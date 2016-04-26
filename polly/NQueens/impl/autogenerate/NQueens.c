@@ -23,7 +23,7 @@ void printf_POS(POS* pos){
 	printf("%lld", pos->c);
 	printf("}");
 }
-long long conflict(POS* p, _DECL_OWNERSHIP_PARAM(p), long long row, long long col){
+long long conflict(POS* p, long long row, long long col){
 	long long _3;
 	long long r = 0;
 	long long c = 0;
@@ -54,7 +54,6 @@ blklab1:;
 	//const %10 = true : bool
 	_10 = true;
 	//return %10
-	_FREE_STRUCT(p, POS);
 	return _10;
 //.blklab0
 blklab0:;
@@ -83,19 +82,17 @@ blklab2:;
 //.blklab3
 blklab3:;
 	//return %15
-	_FREE_STRUCT(p, POS);
 	return _15;
 	//return
 }
 
-long long run(POS** queens, long long queens_size, _DECL_OWNERSHIP_PARAM(queens), long long n, long long dim){
+long long run(POS** queens, long long queens_size, long long n, long long dim){
 	long long _3 = 0;
 	long long num_solutions = 0;
 	long long col = 0;
 	long long isSolution;
 	long long i = 0;
 	POS* p;
-	_DECL_OWNERSHIP(p);
 	long long _9 = 0;
 	long long _10 = 0;
 	long long _11 = 0;
@@ -107,7 +104,6 @@ long long run(POS** queens, long long queens_size, _DECL_OWNERSHIP_PARAM(queens)
 	long long _17 = 0;
 	long long _18 = 0;
 	POS* _19;
-	_DECL_OWNERSHIP(_19);
 	long long _20;
 	long long _21;
 	long long _22;
@@ -116,7 +112,6 @@ long long run(POS** queens, long long queens_size, _DECL_OWNERSHIP_PARAM(queens)
 	long long _25 = 0;
 	long long _26;
 	POS* _27;
-	_DECL_OWNERSHIP(_27);
 	long long _28 = 0;
 	long long _29 = 0;
 	long long _30 = 0;
@@ -128,10 +123,6 @@ long long run(POS** queens, long long queens_size, _DECL_OWNERSHIP_PARAM(queens)
 	//const %9 = 1 : int
 	_9 = 1;
 	//return %9
-	_FREE(queens);
-	_FREE_STRUCT(p, POS);
-	_FREE_STRUCT(_19, POS);
-	_FREE_STRUCT(_27, POS);
 	return _9;
 	//goto blklab7
 	goto blklab7;
@@ -206,14 +197,9 @@ blklab14:;
 			//ifge %7, %1 goto blklab12 : int
 			if(i>=n){goto blklab12;}
 			//indexof %19 = %0, %7 : {int c,int r}[]
-			_FREE(_19);
 			_19 = copy_POS(queens[i]);
-			_ADD_OWNERSHIP(_19);
 			//assign %8 = %19  : {int c,int r}
-			_FREE_STRUCT(p, POS);
 			p = _19;
-			_ADD_OWNERSHIP(p);
-			_REMOVE_OWNERSHIP(_19);
 			//const %20 = true : bool
 			_20 = true;
 			//ifeq %6, %20 goto blklab20 : bool
@@ -223,7 +209,7 @@ blklab14:;
 //.blklab20
 blklab20:;
 			//invoke (%21) = (%8, %1, %5) NQueens:conflict : function(NQueens:POS,int,int)->(bool)
-			_21 = conflict(_STRUCT_PARAM(p), false, n, col);
+			_21 = conflict(_STRUCT_PARAM(p), n, col);
 			//const %22 = true : bool
 			_22 = true;
 			//ifeq %21, %22 goto blklab21 : bool
@@ -262,11 +248,9 @@ blklab12:;
 		//ifne %6, %26 goto blklab22 : bool
 		if(isSolution!=_26){goto blklab22;}
 		//newrecord %27 = (%5, %1) : {int c,int r}
-		_FREE_STRUCT(_27, POS);
 		_27 = malloc(sizeof(POS));
 		_27->c = col;
 		_27->r = n;
-		_ADD_OWNERSHIP(_27);
 		//update %0[%1] = %27 : {int c,int r}[] -> {int c,int r}[]
 		queens[n] = _27;
 		//const %29 = 1 : int
@@ -274,7 +258,7 @@ blklab12:;
 		//add %30 = %1, %29 : int
 		_30=n+_29;
 		//invoke (%28) = (%0, %30, %2) NQueens:run : function(NQueens:POS[],int,int)->(int)
-		_28 = run(_1DARRAY_PARAM(queens), false, _30, dim);
+		_28 = run(_1DARRAY_PARAM(queens), _30, dim);
 		//add %31 = %4, %28 : int
 		_31=num_solutions+_28;
 		//assign %4 = %31  : int
@@ -293,10 +277,6 @@ blklab9:;
 //.blklab8
 blklab8:;
 	//return %4
-	_FREE(queens);
-	_FREE_STRUCT(p, POS);
-	_FREE_STRUCT(_19, POS);
-	_FREE_STRUCT(_27, POS);
 	return num_solutions;
 //.blklab7
 blklab7:;
@@ -308,40 +288,30 @@ int main(int argc, char** args){
 	long long n = 0;
 	POS** init;
 	long long init_size = 0;
-	_DECL_OWNERSHIP(init);
 	long long num_solutions = 0;
 	long long* _5;
 	_DECL_2DARRAY(_6);
-	_DECL_OWNERSHIP(_6);
 	long long _7 = 0;
 	_DECL_1DARRAY(_8);
-	_DECL_OWNERSHIP(_8);
 	long long _9 = 0;
 	long long _10 = 0;
 	POS* _11;
-	_DECL_OWNERSHIP(_11);
 	POS** _12;
 	long long _12_size = 0;
-	_DECL_OWNERSHIP(_12);
 	long long _13 = 0;
 	long long _14 = 0;
 	void* _15;
 	_DECL_1DARRAY(_17);
-	_DECL_OWNERSHIP(_17);
 	void* _18;
 	_DECL_1DARRAY(_20);
-	_DECL_OWNERSHIP(_20);
 	void* _21;
 	void* _23;
 	_DECL_1DARRAY(_25);
-	_DECL_OWNERSHIP(_25);
 	void* _26;
 	void* _28;
 	_DECL_1DARRAY(_30);
-	_DECL_OWNERSHIP(_30);
 	//fieldload %6 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	_CONV_ARGS(_6);
-	_ADD_OWNERSHIP(_6);
 	//const %7 = 0 : int
 	_7 = 0;
 	//indexof %8 = %6, %7 : int[][]
@@ -359,44 +329,33 @@ int main(int argc, char** args){
 	//const %10 = 0 : int
 	_10 = 0;
 	//newrecord %11 = (%9, %10) : {int c,int r}
-	_FREE_STRUCT(_11, POS);
 	_11 = malloc(sizeof(POS));
 	_11->c = _9;
 	_11->r = _10;
-	_ADD_OWNERSHIP(_11);
 	//arraygen %12 = [11; 2] : {int c,int r}[]
-	_FREE(_12);
 	_12 = malloc(n*sizeof(POS*));
 	for(int _12_i=0;_12_i<n;_12_i++){_12[_12_i] = copy_POS(_11);}
 	_12_size = n;
-	_ADD_OWNERSHIP(_12);
 	//assign %3 = %12  : {int c,int r}[]
-	_FREE(init);
 	_1DARRAY_UPDATE(init, _12);
-	_ADD_OWNERSHIP(init);
-	_REMOVE_OWNERSHIP(_12);
 	//const %14 = 0 : int
 	_14 = 0;
 	//invoke (%13) = (%3, %14, %2) NQueens:run : function(NQueens:POS[],int,int)->(int)
-	_13 = run(_1DARRAY_PARAM(init), false, _14, n);
+	_13 = run(_1DARRAY_PARAM(init), _14, n);
 	//assign %4 = %13  : int
 	num_solutions = _13;
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %16 = %15 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %17 = [78,45,81,117,101,101,110,32,80,114,111,98,108,101,109,32,111,110,32,97,32,78,32,88,32,78,32,66,111,97,114,100,46] : int[]
-	_FREE(_17);
 	_NEW_ARRAY(_17, 33);
 	_17[0] = 78; _17[1] = 45; _17[2] = 81; _17[3] = 117; _17[4] = 101; _17[5] = 101; _17[6] = 110; _17[7] = 32; _17[8] = 80; _17[9] = 114; _17[10] = 111; _17[11] = 98; _17[12] = 108; _17[13] = 101; _17[14] = 109; _17[15] = 32; _17[16] = 111; _17[17] = 110; _17[18] = 32; _17[19] = 97; _17[20] = 32; _17[21] = 78; _17[22] = 32; _17[23] = 88; _17[24] = 32; _17[25] = 78; _17[26] = 32; _17[27] = 66; _17[28] = 111; _17[29] = 97; _17[30] = 114; _17[31] = 100; _17[32] = 46; 
-	_ADD_OWNERSHIP(_17);
 	//indirectinvoke () = %16 (%17) : method(int[])->()
-	println_s(_1DARRAY_PARAM(_17));
+	println_s(_17, _17_size);
 	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %19 = %18 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %20 = [78,32,61,32] : int[]
-	_FREE(_20);
 	_NEW_ARRAY(_20, 4);
 	_20[0] = 78; _20[1] = 32; _20[2] = 61; _20[3] = 32; 
-	_ADD_OWNERSHIP(_20);
 	//indirectinvoke () = %19 (%20) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_20));
 	//fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
@@ -406,10 +365,8 @@ int main(int argc, char** args){
 	//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %24 = %23 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %25 = [70,111,117,110,100,32] : int[]
-	_FREE(_25);
 	_NEW_ARRAY(_25, 6);
 	_25[0] = 70; _25[1] = 111; _25[2] = 117; _25[3] = 110; _25[4] = 100; _25[5] = 32; 
-	_ADD_OWNERSHIP(_25);
 	//indirectinvoke () = %24 (%25) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_25));
 	//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
@@ -419,24 +376,13 @@ int main(int argc, char** args){
 	//fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %29 = %28 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %30 = [32,115,111,108,117,116,105,111,110,115,46] : int[]
-	_FREE(_30);
 	_NEW_ARRAY(_30, 11);
 	_30[0] = 32; _30[1] = 115; _30[2] = 111; _30[3] = 108; _30[4] = 117; _30[5] = 116; _30[6] = 105; _30[7] = 111; _30[8] = 110; _30[9] = 115; _30[10] = 46; 
-	_ADD_OWNERSHIP(_30);
 	//indirectinvoke () = %29 (%30) : method(int[])->()
-	println_s(_1DARRAY_PARAM(_30));
+	println_s(_30, _30_size);
 //.blklab23
 blklab23:;
 	//return
-	_FREE(init);
-	_FREE2DArray(_6);
-	_FREE(_8);
-	_FREE_STRUCT(_11, POS);
-	_FREE(_12);
-	_FREE(_17);
-	_FREE(_20);
-	_FREE(_25);
-	_FREE(_30);
 	exit(0);
 }
 

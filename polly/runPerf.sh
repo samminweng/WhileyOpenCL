@@ -9,7 +9,7 @@ run(){
 	executables=$1
 	results=$2
 	export OMP_NUM_THREADS=$num_threads
-	if [[ $c_type == "diableVC" ]]
+	if [[ $c_type == "diablevc" ]]
 	then
 		echo -e -n "Disable loop vectorization..." > $result
 	else
@@ -22,16 +22,18 @@ run(){
 	for i in {1..10}
 	do
 		timeout $TIMEOUT perf stat $executables $parameter >>$result 2>> $result
-		##echo "Beginning the $executables with  $parameter" >>$result
-	        ##start=`date +%s`
-		##$executables $parameter
-		##end=`date +%s`
-		##runtime=$((end-start))
-		##printf '\nParameter:%s\tExecutionTime:%s\tseconds.\n' $parameter  $runtime >> $result
+		#echo "Beginning the $executables with  $parameter" >>$result
+	        #start=`date +%s%N`
+		#$executables $parameter >> $result
+		#end=`date +%s%N`
+		#runtime=$((end-start))
+		#printf '\nParameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter  $runtime >> $result
 	done
 	### Output the hardware info.
 	cat /proc/cpuinfo >> $result
 }
+
+
 ##
 ## Run Polly on the C code
 ##
@@ -49,39 +51,54 @@ compileProgram(){
     	#ar -cvq libUtil.a Util.o
     	if [[ $c_type == *"autogenerate"* ]]
 	then
-		### Translate Whiley program into C code 
-		./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"
+		### Translate Whiley program into copy-eliminated C code 
+		./../../../../bin/wyopcl -code -copy "$program.whiley"
 	fi
    	###read -p "Press [Enter] to continue..."
     	mkdir -p "out"
     	### Compile C code into executables
 	case "$opt" in
 		"gcc")
-			###gcc -O3 -fno-tree-vectorize $program.c Util.c -o "out/$program.$opt.disableVC.out"
-			gcc -std=c99 -O3 $program.c Util.c -o "out/$program.$opt.enableVC.out"
+			gcc -std=c99 -O3 $program.c Util.c -o "out/$program.$opt.enablevc.out"
 			;;
 		"clang")
-			###clang -O3 -fno-vectorize $program.c Util.c -o "out/$program.$opt.disableVC.out"
-			clang -O3 $program.c Util.c -o "out/$program.$opt.enableVC.out"
+			clang -O3 $program.c Util.c -o "out/$program.$opt.enablevc.out"
 			;;
 		"polly")
 			###'-polly-process-unprofitable' option forces Polly to generate sequential code
-			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-process-unprofitable $program.c Util.c -o "out/$program.$opt.enableVC.out"
+			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine\
+	        		-S -emit-llvm -mllvm -polly-process-unprofitable\
+	        		$program.c -o "llvm/$program.$opt.enablevc.ll"
+			### Use 'llc' to compile LLVM code into assembly code
+    			llc "llvm/$program.$opt.enablevc.ll" -o "assembly/$program.$opt.enablevc.s"
+			### Use 'gcc' to compile .s file and link with 'libUtil.a'
+    			pollycc "assembly/$program.$opt.enablevc.s" Util.c -o "out/$program.$opt.enablevc.out"
+
+			#pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine\
+			#	-mllvm -polly-process-unprofitable $program.c Util.c\
+			#	 -o "out/$program.$opt.enablevc.out"
 			;;
 		"openmp")
 			echo "Optimize C code using OpenMP code with $OMP_NUM_THREADS threads..." >> $result
 			### '-polly-parallel-force' forces Polly to generate OpenMP code
-			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-parallel -lgomp\
-                        -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
-			        $program.c Util.c -o "out/$program.$opt.enableVC.out"
+			#pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-parallel -lgomp\
+                        #-mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
+			#        $program.c Util.c -o "out/$program.$opt.enablevc.out"
+			
+			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -S -emit-llvm\
+	        		-mllvm -polly-parallel -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
+	        		$program.c -o "llvm/$program.$opt.enablevc.ll"
+			### Use 'llc' to compile LLVM code into assembly code
+                        llc "llvm/$program.$opt.enablevc.ll" -o "assembly/$program.$opt.enablevc.s"
+                        ### Use 'gcc' to compile .s file and link with 'libUtil.a'
+                        pollycc "assembly/$program.$opt.enablevc.s" Util.c -o "out/$program.$opt.enablevc.out"
+
 			;;
 	esac
 	###read -p "Press [Enter] to continue..."
-	##result="$PWD/../../perf/$c_type.$program.$opt.$parameter.$num_threads.disableVC.txt"
-	###run "./out/$program.$opt.disableVC.out" $result $opt $num_threads "diableVC"
 
-	result="$PWD/../../perf/$c_type.$program.$opt.$parameter.$num_threads.enableVC.txt"
-	run "./out/$program.$opt.enableVC.out" $result $opt $num_threads "enableVC"
+	result="$PWD/../../perf/$c_type.$program.$opt.$parameter.$num_threads.enablevc.txt"
+	run "./out/$program.$opt.enablevc.out" $result $opt $num_threads "enablevc"
 }
 #
 # Execute benchmarks
@@ -110,17 +127,17 @@ init(){
 	#read -p "Press [Enter] to continue..."
 }
 # ### Benchmark Autogenerate GCD
-# init autogenerate GCD
-# exec autogenerate GCD 1000
-# exec autogenerate GCD 10000
-# exec autogenerate GCD 20000
-# exec autogenerate GCD 30000
-# exec autogenerate GCD 40000
-# exec autogenerate1 GCD 1000
-# exec autogenerate1 GCD 10000
-# exec autogenerate1 GCD 20000
-# exec autogenerate1 GCD 30000
-# exec autogenerate1 GCD 40000
+init autogenerate GCD
+exec autogenerate GCD 1000
+exec autogenerate GCD 10000
+exec autogenerate GCD 20000
+exec autogenerate GCD 30000
+exec autogenerate GCD 40000
+exec autogenerate1 GCD 1000
+exec autogenerate1 GCD 10000
+exec autogenerate1 GCD 20000
+exec autogenerate1 GCD 30000
+exec autogenerate1 GCD 40000
 # ### Benchmark Autogenerate CoinGame
 init autogenerate CoinGame
 exec autogenerate CoinGame 1000
@@ -130,14 +147,14 @@ exec autogenerate CoinGame 30000
 exec autogenerate CoinGame 40000
 
 ### Benchmark Autogenerate NQueens
-##init autogenerate NQueens
-##exec autogenerate NQueens 1
-##exec autogenerate NQueens 2
-##exec autogenerate NQueens 4
-##exec autogenerate NQueens 6
-##exec autogenerate NQueens 8
-##exec autogenerate NQueens 10
-##exec autogenerate NQueens 12
+init autogenerate NQueens
+exec autogenerate NQueens 1
+exec autogenerate NQueens 2
+exec autogenerate NQueens 4
+exec autogenerate NQueens 6
+exec autogenerate NQueens 8
+exec autogenerate NQueens 10
+exec autogenerate NQueens 12
 ##exec autogenerate NQueens 14
 ##exec autogenerate NQueens 15
 

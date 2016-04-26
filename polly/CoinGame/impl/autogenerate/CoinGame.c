@@ -1,7 +1,6 @@
 #include "CoinGame.h"
-long long* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_OWNERSHIP_PARAM(moves), long long n){
+long long* findMoves(_DECL_1DARRAY_PARAM(moves), long long n){
 	_DECL_1DARRAY(_2);
-	_DECL_OWNERSHIP(_2);
 	long long s = 0;
 	long long j = 0;
 	long long i = 0;
@@ -227,7 +226,6 @@ blklab1:;
 //.blklab0
 blklab0:;
 	//return %0
-	_FREE(_2);
 	return moves;
 	//return
 }
@@ -236,33 +234,25 @@ int main(int argc, char** args){
 	long long* max;
 	long long n = 0;
 	_DECL_1DARRAY(moves);
-	_DECL_OWNERSHIP(moves);
 	long long sum_alice = 0;
 	long long* _5;
 	_DECL_2DARRAY(_6);
-	_DECL_OWNERSHIP(_6);
 	long long _7 = 0;
 	_DECL_1DARRAY(_8);
-	_DECL_OWNERSHIP(_8);
 	long long _9 = 0;
 	long long _10 = 0;
 	_DECL_1DARRAY(_11);
-	_DECL_OWNERSHIP(_11);
 	_DECL_1DARRAY(_12);
-	_DECL_OWNERSHIP(_12);
 	long long _13 = 0;
 	long long _14 = 0;
 	long long _15 = 0;
 	void* _16;
 	_DECL_1DARRAY(_18);
-	_DECL_OWNERSHIP(_18);
 	void* _19;
 	void* _21;
 	_DECL_1DARRAY(_23);
-	_DECL_OWNERSHIP(_23);
 	//fieldload %6 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	_CONV_ARGS(_6);
-	_ADD_OWNERSHIP(_6);
 	//const %7 = 0 : int
 	_7 = 0;
 	//indexof %8 = %6, %7 : int[][]
@@ -280,25 +270,14 @@ int main(int argc, char** args){
 	//mul %10 = %2, %2 : int
 	_10=n*n;
 	//arraygen %11 = [9; 10] : int[]
-	_FREE(_11);
 	_GEN_1DARRAY(_11, _10, _9);
-	_ADD_OWNERSHIP(_11);
 	//assign %3 = %11  : int[]
-	_FREE(moves);
 	_1DARRAY_UPDATE(moves, _11);
-	_ADD_OWNERSHIP(moves);
-	_REMOVE_OWNERSHIP(_11);
 	//invoke (%12) = (%3, %2) CoinGame:findMoves : function(int[],int)->(int[])
-	_FREE(_12);
-	_REMOVE_OWNERSHIP(moves);
 	_1DARRAY_SIZE(_12, moves);
-	_12 = findMoves(_1DARRAY_PARAM(moves), true, n);
-	_ADD_OWNERSHIP(_12);
+	_12 = findMoves(_1DARRAY_PARAM(moves), n);
 	//assign %3 = %12  : int[]
-	_FREE(moves);
 	_1DARRAY_UPDATE(moves, _12);
-	_ADD_OWNERSHIP(moves);
-	_REMOVE_OWNERSHIP(_12);
 	//const %13 = 1 : int
 	_13 = 1;
 	//sub %14 = %2, %13 : int
@@ -310,10 +289,8 @@ int main(int argc, char** args){
 	//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %17 = %16 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %18 = [84,104,101,32,116,111,116,97,108,32,97,109,111,117,110,116,32,111,102,32,109,111,110,101,121,32,40,109,97,120,105,109,117,109,41,32,65,108,105,99,101,32,103,101,116,115,32,105,115,32] : int[]
-	_FREE(_18);
 	_NEW_ARRAY(_18, 50);
 	_18[0] = 84; _18[1] = 104; _18[2] = 101; _18[3] = 32; _18[4] = 116; _18[5] = 111; _18[6] = 116; _18[7] = 97; _18[8] = 108; _18[9] = 32; _18[10] = 97; _18[11] = 109; _18[12] = 111; _18[13] = 117; _18[14] = 110; _18[15] = 116; _18[16] = 32; _18[17] = 111; _18[18] = 102; _18[19] = 32; _18[20] = 109; _18[21] = 111; _18[22] = 110; _18[23] = 101; _18[24] = 121; _18[25] = 32; _18[26] = 40; _18[27] = 109; _18[28] = 97; _18[29] = 120; _18[30] = 105; _18[31] = 109; _18[32] = 117; _18[33] = 109; _18[34] = 41; _18[35] = 32; _18[36] = 65; _18[37] = 108; _18[38] = 105; _18[39] = 99; _18[40] = 101; _18[41] = 32; _18[42] = 103; _18[43] = 101; _18[44] = 116; _18[45] = 115; _18[46] = 32; _18[47] = 105; _18[48] = 115; _18[49] = 32; 
-	_ADD_OWNERSHIP(_18);
 	//indirectinvoke () = %17 (%18) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_18));
 	//fieldload %19 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
@@ -323,22 +300,13 @@ int main(int argc, char** args){
 	//fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %22 = %21 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %23 = [80,97,115,115,32,67,111,105,110,71,97,109,101,32,116,101,115,116,32,99,97,115,101] : int[]
-	_FREE(_23);
 	_NEW_ARRAY(_23, 23);
 	_23[0] = 80; _23[1] = 97; _23[2] = 115; _23[3] = 115; _23[4] = 32; _23[5] = 67; _23[6] = 111; _23[7] = 105; _23[8] = 110; _23[9] = 71; _23[10] = 97; _23[11] = 109; _23[12] = 101; _23[13] = 32; _23[14] = 116; _23[15] = 101; _23[16] = 115; _23[17] = 116; _23[18] = 32; _23[19] = 99; _23[20] = 97; _23[21] = 115; _23[22] = 101; 
-	_ADD_OWNERSHIP(_23);
 	//indirectinvoke () = %22 (%23) : method(int[])->()
 	println_s(_23, _23_size);
 //.blklab11
 blklab11:;
 	//return
-	_FREE(moves);
-	_FREE2DArray(_6);
-	_FREE(_8);
-	_FREE(_11);
-	_FREE(_12);
-	_FREE(_18);
-	_FREE(_23);
 	exit(0);
 }
 

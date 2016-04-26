@@ -1,0 +1,21 @@
+{
+   "context" : "[p_0_loaded_from_b, p_1_loaded_from_a] -> {  : -9223372036854775808 <= p_0_loaded_from_b <= 9223372036854775807 and -9223372036854775808 <= p_1_loaded_from_a <= 9223372036854775807 }",
+   "name" : "while.body18.preheader => while.body29.preheader",
+   "statements" : [
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "[p_0_loaded_from_b, p_1_loaded_from_a] -> { Stmt_if_end22[i0, i1] -> MemRef_call11[i0, i1] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[p_0_loaded_from_b, p_1_loaded_from_a] -> { Stmt_if_end22[i0, i1] -> MemRef_call15[i1, i0] }"
+            }
+         ],
+         "domain" : "[p_0_loaded_from_b, p_1_loaded_from_a] -> { Stmt_if_end22[i0, i1] : 0 <= i0 < p_1_loaded_from_a and 0 <= i1 < p_0_loaded_from_b }",
+         "name" : "Stmt_if_end22",
+         "schedule" : "[p_0_loaded_from_b, p_1_loaded_from_a] -> { Stmt_if_end22[i0, i1] -> [i0, i1] }"
+      }
+   ]
+}

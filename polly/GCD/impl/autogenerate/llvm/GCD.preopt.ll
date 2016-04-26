@@ -71,179 +71,163 @@ entry:
 
 entry.split:                                      ; preds = %entry
   %call = tail call i64** @convertArgsToIntArray(i32 %argc, i8** %args) #4
-  %sub = add nsw i32 %argc, -1
-  %conv = sext i32 %sub to i64
   %0 = load i64*, i64** %call, align 8
   %call1 = tail call i64* @parseStringToInt(i64* %0) #4
   %cmp = icmp eq i64* %call1, null
-  br i1 %cmp, label %if.then64, label %if.end
+  br i1 %cmp, label %blklab7, label %if.end
 
 if.end:                                           ; preds = %entry.split
   %1 = load i64, i64* %call1, align 8
-  %call5 = tail call noalias i8* @malloc(i64 32) #4
-  %2 = bitcast i8* %call5 to i64*
+  %call3 = tail call noalias i8* @malloc(i64 32) #4
+  %2 = bitcast i8* %call3 to i64*
   store i64 78, i64* %2, align 8
-  %arrayidx7 = getelementptr inbounds i8, i8* %call5, i64 8
-  %3 = bitcast i8* %arrayidx7 to i64*
+  %arrayidx5 = getelementptr inbounds i8, i8* %call3, i64 8
+  %3 = bitcast i8* %arrayidx5 to i64*
   store i64 32, i64* %3, align 8
-  %arrayidx8 = getelementptr inbounds i8, i8* %call5, i64 16
-  %4 = bitcast i8* %arrayidx8 to i64*
+  %arrayidx6 = getelementptr inbounds i8, i8* %call3, i64 16
+  %4 = bitcast i8* %arrayidx6 to i64*
   store i64 61, i64* %4, align 8
-  %arrayidx9 = getelementptr inbounds i8, i8* %call5, i64 24
-  %5 = bitcast i8* %arrayidx9 to i64*
+  %arrayidx7 = getelementptr inbounds i8, i8* %call3, i64 24
+  %5 = bitcast i8* %arrayidx7 to i64*
   store i64 32, i64* %5, align 8
   tail call void @printf_s(i64* %2, i64 4) #4
-  %call10 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.1, i64 0, i64 0), i64 %1) #4
-  %cmp115 = icmp sgt i64 %1, 0
-  br i1 %cmp115, label %while.body16.preheader.lr.ph, label %if.end26
+  %call8 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.1, i64 0, i64 0), i64 %1) #4
+  %cmp94 = icmp sgt i64 %1, 0
+  br i1 %cmp94, label %while.body14.preheader.lr.ph, label %blklab8
 
-while.body16.preheader.lr.ph:                     ; preds = %if.end
-  br label %while.body16.preheader
+while.body14.preheader.lr.ph:                     ; preds = %if.end
+  br label %while.body14.preheader
 
-while.body16.preheader:                           ; preds = %while.body16.preheader.lr.ph, %blklab9
-  %sum.08 = phi i64 [ 0, %while.body16.preheader.lr.ph ], [ %sum.1.lcssa, %blklab9 ]
-  %i.06 = phi i64 [ 0, %while.body16.preheader.lr.ph ], [ %add23, %blklab9 ]
-  %cmp172 = icmp sgt i64 %1, 0
-  br i1 %cmp172, label %if.end20.lr.ph, label %blklab9
+while.body14.preheader:                           ; preds = %while.body14.preheader.lr.ph, %blklab9
+  %sum.07 = phi i64 [ 0, %while.body14.preheader.lr.ph ], [ %sum.1.lcssa, %blklab9 ]
+  %i.05 = phi i64 [ 0, %while.body14.preheader.lr.ph ], [ %add21, %blklab9 ]
+  %cmp151 = icmp sgt i64 %1, 0
+  br i1 %cmp151, label %if.end18.lr.ph, label %blklab9
 
-if.end20.lr.ph:                                   ; preds = %while.body16.preheader
-  br label %if.end20
+if.end18.lr.ph:                                   ; preds = %while.body14.preheader
+  br label %if.end18
 
-if.end20:                                         ; preds = %if.end20.lr.ph, %if.end20
-  %sum.14 = phi i64 [ %sum.08, %if.end20.lr.ph ], [ %add, %if.end20 ]
-  %j.03 = phi i64 [ 0, %if.end20.lr.ph ], [ %add22, %if.end20 ]
-  %call21 = tail call i64 @gcd(i64 %i.06, i64 %j.03)
-  %add22 = add nuw nsw i64 %j.03, 1
-  %add = add nsw i64 %call21, %sum.14
-  %exitcond = icmp ne i64 %add22, %1
-  br i1 %exitcond, label %if.end20, label %while.body16.blklab9_crit_edge
+if.end18:                                         ; preds = %if.end18.lr.ph, %if.end18
+  %sum.13 = phi i64 [ %sum.07, %if.end18.lr.ph ], [ %add, %if.end18 ]
+  %j.02 = phi i64 [ 0, %if.end18.lr.ph ], [ %add20, %if.end18 ]
+  %call19 = tail call i64 @gcd(i64 %i.05, i64 %j.02)
+  %add20 = add nuw nsw i64 %j.02, 1
+  %add = add nsw i64 %call19, %sum.13
+  %exitcond = icmp ne i64 %add20, %1
+  br i1 %exitcond, label %if.end18, label %while.body14.blklab9_crit_edge
 
-while.body16.blklab9_crit_edge:                   ; preds = %if.end20
-  %add.lcssa = phi i64 [ %add, %if.end20 ]
+while.body14.blklab9_crit_edge:                   ; preds = %if.end18
+  %add.lcssa = phi i64 [ %add, %if.end18 ]
   br label %blklab9
 
-blklab9:                                          ; preds = %while.body16.blklab9_crit_edge, %while.body16.preheader
-  %sum.1.lcssa = phi i64 [ %add.lcssa, %while.body16.blklab9_crit_edge ], [ %sum.08, %while.body16.preheader ]
-  %add23 = add nuw nsw i64 %i.06, 1
-  %exitcond10 = icmp ne i64 %add23, %1
-  br i1 %exitcond10, label %while.body16.preheader, label %while.body.if.end26_crit_edge
+blklab9:                                          ; preds = %while.body14.blklab9_crit_edge, %while.body14.preheader
+  %sum.1.lcssa = phi i64 [ %add.lcssa, %while.body14.blklab9_crit_edge ], [ %sum.07, %while.body14.preheader ]
+  %add21 = add nuw nsw i64 %i.05, 1
+  %exitcond9 = icmp ne i64 %add21, %1
+  br i1 %exitcond9, label %while.body14.preheader, label %while.body.blklab8_crit_edge
 
-while.body.if.end26_crit_edge:                    ; preds = %blklab9
+while.body.blklab8_crit_edge:                     ; preds = %blklab9
   %sum.1.lcssa.lcssa = phi i64 [ %sum.1.lcssa, %blklab9 ]
-  br label %if.end26
+  br label %blklab8
 
-if.end26:                                         ; preds = %while.body.if.end26_crit_edge, %if.end
-  %sum.0.lcssa = phi i64 [ %sum.1.lcssa.lcssa, %while.body.if.end26_crit_edge ], [ 0, %if.end ]
-  %call27 = tail call noalias i8* @malloc(i64 40) #4
-  %6 = bitcast i8* %call27 to i64*
+blklab8:                                          ; preds = %while.body.blklab8_crit_edge, %if.end
+  %sum.0.lcssa = phi i64 [ %sum.1.lcssa.lcssa, %while.body.blklab8_crit_edge ], [ 0, %if.end ]
+  %call22 = tail call noalias i8* @malloc(i64 40) #4
+  %6 = bitcast i8* %call22 to i64*
   store i64 83, i64* %6, align 8
-  %arrayidx29 = getelementptr inbounds i8, i8* %call27, i64 8
-  %7 = bitcast i8* %arrayidx29 to i64*
+  %arrayidx24 = getelementptr inbounds i8, i8* %call22, i64 8
+  %7 = bitcast i8* %arrayidx24 to i64*
   store i64 117, i64* %7, align 8
-  %arrayidx30 = getelementptr inbounds i8, i8* %call27, i64 16
-  %8 = bitcast i8* %arrayidx30 to i64*
+  %arrayidx25 = getelementptr inbounds i8, i8* %call22, i64 16
+  %8 = bitcast i8* %arrayidx25 to i64*
   store i64 109, i64* %8, align 8
-  %arrayidx31 = getelementptr inbounds i8, i8* %call27, i64 24
-  %9 = bitcast i8* %arrayidx31 to i64*
+  %arrayidx26 = getelementptr inbounds i8, i8* %call22, i64 24
+  %9 = bitcast i8* %arrayidx26 to i64*
   store i64 58, i64* %9, align 8
-  %arrayidx32 = getelementptr inbounds i8, i8* %call27, i64 32
-  %10 = bitcast i8* %arrayidx32 to i64*
+  %arrayidx27 = getelementptr inbounds i8, i8* %call22, i64 32
+  %10 = bitcast i8* %arrayidx27 to i64*
   store i64 32, i64* %10, align 8
   tail call void @printf_s(i64* %6, i64 5) #4
-  %call33 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.1, i64 0, i64 0), i64 %sum.0.lcssa) #4
-  %call37 = tail call noalias i8* @malloc(i64 200) #4
-  %11 = bitcast i8* %call37 to i64*
+  %call28 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.1, i64 0, i64 0), i64 %sum.0.lcssa) #4
+  %call29 = tail call noalias i8* @malloc(i64 200) #4
+  %11 = bitcast i8* %call29 to i64*
   store i64 80, i64* %11, align 8
-  %arrayidx39 = getelementptr inbounds i8, i8* %call37, i64 8
-  %12 = bitcast i8* %arrayidx39 to i64*
+  %arrayidx31 = getelementptr inbounds i8, i8* %call29, i64 8
+  %12 = bitcast i8* %arrayidx31 to i64*
   store i64 97, i64* %12, align 8
-  %arrayidx40 = getelementptr inbounds i8, i8* %call37, i64 16
-  %13 = bitcast i8* %arrayidx40 to i64*
+  %arrayidx32 = getelementptr inbounds i8, i8* %call29, i64 16
+  %13 = bitcast i8* %arrayidx32 to i64*
   store i64 115, i64* %13, align 8
-  %arrayidx41 = getelementptr inbounds i8, i8* %call37, i64 24
-  %14 = bitcast i8* %arrayidx41 to i64*
+  %arrayidx33 = getelementptr inbounds i8, i8* %call29, i64 24
+  %14 = bitcast i8* %arrayidx33 to i64*
   store i64 115, i64* %14, align 8
-  %arrayidx42 = getelementptr inbounds i8, i8* %call37, i64 32
-  %15 = bitcast i8* %arrayidx42 to i64*
+  %arrayidx34 = getelementptr inbounds i8, i8* %call29, i64 32
+  %15 = bitcast i8* %arrayidx34 to i64*
   store i64 32, i64* %15, align 8
-  %arrayidx43 = getelementptr inbounds i8, i8* %call37, i64 40
-  %16 = bitcast i8* %arrayidx43 to i64*
+  %arrayidx35 = getelementptr inbounds i8, i8* %call29, i64 40
+  %16 = bitcast i8* %arrayidx35 to i64*
   store i64 69, i64* %16, align 8
-  %arrayidx44 = getelementptr inbounds i8, i8* %call37, i64 48
-  %17 = bitcast i8* %arrayidx44 to i64*
+  %arrayidx36 = getelementptr inbounds i8, i8* %call29, i64 48
+  %17 = bitcast i8* %arrayidx36 to i64*
   store i64 117, i64* %17, align 8
-  %arrayidx45 = getelementptr inbounds i8, i8* %call37, i64 56
-  %18 = bitcast i8* %arrayidx45 to i64*
+  %arrayidx37 = getelementptr inbounds i8, i8* %call29, i64 56
+  %18 = bitcast i8* %arrayidx37 to i64*
   store i64 99, i64* %18, align 8
-  %arrayidx46 = getelementptr inbounds i8, i8* %call37, i64 64
-  %19 = bitcast i8* %arrayidx46 to i64*
+  %arrayidx38 = getelementptr inbounds i8, i8* %call29, i64 64
+  %19 = bitcast i8* %arrayidx38 to i64*
   store i64 108, i64* %19, align 8
-  %arrayidx47 = getelementptr inbounds i8, i8* %call37, i64 72
-  %20 = bitcast i8* %arrayidx47 to i64*
+  %arrayidx39 = getelementptr inbounds i8, i8* %call29, i64 72
+  %20 = bitcast i8* %arrayidx39 to i64*
   store i64 105, i64* %20, align 8
-  %arrayidx48 = getelementptr inbounds i8, i8* %call37, i64 80
-  %21 = bitcast i8* %arrayidx48 to i64*
+  %arrayidx40 = getelementptr inbounds i8, i8* %call29, i64 80
+  %21 = bitcast i8* %arrayidx40 to i64*
   store i64 100, i64* %21, align 8
-  %arrayidx49 = getelementptr inbounds i8, i8* %call37, i64 88
-  %22 = bitcast i8* %arrayidx49 to i64*
+  %arrayidx41 = getelementptr inbounds i8, i8* %call29, i64 88
+  %22 = bitcast i8* %arrayidx41 to i64*
   store i64 32, i64* %22, align 8
-  %arrayidx50 = getelementptr inbounds i8, i8* %call37, i64 96
-  %23 = bitcast i8* %arrayidx50 to i64*
+  %arrayidx42 = getelementptr inbounds i8, i8* %call29, i64 96
+  %23 = bitcast i8* %arrayidx42 to i64*
   store i64 71, i64* %23, align 8
-  %arrayidx51 = getelementptr inbounds i8, i8* %call37, i64 104
-  %24 = bitcast i8* %arrayidx51 to i64*
+  %arrayidx43 = getelementptr inbounds i8, i8* %call29, i64 104
+  %24 = bitcast i8* %arrayidx43 to i64*
   store i64 67, i64* %24, align 8
-  %arrayidx52 = getelementptr inbounds i8, i8* %call37, i64 112
-  %25 = bitcast i8* %arrayidx52 to i64*
+  %arrayidx44 = getelementptr inbounds i8, i8* %call29, i64 112
+  %25 = bitcast i8* %arrayidx44 to i64*
   store i64 68, i64* %25, align 8
-  %arrayidx53 = getelementptr inbounds i8, i8* %call37, i64 120
-  %26 = bitcast i8* %arrayidx53 to i64*
+  %arrayidx45 = getelementptr inbounds i8, i8* %call29, i64 120
+  %26 = bitcast i8* %arrayidx45 to i64*
   store i64 32, i64* %26, align 8
-  %arrayidx54 = getelementptr inbounds i8, i8* %call37, i64 128
-  %27 = bitcast i8* %arrayidx54 to i64*
+  %arrayidx46 = getelementptr inbounds i8, i8* %call29, i64 128
+  %27 = bitcast i8* %arrayidx46 to i64*
   store i64 116, i64* %27, align 8
-  %arrayidx55 = getelementptr inbounds i8, i8* %call37, i64 136
-  %28 = bitcast i8* %arrayidx55 to i64*
+  %arrayidx47 = getelementptr inbounds i8, i8* %call29, i64 136
+  %28 = bitcast i8* %arrayidx47 to i64*
   store i64 101, i64* %28, align 8
-  %arrayidx56 = getelementptr inbounds i8, i8* %call37, i64 144
-  %29 = bitcast i8* %arrayidx56 to i64*
+  %arrayidx48 = getelementptr inbounds i8, i8* %call29, i64 144
+  %29 = bitcast i8* %arrayidx48 to i64*
   store i64 115, i64* %29, align 8
-  %arrayidx57 = getelementptr inbounds i8, i8* %call37, i64 152
-  %30 = bitcast i8* %arrayidx57 to i64*
+  %arrayidx49 = getelementptr inbounds i8, i8* %call29, i64 152
+  %30 = bitcast i8* %arrayidx49 to i64*
   store i64 116, i64* %30, align 8
-  %arrayidx58 = getelementptr inbounds i8, i8* %call37, i64 160
-  %31 = bitcast i8* %arrayidx58 to i64*
+  %arrayidx50 = getelementptr inbounds i8, i8* %call29, i64 160
+  %31 = bitcast i8* %arrayidx50 to i64*
   store i64 32, i64* %31, align 8
-  %arrayidx59 = getelementptr inbounds i8, i8* %call37, i64 168
-  %32 = bitcast i8* %arrayidx59 to i64*
+  %arrayidx51 = getelementptr inbounds i8, i8* %call29, i64 168
+  %32 = bitcast i8* %arrayidx51 to i64*
   store i64 99, i64* %32, align 8
-  %arrayidx60 = getelementptr inbounds i8, i8* %call37, i64 176
-  %33 = bitcast i8* %arrayidx60 to i64*
+  %arrayidx52 = getelementptr inbounds i8, i8* %call29, i64 176
+  %33 = bitcast i8* %arrayidx52 to i64*
   store i64 97, i64* %33, align 8
-  %arrayidx61 = getelementptr inbounds i8, i8* %call37, i64 184
-  %34 = bitcast i8* %arrayidx61 to i64*
+  %arrayidx53 = getelementptr inbounds i8, i8* %call29, i64 184
+  %34 = bitcast i8* %arrayidx53 to i64*
   store i64 115, i64* %34, align 8
-  %arrayidx62 = getelementptr inbounds i8, i8* %call37, i64 192
-  %35 = bitcast i8* %arrayidx62 to i64*
+  %arrayidx54 = getelementptr inbounds i8, i8* %call29, i64 192
+  %35 = bitcast i8* %arrayidx54 to i64*
   store i64 101, i64* %35, align 8
   tail call void @println_s(i64* %11, i64 25) #4
-  br label %if.then64
+  br label %blklab7
 
-if.then64:                                        ; preds = %if.end26, %entry.split
-  %_12_has_ownership.0 = phi i1 [ true, %if.end26 ], [ false, %entry.split ]
-  %36 = phi i8* [ %call5, %if.end26 ], [ null, %entry.split ]
-  %37 = phi i8* [ %call27, %if.end26 ], [ null, %entry.split ]
-  %38 = phi i8* [ %call37, %if.end26 ], [ null, %entry.split ]
-  tail call void @free2DArray(i64** %call, i64 %conv) #4
-  br i1 %_12_has_ownership.0, label %if.then70, label %if.end77
-
-if.then70:                                        ; preds = %if.then64
-  tail call void @free(i8* %36) #4
-  tail call void @free(i8* %37) #4
-  tail call void @free(i8* %38) #4
-  br label %if.end77
-
-if.end77:                                         ; preds = %if.then64, %if.then70
+blklab7:                                          ; preds = %entry.split, %blklab8
   tail call void @exit(i32 0) #6
   unreachable
 }
@@ -251,9 +235,6 @@ if.end77:                                         ; preds = %if.then64, %if.then
 declare i64** @convertArgsToIntArray(i32, i8**) #1
 
 declare i64* @parseStringToInt(i64*) #1
-
-; Function Attrs: nounwind
-declare void @free(i8*) #3
 
 ; Function Attrs: nounwind
 declare noalias i8* @malloc(i64) #3
@@ -264,12 +245,10 @@ declare i32 @printf(i8*, ...) #1
 
 declare void @println_s(i64*, i64) #1
 
-declare void @free2DArray(i64**, i64) #1
-
 ; Function Attrs: nounwind
 declare i64 @fwrite(i8* nocapture, i64, i64, %struct._IO_FILE* nocapture) #4
 
-attributes #0 = { nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #0 = { nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #1 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #2 = { noreturn nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #3 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
@@ -279,4 +258,4 @@ attributes #6 = { noreturn nounwind }
 
 !llvm.ident = !{!0}
 
-!0 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git cf7bc8edf8cccb1b5de656c403cb55ad44132e98) (http://llvm.org/git/llvm.git 22706dc4c03305692f494d0e42a6de1050d0ec62)"}
+!0 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git 2af14cc4a90f43170f8ea9c1dfa0f71f46a0621c) (http://llvm.org/git/llvm.git 1e7e2b2b556977af8ccc12b7afba61302f3a2da9)"}

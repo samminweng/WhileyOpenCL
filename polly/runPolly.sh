@@ -79,7 +79,7 @@ clang_polly(){
 	mkdir -p "llvm"  ## Store the llvm code (*.ll)
 	### Compile Util.c to Util.o (object file)
 	clang -c Util.c -o Util.o 
-    ar -cvq libUtil.a Util.o
+    	ar -cvq libUtil.a Util.o
 	echo -e -n "${GREEN}[*] Export SCoP in DOTs and JSCoP${RESET}" && read
 	pollycc -g -O3 -mllvm -polly -o "out"/$program.polly.out\
 	        -mllvm -polly-dot -mllvm -polly-show $program.c libUtil.a
@@ -183,14 +183,14 @@ exec(){
 	
 	if [[ $c_type == *"autogenerate"* ]]
 	then
-		if [[ $program == "NQueens" ]]
-		then
-			##	### Translate Whiley program into copy-eliminated and memory deallocated C code 
+		#if [[ $program == "NQueens" ]]
+		#then
+			### Translate Whiley program into copy-eliminated C code 
 			./../../../../bin/wyopcl -code -copy "$program.whiley"
-		else
-			##	### Translate Whiley program into copy-eliminated and memory deallocated C code 
-			./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"
-		fi
+		#else
+			### Translate Whiley program into copy-eliminated and memory deallocated C code 
+		#	./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"
+		#fi
 	fi
 
 	clang_polly $c_type $program $num_threads $parameter
@@ -199,10 +199,10 @@ exec(){
 
 exec autogenerate1 MatrixMult 100  ### Determine matrix size from cmd line argument
 exec autogenerate2 MatrixMult 100 
-##exec autogenerate GCD 100  ### Use Euclid's algorithm
-##exec autogenerate1 GCD 100 ### Cached the divisors
+exec autogenerate GCD 100  ### Use Euclid's algorithm
+exec autogenerate1 GCD 100 ### Cached the divisors
 exec autogenerate CoinGame 2000
-exec autogenerate NQueens 10
+exec autogenerate NQueens 12
 
 
 

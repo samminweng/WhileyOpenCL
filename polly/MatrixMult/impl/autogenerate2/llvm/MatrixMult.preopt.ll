@@ -135,7 +135,7 @@ declare i32 @printf(i8*, ...) #2
 declare void @printf1DArray(i64*, i64) #2
 
 ; Function Attrs: nounwind uwtable
-define %struct.Matrix* @matrix(i64 %width, i64 %height, i64* %data, i64 %data_size, i1 zeroext %data_has_ownership) #0 {
+define %struct.Matrix* @matrix(i64 %width, i64 %height, i64* %data, i64 %data_size) #0 {
 entry:
   br label %entry.split
 
@@ -154,14 +154,6 @@ entry.split:                                      ; preds = %entry
   %width5 = getelementptr inbounds i8, i8* %call, i64 16
   %3 = bitcast i8* %width5 to i64*
   store i64 %width, i64* %3, align 8
-  br i1 %data_has_ownership, label %if.then7, label %if.end11
-
-if.then7:                                         ; preds = %entry.split
-  %4 = bitcast i64* %data to i8*
-  tail call void @free(i8* %4) #4
-  br label %if.end11
-
-if.end11:                                         ; preds = %entry.split, %if.then7
   ret %struct.Matrix* %0
 }
 
@@ -175,56 +167,54 @@ entry.split:                                      ; preds = %entry
   %conv1 = trunc i64 %mul to i32
   %call = tail call i64* @gen1DArray(i32 0, i32 %conv1) #4
   %cmp3 = icmp sgt i64 %height, 0
-  br i1 %cmp3, label %while.body9.preheader.lr.ph, label %if.end23
+  br i1 %cmp3, label %while.body4.preheader.lr.ph, label %blklab2
 
-while.body9.preheader.lr.ph:                      ; preds = %entry.split
-  br label %while.body9.preheader
+while.body4.preheader.lr.ph:                      ; preds = %entry.split
+  br label %while.body4.preheader
 
-while.body9.preheader:                            ; preds = %while.body9.preheader.lr.ph, %blklab3
-  %i.04 = phi i64 [ 0, %while.body9.preheader.lr.ph ], [ %add20, %blklab3 ]
-  %cmp101 = icmp sgt i64 %width, 0
-  br i1 %cmp101, label %if.end13.lr.ph, label %blklab3
+while.body4.preheader:                            ; preds = %while.body4.preheader.lr.ph, %blklab3
+  %i.04 = phi i64 [ 0, %while.body4.preheader.lr.ph ], [ %add15, %blklab3 ]
+  %cmp51 = icmp sgt i64 %width, 0
+  br i1 %cmp51, label %if.end8.lr.ph, label %blklab3
 
-if.end13.lr.ph:                                   ; preds = %while.body9.preheader
-  br label %if.end13
+if.end8.lr.ph:                                    ; preds = %while.body4.preheader
+  br label %if.end8
 
-if.end13:                                         ; preds = %if.end13.lr.ph, %if.end13
-  %j.02 = phi i64 [ 0, %if.end13.lr.ph ], [ %add19, %if.end13 ]
-  %mul14 = mul nsw i64 %i.04, %width
-  %add = add nsw i64 %j.02, %mul14
+if.end8:                                          ; preds = %if.end8.lr.ph, %if.end8
+  %j.02 = phi i64 [ 0, %if.end8.lr.ph ], [ %add14, %if.end8 ]
+  %mul9 = mul nsw i64 %i.04, %width
+  %add = add nsw i64 %j.02, %mul9
   %arrayidx = getelementptr inbounds i64, i64* %call, i64 %add
   %0 = load i64, i64* %arrayidx, align 8
-  %add15 = add nsw i64 %0, %i.04
-  %mul16 = mul nsw i64 %i.04, %width
-  %add17 = add nsw i64 %j.02, %mul16
-  %arrayidx18 = getelementptr inbounds i64, i64* %call, i64 %add17
-  store i64 %add15, i64* %arrayidx18, align 8
-  %add19 = add nuw nsw i64 %j.02, 1
-  %exitcond = icmp ne i64 %add19, %width
-  br i1 %exitcond, label %if.end13, label %while.body9.blklab3_crit_edge
+  %add10 = add nsw i64 %0, %i.04
+  %mul11 = mul nsw i64 %i.04, %width
+  %add12 = add nsw i64 %j.02, %mul11
+  %arrayidx13 = getelementptr inbounds i64, i64* %call, i64 %add12
+  store i64 %add10, i64* %arrayidx13, align 8
+  %add14 = add nuw nsw i64 %j.02, 1
+  %exitcond = icmp ne i64 %add14, %width
+  br i1 %exitcond, label %if.end8, label %while.body4.blklab3_crit_edge
 
-while.body9.blklab3_crit_edge:                    ; preds = %if.end13
+while.body4.blklab3_crit_edge:                    ; preds = %if.end8
   br label %blklab3
 
-blklab3:                                          ; preds = %while.body9.blklab3_crit_edge, %while.body9.preheader
-  %add20 = add nuw nsw i64 %i.04, 1
-  %exitcond6 = icmp ne i64 %add20, %height
-  br i1 %exitcond6, label %while.body9.preheader, label %while.body.if.end23_crit_edge
+blklab3:                                          ; preds = %while.body4.blklab3_crit_edge, %while.body4.preheader
+  %add15 = add nuw nsw i64 %i.04, 1
+  %exitcond6 = icmp ne i64 %add15, %height
+  br i1 %exitcond6, label %while.body4.preheader, label %while.body.blklab2_crit_edge
 
-while.body.if.end23_crit_edge:                    ; preds = %blklab3
-  br label %if.end23
+while.body.blklab2_crit_edge:                     ; preds = %blklab3
+  br label %blklab2
 
-if.end23:                                         ; preds = %while.body.if.end23_crit_edge, %entry.split
-  %call24 = tail call %struct.Matrix* @matrix(i64 %width, i64 %height, i64* %call, i64 %mul, i1 zeroext false)
-  %1 = bitcast i64* %call to i8*
-  tail call void @free(i8* %1) #4
-  ret %struct.Matrix* %call24
+blklab2:                                          ; preds = %while.body.blklab2_crit_edge, %entry.split
+  %call16 = tail call %struct.Matrix* @matrix(i64 %width, i64 %height, i64* %call, i64 %mul)
+  ret %struct.Matrix* %call16
 }
 
 declare i64* @gen1DArray(i32, i32) #2
 
 ; Function Attrs: nounwind uwtable
-define void @print_mat(%struct._IO_FILE* %sys, %struct.Matrix* %a, i1 zeroext %a_has_ownership) #0 {
+define void @print_mat(%struct._IO_FILE* %sys, %struct.Matrix* %a) #0 {
 entry:
   br label %entry.split
 
@@ -233,143 +223,55 @@ entry.split:                                      ; preds = %entry
   %0 = load i64, i64* %width1, align 8
   %height2 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 3
   %1 = load i64, i64* %height2, align 8
-  %cmp12 = icmp sgt i64 %1, 0
-  br i1 %cmp12, label %while.body4.preheader.lr.ph, label %blklab6
+  %cmp3 = icmp sgt i64 %1, 0
+  br i1 %cmp3, label %while.body4.preheader.lr.ph, label %blklab6
 
 while.body4.preheader.lr.ph:                      ; preds = %entry.split
   br label %while.body4.preheader
 
-while.body4.preheader:                            ; preds = %while.body4.preheader.lr.ph, %if.end21
-  %_25_has_ownership.019 = phi i1 [ false, %while.body4.preheader.lr.ph ], [ true, %if.end21 ]
-  %i.017 = phi i64 [ 0, %while.body4.preheader.lr.ph ], [ %add18, %if.end21 ]
-  %_25.016 = phi i8* [ undef, %while.body4.preheader.lr.ph ], [ %call22, %if.end21 ]
-  %_12.015 = phi i64* [ null, %while.body4.preheader.lr.ph ], [ %_12.1.lcssa, %if.end21 ]
-  %_12_has_ownership.014 = phi i8 [ 0, %while.body4.preheader.lr.ph ], [ %_12_has_ownership.1.lcssa, %if.end21 ]
-  %2 = phi i8* [ null, %while.body4.preheader.lr.ph ], [ %.lcssa1, %if.end21 ]
-  %3 = phi i8* [ null, %while.body4.preheader.lr.ph ], [ %.lcssa, %if.end21 ]
-  %_18_has_ownership.013 = phi i8 [ 0, %while.body4.preheader.lr.ph ], [ %_18_has_ownership.1.lcssa, %if.end21 ]
-  %cmp53 = icmp sgt i64 %0, 0
-  br i1 %cmp53, label %if.end7.lr.ph, label %blklab8
+while.body4.preheader:                            ; preds = %while.body4.preheader.lr.ph, %blklab8
+  %i.04 = phi i64 [ 0, %while.body4.preheader.lr.ph ], [ %add13, %blklab8 ]
+  %cmp51 = icmp sgt i64 %0, 0
+  br i1 %cmp51, label %if.end7.lr.ph, label %blklab8
 
 if.end7.lr.ph:                                    ; preds = %while.body4.preheader
   br label %if.end7
 
-if.end7:                                          ; preds = %if.end7.lr.ph, %if.end14
-  %j.07 = phi i64 [ 0, %if.end7.lr.ph ], [ %add17, %if.end14 ]
-  %_12.16 = phi i64* [ %_12.015, %if.end7.lr.ph ], [ %call, %if.end14 ]
-  %_12_has_ownership.15 = phi i8 [ %_12_has_ownership.014, %if.end7.lr.ph ], [ 1, %if.end14 ]
-  %4 = phi i8* [ %3, %if.end7.lr.ph ], [ %call15, %if.end14 ]
-  %_18_has_ownership.14 = phi i8 [ %_18_has_ownership.013, %if.end7.lr.ph ], [ 1, %if.end14 ]
-  %5 = and i8 %_12_has_ownership.15, 1
-  %tobool = icmp eq i8 %5, 0
-  br i1 %tobool, label %if.end9, label %if.then8
-
-if.then8:                                         ; preds = %if.end7
-  %6 = bitcast i64* %_12.16 to i8*
-  tail call void @free(i8* %6) #4
-  br label %if.end9
-
-if.end9:                                          ; preds = %if.end7, %if.then8
+if.end7:                                          ; preds = %if.end7.lr.ph, %if.end7
+  %j.02 = phi i64 [ 0, %if.end7.lr.ph ], [ %add12, %if.end7 ]
   %data = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 0
-  %7 = load i64*, i64** %data, align 8
-  %data_size10 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 1
-  %8 = load i64, i64* %data_size10, align 8
-  %call = tail call i64* @copy(i64* %7, i64 %8) #4
-  %mul = mul nsw i64 %i.017, %0
-  %add = add nsw i64 %j.07, %mul
+  %2 = load i64*, i64** %data, align 8
+  %data_size8 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 1
+  %3 = load i64, i64* %data_size8, align 8
+  %call = tail call i64* @copy(i64* %2, i64 %3) #4
+  %mul = mul nsw i64 %i.04, %0
+  %add = add nsw i64 %j.02, %mul
   %arrayidx = getelementptr inbounds i64, i64* %call, i64 %add
-  %9 = load i64, i64* %arrayidx, align 8
-  %call11 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %9) #4
-  %10 = and i8 %_18_has_ownership.14, 1
-  %tobool12 = icmp eq i8 %10, 0
-  br i1 %tobool12, label %if.end14, label %if.then13
-
-if.then13:                                        ; preds = %if.end9
-  tail call void @free(i8* %4) #4
-  br label %if.end14
-
-if.end14:                                         ; preds = %if.end9, %if.then13
-  %call15 = tail call noalias i8* @malloc(i64 8) #4
-  %11 = bitcast i8* %call15 to i64*
-  store i64 32, i64* %11, align 8
-  tail call void @printf_s(i64* %11, i64 1) #4
-  %add17 = add nuw nsw i64 %j.07, 1
-  %exitcond = icmp ne i64 %add17, %0
+  %4 = load i64, i64* %arrayidx, align 8
+  %call9 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %4) #4
+  %call10 = tail call noalias i8* @malloc(i64 8) #4
+  %5 = bitcast i8* %call10 to i64*
+  store i64 32, i64* %5, align 8
+  tail call void @printf_s(i64* %5, i64 1) #4
+  %add12 = add nuw nsw i64 %j.02, 1
+  %exitcond = icmp ne i64 %add12, %0
   br i1 %exitcond, label %if.end7, label %while.body4.blklab8_crit_edge
 
-while.body4.blklab8_crit_edge:                    ; preds = %if.end14
-  %call15.lcssa = phi i8* [ %call15, %if.end14 ]
-  %call.lcssa = phi i64* [ %call, %if.end14 ]
+while.body4.blklab8_crit_edge:                    ; preds = %if.end7
   br label %blklab8
 
 blklab8:                                          ; preds = %while.body4.blklab8_crit_edge, %while.body4.preheader
-  %_12.1.lcssa = phi i64* [ %call.lcssa, %while.body4.blklab8_crit_edge ], [ %_12.015, %while.body4.preheader ]
-  %_12_has_ownership.1.lcssa = phi i8 [ 1, %while.body4.blklab8_crit_edge ], [ %_12_has_ownership.014, %while.body4.preheader ]
-  %.lcssa1 = phi i8* [ %call15.lcssa, %while.body4.blklab8_crit_edge ], [ %2, %while.body4.preheader ]
-  %.lcssa = phi i8* [ %call15.lcssa, %while.body4.blklab8_crit_edge ], [ %3, %while.body4.preheader ]
-  %_18_has_ownership.1.lcssa = phi i8 [ 1, %while.body4.blklab8_crit_edge ], [ %_18_has_ownership.013, %while.body4.preheader ]
-  %add18 = add nuw nsw i64 %i.017, 1
-  br i1 %_25_has_ownership.019, label %if.then20, label %if.end21
+  %call14 = tail call noalias i8* @malloc(i64 0) #4
+  %6 = bitcast i8* %call14 to i64*
+  tail call void @println_s(i64* %6, i64 0) #4
+  %add13 = add nuw nsw i64 %i.04, 1
+  %exitcond6 = icmp ne i64 %add13, %1
+  br i1 %exitcond6, label %while.body4.preheader, label %while.body.blklab6_crit_edge
 
-if.then20:                                        ; preds = %blklab8
-  tail call void @free(i8* %_25.016) #4
-  br label %if.end21
-
-if.end21:                                         ; preds = %if.then20, %blklab8
-  %call22 = tail call noalias i8* @malloc(i64 0) #4
-  %12 = bitcast i8* %call22 to i64*
-  tail call void @println_s(i64* %12, i64 0) #4
-  %exitcond26 = icmp ne i64 %add18, %1
-  br i1 %exitcond26, label %while.body4.preheader, label %while.body.blklab6_crit_edge
-
-while.body.blklab6_crit_edge:                     ; preds = %if.end21
-  %call22.lcssa = phi i8* [ %call22, %if.end21 ]
-  %_18_has_ownership.1.lcssa.lcssa = phi i8 [ %_18_has_ownership.1.lcssa, %if.end21 ]
-  %.lcssa1.lcssa = phi i8* [ %.lcssa1, %if.end21 ]
-  %_12_has_ownership.1.lcssa.lcssa = phi i8 [ %_12_has_ownership.1.lcssa, %if.end21 ]
-  %_12.1.lcssa.lcssa = phi i64* [ %_12.1.lcssa, %if.end21 ]
+while.body.blklab6_crit_edge:                     ; preds = %blklab8
   br label %blklab6
 
 blklab6:                                          ; preds = %while.body.blklab6_crit_edge, %entry.split
-  %_25_has_ownership.0.lcssa = phi i1 [ true, %while.body.blklab6_crit_edge ], [ false, %entry.split ]
-  %_25.0.lcssa = phi i8* [ %call22.lcssa, %while.body.blklab6_crit_edge ], [ undef, %entry.split ]
-  %_12.0.lcssa = phi i64* [ %_12.1.lcssa.lcssa, %while.body.blklab6_crit_edge ], [ null, %entry.split ]
-  %_12_has_ownership.0.lcssa = phi i8 [ %_12_has_ownership.1.lcssa.lcssa, %while.body.blklab6_crit_edge ], [ 0, %entry.split ]
-  %.lcssa2 = phi i8* [ %.lcssa1.lcssa, %while.body.blklab6_crit_edge ], [ null, %entry.split ]
-  %_18_has_ownership.0.lcssa = phi i8 [ %_18_has_ownership.1.lcssa.lcssa, %while.body.blklab6_crit_edge ], [ 0, %entry.split ]
-  br i1 %a_has_ownership, label %if.then24, label %if.end25
-
-if.then24:                                        ; preds = %blklab6
-  tail call void @free_Matrix(%struct.Matrix* %a)
-  br label %if.end25
-
-if.end25:                                         ; preds = %if.then24, %blklab6
-  %13 = and i8 %_12_has_ownership.0.lcssa, 1
-  %tobool26 = icmp eq i8 %13, 0
-  br i1 %tobool26, label %if.end28, label %if.then27
-
-if.then27:                                        ; preds = %if.end25
-  %14 = bitcast i64* %_12.0.lcssa to i8*
-  tail call void @free(i8* %14) #4
-  br label %if.end28
-
-if.end28:                                         ; preds = %if.end25, %if.then27
-  %15 = and i8 %_18_has_ownership.0.lcssa, 1
-  %tobool29 = icmp eq i8 %15, 0
-  br i1 %tobool29, label %if.end31, label %if.then30
-
-if.then30:                                        ; preds = %if.end28
-  tail call void @free(i8* %.lcssa2) #4
-  br label %if.end31
-
-if.end31:                                         ; preds = %if.end28, %if.then30
-  br i1 %_25_has_ownership.0.lcssa, label %if.then33, label %if.end34
-
-if.then33:                                        ; preds = %if.end31
-  tail call void @free(i8* %_25.0.lcssa) #4
-  br label %if.end34
-
-if.end34:                                         ; preds = %if.then33, %if.end31
   ret void
 }
 
@@ -378,161 +280,139 @@ declare void @printf_s(i64*, i64) #2
 declare void @println_s(i64*, i64) #2
 
 ; Function Attrs: nounwind uwtable
-define %struct.Matrix* @mat_mult(%struct.Matrix* %a, i1 zeroext %a_has_ownership, %struct.Matrix* %b, i1 zeroext %b_has_ownership) #0 {
+define %struct.Matrix* @mat_mult(%struct.Matrix* %a, %struct.Matrix* %b) #0 {
 entry:
   br label %entry.split
 
 entry.split:                                      ; preds = %entry
-  %width2 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %b, i64 0, i32 2
-  %0 = load i64, i64* %width2, align 8
-  %height3 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 3
-  %1 = load i64, i64* %height3, align 8
+  %width1 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %b, i64 0, i32 2
+  %0 = load i64, i64* %width1, align 8
+  %height2 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 3
+  %1 = load i64, i64* %height2, align 8
   %mul = mul nsw i64 %1, %0
-  %conv4 = trunc i64 %mul to i32
-  %call = tail call i64* @gen1DArray(i32 0, i32 %conv4) #4
-  %data12 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 0
-  %2 = load i64*, i64** %data12, align 8
-  %data_size13 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 1
-  %3 = load i64, i64* %data_size13, align 8
-  %call14 = tail call i64* @copy(i64* %2, i64 %3) #4
-  %data22 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %b, i64 0, i32 0
-  %4 = load i64*, i64** %data22, align 8
-  %data_size23 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %b, i64 0, i32 1
-  %5 = load i64, i64* %data_size23, align 8
-  %call24 = tail call i64* @copy(i64* %4, i64 %5) #4
-  %mul28 = mul nsw i64 %1, %0
-  %conv33 = trunc i64 %mul28 to i32
-  %call34 = tail call i64* @gen1DArray(i32 0, i32 %conv33) #4
+  %conv3 = trunc i64 %mul to i32
+  %call = tail call i64* @gen1DArray(i32 0, i32 %conv3) #4
+  %data5 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 0
+  %2 = load i64*, i64** %data5, align 8
+  %data_size6 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 1
+  %3 = load i64, i64* %data_size6, align 8
+  %call7 = tail call i64* @copy(i64* %2, i64 %3) #4
+  %data9 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %b, i64 0, i32 0
+  %4 = load i64*, i64** %data9, align 8
+  %data_size10 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %b, i64 0, i32 1
+  %5 = load i64, i64* %data_size10, align 8
+  %call11 = tail call i64* @copy(i64* %4, i64 %5) #4
+  %mul12 = mul nsw i64 %1, %0
+  %conv14 = trunc i64 %mul12 to i32
+  %call15 = tail call i64* @gen1DArray(i32 0, i32 %conv14) #4
   %cmp11 = icmp sgt i64 %1, 0
-  br i1 %cmp11, label %while.body42.preheader.lr.ph, label %while.body53.preheader
+  br i1 %cmp11, label %while.body18.preheader.lr.ph, label %while.body29.preheader
 
-while.body42.preheader.lr.ph:                     ; preds = %entry.split
-  br label %while.body42.preheader
+while.body18.preheader.lr.ph:                     ; preds = %entry.split
+  br label %while.body18.preheader
 
-while.body42.preheader:                           ; preds = %while.body42.preheader.lr.ph, %blklab14
-  %i.012 = phi i64 [ 0, %while.body42.preheader.lr.ph ], [ %add52, %blklab14 ]
-  %cmp439 = icmp sgt i64 %0, 0
-  br i1 %cmp439, label %if.end46.lr.ph, label %blklab14
+while.body18.preheader:                           ; preds = %while.body18.preheader.lr.ph, %blklab14
+  %i.012 = phi i64 [ 0, %while.body18.preheader.lr.ph ], [ %add28, %blklab14 ]
+  %cmp199 = icmp sgt i64 %0, 0
+  br i1 %cmp199, label %if.end22.lr.ph, label %blklab14
 
-if.end46.lr.ph:                                   ; preds = %while.body42.preheader
-  br label %if.end46
+if.end22.lr.ph:                                   ; preds = %while.body18.preheader
+  br label %if.end22
 
-while.body.while.body53.preheader_crit_edge:      ; preds = %blklab14
-  br label %while.body53.preheader
+while.body.while.body29.preheader_crit_edge:      ; preds = %blklab14
+  br label %while.body29.preheader
 
-while.body53.preheader:                           ; preds = %while.body.while.body53.preheader_crit_edge, %entry.split
-  %cmp546 = icmp sgt i64 %1, 0
-  br i1 %cmp546, label %while.body59.preheader.lr.ph, label %if.end89
+while.body29.preheader:                           ; preds = %while.body.while.body29.preheader_crit_edge, %entry.split
+  %cmp306 = icmp sgt i64 %1, 0
+  br i1 %cmp306, label %while.body35.preheader.lr.ph, label %blklab17
 
-while.body59.preheader.lr.ph:                     ; preds = %while.body53.preheader
-  br label %while.body59.preheader
+while.body35.preheader.lr.ph:                     ; preds = %while.body29.preheader
+  br label %while.body35.preheader
 
-if.end46:                                         ; preds = %if.end46.lr.ph, %if.end46
-  %j.010 = phi i64 [ 0, %if.end46.lr.ph ], [ %add51, %if.end46 ]
-  %mul47 = mul nsw i64 %i.012, %0
-  %add = add nsw i64 %j.010, %mul47
-  %arrayidx = getelementptr inbounds i64, i64* %call24, i64 %add
+if.end22:                                         ; preds = %if.end22.lr.ph, %if.end22
+  %j.010 = phi i64 [ 0, %if.end22.lr.ph ], [ %add27, %if.end22 ]
+  %mul23 = mul nsw i64 %i.012, %0
+  %add = add nsw i64 %j.010, %mul23
+  %arrayidx = getelementptr inbounds i64, i64* %call11, i64 %add
   %6 = load i64, i64* %arrayidx, align 8
-  %mul48 = mul nsw i64 %j.010, %0
-  %add49 = add nsw i64 %mul48, %i.012
-  %arrayidx50 = getelementptr inbounds i64, i64* %call34, i64 %add49
-  store i64 %6, i64* %arrayidx50, align 8
-  %add51 = add nuw nsw i64 %j.010, 1
-  %exitcond16 = icmp ne i64 %add51, %0
-  br i1 %exitcond16, label %if.end46, label %while.body42.blklab14_crit_edge
+  %mul24 = mul nsw i64 %j.010, %0
+  %add25 = add nsw i64 %mul24, %i.012
+  %arrayidx26 = getelementptr inbounds i64, i64* %call15, i64 %add25
+  store i64 %6, i64* %arrayidx26, align 8
+  %add27 = add nuw nsw i64 %j.010, 1
+  %exitcond16 = icmp ne i64 %add27, %0
+  br i1 %exitcond16, label %if.end22, label %while.body18.blklab14_crit_edge
 
-while.body42.blklab14_crit_edge:                  ; preds = %if.end46
+while.body18.blklab14_crit_edge:                  ; preds = %if.end22
   br label %blklab14
 
-blklab14:                                         ; preds = %while.body42.blklab14_crit_edge, %while.body42.preheader
-  %add52 = add nuw nsw i64 %i.012, 1
-  %exitcond17 = icmp ne i64 %add52, %1
-  br i1 %exitcond17, label %while.body42.preheader, label %while.body.while.body53.preheader_crit_edge
+blklab14:                                         ; preds = %while.body18.blklab14_crit_edge, %while.body18.preheader
+  %add28 = add nuw nsw i64 %i.012, 1
+  %exitcond17 = icmp ne i64 %add28, %1
+  br i1 %exitcond17, label %while.body18.preheader, label %while.body.while.body29.preheader_crit_edge
 
-while.body59.preheader:                           ; preds = %while.body59.preheader.lr.ph, %blklab18
-  %i.17 = phi i64 [ 0, %while.body59.preheader.lr.ph ], [ %add86, %blklab18 ]
-  %cmp603 = icmp sgt i64 %0, 0
-  br i1 %cmp603, label %while.body65.preheader.lr.ph, label %blklab18
+while.body35.preheader:                           ; preds = %while.body35.preheader.lr.ph, %blklab18
+  %i.17 = phi i64 [ 0, %while.body35.preheader.lr.ph ], [ %add62, %blklab18 ]
+  %cmp363 = icmp sgt i64 %0, 0
+  br i1 %cmp363, label %while.body41.preheader.lr.ph, label %blklab18
 
-while.body65.preheader.lr.ph:                     ; preds = %while.body59.preheader
-  br label %while.body65.preheader
+while.body41.preheader.lr.ph:                     ; preds = %while.body35.preheader
+  br label %while.body41.preheader
 
-while.body65.preheader:                           ; preds = %while.body65.preheader.lr.ph, %blklab20
-  %j.14 = phi i64 [ 0, %while.body65.preheader.lr.ph ], [ %add85, %blklab20 ]
-  %cmp661 = icmp sgt i64 %0, 0
-  br i1 %cmp661, label %if.end69.lr.ph, label %blklab20
+while.body41.preheader:                           ; preds = %while.body41.preheader.lr.ph, %blklab20
+  %j.14 = phi i64 [ 0, %while.body41.preheader.lr.ph ], [ %add61, %blklab20 ]
+  %cmp421 = icmp sgt i64 %0, 0
+  br i1 %cmp421, label %if.end45.lr.ph, label %blklab20
 
-if.end69.lr.ph:                                   ; preds = %while.body65.preheader
-  br label %if.end69
+if.end45.lr.ph:                                   ; preds = %while.body41.preheader
+  br label %if.end45
 
-if.end69:                                         ; preds = %if.end69.lr.ph, %if.end69
-  %k.02 = phi i64 [ 0, %if.end69.lr.ph ], [ %add84, %if.end69 ]
-  %mul70 = mul nsw i64 %i.17, %0
-  %add71 = add nsw i64 %j.14, %mul70
-  %arrayidx72 = getelementptr inbounds i64, i64* %call, i64 %add71
-  %7 = load i64, i64* %arrayidx72, align 8
-  %mul73 = mul nsw i64 %i.17, %0
-  %add74 = add nsw i64 %k.02, %mul73
-  %arrayidx75 = getelementptr inbounds i64, i64* %call14, i64 %add74
-  %8 = load i64, i64* %arrayidx75, align 8
-  %mul76 = mul nsw i64 %i.17, %0
-  %add77 = add nsw i64 %k.02, %mul76
-  %arrayidx78 = getelementptr inbounds i64, i64* %call34, i64 %add77
-  %9 = load i64, i64* %arrayidx78, align 8
-  %mul79 = mul nsw i64 %9, %8
-  %add80 = add nsw i64 %mul79, %7
-  %mul81 = mul nsw i64 %i.17, %0
-  %add82 = add nsw i64 %j.14, %mul81
-  %arrayidx83 = getelementptr inbounds i64, i64* %call, i64 %add82
-  store i64 %add80, i64* %arrayidx83, align 8
-  %add84 = add nuw nsw i64 %k.02, 1
-  %exitcond = icmp ne i64 %add84, %0
-  br i1 %exitcond, label %if.end69, label %while.body65.blklab20_crit_edge
+if.end45:                                         ; preds = %if.end45.lr.ph, %if.end45
+  %k.02 = phi i64 [ 0, %if.end45.lr.ph ], [ %add60, %if.end45 ]
+  %mul46 = mul nsw i64 %i.17, %0
+  %add47 = add nsw i64 %j.14, %mul46
+  %arrayidx48 = getelementptr inbounds i64, i64* %call, i64 %add47
+  %7 = load i64, i64* %arrayidx48, align 8
+  %mul49 = mul nsw i64 %i.17, %0
+  %add50 = add nsw i64 %k.02, %mul49
+  %arrayidx51 = getelementptr inbounds i64, i64* %call7, i64 %add50
+  %8 = load i64, i64* %arrayidx51, align 8
+  %mul52 = mul nsw i64 %i.17, %0
+  %add53 = add nsw i64 %k.02, %mul52
+  %arrayidx54 = getelementptr inbounds i64, i64* %call15, i64 %add53
+  %9 = load i64, i64* %arrayidx54, align 8
+  %mul55 = mul nsw i64 %9, %8
+  %add56 = add nsw i64 %mul55, %7
+  %mul57 = mul nsw i64 %i.17, %0
+  %add58 = add nsw i64 %j.14, %mul57
+  %arrayidx59 = getelementptr inbounds i64, i64* %call, i64 %add58
+  store i64 %add56, i64* %arrayidx59, align 8
+  %add60 = add nuw nsw i64 %k.02, 1
+  %exitcond = icmp ne i64 %add60, %0
+  br i1 %exitcond, label %if.end45, label %while.body41.blklab20_crit_edge
 
-while.body65.blklab20_crit_edge:                  ; preds = %if.end69
+while.body41.blklab20_crit_edge:                  ; preds = %if.end45
   br label %blklab20
 
-blklab20:                                         ; preds = %while.body65.blklab20_crit_edge, %while.body65.preheader
-  %add85 = add nuw nsw i64 %j.14, 1
-  %exitcond14 = icmp ne i64 %add85, %0
-  br i1 %exitcond14, label %while.body65.preheader, label %while.body59.blklab18_crit_edge
+blklab20:                                         ; preds = %while.body41.blklab20_crit_edge, %while.body41.preheader
+  %add61 = add nuw nsw i64 %j.14, 1
+  %exitcond14 = icmp ne i64 %add61, %0
+  br i1 %exitcond14, label %while.body41.preheader, label %while.body35.blklab18_crit_edge
 
-while.body59.blklab18_crit_edge:                  ; preds = %blklab20
+while.body35.blklab18_crit_edge:                  ; preds = %blklab20
   br label %blklab18
 
-blklab18:                                         ; preds = %while.body59.blklab18_crit_edge, %while.body59.preheader
-  %add86 = add nuw nsw i64 %i.17, 1
-  %exitcond15 = icmp ne i64 %add86, %1
-  br i1 %exitcond15, label %while.body59.preheader, label %while.body53.if.end89_crit_edge
+blklab18:                                         ; preds = %while.body35.blklab18_crit_edge, %while.body35.preheader
+  %add62 = add nuw nsw i64 %i.17, 1
+  %exitcond15 = icmp ne i64 %add62, %1
+  br i1 %exitcond15, label %while.body35.preheader, label %while.body29.blklab17_crit_edge
 
-while.body53.if.end89_crit_edge:                  ; preds = %blklab18
-  br label %if.end89
+while.body29.blklab17_crit_edge:                  ; preds = %blklab18
+  br label %blklab17
 
-if.end89:                                         ; preds = %while.body53.if.end89_crit_edge, %while.body53.preheader
-  %call90 = tail call %struct.Matrix* @matrix(i64 %0, i64 %1, i64* %call, i64 %mul, i1 zeroext false)
-  br i1 %a_has_ownership, label %if.then92, label %if.end93
-
-if.then92:                                        ; preds = %if.end89
-  tail call void @free_Matrix(%struct.Matrix* %a)
-  br label %if.end93
-
-if.end93:                                         ; preds = %if.then92, %if.end89
-  br i1 %b_has_ownership, label %if.then95, label %if.then101
-
-if.then95:                                        ; preds = %if.end93
-  tail call void @free_Matrix(%struct.Matrix* %b)
-  br label %if.then101
-
-if.then101:                                       ; preds = %if.then95, %if.end93
-  %10 = bitcast i64* %call to i8*
-  tail call void @free(i8* %10) #4
-  %11 = bitcast i64* %call14 to i8*
-  tail call void @free(i8* %11) #4
-  %12 = bitcast i64* %call24 to i8*
-  tail call void @free(i8* %12) #4
-  %13 = bitcast i64* %call34 to i8*
-  tail call void @free(i8* %13) #4
-  ret %struct.Matrix* %call90
+blklab17:                                         ; preds = %while.body29.blklab17_crit_edge, %while.body29.preheader
+  %call63 = tail call %struct.Matrix* @matrix(i64 %0, i64 %1, i64* %call, i64 %mul)
+  ret %struct.Matrix* %call63
 }
 
 ; Function Attrs: nounwind uwtable
@@ -542,8 +422,6 @@ entry:
 
 entry.split:                                      ; preds = %entry
   %call = tail call i64** @convertArgsToIntArray(i32 %argc, i8** %args) #4
-  %sub = add nsw i32 %argc, -1
-  %conv = sext i32 %sub to i64
   %0 = load i64*, i64** %call, align 8
   %call1 = tail call i64* @parseStringToInt(i64* %0) #4
   %cmp = icmp eq i64* %call1, null
@@ -551,319 +429,266 @@ entry.split:                                      ; preds = %entry
 
 if.end:                                           ; preds = %entry.split
   %1 = load i64, i64* %call1, align 8
-  %call5 = tail call noalias i8* @malloc(i64 56) #4
-  %2 = bitcast i8* %call5 to i64*
+  %call3 = tail call noalias i8* @malloc(i64 56) #4
+  %2 = bitcast i8* %call3 to i64*
   store i64 115, i64* %2, align 8
-  %arrayidx7 = getelementptr inbounds i8, i8* %call5, i64 8
-  %3 = bitcast i8* %arrayidx7 to i64*
+  %arrayidx5 = getelementptr inbounds i8, i8* %call3, i64 8
+  %3 = bitcast i8* %arrayidx5 to i64*
   store i64 105, i64* %3, align 8
-  %arrayidx8 = getelementptr inbounds i8, i8* %call5, i64 16
-  %4 = bitcast i8* %arrayidx8 to i64*
+  %arrayidx6 = getelementptr inbounds i8, i8* %call3, i64 16
+  %4 = bitcast i8* %arrayidx6 to i64*
   store i64 122, i64* %4, align 8
-  %arrayidx9 = getelementptr inbounds i8, i8* %call5, i64 24
-  %5 = bitcast i8* %arrayidx9 to i64*
+  %arrayidx7 = getelementptr inbounds i8, i8* %call3, i64 24
+  %5 = bitcast i8* %arrayidx7 to i64*
   store i64 101, i64* %5, align 8
-  %arrayidx10 = getelementptr inbounds i8, i8* %call5, i64 32
-  %6 = bitcast i8* %arrayidx10 to i64*
+  %arrayidx8 = getelementptr inbounds i8, i8* %call3, i64 32
+  %6 = bitcast i8* %arrayidx8 to i64*
   store i64 32, i64* %6, align 8
-  %arrayidx11 = getelementptr inbounds i8, i8* %call5, i64 40
-  %7 = bitcast i8* %arrayidx11 to i64*
+  %arrayidx9 = getelementptr inbounds i8, i8* %call3, i64 40
+  %7 = bitcast i8* %arrayidx9 to i64*
   store i64 61, i64* %7, align 8
-  %arrayidx12 = getelementptr inbounds i8, i8* %call5, i64 48
-  %8 = bitcast i8* %arrayidx12 to i64*
+  %arrayidx10 = getelementptr inbounds i8, i8* %call3, i64 48
+  %8 = bitcast i8* %arrayidx10 to i64*
   store i64 32, i64* %8, align 8
   tail call void @printf_s(i64* %2, i64 7) #4
-  %call13 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.6, i64 0, i64 0), i64 %1) #4
-  %call17 = tail call %struct.Matrix* @init(i64 %1, i64 %1)
-  %call24 = tail call %struct.Matrix* @init(i64 %1, i64 %1)
-  %call31 = tail call %struct.Matrix* @mat_mult(%struct.Matrix* %call17, i1 zeroext false, %struct.Matrix* %call24, i1 zeroext false)
-  %data = getelementptr inbounds %struct.Matrix, %struct.Matrix* %call17, i64 0, i32 0
+  %call11 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.6, i64 0, i64 0), i64 %1) #4
+  %call12 = tail call %struct.Matrix* @init(i64 %1, i64 %1)
+  %call13 = tail call %struct.Matrix* @init(i64 %1, i64 %1)
+  %call14 = tail call %struct.Matrix* @mat_mult(%struct.Matrix* %call12, %struct.Matrix* %call13)
+  %data = getelementptr inbounds %struct.Matrix, %struct.Matrix* %call12, i64 0, i32 0
   %9 = load i64*, i64** %data, align 8
-  %data_size38 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %call17, i64 0, i32 1
-  %10 = load i64, i64* %data_size38, align 8
-  %call39 = tail call i64* @copy(i64* %9, i64 %10) #4
+  %data_size15 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %call12, i64 0, i32 1
+  %10 = load i64, i64* %data_size15, align 8
+  %call16 = tail call i64* @copy(i64* %9, i64 %10) #4
   %add = mul i64 %1, %1
-  %sub41 = add nsw i64 %add, -1
-  %arrayidx42 = getelementptr inbounds i64, i64* %call39, i64 %sub41
-  %11 = load i64, i64* %arrayidx42, align 8
-  %sub43 = add nsw i64 %1, -1
-  %cmp44 = icmp eq i64 %11, %sub43
-  br i1 %cmp44, label %if.end51, label %if.end47
+  %sub18 = add nsw i64 %add, -1
+  %arrayidx19 = getelementptr inbounds i64, i64* %call16, i64 %sub18
+  %11 = load i64, i64* %arrayidx19, align 8
+  %sub20 = add nsw i64 %1, -1
+  %cmp21 = icmp eq i64 %11, %sub20
+  br i1 %cmp21, label %blklab24, label %if.end24
 
-if.end47:                                         ; preds = %if.end
+if.end24:                                         ; preds = %if.end
   %12 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8
   %13 = tail call i64 @fwrite(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.7, i64 0, i64 0), i64 4, i64 1, %struct._IO_FILE* %12) #5
   tail call void @exit(i32 -1) #6
   unreachable
 
-if.end51:                                         ; preds = %if.end
-  %data53 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %call24, i64 0, i32 0
-  %14 = load i64*, i64** %data53, align 8
-  %data_size54 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %call24, i64 0, i32 1
-  %15 = load i64, i64* %data_size54, align 8
-  %call55 = tail call i64* @copy(i64* %14, i64 %15) #4
-  %add58 = mul i64 %1, %1
-  %sub59 = add nsw i64 %add58, -1
-  %arrayidx60 = getelementptr inbounds i64, i64* %call55, i64 %sub59
-  %16 = load i64, i64* %arrayidx60, align 8
-  %sub61 = add nsw i64 %1, -1
-  %cmp62 = icmp eq i64 %16, %sub61
-  br i1 %cmp62, label %blklab25, label %if.end65
+blklab24:                                         ; preds = %if.end
+  %data27 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %call13, i64 0, i32 0
+  %14 = load i64*, i64** %data27, align 8
+  %data_size28 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %call13, i64 0, i32 1
+  %15 = load i64, i64* %data_size28, align 8
+  %call29 = tail call i64* @copy(i64* %14, i64 %15) #4
+  %add32 = mul i64 %1, %1
+  %sub33 = add nsw i64 %add32, -1
+  %arrayidx34 = getelementptr inbounds i64, i64* %call29, i64 %sub33
+  %16 = load i64, i64* %arrayidx34, align 8
+  %sub35 = add nsw i64 %1, -1
+  %cmp36 = icmp eq i64 %16, %sub35
+  br i1 %cmp36, label %blklab25, label %if.end39
 
-if.end65:                                         ; preds = %if.end51
+if.end39:                                         ; preds = %blklab24
   %17 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8
   %18 = tail call i64 @fwrite(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.7, i64 0, i64 0), i64 4, i64 1, %struct._IO_FILE* %17) #5
   tail call void @exit(i32 -1) #6
   unreachable
 
-blklab25:                                         ; preds = %if.end51
-  %cmp67 = icmp eq i64 %1, 2000
-  br i1 %cmp67, label %if.end73, label %if.end90
+blklab25:                                         ; preds = %blklab24
+  %cmp41 = icmp eq i64 %1, 2000
+  br i1 %cmp41, label %if.end44, label %blklab26
 
-if.end73:                                         ; preds = %blklab25
-  %data75 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %call31, i64 0, i32 0
-  %19 = load i64*, i64** %data75, align 8
-  %data_size76 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %call31, i64 0, i32 1
-  %20 = load i64, i64* %data_size76, align 8
-  %call77 = tail call i64* @copy(i64* %19, i64 %20) #4
-  %add80 = mul i64 %1, %1
-  %sub81 = add nsw i64 %add80, -1
-  %arrayidx82 = getelementptr inbounds i64, i64* %call77, i64 %sub81
-  %21 = load i64, i64* %arrayidx82, align 8
-  %cmp83 = icmp eq i64 %21, 3996001000
-  br i1 %cmp83, label %if.end90, label %if.end86
+if.end44:                                         ; preds = %blklab25
+  %data46 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %call14, i64 0, i32 0
+  %19 = load i64*, i64** %data46, align 8
+  %data_size47 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %call14, i64 0, i32 1
+  %20 = load i64, i64* %data_size47, align 8
+  %call48 = tail call i64* @copy(i64* %19, i64 %20) #4
+  %add51 = mul i64 %1, %1
+  %sub52 = add nsw i64 %add51, -1
+  %arrayidx53 = getelementptr inbounds i64, i64* %call48, i64 %sub52
+  %21 = load i64, i64* %arrayidx53, align 8
+  %cmp54 = icmp eq i64 %21, 3996001000
+  br i1 %cmp54, label %blklab26, label %if.end57
 
-if.end86:                                         ; preds = %if.end73
+if.end57:                                         ; preds = %if.end44
   %22 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8
   %23 = tail call i64 @fwrite(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.7, i64 0, i64 0), i64 4, i64 1, %struct._IO_FILE* %22) #5
   tail call void @exit(i32 -1) #6
   unreachable
 
-if.end90:                                         ; preds = %blklab25, %if.end73
-  %_39_has_ownership.0 = phi i8 [ 0, %blklab25 ], [ 1, %if.end73 ]
-  %_39.0 = phi i64* [ null, %blklab25 ], [ %call77, %if.end73 ]
-  %call91 = tail call noalias i8* @malloc(i64 216) #4
-  %24 = bitcast i8* %call91 to i64*
+blklab26:                                         ; preds = %if.end44, %blklab25
+  %call59 = tail call noalias i8* @malloc(i64 216) #4
+  %24 = bitcast i8* %call59 to i64*
   store i64 77, i64* %24, align 8
-  %arrayidx93 = getelementptr inbounds i8, i8* %call91, i64 8
-  %25 = bitcast i8* %arrayidx93 to i64*
+  %arrayidx61 = getelementptr inbounds i8, i8* %call59, i64 8
+  %25 = bitcast i8* %arrayidx61 to i64*
   store i64 97, i64* %25, align 8
-  %arrayidx94 = getelementptr inbounds i8, i8* %call91, i64 16
-  %26 = bitcast i8* %arrayidx94 to i64*
+  %arrayidx62 = getelementptr inbounds i8, i8* %call59, i64 16
+  %26 = bitcast i8* %arrayidx62 to i64*
   store i64 116, i64* %26, align 8
-  %arrayidx95 = getelementptr inbounds i8, i8* %call91, i64 24
-  %27 = bitcast i8* %arrayidx95 to i64*
+  %arrayidx63 = getelementptr inbounds i8, i8* %call59, i64 24
+  %27 = bitcast i8* %arrayidx63 to i64*
   store i64 114, i64* %27, align 8
-  %arrayidx96 = getelementptr inbounds i8, i8* %call91, i64 32
-  %28 = bitcast i8* %arrayidx96 to i64*
+  %arrayidx64 = getelementptr inbounds i8, i8* %call59, i64 32
+  %28 = bitcast i8* %arrayidx64 to i64*
   store i64 105, i64* %28, align 8
-  %arrayidx97 = getelementptr inbounds i8, i8* %call91, i64 40
-  %29 = bitcast i8* %arrayidx97 to i64*
+  %arrayidx65 = getelementptr inbounds i8, i8* %call59, i64 40
+  %29 = bitcast i8* %arrayidx65 to i64*
   store i64 120, i64* %29, align 8
-  %arrayidx98 = getelementptr inbounds i8, i8* %call91, i64 48
-  %30 = bitcast i8* %arrayidx98 to i64*
+  %arrayidx66 = getelementptr inbounds i8, i8* %call59, i64 48
+  %30 = bitcast i8* %arrayidx66 to i64*
   store i64 32, i64* %30, align 8
-  %arrayidx99 = getelementptr inbounds i8, i8* %call91, i64 56
-  %31 = bitcast i8* %arrayidx99 to i64*
+  %arrayidx67 = getelementptr inbounds i8, i8* %call59, i64 56
+  %31 = bitcast i8* %arrayidx67 to i64*
   store i64 67, i64* %31, align 8
-  %arrayidx100 = getelementptr inbounds i8, i8* %call91, i64 64
-  %32 = bitcast i8* %arrayidx100 to i64*
+  %arrayidx68 = getelementptr inbounds i8, i8* %call59, i64 64
+  %32 = bitcast i8* %arrayidx68 to i64*
   store i64 91, i64* %32, align 8
-  %arrayidx101 = getelementptr inbounds i8, i8* %call91, i64 72
-  %33 = bitcast i8* %arrayidx101 to i64*
+  %arrayidx69 = getelementptr inbounds i8, i8* %call59, i64 72
+  %33 = bitcast i8* %arrayidx69 to i64*
   store i64 115, i64* %33, align 8
-  %arrayidx102 = getelementptr inbounds i8, i8* %call91, i64 80
-  %34 = bitcast i8* %arrayidx102 to i64*
+  %arrayidx70 = getelementptr inbounds i8, i8* %call59, i64 80
+  %34 = bitcast i8* %arrayidx70 to i64*
   store i64 105, i64* %34, align 8
-  %arrayidx103 = getelementptr inbounds i8, i8* %call91, i64 88
-  %35 = bitcast i8* %arrayidx103 to i64*
+  %arrayidx71 = getelementptr inbounds i8, i8* %call59, i64 88
+  %35 = bitcast i8* %arrayidx71 to i64*
   store i64 122, i64* %35, align 8
-  %arrayidx104 = getelementptr inbounds i8, i8* %call91, i64 96
-  %36 = bitcast i8* %arrayidx104 to i64*
+  %arrayidx72 = getelementptr inbounds i8, i8* %call59, i64 96
+  %36 = bitcast i8* %arrayidx72 to i64*
   store i64 101, i64* %36, align 8
-  %arrayidx105 = getelementptr inbounds i8, i8* %call91, i64 104
-  %37 = bitcast i8* %arrayidx105 to i64*
+  %arrayidx73 = getelementptr inbounds i8, i8* %call59, i64 104
+  %37 = bitcast i8* %arrayidx73 to i64*
   store i64 45, i64* %37, align 8
-  %arrayidx106 = getelementptr inbounds i8, i8* %call91, i64 112
-  %38 = bitcast i8* %arrayidx106 to i64*
+  %arrayidx74 = getelementptr inbounds i8, i8* %call59, i64 112
+  %38 = bitcast i8* %arrayidx74 to i64*
   store i64 49, i64* %38, align 8
-  %arrayidx107 = getelementptr inbounds i8, i8* %call91, i64 120
-  %39 = bitcast i8* %arrayidx107 to i64*
+  %arrayidx75 = getelementptr inbounds i8, i8* %call59, i64 120
+  %39 = bitcast i8* %arrayidx75 to i64*
   store i64 93, i64* %39, align 8
-  %arrayidx108 = getelementptr inbounds i8, i8* %call91, i64 128
-  %40 = bitcast i8* %arrayidx108 to i64*
+  %arrayidx76 = getelementptr inbounds i8, i8* %call59, i64 128
+  %40 = bitcast i8* %arrayidx76 to i64*
   store i64 91, i64* %40, align 8
-  %arrayidx109 = getelementptr inbounds i8, i8* %call91, i64 136
-  %41 = bitcast i8* %arrayidx109 to i64*
+  %arrayidx77 = getelementptr inbounds i8, i8* %call59, i64 136
+  %41 = bitcast i8* %arrayidx77 to i64*
   store i64 115, i64* %41, align 8
-  %arrayidx110 = getelementptr inbounds i8, i8* %call91, i64 144
-  %42 = bitcast i8* %arrayidx110 to i64*
+  %arrayidx78 = getelementptr inbounds i8, i8* %call59, i64 144
+  %42 = bitcast i8* %arrayidx78 to i64*
   store i64 105, i64* %42, align 8
-  %arrayidx111 = getelementptr inbounds i8, i8* %call91, i64 152
-  %43 = bitcast i8* %arrayidx111 to i64*
+  %arrayidx79 = getelementptr inbounds i8, i8* %call59, i64 152
+  %43 = bitcast i8* %arrayidx79 to i64*
   store i64 122, i64* %43, align 8
-  %arrayidx112 = getelementptr inbounds i8, i8* %call91, i64 160
-  %44 = bitcast i8* %arrayidx112 to i64*
+  %arrayidx80 = getelementptr inbounds i8, i8* %call59, i64 160
+  %44 = bitcast i8* %arrayidx80 to i64*
   store i64 101, i64* %44, align 8
-  %arrayidx113 = getelementptr inbounds i8, i8* %call91, i64 168
-  %45 = bitcast i8* %arrayidx113 to i64*
+  %arrayidx81 = getelementptr inbounds i8, i8* %call59, i64 168
+  %45 = bitcast i8* %arrayidx81 to i64*
   store i64 45, i64* %45, align 8
-  %arrayidx114 = getelementptr inbounds i8, i8* %call91, i64 176
-  %46 = bitcast i8* %arrayidx114 to i64*
+  %arrayidx82 = getelementptr inbounds i8, i8* %call59, i64 176
+  %46 = bitcast i8* %arrayidx82 to i64*
   store i64 49, i64* %46, align 8
-  %arrayidx115 = getelementptr inbounds i8, i8* %call91, i64 184
-  %47 = bitcast i8* %arrayidx115 to i64*
+  %arrayidx83 = getelementptr inbounds i8, i8* %call59, i64 184
+  %47 = bitcast i8* %arrayidx83 to i64*
   store i64 93, i64* %47, align 8
-  %arrayidx116 = getelementptr inbounds i8, i8* %call91, i64 192
-  %48 = bitcast i8* %arrayidx116 to i64*
+  %arrayidx84 = getelementptr inbounds i8, i8* %call59, i64 192
+  %48 = bitcast i8* %arrayidx84 to i64*
   store i64 32, i64* %48, align 8
-  %arrayidx117 = getelementptr inbounds i8, i8* %call91, i64 200
-  %49 = bitcast i8* %arrayidx117 to i64*
+  %arrayidx85 = getelementptr inbounds i8, i8* %call59, i64 200
+  %49 = bitcast i8* %arrayidx85 to i64*
   store i64 61, i64* %49, align 8
-  %arrayidx118 = getelementptr inbounds i8, i8* %call91, i64 208
-  %50 = bitcast i8* %arrayidx118 to i64*
+  %arrayidx86 = getelementptr inbounds i8, i8* %call59, i64 208
+  %50 = bitcast i8* %arrayidx86 to i64*
   store i64 32, i64* %50, align 8
   tail call void @printf_s(i64* %24, i64 27) #4
-  %data123 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %call31, i64 0, i32 0
-  %51 = load i64*, i64** %data123, align 8
-  %data_size124 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %call31, i64 0, i32 1
-  %52 = load i64, i64* %data_size124, align 8
-  %call125 = tail call i64* @copy(i64* %51, i64 %52) #4
-  %add128 = mul i64 %1, %1
-  %sub129 = add nsw i64 %add128, -1
-  %arrayidx130 = getelementptr inbounds i64, i64* %call125, i64 %sub129
-  %53 = load i64, i64* %arrayidx130, align 8
-  %call131 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.6, i64 0, i64 0), i64 %53) #4
-  %call135 = tail call noalias i8* @malloc(i64 200) #4
-  %54 = bitcast i8* %call135 to i64*
+  %data88 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %call14, i64 0, i32 0
+  %51 = load i64*, i64** %data88, align 8
+  %data_size89 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %call14, i64 0, i32 1
+  %52 = load i64, i64* %data_size89, align 8
+  %call90 = tail call i64* @copy(i64* %51, i64 %52) #4
+  %add93 = mul i64 %1, %1
+  %sub94 = add nsw i64 %add93, -1
+  %arrayidx95 = getelementptr inbounds i64, i64* %call90, i64 %sub94
+  %53 = load i64, i64* %arrayidx95, align 8
+  %call96 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.6, i64 0, i64 0), i64 %53) #4
+  %call97 = tail call noalias i8* @malloc(i64 200) #4
+  %54 = bitcast i8* %call97 to i64*
   store i64 80, i64* %54, align 8
-  %arrayidx137 = getelementptr inbounds i8, i8* %call135, i64 8
-  %55 = bitcast i8* %arrayidx137 to i64*
+  %arrayidx99 = getelementptr inbounds i8, i8* %call97, i64 8
+  %55 = bitcast i8* %arrayidx99 to i64*
   store i64 97, i64* %55, align 8
-  %arrayidx138 = getelementptr inbounds i8, i8* %call135, i64 16
-  %56 = bitcast i8* %arrayidx138 to i64*
+  %arrayidx100 = getelementptr inbounds i8, i8* %call97, i64 16
+  %56 = bitcast i8* %arrayidx100 to i64*
   store i64 115, i64* %56, align 8
-  %arrayidx139 = getelementptr inbounds i8, i8* %call135, i64 24
-  %57 = bitcast i8* %arrayidx139 to i64*
+  %arrayidx101 = getelementptr inbounds i8, i8* %call97, i64 24
+  %57 = bitcast i8* %arrayidx101 to i64*
   store i64 115, i64* %57, align 8
-  %arrayidx140 = getelementptr inbounds i8, i8* %call135, i64 32
-  %58 = bitcast i8* %arrayidx140 to i64*
+  %arrayidx102 = getelementptr inbounds i8, i8* %call97, i64 32
+  %58 = bitcast i8* %arrayidx102 to i64*
   store i64 32, i64* %58, align 8
-  %arrayidx141 = getelementptr inbounds i8, i8* %call135, i64 40
-  %59 = bitcast i8* %arrayidx141 to i64*
+  %arrayidx103 = getelementptr inbounds i8, i8* %call97, i64 40
+  %59 = bitcast i8* %arrayidx103 to i64*
   store i64 77, i64* %59, align 8
-  %arrayidx142 = getelementptr inbounds i8, i8* %call135, i64 48
-  %60 = bitcast i8* %arrayidx142 to i64*
+  %arrayidx104 = getelementptr inbounds i8, i8* %call97, i64 48
+  %60 = bitcast i8* %arrayidx104 to i64*
   store i64 97, i64* %60, align 8
-  %arrayidx143 = getelementptr inbounds i8, i8* %call135, i64 56
-  %61 = bitcast i8* %arrayidx143 to i64*
+  %arrayidx105 = getelementptr inbounds i8, i8* %call97, i64 56
+  %61 = bitcast i8* %arrayidx105 to i64*
   store i64 116, i64* %61, align 8
-  %arrayidx144 = getelementptr inbounds i8, i8* %call135, i64 64
-  %62 = bitcast i8* %arrayidx144 to i64*
+  %arrayidx106 = getelementptr inbounds i8, i8* %call97, i64 64
+  %62 = bitcast i8* %arrayidx106 to i64*
   store i64 114, i64* %62, align 8
-  %arrayidx145 = getelementptr inbounds i8, i8* %call135, i64 72
-  %63 = bitcast i8* %arrayidx145 to i64*
+  %arrayidx107 = getelementptr inbounds i8, i8* %call97, i64 72
+  %63 = bitcast i8* %arrayidx107 to i64*
   store i64 105, i64* %63, align 8
-  %arrayidx146 = getelementptr inbounds i8, i8* %call135, i64 80
-  %64 = bitcast i8* %arrayidx146 to i64*
+  %arrayidx108 = getelementptr inbounds i8, i8* %call97, i64 80
+  %64 = bitcast i8* %arrayidx108 to i64*
   store i64 120, i64* %64, align 8
-  %arrayidx147 = getelementptr inbounds i8, i8* %call135, i64 88
-  %65 = bitcast i8* %arrayidx147 to i64*
+  %arrayidx109 = getelementptr inbounds i8, i8* %call97, i64 88
+  %65 = bitcast i8* %arrayidx109 to i64*
   store i64 77, i64* %65, align 8
-  %arrayidx148 = getelementptr inbounds i8, i8* %call135, i64 96
-  %66 = bitcast i8* %arrayidx148 to i64*
+  %arrayidx110 = getelementptr inbounds i8, i8* %call97, i64 96
+  %66 = bitcast i8* %arrayidx110 to i64*
   store i64 117, i64* %66, align 8
-  %arrayidx149 = getelementptr inbounds i8, i8* %call135, i64 104
-  %67 = bitcast i8* %arrayidx149 to i64*
+  %arrayidx111 = getelementptr inbounds i8, i8* %call97, i64 104
+  %67 = bitcast i8* %arrayidx111 to i64*
   store i64 108, i64* %67, align 8
-  %arrayidx150 = getelementptr inbounds i8, i8* %call135, i64 112
-  %68 = bitcast i8* %arrayidx150 to i64*
+  %arrayidx112 = getelementptr inbounds i8, i8* %call97, i64 112
+  %68 = bitcast i8* %arrayidx112 to i64*
   store i64 116, i64* %68, align 8
-  %arrayidx151 = getelementptr inbounds i8, i8* %call135, i64 120
-  %69 = bitcast i8* %arrayidx151 to i64*
+  %arrayidx113 = getelementptr inbounds i8, i8* %call97, i64 120
+  %69 = bitcast i8* %arrayidx113 to i64*
   store i64 32, i64* %69, align 8
-  %arrayidx152 = getelementptr inbounds i8, i8* %call135, i64 128
-  %70 = bitcast i8* %arrayidx152 to i64*
+  %arrayidx114 = getelementptr inbounds i8, i8* %call97, i64 128
+  %70 = bitcast i8* %arrayidx114 to i64*
   store i64 116, i64* %70, align 8
-  %arrayidx153 = getelementptr inbounds i8, i8* %call135, i64 136
-  %71 = bitcast i8* %arrayidx153 to i64*
+  %arrayidx115 = getelementptr inbounds i8, i8* %call97, i64 136
+  %71 = bitcast i8* %arrayidx115 to i64*
   store i64 101, i64* %71, align 8
-  %arrayidx154 = getelementptr inbounds i8, i8* %call135, i64 144
-  %72 = bitcast i8* %arrayidx154 to i64*
+  %arrayidx116 = getelementptr inbounds i8, i8* %call97, i64 144
+  %72 = bitcast i8* %arrayidx116 to i64*
   store i64 115, i64* %72, align 8
-  %arrayidx155 = getelementptr inbounds i8, i8* %call135, i64 152
-  %73 = bitcast i8* %arrayidx155 to i64*
+  %arrayidx117 = getelementptr inbounds i8, i8* %call97, i64 152
+  %73 = bitcast i8* %arrayidx117 to i64*
   store i64 116, i64* %73, align 8
-  %arrayidx156 = getelementptr inbounds i8, i8* %call135, i64 160
-  %74 = bitcast i8* %arrayidx156 to i64*
+  %arrayidx118 = getelementptr inbounds i8, i8* %call97, i64 160
+  %74 = bitcast i8* %arrayidx118 to i64*
   store i64 32, i64* %74, align 8
-  %arrayidx157 = getelementptr inbounds i8, i8* %call135, i64 168
-  %75 = bitcast i8* %arrayidx157 to i64*
+  %arrayidx119 = getelementptr inbounds i8, i8* %call97, i64 168
+  %75 = bitcast i8* %arrayidx119 to i64*
   store i64 99, i64* %75, align 8
-  %arrayidx158 = getelementptr inbounds i8, i8* %call135, i64 176
-  %76 = bitcast i8* %arrayidx158 to i64*
+  %arrayidx120 = getelementptr inbounds i8, i8* %call97, i64 176
+  %76 = bitcast i8* %arrayidx120 to i64*
   store i64 97, i64* %76, align 8
-  %arrayidx159 = getelementptr inbounds i8, i8* %call135, i64 184
-  %77 = bitcast i8* %arrayidx159 to i64*
+  %arrayidx121 = getelementptr inbounds i8, i8* %call97, i64 184
+  %77 = bitcast i8* %arrayidx121 to i64*
   store i64 115, i64* %77, align 8
-  %arrayidx160 = getelementptr inbounds i8, i8* %call135, i64 192
-  %78 = bitcast i8* %arrayidx160 to i64*
+  %arrayidx122 = getelementptr inbounds i8, i8* %call97, i64 192
+  %78 = bitcast i8* %arrayidx122 to i64*
   store i64 101, i64* %78, align 8
   tail call void @println_s(i64* %54, i64 25) #4
-  %phitmp = bitcast i64* %call125 to i8*
-  %phitmp1 = bitcast i64* %call55 to i8*
-  %phitmp2 = bitcast i64* %call39 to i8*
   br label %blklab23
 
-blklab23:                                         ; preds = %entry.split, %if.end90
-  %_53.0 = phi i8* [ %phitmp, %if.end90 ], [ null, %entry.split ]
-  %_50_has_ownership.0 = phi i1 [ true, %if.end90 ], [ false, %entry.split ]
-  %79 = phi i8* [ %call91, %if.end90 ], [ null, %entry.split ]
-  %_39_has_ownership.1 = phi i8 [ %_39_has_ownership.0, %if.end90 ], [ 0, %entry.split ]
-  %_39.1 = phi i64* [ %_39.0, %if.end90 ], [ null, %entry.split ]
-  %_28.0 = phi i8* [ %phitmp1, %if.end90 ], [ null, %entry.split ]
-  %_18.0 = phi i8* [ %phitmp2, %if.end90 ], [ null, %entry.split ]
-  %80 = phi i8* [ %call5, %if.end90 ], [ null, %entry.split ]
-  %C.0 = phi %struct.Matrix* [ %call31, %if.end90 ], [ undef, %entry.split ]
-  %B.0 = phi %struct.Matrix* [ %call24, %if.end90 ], [ undef, %entry.split ]
-  %A.0 = phi %struct.Matrix* [ %call17, %if.end90 ], [ undef, %entry.split ]
-  %81 = phi i8* [ %call135, %if.end90 ], [ null, %entry.split ]
-  br i1 %_50_has_ownership.0, label %if.then162, label %if.end193.critedge6
-
-if.then162:                                       ; preds = %blklab23
-  tail call void @free_Matrix(%struct.Matrix* %A.0)
-  tail call void @free_Matrix(%struct.Matrix* %B.0)
-  tail call void @free_Matrix(%struct.Matrix* %C.0)
-  tail call void @free2DArray(i64** %call, i64 %conv) #4
-  tail call void @free(i8* %80) #4
-  tail call void @free(i8* %_18.0) #4
-  tail call void @free(i8* %_28.0) #4
-  br label %if.end193
-
-if.end193.critedge6:                              ; preds = %blklab23
-  tail call void @free2DArray(i64** %call, i64 %conv) #4
-  br label %if.end193
-
-if.end193:                                        ; preds = %if.end193.critedge6, %if.then162
-  %82 = and i8 %_39_has_ownership.1, 1
-  %tobool194 = icmp eq i8 %82, 0
-  br i1 %tobool194, label %if.end196, label %if.then195
-
-if.then195:                                       ; preds = %if.end193
-  %83 = bitcast i64* %_39.1 to i8*
-  tail call void @free(i8* %83) #4
-  br label %if.end196
-
-if.end196:                                        ; preds = %if.end193, %if.then195
-  br i1 %_50_has_ownership.0, label %if.then198, label %if.end205
-
-if.then198:                                       ; preds = %if.end196
-  tail call void @free(i8* %79) #4
-  tail call void @free(i8* %_53.0) #4
-  tail call void @free(i8* %81) #4
-  br label %if.end205
-
-if.end205:                                        ; preds = %if.end196, %if.then198
+blklab23:                                         ; preds = %entry.split, %blklab26
   tail call void @exit(i32 0) #6
   unreachable
 }
@@ -876,8 +701,6 @@ declare i32 @fprintf(%struct._IO_FILE*, i8*, ...) #2
 
 ; Function Attrs: noreturn nounwind
 declare void @exit(i32) #3
-
-declare void @free2DArray(i64**, i64) #2
 
 declare i32 @putchar(i32)
 
@@ -894,4 +717,4 @@ attributes #6 = { noreturn nounwind }
 
 !llvm.ident = !{!0}
 
-!0 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git 83402ed45b681e9f38ce6626e5899c19159ceb29) (http://llvm.org/git/llvm.git 4fc8e6fd79f212952e8f538b6d5d9d78098b4505)"}
+!0 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git 2af14cc4a90f43170f8ea9c1dfa0f71f46a0621c) (http://llvm.org/git/llvm.git 1e7e2b2b556977af8ccc12b7afba61302f3a2da9)"}
