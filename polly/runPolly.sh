@@ -113,32 +113,6 @@ clang_polly(){
 	        -mllvm -debug-only=polly-ast -mllvm -polly-process-unprofitable\
 	        $program.c libUtil.a
 
-	### Generate executables with disabled vectorizer
-	# echo -e -n "${GREEN}[*] Run Benchmark with diabled Vectorizer${RESET}" && read
-	# echo -e -n "[1] Run ${BOLD}${GREEN} GCC -O3 ${RESET} executables" && read
-	# ### Use C99 mode to compile C program
-	# gcc -std=c99 -O3 -fno-tree-vectorize $program.c Util.c -o "out/$program.gcc.disablevc.out"
-	# time ./out/$program.gcc.disablevc.out $parameter
-
-	# echo -e -n "[2] Run ${BOLD}${GREEN} Clang -O3 ${RESET} executables" && read
-	# clang -g -O3 -fno-vectorize $program.c Util.c -o "out"/$program.clang.disablevc.out
-	# time ./out/$program.clang.disablevc.out $parameter
-
-	# ##-fno-vectorize
-	# echo -e -n "[3] Run ${BOLD}${GREEN} Polly-Optimized ${RESET} executables" && read
-	# pollycc -g -O3 -fno-vectorize\
-	#         -mllvm -polly -S -emit-llvm\
-	#         -mllvm -polly-process-unprofitable\ 
-	#         $program.c -o "llvm/$program.polly.disablevc.ll"
-	# runExecutables $program "polly.disablevc" $parameter
-
-	# echo -e -n "[4] Run ${BOLD}${GREEN} Polly-Optimized OpenMP ${RESET} executables with 2 threads" && read
-	# pollycc -g -O3 -fno-vectorize\
-	#         -mllvm -polly -S -emit-llvm\
-	#         -mllvm -polly-parallel -mllvm -polly-process-unprofitable\
-	#         $program.c -o "llvm/$program.openmp.disablevc.ll"
-	# runExecutables $program "openmp.disablevc" $parameter 2
-
 	### Generate executables with enabled vectorizer
 	echo -e -n "${GREEN}[*]Run Benchmark with Vectorizer enabled${RESET}" && read
 	echo -e -n "[1] Run ${BOLD}${GREEN} GCC -O3 ${RESET} executables" && read
@@ -183,26 +157,30 @@ exec(){
 	
 	if [[ $c_type == *"autogenerate"* ]]
 	then
-		#if [[ $program == "NQueens" ]]
-		#then
+		if [[ $c_type == *"copyonly"* ]]
+		then
 			### Translate Whiley program into copy-eliminated C code 
 			./../../../../bin/wyopcl -code -copy "$program.whiley"
-		#else
+		else
 			### Translate Whiley program into copy-eliminated and memory deallocated C code 
-		#	./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"
-		#fi
+			./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"
+		fi
 	fi
 
 	clang_polly $c_type $program $num_threads $parameter
 	cd ../../../
 }
 
-exec autogenerate1 MatrixMult 100  ### Determine matrix size from cmd line argument
-exec autogenerate2 MatrixMult 100 
-exec autogenerate GCD 100  ### Use Euclid's algorithm
-exec autogenerate1 GCD 100 ### Cached the divisors
-exec autogenerate CoinGame 2000
-exec autogenerate NQueens 12
+#exec autogenerate1 MatrixMult 100  ### Determine matrix size from cmd line argument
+#exec autogenerate2 MatrixMult 100 
+#exec autogenerate_original_copyonly GCD 10000  ### Use Euclid's algorithm
+#exec autogenerate_original_copyfree GCD 10000  
+#exec autogenerate_cached_copyonly GCD 10000 ### Cached the divisors
+#exec autogenerate_cached_copyfree GCD 10000
+#exec autogenerate_copyonly CoinGame 2000
+#exec autogenerate_copyfree CoinGame 2000
+exec autogenerate_copyonly NQueens 12
+exec autogenerate_copyfree NQueens 12
 
 
 

@@ -51,8 +51,15 @@ compileProgram(){
     	#ar -cvq libUtil.a Util.o
     	if [[ $c_type == *"autogenerate"* ]]
 	then
-		### Translate Whiley program into copy-eliminated C code 
-		./../../../../bin/wyopcl -code -copy "$program.whiley"
+		if [[ $c_type == *"copyonly"* ]]
+		then
+			### Translate Whiley program into copy-eliminated C code 
+			./../../../../bin/wyopcl -code -copy "$program.whiley"
+		else
+			### Translate Whiley program into copy-eliminated + memory deallocated C code 
+                        ./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"
+		fi
+
 	fi
    	###read -p "Press [Enter] to continue..."
     	mkdir -p "out"
@@ -127,36 +134,44 @@ init(){
 	#read -p "Press [Enter] to continue..."
 }
 # ### Benchmark Autogenerate GCD
-init autogenerate GCD
-exec autogenerate GCD 1000
-exec autogenerate GCD 10000
-exec autogenerate GCD 20000
-exec autogenerate GCD 30000
-exec autogenerate GCD 40000
-exec autogenerate1 GCD 1000
-exec autogenerate1 GCD 10000
-exec autogenerate1 GCD 20000
-exec autogenerate1 GCD 30000
-exec autogenerate1 GCD 40000
+#init autogenerate GCD
+#exec autogenerate GCD 1000
+#exec autogenerate GCD 10000
+#exec autogenerate GCD 20000
+#exec autogenerate GCD 30000
+#exec autogenerate GCD 40000
+#exec autogenerate1 GCD 1000
+#exec autogenerate1 GCD 10000
+#exec autogenerate1 GCD 20000
+#exec autogenerate1 GCD 30000
+#exec autogenerate1 GCD 40000
 # ### Benchmark Autogenerate CoinGame
-init autogenerate CoinGame
-exec autogenerate CoinGame 1000
-exec autogenerate CoinGame 10000
-exec autogenerate CoinGame 20000
-exec autogenerate CoinGame 30000
-exec autogenerate CoinGame 40000
+#init autogenerate CoinGame
+#exec autogenerate CoinGame 1000
+#exec autogenerate CoinGame 10000
+#exec autogenerate CoinGame 20000
+#exec autogenerate CoinGame 30000
+#exec autogenerate CoinGame 40000
 
 ### Benchmark Autogenerate NQueens
 init autogenerate NQueens
-exec autogenerate NQueens 1
-exec autogenerate NQueens 2
-exec autogenerate NQueens 4
-exec autogenerate NQueens 6
-exec autogenerate NQueens 8
-exec autogenerate NQueens 10
-exec autogenerate NQueens 12
-##exec autogenerate NQueens 14
-##exec autogenerate NQueens 15
+exec autogenerate_copyonly NQueens 1
+exec autogenerate_copyonly NQueens 2
+exec autogenerate_copyonly NQueens 4
+exec autogenerate_copyonly NQueens 6
+exec autogenerate_copyonly NQueens 8
+exec autogenerate_copyonly NQueens 12
+exec autogenerate_copyonly NQueens 14
+exec autogenerate_copyonly NQueens 15
+
+exec autogenerate_copyfree NQueens 1
+exec autogenerate_copyfree NQueens 2 
+exec autogenerate_copyfree NQueens 4 
+exec autogenerate_copyfree NQueens 6 
+exec autogenerate_copyfree NQueens 8 
+exec autogenerate_copyfree NQueens 12 
+exec autogenerate_copyfree NQueens 14
+exec autogenerate_copyfree NQueens 15
 
 ### Benchmark Autogenerate1 and autogenerate2 MatrixMult
 # ### Autogenerate1 MatrixMult

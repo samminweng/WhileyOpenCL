@@ -1,0 +1,39 @@
+digraph "Scop Graph for 'gcd_cached' function" {
+	label="Scop Graph for 'gcd_cached' function";
+
+	Node0xad19bf0 [shape=record,label="{entry:\l  br label %entry.split, !dbg !27\l}"];
+	Node0xad19bf0 -> Node0xadd73f0;
+	Node0xadd73f0 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata i64 %a, i64 0, metadata !14,\l... metadata !28), !dbg !27\l  tail call void @llvm.dbg.value(metadata i64 %b, i64 0, metadata !15,\l... metadata !28), !dbg !29\l  tail call void @llvm.dbg.value(metadata i64 %n, i64 0, metadata !16,\l... metadata !28), !dbg !30\l  tail call void @llvm.dbg.value(metadata i64* %gcds, i64 0, metadata !17,\l... metadata !28), !dbg !31\l  tail call void @llvm.dbg.value(metadata i64 %gcds_size, i64 0, metadata !18,\l... metadata !28), !dbg !31\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !19, metadata\l... !28), !dbg !32\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !20, metadata\l... !28), !dbg !33\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !21, metadata\l... !28), !dbg !34\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !22, metadata\l... !28), !dbg !35\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !23, metadata\l... !28), !dbg !36\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !24, metadata\l... !28), !dbg !37\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !25, metadata\l... !28), !dbg !38\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !26, metadata\l... !28), !dbg !39\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !20, metadata\l... !28), !dbg !33\l  %cmp = icmp eq i64 %a, 0, !dbg !40\l  br i1 %cmp, label %cleanup, label %blklab7, !dbg !42\l}"];
+	Node0xadd73f0 -> Node0xad5bec0;
+	Node0xadd73f0 -> Node0xad18010;
+	Node0xad5bec0 [shape=record,label="{cleanup:                                          \l  %retval.0 = phi i64 [ %0, %blklab9 ], [ %b, %entry.split ], [ %a, %blklab7 ]\l  ret i64 %retval.0, !dbg !57\l}"];
+	Node0xad18010 [shape=record,label="{blklab7:                                          \l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !21, metadata\l... !28), !dbg !34\l  %cmp1 = icmp eq i64 %b, 0, !dbg !43\l  br i1 %cmp1, label %cleanup, label %blklab9, !dbg !45\l}"];
+	Node0xad18010 -> Node0xad5bec0;
+	Node0xad18010 -> Node0xad27110;
+	Node0xad27110 [shape=record,label="{blklab9:                                          \l  %cmp4 = icmp sgt i64 %a, %b, !dbg !46\l  %sub7 = select i1 %cmp4, i64 0, i64 %a, !dbg !48\l  %b.addr.0 = sub nsw i64 %b, %sub7, !dbg !48\l  %sub = select i1 %cmp4, i64 %b, i64 0, !dbg !48\l  %a.addr.0 = sub nsw i64 %a, %sub, !dbg !48\l  %mul = mul nsw i64 %a.addr.0, %n, !dbg !49\l  tail call void @llvm.dbg.value(metadata i64 %mul, i64 0, metadata !24,\l... metadata !28), !dbg !37\l  %add = add nsw i64 %mul, %b.addr.0, !dbg !50\l  tail call void @llvm.dbg.value(metadata i64 %add, i64 0, metadata !25,\l... metadata !28), !dbg !38\l  %arrayidx = getelementptr inbounds i64, i64* %gcds, i64 %add, !dbg !51\l  %0 = load i64, i64* %arrayidx, align 8, !dbg !51, !tbaa !52\l  tail call void @llvm.dbg.value(metadata i64 %0, i64 0, metadata !26,\l... metadata !28), !dbg !39\l  br label %cleanup, !dbg !56\l}"];
+	Node0xad27110 -> Node0xad5bec0;
+	colorscheme = "paired12"
+        subgraph cluster_0xad33490 {
+          label = "GCD.c:62-120
+";
+          style = solid;
+          color = 1
+          subgraph cluster_0xad29210 {
+            label = "GCD.c:62-114
+";
+            style = solid;
+            color = 6
+            subgraph cluster_0xad25160 {
+              label = "GCD.c:65-114
+";
+              style = solid;
+              color = 5
+              Node0xad18010;
+              Node0xad27110;
+            }
+            Node0xadd73f0;
+          }
+          Node0xad19bf0;
+          Node0xad5bec0;
+        }
+}
