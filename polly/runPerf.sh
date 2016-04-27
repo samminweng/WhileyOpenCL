@@ -92,13 +92,14 @@ compileProgram(){
                         #-mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
 			#        $program.c Util.c -o "out/$program.$opt.enablevc.out"
 			
+			export OMP_NUM_THREADS=$num_threads
 			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -S -emit-llvm\
 	        		-mllvm -polly-parallel -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
 	        		$program.c -o "llvm/$program.$opt.enablevc.ll"
 			### Use 'llc' to compile LLVM code into assembly code
                         llc "llvm/$program.$opt.enablevc.ll" -o "assembly/$program.$opt.enablevc.s"
                         ### Use 'gcc' to compile .s file and link with 'libUtil.a'
-                        pollycc "assembly/$program.$opt.enablevc.s" Util.c -o "out/$program.$opt.enablevc.out"
+                        pollycc "assembly/$program.$opt.enablevc.s" Util.c -lgomp -o "out/$program.$opt.enablevc.out"
 
 			;;
 	esac
@@ -146,19 +147,25 @@ init(){
 #exec autogenerate1 GCD 30000
 #exec autogenerate1 GCD 40000
 # ### Benchmark Autogenerate CoinGame
-#init autogenerate_copyonly CoinGame
+init autogenerate_copyonly CoinGame
 #exec autogenerate_copyonly CoinGame 1000
 #exec autogenerate_copyonly CoinGame 10000
 #exec autogenerate_copyonly CoinGame 20000
 #exec autogenerate_copyonly CoinGame 30000
 #exec autogenerate_copyonly CoinGame 40000
 
-#init autogenerate_copyfree 1000
-#exec autogenerate_copyfree CoinGame 1000
-#exec autogenerate_copyfree CoinGame 10000
-#exec autogenerate_copyfree CoinGame 20000
-#exec autogenerate_copyfree CoinGame 30000
-#exec autogenerate_copyfree CoinGame 40000
+#init autogenerate_copyfree CoinGame
+exec autogenerate_copyfree CoinGame 1000
+exec autogenerate_copyfree CoinGame 10000
+exec autogenerate_copyfree CoinGame 20000
+exec autogenerate_copyfree CoinGame 30000
+exec autogenerate_copyfree CoinGame 40000
+
+exec autogenerate_array_copyfree CoinGame 1000
+exec autogenerate_array_copyfree CoinGame 10000
+exec autogenerate_array_copyfree CoinGame 20000
+exec autogenerate_array_copyfree CoinGame 30000
+exec autogenerate_array_copyfree CoinGame 40000
 
 ### Benchmark Autogenerate NQueens
 #init autogenerate_copyonly NQueens
@@ -181,17 +188,17 @@ init(){
 #init autogenerate_copyfree NQueens
 #exec autogenerate_copyfree NQueens 1
 #exec autogenerate_copyfree NQueens 2
-exec autogenerate_copyfree NQueens 3 
+#exec autogenerate_copyfree NQueens 3 
 #exec autogenerate_copyfree NQueens 4
-exec autogenerate_copyfree NQueens 5 
+#exec autogenerate_copyfree NQueens 5 
 #exec autogenerate_copyfree NQueens 6
-exec autogenerate_copyfree NQueens 7 
+#exec autogenerate_copyfree NQueens 7 
 #exec autogenerate_copyfree NQueens 8
-exec autogenerate_copyfree NQueens 9
+#exec autogenerate_copyfree NQueens 9
 #exec autogenerate_copyfree NQueens 10
-exec autogenerate_copyfree NQueens 11 
+#exec autogenerate_copyfree NQueens 11 
 #exec autogenerate_copyfree NQueens 12
-exec autogenerate_copyfree NQueens 13 
+#exec autogenerate_copyfree NQueens 13 
 #exec autogenerate_copyfree NQueens 14
 #exec autogenerate_copyfree NQueens 15
 

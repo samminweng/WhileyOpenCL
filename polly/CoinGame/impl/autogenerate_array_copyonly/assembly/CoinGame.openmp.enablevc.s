@@ -2043,207 +2043,207 @@ findMoves_polly_subfn_7:                # @findMoves_polly_subfn_7
 
 	.section	.debug_str,"MS",@progbits,1
 .Linfo_string0:
-	.asciz	"clang version 3.9.0 (http://llvm.org/git/clang.git 83402ed45b681e9f38ce6626e5899c19159ceb29) (http://llvm.org/git/llvm.git 4fc8e6fd79f212952e8f538b6d5d9d78098b4505)" # string offset=0
+	.asciz	"clang version 3.9.0 (http://llvm.org/git/clang.git 2af14cc4a90f43170f8ea9c1dfa0f71f46a0621c) (http://llvm.org/git/llvm.git 1e7e2b2b556977af8ccc12b7afba61302f3a2da9)" # string offset=0
 .Linfo_string1:
 	.asciz	"CoinGame.c"            # string offset=165
 .Linfo_string2:
-	.asciz	"/home/sam/workspace/WhileyOpenCL/polly/CoinGame/impl/autogenerate_array_copyonly" # string offset=176
+	.asciz	"/home/mw169/workspace/WhileyOpenCL/polly/CoinGame/impl/autogenerate_array_copyonly" # string offset=176
 .Linfo_string3:
-	.asciz	"findMoves"             # string offset=257
+	.asciz	"findMoves"             # string offset=259
 .Linfo_string4:
-	.asciz	"long long int"         # string offset=267
+	.asciz	"long long int"         # string offset=269
 .Linfo_string5:
-	.asciz	"main"                  # string offset=281
+	.asciz	"main"                  # string offset=283
 .Linfo_string6:
-	.asciz	"int"                   # string offset=286
+	.asciz	"int"                   # string offset=288
 .Linfo_string7:
-	.asciz	"moves"                 # string offset=290
+	.asciz	"moves"                 # string offset=292
 .Linfo_string8:
-	.asciz	"moves_size"            # string offset=296
+	.asciz	"moves_size"            # string offset=298
 .Linfo_string9:
-	.asciz	"n"                     # string offset=307
+	.asciz	"n"                     # string offset=309
 .Linfo_string10:
-	.asciz	"_10_size"              # string offset=309
+	.asciz	"_10_size"              # string offset=311
 .Linfo_string11:
-	.asciz	"x_size"                # string offset=318
+	.asciz	"x_size"                # string offset=320
 .Linfo_string12:
-	.asciz	"_12_size"              # string offset=325
+	.asciz	"_12_size"              # string offset=327
 .Linfo_string13:
-	.asciz	"y_size"                # string offset=334
+	.asciz	"y_size"                # string offset=336
 .Linfo_string14:
-	.asciz	"_14_size"              # string offset=341
+	.asciz	"_14_size"              # string offset=343
 .Linfo_string15:
-	.asciz	"z_size"                # string offset=350
+	.asciz	"z_size"                # string offset=352
 .Linfo_string16:
-	.asciz	"_70"                   # string offset=357
+	.asciz	"_70"                   # string offset=359
 .Linfo_string17:
-	.asciz	"_69"                   # string offset=361
+	.asciz	"_69"                   # string offset=363
 .Linfo_string18:
-	.asciz	"_68"                   # string offset=365
+	.asciz	"_68"                   # string offset=367
 .Linfo_string19:
-	.asciz	"_67"                   # string offset=369
+	.asciz	"_67"                   # string offset=371
 .Linfo_string20:
-	.asciz	"_66"                   # string offset=373
+	.asciz	"_66"                   # string offset=375
 .Linfo_string21:
-	.asciz	"_65"                   # string offset=377
+	.asciz	"_65"                   # string offset=379
 .Linfo_string22:
-	.asciz	"_64"                   # string offset=381
+	.asciz	"_64"                   # string offset=383
 .Linfo_string23:
-	.asciz	"_63"                   # string offset=385
+	.asciz	"_63"                   # string offset=387
 .Linfo_string24:
-	.asciz	"_62"                   # string offset=389
+	.asciz	"_62"                   # string offset=391
 .Linfo_string25:
-	.asciz	"_61"                   # string offset=393
+	.asciz	"_61"                   # string offset=395
 .Linfo_string26:
-	.asciz	"_60"                   # string offset=397
+	.asciz	"_60"                   # string offset=399
 .Linfo_string27:
-	.asciz	"_59"                   # string offset=401
+	.asciz	"_59"                   # string offset=403
 .Linfo_string28:
-	.asciz	"_58"                   # string offset=405
+	.asciz	"_58"                   # string offset=407
 .Linfo_string29:
-	.asciz	"_57"                   # string offset=409
+	.asciz	"_57"                   # string offset=411
 .Linfo_string30:
-	.asciz	"_56"                   # string offset=413
+	.asciz	"_56"                   # string offset=415
 .Linfo_string31:
-	.asciz	"_55"                   # string offset=417
+	.asciz	"_55"                   # string offset=419
 .Linfo_string32:
-	.asciz	"_54"                   # string offset=421
+	.asciz	"_54"                   # string offset=423
 .Linfo_string33:
-	.asciz	"_53"                   # string offset=425
+	.asciz	"_53"                   # string offset=427
 .Linfo_string34:
-	.asciz	"_52"                   # string offset=429
+	.asciz	"_52"                   # string offset=431
 .Linfo_string35:
-	.asciz	"_51"                   # string offset=433
+	.asciz	"_51"                   # string offset=435
 .Linfo_string36:
-	.asciz	"_50"                   # string offset=437
+	.asciz	"_50"                   # string offset=439
 .Linfo_string37:
-	.asciz	"_49"                   # string offset=441
+	.asciz	"_49"                   # string offset=443
 .Linfo_string38:
-	.asciz	"_48"                   # string offset=445
+	.asciz	"_48"                   # string offset=447
 .Linfo_string39:
-	.asciz	"_47"                   # string offset=449
+	.asciz	"_47"                   # string offset=451
 .Linfo_string40:
-	.asciz	"_46"                   # string offset=453
+	.asciz	"_46"                   # string offset=455
 .Linfo_string41:
-	.asciz	"_45"                   # string offset=457
+	.asciz	"_45"                   # string offset=459
 .Linfo_string42:
-	.asciz	"_44"                   # string offset=461
+	.asciz	"_44"                   # string offset=463
 .Linfo_string43:
-	.asciz	"_43"                   # string offset=465
+	.asciz	"_43"                   # string offset=467
 .Linfo_string44:
-	.asciz	"_42"                   # string offset=469
+	.asciz	"_42"                   # string offset=471
 .Linfo_string45:
-	.asciz	"_41"                   # string offset=473
+	.asciz	"_41"                   # string offset=475
 .Linfo_string46:
-	.asciz	"_40"                   # string offset=477
+	.asciz	"_40"                   # string offset=479
 .Linfo_string47:
-	.asciz	"_39"                   # string offset=481
+	.asciz	"_39"                   # string offset=483
 .Linfo_string48:
-	.asciz	"_38"                   # string offset=485
+	.asciz	"_38"                   # string offset=487
 .Linfo_string49:
-	.asciz	"_37"                   # string offset=489
+	.asciz	"_37"                   # string offset=491
 .Linfo_string50:
-	.asciz	"_36"                   # string offset=493
+	.asciz	"_36"                   # string offset=495
 .Linfo_string51:
-	.asciz	"_35"                   # string offset=497
+	.asciz	"_35"                   # string offset=499
 .Linfo_string52:
-	.asciz	"_34"                   # string offset=501
+	.asciz	"_34"                   # string offset=503
 .Linfo_string53:
-	.asciz	"_33"                   # string offset=505
+	.asciz	"_33"                   # string offset=507
 .Linfo_string54:
-	.asciz	"_32"                   # string offset=509
+	.asciz	"_32"                   # string offset=511
 .Linfo_string55:
-	.asciz	"_31"                   # string offset=513
+	.asciz	"_31"                   # string offset=515
 .Linfo_string56:
-	.asciz	"_30"                   # string offset=517
+	.asciz	"_30"                   # string offset=519
 .Linfo_string57:
-	.asciz	"_29"                   # string offset=521
+	.asciz	"_29"                   # string offset=523
 .Linfo_string58:
-	.asciz	"_28"                   # string offset=525
+	.asciz	"_28"                   # string offset=527
 .Linfo_string59:
-	.asciz	"_27"                   # string offset=529
+	.asciz	"_27"                   # string offset=531
 .Linfo_string60:
-	.asciz	"_26"                   # string offset=533
+	.asciz	"_26"                   # string offset=535
 .Linfo_string61:
-	.asciz	"_25"                   # string offset=537
+	.asciz	"_25"                   # string offset=539
 .Linfo_string62:
-	.asciz	"_24"                   # string offset=541
+	.asciz	"_24"                   # string offset=543
 .Linfo_string63:
-	.asciz	"_23"                   # string offset=545
+	.asciz	"_23"                   # string offset=547
 .Linfo_string64:
-	.asciz	"_22"                   # string offset=549
+	.asciz	"_22"                   # string offset=551
 .Linfo_string65:
-	.asciz	"_21"                   # string offset=553
+	.asciz	"_21"                   # string offset=555
 .Linfo_string66:
-	.asciz	"_20"                   # string offset=557
+	.asciz	"_20"                   # string offset=559
 .Linfo_string67:
-	.asciz	"_19"                   # string offset=561
+	.asciz	"_19"                   # string offset=563
 .Linfo_string68:
-	.asciz	"_18"                   # string offset=565
+	.asciz	"_18"                   # string offset=567
 .Linfo_string69:
-	.asciz	"_17"                   # string offset=569
+	.asciz	"_17"                   # string offset=571
 .Linfo_string70:
-	.asciz	"_16"                   # string offset=573
+	.asciz	"_16"                   # string offset=575
 .Linfo_string71:
-	.asciz	"_15"                   # string offset=577
+	.asciz	"_15"                   # string offset=579
 .Linfo_string72:
-	.asciz	"_13"                   # string offset=581
+	.asciz	"_13"                   # string offset=583
 .Linfo_string73:
-	.asciz	"_11"                   # string offset=585
+	.asciz	"_11"                   # string offset=587
 .Linfo_string74:
-	.asciz	"_9"                    # string offset=589
+	.asciz	"_9"                    # string offset=591
 .Linfo_string75:
-	.asciz	"i"                     # string offset=592
+	.asciz	"i"                     # string offset=594
 .Linfo_string76:
-	.asciz	"j"                     # string offset=594
+	.asciz	"j"                     # string offset=596
 .Linfo_string77:
-	.asciz	"s"                     # string offset=596
+	.asciz	"s"                     # string offset=598
 .Linfo_string78:
-	.asciz	"_2_size"               # string offset=598
+	.asciz	"_2_size"               # string offset=600
 .Linfo_string79:
-	.asciz	"x"                     # string offset=606
+	.asciz	"x"                     # string offset=608
 .Linfo_string80:
-	.asciz	"_10"                   # string offset=608
+	.asciz	"_10"                   # string offset=610
 .Linfo_string81:
-	.asciz	"y"                     # string offset=612
+	.asciz	"y"                     # string offset=614
 .Linfo_string82:
-	.asciz	"_12"                   # string offset=614
+	.asciz	"_12"                   # string offset=616
 .Linfo_string83:
-	.asciz	"z"                     # string offset=618
+	.asciz	"z"                     # string offset=620
 .Linfo_string84:
-	.asciz	"_14"                   # string offset=620
+	.asciz	"_14"                   # string offset=622
 .Linfo_string85:
-	.asciz	"_2"                    # string offset=624
+	.asciz	"_2"                    # string offset=626
 .Linfo_string86:
-	.asciz	"argc"                  # string offset=627
+	.asciz	"argc"                  # string offset=629
 .Linfo_string87:
-	.asciz	"args"                  # string offset=632
+	.asciz	"args"                  # string offset=634
 .Linfo_string88:
-	.asciz	"char"                  # string offset=637
+	.asciz	"char"                  # string offset=639
 .Linfo_string89:
-	.asciz	"sum_alice"             # string offset=642
+	.asciz	"sum_alice"             # string offset=644
 .Linfo_string90:
-	.asciz	"_6_size"               # string offset=652
+	.asciz	"_6_size"               # string offset=654
 .Linfo_string91:
-	.asciz	"_6_size_size"          # string offset=660
+	.asciz	"_6_size_size"          # string offset=662
 .Linfo_string92:
-	.asciz	"_7"                    # string offset=673
+	.asciz	"_7"                    # string offset=675
 .Linfo_string93:
-	.asciz	"_8_size"               # string offset=676
+	.asciz	"_8_size"               # string offset=678
 .Linfo_string94:
-	.asciz	"_11_size"              # string offset=684
+	.asciz	"_11_size"              # string offset=686
 .Linfo_string95:
-	.asciz	"_18_size"              # string offset=693
+	.asciz	"_18_size"              # string offset=695
 .Linfo_string96:
-	.asciz	"_23_size"              # string offset=702
+	.asciz	"_23_size"              # string offset=704
 .Linfo_string97:
-	.asciz	"_6"                    # string offset=711
+	.asciz	"_6"                    # string offset=713
 .Linfo_string98:
-	.asciz	"_8"                    # string offset=714
+	.asciz	"_8"                    # string offset=716
 .Linfo_string99:
-	.asciz	"max"                   # string offset=717
+	.asciz	"max"                   # string offset=719
 .Linfo_string100:
-	.asciz	"_5"                    # string offset=721
+	.asciz	"_5"                    # string offset=723
 	.section	.debug_loc,"",@progbits
 .Ldebug_loc0:
 	.quad	.Lfunc_begin0-.Lfunc_begin0
@@ -3958,7 +3958,7 @@ findMoves_polly_subfn_7:                # @findMoves_polly_subfn_7
 	.long	0                       # End Mark
 .LpubTypes_end0:
 
-	.ident	"clang version 3.9.0 (http://llvm.org/git/clang.git 83402ed45b681e9f38ce6626e5899c19159ceb29) (http://llvm.org/git/llvm.git 4fc8e6fd79f212952e8f538b6d5d9d78098b4505)"
+	.ident	"clang version 3.9.0 (http://llvm.org/git/clang.git 2af14cc4a90f43170f8ea9c1dfa0f71f46a0621c) (http://llvm.org/git/llvm.git 1e7e2b2b556977af8ccc12b7afba61302f3a2da9)"
 	.section	".note.GNU-stack","",@progbits
 	.section	.debug_line,"",@progbits
 .Lline_table_start0:

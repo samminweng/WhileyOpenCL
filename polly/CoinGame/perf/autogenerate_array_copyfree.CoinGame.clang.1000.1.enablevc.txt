@@ -1,182 +1,182 @@
-Enable loop vectorization...Compile C code using clang with 1 threads...The total amount of money (maximum) Alice gets is 100000000
+Enable loop vectorization...Compile C code using clang with 1 threads...The total amount of money (maximum) Alice gets is 250000
 Pass CoinGame test case
 
- Performance counter stats for './out/CoinGame.clang.enablevc.out 20000':
+ Performance counter stats for './out/CoinGame.clang.enablevc.out 1000':
 
-       1173.175183      task-clock (msec)         #    0.992 CPUs utilized          
-                 5      context-switches          #    0.004 K/sec                  
-                 1      cpu-migrations            #    0.001 K/sec                  
-             2,030      page-faults               #    0.002 M/sec                  
-     4,502,991,337      cycles                    #    3.838 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-     7,822,648,119      instructions              #    1.74  insns per cycle        
-     1,264,981,915      branches                  # 1078.255 M/sec                  
-            44,978      branch-misses             #    0.00% of all branches        
-
-       1.182545319 seconds time elapsed
-
-The total amount of money (maximum) Alice gets is 100000000
-Pass CoinGame test case
-
- Performance counter stats for './out/CoinGame.clang.enablevc.out 20000':
-
-       1203.721556      task-clock (msec)         #    0.997 CPUs utilized          
-                 2      context-switches          #    0.002 K/sec                  
+          3.694865      task-clock (msec)         #    0.500 CPUs utilized          
+                 2      context-switches          #    0.541 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-             2,031      page-faults               #    0.002 M/sec                  
-     4,553,896,464      cycles                    #    3.783 GHz                    
+               989      page-faults               #    0.268 M/sec                  
+        13,257,021      cycles                    #    3.588 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-     7,822,610,709      instructions              #    1.72  insns per cycle        
-     1,264,972,679      branches                  # 1050.885 M/sec                  
-            42,324      branch-misses             #    0.00% of all branches        
+        27,966,520      instructions              #    2.11  insns per cycle        
+         4,177,460      branches                  # 1130.612 M/sec                  
+             9,312      branch-misses             #    0.22% of all branches        
 
-       1.207524075 seconds time elapsed
+       0.007391415 seconds time elapsed
 
-The total amount of money (maximum) Alice gets is 100000000
+The total amount of money (maximum) Alice gets is 250000
 Pass CoinGame test case
 
- Performance counter stats for './out/CoinGame.clang.enablevc.out 20000':
+ Performance counter stats for './out/CoinGame.clang.enablevc.out 1000':
 
-       1204.095994      task-clock (msec)         #    0.997 CPUs utilized          
-                 2      context-switches          #    0.002 K/sec                  
-                 1      cpu-migrations            #    0.001 K/sec                  
-             2,030      page-faults               #    0.002 M/sec                  
-     4,548,211,188      cycles                    #    3.777 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-     7,822,627,962      instructions              #    1.72  insns per cycle        
-     1,264,982,360      branches                  # 1050.566 M/sec                  
-            43,024      branch-misses             #    0.00% of all branches        
-
-       1.207357296 seconds time elapsed
-
-The total amount of money (maximum) Alice gets is 100000000
-Pass CoinGame test case
-
- Performance counter stats for './out/CoinGame.clang.enablevc.out 20000':
-
-       1200.579423      task-clock (msec)         #    0.997 CPUs utilized          
-                 5      context-switches          #    0.004 K/sec                  
+          3.399406      task-clock (msec)         #    0.515 CPUs utilized          
+                 1      context-switches          #    0.294 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-             2,540      page-faults               #    0.002 M/sec                  
-     4,543,606,539      cycles                    #    3.785 GHz                    
+               481      page-faults               #    0.141 M/sec                  
+        12,133,465      cycles                    #    3.569 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-     7,823,838,451      instructions              #    1.72  insns per cycle        
-     1,265,185,392      branches                  # 1053.812 M/sec                  
-            42,879      branch-misses             #    0.00% of all branches        
+        26,691,290      instructions              #    2.20  insns per cycle        
+         3,958,785      branches                  # 1164.552 M/sec                  
+             8,433      branch-misses             #    0.21% of all branches        
 
-       1.203965042 seconds time elapsed
+       0.006595054 seconds time elapsed
 
-The total amount of money (maximum) Alice gets is 100000000
+The total amount of money (maximum) Alice gets is 250000
 Pass CoinGame test case
 
- Performance counter stats for './out/CoinGame.clang.enablevc.out 20000':
+ Performance counter stats for './out/CoinGame.clang.enablevc.out 1000':
 
-       1208.122716      task-clock (msec)         #    0.998 CPUs utilized          
-                 2      context-switches          #    0.002 K/sec                  
+          3.492666      task-clock (msec)         #    0.497 CPUs utilized          
+                 1      context-switches          #    0.286 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-             2,030      page-faults               #    0.002 M/sec                  
-     4,542,882,317      cycles                    #    3.760 GHz                    
+               480      page-faults               #    0.137 M/sec                  
+        12,028,337      cycles                    #    3.444 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-     7,822,601,377      instructions              #    1.72  insns per cycle        
-     1,264,971,866      branches                  # 1047.056 M/sec                  
-            41,976      branch-misses             #    0.00% of all branches        
+        26,694,265      instructions              #    2.22  insns per cycle        
+         3,960,128      branches                  # 1133.841 M/sec                  
+             7,625      branch-misses             #    0.19% of all branches        
 
-       1.211025601 seconds time elapsed
+       0.007031009 seconds time elapsed
 
-The total amount of money (maximum) Alice gets is 100000000
+The total amount of money (maximum) Alice gets is 250000
 Pass CoinGame test case
 
- Performance counter stats for './out/CoinGame.clang.enablevc.out 20000':
+ Performance counter stats for './out/CoinGame.clang.enablevc.out 1000':
 
-       1200.233954      task-clock (msec)         #    0.997 CPUs utilized          
-                 2      context-switches          #    0.002 K/sec                  
+          3.359662      task-clock (msec)         #    0.493 CPUs utilized          
+                 1      context-switches          #    0.298 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-             2,031      page-faults               #    0.002 M/sec                  
-     4,532,353,801      cycles                    #    3.776 GHz                    
+               479      page-faults               #    0.143 M/sec                  
+        11,956,414      cycles                    #    3.559 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-     7,822,592,357      instructions              #    1.73  insns per cycle        
-     1,264,973,405      branches                  # 1053.939 M/sec                  
-            41,693      branch-misses             #    0.00% of all branches        
+        26,652,715      instructions              #    2.23  insns per cycle        
+         3,951,678      branches                  # 1176.213 M/sec                  
+             7,316      branch-misses             #    0.19% of all branches        
 
-       1.203878566 seconds time elapsed
+       0.006820610 seconds time elapsed
 
-The total amount of money (maximum) Alice gets is 100000000
+The total amount of money (maximum) Alice gets is 250000
 Pass CoinGame test case
 
- Performance counter stats for './out/CoinGame.clang.enablevc.out 20000':
+ Performance counter stats for './out/CoinGame.clang.enablevc.out 1000':
 
-       1195.617096      task-clock (msec)         #    0.997 CPUs utilized          
-                 4      context-switches          #    0.003 K/sec                  
+          3.363838      task-clock (msec)         #    0.535 CPUs utilized          
+                 1      context-switches          #    0.297 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-             2,031      page-faults               #    0.002 M/sec                  
-     4,552,535,329      cycles                    #    3.808 GHz                    
+               480      page-faults               #    0.143 M/sec                  
+        11,946,657      cycles                    #    3.551 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-     7,822,565,023      instructions              #    1.72  insns per cycle        
-     1,264,965,831      branches                  # 1058.002 M/sec                  
-            42,457      branch-misses             #    0.00% of all branches        
+        26,694,919      instructions              #    2.23  insns per cycle        
+         3,960,938      branches                  # 1177.506 M/sec                  
+             7,359      branch-misses             #    0.19% of all branches        
 
-       1.199033298 seconds time elapsed
+       0.006291592 seconds time elapsed
 
-The total amount of money (maximum) Alice gets is 100000000
+The total amount of money (maximum) Alice gets is 250000
 Pass CoinGame test case
 
- Performance counter stats for './out/CoinGame.clang.enablevc.out 20000':
+ Performance counter stats for './out/CoinGame.clang.enablevc.out 1000':
 
-       1181.864794      task-clock (msec)         #    0.942 CPUs utilized          
-                 1      context-switches          #    0.001 K/sec                  
+          3.389360      task-clock (msec)         #    0.527 CPUs utilized          
+                 1      context-switches          #    0.295 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-             2,543      page-faults               #    0.002 M/sec                  
-     4,555,973,134      cycles                    #    3.855 GHz                    
+               481      page-faults               #    0.142 M/sec                  
+        12,008,316      cycles                    #    3.543 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-     7,823,786,117      instructions              #    1.72  insns per cycle        
-     1,265,169,450      branches                  # 1070.486 M/sec                  
-            42,572      branch-misses             #    0.00% of all branches        
+        26,689,349      instructions              #    2.22  insns per cycle        
+         3,957,812      branches                  # 1167.717 M/sec                  
+             7,315      branch-misses             #    0.18% of all branches        
 
-       1.255065098 seconds time elapsed
+       0.006426340 seconds time elapsed
 
-The total amount of money (maximum) Alice gets is 100000000
+The total amount of money (maximum) Alice gets is 250000
 Pass CoinGame test case
 
- Performance counter stats for './out/CoinGame.clang.enablevc.out 20000':
+ Performance counter stats for './out/CoinGame.clang.enablevc.out 1000':
 
-       1258.244310      task-clock (msec)         #    0.997 CPUs utilized          
-                 3      context-switches          #    0.002 K/sec                  
-                 1      cpu-migrations            #    0.001 K/sec                  
-             2,030      page-faults               #    0.002 M/sec                  
-     4,507,189,350      cycles                    #    3.582 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-     7,822,617,133      instructions              #    1.74  insns per cycle        
-     1,264,975,322      branches                  # 1005.350 M/sec                  
-            41,951      branch-misses             #    0.00% of all branches        
-
-       1.261571862 seconds time elapsed
-
-The total amount of money (maximum) Alice gets is 100000000
-Pass CoinGame test case
-
- Performance counter stats for './out/CoinGame.clang.enablevc.out 20000':
-
-       1174.878486      task-clock (msec)         #    0.995 CPUs utilized          
-                 2      context-switches          #    0.002 K/sec                  
+          3.303144      task-clock (msec)         #    0.490 CPUs utilized          
+                 1      context-switches          #    0.303 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-             2,031      page-faults               #    0.002 M/sec                  
-     4,547,113,803      cycles                    #    3.870 GHz                    
+               480      page-faults               #    0.145 M/sec                  
+        11,943,152      cycles                    #    3.616 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-     7,822,547,502      instructions              #    1.72  insns per cycle        
-     1,264,966,037      branches                  # 1076.678 M/sec                  
-            40,718      branch-misses             #    0.00% of all branches        
+        26,681,847      instructions              #    2.23  insns per cycle        
+         3,955,377      branches                  # 1197.458 M/sec                  
+             7,922      branch-misses             #    0.20% of all branches        
 
-       1.180697264 seconds time elapsed
+       0.006742929 seconds time elapsed
+
+The total amount of money (maximum) Alice gets is 250000
+Pass CoinGame test case
+
+ Performance counter stats for './out/CoinGame.clang.enablevc.out 1000':
+
+          3.628724      task-clock (msec)         #    0.536 CPUs utilized          
+                 1      context-switches          #    0.276 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+               990      page-faults               #    0.273 M/sec                  
+        13,025,724      cycles                    #    3.590 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        27,940,628      instructions              #    2.15  insns per cycle        
+         4,169,723      branches                  # 1149.088 M/sec                  
+             7,575      branch-misses             #    0.18% of all branches        
+
+       0.006764626 seconds time elapsed
+
+The total amount of money (maximum) Alice gets is 250000
+Pass CoinGame test case
+
+ Performance counter stats for './out/CoinGame.clang.enablevc.out 1000':
+
+          3.674526      task-clock (msec)         #    0.200 CPUs utilized          
+                 1      context-switches          #    0.272 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+               992      page-faults               #    0.270 M/sec                  
+        13,183,211      cycles                    #    3.588 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        27,958,942      instructions              #    2.12  insns per cycle        
+         4,178,878      branches                  # 1137.256 M/sec                  
+             7,845      branch-misses             #    0.19% of all branches        
+
+       0.018393511 seconds time elapsed
+
+The total amount of money (maximum) Alice gets is 250000
+Pass CoinGame test case
+
+ Performance counter stats for './out/CoinGame.clang.enablevc.out 1000':
+
+          3.476299      task-clock (msec)         #    0.501 CPUs utilized          
+                 1      context-switches          #    0.288 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+               480      page-faults               #    0.138 M/sec                  
+        11,968,786      cycles                    #    3.443 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        26,663,506      instructions              #    2.23  insns per cycle        
+         3,954,875      branches                  # 1137.668 M/sec                  
+             8,382      branch-misses             #    0.21% of all branches        
+
+       0.006943854 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -185,7 +185,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3858.468
+cpu MHz		: 3785.820
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -212,7 +212,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3684.484
+cpu MHz		: 3404.781
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -239,7 +239,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3839.875
+cpu MHz		: 3411.421
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -266,7 +266,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3898.578
+cpu MHz		: 3549.679
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -293,7 +293,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3193.343
+cpu MHz		: 3770.945
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -320,7 +320,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 1232.500
+cpu MHz		: 3407.304
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -347,7 +347,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3873.742
+cpu MHz		: 3402.390
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -374,7 +374,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3891.671
+cpu MHz		: 3611.437
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

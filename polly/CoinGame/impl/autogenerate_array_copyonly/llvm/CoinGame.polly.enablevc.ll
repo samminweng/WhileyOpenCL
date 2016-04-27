@@ -388,7 +388,7 @@ polly.loop_header301:                             ; preds = %polly.loop_header30
   %uglygep312 = bitcast i8* %uglygep to i64*
   %_p_scalar_ = load i64, i64* %uglygep312, align 8, !alias.scope !242, !noalias !244, !llvm.mem.parallel_loop_access !249
   %scevgep313 = getelementptr i64, i64* %call4, i64 %polly.indvar305
-  store i64 %_p_scalar_, i64* %scevgep313, align 8, !alias.scope !246, !noalias !250, !llvm.mem.parallel_loop_access !249
+  store i64 %_p_scalar_, i64* %scevgep313, align 8, !alias.scope !245, !noalias !250, !llvm.mem.parallel_loop_access !249
   %polly.indvar_next306 = add nuw nsw i64 %polly.indvar305, 1
   %polly.loop_cond308 = icmp slt i64 %polly.indvar305, %polly.adjust_ub307
   br i1 %polly.loop_cond308, label %polly.loop_header301, label %polly.loop_exit303.loopexit, !llvm.loop !249
@@ -406,7 +406,7 @@ polly.loop_header315:                             ; preds = %polly.loop_header31
   %uglygep326327 = bitcast i8* %uglygep326 to i64*
   %_p_scalar_328 = load i64, i64* %uglygep326327, align 8, !alias.scope !242, !noalias !244, !llvm.mem.parallel_loop_access !251
   %scevgep329 = getelementptr i64, i64* %call, i64 %polly.indvar319
-  store i64 %_p_scalar_328, i64* %scevgep329, align 8, !alias.scope !248, !noalias !252, !llvm.mem.parallel_loop_access !251
+  store i64 %_p_scalar_328, i64* %scevgep329, align 8, !alias.scope !247, !noalias !252, !llvm.mem.parallel_loop_access !251
   %polly.indvar_next320 = add nuw nsw i64 %polly.indvar319, 1
   %polly.loop_cond322 = icmp slt i64 %polly.indvar319, %polly.adjust_ub321
   br i1 %polly.loop_cond322, label %polly.loop_header315, label %polly.loop_exit317.loopexit, !llvm.loop !251
@@ -424,7 +424,7 @@ polly.loop_header331:                             ; preds = %polly.loop_header33
   %uglygep342343 = bitcast i8* %uglygep342 to i64*
   %_p_scalar_344 = load i64, i64* %uglygep342343, align 8, !alias.scope !242, !noalias !244, !llvm.mem.parallel_loop_access !253
   %scevgep345 = getelementptr i64, i64* %call7, i64 %polly.indvar335
-  store i64 %_p_scalar_344, i64* %scevgep345, align 8, !alias.scope !247, !noalias !254, !llvm.mem.parallel_loop_access !253
+  store i64 %_p_scalar_344, i64* %scevgep345, align 8, !alias.scope !246, !noalias !254, !llvm.mem.parallel_loop_access !253
   %polly.indvar_next336 = add nuw nsw i64 %polly.indvar335, 1
   %polly.loop_cond338 = icmp slt i64 %polly.indvar335, %polly.adjust_ub337
   br i1 %polly.loop_cond338, label %polly.loop_header331, label %polly.loop_exit333.loopexit, !llvm.loop !253
@@ -438,14 +438,14 @@ polly.loop_preheader332:                          ; preds = %polly.loop_exit317
 polly.loop_header347:                             ; preds = %polly.loop_header347.preheader, %polly.stmt.blklab7.exit
   %polly.indvar351 = phi i64 [ %polly.indvar_next352, %polly.stmt.blklab7.exit ], [ 0, %polly.loop_header347.preheader ]
   %scevgep355 = getelementptr i64, i64* %call, i64 %polly.indvar351
-  %_p_scalar_356 = load i64, i64* %scevgep355, align 8, !alias.scope !248, !noalias !252, !llvm.mem.parallel_loop_access !255
+  %_p_scalar_356 = load i64, i64* %scevgep355, align 8, !alias.scope !247, !noalias !252, !llvm.mem.parallel_loop_access !255
   %scevgep357 = getelementptr i64, i64* %call4, i64 %polly.indvar351
-  %_p_scalar_358 = load i64, i64* %scevgep357, align 8, !alias.scope !246, !noalias !250, !llvm.mem.parallel_loop_access !255
+  %_p_scalar_358 = load i64, i64* %scevgep357, align 8, !alias.scope !245, !noalias !250, !llvm.mem.parallel_loop_access !255
   %p_cmp52 = icmp sgt i64 %_p_scalar_356, %_p_scalar_358, !dbg !216
   br i1 %p_cmp52, label %polly.stmt.if.end55, label %polly.stmt.blklab7.exit, !dbg !218
 
 polly.stmt.if.end55:                              ; preds = %polly.loop_header347
-  store i64 %_p_scalar_358, i64* %scevgep355, align 8, !alias.scope !248, !noalias !252, !llvm.mem.parallel_loop_access !255
+  store i64 %_p_scalar_358, i64* %scevgep355, align 8, !alias.scope !247, !noalias !252, !llvm.mem.parallel_loop_access !255
   br label %polly.stmt.blklab7.exit, !dbg !222
 
 polly.stmt.blklab7.exit:                          ; preds = %polly.stmt.if.end55, %polly.loop_header347
@@ -459,14 +459,14 @@ polly.loop_header360.preheader:                   ; preds = %polly.stmt.blklab7.
 polly.loop_header360:                             ; preds = %polly.loop_header360.preheader, %polly.stmt.blklab8.exit
   %polly.indvar364 = phi i64 [ %polly.indvar_next365, %polly.stmt.blklab8.exit ], [ 0, %polly.loop_header360.preheader ]
   %scevgep368 = getelementptr i64, i64* %call7, i64 %polly.indvar364
-  %_p_scalar_369 = load i64, i64* %scevgep368, align 8, !alias.scope !247, !noalias !254, !llvm.mem.parallel_loop_access !256
+  %_p_scalar_369 = load i64, i64* %scevgep368, align 8, !alias.scope !246, !noalias !254, !llvm.mem.parallel_loop_access !256
   %scevgep370 = getelementptr i64, i64* %call4, i64 %polly.indvar364
-  %_p_scalar_371 = load i64, i64* %scevgep370, align 8, !alias.scope !246, !noalias !250, !llvm.mem.parallel_loop_access !256
+  %_p_scalar_371 = load i64, i64* %scevgep370, align 8, !alias.scope !245, !noalias !250, !llvm.mem.parallel_loop_access !256
   %p_cmp60 = icmp sgt i64 %_p_scalar_369, %_p_scalar_371, !dbg !223
   br i1 %p_cmp60, label %polly.stmt.if.end63, label %polly.stmt.blklab8.exit, !dbg !225
 
 polly.stmt.if.end63:                              ; preds = %polly.loop_header360
-  store i64 %_p_scalar_371, i64* %scevgep368, align 8, !alias.scope !247, !noalias !254, !llvm.mem.parallel_loop_access !256
+  store i64 %_p_scalar_371, i64* %scevgep368, align 8, !alias.scope !246, !noalias !254, !llvm.mem.parallel_loop_access !256
   br label %polly.stmt.blklab8.exit, !dbg !228
 
 polly.stmt.blklab8.exit:                          ; preds = %polly.stmt.if.end63, %polly.loop_header360
@@ -477,10 +477,10 @@ polly.stmt.blklab8.exit:                          ; preds = %polly.stmt.if.end63
 polly.loop_header373:                             ; preds = %polly.loop_header373, %polly.loop_preheader374
   %polly.indvar377 = phi i64 [ 0, %polly.loop_preheader374 ], [ %polly.indvar_next378, %polly.loop_header373 ]
   %scevgep381 = getelementptr i64, i64* %call, i64 %polly.indvar377
-  %_p_scalar_382 = load i64, i64* %scevgep381, align 8, !alias.scope !248, !noalias !252
+  %_p_scalar_382 = load i64, i64* %scevgep381, align 8, !alias.scope !247, !noalias !252
   %p_add67 = add nsw i64 %_p_scalar_382, %polly.indvar377, !dbg !230
   %scevgep383 = getelementptr i64, i64* %call7, i64 %polly.indvar377
-  %_p_scalar_384 = load i64, i64* %scevgep383, align 8, !alias.scope !247, !noalias !254
+  %_p_scalar_384 = load i64, i64* %scevgep383, align 8, !alias.scope !246, !noalias !254
   %59 = add nuw i64 %polly.indvar377, %polly.indvar
   %p_add69 = add nsw i64 %59, %_p_scalar_384, !dbg !231
   %p_cmp70 = icmp sgt i64 %p_add67, %p_add69, !dbg !232
@@ -728,14 +728,14 @@ attributes #8 = { noreturn nounwind }
 !llvm.module.flags = !{!5, !6}
 !llvm.ident = !{!7}
 
-!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 3.9.0 (http://llvm.org/git/clang.git 83402ed45b681e9f38ce6626e5899c19159ceb29) (http://llvm.org/git/llvm.git 4fc8e6fd79f212952e8f538b6d5d9d78098b4505)", isOptimized: true, runtimeVersion: 0, emissionKind: FullDebug, enums: !2, retainedTypes: !3)
-!1 = !DIFile(filename: "CoinGame.c", directory: "/home/sam/workspace/WhileyOpenCL/polly/CoinGame/impl/autogenerate_array_copyonly")
+!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 3.9.0 (http://llvm.org/git/clang.git 2af14cc4a90f43170f8ea9c1dfa0f71f46a0621c) (http://llvm.org/git/llvm.git 1e7e2b2b556977af8ccc12b7afba61302f3a2da9)", isOptimized: true, runtimeVersion: 0, emissionKind: FullDebug, enums: !2, retainedTypes: !3)
+!1 = !DIFile(filename: "CoinGame.c", directory: "/home/mw169/workspace/WhileyOpenCL/polly/CoinGame/impl/autogenerate_array_copyonly")
 !2 = !{}
 !3 = !{!4}
 !4 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: null, size: 64, align: 64)
 !5 = !{i32 2, !"Dwarf Version", i32 4}
 !6 = !{i32 2, !"Debug Info Version", i32 3}
-!7 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git 83402ed45b681e9f38ce6626e5899c19159ceb29) (http://llvm.org/git/llvm.git 4fc8e6fd79f212952e8f538b6d5d9d78098b4505)"}
+!7 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git 2af14cc4a90f43170f8ea9c1dfa0f71f46a0621c) (http://llvm.org/git/llvm.git 1e7e2b2b556977af8ccc12b7afba61302f3a2da9)"}
 !8 = distinct !DISubprogram(name: "findMoves", scope: !1, file: !1, line: 2, type: !9, isLocal: false, isDefinition: true, scopeLine: 2, flags: DIFlagPrototyped, isOptimized: true, unit: !0, variables: !13)
 !9 = !DISubroutineType(types: !10)
 !10 = !{!11, !11, !12, !12}
@@ -973,16 +973,16 @@ attributes #8 = { noreturn nounwind }
 !242 = distinct !{!242, !243, !"polly.alias.scope.moves"}
 !243 = distinct !{!243, !"polly.alias.scope.domain"}
 !244 = !{!245, !246, !247, !248}
-!245 = distinct !{!245, !243, !"polly.alias.scope.storemerge"}
-!246 = distinct !{!246, !243, !"polly.alias.scope.call4"}
-!247 = distinct !{!247, !243, !"polly.alias.scope.call7"}
-!248 = distinct !{!248, !243, !"polly.alias.scope.call"}
+!245 = distinct !{!245, !243, !"polly.alias.scope.call4"}
+!246 = distinct !{!246, !243, !"polly.alias.scope.call7"}
+!247 = distinct !{!247, !243, !"polly.alias.scope.call"}
+!248 = distinct !{!248, !243, !"polly.alias.scope.storemerge"}
 !249 = distinct !{!249}
-!250 = !{!245, !247, !242, !248}
+!250 = !{!242, !246, !247, !248}
 !251 = distinct !{!251}
-!252 = !{!245, !246, !247, !242}
+!252 = !{!245, !242, !246, !248}
 !253 = distinct !{!253}
-!254 = !{!245, !246, !242, !248}
+!254 = !{!245, !242, !247, !248}
 !255 = distinct !{!255}
 !256 = distinct !{!256}
 !257 = !DILocation(line: 227, column: 7, scope: !173)
