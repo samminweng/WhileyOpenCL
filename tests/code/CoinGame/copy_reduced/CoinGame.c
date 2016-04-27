@@ -497,6 +497,7 @@ int main(int argc, char** args){
 	void* _12;
 	_DECL_1DARRAY(_14);
 	void* _15;
+	long long _17 = 0;
 	//const %4 = 10 : int
 	_4 = 10;
 	//assign %1 = %4  : int
@@ -535,6 +536,19 @@ play(stdout, _1DARRAY_PARAM(moves), n);
 	//fieldload %16 = %15 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %16 (%3) : method(any)->()
 	printf("%lld\n", sum_alice);
+	//assert
+	{
+		//const %17 = 25 : int
+		_17 = 25;
+		//ifeq %3, %17 goto blklab20 : int
+		if(sum_alice==_17){goto blklab20;}
+		//fail
+		fprintf(stderr,"fail");
+		exit(-1);
+//.blklab20
+blklab20:;
+	//assert
+	}
 	//return
 	exit(0);
 }

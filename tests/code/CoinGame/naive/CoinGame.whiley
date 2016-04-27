@@ -102,5 +102,6 @@ method main(System.Console sys):
     int sum_alice = moves[n-1]
     sys.out.print_s("The total amount of money (maximum) Alice gets is ")
     sys.out.println(sum_alice)
+    assert sum_alice == 25
 
     	
