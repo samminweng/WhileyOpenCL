@@ -164,28 +164,34 @@ init(){
 #init autogenerate_copyonly NQueens
 #exec autogenerate_copyonly NQueens 1
 #exec autogenerate_copyonly NQueens 2
-exec autogenerate_copyonly NQueens 3
+#exec autogenerate_copyonly NQueens 3
 #exec autogenerate_copyonly NQueens 4
-exec autogenerate_copyonly NQueens 5
+#exec autogenerate_copyonly NQueens 5
 #exec autogenerate_copyonly NQueens 6
-exec autogenerate_copyonly NQueens 7
+#exec autogenerate_copyonly NQueens 7
 #exec autogenerate_copyonly NQueens 8
-exec autogenerate_copyonly NQueens 9
+#exec autogenerate_copyonly NQueens 9
 #exec autogenerate_copyonly NQueens 10
-exec autogenerate_copyonly NQueens 11
+#exec autogenerate_copyonly NQueens 11
 #exec autogenerate_copyonly NQueens 12
-exec autogenerate_copyonly NQueens 13
+#exec autogenerate_copyonly NQueens 13
 #exec autogenerate_copyonly NQueens 14
 #exec autogenerate_copyonly NQueens 15
 
 #init autogenerate_copyfree NQueens
 #exec autogenerate_copyfree NQueens 1
-#exec autogenerate_copyfree NQueens 2 
-#exec autogenerate_copyfree NQueens 4 
-#exec autogenerate_copyfree NQueens 6 
+#exec autogenerate_copyfree NQueens 2
+exec autogenerate_copyfree NQueens 3 
+#exec autogenerate_copyfree NQueens 4
+exec autogenerate_copyfree NQueens 5 
+#exec autogenerate_copyfree NQueens 6
+exec autogenerate_copyfree NQueens 7 
 #exec autogenerate_copyfree NQueens 8
-#exec autogenerate_copyfree NQueens 10 
-#exec autogenerate_copyfree NQueens 12 
+exec autogenerate_copyfree NQueens 9
+#exec autogenerate_copyfree NQueens 10
+exec autogenerate_copyfree NQueens 11 
+#exec autogenerate_copyfree NQueens 12
+exec autogenerate_copyfree NQueens 13 
 #exec autogenerate_copyfree NQueens 14
 #exec autogenerate_copyfree NQueens 15
 
