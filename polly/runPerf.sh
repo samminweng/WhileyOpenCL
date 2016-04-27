@@ -146,29 +146,35 @@ init(){
 #exec autogenerate1 GCD 30000
 #exec autogenerate1 GCD 40000
 # ### Benchmark Autogenerate CoinGame
-init autogenerate_copyonly CoinGame
-exec autogenerate_copyonly CoinGame 1000
-exec autogenerate_copyonly CoinGame 10000
-exec autogenerate_copyonly CoinGame 20000
-exec autogenerate_copyonly CoinGame 30000
-exec autogenerate_copyonly CoinGame 40000
+#init autogenerate_copyonly CoinGame
+#exec autogenerate_copyonly CoinGame 1000
+#exec autogenerate_copyonly CoinGame 10000
+#exec autogenerate_copyonly CoinGame 20000
+#exec autogenerate_copyonly CoinGame 30000
+#exec autogenerate_copyonly CoinGame 40000
 
-init autogenerate_copyfree 1000
-exec autogenerate_copyfree CoinGame 1000
-exec autogenerate_copyfree CoinGame 10000
-exec autogenerate_copyfree CoinGame 20000
-exec autogenerate_copyfree CoinGame 30000
-exec autogenerate_copyfree CoinGame 40000
+#init autogenerate_copyfree 1000
+#exec autogenerate_copyfree CoinGame 1000
+#exec autogenerate_copyfree CoinGame 10000
+#exec autogenerate_copyfree CoinGame 20000
+#exec autogenerate_copyfree CoinGame 30000
+#exec autogenerate_copyfree CoinGame 40000
 
 ### Benchmark Autogenerate NQueens
 #init autogenerate_copyonly NQueens
 #exec autogenerate_copyonly NQueens 1
 #exec autogenerate_copyonly NQueens 2
+exec autogenerate_copyonly NQueens 3
 #exec autogenerate_copyonly NQueens 4
+exec autogenerate_copyonly NQueens 5
 #exec autogenerate_copyonly NQueens 6
+exec autogenerate_copyonly NQueens 7
 #exec autogenerate_copyonly NQueens 8
+exec autogenerate_copyonly NQueens 9
 #exec autogenerate_copyonly NQueens 10
+exec autogenerate_copyonly NQueens 11
 #exec autogenerate_copyonly NQueens 12
+exec autogenerate_copyonly NQueens 13
 #exec autogenerate_copyonly NQueens 14
 #exec autogenerate_copyonly NQueens 15
 
