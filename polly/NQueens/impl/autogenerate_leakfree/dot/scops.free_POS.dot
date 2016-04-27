@@ -1,0 +1,16 @@
+digraph "Scop Graph for 'free_POS' function" {
+	label="Scop Graph for 'free_POS' function";
+
+	Node0xa9c4da0 [shape=record,label="{entry:\l  br label %entry.split, !dbg !21\l}"];
+	Node0xa9c4da0 -> Node0xa99d820;
+	Node0xa99d820 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata %struct.POS* %pos, i64 0, metadata\l... !20, metadata !22), !dbg !21\l  %0 = bitcast %struct.POS* %pos to i8*, !dbg !23\l  tail call void @free(i8* %0) #7, !dbg !24\l  ret void, !dbg !25\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xaa13b30 {
+          label = "NQueens.c:15-17
+";
+          style = solid;
+          color = 1
+          Node0xa9c4da0;
+          Node0xa99d820;
+        }
+}

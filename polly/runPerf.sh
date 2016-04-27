@@ -51,15 +51,14 @@ compileProgram(){
     	#ar -cvq libUtil.a Util.o
     	if [[ $c_type == *"autogenerate"* ]]
 	then
-		if [[ $c_type == *"copyonly"* ]]
+		if [[ $c_type == *"leakfree"* ]]
 		then
+			### Translate Whiley program into copy-eliminated + memory deallocated C code 
+            ./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"	
+		else
 			### Translate Whiley program into copy-eliminated C code 
 			./../../../../bin/wyopcl -code -copy "$program.whiley"
-		else
-			### Translate Whiley program into copy-eliminated + memory deallocated C code 
-                        ./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"
 		fi
-
 	fi
    	###read -p "Press [Enter] to continue..."
     	mkdir -p "out"
@@ -147,7 +146,7 @@ init(){
 #exec autogenerate1 GCD 30000
 #exec autogenerate1 GCD 40000
 # ### Benchmark Autogenerate CoinGame
-init autogenerate_copyonly CoinGame
+#init autogenerate_copyonly CoinGame
 #exec autogenerate_copyonly CoinGame 1000
 #exec autogenerate_copyonly CoinGame 10000
 #exec autogenerate_copyonly CoinGame 20000
@@ -155,52 +154,39 @@ init autogenerate_copyonly CoinGame
 #exec autogenerate_copyonly CoinGame 40000
 
 #init autogenerate_copyfree CoinGame
-exec autogenerate_copyfree CoinGame 1000
-exec autogenerate_copyfree CoinGame 10000
-exec autogenerate_copyfree CoinGame 20000
-exec autogenerate_copyfree CoinGame 30000
-exec autogenerate_copyfree CoinGame 40000
+#exec autogenerate_copyfree CoinGame 1000
+#exec autogenerate_copyfree CoinGame 10000
+#exec autogenerate_copyfree CoinGame 20000
+#exec autogenerate_copyfree CoinGame 30000
+#exec autogenerate_copyfree CoinGame 40000
 
-exec autogenerate_array_copyfree CoinGame 1000
-exec autogenerate_array_copyfree CoinGame 10000
-exec autogenerate_array_copyfree CoinGame 20000
-exec autogenerate_array_copyfree CoinGame 30000
-exec autogenerate_array_copyfree CoinGame 40000
+#exec autogenerate_array_copyfree CoinGame 1000
+#exec autogenerate_array_copyfree CoinGame 10000
+#exec autogenerate_array_copyfree CoinGame 20000
+#exec autogenerate_array_copyfree CoinGame 30000
+#exec autogenerate_array_copyfree CoinGame 40000
 
 ### Benchmark Autogenerate NQueens
-#init autogenerate_copyonly NQueens
-#exec autogenerate_copyonly NQueens 1
-#exec autogenerate_copyonly NQueens 2
-#exec autogenerate_copyonly NQueens 3
-#exec autogenerate_copyonly NQueens 4
-#exec autogenerate_copyonly NQueens 5
-#exec autogenerate_copyonly NQueens 6
-#exec autogenerate_copyonly NQueens 7
-#exec autogenerate_copyonly NQueens 8
-#exec autogenerate_copyonly NQueens 9
-#exec autogenerate_copyonly NQueens 10
-#exec autogenerate_copyonly NQueens 11
-#exec autogenerate_copyonly NQueens 12
-#exec autogenerate_copyonly NQueens 13
-#exec autogenerate_copyonly NQueens 14
-#exec autogenerate_copyonly NQueens 15
+init autogenerate_leakfree NQueens
+exec autogenerate_leak NQueens 1
+exec autogenerate_leak NQueens 2
+exec autogenerate_leak NQueens 4
+exec autogenerate_leak NQueens 6
+exec autogenerate_leak NQueens 8
+exec autogenerate_leak NQueens 10
+exec autogenerate_leak NQueens 12
+exec autogenerate_leak NQueens 14
+exec autogenerate_leak NQueens 15
 
-#init autogenerate_copyfree NQueens
-#exec autogenerate_copyfree NQueens 1
-#exec autogenerate_copyfree NQueens 2
-#exec autogenerate_copyfree NQueens 3 
-#exec autogenerate_copyfree NQueens 4
-#exec autogenerate_copyfree NQueens 5 
-#exec autogenerate_copyfree NQueens 6
-#exec autogenerate_copyfree NQueens 7 
-#exec autogenerate_copyfree NQueens 8
-#exec autogenerate_copyfree NQueens 9
-#exec autogenerate_copyfree NQueens 10
-#exec autogenerate_copyfree NQueens 11 
-#exec autogenerate_copyfree NQueens 12
-#exec autogenerate_copyfree NQueens 13 
-#exec autogenerate_copyfree NQueens 14
-#exec autogenerate_copyfree NQueens 15
+exec autogenerate_leakfree NQueens 1
+exec autogenerate_leakfree NQueens 2
+exec autogenerate_leakfree NQueens 4
+exec autogenerate_leakfree NQueens 6
+exec autogenerate_leakfree NQueens 8
+exec autogenerate_leakfree NQueens 10
+exec autogenerate_leakfree NQueens 12
+exec autogenerate_leakfree NQueens 14
+exec autogenerate_leakfree NQueens 15
 
 ### Benchmark Autogenerate1 and autogenerate2 MatrixMult
 # ### Autogenerate1 MatrixMult

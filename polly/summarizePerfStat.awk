@@ -55,11 +55,11 @@ BEGIN {
 	# Test case name
 	testcases="CoinGame";
 	# Code Optimizations
-	c_types="autogenerate_copyonly autogenerate_copyfree";
+	c_types="autogenerate_copyfree autogenerate_array_copyfree";
 	# Polly optimiz
 	polly_opts="gcc clang polly openmp"
 	# Parameters
-	parameters["CoinGame"] = "1000 10000 20000 30000 40000";
+	parameters["CoinGame"] = "20000";
 	##parameters["GCD"] = "1000 10000 20000 30000 40000";
 	##parameters["NQueens"] = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15";
 	threads="1 2 4";
@@ -128,8 +128,8 @@ BEGIN {
 	}
 }
 END {
-	##print "CPU Utilization";
-	###generateReport(cpu_utils);
+	print "CPU Utilization";
+	generateReport(cpu_utils);
 	print "Execution Time";
 	generateReport(exec_times);
 }

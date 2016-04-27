@@ -158,13 +158,13 @@ exec(){
 	
 	if [[ $c_type == *"autogenerate"* ]]
 	then
-		if [[ $c_type == *"copyonly"* ]]
+		if [[ $c_type == *"leakfree"* ]]
 		then
-			### Translate Whiley program into copy-eliminated C code 
-			./../../../../bin/wyopcl -code -copy "$program.whiley"
-		else
 			### Translate Whiley program into copy-eliminated and memory deallocated C code 
 			./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"
+		else
+			### Translate Whiley program into copy-eliminated C code 
+			./../../../../bin/wyopcl -code -copy "$program.whiley"
 		fi
 	fi
 
@@ -180,10 +180,10 @@ exec(){
 #exec autogenerate_cached_copyfree GCD 10000
 #exec autogenerate_copyonly CoinGame 10000
 #exec autogenerate_copyfree CoinGame 10000
-exec autogenerate_array_copyonly CoinGame 10000
-exec autogenerate_array_copyfree CoinGame 10000
-#exec autogenerate_copyonly NQueens 12
-#exec autogenerate_copyfree NQueens 12
+#exec autogenerate_array_copyonly CoinGame 10000
+#exec autogenerate_array_copyfree CoinGame 10000
+exec autogenerate_leak NQueens 12
+exec autogenerate_leakfree NQueens 12
 
 
 

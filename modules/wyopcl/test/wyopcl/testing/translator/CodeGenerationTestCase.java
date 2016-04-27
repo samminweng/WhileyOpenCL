@@ -76,6 +76,7 @@ public class CodeGenerationTestCase {
 				"CoinGame",
 				"CoinGame1",
 				"CoinGame2",
+				"CoinGame3",
 				"nqueens"
 				//"lambda"
 		});
