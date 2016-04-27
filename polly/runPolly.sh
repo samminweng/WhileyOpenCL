@@ -41,8 +41,8 @@ runExecutables(){
 	parameter=$3
 	num_threads=$4
 	### Use 'llc' to compile LLVM code into assembly code
-    llc -print-machineinstrs=if-converter "llvm/$program.$opt.ll" -o "assembly/$program.$opt.s"
-    #llc "llvm/$program.$opt.ll" -o "assembly/$program.$opt.s"
+    #llc -print-machineinstrs=if-converter "llvm/$program.$opt.ll" -o "assembly/$program.$opt.s"
+    llc "llvm/$program.$opt.ll" -o "assembly/$program.$opt.s"
     ####read -p "Press [Enter] to continue"
     if [[ $opt == *"openmp"* ]]
     then
@@ -180,6 +180,7 @@ exec(){
 #exec autogenerate_cached_copyfree GCD 10000
 #exec autogenerate_copyonly CoinGame 10000
 #exec autogenerate_copyfree CoinGame 10000
+exec autogenerate_array_copyonly CoinGame 10000
 exec autogenerate_array_copyfree CoinGame 10000
 #exec autogenerate_copyonly NQueens 12
 #exec autogenerate_copyfree NQueens 12
