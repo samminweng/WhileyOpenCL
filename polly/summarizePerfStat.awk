@@ -53,15 +53,15 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcases="NQueens";
+	testcases="CoinGame";
 	# Code Optimizations
-	c_types="autogenerate_leak autogenerate_leakfree";
+	c_types="autogenerate_leak autogenerate_leakfree autogenerate_array_leakfree autogenerate_single_leakfree";
 	# Polly optimiz
 	polly_opts="gcc clang polly openmp"
 	# Parameters
-	#parameters["CoinGame"] = "20000";
+	parameters["CoinGame"] = "40000";
 	##parameters["GCD"] = "1000 10000 20000 30000 40000";
-	parameters["NQueens"] = "1 2 4 6 8 10 12 14 15";
+	#parameters["NQueens"] = "1 2 4 6 8 10 12 14 15";
 	threads="1 2 4";
 	vcs="enablevc";
 	cpu_utils[""] = "";
