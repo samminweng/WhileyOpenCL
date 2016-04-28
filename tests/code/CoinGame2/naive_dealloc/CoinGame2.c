@@ -2,25 +2,25 @@
 long long* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_OWNERSHIP_PARAM(moves), long long n){
 	_DECL_1DARRAY(_2);
 	_DECL_OWNERSHIP(_2);
+	long long s = 0;
 	_DECL_1DARRAY(x);
 	_DECL_OWNERSHIP(x);
 	_DECL_1DARRAY(y);
 	_DECL_OWNERSHIP(y);
 	_DECL_1DARRAY(z);
 	_DECL_OWNERSHIP(z);
-	long long s = 0;
 	long long j = 0;
 	long long i = 0;
 	long long _9 = 0;
-	_DECL_1DARRAY(_10);
-	_DECL_OWNERSHIP(_10);
-	long long _11 = 0;
-	_DECL_1DARRAY(_12);
-	_DECL_OWNERSHIP(_12);
-	long long _13 = 0;
-	_DECL_1DARRAY(_14);
-	_DECL_OWNERSHIP(_14);
-	long long _15 = 0;
+	long long _10 = 0;
+	_DECL_1DARRAY(_11);
+	_DECL_OWNERSHIP(_11);
+	long long _12 = 0;
+	_DECL_1DARRAY(_13);
+	_DECL_OWNERSHIP(_13);
+	long long _14 = 0;
+	_DECL_1DARRAY(_15);
+	_DECL_OWNERSHIP(_15);
 	long long _16 = 0;
 	long long _17 = 0;
 	long long _18 = 0;
@@ -78,58 +78,58 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_OWNERSHIP_PARAM(moves), l
 	long long _70 = 0;
 	//const %9 = 0 : int
 	_9 = 0;
-	//arraygen %10 = [9; 1] : int[]
-	_FREE(_10);
-	_GEN_1DARRAY(_10, n, _9);
-	_ADD_OWNERSHIP(_10);
-	//assign %3 = %10  : int[]
-	_FREE(x);
-	_1DARRAY_COPY(x, _10);
-	_ADD_OWNERSHIP(x);
-	_ADD_OWNERSHIP(_10);
-	//const %11 = 0 : int
-	_11 = 0;
-	//arraygen %12 = [11; 1] : int[]
-	_FREE(_12);
-	_GEN_1DARRAY(_12, n, _11);
-	_ADD_OWNERSHIP(_12);
-	//assign %4 = %12  : int[]
-	_FREE(y);
-	_1DARRAY_COPY(y, _12);
-	_ADD_OWNERSHIP(y);
-	_ADD_OWNERSHIP(_12);
-	//const %13 = 0 : int
-	_13 = 0;
-	//arraygen %14 = [13; 1] : int[]
-	_FREE(_14);
-	_GEN_1DARRAY(_14, n, _13);
-	_ADD_OWNERSHIP(_14);
-	//assign %5 = %14  : int[]
-	_FREE(z);
-	_1DARRAY_COPY(z, _14);
-	_ADD_OWNERSHIP(z);
-	_ADD_OWNERSHIP(_14);
-	//const %15 = 0 : int
-	_15 = 0;
-	//assign %6 = %15  : int
-	s = _15;
-	//loop (%0, %3, %4, %5, %6, %7, %8, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57, %58, %59, %60, %61, %62, %63, %64, %65, %66, %67, %68, %69, %70)
+	//assign %3 = %9  : int
+	s = _9;
+	//loop (%0, %3, %4, %5, %6, %7, %8, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57, %58, %59, %60, %61, %62, %63, %64, %65, %66, %67, %68, %69, %70)
 	while(true){
-		//ifge %6, %1 goto blklab0 : int
+		//ifge %3, %1 goto blklab0 : int
 		if(s>=n){goto blklab0;}
-		//assign %7 = %6  : int
+		//const %10 = 0 : int
+		_10 = 0;
+		//arraygen %11 = [10; 1] : int[]
+		_FREE(_11);
+		_GEN_1DARRAY(_11, n, _10);
+		_ADD_OWNERSHIP(_11);
+		//assign %4 = %11  : int[]
+		_FREE(x);
+		_1DARRAY_COPY(x, _11);
+		_ADD_OWNERSHIP(x);
+		_ADD_OWNERSHIP(_11);
+		//const %12 = 0 : int
+		_12 = 0;
+		//arraygen %13 = [12; 1] : int[]
+		_FREE(_13);
+		_GEN_1DARRAY(_13, n, _12);
+		_ADD_OWNERSHIP(_13);
+		//assign %5 = %13  : int[]
+		_FREE(y);
+		_1DARRAY_COPY(y, _13);
+		_ADD_OWNERSHIP(y);
+		_ADD_OWNERSHIP(_13);
+		//const %14 = 0 : int
+		_14 = 0;
+		//arraygen %15 = [14; 1] : int[]
+		_FREE(_15);
+		_GEN_1DARRAY(_15, n, _14);
+		_ADD_OWNERSHIP(_15);
+		//assign %6 = %15  : int[]
+		_FREE(z);
+		_1DARRAY_COPY(z, _15);
+		_ADD_OWNERSHIP(z);
+		_ADD_OWNERSHIP(_15);
+		//assign %7 = %3  : int
 		j = s;
 		//const %16 = 0 : int
 		_16 = 0;
 		//assign %8 = %16  : int
 		i = _16;
-		//loop (%0, %3, %4, %5, %7, %8, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57, %58, %59, %60, %61, %62, %63, %64, %65, %66, %67, %68)
+		//loop (%0, %4, %5, %6, %7, %8, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57, %58, %59, %60, %61, %62, %63, %64, %65, %66, %67, %68)
 		while(true){
 			//ifge %7, %1 goto blklab2 : int
 			if(j>=n){goto blklab2;}
 			//const %17 = 0 : int
 			_17 = 0;
-			//update %4[%8] = %17 : int[] -> int[]
+			//update %5[%8] = %17 : int[] -> int[]
 			y[i] = _17;
 			//const %18 = 1 : int
 			_18 = 1;
@@ -159,13 +159,13 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_OWNERSHIP_PARAM(moves), l
 			_28=_26-_27;
 			//indexof %29 = %0, %28 : int[]
 			_29=moves[_28];
-			//update %4[%8] = %29 : int[] -> int[]
+			//update %5[%8] = %29 : int[] -> int[]
 			y[i] = _29;
 //.blklab4
 blklab4:;
 			//const %30 = 0 : int
 			_30 = 0;
-			//update %3[%8] = %30 : int[] -> int[]
+			//update %4[%8] = %30 : int[] -> int[]
 			x[i] = _30;
 			//const %31 = 2 : int
 			_31 = 2;
@@ -183,13 +183,13 @@ blklab4:;
 			_36=_35+j;
 			//indexof %37 = %0, %36 : int[]
 			_37=moves[_36];
-			//update %3[%8] = %37 : int[] -> int[]
+			//update %4[%8] = %37 : int[] -> int[]
 			x[i] = _37;
 //.blklab5
 blklab5:;
 			//const %38 = 0 : int
 			_38 = 0;
-			//update %5[%8] = %38 : int[] -> int[]
+			//update %6[%8] = %38 : int[] -> int[]
 			z[i] = _38;
 			//const %39 = 1 : int
 			_39 = 1;
@@ -209,45 +209,45 @@ blklab5:;
 			_45=_43-_44;
 			//indexof %46 = %0, %45 : int[]
 			_46=moves[_45];
-			//update %5[%8] = %46 : int[] -> int[]
+			//update %6[%8] = %46 : int[] -> int[]
 			z[i] = _46;
 //.blklab6
 blklab6:;
-			//indexof %47 = %3, %8 : int[]
+			//indexof %47 = %4, %8 : int[]
 			_47=x[i];
-			//indexof %48 = %4, %8 : int[]
+			//indexof %48 = %5, %8 : int[]
 			_48=y[i];
 			//ifle %47, %48 goto blklab7 : int
 			if(_47<=_48){goto blklab7;}
-			//indexof %49 = %4, %8 : int[]
+			//indexof %49 = %5, %8 : int[]
 			_49=y[i];
-			//update %3[%8] = %49 : int[] -> int[]
+			//update %4[%8] = %49 : int[] -> int[]
 			x[i] = _49;
 //.blklab7
 blklab7:;
-			//indexof %50 = %5, %8 : int[]
+			//indexof %50 = %6, %8 : int[]
 			_50=z[i];
-			//indexof %51 = %4, %8 : int[]
+			//indexof %51 = %5, %8 : int[]
 			_51=y[i];
 			//ifle %50, %51 goto blklab8 : int
 			if(_50<=_51){goto blklab8;}
-			//indexof %52 = %4, %8 : int[]
+			//indexof %52 = %5, %8 : int[]
 			_52=y[i];
-			//update %5[%8] = %52 : int[] -> int[]
+			//update %6[%8] = %52 : int[] -> int[]
 			z[i] = _52;
 //.blklab8
 blklab8:;
-			//indexof %53 = %3, %8 : int[]
+			//indexof %53 = %4, %8 : int[]
 			_53=x[i];
 			//add %54 = %8, %53 : int
 			_54=i+_53;
-			//indexof %55 = %5, %8 : int[]
+			//indexof %55 = %6, %8 : int[]
 			_55=z[i];
 			//add %56 = %7, %55 : int
 			_56=j+_55;
 			//ifle %54, %56 goto blklab9 : int
 			if(_54<=_56){goto blklab9;}
-			//indexof %57 = %3, %8 : int[]
+			//indexof %57 = %4, %8 : int[]
 			_57=x[i];
 			//add %58 = %8, %57 : int
 			_58=i+_57;
@@ -261,7 +261,7 @@ blklab8:;
 			goto blklab10;
 //.blklab9
 blklab9:;
-			//indexof %61 = %5, %8 : int[]
+			//indexof %61 = %6, %8 : int[]
 			_61=z[i];
 			//add %62 = %7, %61 : int
 			_62=j+_61;
@@ -292,9 +292,9 @@ blklab3:;
 blklab2:;
 		//const %69 = 1 : int
 		_69 = 1;
-		//add %70 = %6, %69 : int
+		//add %70 = %3, %69 : int
 		_70=s+_69;
-		//assign %6 = %70  : int
+		//assign %3 = %70  : int
 		s = _70;
 //.blklab1
 blklab1:;
@@ -306,9 +306,9 @@ blklab0:;
 	_FREE(x);
 	_FREE(y);
 	_FREE(z);
-	_FREE(_10);
-	_FREE(_12);
-	_FREE(_14);
+	_FREE(_11);
+	_FREE(_13);
+	_FREE(_15);
 	return moves;
 	//return
 }
