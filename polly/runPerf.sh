@@ -146,10 +146,10 @@ init(){
 #exec autogenerate1 GCD 30000
 #exec autogenerate1 GCD 40000
 # ### Benchmark Autogenerate CoinGame
-init autogenerate CoinGame
-exec autogenerate_leak CoinGame 40000
-exec autogenerate_leakfree CoinGame 40000
-exec autogenerate_array_leakfree CoinGame 40000
+#init autogenerate CoinGame
+#exec autogenerate_leak CoinGame 40000
+#exec autogenerate_leakfree CoinGame 40000
+#exec autogenerate_array_leakfree CoinGame 40000
 exec autogenerate_single_leakfree CoinGame 40000
 
 ### Benchmark Autogenerate NQueens
