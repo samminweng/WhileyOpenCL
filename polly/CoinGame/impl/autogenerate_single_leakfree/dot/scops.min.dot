@@ -1,0 +1,16 @@
+digraph "Scop Graph for 'min' function" {
+	label="Scop Graph for 'min' function";
+
+	Node0xa869630 [shape=record,label="{entry:\l  br label %entry.split, !dbg !16\l}"];
+	Node0xa869630 -> Node0xa85eae0;
+	Node0xa85eae0 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata i64 %a, i64 0, metadata !13,\l... metadata !17), !dbg !16\l  tail call void @llvm.dbg.value(metadata i64 %b, i64 0, metadata !14,\l... metadata !17), !dbg !18\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !15, metadata\l... !17), !dbg !19\l  %cmp = icmp slt i64 %a, %b, !dbg !20\l  %a.b = select i1 %cmp, i64 %a, i64 %b, !dbg !22\l  ret i64 %a.b, !dbg !23\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xa84f5f0 {
+          label = "CoinGame.c:19-34
+";
+          style = solid;
+          color = 1
+          Node0xa869630;
+          Node0xa85eae0;
+        }
+}

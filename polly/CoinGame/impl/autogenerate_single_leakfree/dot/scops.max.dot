@@ -1,0 +1,16 @@
+digraph "Scop Graph for 'max' function" {
+	label="Scop Graph for 'max' function";
+
+	Node0xa8962a0 [shape=record,label="{entry:\l  br label %entry.split, !dbg !16\l}"];
+	Node0xa8962a0 -> Node0xa896580;
+	Node0xa896580 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata i64 %a, i64 0, metadata !13,\l... metadata !17), !dbg !16\l  tail call void @llvm.dbg.value(metadata i64 %b, i64 0, metadata !14,\l... metadata !17), !dbg !18\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !15, metadata\l... !17), !dbg !19\l  %cmp = icmp slt i64 %a, %b, !dbg !20\l  %b.a = select i1 %cmp, i64 %b, i64 %a, !dbg !22\l  ret i64 %b.a, !dbg !23\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xa850a00 {
+          label = "CoinGame.c:2-17
+";
+          style = solid;
+          color = 1
+          Node0xa8962a0;
+          Node0xa896580;
+        }
+}

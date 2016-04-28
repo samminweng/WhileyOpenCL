@@ -149,67 +149,60 @@ findMoves:                              # @findMoves
 	#DEBUG_VALUE: findMoves:_52 <- 0
 	#DEBUG_VALUE: findMoves:_53 <- 0
 	testq	%rcx, %rcx
-	jle	.LBB2_36
+	jle	.LBB2_30
 .Ltmp19:
 # BB#1:                                 # %while.cond1.preheader.lr.ph
 	#DEBUG_VALUE: findMoves:n <- %RCX
 	#DEBUG_VALUE: findMoves:moves_has_ownership [bit_piece offset=0 size=1] <- %EDX
 	#DEBUG_VALUE: findMoves:moves_size <- %RSI
 	#DEBUG_VALUE: findMoves:moves <- %RDI
+	leaq	(,%rcx,8), %rax
+	movq	%rax, -8(%rsp)          # 8-byte Spill
 	leaq	8(,%rcx,8), %r13
-	leaq	(%rcx,%rcx), %rax
-	movq	%rax, -16(%rsp)         # 8-byte Spill
 	movq	%rcx, %rax
 	shlq	$4, %rax
-	addq	%rdi, %rax
+	movq	%rax, -16(%rsp)         # 8-byte Spill
+	leaq	(%rdi,%rax), %rax
 	movq	%rax, -32(%rsp)         # 8-byte Spill
 	movq	%rcx, %rax
 	negq	%rax
-	movq	%rax, -40(%rsp)         # 8-byte Spill
-	leaq	-8(%rdi,%rcx,8), %r12
-	movabsq	$1152921504606846975, %rax # imm = 0xFFFFFFFFFFFFFFF
-	movabsq	$9223372036854775805, %r15 # imm = 0x7FFFFFFFFFFFFFFD
-	xorl	%edx, %edx
-.Ltmp20:
-	incq	%rax
+	movq	%rax, -56(%rsp)         # 8-byte Spill
+	leaq	-8(%rdi,%rcx,8), %rax
 	movq	%rax, -24(%rsp)         # 8-byte Spill
-	xorl	%r10d, %r10d
+	movq	%rdi, %rdx
+.Ltmp20:
+	xorl	%r12d, %r12d
+	xorl	%r14d, %r14d
 .Ltmp21:
 	.p2align	4, 0x90
 .LBB2_2:                                # %while.cond1.preheader
                                         # =>This Loop Header: Depth=1
                                         #     Child Loop BB2_4 Depth 2
                                         #     Child Loop BB2_7 Depth 2
-	movq	-16(%rsp), %rax         # 8-byte Reload
-	leaq	(%r10,%rax), %rax
-	cmpq	-24(%rsp), %rax         # 8-byte Folded Reload
-	movq	%rdx, -8(%rsp)          # 8-byte Spill
-	jge	.LBB2_3
+	movabsq	$1152921504606846975, %rax # imm = 0xFFFFFFFFFFFFFFF
+	cmpq	%rax, %r14
+	movq	%rdx, -40(%rsp)         # 8-byte Spill
+	movq	%r12, -48(%rsp)         # 8-byte Spill
+	jle	.LBB2_3
 # BB#6:                                 # %if.end5.us.preheader
                                         #   in Loop: Header=BB2_2 Depth=1
 .Ltmp22:
 	.loc	1 107 7                 # CoinGame.c:107:7
-	movq	-40(%rsp), %rax         # 8-byte Reload
-	leaq	(%rax,%r10), %r8
-	movq	%rdx, %rax
-	xorl	%r14d, %r14d
+	movq	-56(%rsp), %rax         # 8-byte Reload
+	leaq	(%rax,%r14), %r8
+	movq	%rdx, %rsi
+	movl	$2, %ebx
+.Ltmp23:
 	.p2align	4, 0x90
 .LBB2_7:                                # %if.end5.us
                                         #   Parent Loop BB2_2 Depth=1
                                         # =>  This Inner Loop Header: Depth=2
-	#DEBUG_VALUE: findMoves:y <- 0
-	#DEBUG_VALUE: findMoves:_11 <- 0
-.Ltmp23:
-	#DEBUG_VALUE: findMoves:_12 <- 1
-	movq	%r14, %rbp
-	.loc	1 115 9                 # CoinGame.c:115:9
-	leaq	(%r10,%rbp), %rdx
-	leaq	1(%rbp), %r14
+	.loc	1 47 12                 # CoinGame.c:47:12
+	leaq	-2(%r14,%rbx), %rdx
 .Ltmp24:
-	#DEBUG_VALUE: findMoves:_51 <- %R14
-	#DEBUG_VALUE: findMoves:_18 <- %R14
-	#DEBUG_VALUE: findMoves:_13 <- %R14
-	#DEBUG_VALUE: findMoves:i <- %R14
+	#DEBUG_VALUE: findMoves:_12 <- 1
+	#DEBUG_VALUE: findMoves:_11 <- 0
+	#DEBUG_VALUE: findMoves:y <- 0
 	.loc	1 125 10                # CoinGame.c:125:10
 	testq	%rdx, %rdx
 	#DEBUG_VALUE: findMoves:_16 <- 0
@@ -219,453 +212,385 @@ findMoves:                              # @findMoves
 .Ltmp26:
 # BB#9:                                 # %if.end5.us
                                         #   in Loop: Header=BB2_7 Depth=2
-	#DEBUG_VALUE: findMoves:i <- %R14
-	#DEBUG_VALUE: findMoves:_13 <- %R14
-	#DEBUG_VALUE: findMoves:_18 <- %R14
-	#DEBUG_VALUE: findMoves:_51 <- %R14
-	cmpq	%rcx, %r14
-	movl	$0, %r9d
+	.loc	1 117 10                # CoinGame.c:117:10
+	leaq	-1(%rbx), %rax
+	cmpq	%rcx, %rax
+	movl	$0, %ebp
 	jge	.LBB2_11
 .Ltmp27:
 # BB#10:                                # %if.end11.us
                                         #   in Loop: Header=BB2_7 Depth=2
-	#DEBUG_VALUE: findMoves:_51 <- %R14
-	#DEBUG_VALUE: findMoves:_18 <- %R14
-	#DEBUG_VALUE: findMoves:_13 <- %R14
-	#DEBUG_VALUE: findMoves:i <- %R14
 	#DEBUG_VALUE: findMoves:_17 <- 1
 	#DEBUG_VALUE: findMoves:_21 <- 1
 	.loc	1 139 8                 # CoinGame.c:139:8
-	movq	(%r12,%rax), %r9
+	movq	-8(%rsp), %rax          # 8-byte Reload
+	movq	-8(%rax,%rsi), %rbp
 .Ltmp28:
-	#DEBUG_VALUE: findMoves:_23 <- %R9
-	#DEBUG_VALUE: findMoves:y <- %R9
+	#DEBUG_VALUE: findMoves:_23 <- %RBP
+	#DEBUG_VALUE: findMoves:y <- %RBP
 	jmp	.LBB2_11
 .Ltmp29:
 	.p2align	4, 0x90
 .LBB2_8:                                #   in Loop: Header=BB2_7 Depth=2
-	#DEBUG_VALUE: findMoves:i <- %R14
-	#DEBUG_VALUE: findMoves:_13 <- %R14
-	#DEBUG_VALUE: findMoves:_18 <- %R14
-	#DEBUG_VALUE: findMoves:_51 <- %R14
-	xorl	%r9d, %r9d
-.Ltmp30:
-.LBB2_11:                               # %polly.preload.cond.us
+	xorl	%ebp, %ebp
+.LBB2_11:                               # %blklab8.us
                                         #   in Loop: Header=BB2_7 Depth=2
-	#DEBUG_VALUE: findMoves:_51 <- %R14
-	#DEBUG_VALUE: findMoves:_18 <- %R14
-	#DEBUG_VALUE: findMoves:_13 <- %R14
-	#DEBUG_VALUE: findMoves:i <- %R14
-	cmpq	$1, %rdx
-	setg	%r11b
-	leaq	19(%r15), %rsi
-	cmpq	%rsi, %rax
-	setl	%bl
-	testb	%bl, %r11b
-	jne	.LBB2_16
-.Ltmp31:
-# BB#12:                                # %polly.preload.cond.us
-                                        #   in Loop: Header=BB2_7 Depth=2
-	#DEBUG_VALUE: findMoves:i <- %R14
-	#DEBUG_VALUE: findMoves:_13 <- %R14
-	#DEBUG_VALUE: findMoves:_18 <- %R14
-	#DEBUG_VALUE: findMoves:_51 <- %R14
-	leaq	3(%rbp), %rsi
-	cmpq	%rcx, %rsi
-	jle	.LBB2_16
-.Ltmp32:
-# BB#13:                                # %polly.preload.cond.us
-                                        #   in Loop: Header=BB2_7 Depth=2
-	#DEBUG_VALUE: findMoves:_51 <- %R14
-	#DEBUG_VALUE: findMoves:_18 <- %R14
-	#DEBUG_VALUE: findMoves:_13 <- %R14
-	#DEBUG_VALUE: findMoves:i <- %R14
-	movabsq	$1152921504606846975, %rsi # imm = 0xFFFFFFFFFFFFFFF
-	cmpq	%rsi, %r10
-	jg	.LBB2_16
-.Ltmp33:
-# BB#14:                                # %polly.preload.cond.us
-                                        #   in Loop: Header=BB2_7 Depth=2
-	#DEBUG_VALUE: findMoves:i <- %R14
-	#DEBUG_VALUE: findMoves:_13 <- %R14
-	#DEBUG_VALUE: findMoves:_18 <- %R14
-	#DEBUG_VALUE: findMoves:_51 <- %R14
-	cmpq	%r15, %rbp
-	jg	.LBB2_16
-.Ltmp34:
-# BB#15:                                # %polly.preload.cond.us
-                                        #   in Loop: Header=BB2_7 Depth=2
-	#DEBUG_VALUE: findMoves:_51 <- %R14
-	#DEBUG_VALUE: findMoves:_18 <- %R14
-	#DEBUG_VALUE: findMoves:_13 <- %R14
-	#DEBUG_VALUE: findMoves:i <- %R14
-	leaq	18(%r15), %rsi
-	cmpq	%rsi, %rax
-	movl	$0, %ebx
-	movl	$0, %esi
-	jle	.LBB2_21
-.Ltmp35:
-	.p2align	4, 0x90
-.LBB2_16:                               # %blklab8.us
-                                        #   in Loop: Header=BB2_7 Depth=2
-	#DEBUG_VALUE: findMoves:i <- %R14
-	#DEBUG_VALUE: findMoves:_13 <- %R14
-	#DEBUG_VALUE: findMoves:_18 <- %R14
-	#DEBUG_VALUE: findMoves:_51 <- %R14
 	#DEBUG_VALUE: findMoves:x <- 0
 	#DEBUG_VALUE: findMoves:_24 <- 0
+.Ltmp30:
 	#DEBUG_VALUE: findMoves:_25 <- 2
-	.loc	1 151 9                 # CoinGame.c:151:9
-	leaq	2(%rbp), %rsi
-.Ltmp36:
-	#DEBUG_VALUE: findMoves:_28 <- %RSI
-	#DEBUG_VALUE: findMoves:_26 <- %RSI
 	.loc	1 153 7                 # CoinGame.c:153:7
-	cmpq	%rcx, %rsi
-	movl	$0, %esi
-.Ltmp37:
-	jge	.LBB2_18
-.Ltmp38:
-# BB#17:                                # %if.end18.us
+	cmpq	%rcx, %rbx
+	movl	$0, %eax
+	jge	.LBB2_13
+# BB#12:                                # %if.end18.us
                                         #   in Loop: Header=BB2_7 Depth=2
-	#DEBUG_VALUE: findMoves:_51 <- %R14
-	#DEBUG_VALUE: findMoves:_18 <- %R14
-	#DEBUG_VALUE: findMoves:_13 <- %R14
-	#DEBUG_VALUE: findMoves:i <- %R14
+.Ltmp31:
 	#DEBUG_VALUE: findMoves:_27 <- 2
 	.loc	1 163 8                 # CoinGame.c:163:8
-	movq	-32(%rsp), %rsi         # 8-byte Reload
-	movq	(%rsi,%rax), %rsi
-.Ltmp39:
-	#DEBUG_VALUE: findMoves:_31 <- %RSI
-	#DEBUG_VALUE: findMoves:x <- %RSI
-.LBB2_18:                               # %blklab9.us
+	movq	-16(%rsp), %rax         # 8-byte Reload
+	movq	(%rax,%rsi), %rax
+.Ltmp32:
+	#DEBUG_VALUE: findMoves:_31 <- %RAX
+	#DEBUG_VALUE: findMoves:x <- %RAX
+.LBB2_13:                               # %blklab9.us
                                         #   in Loop: Header=BB2_7 Depth=2
-	#DEBUG_VALUE: findMoves:_51 <- %R14
-	#DEBUG_VALUE: findMoves:_18 <- %R14
-	#DEBUG_VALUE: findMoves:_13 <- %R14
-	#DEBUG_VALUE: findMoves:i <- %R14
 	#DEBUG_VALUE: findMoves:z <- 0
 	#DEBUG_VALUE: findMoves:_32 <- 0
 	#DEBUG_VALUE: findMoves:_33 <- 1
 	#DEBUG_VALUE: findMoves:_35 <- 0
 	.loc	1 179 10                # CoinGame.c:179:10
 	cmpq	$2, %rdx
-	jge	.LBB2_20
-.Ltmp40:
-# BB#19:                                #   in Loop: Header=BB2_7 Depth=2
-	#DEBUG_VALUE: findMoves:i <- %R14
-	#DEBUG_VALUE: findMoves:_13 <- %R14
-	#DEBUG_VALUE: findMoves:_18 <- %R14
-	#DEBUG_VALUE: findMoves:_51 <- %R14
-	xorl	%ebx, %ebx
-	jmp	.LBB2_21
-.Ltmp41:
-	.p2align	4, 0x90
-.LBB2_20:                               # %if.end26.us
+	movl	$0, %edx
+	jl	.LBB2_15
+.Ltmp33:
+# BB#14:                                # %if.end26.us
                                         #   in Loop: Header=BB2_7 Depth=2
-	#DEBUG_VALUE: findMoves:i <- %R14
-	#DEBUG_VALUE: findMoves:_13 <- %R14
-	#DEBUG_VALUE: findMoves:_18 <- %R14
-	#DEBUG_VALUE: findMoves:_51 <- %R14
 	#DEBUG_VALUE: findMoves:_38 <- 2
 	.loc	1 189 8                 # CoinGame.c:189:8
-	movq	-16(%rdi,%rax), %rbx
-.Ltmp42:
-	#DEBUG_VALUE: findMoves:_40 <- %RBX
-	#DEBUG_VALUE: findMoves:z <- %RBX
-.LBB2_21:                               # %blklab10.us
+	movq	-16(%rsi), %rdx
+.Ltmp34:
+	#DEBUG_VALUE: findMoves:_40 <- %RDX
+	#DEBUG_VALUE: findMoves:z <- %RDX
+.LBB2_15:                               # %blklab10.us
                                         #   in Loop: Header=BB2_7 Depth=2
-	#DEBUG_VALUE: findMoves:i <- %R14
-	#DEBUG_VALUE: findMoves:_13 <- %R14
-	#DEBUG_VALUE: findMoves:_18 <- %R14
-	#DEBUG_VALUE: findMoves:_51 <- %R14
 	#DEBUG_VALUE: min:r <- 0
 	#DEBUG_VALUE: min:r <- 0
 	#DEBUG_VALUE: max:r <- 0
-	#DEBUG_VALUE: min:a <- %RSI
-	#DEBUG_VALUE: min:b <- %R9
-	#DEBUG_VALUE: min:b <- %RBX
+	#DEBUG_VALUE: min:a <- %RAX
+	#DEBUG_VALUE: min:b <- %RBP
+	#DEBUG_VALUE: min:b <- %RDX
 	.loc	1 5 6                   # CoinGame.c:5:6
-	notq	%rsi
-.Ltmp43:
-	notq	%r9
-.Ltmp44:
-	cmpq	%r9, %rsi
-	cmovlq	%r9, %rsi
-	negq	%rsi
-	leaq	-1(%rbp,%rsi), %rsi
-	notq	%rbx
-.Ltmp45:
-	cmpq	%r9, %rbx
-	cmovlq	%r9, %rbx
-	subq	%rbx, %rdx
-	decq	%rdx
-	cmpq	%rdx, %rsi
-.Ltmp46:
+	notq	%rax
+.Ltmp35:
+	notq	%rbp
+.Ltmp36:
+	cmpq	%rbp, %rax
+	cmovlq	%rbp, %rax
+	negq	%rax
+	leaq	-3(%rbx,%rax), %rax
+	notq	%rdx
+.Ltmp37:
+	cmpq	%rdx, %rbp
+	cmovgeq	%rbp, %rdx
+	leaq	(%r14,%rbx), %rbp
+	subq	%rdx, %rbp
+	addq	$-3, %rbp
+	cmpq	%rbp, %rax
+.Ltmp38:
 	.loc	1 7 2                   # CoinGame.c:7:2
-	cmovgeq	%rsi, %rdx
-.Ltmp47:
+	cmovgeq	%rax, %rbp
+.Ltmp39:
+	#DEBUG_VALUE: findMoves:_41 <- %RBP
+	.loc	1 209 15                # CoinGame.c:209:15
+	movq	%rbp, (%rsi)
+	.loc	1 107 7                 # CoinGame.c:107:7
+	addq	%r13, %rsi
+	leaq	1(%r8,%rbx), %rax
+.Ltmp40:
 	#DEBUG_VALUE: findMoves:_50 <- 1
 	#DEBUG_VALUE: findMoves:_48 <- 1
-	#DEBUG_VALUE: findMoves:_41 <- %RDX
-	.loc	1 209 15                # CoinGame.c:209:15
-	movq	%rdx, (%rdi,%rax)
-	.loc	1 107 7                 # CoinGame.c:107:7
-	addq	%r13, %rax
-	movq	%r8, %rdx
-.Ltmp48:
-	addq	%r14, %rdx
+	incq	%rbx
+	cmpq	$2, %rax
 	jne	.LBB2_7
-	jmp	.LBB2_35
-.Ltmp49:
+	jmp	.LBB2_29
+.Ltmp41:
 	.p2align	4, 0x90
 .LBB2_3:                                # %if.end5.preheader
                                         #   in Loop: Header=BB2_2 Depth=1
-	movq	-40(%rsp), %rax         # 8-byte Reload
-	leaq	(%rax,%r10), %r14
-	movq	%rdx, %rax
+	leaq	-2(%r14), %rbp
+	movq	-56(%rsp), %rax         # 8-byte Reload
+	leaq	(%rax,%r14), %rax
 	xorl	%r9d, %r9d
+	xorl	%r8d, %r8d
 	.p2align	4, 0x90
 .LBB2_4:                                # %if.end5
                                         #   Parent Loop BB2_2 Depth=1
                                         # =>  This Inner Loop Header: Depth=2
-.Ltmp50:
+.Ltmp42:
 	#DEBUG_VALUE: findMoves:y <- 0
 	#DEBUG_VALUE: findMoves:_11 <- 0
 	#DEBUG_VALUE: findMoves:_12 <- 1
-	movq	%r9, %rbp
+	movq	%r8, %r11
 	.loc	1 115 9                 # CoinGame.c:115:9
-	leaq	(%r10,%rbp), %r8
-	leaq	1(%rbp), %r9
-.Ltmp51:
-	#DEBUG_VALUE: findMoves:_51 <- %R9
-	#DEBUG_VALUE: findMoves:_18 <- %R9
-	#DEBUG_VALUE: findMoves:_13 <- %R9
-	#DEBUG_VALUE: findMoves:i <- %R9
+	leaq	(%r14,%r11), %r15
+	leaq	1(%r11), %r8
+.Ltmp43:
+	#DEBUG_VALUE: findMoves:_51 <- %R8
+	#DEBUG_VALUE: findMoves:_18 <- %R8
+	#DEBUG_VALUE: findMoves:_13 <- %R8
+	#DEBUG_VALUE: findMoves:i <- %R8
 	.loc	1 125 10                # CoinGame.c:125:10
-	testq	%r8, %r8
+	testq	%r15, %r15
 	#DEBUG_VALUE: findMoves:_16 <- 0
 	#DEBUG_VALUE: findMoves:_14 <- 1
 	jle	.LBB2_5
-.Ltmp52:
-# BB#22:                                # %if.end5
+.Ltmp44:
+# BB#16:                                # %if.end5
                                         #   in Loop: Header=BB2_4 Depth=2
-	#DEBUG_VALUE: findMoves:i <- %R9
-	#DEBUG_VALUE: findMoves:_13 <- %R9
-	#DEBUG_VALUE: findMoves:_18 <- %R9
-	#DEBUG_VALUE: findMoves:_51 <- %R9
-	cmpq	%rcx, %r9
-	movl	$0, %esi
-	jge	.LBB2_24
-.Ltmp53:
-# BB#23:                                # %if.end11
+	#DEBUG_VALUE: findMoves:i <- %R8
+	#DEBUG_VALUE: findMoves:_13 <- %R8
+	#DEBUG_VALUE: findMoves:_18 <- %R8
+	#DEBUG_VALUE: findMoves:_51 <- %R8
+	cmpq	%rcx, %r8
+	movl	$0, %r10d
+	jge	.LBB2_18
+.Ltmp45:
+# BB#17:                                # %if.end11
                                         #   in Loop: Header=BB2_4 Depth=2
-	#DEBUG_VALUE: findMoves:_51 <- %R9
-	#DEBUG_VALUE: findMoves:_18 <- %R9
-	#DEBUG_VALUE: findMoves:_13 <- %R9
-	#DEBUG_VALUE: findMoves:i <- %R9
+	#DEBUG_VALUE: findMoves:_51 <- %R8
+	#DEBUG_VALUE: findMoves:_18 <- %R8
+	#DEBUG_VALUE: findMoves:_13 <- %R8
+	#DEBUG_VALUE: findMoves:i <- %R8
 	#DEBUG_VALUE: findMoves:_17 <- 1
 	#DEBUG_VALUE: findMoves:_21 <- 1
 	.loc	1 139 8                 # CoinGame.c:139:8
-	movq	(%r12,%rax), %rsi
-.Ltmp54:
-	#DEBUG_VALUE: findMoves:_23 <- %RSI
-	#DEBUG_VALUE: findMoves:y <- %RSI
-	jmp	.LBB2_24
-.Ltmp55:
+	movq	-24(%rsp), %rdx         # 8-byte Reload
+	movq	(%rdx,%r12), %r10
+.Ltmp46:
+	#DEBUG_VALUE: findMoves:_23 <- %R10
+	#DEBUG_VALUE: findMoves:y <- %R10
+	jmp	.LBB2_18
+.Ltmp47:
 	.p2align	4, 0x90
 .LBB2_5:                                #   in Loop: Header=BB2_4 Depth=2
-	#DEBUG_VALUE: findMoves:i <- %R9
-	#DEBUG_VALUE: findMoves:_13 <- %R9
-	#DEBUG_VALUE: findMoves:_18 <- %R9
-	#DEBUG_VALUE: findMoves:_51 <- %R9
-	xorl	%esi, %esi
-.Ltmp56:
-.LBB2_24:                               # %polly.preload.cond
+	#DEBUG_VALUE: findMoves:i <- %R8
+	#DEBUG_VALUE: findMoves:_13 <- %R8
+	#DEBUG_VALUE: findMoves:_18 <- %R8
+	#DEBUG_VALUE: findMoves:_51 <- %R8
+	xorl	%r10d, %r10d
+.Ltmp48:
+.LBB2_18:                               # %polly.preload.cond
                                         #   in Loop: Header=BB2_4 Depth=2
-	#DEBUG_VALUE: findMoves:_51 <- %R9
-	#DEBUG_VALUE: findMoves:_18 <- %R9
-	#DEBUG_VALUE: findMoves:_13 <- %R9
-	#DEBUG_VALUE: findMoves:i <- %R9
-	cmpq	$1, %r8
+	#DEBUG_VALUE: findMoves:_51 <- %R8
+	#DEBUG_VALUE: findMoves:_18 <- %R8
+	#DEBUG_VALUE: findMoves:_13 <- %R8
+	#DEBUG_VALUE: findMoves:i <- %R8
+	cmpq	$1, %r15
+	movl	$0, %esi
+	jle	.LBB2_19
+.Ltmp49:
+# BB#32:                                # %polly.preload.exec133
+                                        #   in Loop: Header=BB2_4 Depth=2
+	#DEBUG_VALUE: findMoves:i <- %R8
+	#DEBUG_VALUE: findMoves:_13 <- %R8
+	#DEBUG_VALUE: findMoves:_18 <- %R8
+	#DEBUG_VALUE: findMoves:_51 <- %R8
+	movq	%r9, %rdx
+	shrq	$3, %rdx
+	addq	%rbp, %rdx
+	movq	(%rdi,%rdx,8), %rsi
+.Ltmp50:
+.LBB2_19:                               # %polly.preload.merge132
+                                        #   in Loop: Header=BB2_4 Depth=2
+	#DEBUG_VALUE: findMoves:i <- %R8
+	#DEBUG_VALUE: findMoves:_13 <- %R8
+	#DEBUG_VALUE: findMoves:_18 <- %R8
+	#DEBUG_VALUE: findMoves:_51 <- %R8
+	cmpq	$1, %r15
 	setg	%dl
-	leaq	19(%r15), %rbx
-	cmpq	%rbx, %rax
+	movabsq	$9223372036854775805, %rbx # imm = 0x7FFFFFFFFFFFFFFD
+	leaq	19(%rbx), %rbx
+	cmpq	%rbx, %r12
 	setl	%bl
 	testb	%bl, %dl
-	jne	.LBB2_29
-.Ltmp57:
-# BB#25:                                # %polly.preload.cond
+	jne	.LBB2_23
+.Ltmp51:
+# BB#20:                                # %polly.preload.merge132
                                         #   in Loop: Header=BB2_4 Depth=2
-	#DEBUG_VALUE: findMoves:i <- %R9
-	#DEBUG_VALUE: findMoves:_13 <- %R9
-	#DEBUG_VALUE: findMoves:_18 <- %R9
-	#DEBUG_VALUE: findMoves:_51 <- %R9
-	leaq	3(%rbp), %rdx
+	#DEBUG_VALUE: findMoves:_51 <- %R8
+	#DEBUG_VALUE: findMoves:_18 <- %R8
+	#DEBUG_VALUE: findMoves:_13 <- %R8
+	#DEBUG_VALUE: findMoves:i <- %R8
+	leaq	3(%r11), %rdx
 	cmpq	%rcx, %rdx
-	jle	.LBB2_29
-.Ltmp58:
-# BB#26:                                # %polly.preload.cond
+	jle	.LBB2_23
+.Ltmp52:
+# BB#21:                                # %polly.preload.merge132
                                         #   in Loop: Header=BB2_4 Depth=2
-	#DEBUG_VALUE: findMoves:_51 <- %R9
-	#DEBUG_VALUE: findMoves:_18 <- %R9
-	#DEBUG_VALUE: findMoves:_13 <- %R9
-	#DEBUG_VALUE: findMoves:i <- %R9
-	movabsq	$1152921504606846975, %rdx # imm = 0xFFFFFFFFFFFFFFF
-	cmpq	%rdx, %r10
-	jg	.LBB2_29
-.Ltmp59:
-# BB#27:                                # %polly.preload.cond
+	#DEBUG_VALUE: findMoves:i <- %R8
+	#DEBUG_VALUE: findMoves:_13 <- %R8
+	#DEBUG_VALUE: findMoves:_18 <- %R8
+	#DEBUG_VALUE: findMoves:_51 <- %R8
+	movabsq	$9223372036854775805, %rdx # imm = 0x7FFFFFFFFFFFFFFD
+	cmpq	%rdx, %r11
+	jg	.LBB2_23
+.Ltmp53:
+# BB#22:                                # %polly.preload.merge132
                                         #   in Loop: Header=BB2_4 Depth=2
-	#DEBUG_VALUE: findMoves:i <- %R9
-	#DEBUG_VALUE: findMoves:_13 <- %R9
-	#DEBUG_VALUE: findMoves:_18 <- %R9
-	#DEBUG_VALUE: findMoves:_51 <- %R9
-	cmpq	%r15, %rbp
-	jg	.LBB2_29
-.Ltmp60:
-# BB#28:                                # %polly.preload.cond
+	#DEBUG_VALUE: findMoves:_51 <- %R8
+	#DEBUG_VALUE: findMoves:_18 <- %R8
+	#DEBUG_VALUE: findMoves:_13 <- %R8
+	#DEBUG_VALUE: findMoves:i <- %R8
+	movabsq	$9223372036854775805, %rdx # imm = 0x7FFFFFFFFFFFFFFD
+	leaq	18(%rdx), %rdx
+	cmpq	%rdx, %r12
+	jg	.LBB2_23
+.Ltmp54:
+# BB#31:                                # %polly.cond
                                         #   in Loop: Header=BB2_4 Depth=2
-	#DEBUG_VALUE: findMoves:_51 <- %R9
-	#DEBUG_VALUE: findMoves:_18 <- %R9
-	#DEBUG_VALUE: findMoves:_13 <- %R9
-	#DEBUG_VALUE: findMoves:i <- %R9
-	leaq	18(%r15), %rdx
-	cmpq	%rdx, %rax
+	#DEBUG_VALUE: findMoves:i <- %R8
+	#DEBUG_VALUE: findMoves:_13 <- %R8
+	#DEBUG_VALUE: findMoves:_18 <- %R8
+	#DEBUG_VALUE: findMoves:_51 <- %R8
+	cmpq	$1, %r15
 	movl	$0, %edx
-	movl	$0, %ebx
-	jle	.LBB2_34
-.Ltmp61:
+	cmovleq	%rdx, %rsi
+	xorl	%ebx, %ebx
+	jmp	.LBB2_28
+.Ltmp55:
 	.p2align	4, 0x90
-.LBB2_29:                               # %blklab8
+.LBB2_23:                               # %blklab8
                                         #   in Loop: Header=BB2_4 Depth=2
-	#DEBUG_VALUE: findMoves:i <- %R9
-	#DEBUG_VALUE: findMoves:_13 <- %R9
-	#DEBUG_VALUE: findMoves:_18 <- %R9
-	#DEBUG_VALUE: findMoves:_51 <- %R9
+	#DEBUG_VALUE: findMoves:_51 <- %R8
+	#DEBUG_VALUE: findMoves:_18 <- %R8
+	#DEBUG_VALUE: findMoves:_13 <- %R8
+	#DEBUG_VALUE: findMoves:i <- %R8
 	#DEBUG_VALUE: findMoves:x <- 0
 	#DEBUG_VALUE: findMoves:_24 <- 0
 	#DEBUG_VALUE: findMoves:_25 <- 2
 	.loc	1 151 9                 # CoinGame.c:151:9
-	leaq	2(%rbp), %rdx
-.Ltmp62:
+	leaq	2(%r11), %rdx
+.Ltmp56:
 	#DEBUG_VALUE: findMoves:_28 <- %RDX
 	#DEBUG_VALUE: findMoves:_26 <- %RDX
 	.loc	1 153 7                 # CoinGame.c:153:7
 	cmpq	%rcx, %rdx
 	movl	$0, %ebx
-	jge	.LBB2_31
-.Ltmp63:
-# BB#30:                                # %if.end18
+	jge	.LBB2_25
+.Ltmp57:
+# BB#24:                                # %if.end18
                                         #   in Loop: Header=BB2_4 Depth=2
-	#DEBUG_VALUE: findMoves:_51 <- %R9
-	#DEBUG_VALUE: findMoves:_18 <- %R9
-	#DEBUG_VALUE: findMoves:_13 <- %R9
-	#DEBUG_VALUE: findMoves:i <- %R9
+	#DEBUG_VALUE: findMoves:i <- %R8
+	#DEBUG_VALUE: findMoves:_13 <- %R8
+	#DEBUG_VALUE: findMoves:_18 <- %R8
+	#DEBUG_VALUE: findMoves:_51 <- %R8
 	#DEBUG_VALUE: findMoves:_26 <- %RDX
 	#DEBUG_VALUE: findMoves:_28 <- %RDX
 	#DEBUG_VALUE: findMoves:_27 <- 2
 	.loc	1 163 8                 # CoinGame.c:163:8
 	movq	-32(%rsp), %rdx         # 8-byte Reload
-.Ltmp64:
-	movq	(%rdx,%rax), %rbx
-.Ltmp65:
+.Ltmp58:
+	movq	(%rdx,%r12), %rbx
+.Ltmp59:
 	#DEBUG_VALUE: findMoves:_31 <- %RBX
 	#DEBUG_VALUE: findMoves:x <- %RBX
-.LBB2_31:                               # %blklab9
+.LBB2_25:                               # %blklab9
                                         #   in Loop: Header=BB2_4 Depth=2
-	#DEBUG_VALUE: findMoves:_51 <- %R9
-	#DEBUG_VALUE: findMoves:_18 <- %R9
-	#DEBUG_VALUE: findMoves:_13 <- %R9
-	#DEBUG_VALUE: findMoves:i <- %R9
+	#DEBUG_VALUE: findMoves:i <- %R8
+	#DEBUG_VALUE: findMoves:_13 <- %R8
+	#DEBUG_VALUE: findMoves:_18 <- %R8
+	#DEBUG_VALUE: findMoves:_51 <- %R8
 	#DEBUG_VALUE: findMoves:z <- 0
 	#DEBUG_VALUE: findMoves:_32 <- 0
 	#DEBUG_VALUE: findMoves:_33 <- 1
 	#DEBUG_VALUE: findMoves:_35 <- 0
 	.loc	1 179 10                # CoinGame.c:179:10
-	cmpq	$2, %r8
-	jge	.LBB2_33
-.Ltmp66:
-# BB#32:                                #   in Loop: Header=BB2_4 Depth=2
-	#DEBUG_VALUE: findMoves:i <- %R9
-	#DEBUG_VALUE: findMoves:_13 <- %R9
-	#DEBUG_VALUE: findMoves:_18 <- %R9
-	#DEBUG_VALUE: findMoves:_51 <- %R9
-	xorl	%edx, %edx
-	jmp	.LBB2_34
-.Ltmp67:
+	cmpq	$2, %r15
+	jge	.LBB2_27
+.Ltmp60:
+# BB#26:                                #   in Loop: Header=BB2_4 Depth=2
+	#DEBUG_VALUE: findMoves:_51 <- %R8
+	#DEBUG_VALUE: findMoves:_18 <- %R8
+	#DEBUG_VALUE: findMoves:_13 <- %R8
+	#DEBUG_VALUE: findMoves:i <- %R8
+	xorl	%esi, %esi
+	jmp	.LBB2_28
+.Ltmp61:
 	.p2align	4, 0x90
-.LBB2_33:                               # %if.end26
+.LBB2_27:                               # %if.end26
                                         #   in Loop: Header=BB2_4 Depth=2
-	#DEBUG_VALUE: findMoves:i <- %R9
-	#DEBUG_VALUE: findMoves:_13 <- %R9
-	#DEBUG_VALUE: findMoves:_18 <- %R9
-	#DEBUG_VALUE: findMoves:_51 <- %R9
+	#DEBUG_VALUE: findMoves:_51 <- %R8
+	#DEBUG_VALUE: findMoves:_18 <- %R8
+	#DEBUG_VALUE: findMoves:_13 <- %R8
+	#DEBUG_VALUE: findMoves:i <- %R8
 	#DEBUG_VALUE: findMoves:_38 <- 2
 	.loc	1 189 8                 # CoinGame.c:189:8
-	movq	-16(%rdi,%rax), %rdx
-.Ltmp68:
-	#DEBUG_VALUE: findMoves:_40 <- %RDX
-	#DEBUG_VALUE: findMoves:z <- %RDX
-.LBB2_34:                               # %blklab10
+	movq	-16(%rdi,%r12), %rsi
+.Ltmp62:
+	#DEBUG_VALUE: findMoves:_40 <- %RSI
+	#DEBUG_VALUE: findMoves:z <- %RSI
+.LBB2_28:                               # %blklab10
                                         #   in Loop: Header=BB2_4 Depth=2
-	#DEBUG_VALUE: findMoves:i <- %R9
-	#DEBUG_VALUE: findMoves:_13 <- %R9
-	#DEBUG_VALUE: findMoves:_18 <- %R9
-	#DEBUG_VALUE: findMoves:_51 <- %R9
+	#DEBUG_VALUE: findMoves:_51 <- %R8
+	#DEBUG_VALUE: findMoves:_18 <- %R8
+	#DEBUG_VALUE: findMoves:_13 <- %R8
+	#DEBUG_VALUE: findMoves:i <- %R8
 	#DEBUG_VALUE: min:r <- 0
 	#DEBUG_VALUE: min:r <- 0
 	#DEBUG_VALUE: max:r <- 0
 	#DEBUG_VALUE: min:a <- %RBX
+	#DEBUG_VALUE: min:b <- %R10
 	#DEBUG_VALUE: min:b <- %RSI
-	#DEBUG_VALUE: min:b <- %RDX
 	.loc	1 5 6                   # CoinGame.c:5:6
 	notq	%rbx
-.Ltmp69:
-	notq	%rsi
-.Ltmp70:
-	cmpq	%rsi, %rbx
-	cmovlq	%rsi, %rbx
+.Ltmp63:
+	notq	%r10
+.Ltmp64:
+	cmpq	%r10, %rbx
+	cmovlq	%r10, %rbx
 	negq	%rbx
-	leaq	-1(%rbp,%rbx), %rbp
-	notq	%rdx
-.Ltmp71:
-	cmpq	%rsi, %rdx
-	cmovlq	%rsi, %rdx
-	subq	%rdx, %r8
-	decq	%r8
-	cmpq	%r8, %rbp
-.Ltmp72:
+	leaq	-1(%r11,%rbx), %rdx
+	notq	%rsi
+.Ltmp65:
+	cmpq	%r10, %rsi
+	cmovlq	%r10, %rsi
+	subq	%rsi, %r15
+	decq	%r15
+	cmpq	%r15, %rdx
+.Ltmp66:
 	.loc	1 7 2                   # CoinGame.c:7:2
-	cmovgeq	%rbp, %r8
-.Ltmp73:
+	cmovgeq	%rdx, %r15
+.Ltmp67:
 	#DEBUG_VALUE: findMoves:_50 <- 1
 	#DEBUG_VALUE: findMoves:_48 <- 1
-	#DEBUG_VALUE: findMoves:_41 <- %R8
+	#DEBUG_VALUE: findMoves:_41 <- %R15
 	.loc	1 209 15                # CoinGame.c:209:15
-	movq	%r8, (%rdi,%rax)
+	movq	%r15, (%rdi,%r12)
 	.loc	1 107 7                 # CoinGame.c:107:7
-	addq	%r13, %rax
-	movq	%r14, %rdx
-	addq	%r9, %rdx
+	addq	%r13, %r12
+	addq	%r13, %r9
+	movq	%rax, %rdx
+	addq	%r8, %rdx
 	jne	.LBB2_4
-.Ltmp74:
-.LBB2_35:                               # %blklab6
+.Ltmp68:
+.LBB2_29:                               # %blklab6
                                         #   in Loop: Header=BB2_2 Depth=1
 	#DEBUG_VALUE: findMoves:_52 <- 1
 	.loc	1 230 8                 # CoinGame.c:230:8
-	incq	%r10
-.Ltmp75:
-	#DEBUG_VALUE: findMoves:_53 <- %R10
-	#DEBUG_VALUE: findMoves:s <- %R10
-	movq	-8(%rsp), %rdx          # 8-byte Reload
+	incq	%r14
+.Ltmp69:
+	#DEBUG_VALUE: findMoves:_53 <- %R14
+	#DEBUG_VALUE: findMoves:s <- %R14
+	movq	-48(%rsp), %r12         # 8-byte Reload
 	.loc	1 97 6                  # CoinGame.c:97:6
+	addq	$8, %r12
+	movq	-40(%rsp), %rdx         # 8-byte Reload
 	addq	$8, %rdx
-	cmpq	%rcx, %r10
+	cmpq	%rcx, %r14
 	jne	.LBB2_2
-.Ltmp76:
-.LBB2_36:                               # %if.end42
+.Ltmp70:
+.LBB2_30:                               # %if.end42
 	.loc	1 240 2                 # CoinGame.c:240:2
 	movq	%rdi, %rax
 	popq	%rbx
@@ -675,7 +600,7 @@ findMoves:                              # @findMoves
 	popq	%r15
 	popq	%rbp
 	retq
-.Ltmp77:
+.Ltmp71:
 .Lfunc_end2:
 	.size	findMoves, .Lfunc_end2-findMoves
 	.cfi_endproc
@@ -791,42 +716,42 @@ main:                                   # @main
 	.cfi_startproc
 # BB#0:                                 # %entry
 	pushq	%rbp
-.Ltmp78:
+.Ltmp72:
 	.cfi_def_cfa_offset 16
 	pushq	%r15
-.Ltmp79:
+.Ltmp73:
 	.cfi_def_cfa_offset 24
 	pushq	%r14
-.Ltmp80:
+.Ltmp74:
 	.cfi_def_cfa_offset 32
 	pushq	%r13
-.Ltmp81:
+.Ltmp75:
 	.cfi_def_cfa_offset 40
 	pushq	%r12
-.Ltmp82:
+.Ltmp76:
 	.cfi_def_cfa_offset 48
 	pushq	%rbx
-.Ltmp83:
+.Ltmp77:
 	.cfi_def_cfa_offset 56
 	pushq	%rax
-.Ltmp84:
+.Ltmp78:
 	.cfi_def_cfa_offset 64
-.Ltmp85:
+.Ltmp79:
 	.cfi_offset %rbx, -56
-.Ltmp86:
+.Ltmp80:
 	.cfi_offset %r12, -48
-.Ltmp87:
+.Ltmp81:
 	.cfi_offset %r13, -40
-.Ltmp88:
+.Ltmp82:
 	.cfi_offset %r14, -32
-.Ltmp89:
+.Ltmp83:
 	.cfi_offset %r15, -24
-.Ltmp90:
+.Ltmp84:
 	.cfi_offset %rbp, -16
 	#DEBUG_VALUE: main:argc <- %EDI
 	#DEBUG_VALUE: main:args <- %RSI
 	movl	%edi, %ebx
-.Ltmp91:
+.Ltmp85:
 	#DEBUG_VALUE: main:_23_has_ownership <- 0
 	#DEBUG_VALUE: main:_23_size <- 0
 	#DEBUG_VALUE: main:_18_has_ownership <- 0
@@ -853,29 +778,29 @@ main:                                   # @main
 	#DEBUG_VALUE: main:argc <- %EBX
 	.loc	1 273 2 prologue_end    # CoinGame.c:273:2
 	callq	convertArgsToIntArray
-.Ltmp92:
+.Ltmp86:
 	movq	%rax, %r15
-.Ltmp93:
+.Ltmp87:
 	#DEBUG_VALUE: main:_6 <- %R15
 	decl	%ebx
-.Ltmp94:
+.Ltmp88:
 	movslq	%ebx, %r14
-.Ltmp95:
+.Ltmp89:
 	#DEBUG_VALUE: main:_6_has_ownership <- 1
 	#DEBUG_VALUE: main:_6_size <- %EBX
 	.loc	1 278 5                 # CoinGame.c:278:5
 	movq	(%r15), %rdi
-.Ltmp96:
+.Ltmp90:
 	#DEBUG_VALUE: main:_8 <- %RDI
 	.loc	1 280 2                 # CoinGame.c:280:2
 	callq	parseStringToInt
-.Ltmp97:
+.Ltmp91:
 	#DEBUG_VALUE: main:max <- %RAX
 	#DEBUG_VALUE: main:_5 <- %RAX
 	.loc	1 284 9                 # CoinGame.c:284:9
 	testq	%rax, %rax
 	jne	.LBB3_1
-.Ltmp98:
+.Ltmp92:
 # BB#2:                                 # %if.end122.critedge
 	#DEBUG_VALUE: main:_5 <- %RAX
 	#DEBUG_VALUE: main:max <- %RAX
@@ -885,12 +810,12 @@ main:                                   # @main
 	movq	%r15, %rdi
 	movq	%r14, %rsi
 	callq	free2DArray
-.Ltmp99:
+.Ltmp93:
 	#DEBUG_VALUE: main:_6_has_ownership <- 0
 	.loc	1 351 2                 # CoinGame.c:351:2
 	xorl	%edi, %edi
 	callq	exit
-.Ltmp100:
+.Ltmp94:
 .LBB3_1:                                # %if.then103
 	#DEBUG_VALUE: main:_5 <- %RAX
 	#DEBUG_VALUE: main:max <- %RAX
@@ -898,7 +823,7 @@ main:                                   # @main
 	#DEBUG_VALUE: main:_6 <- %R15
 	.loc	1 286 6                 # CoinGame.c:286:6
 	movq	(%rax), %rbx
-.Ltmp101:
+.Ltmp95:
 	#DEBUG_VALUE: main:_9 <- 0
 	#DEBUG_VALUE: main:n <- %RBX
 	.loc	1 290 7                 # CoinGame.c:290:7
@@ -907,7 +832,7 @@ main:                                   # @main
 	.loc	1 293 2                 # CoinGame.c:293:2
 	xorl	%edi, %edi
 	callq	gen1DArray
-.Ltmp102:
+.Ltmp96:
 	#DEBUG_VALUE: main:moves <- %RAX
 	#DEBUG_VALUE: main:_11 <- %RAX
 	#DEBUG_VALUE: main:_11_has_ownership <- 0
@@ -917,9 +842,9 @@ main:                                   # @main
 	movq	%rax, %rdi
 	movq	%rbx, %rcx
 	callq	findMoves
-.Ltmp103:
+.Ltmp97:
 	movq	%rax, %r12
-.Ltmp104:
+.Ltmp98:
 	#DEBUG_VALUE: main:_12 <- %R12
 	#DEBUG_VALUE: main:moves <- %R12
 	#DEBUG_VALUE: main:_13 <- 1
@@ -927,7 +852,7 @@ main:                                   # @main
 	#DEBUG_VALUE: main:moves_has_ownership <- 1
 	.loc	1 316 6                 # CoinGame.c:316:6
 	movq	-8(%r12,%rbx,8), %r13
-.Ltmp105:
+.Ltmp99:
 	#DEBUG_VALUE: main:_18_size <- 50
 	#DEBUG_VALUE: main:_15 <- %R13
 	#DEBUG_VALUE: main:sum_alice <- %R13
@@ -935,7 +860,7 @@ main:                                   # @main
 	movl	$400, %edi              # imm = 0x190
 	callq	malloc
 	movq	%rax, %rbp
-.Ltmp106:
+.Ltmp100:
 	#DEBUG_VALUE: main:_18 <- %RBP
 	.loc	1 324 9                 # CoinGame.c:324:9
 	movaps	.LCPI3_0(%rip), %xmm0   # xmm0 = [84,104]
@@ -1012,7 +937,7 @@ main:                                   # @main
 	.loc	1 324 704               # CoinGame.c:324:704
 	movaps	.LCPI3_23(%rip), %xmm0  # xmm0 = [115,32]
 	movups	%xmm0, 384(%rbp)
-.Ltmp107:
+.Ltmp101:
 	#DEBUG_VALUE: main:_18_has_ownership <- 1
 	.loc	1 327 2 is_stmt 1       # CoinGame.c:327:2
 	movl	$50, %esi
@@ -1023,13 +948,13 @@ main:                                   # @main
 	xorl	%eax, %eax
 	movq	%r13, %rsi
 	callq	printf
-.Ltmp108:
+.Ltmp102:
 	#DEBUG_VALUE: main:_23_size <- 23
 	.loc	1 336 2                 # CoinGame.c:336:2
 	movl	$184, %edi
 	callq	malloc
 	movq	%rax, %rbx
-.Ltmp109:
+.Ltmp103:
 	#DEBUG_VALUE: main:_23 <- %RBX
 	.loc	1 337 9                 # CoinGame.c:337:9
 	movaps	.LCPI3_24(%rip), %xmm0  # xmm0 = [80,97]
@@ -1068,38 +993,38 @@ main:                                   # @main
 	movups	%xmm0, 160(%rbx)
 	.loc	1 337 320               # CoinGame.c:337:320
 	movq	$101, 176(%rbx)
-.Ltmp110:
+.Ltmp104:
 	#DEBUG_VALUE: main:_23_has_ownership <- 1
 	.loc	1 340 2 is_stmt 1       # CoinGame.c:340:2
 	movl	$23, %esi
 	movq	%rbx, %rdi
 	callq	println_s
-.Ltmp111:
+.Ltmp105:
 	.loc	1 344 2 discriminator 1 # CoinGame.c:344:2
 	movq	%r12, %rdi
 	callq	free
-.Ltmp112:
+.Ltmp106:
 	#DEBUG_VALUE: main:moves_has_ownership <- 0
 	.loc	1 345 2 discriminator 1 # CoinGame.c:345:2
 	movq	%r15, %rdi
 	movq	%r14, %rsi
 	callq	free2DArray
-.Ltmp113:
+.Ltmp107:
 	#DEBUG_VALUE: main:_6_has_ownership <- 0
 	.loc	1 349 2 discriminator 1 # CoinGame.c:349:2
 	movq	%rbp, %rdi
 	callq	free
-.Ltmp114:
+.Ltmp108:
 	#DEBUG_VALUE: main:_18_has_ownership <- 0
 	.loc	1 350 2 discriminator 1 # CoinGame.c:350:2
 	movq	%rbx, %rdi
 	callq	free
-.Ltmp115:
+.Ltmp109:
 	#DEBUG_VALUE: main:_23_has_ownership <- 0
 	.loc	1 351 2                 # CoinGame.c:351:2
 	xorl	%edi, %edi
 	callq	exit
-.Ltmp116:
+.Ltmp110:
 .Lfunc_end3:
 	.size	main, .Lfunc_end3-main
 	.cfi_endproc
@@ -1112,189 +1037,189 @@ main:                                   # @main
 
 	.section	.debug_str,"MS",@progbits,1
 .Linfo_string0:
-	.asciz	"clang version 3.9.0 (http://llvm.org/git/clang.git 2af14cc4a90f43170f8ea9c1dfa0f71f46a0621c) (http://llvm.org/git/llvm.git 1e7e2b2b556977af8ccc12b7afba61302f3a2da9)" # string offset=0
+	.asciz	"clang version 3.9.0 (http://llvm.org/git/clang.git 83402ed45b681e9f38ce6626e5899c19159ceb29) (http://llvm.org/git/llvm.git 4fc8e6fd79f212952e8f538b6d5d9d78098b4505)" # string offset=0
 .Linfo_string1:
 	.asciz	"CoinGame.c"            # string offset=165
 .Linfo_string2:
-	.asciz	"/home/mw169/workspace/WhileyOpenCL/polly/CoinGame/impl/autogenerate_ifconverter_copyfree" # string offset=176
+	.asciz	"/home/sam/workspace/WhileyOpenCL/polly/CoinGame/impl/autogenerate_single_leakfree" # string offset=176
 .Linfo_string3:
-	.asciz	"max"                   # string offset=265
+	.asciz	"max"                   # string offset=258
 .Linfo_string4:
-	.asciz	"long long int"         # string offset=269
+	.asciz	"long long int"         # string offset=262
 .Linfo_string5:
-	.asciz	"a"                     # string offset=283
+	.asciz	"a"                     # string offset=276
 .Linfo_string6:
-	.asciz	"b"                     # string offset=285
+	.asciz	"b"                     # string offset=278
 .Linfo_string7:
-	.asciz	"r"                     # string offset=287
+	.asciz	"r"                     # string offset=280
 .Linfo_string8:
-	.asciz	"min"                   # string offset=289
+	.asciz	"min"                   # string offset=282
 .Linfo_string9:
-	.asciz	"findMoves"             # string offset=293
+	.asciz	"findMoves"             # string offset=286
 .Linfo_string10:
-	.asciz	"main"                  # string offset=303
+	.asciz	"main"                  # string offset=296
 .Linfo_string11:
-	.asciz	"int"                   # string offset=308
+	.asciz	"int"                   # string offset=301
 .Linfo_string12:
-	.asciz	"moves"                 # string offset=312
+	.asciz	"moves"                 # string offset=305
 .Linfo_string13:
-	.asciz	"moves_size"            # string offset=318
+	.asciz	"moves_size"            # string offset=311
 .Linfo_string14:
-	.asciz	"moves_has_ownership"   # string offset=329
+	.asciz	"moves_has_ownership"   # string offset=322
 .Linfo_string15:
-	.asciz	"_Bool"                 # string offset=349
+	.asciz	"_Bool"                 # string offset=342
 .Linfo_string16:
-	.asciz	"n"                     # string offset=355
+	.asciz	"n"                     # string offset=348
 .Linfo_string17:
-	.asciz	"_2_size"               # string offset=357
+	.asciz	"_2_size"               # string offset=350
 .Linfo_string18:
-	.asciz	"_2_has_ownership"      # string offset=365
+	.asciz	"_2_has_ownership"      # string offset=358
 .Linfo_string19:
-	.asciz	"s"                     # string offset=382
+	.asciz	"s"                     # string offset=375
 .Linfo_string20:
-	.asciz	"j"                     # string offset=384
+	.asciz	"j"                     # string offset=377
 .Linfo_string21:
-	.asciz	"i"                     # string offset=386
+	.asciz	"i"                     # string offset=379
 .Linfo_string22:
-	.asciz	"y"                     # string offset=388
+	.asciz	"y"                     # string offset=381
 .Linfo_string23:
-	.asciz	"x"                     # string offset=390
+	.asciz	"x"                     # string offset=383
 .Linfo_string24:
-	.asciz	"z"                     # string offset=392
+	.asciz	"z"                     # string offset=385
 .Linfo_string25:
-	.asciz	"_9"                    # string offset=394
+	.asciz	"_9"                    # string offset=387
 .Linfo_string26:
-	.asciz	"_10"                   # string offset=397
+	.asciz	"_10"                   # string offset=390
 .Linfo_string27:
-	.asciz	"_11"                   # string offset=401
+	.asciz	"_11"                   # string offset=394
 .Linfo_string28:
-	.asciz	"_12"                   # string offset=405
+	.asciz	"_12"                   # string offset=398
 .Linfo_string29:
-	.asciz	"_13"                   # string offset=409
+	.asciz	"_13"                   # string offset=402
 .Linfo_string30:
-	.asciz	"_14"                   # string offset=413
+	.asciz	"_14"                   # string offset=406
 .Linfo_string31:
-	.asciz	"_15"                   # string offset=417
+	.asciz	"_15"                   # string offset=410
 .Linfo_string32:
-	.asciz	"_16"                   # string offset=421
+	.asciz	"_16"                   # string offset=414
 .Linfo_string33:
-	.asciz	"_17"                   # string offset=425
+	.asciz	"_17"                   # string offset=418
 .Linfo_string34:
-	.asciz	"_18"                   # string offset=429
+	.asciz	"_18"                   # string offset=422
 .Linfo_string35:
-	.asciz	"_19"                   # string offset=433
+	.asciz	"_19"                   # string offset=426
 .Linfo_string36:
-	.asciz	"_20"                   # string offset=437
+	.asciz	"_20"                   # string offset=430
 .Linfo_string37:
-	.asciz	"_21"                   # string offset=441
+	.asciz	"_21"                   # string offset=434
 .Linfo_string38:
-	.asciz	"_22"                   # string offset=445
+	.asciz	"_22"                   # string offset=438
 .Linfo_string39:
-	.asciz	"_23"                   # string offset=449
+	.asciz	"_23"                   # string offset=442
 .Linfo_string40:
-	.asciz	"_24"                   # string offset=453
+	.asciz	"_24"                   # string offset=446
 .Linfo_string41:
-	.asciz	"_25"                   # string offset=457
+	.asciz	"_25"                   # string offset=450
 .Linfo_string42:
-	.asciz	"_26"                   # string offset=461
+	.asciz	"_26"                   # string offset=454
 .Linfo_string43:
-	.asciz	"_27"                   # string offset=465
+	.asciz	"_27"                   # string offset=458
 .Linfo_string44:
-	.asciz	"_28"                   # string offset=469
+	.asciz	"_28"                   # string offset=462
 .Linfo_string45:
-	.asciz	"_29"                   # string offset=473
+	.asciz	"_29"                   # string offset=466
 .Linfo_string46:
-	.asciz	"_30"                   # string offset=477
+	.asciz	"_30"                   # string offset=470
 .Linfo_string47:
-	.asciz	"_31"                   # string offset=481
+	.asciz	"_31"                   # string offset=474
 .Linfo_string48:
-	.asciz	"_32"                   # string offset=485
+	.asciz	"_32"                   # string offset=478
 .Linfo_string49:
-	.asciz	"_33"                   # string offset=489
+	.asciz	"_33"                   # string offset=482
 .Linfo_string50:
-	.asciz	"_34"                   # string offset=493
+	.asciz	"_34"                   # string offset=486
 .Linfo_string51:
-	.asciz	"_35"                   # string offset=497
+	.asciz	"_35"                   # string offset=490
 .Linfo_string52:
-	.asciz	"_36"                   # string offset=501
+	.asciz	"_36"                   # string offset=494
 .Linfo_string53:
-	.asciz	"_37"                   # string offset=505
+	.asciz	"_37"                   # string offset=498
 .Linfo_string54:
-	.asciz	"_38"                   # string offset=509
+	.asciz	"_38"                   # string offset=502
 .Linfo_string55:
-	.asciz	"_39"                   # string offset=513
+	.asciz	"_39"                   # string offset=506
 .Linfo_string56:
-	.asciz	"_40"                   # string offset=517
+	.asciz	"_40"                   # string offset=510
 .Linfo_string57:
-	.asciz	"_41"                   # string offset=521
+	.asciz	"_41"                   # string offset=514
 .Linfo_string58:
-	.asciz	"_42"                   # string offset=525
+	.asciz	"_42"                   # string offset=518
 .Linfo_string59:
-	.asciz	"_43"                   # string offset=529
+	.asciz	"_43"                   # string offset=522
 .Linfo_string60:
-	.asciz	"_44"                   # string offset=533
+	.asciz	"_44"                   # string offset=526
 .Linfo_string61:
-	.asciz	"_45"                   # string offset=537
+	.asciz	"_45"                   # string offset=530
 .Linfo_string62:
-	.asciz	"_46"                   # string offset=541
+	.asciz	"_46"                   # string offset=534
 .Linfo_string63:
-	.asciz	"_47"                   # string offset=545
+	.asciz	"_47"                   # string offset=538
 .Linfo_string64:
-	.asciz	"_48"                   # string offset=549
+	.asciz	"_48"                   # string offset=542
 .Linfo_string65:
-	.asciz	"_49"                   # string offset=553
+	.asciz	"_49"                   # string offset=546
 .Linfo_string66:
-	.asciz	"_50"                   # string offset=557
+	.asciz	"_50"                   # string offset=550
 .Linfo_string67:
-	.asciz	"_51"                   # string offset=561
+	.asciz	"_51"                   # string offset=554
 .Linfo_string68:
-	.asciz	"_52"                   # string offset=565
+	.asciz	"_52"                   # string offset=558
 .Linfo_string69:
-	.asciz	"_53"                   # string offset=569
+	.asciz	"_53"                   # string offset=562
 .Linfo_string70:
-	.asciz	"_2"                    # string offset=573
+	.asciz	"_2"                    # string offset=566
 .Linfo_string71:
-	.asciz	"argc"                  # string offset=576
+	.asciz	"argc"                  # string offset=569
 .Linfo_string72:
-	.asciz	"args"                  # string offset=581
+	.asciz	"args"                  # string offset=574
 .Linfo_string73:
-	.asciz	"char"                  # string offset=586
+	.asciz	"char"                  # string offset=579
 .Linfo_string74:
-	.asciz	"_23_has_ownership"     # string offset=591
+	.asciz	"_23_has_ownership"     # string offset=584
 .Linfo_string75:
-	.asciz	"_23_size"              # string offset=609
+	.asciz	"_23_size"              # string offset=602
 .Linfo_string76:
-	.asciz	"_18_has_ownership"     # string offset=618
+	.asciz	"_18_has_ownership"     # string offset=611
 .Linfo_string77:
-	.asciz	"_18_size"              # string offset=636
+	.asciz	"_18_size"              # string offset=629
 .Linfo_string78:
-	.asciz	"_12_has_ownership"     # string offset=645
+	.asciz	"_12_has_ownership"     # string offset=638
 .Linfo_string79:
-	.asciz	"_12_size"              # string offset=663
+	.asciz	"_12_size"              # string offset=656
 .Linfo_string80:
-	.asciz	"_11_has_ownership"     # string offset=672
+	.asciz	"_11_has_ownership"     # string offset=665
 .Linfo_string81:
-	.asciz	"_11_size"              # string offset=690
+	.asciz	"_11_size"              # string offset=683
 .Linfo_string82:
-	.asciz	"_8_has_ownership"      # string offset=699
+	.asciz	"_8_has_ownership"      # string offset=692
 .Linfo_string83:
-	.asciz	"_8_size"               # string offset=716
+	.asciz	"_8_size"               # string offset=709
 .Linfo_string84:
-	.asciz	"_7"                    # string offset=724
+	.asciz	"_7"                    # string offset=717
 .Linfo_string85:
-	.asciz	"_6_has_ownership"      # string offset=727
+	.asciz	"_6_has_ownership"      # string offset=720
 .Linfo_string86:
-	.asciz	"_6_size_size"          # string offset=744
+	.asciz	"_6_size_size"          # string offset=737
 .Linfo_string87:
-	.asciz	"_6_size"               # string offset=757
+	.asciz	"_6_size"               # string offset=750
 .Linfo_string88:
-	.asciz	"sum_alice"             # string offset=765
+	.asciz	"sum_alice"             # string offset=758
 .Linfo_string89:
-	.asciz	"_6"                    # string offset=775
+	.asciz	"_6"                    # string offset=768
 .Linfo_string90:
-	.asciz	"_8"                    # string offset=778
+	.asciz	"_8"                    # string offset=771
 .Linfo_string91:
-	.asciz	"_5"                    # string offset=781
+	.asciz	"_5"                    # string offset=774
 	.section	.debug_loc,"",@progbits
 .Ldebug_loc0:
 	.quad	.Lfunc_begin0-.Lfunc_begin0
@@ -1342,32 +1267,28 @@ main:                                   # @main
 	.quad	0
 .Ldebug_loc6:
 	.quad	.Ltmp18-.Lfunc_begin0
-	.quad	.Ltmp75-.Lfunc_begin0
+	.quad	.Ltmp69-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp75-.Lfunc_begin0
-	.quad	.Ltmp76-.Lfunc_begin0
+	.quad	.Ltmp69-.Lfunc_begin0
+	.quad	.Ltmp70-.Lfunc_begin0
 	.short	1                       # Loc expr size
-	.byte	90                      # DW_OP_reg10
+	.byte	94                      # DW_OP_reg14
 	.quad	0
 	.quad	0
 .Ldebug_loc7:
 	.quad	.Ltmp18-.Lfunc_begin0
-	.quad	.Ltmp24-.Lfunc_begin0
+	.quad	.Ltmp43-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp24-.Lfunc_begin0
-	.quad	.Ltmp49-.Lfunc_begin0
+	.quad	.Ltmp43-.Lfunc_begin0
+	.quad	.Ltmp68-.Lfunc_begin0
 	.short	1                       # Loc expr size
-	.byte	94                      # DW_OP_reg14
-	.quad	.Ltmp51-.Lfunc_begin0
-	.quad	.Ltmp74-.Lfunc_begin0
-	.short	1                       # Loc expr size
-	.byte	89                      # DW_OP_reg9
+	.byte	88                      # DW_OP_reg8
 	.quad	0
 	.quad	0
 .Ldebug_loc8:
@@ -1380,73 +1301,73 @@ main:                                   # @main
 	.quad	.Ltmp28-.Lfunc_begin0
 	.quad	.Ltmp29-.Lfunc_begin0
 	.short	1                       # Loc expr size
-	.byte	89                      # DW_OP_reg9
-	.quad	.Ltmp50-.Lfunc_begin0
-	.quad	.Ltmp54-.Lfunc_begin0
+	.byte	86                      # DW_OP_reg6
+	.quad	.Ltmp42-.Lfunc_begin0
+	.quad	.Ltmp46-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp54-.Lfunc_begin0
-	.quad	.Ltmp55-.Lfunc_begin0
+	.quad	.Ltmp46-.Lfunc_begin0
+	.quad	.Ltmp47-.Lfunc_begin0
 	.short	1                       # Loc expr size
-	.byte	84                      # DW_OP_reg4
+	.byte	90                      # DW_OP_reg10
 	.quad	0
 	.quad	0
 .Ldebug_loc9:
 	.quad	.Ltmp18-.Lfunc_begin0
-	.quad	.Ltmp39-.Lfunc_begin0
+	.quad	.Ltmp32-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp39-.Lfunc_begin0
-	.quad	.Ltmp39-.Lfunc_begin0
+	.quad	.Ltmp32-.Lfunc_begin0
+	.quad	.Ltmp32-.Lfunc_begin0
 	.short	1                       # Loc expr size
-	.byte	84                      # DW_OP_reg4
-	.quad	.Ltmp61-.Lfunc_begin0
-	.quad	.Ltmp65-.Lfunc_begin0
+	.byte	80                      # DW_OP_reg0
+	.quad	.Ltmp55-.Lfunc_begin0
+	.quad	.Ltmp59-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp65-.Lfunc_begin0
-	.quad	.Ltmp65-.Lfunc_begin0
+	.quad	.Ltmp59-.Lfunc_begin0
+	.quad	.Ltmp59-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	83                      # DW_OP_reg3
 	.quad	0
 	.quad	0
 .Ldebug_loc10:
 	.quad	.Ltmp18-.Lfunc_begin0
-	.quad	.Ltmp42-.Lfunc_begin0
+	.quad	.Ltmp34-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp42-.Lfunc_begin0
-	.quad	.Ltmp42-.Lfunc_begin0
-	.short	1                       # Loc expr size
-	.byte	83                      # DW_OP_reg3
-	.quad	.Ltmp65-.Lfunc_begin0
-	.quad	.Ltmp68-.Lfunc_begin0
-	.short	3                       # Loc expr size
-	.byte	17                      # DW_OP_consts
-	.byte	0                       # 0
-	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp68-.Lfunc_begin0
-	.quad	.Ltmp68-.Lfunc_begin0
+	.quad	.Ltmp34-.Lfunc_begin0
+	.quad	.Ltmp34-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	81                      # DW_OP_reg1
+	.quad	.Ltmp59-.Lfunc_begin0
+	.quad	.Ltmp62-.Lfunc_begin0
+	.short	3                       # Loc expr size
+	.byte	17                      # DW_OP_consts
+	.byte	0                       # 0
+	.byte	159                     # DW_OP_stack_value
+	.quad	.Ltmp62-.Lfunc_begin0
+	.quad	.Ltmp62-.Lfunc_begin0
+	.short	1                       # Loc expr size
+	.byte	84                      # DW_OP_reg4
 	.quad	0
 	.quad	0
 .Ldebug_loc11:
 	.quad	.Ltmp18-.Lfunc_begin0
-	.quad	.Ltmp23-.Lfunc_begin0
+	.quad	.Ltmp24-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp23-.Lfunc_begin0
+	.quad	.Ltmp24-.Lfunc_begin0
 	.quad	.Lfunc_end2-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
@@ -1456,19 +1377,15 @@ main:                                   # @main
 	.quad	0
 .Ldebug_loc12:
 	.quad	.Ltmp18-.Lfunc_begin0
-	.quad	.Ltmp24-.Lfunc_begin0
+	.quad	.Ltmp43-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp24-.Lfunc_begin0
-	.quad	.Ltmp49-.Lfunc_begin0
+	.quad	.Ltmp43-.Lfunc_begin0
+	.quad	.Ltmp68-.Lfunc_begin0
 	.short	1                       # Loc expr size
-	.byte	94                      # DW_OP_reg14
-	.quad	.Ltmp51-.Lfunc_begin0
-	.quad	.Ltmp74-.Lfunc_begin0
-	.short	1                       # Loc expr size
-	.byte	89                      # DW_OP_reg9
+	.byte	88                      # DW_OP_reg8
 	.quad	0
 	.quad	0
 .Ldebug_loc13:
@@ -1503,19 +1420,15 @@ main:                                   # @main
 	.quad	0
 .Ldebug_loc15:
 	.quad	.Ltmp18-.Lfunc_begin0
-	.quad	.Ltmp24-.Lfunc_begin0
+	.quad	.Ltmp43-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp24-.Lfunc_begin0
-	.quad	.Ltmp49-.Lfunc_begin0
+	.quad	.Ltmp43-.Lfunc_begin0
+	.quad	.Ltmp68-.Lfunc_begin0
 	.short	1                       # Loc expr size
-	.byte	94                      # DW_OP_reg14
-	.quad	.Ltmp51-.Lfunc_begin0
-	.quad	.Ltmp74-.Lfunc_begin0
-	.short	1                       # Loc expr size
-	.byte	89                      # DW_OP_reg9
+	.byte	88                      # DW_OP_reg8
 	.quad	0
 	.quad	0
 .Ldebug_loc16:
@@ -1543,21 +1456,21 @@ main:                                   # @main
 	.quad	.Ltmp28-.Lfunc_begin0
 	.quad	.Ltmp29-.Lfunc_begin0
 	.short	1                       # Loc expr size
-	.byte	89                      # DW_OP_reg9
-	.quad	.Ltmp54-.Lfunc_begin0
-	.quad	.Ltmp55-.Lfunc_begin0
+	.byte	86                      # DW_OP_reg6
+	.quad	.Ltmp46-.Lfunc_begin0
+	.quad	.Ltmp47-.Lfunc_begin0
 	.short	1                       # Loc expr size
-	.byte	84                      # DW_OP_reg4
+	.byte	90                      # DW_OP_reg10
 	.quad	0
 	.quad	0
 .Ldebug_loc18:
 	.quad	.Ltmp18-.Lfunc_begin0
-	.quad	.Ltmp35-.Lfunc_begin0
+	.quad	.Ltmp30-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp35-.Lfunc_begin0
+	.quad	.Ltmp30-.Lfunc_begin0
 	.quad	.Lfunc_end2-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
@@ -1567,29 +1480,25 @@ main:                                   # @main
 	.quad	0
 .Ldebug_loc19:
 	.quad	.Ltmp18-.Lfunc_begin0
-	.quad	.Ltmp36-.Lfunc_begin0
+	.quad	.Ltmp56-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp36-.Lfunc_begin0
-	.quad	.Ltmp37-.Lfunc_begin0
-	.short	1                       # Loc expr size
-	.byte	84                      # DW_OP_reg4
-	.quad	.Ltmp62-.Lfunc_begin0
-	.quad	.Ltmp64-.Lfunc_begin0
+	.quad	.Ltmp56-.Lfunc_begin0
+	.quad	.Ltmp58-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	81                      # DW_OP_reg1
 	.quad	0
 	.quad	0
 .Ldebug_loc20:
 	.quad	.Ltmp18-.Lfunc_begin0
-	.quad	.Ltmp38-.Lfunc_begin0
+	.quad	.Ltmp31-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp38-.Lfunc_begin0
+	.quad	.Ltmp31-.Lfunc_begin0
 	.quad	.Lfunc_end2-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
@@ -1599,46 +1508,42 @@ main:                                   # @main
 	.quad	0
 .Ldebug_loc21:
 	.quad	.Ltmp18-.Lfunc_begin0
-	.quad	.Ltmp36-.Lfunc_begin0
+	.quad	.Ltmp56-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp36-.Lfunc_begin0
-	.quad	.Ltmp37-.Lfunc_begin0
-	.short	1                       # Loc expr size
-	.byte	84                      # DW_OP_reg4
-	.quad	.Ltmp62-.Lfunc_begin0
-	.quad	.Ltmp64-.Lfunc_begin0
+	.quad	.Ltmp56-.Lfunc_begin0
+	.quad	.Ltmp58-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	81                      # DW_OP_reg1
 	.quad	0
 	.quad	0
 .Ldebug_loc22:
 	.quad	.Ltmp18-.Lfunc_begin0
-	.quad	.Ltmp39-.Lfunc_begin0
+	.quad	.Ltmp32-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp39-.Lfunc_begin0
-	.quad	.Ltmp39-.Lfunc_begin0
+	.quad	.Ltmp32-.Lfunc_begin0
+	.quad	.Ltmp32-.Lfunc_begin0
 	.short	1                       # Loc expr size
-	.byte	84                      # DW_OP_reg4
-	.quad	.Ltmp65-.Lfunc_begin0
-	.quad	.Ltmp65-.Lfunc_begin0
+	.byte	80                      # DW_OP_reg0
+	.quad	.Ltmp59-.Lfunc_begin0
+	.quad	.Ltmp59-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	83                      # DW_OP_reg3
 	.quad	0
 	.quad	0
 .Ldebug_loc23:
 	.quad	.Ltmp18-.Lfunc_begin0
-	.quad	.Ltmp39-.Lfunc_begin0
+	.quad	.Ltmp32-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp39-.Lfunc_begin0
+	.quad	.Ltmp32-.Lfunc_begin0
 	.quad	.Lfunc_end2-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
@@ -1648,12 +1553,12 @@ main:                                   # @main
 	.quad	0
 .Ldebug_loc24:
 	.quad	.Ltmp18-.Lfunc_begin0
-	.quad	.Ltmp41-.Lfunc_begin0
+	.quad	.Ltmp33-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp41-.Lfunc_begin0
+	.quad	.Ltmp33-.Lfunc_begin0
 	.quad	.Lfunc_end2-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
@@ -1663,46 +1568,46 @@ main:                                   # @main
 	.quad	0
 .Ldebug_loc25:
 	.quad	.Ltmp18-.Lfunc_begin0
-	.quad	.Ltmp42-.Lfunc_begin0
+	.quad	.Ltmp34-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp42-.Lfunc_begin0
-	.quad	.Ltmp42-.Lfunc_begin0
-	.short	1                       # Loc expr size
-	.byte	83                      # DW_OP_reg3
-	.quad	.Ltmp68-.Lfunc_begin0
-	.quad	.Ltmp68-.Lfunc_begin0
+	.quad	.Ltmp34-.Lfunc_begin0
+	.quad	.Ltmp34-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	81                      # DW_OP_reg1
+	.quad	.Ltmp62-.Lfunc_begin0
+	.quad	.Ltmp62-.Lfunc_begin0
+	.short	1                       # Loc expr size
+	.byte	84                      # DW_OP_reg4
 	.quad	0
 	.quad	0
 .Ldebug_loc26:
 	.quad	.Ltmp18-.Lfunc_begin0
-	.quad	.Ltmp47-.Lfunc_begin0
+	.quad	.Ltmp39-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp47-.Lfunc_begin0
-	.quad	.Ltmp48-.Lfunc_begin0
+	.quad	.Ltmp39-.Lfunc_begin0
+	.quad	.Ltmp41-.Lfunc_begin0
 	.short	1                       # Loc expr size
-	.byte	81                      # DW_OP_reg1
-	.quad	.Ltmp73-.Lfunc_begin0
-	.quad	.Ltmp74-.Lfunc_begin0
+	.byte	86                      # DW_OP_reg6
+	.quad	.Ltmp67-.Lfunc_begin0
+	.quad	.Ltmp68-.Lfunc_begin0
 	.short	1                       # Loc expr size
-	.byte	88                      # DW_OP_reg8
+	.byte	95                      # DW_OP_reg15
 	.quad	0
 	.quad	0
 .Ldebug_loc27:
 	.quad	.Ltmp18-.Lfunc_begin0
-	.quad	.Ltmp47-.Lfunc_begin0
+	.quad	.Ltmp40-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp47-.Lfunc_begin0
+	.quad	.Ltmp40-.Lfunc_begin0
 	.quad	.Lfunc_end2-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
@@ -1712,12 +1617,12 @@ main:                                   # @main
 	.quad	0
 .Ldebug_loc28:
 	.quad	.Ltmp18-.Lfunc_begin0
-	.quad	.Ltmp47-.Lfunc_begin0
+	.quad	.Ltmp40-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp47-.Lfunc_begin0
+	.quad	.Ltmp40-.Lfunc_begin0
 	.quad	.Lfunc_end2-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
@@ -1727,29 +1632,25 @@ main:                                   # @main
 	.quad	0
 .Ldebug_loc29:
 	.quad	.Ltmp18-.Lfunc_begin0
-	.quad	.Ltmp24-.Lfunc_begin0
+	.quad	.Ltmp43-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp24-.Lfunc_begin0
-	.quad	.Ltmp49-.Lfunc_begin0
+	.quad	.Ltmp43-.Lfunc_begin0
+	.quad	.Ltmp68-.Lfunc_begin0
 	.short	1                       # Loc expr size
-	.byte	94                      # DW_OP_reg14
-	.quad	.Ltmp51-.Lfunc_begin0
-	.quad	.Ltmp74-.Lfunc_begin0
-	.short	1                       # Loc expr size
-	.byte	89                      # DW_OP_reg9
+	.byte	88                      # DW_OP_reg8
 	.quad	0
 	.quad	0
 .Ldebug_loc30:
 	.quad	.Ltmp18-.Lfunc_begin0
-	.quad	.Ltmp74-.Lfunc_begin0
+	.quad	.Ltmp68-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp74-.Lfunc_begin0
+	.quad	.Ltmp68-.Lfunc_begin0
 	.quad	.Lfunc_end2-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
@@ -1759,26 +1660,26 @@ main:                                   # @main
 	.quad	0
 .Ldebug_loc31:
 	.quad	.Ltmp18-.Lfunc_begin0
-	.quad	.Ltmp75-.Lfunc_begin0
+	.quad	.Ltmp69-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp75-.Lfunc_begin0
-	.quad	.Ltmp76-.Lfunc_begin0
+	.quad	.Ltmp69-.Lfunc_begin0
+	.quad	.Ltmp70-.Lfunc_begin0
 	.short	1                       # Loc expr size
-	.byte	90                      # DW_OP_reg10
+	.byte	94                      # DW_OP_reg14
 	.quad	0
 	.quad	0
 .Ldebug_loc32:
 	.quad	.Lfunc_begin3-.Lfunc_begin0
-	.quad	.Ltmp91-.Lfunc_begin0
+	.quad	.Ltmp85-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	85                      # super-register DW_OP_reg5
 	.byte	147                     # DW_OP_piece
 	.byte	4                       # 4
-	.quad	.Ltmp91-.Lfunc_begin0
-	.quad	.Ltmp94-.Lfunc_begin0
+	.quad	.Ltmp85-.Lfunc_begin0
+	.quad	.Ltmp88-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	83                      # super-register DW_OP_reg3
 	.byte	147                     # DW_OP_piece
@@ -1787,25 +1688,25 @@ main:                                   # @main
 	.quad	0
 .Ldebug_loc33:
 	.quad	.Lfunc_begin3-.Lfunc_begin0
-	.quad	.Ltmp92-.Lfunc_begin0
+	.quad	.Ltmp86-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	84                      # DW_OP_reg4
 	.quad	0
 	.quad	0
 .Ldebug_loc34:
-	.quad	.Ltmp91-.Lfunc_begin0
-	.quad	.Ltmp110-.Lfunc_begin0
+	.quad	.Ltmp85-.Lfunc_begin0
+	.quad	.Ltmp104-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	16                      # DW_OP_constu
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp110-.Lfunc_begin0
-	.quad	.Ltmp115-.Lfunc_begin0
+	.quad	.Ltmp104-.Lfunc_begin0
+	.quad	.Ltmp109-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	16                      # DW_OP_constu
 	.byte	1                       # 1
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp115-.Lfunc_begin0
+	.quad	.Ltmp109-.Lfunc_begin0
 	.quad	.Lfunc_end3-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	16                      # DW_OP_constu
@@ -1814,13 +1715,13 @@ main:                                   # @main
 	.quad	0
 	.quad	0
 .Ldebug_loc35:
-	.quad	.Ltmp91-.Lfunc_begin0
-	.quad	.Ltmp108-.Lfunc_begin0
+	.quad	.Ltmp85-.Lfunc_begin0
+	.quad	.Ltmp102-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp108-.Lfunc_begin0
+	.quad	.Ltmp102-.Lfunc_begin0
 	.quad	.Lfunc_end3-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
@@ -1829,19 +1730,19 @@ main:                                   # @main
 	.quad	0
 	.quad	0
 .Ldebug_loc36:
-	.quad	.Ltmp91-.Lfunc_begin0
-	.quad	.Ltmp107-.Lfunc_begin0
+	.quad	.Ltmp85-.Lfunc_begin0
+	.quad	.Ltmp101-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	16                      # DW_OP_constu
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp107-.Lfunc_begin0
-	.quad	.Ltmp114-.Lfunc_begin0
+	.quad	.Ltmp101-.Lfunc_begin0
+	.quad	.Ltmp108-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	16                      # DW_OP_constu
 	.byte	1                       # 1
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp114-.Lfunc_begin0
+	.quad	.Ltmp108-.Lfunc_begin0
 	.quad	.Lfunc_end3-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	16                      # DW_OP_constu
@@ -1850,13 +1751,13 @@ main:                                   # @main
 	.quad	0
 	.quad	0
 .Ldebug_loc37:
-	.quad	.Ltmp91-.Lfunc_begin0
-	.quad	.Ltmp105-.Lfunc_begin0
+	.quad	.Ltmp85-.Lfunc_begin0
+	.quad	.Ltmp99-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp105-.Lfunc_begin0
+	.quad	.Ltmp99-.Lfunc_begin0
 	.quad	.Lfunc_end3-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
@@ -1865,26 +1766,26 @@ main:                                   # @main
 	.quad	0
 	.quad	0
 .Ldebug_loc38:
-	.quad	.Ltmp91-.Lfunc_begin0
-	.quad	.Ltmp105-.Lfunc_begin0
+	.quad	.Ltmp85-.Lfunc_begin0
+	.quad	.Ltmp99-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp105-.Lfunc_begin0
+	.quad	.Ltmp99-.Lfunc_begin0
 	.quad	.Lfunc_end3-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	93                      # DW_OP_reg13
 	.quad	0
 	.quad	0
 .Ldebug_loc39:
-	.quad	.Ltmp91-.Lfunc_begin0
-	.quad	.Ltmp104-.Lfunc_begin0
+	.quad	.Ltmp85-.Lfunc_begin0
+	.quad	.Ltmp98-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp104-.Lfunc_begin0
+	.quad	.Ltmp98-.Lfunc_begin0
 	.quad	.Lfunc_end3-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
@@ -1893,19 +1794,19 @@ main:                                   # @main
 	.quad	0
 	.quad	0
 .Ldebug_loc40:
-	.quad	.Ltmp91-.Lfunc_begin0
-	.quad	.Ltmp95-.Lfunc_begin0
+	.quad	.Ltmp85-.Lfunc_begin0
+	.quad	.Ltmp89-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	16                      # DW_OP_constu
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp95-.Lfunc_begin0
-	.quad	.Ltmp99-.Lfunc_begin0
+	.quad	.Ltmp89-.Lfunc_begin0
+	.quad	.Ltmp93-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	16                      # DW_OP_constu
 	.byte	1                       # 1
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp99-.Lfunc_begin0
+	.quad	.Ltmp93-.Lfunc_begin0
 	.quad	.Lfunc_end3-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	16                      # DW_OP_constu
@@ -1914,14 +1815,14 @@ main:                                   # @main
 	.quad	0
 	.quad	0
 .Ldebug_loc41:
-	.quad	.Ltmp91-.Lfunc_begin0
-	.quad	.Ltmp95-.Lfunc_begin0
+	.quad	.Ltmp85-.Lfunc_begin0
+	.quad	.Ltmp89-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
+	.quad	.Ltmp89-.Lfunc_begin0
 	.quad	.Ltmp95-.Lfunc_begin0
-	.quad	.Ltmp101-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	83                      # super-register DW_OP_reg3
 	.byte	147                     # DW_OP_piece
@@ -1929,32 +1830,32 @@ main:                                   # @main
 	.quad	0
 	.quad	0
 .Ldebug_loc42:
-	.quad	.Ltmp91-.Lfunc_begin0
-	.quad	.Ltmp105-.Lfunc_begin0
+	.quad	.Ltmp85-.Lfunc_begin0
+	.quad	.Ltmp99-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp105-.Lfunc_begin0
+	.quad	.Ltmp99-.Lfunc_begin0
 	.quad	.Lfunc_end3-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	93                      # DW_OP_reg13
 	.quad	0
 	.quad	0
 .Ldebug_loc43:
-	.quad	.Ltmp91-.Lfunc_begin0
-	.quad	.Ltmp104-.Lfunc_begin0
+	.quad	.Ltmp85-.Lfunc_begin0
+	.quad	.Ltmp98-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	16                      # DW_OP_constu
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp104-.Lfunc_begin0
-	.quad	.Ltmp112-.Lfunc_begin0
+	.quad	.Ltmp98-.Lfunc_begin0
+	.quad	.Ltmp106-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	16                      # DW_OP_constu
 	.byte	1                       # 1
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp112-.Lfunc_begin0
+	.quad	.Ltmp106-.Lfunc_begin0
 	.quad	.Lfunc_end3-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	16                      # DW_OP_constu
@@ -1963,88 +1864,88 @@ main:                                   # @main
 	.quad	0
 	.quad	0
 .Ldebug_loc44:
-	.quad	.Ltmp91-.Lfunc_begin0
-	.quad	.Ltmp101-.Lfunc_begin0
+	.quad	.Ltmp85-.Lfunc_begin0
+	.quad	.Ltmp95-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp101-.Lfunc_begin0
-	.quad	.Ltmp109-.Lfunc_begin0
+	.quad	.Ltmp95-.Lfunc_begin0
+	.quad	.Ltmp103-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	83                      # DW_OP_reg3
 	.quad	0
 	.quad	0
 .Ldebug_loc45:
-	.quad	.Ltmp93-.Lfunc_begin0
+	.quad	.Ltmp87-.Lfunc_begin0
 	.quad	.Lfunc_end3-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	95                      # DW_OP_reg15
 	.quad	0
 	.quad	0
 .Ldebug_loc46:
-	.quad	.Ltmp96-.Lfunc_begin0
-	.quad	.Ltmp97-.Lfunc_begin0
+	.quad	.Ltmp90-.Lfunc_begin0
+	.quad	.Ltmp91-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	85                      # DW_OP_reg5
 	.quad	0
 	.quad	0
 .Ldebug_loc47:
-	.quad	.Ltmp97-.Lfunc_begin0
-	.quad	.Ltmp99-.Lfunc_begin0
+	.quad	.Ltmp91-.Lfunc_begin0
+	.quad	.Ltmp93-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	80                      # DW_OP_reg0
-	.quad	.Ltmp100-.Lfunc_begin0
-	.quad	.Ltmp102-.Lfunc_begin0
+	.quad	.Ltmp94-.Lfunc_begin0
+	.quad	.Ltmp96-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	80                      # DW_OP_reg0
 	.quad	0
 	.quad	0
 .Ldebug_loc48:
-	.quad	.Ltmp97-.Lfunc_begin0
-	.quad	.Ltmp99-.Lfunc_begin0
+	.quad	.Ltmp91-.Lfunc_begin0
+	.quad	.Ltmp93-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	80                      # DW_OP_reg0
-	.quad	.Ltmp100-.Lfunc_begin0
-	.quad	.Ltmp102-.Lfunc_begin0
+	.quad	.Ltmp94-.Lfunc_begin0
+	.quad	.Ltmp96-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	80                      # DW_OP_reg0
 	.quad	0
 	.quad	0
 .Ldebug_loc49:
-	.quad	.Ltmp102-.Lfunc_begin0
-	.quad	.Ltmp103-.Lfunc_begin0
+	.quad	.Ltmp96-.Lfunc_begin0
+	.quad	.Ltmp97-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	80                      # DW_OP_reg0
-	.quad	.Ltmp104-.Lfunc_begin0
+	.quad	.Ltmp98-.Lfunc_begin0
 	.quad	.Lfunc_end3-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	92                      # DW_OP_reg12
 	.quad	0
 	.quad	0
 .Ldebug_loc50:
-	.quad	.Ltmp102-.Lfunc_begin0
-	.quad	.Ltmp103-.Lfunc_begin0
+	.quad	.Ltmp96-.Lfunc_begin0
+	.quad	.Ltmp97-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	80                      # DW_OP_reg0
 	.quad	0
 	.quad	0
 .Ldebug_loc51:
-	.quad	.Ltmp104-.Lfunc_begin0
+	.quad	.Ltmp98-.Lfunc_begin0
 	.quad	.Lfunc_end3-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	92                      # DW_OP_reg12
 	.quad	0
 	.quad	0
 .Ldebug_loc52:
-	.quad	.Ltmp106-.Lfunc_begin0
+	.quad	.Ltmp100-.Lfunc_begin0
 	.quad	.Lfunc_end3-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	86                      # DW_OP_reg6
 	.quad	0
 	.quad	0
 .Ldebug_loc53:
-	.quad	.Ltmp109-.Lfunc_begin0
+	.quad	.Ltmp103-.Lfunc_begin0
 	.quad	.Lfunc_end3-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	83                      # DW_OP_reg3
@@ -3083,10 +2984,10 @@ main:                                   # @main
 	.section	.debug_ranges,"",@progbits
 .Ldebug_range:
 .Ldebug_ranges0:
-	.quad	.Ltmp42-.Lfunc_begin0
-	.quad	.Ltmp47-.Lfunc_begin0
-	.quad	.Ltmp68-.Lfunc_begin0
-	.quad	.Ltmp73-.Lfunc_begin0
+	.quad	.Ltmp34-.Lfunc_begin0
+	.quad	.Ltmp39-.Lfunc_begin0
+	.quad	.Ltmp62-.Lfunc_begin0
+	.quad	.Ltmp67-.Lfunc_begin0
 	.quad	0
 	.quad	0
 	.section	.debug_macinfo,"",@progbits
@@ -3126,7 +3027,7 @@ main:                                   # @main
 	.long	0                       # End Mark
 .LpubTypes_end0:
 
-	.ident	"clang version 3.9.0 (http://llvm.org/git/clang.git 2af14cc4a90f43170f8ea9c1dfa0f71f46a0621c) (http://llvm.org/git/llvm.git 1e7e2b2b556977af8ccc12b7afba61302f3a2da9)"
+	.ident	"clang version 3.9.0 (http://llvm.org/git/clang.git 83402ed45b681e9f38ce6626e5899c19159ceb29) (http://llvm.org/git/llvm.git 4fc8e6fd79f212952e8f538b6d5d9d78098b4505)"
 	.section	".note.GNU-stack","",@progbits
 	.section	.debug_line,"",@progbits
 .Lline_table_start0:

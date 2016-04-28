@@ -96,16 +96,14 @@ entry:
 while.cond1.preheader.lr.ph:                      ; preds = %entry
   %0 = shl i64 %n, 3, !dbg !162
   %1 = add i64 %0, 8, !dbg !162
-  %2 = shl nsw i64 %n, 1
   br label %while.cond1.preheader, !dbg !162
 
 while.cond1.preheader:                            ; preds = %blklab6, %while.cond1.preheader.lr.ph
   %indvars.iv = phi i64 [ %n, %while.cond1.preheader.lr.ph ], [ %indvars.iv.next, %blklab6 ]
   %s.0129 = phi i64 [ 0, %while.cond1.preheader.lr.ph ], [ %add40, %blklab6 ]
-  %3 = add nsw i64 %s.0129, %2
-  %4 = icmp slt i64 %3, 1152921504606846976
-  %5 = shl nsw i64 %s.0129, 3
-  %6 = icmp sgt i64 %s.0129, 1152921504606846975
+  %2 = add nsw i64 %s.0129, -2
+  %3 = shl nsw i64 %s.0129, 3
+  %4 = icmp sgt i64 %s.0129, 1152921504606846975
   br i1 %4, label %if.end5.us.preheader, label %if.end5.preheader
 
 if.end5.preheader:                                ; preds = %while.cond1.preheader
@@ -120,7 +118,6 @@ if.end5.us:                                       ; preds = %if.end5.us.preheade
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !59, metadata !16), !dbg !116
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !54, metadata !16), !dbg !111
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !60, metadata !16), !dbg !117
-  %7 = mul i64 %i.0127.us, %1, !dbg !163
   %add.us = add nuw nsw i64 %i.0127.us, 1, !dbg !163
   tail call void @llvm.dbg.value(metadata i64 %add.us, i64 0, metadata !61, metadata !16), !dbg !118
   %cmp6.us = icmp sge i64 %add.us, %n, !dbg !165
@@ -128,7 +125,7 @@ if.end5.us:                                       ; preds = %if.end5.us.preheade
   %or.cond.us = or i1 %cmp9.us, %cmp6.us, !dbg !169
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !62, metadata !16), !dbg !119
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !64, metadata !16), !dbg !121
-  br i1 %or.cond.us, label %polly.preload.cond.us, label %if.end11.us, !dbg !169
+  br i1 %or.cond.us, label %blklab8.us, label %if.end11.us, !dbg !169
 
 if.end11.us:                                      ; preds = %if.end5.us
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !65, metadata !16), !dbg !122
@@ -141,29 +138,13 @@ if.end11.us:                                      ; preds = %if.end5.us
   %sub14.us = add i64 %add13.us, %mul.us, !dbg !172
   tail call void @llvm.dbg.value(metadata i64 %sub14.us, i64 0, metadata !70, metadata !16), !dbg !127
   %arrayidx.us = getelementptr inbounds i64, i64* %moves, i64 %sub14.us, !dbg !173
-  %8 = load i64, i64* %arrayidx.us, align 8, !dbg !173, !tbaa !174
-  tail call void @llvm.dbg.value(metadata i64 %8, i64 0, metadata !71, metadata !16), !dbg !128
-  tail call void @llvm.dbg.value(metadata i64 %8, i64 0, metadata !54, metadata !16), !dbg !111
-  br label %polly.preload.cond.us, !dbg !178
+  %5 = load i64, i64* %arrayidx.us, align 8, !dbg !173, !tbaa !174
+  tail call void @llvm.dbg.value(metadata i64 %5, i64 0, metadata !71, metadata !16), !dbg !128
+  tail call void @llvm.dbg.value(metadata i64 %5, i64 0, metadata !54, metadata !16), !dbg !111
+  br label %blklab8.us, !dbg !178
 
-polly.preload.cond.us:                            ; preds = %if.end11.us, %if.end5.us
-  %y.0.ph.us = phi i64 [ %8, %if.end11.us ], [ 0, %if.end5.us ]
-  %9 = add nuw nsw i64 %i.0127.us, 3
-  %10 = icmp sle i64 %9, %n
-  %11 = add nuw nsw i64 %i.0127.us, %s.0129
-  %12 = icmp sgt i64 %11, 1
-  %13 = add nsw i64 %7, %5
-  %14 = icmp sgt i64 %13, -9223372036854775793
-  %15 = icmp slt i64 %13, -9223372036854775792
-  %16 = icmp sgt i64 %i.0127.us, 9223372036854775805
-  %17 = or i1 %16, %14
-  %18 = or i1 %6, %17
-  %19 = or i1 %10, %18
-  %20 = and i1 %12, %15
-  %21 = or i1 %20, %19
-  br i1 %21, label %blklab8.us, label %blklab10.us
-
-blklab8.us:                                       ; preds = %polly.preload.cond.us
+blklab8.us:                                       ; preds = %if.end11.us, %if.end5.us
+  %y.0.ph.us = phi i64 [ %5, %if.end11.us ], [ 0, %if.end5.us ]
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !72, metadata !16), !dbg !129
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !55, metadata !16), !dbg !112
   tail call void @llvm.dbg.value(metadata i64 2, i64 0, metadata !73, metadata !16), !dbg !130
@@ -180,42 +161,41 @@ if.end18.us:                                      ; preds = %blklab8.us
   %add21.us = add nsw i64 %mul20.us, %j.0126.us, !dbg !184
   tail call void @llvm.dbg.value(metadata i64 %add21.us, i64 0, metadata !78, metadata !16), !dbg !135
   %arrayidx22.us = getelementptr inbounds i64, i64* %moves, i64 %add21.us, !dbg !185
-  %22 = load i64, i64* %arrayidx22.us, align 8, !dbg !185, !tbaa !174
-  tail call void @llvm.dbg.value(metadata i64 %22, i64 0, metadata !79, metadata !16), !dbg !136
-  tail call void @llvm.dbg.value(metadata i64 %22, i64 0, metadata !55, metadata !16), !dbg !112
+  %6 = load i64, i64* %arrayidx22.us, align 8, !dbg !185, !tbaa !174
+  tail call void @llvm.dbg.value(metadata i64 %6, i64 0, metadata !79, metadata !16), !dbg !136
+  tail call void @llvm.dbg.value(metadata i64 %6, i64 0, metadata !55, metadata !16), !dbg !112
   br label %blklab9.us, !dbg !186
 
 blklab9.us:                                       ; preds = %if.end18.us, %blklab8.us
-  %x.0.us = phi i64 [ 0, %blklab8.us ], [ %22, %if.end18.us ]
+  %x.0.us = phi i64 [ 0, %blklab8.us ], [ %6, %if.end18.us ]
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !80, metadata !16), !dbg !137
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !56, metadata !16), !dbg !113
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !81, metadata !16), !dbg !138
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !83, metadata !16), !dbg !140
   %cmp24.us = icmp slt i64 %j.0126.us, 2, !dbg !187
-  br i1 %cmp24.us, label %blklab10.us, label %if.end26.us, !dbg !189
+  %.pre = mul nsw i64 %i.0127.us, %n, !dbg !189
+  br i1 %cmp24.us, label %blklab10.us, label %if.end26.us, !dbg !190
 
 if.end26.us:                                      ; preds = %blklab9.us
-  %mul27.us = mul nsw i64 %i.0127.us, %n, !dbg !190
-  tail call void @llvm.dbg.value(metadata i64 %mul27.us, i64 0, metadata !84, metadata !16), !dbg !141
+  tail call void @llvm.dbg.value(metadata i64 %.pre, i64 0, metadata !84, metadata !16), !dbg !141
   tail call void @llvm.dbg.value(metadata i64 %add28.us, i64 0, metadata !85, metadata !16), !dbg !142
   tail call void @llvm.dbg.value(metadata i64 2, i64 0, metadata !86, metadata !16), !dbg !143
   %add28.us = add nsw i64 %j.0126.us, -2, !dbg !191
-  %sub29.us = add i64 %add28.us, %mul27.us, !dbg !192
+  %sub29.us = add i64 %add28.us, %.pre, !dbg !192
   tail call void @llvm.dbg.value(metadata i64 %sub29.us, i64 0, metadata !87, metadata !16), !dbg !144
   %arrayidx30.us = getelementptr inbounds i64, i64* %moves, i64 %sub29.us, !dbg !193
-  %23 = load i64, i64* %arrayidx30.us, align 8, !dbg !193, !tbaa !174
-  tail call void @llvm.dbg.value(metadata i64 %23, i64 0, metadata !88, metadata !16), !dbg !145
-  tail call void @llvm.dbg.value(metadata i64 %23, i64 0, metadata !56, metadata !16), !dbg !113
+  %7 = load i64, i64* %arrayidx30.us, align 8, !dbg !193, !tbaa !174
+  tail call void @llvm.dbg.value(metadata i64 %7, i64 0, metadata !88, metadata !16), !dbg !145
+  tail call void @llvm.dbg.value(metadata i64 %7, i64 0, metadata !56, metadata !16), !dbg !113
   br label %blklab10.us, !dbg !194
 
-blklab10.us:                                      ; preds = %polly.preload.cond.us, %if.end26.us, %blklab9.us
-  %z.0.ph.merge.us = phi i64 [ %23, %if.end26.us ], [ 0, %blklab9.us ], [ 0, %polly.preload.cond.us ]
-  %x.0.merge.us = phi i64 [ %x.0.us, %if.end26.us ], [ %x.0.us, %blklab9.us ], [ 0, %polly.preload.cond.us ]
-  tail call void @llvm.dbg.value(metadata i64 %x.0.merge.us, i64 0, metadata !27, metadata !16), !dbg !195
+blklab10.us:                                      ; preds = %blklab9.us, %if.end26.us
+  %z.0.ph.merge.us = phi i64 [ %7, %if.end26.us ], [ 0, %blklab9.us ]
+  tail call void @llvm.dbg.value(metadata i64 %x.0.us, i64 0, metadata !27, metadata !16), !dbg !195
   tail call void @llvm.dbg.value(metadata i64 %y.0.ph.us, i64 0, metadata !28, metadata !16), !dbg !197
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !29, metadata !16), !dbg !198
-  %cmp.i.us = icmp slt i64 %x.0.merge.us, %y.0.ph.us, !dbg !199
-  %a.b.i.us = select i1 %cmp.i.us, i64 %x.0.merge.us, i64 %y.0.ph.us, !dbg !200
+  %cmp.i.us = icmp slt i64 %x.0.us, %y.0.ph.us, !dbg !199
+  %a.b.i.us = select i1 %cmp.i.us, i64 %x.0.us, i64 %y.0.ph.us, !dbg !200
   tail call void @llvm.dbg.value(metadata i64 %a.b.i.us, i64 0, metadata !90, metadata !16), !dbg !147
   %add31.us = add nsw i64 %a.b.i.us, %i.0127.us, !dbg !201
   tail call void @llvm.dbg.value(metadata i64 %add31.us, i64 0, metadata !91, metadata !16), !dbg !148
@@ -233,21 +213,20 @@ blklab10.us:                                      ; preds = %polly.preload.cond.
   %cmp.i142.us = icmp slt i64 %add31.us, %add33.us, !dbg !213
   %b.a.i.us = select i1 %cmp.i142.us, i64 %add33.us, i64 %add31.us, !dbg !214
   tail call void @llvm.dbg.value(metadata i64 %b.a.i.us, i64 0, metadata !89, metadata !16), !dbg !146
-  %mul35.us = mul nsw i64 %i.0127.us, %n, !dbg !215
-  tail call void @llvm.dbg.value(metadata i64 %mul35.us, i64 0, metadata !94, metadata !16), !dbg !151
-  %add36.us = add nsw i64 %mul35.us, %j.0126.us, !dbg !216
+  tail call void @llvm.dbg.value(metadata i64 %.pre, i64 0, metadata !94, metadata !16), !dbg !151
+  %add36.us = add nsw i64 %.pre, %j.0126.us, !dbg !215
   tail call void @llvm.dbg.value(metadata i64 %add36.us, i64 0, metadata !95, metadata !16), !dbg !152
-  %arrayidx37.us = getelementptr inbounds i64, i64* %moves, i64 %add36.us, !dbg !217
-  store i64 %b.a.i.us, i64* %arrayidx37.us, align 8, !dbg !218, !tbaa !174
+  %arrayidx37.us = getelementptr inbounds i64, i64* %moves, i64 %add36.us, !dbg !216
+  store i64 %b.a.i.us, i64* %arrayidx37.us, align 8, !dbg !217, !tbaa !174
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !96, metadata !16), !dbg !153
-  %add38.us = add nuw nsw i64 %j.0126.us, 1, !dbg !219
+  %add38.us = add nuw nsw i64 %j.0126.us, 1, !dbg !218
   tail call void @llvm.dbg.value(metadata i64 %add38.us, i64 0, metadata !97, metadata !16), !dbg !154
   tail call void @llvm.dbg.value(metadata i64 %add38.us, i64 0, metadata !52, metadata !16), !dbg !109
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !98, metadata !16), !dbg !155
   tail call void @llvm.dbg.value(metadata i64 %add.us, i64 0, metadata !99, metadata !16), !dbg !156
   tail call void @llvm.dbg.value(metadata i64 %add.us, i64 0, metadata !53, metadata !16), !dbg !110
-  %exitcond.us = icmp eq i64 %add.us, %indvars.iv, !dbg !220
-  br i1 %exitcond.us, label %blklab6.loopexit, label %if.end5.us, !dbg !220
+  %exitcond.us = icmp eq i64 %add.us, %indvars.iv, !dbg !219
+  br i1 %exitcond.us, label %blklab6.loopexit, label %if.end5.us, !dbg !219
 
 if.end5:                                          ; preds = %if.end5.preheader, %blklab10
   %i.0127 = phi i64 [ %add, %blklab10 ], [ 0, %if.end5.preheader ]
@@ -255,7 +234,7 @@ if.end5:                                          ; preds = %if.end5.preheader, 
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !59, metadata !16), !dbg !116
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !54, metadata !16), !dbg !111
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !60, metadata !16), !dbg !117
-  %24 = mul i64 %i.0127, %1, !dbg !163
+  %8 = mul i64 %i.0127, %1, !dbg !163
   %add = add nuw nsw i64 %i.0127, 1, !dbg !163
   tail call void @llvm.dbg.value(metadata i64 %add, i64 0, metadata !61, metadata !16), !dbg !118
   %cmp6 = icmp sge i64 %add, %n, !dbg !165
@@ -276,29 +255,32 @@ if.end11:                                         ; preds = %if.end5
   %sub14 = add i64 %add13, %mul, !dbg !172
   tail call void @llvm.dbg.value(metadata i64 %sub14, i64 0, metadata !70, metadata !16), !dbg !127
   %arrayidx = getelementptr inbounds i64, i64* %moves, i64 %sub14, !dbg !173
-  %25 = load i64, i64* %arrayidx, align 8, !dbg !173, !tbaa !174
-  tail call void @llvm.dbg.value(metadata i64 %25, i64 0, metadata !71, metadata !16), !dbg !128
-  tail call void @llvm.dbg.value(metadata i64 %25, i64 0, metadata !54, metadata !16), !dbg !111
+  %9 = load i64, i64* %arrayidx, align 8, !dbg !173, !tbaa !174
+  tail call void @llvm.dbg.value(metadata i64 %9, i64 0, metadata !71, metadata !16), !dbg !128
+  tail call void @llvm.dbg.value(metadata i64 %9, i64 0, metadata !54, metadata !16), !dbg !111
   br label %polly.preload.cond, !dbg !178
 
 polly.preload.cond:                               ; preds = %if.end5, %if.end11
-  %y.0.ph = phi i64 [ %25, %if.end11 ], [ 0, %if.end5 ]
-  %26 = add nuw nsw i64 %i.0127, 3
-  %27 = icmp sle i64 %26, %n
-  %28 = add nuw nsw i64 %i.0127, %s.0129
-  %29 = icmp sgt i64 %28, 1
-  %30 = add nsw i64 %24, %5
-  %31 = icmp sgt i64 %30, -9223372036854775793
-  %32 = icmp slt i64 %30, -9223372036854775792
-  %33 = icmp sgt i64 %i.0127, 9223372036854775805
-  %34 = or i1 %33, %31
-  %35 = or i1 %6, %34
-  %36 = or i1 %27, %35
-  %37 = and i1 %29, %32
-  %38 = or i1 %37, %36
-  br i1 %38, label %blklab8, label %blklab10
+  %y.0.ph = phi i64 [ %9, %if.end11 ], [ 0, %if.end5 ]
+  %10 = add nuw nsw i64 %i.0127, 3
+  %11 = add nuw nsw i64 %i.0127, %s.0129
+  %12 = icmp sgt i64 %11, 1
+  br i1 %12, label %polly.preload.exec133, label %polly.preload.merge132
 
-blklab8:                                          ; preds = %polly.preload.cond
+polly.preload.merge132:                           ; preds = %polly.preload.exec133, %polly.preload.cond
+  %polly.preload..merge136 = phi i64 [ %polly.access.moves135.load, %polly.preload.exec133 ], [ 0, %polly.preload.cond ]
+  %13 = add nsw i64 %8, %3
+  %14 = icmp sgt i64 %13, -9223372036854775793
+  %15 = icmp sgt i64 %i.0127, 9223372036854775805
+  %16 = or i1 %15, %14
+  %17 = icmp sle i64 %10, %n
+  %18 = or i1 %17, %16
+  %19 = icmp slt i64 %13, -9223372036854775792
+  %20 = and i1 %12, %19
+  %21 = or i1 %20, %18
+  br i1 %21, label %blklab8, label %polly.cond
+
+blklab8:                                          ; preds = %polly.preload.merge132
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !72, metadata !16), !dbg !129
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !55, metadata !16), !dbg !112
   tail call void @llvm.dbg.value(metadata i64 2, i64 0, metadata !73, metadata !16), !dbg !130
@@ -315,22 +297,22 @@ if.end18:                                         ; preds = %blklab8
   %add21 = add nsw i64 %mul20, %j.0126, !dbg !184
   tail call void @llvm.dbg.value(metadata i64 %add21, i64 0, metadata !78, metadata !16), !dbg !135
   %arrayidx22 = getelementptr inbounds i64, i64* %moves, i64 %add21, !dbg !185
-  %39 = load i64, i64* %arrayidx22, align 8, !dbg !185, !tbaa !174
-  tail call void @llvm.dbg.value(metadata i64 %39, i64 0, metadata !79, metadata !16), !dbg !136
-  tail call void @llvm.dbg.value(metadata i64 %39, i64 0, metadata !55, metadata !16), !dbg !112
+  %22 = load i64, i64* %arrayidx22, align 8, !dbg !185, !tbaa !174
+  tail call void @llvm.dbg.value(metadata i64 %22, i64 0, metadata !79, metadata !16), !dbg !136
+  tail call void @llvm.dbg.value(metadata i64 %22, i64 0, metadata !55, metadata !16), !dbg !112
   br label %blklab9, !dbg !186
 
 blklab9:                                          ; preds = %blklab8, %if.end18
-  %x.0 = phi i64 [ 0, %blklab8 ], [ %39, %if.end18 ]
+  %x.0 = phi i64 [ 0, %blklab8 ], [ %22, %if.end18 ]
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !80, metadata !16), !dbg !137
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !56, metadata !16), !dbg !113
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !81, metadata !16), !dbg !138
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !83, metadata !16), !dbg !140
   %cmp24 = icmp slt i64 %j.0126, 2, !dbg !187
-  br i1 %cmp24, label %blklab10, label %if.end26, !dbg !189
+  br i1 %cmp24, label %blklab10, label %if.end26, !dbg !190
 
 if.end26:                                         ; preds = %blklab9
-  %mul27 = mul nsw i64 %i.0127, %n, !dbg !190
+  %mul27 = mul nsw i64 %i.0127, %n, !dbg !220
   tail call void @llvm.dbg.value(metadata i64 %mul27, i64 0, metadata !84, metadata !16), !dbg !141
   tail call void @llvm.dbg.value(metadata i64 %add28, i64 0, metadata !85, metadata !16), !dbg !142
   tail call void @llvm.dbg.value(metadata i64 2, i64 0, metadata !86, metadata !16), !dbg !143
@@ -338,14 +320,14 @@ if.end26:                                         ; preds = %blklab9
   %sub29 = add i64 %add28, %mul27, !dbg !192
   tail call void @llvm.dbg.value(metadata i64 %sub29, i64 0, metadata !87, metadata !16), !dbg !144
   %arrayidx30 = getelementptr inbounds i64, i64* %moves, i64 %sub29, !dbg !193
-  %40 = load i64, i64* %arrayidx30, align 8, !dbg !193, !tbaa !174
-  tail call void @llvm.dbg.value(metadata i64 %40, i64 0, metadata !88, metadata !16), !dbg !145
-  tail call void @llvm.dbg.value(metadata i64 %40, i64 0, metadata !56, metadata !16), !dbg !113
+  %23 = load i64, i64* %arrayidx30, align 8, !dbg !193, !tbaa !174
+  tail call void @llvm.dbg.value(metadata i64 %23, i64 0, metadata !88, metadata !16), !dbg !145
+  tail call void @llvm.dbg.value(metadata i64 %23, i64 0, metadata !56, metadata !16), !dbg !113
   br label %blklab10, !dbg !194
 
-blklab10:                                         ; preds = %polly.preload.cond, %if.end26, %blklab9
-  %z.0.ph.merge = phi i64 [ %40, %if.end26 ], [ 0, %blklab9 ], [ 0, %polly.preload.cond ]
-  %x.0.merge = phi i64 [ %x.0, %if.end26 ], [ %x.0, %blklab9 ], [ 0, %polly.preload.cond ]
+blklab10:                                         ; preds = %polly.cond, %if.end26, %blklab9
+  %z.0.ph.merge = phi i64 [ %23, %if.end26 ], [ 0, %blklab9 ], [ %polly.preload..merge136., %polly.cond ]
+  %x.0.merge = phi i64 [ %x.0, %if.end26 ], [ %x.0, %blklab9 ], [ 0, %polly.cond ]
   tail call void @llvm.dbg.value(metadata i64 %x.0.merge, i64 0, metadata !27, metadata !16), !dbg !195
   tail call void @llvm.dbg.value(metadata i64 %y.0.ph, i64 0, metadata !28, metadata !16), !dbg !197
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !29, metadata !16), !dbg !198
@@ -368,21 +350,21 @@ blklab10:                                         ; preds = %polly.preload.cond,
   %cmp.i142 = icmp slt i64 %add31, %add33, !dbg !213
   %b.a.i = select i1 %cmp.i142, i64 %add33, i64 %add31, !dbg !214
   tail call void @llvm.dbg.value(metadata i64 %b.a.i, i64 0, metadata !89, metadata !16), !dbg !146
-  %mul35 = mul nsw i64 %i.0127, %n, !dbg !215
+  %mul35 = mul nsw i64 %i.0127, %n, !dbg !189
   tail call void @llvm.dbg.value(metadata i64 %mul35, i64 0, metadata !94, metadata !16), !dbg !151
-  %add36 = add nsw i64 %mul35, %j.0126, !dbg !216
+  %add36 = add nsw i64 %mul35, %j.0126, !dbg !215
   tail call void @llvm.dbg.value(metadata i64 %add36, i64 0, metadata !95, metadata !16), !dbg !152
-  %arrayidx37 = getelementptr inbounds i64, i64* %moves, i64 %add36, !dbg !217
-  store i64 %b.a.i, i64* %arrayidx37, align 8, !dbg !218, !tbaa !174
+  %arrayidx37 = getelementptr inbounds i64, i64* %moves, i64 %add36, !dbg !216
+  store i64 %b.a.i, i64* %arrayidx37, align 8, !dbg !217, !tbaa !174
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !96, metadata !16), !dbg !153
-  %add38 = add nuw nsw i64 %j.0126, 1, !dbg !219
+  %add38 = add nuw nsw i64 %j.0126, 1, !dbg !218
   tail call void @llvm.dbg.value(metadata i64 %add38, i64 0, metadata !97, metadata !16), !dbg !154
   tail call void @llvm.dbg.value(metadata i64 %add38, i64 0, metadata !52, metadata !16), !dbg !109
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !98, metadata !16), !dbg !155
   tail call void @llvm.dbg.value(metadata i64 %add, i64 0, metadata !99, metadata !16), !dbg !156
   tail call void @llvm.dbg.value(metadata i64 %add, i64 0, metadata !53, metadata !16), !dbg !110
-  %exitcond = icmp eq i64 %add, %indvars.iv, !dbg !220
-  br i1 %exitcond, label %blklab6.loopexit148, label %if.end5, !dbg !220
+  %exitcond = icmp eq i64 %add, %indvars.iv, !dbg !219
+  br i1 %exitcond, label %blklab6.loopexit148, label %if.end5, !dbg !219
 
 blklab6.loopexit:                                 ; preds = %blklab10.us
   br label %blklab6, !dbg !157
@@ -404,6 +386,17 @@ if.end42.loopexit:                                ; preds = %blklab6
 
 if.end42:                                         ; preds = %if.end42.loopexit, %entry
   ret i64* %moves, !dbg !222
+
+polly.cond:                                       ; preds = %polly.preload.merge132
+  %polly.preload..merge136. = select i1 %12, i64 %polly.preload..merge136, i64 0
+  br label %blklab10
+
+polly.preload.exec133:                            ; preds = %polly.preload.cond
+  %polly.fdiv_q.shr134 = ashr exact i64 %8, 3
+  %24 = add i64 %2, %polly.fdiv_q.shr134
+  %polly.access.moves135 = getelementptr i64, i64* %moves, i64 %24
+  %polly.access.moves135.load = load i64, i64* %polly.access.moves135, align 8
+  br label %polly.preload.merge132
 }
 
 ; Function Attrs: nounwind
@@ -671,14 +664,14 @@ attributes #8 = { noreturn nounwind }
 !llvm.module.flags = !{!5, !6}
 !llvm.ident = !{!7}
 
-!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 3.9.0 (http://llvm.org/git/clang.git 2af14cc4a90f43170f8ea9c1dfa0f71f46a0621c) (http://llvm.org/git/llvm.git 1e7e2b2b556977af8ccc12b7afba61302f3a2da9)", isOptimized: true, runtimeVersion: 0, emissionKind: FullDebug, enums: !2, retainedTypes: !3)
-!1 = !DIFile(filename: "CoinGame.c", directory: "/home/mw169/workspace/WhileyOpenCL/polly/CoinGame/impl/autogenerate_ifconverter_copyfree")
+!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 3.9.0 (http://llvm.org/git/clang.git 83402ed45b681e9f38ce6626e5899c19159ceb29) (http://llvm.org/git/llvm.git 4fc8e6fd79f212952e8f538b6d5d9d78098b4505)", isOptimized: true, runtimeVersion: 0, emissionKind: FullDebug, enums: !2, retainedTypes: !3)
+!1 = !DIFile(filename: "CoinGame.c", directory: "/home/sam/workspace/WhileyOpenCL/polly/CoinGame/impl/autogenerate_single_leakfree")
 !2 = !{}
 !3 = !{!4}
 !4 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: null, size: 64, align: 64)
 !5 = !{i32 2, !"Dwarf Version", i32 4}
 !6 = !{i32 2, !"Debug Info Version", i32 3}
-!7 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git 2af14cc4a90f43170f8ea9c1dfa0f71f46a0621c) (http://llvm.org/git/llvm.git 1e7e2b2b556977af8ccc12b7afba61302f3a2da9)"}
+!7 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git 83402ed45b681e9f38ce6626e5899c19159ceb29) (http://llvm.org/git/llvm.git 4fc8e6fd79f212952e8f538b6d5d9d78098b4505)"}
 !8 = distinct !DISubprogram(name: "max", scope: !1, file: !1, line: 2, type: !9, isLocal: false, isDefinition: true, scopeLine: 2, flags: DIFlagPrototyped, isOptimized: true, unit: !0, variables: !12)
 !9 = !DISubroutineType(types: !10)
 !10 = !{!11, !11, !11}
@@ -860,8 +853,8 @@ attributes #8 = { noreturn nounwind }
 !186 = !DILocation(line: 165, column: 4, scope: !164)
 !187 = !DILocation(line: 179, column: 10, scope: !188)
 !188 = distinct !DILexicalBlock(scope: !164, file: !1, line: 179, column: 7)
-!189 = !DILocation(line: 179, column: 7, scope: !164)
-!190 = !DILocation(line: 181, column: 9, scope: !164)
+!189 = !DILocation(line: 205, column: 9, scope: !164)
+!190 = !DILocation(line: 179, column: 7, scope: !164)
 !191 = !DILocation(line: 183, column: 11, scope: !164)
 !192 = !DILocation(line: 187, column: 11, scope: !164)
 !193 = !DILocation(line: 189, column: 8, scope: !164)
@@ -886,12 +879,12 @@ attributes #8 = { noreturn nounwind }
 !212 = !DILocation(line: 3, column: 12, scope: !8, inlinedAt: !210)
 !213 = !DILocation(line: 5, column: 6, scope: !21, inlinedAt: !210)
 !214 = !DILocation(line: 7, column: 2, scope: !8, inlinedAt: !210)
-!215 = !DILocation(line: 205, column: 9, scope: !164)
-!216 = !DILocation(line: 207, column: 11, scope: !164)
-!217 = !DILocation(line: 209, column: 4, scope: !164)
-!218 = !DILocation(line: 209, column: 15, scope: !164)
-!219 = !DILocation(line: 213, column: 9, scope: !164)
-!220 = !DILocation(line: 107, column: 7, scope: !164)
+!215 = !DILocation(line: 207, column: 11, scope: !164)
+!216 = !DILocation(line: 209, column: 4, scope: !164)
+!217 = !DILocation(line: 209, column: 15, scope: !164)
+!218 = !DILocation(line: 213, column: 9, scope: !164)
+!219 = !DILocation(line: 107, column: 7, scope: !164)
+!220 = !DILocation(line: 181, column: 9, scope: !164)
 !221 = !DILocation(line: 230, column: 8, scope: !161)
 !222 = !DILocation(line: 240, column: 2, scope: !38)
 !223 = distinct !DISubprogram(name: "main", scope: !1, file: !1, line: 244, type: !224, isLocal: false, isDefinition: true, scopeLine: 244, flags: DIFlagPrototyped, isOptimized: true, unit: !0, variables: !230)

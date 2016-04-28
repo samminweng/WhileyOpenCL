@@ -146,47 +146,33 @@ init(){
 #exec autogenerate1 GCD 30000
 #exec autogenerate1 GCD 40000
 # ### Benchmark Autogenerate CoinGame
-#init autogenerate_copyonly CoinGame
-#exec autogenerate_copyonly CoinGame 1000
-#exec autogenerate_copyonly CoinGame 10000
-#exec autogenerate_copyonly CoinGame 20000
-#exec autogenerate_copyonly CoinGame 30000
-#exec autogenerate_copyonly CoinGame 40000
-
-#init autogenerate_copyfree CoinGame
-#exec autogenerate_copyfree CoinGame 1000
-#exec autogenerate_copyfree CoinGame 10000
-#exec autogenerate_copyfree CoinGame 20000
-#exec autogenerate_copyfree CoinGame 30000
-#exec autogenerate_copyfree CoinGame 40000
-
-#exec autogenerate_array_copyfree CoinGame 1000
-#exec autogenerate_array_copyfree CoinGame 10000
-#exec autogenerate_array_copyfree CoinGame 20000
-#exec autogenerate_array_copyfree CoinGame 30000
-#exec autogenerate_array_copyfree CoinGame 40000
+init autogenerate CoinGame
+exec autogenerate_leak CoinGame 40000
+exec autogenerate_leakfree CoinGame 40000
+exec autogenerate_array_leakfree CoinGame 40000
+exec autogenerate_single_leakfree CoinGame 40000
 
 ### Benchmark Autogenerate NQueens
-init autogenerate_leakfree NQueens
-exec autogenerate_leak NQueens 1
-exec autogenerate_leak NQueens 2
-exec autogenerate_leak NQueens 4
-exec autogenerate_leak NQueens 6
-exec autogenerate_leak NQueens 8
-exec autogenerate_leak NQueens 10
-exec autogenerate_leak NQueens 12
-exec autogenerate_leak NQueens 14
-exec autogenerate_leak NQueens 15
+# init autogenerate_leakfree NQueens
+# exec autogenerate_leak NQueens 1
+# exec autogenerate_leak NQueens 2
+# exec autogenerate_leak NQueens 4
+# exec autogenerate_leak NQueens 6
+# exec autogenerate_leak NQueens 8
+# exec autogenerate_leak NQueens 10
+# exec autogenerate_leak NQueens 12
+# exec autogenerate_leak NQueens 14
+# exec autogenerate_leak NQueens 15
 
-exec autogenerate_leakfree NQueens 1
-exec autogenerate_leakfree NQueens 2
-exec autogenerate_leakfree NQueens 4
-exec autogenerate_leakfree NQueens 6
-exec autogenerate_leakfree NQueens 8
-exec autogenerate_leakfree NQueens 10
-exec autogenerate_leakfree NQueens 12
-exec autogenerate_leakfree NQueens 14
-exec autogenerate_leakfree NQueens 15
+# exec autogenerate_leakfree NQueens 1
+# exec autogenerate_leakfree NQueens 2
+# exec autogenerate_leakfree NQueens 4
+# exec autogenerate_leakfree NQueens 6
+# exec autogenerate_leakfree NQueens 8
+# exec autogenerate_leakfree NQueens 10
+# exec autogenerate_leakfree NQueens 12
+# exec autogenerate_leakfree NQueens 14
+# exec autogenerate_leakfree NQueens 15
 
 ### Benchmark Autogenerate1 and autogenerate2 MatrixMult
 # ### Autogenerate1 MatrixMult

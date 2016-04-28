@@ -100,7 +100,7 @@ function findMoves(int[] moves, int n) -> int[]:
 method main(System.Console sys):
 	int|null max = Int.parse(sys.args[0])
 	if max != null:
-    	int n = max
+		int n = max
     	int[] moves = [0;n*n]
     	moves = findMoves(moves, n) // Pass 'moves' array to the function 
     	//play(sys, moves, n) 

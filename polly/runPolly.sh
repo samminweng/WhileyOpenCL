@@ -178,12 +178,13 @@ exec(){
 #exec autogenerate_original_copyfree GCD 10000  
 #exec autogenerate_cached_copyonly GCD 10000 ### Cached the divisors
 #exec autogenerate_cached_copyfree GCD 10000
-#exec autogenerate_copyonly CoinGame 10000
-#exec autogenerate_copyfree CoinGame 10000
-#exec autogenerate_array_copyonly CoinGame 10000
-#exec autogenerate_array_copyfree CoinGame 10000
-exec autogenerate_leak NQueens 12
-exec autogenerate_leakfree NQueens 12
+exec autogenerate_leak CoinGame 10000
+exec autogenerate_leakfree CoinGame 10000
+exec autogenerate_array_leakfree CoinGame 10000
+exec autogenerate_single_leakfree CoinGame 10000
+#exec autogenerate_single_array_leakfree CoinGame 10000
+#exec autogenerate_leak NQueens 12
+#exec autogenerate_leakfree NQueens 12
 
 
 
