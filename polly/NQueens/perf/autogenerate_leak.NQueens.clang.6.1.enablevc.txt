@@ -1,0 +1,406 @@
+Enable loop vectorization...Compile C code using clang with 1 threads...N-Queen Problem on a N X N Board.
+N = 6
+Found 4 solutions.
+
+ Performance counter stats for './out/NQueens.clang.enablevc.out 6':
+
+          0.264761      task-clock (msec)         #    0.070 CPUs utilized          
+                 2      context-switches          #    0.008 M/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                56      page-faults               #    0.212 M/sec                  
+           884,103      cycles                    #    3.339 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+           717,083      instructions              #    0.81  insns per cycle        
+           143,074      branches                  #  540.389 M/sec                  
+             8,766      branch-misses             #    6.13% of all branches        
+
+       0.003771101 seconds time elapsed
+
+N-Queen Problem on a N X N Board.
+N = 6
+Found 4 solutions.
+
+ Performance counter stats for './out/NQueens.clang.enablevc.out 6':
+
+          0.218516      task-clock (msec)         #    0.066 CPUs utilized          
+                 1      context-switches          #    0.005 M/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                53      page-faults               #    0.243 M/sec                  
+           733,429      cycles                    #    3.356 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+           673,046      instructions              #    0.92  insns per cycle        
+           134,874      branches                  #  617.227 M/sec                  
+             7,391      branch-misses             #    5.48% of all branches        
+
+       0.003307646 seconds time elapsed
+
+N-Queen Problem on a N X N Board.
+N = 6
+Found 4 solutions.
+
+ Performance counter stats for './out/NQueens.clang.enablevc.out 6':
+
+          0.221118      task-clock (msec)         #    0.062 CPUs utilized          
+                 1      context-switches          #    0.005 M/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                55      page-faults               #    0.249 M/sec                  
+           742,132      cycles                    #    3.356 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+           688,231      instructions              #    0.93  insns per cycle        
+           137,380      branches                  #  621.297 M/sec                  
+             7,242      branch-misses             #    5.27% of all branches        
+
+       0.003578952 seconds time elapsed
+
+N-Queen Problem on a N X N Board.
+N = 6
+Found 4 solutions.
+
+ Performance counter stats for './out/NQueens.clang.enablevc.out 6':
+
+          0.219013      task-clock (msec)         #    0.059 CPUs utilized          
+                 1      context-switches          #    0.005 M/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                56      page-faults               #    0.256 M/sec                  
+           734,956      cycles                    #    3.356 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+           694,368      instructions              #    0.94  insns per cycle        
+           138,356      branches                  #  631.725 M/sec                  
+             7,292      branch-misses             #    5.27% of all branches        
+
+       0.003717342 seconds time elapsed
+
+N-Queen Problem on a N X N Board.
+N = 6
+Found 4 solutions.
+
+ Performance counter stats for './out/NQueens.clang.enablevc.out 6':
+
+          0.218288      task-clock (msec)         #    0.055 CPUs utilized          
+                 1      context-switches          #    0.005 M/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                54      page-faults               #    0.247 M/sec                  
+           732,595      cycles                    #    3.356 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+           693,160      instructions              #    0.95  insns per cycle        
+           137,589      branches                  #  630.309 M/sec                  
+             7,196      branch-misses             #    5.23% of all branches        
+
+       0.003980349 seconds time elapsed
+
+N-Queen Problem on a N X N Board.
+N = 6
+Found 4 solutions.
+
+ Performance counter stats for './out/NQueens.clang.enablevc.out 6':
+
+          0.222242      task-clock (msec)         #    0.056 CPUs utilized          
+                 1      context-switches          #    0.004 M/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                58      page-faults               #    0.261 M/sec                  
+           745,957      cycles                    #    3.357 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+           701,623      instructions              #    0.94  insns per cycle        
+           140,110      branches                  #  630.439 M/sec                  
+             7,196      branch-misses             #    5.14% of all branches        
+
+       0.003936455 seconds time elapsed
+
+N-Queen Problem on a N X N Board.
+N = 6
+Found 4 solutions.
+
+ Performance counter stats for './out/NQueens.clang.enablevc.out 6':
+
+          0.224098      task-clock (msec)         #    0.059 CPUs utilized          
+                 1      context-switches          #    0.004 M/sec                  
+                 1      cpu-migrations            #    0.004 M/sec                  
+                54      page-faults               #    0.241 M/sec                  
+           752,669      cycles                    #    3.359 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+           689,450      instructions              #    0.92  insns per cycle        
+           137,532      branches                  #  613.714 M/sec                  
+             7,271      branch-misses             #    5.29% of all branches        
+
+       0.003775038 seconds time elapsed
+
+N-Queen Problem on a N X N Board.
+N = 6
+Found 4 solutions.
+
+ Performance counter stats for './out/NQueens.clang.enablevc.out 6':
+
+          0.221150      task-clock (msec)         #    0.056 CPUs utilized          
+                 1      context-switches          #    0.005 M/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                55      page-faults               #    0.249 M/sec                  
+           742,188      cycles                    #    3.356 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+           697,943      instructions              #    0.94  insns per cycle        
+           139,148      branches                  #  629.202 M/sec                  
+             7,505      branch-misses             #    5.39% of all branches        
+
+       0.003981928 seconds time elapsed
+
+N-Queen Problem on a N X N Board.
+N = 6
+Found 4 solutions.
+
+ Performance counter stats for './out/NQueens.clang.enablevc.out 6':
+
+          0.223000      task-clock (msec)         #    0.065 CPUs utilized          
+                 1      context-switches          #    0.004 M/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                57      page-faults               #    0.256 M/sec                  
+           748,603      cycles                    #    3.357 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+           707,932      instructions              #    0.95  insns per cycle        
+           140,982      branches                  #  632.206 M/sec                  
+             7,141      branch-misses             #    5.07% of all branches        
+
+       0.003423965 seconds time elapsed
+
+N-Queen Problem on a N X N Board.
+N = 6
+Found 4 solutions.
+
+ Performance counter stats for './out/NQueens.clang.enablevc.out 6':
+
+          0.219303      task-clock (msec)         #    0.066 CPUs utilized          
+                 1      context-switches          #    0.005 M/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                56      page-faults               #    0.255 M/sec                  
+           736,428      cycles                    #    3.358 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+           690,646      instructions              #    0.94  insns per cycle        
+           138,053      branches                  #  629.508 M/sec                  
+             7,240      branch-misses             #    5.24% of all branches        
+
+       0.003330923 seconds time elapsed
+
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3400.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.29
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3402.257
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 2
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.29
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3400.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 4
+initial apicid	: 4
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.29
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3400.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 6
+initial apicid	: 6
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.29
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 4
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3852.093
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.29
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 5
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3411.421
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 3
+initial apicid	: 3
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.29
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 6
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3843.992
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 5
+initial apicid	: 5
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.29
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 7
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3796.046
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 7
+initial apicid	: 7
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.29
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
