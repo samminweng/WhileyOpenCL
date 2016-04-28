@@ -101,10 +101,10 @@ method main(System.Console sys):
 	int|null max = Int.parse(sys.args[0])
 	if max != null:
 		int n = max
-    	int[] moves = [0;n*n]
-    	moves = findMoves(moves, n) // Pass 'moves' array to the function 
-    	//play(sys, moves, n) 
-    	int sum_alice = moves[n-1]
-    	sys.out.print_s("The total amount of money (maximum) Alice gets is ")
-    	sys.out.println(sum_alice)
-    	sys.out.println_s("Pass CoinGame test case")
+		int[] moves = [0;n*n]
+		moves = findMoves(moves, n) // Pass 'moves' array to the function
+		//play(sys, moves, n)
+		int sum_alice = moves[n-1]
+		sys.out.print_s("The total amount of money (maximum) Alice gets is ")
+		sys.out.println(sum_alice)
+		sys.out.println_s("Pass CoinGame test case")

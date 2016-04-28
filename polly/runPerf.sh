@@ -115,11 +115,11 @@ exec(){
 	program=$2
 	parameter=$3
 	cd "$program/impl/$c_type"
-	compileProgram $c_type $program $parameter "gcc" 1
-	compileProgram $c_type $program $parameter "clang" 1
-	compileProgram $c_type $program $parameter "polly" 1
-	compileProgram $c_type $program $parameter "openmp" 1
-	compileProgram $c_type $program $parameter "openmp" 2
+	#compileProgram $c_type $program $parameter "gcc" 1
+	#compileProgram $c_type $program $parameter "clang" 1
+	#compileProgram $c_type $program $parameter "polly" 1
+	#compileProgram $c_type $program $parameter "openmp" 1
+	#compileProgram $c_type $program $parameter "openmp" 2
 	compileProgram $c_type $program $parameter "openmp" 4
 	cd ../../../
 }
@@ -149,8 +149,8 @@ init(){
 #init autogenerate CoinGame
 #exec autogenerate_leak CoinGame 40000
 #exec autogenerate_leakfree CoinGame 40000
-#exec autogenerate_array_leakfree CoinGame 40000
-exec autogenerate_single_leakfree CoinGame 40000
+exec autogenerate_array_leakfree CoinGame 40000
+#exec autogenerate_single_leakfree CoinGame 40000
 
 ### Benchmark Autogenerate NQueens
 # init autogenerate_leakfree NQueens
