@@ -7,45 +7,46 @@ function pause(){
 }
 
 function generateReport(results){
-	print "TestCase,Vectorization,CompilerOpt,Threads,Parameter,CodeType,1st,2nd,3rd,4th,5th,6th,7th,8th,9th,10th,Average";
+	print "TestCase,CodeType,Vectorization,CompilerOpt,Threads,Parameter,1st,2nd,3rd,4th,5th,6th,7th,8th,9th,10th,Average";
  	t_total=split(testcases, t_array, " ");
  	for(t=1;t<=t_total;t++){
  		testcase=t_array[t];
-		vc_total=split(vcs, vc_array, " ");
-		for(vc_t=1;vc_t<=vc_total;vc_t++){
-			vector=vc_array[vc_t];
-			p_total=split(polly_opts, p_array, " ");
-			for(p=1;p<=p_total;p++){
-				polly_opt=p_array[p];
-				th_total=split(threads, th_array, " ");
-				for(th=1;th<=th_total;th++){
-					thread=th_array[th];
-					# Get the parameter
-					if(parameters[testcase]!=""){
-						par_total=split(parameters[testcase], par_array, " ");
-						for(par=1;par<=par_total;par++){
-							parameter=par_array[par];
-							c_total=split(c_types, c_array, " ");
- 							for(c=1;c<=c_total;c++){
- 								c_type=c_array[c]; 							
-								key=testcase","c_type","vector","polly_opt","thread","parameter;
-								# Check if there is any result.
-								if(counts[key]>0){
-									str = testcase"\t"vector"\t"polly_opt"\t"thread"\t"parameter"\t"c_type;
-									## Print out CPU utilization
-			 						for(iteration=1;iteration<=10;iteration++){
-			 							str = str"\t"results[key","iteration];
-			 						}
+ 		c_total=split(c_types, c_array, " ");
+ 		for(c=1;c<=c_total;c++){
+ 			c_type=c_array[c];
+			vc_total=split(vcs, vc_array, " ");
+			for(vc_t=1;vc_t<=vc_total;vc_t++){
+				vector=vc_array[vc_t];
+				p_total=split(polly_opts, p_array, " ");
+				for(p=1;p<=p_total;p++){
+					polly_opt=p_array[p];
+					th_total=split(threads, th_array, " ");
+					for(th=1;th<=th_total;th++){
+						thread=th_array[th];
+						# Get the parameter
+						if(parameters[testcase]!=""){
+							par_total=split(parameters[testcase], par_array, " ");
+							for(par=1;par<=par_total;par++){
+								parameter=par_array[par];							 							
+									key=testcase","c_type","vector","polly_opt","thread","parameter;
+									# Check if there is any result.
+									if(counts[key]>0){
+										str = testcase"\t"vector"\t"polly_opt"\t"thread"\t"parameter"\t"c_type;
+										## Print out CPU utilization
+				 						for(iteration=1;iteration<=10;iteration++){
+				 							str = str"\t"results[key","iteration];
+				 					}
 									print str;
 								}
 							}
-						} 							
-					}
+						}
+					} 							
 				}
 			}
 		}
- 	}
-}
+	}
+ }
+
 
 
 BEGIN {
@@ -53,15 +54,15 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcases="CoinGame";
+	testcases="NQueens";
 	# Code Optimizations
-	c_types="autogenerate_leak autogenerate_leakfree autogenerate_single_leakfree autogenerate_array_leakfree";
+	c_types="autogenerate_leak autogenerate_leakfree";
 	# Polly optimiz
 	polly_opts="gcc clang polly openmp"
 	# Parameters
-	parameters["CoinGame"] = "40000";
+	#parameters["CoinGame"] = "40000";
 	##parameters["GCD"] = "1000 10000 20000 30000 40000";
-	#parameters["NQueens"] = "1 2 4 6 8 10 12 14 15";
+	parameters["NQueens"] = "1 2 4 6 8 10 12 14 15";
 	threads="1 2 4";
 	vcs="enablevc";
 	cpu_utils[""] = "";
