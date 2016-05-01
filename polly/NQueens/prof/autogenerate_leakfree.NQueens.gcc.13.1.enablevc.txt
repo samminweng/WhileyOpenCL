@@ -3,16 +3,18 @@ Flat profile:
 Each sample counts as 0.01 seconds.
   %   cumulative   self              self     total           
  time   seconds   seconds    calls   s/call   s/call  name    
- 44.88      0.70     0.70        1     0.70     1.54  run
- 37.13      1.27     0.58 45396914     0.00     0.00  conflict
- 10.33      1.43     0.16 86257548     0.00     0.00  copy_POS
-  6.78      1.54     0.11 87113725     0.00     0.00  free_POS
-  0.97      1.55     0.02                             copy_array_POS
-  0.00      1.55     0.00        4     0.00     0.00  printf_s
-  0.00      1.55     0.00        2     0.00     0.00  println_s
-  0.00      1.55     0.00        1     0.00     0.00  convertArgsToIntArray
-  0.00      1.55     0.00        1     0.00     0.00  free2DArray
-  0.00      1.55     0.00        1     0.00     0.00  parseStringToInt
+ 41.20      4.66     4.66        1     4.66    11.03  run
+ 35.58      8.68     4.02 292182579     0.00     0.00  conflict
+ 13.19     10.17     1.49 563494698     0.00     0.00  copy_POS
+  7.57     11.03     0.86 568169575     0.00     0.00  free_POS
+  0.97     11.14     0.11                             frame_dummy
+  0.93     11.25     0.11                             copy_array_POS
+  0.62     11.32     0.07                             printf_POS
+  0.00     11.32     0.00        4     0.00     0.00  printf_s
+  0.00     11.32     0.00        2     0.00     0.00  println_s
+  0.00     11.32     0.00        1     0.00     0.00  convertArgsToIntArray
+  0.00     11.32     0.00        1     0.00     0.00  free2DArray
+  0.00     11.32     0.00        1     0.00     0.00  parseStringToInt
 
  %         the percentage of the total running time of the
 time       program used by this function.
@@ -50,58 +52,64 @@ notice and this notice are preserved.
 		     Call graph (explanation follows)
 
 
-granularity: each sample hit covers 2 byte(s) for 0.64% of 1.55 seconds
+granularity: each sample hit covers 2 byte(s) for 0.09% of 11.32 seconds
 
 index % time    self  children    called     name
                                                  <spontaneous>
-[1]     99.0    0.00    1.54                 main [1]
-                0.70    0.84       1/1           run [2]
-                0.00    0.00      12/86257548     copy_POS [4]
-                0.00    0.00       1/87113725     free_POS [5]
-                0.00    0.00       2/2           println_s [8]
-                0.00    0.00       2/4           printf_s [7]
-                0.00    0.00       1/1           convertArgsToIntArray [9]
-                0.00    0.00       1/1           parseStringToInt [11]
-                0.00    0.00       1/1           free2DArray [10]
+[1]     97.5    0.00   11.03                 main [1]
+                4.66    6.37       1/1           run [2]
+                0.00    0.00      13/563494698     copy_POS [4]
+                0.00    0.00       1/568169575     free_POS [5]
+                0.00    0.00       2/2           println_s [10]
+                0.00    0.00       2/4           printf_s [9]
+                0.00    0.00       1/1           convertArgsToIntArray [11]
+                0.00    0.00       1/1           parseStringToInt [13]
+                0.00    0.00       1/1           free2DArray [12]
 -----------------------------------------------
-                              856188             run [2]
-                0.70    0.84       1/1           main [1]
-[2]     99.0    0.70    0.84       1+856188  run [2]
-                0.58    0.00 45396914/45396914     conflict [3]
-                0.16    0.00 86257536/86257548     copy_POS [4]
-                0.11    0.00 87113724/87113725     free_POS [5]
-                              856188             run [2]
+                             4674889             run [2]
+                4.66    6.37       1/1           main [1]
+[2]     97.5    4.66    6.37       1+4674889 run [2]
+                4.02    0.00 292182579/292182579     conflict [3]
+                1.49    0.00 563494685/563494698     copy_POS [4]
+                0.86    0.00 568169574/568169575     free_POS [5]
+                             4674889             run [2]
 -----------------------------------------------
-                0.58    0.00 45396914/45396914     run [2]
-[3]     37.1    0.58    0.00 45396914         conflict [3]
+                4.02    0.00 292182579/292182579     run [2]
+[3]     35.6    4.02    0.00 292182579         conflict [3]
 -----------------------------------------------
-                0.00    0.00      12/86257548     main [1]
-                0.16    0.00 86257536/86257548     run [2]
-[4]     10.3    0.16    0.00 86257548         copy_POS [4]
+                0.00    0.00      13/563494698     main [1]
+                1.49    0.00 563494685/563494698     run [2]
+[4]     13.2    1.49    0.00 563494698         copy_POS [4]
 -----------------------------------------------
-                0.00    0.00       1/87113725     main [1]
-                0.11    0.00 87113724/87113725     run [2]
-[5]      6.8    0.11    0.00 87113725         free_POS [5]
+                0.00    0.00       1/568169575     main [1]
+                0.86    0.00 568169574/568169575     run [2]
+[5]      7.6    0.86    0.00 568169575         free_POS [5]
 -----------------------------------------------
                                                  <spontaneous>
-[6]      1.0    0.02    0.00                 copy_array_POS [6]
+[6]      1.0    0.11    0.00                 frame_dummy [6]
+-----------------------------------------------
+                                                 <spontaneous>
+[7]      0.9    0.11    0.00                 copy_array_POS [7]
+-----------------------------------------------
+                                                 <spontaneous>
+[8]      0.6    0.07    0.00                 printf_POS [8]
 -----------------------------------------------
                 0.00    0.00       2/4           main [1]
-                0.00    0.00       2/4           println_s [8]
-[7]      0.0    0.00    0.00       4         printf_s [7]
+                0.00    0.00       2/4           println_s [10]
+[9]      0.0    0.00    0.00       4         printf_s [9]
 -----------------------------------------------
                 0.00    0.00       2/2           main [1]
-[8]      0.0    0.00    0.00       2         println_s [8]
-                0.00    0.00       2/4           printf_s [7]
+[10]     0.0    0.00    0.00       2         println_s [10]
+                0.00    0.00       2/4           printf_s [9]
 -----------------------------------------------
                 0.00    0.00       1/1           main [1]
-[9]      0.0    0.00    0.00       1         convertArgsToIntArray [9]
+[11]     0.0    0.00    0.00       1         convertArgsToIntArray [11]
 -----------------------------------------------
                 0.00    0.00       1/1           main [1]
-[10]     0.0    0.00    0.00       1         free2DArray [10]
+[12]     0.0    0.00    0.00       1         free2DArray [12]
 -----------------------------------------------
                 0.00    0.00       1/1           main [1]
-[11]     0.0    0.00    0.00       1         parseStringToInt [11]
+[13]     0.0    0.00    0.00       1         parseStringToInt [13]
 -----------------------------------------------
 
  This table describes the call tree of the program, and was sorted by
@@ -194,7 +202,7 @@ notice and this notice are preserved.
 
 Index by function name
 
-   [3] conflict               [10] free2DArray             [8] println_s
-   [9] convertArgsToIntArray   [5] free_POS                [2] run
-   [4] copy_POS               [11] parseStringToInt
-   [6] copy_array_POS          [7] printf_s
+   [3] conflict                [6] frame_dummy             [8] printf_POS
+  [11] convertArgsToIntArray  [12] free2DArray             [9] printf_s
+   [4] copy_POS                [5] free_POS               [10] println_s
+   [7] copy_array_POS         [13] parseStringToInt        [2] run

@@ -77,5 +77,11 @@ exec(){
 	cd ../../..
 }
 
-exec autogenerate_leak NQueens gcc 12 1
-exec autogenerate_leakfree NQueens gcc 12 1
+init(){
+	program=$1
+	rm -rf "$program/prof/*.*"
+}
+
+
+exec autogenerate_leak NQueens gcc 13 1
+exec autogenerate_leakfree NQueens gcc 13 1

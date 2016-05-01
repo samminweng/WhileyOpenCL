@@ -32,7 +32,6 @@ long long* slice(long long* arr, long long arr_size, long long start, long long 
  */
 long long* gen1DArray(int value, int arr_size){
 	long long* arr = NULL;
-	long long i = 0;
 	// Allocate the array
 	arr = (long long*)malloc(arr_size*sizeof(long long));
 	if(arr == NULL){
@@ -272,8 +271,6 @@ void printf1DArray(long long* input, long long input_size) {
 // Print out the first 10 array in an 2D array
 void printf2DArray(long long** input, long long input_size, long long input_size_size){
 	long long i = 0;
-	//Determines whether to add ','.
-	int isFirst = true;
 	int max_i = 10;
 	printf("[");
 	for (i = 0; i < input_size && i < max_i; i++) {
