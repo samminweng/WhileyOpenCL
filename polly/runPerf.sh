@@ -96,9 +96,9 @@ compileProgram(){
 	        		-mllvm -polly-parallel -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
 	        		$program.c -o "llvm/$program.$opt.enablevc.ll"
 			### Use 'llc' to compile LLVM code into assembly code
-                        llc "llvm/$program.$opt.enablevc.ll" -o "assembly/$program.$opt.enablevc.s"
-                        ### Use 'gcc' to compile .s file and link with 'libUtil.a'
-                        pollycc "assembly/$program.$opt.enablevc.s" Util.c -lgomp -o "out/$program.$opt.enablevc.out"
+            llc "llvm/$program.$opt.enablevc.ll" -o "assembly/$program.$opt.enablevc.s"
+            ### Use 'gcc' to compile .s file and link with 'libUtil.a'
+            pollycc "assembly/$program.$opt.enablevc.s" Util.c -lgomp -o "out/$program.$opt.enablevc.out"
 
 			;;
 	esac
