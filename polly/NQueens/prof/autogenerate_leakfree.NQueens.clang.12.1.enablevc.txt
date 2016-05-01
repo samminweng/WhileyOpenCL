@@ -1,0 +1,72 @@
+Function: run: 2175, 0, 30 sampled lines
+Samples collected in the function's body {
+  0: 4
+  36: 0
+  40: 1
+  40.1: 0
+  64: 1
+  72: 0
+  73: 0
+  79: 2
+  116: 136
+  119: 160
+  122: 0
+  129: 140
+  135: 59
+  139: 68
+  161: 196
+  172: 192
+  174: 7
+  175: 3
+  176: 0
+  177: 1
+  180: 0
+  184: 0
+  186: 3
+  188: 15
+  196: 17
+  205: 22
+  205.1: 0
+  206: 0
+  208: 2
+  213.2: 16
+}
+Samples collected in inlined callsites {
+  119: inlined callee: copy_POS: 309, 0, 2 sampled lines
+    Samples collected in the function's body {
+      1.1: 128
+      2: 148
+    }
+    No inlined callsites in this function
+  122.1: inlined callee: free_POS: 136, 0, 1 sampled lines
+    Samples collected in the function's body {
+      1: 133
+    }
+    No inlined callsites in this function
+  135: inlined callee: conflict: 270, 0, 7 sampled lines
+    Samples collected in the function's body {
+      15: 10
+      19: 11
+      23: 67
+      36: 14
+      42: 61
+      48: 52
+      56: 10
+    }
+    No inlined callsites in this function
+  174.1: inlined callee: free_POS: 11, 0, 1 sampled lines
+    Samples collected in the function's body {
+      1: 11
+    }
+    No inlined callsites in this function
+  206.1: inlined callee: free_POS: 2, 0, 1 sampled lines
+    Samples collected in the function's body {
+      1: 2
+    }
+    No inlined callsites in this function
+  208.1: inlined callee: free_POS: 2, 0, 1 sampled lines
+    Samples collected in the function's body {
+      1: 2
+    }
+    No inlined callsites in this function
+}
