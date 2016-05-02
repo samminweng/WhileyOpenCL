@@ -151,7 +151,7 @@ exec(){
 	threads=$5
 	# change folder
 	cd "$program/impl/$c_type"
-	generateCode $program $compiler
+	#generateCode $program $compiler
 	case "$compiler" in
 		"gcc")
 			runGProf $c_type $program $compiler $parameter $threads
