@@ -3,7 +3,7 @@ Flat profile:
 Each sample counts as 0.01 seconds.
   %   cumulative   self              self     total           
  time   seconds   seconds    calls  Ts/call  Ts/call  name    
-100.17      3.24     3.24                             run
+100.17      2.63     2.63                             run
 
  %         the percentage of the total running time of the
 time       program used by this function.
@@ -41,11 +41,11 @@ notice and this notice are preserved.
 		     Call graph (explanation follows)
 
 
-granularity: each sample hit covers 2 byte(s) for 0.31% of 3.24 seconds
+granularity: each sample hit covers 2 byte(s) for 0.38% of 2.63 seconds
 
 index % time    self  children    called     name
                              4674889             run [1]
-[1]    100.0    3.24    0.00       0+4674889 run [1]
+[1]    100.0    2.63    0.00       0+4674889 run [1]
                              4674889             run [1]
 -----------------------------------------------
 
