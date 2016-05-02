@@ -1,38 +1,38 @@
-Function: run: 2146, 0, 22 sampled lines
+Function: run: 2145, 1, 22 sampled lines
 Samples collected in the function's body {
-  0: 1
+  0: 3
   33: 0
-  57: 3
+  57: 1
   65: 0
   66: 0
-  72: 41
-  109: 249
-  111: 38
-  117: 330
-  123: 20
-  127: 43
-  149: 177
-  160: 170
-  162: 12
+  72: 37
+  109: 271
+  111: 43
+  117: 318
+  123: 30
+  127: 36
+  149: 170
+  160: 181
+  162: 11
   163: 0
   164: 0
-  166: 2
-  170: 1
+  166: 0
+  170: 4
   172: 3
-  174: 1
-  182: 15
-  195.2: 44
+  174: 5
+  182: 25
+  195.2: 33
 }
 Samples collected in inlined callsites {
-  123: inlined callee: conflict: 500, 0, 7 sampled lines
+  123: inlined callee: conflict: 496, 0, 7 sampled lines
     Samples collected in the function's body {
-      15: 87
-      19: 37
-      23: 80
-      35: 48
-      41: 44
-      47: 56
-      55: 38
+      15: 77
+      19: 48
+      23: 89
+      35: 40
+      41: 43
+      47: 48
+      55: 28
     }
     No inlined callsites in this function
 }

@@ -40,7 +40,8 @@ runGProf(){
 	mkdir -p "out"
 	## Compile C code with -pg option to write profile information for gprof
 	echo -e -n "[*]Compile $program using GCC" && read
-	gcc -O3 -g -std=c99 -Wall -pg $program.c Util.c -o "out/$program.$compiler.enablevc.out"
+	## O3/O2 optimizes and inlines the function, and loses the track of function call 
+	gcc -O3 -fno-inline-small-functions -g -std=c99 -Wall -pg $program.c Util.c -o "out/$program.$compiler.enablevc.out"
 
 	## Execute the program
 	echo -e -n "[*]Run $program executable to produce profile files" && read
@@ -62,7 +63,32 @@ runGProf(){
 	cd ..
 }
 
+##
+## Collect sample profile data for GCC executable
+## https://gcc.gnu.org/wiki/AutoFDO/Tutorial
+runGCCProfiler(){
+	c_type=$1
+	program=$2
+	compiler=$3
+	parameter=$4
+	threads=$5
+	mkdir -p "out"
+	binary="$c_type.$program.$compiler.$parameter.$threads.enablevc.out"
+	gcov_out="$c_type.$program.$compiler.$parameter.$threads.enablevc.gcov"
+	
+	echo -e -n "[*]Build the code with enabled profiler" && read
+	gcc -O3 -fno-inline-small-functions -g -std=c99 -Wall -pg $program.c Util.c -o "out/$binary" -fprofile-generate
 
+	echo -e -n "[*]Run the executable to generate perf.data" && read
+	perf record "./out/$binary" $parameter
+
+	echo -e -n "[*]Convert perf.data into gcov format" && read
+	create_gcov --binary="./out/$binary" --profile=perf.data --gcov=$gcov_out
+
+	echo -e -n "[*]Complete GCOV Analysis" && read
+	mv $gcov_out "$PWD/../../../prof"
+
+}
 
 ###
 ## Run Clang sample profiler (http://clang.llvm.org/docs/UsersManual.html#profile-guided-optimization)
@@ -122,6 +148,7 @@ exec(){
 	case "$compiler" in
 		"gcc")
 			runGProf $c_type $program $compiler $parameter $threads
+			##runGCCProfiler $c_type $program $compiler $parameter $threads
 			;;
 		"clang")
 			runClangSampleProfiler $c_type $program $compiler $parameter $threads
@@ -140,8 +167,8 @@ init(){
 }
 
 init NQueens
-#exec autogenerate_leak NQueens gcc 13 1
-#exec autogenerate_leakfree NQueens gcc 13 1
+exec autogenerate_leak NQueens gcc 12 1
+exec autogenerate_leakfree NQueens gcc 12 1
 
 exec autogenerate_leak NQueens clang 12 1
 exec autogenerate_leakfree NQueens clang 12 1
