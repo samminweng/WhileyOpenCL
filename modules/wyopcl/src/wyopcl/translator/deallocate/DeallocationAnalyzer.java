@@ -78,6 +78,20 @@ public class DeallocationAnalyzer extends Analyzer {
 	
 	/**
 	 * Given a code, compute the ownerships and return the generated C code. 
+	 * 
+	 * Note the lhs variable in an assignment is not always added with ownership.
+	 * 
+	 * If the lhs variable points to an array element, then its ownership is transferred out. 
+	 * Because the array variable owns the ownership, other variables that point to the array 
+	 * lost the ownership. For example, 
+	 * <pre><code>
+	 * 		a = b[i]; // Access the array element 
+	 * 		a_has_ownership = false; // Transfer lhs ownership 
+	 * 
+	 * 		c = a;
+	 * 		a_has_ownership = false;
+	 * 		c_has_ownership = false; // Transfer lhs ownership
+	 * 
 	 * @param code
 	 * @param function
 	 * @param stores
@@ -87,19 +101,35 @@ public class DeallocationAnalyzer extends Analyzer {
 		List<String> statements = new ArrayList<String>();
 		if(code instanceof Codes.Assign){			
 			Codes.Assign assign = (Codes.Assign)code;
-			// Add lhs to ownership set
-			statements.add(indent + addOwnership(assign.target(0), function, stores));
+			int lhs = assign.target(0);
+			int rhs = assign.operand(0);
+			
+			// Check rhs register is an array variable.
+			if(stores.isArrayVar(assign.operand(0), function)){
+				// Adds lhs register to the list of array variable
+				stores.addArrayVar(lhs, function);
+				// Transfer lhs ownership due to non-transferable array ownership 
+				statements.add(indent + transferOwnership(lhs, function, stores));
+			}else{
+				// Add lhs to ownership set
+				statements.add(indent + addOwnership(lhs, function, stores));
+			}
+			
 			if(isCopyEliminated){
 				// Transfer out rhs ownership set
-				statements.add(indent + transferOwnership(assign.operand(0), function, stores));
+				statements.add(indent + transferOwnership(rhs, function, stores));
 			}else{
 				// Add rhs to ownership set
-				statements.add(indent + addOwnership(assign.operand(0), function, stores));
+				statements.add(indent + addOwnership(rhs, function, stores));
 			}
-		}else if(code instanceof Codes.IndexOf){
-			Codes.IndexOf indexOf = (Codes.IndexOf)code;
-			// Add lhs to ownership set
-			statements.add(indent + addOwnership(indexOf.target(0), function, stores));
+		}else if (code instanceof Codes.IndexOf){
+			Codes.IndexOf indexof = (Codes.IndexOf)code;
+			int lhs = indexof.target(0);
+			// Add lhs register to array variable
+			stores.addArrayVar(lhs, function);
+			// Transfer lhs ownership due to non-transferable array ownership 
+			statements.add(indent + transferOwnership(lhs, function, stores));
+			
 		}else{
 			throw new RuntimeException("Not implemented");
 		}

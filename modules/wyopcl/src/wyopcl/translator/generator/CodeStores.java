@@ -45,6 +45,28 @@ public class CodeStores {
 	}
 	
 	/**
+	 * Add the register to array variable so that no ownership is assigned to it.
+	 * @param register
+	 * @param function
+	 */
+	public void addArrayVar(int register, FunctionOrMethod function){
+		CodeStore store = getCodeStore(function);
+		store.addArrayVariable(register);
+	}
+	
+	/**
+	 * Check if the register points to an array element.
+	 * @param register
+	 * @param function
+	 * @return
+	 */
+	public boolean isArrayVar(int register, FunctionOrMethod function){
+		CodeStore store = getCodeStore(function);
+		return store.isArrayVariable(register);
+	}
+	
+	
+	/**
 	 * Get the code store of the given function.
 	 * 
 	 * @param function
@@ -428,14 +450,37 @@ public class CodeStores {
 		private FunctionOrMethod function;
 		private List<String> statements;// Store the list of translated C code.
 		private HashMap<Integer, String> fields;// Stores the fields of register, e.g. 'println', 'print_s', 'println_s'
-		
+		private List<Integer> array_vars; // Stores the variable that points to array element. 
 		
 		public CodeStore(FunctionOrMethod function) {
 			this.indent = "\t";
 			this.function = function;
 			this.statements = new ArrayList<String>();
 			this.fields = new HashMap<Integer, String>();
+			this.array_vars = new ArrayList<Integer>();
 		}
+		
+		
+		
+		/**
+		 * Add the register to the list of array variables
+		 * @param register
+		 */
+		private void addArrayVariable(int register){
+			if(!array_vars.contains(register)){
+				array_vars.add(register);
+			}
+			
+		}
+		/**
+		 * Check if the register is an array variable. 
+		 * @param register
+		 * @return
+		 */
+		private boolean isArrayVariable(int register){
+			return array_vars.contains(register);
+		}
+		
 		
 		/**
 		 * Load the field to the given register.

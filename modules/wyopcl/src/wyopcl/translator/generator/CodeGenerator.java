@@ -1034,34 +1034,22 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.IndexOf code, FunctionOrMethod function) {
-		// Check the type of array element
-		Type.Array arr_type = (Type.Array) stores.getRawType(code.operand(0), function);
+		// Check the type of array element		
 		List<String> statement = new ArrayList<String>();
 
-		Type elmType = stores.getArrayElementType(arr_type);
 		String indent = stores.getIndent(function);
-		String lhs = stores.getVar(code.target(0), function);
-		Type lhs_type = stores.getRawType(code.operand(0), function);
+		String lhs = stores.getVar(code.target(0), function);		
 		String rhs = stores.getVar(code.operand(0), function);
 		String index = stores.getVar(code.operand(1), function);
-		if (!stores.isIntType(elmType)) {
-			String struct = CodeGeneratorHelper.translateType(elmType, stores).replace("*", "");
-			// Free the lhs
-			this.deallocatedAnalyzer.ifPresent(
-					a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
-			// Copy the rhs and assign the copied to lhs, e.g. a =
-			// copy_POS(b[i]);
-			statement.add(indent + lhs + " = copy_" + struct + "(" + rhs + "[" + index + "]);");
-			// For IndexOf code, the copy is always made to conform the
-			// functional programming.
-			boolean isCopyEliminated = false;
-			this.deallocatedAnalyzer.ifPresent(
-					a -> statement.addAll(a.computeOwnership(indent, isCopyEliminated, code, function, stores)));
-
-		} else {
-			// Assign rhs to rhs without any copy, e.g. a = b[i];
-			statement.add(indent + lhs + "=" + rhs + "[" + index + "];");
-		}
+		
+		// Add lhs register to array variable
+		stores.addArrayVar(code.target(0), function);
+		
+		// Assign rhs to rhs without any copy, e.g. a = b[i];
+		statement.add(indent + lhs + "=" + rhs + "[" + index + "];");
+		
+		this.deallocatedAnalyzer.ifPresent(a -> statement
+				.addAll(a.computeOwnership(indent, false, code, function, stores)));
 
 		stores.addAllStatements(code, statement, function);
 	}

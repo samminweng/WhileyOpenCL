@@ -150,6 +150,7 @@ Matrix* multiply(Matrix* A, _DECL_OWNERSHIP_PARAM(A), Matrix* B, _DECL_OWNERSHIP
 				_ADD_OWNERSHIP(_20);
 				//indexof %21 = %20, %4 : int[][]
 				_21=_20[i];
+				_REMOVE_OWNERSHIP(_21);
 				//indexof %22 = %21, %7 : int[]
 				_22=_21[k];
 				//fieldload %23 = %1 data : {int[][] data,int height,int width}
@@ -158,6 +159,7 @@ Matrix* multiply(Matrix* A, _DECL_OWNERSHIP_PARAM(A), Matrix* B, _DECL_OWNERSHIP
 				_ADD_OWNERSHIP(_23);
 				//indexof %24 = %23, %7 : int[][]
 				_24=_23[k];
+				_REMOVE_OWNERSHIP(_24);
 				//indexof %25 = %24, %5 : int[]
 				_25=_24[j];
 				//mul %26 = %22, %25 : int
@@ -276,6 +278,7 @@ void printMat(FILE* sys, Matrix* A, _DECL_OWNERSHIP_PARAM(A)){
 			_ADD_OWNERSHIP(_10);
 			//indexof %11 = %10, %2 : int[][]
 			_11=_10[i];
+			_REMOVE_OWNERSHIP(_11);
 			//indexof %12 = %11, %3 : int[]
 			_12=_11[j];
 			//indirectinvoke () = %9 (%12) : method(any)->()
@@ -509,6 +512,7 @@ int main(int argc, char** args){
 		_11=max-_10;
 		//indexof %12 = %9, %11 : int[][]
 		_12=_9[_11];
+		_REMOVE_OWNERSHIP(_12);
 		//const %13 = 1 : int
 		_13 = 1;
 		//sub %14 = %1, %13 : int
@@ -540,6 +544,7 @@ blklab27:;
 		_20=max-_19;
 		//indexof %21 = %18, %20 : int[][]
 		_21=_18[_20];
+		_REMOVE_OWNERSHIP(_21);
 		//const %22 = 1 : int
 		_22 = 1;
 		//sub %23 = %1, %22 : int
@@ -571,6 +576,7 @@ blklab28:;
 		_29=max-_28;
 		//indexof %30 = %27, %29 : int[][]
 		_30=_27[_29];
+		_REMOVE_OWNERSHIP(_30);
 		//const %31 = 1 : int
 		_31 = 1;
 		//sub %32 = %1, %31 : int
