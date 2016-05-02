@@ -114,7 +114,7 @@ runClangSampleProfiler(){
 	#clang -O3 -fno-inline -g NQueens.c Util.c -o "out/$binary"
 
 	echo -e -n "[*]Run the executable with sampling profiler" && read
-	time perf record -b "./out/$binary" $parameter
+	time perf record "./out/$binary" $parameter
 
 	echo -e -n "[*]Convert perf.data to LLVM's sampling profiler format using AutoFDO" && read
 	create_llvm_prof --binary="./out/$binary" --out=$sampler
@@ -127,19 +127,15 @@ runClangSampleProfiler(){
 	echo -e -n "[*]Complete Clang Sample Profiling Analysis ($analysis)" && read
 	## Clean up folder
 	mkdir -p "$PWD/../../prof"
-	mkdir -p "$PWD/../../prof/clang"
-	mkdir -p "$PWD/../../prof/clang/out"
-	mkdir -p "$PWD/../../prof/clang/sampler"
-	mkdir -p "$PWD/../../prof/clang/perfdata"
-	## Move binary file
-	mv "out/$binary" "$PWD/../../prof/clang/out"
 	## Move sample profiled data
-	mv $sampler "$PWD/../../prof/clang/sampler"
 	mv $analysis "$PWD/../../prof"
+	## Move binary file
+	rm -f "out/$binary"
+	## delete sampler 
+	rm $sampler 
 	## delete perf.data
 	rm -f perf.data
-	#mv perf.data $perfdata
-	#mv $perfdata "$PWD/../../prof/clang/perfdata"
+
 
 }
 
@@ -174,8 +170,8 @@ init(){
 }
 
 init NQueens
-exec autogenerate_leak NQueens gcc 13 1
-exec autogenerate_leak NQueens clang 13 1
+exec autogenerate_leak NQueens gcc 12 1
+exec autogenerate_leak NQueens clang 12 1
 
-exec autogenerate_leakfree NQueens gcc 13 1
-exec autogenerate_leakfree NQueens clang 13 1
+exec autogenerate_leakfree NQueens gcc 12 1
+exec autogenerate_leakfree NQueens clang 12 1

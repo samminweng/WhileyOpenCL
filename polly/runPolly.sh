@@ -180,11 +180,11 @@ exec(){
 #exec autogenerate_cached_copyfree GCD 10000
 #exec autogenerate_leak CoinGame 10000
 #exec autogenerate_leakfree CoinGame 10000
-exec autogenerate_array1_leak CoinGame 10000
+#exec autogenerate_array1_leak CoinGame 10000
 #exec autogenerate_array_leakfree CoinGame 10000
 #exec autogenerate_single_leakfree CoinGame 10000
 #exec autogenerate_single_array_leakfree CoinGame 10000
-#exec autogenerate_leak NQueens 12
+exec autogenerate_leak NQueens 13
 #exec autogenerate_leakfree NQueens 12
 
 
