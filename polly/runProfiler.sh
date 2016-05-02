@@ -22,7 +22,7 @@ generateCode(){
 		if [[ $c_type == *"leakfree"* ]]
 		then
 			### Translate Whiley program into copy-eliminated + memory deallocated C code 
-            ./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"	
+		        ./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"	
 		else
 			### Translate Whiley program into copy-eliminated C code 
 			./../../../../bin/wyopcl -code -copy "$program.whiley"
@@ -41,7 +41,8 @@ runGProf(){
 	## Compile C code with -pg option to write profile information for gprof
 	echo -e -n "[*]Compile $program using GCC" && read
 	## O3/O2 optimizes and inlines the function, and loses the track of function call 
-	gcc -O3 -fno-inline-small-functions -g -std=c99 -Wall -pg $program.c Util.c -o "out/$program.$compiler.enablevc.out"
+	gcc -O3 -g -std=c99 -Wall -pg $program.c Util.c -o "out/$program.$compiler.enablevc.out"
+	#gcc -O3 -fno-inline-small-functions -g -std=c99 -Wall -pg $program.c Util.c -o "out/$program.$compiler.enablevc.out"
 
 	## Execute the program
 	echo -e -n "[*]Run $program executable to produce profile files" && read
@@ -54,41 +55,43 @@ runGProf(){
 	##gprof "./out/$program.$compiler.enablevc.out" gmon.out
 	analysis="$c_type.$program.$compiler.$parameter.$threads.enablevc.txt"
 	gprof "./$program.$compiler.enablevc.out" gmon.out > $analysis
-
+	
 	echo -e -n "[*]Show Profiled Analysis of $program compiled by GCC" && read
 	cat $analysis | less
 
 	echo -e -n "[*]Complete GProf Analysis ($analysis)" && read
 	mv $analysis "$PWD/../../../prof"
+	## Delete gmon.out
+	rm -f gmon.out
 	cd ..
 }
 
 ##
 ## Collect sample profile data for GCC executable
 ## https://gcc.gnu.org/wiki/AutoFDO/Tutorial
-runGCCProfiler(){
-	c_type=$1
-	program=$2
-	compiler=$3
-	parameter=$4
-	threads=$5
-	mkdir -p "out"
-	binary="$c_type.$program.$compiler.$parameter.$threads.enablevc.out"
-	gcov_out="$c_type.$program.$compiler.$parameter.$threads.enablevc.gcov"
-	
-	echo -e -n "[*]Build the code with enabled profiler" && read
-	gcc -O3 -fno-inline-small-functions -g -std=c99 -Wall -pg $program.c Util.c -o "out/$binary" -fprofile-generate
-
-	echo -e -n "[*]Run the executable to generate perf.data" && read
-	perf record "./out/$binary" $parameter
-
-	echo -e -n "[*]Convert perf.data into gcov format" && read
-	create_gcov --binary="./out/$binary" --profile=perf.data --gcov=$gcov_out
-
-	echo -e -n "[*]Complete GCOV Analysis" && read
-	mv $gcov_out "$PWD/../../../prof"
-
-}
+#runGCCProfiler(){
+#	c_type=$1
+#	program=$2
+#	compiler=$3
+#	parameter=$4
+#	threads=$5
+#	mkdir -p "out"
+#	binary="$c_type.$program.$compiler.$parameter.$threads.enablevc.out"
+#	gcov_out="$c_type.$program.$compiler.$parameter.$threads.enablevc.gcov"
+#	
+#	echo -e -n "[*]Build the code with enabled profiler" && read
+#	gcc -O3 -fno-inline-small-functions -g -std=c99 -Wall -pg $program.c Util.c -o "out/$binary" -fprofile-generate
+#
+#	echo -e -n "[*]Run the executable to generate perf.data" && read
+#	perf record "./out/$binary" $parameter
+#
+#	echo -e -n "[*]Convert perf.data into gcov format" && read
+#	create_gcov --binary="./out/$binary" --profile=perf.data --gcov=$gcov_out
+#
+#	echo -e -n "[*]Complete GCOV Analysis" && read
+#	mv $gcov_out "$PWD/../../../prof"
+#
+#}
 
 ###
 ## Run Clang sample profiler (http://clang.llvm.org/docs/UsersManual.html#profile-guided-optimization)
@@ -105,14 +108,17 @@ runClangSampleProfiler(){
 	analysis="$c_type.$program.$compiler.$parameter.$threads.enablevc.txt"
 	perfdata="$c_type.$program.$compiler.$parameter.$threads.enablevc.perf.data"
 
-	echo -e -n "[*]Build the code with source line info." && read
-	clang -O3 -g NQueens.c Util.c -o "out/$binary"
+	echo -e -n "[*]Build the code with source line info using Clang" && read
+	## Specify 'on-inline' option to Clang compiler
+	clang -O3 -gline-tables-only $program.c Util.c -o "out/$binary"
+	#clang -O3 -fno-inline -g NQueens.c Util.c -o "out/$binary"
 
 	echo -e -n "[*]Run the executable with sampling profiler" && read
-	time perf record "./out/$binary" $parameter
+	time perf record -b "./out/$binary" $parameter
 
 	echo -e -n "[*]Convert perf.data to LLVM's sampling profiler format using AutoFDO" && read
-	create_llvm_prof --use_lbr=false --binary="./out/$binary" --out=$sampler
+	create_llvm_prof --binary="./out/$binary" --out=$sampler
+	#create_llvm_prof --use_lbr=false --binary="./out/$binary" --out=$sampler
 	
 	echo -e -n "[*]Show Profiled Analysis of $program compiled by Clang" && read
 	llvm-profdata show -sample $sampler -output=$analysis
@@ -130,9 +136,10 @@ runClangSampleProfiler(){
 	## Move sample profiled data
 	mv $sampler "$PWD/../../prof/clang/sampler"
 	mv $analysis "$PWD/../../prof"
-	## Move perf.data
-	mv perf.data $perfdata
-	mv $perfdata "$PWD/../../prof/clang/perfdata"
+	## delete perf.data
+	rm -f perf.data
+	#mv perf.data $perfdata
+	#mv $perfdata "$PWD/../../prof/clang/perfdata"
 
 }
 
@@ -167,8 +174,8 @@ init(){
 }
 
 init NQueens
-exec autogenerate_leak NQueens gcc 12 1
-exec autogenerate_leakfree NQueens gcc 12 1
+exec autogenerate_leak NQueens gcc 13 1
+exec autogenerate_leak NQueens clang 13 1
 
-exec autogenerate_leak NQueens clang 12 1
-exec autogenerate_leakfree NQueens clang 12 1
+exec autogenerate_leakfree NQueens gcc 13 1
+exec autogenerate_leakfree NQueens clang 13 1

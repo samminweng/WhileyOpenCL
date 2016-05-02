@@ -1,0 +1,38 @@
+Function: run: 1820554, 192, 22 sampled lines
+Samples collected in the function's body {
+  89: 192
+  122: 192
+  146: 188
+  154: 0
+  155: 0
+  161: 3719
+  198: 33360
+  200: 18447
+  206: 33120
+  212: 18447
+  216: 18836
+  238: 33360
+  249: 3818
+  251: 403
+  252: 230
+  253: 230
+  255: 230
+  259: 188
+  261: 230, calls: run:242
+  263: 304
+  271: 3719
+  284.2: 296
+}
+Samples collected in inlined callsites {
+  0: inlined callee: conflict: 788385, 0, 7 sampled lines
+    Samples collected in the function's body {
+      41: 18447
+      45: 18447
+      49: 18447
+      61: 17056
+      67: 17056
+      73: 17056
+      81: 17056
+    }
+    No inlined callsites in this function
+}

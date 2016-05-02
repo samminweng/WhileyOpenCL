@@ -1,0 +1,53 @@
+Function: run: 3462997, 270, 30 sampled lines
+Samples collected in the function's body {
+  91: 270
+  127: 270
+  131: 11
+  131.1: 0
+  155: 247
+  163: 0
+  164: 0
+  170: 3856
+  207: 34924
+  210: 34277
+  213: 30439
+  220: 32786
+  226: 16083
+  230: 17502
+  252: 34924
+  263: 3659
+  265: 347
+  266: 329
+  267: 281
+  268: 281
+  271: 281
+  275: 247
+  277: 281, calls: run:286
+  279: 3596
+  287: 3856
+  296: 290
+  296.1: 0
+  297: 283
+  299: 236
+  304.2: 246
+}
+Samples collected in inlined callsites {
+  0: inlined callee: copy_POS: 1194403, 0, 9 sampled lines
+    Samples collected in the function's body {
+      3.1: 34277
+      4: 30439
+      41: 16083
+      45: 16083
+      49: 16083
+      62: 13698
+      68: 13698
+      74: 13698
+      82: 13698
+    }
+    No inlined callsites in this function
+  0.1: inlined callee: free_POS: 311507, 0, 1 sampled lines
+    Samples collected in the function's body {
+      16: 32581
+    }
+    No inlined callsites in this function
+}
