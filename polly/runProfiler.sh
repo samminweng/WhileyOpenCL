@@ -117,8 +117,7 @@ runClangSampleProfiler(){
 	time perf record "./out/$binary" $parameter
 
 	echo -e -n "[*]Convert perf.data to LLVM's sampling profiler format using AutoFDO" && read
-	create_llvm_prof --binary="./out/$binary" --out=$sampler
-	#create_llvm_prof --use_lbr=false --binary="./out/$binary" --out=$sampler
+	create_llvm_prof --use_lbr=false --binary="./out/$binary" --out=$sampler
 	
 	echo -e -n "[*]Show Profiled Analysis of $program compiled by Clang" && read
 	llvm-profdata show -sample $sampler -output=$analysis
@@ -147,7 +146,7 @@ exec(){
 	threads=$5
 	# change folder
 	cd "$program/impl/$c_type"
-	#generateCode $program $compiler
+	generateCode $program $compiler
 	case "$compiler" in
 		"gcc")
 			runGProf $c_type $program $compiler $parameter $threads
@@ -166,12 +165,12 @@ exec(){
 
 init(){
 	program=$1
-	rm -rf "$program/prof/*.*"
+	rm -rf "$program/prof/"*
 }
 
 init NQueens
-exec autogenerate_leak NQueens gcc 12 1
-exec autogenerate_leak NQueens clang 12 1
+exec autogenerate_leak NQueens gcc 15 1
+exec autogenerate_leak NQueens clang 15 1
 
-exec autogenerate_leakfree NQueens gcc 12 1
-exec autogenerate_leakfree NQueens clang 12 1
+exec autogenerate_leakfree NQueens gcc 15 1
+exec autogenerate_leakfree NQueens clang 15 1
