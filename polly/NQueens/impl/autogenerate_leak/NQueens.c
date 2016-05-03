@@ -197,7 +197,7 @@ blklab14:;
 			//ifge %7, %1 goto blklab12 : int
 			if(i>=n){goto blklab12;}
 			//indexof %19 = %0, %7 : {int c,int r}[]
-			_19=queens[i];
+			_19 = copy_POS(queens[i]);
 			//assign %8 = %19  : {int c,int r}
 			p = _19;
 			//const %20 = true : bool

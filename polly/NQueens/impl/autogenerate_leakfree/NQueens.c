@@ -206,12 +206,13 @@ blklab14:;
 			//ifge %7, %1 goto blklab12 : int
 			if(i>=n){goto blklab12;}
 			//indexof %19 = %0, %7 : {int c,int r}[]
-			_19=queens[i];
-			_REMOVE_OWNERSHIP(_19);
+			_FREE(_19);
+			_19 = copy_POS(queens[i]);
+			_ADD_OWNERSHIP(_19);
 			//assign %8 = %19  : {int c,int r}
 			_FREE_STRUCT(p, POS);
 			p = _19;
-			_REMOVE_OWNERSHIP(p);
+			_ADD_OWNERSHIP(p);
 			_REMOVE_OWNERSHIP(_19);
 			//const %20 = true : bool
 			_20 = true;
@@ -345,7 +346,6 @@ int main(int argc, char** args){
 	_7 = 0;
 	//indexof %8 = %6, %7 : int[][]
 	_8=_6[_7];
-	_REMOVE_OWNERSHIP(_8);
 	//invoke (%5) = (%8) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
 	_STR_TO_INT(_5, _8);
 	//assign %1 = %5  : null|int
