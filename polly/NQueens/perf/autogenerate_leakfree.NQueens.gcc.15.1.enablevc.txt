@@ -1,192 +1,192 @@
-Enable loop vectorization...Compile C code using clang with 1 threads...N-Queen Problem on a N X N Board.
-N = 4
-Found 2 solutions.
+Enable loop vectorization...Compile C code using gcc with 1 threads...N-Queen Problem on a N X N Board.
+N = 15
+Found 2279184 solutions.
 
- Performance counter stats for './out/NQueens.clang.enablevc.out 4':
+ Performance counter stats for './out/NQueens.gcc.enablevc.out 15':
 
-          0.253361      task-clock (msec)         #    0.063 CPUs utilized          
-                 2      context-switches          #    0.008 M/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                56      page-faults               #    0.221 M/sec                  
-           845,239      cycles                    #    3.336 GHz                    
+     592572.335292      task-clock (msec)         #    1.000 CPUs utilized          
+               529      context-switches          #    0.001 K/sec                  
+                21      cpu-migrations            #    0.000 K/sec                  
+                53      page-faults               #    0.000 K/sec                  
+ 2,303,776,029,838      cycles                    #    3.888 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           659,740      instructions              #    0.78  insns per cycle        
-           130,826      branches                  #  516.362 M/sec                  
-             7,442      branch-misses             #    5.69% of all branches        
+ 6,315,136,449,944      instructions              #    2.74  insns per cycle        
+ 1,512,880,642,193      branches                  # 2553.073 M/sec                  
+     5,242,371,481      branch-misses             #    0.35% of all branches        
 
-       0.004010902 seconds time elapsed
+     592.343295585 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
-N = 4
-Found 2 solutions.
+N = 15
+Found 2279184 solutions.
 
- Performance counter stats for './out/NQueens.clang.enablevc.out 4':
+ Performance counter stats for './out/NQueens.gcc.enablevc.out 15':
 
-          0.206360      task-clock (msec)         #    0.057 CPUs utilized          
-                 1      context-switches          #    0.005 M/sec                  
+     592608.221965      task-clock (msec)         #    1.000 CPUs utilized          
+               153      context-switches          #    0.000 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                54      page-faults               #    0.262 M/sec                  
-           691,924      cycles                    #    3.353 GHz                    
+                53      page-faults               #    0.000 K/sec                  
+ 2,303,942,341,829      cycles                    #    3.888 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           606,915      instructions              #    0.88  insns per cycle        
-           121,954      branches                  #  590.977 M/sec                  
-             6,620      branch-misses             #    5.43% of all branches        
+ 6,315,107,118,871      instructions              #    2.74  insns per cycle        
+ 1,512,875,380,920      branches                  # 2552.910 M/sec                  
+     5,233,421,182      branch-misses             #    0.35% of all branches        
 
-       0.003631040 seconds time elapsed
+     592.377052285 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
-N = 4
-Found 2 solutions.
+N = 15
+Found 2279184 solutions.
 
- Performance counter stats for './out/NQueens.clang.enablevc.out 4':
+ Performance counter stats for './out/NQueens.gcc.enablevc.out 15':
 
-          0.210992      task-clock (msec)         #    0.021 CPUs utilized          
-                 1      context-switches          #    0.005 M/sec                  
+     592454.859322      task-clock (msec)         #    1.000 CPUs utilized          
+               153      context-switches          #    0.000 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                56      page-faults               #    0.265 M/sec                  
-           707,332      cycles                    #    3.352 GHz                    
+                52      page-faults               #    0.000 K/sec                  
+ 2,303,302,008,089      cycles                    #    3.888 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           627,289      instructions              #    0.89  insns per cycle        
-           125,291      branches                  #  593.819 M/sec                  
-             6,674      branch-misses             #    5.33% of all branches        
+ 6,315,105,976,298      instructions              #    2.74  insns per cycle        
+ 1,512,875,286,684      branches                  # 2553.571 M/sec                  
+     5,191,671,236      branch-misses             #    0.34% of all branches        
 
-       0.010094098 seconds time elapsed
+     592.222234757 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
-N = 4
-Found 2 solutions.
+N = 15
+Found 2279184 solutions.
 
- Performance counter stats for './out/NQueens.clang.enablevc.out 4':
+ Performance counter stats for './out/NQueens.gcc.enablevc.out 15':
 
-          0.210544      task-clock (msec)         #    0.020 CPUs utilized          
-                 1      context-switches          #    0.005 M/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                56      page-faults               #    0.266 M/sec                  
-           706,057      cycles                    #    3.353 GHz                    
+     592507.355852      task-clock (msec)         #    1.000 CPUs utilized          
+               238      context-switches          #    0.000 K/sec                  
+                 3      cpu-migrations            #    0.000 K/sec                  
+                53      page-faults               #    0.000 K/sec                  
+ 2,303,414,234,202      cycles                    #    3.888 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           627,750      instructions              #    0.89  insns per cycle        
-           125,655      branches                  #  596.811 M/sec                  
-             6,679      branch-misses             #    5.32% of all branches        
+ 6,315,107,434,663      instructions              #    2.74  insns per cycle        
+ 1,512,875,522,703      branches                  # 2553.345 M/sec                  
+     5,214,575,234      branch-misses             #    0.34% of all branches        
 
-       0.010603207 seconds time elapsed
+     592.275989472 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
-N = 4
-Found 2 solutions.
+N = 15
+Found 2279184 solutions.
 
- Performance counter stats for './out/NQueens.clang.enablevc.out 4':
+ Performance counter stats for './out/NQueens.gcc.enablevc.out 15':
 
-          0.203416      task-clock (msec)         #    0.062 CPUs utilized          
-                 1      context-switches          #    0.005 M/sec                  
+     593040.726982      task-clock (msec)         #    1.000 CPUs utilized          
+               240      context-switches          #    0.000 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                54      page-faults               #    0.265 M/sec                  
-           682,094      cycles                    #    3.353 GHz                    
+                53      page-faults               #    0.000 K/sec                  
+ 2,305,589,002,421      cycles                    #    3.888 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           620,553      instructions              #    0.91  insns per cycle        
-           123,932      branches                  #  609.254 M/sec                  
-             5,842      branch-misses             #    4.71% of all branches        
+ 6,315,108,166,997      instructions              #    2.74  insns per cycle        
+ 1,512,875,552,476      branches                  # 2551.048 M/sec                  
+     5,182,389,445      branch-misses             #    0.34% of all branches        
 
-       0.003260613 seconds time elapsed
+     592.809844515 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
-N = 4
-Found 2 solutions.
+N = 15
+Found 2279184 solutions.
 
- Performance counter stats for './out/NQueens.clang.enablevc.out 4':
+ Performance counter stats for './out/NQueens.gcc.enablevc.out 15':
 
-          0.201958      task-clock (msec)         #    0.023 CPUs utilized          
-                 1      context-switches          #    0.005 M/sec                  
+     592642.189042      task-clock (msec)         #    1.000 CPUs utilized          
+               239      context-switches          #    0.000 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                54      page-faults               #    0.267 M/sec                  
-           677,551      cycles                    #    3.355 GHz                    
+                56      page-faults               #    0.000 K/sec                  
+ 2,303,790,705,690      cycles                    #    3.887 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           618,179      instructions              #    0.91  insns per cycle        
-           123,732      branches                  #  612.662 M/sec                  
-             5,745      branch-misses             #    4.64% of all branches        
+ 6,315,108,135,870      instructions              #    2.74  insns per cycle        
+ 1,512,875,571,583      branches                  # 2552.764 M/sec                  
+     5,200,846,005      branch-misses             #    0.34% of all branches        
 
-       0.008898244 seconds time elapsed
+     592.410351035 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
-N = 4
-Found 2 solutions.
+N = 15
+Found 2279184 solutions.
 
- Performance counter stats for './out/NQueens.clang.enablevc.out 4':
+ Performance counter stats for './out/NQueens.gcc.enablevc.out 15':
 
-          0.209137      task-clock (msec)         #    0.029 CPUs utilized          
-                 1      context-switches          #    0.005 M/sec                  
+     592357.730638      task-clock (msec)         #    1.000 CPUs utilized          
+               153      context-switches          #    0.000 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                55      page-faults               #    0.263 M/sec                  
-           700,895      cycles                    #    3.351 GHz                    
+                52      page-faults               #    0.000 K/sec                  
+ 2,303,038,768,270      cycles                    #    3.888 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           609,864      instructions              #    0.87  insns per cycle        
-           122,563      branches                  #  586.042 M/sec                  
-             6,772      branch-misses             #    5.53% of all branches        
+ 6,315,105,972,704      instructions              #    2.74  insns per cycle        
+ 1,512,875,269,857      branches                  # 2553.989 M/sec                  
+     5,197,906,931      branch-misses             #    0.34% of all branches        
 
-       0.007148071 seconds time elapsed
+     592.131366352 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
-N = 4
-Found 2 solutions.
+N = 15
+Found 2279184 solutions.
 
- Performance counter stats for './out/NQueens.clang.enablevc.out 4':
+ Performance counter stats for './out/NQueens.gcc.enablevc.out 15':
 
-          0.207750      task-clock (msec)         #    0.013 CPUs utilized          
-                 1      context-switches          #    0.005 M/sec                  
+     592571.147197      task-clock (msec)         #    1.000 CPUs utilized          
+               153      context-switches          #    0.000 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                53      page-faults               #    0.255 M/sec                  
-           696,073      cycles                    #    3.351 GHz                    
+                54      page-faults               #    0.000 K/sec                  
+ 2,303,543,666,917      cycles                    #    3.887 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           617,880      instructions              #    0.89  insns per cycle        
-           123,342      branches                  #  593.704 M/sec                  
-             6,735      branch-misses             #    5.46% of all branches        
+ 6,315,107,084,598      instructions              #    2.74  insns per cycle        
+ 1,512,875,398,695      branches                  # 2553.070 M/sec                  
+     5,217,593,485      branch-misses             #    0.34% of all branches        
 
-       0.015597082 seconds time elapsed
+     592.339400901 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
-N = 4
-Found 2 solutions.
+N = 15
+Found 2279184 solutions.
 
- Performance counter stats for './out/NQueens.clang.enablevc.out 4':
+ Performance counter stats for './out/NQueens.gcc.enablevc.out 15':
 
-          0.203884      task-clock (msec)         #    0.064 CPUs utilized          
-                 1      context-switches          #    0.005 M/sec                  
+     592301.562704      task-clock (msec)         #    1.000 CPUs utilized          
+               153      context-switches          #    0.000 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                54      page-faults               #    0.265 M/sec                  
-           683,763      cycles                    #    3.354 GHz                    
+                54      page-faults               #    0.000 K/sec                  
+ 2,302,421,496,789      cycles                    #    3.887 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           621,239      instructions              #    0.91  insns per cycle        
-           124,085      branches                  #  608.606 M/sec                  
-             5,896      branch-misses             #    4.75% of all branches        
+ 6,315,107,952,352      instructions              #    2.74  insns per cycle        
+ 1,512,875,505,049      branches                  # 2554.232 M/sec                  
+     5,192,445,552      branch-misses             #    0.34% of all branches        
 
-       0.003190796 seconds time elapsed
+     592.069495323 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
-N = 4
-Found 2 solutions.
+N = 15
+Found 2279184 solutions.
 
- Performance counter stats for './out/NQueens.clang.enablevc.out 4':
+ Performance counter stats for './out/NQueens.gcc.enablevc.out 15':
 
-          0.205180      task-clock (msec)         #    0.020 CPUs utilized          
-                 1      context-switches          #    0.005 M/sec                  
+     593603.057750      task-clock (msec)         #    1.000 CPUs utilized          
+               153      context-switches          #    0.000 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                56      page-faults               #    0.273 M/sec                  
-           688,160      cycles                    #    3.354 GHz                    
+                53      page-faults               #    0.000 K/sec                  
+ 2,307,616,909,571      cycles                    #    3.887 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           623,953      instructions              #    0.91  insns per cycle        
-           124,995      branches                  #  609.197 M/sec                  
-             5,744      branch-misses             #    4.60% of all branches        
+ 6,315,108,494,617      instructions              #    2.74  insns per cycle        
+ 1,512,875,622,481      branches                  # 2548.632 M/sec                  
+     5,237,072,248      branch-misses             #    0.35% of all branches        
 
-       0.010445195 seconds time elapsed
+     593.372205463 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -195,7 +195,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3399.867
+cpu MHz		: 3900.437
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -222,7 +222,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.398
+cpu MHz		: 3573.187
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -249,7 +249,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3878.921
+cpu MHz		: 3878.390
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -276,7 +276,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.000
+cpu MHz		: 3898.578
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -303,7 +303,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3793.125
+cpu MHz		: 3902.164
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -330,7 +330,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3902.429
+cpu MHz		: 3901.234
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -357,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.000
+cpu MHz		: 3857.804
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -384,7 +384,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.000
+cpu MHz		: 3899.906
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

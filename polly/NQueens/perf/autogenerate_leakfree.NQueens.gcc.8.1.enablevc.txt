@@ -4,18 +4,18 @@ Found 92 solutions.
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 8':
 
-          2.296643      task-clock (msec)         #    0.337 CPUs utilized          
+          2.296248      task-clock (msec)         #    0.393 CPUs utilized          
                  2      context-switches          #    0.871 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                52      page-faults               #    0.023 M/sec                  
-         8,092,984      cycles                    #    3.524 GHz                    
+                54      page-faults               #    0.024 M/sec                  
+         8,101,545      cycles                    #    3.528 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        19,303,157      instructions              #    2.39  insns per cycle        
-         4,602,524      branches                  # 2004.022 M/sec                  
-            37,618      branch-misses             #    0.82% of all branches        
+        19,335,559      instructions              #    2.39  insns per cycle        
+         4,607,976      branches                  # 2006.741 M/sec                  
+            37,620      branch-misses             #    0.82% of all branches        
 
-       0.006812802 seconds time elapsed
+       0.005840824 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 8
@@ -23,37 +23,18 @@ Found 92 solutions.
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 8':
 
-          2.232515      task-clock (msec)         #    0.320 CPUs utilized          
-                 1      context-switches          #    0.448 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                53      page-faults               #    0.024 M/sec                  
-         7,897,276      cycles                    #    3.537 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        19,296,767      instructions              #    2.44  insns per cycle        
-         4,600,694      branches                  # 2060.767 M/sec                  
-            36,297      branch-misses             #    0.79% of all branches        
-
-       0.006980378 seconds time elapsed
-
-N-Queen Problem on a N X N Board.
-N = 8
-Found 92 solutions.
-
- Performance counter stats for './out/NQueens.gcc.enablevc.out 8':
-
-          2.289461      task-clock (msec)         #    0.415 CPUs utilized          
-                 1      context-switches          #    0.437 K/sec                  
+          2.260044      task-clock (msec)         #    0.402 CPUs utilized          
+                 1      context-switches          #    0.442 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
                 53      page-faults               #    0.023 M/sec                  
-         8,011,336      cycles                    #    3.499 GHz                    
+         7,986,589      cycles                    #    3.534 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        19,294,804      instructions              #    2.41  insns per cycle        
-         4,600,607      branches                  # 2009.472 M/sec                  
-            36,635      branch-misses             #    0.80% of all branches        
+        19,288,565      instructions              #    2.42  insns per cycle        
+         4,599,945      branches                  # 2035.334 M/sec                  
+            36,685      branch-misses             #    0.80% of all branches        
 
-       0.005512318 seconds time elapsed
+       0.005622971 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 8
@@ -61,132 +42,151 @@ Found 92 solutions.
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 8':
 
-          2.308754      task-clock (msec)         #    0.420 CPUs utilized          
+          2.228505      task-clock (msec)         #    0.210 CPUs utilized          
+                 1      context-switches          #    0.449 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                56      page-faults               #    0.025 M/sec                  
+         7,917,302      cycles                    #    3.553 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        19,307,644      instructions              #    2.44  insns per cycle        
+         4,603,687      branches                  # 2065.819 M/sec                  
+            36,984      branch-misses             #    0.80% of all branches        
+
+       0.010625832 seconds time elapsed
+
+N-Queen Problem on a N X N Board.
+N = 8
+Found 92 solutions.
+
+ Performance counter stats for './out/NQueens.gcc.enablevc.out 8':
+
+          2.308185      task-clock (msec)         #    0.146 CPUs utilized          
                  1      context-switches          #    0.433 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
+                52      page-faults               #    0.023 M/sec                  
+         7,949,790      cycles                    #    3.444 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        19,271,416      instructions              #    2.42  insns per cycle        
+         4,596,726      branches                  # 1991.489 M/sec                  
+            38,318      branch-misses             #    0.83% of all branches        
+
+       0.015781242 seconds time elapsed
+
+N-Queen Problem on a N X N Board.
+N = 8
+Found 92 solutions.
+
+ Performance counter stats for './out/NQueens.gcc.enablevc.out 8':
+
+          2.294686      task-clock (msec)         #    0.397 CPUs utilized          
+                 1      context-switches          #    0.436 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                55      page-faults               #    0.024 M/sec                  
+         8,037,657      cycles                    #    3.503 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        19,316,496      instructions              #    2.40  insns per cycle        
+         4,604,381      branches                  # 2006.541 M/sec                  
+            39,658      branch-misses             #    0.86% of all branches        
+
+       0.005786292 seconds time elapsed
+
+N-Queen Problem on a N X N Board.
+N = 8
+Found 92 solutions.
+
+ Performance counter stats for './out/NQueens.gcc.enablevc.out 8':
+
+          2.260387      task-clock (msec)         #    0.251 CPUs utilized          
+                 1      context-switches          #    0.442 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                54      page-faults               #    0.024 M/sec                  
+         7,963,685      cycles                    #    3.523 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        19,313,872      instructions              #    2.43  insns per cycle        
+         4,603,891      branches                  # 2036.771 M/sec                  
+            37,520      branch-misses             #    0.81% of all branches        
+
+       0.009005354 seconds time elapsed
+
+N-Queen Problem on a N X N Board.
+N = 8
+Found 92 solutions.
+
+ Performance counter stats for './out/NQueens.gcc.enablevc.out 8':
+
+          2.261124      task-clock (msec)         #    0.402 CPUs utilized          
+                 1      context-switches          #    0.442 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                53      page-faults               #    0.023 M/sec                  
+         7,967,121      cycles                    #    3.524 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        19,300,989      instructions              #    2.42  insns per cycle        
+         4,601,498      branches                  # 2035.049 M/sec                  
+            38,060      branch-misses             #    0.83% of all branches        
+
+       0.005628693 seconds time elapsed
+
+N-Queen Problem on a N X N Board.
+N = 8
+Found 92 solutions.
+
+ Performance counter stats for './out/NQueens.gcc.enablevc.out 8':
+
+          2.266423      task-clock (msec)         #    0.398 CPUs utilized          
+                 1      context-switches          #    0.441 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                53      page-faults               #    0.023 M/sec                  
+         7,950,493      cycles                    #    3.508 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        19,284,274      instructions              #    2.43  insns per cycle        
+         4,599,432      branches                  # 2029.379 M/sec                  
+            36,895      branch-misses             #    0.80% of all branches        
+
+       0.005697968 seconds time elapsed
+
+N-Queen Problem on a N X N Board.
+N = 8
+Found 92 solutions.
+
+ Performance counter stats for './out/NQueens.gcc.enablevc.out 8':
+
+          2.286505      task-clock (msec)         #    0.425 CPUs utilized          
+                 1      context-switches          #    0.437 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                55      page-faults               #    0.024 M/sec                  
+         8,011,311      cycles                    #    3.504 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        19,304,426      instructions              #    2.41  insns per cycle        
+         4,602,462      branches                  # 2012.881 M/sec                  
+            37,584      branch-misses             #    0.82% of all branches        
+
+       0.005380423 seconds time elapsed
+
+N-Queen Problem on a N X N Board.
+N = 8
+Found 92 solutions.
+
+ Performance counter stats for './out/NQueens.gcc.enablevc.out 8':
+
+          2.320980      task-clock (msec)         #    0.241 CPUs utilized          
+                 1      context-switches          #    0.431 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
                 54      page-faults               #    0.023 M/sec                  
-         8,010,996      cycles                    #    3.470 GHz                    
+         8,078,345      cycles                    #    3.481 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        19,284,790      instructions              #    2.41  insns per cycle        
-         4,599,258      branches                  # 1992.095 M/sec                  
-            38,651      branch-misses             #    0.84% of all branches        
+        19,307,304      instructions              #    2.39  insns per cycle        
+         4,602,775      branches                  # 1983.117 M/sec                  
+            38,799      branch-misses             #    0.84% of all branches        
 
-       0.005495764 seconds time elapsed
-
-N-Queen Problem on a N X N Board.
-N = 8
-Found 92 solutions.
-
- Performance counter stats for './out/NQueens.gcc.enablevc.out 8':
-
-          2.255570      task-clock (msec)         #    0.425 CPUs utilized          
-                 1      context-switches          #    0.443 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                53      page-faults               #    0.023 M/sec                  
-         7,887,100      cycles                    #    3.497 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        19,299,552      instructions              #    2.45  insns per cycle        
-         4,601,732      branches                  # 2040.164 M/sec                  
-            36,064      branch-misses             #    0.78% of all branches        
-
-       0.005308087 seconds time elapsed
-
-N-Queen Problem on a N X N Board.
-N = 8
-Found 92 solutions.
-
- Performance counter stats for './out/NQueens.gcc.enablevc.out 8':
-
-          2.238848      task-clock (msec)         #    0.420 CPUs utilized          
-                 1      context-switches          #    0.447 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                53      page-faults               #    0.024 M/sec                  
-         7,966,463      cycles                    #    3.558 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        19,291,887      instructions              #    2.42  insns per cycle        
-         4,600,632      branches                  # 2054.910 M/sec                  
-            37,677      branch-misses             #    0.82% of all branches        
-
-       0.005331608 seconds time elapsed
-
-N-Queen Problem on a N X N Board.
-N = 8
-Found 92 solutions.
-
- Performance counter stats for './out/NQueens.gcc.enablevc.out 8':
-
-          2.246098      task-clock (msec)         #    0.400 CPUs utilized          
-                 1      context-switches          #    0.445 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                54      page-faults               #    0.024 M/sec                  
-         7,972,125      cycles                    #    3.549 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        19,294,492      instructions              #    2.42  insns per cycle        
-         4,601,248      branches                  # 2048.552 M/sec                  
-            37,408      branch-misses             #    0.81% of all branches        
-
-       0.005613639 seconds time elapsed
-
-N-Queen Problem on a N X N Board.
-N = 8
-Found 92 solutions.
-
- Performance counter stats for './out/NQueens.gcc.enablevc.out 8':
-
-          2.283006      task-clock (msec)         #    0.408 CPUs utilized          
-                 1      context-switches          #    0.438 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                54      page-faults               #    0.024 M/sec                  
-         7,913,992      cycles                    #    3.466 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        19,295,424      instructions              #    2.44  insns per cycle        
-         4,600,869      branches                  # 2015.268 M/sec                  
-            36,249      branch-misses             #    0.79% of all branches        
-
-       0.005588845 seconds time elapsed
-
-N-Queen Problem on a N X N Board.
-N = 8
-Found 92 solutions.
-
- Performance counter stats for './out/NQueens.gcc.enablevc.out 8':
-
-          2.249298      task-clock (msec)         #    0.418 CPUs utilized          
-                 1      context-switches          #    0.445 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                53      page-faults               #    0.024 M/sec                  
-         7,901,293      cycles                    #    3.513 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        19,288,095      instructions              #    2.44  insns per cycle        
-         4,599,635      branches                  # 2044.920 M/sec                  
-            36,022      branch-misses             #    0.78% of all branches        
-
-       0.005383991 seconds time elapsed
-
-N-Queen Problem on a N X N Board.
-N = 8
-Found 92 solutions.
-
- Performance counter stats for './out/NQueens.gcc.enablevc.out 8':
-
-          2.274073      task-clock (msec)         #    0.377 CPUs utilized          
-                 1      context-switches          #    0.440 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                53      page-faults               #    0.023 M/sec                  
-         7,917,592      cycles                    #    3.482 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        19,295,899      instructions              #    2.44  insns per cycle        
-         4,600,917      branches                  # 2023.205 M/sec                  
-            35,876      branch-misses             #    0.78% of all branches        
-
-       0.006035815 seconds time elapsed
+       0.009637894 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -195,7 +195,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3399.867
+cpu MHz		: 3470.257
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -209,7 +209,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -222,7 +222,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.773
+cpu MHz		: 3767.890
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -236,7 +236,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -249,7 +249,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3641.585
+cpu MHz		: 3770.148
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -263,7 +263,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -276,7 +276,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3496.421
+cpu MHz		: 3459.765
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -290,7 +290,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -303,7 +303,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.906
+cpu MHz		: 3419.257
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -317,7 +317,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -330,7 +330,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3489.382
+cpu MHz		: 3403.187
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -344,7 +344,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -357,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3401.328
+cpu MHz		: 3400.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -371,7 +371,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -384,7 +384,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3502.265
+cpu MHz		: 3496.023
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -398,7 +398,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual

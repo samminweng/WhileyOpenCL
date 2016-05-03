@@ -4,18 +4,18 @@ Found 14200 solutions.
 
  Performance counter stats for './out/NQueens.openmp.enablevc.out 12':
 
-       1801.846926      task-clock (msec)         #    0.998 CPUs utilized          
-                 5      context-switches          #    0.003 K/sec                  
+       1828.714241      task-clock (msec)         #    0.998 CPUs utilized          
+                 4      context-switches          #    0.002 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
                 67      page-faults               #    0.037 K/sec                  
-     6,988,676,022      cycles                    #    3.879 GHz                    
+     7,001,586,948      cycles                    #    3.829 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    19,127,406,876      instructions              #    2.74  insns per cycle        
-     4,610,700,673      branches                  # 2558.875 M/sec                  
-        20,852,165      branch-misses             #    0.45% of all branches        
+    19,127,437,615      instructions              #    2.73  insns per cycle        
+     4,610,706,667      branches                  # 2521.283 M/sec                  
+        21,456,358      branch-misses             #    0.47% of all branches        
 
-       1.805389683 seconds time elapsed
+       1.831961996 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 12
@@ -23,18 +23,37 @@ Found 14200 solutions.
 
  Performance counter stats for './out/NQueens.openmp.enablevc.out 12':
 
-       1821.305680      task-clock (msec)         #    0.998 CPUs utilized          
+       1802.300541      task-clock (msec)         #    0.997 CPUs utilized          
+                 3      context-switches          #    0.002 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                67      page-faults               #    0.037 K/sec                  
+     6,983,848,211      cycles                    #    3.875 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+    19,127,272,672      instructions              #    2.74  insns per cycle        
+     4,610,675,880      branches                  # 2558.217 M/sec                  
+        20,860,363      branch-misses             #    0.45% of all branches        
+
+       1.807799058 seconds time elapsed
+
+N-Queen Problem on a N X N Board.
+N = 12
+Found 14200 solutions.
+
+ Performance counter stats for './out/NQueens.openmp.enablevc.out 12':
+
+       1858.313313      task-clock (msec)         #    0.998 CPUs utilized          
                  3      context-switches          #    0.002 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
                 68      page-faults               #    0.037 K/sec                  
-     6,983,804,058      cycles                    #    3.835 GHz                    
+     6,985,997,042      cycles                    #    3.759 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    19,127,316,586      instructions              #    2.74  insns per cycle        
-     4,610,684,457      branches                  # 2531.527 M/sec                  
-        20,991,827      branch-misses             #    0.46% of all branches        
+    19,127,348,303      instructions              #    2.74  insns per cycle        
+     4,610,689,029      branches                  # 2481.115 M/sec                  
+        20,885,395      branch-misses             #    0.45% of all branches        
 
-       1.824714240 seconds time elapsed
+       1.862179235 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 12
@@ -42,18 +61,18 @@ Found 14200 solutions.
 
  Performance counter stats for './out/NQueens.openmp.enablevc.out 12':
 
-       1821.654562      task-clock (msec)         #    0.998 CPUs utilized          
-                 4      context-switches          #    0.002 K/sec                  
+       1835.518132      task-clock (msec)         #    0.997 CPUs utilized          
+                 2      context-switches          #    0.001 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
                 67      page-faults               #    0.037 K/sec                  
-     6,995,930,485      cycles                    #    3.840 GHz                    
+     7,066,529,592      cycles                    #    3.850 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    19,127,272,079      instructions              #    2.73  insns per cycle        
-     4,610,677,165      branches                  # 2531.038 M/sec                  
-        21,124,127      branch-misses             #    0.46% of all branches        
+    19,127,303,136      instructions              #    2.71  insns per cycle        
+     4,610,680,682      branches                  # 2511.923 M/sec                  
+        21,258,254      branch-misses             #    0.46% of all branches        
 
-       1.825005622 seconds time elapsed
+       1.840307329 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 12
@@ -61,56 +80,18 @@ Found 14200 solutions.
 
  Performance counter stats for './out/NQueens.openmp.enablevc.out 12':
 
-       1857.520424      task-clock (msec)         #    0.995 CPUs utilized          
-                 5      context-switches          #    0.003 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                68      page-faults               #    0.037 K/sec                  
-     6,991,086,705      cycles                    #    3.764 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    19,127,361,737      instructions              #    2.74  insns per cycle        
-     4,610,692,447      branches                  # 2482.176 M/sec                  
-        20,881,856      branch-misses             #    0.45% of all branches        
-
-       1.866460120 seconds time elapsed
-
-N-Queen Problem on a N X N Board.
-N = 12
-Found 14200 solutions.
-
- Performance counter stats for './out/NQueens.openmp.enablevc.out 12':
-
-       1829.958850      task-clock (msec)         #    0.999 CPUs utilized          
-                 4      context-switches          #    0.002 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.037 K/sec                  
-     6,981,399,327      cycles                    #    3.815 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    19,127,302,525      instructions              #    2.74  insns per cycle        
-     4,610,681,949      branches                  # 2519.555 M/sec                  
-        20,881,398      branch-misses             #    0.45% of all branches        
-
-       1.832574586 seconds time elapsed
-
-N-Queen Problem on a N X N Board.
-N = 12
-Found 14200 solutions.
-
- Performance counter stats for './out/NQueens.openmp.enablevc.out 12':
-
-       1845.865335      task-clock (msec)         #    0.999 CPUs utilized          
-                 4      context-switches          #    0.002 K/sec                  
+       1836.327660      task-clock (msec)         #    0.998 CPUs utilized          
+                 3      context-switches          #    0.002 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
                 67      page-faults               #    0.036 K/sec                  
-     6,996,764,945      cycles                    #    3.791 GHz                    
+     7,007,004,146      cycles                    #    3.816 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    19,127,317,328      instructions              #    2.73  insns per cycle        
-     4,610,685,594      branches                  # 2497.845 M/sec                  
-        20,851,900      branch-misses             #    0.45% of all branches        
+    19,127,327,265      instructions              #    2.73  insns per cycle        
+     4,610,686,148      branches                  # 2510.819 M/sec                  
+        21,571,328      branch-misses             #    0.47% of all branches        
 
-       1.848295880 seconds time elapsed
+       1.840630307 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 12
@@ -118,18 +99,18 @@ Found 14200 solutions.
 
  Performance counter stats for './out/NQueens.openmp.enablevc.out 12':
 
-       1800.297139      task-clock (msec)         #    0.998 CPUs utilized          
-                 5      context-switches          #    0.003 K/sec                  
+       1827.779387      task-clock (msec)         #    0.998 CPUs utilized          
+                 4      context-switches          #    0.002 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
                 67      page-faults               #    0.037 K/sec                  
-     6,981,290,440      cycles                    #    3.878 GHz                    
+     6,983,193,784      cycles                    #    3.821 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    19,127,264,179      instructions              #    2.74  insns per cycle        
-     4,610,676,451      branches                  # 2561.064 M/sec                  
-        20,863,055      branch-misses             #    0.45% of all branches        
+    19,127,276,062      instructions              #    2.74  insns per cycle        
+     4,610,678,055      branches                  # 2522.557 M/sec                  
+        20,941,182      branch-misses             #    0.45% of all branches        
 
-       1.803249285 seconds time elapsed
+       1.832125098 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 12
@@ -137,18 +118,18 @@ Found 14200 solutions.
 
  Performance counter stats for './out/NQueens.openmp.enablevc.out 12':
 
-       1800.411881      task-clock (msec)         #    0.998 CPUs utilized          
+       1848.376468      task-clock (msec)         #    0.997 CPUs utilized          
                  3      context-switches          #    0.002 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.037 K/sec                  
-     6,980,794,726      cycles                    #    3.877 GHz                    
+                67      page-faults               #    0.036 K/sec                  
+     6,988,082,542      cycles                    #    3.781 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    19,127,268,867      instructions              #    2.74  insns per cycle        
-     4,610,676,347      branches                  # 2560.901 M/sec                  
-        20,874,797      branch-misses             #    0.45% of all branches        
+    19,127,324,872      instructions              #    2.74  insns per cycle        
+     4,610,686,095      branches                  # 2494.452 M/sec                  
+        20,880,103      branch-misses             #    0.45% of all branches        
 
-       1.803165933 seconds time elapsed
+       1.854536189 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 12
@@ -156,18 +137,18 @@ Found 14200 solutions.
 
  Performance counter stats for './out/NQueens.openmp.enablevc.out 12':
 
-       1803.756290      task-clock (msec)         #    0.988 CPUs utilized          
+       1801.650958      task-clock (msec)         #    0.993 CPUs utilized          
                  4      context-switches          #    0.002 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
                 68      page-faults               #    0.038 K/sec                  
-     6,995,995,173      cycles                    #    3.879 GHz                    
+     6,982,833,312      cycles                    #    3.876 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    19,127,286,252      instructions              #    2.73  insns per cycle        
-     4,610,679,755      branches                  # 2556.154 M/sec                  
-        21,039,200      branch-misses             #    0.46% of all branches        
+    19,127,284,665      instructions              #    2.74  insns per cycle        
+     4,610,678,813      branches                  # 2559.141 M/sec                  
+        20,881,100      branch-misses             #    0.45% of all branches        
 
-       1.825052685 seconds time elapsed
+       1.813960182 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 12
@@ -175,18 +156,37 @@ Found 14200 solutions.
 
  Performance counter stats for './out/NQueens.openmp.enablevc.out 12':
 
-       1845.171842      task-clock (msec)         #    0.998 CPUs utilized          
-                 3      context-switches          #    0.002 K/sec                  
+       1806.690680      task-clock (msec)         #    0.997 CPUs utilized          
+                 2      context-switches          #    0.001 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                68      page-faults               #    0.037 K/sec                  
-     6,986,908,860      cycles                    #    3.787 GHz                    
+                67      page-faults               #    0.037 K/sec                  
+     6,984,627,211      cycles                    #    3.866 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    19,127,331,551      instructions              #    2.74  insns per cycle        
-     4,610,686,750      branches                  # 2498.784 M/sec                  
-        20,880,911      branch-misses             #    0.45% of all branches        
+    19,127,277,497      instructions              #    2.74  insns per cycle        
+     4,610,677,605      branches                  # 2552.002 M/sec                  
+        20,865,301      branch-misses             #    0.45% of all branches        
 
-       1.848441216 seconds time elapsed
+       1.812386920 seconds time elapsed
+
+N-Queen Problem on a N X N Board.
+N = 12
+Found 14200 solutions.
+
+ Performance counter stats for './out/NQueens.openmp.enablevc.out 12':
+
+       1830.898912      task-clock (msec)         #    0.989 CPUs utilized          
+                 3      context-switches          #    0.002 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                66      page-faults               #    0.036 K/sec                  
+     6,995,505,644      cycles                    #    3.821 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+    19,127,270,339      instructions              #    2.73  insns per cycle        
+     4,610,676,358      branches                  # 2518.258 M/sec                  
+        20,930,592      branch-misses             #    0.45% of all branches        
+
+       1.851555989 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -195,7 +195,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3799.765
+cpu MHz		: 3800.031
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -209,7 +209,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -222,7 +222,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3510.101
+cpu MHz		: 3549.546
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -236,7 +236,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -249,7 +249,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3757.000
+cpu MHz		: 3802.687
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -263,7 +263,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -276,7 +276,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3799.898
+cpu MHz		: 3556.187
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -290,7 +290,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -303,7 +303,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3898.710
+cpu MHz		: 3753.414
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -317,7 +317,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -330,7 +330,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3700.156
+cpu MHz		: 3774.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -344,7 +344,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -357,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3596.031
+cpu MHz		: 3554.726
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -371,7 +371,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -384,7 +384,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3867.234
+cpu MHz		: 3899.109
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -398,7 +398,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual

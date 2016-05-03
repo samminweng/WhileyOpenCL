@@ -74,6 +74,7 @@ compileProgram(){
 			###'-polly-process-unprofitable' option forces Polly to generate sequential code
 			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine\
 	        		-S -emit-llvm -mllvm -polly-process-unprofitable\
+				-mllvm -polly-opt-outer-coincidence=yes\
 	        		$program.c -o "llvm/$program.$opt.enablevc.ll"
 			### Use 'llc' to compile LLVM code into assembly code
     			llc "llvm/$program.$opt.enablevc.ll" -o "assembly/$program.$opt.enablevc.s"
@@ -94,11 +95,12 @@ compileProgram(){
 			export OMP_NUM_THREADS=$num_threads
 			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -S -emit-llvm\
 	        		-mllvm -polly-parallel -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
+				-mllvm -polly-opt-outer-coincidence=yes\
 	        		$program.c -o "llvm/$program.$opt.enablevc.ll"
 			### Use 'llc' to compile LLVM code into assembly code
-            llc "llvm/$program.$opt.enablevc.ll" -o "assembly/$program.$opt.enablevc.s"
-            ### Use 'gcc' to compile .s file and link with 'libUtil.a'
-            pollycc "assembly/$program.$opt.enablevc.s" Util.c -lgomp -o "out/$program.$opt.enablevc.out"
+            		llc "llvm/$program.$opt.enablevc.ll" -o "assembly/$program.$opt.enablevc.s"
+            		### Use 'gcc' to compile .s file and link with 'libUtil.a'
+            		pollycc "assembly/$program.$opt.enablevc.s" Util.c -lgomp -o "out/$program.$opt.enablevc.out"
 
 			;;
 	esac
@@ -115,11 +117,11 @@ exec(){
 	program=$2
 	parameter=$3
 	cd "$program/impl/$c_type"
-	#compileProgram $c_type $program $parameter "gcc" 1
-	#compileProgram $c_type $program $parameter "clang" 1
-	#compileProgram $c_type $program $parameter "polly" 1
-	#compileProgram $c_type $program $parameter "openmp" 1
-	#compileProgram $c_type $program $parameter "openmp" 2
+	compileProgram $c_type $program $parameter "gcc" 1
+	compileProgram $c_type $program $parameter "clang" 1
+	compileProgram $c_type $program $parameter "polly" 1
+	compileProgram $c_type $program $parameter "openmp" 1
+	compileProgram $c_type $program $parameter "openmp" 2
 	compileProgram $c_type $program $parameter "openmp" 4
 	cd ../../../
 }
@@ -149,30 +151,30 @@ init(){
 #init autogenerate CoinGame
 #exec autogenerate_leak CoinGame 40000
 #exec autogenerate_leakfree CoinGame 40000
-exec autogenerate_array_leakfree CoinGame 40000
+#exec autogenerate_array_leakfree CoinGame 40000
 #exec autogenerate_single_leakfree CoinGame 40000
 
 ### Benchmark Autogenerate NQueens
-# init autogenerate_leakfree NQueens
-# exec autogenerate_leak NQueens 1
-# exec autogenerate_leak NQueens 2
-# exec autogenerate_leak NQueens 4
-# exec autogenerate_leak NQueens 6
-# exec autogenerate_leak NQueens 8
-# exec autogenerate_leak NQueens 10
-# exec autogenerate_leak NQueens 12
-# exec autogenerate_leak NQueens 14
-# exec autogenerate_leak NQueens 15
+init autogenerate_leakfree NQueens
+exec autogenerate_leak NQueens 1
+exec autogenerate_leak NQueens 2
+exec autogenerate_leak NQueens 4
+exec autogenerate_leak NQueens 6
+exec autogenerate_leak NQueens 8
+exec autogenerate_leak NQueens 10
+exec autogenerate_leak NQueens 12
+exec autogenerate_leak NQueens 14
+exec autogenerate_leak NQueens 15
 
-# exec autogenerate_leakfree NQueens 1
-# exec autogenerate_leakfree NQueens 2
-# exec autogenerate_leakfree NQueens 4
-# exec autogenerate_leakfree NQueens 6
-# exec autogenerate_leakfree NQueens 8
-# exec autogenerate_leakfree NQueens 10
-# exec autogenerate_leakfree NQueens 12
-# exec autogenerate_leakfree NQueens 14
-# exec autogenerate_leakfree NQueens 15
+exec autogenerate_leakfree NQueens 1
+exec autogenerate_leakfree NQueens 2
+exec autogenerate_leakfree NQueens 4
+exec autogenerate_leakfree NQueens 6
+exec autogenerate_leakfree NQueens 8
+exec autogenerate_leakfree NQueens 10
+exec autogenerate_leakfree NQueens 12
+exec autogenerate_leakfree NQueens 14
+exec autogenerate_leakfree NQueens 15
 
 ### Benchmark Autogenerate1 and autogenerate2 MatrixMult
 # ### Autogenerate1 MatrixMult

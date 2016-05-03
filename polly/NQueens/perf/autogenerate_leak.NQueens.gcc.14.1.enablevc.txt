@@ -2,171 +2,171 @@ Enable loop vectorization...Compile C code using gcc with 1 threads..../out/NQue
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 14':
 
-      14692.264233      task-clock (msec)         #    0.232 CPUs utilized          
-             1,656      context-switches          #    0.113 K/sec                  
-               563      cpu-migrations            #    0.038 K/sec                  
-         4,580,012      page-faults               #    0.312 M/sec                  
-    54,917,345,474      cycles                    #    3.738 GHz                    
+      14912.215604      task-clock (msec)         #    0.245 CPUs utilized          
+             1,586      context-switches          #    0.106 K/sec                  
+               521      cpu-migrations            #    0.035 K/sec                  
+         4,584,043      page-faults               #    0.307 M/sec                  
+    54,846,427,265      cycles                    #    3.678 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   140,166,069,956      instructions              #    2.55  insns per cycle        
-    23,815,959,372      branches                  # 1620.986 M/sec                  
-       142,383,537      branch-misses             #    0.60% of all branches        
+   139,653,550,000      instructions              #    2.55  insns per cycle        
+    23,656,630,568      branches                  # 1586.393 M/sec                  
+       140,917,563      branch-misses             #    0.60% of all branches        
 
-      63.214152562 seconds time elapsed
+      60.788187558 seconds time elapsed
 
 ./out/NQueens.gcc.enablevc.out: Killed
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 14':
 
-      15390.327216      task-clock (msec)         #    0.251 CPUs utilized          
-             1,535      context-switches          #    0.100 K/sec                  
-               419      cpu-migrations            #    0.027 K/sec                  
-         4,579,348      page-faults               #    0.298 M/sec                  
-    54,889,697,556      cycles                    #    3.567 GHz                    
+      14997.731580      task-clock (msec)         #    0.242 CPUs utilized          
+             1,676      context-switches          #    0.112 K/sec                  
+               519      cpu-migrations            #    0.035 K/sec                  
+         4,582,786      page-faults               #    0.306 M/sec                  
+    54,946,855,508      cycles                    #    3.664 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   140,281,661,418      instructions              #    2.56  insns per cycle        
-    23,832,464,287      branches                  # 1548.535 M/sec                  
-       137,519,186      branch-misses             #    0.58% of all branches        
+   140,167,744,439      instructions              #    2.55  insns per cycle        
+    23,780,547,487      branches                  # 1585.610 M/sec                  
+       141,053,039      branch-misses             #    0.59% of all branches        
 
-      61.394789182 seconds time elapsed
+      61.945588597 seconds time elapsed
 
 ./out/NQueens.gcc.enablevc.out: Killed
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 14':
 
-      14829.196595      task-clock (msec)         #    0.229 CPUs utilized          
-             1,389      context-switches          #    0.094 K/sec                  
-               432      cpu-migrations            #    0.029 K/sec                  
-         4,577,945      page-faults               #    0.309 M/sec                  
-    54,513,943,707      cycles                    #    3.676 GHz                    
+      15030.267422      task-clock (msec)         #    0.239 CPUs utilized          
+             2,042      context-switches          #    0.136 K/sec                  
+               527      cpu-migrations            #    0.035 K/sec                  
+         4,585,377      page-faults               #    0.305 M/sec                  
+    55,076,702,080      cycles                    #    3.664 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   139,627,646,538      instructions              #    2.56  insns per cycle        
-    23,657,930,130      branches                  # 1595.362 M/sec                  
-       140,295,931      branch-misses             #    0.59% of all branches        
+   139,934,399,652      instructions              #    2.54  insns per cycle        
+    23,722,831,405      branches                  # 1578.337 M/sec                  
+       150,781,847      branch-misses             #    0.64% of all branches        
 
-      64.711089547 seconds time elapsed
+      62.972799952 seconds time elapsed
 
 ./out/NQueens.gcc.enablevc.out: Killed
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 14':
 
-      15485.906100      task-clock (msec)         #    0.244 CPUs utilized          
-             1,527      context-switches          #    0.099 K/sec                  
-               472      cpu-migrations            #    0.030 K/sec                  
-         4,580,878      page-faults               #    0.296 M/sec                  
-    54,827,292,810      cycles                    #    3.540 GHz                    
+      15000.349848      task-clock (msec)         #    0.236 CPUs utilized          
+             1,657      context-switches          #    0.110 K/sec                  
+               571      cpu-migrations            #    0.038 K/sec                  
+         4,584,056      page-faults               #    0.306 M/sec                  
+    54,758,105,066      cycles                    #    3.650 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   140,044,722,557      instructions              #    2.55  insns per cycle        
-    23,754,087,752      branches                  # 1533.917 M/sec                  
-       141,127,581      branch-misses             #    0.59% of all branches        
+   140,080,823,768      instructions              #    2.56  insns per cycle        
+    23,772,570,777      branches                  # 1584.801 M/sec                  
+       141,121,777      branch-misses             #    0.59% of all branches        
 
-      63.443954471 seconds time elapsed
+      63.477201842 seconds time elapsed
 
 ./out/NQueens.gcc.enablevc.out: Killed
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 14':
 
-      14629.696962      task-clock (msec)         #    0.234 CPUs utilized          
-             1,167      context-switches          #    0.080 K/sec                  
-               524      cpu-migrations            #    0.036 K/sec                  
-         4,578,526      page-faults               #    0.313 M/sec                  
-    54,189,807,032      cycles                    #    3.704 GHz                    
+      15392.755117      task-clock (msec)         #    0.244 CPUs utilized          
+             2,112      context-switches          #    0.137 K/sec                  
+               534      cpu-migrations            #    0.035 K/sec                  
+         4,585,599      page-faults               #    0.298 M/sec                  
+    54,931,199,776      cycles                    #    3.569 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   139,538,984,813      instructions              #    2.58  insns per cycle        
-    23,654,292,123      branches                  # 1616.868 M/sec                  
-       130,070,351      branch-misses             #    0.55% of all branches        
+   140,033,916,156      instructions              #    2.55  insns per cycle        
+    23,737,806,520      branches                  # 1542.142 M/sec                  
+       140,876,520      branch-misses             #    0.59% of all branches        
 
-      62.420141129 seconds time elapsed
+      63.102066460 seconds time elapsed
 
 ./out/NQueens.gcc.enablevc.out: Killed
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 14':
 
-      15151.263404      task-clock (msec)         #    0.238 CPUs utilized          
-             1,682      context-switches          #    0.111 K/sec                  
-               498      cpu-migrations            #    0.033 K/sec                  
-         4,576,931      page-faults               #    0.302 M/sec                  
-    54,622,848,786      cycles                    #    3.605 GHz                    
+      15160.000820      task-clock (msec)         #    0.242 CPUs utilized          
+             1,716      context-switches          #    0.113 K/sec                  
+               493      cpu-migrations            #    0.033 K/sec                  
+         4,584,971      page-faults               #    0.302 M/sec                  
+    54,981,349,773      cycles                    #    3.627 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   139,705,876,091      instructions              #    2.56  insns per cycle        
-    23,683,766,183      branches                  # 1563.155 M/sec                  
-       138,060,724      branch-misses             #    0.58% of all branches        
+   140,325,564,479      instructions              #    2.55  insns per cycle        
+    23,806,731,199      branches                  # 1570.365 M/sec                  
+       141,380,873      branch-misses             #    0.59% of all branches        
 
-      63.678170812 seconds time elapsed
+      62.619804874 seconds time elapsed
 
 ./out/NQueens.gcc.enablevc.out: Killed
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 14':
 
-      14887.491304      task-clock (msec)         #    0.230 CPUs utilized          
-             1,153      context-switches          #    0.077 K/sec                  
-               352      cpu-migrations            #    0.024 K/sec                  
-         4,578,868      page-faults               #    0.308 M/sec                  
-    54,304,337,238      cycles                    #    3.648 GHz                    
+      15106.567531      task-clock (msec)         #    0.238 CPUs utilized          
+             1,694      context-switches          #    0.112 K/sec                  
+               456      cpu-migrations            #    0.030 K/sec                  
+         4,583,796      page-faults               #    0.303 M/sec                  
+    54,992,492,055      cycles                    #    3.640 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   139,633,672,133      instructions              #    2.57  insns per cycle        
-    23,677,746,063      branches                  # 1590.446 M/sec                  
-       136,819,569      branch-misses             #    0.58% of all branches        
+   140,266,617,927      instructions              #    2.55  insns per cycle        
+    23,817,203,092      branches                  # 1576.612 M/sec                  
+       144,964,858      branch-misses             #    0.61% of all branches        
 
-      64.816141197 seconds time elapsed
+      63.584318640 seconds time elapsed
 
 ./out/NQueens.gcc.enablevc.out: Killed
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 14':
 
-      15162.072734      task-clock (msec)         #    0.233 CPUs utilized          
-             1,808      context-switches          #    0.119 K/sec                  
-               483      cpu-migrations            #    0.032 K/sec                  
-         4,577,121      page-faults               #    0.302 M/sec                  
-    54,735,951,431      cycles                    #    3.610 GHz                    
+      15216.218280      task-clock (msec)         #    0.238 CPUs utilized          
+             1,566      context-switches          #    0.103 K/sec                  
+               475      cpu-migrations            #    0.031 K/sec                  
+         4,581,379      page-faults               #    0.301 M/sec                  
+    54,894,390,410      cycles                    #    3.608 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   139,984,928,483      instructions              #    2.56  insns per cycle        
-    23,748,816,269      branches                  # 1566.330 M/sec                  
-       141,679,270      branch-misses             #    0.60% of all branches        
+   140,042,283,881      instructions              #    2.55  insns per cycle        
+    23,764,575,834      branches                  # 1561.793 M/sec                  
+       142,658,295      branch-misses             #    0.60% of all branches        
 
-      65.066622731 seconds time elapsed
+      63.810513851 seconds time elapsed
 
 ./out/NQueens.gcc.enablevc.out: Killed
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 14':
 
-      14925.850886      task-clock (msec)         #    0.242 CPUs utilized          
-             1,542      context-switches          #    0.103 K/sec                  
-               440      cpu-migrations            #    0.029 K/sec                  
-         4,577,248      page-faults               #    0.307 M/sec                  
-    54,730,680,208      cycles                    #    3.667 GHz                    
+      15156.766875      task-clock (msec)         #    0.240 CPUs utilized          
+             1,620      context-switches          #    0.107 K/sec                  
+               536      cpu-migrations            #    0.035 K/sec                  
+         4,581,907      page-faults               #    0.302 M/sec                  
+    54,827,364,841      cycles                    #    3.617 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   139,902,349,183      instructions              #    2.56  insns per cycle        
-    23,733,820,466      branches                  # 1590.115 M/sec                  
-       140,756,843      branch-misses             #    0.59% of all branches        
+   139,931,666,451      instructions              #    2.55  insns per cycle        
+    23,728,708,271      branches                  # 1565.552 M/sec                  
+       140,473,089      branch-misses             #    0.59% of all branches        
 
-      61.753855764 seconds time elapsed
+      63.185627450 seconds time elapsed
 
 ./out/NQueens.gcc.enablevc.out: Killed
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 14':
 
-      14772.921971      task-clock (msec)         #    0.235 CPUs utilized          
-             1,626      context-switches          #    0.110 K/sec                  
-               428      cpu-migrations            #    0.029 K/sec                  
-         4,575,989      page-faults               #    0.310 M/sec                  
-    54,763,432,945      cycles                    #    3.707 GHz                    
+      15011.829338      task-clock (msec)         #    0.239 CPUs utilized          
+             1,294      context-switches          #    0.086 K/sec                  
+               575      cpu-migrations            #    0.038 K/sec                  
+         4,582,388      page-faults               #    0.305 M/sec                  
+    54,479,340,784      cycles                    #    3.629 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   140,080,570,409      instructions              #    2.56  insns per cycle        
-    23,768,555,842      branches                  # 1608.927 M/sec                  
-       141,159,604      branch-misses             #    0.59% of all branches        
+   139,721,344,318      instructions              #    2.56  insns per cycle        
+    23,686,253,608      branches                  # 1577.839 M/sec                  
+       141,115,844      branch-misses             #    0.60% of all branches        
 
-      62.837489026 seconds time elapsed
+      62.869574034 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -175,7 +175,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 988.656
+cpu MHz		: 3236.375
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -189,7 +189,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -202,7 +202,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 2400.718
+cpu MHz		: 1921.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -216,7 +216,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -229,7 +229,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 1024.382
+cpu MHz		: 819.851
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -243,7 +243,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -256,7 +256,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 942.703
+cpu MHz		: 3401.195
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -270,7 +270,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -283,7 +283,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 895.023
+cpu MHz		: 800.062
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -297,7 +297,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -310,7 +310,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 1299.171
+cpu MHz		: 928.492
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -324,7 +324,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -337,7 +337,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.796
+cpu MHz		: 1838.390
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -351,7 +351,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -364,7 +364,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3390.304
+cpu MHz		: 900.468
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -378,7 +378,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual

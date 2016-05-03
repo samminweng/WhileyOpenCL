@@ -65,7 +65,7 @@ for.body:                                         ; preds = %for.body.preheader,
 }
 
 ; Function Attrs: nounwind uwtable
-define void @free_POS(%struct.POS* nocapture %pos) #0 {
+define void @free_POS(%struct.POS* %pos) #0 {
 entry:
   %0 = bitcast %struct.POS* %pos to i8*
   tail call void @free(i8* %0) #6
@@ -73,7 +73,7 @@ entry:
 }
 
 ; Function Attrs: nounwind
-declare void @free(i8* nocapture) #1
+declare void @free(i8*) #1
 
 ; Function Attrs: nounwind uwtable
 define void @printf_POS(%struct.POS* nocapture readonly %pos) #0 {
@@ -95,7 +95,7 @@ entry:
 declare i32 @printf(i8* nocapture readonly, ...) #1
 
 ; Function Attrs: nounwind uwtable
-define i64 @conflict(%struct.POS* nocapture %p, i1 zeroext %p_has_ownership, i64 %row, i64 %col) #0 {
+define i64 @conflict(%struct.POS* %p, i1 zeroext %p_has_ownership, i64 %row, i64 %col) #0 {
 entry:
   %r1 = getelementptr inbounds %struct.POS, %struct.POS* %p, i64 0, i32 0
   %0 = load i64, i64* %r1, align 8, !tbaa !7
@@ -138,7 +138,7 @@ cleanup:                                          ; preds = %blklab0, %if.then14
 }
 
 ; Function Attrs: nounwind uwtable
-define i64 @run(%struct.POS** nocapture %queens, i64 %queens_size, i1 zeroext %queens_has_ownership, i64 %n, i64 %dim) #2 {
+define i64 @run(%struct.POS** %queens, i64 %queens_size, i1 zeroext %queens_has_ownership, i64 %n, i64 %dim) #2 {
 entry:
   %cmp = icmp eq i64 %dim, %n
   br i1 %cmp, label %if.end, label %while.cond.preheader
@@ -516,7 +516,7 @@ attributes #9 = { noreturn nounwind }
 
 !llvm.ident = !{!0}
 
-!0 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git 2af14cc4a90f43170f8ea9c1dfa0f71f46a0621c) (http://llvm.org/git/llvm.git 1e7e2b2b556977af8ccc12b7afba61302f3a2da9)"}
+!0 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git f0413f80c8330e9495069bc2d1358908bba19914) (http://llvm.org/git/llvm.git 84bc70bd9cdc366afa53717cb14d6abb7f201138)"}
 !1 = !{!2, !2, i64 0}
 !2 = !{!"long long", !3, i64 0}
 !3 = !{!"omnipotent char", !4, i64 0}
