@@ -108,11 +108,6 @@ runClangSampleProfiler(){
 	analysis="$c_type.$program.$compiler.$parameter.$threads.enablevc.txt"
 	perfdata="$c_type.$program.$compiler.$parameter.$threads.enablevc.perf.data"
 
-	echo -e -n "[*]Build the code with source line info using Clang" && read
-	## Specify 'on-inline' option to Clang compiler
-	clang -O3 -gline-tables-only $program.c Util.c -o "out/$binary"
-	#clang -O3 -fno-inline -g NQueens.c Util.c -o "out/$binary"
-
 	echo -e -n "[*]Run the executable with sampling profiler" && read
 	time perf record "./out/$binary" $parameter
 
@@ -147,19 +142,32 @@ exec(){
 	# change folder
 	cd "$program/impl/$c_type"
 	generateCode $program $compiler
+	mkdir -p "out"
+        binary="$c_type.$program.$compiler.$parameter.$threads.enablevc.out"
+
 	case "$compiler" in
 		"gcc")
 			runGProf $c_type $program $compiler $parameter $threads
 			##runGCCProfiler $c_type $program $compiler $parameter $threads
 			;;
 		"clang")
+			echo -e -n "[*]Build the code with source line info using Clang" && read
+        		## Specify '-gline-tables-only' option to Clang compiler
+        		clang -O3 -gline-tables-only $program.c Util.c -o "out/$binary"
 			runClangSampleProfiler $c_type $program $compiler $parameter $threads
+			;;
+		"polly")
+			echo -e -n "[*]Build the code with source line info using Polly" && read
+                        ## Specify '-gline-tables-only' option to Clang compiler
+                        pollycc -O3 -gline-tables-only -mllvm -polly -mllvm -polly-vectorizer=stripmine\
+				-mllvm -polly-process-unprofitable -mllvm -polly-opt-outer-coincidence=yes\
+				$program.c Util.c -o "out/$binary"
+                        runClangSampleProfiler $c_type $program $compiler $parameter $threads
 			;;
 		*)
 			echo -e -n "[*]Not implemented" && read
 			;;
 	esac
-
 	cd ../../..
 }
 
@@ -168,9 +176,20 @@ init(){
 	rm -rf "$program/prof/"*
 }
 
-init NQueens
+#init CoinGame
+#exec autogenerate_leakfree CoinGame gcc 40000 1
+#exec autogenerate_leakfree CoinGame clang 40000 1
+#exec autogenerate_single_leakfree CoinGame gcc 40000 1
+#exec autogenerate_single_leakfree CoinGame clang 40000 1
+#exec autogenerate_array_leakfree CoinGame gcc 40000 1
+#exec autogenerate_array_leakfree CoinGame clang 40000 1
+
+
+#init NQueens
 exec autogenerate_leak NQueens gcc 15 1
 exec autogenerate_leak NQueens clang 15 1
+exec autogenerate_leak NQueens polly 15 1
 
 exec autogenerate_leakfree NQueens gcc 15 1
 exec autogenerate_leakfree NQueens clang 15 1
+exec autogenerate_leakfree NQueens polly 15 1
