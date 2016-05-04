@@ -6,119 +6,106 @@ target triple = "x86_64-unknown-linux-gnu"
 @.str = private unnamed_addr constant [6 x i8] c"%lld\0A\00", align 1
 
 ; Function Attrs: nounwind uwtable
-define i64 @max(i64 %a, i64 %b) #0 {
-entry:
-  br label %entry.split
-
-entry.split:                                      ; preds = %entry
-  %cmp = icmp slt i64 %a, %b
-  %retval.0 = select i1 %cmp, i64 %b, i64 %a
-  ret i64 %retval.0
-}
-
-; Function Attrs: nounwind uwtable
-define i64 @min(i64 %a, i64 %b) #0 {
-entry:
-  br label %entry.split
-
-entry.split:                                      ; preds = %entry
-  %cmp = icmp slt i64 %a, %b
-  %retval.0 = select i1 %cmp, i64 %a, i64 %b
-  ret i64 %retval.0
-}
-
-; Function Attrs: nounwind uwtable
 define i64* @findMoves(i64* %moves, i64 %moves_size, i1 zeroext %moves_has_ownership, i64 %n) #0 {
 entry:
   br label %entry.split
 
 entry.split:                                      ; preds = %entry
-  %cmp4 = icmp sgt i64 %n, 0
-  br i1 %cmp4, label %while.body2.preheader.lr.ph, label %if.end42
+  %cmp5 = icmp sgt i64 %n, 0
+  br i1 %cmp5, label %while.body2.preheader.lr.ph, label %if.end58
 
 while.body2.preheader.lr.ph:                      ; preds = %entry.split
   br label %while.body2.preheader
 
-while.body2.preheader:                            ; preds = %while.body2.preheader.lr.ph, %blklab5
-  %indvars.iv = phi i64 [ %n, %while.body2.preheader.lr.ph ], [ %indvars.iv.next, %blklab5 ]
-  %s.05 = phi i64 [ 0, %while.body2.preheader.lr.ph ], [ %add40, %blklab5 ]
-  br i1 true, label %if.end5.lr.ph, label %blklab5
+while.body2.preheader:                            ; preds = %while.body2.preheader.lr.ph, %blklab1
+  %indvars.iv = phi i64 [ %n, %while.body2.preheader.lr.ph ], [ %indvars.iv.next, %blklab1 ]
+  %s.06 = phi i64 [ 0, %while.body2.preheader.lr.ph ], [ %add56, %blklab1 ]
+  br i1 true, label %if.end5.lr.ph, label %blklab1
 
 if.end5.lr.ph:                                    ; preds = %while.body2.preheader
   br label %if.end5
 
-if.end5:                                          ; preds = %if.end5.lr.ph, %blklab10
-  %j.03 = phi i64 [ %s.05, %if.end5.lr.ph ], [ %add38, %blklab10 ]
-  %i.02 = phi i64 [ 0, %if.end5.lr.ph ], [ %add39, %blklab10 ]
-  %add = add nuw nsw i64 %i.02, 1
+if.end5:                                          ; preds = %if.end5.lr.ph, %blklab6
+  %j.04 = phi i64 [ %s.06, %if.end5.lr.ph ], [ %add54, %blklab6 ]
+  %i.03 = phi i64 [ 0, %if.end5.lr.ph ], [ %add55, %blklab6 ]
+  %add = add nuw nsw i64 %i.03, 1
   %cmp6 = icmp sge i64 %add, %n
-  %cmp9 = icmp slt i64 %j.03, 1
+  %cmp9 = icmp slt i64 %j.04, 1
   %or.cond = or i1 %cmp6, %cmp9
-  br i1 %or.cond, label %blklab8, label %if.end11
+  br i1 %or.cond, label %blklab4, label %if.end11
 
 if.end11:                                         ; preds = %if.end5
   %mul = mul nsw i64 %add, %n
-  %add13 = add nsw i64 %j.03, -1
+  %add13 = add nsw i64 %j.04, -1
   %sub14 = add i64 %add13, %mul
   %arrayidx = getelementptr inbounds i64, i64* %moves, i64 %sub14
   %0 = load i64, i64* %arrayidx, align 8
-  br label %blklab8
+  br label %blklab4
 
-blklab8:                                          ; preds = %if.end5, %if.end11
+blklab4:                                          ; preds = %if.end5, %if.end11
   %y.0 = phi i64 [ %0, %if.end11 ], [ 0, %if.end5 ]
-  %add15 = add nuw nsw i64 %i.02, 2
+  %add15 = add nuw nsw i64 %i.03, 2
   %cmp16 = icmp slt i64 %add15, %n
-  br i1 %cmp16, label %if.end18, label %blklab9
+  br i1 %cmp16, label %if.end18, label %blklab5
 
-if.end18:                                         ; preds = %blklab8
+if.end18:                                         ; preds = %blklab4
   %mul20 = mul nsw i64 %add15, %n
-  %add21 = add nsw i64 %mul20, %j.03
+  %add21 = add nsw i64 %mul20, %j.04
   %arrayidx22 = getelementptr inbounds i64, i64* %moves, i64 %add21
   %1 = load i64, i64* %arrayidx22, align 8
-  br label %blklab9
+  br label %blklab5
 
-blklab9:                                          ; preds = %blklab8, %if.end18
-  %x.0 = phi i64 [ %1, %if.end18 ], [ 0, %blklab8 ]
-  %cmp24 = icmp slt i64 %j.03, 2
-  br i1 %cmp24, label %blklab10, label %if.end26
+blklab5:                                          ; preds = %blklab4, %if.end18
+  %x.0 = phi i64 [ %1, %if.end18 ], [ 0, %blklab4 ]
+  %cmp24 = icmp slt i64 %j.04, 2
+  br i1 %cmp24, label %blklab6, label %if.end26
 
-if.end26:                                         ; preds = %blklab9
-  %mul27 = mul nsw i64 %i.02, %n
-  %add28 = add nsw i64 %j.03, -2
+if.end26:                                         ; preds = %blklab5
+  %mul27 = mul nsw i64 %i.03, %n
+  %add28 = add nsw i64 %j.04, -2
   %sub29 = add i64 %add28, %mul27
   %arrayidx30 = getelementptr inbounds i64, i64* %moves, i64 %sub29
   %2 = load i64, i64* %arrayidx30, align 8
-  br label %blklab10
+  br label %blklab6
 
-blklab10:                                         ; preds = %blklab9, %if.end26
-  %z.0 = phi i64 [ %2, %if.end26 ], [ 0, %blklab9 ]
-  %call = tail call i64 @min(i64 %x.0, i64 %y.0)
-  %add31 = add nsw i64 %call, %i.02
-  %call32 = tail call i64 @min(i64 %y.0, i64 %z.0)
-  %add33 = add nsw i64 %call32, %j.03
-  %call34 = tail call i64 @max(i64 %add31, i64 %add33)
-  %mul35 = mul nsw i64 %i.02, %n
-  %add36 = add nsw i64 %mul35, %j.03
-  %arrayidx37 = getelementptr inbounds i64, i64* %moves, i64 %add36
-  store i64 %call34, i64* %arrayidx37, align 8
-  %add39 = add nuw nsw i64 %i.02, 1
-  %add38 = add nuw nsw i64 %j.03, 1
-  %exitcond = icmp ne i64 %add39, %indvars.iv
-  br i1 %exitcond, label %if.end5, label %while.body2.blklab5_crit_edge
+blklab6:                                          ; preds = %blklab5, %if.end26
+  %z.0 = phi i64 [ %2, %if.end26 ], [ 0, %blklab5 ]
+  %xor = xor i64 %x.0, %y.0
+  %cmp31 = icmp slt i64 %x.0, %y.0
+  %and = select i1 %cmp31, i64 %xor, i64 0
+  %xor34 = xor i64 %and, %y.0
+  %add35 = add nsw i64 %xor34, %i.03
+  %xor36 = xor i64 %z.0, %y.0
+  %cmp37 = icmp slt i64 %y.0, %z.0
+  %and41 = select i1 %cmp37, i64 %xor36, i64 0
+  %xor42 = xor i64 %and41, %z.0
+  %add43 = add nsw i64 %xor42, %j.04
+  %xor44 = xor i64 %add43, %add35
+  %cmp45 = icmp slt i64 %add35, %add43
+  %and49 = select i1 %cmp45, i64 %xor44, i64 0
+  %xor50 = xor i64 %and49, %add35
+  %mul51 = mul nsw i64 %i.03, %n
+  %add52 = add nsw i64 %mul51, %j.04
+  %arrayidx53 = getelementptr inbounds i64, i64* %moves, i64 %add52
+  store i64 %xor50, i64* %arrayidx53, align 8
+  %add55 = add nuw nsw i64 %i.03, 1
+  %add54 = add nuw nsw i64 %j.04, 1
+  %exitcond = icmp ne i64 %add55, %indvars.iv
+  br i1 %exitcond, label %if.end5, label %while.body2.blklab1_crit_edge
 
-while.body2.blklab5_crit_edge:                    ; preds = %blklab10
-  br label %blklab5
+while.body2.blklab1_crit_edge:                    ; preds = %blklab6
+  br label %blklab1
 
-blklab5:                                          ; preds = %while.body2.blklab5_crit_edge, %while.body2.preheader
-  %add40 = add nuw nsw i64 %s.05, 1
+blklab1:                                          ; preds = %while.body2.blklab1_crit_edge, %while.body2.preheader
+  %add56 = add nuw nsw i64 %s.06, 1
   %indvars.iv.next = add i64 %indvars.iv, -1
-  %exitcond6 = icmp ne i64 %add40, %n
-  br i1 %exitcond6, label %while.body2.preheader, label %while.body.if.end42_crit_edge
+  %exitcond7 = icmp ne i64 %add56, %n
+  br i1 %exitcond7, label %while.body2.preheader, label %while.body.if.end58_crit_edge
 
-while.body.if.end42_crit_edge:                    ; preds = %blklab5
-  br label %if.end42
+while.body.if.end58_crit_edge:                    ; preds = %blklab1
+  br label %if.end58
 
-if.end42:                                         ; preds = %while.body.if.end42_crit_edge, %entry.split
+if.end58:                                         ; preds = %while.body.if.end58_crit_edge, %entry.split
   ret i64* %moves
 }
 
@@ -137,7 +124,7 @@ entry.split:                                      ; preds = %entry
   %0 = load i64*, i64** %call, align 8
   %call1 = tail call i64* @parseStringToInt(i64* %0) #4
   %cmp = icmp eq i64* %call1, null
-  br i1 %cmp, label %blklab11, label %if.end
+  br i1 %cmp, label %blklab7, label %if.end
 
 if.end:                                           ; preds = %entry.split
   %1 = load i64, i64* %call1, align 8
@@ -371,23 +358,23 @@ if.end:                                           ; preds = %entry.split
   store i64 101, i64* %75, align 8
   tail call void @println_s(i64* %53, i64 23) #4
   %phitmp = bitcast i64* %call14 to i8*
-  br label %blklab11
+  br label %blklab7
 
-blklab11:                                         ; preds = %entry.split, %if.end
+blklab7:                                          ; preds = %entry.split, %if.end
   %76 = phi i8* [ %call23, %if.end ], [ null, %entry.split ]
   %moves_has_ownership.0 = phi i1 [ true, %if.end ], [ false, %entry.split ]
   %moves.0 = phi i8* [ %phitmp, %if.end ], [ null, %entry.split ]
   %77 = phi i8* [ %call78, %if.end ], [ null, %entry.split ]
   br i1 %moves_has_ownership.0, label %if.then103, label %if.end122.critedge
 
-if.then103:                                       ; preds = %blklab11
+if.then103:                                       ; preds = %blklab7
   tail call void @free(i8* %moves.0) #4
   tail call void @free2DArray(i64** %call, i64 %conv) #4
   tail call void @free(i8* %76) #4
   tail call void @free(i8* %77) #4
   br label %if.end122
 
-if.end122.critedge:                               ; preds = %blklab11
+if.end122.critedge:                               ; preds = %blklab7
   tail call void @free2DArray(i64** %call, i64 %conv) #4
   br label %if.end122
 
@@ -425,4 +412,4 @@ attributes #5 = { noreturn nounwind }
 
 !llvm.ident = !{!0}
 
-!0 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git 83402ed45b681e9f38ce6626e5899c19159ceb29) (http://llvm.org/git/llvm.git 4fc8e6fd79f212952e8f538b6d5d9d78098b4505)"}
+!0 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git adeb741e4ef2208282d408214f045b0ce284645a) (http://llvm.org/git/llvm.git 1b960de1374531cbb65e712c7e5843720761e455)"}

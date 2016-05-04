@@ -20,7 +20,6 @@ folder_proc(){
 	rm -rf "$folder"/*	
 	## move to the specific folder
 	mv -f *.$ext "$folder"/
-	
 }
 # ### Generate png files from dot files
 generate_png(){
@@ -94,24 +93,28 @@ clang_polly(){
 	cleanup
 
 	echo -e -n "${GREEN}[*]Show the region Polly can NOT analyze and reasons${RESET}" && read
-	pollycc -g -O3 -mllvm -polly -o "out"/$program.polly.out\
+	pollycc -g -O3 -mllvm -polly -mllvm -polly-opt-outer-coincidence=yes -o "out"/$program.polly.out\
 	        -Rpass-missed=polly $program.c libUtil.a
 
 	echo -e -n "${GREEN}[*]Show the regions Polly can analyze and assumption/restrictions${RESET}" && read
-	pollycc -fcolor-diagnostics -g -O3 -mllvm -polly -o "out"/$program.polly.out\
+	pollycc -fcolor-diagnostics -g -O3 -mllvm -polly\
+			-mllvm -polly-opt-outer-coincidence=yes -o "out"/$program.polly.out\
 	        -Rpass-analysis=polly $program.c libUtil.a
 
 	echo -e -n "${GREEN}[*]Show the information of valid SCoP${RESET}" && read 
-	pollycc -g -O3 -mllvm -polly -o "out"/$program.polly.out\
-		    -mllvm -debug-only=polly-detect $program.c libUtil.a
+	pollycc -g -O3 -mllvm -polly -mllvm -polly-opt-outer-coincidence=yes\
+			-o "out"/$program.polly.out -mllvm -debug-only=polly-detect\
+			$program.c libUtil.a
 
 	echo -e -n "${GREEN}[*]Show the representation of valid SCoP${RESET}" && read 
-	pollycc -g -O3 -mllvm -polly -o "out"/$program.polly.out\
-	        -mllvm -debug-only=polly-scops $program.c libUtil.a
+	pollycc -g -O3 -mllvm -polly -mllvm -polly-opt-outer-coincidence=yes\
+			-o "out"/$program.polly.out -mllvm -debug-only=polly-scops\
+			$program.c libUtil.a
 
 	echo -e -n "${GREEN}[*]Show the optimized AST${RESET}" && read
-	pollycc -g -O3 -mllvm -polly -o "out"/$program.polly.out\
-	        -mllvm -debug-only=polly-ast -mllvm -polly-process-unprofitable\
+	pollycc -g -O3 -mllvm -polly -mllvm -polly-opt-outer-coincidence=yes\
+			-o "out"/$program.polly.out -mllvm -debug-only=polly-ast\
+			-mllvm -polly-process-unprofitable\
 	        $program.c libUtil.a
 
 	### Generate executables with enabled vectorizer
@@ -127,7 +130,7 @@ clang_polly(){
 	##-fno-vectorize
 	echo -e -n "[3] Run ${BOLD}${GREEN} Polly-Optimized ${RESET} executables" && read
 	pollycc -g -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine\
-	        -S -emit-llvm -mllvm -polly-process-unprofitable\
+	        -S -emit-llvm -mllvm -polly-process-unprofitable -mllvm -polly-opt-outer-coincidence=yes\
 	        $program.c -o "llvm/$program.polly.enablevc.ll"
 
 	runExecutables $program "polly.enablevc" $parameter
@@ -135,7 +138,9 @@ clang_polly(){
 	echo -e -n "[4] Run ${BOLD}${GREEN} Polly-Optimized OpenMP ${RESET} executables with 2 threads" && read
 	pollycc -g -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -S -emit-llvm\
 	        -mllvm -polly-parallel -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
+	        -mllvm -polly-opt-outer-coincidence=yes\
 	        $program.c -o "llvm/$program.openmp.enablevc.ll"
+	
 	runExecutables $program "openmp.enablevc" $parameter 2
 
 	echo -e "-----------------Press [Enter] to finish up--------------------"&& read
@@ -178,13 +183,12 @@ exec(){
 #exec autogenerate_original_copyfree GCD 10000  
 #exec autogenerate_cached_copyonly GCD 10000 ### Cached the divisors
 #exec autogenerate_cached_copyfree GCD 10000
-#exec autogenerate_leak CoinGame 10000
-#exec autogenerate_leakfree CoinGame 10000
-#exec autogenerate_array1_leak CoinGame 10000
-#exec autogenerate_array_leakfree CoinGame 10000
-#exec autogenerate_single_leakfree CoinGame 10000
-#exec autogenerate_single_array_leakfree CoinGame 10000
-exec autogenerate_leak NQueens 13
+### CoinGame Test Case
+exec autogenerate_leakfree CoinGame 10000
+exec autogenerate_array_leakfree CoinGame 10000
+exec autogenerate_single_leakfree CoinGame 10000
+### NQueens Test Case
+#exec autogenerate_leak NQueens 13
 #exec autogenerate_leakfree NQueens 12
 
 

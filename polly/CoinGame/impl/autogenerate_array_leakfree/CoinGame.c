@@ -348,6 +348,7 @@ int main(int argc, char** args){
 	_7 = 0;
 	//indexof %8 = %6, %7 : int[][]
 	_8=_6[_7];
+	_REMOVE_OWNERSHIP(_8);
 	//invoke (%5) = (%8) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
 	_STR_TO_INT(_5, _8);
 	//assign %1 = %5  : null|int
