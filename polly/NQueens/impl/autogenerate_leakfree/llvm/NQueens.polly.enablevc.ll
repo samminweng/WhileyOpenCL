@@ -150,186 +150,145 @@ while.cond.preheader:                             ; preds = %entry
   br i1 %or.cond, label %blklab10.preheader, label %blklab11
 
 blklab10.preheader:                               ; preds = %while.cond.preheader
-  %cmp33230 = icmp sgt i64 %n, 0
-  %arrayidx57 = getelementptr inbounds %struct.POS*, %struct.POS** %queens, i64 %n
-  %0 = bitcast %struct.POS** %arrayidx57 to i8**
-  %add58 = add nsw i64 %n, 1
-  %cmp18.us247 = icmp sgt i64 %dim, 0
-  br i1 %cmp18.us247, label %blklab14.preheader.us.preheader, label %blklab8
+  %cmp33202 = icmp sgt i64 %n, 0
+  %arrayidx53 = getelementptr inbounds %struct.POS*, %struct.POS** %queens, i64 %n
+  %0 = bitcast %struct.POS** %arrayidx53 to i8**
+  %add54 = add nsw i64 %n, 1
+  %cmp18.us207 = icmp sgt i64 %dim, 0
+  br i1 %cmp18.us207, label %blklab14.preheader.us.preheader, label %blklab8
 
 blklab14.preheader.us.preheader:                  ; preds = %blklab10.preheader
   br label %blklab14.preheader.us
 
-blklab12.us:                                      ; preds = %blklab18.us
-  %_23.0.ph.merge.us.lcssa = phi i64 [ %_23.0.ph.merge.us, %blklab18.us ]
-  %call.i.us.lcssa = phi i8* [ %call.i.us, %blklab18.us ]
-  %cmp50.us = icmp eq i64 %_23.0.ph.merge.us.lcssa, 1
-  br i1 %cmp50.us, label %if.end52.us, label %blklab22.us
+if.end48.us:                                      ; preds = %blklab14.preheader.us, %blklab14.blklab12_crit_edge.us
+  %1 = and i8 %_27_has_ownership.0190.us208, 1
+  %tobool49.us = icmp eq i8 %1, 0
+  br i1 %tobool49.us, label %if.end51.us, label %if.then50.us
 
-if.end52.us:                                      ; preds = %blklab14.preheader.us, %blklab12.us
-  %p_has_ownership.1198.lcssa.us244 = phi i8 [ 1, %blklab12.us ], [ %p_has_ownership.0201.us255, %blklab14.preheader.us ]
-  %.lcssa.us242 = phi i8* [ %call.i.us.lcssa, %blklab12.us ], [ %19, %blklab14.preheader.us ]
-  %.lcssa222.us240 = phi i8* [ %call.i.us.lcssa, %blklab12.us ], [ %18, %blklab14.preheader.us ]
-  %1 = and i8 %_27_has_ownership.0206.us248, 1
-  %tobool53.us = icmp eq i8 %1, 0
-  br i1 %tobool53.us, label %if.end55.us, label %if.then54.us
+if.then50.us:                                     ; preds = %if.end48.us
+  tail call void @free(i8* %13) #6
+  br label %if.end51.us
 
-if.then54.us:                                     ; preds = %if.end52.us
-  tail call void @free(i8* %20) #6
-  br label %if.end55.us
-
-if.end55.us:                                      ; preds = %if.then54.us, %if.end52.us
-  %call56.us = tail call noalias i8* @malloc(i64 16) #6
-  %c.us = getelementptr inbounds i8, i8* %call56.us, i64 8
+if.end51.us:                                      ; preds = %if.then50.us, %if.end48.us
+  %call52.us = tail call noalias i8* @malloc(i64 16) #6
+  %c.us = getelementptr inbounds i8, i8* %call52.us, i64 8
   %2 = bitcast i8* %c.us to i64*
-  store i64 %col.0202.us252, i64* %2, align 8, !tbaa !9
-  %r.us = bitcast i8* %call56.us to i64*
+  store i64 %col.0186.us212, i64* %2, align 8, !tbaa !9
+  %r.us = bitcast i8* %call52.us to i64*
   store i64 %n, i64* %r.us, align 8, !tbaa !7
-  store i8* %call56.us, i8** %0, align 8, !tbaa !5
-  %call59.us = tail call i64 @run(%struct.POS** %queens, i64 %dim, i1 zeroext false, i64 %add58, i64 %dim)
-  %add60.us = add nsw i64 %call59.us, %num_solutions.0204.us250
+  store i8* %call52.us, i8** %0, align 8, !tbaa !5
+  %call55.us = tail call i64 @run(%struct.POS** %queens, i64 %dim, i1 zeroext false, i64 %add54, i64 %dim)
+  %add56.us = add nsw i64 %call55.us, %num_solutions.0188.us210
   br label %blklab22.us
 
-blklab22.us:                                      ; preds = %if.end55.us, %blklab12.us
-  %p_has_ownership.1198.lcssa.us243 = phi i8 [ 1, %blklab12.us ], [ %p_has_ownership.1198.lcssa.us244, %if.end55.us ]
-  %.lcssa.us241 = phi i8* [ %call.i.us.lcssa, %blklab12.us ], [ %.lcssa.us242, %if.end55.us ]
-  %.lcssa222.us239 = phi i8* [ %call.i.us.lcssa, %blklab12.us ], [ %.lcssa222.us240, %if.end55.us ]
-  %num_solutions.1.us = phi i64 [ %num_solutions.0204.us250, %blklab12.us ], [ %add60.us, %if.end55.us ]
-  %3 = phi i8* [ %21, %blklab12.us ], [ %call56.us, %if.end55.us ]
-  %4 = phi i8* [ %20, %blklab12.us ], [ %call56.us, %if.end55.us ]
-  %_27_has_ownership.1.us = phi i8 [ %_27_has_ownership.0206.us248, %blklab12.us ], [ 1, %if.end55.us ]
-  %add61.us = add nuw nsw i64 %col.0202.us252, 1
-  %cmp18.us = icmp slt i64 %add61.us, %dim
+blklab22.us:                                      ; preds = %if.end51.us, %blklab14.blklab12_crit_edge.us
+  %num_solutions.1.us = phi i64 [ %num_solutions.0188.us210, %blklab14.blklab12_crit_edge.us ], [ %add56.us, %if.end51.us ]
+  %3 = phi i8* [ %14, %blklab14.blklab12_crit_edge.us ], [ %call52.us, %if.end51.us ]
+  %4 = phi i8* [ %13, %blklab14.blklab12_crit_edge.us ], [ %call52.us, %if.end51.us ]
+  %_27_has_ownership.1.us = phi i8 [ %_27_has_ownership.0190.us208, %blklab14.blklab12_crit_edge.us ], [ 1, %if.end51.us ]
+  %add57.us = add nuw nsw i64 %col.0186.us212, 1
+  %cmp18.us = icmp slt i64 %add57.us, %dim
   br i1 %cmp18.us, label %blklab14.preheader.us, label %blklab8.loopexit
 
-if.end38.us:                                      ; preds = %if.end38.us.preheader, %blklab18.us
-  %i.0196233.us = phi i64 [ %add.us, %blklab18.us ], [ 0, %if.end38.us.preheader ]
-  %5 = phi i8* [ %call.i.us, %blklab18.us ], [ %18, %if.end38.us.preheader ]
-  %p_has_ownership.1198232.us = phi i8 [ 1, %blklab18.us ], [ %p_has_ownership.0201.us255, %if.end38.us.preheader ]
-  %isSolution.0199231.us = phi i64 [ %_23.0.ph.merge.us, %blklab18.us ], [ 1, %if.end38.us.preheader ]
-  %arrayidx.us = getelementptr inbounds %struct.POS*, %struct.POS** %queens, i64 %i.0196233.us
-  %6 = bitcast %struct.POS** %arrayidx.us to <2 x i64>**
-  %7 = load <2 x i64>*, <2 x i64>** %6, align 8, !tbaa !5
-  %call.i.us = tail call noalias i8* @malloc(i64 16) #6
-  %r1.i.us = bitcast i8* %call.i.us to i64*
-  %8 = load <2 x i64>, <2 x i64>* %7, align 8, !tbaa !1
-  %c2.i.us = getelementptr inbounds i8, i8* %call.i.us, i64 8
-  %9 = bitcast i8* %c2.i.us to i64*
-  %10 = bitcast i8* %call.i.us to <2 x i64>*
-  store <2 x i64> %8, <2 x i64>* %10, align 8, !tbaa !1
-  %11 = and i8 %p_has_ownership.1198232.us, 1
-  %tobool40.us = icmp eq i8 %11, 0
-  br i1 %tobool40.us, label %polly.split_new_and_old.us, label %if.then41.us
-
-if.then41.us:                                     ; preds = %if.end38.us
-  tail call void @free(i8* %5) #6
-  br label %polly.split_new_and_old.us
-
-polly.split_new_and_old.us:                       ; preds = %if.then41.us, %if.end38.us
-  %12 = icmp eq i64 %isSolution.0199231.us, 1
-  br i1 %12, label %blklab20.us, label %blklab18.us
+polly.split_new_and_old.us:                       ; preds = %polly.split_new_and_old.us.preheader, %blklab18.us
+  %5 = phi i1 [ %12, %blklab18.us ], [ true, %polly.split_new_and_old.us.preheader ]
+  %i.0184203.us = phi i64 [ %add.us, %blklab18.us ], [ 0, %polly.split_new_and_old.us.preheader ]
+  br i1 %5, label %blklab20.us, label %blklab18.us
 
 blklab20.us:                                      ; preds = %polly.split_new_and_old.us
-  %13 = load i64, i64* %r1.i.us, align 8, !tbaa !7
-  %14 = load i64, i64* %9, align 8, !tbaa !9
-  %cmp.i.us = icmp eq i64 %13, %n
-  %cmp3.i.us = icmp eq i64 %14, %col.0202.us252
+  %arrayidx.us = getelementptr inbounds %struct.POS*, %struct.POS** %queens, i64 %i.0184203.us
+  %6 = load %struct.POS*, %struct.POS** %arrayidx.us, align 8, !tbaa !5
+  %r1.i.us = getelementptr inbounds %struct.POS, %struct.POS* %6, i64 0, i32 0
+  %7 = load i64, i64* %r1.i.us, align 8, !tbaa !7
+  %c2.i.us = getelementptr inbounds %struct.POS, %struct.POS* %6, i64 0, i32 1
+  %8 = load i64, i64* %c2.i.us, align 8, !tbaa !9
+  %cmp.i.us = icmp eq i64 %7, %n
+  %cmp3.i.us = icmp eq i64 %8, %col.0186.us212
   %or.cond.i.us = or i1 %cmp.i.us, %cmp3.i.us
   br i1 %or.cond.i.us, label %conflict.exit.us, label %blklab0.i.us
 
 blklab0.i.us:                                     ; preds = %blklab20.us
-  %sub.i.us = sub nsw i64 %14, %col.0202.us252
+  %sub.i.us = sub nsw i64 %8, %col.0186.us212
   %ispos.i.us = icmp sgt i64 %sub.i.us, -1
   %neg.i.us = sub i64 0, %sub.i.us
-  %15 = select i1 %ispos.i.us, i64 %sub.i.us, i64 %neg.i.us
-  %sub8.i.us = sub nsw i64 %13, %n
+  %9 = select i1 %ispos.i.us, i64 %sub.i.us, i64 %neg.i.us
+  %sub8.i.us = sub nsw i64 %7, %n
   %ispos49.i.us = icmp sgt i64 %sub8.i.us, -1
   %neg50.i.us = sub i64 0, %sub8.i.us
-  %16 = select i1 %ispos49.i.us, i64 %sub8.i.us, i64 %neg50.i.us
-  %cmp10.i.us = icmp eq i64 %15, %16
+  %10 = select i1 %ispos49.i.us, i64 %sub8.i.us, i64 %neg50.i.us
+  %cmp10.i.us = icmp eq i64 %9, %10
   %..i.us = zext i1 %cmp10.i.us to i64
   br label %conflict.exit.us
 
 conflict.exit.us:                                 ; preds = %blklab0.i.us, %blklab20.us
   %retval.0.i.us = phi i64 [ %..i.us, %blklab0.i.us ], [ 1, %blklab20.us ]
-  %17 = xor i64 %retval.0.i.us, 1
+  %11 = xor i64 %retval.0.i.us, 1
   br label %blklab18.us
 
 blklab18.us:                                      ; preds = %conflict.exit.us, %polly.split_new_and_old.us
-  %_23.0.ph.merge.us = phi i64 [ %17, %conflict.exit.us ], [ 0, %polly.split_new_and_old.us ]
-  %add.us = add nuw nsw i64 %i.0196233.us, 1
+  %_23.0.ph.merge.us = phi i64 [ %11, %conflict.exit.us ], [ 0, %polly.split_new_and_old.us ]
+  %add.us = add nuw nsw i64 %i.0184203.us, 1
+  %12 = icmp eq i64 %_23.0.ph.merge.us, 1
   %exitcond = icmp eq i64 %add.us, %n
-  br i1 %exitcond, label %blklab12.us, label %if.end38.us
+  br i1 %exitcond, label %blklab14.blklab12_crit_edge.us, label %polly.split_new_and_old.us
 
 blklab14.preheader.us:                            ; preds = %blklab14.preheader.us.preheader, %blklab22.us
-  %18 = phi i8* [ %.lcssa222.us239, %blklab22.us ], [ undef, %blklab14.preheader.us.preheader ]
-  %19 = phi i8* [ %.lcssa.us241, %blklab22.us ], [ undef, %blklab14.preheader.us.preheader ]
-  %p_has_ownership.0201.us255 = phi i8 [ %p_has_ownership.1198.lcssa.us243, %blklab22.us ], [ 0, %blklab14.preheader.us.preheader ]
-  %col.0202.us252 = phi i64 [ %add61.us, %blklab22.us ], [ 0, %blklab14.preheader.us.preheader ]
-  %num_solutions.0204.us250 = phi i64 [ %num_solutions.1.us, %blklab22.us ], [ 0, %blklab14.preheader.us.preheader ]
-  %20 = phi i8* [ %4, %blklab22.us ], [ undef, %blklab14.preheader.us.preheader ]
-  %21 = phi i8* [ %3, %blklab22.us ], [ undef, %blklab14.preheader.us.preheader ]
-  %_27_has_ownership.0206.us248 = phi i8 [ %_27_has_ownership.1.us, %blklab22.us ], [ 0, %blklab14.preheader.us.preheader ]
-  br i1 %cmp33230, label %if.end38.us.preheader, label %if.end52.us
+  %col.0186.us212 = phi i64 [ %add57.us, %blklab22.us ], [ 0, %blklab14.preheader.us.preheader ]
+  %num_solutions.0188.us210 = phi i64 [ %num_solutions.1.us, %blklab22.us ], [ 0, %blklab14.preheader.us.preheader ]
+  %13 = phi i8* [ %4, %blklab22.us ], [ undef, %blklab14.preheader.us.preheader ]
+  %14 = phi i8* [ %3, %blklab22.us ], [ undef, %blklab14.preheader.us.preheader ]
+  %_27_has_ownership.0190.us208 = phi i8 [ %_27_has_ownership.1.us, %blklab22.us ], [ 0, %blklab14.preheader.us.preheader ]
+  br i1 %cmp33202, label %polly.split_new_and_old.us.preheader, label %if.end48.us
 
-if.end38.us.preheader:                            ; preds = %blklab14.preheader.us
-  br label %if.end38.us
+polly.split_new_and_old.us.preheader:             ; preds = %blklab14.preheader.us
+  br label %polly.split_new_and_old.us
+
+blklab14.blklab12_crit_edge.us:                   ; preds = %blklab18.us
+  %.lcssa = phi i1 [ %12, %blklab18.us ]
+  br i1 %.lcssa, label %if.end48.us, label %blklab22.us
 
 if.end:                                           ; preds = %entry
   br i1 %queens_has_ownership, label %if.then1, label %cleanup
 
 if.then1:                                         ; preds = %if.end
-  %22 = bitcast %struct.POS** %queens to i8*
-  tail call void @free(i8* %22) #6
+  %15 = bitcast %struct.POS** %queens to i8*
+  tail call void @free(i8* %15) #6
   br label %cleanup
 
 blklab11:                                         ; preds = %while.cond.preheader
-  %23 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !tbaa !5
-  %24 = tail call i64 @fwrite(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.5, i64 0, i64 0), i64 4, i64 1, %struct._IO_FILE* %23) #8
+  %16 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !tbaa !5
+  %17 = tail call i64 @fwrite(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.5, i64 0, i64 0), i64 4, i64 1, %struct._IO_FILE* %16) #8
   tail call void @exit(i32 -1) #9
   unreachable
 
 blklab8.loopexit:                                 ; preds = %blklab22.us
   %_27_has_ownership.1.us.lcssa = phi i8 [ %_27_has_ownership.1.us, %blklab22.us ]
-  %.lcssa261 = phi i8* [ %3, %blklab22.us ]
+  %.lcssa218 = phi i8* [ %3, %blklab22.us ]
   %num_solutions.1.us.lcssa = phi i64 [ %num_solutions.1.us, %blklab22.us ]
-  %.lcssa.us241.lcssa = phi i8* [ %.lcssa.us241, %blklab22.us ]
-  %p_has_ownership.1198.lcssa.us243.lcssa = phi i8 [ %p_has_ownership.1198.lcssa.us243, %blklab22.us ]
   br label %blklab8
 
 blklab8:                                          ; preds = %blklab8.loopexit, %blklab10.preheader
-  %.lcssa246 = phi i8* [ undef, %blklab10.preheader ], [ %.lcssa.us241.lcssa, %blklab8.loopexit ]
-  %p_has_ownership.0201.us.lcssa = phi i8 [ 0, %blklab10.preheader ], [ %p_has_ownership.1198.lcssa.us243.lcssa, %blklab8.loopexit ]
-  %num_solutions.0204.us.lcssa = phi i64 [ 0, %blklab10.preheader ], [ %num_solutions.1.us.lcssa, %blklab8.loopexit ]
-  %.lcssa = phi i8* [ undef, %blklab10.preheader ], [ %.lcssa261, %blklab8.loopexit ]
-  %_27_has_ownership.0206.us.lcssa = phi i8 [ 0, %blklab10.preheader ], [ %_27_has_ownership.1.us.lcssa, %blklab8.loopexit ]
-  br i1 %queens_has_ownership, label %if.then63, label %if.end64
+  %num_solutions.0188.us.lcssa = phi i64 [ 0, %blklab10.preheader ], [ %num_solutions.1.us.lcssa, %blklab8.loopexit ]
+  %.lcssa206 = phi i8* [ undef, %blklab10.preheader ], [ %.lcssa218, %blklab8.loopexit ]
+  %_27_has_ownership.0190.us.lcssa = phi i8 [ 0, %blklab10.preheader ], [ %_27_has_ownership.1.us.lcssa, %blklab8.loopexit ]
+  br i1 %queens_has_ownership, label %if.then59, label %if.end66
 
-if.then63:                                        ; preds = %blklab8
-  %25 = bitcast %struct.POS** %queens to i8*
-  tail call void @free(i8* %25) #6
-  br label %if.end64
+if.then59:                                        ; preds = %blklab8
+  %18 = bitcast %struct.POS** %queens to i8*
+  tail call void @free(i8* %18) #6
+  br label %if.end66
 
-if.end64:                                         ; preds = %if.then63, %blklab8
-  %26 = and i8 %p_has_ownership.0201.us.lcssa, 1
-  %tobool65 = icmp eq i8 %26, 0
-  br i1 %tobool65, label %if.end70, label %if.then66
+if.end66:                                         ; preds = %if.then59, %blklab8
+  %19 = and i8 %_27_has_ownership.0190.us.lcssa, 1
+  %tobool67 = icmp eq i8 %19, 0
+  br i1 %tobool67, label %cleanup, label %if.then68
 
-if.then66:                                        ; preds = %if.end64
-  tail call void @free(i8* %.lcssa246) #6
-  br label %if.end70
-
-if.end70:                                         ; preds = %if.then66, %if.end64
-  %27 = and i8 %_27_has_ownership.0206.us.lcssa, 1
-  %tobool71 = icmp eq i8 %27, 0
-  br i1 %tobool71, label %cleanup, label %if.then72
-
-if.then72:                                        ; preds = %if.end70
-  tail call void @free(i8* %.lcssa) #6
+if.then68:                                        ; preds = %if.end66
+  tail call void @free(i8* %.lcssa206) #6
   br label %cleanup
 
-cleanup:                                          ; preds = %if.then72, %if.end70, %if.then1, %if.end
-  %retval.0 = phi i64 [ 1, %if.end ], [ 1, %if.then1 ], [ %num_solutions.0204.us.lcssa, %if.end70 ], [ %num_solutions.0204.us.lcssa, %if.then72 ]
+cleanup:                                          ; preds = %if.then68, %if.end66, %if.then1, %if.end
+  %retval.0 = phi i64 [ 1, %if.end ], [ 1, %if.then1 ], [ %num_solutions.0188.us.lcssa, %if.end66 ], [ %num_solutions.0188.us.lcssa, %if.then68 ]
   ret i64 %retval.0
 }
 

@@ -17,7 +17,7 @@ target triple = "x86_64-unknown-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define noalias %struct.POS* @copy_POS(%struct.POS* nocapture readonly %_POS) #0 {
 entry:
-  %call = tail call noalias i8* @malloc(i64 16) #6
+  %call = tail call noalias i8* @malloc(i64 16) #7
   %0 = bitcast i8* %call to %struct.POS*
   %1 = bitcast %struct.POS* %_POS to <2 x i64>*
   %2 = load <2 x i64>, <2 x i64>* %1, align 8, !tbaa !1
@@ -33,7 +33,7 @@ declare noalias i8* @malloc(i64) #1
 define noalias %struct.POS** @copy_array_POS(%struct.POS** nocapture readonly %_POS, i64 %_POS_size) #0 {
 entry:
   %mul = shl i64 %_POS_size, 3
-  %call = tail call noalias i8* @malloc(i64 %mul) #6
+  %call = tail call noalias i8* @malloc(i64 %mul) #7
   %0 = bitcast i8* %call to %struct.POS**
   %cmp12 = icmp sgt i64 %_POS_size, 0
   br i1 %cmp12, label %for.body.preheader, label %for.cond.cleanup
@@ -52,7 +52,7 @@ for.body:                                         ; preds = %for.body.preheader,
   %arrayidx = getelementptr inbounds %struct.POS*, %struct.POS** %_POS, i64 %indvars.iv
   %1 = bitcast %struct.POS** %arrayidx to <2 x i64>**
   %2 = load <2 x i64>*, <2 x i64>** %1, align 8, !tbaa !5
-  %call.i = tail call noalias i8* @malloc(i64 16) #6
+  %call.i = tail call noalias i8* @malloc(i64 16) #7
   %3 = load <2 x i64>, <2 x i64>* %2, align 8, !tbaa !1
   %4 = bitcast i8* %call.i to <2 x i64>*
   store <2 x i64> %3, <2 x i64>* %4, align 8, !tbaa !1
@@ -68,7 +68,7 @@ for.body:                                         ; preds = %for.body.preheader,
 define void @free_POS(%struct.POS* %pos) #0 {
 entry:
   %0 = bitcast %struct.POS* %pos to i8*
-  tail call void @free(i8* %0) #6
+  tail call void @free(i8* %0) #7
   ret void
 }
 
@@ -78,7 +78,7 @@ declare void @free(i8*) #1
 ; Function Attrs: nounwind uwtable
 define void @printf_POS(%struct.POS* nocapture readonly %pos) #0 {
 entry:
-  %putchar = tail call i32 @putchar(i32 123) #6
+  %putchar = tail call i32 @putchar(i32 123) #7
   %call1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.1, i64 0, i64 0))
   %r = getelementptr inbounds %struct.POS, %struct.POS* %pos, i64 0, i32 0
   %0 = load i64, i64* %r, align 8, !tbaa !7
@@ -87,7 +87,7 @@ entry:
   %c = getelementptr inbounds %struct.POS, %struct.POS* %pos, i64 0, i32 1
   %1 = load i64, i64* %c, align 8, !tbaa !9
   %call4 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.2, i64 0, i64 0), i64 %1)
-  %putchar7 = tail call i32 @putchar(i32 125) #6
+  %putchar7 = tail call i32 @putchar(i32 125) #7
   ret void
 }
 
@@ -132,7 +132,7 @@ polly.stmt.blklab0:                               ; preds = %entry
 }
 
 ; Function Attrs: nounwind uwtable
-define i64 @run(%struct.POS** nocapture %queens, i64 %queens_size, i64 %n, i64 %dim) #0 {
+define i64 @run(%struct.POS** nocapture %queens, i64 %queens_size, i64 %n, i64 %dim) #3 {
 entry:
   %cmp = icmp eq i64 %dim, %n
   br i1 %cmp, label %cleanup, label %while.cond.preheader
@@ -144,70 +144,64 @@ while.cond.preheader:                             ; preds = %entry
   br i1 %or.cond, label %blklab10.preheader, label %blklab11
 
 blklab10.preheader:                               ; preds = %while.cond.preheader
-  %cmp22141 = icmp sgt i64 %n, 0
-  %arrayidx37 = getelementptr inbounds %struct.POS*, %struct.POS** %queens, i64 %n
-  %0 = bitcast %struct.POS** %arrayidx37 to i8**
-  %add38 = add nsw i64 %n, 1
-  %cmp7.us145 = icmp sgt i64 %dim, 0
-  br i1 %cmp7.us145, label %blklab14.preheader.us.preheader, label %cleanup
+  %cmp22139 = icmp sgt i64 %n, 0
+  %arrayidx36 = getelementptr inbounds %struct.POS*, %struct.POS** %queens, i64 %n
+  %0 = bitcast %struct.POS** %arrayidx36 to i8**
+  %add37 = add nsw i64 %n, 1
+  %cmp7.us142 = icmp sgt i64 %dim, 0
+  br i1 %cmp7.us142, label %blklab14.preheader.us.preheader, label %cleanup
 
 blklab14.preheader.us.preheader:                  ; preds = %blklab10.preheader
   br label %blklab14.preheader.us
 
-blklab12.us:                                      ; preds = %blklab18.us
-  %_23.0.us.lcssa = phi i64 [ %_23.0.us, %blklab18.us ]
-  %cmp33.us = icmp eq i64 %_23.0.us.lcssa, 1
-  br i1 %cmp33.us, label %if.end35.us, label %blklab22.us
-
-if.end35.us:                                      ; preds = %blklab14.preheader.us, %blklab12.us
-  %call36.us = tail call noalias i8* @malloc(i64 16) #6
-  %c.us = getelementptr inbounds i8, i8* %call36.us, i64 8
+if.end34.us:                                      ; preds = %blklab14.preheader.us, %blklab14.blklab12_crit_edge.us
+  %call35.us = tail call noalias i8* @malloc(i64 16) #7
+  %c.us = getelementptr inbounds i8, i8* %call35.us, i64 8
   %1 = bitcast i8* %c.us to i64*
-  store i64 %col.0135.us148, i64* %1, align 8, !tbaa !9
-  %r.us = bitcast i8* %call36.us to i64*
+  store i64 %col.0133.us145, i64* %1, align 8, !tbaa !9
+  %r.us = bitcast i8* %call35.us to i64*
   store i64 %n, i64* %r.us, align 8, !tbaa !7
-  store i8* %call36.us, i8** %0, align 8, !tbaa !5
-  %call39.us = tail call i64 @run(%struct.POS** %queens, i64 %dim, i64 %add38, i64 %dim)
-  %add40.us = add nsw i64 %call39.us, %num_solutions.0136.us146
+  store i8* %call35.us, i8** %0, align 8, !tbaa !5
+  %call38.us = tail call i64 @run(%struct.POS** %queens, i64 %dim, i64 %add37, i64 %dim)
+  %add39.us = add nsw i64 %call38.us, %num_solutions.0134.us143
   br label %blklab22.us
 
-blklab22.us:                                      ; preds = %if.end35.us, %blklab12.us
-  %num_solutions.1.us = phi i64 [ %num_solutions.0136.us146, %blklab12.us ], [ %add40.us, %if.end35.us ]
-  %add41.us = add nuw nsw i64 %col.0135.us148, 1
-  %cmp7.us = icmp slt i64 %add41.us, %dim
+blklab22.us:                                      ; preds = %if.end34.us, %blklab14.blklab12_crit_edge.us
+  %num_solutions.1.us = phi i64 [ %num_solutions.0134.us143, %blklab14.blklab12_crit_edge.us ], [ %add39.us, %if.end34.us ]
+  %add40.us = add nuw nsw i64 %col.0133.us145, 1
+  %cmp7.us = icmp slt i64 %add40.us, %dim
   br i1 %cmp7.us, label %blklab14.preheader.us, label %cleanup.loopexit
 
-if.end24.us:                                      ; preds = %if.end24.us.preheader, %blklab18.us
-  %i.0133143.us = phi i64 [ %add.us, %blklab18.us ], [ 0, %if.end24.us.preheader ]
-  %isSolution.0134142.us = phi i64 [ %_23.0.us, %blklab18.us ], [ 1, %if.end24.us.preheader ]
-  %arrayidx.us = getelementptr inbounds %struct.POS*, %struct.POS** %queens, i64 %i.0133143.us
-  %2 = load %struct.POS*, %struct.POS** %arrayidx.us, align 8, !tbaa !5
-  %r.i.us = getelementptr inbounds %struct.POS, %struct.POS* %2, i64 0, i32 0
-  %3 = load i64, i64* %r.i.us, align 8, !tbaa !7
-  %c.i.us = getelementptr inbounds %struct.POS, %struct.POS* %2, i64 0, i32 1
-  %4 = load i64, i64* %c.i.us, align 8, !tbaa !9
-  %cmp26.us = icmp eq i64 %isSolution.0134142.us, 1
-  br i1 %cmp26.us, label %blklab20.us, label %blklab18.us
+polly.split_new_and_old.us:                       ; preds = %polly.split_new_and_old.us.preheader, %blklab18.us
+  %cmp25141.us = phi i1 [ %cmp25.us, %blklab18.us ], [ true, %polly.split_new_and_old.us.preheader ]
+  %i.0131140.us = phi i64 [ %add.us, %blklab18.us ], [ 0, %polly.split_new_and_old.us.preheader ]
+  br i1 %cmp25141.us, label %blklab20.us, label %blklab18.us
 
-blklab20.us:                                      ; preds = %if.end24.us
-  %5 = icmp slt i64 %3, %n
-  %6 = icmp slt i64 %4, %col.0135.us148
-  %7 = icmp sgt i64 %4, %col.0135.us148
-  %8 = icmp ne i64 %4, %col.0135.us148
-  %9 = and i1 %5, %8
-  %10 = icmp sgt i64 %3, %n
-  %11 = and i1 %10, %6
-  %12 = or i1 %9, %11
-  %13 = and i1 %10, %7
-  %14 = or i1 %13, %12
-  br i1 %14, label %polly.stmt.blklab0.i.us, label %conflict.exit.us
+blklab20.us:                                      ; preds = %polly.split_new_and_old.us
+  %arrayidx.us = getelementptr inbounds %struct.POS*, %struct.POS** %queens, i64 %i.0131140.us
+  %2 = load %struct.POS*, %struct.POS** %arrayidx.us, align 8, !tbaa !5
+  %polly.access.cast.p.i.us = getelementptr inbounds %struct.POS, %struct.POS* %2, i64 0, i32 0
+  %polly.access.p.load.i.us = load i64, i64* %polly.access.cast.p.i.us, align 8
+  %polly.access.p44.i.us = getelementptr i64, i64* %polly.access.cast.p.i.us, i64 1
+  %polly.access.p44.load.i.us = load i64, i64* %polly.access.p44.i.us, align 8
+  %3 = icmp slt i64 %polly.access.p.load.i.us, %n
+  %4 = icmp slt i64 %polly.access.p44.load.i.us, %col.0133.us145
+  %5 = icmp sgt i64 %polly.access.p44.load.i.us, %col.0133.us145
+  %6 = icmp ne i64 %polly.access.p44.load.i.us, %col.0133.us145
+  %7 = and i1 %3, %6
+  %8 = icmp sgt i64 %polly.access.p.load.i.us, %n
+  %9 = and i1 %8, %4
+  %10 = or i1 %7, %9
+  %11 = and i1 %8, %5
+  %12 = or i1 %11, %10
+  br i1 %12, label %polly.stmt.blklab0.i.us, label %conflict.exit.us
 
 polly.stmt.blklab0.i.us:                          ; preds = %blklab20.us
-  %p_sub.i.us = sub nsw i64 %4, %col.0135.us148
+  %p_sub.i.us = sub nsw i64 %polly.access.p44.load.i.us, %col.0133.us145
   %p_ispos.i.us = icmp sgt i64 %p_sub.i.us, -1
   %p_neg.i.us = sub i64 0, %p_sub.i.us
   %p_.i.us = select i1 %p_ispos.i.us, i64 %p_sub.i.us, i64 %p_neg.i.us
-  %p_sub6.i.us = sub nsw i64 %3, %n
+  %p_sub6.i.us = sub nsw i64 %polly.access.p.load.i.us, %n
   %p_ispos41.i.us = icmp sgt i64 %p_sub6.i.us, -1
   %p_neg42.i.us = sub i64 0, %p_sub6.i.us
   %p_46.i.us = select i1 %p_ispos41.i.us, i64 %p_sub6.i.us, i64 %p_neg42.i.us
@@ -217,27 +211,32 @@ polly.stmt.blklab0.i.us:                          ; preds = %blklab20.us
 
 conflict.exit.us:                                 ; preds = %polly.stmt.blklab0.i.us, %blklab20.us
   %retval.0.s2a.0.i.us = phi i64 [ %p_..i.us, %polly.stmt.blklab0.i.us ], [ 1, %blklab20.us ]
-  %15 = xor i64 %retval.0.s2a.0.i.us, 1
+  %13 = xor i64 %retval.0.s2a.0.i.us, 1
   br label %blklab18.us
 
-blklab18.us:                                      ; preds = %conflict.exit.us, %if.end24.us
-  %_23.0.us = phi i64 [ 0, %if.end24.us ], [ %15, %conflict.exit.us ]
-  %add.us = add nuw nsw i64 %i.0133143.us, 1
+blklab18.us:                                      ; preds = %conflict.exit.us, %polly.split_new_and_old.us
+  %_23.0.ph.merge.us = phi i64 [ %13, %conflict.exit.us ], [ 0, %polly.split_new_and_old.us ]
+  %add.us = add nuw nsw i64 %i.0131140.us, 1
+  %cmp25.us = icmp eq i64 %_23.0.ph.merge.us, 1
   %exitcond = icmp eq i64 %add.us, %n
-  br i1 %exitcond, label %blklab12.us, label %if.end24.us
+  br i1 %exitcond, label %blklab14.blklab12_crit_edge.us, label %polly.split_new_and_old.us
 
 blklab14.preheader.us:                            ; preds = %blklab14.preheader.us.preheader, %blklab22.us
-  %col.0135.us148 = phi i64 [ %add41.us, %blklab22.us ], [ 0, %blklab14.preheader.us.preheader ]
-  %num_solutions.0136.us146 = phi i64 [ %num_solutions.1.us, %blklab22.us ], [ 0, %blklab14.preheader.us.preheader ]
-  br i1 %cmp22141, label %if.end24.us.preheader, label %if.end35.us
+  %col.0133.us145 = phi i64 [ %add40.us, %blklab22.us ], [ 0, %blklab14.preheader.us.preheader ]
+  %num_solutions.0134.us143 = phi i64 [ %num_solutions.1.us, %blklab22.us ], [ 0, %blklab14.preheader.us.preheader ]
+  br i1 %cmp22139, label %polly.split_new_and_old.us.preheader, label %if.end34.us
 
-if.end24.us.preheader:                            ; preds = %blklab14.preheader.us
-  br label %if.end24.us
+polly.split_new_and_old.us.preheader:             ; preds = %blklab14.preheader.us
+  br label %polly.split_new_and_old.us
+
+blklab14.blklab12_crit_edge.us:                   ; preds = %blklab18.us
+  %cmp25.us.lcssa = phi i1 [ %cmp25.us, %blklab18.us ]
+  br i1 %cmp25.us.lcssa, label %if.end34.us, label %blklab22.us
 
 blklab11:                                         ; preds = %while.cond.preheader
-  %16 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !tbaa !5
-  %17 = tail call i64 @fwrite(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.5, i64 0, i64 0), i64 4, i64 1, %struct._IO_FILE* %16) #8
-  tail call void @exit(i32 -1) #9
+  %14 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !tbaa !5
+  %15 = tail call i64 @fwrite(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.5, i64 0, i64 0), i64 4, i64 1, %struct._IO_FILE* %14) #9
+  tail call void @exit(i32 -1) #10
   unreachable
 
 cleanup.loopexit:                                 ; preds = %blklab22.us
@@ -250,21 +249,21 @@ cleanup:                                          ; preds = %cleanup.loopexit, %
 }
 
 ; Function Attrs: noreturn nounwind
-declare void @exit(i32) #3
+declare void @exit(i32) #4
 
 ; Function Attrs: noreturn nounwind uwtable
-define i32 @main(i32 %argc, i8** %args) #4 {
+define i32 @main(i32 %argc, i8** %args) #5 {
 entry:
-  %call = tail call i64** @convertArgsToIntArray(i32 %argc, i8** %args) #6
+  %call = tail call i64** @convertArgsToIntArray(i32 %argc, i8** %args) #7
   %0 = load i64*, i64** %call, align 8, !tbaa !5
-  %call1 = tail call i64* @parseStringToInt(i64* %0) #6
+  %call1 = tail call i64* @parseStringToInt(i64* %0) #7
   %cmp = icmp eq i64* %call1, null
   br i1 %cmp, label %blklab23, label %if.end
 
 if.end:                                           ; preds = %entry
   %1 = load i64, i64* %call1, align 8, !tbaa !1
   %mul = shl i64 %1, 3
-  %call4 = tail call noalias i8* @malloc(i64 %mul) #6
+  %call4 = tail call noalias i8* @malloc(i64 %mul) #7
   %2 = bitcast i8* %call4 to %struct.POS**
   %cmp6137 = icmp sgt i64 %1, 0
   br i1 %cmp6137, label %for.body.preheader, label %for.cond.cleanup
@@ -277,7 +276,7 @@ for.cond.cleanup.loopexit:                        ; preds = %for.body
 
 for.cond.cleanup:                                 ; preds = %for.cond.cleanup.loopexit, %if.end
   %call10 = tail call i64 @run(%struct.POS** %2, i64 %1, i64 0, i64 %1)
-  %call11 = tail call noalias i8* @malloc(i64 264) #6
+  %call11 = tail call noalias i8* @malloc(i64 264) #7
   %3 = bitcast i8* %call11 to i64*
   %4 = bitcast i8* %call11 to <2 x i64>*
   store <2 x i64> <i64 78, i64 45>, <2 x i64>* %4, align 8, !tbaa !1
@@ -329,17 +328,17 @@ for.cond.cleanup:                                 ; preds = %for.cond.cleanup.lo
   %arrayidx44 = getelementptr inbounds i8, i8* %call11, i64 256
   %20 = bitcast i8* %arrayidx44 to i64*
   store i64 46, i64* %20, align 8, !tbaa !1
-  tail call void @println_s(i64* %3, i64 33) #6
-  %call45 = tail call noalias i8* @malloc(i64 32) #6
+  tail call void @println_s(i64* %3, i64 33) #7
+  %call45 = tail call noalias i8* @malloc(i64 32) #7
   %21 = bitcast i8* %call45 to i64*
   %22 = bitcast i8* %call45 to <2 x i64>*
   store <2 x i64> <i64 78, i64 32>, <2 x i64>* %22, align 8, !tbaa !1
   %arrayidx48 = getelementptr inbounds i8, i8* %call45, i64 16
   %23 = bitcast i8* %arrayidx48 to <2 x i64>*
   store <2 x i64> <i64 61, i64 32>, <2 x i64>* %23, align 8, !tbaa !1
-  tail call void @printf_s(i64* %21, i64 4) #6
+  tail call void @printf_s(i64* %21, i64 4) #7
   %call50 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.6, i64 0, i64 0), i64 %1)
-  %call51 = tail call noalias i8* @malloc(i64 48) #6
+  %call51 = tail call noalias i8* @malloc(i64 48) #7
   %24 = bitcast i8* %call51 to i64*
   %25 = bitcast i8* %call51 to <2 x i64>*
   store <2 x i64> <i64 70, i64 111>, <2 x i64>* %25, align 8, !tbaa !1
@@ -349,9 +348,9 @@ for.cond.cleanup:                                 ; preds = %for.cond.cleanup.lo
   %arrayidx56 = getelementptr inbounds i8, i8* %call51, i64 32
   %27 = bitcast i8* %arrayidx56 to <2 x i64>*
   store <2 x i64> <i64 100, i64 32>, <2 x i64>* %27, align 8, !tbaa !1
-  tail call void @printf_s(i64* %24, i64 6) #6
+  tail call void @printf_s(i64* %24, i64 6) #7
   %call58 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.2, i64 0, i64 0), i64 %call10)
-  %call59 = tail call noalias i8* @malloc(i64 88) #6
+  %call59 = tail call noalias i8* @malloc(i64 88) #7
   %28 = bitcast i8* %call59 to i64*
   %29 = bitcast i8* %call59 to <2 x i64>*
   store <2 x i64> <i64 32, i64 115>, <2 x i64>* %29, align 8, !tbaa !1
@@ -370,12 +369,12 @@ for.cond.cleanup:                                 ; preds = %for.cond.cleanup.lo
   %arrayidx70 = getelementptr inbounds i8, i8* %call59, i64 80
   %34 = bitcast i8* %arrayidx70 to i64*
   store i64 46, i64* %34, align 8, !tbaa !1
-  tail call void @println_s(i64* %28, i64 11) #6
+  tail call void @println_s(i64* %28, i64 11) #7
   br label %blklab23
 
 for.body:                                         ; preds = %for.body.preheader, %for.body
   %indvars.iv = phi i64 [ %indvars.iv.next, %for.body ], [ 0, %for.body.preheader ]
-  %call.i = tail call noalias i8* @malloc(i64 16) #6
+  %call.i = tail call noalias i8* @malloc(i64 16) #7
   %arrayidx9 = getelementptr inbounds %struct.POS*, %struct.POS** %2, i64 %indvars.iv
   %35 = bitcast %struct.POS** %arrayidx9 to i8**
   call void @llvm.memset.p0i8.i64(i8* %call.i, i8 0, i64 16, i32 8, i1 false)
@@ -385,36 +384,37 @@ for.body:                                         ; preds = %for.body.preheader,
   br i1 %exitcond, label %for.cond.cleanup.loopexit, label %for.body
 
 blklab23:                                         ; preds = %entry, %for.cond.cleanup
-  tail call void @exit(i32 0) #9
+  tail call void @exit(i32 0) #10
   unreachable
 }
 
-declare i64** @convertArgsToIntArray(i32, i8**) #5
+declare i64** @convertArgsToIntArray(i32, i8**) #6
 
-declare i64* @parseStringToInt(i64*) #5
+declare i64* @parseStringToInt(i64*) #6
 
-declare void @println_s(i64*, i64) #5
+declare void @println_s(i64*, i64) #6
 
-declare void @printf_s(i64*, i64) #5
+declare void @printf_s(i64*, i64) #6
 
 declare i32 @putchar(i32)
 
 ; Function Attrs: nounwind
-declare i64 @fwrite(i8* nocapture, i64, i64, %struct._IO_FILE* nocapture) #6
+declare i64 @fwrite(i8* nocapture, i64, i64, %struct._IO_FILE* nocapture) #7
 
 ; Function Attrs: argmemonly nounwind
-declare void @llvm.memset.p0i8.i64(i8* nocapture, i8, i64, i32, i1) #7
+declare void @llvm.memset.p0i8.i64(i8* nocapture, i8, i64, i32, i1) #8
 
 attributes #0 = { nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #1 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #2 = { norecurse nounwind readonly uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "polly-optimized" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #3 = { noreturn nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #4 = { noreturn nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #5 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #6 = { nounwind }
-attributes #7 = { argmemonly nounwind }
-attributes #8 = { cold }
-attributes #9 = { noreturn nounwind }
+attributes #3 = { nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "polly-optimized" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #4 = { noreturn nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #5 = { noreturn nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #6 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #7 = { nounwind }
+attributes #8 = { argmemonly nounwind }
+attributes #9 = { cold }
+attributes #10 = { noreturn nounwind }
 
 !llvm.ident = !{!0}
 

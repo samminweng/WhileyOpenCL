@@ -1,172 +1,192 @@
-Enable loop vectorization...Compile C code using gcc with 1 threads..../out/NQueens.gcc.enablevc.out: Killed
+Enable loop vectorization...Compile C code using gcc with 1 threads...N-Queen Problem on a N X N Board.
+N = 15
+Found 2279184 solutions.
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 15':
 
-      14789.833409      task-clock (msec)         #    0.238 CPUs utilized          
-             1,573      context-switches          #    0.106 K/sec                  
-               563      cpu-migrations            #    0.038 K/sec                  
-         4,578,681      page-faults               #    0.310 M/sec                  
-    54,314,435,917      cycles                    #    3.672 GHz                    
+      48478.799302      task-clock (msec)         #    1.000 CPUs utilized          
+                90      context-switches          #    0.002 K/sec                  
+                 4      cpu-migrations            #    0.000 K/sec                  
+         1,337,001      page-faults               #    0.028 M/sec                  
+   188,133,355,937      cycles                    #    3.881 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   139,843,037,615      instructions              #    2.57  insns per cycle        
-    23,720,851,088      branches                  # 1603.862 M/sec                  
-       124,872,929      branch-misses             #    0.53% of all branches        
+   525,602,640,688      instructions              #    2.79  insns per cycle        
+   103,414,384,741      branches                  # 2133.188 M/sec                  
+     2,067,904,913      branch-misses             #    2.00% of all branches        
 
-      62.134591333 seconds time elapsed
+      48.463989967 seconds time elapsed
 
-./out/NQueens.gcc.enablevc.out: Killed
+N-Queen Problem on a N X N Board.
+N = 15
+Found 2279184 solutions.
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 15':
 
-      15169.118205      task-clock (msec)         #    0.243 CPUs utilized          
-             1,565      context-switches          #    0.103 K/sec                  
-               483      cpu-migrations            #    0.032 K/sec                  
-         4,584,189      page-faults               #    0.302 M/sec                  
-    54,655,005,972      cycles                    #    3.603 GHz                    
+      48445.928031      task-clock (msec)         #    1.000 CPUs utilized          
+                90      context-switches          #    0.002 K/sec                  
+                 2      cpu-migrations            #    0.000 K/sec                  
+         1,337,000      page-faults               #    0.028 M/sec                  
+   188,243,938,456      cycles                    #    3.886 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   140,186,912,698      instructions              #    2.56  insns per cycle        
-    23,797,290,865      branches                  # 1568.799 M/sec                  
-       131,478,115      branch-misses             #    0.55% of all branches        
+   525,605,464,104      instructions              #    2.79  insns per cycle        
+   103,417,826,696      branches                  # 2134.706 M/sec                  
+     2,070,797,953      branch-misses             #    2.00% of all branches        
 
-      62.429572196 seconds time elapsed
+      48.440779666 seconds time elapsed
 
-./out/NQueens.gcc.enablevc.out: Killed
+N-Queen Problem on a N X N Board.
+N = 15
+Found 2279184 solutions.
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 15':
 
-      14769.312936      task-clock (msec)         #    0.236 CPUs utilized          
-             1,189      context-switches          #    0.081 K/sec                  
-               613      cpu-migrations            #    0.042 K/sec                  
-         4,582,290      page-faults               #    0.310 M/sec                  
-    54,434,543,125      cycles                    #    3.686 GHz                    
+      48443.797005      task-clock (msec)         #    1.000 CPUs utilized          
+               102      context-switches          #    0.002 K/sec                  
+                 2      cpu-migrations            #    0.000 K/sec                  
+         1,337,000      page-faults               #    0.028 M/sec                  
+   188,291,242,042      cycles                    #    3.887 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   139,330,579,531      instructions              #    2.56  insns per cycle        
-    23,602,226,436      branches                  # 1598.059 M/sec                  
-       131,056,593      branch-misses             #    0.56% of all branches        
+   525,616,814,080      instructions              #    2.79  insns per cycle        
+   103,422,737,441      branches                  # 2134.902 M/sec                  
+     2,074,788,209      branch-misses             #    2.01% of all branches        
 
-      62.696528177 seconds time elapsed
+      48.442114569 seconds time elapsed
 
-./out/NQueens.gcc.enablevc.out: Killed
+N-Queen Problem on a N X N Board.
+N = 15
+Found 2279184 solutions.
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 15':
 
-      15197.330720      task-clock (msec)         #    0.238 CPUs utilized          
-             1,755      context-switches          #    0.115 K/sec                  
-               527      cpu-migrations            #    0.035 K/sec                  
-         4,585,645      page-faults               #    0.302 M/sec                  
-    54,653,025,665      cycles                    #    3.596 GHz                    
+      48489.980372      task-clock (msec)         #    1.000 CPUs utilized          
+               102      context-switches          #    0.002 K/sec                  
+                 2      cpu-migrations            #    0.000 K/sec                  
+         1,337,000      page-faults               #    0.028 M/sec                  
+   188,187,846,418      cycles                    #    3.881 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   139,680,114,841      instructions              #    2.56  insns per cycle        
-    23,661,227,976      branches                  # 1556.933 M/sec                  
-       131,642,610      branch-misses             #    0.56% of all branches        
+   525,616,372,994      instructions              #    2.79  insns per cycle        
+   103,422,575,555      branches                  # 2132.865 M/sec                  
+     2,071,251,322      branch-misses             #    2.00% of all branches        
 
-      63.817690193 seconds time elapsed
+      48.490703816 seconds time elapsed
 
-./out/NQueens.gcc.enablevc.out: Killed
+N-Queen Problem on a N X N Board.
+N = 15
+Found 2279184 solutions.
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 15':
 
-      14924.867757      task-clock (msec)         #    0.234 CPUs utilized          
-             1,441      context-switches          #    0.097 K/sec                  
-               408      cpu-migrations            #    0.027 K/sec                  
-         4,581,721      page-faults               #    0.307 M/sec                  
-    54,551,535,490      cycles                    #    3.655 GHz                    
+      48418.463959      task-clock (msec)         #    1.000 CPUs utilized          
+               101      context-switches          #    0.002 K/sec                  
+                 2      cpu-migrations            #    0.000 K/sec                  
+         1,336,998      page-faults               #    0.028 M/sec                  
+   188,173,375,752      cycles                    #    3.886 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   139,931,680,130      instructions              #    2.57  insns per cycle        
-    23,740,151,198      branches                  # 1590.644 M/sec                  
-       130,942,708      branch-misses             #    0.55% of all branches        
+   525,602,658,204      instructions              #    2.79  insns per cycle        
+   103,417,607,610      branches                  # 2135.913 M/sec                  
+     2,072,108,541      branch-misses             #    2.00% of all branches        
 
-      63.858670668 seconds time elapsed
+      48.416727324 seconds time elapsed
 
-./out/NQueens.gcc.enablevc.out: Killed
+N-Queen Problem on a N X N Board.
+N = 15
+Found 2279184 solutions.
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 15':
 
-      14987.461607      task-clock (msec)         #    0.233 CPUs utilized          
-             1,533      context-switches          #    0.102 K/sec                  
-               433      cpu-migrations            #    0.029 K/sec                  
-         4,578,613      page-faults               #    0.305 M/sec                  
-    54,277,298,852      cycles                    #    3.622 GHz                    
+      48419.838067      task-clock (msec)         #    1.000 CPUs utilized          
+               100      context-switches          #    0.002 K/sec                  
+                 1      cpu-migrations            #    0.000 K/sec                  
+         1,336,999      page-faults               #    0.028 M/sec                  
+   188,096,070,201      cycles                    #    3.885 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   139,658,420,286      instructions              #    2.57  insns per cycle        
-    23,665,462,982      branches                  # 1579.017 M/sec                  
-       130,314,206      branch-misses             #    0.55% of all branches        
+   525,616,819,507      instructions              #    2.79  insns per cycle        
+   103,422,738,636      branches                  # 2135.958 M/sec                  
+     2,068,501,981      branch-misses             #    2.00% of all branches        
 
-      64.234980590 seconds time elapsed
+      48.418386089 seconds time elapsed
 
-./out/NQueens.gcc.enablevc.out: Killed
+N-Queen Problem on a N X N Board.
+N = 15
+Found 2279184 solutions.
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 15':
 
-      15179.354104      task-clock (msec)         #    0.239 CPUs utilized          
-             1,538      context-switches          #    0.101 K/sec                  
-               637      cpu-migrations            #    0.042 K/sec                  
-         4,577,355      page-faults               #    0.302 M/sec                  
-    54,532,308,279      cycles                    #    3.593 GHz                    
+      48437.144392      task-clock (msec)         #    1.000 CPUs utilized          
+               103      context-switches          #    0.002 K/sec                  
+                 3      cpu-migrations            #    0.000 K/sec                  
+         1,337,000      page-faults               #    0.028 M/sec                  
+   188,258,164,897      cycles                    #    3.887 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   139,752,199,923      instructions              #    2.56  insns per cycle        
-    23,703,469,657      branches                  # 1561.560 M/sec                  
-       130,051,354      branch-misses             #    0.55% of all branches        
+   525,616,224,542      instructions              #    2.79  insns per cycle        
+   103,422,554,531      branches                  # 2135.191 M/sec                  
+     2,076,624,021      branch-misses             #    2.01% of all branches        
 
-      63.463955391 seconds time elapsed
+      48.439775428 seconds time elapsed
 
-./out/NQueens.gcc.enablevc.out: Killed
+N-Queen Problem on a N X N Board.
+N = 15
+Found 2279184 solutions.
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 15':
 
-      15021.196014      task-clock (msec)         #    0.231 CPUs utilized          
-             1,313      context-switches          #    0.087 K/sec                  
-               531      cpu-migrations            #    0.035 K/sec                  
-         4,584,979      page-faults               #    0.305 M/sec                  
-    54,532,373,774      cycles                    #    3.630 GHz                    
+      48370.419801      task-clock (msec)         #    1.000 CPUs utilized          
+                98      context-switches          #    0.002 K/sec                  
+                 2      cpu-migrations            #    0.000 K/sec                  
+         1,337,002      page-faults               #    0.028 M/sec                  
+   188,008,993,479      cycles                    #    3.887 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   139,698,662,135      instructions              #    2.56  insns per cycle        
-    23,667,281,306      branches                  # 1575.592 M/sec                  
-       130,336,925      branch-misses             #    0.55% of all branches        
+   525,590,368,670      instructions              #    2.80  insns per cycle        
+   103,412,568,788      branches                  # 2137.930 M/sec                  
+     2,067,454,335      branch-misses             #    2.00% of all branches        
 
-      65.001149065 seconds time elapsed
+      48.370411451 seconds time elapsed
 
-./out/NQueens.gcc.enablevc.out: Killed
+N-Queen Problem on a N X N Board.
+N = 15
+Found 2279184 solutions.
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 15':
 
-      15422.988455      task-clock (msec)         #    0.232 CPUs utilized          
-             1,304      context-switches          #    0.085 K/sec                  
-               530      cpu-migrations            #    0.034 K/sec                  
-         4,581,439      page-faults               #    0.297 M/sec                  
-    54,433,079,498      cycles                    #    3.529 GHz                    
+      48419.223250      task-clock (msec)         #    1.000 CPUs utilized          
+               100      context-switches          #    0.002 K/sec                  
+                 2      cpu-migrations            #    0.000 K/sec                  
+         1,336,998      page-faults               #    0.028 M/sec                  
+   188,140,788,711      cycles                    #    3.886 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   139,690,677,648      instructions              #    2.57  insns per cycle        
-    23,679,971,541      branches                  # 1535.369 M/sec                  
-       129,664,596      branch-misses             #    0.55% of all branches        
+   525,587,184,210      instructions              #    2.79  insns per cycle        
+   103,411,969,302      branches                  # 2135.763 M/sec                  
+     2,067,259,850      branch-misses             #    2.00% of all branches        
 
-      66.465460933 seconds time elapsed
+      48.419779301 seconds time elapsed
 
-./out/NQueens.gcc.enablevc.out: Killed
+N-Queen Problem on a N X N Board.
+N = 15
+Found 2279184 solutions.
 
  Performance counter stats for './out/NQueens.gcc.enablevc.out 15':
 
-      14913.282623      task-clock (msec)         #    0.224 CPUs utilized          
-             1,756      context-switches          #    0.118 K/sec                  
-               538      cpu-migrations            #    0.036 K/sec                  
-         4,585,245      page-faults               #    0.307 M/sec                  
-    54,591,564,103      cycles                    #    3.661 GHz                    
+      48363.477123      task-clock (msec)         #    1.000 CPUs utilized          
+               102      context-switches          #    0.002 K/sec                  
+                 2      cpu-migrations            #    0.000 K/sec                  
+         1,336,999      page-faults               #    0.028 M/sec                  
+   187,998,195,027      cycles                    #    3.887 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   139,802,687,396      instructions              #    2.56  insns per cycle        
-    23,683,683,900      branches                  # 1588.093 M/sec                  
-       129,333,177      branch-misses             #    0.55% of all branches        
+   525,631,465,911      instructions              #    2.80  insns per cycle        
+   103,428,088,843      branches                  # 2138.558 M/sec                  
+     2,073,956,689      branch-misses             #    2.01% of all branches        
 
-      66.632043298 seconds time elapsed
+      48.363292561 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -175,7 +195,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 800.062
+cpu MHz		: 3887.687
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -202,7 +222,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3399.867
+cpu MHz		: 3782.234
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -229,7 +249,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 800.062
+cpu MHz		: 3899.906
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -256,7 +276,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3489.781
+cpu MHz		: 3898.843
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -283,7 +303,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 1447.789
+cpu MHz		: 3862.187
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -310,7 +330,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 800.062
+cpu MHz		: 3815.171
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -337,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 1184.156
+cpu MHz		: 3505.453
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -364,7 +384,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 890.773
+cpu MHz		: 3899.906
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

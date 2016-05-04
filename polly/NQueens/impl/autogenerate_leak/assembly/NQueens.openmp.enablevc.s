@@ -197,9 +197,9 @@ run:                                    # @run
 	pushq	%rbx
 .Ltmp19:
 	.cfi_def_cfa_offset 56
-	pushq	%rax
+	subq	$24, %rsp
 .Ltmp20:
-	.cfi_def_cfa_offset 64
+	.cfi_def_cfa_offset 80
 .Ltmp21:
 	.cfi_offset %rbx, -56
 .Ltmp22:
@@ -215,9 +215,10 @@ run:                                    # @run
 	movq	%rcx, %r14
 	movq	%rdx, %r13
 	movq	%rdi, %r15
-	movl	$1, %r12d
+	movl	$1, %eax
+	movq	%rax, 8(%rsp)           # 8-byte Spill
 	cmpq	%r13, %r14
-	je	.LBB5_17
+	je	.LBB5_8
 # BB#1:                                 # %while.cond.preheader
 	cmpq	%rsi, %r13
 	jge	.LBB5_18
@@ -225,98 +226,102 @@ run:                                    # @run
 	cmpq	%rsi, %r14
 	jne	.LBB5_18
 # BB#3:                                 # %blklab10.preheader
-	xorl	%r12d, %r12d
+	xorl	%eax, %eax
+	movq	%rax, 8(%rsp)           # 8-byte Spill
 	testq	%r14, %r14
-	jle	.LBB5_17
+	jle	.LBB5_8
 # BB#4:                                 # %blklab14.preheader.us.preheader
 	leaq	1(%r13), %rax
-	movq	%rax, (%rsp)            # 8-byte Spill
-	xorl	%ebp, %ebp
+	movq	%rax, 16(%rsp)          # 8-byte Spill
 	xorl	%r12d, %r12d
+	xorl	%eax, %eax
+	movq	%rax, 8(%rsp)           # 8-byte Spill
 	.p2align	4, 0x90
 .LBB5_5:                                # %blklab14.preheader.us
                                         # =>This Loop Header: Depth=1
-                                        #     Child Loop BB5_7 Depth 2
+                                        #     Child Loop BB5_10 Depth 2
 	testq	%r13, %r13
-	jle	.LBB5_15
-# BB#6:                                 # %if.end24.us.preheader
+	jle	.LBB5_6
+# BB#9:                                 # %polly.split_new_and_old.us.preheader
                                         #   in Loop: Header=BB5_5 Depth=1
+	movb	$1, %cl
 	xorl	%eax, %eax
-	movl	$1, %edx
 	.p2align	4, 0x90
-.LBB5_7:                                # %if.end24.us
+.LBB5_10:                               # %polly.split_new_and_old.us
                                         #   Parent Loop BB5_5 Depth=1
                                         # =>  This Inner Loop Header: Depth=2
-	cmpq	$1, %rdx
-	movl	$0, %edx
-	jne	.LBB5_13
-# BB#8:                                 # %blklab20.us
-                                        #   in Loop: Header=BB5_7 Depth=2
-	movq	(%r15,%rax,8), %rdx
-	movq	(%rdx), %rcx
-	movq	8(%rdx), %rsi
-	subq	%rbp, %rsi
-	setl	%dil
-	setg	%r9b
-	setne	%r8b
-	subq	%r13, %rcx
-	setl	%dl
-	setg	%bl
-	testb	%r9b, %bl
-	jne	.LBB5_11
-# BB#9:                                 # %blklab20.us
-                                        #   in Loop: Header=BB5_7 Depth=2
-	andb	%r8b, %dl
-	jne	.LBB5_11
-# BB#10:                                # %blklab20.us
-                                        #   in Loop: Header=BB5_7 Depth=2
-	andb	%dil, %bl
-	movl	$1, %edx
-	je	.LBB5_12
-.LBB5_11:                               # %polly.stmt.blklab0.i.us
-                                        #   in Loop: Header=BB5_7 Depth=2
-	movq	%rsi, %rdx
-	negq	%rdx
-	cmovlq	%rsi, %rdx
-	movq	%rcx, %rsi
-	negq	%rsi
-	cmovlq	%rcx, %rsi
-	cmpq	%rsi, %rdx
-	sete	%cl
-	movzbl	%cl, %edx
-.LBB5_12:                               # %conflict.exit.us
-                                        #   in Loop: Header=BB5_7 Depth=2
-	xorq	$1, %rdx
-.LBB5_13:                               # %blklab18.us
-                                        #   in Loop: Header=BB5_7 Depth=2
-	incq	%rax
-	cmpq	%rax, %r13
-	jne	.LBB5_7
-# BB#14:                                # %blklab12.us
-                                        #   in Loop: Header=BB5_5 Depth=1
-	testq	%rdx, %rdx
+	testb	$1, %cl
+	movl	$0, %esi
 	je	.LBB5_16
-.LBB5_15:                               # %if.end35.us
+# BB#11:                                # %blklab20.us
+                                        #   in Loop: Header=BB5_10 Depth=2
+	movq	(%r15,%rax,8), %rcx
+	movq	(%rcx), %rbp
+	movq	8(%rcx), %rdx
+	subq	%r12, %rdx
+	setl	%sil
+	setg	%r8b
+	setne	%dil
+	subq	%r13, %rbp
+	setl	%cl
+	setg	%bl
+	testb	%r8b, %bl
+	jne	.LBB5_14
+# BB#12:                                # %blklab20.us
+                                        #   in Loop: Header=BB5_10 Depth=2
+	andb	%dil, %cl
+	jne	.LBB5_14
+# BB#13:                                # %blklab20.us
+                                        #   in Loop: Header=BB5_10 Depth=2
+	andb	%sil, %bl
+	movl	$1, %esi
+	je	.LBB5_15
+.LBB5_14:                               # %polly.stmt.blklab0.i.us
+                                        #   in Loop: Header=BB5_10 Depth=2
+	movq	%rdx, %rcx
+	negq	%rcx
+	cmovlq	%rdx, %rcx
+	movq	%rbp, %rdx
+	negq	%rdx
+	cmovlq	%rbp, %rdx
+	cmpq	%rdx, %rcx
+	sete	%cl
+	movzbl	%cl, %esi
+.LBB5_15:                               # %conflict.exit.us
+                                        #   in Loop: Header=BB5_10 Depth=2
+	xorq	$1, %rsi
+.LBB5_16:                               # %blklab18.us
+                                        #   in Loop: Header=BB5_10 Depth=2
+	incq	%rax
+	testq	%rsi, %rsi
+	setne	%cl
+	cmpq	%rax, %r13
+	jne	.LBB5_10
+# BB#17:                                # %blklab14.blklab12_crit_edge.us
+                                        #   in Loop: Header=BB5_5 Depth=1
+	testq	%rsi, %rsi
+	je	.LBB5_7
+.LBB5_6:                                # %if.end34.us
                                         #   in Loop: Header=BB5_5 Depth=1
 	movl	$16, %edi
 	callq	malloc
-	movq	%rbp, 8(%rax)
+	movq	%r12, 8(%rax)
 	movq	%r13, (%rax)
 	movq	%rax, (%r15,%r13,8)
 	movq	%r15, %rdi
 	movq	%r14, %rsi
-	movq	(%rsp), %rdx            # 8-byte Reload
+	movq	16(%rsp), %rdx          # 8-byte Reload
 	movq	%r14, %rcx
 	callq	run
-	addq	%rax, %r12
-.LBB5_16:                               # %blklab22.us
+	addq	%rax, 8(%rsp)           # 8-byte Folded Spill
+.LBB5_7:                                # %blklab22.us
                                         #   in Loop: Header=BB5_5 Depth=1
-	incq	%rbp
-	cmpq	%r14, %rbp
+	incq	%r12
+	cmpq	%r14, %r12
 	jl	.LBB5_5
-.LBB5_17:                               # %cleanup
-	movq	%r12, %rax
-	addq	$8, %rsp
+.LBB5_8:                                # %cleanup
+	movq	8(%rsp), %rax           # 8-byte Reload
+	addq	$24, %rsp
 	popq	%rbx
 	popq	%r12
 	popq	%r13

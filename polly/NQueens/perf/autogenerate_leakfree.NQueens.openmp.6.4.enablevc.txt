@@ -4,18 +4,18 @@ Found 4 solutions.
 
  Performance counter stats for './out/NQueens.openmp.enablevc.out 6':
 
-          0.389518      task-clock (msec)         #    0.070 CPUs utilized          
-                 2      context-switches          #    0.005 M/sec                  
+          0.337669      task-clock (msec)         #    0.069 CPUs utilized          
+                 2      context-switches          #    0.006 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.172 M/sec                  
-         1,306,507      cycles                    #    3.354 GHz                    
+                67      page-faults               #    0.198 M/sec                  
+         1,131,284      cycles                    #    3.350 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         1,589,174      instructions              #    1.22  insns per cycle        
-           345,983      branches                  #  888.234 M/sec                  
-            10,019      branch-misses             #    2.90% of all branches        
+           962,915      instructions              #    0.85  insns per cycle        
+           192,084      branches                  #  568.853 M/sec                  
+            10,644      branch-misses             #    5.54% of all branches        
 
-       0.005580024 seconds time elapsed
+       0.004867525 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 6
@@ -23,18 +23,18 @@ Found 4 solutions.
 
  Performance counter stats for './out/NQueens.openmp.enablevc.out 6':
 
-          0.364226      task-clock (msec)         #    0.062 CPUs utilized          
-                 1      context-switches          #    0.003 M/sec                  
+          0.261710      task-clock (msec)         #    0.051 CPUs utilized          
+                 1      context-switches          #    0.004 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.184 M/sec                  
-         1,226,790      cycles                    #    3.368 GHz                    
+                67      page-faults               #    0.256 M/sec                  
+           952,693      cycles                    #    3.640 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         1,557,319      instructions              #    1.27  insns per cycle        
-           340,679      branches                  #  935.351 M/sec                  
-            10,293      branch-misses             #    3.02% of all branches        
+           891,206      instructions              #    0.94  insns per cycle        
+           180,523      branches                  #  689.783 M/sec                  
+            10,107      branch-misses             #    5.60% of all branches        
 
-       0.005837345 seconds time elapsed
+       0.005153913 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 6
@@ -42,18 +42,18 @@ Found 4 solutions.
 
  Performance counter stats for './out/NQueens.openmp.enablevc.out 6':
 
-          0.347214      task-clock (msec)         #    0.030 CPUs utilized          
-                 1      context-switches          #    0.003 M/sec                  
+          0.280454      task-clock (msec)         #    0.055 CPUs utilized          
+                 1      context-switches          #    0.004 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.193 M/sec                  
-         1,169,399      cycles                    #    3.368 GHz                    
+                67      page-faults               #    0.239 M/sec                  
+           943,106      cycles                    #    3.363 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         1,590,240      instructions              #    1.36  insns per cycle        
-           345,440      branches                  #  994.891 M/sec                  
-             8,929      branch-misses             #    2.58% of all branches        
+           925,413      instructions              #    0.98  insns per cycle        
+           185,752      branches                  #  662.326 M/sec                  
+             8,879      branch-misses             #    4.78% of all branches        
 
-       0.011724462 seconds time elapsed
+       0.005069068 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 6
@@ -61,18 +61,18 @@ Found 4 solutions.
 
  Performance counter stats for './out/NQueens.openmp.enablevc.out 6':
 
-          0.342985      task-clock (msec)         #    0.013 CPUs utilized          
-                 1      context-switches          #    0.003 M/sec                  
+          0.277861      task-clock (msec)         #    0.061 CPUs utilized          
+                 1      context-switches          #    0.004 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.195 M/sec                  
-         1,155,146      cycles                    #    3.368 GHz                    
+                67      page-faults               #    0.241 M/sec                  
+           934,508      cycles                    #    3.363 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         1,570,061      instructions              #    1.36  insns per cycle        
-           342,305      branches                  #  998.017 M/sec                  
-             8,740      branch-misses             #    2.55% of all branches        
+           927,901      instructions              #    0.99  insns per cycle        
+           186,151      branches                  #  669.943 M/sec                  
+             8,821      branch-misses             #    4.74% of all branches        
 
-       0.026206874 seconds time elapsed
+       0.004523073 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 6
@@ -80,18 +80,18 @@ Found 4 solutions.
 
  Performance counter stats for './out/NQueens.openmp.enablevc.out 6':
 
-          0.347871      task-clock (msec)         #    0.023 CPUs utilized          
-                 1      context-switches          #    0.003 M/sec                  
+          0.276156      task-clock (msec)         #    0.081 CPUs utilized          
+                 1      context-switches          #    0.004 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.193 M/sec                  
-         1,171,940      cycles                    #    3.369 GHz                    
+                67      page-faults               #    0.243 M/sec                  
+           928,825      cycles                    #    3.363 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         1,583,484      instructions              #    1.35  insns per cycle        
-           344,267      branches                  #  989.640 M/sec                  
-             9,029      branch-misses             #    2.62% of all branches        
+           924,304      instructions              #    1.00  insns per cycle        
+           185,639      branches                  #  672.225 M/sec                  
+             8,883      branch-misses             #    4.79% of all branches        
 
-       0.015134556 seconds time elapsed
+       0.003397951 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 6
@@ -99,18 +99,18 @@ Found 4 solutions.
 
  Performance counter stats for './out/NQueens.openmp.enablevc.out 6':
 
-          0.342667      task-clock (msec)         #    0.094 CPUs utilized          
-                 1      context-switches          #    0.003 M/sec                  
+          0.278382      task-clock (msec)         #    0.061 CPUs utilized          
+                 1      context-switches          #    0.004 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.196 M/sec                  
-         1,154,283      cycles                    #    3.369 GHz                    
+                67      page-faults               #    0.241 M/sec                  
+           936,162      cycles                    #    3.363 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         1,543,864      instructions              #    1.34  insns per cycle        
-           338,645      branches                  #  988.263 M/sec                  
-             8,848      branch-misses             #    2.61% of all branches        
+           928,479      instructions              #    0.99  insns per cycle        
+           186,197      branches                  #  668.854 M/sec                  
+             8,741      branch-misses             #    4.69% of all branches        
 
-       0.003636685 seconds time elapsed
+       0.004540526 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 6
@@ -118,18 +118,18 @@ Found 4 solutions.
 
  Performance counter stats for './out/NQueens.openmp.enablevc.out 6':
 
-          0.344060      task-clock (msec)         #    0.053 CPUs utilized          
-                 1      context-switches          #    0.003 M/sec                  
+          0.278175      task-clock (msec)         #    0.056 CPUs utilized          
+                 1      context-switches          #    0.004 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                66      page-faults               #    0.192 M/sec                  
-         1,158,671      cycles                    #    3.368 GHz                    
+                68      page-faults               #    0.244 M/sec                  
+           935,276      cycles                    #    3.362 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         1,557,377      instructions              #    1.34  insns per cycle        
-           340,368      branches                  #  989.269 M/sec                  
-             8,875      branch-misses             #    2.61% of all branches        
+           916,599      instructions              #    0.98  insns per cycle        
+           185,165      branches                  #  665.642 M/sec                  
+             8,846      branch-misses             #    4.78% of all branches        
 
-       0.006501220 seconds time elapsed
+       0.004954993 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 6
@@ -137,18 +137,18 @@ Found 4 solutions.
 
  Performance counter stats for './out/NQueens.openmp.enablevc.out 6':
 
-          0.356345      task-clock (msec)         #    0.015 CPUs utilized          
-                 1      context-switches          #    0.003 M/sec                  
+          0.281062      task-clock (msec)         #    0.065 CPUs utilized          
+                 1      context-switches          #    0.004 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.188 M/sec                  
-         1,199,469      cycles                    #    3.366 GHz                    
+                67      page-faults               #    0.238 M/sec                  
+           945,303      cycles                    #    3.363 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         1,559,327      instructions              #    1.30  insns per cycle        
-           340,770      branches                  #  956.292 M/sec                  
-             9,182      branch-misses             #    2.69% of all branches        
+           939,057      instructions              #    0.99  insns per cycle        
+           188,002      branches                  #  668.899 M/sec                  
+             8,799      branch-misses             #    4.68% of all branches        
 
-       0.023145649 seconds time elapsed
+       0.004316290 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 6
@@ -156,18 +156,18 @@ Found 4 solutions.
 
  Performance counter stats for './out/NQueens.openmp.enablevc.out 6':
 
-          0.345446      task-clock (msec)         #    0.015 CPUs utilized          
-                 1      context-switches          #    0.003 M/sec                  
+          0.280508      task-clock (msec)         #    0.079 CPUs utilized          
+                 1      context-switches          #    0.004 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.194 M/sec                  
-         1,163,296      cycles                    #    3.368 GHz                    
+                67      page-faults               #    0.239 M/sec                  
+           943,549      cycles                    #    3.364 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         1,574,942      instructions              #    1.35  insns per cycle        
-           343,081      branches                  #  993.154 M/sec                  
-             8,910      branch-misses             #    2.60% of all branches        
+           935,819      instructions              #    0.99  insns per cycle        
+           186,934      branches                  #  666.412 M/sec                  
+             8,799      branch-misses             #    4.71% of all branches        
 
-       0.023697896 seconds time elapsed
+       0.003565408 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 6
@@ -175,18 +175,18 @@ Found 4 solutions.
 
  Performance counter stats for './out/NQueens.openmp.enablevc.out 6':
 
-          0.348547      task-clock (msec)         #    0.018 CPUs utilized          
-                 1      context-switches          #    0.003 M/sec                  
+          0.282871      task-clock (msec)         #    0.045 CPUs utilized          
+                 1      context-switches          #    0.004 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.192 M/sec                  
-         1,173,878      cycles                    #    3.368 GHz                    
+                67      page-faults               #    0.237 M/sec                  
+           950,852      cycles                    #    3.361 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         1,584,644      instructions              #    1.35  insns per cycle        
-           344,867      branches                  #  989.442 M/sec                  
-             8,974      branch-misses             #    2.60% of all branches        
+           916,014      instructions              #    0.96  insns per cycle        
+           184,081      branches                  #  650.760 M/sec                  
+             9,975      branch-misses             #    5.42% of all branches        
 
-       0.019028878 seconds time elapsed
+       0.006319556 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -195,7 +195,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3513.156
+cpu MHz		: 3681.031
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -222,7 +222,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3575.710
+cpu MHz		: 3412.218
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -249,7 +249,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3399.867
+cpu MHz		: 3775.062
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -276,7 +276,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.000
+cpu MHz		: 3419.921
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -303,7 +303,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.796
+cpu MHz		: 3399.867
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -330,7 +330,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3399.867
+cpu MHz		: 3700.953
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -357,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3410.625
+cpu MHz		: 3400.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -384,7 +384,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.000
+cpu MHz		: 3594.570
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

@@ -205,9 +205,9 @@ run:                                    # @run
 	pushq	%rbx
 .Ltmp21:
 	.cfi_def_cfa_offset 56
-	subq	$72, %rsp
+	subq	$24, %rsp
 .Ltmp22:
-	.cfi_def_cfa_offset 128
+	.cfi_def_cfa_offset 80
 .Ltmp23:
 	.cfi_offset %rbx, -56
 .Ltmp24:
@@ -220,189 +220,147 @@ run:                                    # @run
 	.cfi_offset %r15, -24
 .Ltmp28:
 	.cfi_offset %rbp, -16
-	movq	%r8, %rbp
-	movq	%rdi, 8(%rsp)           # 8-byte Spill
-	cmpq	%rcx, %rbp
+	movq	%r8, %r12
+	movq	%rcx, %rbp
+	movq	%rdi, %rbx
+	cmpq	%rbp, %r12
 	jne	.LBB5_1
-# BB#30:                                # %if.end
-	movl	$1, %r12d
+# BB#25:                                # %if.end
+	movl	$1, %eax
 	testb	%dl, %dl
-	je	.LBB5_17
-# BB#31:                                # %if.then1
-	movq	8(%rsp), %rdi           # 8-byte Reload
+	je	.LBB5_27
+# BB#26:                                # %if.then1
+	movq	%rbx, %rdi
 	callq	free
-	movl	$1, %r12d
-	jmp	.LBB5_17
+	movl	$1, %eax
+	jmp	.LBB5_27
 .LBB5_1:                                # %while.cond.preheader
-	cmpq	%rsi, %rcx
-	jge	.LBB5_32
-# BB#2:                                 # %while.cond.preheader
 	cmpq	%rsi, %rbp
-	jne	.LBB5_32
+	jge	.LBB5_28
+# BB#2:                                 # %while.cond.preheader
+	cmpq	%rsi, %r12
+	jne	.LBB5_28
 # BB#3:                                 # %blklab10.preheader
-	movl	%edx, 28(%rsp)          # 4-byte Spill
-	xorl	%r12d, %r12d
-	testq	%rbp, %rbp
+	movl	%edx, 12(%rsp)          # 4-byte Spill
+	testq	%r12, %r12
 	jle	.LBB5_4
-# BB#27:                                # %blklab14.preheader.us.preheader
-	leaq	1(%rcx), %rax
-	movq	%rax, 48(%rsp)          # 8-byte Spill
-	xorl	%r13d, %r13d
-                                        # implicit-def: %R14
-                                        # implicit-def: %R15
-	xorl	%ebx, %ebx
-	xorl	%r12d, %r12d
-                                        # implicit-def: %RAX
-	movq	%rax, (%rsp)            # 8-byte Spill
+# BB#22:                                # %blklab14.preheader.us.preheader
+	leaq	1(%rbp), %rax
+	movq	%rax, 16(%rsp)          # 8-byte Spill
+	xorl	%r15d, %r15d
 	xorl	%eax, %eax
-	movq	%rcx, 16(%rsp)          # 8-byte Spill
-	movq	%rbp, 40(%rsp)          # 8-byte Spill
+	movq	%rax, (%rsp)            # 8-byte Spill
+                                        # implicit-def: %R13
+	xorl	%r14d, %r14d
 	.p2align	4, 0x90
-.LBB5_28:                               # %blklab14.preheader.us
+.LBB5_23:                               # %blklab14.preheader.us
                                         # =>This Loop Header: Depth=1
-                                        #     Child Loop BB5_18 Depth 2
-	testq	%rcx, %rcx
-	jle	.LBB5_7
-# BB#29:                                # %if.end38.us.preheader
-                                        #   in Loop: Header=BB5_28 Depth=1
-	movq	%rax, 56(%rsp)          # 8-byte Spill
-	movq	%rbx, 32(%rsp)          # 8-byte Spill
-	movq	%r12, 64(%rsp)          # 8-byte Spill
-	xorl	%r12d, %r12d
-	movl	$1, %ebx
-	.p2align	4, 0x90
-.LBB5_18:                               # %if.end38.us
-                                        #   Parent Loop BB5_28 Depth=1
-                                        # =>  This Inner Loop Header: Depth=2
-	movq	8(%rsp), %rax           # 8-byte Reload
-	movq	(%rax,%r12,8), %rbp
-	movl	$16, %edi
-	callq	malloc
-	movq	%rax, %r15
-	movups	(%rbp), %xmm0
-	movups	%xmm0, (%r15)
-	testb	$1, %r13b
-	je	.LBB5_20
-# BB#19:                                # %if.then41.us
-                                        #   in Loop: Header=BB5_18 Depth=2
-	movq	%r14, %rdi
-	callq	free
-.LBB5_20:                               # %polly.split_new_and_old.us
-                                        #   in Loop: Header=BB5_18 Depth=2
-	cmpq	$1, %rbx
-	movl	$0, %ebx
-	movq	16(%rsp), %rsi          # 8-byte Reload
-	jne	.LBB5_26
-# BB#21:                                # %blklab20.us
-                                        #   in Loop: Header=BB5_18 Depth=2
-	movq	(%r15), %rax
-	subq	%rsi, %rax
-	je	.LBB5_22
-# BB#23:                                # %blklab20.us
-                                        #   in Loop: Header=BB5_18 Depth=2
-	movq	8(%r15), %rcx
-	subq	32(%rsp), %rcx          # 8-byte Folded Reload
-	movl	$1, %ebx
-	je	.LBB5_25
-# BB#24:                                # %blklab0.i.us
-                                        #   in Loop: Header=BB5_18 Depth=2
-	movq	%rcx, %rdx
-	negq	%rdx
-	cmovlq	%rcx, %rdx
-	movq	%rax, %rcx
-	negq	%rcx
-	cmovlq	%rax, %rcx
-	cmpq	%rcx, %rdx
-	sete	%al
-	movzbl	%al, %ebx
-	jmp	.LBB5_25
-.LBB5_22:                               #   in Loop: Header=BB5_18 Depth=2
-	movl	$1, %ebx
-.LBB5_25:                               # %conflict.exit.us
-                                        #   in Loop: Header=BB5_18 Depth=2
-	xorq	$1, %rbx
-.LBB5_26:                               # %blklab18.us
-                                        #   in Loop: Header=BB5_18 Depth=2
-	incq	%r12
-	movb	$1, %r13b
-	cmpq	%r12, %rsi
-	movq	%r15, %r14
-	jne	.LBB5_18
-# BB#5:                                 # %blklab12.us
-                                        #   in Loop: Header=BB5_28 Depth=1
-	movb	$1, %r13b
-	testq	%rbx, %rbx
-	movq	%r15, %r14
-	movq	64(%rsp), %r12          # 8-byte Reload
-	movq	40(%rsp), %rbp          # 8-byte Reload
-	movq	32(%rsp), %rbx          # 8-byte Reload
-	movq	56(%rsp), %rax          # 8-byte Reload
-	je	.LBB5_6
-.LBB5_7:                                # %if.end52.us
-                                        #   in Loop: Header=BB5_28 Depth=1
-	testb	$1, %al
-	je	.LBB5_9
-# BB#8:                                 # %if.then54.us
-                                        #   in Loop: Header=BB5_28 Depth=1
-	movq	(%rsp), %rdi            # 8-byte Reload
-	callq	free
-.LBB5_9:                                # %if.end55.us
-                                        #   in Loop: Header=BB5_28 Depth=1
-	movl	$16, %edi
-	callq	malloc
-	movq	%rbx, 8(%rax)
-	movq	16(%rsp), %rcx          # 8-byte Reload
-	movq	%rcx, (%rax)
-	movq	8(%rsp), %rdi           # 8-byte Reload
-	movq	%rax, (%rsp)            # 8-byte Spill
-	movq	%rax, (%rdi,%rcx,8)
-	xorl	%edx, %edx
-	movq	%rbp, %rsi
-	movq	48(%rsp), %rcx          # 8-byte Reload
-	movq	%rbp, %r8
-	callq	run
-	addq	%rax, %r12
-	movb	$1, %al
-	jmp	.LBB5_10
-	.p2align	4, 0x90
-.LBB5_6:                                #   in Loop: Header=BB5_28 Depth=1
-	movq	%r15, %r14
-.LBB5_10:                               # %blklab22.us
-                                        #   in Loop: Header=BB5_28 Depth=1
-	incq	%rbx
-	cmpq	%rbp, %rbx
-	movq	16(%rsp), %rcx          # 8-byte Reload
-	jl	.LBB5_28
-	jmp	.LBB5_11
-.LBB5_4:
-                                        # implicit-def: %R15
-	xorl	%r13d, %r13d
-                                        # implicit-def: %RAX
-	movq	%rax, (%rsp)            # 8-byte Spill
+                                        #     Child Loop BB5_14 Depth 2
+	testq	%rbp, %rbp
+	jle	.LBB5_5
+# BB#24:                                # %polly.split_new_and_old.us.preheader
+                                        #   in Loop: Header=BB5_23 Depth=1
+	movb	$1, %dl
 	xorl	%eax, %eax
-.LBB5_11:                               # %blklab8
-	movq	%rax, %rbx
-	movl	28(%rsp), %eax          # 4-byte Reload
+	.p2align	4, 0x90
+.LBB5_14:                               # %polly.split_new_and_old.us
+                                        #   Parent Loop BB5_23 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	testb	$1, %dl
+	movl	$0, %ecx
+	je	.LBB5_20
+# BB#15:                                # %blklab20.us
+                                        #   in Loop: Header=BB5_14 Depth=2
+	movq	(%rbx,%rax,8), %rcx
+	movq	(%rcx), %rdx
+	subq	%rbp, %rdx
+	je	.LBB5_16
+# BB#17:                                # %blklab20.us
+                                        #   in Loop: Header=BB5_14 Depth=2
+	movq	8(%rcx), %rsi
+	subq	%r15, %rsi
+	movl	$1, %ecx
+	je	.LBB5_19
+# BB#18:                                # %blklab0.i.us
+                                        #   in Loop: Header=BB5_14 Depth=2
+	movq	%rsi, %rcx
+	negq	%rcx
+	cmovlq	%rsi, %rcx
+	movq	%rdx, %rsi
+	negq	%rsi
+	cmovlq	%rdx, %rsi
+	cmpq	%rsi, %rcx
+	sete	%cl
+	movzbl	%cl, %ecx
+	jmp	.LBB5_19
+.LBB5_16:                               #   in Loop: Header=BB5_14 Depth=2
+	movl	$1, %ecx
+.LBB5_19:                               # %conflict.exit.us
+                                        #   in Loop: Header=BB5_14 Depth=2
+	xorq	$1, %rcx
+.LBB5_20:                               # %blklab18.us
+                                        #   in Loop: Header=BB5_14 Depth=2
+	incq	%rax
+	testq	%rcx, %rcx
+	setne	%dl
+	cmpq	%rax, %rbp
+	jne	.LBB5_14
+# BB#21:                                # %blklab14.blklab12_crit_edge.us
+                                        #   in Loop: Header=BB5_23 Depth=1
+	testq	%rcx, %rcx
+	je	.LBB5_8
+.LBB5_5:                                # %if.end48.us
+                                        #   in Loop: Header=BB5_23 Depth=1
+	testb	$1, %r14b
+	je	.LBB5_7
+# BB#6:                                 # %if.then50.us
+                                        #   in Loop: Header=BB5_23 Depth=1
+	movq	%r13, %rdi
+	callq	free
+.LBB5_7:                                # %if.end51.us
+                                        #   in Loop: Header=BB5_23 Depth=1
+	movl	$16, %edi
+	callq	malloc
+	movq	%rax, %r13
+	movq	%r15, 8(%r13)
+	movq	%rbp, (%r13)
+	movq	%r13, (%rbx,%rbp,8)
+	xorl	%edx, %edx
+	movq	%rbx, %rdi
+	movq	%r12, %rsi
+	movq	16(%rsp), %rcx          # 8-byte Reload
+	movq	%r12, %r8
+	callq	run
+	addq	%rax, (%rsp)            # 8-byte Folded Spill
+	movb	$1, %r14b
+.LBB5_8:                                # %blklab22.us
+                                        #   in Loop: Header=BB5_23 Depth=1
+	incq	%r15
+	cmpq	%r12, %r15
+	jl	.LBB5_23
+	jmp	.LBB5_9
+.LBB5_4:
+	xorl	%eax, %eax
+	movq	%rax, (%rsp)            # 8-byte Spill
+                                        # implicit-def: %R13
+	xorl	%r14d, %r14d
+.LBB5_9:                                # %blklab8
+	movl	12(%rsp), %eax          # 4-byte Reload
 	testb	%al, %al
+	je	.LBB5_11
+# BB#10:                                # %if.then59
+	movq	%rbx, %rdi
+	callq	free
+.LBB5_11:                               # %if.end66
+	testb	$1, %r14b
 	je	.LBB5_13
-# BB#12:                                # %if.then63
-	movq	8(%rsp), %rdi           # 8-byte Reload
+# BB#12:                                # %if.then68
+	movq	%r13, %rdi
 	callq	free
-.LBB5_13:                               # %if.end64
-	testb	$1, %r13b
-	je	.LBB5_15
-# BB#14:                                # %if.then66
-	movq	%r15, %rdi
-	callq	free
-.LBB5_15:                               # %if.end70
-	testb	$1, %bl
-	je	.LBB5_17
-# BB#16:                                # %if.then72
-	movq	(%rsp), %rdi            # 8-byte Reload
-	callq	free
-.LBB5_17:                               # %cleanup
-	movq	%r12, %rax
-	addq	$72, %rsp
+.LBB5_13:                               # %cleanup
+	movq	(%rsp), %rax            # 8-byte Reload
+.LBB5_27:                               # %cleanup
+	addq	$24, %rsp
 	popq	%rbx
 	popq	%r12
 	popq	%r13
@@ -410,7 +368,7 @@ run:                                    # @run
 	popq	%r15
 	popq	%rbp
 	retq
-.LBB5_32:                               # %blklab11
+.LBB5_28:                               # %blklab11
 	movq	stderr(%rip), %rcx
 	movl	$.L.str.5, %edi
 	movl	$4, %esi
