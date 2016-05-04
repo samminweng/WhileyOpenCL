@@ -148,15 +148,27 @@ init(){
 #exec autogenerate1 GCD 30000
 #exec autogenerate1 GCD 40000
 # ### Benchmark Autogenerate CoinGame
-#init autogenerate CoinGame
-#exec autogenerate_leakfree CoinGame 1000
-#exec autogenerate_leakfree CoinGame 10000
-#exec autogenerate_leakfree CoinGame 20000
-#exec autogenerate_leakfree CoinGame 30000
-#exec autogenerate_leakfree CoinGame 40000
-#exec autogenerate_leakfree CoinGame 40000
-#exec autogenerate_array_leakfree CoinGame 40000
-#exec autogenerate_single_leakfree CoinGame 40000
+init autogenerate CoinGame
+exec autogenerate_leakfree CoinGame 1000
+exec autogenerate_leakfree CoinGame 10000
+exec autogenerate_leakfree CoinGame 20000
+exec autogenerate_leakfree CoinGame 30000
+exec autogenerate_leakfree CoinGame 40000
+exec autogenerate_leakfree CoinGame 50000
+
+exec autogenerate_array_leakfree CoinGame 1000
+exec autogenerate_array_leakfree CoinGame 10000
+exec autogenerate_array_leakfree CoinGame 20000
+exec autogenerate_array_leakfree CoinGame 30000
+exec autogenerate_array_leakfree CoinGame 40000
+exec autogenerate_array_leakfree CoinGame 50000
+
+exec autogenerate_single_leakfree CoinGame 1000
+exec autogenerate_single_leakfree CoinGame 10000
+exec autogenerate_single_leakfree CoinGame 20000
+exec autogenerate_single_leakfree CoinGame 30000
+exec autogenerate_single_leakfree CoinGame 40000
+exec autogenerate_single_leakfree CoinGame 50000 
 
 ### Benchmark Autogenerate NQueens
 #init autogenerate_leakfree NQueens

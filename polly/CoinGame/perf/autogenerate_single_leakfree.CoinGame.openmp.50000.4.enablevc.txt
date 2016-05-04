@@ -1,182 +1,172 @@
-Enable loop vectorization...Compile C code using clang with 1 threads...The total amount of money (maximum) Alice gets is 400000000
-Pass CoinGame test case
+Enable loop vectorization...Compile C code using openmp with 4 threads...fail to allocate the memory at gen1DArray function in Util.c
 
- Performance counter stats for './out/CoinGame.clang.enablevc.out 40000':
+ Performance counter stats for './out/CoinGame.openmp.enablevc.out 50000':
 
-       4875.112591      task-clock (msec)         #    0.999 CPUs utilized          
-                 7      context-switches          #    0.001 K/sec                  
+          0.300969      task-clock (msec)         #    0.070 CPUs utilized          
+                 2      context-switches          #    0.007 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-             6,934      page-faults               #    0.001 M/sec                  
-    18,916,609,331      cycles                    #    3.880 GHz                    
+                67      page-faults               #    0.223 M/sec                  
+         1,033,705      cycles                    #    3.435 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    31,285,781,306      instructions              #    1.65  insns per cycle        
-     5,059,088,730      branches                  # 1037.738 M/sec                  
-           108,120      branch-misses             #    0.00% of all branches        
+           851,863      instructions              #    0.82  insns per cycle        
+           167,682      branches                  #  557.140 M/sec                  
+             8,901      branch-misses             #    5.31% of all branches        
 
-       4.879256708 seconds time elapsed
+       0.004316237 seconds time elapsed
 
-The total amount of money (maximum) Alice gets is 400000000
-Pass CoinGame test case
+fail to allocate the memory at gen1DArray function in Util.c
 
- Performance counter stats for './out/CoinGame.clang.enablevc.out 40000':
+ Performance counter stats for './out/CoinGame.openmp.enablevc.out 50000':
 
-       4911.641180      task-clock (msec)         #    0.999 CPUs utilized          
-                 9      context-switches          #    0.002 K/sec                  
+          0.259596      task-clock (msec)         #    0.068 CPUs utilized          
+                 1      context-switches          #    0.004 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-             6,934      page-faults               #    0.001 M/sec                  
-    19,079,249,446      cycles                    #    3.884 GHz                    
+                68      page-faults               #    0.262 M/sec                  
+           872,676      cycles                    #    3.362 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    31,285,525,507      instructions              #    1.64  insns per cycle        
-     5,059,029,833      branches                  # 1030.008 M/sec                  
-           105,120      branch-misses             #    0.00% of all branches        
+           813,258      instructions              #    0.93  insns per cycle        
+           161,059      branches                  #  620.422 M/sec                  
+             7,164      branch-misses             #    4.45% of all branches        
 
-       4.914543522 seconds time elapsed
+       0.003840587 seconds time elapsed
 
-The total amount of money (maximum) Alice gets is 400000000
-Pass CoinGame test case
+fail to allocate the memory at gen1DArray function in Util.c
 
- Performance counter stats for './out/CoinGame.clang.enablevc.out 40000':
+ Performance counter stats for './out/CoinGame.openmp.enablevc.out 50000':
 
-       4937.970981      task-clock (msec)         #    0.999 CPUs utilized          
-                 8      context-switches          #    0.002 K/sec                  
+          0.256101      task-clock (msec)         #    0.063 CPUs utilized          
+                 1      context-switches          #    0.004 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-             6,420      page-faults               #    0.001 M/sec                  
-    19,115,465,625      cycles                    #    3.871 GHz                    
+                68      page-faults               #    0.266 M/sec                  
+           860,903      cycles                    #    3.362 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    31,284,221,291      instructions              #    1.64  insns per cycle        
-     5,058,799,752      branches                  # 1024.469 M/sec                  
-           103,980      branch-misses             #    0.00% of all branches        
+           805,393      instructions              #    0.94  insns per cycle        
+           160,253      branches                  #  625.741 M/sec                  
+             7,027      branch-misses             #    4.38% of all branches        
 
-       4.941549316 seconds time elapsed
+       0.004055100 seconds time elapsed
 
-The total amount of money (maximum) Alice gets is 400000000
-Pass CoinGame test case
+fail to allocate the memory at gen1DArray function in Util.c
 
- Performance counter stats for './out/CoinGame.clang.enablevc.out 40000':
+ Performance counter stats for './out/CoinGame.openmp.enablevc.out 50000':
 
-       4910.669351      task-clock (msec)         #    0.999 CPUs utilized          
-                10      context-switches          #    0.002 K/sec                  
+          0.264532      task-clock (msec)         #    0.045 CPUs utilized          
+                 1      context-switches          #    0.004 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-             6,933      page-faults               #    0.001 M/sec                  
-    19,071,250,763      cycles                    #    3.884 GHz                    
+                68      page-faults               #    0.257 M/sec                  
+           889,401      cycles                    #    3.362 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    31,285,517,709      instructions              #    1.64  insns per cycle        
-     5,059,031,468      branches                  # 1030.212 M/sec                  
-           102,902      branch-misses             #    0.00% of all branches        
+           817,545      instructions              #    0.92  insns per cycle        
+           162,189      branches                  #  613.117 M/sec                  
+             8,228      branch-misses             #    5.07% of all branches        
 
-       4.915005543 seconds time elapsed
+       0.005827185 seconds time elapsed
 
-The total amount of money (maximum) Alice gets is 400000000
-Pass CoinGame test case
+fail to allocate the memory at gen1DArray function in Util.c
 
- Performance counter stats for './out/CoinGame.clang.enablevc.out 40000':
+ Performance counter stats for './out/CoinGame.openmp.enablevc.out 50000':
 
-       4942.588099      task-clock (msec)         #    0.999 CPUs utilized          
-                 9      context-switches          #    0.002 K/sec                  
+          0.262893      task-clock (msec)         #    0.060 CPUs utilized          
+                 1      context-switches          #    0.004 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-             6,422      page-faults               #    0.001 M/sec                  
-    19,111,382,324      cycles                    #    3.867 GHz                    
+                68      page-faults               #    0.259 M/sec                  
+           883,715      cycles                    #    3.362 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    31,284,294,148      instructions              #    1.64  insns per cycle        
-     5,058,831,442      branches                  # 1023.519 M/sec                  
-           104,283      branch-misses             #    0.00% of all branches        
+           824,951      instructions              #    0.93  insns per cycle        
+           163,939      branches                  #  623.596 M/sec                  
+             7,411      branch-misses             #    4.52% of all branches        
 
-       4.946171023 seconds time elapsed
+       0.004350420 seconds time elapsed
 
-The total amount of money (maximum) Alice gets is 400000000
-Pass CoinGame test case
+fail to allocate the memory at gen1DArray function in Util.c
 
- Performance counter stats for './out/CoinGame.clang.enablevc.out 40000':
+ Performance counter stats for './out/CoinGame.openmp.enablevc.out 50000':
 
-       4965.776490      task-clock (msec)         #    0.999 CPUs utilized          
-                 9      context-switches          #    0.002 K/sec                  
+          0.269221      task-clock (msec)         #    0.056 CPUs utilized          
+                 1      context-switches          #    0.004 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-             6,422      page-faults               #    0.001 M/sec                  
-    19,085,194,052      cycles                    #    3.843 GHz                    
+                68      page-faults               #    0.253 M/sec                  
+           905,005      cycles                    #    3.362 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    31,284,082,184      instructions              #    1.64  insns per cycle        
-     5,058,749,858      branches                  # 1018.723 M/sec                  
-           106,757      branch-misses             #    0.00% of all branches        
+           828,835      instructions              #    0.92  insns per cycle        
+           163,941      branches                  #  608.946 M/sec                  
+             8,183      branch-misses             #    4.99% of all branches        
 
-       4.968394037 seconds time elapsed
+       0.004792962 seconds time elapsed
 
-The total amount of money (maximum) Alice gets is 400000000
-Pass CoinGame test case
+fail to allocate the memory at gen1DArray function in Util.c
 
- Performance counter stats for './out/CoinGame.clang.enablevc.out 40000':
+ Performance counter stats for './out/CoinGame.openmp.enablevc.out 50000':
 
-       4969.122456      task-clock (msec)         #    0.999 CPUs utilized          
-                 6      context-switches          #    0.001 K/sec                  
+          0.259718      task-clock (msec)         #    0.066 CPUs utilized          
+                 1      context-switches          #    0.004 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-             6,932      page-faults               #    0.001 M/sec                  
-    19,028,564,609      cycles                    #    3.829 GHz                    
+                68      page-faults               #    0.262 M/sec                  
+           872,927      cycles                    #    3.361 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    31,285,440,266      instructions              #    1.64  insns per cycle        
-     5,058,997,375      branches                  # 1018.087 M/sec                  
-           106,196      branch-misses             #    0.00% of all branches        
+           804,000      instructions              #    0.92  insns per cycle        
+           160,310      branches                  #  617.246 M/sec                  
+             7,452      branch-misses             #    4.65% of all branches        
 
-       4.971707842 seconds time elapsed
+       0.003919545 seconds time elapsed
 
-The total amount of money (maximum) Alice gets is 400000000
-Pass CoinGame test case
+fail to allocate the memory at gen1DArray function in Util.c
 
- Performance counter stats for './out/CoinGame.clang.enablevc.out 40000':
+ Performance counter stats for './out/CoinGame.openmp.enablevc.out 50000':
 
-       4963.811222      task-clock (msec)         #    0.999 CPUs utilized          
-                 6      context-switches          #    0.001 K/sec                  
+          0.257630      task-clock (msec)         #    0.056 CPUs utilized          
+                 1      context-switches          #    0.004 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-             6,424      page-faults               #    0.001 M/sec                  
-    19,077,503,284      cycles                    #    3.843 GHz                    
+                67      page-faults               #    0.260 M/sec                  
+           866,376      cycles                    #    3.363 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    31,284,237,898      instructions              #    1.64  insns per cycle        
-     5,058,803,270      branches                  # 1019.137 M/sec                  
-           104,731      branch-misses             #    0.00% of all branches        
+           801,555      instructions              #    0.93  insns per cycle        
+           159,486      branches                  #  619.051 M/sec                  
+             7,144      branch-misses             #    4.48% of all branches        
 
-       4.968762354 seconds time elapsed
+       0.004582308 seconds time elapsed
 
-The total amount of money (maximum) Alice gets is 400000000
-Pass CoinGame test case
+fail to allocate the memory at gen1DArray function in Util.c
 
- Performance counter stats for './out/CoinGame.clang.enablevc.out 40000':
+ Performance counter stats for './out/CoinGame.openmp.enablevc.out 50000':
 
-       4943.412184      task-clock (msec)         #    1.000 CPUs utilized          
-                 9      context-switches          #    0.002 K/sec                  
+          0.258268      task-clock (msec)         #    0.054 CPUs utilized          
+                 1      context-switches          #    0.004 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-             6,421      page-faults               #    0.001 M/sec                  
-    19,070,930,179      cycles                    #    3.858 GHz                    
+                68      page-faults               #    0.263 M/sec                  
+           868,321      cycles                    #    3.362 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    31,284,096,638      instructions              #    1.64  insns per cycle        
-     5,058,765,567      branches                  # 1023.335 M/sec                  
-           104,980      branch-misses             #    0.00% of all branches        
+           812,924      instructions              #    0.94  insns per cycle        
+           161,403      branches                  #  624.944 M/sec                  
+             7,204      branch-misses             #    4.46% of all branches        
 
-       4.945792855 seconds time elapsed
+       0.004775181 seconds time elapsed
 
-The total amount of money (maximum) Alice gets is 400000000
-Pass CoinGame test case
+fail to allocate the memory at gen1DArray function in Util.c
 
- Performance counter stats for './out/CoinGame.clang.enablevc.out 40000':
+ Performance counter stats for './out/CoinGame.openmp.enablevc.out 50000':
 
-       4933.415289      task-clock (msec)         #    1.000 CPUs utilized          
-                 7      context-switches          #    0.001 K/sec                  
+          0.256184      task-clock (msec)         #    0.071 CPUs utilized          
+                 1      context-switches          #    0.004 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-             6,423      page-faults               #    0.001 M/sec                  
-    18,951,115,190      cycles                    #    3.841 GHz                    
+                68      page-faults               #    0.265 M/sec                  
+           861,128      cycles                    #    3.361 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    31,284,125,902      instructions              #    1.65  insns per cycle        
-     5,058,771,096      branches                  # 1025.410 M/sec                  
-           107,514      branch-misses             #    0.00% of all branches        
+           824,579      instructions              #    0.96  insns per cycle        
+           163,302      branches                  #  637.440 M/sec                  
+             6,932      branch-misses             #    4.24% of all branches        
 
-       4.935505159 seconds time elapsed
+       0.003601976 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -185,7 +175,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3900.703
+cpu MHz		: 3574.781
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -199,7 +189,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -212,7 +202,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3550.875
+cpu MHz		: 3399.867
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -226,7 +216,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -239,7 +229,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.906
+cpu MHz		: 3819.820
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -253,7 +243,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -266,7 +256,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.773
+cpu MHz		: 3400.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -280,7 +270,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -293,7 +283,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3640.789
+cpu MHz		: 3737.343
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -307,7 +297,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -320,7 +310,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3876.929
+cpu MHz		: 3399.867
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -334,7 +324,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -347,7 +337,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3757.000
+cpu MHz		: 3400.796
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -361,7 +351,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -374,7 +364,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3897.117
+cpu MHz		: 3399.867
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -388,7 +378,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.29
+bogomips	: 6784.79
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
