@@ -1,5 +1,6 @@
 import whiley.lang.*
 import whiley.io.File
+import whiley.lang.Math
 
 // The 'coins' array can be skipped 
 // because the coin value is the same as the index
@@ -54,19 +55,6 @@ import whiley.io.File
     sys.out.println(sum_bob)
 */
 
-function max(int a, int b) -> (int r):
-    //
-    if a < b:
-        return b
-    else:
-        return a
-
-function min(int a, int b) -> (int r):
-    //
-    if a < b:
-        return a
-    else:
-        return b
 // Use dynamic programming to find moves for Alice
 // The coins are an array, starting from 0 upto n
 function findMoves(int[] moves, int n) -> int[]:
@@ -90,7 +78,7 @@ function findMoves(int[] moves, int n) -> int[]:
             if (j - 1 > 0):
                 z[i] = z[i] + moves[i*n+j - 2]
             
-            moves[i*n+j] = max(i + min(x[i], y[i]), j + min(y[i], z[i]))
+            moves[i*n+j] = Math.max(i + Math.min(x[i], y[i]), j + Math.min(y[i], z[i]))
             
             j = j + 1
             i = i + 1

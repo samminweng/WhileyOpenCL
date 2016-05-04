@@ -1,38 +1,4 @@
 #include "CoinGame3.h"
-long long max(long long a, long long b){
-	long long r = 0;
-	//ifge %0, %1 goto blklab0 : int
-	if(a>=b){goto blklab0;}
-	//return %1
-	return b;
-	//goto blklab1
-	goto blklab1;
-//.blklab0
-blklab0:;
-	//return %0
-	return a;
-//.blklab1
-blklab1:;
-	//return
-}
-
-long long min(long long a, long long b){
-	long long r = 0;
-	//ifge %0, %1 goto blklab2 : int
-	if(a>=b){goto blklab2;}
-	//return %0
-	return a;
-	//goto blklab3
-	goto blklab3;
-//.blklab2
-blklab2:;
-	//return %1
-	return b;
-//.blklab3
-blklab3:;
-	//return
-}
-
 long long* findMoves(_DECL_1DARRAY_PARAM(moves), long long n){
 	_DECL_1DARRAY(_2);
 	_DECL_1DARRAY(x);
@@ -126,8 +92,8 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), long long n){
 	s = _15;
 	//loop (%0, %3, %4, %5, %6, %7, %8, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57, %58, %59, %60, %61, %62, %63, %64, %65, %66, %67, %68, %69)
 	while(true){
-		//ifge %6, %1 goto blklab4 : int
-		if(s>=n){goto blklab4;}
+		//ifge %6, %1 goto blklab0 : int
+		if(s>=n){goto blklab0;}
 		//assign %7 = %6  : int
 		j = s;
 		//const %16 = 0 : int
@@ -136,8 +102,8 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), long long n){
 		i = _16;
 		//loop (%0, %3, %4, %5, %7, %8, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57, %58, %59, %60, %61, %62, %63, %64, %65, %66, %67)
 		while(true){
-			//ifge %7, %1 goto blklab6 : int
-			if(j>=n){goto blklab6;}
+			//ifge %7, %1 goto blklab2 : int
+			if(j>=n){goto blklab2;}
 			//const %17 = 0 : int
 			_17 = 0;
 			//update %4[%8] = %17 : int[] -> int[]
@@ -146,16 +112,16 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), long long n){
 			_18 = 1;
 			//add %19 = %8, %18 : int
 			_19=i+_18;
-			//ifge %19, %1 goto blklab8 : int
-			if(_19>=n){goto blklab8;}
+			//ifge %19, %1 goto blklab4 : int
+			if(_19>=n){goto blklab4;}
 			//const %20 = 1 : int
 			_20 = 1;
 			//sub %21 = %7, %20 : int
 			_21=j-_20;
 			//const %22 = 0 : int
 			_22 = 0;
-			//iflt %21, %22 goto blklab8 : int
-			if(_21<_22){goto blklab8;}
+			//iflt %21, %22 goto blklab4 : int
+			if(_21<_22){goto blklab4;}
 			//indexof %23 = %4, %8 : int[]
 			_23=y[i];
 			//const %24 = 1 : int
@@ -176,8 +142,8 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), long long n){
 			_31=_23+_30;
 			//update %4[%8] = %31 : int[] -> int[]
 			y[i] = _31;
-//.blklab8
-blklab8:;
+//.blklab4
+blklab4:;
 			//const %32 = 0 : int
 			_32 = 0;
 			//update %3[%8] = %32 : int[] -> int[]
@@ -186,8 +152,8 @@ blklab8:;
 			_33 = 2;
 			//add %34 = %8, %33 : int
 			_34=i+_33;
-			//ifge %34, %1 goto blklab9 : int
-			if(_34>=n){goto blklab9;}
+			//ifge %34, %1 goto blklab5 : int
+			if(_34>=n){goto blklab5;}
 			//indexof %35 = %3, %8 : int[]
 			_35=x[i];
 			//const %36 = 2 : int
@@ -204,8 +170,8 @@ blklab8:;
 			_41=_35+_40;
 			//update %3[%8] = %41 : int[] -> int[]
 			x[i] = _41;
-//.blklab9
-blklab9:;
+//.blklab5
+blklab5:;
 			//const %42 = 0 : int
 			_42 = 0;
 			//update %5[%8] = %42 : int[] -> int[]
@@ -216,8 +182,8 @@ blklab9:;
 			_44=j-_43;
 			//const %45 = 0 : int
 			_45 = 0;
-			//ifle %44, %45 goto blklab10 : int
-			if(_44<=_45){goto blklab10;}
+			//ifle %44, %45 goto blklab6 : int
+			if(_44<=_45){goto blklab6;}
 			//indexof %46 = %5, %8 : int[]
 			_46=z[i];
 			//mul %47 = %8, %1 : int
@@ -234,13 +200,13 @@ blklab9:;
 			_52=_46+_51;
 			//update %5[%8] = %52 : int[] -> int[]
 			z[i] = _52;
-//.blklab10
-blklab10:;
+//.blklab6
+blklab6:;
 			//indexof %55 = %3, %8 : int[]
 			_55=x[i];
 			//indexof %56 = %4, %8 : int[]
 			_56=y[i];
-			//invoke (%54) = (%55, %56) CoinGame3:min : function(int,int)->(int)
+			//invoke (%54) = (%55, %56) whiley/lang/Math:min : function(int,int)->(int)
 			_54 = min(_55, _56);
 			//add %57 = %8, %54 : int
 			_57=i+_54;
@@ -248,11 +214,11 @@ blklab10:;
 			_59=y[i];
 			//indexof %60 = %5, %8 : int[]
 			_60=z[i];
-			//invoke (%58) = (%59, %60) CoinGame3:min : function(int,int)->(int)
+			//invoke (%58) = (%59, %60) whiley/lang/Math:min : function(int,int)->(int)
 			_58 = min(_59, _60);
 			//add %61 = %7, %58 : int
 			_61=j+_58;
-			//invoke (%53) = (%57, %61) CoinGame3:max : function(int,int)->(int)
+			//invoke (%53) = (%57, %61) whiley/lang/Math:max : function(int,int)->(int)
 			_53 = max(_57, _61);
 			//mul %62 = %8, %1 : int
 			_62=i*n;
@@ -272,22 +238,22 @@ blklab10:;
 			_67=i+_66;
 			//assign %8 = %67  : int
 			i = _67;
-//.blklab7
-blklab7:;
+//.blklab3
+blklab3:;
 		}
-//.blklab6
-blklab6:;
+//.blklab2
+blklab2:;
 		//const %68 = 1 : int
 		_68 = 1;
 		//add %69 = %6, %68 : int
 		_69=s+_68;
 		//assign %6 = %69  : int
 		s = _69;
-//.blklab5
-blklab5:;
+//.blklab1
+blklab1:;
 	}
-//.blklab4
-blklab4:;
+//.blklab0
+blklab0:;
 	//return %0
 	return moves;
 	//return
@@ -340,13 +306,13 @@ int main(int argc, char** args){
 	{
 		//const %12 = 25 : int
 		_12 = 25;
-		//ifeq %3, %12 goto blklab11 : int
-		if(sum_alice==_12){goto blklab11;}
+		//ifeq %3, %12 goto blklab7 : int
+		if(sum_alice==_12){goto blklab7;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-//.blklab11
-blklab11:;
+//.blklab7
+blklab7:;
 	//assert
 	}
 	//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}

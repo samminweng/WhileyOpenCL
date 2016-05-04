@@ -37,6 +37,22 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 /**
  * Macro Section
 **/
+// Define 'max' and 'min' macro
+// Compute max and min without branches (http://graphics.stanford.edu/~seander/bithacks.html#IntegerMinOrMax)
+#ifndef max
+//#define max(a,b) \
+//		({ __typeof__ (a) _a = (a); \
+//		   __typeof__ (b) _b = (b); \
+//		   _a > _b ? _a : _b; })
+#define max(a, b) a ^ ((a ^ b) & -(a < b))
+#endif
+#ifndef min
+#define min(a, b) b ^ ((a ^ b) & -(a < b));
+//#define min(a,b) \
+//		({ __typeof__ (a) _a = (a); \
+//		   __typeof__ (b) _b = (b); \
+//		   _a < _b ? _a : _b; })
+#endif
 // Define 1D array variable
 #define _DECL_1DARRAY(a) long long* a = NULL; long long a##_size = 0;
 // Define 2D array variable

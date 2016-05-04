@@ -678,6 +678,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// because the rhs is a long long integer.
 				statement.add(indent + lhs + " = llabs(" + rhs + ");");
 				break;
+			case "min":
+				String rhs1 = stores.getVar(code.operand(1), function);
+				statement.add(indent + lhs + " = min(" + rhs + ", "+ rhs1 +");");
+				break;
+			case "max":
+				rhs1 = stores.getVar(code.operand(1), function);
+				statement.add(indent + lhs + " = max(" + rhs + ", "+ rhs1 +");");
+				break;
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);
 			}
