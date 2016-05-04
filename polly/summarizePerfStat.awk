@@ -7,7 +7,7 @@ function pause(){
 }
 
 function generateReport(results){
-	print "TestCase,CodeType,Vectorization,CompilerOpt,Threads,Parameter,1st,2nd,3rd,4th,5th,6th,7th,8th,9th,10th,Average";
+	print "TestCase,Vectorization,CompilerOpt,Threads,ProblemSize,CodeType,1st,2nd,3rd,4th,5th,6th,7th,8th,9th,10th,Average";
  	t_total=split(testcases, t_array, " ");
  	for(t=1;t<=t_total;t++){
  		testcase=t_array[t];
@@ -54,15 +54,15 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcases="NQueens";
+	testcases="CoinGame";
 	# Code Optimizations
-	c_types="autogenerate_leak autogenerate_leakfree";
+	c_types="autogenerate_leakfree autogenerate_single_leakfree autogenerate_array_leakfree";
 	# Polly optimiz
 	polly_opts="gcc clang polly openmp"
 	# Parameters
-	#parameters["CoinGame"] = "40000";
+	parameters["CoinGame"] = "1000 10000 20000 30000 40000";
 	##parameters["GCD"] = "1000 10000 20000 30000 40000";
-	parameters["NQueens"] = "1 2 4 6 8 10 12 14 15";
+	#parameters["NQueens"] = "1 2 4 6 8 10 12 14 15";
 	threads="1 2 4";
 	vcs="enablevc";
 	cpu_utils[""] = "";
