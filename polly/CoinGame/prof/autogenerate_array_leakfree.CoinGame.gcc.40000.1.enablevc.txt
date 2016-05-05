@@ -3,8 +3,8 @@ Flat profile:
 Each sample counts as 0.01 seconds.
   %   cumulative   self              self     total           
  time   seconds   seconds    calls  Ts/call  Ts/call  name    
-100.20      5.35     5.35                             findMoves
-  0.00      5.35     0.00        3     0.00     0.00  gen1DArray
+100.20      5.47     5.47                             findMoves
+  0.00      5.47     0.00        3     0.00     0.00  gen1DArray
 
  %         the percentage of the total running time of the
 time       program used by this function.
@@ -42,11 +42,11 @@ notice and this notice are preserved.
 		     Call graph (explanation follows)
 
 
-granularity: each sample hit covers 2 byte(s) for 0.19% of 5.35 seconds
+granularity: each sample hit covers 2 byte(s) for 0.18% of 5.47 seconds
 
 index % time    self  children    called     name
                                                  <spontaneous>
-[1]    100.0    5.35    0.00                 findMoves [1]
+[1]    100.0    5.47    0.00                 findMoves [1]
                 0.00    0.00       3/3           gen1DArray [2]
 -----------------------------------------------
                 0.00    0.00       3/3           findMoves [1]

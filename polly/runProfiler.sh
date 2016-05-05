@@ -176,20 +176,24 @@ init(){
 	rm -rf "$program/prof/"*
 }
 
-#init CoinGame
-#exec autogenerate_leakfree CoinGame gcc 40000 1
-#exec autogenerate_leakfree CoinGame clang 40000 1
-#exec autogenerate_single_leakfree CoinGame gcc 40000 1
-#exec autogenerate_single_leakfree CoinGame clang 40000 1
-#exec autogenerate_array_leakfree CoinGame gcc 40000 1
-#exec autogenerate_array_leakfree CoinGame clang 40000 1
+init CoinGame
+exec autogenerate_leakfree CoinGame gcc 40000 1
+exec autogenerate_leakfree CoinGame clang 40000 1
+exec autogenerate_leakfree CoinGame polly 40000 1
 
+exec autogenerate_single_leakfree CoinGame gcc 40000 1
+exec autogenerate_single_leakfree CoinGame clang 40000 1
+exec autogenerate_single_leakfree CoinGame polly 40000 1
+
+exec autogenerate_array_leakfree CoinGame gcc 40000 1
+exec autogenerate_array_leakfree CoinGame clang 40000 1
+exec autogenerate_array_leakfree CoinGame polly 40000 1
 
 #init NQueens
-exec autogenerate_leak NQueens gcc 15 1
-exec autogenerate_leak NQueens clang 15 1
-exec autogenerate_leak NQueens polly 15 1
+#exec autogenerate_leak NQueens gcc 15 1
+#exec autogenerate_leak NQueens clang 15 1
+#exec autogenerate_leak NQueens polly 15 1
 
-exec autogenerate_leakfree NQueens gcc 15 1
-exec autogenerate_leakfree NQueens clang 15 1
-exec autogenerate_leakfree NQueens polly 15 1
+#exec autogenerate_leakfree NQueens gcc 15 1
+#exec autogenerate_leakfree NQueens clang 15 1
+#exec autogenerate_leakfree NQueens polly 15 1
