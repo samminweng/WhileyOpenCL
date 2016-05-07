@@ -146,12 +146,14 @@ int main(int argc, char** args){
 	long long _20 = 0;
 	long long _21 = 0;
 	long long _22 = 0;
+	void* _23;
 	void* _24;
 	_DECL_1DARRAY(_26);
 	long long _27 = 0;
 	long long _28 = 0;
 	long long _29 = 0;
 	long long _30 = 0;
+	void* _31;
 	long long _32 = 0;
 	long long _33 = 0;
 	long long _34 = 0;
@@ -241,7 +243,7 @@ blklab16:;
 		//assign %3 = %2  : {int move,int[] pieces}
 		b2 = b1;
 		//const %23 = null : null
-		void* _23 = NULL;
+		_23 = NULL;
 		//assign %2 = %23  : null
 		b1 = NULL;
 		//goto blklab20
@@ -272,7 +274,7 @@ blklab19:;
 		//assign %2 = %3  : {int move,int[] pieces}
 		b1 = b2;
 		//const %31 = null : null
-		void* _31 = NULL;
+		_31 = NULL;
 		//assign %3 = %31  : null
 		b2 = NULL;
 //.blklab21

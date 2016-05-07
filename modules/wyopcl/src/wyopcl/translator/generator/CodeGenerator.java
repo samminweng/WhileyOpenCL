@@ -105,7 +105,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Skip translation
 			} else {
 				if (type instanceof Type.Null) {
-					// Skip translation for null-typed variables.
+					declarations.add(indent + "void* " + var + ";");
 				} else if (type instanceof Type.Int) {
 					String translateType = CodeGeneratorHelper.translateType(type, stores);
 					declarations.add(indent + translateType + " " + var + " = 0;");
@@ -270,11 +270,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.Const code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
-		String lhs = stores.getVar(code.target(), function);
+		String lhs = stores.getVar(code.target(0), function);
 		Type lhs_type = stores.getRawType(code.target(), function);
 		String indent = stores.getIndent(function);
 		if (code.constant.type() instanceof Type.Null) {
-			statement.add(indent + "void* " + lhs + " = NULL;");
+			statement.add(indent  + lhs + " = NULL;");
+			// Remove lhs ownership as it points to NULL
+			// Add lhs to ownership
+			this.deallocatedAnalyzer
+				.ifPresent(a -> statement.add(indent + a.removeOwnership(code.target(0), function, stores)));
+			
 		} else {
 			if (code.constant.type() instanceof Type.Array) {
 				// Cast the constant to an array
@@ -368,7 +373,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					statement.add(indent + lhs + " = NULL;");
 					// Transfer out the ownership of lhs variable
 					this.deallocatedAnalyzer.ifPresent(
-							a -> statement.add(indent + a.transferOwnership(code.target(0), function, stores)));
+							a -> statement.add(indent + a.transferOwnership(code.target(0), code.operand(0), function, stores)));
 				} else {
 					boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
 					statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, indent, lhs, rhs,
@@ -709,7 +714,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						boolean caller_own = o.get("caller");
 						if(!caller_own){
 							// The ownership is transferred from caller to calling function
-							statement.add(indent + a.transferOwnership(register, function, stores));
+							statement.add(indent + a.removeOwnership(register, function, stores));
 						}
 					});
 				});

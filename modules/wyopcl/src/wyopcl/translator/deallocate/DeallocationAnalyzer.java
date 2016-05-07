@@ -64,7 +64,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			// Skip the deallocation for return value.
 			if(r != ret){
 				Type var_type = stores.getRawType(r, function);
-				if(var_type != null){
+				if(var_type != null && !(var_type instanceof Type.Null)){
 					String var = stores.getVar(r, function);
 					statements.add(indent + CodeGeneratorHelper.addDeallocatedCode(var, var_type, stores));
 				}
@@ -109,7 +109,7 @@ public class DeallocationAnalyzer extends Analyzer {
 				// Adds lhs register to the list of array variable
 				stores.addArrayVar(lhs, function);
 				// Transfer lhs ownership due to non-transferable array ownership 
-				statements.add(indent + transferOwnership(lhs, function, stores));
+				statements.add(indent + removeOwnership(lhs, function, stores));
 			}else{
 				// Add lhs to ownership set
 				statements.add(indent + addOwnership(lhs, function, stores));
@@ -117,7 +117,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			
 			if(isCopyEliminated){
 				// Transfer out rhs ownership set
-				statements.add(indent + transferOwnership(rhs, function, stores));
+				statements.add(indent + removeOwnership(rhs, function, stores));
 			}else{
 				// Add rhs to ownership set
 				statements.add(indent + addOwnership(rhs, function, stores));
@@ -128,7 +128,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			// Add lhs register to array variable
 			stores.addArrayVar(lhs, function);
 			// Transfer lhs ownership due to non-transferable array ownership 
-			statements.add(indent + transferOwnership(lhs, function, stores));
+			statements.add(indent + removeOwnership(lhs, function, stores));
 			
 		}else{
 			throw new RuntimeException("Not implemented");
@@ -162,18 +162,36 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param reg
 	 * @param function
 	 */
-	public String transferOwnership(int register, FunctionOrMethod function, CodeStores stores){
+	public String removeOwnership(int register, FunctionOrMethod function, CodeStores stores){
 		Type type = stores.getRawType(register, function);
 		if(stores.isCompoundType(type)){
 			String var = stores.getVar(register, function);
-			this.ownerships.get(function).transferOwnership(register);
+			this.ownerships.get(function).removeOwnership(register);
 			return "_REMOVE_OWNERSHIP("+var+");";
 		}
 		return "";
 	}
 
 	
-	
+	/**
+	 * Transfer rhs's ownership to lhs's ownership for an assignment
+	 * a = b;
+	 * a_has_ownership = b_has_ownership
+	 * 
+	 * @param lhs register
+	 * @param rhs register
+	 * @param function
+	 */
+	public String transferOwnership(int lhs, int rhs, FunctionOrMethod function, CodeStores stores){
+		Type type = stores.getRawType(lhs, function);
+		if(stores.isCompoundType(type)){
+			String lhs_var = stores.getVar(lhs, function);
+			String rhs_var = stores.getVar(rhs, function);
+			//this.ownerships.get(function).removeOwnership(register);
+			return "_TRANSFER_OWNERSHIP("+lhs_var+", "+rhs_var+");";
+		}
+		return "";
+	}
 	
 	/**
 	 * Return parameter ownership in the caller. If deallocation is enabled, then pass the ownership to a function. 

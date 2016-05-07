@@ -300,10 +300,10 @@ public class CodeStores {
 	 */
 	public boolean isCompoundType(Type type){
 		// Check if type aliased to INT type.
-		if(type instanceof Type.Array){
+		if(type instanceof Type.Array || type instanceof Type.Null){
 			return true;
 		}else{
-			if(isIntType(type) || type instanceof Type.Null || type instanceof Type.FunctionOrMethod ||
+			if(isIntType(type) || type instanceof Type.FunctionOrMethod ||
 					type instanceof Type.Bool){
 				return false;			
 			}else if(type instanceof Type.Record){

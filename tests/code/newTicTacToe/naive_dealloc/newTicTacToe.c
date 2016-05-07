@@ -163,6 +163,8 @@ int main(int argc, char** args){
 	long long _20 = 0;
 	long long _21 = 0;
 	long long _22 = 0;
+	void* _23;
+	_DECL_OWNERSHIP(_23);
 	void* _24;
 	_DECL_1DARRAY(_26);
 	_DECL_OWNERSHIP(_26);
@@ -170,6 +172,8 @@ int main(int argc, char** args){
 	long long _28 = 0;
 	long long _29 = 0;
 	long long _30 = 0;
+	void* _31;
+	_DECL_OWNERSHIP(_31);
 	long long _32 = 0;
 	long long _33 = 0;
 	long long _34 = 0;
@@ -281,11 +285,12 @@ blklab16:;
 		_ADD_OWNERSHIP(b2);
 		_ADD_OWNERSHIP(b1);
 		//const %23 = null : null
-		void* _23 = NULL;
+		_23 = NULL;
+		_REMOVE_OWNERSHIP(_23);
 		//assign %2 = %23  : null
 		_FREE_STRUCT(b1, Board);
 		b1 = NULL;
-		_REMOVE_OWNERSHIP(b1);
+		_TRANSFER_OWNERSHIP(b1, _23);
 		//goto blklab20
 		goto blklab20;
 //.blklab19
@@ -319,11 +324,12 @@ blklab19:;
 		_ADD_OWNERSHIP(b1);
 		_ADD_OWNERSHIP(b2);
 		//const %31 = null : null
-		void* _31 = NULL;
+		_31 = NULL;
+		_REMOVE_OWNERSHIP(_31);
 		//assign %3 = %31  : null
 		_FREE_STRUCT(b2, Board);
 		b2 = NULL;
-		_REMOVE_OWNERSHIP(b2);
+		_TRANSFER_OWNERSHIP(b2, _31);
 //.blklab21
 blklab21:;
 //.blklab20

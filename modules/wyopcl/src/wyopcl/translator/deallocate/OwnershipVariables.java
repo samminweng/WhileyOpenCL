@@ -32,7 +32,7 @@ public class OwnershipVariables {
 	 * Remove the ownership of an array variable ('reg')
 	 * @param reg
 	 */
-	protected void transferOwnership(int reg){
+	protected void removeOwnership(int reg){
 		this.ownerships.remove(reg);
 	}
 	
