@@ -109,7 +109,6 @@ Matrix* multiply(Matrix* A, _DECL_OWNERSHIP_PARAM(A), Matrix* B, _DECL_OWNERSHIP
 	_FREE2DArray(C_data);
 	_2DARRAY_COPY(C_data, _12);
 	_ADD_OWNERSHIP(C_data);
-	_ADD_OWNERSHIP(_12);
 	//const %13 = 0 : int
 	_13 = 0;
 	//assign %4 = %13  : int
@@ -365,7 +364,6 @@ Matrix* init(long long height, long long width){
 	_FREE2DArray(rows);
 	_2DARRAY_COPY(rows, _8);
 	_ADD_OWNERSHIP(rows);
-	_ADD_OWNERSHIP(_8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %4 = %9  : int
@@ -481,7 +479,6 @@ int main(int argc, char** args){
 	_FREE_STRUCT(A, Matrix);
 	A = copy_Matrix(_6);
 	_ADD_OWNERSHIP(A);
-	_ADD_OWNERSHIP(_6);
 	//invoke (%7) = (%1, %1) MatrixMult:init : function(MatrixMult:nat,MatrixMult:nat)->(MatrixMult:Matrix)
 	_FREE_STRUCT(_7, Matrix);
 	_7 = init(max, max);
@@ -490,7 +487,6 @@ int main(int argc, char** args){
 	_FREE_STRUCT(B, Matrix);
 	B = copy_Matrix(_7);
 	_ADD_OWNERSHIP(B);
-	_ADD_OWNERSHIP(_7);
 	//invoke (%8) = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
 	_FREE_STRUCT(_8, Matrix);
 	_8 = multiply(_STRUCT_COPY_PARAM(A, Matrix), false, _STRUCT_COPY_PARAM(B, Matrix), false);
@@ -499,7 +495,6 @@ int main(int argc, char** args){
 	_FREE_STRUCT(C, Matrix);
 	C = copy_Matrix(_8);
 	_ADD_OWNERSHIP(C);
-	_ADD_OWNERSHIP(_8);
 	//assert
 	{
 		//fieldload %9 = %2 data : {int[][] data,int height,int width}

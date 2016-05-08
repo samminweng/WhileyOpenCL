@@ -80,7 +80,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _IFEQ_ARRAY(a, b, blklab) if(isArrayEqual(a, a##_size, b, b##_size)==1){goto blklab;}
 #define _GEN_1DARRAY(a, size, value) a##_size = size; a = gen1DArray(value, a##_size);
 #define _FREE(a) if(a##_has_ownership){free(a);a##_has_ownership=false;}
-#define _FREE_1DARRAY_STRUCT(a, name) if(a##_has_ownership){for(int i=0;i<a##_size;i++) free_##name(a); a##_has_ownership = false;}
+#define _FREE_1DARRAY_STRUCT(a, name) if(a##_has_ownership){for(int i=0;i<a##_size;i++) free_##name(a[i]); a##_has_ownership = false;}
 #define _NEW_ARRAY(a, length) a##_size = length; a = malloc(length*sizeof(long long)); 
 // Concatenate 2D array variable and array size variable
 #define _DECL_2DARRAY_PARAM(a) long long** a, long long a##_size, long long a##_size_size

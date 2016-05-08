@@ -246,7 +246,6 @@ int main(int argc, char** args){
 	_FREE(moves);
 	_1DARRAY_COPY(moves, _7);
 	_ADD_OWNERSHIP(moves);
-	_ADD_OWNERSHIP(_7);
 	//invoke (%8) = (%2, %1) CoinGame1:findMoves : function(int[],int)->(int[])
 	_FREE(_8);
 	_REMOVE_OWNERSHIP(moves);
@@ -257,7 +256,6 @@ int main(int argc, char** args){
 	_FREE(moves);
 	_1DARRAY_COPY(moves, _8);
 	_ADD_OWNERSHIP(moves);
-	_ADD_OWNERSHIP(_8);
 	//const %9 = 1 : int
 	_9 = 1;
 	//sub %10 = %1, %9 : int

@@ -56,7 +56,6 @@ int main(int argc, char** args){
 	_FREE(a);
 	_1DARRAY_COPY(a, _9);
 	_ADD_OWNERSHIP(a);
-	_ADD_OWNERSHIP(_9);
 	//const %10 = 1 : int
 	_10 = 1;
 	//const %11 = 1 : int
@@ -76,22 +75,18 @@ int main(int argc, char** args){
 	_FREE(b);
 	_1DARRAY_COPY(b, _15);
 	_ADD_OWNERSHIP(b);
-	_ADD_OWNERSHIP(_15);
 	//assign %3 = %1  : int[]
 	_FREE(tmp);
 	_1DARRAY_COPY(tmp, a);
 	_ADD_OWNERSHIP(tmp);
-	_ADD_OWNERSHIP(a);
 	//assign %1 = %2  : int[]
 	_FREE(a);
 	_1DARRAY_COPY(a, b);
 	_ADD_OWNERSHIP(a);
-	_ADD_OWNERSHIP(b);
 	//assign %2 = %3  : int[]
 	_FREE(b);
 	_1DARRAY_COPY(b, tmp);
 	_ADD_OWNERSHIP(b);
-	_ADD_OWNERSHIP(tmp);
 	//assert
 	{
 		//const %16 = 1 : int

@@ -36,7 +36,6 @@ long long* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_OWNERSHIP_PARAM(ls)){
 	_FREE(r);
 	_1DARRAY_COPY(r, _8);
 	_ADD_OWNERSHIP(r);
-	_ADD_OWNERSHIP(_8);
 	//loop (%2, %3, %4, %9, %10, %11, %12, %13, %14, %15, %16, %17)
 	while(true){
 		//invariant
@@ -159,7 +158,6 @@ int main(int argc, char** args){
 	_FREE(rs);
 	_1DARRAY_COPY(rs, _5);
 	_ADD_OWNERSHIP(rs);
-	_ADD_OWNERSHIP(_5);
 	//assert
 	{
 		//const %12 = 5 : int
@@ -208,7 +206,6 @@ blklab4:;
 	_FREE(arr);
 	_1DARRAY_COPY(arr, _23);
 	_ADD_OWNERSHIP(arr);
-	_ADD_OWNERSHIP(_23);
 	//loop (%3, %4, %24, %25, %26)
 	while(true){
 		//ifgt %3, %2 goto blklab5 : int
@@ -237,7 +234,6 @@ blklab5:;
 	_FREE(arr);
 	_1DARRAY_COPY(arr, _27);
 	_ADD_OWNERSHIP(arr);
-	_ADD_OWNERSHIP(_27);
 	//assert
 	{
 		//const %28 = 0 : int

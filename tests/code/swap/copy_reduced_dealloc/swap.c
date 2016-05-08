@@ -55,7 +55,7 @@ int main(int argc, char** args){
 	//assign %1 = %9  : int[]
 	_FREE(a);
 	_1DARRAY_UPDATE(a, _9);
-	_ADD_OWNERSHIP(a);
+	_TRANSFER_OWNERSHIP(a, _9);
 	_REMOVE_OWNERSHIP(_9);
 	//const %10 = 1 : int
 	_10 = 1;
@@ -75,22 +75,22 @@ int main(int argc, char** args){
 	//assign %2 = %15  : int[]
 	_FREE(b);
 	_1DARRAY_UPDATE(b, _15);
-	_ADD_OWNERSHIP(b);
+	_TRANSFER_OWNERSHIP(b, _15);
 	_REMOVE_OWNERSHIP(_15);
 	//assign %3 = %1  : int[]
 	_FREE(tmp);
 	_1DARRAY_UPDATE(tmp, a);
-	_ADD_OWNERSHIP(tmp);
+	_TRANSFER_OWNERSHIP(tmp, a);
 	_REMOVE_OWNERSHIP(a);
 	//assign %1 = %2  : int[]
 	_FREE(a);
 	_1DARRAY_UPDATE(a, b);
-	_ADD_OWNERSHIP(a);
+	_TRANSFER_OWNERSHIP(a, b);
 	_REMOVE_OWNERSHIP(b);
 	//assign %2 = %3  : int[]
 	_FREE(b);
 	_1DARRAY_UPDATE(b, tmp);
-	_ADD_OWNERSHIP(b);
+	_TRANSFER_OWNERSHIP(b, tmp);
 	_REMOVE_OWNERSHIP(tmp);
 	//assert
 	{

@@ -76,7 +76,6 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	_FREE(lhs);
 	_1DARRAY_COPY(lhs, _15);
 	_ADD_OWNERSHIP(lhs);
-	_ADD_OWNERSHIP(_15);
 	//const %17 = 0 : int
 	_17 = 0;
 	//invoke (%16) = (%5, %17, %4) mergesort:sortV1 : function(int[],int,int)->(int[])
@@ -89,7 +88,6 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	_FREE(lhs);
 	_1DARRAY_COPY(lhs, _16);
 	_ADD_OWNERSHIP(lhs);
-	_ADD_OWNERSHIP(_16);
 	//invoke (%18) = (%0, %4, %2) whiley/lang/Array:slice : function(int[],int,int)->(int[])
 	_FREE(_18);
 _SLICE_ARRAY(_18, items, pivot, end);
@@ -98,7 +96,6 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	_FREE(rhs);
 	_1DARRAY_COPY(rhs, _18);
 	_ADD_OWNERSHIP(rhs);
-	_ADD_OWNERSHIP(_18);
 	//const %20 = 0 : int
 	_20 = 0;
 	//sub %21 = %2, %4 : int
@@ -113,7 +110,6 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	_FREE(rhs);
 	_1DARRAY_COPY(rhs, _19);
 	_ADD_OWNERSHIP(rhs);
-	_ADD_OWNERSHIP(_19);
 	//const %22 = 0 : int
 	_22 = 0;
 	//assign %7 = %22  : int
@@ -376,7 +372,6 @@ int main(int argc, char** args){
 	_FREE(ys);
 	_1DARRAY_COPY(ys, _10);
 	_ADD_OWNERSHIP(ys);
-	_ADD_OWNERSHIP(_10);
 	//const %12 = 0 : int
 	_12 = 0;
 	//const %13 = 5 : int
@@ -391,7 +386,6 @@ int main(int argc, char** args){
 	_FREE(ys);
 	_1DARRAY_COPY(ys, _11);
 	_ADD_OWNERSHIP(ys);
-	_ADD_OWNERSHIP(_11);
 	//assert
 	{
 		//const %14 = 1 : int
@@ -435,7 +429,6 @@ blklab9:;
 	_FREE(ys);
 	_1DARRAY_COPY(ys, _24);
 	_ADD_OWNERSHIP(ys);
-	_ADD_OWNERSHIP(_24);
 	//const %26 = 0 : int
 	_26 = 0;
 	//const %27 = 4 : int
@@ -450,7 +443,6 @@ blklab9:;
 	_FREE(ys);
 	_1DARRAY_COPY(ys, _25);
 	_ADD_OWNERSHIP(ys);
-	_ADD_OWNERSHIP(_25);
 	//assert
 	{
 		//const %28 = 2 : int
@@ -492,7 +484,6 @@ blklab10:;
 	_FREE(ys);
 	_1DARRAY_COPY(ys, _37);
 	_ADD_OWNERSHIP(ys);
-	_ADD_OWNERSHIP(_37);
 	//const %39 = 0 : int
 	_39 = 0;
 	//const %40 = 4 : int
@@ -507,7 +498,6 @@ blklab10:;
 	_FREE(ys);
 	_1DARRAY_COPY(ys, _38);
 	_ADD_OWNERSHIP(ys);
-	_ADD_OWNERSHIP(_38);
 	//assert
 	{
 		//const %41 = 1 : int
@@ -551,7 +541,6 @@ blklab11:;
 	_FREE(ys);
 	_1DARRAY_COPY(ys, _51);
 	_ADD_OWNERSHIP(ys);
-	_ADD_OWNERSHIP(_51);
 	//const %53 = 0 : int
 	_53 = 0;
 	//const %54 = 5 : int
@@ -566,7 +555,6 @@ blklab11:;
 	_FREE(ys);
 	_1DARRAY_COPY(ys, _52);
 	_ADD_OWNERSHIP(ys);
-	_ADD_OWNERSHIP(_52);
 	//assert
 	{
 		//const %55 = 1 : int
@@ -615,7 +603,6 @@ blklab12:;
 	_FREE(arr);
 	_1DARRAY_COPY(arr, _66);
 	_ADD_OWNERSHIP(arr);
-	_ADD_OWNERSHIP(_66);
 	//loop (%3, %4, %67, %68, %69)
 	while(true){
 		//ifgt %3, %2 goto blklab13 : int
@@ -651,7 +638,6 @@ blklab13:;
 	_FREE(arr);
 	_1DARRAY_COPY(arr, _70);
 	_ADD_OWNERSHIP(arr);
-	_ADD_OWNERSHIP(_70);
 	//assert
 	{
 		//const %74 = 0 : int

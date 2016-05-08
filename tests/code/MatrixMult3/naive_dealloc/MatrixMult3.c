@@ -83,7 +83,6 @@ Matrix* init(long long width, long long height){
 	_FREE(data);
 	_1DARRAY_COPY(data, _8);
 	_ADD_OWNERSHIP(data);
-	_ADD_OWNERSHIP(_8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %4 = %9  : int
@@ -347,7 +346,6 @@ Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP
 	_FREE(data);
 	_1DARRAY_COPY(data, _16);
 	_ADD_OWNERSHIP(data);
-	_ADD_OWNERSHIP(_16);
 	//fieldload %17 = %0 data : {int[] data,int height,int width}
 	_FREE(_17);
 	_1DARRAY_COPY(_17, a->data);
@@ -356,7 +354,6 @@ Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP
 	_FREE(a_data);
 	_1DARRAY_COPY(a_data, _17);
 	_ADD_OWNERSHIP(a_data);
-	_ADD_OWNERSHIP(_17);
 	//fieldload %18 = %1 data : {int[] data,int height,int width}
 	_FREE(_18);
 	_1DARRAY_COPY(_18, b->data);
@@ -365,7 +362,6 @@ Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP
 	_FREE(b_data);
 	_1DARRAY_COPY(b_data, _18);
 	_ADD_OWNERSHIP(b_data);
-	_ADD_OWNERSHIP(_18);
 	//const %19 = 0 : int
 	_19 = 0;
 	//mul %20 = %3, %4 : int
@@ -378,7 +374,6 @@ Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP
 	_FREE(b_t);
 	_1DARRAY_COPY(b_t, _21);
 	_ADD_OWNERSHIP(b_t);
-	_ADD_OWNERSHIP(_21);
 	//const %22 = 0 : int
 	_22 = 0;
 	//assign %9 = %22  : int
@@ -657,7 +652,6 @@ int main(int argc, char** args){
 	_FREE_STRUCT(A, Matrix);
 	A = copy_Matrix(_10);
 	_ADD_OWNERSHIP(A);
-	_ADD_OWNERSHIP(_10);
 	//const %14 = 20 : int
 	_14 = 20;
 	//const %15 = 20 : int
@@ -670,7 +664,6 @@ int main(int argc, char** args){
 	_FREE_STRUCT(B, Matrix);
 	B = copy_Matrix(_13);
 	_ADD_OWNERSHIP(B);
-	_ADD_OWNERSHIP(_13);
 	//invoke (%16) = (%1, %2) MatrixMult3:mat_mult : function(MatrixMult3:Matrix,MatrixMult3:Matrix)->(MatrixMult3:Matrix)
 	_FREE_STRUCT(_16, Matrix);
 	_16 = mat_mult(_STRUCT_COPY_PARAM(A, Matrix), false, _STRUCT_COPY_PARAM(B, Matrix), false);
@@ -679,7 +672,6 @@ int main(int argc, char** args){
 	_FREE_STRUCT(C, Matrix);
 	C = copy_Matrix(_16);
 	_ADD_OWNERSHIP(C);
-	_ADD_OWNERSHIP(_16);
 	//assert
 	{
 		//fieldload %17 = %1 data : {int[] data,int height,int width}

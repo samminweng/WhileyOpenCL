@@ -193,7 +193,7 @@ int main(int argc, char** args){
 	//assign %2 = %13  : int[]
 	_FREE(gcds);
 	_1DARRAY_UPDATE(gcds, _13);
-	_ADD_OWNERSHIP(gcds);
+	_TRANSFER_OWNERSHIP(gcds, _13);
 	_REMOVE_OWNERSHIP(_13);
 	//const %14 = 0 : int
 	_14 = 0;

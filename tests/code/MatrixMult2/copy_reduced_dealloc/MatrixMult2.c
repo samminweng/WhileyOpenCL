@@ -82,7 +82,7 @@ Matrix* init(long long width, long long height){
 	//assign %3 = %8  : int[]
 	_FREE(data);
 	_1DARRAY_UPDATE(data, _8);
-	_ADD_OWNERSHIP(data);
+	_TRANSFER_OWNERSHIP(data, _8);
 	_REMOVE_OWNERSHIP(_8);
 	//const %9 = 0 : int
 	_9 = 0;
@@ -326,7 +326,7 @@ Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP
 	//assign %5 = %15  : int[]
 	_FREE(data);
 	_1DARRAY_UPDATE(data, _15);
-	_ADD_OWNERSHIP(data);
+	_TRANSFER_OWNERSHIP(data, _15);
 	_REMOVE_OWNERSHIP(_15);
 	//fieldload %16 = %0 data : {int[] data,int height,int width}
 	_FREE(_16);
@@ -335,7 +335,7 @@ Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP
 	//assign %6 = %16  : int[]
 	_FREE(a_data);
 	_1DARRAY_UPDATE(a_data, _16);
-	_ADD_OWNERSHIP(a_data);
+	_TRANSFER_OWNERSHIP(a_data, _16);
 	_REMOVE_OWNERSHIP(_16);
 	//fieldload %17 = %1 data : {int[] data,int height,int width}
 	_FREE(_17);
@@ -344,7 +344,7 @@ Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP
 	//assign %7 = %17  : int[]
 	_FREE(b_data);
 	_1DARRAY_UPDATE(b_data, _17);
-	_ADD_OWNERSHIP(b_data);
+	_TRANSFER_OWNERSHIP(b_data, _17);
 	_REMOVE_OWNERSHIP(_17);
 	//const %18 = 0 : int
 	_18 = 0;
@@ -559,7 +559,7 @@ int main(int argc, char** args){
 	//assign %1 = %10  : {int[] data,int height,int width}
 	_FREE_STRUCT(A, Matrix);
 	A = _10;
-	_ADD_OWNERSHIP(A);
+	_TRANSFER_OWNERSHIP(A, _10);
 	_REMOVE_OWNERSHIP(_10);
 	//const %14 = 20 : int
 	_14 = 20;
@@ -572,7 +572,7 @@ int main(int argc, char** args){
 	//assign %2 = %13  : {int[] data,int height,int width}
 	_FREE_STRUCT(B, Matrix);
 	B = _13;
-	_ADD_OWNERSHIP(B);
+	_TRANSFER_OWNERSHIP(B, _13);
 	_REMOVE_OWNERSHIP(_13);
 	//invoke (%16) = (%1, %2) MatrixMult2:mat_mult : function(MatrixMult2:Matrix,MatrixMult2:Matrix)->(MatrixMult2:Matrix)
 	_FREE_STRUCT(_16, Matrix);
@@ -581,7 +581,7 @@ int main(int argc, char** args){
 	//assign %3 = %16  : {int[] data,int height,int width}
 	_FREE_STRUCT(C, Matrix);
 	C = _16;
-	_ADD_OWNERSHIP(C);
+	_TRANSFER_OWNERSHIP(C, _16);
 	_REMOVE_OWNERSHIP(_16);
 	//assert
 	{

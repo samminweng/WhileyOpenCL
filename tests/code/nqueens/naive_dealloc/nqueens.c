@@ -128,7 +128,7 @@ long long run(POS** queens, long long queens_size, _DECL_OWNERSHIP_PARAM(queens)
 	//const %9 = 1 : int
 	_9 = 1;
 	//return %9
-	_FREE(queens);
+	_FREE_1DARRAY_STRUCT(queens, POS);
 	_FREE_STRUCT(p, POS);
 	_FREE_STRUCT(_19, POS);
 	_FREE_STRUCT(_27, POS);
@@ -211,8 +211,7 @@ blklab14:;
 			//assign %8 = %19  : {int c,int r}
 			_FREE_STRUCT(p, POS);
 			p = copy_POS(_19);
-			_REMOVE_OWNERSHIP(p);
-			_ADD_OWNERSHIP(_19);
+			_ADD_OWNERSHIP(p);
 			//const %20 = true : bool
 			_20 = true;
 			//ifeq %6, %20 goto blklab20 : bool
@@ -292,7 +291,7 @@ blklab9:;
 //.blklab8
 blklab8:;
 	//return %4
-	_FREE(queens);
+	_FREE_1DARRAY_STRUCT(queens, POS);
 	_FREE_STRUCT(p, POS);
 	_FREE_STRUCT(_19, POS);
 	_FREE_STRUCT(_27, POS);
@@ -348,16 +347,15 @@ int main(int argc, char** args){
 	_7->r = _6;
 	_ADD_OWNERSHIP(_7);
 	//arraygen %8 = [7; 1] : {int c,int r}[]
-	_FREE(_8);
+	_FREE_1DARRAY_STRUCT(_8, POS);
 	_8 = malloc(n*sizeof(POS*));
 	for(int _8_i=0;_8_i<n;_8_i++){_8[_8_i] = copy_POS(_7);}
 	_8_size = n;
 	_ADD_OWNERSHIP(_8);
 	//assign %2 = %8  : {int c,int r}[]
-	_FREE(init);
+	_FREE_1DARRAY_STRUCT(init, POS);
 	_1DARRAY_COPY(init, _8);
 	_ADD_OWNERSHIP(init);
-	_ADD_OWNERSHIP(_8);
 	//const %10 = 0 : int
 	_10 = 0;
 	//invoke (%9) = (%2, %10, %1) nqueens:run : function(nqueens:POS[],int,int)->(int)
@@ -422,9 +420,9 @@ blklab23:;
 	//indirectinvoke () = %26 (%27) : method(int[])->()
 	println_s(_27, _27_size);
 	//return
-	_FREE(init);
+	_FREE_1DARRAY_STRUCT(init, POS);
 	_FREE_STRUCT(_7, POS);
-	_FREE(_8);
+	_FREE_1DARRAY_STRUCT(_8, POS);
 	_FREE(_14);
 	_FREE(_17);
 	_FREE(_22);

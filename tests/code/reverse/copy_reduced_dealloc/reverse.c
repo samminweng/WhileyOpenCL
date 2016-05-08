@@ -35,7 +35,7 @@ long long* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_OWNERSHIP_PARAM(ls)){
 	//assign %3 = %8  : int[]
 	_FREE(r);
 	_1DARRAY_UPDATE(r, _8);
-	_ADD_OWNERSHIP(r);
+	_TRANSFER_OWNERSHIP(r, _8);
 	_REMOVE_OWNERSHIP(_8);
 	//loop (%2, %3, %4, %9, %10, %11, %12, %13, %14, %15, %16, %17)
 	while(true){
@@ -158,7 +158,7 @@ int main(int argc, char** args){
 	//assign %1 = %5  : int[]
 	_FREE(rs);
 	_1DARRAY_UPDATE(rs, _5);
-	_ADD_OWNERSHIP(rs);
+	_TRANSFER_OWNERSHIP(rs, _5);
 	_REMOVE_OWNERSHIP(_5);
 	//assert
 	{
@@ -207,7 +207,7 @@ blklab4:;
 	//assign %4 = %23  : int[]
 	_FREE(arr);
 	_1DARRAY_UPDATE(arr, _23);
-	_ADD_OWNERSHIP(arr);
+	_TRANSFER_OWNERSHIP(arr, _23);
 	_REMOVE_OWNERSHIP(_23);
 	//loop (%3, %4, %24, %25, %26)
 	while(true){
@@ -236,7 +236,7 @@ blklab5:;
 	//assign %4 = %27  : int[]
 	_FREE(arr);
 	_1DARRAY_UPDATE(arr, _27);
-	_ADD_OWNERSHIP(arr);
+	_TRANSFER_OWNERSHIP(arr, _27);
 	_REMOVE_OWNERSHIP(_27);
 	//assert
 	{

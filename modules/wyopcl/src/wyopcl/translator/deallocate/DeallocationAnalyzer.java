@@ -103,24 +103,15 @@ public class DeallocationAnalyzer extends Analyzer {
 			Codes.Assign assign = (Codes.Assign)code;
 			int lhs = assign.target(0);
 			int rhs = assign.operand(0);
-			
-			// Check rhs register is an array variable.
-			if(stores.isArrayVar(assign.operand(0), function)){
-				// Adds lhs register to the list of array variable
-				stores.addArrayVar(lhs, function);
-				// Transfer lhs ownership due to non-transferable array ownership 
-				statements.add(indent + removeOwnership(lhs, function, stores));
-			}else{
-				// Add lhs to ownership set
-				statements.add(indent + addOwnership(lhs, function, stores));
-			}
-			
+						
 			if(isCopyEliminated){
-				// Transfer out rhs ownership set
+				// Transfer rhs ownership to lhs 
+				statements.add(indent + transferOwnership(lhs, rhs, function, stores));
+				// Remove rhs ownership
 				statements.add(indent + removeOwnership(rhs, function, stores));
 			}else{
 				// Add rhs to ownership set
-				statements.add(indent + addOwnership(rhs, function, stores));
+				statements.add(indent + addOwnership(lhs, function, stores));
 			}
 		}else if (code instanceof Codes.IndexOf){
 			Codes.IndexOf indexof = (Codes.IndexOf)code;
@@ -129,6 +120,16 @@ public class DeallocationAnalyzer extends Analyzer {
 			stores.addArrayVar(lhs, function);
 			// Transfer lhs ownership due to non-transferable array ownership 
 			statements.add(indent + removeOwnership(lhs, function, stores));
+			
+		}else if (code instanceof Codes.Update){
+			Codes.Update u = (Codes.Update)code;
+			// The rhs register is always the last operand (a[i] = b)
+			int rhs = u.operand(u.operands().length - 1);
+			
+			if(isCopyEliminated){
+				// Remove the rhs ownership
+				statements.add(indent + removeOwnership(rhs, function, stores));
+			}
 			
 		}else{
 			throw new RuntimeException("Not implemented");

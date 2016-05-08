@@ -206,7 +206,6 @@ int main(int argc, char** args){
 	_FREE_STRUCT(b1, Board);
 	b1 = copy_Board(_7);
 	_ADD_OWNERSHIP(b1);
-	_ADD_OWNERSHIP(_7);
 	//invoke (%8) = () newTicTacToe:EmptyBoard : function()->(newTicTacToe:Board)
 	_FREE_STRUCT(_8, Board);
 	_8 = EmptyBoard();
@@ -215,7 +214,6 @@ int main(int argc, char** args){
 	_FREE_STRUCT(b2, Board);
 	b2 = copy_Board(_8);
 	_ADD_OWNERSHIP(b2);
-	_ADD_OWNERSHIP(_8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %4 = %9  : int
@@ -283,7 +281,6 @@ blklab16:;
 		_FREE_STRUCT(b2, Board);
 		b2 = copy_Board(b1);
 		_ADD_OWNERSHIP(b2);
-		_ADD_OWNERSHIP(b1);
 		//const %23 = null : null
 		_23 = NULL;
 		_REMOVE_OWNERSHIP(_23);
@@ -322,7 +319,6 @@ blklab19:;
 		_FREE_STRUCT(b1, Board);
 		b1 = copy_Board(b2);
 		_ADD_OWNERSHIP(b1);
-		_ADD_OWNERSHIP(b2);
 		//const %31 = null : null
 		_31 = NULL;
 		_REMOVE_OWNERSHIP(_31);

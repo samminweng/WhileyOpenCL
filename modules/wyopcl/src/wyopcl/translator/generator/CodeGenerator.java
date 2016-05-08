@@ -907,8 +907,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Translates the update byte-code into C code. For example,
-	 * 
+	 * Translates the update byte-code into C code, and removes the ownership of rhs variable 
+	 * (a[i] = b; b_has_ownership = false;)
+	 * For example,
 	 * <pre>
 	 * <code>
 	 * update %0.pieces[%1] = %7 : {int move,[int] pieces} -> {int move,[int] pieces}
@@ -920,6 +921,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * <pre>
 	 * <code>
 	 * _0.pieces[_1] = _7;
+	 * _7_has_ownership = false;
 	 * </code>
 	 * </pre>
 	 * 
@@ -935,10 +937,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.Update code, FunctionOrMethod function) {
 		String indent = stores.getIndent(function);
+		List<String> statement = new ArrayList<String>();
+		
+		// Generate update statement, e.g. a[i] = b
 		String s = "";
 		String lhs = stores.getVar(code.target(0), function);
 		Type lhs_type = stores.getRawType(code.target(0), function);
-
 		// For List type only
 		if (lhs_type instanceof Type.Array) {
 			s += indent + lhs;
@@ -959,7 +963,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 
 		s += " = " + stores.getVar(code.result(), function) + ";";
-		stores.addStatement(code, s, function);
+		statement.add(s);
+		
+		// Check if rhs variable needs the copy.
+		boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
+		// Remove 
+		this.deallocatedAnalyzer.ifPresent(a->
+				statement.addAll(a.computeOwnership(indent, isCopyEliminated, code, function, stores))
+				);
+		
+		
+		stores.addAllStatements(code, statement, function);
 	}
 
 	protected void translate(Codes.Nop code, FunctionOrMethod function) {

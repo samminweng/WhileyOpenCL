@@ -108,7 +108,7 @@ Matrix* multiply(Matrix* A, _DECL_OWNERSHIP_PARAM(A), Matrix* B, _DECL_OWNERSHIP
 	//assign %3 = %12  : int[][]
 	_FREE2DArray(C_data);
 	_2DARRAY_UPDATE(C_data, _12);
-	_ADD_OWNERSHIP(C_data);
+	_TRANSFER_OWNERSHIP(C_data, _12);
 	_REMOVE_OWNERSHIP(_12);
 	//const %13 = 0 : int
 	_13 = 0;
@@ -364,7 +364,7 @@ Matrix* init(long long height, long long width){
 	//assign %3 = %8  : int[][]
 	_FREE2DArray(rows);
 	_2DARRAY_UPDATE(rows, _8);
-	_ADD_OWNERSHIP(rows);
+	_TRANSFER_OWNERSHIP(rows, _8);
 	_REMOVE_OWNERSHIP(_8);
 	//const %9 = 0 : int
 	_9 = 0;
@@ -480,7 +480,7 @@ int main(int argc, char** args){
 	//assign %2 = %6  : {int[][] data,int height,int width}
 	_FREE_STRUCT(A, Matrix);
 	A = _6;
-	_ADD_OWNERSHIP(A);
+	_TRANSFER_OWNERSHIP(A, _6);
 	_REMOVE_OWNERSHIP(_6);
 	//invoke (%7) = (%1, %1) MatrixMult:init : function(MatrixMult:nat,MatrixMult:nat)->(MatrixMult:Matrix)
 	_FREE_STRUCT(_7, Matrix);
@@ -489,7 +489,7 @@ int main(int argc, char** args){
 	//assign %3 = %7  : {int[][] data,int height,int width}
 	_FREE_STRUCT(B, Matrix);
 	B = _7;
-	_ADD_OWNERSHIP(B);
+	_TRANSFER_OWNERSHIP(B, _7);
 	_REMOVE_OWNERSHIP(_7);
 	//invoke (%8) = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
 	_FREE_STRUCT(_8, Matrix);
@@ -498,7 +498,7 @@ int main(int argc, char** args){
 	//assign %4 = %8  : {int[][] data,int height,int width}
 	_FREE_STRUCT(C, Matrix);
 	C = _8;
-	_ADD_OWNERSHIP(C);
+	_TRANSFER_OWNERSHIP(C, _8);
 	_REMOVE_OWNERSHIP(_8);
 	//assert
 	{

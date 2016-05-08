@@ -245,7 +245,7 @@ int main(int argc, char** args){
 	//assign %2 = %7  : int[]
 	_FREE(moves);
 	_1DARRAY_UPDATE(moves, _7);
-	_ADD_OWNERSHIP(moves);
+	_TRANSFER_OWNERSHIP(moves, _7);
 	_REMOVE_OWNERSHIP(_7);
 	//invoke (%8) = (%2, %1) CoinGame1:findMoves : function(int[],int)->(int[])
 	_FREE(_8);
@@ -256,7 +256,7 @@ int main(int argc, char** args){
 	//assign %2 = %8  : int[]
 	_FREE(moves);
 	_1DARRAY_UPDATE(moves, _8);
-	_ADD_OWNERSHIP(moves);
+	_TRANSFER_OWNERSHIP(moves, _8);
 	_REMOVE_OWNERSHIP(_8);
 	//const %9 = 1 : int
 	_9 = 1;

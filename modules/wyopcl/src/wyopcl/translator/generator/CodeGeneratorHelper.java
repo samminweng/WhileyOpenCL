@@ -305,13 +305,29 @@ public final class CodeGeneratorHelper {
 		String name = "";
 		// Check if var_type is a structure
 		if(type instanceof Type.Array){
-			int dimension = stores.getArrayDimension(type);
-			if(dimension== 2){
-				return "_FREE2DArray("+var+");";
+			Type.Array arr_type = (Type.Array)type;
+			Type elem_type = stores.getArrayElementType(arr_type);
+			int dimension = stores.getArrayDimension(arr_type);
+			 
+			// For integer array or NULL array
+			if(stores.isIntType(elem_type)|| elem_type instanceof Type.Void){
+				if(dimension== 2){
+					return "_FREE2DArray("+var+");";
+				}else{
+					// Use _FREE macro to release the array variable.
+					return "_FREE("+var+");";
+				}
 			}else{
-				// Use _FREE macro to release the array variable.
-				return "_FREE("+var+");";
+				name = translateType(elem_type, stores).replace("*", "");
+				if(dimension==1){
+					// Use '_FREE_1DARRAY_STRUCT' to release an array of structure
+					return "_FREE_1DARRAY_STRUCT("+var+", "+name+");";
+				}else{
+					throw new RuntimeException("Not implemented");
+				}
+				
 			}
+			
 		}else if(type instanceof Type.Record|| type instanceof Type.Union){
 			name = translateType(type, stores).replace("*", "");
 			return "_FREE_STRUCT("+var+", "+name+");";

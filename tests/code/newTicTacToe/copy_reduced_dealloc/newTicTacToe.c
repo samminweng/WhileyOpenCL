@@ -205,7 +205,7 @@ int main(int argc, char** args){
 	//assign %2 = %7  : null|{int move,int[] pieces}
 	_FREE_STRUCT(b1, Board);
 	b1 = _7;
-	_ADD_OWNERSHIP(b1);
+	_TRANSFER_OWNERSHIP(b1, _7);
 	_REMOVE_OWNERSHIP(_7);
 	//invoke (%8) = () newTicTacToe:EmptyBoard : function()->(newTicTacToe:Board)
 	_FREE_STRUCT(_8, Board);
@@ -214,7 +214,7 @@ int main(int argc, char** args){
 	//assign %3 = %8  : null|{int move,int[] pieces}
 	_FREE_STRUCT(b2, Board);
 	b2 = _8;
-	_ADD_OWNERSHIP(b2);
+	_TRANSFER_OWNERSHIP(b2, _8);
 	_REMOVE_OWNERSHIP(_8);
 	//const %9 = 0 : int
 	_9 = 0;
@@ -282,7 +282,7 @@ blklab16:;
 		//assign %3 = %2  : {int move,int[] pieces}
 		_FREE_STRUCT(b2, Board);
 		b2 = b1;
-		_ADD_OWNERSHIP(b2);
+		_TRANSFER_OWNERSHIP(b2, b1);
 		_REMOVE_OWNERSHIP(b1);
 		//const %23 = null : null
 		_23 = NULL;
@@ -321,7 +321,7 @@ blklab19:;
 		//assign %2 = %3  : {int move,int[] pieces}
 		_FREE_STRUCT(b1, Board);
 		b1 = b2;
-		_ADD_OWNERSHIP(b1);
+		_TRANSFER_OWNERSHIP(b1, b2);
 		_REMOVE_OWNERSHIP(b2);
 		//const %31 = null : null
 		_31 = NULL;

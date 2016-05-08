@@ -199,25 +199,17 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 * 
 	 */
 	public boolean isCopyEliminated(int reg, Code code, FunctionOrMethod f) {
-		// TODO: For fieldload code, the copy is always made
-		/*if (code instanceof Codes.FieldLoad) {
-			 Codes.FieldLoad fieldload = (Codes.FieldLoad)code; String lhs =
-			 getActualVarName(fieldload.target(0), f); // Check if the lhs is
-			 modified in 'f' funciton isReadOnly = !isMutated(lhs, f); return
-			 isReadOnly;			 
-		}*/
-
 		boolean isLive = isLive(reg, code, f);
 
 		// If the variable is not alive, then the copies are not needed.
 		if (!isLive) {
 			return true;
 		} else {
-			// Check the array is read-only. By default, the array is assumed
-			// not read-only but modified.
-			boolean isReadOnly = false;
-			boolean isReturned = false;
 			if (code instanceof Codes.Invoke) {
+				// Check the array is read-only. By default, the array is assumed
+				// not read-only but modified.
+				boolean isReadOnly = false;
+				boolean isReturned = false;
 				Codes.Invoke invoked = (Codes.Invoke) code;
 				FunctionOrMethod invoked_function = this.getFunction(invoked.name.name(), invoked.type(0));
 				if (invoked_function != null) {
@@ -250,6 +242,9 @@ public class CopyEliminationAnalyzer extends Analyzer {
 						}
 					}
 				}
+			}else if (code instanceof Codes.Update){
+				// The copy is needed as the variable is alive after this code.
+				return false;
 			}
 			throw new RuntimeException("Not implemeneted");
 		}
