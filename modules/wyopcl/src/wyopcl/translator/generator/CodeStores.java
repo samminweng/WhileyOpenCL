@@ -206,7 +206,7 @@ public class CodeStores {
 	 * @param type
 	 * @return the array dimension. Return 0 if the input is not an array type.
 	 */
-	protected int getArrayDimension(Type type){
+	public int getArrayDimension(Type type){
 		int dimension = 0;
 		// Compute array dimension.
 		while(type != null && type instanceof Type.Array){
@@ -226,7 +226,7 @@ public class CodeStores {
 	 * @param type
 	 * @return true if the type is or contains an integer type.
 	 */
-	protected boolean isIntType(Type type) {
+	public boolean isIntType(Type type) {
 		if (type instanceof Type.Int) {
 			return true;
 		}
@@ -282,7 +282,7 @@ public class CodeStores {
 	 * @param type
 	 * @return
 	 */
-	protected Type getArrayElementType(Type.Array type){
+	public Type getArrayElementType(Type.Array type){
 		Type elmType = type.element();
 		if(elmType instanceof Type.Array){
 			return getArrayElementType((Type.Array)elmType);

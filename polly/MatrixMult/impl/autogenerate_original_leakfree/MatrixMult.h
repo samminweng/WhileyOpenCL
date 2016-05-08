@@ -12,4 +12,3 @@ Matrix* matrix(long long width, long long height, _DECL_1DARRAY_PARAM(data), _DE
 Matrix* init(long long width, long long height);
 void print_mat(FILE* sys, Matrix* a, _DECL_OWNERSHIP_PARAM(a));
 Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP_PARAM(b));
-int main(int argc, char** args);

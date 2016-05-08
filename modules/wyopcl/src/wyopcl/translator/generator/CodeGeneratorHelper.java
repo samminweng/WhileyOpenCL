@@ -296,7 +296,7 @@ public final class CodeGeneratorHelper {
 	 * @param stores
 	 * @return
 	 */
-	public static String addDeallocatedCode(String var, Type type, CodeStores stores){
+	/*public static String addDeallocatedCode(String var, Type type, CodeStores stores){
 		if(!stores.isCompoundType(type)&& !(type instanceof Type.Union)){
 			return "";
 		}
@@ -341,7 +341,7 @@ public final class CodeGeneratorHelper {
 		}else{
 			throw new RuntimeException("Not implemented");
 		}
-	}
+	}*/
 
 
 	
@@ -356,7 +356,7 @@ public final class CodeGeneratorHelper {
 	 *         
 	 * 
 	 */
-	protected static String translateType(Type type, CodeStores stores) {	
+	public static String translateType(Type type, CodeStores stores) {	
 		if (type instanceof Type.Nominal) {
 			// Check is type is a System.Console. 
 			if(((Type.Nominal) type).name().name().equals("Console")){

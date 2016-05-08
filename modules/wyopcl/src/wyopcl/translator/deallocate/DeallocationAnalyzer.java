@@ -78,7 +78,7 @@ public class DeallocationAnalyzer extends Analyzer {
 				Type var_type = stores.getRawType(r, function);
 				if(var_type != null && !(var_type instanceof Type.Null)){
 					String var = stores.getVar(r, function);
-					statements.add(indent + CodeGeneratorHelper.addDeallocatedCode(var, var_type, stores));
+					statements.add(indent + addDeallocatedCode(var, var_type, stores));
 				}
 			}
 		}
@@ -291,6 +291,68 @@ public class DeallocationAnalyzer extends Analyzer {
 		return ownership;
 	}
 
+	
+	/**
+	 * Generate the code to release the memory for a given variable, e.g. 
+	 * <pre><code>
+	 * if(a_has_ownership){free_Board(a); a_has_ownership = false;}
+	 * </code></pre>
+	 * where 'a' is a board and 'a_has_ownership' flag indicates whether 'a' owns an object.
+	 * 
+	 * @param var
+	 * @param type
+	 * @param stores
+	 * @return
+	 */
+	public String addDeallocatedCode(String var, Type type, CodeStores stores){
+		if(!stores.isCompoundType(type)&& !(type instanceof Type.Union)){
+			return "";
+		}
+		
+		// Get function name
+		String name = "";
+		// Check if var_type is a structure
+		if(type instanceof Type.Array){
+			Type.Array arr_type = (Type.Array)type;
+			Type elem_type = stores.getArrayElementType(arr_type);
+			int dimension = stores.getArrayDimension(arr_type);
+			 
+			// For integer array or NULL array
+			if(stores.isIntType(elem_type)|| elem_type instanceof Type.Void){
+				if(dimension== 2){
+					return "_FREE2DArray("+var+");";
+				}else{
+					// Use _FREE macro to release the array variable.
+					return "_FREE("+var+");";
+				}
+			}else{
+				name = CodeGeneratorHelper.translateType(elem_type, stores).replace("*", "");
+				if(dimension==1){
+					// Use '_FREE_1DARRAY_STRUCT' to release an array of structure
+					return "_FREE_1DARRAY_STRUCT("+var+", "+name+");";
+				}else{
+					throw new RuntimeException("Not implemented");
+				}
+				
+			}
+			
+		}else if(type instanceof Type.Record){
+			name =  CodeGeneratorHelper.translateType(type, stores).replace("*", "");
+			return "_FREE_STRUCT("+var+", "+name+");";
+		}else if(type instanceof Type.Union){
+			if(stores.isIntType(type)){
+				return "_FREE("+var+");";
+			}else{
+				name =  CodeGeneratorHelper.translateType(type, stores).replace("*", "");
+				return "_FREE_STRUCT("+var+", "+name+");";
+			}
+		}else{
+			throw new RuntimeException("Not implemented");
+		}
+	}
+	
+	
+	
 	@Override
 	public void apply(WyilFile module) {
 		super.apply(module);
