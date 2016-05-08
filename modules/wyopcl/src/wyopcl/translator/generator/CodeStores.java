@@ -244,7 +244,6 @@ public class CodeStores {
 			}
 		}
 		
-		
 		return false;
 	}
 	
@@ -271,7 +270,8 @@ public class CodeStores {
 					}
 				}
 			}
-			throw new RuntimeException("Can not find the record type");
+			return null;
+			//throw new RuntimeException("Can not find the record type");
 		}else{
 			throw new RuntimeException("Not implemented");
 		}
@@ -328,11 +328,12 @@ public class CodeStores {
 					return false;
 				}
 			}else if(type instanceof Type.Union){
-				Optional<Record> record = Optional.of(getRecordType((Type.Union)type));
+				// The record may be null or non-null
+				Optional<Record> record = Optional.ofNullable(getRecordType((Type.Union)type));
 				if(record.isPresent()){
 					return isCompoundType(record.get());
 				}else{
-					return false;
+					return true;
 				}
 			}
 			throw new RuntimeException("Not Implemented");
@@ -666,12 +667,5 @@ public class CodeStores {
 		CodeStore store = getCodeStore(function);
 		return store.getStatements();
 	}
-
-	
-
-
-	
-
-
 	
 }

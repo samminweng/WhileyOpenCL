@@ -120,9 +120,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						String translateType = CodeGeneratorHelper.translateType(elm_type, stores);
 						declarations.add(indent + translateType + "* " + var + ";");
 						declarations.add(indent + "long long " + var + "_size = 0;");
-						// throw new RuntimeException("Not implemented");
 					}
-
 				} else if (type instanceof Type.Reference && ((Type.Reference) type).element() instanceof Type.Array) {
 					// Declare array variable
 					int dimension = stores.getArrayDimension(type);
@@ -135,12 +133,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					throw new RuntimeException("Not implemented");
 				}
 			}
-
+			int register = reg;
 			// Declare ownership
-			if (stores.isCompoundType(type)) {
-				// Declare the extra 'has_ownership' boolean variables
-				this.deallocatedAnalyzer.ifPresent(a -> declarations.add(indent + "_DECL_OWNERSHIP(" + var + ");"));
-			}
+			this.deallocatedAnalyzer.ifPresent(a -> {
+				String o = a.declareOwnershipVar(indent, register, function, stores);
+				if (o != null) {
+					declarations.add(o);
+				}
+			});
 
 		}
 
@@ -274,12 +274,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		Type lhs_type = stores.getRawType(code.target(), function);
 		String indent = stores.getIndent(function);
 		if (code.constant.type() instanceof Type.Null) {
-			statement.add(indent  + lhs + " = NULL;");
+			statement.add(indent + lhs + " = NULL;");
 			// Remove lhs ownership as it points to NULL
 			// Add lhs to ownership
 			this.deallocatedAnalyzer
-				.ifPresent(a -> statement.add(indent + a.removeOwnership(code.target(0), function, stores)));
-			
+					.ifPresent(a -> statement.add(indent + a.removeOwnership(code.target(0), function, stores)));
+
 		} else {
 			if (code.constant.type() instanceof Type.Array) {
 				// Cast the constant to an array
@@ -360,10 +360,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				if (lhs_type instanceof Type.Int && rhs_type instanceof Type.Union) {
 					// Cast an integer pointer to integer, e.g. 'size = *i'
 					statement.add(indent + lhs + " = *" + rhs + ";");
+					// Add ownership to lhs variable;
 				} else {
 					statement.add(indent + lhs + " = " + rhs + ";");
 				}
-
 			} else {
 				this.deallocatedAnalyzer.ifPresent(
 						a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
@@ -372,8 +372,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					// Assign lhs to NULL values by
 					statement.add(indent + lhs + " = NULL;");
 					// Transfer out the ownership of lhs variable
-					this.deallocatedAnalyzer.ifPresent(
-							a -> statement.add(indent + a.transferOwnership(code.target(0), code.operand(0), function, stores)));
+					this.deallocatedAnalyzer.ifPresent(a -> statement
+							.add(indent + a.transferOwnership(code.target(0), code.operand(0), function, stores)));
 				} else {
 					boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
 					statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, indent, lhs, rhs,
@@ -659,6 +659,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Parse a string into an integer.
 			case "parse":
 				statement.add(indent + "_STR_TO_INT(" + lhs + ", " + rhs + ");");
+				// Compute ownership for 'parseInt'
+				this.deallocatedAnalyzer
+						.ifPresent(a -> statement.addAll(a.computeOwnership(indent, false, code, function, stores)));
 				break;
 			// Slice an array into a new sub-array at given starting and ending
 			// index.
@@ -685,11 +688,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				break;
 			case "min":
 				String rhs1 = stores.getVar(code.operand(1), function);
-				statement.add(indent + lhs + " = min(" + rhs + ", "+ rhs1 +");");
+				statement.add(indent + lhs + " = min(" + rhs + ", " + rhs1 + ");");
 				break;
 			case "max":
 				rhs1 = stores.getVar(code.operand(1), function);
-				statement.add(indent + lhs + " = max(" + rhs + ", "+ rhs1 +");");
+				statement.add(indent + lhs + " = max(" + rhs + ", " + rhs1 + ");");
 				break;
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);
@@ -712,8 +715,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					ownership.ifPresent(o -> {
 						// Get caller ownership
 						boolean caller_own = o.get("caller");
-						if(!caller_own){
-							// The ownership is transferred from caller to calling function
+						if (!caller_own) {
+							// The ownership is transferred from caller to
+							// calling function
 							statement.add(indent + a.removeOwnership(register, function, stores));
 						}
 					});
@@ -907,9 +911,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Translates the update byte-code into C code, and removes the ownership of rhs variable 
-	 * (a[i] = b; b_has_ownership = false;)
-	 * For example,
+	 * Translates the update byte-code into C code, and removes the ownership of
+	 * rhs variable (a[i] = b; b_has_ownership = false;) For example,
+	 * 
 	 * <pre>
 	 * <code>
 	 * update %0.pieces[%1] = %7 : {int move,[int] pieces} -> {int move,[int] pieces}
@@ -938,7 +942,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.Update code, FunctionOrMethod function) {
 		String indent = stores.getIndent(function);
 		List<String> statement = new ArrayList<String>();
-		
+
 		// Generate update statement, e.g. a[i] = b
 		String s = "";
 		String lhs = stores.getVar(code.target(0), function);
@@ -964,15 +968,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		s += " = " + stores.getVar(code.result(), function) + ";";
 		statement.add(s);
-		
+
 		// Check if rhs variable needs the copy.
 		boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
-		// Remove 
-		this.deallocatedAnalyzer.ifPresent(a->
-				statement.addAll(a.computeOwnership(indent, isCopyEliminated, code, function, stores))
-				);
-		
-		
+		// Remove
+		this.deallocatedAnalyzer
+				.ifPresent(a -> statement.addAll(a.computeOwnership(indent, isCopyEliminated, code, function, stores)));
+
 		stores.addAllStatements(code, statement, function);
 	}
 
@@ -1061,22 +1063,22 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.IndexOf code, FunctionOrMethod function) {
-		// Check the type of array element		
+		// Check the type of array element
 		List<String> statement = new ArrayList<String>();
 
 		String indent = stores.getIndent(function);
-		String lhs = stores.getVar(code.target(0), function);		
+		String lhs = stores.getVar(code.target(0), function);
 		String rhs = stores.getVar(code.operand(0), function);
 		String index = stores.getVar(code.operand(1), function);
-		
+
 		// Add lhs register to array variable
 		stores.addArrayVar(code.target(0), function);
-		
+
 		// Assign rhs to rhs without any copy, e.g. a = b[i];
 		statement.add(indent + lhs + "=" + rhs + "[" + index + "];");
-		
-		this.deallocatedAnalyzer.ifPresent(a -> statement
-				.addAll(a.computeOwnership(indent, false, code, function, stores)));
+
+		this.deallocatedAnalyzer
+				.ifPresent(a -> statement.addAll(a.computeOwnership(indent, false, code, function, stores)));
 
 		stores.addAllStatements(code, statement, function);
 	}
@@ -1272,8 +1274,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement.add(indent + "printf_s(_" + dimension + "DARRAY_PARAM(" + input + "));");
 				break;
 			case "println_s":
-				//dimension = stores.getArrayDimension(input_type);
-				statement.add(indent + "println_s(" + input + ", "+ input + "_size);");
+				// dimension = stores.getArrayDimension(input_type);
+				statement.add(indent + "println_s(" + input + ", " + input + "_size);");
 				break;
 			case "println":
 				// Check input's type to call different println function.

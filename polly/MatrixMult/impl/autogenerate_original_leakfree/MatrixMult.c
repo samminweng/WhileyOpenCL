@@ -451,6 +451,7 @@ blklab13:;
 
 int main(int argc, char** args){
 	long long* max;
+	_DECL_OWNERSHIP(max);
 	long long size = 0;
 	Matrix* A;
 	_DECL_OWNERSHIP(A);
@@ -459,6 +460,7 @@ int main(int argc, char** args){
 	Matrix* C;
 	_DECL_OWNERSHIP(C);
 	long long* _6;
+	_DECL_OWNERSHIP(_6);
 	_DECL_2DARRAY(_7);
 	_DECL_OWNERSHIP(_7);
 	long long _8 = 0;
@@ -533,6 +535,8 @@ int main(int argc, char** args){
 	_REMOVE_OWNERSHIP(_9);
 	//invoke (%6) = (%9) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
 	_STR_TO_INT(_6, _9);
+	_ADD_OWNERSHIP(_6);
+	_REMOVE_OWNERSHIP(_9);
 	//assign %1 = %6  : null|int
 	max = _6;
 	//ifis %1, null goto blklab19 : null|int
@@ -725,10 +729,11 @@ blklab22:;
 //.blklab19
 blklab19:;
 	//return
-	free(max);
+	_FREE(max);
 	_FREE_STRUCT(A, Matrix);
 	_FREE_STRUCT(B, Matrix);
 	_FREE_STRUCT(C, Matrix);
+	_FREE(_6);
 	_FREE2DArray(_7);
 	_FREE(_9);
 	_FREE(_12);

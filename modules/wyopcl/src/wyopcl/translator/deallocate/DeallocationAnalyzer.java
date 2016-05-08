@@ -35,6 +35,18 @@ public class DeallocationAnalyzer extends Analyzer {
 		this.ownerships = new HashMap<FunctionOrMethod, OwnershipVariables>();
 	}
 	
+	public String declareOwnershipVar(String indent, int register, FunctionOrMethod function, CodeStores stores ){
+		Type type = stores.getRawType(register, function);
+		String var = stores.getVar(register, function);
+		// Declare ownership
+		if (stores.isCompoundType(type) || type instanceof Type.Union) {
+			// Declare the extra 'has_ownership' boolean variables
+				return indent + "_DECL_OWNERSHIP(" + var + ");";
+		}
+		return null;
+	}
+	
+	
 	/**
 	 * Get a list of ownership variables and generate the code to free all of them
 	 * Note that the deallocation of function input parameters are skipped by default.
@@ -122,13 +134,26 @@ public class DeallocationAnalyzer extends Analyzer {
 			statements.add(indent + removeOwnership(lhs, function, stores));
 			
 		}else if (code instanceof Codes.Update){
-			Codes.Update u = (Codes.Update)code;
+			Codes.Update update = (Codes.Update)code;
 			// The rhs register is always the last operand (a[i] = b)
-			int rhs = u.operand(u.operands().length - 1);
+			int rhs = update.operand(update.operands().length - 1);
 			
 			if(isCopyEliminated){
 				// Remove the rhs ownership
 				statements.add(indent + removeOwnership(rhs, function, stores));
+			}
+		}else if(code instanceof Codes.Invoke){
+			Codes.Invoke invoke = (Codes.Invoke)code;
+			if(invoke.name.name().equals("parse")){
+				int lhs = invoke.target(0);
+				int rhs = invoke.operand(0);
+				//Add ownership to lhs.
+				statements.add(indent + addOwnership(lhs, function, stores));
+				// Remove rhs ownership
+				statements.add(indent + removeOwnership(rhs, function, stores));
+				
+			}else{
+				throw new RuntimeException("Not implement");
 			}
 			
 		}else{
@@ -150,7 +175,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 */
 	public String addOwnership(int register, FunctionOrMethod function, CodeStores stores){
 		Type type = stores.getRawType(register, function);
-		if(stores.isCompoundType(type)){
+		if(stores.isCompoundType(type) || type instanceof Type.Union){
 			String var = stores.getVar(register, function);
 			this.ownerships.get(function).addOwnership(register);
 			return "_ADD_OWNERSHIP("+var+");";
@@ -165,7 +190,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 */
 	public String removeOwnership(int register, FunctionOrMethod function, CodeStores stores){
 		Type type = stores.getRawType(register, function);
-		if(stores.isCompoundType(type)){
+		if(stores.isCompoundType(type)|| type instanceof Type.Union){
 			String var = stores.getVar(register, function);
 			this.ownerships.get(function).removeOwnership(register);
 			return "_REMOVE_OWNERSHIP("+var+");";
@@ -185,7 +210,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 */
 	public String transferOwnership(int lhs, int rhs, FunctionOrMethod function, CodeStores stores){
 		Type type = stores.getRawType(lhs, function);
-		if(stores.isCompoundType(type)){
+		if(stores.isCompoundType(type)|| type instanceof Type.Union){
 			String lhs_var = stores.getVar(lhs, function);
 			String rhs_var = stores.getVar(rhs, function);
 			//this.ownerships.get(function).removeOwnership(register);
@@ -266,24 +291,6 @@ public class DeallocationAnalyzer extends Analyzer {
 		return ownership;
 	}
 
-	
-	
-	
-	/**
-	 * Print out ownership
-	 */
-	/*private void printOwnership(FunctionOrMethod function){
-		List<Integer> ownership = this.getOwnerships(function);
-		// Print out ownership variables (comma-separated string).
-		System.out.println("Ownerships = {"+
-				ownership.stream()
-				.map(o -> this.getActualVarName(o, function))
-				.collect(Collectors.joining(", ")) + "}"
-				);
-		
-	}
-	*/
-	
 	@Override
 	public void apply(WyilFile module) {
 		super.apply(module);
@@ -294,20 +301,6 @@ public class DeallocationAnalyzer extends Analyzer {
 			}
 		}
 		
-		// Compute ownership set for each function.
-		/*for(FunctionOrMethod function: module.functionOrMethods()){
-			// Initialize the 'ownership' set with each of true value.
-			this.initializeOwnership(function);
-			// Compute 'ownership' set
-			for(Code code: function.body().bytecodes()){
-				this.iterateCode(code, function);
-			}
-			if(config.isVerbose()){
-				this.printOwnership(function);
-			}
-		}*/
 	}
 	
-	
-
 }

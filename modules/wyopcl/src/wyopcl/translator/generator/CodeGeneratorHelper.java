@@ -297,7 +297,7 @@ public final class CodeGeneratorHelper {
 	 * @return
 	 */
 	public static String addDeallocatedCode(String var, Type type, CodeStores stores){
-		if(!stores.isCompoundType(type)){
+		if(!stores.isCompoundType(type)&& !(type instanceof Type.Union)){
 			return "";
 		}
 		
@@ -328,9 +328,16 @@ public final class CodeGeneratorHelper {
 				
 			}
 			
-		}else if(type instanceof Type.Record|| type instanceof Type.Union){
+		}else if(type instanceof Type.Record){
 			name = translateType(type, stores).replace("*", "");
 			return "_FREE_STRUCT("+var+", "+name+");";
+		}else if(type instanceof Type.Union){
+			if(stores.isIntType(type)){
+				return "_FREE("+var+");";
+			}else{
+				name = translateType(type, stores).replace("*", "");
+				return "_FREE_STRUCT("+var+", "+name+");";
+			}
 		}else{
 			throw new RuntimeException("Not implemented");
 		}
@@ -388,17 +395,18 @@ public final class CodeGeneratorHelper {
 				return "int argc, char** args";
 			}
 			// Get the user-defined type
-			return Optional.of(stores.getUserDefinedType(type)).get().name()+"*";
+			return Optional.ofNullable(stores.getUserDefinedType(type)).get().name()+"*";
 			
 		}
 
 		if (type instanceof Type.Union) {
-			// Check if there is any record in 'union' type
-			if (stores.isIntType(type)) {
+			Type.Union u = (Type.Union)type;
+			// Check if type is 'union' type of INT and NULL
+			if (u.bounds().contains(Type.Int.T_INT) &&  u.bounds().contains(Type.Null.T_NULL)) {
 				return "long long*";
 			}
 
-			return Optional.of(stores.getUserDefinedType(type)).get().name()+"*";
+			return Optional.ofNullable(stores.getUserDefinedType(type)).get().name()+"*";
 		}
 
 		// Translate reference type in Whiley to pointer type in C.

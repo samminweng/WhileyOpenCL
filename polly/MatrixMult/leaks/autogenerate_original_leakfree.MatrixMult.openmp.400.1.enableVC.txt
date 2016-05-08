@@ -1,24 +1,24 @@
-==25634== Memcheck, a memory error detector
-==25634== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==25634== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==25634== Command: ./out/MatrixMult.openmp.enableVC.out 400
-==25634== Parent PID: 23577
-==25634== 
-==25634== 
-==25634== HEAP SUMMARY:
-==25634==     in use at exit: 192 bytes in 1 blocks
-==25634==   total heap usage: 24 allocs, 23 frees, 14,085,176 bytes allocated
-==25634== 
-==25634== LEAK SUMMARY:
-==25634==    definitely lost: 0 bytes in 0 blocks
-==25634==    indirectly lost: 0 bytes in 0 blocks
-==25634==      possibly lost: 0 bytes in 0 blocks
-==25634==    still reachable: 192 bytes in 1 blocks
-==25634==         suppressed: 0 bytes in 0 blocks
-==25634== Rerun with --leak-check=full to see details of leaked memory
-==25634== 
-==25634== For counts of detected and suppressed errors, rerun with: -v
-==25634== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==4669== Memcheck, a memory error detector
+==4669== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==4669== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==4669== Command: ./out/MatrixMult.openmp.enableVC.out 400
+==4669== Parent PID: 23577
+==4669== 
+==4669== 
+==4669== HEAP SUMMARY:
+==4669==     in use at exit: 192 bytes in 1 blocks
+==4669==   total heap usage: 24 allocs, 23 frees, 14,085,176 bytes allocated
+==4669== 
+==4669== LEAK SUMMARY:
+==4669==    definitely lost: 0 bytes in 0 blocks
+==4669==    indirectly lost: 0 bytes in 0 blocks
+==4669==      possibly lost: 0 bytes in 0 blocks
+==4669==    still reachable: 192 bytes in 1 blocks
+==4669==         suppressed: 0 bytes in 0 blocks
+==4669== Rerun with --leak-check=full to see details of leaked memory
+==4669== 
+==4669== For counts of detected and suppressed errors, rerun with: -v
+==4669== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: AuthenticAMD
 cpu family	: 21
@@ -54,7 +54,7 @@ model		: 96
 model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G 
 stepping	: 1
 microcode	: 0x600610b
-cpu MHz		: 2100.000
+cpu MHz		: 1400.000
 cache size	: 1024 KB
 physical id	: 0
 siblings	: 4
@@ -82,7 +82,7 @@ model		: 96
 model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G 
 stepping	: 1
 microcode	: 0x600610b
-cpu MHz		: 2100.000
+cpu MHz		: 1400.000
 cache size	: 1024 KB
 physical id	: 0
 siblings	: 4
@@ -110,7 +110,7 @@ model		: 96
 model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G 
 stepping	: 1
 microcode	: 0x600610b
-cpu MHz		: 1800.000
+cpu MHz		: 2100.000
 cache size	: 1024 KB
 physical id	: 0
 siblings	: 4
