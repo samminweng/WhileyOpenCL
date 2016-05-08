@@ -143,7 +143,7 @@ exec(){
 	cd "$program/impl/$c_type"
 	generateCode $program $compiler
 	mkdir -p "out"
-        binary="$c_type.$program.$compiler.$parameter.$threads.enablevc.out"
+    binary="$c_type.$program.$compiler.$parameter.$threads.enablevc.out"
 
 	case "$compiler" in
 		"gcc")
