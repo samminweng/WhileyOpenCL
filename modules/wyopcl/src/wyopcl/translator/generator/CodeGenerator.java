@@ -1105,9 +1105,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String rhs = stores.getVar(code.operand(0), function);
 		String index = stores.getVar(code.operand(1), function);
 
-		// Add lhs register to array variable
-		stores.addArrayVar(code.target(0), function);
-
 		// Assign rhs to rhs without any copy, e.g. a = b[i];
 		statement.add(indent + lhs + "=" + rhs + "[" + index + "];");
 

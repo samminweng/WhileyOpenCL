@@ -139,11 +139,8 @@ public class DeallocationAnalyzer extends Analyzer {
 		}else if (code instanceof Codes.IndexOf){
 			Codes.IndexOf indexof = (Codes.IndexOf)code;
 			int lhs = indexof.target(0);
-			// Add lhs register to array variable
-			stores.addArrayVar(lhs, function);
 			// Transfer lhs ownership due to non-transferable array ownership 
 			statements.add(indent + removeOwnership(lhs, function, stores));
-			
 		}else if (code instanceof Codes.Update){
 			Codes.Update update = (Codes.Update)code;
 			// The rhs register is always the last operand (a[i] = b)

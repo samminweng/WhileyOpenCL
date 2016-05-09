@@ -75,7 +75,7 @@ detectleaks(){
 					-mllvm -polly-parallel -lgomp $program.c Util.c -o "out/$program.$compiler.enableVC.out"
 			;;
 	esac
-	valgrind --tool=memcheck --leak-check=full "--log-file=$result" ./out/"$program.$compiler.enableVC.out" $parameter
+	valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all "--log-file=$result" ./out/"$program.$compiler.enableVC.out" $parameter
 	# Added the CPU info
 	cat /proc/cpuinfo >> $result
 	# move result to leaks folder
