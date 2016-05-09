@@ -75,7 +75,7 @@ detectleaks(){
 					-mllvm -polly-parallel -lgomp $program.c Util.c -o "out/$program.$compiler.enableVC.out"
 			;;
 	esac
-	valgrind --tool=memcheck "--log-file=$result" ./out/"$program.$compiler.enableVC.out" $parameter
+	valgrind --tool=memcheck --leak-check=full "--log-file=$result" ./out/"$program.$compiler.enableVC.out" $parameter
 	# Added the CPU info
 	cat /proc/cpuinfo >> $result
 	# move result to leaks folder
@@ -91,8 +91,8 @@ exec(){
 	# change folder
 	cd "$program/impl/$c_type"
 	#read -p "Press [Enter] to continue..."
-	#generateCode $program
-	#read -p "Press [Enter] to continue..."	
+	generateCode $program
+	read -p "Press [Enter] to continue..."	
 	# Detect the leaks of generated C code using different compiler
 	detectleaks $c_type $program "gcc" $parameter 1
 	detectleaks $c_type $program "clang" $parameter 1

@@ -114,12 +114,17 @@ public class DeallocationAnalyzer extends Analyzer {
 		if(code instanceof Codes.Assign){			
 			Codes.Assign assign = (Codes.Assign)code;
 			int lhs = assign.target(0);
+			Type lhs_type = stores.getRawType(lhs, function);
 			int rhs = assign.operand(0);
+			Type rhs_type = stores.getRawType(rhs, function);
 			
 			// Special case for NULL type ( a = NULL;)
 			if(assign.type(0) instanceof Type.Null){
 				// Remove lhs ownership
 				statements.add(indent + removeOwnership(lhs, function, stores));
+			}else if(lhs_type instanceof Type.Int && rhs_type instanceof Type.Union){
+				// Special case for converting an integer pointer to an integer
+				// No changes to ownership
 			}else{
 				if(isCopyEliminated){
 					// Transfer rhs ownership to lhs 
@@ -165,13 +170,13 @@ public class DeallocationAnalyzer extends Analyzer {
 		}else if(code instanceof Codes.FieldLoad){
 			Codes.FieldLoad fieldload = (Codes.FieldLoad)code;
 			int lhs = fieldload.target(0);
-			int rhs = fieldload.operand(0);
-			
+			//int rhs = fieldload.operand(0);
 			if(isCopyEliminated){
-				statements.add(indent + transferOwnership(lhs, rhs, function, stores));
-				statements.add(indent + removeOwnership(rhs, function, stores));
+				// That means 'fieldload' access one member 
+				// rhs ownership could be changed. But remove lhs ownership
+				statements.add(indent + removeOwnership(lhs, function, stores));
 			}else{
-				// Assign ownership to lhs variable if the rhs variable is copied.
+				// Assign ownership to lhs variable.
 				statements.add(indent + addOwnership(lhs, function, stores));
 			}			
 		}else if(code instanceof Codes.NewRecord){

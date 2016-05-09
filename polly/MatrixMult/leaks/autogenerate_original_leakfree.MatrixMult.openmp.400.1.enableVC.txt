@@ -1,24 +1,25 @@
-==4669== Memcheck, a memory error detector
-==4669== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==4669== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==4669== Command: ./out/MatrixMult.openmp.enableVC.out 400
-==4669== Parent PID: 23577
-==4669== 
-==4669== 
-==4669== HEAP SUMMARY:
-==4669==     in use at exit: 192 bytes in 1 blocks
-==4669==   total heap usage: 24 allocs, 23 frees, 14,085,176 bytes allocated
-==4669== 
-==4669== LEAK SUMMARY:
-==4669==    definitely lost: 0 bytes in 0 blocks
-==4669==    indirectly lost: 0 bytes in 0 blocks
-==4669==      possibly lost: 0 bytes in 0 blocks
-==4669==    still reachable: 192 bytes in 1 blocks
-==4669==         suppressed: 0 bytes in 0 blocks
-==4669== Rerun with --leak-check=full to see details of leaked memory
-==4669== 
-==4669== For counts of detected and suppressed errors, rerun with: -v
-==4669== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14808== Memcheck, a memory error detector
+==14808== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==14808== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==14808== Command: ./out/MatrixMult.openmp.enableVC.out 400
+==14808== Parent PID: 17012
+==14808== 
+==14808== 
+==14808== HEAP SUMMARY:
+==14808==     in use at exit: 192 bytes in 1 blocks
+==14808==   total heap usage: 21 allocs, 20 frees, 10,245,176 bytes allocated
+==14808== 
+==14808== LEAK SUMMARY:
+==14808==    definitely lost: 0 bytes in 0 blocks
+==14808==    indirectly lost: 0 bytes in 0 blocks
+==14808==      possibly lost: 0 bytes in 0 blocks
+==14808==    still reachable: 192 bytes in 1 blocks
+==14808==         suppressed: 0 bytes in 0 blocks
+==14808== Reachable blocks (those to which a pointer was found) are not shown.
+==14808== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==14808== 
+==14808== For counts of detected and suppressed errors, rerun with: -v
+==14808== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: AuthenticAMD
 cpu family	: 21
@@ -26,7 +27,7 @@ model		: 96
 model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G
 stepping	: 1
 microcode	: 0x600610b
-cpu MHz		: 1400.000
+cpu MHz		: 2100.000
 cache size	: 1024 KB
 physical id	: 0
 siblings	: 4
@@ -40,7 +41,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
 bugs		: fxsave_leak
-bogomips	: 4192.47
+bogomips	: 4192.13
 TLB size	: 1536 4K pages
 clflush size	: 64
 cache_alignment	: 64
@@ -68,7 +69,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
 bugs		: fxsave_leak
-bogomips	: 4192.47
+bogomips	: 4192.13
 TLB size	: 1536 4K pages
 clflush size	: 64
 cache_alignment	: 64
@@ -96,7 +97,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
 bugs		: fxsave_leak
-bogomips	: 4192.47
+bogomips	: 4192.13
 TLB size	: 1536 4K pages
 clflush size	: 64
 cache_alignment	: 64
@@ -110,7 +111,7 @@ model		: 96
 model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G 
 stepping	: 1
 microcode	: 0x600610b
-cpu MHz		: 2100.000
+cpu MHz		: 1800.000
 cache size	: 1024 KB
 physical id	: 0
 siblings	: 4
@@ -124,7 +125,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
 bugs		: fxsave_leak
-bogomips	: 4192.47
+bogomips	: 4192.13
 TLB size	: 1536 4K pages
 clflush size	: 64
 cache_alignment	: 64

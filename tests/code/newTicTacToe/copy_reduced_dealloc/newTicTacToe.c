@@ -271,7 +271,6 @@ blklab16:;
 		b1->pieces[p] = _19;
 		//fieldload %20 = %2 move : {int move,int[] pieces}
 		_20 = b1->move;
-		_REMOVE_OWNERSHIP(b1);
 		//const %21 = 1 : int
 		_21 = 1;
 		//add %22 = %20, %21 : int
@@ -310,7 +309,6 @@ blklab19:;
 		b2->pieces[p] = _27;
 		//fieldload %28 = %3 move : {int move,int[] pieces}
 		_28 = b2->move;
-		_REMOVE_OWNERSHIP(b2);
 		//const %29 = 1 : int
 		_29 = 1;
 		//add %30 = %28, %29 : int

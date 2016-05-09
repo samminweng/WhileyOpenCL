@@ -156,8 +156,7 @@ Matrix* multiply(Matrix* A, _DECL_OWNERSHIP_PARAM(A), Matrix* B, _DECL_OWNERSHIP
 				//fieldload %23 = %1 data : {int[][] data,int height,int width}
 				_FREE2DArray(_23);
 				_2DARRAY_UPDATE(_23, B->data);
-				_TRANSFER_OWNERSHIP(_23, B);
-				_REMOVE_OWNERSHIP(B);
+				_REMOVE_OWNERSHIP(_23);
 				//indexof %24 = %23, %7 : int[][]
 				_24=_23[k];
 				_REMOVE_OWNERSHIP(_24);
@@ -206,10 +205,8 @@ blklab14:;
 blklab13:;
 	//fieldload %35 = %1 width : {int[][] data,int height,int width}
 	_35 = B->width;
-	_REMOVE_OWNERSHIP(B);
 	//fieldload %36 = %0 height : {int[][] data,int height,int width}
 	_36 = A->height;
-	_REMOVE_OWNERSHIP(A);
 	//invoke (%34) = (%35, %36, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
 	_FREE_STRUCT(_34, Matrix);
 	_34 = matrix(_35, _36, _2DARRAY_PARAM(C_data), false);

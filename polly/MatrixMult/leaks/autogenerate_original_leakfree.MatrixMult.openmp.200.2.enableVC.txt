@@ -1,24 +1,36 @@
-==4627== Memcheck, a memory error detector
-==4627== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==4627== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==4627== Command: ./out/MatrixMult.openmp.enableVC.out 200
-==4627== Parent PID: 23577
-==4627== 
-==4627== 
-==4627== HEAP SUMMARY:
-==4627==     in use at exit: 2,072 bytes in 4 blocks
-==4627==   total heap usage: 26 allocs, 22 frees, 3,525,824 bytes allocated
-==4627== 
-==4627== LEAK SUMMARY:
-==4627==    definitely lost: 0 bytes in 0 blocks
-==4627==    indirectly lost: 0 bytes in 0 blocks
-==4627==      possibly lost: 288 bytes in 1 blocks
-==4627==    still reachable: 1,784 bytes in 3 blocks
-==4627==         suppressed: 0 bytes in 0 blocks
-==4627== Rerun with --leak-check=full to see details of leaked memory
-==4627== 
-==4627== For counts of detected and suppressed errors, rerun with: -v
-==4627== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14731== Memcheck, a memory error detector
+==14731== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==14731== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==14731== Command: ./out/MatrixMult.openmp.enableVC.out 200
+==14731== Parent PID: 17012
+==14731== 
+==14731== 
+==14731== HEAP SUMMARY:
+==14731==     in use at exit: 2,072 bytes in 4 blocks
+==14731==   total heap usage: 23 allocs, 19 frees, 2,565,824 bytes allocated
+==14731== 
+==14731== 288 bytes in 1 blocks are possibly lost in loss record 3 of 4
+==14731==    at 0x4C2CC70: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==14731==    by 0x4012E54: allocate_dtv (dl-tls.c:296)
+==14731==    by 0x4012E54: _dl_allocate_tls (dl-tls.c:460)
+==14731==    by 0x5413DA0: allocate_stack (allocatestack.c:589)
+==14731==    by 0x5413DA0: pthread_create@@GLIBC_2.2.5 (pthread_create.c:500)
+==14731==    by 0x4E3F905: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==14731==    by 0x4E3D345: GOMP_parallel_loop_runtime_start (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==14731==    by 0x400CD1: init (MatrixMult.c:94)
+==14731==    by 0x401271: main (MatrixMult.c:564)
+==14731== 
+==14731== LEAK SUMMARY:
+==14731==    definitely lost: 0 bytes in 0 blocks
+==14731==    indirectly lost: 0 bytes in 0 blocks
+==14731==      possibly lost: 288 bytes in 1 blocks
+==14731==    still reachable: 1,784 bytes in 3 blocks
+==14731==         suppressed: 0 bytes in 0 blocks
+==14731== Reachable blocks (those to which a pointer was found) are not shown.
+==14731== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==14731== 
+==14731== For counts of detected and suppressed errors, rerun with: -v
+==14731== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: AuthenticAMD
 cpu family	: 21
@@ -26,7 +38,7 @@ model		: 96
 model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G
 stepping	: 1
 microcode	: 0x600610b
-cpu MHz		: 2100.000
+cpu MHz		: 1800.000
 cache size	: 1024 KB
 physical id	: 0
 siblings	: 4
@@ -40,7 +52,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
 bugs		: fxsave_leak
-bogomips	: 4192.47
+bogomips	: 4192.13
 TLB size	: 1536 4K pages
 clflush size	: 64
 cache_alignment	: 64
@@ -68,7 +80,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
 bugs		: fxsave_leak
-bogomips	: 4192.47
+bogomips	: 4192.13
 TLB size	: 1536 4K pages
 clflush size	: 64
 cache_alignment	: 64
@@ -96,7 +108,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
 bugs		: fxsave_leak
-bogomips	: 4192.47
+bogomips	: 4192.13
 TLB size	: 1536 4K pages
 clflush size	: 64
 cache_alignment	: 64
@@ -110,7 +122,7 @@ model		: 96
 model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G 
 stepping	: 1
 microcode	: 0x600610b
-cpu MHz		: 1800.000
+cpu MHz		: 2100.000
 cache size	: 1024 KB
 physical id	: 0
 siblings	: 4
@@ -124,7 +136,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
 bugs		: fxsave_leak
-bogomips	: 4192.47
+bogomips	: 4192.13
 TLB size	: 1536 4K pages
 clflush size	: 64
 cache_alignment	: 64
