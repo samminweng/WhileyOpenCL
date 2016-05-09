@@ -245,6 +245,10 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			}else if (code instanceof Codes.Update){
 				// The copy is needed as the variable is alive after this code.
 				return false;
+			}else if (code instanceof Codes.Assign){
+				return false; // The copy is not needed due to the register becomes dead
+			}else if (code instanceof Codes.FieldLoad){
+				return false;
 			}
 			throw new RuntimeException("Not implemeneted");
 		}

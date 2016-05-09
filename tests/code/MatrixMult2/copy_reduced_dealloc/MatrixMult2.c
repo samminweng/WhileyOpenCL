@@ -309,10 +309,12 @@ Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP
 	_DECL_OWNERSHIP(_40);
 	//fieldload %11 = %1 width : {int[] data,int height,int width}
 	_11 = b->width;
+	_REMOVE_OWNERSHIP(b);
 	//assign %3 = %11  : int
 	width = _11;
 	//fieldload %12 = %0 height : {int[] data,int height,int width}
 	_12 = a->height;
+	_REMOVE_OWNERSHIP(a);
 	//assign %4 = %12  : int
 	height = _12;
 	//const %13 = 0 : int
@@ -330,8 +332,9 @@ Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP
 	_REMOVE_OWNERSHIP(_15);
 	//fieldload %16 = %0 data : {int[] data,int height,int width}
 	_FREE(_16);
-	_1DARRAY_COPY(_16, a->data);
-	_ADD_OWNERSHIP(_16);
+	_1DARRAY_UPDATE(_16, a->data);
+	_TRANSFER_OWNERSHIP(_16, a);
+	_REMOVE_OWNERSHIP(a);
 	//assign %6 = %16  : int[]
 	_FREE(a_data);
 	_1DARRAY_UPDATE(a_data, _16);
@@ -339,8 +342,9 @@ Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP
 	_REMOVE_OWNERSHIP(_16);
 	//fieldload %17 = %1 data : {int[] data,int height,int width}
 	_FREE(_17);
-	_1DARRAY_COPY(_17, b->data);
-	_ADD_OWNERSHIP(_17);
+	_1DARRAY_UPDATE(_17, b->data);
+	_TRANSFER_OWNERSHIP(_17, b);
+	_REMOVE_OWNERSHIP(b);
 	//assign %7 = %17  : int[]
 	_FREE(b_data);
 	_1DARRAY_UPDATE(b_data, _17);
@@ -717,8 +721,9 @@ print_mat(stdout, _STRUCT_PARAM(C), false);
 	//fieldload %61 = %60 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//fieldload %62 = %3 data : {int[] data,int height,int width}
 	_FREE(_62);
-	_1DARRAY_COPY(_62, C->data);
-	_ADD_OWNERSHIP(_62);
+	_1DARRAY_UPDATE(_62, C->data);
+	_TRANSFER_OWNERSHIP(_62, C);
+	_REMOVE_OWNERSHIP(C);
 	//const %63 = 20 : int
 	_63 = 20;
 	//const %64 = 1 : int

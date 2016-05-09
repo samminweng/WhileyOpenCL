@@ -300,13 +300,19 @@ public class CodeStores {
 	 */
 	public boolean isCompoundType(Type type){
 		// Check if type aliased to INT type.
-		if(type instanceof Type.Array || type instanceof Type.Null){
+		if(type instanceof Type.Array){
 			return true;
 		}else{
+			if(type instanceof Type.Null){
+				return false;
+			}
+			
 			if(isIntType(type) || type instanceof Type.FunctionOrMethod ||
 					type instanceof Type.Bool){
 				return false;			
-			}else if(type instanceof Type.Record){
+			}
+			
+			if(type instanceof Type.Record){
 				Type.Record record = (Type.Record)type;
 				// Check if the variable contains 'printf' field. 
 				long nonePrintFields = record.fields().keySet().stream()
@@ -319,7 +325,9 @@ public class CodeStores {
 				}else{
 					return false;
 				}
-			}else if(type instanceof Type.Nominal){
+			}
+			
+			if(type instanceof Type.Nominal){
 				// Get nominal type
 				Optional<wyil.lang.WyilFile.Type> nominal = Optional.ofNullable(getUserDefinedType(type));
 				if(nominal.isPresent()){
@@ -327,7 +335,9 @@ public class CodeStores {
 				}else{
 					return false;
 				}
-			}else if(type instanceof Type.Union){
+			}
+			
+			if(type instanceof Type.Union){
 				// The record may be null or non-null
 				Optional<Record> record = Optional.ofNullable(getRecordType((Type.Union)type));
 				if(record.isPresent()){

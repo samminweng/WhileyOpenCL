@@ -39,10 +39,12 @@ long long conflict(POS* p, _DECL_OWNERSHIP_PARAM(p), long long row, long long co
 	long long _15;
 	//fieldload %8 = %0 r : {int c,int r}
 	_8 = p->r;
+	_REMOVE_OWNERSHIP(p);
 	//assign %4 = %8  : int
 	r = _8;
 	//fieldload %9 = %0 c : {int c,int r}
 	_9 = p->c;
+	_REMOVE_OWNERSHIP(p);
 	//assign %5 = %9  : int
 	c = _9;
 	//ifeq %4, %1 goto blklab1 : int

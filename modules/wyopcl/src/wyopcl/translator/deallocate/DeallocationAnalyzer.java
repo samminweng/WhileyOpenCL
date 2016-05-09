@@ -115,15 +115,21 @@ public class DeallocationAnalyzer extends Analyzer {
 			Codes.Assign assign = (Codes.Assign)code;
 			int lhs = assign.target(0);
 			int rhs = assign.operand(0);
-						
-			if(isCopyEliminated){
-				// Transfer rhs ownership to lhs 
-				statements.add(indent + transferOwnership(lhs, rhs, function, stores));
-				// Remove rhs ownership
-				statements.add(indent + removeOwnership(rhs, function, stores));
+			
+			// Special case for NULL type ( a = NULL;)
+			if(assign.type(0) instanceof Type.Null){
+				// Remove lhs ownership
+				statements.add(indent + removeOwnership(lhs, function, stores));
 			}else{
-				// Add rhs to ownership set
-				statements.add(indent + addOwnership(lhs, function, stores));
+				if(isCopyEliminated){
+					// Transfer rhs ownership to lhs 
+					statements.add(indent + transferOwnership(lhs, rhs, function, stores));
+					// Remove rhs ownership
+					statements.add(indent + removeOwnership(rhs, function, stores));
+				}else{
+					// Add rhs to ownership set
+					statements.add(indent + addOwnership(lhs, function, stores));
+				}
 			}
 		}else if (code instanceof Codes.IndexOf){
 			Codes.IndexOf indexof = (Codes.IndexOf)code;
@@ -156,6 +162,29 @@ public class DeallocationAnalyzer extends Analyzer {
 				throw new RuntimeException("Not implement");
 			}
 			
+		}else if(code instanceof Codes.FieldLoad){
+			Codes.FieldLoad fieldload = (Codes.FieldLoad)code;
+			int lhs = fieldload.target(0);
+			int rhs = fieldload.operand(0);
+			
+			if(isCopyEliminated){
+				statements.add(indent + transferOwnership(lhs, rhs, function, stores));
+				statements.add(indent + removeOwnership(rhs, function, stores));
+			}else{
+				// Assign ownership to lhs variable if the rhs variable is copied.
+				statements.add(indent + addOwnership(lhs, function, stores));
+			}			
+		}else if(code instanceof Codes.NewRecord){
+			Codes.NewRecord nr = (Codes.NewRecord)code;
+			int lhs = nr.target(0);
+			int rhs = nr.operand(0);
+			if(isCopyEliminated){
+				statements.add(indent + transferOwnership(lhs, rhs, function, stores));
+				statements.add(indent + removeOwnership(rhs, function, stores));
+			}else{
+				// Assign ownership to lhs variable if the rhs variable is copied.
+				statements.add(indent + addOwnership(lhs, function, stores));
+			}
 		}else{
 			throw new RuntimeException("Not implemented");
 		}

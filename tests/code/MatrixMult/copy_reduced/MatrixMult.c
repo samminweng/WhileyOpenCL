@@ -129,7 +129,7 @@ Matrix* multiply(Matrix* A, Matrix* B){
 				//indexof %22 = %21, %7 : int[]
 				_22=_21[k];
 				//fieldload %23 = %1 data : {int[][] data,int height,int width}
-				_2DARRAY_COPY(_23, B->data);
+				_2DARRAY_UPDATE(_23, B->data);
 				//indexof %24 = %23, %7 : int[][]
 				_24=_23[k];
 				//indexof %25 = %24, %5 : int[]

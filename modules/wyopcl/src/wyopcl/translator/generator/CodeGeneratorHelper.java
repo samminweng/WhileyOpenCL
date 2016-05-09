@@ -121,13 +121,15 @@ public final class CodeGeneratorHelper {
 			if(isCopyEliminated || !stores.isCompoundType(type)){
 				statement.add(indent + lhs + " = "+ rhs+";");
 			}else{
-				statement.add(indent + lhs + " = copy_" + CodeGeneratorHelper.translateType(type, stores).replace("*", "")+"("+rhs+");");
+				statement.add(indent + lhs + " = copy_" + translateType(type, stores).replace("*", "")+"("+rhs+");");
 			}
 		}
 		
 		return statement;
 	}
 
+	
+	
 	/**
 	 * Given a structure, generate 'copy_*' function to make a copy of the structure, e.g. 
 	 * <pre><code>
