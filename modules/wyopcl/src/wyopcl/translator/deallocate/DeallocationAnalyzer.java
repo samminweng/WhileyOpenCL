@@ -17,9 +17,8 @@ import wyopcl.translator.generator.CodeGeneratorHelper;
 import wyopcl.translator.generator.CodeStores;
 
 /**
- * Deallocation Analyzer computes ownerships for a variety of code type, and
- * produce the code of adding, removing or transferring ownership so that it is
- * added to the generated C code.
+ * Deallocation Analyzer computes ownerships for a variety of code type, and produce the code of adding, removing or
+ * transferring ownership so that it is added to the generated C code.
  * 
  * 
  * @author Min-Hsien Weng
@@ -42,9 +41,8 @@ public class DeallocationAnalyzer extends Analyzer {
     }
 
     /**
-     * Get a list of ownership variables and generate the code to free all of
-     * them Note that the deallocation of function input parameters are skipped
-     * by default. Thus, the deallocation releases all the local variables,
+     * Get a list of ownership variables and generate the code to free all of them Note that the deallocation of
+     * function input parameters are skipped by default. Thus, the deallocation releases all the local variables,
      * excluding input parameters.
      *
      * @param code
@@ -85,12 +83,10 @@ public class DeallocationAnalyzer extends Analyzer {
     /**
      * Given a code, compute the ownerships and return the generated C code.
      * 
-     * Note the lhs variable in an assignment is not always added with
-     * ownership.
+     * Note the lhs variable in an assignment is not always added with ownership.
      * 
-     * If the lhs variable points to an array element, then its ownership is
-     * transferred out. Because the array variable owns the ownership, other
-     * variables that point to the array lost the ownership. For example,
+     * If the lhs variable points to an array element, then its ownership is transferred out. Because the array variable
+     * owns the ownership, other variables that point to the array lost the ownership. For example,
      * 
      * <pre>
      * <code> a = b[i]; // Access the array element a_has_ownership = false; 
@@ -193,8 +189,7 @@ public class DeallocationAnalyzer extends Analyzer {
 		statements.add(indent + transferOwnership(lhs, rhs, function, stores));
 		statements.add(indent + removeOwnership(rhs, function, stores));
 	    } else {
-		// Assign ownership to lhs variable if the rhs variable is
-		// copied.
+		// Assign ownership to lhs variable if the rhs variable is copied.
 		statements.add(indent + addOwnership(lhs, function, stores));
 	    }
 	} else if (code instanceof Codes.Const) {
@@ -205,7 +200,13 @@ public class DeallocationAnalyzer extends Analyzer {
 		// Remove lhs ownership as it points to NULL
 		statements.add(indent + removeOwnership(lhs, function, stores));
 	    }
-
+	} else if (code instanceof Codes.NewArray) {
+	    Codes.NewArray na = (Codes.NewArray) code;
+	    int lhs = na.target(0);
+	    if (na.operands().length > 0) {
+		// Create an non-empty array, and add lhs variable to ownership set.
+		statements.add(indent + addOwnership(lhs, function, stores));
+	    }
 	} else {
 	    throw new RuntimeException("Not implemented");
 	}
@@ -217,8 +218,7 @@ public class DeallocationAnalyzer extends Analyzer {
     /**
      * Compute the ownership for each parameter of a function call,
      * 
-     * If the parameter ownership is transferred to the calling function, then
-     * its ownership is removed. For example,
+     * If the parameter ownership is transferred to the calling function, then its ownership is removed. For example,
      * 
      * <pre>
      * <code>
@@ -293,8 +293,7 @@ public class DeallocationAnalyzer extends Analyzer {
     }
 
     /**
-     * Transfer rhs's ownership to lhs's ownership for an assignment a = b;
-     * a_has_ownership = b_has_ownership
+     * Transfer rhs's ownership to lhs's ownership for an assignment a = b; a_has_ownership = b_has_ownership
      * 
      * @param lhs
      *            register
@@ -313,9 +312,8 @@ public class DeallocationAnalyzer extends Analyzer {
     }
 
     /**
-     * Return parameter ownership in the caller. If deallocation is enabled,
-     * then pass the ownership to a function. The ownership value are based on
-     * based on the following rules, e.g. a function call 'a = f(b, b_own_f)',
+     * Return parameter ownership in the caller. If deallocation is enabled, then pass the ownership to a function. The
+     * ownership value are based on based on the following rules, e.g. a function call 'a = f(b, b_own_f)',
      * 
      * <table>
      * <thead>
@@ -383,8 +381,7 @@ public class DeallocationAnalyzer extends Analyzer {
      * 
      * @param type
      * @param copyAnalyzer
-     * @return a hashmap that contains caller's ownership and callee's ownership
-     *         for a parameter.
+     * @return a hashmap that contains caller's ownership and callee's ownership for a parameter.
      */
     public Optional<HashMap<String, Boolean>> computeCallParameterOwnership(int register, Codes.Invoke code,
 	    FunctionOrMethod function, CodeStores stores, Optional<CopyEliminationAnalyzer> copyAnalyzer) {
@@ -446,8 +443,7 @@ public class DeallocationAnalyzer extends Analyzer {
      * </code>
      * </pre>
      * 
-     * where 'a' is a board and 'a_has_ownership' flag indicates whether 'a'
-     * owns an object.
+     * where 'a' is a board and 'a_has_ownership' flag indicates whether 'a' owns an object.
      * 
      * @param var
      * @param type

@@ -1,60 +1,60 @@
-==23976== Memcheck, a memory error detector
-==23976== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==23976== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==23976== Command: ./out/MatrixMult.openmp.enableVC.out 400
-==23976== Parent PID: 8736
-==23976== 
-==23976== 
-==23976== HEAP SUMMARY:
-==23976==     in use at exit: 2,072 bytes in 4 blocks
-==23976==   total heap usage: 23 allocs, 19 frees, 10,245,824 bytes allocated
-==23976== 
-==23976== 24 bytes in 1 blocks are still reachable in loss record 1 of 4
-==23976==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==23976==    by 0x4C2CF1F: realloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==23976==    by 0x4E3B7F8: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==23976==    by 0x4E3F9FA: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==23976==    by 0x4E3D345: GOMP_parallel_loop_runtime_start (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==23976==    by 0x400CD1: init (MatrixMult.c:94)
-==23976==    by 0x401271: main (MatrixMult.c:564)
-==23976== 
-==23976== 192 bytes in 1 blocks are still reachable in loss record 2 of 4
-==23976==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==23976==    by 0x4E3B7A8: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==23976==    by 0x4E3FB8E: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==23976==    by 0x4E3D345: GOMP_parallel_loop_runtime_start (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==23976==    by 0x400CD1: init (MatrixMult.c:94)
-==23976==    by 0x401271: main (MatrixMult.c:564)
-==23976== 
-==23976== 288 bytes in 1 blocks are possibly lost in loss record 3 of 4
-==23976==    at 0x4C2CC70: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==23976==    by 0x4012E54: allocate_dtv (dl-tls.c:296)
-==23976==    by 0x4012E54: _dl_allocate_tls (dl-tls.c:460)
-==23976==    by 0x5413DA0: allocate_stack (allocatestack.c:589)
-==23976==    by 0x5413DA0: pthread_create@@GLIBC_2.2.5 (pthread_create.c:500)
-==23976==    by 0x4E3F905: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==23976==    by 0x4E3D345: GOMP_parallel_loop_runtime_start (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==23976==    by 0x400CD1: init (MatrixMult.c:94)
-==23976==    by 0x401271: main (MatrixMult.c:564)
-==23976== 
-==23976== 1,568 bytes in 1 blocks are still reachable in loss record 4 of 4
-==23976==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==23976==    by 0x4E3B7A8: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==23976==    by 0x4E3F4D5: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==23976==    by 0x4E3C5FC: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==23976==    by 0x4E3D345: GOMP_parallel_loop_runtime_start (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==23976==    by 0x401023: mat_mult (MatrixMult.c:342)
-==23976==    by 0x401291: main (MatrixMult.c:582)
-==23976== 
-==23976== LEAK SUMMARY:
-==23976==    definitely lost: 0 bytes in 0 blocks
-==23976==    indirectly lost: 0 bytes in 0 blocks
-==23976==      possibly lost: 288 bytes in 1 blocks
-==23976==    still reachable: 1,784 bytes in 3 blocks
-==23976==         suppressed: 0 bytes in 0 blocks
-==23976== 
-==23976== For counts of detected and suppressed errors, rerun with: -v
-==23976== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==10247== Memcheck, a memory error detector
+==10247== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==10247== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==10247== Command: ./out/MatrixMult.openmp.enableVC.out 400
+==10247== Parent PID: 4043
+==10247== 
+==10247== 
+==10247== HEAP SUMMARY:
+==10247==     in use at exit: 2,072 bytes in 4 blocks
+==10247==   total heap usage: 23 allocs, 19 frees, 10,245,824 bytes allocated
+==10247== 
+==10247== 24 bytes in 1 blocks are still reachable in loss record 1 of 4
+==10247==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10247==    by 0x4C2CF1F: realloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10247==    by 0x4E3B7F8: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==10247==    by 0x4E3F9FA: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==10247==    by 0x4E3D345: GOMP_parallel_loop_runtime_start (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==10247==    by 0x400CD1: init (MatrixMult.c:94)
+==10247==    by 0x401271: main (MatrixMult.c:564)
+==10247== 
+==10247== 192 bytes in 1 blocks are still reachable in loss record 2 of 4
+==10247==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10247==    by 0x4E3B7A8: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==10247==    by 0x4E3FB8E: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==10247==    by 0x4E3D345: GOMP_parallel_loop_runtime_start (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==10247==    by 0x400CD1: init (MatrixMult.c:94)
+==10247==    by 0x401271: main (MatrixMult.c:564)
+==10247== 
+==10247== 288 bytes in 1 blocks are possibly lost in loss record 3 of 4
+==10247==    at 0x4C2CC70: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10247==    by 0x4012E54: allocate_dtv (dl-tls.c:296)
+==10247==    by 0x4012E54: _dl_allocate_tls (dl-tls.c:460)
+==10247==    by 0x5413DA0: allocate_stack (allocatestack.c:589)
+==10247==    by 0x5413DA0: pthread_create@@GLIBC_2.2.5 (pthread_create.c:500)
+==10247==    by 0x4E3F905: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==10247==    by 0x4E3D345: GOMP_parallel_loop_runtime_start (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==10247==    by 0x400CD1: init (MatrixMult.c:94)
+==10247==    by 0x401271: main (MatrixMult.c:564)
+==10247== 
+==10247== 1,568 bytes in 1 blocks are still reachable in loss record 4 of 4
+==10247==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10247==    by 0x4E3B7A8: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==10247==    by 0x4E3F4D5: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==10247==    by 0x4E3C5FC: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==10247==    by 0x4E3D345: GOMP_parallel_loop_runtime_start (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==10247==    by 0x401023: mat_mult (MatrixMult.c:342)
+==10247==    by 0x401291: main (MatrixMult.c:582)
+==10247== 
+==10247== LEAK SUMMARY:
+==10247==    definitely lost: 0 bytes in 0 blocks
+==10247==    indirectly lost: 0 bytes in 0 blocks
+==10247==      possibly lost: 288 bytes in 1 blocks
+==10247==    still reachable: 1,784 bytes in 3 blocks
+==10247==         suppressed: 0 bytes in 0 blocks
+==10247== 
+==10247== For counts of detected and suppressed errors, rerun with: -v
+==10247== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: AuthenticAMD
 cpu family	: 21
@@ -62,7 +62,7 @@ model		: 96
 model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G
 stepping	: 1
 microcode	: 0x600610b
-cpu MHz		: 1400.000
+cpu MHz		: 1800.000
 cache size	: 1024 KB
 physical id	: 0
 siblings	: 4
@@ -76,7 +76,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
 bugs		: fxsave_leak
-bogomips	: 4192.10
+bogomips	: 4192.08
 TLB size	: 1536 4K pages
 clflush size	: 64
 cache_alignment	: 64
@@ -104,7 +104,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
 bugs		: fxsave_leak
-bogomips	: 4192.10
+bogomips	: 4192.08
 TLB size	: 1536 4K pages
 clflush size	: 64
 cache_alignment	: 64
@@ -132,7 +132,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
 bugs		: fxsave_leak
-bogomips	: 4192.10
+bogomips	: 4192.08
 TLB size	: 1536 4K pages
 clflush size	: 64
 cache_alignment	: 64
@@ -160,7 +160,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
 bugs		: fxsave_leak
-bogomips	: 4192.10
+bogomips	: 4192.08
 TLB size	: 1536 4K pages
 clflush size	: 64
 cache_alignment	: 64

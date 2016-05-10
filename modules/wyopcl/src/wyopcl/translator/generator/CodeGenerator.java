@@ -733,7 +733,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	    });
 
 	    // call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
-	    statement.add(translateLHSFunctionCall(code, function) + code.name.name() + "(" 
+	    statement.add(translateLHSFunctionCall(code, function) + code.name.name() + "("
 		    + translateRHSFunctionCall(code, function) + ");");
 
 	}
@@ -1121,23 +1121,24 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	Type lhs_type = stores.getRawType(code.target(0), function);
 	List<String> statement = new ArrayList<String>();
 	int length = code.operands().length;
+
 	if (length > 0) {
 	    // Free lhs variable
-	    this.deallocatedAnalyzer
-		    .ifPresent(a -> statement.add(indent + a.addDeallocatedCode(lhs, lhs_type, stores)));
+	    this.deallocatedAnalyzer.ifPresent(a -> {
+		statement.add(indent + a.addDeallocatedCode(lhs, lhs_type, stores));
+	    });
 	    statement.add(indent + "_NEW_ARRAY(" + lhs + ", " + length + ");");
-
 	    String s = indent;
 	    // Initialize the array
 	    for (int i = 0; i < code.operands().length; i++) {
 		s += lhs + "[" + i + "] = " + stores.getVar(code.operand(i), function) + "; ";
 	    }
 	    statement.add(s);
-	    // Add lhs variable to ownership set.
-	    this.deallocatedAnalyzer
-		    .ifPresent(a -> statement.add(indent + a.addOwnership(code.target(0), function, stores)));
 	}
-
+	
+	this.deallocatedAnalyzer.ifPresent(a -> {
+	    statement.addAll(a.computeOwnership(false, code, function, stores));
+	});
 	stores.addAllStatements(code, statement, function);
     }
 
