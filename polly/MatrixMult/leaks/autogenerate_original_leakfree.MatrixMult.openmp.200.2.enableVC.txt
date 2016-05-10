@@ -1,60 +1,60 @@
-==10163== Memcheck, a memory error detector
-==10163== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==10163== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==10163== Command: ./out/MatrixMult.openmp.enableVC.out 200
-==10163== Parent PID: 4043
-==10163== 
-==10163== 
-==10163== HEAP SUMMARY:
-==10163==     in use at exit: 2,072 bytes in 4 blocks
-==10163==   total heap usage: 23 allocs, 19 frees, 2,565,824 bytes allocated
-==10163== 
-==10163== 24 bytes in 1 blocks are still reachable in loss record 1 of 4
-==10163==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==10163==    by 0x4C2CF1F: realloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==10163==    by 0x4E3B7F8: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==10163==    by 0x4E3F9FA: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==10163==    by 0x4E3D345: GOMP_parallel_loop_runtime_start (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==10163==    by 0x400CD1: init (MatrixMult.c:94)
-==10163==    by 0x401271: main (MatrixMult.c:564)
-==10163== 
-==10163== 192 bytes in 1 blocks are still reachable in loss record 2 of 4
-==10163==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==10163==    by 0x4E3B7A8: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==10163==    by 0x4E3FB8E: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==10163==    by 0x4E3D345: GOMP_parallel_loop_runtime_start (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==10163==    by 0x400CD1: init (MatrixMult.c:94)
-==10163==    by 0x401271: main (MatrixMult.c:564)
-==10163== 
-==10163== 288 bytes in 1 blocks are possibly lost in loss record 3 of 4
-==10163==    at 0x4C2CC70: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==10163==    by 0x4012E54: allocate_dtv (dl-tls.c:296)
-==10163==    by 0x4012E54: _dl_allocate_tls (dl-tls.c:460)
-==10163==    by 0x5413DA0: allocate_stack (allocatestack.c:589)
-==10163==    by 0x5413DA0: pthread_create@@GLIBC_2.2.5 (pthread_create.c:500)
-==10163==    by 0x4E3F905: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==10163==    by 0x4E3D345: GOMP_parallel_loop_runtime_start (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==10163==    by 0x400CD1: init (MatrixMult.c:94)
-==10163==    by 0x401271: main (MatrixMult.c:564)
-==10163== 
-==10163== 1,568 bytes in 1 blocks are still reachable in loss record 4 of 4
-==10163==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==10163==    by 0x4E3B7A8: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==10163==    by 0x4E3F4D5: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==10163==    by 0x4E3C5FC: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==10163==    by 0x4E3D345: GOMP_parallel_loop_runtime_start (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-==10163==    by 0x401023: mat_mult (MatrixMult.c:342)
-==10163==    by 0x401291: main (MatrixMult.c:582)
-==10163== 
-==10163== LEAK SUMMARY:
-==10163==    definitely lost: 0 bytes in 0 blocks
-==10163==    indirectly lost: 0 bytes in 0 blocks
-==10163==      possibly lost: 288 bytes in 1 blocks
-==10163==    still reachable: 1,784 bytes in 3 blocks
-==10163==         suppressed: 0 bytes in 0 blocks
-==10163== 
-==10163== For counts of detected and suppressed errors, rerun with: -v
-==10163== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==13405== Memcheck, a memory error detector
+==13405== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==13405== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==13405== Command: ./out/MatrixMult.openmp.enableVC.out 200
+==13405== Parent PID: 4043
+==13405== 
+==13405== 
+==13405== HEAP SUMMARY:
+==13405==     in use at exit: 2,072 bytes in 4 blocks
+==13405==   total heap usage: 23 allocs, 19 frees, 2,565,824 bytes allocated
+==13405== 
+==13405== 24 bytes in 1 blocks are still reachable in loss record 1 of 4
+==13405==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13405==    by 0x4C2CF1F: realloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13405==    by 0x4E3B7F8: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==13405==    by 0x4E3F9FA: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==13405==    by 0x4E3D345: GOMP_parallel_loop_runtime_start (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==13405==    by 0x400CD1: init (MatrixMult.c:94)
+==13405==    by 0x401271: main (MatrixMult.c:564)
+==13405== 
+==13405== 192 bytes in 1 blocks are still reachable in loss record 2 of 4
+==13405==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13405==    by 0x4E3B7A8: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==13405==    by 0x4E3FB8E: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==13405==    by 0x4E3D345: GOMP_parallel_loop_runtime_start (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==13405==    by 0x400CD1: init (MatrixMult.c:94)
+==13405==    by 0x401271: main (MatrixMult.c:564)
+==13405== 
+==13405== 288 bytes in 1 blocks are possibly lost in loss record 3 of 4
+==13405==    at 0x4C2CC70: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13405==    by 0x4012E54: allocate_dtv (dl-tls.c:296)
+==13405==    by 0x4012E54: _dl_allocate_tls (dl-tls.c:460)
+==13405==    by 0x5413DA0: allocate_stack (allocatestack.c:589)
+==13405==    by 0x5413DA0: pthread_create@@GLIBC_2.2.5 (pthread_create.c:500)
+==13405==    by 0x4E3F905: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==13405==    by 0x4E3D345: GOMP_parallel_loop_runtime_start (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==13405==    by 0x400CD1: init (MatrixMult.c:94)
+==13405==    by 0x401271: main (MatrixMult.c:564)
+==13405== 
+==13405== 1,568 bytes in 1 blocks are still reachable in loss record 4 of 4
+==13405==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13405==    by 0x4E3B7A8: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==13405==    by 0x4E3F4D5: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==13405==    by 0x4E3C5FC: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==13405==    by 0x4E3D345: GOMP_parallel_loop_runtime_start (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==13405==    by 0x401023: mat_mult (MatrixMult.c:342)
+==13405==    by 0x401291: main (MatrixMult.c:582)
+==13405== 
+==13405== LEAK SUMMARY:
+==13405==    definitely lost: 0 bytes in 0 blocks
+==13405==    indirectly lost: 0 bytes in 0 blocks
+==13405==      possibly lost: 288 bytes in 1 blocks
+==13405==    still reachable: 1,784 bytes in 3 blocks
+==13405==         suppressed: 0 bytes in 0 blocks
+==13405== 
+==13405== For counts of detected and suppressed errors, rerun with: -v
+==13405== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: AuthenticAMD
 cpu family	: 21
@@ -62,7 +62,7 @@ model		: 96
 model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G
 stepping	: 1
 microcode	: 0x600610b
-cpu MHz		: 1400.000
+cpu MHz		: 2100.000
 cache size	: 1024 KB
 physical id	: 0
 siblings	: 4
@@ -90,7 +90,7 @@ model		: 96
 model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G 
 stepping	: 1
 microcode	: 0x600610b
-cpu MHz		: 1800.000
+cpu MHz		: 2100.000
 cache size	: 1024 KB
 physical id	: 0
 siblings	: 4
@@ -118,7 +118,7 @@ model		: 96
 model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G 
 stepping	: 1
 microcode	: 0x600610b
-cpu MHz		: 2100.000
+cpu MHz		: 1400.000
 cache size	: 1024 KB
 physical id	: 0
 siblings	: 4
@@ -146,7 +146,7 @@ model		: 96
 model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G 
 stepping	: 1
 microcode	: 0x600610b
-cpu MHz		: 1400.000
+cpu MHz		: 1800.000
 cache size	: 1024 KB
 physical id	: 0
 siblings	: 4

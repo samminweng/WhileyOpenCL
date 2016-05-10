@@ -274,11 +274,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	String indent = stores.getIndent(function);
 	if (code.constant.type() instanceof Type.Null) {
 	    statement.add(indent + lhs + " = NULL;");
-	    // Compute the ownership
-	    this.deallocatedAnalyzer.ifPresent(a -> {
-		statement.addAll(a.computeOwnership(true, code, function, stores));
-	    });
-
 	} else {
 	    if (code.constant.type() instanceof Type.Array) {
 		// Cast the constant to an array
@@ -299,12 +294,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Add a statement
 		statement.add(indent + lhs + " = " + code.constant + ";");
 	    }
-
-	    // Add lhs to ownership
-	    this.deallocatedAnalyzer
-		    .ifPresent(a -> statement.add(indent + a.addOwnership(code.target(), function, stores)));
-
 	}
+
+	// Compute the ownership
+	this.deallocatedAnalyzer.ifPresent(a -> {
+	    statement.addAll(a.computeOwnership(true, code, function, stores));
+	});
 
 	stores.addAllStatements(code, statement, function);
     }
@@ -1135,7 +1130,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	    }
 	    statement.add(s);
 	}
-	
+
 	this.deallocatedAnalyzer.ifPresent(a -> {
 	    statement.addAll(a.computeOwnership(false, code, function, stores));
 	});

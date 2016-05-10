@@ -199,6 +199,9 @@ public class DeallocationAnalyzer extends Analyzer {
 	    if (c.constant.type() instanceof Type.Null) {
 		// Remove lhs ownership as it points to NULL
 		statements.add(indent + removeOwnership(lhs, function, stores));
+	    }else{
+		 // Add lhs to ownership
+		statements.add(indent + addOwnership(lhs, function, stores));
 	    }
 	} else if (code instanceof Codes.NewArray) {
 	    Codes.NewArray na = (Codes.NewArray) code;
