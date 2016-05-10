@@ -1,18 +1,18 @@
-==20170== Memcheck, a memory error detector
-==20170== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==20170== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==20170== Command: ./out/MatrixMult.polly.enableVC.out 200
-==20170== Parent PID: 4043
-==20170== 
-==20170== 
-==20170== HEAP SUMMARY:
-==20170==     in use at exit: 0 bytes in 0 blocks
-==20170==   total heap usage: 17 allocs, 17 frees, 2,560,616 bytes allocated
-==20170== 
-==20170== All heap blocks were freed -- no leaks are possible
-==20170== 
-==20170== For counts of detected and suppressed errors, rerun with: -v
-==20170== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==23310== Memcheck, a memory error detector
+==23310== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==23310== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==23310== Command: ./out/MatrixMult.polly.enableVC.out 200
+==23310== Parent PID: 4043
+==23310== 
+==23310== 
+==23310== HEAP SUMMARY:
+==23310==     in use at exit: 0 bytes in 0 blocks
+==23310==   total heap usage: 17 allocs, 17 frees, 2,560,616 bytes allocated
+==23310== 
+==23310== All heap blocks were freed -- no leaks are possible
+==23310== 
+==23310== For counts of detected and suppressed errors, rerun with: -v
+==23310== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: AuthenticAMD
 cpu family	: 21
@@ -20,7 +20,7 @@ model		: 96
 model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G
 stepping	: 1
 microcode	: 0x600610b
-cpu MHz		: 2100.000
+cpu MHz		: 1400.000
 cache size	: 1024 KB
 physical id	: 0
 siblings	: 4
@@ -48,7 +48,7 @@ model		: 96
 model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G 
 stepping	: 1
 microcode	: 0x600610b
-cpu MHz		: 1800.000
+cpu MHz		: 2100.000
 cache size	: 1024 KB
 physical id	: 0
 siblings	: 4
@@ -76,7 +76,7 @@ model		: 96
 model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G 
 stepping	: 1
 microcode	: 0x600610b
-cpu MHz		: 1800.000
+cpu MHz		: 1400.000
 cache size	: 1024 KB
 physical id	: 0
 siblings	: 4
