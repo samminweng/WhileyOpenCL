@@ -215,6 +215,11 @@ public class DeallocationAnalyzer extends Analyzer {
 		// Create an non-empty array, and add lhs variable to ownership set.
 		statements.add(indent + addOwnership(lhs, function, stores));
 	    }
+	} else if(code instanceof Codes.ArrayGenerator){
+	    Codes.ArrayGenerator ag = (Codes.ArrayGenerator)code;
+	    int lhs = ag.target(0);
+	    // Assign ownership to lhs variable.
+	    statements.add(indent + addOwnership(lhs, function, stores));
 	} else {
 	    throw new RuntimeException("Not implemented");
 	}

@@ -1528,32 +1528,35 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	List<String> statement = new ArrayList<String>();
 
 	// Deallocate lhs variable
-	this.deallocatedAnalyzer
-		.ifPresent(a -> statement.add(indent + a.addDeallocatedCode(lhs, code.type(0), stores)));
+	this.deallocatedAnalyzer.ifPresent(a ->{
+	    statement.add(indent + a.addDeallocatedCode(lhs, code.type(0), stores));
+	});
+	
 	Type elm_type = stores.getArrayElementType(lhs_type);
-
+	boolean isCopyEliminated;
 	if (stores.isIntType(elm_type)) {
 	    // Generate array of integers
 	    int dimension = stores.getArrayDimension(lhs_type);
 	    // Generate the array with size and values.
 	    statement.add(indent + "_GEN_" + dimension + "DARRAY(" + lhs + ", " + size + ", " + rhs + ");");
+	    isCopyEliminated = true;
 	} else {
 	    // Generate array of structures
 	    String translateType = CodeGeneratorHelper.translateType(lhs_type.element(), stores);
 	    // _a = malloc(n*sizeof(POS));
 	    statement.add(indent + lhs + " = malloc(" + size + "*sizeof(" + translateType + "));");
-	    // copy the rhs to each element in
-	    // for(int _a_i =0;_a_i<n;_a_i++){ _a[_a_i] = copy_POS(b);}
+	    // copy the rhs to each element for(int _a_i =0;_a_i<n;_a_i++){ _a[_a_i] = copy_POS(b);}
 	    String arr_i = lhs + "_i";
 	    statement.add(indent + "for(int " + arr_i + "=0;" + arr_i + "<" + size + ";" + arr_i + "++){" + lhs + "["
 		    + arr_i + "] = copy_" + translateType.replace("*", "") + "(" + rhs + ");" + "}");
 	    // _a_size = n;
 	    statement.add(indent + lhs + "_size = " + size + ";");
+	    isCopyEliminated = false;
 	}
 
-	// Assign ownership to lhs variable.
-	this.deallocatedAnalyzer
-		.ifPresent(a -> statement.add(indent + a.addOwnership(code.target(0), function, stores)));
+	this.deallocatedAnalyzer.ifPresent(a ->{
+	    statement.addAll(a.computeOwnership(isCopyEliminated, code, function, stores));
+	});
 
 	stores.addAllStatements(code, statement, function);
     }
