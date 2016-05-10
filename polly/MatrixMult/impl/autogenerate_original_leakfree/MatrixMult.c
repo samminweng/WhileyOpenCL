@@ -526,6 +526,7 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_63);
 	_DECL_OWNERSHIP(_63);
 	//fieldload %7 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	_FREE2DArray(_7);
 	_CONV_ARGS(_7);
 	_ADD_OWNERSHIP(_7);
 	//const %8 = 0 : int

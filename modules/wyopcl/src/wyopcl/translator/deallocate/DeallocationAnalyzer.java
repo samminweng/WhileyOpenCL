@@ -172,14 +172,19 @@ public class DeallocationAnalyzer extends Analyzer {
 	} else if (code instanceof Codes.FieldLoad) {
 	    Codes.FieldLoad fieldload = (Codes.FieldLoad) code;
 	    int lhs = fieldload.target(0);
-	    // int rhs = fieldload.operand(0);
-	    if (isCopyEliminated) {
-		// That means 'fieldload' access one member
-		// rhs ownership could be changed. But remove lhs ownership
-		statements.add(indent + removeOwnership(lhs, function, stores));
-	    } else {
-		// Assign ownership to lhs variable.
+	    if (fieldload.field.equals("args")) {
+		// Add ownership to lhs register
 		statements.add(indent + addOwnership(lhs, function, stores));
+	    } else {
+		// int rhs = fieldload.operand(0);
+		if (isCopyEliminated) {
+		    // That means 'fieldload' access one member
+		    // rhs ownership could be changed. But remove lhs ownership
+		    statements.add(indent + removeOwnership(lhs, function, stores));
+		} else {
+		    // Assign ownership to lhs variable.
+		    statements.add(indent + addOwnership(lhs, function, stores));
+		}
 	    }
 	} else if (code instanceof Codes.NewRecord) {
 	    Codes.NewRecord nr = (Codes.NewRecord) code;
@@ -199,8 +204,8 @@ public class DeallocationAnalyzer extends Analyzer {
 	    if (c.constant.type() instanceof Type.Null) {
 		// Remove lhs ownership as it points to NULL
 		statements.add(indent + removeOwnership(lhs, function, stores));
-	    }else{
-		 // Add lhs to ownership
+	    } else {
+		// Add lhs to ownership
 		statements.add(indent + addOwnership(lhs, function, stores));
 	    }
 	} else if (code instanceof Codes.NewArray) {

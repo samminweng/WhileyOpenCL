@@ -1174,31 +1174,30 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	    stores.loadField(code.target(0), field, function);
 	} else {
 	    String lhs = stores.getVar(code.target(0), function);
+	    Type lhs_type = stores.getRawType(code.target(0), function);
 	    String indent = stores.getIndent(function);
-	    if (field.equals("args")) {
-		// Convert the arguments into an array of integer array (long
-		// long**).
-		statement.add(indent + "_CONV_ARGS(" + lhs + ");");
-		// Add ownership.
-		this.deallocatedAnalyzer
-			.ifPresent(a -> statement.add(indent + a.addOwnership(code.target(0), function, stores)));
-	    } else {
-		Type lhs_type = stores.getRawType(code.target(0), function);
-		String rhs = stores.getVar(code.operand(0), function) + "->" + code.field;
-		// Free lhs variable
-		this.deallocatedAnalyzer.ifPresent(a -> {
-		    statement.add(indent + a.addDeallocatedCode(lhs, lhs_type, stores));
-		});
+	    // Free lhs variable
+	    this.deallocatedAnalyzer.ifPresent(a -> {
+		statement.add(indent + a.addDeallocatedCode(lhs, lhs_type, stores));
+	    });
 
-		boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
-		// Copy the field data and assign it to the lhs
+	    boolean isCopyEliminated;
+	    if (field.equals("args")) {
+		// Convert the arguments into an array of integer array (long long**).
+		statement.add(indent + "_CONV_ARGS(" + lhs + ");");
+		isCopyEliminated = false;
+	    } else {
+		String rhs = stores.getVar(code.operand(0), function) + "->" + code.field;
+		isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
+		// Generate copy/uncopy assignment code
 		statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, indent, lhs, rhs,
 			isCopyEliminated, stores));
-		// Compute ownership
-		this.deallocatedAnalyzer.ifPresent(a -> {
-		    statement.addAll(a.computeOwnership(isCopyEliminated, code, function, stores));
-		});
 	    }
+
+	    // Compute ownership
+	    this.deallocatedAnalyzer.ifPresent(a -> {
+		statement.addAll(a.computeOwnership(isCopyEliminated, code, function, stores));
+	    });
 	}
 	stores.addAllStatements(code, statement, function);
     }
