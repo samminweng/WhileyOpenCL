@@ -24,15 +24,17 @@ import wyopcl.translator.generator.CodeStores;
 
 
 /**
+ * Deallocation Analyzer computes ownerships for a variety of code type, and produce
+ * the code of adding, removing or transferring ownership so that it is added to the
+ * generated C code. 
+ * 
  * 
  * @author Min-Hsien Weng
  *
  */
 public class DeallocationAnalyzer extends Analyzer {
-	private HashMap<FunctionOrMethod, OwnershipVariables> ownerships;
 	public DeallocationAnalyzer(Configuration config){
 		super(config);
-		this.ownerships = new HashMap<FunctionOrMethod, OwnershipVariables>();
 	}
 	
 	public String declareOwnershipVar(String indent, int register, FunctionOrMethod function, CodeStores stores ){
@@ -208,7 +210,6 @@ public class DeallocationAnalyzer extends Analyzer {
 		Type type = stores.getRawType(register, function);
 		if(stores.isCompoundType(type) || type instanceof Type.Union){
 			String var = stores.getVar(register, function);
-			this.ownerships.get(function).addOwnership(register);
 			return "_ADD_OWNERSHIP("+var+");";
 		}
 		return "";
@@ -223,7 +224,6 @@ public class DeallocationAnalyzer extends Analyzer {
 		Type type = stores.getRawType(register, function);
 		if(stores.isCompoundType(type)|| type instanceof Type.Union){
 			String var = stores.getVar(register, function);
-			this.ownerships.get(function).removeOwnership(register);
 			return "_REMOVE_OWNERSHIP("+var+");";
 		}
 		return "";
@@ -244,7 +244,6 @@ public class DeallocationAnalyzer extends Analyzer {
 		if(stores.isCompoundType(type)|| type instanceof Type.Union){
 			String lhs_var = stores.getVar(lhs, function);
 			String rhs_var = stores.getVar(rhs, function);
-			//this.ownerships.get(function).removeOwnership(register);
 			return "_TRANSFER_OWNERSHIP("+lhs_var+", "+rhs_var+");";
 		}
 		return "";
@@ -387,13 +386,6 @@ public class DeallocationAnalyzer extends Analyzer {
 	@Override
 	public void apply(WyilFile module) {
 		super.apply(module);
-		
-		for(FunctionOrMethod function: module.functionOrMethods()){
-			if(!this.ownerships.containsKey(function)){
-				this.ownerships.put(function, new OwnershipVariables());
-			}
-		}
-		
 	}
 	
 }
