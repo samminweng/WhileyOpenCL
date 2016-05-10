@@ -274,11 +274,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		Type lhs_type = stores.getRawType(code.target(), function);
 		String indent = stores.getIndent(function);
 		if (code.constant.type() instanceof Type.Null) {
-			statement.add(indent + lhs + " = NULL;");
-			// Remove lhs ownership as it points to NULL
-			// Add lhs to ownership
-			this.deallocatedAnalyzer
-					.ifPresent(a -> statement.add(indent + a.removeOwnership(code.target(0), function, stores)));
+			statement.add(indent + lhs + " = NULL;");			
+			// Compute the ownership
+			this.deallocatedAnalyzer.ifPresent(a -> {
+				statement.addAll(a.computeOwnership(true, code, function, stores));
+			});
 
 		} else {
 			if (code.constant.type() instanceof Type.Array) {
@@ -413,7 +413,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 			statement.add(generateAssignmentCode(code, isCopyEliminated, function, stores));
 			this.deallocatedAnalyzer.ifPresent(a ->{
-				statement.addAll(a.computeOwnership(indent, isCopyEliminated, code, function, stores));
+				statement.addAll(a.computeOwnership(isCopyEliminated, code, function, stores));
 			});
 
 		}
@@ -695,7 +695,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement.add(indent + "_STR_TO_INT(" + lhs + ", " + rhs + ");");
 				// Compute ownership for 'parseInt'
 				this.deallocatedAnalyzer
-						.ifPresent(a -> statement.addAll(a.computeOwnership(indent, false, code, function, stores)));
+						.ifPresent(a -> statement.addAll(a.computeOwnership(false, code, function, stores)));
 				break;
 			// Slice an array into a new sub-array at given starting and ending
 			// index.
@@ -741,32 +741,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						.ifPresent(a -> statement.add(indent + a.addDeallocatedCode(lhs, lhs_type, stores)));
 			}
 
-			// Add or transfer out the parameters that do not have the copy
-			for (int register : code.operands()) {
-				this.deallocatedAnalyzer.ifPresent(a -> {
-					Optional<HashMap<String, Boolean>> ownership = a.computeCallParameterOwnership(register, code,
-							function, stores, copyAnalyzer);
-					ownership.ifPresent(o -> {
-						// Get caller ownership
-						boolean caller_own = o.get("caller");
-						if (!caller_own) {
-							// The ownership is transferred from caller to
-							// calling function
-							statement.add(indent + a.removeOwnership(register, function, stores));
-						}
-					});
-				});
-			}
+			// Remove ownerships of the parameters that do not have the copy
+			this.deallocatedAnalyzer.ifPresent(a -> {
+				statement.addAll(a.computeOwnership(code, function, stores, copyAnalyzer));
+			});
+			
 
 			// call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
 			statement.add(translateLHSFunctionCall(code, function) + code.name.name() + "("
 					+ translateRHSFunctionCall(code, function) + ");");
 
-			if (code.targets().length > 0) {
-				// Assign ownership to lhs
-				this.deallocatedAnalyzer
-						.ifPresent(a -> statement.add(indent + a.addOwnership(code.target(0), function, this.stores)));
-			}
+			this.deallocatedAnalyzer.ifPresent(a -> {
+				statement.addAll(a.computeOwnership(false, code, function, stores));
+			});
 		}
 		// add the statement
 		stores.addAllStatements(code, statement, function);
@@ -1007,7 +994,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
 		// Remove
 		this.deallocatedAnalyzer
-				.ifPresent(a -> statement.addAll(a.computeOwnership(indent, isCopyEliminated, code, function, stores)));
+				.ifPresent(a -> statement.addAll(a.computeOwnership(isCopyEliminated, code, function, stores)));
 
 		stores.addAllStatements(code, statement, function);
 	}
@@ -1109,7 +1096,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		statement.add(indent + lhs + "=" + rhs + "[" + index + "];");
 
 		this.deallocatedAnalyzer
-				.ifPresent(a -> statement.addAll(a.computeOwnership(indent, false, code, function, stores)));
+				.ifPresent(a -> statement.addAll(a.computeOwnership(false, code, function, stores)));
 
 		stores.addAllStatements(code, statement, function);
 	}
@@ -1236,7 +1223,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						isCopyEliminated, stores));
 				// Compute ownership
 				this.deallocatedAnalyzer.ifPresent(a -> {
-					statement.addAll(a.computeOwnership(indent, isCopyEliminated, code, function, stores));
+					statement.addAll(a.computeOwnership(isCopyEliminated, code, function, stores));
 				});
 			}
 		}
@@ -1420,7 +1407,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		boolean isCopyEliminatedFinal = isCopyEliminated;
 		// Assign ownership to lhs
 		this.deallocatedAnalyzer.ifPresent(a -> {
-			statement.addAll(a.computeOwnership(indent, isCopyEliminatedFinal, code, function, stores));
+			statement.addAll(a.computeOwnership(isCopyEliminatedFinal, code, function, stores));
 		});
 
 		// Get the set of field names and convert it to an array of string.
