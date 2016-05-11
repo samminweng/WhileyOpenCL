@@ -128,7 +128,7 @@ long long run(POS** queens, long long queens_size, _DECL_OWNERSHIP_PARAM(queens)
 	//const %9 = 1 : int
 	_9 = 1;
 	//return %9
-	_FREE(queens);
+	_FREE_1DARRAY_STRUCT(queens, POS);
 	_FREE_STRUCT(p, POS);
 	_FREE_STRUCT(_19, POS);
 	_FREE_STRUCT(_27, POS);
@@ -211,7 +211,7 @@ blklab14:;
 			//assign %8 = %19  : {int c,int r}
 			_FREE_STRUCT(p, POS);
 			p = _19;
-			_REMOVE_OWNERSHIP(p);
+			_TRANSFER_OWNERSHIP(p, _19);
 			_REMOVE_OWNERSHIP(_19);
 			//const %20 = true : bool
 			_20 = true;
@@ -268,6 +268,7 @@ blklab12:;
 		_ADD_OWNERSHIP(_27);
 		//update %0[%1] = %27 : {int c,int r}[] -> {int c,int r}[]
 		queens[n] = _27;
+		_REMOVE_OWNERSHIP(_27);
 		//const %29 = 1 : int
 		_29 = 1;
 		//add %30 = %1, %29 : int
@@ -292,7 +293,7 @@ blklab9:;
 //.blklab8
 blklab8:;
 	//return %4
-	_FREE(queens);
+	_FREE_1DARRAY_STRUCT(queens, POS);
 	_FREE_STRUCT(p, POS);
 	_FREE_STRUCT(_19, POS);
 	_FREE_STRUCT(_27, POS);
@@ -304,12 +305,14 @@ blklab7:;
 
 int main(int argc, char** args){
 	long long* max;
+	_DECL_OWNERSHIP(max);
 	long long n = 0;
 	POS** init;
 	long long init_size = 0;
 	_DECL_OWNERSHIP(init);
 	long long num_solutions = 0;
 	long long* _5;
+	_DECL_OWNERSHIP(_5);
 	_DECL_2DARRAY(_6);
 	_DECL_OWNERSHIP(_6);
 	long long _7 = 0;
@@ -339,6 +342,7 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_30);
 	_DECL_OWNERSHIP(_30);
 	//fieldload %6 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	_FREE2DArray(_6);
 	_CONV_ARGS(_6);
 	_ADD_OWNERSHIP(_6);
 	//const %7 = 0 : int
@@ -348,8 +352,13 @@ int main(int argc, char** args){
 	_REMOVE_OWNERSHIP(_8);
 	//invoke (%5) = (%8) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
 	_STR_TO_INT(_5, _8);
+	_ADD_OWNERSHIP(_5);
+	_REMOVE_OWNERSHIP(_8);
 	//assign %1 = %5  : null|int
+	_FREE(max);
 	max = _5;
+	_TRANSFER_OWNERSHIP(max, _5);
+	_REMOVE_OWNERSHIP(_5);
 	//ifis %1, null goto blklab23 : null|int
 	if(max == NULL) { goto blklab23;}
 	//assign %2 = %1  : int
@@ -365,15 +374,15 @@ int main(int argc, char** args){
 	_11->r = _10;
 	_ADD_OWNERSHIP(_11);
 	//arraygen %12 = [11; 2] : {int c,int r}[]
-	_FREE(_12);
+	_FREE_1DARRAY_STRUCT(_12, POS);
 	_12 = malloc(n*sizeof(POS*));
 	for(int _12_i=0;_12_i<n;_12_i++){_12[_12_i] = copy_POS(_11);}
 	_12_size = n;
 	_ADD_OWNERSHIP(_12);
 	//assign %3 = %12  : {int c,int r}[]
-	_FREE(init);
+	_FREE_1DARRAY_STRUCT(init, POS);
 	_1DARRAY_UPDATE(init, _12);
-	_ADD_OWNERSHIP(init);
+	_TRANSFER_OWNERSHIP(init, _12);
 	_REMOVE_OWNERSHIP(_12);
 	//const %14 = 0 : int
 	_14 = 0;
@@ -428,11 +437,13 @@ int main(int argc, char** args){
 //.blklab23
 blklab23:;
 	//return
-	_FREE(init);
+	_FREE(max);
+	_FREE_1DARRAY_STRUCT(init, POS);
+	_FREE(_5);
 	_FREE2DArray(_6);
 	_FREE(_8);
 	_FREE_STRUCT(_11, POS);
-	_FREE(_12);
+	_FREE_1DARRAY_STRUCT(_12, POS);
 	_FREE(_17);
 	_FREE(_20);
 	_FREE(_25);

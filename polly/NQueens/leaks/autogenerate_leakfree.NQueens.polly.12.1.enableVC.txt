@@ -1,0 +1,250 @@
+==9006== Memcheck, a memory error detector
+==9006== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==9006== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==9006== Command: ./out/NQueens.polly.enableVC.out 12
+==9006== Parent PID: 4328
+==9006== 
+==9006== 
+==9006== HEAP SUMMARY:
+==9006==     in use at exit: 13,699,104 bytes in 856,189 blocks
+==9006==   total heap usage: 856,208 allocs, 19 frees, 13,699,768 bytes allocated
+==9006== 
+==9006== 96 bytes in 1 blocks are definitely lost in loss record 1 of 13
+==9006==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9006==    by 0x400BCC: main (NQueens.c:378)
+==9006== 
+==9006== 176 bytes in 11 blocks are definitely lost in loss record 2 of 13
+==9006==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9006==    by 0x400AE8: run (NQueens.c:265)
+==9006==    by 0x400C0E: main (NQueens.c:390)
+==9006== 
+==9006== 192 bytes in 12 blocks are definitely lost in loss record 3 of 13
+==9006==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9006==    by 0x400BE9: copy_POS (NQueens.c:3)
+==9006==    by 0x400BE9: main (NQueens.c:379)
+==9006== 
+==9006== 1,744 bytes in 109 blocks are definitely lost in loss record 4 of 13
+==9006==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9006==    by 0x400AE8: run (NQueens.c:265)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400C0E: main (NQueens.c:390)
+==9006== 
+==9006== 12,080 bytes in 755 blocks are definitely lost in loss record 5 of 13
+==9006==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9006==    by 0x400AE8: run (NQueens.c:265)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400C0E: main (NQueens.c:390)
+==9006== 
+==9006== 65,264 bytes in 4,079 blocks are definitely lost in loss record 6 of 13
+==9006==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9006==    by 0x400AE8: run (NQueens.c:265)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400C0E: main (NQueens.c:390)
+==9006== 
+==9006== 269,616 bytes in 16,851 blocks are definitely lost in loss record 7 of 13
+==9006==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9006==    by 0x400AE8: run (NQueens.c:265)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400C0E: main (NQueens.c:390)
+==9006== 
+==9006== 845,680 bytes in 52,855 blocks are definitely lost in loss record 8 of 13
+==9006==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9006==    by 0x400AE8: run (NQueens.c:265)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400C0E: main (NQueens.c:390)
+==9006== 
+==9006== 1,319,392 bytes in 82,462 blocks are definitely lost in loss record 9 of 13
+==9006==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9006==    by 0x400AE8: run (NQueens.c:265)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006== 
+==9006== 1,921,648 bytes in 120,103 blocks are definitely lost in loss record 10 of 13
+==9006==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9006==    by 0x400AE8: run (NQueens.c:265)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400C0E: main (NQueens.c:390)
+==9006== 
+==9006== 2,575,408 bytes in 160,963 blocks are definitely lost in loss record 11 of 13
+==9006==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9006==    by 0x400AE8: run (NQueens.c:265)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400C0E: main (NQueens.c:390)
+==9006== 
+==9006== 3,124,304 bytes in 195,269 blocks are definitely lost in loss record 12 of 13
+==9006==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9006==    by 0x400AE8: run (NQueens.c:265)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400C0E: main (NQueens.c:390)
+==9006== 
+==9006== 3,563,504 bytes in 222,719 blocks are definitely lost in loss record 13 of 13
+==9006==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9006==    by 0x400AE8: run (NQueens.c:265)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400B06: run (NQueens.c:277)
+==9006==    by 0x400C0E: main (NQueens.c:390)
+==9006== 
+==9006== LEAK SUMMARY:
+==9006==    definitely lost: 13,699,104 bytes in 856,189 blocks
+==9006==    indirectly lost: 0 bytes in 0 blocks
+==9006==      possibly lost: 0 bytes in 0 blocks
+==9006==    still reachable: 0 bytes in 0 blocks
+==9006==         suppressed: 0 bytes in 0 blocks
+==9006== 
+==9006== For counts of detected and suppressed errors, rerun with: -v
+==9006== ERROR SUMMARY: 13 errors from 13 contexts (suppressed: 0 from 0)
+processor	: 0
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 96
+model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G
+stepping	: 1
+microcode	: 0x600610b
+cpu MHz		: 1400.000
+cache size	: 1024 KB
+physical id	: 0
+siblings	: 4
+core id		: 0
+cpu cores	: 2
+apicid		: 16
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
+bugs		: fxsave_leak
+bogomips	: 4192.10
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate cpb eff_freq_ro [12] [13]
+
+processor	: 1
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 96
+model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G 
+stepping	: 1
+microcode	: 0x600610b
+cpu MHz		: 2100.000
+cache size	: 1024 KB
+physical id	: 0
+siblings	: 4
+core id		: 1
+cpu cores	: 2
+apicid		: 17
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
+bugs		: fxsave_leak
+bogomips	: 4192.10
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate cpb eff_freq_ro [12] [13]
+
+processor	: 2
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 96
+model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G 
+stepping	: 1
+microcode	: 0x600610b
+cpu MHz		: 1800.000
+cache size	: 1024 KB
+physical id	: 0
+siblings	: 4
+core id		: 2
+cpu cores	: 2
+apicid		: 18
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
+bugs		: fxsave_leak
+bogomips	: 4192.10
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate cpb eff_freq_ro [12] [13]
+
+processor	: 3
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 96
+model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G 
+stepping	: 1
+microcode	: 0x600610b
+cpu MHz		: 1400.000
+cache size	: 1024 KB
+physical id	: 0
+siblings	: 4
+core id		: 3
+cpu cores	: 2
+apicid		: 19
+initial apicid	: 3
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
+bugs		: fxsave_leak
+bogomips	: 4192.10
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate cpb eff_freq_ro [12] [13]
+

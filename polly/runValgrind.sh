@@ -7,6 +7,7 @@ alias pollycc="clang -Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
 ### Generate C code
 generateCode(){
 	program=$1
+	generator=$2
 	mkdir -p "out"
 	rm -rf "out/"*.*
 	### Creating a static library ('Util.o') with GCC (http://www.cs.dartmouth.edu/~campbell/cs50/buildlib.html)
@@ -17,13 +18,31 @@ generateCode(){
 	#ar -cvq libUtil.a Util.o
 	if [[ $c_type == *"autogenerate"* ]]
 	then
-		if [[ $c_type == *"leakfree"* ]]
+		## Translate Whiley programs into naive C code
+		if [[ $generator == *"naive"* ]]
 		then
-			### Translate Whiley program into copy-eliminated + memory deallocated C code 
-		        ./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"	
-		else
-			### Translate Whiley program into copy-eliminated C code 
-			./../../../../bin/wyopcl -code -copy "$program.whiley"
+			if [[ $generator == *"leakfree"* ]]
+			then
+				### Translate Whiley program into naive + leakfree C code 
+		    	./../../../../bin/wyopcl -code "$program.whiley"
+		    else
+		    	### Translate Whiley program into naive C code 
+		    	./../../../../bin/wyopcl -code "$program.whiley"
+		    fi
+		fi
+
+		## Translate Whiley programs into copy_reduced C code
+		if [[ $generator == *"copyreduced"* ]]
+		then
+
+			if [[ $generator == *"leakfree"* ]]
+			then
+				### Translate Whiley program into copy-eliminated + memory deallocated C code 
+		    	./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"	
+			else
+				### Translate Whiley program into copy-eliminated C code 
+				./../../../../bin/wyopcl -code -copy "$program.whiley"
+			fi
 		fi
 	fi
 	#clang -c Util.c -o Util.o 
@@ -43,14 +62,15 @@ init(){
 ##
 detectleaks(){
 	c_type=$1
-	program=$2
-	compiler=$3
-	parameter=$4
-	num_threads=$5
+	generator=$2
+	program=$3
+	compiler=$4
+	parameter=$5
+	num_threads=$6
 	# Ref: http://valgrind.org/docs/manual/manual.html
 	# Run Valgrind memcheck tool to detect memory leaks, and write out results to output file.
 	#read -p "Press [Enter] to continue..."	
-	result="$c_type.$program.$compiler.$parameter.$num_threads.enableVC.txt"
+	result="$c_type.$generator.$program.$compiler.$parameter.$num_threads.enableVC.txt"
 	echo -e -n "Start Detect leaks..." > $result
 	case "$compiler" in
 		"gcc")
@@ -75,7 +95,8 @@ detectleaks(){
 					-mllvm -polly-parallel -lgomp $program.c Util.c -o "out/$program.$compiler.enableVC.out"
 			;;
 	esac
-	valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all "--log-file=$result" ./out/"$program.$compiler.enableVC.out" $parameter
+	valgrind --tool=memcheck "--log-file=$result" ./out/"$program.$compiler.enableVC.out" $parameter
+	#valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all "--log-file=$result" ./out/"$program.$compiler.enableVC.out" $parameter
 	# Added the CPU info
 	cat /proc/cpuinfo >> $result
 	# move result to leaks folder
@@ -86,27 +107,30 @@ detectleaks(){
 #
 exec(){
 	c_type=$1
-	program=$2
-	parameter=$3
+	generator=$2
+	program=$3
+	parameter=$4
 	# change folder
 	cd "$program/impl/$c_type"
 	# read -p "Press [Enter] to continue..."
-	generateCode $program
+	generateCode $program $generator
 	# read -p "Press [Enter] to continue..."	
 	# Detect the leaks of generated C code using different compiler
-	detectleaks $c_type $program "gcc" $parameter 1
-	detectleaks $c_type $program "clang" $parameter 1
-	detectleaks $c_type $program "polly" $parameter 1
-	detectleaks $c_type $program "openmp" $parameter 1
-	detectleaks $c_type $program "openmp" $parameter 2
-	detectleaks $c_type $program "openmp" $parameter 4
+	detectleaks $c_type $generator $program "gcc" $parameter 1
+	detectleaks $c_type $generator $program "clang" $parameter 1
+	detectleaks $c_type $generator $program "polly" $parameter 1
+	detectleaks $c_type $generator $program "openmp" $parameter 1
+	detectleaks $c_type $generator $program "openmp" $parameter 2
+	detectleaks $c_type $generator $program "openmp" $parameter 4
     # Return to the working directory
     cd ../../../
 }
 ## MatrixMult test case
-##init MatrixMult
-##exec autogenerate_original_leakfree MatrixMult 200
-##exec autogenerate_original_leakfree MatrixMult 400
+init MatrixMult
+exec autogenerate_original naive MatrixMult 10
+exec autogenerate_original naive_leakfree MatrixMult 10
+exec autogenerate_original copyreduced MatrixMult 10
+exec autogenerate_original copyreduced_leakfree MatrixMult 10
 ### GCD test case
 ##init GCD
 ##exec autogenerate_original_leakfree GCD 1000
@@ -114,10 +138,13 @@ exec(){
 ##exec autogenerate_cached_leakfree GCD 1000
 ##exec autogenerate_cached_leakfree GCD 2000
 ### CoinGame test case
-init CoinGame
-exec autogenerate_leakfree CoinGame 1000
-exec autogenerate_leakfree CoinGame 2000
-exec autogenerate_single_leakfree CoinGame 1000
-exec autogenerate_single_leakfree CoinGame 2000
-exec autogenerate_array_leakfree CoinGame 1000
-exec autogenerate_array_leakfree CoinGame 2000
+# init CoinGame
+# exec autogenerate_leakfree CoinGame 1000
+# exec autogenerate_leakfree CoinGame 2000
+# exec autogenerate_single_leakfree CoinGame 1000
+# exec autogenerate_single_leakfree CoinGame 2000
+# exec autogenerate_array_leakfree CoinGame 1000
+# exec autogenerate_array_leakfree CoinGame 2000
+#init NQueens
+#exec autogenerate_leakfree NQueens 10
+#exec autogenerate_leakfree NQueens 12
