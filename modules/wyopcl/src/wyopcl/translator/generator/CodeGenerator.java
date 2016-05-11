@@ -939,32 +939,36 @@ public class CodeGenerator extends AbstractCodeGenerator {
     protected void translate(Codes.Update code, FunctionOrMethod function) {
 	String indent = stores.getIndent(function);
 	List<String> statement = new ArrayList<String>();
-
-	// Generate update statement, e.g. a[i] = b
-	String s = "";
-	String lhs = stores.getVar(code.target(0), function);
 	Type lhs_type = stores.getRawType(code.target(0), function);
-	// For List type only
+
+	String lhs;
+	// Generate lhs variable
 	if (lhs_type instanceof Type.Array) {
-	    s += indent + lhs;
+	    lhs = stores.getVar(code.target(0), function);
 	    // Iterates operands to increase the depths.
 	    for (int i = 0; i < code.operands().length - 1; i++) {
-		s += "[" + stores.getVar(code.operand(i), function) + "]";
+		lhs += "[" + stores.getVar(code.operand(i), function) + "]";
 	    }
 	} else if (lhs_type instanceof Type.Record || lhs_type instanceof Type.Union) {
+	    lhs = stores.getVar(code.target(0), function);
 	    String member = code.fields.get(0);
-	    s += indent + lhs + "->" + member;
-	    // check if there are two or more operands. If so, then add 'index'
-	    // operand.
+	    lhs += "->" + member;
+	    // check if there are two or more operands. If so, then add 'index' operand.
 	    if (code.operands().length > 1) {
-		s += "[" + stores.getVar(code.operand(0), function) + "]";
+		lhs += "[" + stores.getVar(code.operand(0), function) + "]";
 	    }
+
 	} else {
 	    throw new RuntimeException("Not implemented" + code);
 	}
-
-	s += " = " + stores.getVar(code.result(), function) + ";";
-	statement.add(s);
+	
+	String lhs_final = lhs;
+	// Add deallocation code to lhs variable
+	this.deallocatedAnalyzer.ifPresent(a -> {
+	    statement.add(a.addDeallocatedCode(lhs_final, code, function, stores));
+	});
+	// Generate update statement, e.g. a[i] = b
+	statement.add(indent + lhs + " = " + stores.getVar(code.result(), function) + ";");
 
 	// Check if rhs variable needs the copy.
 	boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
@@ -1528,10 +1532,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	List<String> statement = new ArrayList<String>();
 
 	// Deallocate lhs variable
-	this.deallocatedAnalyzer.ifPresent(a ->{
+	this.deallocatedAnalyzer.ifPresent(a -> {
 	    statement.add(indent + a.addDeallocatedCode(lhs, code.type(0), stores));
 	});
-	
+
 	Type elm_type = stores.getArrayElementType(lhs_type);
 	boolean isCopyEliminated;
 	if (stores.isIntType(elm_type)) {
@@ -1554,7 +1558,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	    isCopyEliminated = false;
 	}
 
-	this.deallocatedAnalyzer.ifPresent(a ->{
+	this.deallocatedAnalyzer.ifPresent(a -> {
 	    statement.addAll(a.computeOwnership(isCopyEliminated, code, function, stores));
 	});
 

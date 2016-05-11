@@ -4,15 +4,21 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcases="MatrixMult";
+	testcases="MatrixMult GCD CoinGame NQueens";
 	# Implementation
-	impls="autogenerate_original";
+	impls["MatrixMult"]="autogenerate_original autogenerate_transpose";
+	impls["GCD"]="autogenerate_original autogenerate_cached";
+	impls["CoinGame"]="autogenerate autogenerate_single autogenerate_array";
+	impls["NQueens"]="autogenerate";
 	# Optimization
 	opts = "naive naive_leakfree copyreduced copyreduced_leakfree";
 	# Compiler
 	compilers = "gcc clang polly";
 	# Parameter
-	parameters["MatrixMult"] = "10";
+	parameters["MatrixMult"] = "15";
+	parameters["GCD"] = "100";
+	parameters["CoinGame"] = "100";
+	parameters["NQueens"] = "10";
 	count[""]=0;
 	# Leak
 	leaks[""]=0;
@@ -92,7 +98,7 @@ END {
 	for(t=1;t<=t_total;t++){
 		testcase=t_array[t];
 		# Get implementation
-		impl_total=split(impls, impl_array, " ");
+		impl_total=split(impls[testcase], impl_array, " ");
 		for(i=0;i<=impl_total;i++){
 			impl = impl_array[i];
 			# Get Optimization Type

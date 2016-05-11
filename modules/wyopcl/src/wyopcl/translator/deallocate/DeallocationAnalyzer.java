@@ -215,8 +215,8 @@ public class DeallocationAnalyzer extends Analyzer {
 		// Create an non-empty array, and add lhs variable to ownership set.
 		statements.add(indent + addOwnership(lhs, function, stores));
 	    }
-	} else if(code instanceof Codes.ArrayGenerator){
-	    Codes.ArrayGenerator ag = (Codes.ArrayGenerator)code;
+	} else if (code instanceof Codes.ArrayGenerator) {
+	    Codes.ArrayGenerator ag = (Codes.ArrayGenerator) code;
 	    int lhs = ag.target(0);
 	    // Assign ownership to lhs variable.
 	    statements.add(indent + addOwnership(lhs, function, stores));
@@ -445,6 +445,25 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	return ownership;
+    }
+
+    public String addDeallocatedCode(String lhs, Codes.Update code, FunctionOrMethod function, CodeStores stores) {
+	String indent = stores.getIndent(function);
+	Type lhs_type = stores.getRawType(code.target(0), function);
+	
+	if (lhs_type instanceof Type.Array) {
+	    String array_variable = stores.getVar(code.target(0), function);
+	    // Get array element type
+	    Type elm_type = stores.getArrayElementType((Type.Array) lhs_type);
+	    if (stores.isCompoundType(elm_type)) {
+		// Free the lhs variable
+		String name = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");
+		return indent+"_FREE_1DARRAY_ELEMENT_STRUCT(" + array_variable+ ", "+ lhs + ", " + name + ");";
+	    }
+	}
+
+	return "";
+
     }
 
     /**

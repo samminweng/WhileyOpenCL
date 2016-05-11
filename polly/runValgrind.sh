@@ -67,6 +67,7 @@ detectleaks(){
 	compiler=$4
 	parameter=$5
 	num_threads=$6
+	mkdir -p out
 	# Ref: http://valgrind.org/docs/manual/manual.html
 	# Run Valgrind memcheck tool to detect memory leaks, and write out results to output file.
 	#read -p "Press [Enter] to continue..."	
@@ -126,40 +127,40 @@ exec(){
     cd ../../../
 }
 ## MatrixMult test case
-init MatrixMult
-exec autogenerate_original naive MatrixMult 15
-exec autogenerate_original naive_leakfree MatrixMult 15
-exec autogenerate_original copyreduced MatrixMult 15
-exec autogenerate_original copyreduced_leakfree MatrixMult 15
-exec autogenerate_transpose naive MatrixMult 15
-exec autogenerate_transpose naive_leakfree MatrixMult 15
-exec autogenerate_transpose copyreduced MatrixMult 15
-exec autogenerate_transpose copyreduced_leakfree MatrixMult 15
-### GCD test case
-init GCD
-exec autogenerate_original naive GCD 100
-exec autogenerate_original naive_leakfree GCD 100
-exec autogenerate_original copyreduced GCD 100
-exec autogenerate_original copyreduced_leakfree GCD 100
-exec autogenerate_cached naive GCD 100
-exec autogenerate_cached naive_leakfree GCD 100
-exec autogenerate_cached copyreduced GCD 100
-exec autogenerate_cached copyreduced_leakfree GCD 100
+# init MatrixMult
+# exec autogenerate_original naive MatrixMult 15
+# exec autogenerate_original naive_leakfree MatrixMult 15
+# exec autogenerate_original copyreduced MatrixMult 15
+# exec autogenerate_original copyreduced_leakfree MatrixMult 15
+# exec autogenerate_transpose naive MatrixMult 15
+# exec autogenerate_transpose naive_leakfree MatrixMult 15
+# exec autogenerate_transpose copyreduced MatrixMult 15
+# exec autogenerate_transpose copyreduced_leakfree MatrixMult 15
+# ### GCD test case
+# init GCD
+# exec autogenerate_original naive GCD 100
+# exec autogenerate_original naive_leakfree GCD 100
+# exec autogenerate_original copyreduced GCD 100
+# exec autogenerate_original copyreduced_leakfree GCD 100
+# exec autogenerate_cached naive GCD 100
+# exec autogenerate_cached naive_leakfree GCD 100
+# exec autogenerate_cached copyreduced GCD 100
+# exec autogenerate_cached copyreduced_leakfree GCD 100
 
-### CoinGame test case
-init CoinGame
-exec autogenerate naive CoinGame 100
-exec autogenerate naive_leakfree CoinGame 100
-exec autogenerate copyreduced CoinGame 100
-exec autogenerate copyreduced_leakfree CoinGame 100
-exec autogenerate_single naive CoinGame 100
-exec autogenerate_single naive_leakfree CoinGame 100
-exec autogenerate_single copyreduced CoinGame 100
-exec autogenerate_single copyreduced_leakfree CoinGame 100
-exec autogenerate_array naive CoinGame 100
-exec autogenerate_array naive_leakfree CoinGame 100
-exec autogenerate_array copyreduced CoinGame 100
-exec autogenerate_array copyreduced_leakfree CoinGame 100
+# ### CoinGame test case
+# init CoinGame
+# exec autogenerate naive CoinGame 100
+# exec autogenerate naive_leakfree CoinGame 100
+# exec autogenerate copyreduced CoinGame 100
+# exec autogenerate copyreduced_leakfree CoinGame 100
+# exec autogenerate_single naive CoinGame 100
+# exec autogenerate_single naive_leakfree CoinGame 100
+# exec autogenerate_single copyreduced CoinGame 100
+# exec autogenerate_single copyreduced_leakfree CoinGame 100
+# exec autogenerate_array naive CoinGame 100
+# exec autogenerate_array naive_leakfree CoinGame 100
+# exec autogenerate_array copyreduced CoinGame 100
+# exec autogenerate_array copyreduced_leakfree CoinGame 100
 #### NQueen test case
 init NQueens
 exec autogenerate naive NQueens 10
