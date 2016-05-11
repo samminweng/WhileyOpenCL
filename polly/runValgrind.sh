@@ -90,9 +90,9 @@ exec(){
 	parameter=$3
 	# change folder
 	cd "$program/impl/$c_type"
-	#read -p "Press [Enter] to continue..."
+	# read -p "Press [Enter] to continue..."
 	generateCode $program
-	read -p "Press [Enter] to continue..."	
+	# read -p "Press [Enter] to continue..."	
 	# Detect the leaks of generated C code using different compiler
 	detectleaks $c_type $program "gcc" $parameter 1
 	detectleaks $c_type $program "clang" $parameter 1
@@ -103,7 +103,21 @@ exec(){
     # Return to the working directory
     cd ../../../
 }
-
-init MatrixMult
-exec autogenerate_original_leakfree MatrixMult 200
-exec autogenerate_original_leakfree MatrixMult 400
+## MatrixMult test case
+##init MatrixMult
+##exec autogenerate_original_leakfree MatrixMult 200
+##exec autogenerate_original_leakfree MatrixMult 400
+### GCD test case
+##init GCD
+##exec autogenerate_original_leakfree GCD 1000
+##exec autogenerate_original_leakfree GCD 2000
+##exec autogenerate_cached_leakfree GCD 1000
+##exec autogenerate_cached_leakfree GCD 2000
+### CoinGame test case
+init CoinGame
+exec autogenerate_leakfree CoinGame 1000
+exec autogenerate_leakfree CoinGame 2000
+exec autogenerate_single_leakfree CoinGame 1000
+exec autogenerate_single_leakfree CoinGame 2000
+exec autogenerate_array_leakfree CoinGame 1000
+exec autogenerate_array_leakfree CoinGame 2000

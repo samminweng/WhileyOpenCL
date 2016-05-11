@@ -124,6 +124,7 @@ blklab8:;
 
 int main(int argc, char** args){
 	long long* max;
+	_DECL_OWNERSHIP(max);
 	long long n = 0;
 	_DECL_1DARRAY(gcds);
 	_DECL_OWNERSHIP(gcds);
@@ -131,6 +132,7 @@ int main(int argc, char** args){
 	long long i = 0;
 	long long j = 0;
 	long long* _7;
+	_DECL_OWNERSHIP(_7);
 	_DECL_2DARRAY(_8);
 	_DECL_OWNERSHIP(_8);
 	long long _9 = 0;
@@ -166,16 +168,23 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_40);
 	_DECL_OWNERSHIP(_40);
 	//fieldload %8 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	_FREE2DArray(_8);
 	_CONV_ARGS(_8);
 	_ADD_OWNERSHIP(_8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//indexof %10 = %8, %9 : int[][]
 	_10=_8[_9];
+	_REMOVE_OWNERSHIP(_10);
 	//invoke (%7) = (%10) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
 	_STR_TO_INT(_7, _10);
+	_ADD_OWNERSHIP(_7);
+	_REMOVE_OWNERSHIP(_10);
 	//assign %1 = %7  : null|int
+	_FREE(max);
 	max = _7;
+	_TRANSFER_OWNERSHIP(max, _7);
+	_REMOVE_OWNERSHIP(_7);
 	//ifis %1, null goto blklab13 : null|int
 	if(max == NULL) { goto blklab13;}
 	//assign %2 = %1  : int
@@ -204,7 +213,7 @@ int main(int argc, char** args){
 	//assign %3 = %18  : int[]
 	_FREE(gcds);
 	_1DARRAY_UPDATE(gcds, _18);
-	_ADD_OWNERSHIP(gcds);
+	_TRANSFER_OWNERSHIP(gcds, _18);
 	_REMOVE_OWNERSHIP(_18);
 	//const %19 = 0 : int
 	_19 = 0;
@@ -291,7 +300,9 @@ blklab14:;
 //.blklab13
 blklab13:;
 	//return
+	_FREE(max);
 	_FREE(gcds);
+	_FREE(_7);
 	_FREE2DArray(_8);
 	_FREE(_10);
 	_FREE(_13);

@@ -61,11 +61,13 @@ blklab2:;
 
 int main(int argc, char** args){
 	long long* max;
+	_DECL_OWNERSHIP(max);
 	long long n = 0;
 	long long sum = 0;
 	long long i = 0;
 	long long j = 0;
 	long long* _6;
+	_DECL_OWNERSHIP(_6);
 	_DECL_2DARRAY(_7);
 	_DECL_OWNERSHIP(_7);
 	long long _8 = 0;
@@ -92,16 +94,23 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_31);
 	_DECL_OWNERSHIP(_31);
 	//fieldload %7 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	_FREE2DArray(_7);
 	_CONV_ARGS(_7);
 	_ADD_OWNERSHIP(_7);
 	//const %8 = 0 : int
 	_8 = 0;
 	//indexof %9 = %7, %8 : int[][]
 	_9=_7[_8];
+	_REMOVE_OWNERSHIP(_9);
 	//invoke (%6) = (%9) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
 	_STR_TO_INT(_6, _9);
+	_ADD_OWNERSHIP(_6);
+	_REMOVE_OWNERSHIP(_9);
 	//assign %1 = %6  : null|int
+	_FREE(max);
 	max = _6;
+	_TRANSFER_OWNERSHIP(max, _6);
+	_REMOVE_OWNERSHIP(_6);
 	//ifis %1, null goto blklab7 : null|int
 	if(max == NULL) { goto blklab7;}
 	//assign %2 = %1  : int
@@ -192,6 +201,8 @@ blklab8:;
 //.blklab7
 blklab7:;
 	//return
+	_FREE(max);
+	_FREE(_6);
 	_FREE2DArray(_7);
 	_FREE(_9);
 	_FREE(_12);

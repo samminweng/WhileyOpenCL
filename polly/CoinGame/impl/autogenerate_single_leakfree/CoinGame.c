@@ -209,11 +209,13 @@ blklab0:;
 
 int main(int argc, char** args){
 	long long* max;
+	_DECL_OWNERSHIP(max);
 	long long n = 0;
 	_DECL_1DARRAY(moves);
 	_DECL_OWNERSHIP(moves);
 	long long sum_alice = 0;
 	long long* _5;
+	_DECL_OWNERSHIP(_5);
 	_DECL_2DARRAY(_6);
 	_DECL_OWNERSHIP(_6);
 	long long _7 = 0;
@@ -236,6 +238,7 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_23);
 	_DECL_OWNERSHIP(_23);
 	//fieldload %6 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	_FREE2DArray(_6);
 	_CONV_ARGS(_6);
 	_ADD_OWNERSHIP(_6);
 	//const %7 = 0 : int
@@ -245,8 +248,13 @@ int main(int argc, char** args){
 	_REMOVE_OWNERSHIP(_8);
 	//invoke (%5) = (%8) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
 	_STR_TO_INT(_5, _8);
+	_ADD_OWNERSHIP(_5);
+	_REMOVE_OWNERSHIP(_8);
 	//assign %1 = %5  : null|int
+	_FREE(max);
 	max = _5;
+	_TRANSFER_OWNERSHIP(max, _5);
+	_REMOVE_OWNERSHIP(_5);
 	//ifis %1, null goto blklab7 : null|int
 	if(max == NULL) { goto blklab7;}
 	//assign %2 = %1  : int
@@ -262,7 +270,7 @@ int main(int argc, char** args){
 	//assign %3 = %11  : int[]
 	_FREE(moves);
 	_1DARRAY_UPDATE(moves, _11);
-	_ADD_OWNERSHIP(moves);
+	_TRANSFER_OWNERSHIP(moves, _11);
 	_REMOVE_OWNERSHIP(_11);
 	//invoke (%12) = (%3, %2) CoinGame:findMoves : function(int[],int)->(int[])
 	_FREE(_12);
@@ -273,7 +281,7 @@ int main(int argc, char** args){
 	//assign %3 = %12  : int[]
 	_FREE(moves);
 	_1DARRAY_UPDATE(moves, _12);
-	_ADD_OWNERSHIP(moves);
+	_TRANSFER_OWNERSHIP(moves, _12);
 	_REMOVE_OWNERSHIP(_12);
 	//const %13 = 1 : int
 	_13 = 1;
@@ -308,7 +316,9 @@ int main(int argc, char** args){
 //.blklab7
 blklab7:;
 	//return
+	_FREE(max);
 	_FREE(moves);
+	_FREE(_5);
 	_FREE2DArray(_6);
 	_FREE(_8);
 	_FREE(_11);

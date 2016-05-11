@@ -281,7 +281,7 @@ public class DeallocationAnalyzer extends Analyzer {
      * @param var
      * @return
      */
-    public String addOwnership(int register, FunctionOrMethod function, CodeStores stores) {
+    protected String addOwnership(int register, FunctionOrMethod function, CodeStores stores) {
 	Type type = stores.getRawType(register, function);
 	if (stores.isCompoundType(type) || type instanceof Type.Union) {
 	    String var = stores.getVar(register, function);
@@ -314,7 +314,7 @@ public class DeallocationAnalyzer extends Analyzer {
      *            register
      * @param function
      */
-    public String transferOwnership(int lhs, int rhs, FunctionOrMethod function, CodeStores stores) {
+    protected String transferOwnership(int lhs, int rhs, FunctionOrMethod function, CodeStores stores) {
 	Type type = stores.getRawType(lhs, function);
 	if (stores.isCompoundType(type) || type instanceof Type.Union) {
 	    String lhs_var = stores.getVar(lhs, function);
