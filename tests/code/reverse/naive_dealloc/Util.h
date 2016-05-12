@@ -71,6 +71,12 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _DECL_1DARRAY_MEMBER(a) long long* a; long long a##_size;
 #define _1DARRAY_PARAM(a) a, a##_size
 #define _1DARRAY_PARAM_OWN(a) a, a##_size, a##_has_ownership
+#define _1DARRAY_COPY_STRUCT(a, b, name) \
+		({ for(int i=0;i<b##_size;i++){\
+ 				a[i] = copy_##name(b[i]);\
+ 		    }\
+ 			a##_size = b##_size;\
+		})
 #define _1DARRAY_COPY_PARAM(a) copy(a, a##_size), a##_size
 #define _1DARRAY_COPY_PARAM_OWN(a) copy(a, a##_size), a##_size, a##_has_ownership
 #define _1DARRAY_PRINT(a) printf1DArray(a, a##_size);

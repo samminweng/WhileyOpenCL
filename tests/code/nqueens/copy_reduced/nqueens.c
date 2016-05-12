@@ -324,7 +324,8 @@ int main(int argc, char** args){
 	for(int _8_i=0;_8_i<n;_8_i++){_8[_8_i] = copy_POS(_7);}
 	_8_size = n;
 	//assign %2 = %8  : {int c,int r}[]
-	_1DARRAY_UPDATE(init, _8);
+	init = malloc(_8_size*sizeof(POS*));
+	_1DARRAY_COPY_STRUCT(init, _8, POS);
 	//const %10 = 0 : int
 	_10 = 0;
 	//invoke (%9) = (%2, %10, %1) nqueens:run : function(nqueens:POS[],int,int)->(int)

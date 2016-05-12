@@ -336,12 +336,26 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	} else {
 	    if (lhs_type instanceof Type.Array) {
 		int dimension = stores.getArrayDimension(lhs_type);
-		// Check if the lhs copy is needed or not
-		if (isCopyEliminated) {
-		    return indent + "_" + dimension + "DARRAY_UPDATE(" + lhs + ", " + rhs + ");";
-		} else {
-		    return indent + "_" + dimension + "DARRAY_COPY(" + lhs + ", " + rhs + ");";
+		// Get element type
+		Type elm_type = stores.getArrayElementType((Type.Array) lhs_type);
+
+		if (stores.isIntType(elm_type)) {
+		    // Check if the lhs copy is needed or not
+		    if (isCopyEliminated) {
+			return indent + "_" + dimension + "DARRAY_UPDATE(" + lhs + ", " + rhs + ");";
+		    } else {
+			return indent + "_" + dimension + "DARRAY_COPY(" + lhs + ", " + rhs + ");";
+		    }
+		}else{
+		    String struct = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");
+		    // Create an array of stuctures
+		    
+		    return indent  + lhs + " = malloc("+rhs+"_size*sizeof("+struct+"*));\n" +
+		    // Copy an array of structures
+	            	   indent + "_1DARRAY_COPY_STRUCT("+ lhs+ ", "+ rhs+ ", " +struct+");";
+		    
 		}
+
 	    } else {
 		if (isCopyEliminated) {
 		    return indent + lhs + " = " + rhs + ";";
@@ -961,7 +975,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	} else {
 	    throw new RuntimeException("Not implemented" + code);
 	}
-	
+
 	String lhs_final = lhs;
 	// Add deallocation code to lhs variable
 	this.deallocatedAnalyzer.ifPresent(a -> {

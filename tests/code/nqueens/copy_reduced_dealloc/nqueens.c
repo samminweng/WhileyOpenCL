@@ -357,7 +357,8 @@ int main(int argc, char** args){
 	_ADD_OWNERSHIP(_8);
 	//assign %2 = %8  : {int c,int r}[]
 	_FREE_1DARRAY_STRUCT(init, POS);
-	_1DARRAY_UPDATE(init, _8);
+	init = malloc(_8_size*sizeof(POS*));
+	_1DARRAY_COPY_STRUCT(init, _8, POS);
 	_TRANSFER_OWNERSHIP(init, _8);
 	_REMOVE_OWNERSHIP(_8);
 	//const %10 = 0 : int
