@@ -138,10 +138,8 @@ public class DeallocationAnalyzer extends Analyzer {
 	    // The rhs register is always the last operand (a[i] = b)
 	    int rhs = update.operand(update.operands().length - 1);
 
-	    if (isCopyEliminated) {
-		// Remove the rhs ownership
-		statements.add(indent + removeOwnership(rhs, function, stores));
-	    }
+	    // Remove the rhs ownership without checking if the copy is made.
+	    statements.add(indent + removeOwnership(rhs, function, stores));
 	} else if (code instanceof Codes.Invoke) {
 	    Codes.Invoke invoke = (Codes.Invoke) code;
 	    if (invoke.name.module().toString().contains("whiley/lang")) {

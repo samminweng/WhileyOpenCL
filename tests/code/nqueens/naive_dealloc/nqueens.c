@@ -268,6 +268,7 @@ blklab12:;
 		//update %0[%1] = %27 : {int c,int r}[] -> {int c,int r}[]
 		_FREE_1DARRAY_ELEMENT_STRUCT(queens, queens[n], POS);
 		queens[n] = _27;
+		_REMOVE_OWNERSHIP(_27);
 		//const %29 = 1 : int
 		_29 = 1;
 		//add %30 = %1, %29 : int
