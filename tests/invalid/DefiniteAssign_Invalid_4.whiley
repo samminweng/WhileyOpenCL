@@ -1,5 +1,5 @@
-method f(any _this) :
-    debug _this
+method f(any this) :
+    debug a
 
 method g() :
     f(x)

@@ -25,8 +25,6 @@
 
 package wyjc.runtime;
 
-import java.util.Arrays;
-
 public abstract class WyLambda {
 	private final Object[] bindings;
 

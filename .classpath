@@ -6,7 +6,7 @@
 	<classpathentry kind="src" path="modules/wyc/src"/>
 	<classpathentry kind="src" path="modules/wyrt/src"/>
 	<classpathentry kind="src" path="modules/wyjc/src"/>
-	<classpathentry excluding="wyopcl/translator/symbolic/|wyopcl/util/" kind="src" path="modules/wyopcl/src"/>
+	<classpathentry excluding="wyopcl/translator/symbolic/pattern/transform/WhileLoopIncrPatternTransformer.java|wyopcl/util/" kind="src" path="modules/wyopcl/src"/>
 	<classpathentry excluding="wyopcl/testing/interpreter/" kind="src" path="modules/wyopcl/test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
@@ -15,12 +15,12 @@
 	<classpathentry kind="lib" path="lib/wyrl-v0.4.4.jar"/>
 	<classpathentry kind="lib" path="lib/ant.jar"/>
 	<classpathentry kind="lib" path="lib/maven-ant-tasks-2.1.3.jar"/>
-	<classpathentry kind="lib" path="lib/wybs-v0.3.40.jar"/>
-	<classpathentry kind="lib" path="lib/wyc-v0.3.40.jar"/>
-	<classpathentry kind="lib" path="lib/wycs-v0.3.40.jar"/>
-	<classpathentry kind="lib" path="lib/wyil-v0.3.40.jar"/>
-	<classpathentry kind="lib" path="lib/wyjc-v0.3.40.jar"/>
-	<classpathentry kind="lib" path="lib/wyopcl-v0.3.40.jar"/>
-	<classpathentry kind="lib" path="lib/wyrt-v0.3.40.jar"/>
+	<classpathentry kind="lib" path="lib/wybs-v0.3.39.jar"/>
+	<classpathentry kind="lib" path="lib/wyc-v0.3.39.jar"/>
+	<classpathentry kind="lib" path="lib/wycs-v0.3.39.jar"/>
+	<classpathentry kind="lib" path="lib/wyil-v0.3.39.jar"/>
+	<classpathentry kind="lib" path="lib/wyjc-v0.3.39.jar"/>
+	<classpathentry kind="lib" path="lib/wyopcl-v0.3.39.jar"/>
+	<classpathentry kind="lib" path="lib/wyrt-v0.3.39.jar"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>

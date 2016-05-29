@@ -35,6 +35,7 @@ import wycc.util.Pair;
 import wyfs.lang.Content;
 import wyfs.lang.Path;
 import wyil.io.*;
+import wyil.util.AttributedCodeBlock;
 
 /**
  * <p>
@@ -451,16 +452,17 @@ public final class WyilFile implements CompilationUnit {
 	 */
 	public static final class Type extends Declaration {
 		private wyil.lang.Type type;
-		private BytecodeForest invariant;
+		private AttributedCodeBlock invariant;
 
-		public Type(Collection<Modifier> modifiers, String name, wyil.lang.Type type, BytecodeForest invariant,
-				Attribute... attributes) {
-			super(name, modifiers, attributes);
+		public Type(Collection<Modifier> modifiers, String name, wyil.lang.Type type,
+				AttributedCodeBlock invariant, Attribute... attributes) {
+			super(name,modifiers,attributes);
 			this.type = type;
 			this.invariant = invariant;
 		}
 
-		public Type(Collection<Modifier> modifiers, String name, wyil.lang.Type type, BytecodeForest invariant,
+		public Type(Collection<Modifier> modifiers, String name,
+				wyil.lang.Type type, AttributedCodeBlock invariant,
 				Collection<Attribute> attributes) {
 			super(name, modifiers, attributes);
 			this.type = type;
@@ -471,7 +473,7 @@ public final class WyilFile implements CompilationUnit {
 			return type;
 		}
 
-		public BytecodeForest invariant() {
+		public AttributedCodeBlock invariant() {
 			return invariant;
 		}
 	}
@@ -509,26 +511,32 @@ public final class WyilFile implements CompilationUnit {
 	public static final class FunctionOrMethod extends
 			Declaration {
 		private wyil.lang.Type.FunctionOrMethod type;
-		private int numPreconditions;
-		private int numPostconditions;
-		private final BytecodeForest forest;
+		private final ArrayList<AttributedCodeBlock> precondition;
+		private final ArrayList<AttributedCodeBlock> postcondition;
+		private final AttributedCodeBlock body;
 		
-		public FunctionOrMethod(Collection<Modifier> modifiers, String name, wyil.lang.Type.FunctionOrMethod type,
-				BytecodeForest forest, int numPreconditions, int numPostconditions, Attribute... attributes) {
+		public FunctionOrMethod(Collection<Modifier> modifiers, String name,
+				wyil.lang.Type.FunctionOrMethod type, AttributedCodeBlock body,
+				List<AttributedCodeBlock> precondition,
+				List<AttributedCodeBlock> postcondition,
+				Attribute... attributes) {
 			super(name, modifiers, attributes);
 			this.type = type;
-			this.forest = forest;
-			this.numPreconditions = numPreconditions;
-			this.numPostconditions = numPostconditions;			
+			this.body = body;
+			this.precondition = new ArrayList<AttributedCodeBlock>(precondition);
+			this.postcondition = new ArrayList<AttributedCodeBlock>(postcondition);
 		}
 
-		public FunctionOrMethod(Collection<Modifier> modifiers, String name, wyil.lang.Type.FunctionOrMethod type,
-				BytecodeForest forest, int numPreconditions, int numPostconditions, Collection<Attribute> attributes) {
+		public FunctionOrMethod(Collection<Modifier> modifiers, String name,
+				wyil.lang.Type.FunctionOrMethod type, AttributedCodeBlock body,
+				List<AttributedCodeBlock> precondition,
+				List<AttributedCodeBlock> postcondition,
+				Collection<Attribute> attributes) {
 			super(name, modifiers, attributes);
 			this.type = type;
-			this.forest = forest;
-			this.numPreconditions = numPreconditions;
-			this.numPostconditions = numPostconditions;	
+			this.body = body;
+			this.precondition = new ArrayList<AttributedCodeBlock>(precondition);
+			this.postcondition = new ArrayList<AttributedCodeBlock>(postcondition);
 		}
 
 		public wyil.lang.Type.FunctionOrMethod type() {
@@ -543,51 +551,16 @@ public final class WyilFile implements CompilationUnit {
 			return type instanceof wyil.lang.Type.Method;
 		}
 		
-		public BytecodeForest code() {
-			return forest;
-		}
-		
-		/**
-		 * Get the list of blocks within the code forest that represent the
-		 * preconditions of this function/method.
-		 * 
-		 * @return
-		 */
-		public int[] preconditions() {
-			int[] ids = new int[numPreconditions];
-			for(int i=0;i!=numPreconditions;++i) {
-				ids[i] = forest.getRoot(i);
-			}
-			return ids;
+		public AttributedCodeBlock body() {
+			return body;
 		}
 
-		/**
-		 * Get the list of blocks within the code forest that represent the
-		 * postconditions of this function/method.
-		 * 
-		 * @return
-		 */
-		public int[] postconditions() {
-			int[] ids = new int[numPostconditions];
-			for(int i=0;i!=numPostconditions;++i) {
-				ids[i] = forest.getRoot(i+numPreconditions);
-			}
-			return ids;
+		public List<AttributedCodeBlock> precondition() {
+			return precondition;
 		}
-		
-		/**
-		 * Get the block corresponding to the body of this function, or null if
-		 * no such body exists.
-		 * 
-		 * @return
-		 */
-		public Integer body() {
-			int r = numPreconditions + numPostconditions;
-			if(r == forest.numRoots()) {
-				return null;
-			} else {
-				return forest.getRoot(r);
-			}
+
+		public List<AttributedCodeBlock> postcondition() {
+			return postcondition;
 		}
 	}
 }

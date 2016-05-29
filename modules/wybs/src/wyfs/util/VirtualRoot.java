@@ -73,11 +73,6 @@ public class VirtualRoot extends AbstractRoot<VirtualRoot.Folder> {
 		private byte[] data;
 
 		/**
-		 * Number of bytes in data actually used.
-		 */
-		private int length;
-		
-		/**
 		 * The last modified date. This is a time stamp used to determine when
 		 * the file was last modified in order to calculate which dependents
 		 * need recompilation.
@@ -103,31 +98,22 @@ public class VirtualRoot extends AbstractRoot<VirtualRoot.Folder> {
 		}
 
 		public InputStream inputStream() {
-			return new ByteArrayInputStream(data,0,length);
+			return new ByteArrayInputStream(data);
 		}
 
 		public OutputStream outputStream() {
 			lastModified = System.currentTimeMillis();
 			data = new byte[0];
-			length = 0;
 			// create an output stream which will automatically resize the given
 			// array.
-			return new OutputStream() {		
-				public void write(byte[] bytes) {
-					data = new byte[bytes.length];
-					System.arraycopy(bytes, 0, data, 0, bytes.length);
-					length = data.length;
-				}
-				public void write(byte[] bytes, int off, int len) {
-					data = new byte[len];
-					System.arraycopy(bytes, off, data, 0, len);
-					length = data.length;
-				}
+			return new OutputStream() {
+				private int pos = 0;
+
 				public void write(int b) {
-					if (length >= data.length) {
+					if (pos >= data.length) {
 						data = Arrays.copyOf(data, (data.length + 1) * 2);
 					}
-					data[length++] = (byte) b;
+					data[pos++] = (byte) b;
 				}
 			};
 		}

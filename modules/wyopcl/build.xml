@@ -14,11 +14,11 @@
 			<src path="src"/>
 			<src path="test"/>
 			<include name="*/**"/>
-			<!-- Excluding Symbolic Pattern Transformer -->
-			<exclude name="**/wyopcl/translator/symbolic"/>
+			<!-- Excluding Pattern Transformer -->
+			<exclude name="wyopcl/translator/symbolic/pattern/transform/WhileLoopIncrPatternTransformer.java"/>
 			<!-- Excluding Interpreter -->
-			<exclude name="**/wyopcl/util/**"/>
-			<exclude name="**/wyopcl/testing/interpreter/**"/>
+			<exclude name="wyopcl/util/**"/>
+			<exclude name="wyopcl/testing/interpreter/**"/>
 		</javac>
 		<taskdef name="wyopcl" classname="wyopcl.WyopclAntTask" classpath="src/:../wyil/src/:../wyc/src:../wyrl/src:../wycs/src:../wybs/src/:../wyjc/src/:../../${JASM_JAR}"/>
 	</target>

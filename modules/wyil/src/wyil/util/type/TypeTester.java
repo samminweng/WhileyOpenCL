@@ -97,8 +97,7 @@ public class TypeTester {
 					return false;
 				}
 				int length = schildren.length;
-				Type.FunctionOrMethod.Data data = (Type.FunctionOrMethod.Data) state.data;
-				int sNumParams = data.numParams;
+				int sNumParams = (Integer) state.data;
 				// First, do parameters (which are contravariant).
 				for(int i=0;i<sNumParams;++i) {
 					int schild = schildren[i];

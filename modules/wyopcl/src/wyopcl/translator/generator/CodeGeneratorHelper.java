@@ -19,6 +19,8 @@ import java.util.stream.IntStream;
 
 import wyil.attributes.VariableDeclarations;
 import wyil.lang.Attribute;
+import wyil.lang.Code;
+import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.Type.Record.State;

@@ -36,6 +36,7 @@ import wycc.lang.SyntaxError;
 import wycc.util.Pair;
 import wyil.attributes.SourceLocation;
 import wyil.lang.*;
+import wyil.util.AttributedCodeBlock;
 import static wyil.util.ErrorMessages.*;
 
 public abstract class BackwardFlowAnalysis<T> {
@@ -53,7 +54,7 @@ public abstract class BackwardFlowAnalysis<T> {
 	/**
 	 * The root block currently being propagated through.
 	 */
-	protected BytecodeForest forest;
+	protected AttributedCodeBlock rootBlock;
 
 	/**
 	 * The temporary abstract stores being generated during propagation.
@@ -91,14 +92,15 @@ public abstract class BackwardFlowAnalysis<T> {
 			WyilFile.FunctionOrMethod method) {
 		this.method = method;
 		this.stores = new HashMap<String,T>();
-		this.forest = method.code();
+		this.rootBlock = method.body();
 		T last = lastStore();
-		propagate(method.body(), last, Collections.EMPTY_LIST);
+		propagate(null, rootBlock, last, Collections.EMPTY_LIST);
 		
 		// FIXME: should we propagate through the precondition and postconditions !?
 		
-		return new WyilFile.FunctionOrMethod(method.modifiers(), method.name(), method.type(), method.code(),
-				method.preconditions().length, method.postconditions().length, method.attributes());
+		return new WyilFile.FunctionOrMethod(method.modifiers(), method.name(),
+				method.type(), method.body(), method.precondition(),
+				method.postcondition(), method.attributes());
 	}
 
 	/**
@@ -116,50 +118,49 @@ public abstract class BackwardFlowAnalysis<T> {
 	 *            The list of active exception handlers
 	 * @return
 	 */
-	protected T propagate(int blockID, T store, List<Pair<Type,String>> handlers) {
-		BytecodeForest.Block block = forest.get(blockID);
-		
+	protected T propagate(CodeBlock.Index parentIndex, CodeBlock block, T store, List<Pair<Type,String>> handlers) {
+
 		for (int i = block.size()-1; i >= 0; --i) {
-			Bytecode code = block.get(i).code();
+			Code code = block.get(i);
 
 			// Construct the bytecode index
-			BytecodeForest.Index id = new BytecodeForest.Index(blockID,i);
+			CodeBlock.Index id = new CodeBlock.Index(parentIndex,i);
 
 			try {
 				// First, check for a label which may have incoming information.
-				if (code instanceof Bytecode.Loop) {
-					Bytecode.Loop loop = (Bytecode.Loop) code;
+				if (code instanceof Codes.Loop) {
+					Codes.Loop loop = (Codes.Loop) code;
 					store = propagate(id, loop, store, handlers);
 					continue;
-				} else if (code instanceof Bytecode.Label) {
-					Bytecode.Label l = (Bytecode.Label) code;
-					stores.put(l.label(),store);
-				} else if (code instanceof Bytecode.If) {
-					Bytecode.If ifgoto = (Bytecode.If) code;
-					T trueStore = stores.get(ifgoto.destination());
+				} else if (code instanceof Codes.Label) {
+					Codes.Label l = (Codes.Label) code;
+					stores.put(l.label,store);
+				} else if (code instanceof Codes.If) {
+					Codes.If ifgoto = (Codes.If) code;
+					T trueStore = stores.get(ifgoto.target);
 					store = propagate(id, ifgoto, trueStore, store);
-				} else if (code instanceof Bytecode.IfIs) {
-					Bytecode.IfIs iftype = (Bytecode.IfIs) code;
-					T trueStore = stores.get(iftype.destination());
+				} else if (code instanceof Codes.IfIs) {
+					Codes.IfIs iftype = (Codes.IfIs) code;
+					T trueStore = stores.get(iftype.target);
 					store = propagate(id, iftype, trueStore, store);
-				} else if (code instanceof Bytecode.Switch) {
-					Bytecode.Switch sw = (Bytecode.Switch) code;
+				} else if (code instanceof Codes.Switch) {
+					Codes.Switch sw = (Codes.Switch) code;
 
 					ArrayList<T> swStores = new ArrayList<T>();
-					for(int j=0;j!=sw.branches().size();++j){
-						String target = sw.branches().get(j).second();
+					for(int j=0;j!=sw.branches.size();++j){
+						String target = sw.branches.get(j).second();
 						swStores.add(stores.get(target));
 					}
-					T defStore = stores.get(sw.defaultTarget());
+					T defStore = stores.get(sw.defaultTarget);
 
 					store = propagate(id, sw, swStores, defStore);
-				} else if (code instanceof Bytecode.Goto) {
-					Bytecode.Goto gto = (Bytecode.Goto) code;
-					store = stores.get(gto.destination());
+				} else if (code instanceof Codes.Goto) {
+					Codes.Goto gto = (Codes.Goto) code;
+					store = stores.get(gto.target);
 				} else {
 					// This indicates a sequential statement was encountered.
-					if (code instanceof Bytecode.Return
-						|| code instanceof Bytecode.Fail) {
+					if (code instanceof Codes.Return
+						|| code instanceof Codes.Fail) {
 						store = lastStore();
 					}
 					store = propagate(id, code, store);
@@ -167,8 +168,7 @@ public abstract class BackwardFlowAnalysis<T> {
 			} catch (SyntaxError se) {
 				throw se;
 			} catch (Throwable ex) {
-				internalFailure("internal failure", filename, ex, forest.get(id).attribute(SourceLocation.class));
-			}
+				internalFailure("internal failure", filename, ex, rootBlock.attribute(id,SourceLocation.class));			}
 		}
 
 		return store;
@@ -194,7 +194,7 @@ public abstract class BackwardFlowAnalysis<T> {
 	 *            statement on the false branch.
 	 * @return
 	 */
-	protected abstract T propagate(BytecodeForest.Index index, Bytecode.If ifgoto,
+	protected abstract T propagate(CodeBlock.Index index, Codes.If ifgoto,
 			T trueStore, T falseStore);
 
 	/**
@@ -216,7 +216,7 @@ public abstract class BackwardFlowAnalysis<T> {
 	 *            statement on the false branch.
 	 * @return
 	 */
-	protected abstract T propagate(BytecodeForest.Index index, Bytecode.IfIs iftype, T trueStore,
+	protected abstract T propagate(CodeBlock.Index index, Codes.IfIs iftype, T trueStore,
 			T falseStore);
 
 	/**
@@ -236,7 +236,7 @@ public abstract class BackwardFlowAnalysis<T> {
 	 *            --- abstract store coming from default branch
 	 * @return
 	 */
-	protected abstract T propagate(BytecodeForest.Index index, Bytecode.Switch sw,
+	protected abstract T propagate(CodeBlock.Index index, Codes.Switch sw,
 			List<T> stores, T defStore);
 
 	/**
@@ -254,7 +254,7 @@ public abstract class BackwardFlowAnalysis<T> {
 	 *            statement.
 	 * @return
 	 */
-	protected abstract T propagate(BytecodeForest.Index index, Bytecode.Loop code, T store,
+	protected abstract T propagate(CodeBlock.Index index, Codes.Loop code, T store,
 			List<Pair<Type, String>> handlers);
 
 	/**
@@ -272,7 +272,7 @@ public abstract class BackwardFlowAnalysis<T> {
 	 *            statement.
 	 * @return
 	 */
-	protected abstract T propagate(BytecodeForest.Index index, Bytecode code, T store);
+	protected abstract T propagate(CodeBlock.Index index, Code code, T store);
 
 	/**
 	 * Propagate from an exception handler.

@@ -33,6 +33,7 @@ import wycc.lang.Transform;
 import wycc.util.Pair;
 import wyil.attributes.SourceLocation;
 import wyil.lang.*;
+import wyil.util.AttributedCodeBlock;
 
 /**
  * <p>
@@ -87,22 +88,20 @@ public class CoercionCheck implements Transform<WyilFile> {
 	}
 
 	public void check(WyilFile.FunctionOrMethod method) {
-		BytecodeForest forest = method.code();
-		for(int i=0;i!=forest.numBlocks();++i) {
-			check(i, forest, method);
-		}
+		check(null, method.body(), method.body(), method);
 	}
 
-	protected void check(int blockID, BytecodeForest forest, WyilFile.FunctionOrMethod method) {
+	protected void check(CodeBlock.Index index, CodeBlock block, AttributedCodeBlock root, WyilFile.FunctionOrMethod method) {
 		// Examine all entries in this block looking for a conversion bytecode
-		BytecodeForest.Block block = forest.get(blockID);
 		for (int i = 0; i != block.size(); ++i) {
-			BytecodeForest.Entry e = block.get(i);
-			Bytecode code = e.code();
-			if (code instanceof Bytecode.Convert) {
-				Bytecode.Convert conv = (Bytecode.Convert) code;
-				check(conv.type(0), conv.result(), new HashSet<Pair<Type, Type>>(), e.attribute(SourceLocation.class));
-			} 
+			Code code = block.get(i);
+			if (code instanceof Codes.Convert) {
+				Codes.Convert conv = (Codes.Convert) code;
+				check(conv.type(0), conv.result, new HashSet<Pair<Type, Type>>(),
+						root.attribute(new CodeBlock.Index(index, i), SourceLocation.class));
+			} else if (code instanceof CodeBlock) {
+				check(new CodeBlock.Index(index, i), (CodeBlock) code, root, method);
+			}
 		}
 	}
 
@@ -116,7 +115,8 @@ public class CoercionCheck implements Transform<WyilFile> {
 	 * @param visited - the set of pairs already checked.
 	 * @param location - source location attribute (if applicable).
 	 */
-	protected void check(Type from, Type to, HashSet<Pair<Type, Type>> visited, SourceLocation location) {
+	protected void check(Type from, Type to, HashSet<Pair<Type, Type>> visited,
+			SourceLocation location) {
 		Pair<Type,Type> p = new Pair<Type,Type>(from,to);
 		if(visited.contains(p)) {
 			return; // already checked this pair

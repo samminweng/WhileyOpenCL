@@ -160,8 +160,6 @@ public class WhileyFilePrinter {
 			print((Stmt.Skip) stmt);
 		} else if(stmt instanceof Stmt.Switch) {
 			print((Stmt.Switch) stmt, indent);
-		} else if(stmt instanceof Stmt.NamedBlock) {
-			print((Stmt.NamedBlock) stmt, indent);
 		} else if(stmt instanceof Stmt.While) {
 			print((Stmt.While) stmt, indent);
 		} else if(stmt instanceof Stmt.VariableDeclaration) {
@@ -257,11 +255,6 @@ public class WhileyFilePrinter {
 		out.println();
 	}
 
-	public void print(Stmt.NamedBlock s, int indent) {
-		out.println(s.name + ":");
-		print(s.body,indent+1);
-	}
-
 	public void print(Stmt.While s, int indent) {
 		out.print("while ");
 		print(s.condition);
@@ -346,6 +339,8 @@ public class WhileyFilePrinter {
 			print ((Expr.ArrayInitialiser) expression);
 		} else if (expression instanceof Expr.BinOp) {
 			print ((Expr.BinOp) expression);
+		} else if (expression instanceof Expr.LengthOf) {
+			print ((Expr.LengthOf) expression);
 		} else if (expression instanceof Expr.Dereference) {
 			print ((Expr.Dereference) expression);
 		} else if (expression instanceof Expr.Cast) {
@@ -417,6 +412,12 @@ public class WhileyFilePrinter {
 		printWithBrackets(e.rhs, Expr.BinOp.class, Expr.Cast.class);
 	}
 
+	public void print(Expr.LengthOf e) {
+		out.print("|");
+		print(e.src);
+		out.print("|");
+	}
+
 	public void print(Expr.Dereference e) {
 		out.print("*");
 		print(e.src);
@@ -447,11 +448,6 @@ public class WhileyFilePrinter {
 		case INVERT:
 			out.print("~");
 			break;
-		case ARRAYLENGTH:
-			out.print("|");
-			print(e.mhs);
-			out.print("|");
-			return;
 		}
 		printWithBrackets(e.mhs,Expr.BinOp.class,Expr.Cast.class);
 	}
@@ -462,18 +458,6 @@ public class WhileyFilePrinter {
 			out.print(".");
 		}
 		out.print(e.name);
-		if (!e.lifetimeArguments.isEmpty()) {
-			out.print("<");
-			boolean firstTime = true;
-			for (String lifetime : e.lifetimeArguments) {
-				if (!firstTime) {
-					out.print(", ");
-				}
-				firstTime = false;
-				out.print(lifetime);
-			}
-			out.print(">");
-		}
 		out.print("(");
 		boolean firstTime = true;
 		for(Expr i : e.arguments) {
@@ -488,18 +472,6 @@ public class WhileyFilePrinter {
 
 	public void print(Expr.IndirectFunctionCall e) {
 		print(e.src);
-		if (!e.lifetimeArguments.isEmpty()) {
-			out.print("<");
-			boolean firstTime = true;
-			for (String lifetime : e.lifetimeArguments) {
-				if (!firstTime) {
-					out.print(", ");
-				}
-				firstTime = false;
-				out.print(lifetime);
-			}
-			out.print(">");
-		}
 		out.print("(");
 		boolean firstTime = true;
 		for(Expr i : e.arguments) {
@@ -514,18 +486,6 @@ public class WhileyFilePrinter {
 
 	public void print(Expr.IndirectMethodCall e) {
 		print(e.src);
-		if (!e.lifetimeArguments.isEmpty()) {
-			out.print("<");
-			boolean firstTime = true;
-			for (String lifetime : e.lifetimeArguments) {
-				if (!firstTime) {
-					out.print(", ");
-				}
-				firstTime = false;
-				out.print(lifetime);
-			}
-			out.print(">");
-		}
 		out.print("(");
 		boolean firstTime = true;
 		for(Expr i : e.arguments) {
@@ -614,32 +574,7 @@ public class WhileyFilePrinter {
 	}
 
 	public void print(Expr.Lambda e) {
-		out.print("&");
-		if (!e.contextLifetimes.isEmpty()) {
-			out.print("[");
-			boolean firstTime = true;
-			for (String lifetime : e.contextLifetimes) {
-				if (!firstTime) {
-					out.print(", ");
-				}
-				firstTime = false;
-				out.print(lifetime);
-			}
-			out.print("]");
-		}
-		if (!e.lifetimeParameters.isEmpty()) {
-			out.print("<");
-			boolean firstTime = true;
-			for (String lifetime : e.lifetimeParameters) {
-				if (!firstTime) {
-					out.print(", ");
-				}
-				firstTime = false;
-				out.print(lifetime);
-			}
-			out.print(">");
-		}
-		out.print("(");
+		out.print("&(");
 		boolean firstTime = true;
 		for(WhileyFile.Parameter p : e.parameters) {
 			if(!firstTime) {
@@ -733,30 +668,6 @@ public class WhileyFilePrinter {
 				out.print("method ");
 			} else {
 				out.print("function ");
-			}
-			if (!tt.contextLifetimes.isEmpty()) {
-				out.print("[");
-				boolean firstTime = true;
-				for (String lifetime : tt.contextLifetimes) {
-					if (!firstTime) {
-						out.print(", ");
-					}
-					firstTime = false;
-					out.print(lifetime);
-				}
-				out.print("]");
-			}
-			if (!tt.lifetimeParameters.isEmpty()) {
-				out.print("<");
-				boolean firstTime = true;
-				for (String lifetime : tt.lifetimeParameters) {
-					if (!firstTime) {
-						out.print(", ");
-					}
-					firstTime = false;
-					out.print(lifetime);
-				}
-				out.print(">");
 			}
 			printParameterTypes(tt.paramTypes);
 			out.print("->");

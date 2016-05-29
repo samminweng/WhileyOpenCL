@@ -59,10 +59,10 @@ method eof(BufferState state) -> bool:
 
 // Construct buffer from list of bytes
 public method BufferInputStream(byte[] buffer) -> InputStream:
-    BufferState _this = new {bytes: buffer, pos: 0}
+    BufferState this = new {bytes: buffer, pos: 0}
     return {
-        read: &(int x -> read(_this, x)),
-        eof: &( -> eof(_this))
+        read: &(int x -> read(this, x)),
+        eof: &( -> eof(this))
     }
 
 method read(string s) -> byte[]:

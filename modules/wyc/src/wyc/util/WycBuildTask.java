@@ -146,14 +146,24 @@ public class WycBuildTask {
 	public static final List<Pipeline.Template> defaultPipeline = Collections
 			.unmodifiableList(new ArrayList<Pipeline.Template>() {
 				{
+					// add(new Pipeline.Template(WyilFilePrinter.class,
+					// Collections.EMPTY_MAP));
 					add(new Pipeline.Template(DefiniteAssignmentCheck.class,
 							Collections.EMPTY_MAP));
 					add(new Pipeline.Template(ModuleCheck.class,
 							Collections.EMPTY_MAP));
 					add(new Pipeline.Template(LoopVariants.class,
 							Collections.EMPTY_MAP));
+//					add(new Pipeline.Template(ConstantPropagation.class,
+//							Collections.EMPTY_MAP));
 					add(new Pipeline.Template(CoercionCheck.class,
 							Collections.EMPTY_MAP));
+//					add(new Pipeline.Template(DeadCodeElimination.class,
+//							Collections.EMPTY_MAP));
+//					add(new Pipeline.Template(LiveVariablesAnalysis.class,
+//							Collections.EMPTY_MAP));
+					// add(new Pipeline.Template(WyilFilePrinter.class,
+					// Collections.EMPTY_MAP));
 				}
 			});
 
@@ -164,10 +174,13 @@ public class WycBuildTask {
 	 */
 	static {
 		Pipeline.register(DefiniteAssignmentCheck.class);
-		Pipeline.register(LoopVariants.class);		
+		Pipeline.register(LoopVariants.class);
+		Pipeline.register(ConstantPropagation.class);
 		Pipeline.register(ModuleCheck.class);
 		Pipeline.register(CoercionCheck.class);
-		Pipeline.register(WyilFilePrinter.class);		
+		Pipeline.register(WyilFilePrinter.class);
+		Pipeline.register(DeadCodeElimination.class);
+		Pipeline.register(LiveVariablesAnalysis.class);
 	}
 
 	/**

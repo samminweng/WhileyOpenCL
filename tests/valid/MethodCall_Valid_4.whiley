@@ -1,16 +1,16 @@
 type Sum is &{int result, int[] items}
 
-method start(Sum _this) :
+method start(Sum this) :
     int sum = 0
     int i = 0
-    int[] items = _this->items
+    int[] items = this->items
     while i < |items| where i >= 0:
         sum = sum + items[i]
         i = i + 1
-    _this->result = sum
+    this->result = sum
 
-method get(Sum _this) -> int:
-    return _this->result
+method get(Sum this) -> int:
+    return this->result
 
 method create(int[] items) -> Sum:
     return new {result: 0, items: items}

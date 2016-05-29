@@ -33,8 +33,9 @@ import wycc.lang.Transform;
 import wycc.util.Pair;
 import wyil.attributes.SourceLocation;
 import wyil.lang.*;
-import wyil.lang.BytecodeForest.Index;
-import wyil.lang.Bytecode.*;
+import wyil.lang.CodeBlock.Index;
+import wyil.lang.Codes.*;
+import wyil.util.AttributedCodeBlock;
 import static wyil.util.ErrorMessages.*;
 
 /**
@@ -125,27 +126,26 @@ public class ModuleCheck implements Transform<WyilFile> {
 	 * @param c
 	 */
 	protected void checkFunctionPure(WyilFile.FunctionOrMethod c) {
-		checkFunctionPure(c.body(),c.code());
+		AttributedCodeBlock block = c.body();
+		checkFunctionPure(null,block,block);
 	}
 
-	protected void checkFunctionPure(int blockID, BytecodeForest forest) {
-		BytecodeForest.Block block = forest.get(blockID);
+	protected void checkFunctionPure(CodeBlock.Index parent, CodeBlock block, AttributedCodeBlock root) {
 		for (int i = 0; i != block.size(); ++i) {
-			BytecodeForest.Entry e = block.get(i);
-			Bytecode code = e.first();			
-			if(code instanceof Bytecode.Invoke && ((Bytecode.Invoke)code).type(0) instanceof Type.Method) {
+			Code code = block.get(i);
+			CodeBlock.Index index = new CodeBlock.Index(parent,i);
+			if(code instanceof Codes.Invoke && ((Codes.Invoke)code).type(0) instanceof Type.Method) {
 				// internal message send
-				syntaxError(errorMessage(METHODCALL_NOT_PERMITTED_IN_FUNCTION), filename, e.attribute(SourceLocation.class));
-			} else if (code instanceof Bytecode.IndirectInvoke && ((Bytecode.IndirectInvoke)code).type(0) instanceof Type.Method) {
-				syntaxError(errorMessage(METHODCALL_NOT_PERMITTED_IN_FUNCTION), filename, e.attribute(SourceLocation.class));
-			} else if (code.opcode() == Bytecode.OPCODE_newobject) {
-				syntaxError(errorMessage(ALLOCATION_NOT_PERMITTED_IN_FUNCTION), filename, e.attribute(SourceLocation.class));
-			} else if (code.opcode() == Bytecode.OPCODE_dereference) {
-				syntaxError(errorMessage(REFERENCE_ACCESS_NOT_PERMITTED_IN_FUNCTION), filename,
-						e.attribute(SourceLocation.class));
-			} else if (code instanceof Bytecode.Compound) {
-				Bytecode.Compound a = (Bytecode.Compound) code;
-				checkFunctionPure(a.block(), forest);
+				syntaxError(errorMessage(METHODCALL_NOT_PERMITTED_IN_FUNCTION), filename, root.attribute(index, SourceLocation.class));
+			} else if (code instanceof Codes.IndirectInvoke && ((Codes.IndirectInvoke)code).type(0) instanceof Type.Method) {
+				syntaxError(errorMessage(METHODCALL_NOT_PERMITTED_IN_FUNCTION), filename, root.attribute(index, SourceLocation.class));
+			} else if(code instanceof Codes.NewObject) {
+				syntaxError(errorMessage(ALLOCATION_NOT_PERMITTED_IN_FUNCTION), filename, root.attribute(index, SourceLocation.class));
+			} else if(code instanceof Codes.Dereference){
+				syntaxError(errorMessage(REFERENCE_ACCESS_NOT_PERMITTED_IN_FUNCTION), filename, root.attribute(index, SourceLocation.class));
+			} else if(code instanceof CodeBlock) {
+				// Recursively check the block
+				checkFunctionPure(index,(CodeBlock) code, root);
 			}
 		}
 	}

@@ -18,7 +18,7 @@ import wyil.io.WyilFileReader;
 import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyil.lang.WyilFile;
-import wyil.util.interpreter.Interpreter;
+import wyil.util.Interpreter;
 
 public class Main {
 
@@ -89,8 +89,7 @@ public class Main {
 			WyilFile wf = new WyilFileReader(args[0]).read();
 			new WyilFilePrinter(System.out).apply(wf);
 			// FIXME: this is all a hack for now
-			Type.Method sig = Type.Method(Collections.<Type>emptyList(), Collections.<String>emptySet(),
-					Collections.<String>emptyList(), Collections.<Type>emptyList());
+			Type.Method sig = Type.Method(Collections.EMPTY_LIST, Collections.EMPTY_LIST);
 			NameID name = new NameID(wf.id(),"test");
 			Build.Project project = initialiseProject(".");
 			Constant[] returns = new Interpreter(project,System.out).execute(name,sig);

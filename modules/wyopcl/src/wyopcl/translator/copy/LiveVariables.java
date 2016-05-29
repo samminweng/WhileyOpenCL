@@ -3,15 +3,15 @@ package wyopcl.translator.copy;
 import java.util.HashMap;
 import java.util.List;
 
-import wyil.lang.Bytecode;
-import wyil.lang.Bytecode.Assert;
-import wyil.lang.Bytecode.Invariant;
-import wyil.lang.Bytecode.Return;
+import wyil.lang.Code;
+import wyil.lang.Codes;
+import wyil.lang.Codes.Return;
 import wyil.lang.WyilFile.FunctionOrMethod;
+import wyil.transforms.LiveVariablesAnalysis;
+import wyil.transforms.LiveVariablesAnalysis.Env;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.CFGraph;
-import wyopcl.translator.copy.LiveVariablesAnalysis.Env;
 
 
 /**
@@ -41,7 +41,7 @@ public class LiveVariables {
 			Env out = new Env();
 			// Use different initial values for return block.
 			if (block.getType().equals(BlockType.RETURN)) {
-				Return code = (Return) block.getCodeBlock().get(0).code();
+				Codes.Return code = (Return) block.getCodeBlock().get(0);
 				// Add the return register to both in/out set.
 				in.add(code.operand(0));
 				out.add(code.operand(0));
@@ -117,20 +117,18 @@ public class LiveVariables {
 	 *            the 'in' set
 	 * @return the resulting 'in' set.
 	 */
-	private Env compute(List<Bytecode> codes, Env in, LiveVariablesAnalysis liveAnalyzer) {
+	private Env compute(List<Code> codes, Env in, LiveVariablesAnalysis liveAnalyzer) {
 		// Traverse the wyil code in the reverse order.
 		for (int i = codes.size() - 1; i >= 0; i--) {
 			// Compute the live variables, and store the results in in/out set.
-			Bytecode code = codes.get(i);
-			/*if (code instanceof Assert) {
-				Assert as = (Assert)code;
-				as.block()
-				in = compute(((Assert) code), in, liveAnalyzer);
-			} else if (code instanceof Invariant) {
-				in = compute(((Invariant) code).bytecodes(), in, liveAnalyzer);
-			} else {*/
+			Code code = codes.get(i);
+			if (code instanceof Codes.Assert) {
+				in = compute(((Codes.Assert) code).bytecodes(), in, liveAnalyzer);
+			} else if (code instanceof Codes.Invariant) {
+				in = compute(((Codes.Invariant) code).bytecodes(), in, liveAnalyzer);
+			} else {
 				in = liveAnalyzer.propagate(null, code, in);
-			//}
+			}
 		}
 		return in;
 	}
@@ -145,8 +143,8 @@ public class LiveVariables {
 	 * @return
 	 */
 	public Env computeIN(BasicBlock block, Env in, LiveVariablesAnalysis liveAnalyzer) {
-		//List<Bytecode> codes = block.getCodeBlock().bytecodes();
-		//in = compute(codes, in, liveAnalyzer);
+		List<Code> codes = block.getCodeBlock().bytecodes();
+		in = compute(codes, in, liveAnalyzer);
 		// Update 'in' set of the block.
 		setIN(block, in);
 		return in;
