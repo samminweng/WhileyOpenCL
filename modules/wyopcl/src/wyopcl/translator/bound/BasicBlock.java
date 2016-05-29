@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import wyil.lang.Code;
-import wyil.lang.CodeBlock;
+import wyil.lang.Bytecode;
+import wyil.lang.BytecodeForest;
+import wyil.lang.BytecodeForest.Block;
 import wyopcl.translator.bound.constraint.Constraint;
 
 /**
@@ -16,7 +17,7 @@ import wyopcl.translator.bound.constraint.Constraint;
  *
  */
 public class BasicBlock implements Comparable<BasicBlock> {
-	private CodeBlock codeBlock;// Store all the byte-code for a block
+	private Block codeBlock;// Store all the byte-code for a block
 	private List<Constraint> constraints;
 	private List<BasicBlock> childNodes = null;
 	private List<BasicBlock> parentNodes = null;
@@ -103,7 +104,7 @@ public class BasicBlock implements Comparable<BasicBlock> {
 	private BasicBlock() {
 		this.unionOfBounds = new Bounds();
 		this.constraints = new ArrayList<Constraint>();
-		this.codeBlock = new CodeBlock();
+		this.codeBlock = new BytecodeForest.Block();
 	}
 
 	/**
@@ -143,14 +144,14 @@ public class BasicBlock implements Comparable<BasicBlock> {
 	 * 
 	 * @param code
 	 */
-	public void addCode(Code code) {
+	public void addCode(Bytecode code) {
 		this.codeBlock.add(code);
 	}
 	/**
 	 * Get the list of codes.
 	 * @return
 	 */
-	public CodeBlock getCodeBlock(){
+	public Block getCodeBlock(){
 		return this.codeBlock;
 	}
 	
@@ -356,10 +357,10 @@ public class BasicBlock implements Comparable<BasicBlock> {
 		//Display the list of byte-code
 		if(this.codeBlock.size()>0){
 			str += "\n-------------------------------";
-			int index=0;
-			for(Code code: this.codeBlock){
-				str += "\nl."+index+":"+code;
-				index++;
+			
+			for(int i=0;i<this.codeBlock.size();i++){
+				Bytecode code = this.codeBlock.get(i).code();
+				str += "\nl."+i+":"+code;
 			}
 			str += "\n-------------------------------";
 		}

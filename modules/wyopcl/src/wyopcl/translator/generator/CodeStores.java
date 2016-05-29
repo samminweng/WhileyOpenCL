@@ -1,28 +1,21 @@
 package wyopcl.translator.generator;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 import java.util.Map.Entry;
-import java.util.stream.Collector;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-import wyc.lang.Stmt.VariableDeclaration;
 import wyil.attributes.VariableDeclarations;
 import wyil.attributes.VariableDeclarations.Declaration;
-import wyil.lang.Code;
-import wyil.lang.Codes;
-import wyil.lang.Codes.FieldLoad;
+import wyil.lang.Bytecode;
 import wyil.lang.Type;
 import wyil.lang.Type.Record;
 import wyil.lang.Type.Record.State;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
-import wyopcl.Configuration;
 
 /**
  * Stores the generated code and provides common functionality for code generator.
@@ -80,7 +73,7 @@ public class CodeStores {
 	 * @param statement
 	 * @param function
 	 */
-	protected void addAllStatements(Code code, List<String> statement, FunctionOrMethod function) {
+	protected void addAllStatements(Bytecode code, List<String> statement, FunctionOrMethod function) {
 		CodeStore store = getCodeStore(function);
 		store.addAllStatements(code, statement);
 	}
@@ -90,7 +83,7 @@ public class CodeStores {
 	 * @param statement
 	 * @param function
 	 */
-	protected void addStatement(Code code, String statement, FunctionOrMethod function){
+	protected void addStatement(Bytecode code, String statement, FunctionOrMethod function){
 		CodeStore store = getCodeStore(function);
 		store.addStatement(code, statement);
 	}
@@ -478,10 +471,10 @@ public class CodeStores {
 		 * @param statement
 		 *            the C code
 		 */
-		protected void addStatement(Code code, String statement) {
+		protected void addStatement(Bytecode code, String statement) {
 			// Add the WyIL code as a comment
 			if (code != null) {
-				if (code instanceof Codes.Label) {
+				if (code instanceof Bytecode.Label) {
 					// No indentation for label bytecode
 					statements.add("//" + code.toString());
 				} else {
@@ -504,10 +497,10 @@ public class CodeStores {
 		 * @param code
 		 * @param statement
 		 */
-		protected void addAllStatements(Code code, List<String> statement) {
+		protected void addAllStatements(Bytecode code, List<String> statement) {
 			// Add the WyIL code as a comment
 			if (code != null) {
-				if (code instanceof Codes.Label) {
+				if (code instanceof Bytecode.Label) {
 					// No indentation for label bytecode
 					statements.add("//" + code.toString());
 				} else {

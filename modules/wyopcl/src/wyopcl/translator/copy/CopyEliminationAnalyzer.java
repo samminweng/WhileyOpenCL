@@ -4,16 +4,21 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import wybs.lang.Builder;
-import wyil.lang.Code;
-import wyil.lang.Codes;
+import wyil.lang.Bytecode;
+import wyil.lang.Bytecode.FieldLoad;
+import wyil.lang.Bytecode.Invoke;
+import wyil.lang.Bytecode.Operator;
+import wyil.lang.Bytecode.OperatorKind;
+import wyil.lang.Bytecode.Update;
+import wyil.lang.BytecodeForest.Block;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
-import wyil.transforms.LiveVariablesAnalysis;
-import wyil.transforms.LiveVariablesAnalysis.Env;
+
 import wyopcl.Configuration;
 import wyopcl.translator.Analyzer;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
+import wyopcl.translator.copy.LiveVariablesAnalysis.Env;
 
 /**
  * Analyze the alias in the WyIL code to find all the necessary array copies and
@@ -36,7 +41,6 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		this.liveAnalyzer = new LiveVariablesAnalysis(builder);
 		// Diabled the constant propagation
 		this.liveAnalyzer.setEnable(false);
-		this.liveAnalyzer.setNops(true);
 		// Initialize the liveness stores.
 		this.livenessStore = new HashMap<FunctionOrMethod, LiveVariables>();
 	}
@@ -129,16 +133,18 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		}
 	}
 
-	public boolean isLive(int reg, Code code, FunctionOrMethod f) {
+	public boolean isLive(int reg, Bytecode code, FunctionOrMethod function) {
 		boolean isLive = true;
-
+		
+		Block blk = function.code().get(function.body());
+		
 		// Check the array is live.
-		BasicBlock blk = getBlockbyCode(f, code);// Get basic block that
+		//BasicBlock blk = getBlockbyCode(f, code);// Get basic block that
 													// contains the given code.
-		if (blk != null) {
-			Env outSet = getLiveness(f).getOUT(blk);
+		/*if (blk != null) {
+			Env outSet = getLiveness(function).getOUT(blk);
 			isLive = outSet.contains(reg);
-		}
+		}*/
 		return isLive;
 	}
 
@@ -198,20 +204,20 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 *         false.
 	 * 
 	 */
-	public boolean isCopyEliminated(int reg, Code code, FunctionOrMethod f) {
+	public boolean isCopyEliminated(int reg, Bytecode code, FunctionOrMethod f) {
 		boolean isLive = isLive(reg, code, f);
 
 		// If the variable is not alive, then the copies are not needed.
 		if (!isLive) {
 			return true;
 		} else {
-			if (code instanceof Codes.Invoke) {
+			if (code instanceof Invoke) {
 				// Check the array is read-only. By default, the array is assumed
 				// not read-only but modified.
 				boolean isReadOnly = false;
 				boolean isReturned = false;
-				Codes.Invoke invoked = (Codes.Invoke) code;
-				FunctionOrMethod invoked_function = this.getFunction(invoked.name.name(), invoked.type(0));
+				Invoke invoked = (Invoke) code;
+				FunctionOrMethod invoked_function = this.getFunction(invoked.name().name(), invoked.type(0));
 				if (invoked_function != null) {
 					// Map the register to input parameter.
 					int parameter = 0;
@@ -242,12 +248,18 @@ public class CopyEliminationAnalyzer extends Analyzer {
 						}
 					}
 				}
-			}else if (code instanceof Codes.Update){
+			}else if (code instanceof Update){
 				// The copy is needed as the variable is alive after this code.
 				return false;
-			}else if (code instanceof Codes.Assign){
-				return false; // The copy is not needed due to the register becomes dead
-			}else if (code instanceof Codes.FieldLoad){
+			}else if(code instanceof Operator){
+				Operator op = (Operator)code;
+				// Assignment
+				if(op.kind() == OperatorKind.ASSIGN){
+					return false; // The copy is not needed due to the register becomes dead
+				}else{
+					throw new RuntimeException("Not implemented");
+				}
+			}else if (code instanceof FieldLoad){
 				return false;
 			}
 			throw new RuntimeException("Not implemeneted");

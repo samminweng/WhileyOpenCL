@@ -20,35 +20,25 @@ import wyc.lang.Stmt.VariableDeclaration;
 import wycc.lang.SyntaxError;
 import wyil.attributes.VariableDeclarations;
 import wyil.attributes.VariableDeclarations.Declaration;
-import wyil.lang.Code;
-import wyil.lang.Codes;
-import wyil.lang.Codes.ArrayGenerator;
-import wyil.lang.Codes.AssertOrAssume;
-import wyil.lang.Codes.Assign;
-import wyil.lang.Codes.BinaryOperator;
-import wyil.lang.Codes.Const;
-import wyil.lang.Codes.Convert;
-import wyil.lang.Codes.Debug;
-import wyil.lang.Codes.Dereference;
-import wyil.lang.Codes.Fail;
-import wyil.lang.Codes.FieldLoad;
-import wyil.lang.Codes.Goto;
-import wyil.lang.Codes.If;
-import wyil.lang.Codes.IfIs;
-import wyil.lang.Codes.IndexOf;
-import wyil.lang.Codes.IndirectInvoke;
-import wyil.lang.Codes.Invoke;
-import wyil.lang.Codes.Label;
-import wyil.lang.Codes.Lambda;
-import wyil.lang.Codes.LengthOf;
-import wyil.lang.Codes.Loop;
-import wyil.lang.Codes.NewArray;
-import wyil.lang.Codes.NewObject;
-import wyil.lang.Codes.NewRecord;
-import wyil.lang.Codes.Nop;
-import wyil.lang.Codes.Return;
-import wyil.lang.Codes.UnaryOperator;
-import wyil.lang.Codes.Update;
+import wyil.lang.Bytecode;
+import wyil.lang.Bytecode.Operator;
+import wyil.lang.Bytecode.OperatorKind;
+import wyil.lang.Bytecode.AssertOrAssume;
+import wyil.lang.Bytecode.Const;
+import wyil.lang.Bytecode.Convert;
+import wyil.lang.Bytecode.Debug;
+import wyil.lang.Bytecode.Fail;
+import wyil.lang.Bytecode.FieldLoad;
+import wyil.lang.Bytecode.Goto;
+import wyil.lang.Bytecode.If;
+import wyil.lang.Bytecode.IfIs;
+import wyil.lang.Bytecode.IndirectInvoke;
+import wyil.lang.Bytecode.Invoke;
+import wyil.lang.Bytecode.Label;
+import wyil.lang.Bytecode.Lambda;
+import wyil.lang.Bytecode.Loop;
+import wyil.lang.Bytecode.Return;
+import wyil.lang.Bytecode.Update;
 import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.Constant;
@@ -75,15 +65,7 @@ public abstract class AbstractCodeGenerator {
 
 	protected abstract void translate(Update code, FunctionOrMethod function);
 
-	protected abstract void translate(UnaryOperator code, FunctionOrMethod function);
-
-	protected abstract void translate(Nop code, FunctionOrMethod function);
-
 	protected abstract void translate(Return code, FunctionOrMethod function);
-
-	protected abstract void translate(NewRecord code, FunctionOrMethod function);
-
-	protected abstract void translate(LengthOf code, FunctionOrMethod function);
 
 	protected abstract void translate(Label code, FunctionOrMethod function);
 
@@ -92,8 +74,6 @@ public abstract class AbstractCodeGenerator {
 	protected abstract void translate(IndirectInvoke code, FunctionOrMethod function);
 
 	protected abstract void translate(Invoke code, FunctionOrMethod function);
-
-	protected abstract void translate(IndexOf code, FunctionOrMethod function);
 
 	protected abstract void translate(If code, FunctionOrMethod function);
 
@@ -107,10 +87,6 @@ public abstract class AbstractCodeGenerator {
 
 	protected abstract void translate(Convert code, FunctionOrMethod function);
 
-	protected abstract void translate(BinaryOperator code, FunctionOrMethod function);
-
-	protected abstract void translate(Assign code, FunctionOrMethod function);
-
 	protected abstract void translate(AssertOrAssume code, FunctionOrMethod function);
 
 	protected abstract String declareFunction(FunctionOrMethod function);
@@ -121,15 +97,70 @@ public abstract class AbstractCodeGenerator {
 
 	protected abstract void translate(Lambda code, FunctionOrMethod function);
 
-	protected abstract void translate(NewArray code, FunctionOrMethod function);
-
-	protected abstract void translate(ArrayGenerator code, FunctionOrMethod function);
-
-	protected abstract void translate(NewObject code, FunctionOrMethod function);
-
-	protected abstract void translate(Dereference code, FunctionOrMethod function);
-
 	protected abstract void translate(IfIs code, FunctionOrMethod function);
+
+	// Translate the assignment code
+	protected abstract void translateAssign(Operator code, FunctionOrMethod function);
+	// Translate the binOP code, e.g. add, rem
+	protected abstract void translateBinOp(Operator code, FunctionOrMethod function);
+	// Translate the array constructor
+	protected abstract void translateNewArray(Operator code, FunctionOrMethod function);
+	// Translate the array generator
+	protected abstract void translateArrayGen(Operator code, FunctionOrMethod function);
+	// Translate the array index
+	protected abstract void translateArrayIndex(Operator code, FunctionOrMethod function);
+	// Translate the array length
+	protected abstract void translateArrayLength(Operator code, FunctionOrMethod function);
+	// Translate the record constructor
+	protected abstract void translateNewRecord(Operator code, FunctionOrMethod function);
+	// Translate the deference 
+	protected abstract void translateDeference(Operator code, FunctionOrMethod function);
+	// Translate the new object
+	protected abstract void translateNew(Operator code, FunctionOrMethod function);
+	// Translate the unary operator
+	protected abstract void translateUnaryOp(Operator code, FunctionOrMethod function);
+	/**
+	 * Checks the operator code kind and dispatches it to the corresponding translator
+	 * @param code
+	 * @param function
+	 */
+	protected void translate(Operator code, FunctionOrMethod function){
+		switch (code.kind()){
+		case ASSIGN:
+			translateAssign(code, function);
+			break;
+		case ARRAYCONSTRUCTOR:
+			translateNewArray(code, function);
+			break;
+		case ARRAYGENERATOR:
+			translateArrayGen(code, function);
+			break;
+		case ARRAYINDEX:
+			translateArrayIndex(code, function);
+			break;
+		case ARRAYLENGTH:
+			translateArrayLength(code, function);
+			break;
+		case DEREFERENCE:
+			translateDeference(code, function);
+			break;
+		case NEW:
+			translateNew(code, function);
+			break;
+		case NOT:
+			translateUnaryOp(code, function);
+			break;
+		case RECORDCONSTRUCTOR:
+			translateNewRecord(code, function);
+			break;		
+		default:
+			translateBinOp(code, function);
+			break;
+		
+		}
+		
+	}
+	
 
 	/**
 	 * Iterates over the list of byte-code to generate the corresponding C code.
@@ -139,72 +170,46 @@ public abstract class AbstractCodeGenerator {
 	 * @param code
 	 * @param func_name
 	 */
-	protected void iterateCode(Code code, FunctionOrMethod function) {
+	protected void iterateCode(Bytecode code, FunctionOrMethod function) {
 
 		try {
 			// enable the assertion
-			if (code instanceof Codes.AssertOrAssume) {
-				translate((Codes.AssertOrAssume) code, function);
-			} else if (code instanceof Codes.Assign) {
-				translate((Codes.Assign) code, function);
-			} else if (code instanceof Codes.BinaryOperator) {
-				translate((Codes.BinaryOperator) code, function);
-			} else if (code instanceof Codes.Convert) {
-				translate((Codes.Convert) code, function);
-			} else if (code instanceof Codes.Const) {
-				translate((Codes.Const) code, function);
-			} else if (code instanceof Codes.Debug) {
-				translate((Codes.Debug) code, function);
-				// throw new RuntimeException("Not implemented! "+
-				// code.toString(), null);
-			} else if (code instanceof Codes.Dereference) {
-				translate((Codes.Dereference) code, function);
-			} else if (code instanceof Codes.Fail) {
-				translate((Codes.Fail) code, function);
-			} else if (code instanceof Codes.FieldLoad) {
-				translate((Codes.FieldLoad) code, function);
-			} else if (code instanceof Codes.Goto) {
-				translate((Codes.Goto) code, function);
-			} else if (code instanceof Codes.If) {
-				translate((Codes.If) code, function);
-			} else if (code instanceof Codes.IfIs) {
-				translate((Codes.IfIs) code, function);
-			} else if (code instanceof Codes.IndexOf) {
-				translate((Codes.IndexOf) code, function);
-			} else if (code instanceof Codes.IndirectInvoke) {
-				translate((Codes.IndirectInvoke) code, function);
-			} else if (code instanceof Codes.Invoke) {
-				translate((Codes.Invoke) code, function);
-			} else if (code instanceof Codes.Invert) {
+			if (code instanceof Bytecode.AssertOrAssume) {
+				translate((Bytecode.AssertOrAssume) code, function);
+			} else if (code instanceof Bytecode.Operator) {
+				translate((Bytecode.Operator) code, function);
+			} else if (code instanceof Bytecode.Convert) {
+				translate((Bytecode.Convert) code, function);
+			} else if (code instanceof Bytecode.Const) {
+				translate((Bytecode.Const) code, function);
+			} else if (code instanceof Bytecode.Debug) {
+				translate((Bytecode.Debug) code, function);
+			} else if (code instanceof Bytecode.Fail) {
+				translate((Bytecode.Fail) code, function);
+			} else if (code instanceof Bytecode.FieldLoad) {
+				translate((Bytecode.FieldLoad) code, function);
+			} else if (code instanceof Bytecode.Goto) {
+				translate((Bytecode.Goto) code, function);
+			} else if (code instanceof Bytecode.If) {
+				translate((Bytecode.If) code, function);
+			} else if (code instanceof Bytecode.IfIs) {
+				translate((Bytecode.IfIs) code, function);
+			} else if (code instanceof Bytecode.IndirectInvoke) {
+				translate((Bytecode.IndirectInvoke) code, function);
+			} else if (code instanceof Bytecode.Invoke) {
+				translate((Bytecode.Invoke) code, function);
+			} else if (code instanceof Bytecode.Loop) {
+				translate((Bytecode.Loop) code, function);
+			} else if (code instanceof Bytecode.Label) {
+				translate((Bytecode.Label) code, function);
+			} else if (code instanceof Bytecode.Lambda) {
+				translate((Bytecode.Lambda) code, function);
+			} else if (code instanceof Bytecode.Return) {
+				translate((Bytecode.Return) code, function);
+			} else if (code instanceof Bytecode.Switch) {
 				throw new RuntimeException("Not implemented! " + code.toString(), null);
-			} else if (code instanceof Codes.Loop) {
-				translate((Codes.Loop) code, function);
-			} else if (code instanceof Codes.Label) {
-				translate((Codes.Label) code, function);
-			} else if (code instanceof Codes.Lambda) {
-				translate((Codes.Lambda) code, function);
-			} else if (code instanceof Codes.LengthOf) {
-				translate((Codes.LengthOf) code, function);
-			} else if (code instanceof Codes.ArrayGenerator) {
-				translate((Codes.ArrayGenerator) code, function);
-			} else if (code instanceof Codes.Move) {
-				throw new RuntimeException("Not implemented! " + code.toString(), null);
-			} else if (code instanceof Codes.NewArray) {
-				translate((Codes.NewArray) code, function);
-			} else if (code instanceof Codes.NewRecord) {
-				translate((Codes.NewRecord) code, function);
-			} else if (code instanceof Codes.Return) {
-				translate((Codes.Return) code, function);
-			} else if (code instanceof Codes.NewObject) {
-				translate((Codes.NewObject) code, function);
-			} else if (code instanceof Codes.Nop) {
-				translate((Codes.Nop) code, function);
-			} else if (code instanceof Codes.Switch) {
-				throw new RuntimeException("Not implemented! " + code.toString(), null);
-			} else if (code instanceof Codes.UnaryOperator) {
-				translate((Codes.UnaryOperator) code, function);
-			} else if (code instanceof Codes.Update) {
-				translate((Codes.Update) code, function);
+			}  else if (code instanceof Bytecode.Update) {
+				translate((Bytecode.Update) code, function);
 			} else {
 				throw new RuntimeException("Not implemented! " + code.toString(), null);
 			}
