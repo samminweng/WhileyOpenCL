@@ -20,6 +20,7 @@ public class Configuration {
 		this.options = new Properties();
 		this.options.put("copy", false);
 		this.options.put("bound", false);
+		this.options.put("pattern", false);
 		this.options.put("dealloc", false);
 		this.options.put("code", false);
 		this.options.put("verbose", false);

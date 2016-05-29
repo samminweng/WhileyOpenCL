@@ -14,62 +14,70 @@ import wycc.lang.SyntaxError.InternalFailure;
 import wycc.util.Logger;
 import wycc.util.OptArg;
 
-public class WyopclMain extends WycMain {
+public class WyopclMain extends WycMain{
 	private boolean verbose = false;
-	public static final OptArg[] EXTRA_OPTIONS = {
-			new OptArg("dealloc", "Run the deallocation analysis to release un-used memory"),
-
-			// Add the 'copy' option to eliminate un-needed copies
-			new OptArg("copy",
-					"Run the copy elimination analysis to eliminate the un-necessary array copies at byte-code level.\n"),
-
-			// Add the 'bound' option
-			new OptArg("bound", OptArg.STRING,
-					"Run bound analysis on whiley program with a specific widening strategy:\n"
-							+ "\t\t\t   [naive]\tWidening the bounds to infinity.\n"
-							+ "\t\t\t   [gradual]\tWidening the bounds to Int16, Int32, Int64 and infinity."),
-
-			// Add the 'code' option
-			new OptArg("code", "Run the code generate to trasnlate the given Whiley Program into C code.\n"),
-
+	public static final OptArg[] EXTRA_OPTIONS = {		
+		new OptArg("dealloc", "Run the deallocation analysis to release un-used memory"),
+			
+		//Add the 'copy' option to eliminate un-needed copies
+		new OptArg("copy", "Run the copy elimination analysis to eliminate the un-necessary array copies at byte-code level.\n" ),
+		
+		//Add the 'bound' option 
+		new OptArg("bound", OptArg.STRING, "Run bound analysis on whiley program with a specific widening strategy:\n"
+												 + "\t\t\t   [naive]\tWidening the bounds to infinity.\n"
+												 + "\t\t\t   [gradual]\tWidening the bounds to Int16, Int32, Int64 and infinity."),		
+		//Add the 'pattern' option
+		new OptArg("pattern", "Run the pattern matching to analyze the pattern of a given Whiley Program\n" ),
+		
+		//Add the 'code' option
+		new OptArg("code", "Run the code generate to trasnlate the given Whiley Program into C code.\n" ),
+												 
 	};
-
+	
 	public static OptArg[] DEFAULT_OPTIONS;
-
+	
 	static {
 		// first append options
-		OptArg[] options = new OptArg[WycMain.DEFAULT_OPTIONS.length + EXTRA_OPTIONS.length];
-		System.arraycopy(WycMain.DEFAULT_OPTIONS, 0, options, 0, WycMain.DEFAULT_OPTIONS.length);
-		System.arraycopy(EXTRA_OPTIONS, 0, options, WycMain.DEFAULT_OPTIONS.length, EXTRA_OPTIONS.length);
+		OptArg[] options = new OptArg[WycMain.DEFAULT_OPTIONS.length
+				+ EXTRA_OPTIONS.length];
+		System.arraycopy(WycMain.DEFAULT_OPTIONS, 0, options, 0,
+				WycMain.DEFAULT_OPTIONS.length);
+		System.arraycopy(EXTRA_OPTIONS, 0, options,
+				WycMain.DEFAULT_OPTIONS.length, EXTRA_OPTIONS.length);
 		WyopclMain.DEFAULT_OPTIONS = options;
 	}
-
+	
 	public WyopclMain(WycBuildTask builder, OptArg[] options) {
 		super(builder, options);
 	}
+	
 
+	
 	@Override
 	public void configure(Map<String, Object> values) throws IOException {
 		super.configure(values);
 		verbose = values.containsKey("verbose");
-		if (verbose) {
+		if(verbose){
 			builder.setVerbose(verbose);
+		}	
+		
+		//Check if there is only 'verbose' option. If so, then run the interpreter to execute the program.
+		if(values.keySet().size()==0||(values.keySet().size()==1&&verbose)){
+			((WyopclBuildTask)builder).enableInterpreter();
+		}else{
+			//Run the translator with configuration.
+			Configuration config = new Configuration();	
+			//If the options are matched with existing modes, then enable the translator by writing the mode option. 
+			for(Entry<String, Object> entry: values.entrySet()){
+				String option = entry.getKey();
+				Object value = entry.getValue();
+				config.setOption(option, value);
+			}
+			((WyopclBuildTask)builder).setConfig(config);
 		}
-
-		// Check if there is only 'verbose' option. If so, then run the interpreter to execute the program.
-
-		// Run the translator with configuration.
-		Configuration config = new Configuration();
-		// If the options are matched with existing modes, then enable the translator by writing the mode option.
-		for (Entry<String, Object> entry : values.entrySet()) {
-			String option = entry.getKey();
-			Object value = entry.getValue();
-			config.setOption(option, value);
-		}
-		((WyopclBuildTask) builder).setConfig(config);
-
 	}
-
+	
+	
 	@Override
 	public int run(String[] _args) {
 		try {
@@ -90,41 +98,41 @@ public class WyopclMain extends WycMain {
 			if (args.isEmpty() || values.containsKey("help")) {
 				usage();
 				return SUCCESS;
-			}
-
+			}		
+			
 			configure(values);
-
+						
 			ArrayList<File> delta = new ArrayList<File>();
-			// Additional arguments
+			//Additional arguments
 			ArrayList<String> arguments = new ArrayList<String>();
 			for (String arg : args) {
-				if (arg.contains(".whiley")) {
+				if(arg.contains(".whiley")){
 					File f = new File(arg);
-					if (f.exists()) {
-						delta.add(f);
-					} else {
-						throw new RuntimeException("Could not find " + arg);
+					if(f.exists()){
+						delta.add(f);					
+					}else{
+						throw new RuntimeException("Could not find "+arg);
 					}
-				} else {
+				}else{
 					arguments.add(arg);
 				}
 			}
-
+			
 			((WyopclBuildTask) builder).setArguments(arguments.toArray(new String[arguments.size()]));
-
+			
 			// =====================================================================
 			// Run Build Task
 			// =====================================================================
 			builder.build(delta);
 
 		} catch (InternalFailure e) {
-			e.outputSourceError(stderr, false);
+			e.outputSourceError(stderr,false);
 			if (verbose) {
 				e.printStackTrace(stderr);
 			}
 			return INTERNAL_FAILURE;
 		} catch (SyntaxError e) {
-			e.outputSourceError(stderr, false);
+			e.outputSourceError(stderr,false);
 			if (verbose) {
 				e.printStackTrace(stderr);
 			}
@@ -139,8 +147,10 @@ public class WyopclMain extends WycMain {
 
 		return SUCCESS;
 	}
-
-	public static void main(String[] args) {
+	
+	
+	
+	public static void main(String[] args) {		
 		// run WyopclBuildTask
 		System.exit(new WyopclMain(new WyopclBuildTask(), DEFAULT_OPTIONS).run(args));
 	}
