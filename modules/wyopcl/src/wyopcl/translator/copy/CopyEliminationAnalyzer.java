@@ -14,6 +14,7 @@ import wyopcl.Configuration;
 import wyopcl.translator.Analyzer;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
+import wyopcl.translator.readwrite.ReadWriteAnalyzer;
 
 /**
  * Analyze the alias in the WyIL code to find all the necessary array copies and
@@ -23,6 +24,7 @@ import wyopcl.translator.bound.BasicBlock.BlockType;
  *
  */
 public class CopyEliminationAnalyzer extends Analyzer {
+	
 	private LiveVariablesAnalysis liveAnalyzer;
 	// Store the liveness analysis for each function (Key: function,
 	// Value:Liveness information).
@@ -213,17 +215,12 @@ public class CopyEliminationAnalyzer extends Analyzer {
 				Codes.Invoke invoked = (Codes.Invoke) code;
 				FunctionOrMethod invoked_function = this.getFunction(invoked.name.name(), invoked.type(0));
 				if (invoked_function != null) {
-					// Map the register to input parameter.
-					int parameter = 0;
-					while (parameter < invoked.operands().length) {
-						if (reg == invoked.operand(parameter)) {
-							break;
-						}
-						parameter++;
-					}
-					String var = getActualVarName(parameter, invoked_function);
-					// Check if 'var' is modified inside 'invoked_function'.
-					isReadOnly = !isMutated(var, invoked_function);
+					// Map the register to function argument.
+					int argument = this.mapRegisterToFunctionAugment(reg, invoked);
+					
+					String var = getActualVarName(argument, invoked_function);
+					// Check if parameter is modified inside 'invoked_function'.
+					isReadOnly = !isMutated(argument, invoked_function);
 					// Check if 'var' is returned by 'invoked_function'
 					isReturned = isReturned(var, invoked_function);
 					// The 'var' is mutated and returned

@@ -1,0 +1,23 @@
+digraph multiply{
+"entry [ENTRY]"->"code [BLOCK]";
+"code [BLOCK]"->"blklab13 [LOOP_HEADER]";
+"blklab13 [LOOP_HEADER]"->"blklab13 [LOOP_BODY]";
+"blklab13 [LOOP_HEADER]"->"blklab13 [LOOP_EXIT]";
+"blklab13 [LOOP_BODY]"->"blklab13 [LOOP_HEADER]";
+"blklab13 [LOOP_BODY]"->"blklab15 [LOOP_HEADER]";
+"blklab13 [LOOP_EXIT]"->"matrix51 [INVOKE]";
+"blklab15 [LOOP_HEADER]"->"blklab15 [LOOP_BODY]";
+"blklab15 [LOOP_HEADER]"->"blklab15 [LOOP_EXIT]";
+"blklab15 [LOOP_BODY]"->"blklab15 [LOOP_HEADER]";
+"blklab15 [LOOP_BODY]"->"blklab17 [LOOP_HEADER]";
+"blklab15 [LOOP_EXIT]"->"blklab14 [BLOCK]";
+"blklab17 [LOOP_HEADER]"->"blklab17 [LOOP_BODY]";
+"blklab17 [LOOP_HEADER]"->"blklab17 [LOOP_EXIT]";
+"blklab17 [LOOP_BODY]"->"blklab17 [LOOP_HEADER]";
+"blklab17 [LOOP_BODY]"->"blklab18 [BLOCK]";
+"blklab17 [LOOP_EXIT]"->"blklab16 [BLOCK]";
+"matrix51 [INVOKE]"->"matrix51 [BLOCK]";
+"matrix51 [BLOCK]"->"%34 [RETURN]";
+"%34 [RETURN]"->"exit [EXIT]";
+
+}

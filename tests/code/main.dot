@@ -1,0 +1,13 @@
+digraph main{
+"entry [ENTRY]"->"code [BLOCK]";
+"code [BLOCK]"->"init3 [INVOKE]";
+"init3 [INVOKE]"->"init3 [BLOCK]";
+"init3 [BLOCK]"->"init5 [INVOKE]";
+"init5 [INVOKE]"->"init5 [BLOCK]";
+"init5 [BLOCK]"->"multiply7 [INVOKE]";
+"multiply7 [INVOKE]"->"multiply7 [BLOCK]";
+"multiply7 [BLOCK]"->"printMat12 [INVOKE]";
+"printMat12 [INVOKE]"->"printMat12 [BLOCK]";
+"printMat12 [BLOCK]"->"exit [EXIT]";
+
+}

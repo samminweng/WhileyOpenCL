@@ -326,7 +326,6 @@ int main(int argc, char** args){
 	_ADD_OWNERSHIP(moves);
 	//invoke (%8) = (%2, %1) CoinGame3:findMoves : function(int[],int)->(int[])
 	_FREE(_8);
-	_REMOVE_OWNERSHIP(moves);
 	_1DARRAY_SIZE(_8, moves);
 	_8 = findMoves(_1DARRAY_COPY_PARAM(moves), true, n);
 	_ADD_OWNERSHIP(_8);

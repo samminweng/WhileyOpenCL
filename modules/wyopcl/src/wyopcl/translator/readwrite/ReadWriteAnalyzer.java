@@ -16,7 +16,7 @@ import wyil.lang.WyilFile.FunctionOrMethod;
  * <pre><code>
  * Codes.Debug, Codes.Fail, Codes.Goto, Codes.If, Codes.IfIs, Codes.Label,
  * Codes.Lambda, Codes.Nop, Codes.Quantify, Codes.Return, Codes.Switch,
- * Codes.Void
+ * Codes.Void, Codes.IndirectInvoke
  * </code></pre>
  * This is because those code types does not perform read-write but workflow.
  *
@@ -42,7 +42,8 @@ public class ReadWriteAnalyzer {
 		if (code instanceof Codes.Debug || code instanceof Codes.Fail || code instanceof Codes.Goto
 				|| code instanceof Codes.If || code instanceof Codes.IfIs || code instanceof Codes.Label
 				|| code instanceof Codes.Lambda || code instanceof Codes.Nop || code instanceof Codes.Quantify
-				|| code instanceof Codes.Return || code instanceof Codes.Switch || code instanceof Codes.Void) {
+				|| code instanceof Codes.Return || code instanceof Codes.Switch || code instanceof Codes.Void
+				|| code instanceof Codes.IndirectInvoke) {
 			// Do nothing
 		} else {
 			// Check the register is left-handed side
@@ -67,9 +68,7 @@ public class ReadWriteAnalyzer {
 			} else if (code instanceof Codes.FieldLoad) {
 				store.add(((Codes.FieldLoad) code).target(0));
 			} else if (code instanceof Codes.IndexOf) {
-				store.add(((Codes.IfIs) code).target(0));
-			} else if (code instanceof Codes.IndirectInvoke) {
-				store.add(((Codes.IndirectInvoke) code).target(0));
+				store.add(((Codes.IndexOf) code).target(0));
 			} else if (code instanceof Codes.Invariant) {
 				// Go through invariant block
 				Codes.Invariant inv = (Codes.Invariant) code;
@@ -79,7 +78,11 @@ public class ReadWriteAnalyzer {
 			} else if (code instanceof Codes.Invert) {
 				store.add(((Codes.Invert) code).target(0));
 			} else if (code instanceof Codes.Invoke) {
-				store.add(((Codes.Invoke) code).target(0));
+				Codes.Invoke invoke = (Codes.Invoke)code;
+				// Check if there is any return value;
+				if(invoke.targets().length>0){
+					store.add(((Codes.Invoke) code).target(0));
+				}
 			} else if (code instanceof Codes.LengthOf) {
 				store.add(((Codes.LengthOf) code).target(0));
 			} else if (code instanceof Codes.Loop) {

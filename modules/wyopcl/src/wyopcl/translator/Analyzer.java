@@ -27,6 +27,7 @@ import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.CFGraph;
 import wyopcl.translator.bound.CFGraph.STATUS;
+import wyopcl.translator.readwrite.ReadWriteAnalyzer;
 
 /**
  * Aims to build control flow graph for a function.
@@ -46,6 +47,8 @@ public abstract class Analyzer {
 	private int line;
 	// Wyil byte-code
 	protected WyilFile module;
+	// Perform read-write checks
+	private ReadWriteAnalyzer readwriteAnalyzer;
 
 	/**
 	 * Constructor
@@ -53,31 +56,35 @@ public abstract class Analyzer {
 	public Analyzer(Configuration config) {
 		this.cfgraphs = new HashMap<FunctionOrMethod, CFGraph>();
 		this.config = config;
+		this.readwriteAnalyzer = new ReadWriteAnalyzer();
 	}
-	
-	
+
 	/**
 	 * Assign module to analyzer
+	 * 
 	 * @param module
 	 */
-	public void apply(WyilFile module){
+	public void apply(WyilFile module) {
 		this.module = module;
+		// Perform read-write checks
+		this.readwriteAnalyzer.apply(module);
+
 		// Iterate each function to build up CFG
 		for (FunctionOrMethod function : module.functionOrMethods()) {
 			this.buildCFG(function);
-		}	
+		}
 	}
-	
+
 	/**
 	 * Returns the function
+	 * 
 	 * @param name
 	 * @param type
 	 * @return
 	 */
-	protected FunctionOrMethod getFunction(String name, Type.FunctionOrMethod type){
+	protected FunctionOrMethod getFunction(String name, Type.FunctionOrMethod type) {
 		return this.module.functionOrMethod(name, type);
 	}
-	
 
 	/**
 	 * Given a function name, get the CFGraph.
@@ -169,7 +176,8 @@ public abstract class Analyzer {
 		for (BasicBlock blk : blks) {
 			if (!blk.isLeaf()) {
 				for (BasicBlock child : blk.getChildNodes()) {
-					dot_string += "\"" + blk.getLabel() + " [" + blk.getType() + "]\"->\"" + child.getLabel() + " [" + child.getType() + "]\";\n";
+					dot_string += "\"" + blk.getLabel() + " [" + blk.getType() + "]\"->\"" + child.getLabel() + " ["
+							+ child.getType() + "]\";\n";
 				}
 			}
 		}
@@ -186,10 +194,12 @@ public abstract class Analyzer {
 	}
 
 	/**
-	 * Build a control flow graph for a function. 
-	 * @param function the function code block.
+	 * Build a control flow graph for a function.
+	 * 
+	 * @param function
+	 *            the function code block.
 	 */
-	private void buildCFG(FunctionOrMethod function){
+	private void buildCFG(FunctionOrMethod function) {
 		if (!isCached(function)) {
 			line = 0;
 			iterateWyilCode(function, function.body().bytecodes());
@@ -200,8 +210,7 @@ public abstract class Analyzer {
 			this.printCFG(function);
 		}
 	}
-	
-	
+
 	/**
 	 * Prints out each bytecode with line number and indentation.
 	 * 
@@ -209,7 +218,7 @@ public abstract class Analyzer {
 	 * @param line
 	 */
 	private int printWyILCode(FunctionOrMethod function, Code code, int line) {
-		if(config.isVerbose()){
+		if (config.isVerbose()) {
 			String name = function.name();
 			// Print out the bytecode
 			if (code instanceof Codes.Label) {
@@ -222,9 +231,8 @@ public abstract class Analyzer {
 	}
 
 	/**
-	 * Build up the control flow graph: iterating each byte-code to create the
-	 * block (e.g. loop structure/if-else branches) or reuse the current block
-	 * to put the constraints into the corresponding block.
+	 * Build up the control flow graph: iterating each byte-code to create the block (e.g. loop structure/if-else
+	 * branches) or reuse the current block to put the constraints into the corresponding block.
 	 * 
 	 * @param function
 	 *            the function that is currently being analyzed.
@@ -238,8 +246,8 @@ public abstract class Analyzer {
 			line = printWyILCode(function, code, line);
 			// Parse each byte-code and add the constraints accordingly.
 			try {
-				if(code instanceof Codes.Assert){
-					//buildCFG((Codes.Assert)code, function);
+				if (code instanceof Codes.Assert) {
+					// buildCFG((Codes.Assert)code, function);
 				} else if (code instanceof Codes.Invariant) {
 					buildCFG((Codes.Invariant) code, function);
 				} else if (code instanceof Codes.If) {
@@ -274,25 +282,21 @@ public abstract class Analyzer {
 	 */
 	private void buildCFG(Assert code, FunctionOrMethod function) {
 		// Get label code from the list of assertion code
-		String label = code.bytecodes().stream()
-		.filter(c -> c instanceof Codes.Label)
-		.map(c -> ((Codes.Label)c).label)
-		.collect(Collectors.joining(", "));
-		
+		String label = code.bytecodes().stream().filter(c -> c instanceof Codes.Label).map(c -> ((Codes.Label) c).label)
+				.collect(Collectors.joining(", "));
+
 		// Get current block
 		CFGraph graph = this.getCFGraph(function);
 		BasicBlock parent = graph.getCurrentBlock();
 		// Create an assert block
 		BasicBlock blk = graph.createBasicBlock(label, BlockType.ASSERT, parent);
 		// Add the code to blk
-		code.bytecodes().stream()
-		.forEach(c -> blk.addCode(c));
-		
+		code.bytecodes().stream().forEach(c -> blk.addCode(c));
+
 		// Set current blk to the original blk
 		graph.setCurrentBlock(blk);
-		
-	}
 
+	}
 
 	/**
 	 * Builds up a basic block for the calling function.
@@ -349,8 +353,7 @@ public abstract class Analyzer {
 	}
 
 	/**
-	 * Checks or creates the goto block and updates the current block to be
-	 * null.
+	 * Checks or creates the goto block and updates the current block to be null.
 	 * 
 	 * @param code
 	 *            Goto ({@link wyil.lang.Codes.Goto } byte-code
@@ -369,11 +372,10 @@ public abstract class Analyzer {
 	}
 
 	/**
-	 * Gets the block by the label byte-code and sets the current block to that
-	 * block.
+	 * Gets the block by the label byte-code and sets the current block to that block.
 	 * 
-	 * If the current and target blocks are not the same and target block is not
-	 * a Loop Exit, then add the parent-child relation to these two blocks.
+	 * If the current and target blocks are not the same and target block is not a Loop Exit, then add the parent-child
+	 * relation to these two blocks.
 	 * 
 	 * @param code
 	 *            {@link wyil.lang.Codes.Label} byte-code
@@ -452,10 +454,9 @@ public abstract class Analyzer {
 	}
 
 	/**
-	 * Analyze the 'return' byte-code, to create an return block. 
+	 * Analyze the 'return' byte-code, to create an return block.
 	 * 
-	 * If the return code does not have return value, then create
-	 * an exit block.
+	 * If the return code does not have return value, then create an exit block.
 	 * 
 	 * @param code
 	 * @param name
@@ -472,7 +473,7 @@ public abstract class Analyzer {
 			blk.addCode(code);
 			// Set current block.
 			graph.setCurrentBlock(blk);
-		}else{
+		} else {
 			// Connect current block to exit block.
 			BasicBlock exit = graph.getBasicBlock("exit", BlockType.EXIT);
 			if (exit == null) {
@@ -483,19 +484,18 @@ public abstract class Analyzer {
 			}
 		}
 		// Set the current block to null
-		//graph.setCurrentBlock(null);
+		// graph.setCurrentBlock(null);
 	}
-	
-	
+
 	/**
 	 * Get the actual (source-level) variable name of a register
-	 *   
+	 * 
 	 * @param reg
 	 * @param function
 	 * @return
 	 */
-	protected String getActualVarName(int register, FunctionOrMethod function){
-		//Get the mapping table between variable name and register.
+	protected String getActualVarName(int register, FunctionOrMethod function) {
+		// Get the mapping table between variable name and register.
 		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
 		String var_name = vars.get(register).name();
 		if (var_name == null) {
@@ -505,67 +505,60 @@ public abstract class Analyzer {
 		}
 		return var_name;
 	}
-	
+
 	/**
 	 * Check if a variable is returned by the function 'f'
+	 * 
 	 * @param r
 	 * @param f
 	 * @return
 	 */
-	protected boolean isReturned(String var, FunctionOrMethod f){
+	protected boolean isReturned(String var, FunctionOrMethod f) {
 		// Iterate the list of wyil code
 		for (Code code : f.body().bytecodes()) {
-			if(code instanceof Codes.Return){
-				Codes.Return r = (Codes.Return)code;
-				if(r.operands().length>0){
+			if (code instanceof Codes.Return) {
+				Codes.Return r = (Codes.Return) code;
+				if (r.operands().length > 0) {
 					String ret = getActualVarName(r.operand(0), f);
-					if(ret.equals(var)){
+					if (ret.equals(var)) {
 						return true;
 					}
 				}
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Check if the array 'r' is updated inside the function.
 	 * 
 	 * @param reg
-	 *            the array
-	 * @param f
+	 *            the register
+	 * @param function
 	 *            the function
-	 * @return true if the array 'r' is updated.
+	 * @return true if reg is updated.
 	 */
-	protected boolean isMutated(String var, FunctionOrMethod f) {
-		// Get the list of wyil code
-		for (Code code : f.body().bytecodes()) {
-			// Check the array is updated.
-			if (code instanceof Codes.Update) {
-				String target = getActualVarName(((Codes.Update) code).target(0), f);
-				if (target.equals(var)) {
-					return true;// Modified Array.
-				}
-			}
-		}
-		// Read-only array.
-		return false;
+	protected boolean isMutated(int register, FunctionOrMethod function) {
+		return readwriteAnalyzer.isMutated(register, function);
 	}
+
 	
+
 	/**
-	 * Map an argument of a function call to the input parameters of a function. 
+	 * Map an argument of a function call to the input parameters of a function.
+	 * 
 	 * @param register
 	 * @param code
 	 * @return
 	 */
-	protected String mapToFunctionParameters(int register, Codes.Invoke code){
+	protected String mapToFunctionParameters(int register, Codes.Invoke code) {
 		FunctionOrMethod invoked_function = this.getFunction(code.name.name(), code.type(0));
 		if (invoked_function != null) {
 			// Map the register to input parameter.
-			int parameter=0;
-			while(parameter<code.operands().length){
-				if(register==code.operand(parameter)){
+			int parameter = 0;
+			while (parameter < code.operands().length) {
+				if (register == code.operand(parameter)) {
 					break;
 				}
 				parameter++;
@@ -574,4 +567,33 @@ public abstract class Analyzer {
 		}
 		throw new RuntimeException("Not implemented");
 	}
+	
+	
+	/**
+	 * Map the passed parameter to the arguments of the function.
+	 * For example, 'a = f(b, c)'
+	 * The passed parameter 'b' is mapped to the first register
+	 * in calling function 'f'
+	 * 
+	 * 
+	 * @param parameter the register at caller site
+	 * @param code
+	 * @return the register in function
+	 */
+	protected int mapRegisterToFunctionAugment(int parameter, Codes.Invoke code) {
+		// Map the register to input parameter.
+		int[] ops = code.operands();
+		
+		// Find out the index of passed parameter
+		int index =0;
+		while(index<ops.length){
+			if(ops[index] == parameter){
+				break;
+			}
+			index++;
+		}
+		
+		return index;// The operand index is also the registers defined in the function.
+	}
+	
 }

@@ -8,13 +8,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 /**
- * Test ownership rules of a function call 'a = f(b)' 
+ * The tests of copy analysis is merged to tests of code generator. 
  * 
  * @author Min-Hsien Weng
  *
  */
+@Deprecated 
 public class CopyAnalysisTestCase {
-	private BaseTestUtil util;
+	/*private BaseTestUtil util;
 	final Path path = Paths.get(System.getProperty("user.dir")+ File.separator + "tests" + File.separator + "copy");
 
 	@Before
@@ -75,4 +76,5 @@ public class CopyAnalysisTestCase {
 		// 'b' is NOT mutated or NOT returned by 'f', or NOT alive after the function call    
 		util.execCopyAnalysis(path, "nomutate_noreturn_nolive");
 	}
+	*/
 }

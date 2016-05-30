@@ -106,34 +106,7 @@ public final class BaseTestUtil {
 		pb = null;
 	}
 
-	/**
-	 * Find the pattern for all the functions in a Whiley program using pattern
-	 * option.
-	 * 
-	 * @param path_whiley
-	 * @param widen
-	 */
-	public void execPattern(String path, String filename, String... options) {
-		ProcessBuilder pb = null;
-		File file = new File(path + filename + ".whiley");
-		try {
-			String sysout = path + filename + "." + options[0] + ".sysout";
-			// Create the process with the given options
-			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", whiley_runtime_lib,
-					"-" + options[0], file.getName());
-			pb.directory(file.getParentFile());
-			p = pb.start();
-			assertOutput(new BufferedReader(new InputStreamReader(p.getInputStream(), Charset.forName("UTF-8"))),
-					new BufferedReader(new FileReader(sysout)));
-		} catch (Exception e) {
-			terminate();
-			throw new RuntimeException("Test file: " + file.getName(), e);
-		}
-
-		file = null;
-		pb = null;
-	}
-
+	
 	/**
 	 * Use Java process to execute the command line .
 	 * 
@@ -339,7 +312,7 @@ public final class BaseTestUtil {
 		}
 	}
 
-	public void execCopyAnalysis(Path path, String testcase) {
+	/*public void execCopyAnalysis(Path path, String testcase) {
 		// Run commmands
 		String cmd = "java -cp " + classpath + " wyopcl.WyopclMain -bp " + whiley_runtime_lib + " -code -copy"
 				+ " " + testcase + ".whiley";
@@ -354,6 +327,6 @@ public final class BaseTestUtil {
 		} catch (IOException e) {
 			throw new RuntimeException("Errors!!!");
 		}
-	}
+	}*/
 
 }
