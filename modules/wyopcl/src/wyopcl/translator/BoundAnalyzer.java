@@ -362,7 +362,7 @@ public class BoundAnalyzer {
 		}
 
 		// Check if the assigned value is an integer
-		if (TranslatorHelper.isIntType(code.type(0))) {
+		if (isIntType(code.type(0))) {
 			// Add the constraint 'target = operand'
 			if (!AnalyzerHelper.isCached(name)) {
 				CFGraph graph = AnalyzerHelper.getCFGraph(name);
@@ -404,7 +404,7 @@ public class BoundAnalyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.IndexOf code, String name) {
-		if (TranslatorHelper.isIntType((Type) code.type(0)) && !AnalyzerHelper.isCached(name)) {
+		if (isIntType((Type) code.type(0)) && !AnalyzerHelper.isCached(name)) {
 			String target = prefix + code.target(0);
 			String op = prefix + code.operand(0);
 			String index = prefix + code.operand(1);
@@ -428,7 +428,7 @@ public class BoundAnalyzer {
 			CFGraph graph = AnalyzerHelper.getCFGraph(name);
 			Constraint c = null;
 			Constraint neg_c = null;
-			if (TranslatorHelper.isIntType(code.type(0))) {
+			if (isIntType(code.type(0))) {
 				switch (code.op) {
 				case EQ:
 					c = new Equals(left, right);
@@ -504,24 +504,7 @@ public class BoundAnalyzer {
 		}
 	}
 
-	/**
-	 * Add the 'equal' constraints of the target and operand register.
-	 * 
-	 * @param code
-	 *            the new list byte-code
-	 */
-	/*private void analyze(Codes.NewList code, String name) {
-		String target = prefix + code.target();
-		if (TranslatorHelper.isIntType(code.type()) && !AnalyzerHelper.isCached(name)) {
-			// Get the CFGraph
-			CFGraph graph = AnalyzerHelper.getCFGraph(name);
-			for (int operand : code.operands()) {
-				graph.addConstraint(new Union(prefix + code.target(), prefix + operand));
-			}
-		}
-		// Add the 'size' attribute
-		AnalyzerHelper.addSizeInfo(name, target, BigInteger.valueOf(code.operands().length));
-	}*/
+	
 
 	/**
 	 * Parse the 'return' bytecode and add the constraint
@@ -541,7 +524,7 @@ public class BoundAnalyzer {
 			// procedure.
 			if (c_blk != null) {
 				// Check if the return type is integer.
-				if (TranslatorHelper.isIntType(code.type(0))) {
+				if (isIntType(code.type(0))) {
 					// Add the 'Equals' constraint to the return (ret) variable.
 					c_blk.addConstraint((new Assign("return", retOp)));
 				}
@@ -559,44 +542,7 @@ public class BoundAnalyzer {
 
 	}
 
-	/**
-	 * Deprecated due to v0.3.36
-	 * 
-	 * Parses ListOperator byte-code.
-	 * 
-	 * @param graph
-	 * @param sym_ctrl
-	 * @param code
-	 */
-	@Deprecated
-	/*
-	private void analyze(Codes.ListOperator code, String name) {
-		String target_reg = prefix + code.target();
-		//SymbolFactory sym_factory = BoundAnalyzerHelper.getSymbolFactory(name);
-		switch (code.kind) {
-		case APPEND:
-			BigInteger size = BigInteger.ZERO;
-			for (int operand : code.operands()) {
-				String op_reg = prefix + operand;
-				//Get size info
-				AnalyzerHelper.getSizeInfo(name, op_reg);
-				size = size.add(AnalyzerHelper.getSizeInfo(name, op_reg));
-				//size = size.add((BigInteger) sym_factory.getAttribute(op, "size"));
-				if (!AnalyzerHelper.isCached(name)) {
-					// Get the CFGraph
-					CFGraph graph = AnalyzerHelper.getCFGraph(name);
-					graph.addConstraint(new Equals(target_reg, prefix + operand));
-				}
-			}
-			
-			// put 'size' attribute to the target reg
-			AnalyzerHelper.addSizeInfo(name, target_reg, size);
-			break;
-		default:
-			throw new RuntimeException("unknown list operator encountered (" + code + ")");
-		}
-	}*/
-
+	
 	/**
 	 * Parse 'Unary Operator' bytecode and add the constraints in accordance
 	 * with operator kind. For example, add the 'Negate' constraint for the
@@ -653,24 +599,7 @@ public class BoundAnalyzer {
 		isLoop = false;
 	}
 
-	/**
-	 * Deprecated due to v0.3.36
-	 * The bounds of a list/map shall be propagated from the operand to the
-	 * target.
-	 * 
-	 * @param code
-	 */
-	@Deprecated
-	/*
-	private void analyze(Codes.SubList code, String name) {
-		CFGraph graph = AnalyzerHelper.getCFGraph(name);
-		if (code.type().element() instanceof Type.Int) {
-			for (int operand : code.operands()) {
-				graph.addConstraint(new Equals(prefix + code.target(), prefix + operand));
-			}
-		}
-
-	}*/
+	
 
 	/**
 	 * Implemented the propagation rule for <code>Codes.BinaryOperator</code>
@@ -681,7 +610,7 @@ public class BoundAnalyzer {
 	private void analyze(Codes.BinaryOperator code, String name) {
 		String target = prefix + code.target(0);
 		// Add the type att
-		if (TranslatorHelper.isIntType(code.type(0)) && !AnalyzerHelper.isCached(name)) {
+		if (isIntType(code.type(0)) && !AnalyzerHelper.isCached(name)) {
 			// Get the values
 			CFGraph graph = AnalyzerHelper.getCFGraph(name);
 			switch (code.kind) {
@@ -726,50 +655,6 @@ public class BoundAnalyzer {
 
 	}
 
-	/**
-	 * Depreciated due to the Whiley compiler upgrade v0.3.38 
-	 * 
-	 * 
-	 * Load the tuple values at the given index and assign the bounds of the
-	 * operand to the target.
-	 * 
-	 * @param code
-	 */
-	/*private void analyze(Codes.TupleLoad code, String name) {
-		// Check if the index is that of value field (1).
-		CFGraph graph = AnalyzerHelper.getCFGraph(name);
-		int index = code.index;
-		if (index % 2 == 1) {
-			Type.Tuple tuple = (Tuple) code.type();
-			if (TranslatorHelper.isIntType(tuple.element(index))) {
-				graph.addConstraint(new Equals(prefix + code.target(), prefix + code.operand(0)));
-			}
-		}
-
-	}*/
-
-	/**
-	 * Depreciated due to the Whiley compiler upgrade (v0.3.38) 
-	 * 
-	 * Take the union of bounds from operands and target
-	 * 
-	 * @param code
-	 */
-	/*private void analyze(Codes.NewTuple code, String name) {
-		// Assing the bounds of value field to the target
-		Type.Tuple tuple = code.type();
-		if (!AnalyzerHelper.isCached(name)) {
-			// Get the CFGraph
-			CFGraph graph = AnalyzerHelper.getCFGraph(name);
-			int index = 1;
-			while (index < code.operands().length) {
-				if (TranslatorHelper.isIntType(tuple.element(index))) {
-					graph.addConstraint(new Union(prefix + code.target(), prefix + code.operand(index)));
-				}
-				index += 2;
-			}
-		}
-	}*/
 
 	/**
 	 * Updates an element of a list. But how do we update the bounds???
@@ -820,6 +705,27 @@ public class BoundAnalyzer {
 
 	}
 
+	/**
+	 * Check if the type is instance of Integer by inferring the type from
+	 * <code>wyil.Lang.Type</code> objects, including the effective collection
+	 * types.
+	 * 
+	 * @param type
+	 * @return true if the type is or contains an integer type.
+	 */
+	public boolean isIntType(Type type) {
+		if (type instanceof Type.Int) {
+			return true;
+		}
+
+		if (type instanceof Type.Array) {
+			return isIntType(((Type.Array) type).element());
+		}
+
+		
+		return false;
+	}
+	
 	/**
 	 * Get the list of bytecode of the invoked function and infer the bounds of
 	 * the function in the context of input bounds. And then propagate the

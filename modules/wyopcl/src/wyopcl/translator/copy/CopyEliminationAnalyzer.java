@@ -12,9 +12,9 @@ import wyil.transforms.LiveVariablesAnalysis;
 import wyil.transforms.LiveVariablesAnalysis.Env;
 import wyopcl.Configuration;
 import wyopcl.translator.Analyzer;
+import wyopcl.translator.ReadWriteAnalyzer;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
-import wyopcl.translator.readwrite.ReadWriteAnalyzer;
 
 /**
  * Analyze the alias in the WyIL code to find all the necessary array copies and
@@ -221,8 +221,8 @@ public class CopyEliminationAnalyzer extends Analyzer {
 					String var = getActualVarName(argument, invoked_function);
 					// Check if parameter is modified inside 'invoked_function'.
 					isReadOnly = !isMutated(argument, invoked_function);
-					// Check if 'var' is returned by 'invoked_function'
-					isReturned = isReturned(var, invoked_function);
+					// Check if argument is returned by 'invoked_function'
+					isReturned = isReturned(argument, invoked_function);
 					// The 'var' is mutated and returned
 					if (!isReadOnly) {
 						if (isReturned) {

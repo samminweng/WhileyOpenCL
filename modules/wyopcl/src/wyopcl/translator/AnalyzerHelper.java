@@ -200,7 +200,7 @@ public final class AnalyzerHelper {
 			String param = prefix + index;
 			String operand = prefix + operands[index];
 			// Check parameter type
-			if (TranslatorHelper.isIntType(paramType)) {
+			if (isIntType(paramType)) {
 				entry.addBounds(param, bnd.getLower(operand),  bnd.getUpper(operand));
 			}	
 			index++;
@@ -267,7 +267,7 @@ public final class AnalyzerHelper {
 	 */
 	public static void propagateBoundsFromFunctionCall(String caller_name, String callee_name, String ret_reg, Type ret_type, Bounds bnd) {
 		CFGraph graph = getCFGraph(caller_name);
-		if (TranslatorHelper.isIntType(ret_type)) {
+		if (isIntType(ret_type)) {
 			// propagate the bounds of return value.
 			graph.addConstraint(new Range(ret_reg, bnd.getLower("return"), bnd.getUpper("return")));
 		}

@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-
 import wyil.lang.Type;
-import wyopcl.translator.TranslatorHelper;
 
 /**
  * This symbol factory creates, retrieve and maintain the symbols for a function.
@@ -117,7 +115,7 @@ public class SymbolFactory {
 	 * @param callee the symbol factory of callee
 	 */
 	public void addOutputSymbols(SymbolFactory callee_factory, String ret_reg, Type ret_type){
-		if (TranslatorHelper.isIntType(ret_type)) {
+		if (isIntType(ret_type)) {
 			// Add 'type' attribute of 'return_reg'
 			this.putAttribute(ret_reg, "type", ret_type);
 		}
@@ -129,5 +127,25 @@ public class SymbolFactory {
 		}
 	}
 
+	/**
+	 * Check if the type is instance of Integer by inferring the type from
+	 * <code>wyil.Lang.Type</code> objects, including the effective collection
+	 * types.
+	 * 
+	 * @param type
+	 * @return true if the type is or contains an integer type.
+	 */
+	public boolean isIntType(Type type) {
+		if (type instanceof Type.Int) {
+			return true;
+		}
 
+		if (type instanceof Type.Array) {
+			return isIntType(((Type.Array) type).element());
+		}
+
+		
+		return false;
+	}
+	
 }

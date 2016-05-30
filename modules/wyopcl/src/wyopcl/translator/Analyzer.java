@@ -27,7 +27,6 @@ import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.CFGraph;
 import wyopcl.translator.bound.CFGraph.STATUS;
-import wyopcl.translator.readwrite.ReadWriteAnalyzer;
 
 /**
  * Aims to build control flow graph for a function.
@@ -49,6 +48,8 @@ public abstract class Analyzer {
 	protected WyilFile module;
 	// Perform read-write checks
 	private ReadWriteAnalyzer readwriteAnalyzer;
+	// Perform return checks
+	private ReturnAnalyzer returnAnalyzer;
 
 	/**
 	 * Constructor
@@ -57,6 +58,7 @@ public abstract class Analyzer {
 		this.cfgraphs = new HashMap<FunctionOrMethod, CFGraph>();
 		this.config = config;
 		this.readwriteAnalyzer = new ReadWriteAnalyzer();
+		this.returnAnalyzer = new ReturnAnalyzer();
 	}
 
 	/**
@@ -68,7 +70,9 @@ public abstract class Analyzer {
 		this.module = module;
 		// Perform read-write checks
 		this.readwriteAnalyzer.apply(module);
-
+		// Perform return checks
+		this.returnAnalyzer.apply(module);
+		
 		// Iterate each function to build up CFG
 		for (FunctionOrMethod function : module.functionOrMethods()) {
 			this.buildCFG(function);
@@ -507,15 +511,18 @@ public abstract class Analyzer {
 	}
 
 	/**
-	 * Check if a variable is returned by the function 'f'
+	 * Check if a register is returned by the function 'f'
 	 * 
-	 * @param r
-	 * @param f
-	 * @return
+	 * @param register
+	 * @param function
+	 * @return true if the register is returned inside the function 'f'.
 	 */
-	protected boolean isReturned(String var, FunctionOrMethod f) {
+	protected boolean isReturned(int register, FunctionOrMethod function) {
+		return this.returnAnalyzer.isReturned(register, function);
+		
+		
 		// Iterate the list of wyil code
-		for (Code code : f.body().bytecodes()) {
+		/*for (Code code : f.body().bytecodes()) {
 			if (code instanceof Codes.Return) {
 				Codes.Return r = (Codes.Return) code;
 				if (r.operands().length > 0) {
@@ -527,7 +534,7 @@ public abstract class Analyzer {
 			}
 		}
 
-		return false;
+		return false;*/
 	}
 
 	/**

@@ -3,17 +3,11 @@ package wyopcl.translator.bound;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import wyil.lang.Code;
-import wyil.lang.Codes;
 import wyil.lang.Type;
-import wyopcl.Configuration;
-import wyopcl.translator.AnalyzerHelper;
-import wyopcl.translator.TranslatorHelper;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.constraint.Constraint;
 
@@ -214,7 +208,7 @@ public class CFGraph {
 			String param = prefix + index;
 			String operand = prefix + operands[index];
 			// Check parameter type
-			if (TranslatorHelper.isIntType(paramType)) {
+			if (isIntType(paramType)) {
 				entry.addBounds(param, bnd.getLower(operand),  bnd.getUpper(operand));
 			}	
 			index++;
@@ -367,6 +361,25 @@ public class CFGraph {
 		}
 	}
 	
-	
+	/**
+	 * Check if the type is instance of Integer by inferring the type from
+	 * <code>wyil.Lang.Type</code> objects, including the effective collection
+	 * types.
+	 * 
+	 * @param type
+	 * @return true if the type is or contains an integer type.
+	 */
+	public boolean isIntType(Type type) {
+		if (type instanceof Type.Int) {
+			return true;
+		}
+
+		if (type instanceof Type.Array) {
+			return isIntType(((Type.Array) type).element());
+		}
+
+		
+		return false;
+	}
 	
 }

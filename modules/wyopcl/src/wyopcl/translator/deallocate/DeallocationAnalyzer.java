@@ -414,7 +414,7 @@ public class DeallocationAnalyzer extends Analyzer {
 		FunctionOrMethod f = this.getFunction(code.name.name(), code.type(0));
 		int arguement = mapRegisterToFunctionAugment(register, code);
 		boolean isMutated = this.isMutated(arguement, f);
-		boolean isReturned = this.isReturned(var, f);
+		boolean isReturned = this.isReturned(arguement, f);
 
 		Optional<HashMap<String, Boolean>> ownership = Optional.of(new HashMap<String, Boolean>());
 		if (!isMutated) {
