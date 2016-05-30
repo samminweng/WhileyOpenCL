@@ -8,9 +8,6 @@ import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
-import wyopcl.translator.symbolic.PatternMatcher;
-import wyopcl.translator.symbolic.PatternTransformer;
-import wyopcl.translator.symbolic.pattern.Pattern;
 
 /**
  * 
@@ -55,7 +52,7 @@ public final class TranslatorHelper {
 	 *         return the original one.
 	 */
 	@Deprecated
-	public static FunctionOrMethod patternMatchingandTransformation(Configuration config, FunctionOrMethod functionOrMethod) {
+	/*public static FunctionOrMethod patternMatchingandTransformation(Configuration config, FunctionOrMethod functionOrMethod) {
 		// Begin the function	
 		PatternMatcher matcher = new PatternMatcher(config);
 		Pattern pattern = matcher.analyzePattern(functionOrMethod);
@@ -80,7 +77,7 @@ public final class TranslatorHelper {
 		//If no pattern is found or the transformation failed, then return the original functional code block.
 		return functionOrMethod;
 	}
-	
+	*/
 	/**
 	 * Check if the type is instance of Integer by inferring the type from
 	 * <code>wyil.Lang.Type</code> objects, including the effective collection

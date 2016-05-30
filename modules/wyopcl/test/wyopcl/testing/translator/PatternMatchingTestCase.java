@@ -6,8 +6,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * The pattern matching is not longer supported, because lists and while-loop
+ * is not used in Whiley program.
+ * 
+ * @author Min-Hsien Weng
+ *
+ */
+@Deprecated 
 public class PatternMatchingTestCase {
-	private BaseTestUtil util;
+	/*private BaseTestUtil util;
 	final String path = System.getProperty("user.dir") + File.separator + "tests" + File.separator + "pattern"+ File.separator;
 
 	@Before
@@ -30,5 +38,5 @@ public class PatternMatchingTestCase {
 	public void test_While_Valid_1() {
 		util.execPattern(path, "While_Valid_1", "pattern");
 	}
-	
+	*/
 }

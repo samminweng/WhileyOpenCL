@@ -1,14 +1,9 @@
 package wyopcl.translator;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
-import java.util.Properties;
 import java.util.Set;
 
 import wybs.lang.Build.Project;
@@ -17,21 +12,11 @@ import wycc.util.Pair;
 import wyfs.lang.Path;
 import wyfs.lang.Path.Entry;
 import wyfs.lang.Path.Root;
-import wyil.attributes.VariableDeclarations;
-import wyil.lang.Attribute;
-import wyil.lang.Code;
-import wyil.lang.Type;
 import wyil.lang.WyilFile;
-import wyil.lang.WyilFile.FunctionOrMethod;
-import wyil.util.AttributedCodeBlock;
 import wyopcl.Configuration;
 import wyopcl.translator.copy.CopyEliminationAnalyzer;
 import wyopcl.translator.deallocate.DeallocationAnalyzer;
 import wyopcl.translator.generator.CodeGenerator;
-import wyopcl.translator.generator.CodeGeneratorHelper;
-import wyopcl.translator.symbolic.PatternMatcher;
-import wyopcl.translator.symbolic.PatternTransformer;
-import wyopcl.translator.symbolic.pattern.Pattern;
 
 /**
  * Main entry point of translator
@@ -89,10 +74,10 @@ public class Translator implements Builder {
 			analyzeBounds(module);
 			message = "Bound analysis completed.\nFile: " + config.getFilename();
 		}
-		if (config.isEnabled("pattern")) {
+		/*if (config.isEnabled("pattern")) {
 			patternMatch(module);
 			message = "Pattern matching completed.\nFile: " + config.getFilename();
-		}
+		}*/
 
 		// Reads the in-memory WyIL file and generates the code in C
 		if (config.isEnabled("code")) {
@@ -139,7 +124,7 @@ public class Translator implements Builder {
 	 * @return the transformed functional code block. If the pattern is not transformable, then
 	 *         return the original one.
 	 */
-	private void patternMatch(WyilFile module) {
+	/*private void patternMatch(WyilFile module) {
 		// Iterate each function
 		for (FunctionOrMethod functionOrMethod : module.functionOrMethods()) {
 			// Begin the function
@@ -164,7 +149,7 @@ public class Translator implements Builder {
 			transformer = null;
 			matcher = null;
 		}
-	}
+	}*/
 
 	@Override
 	public Project project() {

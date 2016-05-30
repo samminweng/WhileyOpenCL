@@ -27,7 +27,7 @@ public class WyopclMain extends WycMain{
 												 + "\t\t\t   [naive]\tWidening the bounds to infinity.\n"
 												 + "\t\t\t   [gradual]\tWidening the bounds to Int16, Int32, Int64 and infinity."),		
 		//Add the 'pattern' option
-		new OptArg("pattern", "Run the pattern matching to analyze the pattern of a given Whiley Program\n" ),
+		//new OptArg("pattern", "Run the pattern matching to analyze the pattern of a given Whiley Program\n" ),
 		
 		//Add the 'code' option
 		new OptArg("code", "Run the code generate to trasnlate the given Whiley Program into C code.\n" ),
