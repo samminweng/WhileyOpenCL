@@ -31,34 +31,20 @@ $ cd tests/bounds && ./../../bin/wyopcl -bound naive WhileLoop.whiley
 Or use the gradual widening strategy to get more precise bounds.
 $ ./../../bin/wyopcl -bound gradual WhileLoop.whiley
 
-1.2 Pattern Matching and Transformation
-Pattern matcher finds the list of code block at byte-code level, and matches it with predefined patterns and transforms the program w.r.t the pattern.
-$ cd tests/pattern && ./../../bin/wyopcl -pattern While_Valid_1.whiley
-
-1.3 Code Generator
+1.2 Code Generator
 Code Generator aims to translate the Whiley program into C code.
 $ cd tests/code
 $ ./../../bin/wyopcl -code swap.whiley && gcc swap.c Util.c -o swap.out && ./swap.out
 
-1.4 Copy Elimination Analysis
+1.3 Copy Elimination Analysis
 Copy Elimination analysis aims to eliminate the un-necessary copies at Wyil level. 
 $ cd tests/code
 $ ./../../bin/wyopcl -copy swap.whiley
 
-1.5 Deallocation Analysis
+1.4 Deallocation Analysis
 Deallocation analysis aims to compute ownership variable set for releasing memory at block end.
 $ cd tests/code
 $ ./../../bin/wyopcl -code -dealloc swap.whiley
-
-@Deprecated
-This interpreter could not function well due to the change in WyIL
-structures and upgrades of Whiley compiler.
-~~ 2. WyIL (Whiley Intermediate Language) Interpreter ~~  
-~~ ---------------------------------------------------------------------- ~~
-~~ To play with WyIL interpreter, use the commands: ~~
-~~ $ cd examples && ./../bin/wyopcl sieve.whiley 100 ~~
-~~ Or add the verbose option to print out the interpretation. ~~
-~~ $ ./../bin/wyopcl -verbose sieve.whiley 100 ~~
 
 
 ============================================================================================
@@ -70,21 +56,7 @@ The bound analyzer is being tested with several Whiley programs. Use the below c
 $ ant test-bound
 The unit test results are summarized at 'report/bound/index.html'. 
 
-1.2 Pattern Matching and Transformation
-The pattern module is being tested with several Whiley programs. Use the below commands:
-$ ant test-pattern
-The unit test results are summarized at 'report/pattern/index.html'.
-
-1.3 Code Generator
+1.2 Code Generator
 The code generator is tested with 5 Whiley programs. Use the below commands:
 $ ant test-code
-The unit test results are summarized at 'report/code/index.html'. 
-
-
-~~ 2. WyIL Interpreter ~~
-~~ The interpreter can be verified with 915 test cases by using the commands: ~~
-~~ $ ant interpreter ~~
-~~ The unit test results are summarized at 'report/interpreter/index.html'. ~~ 
-~~ The current success rate is 95.85% (Failures: 22, Errors: 16, Skipped: 94). ~~
-
-
+The unit test results are summarized at 'report/code/index.html'.
