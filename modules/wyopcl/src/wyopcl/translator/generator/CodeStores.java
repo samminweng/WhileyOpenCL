@@ -147,6 +147,7 @@ public class CodeStores {
 	 * @return
 	 */
 	public String getVar(int register, FunctionOrMethod function){
+		
 		CodeStore store = getCodeStore(function);
 		return store.getVar(register);
 	}
