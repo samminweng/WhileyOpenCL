@@ -275,7 +275,8 @@ blklab12:;
 		//add %30 = %1, %29 : int
 		_30=n+_29;
 		//invoke (%28) = (%0, %30, %2) NQueens:run : function(NQueens:POS[],int,int)->(int)
-		_28 = run(_1DARRAY_PARAM(queens), false, _30, dim);
+		_REMOVE_OWNERSHIP(queens);
+		_28 = run(_1DARRAY_PARAM(queens), true, _30, dim);
 		//add %31 = %4, %28 : int
 		_31=num_solutions+_28;
 		//assign %4 = %31  : int
@@ -389,7 +390,8 @@ int main(int argc, char** args){
 	//const %14 = 0 : int
 	_14 = 0;
 	//invoke (%13) = (%3, %14, %2) NQueens:run : function(NQueens:POS[],int,int)->(int)
-	_13 = run(_1DARRAY_PARAM(init), false, _14, n);
+	_REMOVE_OWNERSHIP(init);
+	_13 = run(_1DARRAY_PARAM(init), true, _14, n);
 	//assign %4 = %13  : int
 	num_solutions = _13;
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
