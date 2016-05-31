@@ -519,22 +519,6 @@ public abstract class Analyzer {
 	 */
 	protected boolean isReturned(int register, FunctionOrMethod function) {
 		return this.returnAnalyzer.isReturned(register, function);
-		
-		
-		// Iterate the list of wyil code
-		/*for (Code code : f.body().bytecodes()) {
-			if (code instanceof Codes.Return) {
-				Codes.Return r = (Codes.Return) code;
-				if (r.operands().length > 0) {
-					String ret = getActualVarName(r.operand(0), f);
-					if (ret.equals(var)) {
-						return true;
-					}
-				}
-			}
-		}
-
-		return false;*/
 	}
 
 	/**
@@ -551,43 +535,18 @@ public abstract class Analyzer {
 	}
 
 	
-
 	/**
-	 * Map an argument of a function call to the input parameters of a function.
-	 * 
-	 * @param register
-	 * @param code
-	 * @return
-	 */
-	protected String mapToFunctionParameters(int register, Codes.Invoke code) {
-		FunctionOrMethod invoked_function = this.getFunction(code.name.name(), code.type(0));
-		if (invoked_function != null) {
-			// Map the register to input parameter.
-			int parameter = 0;
-			while (parameter < code.operands().length) {
-				if (register == code.operand(parameter)) {
-					break;
-				}
-				parameter++;
-			}
-			return getActualVarName(parameter, invoked_function);
-		}
-		throw new RuntimeException("Not implemented");
-	}
-	
-	
-	/**
-	 * Map the passed parameter to the arguments of the function.
+	 * Map the function argument to the register in the calling function.
 	 * For example, 'a = f(b, c)'
-	 * The passed parameter 'b' is mapped to the first register
+	 * The passed argument 'b' is mapped to the first register
 	 * in calling function 'f'
 	 * 
 	 * 
-	 * @param parameter the register at caller site
+	 * @param parameter the function argument at caller site
 	 * @param code
-	 * @return the register in function
+	 * @return the register in calling function
 	 */
-	protected int mapRegisterToFunctionAugment(int parameter, Codes.Invoke code) {
+	protected int mapFunctionArgument(int parameter, Codes.Invoke code) {
 		// Map the register to input parameter.
 		int[] ops = code.operands();
 		

@@ -216,9 +216,8 @@ public class CopyEliminationAnalyzer extends Analyzer {
 				FunctionOrMethod invoked_function = this.getFunction(invoked.name.name(), invoked.type(0));
 				if (invoked_function != null) {
 					// Map the register to function argument.
-					int argument = this.mapRegisterToFunctionAugment(reg, invoked);
+					int argument = this.mapFunctionArgument(reg, invoked);
 					
-					String var = getActualVarName(argument, invoked_function);
 					// Check if parameter is modified inside 'invoked_function'.
 					isReadOnly = !isMutated(argument, invoked_function);
 					// Check if argument is returned by 'invoked_function'
@@ -243,8 +242,10 @@ public class CopyEliminationAnalyzer extends Analyzer {
 				// The copy is needed as the variable is alive after this code.
 				return false;
 			}else if (code instanceof Codes.Assign){
-				return false; // The copy is not needed due to the register becomes dead
+				// The copy is not needed due to the register becomes dead (not alive)
+				return false; 
 			}else if (code instanceof Codes.FieldLoad){
+				// The copy is not needed due to the 
 				return false;
 			}
 			throw new RuntimeException("Not implemeneted");
