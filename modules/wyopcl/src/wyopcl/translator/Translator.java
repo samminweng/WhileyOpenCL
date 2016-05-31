@@ -110,6 +110,15 @@ public class Translator implements Builder {
 		}
 	}
 
+	/*
+	public static FunctionOrMethod patternMatchingandTransformation(Configuration config, FunctionOrMethod functionOrMethod) {
+  		// Begin the function	
+  		PatternMatcher matcher = new PatternMatcher(config);
+  		Pattern pattern = matcher.analyzePattern(functionOrMethod);
+  		//If no pattern is found or the transformation failed, then return the original functional code block.
+  		return functionOrMethod;
+  	}
+ 	*/
 	@Override
 	public Project project() {
 		// TODO Auto-generated method stub
