@@ -71,6 +71,12 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _DECL_1DARRAY_MEMBER(a) long long* a; long long a##_size;
 #define _1DARRAY_PARAM(a) a, a##_size
 #define _1DARRAY_PARAM_OWN(a) a, a##_size, a##_has_ownership
+#define _1DARRAY_COPY_STRUCT(a, b, name) \
+		({ for(int i=0;i<b##_size;i++){\
+ 				a[i] = copy_##name(b[i]);\
+ 		    }\
+ 			a##_size = b##_size;\
+		})
 #define _1DARRAY_COPY_PARAM(a) copy(a, a##_size), a##_size
 #define _1DARRAY_COPY_PARAM_OWN(a) copy(a, a##_size), a##_size, a##_has_ownership
 #define _1DARRAY_PRINT(a) printf1DArray(a, a##_size);
@@ -80,6 +86,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _IFEQ_ARRAY(a, b, blklab) if(isArrayEqual(a, a##_size, b, b##_size)==1){goto blklab;}
 #define _GEN_1DARRAY(a, size, value) a##_size = size; a = gen1DArray(value, a##_size);
 #define _FREE(a) if(a##_has_ownership){free(a);a##_has_ownership=false;}
+#define _FREE_1DARRAY_ELEMENT_STRUCT(a, b, name) free_##name(b);
 #define _FREE_1DARRAY_STRUCT(a, name) if(a##_has_ownership){for(int i=0;i<a##_size;i++) free_##name(a[i]); a##_has_ownership = false;}
 #define _NEW_ARRAY(a, length) a##_size = length; a = malloc(length*sizeof(long long)); 
 // Concatenate 2D array variable and array size variable
