@@ -147,7 +147,7 @@ public abstract class Analyzer {
 	 * @param name
 	 * @return
 	 */
-	private boolean isCached(FunctionOrMethod function) {
+	protected boolean isCached(FunctionOrMethod function) {
 		CFGraph graph = getCFGraph(function);
 		if (graph != null) {
 			if (graph.getStatus() == STATUS.COMPLETE) {

@@ -8,13 +8,12 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
-import wyil.transforms.LiveVariablesAnalysis;
-import wyil.transforms.LiveVariablesAnalysis.Env;
 import wyopcl.Configuration;
 import wyopcl.translator.Analyzer;
 import wyopcl.translator.ReadWriteAnalyzer;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
+import wyopcl.translator.copy.LiveVariablesAnalysis.Env;
 
 /**
  * Analyze the alias in the WyIL code to find all the necessary array copies and
@@ -37,8 +36,8 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		super(config);
 		this.liveAnalyzer = new LiveVariablesAnalysis(builder);
 		// Diabled the constant propagation
-		this.liveAnalyzer.setEnable(false);
-		this.liveAnalyzer.setNops(true);
+		//this.liveAnalyzer.setEnable(false);
+		//this.liveAnalyzer.setNops(true);
 		// Initialize the liveness stores.
 		this.livenessStore = new HashMap<FunctionOrMethod, LiveVariables>();
 	}

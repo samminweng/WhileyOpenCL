@@ -6,12 +6,10 @@ import java.util.List;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.Return;
-import wyil.lang.WyilFile.FunctionOrMethod;
-import wyil.transforms.LiveVariablesAnalysis;
-import wyil.transforms.LiveVariablesAnalysis.Env;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.CFGraph;
+import wyopcl.translator.copy.LiveVariablesAnalysis.Env;
 
 
 /**
