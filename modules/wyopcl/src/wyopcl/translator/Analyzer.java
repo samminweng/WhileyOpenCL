@@ -86,7 +86,7 @@ public abstract class Analyzer {
 	 * @param type
 	 * @return
 	 */
-	protected FunctionOrMethod getFunction(String name, Type.FunctionOrMethod type) {
+	public FunctionOrMethod getFunction(String name, Type.FunctionOrMethod type) {
 		return this.module.functionOrMethod(name, type);
 	}
 

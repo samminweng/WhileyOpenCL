@@ -1,11 +1,18 @@
 package wyopcl.translator;
 
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
+
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
+import wyopcl.Configuration;
 
 /**
  * Find out what variables in each function are read-only by check if the variable appear on
@@ -26,7 +33,11 @@ import wyil.lang.WyilFile.FunctionOrMethod;
 public class ReadWriteAnalyzer {
 	// Store the set of read-write registers for each function.
 	private HashMap<FunctionOrMethod, HashSet<Integer>> stores;
-
+	// Wyil byte-code
+	private WyilFile module;
+	// The tree node of calling graph 
+	private DefaultMutableTreeNode tree;
+	
 	public ReadWriteAnalyzer() {
 		stores = new HashMap<FunctionOrMethod, HashSet<Integer>>();
 	}
@@ -126,6 +137,99 @@ public class ReadWriteAnalyzer {
 		return false;// Read-only
 	}
 	
+	
+	/**
+	 * Iterate each code recursively and 
+	 * @param code
+	 * @param function
+	 * @param root
+	 */
+	private void buildCallGraph(Code code, FunctionOrMethod function, DefaultMutableTreeNode parentNode){
+		if(code instanceof Codes.Invoke){
+			Codes.Invoke invoke = (Codes.Invoke)code;
+			// Create the tree node and append the node to the parent node
+			DefaultMutableTreeNode node = new DefaultMutableTreeNode(invoke.name.name());
+			parentNode.add(node);
+			// Get the calling function
+			FunctionOrMethod callingfunction = this.module.functionOrMethod(invoke.name.name(), invoke.type(0));
+			// Check if calling function is not recursive function
+			// Treenode can not be recursively added to the function. 
+			if(callingfunction != null && callingfunction.equals(function)){
+				// Iterate the calling function
+				for(Code c :callingfunction.body().bytecodes()){
+					buildCallGraph(c, callingfunction, node);
+				}
+			}
+		}else if(code instanceof Codes.IndirectInvoke){
+			Codes.IndirectInvoke indirect = (Codes.IndirectInvoke)code;
+			System.out.println(indirect);
+			
+			//root.add(new DefaultMutableTreeNode(indirect.name()));
+		}else if(code instanceof Codes.Loop){
+			Codes.Loop loop = (Codes.Loop)code;
+			// Iterate the byte-code inside loop body
+			for(Code c :loop.bytecodes()){
+				buildCallGraph(c, function, parentNode);
+			}
+			
+		}
+		
+	}
+	
+	/**
+	 * Perform the in-order traversal to visit all nodes of a tree
+	 * reference: http://www.tutorialspoint.com/data_structures_algorithms/tree_traversal.htm
+	 * @param root
+	 */
+	private void traversalCallGraph(DefaultMutableTreeNode currentNode){
+		if(!currentNode.isRoot()){
+			System.out.println(currentNode.getParent()+"->"+currentNode);
+		}
+		
+		if(currentNode.isLeaf()){
+			return ;
+		}
+		
+		Enumeration<DefaultMutableTreeNode> childNodes = currentNode.children();
+		// Iterate the child nodes
+		while(childNodes.hasMoreElements()){
+			DefaultMutableTreeNode childNode = childNodes.nextElement();
+			traversalCallGraph(childNode);
+		}
+		
+		// Iterate siblings by setting current Node to its sibling		
+		/*while((currentNode = currentNode.getNextSibling()) != null){
+			// Traverse the sibling nodes
+			inOrderTraversal(currentNode);
+		}*/
+	}
+	
+	
+	/**
+	 * Creates a call graph to represent calling relationship between
+	 * functions
+	 * 
+	 * The call graph is constructed with tree node
+	 * 
+	 * reference is http://docs.oracle.com/javase/tutorial/uiswing/components/tree.html
+	 * @param module
+	 */
+	private void buildCallGraph(WyilFile module){
+		// Create the root node, i.e. main function
+		tree = new DefaultMutableTreeNode("main");
+		
+		FunctionOrMethod main = module.functionOrMethod("main").get(0);
+		// Go through main function
+		for(Code code :main.body().bytecodes()){
+			buildCallGraph(code, main, tree);
+		}
+		// Traverse the tree
+		traversalCallGraph(tree);
+		
+	}
+	
+	
+	
 	/**
 	 * Go through every function, and checks each byte-code and adds the lhs register
 	 * to read-write set.
@@ -134,6 +238,11 @@ public class ReadWriteAnalyzer {
 	 * @param module
 	 */
 	public void apply(WyilFile module) {
+		// Assign the module
+		this.module = module;
+		// Build the call tree
+		buildCallGraph(module);
+		
 		// Iterate each function to find out whether each variable is read-only
 		for (FunctionOrMethod function : module.functionOrMethods()) {
 			HashSet<Integer> store;

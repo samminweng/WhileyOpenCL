@@ -54,7 +54,7 @@ import whiley.io.File
     sys.out.println(sum_bob)
 */
 // Pick the coin 
-// This function tests the calling graph
+// This function is only used to test the calling graph
 function pickCoin(int[] moves, int i, int j, int n, int x, int y, int z) -> int[]:
     // Pick the coins.
     if (i + x > j + z):
