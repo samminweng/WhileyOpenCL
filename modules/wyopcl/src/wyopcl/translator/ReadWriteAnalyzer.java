@@ -162,8 +162,7 @@ public class ReadWriteAnalyzer {
 			}
 		}else if(code instanceof Codes.IndirectInvoke){
 			Codes.IndirectInvoke indirect = (Codes.IndirectInvoke)code;
-			System.out.println(indirect);
-			
+			//System.out.println(indirect);
 			//root.add(new DefaultMutableTreeNode(indirect.name()));
 		}else if(code instanceof Codes.Loop){
 			Codes.Loop loop = (Codes.Loop)code;
@@ -197,11 +196,6 @@ public class ReadWriteAnalyzer {
 			traversalCallGraph(childNode);
 		}
 		
-		// Iterate siblings by setting current Node to its sibling		
-		/*while((currentNode = currentNode.getNextSibling()) != null){
-			// Traverse the sibling nodes
-			inOrderTraversal(currentNode);
-		}*/
 	}
 	
 	
