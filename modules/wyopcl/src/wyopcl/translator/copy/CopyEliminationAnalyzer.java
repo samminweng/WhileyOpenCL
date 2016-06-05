@@ -11,24 +11,26 @@ import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 import wyopcl.translator.Analyzer;
 import wyopcl.translator.ReadWriteAnalyzer;
+import wyopcl.translator.ReturnAnalyzer;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.copy.LiveVariablesAnalysis.Env;
 
 /**
- * Analyze the alias in the WyIL code to find all the necessary array copies and
- * eliminate un-necessary copies.
+ * Analyze the alias in the WyIL code to find all the necessary array copies and eliminate un-necessary copies.
  * 
  * @author Min-Hsien Weng
  *
  */
 public class CopyEliminationAnalyzer extends Analyzer {
-	
+	// Perform liveness checks
 	private LiveVariablesAnalysis liveAnalyzer;
 	// Perform read-write checks
 	private ReadWriteAnalyzer readwriteAnalyzer;
-	// Store the liveness analysis for each function (Key: function,
-	// Value:Liveness information).
+	// Perform return checks
+	private ReturnAnalyzer returnAnalyzer;
+	// Store the liveness analysis for each function
+	//(Key: function, Value:Liveness information).
 	private HashMap<FunctionOrMethod, LiveVariables> livenessStore;
 
 	/**
@@ -37,6 +39,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	public CopyEliminationAnalyzer(Builder builder, Configuration config) {
 		super(config);
 		this.readwriteAnalyzer = new ReadWriteAnalyzer(config);
+		this.returnAnalyzer = new ReturnAnalyzer(config);
 		this.liveAnalyzer = new LiveVariablesAnalysis(builder);
 		// Initialize the liveness stores.
 		this.livenessStore = new HashMap<FunctionOrMethod, LiveVariables>();
@@ -99,8 +102,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Applies live variable analysis on the function, in order to get in/out
-	 * set of each block.
+	 * Applies live variable analysis on the function, in order to get in/out set of each block.
 	 * 
 	 * @param function
 	 *            code block of function
@@ -126,6 +128,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		super.apply(module);
 		// Builds up a calling graph and perform read-write checks.
 		this.readwriteAnalyzer.apply(module);
+		this.returnAnalyzer.apply(module);
 		// Apply live analysis on each function, except for main function.
 		for (FunctionOrMethod function : module.functionOrMethods()) {
 			computeLiveness(function);
@@ -146,11 +149,9 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Determines whether to make a copy of array by checking liveness
-	 * information or read-only property.
+	 * Determines whether to make a copy of array by checking liveness information or read-only property.
 	 * 
-	 * If the variable is live, then the copy is necessary. Otherwise, the
-	 * register can be overwritten safely.
+	 * If the variable is live, then the copy is necessary. Otherwise, the register can be overwritten safely.
 	 * 
 	 * The rules of determining the copy of
 	 * <table>
@@ -197,8 +198,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 *            the byte-code of function call.
 	 * @param f
 	 *            the caller function
-	 * @return ture if the copy is un-needed and can be avoid. Otherwise, return
-	 *         false.
+	 * @return ture if the copy is un-needed and can be avoid. Otherwise, return false.
 	 * 
 	 */
 	public boolean isCopyEliminated(int reg, Code code, FunctionOrMethod f) {
@@ -218,11 +218,11 @@ public class CopyEliminationAnalyzer extends Analyzer {
 				if (invoked_function != null) {
 					// Map the register to function argument.
 					int argument = this.mapFunctionArgument(reg, invoked);
-					
+
 					// Check if parameter is modified inside 'invoked_function'.
 					isReadOnly = !readwriteAnalyzer.isMutated(argument, invoked_function);
 					// Check if argument is returned by 'invoked_function'
-					isReturned = isReturned(argument, invoked_function);
+					isReturned = returnAnalyzer.isReturned(argument, invoked_function);
 					// The 'var' is mutated and returned
 					if (!isReadOnly) {
 						if (isReturned) {
@@ -239,14 +239,14 @@ public class CopyEliminationAnalyzer extends Analyzer {
 						}
 					}
 				}
-			}else if (code instanceof Codes.Update){
+			} else if (code instanceof Codes.Update) {
 				// The copy is needed as the variable is alive after this code.
 				return false;
-			}else if (code instanceof Codes.Assign){
+			} else if (code instanceof Codes.Assign) {
 				// The copy is not needed due to the register becomes dead (not alive)
-				return false; 
-			}else if (code instanceof Codes.FieldLoad){
-				// The copy is not needed due to the 
+				return false;
+			} else if (code instanceof Codes.FieldLoad) {
+				// The copy is not needed due to the
 				return false;
 			}
 			throw new RuntimeException("Not implemeneted");

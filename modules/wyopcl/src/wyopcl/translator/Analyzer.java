@@ -52,9 +52,6 @@ public abstract class Analyzer {
 	protected WyilFile module;
 	// The tree node of calling graph
 	protected DefaultMutableTreeNode tree;
-	
-	// Perform return checks
-	private ReturnAnalyzer returnAnalyzer;
 
 	/**
 	 * Constructor
@@ -63,7 +60,6 @@ public abstract class Analyzer {
 		this.cfgraphs = new HashMap<FunctionOrMethod, CFGraph>();
 		this.config = config;
 		
-		this.returnAnalyzer = new ReturnAnalyzer();
 	}
 
 	/**
@@ -73,9 +69,7 @@ public abstract class Analyzer {
 	 */
 	public void apply(WyilFile module) {
 		this.module = module;
-		// Perform return checks
-		this.returnAnalyzer.apply(module);
-		
+		this.buildCallGraph(module);
 		// Iterate each function to build up CFG
 		for (FunctionOrMethod function : module.functionOrMethods()) {
 			this.buildCFG(function);
@@ -525,16 +519,6 @@ public abstract class Analyzer {
 		return var_name;
 	}
 
-	/**
-	 * Check if a register is returned by the function 'f'
-	 * 
-	 * @param register
-	 * @param function
-	 * @return true if the register is returned inside the function 'f'.
-	 */
-	protected boolean isReturned(int register, FunctionOrMethod function) {
-		return this.returnAnalyzer.isReturned(register, function);
-	}
 	
 	/**
 	 * Map the function argument to the register in the calling function.
@@ -627,5 +611,5 @@ public abstract class Analyzer {
 
 		}
 	}
-
+	
 }

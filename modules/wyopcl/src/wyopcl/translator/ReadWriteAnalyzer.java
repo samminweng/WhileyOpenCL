@@ -40,7 +40,6 @@ public class ReadWriteAnalyzer extends Analyzer{
 
 	public ReadWriteAnalyzer(Configuration config) {
 		super(config);
-		tree = null;
 		stores = new HashMap<FunctionOrMethod, HashSet<Integer>>();
 	}
 
@@ -181,8 +180,7 @@ public class ReadWriteAnalyzer extends Analyzer{
 	 * 
 	 * @param root
 	 */
-	protected void postorderTraversalCallGraph(DefaultMutableTreeNode tree) {
-
+	private void postorderTraversalCallGraph(DefaultMutableTreeNode tree) {
 		// Go through all the nodes in post order
 		Enumeration<DefaultMutableTreeNode> nodes = tree.postorderEnumeration();
 		while (nodes.hasMoreElements()) {
@@ -199,11 +197,7 @@ public class ReadWriteAnalyzer extends Analyzer{
 	 * @param module
 	 */
 	public void apply(WyilFile module) {
-		// Assign the module
-		this.module = module;
-		// Build the call tree
-		buildCallGraph(module);
-
+		super.apply(module);
 		// Traverse the tree in post-order and find out whether a variable is read-write or not
 		postorderTraversalCallGraph(tree);
 

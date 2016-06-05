@@ -13,6 +13,7 @@ import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 import wyopcl.translator.Analyzer;
 import wyopcl.translator.ReadWriteAnalyzer;
+import wyopcl.translator.ReturnAnalyzer;
 import wyopcl.translator.copy.CopyEliminationAnalyzer;
 import wyopcl.translator.generator.CodeGeneratorHelper;
 import wyopcl.translator.generator.CodeStores;
@@ -28,9 +29,13 @@ import wyopcl.translator.generator.CodeStores;
 public class DeallocationAnalyzer extends Analyzer {
 	// Perform read-write checks
 	private ReadWriteAnalyzer readwriteAnalyzer;
+	// Perform return checks
+	private ReturnAnalyzer returnAnalyzer;
+
 	public DeallocationAnalyzer(Configuration config) {
 		super(config);
 		this.readwriteAnalyzer = new ReadWriteAnalyzer(config);
+		this.returnAnalyzer = new ReturnAnalyzer(config);
 	}
 
 	public String declareOwnershipVar(String indent, int register, FunctionOrMethod function, CodeStores stores) {
@@ -326,10 +331,6 @@ public class DeallocationAnalyzer extends Analyzer {
 		return "";
 	}
 
-	
-	
-	
-	
 	/**
 	 * Return parameter ownership in the caller. If deallocation is enabled, then pass the ownership to a function. The
 	 * ownership value are based on based on the following rules, e.g. a function call 'a = f(b, b_own_f)',
@@ -417,7 +418,7 @@ public class DeallocationAnalyzer extends Analyzer {
 		FunctionOrMethod f = this.getFunction(code.name.name(), code.type(0));
 		int arguement = mapFunctionArgument(register, code);
 		boolean isMutated = this.readwriteAnalyzer.isMutated(arguement, f);
-		boolean isReturned = this.isReturned(arguement, f);
+		boolean isReturned = this.returnAnalyzer.isReturned(arguement, f);
 
 		Optional<HashMap<String, Boolean>> ownership = Optional.of(new HashMap<String, Boolean>());
 		if (!isMutated) {
@@ -539,8 +540,10 @@ public class DeallocationAnalyzer extends Analyzer {
 	@Override
 	public void apply(WyilFile module) {
 		super.apply(module);
-		// Builds up a calling graph and perform read-write checks.
+		// Builds up read-write set
 		this.readwriteAnalyzer.apply(module);
+		// Build up return set
+		this.returnAnalyzer.apply(module);
 	}
 
 }
