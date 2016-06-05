@@ -251,6 +251,32 @@ blklab8:;
 	return;
 }
 
+long long findMin(long long a, long long b){
+	long long _2 = 0;
+	//ifge %0, %1 goto blklab9 : int
+	if(a>=b){goto blklab9;}
+	//return %0
+	return a;
+//.blklab9
+blklab9:;
+	//return %1
+	return b;
+	//return
+}
+
+long long findMax(long long a, long long b){
+	long long _2 = 0;
+	//ifle %0, %1 goto blklab10 : int
+	if(a<=b){goto blklab10;}
+	//return %0
+	return a;
+//.blklab10
+blklab10:;
+	//return %1
+	return b;
+	//return
+}
+
 long long* pickCoin(_DECL_1DARRAY_PARAM(moves), long long i, long long j, long long n, long long x, long long y, long long z){
 	_DECL_1DARRAY(_7);
 	long long _8 = 0;
@@ -260,47 +286,22 @@ long long* pickCoin(_DECL_1DARRAY_PARAM(moves), long long i, long long j, long l
 	long long _12 = 0;
 	long long _13 = 0;
 	long long _14 = 0;
-	long long _15 = 0;
-	//ifle %4, %5 goto blklab9 : int
-	if(x<=y){goto blklab9;}
-	//assign %4 = %5  : int
-	x = y;
-//.blklab9
-blklab9:;
-	//ifle %6, %5 goto blklab10 : int
-	if(z<=y){goto blklab10;}
-	//assign %6 = %5  : int
-	z = y;
-//.blklab10
-blklab10:;
-	//add %8 = %1, %4 : int
-	_8=i+x;
-	//add %9 = %2, %6 : int
-	_9=j+z;
-	//ifle %8, %9 goto blklab11 : int
-	if(_8<=_9){goto blklab11;}
-	//add %10 = %1, %4 : int
-	_10=i+x;
-	//mul %11 = %1, %3 : int
-	_11=i*n;
-	//add %12 = %11, %2 : int
-	_12=_11+j;
-	//update %0[%12] = %10 : int[] -> int[]
-	moves[_12] = _10;
-	//goto blklab12
-	goto blklab12;
-//.blklab11
-blklab11:;
-	//add %13 = %2, %6 : int
-	_13=j+z;
-	//mul %14 = %1, %3 : int
-	_14=i*n;
-	//add %15 = %14, %2 : int
-	_15=_14+j;
-	//update %0[%15] = %13 : int[] -> int[]
-	moves[_15] = _13;
-//.blklab12
-blklab12:;
+	//invoke (%9) = (%4, %5) CoinGame4:findMin : function(int,int)->(int)
+	_9 = findMin(x, y);
+	//add %10 = %1, %9 : int
+	_10=i+_9;
+	//invoke (%11) = (%5, %6) CoinGame4:findMin : function(int,int)->(int)
+	_11 = findMin(y, z);
+	//add %12 = %2, %11 : int
+	_12=j+_11;
+	//invoke (%8) = (%10, %12) CoinGame4:findMax : function(int,int)->(int)
+	_8 = findMax(_10, _12);
+	//mul %13 = %1, %3 : int
+	_13=i*n;
+	//add %14 = %13, %2 : int
+	_14=_13+j;
+	//update %0[%14] = %8 : int[] -> int[]
+	moves[_14] = _8;
 	//return %0
 	return moves;
 	//return
@@ -359,8 +360,8 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), long long n){
 	s = _9;
 	//loop (%0, %3, %4, %5, %6, %7, %8, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47)
 	while(true){
-		//ifge %3, %1 goto blklab13 : int
-		if(s>=n){goto blklab13;}
+		//ifge %3, %1 goto blklab11 : int
+		if(s>=n){goto blklab11;}
 		//assign %4 = %3  : int
 		j = s;
 		//const %10 = 0 : int
@@ -369,8 +370,8 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), long long n){
 		i = _10;
 		//loop (%0, %4, %5, %6, %7, %8, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45)
 		while(true){
-			//ifge %4, %1 goto blklab15 : int
-			if(j>=n){goto blklab15;}
+			//ifge %4, %1 goto blklab13 : int
+			if(j>=n){goto blklab13;}
 			//const %11 = 0 : int
 			_11 = 0;
 			//assign %6 = %11  : int
@@ -379,16 +380,16 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), long long n){
 			_12 = 1;
 			//add %13 = %5, %12 : int
 			_13=i+_12;
-			//ifge %13, %1 goto blklab17 : int
-			if(_13>=n){goto blklab17;}
+			//ifge %13, %1 goto blklab15 : int
+			if(_13>=n){goto blklab15;}
 			//const %14 = 1 : int
 			_14 = 1;
 			//sub %15 = %4, %14 : int
 			_15=j-_14;
 			//const %16 = 0 : int
 			_16 = 0;
-			//iflt %15, %16 goto blklab17 : int
-			if(_15<_16){goto blklab17;}
+			//iflt %15, %16 goto blklab15 : int
+			if(_15<_16){goto blklab15;}
 			//const %17 = 1 : int
 			_17 = 1;
 			//add %18 = %5, %17 : int
@@ -405,8 +406,8 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), long long n){
 			_23=moves[_22];
 			//assign %6 = %23  : int
 			y = _23;
-//.blklab17
-blklab17:;
+//.blklab15
+blklab15:;
 			//const %24 = 0 : int
 			_24 = 0;
 			//assign %7 = %24  : int
@@ -415,8 +416,8 @@ blklab17:;
 			_25 = 2;
 			//add %26 = %5, %25 : int
 			_26=i+_25;
-			//ifge %26, %1 goto blklab18 : int
-			if(_26>=n){goto blklab18;}
+			//ifge %26, %1 goto blklab16 : int
+			if(_26>=n){goto blklab16;}
 			//const %27 = 2 : int
 			_27 = 2;
 			//add %28 = %5, %27 : int
@@ -429,8 +430,8 @@ blklab17:;
 			_31=moves[_30];
 			//assign %7 = %31  : int
 			x = _31;
-//.blklab18
-blklab18:;
+//.blklab16
+blklab16:;
 			//const %32 = 0 : int
 			_32 = 0;
 			//assign %8 = %32  : int
@@ -441,8 +442,8 @@ blklab18:;
 			_34=j-_33;
 			//const %35 = 0 : int
 			_35 = 0;
-			//ifle %34, %35 goto blklab19 : int
-			if(_34<=_35){goto blklab19;}
+			//ifle %34, %35 goto blklab17 : int
+			if(_34<=_35){goto blklab17;}
 			//mul %36 = %5, %1 : int
 			_36=i*n;
 			//add %37 = %36, %4 : int
@@ -455,8 +456,8 @@ blklab18:;
 			_40=moves[_39];
 			//assign %8 = %40  : int
 			z = _40;
-//.blklab19
-blklab19:;
+//.blklab17
+blklab17:;
 			//invoke (%41) = (%0, %5, %4, %1, %7, %6, %8) CoinGame4:pickCoin : function(int[],int,int,int,int,int,int)->(int[])
 			_1DARRAY_SIZE(_41, moves);
 			_41 = pickCoin(_1DARRAY_PARAM(moves), i, j, n, x, y, z);
@@ -474,22 +475,22 @@ blklab19:;
 			_45=i+_44;
 			//assign %5 = %45  : int
 			i = _45;
-//.blklab16
-blklab16:;
+//.blklab14
+blklab14:;
 		}
-//.blklab15
-blklab15:;
+//.blklab13
+blklab13:;
 		//const %46 = 1 : int
 		_46 = 1;
 		//add %47 = %3, %46 : int
 		_47=s+_46;
 		//assign %3 = %47  : int
 		s = _47;
-//.blklab14
-blklab14:;
+//.blklab12
+blklab12:;
 	}
-//.blklab13
-blklab13:;
+//.blklab11
+blklab11:;
 	//return %0
 	return moves;
 	//return
@@ -553,13 +554,13 @@ play(stdout, _1DARRAY_PARAM(moves), n);
 	{
 		//const %17 = 25 : int
 		_17 = 25;
-		//ifeq %3, %17 goto blklab20 : int
-		if(sum_alice==_17){goto blklab20;}
+		//ifeq %3, %17 goto blklab18 : int
+		if(sum_alice==_17){goto blklab18;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-//.blklab20
-blklab20:;
+//.blklab18
+blklab18:;
 	//assert
 	}
 	//return

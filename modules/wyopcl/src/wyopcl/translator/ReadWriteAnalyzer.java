@@ -15,16 +15,19 @@ import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 
 /**
- * Find out what variables in each function are read-only by check if the variable appear on
- * the lhs-handed side of the statement. If the variable is never on lhs, then it is classified
- * as read-only. Otherwise, it is read-write.
- * <br><br>
+ * Find out what variables in each function are read-only by check if the variable appear on the lhs-handed side of the
+ * statement. If the variable is never on lhs, then it is classified as read-only. Otherwise, it is read-write. <br>
+ * <br>
  * However, the analyze does not analyze the below code types, including:
- * <pre><code>
+ * 
+ * <pre>
+ * <code>
  * Codes.Debug, Codes.Fail, Codes.Goto, Codes.If, Codes.IfIs, Codes.Label,
  * Codes.Lambda, Codes.Nop, Codes.Quantify, Codes.Return, Codes.Switch,
  * Codes.Void, Codes.IndirectInvoke
- * </code></pre>
+ * </code>
+ * </pre>
+ * 
  * This is because those code types does not perform read-write but workflow.
  *
  * @author Min-Hsien Weng
@@ -35,11 +38,24 @@ public class ReadWriteAnalyzer {
 	private HashMap<FunctionOrMethod, HashSet<Integer>> stores;
 	// Wyil byte-code
 	private WyilFile module;
-	// The tree node of calling graph 
+	// The tree node of calling graph
 	private DefaultMutableTreeNode tree;
-	
+
 	public ReadWriteAnalyzer() {
+		tree = null;
 		stores = new HashMap<FunctionOrMethod, HashSet<Integer>>();
+	}
+
+	/**
+	 * Get the function by name
+	 * 
+	 * @param name
+	 * @return function. Return null if the function is not defined in whiley program.
+	 */
+	private FunctionOrMethod getFunction(String name) {
+		if (!this.module.functionOrMethod(name).isEmpty())
+			return this.module.functionOrMethod(name).get(0);
+		return null;
 	}
 
 	/**
@@ -48,7 +64,7 @@ public class ReadWriteAnalyzer {
 	 * @param code
 	 * @param store
 	 */
-	private void iterateBytecode(Code code, HashSet<Integer> store) {		
+	private void iterateBytecode(Code code, HashSet<Integer> store) {
 		// Skip the workflow code type
 		if (code instanceof Codes.Debug || code instanceof Codes.Fail || code instanceof Codes.Goto
 				|| code instanceof Codes.If || code instanceof Codes.IfIs || code instanceof Codes.Label
@@ -89,9 +105,9 @@ public class ReadWriteAnalyzer {
 			} else if (code instanceof Codes.Invert) {
 				store.add(((Codes.Invert) code).target(0));
 			} else if (code instanceof Codes.Invoke) {
-				Codes.Invoke invoke = (Codes.Invoke)code;
+				Codes.Invoke invoke = (Codes.Invoke) code;
 				// Check if there is any return value;
-				if(invoke.targets().length>0){
+				if (invoke.targets().length > 0) {
 					store.add(((Codes.Invoke) code).target(0));
 				}
 			} else if (code instanceof Codes.LengthOf) {
@@ -121,124 +137,75 @@ public class ReadWriteAnalyzer {
 			}
 		}
 	}
-	
+
 	/**
 	 * Check whether a register is read and write inside the function.
+	 * 
 	 * @param register
 	 * @param function
 	 * @return true if register is read-write. Otherwise, return false (read-only).
 	 */
-	public boolean isMutated(int register, FunctionOrMethod function){
+	public boolean isMutated(int register, FunctionOrMethod function) {
 		HashSet<Integer> store = stores.get(function);
 		// Check if the register belongs to read-write set
-		if (store.contains(register)){
+		if (store.contains(register)) {
 			return true; // read-write
 		}
 		return false;// Read-only
 	}
-	
-	
+
 	/**
-	 * Iterate each code recursively and 
+	 * Iterate each code recursively and
+	 * 
 	 * @param code
 	 * @param function
 	 * @param root
 	 */
-	private void buildCallGraph(Code code, FunctionOrMethod function, DefaultMutableTreeNode parentNode){
-		if(code instanceof Codes.Invoke){
-			Codes.Invoke invoke = (Codes.Invoke)code;
+	private void buildCallGraph(Code code, FunctionOrMethod function, DefaultMutableTreeNode parentNode) {
+		if (code instanceof Codes.Invoke) {
+			Codes.Invoke invoke = (Codes.Invoke) code;
+
+			// Some function are not defined in
 			// Create the tree node and append the node to the parent node
 			DefaultMutableTreeNode node = new DefaultMutableTreeNode(invoke.name.name());
 			parentNode.add(node);
-			// Get the calling function
-			FunctionOrMethod callingfunction = this.module.functionOrMethod(invoke.name.name(), invoke.type(0));
+
+			// Get the calling function.
+			FunctionOrMethod callingfunction = getFunction(invoke.name.name());
 			// Check if calling function is not recursive function
-			// Treenode can not be recursively added to the function. 
-			if(callingfunction != null && callingfunction.equals(function)){
+			// TreeNode can not be recursively added to the function.
+			if (callingfunction != null && !callingfunction.equals(function)) {
 				// Iterate the calling function
-				for(Code c :callingfunction.body().bytecodes()){
+				for (Code c : callingfunction.body().bytecodes()) {
 					buildCallGraph(c, callingfunction, node);
 				}
 			}
-		}else if(code instanceof Codes.IndirectInvoke){
-			Codes.IndirectInvoke indirect = (Codes.IndirectInvoke)code;
-			//System.out.println(indirect);
-			//root.add(new DefaultMutableTreeNode(indirect.name()));
-		}else if(code instanceof Codes.Loop){
-			Codes.Loop loop = (Codes.Loop)code;
+		} else if (code instanceof Codes.IndirectInvoke) {
+			// Codes.IndirectInvoke indirect = (Codes.IndirectInvoke) code;
+			// System.out.println(indirect);
+			// root.add(new DefaultMutableTreeNode(indirect.name()));
+		} else if (code instanceof Codes.Loop) {
+			Codes.Loop loop = (Codes.Loop) code;
 			// Iterate the byte-code inside loop body
-			for(Code c :loop.bytecodes()){
+			for (Code c : loop.bytecodes()) {
 				buildCallGraph(c, function, parentNode);
 			}
-			
+
 		}
-		
+
 	}
-	
+
 	/**
-	 * Perform the in-order traversal to visit all nodes of a tree
-	 * reference: http://www.tutorialspoint.com/data_structures_algorithms/tree_traversal.htm
-	 * @param root
-	 */
-	private void traversalCallGraph(DefaultMutableTreeNode currentNode){
-		if(!currentNode.isRoot()){
-			System.out.println(currentNode.getParent()+"->"+currentNode);
-		}
-		
-		if(currentNode.isLeaf()){
-			return ;
-		}
-		
-		Enumeration<DefaultMutableTreeNode> childNodes = currentNode.children();
-		// Iterate the child nodes
-		while(childNodes.hasMoreElements()){
-			DefaultMutableTreeNode childNode = childNodes.nextElement();
-			traversalCallGraph(childNode);
-		}
-		
-	}
-	
-	
-	/**
-	 * Creates a call graph to represent calling relationship between
-	 * functions
+	 * Visit the node and compute the readwrite set for that function
 	 * 
-	 * The call graph is constructed with tree node
-	 * 
-	 * reference is http://docs.oracle.com/javase/tutorial/uiswing/components/tree.html
-	 * @param module
+	 * @param currentNode
 	 */
-	private void buildCallGraph(WyilFile module){
-		// Create the root node, i.e. main function
-		tree = new DefaultMutableTreeNode("main");
-		
-		FunctionOrMethod main = module.functionOrMethod("main").get(0);
-		// Go through main function
-		for(Code code :main.body().bytecodes()){
-			buildCallGraph(code, main, tree);
-		}
-		// Traverse the tree
-		traversalCallGraph(tree);
-		
-	}
-	
-	
-	
-	/**
-	 * Go through every function, and checks each byte-code and adds the lhs register
-	 * to read-write set.
-	 * 
-	 *
-	 * @param module
-	 */
-	public void apply(WyilFile module) {
-		// Assign the module
-		this.module = module;
-		// Build the call tree
-		buildCallGraph(module);
-		
-		// Iterate each function to find out whether each variable is read-only
-		for (FunctionOrMethod function : module.functionOrMethods()) {
+	private void visit(DefaultMutableTreeNode currentNode) {
+		// Compute the readwrite set for the give node
+		String name = (String)currentNode.getUserObject();
+		FunctionOrMethod function = (FunctionOrMethod) this.getFunction(name);
+
+		if(function != null){
 			HashSet<Integer> store;
 			if (!stores.containsKey(function)) {
 				stores.put(function, new HashSet<Integer>());
@@ -250,6 +217,71 @@ public class ReadWriteAnalyzer {
 				iterateBytecode(code, store);
 			}
 		}
+		
+		// Print out the node information (path).
+		if (!currentNode.isRoot()) {
+			String parent =  (String) ((DefaultMutableTreeNode) currentNode.getParent())
+					.getUserObject();
+			System.out.println(parent + "->" + name);
+		}
+	}
+
+	/**
+	 * Perform the post-order traversal to visit all nodes of a tree reference:
+	 * http://www.tutorialspoint.com/data_structures_algorithms/tree_traversal.htm
+	 * 
+	 * @param root
+	 */
+	private void postorderTraversalCallGraph(DefaultMutableTreeNode tree) {
+
+		// Go through all the nodes in post order
+		Enumeration<DefaultMutableTreeNode> nodes = tree.postorderEnumeration();
+		while (nodes.hasMoreElements()) {
+			DefaultMutableTreeNode node = nodes.nextElement();
+			visit(node);
+		}
+
+	}
+
+	/**
+	 * Creates a call graph to represent calling relationship between functions
+	 * 
+	 * The call graph is constructed with tree node
+	 * 
+	 * reference is http://docs.oracle.com/javase/tutorial/uiswing/components/tree.html
+	 * 
+	 * @param module
+	 */
+	private void buildCallGraph(WyilFile module) {
+		// Ensure the tree is built once
+		if (tree == null) {
+			// Create the root node, i.e. main function
+			tree = new DefaultMutableTreeNode("main");
+
+			FunctionOrMethod main = module.functionOrMethod("main").get(0);
+			// Go through main function
+			for (Code code : main.body().bytecodes()) {
+				buildCallGraph(code, main, tree);
+			}
+
+		}
+	}
+
+	/**
+	 * Go through every function, and checks each byte-code and adds the lhs register to read-write set.
+	 * 
+	 *
+	 * @param module
+	 */
+	public void apply(WyilFile module) {
+		// Assign the module
+		this.module = module;
+		// Build the call tree
+		buildCallGraph(module);
+
+		// Traverse the tree in post-order and find out whether a variable is read-write or not
+		postorderTraversalCallGraph(tree);
+
 	}
 
 }

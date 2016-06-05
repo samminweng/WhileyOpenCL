@@ -1,4 +1,4 @@
-#include "CoinGame4.h"
+#include "CoinGame.h"
 void play(FILE* sys, _DECL_1DARRAY_PARAM(moves), _DECL_OWNERSHIP_PARAM(moves), long long n){
 	long long left = 0;
 	long long right = 0;
@@ -280,64 +280,6 @@ blklab8:;
 	return;
 }
 
-long long findMin(long long a, long long b){
-	long long _2 = 0;
-	//ifge %0, %1 goto blklab9 : int
-	if(a>=b){goto blklab9;}
-	//return %0
-	return a;
-//.blklab9
-blklab9:;
-	//return %1
-	return b;
-	//return
-}
-
-long long findMax(long long a, long long b){
-	long long _2 = 0;
-	//ifle %0, %1 goto blklab10 : int
-	if(a<=b){goto blklab10;}
-	//return %0
-	return a;
-//.blklab10
-blklab10:;
-	//return %1
-	return b;
-	//return
-}
-
-long long* pickCoin(_DECL_1DARRAY_PARAM(moves), _DECL_OWNERSHIP_PARAM(moves), long long i, long long j, long long n, long long x, long long y, long long z){
-	_DECL_1DARRAY(_7);
-	_DECL_OWNERSHIP(_7);
-	long long _8 = 0;
-	long long _9 = 0;
-	long long _10 = 0;
-	long long _11 = 0;
-	long long _12 = 0;
-	long long _13 = 0;
-	long long _14 = 0;
-	//invoke (%9) = (%4, %5) CoinGame4:findMin : function(int,int)->(int)
-	_9 = findMin(x, y);
-	//add %10 = %1, %9 : int
-	_10=i+_9;
-	//invoke (%11) = (%5, %6) CoinGame4:findMin : function(int,int)->(int)
-	_11 = findMin(y, z);
-	//add %12 = %2, %11 : int
-	_12=j+_11;
-	//invoke (%8) = (%10, %12) CoinGame4:findMax : function(int,int)->(int)
-	_8 = findMax(_10, _12);
-	//mul %13 = %1, %3 : int
-	_13=i*n;
-	//add %14 = %13, %2 : int
-	_14=_13+j;
-	//update %0[%14] = %8 : int[] -> int[]
-	moves[_14] = _8;
-	//return %0
-	_FREE(_7);
-	return moves;
-	//return
-}
-
 long long* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_OWNERSHIP_PARAM(moves), long long n){
 	_DECL_1DARRAY(_2);
 	_DECL_OWNERSHIP(_2);
@@ -379,32 +321,38 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_OWNERSHIP_PARAM(moves), l
 	long long _38 = 0;
 	long long _39 = 0;
 	long long _40 = 0;
-	_DECL_1DARRAY(_41);
-	_DECL_OWNERSHIP(_41);
+	long long _41 = 0;
 	long long _42 = 0;
 	long long _43 = 0;
 	long long _44 = 0;
 	long long _45 = 0;
 	long long _46 = 0;
 	long long _47 = 0;
+	long long _48 = 0;
+	long long _49 = 0;
+	long long _50 = 0;
+	long long _51 = 0;
+	long long _52 = 0;
+	long long _53 = 0;
+	long long _54 = 0;
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %3 = %9  : int
 	s = _9;
-	//loop (%0, %3, %4, %5, %6, %7, %8, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47)
+	//loop (%0, %3, %4, %5, %6, %7, %8, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54)
 	while(true){
-		//ifge %3, %1 goto blklab11 : int
-		if(s>=n){goto blklab11;}
+		//ifge %3, %1 goto blklab9 : int
+		if(s>=n){goto blklab9;}
 		//assign %4 = %3  : int
 		j = s;
 		//const %10 = 0 : int
 		_10 = 0;
 		//assign %5 = %10  : int
 		i = _10;
-		//loop (%0, %4, %5, %6, %7, %8, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45)
+		//loop (%0, %4, %5, %6, %7, %8, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52)
 		while(true){
-			//ifge %4, %1 goto blklab13 : int
-			if(j>=n){goto blklab13;}
+			//ifge %4, %1 goto blklab11 : int
+			if(j>=n){goto blklab11;}
 			//const %11 = 0 : int
 			_11 = 0;
 			//assign %6 = %11  : int
@@ -413,16 +361,16 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_OWNERSHIP_PARAM(moves), l
 			_12 = 1;
 			//add %13 = %5, %12 : int
 			_13=i+_12;
-			//ifge %13, %1 goto blklab15 : int
-			if(_13>=n){goto blklab15;}
+			//ifge %13, %1 goto blklab13 : int
+			if(_13>=n){goto blklab13;}
 			//const %14 = 1 : int
 			_14 = 1;
 			//sub %15 = %4, %14 : int
 			_15=j-_14;
 			//const %16 = 0 : int
 			_16 = 0;
-			//iflt %15, %16 goto blklab15 : int
-			if(_15<_16){goto blklab15;}
+			//iflt %15, %16 goto blklab13 : int
+			if(_15<_16){goto blklab13;}
 			//const %17 = 1 : int
 			_17 = 1;
 			//add %18 = %5, %17 : int
@@ -439,8 +387,8 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_OWNERSHIP_PARAM(moves), l
 			_23=moves[_22];
 			//assign %6 = %23  : int
 			y = _23;
-//.blklab15
-blklab15:;
+//.blklab13
+blklab13:;
 			//const %24 = 0 : int
 			_24 = 0;
 			//assign %7 = %24  : int
@@ -449,8 +397,8 @@ blklab15:;
 			_25 = 2;
 			//add %26 = %5, %25 : int
 			_26=i+_25;
-			//ifge %26, %1 goto blklab16 : int
-			if(_26>=n){goto blklab16;}
+			//ifge %26, %1 goto blklab14 : int
+			if(_26>=n){goto blklab14;}
 			//const %27 = 2 : int
 			_27 = 2;
 			//add %28 = %5, %27 : int
@@ -463,8 +411,8 @@ blklab15:;
 			_31=moves[_30];
 			//assign %7 = %31  : int
 			x = _31;
-//.blklab16
-blklab16:;
+//.blklab14
+blklab14:;
 			//const %32 = 0 : int
 			_32 = 0;
 			//assign %8 = %32  : int
@@ -475,8 +423,8 @@ blklab16:;
 			_34=j-_33;
 			//const %35 = 0 : int
 			_35 = 0;
-			//ifle %34, %35 goto blklab17 : int
-			if(_34<=_35){goto blklab17;}
+			//ifle %34, %35 goto blklab15 : int
+			if(_34<=_35){goto blklab15;}
 			//mul %36 = %5, %1 : int
 			_36=i*n;
 			//add %37 = %36, %4 : int
@@ -489,48 +437,78 @@ blklab16:;
 			_40=moves[_39];
 			//assign %8 = %40  : int
 			z = _40;
+//.blklab15
+blklab15:;
+			//ifle %7, %6 goto blklab16 : int
+			if(x<=y){goto blklab16;}
+			//assign %7 = %6  : int
+			x = y;
+//.blklab16
+blklab16:;
+			//ifle %8, %6 goto blklab17 : int
+			if(z<=y){goto blklab17;}
+			//assign %8 = %6  : int
+			z = y;
 //.blklab17
 blklab17:;
-			//invoke (%41) = (%0, %5, %4, %1, %7, %6, %8) CoinGame4:pickCoin : function(int[],int,int,int,int,int,int)->(int[])
-			_FREE(_41);
-			_1DARRAY_SIZE(_41, moves);
-			_41 = pickCoin(_1DARRAY_COPY_PARAM(moves), true, i, j, n, x, y, z);
-			_ADD_OWNERSHIP(_41);
-			//assign %0 = %41  : int[]
-			_FREE(moves);
-			_1DARRAY_COPY(moves, _41);
-			_ADD_OWNERSHIP(moves);
-			//const %42 = 1 : int
-			_42 = 1;
-			//add %43 = %4, %42 : int
-			_43=j+_42;
-			//assign %4 = %43  : int
-			j = _43;
-			//const %44 = 1 : int
-			_44 = 1;
-			//add %45 = %5, %44 : int
-			_45=i+_44;
-			//assign %5 = %45  : int
-			i = _45;
-//.blklab14
-blklab14:;
-		}
-//.blklab13
-blklab13:;
-		//const %46 = 1 : int
-		_46 = 1;
-		//add %47 = %3, %46 : int
-		_47=s+_46;
-		//assign %3 = %47  : int
-		s = _47;
+			//add %41 = %5, %7 : int
+			_41=i+x;
+			//add %42 = %4, %8 : int
+			_42=j+z;
+			//ifle %41, %42 goto blklab18 : int
+			if(_41<=_42){goto blklab18;}
+			//add %43 = %5, %7 : int
+			_43=i+x;
+			//mul %44 = %5, %1 : int
+			_44=i*n;
+			//add %45 = %44, %4 : int
+			_45=_44+j;
+			//update %0[%45] = %43 : int[] -> int[]
+			moves[_45] = _43;
+			//goto blklab19
+			goto blklab19;
+//.blklab18
+blklab18:;
+			//add %46 = %4, %8 : int
+			_46=j+z;
+			//mul %47 = %5, %1 : int
+			_47=i*n;
+			//add %48 = %47, %4 : int
+			_48=_47+j;
+			//update %0[%48] = %46 : int[] -> int[]
+			moves[_48] = _46;
+//.blklab19
+blklab19:;
+			//const %49 = 1 : int
+			_49 = 1;
+			//add %50 = %4, %49 : int
+			_50=j+_49;
+			//assign %4 = %50  : int
+			j = _50;
+			//const %51 = 1 : int
+			_51 = 1;
+			//add %52 = %5, %51 : int
+			_52=i+_51;
+			//assign %5 = %52  : int
+			i = _52;
 //.blklab12
 blklab12:;
-	}
+		}
 //.blklab11
 blklab11:;
+		//const %53 = 1 : int
+		_53 = 1;
+		//add %54 = %3, %53 : int
+		_54=s+_53;
+		//assign %3 = %54  : int
+		s = _54;
+//.blklab10
+blklab10:;
+	}
+//.blklab9
+blklab9:;
 	//return %0
 	_FREE(_2);
-	_FREE(_41);
 	return moves;
 	//return
 }
@@ -569,19 +547,22 @@ int main(int argc, char** args){
 	_ADD_OWNERSHIP(_7);
 	//assign %2 = %7  : int[]
 	_FREE(moves);
-	_1DARRAY_COPY(moves, _7);
-	_ADD_OWNERSHIP(moves);
-	//invoke (%8) = (%2, %1) CoinGame4:findMoves : function(int[],int)->(int[])
+	_1DARRAY_UPDATE(moves, _7);
+	_TRANSFER_OWNERSHIP(moves, _7);
+	_REMOVE_OWNERSHIP(_7);
+	//invoke (%8) = (%2, %1) CoinGame:findMoves : function(int[],int)->(int[])
 	_FREE(_8);
+	_REMOVE_OWNERSHIP(moves);
 	_1DARRAY_SIZE(_8, moves);
-	_8 = findMoves(_1DARRAY_COPY_PARAM(moves), true, n);
+	_8 = findMoves(_1DARRAY_PARAM(moves), true, n);
 	_ADD_OWNERSHIP(_8);
 	//assign %2 = %8  : int[]
 	_FREE(moves);
-	_1DARRAY_COPY(moves, _8);
-	_ADD_OWNERSHIP(moves);
-	//invoke () = (%0, %2, %1) CoinGame4:play : method(whiley/lang/System:Console,int[],int)->()
-play(stdout, _1DARRAY_COPY_PARAM(moves), false, n);
+	_1DARRAY_UPDATE(moves, _8);
+	_TRANSFER_OWNERSHIP(moves, _8);
+	_REMOVE_OWNERSHIP(_8);
+	//invoke () = (%0, %2, %1) CoinGame:play : method(whiley/lang/System:Console,int[],int)->()
+play(stdout, _1DARRAY_PARAM(moves), false, n);
 	//const %9 = 1 : int
 	_9 = 1;
 	//sub %10 = %1, %9 : int
@@ -607,13 +588,13 @@ play(stdout, _1DARRAY_COPY_PARAM(moves), false, n);
 	{
 		//const %17 = 25 : int
 		_17 = 25;
-		//ifeq %3, %17 goto blklab18 : int
-		if(sum_alice==_17){goto blklab18;}
+		//ifeq %3, %17 goto blklab20 : int
+		if(sum_alice==_17){goto blklab20;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-//.blklab18
-blklab18:;
+//.blklab20
+blklab20:;
 	//assert
 	}
 	//return

@@ -52,23 +52,32 @@ method play(System.Console sys, int[] moves, int n):
     assert sum_alice >= sum_bob
     sys.out.print_s("The total amount of money (maximum) Bob gets is ")
     sys.out.println(sum_bob)
+// Find minimal value
+function findMin(int a, int b) -> int:
+    if(a < b):
+        return a
+    return b
+// Find maximal value
+function findMax(int a, int b) -> int:
+    if(a > b):
+        return a
+    return b
 
 // Pick the coin 
 // This function is only used to test the calling graph
 function pickCoin(int[] moves, int i, int j, int n, int x, int y, int z) -> int[]:
-     // Max(x, y)
-    if(x > y):
-        x = y
-        
-    // Max(y, z)
-    if(z > y):
-        z = y
-
-    // Pick the coins.
-    if (i + x > j + z):
-        moves[i*n+j] = i + x// Pick coins[i] = i
-    else:
-        moves[i*n+j] = j + z// Pick coins[j] = j
+    // Pick the coins with 
+    moves[i*n+j] = findMax(i+findMin(x, y) , j +  findMin(y, z))
+    // Min(x, y)
+    //if(x > y):
+    //    x = y
+    // Min(y, z)
+    //if(z > y):
+    //    z = y
+    //if (i + i_min > j + j_min):
+    //    moves[i*n+j] = i + i_min// Pick coins[i] = i
+    //else:
+    //    moves[i*n+j] = j + j_min// Pick coins[j] = j
     return moves
 
 // Use dynamic programming to find moves for Alice
