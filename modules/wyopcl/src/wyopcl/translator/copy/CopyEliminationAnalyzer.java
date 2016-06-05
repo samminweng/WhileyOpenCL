@@ -24,15 +24,12 @@ import wyopcl.translator.bound.BasicBlock.BlockType;
  *
  */
 public class CopyEliminationAnalyzer extends Analyzer {
-	// Perform liveness checks
-	private LiveVariablesAnalysis liveAnalyzer;
 	// Perform read-write checks
 	private ReadWriteAnalyzer readwriteAnalyzer;
 	// Perform return checks
 	private ReturnAnalyzer returnAnalyzer;
-	// Store the liveness analysis for each function
-	//(Key: function, Value:Liveness information).
-	private HashMap<FunctionOrMethod, LiveVariables> livenessStore;
+	// Perform liveness checks
+	private LiveVariablesAnalysis liveAnalyzer;
 
 	/**
 	 * Basic Constructor
@@ -41,83 +38,10 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		super(config);
 		this.readwriteAnalyzer = new ReadWriteAnalyzer(config);
 		this.returnAnalyzer = new ReturnAnalyzer(config);
-		this.liveAnalyzer = new LiveVariablesAnalysis(builder);
-		// Initialize the liveness stores.
-		this.livenessStore = new HashMap<FunctionOrMethod, LiveVariables>();
+		this.liveAnalyzer = new LiveVariablesAnalysis(config);		
 	}
 
-	/**
-	 * Output the live variables, that are stored in In/Out set.
-	 * 
-	 * @param env
-	 *            In/Out set of live variables
-	 * @param vars
-	 *            the hash map, which maps register to the variable name.
-	 * @return
-	 */
-	private String getLiveVariables(HashSet<Integer> env, FunctionOrMethod function) {
-		String str = "";
-		Boolean isFirst = true;
-		Iterator<Integer> iterator = env.iterator();
-		while (iterator.hasNext()) {
-			int register = iterator.next();
-			if (!isFirst) {
-				str += ", ";
-			} else {
-				isFirst = false;
-			}
-			// Get the variable name from register
-			str += this.getActualVarName(register, function);
-		}
-		return str;
-	}
-
-	/**
-	 * Print out the liveness for a given function.
-	 * 
-	 * @param function
-	 * @param livenessStore
-	 */
-	private void printLivenss(FunctionOrMethod function) {
-		// Get function name
-		System.out.println("###### Live variables for " + function.name() + " function. ######");
-		// Get liveness
-		LiveVariables liveness = getLiveness(function);
-		// Get the list of blocks for the function.
-		for (BasicBlock block : this.getBlocks(function)) {
-			// Print out the in/out set for the block.
-			System.out.println("In" + ":{" + getLiveVariables(liveness.getIN(block), function) + "}\n" + block + "\nOut"
-					+ ":{" + getLiveVariables(liveness.getOUT(block), function) + "}\n");
-		}
-	}
-
-	/**
-	 * Get the live analysis results of the function.
-	 * 
-	 * @param function
-	 * @return
-	 */
-	public LiveVariables getLiveness(FunctionOrMethod function) {
-		// Get function name
-		return livenessStore.get(function);
-	}
-
-	/**
-	 * Applies live variable analysis on the function, in order to get in/out set of each block.
-	 * 
-	 * @param function
-	 *            code block of function
-	 */
-	private void computeLiveness(FunctionOrMethod function) {
-		LiveVariables liveness = new LiveVariables();
-		liveness.computeLiveness(function.name(), config.isVerbose(), this.getCFGraph(function), liveAnalyzer);
-		// Store the liveness analysis for the function.
-		livenessStore.put(function, liveness);
-		// Print out analysis result
-		if (config.isVerbose()) {
-			printLivenss(function);
-		}
-	}
+	
 
 	/**
 	 * Applies live variable analysis on each basic block.
@@ -130,25 +54,10 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		// Builds up a calling graph and perform read-write checks.
 		this.readwriteAnalyzer.apply(module);
 		this.returnAnalyzer.apply(module);
-		// Apply live analysis on each function, except for main function.
-		for (FunctionOrMethod function : module.functionOrMethods()) {
-			computeLiveness(function);
-		}
+		this.liveAnalyzer.apply(module);
 	}
 
-	public boolean isLive(int reg, Code code, FunctionOrMethod f) {
-		boolean isLive = true;
-
-		// Check the array is live.
-		BasicBlock blk = getBlockbyCode(f, code);// Get basic block that
-													// contains the given code.
-		if (blk != null) {
-			HashSet<Integer> outSet = getLiveness(f).getOUT(blk);
-			isLive = outSet.contains(reg);
-		}
-		return isLive;
-	}
-
+	
 	/**
 	 * Determines whether to make a copy of array by checking liveness information or read-only property.
 	 * 
@@ -203,7 +112,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 * 
 	 */
 	public boolean isCopyEliminated(int reg, Code code, FunctionOrMethod f) {
-		boolean isLive = isLive(reg, code, f);
+		boolean isLive = this.liveAnalyzer.isLive(reg, code, f);
 
 		// If the variable is not alive, then the copies are not needed.
 		if (!isLive) {
@@ -215,7 +124,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 				boolean isReadOnly = false;
 				boolean isReturned = false;
 				Codes.Invoke invoked = (Codes.Invoke) code;
-				FunctionOrMethod invoked_function = this.getFunction(invoked.name.name(), invoked.type(0));
+				FunctionOrMethod invoked_function = this.getFunction(invoked.name.name());
 				if (invoked_function != null) {
 					// Map the register to function argument.
 					int argument = this.mapFunctionArgument(reg, invoked);

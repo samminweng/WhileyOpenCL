@@ -15,6 +15,7 @@ import wyopcl.translator.Analyzer;
 import wyopcl.translator.ReadWriteAnalyzer;
 import wyopcl.translator.ReturnAnalyzer;
 import wyopcl.translator.copy.CopyEliminationAnalyzer;
+import wyopcl.translator.copy.LiveVariablesAnalysis;
 import wyopcl.translator.generator.CodeGeneratorHelper;
 import wyopcl.translator.generator.CodeStores;
 
@@ -31,11 +32,14 @@ public class DeallocationAnalyzer extends Analyzer {
 	private ReadWriteAnalyzer readwriteAnalyzer;
 	// Perform return checks
 	private ReturnAnalyzer returnAnalyzer;
+	// Perform liveness checks
+	private LiveVariablesAnalysis liveAnalyzer; 
 
 	public DeallocationAnalyzer(Configuration config) {
 		super(config);
 		this.readwriteAnalyzer = new ReadWriteAnalyzer(config);
 		this.returnAnalyzer = new ReturnAnalyzer(config);
+		this.liveAnalyzer = new LiveVariablesAnalysis(config);
 	}
 
 	public String declareOwnershipVar(String indent, int register, FunctionOrMethod function, CodeStores stores) {
@@ -412,7 +416,8 @@ public class DeallocationAnalyzer extends Analyzer {
 
 		boolean isLive = true;
 		if (copyAnalyzer.isPresent()) {
-			isLive = copyAnalyzer.get().isLive(register, code, function);
+			isLive = this.liveAnalyzer.isLive(register, code, function);
+			//isLive = copyAnalyzer.get().isLive(register, code, function);
 		}
 
 		FunctionOrMethod f = this.getFunction(code.name.name(), code.type(0));
@@ -544,6 +549,8 @@ public class DeallocationAnalyzer extends Analyzer {
 		this.readwriteAnalyzer.apply(module);
 		// Build up return set
 		this.returnAnalyzer.apply(module);
+		// Perform liveness analysis
+		this.liveAnalyzer.apply(module);
 	}
 
 }

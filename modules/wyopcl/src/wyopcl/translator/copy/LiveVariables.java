@@ -5,7 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 
 import wyil.lang.Code;
+import wyil.lang.CodeBlock;
 import wyil.lang.Codes;
+import wyil.lang.Type;
 import wyil.lang.Codes.Return;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
@@ -58,7 +60,7 @@ public class LiveVariables {
 	 * @param graph
 	 * @param liveAnalyzer
 	 */
-	public void computeLiveness(String name, boolean isVerbose, CFGraph graph, LiveVariablesAnalysis liveAnalyzer){
+	public void computeLiveness(String name, boolean isVerbose, CFGraph graph){
 		List<BasicBlock> blocks = graph.getBlockList();
 		initialize(blocks);
 		int iteration = 1;// Start with 1st iteration.
@@ -77,7 +79,7 @@ public class LiveVariables {
 					// Get in/out set of the block.
 					HashSet<Integer> out = (HashSet<Integer>) computeOut(block);
 					// Compute the store in set of the block.
-					HashSet<Integer> in = computeIN(block, (HashSet<Integer>) out.clone(), liveAnalyzer);
+					HashSet<Integer> in = computeIN(block, (HashSet<Integer>) out.clone());
 					if (isVerbose) {
 						System.out.println("In" + ":{" + in + "}\n" + block 
 								+ "\nOut" + ":{" + out + "}\n");
@@ -106,6 +108,68 @@ public class LiveVariables {
 	}
 
 	/**
+	 * <p>
+	 * Implements a classic live variables analysis to enable efficient reference counting. Compound structures in
+	 * Whiley (e.g. lists, sets, records, etc) are <i>reference counted</i>. This means we count the number of aliases
+	 * to them in the heap and on the stack. Then, when a compound structure is updated, we can perform an <i>inplace
+	 * update</i> if the reference count is 1; otherwise, we have to clone the structure. Cloning is potentially
+	 * expensive, and we want to avoid it as much as possible. Therefore, as soon as a variable is no longer live, we
+	 * should decrement its reference count. This is signalled using the special <code>void</code> bytecode which,
+	 * literally, "voids" a given register thereby allowing us to release it.
+	 * </p>
+	 * <p>
+	 * The purpose of this class is to determine when a variable is live, and when it is not. The live variables
+	 * analysis operates as a backwards analysis, propagating information from variable uses (i.e. <code>load</code>
+	 * bytecodes) back to their definitions (i.e. <code>store</code> bytecodes). For more information on Live Variables
+	 * Analysis, see <a href="http://en.wikipedia.org/wiki/Live_variable_analysis">the Wikipedia page</a>.
+	 * </p>
+	 *
+	 * @author David J. Pearce, 2011
+	 *
+	 */
+	public HashSet<Integer> propagate(CodeBlock.Index index, Code code, HashSet<Integer> environment) {
+		// rewrites.put(index,null);
+		boolean isLive = true;
+		environment = (HashSet<Integer>) environment.clone();
+
+		if (code instanceof Code.AbstractBytecode) {
+			Code.AbstractBytecode aa = (Code.AbstractBytecode) code;
+			if (code instanceof Codes.Update) {
+				Codes.Update cu = (Codes.Update) aa;
+				// In the normal case, this bytecode is considered live if the
+				// assigned register is live. However, in the case of an
+				// indirect assignment, then it is always considered live.
+				if (!(cu.type(0) instanceof Type.Reference)) {
+					// No, this is not an indirect assignment through a
+					// reference
+					isLive = environment.contains(cu.target(0));
+				}
+			} else {
+				for (int target : aa.targets()) {
+					isLive = environment.remove(target);
+				}
+			}
+		}
+
+		if ((isLive && code instanceof Code.AbstractBytecode)
+				|| (code instanceof Codes.Invoke && ((Codes.Invoke) code).type(0) instanceof Type.Method)
+				|| (code instanceof Codes.IndirectInvoke
+						&& ((Codes.IndirectInvoke) code).type(0) instanceof Type.Method)) {
+			// FIXME: this seems to be a problem if there are no assigned variables!
+			Code.AbstractBytecode c = (Code.AbstractBytecode) code;
+			for (int operand : c.operands()) {
+				environment.add(operand);
+			}
+		} else if (!isLive) {
+			// rewrites.put(index, Codes.Nop);
+		} else {
+			// const
+		}
+
+		return environment;
+	}
+	
+	/**
 	 * Compute 'in' set for a list of code.
 	 * 
 	 * @param codes
@@ -114,17 +178,17 @@ public class LiveVariables {
 	 *            the 'in' set
 	 * @return the resulting 'in' set.
 	 */
-	private HashSet<Integer> compute(List<Code> codes, HashSet<Integer> in, LiveVariablesAnalysis liveAnalyzer) {
+	private HashSet<Integer> compute(List<Code> codes, HashSet<Integer> in) {
 		// Traverse the wyil code in the reverse order.
 		for (int i = codes.size() - 1; i >= 0; i--) {
 			// Compute the live variables, and store the results in in/out set.
 			Code code = codes.get(i);
 			if (code instanceof Codes.Assert) {
-				in = compute(((Codes.Assert) code).bytecodes(), in, liveAnalyzer);
+				in = compute(((Codes.Assert) code).bytecodes(), in);
 			} else if (code instanceof Codes.Invariant) {
-				in = compute(((Codes.Invariant) code).bytecodes(), in, liveAnalyzer);
+				in = compute(((Codes.Invariant) code).bytecodes(), in);
 			} else {
-				in = liveAnalyzer.propagate(null, code, in);
+				in = propagate(null, code, in);
 			}
 		}
 		return in;
@@ -139,9 +203,9 @@ public class LiveVariables {
 	 *            the initial 'in' set
 	 * @return
 	 */
-	public HashSet<Integer> computeIN(BasicBlock block, HashSet<Integer> in, LiveVariablesAnalysis liveAnalyzer) {
+	public HashSet<Integer> computeIN(BasicBlock block, HashSet<Integer> in) {
 		List<Code> codes = block.getCodeBlock().bytecodes();
-		in = compute(codes, in, liveAnalyzer);
+		in = compute(codes, in);
 		// Update 'in' set of the block.
 		setIN(block, in);
 		return in;

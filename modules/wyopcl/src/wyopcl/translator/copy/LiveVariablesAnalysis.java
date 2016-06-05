@@ -1,6 +1,8 @@
 package wyopcl.translator.copy;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 import wybs.lang.Builder;
@@ -13,117 +15,143 @@ import wyil.lang.Codes.If;
 import wyil.lang.Codes.IfIs;
 import wyil.lang.Codes.Loop;
 import wyil.lang.Codes.Switch;
+import wyil.lang.WyilFile.FunctionOrMethod;
 import wyil.lang.Type;
+import wyil.lang.WyilFile;
 import wyil.util.dfa.BackwardFlowAnalysis;
+import wyopcl.Configuration;
+import wyopcl.translator.Analyzer;
+import wyopcl.translator.bound.BasicBlock;
+
+//public class LiveVariablesAnalysis extends BackwardFlowAnalysis<HashSet<Integer>>{
 /**
- * <p>
- * Implements a classic live variables analysis to enable efficient reference
- * counting. Compound structures in Whiley (e.g. lists, sets, records, etc) are
- * <i>reference counted</i>. This means we count the number of aliases to them
- * in the heap and on the stack. Then, when a compound structure is updated, we
- * can perform an <i>inplace update</i> if the reference count is 1; otherwise,
- * we have to clone the structure. Cloning is potentially expensive, and we want
- * to avoid it as much as possible. Therefore, as soon as a variable is no
- * longer live, we should decrement its reference count. This is signalled using
- * the special <code>void</code> bytecode which, literally, "voids" a given
- * register thereby allowing us to release it.
- * </p>
- * <p>
- * The purpose of this class is to determine when a variable is live, and when
- * it is not. The live variables analysis operates as a backwards analysis,
- * propagating information from variable uses (i.e. <code>load</code> bytecodes)
- * back to their definitions (i.e. <code>store</code> bytecodes). For more
- * information on Live Variables Analysis, see <a
- * href="http://en.wikipedia.org/wiki/Live_variable_analysis">the Wikipedia
- * page</a>.
- * </p>
- *
- * @author David J. Pearce, 2011
+ * Implements Live variable analyzer to check if a register is alive or dead after a code of the function.
+ * 
+ * 
+ * This class is based on David Pearce's propagation rule for live variable.
+ * 
+ * @author Min-Hsien Weng
  *
  */
-public class LiveVariablesAnalysis extends BackwardFlowAnalysis<HashSet<Integer>>{
+public class LiveVariablesAnalysis extends Analyzer {
+	// Store the liveness analysis for each function
+	// (Key: function, Value:Liveness information).
+	private HashMap<FunctionOrMethod, LiveVariables> livenessStore;
 
-	public LiveVariablesAnalysis(Builder builder) {
-
+	public LiveVariablesAnalysis(Configuration config) {
+		super(config);
+		// Initialize the liveness stores.
+		this.livenessStore = new HashMap<FunctionOrMethod, LiveVariables>();
 	}
-	
-	@Override
-	public HashSet<Integer> propagate(CodeBlock.Index index, Code code, HashSet<Integer> environment) {
-		//rewrites.put(index,null);
+
+	/**
+	 * Applies live variable analysis on each basic block.
+	 * 
+	 * @param module
+	 */
+	public void apply(WyilFile module) {
+		// Builds up a CFG of the function.
+		super.apply(module);
+		// Apply live analysis on each function, except for main function.
+		for (FunctionOrMethod function : module.functionOrMethods()) {
+			computeLiveness(function);
+		}
+	}
+
+	/**
+	 * Check if a register is alive after the code
+	 * 
+	 * @param reg
+	 * @param code
+	 * @param f
+	 * @return
+	 */
+	public boolean isLive(int reg, Code code, FunctionOrMethod f) {
 		boolean isLive = true;
-		environment = (HashSet<Integer>) environment.clone();
 
-		if (code instanceof Code.AbstractBytecode) {
-			Code.AbstractBytecode aa = (Code.AbstractBytecode) code;
-			if(code instanceof Codes.Update) {
-				Codes.Update cu = (Codes.Update) aa;
-				// In the normal case, this bytecode is considered live if the
-				// assigned register is live. However, in the case of an
-				// indirect assignment, then it is always considered live.
-				if(!(cu.type(0) instanceof Type.Reference)) {
-					// No, this is not an indirect assignment through a
-					// reference
-					isLive = environment.contains(cu.target(0));
-				}
+		// Check the array is live.
+		BasicBlock blk = getBlockbyCode(f, code);// Get basic block that
+													// contains the given code.
+		if (blk != null) {
+			HashSet<Integer> outSet = getLiveness(f).getOUT(blk);
+			isLive = outSet.contains(reg);
+		}
+		return isLive;
+	}
+
+	/**
+	 * Output the live variables, that are stored in In/Out set.
+	 * 
+	 * @param env
+	 *            In/Out set of live variables
+	 * @param vars
+	 *            the hash map, which maps register to the variable name.
+	 * @return
+	 */
+	private String getLiveVariables(HashSet<Integer> env, FunctionOrMethod function) {
+		String str = "";
+		Boolean isFirst = true;
+		Iterator<Integer> iterator = env.iterator();
+		while (iterator.hasNext()) {
+			int register = iterator.next();
+			if (!isFirst) {
+				str += ", ";
 			} else {
-				for(int target : aa.targets()) {
-					isLive = environment.remove(target);
-				}
+				isFirst = false;
 			}
+			// Get the variable name from register
+			str += this.getActualVarName(register, function);
 		}
+		return str;
+	}
 
-		if ((isLive && code instanceof Code.AbstractBytecode)
-				|| (code instanceof Codes.Invoke && ((Codes.Invoke) code).type(0) instanceof Type.Method)
-				|| (code instanceof Codes.IndirectInvoke
-						&& ((Codes.IndirectInvoke) code).type(0) instanceof Type.Method)) {
-			// FIXME: this seems to be a problem if there are no assigned variables!
-			Code.AbstractBytecode c = (Code.AbstractBytecode) code;
-			for (int operand : c.operands()) {
-				environment.add(operand);
-			}
-		} else if(!isLive) {
-			//rewrites.put(index, Codes.Nop);
-		} else {
-			// const
+	/**
+	 * Print out the liveness for a given function.
+	 * 
+	 * @param function
+	 * @param livenessStore
+	 */
+	private void printLivenss(FunctionOrMethod function) {
+		// Get function name
+		System.out.println("###### Live variables for " + function.name() + " function. ######");
+		// Get liveness
+		LiveVariables liveness = getLiveness(function);
+		// Get the list of blocks for the function.
+		for (BasicBlock block : this.getBlocks(function)) {
+			// Print out the in/out set for the block.
+			System.out.println("In" + ":{" + getLiveVariables(liveness.getIN(block), function) + "}\n" + block + "\nOut"
+					+ ":{" + getLiveVariables(liveness.getOUT(block), function) + "}\n");
 		}
-
-		return environment;
 	}
 
-	@Override
-	protected HashSet<Integer> propagate(Index index, If ifgoto, HashSet<Integer> trueStore,
-			HashSet<Integer> falseStore) {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * Get the live analysis results of the function.
+	 * 
+	 * @param function
+	 * @return
+	 */
+	public LiveVariables getLiveness(FunctionOrMethod function) {
+		// Get function name
+		return livenessStore.get(function);
 	}
 
-	@Override
-	protected HashSet<Integer> propagate(Index index, IfIs iftype, HashSet<Integer> trueStore,
-			HashSet<Integer> falseStore) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected HashSet<Integer> propagate(Index index, Switch sw, List<HashSet<Integer>> stores,
-			HashSet<Integer> defStore) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected HashSet<Integer> propagate(Index index, Loop code, HashSet<Integer> store,
-			List<Pair<Type, String>> handlers) {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * Applies live variable analysis on the function, in order to get in/out set of each block.
+	 * 
+	 * @param function
+	 *            code block of function
+	 */
+	private void computeLiveness(FunctionOrMethod function) {
+		LiveVariables liveness = new LiveVariables();
+		liveness.computeLiveness(function.name(), config.isVerbose(), this.getCFGraph(function));
+		// Store the liveness analysis for the function.
+		livenessStore.put(function, liveness);
+		// Print out analysis result
+		if (config.isVerbose()) {
+			printLivenss(function);
+		}
 	}
 
 	
-
-	@Override
-	protected HashSet<Integer> propagate(Type handler, HashSet<Integer> normalStore, HashSet<Integer> exceptionStore) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }
