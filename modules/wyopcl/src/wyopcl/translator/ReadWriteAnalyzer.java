@@ -33,30 +33,18 @@ import wyopcl.Configuration;
  * @author Min-Hsien Weng
  *
  */
-public class ReadWriteAnalyzer {
+public class ReadWriteAnalyzer extends Analyzer{
 	// Store the set of read-write registers for each function.
 	private HashMap<FunctionOrMethod, HashSet<Integer>> stores;
-	// Wyil byte-code
-	private WyilFile module;
-	// The tree node of calling graph
-	private DefaultMutableTreeNode tree;
+	
 
-	public ReadWriteAnalyzer() {
+	public ReadWriteAnalyzer(Configuration config) {
+		super(config);
 		tree = null;
 		stores = new HashMap<FunctionOrMethod, HashSet<Integer>>();
 	}
 
-	/**
-	 * Get the function by name
-	 * 
-	 * @param name
-	 * @return function. Return null if the function is not defined in whiley program.
-	 */
-	private FunctionOrMethod getFunction(String name) {
-		if (!this.module.functionOrMethod(name).isEmpty())
-			return this.module.functionOrMethod(name).get(0);
-		return null;
-	}
+	
 
 	/**
 	 * Given a byte-code, add lhs variable to the Hashset.
@@ -154,46 +142,7 @@ public class ReadWriteAnalyzer {
 		return false;// Read-only
 	}
 
-	/**
-	 * Iterate each code recursively and
-	 * 
-	 * @param code
-	 * @param function
-	 * @param root
-	 */
-	private void buildCallGraph(Code code, FunctionOrMethod function, DefaultMutableTreeNode parentNode) {
-		if (code instanceof Codes.Invoke) {
-			Codes.Invoke invoke = (Codes.Invoke) code;
-
-			// Some function are not defined in
-			// Create the tree node and append the node to the parent node
-			DefaultMutableTreeNode node = new DefaultMutableTreeNode(invoke.name.name());
-			parentNode.add(node);
-
-			// Get the calling function.
-			FunctionOrMethod callingfunction = getFunction(invoke.name.name());
-			// Check if calling function is not recursive function
-			// TreeNode can not be recursively added to the function.
-			if (callingfunction != null && !callingfunction.equals(function)) {
-				// Iterate the calling function
-				for (Code c : callingfunction.body().bytecodes()) {
-					buildCallGraph(c, callingfunction, node);
-				}
-			}
-		} else if (code instanceof Codes.IndirectInvoke) {
-			// Codes.IndirectInvoke indirect = (Codes.IndirectInvoke) code;
-			// System.out.println(indirect);
-			// root.add(new DefaultMutableTreeNode(indirect.name()));
-		} else if (code instanceof Codes.Loop) {
-			Codes.Loop loop = (Codes.Loop) code;
-			// Iterate the byte-code inside loop body
-			for (Code c : loop.bytecodes()) {
-				buildCallGraph(c, function, parentNode);
-			}
-
-		}
-
-	}
+	
 
 	/**
 	 * Visit the node and compute the readwrite set for that function
@@ -232,7 +181,7 @@ public class ReadWriteAnalyzer {
 	 * 
 	 * @param root
 	 */
-	private void postorderTraversalCallGraph(DefaultMutableTreeNode tree) {
+	protected void postorderTraversalCallGraph(DefaultMutableTreeNode tree) {
 
 		// Go through all the nodes in post order
 		Enumeration<DefaultMutableTreeNode> nodes = tree.postorderEnumeration();
@@ -241,30 +190,6 @@ public class ReadWriteAnalyzer {
 			visit(node);
 		}
 
-	}
-
-	/**
-	 * Creates a call graph to represent calling relationship between functions
-	 * 
-	 * The call graph is constructed with tree node
-	 * 
-	 * reference is http://docs.oracle.com/javase/tutorial/uiswing/components/tree.html
-	 * 
-	 * @param module
-	 */
-	private void buildCallGraph(WyilFile module) {
-		// Ensure the tree is built once
-		if (tree == null) {
-			// Create the root node, i.e. main function
-			tree = new DefaultMutableTreeNode("main");
-
-			FunctionOrMethod main = module.functionOrMethod("main").get(0);
-			// Go through main function
-			for (Code code : main.body().bytecodes()) {
-				buildCallGraph(code, main, tree);
-			}
-
-		}
 	}
 
 	/**

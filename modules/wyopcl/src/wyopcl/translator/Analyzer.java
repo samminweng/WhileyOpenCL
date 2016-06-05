@@ -4,9 +4,13 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.swing.tree.DefaultMutableTreeNode;
 
 import wyil.attributes.VariableDeclarations;
 import wyil.lang.Code;
@@ -46,8 +50,9 @@ public abstract class Analyzer {
 	private int line;
 	// Wyil byte-code
 	protected WyilFile module;
-	// Perform read-write checks
-	private ReadWriteAnalyzer readwriteAnalyzer;
+	// The tree node of calling graph
+	protected DefaultMutableTreeNode tree;
+	
 	// Perform return checks
 	private ReturnAnalyzer returnAnalyzer;
 
@@ -57,7 +62,7 @@ public abstract class Analyzer {
 	public Analyzer(Configuration config) {
 		this.cfgraphs = new HashMap<FunctionOrMethod, CFGraph>();
 		this.config = config;
-		this.readwriteAnalyzer = new ReadWriteAnalyzer();
+		
 		this.returnAnalyzer = new ReturnAnalyzer();
 	}
 
@@ -68,8 +73,6 @@ public abstract class Analyzer {
 	 */
 	public void apply(WyilFile module) {
 		this.module = module;
-		// Perform read-write checks
-		this.readwriteAnalyzer.apply(module);
 		// Perform return checks
 		this.returnAnalyzer.apply(module);
 		
@@ -79,6 +82,18 @@ public abstract class Analyzer {
 		}
 	}
 
+	/**
+	 * Get the function by name
+	 * 
+	 * @param name
+	 * @return function. Return null if the function is not defined in whiley program.
+	 */
+	protected FunctionOrMethod getFunction(String name) {
+		if (!this.module.functionOrMethod(name).isEmpty())
+			return this.module.functionOrMethod(name).get(0);
+		return null;
+	}
+	
 	/**
 	 * Returns the function
 	 * 
@@ -520,20 +535,6 @@ public abstract class Analyzer {
 	protected boolean isReturned(int register, FunctionOrMethod function) {
 		return this.returnAnalyzer.isReturned(register, function);
 	}
-
-	/**
-	 * Check if the array 'r' is updated inside the function.
-	 * 
-	 * @param reg
-	 *            the register
-	 * @param function
-	 *            the function
-	 * @return true if reg is updated.
-	 */
-	protected boolean isMutated(int register, FunctionOrMethod function) {
-		return readwriteAnalyzer.isMutated(register, function);
-	}
-
 	
 	/**
 	 * Map the function argument to the register in the calling function.
@@ -562,4 +563,69 @@ public abstract class Analyzer {
 		return index;// The operand index is also the registers defined in the function.
 	}
 	
+	/**
+	 * Iterate each code recursively and
+	 * 
+	 * @param code
+	 * @param function
+	 * @param root
+	 */
+	protected void buildCallGraph(Code code, FunctionOrMethod function, DefaultMutableTreeNode parentNode) {
+		if (code instanceof Codes.Invoke) {
+			Codes.Invoke invoke = (Codes.Invoke) code;
+
+			// Some function are not defined in
+			// Create the tree node and append the node to the parent node
+			DefaultMutableTreeNode node = new DefaultMutableTreeNode(invoke.name.name());
+			parentNode.add(node);
+
+			// Get the calling function.
+			FunctionOrMethod callingfunction = getFunction(invoke.name.name());
+			// Check if calling function is not recursive function
+			// TreeNode can not be recursively added to the function.
+			if (callingfunction != null && !callingfunction.equals(function)) {
+				// Iterate the calling function
+				for (Code c : callingfunction.body().bytecodes()) {
+					buildCallGraph(c, callingfunction, node);
+				}
+			}
+		} else if (code instanceof Codes.IndirectInvoke) {
+			// Codes.IndirectInvoke indirect = (Codes.IndirectInvoke) code;
+			// System.out.println(indirect);
+			// root.add(new DefaultMutableTreeNode(indirect.name()));
+		} else if (code instanceof Codes.Loop) {
+			Codes.Loop loop = (Codes.Loop) code;
+			// Iterate the byte-code inside loop body
+			for (Code c : loop.bytecodes()) {
+				buildCallGraph(c, function, parentNode);
+			}
+
+		}
+
+	}
+	
+	/**
+	 * Creates a call graph to represent calling relationship between functions
+	 * 
+	 * The call graph is constructed with tree node
+	 * 
+	 * reference is http://docs.oracle.com/javase/tutorial/uiswing/components/tree.html
+	 * 
+	 * @param module
+	 */
+	protected void buildCallGraph(WyilFile module) {
+		// Ensure the tree is built once
+		if (tree == null) {
+			// Create the root node, i.e. main function
+			tree = new DefaultMutableTreeNode("main");
+
+			FunctionOrMethod main = module.functionOrMethod("main").get(0);
+			// Go through main function
+			for (Code code : main.body().bytecodes()) {
+				buildCallGraph(code, main, tree);
+			}
+
+		}
+	}
+
 }

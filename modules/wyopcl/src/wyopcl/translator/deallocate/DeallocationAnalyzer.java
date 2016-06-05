@@ -12,6 +12,7 @@ import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 import wyopcl.translator.Analyzer;
+import wyopcl.translator.ReadWriteAnalyzer;
 import wyopcl.translator.copy.CopyEliminationAnalyzer;
 import wyopcl.translator.generator.CodeGeneratorHelper;
 import wyopcl.translator.generator.CodeStores;
@@ -25,8 +26,11 @@ import wyopcl.translator.generator.CodeStores;
  *
  */
 public class DeallocationAnalyzer extends Analyzer {
+	// Perform read-write checks
+	private ReadWriteAnalyzer readwriteAnalyzer;
 	public DeallocationAnalyzer(Configuration config) {
 		super(config);
+		this.readwriteAnalyzer = new ReadWriteAnalyzer(config);
 	}
 
 	public String declareOwnershipVar(String indent, int register, FunctionOrMethod function, CodeStores stores) {
@@ -412,7 +416,7 @@ public class DeallocationAnalyzer extends Analyzer {
 
 		FunctionOrMethod f = this.getFunction(code.name.name(), code.type(0));
 		int arguement = mapFunctionArgument(register, code);
-		boolean isMutated = this.isMutated(arguement, f);
+		boolean isMutated = this.readwriteAnalyzer.isMutated(arguement, f);
 		boolean isReturned = this.isReturned(arguement, f);
 
 		Optional<HashMap<String, Boolean>> ownership = Optional.of(new HashMap<String, Boolean>());
@@ -535,6 +539,8 @@ public class DeallocationAnalyzer extends Analyzer {
 	@Override
 	public void apply(WyilFile module) {
 		super.apply(module);
+		// Builds up a calling graph and perform read-write checks.
+		this.readwriteAnalyzer.apply(module);
 	}
 
 }

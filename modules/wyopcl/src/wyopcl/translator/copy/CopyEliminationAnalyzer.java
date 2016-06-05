@@ -25,6 +25,8 @@ import wyopcl.translator.copy.LiveVariablesAnalysis.Env;
 public class CopyEliminationAnalyzer extends Analyzer {
 	
 	private LiveVariablesAnalysis liveAnalyzer;
+	// Perform read-write checks
+	private ReadWriteAnalyzer readwriteAnalyzer;
 	// Store the liveness analysis for each function (Key: function,
 	// Value:Liveness information).
 	private HashMap<FunctionOrMethod, LiveVariables> livenessStore;
@@ -34,10 +36,8 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 */
 	public CopyEliminationAnalyzer(Builder builder, Configuration config) {
 		super(config);
+		this.readwriteAnalyzer = new ReadWriteAnalyzer(config);
 		this.liveAnalyzer = new LiveVariablesAnalysis(builder);
-		// Diabled the constant propagation
-		//this.liveAnalyzer.setEnable(false);
-		//this.liveAnalyzer.setNops(true);
 		// Initialize the liveness stores.
 		this.livenessStore = new HashMap<FunctionOrMethod, LiveVariables>();
 	}
@@ -124,6 +124,8 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	public void apply(WyilFile module) {
 		// Builds up a CFG of the function.
 		super.apply(module);
+		// Builds up a calling graph and perform read-write checks.
+		this.readwriteAnalyzer.apply(module);
 		// Apply live analysis on each function, except for main function.
 		for (FunctionOrMethod function : module.functionOrMethods()) {
 			computeLiveness(function);
@@ -218,7 +220,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 					int argument = this.mapFunctionArgument(reg, invoked);
 					
 					// Check if parameter is modified inside 'invoked_function'.
-					isReadOnly = !isMutated(argument, invoked_function);
+					isReadOnly = !readwriteAnalyzer.isMutated(argument, invoked_function);
 					// Check if argument is returned by 'invoked_function'
 					isReturned = isReturned(argument, invoked_function);
 					// The 'var' is mutated and returned
