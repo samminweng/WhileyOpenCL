@@ -1,6 +1,7 @@
 package wyopcl.translator.copy;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import wyil.lang.Code;
@@ -9,8 +10,6 @@ import wyil.lang.Codes.Return;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.CFGraph;
-import wyopcl.translator.copy.LiveVariablesAnalysis.Env;
-
 
 /**
  * Stores and computes live variables for each function, including each block's 'IN' and 'OUT' set.
@@ -20,23 +19,23 @@ import wyopcl.translator.copy.LiveVariablesAnalysis.Env;
  */
 public class LiveVariables {
 	private boolean isChanged;// Indicate if there is any change of in/out  set.
-	private HashMap<BasicBlock, Env> inSet;// Each env stores the register numbers.
-	private HashMap<BasicBlock, Env> outSet;
+	private HashMap<BasicBlock, HashSet<Integer>> inSet;// Each env stores the register numbers.
+	private HashMap<BasicBlock, HashSet<Integer>> outSet;
 	/**
 	 * Constructor with a list of blocks.
 	 * 
 	 * @param blocks
 	 */
 	public LiveVariables() {
-		inSet = new HashMap<BasicBlock, Env>();
-		outSet = new HashMap<BasicBlock, Env>();
+		inSet = new HashMap<BasicBlock, HashSet<Integer>>();
+		outSet = new HashMap<BasicBlock, HashSet<Integer>>();
 	}
 
 	private void initialize(List<BasicBlock> blocks){
 		// Initialize in/out set for each block.
 		for (BasicBlock block : blocks) {
-			Env in = new Env();
-			Env out = new Env();
+			HashSet<Integer> in = new HashSet<Integer>();
+			HashSet<Integer> out = new HashSet<Integer>();
 			// Use different initial values for return block.
 			if (block.getType().equals(BlockType.RETURN)) {
 				Codes.Return code = (Return) block.getCodeBlock().get(0);
@@ -76,9 +75,9 @@ public class LiveVariables {
 				// Compute in/out blocks, except for exit or return block.
 				if (!block.getType().equals(BlockType.EXIT) || !block.getType().equals(BlockType.RETURN)) {
 					// Get in/out set of the block.
-					Env out = (Env) computeOut(block);
+					HashSet<Integer> out = (HashSet<Integer>) computeOut(block);
 					// Compute the store in set of the block.
-					Env in = computeIN(block, (Env) out.clone(), liveAnalyzer);
+					HashSet<Integer> in = computeIN(block, (HashSet<Integer>) out.clone(), liveAnalyzer);
 					if (isVerbose) {
 						System.out.println("In" + ":{" + in + "}\n" + block 
 								+ "\nOut" + ":{" + out + "}\n");
@@ -115,7 +114,7 @@ public class LiveVariables {
 	 *            the 'in' set
 	 * @return the resulting 'in' set.
 	 */
-	private Env compute(List<Code> codes, Env in, LiveVariablesAnalysis liveAnalyzer) {
+	private HashSet<Integer> compute(List<Code> codes, HashSet<Integer> in, LiveVariablesAnalysis liveAnalyzer) {
 		// Traverse the wyil code in the reverse order.
 		for (int i = codes.size() - 1; i >= 0; i--) {
 			// Compute the live variables, and store the results in in/out set.
@@ -140,7 +139,7 @@ public class LiveVariables {
 	 *            the initial 'in' set
 	 * @return
 	 */
-	public Env computeIN(BasicBlock block, Env in, LiveVariablesAnalysis liveAnalyzer) {
+	public HashSet<Integer> computeIN(BasicBlock block, HashSet<Integer> in, LiveVariablesAnalysis liveAnalyzer) {
 		List<Code> codes = block.getCodeBlock().bytecodes();
 		in = compute(codes, in, liveAnalyzer);
 		// Update 'in' set of the block.
@@ -155,9 +154,9 @@ public class LiveVariables {
 	 * @param block
 	 * @return
 	 */
-	protected void setIN(BasicBlock blk, Env new_in) {
+	protected void setIN(BasicBlock blk, HashSet<Integer> new_in) {
 		// Check if new 'in' set is different from existing 'in' set.
-		Env in = getIN(blk);
+		HashSet<Integer> in = getIN(blk);
 		if (!in.equals(new_in)) {
 			// Use logic OR operator to combine the result of 'isChanged' flag.
 			this.isChanged |= true;
@@ -172,8 +171,8 @@ public class LiveVariables {
 	 * @param block
 	 * @param new_out
 	 */
-	protected void setOUT(BasicBlock blk, Env new_out) {
-		Env out = getOUT(blk);
+	protected void setOUT(BasicBlock blk, HashSet<Integer> new_out) {
+		HashSet<Integer> out = getOUT(blk);
 		if (!out.equals(new_out)) {
 			this.isChanged |= true;
 			outSet.put(blk, new_out);
@@ -186,7 +185,7 @@ public class LiveVariables {
 	 * @param block
 	 * @return
 	 */
-	public Env getIN(BasicBlock block) {
+	public HashSet<Integer> getIN(BasicBlock block) {
 		return inSet.get(block);
 	}
 
@@ -196,7 +195,7 @@ public class LiveVariables {
 	 * @param block
 	 * @return
 	 */
-	public Env getOUT(BasicBlock block) {
+	public HashSet<Integer> getOUT(BasicBlock block) {
 		return outSet.get(block);
 	}		
 
@@ -205,14 +204,14 @@ public class LiveVariables {
 	 * 
 	 * @param set
 	 */
-	public Env computeOut(BasicBlock block) {
+	public HashSet<Integer> computeOut(BasicBlock block) {
 		// Check if the block is not exit block.
-		Env out = getOUT(block);
+		HashSet<Integer> out = getOUT(block);
 		// Check if block has the children.
 		if(!block.isLeaf()){
 			// Take the union of child blocks' in set.
 			for (BasicBlock child : block.getChildNodes()) {
-				Env in = getIN(child);
+				HashSet<Integer> in = getIN(child);
 				out.addAll(in);
 			}
 			setOUT(block, out);

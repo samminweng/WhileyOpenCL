@@ -1,6 +1,7 @@
 package wyopcl.translator.copy;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import wybs.lang.Builder;
@@ -14,7 +15,7 @@ import wyopcl.translator.ReadWriteAnalyzer;
 import wyopcl.translator.ReturnAnalyzer;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
-import wyopcl.translator.copy.LiveVariablesAnalysis.Env;
+
 
 /**
  * Analyze the alias in the WyIL code to find all the necessary array copies and eliminate un-necessary copies.
@@ -54,7 +55,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 *            the hash map, which maps register to the variable name.
 	 * @return
 	 */
-	private String getLiveVariables(Env env, FunctionOrMethod function) {
+	private String getLiveVariables(HashSet<Integer> env, FunctionOrMethod function) {
 		String str = "";
 		Boolean isFirst = true;
 		Iterator<Integer> iterator = env.iterator();
@@ -142,7 +143,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		BasicBlock blk = getBlockbyCode(f, code);// Get basic block that
 													// contains the given code.
 		if (blk != null) {
-			Env outSet = getLiveness(f).getOUT(blk);
+			HashSet<Integer> outSet = getLiveness(f).getOUT(blk);
 			isLive = outSet.contains(reg);
 		}
 		return isLive;

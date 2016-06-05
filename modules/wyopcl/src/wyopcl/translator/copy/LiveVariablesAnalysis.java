@@ -41,17 +41,17 @@ import wyil.util.dfa.BackwardFlowAnalysis;
  * @author David J. Pearce, 2011
  *
  */
-public class LiveVariablesAnalysis extends BackwardFlowAnalysis<LiveVariablesAnalysis.Env>{
+public class LiveVariablesAnalysis extends BackwardFlowAnalysis<HashSet<Integer>>{
 
 	public LiveVariablesAnalysis(Builder builder) {
 
 	}
 	
 	@Override
-	public Env propagate(CodeBlock.Index index, Code code, Env environment) {
+	public HashSet<Integer> propagate(CodeBlock.Index index, Code code, HashSet<Integer> environment) {
 		//rewrites.put(index,null);
 		boolean isLive = true;
-		environment = (Env) environment.clone();
+		environment = (HashSet<Integer>) environment.clone();
 
 		if (code instanceof Code.AbstractBytecode) {
 			Code.AbstractBytecode aa = (Code.AbstractBytecode) code;
@@ -91,42 +91,39 @@ public class LiveVariablesAnalysis extends BackwardFlowAnalysis<LiveVariablesAna
 	}
 
 	@Override
-	protected Env propagate(Index index, If ifgoto, Env trueStore, Env falseStore) {
+	protected HashSet<Integer> propagate(Index index, If ifgoto, HashSet<Integer> trueStore,
+			HashSet<Integer> falseStore) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	protected Env propagate(Index index, IfIs iftype, Env trueStore, Env falseStore) {
+	protected HashSet<Integer> propagate(Index index, IfIs iftype, HashSet<Integer> trueStore,
+			HashSet<Integer> falseStore) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	protected Env propagate(Index index, Switch sw, List<Env> stores, Env defStore) {
+	protected HashSet<Integer> propagate(Index index, Switch sw, List<HashSet<Integer>> stores,
+			HashSet<Integer> defStore) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	protected Env propagate(Index index, Loop code, Env store, List<Pair<Type, String>> handlers) {
+	protected HashSet<Integer> propagate(Index index, Loop code, HashSet<Integer> store,
+			List<Pair<Type, String>> handlers) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	protected Env propagate(Type handler, Env normalStore, Env exceptionStore) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
-	public static final class Env extends HashSet<Integer> {
-		public Env() {
-			super();
-		}
 
-		public Env(Env env) {
-			super(env);
-		}
+	@Override
+	protected HashSet<Integer> propagate(Type handler, HashSet<Integer> normalStore, HashSet<Integer> exceptionStore) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
 }
