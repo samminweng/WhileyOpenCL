@@ -95,7 +95,7 @@ public abstract class Analyzer {
 	 * @param type
 	 * @return
 	 */
-	public FunctionOrMethod getFunction(String name, Type.FunctionOrMethod type) {
+	private FunctionOrMethod getFunction(String name, Type.FunctionOrMethod type) {
 		return this.module.functionOrMethod(name, type);
 	}
 
@@ -332,7 +332,12 @@ public abstract class Analyzer {
 		// Set next_blk to be the current block.
 		graph.setCurrentBlock(blk);
 	}
-
+	
+	/**
+	 * Adds an invariant code to the current block
+	 * @param code
+	 * @param function
+	 */
 	private void buildCFG(Invariant code, FunctionOrMethod function) {
 		// Add the invariant to the current block.
 		CFGraph graph = getCFGraph(function);

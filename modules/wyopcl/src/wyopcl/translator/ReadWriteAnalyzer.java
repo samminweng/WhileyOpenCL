@@ -43,6 +43,26 @@ public class ReadWriteAnalyzer extends Analyzer{
 		stores = new HashMap<FunctionOrMethod, HashSet<Integer>>();
 	}
 
+	/**
+	 * Adds 'register' to the readwrite set.
+	 * 
+	 * Due to the copy is removed, lhs and rhs variables are aliased together, 
+	 * thus rhs register is added to readwrite set.
+	 * 
+	 * @param isCopyAvoided the copy is removed (true) or not (false)
+	 * @param register 
+	 * @param function
+	 */
+	public void updateSet(boolean isCopyAvoided, int register, FunctionOrMethod function){
+		if(isCopyAvoided){
+			// Adds register to readwrite set.
+			if(!stores.containsKey(function)){
+				stores.put(function, new HashSet<Integer>());
+			}
+			HashSet<Integer> store = stores.get(function);
+			store.add(register);
+		}
+	}
 	
 
 	/**
@@ -152,12 +172,12 @@ public class ReadWriteAnalyzer extends Analyzer{
 		// Compute the readwrite set for the give node
 		String name = (String)currentNode.getUserObject();
 		FunctionOrMethod function = (FunctionOrMethod) this.getFunction(name);
-
-		if(function != null){
-			HashSet<Integer> store;
-			if (!stores.containsKey(function)) {
-				stores.put(function, new HashSet<Integer>());
-			}
+		HashSet<Integer> store;
+		if (!stores.containsKey(function)) {
+			stores.put(function, new HashSet<Integer>());
+		}
+		
+		if(function != null){			
 			// Store read-write registers
 			store = stores.get(function);
 			// Go through each bytecode and add lhs register to read-write set

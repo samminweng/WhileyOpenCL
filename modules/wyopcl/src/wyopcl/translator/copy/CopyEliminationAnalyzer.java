@@ -16,7 +16,6 @@ import wyopcl.translator.ReturnAnalyzer;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 
-
 /**
  * Analyze the alias in the WyIL code to find all the necessary array copies and eliminate un-necessary copies.
  * 
@@ -38,10 +37,8 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		super(config);
 		this.readwriteAnalyzer = new ReadWriteAnalyzer(config);
 		this.returnAnalyzer = new ReturnAnalyzer(config);
-		this.liveAnalyzer = new LiveVariablesAnalysis(config);		
+		this.liveAnalyzer = new LiveVariablesAnalysis(config);
 	}
-
-	
 
 	/**
 	 * Applies live variable analysis on each basic block.
@@ -57,7 +54,6 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		this.liveAnalyzer.apply(module);
 	}
 
-	
 	/**
 	 * Determines whether to make a copy of array by checking liveness information or read-only property.
 	 * 
@@ -102,7 +98,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 * 
 	 * 
 	 * 
-	 * @param reg
+	 * @param register
 	 *            the register of array variable
 	 * @param code
 	 *            the byte-code of function call.
@@ -111,55 +107,65 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 * @return ture if the copy is un-needed and can be avoid. Otherwise, return false.
 	 * 
 	 */
-	public boolean isCopyEliminated(int reg, Code code, FunctionOrMethod f) {
-		boolean isLive = this.liveAnalyzer.isLive(reg, code, f);
+	public boolean isCopyEliminated(int register, Code code, FunctionOrMethod function) {
+
+		boolean isCopyAvoided = true; // The copy is avoided
+		boolean isLive = this.liveAnalyzer.isLive(register, code, function);
 
 		// If the variable is not alive, then the copies are not needed.
 		if (!isLive) {
-			return true;
+			isCopyAvoided = true;
 		} else {
+			// If the variable is alive,
 			if (code instanceof Codes.Invoke) {
-				// Check the array is read-only. By default, the array is assumed
-				// not read-only but modified.
+				// For a function call, we need to check 1) readwrite 2) returned
 				boolean isReadOnly = false;
 				boolean isReturned = false;
 				Codes.Invoke invoked = (Codes.Invoke) code;
 				FunctionOrMethod invoked_function = this.getFunction(invoked.name.name());
 				if (invoked_function != null) {
 					// Map the register to function argument.
-					int argument = this.mapFunctionArgument(reg, invoked);
+					int argument = this.mapFunctionArgument(register, invoked);
 
 					// Check if parameter is modified inside 'invoked_function'.
 					isReadOnly = !readwriteAnalyzer.isMutated(argument, invoked_function);
 					// Check if argument is returned by 'invoked_function'
 					isReturned = returnAnalyzer.isReturned(argument, invoked_function);
-					// The 'var' is mutated and returned
+					// The 'var' is mutated and returned, and the copy is needed.
 					if (!isReadOnly) {
 						if (isReturned) {
-							return false;
+							isCopyAvoided = false;							
 						} else {
-							return false;
+							isCopyAvoided = false;							
 						}
 					} else {
-						// The 'var' is not mutated
+						// The 'var' is not mutated, and the copy is not needed.
 						if (isReturned) {
-							return true;
+							isCopyAvoided = true;							
 						} else {
-							return true;
+							isCopyAvoided = true;							
 						}
 					}
 				}
 			} else if (code instanceof Codes.Update) {
-				// The copy is needed as the variable is alive after this code.
-				return false;
+				// The copy is needed
+				isCopyAvoided = false;				
 			} else if (code instanceof Codes.Assign) {
-				// The copy is not needed due to the register becomes dead (not alive)
-				return false;
+				// The copy is needed
+				isCopyAvoided = false;				
 			} else if (code instanceof Codes.FieldLoad) {
-				// The copy is not needed due to the
-				return false;
+				// The copy is needed
+				isCopyAvoided = false;				
+			}else{
+				throw new RuntimeException("Not implemeneted");
 			}
-			throw new RuntimeException("Not implemeneted");
 		}
+		// Based on the copy analysis results, update the readwrite set.
+		this.readwriteAnalyzer.updateSet(isCopyAvoided, register, function);
+		
+		return isCopyAvoided;
+		
 	}
+	
+	
 }
