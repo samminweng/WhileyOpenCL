@@ -29,7 +29,54 @@ public class ReturnAnalyzer extends Analyzer {
 		super(config);
 		this.stores = new HashMap<FunctionOrMethod, HashSet<Integer>>();
 	}
+	
 
+	/**
+	 * Update the return set.
+	 * 
+	 * If the copy of the register is avoided, then the register is aliased
+	 * to lhs variable. And if the lhs variable is a return register, then
+	 * the register would be a return value.
+	 * 
+	 * 
+	 * @param isCopyAvoided
+	 * @param register
+	 * @param function
+	 */
+	public void updateSet(boolean isCopyAvoided, int register, Code code, FunctionOrMethod function){
+		if(isCopyAvoided){
+			// Adds register to return set.
+			if(!stores.containsKey(function)){
+				stores.put(function, new HashSet<Integer>());
+			}
+			
+			HashSet<Integer> store = stores.get(function);
+			int lhs = -1;
+			if(code instanceof Codes.Assign){
+				lhs = ((Codes.Assign)code).target(0);
+			}else if (code instanceof Codes.FieldLoad){
+				lhs = ((Codes.FieldLoad)code).target(0);
+			}else if (code instanceof Codes.Update){
+				lhs = ((Codes.Update)code).target(0);
+			}else if (code instanceof Codes.Invoke){				
+				Codes.Invoke invoke = (Codes.Invoke)code;
+				// Check if there is a return value in invoke bytecode
+				if(invoke.targets().length>0){
+					lhs = ((Codes.Invoke)code).target(0);
+				}
+			}else if (code instanceof Codes.IndexOf){
+				lhs = ((Codes.IndexOf)code).target(0);
+			}
+			
+			// Check if lhs variable is a return register
+			if(lhs >=0 && store.contains(lhs)){
+				store.add(register);
+			}
+			
+		}
+	}
+	
+	
 	/**
 	 * Perform the post-order traversal to visit all nodes of a tree reference:
 	 * http://www.tutorialspoint.com/data_structures_algorithms/tree_traversal.htm

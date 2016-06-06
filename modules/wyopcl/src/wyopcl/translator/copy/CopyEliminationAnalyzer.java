@@ -161,8 +161,8 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			}
 		}
 		// Based on the copy analysis results, update the readwrite set.
-		this.readwriteAnalyzer.updateSet(isCopyAvoided, register, function);
-		
+		this.readwriteAnalyzer.updateSet(isCopyAvoided, register, code, function);
+		this.returnAnalyzer.updateSet(isCopyAvoided, register, code, function);
 		return isCopyAvoided;
 		
 	}

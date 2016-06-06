@@ -53,7 +53,7 @@ public class ReadWriteAnalyzer extends Analyzer{
 	 * @param register 
 	 * @param function
 	 */
-	public void updateSet(boolean isCopyAvoided, int register, FunctionOrMethod function){
+	public void updateSet(boolean isCopyAvoided, int register, Code code, FunctionOrMethod function){
 		if(isCopyAvoided){
 			// Adds register to readwrite set.
 			if(!stores.containsKey(function)){
