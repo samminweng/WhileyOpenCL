@@ -87,7 +87,7 @@ Matrix* multiply(Matrix* A, Matrix* B){
 	//arraygen %12 = [10; 11] : int[][]
 	_GEN_2DARRAY(_12, _11, _10);
 	//assign %3 = %12  : int[][]
-	_2DARRAY_UPDATE(C_data, _12);
+	_2DARRAY_COPY(C_data, _12);
 	//const %13 = 0 : int
 	_13 = 0;
 	//assign %4 = %13  : int
@@ -123,13 +123,13 @@ Matrix* multiply(Matrix* A, Matrix* B){
 				//ifge %7, %19 goto blklab17 : int
 				if(k>=_19){goto blklab17;}
 				//fieldload %20 = %0 data : {int[][] data,int height,int width}
-				_2DARRAY_COPY(_20, A->data);
+				_2DARRAY_UPDATE(_20, A->data);
 				//indexof %21 = %20, %4 : int[][]
 				_21=_20[i];
 				//indexof %22 = %21, %7 : int[]
 				_22=_21[k];
 				//fieldload %23 = %1 data : {int[][] data,int height,int width}
-				_2DARRAY_UPDATE(_23, B->data);
+				_2DARRAY_COPY(_23, B->data);
 				//indexof %24 = %23, %7 : int[][]
 				_24=_23[k];
 				//indexof %25 = %24, %5 : int[]
@@ -180,7 +180,7 @@ blklab13:;
 	//fieldload %36 = %0 height : {int[][] data,int height,int width}
 	_36 = A->height;
 	//invoke (%34) = (%35, %36, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
-	_34 = matrix(_35, _36, _2DARRAY_PARAM(C_data));
+	_34 = matrix(_35, _36, _2DARRAY_COPY_PARAM(C_data));
 	//return %34
 	return _34;
 	//return
@@ -229,7 +229,7 @@ void printMat(FILE* sys, Matrix* A){
 			//fieldload %8 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %9 = %8 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//fieldload %10 = %1 data : {int[][] data,int height,int width}
-			_2DARRAY_COPY(_10, A->data);
+			_2DARRAY_UPDATE(_10, A->data);
 			//indexof %11 = %10, %2 : int[][]
 			_11=_10[i];
 			//indexof %12 = %11, %3 : int[]
@@ -297,7 +297,7 @@ Matrix* init(long long height, long long width){
 	//arraygen %8 = [7; 0] : int[][]
 	_GEN_2DARRAY(_8, height, _7);
 	//assign %3 = %8  : int[][]
-	_2DARRAY_UPDATE(rows, _8);
+	_2DARRAY_COPY(rows, _8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %4 = %9  : int
@@ -339,7 +339,7 @@ blklab24:;
 //.blklab23
 blklab23:;
 	//invoke (%15) = (%1, %0, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
-	_15 = matrix(width, height, _2DARRAY_PARAM(rows));
+	_15 = matrix(width, height, _2DARRAY_COPY_PARAM(rows));
 	//return %15
 	return _15;
 	//return
@@ -389,19 +389,19 @@ int main(int argc, char** args){
 	//invoke (%6) = (%1, %1) MatrixMult:init : function(MatrixMult:nat,MatrixMult:nat)->(MatrixMult:Matrix)
 	_6 = init(max, max);
 	//assign %2 = %6  : {int[][] data,int height,int width}
-	A = _6;
+	A = copy_Matrix(_6);
 	//invoke (%7) = (%1, %1) MatrixMult:init : function(MatrixMult:nat,MatrixMult:nat)->(MatrixMult:Matrix)
 	_7 = init(max, max);
 	//assign %3 = %7  : {int[][] data,int height,int width}
-	B = _7;
+	B = copy_Matrix(_7);
 	//invoke (%8) = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
 	_8 = multiply(_STRUCT_PARAM(A), _STRUCT_PARAM(B));
 	//assign %4 = %8  : {int[][] data,int height,int width}
-	C = _8;
+	C = copy_Matrix(_8);
 	//assert
 	{
 		//fieldload %9 = %2 data : {int[][] data,int height,int width}
-		_2DARRAY_COPY(_9, A->data);
+		_2DARRAY_UPDATE(_9, A->data);
 		//const %10 = 1 : int
 		_10 = 1;
 		//sub %11 = %1, %10 : int
@@ -430,7 +430,7 @@ blklab27:;
 	//assert
 	{
 		//fieldload %18 = %3 data : {int[][] data,int height,int width}
-		_2DARRAY_COPY(_18, B->data);
+		_2DARRAY_UPDATE(_18, B->data);
 		//const %19 = 1 : int
 		_19 = 1;
 		//sub %20 = %1, %19 : int
@@ -459,7 +459,7 @@ blklab28:;
 	//assert
 	{
 		//fieldload %27 = %4 data : {int[][] data,int height,int width}
-		_2DARRAY_COPY(_27, C->data);
+		_2DARRAY_UPDATE(_27, C->data);
 		//const %28 = 1 : int
 		_28 = 1;
 		//sub %29 = %1, %28 : int

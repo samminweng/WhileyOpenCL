@@ -67,7 +67,7 @@ public class LiveVariablesAnalysis extends Analyzer {
 	 * @return
 	 */
 	public boolean isLive(int reg, Code code, FunctionOrMethod f) {
-		boolean isLive = true;
+		boolean isLive = true; // Assume the reg is alive conservatively
 
 		// Check the array is live.
 		BasicBlock blk = getBlockbyCode(f, code);// Get basic block that

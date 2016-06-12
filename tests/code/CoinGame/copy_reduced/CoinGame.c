@@ -509,12 +509,12 @@ int main(int argc, char** args){
 	//arraygen %7 = [5; 6] : int[]
 	_GEN_1DARRAY(_7, _6, _5);
 	//assign %2 = %7  : int[]
-	_1DARRAY_UPDATE(moves, _7);
+	_1DARRAY_COPY(moves, _7);
 	//invoke (%8) = (%2, %1) CoinGame:findMoves : function(int[],int)->(int[])
 	_1DARRAY_SIZE(_8, moves);
 	_8 = findMoves(_1DARRAY_PARAM(moves), n);
 	//assign %2 = %8  : int[]
-	_1DARRAY_UPDATE(moves, _8);
+	_1DARRAY_COPY(moves, _8);
 	//invoke () = (%0, %2, %1) CoinGame:play : method(whiley/lang/System:Console,int[],int)->()
 play(stdout, _1DARRAY_PARAM(moves), n);
 	//const %9 = 1 : int

@@ -202,18 +202,16 @@ int main(int argc, char** args){
 	_ADD_OWNERSHIP(_7);
 	//assign %2 = %7  : null|{int move,int[] pieces}
 	_FREE_STRUCT(b1, Board);
-	b1 = _7;
-	_TRANSFER_OWNERSHIP(b1, _7);
-	_REMOVE_OWNERSHIP(_7);
+	b1 = copy_Board(_7);
+	_ADD_OWNERSHIP(b1);
 	//invoke (%8) = () newTicTacToe:EmptyBoard : function()->(newTicTacToe:Board)
 	_FREE_STRUCT(_8, Board);
 	_8 = EmptyBoard();
 	_ADD_OWNERSHIP(_8);
 	//assign %3 = %8  : null|{int move,int[] pieces}
 	_FREE_STRUCT(b2, Board);
-	b2 = _8;
-	_TRANSFER_OWNERSHIP(b2, _8);
-	_REMOVE_OWNERSHIP(_8);
+	b2 = copy_Board(_8);
+	_ADD_OWNERSHIP(b2);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %4 = %9  : int
@@ -279,9 +277,8 @@ blklab16:;
 		b1->move = _22;
 		//assign %3 = %2  : {int move,int[] pieces}
 		_FREE_STRUCT(b2, Board);
-		b2 = b1;
-		_TRANSFER_OWNERSHIP(b2, b1);
-		_REMOVE_OWNERSHIP(b1);
+		b2 = copy_Board(b1);
+		_ADD_OWNERSHIP(b2);
 		//const %23 = null : null
 		_23 = NULL;
 		//assign %2 = %23  : null
@@ -317,9 +314,8 @@ blklab19:;
 		b2->move = _30;
 		//assign %2 = %3  : {int move,int[] pieces}
 		_FREE_STRUCT(b1, Board);
-		b1 = b2;
-		_TRANSFER_OWNERSHIP(b1, b2);
-		_REMOVE_OWNERSHIP(b2);
+		b1 = copy_Board(b2);
+		_ADD_OWNERSHIP(b1);
 		//const %31 = null : null
 		_31 = NULL;
 		//assign %3 = %31  : null
@@ -379,8 +375,8 @@ blklab23:;
 		if(b2 == NULL) { goto blklab26;}
 		//fieldload %36 = %3 pieces : {int move,int[] pieces}
 		_FREE(_36);
-		_1DARRAY_COPY(_36, b2->pieces);
-		_ADD_OWNERSHIP(_36);
+		_1DARRAY_UPDATE(_36, b2->pieces);
+		_REMOVE_OWNERSHIP(_36);
 		//const %37 = 1 : int
 		_37 = 1;
 		//const %38 = 2 : int

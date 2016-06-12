@@ -499,9 +499,8 @@ blklab17:;
 			_ADD_OWNERSHIP(_41);
 			//assign %0 = %41  : int[]
 			_FREE(moves);
-			_1DARRAY_UPDATE(moves, _41);
-			_TRANSFER_OWNERSHIP(moves, _41);
-			_REMOVE_OWNERSHIP(_41);
+			_1DARRAY_COPY(moves, _41);
+			_ADD_OWNERSHIP(moves);
 			//const %42 = 1 : int
 			_42 = 1;
 			//add %43 = %4, %42 : int
@@ -571,9 +570,8 @@ int main(int argc, char** args){
 	_ADD_OWNERSHIP(_7);
 	//assign %2 = %7  : int[]
 	_FREE(moves);
-	_1DARRAY_UPDATE(moves, _7);
-	_TRANSFER_OWNERSHIP(moves, _7);
-	_REMOVE_OWNERSHIP(_7);
+	_1DARRAY_COPY(moves, _7);
+	_ADD_OWNERSHIP(moves);
 	//invoke (%8) = (%2, %1) CoinGame4:findMoves : function(int[],int)->(int[])
 	_FREE(_8);
 	_REMOVE_OWNERSHIP(moves);
@@ -582,9 +580,8 @@ int main(int argc, char** args){
 	_ADD_OWNERSHIP(_8);
 	//assign %2 = %8  : int[]
 	_FREE(moves);
-	_1DARRAY_UPDATE(moves, _8);
-	_TRANSFER_OWNERSHIP(moves, _8);
-	_REMOVE_OWNERSHIP(_8);
+	_1DARRAY_COPY(moves, _8);
+	_ADD_OWNERSHIP(moves);
 	//invoke () = (%0, %2, %1) CoinGame4:play : method(whiley/lang/System:Console,int[],int)->()
 play(stdout, _1DARRAY_PARAM(moves), false, n);
 	//const %9 = 1 : int

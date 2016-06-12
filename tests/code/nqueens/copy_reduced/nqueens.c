@@ -199,7 +199,7 @@ blklab14:;
 			//indexof %19 = %0, %7 : {int c,int r}[]
 			_19=queens[i];
 			//assign %8 = %19  : {int c,int r}
-			p = _19;
+			p = copy_POS(_19);
 			//const %20 = true : bool
 			_20 = true;
 			//ifeq %6, %20 goto blklab20 : bool
@@ -209,7 +209,7 @@ blklab14:;
 //.blklab20
 blklab20:;
 			//invoke (%21) = (%8, %1, %5) nqueens:conflict : function(nqueens:POS,int,int)->(bool)
-			_21 = conflict(_STRUCT_PARAM(p), n, col);
+			_21 = conflict(_STRUCT_COPY_PARAM(p, POS), n, col);
 			//const %22 = true : bool
 			_22 = true;
 			//ifeq %21, %22 goto blklab21 : bool

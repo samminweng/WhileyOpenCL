@@ -44,7 +44,7 @@ blklab0:;
 	_1DARRAY_SIZE(_8, ls);
 	_8 = fibonacci(_1DARRAY_PARAM(ls), _10);
 	//assign %0 = %8  : int[]
-	_1DARRAY_UPDATE(ls, _8);
+	_1DARRAY_COPY(ls, _8);
 	//const %11 = 1 : int
 	_11 = 1;
 	//sub %12 = %1, %11 : int
@@ -100,7 +100,7 @@ int main(int argc, char** args){
 	//arraygen %5 = [4; 1] : int[]
 	_GEN_1DARRAY(_5, max, _4);
 	//assign %2 = %5  : int[]
-	_1DARRAY_UPDATE(arr, _5);
+	_1DARRAY_COPY(arr, _5);
 	//const %7 = 1 : int
 	_7 = 1;
 	//sub %8 = %1, %7 : int
@@ -109,7 +109,7 @@ int main(int argc, char** args){
 	_1DARRAY_SIZE(_6, arr);
 	_6 = fibonacci(_1DARRAY_PARAM(arr), _8);
 	//assign %2 = %6  : int[]
-	_1DARRAY_UPDATE(arr, _6);
+	_1DARRAY_COPY(arr, _6);
 	//assert
 	{
 		//const %9 = 0 : int

@@ -178,7 +178,7 @@ int main(int argc, char** args){
 	//arraygen %13 = [11; 12] : int[]
 	_GEN_1DARRAY(_13, _12, _11);
 	//assign %2 = %13  : int[]
-	_1DARRAY_UPDATE(gcds, _13);
+	_1DARRAY_COPY(gcds, _13);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %3 = %14  : int

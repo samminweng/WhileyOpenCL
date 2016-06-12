@@ -1,9 +1,5 @@
 package wyopcl.translator.copy;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import wybs.lang.Builder;
 import wyil.lang.Code;
 import wyil.lang.Codes;
@@ -13,8 +9,6 @@ import wyopcl.Configuration;
 import wyopcl.translator.Analyzer;
 import wyopcl.translator.ReadWriteAnalyzer;
 import wyopcl.translator.ReturnAnalyzer;
-import wyopcl.translator.bound.BasicBlock;
-import wyopcl.translator.bound.BasicBlock.BlockType;
 
 /**
  * Analyze the alias in the WyIL code to find all the necessary array copies and eliminate un-necessary copies.
@@ -55,47 +49,14 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Determines whether to make a copy of array by checking liveness information or read-only property.
+	 * Determines whether to make a copy of array using liveness information and mutability property.
+	 * Rules are as below:
 	 * 
-	 * If the variable is live, then the copy is necessary. Otherwise, the register can be overwritten safely.
-	 * 
-	 * The rules of determining the copy of
-	 * <table>
-	 * <thead>
-	 * <tr>
-	 * <th colspan="2">f mutates b?</th>
-	 * <th>F</th>
-	 * <th>F</th>
-	 * <th>T</th>
-	 * <th>T</th>
-	 * </tr>
-	 * <tr>
-	 * <th colspan="2">f returns b?</th>
-	 * <th>F</th>
-	 * <th>T</th>
-	 * <th>T</th>
-	 * <th>F</th>
-	 * </tr>
-	 * </thead> <tbody>
-	 * <tr>
-	 * <td>b is live?</td>
-	 * <td>T</td>
-	 * <td>No copy</td>
-	 * <td>No copy</td>
-	 * <td>Copy</td>
-	 * <td>Copy</td>
-	 * </tr>
-	 * <tr>
-	 * <td>b is live?</td>
-	 * <td>F</td>
-	 * <td>No copy</td>
-	 * <td>No copy</td>
-	 * <td>No copy</td>
-	 * <td>No copy</td>
-	 * </tr>
-	 * </tbody>
-	 * </table>
-	 * 
+	 * f mutates b?	   |F	   |F		|T		|T
+	 * f returns b?    |F	   |T		|T		|F
+	 * ----------------------------------------------
+	 * b is live?   T  |No Copy|No Copy |Copy	|Copy
+	 * 				F  |No Copy|No Copy |No Copy|No Copy
 	 * 
 	 * 
 	 * @param register
@@ -108,64 +69,38 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 * 
 	 */
 	public boolean isCopyEliminated(int register, Code code, FunctionOrMethod function) {
-
-		boolean isCopyAvoided = true; // The copy is avoided
+		boolean isCopyAvoided = false; // The copy is needed
 		boolean isLive = this.liveAnalyzer.isLive(register, code, function);
 
-		// If the variable is not alive, then the copies are not needed.
-		if (!isLive) {
+		if (isLive) {
+			// If the variable is alive, then the copy is avoided.
 			isCopyAvoided = true;
 		} else {
 			// If the variable is alive,
 			if (code instanceof Codes.Invoke) {
-				// For a function call, we need to check 1) readwrite 2) returned
-				boolean isReadOnly = false;
-				boolean isReturned = false;
-				Codes.Invoke invoked = (Codes.Invoke) code;
-				FunctionOrMethod invoked_function = this.getFunction(invoked.name.name());
+				// For a function call
+				Codes.Invoke functioncall = (Codes.Invoke) code;
+				FunctionOrMethod invoked_function = this.getFunction(functioncall.name.name());
 				if (invoked_function != null) {
 					// Map the register to function argument.
-					int argument = this.mapFunctionArgument(register, invoked);
-
+					int argument = this.mapFunctionArgument(register, functioncall);
 					// Check if parameter is modified inside 'invoked_function'.
-					isReadOnly = !readwriteAnalyzer.isMutated(argument, invoked_function);
-					// Check if argument is returned by 'invoked_function'
-					isReturned = returnAnalyzer.isReturned(argument, invoked_function);
-					// The 'var' is mutated and returned, and the copy is needed.
-					if (!isReadOnly) {
-						if (isReturned) {
-							isCopyAvoided = false;							
-						} else {
-							isCopyAvoided = false;							
-						}
-					} else {
-						// The 'var' is not mutated, and the copy is not needed.
-						if (isReturned) {
-							isCopyAvoided = true;							
-						} else {
-							isCopyAvoided = true;							
-						}
+					boolean isMutated = !readwriteAnalyzer.isMutated(argument, invoked_function);
+					// 'r' is NOT mutated inside invoked function
+					if (!isMutated) {
+						isCopyAvoided = true;
 					}
 				}
-			} else if (code instanceof Codes.Update) {
-				// The copy is needed
-				isCopyAvoided = false;				
-			} else if (code instanceof Codes.Assign) {
-				// The copy is needed
-				isCopyAvoided = false;				
-			} else if (code instanceof Codes.FieldLoad) {
-				// The copy is needed
-				isCopyAvoided = false;				
-			}else{
-				throw new RuntimeException("Not implemeneted");
 			}
 		}
-		// Based on the copy analysis results, update the readwrite set.
-		this.readwriteAnalyzer.updateSet(isCopyAvoided, register, code, function);
-		this.returnAnalyzer.updateSet(isCopyAvoided, register, code, function);
+
+		if (isCopyAvoided) {
+			// Based on the copy analysis results, update the readwrite set.
+			this.readwriteAnalyzer.updateSet(isCopyAvoided, register, code, function);
+			this.returnAnalyzer.updateSet(isCopyAvoided, register, code, function);
+		}
+
 		return isCopyAvoided;
-		
 	}
-	
-	
+
 }

@@ -34,9 +34,8 @@ long long* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_OWNERSHIP_PARAM(ls)){
 	_ADD_OWNERSHIP(_8);
 	//assign %3 = %8  : int[]
 	_FREE(r);
-	_1DARRAY_UPDATE(r, _8);
-	_TRANSFER_OWNERSHIP(r, _8);
-	_REMOVE_OWNERSHIP(_8);
+	_1DARRAY_COPY(r, _8);
+	_ADD_OWNERSHIP(r);
 	//loop (%2, %3, %4, %9, %10, %11, %12, %13, %14, %15, %16, %17)
 	while(true){
 		//invariant
@@ -153,13 +152,12 @@ int main(int argc, char** args){
 	//invoke (%5) = (%11) reverse:reverse : function(int[])->(int[])
 	_FREE(_5);
 	_1DARRAY_SIZE(_5, _11);
-	_5 = reverse(_1DARRAY_PARAM(_11), false);
+	_5 = reverse(_1DARRAY_COPY_PARAM(_11), false);
 	_ADD_OWNERSHIP(_5);
 	//assign %1 = %5  : int[]
 	_FREE(rs);
-	_1DARRAY_UPDATE(rs, _5);
-	_TRANSFER_OWNERSHIP(rs, _5);
-	_REMOVE_OWNERSHIP(_5);
+	_1DARRAY_COPY(rs, _5);
+	_ADD_OWNERSHIP(rs);
 	//assert
 	{
 		//const %12 = 5 : int
@@ -206,9 +204,8 @@ blklab4:;
 	_ADD_OWNERSHIP(_23);
 	//assign %4 = %23  : int[]
 	_FREE(arr);
-	_1DARRAY_UPDATE(arr, _23);
-	_TRANSFER_OWNERSHIP(arr, _23);
-	_REMOVE_OWNERSHIP(_23);
+	_1DARRAY_COPY(arr, _23);
+	_ADD_OWNERSHIP(arr);
 	//loop (%3, %4, %24, %25, %26)
 	while(true){
 		//ifgt %3, %2 goto blklab5 : int
@@ -231,13 +228,12 @@ blklab5:;
 	//invoke (%27) = (%4) reverse:reverse : function(int[])->(int[])
 	_FREE(_27);
 	_1DARRAY_SIZE(_27, arr);
-	_27 = reverse(_1DARRAY_PARAM(arr), false);
+	_27 = reverse(_1DARRAY_COPY_PARAM(arr), false);
 	_ADD_OWNERSHIP(_27);
 	//assign %4 = %27  : int[]
 	_FREE(arr);
-	_1DARRAY_UPDATE(arr, _27);
-	_TRANSFER_OWNERSHIP(arr, _27);
-	_REMOVE_OWNERSHIP(_27);
+	_1DARRAY_COPY(arr, _27);
+	_ADD_OWNERSHIP(arr);
 	//assert
 	{
 		//const %28 = 0 : int

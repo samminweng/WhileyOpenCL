@@ -107,9 +107,8 @@ Matrix* multiply(Matrix* A, _DECL_OWNERSHIP_PARAM(A), Matrix* B, _DECL_OWNERSHIP
 	_ADD_OWNERSHIP(_12);
 	//assign %3 = %12  : int[][]
 	_FREE2DArray(C_data);
-	_2DARRAY_UPDATE(C_data, _12);
-	_TRANSFER_OWNERSHIP(C_data, _12);
-	_REMOVE_OWNERSHIP(_12);
+	_2DARRAY_COPY(C_data, _12);
+	_ADD_OWNERSHIP(C_data);
 	//const %13 = 0 : int
 	_13 = 0;
 	//assign %4 = %13  : int
@@ -146,8 +145,8 @@ Matrix* multiply(Matrix* A, _DECL_OWNERSHIP_PARAM(A), Matrix* B, _DECL_OWNERSHIP
 				if(k>=_19){goto blklab17;}
 				//fieldload %20 = %0 data : {int[][] data,int height,int width}
 				_FREE2DArray(_20);
-				_2DARRAY_COPY(_20, A->data);
-				_ADD_OWNERSHIP(_20);
+				_2DARRAY_UPDATE(_20, A->data);
+				_REMOVE_OWNERSHIP(_20);
 				//indexof %21 = %20, %4 : int[][]
 				_21=_20[i];
 				_REMOVE_OWNERSHIP(_21);
@@ -155,8 +154,8 @@ Matrix* multiply(Matrix* A, _DECL_OWNERSHIP_PARAM(A), Matrix* B, _DECL_OWNERSHIP
 				_22=_21[k];
 				//fieldload %23 = %1 data : {int[][] data,int height,int width}
 				_FREE2DArray(_23);
-				_2DARRAY_UPDATE(_23, B->data);
-				_REMOVE_OWNERSHIP(_23);
+				_2DARRAY_COPY(_23, B->data);
+				_ADD_OWNERSHIP(_23);
 				//indexof %24 = %23, %7 : int[][]
 				_24=_23[k];
 				_REMOVE_OWNERSHIP(_24);
@@ -209,7 +208,7 @@ blklab13:;
 	_36 = A->height;
 	//invoke (%34) = (%35, %36, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
 	_FREE_STRUCT(_34, Matrix);
-	_34 = matrix(_35, _36, _2DARRAY_PARAM(C_data), false);
+	_34 = matrix(_35, _36, _2DARRAY_COPY_PARAM(C_data), false);
 	_ADD_OWNERSHIP(_34);
 	//return %34
 	_FREE_STRUCT(A, Matrix);
@@ -274,8 +273,8 @@ void printMat(FILE* sys, Matrix* A, _DECL_OWNERSHIP_PARAM(A)){
 			//fieldload %9 = %8 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//fieldload %10 = %1 data : {int[][] data,int height,int width}
 			_FREE2DArray(_10);
-			_2DARRAY_COPY(_10, A->data);
-			_ADD_OWNERSHIP(_10);
+			_2DARRAY_UPDATE(_10, A->data);
+			_REMOVE_OWNERSHIP(_10);
 			//indexof %11 = %10, %2 : int[][]
 			_11=_10[i];
 			_REMOVE_OWNERSHIP(_11);
@@ -363,9 +362,8 @@ Matrix* init(long long height, long long width){
 	_ADD_OWNERSHIP(_8);
 	//assign %3 = %8  : int[][]
 	_FREE2DArray(rows);
-	_2DARRAY_UPDATE(rows, _8);
-	_TRANSFER_OWNERSHIP(rows, _8);
-	_REMOVE_OWNERSHIP(_8);
+	_2DARRAY_COPY(rows, _8);
+	_ADD_OWNERSHIP(rows);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %4 = %9  : int
@@ -408,7 +406,7 @@ blklab24:;
 blklab23:;
 	//invoke (%15) = (%1, %0, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
 	_FREE_STRUCT(_15, Matrix);
-	_15 = matrix(width, height, _2DARRAY_PARAM(rows), false);
+	_15 = matrix(width, height, _2DARRAY_COPY_PARAM(rows), false);
 	_ADD_OWNERSHIP(_15);
 	//return %15
 	_FREE_STRUCT(r, Matrix);
@@ -479,33 +477,30 @@ int main(int argc, char** args){
 	_ADD_OWNERSHIP(_6);
 	//assign %2 = %6  : {int[][] data,int height,int width}
 	_FREE_STRUCT(A, Matrix);
-	A = _6;
-	_TRANSFER_OWNERSHIP(A, _6);
-	_REMOVE_OWNERSHIP(_6);
+	A = copy_Matrix(_6);
+	_ADD_OWNERSHIP(A);
 	//invoke (%7) = (%1, %1) MatrixMult:init : function(MatrixMult:nat,MatrixMult:nat)->(MatrixMult:Matrix)
 	_FREE_STRUCT(_7, Matrix);
 	_7 = init(max, max);
 	_ADD_OWNERSHIP(_7);
 	//assign %3 = %7  : {int[][] data,int height,int width}
 	_FREE_STRUCT(B, Matrix);
-	B = _7;
-	_TRANSFER_OWNERSHIP(B, _7);
-	_REMOVE_OWNERSHIP(_7);
+	B = copy_Matrix(_7);
+	_ADD_OWNERSHIP(B);
 	//invoke (%8) = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
 	_FREE_STRUCT(_8, Matrix);
 	_8 = multiply(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
 	_ADD_OWNERSHIP(_8);
 	//assign %4 = %8  : {int[][] data,int height,int width}
 	_FREE_STRUCT(C, Matrix);
-	C = _8;
-	_TRANSFER_OWNERSHIP(C, _8);
-	_REMOVE_OWNERSHIP(_8);
+	C = copy_Matrix(_8);
+	_ADD_OWNERSHIP(C);
 	//assert
 	{
 		//fieldload %9 = %2 data : {int[][] data,int height,int width}
 		_FREE2DArray(_9);
-		_2DARRAY_COPY(_9, A->data);
-		_ADD_OWNERSHIP(_9);
+		_2DARRAY_UPDATE(_9, A->data);
+		_REMOVE_OWNERSHIP(_9);
 		//const %10 = 1 : int
 		_10 = 1;
 		//sub %11 = %1, %10 : int
@@ -536,8 +531,8 @@ blklab27:;
 	{
 		//fieldload %18 = %3 data : {int[][] data,int height,int width}
 		_FREE2DArray(_18);
-		_2DARRAY_COPY(_18, B->data);
-		_ADD_OWNERSHIP(_18);
+		_2DARRAY_UPDATE(_18, B->data);
+		_REMOVE_OWNERSHIP(_18);
 		//const %19 = 1 : int
 		_19 = 1;
 		//sub %20 = %1, %19 : int
@@ -568,8 +563,8 @@ blklab28:;
 	{
 		//fieldload %27 = %4 data : {int[][] data,int height,int width}
 		_FREE2DArray(_27);
-		_2DARRAY_COPY(_27, C->data);
-		_ADD_OWNERSHIP(_27);
+		_2DARRAY_UPDATE(_27, C->data);
+		_REMOVE_OWNERSHIP(_27);
 		//const %28 = 1 : int
 		_28 = 1;
 		//sub %29 = %1, %28 : int
