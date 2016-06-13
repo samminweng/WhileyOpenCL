@@ -76,24 +76,6 @@ public class CFGraph {
 		}
 		return blk;
 		
-		/*BasicBlock blk = new BasicBlock(label, type);
-		// Check if the block exists
-		if (!blocks.contains(blk)) {
-			blocks.add(blk);
-			BasicBlock parent = parents.length > 0 ? parents[0] : null;
-			if (parent != null) {
-				parent.addChild(blk);
-			}
-			return blk;
-		} else {
-			for (BasicBlock block : blocks) {
-				if (blk.equals(block)) {
-					return block;
-				}
-			}
-		}
-		return null;
-		*/
 	}
 
 	/**

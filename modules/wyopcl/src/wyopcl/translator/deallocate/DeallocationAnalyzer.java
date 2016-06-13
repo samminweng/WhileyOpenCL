@@ -42,7 +42,15 @@ public class DeallocationAnalyzer extends Analyzer {
 		this.liveAnalyzer = new LiveVariablesAnalysis(config);
 	}
 
-	public String declareOwnershipVar(String indent, int register, FunctionOrMethod function, CodeStores stores) {
+	/**
+	 * Declare ownership flags
+	 * @param indent
+	 * @param register
+	 * @param function
+	 * @param stores
+	 * @return
+	 */
+	public String declareOwnershipFlag(String indent, int register, FunctionOrMethod function, CodeStores stores) {
 		Type type = stores.getRawType(register, function);
 		String var = stores.getVar(register, function);
 		// Declare ownership
@@ -264,7 +272,7 @@ public class DeallocationAnalyzer extends Analyzer {
 		String indent = stores.getIndent(function);
 		// Add or transfer out the parameters that do not have the copy
 		for (int register : code.operands()) {
-			Optional<HashMap<String, Boolean>> ownership = computeCallParameterOwnership(register, code, function,
+			Optional<HashMap<String, Boolean>> ownership = computeOwnership(register, code, function,
 					stores, copyAnalyzer);
 			ownership.ifPresent(o -> {
 				// Get caller ownership
@@ -339,75 +347,28 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * Return parameter ownership in the caller. If deallocation is enabled, then pass the ownership to a function. The
 	 * ownership value are based on based on the following rules, e.g. a function call 'a = f(b, b_own_f)',
 	 * 
-	 * <table>
-	 * <thead>
-	 * <tr>
-	 * <th colspan="2">f mutates b?</th>
-	 * <th>F</th>
-	 * <th>F</th>
-	 * <th>T</th>
-	 * <th>T</th>
-	 * </tr>
-	 * <tr>
-	 * <th colspan="2">f returns b?</th>
-	 * <th>F</th>
-	 * <th>T</th>
-	 * <th>T</th>
-	 * <th>F</th>
-	 * </tr>
-	 * </thead> <tbody>
-	 * <tr>
-	 * <td rowspan="3">b is live?</td>
-	 * <td rowspan="3">T</td>
-	 * <td>No copy</td>
-	 * <td>No copy</td>
-	 * <td>Copy</td>
-	 * <td>Copy</td>
-	 * </tr>
-	 * <tr>
-	 * <td>b_own=T</td>
-	 * <td>b_own=F</td>
-	 * <td>b_own=T</td>
-	 * <td>b_own=T</td>
-	 * <td></td>
-	 * </tr>
-	 * <tr>
-	 * <td>b_own_f=F</td>
-	 * <td>b_own_f=T</td>
-	 * <td>b_own_f=T</td>
-	 * <td>b_own_f=T</td>
-	 * <td></td>
-	 * </tr>
-	 * <tr>
-	 * <td rowspan="3">b is live?</td>
-	 * <td rowspan="3">F</td>
-	 * <td>No copy</td>
-	 * <td>No copy</td>
-	 * <td>No copy</td>
-	 * <td>No copy</td>
-	 * </tr>
-	 * <tr>
-	 * <td>b_own=T</td>
-	 * <td>b_own=F</td>
-	 * <td>b_own=F</td>
-	 * <td>b_own=F</td>
-	 * <td></td>
-	 * </tr>
-	 * <tr>
-	 * <td>b_own_f=F</td>
-	 * <td>b_own_f=T</td>
-	 * <td>b_own_f=T</td>
-	 * <td>b_own_f=T</td>
-	 * <td></td>
-	 * </tr>
-	 * </tbody>
-	 * </table>
+	 * 
+	 * Rules are as below:
+	 * <pre>
+	 * f mutates b?		|F			|F			|T			|T
+	 * f returns b?		|F			|T			|T			|F
+	 * --------------------------------------------------------------------
+	 * b is alive?	T	|No Copy	|No Copy	|Copy		|Copy
+	 * 					|caller = T	|caller = F |caller = T	|caller = T
+	 * 					|callee = F |callee = T |callee = T	|calee  = T
+	 * --------------------------------------------------------------------
+	 * 				F	|No Copy	|No Copy	|No Copy	|No Copy
+	 * 					|caller = T |caller = F	|caller = F |caller = F
+	 * 					|callee = F |callee = T	|callee = T	|callee = T
+	 * </pre>
+	 * where 'caller' is the ownership flag of caller site
+	 *       'callee' is the ownership flag of callee site
 	 * 
 	 * @param type
 	 * @param copyAnalyzer
 	 * @return a hashmap that contains caller's ownership and callee's ownership for a parameter.
 	 */
-	public Optional<HashMap<String, Boolean>> computeCallParameterOwnership(int register, Codes.Invoke code,
+	public Optional<HashMap<String, Boolean>> computeOwnership(int register, Codes.Invoke code,
 			FunctionOrMethod function, CodeStores stores, Optional<CopyEliminationAnalyzer> copyAnalyzer) {
 		Type type = stores.getRawType(register, function);
 		if (!stores.isCompoundType(type)) {
@@ -415,50 +376,63 @@ public class DeallocationAnalyzer extends Analyzer {
 		}
 
 		boolean isLive = true;
-		if (copyAnalyzer.isPresent()) {
-			isLive = this.liveAnalyzer.isLive(register, code, function);
-			//isLive = copyAnalyzer.get().isLive(register, code, function);
-		}
-
-		FunctionOrMethod f = this.getFunction(code.name.name());
-		int arguement = mapFunctionArgument(register, code);
-		boolean isMutated = this.readwriteAnalyzer.isMutated(arguement, f);
-		boolean isReturned = this.returnAnalyzer.isReturned(arguement, f);
-
 		Optional<HashMap<String, Boolean>> ownership = Optional.of(new HashMap<String, Boolean>());
-		if (!isMutated) {
-			if (!isReturned) {
-				// Caller ownership
-				ownership.get().put("caller", true);
-				ownership.get().put("callee", false);
-			} else {
-				ownership.get().put("caller", false);
-				ownership.get().put("callee", true);
-			}
-		} else {
-			if (isReturned) {
-				// 'b' is alive
-				if (isLive) {
+		if (copyAnalyzer.isPresent()) {
+			// Analyze the ownerships using live variable, read-write and return analysis
+			isLive = this.liveAnalyzer.isLive(register, code, function);
+			
+			FunctionOrMethod f = this.getFunction(code.name.name());
+			int arguement = mapFunctionArgument(register, code);
+			boolean isMutated = this.readwriteAnalyzer.isMutated(arguement, f);
+			boolean isReturned = this.returnAnalyzer.isReturned(arguement, f);
+
+			
+			if (!isMutated) {
+				if (!isReturned) {
+					// Caller ownership
 					ownership.get().put("caller", true);
-					ownership.get().put("callee", true);
+					ownership.get().put("callee", false);
 				} else {
 					ownership.get().put("caller", false);
 					ownership.get().put("callee", true);
 				}
 			} else {
-				if (isLive) {
-					ownership.get().put("caller", true);
-					ownership.get().put("callee", true);
+				if (isReturned) {
+					// 'b' is alive
+					if (isLive) {
+						ownership.get().put("caller", true);
+						ownership.get().put("callee", true);
+					} else {
+						ownership.get().put("caller", false);
+						ownership.get().put("callee", true);
+					}
 				} else {
-					ownership.get().put("caller", false);
-					ownership.get().put("callee", true);
+					if (isLive) {
+						ownership.get().put("caller", true);
+						ownership.get().put("callee", true);
+					} else {
+						ownership.get().put("caller", false);
+						ownership.get().put("callee", true);
+					}
 				}
 			}
+		}else{
+			// The copy is needed, so that caller and Callee both have the ownerships
+			ownership.get().put("caller", true);
+			ownership.get().put("callee", true);
 		}
 
 		return ownership;
 	}
 
+	/**
+	 * Adds the deallocation code 
+	 * @param lhs
+	 * @param code
+	 * @param function
+	 * @param stores
+	 * @return
+	 */
 	public String addDeallocatedCode(String lhs, Codes.Update code, FunctionOrMethod function, CodeStores stores) {
 		String indent = stores.getIndent(function);
 		Type lhs_type = stores.getRawType(code.target(0), function);

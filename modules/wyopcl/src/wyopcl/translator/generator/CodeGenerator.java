@@ -136,7 +136,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			int register = reg;
 			// Declare ownership
 			this.deallocatedAnalyzer.ifPresent(a -> {
-				String o = a.declareOwnershipVar(indent, register, function, stores);
+				String o = a.declareOwnershipFlag(indent, register, function, stores);
 				if (o != null) {
 					declarations.add(o);
 				}
@@ -599,7 +599,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 				// Append ownership to the function call
 				this.deallocatedAnalyzer.ifPresent(a -> {
-					Optional<HashMap<String, Boolean>> ownership = a.computeCallParameterOwnership(operand, code,
+					Optional<HashMap<String, Boolean>> ownership = a.computeOwnership(operand, code,
 							function, stores, copyAnalyzer);
 					ownership.ifPresent(o -> {
 						// Get and pass callee ownership
@@ -623,7 +623,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				}
 				// Append ownership to the function call
 				this.deallocatedAnalyzer.ifPresent(a -> {
-					Optional<HashMap<String, Boolean>> ownership = a.computeCallParameterOwnership(operand, code,
+					Optional<HashMap<String, Boolean>> ownership = a.computeOwnership(operand, code,
 							function, stores, copyAnalyzer);
 					ownership.ifPresent(o -> {
 						// Get and pass callee ownership

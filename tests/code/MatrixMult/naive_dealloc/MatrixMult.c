@@ -208,7 +208,7 @@ blklab13:;
 	_36 = A->height;
 	//invoke (%34) = (%35, %36, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
 	_FREE_STRUCT(_34, Matrix);
-	_34 = matrix(_35, _36, _2DARRAY_COPY_PARAM(C_data), false);
+	_34 = matrix(_35, _36, _2DARRAY_COPY_PARAM(C_data), true);
 	_ADD_OWNERSHIP(_34);
 	//return %34
 	_FREE_STRUCT(A, Matrix);
@@ -406,7 +406,7 @@ blklab24:;
 blklab23:;
 	//invoke (%15) = (%1, %0, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
 	_FREE_STRUCT(_15, Matrix);
-	_15 = matrix(width, height, _2DARRAY_COPY_PARAM(rows), false);
+	_15 = matrix(width, height, _2DARRAY_COPY_PARAM(rows), true);
 	_ADD_OWNERSHIP(_15);
 	//return %15
 	_FREE_STRUCT(r, Matrix);
@@ -489,7 +489,7 @@ int main(int argc, char** args){
 	_ADD_OWNERSHIP(B);
 	//invoke (%8) = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
 	_FREE_STRUCT(_8, Matrix);
-	_8 = multiply(_STRUCT_COPY_PARAM(A, Matrix), false, _STRUCT_COPY_PARAM(B, Matrix), false);
+	_8 = multiply(_STRUCT_COPY_PARAM(A, Matrix), true, _STRUCT_COPY_PARAM(B, Matrix), true);
 	_ADD_OWNERSHIP(_8);
 	//assign %4 = %8  : {int[][] data,int height,int width}
 	_FREE_STRUCT(C, Matrix);
@@ -590,7 +590,7 @@ blklab29:;
 	//assert
 	}
 	//invoke () = (%0, %4) MatrixMult:printMat : method(whiley/lang/System:Console,MatrixMult:Matrix)->()
-printMat(stdout, _STRUCT_COPY_PARAM(C, Matrix), false);
+printMat(stdout, _STRUCT_COPY_PARAM(C, Matrix), true);
 	//fieldload %35 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %36 = %35 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %37 = [80,97,115,115,32,77,97,116,114,105,120,77,117,108,116,32,116,101,115,116,32,99,97,115,101] : int[]
