@@ -74,8 +74,9 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	_ADD_OWNERSHIP(_15);
 	//assign %5 = %15  : int[]
 	_FREE(lhs);
-	_1DARRAY_COPY(lhs, _15);
-	_ADD_OWNERSHIP(lhs);
+	_1DARRAY_UPDATE(lhs, _15);
+	_TRANSFER_OWNERSHIP(lhs, _15);
+	_REMOVE_OWNERSHIP(_15);
 	//const %17 = 0 : int
 	_17 = 0;
 	//invoke (%16) = (%5, %17, %4) mergesort:sortV1 : function(int[],int,int)->(int[])
@@ -86,16 +87,18 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	_ADD_OWNERSHIP(_16);
 	//assign %5 = %16  : int[]
 	_FREE(lhs);
-	_1DARRAY_COPY(lhs, _16);
-	_ADD_OWNERSHIP(lhs);
+	_1DARRAY_UPDATE(lhs, _16);
+	_TRANSFER_OWNERSHIP(lhs, _16);
+	_REMOVE_OWNERSHIP(_16);
 	//invoke (%18) = (%0, %4, %2) whiley/lang/Array:slice : function(int[],int,int)->(int[])
 	_FREE(_18);
 _SLICE_ARRAY(_18, items, pivot, end);
 	_ADD_OWNERSHIP(_18);
 	//assign %6 = %18  : int[]
 	_FREE(rhs);
-	_1DARRAY_COPY(rhs, _18);
-	_ADD_OWNERSHIP(rhs);
+	_1DARRAY_UPDATE(rhs, _18);
+	_TRANSFER_OWNERSHIP(rhs, _18);
+	_REMOVE_OWNERSHIP(_18);
 	//const %20 = 0 : int
 	_20 = 0;
 	//sub %21 = %2, %4 : int
@@ -108,8 +111,9 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	_ADD_OWNERSHIP(_19);
 	//assign %6 = %19  : int[]
 	_FREE(rhs);
-	_1DARRAY_COPY(rhs, _19);
-	_ADD_OWNERSHIP(rhs);
+	_1DARRAY_UPDATE(rhs, _19);
+	_TRANSFER_OWNERSHIP(rhs, _19);
+	_REMOVE_OWNERSHIP(_19);
 	//const %22 = 0 : int
 	_22 = 0;
 	//assign %7 = %22  : int
@@ -370,8 +374,9 @@ int main(int argc, char** args){
 	_ADD_OWNERSHIP(_10);
 	//assign %1 = %10  : int[]
 	_FREE(ys);
-	_1DARRAY_COPY(ys, _10);
-	_ADD_OWNERSHIP(ys);
+	_1DARRAY_UPDATE(ys, _10);
+	_TRANSFER_OWNERSHIP(ys, _10);
+	_REMOVE_OWNERSHIP(_10);
 	//const %12 = 0 : int
 	_12 = 0;
 	//const %13 = 5 : int
@@ -384,8 +389,9 @@ int main(int argc, char** args){
 	_ADD_OWNERSHIP(_11);
 	//assign %1 = %11  : int[]
 	_FREE(ys);
-	_1DARRAY_COPY(ys, _11);
-	_ADD_OWNERSHIP(ys);
+	_1DARRAY_UPDATE(ys, _11);
+	_TRANSFER_OWNERSHIP(ys, _11);
+	_REMOVE_OWNERSHIP(_11);
 	//assert
 	{
 		//const %14 = 1 : int
@@ -427,8 +433,9 @@ blklab9:;
 	_ADD_OWNERSHIP(_24);
 	//assign %1 = %24  : int[]
 	_FREE(ys);
-	_1DARRAY_COPY(ys, _24);
-	_ADD_OWNERSHIP(ys);
+	_1DARRAY_UPDATE(ys, _24);
+	_TRANSFER_OWNERSHIP(ys, _24);
+	_REMOVE_OWNERSHIP(_24);
 	//const %26 = 0 : int
 	_26 = 0;
 	//const %27 = 4 : int
@@ -441,8 +448,9 @@ blklab9:;
 	_ADD_OWNERSHIP(_25);
 	//assign %1 = %25  : int[]
 	_FREE(ys);
-	_1DARRAY_COPY(ys, _25);
-	_ADD_OWNERSHIP(ys);
+	_1DARRAY_UPDATE(ys, _25);
+	_TRANSFER_OWNERSHIP(ys, _25);
+	_REMOVE_OWNERSHIP(_25);
 	//assert
 	{
 		//const %28 = 2 : int
@@ -482,8 +490,9 @@ blklab10:;
 	_ADD_OWNERSHIP(_37);
 	//assign %1 = %37  : int[]
 	_FREE(ys);
-	_1DARRAY_COPY(ys, _37);
-	_ADD_OWNERSHIP(ys);
+	_1DARRAY_UPDATE(ys, _37);
+	_TRANSFER_OWNERSHIP(ys, _37);
+	_REMOVE_OWNERSHIP(_37);
 	//const %39 = 0 : int
 	_39 = 0;
 	//const %40 = 4 : int
@@ -496,8 +505,9 @@ blklab10:;
 	_ADD_OWNERSHIP(_38);
 	//assign %1 = %38  : int[]
 	_FREE(ys);
-	_1DARRAY_COPY(ys, _38);
-	_ADD_OWNERSHIP(ys);
+	_1DARRAY_UPDATE(ys, _38);
+	_TRANSFER_OWNERSHIP(ys, _38);
+	_REMOVE_OWNERSHIP(_38);
 	//assert
 	{
 		//const %41 = 1 : int
@@ -539,8 +549,9 @@ blklab11:;
 	_ADD_OWNERSHIP(_51);
 	//assign %1 = %51  : int[]
 	_FREE(ys);
-	_1DARRAY_COPY(ys, _51);
-	_ADD_OWNERSHIP(ys);
+	_1DARRAY_UPDATE(ys, _51);
+	_TRANSFER_OWNERSHIP(ys, _51);
+	_REMOVE_OWNERSHIP(_51);
 	//const %53 = 0 : int
 	_53 = 0;
 	//const %54 = 5 : int
@@ -553,8 +564,9 @@ blklab11:;
 	_ADD_OWNERSHIP(_52);
 	//assign %1 = %52  : int[]
 	_FREE(ys);
-	_1DARRAY_COPY(ys, _52);
-	_ADD_OWNERSHIP(ys);
+	_1DARRAY_UPDATE(ys, _52);
+	_TRANSFER_OWNERSHIP(ys, _52);
+	_REMOVE_OWNERSHIP(_52);
 	//assert
 	{
 		//const %55 = 1 : int
@@ -601,8 +613,9 @@ blklab12:;
 	_ADD_OWNERSHIP(_66);
 	//assign %4 = %66  : int[]
 	_FREE(arr);
-	_1DARRAY_COPY(arr, _66);
-	_ADD_OWNERSHIP(arr);
+	_1DARRAY_UPDATE(arr, _66);
+	_TRANSFER_OWNERSHIP(arr, _66);
+	_REMOVE_OWNERSHIP(_66);
 	//loop (%3, %4, %67, %68, %69)
 	while(true){
 		//ifgt %3, %2 goto blklab13 : int
@@ -636,8 +649,9 @@ blklab13:;
 	_ADD_OWNERSHIP(_70);
 	//assign %4 = %70  : int[]
 	_FREE(arr);
-	_1DARRAY_COPY(arr, _70);
-	_ADD_OWNERSHIP(arr);
+	_1DARRAY_UPDATE(arr, _70);
+	_TRANSFER_OWNERSHIP(arr, _70);
+	_REMOVE_OWNERSHIP(_70);
 	//assert
 	{
 		//const %74 = 0 : int

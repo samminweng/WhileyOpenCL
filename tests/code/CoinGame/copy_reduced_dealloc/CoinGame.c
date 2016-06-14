@@ -547,8 +547,9 @@ int main(int argc, char** args){
 	_ADD_OWNERSHIP(_7);
 	//assign %2 = %7  : int[]
 	_FREE(moves);
-	_1DARRAY_COPY(moves, _7);
-	_ADD_OWNERSHIP(moves);
+	_1DARRAY_UPDATE(moves, _7);
+	_TRANSFER_OWNERSHIP(moves, _7);
+	_REMOVE_OWNERSHIP(_7);
 	//invoke (%8) = (%2, %1) CoinGame:findMoves : function(int[],int)->(int[])
 	_FREE(_8);
 	_REMOVE_OWNERSHIP(moves);
@@ -557,10 +558,11 @@ int main(int argc, char** args){
 	_ADD_OWNERSHIP(_8);
 	//assign %2 = %8  : int[]
 	_FREE(moves);
-	_1DARRAY_COPY(moves, _8);
-	_ADD_OWNERSHIP(moves);
+	_1DARRAY_UPDATE(moves, _8);
+	_TRANSFER_OWNERSHIP(moves, _8);
+	_REMOVE_OWNERSHIP(_8);
 	//invoke () = (%0, %2, %1) CoinGame:play : method(whiley/lang/System:Console,int[],int)->()
-play(stdout, _1DARRAY_PARAM(moves), false, n);
+play(stdout, _1DARRAY_COPY_PARAM(moves), false, n);
 	//const %9 = 1 : int
 	_9 = 1;
 	//sub %10 = %1, %9 : int

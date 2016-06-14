@@ -72,8 +72,8 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		boolean isCopyAvoided = false; // The copy is needed
 		boolean isLive = this.liveAnalyzer.isLive(register, code, function);
 
-		if (isLive) {
-			// If the variable is alive, then the copy is avoided.
+		if (!isLive) {
+			// If the variable is NOT alive, then the copy is avoided.
 			isCopyAvoided = true;
 		} else {
 			// If the variable is alive,

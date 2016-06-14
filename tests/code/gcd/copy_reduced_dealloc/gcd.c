@@ -192,8 +192,9 @@ int main(int argc, char** args){
 	_ADD_OWNERSHIP(_13);
 	//assign %2 = %13  : int[]
 	_FREE(gcds);
-	_1DARRAY_COPY(gcds, _13);
-	_ADD_OWNERSHIP(gcds);
+	_1DARRAY_UPDATE(gcds, _13);
+	_TRANSFER_OWNERSHIP(gcds, _13);
+	_REMOVE_OWNERSHIP(_13);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %3 = %14  : int
@@ -211,7 +212,7 @@ int main(int argc, char** args){
 			//ifge %4, %1 goto blklab15 : int
 			if(j>=n){goto blklab15;}
 			//invoke (%16) = (%3, %4, %1, %2) gcd:gcd_cached : function(int,int,int,int[])->(int)
-			_16 = gcd_cached(i, j, n, _1DARRAY_PARAM(gcds), false);
+			_16 = gcd_cached(i, j, n, _1DARRAY_COPY_PARAM(gcds), false);
 			//mul %17 = %3, %1 : int
 			_17=i*n;
 			//add %18 = %17, %4 : int

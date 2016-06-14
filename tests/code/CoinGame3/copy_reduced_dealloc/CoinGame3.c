@@ -83,8 +83,9 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_OWNERSHIP_PARAM(moves), l
 	_ADD_OWNERSHIP(_10);
 	//assign %3 = %10  : int[]
 	_FREE(x);
-	_1DARRAY_COPY(x, _10);
-	_ADD_OWNERSHIP(x);
+	_1DARRAY_UPDATE(x, _10);
+	_TRANSFER_OWNERSHIP(x, _10);
+	_REMOVE_OWNERSHIP(_10);
 	//const %11 = 0 : int
 	_11 = 0;
 	//arraygen %12 = [11; 1] : int[]
@@ -93,8 +94,9 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_OWNERSHIP_PARAM(moves), l
 	_ADD_OWNERSHIP(_12);
 	//assign %4 = %12  : int[]
 	_FREE(y);
-	_1DARRAY_COPY(y, _12);
-	_ADD_OWNERSHIP(y);
+	_1DARRAY_UPDATE(y, _12);
+	_TRANSFER_OWNERSHIP(y, _12);
+	_REMOVE_OWNERSHIP(_12);
 	//const %13 = 0 : int
 	_13 = 0;
 	//arraygen %14 = [13; 1] : int[]
@@ -103,8 +105,9 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_OWNERSHIP_PARAM(moves), l
 	_ADD_OWNERSHIP(_14);
 	//assign %5 = %14  : int[]
 	_FREE(z);
-	_1DARRAY_COPY(z, _14);
-	_ADD_OWNERSHIP(z);
+	_1DARRAY_UPDATE(z, _14);
+	_TRANSFER_OWNERSHIP(z, _14);
+	_REMOVE_OWNERSHIP(_14);
 	//const %15 = 0 : int
 	_15 = 0;
 	//assign %6 = %15  : int
@@ -322,8 +325,9 @@ int main(int argc, char** args){
 	_ADD_OWNERSHIP(_7);
 	//assign %2 = %7  : int[]
 	_FREE(moves);
-	_1DARRAY_COPY(moves, _7);
-	_ADD_OWNERSHIP(moves);
+	_1DARRAY_UPDATE(moves, _7);
+	_TRANSFER_OWNERSHIP(moves, _7);
+	_REMOVE_OWNERSHIP(_7);
 	//invoke (%8) = (%2, %1) CoinGame3:findMoves : function(int[],int)->(int[])
 	_FREE(_8);
 	_REMOVE_OWNERSHIP(moves);
@@ -332,8 +336,9 @@ int main(int argc, char** args){
 	_ADD_OWNERSHIP(_8);
 	//assign %2 = %8  : int[]
 	_FREE(moves);
-	_1DARRAY_COPY(moves, _8);
-	_ADD_OWNERSHIP(moves);
+	_1DARRAY_UPDATE(moves, _8);
+	_TRANSFER_OWNERSHIP(moves, _8);
+	_REMOVE_OWNERSHIP(_8);
 	//const %9 = 1 : int
 	_9 = 1;
 	//sub %10 = %1, %9 : int

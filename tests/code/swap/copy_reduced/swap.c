@@ -43,7 +43,7 @@ int main(int argc, char** args){
 	_NEW_ARRAY(_9, 5);
 	_9[0] = _4; _9[1] = _5; _9[2] = _6; _9[3] = _7; _9[4] = _8; 
 	//assign %1 = %9  : int[]
-	_1DARRAY_COPY(a, _9);
+	_1DARRAY_UPDATE(a, _9);
 	//const %10 = 1 : int
 	_10 = 1;
 	//const %11 = 1 : int
@@ -58,13 +58,13 @@ int main(int argc, char** args){
 	_NEW_ARRAY(_15, 5);
 	_15[0] = _10; _15[1] = _11; _15[2] = _12; _15[3] = _13; _15[4] = _14; 
 	//assign %2 = %15  : int[]
-	_1DARRAY_COPY(b, _15);
+	_1DARRAY_UPDATE(b, _15);
 	//assign %3 = %1  : int[]
-	_1DARRAY_UPDATE(tmp, a);
+	_1DARRAY_COPY(tmp, a);
 	//assign %1 = %2  : int[]
-	_1DARRAY_UPDATE(a, b);
+	_1DARRAY_COPY(a, b);
 	//assign %2 = %3  : int[]
-	_1DARRAY_COPY(b, tmp);
+	_1DARRAY_UPDATE(b, tmp);
 	//assert
 	{
 		//const %16 = 1 : int

@@ -50,8 +50,9 @@ blklab0:;
 	_ADD_OWNERSHIP(_8);
 	//assign %0 = %8  : int[]
 	_FREE(ls);
-	_1DARRAY_COPY(ls, _8);
-	_ADD_OWNERSHIP(ls);
+	_1DARRAY_UPDATE(ls, _8);
+	_TRANSFER_OWNERSHIP(ls, _8);
+	_REMOVE_OWNERSHIP(_8);
 	//const %11 = 1 : int
 	_11 = 1;
 	//sub %12 = %1, %11 : int
@@ -117,8 +118,9 @@ int main(int argc, char** args){
 	_ADD_OWNERSHIP(_5);
 	//assign %2 = %5  : int[]
 	_FREE(arr);
-	_1DARRAY_COPY(arr, _5);
-	_ADD_OWNERSHIP(arr);
+	_1DARRAY_UPDATE(arr, _5);
+	_TRANSFER_OWNERSHIP(arr, _5);
+	_REMOVE_OWNERSHIP(_5);
 	//const %7 = 1 : int
 	_7 = 1;
 	//sub %8 = %1, %7 : int
@@ -131,8 +133,9 @@ int main(int argc, char** args){
 	_ADD_OWNERSHIP(_6);
 	//assign %2 = %6  : int[]
 	_FREE(arr);
-	_1DARRAY_COPY(arr, _6);
-	_ADD_OWNERSHIP(arr);
+	_1DARRAY_UPDATE(arr, _6);
+	_TRANSFER_OWNERSHIP(arr, _6);
+	_REMOVE_OWNERSHIP(_6);
 	//assert
 	{
 		//const %9 = 0 : int
