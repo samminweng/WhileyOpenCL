@@ -419,9 +419,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
 
 			statement.add(generateAssignmentCode(code, isCopyEliminated, function, stores));
-			this.deallocatedAnalyzer.ifPresent(a -> {
-				statement.addAll(a.computeOwnership(isCopyEliminated, code, function, stores));
-			});
+
+			postProcessor(isCopyEliminated, code.operand(0), statement, code, function);
+			/*
+			 * this.deallocatedAnalyzer.ifPresent(a -> { statement.addAll(a.computeOwnership(isCopyEliminated, code,
+			 * function, stores)); });
+			 */
 
 		}
 
@@ -644,31 +647,50 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		return statement.stream().filter(s -> !s.equals("")).map(s -> s.toString()).collect(Collectors.joining(", "));
 	}
 	
+	
 	/**
+	 * Update the set with register and generate ownership code.
 	 * 
-	 * Update read-write and return sets and generate ownership for lhs register.
 	 * 
-	 * 
+	 * @param isCopyEliminated
+	 * @param register
 	 * @param statement
-	 * @param argumentCopyEliminated
 	 * @param code
 	 * @param function
 	 */
-	private void postProcessor(List<String> statement, HashMap<Integer, Boolean> argumentCopyEliminated, Code code, FunctionOrMethod function) {
-
-		if(argumentCopyEliminated != null){
-			// Iterate copy elimination set and update read-write/return set
-			argumentCopyEliminated.entrySet().forEach(entry -> {
-				int register = entry.getKey();
-				boolean isCopyEliminated = entry.getValue();
-				this.copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, register, code, function));
-			});
+	private void postProcessor(boolean isCopyEliminated, int register, List<String> statement, Code code,
+			FunctionOrMethod function) {
+		// Update the set with register
+		if (register >= 0) {
+			this.copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, register, code, function));
 		}
-		
+		// Compute ownership of lhs register
+		this.deallocatedAnalyzer.ifPresent(a -> {
+			statement.addAll(a.computeOwnership(isCopyEliminated, code, function, stores));
+		});
+	}
+
+	/**
+	 * Update read-write and return sets and generate ownership for lhs register.
+	 * 
+	 * @param isCopyEliminated
+	 * @param argumentCopyEliminated
+	 * @param statement
+	 * @param code
+	 * @param function
+	 */
+	private void postProcessor(boolean isCopyEliminated, HashMap<Integer, Boolean> argumentCopyEliminated,
+			List<String> statement, Code code, FunctionOrMethod function) {
+
+		if (argumentCopyEliminated != null) {
+			// Iterate copy elimination set and update read-write/return set
+			argumentCopyEliminated.entrySet().forEach(entry -> this.copyAnalyzer
+					.ifPresent(a -> a.updateSet(entry.getValue(), entry.getKey(), code, function)));
+		}
 
 		// Compute ownership of lhs register
 		this.deallocatedAnalyzer.ifPresent(a -> {
-			statement.addAll(a.computeOwnership(false, code, function, stores));
+			statement.addAll(a.computeOwnership(isCopyEliminated, code, function, stores));
 		});
 
 	}
@@ -777,9 +799,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		}
 
-		
-		postProcessor(statement, argumentCopyEliminated, code, function);
-		
+		postProcessor(false, argumentCopyEliminated, statement, code, function);
+
 		// add the statement
 		stores.addAllStatements(code, statement, function);
 	}
