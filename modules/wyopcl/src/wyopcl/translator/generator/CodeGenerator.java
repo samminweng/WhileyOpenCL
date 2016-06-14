@@ -566,7 +566,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param f
 	 * @return
 	 */
-	private String translateRHSFunctionCall(Codes.Invoke code, FunctionOrMethod function) {
+	private String translateRHSFunctionCall(HashMap<Integer, Boolean> argumentCopyEliminated, Codes.Invoke code,
+			FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
 		for (int operand : code.operands()) {
 			String parameter = stores.getVar(operand, function);
@@ -599,8 +600,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 				// Append ownership to the function call
 				this.deallocatedAnalyzer.ifPresent(a -> {
-					Optional<HashMap<String, Boolean>> ownership = a.computeOwnership(operand, code,
-							function, stores, copyAnalyzer);
+					Optional<HashMap<String, Boolean>> ownership = a.computeOwnership(operand, code, function, stores,
+							copyAnalyzer);
 					ownership.ifPresent(o -> {
 						// Get and pass callee ownership
 						boolean callee_own = ownership.get().get("callee");
@@ -623,8 +624,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				}
 				// Append ownership to the function call
 				this.deallocatedAnalyzer.ifPresent(a -> {
-					Optional<HashMap<String, Boolean>> ownership = a.computeOwnership(operand, code,
-							function, stores, copyAnalyzer);
+					Optional<HashMap<String, Boolean>> ownership = a.computeOwnership(operand, code, function, stores,
+							copyAnalyzer);
 					ownership.ifPresent(o -> {
 						// Get and pass callee ownership
 						boolean callee_own = ownership.get().get("callee");
@@ -641,6 +642,35 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 
 		return statement.stream().filter(s -> !s.equals("")).map(s -> s.toString()).collect(Collectors.joining(", "));
+	}
+	
+	/**
+	 * 
+	 * Update read-write and return sets and generate ownership for lhs register.
+	 * 
+	 * 
+	 * @param statement
+	 * @param argumentCopyEliminated
+	 * @param code
+	 * @param function
+	 */
+	private void postProcessor(List<String> statement, HashMap<Integer, Boolean> argumentCopyEliminated, Code code, FunctionOrMethod function) {
+
+		if(argumentCopyEliminated != null){
+			// Iterate copy elimination set and update read-write/return set
+			argumentCopyEliminated.entrySet().forEach(entry -> {
+				int register = entry.getKey();
+				boolean isCopyEliminated = entry.getValue();
+				this.copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, register, code, function));
+			});
+		}
+		
+
+		// Compute ownership of lhs register
+		this.deallocatedAnalyzer.ifPresent(a -> {
+			statement.addAll(a.computeOwnership(false, code, function, stores));
+		});
+
 	}
 
 	/**
@@ -686,7 +716,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.Invoke code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
 		String indent = stores.getIndent(function);
-
+		HashMap<Integer, Boolean> argumentCopyEliminated = new HashMap<Integer, Boolean>();
 		// Translate built-in Whiley functions using macros.
 		if (code.name.module().toString().contains("whiley/lang")) {
 			String lhs = stores.getVar(code.target(0), function);
@@ -743,14 +773,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 			// call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
 			statement.add(translateLHSFunctionCall(code, function) + code.name.name() + "("
-					+ translateRHSFunctionCall(code, function) + ");");
+					+ translateRHSFunctionCall(argumentCopyEliminated, code, function) + ");");
 
 		}
-		// Compute ownership
-		this.deallocatedAnalyzer.ifPresent(a -> {
-			statement.addAll(a.computeOwnership(false, code, function, stores));
-		});
 
+		
+		postProcessor(statement, argumentCopyEliminated, code, function);
+		
 		// add the statement
 		stores.addAllStatements(code, statement, function);
 	}
