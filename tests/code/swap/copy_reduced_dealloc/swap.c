@@ -77,12 +77,14 @@ int main(int argc, char** args){
 	_ADD_OWNERSHIP(b);
 	//assign %3 = %1  : int[]
 	_FREE(tmp);
-	_1DARRAY_COPY(tmp, a);
-	_ADD_OWNERSHIP(tmp);
+	_1DARRAY_UPDATE(tmp, a);
+	_TRANSFER_OWNERSHIP(tmp, a);
+	_REMOVE_OWNERSHIP(a);
 	//assign %1 = %2  : int[]
 	_FREE(a);
-	_1DARRAY_COPY(a, b);
-	_ADD_OWNERSHIP(a);
+	_1DARRAY_UPDATE(a, b);
+	_TRANSFER_OWNERSHIP(a, b);
+	_REMOVE_OWNERSHIP(b);
 	//assign %2 = %3  : int[]
 	_FREE(b);
 	_1DARRAY_COPY(b, tmp);

@@ -27,19 +27,10 @@ import wyopcl.translator.generator.CodeStores;
  * @author Min-Hsien Weng
  *
  */
-public class DeallocationAnalyzer extends Analyzer {
-	// Perform read-write checks
-	private ReadWriteAnalyzer readwriteAnalyzer;
-	// Perform return checks
-	private ReturnAnalyzer returnAnalyzer;
-	// Perform liveness checks
-	private LiveVariablesAnalysis liveAnalyzer; 
+public class DeallocationAnalyzer extends Analyzer {	
 
 	public DeallocationAnalyzer(Configuration config) {
-		super(config);
-		this.readwriteAnalyzer = new ReadWriteAnalyzer(config);
-		this.returnAnalyzer = new ReturnAnalyzer(config);
-		this.liveAnalyzer = new LiveVariablesAnalysis(config);
+		super(config);		
 	}
 
 	/**
@@ -379,14 +370,13 @@ public class DeallocationAnalyzer extends Analyzer {
 		Optional<HashMap<String, Boolean>> ownership = Optional.of(new HashMap<String, Boolean>());
 		if (copyAnalyzer.isPresent()) {
 			// Analyze the ownerships using live variable, read-write and return analysis
-			isLive = this.liveAnalyzer.isLive(register, code, function);
+			isLive = copyAnalyzer.get().liveAnalyzer.isLive(register, code, function);
 			
 			FunctionOrMethod f = this.getFunction(code.name.name());
 			int arguement = mapFunctionArgument(register, code);
-			boolean isMutated = this.readwriteAnalyzer.isMutated(arguement, f);
-			boolean isReturned = this.returnAnalyzer.isReturned(arguement, f);
+			boolean isMutated = copyAnalyzer.get().readwriteAnalyzer.isMutated(arguement, f);
+			boolean isReturned = copyAnalyzer.get().returnAnalyzer.isReturned(arguement, f);
 
-			
 			if (!isMutated) {
 				if (!isReturned) {
 					// Caller ownership
@@ -519,12 +509,6 @@ public class DeallocationAnalyzer extends Analyzer {
 	@Override
 	public void apply(WyilFile module) {
 		super.apply(module);
-		// Builds up read-write set
-		this.readwriteAnalyzer.apply(module);
-		// Build up return set
-		this.returnAnalyzer.apply(module);
-		// Perform liveness analysis
-		this.liveAnalyzer.apply(module);
 	}
 
 }

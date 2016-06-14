@@ -571,13 +571,13 @@ int main(int argc, char** args){
 	//assign %2 = %13  : {int[] data,int height,int width}
 	B = copy_Matrix(_13);
 	//invoke (%16) = (%1, %2) MatrixMult3:mat_mult : function(MatrixMult3:Matrix,MatrixMult3:Matrix)->(MatrixMult3:Matrix)
-	_16 = mat_mult(_STRUCT_COPY_PARAM(A, Matrix), _STRUCT_COPY_PARAM(B, Matrix));
+	_16 = mat_mult(_STRUCT_PARAM(A), _STRUCT_PARAM(B));
 	//assign %3 = %16  : {int[] data,int height,int width}
 	C = copy_Matrix(_16);
 	//assert
 	{
 		//fieldload %17 = %1 data : {int[] data,int height,int width}
-		_1DARRAY_UPDATE(_17, A->data);
+		_1DARRAY_COPY(_17, A->data);
 		//const %18 = 20 : int
 		_18 = 20;
 		//const %19 = 1 : int
@@ -616,7 +616,7 @@ blklab23:;
 	//assert
 	{
 		//fieldload %31 = %2 data : {int[] data,int height,int width}
-		_1DARRAY_UPDATE(_31, B->data);
+		_1DARRAY_COPY(_31, B->data);
 		//const %32 = 20 : int
 		_32 = 20;
 		//const %33 = 1 : int

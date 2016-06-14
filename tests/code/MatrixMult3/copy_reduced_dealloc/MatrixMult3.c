@@ -666,7 +666,7 @@ int main(int argc, char** args){
 	_ADD_OWNERSHIP(B);
 	//invoke (%16) = (%1, %2) MatrixMult3:mat_mult : function(MatrixMult3:Matrix,MatrixMult3:Matrix)->(MatrixMult3:Matrix)
 	_FREE_STRUCT(_16, Matrix);
-	_16 = mat_mult(_STRUCT_COPY_PARAM(A, Matrix), false, _STRUCT_COPY_PARAM(B, Matrix), false);
+	_16 = mat_mult(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
 	_ADD_OWNERSHIP(_16);
 	//assign %3 = %16  : {int[] data,int height,int width}
 	_FREE_STRUCT(C, Matrix);
@@ -676,8 +676,8 @@ int main(int argc, char** args){
 	{
 		//fieldload %17 = %1 data : {int[] data,int height,int width}
 		_FREE(_17);
-		_1DARRAY_UPDATE(_17, A->data);
-		_REMOVE_OWNERSHIP(_17);
+		_1DARRAY_COPY(_17, A->data);
+		_ADD_OWNERSHIP(_17);
 		//const %18 = 20 : int
 		_18 = 20;
 		//const %19 = 1 : int
@@ -717,8 +717,8 @@ blklab23:;
 	{
 		//fieldload %31 = %2 data : {int[] data,int height,int width}
 		_FREE(_31);
-		_1DARRAY_UPDATE(_31, B->data);
-		_REMOVE_OWNERSHIP(_31);
+		_1DARRAY_COPY(_31, B->data);
+		_ADD_OWNERSHIP(_31);
 		//const %32 = 20 : int
 		_32 = 20;
 		//const %33 = 1 : int

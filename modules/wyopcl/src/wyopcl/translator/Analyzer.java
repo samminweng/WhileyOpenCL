@@ -260,7 +260,7 @@ public abstract class Analyzer {
 			// Parse each byte-code and add the constraints accordingly.
 			try {
 				if (code instanceof Codes.Assert) {
-					// buildCFG((Codes.Assert)code, function);
+					buildCFG((Codes.Assert)code, function);
 				} else if (code instanceof Codes.Invariant) {
 					buildCFG((Codes.Invariant) code, function);
 				} else if (code instanceof Codes.If) {

@@ -18,11 +18,11 @@ import wyopcl.translator.ReturnAnalyzer;
  */
 public class CopyEliminationAnalyzer extends Analyzer {
 	// Perform read-write checks
-	private ReadWriteAnalyzer readwriteAnalyzer;
+	public ReadWriteAnalyzer readwriteAnalyzer;
 	// Perform return checks
-	private ReturnAnalyzer returnAnalyzer;
+	public ReturnAnalyzer returnAnalyzer;
 	// Perform liveness checks
-	private LiveVariablesAnalysis liveAnalyzer;
+	public LiveVariablesAnalysis liveAnalyzer;
 
 	/**
 	 * Basic Constructor
@@ -94,13 +94,23 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			}
 		}
 
+		return isCopyAvoided;
+	}
+	
+	
+	/**
+	 * Update the read-write set due to changes to the copy of rhs register
+	 * 
+	 * @param isCopyAvoided
+	 * @param code
+	 * @param function
+	 */
+	public void updateSet(boolean isCopyAvoided, int register, Code code, FunctionOrMethod function){
 		if (isCopyAvoided) {
 			// Based on the copy analysis results, update the readwrite set.
 			this.readwriteAnalyzer.updateSet(isCopyAvoided, register, code, function);
 			this.returnAnalyzer.updateSet(isCopyAvoided, register, code, function);
 		}
-
-		return isCopyAvoided;
+		
 	}
-
 }

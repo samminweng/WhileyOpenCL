@@ -57,7 +57,7 @@ public class ReturnAnalyzer extends Analyzer {
 			}else if (code instanceof Codes.FieldLoad){
 				lhs = ((Codes.FieldLoad)code).target(0);
 			}else if (code instanceof Codes.Update){
-				lhs = ((Codes.Update)code).target(0);
+				lhs = ((Codes.Update)code).target(0);				
 			}else if (code instanceof Codes.Invoke){				
 				Codes.Invoke invoke = (Codes.Invoke)code;
 				// Check if there is a return value in invoke bytecode

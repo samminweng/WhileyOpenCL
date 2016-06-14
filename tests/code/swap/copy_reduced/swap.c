@@ -60,9 +60,9 @@ int main(int argc, char** args){
 	//assign %2 = %15  : int[]
 	_1DARRAY_COPY(b, _15);
 	//assign %3 = %1  : int[]
-	_1DARRAY_COPY(tmp, a);
+	_1DARRAY_UPDATE(tmp, a);
 	//assign %1 = %2  : int[]
-	_1DARRAY_COPY(a, b);
+	_1DARRAY_UPDATE(a, b);
 	//assign %2 = %3  : int[]
 	_1DARRAY_COPY(b, tmp);
 	//assert

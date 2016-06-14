@@ -33,10 +33,9 @@ import wyopcl.Configuration;
  * @author Min-Hsien Weng
  *
  */
-public class ReadWriteAnalyzer extends Analyzer{
+public class ReadWriteAnalyzer extends Analyzer {
 	// Store the set of read-write registers for each function.
 	private HashMap<FunctionOrMethod, HashSet<Integer>> stores;
-	
 
 	public ReadWriteAnalyzer(Configuration config) {
 		super(config);
@@ -44,26 +43,26 @@ public class ReadWriteAnalyzer extends Analyzer{
 	}
 
 	/**
-	 * Adds 'register' to the readwrite set.
+	 * Add rhs register to the readwrite set.
 	 * 
-	 * Due to the copy is removed, lhs and rhs variables are aliased together, 
-	 * thus rhs register is added to readwrite set.
+	 * Due to the copy is removed, lhs and rhs variables are aliased together, thus rhs register is added to readwrite
+	 * set.
 	 * 
-	 * @param isCopyAvoided the copy is removed (true) or not (false)
-	 * @param register 
+	 * @param isCopyAvoided
+	 *            the copy is removed (true) or not (false)
+	 * @param register
 	 * @param function
 	 */
-	public void updateSet(boolean isCopyAvoided, int register, Code code, FunctionOrMethod function){
-		if(isCopyAvoided){
-			// Adds register to readwrite set.
-			if(!stores.containsKey(function)){
-				stores.put(function, new HashSet<Integer>());
-			}
-			HashSet<Integer> store = stores.get(function);
-			store.add(register);
+	public void updateSet(boolean isCopyAvoided, int register, Code code, FunctionOrMethod function) {
+		
+		// Adds register to readwrite set.
+		if (!stores.containsKey(function)) {
+			stores.put(function, new HashSet<Integer>());
 		}
+		HashSet<Integer> store = stores.get(function);
+		// Check if the code is an assignment
+		store.add(register);
 	}
-	
 
 	/**
 	 * Given a byte-code, add lhs variable to the Hashset.
@@ -161,8 +160,6 @@ public class ReadWriteAnalyzer extends Analyzer{
 		return false;// Read-only
 	}
 
-	
-
 	/**
 	 * Visit the node and compute the readwrite set for that function
 	 * 
@@ -170,14 +167,14 @@ public class ReadWriteAnalyzer extends Analyzer{
 	 */
 	private void visit(DefaultMutableTreeNode currentNode) {
 		// Compute the readwrite set for the give node
-		String name = (String)currentNode.getUserObject();
+		String name = (String) currentNode.getUserObject();
 		FunctionOrMethod function = (FunctionOrMethod) this.getFunction(name);
 		HashSet<Integer> store;
 		if (!stores.containsKey(function)) {
 			stores.put(function, new HashSet<Integer>());
 		}
-		
-		if(function != null){			
+
+		if (function != null) {
 			// Store read-write registers
 			store = stores.get(function);
 			// Go through each bytecode and add lhs register to read-write set
@@ -185,11 +182,10 @@ public class ReadWriteAnalyzer extends Analyzer{
 				iterateBytecode(code, store);
 			}
 		}
-		
+
 		// Print out the node information (path).
 		if (!currentNode.isRoot()) {
-			String parent =  (String) ((DefaultMutableTreeNode) currentNode.getParent())
-					.getUserObject();
+			String parent = (String) ((DefaultMutableTreeNode) currentNode.getParent()).getUserObject();
 			System.out.println(parent + "->" + name);
 		}
 	}

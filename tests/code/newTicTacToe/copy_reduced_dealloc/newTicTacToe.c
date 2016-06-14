@@ -375,8 +375,8 @@ blklab23:;
 		if(b2 == NULL) { goto blklab26;}
 		//fieldload %36 = %3 pieces : {int move,int[] pieces}
 		_FREE(_36);
-		_1DARRAY_UPDATE(_36, b2->pieces);
-		_REMOVE_OWNERSHIP(_36);
+		_1DARRAY_COPY(_36, b2->pieces);
+		_ADD_OWNERSHIP(_36);
 		//const %37 = 1 : int
 		_37 = 1;
 		//const %38 = 2 : int

@@ -499,8 +499,8 @@ int main(int argc, char** args){
 	{
 		//fieldload %9 = %2 data : {int[][] data,int height,int width}
 		_FREE2DArray(_9);
-		_2DARRAY_UPDATE(_9, A->data);
-		_REMOVE_OWNERSHIP(_9);
+		_2DARRAY_COPY(_9, A->data);
+		_ADD_OWNERSHIP(_9);
 		//const %10 = 1 : int
 		_10 = 1;
 		//sub %11 = %1, %10 : int
@@ -531,8 +531,8 @@ blklab27:;
 	{
 		//fieldload %18 = %3 data : {int[][] data,int height,int width}
 		_FREE2DArray(_18);
-		_2DARRAY_UPDATE(_18, B->data);
-		_REMOVE_OWNERSHIP(_18);
+		_2DARRAY_COPY(_18, B->data);
+		_ADD_OWNERSHIP(_18);
 		//const %19 = 1 : int
 		_19 = 1;
 		//sub %20 = %1, %19 : int
@@ -590,7 +590,7 @@ blklab29:;
 	//assert
 	}
 	//invoke () = (%0, %4) MatrixMult:printMat : method(whiley/lang/System:Console,MatrixMult:Matrix)->()
-printMat(stdout, _STRUCT_PARAM(C), false);
+printMat(stdout, _STRUCT_COPY_PARAM(C, Matrix), false);
 	//fieldload %35 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %36 = %35 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %37 = [80,97,115,115,32,77,97,116,114,105,120,77,117,108,116,32,116,101,115,116,32,99,97,115,101] : int[]
