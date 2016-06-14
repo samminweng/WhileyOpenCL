@@ -420,8 +420,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 			statement.add(generateAssignmentCode(code, isCopyEliminated, function, stores));
 
-			postProcessor(isCopyEliminated, code.operand(0), statement, code, function);
-			
+			postProcessor(true, isCopyEliminated, code.operand(0), statement, code, function);
+
 		}
 
 		// Add the statement to the list of statements.
@@ -642,8 +642,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		return statement.stream().filter(s -> !s.equals("")).map(s -> s.toString()).collect(Collectors.joining(", "));
 	}
-	
-	
+
 	/**
 	 * Update the set with register and generate ownership code.
 	 * 
@@ -654,10 +653,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 * @param function
 	 */
-	private void postProcessor(boolean isCopyEliminated, int register, List<String> statement, Code code,
-			FunctionOrMethod function) {
+	private void postProcessor(boolean isUpdated, boolean isCopyEliminated, int register, List<String> statement,
+			Code code, FunctionOrMethod function) {
 		// Update the set with register
-		if (register >= 0) {
+		if (isUpdated) {
 			this.copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, register, code, function));
 		}
 		// Compute ownership of lhs register
@@ -675,18 +674,25 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 * @param function
 	 */
-	private void postProcessor(boolean isCopyEliminated, HashMap<Integer, Boolean> argumentCopyEliminated,
+	private void postProcessor(HashMap<Integer, Boolean> argumentCopyEliminated,
 			List<String> statement, Code code, FunctionOrMethod function) {
 
-		if (argumentCopyEliminated != null) {
-			// Iterate copy elimination set and update read-write/return set
-			argumentCopyEliminated.entrySet().forEach(entry -> this.copyAnalyzer
-					.ifPresent(a -> a.updateSet(entry.getValue(), entry.getKey(), code, function)));
+		// Iterate copy elimination set and update read-write/return set
+		if(this.copyAnalyzer.isPresent()){
+			argumentCopyEliminated.entrySet().forEach(entry -> {
+				boolean isCopyEliminated = entry.getValue();
+				int register = entry.getKey();
+				this.copyAnalyzer.get().updateSet(isCopyEliminated, register, code, function);
+			});
 		}
-
+		
 		// Compute ownership of lhs register
 		this.deallocatedAnalyzer.ifPresent(a -> {
-			statement.addAll(a.computeOwnership(isCopyEliminated, code, function, stores));
+			if(code instanceof Codes.NewRecord){
+				statement.addAll(a.computeOwnership((Codes.NewRecord)code, function, stores, argumentCopyEliminated));
+			}else{
+				statement.addAll(a.computeOwnership(false, code, function, stores));
+			}
 		});
 
 	}
@@ -795,7 +801,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		}
 
-		postProcessor(false, argumentCopyEliminated, statement, code, function);
+		postProcessor(argumentCopyEliminated, statement, code, function);
 
 		// add the statement
 		stores.addAllStatements(code, statement, function);
@@ -1134,7 +1140,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Assign rhs to rhs without any copy, e.g. a = b[i];
 		statement.add(indent + lhs + "=" + rhs + "[" + index + "];");
 
-		postProcessor(false, code.operand(0), statement, code, function);
+		postProcessor(false, false, code.operand(0), statement, code, function);
 
 		stores.addAllStatements(code, statement, function);
 	}
@@ -1195,8 +1201,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement.add(s);
 		}
 
-		postProcessor(false, code.operand(0), statement, code, function);
-		
+		postProcessor(false, false, code.operand(0), statement, code, function);
+
 		stores.addAllStatements(code, statement, function);
 	}
 
@@ -1255,13 +1261,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Generate copy/uncopy assignment code
 				statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, indent, lhs, rhs,
 						isCopyEliminated, stores));
+
+				postProcessor(false, isCopyEliminated, code.operand(0), statement, code, function);
 			}
-			
+
 			// Compute ownership
-			this.deallocatedAnalyzer.ifPresent(a -> {
-				statement.addAll(a.computeOwnership(isCopyEliminated, code, function, stores));
-			});
-			
+			/*
+			 * this.deallocatedAnalyzer.ifPresent(a -> { statement.addAll(a.computeOwnership(isCopyEliminated, code,
+			 * function, stores)); });
+			 */
 		}
 		stores.addAllStatements(code, statement, function);
 	}
@@ -1428,7 +1436,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				+ CodeGeneratorHelper.translateType(lhs_type, stores).replace("*", "") + "));");
 
 		List<String> members = stores.getMemebers(code.type(0));
-		boolean isCopyEliminated = false;
+
+		HashMap<Integer, Boolean> copyEliminatedMap = new HashMap<Integer, Boolean>();
 		int[] operands = code.operands();
 		for (int i = 0; i < operands.length; i++) {
 			// Get operand
@@ -1437,12 +1446,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String member = members.get(i);
 			String lhs_member = lhs + "->" + member;
 			Type type = code.type(0).field(member);
-			isCopyEliminated &= isCopyEliminated(operand, code, function);
+			boolean isCopyEliminated = isCopyEliminated(operand, code, function);
+			copyEliminatedMap.put(operand, isCopyEliminated);
+
 			statement.addAll(CodeGeneratorHelper.generateAssignmentCode(type, indent, lhs_member, rhs, isCopyEliminated,
 					stores));
-		}		
-		
-		postProcessor(isCopyEliminated, code.operand(0), statement, code, function);
+		}
+
+		postProcessor(copyEliminatedMap, statement, code, function);
 
 		// Get the set of field names and convert it to an array of string.
 		stores.addAllStatements(code, statement, function);
@@ -1615,8 +1626,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			isCopyEliminated = false;
 		}
 
-		postProcessor(isCopyEliminated, code.operand(0), statement, code, function);
-		
+		postProcessor(true, isCopyEliminated, code.operand(0), statement, code, function);
+
 		stores.addAllStatements(code, statement, function);
 	}
 

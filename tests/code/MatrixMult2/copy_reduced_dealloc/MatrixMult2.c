@@ -35,9 +35,10 @@ Matrix* matrix(long long width, long long height, _DECL_1DARRAY_PARAM(data), _DE
 	//newrecord %4 = (%2, %1, %0) : {int[] data,int height,int width}
 	_FREE_STRUCT(_4, Matrix);
 	_4 = malloc(sizeof(Matrix));
-	_1DARRAY_COPY(_4->data, data);
+	_1DARRAY_UPDATE(_4->data, data);
 	_4->height = height;
 	_4->width = width;
+	_REMOVE_OWNERSHIP(data);
 	_ADD_OWNERSHIP(_4);
 	//return %4
 	_FREE(data);
@@ -138,7 +139,8 @@ blklab3:;
 blklab2:;
 	//invoke (%21) = (%0, %1, %3) MatrixMult2:matrix : function(MatrixMult2:nat,MatrixMult2:nat,int[])->(MatrixMult2:Matrix)
 	_FREE_STRUCT(_21, Matrix);
-	_21 = matrix(width, height, _1DARRAY_PARAM(data), false);
+	_REMOVE_OWNERSHIP(data);
+	_21 = matrix(width, height, _1DARRAY_PARAM(data), true);
 	_ADD_OWNERSHIP(_21);
 	//return %21
 	_FREE_STRUCT(r, Matrix);
@@ -433,7 +435,8 @@ blklab14:;
 blklab13:;
 	//invoke (%40) = (%3, %4, %5) MatrixMult2:matrix : function(MatrixMult2:nat,MatrixMult2:nat,int[])->(MatrixMult2:Matrix)
 	_FREE_STRUCT(_40, Matrix);
-	_40 = matrix(width, height, _1DARRAY_PARAM(data), false);
+	_REMOVE_OWNERSHIP(data);
+	_40 = matrix(width, height, _1DARRAY_PARAM(data), true);
 	_ADD_OWNERSHIP(_40);
 	//return %40
 	_FREE_STRUCT(a, Matrix);

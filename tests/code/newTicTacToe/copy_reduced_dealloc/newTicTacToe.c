@@ -70,7 +70,8 @@ Board* EmptyBoard(){
 	_FREE_STRUCT(_12, Board);
 	_12 = malloc(sizeof(Board));
 	_12->move = _1;
-	_1DARRAY_COPY(_12->pieces, _11);
+	_1DARRAY_UPDATE(_12->pieces, _11);
+	_REMOVE_OWNERSHIP(_11);
 	_ADD_OWNERSHIP(_12);
 	//return %12
 	_FREE_STRUCT(r, Board);

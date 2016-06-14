@@ -92,6 +92,38 @@ public class DeallocationAnalyzer extends Analyzer {
 
 	}
 
+	
+	/**
+	 * Compute ownerships for new record code
+	 * 
+	 * @param code
+	 * @param function
+	 * @param stores
+	 * @return
+	 */
+	public List<String> computeOwnership(Codes.NewRecord code, FunctionOrMethod function,
+			CodeStores stores, HashMap<Integer, Boolean> argumentCopyEliminated){
+		String indent = stores.getIndent(function);
+		List<String> statements = new ArrayList<String>();
+		// Iterate each member
+		argumentCopyEliminated.entrySet().forEach(entry ->{
+			int register = entry.getKey();
+			boolean isCopyEliminated = entry.getValue();
+			// Remove the ownerships for those member whose copies are not needed.
+			if(isCopyEliminated){
+				statements.add(indent + removeOwnership(register, function, stores));
+			}
+		});
+		
+		
+		// Assign ownership to lhs variable
+		statements.add(indent + addOwnership(code.target(0), function, stores));
+		
+		return statements;
+	}
+	
+	
+	
 	/**
 	 * Given a code, compute the ownerships and return the generated C code.
 	 * 

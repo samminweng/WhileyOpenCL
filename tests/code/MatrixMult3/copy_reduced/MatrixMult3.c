@@ -32,7 +32,7 @@ Matrix* matrix(long long width, long long height, _DECL_1DARRAY_PARAM(data)){
 	Matrix* _4;
 	//newrecord %4 = (%2, %1, %0) : {int[] data,int height,int width}
 	_4 = malloc(sizeof(Matrix));
-	_1DARRAY_COPY(_4->data, data);
+	_1DARRAY_UPDATE(_4->data, data);
 	_4->height = height;
 	_4->width = width;
 	//return %4

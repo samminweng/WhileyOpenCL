@@ -64,7 +64,7 @@ Board* EmptyBoard(){
 	//newrecord %12 = (%1, %11) : {int move,int[] pieces}
 	_12 = malloc(sizeof(Board));
 	_12->move = _1;
-	_1DARRAY_COPY(_12->pieces, _11);
+	_1DARRAY_UPDATE(_12->pieces, _11);
 	//return %12
 	return _12;
 	//return
