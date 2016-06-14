@@ -421,11 +421,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement.add(generateAssignmentCode(code, isCopyEliminated, function, stores));
 
 			postProcessor(isCopyEliminated, code.operand(0), statement, code, function);
-			/*
-			 * this.deallocatedAnalyzer.ifPresent(a -> { statement.addAll(a.computeOwnership(isCopyEliminated, code,
-			 * function, stores)); });
-			 */
-
+			
 		}
 
 		// Add the statement to the list of statements.
@@ -1138,7 +1134,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Assign rhs to rhs without any copy, e.g. a = b[i];
 		statement.add(indent + lhs + "=" + rhs + "[" + index + "];");
 
-		this.deallocatedAnalyzer.ifPresent(a -> statement.addAll(a.computeOwnership(false, code, function, stores)));
+		postProcessor(false, code.operand(0), statement, code, function);
 
 		stores.addAllStatements(code, statement, function);
 	}
@@ -1199,9 +1195,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement.add(s);
 		}
 
-		this.deallocatedAnalyzer.ifPresent(a -> {
-			statement.addAll(a.computeOwnership(false, code, function, stores));
-		});
+		postProcessor(false, code.operand(0), statement, code, function);
+		
 		stores.addAllStatements(code, statement, function);
 	}
 
@@ -1261,11 +1256,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, indent, lhs, rhs,
 						isCopyEliminated, stores));
 			}
-
+			
 			// Compute ownership
 			this.deallocatedAnalyzer.ifPresent(a -> {
 				statement.addAll(a.computeOwnership(isCopyEliminated, code, function, stores));
 			});
+			
 		}
 		stores.addAllStatements(code, statement, function);
 	}
@@ -1444,12 +1440,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			isCopyEliminated &= isCopyEliminated(operand, code, function);
 			statement.addAll(CodeGeneratorHelper.generateAssignmentCode(type, indent, lhs_member, rhs, isCopyEliminated,
 					stores));
-		}
-		boolean isCopyEliminatedFinal = isCopyEliminated;
-		// Assign ownership to lhs
-		this.deallocatedAnalyzer.ifPresent(a -> {
-			statement.addAll(a.computeOwnership(isCopyEliminatedFinal, code, function, stores));
-		});
+		}		
+		
+		postProcessor(isCopyEliminated, code.operand(0), statement, code, function);
 
 		// Get the set of field names and convert it to an array of string.
 		stores.addAllStatements(code, statement, function);
@@ -1622,10 +1615,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			isCopyEliminated = false;
 		}
 
-		this.deallocatedAnalyzer.ifPresent(a -> {
-			statement.addAll(a.computeOwnership(isCopyEliminated, code, function, stores));
-		});
-
+		postProcessor(isCopyEliminated, code.operand(0), statement, code, function);
+		
 		stores.addAllStatements(code, statement, function);
 	}
 
