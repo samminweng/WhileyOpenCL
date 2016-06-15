@@ -27,14 +27,15 @@ import wyopcl.translator.generator.CodeStores;
  * @author Min-Hsien Weng
  *
  */
-public class DeallocationAnalyzer extends Analyzer {	
+public class DeallocationAnalyzer extends Analyzer {
 
 	public DeallocationAnalyzer(Configuration config) {
-		super(config);		
+		super(config);
 	}
 
 	/**
 	 * Declare ownership flags
+	 * 
 	 * @param indent
 	 * @param register
 	 * @param function
@@ -100,11 +101,10 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeOwnership(Codes.Invoke code, FunctionOrMethod function,
-			CodeStores stores){
+	public List<String> computeOwnership(Codes.Invoke code, FunctionOrMethod function, CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
-		
+
 		if (code.name.module().toString().contains("whiley/lang")) {
 			int lhs = code.target(0);
 			switch (code.name.name()) {
@@ -130,11 +130,9 @@ public class DeallocationAnalyzer extends Analyzer {
 			}
 		}
 		return statements;
-		
+
 	}
-	
-	
-	
+
 	/**
 	 * Compute ownership of array generator
 	 * 
@@ -143,19 +141,17 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeOwnership(Codes.ArrayGenerator code, FunctionOrMethod function,
-			CodeStores stores){
+	public List<String> computeOwnership(Codes.ArrayGenerator code, FunctionOrMethod function, CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
-		
+
 		// Assign ownership to lhs variable.
 		statements.add(indent + addOwnership(code.target(0), function, stores));
-		
+
 		return statements;
-		
+
 	}
-	
-	
+
 	/**
 	 * Compute ownership of Const byte-code
 	 * 
@@ -165,26 +161,24 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeOwnership(Codes.Const code, FunctionOrMethod function,
-			CodeStores stores){
+	public List<String> computeOwnership(Codes.Const code, FunctionOrMethod function, CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
-		
+
 		int lhs = code.target(0);
 		if (code.constant.type() instanceof Type.Null) {
-			// Constant is a NULL and remove ownership 
+			// Constant is a NULL and remove ownership
 			statements.add(indent + removeOwnership(lhs, function, stores));
-		} else if(code.constant.type() instanceof Type.Array){
+		} else if (code.constant.type() instanceof Type.Array) {
 			// Check if constant is an array and add ownership
 			statements.add(indent + addOwnership(lhs, function, stores));
 		} else {
 			// Do nothing
 		}
-				
+
 		return statements;
 	}
-	
-	
+
 	/**
 	 * Computes ownership for new array byte-code
 	 * 
@@ -195,8 +189,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeOwnership(Codes.NewArray code, FunctionOrMethod function,
-			CodeStores stores){
+	public List<String> computeOwnership(Codes.NewArray code, FunctionOrMethod function, CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
 		int lhs = code.target(0);
@@ -204,11 +197,10 @@ public class DeallocationAnalyzer extends Analyzer {
 			// Create an non-empty array, and add lhs variable to ownership set.
 			statements.add(indent + addOwnership(lhs, function, stores));
 		}
-		
+
 		return statements;
 	}
-	
-	
+
 	/**
 	 * Compute ownerships for new record code
 	 * 
@@ -217,28 +209,67 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeOwnership(Codes.NewRecord code, FunctionOrMethod function,
-			CodeStores stores, HashMap<Integer, Boolean> argumentCopyEliminated){
+	public List<String> computeOwnership(Codes.NewRecord code, FunctionOrMethod function, CodeStores stores,
+			HashMap<Integer, Boolean> argumentCopyEliminated) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
 		// Iterate each member
-		argumentCopyEliminated.entrySet().forEach(entry ->{
+		argumentCopyEliminated.entrySet().forEach(entry -> {
 			int register = entry.getKey();
 			boolean isCopyEliminated = entry.getValue();
 			// Remove the ownerships for those member whose copies are not needed.
-			if(isCopyEliminated){
+			if (isCopyEliminated) {
 				statements.add(indent + removeOwnership(register, function, stores));
 			}
 		});
-		
+
 		// Assign ownership to lhs variable
 		statements.add(indent + addOwnership(code.target(0), function, stores));
-		
+
 		return statements;
 	}
-	
-	
-	
+
+	/**
+	 * Compute ownership flags for assignment
+	 * 
+	 * 
+	 * @param code
+	 * @param function
+	 * @param stores
+	 * @return
+	 */
+	public List<String> computeOwnership(boolean isCopyEliminated, Codes.Assign code, FunctionOrMethod function,
+			CodeStores stores) {
+		String indent = stores.getIndent(function);
+		List<String> statements = new ArrayList<String>();
+		Codes.Assign assign = (Codes.Assign) code;
+		int lhs = assign.target(0);
+		Type lhs_type = stores.getRawType(lhs, function);
+		int rhs = assign.operand(0);
+		Type rhs_type = stores.getRawType(rhs, function);
+
+		// Special case for NULL type ( a = NULL;)
+		if (assign.type(0) instanceof Type.Null) {
+			// Remove lhs ownership
+			statements.add(indent + removeOwnership(lhs, function, stores));
+		} else if (lhs_type instanceof Type.Int && rhs_type instanceof Type.Union) {
+			// Special case for converting an integer pointer to an integer
+			// No changes to ownership
+		} else {
+			if (isCopyEliminated) {
+				// Transfer rhs ownership to lhs
+				statements.add(indent + transferOwnership(lhs, rhs, function, stores));
+				// Remove rhs ownership
+				statements.add(indent + removeOwnership(rhs, function, stores));
+			} else {
+				// Add rhs to ownership set
+				statements.add(indent + addOwnership(lhs, function, stores));
+			}
+		}
+
+		return statements;
+	}
+
 	/**
 	 * Given a code, compute the ownerships and return the generated C code.
 	 * 
@@ -262,32 +293,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
-		if (code instanceof Codes.Assign) {
-			Codes.Assign assign = (Codes.Assign) code;
-			int lhs = assign.target(0);
-			Type lhs_type = stores.getRawType(lhs, function);
-			int rhs = assign.operand(0);
-			Type rhs_type = stores.getRawType(rhs, function);
-
-			// Special case for NULL type ( a = NULL;)
-			if (assign.type(0) instanceof Type.Null) {
-				// Remove lhs ownership
-				statements.add(indent + removeOwnership(lhs, function, stores));
-			} else if (lhs_type instanceof Type.Int && rhs_type instanceof Type.Union) {
-				// Special case for converting an integer pointer to an integer
-				// No changes to ownership
-			} else {
-				if (isCopyEliminated) {
-					// Transfer rhs ownership to lhs
-					statements.add(indent + transferOwnership(lhs, rhs, function, stores));
-					// Remove rhs ownership
-					statements.add(indent + removeOwnership(rhs, function, stores));
-				} else {
-					// Add rhs to ownership set
-					statements.add(indent + addOwnership(lhs, function, stores));
-				}
-			}
-		} else if (code instanceof Codes.IndexOf) {
+		if (code instanceof Codes.IndexOf) {
 			Codes.IndexOf indexof = (Codes.IndexOf) code;
 			int lhs = indexof.target(0);
 			// Transfer lhs ownership due to non-transferable array ownership
@@ -349,8 +355,8 @@ public class DeallocationAnalyzer extends Analyzer {
 		String indent = stores.getIndent(function);
 		// Add or transfer out the parameters that do not have the copy
 		for (int register : code.operands()) {
-			Optional<HashMap<String, Boolean>> ownership = computeOwnership(register, code, function,
-					stores, copyAnalyzer);
+			Optional<HashMap<String, Boolean>> ownership = computeOwnership(register, code, function, stores,
+					copyAnalyzer);
 			ownership.ifPresent(o -> {
 				// Get caller ownership
 				boolean caller_own = o.get("caller");
@@ -426,6 +432,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * 
 	 * 
 	 * Rules are as below:
+	 * 
 	 * <pre>
 	 * f mutates b?		|F			|F			|T			|T
 	 * f returns b?		|F			|T			|T			|F
@@ -438,8 +445,8 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * 					|caller = T |caller = F	|caller = F |caller = F
 	 * 					|callee = F |callee = T	|callee = T	|callee = T
 	 * </pre>
-	 * where 'caller' is the ownership flag of caller site
-	 *       'callee' is the ownership flag of callee site
+	 * 
+	 * where 'caller' is the ownership flag of caller site 'callee' is the ownership flag of callee site
 	 * 
 	 * @param type
 	 * @param copyAnalyzer
@@ -457,7 +464,7 @@ public class DeallocationAnalyzer extends Analyzer {
 		if (copyAnalyzer.isPresent()) {
 			// Analyze the ownerships using live variable, read-write and return analysis
 			isLive = copyAnalyzer.get().liveAnalyzer.isLive(register, code, function);
-			
+
 			FunctionOrMethod f = this.getFunction(code.name.name());
 			int arguement = mapFunctionArgument(register, code);
 			boolean isMutated = copyAnalyzer.get().readwriteAnalyzer.isMutated(arguement, f);
@@ -492,7 +499,7 @@ public class DeallocationAnalyzer extends Analyzer {
 					}
 				}
 			}
-		}else{
+		} else {
 			// The copy is needed, so that caller and Callee both have the ownerships
 			ownership.get().put("caller", true);
 			ownership.get().put("callee", true);
@@ -502,7 +509,8 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Adds the deallocation code 
+	 * Adds the deallocation code
+	 * 
 	 * @param lhs
 	 * @param code
 	 * @param function

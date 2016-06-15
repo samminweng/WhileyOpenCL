@@ -659,7 +659,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 		// Compute ownership of lhs register
 		this.deallocatedAnalyzer.ifPresent(a -> {
-			if(code instanceof Codes.NewArray){
+			if(code instanceof Codes.Assign){
+				statement.addAll(a.computeOwnership(isCopyEliminated, (Codes.Assign)code, function, stores));
+			}else if(code instanceof Codes.NewArray){
 				statement.addAll(a.computeOwnership((Codes.NewArray)code, function, stores));
 			} else if (code instanceof Codes.Const){
 				statement.addAll(a.computeOwnership((Codes.Const)code, function, stores));
