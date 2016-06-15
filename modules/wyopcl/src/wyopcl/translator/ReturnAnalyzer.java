@@ -114,9 +114,9 @@ public class ReturnAnalyzer extends Analyzer {
 			for (Code code : function.body().bytecodes()) {
 				if (code instanceof Codes.Return) {
 					Codes.Return r = (Codes.Return) code;
-					if (r.targets().length > 0) {
+					if (r.operands().length > 0) {
 						// add return register to set
-						store.add(r.target(0));
+						store.add(r.operand(0));
 					}
 				}
 			}
