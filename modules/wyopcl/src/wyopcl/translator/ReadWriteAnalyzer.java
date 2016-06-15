@@ -60,8 +60,18 @@ public class ReadWriteAnalyzer extends Analyzer {
 			stores.put(function, new HashSet<Integer>());
 		}
 		HashSet<Integer> store = stores.get(function);
-		// Check if the code is an assignment
-		store.add(register);
+		// Check if code is update
+		if(code instanceof Codes.Update){
+			Codes.Update update = (Codes.Update)code;
+			int lhs = update.target(0);
+			int rhs = update.operand(update.operands().length - 1);
+			// Check if lhs is readwrite and the copy is avoided
+			if(store.contains(lhs) && isCopyAvoided){
+				store.add(rhs);
+			}			
+		}else{
+			store.add(register);
+		}
 	}
 
 	/**

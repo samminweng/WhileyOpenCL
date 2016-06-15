@@ -667,6 +667,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement.addAll(a.computeOwnership((Codes.Const)code, function, stores));
 			} else if(code instanceof Codes.ArrayGenerator){
 				statement.addAll(a.computeOwnership((Codes.ArrayGenerator)code, function, stores));
+			} else if (code instanceof Codes.Update){
+				statement.addAll(a.computeOwnership((Codes.Update)code, function, stores));
 			} else{
 				statement.addAll(a.computeOwnership(isCopyEliminated, code, function, stores));
 			}
@@ -1045,13 +1047,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		});
 		// Generate update statement, e.g. a[i] = b
 		statement.add(indent + lhs + " = " + stores.getVar(code.result(), function) + ";");
-
-		// Check if rhs variable needs the copy.
 		boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
-		// Remove
-		this.deallocatedAnalyzer
-				.ifPresent(a -> statement.addAll(a.computeOwnership(isCopyEliminated, code, function, stores)));
-
+		postProcessor(true, isCopyEliminated, code.operand(0), statement, code, function);
+		
 		stores.addAllStatements(code, statement, function);
 	}
 

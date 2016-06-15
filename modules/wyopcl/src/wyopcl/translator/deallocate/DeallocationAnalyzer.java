@@ -271,6 +271,25 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
+	 * Compute ownerships of Update byte-code
+	 * 
+	 * @param code
+	 * @param function
+	 * @param stores
+	 * @return
+	 */
+	public List<String> computeOwnership(Codes.Update code, FunctionOrMethod function, CodeStores stores) {
+		String indent = stores.getIndent(function);
+		List<String> statements = new ArrayList<String>();
+		
+		// The rhs register is the last operand
+		int rhs = code.operand(code.operands().length - 1);
+		// Remove rhs ownership as the copy is not made at 'update' byte-code
+		statements.add(indent + removeOwnership(rhs, function, stores));
+		return statements;
+	}
+	
+	/**
 	 * Given a code, compute the ownerships and return the generated C code.
 	 * 
 	 * Note the lhs variable in an assignment is not always added with ownership.
@@ -298,13 +317,6 @@ public class DeallocationAnalyzer extends Analyzer {
 			int lhs = indexof.target(0);
 			// Transfer lhs ownership due to non-transferable array ownership
 			statements.add(indent + removeOwnership(lhs, function, stores));
-		} else if (code instanceof Codes.Update) {
-			Codes.Update update = (Codes.Update) code;
-			// The rhs register is always the last operand (a[i] = b)
-			int rhs = update.operand(update.operands().length - 1);
-
-			// Remove the rhs ownership without checking if the copy is made.
-			statements.add(indent + removeOwnership(rhs, function, stores));
 		} else if (code instanceof Codes.FieldLoad) {
 			Codes.FieldLoad fieldload = (Codes.FieldLoad) code;
 			int lhs = fieldload.target(0);
