@@ -297,9 +297,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 
 		// Compute the ownership
-		this.deallocatedAnalyzer.ifPresent(a -> {
-			statement.addAll(a.computeOwnership(true, code, function, stores));
-		});
+		postProcessor(false, false, code.target(0), statement, code, function);
 
 		stores.addAllStatements(code, statement, function);
 	}
@@ -661,7 +659,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 		// Compute ownership of lhs register
 		this.deallocatedAnalyzer.ifPresent(a -> {
-			statement.addAll(a.computeOwnership(isCopyEliminated, code, function, stores));
+			if(code instanceof Codes.NewArray){
+				statement.addAll(a.computeOwnership((Codes.NewArray)code, function, stores));
+			} else if (code instanceof Codes.Const){
+				statement.addAll(a.computeOwnership((Codes.Const)code, function, stores));
+			} else if(code instanceof Codes.ArrayGenerator){
+				statement.addAll(a.computeOwnership((Codes.ArrayGenerator)code, function, stores));
+			} else{
+				statement.addAll(a.computeOwnership(isCopyEliminated, code, function, stores));
+			}
 		});
 	}
 

@@ -92,6 +92,79 @@ public class DeallocationAnalyzer extends Analyzer {
 
 	}
 
+	/**
+	 * Compute ownership of array generator
+	 * 
+	 * @param code
+	 * @param function
+	 * @param stores
+	 * @return
+	 */
+	public List<String> computeOwnership(Codes.ArrayGenerator code, FunctionOrMethod function,
+			CodeStores stores){
+		String indent = stores.getIndent(function);
+		List<String> statements = new ArrayList<String>();
+		
+		// Assign ownership to lhs variable.
+		statements.add(indent + addOwnership(code.target(0), function, stores));
+		
+		return statements;
+		
+	}
+	
+	
+	/**
+	 * Compute ownership of Const byte-code
+	 * 
+	 * 
+	 * @param code
+	 * @param function
+	 * @param stores
+	 * @return
+	 */
+	public List<String> computeOwnership(Codes.Const code, FunctionOrMethod function,
+			CodeStores stores){
+		String indent = stores.getIndent(function);
+		List<String> statements = new ArrayList<String>();
+		
+		int lhs = code.target(0);
+		if (code.constant.type() instanceof Type.Null) {
+			// Constant is a NULL and remove ownership 
+			statements.add(indent + removeOwnership(lhs, function, stores));
+		} else if(code.constant.type() instanceof Type.Array){
+			// Check if constant is an array and add ownership
+			statements.add(indent + addOwnership(lhs, function, stores));
+		} else {
+			// Do nothing
+		}
+				
+		return statements;
+	}
+	
+	
+	/**
+	 * Computes ownership for new array byte-code
+	 * 
+	 * 
+	 * 
+	 * @param code
+	 * @param function
+	 * @param stores
+	 * @return
+	 */
+	public List<String> computeOwnership(Codes.NewArray code, FunctionOrMethod function,
+			CodeStores stores){
+		String indent = stores.getIndent(function);
+		List<String> statements = new ArrayList<String>();
+		int lhs = code.target(0);
+		if (code.operands().length > 0) {
+			// Create an non-empty array, and add lhs variable to ownership set.
+			statements.add(indent + addOwnership(lhs, function, stores));
+		}
+		
+		return statements;
+	}
+	
 	
 	/**
 	 * Compute ownerships for new record code
@@ -114,7 +187,6 @@ public class DeallocationAnalyzer extends Analyzer {
 				statements.add(indent + removeOwnership(register, function, stores));
 			}
 		});
-		
 		
 		// Assign ownership to lhs variable
 		statements.add(indent + addOwnership(code.target(0), function, stores));
@@ -228,40 +300,6 @@ public class DeallocationAnalyzer extends Analyzer {
 					statements.add(indent + addOwnership(lhs, function, stores));
 				}
 			}
-		} else if (code instanceof Codes.NewRecord) {
-			Codes.NewRecord nr = (Codes.NewRecord) code;
-			int lhs = nr.target(0);
-			int rhs = nr.operand(0);
-			if (isCopyEliminated) {
-				statements.add(indent + transferOwnership(lhs, rhs, function, stores));
-				statements.add(indent + removeOwnership(rhs, function, stores));
-			} else {
-				// Assign ownership to lhs variable if the rhs variable is copied.
-				statements.add(indent + addOwnership(lhs, function, stores));
-			}
-		} else if (code instanceof Codes.Const) {
-			Codes.Const c = (Codes.Const) code;
-			int lhs = c.target(0);
-			// Define NULL as a constant
-			if (c.constant.type() instanceof Type.Null) {
-				// Remove lhs ownership as it points to NULL
-				statements.add(indent + removeOwnership(lhs, function, stores));
-			} else {
-				// Add lhs to ownership
-				statements.add(indent + addOwnership(lhs, function, stores));
-			}
-		} else if (code instanceof Codes.NewArray) {
-			Codes.NewArray na = (Codes.NewArray) code;
-			int lhs = na.target(0);
-			if (na.operands().length > 0) {
-				// Create an non-empty array, and add lhs variable to ownership set.
-				statements.add(indent + addOwnership(lhs, function, stores));
-			}
-		} else if (code instanceof Codes.ArrayGenerator) {
-			Codes.ArrayGenerator ag = (Codes.ArrayGenerator) code;
-			int lhs = ag.target(0);
-			// Assign ownership to lhs variable.
-			statements.add(indent + addOwnership(lhs, function, stores));
 		} else {
 			throw new RuntimeException("Not implemented");
 		}
