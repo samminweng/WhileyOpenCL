@@ -93,6 +93,49 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
+	 * Compute ownerships for a function call
+	 * 
+	 * @param code
+	 * @param function
+	 * @param stores
+	 * @return
+	 */
+	public List<String> computeOwnership(Codes.Invoke code, FunctionOrMethod function,
+			CodeStores stores){
+		String indent = stores.getIndent(function);
+		List<String> statements = new ArrayList<String>();
+		
+		if (code.name.module().toString().contains("whiley/lang")) {
+			int lhs = code.target(0);
+			switch (code.name.name()) {
+			case "parse":
+				int rhs = code.operand(0);
+				// Add ownership to lhs.
+				statements.add(indent + addOwnership(lhs, function, stores));
+				// Remove rhs ownership
+				statements.add(indent + removeOwnership(rhs, function, stores));
+				break;
+			case "slice":
+				// Add ownership to lhs.
+				statements.add(indent + addOwnership(lhs, function, stores));
+				break;
+			default:
+				// no change to statement
+				break;
+			}
+		} else {
+			// Add ownership to lhs variable
+			if (code.targets().length > 0) {
+				statements.add(indent + addOwnership(code.target(0), function, stores));
+			}
+		}
+		return statements;
+		
+	}
+	
+	
+	
+	/**
 	 * Compute ownership of array generator
 	 * 
 	 * @param code
@@ -256,33 +299,6 @@ public class DeallocationAnalyzer extends Analyzer {
 
 			// Remove the rhs ownership without checking if the copy is made.
 			statements.add(indent + removeOwnership(rhs, function, stores));
-		} else if (code instanceof Codes.Invoke) {
-			Codes.Invoke invoke = (Codes.Invoke) code;
-			if (invoke.name.module().toString().contains("whiley/lang")) {
-				int lhs = invoke.target(0);
-				switch (invoke.name.name()) {
-				case "parse":
-					int rhs = invoke.operand(0);
-					// Add ownership to lhs.
-					statements.add(indent + addOwnership(lhs, function, stores));
-					// Remove rhs ownership
-					statements.add(indent + removeOwnership(rhs, function, stores));
-					break;
-				case "slice":
-					// Add ownership to lhs.
-					statements.add(indent + addOwnership(lhs, function, stores));
-					break;
-				default:
-					// no change to statement
-					break;
-				}
-			} else {
-				// Add ownership to lhs variable
-				if (invoke.targets().length > 0) {
-					statements.add(indent + addOwnership(invoke.target(0), function, stores));
-				}
-			}
-
 		} else if (code instanceof Codes.FieldLoad) {
 			Codes.FieldLoad fieldload = (Codes.FieldLoad) code;
 			int lhs = fieldload.target(0);

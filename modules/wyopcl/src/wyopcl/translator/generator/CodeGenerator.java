@@ -696,7 +696,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		this.deallocatedAnalyzer.ifPresent(a -> {
 			if(code instanceof Codes.NewRecord){
 				statement.addAll(a.computeOwnership((Codes.NewRecord)code, function, stores, argumentCopyEliminated));
-			}else{
+			}else if (code instanceof Codes.Invoke){
+				statement.addAll(a.computeOwnership((Codes.Invoke)code, function, stores));
+			} else{
 				statement.addAll(a.computeOwnership(false, code, function, stores));
 			}
 		});
