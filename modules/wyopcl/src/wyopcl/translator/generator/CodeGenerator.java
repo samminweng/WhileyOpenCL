@@ -400,6 +400,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.Assign code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
+
 		// Get the actual type for lhs variable.
 		String indent = stores.getIndent(function);
 		Type lhs_type = stores.getRawType(code.target(0), function);
@@ -410,9 +411,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Point lhs to lambda function.
 			statement.add(indent + lhs + " = " + rhs + ";");
 		} else {
-			this.deallocatedAnalyzer.ifPresent(a -> {
-				statement.add(indent + a.addDeallocatedCode(lhs, lhs_type, stores));
-			});
+			/*
+			 * this.deallocatedAnalyzer.ifPresent(a -> { statement.add(indent + a.addDeallocatedCode(lhs, lhs_type,
+			 * stores)); });
+			 */
+			preProcessor(statement, code, function);
 
 			boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
 
@@ -642,6 +645,35 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
+	 * Added de-allocation code to release the memory of lhs register
+	 * 
+	 * @param register
+	 * @param statement
+	 * @param code
+	 * @param function
+	 */
+	private void preProcessor(List<String> statement, Code code, FunctionOrMethod function) {
+		String indent = stores.getIndent(function);
+		String lhs;
+		Type lhs_type;
+		if (code instanceof Codes.ArrayGenerator) {
+			lhs = stores.getVar(((Codes.ArrayGenerator) code).target(0), function);
+			lhs_type = ((Codes.ArrayGenerator) code).type(0);
+		} else if (code instanceof Codes.Assign) {
+			lhs = stores.getVar(((Codes.Assign) code).target(0), function);
+			lhs_type = stores.getRawType(((Codes.Assign) code).target(0), function);
+		} else {
+			throw new RuntimeException("Not implemented");
+		}
+
+		// Deallocate lhs variable
+		this.deallocatedAnalyzer.ifPresent(a -> {
+			statement.add(indent + a.addDeallocatedCode(lhs, lhs_type, stores));
+		});
+
+	}
+
+	/**
 	 * Update the set with register and generate ownership code.
 	 * 
 	 * 
@@ -659,17 +691,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 		// Compute ownership of lhs register
 		this.deallocatedAnalyzer.ifPresent(a -> {
-			if(code instanceof Codes.Assign){
-				statement.addAll(a.computeOwnership(isCopyEliminated, (Codes.Assign)code, function, stores));
-			}else if(code instanceof Codes.NewArray){
-				statement.addAll(a.computeOwnership((Codes.NewArray)code, function, stores));
-			} else if (code instanceof Codes.Const){
-				statement.addAll(a.computeOwnership((Codes.Const)code, function, stores));
-			} else if(code instanceof Codes.ArrayGenerator){
-				statement.addAll(a.computeOwnership((Codes.ArrayGenerator)code, function, stores));
-			} else if (code instanceof Codes.Update){
-				statement.addAll(a.computeOwnership((Codes.Update)code, function, stores));
-			} else{
+			if (code instanceof Codes.Assign) {
+				statement.addAll(a.computeOwnership(isCopyEliminated, (Codes.Assign) code, function, stores));
+			} else if (code instanceof Codes.NewArray) {
+				statement.addAll(a.computeOwnership((Codes.NewArray) code, function, stores));
+			} else if (code instanceof Codes.Const) {
+				statement.addAll(a.computeOwnership((Codes.Const) code, function, stores));
+			} else if (code instanceof Codes.ArrayGenerator) {
+				statement.addAll(a.computeOwnership((Codes.ArrayGenerator) code, function, stores));
+			} else if (code instanceof Codes.Update) {
+				statement.addAll(a.computeOwnership((Codes.Update) code, function, stores));
+			} else {
 				statement.addAll(a.computeOwnership(isCopyEliminated, code, function, stores));
 			}
 		});
@@ -684,25 +716,25 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 * @param function
 	 */
-	private void postProcessor(HashMap<Integer, Boolean> argumentCopyEliminated,
-			List<String> statement, Code code, FunctionOrMethod function) {
+	private void postProcessor(HashMap<Integer, Boolean> argumentCopyEliminated, List<String> statement, Code code,
+			FunctionOrMethod function) {
 
 		// Iterate copy elimination set and update read-write/return set
-		if(this.copyAnalyzer.isPresent()){
+		if (this.copyAnalyzer.isPresent()) {
 			argumentCopyEliminated.entrySet().forEach(entry -> {
 				boolean isCopyEliminated = entry.getValue();
 				int register = entry.getKey();
 				this.copyAnalyzer.get().updateSet(isCopyEliminated, register, code, function);
 			});
 		}
-		
+
 		// Compute ownership of lhs register
 		this.deallocatedAnalyzer.ifPresent(a -> {
-			if(code instanceof Codes.NewRecord){
-				statement.addAll(a.computeOwnership((Codes.NewRecord)code, function, stores, argumentCopyEliminated));
-			}else if (code instanceof Codes.Invoke){
-				statement.addAll(a.computeOwnership((Codes.Invoke)code, function, stores));
-			} else{
+			if (code instanceof Codes.NewRecord) {
+				statement.addAll(a.computeOwnership((Codes.NewRecord) code, function, stores, argumentCopyEliminated));
+			} else if (code instanceof Codes.Invoke) {
+				statement.addAll(a.computeOwnership((Codes.Invoke) code, function, stores));
+			} else {
 				statement.addAll(a.computeOwnership(false, code, function, stores));
 			}
 		});
@@ -1049,7 +1081,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		statement.add(indent + lhs + " = " + stores.getVar(code.result(), function) + ";");
 		boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
 		postProcessor(true, isCopyEliminated, code.operand(0), statement, code, function);
-		
+
 		stores.addAllStatements(code, statement, function);
 	}
 
@@ -1599,19 +1631,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	@Override
 	protected void translate(ArrayGenerator code, FunctionOrMethod function) {
+		List<String> statement = new ArrayList<String>();
+		preProcessor(statement, code, function);
 
 		String indent = stores.getIndent(function);
 		String lhs = stores.getVar(code.target(0), function);
 		Type.Array lhs_type = (Type.Array) stores.getRawType(code.target(0), function);
 		String rhs = stores.getVar(code.operand(0), function);
 		String size = stores.getVar(code.operand(1), function);
-		List<String> statement = new ArrayList<String>();
-
-		// Deallocate lhs variable
-		this.deallocatedAnalyzer.ifPresent(a -> {
-			statement.add(indent + a.addDeallocatedCode(lhs, code.type(0), stores));
-		});
-
 		Type elm_type = stores.getArrayElementType(lhs_type);
 		boolean isCopyEliminated;
 		if (stores.isIntType(elm_type)) {
