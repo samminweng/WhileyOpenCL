@@ -69,6 +69,7 @@ long long* sortV1(_DECL_1DARRAY_PARAM(items), _DECL_OWNERSHIP_PARAM(items), long
 	//assign %4 = %14  : int
 	pivot = _14;
 	//invoke (%15) = (%0, %1, %4) whiley/lang/Array:slice : function(int[],int,int)->(int[])
+	_1DARRAY_SIZE(_15, items);
 	_FREE(_15);
 _SLICE_ARRAY(_15, items, start, pivot);
 	_ADD_OWNERSHIP(_15);
@@ -80,9 +81,9 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	//const %17 = 0 : int
 	_17 = 0;
 	//invoke (%16) = (%5, %17, %4) mergesort:sortV1 : function(int[],int,int)->(int[])
+	_1DARRAY_SIZE(_16, lhs);
 	_FREE(_16);
 	_REMOVE_OWNERSHIP(lhs);
-	_1DARRAY_SIZE(_16, lhs);
 	_16 = sortV1(_1DARRAY_PARAM(lhs), true, _17, pivot);
 	_ADD_OWNERSHIP(_16);
 	//assign %5 = %16  : int[]
@@ -91,6 +92,7 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	_TRANSFER_OWNERSHIP(lhs, _16);
 	_REMOVE_OWNERSHIP(_16);
 	//invoke (%18) = (%0, %4, %2) whiley/lang/Array:slice : function(int[],int,int)->(int[])
+	_1DARRAY_SIZE(_18, items);
 	_FREE(_18);
 _SLICE_ARRAY(_18, items, pivot, end);
 	_ADD_OWNERSHIP(_18);
@@ -104,9 +106,9 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	//sub %21 = %2, %4 : int
 	_21=end-pivot;
 	//invoke (%19) = (%6, %20, %21) mergesort:sortV1 : function(int[],int,int)->(int[])
+	_1DARRAY_SIZE(_19, rhs);
 	_FREE(_19);
 	_REMOVE_OWNERSHIP(rhs);
-	_1DARRAY_SIZE(_19, rhs);
 	_19 = sortV1(_1DARRAY_PARAM(rhs), true, _20, _21);
 	_ADD_OWNERSHIP(_19);
 	//assign %6 = %19  : int[]
@@ -382,9 +384,9 @@ int main(int argc, char** args){
 	//const %13 = 5 : int
 	_13 = 5;
 	//invoke (%11) = (%1, %12, %13) mergesort:sortV1 : function(int[],int,int)->(int[])
+	_1DARRAY_SIZE(_11, ys);
 	_FREE(_11);
 	_REMOVE_OWNERSHIP(ys);
-	_1DARRAY_SIZE(_11, ys);
 	_11 = sortV1(_1DARRAY_PARAM(ys), true, _12, _13);
 	_ADD_OWNERSHIP(_11);
 	//assign %1 = %11  : int[]
@@ -441,9 +443,9 @@ blklab9:;
 	//const %27 = 4 : int
 	_27 = 4;
 	//invoke (%25) = (%1, %26, %27) mergesort:sortV1 : function(int[],int,int)->(int[])
+	_1DARRAY_SIZE(_25, ys);
 	_FREE(_25);
 	_REMOVE_OWNERSHIP(ys);
-	_1DARRAY_SIZE(_25, ys);
 	_25 = sortV1(_1DARRAY_PARAM(ys), true, _26, _27);
 	_ADD_OWNERSHIP(_25);
 	//assign %1 = %25  : int[]
@@ -498,9 +500,9 @@ blklab10:;
 	//const %40 = 4 : int
 	_40 = 4;
 	//invoke (%38) = (%1, %39, %40) mergesort:sortV1 : function(int[],int,int)->(int[])
+	_1DARRAY_SIZE(_38, ys);
 	_FREE(_38);
 	_REMOVE_OWNERSHIP(ys);
-	_1DARRAY_SIZE(_38, ys);
 	_38 = sortV1(_1DARRAY_PARAM(ys), true, _39, _40);
 	_ADD_OWNERSHIP(_38);
 	//assign %1 = %38  : int[]
@@ -557,9 +559,9 @@ blklab11:;
 	//const %54 = 5 : int
 	_54 = 5;
 	//invoke (%52) = (%1, %53, %54) mergesort:sortV1 : function(int[],int,int)->(int[])
+	_1DARRAY_SIZE(_52, ys);
 	_FREE(_52);
 	_REMOVE_OWNERSHIP(ys);
-	_1DARRAY_SIZE(_52, ys);
 	_52 = sortV1(_1DARRAY_PARAM(ys), true, _53, _54);
 	_ADD_OWNERSHIP(_52);
 	//assign %1 = %52  : int[]
@@ -642,9 +644,9 @@ blklab13:;
 	//add %73 = %2, %72 : int
 	_73=max+_72;
 	//invoke (%70) = (%4, %71, %73) mergesort:sortV1 : function(int[],int,int)->(int[])
+	_1DARRAY_SIZE(_70, arr);
 	_FREE(_70);
 	_REMOVE_OWNERSHIP(arr);
-	_1DARRAY_SIZE(_70, arr);
 	_70 = sortV1(_1DARRAY_PARAM(arr), true, _71, _73);
 	_ADD_OWNERSHIP(_70);
 	//assign %4 = %70  : int[]

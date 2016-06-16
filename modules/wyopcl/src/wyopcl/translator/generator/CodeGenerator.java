@@ -532,20 +532,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// If no return value, no needs for translation.
 		if (code.targets().length > 0) {
 			String indent = stores.getIndent(function);
-			Type lhs_type = stores.getRawType(code.target(0), function);
 			String lhs = stores.getVar(code.target(0), function);
-			if (lhs_type instanceof Type.Array) {
-				// Get input Array
-				for (int operand : code.operands()) {
-					Type type = stores.getRawType(operand, function);
-					if (type instanceof Type.Array) {
-						String param = stores.getVar(operand, function);
-						// Propagate array sizes from input parameters.
-						statement += indent + "_" + stores.getArrayDimension(type) + "DARRAY_SIZE(" + lhs + ", " + param
-								+ ");\n";
-					}
-				}
-			}
 			// Call the function and assign the return value to lhs register.
 			statement += indent + lhs + " = ";
 		}
@@ -666,7 +653,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Check if function call returns the values.
 			if(invoke.targets().length>0){
 				lhs = stores.getVar(invoke.target(0), function);
-				lhs_type = stores.getRawType(invoke.target(0), function); 
+				lhs_type = stores.getRawType(invoke.target(0), function);
+				if (lhs_type instanceof Type.Array) {
+					// Adds the code to propagate size variable 
+					for (int operand : invoke.operands()) {
+						Type type = stores.getRawType(operand, function);
+						if (type instanceof Type.Array) {
+							String param = stores.getVar(operand, function);
+							// Propagate the size of return array from input array.
+							statement.add(indent + "_" + stores.getArrayDimension(type) + "DARRAY_SIZE(" + lhs + ", " + param
+									+ ");");
+						}
+					}
+				}
 			}else{
 				lhs = null;
 				lhs_type = null;

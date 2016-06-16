@@ -150,8 +150,8 @@ int main(int argc, char** args){
 	_11[0] = _6; _11[1] = _7; _11[2] = _8; _11[3] = _9; _11[4] = _10; 
 	_ADD_OWNERSHIP(_11);
 	//invoke (%5) = (%11) reverse:reverse : function(int[])->(int[])
-	_FREE(_5);
 	_1DARRAY_SIZE(_5, _11);
+	_FREE(_5);
 	_5 = reverse(_1DARRAY_COPY_PARAM(_11), true);
 	_ADD_OWNERSHIP(_5);
 	//assign %1 = %5  : int[]
@@ -226,8 +226,8 @@ blklab6:;
 //.blklab5
 blklab5:;
 	//invoke (%27) = (%4) reverse:reverse : function(int[])->(int[])
-	_FREE(_27);
 	_1DARRAY_SIZE(_27, arr);
+	_FREE(_27);
 	_27 = reverse(_1DARRAY_COPY_PARAM(arr), true);
 	_ADD_OWNERSHIP(_27);
 	//assign %4 = %27  : int[]

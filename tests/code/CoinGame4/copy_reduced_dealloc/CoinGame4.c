@@ -492,9 +492,9 @@ blklab16:;
 //.blklab17
 blklab17:;
 			//invoke (%41) = (%0, %5, %4, %1, %7, %6, %8) CoinGame4:pickCoin : function(int[],int,int,int,int,int,int)->(int[])
+			_1DARRAY_SIZE(_41, moves);
 			_FREE(_41);
 			_REMOVE_OWNERSHIP(moves);
-			_1DARRAY_SIZE(_41, moves);
 			_41 = pickCoin(_1DARRAY_PARAM(moves), true, i, j, n, x, y, z);
 			_ADD_OWNERSHIP(_41);
 			//assign %0 = %41  : int[]
@@ -575,9 +575,9 @@ int main(int argc, char** args){
 	_TRANSFER_OWNERSHIP(moves, _7);
 	_REMOVE_OWNERSHIP(_7);
 	//invoke (%8) = (%2, %1) CoinGame4:findMoves : function(int[],int)->(int[])
+	_1DARRAY_SIZE(_8, moves);
 	_FREE(_8);
 	_REMOVE_OWNERSHIP(moves);
-	_1DARRAY_SIZE(_8, moves);
 	_8 = findMoves(_1DARRAY_PARAM(moves), true, n);
 	_ADD_OWNERSHIP(_8);
 	//assign %2 = %8  : int[]

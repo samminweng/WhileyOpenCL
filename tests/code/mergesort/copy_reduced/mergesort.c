@@ -62,6 +62,7 @@ long long* sortV1(_DECL_1DARRAY_PARAM(items), long long start, long long end){
 	//assign %4 = %14  : int
 	pivot = _14;
 	//invoke (%15) = (%0, %1, %4) whiley/lang/Array:slice : function(int[],int,int)->(int[])
+	_1DARRAY_SIZE(_15, items);
 _SLICE_ARRAY(_15, items, start, pivot);
 	//assign %5 = %15  : int[]
 	_1DARRAY_UPDATE(lhs, _15);
@@ -73,6 +74,7 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	//assign %5 = %16  : int[]
 	_1DARRAY_UPDATE(lhs, _16);
 	//invoke (%18) = (%0, %4, %2) whiley/lang/Array:slice : function(int[],int,int)->(int[])
+	_1DARRAY_SIZE(_18, items);
 _SLICE_ARRAY(_18, items, pivot, end);
 	//assign %6 = %18  : int[]
 	_1DARRAY_UPDATE(rhs, _18);
