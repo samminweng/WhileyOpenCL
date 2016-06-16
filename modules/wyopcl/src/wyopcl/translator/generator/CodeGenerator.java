@@ -270,7 +270,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.Const code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
 		String lhs = stores.getVar(code.target(0), function);
-		Type lhs_type = stores.getRawType(code.target(), function);
+		//Type lhs_type = stores.getRawType(code.target(), function);
 		String indent = stores.getIndent(function);
 		if (code.constant.type() instanceof Type.Null) {
 			statement.add(indent + lhs + " = NULL;");
@@ -279,8 +279,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Cast the constant to an array
 				Constant.Array list = (Constant.Array) code.constant;
 				// Free lhs variable
-				this.deallocatedAnalyzer
-						.ifPresent(a -> statement.add(indent + a.addDeallocatedCode(lhs, lhs_type, stores)));
+				preProcessor(statement, code, function);
 				statement.add(indent + "_NEW_ARRAY(" + lhs + ", " + list.values.size() + ");");
 				if (!list.values.isEmpty()) {
 					// Assign values to each element
@@ -662,6 +661,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		} else if (code instanceof Codes.Assign) {
 			lhs = stores.getVar(((Codes.Assign) code).target(0), function);
 			lhs_type = stores.getRawType(((Codes.Assign) code).target(0), function);
+		} else if (code instanceof Codes.Const){
+			lhs = stores.getVar(((Codes.Const)code).target(0), function);
+			lhs_type = stores.getRawType(((Codes.Const)code).target(0), function);
+		} else if (code instanceof Codes.FieldLoad){
+			lhs = stores.getVar(((Codes.FieldLoad)code).target(0), function);
+			lhs_type = stores.getRawType(((Codes.FieldLoad)code).target(0), function); 
 		} else {
 			throw new RuntimeException("Not implemented");
 		}
@@ -1286,9 +1291,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			Type lhs_type = stores.getRawType(code.target(0), function);
 			String indent = stores.getIndent(function);
 			// Free lhs variable
-			this.deallocatedAnalyzer.ifPresent(a -> {
+			/*this.deallocatedAnalyzer.ifPresent(a -> {
 				statement.add(indent + a.addDeallocatedCode(lhs, lhs_type, stores));
-			});
+			});*/
+			preProcessor(statement, code, function);
 
 			boolean isCopyEliminated;
 			if (field.equals("args")) {
