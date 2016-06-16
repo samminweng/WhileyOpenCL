@@ -519,25 +519,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		return false;
 	}
 
-	/**
-	 * Translate the lhs of a function call.
-	 * 
-	 * @param code
-	 * @param function
-	 * @return
-	 */
-	private String translateLHSFunctionCall(Codes.Invoke code, FunctionOrMethod function) {
-		String statement = "";
-		// Translate the return value of a function call.
-		// If no return value, no needs for translation.
-		if (code.targets().length > 0) {
-			String indent = stores.getIndent(function);
-			String lhs = stores.getVar(code.target(0), function);
-			// Call the function and assign the return value to lhs register.
-			statement += indent + lhs + " = ";
-		}
-		return statement;
-	}
+
 
 	/**
 	 * Translate the rhs of a function call
@@ -546,8 +528,20 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param f
 	 * @return
 	 */
-	private String translateRHSFunctionCall(HashMap<Integer, Boolean> argumentCopyEliminated, Codes.Invoke code,
+	private String translateFunctionCall(HashMap<Integer, Boolean> argumentCopyEliminated, Codes.Invoke code,
 			FunctionOrMethod function) {
+		
+		String lhs_statement = "";
+		// Translate the lhs side register of a function call.
+		// If no return value, no needs for translation.
+		if (code.targets().length > 0) {
+			String indent = stores.getIndent(function);
+			String lhs = stores.getVar(code.target(0), function);
+			// Call the function and assign the return value to lhs register.
+			lhs_statement = indent + lhs + " = ";
+		}
+		
+		
 		List<String> statement = new ArrayList<String>();
 		for (int operand : code.operands()) {
 			String parameter = stores.getVar(operand, function);
@@ -573,8 +567,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						// Copy the rhs and rhs size
 						statement.add("copy_array_" + elm_type + "(" + parameter + ", " + parameter + "_size), "
 								+ parameter + "_size");
-
-						// throw new RuntimeException("Not implemented");
 					}
 				}
 
@@ -621,7 +613,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 		}
 
-		return statement.stream().filter(s -> !s.equals("")).map(s -> s.toString()).collect(Collectors.joining(", "));
+		String rhs_statement = statement.stream().filter(s -> !s.equals("")).map(s -> s.toString()).collect(Collectors.joining(", "));
+		
+		return lhs_statement + code.name.name()+ "(" + rhs_statement + ");";
+		
+	
 	}
 
 	/**
@@ -846,8 +842,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			});
 
 			// call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
-			statement.add(translateLHSFunctionCall(code, function) + code.name.name() + "("
-					+ translateRHSFunctionCall(argumentCopyEliminated, code, function) + ");");
+			statement.add(translateFunctionCall(argumentCopyEliminated, code, function));
+			//statement.add(translateLHSFunctionCall(code, function) + code.name.name() + "("
+			//		+ translateRHSFunctionCall(argumentCopyEliminated, code, function) + ");");
 		}
 		
 		postProcessor(argumentCopyEliminated, statement, code, function);
