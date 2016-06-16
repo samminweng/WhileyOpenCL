@@ -565,7 +565,8 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @return
 	 */
 	public String addDeallocatedCode(String var, Type type, CodeStores stores) {
-		if (!stores.isCompoundType(type) && !(type instanceof Type.Union)) {
+		// NULL check
+		if(var == null || type == null || !stores.isCompoundType(type) && !(type instanceof Type.Union)){
 			return "";
 		}
 
