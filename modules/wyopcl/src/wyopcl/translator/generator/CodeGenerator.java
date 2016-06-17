@@ -269,8 +269,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.Const code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
-		String lhs = stores.getVar(code.target(0), function);
-		//Type lhs_type = stores.getRawType(code.target(), function);
+		String lhs = preProcessor(statement, code, function);
+		
 		String indent = stores.getIndent(function);
 		if (code.constant.type() instanceof Type.Null) {
 			statement.add(indent + lhs + " = NULL;");
@@ -278,8 +278,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if (code.constant.type() instanceof Type.Array) {
 				// Cast the constant to an array
 				Constant.Array list = (Constant.Array) code.constant;
-				// Free lhs variable
-				preProcessor(statement, code, function);
 				statement.add(indent + "_NEW_ARRAY(" + lhs + ", " + list.values.size() + ");");
 				if (!list.values.isEmpty()) {
 					// Assign values to each element
@@ -399,22 +397,18 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.Assign code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
-
+		String lhs = preProcessor(statement, code, function);
 		// Get the actual type for lhs variable.
 		String indent = stores.getIndent(function);
 		Type lhs_type = stores.getRawType(code.target(0), function);
-		String lhs = stores.getVar(code.target(0), function);
 		String rhs = stores.getVar(code.operand(0), function);
 		if (lhs_type instanceof Type.Function) {
 			statement.add(indent + declareLambda(lhs, (Type.Function) lhs_type) + ";");
 			// Point lhs to lambda function.
 			statement.add(indent + lhs + " = " + rhs + ";");
 		} else {
-			preProcessor(statement, code, function);
-
 			boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
 			statement.add(generateAssignmentCode(code, isCopyEliminated, function, stores));
-			
 			postProcessor(true, isCopyEliminated, code.operand(0), statement, code, function);
 		}
 
@@ -620,15 +614,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	
 	}
 
+
 	/**
 	 * Added de-allocation code to release the memory of lhs register
-	 * 
-	 * @param register
 	 * @param statement
 	 * @param code
 	 * @param function
+	 * @return lhs variable
 	 */
-	private void preProcessor(List<String> statement, Code code, FunctionOrMethod function) {
+	private String preProcessor(List<String> statement, Code code, FunctionOrMethod function) {
 		String indent = stores.getIndent(function);
 		String lhs;
 		Type lhs_type;
@@ -681,6 +675,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement.add(indent + a.addDeallocatedCode(lhs, lhs_type, stores));
 		});
 
+		return lhs;
 	}
 
 	/**
@@ -843,8 +838,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 			// call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
 			statement.add(translateFunctionCall(argumentCopyEliminated, code, function));
-			//statement.add(translateLHSFunctionCall(code, function) + code.name.name() + "("
-			//		+ translateRHSFunctionCall(argumentCopyEliminated, code, function) + ");");
 		}
 		
 		postProcessor(argumentCopyEliminated, statement, code, function);
@@ -1616,27 +1609,25 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	@Override
 	protected void translate(ArrayGenerator code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
-		preProcessor(statement, code, function);
+		String lhs = preProcessor(statement, code, function);
 
 		String indent = stores.getIndent(function);
-		String lhs = stores.getVar(code.target(0), function);
 		Type.Array lhs_type = (Type.Array) stores.getRawType(code.target(0), function);
 		String rhs = stores.getVar(code.operand(0), function);
 		String size = stores.getVar(code.operand(1), function);
 		Type elm_type = stores.getArrayElementType(lhs_type);
 		boolean isCopyEliminated;
 		if (stores.isIntType(elm_type)) {
-			// Generate array of integers
-			int dimension = stores.getArrayDimension(lhs_type);
-			// Generate the array with size and values.
-			statement.add(indent + "_GEN_" + dimension + "DARRAY(" + lhs + ", " + size + ", " + rhs + ");");
+			// Generate an array with given size and values.
+			statement.add(indent + "_GEN_" + stores.getArrayDimension(lhs_type) + "DARRAY(" + lhs + ", " + size + ", " + rhs + ");");
 			isCopyEliminated = true;
 		} else {
-			// Generate array of structures
+			// Generate an array of structures
 			String translateType = CodeGeneratorHelper.translateType(lhs_type.element(), stores);
 			// _a = malloc(n*sizeof(POS));
 			statement.add(indent + lhs + " = malloc(" + size + "*sizeof(" + translateType + "));");
-			// copy the rhs to each element for(int _a_i =0;_a_i<n;_a_i++){ _a[_a_i] = copy_POS(b);}
+			// copy the rhs to each element using below code
+			// for(int _a_i =0;_a_i<n;_a_i++){ _a[_a_i] = copy_POS(b);}
 			String arr_i = lhs + "_i";
 			statement.add(indent + "for(int " + arr_i + "=0;" + arr_i + "<" + size + ";" + arr_i + "++){" + lhs + "["
 					+ arr_i + "] = copy_" + translateType.replace("*", "") + "(" + rhs + ");" + "}");
