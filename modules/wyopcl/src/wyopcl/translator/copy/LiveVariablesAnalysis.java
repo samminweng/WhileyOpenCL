@@ -54,12 +54,6 @@ public class LiveVariablesAnalysis extends Analyzer {
 		// Builds up a CFG of the function.
 		super.apply(module);
 		postorderTraversalCallGraph(tree);
-		for (FunctionOrMethod function : module.functionOrMethods()) {
-			// Apply live analysis on the functions, which are NOT invoked
-			if(tree.getIndex(new DefaultMutableTreeNode(function.name()))<0){
-				computeLiveness(function);
-			}
-		}
 	}
 
 	/**
@@ -165,7 +159,4 @@ public class LiveVariablesAnalysis extends Analyzer {
 			computeLiveness(function);
 		}
 	}
-
-	
-
 }

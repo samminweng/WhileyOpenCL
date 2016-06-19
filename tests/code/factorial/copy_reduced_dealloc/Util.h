@@ -103,7 +103,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 		})
 #define _FREE_1DARRAY_ELEMENT_STRUCT(a, b, name) \
 		({\
-			free_##name(b);\ 
+			free_##name(b);\
 			b = NULL;\
 		})
 #define _FREE_1DARRAY_STRUCT(a, name) \

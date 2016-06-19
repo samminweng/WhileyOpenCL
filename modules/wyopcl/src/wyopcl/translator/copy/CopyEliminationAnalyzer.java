@@ -1,5 +1,8 @@
 package wyopcl.translator.copy;
 
+import java.util.HashMap;
+import java.util.HashSet;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import wybs.lang.Builder;
@@ -18,7 +21,7 @@ import wyopcl.translator.ReturnAnalyzer;
  * @author Min-Hsien Weng
  *
  */
-public class CopyEliminationAnalyzer extends Analyzer {
+public class CopyEliminationAnalyzer extends Analyzer {	
 	// Perform read-write checks
 	public ReadWriteAnalyzer readwriteAnalyzer;
 	// Perform return checks
@@ -34,6 +37,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		this.readwriteAnalyzer = new ReadWriteAnalyzer(config);
 		this.returnAnalyzer = new ReturnAnalyzer(config);
 		this.liveAnalyzer = new LiveVariablesAnalysis(config);
+		
 	}
 
 	/**
@@ -48,6 +52,10 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		this.readwriteAnalyzer.apply(module);
 		this.returnAnalyzer.apply(module);
 		this.liveAnalyzer.apply(module);
+		if(this.config.isVerbose()){
+			// Iterate each function to determine if copies are needed.
+			postorderTraversalCallGraph(tree);
+		}
 	}
 
 	/**
@@ -118,7 +126,16 @@ public class CopyEliminationAnalyzer extends Analyzer {
 
 	@Override
 	protected void visit(DefaultMutableTreeNode node) {
-		// TODO Auto-generated method stub
-		
+		String name = (String) node.getUserObject();
+		FunctionOrMethod function = (FunctionOrMethod) this.getFunction(name);
+		if(function != null){
+			// Analyze whether the copy is need for each byte-code
+			for(Code code:function.body().bytecodes()){
+				if(code instanceof Codes.Assign){
+					int rhs = ((Codes.Assign)code).operand(0);
+					boolean isCopyEliminated = isCopyEliminated(rhs, code, function);
+				}
+			}
+		}
 	}
 }

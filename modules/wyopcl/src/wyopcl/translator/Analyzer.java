@@ -95,9 +95,9 @@ public abstract class Analyzer {
 	 * @param type
 	 * @return
 	 */
-	private FunctionOrMethod getFunction(String name, Type.FunctionOrMethod type) {
+	/*private FunctionOrMethod getFunction(String name, Type.FunctionOrMethod type) {
 		return this.module.functionOrMethod(name, type);
-	}
+	}*/
 
 	/**
 	 * Given a function name, get the CFGraph.
@@ -570,7 +570,10 @@ public abstract class Analyzer {
 		Enumeration<DefaultMutableTreeNode> nodes = tree.postorderEnumeration();
 		while (nodes.hasMoreElements()) {
 			DefaultMutableTreeNode node = nodes.nextElement();
-			visit(node);
+			// Root node represents the tree and does not have the function.
+			if (!node.isRoot()){
+				visit(node);
+			}
 		}
 	}
 	
@@ -603,13 +606,19 @@ public abstract class Analyzer {
 			}
 		} else if (code instanceof Codes.IndirectInvoke) {
 			// Do nothing
+			System.out.println(code);
 		} else if (code instanceof Codes.Loop) {
 			Codes.Loop loop = (Codes.Loop) code;
 			// Iterate the byte-code inside loop body
 			for (Code c : loop.bytecodes()) {
 				buildCallGraph(c, function, parentNode);
 			}
-
+		} else if (code instanceof Codes.Assert){
+			Codes.Assert as = (Codes.Assert)code;
+			// Iterate each byte-code inside an assertion
+			for(Code c :as.bytecodes()){
+				buildCallGraph(c, function, parentNode);
+			}
 		}
 
 	}
@@ -626,15 +635,30 @@ public abstract class Analyzer {
 	protected void buildCallGraph(WyilFile module) {
 		// Ensure the tree is built once
 		if (tree == null) {
-			// Create the root node, i.e. main function
-			tree = new DefaultMutableTreeNode("main");
-
+			// Create the root node
+			tree = new DefaultMutableTreeNode("rootNode");
+			
+			// Build call graph, starting with main function.
 			FunctionOrMethod main = module.functionOrMethod("main").get(0);
+			DefaultMutableTreeNode mainNode = new DefaultMutableTreeNode("main");
+			tree.add(mainNode);
+			
 			// Go through main function
 			for (Code code : main.body().bytecodes()) {
-				buildCallGraph(code, main, tree);
+				buildCallGraph(code, main, mainNode);
 			}
-
+			
+			// Add the un-used functions to the tree
+			for(FunctionOrMethod function: module.functionOrMethods()){
+				DefaultMutableTreeNode node = new DefaultMutableTreeNode(function.name());
+				// Check if the node function is added to the tree
+				if(tree.getIndex(node)<0){
+					// If not, then add the node to the tree
+					tree.add(node);
+				}
+			}
+			
+			
 		}
 	}
 	
