@@ -20,8 +20,9 @@ import wyopcl.translator.generator.CodeGeneratorHelper;
 import wyopcl.translator.generator.CodeStores;
 
 /**
- * Deallocation Analyzer computes ownerships for a variety of code type, and produce the code of adding, removing or
- * transferring ownership so that it is added to the generated C code.
+ * Deallocation Analyzer computes deallocation flags for a variety of code type, and produce the code of 
+ * 
+ * adding, removing or transferring deallocation flag so that it is added to the generated C code.
  * 
  * 
  * @author Min-Hsien Weng
@@ -34,7 +35,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Declare ownership flags
+	 * Declare deallocation flags
 	 * 
 	 * @param indent
 	 * @param register
@@ -42,19 +43,19 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public String declareOwnershipFlag(String indent, int register, FunctionOrMethod function, CodeStores stores) {
+	public String declareDeallocFlag(String indent, int register, FunctionOrMethod function, CodeStores stores) {
 		Type type = stores.getRawType(register, function);
 		String var = stores.getVar(register, function);
-		// Declare ownership
+		// Declare deallocation flag
 		if (stores.isCompoundType(type) || type instanceof Type.Union) {
-			// Declare the extra 'has_ownership' boolean variables
-			return indent + "_DECL_OWNERSHIP(" + var + ");";
+			// Declare the extra '_dealloc' boolean variables
+			return indent + "_DECL_DEALLOC(" + var + ");";
 		}
 		return null;
 	}
 
 	/**
-	 * Get a list of ownership variables and generate the code to free all of them Note that the deallocation of
+	 * Get a list of deallocation flag and generate the code to free all of them Note that the deallocation of
 	 * function input parameters are skipped by default. Thus, the deallocation releases all the local variables,
 	 * excluding input parameters.
 	 *
@@ -64,7 +65,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @return
 	 *
 	 */
-	public List<String> freeAllMemory(Codes.Return code, FunctionOrMethod function, CodeStores stores) {
+	public List<String> addAllDeallocCode(Codes.Return code, FunctionOrMethod function, CodeStores stores) {
 		List<String> statements = new ArrayList<String>();
 
 		// Get all registers
@@ -84,7 +85,7 @@ public class DeallocationAnalyzer extends Analyzer {
 				Type var_type = stores.getRawType(r, function);
 				if (var_type != null && !(var_type instanceof Type.Null)) {
 					String var = stores.getVar(r, function);
-					statements.add(indent + addDeallocatedCode(var, var_type, stores));
+					statements.add(indent + addDeallocCode(var, var_type, stores));
 				}
 			}
 		}
@@ -94,14 +95,14 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Compute ownerships for a function call
+	 * Compute deallocation flags for a function call
 	 * 
 	 * @param code
 	 * @param function
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeOwnership(Codes.Invoke code, FunctionOrMethod function, CodeStores stores) {
+	public List<String> computeDealloc(Codes.Invoke code, FunctionOrMethod function, CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
 
@@ -110,23 +111,23 @@ public class DeallocationAnalyzer extends Analyzer {
 			switch (code.name.name()) {
 			case "parse":
 				int rhs = code.operand(0);
-				// Add ownership to lhs.
-				statements.add(indent + addOwnership(lhs, function, stores));
-				// Remove rhs ownership
-				statements.add(indent + removeOwnership(rhs, function, stores));
+				// Add deallocation flag to lhs.
+				statements.add(indent + addDealloc(lhs, function, stores));
+				// Remove rhs deallocation flag
+				statements.add(indent + removeDealloc(rhs, function, stores));
 				break;
 			case "slice":
-				// Add ownership to lhs.
-				statements.add(indent + addOwnership(lhs, function, stores));
+				// Add deallocation flag to lhs.
+				statements.add(indent + addDealloc(lhs, function, stores));
 				break;
 			default:
 				// no change to statement
 				break;
 			}
 		} else {
-			// Add ownership to lhs variable
+			// Add deallocation flag to lhs variable
 			if (code.targets().length > 0) {
-				statements.add(indent + addOwnership(code.target(0), function, stores));
+				statements.add(indent + addDealloc(code.target(0), function, stores));
 			}
 		}
 		return statements;
@@ -134,26 +135,26 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Compute ownership of array generator
+	 * Compute deallocation flag of array generator
 	 * 
 	 * @param code
 	 * @param function
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeOwnership(Codes.ArrayGenerator code, FunctionOrMethod function, CodeStores stores) {
+	public List<String> computeDealloc(Codes.ArrayGenerator code, FunctionOrMethod function, CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
 
-		// Assign ownership to lhs variable.
-		statements.add(indent + addOwnership(code.target(0), function, stores));
+		// Assign deallocation flag to lhs variable.
+		statements.add(indent + addDealloc(code.target(0), function, stores));
 
 		return statements;
 
 	}
 
 	/**
-	 * Compute ownership of Const byte-code
+	 * Compute deallocation flag of Const byte-code
 	 * 
 	 * 
 	 * @param code
@@ -161,17 +162,17 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeOwnership(Codes.Const code, FunctionOrMethod function, CodeStores stores) {
+	public List<String> computeDealloc(Codes.Const code, FunctionOrMethod function, CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
 
 		int lhs = code.target(0);
 		if (code.constant.type() instanceof Type.Null) {
-			// Constant is a NULL and remove ownership
-			statements.add(indent + removeOwnership(lhs, function, stores));
+			// Constant is a NULL and remove deallocation flag
+			statements.add(indent + removeDealloc(lhs, function, stores));
 		} else if (code.constant.type() instanceof Type.Array) {
-			// Check if constant is an array and add ownership
-			statements.add(indent + addOwnership(lhs, function, stores));
+			// Check if constant is an array and add deallocation flag
+			statements.add(indent + addDealloc(lhs, function, stores));
 		} else {
 			// Do nothing
 		}
@@ -180,7 +181,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Computes ownership for new array byte-code
+	 * Computes deallocation flag for new array byte-code
 	 * 
 	 * 
 	 * 
@@ -189,27 +190,27 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeOwnership(Codes.NewArray code, FunctionOrMethod function, CodeStores stores) {
+	public List<String> computeDealloc(Codes.NewArray code, FunctionOrMethod function, CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
 		int lhs = code.target(0);
 		if (code.operands().length > 0) {
-			// Create an non-empty array, and add lhs variable to ownership set.
-			statements.add(indent + addOwnership(lhs, function, stores));
+			// Create an non-empty array, and add lhs variable to deallocation flag set.
+			statements.add(indent + addDealloc(lhs, function, stores));
 		}
 
 		return statements;
 	}
 
 	/**
-	 * Compute ownerships for new record code
+	 * Compute deallocation flags for new record code
 	 * 
 	 * @param code
 	 * @param function
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeOwnership(Codes.NewRecord code, FunctionOrMethod function, CodeStores stores,
+	public List<String> computeDealloc(Codes.NewRecord code, FunctionOrMethod function, CodeStores stores,
 			HashMap<Integer, Boolean> argumentCopyEliminated) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
@@ -217,20 +218,20 @@ public class DeallocationAnalyzer extends Analyzer {
 		argumentCopyEliminated.entrySet().forEach(entry -> {
 			int register = entry.getKey();
 			boolean isCopyEliminated = entry.getValue();
-			// Remove the ownerships for those member whose copies are not needed.
+			// Remove the deallocation flags for those member whose copies are not needed.
 			if (isCopyEliminated) {
-				statements.add(indent + removeOwnership(register, function, stores));
+				statements.add(indent + removeDealloc(register, function, stores));
 			}
 		});
 
-		// Assign ownership to lhs variable
-		statements.add(indent + addOwnership(code.target(0), function, stores));
+		// Assign deallocation flag to lhs variable
+		statements.add(indent + addDealloc(code.target(0), function, stores));
 
 		return statements;
 	}
 
 	/**
-	 * Compute ownership flags for assignment
+	 * Compute deallocation flag flags for assignment
 	 * 
 	 * 
 	 * @param code
@@ -238,7 +239,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeOwnership(boolean isCopyEliminated, Codes.Assign code, FunctionOrMethod function,
+	public List<String> computeDealloc(boolean isCopyEliminated, Codes.Assign code, FunctionOrMethod function,
 			CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
@@ -250,20 +251,20 @@ public class DeallocationAnalyzer extends Analyzer {
 
 		// Special case for NULL type ( a = NULL;)
 		if (assign.type(0) instanceof Type.Null) {
-			// Remove lhs ownership
-			statements.add(indent + removeOwnership(lhs, function, stores));
+			// Remove lhs deallocation flag
+			statements.add(indent + removeDealloc(lhs, function, stores));
 		} else if (lhs_type instanceof Type.Int && rhs_type instanceof Type.Union) {
 			// Special case for converting an integer pointer to an integer
-			// No changes to ownership
+			// No changes to deallocation flag
 		} else {
 			if (isCopyEliminated) {
-				// Transfer rhs ownership to lhs
-				statements.add(indent + transferOwnership(lhs, rhs, function, stores));
-				// Remove rhs ownership
-				statements.add(indent + removeOwnership(rhs, function, stores));
+				// Transfer rhs deallocation flag to lhs
+				statements.add(indent + transferDealloc(lhs, rhs, function, stores));
+				// Remove rhs deallocation flag
+				statements.add(indent + removeDealloc(rhs, function, stores));
 			} else {
-				// Add rhs to ownership set
-				statements.add(indent + addOwnership(lhs, function, stores));
+				// Add deallocation flag to rhs register
+				statements.add(indent + addDealloc(lhs, function, stores));
 			}
 		}
 
@@ -271,35 +272,35 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Compute ownerships of Update byte-code
+	 * Compute deallocation flags of Update byte-code
 	 * 
 	 * @param code
 	 * @param function
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeOwnership(Codes.Update code, FunctionOrMethod function, CodeStores stores) {
+	public List<String> computeDealloc(Codes.Update code, FunctionOrMethod function, CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
 		
 		// The rhs register is the last operand
 		int rhs = code.operand(code.operands().length - 1);
-		// Remove rhs ownership as the copy is not made at 'update' byte-code
-		statements.add(indent + removeOwnership(rhs, function, stores));
+		// Remove rhs deallocation flag as the copy is not made at 'update' byte-code
+		statements.add(indent + removeDealloc(rhs, function, stores));
 		return statements;
 	}
 	
 	/**
-	 * Given a code, compute the ownerships and return the generated C code.
+	 * Given a code, compute the deallocation flags and return the generated C code.
 	 * 
-	 * Note the lhs variable in an assignment is not always added with ownership.
+	 * Note the lhs variable in an assignment is not always added with deallocation flag.
 	 * 
-	 * If the lhs variable points to an array element, then its ownership is transferred out. Because the array variable
-	 * owns the ownership, other variables that point to the array lost the ownership. For example,
+	 * If the lhs variable points to an array element, then its deallocation flag is transferred out. Because the array variable
+	 * owns the deallocation flag, other variables that point to the array lost the deallocation flag. For example,
 	 * 
 	 * <pre>
 	 * <code> a = b[i]; // Access the array element a_dealloc = false; 
-	 * 		  a_dealloc = false;//Remove lhs ownership
+	 * 		  a_dealloc = false;//Remove lhs deallocation flag
 	 * </code>
 	 * </pre>
 	 * 
@@ -308,30 +309,30 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeOwnership(boolean isCopyEliminated, Code code, FunctionOrMethod function,
+	public List<String> computeDealloc(boolean isCopyEliminated, Code code, FunctionOrMethod function,
 			CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
 		if (code instanceof Codes.IndexOf) {
 			Codes.IndexOf indexof = (Codes.IndexOf) code;
 			int lhs = indexof.target(0);
-			// Transfer lhs ownership due to non-transferable array ownership
-			statements.add(indent + removeOwnership(lhs, function, stores));
+			// Transfer lhs deallocation flag due to non-transferable array deallocation flag
+			statements.add(indent + removeDealloc(lhs, function, stores));
 		} else if (code instanceof Codes.FieldLoad) {
 			Codes.FieldLoad fieldload = (Codes.FieldLoad) code;
 			int lhs = fieldload.target(0);
 			if (fieldload.field.equals("args")) {
-				// Add ownership to lhs register
-				statements.add(indent + addOwnership(lhs, function, stores));
+				// Add deallocation flag to lhs register
+				statements.add(indent + addDealloc(lhs, function, stores));
 			} else {
 				// int rhs = fieldload.operand(0);
 				if (isCopyEliminated) {
 					// That means 'fieldload' access one member
-					// rhs ownership could be changed. But remove lhs ownership
-					statements.add(indent + removeOwnership(lhs, function, stores));
+					// rhs deallocation flag could be changed. But remove lhs deallocation flag
+					statements.add(indent + removeDealloc(lhs, function, stores));
 				} else {
-					// Assign ownership to lhs variable.
-					statements.add(indent + addOwnership(lhs, function, stores));
+					// Assign deallocation flag to lhs variable.
+					statements.add(indent + addDealloc(lhs, function, stores));
 				}
 			}
 		} else {
@@ -343,9 +344,9 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Compute the ownership for each parameter of a function call,
+	 * Compute the deallocation flag for each parameter of a function call,
 	 * 
-	 * If the parameter ownership is transferred to the calling function, then its ownership is removed. For example,
+	 * If the parameter deallocation flag is transferred to the calling function, then its deallocation flag is removed. For example,
 	 * 
 	 * <pre>
 	 * <code>
@@ -360,22 +361,22 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param copyAnalyzer
 	 * @return
 	 */
-	public List<String> computeOwnership(Codes.Invoke code, FunctionOrMethod function, CodeStores stores,
+	public List<String> computeDealloc(Codes.Invoke code, FunctionOrMethod function, CodeStores stores,
 			Optional<CopyEliminationAnalyzer> copyAnalyzer) {
 		List<String> statements = new ArrayList<String>();
 
 		String indent = stores.getIndent(function);
 		// Add or transfer out the parameters that do not have the copy
 		for (int register : code.operands()) {
-			Optional<HashMap<String, Boolean>> ownership = computeOwnership(register, code, function, stores,
+			Optional<HashMap<String, Boolean>> dealloc = computeDealloc(register, code, function, stores,
 					copyAnalyzer);
-			ownership.ifPresent(o -> {
-				// Get caller ownership
+			dealloc.ifPresent(o -> {
+				// Get caller deallocation flag
 				boolean caller_own = o.get("caller");
 				if (!caller_own) {
-					// The ownership is transferred from caller to calling
+					// The deallocation flag is transferred from caller to calling
 					// function
-					statements.add(indent + removeOwnership(register, function, stores));
+					statements.add(indent + removeDealloc(register, function, stores));
 				}
 			});
 		}
@@ -384,7 +385,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Adds the register to ownership and generate the code
+	 * Adds deallocation flag to register and generate the code
 	 * 
 	 * <pre>
 	 * <code>
@@ -395,54 +396,59 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param var
 	 * @return
 	 */
-	protected String addOwnership(int register, FunctionOrMethod function, CodeStores stores) {
+	protected String addDealloc(int register, FunctionOrMethod function, CodeStores stores) {
 		Type type = stores.getRawType(register, function);
 		if (stores.isCompoundType(type) || type instanceof Type.Union) {
 			String var = stores.getVar(register, function);
-			return "_ADD_OWNERSHIP(" + var + ");";
+			return "_ADD_DEALLOC(" + var + ");";
 		}
 		return "";
 	}
 
 	/**
-	 * Takes out 'register' from 'ownership' set
+	 * Set de-allocation flag of given register to be 'false'
 	 * 
 	 * @param reg
 	 * @param function
 	 */
-	protected String removeOwnership(int register, FunctionOrMethod function, CodeStores stores) {
+	protected String removeDealloc(int register, FunctionOrMethod function, CodeStores stores) {
 		Type type = stores.getRawType(register, function);
 		if (stores.isCompoundType(type) || type instanceof Type.Union) {
 			String var = stores.getVar(register, function);
-			return "_REMOVE_OWNERSHIP(" + var + ");";
+			return "_REMOVE_DEALLOC(" + var + ");";
 		}
 		return "";
 	}
 
 	/**
-	 * Transfer rhs's ownership to lhs's ownership for an assignment a = b; a_dealloc = b_dealloc
+	 * Transfer rhs's deallocation flag to lhs's
 	 * 
+	 * For example, 
+	 * <pre><code>
+	 * a = b;
+	 * a_dealloc = b_dealloc;
+	 * </code></pre>
 	 * @param lhs
 	 *            register
 	 * @param rhs
 	 *            register
 	 * @param function
 	 */
-	protected String transferOwnership(int lhs, int rhs, FunctionOrMethod function, CodeStores stores) {
+	protected String transferDealloc(int lhs, int rhs, FunctionOrMethod function, CodeStores stores) {
 		Type type = stores.getRawType(lhs, function);
 		if (stores.isCompoundType(type) || type instanceof Type.Union) {
 			String lhs_var = stores.getVar(lhs, function);
 			String rhs_var = stores.getVar(rhs, function);
-			return "_TRANSFER_OWNERSHIP(" + lhs_var + ", " + rhs_var + ");";
+			return "_TRANSFER_DEALLOC(" + lhs_var + ", " + rhs_var + ");";
 		}
 		return "";
 	}
 
 	/**
-	 * Return parameter ownership in the caller. If deallocation is enabled, then pass the ownership to a function. The
-	 * ownership value are based on based on the following rules, e.g. a function call 'a = f(b, b_own_f)',
+	 * Return parameter deallocation flag of the caller.
 	 * 
-	 * 
+	 * If deallocation analyzer is enabled, then deallocation flags of caller and callee are based on 
+	 * the following rules, e.g. a function call 'a = f(b, b_own_f)', 
 	 * Rules are as below:
 	 * 
 	 * <pre>
@@ -458,13 +464,13 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * 					|callee = F |callee = T	|callee = T	|callee = T
 	 * </pre>
 	 * 
-	 * where 'caller' is the ownership flag of caller site 'callee' is the ownership flag of callee site
+	 * where 'caller' is the deallocation flag of caller site 'callee' is the deallocation flag of callee site
 	 * 
 	 * @param type
 	 * @param copyAnalyzer
-	 * @return a hashmap that contains caller's ownership and callee's ownership for a parameter.
+	 * @return a hashmap that contains caller's deallocation flag and callee's deallocation flag for a parameter.
 	 */
-	public Optional<HashMap<String, Boolean>> computeOwnership(int register, Codes.Invoke code,
+	public Optional<HashMap<String, Boolean>> computeDealloc(int register, Codes.Invoke code,
 			FunctionOrMethod function, CodeStores stores, Optional<CopyEliminationAnalyzer> copyAnalyzer) {
 		Type type = stores.getRawType(register, function);
 		if (!stores.isCompoundType(type)) {
@@ -472,9 +478,9 @@ public class DeallocationAnalyzer extends Analyzer {
 		}
 
 		boolean isLive = true;
-		Optional<HashMap<String, Boolean>> ownership = Optional.of(new HashMap<String, Boolean>());
+		Optional<HashMap<String, Boolean>> dealloc = Optional.of(new HashMap<String, Boolean>());
 		if (copyAnalyzer.isPresent()) {
-			// Analyze the ownerships using live variable, read-write and return analysis
+			// Analyze the deallocation flags using live variable, read-write and return analysis
 			isLive = copyAnalyzer.get().liveAnalyzer.isLive(register, code, function);
 
 			FunctionOrMethod f = this.getFunction(code.name.name());
@@ -484,40 +490,40 @@ public class DeallocationAnalyzer extends Analyzer {
 
 			if (!isMutated) {
 				if (!isReturned) {
-					// Caller ownership
-					ownership.get().put("caller", true);
-					ownership.get().put("callee", false);
+					// Caller deallocation flag
+					dealloc.get().put("caller", true);
+					dealloc.get().put("callee", false);
 				} else {
-					ownership.get().put("caller", false);
-					ownership.get().put("callee", true);
+					dealloc.get().put("caller", false);
+					dealloc.get().put("callee", true);
 				}
 			} else {
 				if (isReturned) {
 					// 'b' is alive
 					if (isLive) {
-						ownership.get().put("caller", true);
-						ownership.get().put("callee", true);
+						dealloc.get().put("caller", true);
+						dealloc.get().put("callee", true);
 					} else {
-						ownership.get().put("caller", false);
-						ownership.get().put("callee", true);
+						dealloc.get().put("caller", false);
+						dealloc.get().put("callee", true);
 					}
 				} else {
 					if (isLive) {
-						ownership.get().put("caller", true);
-						ownership.get().put("callee", true);
+						dealloc.get().put("caller", true);
+						dealloc.get().put("callee", true);
 					} else {
-						ownership.get().put("caller", false);
-						ownership.get().put("callee", true);
+						dealloc.get().put("caller", false);
+						dealloc.get().put("callee", true);
 					}
 				}
 			}
 		} else {
-			// The copy is needed, so that caller and Callee both have the ownerships
-			ownership.get().put("caller", true);
-			ownership.get().put("callee", true);
+			// The copy is needed, so that caller and Callee both have the deallocation flags
+			dealloc.get().put("caller", true);
+			dealloc.get().put("callee", true);
 		}
 
-		return ownership;
+		return dealloc;
 	}
 
 	/**
@@ -529,7 +535,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public String addDeallocatedCode(String lhs, Codes.Update code, FunctionOrMethod function, CodeStores stores) {
+	public String addDeallocCode(String lhs, Codes.Update code, FunctionOrMethod function, CodeStores stores) {
 		String indent = stores.getIndent(function);
 		Type lhs_type = stores.getRawType(code.target(0), function);
 
@@ -564,7 +570,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public String addDeallocatedCode(String var, Type type, CodeStores stores) {
+	public String addDeallocCode(String var, Type type, CodeStores stores) {
 		// NULL check
 		if(var == null || type == null || !stores.isCompoundType(type) && !(type instanceof Type.Union)){
 			return "";

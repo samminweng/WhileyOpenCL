@@ -1,16 +1,16 @@
 #include "reverse.h"
-long long* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_OWNERSHIP_PARAM(ls)){
+long long* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls)){
 	_DECL_1DARRAY(_1);
-	_DECL_OWNERSHIP(_1);
+	_DECL_DEALLOC(_1);
 	long long i = 0;
 	_DECL_1DARRAY(r);
-	_DECL_OWNERSHIP(r);
+	_DECL_DEALLOC(r);
 	long long item = 0;
 	long long _5 = 0;
 	long long _6 = 0;
 	long long _7 = 0;
 	_DECL_1DARRAY(_8);
-	_DECL_OWNERSHIP(_8);
+	_DECL_DEALLOC(_8);
 	long long _9 = 0;
 	long long _10 = 0;
 	long long _11 = 0;
@@ -31,11 +31,11 @@ long long* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_OWNERSHIP_PARAM(ls)){
 	//arraygen %8 = [6; 7] : int[]
 	_FREE(_8);
 	_GEN_1DARRAY(_8, _7, _6);
-	_ADD_OWNERSHIP(_8);
+	_ADD_DEALLOC(_8);
 	//assign %3 = %8  : int[]
 	_FREE(r);
 	_1DARRAY_COPY(r, _8);
-	_ADD_OWNERSHIP(r);
+	_ADD_DEALLOC(r);
 	//loop (%2, %3, %4, %9, %10, %11, %12, %13, %14, %15, %16, %17)
 	while(true){
 		//invariant
@@ -94,46 +94,46 @@ blklab0:;
 
 int main(int argc, char** args){
 	_DECL_1DARRAY(rs);
-	_DECL_OWNERSHIP(rs);
+	_DECL_DEALLOC(rs);
 	long long max = 0;
 	long long index = 0;
 	_DECL_1DARRAY(arr);
-	_DECL_OWNERSHIP(arr);
+	_DECL_DEALLOC(arr);
 	_DECL_1DARRAY(_5);
-	_DECL_OWNERSHIP(_5);
+	_DECL_DEALLOC(_5);
 	long long _6 = 0;
 	long long _7 = 0;
 	long long _8 = 0;
 	long long _9 = 0;
 	long long _10 = 0;
 	_DECL_1DARRAY(_11);
-	_DECL_OWNERSHIP(_11);
+	_DECL_DEALLOC(_11);
 	long long _12 = 0;
 	long long _13 = 0;
 	long long _14 = 0;
 	long long _15 = 0;
 	long long _16 = 0;
 	_DECL_1DARRAY(_17);
-	_DECL_OWNERSHIP(_17);
+	_DECL_DEALLOC(_17);
 	long long _18 = 0;
 	long long _19 = 0;
 	long long _20 = 0;
 	long long _21 = 0;
 	long long _22 = 0;
 	_DECL_1DARRAY(_23);
-	_DECL_OWNERSHIP(_23);
+	_DECL_DEALLOC(_23);
 	long long _24 = 0;
 	long long _25 = 0;
 	long long _26 = 0;
 	_DECL_1DARRAY(_27);
-	_DECL_OWNERSHIP(_27);
+	_DECL_DEALLOC(_27);
 	long long _28 = 0;
 	long long _29 = 0;
 	long long _30 = 0;
 	long long _31 = 0;
 	void* _32;
 	_DECL_1DARRAY(_34);
-	_DECL_OWNERSHIP(_34);
+	_DECL_DEALLOC(_34);
 	//const %6 = 1 : int
 	_6 = 1;
 	//const %7 = 2 : int
@@ -148,16 +148,16 @@ int main(int argc, char** args){
 	_FREE(_11);
 	_NEW_ARRAY(_11, 5);
 	_11[0] = _6; _11[1] = _7; _11[2] = _8; _11[3] = _9; _11[4] = _10; 
-	_ADD_OWNERSHIP(_11);
+	_ADD_DEALLOC(_11);
 	//invoke (%5) = (%11) reverse:reverse : function(int[])->(int[])
 	_1DARRAY_SIZE(_5, _11);
 	_FREE(_5);
 	_5 = reverse(_1DARRAY_COPY_PARAM(_11), true);
-	_ADD_OWNERSHIP(_5);
+	_ADD_DEALLOC(_5);
 	//assign %1 = %5  : int[]
 	_FREE(rs);
 	_1DARRAY_COPY(rs, _5);
-	_ADD_OWNERSHIP(rs);
+	_ADD_DEALLOC(rs);
 	//assert
 	{
 		//const %12 = 5 : int
@@ -174,7 +174,7 @@ int main(int argc, char** args){
 		_FREE(_17);
 		_NEW_ARRAY(_17, 5);
 		_17[0] = _12; _17[1] = _13; _17[2] = _14; _17[3] = _15; _17[4] = _16; 
-		_ADD_OWNERSHIP(_17);
+		_ADD_DEALLOC(_17);
 		//ifeq %1, %17 goto blklab4 : int[]
 		_IFEQ_ARRAY(rs, _17, blklab4);
 		//fail
@@ -201,11 +201,11 @@ blklab4:;
 	//arraygen %23 = [20; 22] : int[]
 	_FREE(_23);
 	_GEN_1DARRAY(_23, _22, _20);
-	_ADD_OWNERSHIP(_23);
+	_ADD_DEALLOC(_23);
 	//assign %4 = %23  : int[]
 	_FREE(arr);
 	_1DARRAY_COPY(arr, _23);
-	_ADD_OWNERSHIP(arr);
+	_ADD_DEALLOC(arr);
 	//loop (%3, %4, %24, %25, %26)
 	while(true){
 		//ifgt %3, %2 goto blklab5 : int
@@ -229,11 +229,11 @@ blklab5:;
 	_1DARRAY_SIZE(_27, arr);
 	_FREE(_27);
 	_27 = reverse(_1DARRAY_COPY_PARAM(arr), true);
-	_ADD_OWNERSHIP(_27);
+	_ADD_DEALLOC(_27);
 	//assign %4 = %27  : int[]
 	_FREE(arr);
 	_1DARRAY_COPY(arr, _27);
-	_ADD_OWNERSHIP(arr);
+	_ADD_DEALLOC(arr);
 	//assert
 	{
 		//const %28 = 0 : int
@@ -270,7 +270,7 @@ blklab8:;
 	_FREE(_34);
 	_NEW_ARRAY(_34, 22);
 	_34[0] = 80; _34[1] = 97; _34[2] = 115; _34[3] = 115; _34[4] = 32; _34[5] = 114; _34[6] = 101; _34[7] = 118; _34[8] = 101; _34[9] = 114; _34[10] = 115; _34[11] = 101; _34[12] = 32; _34[13] = 116; _34[14] = 101; _34[15] = 115; _34[16] = 116; _34[17] = 32; _34[18] = 99; _34[19] = 97; _34[20] = 115; _34[21] = 101; 
-	_ADD_OWNERSHIP(_34);
+	_ADD_DEALLOC(_34);
 	//indirectinvoke () = %33 (%34) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_34));
 	//return

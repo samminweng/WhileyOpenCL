@@ -23,7 +23,7 @@ void printf_POS(POS* pos){
 	printf("%lld", pos->c);
 	printf("}");
 }
-long long conflict(POS* p, _DECL_OWNERSHIP_PARAM(p), long long row, long long col){
+long long conflict(POS* p, _DECL_DEALLOC_PARAM(p), long long row, long long col){
 	long long _3;
 	long long r = 0;
 	long long c = 0;
@@ -88,14 +88,14 @@ blklab3:;
 	//return
 }
 
-long long run(POS** queens, long long queens_size, _DECL_OWNERSHIP_PARAM(queens), long long n, long long dim){
+long long run(POS** queens, long long queens_size, _DECL_DEALLOC_PARAM(queens), long long n, long long dim){
 	long long _3 = 0;
 	long long num_solutions = 0;
 	long long col = 0;
 	long long isSolution;
 	long long i = 0;
 	POS* p;
-	_DECL_OWNERSHIP(p);
+	_DECL_DEALLOC(p);
 	long long _9 = 0;
 	long long _10 = 0;
 	long long _11 = 0;
@@ -107,7 +107,7 @@ long long run(POS** queens, long long queens_size, _DECL_OWNERSHIP_PARAM(queens)
 	long long _17 = 0;
 	long long _18 = 0;
 	POS* _19;
-	_DECL_OWNERSHIP(_19);
+	_DECL_DEALLOC(_19);
 	long long _20;
 	long long _21;
 	long long _22;
@@ -116,7 +116,7 @@ long long run(POS** queens, long long queens_size, _DECL_OWNERSHIP_PARAM(queens)
 	long long _25 = 0;
 	long long _26;
 	POS* _27;
-	_DECL_OWNERSHIP(_27);
+	_DECL_DEALLOC(_27);
 	long long _28 = 0;
 	long long _29 = 0;
 	long long _30 = 0;
@@ -207,11 +207,11 @@ blklab14:;
 			if(i>=n){goto blklab12;}
 			//indexof %19 = %0, %7 : {int c,int r}[]
 			_19=queens[i];
-			_REMOVE_OWNERSHIP(_19);
+			_REMOVE_DEALLOC(_19);
 			//assign %8 = %19  : {int c,int r}
 			_FREE_STRUCT(p, POS);
 			p = copy_POS(_19);
-			_ADD_OWNERSHIP(p);
+			_ADD_DEALLOC(p);
 			//const %20 = true : bool
 			_20 = true;
 			//ifeq %6, %20 goto blklab20 : bool
@@ -264,11 +264,11 @@ blklab12:;
 		_27 = malloc(sizeof(POS));
 		_27->c = col;
 		_27->r = n;
-		_ADD_OWNERSHIP(_27);
+		_ADD_DEALLOC(_27);
 		//update %0[%1] = %27 : {int c,int r}[] -> {int c,int r}[]
 		_FREE_1DARRAY_ELEMENT_STRUCT(queens, queens[n], POS);
 		queens[n] = _27;
-		_REMOVE_OWNERSHIP(_27);
+		_REMOVE_DEALLOC(_27);
 		//const %29 = 1 : int
 		_29 = 1;
 		//add %30 = %1, %29 : int
@@ -307,33 +307,33 @@ int main(int argc, char** args){
 	long long n = 0;
 	POS** init;
 	long long init_size = 0;
-	_DECL_OWNERSHIP(init);
+	_DECL_DEALLOC(init);
 	long long num_solutions = 0;
 	long long _4 = 0;
 	long long _5 = 0;
 	long long _6 = 0;
 	POS* _7;
-	_DECL_OWNERSHIP(_7);
+	_DECL_DEALLOC(_7);
 	POS** _8;
 	long long _8_size = 0;
-	_DECL_OWNERSHIP(_8);
+	_DECL_DEALLOC(_8);
 	long long _9 = 0;
 	long long _10 = 0;
 	long long _11 = 0;
 	void* _12;
 	_DECL_1DARRAY(_14);
-	_DECL_OWNERSHIP(_14);
+	_DECL_DEALLOC(_14);
 	void* _15;
 	_DECL_1DARRAY(_17);
-	_DECL_OWNERSHIP(_17);
+	_DECL_DEALLOC(_17);
 	void* _18;
 	void* _20;
 	_DECL_1DARRAY(_22);
-	_DECL_OWNERSHIP(_22);
+	_DECL_DEALLOC(_22);
 	void* _23;
 	void* _25;
 	_DECL_1DARRAY(_27);
-	_DECL_OWNERSHIP(_27);
+	_DECL_DEALLOC(_27);
 	//const %4 = 10 : int
 	_4 = 10;
 	//assign %1 = %4  : int
@@ -347,18 +347,18 @@ int main(int argc, char** args){
 	_7 = malloc(sizeof(POS));
 	_7->c = _5;
 	_7->r = _6;
-	_ADD_OWNERSHIP(_7);
+	_ADD_DEALLOC(_7);
 	//arraygen %8 = [7; 1] : {int c,int r}[]
 	_FREE_1DARRAY_STRUCT(_8, POS);
 	_8 = malloc(n*sizeof(POS*));
 	for(int _8_i=0;_8_i<n;_8_i++){_8[_8_i] = copy_POS(_7);}
 	_8_size = n;
-	_ADD_OWNERSHIP(_8);
+	_ADD_DEALLOC(_8);
 	//assign %2 = %8  : {int c,int r}[]
 	_FREE_1DARRAY_STRUCT(init, POS);
 	init = malloc(_8_size*sizeof(POS*));
 	_1DARRAY_COPY_STRUCT(init, _8, POS);
-	_ADD_OWNERSHIP(init);
+	_ADD_DEALLOC(init);
 	//const %10 = 0 : int
 	_10 = 0;
 	//invoke (%9) = (%2, %10, %1) nqueens:run : function(nqueens:POS[],int,int)->(int)
@@ -384,7 +384,7 @@ blklab23:;
 	_FREE(_14);
 	_NEW_ARRAY(_14, 33);
 	_14[0] = 78; _14[1] = 45; _14[2] = 81; _14[3] = 117; _14[4] = 101; _14[5] = 101; _14[6] = 110; _14[7] = 32; _14[8] = 80; _14[9] = 114; _14[10] = 111; _14[11] = 98; _14[12] = 108; _14[13] = 101; _14[14] = 109; _14[15] = 32; _14[16] = 111; _14[17] = 110; _14[18] = 32; _14[19] = 97; _14[20] = 32; _14[21] = 78; _14[22] = 32; _14[23] = 88; _14[24] = 32; _14[25] = 78; _14[26] = 32; _14[27] = 66; _14[28] = 111; _14[29] = 97; _14[30] = 114; _14[31] = 100; _14[32] = 46; 
-	_ADD_OWNERSHIP(_14);
+	_ADD_DEALLOC(_14);
 	//indirectinvoke () = %13 (%14) : method(int[])->()
 	println_s(_14, _14_size);
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
@@ -393,7 +393,7 @@ blklab23:;
 	_FREE(_17);
 	_NEW_ARRAY(_17, 4);
 	_17[0] = 78; _17[1] = 32; _17[2] = 61; _17[3] = 32; 
-	_ADD_OWNERSHIP(_17);
+	_ADD_DEALLOC(_17);
 	//indirectinvoke () = %16 (%17) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_17));
 	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
@@ -406,7 +406,7 @@ blklab23:;
 	_FREE(_22);
 	_NEW_ARRAY(_22, 6);
 	_22[0] = 70; _22[1] = 111; _22[2] = 117; _22[3] = 110; _22[4] = 100; _22[5] = 32; 
-	_ADD_OWNERSHIP(_22);
+	_ADD_DEALLOC(_22);
 	//indirectinvoke () = %21 (%22) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_22));
 	//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
@@ -419,7 +419,7 @@ blklab23:;
 	_FREE(_27);
 	_NEW_ARRAY(_27, 11);
 	_27[0] = 32; _27[1] = 115; _27[2] = 111; _27[3] = 108; _27[4] = 117; _27[5] = 116; _27[6] = 105; _27[7] = 111; _27[8] = 110; _27[9] = 115; _27[10] = 46; 
-	_ADD_OWNERSHIP(_27);
+	_ADD_DEALLOC(_27);
 	//indirectinvoke () = %26 (%27) : method(int[])->()
 	println_s(_27, _27_size);
 	//return

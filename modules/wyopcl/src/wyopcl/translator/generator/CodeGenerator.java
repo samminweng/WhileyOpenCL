@@ -134,9 +134,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				}
 			}
 			int register = reg;
-			// Declare ownership
+			// Declare deallocation flag
 			this.deallocatedAnalyzer.ifPresent(a -> {
-				String o = a.declareOwnershipFlag(indent, register, function, stores);
+				String o = a.declareDeallocFlag(indent, register, function, stores);
 				if (o != null) {
 					declarations.add(o);
 				}
@@ -230,10 +230,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						parameters.add(CodeGeneratorHelper.translateType(parameter_type, stores) + " " + var);
 					}
 				}
-				// Add ownership flag ('_dealloc') to input parameter
+				// Add deallocation flag ('_dealloc') to input parameter
 				this.deallocatedAnalyzer.ifPresent(a -> {
 					if (stores.isCompoundType(parameter_type)) {
-						parameters.add("_DECL_OWNERSHIP_PARAM(" + var + ")");
+						parameters.add("_DECL_DEALLOC_PARAM(" + var + ")");
 					}
 				});
 			}
@@ -293,7 +293,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 		}
 
-		// Compute the ownership
+		// Compute the deallocation flag
 		postProcessor(false, false, code.target(0), statement, code, function);
 
 		stores.addAllStatements(code, statement, function);
@@ -564,13 +564,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					}
 				}
 
-				// Append ownership to the function call
+				// Append deallocation flag to the function call
 				this.deallocatedAnalyzer.ifPresent(a -> {
-					Optional<HashMap<String, Boolean>> ownership = a.computeOwnership(operand, code, function, stores,
+					Optional<HashMap<String, Boolean>> dealloc = a.computeDealloc(operand, code, function, stores,
 							copyAnalyzer);
-					ownership.ifPresent(o -> {
-						// Get and pass callee ownership
-						boolean callee_own = ownership.get().get("callee");
+					dealloc.ifPresent(o -> {
+						// Get and pass callee deallocation flag
+						boolean callee_own = dealloc.get().get("callee");
 						if (callee_own) {
 							statement.add("true");
 						} else {
@@ -588,13 +588,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				} else {
 					statement.add("_STRUCT_COPY_PARAM(" + parameter + ", " + type_name + ")");
 				}
-				// Append ownership to the function call
+				// Append deallocation flag to the function call
 				this.deallocatedAnalyzer.ifPresent(a -> {
-					Optional<HashMap<String, Boolean>> ownership = a.computeOwnership(operand, code, function, stores,
+					Optional<HashMap<String, Boolean>> dealloc = a.computeDealloc(operand, code, function, stores,
 							copyAnalyzer);
-					ownership.ifPresent(o -> {
-						// Get and pass callee ownership
-						boolean callee_own = ownership.get().get("callee");
+					dealloc.ifPresent(o -> {
+						// Get and pass callee deallocation flag
+						boolean callee_own = dealloc.get().get("callee");
 						if (callee_own) {
 							statement.add("true");
 						} else {
@@ -672,14 +672,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		// Deallocate lhs register
 		this.deallocatedAnalyzer.ifPresent(a -> {
-			statement.add(indent + a.addDeallocatedCode(lhs, lhs_type, stores));
+			statement.add(indent + a.addDeallocCode(lhs, lhs_type, stores));
 		});
 
 		return lhs;
 	}
 
 	/**
-	 * Update the set with register and generate ownership code.
+	 * Update the set with register and generate deallocation code.
 	 * 
 	 * 
 	 * @param isCopyEliminated
@@ -694,26 +694,26 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		if (isUpdated) {
 			this.copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, register, code, function));
 		}
-		// Compute ownership of lhs register
+		// Compute deallocation flag of lhs register
 		this.deallocatedAnalyzer.ifPresent(a -> {
 			if (code instanceof Codes.Assign) {
-				statement.addAll(a.computeOwnership(isCopyEliminated, (Codes.Assign) code, function, stores));
+				statement.addAll(a.computeDealloc(isCopyEliminated, (Codes.Assign) code, function, stores));
 			} else if (code instanceof Codes.NewArray) {
-				statement.addAll(a.computeOwnership((Codes.NewArray) code, function, stores));
+				statement.addAll(a.computeDealloc((Codes.NewArray) code, function, stores));
 			} else if (code instanceof Codes.Const) {
-				statement.addAll(a.computeOwnership((Codes.Const) code, function, stores));
+				statement.addAll(a.computeDealloc((Codes.Const) code, function, stores));
 			} else if (code instanceof Codes.ArrayGenerator) {
-				statement.addAll(a.computeOwnership((Codes.ArrayGenerator) code, function, stores));
+				statement.addAll(a.computeDealloc((Codes.ArrayGenerator) code, function, stores));
 			} else if (code instanceof Codes.Update) {
-				statement.addAll(a.computeOwnership((Codes.Update) code, function, stores));
+				statement.addAll(a.computeDealloc((Codes.Update) code, function, stores));
 			} else {
-				statement.addAll(a.computeOwnership(isCopyEliminated, code, function, stores));
+				statement.addAll(a.computeDealloc(isCopyEliminated, code, function, stores));
 			}
 		});
 	}
 
 	/**
-	 * Update read-write and return sets and generate ownership for lhs register.
+	 * Update read-write and return sets and generate deallocation flag for lhs register.
 	 * 
 	 * @param isCopyEliminated
 	 * @param argumentCopyEliminated
@@ -733,14 +733,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			});
 		}
 
-		// Compute ownership of lhs register
+		// Compute deallocation flag of lhs register
 		this.deallocatedAnalyzer.ifPresent(a -> {
 			if (code instanceof Codes.NewRecord) {
-				statement.addAll(a.computeOwnership((Codes.NewRecord) code, function, stores, argumentCopyEliminated));
+				statement.addAll(a.computeDealloc((Codes.NewRecord) code, function, stores, argumentCopyEliminated));
 			} else if (code instanceof Codes.Invoke) {
-				statement.addAll(a.computeOwnership((Codes.Invoke) code, function, stores));
+				statement.addAll(a.computeDealloc((Codes.Invoke) code, function, stores));
 			} else {
-				statement.addAll(a.computeOwnership(false, code, function, stores));
+				statement.addAll(a.computeDealloc(false, code, function, stores));
 			}
 		});
 
@@ -831,9 +831,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// De-allocate lhs register
 			preProcessor(statement, code, function);
 		
-			// Remove ownerships of the parameters that do not have the copy
+			// Remove deallocation flags of the parameters that do not have the copy
 			this.deallocatedAnalyzer.ifPresent(a -> {
-				statement.addAll(a.computeOwnership(code, function, stores, copyAnalyzer));
+				statement.addAll(a.computeDealloc(code, function, stores, copyAnalyzer));
 			});
 
 			// call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
@@ -1014,7 +1014,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Translates the update byte-code into C code, and removes the ownership of rhs variable (a[i] = b; b_dealloc
+	 * Translates the update byte-code into C code, and removes the deallocation flag of rhs variable (a[i] = b; b_dealloc
 	 * = false;) For example,
 	 * 
 	 * <pre>
@@ -1070,7 +1070,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String lhs_final = lhs;
 		// Add deallocation code to lhs variable
 		this.deallocatedAnalyzer.ifPresent(a -> {
-			statement.add(a.addDeallocatedCode(lhs_final, code, function, stores));
+			statement.add(a.addDeallocCode(lhs_final, code, function, stores));
 		});
 		// Generate update statement, e.g. a[i] = b
 		statement.add(indent + lhs + " = " + stores.getVar(code.result(), function) + ";");
@@ -1112,9 +1112,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		if (function.isFunction()) {
 			// Generate a statement that returns a value to a calling function
 			if (code.operands().length > 0) {
-				// Add the code to deallocate all ownership variables.
+				// Add the code to deallocate all variables.
 				this.deallocatedAnalyzer.ifPresent(a -> {
-					statements.addAll(a.freeAllMemory(code, function, stores));
+					statements.addAll(a.addAllDeallocCode(code, function, stores));
 				});
 				statements.add(indent + "return " + stores.getVar(code.operand(0), function) + ";");
 			}
@@ -1122,17 +1122,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		} else {
 			// Generate system exit statement
 			if (function.name().equals("main")) {
-				// Add the code to deallocate all ownership variables.
+				// Add the code to deallocate all variables.
 				this.deallocatedAnalyzer.ifPresent(a -> {
-					statements.addAll(a.freeAllMemory(code, function, stores));
+					statements.addAll(a.addAllDeallocCode(code, function, stores));
 				});
 				// Add 'exit(0);'
 				statements.add(indent + "exit(0);");
 			} else {
 				if (code.operands().length == 0) {
-					// Add the code to deallocate all ownership variables.
+					// Add the code to deallocate all variables.
 					this.deallocatedAnalyzer.ifPresent(a -> {
-						statements.addAll(a.freeAllMemory(code, function, stores));
+						statements.addAll(a.addAllDeallocCode(code, function, stores));
 					});
 					statements.add(indent + "return;");
 				} else {

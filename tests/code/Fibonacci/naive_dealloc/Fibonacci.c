@@ -1,14 +1,14 @@
 #include "Fibonacci.h"
-long long* fibonacci(_DECL_1DARRAY_PARAM(ls), _DECL_OWNERSHIP_PARAM(ls), long long n){
+long long* fibonacci(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls), long long n){
 	_DECL_1DARRAY(_2);
-	_DECL_OWNERSHIP(_2);
+	_DECL_DEALLOC(_2);
 	long long _3 = 0;
 	long long _4 = 0;
 	long long _5 = 0;
 	long long _6 = 0;
 	long long _7 = 0;
 	_DECL_1DARRAY(_8);
-	_DECL_OWNERSHIP(_8);
+	_DECL_DEALLOC(_8);
 	long long _9 = 0;
 	long long _10 = 0;
 	long long _11 = 0;
@@ -46,11 +46,11 @@ blklab0:;
 	_1DARRAY_SIZE(_8, ls);
 	_FREE(_8);
 	_8 = fibonacci(_1DARRAY_COPY_PARAM(ls), true, _10);
-	_ADD_OWNERSHIP(_8);
+	_ADD_DEALLOC(_8);
 	//assign %0 = %8  : int[]
 	_FREE(ls);
 	_1DARRAY_COPY(ls, _8);
-	_ADD_OWNERSHIP(ls);
+	_ADD_DEALLOC(ls);
 	//const %11 = 1 : int
 	_11 = 1;
 	//sub %12 = %1, %11 : int
@@ -79,13 +79,13 @@ blklab1:;
 int main(int argc, char** args){
 	long long max = 0;
 	_DECL_1DARRAY(arr);
-	_DECL_OWNERSHIP(arr);
+	_DECL_DEALLOC(arr);
 	long long _3 = 0;
 	long long _4 = 0;
 	_DECL_1DARRAY(_5);
-	_DECL_OWNERSHIP(_5);
+	_DECL_DEALLOC(_5);
 	_DECL_1DARRAY(_6);
-	_DECL_OWNERSHIP(_6);
+	_DECL_DEALLOC(_6);
 	long long _7 = 0;
 	long long _8 = 0;
 	long long _9 = 0;
@@ -99,11 +99,11 @@ int main(int argc, char** args){
 	long long _17 = 0;
 	long long _18 = 0;
 	_DECL_1DARRAY(_19);
-	_DECL_OWNERSHIP(_19);
+	_DECL_DEALLOC(_19);
 	void* _20;
 	void* _22;
 	_DECL_1DARRAY(_24);
-	_DECL_OWNERSHIP(_24);
+	_DECL_DEALLOC(_24);
 	//const %3 = 10 : int
 	_3 = 10;
 	//assign %1 = %3  : int
@@ -113,11 +113,11 @@ int main(int argc, char** args){
 	//arraygen %5 = [4; 1] : int[]
 	_FREE(_5);
 	_GEN_1DARRAY(_5, max, _4);
-	_ADD_OWNERSHIP(_5);
+	_ADD_DEALLOC(_5);
 	//assign %2 = %5  : int[]
 	_FREE(arr);
 	_1DARRAY_COPY(arr, _5);
-	_ADD_OWNERSHIP(arr);
+	_ADD_DEALLOC(arr);
 	//const %7 = 1 : int
 	_7 = 1;
 	//sub %8 = %1, %7 : int
@@ -126,11 +126,11 @@ int main(int argc, char** args){
 	_1DARRAY_SIZE(_6, arr);
 	_FREE(_6);
 	_6 = fibonacci(_1DARRAY_COPY_PARAM(arr), true, _8);
-	_ADD_OWNERSHIP(_6);
+	_ADD_DEALLOC(_6);
 	//assign %2 = %6  : int[]
 	_FREE(arr);
 	_1DARRAY_COPY(arr, _6);
-	_ADD_OWNERSHIP(arr);
+	_ADD_DEALLOC(arr);
 	//assert
 	{
 		//const %9 = 0 : int
@@ -157,7 +157,7 @@ int main(int argc, char** args){
 		_FREE(_19);
 		_NEW_ARRAY(_19, 10);
 		_19[0] = _9; _19[1] = _10; _19[2] = _11; _19[3] = _12; _19[4] = _13; _19[5] = _14; _19[6] = _15; _19[7] = _16; _19[8] = _17; _19[9] = _18; 
-		_ADD_OWNERSHIP(_19);
+		_ADD_DEALLOC(_19);
 		//ifeq %2, %19 goto blklab2 : int[]
 		_IFEQ_ARRAY(arr, _19, blklab2);
 		//fail
@@ -177,7 +177,7 @@ blklab2:;
 	_FREE(_24);
 	_NEW_ARRAY(_24, 24);
 	_24[0] = 80; _24[1] = 97; _24[2] = 115; _24[3] = 115; _24[4] = 32; _24[5] = 70; _24[6] = 105; _24[7] = 98; _24[8] = 111; _24[9] = 110; _24[10] = 97; _24[11] = 99; _24[12] = 99; _24[13] = 105; _24[14] = 32; _24[15] = 116; _24[16] = 101; _24[17] = 115; _24[18] = 116; _24[19] = 32; _24[20] = 99; _24[21] = 97; _24[22] = 115; _24[23] = 101; 
-	_ADD_OWNERSHIP(_24);
+	_ADD_DEALLOC(_24);
 	//indirectinvoke () = %23 (%24) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_24));
 	//return

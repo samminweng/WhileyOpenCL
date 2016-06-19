@@ -57,9 +57,9 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _DECL_1DARRAY(a) long long* a = NULL; long long a##_size = 0;
 // Define 2D array variable
 #define _DECL_2DARRAY(a) long long** a = NULL; long long a##_size = 0; long long a##_size_size = 0;
-// Define the ownership variable
-#define _DECL_OWNERSHIP(a) bool a##_dealloc = false;
-#define _DECL_OWNERSHIP_PARAM(a) bool a##_dealloc
+// Define the deallocation flag
+#define _DECL_DEALLOC(a) bool a##_dealloc = false;
+#define _DECL_DEALLOC_PARAM(a) bool a##_dealloc
 // Concatenate struct and ownership
 #define _STRUCT_PARAM(a) a
 #define _STRUCT_PARAM_OWN(a) a, a##_dealloc
@@ -103,11 +103,11 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _GEN_2DARRAY(a, size, value) a##_size = size; a##_size_size = value##_size; a = gen2DArray(value, a##_size, a##_size_size);
 #define _FREE2DArray(a) if(a##_dealloc){free2DArray(a, a##_size); a##_dealloc = false;}
 // Add ownership for a given variable
-#define _ADD_OWNERSHIP(a) a##_dealloc = true;
+#define _ADD_DEALLOC(a) a##_dealloc = true;
 // Take out a variable's ownership
-#define _REMOVE_OWNERSHIP(a) a##_dealloc = false;
+#define _REMOVE_DEALLOC(a) a##_dealloc = false;
 // Transfer one variable's ownership to another
-#define _TRANSFER_OWNERSHIP(a, b) a##_dealloc = b##_dealloc;
+#define _TRANSFER_DEALLOC(a, b) a##_dealloc = b##_dealloc;
 //Nullify the array variable
 #define _NULLIFY(a) a = NULL;
 // Converts command line arguments into integer arrays

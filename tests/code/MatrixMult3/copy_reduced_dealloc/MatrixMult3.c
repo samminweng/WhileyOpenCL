@@ -27,19 +27,19 @@ void printf_Matrix(Matrix* matrix){
 	printf("%lld", matrix->height);
 	printf("}");
 }
-Matrix* matrix(long long width, long long height, _DECL_1DARRAY_PARAM(data), _DECL_OWNERSHIP_PARAM(data)){
+Matrix* matrix(long long width, long long height, _DECL_1DARRAY_PARAM(data), _DECL_DEALLOC_PARAM(data)){
 	Matrix* r;
-	_DECL_OWNERSHIP(r);
+	_DECL_DEALLOC(r);
 	Matrix* _4;
-	_DECL_OWNERSHIP(_4);
+	_DECL_DEALLOC(_4);
 	//newrecord %4 = (%2, %1, %0) : {int[] data,int height,int width}
 	_FREE_STRUCT(_4, Matrix);
 	_4 = malloc(sizeof(Matrix));
 	_1DARRAY_UPDATE(_4->data, data);
 	_4->height = height;
 	_4->width = width;
-	_REMOVE_OWNERSHIP(data);
-	_ADD_OWNERSHIP(_4);
+	_REMOVE_DEALLOC(data);
+	_ADD_DEALLOC(_4);
 	//return %4
 	_FREE(data);
 	_FREE_STRUCT(r, Matrix);
@@ -49,15 +49,15 @@ Matrix* matrix(long long width, long long height, _DECL_1DARRAY_PARAM(data), _DE
 
 Matrix* init(long long width, long long height){
 	Matrix* r;
-	_DECL_OWNERSHIP(r);
+	_DECL_DEALLOC(r);
 	_DECL_1DARRAY(data);
-	_DECL_OWNERSHIP(data);
+	_DECL_DEALLOC(data);
 	long long i = 0;
 	long long j = 0;
 	long long _6 = 0;
 	long long _7 = 0;
 	_DECL_1DARRAY(_8);
-	_DECL_OWNERSHIP(_8);
+	_DECL_DEALLOC(_8);
 	long long _9 = 0;
 	long long _10 = 0;
 	long long _11 = 0;
@@ -71,7 +71,7 @@ Matrix* init(long long width, long long height){
 	long long _19 = 0;
 	long long _20 = 0;
 	Matrix* _21;
-	_DECL_OWNERSHIP(_21);
+	_DECL_DEALLOC(_21);
 	//const %6 = 0 : int
 	_6 = 0;
 	//mul %7 = %0, %1 : int
@@ -79,12 +79,12 @@ Matrix* init(long long width, long long height){
 	//arraygen %8 = [6; 7] : int[]
 	_FREE(_8);
 	_GEN_1DARRAY(_8, _7, _6);
-	_ADD_OWNERSHIP(_8);
+	_ADD_DEALLOC(_8);
 	//assign %3 = %8  : int[]
 	_FREE(data);
 	_1DARRAY_UPDATE(data, _8);
-	_TRANSFER_OWNERSHIP(data, _8);
-	_REMOVE_OWNERSHIP(_8);
+	_TRANSFER_DEALLOC(data, _8);
+	_REMOVE_DEALLOC(_8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %4 = %9  : int
@@ -139,9 +139,9 @@ blklab3:;
 blklab2:;
 	//invoke (%21) = (%0, %1, %3) MatrixMult3:matrix : function(MatrixMult3:nat,MatrixMult3:nat,int[])->(MatrixMult3:Matrix)
 	_FREE_STRUCT(_21, Matrix);
-	_REMOVE_OWNERSHIP(data);
+	_REMOVE_DEALLOC(data);
 	_21 = matrix(width, height, _1DARRAY_PARAM(data), true);
-	_ADD_OWNERSHIP(_21);
+	_ADD_DEALLOC(_21);
 	//return %21
 	_FREE_STRUCT(r, Matrix);
 	_FREE(data);
@@ -150,7 +150,7 @@ blklab2:;
 	//return
 }
 
-void print_mat(FILE* sys, Matrix* a, _DECL_OWNERSHIP_PARAM(a)){
+void print_mat(FILE* sys, Matrix* a, _DECL_DEALLOC_PARAM(a)){
 	long long i = 0;
 	long long width = 0;
 	long long height = 0;
@@ -161,13 +161,13 @@ void print_mat(FILE* sys, Matrix* a, _DECL_OWNERSHIP_PARAM(a)){
 	long long _9 = 0;
 	void* _10;
 	_DECL_1DARRAY(_12);
-	_DECL_OWNERSHIP(_12);
+	_DECL_DEALLOC(_12);
 	long long _13 = 0;
 	long long _14 = 0;
 	long long _15 = 0;
 	void* _16;
 	_DECL_1DARRAY(_18);
-	_DECL_OWNERSHIP(_18);
+	_DECL_DEALLOC(_18);
 	long long _19 = 0;
 	long long _20 = 0;
 	long long _21 = 0;
@@ -175,7 +175,7 @@ void print_mat(FILE* sys, Matrix* a, _DECL_OWNERSHIP_PARAM(a)){
 	void* _23;
 	void* _25;
 	long long _25_size = 0;
-	_DECL_OWNERSHIP(_25);
+	_DECL_DEALLOC(_25);
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %2 = %6  : int
@@ -205,7 +205,7 @@ void print_mat(FILE* sys, Matrix* a, _DECL_OWNERSHIP_PARAM(a)){
 			//fieldload %12 = %1 data : {int[] data,int height,int width}
 			_FREE(_12);
 			_1DARRAY_COPY(_12, a->data);
-			_ADD_OWNERSHIP(_12);
+			_ADD_DEALLOC(_12);
 			//mul %13 = %2, %3 : int
 			_13=i*width;
 			//add %14 = %13, %5 : int
@@ -220,7 +220,7 @@ void print_mat(FILE* sys, Matrix* a, _DECL_OWNERSHIP_PARAM(a)){
 			_FREE(_18);
 			_NEW_ARRAY(_18, 1);
 			_18[0] = 32; 
-			_ADD_OWNERSHIP(_18);
+			_ADD_DEALLOC(_18);
 			//indirectinvoke () = %17 (%18) : method(int[])->()
 			printf_s(_1DARRAY_PARAM(_18));
 			//const %19 = 1 : int
@@ -245,7 +245,7 @@ blklab8:;
 		//const %25 = [] : void[]
 		_FREE(_25);
 		_NEW_ARRAY(_25, 0);
-		_ADD_OWNERSHIP(_25);
+		_ADD_DEALLOC(_25);
 		//indirectinvoke () = %24 (%25) : method(int[])->()
 		println_s(_25, _25_size);
 //.blklab7
@@ -261,19 +261,19 @@ blklab6:;
 	return;
 }
 
-Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP_PARAM(b)){
+Matrix* mat_mult(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_PARAM(b)){
 	Matrix* c;
-	_DECL_OWNERSHIP(c);
+	_DECL_DEALLOC(c);
 	long long width = 0;
 	long long height = 0;
 	_DECL_1DARRAY(data);
-	_DECL_OWNERSHIP(data);
+	_DECL_DEALLOC(data);
 	_DECL_1DARRAY(a_data);
-	_DECL_OWNERSHIP(a_data);
+	_DECL_DEALLOC(a_data);
 	_DECL_1DARRAY(b_data);
-	_DECL_OWNERSHIP(b_data);
+	_DECL_DEALLOC(b_data);
 	_DECL_1DARRAY(b_t);
-	_DECL_OWNERSHIP(b_t);
+	_DECL_DEALLOC(b_t);
 	long long i = 0;
 	long long j = 0;
 	long long k = 0;
@@ -282,15 +282,15 @@ Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP
 	long long _14 = 0;
 	long long _15 = 0;
 	_DECL_1DARRAY(_16);
-	_DECL_OWNERSHIP(_16);
+	_DECL_DEALLOC(_16);
 	_DECL_1DARRAY(_17);
-	_DECL_OWNERSHIP(_17);
+	_DECL_DEALLOC(_17);
 	_DECL_1DARRAY(_18);
-	_DECL_OWNERSHIP(_18);
+	_DECL_DEALLOC(_18);
 	long long _19 = 0;
 	long long _20 = 0;
 	_DECL_1DARRAY(_21);
-	_DECL_OWNERSHIP(_21);
+	_DECL_DEALLOC(_21);
 	long long _22 = 0;
 	long long _23 = 0;
 	long long _24 = 0;
@@ -328,7 +328,7 @@ Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP
 	long long _56 = 0;
 	long long _57 = 0;
 	Matrix* _58;
-	_DECL_OWNERSHIP(_58);
+	_DECL_DEALLOC(_58);
 	//fieldload %12 = %1 width : {int[] data,int height,int width}
 	_12 = b->width;
 	//assign %3 = %12  : int
@@ -344,30 +344,30 @@ Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP
 	//arraygen %16 = [14; 15] : int[]
 	_FREE(_16);
 	_GEN_1DARRAY(_16, _15, _14);
-	_ADD_OWNERSHIP(_16);
+	_ADD_DEALLOC(_16);
 	//assign %5 = %16  : int[]
 	_FREE(data);
 	_1DARRAY_UPDATE(data, _16);
-	_TRANSFER_OWNERSHIP(data, _16);
-	_REMOVE_OWNERSHIP(_16);
+	_TRANSFER_DEALLOC(data, _16);
+	_REMOVE_DEALLOC(_16);
 	//fieldload %17 = %0 data : {int[] data,int height,int width}
 	_FREE(_17);
 	_1DARRAY_UPDATE(_17, a->data);
-	_REMOVE_OWNERSHIP(_17);
+	_REMOVE_DEALLOC(_17);
 	//assign %6 = %17  : int[]
 	_FREE(a_data);
 	_1DARRAY_UPDATE(a_data, _17);
-	_TRANSFER_OWNERSHIP(a_data, _17);
-	_REMOVE_OWNERSHIP(_17);
+	_TRANSFER_DEALLOC(a_data, _17);
+	_REMOVE_DEALLOC(_17);
 	//fieldload %18 = %1 data : {int[] data,int height,int width}
 	_FREE(_18);
 	_1DARRAY_UPDATE(_18, b->data);
-	_REMOVE_OWNERSHIP(_18);
+	_REMOVE_DEALLOC(_18);
 	//assign %7 = %18  : int[]
 	_FREE(b_data);
 	_1DARRAY_UPDATE(b_data, _18);
-	_TRANSFER_OWNERSHIP(b_data, _18);
-	_REMOVE_OWNERSHIP(_18);
+	_TRANSFER_DEALLOC(b_data, _18);
+	_REMOVE_DEALLOC(_18);
 	//const %19 = 0 : int
 	_19 = 0;
 	//mul %20 = %3, %4 : int
@@ -375,12 +375,12 @@ Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP
 	//arraygen %21 = [19; 20] : int[]
 	_FREE(_21);
 	_GEN_1DARRAY(_21, _20, _19);
-	_ADD_OWNERSHIP(_21);
+	_ADD_DEALLOC(_21);
 	//assign %8 = %21  : int[]
 	_FREE(b_t);
 	_1DARRAY_UPDATE(b_t, _21);
-	_TRANSFER_OWNERSHIP(b_t, _21);
-	_REMOVE_OWNERSHIP(_21);
+	_TRANSFER_DEALLOC(b_t, _21);
+	_REMOVE_DEALLOC(_21);
 	//const %22 = 0 : int
 	_22 = 0;
 	//assign %9 = %22  : int
@@ -530,9 +530,9 @@ blklab18:;
 blklab17:;
 	//invoke (%58) = (%3, %4, %5) MatrixMult3:matrix : function(MatrixMult3:nat,MatrixMult3:nat,int[])->(MatrixMult3:Matrix)
 	_FREE_STRUCT(_58, Matrix);
-	_REMOVE_OWNERSHIP(data);
+	_REMOVE_DEALLOC(data);
 	_58 = matrix(width, height, _1DARRAY_PARAM(data), true);
-	_ADD_OWNERSHIP(_58);
+	_ADD_DEALLOC(_58);
 	//return %58
 	_FREE_STRUCT(a, Matrix);
 	_FREE_STRUCT(b, Matrix);
@@ -551,28 +551,28 @@ blklab17:;
 
 int main(int argc, char** args){
 	Matrix* A;
-	_DECL_OWNERSHIP(A);
+	_DECL_DEALLOC(A);
 	Matrix* B;
-	_DECL_OWNERSHIP(B);
+	_DECL_DEALLOC(B);
 	Matrix* C;
-	_DECL_OWNERSHIP(C);
+	_DECL_DEALLOC(C);
 	void* _4;
 	_DECL_1DARRAY(_6);
-	_DECL_OWNERSHIP(_6);
+	_DECL_DEALLOC(_6);
 	void* _7;
 	long long _9 = 0;
 	Matrix* _10;
-	_DECL_OWNERSHIP(_10);
+	_DECL_DEALLOC(_10);
 	long long _11 = 0;
 	long long _12 = 0;
 	Matrix* _13;
-	_DECL_OWNERSHIP(_13);
+	_DECL_DEALLOC(_13);
 	long long _14 = 0;
 	long long _15 = 0;
 	Matrix* _16;
-	_DECL_OWNERSHIP(_16);
+	_DECL_DEALLOC(_16);
 	_DECL_1DARRAY(_17);
-	_DECL_OWNERSHIP(_17);
+	_DECL_DEALLOC(_17);
 	long long _18 = 0;
 	long long _19 = 0;
 	long long _20 = 0;
@@ -587,7 +587,7 @@ int main(int argc, char** args){
 	long long _29 = 0;
 	long long _30 = 0;
 	_DECL_1DARRAY(_31);
-	_DECL_OWNERSHIP(_31);
+	_DECL_DEALLOC(_31);
 	long long _32 = 0;
 	long long _33 = 0;
 	long long _34 = 0;
@@ -602,7 +602,7 @@ int main(int argc, char** args){
 	long long _43 = 0;
 	long long _44 = 0;
 	_DECL_1DARRAY(_45);
-	_DECL_OWNERSHIP(_45);
+	_DECL_DEALLOC(_45);
 	long long _46 = 0;
 	long long _47 = 0;
 	long long _48 = 0;
@@ -616,10 +616,10 @@ int main(int argc, char** args){
 	long long _56 = 0;
 	void* _57;
 	_DECL_1DARRAY(_59);
-	_DECL_OWNERSHIP(_59);
+	_DECL_DEALLOC(_59);
 	void* _60;
 	_DECL_1DARRAY(_62);
-	_DECL_OWNERSHIP(_62);
+	_DECL_DEALLOC(_62);
 	long long _63 = 0;
 	long long _64 = 0;
 	long long _65 = 0;
@@ -632,14 +632,14 @@ int main(int argc, char** args){
 	long long _72 = 0;
 	void* _73;
 	_DECL_1DARRAY(_75);
-	_DECL_OWNERSHIP(_75);
+	_DECL_DEALLOC(_75);
 	//fieldload %4 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %5 = %4 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %6 = [78,32,61,32] : int[]
 	_FREE(_6);
 	_NEW_ARRAY(_6, 4);
 	_6[0] = 78; _6[1] = 32; _6[2] = 61; _6[3] = 32; 
-	_ADD_OWNERSHIP(_6);
+	_ADD_DEALLOC(_6);
 	//indirectinvoke () = %5 (%6) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_6));
 	//fieldload %7 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
@@ -655,12 +655,12 @@ int main(int argc, char** args){
 	//invoke (%10) = (%11, %12) MatrixMult3:init : function(MatrixMult3:nat,MatrixMult3:nat)->(MatrixMult3:Matrix)
 	_FREE_STRUCT(_10, Matrix);
 	_10 = init(_11, _12);
-	_ADD_OWNERSHIP(_10);
+	_ADD_DEALLOC(_10);
 	//assign %1 = %10  : {int[] data,int height,int width}
 	_FREE_STRUCT(A, Matrix);
 	A = _10;
-	_TRANSFER_OWNERSHIP(A, _10);
-	_REMOVE_OWNERSHIP(_10);
+	_TRANSFER_DEALLOC(A, _10);
+	_REMOVE_DEALLOC(_10);
 	//const %14 = 20 : int
 	_14 = 20;
 	//const %15 = 20 : int
@@ -668,27 +668,27 @@ int main(int argc, char** args){
 	//invoke (%13) = (%14, %15) MatrixMult3:init : function(MatrixMult3:nat,MatrixMult3:nat)->(MatrixMult3:Matrix)
 	_FREE_STRUCT(_13, Matrix);
 	_13 = init(_14, _15);
-	_ADD_OWNERSHIP(_13);
+	_ADD_DEALLOC(_13);
 	//assign %2 = %13  : {int[] data,int height,int width}
 	_FREE_STRUCT(B, Matrix);
 	B = _13;
-	_TRANSFER_OWNERSHIP(B, _13);
-	_REMOVE_OWNERSHIP(_13);
+	_TRANSFER_DEALLOC(B, _13);
+	_REMOVE_DEALLOC(_13);
 	//invoke (%16) = (%1, %2) MatrixMult3:mat_mult : function(MatrixMult3:Matrix,MatrixMult3:Matrix)->(MatrixMult3:Matrix)
 	_FREE_STRUCT(_16, Matrix);
 	_16 = mat_mult(_STRUCT_COPY_PARAM(A, Matrix), false, _STRUCT_COPY_PARAM(B, Matrix), false);
-	_ADD_OWNERSHIP(_16);
+	_ADD_DEALLOC(_16);
 	//assign %3 = %16  : {int[] data,int height,int width}
 	_FREE_STRUCT(C, Matrix);
 	C = _16;
-	_TRANSFER_OWNERSHIP(C, _16);
-	_REMOVE_OWNERSHIP(_16);
+	_TRANSFER_DEALLOC(C, _16);
+	_REMOVE_DEALLOC(_16);
 	//assert
 	{
 		//fieldload %17 = %1 data : {int[] data,int height,int width}
 		_FREE(_17);
 		_1DARRAY_UPDATE(_17, A->data);
-		_REMOVE_OWNERSHIP(_17);
+		_REMOVE_DEALLOC(_17);
 		//const %18 = 20 : int
 		_18 = 20;
 		//const %19 = 1 : int
@@ -729,7 +729,7 @@ blklab23:;
 		//fieldload %31 = %2 data : {int[] data,int height,int width}
 		_FREE(_31);
 		_1DARRAY_UPDATE(_31, B->data);
-		_REMOVE_OWNERSHIP(_31);
+		_REMOVE_DEALLOC(_31);
 		//const %32 = 20 : int
 		_32 = 20;
 		//const %33 = 1 : int
@@ -770,7 +770,7 @@ blklab24:;
 		//fieldload %45 = %3 data : {int[] data,int height,int width}
 		_FREE(_45);
 		_1DARRAY_COPY(_45, C->data);
-		_ADD_OWNERSHIP(_45);
+		_ADD_DEALLOC(_45);
 		//const %46 = 20 : int
 		_46 = 20;
 		//const %47 = 1 : int
@@ -810,7 +810,7 @@ print_mat(stdout, _STRUCT_COPY_PARAM(C, Matrix), false);
 	_FREE(_59);
 	_NEW_ARRAY(_59, 21);
 	_59[0] = 77; _59[1] = 97; _59[2] = 116; _59[3] = 114; _59[4] = 105; _59[5] = 120; _59[6] = 32; _59[7] = 67; _59[8] = 91; _59[9] = 78; _59[10] = 45; _59[11] = 49; _59[12] = 93; _59[13] = 91; _59[14] = 78; _59[15] = 45; _59[16] = 49; _59[17] = 93; _59[18] = 32; _59[19] = 61; _59[20] = 32; 
-	_ADD_OWNERSHIP(_59);
+	_ADD_DEALLOC(_59);
 	//indirectinvoke () = %58 (%59) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_59));
 	//fieldload %60 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
@@ -818,7 +818,7 @@ print_mat(stdout, _STRUCT_COPY_PARAM(C, Matrix), false);
 	//fieldload %62 = %3 data : {int[] data,int height,int width}
 	_FREE(_62);
 	_1DARRAY_UPDATE(_62, C->data);
-	_REMOVE_OWNERSHIP(_62);
+	_REMOVE_DEALLOC(_62);
 	//const %63 = 20 : int
 	_63 = 20;
 	//const %64 = 1 : int
@@ -847,7 +847,7 @@ print_mat(stdout, _STRUCT_COPY_PARAM(C, Matrix), false);
 	_FREE(_75);
 	_NEW_ARRAY(_75, 26);
 	_75[0] = 80; _75[1] = 97; _75[2] = 115; _75[3] = 115; _75[4] = 32; _75[5] = 77; _75[6] = 97; _75[7] = 116; _75[8] = 114; _75[9] = 105; _75[10] = 120; _75[11] = 77; _75[12] = 117; _75[13] = 108; _75[14] = 116; _75[15] = 50; _75[16] = 32; _75[17] = 116; _75[18] = 101; _75[19] = 115; _75[20] = 116; _75[21] = 32; _75[22] = 99; _75[23] = 97; _75[24] = 115; _75[25] = 101; 
-	_ADD_OWNERSHIP(_75);
+	_ADD_DEALLOC(_75);
 	//indirectinvoke () = %74 (%75) : method(int[])->()
 	println_s(_75, _75_size);
 	//return

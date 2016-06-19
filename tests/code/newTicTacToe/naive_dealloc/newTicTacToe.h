@@ -13,5 +13,5 @@ void printf_Board(Board* _board);
 Board* copy_Board(Board* _board);
 void free_Board(Board* _board);
 Board* EmptyBoard();
-long long countOf(_DECL_1DARRAY_PARAM(pieces), _DECL_OWNERSHIP_PARAM(pieces), long long s);
+long long countOf(_DECL_1DARRAY_PARAM(pieces), _DECL_DEALLOC_PARAM(pieces), long long s);
 int main(int argc, char** args);
