@@ -230,7 +230,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						parameters.add(CodeGeneratorHelper.translateType(parameter_type, stores) + " " + var);
 					}
 				}
-				// Add ownership flag ('_has_ownership') to input parameter
+				// Add ownership flag ('_dealloc') to input parameter
 				this.deallocatedAnalyzer.ifPresent(a -> {
 					if (stores.isCompoundType(parameter_type)) {
 						parameters.add("_DECL_OWNERSHIP_PARAM(" + var + ")");
@@ -1014,7 +1014,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Translates the update byte-code into C code, and removes the ownership of rhs variable (a[i] = b; b_has_ownership
+	 * Translates the update byte-code into C code, and removes the ownership of rhs variable (a[i] = b; b_dealloc
 	 * = false;) For example,
 	 * 
 	 * <pre>
@@ -1028,7 +1028,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * <pre>
 	 * <code>
 	 * _0.pieces[_1] = _7;
-	 * _7_has_ownership = false;
+	 * _7_dealloc = false;
 	 * </code>
 	 * </pre>
 	 * 
@@ -1597,10 +1597,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * <pre>
 	 * <code>
 	 * a_size = c;
-	 *	if(a_has_ownership){free2DArray(a, a_size); a_has_ownership = false;}
+	 *	if(a_dealloc){free2DArray(a, a_size); a_dealloc = false;}
 	 * a_size_size = __size;
 	 * a = gen2DArray(b, a_size, a_size_size);
-	 * a_has_ownership = true;
+	 * a_dealloc = true;
 	 * </code>
 	 * </pre>
 	 * 

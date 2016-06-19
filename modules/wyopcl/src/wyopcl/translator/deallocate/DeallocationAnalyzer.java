@@ -298,8 +298,8 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * owns the ownership, other variables that point to the array lost the ownership. For example,
 	 * 
 	 * <pre>
-	 * <code> a = b[i]; // Access the array element a_has_ownership = false; 
-	 * 		  a_has_ownership = false;//Remove lhs ownership
+	 * <code> a = b[i]; // Access the array element a_dealloc = false; 
+	 * 		  a_dealloc = false;//Remove lhs ownership
 	 * </code>
 	 * </pre>
 	 * 
@@ -350,7 +350,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * <pre>
 	 * <code>
 	 * 		a = f(b); // Pass b parameter without copy call function f 
-	 * 		b_has_ownership = false;
+	 * 		b_dealloc = false;
 	 * </code>
 	 * </pre>
 	 * 
@@ -388,7 +388,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * 
 	 * <pre>
 	 * <code>
-	 * bool a_has_ownership = true;
+	 * bool a_dealloc = true;
 	 * </code>
 	 * </pre>
 	 * 
@@ -420,7 +420,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Transfer rhs's ownership to lhs's ownership for an assignment a = b; a_has_ownership = b_has_ownership
+	 * Transfer rhs's ownership to lhs's ownership for an assignment a = b; a_dealloc = b_dealloc
 	 * 
 	 * @param lhs
 	 *            register
@@ -553,11 +553,11 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * 
 	 * <pre>
 	 * <code>
-	 * if(a_has_ownership){free_Board(a); a_has_ownership = false;}
+	 * if(a_dealloc){free_Board(a); a_dealloc = false;}
 	 * </code>
 	 * </pre>
 	 * 
-	 * where 'a' is a board and 'a_has_ownership' flag indicates whether 'a' owns an object.
+	 * where 'a' is a board and 'a_dealloc' flag indicates whether 'a' owns an object.
 	 * 
 	 * @param var
 	 * @param type
