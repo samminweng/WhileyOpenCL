@@ -8,9 +8,11 @@ void free2DArray(long long** ptr, long long size){
 	// Free each sub-pointer.
 	for(i=0;i<size;i++){
 		free(ptr[i]);
+		ptr[i] = NULL;
 	}
 	// Free top-level pointer.
 	free(ptr);
+	ptr = NULL;
 }
 
 /**

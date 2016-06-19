@@ -60,21 +60,29 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 // Define the deallocation flag
 #define _DECL_DEALLOC(a) bool a##_dealloc = false;
 #define _DECL_DEALLOC_PARAM(a) bool a##_dealloc
-// Concatenate struct and ownership
+// Concatenate struct and deallocation flag
 #define _STRUCT_PARAM(a) a
 #define _STRUCT_PARAM_OWN(a) a, a##_dealloc
 #define _STRUCT_COPY_PARAM(a, name) copy_##name(a)
 #define _STRUCT_COPY_PARAM_OWN(a, name) copy_##name(a), a##_dealloc
-#define _FREE_STRUCT(a, name) if(a##_dealloc){free_##name(a); a##_dealloc = false;}
-// Concatenate 1D array variable, array size variable and ownership
+#define _FREE_STRUCT(a, name) \
+		({\
+			if(a##_dealloc){\
+				free_##name(a);\
+				a = NULL;\
+				a##_dealloc = false;\
+			}\
+		})
+// Concatenate 1D array variable, array size variable and deallocation flag
 #define _DECL_1DARRAY_PARAM(a) long long* a, long long a##_size
 #define _DECL_1DARRAY_MEMBER(a) long long* a; long long a##_size;
 #define _1DARRAY_PARAM(a) a, a##_size
 #define _1DARRAY_PARAM_OWN(a) a, a##_size, a##_dealloc
 #define _1DARRAY_COPY_STRUCT(a, b, name) \
-		({ for(int i=0;i<b##_size;i++){\
+		({\
+			for(int i=0;i<b##_size;i++){\
  				a[i] = copy_##name(b[i]);\
- 		    }\
+ 		  	}\
  			a##_size = b##_size;\
 		})
 #define _1DARRAY_COPY_PARAM(a) copy(a, a##_size), a##_size
@@ -85,9 +93,30 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _1DARRAY_UPDATE(a, b) a##_size = b##_size; a = b;
 #define _IFEQ_ARRAY(a, b, blklab) if(isArrayEqual(a, a##_size, b, b##_size)==1){goto blklab;}
 #define _GEN_1DARRAY(a, size, value) a##_size = size; a = gen1DArray(value, a##_size);
-#define _FREE(a) if(a##_dealloc){free(a);a##_dealloc=false;}
-#define _FREE_1DARRAY_ELEMENT_STRUCT(a, b, name) free_##name(b);
-#define _FREE_1DARRAY_STRUCT(a, name) if(a##_dealloc){for(int i=0;i<a##_size;i++) free_##name(a[i]); a##_dealloc = false;}
+#define _FREE(a) \
+		({\
+			if(a##_dealloc){\
+				free(a);\
+				a = NULL;\
+				a##_dealloc=false;\
+			}\
+		})
+#define _FREE_1DARRAY_ELEMENT_STRUCT(a, b, name) \
+		({\
+			free_##name(b);\ 
+			b = NULL;\
+		})
+#define _FREE_1DARRAY_STRUCT(a, name) \
+		({\
+			if(a##_dealloc){\
+				for(int i=0;i<a##_size;i++){\
+					free_##name(a[i]);\
+					a[i] = NULL;\
+				}\
+				a = NULL;\
+				a##_dealloc = false;\
+		  	}\
+		})
 #define _NEW_ARRAY(a, length) a##_size = length; a = malloc(length*sizeof(long long)); 
 // Concatenate 2D array variable and array size variable
 #define _DECL_2DARRAY_PARAM(a) long long** a, long long a##_size, long long a##_size_size
@@ -101,12 +130,19 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _2DARRAY_COPY(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = copy2DArray(b, b##_size, b##_size_size);
 #define _2DARRAY_UPDATE(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = b;
 #define _GEN_2DARRAY(a, size, value) a##_size = size; a##_size_size = value##_size; a = gen2DArray(value, a##_size, a##_size_size);
-#define _FREE2DArray(a) if(a##_dealloc){free2DArray(a, a##_size); a##_dealloc = false;}
-// Add ownership for a given variable
+#define _FREE2DArray(a) \
+		({\
+			if(a##_dealloc){\
+				free2DArray(a, a##_size);\
+				a = NULL;\
+				a##_dealloc = false;\
+			}\
+		})
+// Add deallocation flag for a given variable
 #define _ADD_DEALLOC(a) a##_dealloc = true;
-// Take out a variable's ownership
+// Take out a variable's deallocation flag
 #define _REMOVE_DEALLOC(a) a##_dealloc = false;
-// Transfer one variable's ownership to another
+// Transfer one variable's deallocation flag to another
 #define _TRANSFER_DEALLOC(a, b) a##_dealloc = b##_dealloc;
 //Nullify the array variable
 #define _NULLIFY(a) a = NULL;
