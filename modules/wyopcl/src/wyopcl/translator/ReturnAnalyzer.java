@@ -78,27 +78,12 @@ public class ReturnAnalyzer extends Analyzer {
 	
 	
 	/**
-	 * Perform the post-order traversal to visit all nodes of a tree reference:
-	 * http://www.tutorialspoint.com/data_structures_algorithms/tree_traversal.htm
-	 * 
-	 * @param root
-	 */
-	private void postorderTraversalCallGraph(DefaultMutableTreeNode tree) {
-		// Go through all the nodes in post order
-		Enumeration<DefaultMutableTreeNode> nodes = tree.postorderEnumeration();
-		while (nodes.hasMoreElements()) {
-			DefaultMutableTreeNode node = nodes.nextElement();
-			visit(node);
-		}
-
-	}
-
-	/**
-	 * Visit the node and compute the return set for that function
+	 * Compute the return set for the given function node
 	 * 
 	 * @param currentNode
 	 */
-	private void visit(DefaultMutableTreeNode currentNode) {
+	@Override
+	protected void visit(DefaultMutableTreeNode currentNode) {
 		// Compute the return set for the give node
 		String name = (String) currentNode.getUserObject();
 		FunctionOrMethod function = (FunctionOrMethod) this.getFunction(name);

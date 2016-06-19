@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+
 import wybs.lang.Builder;
 import wycc.util.Pair;
 import wyil.lang.Code;
@@ -23,7 +25,6 @@ import wyopcl.Configuration;
 import wyopcl.translator.Analyzer;
 import wyopcl.translator.bound.BasicBlock;
 
-//public class LiveVariablesAnalysis extends BackwardFlowAnalysis<HashSet<Integer>>{
 /**
  * Implements Live variable analyzer to check if a register is alive or dead after a code of the function.
  * 
@@ -52,9 +53,12 @@ public class LiveVariablesAnalysis extends Analyzer {
 	public void apply(WyilFile module) {
 		// Builds up a CFG of the function.
 		super.apply(module);
-		// Apply live analysis on each function, except for main function.
+		postorderTraversalCallGraph(tree);
 		for (FunctionOrMethod function : module.functionOrMethods()) {
-			computeLiveness(function);
+			// Apply live analysis on the functions, which are NOT invoked
+			if(tree.getIndex(new DefaultMutableTreeNode(function.name()))<0){
+				computeLiveness(function);
+			}
 		}
 	}
 
@@ -149,6 +153,16 @@ public class LiveVariablesAnalysis extends Analyzer {
 		// Print out analysis result
 		if (config.isVerbose()) {
 			printLivenss(function);
+		}
+	}
+
+	@Override
+	protected void visit(DefaultMutableTreeNode node) {
+		// Apply live analysis on each calling function
+		String name = (String) node.getUserObject();
+		FunctionOrMethod function = (FunctionOrMethod) this.getFunction(name);
+		if(function != null){
+			computeLiveness(function);
 		}
 	}
 

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
@@ -622,6 +624,12 @@ public class DeallocationAnalyzer extends Analyzer {
 	@Override
 	public void apply(WyilFile module) {
 		super.apply(module);
+	}
+
+	@Override
+	protected void visit(DefaultMutableTreeNode node) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

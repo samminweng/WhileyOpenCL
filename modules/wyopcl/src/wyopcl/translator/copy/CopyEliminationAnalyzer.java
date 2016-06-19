@@ -1,5 +1,7 @@
 package wyopcl.translator.copy;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+
 import wybs.lang.Builder;
 import wyil.lang.Code;
 import wyil.lang.Codes;
@@ -111,6 +113,12 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			this.readwriteAnalyzer.updateSet(isCopyAvoided, register, code, function);
 			this.returnAnalyzer.updateSet(isCopyAvoided, register, code, function);
 		}
+		
+	}
+
+	@Override
+	protected void visit(DefaultMutableTreeNode node) {
+		// TODO Auto-generated method stub
 		
 	}
 }

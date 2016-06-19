@@ -171,11 +171,12 @@ public class ReadWriteAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Visit the node and compute the readwrite set for that function
+	 * Compute the read-write set for the given function
 	 * 
 	 * @param currentNode
 	 */
-	private void visit(DefaultMutableTreeNode currentNode) {
+	@Override
+	protected void visit(DefaultMutableTreeNode currentNode) {
 		// Compute the readwrite set for the give node
 		String name = (String) currentNode.getUserObject();
 		FunctionOrMethod function = (FunctionOrMethod) this.getFunction(name);
@@ -200,21 +201,7 @@ public class ReadWriteAnalyzer extends Analyzer {
 		}
 	}
 
-	/**
-	 * Perform the post-order traversal to visit all nodes of a tree reference:
-	 * http://www.tutorialspoint.com/data_structures_algorithms/tree_traversal.htm
-	 * 
-	 * @param root
-	 */
-	private void postorderTraversalCallGraph(DefaultMutableTreeNode tree) {
-		// Go through all the nodes in post order
-		Enumeration<DefaultMutableTreeNode> nodes = tree.postorderEnumeration();
-		while (nodes.hasMoreElements()) {
-			DefaultMutableTreeNode node = nodes.nextElement();
-			visit(node);
-		}
-
-	}
+	
 
 	/**
 	 * Go through every function, and checks each byte-code and adds the lhs register to read-write set.

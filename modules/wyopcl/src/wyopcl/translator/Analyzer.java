@@ -553,6 +553,29 @@ public abstract class Analyzer {
 	}
 	
 	/**
+	 * Visit the node and analyze the function
+	 * 
+	 * @param currentNode
+	 */
+	protected abstract void visit(DefaultMutableTreeNode node);
+	
+	/**
+	 * Perform the post-order traversal to visit all nodes of a tree reference:
+	 * http://www.tutorialspoint.com/data_structures_algorithms/tree_traversal.htm
+	 * 
+	 * @param root
+	 */
+	protected void postorderTraversalCallGraph(DefaultMutableTreeNode tree) {
+		// Go through all the nodes in post order
+		Enumeration<DefaultMutableTreeNode> nodes = tree.postorderEnumeration();
+		while (nodes.hasMoreElements()) {
+			DefaultMutableTreeNode node = nodes.nextElement();
+			visit(node);
+		}
+	}
+	
+	
+	/**
 	 * Iterate each code recursively and
 	 * 
 	 * @param code
@@ -562,15 +585,15 @@ public abstract class Analyzer {
 	protected void buildCallGraph(Code code, FunctionOrMethod function, DefaultMutableTreeNode parentNode) {
 		if (code instanceof Codes.Invoke) {
 			Codes.Invoke invoke = (Codes.Invoke) code;
-
-			// Some function are not defined in
 			// Create the tree node and append the node to the parent node
 			DefaultMutableTreeNode node = new DefaultMutableTreeNode(invoke.name.name());
 			parentNode.add(node);
 
 			// Get the calling function.
 			FunctionOrMethod callingfunction = getFunction(invoke.name.name());
-			// Check if calling function is not recursive function
+			
+			// Check if function are defined in the program.
+			// Check if calling function is not recursive function.
 			// TreeNode can not be recursively added to the function.
 			if (callingfunction != null && !callingfunction.equals(function)) {
 				// Iterate the calling function
@@ -579,9 +602,7 @@ public abstract class Analyzer {
 				}
 			}
 		} else if (code instanceof Codes.IndirectInvoke) {
-			// Codes.IndirectInvoke indirect = (Codes.IndirectInvoke) code;
-			// System.out.println(indirect);
-			// root.add(new DefaultMutableTreeNode(indirect.name()));
+			// Do nothing
 		} else if (code instanceof Codes.Loop) {
 			Codes.Loop loop = (Codes.Loop) code;
 			// Iterate the byte-code inside loop body
