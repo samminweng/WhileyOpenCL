@@ -2,6 +2,7 @@ package wyopcl.testing.translator;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -130,8 +131,7 @@ public final class BaseTestUtil {
 			 * cause the process to block, and even deadlock.
 			 */
 			pr = rt.exec(cmd, null, workingDir.toFile());
-			// Instantly write out the output message to avoid the process to
-			// block.
+			// Instantly write out the output message to avoid the process to block.
 			BufferedReader stdIn = new BufferedReader(new InputStreamReader(pr.getInputStream()));
 			String s;
 			while ((s = stdIn.readLine()) != null) {

@@ -606,7 +606,7 @@ public abstract class Analyzer {
 			}
 		} else if (code instanceof Codes.IndirectInvoke) {
 			// Do nothing
-			System.out.println(code);
+			//System.out.println(code);
 		} else if (code instanceof Codes.Loop) {
 			Codes.Loop loop = (Codes.Loop) code;
 			// Iterate the byte-code inside loop body
@@ -622,6 +622,31 @@ public abstract class Analyzer {
 		}
 
 	}
+	
+	/**
+	 * Go through each function in the tree (post-order)
+	 * to check if the given node is one of child nodes. 
+	 * 
+	 * 
+	 * @param node
+	 * @return true if the node is a child node.
+	 */
+	private boolean findCallGraph(DefaultMutableTreeNode node){
+		// Get a list of functions in the call graph tree
+		Enumeration<DefaultMutableTreeNode> childNodes = tree.postorderEnumeration();
+		boolean isFound = false;
+		while(childNodes.hasMoreElements()){
+			DefaultMutableTreeNode childNode = childNodes.nextElement();
+			// Check if the given node is one of child nodes
+			if(childNode.getUserObject().equals(node.getUserObject())){
+				isFound = true;// Found the child node
+				break;
+			}
+		}
+		return isFound;// Not found
+	}
+	
+	
 	
 	/**
 	 * Creates a call graph to represent calling relationship between functions
@@ -648,11 +673,13 @@ public abstract class Analyzer {
 				buildCallGraph(code, main, mainNode);
 			}
 			
+			
 			// Discover un-used or un-called functions to the tree
 			for(FunctionOrMethod function: module.functionOrMethods()){
 				DefaultMutableTreeNode node = new DefaultMutableTreeNode(function.name());
 				// Check if the node function is added to the tree
-				if(tree.getIndex(node)<0){
+				boolean isFound = findCallGraph(node);
+				if(!isFound){
 					// If not, then add the node to the tree
 					tree.add(node);
 				}
