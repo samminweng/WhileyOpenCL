@@ -327,7 +327,6 @@ public class DeallocationAnalyzer extends Analyzer {
 				// Add deallocation flag to lhs register
 				statements.add(indent + addDealloc(lhs, function, stores));
 			} else {
-				// int rhs = fieldload.operand(0);
 				if (isCopyEliminated) {
 					// That means 'fieldload' access one member
 					// rhs deallocation flag could be changed. But remove lhs deallocation flag
@@ -346,14 +345,17 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Compute the deallocation flag for each parameter of a function call,
+	 * Compute the deallocation flag for each argument of a function call,
 	 * 
-	 * If the parameter deallocation flag is transferred to the calling function, then its deallocation flag is removed. For example,
+	 * If the deallocation flag is assigned to the calling function and no copy is made, 
+	 * then callee frees the argument.
+	 * 
+	 * For example,
 	 * 
 	 * <pre>
 	 * <code>
-	 * 		a = f(b); // Pass b parameter without copy call function f 
-	 * 		b_dealloc = false;
+	 * 		a = f(b, true); // 'f' function frees 'b' array
+	 * 		b_dealloc = false; // Remove b 'de-alloc' flag 
 	 * </code>
 	 * </pre>
 	 * 
@@ -373,13 +375,15 @@ public class DeallocationAnalyzer extends Analyzer {
 			Optional<HashMap<String, Boolean>> dealloc = computeDealloc(register, code, function, stores,
 					copyAnalyzer);
 			dealloc.ifPresent(o -> {
-				// Get caller deallocation flag
-				boolean caller_own = o.get("caller");
-				if (!caller_own) {
-					// The deallocation flag is transferred from caller to calling
-					// function
-					statements.add(indent + removeDealloc(register, function, stores));
-				}
+				// Get callee's deallocation flag
+				boolean callee_dealloc = o.get("callee");
+				if(copyAnalyzer.isPresent()){
+					// Check if the callee de-allocates the argument
+					if (callee_dealloc) {
+						// If so, then deallocation flag is removed at caller site
+						statements.add(indent + removeDealloc(register, function, stores));
+					}
+				};
 			});
 		}
 
@@ -458,8 +462,8 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * f returns b?		|F			|T			|T			|F
 	 * --------------------------------------------------------------------
 	 * b is alive?	T	|No Copy	|No Copy	|Copy		|Copy
-	 * 					|caller = T	|caller = F |caller = T	|caller = T
-	 * 					|callee = F |callee = T |callee = T	|calee  = T
+	 * 					|caller = T	|caller = T |caller = T	|caller = T
+	 * 					|callee = F |callee = F |callee = T	|calee  = T
 	 * --------------------------------------------------------------------
 	 * 				F	|No Copy	|No Copy	|No Copy	|No Copy
 	 * 					|caller = T |caller = F	|caller = F |caller = F
@@ -492,12 +496,19 @@ public class DeallocationAnalyzer extends Analyzer {
 
 			if (!isMutated) {
 				if (!isReturned) {
-					// Caller deallocation flag
+					// NOT mutated nor return 
 					dealloc.get().put("caller", true);
 					dealloc.get().put("callee", false);
 				} else {
-					dealloc.get().put("caller", false);
-					dealloc.get().put("callee", true);
+					// NOT mutated but returned
+					// If 'b' is alive at caller site
+					if(isLive){
+						dealloc.get().put("caller", true);
+						dealloc.get().put("callee", false);
+					}else{
+						dealloc.get().put("caller", false);
+						dealloc.get().put("callee", true);
+					}
 				}
 			} else {
 				if (isReturned) {

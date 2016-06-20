@@ -648,7 +648,7 @@ public abstract class Analyzer {
 				buildCallGraph(code, main, mainNode);
 			}
 			
-			// Add the un-used functions to the tree
+			// Discover un-used or un-called functions to the tree
 			for(FunctionOrMethod function: module.functionOrMethods()){
 				DefaultMutableTreeNode node = new DefaultMutableTreeNode(function.name());
 				// Check if the node function is added to the tree

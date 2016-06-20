@@ -571,11 +571,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					dealloc.ifPresent(o -> {
 						// Get and pass callee deallocation flag
 						boolean callee_own = dealloc.get().get("callee");
-						if (callee_own) {
-							statement.add("true");
-						} else {
-							statement.add("false");
-						}
+						statement.add(callee_own+"");
 					});
 				});
 
@@ -595,11 +591,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					dealloc.ifPresent(o -> {
 						// Get and pass callee deallocation flag
 						boolean callee_own = dealloc.get().get("callee");
-						if (callee_own) {
-							statement.add("true");
-						} else {
-							statement.add("false");
-						}
+						statement.add(callee_own+"");
 					});
 				});
 			} else {
