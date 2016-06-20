@@ -611,8 +611,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			} else {
 				name = CodeGeneratorHelper.translateType(elem_type, stores).replace("*", "");
 				if (dimension == 1) {
-					// Use '_FREE_1DARRAY_STRUCT' to release an array of
-					// structure
+					// Use '_FREE_1DARRAY_STRUCT' to release an array of structure pointer
 					return "_FREE_1DARRAY_STRUCT(" + var + ", " + name + ");";
 				} else {
 					throw new RuntimeException("Not implemented");

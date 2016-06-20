@@ -648,6 +648,42 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		} else if (code instanceof Codes.NewRecord){
 			lhs = stores.getVar(((Codes.NewRecord)code).target(0), function);
 			lhs_type = stores.getRawType(((Codes.NewRecord)code).target(0), function); 
+		} else if (code instanceof Codes.Update){
+			Codes.Update update = (Codes.Update)code;
+			Type type = stores.getRawType(update.target(0), function);
+			// Get lhs variable, e.g. a[i]
+			String var = null;
+			if (type instanceof Type.Array) {
+				var = stores.getVar(update.target(0), function);
+				// Iterates operands to increase the depths.
+				for (int i = 0; i < update.operands().length - 1; i++) {
+					var += "[" + stores.getVar(update.operand(i), function) + "]";
+				}
+				
+				// Get array element type
+				lhs_type = stores.getArrayElementType((Type.Array) type);
+				
+			} else if (type instanceof Type.Record || type instanceof Type.Union) {
+				var = stores.getVar(update.target(0), function);
+				String member = update.fields.get(0);
+				var += "->" + member;
+				// check if there are two or more operands. If so, then add 'index' operand.
+				if (update.operands().length > 1) {
+					var += "[" + stores.getVar(update.operand(0), function) + "]";
+				}
+				lhs_type = type;
+			} else {
+				throw new RuntimeException("Not implemented" + code);
+			}
+			lhs = var;
+			
+			// Add deallocation code to lhs variable
+			this.deallocatedAnalyzer.ifPresent(a -> {
+				statement.add(a.addDeallocCode(lhs, update, function, stores));
+			});
+			
+			return lhs;
+			
 		} else {
 			throw new RuntimeException("Not implemented");
 		}
@@ -1025,35 +1061,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.Update code, FunctionOrMethod function) {
 		String indent = stores.getIndent(function);
-		List<String> statement = new ArrayList<String>();
-		Type lhs_type = stores.getRawType(code.target(0), function);
-
-		String lhs;
-		// Generate lhs variable
-		if (lhs_type instanceof Type.Array) {
-			lhs = stores.getVar(code.target(0), function);
-			// Iterates operands to increase the depths.
-			for (int i = 0; i < code.operands().length - 1; i++) {
-				lhs += "[" + stores.getVar(code.operand(i), function) + "]";
-			}
-		} else if (lhs_type instanceof Type.Record || lhs_type instanceof Type.Union) {
-			lhs = stores.getVar(code.target(0), function);
-			String member = code.fields.get(0);
-			lhs += "->" + member;
-			// check if there are two or more operands. If so, then add 'index' operand.
-			if (code.operands().length > 1) {
-				lhs += "[" + stores.getVar(code.operand(0), function) + "]";
-			}
-
-		} else {
-			throw new RuntimeException("Not implemented" + code);
-		}
-
-		String lhs_final = lhs;
-		// Add deallocation code to lhs variable
-		this.deallocatedAnalyzer.ifPresent(a -> {
-			statement.add(a.addDeallocCode(lhs_final, code, function, stores));
-		});
+		List<String> statement = new ArrayList<String>();	
+		String lhs = preProcessor(statement, code, function);
+		
 		// Generate update statement, e.g. a[i] = b
 		statement.add(indent + lhs + " = " + stores.getVar(code.result(), function) + ";");
 		boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
