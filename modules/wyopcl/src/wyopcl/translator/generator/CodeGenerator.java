@@ -526,7 +526,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			FunctionOrMethod function) {
 		
 		String lhs_statement = "";
-		// Translate the lhs side register of a function call.
+		// Translate the lhs side of a function call.
 		// If no return value, no needs for translation.
 		if (code.targets().length > 0) {
 			String indent = stores.getIndent(function);
@@ -535,21 +535,22 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			lhs_statement = indent + lhs + " = ";
 		}
 		
-		
+		// Translate the rhs side of a function call
 		List<String> statement = new ArrayList<String>();
 		for (int operand : code.operands()) {
 			String parameter = stores.getVar(operand, function);
 			Type parameter_type = stores.getRawType(operand, function);
+			
+			// Check if the copy of function argument is needed or not
+			// And then generate the corresponding code
 			if (parameter_type instanceof Type.Nominal
 					&& ((Type.Nominal) parameter_type).name().name().equals("Console")) {
 				statement.add("stdout");
-			} else if (parameter_type instanceof Type.Int || stores.isIntType(parameter_type)) {
+			} else if (stores.isIntType(parameter_type)) {
 				statement.add(parameter);
 			} else if (parameter_type instanceof Type.Array) {
-				Type elm = stores.getArrayElementType((Type.Array) parameter_type);
-
 				boolean isCopyEliminated = isCopyEliminated(operand, code, function);
-
+				Type elm = stores.getArrayElementType((Type.Array) parameter_type);
 				int dimension = stores.getArrayDimension(parameter_type);
 				if (isCopyEliminated) {
 					statement.add("_" + dimension + "DARRAY_PARAM(" + parameter + ")");
@@ -563,18 +564,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 								+ parameter + "_size");
 					}
 				}
-
-				// Append deallocation flag to the function call
-				this.deallocatedAnalyzer.ifPresent(a -> {
-					Optional<HashMap<String, Boolean>> dealloc = a.computeDealloc(operand, code, function, stores,
-							copyAnalyzer);
-					dealloc.ifPresent(o -> {
-						// Get and pass callee deallocation flag
-						boolean callee_own = dealloc.get().get("callee");
-						statement.add(callee_own+"");
-					});
-				});
-
 			} else if (parameter_type instanceof Type.Record || parameter_type instanceof Type.Nominal
 					|| parameter_type instanceof Type.Union) {
 				boolean isCopyEliminated = isCopyEliminated(operand, code, function);
@@ -584,23 +573,24 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				} else {
 					statement.add("_STRUCT_COPY_PARAM(" + parameter + ", " + type_name + ")");
 				}
-				// Append deallocation flag to the function call
-				this.deallocatedAnalyzer.ifPresent(a -> {
-					Optional<HashMap<String, Boolean>> dealloc = a.computeDealloc(operand, code, function, stores,
-							copyAnalyzer);
-					dealloc.ifPresent(o -> {
-						// Get and pass callee deallocation flag
-						boolean callee_own = dealloc.get().get("callee");
-						statement.add(callee_own+"");
-					});
-				});
 			} else {
 				throw new RuntimeException("Not Implemented");
 			}
+			
+			// Append deallocation flag to the function call
+			this.deallocatedAnalyzer.ifPresent(a -> {
+				Optional<HashMap<String, Boolean>> dealloc = 
+						a.computeDealloc(operand, code, function, stores, copyAnalyzer);
+				dealloc.ifPresent(o -> 
+					// Get and pass callee deallocation flag
+					statement.add(dealloc.get().get("callee")+"")
+				);
+			});
 		}
 
 		String rhs_statement = statement.stream().filter(s -> !s.equals("")).map(s -> s.toString()).collect(Collectors.joining(", "));
 		
+		// Combine lhs and rhs to the statement
 		return lhs_statement + code.name.name()+ "(" + rhs_statement + ");";
 		
 	

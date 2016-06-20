@@ -376,10 +376,10 @@ public class DeallocationAnalyzer extends Analyzer {
 					copyAnalyzer);
 			dealloc.ifPresent(o -> {
 				// Get callee's deallocation flag
-				boolean callee_dealloc = o.get("callee");
+				boolean caller_dealloc = o.get("caller");
 				if(copyAnalyzer.isPresent()){
 					// Check if the callee de-allocates the argument
-					if (callee_dealloc) {
+					if (!caller_dealloc) {
 						// If so, then deallocation flag is removed at caller site
 						statements.add(indent + removeDealloc(register, function, stores));
 					}
@@ -512,8 +512,9 @@ public class DeallocationAnalyzer extends Analyzer {
 				}
 			} else {
 				if (isReturned) {
-					// 'b' is alive
+					// Mutated and returned
 					if (isLive) {
+						// 'b' is alive
 						dealloc.get().put("caller", true);
 						dealloc.get().put("callee", true);
 					} else {
@@ -521,7 +522,9 @@ public class DeallocationAnalyzer extends Analyzer {
 						dealloc.get().put("callee", true);
 					}
 				} else {
+					// Mutated and NOT returned
 					if (isLive) {
+						// 'b' is alive
 						dealloc.get().put("caller", true);
 						dealloc.get().put("callee", true);
 					} else {
@@ -531,7 +534,7 @@ public class DeallocationAnalyzer extends Analyzer {
 				}
 			}
 		} else {
-			// The copy is needed, so that caller and Callee both have the deallocation flags
+			// The copy is needed, so that caller and callee both have the deallocation flags
 			dealloc.get().put("caller", true);
 			dealloc.get().put("callee", true);
 		}
