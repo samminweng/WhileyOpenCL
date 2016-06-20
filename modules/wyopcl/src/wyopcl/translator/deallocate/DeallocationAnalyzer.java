@@ -543,26 +543,29 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Adds the deallocation code
+	 * Adds the deallocation code for update byte-code. For example, 
+	 * <pre><code>
+	 * if(a_dealloc){ // Free a[i]
+	 * 		free(a[n]);
+	 * 		a[n] = NULL;
+	 * }
+	 * a[n] = b; // Update a[i] with b where b is a structure pointer 
+	 * </code></pre>
 	 * 
+	 * @param var
 	 * @param lhs
-	 * @param code
-	 * @param function
+	 * @param lhs_type
 	 * @param stores
 	 * @return
 	 */
-	public String addDeallocCode(String lhs, Codes.Update code, FunctionOrMethod function, CodeStores stores) {
-		String indent = stores.getIndent(function);
-		Type lhs_type = stores.getRawType(code.target(0), function);
-
+	public String addDeallocCode(String var, String lhs, Type lhs_type, CodeStores stores) {
 		if (lhs_type instanceof Type.Array) {
-			String array_variable = stores.getVar(code.target(0), function);
-			// Get array element type
+			// Get element type of array type
 			Type elm_type = stores.getArrayElementType((Type.Array) lhs_type);
 			if (stores.isCompoundType(elm_type)) {
-				// Free the lhs variable
+				// Free the lhs structure pointer
 				String name = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");
-				return indent + "_FREE_1DARRAY_ELEMENT_STRUCT(" + array_variable + ", " + lhs + ", " + name + ");";
+				return "_FREE_1DARRAY_ELEMENT_STRUCT(" + var + ", " + lhs + ", " + name + ");";
 			}
 		}
 
