@@ -680,7 +680,7 @@ int main(int argc, char** args){
 	_REMOVE_DEALLOC(_16);
 	//invoke (%17) = (%3, %4) MatrixMult:mat_mult : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
 	_FREE_STRUCT(_17, Matrix);
-	_17 = mat_mult(_STRUCT_COPY_PARAM(A, Matrix), false, _STRUCT_COPY_PARAM(B, Matrix), false);
+	_17 = mat_mult(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
 	_ADD_DEALLOC(_17);
 	//assign %5 = %17  : {int[] data,int height,int width}
 	_FREE_STRUCT(C, Matrix);
