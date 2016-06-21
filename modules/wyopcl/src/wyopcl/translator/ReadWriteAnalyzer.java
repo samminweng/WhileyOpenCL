@@ -69,7 +69,21 @@ public class ReadWriteAnalyzer extends Analyzer {
 			if(store.contains(lhs) && isCopyAvoided){
 				store.add(rhs);
 			}			
-		}else{
+		} else if(code instanceof Codes.Const){
+			// Do nothing as the code defines a constant
+		} else if(code instanceof Codes.NewArray){
+			// Do nothing as the code defines a new array
+		} else if(code instanceof Codes.IndexOf){
+			// Do nothing as the code access the array
+		} else if (code instanceof Codes.FieldLoad){
+			Codes.FieldLoad fl = (Codes.FieldLoad)code;
+			int lhs = fl.target(0);
+			int rhs = fl.operand(0);
+			// Check if lhs is readwrite and the copy is avoided
+			if(store.contains(lhs) && isCopyAvoided){
+				store.add(rhs);
+			}
+		} else{
 			store.add(register);
 		}
 	}

@@ -571,7 +571,7 @@ int main(int argc, char** args){
 	//assign %2 = %13  : {int[] data,int height,int width}
 	B = _13;
 	//invoke (%16) = (%1, %2) MatrixMult3:mat_mult : function(MatrixMult3:Matrix,MatrixMult3:Matrix)->(MatrixMult3:Matrix)
-	_16 = mat_mult(_STRUCT_PARAM(A), _STRUCT_PARAM(B));
+	_16 = mat_mult(_STRUCT_COPY_PARAM(A, Matrix), _STRUCT_COPY_PARAM(B, Matrix));
 	//assign %3 = %16  : {int[] data,int height,int width}
 	C = _16;
 	//assert

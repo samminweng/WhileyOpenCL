@@ -294,7 +294,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 
 		// Compute the deallocation flag
-		postProcessor(false, false, code.target(0), statement, code, function);
+		postProcessor(false, code.target(0), statement, code, function);
 
 		stores.addAllStatements(code, statement, function);
 	}
@@ -409,7 +409,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		} else {
 			boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
 			statement.add(generateAssignmentCode(code, isCopyEliminated, function, stores));
-			postProcessor(true, isCopyEliminated, code.operand(0), statement, code, function);
+			postProcessor(isCopyEliminated, code.operand(0), statement, code, function);
 		}
 
 		// Add the statement to the list of statements.
@@ -700,20 +700,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 	/**
 	 * Update the set with register and generate deallocation code.
-	 * 
-	 * 
 	 * @param isCopyEliminated
 	 * @param register
 	 * @param statement
 	 * @param code
 	 * @param function
 	 */
-	private void postProcessor(boolean isUpdated, boolean isCopyEliminated, int register, List<String> statement,
-			Code code, FunctionOrMethod function) {
+	private void postProcessor(boolean isCopyEliminated, int register, List<String> statement, Code code,
+			FunctionOrMethod function) {
 		// Update the set with register
-		if (isUpdated) {
-			this.copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, register, code, function));
-		}
+		this.copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, register, code, function));
+		
 		// Compute deallocation flag of lhs register
 		this.deallocatedAnalyzer.ifPresent(a -> {
 			if (code instanceof Codes.Assign) {
@@ -1069,7 +1066,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Generate update statement, e.g. a[i] = b
 		statement.add(indent + lhs + " = " + stores.getVar(code.result(), function) + ";");
 		boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
-		postProcessor(true, isCopyEliminated, code.operand(0), statement, code, function);
+		postProcessor(isCopyEliminated, code.operand(0), statement, code, function);
 
 		stores.addAllStatements(code, statement, function);
 	}
@@ -1169,7 +1166,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Assign rhs to rhs without any copy, e.g. a = b[i];
 		statement.add(indent + lhs + "=" + rhs + "[" + index + "];");
 
-		postProcessor(false, false, code.operand(0), statement, code, function);
+		postProcessor(false, code.operand(0), statement, code, function);
 
 		stores.addAllStatements(code, statement, function);
 	}
@@ -1226,7 +1223,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement.add(s);
 		}
 
-		postProcessor(false, false, code.operand(0), statement, code, function);
+		postProcessor(false, code.operand(0), statement, code, function);
 
 		stores.addAllStatements(code, statement, function);
 	}
@@ -1282,7 +1279,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, stores.getIndent(function), stores.getVar(code.target(0), function), rhs,
 						isCopyEliminated, stores));
 			}
-			postProcessor(false, isCopyEliminated, code.operand(0), statement, code, function);
+			postProcessor(isCopyEliminated, code.operand(0), statement, code, function);
 		}
 		stores.addAllStatements(code, statement, function);
 	}
@@ -1629,7 +1626,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			isCopyEliminated = false;
 		}
 
-		postProcessor(true, isCopyEliminated, code.operand(0), statement, code, function);
+		postProcessor(isCopyEliminated, code.operand(0), statement, code, function);
 
 		stores.addAllStatements(code, statement, function);
 	}
