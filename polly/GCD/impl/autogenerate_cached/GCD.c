@@ -59,7 +59,7 @@ blklab2:;
 	//return
 }
 
-long long gcd_cached(long long a, long long b, long long n, _DECL_1DARRAY_PARAM(gcds), _DECL_OWNERSHIP_PARAM(gcds)){
+long long gcd_cached(long long a, long long b, long long n, _DECL_1DARRAY_PARAM(gcds), _DECL_DEALLOC_PARAM(gcds)){
 	long long _4 = 0;
 	long long _5 = 0;
 	long long _6 = 0;
@@ -124,28 +124,28 @@ blklab8:;
 
 int main(int argc, char** args){
 	long long* max;
-	_DECL_OWNERSHIP(max);
+	_DECL_DEALLOC(max);
 	long long n = 0;
 	_DECL_1DARRAY(gcds);
-	_DECL_OWNERSHIP(gcds);
+	_DECL_DEALLOC(gcds);
 	long long sum = 0;
 	long long i = 0;
 	long long j = 0;
 	long long* _7;
-	_DECL_OWNERSHIP(_7);
+	_DECL_DEALLOC(_7);
 	_DECL_2DARRAY(_8);
-	_DECL_OWNERSHIP(_8);
+	_DECL_DEALLOC(_8);
 	long long _9 = 0;
 	_DECL_1DARRAY(_10);
-	_DECL_OWNERSHIP(_10);
+	_DECL_DEALLOC(_10);
 	void* _11;
 	_DECL_1DARRAY(_13);
-	_DECL_OWNERSHIP(_13);
+	_DECL_DEALLOC(_13);
 	void* _14;
 	long long _16 = 0;
 	long long _17 = 0;
 	_DECL_1DARRAY(_18);
-	_DECL_OWNERSHIP(_18);
+	_DECL_DEALLOC(_18);
 	long long _19 = 0;
 	long long _20 = 0;
 	long long _21 = 0;
@@ -162,29 +162,29 @@ int main(int argc, char** args){
 	long long _32 = 0;
 	void* _33;
 	_DECL_1DARRAY(_35);
-	_DECL_OWNERSHIP(_35);
+	_DECL_DEALLOC(_35);
 	void* _36;
 	void* _38;
 	_DECL_1DARRAY(_40);
-	_DECL_OWNERSHIP(_40);
+	_DECL_DEALLOC(_40);
 	//fieldload %8 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	_FREE2DArray(_8);
 	_CONV_ARGS(_8);
-	_ADD_OWNERSHIP(_8);
+	_ADD_DEALLOC(_8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//indexof %10 = %8, %9 : int[][]
 	_10=_8[_9];
-	_REMOVE_OWNERSHIP(_10);
+	_REMOVE_DEALLOC(_10);
 	//invoke (%7) = (%10) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
 	_STR_TO_INT(_7, _10);
-	_ADD_OWNERSHIP(_7);
-	_REMOVE_OWNERSHIP(_10);
+	_ADD_DEALLOC(_7);
+	_REMOVE_DEALLOC(_10);
 	//assign %1 = %7  : null|int
 	_FREE(max);
 	max = _7;
-	_TRANSFER_OWNERSHIP(max, _7);
-	_REMOVE_OWNERSHIP(_7);
+	_TRANSFER_DEALLOC(max, _7);
+	_REMOVE_DEALLOC(_7);
 	//ifis %1, null goto blklab13 : null|int
 	if(max == NULL) { goto blklab13;}
 	//assign %2 = %1  : int
@@ -195,7 +195,7 @@ int main(int argc, char** args){
 	_FREE(_13);
 	_NEW_ARRAY(_13, 4);
 	_13[0] = 78; _13[1] = 32; _13[2] = 61; _13[3] = 32; 
-	_ADD_OWNERSHIP(_13);
+	_ADD_DEALLOC(_13);
 	//indirectinvoke () = %12 (%13) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_13));
 	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
@@ -209,12 +209,12 @@ int main(int argc, char** args){
 	//arraygen %18 = [16; 17] : int[]
 	_FREE(_18);
 	_GEN_1DARRAY(_18, _17, _16);
-	_ADD_OWNERSHIP(_18);
+	_ADD_DEALLOC(_18);
 	//assign %3 = %18  : int[]
 	_FREE(gcds);
 	_1DARRAY_UPDATE(gcds, _18);
-	_TRANSFER_OWNERSHIP(gcds, _18);
-	_REMOVE_OWNERSHIP(_18);
+	_TRANSFER_DEALLOC(gcds, _18);
+	_REMOVE_DEALLOC(_18);
 	//const %19 = 0 : int
 	_19 = 0;
 	//assign %4 = %19  : int
@@ -281,7 +281,7 @@ blklab14:;
 	_FREE(_35);
 	_NEW_ARRAY(_35, 5);
 	_35[0] = 83; _35[1] = 117; _35[2] = 109; _35[3] = 58; _35[4] = 32; 
-	_ADD_OWNERSHIP(_35);
+	_ADD_DEALLOC(_35);
 	//indirectinvoke () = %34 (%35) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_35));
 	//fieldload %36 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
@@ -294,7 +294,7 @@ blklab14:;
 	_FREE(_40);
 	_NEW_ARRAY(_40, 32);
 	_40[0] = 80; _40[1] = 97; _40[2] = 115; _40[3] = 115; _40[4] = 32; _40[5] = 99; _40[6] = 97; _40[7] = 99; _40[8] = 104; _40[9] = 101; _40[10] = 100; _40[11] = 32; _40[12] = 69; _40[13] = 117; _40[14] = 99; _40[15] = 108; _40[16] = 105; _40[17] = 100; _40[18] = 32; _40[19] = 71; _40[20] = 67; _40[21] = 68; _40[22] = 32; _40[23] = 116; _40[24] = 101; _40[25] = 115; _40[26] = 116; _40[27] = 32; _40[28] = 99; _40[29] = 97; _40[30] = 115; _40[31] = 101; 
-	_ADD_OWNERSHIP(_40);
+	_ADD_DEALLOC(_40);
 	//indirectinvoke () = %39 (%40) : method(int[])->()
 	println_s(_40, _40_size);
 //.blklab13

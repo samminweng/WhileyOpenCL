@@ -1,299 +1,51 @@
-==6121== Memcheck, a memory error detector
-==6121== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==6121== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==6121== Command: ./out/NQueens.polly.enableVC.out 10
-==6121== Parent PID: 3285
-==6121== 
-==6121== Invalid read of size 8
-==6121==    at 0x400A8E: conflict (NQueens.c:41)
-==6121==    by 0x400A8E: run (NQueens.c:225)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121==  Address 0x51fc8f0 is 0 bytes inside a block of size 16 free'd
-==6121==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6121==    by 0x400B48: free_POS (NQueens.c:16)
-==6121==    by 0x400B48: run (NQueens.c:298)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121== 
-==6121== Invalid read of size 8
-==6121==    at 0x400A96: conflict (NQueens.c:45)
-==6121==    by 0x400A96: run (NQueens.c:225)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121==  Address 0x51fc8f8 is 8 bytes inside a block of size 16 free'd
-==6121==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6121==    by 0x400B48: free_POS (NQueens.c:16)
-==6121==    by 0x400B48: run (NQueens.c:298)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121== 
-==6121== Invalid free() / delete / delete[] / realloc()
-==6121==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6121==    by 0x400AFF: free_POS (NQueens.c:16)
-==6121==    by 0x400AFF: run (NQueens.c:270)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121==  Address 0x51fca80 is 0 bytes inside a block of size 16 free'd
-==6121==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6121==    by 0x400B48: free_POS (NQueens.c:16)
-==6121==    by 0x400B48: run (NQueens.c:298)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121== 
-==6121== Invalid free() / delete / delete[] / realloc()
-==6121==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6121==    by 0x400B48: free_POS (NQueens.c:16)
-==6121==    by 0x400B48: run (NQueens.c:298)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121==  Address 0x51fc8f0 is 0 bytes inside a block of size 16 free'd
-==6121==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6121==    by 0x400B48: free_POS (NQueens.c:16)
-==6121==    by 0x400B48: run (NQueens.c:298)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121== 
-==6121== Invalid read of size 8
-==6121==    at 0x400A8E: conflict (NQueens.c:41)
-==6121==    by 0x400A8E: run (NQueens.c:225)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121==  Address 0x51fc8f0 is 0 bytes inside a block of size 16 free'd
-==6121==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6121==    by 0x400B48: free_POS (NQueens.c:16)
-==6121==    by 0x400B48: run (NQueens.c:298)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121== 
-==6121== Invalid read of size 8
-==6121==    at 0x400A96: conflict (NQueens.c:45)
-==6121==    by 0x400A96: run (NQueens.c:225)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121==  Address 0x51fc8f8 is 8 bytes inside a block of size 16 free'd
-==6121==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6121==    by 0x400B48: free_POS (NQueens.c:16)
-==6121==    by 0x400B48: run (NQueens.c:298)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121== 
-==6121== Invalid read of size 8
-==6121==    at 0x400A8E: conflict (NQueens.c:41)
-==6121==    by 0x400A8E: run (NQueens.c:225)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121==  Address 0x51fc8f0 is 0 bytes inside a block of size 16 free'd
-==6121==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6121==    by 0x400B48: free_POS (NQueens.c:16)
-==6121==    by 0x400B48: run (NQueens.c:298)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121== 
-==6121== Invalid read of size 8
-==6121==    at 0x400A96: conflict (NQueens.c:45)
-==6121==    by 0x400A96: run (NQueens.c:225)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121==  Address 0x51fc8f8 is 8 bytes inside a block of size 16 free'd
-==6121==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6121==    by 0x400B48: free_POS (NQueens.c:16)
-==6121==    by 0x400B48: run (NQueens.c:298)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121== 
-==6121== Invalid free() / delete / delete[] / realloc()
-==6121==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6121==    by 0x400AFF: free_POS (NQueens.c:16)
-==6121==    by 0x400AFF: run (NQueens.c:270)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121==  Address 0x51fc990 is 0 bytes inside a block of size 16 free'd
-==6121==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6121==    by 0x400B48: free_POS (NQueens.c:16)
-==6121==    by 0x400B48: run (NQueens.c:298)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121== 
-==6121== Invalid free() / delete / delete[] / realloc()
-==6121==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6121==    by 0x400A28: free_POS (NQueens.c:16)
-==6121==    by 0x400A28: run (NQueens.c:131)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==  Address 0x51fc8f0 is 0 bytes inside a block of size 16 free'd
-==6121==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6121==    by 0x400B48: free_POS (NQueens.c:16)
-==6121==    by 0x400B48: run (NQueens.c:298)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121== 
-==6121== Invalid read of size 8
-==6121==    at 0x400A8E: conflict (NQueens.c:41)
-==6121==    by 0x400A8E: run (NQueens.c:225)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121==  Address 0x51fc8f0 is 0 bytes inside a block of size 16 free'd
-==6121==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6121==    by 0x400B48: free_POS (NQueens.c:16)
-==6121==    by 0x400B48: run (NQueens.c:298)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121== 
-==6121== Invalid read of size 8
-==6121==    at 0x400A96: conflict (NQueens.c:45)
-==6121==    by 0x400A96: run (NQueens.c:225)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121==  Address 0x51fc8f8 is 8 bytes inside a block of size 16 free'd
-==6121==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6121==    by 0x400B48: free_POS (NQueens.c:16)
-==6121==    by 0x400B48: run (NQueens.c:298)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121== 
-==6121== Invalid free() / delete / delete[] / realloc()
-==6121==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6121==    by 0x400AFF: free_POS (NQueens.c:16)
-==6121==    by 0x400AFF: run (NQueens.c:270)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121==  Address 0x51fc940 is 0 bytes inside a block of size 16 free'd
-==6121==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6121==    by 0x400B48: free_POS (NQueens.c:16)
-==6121==    by 0x400B48: run (NQueens.c:298)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121== 
-==6121== Invalid free() / delete / delete[] / realloc()
-==6121==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6121==    by 0x400B80: free_POS (NQueens.c:16)
-==6121==    by 0x400B80: run (NQueens.c:270)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121==  Address 0x51fc8f0 is 0 bytes inside a block of size 16 free'd
-==6121==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6121==    by 0x400B48: free_POS (NQueens.c:16)
-==6121==    by 0x400B48: run (NQueens.c:298)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400B1B: run (NQueens.c:279)
-==6121==    by 0x400BA2: run (NQueens.c:279)
-==6121==    by 0x400CDB: main (NQueens.c:394)
-==6121== 
-==6121== 
-==6121== HEAP SUMMARY:
-==6121==     in use at exit: 320 bytes in 12 blocks
-==6121==   total heap usage: 35,568 allocs, 163,286 frees, 569,576 bytes allocated
-==6121== 
-==6121== LEAK SUMMARY:
-==6121==    definitely lost: 160 bytes in 2 blocks
-==6121==    indirectly lost: 144 bytes in 9 blocks
-==6121==      possibly lost: 0 bytes in 0 blocks
-==6121==    still reachable: 16 bytes in 1 blocks
-==6121==         suppressed: 0 bytes in 0 blocks
-==6121== Rerun with --leak-check=full to see details of leaked memory
-==6121== 
-==6121== For counts of detected and suppressed errors, rerun with: -v
-==6121== ERROR SUMMARY: 2439528 errors from 14 contexts (suppressed: 0 from 0)
+==16691== Memcheck, a memory error detector
+==16691== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==16691== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==16691== Command: ./out/NQueens.polly.enableVC.out 10
+==16691== Parent PID: 9997
+==16691== 
+==16691== Invalid read of size 8
+==16691==    at 0x400A9E: conflict (NQueens.c:41)
+==16691==    by 0x400A9E: run (NQueens.c:225)
+==16691==    by 0x400B38: run (NQueens.c:279)
+==16691==    by 0x400B38: run (NQueens.c:279)
+==16691==    by 0x400B38: run (NQueens.c:279)
+==16691==    by 0x400B38: run (NQueens.c:279)
+==16691==    by 0x400BEF: run (NQueens.c:279)
+==16691==    by 0x400D2B: main (NQueens.c:394)
+==16691==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==16691== 
+==16691== 
+==16691== Process terminating with default action of signal 11 (SIGSEGV)
+==16691==  Access not within mapped region at address 0x0
+==16691==    at 0x400A9E: conflict (NQueens.c:41)
+==16691==    by 0x400A9E: run (NQueens.c:225)
+==16691==    by 0x400B38: run (NQueens.c:279)
+==16691==    by 0x400B38: run (NQueens.c:279)
+==16691==    by 0x400B38: run (NQueens.c:279)
+==16691==    by 0x400B38: run (NQueens.c:279)
+==16691==    by 0x400BEF: run (NQueens.c:279)
+==16691==    by 0x400D2B: main (NQueens.c:394)
+==16691==  If you believe this happened as a result of a stack
+==16691==  overflow in your program's main thread (unlikely but
+==16691==  possible), you can try to increase the size of the
+==16691==  main thread stack using the --main-stacksize= flag.
+==16691==  The main thread stack size used in this run was 8388608.
+==16691== 
+==16691== HEAP SUMMARY:
+==16691==     in use at exit: 376 bytes in 16 blocks
+==16691==   total heap usage: 32 allocs, 16 frees, 632 bytes allocated
+==16691== 
+==16691== LEAK SUMMARY:
+==16691==    definitely lost: 80 bytes in 1 blocks
+==16691==    indirectly lost: 144 bytes in 9 blocks
+==16691==      possibly lost: 0 bytes in 0 blocks
+==16691==    still reachable: 152 bytes in 6 blocks
+==16691==         suppressed: 0 bytes in 0 blocks
+==16691== Rerun with --leak-check=full to see details of leaked memory
+==16691== 
+==16691== For counts of detected and suppressed errors, rerun with: -v
+==16691== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -301,7 +53,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3888.750
+cpu MHz		: 3861.656
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -315,7 +67,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.79
+bogomips	: 6784.51
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -328,7 +80,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3791.531
+cpu MHz		: 3878.789
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -342,7 +94,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.79
+bogomips	: 6784.51
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -369,7 +121,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.79
+bogomips	: 6784.51
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -382,7 +134,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3811.984
+cpu MHz		: 3796.578
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -396,7 +148,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.79
+bogomips	: 6784.51
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -409,7 +161,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3871.351
+cpu MHz		: 3823.804
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -423,7 +175,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.79
+bogomips	: 6784.51
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -436,7 +188,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3656.195
+cpu MHz		: 3401.195
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -450,7 +202,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.79
+bogomips	: 6784.51
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -463,7 +215,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.375
+cpu MHz		: 3429.484
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -477,7 +229,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.79
+bogomips	: 6784.51
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -490,7 +242,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3425.367
+cpu MHz		: 3440.375
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -504,7 +256,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.79
+bogomips	: 6784.51
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual

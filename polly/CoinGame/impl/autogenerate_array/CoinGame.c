@@ -1,25 +1,25 @@
 #include "CoinGame.h"
-long long* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_OWNERSHIP_PARAM(moves), long long n){
+long long* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), long long n){
 	_DECL_1DARRAY(_2);
-	_DECL_OWNERSHIP(_2);
+	_DECL_DEALLOC(_2);
 	_DECL_1DARRAY(x);
-	_DECL_OWNERSHIP(x);
+	_DECL_DEALLOC(x);
 	_DECL_1DARRAY(y);
-	_DECL_OWNERSHIP(y);
+	_DECL_DEALLOC(y);
 	_DECL_1DARRAY(z);
-	_DECL_OWNERSHIP(z);
+	_DECL_DEALLOC(z);
 	long long s = 0;
 	long long j = 0;
 	long long i = 0;
 	long long _9 = 0;
 	_DECL_1DARRAY(_10);
-	_DECL_OWNERSHIP(_10);
+	_DECL_DEALLOC(_10);
 	long long _11 = 0;
 	_DECL_1DARRAY(_12);
-	_DECL_OWNERSHIP(_12);
+	_DECL_DEALLOC(_12);
 	long long _13 = 0;
 	_DECL_1DARRAY(_14);
-	_DECL_OWNERSHIP(_14);
+	_DECL_DEALLOC(_14);
 	long long _15 = 0;
 	long long _16 = 0;
 	long long _17 = 0;
@@ -81,34 +81,34 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_OWNERSHIP_PARAM(moves), l
 	//arraygen %10 = [9; 1] : int[]
 	_FREE(_10);
 	_GEN_1DARRAY(_10, n, _9);
-	_ADD_OWNERSHIP(_10);
+	_ADD_DEALLOC(_10);
 	//assign %3 = %10  : int[]
 	_FREE(x);
 	_1DARRAY_UPDATE(x, _10);
-	_TRANSFER_OWNERSHIP(x, _10);
-	_REMOVE_OWNERSHIP(_10);
+	_TRANSFER_DEALLOC(x, _10);
+	_REMOVE_DEALLOC(_10);
 	//const %11 = 0 : int
 	_11 = 0;
 	//arraygen %12 = [11; 1] : int[]
 	_FREE(_12);
 	_GEN_1DARRAY(_12, n, _11);
-	_ADD_OWNERSHIP(_12);
+	_ADD_DEALLOC(_12);
 	//assign %4 = %12  : int[]
 	_FREE(y);
 	_1DARRAY_UPDATE(y, _12);
-	_TRANSFER_OWNERSHIP(y, _12);
-	_REMOVE_OWNERSHIP(_12);
+	_TRANSFER_DEALLOC(y, _12);
+	_REMOVE_DEALLOC(_12);
 	//const %13 = 0 : int
 	_13 = 0;
 	//arraygen %14 = [13; 1] : int[]
 	_FREE(_14);
 	_GEN_1DARRAY(_14, n, _13);
-	_ADD_OWNERSHIP(_14);
+	_ADD_DEALLOC(_14);
 	//assign %5 = %14  : int[]
 	_FREE(z);
 	_1DARRAY_UPDATE(z, _14);
-	_TRANSFER_OWNERSHIP(z, _14);
-	_REMOVE_OWNERSHIP(_14);
+	_TRANSFER_DEALLOC(z, _14);
+	_REMOVE_DEALLOC(_14);
 	//const %15 = 0 : int
 	_15 = 0;
 	//assign %6 = %15  : int
@@ -315,52 +315,52 @@ blklab0:;
 
 int main(int argc, char** args){
 	long long* max;
-	_DECL_OWNERSHIP(max);
+	_DECL_DEALLOC(max);
 	long long n = 0;
 	_DECL_1DARRAY(moves);
-	_DECL_OWNERSHIP(moves);
+	_DECL_DEALLOC(moves);
 	long long sum_alice = 0;
 	long long* _5;
-	_DECL_OWNERSHIP(_5);
+	_DECL_DEALLOC(_5);
 	_DECL_2DARRAY(_6);
-	_DECL_OWNERSHIP(_6);
+	_DECL_DEALLOC(_6);
 	long long _7 = 0;
 	_DECL_1DARRAY(_8);
-	_DECL_OWNERSHIP(_8);
+	_DECL_DEALLOC(_8);
 	long long _9 = 0;
 	long long _10 = 0;
 	_DECL_1DARRAY(_11);
-	_DECL_OWNERSHIP(_11);
+	_DECL_DEALLOC(_11);
 	_DECL_1DARRAY(_12);
-	_DECL_OWNERSHIP(_12);
+	_DECL_DEALLOC(_12);
 	long long _13 = 0;
 	long long _14 = 0;
 	long long _15 = 0;
 	void* _16;
 	_DECL_1DARRAY(_18);
-	_DECL_OWNERSHIP(_18);
+	_DECL_DEALLOC(_18);
 	void* _19;
 	void* _21;
 	_DECL_1DARRAY(_23);
-	_DECL_OWNERSHIP(_23);
+	_DECL_DEALLOC(_23);
 	//fieldload %6 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	_FREE2DArray(_6);
 	_CONV_ARGS(_6);
-	_ADD_OWNERSHIP(_6);
+	_ADD_DEALLOC(_6);
 	//const %7 = 0 : int
 	_7 = 0;
 	//indexof %8 = %6, %7 : int[][]
 	_8=_6[_7];
-	_REMOVE_OWNERSHIP(_8);
+	_REMOVE_DEALLOC(_8);
 	//invoke (%5) = (%8) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
 	_STR_TO_INT(_5, _8);
-	_ADD_OWNERSHIP(_5);
-	_REMOVE_OWNERSHIP(_8);
+	_ADD_DEALLOC(_5);
+	_REMOVE_DEALLOC(_8);
 	//assign %1 = %5  : null|int
 	_FREE(max);
 	max = _5;
-	_TRANSFER_OWNERSHIP(max, _5);
-	_REMOVE_OWNERSHIP(_5);
+	_TRANSFER_DEALLOC(max, _5);
+	_REMOVE_DEALLOC(_5);
 	//ifis %1, null goto blklab11 : null|int
 	if(max == NULL) { goto blklab11;}
 	//assign %2 = %1  : int
@@ -372,23 +372,23 @@ int main(int argc, char** args){
 	//arraygen %11 = [9; 10] : int[]
 	_FREE(_11);
 	_GEN_1DARRAY(_11, _10, _9);
-	_ADD_OWNERSHIP(_11);
+	_ADD_DEALLOC(_11);
 	//assign %3 = %11  : int[]
 	_FREE(moves);
 	_1DARRAY_UPDATE(moves, _11);
-	_TRANSFER_OWNERSHIP(moves, _11);
-	_REMOVE_OWNERSHIP(_11);
+	_TRANSFER_DEALLOC(moves, _11);
+	_REMOVE_DEALLOC(_11);
 	//invoke (%12) = (%3, %2) CoinGame:findMoves : function(int[],int)->(int[])
-	_FREE(_12);
-	_REMOVE_OWNERSHIP(moves);
 	_1DARRAY_SIZE(_12, moves);
+	_FREE(_12);
+	_REMOVE_DEALLOC(moves);
 	_12 = findMoves(_1DARRAY_PARAM(moves), true, n);
-	_ADD_OWNERSHIP(_12);
+	_ADD_DEALLOC(_12);
 	//assign %3 = %12  : int[]
 	_FREE(moves);
 	_1DARRAY_UPDATE(moves, _12);
-	_TRANSFER_OWNERSHIP(moves, _12);
-	_REMOVE_OWNERSHIP(_12);
+	_TRANSFER_DEALLOC(moves, _12);
+	_REMOVE_DEALLOC(_12);
 	//const %13 = 1 : int
 	_13 = 1;
 	//sub %14 = %2, %13 : int
@@ -403,7 +403,7 @@ int main(int argc, char** args){
 	_FREE(_18);
 	_NEW_ARRAY(_18, 50);
 	_18[0] = 84; _18[1] = 104; _18[2] = 101; _18[3] = 32; _18[4] = 116; _18[5] = 111; _18[6] = 116; _18[7] = 97; _18[8] = 108; _18[9] = 32; _18[10] = 97; _18[11] = 109; _18[12] = 111; _18[13] = 117; _18[14] = 110; _18[15] = 116; _18[16] = 32; _18[17] = 111; _18[18] = 102; _18[19] = 32; _18[20] = 109; _18[21] = 111; _18[22] = 110; _18[23] = 101; _18[24] = 121; _18[25] = 32; _18[26] = 40; _18[27] = 109; _18[28] = 97; _18[29] = 120; _18[30] = 105; _18[31] = 109; _18[32] = 117; _18[33] = 109; _18[34] = 41; _18[35] = 32; _18[36] = 65; _18[37] = 108; _18[38] = 105; _18[39] = 99; _18[40] = 101; _18[41] = 32; _18[42] = 103; _18[43] = 101; _18[44] = 116; _18[45] = 115; _18[46] = 32; _18[47] = 105; _18[48] = 115; _18[49] = 32; 
-	_ADD_OWNERSHIP(_18);
+	_ADD_DEALLOC(_18);
 	//indirectinvoke () = %17 (%18) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_18));
 	//fieldload %19 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
@@ -416,7 +416,7 @@ int main(int argc, char** args){
 	_FREE(_23);
 	_NEW_ARRAY(_23, 23);
 	_23[0] = 80; _23[1] = 97; _23[2] = 115; _23[3] = 115; _23[4] = 32; _23[5] = 67; _23[6] = 111; _23[7] = 105; _23[8] = 110; _23[9] = 71; _23[10] = 97; _23[11] = 109; _23[12] = 101; _23[13] = 32; _23[14] = 116; _23[15] = 101; _23[16] = 115; _23[17] = 116; _23[18] = 32; _23[19] = 99; _23[20] = 97; _23[21] = 115; _23[22] = 101; 
-	_ADD_OWNERSHIP(_23);
+	_ADD_DEALLOC(_23);
 	//indirectinvoke () = %22 (%23) : method(int[])->()
 	println_s(_23, _23_size);
 //.blklab11
