@@ -728,8 +728,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement.addAll(a.computeDealloc((Codes.Update) code, function, stores));
 			} else if (code instanceof Codes.IndexOf){
 				statement.addAll(a.computeDealloc((Codes.IndexOf) code, function, stores));
-			} else {
-				statement.addAll(a.computeDealloc(isCopyEliminated, code, function, stores));
+			} else if(code instanceof Codes.FieldLoad) {
+				statement.addAll(a.computeDealloc(isCopyEliminated, (Codes.FieldLoad)code, function, stores));
 			}
 		});
 	}
@@ -761,8 +761,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement.addAll(a.computeDealloc((Codes.NewRecord) code, function, stores, argumentCopyEliminated));
 			} else if (code instanceof Codes.Invoke) {
 				statement.addAll(a.computeDealloc((Codes.Invoke) code, function, stores));
-			} else {
-				statement.addAll(a.computeDealloc(false, code, function, stores));
 			}
 		});
 
@@ -1283,9 +1281,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Generate copy/uncopy assignment code
 				statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, stores.getIndent(function), stores.getVar(code.target(0), function), rhs,
 						isCopyEliminated, stores));
-
-				postProcessor(false, isCopyEliminated, code.operand(0), statement, code, function);
 			}
+			postProcessor(false, isCopyEliminated, code.operand(0), statement, code, function);
 		}
 		stores.addAllStatements(code, statement, function);
 	}

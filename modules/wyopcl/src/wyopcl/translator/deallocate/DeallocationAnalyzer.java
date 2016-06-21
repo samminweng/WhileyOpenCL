@@ -22,7 +22,7 @@ import wyopcl.translator.generator.CodeGeneratorHelper;
 import wyopcl.translator.generator.CodeStores;
 
 /**
- * Deallocation Analyzer computes deallocation flags for a variety of code type, and produce the code of 
+ * Deallocation Analyzer computes deallocation flags for a variety of code type, and produce the code of
  * 
  * adding, removing or transferring deallocation flag so that it is added to the generated C code.
  * 
@@ -57,9 +57,9 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Get a list of deallocation flag and generate the code to free all of them Note that the deallocation of
-	 * function input parameters are skipped by default. Thus, the deallocation releases all the local variables,
-	 * excluding input parameters.
+	 * Get a list of deallocation flag and generate the code to free all of them Note that the deallocation of function
+	 * input parameters are skipped by default. Thus, the deallocation releases all the local variables, excluding input
+	 * parameters.
 	 *
 	 * @param code
 	 * @param function
@@ -284,13 +284,14 @@ public class DeallocationAnalyzer extends Analyzer {
 	public List<String> computeDealloc(Codes.Update code, FunctionOrMethod function, CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
-		
+
 		// The rhs register is the last operand
 		int rhs = code.operand(code.operands().length - 1);
 		// Remove rhs deallocation flag as the copy is not made at 'update' byte-code
 		statements.add(indent + removeDealloc(rhs, function, stores));
 		return statements;
 	}
+
 	/**
 	 * Compute deallocation flags of IndexOf code
 	 * 
@@ -303,56 +304,38 @@ public class DeallocationAnalyzer extends Analyzer {
 	public List<String> computeDealloc(Codes.IndexOf code, FunctionOrMethod function, CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
-		
+
 		int lhs = code.target(0);
 		// Transfer lhs deallocation flag due to non-transferable array deallocation flag
 		statements.add(indent + removeDealloc(lhs, function, stores));
 		return statements;
 	}
-	
-	
-	
+
 	/**
-	 * Given a code, compute the deallocation flags and return the generated C code.
-	 * 
-	 * Note the lhs variable in an assignment is not always added with deallocation flag.
-	 * 
-	 * If the lhs variable points to an array element, then its deallocation flag is transferred out. Because the array variable
-	 * owns the deallocation flag, other variables that point to the array lost the deallocation flag. For example,
-	 * 
-	 * <pre>
-	 * <code> a = b[i]; // Access the array element a_dealloc = false; 
-	 * 		  a_dealloc = false;//Remove lhs deallocation flag
-	 * </code>
-	 * </pre>
+	 * Compute the deallocation flags of FieldLoad byte-code
 	 * 
 	 * @param code
 	 * @param function
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeDealloc(boolean isCopyEliminated, Code code, FunctionOrMethod function,
+	public List<String> computeDealloc(boolean isCopyEliminated, Codes.FieldLoad code, FunctionOrMethod function,
 			CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
-		 if (code instanceof Codes.FieldLoad) {
-			Codes.FieldLoad fieldload = (Codes.FieldLoad) code;
-			int lhs = fieldload.target(0);
-			if (fieldload.field.equals("args")) {
-				// Add deallocation flag to lhs register
-				statements.add(indent + addDealloc(lhs, function, stores));
-			} else {
-				if (isCopyEliminated) {
-					// That means 'fieldload' access one member
-					// rhs deallocation flag could be changed. But remove lhs deallocation flag
-					statements.add(indent + removeDealloc(lhs, function, stores));
-				} else {
-					// Assign deallocation flag to lhs variable.
-					statements.add(indent + addDealloc(lhs, function, stores));
-				}
-			}
+		int lhs = code.target(0);
+		if (code.field.equals("args")) {
+			// Add deallocation flag to lhs register
+			statements.add(indent + addDealloc(lhs, function, stores));
 		} else {
-			throw new RuntimeException("Not implemented");
+			if (isCopyEliminated) {
+				// That means 'fieldload' access one member
+				// rhs deallocation flag could be changed. But remove lhs deallocation flag
+				statements.add(indent + removeDealloc(lhs, function, stores));
+			} else {
+				// Assign deallocation flag to lhs variable.
+				statements.add(indent + addDealloc(lhs, function, stores));
+			}
 		}
 
 		return statements;
@@ -362,8 +345,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	/**
 	 * Compute the deallocation flag for each argument of a function call,
 	 * 
-	 * If the deallocation flag is assigned to the calling function and no copy is made, 
-	 * then callee frees the argument.
+	 * If the deallocation flag is assigned to the calling function and no copy is made, then callee frees the argument.
 	 * 
 	 * For example,
 	 * 
@@ -387,18 +369,18 @@ public class DeallocationAnalyzer extends Analyzer {
 		String indent = stores.getIndent(function);
 		// Add or transfer out the parameters that do not have the copy
 		for (int register : code.operands()) {
-			Optional<HashMap<String, Boolean>> dealloc = computeDealloc(register, code, function, stores,
-					copyAnalyzer);
+			Optional<HashMap<String, Boolean>> dealloc = computeDealloc(register, code, function, stores, copyAnalyzer);
 			dealloc.ifPresent(o -> {
 				// Get callee's deallocation flag
 				boolean caller_dealloc = o.get("caller");
-				if(copyAnalyzer.isPresent()){
+				if (copyAnalyzer.isPresent()) {
 					// Check if the callee de-allocates the argument
 					if (!caller_dealloc) {
 						// If so, then deallocation flag is removed at caller site
 						statements.add(indent + removeDealloc(register, function, stores));
 					}
-				};
+				}
+				;
 			});
 		}
 
@@ -444,11 +426,15 @@ public class DeallocationAnalyzer extends Analyzer {
 	/**
 	 * Transfer rhs's deallocation flag to lhs's
 	 * 
-	 * For example, 
-	 * <pre><code>
+	 * For example,
+	 * 
+	 * <pre>
+	 * <code>
 	 * a = b;
 	 * a_dealloc = b_dealloc;
-	 * </code></pre>
+	 * </code>
+	 * </pre>
+	 * 
 	 * @param lhs
 	 *            register
 	 * @param rhs
@@ -468,9 +454,8 @@ public class DeallocationAnalyzer extends Analyzer {
 	/**
 	 * Return parameter deallocation flag of the caller.
 	 * 
-	 * If deallocation analyzer is enabled, then deallocation flags of caller and callee are based on 
-	 * the following rules, e.g. a function call 'a = f(b, b_own_f)', 
-	 * Rules are as below:
+	 * If deallocation analyzer is enabled, then deallocation flags of caller and callee are based on the following
+	 * rules, e.g. a function call 'a = f(b, b_own_f)', Rules are as below:
 	 * 
 	 * <pre>
 	 * f mutates b?		|F			|F			|T			|T
@@ -491,8 +476,8 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param copyAnalyzer
 	 * @return a hashmap that contains caller's deallocation flag and callee's deallocation flag for a parameter.
 	 */
-	public Optional<HashMap<String, Boolean>> computeDealloc(int register, Codes.Invoke code,
-			FunctionOrMethod function, CodeStores stores, Optional<CopyEliminationAnalyzer> copyAnalyzer) {
+	public Optional<HashMap<String, Boolean>> computeDealloc(int register, Codes.Invoke code, FunctionOrMethod function,
+			CodeStores stores, Optional<CopyEliminationAnalyzer> copyAnalyzer) {
 		Type type = stores.getRawType(register, function);
 		if (!stores.isCompoundType(type)) {
 			return Optional.empty();
@@ -511,16 +496,16 @@ public class DeallocationAnalyzer extends Analyzer {
 
 			if (!isMutated) {
 				if (!isReturned) {
-					// NOT mutated nor return 
+					// NOT mutated nor return
 					dealloc.get().put("caller", true);
 					dealloc.get().put("callee", false);
 				} else {
 					// NOT mutated but returned
 					// If 'b' is alive at caller site
-					if(isLive){
+					if (isLive) {
 						dealloc.get().put("caller", true);
 						dealloc.get().put("callee", false);
-					}else{
+					} else {
 						dealloc.get().put("caller", false);
 						dealloc.get().put("callee", true);
 					}
@@ -558,14 +543,17 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Adds the deallocation code for update byte-code. For example, 
-	 * <pre><code>
+	 * Adds the deallocation code for update byte-code. For example,
+	 * 
+	 * <pre>
+	 * <code>
 	 * if(a_dealloc){ // Free a[i]
 	 * 		free(a[n]);
 	 * 		a[n] = NULL;
 	 * }
 	 * a[n] = b; // Update a[i] with b where b is a structure pointer 
-	 * </code></pre>
+	 * </code>
+	 * </pre>
 	 * 
 	 * @param var
 	 * @param lhs
@@ -606,7 +594,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 */
 	public String addDeallocCode(String var, Type type, CodeStores stores) {
 		// NULL check
-		if(var == null || type == null || !stores.isCompoundType(type) && !(type instanceof Type.Union)){
+		if (var == null || type == null || !stores.isCompoundType(type) && !(type instanceof Type.Union)) {
 			return "";
 		}
 
@@ -660,7 +648,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	@Override
 	protected void visit(DefaultMutableTreeNode node) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
