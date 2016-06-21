@@ -291,6 +291,26 @@ public class DeallocationAnalyzer extends Analyzer {
 		statements.add(indent + removeDealloc(rhs, function, stores));
 		return statements;
 	}
+	/**
+	 * Compute deallocation flags of IndexOf code
+	 * 
+	 * 
+	 * @param code
+	 * @param function
+	 * @param stores
+	 * @return
+	 */
+	public List<String> computeDealloc(Codes.IndexOf code, FunctionOrMethod function, CodeStores stores) {
+		String indent = stores.getIndent(function);
+		List<String> statements = new ArrayList<String>();
+		
+		int lhs = code.target(0);
+		// Transfer lhs deallocation flag due to non-transferable array deallocation flag
+		statements.add(indent + removeDealloc(lhs, function, stores));
+		return statements;
+	}
+	
+	
 	
 	/**
 	 * Given a code, compute the deallocation flags and return the generated C code.
@@ -315,12 +335,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
-		if (code instanceof Codes.IndexOf) {
-			Codes.IndexOf indexof = (Codes.IndexOf) code;
-			int lhs = indexof.target(0);
-			// Transfer lhs deallocation flag due to non-transferable array deallocation flag
-			statements.add(indent + removeDealloc(lhs, function, stores));
-		} else if (code instanceof Codes.FieldLoad) {
+		 if (code instanceof Codes.FieldLoad) {
 			Codes.FieldLoad fieldload = (Codes.FieldLoad) code;
 			int lhs = fieldload.target(0);
 			if (fieldload.field.equals("args")) {

@@ -726,6 +726,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement.addAll(a.computeDealloc((Codes.ArrayGenerator) code, function, stores));
 			} else if (code instanceof Codes.Update) {
 				statement.addAll(a.computeDealloc((Codes.Update) code, function, stores));
+			} else if (code instanceof Codes.IndexOf){
+				statement.addAll(a.computeDealloc((Codes.IndexOf) code, function, stores));
 			} else {
 				statement.addAll(a.computeDealloc(isCopyEliminated, code, function, stores));
 			}
