@@ -496,7 +496,7 @@ int main(int argc, char** args){
 	_REMOVE_DEALLOC(_7);
 	//invoke (%8) = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
 	_FREE_STRUCT(_8, Matrix);
-	_8 = multiply(_STRUCT_COPY_PARAM(A, Matrix), false, _STRUCT_COPY_PARAM(B, Matrix), false);
+	_8 = multiply(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
 	_ADD_DEALLOC(_8);
 	//assign %4 = %8  : {int[][] data,int height,int width}
 	_FREE_STRUCT(C, Matrix);

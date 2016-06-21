@@ -586,7 +586,7 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(moves, _8);
 	_REMOVE_DEALLOC(_8);
 	//invoke () = (%0, %2, %1) CoinGame4:play : method(whiley/lang/System:Console,int[],int)->()
-play(stdout, _1DARRAY_COPY_PARAM(moves), false, n);
+play(stdout, _1DARRAY_PARAM(moves), false, n);
 	//const %9 = 1 : int
 	_9 = 1;
 	//sub %10 = %1, %9 : int

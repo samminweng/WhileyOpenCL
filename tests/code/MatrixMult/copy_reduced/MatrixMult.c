@@ -395,7 +395,7 @@ int main(int argc, char** args){
 	//assign %3 = %7  : {int[][] data,int height,int width}
 	B = _7;
 	//invoke (%8) = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
-	_8 = multiply(_STRUCT_COPY_PARAM(A, Matrix), _STRUCT_COPY_PARAM(B, Matrix));
+	_8 = multiply(_STRUCT_PARAM(A), _STRUCT_PARAM(B));
 	//assign %4 = %8  : {int[][] data,int height,int width}
 	C = _8;
 	//assert

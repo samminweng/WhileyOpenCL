@@ -676,7 +676,7 @@ int main(int argc, char** args){
 	_REMOVE_DEALLOC(_13);
 	//invoke (%16) = (%1, %2) MatrixMult3:mat_mult : function(MatrixMult3:Matrix,MatrixMult3:Matrix)->(MatrixMult3:Matrix)
 	_FREE_STRUCT(_16, Matrix);
-	_16 = mat_mult(_STRUCT_COPY_PARAM(A, Matrix), false, _STRUCT_COPY_PARAM(B, Matrix), false);
+	_16 = mat_mult(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
 	_ADD_DEALLOC(_16);
 	//assign %3 = %16  : {int[] data,int height,int width}
 	_FREE_STRUCT(C, Matrix);
@@ -803,7 +803,7 @@ blklab25:;
 	//assert
 	}
 	//invoke () = (%0, %3) MatrixMult3:print_mat : method(whiley/lang/System:Console,MatrixMult3:Matrix)->()
-print_mat(stdout, _STRUCT_COPY_PARAM(C, Matrix), false);
+print_mat(stdout, _STRUCT_PARAM(C), false);
 	//fieldload %57 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %58 = %57 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %59 = [77,97,116,114,105,120,32,67,91,78,45,49,93,91,78,45,49,93,32,61,32] : int[]

@@ -95,7 +95,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 					// Map the register to function argument.
 					int argument = this.mapFunctionArgument(register, functioncall);
 					// Check if parameter is modified inside 'invoked_function'.
-					boolean isMutated = !readwriteAnalyzer.isMutated(argument, invoked_function);
+					boolean isMutated = readwriteAnalyzer.isMutated(argument, invoked_function);
 					// 'r' is NOT mutated inside invoked function
 					if (!isMutated) {
 						isCopyAvoided = true;
