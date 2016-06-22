@@ -116,12 +116,9 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 * @param function
 	 */
 	public void updateSet(boolean isCopyAvoided, int register, Code code, FunctionOrMethod function){
-		if (isCopyAvoided) {
-			// Based on the copy analysis results, update the readwrite set.
-			this.readwriteAnalyzer.updateSet(isCopyAvoided, register, code, function);
-			this.returnAnalyzer.updateSet(isCopyAvoided, register, code, function);
-		}
-		
+		// Based on the copy analysis results, update the readwrite set.
+		this.readwriteAnalyzer.updateSet(isCopyAvoided, register, code, function);
+		this.returnAnalyzer.updateSet(isCopyAvoided, register, code, function);
 	}
 
 	@Override

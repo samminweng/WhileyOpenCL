@@ -50,22 +50,19 @@ public class ReadWriteAnalyzer extends Analyzer {
 	 * 
 	 * @param isCopyAvoided
 	 *            the copy is removed (true) or not (false)
-	 * @param register the RHS register
+	 * @param register
+	 *            the RHS register
 	 * @param code
 	 * @param function
 	 */
 	public void updateSet(boolean isCopyAvoided, int register, Code code, FunctionOrMethod function) {
-		
-		// Adds register to readwrite set.
-		if (!stores.containsKey(function)) {
-			stores.put(function, new HashSet<Integer>());
-		}
-		HashSet<Integer> store = stores.get(function);
-		// Check if code is not const, new array or indexof byte-code
-		if(!(code instanceof Codes.Const) && !(code instanceof Codes.NewArray)
-				&& !(code instanceof Codes.IndexOf)){
-			if(isCopyAvoided){
-				// The copy is NOT made, and the RHS register is aliased to lhs 
+		if (isCopyAvoided) {
+			// Check if code is not const, new array or indexof byte-code
+			if (!(code instanceof Codes.Const) && !(code instanceof Codes.NewArray)
+					&& !(code instanceof Codes.IndexOf)) {
+				// Adds register to readwrite set.
+				HashSet<Integer> store = stores.get(function);
+				// The copy is NOT made, and the RHS register is aliased to lhs
 				store.add(register);
 			}
 		}
@@ -197,8 +194,6 @@ public class ReadWriteAnalyzer extends Analyzer {
 			System.out.println(parent + "->" + name);
 		}
 	}
-
-	
 
 	/**
 	 * Go through every function, and checks each byte-code and adds the lhs register to read-write set.

@@ -39,44 +39,36 @@ public class ReturnAnalyzer extends Analyzer {
 	 * 
 	 * @param isCopyAvoided
 	 * @param register
+	 * @param code
 	 * @param function
 	 */
 	public void updateSet(boolean isCopyAvoided, int register, Code code, FunctionOrMethod function) {
 		if (isCopyAvoided) {
-			// Adds register to return set.
-			if (!stores.containsKey(function)) {
-				stores.put(function, new HashSet<Integer>());
-			}
-
-			HashSet<Integer> store = stores.get(function);
-			int lhs = -1;
-			if (code instanceof Codes.Assign) {
-				lhs = ((Codes.Assign) code).target(0);
-			} else if (code instanceof Codes.FieldLoad) {
-				lhs = ((Codes.FieldLoad) code).target(0);
-			} else if (code instanceof Codes.Update) {
-				lhs = ((Codes.Update) code).target(0);
-			} else if (code instanceof Codes.Invoke) {
-				Codes.Invoke invoke = (Codes.Invoke) code;
-				// Check if there is a return value in invoke bytecode
-				if (invoke.targets().length > 0) {
-					lhs = ((Codes.Invoke) code).target(0);
+			if (!(code instanceof Codes.Const) && !(code instanceof Codes.NewArray)
+					&& !(code instanceof Codes.IndexOf)) {
+				
+				// Extract lhs register
+				int lhs = -1;
+				if (code instanceof Codes.Assign) {
+					lhs = ((Codes.Assign) code).target(0);
+				} else if (code instanceof Codes.FieldLoad) {
+					lhs = ((Codes.FieldLoad) code).target(0);
+				} else if (code instanceof Codes.Update) {
+					lhs = ((Codes.Update) code).target(0);
+				} else if (code instanceof Codes.Invoke) {
+					Codes.Invoke invoke = (Codes.Invoke) code;
+					// Check if there is a return value in invoke bytecode
+					if (invoke.targets().length > 0) {
+						lhs = ((Codes.Invoke) code).target(0);
+					}
+				} 
+				// Get return set of given function
+				HashSet<Integer> store = stores.get(function);
+				// Check if lhs variable is a return register
+				if (lhs >= 0 && store.contains(lhs)) {
+					store.add(register);
 				}
-			} else if (code instanceof Codes.IndexOf) {
-				lhs = ((Codes.IndexOf) code).target(0);
-			} else if (code instanceof Codes.Const) {
-				// Do nothing as the code defines a constant
-			} else if (code instanceof Codes.NewArray) {
-				// Do nothing as the code defines a new array
-			} else if (code instanceof Codes.IndexOf) {
-				// Do nothing as the code access the array
 			}
-
-			// Check if lhs variable is a return register
-			if (lhs >= 0 && store.contains(lhs)) {
-				store.add(register);
-			}
-
 		}
 	}
 
