@@ -579,7 +579,7 @@ public abstract class Analyzer {
 	
 	
 	/**
-	 * Iterate each code recursively and
+	 * Iterate each code recursively to build the call graph
 	 * 
 	 * @param code
 	 * @param function

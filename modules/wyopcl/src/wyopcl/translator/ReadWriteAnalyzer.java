@@ -50,7 +50,8 @@ public class ReadWriteAnalyzer extends Analyzer {
 	 * 
 	 * @param isCopyAvoided
 	 *            the copy is removed (true) or not (false)
-	 * @param register
+	 * @param register the RHS register
+	 * @param code
 	 * @param function
 	 */
 	public void updateSet(boolean isCopyAvoided, int register, Code code, FunctionOrMethod function) {
@@ -60,31 +61,13 @@ public class ReadWriteAnalyzer extends Analyzer {
 			stores.put(function, new HashSet<Integer>());
 		}
 		HashSet<Integer> store = stores.get(function);
-		// Check if code is update
-		if(code instanceof Codes.Update){
-			Codes.Update update = (Codes.Update)code;
-			int lhs = update.target(0);
-			int rhs = update.operand(update.operands().length - 1);
-			// Check if lhs is readwrite and the copy is avoided
-			if(store.contains(lhs) && isCopyAvoided){
-				store.add(rhs);
-			}			
-		} else if(code instanceof Codes.Const){
-			// Do nothing as the code defines a constant
-		} else if(code instanceof Codes.NewArray){
-			// Do nothing as the code defines a new array
-		} else if(code instanceof Codes.IndexOf){
-			// Do nothing as the code access the array
-		} else if (code instanceof Codes.FieldLoad){
-			Codes.FieldLoad fl = (Codes.FieldLoad)code;
-			int lhs = fl.target(0);
-			int rhs = fl.operand(0);
-			// Check if lhs is readwrite and the copy is avoided
-			if(store.contains(lhs) && isCopyAvoided){
-				store.add(rhs);
+		// Check if code is not const, new array or indexof byte-code
+		if(!(code instanceof Codes.Const) && !(code instanceof Codes.NewArray)
+				&& !(code instanceof Codes.IndexOf)){
+			if(isCopyAvoided){
+				// The copy is NOT made, and the RHS register is aliased to lhs 
+				store.add(register);
 			}
-		} else{
-			store.add(register);
 		}
 	}
 
