@@ -233,7 +233,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Compute deallocation flag flags for assignment
+	 * Compute deallocation flag for assignment
 	 * 
 	 * 
 	 * @param code
@@ -265,7 +265,7 @@ public class DeallocationAnalyzer extends Analyzer {
 				// Remove rhs deallocation flag
 				statements.add(indent + removeDealloc(rhs, function, stores));
 			} else {
-				// Add deallocation flag to rhs register
+				// Add deallocation flag to lhs register
 				statements.add(indent + addDealloc(lhs, function, stores));
 			}
 		}
