@@ -82,7 +82,18 @@ public final class CodeGeneratorHelper {
 				// Add field values.
 				statement.add("\tprintf(\"%lld\", " + input_member + ");");
 			} else if (member_type instanceof Type.Array) {
-				statement.add("\t_"+stores.getArrayDimension(member_type)+"DARRAY_PRINT("+input_member+");");
+				// Check the element type
+				Type elm_type = stores.getArrayElementType((Type.Array)member_type);
+				if(stores.isIntType(elm_type)){
+					// Print an array of integers
+					statement.add("\t_"+stores.getArrayDimension(member_type)+"DARRAY_PRINT("+input_member+");");
+				}else{
+					String struct = translateType(elm_type, stores).replace("*", "");
+					// Print an array of structure pointers using macro
+					statement.add("\t_1DARRAY_STRUCT_PRINT("+struct+","+input_member+");");
+				}
+				
+				
 			} else {
 				throw new RuntimeException("Not implemented!");
 			}
@@ -110,12 +121,20 @@ public final class CodeGeneratorHelper {
 	protected static List<String> generateAssignmentCode(Type type, String indent, String lhs, String rhs, boolean isCopyEliminated, CodeStores stores){
 		List<String> statement = new ArrayList<String>();
 		if(type instanceof Type.Array){
-			int dimension = stores.getArrayDimension(type);
-			// Check if the lhs copy is needed or not 
-			if(isCopyEliminated){
-				statement.add(indent + "_"+dimension+"DARRAY_UPDATE("+lhs+", "+rhs+");");			
+			Type elm_type = stores.getArrayElementType((Type.Array)type);
+			if(stores.isIntType(elm_type)){
+				// An array of integers
+				int dimension = stores.getArrayDimension(type);
+				// Check if the lhs copy is needed or not 
+				if(isCopyEliminated){
+					statement.add(indent + "_"+dimension+"DARRAY_UPDATE("+lhs+", "+rhs+");");			
+				}else{
+					statement.add(indent + "_"+dimension+"DARRAY_COPY("+lhs+", "+rhs+");");		
+				}
 			}else{
-				statement.add(indent + "_"+dimension+"DARRAY_COPY("+lhs+", "+rhs+");");		
+				// An array of structure pointers
+				String struct = translateType(elm_type, stores).replace("*", "");
+				statement.add(indent + "_1DARRAY_COPY_STRUCT("+lhs+", "+rhs+", "+struct+");");
 			}
 		}else{
 			if(isCopyEliminated || !stores.isCompoundType(type)){
@@ -437,8 +456,18 @@ public final class CodeGeneratorHelper {
 		// Gather all members
 		record.fields().forEach((member, member_type) ->{
 			if (member_type instanceof Type.Array) {
-				int dimension = stores.getArrayDimension(member_type);
-				statements.add("\t_DECL_"+dimension+"DARRAY_MEMBER(" + member + ");");
+				Type elm_type = stores.getArrayElementType((Type.Array)member_type);
+				if(stores.isIntType(elm_type)){
+					// Declare an array of integers
+					int dimension = stores.getArrayDimension(member_type);
+					statements.add("\t_DECL_"+dimension+"DARRAY_MEMBER(" + member + ");");
+				}else{
+					String struct =  translateType(elm_type, stores).replace("*", "");
+					// Declare an array of structure pointers, e.g. POS**
+					statements.add("\t"+struct +"** "+member+";");
+					statements.add("\tlong long "+member+"_size;");
+				}
+				
 			}else{
 				statements.add("\t" + translateType(member_type, stores) + " " + member + ";");
 			}

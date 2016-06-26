@@ -53,13 +53,22 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 //		   __typeof__ (b) _b = (b); \
 //		   _a < _b ? _a : _b; })
 #endif
-// Define 1D array variable
+ /***
+ *
+ * Declaration Macros
+ *
+ */
+// Define 1D array of integers
 #define _DECL_1DARRAY(a) long long* a = NULL; long long a##_size = 0;
 // Define 2D array variable
 #define _DECL_2DARRAY(a) long long** a = NULL; long long a##_size = 0; long long a##_size_size = 0;
 // Define the deallocation flag
 #define _DECL_DEALLOC(a) bool a##_dealloc = false;
 #define _DECL_DEALLOC_PARAM(a) bool a##_dealloc
+#define _DECL_1DARRAY_PARAM(a) long long* a, long long a##_size
+#define _DECL_1DARRAY_MEMBER(a) long long* a; long long a##_size;
+#define _DECL_2DARRAY_PARAM(a) long long** a, long long a##_size, long long a##_size_size
+#define _DECL_2DARRAY_MEMBER(a) long long** a; long long a##_size; long long a##_size_size;
 // Concatenate struct and deallocation flag
 #define _STRUCT_PARAM(a) a
 #define _STRUCT_PARAM_OWN(a) a, a##_dealloc
@@ -74,12 +83,11 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 			}\
 		})
 // Concatenate 1D array variable, array size variable and deallocation flag
-#define _DECL_1DARRAY_PARAM(a) long long* a, long long a##_size
-#define _DECL_1DARRAY_MEMBER(a) long long* a; long long a##_size;
 #define _1DARRAY_PARAM(a) a, a##_size
 #define _1DARRAY_PARAM_OWN(a) a, a##_size, a##_dealloc
 #define _1DARRAY_COPY_STRUCT(a, b, name) \
 		({\
+			a = malloc(b##_size*sizeof(name*));\
 			for(int i=0;i<b##_size;i++){\
  				a[i] = copy_##name(b[i]);\
  		  	}\
@@ -87,7 +95,6 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 		})
 #define _1DARRAY_COPY_PARAM(a) copy(a, a##_size), a##_size
 #define _1DARRAY_COPY_PARAM_OWN(a) copy(a, a##_size), a##_size, a##_dealloc
-#define _1DARRAY_PRINT(a) printf1DArray(a, a##_size);
 #define _1DARRAY_SIZE(a, b) a##_size = b##_size;
 #define _1DARRAY_COPY(a, b) a##_size = b##_size; a = copy(b, b##_size);
 #define _1DARRAY_UPDATE(a, b) a##_size = b##_size; a = b;
@@ -121,13 +128,10 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 		})
 #define _NEW_ARRAY(a, length) a##_size = length; a = malloc(length*sizeof(long long)); 
 // Concatenate 2D array variable and array size variable
-#define _DECL_2DARRAY_PARAM(a) long long** a, long long a##_size, long long a##_size_size
-#define _DECL_2DARRAY_MEMBER(a) long long** a; long long a##_size; long long a##_size_size;
 #define _2DARRAY_PARAM(a) a, a##_size, a##_size_size
 #define _2DARRAY_PARAM_OWN(a) a, a##_size, a##_size_size, a##_dealloc 
 #define _2DARRAY_COPY_PARAM(a) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size
 #define _2DARRAY_COPY_PARAM_OWN(a) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size, a##_dealloc
-#define _2DARRAY_PRINT(a) printf2DArray(a, a##_size, a##_size_size);
 #define _2DARRAY_SIZE(a, b) a##_size = b##_size; a##_size_size = b##_size_size;
 #define _2DARRAY_COPY(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = copy2DArray(b, b##_size, b##_size_size);
 #define _2DARRAY_UPDATE(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = b;
@@ -140,6 +144,25 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 				a##_dealloc = false;\
 			}\
 		})
+/***
+*  Print Macros
+* 
+*/
+// Print an array of integers
+#define _1DARRAY_PRINT(a) printf1DArray(a, a##_size);
+// Print two dimensional arrays of integers
+#define _2DARRAY_PRINT(a) printf2DArray(a, a##_size, a##_size_size);
+// Print an array of structure pointer
+#define _1DARRAY_STRUCT_PRINT(name, a) \
+		({\
+			for(int i=0;i<a##_size;i++){\
+				printf_##name(a[i]);\
+			}\
+		})
+/**
+* Deallocation Flag Macros
+*
+*/
 // Add deallocation flag for a given variable
 #define _ADD_DEALLOC(a) a##_dealloc = true;
 // Take out a variable's deallocation flag

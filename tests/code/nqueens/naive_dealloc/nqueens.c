@@ -23,6 +23,49 @@ void printf_POS(POS* pos){
 	printf("%lld", pos->c);
 	printf("}");
 }
+NQueen* copy_NQueen(NQueen* _NQueen){
+	NQueen* new_NQueen = malloc(sizeof(NQueen));
+	_1DARRAY_COPY_STRUCT(new_NQueen->queens, _NQueen->queens, POS);
+	new_NQueen->num_solutions = _NQueen->num_solutions;
+	return new_NQueen;
+}
+NQueen** copy_array_NQueen(NQueen** _NQueen, long long _NQueen_size){
+	NQueen** new_NQueen = malloc(_NQueen_size*sizeof(NQueen*));
+	for(int i=0;i<_NQueen_size;i++){
+		new_NQueen[i] = copy_NQueen(_NQueen[i]);
+	}
+	return new_NQueen;
+}
+void free_NQueen(NQueen* nqueen){
+	free(nqueen->queens);
+	free(nqueen);
+}
+void printf_NQueen(NQueen* nqueen){
+	printf("{");
+	printf(" queens:");
+	_1DARRAY_STRUCT_PRINT(POS,nqueen->queens);
+	printf(" num_solutions:");
+	printf("%lld", nqueen->num_solutions);
+	printf("}");
+}
+NQueen* nqueen(long long num_solutions, POS** queens, long long queens_size, _DECL_DEALLOC_PARAM(queens)){
+	NQueen* nq;
+	_DECL_DEALLOC(nq);
+	NQueen* _3;
+	_DECL_DEALLOC(_3);
+	//newrecord %3 = (%0, %1) : {int num_solutions,{int c,int r}[] queens}
+	_FREE_STRUCT(_3, NQueen);
+	_3 = malloc(sizeof(NQueen));
+	_3->num_solutions = num_solutions;
+	_1DARRAY_COPY_STRUCT(_3->queens, queens, POS);
+	_ADD_DEALLOC(_3);
+	//return %3
+	_FREE_1DARRAY_STRUCT(queens, POS);
+	_FREE_STRUCT(nq, NQueen);
+	return _3;
+	//return
+}
+
 long long conflict(POS* p, _DECL_DEALLOC_PARAM(p), long long row, long long col){
 	long long _3;
 	long long r = 0;
@@ -88,75 +131,107 @@ blklab3:;
 	//return
 }
 
-long long run(POS** queens, long long queens_size, _DECL_DEALLOC_PARAM(queens), long long n, long long dim){
-	long long _3 = 0;
-	long long num_solutions = 0;
+NQueen* run(NQueen* nq, _DECL_DEALLOC_PARAM(nq), long long n, long long dim){
+	NQueen* _3;
+	_DECL_DEALLOC(_3);
 	long long col = 0;
 	long long isSolution;
 	long long i = 0;
 	POS* p;
 	_DECL_DEALLOC(p);
+	long long _8 = 0;
 	long long _9 = 0;
 	long long _10 = 0;
 	long long _11 = 0;
-	long long _12 = 0;
+	POS** _12;
+	long long _12_size = 0;
+	_DECL_DEALLOC(_12);
 	long long _13 = 0;
-	long long _14;
+	POS** _14;
+	long long _14_size = 0;
+	_DECL_DEALLOC(_14);
 	long long _15 = 0;
-	long long _16 = 0;
+	long long _16;
 	long long _17 = 0;
-	long long _18 = 0;
-	POS* _19;
-	_DECL_DEALLOC(_19);
-	long long _20;
-	long long _21;
-	long long _22;
-	long long _23;
-	long long _24 = 0;
-	long long _25 = 0;
+	POS** _18;
+	long long _18_size = 0;
+	_DECL_DEALLOC(_18);
+	long long _19 = 0;
+	long long _20 = 0;
+	POS** _21;
+	long long _21_size = 0;
+	_DECL_DEALLOC(_21);
+	long long _22 = 0;
+	POS** _23;
+	long long _23_size = 0;
+	_DECL_DEALLOC(_23);
+	POS* _24;
+	_DECL_DEALLOC(_24);
+	long long _25;
 	long long _26;
-	POS* _27;
-	_DECL_DEALLOC(_27);
-	long long _28 = 0;
+	long long _27;
+	long long _28;
 	long long _29 = 0;
 	long long _30 = 0;
-	long long _31 = 0;
-	long long _32 = 0;
-	long long _33 = 0;
+	long long _31;
+	POS* _32;
+	_DECL_DEALLOC(_32);
+	NQueen* _33;
+	_DECL_DEALLOC(_33);
+	long long _34 = 0;
+	long long _35 = 0;
+	long long _36 = 0;
+	long long _37 = 0;
 	//ifne %2, %1 goto blklab6 : int
 	if(dim!=n){goto blklab6;}
+	//fieldload %8 = %0 num_solutions : {int num_solutions,{int c,int r}[] queens}
+	_8 = nq->num_solutions;
 	//const %9 = 1 : int
 	_9 = 1;
-	//return %9
-	_FREE_1DARRAY_STRUCT(queens, POS);
+	//add %10 = %8, %9 : int
+	_10=_8+_9;
+	//update %0.num_solutions = %10 : {int num_solutions,{int c,int r}[] queens} -> {int num_solutions,{int c,int r}[] queens}
+	nq->num_solutions = _10;
+	//return %0
+	_FREE_STRUCT(_3, NQueen);
 	_FREE_STRUCT(p, POS);
-	_FREE_STRUCT(_19, POS);
-	_FREE_STRUCT(_27, POS);
-	return _9;
+	_FREE_1DARRAY_STRUCT(_12, POS);
+	_FREE_1DARRAY_STRUCT(_14, POS);
+	_FREE_1DARRAY_STRUCT(_18, POS);
+	_FREE_1DARRAY_STRUCT(_21, POS);
+	_FREE_1DARRAY_STRUCT(_23, POS);
+	_FREE_STRUCT(_24, POS);
+	_FREE_STRUCT(_32, POS);
+	_FREE_STRUCT(_33, NQueen);
+	return nq;
 	//goto blklab7
 	goto blklab7;
 //.blklab6
 blklab6:;
-	//const %10 = 0 : int
-	_10 = 0;
-	//assign %4 = %10  : int
-	num_solutions = _10;
 	//const %11 = 0 : int
 	_11 = 0;
-	//assign %5 = %11  : int
+	//assign %4 = %11  : int
 	col = _11;
-	//loop (%0, %4, %5, %6, %7, %8, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33)
+	//loop (%0, %4, %5, %6, %7, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37)
 	while(true){
 		//invariant
 		{
-			//lengthof %12 = %0 : {int c,int r}[]
-			_12 = queens_size;
-			//ifge %1, %12 goto blklab11 : int
-			if(n>=_12){goto blklab11;}
-			//lengthof %13 = %0 : {int c,int r}[]
-			_13 = queens_size;
-			//ifeq %2, %13 goto blklab10 : int
-			if(dim==_13){goto blklab10;}
+			//fieldload %12 = %0 queens : {int num_solutions,{int c,int r}[] queens}
+			_FREE_1DARRAY_STRUCT(_12, POS);
+			_1DARRAY_COPY_STRUCT(_12, nq->queens, POS);
+			_ADD_DEALLOC(_12);
+			//lengthof %13 = %12 : {int c,int r}[]
+			_13 = _12_size;
+			//ifge %1, %13 goto blklab11 : int
+			if(n>=_13){goto blklab11;}
+			//fieldload %14 = %0 queens : {int num_solutions,{int c,int r}[] queens}
+			_FREE_1DARRAY_STRUCT(_14, POS);
+			_1DARRAY_COPY_STRUCT(_14, nq->queens, POS);
+			_ADD_DEALLOC(_14);
+			//lengthof %15 = %14 : {int c,int r}[]
+			_15 = _14_size;
+			//ifeq %2, %15 goto blklab10 : int
+			if(dim==_15){goto blklab10;}
 //.blklab11
 blklab11:;
 			//fail
@@ -166,32 +241,40 @@ blklab11:;
 blklab10:;
 		//invariant
 		}
-		//ifge %5, %2 goto blklab8 : int
+		//ifge %4, %2 goto blklab8 : int
 		if(col>=dim){goto blklab8;}
-		//const %14 = true : bool
-		_14 = true;
-		//assign %6 = %14  : bool
-		isSolution = _14;
-		//const %15 = 0 : int
-		_15 = 0;
-		//assign %7 = %15  : int
-		i = _15;
-		//loop (%6, %7, %8, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25)
+		//const %16 = true : bool
+		_16 = true;
+		//assign %5 = %16  : bool
+		isSolution = _16;
+		//const %17 = 0 : int
+		_17 = 0;
+		//assign %6 = %17  : int
+		i = _17;
+		//loop (%5, %6, %7, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30)
 		while(true){
 			//invariant
 			{
-				//lengthof %16 = %0 : {int c,int r}[]
-				_16 = queens_size;
-				//ifge %1, %16 goto blklab15 : int
-				if(n>=_16){goto blklab15;}
-				//const %17 = 0 : int
-				_17 = 0;
-				//iflt %7, %17 goto blklab16 : int
-				if(i<_17){goto blklab16;}
-				//lengthof %18 = %0 : {int c,int r}[]
-				_18 = queens_size;
-				//ifeq %2, %18 goto blklab14 : int
-				if(dim==_18){goto blklab14;}
+				//fieldload %18 = %0 queens : {int num_solutions,{int c,int r}[] queens}
+				_FREE_1DARRAY_STRUCT(_18, POS);
+				_1DARRAY_COPY_STRUCT(_18, nq->queens, POS);
+				_ADD_DEALLOC(_18);
+				//lengthof %19 = %18 : {int c,int r}[]
+				_19 = _18_size;
+				//ifge %1, %19 goto blklab15 : int
+				if(n>=_19){goto blklab15;}
+				//const %20 = 0 : int
+				_20 = 0;
+				//iflt %6, %20 goto blklab16 : int
+				if(i<_20){goto blklab16;}
+				//fieldload %21 = %0 queens : {int num_solutions,{int c,int r}[] queens}
+				_FREE_1DARRAY_STRUCT(_21, POS);
+				_1DARRAY_COPY_STRUCT(_21, nq->queens, POS);
+				_ADD_DEALLOC(_21);
+				//lengthof %22 = %21 : {int c,int r}[]
+				_22 = _21_size;
+				//ifeq %2, %22 goto blklab14 : int
+				if(dim==_22){goto blklab14;}
 //.blklab16
 blklab16:;
 //.blklab15
@@ -203,101 +286,112 @@ blklab15:;
 blklab14:;
 			//invariant
 			}
-			//ifge %7, %1 goto blklab12 : int
+			//ifge %6, %1 goto blklab12 : int
 			if(i>=n){goto blklab12;}
-			//indexof %19 = %0, %7 : {int c,int r}[]
-			_19=queens[i];
-			_REMOVE_DEALLOC(_19);
-			//assign %8 = %19  : {int c,int r}
+			//fieldload %23 = %0 queens : {int num_solutions,{int c,int r}[] queens}
+			_FREE_1DARRAY_STRUCT(_23, POS);
+			_1DARRAY_COPY_STRUCT(_23, nq->queens, POS);
+			_ADD_DEALLOC(_23);
+			//indexof %24 = %23, %6 : {int c,int r}[]
+			_24=_23[i];
+			_REMOVE_DEALLOC(_24);
+			//assign %7 = %24  : {int c,int r}
 			_FREE_STRUCT(p, POS);
-			p = copy_POS(_19);
+			p = copy_POS(_24);
 			_ADD_DEALLOC(p);
-			//const %20 = true : bool
-			_20 = true;
-			//ifeq %6, %20 goto blklab20 : bool
-			if(isSolution==_20){goto blklab20;}
+			//const %25 = true : bool
+			_25 = true;
+			//ifeq %5, %25 goto blklab20 : bool
+			if(isSolution==_25){goto blklab20;}
 			//goto blklab19
 			goto blklab19;
 //.blklab20
 blklab20:;
-			//invoke (%21) = (%8, %1, %5) nqueens:conflict : function(nqueens:POS,int,int)->(bool)
-			_21 = conflict(_STRUCT_COPY_PARAM(p, POS), true, n, col);
-			//const %22 = true : bool
-			_22 = true;
-			//ifeq %21, %22 goto blklab21 : bool
-			if(_21==_22){goto blklab21;}
+			//invoke (%26) = (%7, %1, %4) nqueens:conflict : function(nqueens:POS,int,int)->(bool)
+			_26 = conflict(_STRUCT_COPY_PARAM(p, POS), true, n, col);
+			//const %27 = true : bool
+			_27 = true;
+			//ifeq %26, %27 goto blklab21 : bool
+			if(_26==_27){goto blklab21;}
 			//goto blklab17
 			goto blklab17;
 //.blklab21
 blklab21:;
 //.blklab19
 blklab19:;
-			//const %23 = false : bool
-			_23 = false;
+			//const %28 = false : bool
+			_28 = false;
 			//goto blklab18
 			goto blklab18;
 //.blklab17
 blklab17:;
-			//const %23 = true : bool
-			_23 = true;
+			//const %28 = true : bool
+			_28 = true;
 //.blklab18
 blklab18:;
-			//assign %6 = %23  : bool
-			isSolution = _23;
-			//const %24 = 1 : int
-			_24 = 1;
-			//add %25 = %7, %24 : int
-			_25=i+_24;
-			//assign %7 = %25  : int
-			i = _25;
+			//assign %5 = %28  : bool
+			isSolution = _28;
+			//const %29 = 1 : int
+			_29 = 1;
+			//add %30 = %6, %29 : int
+			_30=i+_29;
+			//assign %6 = %30  : int
+			i = _30;
 //.blklab13
 blklab13:;
 		}
 //.blklab12
 blklab12:;
-		//const %26 = true : bool
-		_26 = true;
-		//ifne %6, %26 goto blklab22 : bool
-		if(isSolution!=_26){goto blklab22;}
-		//newrecord %27 = (%5, %1) : {int c,int r}
-		_FREE_STRUCT(_27, POS);
-		_27 = malloc(sizeof(POS));
-		_27->c = col;
-		_27->r = n;
-		_ADD_DEALLOC(_27);
-		//update %0[%1] = %27 : {int c,int r}[] -> {int c,int r}[]
-		_FREE_1DARRAY_ELEMENT_STRUCT(queens, queens[n], POS);
-		queens[n] = _27;
-		_REMOVE_DEALLOC(_27);
-		//const %29 = 1 : int
-		_29 = 1;
-		//add %30 = %1, %29 : int
-		_30=n+_29;
-		//invoke (%28) = (%0, %30, %2) nqueens:run : function(nqueens:POS[],int,int)->(int)
-		_28 = run(copy_array_POS(queens, queens_size), queens_size, true, _30, dim);
-		//add %31 = %4, %28 : int
-		_31=num_solutions+_28;
-		//assign %4 = %31  : int
-		num_solutions = _31;
+		//const %31 = true : bool
+		_31 = true;
+		//ifne %5, %31 goto blklab22 : bool
+		if(isSolution!=_31){goto blklab22;}
+		//newrecord %32 = (%4, %1) : {int c,int r}
+		_FREE_STRUCT(_32, POS);
+		_32 = malloc(sizeof(POS));
+		_32->c = col;
+		_32->r = n;
+		_ADD_DEALLOC(_32);
+		//update %0.queens[%1] = %32 : {int num_solutions,{int c,int r}[] queens} -> {int num_solutions,{int c,int r}[] queens}
+		nq->queens[n] = _32;
+		_REMOVE_DEALLOC(_32);
+		//const %34 = 1 : int
+		_34 = 1;
+		//add %35 = %1, %34 : int
+		_35=n+_34;
+		//invoke (%33) = (%0, %35, %2) nqueens:run : function(nqueens:NQueen,int,int)->(nqueens:NQueen)
+		_FREE_STRUCT(_33, NQueen);
+		_33 = run(_STRUCT_COPY_PARAM(nq, NQueen), true, _35, dim);
+		_ADD_DEALLOC(_33);
+		//assign %0 = %33  : {int num_solutions,{int c,int r}[] queens}
+		_FREE_STRUCT(nq, NQueen);
+		nq = copy_NQueen(_33);
+		_ADD_DEALLOC(nq);
 //.blklab22
 blklab22:;
-		//const %32 = 1 : int
-		_32 = 1;
-		//add %33 = %5, %32 : int
-		_33=col+_32;
-		//assign %5 = %33  : int
-		col = _33;
+		//const %36 = 1 : int
+		_36 = 1;
+		//add %37 = %4, %36 : int
+		_37=col+_36;
+		//assign %4 = %37  : int
+		col = _37;
 //.blklab9
 blklab9:;
 	}
 //.blklab8
 blklab8:;
-	//return %4
-	_FREE_1DARRAY_STRUCT(queens, POS);
+	//return %0
+	_FREE_STRUCT(_3, NQueen);
 	_FREE_STRUCT(p, POS);
-	_FREE_STRUCT(_19, POS);
-	_FREE_STRUCT(_27, POS);
-	return num_solutions;
+	_FREE_1DARRAY_STRUCT(_12, POS);
+	_FREE_1DARRAY_STRUCT(_14, POS);
+	_FREE_1DARRAY_STRUCT(_18, POS);
+	_FREE_1DARRAY_STRUCT(_21, POS);
+	_FREE_1DARRAY_STRUCT(_23, POS);
+	_FREE_STRUCT(_24, POS);
+	_FREE_STRUCT(_32, POS);
+	_FREE_STRUCT(_33, NQueen);
+	return nq;
 //.blklab7
 blklab7:;
 	//return
@@ -305,72 +399,98 @@ blklab7:;
 
 int main(int argc, char** args){
 	long long n = 0;
-	POS** init;
-	long long init_size = 0;
-	_DECL_DEALLOC(init);
+	POS** queens;
+	long long queens_size = 0;
+	_DECL_DEALLOC(queens);
 	long long num_solutions = 0;
-	long long _4 = 0;
+	NQueen* nq;
+	_DECL_DEALLOC(nq);
 	long long _5 = 0;
 	long long _6 = 0;
-	POS* _7;
-	_DECL_DEALLOC(_7);
-	POS** _8;
-	long long _8_size = 0;
+	long long _7 = 0;
+	POS* _8;
 	_DECL_DEALLOC(_8);
-	long long _9 = 0;
+	POS** _9;
+	long long _9_size = 0;
+	_DECL_DEALLOC(_9);
 	long long _10 = 0;
-	long long _11 = 0;
-	void* _12;
-	_DECL_1DARRAY(_14);
-	_DECL_DEALLOC(_14);
-	void* _15;
-	_DECL_1DARRAY(_17);
-	_DECL_DEALLOC(_17);
-	void* _18;
-	void* _20;
-	_DECL_1DARRAY(_22);
-	_DECL_DEALLOC(_22);
-	void* _23;
-	void* _25;
-	_DECL_1DARRAY(_27);
-	_DECL_DEALLOC(_27);
-	//const %4 = 10 : int
-	_4 = 10;
-	//assign %1 = %4  : int
-	n = _4;
-	//const %5 = 0 : int
-	_5 = 0;
+	NQueen* _11;
+	_DECL_DEALLOC(_11);
+	NQueen* _12;
+	_DECL_DEALLOC(_12);
+	long long _13 = 0;
+	long long _14 = 0;
+	long long _15 = 0;
+	void* _16;
+	_DECL_1DARRAY(_18);
+	_DECL_DEALLOC(_18);
+	void* _19;
+	_DECL_1DARRAY(_21);
+	_DECL_DEALLOC(_21);
+	void* _22;
+	void* _24;
+	_DECL_1DARRAY(_26);
+	_DECL_DEALLOC(_26);
+	void* _27;
+	long long _29 = 0;
+	void* _30;
+	_DECL_1DARRAY(_32);
+	_DECL_DEALLOC(_32);
+	//const %5 = 10 : int
+	_5 = 10;
+	//assign %1 = %5  : int
+	n = _5;
 	//const %6 = 0 : int
 	_6 = 0;
-	//newrecord %7 = (%5, %6) : {int c,int r}
-	_FREE_STRUCT(_7, POS);
-	_7 = malloc(sizeof(POS));
-	_7->c = _5;
-	_7->r = _6;
-	_ADD_DEALLOC(_7);
-	//arraygen %8 = [7; 1] : {int c,int r}[]
-	_FREE_1DARRAY_STRUCT(_8, POS);
-	_8 = malloc(n*sizeof(POS*));
-	for(int _8_i=0;_8_i<n;_8_i++){_8[_8_i] = copy_POS(_7);}
-	_8_size = n;
+	//const %7 = 0 : int
+	_7 = 0;
+	//newrecord %8 = (%6, %7) : {int c,int r}
+	_FREE_STRUCT(_8, POS);
+	_8 = malloc(sizeof(POS));
+	_8->c = _6;
+	_8->r = _7;
 	_ADD_DEALLOC(_8);
-	//assign %2 = %8  : {int c,int r}[]
-	_FREE_1DARRAY_STRUCT(init, POS);
-	init = malloc(_8_size*sizeof(POS*));
-	_1DARRAY_COPY_STRUCT(init, _8, POS);
-	_ADD_DEALLOC(init);
+	//arraygen %9 = [8; 1] : {int c,int r}[]
+	_FREE_1DARRAY_STRUCT(_9, POS);
+	_9 = malloc(n*sizeof(POS*));
+	for(int _9_i=0;_9_i<n;_9_i++){_9[_9_i] = copy_POS(_8);}
+	_9_size = n;
+	_ADD_DEALLOC(_9);
+	//assign %2 = %9  : {int c,int r}[]
+	_FREE_1DARRAY_STRUCT(queens, POS);
+	queens = malloc(_9_size*sizeof(POS*));
+	_1DARRAY_COPY_STRUCT(queens, _9, POS);
+	_ADD_DEALLOC(queens);
 	//const %10 = 0 : int
 	_10 = 0;
-	//invoke (%9) = (%2, %10, %1) nqueens:run : function(nqueens:POS[],int,int)->(int)
-	_9 = run(copy_array_POS(init, init_size), init_size, true, _10, n);
-	//assign %3 = %9  : int
-	num_solutions = _9;
+	//assign %3 = %10  : int
+	num_solutions = _10;
+	//invoke (%11) = (%3, %2) nqueens:nqueen : function(int,nqueens:POS[])->(nqueens:NQueen)
+	_FREE_STRUCT(_11, NQueen);
+	_11 = nqueen(num_solutions, copy_array_POS(queens, queens_size), queens_size, true);
+	_ADD_DEALLOC(_11);
+	//assign %4 = %11  : {int num_solutions,{int c,int r}[] queens}
+	_FREE_STRUCT(nq, NQueen);
+	nq = copy_NQueen(_11);
+	_ADD_DEALLOC(nq);
+	//const %13 = 0 : int
+	_13 = 0;
+	//invoke (%12) = (%4, %13, %1) nqueens:run : function(nqueens:NQueen,int,int)->(nqueens:NQueen)
+	_FREE_STRUCT(_12, NQueen);
+	_12 = run(_STRUCT_COPY_PARAM(nq, NQueen), true, _13, n);
+	_ADD_DEALLOC(_12);
+	//assign %4 = %12  : {int num_solutions,{int c,int r}[] queens}
+	_FREE_STRUCT(nq, NQueen);
+	nq = copy_NQueen(_12);
+	_ADD_DEALLOC(nq);
 	//assert
 	{
-		//const %11 = 724 : int
-		_11 = 724;
-		//ifeq %3, %11 goto blklab23 : int
-		if(num_solutions==_11){goto blklab23;}
+		//fieldload %14 = %4 num_solutions : {int num_solutions,{int c,int r}[] queens}
+		_14 = nq->num_solutions;
+		//const %15 = 724 : int
+		_15 = 724;
+		//ifeq %14, %15 goto blklab23 : int
+		if(_14==_15){goto blklab23;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -378,58 +498,63 @@ int main(int argc, char** args){
 blklab23:;
 	//assert
 	}
-	//fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %13 = %12 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %14 = [78,45,81,117,101,101,110,32,80,114,111,98,108,101,109,32,111,110,32,97,32,78,32,88,32,78,32,66,111,97,114,100,46] : int[]
-	_FREE(_14);
-	_NEW_ARRAY(_14, 33);
-	_14[0] = 78; _14[1] = 45; _14[2] = 81; _14[3] = 117; _14[4] = 101; _14[5] = 101; _14[6] = 110; _14[7] = 32; _14[8] = 80; _14[9] = 114; _14[10] = 111; _14[11] = 98; _14[12] = 108; _14[13] = 101; _14[14] = 109; _14[15] = 32; _14[16] = 111; _14[17] = 110; _14[18] = 32; _14[19] = 97; _14[20] = 32; _14[21] = 78; _14[22] = 32; _14[23] = 88; _14[24] = 32; _14[25] = 78; _14[26] = 32; _14[27] = 66; _14[28] = 111; _14[29] = 97; _14[30] = 114; _14[31] = 100; _14[32] = 46; 
-	_ADD_DEALLOC(_14);
-	//indirectinvoke () = %13 (%14) : method(int[])->()
-	println_s(_14, _14_size);
-	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %16 = %15 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %17 = [78,32,61,32] : int[]
-	_FREE(_17);
-	_NEW_ARRAY(_17, 4);
-	_17[0] = 78; _17[1] = 32; _17[2] = 61; _17[3] = 32; 
-	_ADD_DEALLOC(_17);
-	//indirectinvoke () = %16 (%17) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_17));
-	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %19 = %18 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//indirectinvoke () = %19 (%1) : method(any)->()
+	//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %17 = %16 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %18 = [78,45,81,117,101,101,110,32,80,114,111,98,108,101,109,32,111,110,32,97,32,78,32,88,32,78,32,66,111,97,114,100,46] : int[]
+	_FREE(_18);
+	_NEW_ARRAY(_18, 33);
+	_18[0] = 78; _18[1] = 45; _18[2] = 81; _18[3] = 117; _18[4] = 101; _18[5] = 101; _18[6] = 110; _18[7] = 32; _18[8] = 80; _18[9] = 114; _18[10] = 111; _18[11] = 98; _18[12] = 108; _18[13] = 101; _18[14] = 109; _18[15] = 32; _18[16] = 111; _18[17] = 110; _18[18] = 32; _18[19] = 97; _18[20] = 32; _18[21] = 78; _18[22] = 32; _18[23] = 88; _18[24] = 32; _18[25] = 78; _18[26] = 32; _18[27] = 66; _18[28] = 111; _18[29] = 97; _18[30] = 114; _18[31] = 100; _18[32] = 46; 
+	_ADD_DEALLOC(_18);
+	//indirectinvoke () = %17 (%18) : method(int[])->()
+	println_s(_18, _18_size);
+	//fieldload %19 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %20 = %19 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %21 = [78,32,61,32] : int[]
+	_FREE(_21);
+	_NEW_ARRAY(_21, 4);
+	_21[0] = 78; _21[1] = 32; _21[2] = 61; _21[3] = 32; 
+	_ADD_DEALLOC(_21);
+	//indirectinvoke () = %20 (%21) : method(int[])->()
+	printf_s(_1DARRAY_PARAM(_21));
+	//fieldload %22 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %23 = %22 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %23 (%1) : method(any)->()
 	printf("%lld\n", n);
-	//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %21 = %20 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %22 = [70,111,117,110,100,32] : int[]
-	_FREE(_22);
-	_NEW_ARRAY(_22, 6);
-	_22[0] = 70; _22[1] = 111; _22[2] = 117; _22[3] = 110; _22[4] = 100; _22[5] = 32; 
-	_ADD_DEALLOC(_22);
-	//indirectinvoke () = %21 (%22) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_22));
-	//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %24 = %23 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//indirectinvoke () = %24 (%3) : method(any)->()
-	printf("%lld", num_solutions);
-	//fieldload %25 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %26 = %25 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %27 = [32,115,111,108,117,116,105,111,110,115,46] : int[]
-	_FREE(_27);
-	_NEW_ARRAY(_27, 11);
-	_27[0] = 32; _27[1] = 115; _27[2] = 111; _27[3] = 108; _27[4] = 117; _27[5] = 116; _27[6] = 105; _27[7] = 111; _27[8] = 110; _27[9] = 115; _27[10] = 46; 
-	_ADD_DEALLOC(_27);
-	//indirectinvoke () = %26 (%27) : method(int[])->()
-	println_s(_27, _27_size);
+	//fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %25 = %24 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %26 = [70,111,117,110,100,32] : int[]
+	_FREE(_26);
+	_NEW_ARRAY(_26, 6);
+	_26[0] = 70; _26[1] = 111; _26[2] = 117; _26[3] = 110; _26[4] = 100; _26[5] = 32; 
+	_ADD_DEALLOC(_26);
+	//indirectinvoke () = %25 (%26) : method(int[])->()
+	printf_s(_1DARRAY_PARAM(_26));
+	//fieldload %27 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %28 = %27 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//fieldload %29 = %4 num_solutions : {int num_solutions,{int c,int r}[] queens}
+	_29 = nq->num_solutions;
+	//indirectinvoke () = %28 (%29) : method(any)->()
+	printf("%lld", _29);
+	//fieldload %30 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %31 = %30 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %32 = [32,115,111,108,117,116,105,111,110,115,46] : int[]
+	_FREE(_32);
+	_NEW_ARRAY(_32, 11);
+	_32[0] = 32; _32[1] = 115; _32[2] = 111; _32[3] = 108; _32[4] = 117; _32[5] = 116; _32[6] = 105; _32[7] = 111; _32[8] = 110; _32[9] = 115; _32[10] = 46; 
+	_ADD_DEALLOC(_32);
+	//indirectinvoke () = %31 (%32) : method(int[])->()
+	println_s(_32, _32_size);
 	//return
-	_FREE_1DARRAY_STRUCT(init, POS);
-	_FREE_STRUCT(_7, POS);
-	_FREE_1DARRAY_STRUCT(_8, POS);
-	_FREE(_14);
-	_FREE(_17);
-	_FREE(_22);
-	_FREE(_27);
+	_FREE_1DARRAY_STRUCT(queens, POS);
+	_FREE_STRUCT(nq, NQueen);
+	_FREE_STRUCT(_8, POS);
+	_FREE_1DARRAY_STRUCT(_9, POS);
+	_FREE_STRUCT(_11, NQueen);
+	_FREE_STRUCT(_12, NQueen);
+	_FREE(_18);
+	_FREE(_21);
+	_FREE(_26);
+	_FREE(_32);
 	exit(0);
 }
 
