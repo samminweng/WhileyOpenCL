@@ -70,11 +70,11 @@ long long* sortV1(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), long l
 	pivot = _14;
 	//invoke (%15) = (%0, %1, %4) whiley/lang/Array:slice : function(int[],int,int)->(int[])
 	_1DARRAY_SIZE(_15, items);
-	_FREE(_15);
+	_DEALLOC(_15);
 _SLICE_ARRAY(_15, items, start, pivot);
 	_ADD_DEALLOC(_15);
 	//assign %5 = %15  : int[]
-	_FREE(lhs);
+	_DEALLOC(lhs);
 	_1DARRAY_UPDATE(lhs, _15);
 	_TRANSFER_DEALLOC(lhs, _15);
 	_REMOVE_DEALLOC(_15);
@@ -82,22 +82,22 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	_17 = 0;
 	//invoke (%16) = (%5, %17, %4) mergesort:sortV1 : function(int[],int,int)->(int[])
 	_1DARRAY_SIZE(_16, lhs);
-	_FREE(_16);
+	_DEALLOC(_16);
 	_REMOVE_DEALLOC(lhs);
 	_16 = sortV1(_1DARRAY_PARAM(lhs), true, _17, pivot);
 	_ADD_DEALLOC(_16);
 	//assign %5 = %16  : int[]
-	_FREE(lhs);
+	_DEALLOC(lhs);
 	_1DARRAY_UPDATE(lhs, _16);
 	_TRANSFER_DEALLOC(lhs, _16);
 	_REMOVE_DEALLOC(_16);
 	//invoke (%18) = (%0, %4, %2) whiley/lang/Array:slice : function(int[],int,int)->(int[])
 	_1DARRAY_SIZE(_18, items);
-	_FREE(_18);
+	_DEALLOC(_18);
 _SLICE_ARRAY(_18, items, pivot, end);
 	_ADD_DEALLOC(_18);
 	//assign %6 = %18  : int[]
-	_FREE(rhs);
+	_DEALLOC(rhs);
 	_1DARRAY_UPDATE(rhs, _18);
 	_TRANSFER_DEALLOC(rhs, _18);
 	_REMOVE_DEALLOC(_18);
@@ -107,12 +107,12 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	_21=end-pivot;
 	//invoke (%19) = (%6, %20, %21) mergesort:sortV1 : function(int[],int,int)->(int[])
 	_1DARRAY_SIZE(_19, rhs);
-	_FREE(_19);
+	_DEALLOC(_19);
 	_REMOVE_DEALLOC(rhs);
 	_19 = sortV1(_1DARRAY_PARAM(rhs), true, _20, _21);
 	_ADD_DEALLOC(_19);
 	//assign %6 = %19  : int[]
-	_FREE(rhs);
+	_DEALLOC(rhs);
 	_1DARRAY_UPDATE(rhs, _19);
 	_TRANSFER_DEALLOC(rhs, _19);
 	_REMOVE_DEALLOC(_19);
@@ -242,13 +242,13 @@ blklab7:;
 //.blklab0
 blklab0:;
 	//return %0
-	_FREE(_3);
-	_FREE(lhs);
-	_FREE(rhs);
-	_FREE(_15);
-	_FREE(_16);
-	_FREE(_18);
-	_FREE(_19);
+	_DEALLOC(_3);
+	_DEALLOC(lhs);
+	_DEALLOC(rhs);
+	_DEALLOC(_15);
+	_DEALLOC(_16);
+	_DEALLOC(_18);
+	_DEALLOC(_19);
 	return items;
 	//return
 }
@@ -370,12 +370,12 @@ int main(int argc, char** args){
 	//const %9 = 2 : int
 	_9 = 2;
 	//newlist %10 = (%5, %6, %7, %8, %9) : int[]
-	_FREE(_10);
+	_DEALLOC(_10);
 	_NEW_ARRAY(_10, 5);
 	_10[0] = _5; _10[1] = _6; _10[2] = _7; _10[3] = _8; _10[4] = _9; 
 	_ADD_DEALLOC(_10);
 	//assign %1 = %10  : int[]
-	_FREE(ys);
+	_DEALLOC(ys);
 	_1DARRAY_UPDATE(ys, _10);
 	_TRANSFER_DEALLOC(ys, _10);
 	_REMOVE_DEALLOC(_10);
@@ -385,12 +385,12 @@ int main(int argc, char** args){
 	_13 = 5;
 	//invoke (%11) = (%1, %12, %13) mergesort:sortV1 : function(int[],int,int)->(int[])
 	_1DARRAY_SIZE(_11, ys);
-	_FREE(_11);
+	_DEALLOC(_11);
 	_REMOVE_DEALLOC(ys);
 	_11 = sortV1(_1DARRAY_PARAM(ys), true, _12, _13);
 	_ADD_DEALLOC(_11);
 	//assign %1 = %11  : int[]
-	_FREE(ys);
+	_DEALLOC(ys);
 	_1DARRAY_UPDATE(ys, _11);
 	_TRANSFER_DEALLOC(ys, _11);
 	_REMOVE_DEALLOC(_11);
@@ -407,7 +407,7 @@ int main(int argc, char** args){
 		//const %18 = 7 : int
 		_18 = 7;
 		//newlist %19 = (%14, %15, %16, %17, %18) : int[]
-		_FREE(_19);
+		_DEALLOC(_19);
 		_NEW_ARRAY(_19, 5);
 		_19[0] = _14; _19[1] = _15; _19[2] = _16; _19[3] = _17; _19[4] = _18; 
 		_ADD_DEALLOC(_19);
@@ -429,12 +429,12 @@ blklab9:;
 	//const %23 = 2 : int
 	_23 = 2;
 	//newlist %24 = (%20, %21, %22, %23) : int[]
-	_FREE(_24);
+	_DEALLOC(_24);
 	_NEW_ARRAY(_24, 4);
 	_24[0] = _20; _24[1] = _21; _24[2] = _22; _24[3] = _23; 
 	_ADD_DEALLOC(_24);
 	//assign %1 = %24  : int[]
-	_FREE(ys);
+	_DEALLOC(ys);
 	_1DARRAY_UPDATE(ys, _24);
 	_TRANSFER_DEALLOC(ys, _24);
 	_REMOVE_DEALLOC(_24);
@@ -444,12 +444,12 @@ blklab9:;
 	_27 = 4;
 	//invoke (%25) = (%1, %26, %27) mergesort:sortV1 : function(int[],int,int)->(int[])
 	_1DARRAY_SIZE(_25, ys);
-	_FREE(_25);
+	_DEALLOC(_25);
 	_REMOVE_DEALLOC(ys);
 	_25 = sortV1(_1DARRAY_PARAM(ys), true, _26, _27);
 	_ADD_DEALLOC(_25);
 	//assign %1 = %25  : int[]
-	_FREE(ys);
+	_DEALLOC(ys);
 	_1DARRAY_UPDATE(ys, _25);
 	_TRANSFER_DEALLOC(ys, _25);
 	_REMOVE_DEALLOC(_25);
@@ -464,7 +464,7 @@ blklab9:;
 		//const %31 = 7 : int
 		_31 = 7;
 		//newlist %32 = (%28, %29, %30, %31) : int[]
-		_FREE(_32);
+		_DEALLOC(_32);
 		_NEW_ARRAY(_32, 4);
 		_32[0] = _28; _32[1] = _29; _32[2] = _30; _32[3] = _31; 
 		_ADD_DEALLOC(_32);
@@ -486,12 +486,12 @@ blklab10:;
 	//const %36 = 4 : int
 	_36 = 4;
 	//newlist %37 = (%33, %34, %35, %36) : int[]
-	_FREE(_37);
+	_DEALLOC(_37);
 	_NEW_ARRAY(_37, 4);
 	_37[0] = _33; _37[1] = _34; _37[2] = _35; _37[3] = _36; 
 	_ADD_DEALLOC(_37);
 	//assign %1 = %37  : int[]
-	_FREE(ys);
+	_DEALLOC(ys);
 	_1DARRAY_UPDATE(ys, _37);
 	_TRANSFER_DEALLOC(ys, _37);
 	_REMOVE_DEALLOC(_37);
@@ -501,12 +501,12 @@ blklab10:;
 	_40 = 4;
 	//invoke (%38) = (%1, %39, %40) mergesort:sortV1 : function(int[],int,int)->(int[])
 	_1DARRAY_SIZE(_38, ys);
-	_FREE(_38);
+	_DEALLOC(_38);
 	_REMOVE_DEALLOC(ys);
 	_38 = sortV1(_1DARRAY_PARAM(ys), true, _39, _40);
 	_ADD_DEALLOC(_38);
 	//assign %1 = %38  : int[]
-	_FREE(ys);
+	_DEALLOC(ys);
 	_1DARRAY_UPDATE(ys, _38);
 	_TRANSFER_DEALLOC(ys, _38);
 	_REMOVE_DEALLOC(_38);
@@ -521,7 +521,7 @@ blklab10:;
 		//const %44 = 4 : int
 		_44 = 4;
 		//newlist %45 = (%41, %42, %43, %44) : int[]
-		_FREE(_45);
+		_DEALLOC(_45);
 		_NEW_ARRAY(_45, 4);
 		_45[0] = _41; _45[1] = _42; _45[2] = _43; _45[3] = _44; 
 		_ADD_DEALLOC(_45);
@@ -545,12 +545,12 @@ blklab11:;
 	//const %50 = 5 : int
 	_50 = 5;
 	//newlist %51 = (%46, %47, %48, %49, %50) : int[]
-	_FREE(_51);
+	_DEALLOC(_51);
 	_NEW_ARRAY(_51, 5);
 	_51[0] = _46; _51[1] = _47; _51[2] = _48; _51[3] = _49; _51[4] = _50; 
 	_ADD_DEALLOC(_51);
 	//assign %1 = %51  : int[]
-	_FREE(ys);
+	_DEALLOC(ys);
 	_1DARRAY_UPDATE(ys, _51);
 	_TRANSFER_DEALLOC(ys, _51);
 	_REMOVE_DEALLOC(_51);
@@ -560,12 +560,12 @@ blklab11:;
 	_54 = 5;
 	//invoke (%52) = (%1, %53, %54) mergesort:sortV1 : function(int[],int,int)->(int[])
 	_1DARRAY_SIZE(_52, ys);
-	_FREE(_52);
+	_DEALLOC(_52);
 	_REMOVE_DEALLOC(ys);
 	_52 = sortV1(_1DARRAY_PARAM(ys), true, _53, _54);
 	_ADD_DEALLOC(_52);
 	//assign %1 = %52  : int[]
-	_FREE(ys);
+	_DEALLOC(ys);
 	_1DARRAY_UPDATE(ys, _52);
 	_TRANSFER_DEALLOC(ys, _52);
 	_REMOVE_DEALLOC(_52);
@@ -582,7 +582,7 @@ blklab11:;
 		//const %59 = 5 : int
 		_59 = 5;
 		//newlist %60 = (%55, %56, %57, %58, %59) : int[]
-		_FREE(_60);
+		_DEALLOC(_60);
 		_NEW_ARRAY(_60, 5);
 		_60[0] = _55; _60[1] = _56; _60[2] = _57; _60[3] = _58; _60[4] = _59; 
 		_ADD_DEALLOC(_60);
@@ -610,11 +610,11 @@ blklab12:;
 	//add %65 = %2, %64 : int
 	_65=max+_64;
 	//arraygen %66 = [63; 65] : int[]
-	_FREE(_66);
+	_DEALLOC(_66);
 	_GEN_1DARRAY(_66, _65, _63);
 	_ADD_DEALLOC(_66);
 	//assign %4 = %66  : int[]
-	_FREE(arr);
+	_DEALLOC(arr);
 	_1DARRAY_UPDATE(arr, _66);
 	_TRANSFER_DEALLOC(arr, _66);
 	_REMOVE_DEALLOC(_66);
@@ -645,12 +645,12 @@ blklab13:;
 	_73=max+_72;
 	//invoke (%70) = (%4, %71, %73) mergesort:sortV1 : function(int[],int,int)->(int[])
 	_1DARRAY_SIZE(_70, arr);
-	_FREE(_70);
+	_DEALLOC(_70);
 	_REMOVE_DEALLOC(arr);
 	_70 = sortV1(_1DARRAY_PARAM(arr), true, _71, _73);
 	_ADD_DEALLOC(_70);
 	//assign %4 = %70  : int[]
-	_FREE(arr);
+	_DEALLOC(arr);
 	_1DARRAY_UPDATE(arr, _70);
 	_TRANSFER_DEALLOC(arr, _70);
 	_REMOVE_DEALLOC(_70);
@@ -679,7 +679,7 @@ blklab13:;
 		//const %84 = 10 : int
 		_84 = 10;
 		//newlist %85 = (%74, %75, %76, %77, %78, %79, %80, %81, %82, %83, %84) : int[]
-		_FREE(_85);
+		_DEALLOC(_85);
 		_NEW_ARRAY(_85, 11);
 		_85[0] = _74; _85[1] = _75; _85[2] = _76; _85[3] = _77; _85[4] = _78; _85[5] = _79; _85[6] = _80; _85[7] = _81; _85[8] = _82; _85[9] = _83; _85[10] = _84; 
 		_ADD_DEALLOC(_85);
@@ -695,31 +695,31 @@ blklab15:;
 	//fieldload %86 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %87 = %86 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %88 = [80,97,115,115,32,109,101,114,103,101,115,111,114,116,32,116,101,115,116,32,99,97,115,101] : int[]
-	_FREE(_88);
+	_DEALLOC(_88);
 	_NEW_ARRAY(_88, 24);
 	_88[0] = 80; _88[1] = 97; _88[2] = 115; _88[3] = 115; _88[4] = 32; _88[5] = 109; _88[6] = 101; _88[7] = 114; _88[8] = 103; _88[9] = 101; _88[10] = 115; _88[11] = 111; _88[12] = 114; _88[13] = 116; _88[14] = 32; _88[15] = 116; _88[16] = 101; _88[17] = 115; _88[18] = 116; _88[19] = 32; _88[20] = 99; _88[21] = 97; _88[22] = 115; _88[23] = 101; 
 	_ADD_DEALLOC(_88);
 	//indirectinvoke () = %87 (%88) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_88));
 	//return
-	_FREE(ys);
-	_FREE(arr);
-	_FREE(_10);
-	_FREE(_11);
-	_FREE(_19);
-	_FREE(_24);
-	_FREE(_25);
-	_FREE(_32);
-	_FREE(_37);
-	_FREE(_38);
-	_FREE(_45);
-	_FREE(_51);
-	_FREE(_52);
-	_FREE(_60);
-	_FREE(_66);
-	_FREE(_70);
-	_FREE(_85);
-	_FREE(_88);
+	_DEALLOC(ys);
+	_DEALLOC(arr);
+	_DEALLOC(_10);
+	_DEALLOC(_11);
+	_DEALLOC(_19);
+	_DEALLOC(_24);
+	_DEALLOC(_25);
+	_DEALLOC(_32);
+	_DEALLOC(_37);
+	_DEALLOC(_38);
+	_DEALLOC(_45);
+	_DEALLOC(_51);
+	_DEALLOC(_52);
+	_DEALLOC(_60);
+	_DEALLOC(_66);
+	_DEALLOC(_70);
+	_DEALLOC(_85);
+	_DEALLOC(_88);
 	exit(0);
 }
 

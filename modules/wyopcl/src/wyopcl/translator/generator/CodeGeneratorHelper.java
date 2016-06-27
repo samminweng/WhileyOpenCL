@@ -287,13 +287,21 @@ public final class CodeGeneratorHelper {
 		// Get all array-typed members and free their memory spaces
 		record.fields().forEach((member, member_type) ->{
 			if(member_type instanceof Type.Array){
-				//String input_member = accessMember(struct, member, type);
 				String input_member = parameter +"->"+ member;
-				if(stores.getArrayDimension(member_type)== 2){
-					// Release 2D array by using built-in 'free2DArray' function
-					statement.add("\tfree2DArray("+input_member+", "+input_member+"_size);");
+				// Check element type
+				Type elm_type = stores.getArrayElementType((Type.Array)member_type);
+				if(stores.isIntType(elm_type)){
+					// An array of integers
+					if(stores.getArrayDimension(member_type)== 2){
+						// Free an array of integer arrays by using 'free2DArray' function
+						statement.add("\tfree2DArray("+input_member+", "+input_member+"_size);");
+					}else{
+						statement.add("\tfree("+input_member+");");
+					}
 				}else{
-					statement.add("\tfree("+input_member+");");
+					// Free n array of structure pointers
+					String struct = translateType(elm_type, stores).replace("*", "");
+					statement.add("\t_FREE_1DARRAY_STRUCT("+input_member +", "+ struct+");");
 				}
 			}
 		});

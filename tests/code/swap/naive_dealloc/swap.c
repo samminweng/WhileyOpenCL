@@ -48,12 +48,12 @@ int main(int argc, char** args){
 	//const %8 = 0 : int
 	_8 = 0;
 	//newlist %9 = (%4, %5, %6, %7, %8) : int[]
-	_FREE(_9);
+	_DEALLOC(_9);
 	_NEW_ARRAY(_9, 5);
 	_9[0] = _4; _9[1] = _5; _9[2] = _6; _9[3] = _7; _9[4] = _8; 
 	_ADD_DEALLOC(_9);
 	//assign %1 = %9  : int[]
-	_FREE(a);
+	_DEALLOC(a);
 	_1DARRAY_COPY(a, _9);
 	_ADD_DEALLOC(a);
 	//const %10 = 1 : int
@@ -67,24 +67,24 @@ int main(int argc, char** args){
 	//const %14 = 1 : int
 	_14 = 1;
 	//newlist %15 = (%10, %11, %12, %13, %14) : int[]
-	_FREE(_15);
+	_DEALLOC(_15);
 	_NEW_ARRAY(_15, 5);
 	_15[0] = _10; _15[1] = _11; _15[2] = _12; _15[3] = _13; _15[4] = _14; 
 	_ADD_DEALLOC(_15);
 	//assign %2 = %15  : int[]
-	_FREE(b);
+	_DEALLOC(b);
 	_1DARRAY_COPY(b, _15);
 	_ADD_DEALLOC(b);
 	//assign %3 = %1  : int[]
-	_FREE(tmp);
+	_DEALLOC(tmp);
 	_1DARRAY_COPY(tmp, a);
 	_ADD_DEALLOC(tmp);
 	//assign %1 = %2  : int[]
-	_FREE(a);
+	_DEALLOC(a);
 	_1DARRAY_COPY(a, b);
 	_ADD_DEALLOC(a);
 	//assign %2 = %3  : int[]
-	_FREE(b);
+	_DEALLOC(b);
 	_1DARRAY_COPY(b, tmp);
 	_ADD_DEALLOC(b);
 	//assert
@@ -100,7 +100,7 @@ int main(int argc, char** args){
 		//const %20 = 1 : int
 		_20 = 1;
 		//newlist %21 = (%16, %17, %18, %19, %20) : int[]
-		_FREE(_21);
+		_DEALLOC(_21);
 		_NEW_ARRAY(_21, 5);
 		_21[0] = _16; _21[1] = _17; _21[2] = _18; _21[3] = _19; _21[4] = _20; 
 		_ADD_DEALLOC(_21);
@@ -126,7 +126,7 @@ blklab0:;
 		//const %26 = 0 : int
 		_26 = 0;
 		//newlist %27 = (%22, %23, %24, %25, %26) : int[]
-		_FREE(_27);
+		_DEALLOC(_27);
 		_NEW_ARRAY(_27, 5);
 		_27[0] = _22; _27[1] = _23; _27[2] = _24; _27[3] = _25; _27[4] = _26; 
 		_ADD_DEALLOC(_27);
@@ -142,21 +142,21 @@ blklab1:;
 	//fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %29 = %28 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %30 = [80,97,115,115,32,115,119,97,112,32,116,101,115,116,32,99,97,115,101] : int[]
-	_FREE(_30);
+	_DEALLOC(_30);
 	_NEW_ARRAY(_30, 19);
 	_30[0] = 80; _30[1] = 97; _30[2] = 115; _30[3] = 115; _30[4] = 32; _30[5] = 115; _30[6] = 119; _30[7] = 97; _30[8] = 112; _30[9] = 32; _30[10] = 116; _30[11] = 101; _30[12] = 115; _30[13] = 116; _30[14] = 32; _30[15] = 99; _30[16] = 97; _30[17] = 115; _30[18] = 101; 
 	_ADD_DEALLOC(_30);
 	//indirectinvoke () = %29 (%30) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_30));
 	//return
-	_FREE(a);
-	_FREE(b);
-	_FREE(tmp);
-	_FREE(_9);
-	_FREE(_15);
-	_FREE(_21);
-	_FREE(_27);
-	_FREE(_30);
+	_DEALLOC(a);
+	_DEALLOC(b);
+	_DEALLOC(tmp);
+	_DEALLOC(_9);
+	_DEALLOC(_15);
+	_DEALLOC(_21);
+	_DEALLOC(_27);
+	_DEALLOC(_30);
 	exit(0);
 }
 

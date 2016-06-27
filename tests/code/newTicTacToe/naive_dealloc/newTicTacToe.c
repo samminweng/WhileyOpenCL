@@ -62,19 +62,19 @@ Board* EmptyBoard(){
 	//const %10 = 0 : int
 	_10 = 0;
 	//newlist %11 = (%2, %3, %4, %5, %6, %7, %8, %9, %10) : int[]
-	_FREE(_11);
+	_DEALLOC(_11);
 	_NEW_ARRAY(_11, 9);
 	_11[0] = _2; _11[1] = _3; _11[2] = _4; _11[3] = _5; _11[4] = _6; _11[5] = _7; _11[6] = _8; _11[7] = _9; _11[8] = _10; 
 	_ADD_DEALLOC(_11);
 	//newrecord %12 = (%1, %11) : {int move,int[] pieces}
-	_FREE_STRUCT(_12, Board);
+	_DEALLOC_STRUCT(_12, Board);
 	_12 = malloc(sizeof(Board));
 	_12->move = _1;
 	_1DARRAY_COPY(_12->pieces, _11);
 	_ADD_DEALLOC(_12);
 	//return %12
-	_FREE_STRUCT(r, Board);
-	_FREE(_11);
+	_DEALLOC_STRUCT(r, Board);
+	_DEALLOC(_11);
 	return _12;
 	//return
 }
@@ -129,7 +129,7 @@ blklab12:;
 //.blklab11
 blklab11:;
 	//return %3
-	_FREE(pieces);
+	_DEALLOC(pieces);
 	return count;
 	//return
 }
@@ -197,19 +197,19 @@ int main(int argc, char** args){
 	//assign %1 = %6  : int
 	repeat = _6;
 	//invoke (%7) = () newTicTacToe:EmptyBoard : function()->(newTicTacToe:Board)
-	_FREE_STRUCT(_7, Board);
+	_DEALLOC_STRUCT(_7, Board);
 	_7 = EmptyBoard();
 	_ADD_DEALLOC(_7);
 	//assign %2 = %7  : null|{int move,int[] pieces}
-	_FREE_STRUCT(b1, Board);
+	_DEALLOC_STRUCT(b1, Board);
 	b1 = copy_Board(_7);
 	_ADD_DEALLOC(b1);
 	//invoke (%8) = () newTicTacToe:EmptyBoard : function()->(newTicTacToe:Board)
-	_FREE_STRUCT(_8, Board);
+	_DEALLOC_STRUCT(_8, Board);
 	_8 = EmptyBoard();
 	_ADD_DEALLOC(_8);
 	//assign %3 = %8  : null|{int move,int[] pieces}
-	_FREE_STRUCT(b2, Board);
+	_DEALLOC_STRUCT(b2, Board);
 	b2 = copy_Board(_8);
 	_ADD_DEALLOC(b2);
 	//const %9 = 0 : int
@@ -219,7 +219,7 @@ int main(int argc, char** args){
 	//loop (%2, %3, %4, %5, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33)
 	while(true){
 		//const %10 = [0,1,2,3,4,5,6,7,8] : int[]
-		_FREE(_10);
+		_DEALLOC(_10);
 		_NEW_ARRAY(_10, 9);
 		_10[0] = 0; _10[1] = 1; _10[2] = 2; _10[3] = 3; _10[4] = 4; _10[5] = 5; _10[6] = 6; _10[7] = 7; _10[8] = 8; 
 		_ADD_DEALLOC(_10);
@@ -228,7 +228,7 @@ int main(int argc, char** args){
 		//ifge %4, %11 goto blklab14 : int
 		if(i>=_11){goto blklab14;}
 		//const %12 = [0,1,2,3,4,5,6,7,8] : int[]
-		_FREE(_12);
+		_DEALLOC(_12);
 		_NEW_ARRAY(_12, 9);
 		_12[0] = 0; _12[1] = 1; _12[2] = 2; _12[3] = 3; _12[4] = 4; _12[5] = 5; _12[6] = 6; _12[7] = 7; _12[8] = 8; 
 		_ADD_DEALLOC(_12);
@@ -257,7 +257,7 @@ blklab16:;
 		//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %17 = %16 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//const %18 = [112,108,97,121,32,49,39,115,32,116,117,114,110,32,40,67,73,82,67,76,69,41] : int[]
-		_FREE(_18);
+		_DEALLOC(_18);
 		_NEW_ARRAY(_18, 22);
 		_18[0] = 112; _18[1] = 108; _18[2] = 97; _18[3] = 121; _18[4] = 32; _18[5] = 49; _18[6] = 39; _18[7] = 115; _18[8] = 32; _18[9] = 116; _18[10] = 117; _18[11] = 114; _18[12] = 110; _18[13] = 32; _18[14] = 40; _18[15] = 67; _18[16] = 73; _18[17] = 82; _18[18] = 67; _18[19] = 76; _18[20] = 69; _18[21] = 41; 
 		_ADD_DEALLOC(_18);
@@ -276,13 +276,13 @@ blklab16:;
 		//update %2.move = %22 : {int move,int[] pieces} -> {int move,int[] pieces}
 		b1->move = _22;
 		//assign %3 = %2  : {int move,int[] pieces}
-		_FREE_STRUCT(b2, Board);
+		_DEALLOC_STRUCT(b2, Board);
 		b2 = copy_Board(b1);
 		_ADD_DEALLOC(b2);
 		//const %23 = null : null
 		_23 = NULL;
 		//assign %2 = %23  : null
-		_FREE_STRUCT(b1, Board);
+		_DEALLOC_STRUCT(b1, Board);
 		b1 = NULL;
 		_REMOVE_DEALLOC(b1);
 		//goto blklab20
@@ -294,7 +294,7 @@ blklab19:;
 		//fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %25 = %24 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//const %26 = [80,108,97,121,32,50,39,115,32,116,117,114,110,32,40,67,82,79,83,83,41] : int[]
-		_FREE(_26);
+		_DEALLOC(_26);
 		_NEW_ARRAY(_26, 21);
 		_26[0] = 80; _26[1] = 108; _26[2] = 97; _26[3] = 121; _26[4] = 32; _26[5] = 50; _26[6] = 39; _26[7] = 115; _26[8] = 32; _26[9] = 116; _26[10] = 117; _26[11] = 114; _26[12] = 110; _26[13] = 32; _26[14] = 40; _26[15] = 67; _26[16] = 82; _26[17] = 79; _26[18] = 83; _26[19] = 83; _26[20] = 41; 
 		_ADD_DEALLOC(_26);
@@ -313,13 +313,13 @@ blklab19:;
 		//update %3.move = %30 : {int move,int[] pieces} -> {int move,int[] pieces}
 		b2->move = _30;
 		//assign %2 = %3  : {int move,int[] pieces}
-		_FREE_STRUCT(b1, Board);
+		_DEALLOC_STRUCT(b1, Board);
 		b1 = copy_Board(b2);
 		_ADD_DEALLOC(b1);
 		//const %31 = null : null
 		_31 = NULL;
 		//assign %3 = %31  : null
-		_FREE_STRUCT(b2, Board);
+		_DEALLOC_STRUCT(b2, Board);
 		b2 = NULL;
 		_REMOVE_DEALLOC(b2);
 //.blklab21
@@ -374,7 +374,7 @@ blklab23:;
 		//ifis %3, null goto blklab26 : null|{int move,int[] pieces}
 		if(b2 == NULL) { goto blklab26;}
 		//fieldload %36 = %3 pieces : {int move,int[] pieces}
-		_FREE(_36);
+		_DEALLOC(_36);
 		_1DARRAY_COPY(_36, b2->pieces);
 		_ADD_DEALLOC(_36);
 		//const %37 = 1 : int
@@ -396,7 +396,7 @@ blklab23:;
 		//const %45 = 1 : int
 		_45 = 1;
 		//newlist %46 = (%37, %38, %39, %40, %41, %42, %43, %44, %45) : int[]
-		_FREE(_46);
+		_DEALLOC(_46);
 		_NEW_ARRAY(_46, 9);
 		_46[0] = _37; _46[1] = _38; _46[2] = _39; _46[3] = _40; _46[4] = _41; _46[5] = _42; _46[6] = _43; _46[7] = _44; _46[8] = _45; 
 		_ADD_DEALLOC(_46);
@@ -414,24 +414,24 @@ blklab25:;
 	//fieldload %47 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %48 = %47 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %49 = [80,97,115,115,32,110,101,119,32,84,105,99,84,97,99,84,111,101,32,116,101,115,116,32,99,97,115,101] : int[]
-	_FREE(_49);
+	_DEALLOC(_49);
 	_NEW_ARRAY(_49, 28);
 	_49[0] = 80; _49[1] = 97; _49[2] = 115; _49[3] = 115; _49[4] = 32; _49[5] = 110; _49[6] = 101; _49[7] = 119; _49[8] = 32; _49[9] = 84; _49[10] = 105; _49[11] = 99; _49[12] = 84; _49[13] = 97; _49[14] = 99; _49[15] = 84; _49[16] = 111; _49[17] = 101; _49[18] = 32; _49[19] = 116; _49[20] = 101; _49[21] = 115; _49[22] = 116; _49[23] = 32; _49[24] = 99; _49[25] = 97; _49[26] = 115; _49[27] = 101; 
 	_ADD_DEALLOC(_49);
 	//indirectinvoke () = %48 (%49) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_49));
 	//return
-	_FREE_STRUCT(b1, Board);
-	_FREE_STRUCT(b2, Board);
-	_FREE_STRUCT(_7, Board);
-	_FREE_STRUCT(_8, Board);
-	_FREE(_10);
-	_FREE(_12);
-	_FREE(_18);
-	_FREE(_26);
-	_FREE(_36);
-	_FREE(_46);
-	_FREE(_49);
+	_DEALLOC_STRUCT(b1, Board);
+	_DEALLOC_STRUCT(b2, Board);
+	_DEALLOC_STRUCT(_7, Board);
+	_DEALLOC_STRUCT(_8, Board);
+	_DEALLOC(_10);
+	_DEALLOC(_12);
+	_DEALLOC(_18);
+	_DEALLOC(_26);
+	_DEALLOC(_36);
+	_DEALLOC(_46);
+	_DEALLOC(_49);
 	exit(0);
 }
 

@@ -44,11 +44,11 @@ blklab0:;
 	_10=n-_9;
 	//invoke (%8) = (%0, %10) Fibonacci:fibonacci : function(int[],int)->(int[])
 	_1DARRAY_SIZE(_8, ls);
-	_FREE(_8);
+	_DEALLOC(_8);
 	_8 = fibonacci(_1DARRAY_COPY_PARAM(ls), true, _10);
 	_ADD_DEALLOC(_8);
 	//assign %0 = %8  : int[]
-	_FREE(ls);
+	_DEALLOC(ls);
 	_1DARRAY_COPY(ls, _8);
 	_ADD_DEALLOC(ls);
 	//const %11 = 1 : int
@@ -70,8 +70,8 @@ blklab0:;
 //.blklab1
 blklab1:;
 	//return %0
-	_FREE(_2);
-	_FREE(_8);
+	_DEALLOC(_2);
+	_DEALLOC(_8);
 	return ls;
 	//return
 }
@@ -111,11 +111,11 @@ int main(int argc, char** args){
 	//const %4 = 0 : int
 	_4 = 0;
 	//arraygen %5 = [4; 1] : int[]
-	_FREE(_5);
+	_DEALLOC(_5);
 	_GEN_1DARRAY(_5, max, _4);
 	_ADD_DEALLOC(_5);
 	//assign %2 = %5  : int[]
-	_FREE(arr);
+	_DEALLOC(arr);
 	_1DARRAY_COPY(arr, _5);
 	_ADD_DEALLOC(arr);
 	//const %7 = 1 : int
@@ -124,11 +124,11 @@ int main(int argc, char** args){
 	_8=max-_7;
 	//invoke (%6) = (%2, %8) Fibonacci:fibonacci : function(int[],int)->(int[])
 	_1DARRAY_SIZE(_6, arr);
-	_FREE(_6);
+	_DEALLOC(_6);
 	_6 = fibonacci(_1DARRAY_COPY_PARAM(arr), true, _8);
 	_ADD_DEALLOC(_6);
 	//assign %2 = %6  : int[]
-	_FREE(arr);
+	_DEALLOC(arr);
 	_1DARRAY_COPY(arr, _6);
 	_ADD_DEALLOC(arr);
 	//assert
@@ -154,7 +154,7 @@ int main(int argc, char** args){
 		//const %18 = 34 : int
 		_18 = 34;
 		//newlist %19 = (%9, %10, %11, %12, %13, %14, %15, %16, %17, %18) : int[]
-		_FREE(_19);
+		_DEALLOC(_19);
 		_NEW_ARRAY(_19, 10);
 		_19[0] = _9; _19[1] = _10; _19[2] = _11; _19[3] = _12; _19[4] = _13; _19[5] = _14; _19[6] = _15; _19[7] = _16; _19[8] = _17; _19[9] = _18; 
 		_ADD_DEALLOC(_19);
@@ -174,18 +174,18 @@ blklab2:;
 	//fieldload %22 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %23 = %22 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %24 = [80,97,115,115,32,70,105,98,111,110,97,99,99,105,32,116,101,115,116,32,99,97,115,101] : int[]
-	_FREE(_24);
+	_DEALLOC(_24);
 	_NEW_ARRAY(_24, 24);
 	_24[0] = 80; _24[1] = 97; _24[2] = 115; _24[3] = 115; _24[4] = 32; _24[5] = 70; _24[6] = 105; _24[7] = 98; _24[8] = 111; _24[9] = 110; _24[10] = 97; _24[11] = 99; _24[12] = 99; _24[13] = 105; _24[14] = 32; _24[15] = 116; _24[16] = 101; _24[17] = 115; _24[18] = 116; _24[19] = 32; _24[20] = 99; _24[21] = 97; _24[22] = 115; _24[23] = 101; 
 	_ADD_DEALLOC(_24);
 	//indirectinvoke () = %23 (%24) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_24));
 	//return
-	_FREE(arr);
-	_FREE(_5);
-	_FREE(_6);
-	_FREE(_19);
-	_FREE(_24);
+	_DEALLOC(arr);
+	_DEALLOC(_5);
+	_DEALLOC(_6);
+	_DEALLOC(_19);
+	_DEALLOC(_24);
 	exit(0);
 }
 

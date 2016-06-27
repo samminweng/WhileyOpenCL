@@ -37,7 +37,7 @@ NQueen** copy_array_NQueen(NQueen** _NQueen, long long _NQueen_size){
 	return new_NQueen;
 }
 void free_NQueen(NQueen* nqueen){
-	free(nqueen->queens);
+	_FREE_1DARRAY_STRUCT(nqueen->queens, POS);
 	free(nqueen);
 }
 void printf_NQueen(NQueen* nqueen){
@@ -368,8 +368,8 @@ int main(int argc, char** args){
 	long long _29 = 0;
 	void* _30;
 	_DECL_1DARRAY(_32);
-	//const %5 = 10 : int
-	_5 = 10;
+	//const %5 = 8 : int
+	_5 = 8;
 	//assign %1 = %5  : int
 	n = _5;
 	//const %6 = 0 : int
@@ -405,8 +405,8 @@ int main(int argc, char** args){
 	{
 		//fieldload %14 = %4 num_solutions : {int num_solutions,{int c,int r}[] queens}
 		_14 = nq->num_solutions;
-		//const %15 = 724 : int
-		_15 = 724;
+		//const %15 = 92 : int
+		_15 = 92;
 		//ifeq %14, %15 goto blklab23 : int
 		if(_14==_15){goto blklab23;}
 		//fail

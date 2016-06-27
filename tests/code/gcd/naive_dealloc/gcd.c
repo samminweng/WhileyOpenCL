@@ -73,7 +73,7 @@ long long gcd_cached(long long a, long long b, long long n, _DECL_1DARRAY_PARAM(
 	//ifne %0, %5 goto blklab7 : int
 	if(a!=_5){goto blklab7;}
 	//return %1
-	_FREE(gcds);
+	_DEALLOC(gcds);
 	return b;
 	//goto blklab8
 	goto blklab8;
@@ -84,7 +84,7 @@ blklab7:;
 	//ifne %1, %6 goto blklab9 : int
 	if(b!=_6){goto blklab9;}
 	//return %0
-	_FREE(gcds);
+	_DEALLOC(gcds);
 	return a;
 	//goto blklab10
 	goto blklab10;
@@ -113,7 +113,7 @@ blklab12:;
 	//indexof %11 = %3, %10 : int[]
 	_11=gcds[_10];
 	//return %11
-	_FREE(gcds);
+	_DEALLOC(gcds);
 	return _11;
 //.blklab10
 blklab10:;
@@ -172,7 +172,7 @@ int main(int argc, char** args){
 	//fieldload %6 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %7 = %6 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %8 = [78,32,61,32] : int[]
-	_FREE(_8);
+	_DEALLOC(_8);
 	_NEW_ARRAY(_8, 4);
 	_8[0] = 78; _8[1] = 32; _8[2] = 61; _8[3] = 32; 
 	_ADD_DEALLOC(_8);
@@ -187,11 +187,11 @@ int main(int argc, char** args){
 	//mul %12 = %1, %1 : int
 	_12=n*n;
 	//arraygen %13 = [11; 12] : int[]
-	_FREE(_13);
+	_DEALLOC(_13);
 	_GEN_1DARRAY(_13, _12, _11);
 	_ADD_DEALLOC(_13);
 	//assign %2 = %13  : int[]
-	_FREE(gcds);
+	_DEALLOC(gcds);
 	_1DARRAY_COPY(gcds, _13);
 	_ADD_DEALLOC(gcds);
 	//const %14 = 0 : int
@@ -240,7 +240,7 @@ blklab17:;
 			//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %24 = %23 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %25 = [78,117,109,98,101,114,58,32] : int[]
-			_FREE(_25);
+			_DEALLOC(_25);
 			_NEW_ARRAY(_25, 8);
 			_25[0] = 78; _25[1] = 117; _25[2] = 109; _25[3] = 98; _25[4] = 101; _25[5] = 114; _25[6] = 58; _25[7] = 32; 
 			_ADD_DEALLOC(_25);
@@ -253,7 +253,7 @@ blklab17:;
 			//fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %29 = %28 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %30 = [32,78,117,109,98,101,114,58,32] : int[]
-			_FREE(_30);
+			_DEALLOC(_30);
 			_NEW_ARRAY(_30, 9);
 			_30[0] = 32; _30[1] = 78; _30[2] = 117; _30[3] = 109; _30[4] = 98; _30[5] = 101; _30[6] = 114; _30[7] = 58; _30[8] = 32; 
 			_ADD_DEALLOC(_30);
@@ -266,7 +266,7 @@ blklab17:;
 			//fieldload %33 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %34 = %33 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %35 = [32,71,67,68,58] : int[]
-			_FREE(_35);
+			_DEALLOC(_35);
 			_NEW_ARRAY(_35, 5);
 			_35[0] = 32; _35[1] = 71; _35[2] = 67; _35[3] = 68; _35[4] = 58; 
 			_ADD_DEALLOC(_35);
@@ -305,12 +305,12 @@ blklab14:;
 //.blklab13
 blklab13:;
 	//return
-	_FREE(gcds);
-	_FREE(_8);
-	_FREE(_13);
-	_FREE(_25);
-	_FREE(_30);
-	_FREE(_35);
+	_DEALLOC(gcds);
+	_DEALLOC(_8);
+	_DEALLOC(_13);
+	_DEALLOC(_25);
+	_DEALLOC(_30);
+	_DEALLOC(_35);
 	exit(0);
 }
 

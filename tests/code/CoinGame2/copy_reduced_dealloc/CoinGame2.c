@@ -87,33 +87,33 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), lon
 		//const %10 = 0 : int
 		_10 = 0;
 		//arraygen %11 = [10; 1] : int[]
-		_FREE(_11);
+		_DEALLOC(_11);
 		_GEN_1DARRAY(_11, n, _10);
 		_ADD_DEALLOC(_11);
 		//assign %4 = %11  : int[]
-		_FREE(x);
+		_DEALLOC(x);
 		_1DARRAY_UPDATE(x, _11);
 		_TRANSFER_DEALLOC(x, _11);
 		_REMOVE_DEALLOC(_11);
 		//const %12 = 0 : int
 		_12 = 0;
 		//arraygen %13 = [12; 1] : int[]
-		_FREE(_13);
+		_DEALLOC(_13);
 		_GEN_1DARRAY(_13, n, _12);
 		_ADD_DEALLOC(_13);
 		//assign %5 = %13  : int[]
-		_FREE(y);
+		_DEALLOC(y);
 		_1DARRAY_UPDATE(y, _13);
 		_TRANSFER_DEALLOC(y, _13);
 		_REMOVE_DEALLOC(_13);
 		//const %14 = 0 : int
 		_14 = 0;
 		//arraygen %15 = [14; 1] : int[]
-		_FREE(_15);
+		_DEALLOC(_15);
 		_GEN_1DARRAY(_15, n, _14);
 		_ADD_DEALLOC(_15);
 		//assign %6 = %15  : int[]
-		_FREE(z);
+		_DEALLOC(z);
 		_1DARRAY_UPDATE(z, _15);
 		_TRANSFER_DEALLOC(z, _15);
 		_REMOVE_DEALLOC(_15);
@@ -302,13 +302,13 @@ blklab1:;
 //.blklab0
 blklab0:;
 	//return %0
-	_FREE(_2);
-	_FREE(x);
-	_FREE(y);
-	_FREE(z);
-	_FREE(_11);
-	_FREE(_13);
-	_FREE(_15);
+	_DEALLOC(_2);
+	_DEALLOC(x);
+	_DEALLOC(y);
+	_DEALLOC(z);
+	_DEALLOC(_11);
+	_DEALLOC(_13);
+	_DEALLOC(_15);
 	return moves;
 	//return
 }
@@ -345,22 +345,22 @@ int main(int argc, char** args){
 	//mul %6 = %1, %1 : int
 	_6=n*n;
 	//arraygen %7 = [5; 6] : int[]
-	_FREE(_7);
+	_DEALLOC(_7);
 	_GEN_1DARRAY(_7, _6, _5);
 	_ADD_DEALLOC(_7);
 	//assign %2 = %7  : int[]
-	_FREE(moves);
+	_DEALLOC(moves);
 	_1DARRAY_UPDATE(moves, _7);
 	_TRANSFER_DEALLOC(moves, _7);
 	_REMOVE_DEALLOC(_7);
 	//invoke (%8) = (%2, %1) CoinGame2:findMoves : function(int[],int)->(int[])
 	_1DARRAY_SIZE(_8, moves);
-	_FREE(_8);
+	_DEALLOC(_8);
 	_REMOVE_DEALLOC(moves);
 	_8 = findMoves(_1DARRAY_PARAM(moves), true, n);
 	_ADD_DEALLOC(_8);
 	//assign %2 = %8  : int[]
-	_FREE(moves);
+	_DEALLOC(moves);
 	_1DARRAY_UPDATE(moves, _8);
 	_TRANSFER_DEALLOC(moves, _8);
 	_REMOVE_DEALLOC(_8);
@@ -388,7 +388,7 @@ blklab11:;
 	//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %14 = %13 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %15 = [84,104,101,32,116,111,116,97,108,32,97,109,111,117,110,116,32,111,102,32,109,111,110,101,121,32,40,109,97,120,105,109,117,109,41,32,65,108,105,99,101,32,103,101,116,115,32,105,115,32] : int[]
-	_FREE(_15);
+	_DEALLOC(_15);
 	_NEW_ARRAY(_15, 50);
 	_15[0] = 84; _15[1] = 104; _15[2] = 101; _15[3] = 32; _15[4] = 116; _15[5] = 111; _15[6] = 116; _15[7] = 97; _15[8] = 108; _15[9] = 32; _15[10] = 97; _15[11] = 109; _15[12] = 111; _15[13] = 117; _15[14] = 110; _15[15] = 116; _15[16] = 32; _15[17] = 111; _15[18] = 102; _15[19] = 32; _15[20] = 109; _15[21] = 111; _15[22] = 110; _15[23] = 101; _15[24] = 121; _15[25] = 32; _15[26] = 40; _15[27] = 109; _15[28] = 97; _15[29] = 120; _15[30] = 105; _15[31] = 109; _15[32] = 117; _15[33] = 109; _15[34] = 41; _15[35] = 32; _15[36] = 65; _15[37] = 108; _15[38] = 105; _15[39] = 99; _15[40] = 101; _15[41] = 32; _15[42] = 103; _15[43] = 101; _15[44] = 116; _15[45] = 115; _15[46] = 32; _15[47] = 105; _15[48] = 115; _15[49] = 32; 
 	_ADD_DEALLOC(_15);
@@ -401,18 +401,18 @@ blklab11:;
 	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %19 = %18 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %20 = [80,97,115,115,32,67,111,105,110,71,97,109,101,32,116,101,115,116,32,99,97,115,101] : int[]
-	_FREE(_20);
+	_DEALLOC(_20);
 	_NEW_ARRAY(_20, 23);
 	_20[0] = 80; _20[1] = 97; _20[2] = 115; _20[3] = 115; _20[4] = 32; _20[5] = 67; _20[6] = 111; _20[7] = 105; _20[8] = 110; _20[9] = 71; _20[10] = 97; _20[11] = 109; _20[12] = 101; _20[13] = 32; _20[14] = 116; _20[15] = 101; _20[16] = 115; _20[17] = 116; _20[18] = 32; _20[19] = 99; _20[20] = 97; _20[21] = 115; _20[22] = 101; 
 	_ADD_DEALLOC(_20);
 	//indirectinvoke () = %19 (%20) : method(int[])->()
 	println_s(_20, _20_size);
 	//return
-	_FREE(moves);
-	_FREE(_7);
-	_FREE(_8);
-	_FREE(_15);
-	_FREE(_20);
+	_DEALLOC(moves);
+	_DEALLOC(_7);
+	_DEALLOC(_8);
+	_DEALLOC(_15);
+	_DEALLOC(_20);
 	exit(0);
 }
 

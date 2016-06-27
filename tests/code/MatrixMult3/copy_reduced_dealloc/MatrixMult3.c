@@ -33,7 +33,7 @@ Matrix* matrix(long long width, long long height, _DECL_1DARRAY_PARAM(data), _DE
 	Matrix* _4;
 	_DECL_DEALLOC(_4);
 	//newrecord %4 = (%2, %1, %0) : {int[] data,int height,int width}
-	_FREE_STRUCT(_4, Matrix);
+	_DEALLOC_STRUCT(_4, Matrix);
 	_4 = malloc(sizeof(Matrix));
 	_1DARRAY_UPDATE(_4->data, data);
 	_4->height = height;
@@ -41,8 +41,8 @@ Matrix* matrix(long long width, long long height, _DECL_1DARRAY_PARAM(data), _DE
 	_REMOVE_DEALLOC(data);
 	_ADD_DEALLOC(_4);
 	//return %4
-	_FREE(data);
-	_FREE_STRUCT(r, Matrix);
+	_DEALLOC(data);
+	_DEALLOC_STRUCT(r, Matrix);
 	return _4;
 	//return
 }
@@ -77,11 +77,11 @@ Matrix* init(long long width, long long height){
 	//mul %7 = %0, %1 : int
 	_7=width*height;
 	//arraygen %8 = [6; 7] : int[]
-	_FREE(_8);
+	_DEALLOC(_8);
 	_GEN_1DARRAY(_8, _7, _6);
 	_ADD_DEALLOC(_8);
 	//assign %3 = %8  : int[]
-	_FREE(data);
+	_DEALLOC(data);
 	_1DARRAY_UPDATE(data, _8);
 	_TRANSFER_DEALLOC(data, _8);
 	_REMOVE_DEALLOC(_8);
@@ -138,14 +138,14 @@ blklab3:;
 //.blklab2
 blklab2:;
 	//invoke (%21) = (%0, %1, %3) MatrixMult3:matrix : function(MatrixMult3:nat,MatrixMult3:nat,int[])->(MatrixMult3:Matrix)
-	_FREE_STRUCT(_21, Matrix);
+	_DEALLOC_STRUCT(_21, Matrix);
 	_REMOVE_DEALLOC(data);
 	_21 = matrix(width, height, _1DARRAY_PARAM(data), true);
 	_ADD_DEALLOC(_21);
 	//return %21
-	_FREE_STRUCT(r, Matrix);
-	_FREE(data);
-	_FREE(_8);
+	_DEALLOC_STRUCT(r, Matrix);
+	_DEALLOC(data);
+	_DEALLOC(_8);
 	return _21;
 	//return
 }
@@ -203,7 +203,7 @@ void print_mat(FILE* sys, Matrix* a, _DECL_DEALLOC_PARAM(a)){
 			//fieldload %10 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %11 = %10 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//fieldload %12 = %1 data : {int[] data,int height,int width}
-			_FREE(_12);
+			_DEALLOC(_12);
 			_1DARRAY_COPY(_12, a->data);
 			_ADD_DEALLOC(_12);
 			//mul %13 = %2, %3 : int
@@ -217,7 +217,7 @@ void print_mat(FILE* sys, Matrix* a, _DECL_DEALLOC_PARAM(a)){
 			//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %17 = %16 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %18 = [32] : int[]
-			_FREE(_18);
+			_DEALLOC(_18);
 			_NEW_ARRAY(_18, 1);
 			_18[0] = 32; 
 			_ADD_DEALLOC(_18);
@@ -243,7 +243,7 @@ blklab8:;
 		//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %24 = %23 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//const %25 = [] : void[]
-		_FREE(_25);
+		_DEALLOC(_25);
 		_NEW_ARRAY(_25, 0);
 		_ADD_DEALLOC(_25);
 		//indirectinvoke () = %24 (%25) : method(int[])->()
@@ -254,10 +254,10 @@ blklab7:;
 //.blklab6
 blklab6:;
 	//return
-	_FREE_STRUCT(a, Matrix);
-	_FREE(_12);
-	_FREE(_18);
-	_FREE(_25);
+	_DEALLOC_STRUCT(a, Matrix);
+	_DEALLOC(_12);
+	_DEALLOC(_18);
+	_DEALLOC(_25);
 	return;
 }
 
@@ -342,29 +342,29 @@ Matrix* mat_mult(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_PAR
 	//mul %15 = %3, %4 : int
 	_15=width*height;
 	//arraygen %16 = [14; 15] : int[]
-	_FREE(_16);
+	_DEALLOC(_16);
 	_GEN_1DARRAY(_16, _15, _14);
 	_ADD_DEALLOC(_16);
 	//assign %5 = %16  : int[]
-	_FREE(data);
+	_DEALLOC(data);
 	_1DARRAY_UPDATE(data, _16);
 	_TRANSFER_DEALLOC(data, _16);
 	_REMOVE_DEALLOC(_16);
 	//fieldload %17 = %0 data : {int[] data,int height,int width}
-	_FREE(_17);
+	_DEALLOC(_17);
 	_1DARRAY_UPDATE(_17, a->data);
 	_REMOVE_DEALLOC(_17);
 	//assign %6 = %17  : int[]
-	_FREE(a_data);
+	_DEALLOC(a_data);
 	_1DARRAY_UPDATE(a_data, _17);
 	_TRANSFER_DEALLOC(a_data, _17);
 	_REMOVE_DEALLOC(_17);
 	//fieldload %18 = %1 data : {int[] data,int height,int width}
-	_FREE(_18);
+	_DEALLOC(_18);
 	_1DARRAY_UPDATE(_18, b->data);
 	_REMOVE_DEALLOC(_18);
 	//assign %7 = %18  : int[]
-	_FREE(b_data);
+	_DEALLOC(b_data);
 	_1DARRAY_UPDATE(b_data, _18);
 	_TRANSFER_DEALLOC(b_data, _18);
 	_REMOVE_DEALLOC(_18);
@@ -373,11 +373,11 @@ Matrix* mat_mult(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_PAR
 	//mul %20 = %3, %4 : int
 	_20=width*height;
 	//arraygen %21 = [19; 20] : int[]
-	_FREE(_21);
+	_DEALLOC(_21);
 	_GEN_1DARRAY(_21, _20, _19);
 	_ADD_DEALLOC(_21);
 	//assign %8 = %21  : int[]
-	_FREE(b_t);
+	_DEALLOC(b_t);
 	_1DARRAY_UPDATE(b_t, _21);
 	_TRANSFER_DEALLOC(b_t, _21);
 	_REMOVE_DEALLOC(_21);
@@ -529,22 +529,22 @@ blklab18:;
 //.blklab17
 blklab17:;
 	//invoke (%58) = (%3, %4, %5) MatrixMult3:matrix : function(MatrixMult3:nat,MatrixMult3:nat,int[])->(MatrixMult3:Matrix)
-	_FREE_STRUCT(_58, Matrix);
+	_DEALLOC_STRUCT(_58, Matrix);
 	_REMOVE_DEALLOC(data);
 	_58 = matrix(width, height, _1DARRAY_PARAM(data), true);
 	_ADD_DEALLOC(_58);
 	//return %58
-	_FREE_STRUCT(a, Matrix);
-	_FREE_STRUCT(b, Matrix);
-	_FREE_STRUCT(c, Matrix);
-	_FREE(data);
-	_FREE(a_data);
-	_FREE(b_data);
-	_FREE(b_t);
-	_FREE(_16);
-	_FREE(_17);
-	_FREE(_18);
-	_FREE(_21);
+	_DEALLOC_STRUCT(a, Matrix);
+	_DEALLOC_STRUCT(b, Matrix);
+	_DEALLOC_STRUCT(c, Matrix);
+	_DEALLOC(data);
+	_DEALLOC(a_data);
+	_DEALLOC(b_data);
+	_DEALLOC(b_t);
+	_DEALLOC(_16);
+	_DEALLOC(_17);
+	_DEALLOC(_18);
+	_DEALLOC(_21);
 	return _58;
 	//return
 }
@@ -636,7 +636,7 @@ int main(int argc, char** args){
 	//fieldload %4 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %5 = %4 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %6 = [78,32,61,32] : int[]
-	_FREE(_6);
+	_DEALLOC(_6);
 	_NEW_ARRAY(_6, 4);
 	_6[0] = 78; _6[1] = 32; _6[2] = 61; _6[3] = 32; 
 	_ADD_DEALLOC(_6);
@@ -653,11 +653,11 @@ int main(int argc, char** args){
 	//const %12 = 20 : int
 	_12 = 20;
 	//invoke (%10) = (%11, %12) MatrixMult3:init : function(MatrixMult3:nat,MatrixMult3:nat)->(MatrixMult3:Matrix)
-	_FREE_STRUCT(_10, Matrix);
+	_DEALLOC_STRUCT(_10, Matrix);
 	_10 = init(_11, _12);
 	_ADD_DEALLOC(_10);
 	//assign %1 = %10  : {int[] data,int height,int width}
-	_FREE_STRUCT(A, Matrix);
+	_DEALLOC_STRUCT(A, Matrix);
 	A = _10;
 	_TRANSFER_DEALLOC(A, _10);
 	_REMOVE_DEALLOC(_10);
@@ -666,27 +666,27 @@ int main(int argc, char** args){
 	//const %15 = 20 : int
 	_15 = 20;
 	//invoke (%13) = (%14, %15) MatrixMult3:init : function(MatrixMult3:nat,MatrixMult3:nat)->(MatrixMult3:Matrix)
-	_FREE_STRUCT(_13, Matrix);
+	_DEALLOC_STRUCT(_13, Matrix);
 	_13 = init(_14, _15);
 	_ADD_DEALLOC(_13);
 	//assign %2 = %13  : {int[] data,int height,int width}
-	_FREE_STRUCT(B, Matrix);
+	_DEALLOC_STRUCT(B, Matrix);
 	B = _13;
 	_TRANSFER_DEALLOC(B, _13);
 	_REMOVE_DEALLOC(_13);
 	//invoke (%16) = (%1, %2) MatrixMult3:mat_mult : function(MatrixMult3:Matrix,MatrixMult3:Matrix)->(MatrixMult3:Matrix)
-	_FREE_STRUCT(_16, Matrix);
+	_DEALLOC_STRUCT(_16, Matrix);
 	_16 = mat_mult(_STRUCT_COPY_PARAM(A, Matrix), true, _STRUCT_COPY_PARAM(B, Matrix), true);
 	_ADD_DEALLOC(_16);
 	//assign %3 = %16  : {int[] data,int height,int width}
-	_FREE_STRUCT(C, Matrix);
+	_DEALLOC_STRUCT(C, Matrix);
 	C = _16;
 	_TRANSFER_DEALLOC(C, _16);
 	_REMOVE_DEALLOC(_16);
 	//assert
 	{
 		//fieldload %17 = %1 data : {int[] data,int height,int width}
-		_FREE(_17);
+		_DEALLOC(_17);
 		_1DARRAY_UPDATE(_17, A->data);
 		_REMOVE_DEALLOC(_17);
 		//const %18 = 20 : int
@@ -727,7 +727,7 @@ blklab23:;
 	//assert
 	{
 		//fieldload %31 = %2 data : {int[] data,int height,int width}
-		_FREE(_31);
+		_DEALLOC(_31);
 		_1DARRAY_UPDATE(_31, B->data);
 		_REMOVE_DEALLOC(_31);
 		//const %32 = 20 : int
@@ -768,7 +768,7 @@ blklab24:;
 	//assert
 	{
 		//fieldload %45 = %3 data : {int[] data,int height,int width}
-		_FREE(_45);
+		_DEALLOC(_45);
 		_1DARRAY_COPY(_45, C->data);
 		_ADD_DEALLOC(_45);
 		//const %46 = 20 : int
@@ -807,7 +807,7 @@ print_mat(stdout, _STRUCT_PARAM(C), false);
 	//fieldload %57 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %58 = %57 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %59 = [77,97,116,114,105,120,32,67,91,78,45,49,93,91,78,45,49,93,32,61,32] : int[]
-	_FREE(_59);
+	_DEALLOC(_59);
 	_NEW_ARRAY(_59, 21);
 	_59[0] = 77; _59[1] = 97; _59[2] = 116; _59[3] = 114; _59[4] = 105; _59[5] = 120; _59[6] = 32; _59[7] = 67; _59[8] = 91; _59[9] = 78; _59[10] = 45; _59[11] = 49; _59[12] = 93; _59[13] = 91; _59[14] = 78; _59[15] = 45; _59[16] = 49; _59[17] = 93; _59[18] = 32; _59[19] = 61; _59[20] = 32; 
 	_ADD_DEALLOC(_59);
@@ -816,7 +816,7 @@ print_mat(stdout, _STRUCT_PARAM(C), false);
 	//fieldload %60 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %61 = %60 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//fieldload %62 = %3 data : {int[] data,int height,int width}
-	_FREE(_62);
+	_DEALLOC(_62);
 	_1DARRAY_UPDATE(_62, C->data);
 	_REMOVE_DEALLOC(_62);
 	//const %63 = 20 : int
@@ -844,26 +844,26 @@ print_mat(stdout, _STRUCT_PARAM(C), false);
 	//fieldload %73 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %74 = %73 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %75 = [80,97,115,115,32,77,97,116,114,105,120,77,117,108,116,50,32,116,101,115,116,32,99,97,115,101] : int[]
-	_FREE(_75);
+	_DEALLOC(_75);
 	_NEW_ARRAY(_75, 26);
 	_75[0] = 80; _75[1] = 97; _75[2] = 115; _75[3] = 115; _75[4] = 32; _75[5] = 77; _75[6] = 97; _75[7] = 116; _75[8] = 114; _75[9] = 105; _75[10] = 120; _75[11] = 77; _75[12] = 117; _75[13] = 108; _75[14] = 116; _75[15] = 50; _75[16] = 32; _75[17] = 116; _75[18] = 101; _75[19] = 115; _75[20] = 116; _75[21] = 32; _75[22] = 99; _75[23] = 97; _75[24] = 115; _75[25] = 101; 
 	_ADD_DEALLOC(_75);
 	//indirectinvoke () = %74 (%75) : method(int[])->()
 	println_s(_75, _75_size);
 	//return
-	_FREE_STRUCT(A, Matrix);
-	_FREE_STRUCT(B, Matrix);
-	_FREE_STRUCT(C, Matrix);
-	_FREE(_6);
-	_FREE_STRUCT(_10, Matrix);
-	_FREE_STRUCT(_13, Matrix);
-	_FREE_STRUCT(_16, Matrix);
-	_FREE(_17);
-	_FREE(_31);
-	_FREE(_45);
-	_FREE(_59);
-	_FREE(_62);
-	_FREE(_75);
+	_DEALLOC_STRUCT(A, Matrix);
+	_DEALLOC_STRUCT(B, Matrix);
+	_DEALLOC_STRUCT(C, Matrix);
+	_DEALLOC(_6);
+	_DEALLOC_STRUCT(_10, Matrix);
+	_DEALLOC_STRUCT(_13, Matrix);
+	_DEALLOC_STRUCT(_16, Matrix);
+	_DEALLOC(_17);
+	_DEALLOC(_31);
+	_DEALLOC(_45);
+	_DEALLOC(_59);
+	_DEALLOC(_62);
+	_DEALLOC(_75);
 	exit(0);
 }
 

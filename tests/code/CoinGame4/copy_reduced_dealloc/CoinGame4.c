@@ -146,7 +146,7 @@ blklab3:;
 		//fieldload %33 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %34 = %33 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//const %35 = [65,108,105,99,101,32,116,97,107,101,32,99,111,105,110,32,40,32] : int[]
-		_FREE(_35);
+		_DEALLOC(_35);
 		_NEW_ARRAY(_35, 18);
 		_35[0] = 65; _35[1] = 108; _35[2] = 105; _35[3] = 99; _35[4] = 101; _35[5] = 32; _35[6] = 116; _35[7] = 97; _35[8] = 107; _35[9] = 101; _35[10] = 32; _35[11] = 99; _35[12] = 111; _35[13] = 105; _35[14] = 110; _35[15] = 32; _35[16] = 40; _35[17] = 32; 
 		_ADD_DEALLOC(_35);
@@ -159,7 +159,7 @@ blklab4:;
 		//fieldload %36 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %37 = %36 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//const %38 = [66,111,98,32,116,97,107,101,32,99,111,105,110,32,40,32] : int[]
-		_FREE(_38);
+		_DEALLOC(_38);
 		_NEW_ARRAY(_38, 16);
 		_38[0] = 66; _38[1] = 111; _38[2] = 98; _38[3] = 32; _38[4] = 116; _38[5] = 97; _38[6] = 107; _38[7] = 101; _38[8] = 32; _38[9] = 99; _38[10] = 111; _38[11] = 105; _38[12] = 110; _38[13] = 32; _38[14] = 40; _38[15] = 32; 
 		_ADD_DEALLOC(_38);
@@ -174,7 +174,7 @@ blklab5:;
 		//fieldload %41 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %42 = %41 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//const %43 = [32,44,32] : int[]
-		_FREE(_43);
+		_DEALLOC(_43);
 		_NEW_ARRAY(_43, 3);
 		_43[0] = 32; _43[1] = 44; _43[2] = 32; 
 		_ADD_DEALLOC(_43);
@@ -187,7 +187,7 @@ blklab5:;
 		//fieldload %46 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %47 = %46 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//const %48 = [32,41] : int[]
-		_FREE(_48);
+		_DEALLOC(_48);
 		_NEW_ARRAY(_48, 2);
 		_48[0] = 32; _48[1] = 41; 
 		_ADD_DEALLOC(_48);
@@ -208,7 +208,7 @@ blklab5:;
 		//fieldload %53 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %54 = %53 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//const %55 = [44,32] : int[]
-		_FREE(_55);
+		_DEALLOC(_55);
 		_NEW_ARRAY(_55, 2);
 		_55[0] = 44; _55[1] = 32; 
 		_ADD_DEALLOC(_55);
@@ -225,7 +225,7 @@ blklab6:;
 		//fieldload %57 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %58 = %57 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//const %59 = [32] : int[]
-		_FREE(_59);
+		_DEALLOC(_59);
 		_NEW_ARRAY(_59, 1);
 		_59[0] = 32; 
 		_ADD_DEALLOC(_59);
@@ -258,7 +258,7 @@ blklab8:;
 	//fieldload %62 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %63 = %62 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %64 = [84,104,101,32,116,111,116,97,108,32,97,109,111,117,110,116,32,111,102,32,109,111,110,101,121,32,40,109,97,120,105,109,117,109,41,32,66,111,98,32,103,101,116,115,32,105,115,32] : int[]
-	_FREE(_64);
+	_DEALLOC(_64);
 	_NEW_ARRAY(_64, 48);
 	_64[0] = 84; _64[1] = 104; _64[2] = 101; _64[3] = 32; _64[4] = 116; _64[5] = 111; _64[6] = 116; _64[7] = 97; _64[8] = 108; _64[9] = 32; _64[10] = 97; _64[11] = 109; _64[12] = 111; _64[13] = 117; _64[14] = 110; _64[15] = 116; _64[16] = 32; _64[17] = 111; _64[18] = 102; _64[19] = 32; _64[20] = 109; _64[21] = 111; _64[22] = 110; _64[23] = 101; _64[24] = 121; _64[25] = 32; _64[26] = 40; _64[27] = 109; _64[28] = 97; _64[29] = 120; _64[30] = 105; _64[31] = 109; _64[32] = 117; _64[33] = 109; _64[34] = 41; _64[35] = 32; _64[36] = 66; _64[37] = 111; _64[38] = 98; _64[39] = 32; _64[40] = 103; _64[41] = 101; _64[42] = 116; _64[43] = 115; _64[44] = 32; _64[45] = 105; _64[46] = 115; _64[47] = 32; 
 	_ADD_DEALLOC(_64);
@@ -269,14 +269,14 @@ blklab8:;
 	//indirectinvoke () = %66 (%7) : method(any)->()
 	printf("%lld\n", sum_bob);
 	//return
-	_FREE(moves);
-	_FREE(_35);
-	_FREE(_38);
-	_FREE(_43);
-	_FREE(_48);
-	_FREE(_55);
-	_FREE(_59);
-	_FREE(_64);
+	_DEALLOC(moves);
+	_DEALLOC(_35);
+	_DEALLOC(_38);
+	_DEALLOC(_43);
+	_DEALLOC(_48);
+	_DEALLOC(_55);
+	_DEALLOC(_59);
+	_DEALLOC(_64);
 	return;
 }
 
@@ -333,7 +333,7 @@ long long* pickCoin(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), long
 	//update %0[%14] = %8 : int[] -> int[]
 	moves[_14] = _8;
 	//return %0
-	_FREE(_7);
+	_DEALLOC(_7);
 	return moves;
 	//return
 }
@@ -493,12 +493,12 @@ blklab16:;
 blklab17:;
 			//invoke (%41) = (%0, %5, %4, %1, %7, %6, %8) CoinGame4:pickCoin : function(int[],int,int,int,int,int,int)->(int[])
 			_1DARRAY_SIZE(_41, moves);
-			_FREE(_41);
+			_DEALLOC(_41);
 			_REMOVE_DEALLOC(moves);
 			_41 = pickCoin(_1DARRAY_PARAM(moves), true, i, j, n, x, y, z);
 			_ADD_DEALLOC(_41);
 			//assign %0 = %41  : int[]
-			_FREE(moves);
+			_DEALLOC(moves);
 			_1DARRAY_UPDATE(moves, _41);
 			_TRANSFER_DEALLOC(moves, _41);
 			_REMOVE_DEALLOC(_41);
@@ -531,8 +531,8 @@ blklab12:;
 //.blklab11
 blklab11:;
 	//return %0
-	_FREE(_2);
-	_FREE(_41);
+	_DEALLOC(_2);
+	_DEALLOC(_41);
 	return moves;
 	//return
 }
@@ -566,22 +566,22 @@ int main(int argc, char** args){
 	//mul %6 = %1, %1 : int
 	_6=n*n;
 	//arraygen %7 = [5; 6] : int[]
-	_FREE(_7);
+	_DEALLOC(_7);
 	_GEN_1DARRAY(_7, _6, _5);
 	_ADD_DEALLOC(_7);
 	//assign %2 = %7  : int[]
-	_FREE(moves);
+	_DEALLOC(moves);
 	_1DARRAY_UPDATE(moves, _7);
 	_TRANSFER_DEALLOC(moves, _7);
 	_REMOVE_DEALLOC(_7);
 	//invoke (%8) = (%2, %1) CoinGame4:findMoves : function(int[],int)->(int[])
 	_1DARRAY_SIZE(_8, moves);
-	_FREE(_8);
+	_DEALLOC(_8);
 	_REMOVE_DEALLOC(moves);
 	_8 = findMoves(_1DARRAY_PARAM(moves), true, n);
 	_ADD_DEALLOC(_8);
 	//assign %2 = %8  : int[]
-	_FREE(moves);
+	_DEALLOC(moves);
 	_1DARRAY_UPDATE(moves, _8);
 	_TRANSFER_DEALLOC(moves, _8);
 	_REMOVE_DEALLOC(_8);
@@ -598,7 +598,7 @@ play(stdout, _1DARRAY_PARAM(moves), false, n);
 	//fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %13 = %12 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %14 = [84,104,101,32,116,111,116,97,108,32,97,109,111,117,110,116,32,111,102,32,109,111,110,101,121,32,40,109,97,120,105,109,117,109,41,32,65,108,105,99,101,32,103,101,116,115,32,105,115,32] : int[]
-	_FREE(_14);
+	_DEALLOC(_14);
 	_NEW_ARRAY(_14, 50);
 	_14[0] = 84; _14[1] = 104; _14[2] = 101; _14[3] = 32; _14[4] = 116; _14[5] = 111; _14[6] = 116; _14[7] = 97; _14[8] = 108; _14[9] = 32; _14[10] = 97; _14[11] = 109; _14[12] = 111; _14[13] = 117; _14[14] = 110; _14[15] = 116; _14[16] = 32; _14[17] = 111; _14[18] = 102; _14[19] = 32; _14[20] = 109; _14[21] = 111; _14[22] = 110; _14[23] = 101; _14[24] = 121; _14[25] = 32; _14[26] = 40; _14[27] = 109; _14[28] = 97; _14[29] = 120; _14[30] = 105; _14[31] = 109; _14[32] = 117; _14[33] = 109; _14[34] = 41; _14[35] = 32; _14[36] = 65; _14[37] = 108; _14[38] = 105; _14[39] = 99; _14[40] = 101; _14[41] = 32; _14[42] = 103; _14[43] = 101; _14[44] = 116; _14[45] = 115; _14[46] = 32; _14[47] = 105; _14[48] = 115; _14[49] = 32; 
 	_ADD_DEALLOC(_14);
@@ -622,10 +622,10 @@ blklab18:;
 	//assert
 	}
 	//return
-	_FREE(moves);
-	_FREE(_7);
-	_FREE(_8);
-	_FREE(_14);
+	_DEALLOC(moves);
+	_DEALLOC(_7);
+	_DEALLOC(_8);
+	_DEALLOC(_14);
 	exit(0);
 }
 

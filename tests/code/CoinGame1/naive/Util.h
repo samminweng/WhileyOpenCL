@@ -53,7 +53,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 //		   __typeof__ (b) _b = (b); \
 //		   _a < _b ? _a : _b; })
 #endif
- /***
+/***
  *
  * Declaration Macros
  *
@@ -69,22 +69,14 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _DECL_1DARRAY_MEMBER(a) long long* a; long long a##_size;
 #define _DECL_2DARRAY_PARAM(a) long long** a, long long a##_size, long long a##_size_size
 #define _DECL_2DARRAY_MEMBER(a) long long** a; long long a##_size; long long a##_size_size;
-// Concatenate struct and deallocation flag
-#define _STRUCT_PARAM(a) a
-#define _STRUCT_PARAM_OWN(a) a, a##_dealloc
+/***
+ * Copy Macros
+ *
+ */
+#define _1DARRAY_COPY_PARAM(a) copy(a, a##_size), a##_size
+#define _1DARRAY_COPY_PARAM_OWN(a) copy(a, a##_size), a##_size, a##_dealloc
 #define _STRUCT_COPY_PARAM(a, name) copy_##name(a)
 #define _STRUCT_COPY_PARAM_OWN(a, name) copy_##name(a), a##_dealloc
-#define _FREE_STRUCT(a, name) \
-		({\
-			if(a##_dealloc){\
-				free_##name(a);\
-				a = NULL;\
-				a##_dealloc = false;\
-			}\
-		})
-// Concatenate 1D array variable, array size variable and deallocation flag
-#define _1DARRAY_PARAM(a) a, a##_size
-#define _1DARRAY_PARAM_OWN(a) a, a##_size, a##_dealloc
 #define _1DARRAY_COPY_STRUCT(a, b, name) \
 		({\
 			a = malloc(b##_size*sizeof(name*));\
@@ -93,14 +85,37 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
  		  	}\
  			a##_size = b##_size;\
 		})
-#define _1DARRAY_COPY_PARAM(a) copy(a, a##_size), a##_size
-#define _1DARRAY_COPY_PARAM_OWN(a) copy(a, a##_size), a##_size, a##_dealloc
-#define _1DARRAY_SIZE(a, b) a##_size = b##_size;
 #define _1DARRAY_COPY(a, b) a##_size = b##_size; a = copy(b, b##_size);
+#define _2DARRAY_COPY_PARAM(a) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size
+#define _2DARRAY_COPY_PARAM_OWN(a) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size, a##_dealloc
+#define _2DARRAY_COPY(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = copy2DArray(b, b##_size, b##_size_size);
+/*
+* Other Macros 
+*
+*/
+// Concatenate struct and deallocation flag
+#define _STRUCT_PARAM(a) a
+#define _STRUCT_PARAM_OWN(a) a, a##_dealloc
+// Concatenate 1D array variable, array size variable and deallocation flag
+#define _1DARRAY_PARAM(a) a, a##_size
+#define _1DARRAY_PARAM_OWN(a) a, a##_size, a##_dealloc
+#define _1DARRAY_SIZE(a, b) a##_size = b##_size;
 #define _1DARRAY_UPDATE(a, b) a##_size = b##_size; a = b;
 #define _IFEQ_ARRAY(a, b, blklab) if(isArrayEqual(a, a##_size, b, b##_size)==1){goto blklab;}
 #define _GEN_1DARRAY(a, size, value) a##_size = size; a = gen1DArray(value, a##_size);
-#define _FREE(a) \
+#define _NEW_ARRAY(a, length) a##_size = length; a = malloc(length*sizeof(long long)); 
+// Concatenate 2D array variable and array size variable
+#define _2DARRAY_PARAM(a) a, a##_size, a##_size_size
+#define _2DARRAY_PARAM_OWN(a) a, a##_size, a##_size_size, a##_dealloc
+#define _2DARRAY_SIZE(a, b) a##_size = b##_size; a##_size_size = b##_size_size;
+#define _2DARRAY_UPDATE(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = b;
+#define _GEN_2DARRAY(a, size, value) a##_size = size; a##_size_size = value##_size; a = gen2DArray(value, a##_size, a##_size_size);
+/***
+* Deallocation Macros
+*
+*/
+// Deallocate any previously allocated heap variable 
+#define _DEALLOC(a) \
 		({\
 			if(a##_dealloc){\
 				free(a);\
@@ -108,14 +123,36 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 				a##_dealloc=false;\
 			}\
 		})
-#define _FREE_1DARRAY_ELEMENT_STRUCT(a, b, name) \
+
+// Deallocate an array of integer arrays
+#define _DEALLOC_2DArray(a) \
 		({\
 			if(a##_dealloc){\
-				free_##name(b);\
-				b = NULL;\
+				free2DArray(a, a##_size);\
+				a = NULL;\
+				a##_dealloc = false;\
 			}\
 		})
+// Deallocate a structure pointer
+#define _DEALLOC_STRUCT(a, name) \
+		({\
+			if(a##_dealloc){\
+				free_##name(a);\
+				a = NULL;\
+				a##_dealloc = false;\
+			}\
+		})
+// The standard structure member function code to free an array of structure pointers
 #define _FREE_1DARRAY_STRUCT(a, name) \
+		({\
+			for(int i=0;i<a##_size;i++){\
+				free_##name(a[i]);\
+				a[i] = NULL;\
+			}\
+			a = NULL;\
+		})	
+// Deallocate an array of structure pointers
+#define _DEALLOC_1DARRAY_STRUCT(a, name) \
 		({\
 			if(a##_dealloc){\
 				for(int i=0;i<a##_size;i++){\
@@ -126,22 +163,15 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 				a##_dealloc = false;\
 		  	}\
 		})
-#define _NEW_ARRAY(a, length) a##_size = length; a = malloc(length*sizeof(long long)); 
-// Concatenate 2D array variable and array size variable
-#define _2DARRAY_PARAM(a) a, a##_size, a##_size_size
-#define _2DARRAY_PARAM_OWN(a) a, a##_size, a##_size_size, a##_dealloc 
-#define _2DARRAY_COPY_PARAM(a) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size
-#define _2DARRAY_COPY_PARAM_OWN(a) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size, a##_dealloc
-#define _2DARRAY_SIZE(a, b) a##_size = b##_size; a##_size_size = b##_size_size;
-#define _2DARRAY_COPY(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = copy2DArray(b, b##_size, b##_size_size);
-#define _2DARRAY_UPDATE(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = b;
-#define _GEN_2DARRAY(a, size, value) a##_size = size; a##_size_size = value##_size; a = gen2DArray(value, a##_size, a##_size_size);
-#define _FREE2DArray(a) \
+// Deallocate a member whose type is an array of structure pointers
+#define _DEALLOC_MEMBER_1DARRAY_STRUCT(a, b, name) \
 		({\
 			if(a##_dealloc){\
-				free2DArray(a, a##_size);\
-				a = NULL;\
-				a##_dealloc = false;\
+				for(int i=0;i<b##_size;i++){\
+					free_##name(b[i]);\
+					b[i] = NULL;\
+				}\
+				b = NULL;\
 			}\
 		})
 /***

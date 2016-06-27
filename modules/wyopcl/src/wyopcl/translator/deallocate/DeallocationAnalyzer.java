@@ -555,20 +555,21 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * </code>
 	 * </pre>
 	 * 
-	 * @param var
+	 * @param dealloc_var
 	 * @param lhs
 	 * @param lhs_type
 	 * @param stores
 	 * @return
 	 */
-	public String addDeallocCode(String var, String lhs, Type lhs_type, CodeStores stores) {
+	public String addDeallocCode(String dealloc_var, String lhs, Type lhs_type, CodeStores stores) {
 		if (lhs_type instanceof Type.Array) {
 			// Get element type of array type
 			Type elm_type = stores.getArrayElementType((Type.Array) lhs_type);
 			if (stores.isCompoundType(elm_type)) {
 				// Free the lhs structure pointer
-				String name = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");
-				return "_FREE_1DARRAY_ELEMENT_STRUCT(" + var + ", " + lhs + ", " + name + ");";
+				String struct = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");
+				return "_DEALLOC_MEMBER_1DARRAY_STRUCT(" + dealloc_var + ", " + lhs + ", " + struct + ");";
+				//return "_FREE_1DARRAY_ELEMENT_STRUCT(" + var + ", " + lhs + ", " + name + ");";
 			}
 		}
 
@@ -609,16 +610,16 @@ public class DeallocationAnalyzer extends Analyzer {
 			// For integer array or NULL array
 			if (stores.isIntType(elem_type) || elem_type instanceof Type.Void) {
 				if (dimension == 2) {
-					return "_FREE2DArray(" + var + ");";
+					return "_DEALLOC_2DArray(" + var + ");";
 				} else {
-					// Use _FREE macro to release the array variable.
-					return "_FREE(" + var + ");";
+					// Release the previously allocated variable, e.g. an array of integers
+					return "_DEALLOC(" + var + ");";
 				}
 			} else {
 				name = CodeGeneratorHelper.translateType(elem_type, stores).replace("*", "");
 				if (dimension == 1) {
-					// Use '_FREE_1DARRAY_STRUCT' to release an array of structure pointer
-					return "_FREE_1DARRAY_STRUCT(" + var + ", " + name + ");";
+					// Release an array of structure pointer
+					return "_DEALLOC_1DARRAY_STRUCT(" + var + ", " + name + ");";
 				} else {
 					throw new RuntimeException("Not implemented");
 				}
@@ -627,13 +628,13 @@ public class DeallocationAnalyzer extends Analyzer {
 
 		} else if (type instanceof Type.Record) {
 			name = CodeGeneratorHelper.translateType(type, stores).replace("*", "");
-			return "_FREE_STRUCT(" + var + ", " + name + ");";
+			return "_DEALLOC_STRUCT(" + var + ", " + name + ");";
 		} else if (type instanceof Type.Union) {
 			if (stores.isIntType(type)) {
-				return "_FREE(" + var + ");";
+				return "_DEALLOC(" + var + ");";
 			} else {
 				name = CodeGeneratorHelper.translateType(type, stores).replace("*", "");
-				return "_FREE_STRUCT(" + var + ", " + name + ");";
+				return "_DEALLOC_STRUCT(" + var + ", " + name + ");";
 			}
 		} else {
 			throw new RuntimeException("Not implemented");
