@@ -278,7 +278,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if (code.constant.type() instanceof Type.Array) {
 				// Cast the constant to an array
 				Constant.Array list = (Constant.Array) code.constant;
-				statement.add(indent + "_NEW_ARRAY(" + lhs + ", " + list.values.size() + ");");
+				statement.add(indent + "_NEW_1DARRAY(" + lhs + ", " + list.values.size() + ", 0);");
 				if (!list.values.isEmpty()) {
 					// Assign values to each element
 					String s = indent;
@@ -1214,7 +1214,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String lhs = stores.getVar(code.target(0), function);
 		int length = code.operands().length;
 		if (length > 0) {	
-			statement.add(indent + "_NEW_ARRAY(" + lhs + ", " + length + ");");
+			statement.add(indent + "_NEW_1DARRAY(" + lhs + ", " + length + ", 0);");
 			String s = indent;
 			// Initialize the array
 			for (int i = 0; i < code.operands().length; i++) {
@@ -1609,7 +1609,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		boolean isCopyEliminated;
 		if (stores.isIntType(elm_type)) {
 			// Generate an array with given size and values.
-			statement.add(indent + "_GEN_" + stores.getArrayDimension(lhs_type) + "DARRAY(" + lhs + ", " + size + ", " + rhs + ");");
+			statement.add(indent + "_NEW_" + stores.getArrayDimension(lhs_type) + "DARRAY(" + lhs + ", " + size + ", " + rhs + ");");
 			isCopyEliminated = true;
 		} else {
 			// Generate an array of structures

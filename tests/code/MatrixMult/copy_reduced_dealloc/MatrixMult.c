@@ -98,13 +98,13 @@ Matrix* multiply(Matrix* A, _DECL_DEALLOC_PARAM(A), Matrix* B, _DECL_DEALLOC_PAR
 	_9 = B->width;
 	//arraygen %10 = [8; 9] : int[]
 	_DEALLOC(_10);
-	_GEN_1DARRAY(_10, _9, _8);
+	_NEW_1DARRAY(_10, _9, _8);
 	_ADD_DEALLOC(_10);
 	//fieldload %11 = %0 height : {int[][] data,int height,int width}
 	_11 = A->height;
 	//arraygen %12 = [10; 11] : int[][]
 	_DEALLOC_2DArray(_12);
-	_GEN_2DARRAY(_12, _11, _10);
+	_NEW_2DARRAY(_12, _11, _10);
 	_ADD_DEALLOC(_12);
 	//assign %3 = %12  : int[][]
 	_DEALLOC_2DArray(C_data);
@@ -289,7 +289,7 @@ void printMat(FILE* sys, Matrix* A, _DECL_DEALLOC_PARAM(A)){
 			//fieldload %14 = %13 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %15 = [32] : int[]
 			_DEALLOC(_15);
-			_NEW_ARRAY(_15, 1);
+			_NEW_1DARRAY(_15, 1, 0);
 			_15[0] = 32; 
 			_ADD_DEALLOC(_15);
 			//indirectinvoke () = %14 (%15) : method(int[])->()
@@ -315,7 +315,7 @@ blklab21:;
 		//fieldload %21 = %20 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//const %22 = [] : void[]
 		_DEALLOC(_22);
-		_NEW_ARRAY(_22, 0);
+		_NEW_1DARRAY(_22, 0, 0);
 		_ADD_DEALLOC(_22);
 		//indirectinvoke () = %21 (%22) : method(int[])->()
 		println_s(_22, _22_size);
@@ -357,11 +357,11 @@ Matrix* init(long long height, long long width){
 	_6 = 0;
 	//arraygen %7 = [6; 1] : int[]
 	_DEALLOC(_7);
-	_GEN_1DARRAY(_7, width, _6);
+	_NEW_1DARRAY(_7, width, _6);
 	_ADD_DEALLOC(_7);
 	//arraygen %8 = [7; 0] : int[][]
 	_DEALLOC_2DArray(_8);
-	_GEN_2DARRAY(_8, height, _7);
+	_NEW_2DARRAY(_8, height, _7);
 	_ADD_DEALLOC(_8);
 	//assign %3 = %8  : int[][]
 	_DEALLOC_2DArray(rows);
@@ -603,7 +603,7 @@ printMat(stdout, _STRUCT_PARAM(C), false);
 	//fieldload %36 = %35 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %37 = [80,97,115,115,32,77,97,116,114,105,120,77,117,108,116,32,116,101,115,116,32,99,97,115,101] : int[]
 	_DEALLOC(_37);
-	_NEW_ARRAY(_37, 25);
+	_NEW_1DARRAY(_37, 25, 0);
 	_37[0] = 80; _37[1] = 97; _37[2] = 115; _37[3] = 115; _37[4] = 32; _37[5] = 77; _37[6] = 97; _37[7] = 116; _37[8] = 114; _37[9] = 105; _37[10] = 120; _37[11] = 77; _37[12] = 117; _37[13] = 108; _37[14] = 116; _37[15] = 32; _37[16] = 116; _37[17] = 101; _37[18] = 115; _37[19] = 116; _37[20] = 32; _37[21] = 99; _37[22] = 97; _37[23] = 115; _37[24] = 101; 
 	_ADD_DEALLOC(_37);
 	//indirectinvoke () = %36 (%37) : method(int[])->()

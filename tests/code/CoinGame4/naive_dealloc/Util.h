@@ -21,11 +21,11 @@ long long* parseStringToInt(long long* arr);
 // 1D Array Operator
 long long** convertArgsToIntArray(int argc, char** args);
 long long* copy(long long *arr, long long size);
-long long* gen1DArray(int value, int arr_size);
+long long* create1DArray(int value, int arr_size);
 int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2, long long arr2_size);
 // 2D Array Operator
 long long** copy2DArray(long long **arr, long long x, long long y);
-long long** gen2DArray(long long* arr,  long long x, long long y);
+long long** create2DArray(long long* arr,  long long x, long long y);
 void free2DArray(long long** ptr, long long size);
 void printf2DArray(long long** input, long long input_size, long long input_size_size);
 // List Operator.
@@ -70,6 +70,13 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _DECL_2DARRAY_PARAM(a) long long** a, long long a##_size, long long a##_size_size
 #define _DECL_2DARRAY_MEMBER(a) long long** a; long long a##_size; long long a##_size_size;
 /***
+ * Create (NEW) Macros
+ *
+ */
+// Create an array of integers 
+#define _NEW_1DARRAY(a, size, value) a##_size = size; a = create1DArray(value, a##_size);
+#define _NEW_2DARRAY(a, size, value) a##_size = size; a##_size_size = value##_size; a = create2DArray(value, a##_size, a##_size_size);
+/***
  * Copy Macros
  *
  */
@@ -102,14 +109,26 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _1DARRAY_SIZE(a, b) a##_size = b##_size;
 #define _1DARRAY_UPDATE(a, b) a##_size = b##_size; a = b;
 #define _IFEQ_ARRAY(a, b, blklab) if(isArrayEqual(a, a##_size, b, b##_size)==1){goto blklab;}
-#define _GEN_1DARRAY(a, size, value) a##_size = size; a = gen1DArray(value, a##_size);
-#define _NEW_ARRAY(a, length) a##_size = length; a = malloc(length*sizeof(long long)); 
 // Concatenate 2D array variable and array size variable
 #define _2DARRAY_PARAM(a) a, a##_size, a##_size_size
 #define _2DARRAY_PARAM_OWN(a) a, a##_size, a##_size_size, a##_dealloc
 #define _2DARRAY_SIZE(a, b) a##_size = b##_size; a##_size_size = b##_size_size;
 #define _2DARRAY_UPDATE(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = b;
-#define _GEN_2DARRAY(a, size, value) a##_size = size; a##_size_size = value##_size; a = gen2DArray(value, a##_size, a##_size_size);
+/***
+*  Print Macros
+* 
+*/
+// Print an array of integers
+#define _1DARRAY_PRINT(a) printf1DArray(a, a##_size);
+// Print two dimensional arrays of integers
+#define _2DARRAY_PRINT(a) printf2DArray(a, a##_size, a##_size_size);
+// Print an array of structure pointer
+#define _1DARRAY_STRUCT_PRINT(name, a) \
+		({\
+			for(int i=0;i<a##_size;i++){\
+				printf_##name(a[i]);\
+			}\
+		})
 /***
 * Deallocation Macros
 *
@@ -174,21 +193,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 				b = NULL;\
 			}\
 		})
-/***
-*  Print Macros
-* 
-*/
-// Print an array of integers
-#define _1DARRAY_PRINT(a) printf1DArray(a, a##_size);
-// Print two dimensional arrays of integers
-#define _2DARRAY_PRINT(a) printf2DArray(a, a##_size, a##_size_size);
-// Print an array of structure pointer
-#define _1DARRAY_STRUCT_PRINT(name, a) \
-		({\
-			for(int i=0;i<a##_size;i++){\
-				printf_##name(a[i]);\
-			}\
-		})
+
 /**
 * Deallocation Flag Macros
 *
