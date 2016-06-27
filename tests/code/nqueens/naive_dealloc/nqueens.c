@@ -452,9 +452,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_8);
 	//arraygen %9 = [8; 1] : {int c,int r}[]
 	_DEALLOC_1DARRAY_STRUCT(_9, POS);
-	_9 = malloc(n*sizeof(POS*));
-	for(int _9_i=0;_9_i<n;_9_i++){_9[_9_i] = copy_POS(_8);}
-	_9_size = n;
+	_NEW_1DARRAY_STRUCT(_9, n, _8, POS);
 	_ADD_DEALLOC(_9);
 	//assign %2 = %9  : {int c,int r}[]
 	_DEALLOC_1DARRAY_STRUCT(queens, POS);

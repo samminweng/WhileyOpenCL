@@ -1613,6 +1613,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			isCopyEliminated = true;
 		} else {
 			// Generate an array of structures
+			String struct = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");
+			statement.add(indent + "_NEW_1DARRAY_STRUCT("+lhs +", "+size+", "+ rhs+ ", "+struct+");");
+			/*
 			String translateType = CodeGeneratorHelper.translateType(lhs_type.element(), stores);
 			// _a = malloc(n*sizeof(POS));
 			statement.add(indent + lhs + " = malloc(" + size + "*sizeof(" + translateType + "));");
@@ -1623,6 +1626,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					+ arr_i + "] = copy_" + translateType.replace("*", "") + "(" + rhs + ");" + "}");
 			// _a_size = n;
 			statement.add(indent + lhs + "_size = " + size + ";");
+			*/
 			isCopyEliminated = false;
 		}
 

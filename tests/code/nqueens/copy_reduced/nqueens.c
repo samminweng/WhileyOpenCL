@@ -381,9 +381,7 @@ int main(int argc, char** args){
 	_8->c = _6;
 	_8->r = _7;
 	//arraygen %9 = [8; 1] : {int c,int r}[]
-	_9 = malloc(n*sizeof(POS*));
-	for(int _9_i=0;_9_i<n;_9_i++){_9[_9_i] = copy_POS(_8);}
-	_9_size = n;
+	_NEW_1DARRAY_STRUCT(_9, n, _8, POS);
 	//assign %2 = %9  : {int c,int r}[]
 	queens = malloc(_9_size*sizeof(POS*));
 	_1DARRAY_COPY_STRUCT(queens, _9, POS);

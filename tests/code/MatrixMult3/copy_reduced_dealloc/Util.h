@@ -73,9 +73,18 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
  * Create (NEW) Macros
  *
  */
-// Create an array of integers 
+// Create an array of integers or integer arrays
 #define _NEW_1DARRAY(a, size, value) a##_size = size; a = create1DArray(value, a##_size);
 #define _NEW_2DARRAY(a, size, value) a##_size = size; a##_size_size = value##_size; a = create2DArray(value, a##_size, a##_size_size);
+// Create an array of structure pointers
+#define _NEW_1DARRAY_STRUCT(a, size, b, name) \
+ 		({\
+ 			a = malloc(size*sizeof(name*));\
+ 			for(int i=0;i<size;i++){\
+ 				a[i] = copy_##name(b);\
+ 			}\
+ 			a##_size = size;\
+ 		})
 /***
  * Copy Macros
  *
