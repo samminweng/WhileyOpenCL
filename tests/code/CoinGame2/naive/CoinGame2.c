@@ -315,7 +315,7 @@ int main(int argc, char** args){
 	//assign %2 = %7  : int[]
 	_1DARRAY_COPY(moves, _7);
 	//invoke (%8) = (%2, %1) CoinGame2:findMoves : function(int[],int)->(int[])
-	_1DARRAY_SIZE(_8, moves);
+	_UPDATE_1DARRAY_SIZE(_8, moves);
 	_8 = findMoves(_1DARRAY_COPY_PARAM(moves), n);
 	//assign %2 = %8  : int[]
 	_1DARRAY_COPY(moves, _8);

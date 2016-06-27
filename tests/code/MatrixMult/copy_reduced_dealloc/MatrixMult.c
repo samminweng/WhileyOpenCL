@@ -35,7 +35,7 @@ Matrix* matrix(long long width, long long height, _DECL_2DARRAY_PARAM(data), _DE
 	//newrecord %4 = (%2, %1, %0) : {int[][] data,int height,int width}
 	_DEALLOC_STRUCT(_4, Matrix);
 	_4 = malloc(sizeof(Matrix));
-	_2DARRAY_UPDATE(_4->data, data);
+	_UPDATE_2DARRAY(_4->data, data);
 	_4->height = height;
 	_4->width = width;
 	_REMOVE_DEALLOC(data);
@@ -108,7 +108,7 @@ Matrix* multiply(Matrix* A, _DECL_DEALLOC_PARAM(A), Matrix* B, _DECL_DEALLOC_PAR
 	_ADD_DEALLOC(_12);
 	//assign %3 = %12  : int[][]
 	_DEALLOC_2DArray(C_data);
-	_2DARRAY_UPDATE(C_data, _12);
+	_UPDATE_2DARRAY(C_data, _12);
 	_TRANSFER_DEALLOC(C_data, _12);
 	_REMOVE_DEALLOC(_12);
 	//const %13 = 0 : int
@@ -156,7 +156,7 @@ Matrix* multiply(Matrix* A, _DECL_DEALLOC_PARAM(A), Matrix* B, _DECL_DEALLOC_PAR
 				_22=_21[k];
 				//fieldload %23 = %1 data : {int[][] data,int height,int width}
 				_DEALLOC_2DArray(_23);
-				_2DARRAY_UPDATE(_23, B->data);
+				_UPDATE_2DARRAY(_23, B->data);
 				_REMOVE_DEALLOC(_23);
 				//indexof %24 = %23, %7 : int[][]
 				_24=_23[k];
@@ -365,7 +365,7 @@ Matrix* init(long long height, long long width){
 	_ADD_DEALLOC(_8);
 	//assign %3 = %8  : int[][]
 	_DEALLOC_2DArray(rows);
-	_2DARRAY_UPDATE(rows, _8);
+	_UPDATE_2DARRAY(rows, _8);
 	_TRANSFER_DEALLOC(rows, _8);
 	_REMOVE_DEALLOC(_8);
 	//const %9 = 0 : int
@@ -507,7 +507,7 @@ int main(int argc, char** args){
 	{
 		//fieldload %9 = %2 data : {int[][] data,int height,int width}
 		_DEALLOC_2DArray(_9);
-		_2DARRAY_UPDATE(_9, A->data);
+		_UPDATE_2DARRAY(_9, A->data);
 		_REMOVE_DEALLOC(_9);
 		//const %10 = 1 : int
 		_10 = 1;
@@ -539,7 +539,7 @@ blklab27:;
 	{
 		//fieldload %18 = %3 data : {int[][] data,int height,int width}
 		_DEALLOC_2DArray(_18);
-		_2DARRAY_UPDATE(_18, B->data);
+		_UPDATE_2DARRAY(_18, B->data);
 		_REMOVE_DEALLOC(_18);
 		//const %19 = 1 : int
 		_19 = 1;

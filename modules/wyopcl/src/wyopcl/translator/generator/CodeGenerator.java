@@ -337,7 +337,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				if (stores.isIntType(elm_type)) {
 					// Check if the lhs copy is needed or not
 					if (isCopyEliminated) {
-						return indent + "_" + dimension + "DARRAY_UPDATE(" + lhs + ", " + rhs + ");";
+						return indent + "_UPDATE_" + dimension + "DARRAY(" + lhs + ", " + rhs + ");";
 					} else {
 						return indent + "_" + dimension + "DARRAY_COPY(" + lhs + ", " + rhs + ");";
 					}
@@ -633,8 +633,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						if (op_type instanceof Type.Array) {
 							String param = stores.getVar(operand, function);
 							// Propagate the size of return array from input array.
-							statement.add(indent + "_" + stores.getArrayDimension(op_type) + "DARRAY_SIZE(" + var 
-									+ ", " + param + ");");
+							statement.add(indent + "_UPDATE_" + stores.getArrayDimension(op_type) 
+							+ "DARRAY_SIZE(" + var + ", " + param + ");");
 						}
 					}
 				}
@@ -1615,18 +1615,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Generate an array of structures
 			String struct = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");
 			statement.add(indent + "_NEW_1DARRAY_STRUCT("+lhs +", "+size+", "+ rhs+ ", "+struct+");");
-			/*
-			String translateType = CodeGeneratorHelper.translateType(lhs_type.element(), stores);
-			// _a = malloc(n*sizeof(POS));
-			statement.add(indent + lhs + " = malloc(" + size + "*sizeof(" + translateType + "));");
-			// copy the rhs to each element using below code
-			// for(int _a_i =0;_a_i<n;_a_i++){ _a[_a_i] = copy_POS(b);}
-			String arr_i = lhs + "_i";
-			statement.add(indent + "for(int " + arr_i + "=0;" + arr_i + "<" + size + ";" + arr_i + "++){" + lhs + "["
-					+ arr_i + "] = copy_" + translateType.replace("*", "") + "(" + rhs + ");" + "}");
-			// _a_size = n;
-			statement.add(indent + lhs + "_size = " + size + ";");
-			*/
 			isCopyEliminated = false;
 		}
 

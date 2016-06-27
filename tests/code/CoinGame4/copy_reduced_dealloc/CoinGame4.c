@@ -492,14 +492,14 @@ blklab16:;
 //.blklab17
 blklab17:;
 			//invoke (%41) = (%0, %5, %4, %1, %7, %6, %8) CoinGame4:pickCoin : function(int[],int,int,int,int,int,int)->(int[])
-			_1DARRAY_SIZE(_41, moves);
+			_UPDATE_1DARRAY_SIZE(_41, moves);
 			_DEALLOC(_41);
 			_REMOVE_DEALLOC(moves);
 			_41 = pickCoin(_1DARRAY_PARAM(moves), true, i, j, n, x, y, z);
 			_ADD_DEALLOC(_41);
 			//assign %0 = %41  : int[]
 			_DEALLOC(moves);
-			_1DARRAY_UPDATE(moves, _41);
+			_UPDATE_1DARRAY(moves, _41);
 			_TRANSFER_DEALLOC(moves, _41);
 			_REMOVE_DEALLOC(_41);
 			//const %42 = 1 : int
@@ -571,18 +571,18 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_7);
 	//assign %2 = %7  : int[]
 	_DEALLOC(moves);
-	_1DARRAY_UPDATE(moves, _7);
+	_UPDATE_1DARRAY(moves, _7);
 	_TRANSFER_DEALLOC(moves, _7);
 	_REMOVE_DEALLOC(_7);
 	//invoke (%8) = (%2, %1) CoinGame4:findMoves : function(int[],int)->(int[])
-	_1DARRAY_SIZE(_8, moves);
+	_UPDATE_1DARRAY_SIZE(_8, moves);
 	_DEALLOC(_8);
 	_REMOVE_DEALLOC(moves);
 	_8 = findMoves(_1DARRAY_PARAM(moves), true, n);
 	_ADD_DEALLOC(_8);
 	//assign %2 = %8  : int[]
 	_DEALLOC(moves);
-	_1DARRAY_UPDATE(moves, _8);
+	_UPDATE_1DARRAY(moves, _8);
 	_TRANSFER_DEALLOC(moves, _8);
 	_REMOVE_DEALLOC(_8);
 	//invoke () = (%0, %2, %1) CoinGame4:play : method(whiley/lang/System:Console,int[],int)->()

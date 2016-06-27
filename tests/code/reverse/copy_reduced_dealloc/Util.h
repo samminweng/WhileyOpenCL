@@ -105,6 +105,16 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _2DARRAY_COPY_PARAM(a) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size
 #define _2DARRAY_COPY_PARAM_OWN(a) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size, a##_dealloc
 #define _2DARRAY_COPY(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = copy2DArray(b, b##_size, b##_size_size);
+/***
+ * In-place Update Macros
+ *
+ */
+// Update an array of integers
+#define _UPDATE_1DARRAY(a, b) a##_size = b##_size; a = b;
+#define _UPDATE_2DARRAY(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = b; 
+// Update the array size
+#define _UPDATE_1DARRAY_SIZE(a, b) a##_size = b##_size;
+#define _UPDATE_2DARRAY_SIZE(a, b) a##_size = b##_size; a##_size_size = b##_size_size;
 /*
 * Other Macros 
 *
@@ -115,14 +125,10 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 // Concatenate 1D array variable, array size variable and deallocation flag
 #define _1DARRAY_PARAM(a) a, a##_size
 #define _1DARRAY_PARAM_OWN(a) a, a##_size, a##_dealloc
-#define _1DARRAY_SIZE(a, b) a##_size = b##_size;
-#define _1DARRAY_UPDATE(a, b) a##_size = b##_size; a = b;
 #define _IFEQ_ARRAY(a, b, blklab) if(isArrayEqual(a, a##_size, b, b##_size)==1){goto blklab;}
 // Concatenate 2D array variable and array size variable
 #define _2DARRAY_PARAM(a) a, a##_size, a##_size_size
 #define _2DARRAY_PARAM_OWN(a) a, a##_size, a##_size_size, a##_dealloc
-#define _2DARRAY_SIZE(a, b) a##_size = b##_size; a##_size_size = b##_size_size;
-#define _2DARRAY_UPDATE(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = b;
 /***
 *  Print Macros
 * 

@@ -32,7 +32,7 @@ Matrix* matrix(long long width, long long height, _DECL_2DARRAY_PARAM(data)){
 	Matrix* _4;
 	//newrecord %4 = (%2, %1, %0) : {int[][] data,int height,int width}
 	_4 = malloc(sizeof(Matrix));
-	_2DARRAY_UPDATE(_4->data, data);
+	_UPDATE_2DARRAY(_4->data, data);
 	_4->height = height;
 	_4->width = width;
 	//return %4
@@ -87,7 +87,7 @@ Matrix* multiply(Matrix* A, Matrix* B){
 	//arraygen %12 = [10; 11] : int[][]
 	_NEW_2DARRAY(_12, _11, _10);
 	//assign %3 = %12  : int[][]
-	_2DARRAY_UPDATE(C_data, _12);
+	_UPDATE_2DARRAY(C_data, _12);
 	//const %13 = 0 : int
 	_13 = 0;
 	//assign %4 = %13  : int
@@ -129,7 +129,7 @@ Matrix* multiply(Matrix* A, Matrix* B){
 				//indexof %22 = %21, %7 : int[]
 				_22=_21[k];
 				//fieldload %23 = %1 data : {int[][] data,int height,int width}
-				_2DARRAY_UPDATE(_23, B->data);
+				_UPDATE_2DARRAY(_23, B->data);
 				//indexof %24 = %23, %7 : int[][]
 				_24=_23[k];
 				//indexof %25 = %24, %5 : int[]
@@ -297,7 +297,7 @@ Matrix* init(long long height, long long width){
 	//arraygen %8 = [7; 0] : int[][]
 	_NEW_2DARRAY(_8, height, _7);
 	//assign %3 = %8  : int[][]
-	_2DARRAY_UPDATE(rows, _8);
+	_UPDATE_2DARRAY(rows, _8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %4 = %9  : int
@@ -401,7 +401,7 @@ int main(int argc, char** args){
 	//assert
 	{
 		//fieldload %9 = %2 data : {int[][] data,int height,int width}
-		_2DARRAY_UPDATE(_9, A->data);
+		_UPDATE_2DARRAY(_9, A->data);
 		//const %10 = 1 : int
 		_10 = 1;
 		//sub %11 = %1, %10 : int
@@ -430,7 +430,7 @@ blklab27:;
 	//assert
 	{
 		//fieldload %18 = %3 data : {int[][] data,int height,int width}
-		_2DARRAY_UPDATE(_18, B->data);
+		_UPDATE_2DARRAY(_18, B->data);
 		//const %19 = 1 : int
 		_19 = 1;
 		//sub %20 = %1, %19 : int

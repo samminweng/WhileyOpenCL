@@ -83,7 +83,7 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), lon
 	_ADD_DEALLOC(_10);
 	//assign %3 = %10  : int[]
 	_DEALLOC(x);
-	_1DARRAY_UPDATE(x, _10);
+	_UPDATE_1DARRAY(x, _10);
 	_TRANSFER_DEALLOC(x, _10);
 	_REMOVE_DEALLOC(_10);
 	//const %11 = 0 : int
@@ -94,7 +94,7 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), lon
 	_ADD_DEALLOC(_12);
 	//assign %4 = %12  : int[]
 	_DEALLOC(y);
-	_1DARRAY_UPDATE(y, _12);
+	_UPDATE_1DARRAY(y, _12);
 	_TRANSFER_DEALLOC(y, _12);
 	_REMOVE_DEALLOC(_12);
 	//const %13 = 0 : int
@@ -105,7 +105,7 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), lon
 	_ADD_DEALLOC(_14);
 	//assign %5 = %14  : int[]
 	_DEALLOC(z);
-	_1DARRAY_UPDATE(z, _14);
+	_UPDATE_1DARRAY(z, _14);
 	_TRANSFER_DEALLOC(z, _14);
 	_REMOVE_DEALLOC(_14);
 	//const %15 = 0 : int
@@ -325,18 +325,18 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_7);
 	//assign %2 = %7  : int[]
 	_DEALLOC(moves);
-	_1DARRAY_UPDATE(moves, _7);
+	_UPDATE_1DARRAY(moves, _7);
 	_TRANSFER_DEALLOC(moves, _7);
 	_REMOVE_DEALLOC(_7);
 	//invoke (%8) = (%2, %1) CoinGame3:findMoves : function(int[],int)->(int[])
-	_1DARRAY_SIZE(_8, moves);
+	_UPDATE_1DARRAY_SIZE(_8, moves);
 	_DEALLOC(_8);
 	_REMOVE_DEALLOC(moves);
 	_8 = findMoves(_1DARRAY_PARAM(moves), true, n);
 	_ADD_DEALLOC(_8);
 	//assign %2 = %8  : int[]
 	_DEALLOC(moves);
-	_1DARRAY_UPDATE(moves, _8);
+	_UPDATE_1DARRAY(moves, _8);
 	_TRANSFER_DEALLOC(moves, _8);
 	_REMOVE_DEALLOC(_8);
 	//const %9 = 1 : int

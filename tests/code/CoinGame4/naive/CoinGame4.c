@@ -459,7 +459,7 @@ blklab16:;
 //.blklab17
 blklab17:;
 			//invoke (%41) = (%0, %5, %4, %1, %7, %6, %8) CoinGame4:pickCoin : function(int[],int,int,int,int,int,int)->(int[])
-			_1DARRAY_SIZE(_41, moves);
+			_UPDATE_1DARRAY_SIZE(_41, moves);
 			_41 = pickCoin(_1DARRAY_COPY_PARAM(moves), i, j, n, x, y, z);
 			//assign %0 = %41  : int[]
 			_1DARRAY_COPY(moves, _41);
@@ -525,7 +525,7 @@ int main(int argc, char** args){
 	//assign %2 = %7  : int[]
 	_1DARRAY_COPY(moves, _7);
 	//invoke (%8) = (%2, %1) CoinGame4:findMoves : function(int[],int)->(int[])
-	_1DARRAY_SIZE(_8, moves);
+	_UPDATE_1DARRAY_SIZE(_8, moves);
 	_8 = findMoves(_1DARRAY_COPY_PARAM(moves), n);
 	//assign %2 = %8  : int[]
 	_1DARRAY_COPY(moves, _8);

@@ -32,7 +32,7 @@ Matrix* matrix(long long width, long long height, _DECL_1DARRAY_PARAM(data)){
 	Matrix* _4;
 	//newrecord %4 = (%2, %1, %0) : {int[] data,int height,int width}
 	_4 = malloc(sizeof(Matrix));
-	_1DARRAY_UPDATE(_4->data, data);
+	_UPDATE_1DARRAY(_4->data, data);
 	_4->height = height;
 	_4->width = width;
 	//return %4
@@ -68,7 +68,7 @@ Matrix* init(long long width, long long height){
 	//arraygen %8 = [6; 7] : int[]
 	_NEW_1DARRAY(_8, _7, _6);
 	//assign %3 = %8  : int[]
-	_1DARRAY_UPDATE(data, _8);
+	_UPDATE_1DARRAY(data, _8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %4 = %9  : int
@@ -299,15 +299,15 @@ Matrix* mat_mult(Matrix* a, Matrix* b){
 	//arraygen %16 = [14; 15] : int[]
 	_NEW_1DARRAY(_16, _15, _14);
 	//assign %5 = %16  : int[]
-	_1DARRAY_UPDATE(data, _16);
+	_UPDATE_1DARRAY(data, _16);
 	//fieldload %17 = %0 data : {int[] data,int height,int width}
-	_1DARRAY_UPDATE(_17, a->data);
+	_UPDATE_1DARRAY(_17, a->data);
 	//assign %6 = %17  : int[]
-	_1DARRAY_UPDATE(a_data, _17);
+	_UPDATE_1DARRAY(a_data, _17);
 	//fieldload %18 = %1 data : {int[] data,int height,int width}
-	_1DARRAY_UPDATE(_18, b->data);
+	_UPDATE_1DARRAY(_18, b->data);
 	//assign %7 = %18  : int[]
-	_1DARRAY_UPDATE(b_data, _18);
+	_UPDATE_1DARRAY(b_data, _18);
 	//const %19 = 0 : int
 	_19 = 0;
 	//mul %20 = %3, %4 : int
@@ -315,7 +315,7 @@ Matrix* mat_mult(Matrix* a, Matrix* b){
 	//arraygen %21 = [19; 20] : int[]
 	_NEW_1DARRAY(_21, _20, _19);
 	//assign %8 = %21  : int[]
-	_1DARRAY_UPDATE(b_t, _21);
+	_UPDATE_1DARRAY(b_t, _21);
 	//const %22 = 0 : int
 	_22 = 0;
 	//assign %9 = %22  : int
@@ -577,7 +577,7 @@ int main(int argc, char** args){
 	//assert
 	{
 		//fieldload %17 = %1 data : {int[] data,int height,int width}
-		_1DARRAY_UPDATE(_17, A->data);
+		_UPDATE_1DARRAY(_17, A->data);
 		//const %18 = 20 : int
 		_18 = 20;
 		//const %19 = 1 : int
@@ -616,7 +616,7 @@ blklab23:;
 	//assert
 	{
 		//fieldload %31 = %2 data : {int[] data,int height,int width}
-		_1DARRAY_UPDATE(_31, B->data);
+		_UPDATE_1DARRAY(_31, B->data);
 		//const %32 = 20 : int
 		_32 = 20;
 		//const %33 = 1 : int
@@ -699,7 +699,7 @@ print_mat(stdout, _STRUCT_PARAM(C));
 	//fieldload %60 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %61 = %60 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//fieldload %62 = %3 data : {int[] data,int height,int width}
-	_1DARRAY_UPDATE(_62, C->data);
+	_UPDATE_1DARRAY(_62, C->data);
 	//const %63 = 20 : int
 	_63 = 20;
 	//const %64 = 1 : int

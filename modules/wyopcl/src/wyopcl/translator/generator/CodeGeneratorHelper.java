@@ -127,7 +127,7 @@ public final class CodeGeneratorHelper {
 				int dimension = stores.getArrayDimension(type);
 				// Check if the lhs copy is needed or not 
 				if(isCopyEliminated){
-					statement.add(indent + "_"+dimension+"DARRAY_UPDATE("+lhs+", "+rhs+");");			
+					statement.add(indent + "_UPDATE_"+dimension+"DARRAY("+lhs+", "+rhs+");");			
 				}else{
 					statement.add(indent + "_"+dimension+"DARRAY_COPY("+lhs+", "+rhs+");");		
 				}

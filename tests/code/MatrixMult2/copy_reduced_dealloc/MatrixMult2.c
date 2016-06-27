@@ -35,7 +35,7 @@ Matrix* matrix(long long width, long long height, _DECL_1DARRAY_PARAM(data), _DE
 	//newrecord %4 = (%2, %1, %0) : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(_4, Matrix);
 	_4 = malloc(sizeof(Matrix));
-	_1DARRAY_UPDATE(_4->data, data);
+	_UPDATE_1DARRAY(_4->data, data);
 	_4->height = height;
 	_4->width = width;
 	_REMOVE_DEALLOC(data);
@@ -82,7 +82,7 @@ Matrix* init(long long width, long long height){
 	_ADD_DEALLOC(_8);
 	//assign %3 = %8  : int[]
 	_DEALLOC(data);
-	_1DARRAY_UPDATE(data, _8);
+	_UPDATE_1DARRAY(data, _8);
 	_TRANSFER_DEALLOC(data, _8);
 	_REMOVE_DEALLOC(_8);
 	//const %9 = 0 : int
@@ -327,25 +327,25 @@ Matrix* mat_mult(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_PAR
 	_ADD_DEALLOC(_15);
 	//assign %5 = %15  : int[]
 	_DEALLOC(data);
-	_1DARRAY_UPDATE(data, _15);
+	_UPDATE_1DARRAY(data, _15);
 	_TRANSFER_DEALLOC(data, _15);
 	_REMOVE_DEALLOC(_15);
 	//fieldload %16 = %0 data : {int[] data,int height,int width}
 	_DEALLOC(_16);
-	_1DARRAY_UPDATE(_16, a->data);
+	_UPDATE_1DARRAY(_16, a->data);
 	_REMOVE_DEALLOC(_16);
 	//assign %6 = %16  : int[]
 	_DEALLOC(a_data);
-	_1DARRAY_UPDATE(a_data, _16);
+	_UPDATE_1DARRAY(a_data, _16);
 	_TRANSFER_DEALLOC(a_data, _16);
 	_REMOVE_DEALLOC(_16);
 	//fieldload %17 = %1 data : {int[] data,int height,int width}
 	_DEALLOC(_17);
-	_1DARRAY_UPDATE(_17, b->data);
+	_UPDATE_1DARRAY(_17, b->data);
 	_REMOVE_DEALLOC(_17);
 	//assign %7 = %17  : int[]
 	_DEALLOC(b_data);
-	_1DARRAY_UPDATE(b_data, _17);
+	_UPDATE_1DARRAY(b_data, _17);
 	_TRANSFER_DEALLOC(b_data, _17);
 	_REMOVE_DEALLOC(_17);
 	//const %18 = 0 : int
@@ -590,7 +590,7 @@ int main(int argc, char** args){
 	{
 		//fieldload %17 = %1 data : {int[] data,int height,int width}
 		_DEALLOC(_17);
-		_1DARRAY_UPDATE(_17, A->data);
+		_UPDATE_1DARRAY(_17, A->data);
 		_REMOVE_DEALLOC(_17);
 		//const %18 = 20 : int
 		_18 = 20;
@@ -631,7 +631,7 @@ blklab19:;
 	{
 		//fieldload %31 = %2 data : {int[] data,int height,int width}
 		_DEALLOC(_31);
-		_1DARRAY_UPDATE(_31, B->data);
+		_UPDATE_1DARRAY(_31, B->data);
 		_REMOVE_DEALLOC(_31);
 		//const %32 = 20 : int
 		_32 = 20;
@@ -720,7 +720,7 @@ print_mat(stdout, _STRUCT_PARAM(C), false);
 	//fieldload %61 = %60 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//fieldload %62 = %3 data : {int[] data,int height,int width}
 	_DEALLOC(_62);
-	_1DARRAY_UPDATE(_62, C->data);
+	_UPDATE_1DARRAY(_62, C->data);
 	_REMOVE_DEALLOC(_62);
 	//const %63 = 20 : int
 	_63 = 20;

@@ -34,7 +34,7 @@ long long* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls)){
 	_ADD_DEALLOC(_8);
 	//assign %3 = %8  : int[]
 	_DEALLOC(r);
-	_1DARRAY_UPDATE(r, _8);
+	_UPDATE_1DARRAY(r, _8);
 	_TRANSFER_DEALLOC(r, _8);
 	_REMOVE_DEALLOC(_8);
 	//loop (%2, %3, %4, %9, %10, %11, %12, %13, %14, %15, %16, %17)
@@ -151,13 +151,13 @@ int main(int argc, char** args){
 	_11[0] = _6; _11[1] = _7; _11[2] = _8; _11[3] = _9; _11[4] = _10; 
 	_ADD_DEALLOC(_11);
 	//invoke (%5) = (%11) reverse:reverse : function(int[])->(int[])
-	_1DARRAY_SIZE(_5, _11);
+	_UPDATE_1DARRAY_SIZE(_5, _11);
 	_DEALLOC(_5);
 	_5 = reverse(_1DARRAY_PARAM(_11), false);
 	_ADD_DEALLOC(_5);
 	//assign %1 = %5  : int[]
 	_DEALLOC(rs);
-	_1DARRAY_UPDATE(rs, _5);
+	_UPDATE_1DARRAY(rs, _5);
 	_TRANSFER_DEALLOC(rs, _5);
 	_REMOVE_DEALLOC(_5);
 	//assert
@@ -206,7 +206,7 @@ blklab4:;
 	_ADD_DEALLOC(_23);
 	//assign %4 = %23  : int[]
 	_DEALLOC(arr);
-	_1DARRAY_UPDATE(arr, _23);
+	_UPDATE_1DARRAY(arr, _23);
 	_TRANSFER_DEALLOC(arr, _23);
 	_REMOVE_DEALLOC(_23);
 	//loop (%3, %4, %24, %25, %26)
@@ -229,13 +229,13 @@ blklab6:;
 //.blklab5
 blklab5:;
 	//invoke (%27) = (%4) reverse:reverse : function(int[])->(int[])
-	_1DARRAY_SIZE(_27, arr);
+	_UPDATE_1DARRAY_SIZE(_27, arr);
 	_DEALLOC(_27);
 	_27 = reverse(_1DARRAY_PARAM(arr), false);
 	_ADD_DEALLOC(_27);
 	//assign %4 = %27  : int[]
 	_DEALLOC(arr);
-	_1DARRAY_UPDATE(arr, _27);
+	_UPDATE_1DARRAY(arr, _27);
 	_TRANSFER_DEALLOC(arr, _27);
 	_REMOVE_DEALLOC(_27);
 	//assert

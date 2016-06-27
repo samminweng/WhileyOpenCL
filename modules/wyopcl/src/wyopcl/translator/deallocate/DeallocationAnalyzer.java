@@ -568,8 +568,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			if (stores.isCompoundType(elm_type)) {
 				// Free the lhs structure pointer
 				String struct = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");
-				return "_DEALLOC_MEMBER_1DARRAY_STRUCT(" + dealloc_var + ", " + lhs + ", " + struct + ");";
-				//return "_FREE_1DARRAY_ELEMENT_STRUCT(" + var + ", " + lhs + ", " + name + ");";
+				return "_DEALLOC_MEMBER_1DARRAY_STRUCT(" + dealloc_var + ", " + lhs + ", " + struct + ");";	
 			}
 		}
 
