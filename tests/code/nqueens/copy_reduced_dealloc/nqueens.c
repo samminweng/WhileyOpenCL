@@ -43,7 +43,7 @@ void free_NQueen(NQueen* nqueen){
 void printf_NQueen(NQueen* nqueen){
 	printf("{");
 	printf(" queens:");
-	_1DARRAY_STRUCT_PRINT(POS,nqueen->queens);
+	_PRINT_1DARRAY_STRUCT(POS,nqueen->queens);
 	printf(" num_solutions:");
 	printf("%lld", nqueen->num_solutions);
 	printf("}");

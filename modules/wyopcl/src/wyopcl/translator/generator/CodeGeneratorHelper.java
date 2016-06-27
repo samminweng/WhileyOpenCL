@@ -86,11 +86,11 @@ public final class CodeGeneratorHelper {
 				Type elm_type = stores.getArrayElementType((Type.Array)member_type);
 				if(stores.isIntType(elm_type)){
 					// Print an array of integers
-					statement.add("\t_"+stores.getArrayDimension(member_type)+"DARRAY_PRINT("+input_member+");");
+					statement.add("\t_PRINT_"+stores.getArrayDimension(member_type)+"DARRAY("+input_member+");");
 				}else{
 					String struct = translateType(elm_type, stores).replace("*", "");
 					// Print an array of structure pointers using macro
-					statement.add("\t_1DARRAY_STRUCT_PRINT("+struct+","+input_member+");");
+					statement.add("\t_PRINT_1DARRAY_STRUCT("+struct+","+input_member+");");
 				}
 				
 				

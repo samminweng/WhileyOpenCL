@@ -19,7 +19,7 @@ void free_Board(Board* board){
 void printf_Board(Board* board){
 	printf("{");
 	printf(" pieces:");
-	_1DARRAY_PRINT(board->pieces);
+	_PRINT_1DARRAY(board->pieces);
 	printf(" move:");
 	printf("%lld", board->move);
 	printf("}");

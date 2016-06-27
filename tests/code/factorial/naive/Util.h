@@ -113,30 +113,22 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 // Update the array size
 #define _UPDATE_1DARRAY_SIZE(a, b) a##_size = b##_size;
 #define _UPDATE_2DARRAY_SIZE(a, b) a##_size = b##_size; a##_size_size = b##_size_size;
-/*
-* Other Macros 
-*
-*/
 // Concatenate struct and deallocation flag
 #define _STRUCT_PARAM(a) a
-#define _STRUCT_PARAM_OWN(a) a, a##_dealloc
 // Concatenate 1D array variable, array size variable and deallocation flag
 #define _1DARRAY_PARAM(a) a, a##_size
-#define _1DARRAY_PARAM_OWN(a) a, a##_size, a##_dealloc
-#define _IFEQ_ARRAY(a, b, blklab) if(isArrayEqual(a, a##_size, b, b##_size)==1){goto blklab;}
 // Concatenate 2D array variable and array size variable
 #define _2DARRAY_PARAM(a) a, a##_size, a##_size_size
-#define _2DARRAY_PARAM_OWN(a) a, a##_size, a##_size_size, a##_dealloc
 /***
 *  Print Macros
 * 
 */
 // Print an array of integers
-#define _1DARRAY_PRINT(a) printf1DArray(a, a##_size);
+#define _PRINT_1DARRAY(a) printf1DArray(a, a##_size);
 // Print two dimensional arrays of integers
-#define _2DARRAY_PRINT(a) printf2DArray(a, a##_size, a##_size_size);
+#define _PRINT_2DARRAY(a) printf2DArray(a, a##_size, a##_size_size);
 // Print an array of structure pointer
-#define _1DARRAY_STRUCT_PRINT(name, a) \
+#define _PRINT_1DARRAY_STRUCT(name, a) \
 		({\
 			for(int i=0;i<a##_size;i++){\
 				printf_##name(a[i]);\
@@ -216,6 +208,10 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _REMOVE_DEALLOC(a) a##_dealloc = false;
 // Transfer one variable's deallocation flag to another
 #define _TRANSFER_DEALLOC(a, b) a##_dealloc = b##_dealloc;
+/*
+* Other Macros 
+*
+*/
 //Nullify the array variable
 #define _NULLIFY(a) a = NULL;
 // Converts command line arguments into integer arrays
@@ -224,3 +220,5 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _STR_TO_INT(a, b) a = parseStringToInt(b);
 // Slice an array 'b' into a new array 'a' 
 #define _SLICE_ARRAY(a, b, start, end) a = slice(b, b##_size, start, end); a##_size = end - start;
+// Compare two arrays of integers
+#define _IFEQ_ARRAY(a, b, blklab) if(isArrayEqual(a, a##_size, b, b##_size)==1){goto blklab;}
