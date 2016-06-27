@@ -244,16 +244,16 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_7);
 	//assign %2 = %7  : int[]
 	_DEALLOC(moves);
-	_1DARRAY_COPY(moves, _7);
+	_COPY_1DARRAY(moves, _7);
 	_ADD_DEALLOC(moves);
 	//invoke (%8) = (%2, %1) CoinGame1:findMoves : function(int[],int)->(int[])
 	_UPDATE_1DARRAY_SIZE(_8, moves);
 	_DEALLOC(_8);
-	_8 = findMoves(_1DARRAY_COPY_PARAM(moves), true, n);
+	_8 = findMoves(_COPY_1DARRAY_PARAM(moves), true, n);
 	_ADD_DEALLOC(_8);
 	//assign %2 = %8  : int[]
 	_DEALLOC(moves);
-	_1DARRAY_COPY(moves, _8);
+	_COPY_1DARRAY(moves, _8);
 	_ADD_DEALLOC(moves);
 	//const %9 = 1 : int
 	_9 = 1;

@@ -1,7 +1,7 @@
 #include "MatrixMult3.h"
 Matrix* copy_Matrix(Matrix* _Matrix){
 	Matrix* new_Matrix = malloc(sizeof(Matrix));
-	_1DARRAY_COPY(new_Matrix->data, _Matrix->data);
+	_COPY_1DARRAY(new_Matrix->data, _Matrix->data);
 	new_Matrix->width = _Matrix->width;
 	new_Matrix->height = _Matrix->height;
 	return new_Matrix;
@@ -35,7 +35,7 @@ Matrix* matrix(long long width, long long height, _DECL_1DARRAY_PARAM(data), _DE
 	//newrecord %4 = (%2, %1, %0) : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(_4, Matrix);
 	_4 = malloc(sizeof(Matrix));
-	_1DARRAY_COPY(_4->data, data);
+	_COPY_1DARRAY(_4->data, data);
 	_4->height = height;
 	_4->width = width;
 	_ADD_DEALLOC(_4);
@@ -81,7 +81,7 @@ Matrix* init(long long width, long long height){
 	_ADD_DEALLOC(_8);
 	//assign %3 = %8  : int[]
 	_DEALLOC(data);
-	_1DARRAY_COPY(data, _8);
+	_COPY_1DARRAY(data, _8);
 	_ADD_DEALLOC(data);
 	//const %9 = 0 : int
 	_9 = 0;
@@ -137,7 +137,7 @@ blklab3:;
 blklab2:;
 	//invoke (%21) = (%0, %1, %3) MatrixMult3:matrix : function(MatrixMult3:nat,MatrixMult3:nat,int[])->(MatrixMult3:Matrix)
 	_DEALLOC_STRUCT(_21, Matrix);
-	_21 = matrix(width, height, _1DARRAY_COPY_PARAM(data), true);
+	_21 = matrix(width, height, _COPY_1DARRAY_PARAM(data), true);
 	_ADD_DEALLOC(_21);
 	//return %21
 	_DEALLOC_STRUCT(r, Matrix);
@@ -201,7 +201,7 @@ void print_mat(FILE* sys, Matrix* a, _DECL_DEALLOC_PARAM(a)){
 			//fieldload %11 = %10 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//fieldload %12 = %1 data : {int[] data,int height,int width}
 			_DEALLOC(_12);
-			_1DARRAY_COPY(_12, a->data);
+			_COPY_1DARRAY(_12, a->data);
 			_ADD_DEALLOC(_12);
 			//mul %13 = %2, %3 : int
 			_13=i*width;
@@ -344,23 +344,23 @@ Matrix* mat_mult(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_PAR
 	_ADD_DEALLOC(_16);
 	//assign %5 = %16  : int[]
 	_DEALLOC(data);
-	_1DARRAY_COPY(data, _16);
+	_COPY_1DARRAY(data, _16);
 	_ADD_DEALLOC(data);
 	//fieldload %17 = %0 data : {int[] data,int height,int width}
 	_DEALLOC(_17);
-	_1DARRAY_COPY(_17, a->data);
+	_COPY_1DARRAY(_17, a->data);
 	_ADD_DEALLOC(_17);
 	//assign %6 = %17  : int[]
 	_DEALLOC(a_data);
-	_1DARRAY_COPY(a_data, _17);
+	_COPY_1DARRAY(a_data, _17);
 	_ADD_DEALLOC(a_data);
 	//fieldload %18 = %1 data : {int[] data,int height,int width}
 	_DEALLOC(_18);
-	_1DARRAY_COPY(_18, b->data);
+	_COPY_1DARRAY(_18, b->data);
 	_ADD_DEALLOC(_18);
 	//assign %7 = %18  : int[]
 	_DEALLOC(b_data);
-	_1DARRAY_COPY(b_data, _18);
+	_COPY_1DARRAY(b_data, _18);
 	_ADD_DEALLOC(b_data);
 	//const %19 = 0 : int
 	_19 = 0;
@@ -372,7 +372,7 @@ Matrix* mat_mult(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_PAR
 	_ADD_DEALLOC(_21);
 	//assign %8 = %21  : int[]
 	_DEALLOC(b_t);
-	_1DARRAY_COPY(b_t, _21);
+	_COPY_1DARRAY(b_t, _21);
 	_ADD_DEALLOC(b_t);
 	//const %22 = 0 : int
 	_22 = 0;
@@ -523,7 +523,7 @@ blklab18:;
 blklab17:;
 	//invoke (%58) = (%3, %4, %5) MatrixMult3:matrix : function(MatrixMult3:nat,MatrixMult3:nat,int[])->(MatrixMult3:Matrix)
 	_DEALLOC_STRUCT(_58, Matrix);
-	_58 = matrix(width, height, _1DARRAY_COPY_PARAM(data), true);
+	_58 = matrix(width, height, _COPY_1DARRAY_PARAM(data), true);
 	_ADD_DEALLOC(_58);
 	//return %58
 	_DEALLOC_STRUCT(a, Matrix);
@@ -666,7 +666,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(B);
 	//invoke (%16) = (%1, %2) MatrixMult3:mat_mult : function(MatrixMult3:Matrix,MatrixMult3:Matrix)->(MatrixMult3:Matrix)
 	_DEALLOC_STRUCT(_16, Matrix);
-	_16 = mat_mult(_STRUCT_COPY_PARAM(A, Matrix), true, _STRUCT_COPY_PARAM(B, Matrix), true);
+	_16 = mat_mult(_COPY_STRUCT_PARAM(A, Matrix), true, _COPY_STRUCT_PARAM(B, Matrix), true);
 	_ADD_DEALLOC(_16);
 	//assign %3 = %16  : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(C, Matrix);
@@ -676,7 +676,7 @@ int main(int argc, char** args){
 	{
 		//fieldload %17 = %1 data : {int[] data,int height,int width}
 		_DEALLOC(_17);
-		_1DARRAY_COPY(_17, A->data);
+		_COPY_1DARRAY(_17, A->data);
 		_ADD_DEALLOC(_17);
 		//const %18 = 20 : int
 		_18 = 20;
@@ -717,7 +717,7 @@ blklab23:;
 	{
 		//fieldload %31 = %2 data : {int[] data,int height,int width}
 		_DEALLOC(_31);
-		_1DARRAY_COPY(_31, B->data);
+		_COPY_1DARRAY(_31, B->data);
 		_ADD_DEALLOC(_31);
 		//const %32 = 20 : int
 		_32 = 20;
@@ -758,7 +758,7 @@ blklab24:;
 	{
 		//fieldload %45 = %3 data : {int[] data,int height,int width}
 		_DEALLOC(_45);
-		_1DARRAY_COPY(_45, C->data);
+		_COPY_1DARRAY(_45, C->data);
 		_ADD_DEALLOC(_45);
 		//const %46 = 20 : int
 		_46 = 20;
@@ -792,7 +792,7 @@ blklab25:;
 	//assert
 	}
 	//invoke () = (%0, %3) MatrixMult3:print_mat : method(whiley/lang/System:Console,MatrixMult3:Matrix)->()
-print_mat(stdout, _STRUCT_COPY_PARAM(C, Matrix), true);
+print_mat(stdout, _COPY_STRUCT_PARAM(C, Matrix), true);
 	//fieldload %57 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %58 = %57 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %59 = [77,97,116,114,105,120,32,67,91,78,45,49,93,91,78,45,49,93,32,61,32] : int[]
@@ -806,7 +806,7 @@ print_mat(stdout, _STRUCT_COPY_PARAM(C, Matrix), true);
 	//fieldload %61 = %60 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//fieldload %62 = %3 data : {int[] data,int height,int width}
 	_DEALLOC(_62);
-	_1DARRAY_COPY(_62, C->data);
+	_COPY_1DARRAY(_62, C->data);
 	_ADD_DEALLOC(_62);
 	//const %63 = 20 : int
 	_63 = 20;

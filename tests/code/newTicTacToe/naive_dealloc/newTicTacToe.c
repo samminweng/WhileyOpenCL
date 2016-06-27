@@ -1,7 +1,7 @@
 #include "newTicTacToe.h"
 Board* copy_Board(Board* _Board){
 	Board* new_Board = malloc(sizeof(Board));
-	_1DARRAY_COPY(new_Board->pieces, _Board->pieces);
+	_COPY_1DARRAY(new_Board->pieces, _Board->pieces);
 	new_Board->move = _Board->move;
 	return new_Board;
 }
@@ -70,7 +70,7 @@ Board* EmptyBoard(){
 	_DEALLOC_STRUCT(_12, Board);
 	_12 = malloc(sizeof(Board));
 	_12->move = _1;
-	_1DARRAY_COPY(_12->pieces, _11);
+	_COPY_1DARRAY(_12->pieces, _11);
 	_ADD_DEALLOC(_12);
 	//return %12
 	_DEALLOC_STRUCT(r, Board);
@@ -375,7 +375,7 @@ blklab23:;
 		if(b2 == NULL) { goto blklab26;}
 		//fieldload %36 = %3 pieces : {int move,int[] pieces}
 		_DEALLOC(_36);
-		_1DARRAY_COPY(_36, b2->pieces);
+		_COPY_1DARRAY(_36, b2->pieces);
 		_ADD_DEALLOC(_36);
 		//const %37 = 1 : int
 		_37 = 1;

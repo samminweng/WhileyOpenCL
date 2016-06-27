@@ -1,7 +1,7 @@
 #include "MatrixMult3.h"
 Matrix* copy_Matrix(Matrix* _Matrix){
 	Matrix* new_Matrix = malloc(sizeof(Matrix));
-	_1DARRAY_COPY(new_Matrix->data, _Matrix->data);
+	_COPY_1DARRAY(new_Matrix->data, _Matrix->data);
 	new_Matrix->width = _Matrix->width;
 	new_Matrix->height = _Matrix->height;
 	return new_Matrix;
@@ -32,7 +32,7 @@ Matrix* matrix(long long width, long long height, _DECL_1DARRAY_PARAM(data)){
 	Matrix* _4;
 	//newrecord %4 = (%2, %1, %0) : {int[] data,int height,int width}
 	_4 = malloc(sizeof(Matrix));
-	_1DARRAY_COPY(_4->data, data);
+	_COPY_1DARRAY(_4->data, data);
 	_4->height = height;
 	_4->width = width;
 	//return %4
@@ -68,7 +68,7 @@ Matrix* init(long long width, long long height){
 	//arraygen %8 = [6; 7] : int[]
 	_NEW_1DARRAY(_8, _7, _6);
 	//assign %3 = %8  : int[]
-	_1DARRAY_COPY(data, _8);
+	_COPY_1DARRAY(data, _8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %4 = %9  : int
@@ -122,7 +122,7 @@ blklab3:;
 //.blklab2
 blklab2:;
 	//invoke (%21) = (%0, %1, %3) MatrixMult3:matrix : function(MatrixMult3:nat,MatrixMult3:nat,int[])->(MatrixMult3:Matrix)
-	_21 = matrix(width, height, _1DARRAY_COPY_PARAM(data));
+	_21 = matrix(width, height, _COPY_1DARRAY_PARAM(data));
 	//return %21
 	return _21;
 	//return
@@ -178,7 +178,7 @@ void print_mat(FILE* sys, Matrix* a){
 			//fieldload %10 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %11 = %10 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//fieldload %12 = %1 data : {int[] data,int height,int width}
-			_1DARRAY_COPY(_12, a->data);
+			_COPY_1DARRAY(_12, a->data);
 			//mul %13 = %2, %3 : int
 			_13=i*width;
 			//add %14 = %13, %5 : int
@@ -299,15 +299,15 @@ Matrix* mat_mult(Matrix* a, Matrix* b){
 	//arraygen %16 = [14; 15] : int[]
 	_NEW_1DARRAY(_16, _15, _14);
 	//assign %5 = %16  : int[]
-	_1DARRAY_COPY(data, _16);
+	_COPY_1DARRAY(data, _16);
 	//fieldload %17 = %0 data : {int[] data,int height,int width}
-	_1DARRAY_COPY(_17, a->data);
+	_COPY_1DARRAY(_17, a->data);
 	//assign %6 = %17  : int[]
-	_1DARRAY_COPY(a_data, _17);
+	_COPY_1DARRAY(a_data, _17);
 	//fieldload %18 = %1 data : {int[] data,int height,int width}
-	_1DARRAY_COPY(_18, b->data);
+	_COPY_1DARRAY(_18, b->data);
 	//assign %7 = %18  : int[]
-	_1DARRAY_COPY(b_data, _18);
+	_COPY_1DARRAY(b_data, _18);
 	//const %19 = 0 : int
 	_19 = 0;
 	//mul %20 = %3, %4 : int
@@ -315,7 +315,7 @@ Matrix* mat_mult(Matrix* a, Matrix* b){
 	//arraygen %21 = [19; 20] : int[]
 	_NEW_1DARRAY(_21, _20, _19);
 	//assign %8 = %21  : int[]
-	_1DARRAY_COPY(b_t, _21);
+	_COPY_1DARRAY(b_t, _21);
 	//const %22 = 0 : int
 	_22 = 0;
 	//assign %9 = %22  : int
@@ -464,7 +464,7 @@ blklab18:;
 //.blklab17
 blklab17:;
 	//invoke (%58) = (%3, %4, %5) MatrixMult3:matrix : function(MatrixMult3:nat,MatrixMult3:nat,int[])->(MatrixMult3:Matrix)
-	_58 = matrix(width, height, _1DARRAY_COPY_PARAM(data));
+	_58 = matrix(width, height, _COPY_1DARRAY_PARAM(data));
 	//return %58
 	return _58;
 	//return
@@ -571,13 +571,13 @@ int main(int argc, char** args){
 	//assign %2 = %13  : {int[] data,int height,int width}
 	B = copy_Matrix(_13);
 	//invoke (%16) = (%1, %2) MatrixMult3:mat_mult : function(MatrixMult3:Matrix,MatrixMult3:Matrix)->(MatrixMult3:Matrix)
-	_16 = mat_mult(_STRUCT_COPY_PARAM(A, Matrix), _STRUCT_COPY_PARAM(B, Matrix));
+	_16 = mat_mult(_COPY_STRUCT_PARAM(A, Matrix), _COPY_STRUCT_PARAM(B, Matrix));
 	//assign %3 = %16  : {int[] data,int height,int width}
 	C = copy_Matrix(_16);
 	//assert
 	{
 		//fieldload %17 = %1 data : {int[] data,int height,int width}
-		_1DARRAY_COPY(_17, A->data);
+		_COPY_1DARRAY(_17, A->data);
 		//const %18 = 20 : int
 		_18 = 20;
 		//const %19 = 1 : int
@@ -616,7 +616,7 @@ blklab23:;
 	//assert
 	{
 		//fieldload %31 = %2 data : {int[] data,int height,int width}
-		_1DARRAY_COPY(_31, B->data);
+		_COPY_1DARRAY(_31, B->data);
 		//const %32 = 20 : int
 		_32 = 20;
 		//const %33 = 1 : int
@@ -655,7 +655,7 @@ blklab24:;
 	//assert
 	{
 		//fieldload %45 = %3 data : {int[] data,int height,int width}
-		_1DARRAY_COPY(_45, C->data);
+		_COPY_1DARRAY(_45, C->data);
 		//const %46 = 20 : int
 		_46 = 20;
 		//const %47 = 1 : int
@@ -688,7 +688,7 @@ blklab25:;
 	//assert
 	}
 	//invoke () = (%0, %3) MatrixMult3:print_mat : method(whiley/lang/System:Console,MatrixMult3:Matrix)->()
-print_mat(stdout, _STRUCT_COPY_PARAM(C, Matrix));
+print_mat(stdout, _COPY_STRUCT_PARAM(C, Matrix));
 	//fieldload %57 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %58 = %57 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %59 = [77,97,116,114,105,120,32,67,91,78,45,49,93,91,78,45,49,93,32,61,32] : int[]
@@ -699,7 +699,7 @@ print_mat(stdout, _STRUCT_COPY_PARAM(C, Matrix));
 	//fieldload %60 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %61 = %60 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//fieldload %62 = %3 data : {int[] data,int height,int width}
-	_1DARRAY_COPY(_62, C->data);
+	_COPY_1DARRAY(_62, C->data);
 	//const %63 = 20 : int
 	_63 = 20;
 	//const %64 = 1 : int

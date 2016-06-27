@@ -79,11 +79,11 @@ int main(int argc, char** args){
 	_REMOVE_DEALLOC(_15);
 	//assign %3 = %1  : int[]
 	_DEALLOC(tmp);
-	_1DARRAY_COPY(tmp, a);
+	_COPY_1DARRAY(tmp, a);
 	_ADD_DEALLOC(tmp);
 	//assign %1 = %2  : int[]
 	_DEALLOC(a);
-	_1DARRAY_COPY(a, b);
+	_COPY_1DARRAY(a, b);
 	_ADD_DEALLOC(a);
 	//assign %2 = %3  : int[]
 	_DEALLOC(b);

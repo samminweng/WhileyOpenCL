@@ -1,7 +1,7 @@
 #include "MatrixMult.h"
 Matrix* copy_Matrix(Matrix* _Matrix){
 	Matrix* new_Matrix = malloc(sizeof(Matrix));
-	_2DARRAY_COPY(new_Matrix->data, _Matrix->data);
+	_COPY_2DARRAY(new_Matrix->data, _Matrix->data);
 	new_Matrix->width = _Matrix->width;
 	new_Matrix->height = _Matrix->height;
 	return new_Matrix;
@@ -123,7 +123,7 @@ Matrix* multiply(Matrix* A, Matrix* B){
 				//ifge %7, %19 goto blklab17 : int
 				if(k>=_19){goto blklab17;}
 				//fieldload %20 = %0 data : {int[][] data,int height,int width}
-				_2DARRAY_COPY(_20, A->data);
+				_COPY_2DARRAY(_20, A->data);
 				//indexof %21 = %20, %4 : int[][]
 				_21=_20[i];
 				//indexof %22 = %21, %7 : int[]
@@ -229,7 +229,7 @@ void printMat(FILE* sys, Matrix* A){
 			//fieldload %8 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %9 = %8 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//fieldload %10 = %1 data : {int[][] data,int height,int width}
-			_2DARRAY_COPY(_10, A->data);
+			_COPY_2DARRAY(_10, A->data);
 			//indexof %11 = %10, %2 : int[][]
 			_11=_10[i];
 			//indexof %12 = %11, %3 : int[]
@@ -395,7 +395,7 @@ int main(int argc, char** args){
 	//assign %3 = %7  : {int[][] data,int height,int width}
 	B = _7;
 	//invoke (%8) = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
-	_8 = multiply(_STRUCT_COPY_PARAM(A, Matrix), _STRUCT_COPY_PARAM(B, Matrix));
+	_8 = multiply(_COPY_STRUCT_PARAM(A, Matrix), _COPY_STRUCT_PARAM(B, Matrix));
 	//assign %4 = %8  : {int[][] data,int height,int width}
 	C = _8;
 	//assert
@@ -459,7 +459,7 @@ blklab28:;
 	//assert
 	{
 		//fieldload %27 = %4 data : {int[][] data,int height,int width}
-		_2DARRAY_COPY(_27, C->data);
+		_COPY_2DARRAY(_27, C->data);
 		//const %28 = 1 : int
 		_28 = 1;
 		//sub %29 = %1, %28 : int

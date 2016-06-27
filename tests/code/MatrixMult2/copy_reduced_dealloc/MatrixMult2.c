@@ -1,7 +1,7 @@
 #include "MatrixMult2.h"
 Matrix* copy_Matrix(Matrix* _Matrix){
 	Matrix* new_Matrix = malloc(sizeof(Matrix));
-	_1DARRAY_COPY(new_Matrix->data, _Matrix->data);
+	_COPY_1DARRAY(new_Matrix->data, _Matrix->data);
 	new_Matrix->width = _Matrix->width;
 	new_Matrix->height = _Matrix->height;
 	return new_Matrix;
@@ -204,7 +204,7 @@ void print_mat(FILE* sys, Matrix* a, _DECL_DEALLOC_PARAM(a)){
 			//fieldload %11 = %10 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//fieldload %12 = %1 data : {int[] data,int height,int width}
 			_DEALLOC(_12);
-			_1DARRAY_COPY(_12, a->data);
+			_COPY_1DARRAY(_12, a->data);
 			_ADD_DEALLOC(_12);
 			//mul %13 = %2, %3 : int
 			_13=i*width;
@@ -579,7 +579,7 @@ int main(int argc, char** args){
 	_REMOVE_DEALLOC(_13);
 	//invoke (%16) = (%1, %2) MatrixMult2:mat_mult : function(MatrixMult2:Matrix,MatrixMult2:Matrix)->(MatrixMult2:Matrix)
 	_DEALLOC_STRUCT(_16, Matrix);
-	_16 = mat_mult(_STRUCT_COPY_PARAM(A, Matrix), true, _STRUCT_COPY_PARAM(B, Matrix), true);
+	_16 = mat_mult(_COPY_STRUCT_PARAM(A, Matrix), true, _COPY_STRUCT_PARAM(B, Matrix), true);
 	_ADD_DEALLOC(_16);
 	//assign %3 = %16  : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(C, Matrix);
@@ -672,7 +672,7 @@ blklab20:;
 	{
 		//fieldload %45 = %3 data : {int[] data,int height,int width}
 		_DEALLOC(_45);
-		_1DARRAY_COPY(_45, C->data);
+		_COPY_1DARRAY(_45, C->data);
 		_ADD_DEALLOC(_45);
 		//const %46 = 20 : int
 		_46 = 20;

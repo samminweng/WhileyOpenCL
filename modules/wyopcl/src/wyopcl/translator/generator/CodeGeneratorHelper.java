@@ -129,12 +129,12 @@ public final class CodeGeneratorHelper {
 				if(isCopyEliminated){
 					statement.add(indent + "_UPDATE_"+dimension+"DARRAY("+lhs+", "+rhs+");");			
 				}else{
-					statement.add(indent + "_"+dimension+"DARRAY_COPY("+lhs+", "+rhs+");");		
+					statement.add(indent + "_COPY_"+dimension+"DARRAY("+lhs+", "+rhs+");");		
 				}
 			}else{
 				// An array of structure pointers
 				String struct = translateType(elm_type, stores).replace("*", "");
-				statement.add(indent + "_1DARRAY_COPY_STRUCT("+lhs+", "+rhs+", "+struct+");");
+				statement.add(indent + "_COPY_1DARRAY_STRUCT("+lhs+", "+rhs+", "+struct+");");
 			}
 		}else{
 			if(isCopyEliminated || !stores.isCompoundType(type)){

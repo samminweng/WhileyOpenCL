@@ -89,11 +89,11 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
  * Copy Macros
  *
  */
-#define _1DARRAY_COPY_PARAM(a) copy(a, a##_size), a##_size
-#define _1DARRAY_COPY_PARAM_OWN(a) copy(a, a##_size), a##_size, a##_dealloc
-#define _STRUCT_COPY_PARAM(a, name) copy_##name(a)
-#define _STRUCT_COPY_PARAM_OWN(a, name) copy_##name(a), a##_dealloc
-#define _1DARRAY_COPY_STRUCT(a, b, name) \
+// Copy an array and pass it as function argument
+#define _COPY_1DARRAY_PARAM(a) copy(a, a##_size), a##_size
+#define _COPY_2DARRAY_PARAM(a) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size
+#define _COPY_STRUCT_PARAM(a, name) copy_##name(a)
+#define _COPY_1DARRAY_STRUCT(a, b, name) \
 		({\
 			a = malloc(b##_size*sizeof(name*));\
 			for(int i=0;i<b##_size;i++){\
@@ -101,10 +101,8 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
  		  	}\
  			a##_size = b##_size;\
 		})
-#define _1DARRAY_COPY(a, b) a##_size = b##_size; a = copy(b, b##_size);
-#define _2DARRAY_COPY_PARAM(a) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size
-#define _2DARRAY_COPY_PARAM_OWN(a) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size, a##_dealloc
-#define _2DARRAY_COPY(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = copy2DArray(b, b##_size, b##_size_size);
+#define _COPY_1DARRAY(a, b) a##_size = b##_size; a = copy(b, b##_size);
+#define _COPY_2DARRAY(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = copy2DArray(b, b##_size, b##_size_size);
 /***
  * In-place Update Macros
  *
@@ -157,7 +155,6 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 				a##_dealloc=false;\
 			}\
 		})
-
 // Deallocate an array of integer arrays
 #define _DEALLOC_2DArray(a) \
 		({\

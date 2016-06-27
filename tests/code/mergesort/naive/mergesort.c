@@ -65,28 +65,28 @@ long long* sortV1(_DECL_1DARRAY_PARAM(items), long long start, long long end){
 	_UPDATE_1DARRAY_SIZE(_15, items);
 _SLICE_ARRAY(_15, items, start, pivot);
 	//assign %5 = %15  : int[]
-	_1DARRAY_COPY(lhs, _15);
+	_COPY_1DARRAY(lhs, _15);
 	//const %17 = 0 : int
 	_17 = 0;
 	//invoke (%16) = (%5, %17, %4) mergesort:sortV1 : function(int[],int,int)->(int[])
 	_UPDATE_1DARRAY_SIZE(_16, lhs);
-	_16 = sortV1(_1DARRAY_COPY_PARAM(lhs), _17, pivot);
+	_16 = sortV1(_COPY_1DARRAY_PARAM(lhs), _17, pivot);
 	//assign %5 = %16  : int[]
-	_1DARRAY_COPY(lhs, _16);
+	_COPY_1DARRAY(lhs, _16);
 	//invoke (%18) = (%0, %4, %2) whiley/lang/Array:slice : function(int[],int,int)->(int[])
 	_UPDATE_1DARRAY_SIZE(_18, items);
 _SLICE_ARRAY(_18, items, pivot, end);
 	//assign %6 = %18  : int[]
-	_1DARRAY_COPY(rhs, _18);
+	_COPY_1DARRAY(rhs, _18);
 	//const %20 = 0 : int
 	_20 = 0;
 	//sub %21 = %2, %4 : int
 	_21=end-pivot;
 	//invoke (%19) = (%6, %20, %21) mergesort:sortV1 : function(int[],int,int)->(int[])
 	_UPDATE_1DARRAY_SIZE(_19, rhs);
-	_19 = sortV1(_1DARRAY_COPY_PARAM(rhs), _20, _21);
+	_19 = sortV1(_COPY_1DARRAY_PARAM(rhs), _20, _21);
 	//assign %6 = %19  : int[]
-	_1DARRAY_COPY(rhs, _19);
+	_COPY_1DARRAY(rhs, _19);
 	//const %22 = 0 : int
 	_22 = 0;
 	//assign %7 = %22  : int
@@ -319,16 +319,16 @@ int main(int argc, char** args){
 	_NEW_1DARRAY(_10, 5, 0);
 	_10[0] = _5; _10[1] = _6; _10[2] = _7; _10[3] = _8; _10[4] = _9; 
 	//assign %1 = %10  : int[]
-	_1DARRAY_COPY(ys, _10);
+	_COPY_1DARRAY(ys, _10);
 	//const %12 = 0 : int
 	_12 = 0;
 	//const %13 = 5 : int
 	_13 = 5;
 	//invoke (%11) = (%1, %12, %13) mergesort:sortV1 : function(int[],int,int)->(int[])
 	_UPDATE_1DARRAY_SIZE(_11, ys);
-	_11 = sortV1(_1DARRAY_COPY_PARAM(ys), _12, _13);
+	_11 = sortV1(_COPY_1DARRAY_PARAM(ys), _12, _13);
 	//assign %1 = %11  : int[]
-	_1DARRAY_COPY(ys, _11);
+	_COPY_1DARRAY(ys, _11);
 	//assert
 	{
 		//const %14 = 1 : int
@@ -365,16 +365,16 @@ blklab9:;
 	_NEW_1DARRAY(_24, 4, 0);
 	_24[0] = _20; _24[1] = _21; _24[2] = _22; _24[3] = _23; 
 	//assign %1 = %24  : int[]
-	_1DARRAY_COPY(ys, _24);
+	_COPY_1DARRAY(ys, _24);
 	//const %26 = 0 : int
 	_26 = 0;
 	//const %27 = 4 : int
 	_27 = 4;
 	//invoke (%25) = (%1, %26, %27) mergesort:sortV1 : function(int[],int,int)->(int[])
 	_UPDATE_1DARRAY_SIZE(_25, ys);
-	_25 = sortV1(_1DARRAY_COPY_PARAM(ys), _26, _27);
+	_25 = sortV1(_COPY_1DARRAY_PARAM(ys), _26, _27);
 	//assign %1 = %25  : int[]
-	_1DARRAY_COPY(ys, _25);
+	_COPY_1DARRAY(ys, _25);
 	//assert
 	{
 		//const %28 = 2 : int
@@ -409,16 +409,16 @@ blklab10:;
 	_NEW_1DARRAY(_37, 4, 0);
 	_37[0] = _33; _37[1] = _34; _37[2] = _35; _37[3] = _36; 
 	//assign %1 = %37  : int[]
-	_1DARRAY_COPY(ys, _37);
+	_COPY_1DARRAY(ys, _37);
 	//const %39 = 0 : int
 	_39 = 0;
 	//const %40 = 4 : int
 	_40 = 4;
 	//invoke (%38) = (%1, %39, %40) mergesort:sortV1 : function(int[],int,int)->(int[])
 	_UPDATE_1DARRAY_SIZE(_38, ys);
-	_38 = sortV1(_1DARRAY_COPY_PARAM(ys), _39, _40);
+	_38 = sortV1(_COPY_1DARRAY_PARAM(ys), _39, _40);
 	//assign %1 = %38  : int[]
-	_1DARRAY_COPY(ys, _38);
+	_COPY_1DARRAY(ys, _38);
 	//assert
 	{
 		//const %41 = 1 : int
@@ -455,16 +455,16 @@ blklab11:;
 	_NEW_1DARRAY(_51, 5, 0);
 	_51[0] = _46; _51[1] = _47; _51[2] = _48; _51[3] = _49; _51[4] = _50; 
 	//assign %1 = %51  : int[]
-	_1DARRAY_COPY(ys, _51);
+	_COPY_1DARRAY(ys, _51);
 	//const %53 = 0 : int
 	_53 = 0;
 	//const %54 = 5 : int
 	_54 = 5;
 	//invoke (%52) = (%1, %53, %54) mergesort:sortV1 : function(int[],int,int)->(int[])
 	_UPDATE_1DARRAY_SIZE(_52, ys);
-	_52 = sortV1(_1DARRAY_COPY_PARAM(ys), _53, _54);
+	_52 = sortV1(_COPY_1DARRAY_PARAM(ys), _53, _54);
 	//assign %1 = %52  : int[]
-	_1DARRAY_COPY(ys, _52);
+	_COPY_1DARRAY(ys, _52);
 	//assert
 	{
 		//const %55 = 1 : int
@@ -506,7 +506,7 @@ blklab12:;
 	//arraygen %66 = [63; 65] : int[]
 	_NEW_1DARRAY(_66, _65, _63);
 	//assign %4 = %66  : int[]
-	_1DARRAY_COPY(arr, _66);
+	_COPY_1DARRAY(arr, _66);
 	//loop (%3, %4, %67, %68, %69)
 	while(true){
 		//ifgt %3, %2 goto blklab13 : int
@@ -534,9 +534,9 @@ blklab13:;
 	_73=max+_72;
 	//invoke (%70) = (%4, %71, %73) mergesort:sortV1 : function(int[],int,int)->(int[])
 	_UPDATE_1DARRAY_SIZE(_70, arr);
-	_70 = sortV1(_1DARRAY_COPY_PARAM(arr), _71, _73);
+	_70 = sortV1(_COPY_1DARRAY_PARAM(arr), _71, _73);
 	//assign %4 = %70  : int[]
-	_1DARRAY_COPY(arr, _70);
+	_COPY_1DARRAY(arr, _70);
 	//assert
 	{
 		//const %74 = 0 : int

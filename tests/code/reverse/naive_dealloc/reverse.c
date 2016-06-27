@@ -34,7 +34,7 @@ long long* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls)){
 	_ADD_DEALLOC(_8);
 	//assign %3 = %8  : int[]
 	_DEALLOC(r);
-	_1DARRAY_COPY(r, _8);
+	_COPY_1DARRAY(r, _8);
 	_ADD_DEALLOC(r);
 	//loop (%2, %3, %4, %9, %10, %11, %12, %13, %14, %15, %16, %17)
 	while(true){
@@ -152,11 +152,11 @@ int main(int argc, char** args){
 	//invoke (%5) = (%11) reverse:reverse : function(int[])->(int[])
 	_UPDATE_1DARRAY_SIZE(_5, _11);
 	_DEALLOC(_5);
-	_5 = reverse(_1DARRAY_COPY_PARAM(_11), true);
+	_5 = reverse(_COPY_1DARRAY_PARAM(_11), true);
 	_ADD_DEALLOC(_5);
 	//assign %1 = %5  : int[]
 	_DEALLOC(rs);
-	_1DARRAY_COPY(rs, _5);
+	_COPY_1DARRAY(rs, _5);
 	_ADD_DEALLOC(rs);
 	//assert
 	{
@@ -204,7 +204,7 @@ blklab4:;
 	_ADD_DEALLOC(_23);
 	//assign %4 = %23  : int[]
 	_DEALLOC(arr);
-	_1DARRAY_COPY(arr, _23);
+	_COPY_1DARRAY(arr, _23);
 	_ADD_DEALLOC(arr);
 	//loop (%3, %4, %24, %25, %26)
 	while(true){
@@ -228,11 +228,11 @@ blklab5:;
 	//invoke (%27) = (%4) reverse:reverse : function(int[])->(int[])
 	_UPDATE_1DARRAY_SIZE(_27, arr);
 	_DEALLOC(_27);
-	_27 = reverse(_1DARRAY_COPY_PARAM(arr), true);
+	_27 = reverse(_COPY_1DARRAY_PARAM(arr), true);
 	_ADD_DEALLOC(_27);
 	//assign %4 = %27  : int[]
 	_DEALLOC(arr);
-	_1DARRAY_COPY(arr, _27);
+	_COPY_1DARRAY(arr, _27);
 	_ADD_DEALLOC(arr);
 	//assert
 	{

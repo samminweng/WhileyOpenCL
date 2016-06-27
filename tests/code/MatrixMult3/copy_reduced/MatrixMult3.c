@@ -1,7 +1,7 @@
 #include "MatrixMult3.h"
 Matrix* copy_Matrix(Matrix* _Matrix){
 	Matrix* new_Matrix = malloc(sizeof(Matrix));
-	_1DARRAY_COPY(new_Matrix->data, _Matrix->data);
+	_COPY_1DARRAY(new_Matrix->data, _Matrix->data);
 	new_Matrix->width = _Matrix->width;
 	new_Matrix->height = _Matrix->height;
 	return new_Matrix;
@@ -178,7 +178,7 @@ void print_mat(FILE* sys, Matrix* a){
 			//fieldload %10 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %11 = %10 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//fieldload %12 = %1 data : {int[] data,int height,int width}
-			_1DARRAY_COPY(_12, a->data);
+			_COPY_1DARRAY(_12, a->data);
 			//mul %13 = %2, %3 : int
 			_13=i*width;
 			//add %14 = %13, %5 : int
@@ -571,7 +571,7 @@ int main(int argc, char** args){
 	//assign %2 = %13  : {int[] data,int height,int width}
 	B = _13;
 	//invoke (%16) = (%1, %2) MatrixMult3:mat_mult : function(MatrixMult3:Matrix,MatrixMult3:Matrix)->(MatrixMult3:Matrix)
-	_16 = mat_mult(_STRUCT_COPY_PARAM(A, Matrix), _STRUCT_COPY_PARAM(B, Matrix));
+	_16 = mat_mult(_COPY_STRUCT_PARAM(A, Matrix), _COPY_STRUCT_PARAM(B, Matrix));
 	//assign %3 = %16  : {int[] data,int height,int width}
 	C = _16;
 	//assert
@@ -655,7 +655,7 @@ blklab24:;
 	//assert
 	{
 		//fieldload %45 = %3 data : {int[] data,int height,int width}
-		_1DARRAY_COPY(_45, C->data);
+		_COPY_1DARRAY(_45, C->data);
 		//const %46 = 20 : int
 		_46 = 20;
 		//const %47 = 1 : int

@@ -25,7 +25,7 @@ void printf_POS(POS* pos){
 }
 NQueen* copy_NQueen(NQueen* _NQueen){
 	NQueen* new_NQueen = malloc(sizeof(NQueen));
-	_1DARRAY_COPY_STRUCT(new_NQueen->queens, _NQueen->queens, POS);
+	_COPY_1DARRAY_STRUCT(new_NQueen->queens, _NQueen->queens, POS);
 	new_NQueen->num_solutions = _NQueen->num_solutions;
 	return new_NQueen;
 }
@@ -54,7 +54,7 @@ NQueen* nqueen(long long num_solutions, POS** queens, long long queens_size){
 	//newrecord %3 = (%0, %1) : {int num_solutions,{int c,int r}[] queens}
 	_3 = malloc(sizeof(NQueen));
 	_3->num_solutions = num_solutions;
-	_1DARRAY_COPY_STRUCT(_3->queens, queens, POS);
+	_COPY_1DARRAY_STRUCT(_3->queens, queens, POS);
 	//return %3
 	return _3;
 	//return
@@ -189,13 +189,13 @@ blklab6:;
 		//invariant
 		{
 			//fieldload %12 = %0 queens : {int num_solutions,{int c,int r}[] queens}
-			_1DARRAY_COPY_STRUCT(_12, nq->queens, POS);
+			_COPY_1DARRAY_STRUCT(_12, nq->queens, POS);
 			//lengthof %13 = %12 : {int c,int r}[]
 			_13 = _12_size;
 			//ifge %1, %13 goto blklab11 : int
 			if(n>=_13){goto blklab11;}
 			//fieldload %14 = %0 queens : {int num_solutions,{int c,int r}[] queens}
-			_1DARRAY_COPY_STRUCT(_14, nq->queens, POS);
+			_COPY_1DARRAY_STRUCT(_14, nq->queens, POS);
 			//lengthof %15 = %14 : {int c,int r}[]
 			_15 = _14_size;
 			//ifeq %2, %15 goto blklab10 : int
@@ -224,7 +224,7 @@ blklab10:;
 			//invariant
 			{
 				//fieldload %18 = %0 queens : {int num_solutions,{int c,int r}[] queens}
-				_1DARRAY_COPY_STRUCT(_18, nq->queens, POS);
+				_COPY_1DARRAY_STRUCT(_18, nq->queens, POS);
 				//lengthof %19 = %18 : {int c,int r}[]
 				_19 = _18_size;
 				//ifge %1, %19 goto blklab15 : int
@@ -234,7 +234,7 @@ blklab10:;
 				//iflt %6, %20 goto blklab16 : int
 				if(i<_20){goto blklab16;}
 				//fieldload %21 = %0 queens : {int num_solutions,{int c,int r}[] queens}
-				_1DARRAY_COPY_STRUCT(_21, nq->queens, POS);
+				_COPY_1DARRAY_STRUCT(_21, nq->queens, POS);
 				//lengthof %22 = %21 : {int c,int r}[]
 				_22 = _21_size;
 				//ifeq %2, %22 goto blklab14 : int
@@ -253,7 +253,7 @@ blklab14:;
 			//ifge %6, %1 goto blklab12 : int
 			if(i>=n){goto blklab12;}
 			//fieldload %23 = %0 queens : {int num_solutions,{int c,int r}[] queens}
-			_1DARRAY_COPY_STRUCT(_23, nq->queens, POS);
+			_COPY_1DARRAY_STRUCT(_23, nq->queens, POS);
 			//indexof %24 = %23, %6 : {int c,int r}[]
 			_24=_23[i];
 			//assign %7 = %24  : {int c,int r}
@@ -267,7 +267,7 @@ blklab14:;
 //.blklab20
 blklab20:;
 			//invoke (%26) = (%7, %1, %4) nqueens:conflict : function(nqueens:POS,int,int)->(bool)
-			_26 = conflict(_STRUCT_COPY_PARAM(p, POS), n, col);
+			_26 = conflict(_COPY_STRUCT_PARAM(p, POS), n, col);
 			//const %27 = true : bool
 			_27 = true;
 			//ifeq %26, %27 goto blklab21 : bool
@@ -316,7 +316,7 @@ blklab12:;
 		//add %35 = %1, %34 : int
 		_35=n+_34;
 		//invoke (%33) = (%0, %35, %2) nqueens:run : function(nqueens:NQueen,int,int)->(nqueens:NQueen)
-		_33 = run(_STRUCT_COPY_PARAM(nq, NQueen), _35, dim);
+		_33 = run(_COPY_STRUCT_PARAM(nq, NQueen), _35, dim);
 		//assign %0 = %33  : {int num_solutions,{int c,int r}[] queens}
 		nq = copy_NQueen(_33);
 //.blklab22
@@ -383,8 +383,7 @@ int main(int argc, char** args){
 	//arraygen %9 = [8; 1] : {int c,int r}[]
 	_NEW_1DARRAY_STRUCT(_9, n, _8, POS);
 	//assign %2 = %9  : {int c,int r}[]
-	queens = malloc(_9_size*sizeof(POS*));
-	_1DARRAY_COPY_STRUCT(queens, _9, POS);
+	_COPY_1DARRAY_STRUCT(queens, _9, POS);
 	//const %10 = 0 : int
 	_10 = 0;
 	//assign %3 = %10  : int
@@ -396,7 +395,7 @@ int main(int argc, char** args){
 	//const %13 = 0 : int
 	_13 = 0;
 	//invoke (%12) = (%4, %13, %1) nqueens:run : function(nqueens:NQueen,int,int)->(nqueens:NQueen)
-	_12 = run(_STRUCT_COPY_PARAM(nq, NQueen), _13, n);
+	_12 = run(_COPY_STRUCT_PARAM(nq, NQueen), _13, n);
 	//assign %4 = %12  : {int num_solutions,{int c,int r}[] queens}
 	nq = copy_NQueen(_12);
 	//assert

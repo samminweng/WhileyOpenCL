@@ -25,7 +25,7 @@ void printf_POS(POS* pos){
 }
 NQueen* copy_NQueen(NQueen* _NQueen){
 	NQueen* new_NQueen = malloc(sizeof(NQueen));
-	_1DARRAY_COPY_STRUCT(new_NQueen->queens, _NQueen->queens, POS);
+	_COPY_1DARRAY_STRUCT(new_NQueen->queens, _NQueen->queens, POS);
 	new_NQueen->num_solutions = _NQueen->num_solutions;
 	return new_NQueen;
 }
@@ -57,7 +57,7 @@ NQueen* nqueen(long long num_solutions, POS** queens, long long queens_size, _DE
 	_DEALLOC_STRUCT(_3, NQueen);
 	_3 = malloc(sizeof(NQueen));
 	_3->num_solutions = num_solutions;
-	_1DARRAY_COPY_STRUCT(_3->queens, queens, POS);
+	_COPY_1DARRAY_STRUCT(_3->queens, queens, POS);
 	_REMOVE_DEALLOC(queens);
 	_ADD_DEALLOC(_3);
 	//return %3
@@ -219,7 +219,7 @@ blklab6:;
 		{
 			//fieldload %12 = %0 queens : {int num_solutions,{int c,int r}[] queens}
 			_DEALLOC_1DARRAY_STRUCT(_12, POS);
-			_1DARRAY_COPY_STRUCT(_12, nq->queens, POS);
+			_COPY_1DARRAY_STRUCT(_12, nq->queens, POS);
 			_ADD_DEALLOC(_12);
 			//lengthof %13 = %12 : {int c,int r}[]
 			_13 = _12_size;
@@ -227,7 +227,7 @@ blklab6:;
 			if(n>=_13){goto blklab11;}
 			//fieldload %14 = %0 queens : {int num_solutions,{int c,int r}[] queens}
 			_DEALLOC_1DARRAY_STRUCT(_14, POS);
-			_1DARRAY_COPY_STRUCT(_14, nq->queens, POS);
+			_COPY_1DARRAY_STRUCT(_14, nq->queens, POS);
 			_ADD_DEALLOC(_14);
 			//lengthof %15 = %14 : {int c,int r}[]
 			_15 = _14_size;
@@ -258,7 +258,7 @@ blklab10:;
 			{
 				//fieldload %18 = %0 queens : {int num_solutions,{int c,int r}[] queens}
 				_DEALLOC_1DARRAY_STRUCT(_18, POS);
-				_1DARRAY_COPY_STRUCT(_18, nq->queens, POS);
+				_COPY_1DARRAY_STRUCT(_18, nq->queens, POS);
 				_ADD_DEALLOC(_18);
 				//lengthof %19 = %18 : {int c,int r}[]
 				_19 = _18_size;
@@ -270,7 +270,7 @@ blklab10:;
 				if(i<_20){goto blklab16;}
 				//fieldload %21 = %0 queens : {int num_solutions,{int c,int r}[] queens}
 				_DEALLOC_1DARRAY_STRUCT(_21, POS);
-				_1DARRAY_COPY_STRUCT(_21, nq->queens, POS);
+				_COPY_1DARRAY_STRUCT(_21, nq->queens, POS);
 				_ADD_DEALLOC(_21);
 				//lengthof %22 = %21 : {int c,int r}[]
 				_22 = _21_size;
@@ -291,7 +291,7 @@ blklab14:;
 			if(i>=n){goto blklab12;}
 			//fieldload %23 = %0 queens : {int num_solutions,{int c,int r}[] queens}
 			_DEALLOC_1DARRAY_STRUCT(_23, POS);
-			_1DARRAY_COPY_STRUCT(_23, nq->queens, POS);
+			_COPY_1DARRAY_STRUCT(_23, nq->queens, POS);
 			_ADD_DEALLOC(_23);
 			//indexof %24 = %23, %6 : {int c,int r}[]
 			_24=_23[i];
@@ -461,8 +461,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_9);
 	//assign %2 = %9  : {int c,int r}[]
 	_DEALLOC_1DARRAY_STRUCT(queens, POS);
-	queens = malloc(_9_size*sizeof(POS*));
-	_1DARRAY_COPY_STRUCT(queens, _9, POS);
+	_COPY_1DARRAY_STRUCT(queens, _9, POS);
 	_TRANSFER_DEALLOC(queens, _9);
 	_REMOVE_DEALLOC(_9);
 	//const %10 = 0 : int

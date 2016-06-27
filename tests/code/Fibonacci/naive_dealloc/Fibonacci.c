@@ -45,11 +45,11 @@ blklab0:;
 	//invoke (%8) = (%0, %10) Fibonacci:fibonacci : function(int[],int)->(int[])
 	_UPDATE_1DARRAY_SIZE(_8, ls);
 	_DEALLOC(_8);
-	_8 = fibonacci(_1DARRAY_COPY_PARAM(ls), true, _10);
+	_8 = fibonacci(_COPY_1DARRAY_PARAM(ls), true, _10);
 	_ADD_DEALLOC(_8);
 	//assign %0 = %8  : int[]
 	_DEALLOC(ls);
-	_1DARRAY_COPY(ls, _8);
+	_COPY_1DARRAY(ls, _8);
 	_ADD_DEALLOC(ls);
 	//const %11 = 1 : int
 	_11 = 1;
@@ -116,7 +116,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_5);
 	//assign %2 = %5  : int[]
 	_DEALLOC(arr);
-	_1DARRAY_COPY(arr, _5);
+	_COPY_1DARRAY(arr, _5);
 	_ADD_DEALLOC(arr);
 	//const %7 = 1 : int
 	_7 = 1;
@@ -125,11 +125,11 @@ int main(int argc, char** args){
 	//invoke (%6) = (%2, %8) Fibonacci:fibonacci : function(int[],int)->(int[])
 	_UPDATE_1DARRAY_SIZE(_6, arr);
 	_DEALLOC(_6);
-	_6 = fibonacci(_1DARRAY_COPY_PARAM(arr), true, _8);
+	_6 = fibonacci(_COPY_1DARRAY_PARAM(arr), true, _8);
 	_ADD_DEALLOC(_6);
 	//assign %2 = %6  : int[]
 	_DEALLOC(arr);
-	_1DARRAY_COPY(arr, _6);
+	_COPY_1DARRAY(arr, _6);
 	_ADD_DEALLOC(arr);
 	//assert
 	{

@@ -339,15 +339,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					if (isCopyEliminated) {
 						return indent + "_UPDATE_" + dimension + "DARRAY(" + lhs + ", " + rhs + ");";
 					} else {
-						return indent + "_" + dimension + "DARRAY_COPY(" + lhs + ", " + rhs + ");";
+						return indent + "_COPY_" + dimension + "DARRAY(" + lhs + ", " + rhs + ");";
 					}
 				} else {
 					String struct = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");
-					// Create an array of stuctures
-
-					return indent + lhs + " = malloc(" + rhs + "_size*sizeof(" + struct + "*));\n" +
-					// Copy an array of structures
-							indent + "_1DARRAY_COPY_STRUCT(" + lhs + ", " + rhs + ", " + struct + ");";
+					// Create an array of stucture pointers
+					//return indent + lhs + " = malloc(" + rhs + "_size*sizeof(" + struct + "*));\n" +
+							// Copy an array of structures
+							return indent + "_COPY_1DARRAY_STRUCT(" + lhs + ", " + rhs + ", " + struct + ");";
 
 				}
 
@@ -556,7 +555,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					statement.add("_" + dimension + "DARRAY_PARAM(" + parameter + ")");
 				} else {
 					if (stores.isIntType(elm)) {
-						statement.add("_" + dimension + "DARRAY_COPY_PARAM(" + parameter + ")");
+						statement.add("_COPY_" + dimension + "DARRAY_PARAM(" + parameter + ")");
 					} else {
 						String elm_type = CodeGeneratorHelper.translateType(elm, stores).replace("*", "");
 						// Copy the rhs and rhs size
@@ -571,7 +570,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				if (isCopyEliminated) {
 					statement.add("_STRUCT_PARAM(" + parameter + ")");
 				} else {
-					statement.add("_STRUCT_COPY_PARAM(" + parameter + ", " + type_name + ")");
+					statement.add("_COPY_STRUCT_PARAM(" + parameter + ", " + type_name + ")");
 				}
 			} else {
 				throw new RuntimeException("Not Implemented");
