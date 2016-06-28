@@ -658,18 +658,22 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			var = stores.getVar(((Codes.NewRecord)code).target(0), function);
 			type = stores.getRawType(((Codes.NewRecord)code).target(0), function); 
 		} else if (code instanceof Codes.Update){
+			// Update bytecode 'update %0.queens[%1] = %32'
 			Codes.Update update = (Codes.Update)code;
-			type = stores.getRawType(update.target(0), function);
+			Type lhs_type = stores.getRawType(update.target(0), function);
 			// Get array variable, e.g. a[i]
 			var = stores.getVar(update.target(0), function);
 			String lhs_var;
-			if (type instanceof Type.Array) {
+			// Get rhs register (the last operand)
+			int rhs_register = update.operand(update.operands().length -1);
+			Type rhs_type = stores.getRawType(rhs_register, function);
+			if (lhs_type instanceof Type.Array) {
 				lhs_var = var;
 				// Iterates operands to increase the depths.
 				for (int i = 0; i < update.operands().length - 1; i++) {
 					lhs_var += "[" + stores.getVar(update.operand(i), function) + "]";
 				}
-			} else if (type instanceof Type.Record || type instanceof Type.Union) {
+			} else if (lhs_type instanceof Type.Record || lhs_type instanceof Type.Union) {
 				lhs_var = var;
 				String member = update.fields.get(0);
 				lhs_var += "->" + member;
@@ -682,10 +686,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 			
 			final String lhs = lhs_var;
-			final Type lhs_type = type;
 			// Deallocate lhs register
 			this.deallocatedAnalyzer.ifPresent(a -> {
-				statement.add(indent+ a.addDeallocCode(var, lhs, lhs_type, stores));
+				statement.add(indent+ a.addDeallocCode(var, lhs, lhs_type, rhs_type, stores));
 			});
 
 			return lhs;

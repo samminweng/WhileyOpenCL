@@ -54,7 +54,7 @@ NQueen* nqueen(long long num_solutions, POS** queens, long long queens_size){
 	//newrecord %3 = (%0, %1) : {int num_solutions,{int c,int r}[] queens}
 	_3 = malloc(sizeof(NQueen));
 	_3->num_solutions = num_solutions;
-		_UPDATE_1DARRAY(_3->queens, queens);
+	_UPDATE_1DARRAY(_3->queens, queens);
 	//return %3
 	return _3;
 	//return

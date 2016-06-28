@@ -57,7 +57,7 @@ NQueen* nqueen(long long num_solutions, POS** queens, long long queens_size, _DE
 	_DEALLOC_STRUCT(_3, NQueen);
 	_3 = malloc(sizeof(NQueen));
 	_3->num_solutions = num_solutions;
-		_UPDATE_1DARRAY(_3->queens, queens);
+	_UPDATE_1DARRAY(_3->queens, queens);
 	_REMOVE_DEALLOC(queens);
 	_ADD_DEALLOC(_3);
 	//return %3
@@ -355,6 +355,7 @@ blklab12:;
 		_32->r = n;
 		_ADD_DEALLOC(_32);
 		//update %0.queens[%1] = %32 : {int num_solutions,{int c,int r}[] queens} -> {int num_solutions,{int c,int r}[] queens}
+		_FREE_STRUCT(nq->queens[n], POS);
 		nq->queens[n] = _32;
 		_REMOVE_DEALLOC(_32);
 		//const %34 = 1 : int

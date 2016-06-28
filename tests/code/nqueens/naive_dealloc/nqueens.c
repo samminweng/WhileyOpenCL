@@ -353,6 +353,7 @@ blklab12:;
 		_32->r = n;
 		_ADD_DEALLOC(_32);
 		//update %0.queens[%1] = %32 : {int num_solutions,{int c,int r}[] queens} -> {int num_solutions,{int c,int r}[] queens}
+		_FREE_STRUCT(nq->queens[n], POS);
 		nq->queens[n] = _32;
 		_REMOVE_DEALLOC(_32);
 		//const %34 = 1 : int

@@ -135,7 +135,7 @@ public final class CodeGeneratorHelper {
 				// An array of structure pointers
 				if(isCopyEliminated){
 					// Have an in-place update
-					statement.add(indent + indent + "_UPDATE_1DARRAY("+lhs+", "+rhs+");");			
+					statement.add(indent + "_UPDATE_1DARRAY("+lhs+", "+rhs+");");			
 				}else{
 					// Copy the array and assign it to lhs
 					String struct = translateType(elm_type, stores).replace("*", "");
