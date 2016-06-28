@@ -205,7 +205,6 @@ int main(int argc, char** args){
 	_DEALLOC_STRUCT(b1, Board);
 	b1 = _7;
 	_TRANSFER_DEALLOC(b1, _7);
-	_REMOVE_DEALLOC(_7);
 	//invoke (%8) = () newTicTacToe:EmptyBoard : function()->(newTicTacToe:Board)
 	_DEALLOC_STRUCT(_8, Board);
 	_8 = EmptyBoard();
@@ -214,7 +213,6 @@ int main(int argc, char** args){
 	_DEALLOC_STRUCT(b2, Board);
 	b2 = _8;
 	_TRANSFER_DEALLOC(b2, _8);
-	_REMOVE_DEALLOC(_8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %4 = %9  : int
@@ -282,7 +280,6 @@ blklab16:;
 		_DEALLOC_STRUCT(b2, Board);
 		b2 = b1;
 		_TRANSFER_DEALLOC(b2, b1);
-		_REMOVE_DEALLOC(b1);
 		//const %23 = null : null
 		_23 = NULL;
 		//assign %2 = %23  : null
@@ -320,7 +317,6 @@ blklab19:;
 		_DEALLOC_STRUCT(b1, Board);
 		b1 = b2;
 		_TRANSFER_DEALLOC(b1, b2);
-		_REMOVE_DEALLOC(b2);
 		//const %31 = null : null
 		_31 = NULL;
 		//assign %3 = %31  : null

@@ -194,7 +194,6 @@ int main(int argc, char** args){
 	_DEALLOC(gcds);
 	_UPDATE_1DARRAY(gcds, _13);
 	_TRANSFER_DEALLOC(gcds, _13);
-	_REMOVE_DEALLOC(_13);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %3 = %14  : int

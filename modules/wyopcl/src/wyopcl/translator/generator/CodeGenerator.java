@@ -578,12 +578,22 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			
 			// Append deallocation flag to the function call
 			this.deallocatedAnalyzer.ifPresent(a -> {
-				Optional<HashMap<String, Boolean>> dealloc = 
+				Optional<String> dealloc = 
 						a.computeDealloc(operand, code, function, stores, copyAnalyzer);
-				dealloc.ifPresent(o -> 
-					// Get and pass callee deallocation flag
-					statement.add(dealloc.get().get("callee")+"")
-				);
+				dealloc.ifPresent(callee_dealloc ->{
+					switch(callee_dealloc){
+						case "add_callee":
+							// Assign 'true' to callee's flag
+							statement.add("true");
+						break;
+						case "rm_callee":
+							statement.add("false");
+						break;
+						case "transfer_callee":
+							statement.add(parameter+"_dealloc");
+						break;
+					}
+				});
 			});
 		}
 

@@ -36,7 +36,6 @@ long long* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls)){
 	_DEALLOC(r);
 	_UPDATE_1DARRAY(r, _8);
 	_TRANSFER_DEALLOC(r, _8);
-	_REMOVE_DEALLOC(_8);
 	//loop (%2, %3, %4, %9, %10, %11, %12, %13, %14, %15, %16, %17)
 	while(true){
 		//invariant
@@ -159,7 +158,6 @@ int main(int argc, char** args){
 	_DEALLOC(rs);
 	_UPDATE_1DARRAY(rs, _5);
 	_TRANSFER_DEALLOC(rs, _5);
-	_REMOVE_DEALLOC(_5);
 	//assert
 	{
 		//const %12 = 5 : int
@@ -208,7 +206,6 @@ blklab4:;
 	_DEALLOC(arr);
 	_UPDATE_1DARRAY(arr, _23);
 	_TRANSFER_DEALLOC(arr, _23);
-	_REMOVE_DEALLOC(_23);
 	//loop (%3, %4, %24, %25, %26)
 	while(true){
 		//ifgt %3, %2 goto blklab5 : int
@@ -237,7 +234,6 @@ blklab5:;
 	_DEALLOC(arr);
 	_UPDATE_1DARRAY(arr, _27);
 	_TRANSFER_DEALLOC(arr, _27);
-	_REMOVE_DEALLOC(_27);
 	//assert
 	{
 		//const %28 = 0 : int

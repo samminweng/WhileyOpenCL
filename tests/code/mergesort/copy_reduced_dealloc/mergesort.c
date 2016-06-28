@@ -77,20 +77,18 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	_DEALLOC(lhs);
 	_UPDATE_1DARRAY(lhs, _15);
 	_TRANSFER_DEALLOC(lhs, _15);
-	_REMOVE_DEALLOC(_15);
 	//const %17 = 0 : int
 	_17 = 0;
 	//invoke (%16) = (%5, %17, %4) mergesort:sortV1 : function(int[],int,int)->(int[])
 	_UPDATE_1DARRAY_SIZE(_16, lhs);
 	_DEALLOC(_16);
 	_REMOVE_DEALLOC(lhs);
-	_16 = sortV1(_1DARRAY_PARAM(lhs), true, _17, pivot);
+	_16 = sortV1(_1DARRAY_PARAM(lhs), lhs_dealloc, _17, pivot);
 	_ADD_DEALLOC(_16);
 	//assign %5 = %16  : int[]
 	_DEALLOC(lhs);
 	_UPDATE_1DARRAY(lhs, _16);
 	_TRANSFER_DEALLOC(lhs, _16);
-	_REMOVE_DEALLOC(_16);
 	//invoke (%18) = (%0, %4, %2) whiley/lang/Array:slice : function(int[],int,int)->(int[])
 	_UPDATE_1DARRAY_SIZE(_18, items);
 	_DEALLOC(_18);
@@ -100,7 +98,6 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	_DEALLOC(rhs);
 	_UPDATE_1DARRAY(rhs, _18);
 	_TRANSFER_DEALLOC(rhs, _18);
-	_REMOVE_DEALLOC(_18);
 	//const %20 = 0 : int
 	_20 = 0;
 	//sub %21 = %2, %4 : int
@@ -109,13 +106,12 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	_UPDATE_1DARRAY_SIZE(_19, rhs);
 	_DEALLOC(_19);
 	_REMOVE_DEALLOC(rhs);
-	_19 = sortV1(_1DARRAY_PARAM(rhs), true, _20, _21);
+	_19 = sortV1(_1DARRAY_PARAM(rhs), rhs_dealloc, _20, _21);
 	_ADD_DEALLOC(_19);
 	//assign %6 = %19  : int[]
 	_DEALLOC(rhs);
 	_UPDATE_1DARRAY(rhs, _19);
 	_TRANSFER_DEALLOC(rhs, _19);
-	_REMOVE_DEALLOC(_19);
 	//const %22 = 0 : int
 	_22 = 0;
 	//assign %7 = %22  : int
@@ -378,7 +374,6 @@ int main(int argc, char** args){
 	_DEALLOC(ys);
 	_UPDATE_1DARRAY(ys, _10);
 	_TRANSFER_DEALLOC(ys, _10);
-	_REMOVE_DEALLOC(_10);
 	//const %12 = 0 : int
 	_12 = 0;
 	//const %13 = 5 : int
@@ -387,13 +382,12 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY_SIZE(_11, ys);
 	_DEALLOC(_11);
 	_REMOVE_DEALLOC(ys);
-	_11 = sortV1(_1DARRAY_PARAM(ys), true, _12, _13);
+	_11 = sortV1(_1DARRAY_PARAM(ys), ys_dealloc, _12, _13);
 	_ADD_DEALLOC(_11);
 	//assign %1 = %11  : int[]
 	_DEALLOC(ys);
 	_UPDATE_1DARRAY(ys, _11);
 	_TRANSFER_DEALLOC(ys, _11);
-	_REMOVE_DEALLOC(_11);
 	//assert
 	{
 		//const %14 = 1 : int
@@ -437,7 +431,6 @@ blklab9:;
 	_DEALLOC(ys);
 	_UPDATE_1DARRAY(ys, _24);
 	_TRANSFER_DEALLOC(ys, _24);
-	_REMOVE_DEALLOC(_24);
 	//const %26 = 0 : int
 	_26 = 0;
 	//const %27 = 4 : int
@@ -446,13 +439,12 @@ blklab9:;
 	_UPDATE_1DARRAY_SIZE(_25, ys);
 	_DEALLOC(_25);
 	_REMOVE_DEALLOC(ys);
-	_25 = sortV1(_1DARRAY_PARAM(ys), true, _26, _27);
+	_25 = sortV1(_1DARRAY_PARAM(ys), ys_dealloc, _26, _27);
 	_ADD_DEALLOC(_25);
 	//assign %1 = %25  : int[]
 	_DEALLOC(ys);
 	_UPDATE_1DARRAY(ys, _25);
 	_TRANSFER_DEALLOC(ys, _25);
-	_REMOVE_DEALLOC(_25);
 	//assert
 	{
 		//const %28 = 2 : int
@@ -494,7 +486,6 @@ blklab10:;
 	_DEALLOC(ys);
 	_UPDATE_1DARRAY(ys, _37);
 	_TRANSFER_DEALLOC(ys, _37);
-	_REMOVE_DEALLOC(_37);
 	//const %39 = 0 : int
 	_39 = 0;
 	//const %40 = 4 : int
@@ -503,13 +494,12 @@ blklab10:;
 	_UPDATE_1DARRAY_SIZE(_38, ys);
 	_DEALLOC(_38);
 	_REMOVE_DEALLOC(ys);
-	_38 = sortV1(_1DARRAY_PARAM(ys), true, _39, _40);
+	_38 = sortV1(_1DARRAY_PARAM(ys), ys_dealloc, _39, _40);
 	_ADD_DEALLOC(_38);
 	//assign %1 = %38  : int[]
 	_DEALLOC(ys);
 	_UPDATE_1DARRAY(ys, _38);
 	_TRANSFER_DEALLOC(ys, _38);
-	_REMOVE_DEALLOC(_38);
 	//assert
 	{
 		//const %41 = 1 : int
@@ -553,7 +543,6 @@ blklab11:;
 	_DEALLOC(ys);
 	_UPDATE_1DARRAY(ys, _51);
 	_TRANSFER_DEALLOC(ys, _51);
-	_REMOVE_DEALLOC(_51);
 	//const %53 = 0 : int
 	_53 = 0;
 	//const %54 = 5 : int
@@ -562,13 +551,12 @@ blklab11:;
 	_UPDATE_1DARRAY_SIZE(_52, ys);
 	_DEALLOC(_52);
 	_REMOVE_DEALLOC(ys);
-	_52 = sortV1(_1DARRAY_PARAM(ys), true, _53, _54);
+	_52 = sortV1(_1DARRAY_PARAM(ys), ys_dealloc, _53, _54);
 	_ADD_DEALLOC(_52);
 	//assign %1 = %52  : int[]
 	_DEALLOC(ys);
 	_UPDATE_1DARRAY(ys, _52);
 	_TRANSFER_DEALLOC(ys, _52);
-	_REMOVE_DEALLOC(_52);
 	//assert
 	{
 		//const %55 = 1 : int
@@ -617,7 +605,6 @@ blklab12:;
 	_DEALLOC(arr);
 	_UPDATE_1DARRAY(arr, _66);
 	_TRANSFER_DEALLOC(arr, _66);
-	_REMOVE_DEALLOC(_66);
 	//loop (%3, %4, %67, %68, %69)
 	while(true){
 		//ifgt %3, %2 goto blklab13 : int
@@ -647,13 +634,12 @@ blklab13:;
 	_UPDATE_1DARRAY_SIZE(_70, arr);
 	_DEALLOC(_70);
 	_REMOVE_DEALLOC(arr);
-	_70 = sortV1(_1DARRAY_PARAM(arr), true, _71, _73);
+	_70 = sortV1(_1DARRAY_PARAM(arr), arr_dealloc, _71, _73);
 	_ADD_DEALLOC(_70);
 	//assign %4 = %70  : int[]
 	_DEALLOC(arr);
 	_UPDATE_1DARRAY(arr, _70);
 	_TRANSFER_DEALLOC(arr, _70);
-	_REMOVE_DEALLOC(_70);
 	//assert
 	{
 		//const %74 = 0 : int

@@ -207,7 +207,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 // Take out a variable's deallocation flag
 #define _REMOVE_DEALLOC(a) a##_dealloc = false;
 // Transfer one variable's deallocation flag to another
-#define _TRANSFER_DEALLOC(a, b) a##_dealloc = b##_dealloc;
+#define _TRANSFER_DEALLOC(a, b) a##_dealloc = b##_dealloc; b##_dealloc = false;
 /*
 * Other Macros 
 *

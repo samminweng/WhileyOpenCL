@@ -110,7 +110,6 @@ Matrix* multiply(Matrix* A, _DECL_DEALLOC_PARAM(A), Matrix* B, _DECL_DEALLOC_PAR
 	_DEALLOC_2DArray(C_data);
 	_UPDATE_2DARRAY(C_data, _12);
 	_TRANSFER_DEALLOC(C_data, _12);
-	_REMOVE_DEALLOC(_12);
 	//const %13 = 0 : int
 	_13 = 0;
 	//assign %4 = %13  : int
@@ -211,7 +210,7 @@ blklab13:;
 	//invoke (%34) = (%35, %36, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
 	_DEALLOC_STRUCT(_34, Matrix);
 	_REMOVE_DEALLOC(C_data);
-	_34 = matrix(_35, _36, _2DARRAY_PARAM(C_data), true);
+	_34 = matrix(_35, _36, _2DARRAY_PARAM(C_data), C_data_dealloc);
 	_ADD_DEALLOC(_34);
 	//return %34
 	_DEALLOC_STRUCT(A, Matrix);
@@ -367,7 +366,6 @@ Matrix* init(long long height, long long width){
 	_DEALLOC_2DArray(rows);
 	_UPDATE_2DARRAY(rows, _8);
 	_TRANSFER_DEALLOC(rows, _8);
-	_REMOVE_DEALLOC(_8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %4 = %9  : int
@@ -411,7 +409,7 @@ blklab23:;
 	//invoke (%15) = (%1, %0, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
 	_DEALLOC_STRUCT(_15, Matrix);
 	_REMOVE_DEALLOC(rows);
-	_15 = matrix(width, height, _2DARRAY_PARAM(rows), true);
+	_15 = matrix(width, height, _2DARRAY_PARAM(rows), rows_dealloc);
 	_ADD_DEALLOC(_15);
 	//return %15
 	_DEALLOC_STRUCT(r, Matrix);
@@ -484,7 +482,6 @@ int main(int argc, char** args){
 	_DEALLOC_STRUCT(A, Matrix);
 	A = _6;
 	_TRANSFER_DEALLOC(A, _6);
-	_REMOVE_DEALLOC(_6);
 	//invoke (%7) = (%1, %1) MatrixMult:init : function(MatrixMult:nat,MatrixMult:nat)->(MatrixMult:Matrix)
 	_DEALLOC_STRUCT(_7, Matrix);
 	_7 = init(max, max);
@@ -493,7 +490,6 @@ int main(int argc, char** args){
 	_DEALLOC_STRUCT(B, Matrix);
 	B = _7;
 	_TRANSFER_DEALLOC(B, _7);
-	_REMOVE_DEALLOC(_7);
 	//invoke (%8) = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
 	_DEALLOC_STRUCT(_8, Matrix);
 	_8 = multiply(_COPY_STRUCT_PARAM(A, Matrix), true, _COPY_STRUCT_PARAM(B, Matrix), true);
@@ -502,7 +498,6 @@ int main(int argc, char** args){
 	_DEALLOC_STRUCT(C, Matrix);
 	C = _8;
 	_TRANSFER_DEALLOC(C, _8);
-	_REMOVE_DEALLOC(_8);
 	//assert
 	{
 		//fieldload %9 = %2 data : {int[][] data,int height,int width}

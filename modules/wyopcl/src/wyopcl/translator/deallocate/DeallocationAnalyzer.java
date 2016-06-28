@@ -262,8 +262,6 @@ public class DeallocationAnalyzer extends Analyzer {
 			if (isCopyEliminated) {
 				// Transfer rhs deallocation flag to lhs
 				statements.add(indent + transferDealloc(lhs, rhs, function, stores));
-				// Remove rhs deallocation flag
-				statements.add(indent + removeDealloc(rhs, function, stores));
 			} else {
 				// Add deallocation flag to lhs register
 				statements.add(indent + addDealloc(lhs, function, stores));
@@ -369,14 +367,14 @@ public class DeallocationAnalyzer extends Analyzer {
 		String indent = stores.getIndent(function);
 		// Add or transfer out the parameters that do not have the copy
 		for (int register : code.operands()) {
-			Optional<HashMap<String, Boolean>> dealloc = computeDealloc(register, code, function, stores, copyAnalyzer);
-			dealloc.ifPresent(o -> {
-				// Get callee's deallocation flag
-				boolean caller_dealloc = o.get("caller");
+			Optional<String> dealloc = computeDealloc(register, code, function, stores, copyAnalyzer);
+			dealloc.ifPresent(callee_dealloc -> {
+				// Check callee's deallocation flag
 				if (copyAnalyzer.isPresent()) {
 					// Check if the callee de-allocates the argument
-					if (!caller_dealloc) {
-						// If so, then deallocation flag is removed at caller site
+					if (callee_dealloc.equals("transfer_callee")) {
+						// If so, then deallocation flag is transferred from caller site to callee
+						// And remove the caller's flag
 						statements.add(indent + removeDealloc(register, function, stores));
 					}
 				}
@@ -463,7 +461,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * --------------------------------------------------------------------
 	 * b is alive?	T	|No Copy	|No Copy	|Copy		|Copy
 	 * 					|caller = T	|caller = T |caller = T	|caller = T
-	 * 					|callee = F |callee = F |callee = T	|calee  = T
+	 * 					|callee = F |callee = F |callee = T	|callee  = T
 	 * --------------------------------------------------------------------
 	 * 				F	|No Copy	|No Copy	|No Copy	|No Copy
 	 * 					|caller = T |caller = F	|caller = F |caller = F
@@ -472,22 +470,28 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * 
 	 * where 'caller' is the deallocation flag of caller site 'callee' is the deallocation flag of callee site
 	 * 
-	 * @param type
+	 * @param register function argument
+	 * @param code function call byte-code
+	 * @param function caller function
+	 * @param stores code stores
 	 * @param copyAnalyzer
-	 * @return a hashmap that contains caller's deallocation flag and callee's deallocation flag for a parameter.
+	 * @return three outcomes: 'rm_callee', 'add_callee' and 'transfer_callee'
+	 * 
+	 *  'rm_callee': set callee flag to be 'false'
+	 *  'add_callee': set callee flag to be 'true'
+	 *  'transfer_callee': transfers caller's flag to callee and set caller flag to be 'false'
+	 * 
 	 */
-	public Optional<HashMap<String, Boolean>> computeDealloc(int register, Codes.Invoke code, FunctionOrMethod function,
+	public Optional<String> computeDealloc(int register, Codes.Invoke code, FunctionOrMethod function,
 			CodeStores stores, Optional<CopyEliminationAnalyzer> copyAnalyzer) {
 		Type type = stores.getRawType(register, function);
 		if (!stores.isCompoundType(type)) {
 			return Optional.empty();
 		}
 
-		boolean isLive = true;
-		Optional<HashMap<String, Boolean>> dealloc = Optional.of(new HashMap<String, Boolean>());
 		if (copyAnalyzer.isPresent()) {
 			// Analyze the deallocation flags using live variable, read-write and return analysis
-			isLive = copyAnalyzer.get().liveAnalyzer.isLive(register, code, function);
+			boolean isLive = copyAnalyzer.get().liveAnalyzer.isLive(register, code, function);
 
 			FunctionOrMethod f = this.getFunction(code.name.name());
 			int arguement = mapFunctionArgument(register, code);
@@ -497,17 +501,21 @@ public class DeallocationAnalyzer extends Analyzer {
 			if (!isMutated) {
 				if (!isReturned) {
 					// NOT mutated nor return
-					dealloc.get().put("caller", true);
-					dealloc.get().put("callee", false);
+					return Optional.of("rm_callee");
+					//dealloc.get().put("caller", true);
+					//dealloc.get().put("callee", false);
 				} else {
 					// NOT mutated but returned
-					// If 'b' is alive at caller site
 					if (isLive) {
-						dealloc.get().put("caller", true);
-						dealloc.get().put("callee", false);
+						// If 'b' is alive at caller site
+						return Optional.of("rm_callee");
+						//dealloc.get().put("caller", true);
+						//dealloc.get().put("callee", false);
 					} else {
-						dealloc.get().put("caller", false);
-						dealloc.get().put("callee", true);
+						// If 'b' is NOT alive at caller site
+						return Optional.of("transfer_callee");
+						//dealloc.get().put("caller", false);
+						//dealloc.get().put("callee", true);
 					}
 				}
 			} else {
@@ -515,31 +523,37 @@ public class DeallocationAnalyzer extends Analyzer {
 					// Mutated and returned
 					if (isLive) {
 						// 'b' is alive
-						dealloc.get().put("caller", true);
-						dealloc.get().put("callee", true);
+						return Optional.of("add_callee");
+						//dealloc.get().put("caller", true);
+						//dealloc.get().put("callee", true);
 					} else {
-						dealloc.get().put("caller", false);
-						dealloc.get().put("callee", true);
+						// 'b' is NOT alive
+						return Optional.of("transfer_callee");
+						//dealloc.get().put("caller", false);
+						//dealloc.get().put("callee", true);
 					}
 				} else {
 					// Mutated and NOT returned
 					if (isLive) {
 						// 'b' is alive
-						dealloc.get().put("caller", true);
-						dealloc.get().put("callee", true);
+						return Optional.of("add_callee");
+						//dealloc.get().put("caller", true);
+						//dealloc.get().put("callee", true);
 					} else {
-						dealloc.get().put("caller", false);
-						dealloc.get().put("callee", true);
+						return Optional.of("transfer_callee");
+						//dealloc.get().put("caller", false);
+						//dealloc.get().put("callee", true);
 					}
 				}
 			}
 		} else {
 			// The copy is needed, so that caller and callee both have the deallocation flags
-			dealloc.get().put("caller", true);
-			dealloc.get().put("callee", true);
+			return Optional.of("add_callee");
+			//dealloc.get().put("caller", true);
+			//dealloc.get().put("callee", true);
 		}
 
-		return dealloc;
+		//return dealloc;
 	}
 
 	/**
