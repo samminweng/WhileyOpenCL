@@ -249,8 +249,8 @@ int main(int argc, char** args){
 	//invoke (%8) = (%2, %1) CoinGame1:findMoves : function(int[],int)->(int[])
 	_UPDATE_1DARRAY_SIZE(_8, moves);
 	_DEALLOC(_8);
-	_REMOVE_DEALLOC(moves);
 	_8 = findMoves(_1DARRAY_PARAM(moves), moves_dealloc, n);
+	_REMOVE_DEALLOC(moves);
 	_ADD_DEALLOC(_8);
 	//assign %2 = %8  : int[]
 	_DEALLOC(moves);

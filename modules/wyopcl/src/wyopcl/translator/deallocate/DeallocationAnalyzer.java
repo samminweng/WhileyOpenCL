@@ -349,8 +349,8 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * 
 	 * <pre>
 	 * <code>
-	 * 		a = f(b, true); // 'f' function frees 'b' array
-	 * 		b_dealloc = false; // Remove b 'de-alloc' flag 
+	 * 		a = f(b, b_dealloc); // 'f' function frees 'b' array
+	 * 		b_dealloc = false; // reset b 'de-alloc' flag to be 'false' 
 	 * </code>
 	 * </pre>
 	 * 

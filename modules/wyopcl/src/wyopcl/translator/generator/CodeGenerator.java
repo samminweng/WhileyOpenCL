@@ -857,13 +857,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// De-allocate lhs register
 			preProcessor(statement, code, function);
 		
-			// Remove deallocation flags of the parameters that do not have the copy
+			// call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
+			statement.add(translateFunctionCall(argumentCopyEliminated, code, function));
+			
+			// If the copy is not made and the parameter is transferred to callee, 
+			// then remove deallocation flags of the parameters.
 			this.deallocatedAnalyzer.ifPresent(a -> {
 				statement.addAll(a.computeDealloc(code, function, stores, copyAnalyzer));
 			});
-
-			// call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
-			statement.add(translateFunctionCall(argumentCopyEliminated, code, function));
 		}
 		
 		postProcessor(argumentCopyEliminated, statement, code, function);

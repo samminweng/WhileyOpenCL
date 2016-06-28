@@ -138,8 +138,8 @@ blklab3:;
 blklab2:;
 	//invoke (%21) = (%0, %1, %3) MatrixMult3:matrix : function(MatrixMult3:nat,MatrixMult3:nat,int[])->(MatrixMult3:Matrix)
 	_DEALLOC_STRUCT(_21, Matrix);
-	_REMOVE_DEALLOC(data);
 	_21 = matrix(width, height, _1DARRAY_PARAM(data), data_dealloc);
+	_REMOVE_DEALLOC(data);
 	_ADD_DEALLOC(_21);
 	//return %21
 	_DEALLOC_STRUCT(r, Matrix);
@@ -525,8 +525,8 @@ blklab18:;
 blklab17:;
 	//invoke (%58) = (%3, %4, %5) MatrixMult3:matrix : function(MatrixMult3:nat,MatrixMult3:nat,int[])->(MatrixMult3:Matrix)
 	_DEALLOC_STRUCT(_58, Matrix);
-	_REMOVE_DEALLOC(data);
 	_58 = matrix(width, height, _1DARRAY_PARAM(data), data_dealloc);
+	_REMOVE_DEALLOC(data);
 	_ADD_DEALLOC(_58);
 	//return %58
 	_DEALLOC_STRUCT(a, Matrix);
