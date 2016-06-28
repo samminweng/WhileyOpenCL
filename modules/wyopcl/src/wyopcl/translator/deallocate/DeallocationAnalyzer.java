@@ -456,16 +456,14 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * rules, e.g. a function call 'a = f(b, b_own_f)', Rules are as below:
 	 * 
 	 * <pre>
-	 * f mutates b?		|F			|F			|T			|T
-	 * f returns b?		|F			|T			|T			|F
+	 * f mutates b?		|F			|F			      |T			    |T
+	 * f returns b?		|F			|T			      |T			    |F
+	 * -----------------------------------------------------------------------------
+	 * b is alive?	T	|No Copy	|No Copy	      |Copy		        |Copy
+	 * 					|'rm_callee'|'rm_callee'      |'add_callee'	    |'add_callee'
 	 * --------------------------------------------------------------------
-	 * b is alive?	T	|No Copy	|No Copy	|Copy		|Copy
-	 * 					|caller = T	|caller = T |caller = T	|caller = T
-	 * 					|callee = F |callee = F |callee = T	|callee  = T
-	 * --------------------------------------------------------------------
-	 * 				F	|No Copy	|No Copy	|No Copy	|No Copy
-	 * 					|caller = T |caller = F	|caller = F |caller = F
-	 * 					|callee = F |callee = T	|callee = T	|callee = T
+	 * 				F	|No Copy	|No Copy	      |No Copy	        |No Copy
+	 * 					|'rm_callee'|'transfer_callee'|'transfer_callee'|'transfer_callee'
 	 * </pre>
 	 * 
 	 * where 'caller' is the deallocation flag of caller site 'callee' is the deallocation flag of callee site
@@ -479,7 +477,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * 
 	 *  'rm_callee': set callee flag to be 'false'
 	 *  'add_callee': set callee flag to be 'true'
-	 *  'transfer_callee': transfers caller's flag to callee and set caller flag to be 'false'
+	 *  'transfer_callee': transfers caller's flag to callee, and after the function call, set caller flag to be 'false'
 	 * 
 	 */
 	public Optional<String> computeDealloc(int register, Codes.Invoke code, FunctionOrMethod function,
