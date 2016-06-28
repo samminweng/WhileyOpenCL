@@ -62,7 +62,7 @@ public class LiveVariablesAnalysis extends Analyzer {
 	 * @param reg
 	 * @param code
 	 * @param f
-	 * @return
+	 * @return true if the reg is a live. Return false if the register is not alive
 	 */
 	public boolean isLive(int reg, Code code, FunctionOrMethod f) {
 		boolean isLive = true; // Assume the reg is alive conservatively

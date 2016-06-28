@@ -133,8 +133,14 @@ public final class CodeGeneratorHelper {
 				}
 			}else{
 				// An array of structure pointers
-				String struct = translateType(elm_type, stores).replace("*", "");
-				statement.add(indent + "_COPY_1DARRAY_STRUCT("+lhs+", "+rhs+", "+struct+");");
+				if(isCopyEliminated){
+					// Have an in-place update
+					statement.add(indent + indent + "_UPDATE_1DARRAY("+lhs+", "+rhs+");");			
+				}else{
+					// Copy the array and assign it to lhs
+					String struct = translateType(elm_type, stores).replace("*", "");
+					statement.add(indent + "_COPY_1DARRAY_STRUCT("+lhs+", "+rhs+", "+struct+");");
+				}
 			}
 		}else{
 			if(isCopyEliminated || !stores.isCompoundType(type)){

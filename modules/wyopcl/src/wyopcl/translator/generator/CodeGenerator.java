@@ -1458,15 +1458,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		int[] operands = code.operands();
 		for (int i = 0; i < operands.length; i++) {
 			// Get operand
-			int operand = operands[i];
-			String rhs = stores.getVar(operand, function);
+			int register = operands[i];
+			String rhs = stores.getVar(register, function);
 			String member = members.get(i);
 			String lhs_member = lhs + "->" + member;
-			Type type = code.type(0).field(member);
-			boolean isCopyEliminated = isCopyEliminated(operand, code, function);
-			copyEliminatedMap.put(operand, isCopyEliminated);
+			Type member_type = stores.getRawType(register, function);
+			//Type type = code.type(0).field(member);
+			boolean isCopyEliminated = isCopyEliminated(register, code, function);
+			copyEliminatedMap.put(register, isCopyEliminated);
 
-			statement.addAll(CodeGeneratorHelper.generateAssignmentCode(type, indent, lhs_member, rhs, isCopyEliminated,
+			statement.addAll(CodeGeneratorHelper.generateAssignmentCode(member_type, indent, lhs_member, rhs, isCopyEliminated,
 					stores));
 		}
 

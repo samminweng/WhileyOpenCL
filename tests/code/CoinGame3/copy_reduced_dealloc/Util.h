@@ -107,9 +107,9 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
  * In-place Update Macros
  *
  */
-// Update an array of integers
+// Update an array of integers or structure pointers
 #define _UPDATE_1DARRAY(a, b) a##_size = b##_size; a = b;
-#define _UPDATE_2DARRAY(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = b; 
+#define _UPDATE_2DARRAY(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = b;
 // Update the array size
 #define _UPDATE_1DARRAY_SIZE(a, b) a##_size = b##_size;
 #define _UPDATE_2DARRAY_SIZE(a, b) a##_size = b##_size; a##_size_size = b##_size_size;
