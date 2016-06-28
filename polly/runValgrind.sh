@@ -163,7 +163,7 @@ exec autogenerate_array copyreduced CoinGame 100
 exec autogenerate_array copyreduced_leakfree CoinGame 100
 #### NQueen test case
 init NQueens
-exec autogenerate naive NQueens 10
-exec autogenerate naive_leakfree NQueens 10
-exec autogenerate copyreduced NQueens 10
-exec autogenerate copyreduced_leakfree NQueens 10
+exec autogenerate naive NQueens 8
+exec autogenerate naive_leakfree NQueens 8
+exec autogenerate copyreduced NQueens 8
+exec autogenerate copyreduced_leakfree NQueens 8

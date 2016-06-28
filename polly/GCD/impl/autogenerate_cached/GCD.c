@@ -73,7 +73,7 @@ long long gcd_cached(long long a, long long b, long long n, _DECL_1DARRAY_PARAM(
 	//ifne %0, %5 goto blklab7 : int
 	if(a!=_5){goto blklab7;}
 	//return %1
-	_FREE(gcds);
+	_DEALLOC(gcds);
 	return b;
 	//goto blklab8
 	goto blklab8;
@@ -84,7 +84,7 @@ blklab7:;
 	//ifne %1, %6 goto blklab9 : int
 	if(b!=_6){goto blklab9;}
 	//return %0
-	_FREE(gcds);
+	_DEALLOC(gcds);
 	return a;
 	//goto blklab10
 	goto blklab10;
@@ -113,7 +113,7 @@ blklab12:;
 	//indexof %11 = %3, %10 : int[]
 	_11=gcds[_10];
 	//return %11
-	_FREE(gcds);
+	_DEALLOC(gcds);
 	return _11;
 //.blklab10
 blklab10:;
@@ -168,7 +168,7 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_40);
 	_DECL_DEALLOC(_40);
 	//fieldload %8 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	_FREE2DArray(_8);
+	_DEALLOC_2DArray(_8);
 	_CONV_ARGS(_8);
 	_ADD_DEALLOC(_8);
 	//const %9 = 0 : int
@@ -181,10 +181,9 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_7);
 	_REMOVE_DEALLOC(_10);
 	//assign %1 = %7  : null|int
-	_FREE(max);
+	_DEALLOC(max);
 	max = _7;
 	_TRANSFER_DEALLOC(max, _7);
-	_REMOVE_DEALLOC(_7);
 	//ifis %1, null goto blklab13 : null|int
 	if(max == NULL) { goto blklab13;}
 	//assign %2 = %1  : int
@@ -192,8 +191,8 @@ int main(int argc, char** args){
 	//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %12 = %11 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %13 = [78,32,61,32] : int[]
-	_FREE(_13);
-	_NEW_ARRAY(_13, 4);
+	_DEALLOC(_13);
+	_NEW_1DARRAY(_13, 4, 0);
 	_13[0] = 78; _13[1] = 32; _13[2] = 61; _13[3] = 32; 
 	_ADD_DEALLOC(_13);
 	//indirectinvoke () = %12 (%13) : method(int[])->()
@@ -207,14 +206,13 @@ int main(int argc, char** args){
 	//mul %17 = %2, %2 : int
 	_17=n*n;
 	//arraygen %18 = [16; 17] : int[]
-	_FREE(_18);
-	_GEN_1DARRAY(_18, _17, _16);
+	_DEALLOC(_18);
+	_NEW_1DARRAY(_18, _17, _16);
 	_ADD_DEALLOC(_18);
 	//assign %3 = %18  : int[]
-	_FREE(gcds);
-	_1DARRAY_UPDATE(gcds, _18);
+	_DEALLOC(gcds);
+	_UPDATE_1DARRAY(gcds, _18);
 	_TRANSFER_DEALLOC(gcds, _18);
-	_REMOVE_DEALLOC(_18);
 	//const %19 = 0 : int
 	_19 = 0;
 	//assign %4 = %19  : int
@@ -278,8 +276,8 @@ blklab14:;
 	//fieldload %33 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %34 = %33 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %35 = [83,117,109,58,32] : int[]
-	_FREE(_35);
-	_NEW_ARRAY(_35, 5);
+	_DEALLOC(_35);
+	_NEW_1DARRAY(_35, 5, 0);
 	_35[0] = 83; _35[1] = 117; _35[2] = 109; _35[3] = 58; _35[4] = 32; 
 	_ADD_DEALLOC(_35);
 	//indirectinvoke () = %34 (%35) : method(int[])->()
@@ -291,8 +289,8 @@ blklab14:;
 	//fieldload %38 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %39 = %38 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %40 = [80,97,115,115,32,99,97,99,104,101,100,32,69,117,99,108,105,100,32,71,67,68,32,116,101,115,116,32,99,97,115,101] : int[]
-	_FREE(_40);
-	_NEW_ARRAY(_40, 32);
+	_DEALLOC(_40);
+	_NEW_1DARRAY(_40, 32, 0);
 	_40[0] = 80; _40[1] = 97; _40[2] = 115; _40[3] = 115; _40[4] = 32; _40[5] = 99; _40[6] = 97; _40[7] = 99; _40[8] = 104; _40[9] = 101; _40[10] = 100; _40[11] = 32; _40[12] = 69; _40[13] = 117; _40[14] = 99; _40[15] = 108; _40[16] = 105; _40[17] = 100; _40[18] = 32; _40[19] = 71; _40[20] = 67; _40[21] = 68; _40[22] = 32; _40[23] = 116; _40[24] = 101; _40[25] = 115; _40[26] = 116; _40[27] = 32; _40[28] = 99; _40[29] = 97; _40[30] = 115; _40[31] = 101; 
 	_ADD_DEALLOC(_40);
 	//indirectinvoke () = %39 (%40) : method(int[])->()
@@ -300,15 +298,15 @@ blklab14:;
 //.blklab13
 blklab13:;
 	//return
-	_FREE(max);
-	_FREE(gcds);
-	_FREE(_7);
-	_FREE2DArray(_8);
-	_FREE(_10);
-	_FREE(_13);
-	_FREE(_18);
-	_FREE(_35);
-	_FREE(_40);
+	_DEALLOC(max);
+	_DEALLOC(gcds);
+	_DEALLOC(_7);
+	_DEALLOC_2DArray(_8);
+	_DEALLOC(_10);
+	_DEALLOC(_13);
+	_DEALLOC(_18);
+	_DEALLOC(_35);
+	_DEALLOC(_40);
 	exit(0);
 }
 

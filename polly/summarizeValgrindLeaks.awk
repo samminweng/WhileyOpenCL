@@ -18,7 +18,7 @@ BEGIN {
 	parameters["MatrixMult"] = "15";
 	parameters["GCD"] = "100";
 	parameters["CoinGame"] = "100";
-	parameters["NQueens"] = "10";
+	parameters["NQueens"] = "8";
 	count[""]=0;
 	# Leak
 	leaks[""]=0;

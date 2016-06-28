@@ -6,6 +6,15 @@ typedef struct{
 void printf_POS(POS* _pos);
 POS* copy_POS(POS* _pos);
 void free_POS(POS* _pos);
+typedef struct{
+	POS** queens;
+	long long queens_size;
+	long long num_solutions;
+} NQueen;
+void printf_NQueen(NQueen* _nqueen);
+NQueen* copy_NQueen(NQueen* _nqueen);
+void free_NQueen(NQueen* _nqueen);
+NQueen* nqueen(long long num_solutions, POS** queens, long long queens_size, _DECL_DEALLOC_PARAM(queens));
 long long conflict(POS* p, _DECL_DEALLOC_PARAM(p), long long row, long long col);
-long long run(POS** queens, long long queens_size, _DECL_DEALLOC_PARAM(queens), long long n, long long dim);
+NQueen* run(NQueen* nq, _DECL_DEALLOC_PARAM(nq), long long n, long long dim);
 int main(int argc, char** args);
