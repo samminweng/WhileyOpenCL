@@ -146,14 +146,18 @@ Matrix* multiply(Matrix* A, _DECL_DEALLOC_PARAM(A), Matrix* B, _DECL_DEALLOC_PAR
 				//ifge %7, %19 goto blklab17 : int
 				if(k>=_19){goto blklab17;}
 				//fieldload %20 = %0 data : {int[][] data,int height,int width}
+				_DEALLOC_2DArray(_20);
 				_UPDATE_2DARRAY(_20, A->data);
+				_REMOVE_DEALLOC(_20);
 				//indexof %21 = %20, %4 : int[][]
 				_21=_20[i];
 				_REMOVE_DEALLOC(_21);
 				//indexof %22 = %21, %7 : int[]
 				_22=_21[k];
 				//fieldload %23 = %1 data : {int[][] data,int height,int width}
+				_DEALLOC_2DArray(_23);
 				_UPDATE_2DARRAY(_23, B->data);
+				_REMOVE_DEALLOC(_23);
 				//indexof %24 = %23, %7 : int[][]
 				_24=_23[k];
 				_REMOVE_DEALLOC(_24);
@@ -271,7 +275,9 @@ void printMat(FILE* sys, Matrix* A, _DECL_DEALLOC_PARAM(A)){
 			//fieldload %8 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %9 = %8 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//fieldload %10 = %1 data : {int[][] data,int height,int width}
+			_DEALLOC_2DArray(_10);
 			_UPDATE_2DARRAY(_10, A->data);
+			_REMOVE_DEALLOC(_10);
 			//indexof %11 = %10, %2 : int[][]
 			_11=_10[i];
 			_REMOVE_DEALLOC(_11);
@@ -487,7 +493,7 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(B, _7);
 	//invoke (%8) = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
 	_DEALLOC_STRUCT(_8, Matrix);
-	_8 = multiply(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
+	_8 = multiply(_COPY_STRUCT_PARAM(A, Matrix), true, _COPY_STRUCT_PARAM(B, Matrix), true);
 	_ADD_DEALLOC(_8);
 	//assign %4 = %8  : {int[][] data,int height,int width}
 	_DEALLOC_STRUCT(C, Matrix);
@@ -496,7 +502,9 @@ int main(int argc, char** args){
 	//assert
 	{
 		//fieldload %9 = %2 data : {int[][] data,int height,int width}
+		_DEALLOC_2DArray(_9);
 		_UPDATE_2DARRAY(_9, A->data);
+		_REMOVE_DEALLOC(_9);
 		//const %10 = 1 : int
 		_10 = 1;
 		//sub %11 = %1, %10 : int
@@ -526,7 +534,9 @@ blklab27:;
 	//assert
 	{
 		//fieldload %18 = %3 data : {int[][] data,int height,int width}
+		_DEALLOC_2DArray(_18);
 		_UPDATE_2DARRAY(_18, B->data);
+		_REMOVE_DEALLOC(_18);
 		//const %19 = 1 : int
 		_19 = 1;
 		//sub %20 = %1, %19 : int
@@ -556,7 +566,9 @@ blklab28:;
 	//assert
 	{
 		//fieldload %27 = %4 data : {int[][] data,int height,int width}
+		_DEALLOC_2DArray(_27);
 		_UPDATE_2DARRAY(_27, C->data);
+		_REMOVE_DEALLOC(_27);
 		//const %28 = 1 : int
 		_28 = 1;
 		//sub %29 = %1, %28 : int
@@ -582,7 +594,8 @@ blklab29:;
 	//assert
 	}
 	//invoke () = (%0, %4) MatrixMult:printMat : method(whiley/lang/System:Console,MatrixMult:Matrix)->()
-printMat(stdout, _STRUCT_PARAM(C), false);
+printMat(stdout, _STRUCT_PARAM(C), C_dealloc);
+	_REMOVE_DEALLOC(C);
 	//fieldload %35 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %36 = %35 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %37 = [80,97,115,115,32,77,97,116,114,105,120,77,117,108,116,32,116,101,115,116,32,99,97,115,101] : int[]

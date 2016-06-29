@@ -201,7 +201,9 @@ void print_mat(FILE* sys, Matrix* a, _DECL_DEALLOC_PARAM(a)){
 			//fieldload %10 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %11 = %10 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//fieldload %12 = %1 data : {int[] data,int height,int width}
+			_DEALLOC(_12);
 			_COPY_1DARRAY(_12, a->data);
+			_ADD_DEALLOC(_12);
 			//mul %13 = %2, %3 : int
 			_13=i*width;
 			//add %14 = %13, %5 : int
@@ -326,13 +328,17 @@ Matrix* mat_mult(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_PAR
 	_COPY_1DARRAY(data, _15);
 	_ADD_DEALLOC(data);
 	//fieldload %16 = %0 data : {int[] data,int height,int width}
+	_DEALLOC(_16);
 	_COPY_1DARRAY(_16, a->data);
+	_ADD_DEALLOC(_16);
 	//assign %6 = %16  : int[]
 	_DEALLOC(a_data);
 	_COPY_1DARRAY(a_data, _16);
 	_ADD_DEALLOC(a_data);
 	//fieldload %17 = %1 data : {int[] data,int height,int width}
+	_DEALLOC(_17);
 	_COPY_1DARRAY(_17, b->data);
+	_ADD_DEALLOC(_17);
 	//assign %7 = %17  : int[]
 	_DEALLOC(b_data);
 	_COPY_1DARRAY(b_data, _17);
@@ -574,7 +580,9 @@ int main(int argc, char** args){
 	//assert
 	{
 		//fieldload %17 = %1 data : {int[] data,int height,int width}
+		_DEALLOC(_17);
 		_COPY_1DARRAY(_17, A->data);
+		_ADD_DEALLOC(_17);
 		//const %18 = 20 : int
 		_18 = 20;
 		//const %19 = 1 : int
@@ -613,7 +621,9 @@ blklab19:;
 	//assert
 	{
 		//fieldload %31 = %2 data : {int[] data,int height,int width}
+		_DEALLOC(_31);
 		_COPY_1DARRAY(_31, B->data);
+		_ADD_DEALLOC(_31);
 		//const %32 = 20 : int
 		_32 = 20;
 		//const %33 = 1 : int
@@ -652,7 +662,9 @@ blklab20:;
 	//assert
 	{
 		//fieldload %45 = %3 data : {int[] data,int height,int width}
+		_DEALLOC(_45);
 		_COPY_1DARRAY(_45, C->data);
+		_ADD_DEALLOC(_45);
 		//const %46 = 20 : int
 		_46 = 20;
 		//const %47 = 1 : int
@@ -698,7 +710,9 @@ print_mat(stdout, _COPY_STRUCT_PARAM(C, Matrix), true);
 	//fieldload %60 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %61 = %60 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//fieldload %62 = %3 data : {int[] data,int height,int width}
+	_DEALLOC(_62);
 	_COPY_1DARRAY(_62, C->data);
+	_ADD_DEALLOC(_62);
 	//const %63 = 20 : int
 	_63 = 20;
 	//const %64 = 1 : int

@@ -146,6 +146,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 				free_##name(a[i]);\
 				a[i] = NULL;\
 			}\
+			free(a);\
 			a = NULL;\
 		})
 
@@ -185,6 +186,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 					free_##name(a[i]);\
 					a[i] = NULL;\
 				}\
+				free(a);\
 				a = NULL;\
 				a##_dealloc = false;\
 		  	}\
@@ -197,6 +199,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 					free_##name(b[i]);\
 					b[i] = NULL;\
 				}\
+				free(b);\
 				b = NULL;\
 			}\
 		})

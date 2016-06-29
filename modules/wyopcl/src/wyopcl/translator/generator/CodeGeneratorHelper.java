@@ -304,7 +304,7 @@ public final class CodeGeneratorHelper {
 					}else{
 						statement.add("\tfree("+input_member+");");
 					}
-					// Set the member to be 'NULL'
+					// Nullify the member
 					statement.add("\t"+input_member+" = NULL;");
 				}else{
 					// Free n array of structure pointers
