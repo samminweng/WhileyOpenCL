@@ -1278,8 +1278,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			stores.loadField(code.target(0), field, function);
 		} else {
 			// Free lhs variable
-			preProcessor(statement, code, function);
-			boolean isCopyEliminated;
+			//preProcessor(statement, code, function);
+			boolean isCopyEliminated;// The copy is NOT needed by default.
 			if (field.equals("args")) {
 				// Convert the arguments into an array of integer array (long long**).
 				statement.add(stores.getIndent(function) + "_CONV_ARGS(" + stores.getVar(code.target(0), function) + ");");
@@ -1292,7 +1292,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, stores.getIndent(function), stores.getVar(code.target(0), function), rhs,
 						isCopyEliminated, stores));
 			}
-			postProcessor(isCopyEliminated, code.operand(0), statement, code, function);
+			//postProcessor(isCopyEliminated, code.operand(0), statement, code, function);
 		}
 		stores.addAllStatements(code, statement, function);
 	}

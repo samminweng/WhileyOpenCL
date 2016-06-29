@@ -139,12 +139,6 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 *
 */
 // Release the structure pointers without checking de-allocated flag.
-// This macro is used in update byte-code
-#define _FREE_STRUCT(a, name) \
-		({\
-			free_##name(a);\
-			a = NULL;\
-		})
 // The standard structure member function code to free an array of structure pointers
 #define _FREE_1DARRAY_STRUCT(a, name) \
 		({\
@@ -206,7 +200,14 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 				b = NULL;\
 			}\
 		})
-
+// Deallocate a member whose type is a structure pointer
+#define _DEALLOC_MEMBER_STRUCT(a, b, name) \
+		({\
+			if(a##_dealloc){\
+				free_##name(b);\
+				b = NULL;\
+			}\
+		})
 /**
 * Deallocation Flag Macros
 *

@@ -77,8 +77,15 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 *            the caller function
 	 * @return ture if the copy is un-needed and can be avoid. Otherwise, return false.
 	 * 
+	 * Note that The copies are not needed by default in some special forms of byte-code ('FieldLoad')
+	 * 
 	 */
 	public boolean isCopyEliminated(int register, Code code, FunctionOrMethod function) {
+		// Special case
+		if(code instanceof Codes.FieldLoad){
+			return true; // The copies can be safely removed.
+		}
+		
 		boolean isCopyAvoided = false; // The copy is needed
 		boolean isLive = this.liveAnalyzer.isLive(register, code, function);
 

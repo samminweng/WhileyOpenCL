@@ -500,20 +500,14 @@ public class DeallocationAnalyzer extends Analyzer {
 				if (!isReturned) {
 					// NOT mutated nor return
 					return Optional.of("rm_callee");
-					//dealloc.get().put("caller", true);
-					//dealloc.get().put("callee", false);
 				} else {
 					// NOT mutated but returned
 					if (isLive) {
 						// If 'b' is alive at caller site
 						return Optional.of("rm_callee");
-						//dealloc.get().put("caller", true);
-						//dealloc.get().put("callee", false);
 					} else {
 						// If 'b' is NOT alive at caller site
 						return Optional.of("transfer_callee");
-						//dealloc.get().put("caller", false);
-						//dealloc.get().put("callee", true);
 					}
 				}
 			} else {
@@ -522,36 +516,24 @@ public class DeallocationAnalyzer extends Analyzer {
 					if (isLive) {
 						// 'b' is alive
 						return Optional.of("add_callee");
-						//dealloc.get().put("caller", true);
-						//dealloc.get().put("callee", true);
 					} else {
 						// 'b' is NOT alive
 						return Optional.of("transfer_callee");
-						//dealloc.get().put("caller", false);
-						//dealloc.get().put("callee", true);
 					}
 				} else {
 					// Mutated and NOT returned
 					if (isLive) {
 						// 'b' is alive
 						return Optional.of("add_callee");
-						//dealloc.get().put("caller", true);
-						//dealloc.get().put("callee", true);
 					} else {
 						return Optional.of("transfer_callee");
-						//dealloc.get().put("caller", false);
-						//dealloc.get().put("callee", true);
 					}
 				}
 			}
 		} else {
 			// The copy is needed, so that caller and callee both have the deallocation flags
 			return Optional.of("add_callee");
-			//dealloc.get().put("caller", true);
-			//dealloc.get().put("callee", true);
 		}
-
-		//return dealloc;
 	}
 
 	/**
@@ -567,26 +549,26 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * </code>
 	 * </pre>
 	 * 
-	 * @param dealloc_var
+	 * @param struct_var
 	 * @param lhs
 	 * @param lhs_type
 	 * @param stores
 	 * @return
 	 */
-	public String addDeallocCode(String dealloc_var, String lhs, Type lhs_type, Type rhs_type, CodeStores stores) {
+	public String addDeallocCode(String struct_var, String lhs, Type lhs_type, Type rhs_type, CodeStores stores) {
 		if (lhs_type instanceof Type.Array) {
 			// Get element type of array type
 			Type elm_type = stores.getArrayElementType((Type.Array) lhs_type);
 			if (stores.isCompoundType(elm_type)) {
 				// Free the lhs structure pointer
 				String struct = CodeGeneratorHelper.translateType(lhs_type, stores).replace("*", "");
-				return "_DEALLOC_MEMBER_1DARRAY_STRUCT(" + dealloc_var + ", " + lhs + ", " + struct + ");";	
+				return "_DEALLOC_MEMBER_1DARRAY_STRUCT(" + struct_var + ", " + lhs + ", " + struct + ");";	
 			}
 		}else if(lhs_type instanceof Type.Record && rhs_type instanceof Type.Record){
 			// LHS and RHS are both structures
 			String struct = CodeGeneratorHelper.translateType(rhs_type, stores).replace("*", "");
-			// Use '_FREE_STRUCT' to forcedly release the var
-			return "_FREE_STRUCT("+lhs+", "+ struct+");";
+			// Use '_DEALLOC_MEMBER_STRUCT' to forcedly release the var
+			return "_DEALLOC_MEMBER_STRUCT("+struct_var+", "+lhs+", "+ struct+");";
 		}
 
 		return "";

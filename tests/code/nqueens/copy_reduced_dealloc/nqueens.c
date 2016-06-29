@@ -218,17 +218,13 @@ blklab6:;
 		//invariant
 		{
 			//fieldload %12 = %0 queens : {int num_solutions,{int c,int r}[] queens}
-			_DEALLOC_1DARRAY_STRUCT(_12, POS);
-			_COPY_1DARRAY_STRUCT(_12, nq->queens, POS);
-			_ADD_DEALLOC(_12);
+			_UPDATE_1DARRAY(_12, nq->queens);
 			//lengthof %13 = %12 : {int c,int r}[]
 			_13 = _12_size;
 			//ifge %1, %13 goto blklab11 : int
 			if(n>=_13){goto blklab11;}
 			//fieldload %14 = %0 queens : {int num_solutions,{int c,int r}[] queens}
-			_DEALLOC_1DARRAY_STRUCT(_14, POS);
-			_COPY_1DARRAY_STRUCT(_14, nq->queens, POS);
-			_ADD_DEALLOC(_14);
+			_UPDATE_1DARRAY(_14, nq->queens);
 			//lengthof %15 = %14 : {int c,int r}[]
 			_15 = _14_size;
 			//ifeq %2, %15 goto blklab10 : int
@@ -257,9 +253,7 @@ blklab10:;
 			//invariant
 			{
 				//fieldload %18 = %0 queens : {int num_solutions,{int c,int r}[] queens}
-				_DEALLOC_1DARRAY_STRUCT(_18, POS);
-				_COPY_1DARRAY_STRUCT(_18, nq->queens, POS);
-				_ADD_DEALLOC(_18);
+				_UPDATE_1DARRAY(_18, nq->queens);
 				//lengthof %19 = %18 : {int c,int r}[]
 				_19 = _18_size;
 				//ifge %1, %19 goto blklab15 : int
@@ -269,9 +263,7 @@ blklab10:;
 				//iflt %6, %20 goto blklab16 : int
 				if(i<_20){goto blklab16;}
 				//fieldload %21 = %0 queens : {int num_solutions,{int c,int r}[] queens}
-				_DEALLOC_1DARRAY_STRUCT(_21, POS);
-				_COPY_1DARRAY_STRUCT(_21, nq->queens, POS);
-				_ADD_DEALLOC(_21);
+				_UPDATE_1DARRAY(_21, nq->queens);
 				//lengthof %22 = %21 : {int c,int r}[]
 				_22 = _21_size;
 				//ifeq %2, %22 goto blklab14 : int
@@ -290,9 +282,7 @@ blklab14:;
 			//ifge %6, %1 goto blklab12 : int
 			if(i>=n){goto blklab12;}
 			//fieldload %23 = %0 queens : {int num_solutions,{int c,int r}[] queens}
-			_DEALLOC_1DARRAY_STRUCT(_23, POS);
-			_COPY_1DARRAY_STRUCT(_23, nq->queens, POS);
-			_ADD_DEALLOC(_23);
+			_UPDATE_1DARRAY(_23, nq->queens);
 			//indexof %24 = %23, %6 : {int c,int r}[]
 			_24=_23[i];
 			_REMOVE_DEALLOC(_24);
@@ -309,8 +299,7 @@ blklab14:;
 //.blklab20
 blklab20:;
 			//invoke (%26) = (%7, %1, %4) nqueens:conflict : function(nqueens:POS,int,int)->(bool)
-			_26 = conflict(_STRUCT_PARAM(p), p_dealloc, n, col);
-			_REMOVE_DEALLOC(p);
+			_26 = conflict(_STRUCT_PARAM(p), false, n, col);
 			//const %27 = true : bool
 			_27 = true;
 			//ifeq %26, %27 goto blklab21 : bool
@@ -355,7 +344,7 @@ blklab12:;
 		_32->r = n;
 		_ADD_DEALLOC(_32);
 		//update %0.queens[%1] = %32 : {int num_solutions,{int c,int r}[] queens} -> {int num_solutions,{int c,int r}[] queens}
-		_FREE_STRUCT(nq->queens[n], POS);
+		_DEALLOC_MEMBER_STRUCT(nq, nq->queens[n], POS);
 		nq->queens[n] = _32;
 		_REMOVE_DEALLOC(_32);
 		//const %34 = 1 : int

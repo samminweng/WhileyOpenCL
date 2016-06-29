@@ -189,13 +189,13 @@ blklab6:;
 		//invariant
 		{
 			//fieldload %12 = %0 queens : {int num_solutions,{int c,int r}[] queens}
-			_COPY_1DARRAY_STRUCT(_12, nq->queens, POS);
+			_UPDATE_1DARRAY(_12, nq->queens);
 			//lengthof %13 = %12 : {int c,int r}[]
 			_13 = _12_size;
 			//ifge %1, %13 goto blklab11 : int
 			if(n>=_13){goto blklab11;}
 			//fieldload %14 = %0 queens : {int num_solutions,{int c,int r}[] queens}
-			_COPY_1DARRAY_STRUCT(_14, nq->queens, POS);
+			_UPDATE_1DARRAY(_14, nq->queens);
 			//lengthof %15 = %14 : {int c,int r}[]
 			_15 = _14_size;
 			//ifeq %2, %15 goto blklab10 : int
@@ -224,7 +224,7 @@ blklab10:;
 			//invariant
 			{
 				//fieldload %18 = %0 queens : {int num_solutions,{int c,int r}[] queens}
-				_COPY_1DARRAY_STRUCT(_18, nq->queens, POS);
+				_UPDATE_1DARRAY(_18, nq->queens);
 				//lengthof %19 = %18 : {int c,int r}[]
 				_19 = _18_size;
 				//ifge %1, %19 goto blklab15 : int
@@ -234,7 +234,7 @@ blklab10:;
 				//iflt %6, %20 goto blklab16 : int
 				if(i<_20){goto blklab16;}
 				//fieldload %21 = %0 queens : {int num_solutions,{int c,int r}[] queens}
-				_COPY_1DARRAY_STRUCT(_21, nq->queens, POS);
+				_UPDATE_1DARRAY(_21, nq->queens);
 				//lengthof %22 = %21 : {int c,int r}[]
 				_22 = _21_size;
 				//ifeq %2, %22 goto blklab14 : int
@@ -253,7 +253,7 @@ blklab14:;
 			//ifge %6, %1 goto blklab12 : int
 			if(i>=n){goto blklab12;}
 			//fieldload %23 = %0 queens : {int num_solutions,{int c,int r}[] queens}
-			_COPY_1DARRAY_STRUCT(_23, nq->queens, POS);
+			_UPDATE_1DARRAY(_23, nq->queens);
 			//indexof %24 = %23, %6 : {int c,int r}[]
 			_24=_23[i];
 			//assign %7 = %24  : {int c,int r}

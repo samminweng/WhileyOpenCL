@@ -375,9 +375,7 @@ blklab23:;
 		//ifis %3, null goto blklab26 : null|{int move,int[] pieces}
 		if(b2 == NULL) { goto blklab26;}
 		//fieldload %36 = %3 pieces : {int move,int[] pieces}
-		_DEALLOC(_36);
 		_UPDATE_1DARRAY(_36, b2->pieces);
-		_REMOVE_DEALLOC(_36);
 		//const %37 = 1 : int
 		_37 = 1;
 		//const %38 = 2 : int
