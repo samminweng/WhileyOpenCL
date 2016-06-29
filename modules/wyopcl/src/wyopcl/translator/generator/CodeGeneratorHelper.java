@@ -304,6 +304,8 @@ public final class CodeGeneratorHelper {
 					}else{
 						statement.add("\tfree("+input_member+");");
 					}
+					// Set the member to be 'NULL'
+					statement.add("\t"+input_member+" = NULL;");
 				}else{
 					// Free n array of structure pointers
 					String struct = translateType(elm_type, stores).replace("*", "");

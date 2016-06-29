@@ -15,6 +15,7 @@ Matrix** copy_array_Matrix(Matrix** _Matrix, long long _Matrix_size){
 }
 void free_Matrix(Matrix* matrix){
 	free(matrix->data);
+	matrix->data = NULL;
 	free(matrix);
 }
 void printf_Matrix(Matrix* matrix){

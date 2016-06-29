@@ -14,6 +14,7 @@ Board** copy_array_Board(Board** _Board, long long _Board_size){
 }
 void free_Board(Board* board){
 	free(board->pieces);
+	board->pieces = NULL;
 	free(board);
 }
 void printf_Board(Board* board){
