@@ -1,24 +1,24 @@
-==3766== Memcheck, a memory error detector
-==3766== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==3766== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==3766== Command: ./out/MatrixMult.gcc.enableVC.out 15
-==3766== Parent PID: 3466
-==3766== 
-==3766== 
-==3766== HEAP SUMMARY:
-==3766==     in use at exit: 9,672 bytes in 16 blocks
-==3766==   total heap usage: 16 allocs, 0 frees, 9,672 bytes allocated
-==3766== 
-==3766== LEAK SUMMARY:
-==3766==    definitely lost: 584 bytes in 8 blocks
-==3766==    indirectly lost: 5,424 bytes in 4 blocks
-==3766==      possibly lost: 0 bytes in 0 blocks
-==3766==    still reachable: 3,664 bytes in 4 blocks
-==3766==         suppressed: 0 bytes in 0 blocks
-==3766== Rerun with --leak-check=full to see details of leaked memory
-==3766== 
-==3766== For counts of detected and suppressed errors, rerun with: -v
-==3766== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==15711== Memcheck, a memory error detector
+==15711== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==15711== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==15711== Command: ./out/MatrixMult.gcc.enableVC.out 15
+==15711== Parent PID: 11606
+==15711== 
+==15711== 
+==15711== HEAP SUMMARY:
+==15711==     in use at exit: 6,008 bytes in 12 blocks
+==15711==   total heap usage: 12 allocs, 0 frees, 6,008 bytes allocated
+==15711== 
+==15711== LEAK SUMMARY:
+==15711==    definitely lost: 520 bytes in 6 blocks
+==15711==    indirectly lost: 1,824 bytes in 2 blocks
+==15711==      possibly lost: 0 bytes in 0 blocks
+==15711==    still reachable: 3,664 bytes in 4 blocks
+==15711==         suppressed: 0 bytes in 0 blocks
+==15711== Rerun with --leak-check=full to see details of leaked memory
+==15711== 
+==15711== For counts of detected and suppressed errors, rerun with: -v
+==15711== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -26,7 +26,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3764.835
+cpu MHz		: 3712.242
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -53,7 +53,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3878.523
+cpu MHz		: 3764.703
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -80,7 +80,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.906
+cpu MHz		: 3412.351
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -107,7 +107,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3741.593
+cpu MHz		: 3780.507
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -134,7 +134,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3898.976
+cpu MHz		: 3903.359
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -161,7 +161,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3700.554
+cpu MHz		: 3666.820
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -188,7 +188,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3467.070
+cpu MHz		: 3679.304
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -215,7 +215,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3783.562
+cpu MHz		: 3899.906
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

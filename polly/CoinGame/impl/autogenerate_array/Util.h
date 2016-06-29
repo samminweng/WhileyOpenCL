@@ -107,9 +107,9 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
  * In-place Update Macros
  *
  */
-// Update an array of integers
+// Update an array of integers or structure pointers
 #define _UPDATE_1DARRAY(a, b) a##_size = b##_size; a = b;
-#define _UPDATE_2DARRAY(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = b; 
+#define _UPDATE_2DARRAY(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = b;
 // Update the array size
 #define _UPDATE_1DARRAY_SIZE(a, b) a##_size = b##_size;
 #define _UPDATE_2DARRAY_SIZE(a, b) a##_size = b##_size; a##_size_size = b##_size_size;
@@ -138,6 +138,17 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 * Deallocation Macros
 *
 */
+// Release the structure pointers without checking de-allocated flag.
+// The standard structure member function code to free an array of structure pointers
+#define _FREE_1DARRAY_STRUCT(a, name) \
+		({\
+			for(int i=0;i<a##_size;i++){\
+				free_##name(a[i]);\
+				a[i] = NULL;\
+			}\
+			a = NULL;\
+		})
+
 // Deallocate any previously allocated heap variable 
 #define _DEALLOC(a) \
 		({\
@@ -165,15 +176,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 				a##_dealloc = false;\
 			}\
 		})
-// The standard structure member function code to free an array of structure pointers
-#define _FREE_1DARRAY_STRUCT(a, name) \
-		({\
-			for(int i=0;i<a##_size;i++){\
-				free_##name(a[i]);\
-				a[i] = NULL;\
-			}\
-			a = NULL;\
-		})	
+	
 // Deallocate an array of structure pointers
 #define _DEALLOC_1DARRAY_STRUCT(a, name) \
 		({\
@@ -197,7 +200,14 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 				b = NULL;\
 			}\
 		})
-
+// Deallocate a member whose type is a structure pointer
+#define _DEALLOC_MEMBER_STRUCT(a, b, name) \
+		({\
+			if(a##_dealloc){\
+				free_##name(b);\
+				b = NULL;\
+			}\
+		})
 /**
 * Deallocation Flag Macros
 *
