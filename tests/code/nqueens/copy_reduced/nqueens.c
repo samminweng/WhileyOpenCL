@@ -383,7 +383,7 @@ int main(int argc, char** args){
 	//arraygen %9 = [8; 1] : {int c,int r}[]
 	_NEW_1DARRAY_STRUCT(_9, n, _8, POS);
 	//assign %2 = %9  : {int c,int r}[]
-	_COPY_1DARRAY_STRUCT(queens, _9, POS);
+	_UPDATE_1DARRAY(queens, _9);
 	//const %10 = 0 : int
 	_10 = 0;
 	//assign %3 = %10  : int

@@ -449,7 +449,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_9);
 	//assign %2 = %9  : {int c,int r}[]
 	_DEALLOC_1DARRAY_STRUCT(queens, POS);
-	_COPY_1DARRAY_STRUCT(queens, _9, POS);
+	_UPDATE_1DARRAY(queens, _9);
 	_TRANSFER_DEALLOC(queens, _9);
 	//const %10 = 0 : int
 	_10 = 0;

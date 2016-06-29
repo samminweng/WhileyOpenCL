@@ -343,13 +343,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					}
 				} else {
 					String struct = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");
-					// Create an array of stucture pointers
-					//return indent + lhs + " = malloc(" + rhs + "_size*sizeof(" + struct + "*));\n" +
-							// Copy an array of structures
-							return indent + "_COPY_1DARRAY_STRUCT(" + lhs + ", " + rhs + ", " + struct + ");";
-
+					// An array of structure pointers
+					if(isCopyEliminated){
+						// Have an in-place update
+						return indent + "_UPDATE_1DARRAY("+lhs+", "+rhs+");";			
+					}else{
+						// Copy an array of structures
+						return indent + "_COPY_1DARRAY_STRUCT(" + lhs + ", " + rhs + ", " + struct + ");";
+					}
 				}
-
 			} else {
 				if (isCopyEliminated) {
 					return indent + lhs + " = " + rhs + ";";
