@@ -4,83 +4,81 @@ export PATH_TO_POLLY_LIB="$HOME/polly/llvm_build/lib"
 export CPPFLAGS="-Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
 alias opt="opt -load ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
 alias pollycc="clang -Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
+### Get the root working directory
+basedir="$(dirname "$(pwd)")"
+utildir="$basedir/tests/code"
 
-run(){
-	executables=$1
-	results=$2
-	export OMP_NUM_THREADS=$num_threads
-	if [[ $c_type == "diablevc" ]]
-	then
-		echo -e -n "Disable loop vectorization..." > $result
-	else
-		echo -e -n "Enable loop vectorization..." > $result
-	fi
-
-	echo -e -n "Compile C code using $opt with $OMP_NUM_THREADS threads..." >> $result
-
-	### Repeat running the executables.
-	for i in {1..10}
-	do
-		timeout $TIMEOUT perf stat $executables $parameter >>$result 2>> $result
-		#echo "Beginning the $executables with  $parameter" >>$result
-	        #start=`date +%s%N`
-		#$executables $parameter >> $result
-		#end=`date +%s%N`
-		#runtime=$((end-start))
-		#printf '\nParameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter  $runtime >> $result
-	done
-	### Output the hardware info.
-	cat /proc/cpuinfo >> $result
+### Generate C code
+generateCode(){
+	testcase=$1
+	program=$2
+	codegen=$3
+	## change to 'testcase' folder
+	cd "$basedir/polly/$testcase/" 
+	# clean and create the folder
+	rm -f "impl/$program/$codegen"
+	mkdir -p "impl/$program/$codegen"
+	# copy the source whiley file to the folder
+	cp $testcase"_"$program.whiley "impl/$program/$codegen/."
+	
+	#### Change folder to the corresponding implementation folder
+	cd "impl/$program/$codegen"
+	## Clean up previously generated C code
+	rm -f *.c *.h
+	### Copy Util.c Util.h to 
+	cp $utildir/Util.c $utildir/Util.h .
+	## Translate Whiley programs into naive C code
+	case "$codegen" in
+		"naive")
+			### Translate Whiley program into naive C code 
+	    	./../../../../..//bin/wyopcl -code $testcase"_"$program.whiley
+	    	;;
+	    "naive_dealloc")
+			### Translate Whiley program into naive + dealloc C code 
+	    	./../../../../../bin/wyopcl -code -dealloc $testcase"_"$program.whiley
+	    	;;
+	    "copyreduced")
+			## Translate Whiley programs into copy_reduced C code
+			./../../../../../bin/wyopcl -code -copy $testcase"_"$program.whiley
+			;;
+		"copyreduced_dealloc")
+			### Translate Whiley program into copy-eliminated + memory deallocated C code 
+	    	./../../../../../bin/wyopcl -code -copy -dealloc $testcase"_"$program.whiley	
+			;;
+	esac
 }
 
-
 ##
-## Run Polly on the C code
+## Compile the program and run the executable with given parameters
 ##
-compileProgram(){
-	c_type=$1
+compileAndRun(){
+	testcase=$1
 	program=$2
-	parameter=$3
-	opt=$4
-	num_threads=$5
-	### Creating a static library ('Util.o') with GCC (http://www.cs.dartmouth.edu/~campbell/cs50/buildlib.html)
-    	utildir="$PWD/../../../../tests/code"
-	### cp "$program/$program.whiley" $utildir/Util.c $utildir/Util.h $workingdir
-	cp $utildir/Util.c $utildir/Util.h $PWD
-    	#clang -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
-    	#ar -cvq libUtil.a Util.o
-    	if [[ $c_type == *"autogenerate"* ]]
-	then
-		if [[ $c_type == *"leakfree"* ]]
-		then
-			### Translate Whiley program into copy-eliminated + memory deallocated C code 
-            ./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"	
-		else
-			### Translate Whiley program into copy-eliminated C code 
-			./../../../../bin/wyopcl -code -copy "$program.whiley"
-		fi
-	fi
-   	###read -p "Press [Enter] to continue..."
-    	mkdir -p "out"
-    	### Compile C code into executables
-	case "$opt" in
+	codegen=$3
+	parameter=$4
+	compiler=$5
+	num_threads=$6
+	####Create 'out' folder
+    mkdir -p "out"
+    ### Compile C code into executables
+	case "$compiler" in
 		"gcc")
-			gcc -std=c99 -O3 $program.c Util.c -o "out/$program.$opt.enablevc.out"
+			##echo gcc -std=c99 -O3 $testcase"_"$program.c Util.c -o out/"$testcase.$program.$codegen.$compiler.out"
+			gcc -std=c99 -O3 $testcase"_"$program.c Util.c -o out/"$testcase.$program.$codegen.$compiler.out"
 			;;
 		"clang")
-			clang -O3 $program.c Util.c -o "out/$program.$opt.enablevc.out"
+			clang -O3 $testcase"_"$program.c Util.c -o out/$executables
 			;;
 		"polly")
 			###'-polly-process-unprofitable' option forces Polly to generate sequential code
 			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine\
 	        		-S -emit-llvm -mllvm -polly-process-unprofitable\
-				-mllvm -polly-opt-outer-coincidence=yes\
-	        		$program.c -o "llvm/$program.$opt.enablevc.ll"
+					-mllvm -polly-opt-outer-coincidence=yes\
+	        		$testcase"_"$program.c -o "llvm/$testcase.$program.$codegen.$compiler.ll"
 			### Use 'llc' to compile LLVM code into assembly code
-    			llc "llvm/$program.$opt.enablevc.ll" -o "assembly/$program.$opt.enablevc.s"
+    		llc "llvm/$testcase.$program.$codegen.$compiler.ll" -o "assembly/$testcase.$program.$codegen.$compiler.s"
 			### Use 'gcc' to compile .s file and link with 'libUtil.a'
-    			pollycc "assembly/$program.$opt.enablevc.s" Util.c -o "out/$program.$opt.enablevc.out"
-
+    		pollycc "assembly/$testcase.$program.$codegen.$compiler.s" Util.c -o out/"$testcase.$program.$codegen.$compiler.out"
 			#pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine\
 			#	-mllvm -polly-process-unprofitable $program.c Util.c\
 			#	 -o "out/$program.$opt.enablevc.out"
@@ -91,139 +89,145 @@ compileProgram(){
 			#pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-parallel -lgomp\
                         #-mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
 			#        $program.c Util.c -o "out/$program.$opt.enablevc.out"
-			
 			export OMP_NUM_THREADS=$num_threads
 			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -S -emit-llvm\
 	        		-mllvm -polly-parallel -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
-				-mllvm -polly-opt-outer-coincidence=yes\
-	        		$program.c -o "llvm/$program.$opt.enablevc.ll"
+					-mllvm -polly-opt-outer-coincidence=yes\
+	        		$program.c -o "llvm/$testcase.$program.$codegen.$compiler.ll"
 			### Use 'llc' to compile LLVM code into assembly code
-            		llc "llvm/$program.$opt.enablevc.ll" -o "assembly/$program.$opt.enablevc.s"
-            		### Use 'gcc' to compile .s file and link with 'libUtil.a'
-            		pollycc "assembly/$program.$opt.enablevc.s" Util.c -lgomp -o "out/$program.$opt.enablevc.out"
-
+            llc "llvm/$testcase.$program.$codegen.$compiler.ll" -o "assembly/$testcase.$program.$codegen.$compiler.s"
+            ### Use 'gcc' to compile .s file and link with 'libUtil.a'
+            pollycc "assembly/$testcase.$program.$codegen.$compiler.s" Util.c -lgomp -o out/"$testcase.$program.$codegen.$compiler.out"
 			;;
 	esac
 	###read -p "Press [Enter] to continue..."
-
-	result="$PWD/../../perf/$c_type.$program.$opt.$parameter.$num_threads.enablevc.txt"
-	run "./out/$program.$opt.enablevc.out" $result $opt $num_threads "enablevc"
+	result="$basedir/polly/$testcase/perf/$testcase.$program.$codegen.$compiler.$parameter.$num_threads.txt"
+	export OMP_NUM_THREADS=$num_threads
+	echo -e -n "Run the $program $testcase on $parameter using $OMP_NUM_THREADS threads..." >> $result
+	echo "Run the $program $testcase on $parameter using $OMP_NUM_THREADS threads..."
+	for i in {1..10}
+	do
+		echo "Begin $i iteration"
+		timeout $TIMEOUT perf stat out/"$testcase.$program.$codegen.$compiler.out" $parameter >>$result 2>> $result
+		echo "Finish $i iteration"
+		#echo "Beginning the $executables with  $parameter" >>$result
+	    #start=`date +%s%N`
+		#$executables $parameter >> $result
+		#end=`date +%s%N`
+		#runtime=$((end-start))
+		#printf '\nParameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter  $runtime >> $result
+	done
+	### Output the hardware info.
+	cat /proc/cpuinfo >> $result
 }
 #
 # Execute benchmarks
 #
 exec(){
-	c_type=$1
+	testcase=$1
 	program=$2
+	codgen="copyreduced_dealloc"
 	parameter=$3
-	cd "$program/impl/$c_type"
-	compileProgram $c_type $program $parameter "gcc" 1
-	compileProgram $c_type $program $parameter "clang" 1
-	compileProgram $c_type $program $parameter "polly" 1
-	compileProgram $c_type $program $parameter "openmp" 1
-	compileProgram $c_type $program $parameter "openmp" 2
-	compileProgram $c_type $program $parameter "openmp" 4
-	cd ../../../
+	## Generate C code
+	generateCode $testcase $program $codgen
+	##read -p "Complete code generation. Press [Enter] to continue..."
+	compileAndRun $testcase $program $codgen $parameter "gcc" 1
+	###read -p "Complete. Press [Enter] to continue..."
+	#compileAndRun $testcase $program $codgen $parameter "clang" 1
+	#compileAndRun $testcase $program $codgen $parameter "polly" 1
+	#compileAndRun $testcase $program $codgen $parameter "openmp" 1
+	#compileAndRun $testcase $program $codgen $parameter "openmp" 2
+	#compileAndRun $testcase $program $codgen $parameter "openmp" 4
+	# Return to the working directory
+    cd $basedir/polly
+    ###read -p "Press [Enter] to continue..."
 }
 ### Create the folder and/or clean up the files
 init(){
-	c_type=$1
-	program=$2
-	mkdir -p "$PWD/$program/perf"
-	rm -rf "$PWD/$program/perf/"*.*
-	mkdir -p "$PWD/$program/impl/$c_type/out" ## Create 'out' folder
-	rm -rf "$PWD/$program/impl/$c_type/out/"*.*
-	#read -p "Press [Enter] to continue..."
+	testcase=$1
+	testcase=$1
+	perfdir="$basedir/polly/$testcase/perf"
+	mkdir -p "$perfdir"
+	### remove all files inside the folder
+	rm -f "$perfdir/"*.*
 }
-# ### Benchmark Autogenerate GCD
-#init autogenerate GCD
-#exec autogenerate GCD 1000
-#exec autogenerate GCD 10000
-#exec autogenerate GCD 20000
-#exec autogenerate GCD 30000
-#exec autogenerate GCD 40000
-#exec autogenerate1 GCD 1000
-#exec autogenerate1 GCD 10000
-#exec autogenerate1 GCD 20000
-#exec autogenerate1 GCD 30000
-#exec autogenerate1 GCD 40000
-# ### Benchmark Autogenerate CoinGame
-init autogenerate CoinGame
-exec autogenerate_leakfree CoinGame 1000
-exec autogenerate_leakfree CoinGame 10000
-exec autogenerate_leakfree CoinGame 20000
-exec autogenerate_leakfree CoinGame 30000
-exec autogenerate_leakfree CoinGame 40000
-exec autogenerate_leakfree CoinGame 50000
+# ### Benchmark GCD testcase
+init GCD
+exec GCD original 1000
+exec GCD original 10000
+exec GCD original 20000
+exec GCD original 30000
+exec GCD original 40000
+exec GCD cached 1000
+exec GCD cached 10000
+exec GCD cached 20000
+exec GCD cached 30000
+exec GCD cached 40000
 
-exec autogenerate_array_leakfree CoinGame 1000
-exec autogenerate_array_leakfree CoinGame 10000
-exec autogenerate_array_leakfree CoinGame 20000
-exec autogenerate_array_leakfree CoinGame 30000
-exec autogenerate_array_leakfree CoinGame 40000
-exec autogenerate_array_leakfree CoinGame 50000
+### Benchmark CoinGame
+init CoinGame
+exec CoinGame original 1000
+exec CoinGame original 10000
+exec CoinGame original 20000
+exec CoinGame original 30000
+exec CoinGame original 40000
+exec CoinGame original 50000
+exec CoinGame single 1000
+exec CoinGame single 10000
+exec CoinGame single 20000
+exec CoinGame single 30000
+exec CoinGame single 40000
+exec CoinGame single 50000
+exec CoinGame array 1000
+exec CoinGame array 10000
+exec CoinGame array 20000
+exec CoinGame array 30000
+exec CoinGame array 40000
+exec CoinGame array 50000
 
-exec autogenerate_single_leakfree CoinGame 1000
-exec autogenerate_single_leakfree CoinGame 10000
-exec autogenerate_single_leakfree CoinGame 20000
-exec autogenerate_single_leakfree CoinGame 30000
-exec autogenerate_single_leakfree CoinGame 40000
-exec autogenerate_single_leakfree CoinGame 50000 
+### Benchmark NQueens
+init NQueens
+exec NQueens original 1
+exec NQueens original 2
+exec NQueens original 4
+exec NQueens original 6
+exec NQueens original 8
+exec NQueens original 10
+exec NQueens original 12
+exec NQueens original 14
+exec NQueens original 15
 
-### Benchmark Autogenerate NQueens
-#init autogenerate_leakfree NQueens
-#exec autogenerate_leak NQueens 1
-#exec autogenerate_leak NQueens 2
-#exec autogenerate_leak NQueens 4
-#exec autogenerate_leak NQueens 6
-#exec autogenerate_leak NQueens 8
-#exec autogenerate_leak NQueens 10
-#exec autogenerate_leak NQueens 12
-#exec autogenerate_leak NQueens 14
-#exec autogenerate_leak NQueens 15
-
-#exec autogenerate_leakfree NQueens 1
-#exec autogenerate_leakfree NQueens 2
-#exec autogenerate_leakfree NQueens 4
-#exec autogenerate_leakfree NQueens 6
-#exec autogenerate_leakfree NQueens 8
-#exec autogenerate_leakfree NQueens 10
-#exec autogenerate_leakfree NQueens 12
-#exec autogenerate_leakfree NQueens 14
-#exec autogenerate_leakfree NQueens 15
-
-### Benchmark Autogenerate1 and autogenerate2 MatrixMult
-# ### Autogenerate1 MatrixMult
-# init autogenerate1 MatrixMult
-# init autogenerate2 MatrixMult
-# exec autogenerate1 MatrixMult 200
-# exec autogenerate1 MatrixMult 400
-# exec autogenerate1 MatrixMult 600
-# exec autogenerate1 MatrixMult 800
-# exec autogenerate1 MatrixMult 1000
-# exec autogenerate1 MatrixMult 1200
-# exec autogenerate1 MatrixMult 1400
-# exec autogenerate1 MatrixMult 1600
-# exec autogenerate1 MatrixMult 1800
-# exec autogenerate1 MatrixMult 2000
-# exec autogenerate1 MatrixMult 2200
-# exec autogenerate1 MatrixMult 2400
-# exec autogenerate1 MatrixMult 2600
-# exec autogenerate1 MatrixMult 2800
-# exec autogenerate1 MatrixMult 3000
-# ### Autogenerate2 MatrixMult
-# exec autogenerate2 MatrixMult 200
-# exec autogenerate2 MatrixMult 400
-# exec autogenerate2 MatrixMult 600
-# exec autogenerate2 MatrixMult 800
-# exec autogenerate2 MatrixMult 1000
-# exec autogenerate2 MatrixMult 1200
-# exec autogenerate2 MatrixMult 1400
-# exec autogenerate2 MatrixMult 1600
-# exec autogenerate2 MatrixMult 1800
-# exec autogenerate2 MatrixMult 2000
-# exec autogenerate2 MatrixMult 2200
-# exec autogenerate2 MatrixMult 2400
-# exec autogenerate2 MatrixMult 2600
-# exec autogenerate2 MatrixMult 2800
-# exec autogenerate2 MatrixMult 3000
+### Benchmark MatrixMult
+### Original MatrixMult
+init MatrixMult
+exec MatrixMult original 200
+exec MatrixMult original 400
+exec MatrixMult original 600
+exec MatrixMult original 800
+exec MatrixMult original 1000
+exec MatrixMult original 1200
+exec MatrixMult original 1400
+exec MatrixMult original 1600
+exec MatrixMult original 1800
+exec MatrixMult original 2000
+exec MatrixMult original 2200
+exec MatrixMult original 2400
+exec MatrixMult original 2600
+exec MatrixMult original 2800
+exec MatrixMult original 3000
+### Transpose MatrixMult
+exec MatrixMult transpose 200
+exec MatrixMult transpose 400
+exec MatrixMult transpose 600
+exec MatrixMult transpose 800
+exec MatrixMult transpose 1000
+exec MatrixMult transpose 1200
+exec MatrixMult transpose 1400
+exec MatrixMult transpose 1600
+exec MatrixMult transpose 1800
+exec MatrixMult transpose 2000
+exec MatrixMult transpose 2200
+exec MatrixMult transpose 2400
+exec MatrixMult transpose 2600
+exec MatrixMult transpose 2800
+exec MatrixMult transpose 3000

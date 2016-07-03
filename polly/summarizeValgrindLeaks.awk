@@ -105,9 +105,11 @@ END {
 			codegen_total=split(codegens, codegen_array, " ");
 			for(c=1;c<=codegen_total;c++){
 				codegen=codegen_array[c];
+				## Compiler
 				compilers_total=split(compilers, compiler_array, " ");
 				for(cr=1;cr<=compilers_total;cr++){
 					compiler = compiler_array[cr];
+					## Parameter
 					par_total=split(parameters[testcase], par_array, " ");
 					for(p=1;p<=par_total;p++){
 						parameter = par_array[p];

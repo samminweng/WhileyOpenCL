@@ -8,27 +8,48 @@ export PATH_TO_POLLY_LIB="$HOME/polly/llvm_build/lib"
 export CPPFLAGS="-Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
 alias opt="opt -load ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
 alias pollycc="clang -Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
+### Get the root working directory
+basedir="$(dirname "$(pwd)")"
+utildir="$basedir/tests/code"
+
 ### Generate C code
 generateCode(){
-	program=$1
-	### Creating a static library ('Util.o') with GCC (http://www.cs.dartmouth.edu/~campbell/cs50/buildlib.html)
-	utildir="$PWD/../../../../tests/code"
-	### cp "$program/$program.whiley" $utildir/Util.c $utildir/Util.h $workingdir
-	cp $utildir/Util.c $utildir/Util.h $PWD
-	#clang -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
-	#ar -cvq libUtil.a Util.o
-	if [[ $c_type == *"autogenerate"* ]]
-	then
-		if [[ $c_type == *"leakfree"* ]]
-		then
+	testcase=$1
+	program=$2
+	codegen=$3
+	## change to 'testcase' folder
+	cd "$basedir/polly/$testcase/" 
+	# clean and create the folder
+	rm -f "impl/$program/$codegen"
+	mkdir -p "impl/$program/$codegen"
+	# copy the source whiley file to the folder
+	cp $testcase"_"$program.whiley "impl/$program/$codegen/."
+	
+	#### Change folder to the corresponding implementation folder
+	cd "impl/$program/$codegen"
+	## Clean up previously generated C code
+	rm -f *.c *.h
+	### Copy Util.c Util.h to 
+	cp $utildir/Util.c $utildir/Util.h .
+	## Translate Whiley programs into naive C code
+	case "$codegen" in
+		"naive")
+			### Translate Whiley program into naive C code 
+	    	./../../../../..//bin/wyopcl -code $testcase"_"$program.whiley
+	    	;;
+	    "naive_dealloc")
+			### Translate Whiley program into naive + dealloc C code 
+	    	./../../../../../bin/wyopcl -code -dealloc $testcase"_"$program.whiley
+	    	;;
+	    "copyreduced")
+			## Translate Whiley programs into copy_reduced C code
+			./../../../../../bin/wyopcl -code -copy $testcase"_"$program.whiley
+			;;
+		"copyreduced_dealloc")
 			### Translate Whiley program into copy-eliminated + memory deallocated C code 
-		        ./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"	
-		else
-			### Translate Whiley program into copy-eliminated C code 
-			./../../../../bin/wyopcl -code -copy "$program.whiley"
-		fi
-	fi
-	#echo -e -n "${GREEN}[*]Generate $program C code${RESET}" && read
+	    	./../../../../../bin/wyopcl -code -copy -dealloc $testcase"_"$program.whiley	
+			;;
+	esac
 }
 
 runGProf(){
