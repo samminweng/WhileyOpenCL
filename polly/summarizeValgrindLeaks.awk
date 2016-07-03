@@ -6,14 +6,14 @@ BEGIN {
 	# Test case name
 	testcases="MatrixMult GCD CoinGame NQueens";
 	# Implementation
-	impls["MatrixMult"]="autogenerate_original autogenerate_transpose";
-	impls["GCD"]="autogenerate_original autogenerate_cached";
-	impls["CoinGame"]="autogenerate autogenerate_single autogenerate_array";
-	impls["NQueens"]="autogenerate";
-	# Optimization
-	opts = "naive naive_leakfree copyreduced copyreduced_leakfree";
+	impls["MatrixMult"]="original transpose";
+	impls["GCD"]="original cached";
+	impls["CoinGame"]="original single array";
+	impls["NQueens"]="original";
+	# Code Generation
+	codegens = "naive naive_leakfree copyreduced copyreduced_leakfree";
 	# Compiler
-	compilers = "gcc clang polly";
+	compilers = "gcc";
 	# Parameter
 	parameters["MatrixMult"] = "15";
 	parameters["GCD"] = "100";
@@ -27,17 +27,17 @@ BEGIN {
 	filename=FILENAME;
 	split(filename, arr, "/");
 	split(arr[3], t_array, ".");
-	# type
-	impl= t_array[1];
-	# Get optimization
-	opt=t_array[2];
-	# Get test case
-	testcase=t_array[3];
-	# Get Compiler 
+	# Test case
+	testcase=t_array[1];
+	# implementation type
+	impl= t_array[2];
+	# Codegen
+	codegen=t_array[3];
+	# Compiler 
 	compiler=t_array[4];
 	# Get parameter
 	parameter = t_array[5];
-	key =testcase","impl","opt","compiler","parameter;
+	key =testcase","impl","codegen","compiler","parameter;
 	count[key]++;
 	#print key "," count[key];
 	# Get definite loss.
@@ -93,7 +93,7 @@ BEGIN {
 END {	
 
 	print "Memory Leak (bytes)";
-	print "TestCase\tImplementation\tOptimization\tProblemSize\tCompiler\tdefinite loss\tindirect loss\tpossible loss\treachable loss";
+	print "TestCase\tImplementation\tCodeGen\tCompiler\tParameter\tdefinite loss\tindirect loss\tpossible loss\treachable loss";
 	t_total=split(testcases, t_array, " ");
 	for(t=1;t<=t_total;t++){
 		testcase=t_array[t];
@@ -101,22 +101,22 @@ END {
 		impl_total=split(impls[testcase], impl_array, " ");
 		for(i=0;i<=impl_total;i++){
 			impl = impl_array[i];
-			# Get Optimization Type
-			opts_total=split(opts, opt_array, " ");
-			for(o=1;o<=opts_total;o++){
-				opt=opt_array[o];
-				s_total=split(parameters[testcase], s_array, " ");
-				for(s=1;s<=s_total;s++){
-					parameter = s_array[s];
-					compilers_total=split(compilers, compiler_array, " ");
-					for(c=1;c<=compilers_total;c++){
-						compiler = compiler_array[c];
+			# Get CodeGen 
+			codegen_total=split(codegens, codegen_array, " ");
+			for(c=1;c<=codegen_total;c++){
+				codegen=codegen_array[c];
+				compilers_total=split(compilers, compiler_array, " ");
+				for(cr=1;cr<=compilers_total;cr++){
+					compiler = compiler_array[cr];
+					par_total=split(parameters[testcase], par_array, " ");
+					for(p=1;p<=par_total;p++){
+						parameter = par_array[p];
 						# Constitute key
-						key =testcase","impl","opt","compiler","parameter;
+						key =testcase","impl","codegen","compiler","parameter;
 						# Check if there is the memory leak result.
 						if(count[key]>0){
 							# FIll in the values
-							str = testcase"\t"impl"\t"opt"\t"parameter"\t"compiler"\t"leaks[key",definiteloss"]+0"\t"leaks[key",indirectloss"]+0"\t"leaks[key",possibleloss"]+0"\t"leaks[key",reachableloss"]+0;
+							str = testcase"\t"impl"\t"codegen"\t"compiler"\t"parameter"\t"leaks[key",definiteloss"]+0"\t"leaks[key",indirectloss"]+0"\t"leaks[key",possibleloss"]+0"\t"leaks[key",reachableloss"]+0;
 							print str;
 						}
 					}

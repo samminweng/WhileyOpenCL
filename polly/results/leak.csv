@@ -1,0 +1,28 @@
+Memory Leak (bytes)
+TestCase	Implementation	CodeGen	Compiler	Parameter	definite loss	indirect loss	possible loss	reachable loss
+MatrixMult	original	naive	gcc	15	29480	10824	0	3664
+MatrixMult	original	naive_leakfree	gcc	15	9008	24	0	0
+GCD	original	naive	gcc	100	288	32	0	0
+GCD	original	naive_leakfree	gcc	100	8	32	0	0
+GCD	original	copyreduced	gcc	100	288	32	0	0
+GCD	original	copyreduced_leakfree	gcc	100	8	32	0	0
+GCD	cached	naive	gcc	100	799680344	32	400000	80000
+GCD	cached	naive_leakfree	gcc	100	8	32	0	0
+GCD	cached	copyreduced	gcc	100	80344	32	0	0
+GCD	cached	copyreduced_leakfree	gcc	100	8	32	0	0
+CoinGame	original	naive	gcc	100	320600	32	0	0
+CoinGame	original	naive_leakfree	gcc	100	8	32	0	0
+CoinGame	original	copyreduced	gcc	100	80600	32	0	0
+CoinGame	original	copyreduced_leakfree	gcc	100	8	32	0	0
+CoinGame	single	naive	gcc	100	320600	32	0	0
+CoinGame	single	naive_leakfree	gcc	100	8	32	0	0
+CoinGame	single	copyreduced	gcc	100	80600	32	0	0
+CoinGame	single	copyreduced_leakfree	gcc	100	8	32	0	0
+CoinGame	array	naive	gcc	100	325400	32	0	0
+CoinGame	array	naive_leakfree	gcc	100	8	32	0	0
+CoinGame	array	copyreduced	gcc	100	83000	32	0	0
+CoinGame	array	copyreduced_leakfree	gcc	100	8	32	0	0
+NQueens	original	naive	gcc	8	22148824	40713168	192	408
+NQueens	original	naive_leakfree	gcc	8	19961416	39922832	192	0
+NQueens	original	copyreduced	gcc	8	33360	16	0	408
+NQueens	original	copyreduced_leakfree	gcc	8	72	144	0	0
