@@ -32,15 +32,15 @@ generateCode(){
 			### Translate Whiley program into naive C code 
 	    	./../../../../..//bin/wyopcl -code $testcase"_"$program.whiley
 	    	;;
-	    "naive_leakfree")
-			### Translate Whiley program into naive + leakfree C code 
+	    "naive_dealloc")
+			### Translate Whiley program into naive + dealloc C code 
 	    	./../../../../../bin/wyopcl -code -dealloc $testcase"_"$program.whiley
 	    	;;
 	    "copyreduced")
 			## Translate Whiley programs into copy_reduced C code
 			./../../../../../bin/wyopcl -code -copy $testcase"_"$program.whiley
 			;;
-		"copyreduced_leakfree")
+		"copyreduced_dealloc")
 			### Translate Whiley program into copy-eliminated + memory deallocated C code 
 	    	./../../../../../bin/wyopcl -code -copy -dealloc $testcase"_"$program.whiley	
 			;;
@@ -123,40 +123,40 @@ exec(){
 # MatrixMult test case
 init MatrixMult
 exec MatrixMult original naive 15
-exec MatrixMult original naive_leakfree 15
+exec MatrixMult original naive_dealloc 15
 exec MatrixMult original copyreduced 15
-exec MatrixMult original copyreduced_leakfree 15
+exec MatrixMult original copyreduced_dealloc 15
 exec MatrixMult transpose naive 15
-exec MatrixMult transpose naive_leakfree 15
+exec MatrixMult transpose naive_dealloc 15
 exec MatrixMult transpose copyreduced 15
-exec MatrixMult transpose copyreduced_leakfree 15
+exec MatrixMult transpose copyreduced_dealloc 15
 ### GCD test case
 init GCD
 exec GCD original naive 100
-exec GCD original naive_leakfree 100
+exec GCD original naive_dealloc 100
 exec GCD original copyreduced 100
-exec GCD original copyreduced_leakfree 100
+exec GCD original copyreduced_dealloc 100
 exec GCD cached naive 100
-exec GCD cached naive_leakfree 100
+exec GCD cached naive_dealloc 100
 exec GCD cached copyreduced 100
-exec GCD cached copyreduced_leakfree 100
+exec GCD cached copyreduced_dealloc 100
 # ### CoinGame test case
 init CoinGame
 exec CoinGame original naive 100
-exec CoinGame original naive_leakfree 100
+exec CoinGame original naive_dealloc 100
 exec CoinGame original copyreduced 100
-exec CoinGame original copyreduced_leakfree 100
+exec CoinGame original copyreduced_dealloc 100
 exec CoinGame single naive 100
-exec CoinGame single naive_leakfree 100
+exec CoinGame single naive_dealloc 100
 exec CoinGame single copyreduced 100
-exec CoinGame single copyreduced_leakfree 100
+exec CoinGame single copyreduced_dealloc 100
 exec CoinGame array naive 100
-exec CoinGame array naive_leakfree 100
+exec CoinGame array naive_dealloc 100
 exec CoinGame array copyreduced 100
-exec CoinGame array copyreduced_leakfree 100
+exec CoinGame array copyreduced_dealloc 100
 # #### NQueen test case
 init NQueens
 exec NQueens original naive 8
-exec NQueens original naive_leakfree  8
+exec NQueens original naive_dealloc  8
 exec NQueens original copyreduced  8
-exec NQueens original copyreduced_leakfree  8
+exec NQueens original copyreduced_dealloc  8

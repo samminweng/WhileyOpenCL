@@ -11,7 +11,7 @@ BEGIN {
 	impls["CoinGame"]="original single array";
 	impls["NQueens"]="original";
 	# Code Generation
-	codegens = "naive naive_leakfree copyreduced copyreduced_leakfree";
+	codegens = "naive naive_dealloc copyreduced copyreduced_dealloc";
 	# Compiler
 	compilers = "gcc";
 	# Parameter

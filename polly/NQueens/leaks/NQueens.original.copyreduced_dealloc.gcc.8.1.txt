@@ -1,31 +1,24 @@
-==9276== Memcheck, a memory error detector
-==9276== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==9276== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==9276== Command: ./out/CoinGame.original.naive_leakfree.gcc.out 100
-==9276== Parent PID: 4274
-==9276== 
-==9276== Invalid free() / delete / delete[] / realloc()
-==9276==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==9276==    by 0x400A4B: main (CoinGame_original.c:340)
-==9276==  Address 0x51fc0f0 is 0 bytes inside a block of size 8 free'd
-==9276==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==9276==    by 0x400A3B: main (CoinGame_original.c:338)
-==9276== 
-==9276== 
-==9276== HEAP SUMMARY:
-==9276==     in use at exit: 40 bytes in 2 blocks
-==9276==   total heap usage: 9 allocs, 8 frees, 320,632 bytes allocated
-==9276== 
-==9276== LEAK SUMMARY:
-==9276==    definitely lost: 8 bytes in 1 blocks
-==9276==    indirectly lost: 32 bytes in 1 blocks
-==9276==      possibly lost: 0 bytes in 0 blocks
-==9276==    still reachable: 0 bytes in 0 blocks
-==9276==         suppressed: 0 bytes in 0 blocks
-==9276== Rerun with --leak-check=full to see details of leaked memory
-==9276== 
-==9276== For counts of detected and suppressed errors, rerun with: -v
-==9276== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==14929== Memcheck, a memory error detector
+==14929== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==14929== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==14929== Command: ./out/NQueens.original.copyreduced_dealloc.gcc.out 8
+==14929== Parent PID: 4274
+==14929== 
+==14929== 
+==14929== HEAP SUMMARY:
+==14929==     in use at exit: 216 bytes in 11 blocks
+==14929==   total heap usage: 2,083 allocs, 2,072 frees, 33,784 bytes allocated
+==14929== 
+==14929== LEAK SUMMARY:
+==14929==    definitely lost: 72 bytes in 2 blocks
+==14929==    indirectly lost: 144 bytes in 9 blocks
+==14929==      possibly lost: 0 bytes in 0 blocks
+==14929==    still reachable: 0 bytes in 0 blocks
+==14929==         suppressed: 0 bytes in 0 blocks
+==14929== Rerun with --leak-check=full to see details of leaked memory
+==14929== 
+==14929== For counts of detected and suppressed errors, rerun with: -v
+==14929== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -33,7 +26,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3770.679
+cpu MHz		: 3742.390
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -60,7 +53,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3898.445
+cpu MHz		: 3546.093
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -87,7 +80,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3875.335
+cpu MHz		: 3400.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -114,7 +107,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.906
+cpu MHz		: 3679.835
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -141,7 +134,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3712.109
+cpu MHz		: 3894.195
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -168,7 +161,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.109
+cpu MHz		: 3460.429
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -195,7 +188,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.109
+cpu MHz		: 3455.250
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -222,7 +215,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3558.179
+cpu MHz		: 3669.210
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
