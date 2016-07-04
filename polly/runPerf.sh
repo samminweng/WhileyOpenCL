@@ -1,9 +1,11 @@
 #!/bin/bash
 TIMEOUT="1800s"
-export PATH_TO_POLLY_LIB="$HOME/polly/llvm_build/lib"
-export CPPFLAGS="-Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
-alias opt="opt -load ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
-alias pollycc="clang -Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
+#export PATH_TO_POLLY_LIB="$HOME/polly/llvm_build/lib"
+#export CPPFLAGS="-Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
+#alias opt="opt -load ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
+#alias pollycc="clang -Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
+alias opt="opt -O3 -polly"
+alias pollycc="clang -O3 -mllvm -polly"
 ### Get the root working directory
 basedir="$(dirname "$(pwd)")"
 utildir="$basedir/tests/code"
@@ -16,7 +18,7 @@ generateCode(){
 	## change to 'testcase' folder
 	cd "$basedir/polly/$testcase/" 
 	# clean and create the folder
-	rm -f "impl/$program/$codegen"
+	rm -f "impl/$program/$codegen/*.*"
 	mkdir -p "impl/$program/$codegen"
 	# copy the source whiley file to the folder
 	cp $testcase"_"$program.whiley "impl/$program/$codegen/."
@@ -61,25 +63,26 @@ compileAndRun(){
 	####Create 'out' folder
     rm -rf "out"
 	mkdir -p "out"
+	executable=$testcase"_"$program.$codegen.$compiler
     ### Compile C code into executables
 	case "$compiler" in
 		"gcc")
 			##echo gcc -std=c99 -O3 $testcase"_"$program.c Util.c -o out/"$testcase.$program.$codegen.$compiler.out"
-			gcc -std=c99 -O3 $testcase"_"$program.c Util.c -o out/"$testcase.$program.$codegen.$compiler.out"
+			gcc -std=c99 -O3 $testcase"_"$program.c Util.c -o out/$executable.out
 			;;
 		"clang")
-			clang -O3 $testcase"_"$program.c Util.c -o out/$executables
+			clang -O3 $testcase"_"$program.c Util.c -o out/$executable.out
 			;;
 		"polly")
 			###'-polly-process-unprofitable' option forces Polly to generate sequential code
-			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine\
+			pollycc -mllvm -polly-vectorizer=stripmine\
 	        		-S -emit-llvm -mllvm -polly-process-unprofitable\
 					-mllvm -polly-opt-outer-coincidence=yes\
-	        		$testcase"_"$program.c -o "llvm/$testcase.$program.$codegen.$compiler.ll"
+	        		$testcase"_"$program.c -o "llvm"/$executable.ll
 			### Use 'llc' to compile LLVM code into assembly code
-    		llc "llvm/$testcase.$program.$codegen.$compiler.ll" -o "assembly/$testcase.$program.$codegen.$compiler.s"
-			### Use 'gcc' to compile .s file and link with 'libUtil.a'
-    		pollycc "assembly/$testcase.$program.$codegen.$compiler.s" Util.c -o out/"$testcase.$program.$codegen.$compiler.out"
+    		llc "llvm"/$executable.ll -o "assembly"/$executable.s
+			### Use 'clang' to compile .s file and link with 'libUtil.a'
+    		clang "assembly"/$executable.s Util.c -o out/$executable.out
 			#pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine\
 			#	-mllvm -polly-process-unprofitable $program.c Util.c\
 			#	 -o "out/$program.$opt.enablevc.out"
@@ -91,25 +94,25 @@ compileAndRun(){
                         #-mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
 			#        $program.c Util.c -o "out/$program.$opt.enablevc.out"
 			export OMP_NUM_THREADS=$num_threads
-			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -S -emit-llvm\
+			pollycc -mllvm -polly-vectorizer=stripmine -S -emit-llvm\
 	        		-mllvm -polly-parallel -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
 					-mllvm -polly-opt-outer-coincidence=yes\
-	        		$program.c -o "llvm/$testcase.$program.$codegen.$compiler.ll"
+	        		$testcase"_"$program.c -o "llvm"/$executable.ll
 			### Use 'llc' to compile LLVM code into assembly code
-            llc "llvm/$testcase.$program.$codegen.$compiler.ll" -o "assembly/$testcase.$program.$codegen.$compiler.s"
-            ### Use 'gcc' to compile .s file and link with 'libUtil.a'
-            pollycc "assembly/$testcase.$program.$codegen.$compiler.s" Util.c -lgomp -o out/"$testcase.$program.$codegen.$compiler.out"
+            llc "llvm"/$executable.ll -o "assembly"/$executable.s
+            ### Use 'clang' to compile .s file and link with 'Util.c'
+            clang "assembly"/$executable.s Util.c -lgomp -o "out"/$executable.out
 			;;
 	esac
 	###read -p "Press [Enter] to continue..."
-	result="$basedir/polly/$testcase/perf/$testcase.$program.$codegen.$compiler.$parameter.$num_threads.txt"
+	result="$basedir/polly/$testcase/perf/$executable.$parameter.$num_threads.txt"
 	export OMP_NUM_THREADS=$num_threads
-	echo -e -n "Run the $program $testcase on $parameter using $OMP_NUM_THREADS threads..." >> $result
+	echo -e -n "Run the $program $testcase on $parameter using $compiler and $OMP_NUM_THREADS threads..." >> $result
 	echo "Run the $program $testcase on $parameter using $OMP_NUM_THREADS threads..."
 	for i in {1..10}
 	do
 		echo "Begin $i iteration"
-		timeout $TIMEOUT perf stat out/"$testcase.$program.$codegen.$compiler.out" $parameter >>$result 2>> $result
+		timeout $TIMEOUT perf stat out/"$executable.out" $parameter >>$result 2>> $result
 		echo "Finish $i iteration"
 		#echo "Beginning the $executables with  $parameter" >>$result
 	    #start=`date +%s%N`
@@ -134,11 +137,11 @@ exec(){
 	##read -p "Complete code generation. Press [Enter] to continue..."
 	compileAndRun $testcase $program $codgen $parameter "gcc" 1
 	###read -p "Complete. Press [Enter] to continue..."
-	#compileAndRun $testcase $program $codgen $parameter "clang" 1
-	#compileAndRun $testcase $program $codgen $parameter "polly" 1
-	#compileAndRun $testcase $program $codgen $parameter "openmp" 1
-	#compileAndRun $testcase $program $codgen $parameter "openmp" 2
-	#compileAndRun $testcase $program $codgen $parameter "openmp" 4
+	compileAndRun $testcase $program $codgen $parameter "clang" 1
+	compileAndRun $testcase $program $codgen $parameter "polly" 1
+	compileAndRun $testcase $program $codgen $parameter "openmp" 1
+	compileAndRun $testcase $program $codgen $parameter "openmp" 2
+	compileAndRun $testcase $program $codgen $parameter "openmp" 4
 	# Return to the working directory
     cd $basedir/polly
     ###read -p "Press [Enter] to continue..."
