@@ -1,0 +1,42 @@
+digraph "Scop Graph for 'copy2DArray' function" {
+	label="Scop Graph for 'copy2DArray' function";
+
+	Node0xb3cf760 [shape=record,label="{entry:\l  br label %entry.split, !dbg !38\l}"];
+	Node0xb3cf760 -> Node0xb426960;
+	Node0xb426960 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata i64** %arr, i64 0, metadata !32,\l... metadata !39), !dbg !38\l  tail call void @llvm.dbg.value(metadata i64 %x, i64 0, metadata !33,\l... metadata !39), !dbg !40\l  tail call void @llvm.dbg.value(metadata i64 %y, i64 0, metadata !34,\l... metadata !39), !dbg !41\l  tail call void @llvm.dbg.value(metadata i64** null, i64 0, metadata !35,\l... metadata !39), !dbg !42\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !36, metadata\l... !39), !dbg !43\l  %mul = shl i64 %x, 3, !dbg !44\l  %call = tail call noalias i8* @malloc(i64 %mul) #6, !dbg !45\l  %0 = bitcast i8* %call to i64**, !dbg !46\l  tail call void @llvm.dbg.value(metadata i64** %0, i64 0, metadata !35,\l... metadata !39), !dbg !42\l  %cmp = icmp eq i8* %call, null, !dbg !47\l  br i1 %cmp, label %if.then, label %if.end, !dbg !49\l}"];
+	Node0xb426960 -> Node0xb3e8340;
+	Node0xb426960 -> Node0xb41b360;
+	Node0xb3e8340 [shape=record,label="{if.then:                                          \l  %puts26 = tail call i32 @puts(i8* getelementptr inbounds ([60 x i8], [60 x\l... i8]* @str.28, i64 0, i64 0)), !dbg !50\l  tail call void @exit(i32 -2) #7, !dbg !52\l  unreachable, !dbg !52\l}"];
+	Node0xb41b360 [shape=record,label="{if.end:                                           \l  %mul2 = shl i64 %y, 3, !dbg !53\l  tail call void @llvm.dbg.value(metadata i64 %mul2, i64 0, metadata !37,\l... metadata !39), !dbg !54\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !36, metadata\l... !39), !dbg !43\l  %cmp327 = icmp sgt i64 %x, 0, !dbg !55\l  br i1 %cmp327, label %for.body.lr.ph, label %for.end, !dbg !59\l}"];
+	Node0xb41b360 -> Node0xb27c260;
+	Node0xb41b360 -> Node0xb3d9ca0;
+	Node0xb27c260 [shape=record,label="{for.body.lr.ph:                                   \l  br label %for.body, !dbg !59\l}"];
+	Node0xb27c260 -> Node0xb419850;
+	Node0xb419850 [shape=record,label="{for.body:                                         \l  %i.028 = phi i64 [ 0, %for.body.lr.ph ], [ %inc, %if.end9 ]\l  %call4 = tail call noalias i8* @malloc(i64 %mul2) #6, !dbg !60\l  %arrayidx = getelementptr inbounds i64*, i64** %0, i64 %i.028, !dbg !62\l  %1 = bitcast i64** %arrayidx to i8**, !dbg !63\l  store i8* %call4, i8** %1, align 8, !dbg !63, !tbaa !64\l  %cmp6 = icmp eq i8* %call4, null, !dbg !68\l  br i1 %cmp6, label %if.then7, label %if.end9, !dbg !70\l}"];
+	Node0xb419850 -> Node0xb4bdf70;
+	Node0xb419850 -> Node0xb3d7510;
+	Node0xb4bdf70 [shape=record,label="{if.then7:                                         \l  %puts = tail call i32 @puts(i8* getelementptr inbounds ([63 x i8], [63 x\l... i8]* @str.27, i64 0, i64 0)), !dbg !71\l  tail call void @exit(i32 -2) #7, !dbg !73\l  unreachable, !dbg !73\l}"];
+	Node0xb3d7510 [shape=record,label="{if.end9:                                          \l  %arrayidx11 = getelementptr inbounds i64*, i64** %arr, i64 %i.028, !dbg !74\l  %2 = bitcast i64** %arrayidx11 to i8**, !dbg !74\l  %3 = load i8*, i8** %2, align 8, !dbg !74, !tbaa !64\l  tail call void @llvm.memcpy.p0i8.p0i8.i64(i8* nonnull %call4, i8* %3, i64\l... %mul2, i32 8, i1 false), !dbg !75\l  %inc = add nuw nsw i64 %i.028, 1, !dbg !76\l  tail call void @llvm.dbg.value(metadata i64 %inc, i64 0, metadata !36,\l... metadata !39), !dbg !43\l  %cmp3 = icmp slt i64 %inc, %x, !dbg !55\l  br i1 %cmp3, label %for.body, label %for.cond.for.end_crit_edge, !dbg !59,\l... !llvm.loop !78\l}"];
+	Node0xb3d7510 -> Node0xb419850;
+	Node0xb3d7510 -> Node0xb4183e0;
+	Node0xb4183e0 [shape=record,label="{for.cond.for.end_crit_edge:                       \l  br label %for.end, !dbg !59\l}"];
+	Node0xb4183e0 -> Node0xb3d9ca0;
+	Node0xb3d9ca0 [shape=record,label="{for.end:                                          \l  ret i64** %0, !dbg !80\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xb42e850 {
+          label = "Util.c:179-196
+";
+          style = solid;
+          color = 1
+          Node0xb3cf760;
+          Node0xb426960;
+          Node0xb3e8340;
+          Node0xb41b360;
+          Node0xb27c260;
+          Node0xb419850;
+          Node0xb4bdf70;
+          Node0xb3d7510;
+          Node0xb4183e0;
+          Node0xb3d9ca0;
+        }
+}

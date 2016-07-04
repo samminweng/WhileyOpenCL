@@ -1,0 +1,84 @@
+{
+   "context" : "[p_0_loaded_from_b, p_1_loaded_from_a, polly_fdiv_q_shr110] -> {  : -9223372036854775808 <= p_0_loaded_from_b <= 9223372036854775807 and -9223372036854775808 <= p_1_loaded_from_a <= 9223372036854775807 and -288230376151711744 <= polly_fdiv_q_shr110 <= 288230376151711743 }",
+   "name" : "%polly.loop_header112---%polly.split_new_and_old",
+   "statements" : [
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "[p_0_loaded_from_b, p_1_loaded_from_a, polly_fdiv_q_shr110] -> { Stmt_polly_loop_header143_us[i0, i1, i2, i3] -> MemRef_3[32i0 + i2, 128i1 + 4i3] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[p_0_loaded_from_b, p_1_loaded_from_a, polly_fdiv_q_shr110] -> { Stmt_polly_loop_header143_us[i0, i1, i2, i3] -> MemRef_call30[128i1 + 4i3, 32i0 + i2] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[p_0_loaded_from_b, p_1_loaded_from_a, polly_fdiv_q_shr110] -> { Stmt_polly_loop_header143_us[i0, i1, i2, i3] -> MemRef_3[32i0 + i2, 1 + 128i1 + 4i3] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[p_0_loaded_from_b, p_1_loaded_from_a, polly_fdiv_q_shr110] -> { Stmt_polly_loop_header143_us[i0, i1, i2, i3] -> MemRef_call30[1 + 128i1 + 4i3, 32i0 + i2] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[p_0_loaded_from_b, p_1_loaded_from_a, polly_fdiv_q_shr110] -> { Stmt_polly_loop_header143_us[i0, i1, i2, i3] -> MemRef_3[32i0 + i2, 2 + 128i1 + 4i3] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[p_0_loaded_from_b, p_1_loaded_from_a, polly_fdiv_q_shr110] -> { Stmt_polly_loop_header143_us[i0, i1, i2, i3] -> MemRef_call30[2 + 128i1 + 4i3, 32i0 + i2] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[p_0_loaded_from_b, p_1_loaded_from_a, polly_fdiv_q_shr110] -> { Stmt_polly_loop_header143_us[i0, i1, i2, i3] -> MemRef_3[32i0 + i2, 3 + 128i1 + 4i3] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[p_0_loaded_from_b, p_1_loaded_from_a, polly_fdiv_q_shr110] -> { Stmt_polly_loop_header143_us[i0, i1, i2, i3] -> MemRef_call30[3 + 128i1 + 4i3, 32i0 + i2] }"
+            }
+         ],
+         "domain" : "[p_0_loaded_from_b, p_1_loaded_from_a, polly_fdiv_q_shr110] -> { Stmt_polly_loop_header143_us[i0, i1, i2, i3] : p_0_loaded_from_b >= 6 and 0 <= i0 <= polly_fdiv_q_shr110 and i1 >= 0 and 0 <= i2 <= 31 and i2 < p_1_loaded_from_a - 32i0 and 0 <= i3 <= 31 and 4i3 <= -4 + p_0_loaded_from_b - 128i1 }",
+         "name" : "Stmt_polly_loop_header143_us",
+         "schedule" : "[p_0_loaded_from_b, p_1_loaded_from_a, polly_fdiv_q_shr110] -> { Stmt_polly_loop_header143_us[i0, i1, i2, i3] -> [i0, 1, i1, i2, i3] }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "[p_0_loaded_from_b, p_1_loaded_from_a, polly_fdiv_q_shr110] -> { Stmt_polly_loop_header175[i0, i1] -> MemRef_3[32i0 + i1, 0] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[p_0_loaded_from_b, p_1_loaded_from_a, polly_fdiv_q_shr110] -> { Stmt_polly_loop_header175[i0, i1] -> MemRef_call30[0, 32i0 + i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[p_0_loaded_from_b, p_1_loaded_from_a, polly_fdiv_q_shr110] -> { Stmt_polly_loop_header175[i0, i1] -> MemRef_3[32i0 + i1, 1] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[p_0_loaded_from_b, p_1_loaded_from_a, polly_fdiv_q_shr110] -> { Stmt_polly_loop_header175[i0, i1] -> MemRef_call30[1, 32i0 + i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[p_0_loaded_from_b, p_1_loaded_from_a, polly_fdiv_q_shr110] -> { Stmt_polly_loop_header175[i0, i1] -> MemRef_3[32i0 + i1, 2] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[p_0_loaded_from_b, p_1_loaded_from_a, polly_fdiv_q_shr110] -> { Stmt_polly_loop_header175[i0, i1] -> MemRef_call30[2, 32i0 + i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[p_0_loaded_from_b, p_1_loaded_from_a, polly_fdiv_q_shr110] -> { Stmt_polly_loop_header175[i0, i1] -> MemRef_3[32i0 + i1, 3] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[p_0_loaded_from_b, p_1_loaded_from_a, polly_fdiv_q_shr110] -> { Stmt_polly_loop_header175[i0, i1] -> MemRef_call30[3, 32i0 + i1] }"
+            }
+         ],
+         "domain" : "[p_0_loaded_from_b, p_1_loaded_from_a, polly_fdiv_q_shr110] -> { Stmt_polly_loop_header175[i0, i1] : p_0_loaded_from_b <= 5 and 0 <= i0 <= polly_fdiv_q_shr110 and 0 <= i1 <= 31 and i1 < p_1_loaded_from_a - 32i0 }",
+         "name" : "Stmt_polly_loop_header175",
+         "schedule" : "[p_0_loaded_from_b, p_1_loaded_from_a, polly_fdiv_q_shr110] -> { Stmt_polly_loop_header175[i0, i1] -> [i0, 0, i1, 0, 0] }"
+      }
+   ]
+}

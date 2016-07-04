@@ -1,0 +1,16 @@
+digraph "Scop Graph for 'printf_POS' function" {
+	label="Scop Graph for 'printf_POS' function";
+
+	Node0xa57c840 [shape=record,label="{entry:\l  br label %entry.split, !dbg !21\l}"];
+	Node0xa57c840 -> Node0xa589870;
+	Node0xa589870 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata %struct.POS* %pos, i64 0, metadata\l... !20, metadata !22), !dbg !21\l  %putchar = tail call i32 @putchar(i32 123) #7, !dbg !23\l  %call1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x\l... i8], [4 x i8]* @.str.1, i64 0, i64 0)), !dbg !24\l  %r = getelementptr inbounds %struct.POS, %struct.POS* %pos, i64 0, i32 0,\l... !dbg !25\l  %0 = load i64, i64* %r, align 8, !dbg !25, !tbaa !26\l  %call2 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x\l... i8], [5 x i8]* @.str.2, i64 0, i64 0), i64 %0), !dbg !31\l  %call3 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x\l... i8], [4 x i8]* @.str.3, i64 0, i64 0)), !dbg !32\l  %c = getelementptr inbounds %struct.POS, %struct.POS* %pos, i64 0, i32 1,\l... !dbg !33\l  %1 = load i64, i64* %c, align 8, !dbg !33, !tbaa !34\l  %call4 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x\l... i8], [5 x i8]* @.str.2, i64 0, i64 0), i64 %1), !dbg !35\l  %putchar7 = tail call i32 @putchar(i32 125) #7, !dbg !36\l  ret void, !dbg !37\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xa579c50 {
+          label = "NQueens_original.c:18-25
+";
+          style = solid;
+          color = 1
+          Node0xa57c840;
+          Node0xa589870;
+        }
+}

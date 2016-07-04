@@ -1,0 +1,133 @@
+digraph "Scop Graph for 'print_mat' function" {
+	label="Scop Graph for 'print_mat' function";
+
+	Node0xb6d6e10 [shape=record,label="{entry:\l  br label %entry.split, !dbg !116\l}"];
+	Node0xb6d6e10 -> Node0xb70fee0;
+	Node0xb70fee0 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata %struct._IO_FILE* %sys, i64 0,\l... metadata !86, metadata !117), !dbg !116\l  tail call void @llvm.dbg.value(metadata %struct.Matrix* %a, i64 0, metadata\l... !87, metadata !117), !dbg !118\l  tail call void @llvm.dbg.value(metadata i1 %a_dealloc, i64 0, metadata !88,\l... metadata !119), !dbg !120\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !89, metadata\l... !117), !dbg !121\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !90, metadata\l... !117), !dbg !122\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !91, metadata\l... !117), !dbg !123\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !92, metadata\l... !117), !dbg !124\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !93, metadata\l... !117), !dbg !125\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !94, metadata\l... !117), !dbg !126\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !95, metadata\l... !117), !dbg !127\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !96, metadata\l... !117), !dbg !128\l  tail call void @llvm.dbg.value(metadata i64* null, i64 0, metadata !98,\l... metadata !117), !dbg !129\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !99, metadata\l... !117), !dbg !129\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !100, metadata\l... !117), !dbg !130\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !101,\l... metadata !117), !dbg !131\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !102,\l... metadata !117), !dbg !132\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !103,\l... metadata !117), !dbg !133\l  tail call void @llvm.dbg.value(metadata i64* null, i64 0, metadata !105,\l... metadata !117), !dbg !134\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !106,\l... metadata !117), !dbg !134\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !107, metadata\l... !117), !dbg !135\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !108,\l... metadata !117), !dbg !136\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !109,\l... metadata !117), !dbg !137\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !110,\l... metadata !117), !dbg !138\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !111,\l... metadata !117), !dbg !139\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !114,\l... metadata !117), !dbg !140\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !115, metadata\l... !117), !dbg !141\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !93, metadata\l... !117), !dbg !125\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !89, metadata\l... !117), !dbg !121\l  %width1 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0,\l... i32 2, !dbg !142\l  %0 = load i64, i64* %width1, align 8, !dbg !142, !tbaa !143\l  tail call void @llvm.dbg.value(metadata i64 %0, i64 0, metadata !94,\l... metadata !117), !dbg !126\l  tail call void @llvm.dbg.value(metadata i64 %0, i64 0, metadata !90,\l... metadata !117), !dbg !122\l  %height2 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0,\l... i32 3, !dbg !149\l  %1 = load i64, i64* %height2, align 8, !dbg !149, !tbaa !150\l  tail call void @llvm.dbg.value(metadata i64 %1, i64 0, metadata !95,\l... metadata !117), !dbg !127\l  tail call void @llvm.dbg.value(metadata i64 %1, i64 0, metadata !91,\l... metadata !117), !dbg !123\l  %cmp79 = icmp sgt i64 %1, 0, !dbg !151\l  br i1 %cmp79, label %while.cond3.preheader.lr.ph, label %blklab6, !dbg !154\l}"];
+	Node0xb70fee0 -> Node0xb6de200;
+	Node0xb70fee0 -> Node0xb701e90;
+	Node0xb6de200 [shape=record,label="{while.cond3.preheader.lr.ph:                      \l  br label %while.cond3.preheader, !dbg !154\l}"];
+	Node0xb6de200 -> Node0xb6d1f60;
+	Node0xb6d1f60 [shape=record,label="{while.cond3.preheader:                            \l  %_25_dealloc.085 = phi i1 [ false, %while.cond3.preheader.lr.ph ], [ true,\l... %if.end16 ]\l  %_25.084 = phi i8* [ undef, %while.cond3.preheader.lr.ph ], [ %6, %if.end16 ]\l  %_18_dealloc.083 = phi i8 [ 0, %while.cond3.preheader.lr.ph ], [\l... %_18_dealloc.1.lcssa, %if.end16 ]\l  %_18.082 = phi i64* [ null, %while.cond3.preheader.lr.ph ], [ %_18.1.lcssa,\l... %if.end16 ]\l  %i.080 = phi i64 [ 0, %while.cond3.preheader.lr.ph ], [ %add13, %if.end16 ]\l  %cmp574 = icmp sgt i64 %0, 0, !dbg !155\l  br i1 %cmp574, label %if.end7.lr.ph, label %blklab8, !dbg !158\l}"];
+	Node0xb6d1f60 -> Node0xb6653d0;
+	Node0xb6d1f60 -> Node0xb644f40;
+	Node0xb6653d0 [shape=record,label="{if.end7.lr.ph:                                    \l  br label %if.end7, !dbg !158\l}"];
+	Node0xb6653d0 -> Node0xb6dccf0;
+	Node0xb6dccf0 [shape=record,label="{if.end7:                                          \l  %_18_dealloc.177 = phi i8 [ %_18_dealloc.083, %if.end7.lr.ph ], [ 1,\l... %if.end9 ]\l  %_18.176 = phi i64* [ %_18.082, %if.end7.lr.ph ], [ %call10, %if.end9 ]\l  %j.075 = phi i64 [ 0, %if.end7.lr.ph ], [ %add12, %if.end9 ]\l  %data = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0,\l... i32 0, !dbg !159\l  %2 = load i64*, i64** %data, align 8, !dbg !159, !tbaa !160\l  tail call void @llvm.dbg.value(metadata i64* %2, i64 0, metadata !98,\l... metadata !117), !dbg !129\l  %mul = mul nsw i64 %i.080, %0, !dbg !161\l  tail call void @llvm.dbg.value(metadata i64 %mul, i64 0, metadata !101,\l... metadata !117), !dbg !131\l  %add = add nsw i64 %j.075, %mul, !dbg !162\l  tail call void @llvm.dbg.value(metadata i64 %add, i64 0, metadata !102,\l... metadata !117), !dbg !132\l  %arrayidx = getelementptr inbounds i64, i64* %2, i64 %add, !dbg !163\l  %3 = load i64, i64* %arrayidx, align 8, !dbg !163, !tbaa !164\l  tail call void @llvm.dbg.value(metadata i64 %3, i64 0, metadata !103,\l... metadata !117), !dbg !133\l  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x\l... i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %3), !dbg !165\l  %4 = and i8 %_18_dealloc.177, 1, !dbg !166\l  %tobool = icmp eq i8 %4, 0, !dbg !166\l  br i1 %tobool, label %if.end9, label %if.then8, !dbg !169\l}"];
+	Node0xb6dccf0 -> Node0xb6cf400;
+	Node0xb6dccf0 -> Node0xb667880;
+	Node0xb6cf400 [shape=record,label="{if.end9:                                          \l  tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !106,\l... metadata !117), !dbg !134\l  %call10 = tail call i64* @create1DArray(i32 0, i32 1) #7, !dbg !173\l  tail call void @llvm.dbg.value(metadata i64* %call10, i64 0, metadata !105,\l... metadata !117), !dbg !134\l  store i64 32, i64* %call10, align 8, !dbg !174, !tbaa !164\l  tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !107, metadata\l... !117), !dbg !135\l  tail call void @printf_s(i64* %call10, i64 1) #7, !dbg !175\l  tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !108,\l... metadata !117), !dbg !136\l  %add12 = add nuw nsw i64 %j.075, 1, !dbg !176\l  tail call void @llvm.dbg.value(metadata i64 %add12, i64 0, metadata !109,\l... metadata !117), !dbg !137\l  tail call void @llvm.dbg.value(metadata i64 %add12, i64 0, metadata !92,\l... metadata !117), !dbg !124\l  %exitcond = icmp ne i64 %add12, %0, !dbg !158\l  br i1 %exitcond, label %if.end7, label %while.cond3.blklab8_crit_edge, !dbg\l... !158, !llvm.loop !177\l}"];
+	Node0xb6cf400 -> Node0xb6dccf0[constraint=false];
+	Node0xb6cf400 -> Node0xb6ca8f0;
+	Node0xb6ca8f0 [shape=record,label="{while.cond3.blklab8_crit_edge:                    \l  %call10.lcssa = phi i64* [ %call10, %if.end9 ]\l  br label %blklab8, !dbg !158\l}"];
+	Node0xb6ca8f0 -> Node0xb644f40;
+	Node0xb644f40 [shape=record,label="{blklab8:                                          \l  %_18_dealloc.1.lcssa = phi i8 [ 1, %while.cond3.blklab8_crit_edge ], [\l... %_18_dealloc.083, %while.cond3.preheader ]\l  %_18.1.lcssa = phi i64* [ %call10.lcssa, %while.cond3.blklab8_crit_edge ], [\l... %_18.082, %while.cond3.preheader ]\l  tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !110,\l... metadata !117), !dbg !138\l  %add13 = add nuw nsw i64 %i.080, 1, !dbg !179\l  tail call void @llvm.dbg.value(metadata i64 %add13, i64 0, metadata !111,\l... metadata !117), !dbg !139\l  tail call void @llvm.dbg.value(metadata i64 %add13, i64 0, metadata !89,\l... metadata !117), !dbg !121\l  br i1 %_25_dealloc.085, label %if.then15, label %if.end16, !dbg !180\l}"];
+	Node0xb644f40 -> Node0xb739e80;
+	Node0xb644f40 -> Node0xb72da70;
+	Node0xb739e80 [shape=record,label="{if.then15:                                        \l  tail call void @free(i8* %_25.084) #7, !dbg !182\l  tail call void @llvm.dbg.value(metadata i8* null, i64 0, metadata !113,\l... metadata !117), !dbg !186\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !115, metadata\l... !117), !dbg !141\l  br label %if.end16, !dbg !182\l}"];
+	Node0xb739e80 -> Node0xb72da70;
+	Node0xb72da70 [shape=record,label="{if.end16:                                         \l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !114,\l... metadata !117), !dbg !140\l  %call18 = tail call i64* @create1DArray(i32 0, i32 0) #7, !dbg !187\l  %6 = bitcast i64* %call18 to i8*, !dbg !187\l  tail call void @llvm.dbg.value(metadata i8* %6, i64 0, metadata !113,\l... metadata !117), !dbg !186\l  tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !115, metadata\l... !117), !dbg !141\l  tail call void @println_s(i64* %call18, i64 0) #7, !dbg !188\l  %exitcond90 = icmp ne i64 %add13, %1, !dbg !154\l  br i1 %exitcond90, label %while.cond3.preheader, label\l... %while.cond.blklab6_crit_edge, !dbg !154, !llvm.loop !189\l}"];
+	Node0xb72da70 -> Node0xb6d1f60[constraint=false];
+	Node0xb72da70 -> Node0xb6cedb0;
+	Node0xb6cedb0 [shape=record,label="{while.cond.blklab6_crit_edge:                     \l  %.lcssa = phi i8* [ %6, %if.end16 ]\l  %_18.1.lcssa.lcssa = phi i64* [ %_18.1.lcssa, %if.end16 ]\l  %_18_dealloc.1.lcssa.lcssa = phi i8 [ %_18_dealloc.1.lcssa, %if.end16 ]\l  br label %blklab6, !dbg !154\l}"];
+	Node0xb6cedb0 -> Node0xb701e90;
+	Node0xb701e90 [shape=record,label="{blklab6:                                          \l  %_25_dealloc.0.lcssa = phi i1 [ true, %while.cond.blklab6_crit_edge ], [\l... false, %entry.split ]\l  %_25.0.lcssa = phi i8* [ %.lcssa, %while.cond.blklab6_crit_edge ], [ undef,\l... %entry.split ]\l  %_18_dealloc.0.lcssa = phi i8 [ %_18_dealloc.1.lcssa.lcssa,\l... %while.cond.blklab6_crit_edge ], [ 0, %entry.split ]\l  %_18.0.lcssa = phi i64* [ %_18.1.lcssa.lcssa, %while.cond.blklab6_crit_edge\l... ], [ null, %entry.split ]\l  br i1 %a_dealloc, label %if.then20, label %if.end24, !dbg !191\l}"];
+	Node0xb701e90 -> Node0xb64fbd0;
+	Node0xb701e90 -> Node0xb689b10;
+	Node0xb64fbd0 [shape=record,label="{if.then20:                                        \l  tail call void @free_Matrix(%struct.Matrix* %a), !dbg !193\l  tail call void @llvm.dbg.value(metadata %struct.Matrix* null, i64 0,\l... metadata !87, metadata !117), !dbg !118\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !88, metadata\l... !117), !dbg !120\l  br label %if.end24, !dbg !193\l}"];
+	Node0xb64fbd0 -> Node0xb689b10;
+	Node0xb689b10 [shape=record,label="{if.end24:                                         \l  %7 = and i8 %_18_dealloc.0.lcssa, 1, !dbg !197\l  %tobool25 = icmp eq i8 %7, 0, !dbg !197\l  br i1 %tobool25, label %if.end27, label %if.then26, !dbg !200\l}"];
+	Node0xb689b10 -> Node0xb67a030;
+	Node0xb689b10 -> Node0xb6ce760;
+	Node0xb67a030 [shape=record,label="{if.end27:                                         \l  br i1 %_25_dealloc.0.lcssa, label %if.then29, label %if.end30, !dbg !204\l}"];
+	Node0xb67a030 -> Node0xb6bbf90;
+	Node0xb67a030 -> Node0xb6ded90;
+	Node0xb6bbf90 [shape=record,label="{if.then29:                                        \l  tail call void @free(i8* %_25.0.lcssa) #7, !dbg !206\l  tail call void @llvm.dbg.value(metadata i8* null, i64 0, metadata !113,\l... metadata !117), !dbg !186\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !115, metadata\l... !117), !dbg !141\l  br label %if.end30, !dbg !206\l}"];
+	Node0xb6bbf90 -> Node0xb6ded90;
+	Node0xb6ded90 [shape=record,label="{if.end30:                                         \l  ret void, !dbg !210\l}"];
+	Node0xb6ce760 [shape=record,label="{if.then26:                                        \l  %8 = bitcast i64* %_18.0.lcssa to i8*, !dbg !201\l  tail call void @free(i8* %8) #7, !dbg !201\l  tail call void @llvm.dbg.value(metadata i64* null, i64 0, metadata !105,\l... metadata !117), !dbg !134\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !107, metadata\l... !117), !dbg !135\l  br label %if.end27, !dbg !201\l}"];
+	Node0xb6ce760 -> Node0xb67a030;
+	Node0xb667880 [shape=record,label="{if.then8:                                         \l  %5 = bitcast i64* %_18.176 to i8*, !dbg !170\l  tail call void @free(i8* %5) #7, !dbg !170\l  tail call void @llvm.dbg.value(metadata i64* null, i64 0, metadata !105,\l... metadata !117), !dbg !134\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !107, metadata\l... !117), !dbg !135\l  br label %if.end9, !dbg !170\l}"];
+	Node0xb667880 -> Node0xb6cf400;
+	colorscheme = "paired12"
+        subgraph cluster_0xb711120 {
+          label = "MatrixMult_transpose.c:152-259
+";
+          style = solid;
+          color = 1
+          subgraph cluster_0xb6dbfe0 {
+            label = "MatrixMult_transpose.c:152-247
+Call instruction:   %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %3), !dbg !165";
+            style = solid;
+            color = 6
+            subgraph cluster_0xb702670 {
+              label = "MatrixMult_transpose.c:153-247
+Call instruction:   %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %3), !dbg !165";
+              style = solid;
+              color = 5
+              subgraph cluster_0xb6bac70 {
+                label = "MatrixMult_transpose.c:156-226
+Call instruction:   %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %3), !dbg !165";
+                style = solid;
+                color = 7
+                subgraph cluster_0xb6b9e60 {
+                  label = "MatrixMult_transpose.c:156-226
+Call instruction:   %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %3), !dbg !165";
+                  style = solid;
+                  color = 9
+                  subgraph cluster_0xb6dcb70 {
+                    label = "MatrixMult_transpose.c:162-217
+Region can not profitably be optimized!";
+                    style = solid;
+                    color = 11
+                    Node0xb6dccf0;
+                    Node0xb667880;
+                  }
+                  Node0xb6cf400;
+                }
+                Node0xb6d1f60;
+                Node0xb6653d0;
+                Node0xb6ca8f0;
+              }
+              subgraph cluster_0xb6822e0 {
+                label = "MatrixMult_transpose.c:153-243
+Region can not profitably be optimized!";
+                style = solid;
+                color = 7
+                Node0xb644f40;
+                Node0xb739e80;
+              }
+              Node0xb72da70;
+            }
+            Node0xb70fee0;
+            Node0xb6de200;
+            Node0xb6cedb0;
+          }
+          subgraph cluster_0xb6c6750 {
+            label = "MatrixMult_transpose.c:152-254
+Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xb701e90;
+            Node0xb64fbd0;
+          }
+          subgraph cluster_0xb6de540 {
+            label = "MatrixMult_transpose.c:168-256
+Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xb689b10;
+            Node0xb6ce760;
+          }
+          subgraph cluster_0xb719c40 {
+            label = "MatrixMult_transpose.c:175-257
+Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xb67a030;
+            Node0xb6bbf90;
+          }
+          Node0xb6d6e10;
+          Node0xb6ded90;
+        }
+}

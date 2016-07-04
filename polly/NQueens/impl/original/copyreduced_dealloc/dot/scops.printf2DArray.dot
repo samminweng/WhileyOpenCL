@@ -1,0 +1,55 @@
+digraph "Scop Graph for 'printf2DArray' function" {
+	label="Scop Graph for 'printf2DArray' function";
+
+	Node0xa7c0830 [shape=record,label="{entry:\l  br label %entry.split, !dbg !37\l}"];
+	Node0xa7c0830 -> Node0xa7e7960;
+	Node0xa7e7960 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata i64** %input, i64 0, metadata !32,\l... metadata !38), !dbg !37\l  tail call void @llvm.dbg.value(metadata i64 %input_size, i64 0, metadata\l... !33, metadata !38), !dbg !39\l  tail call void @llvm.dbg.value(metadata i64 %input_size_size, i64 0,\l... metadata !34, metadata !38), !dbg !40\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !35, metadata\l... !38), !dbg !41\l  tail call void @llvm.dbg.value(metadata i32 10, i64 0, metadata !36,\l... metadata !38), !dbg !42\l  %putchar = tail call i32 @putchar(i32 91) #6, !dbg !43\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !35, metadata\l... !38), !dbg !41\l  %cmp19 = icmp sgt i64 %input_size, 0, !dbg !44\l  br i1 %cmp19, label %for.body.lr.ph, label %for.end, !dbg !48\l}"];
+	Node0xa7e7960 -> Node0xa86da70;
+	Node0xa7e7960 -> Node0xa7da9d0;
+	Node0xa86da70 [shape=record,label="{for.body.lr.ph:                                   \l  br label %for.body, !dbg !48\l}"];
+	Node0xa86da70 -> Node0xa7c2ef0;
+	Node0xa7c2ef0 [shape=record,label="{for.body:                                         \l  %i.020 = phi i64 [ 0, %for.body.lr.ph ], [ %inc, %for.body ]\l  %arrayidx = getelementptr inbounds i64*, i64** %input, i64 %i.020, !dbg !49\l  %0 = load i64*, i64** %arrayidx, align 8, !dbg !49, !tbaa !51\l  tail call void @printf1DArray(i64* %0, i64 %input_size_size), !dbg !55\l  %inc = add nuw nsw i64 %i.020, 1, !dbg !56\l  tail call void @llvm.dbg.value(metadata i64 %inc, i64 0, metadata !35,\l... metadata !38), !dbg !41\l  %cmp = icmp slt i64 %inc, %input_size, !dbg !44\l  %cmp1 = icmp slt i64 %inc, 10, !dbg !58\l  %or.cond = and i1 %cmp, %cmp1, !dbg !48\l  br i1 %or.cond, label %for.body, label %for.cond.for.end_crit_edge, !dbg\l... !48, !llvm.loop !60\l}"];
+	Node0xa7c2ef0 -> Node0xa7c2ef0[constraint=false];
+	Node0xa7c2ef0 -> Node0xa7a4ca0;
+	Node0xa7a4ca0 [shape=record,label="{for.cond.for.end_crit_edge:                       \l  %cmp.lcssa21 = phi i1 [ %cmp, %for.body ]\l  br label %for.end, !dbg !48\l}"];
+	Node0xa7a4ca0 -> Node0xa7da9d0;
+	Node0xa7da9d0 [shape=record,label="{for.end:                                          \l  %cmp.lcssa = phi i1 [ %cmp.lcssa21, %for.cond.for.end_crit_edge ], [ %cmp19,\l... %entry.split ]\l  br i1 %cmp.lcssa, label %if.then, label %if.end, !dbg !62\l}"];
+	Node0xa7da9d0 -> Node0xa7a1a30;
+	Node0xa7da9d0 -> Node0xa7b11a0;
+	Node0xa7a1a30 [shape=record,label="{if.then:                                          \l  %puts = tail call i32 @puts(i8* getelementptr inbounds ([5 x i8], [5 x i8]*\l... @str.30, i64 0, i64 0)), !dbg !63\l  %sub = add nsw i64 %input_size, -1, !dbg !66\l  %arrayidx6 = getelementptr inbounds i64*, i64** %input, i64 %sub, !dbg !67\l  %1 = load i64*, i64** %arrayidx6, align 8, !dbg !67, !tbaa !51\l  tail call void @printf1DArray(i64* %1, i64 %input_size_size), !dbg !68\l  br label %if.end, !dbg !69\l}"];
+	Node0xa7a1a30 -> Node0xa7b11a0;
+	Node0xa7b11a0 [shape=record,label="{if.end:                                           \l  %putchar18 = tail call i32 @putchar(i32 93) #6, !dbg !70\l  ret void, !dbg !71\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xa7a5d40 {
+          label = "Util.c:272-284
+";
+          style = solid;
+          color = 1
+          subgraph cluster_0xa7d17a0 {
+            label = "Util.c:272-277
+Call instruction:   %putchar = tail call i32 @putchar(i32 91) #6, !dbg !43";
+            style = solid;
+            color = 6
+            subgraph cluster_0xa7f1aa0 {
+              label = "Util.c:273-277
+Call instruction:   tail call void @printf1DArray(i64* %0, i64 %input_size_size), !dbg !55";
+              style = solid;
+              color = 5
+              Node0xa7c2ef0;
+            }
+            Node0xa7e7960;
+            Node0xa86da70;
+            Node0xa7a4ca0;
+          }
+          subgraph cluster_0xa7a5dc0 {
+            label = "Util.c:279-282
+Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xa7da9d0;
+            Node0xa7a1a30;
+          }
+          Node0xa7c0830;
+          Node0xa7b11a0;
+        }
+}

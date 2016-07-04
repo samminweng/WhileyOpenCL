@@ -20,11 +20,11 @@ generateCode(){
 	## change to 'testcase' folder
 	cd "$basedir/polly/$testcase/" 
 	# clean and create the folder
-	rm -f "impl/$program/$codegen"
+	rm -f "impl/$program/$codegen/*.*"
 	mkdir -p "impl/$program/$codegen"
 	# copy the source whiley file to the folder
 	cp $testcase"_"$program.whiley "impl/$program/$codegen/."
-	
+	#read -p "Press [Enter] to continue..."
 	#### Change folder to the corresponding implementation folder
 	cd "impl/$program/$codegen"
 	## Clean up previously generated C code
@@ -51,40 +51,42 @@ generateCode(){
 			;;
 	esac
 }
-
+##
+## Run 'Grof' to profile the generated code
+##
 runGProf(){
-	c_type=$1
+	testcase=$1
 	program=$2
-	compiler=$3
-	parameter=$4
-	threads=$5
-	mkdir -p "out"
+	codegen=$3
+	compiler=$4
+	parameter=$5
+	threads=$6
+	### executable file
+	executables="$testcase.$program.$codegen.$compiler.$parameter.$threads.out"
+
 	## Compile C code with -pg option to write profile information for gprof
 	echo -e -n "[*]Compile $program using GCC" && read
 	## O3/O2 optimizes and inlines the function, and loses the track of function call 
-	gcc -O3 -g -std=c99 -Wall -pg $program.c Util.c -o "out/$program.$compiler.enablevc.out"
+	gcc -O3 -g -std=c99 -Wall -pg $testcase"_"$program.c Util.c -o "out/$executables"
 	#gcc -O3 -fno-inline-small-functions -g -std=c99 -Wall -pg $program.c Util.c -o "out/$program.$compiler.enablevc.out"
 
 	## Execute the program
 	echo -e -n "[*]Run $program executable to produce profile files" && read
-	cd out
-	time "./$program.$compiler.enablevc.out" $parameter
+	time "./out/$executables" $parameter
 
 	## The analysis file 'gmon.out' is generated
 	echo -e -n "[*]Run GProf" && read
-	mkdir -p "$PWD/../../../prof"
 	##gprof "./out/$program.$compiler.enablevc.out" gmon.out
-	analysis="$c_type.$program.$compiler.$parameter.$threads.enablevc.txt"
-	gprof "./$program.$compiler.enablevc.out" gmon.out > $analysis
+	analysis="$testcase.$program.$codegen.$compiler.$parameter.$threads.txt"
+	gprof "./out/$executables" gmon.out > $analysis
 	
 	echo -e -n "[*]Show Profiled Analysis of $program compiled by GCC" && read
 	cat $analysis | less
 
 	echo -e -n "[*]Complete GProf Analysis ($analysis)" && read
-	mv $analysis "$PWD/../../../prof"
+	mv $analysis "$basedir/polly/$testcase/prof"
 	## Delete gmon.out
 	rm -f gmon.out
-	cd ..
 }
 
 ##
@@ -118,97 +120,104 @@ runGProf(){
 ## Run Clang sample profiler (http://clang.llvm.org/docs/UsersManual.html#profile-guided-optimization)
 ###
 runClangSampleProfiler(){
-	c_type=$1
+	testcase=$1
 	program=$2
-	compiler=$3
-	parameter=$4
-	threads=$5
-	mkdir -p "out"
-	binary="$c_type.$program.$compiler.$parameter.$threads.enablevc.out"
-	sampler="$c_type.$program.$compiler.$parameter.$threads.enablevc.sampler"
-	analysis="$c_type.$program.$compiler.$parameter.$threads.enablevc.txt"
-	perfdata="$c_type.$program.$compiler.$parameter.$threads.enablevc.perf.data"
+	codegen=$3
+	compiler=$4
+	parameter=$5
+	threads=$6
+	### executable file
+	executables="$testcase.$program.$codegen.$compiler.$parameter.$threads.out"
+	### Sampler 
+	sampler="$testcase.$program.$codegen.$compiler.$parameter.$threads.sampler"
+	### Analysis results
+	analysis="$testcase.$program.$codegen.$compiler.$parameter.$threads.txt"
+	### Perf data
+	perfdata="$testcase.$program.$codegen.$compiler.$parameter.$threads.perf.data"
 
 	echo -e -n "[*]Run the executable with sampling profiler" && read
-	time perf record "./out/$binary" $parameter
+	time perf record "./out/$executables" $parameter
 
 	echo -e -n "[*]Convert perf.data to LLVM's sampling profiler format using AutoFDO" && read
-	create_llvm_prof --use_lbr=false --binary="./out/$binary" --out=$sampler
+	create_llvm_prof --use_lbr=false --binary="./out/$executables" --out=$sampler
 	
 	echo -e -n "[*]Show Profiled Analysis of $program compiled by Clang" && read
 	llvm-profdata show -sample $sampler -output=$analysis
 	llvm-profdata show -sample $sampler
 	
 	echo -e -n "[*]Complete Clang Sample Profiling Analysis ($analysis)" && read
-	## Clean up folder
-	mkdir -p "$PWD/../../prof"
+	
 	## Move sample profiled data
-	mv $analysis "$PWD/../../prof"
-	## Move binary file
-	rm -f "out/$binary"
+	mv $analysis "$basedir/polly/$testcase/prof"
 	## delete sampler 
-	rm $sampler 
+	rm $sampler
 	## delete perf.data
 	rm -f perf.data
-
 
 }
 
 exec(){
-	c_type=$1
+	testcase=$1
 	program=$2
+	codegen="copyreduced_dealloc"
 	compiler=$3
 	parameter=$4
 	threads=$5
-	# change folder
-	cd "$program/impl/$c_type"
-	generateCode $program $compiler
+	### Generate the code
+	generateCode $testcase $program $codegen
+	rm -rf "out"
 	mkdir -p "out"
-    binary="$c_type.$program.$compiler.$parameter.$threads.enablevc.out"
+    executables="$testcase.$program.$codgen.$compiler.$parameter.$threads.out"
 
 	case "$compiler" in
 		"gcc")
-			runGProf $c_type $program $compiler $parameter $threads
+			runGProf $testcase $program $codgen $compiler $parameter $threads
 			##runGCCProfiler $c_type $program $compiler $parameter $threads
 			;;
 		"clang")
 			echo -e -n "[*]Build the code with source line info using Clang" && read
-        		## Specify '-gline-tables-only' option to Clang compiler
-        		clang -O3 -gline-tables-only $program.c Util.c -o "out/$binary"
-			runClangSampleProfiler $c_type $program $compiler $parameter $threads
+        	## Specify '-gline-tables-only' option to Clang compiler
+        	clang -O3 -gline-tables-only $testcase"_"$program.c Util.c -o "out/$executables"
+			runClangSampleProfiler $testcase $program $codgen $compiler $parameter $threads
 			;;
 		"polly")
 			echo -e -n "[*]Build the code with source line info using Polly" && read
-                        ## Specify '-gline-tables-only' option to Clang compiler
-                        pollycc -O3 -gline-tables-only -mllvm -polly -mllvm -polly-vectorizer=stripmine\
+            ## Specify '-gline-tables-only' option to Clang compiler
+            pollycc -O3 -gline-tables-only -mllvm -polly -mllvm -polly-vectorizer=stripmine\
 				-mllvm -polly-process-unprofitable -mllvm -polly-opt-outer-coincidence=yes\
-				$program.c Util.c -o "out/$binary"
-                        runClangSampleProfiler $c_type $program $compiler $parameter $threads
+				$testcase"_"$program.c Util.c -o "out/$executables"
+            runClangSampleProfiler $testcase $program $codgen $compiler $parameter $threads
 			;;
 		*)
 			echo -e -n "[*]Not implemented" && read
 			;;
 	esac
-	cd ../../..
+	# Return to the working directory
+    cd $basedir/polly
 }
 
+### Create the folder and/or clean up the files
 init(){
-	program=$1
-	rm -rf "$program/prof/"*
+	testcase=$1
+	testcase=$1
+	profdir="$basedir/polly/$testcase/prof"
+	mkdir -p "$profdir"
+	### remove all files inside the folder
+	rm -f "$profdir/"*.*
 }
 
 init CoinGame
-exec autogenerate_leakfree CoinGame gcc 40000 1
-exec autogenerate_leakfree CoinGame clang 40000 1
-exec autogenerate_leakfree CoinGame polly 40000 1
+#exec CoinGame original gcc 40000 1
+exec CoinGame original clang 40000 1
+# exec original CoinGame polly 40000 1
 
-exec autogenerate_single_leakfree CoinGame gcc 40000 1
-exec autogenerate_single_leakfree CoinGame clang 40000 1
-exec autogenerate_single_leakfree CoinGame polly 40000 1
+# exec single CoinGame gcc 40000 1
+# exec single CoinGame clang 40000 1
+# exec single CoinGame polly 40000 1
 
-exec autogenerate_array_leakfree CoinGame gcc 40000 1
-exec autogenerate_array_leakfree CoinGame clang 40000 1
-exec autogenerate_array_leakfree CoinGame polly 40000 1
+# exec array CoinGame gcc 40000 1
+# exec array CoinGame clang 40000 1
+# exec array CoinGame polly 40000 1
 
 #init NQueens
 #exec autogenerate_leak NQueens gcc 15 1

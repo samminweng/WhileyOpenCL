@@ -59,7 +59,8 @@ compileAndRun(){
 	compiler=$5
 	num_threads=$6
 	####Create 'out' folder
-    mkdir -p "out"
+    rm -rf "out"
+	mkdir -p "out"
     ### Compile C code into executables
 	case "$compiler" in
 		"gcc")

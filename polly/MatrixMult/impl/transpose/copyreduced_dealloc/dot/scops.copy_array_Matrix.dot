@@ -1,0 +1,42 @@
+digraph "Scop Graph for 'copy_array_Matrix' function" {
+	label="Scop Graph for 'copy_array_Matrix' function";
+
+	Node0xb657b80 [shape=record,label="{entry:\l  br label %entry.split, !dbg !30\l}"];
+	Node0xb657b80 -> Node0xb6598f0;
+	Node0xb6598f0 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata %struct.Matrix** %_Matrix, i64 0,\l... metadata !24, metadata !31), !dbg !30\l  tail call void @llvm.dbg.value(metadata i64 %_Matrix_size, i64 0, metadata\l... !25, metadata !31), !dbg !32\l  %mul = shl i64 %_Matrix_size, 3, !dbg !33\l  %call = tail call noalias i8* @malloc(i64 %mul) #6, !dbg !34\l  %0 = bitcast i8* %call to %struct.Matrix**, !dbg !36\l  tail call void @llvm.dbg.value(metadata %struct.Matrix** %0, i64 0, metadata\l... !26, metadata !31), !dbg !37\l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !27, metadata\l... !31), !dbg !38\l  %cmp12 = icmp sgt i64 %_Matrix_size, 0, !dbg !39\l  br i1 %cmp12, label %for.body.lr.ph, label %for.cond.cleanup, !dbg !42\l}"];
+	Node0xb6598f0 -> Node0xb6df260;
+	Node0xb6598f0 -> Node0xb6def20;
+	Node0xb6df260 [shape=record,label="{for.body.lr.ph:                                   \l  br label %for.body, !dbg !42\l}"];
+	Node0xb6df260 -> Node0xb63b240;
+	Node0xb63b240 [shape=record,label="{for.body:                                         \l  %indvars.iv = phi i64 [ 0, %for.body.lr.ph ], [ %indvars.iv.next, %for.body ]\l  %arrayidx = getelementptr inbounds %struct.Matrix*, %struct.Matrix**\l... %_Matrix, i64 %indvars.iv, !dbg !44\l  %1 = load %struct.Matrix*, %struct.Matrix** %arrayidx, align 8, !dbg !44,\l... !tbaa !46\l  %call2 = tail call %struct.Matrix* @copy_Matrix(%struct.Matrix* %1), !dbg !50\l  %arrayidx4 = getelementptr inbounds %struct.Matrix*, %struct.Matrix** %0,\l... i64 %indvars.iv, !dbg !51\l  store %struct.Matrix* %call2, %struct.Matrix** %arrayidx4, align 8, !dbg\l... !52, !tbaa !46\l  %indvars.iv.next = add nuw i64 %indvars.iv, 1, !dbg !42\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !27, metadata\l... !31), !dbg !38\l  %cmp = icmp slt i64 %indvars.iv.next, %_Matrix_size, !dbg !39\l  br i1 %cmp, label %for.body, label %for.cond.for.cond.cleanup_crit_edge,\l... !dbg !42, !llvm.loop !53\l}"];
+	Node0xb63b240 -> Node0xb63b240[constraint=false];
+	Node0xb63b240 -> Node0xb72f870;
+	Node0xb72f870 [shape=record,label="{for.cond.for.cond.cleanup_crit_edge:              \l  br label %for.cond.cleanup, !dbg !42\l}"];
+	Node0xb72f870 -> Node0xb6def20;
+	Node0xb6def20 [shape=record,label="{for.cond.cleanup:                                 \l  ret %struct.Matrix** %0, !dbg !43\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xb71a5a0 {
+          label = "MatrixMult_transpose.c:9-14
+";
+          style = solid;
+          color = 1
+          subgraph cluster_0xb719c40 {
+            label = "MatrixMult_transpose.c:9-12
+Call instruction:   %call = tail call noalias i8* @malloc(i64 %mul) #6, !dbg !34";
+            style = solid;
+            color = 6
+            subgraph cluster_0xb71a0f0 {
+              label = "MatrixMult_transpose.c:11-12
+Call instruction:   %call2 = tail call %struct.Matrix* @copy_Matrix(%struct.Matrix* %1), !dbg !50";
+              style = solid;
+              color = 5
+              Node0xb63b240;
+            }
+            Node0xb6598f0;
+            Node0xb6df260;
+            Node0xb72f870;
+          }
+          Node0xb657b80;
+          Node0xb6def20;
+        }
+}

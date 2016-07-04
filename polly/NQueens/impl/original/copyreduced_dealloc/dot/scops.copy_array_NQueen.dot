@@ -1,0 +1,42 @@
+digraph "Scop Graph for 'copy_array_NQueen' function" {
+	label="Scop Graph for 'copy_array_NQueen' function";
+
+	Node0xa5d9180 [shape=record,label="{entry:\l  br label %entry.split, !dbg !35\l}"];
+	Node0xa5d9180 -> Node0xa559fd0;
+	Node0xa559fd0 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata %struct.NQueen** %_NQueen, i64 0,\l... metadata !29, metadata !36), !dbg !35\l  tail call void @llvm.dbg.value(metadata i64 %_NQueen_size, i64 0, metadata\l... !30, metadata !36), !dbg !37\l  %mul = shl i64 %_NQueen_size, 3, !dbg !38\l  %call = tail call noalias i8* @malloc(i64 %mul) #7, !dbg !39\l  %0 = bitcast i8* %call to %struct.NQueen**, !dbg !41\l  tail call void @llvm.dbg.value(metadata %struct.NQueen** %0, i64 0, metadata\l... !31, metadata !36), !dbg !42\l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !32, metadata\l... !36), !dbg !43\l  %cmp12 = icmp sgt i64 %_NQueen_size, 0, !dbg !44\l  br i1 %cmp12, label %for.body.lr.ph, label %for.cond.cleanup, !dbg !47\l}"];
+	Node0xa559fd0 -> Node0xa58b700;
+	Node0xa559fd0 -> Node0xa5a99a0;
+	Node0xa58b700 [shape=record,label="{for.body.lr.ph:                                   \l  br label %for.body, !dbg !47\l}"];
+	Node0xa58b700 -> Node0xa5e6330;
+	Node0xa5e6330 [shape=record,label="{for.body:                                         \l  %indvars.iv = phi i64 [ 0, %for.body.lr.ph ], [ %indvars.iv.next, %for.body ]\l  %arrayidx = getelementptr inbounds %struct.NQueen*, %struct.NQueen**\l... %_NQueen, i64 %indvars.iv, !dbg !49\l  %1 = load %struct.NQueen*, %struct.NQueen** %arrayidx, align 8, !dbg !49,\l... !tbaa !51\l  %call2 = tail call %struct.NQueen* @copy_NQueen(%struct.NQueen* %1), !dbg !55\l  %arrayidx4 = getelementptr inbounds %struct.NQueen*, %struct.NQueen** %0,\l... i64 %indvars.iv, !dbg !56\l  store %struct.NQueen* %call2, %struct.NQueen** %arrayidx4, align 8, !dbg\l... !57, !tbaa !51\l  %indvars.iv.next = add nuw i64 %indvars.iv, 1, !dbg !47\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !32, metadata\l... !36), !dbg !43\l  %cmp = icmp slt i64 %indvars.iv.next, %_NQueen_size, !dbg !44\l  br i1 %cmp, label %for.body, label %for.cond.for.cond.cleanup_crit_edge,\l... !dbg !47, !llvm.loop !58\l}"];
+	Node0xa5e6330 -> Node0xa5e6330[constraint=false];
+	Node0xa5e6330 -> Node0xa5e7ed0;
+	Node0xa5e7ed0 [shape=record,label="{for.cond.for.cond.cleanup_crit_edge:              \l  br label %for.cond.cleanup, !dbg !47\l}"];
+	Node0xa5e7ed0 -> Node0xa5a99a0;
+	Node0xa5a99a0 [shape=record,label="{for.cond.cleanup:                                 \l  ret %struct.NQueen** %0, !dbg !48\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xa5e17a0 {
+          label = "NQueens_original.c:32-37
+";
+          style = solid;
+          color = 1
+          subgraph cluster_0xa619b00 {
+            label = "NQueens_original.c:32-35
+Call instruction:   %call = tail call noalias i8* @malloc(i64 %mul) #7, !dbg !39";
+            style = solid;
+            color = 6
+            subgraph cluster_0xa5bb7d0 {
+              label = "NQueens_original.c:34-35
+Call instruction:   %call2 = tail call %struct.NQueen* @copy_NQueen(%struct.NQueen* %1), !dbg !55";
+              style = solid;
+              color = 5
+              Node0xa5e6330;
+            }
+            Node0xa559fd0;
+            Node0xa58b700;
+            Node0xa5e7ed0;
+          }
+          Node0xa5d9180;
+          Node0xa5a99a0;
+        }
+}

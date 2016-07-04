@@ -1,0 +1,22 @@
+digraph "Scop Graph for 'create1DArray' function" {
+	label="Scop Graph for 'create1DArray' function";
+
+	Node0xb1da3f0 [shape=record,label="{entry:\l  br label %entry.split, !dbg !35\l}"];
+	Node0xb1da3f0 -> Node0xb1e0e40;
+	Node0xb1e0e40 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata i32 %value, i64 0, metadata !32,\l... metadata !36), !dbg !35\l  tail call void @llvm.dbg.value(metadata i32 %arr_size, i64 0, metadata !33,\l... metadata !36), !dbg !37\l  tail call void @llvm.dbg.value(metadata i64* null, i64 0, metadata !34,\l... metadata !36), !dbg !38\l  %conv = sext i32 %arr_size to i64, !dbg !39\l  %mul = shl nsw i64 %conv, 3, !dbg !40\l  %call = tail call noalias i8* @malloc(i64 %mul) #6, !dbg !41\l  tail call void @llvm.dbg.value(metadata i64* %0, i64 0, metadata !34,\l... metadata !36), !dbg !38\l  %cmp = icmp eq i8* %call, null, !dbg !42\l  br i1 %cmp, label %if.then, label %if.end, !dbg !44\l}"];
+	Node0xb1e0e40 -> Node0xb1e3260;
+	Node0xb1e0e40 -> Node0xb238040;
+	Node0xb1e3260 [shape=record,label="{if.then:                                          \l  %puts = tail call i32 @puts(i8* getelementptr inbounds ([64 x i8], [64 x\l... i8]* @str.20, i64 0, i64 0)), !dbg !45\l  tail call void @exit(i32 -2) #7, !dbg !47\l  unreachable, !dbg !47\l}"];
+	Node0xb238040 [shape=record,label="{if.end:                                           \l  %0 = bitcast i8* %call to i64*, !dbg !48\l  %1 = trunc i32 %value to i8, !dbg !49\l  tail call void @llvm.memset.p0i8.i64(i8* nonnull %call, i8 %1, i64 %mul, i32\l... 8, i1 false), !dbg !49\l  ret i64* %0, !dbg !50\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xb1f5460 {
+          label = "Util.c:35-45
+";
+          style = solid;
+          color = 1
+          Node0xb1da3f0;
+          Node0xb1e0e40;
+          Node0xb1e3260;
+          Node0xb238040;
+        }
+}

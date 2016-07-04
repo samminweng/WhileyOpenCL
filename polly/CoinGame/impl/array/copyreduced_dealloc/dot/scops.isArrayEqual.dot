@@ -1,0 +1,62 @@
+digraph "Scop Graph for 'isArrayEqual' function" {
+	label="Scop Graph for 'isArrayEqual' function";
+
+	Node0xab833e0 [shape=record,label="{entry:\l  br label %entry.split, !dbg !37\l}"];
+	Node0xab833e0 -> Node0xab63d90;
+	Node0xab63d90 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata i64* %arr1, i64 0, metadata !32,\l... metadata !38), !dbg !37\l  tail call void @llvm.dbg.value(metadata i64 %arr1_size, i64 0, metadata !33,\l... metadata !38), !dbg !39\l  tail call void @llvm.dbg.value(metadata i64* %arr2, i64 0, metadata !34,\l... metadata !38), !dbg !40\l  tail call void @llvm.dbg.value(metadata i64 %arr2_size, i64 0, metadata !35,\l... metadata !38), !dbg !41\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !36, metadata\l... !38), !dbg !42\l  %cmp = icmp eq i64 %arr1_size, %arr2_size, !dbg !43\l  br i1 %cmp, label %for.cond.preheader, label %cleanup, !dbg !45\l}"];
+	Node0xab63d90 -> Node0xab3a350;
+	Node0xab63d90 -> Node0xab92e30;
+	Node0xab3a350 [shape=record,label="{for.cond.preheader:                               \l  %cmp111 = icmp sgt i64 %arr1_size, 0, !dbg !46\l  br i1 %cmp111, label %for.body.lr.ph, label %cleanup.loopexit, !dbg !50\l}"];
+	Node0xab3a350 -> Node0xab913d0;
+	Node0xab3a350 -> Node0xab4ee70;
+	Node0xab913d0 [shape=record,label="{for.body.lr.ph:                                   \l  br label %for.body, !dbg !50\l}"];
+	Node0xab913d0 -> Node0xab3fbe0;
+	Node0xab3fbe0 [shape=record,label="{for.body:                                         \l  %i.012 = phi i64 [ 0, %for.body.lr.ph ], [ %inc, %for.cond ]\l  %arrayidx = getelementptr inbounds i64, i64* %arr1, i64 %i.012, !dbg !53\l  %0 = load i64, i64* %arrayidx, align 8, !dbg !53, !tbaa !56\l  %arrayidx2 = getelementptr inbounds i64, i64* %arr2, i64 %i.012, !dbg !60\l  %1 = load i64, i64* %arrayidx2, align 8, !dbg !60, !tbaa !56\l  %cmp3 = icmp eq i64 %0, %1, !dbg !61\l  %inc = add nuw nsw i64 %i.012, 1, !dbg !62\l  tail call void @llvm.dbg.value(metadata i64 %inc, i64 0, metadata !36,\l... metadata !38), !dbg !42\l  br i1 %cmp3, label %for.cond, label %for.body.cleanup.loopexit_crit_edge,\l... !dbg !64\l}"];
+	Node0xab3fbe0 -> Node0xab7f100;
+	Node0xab3fbe0 -> Node0xab62e30;
+	Node0xab7f100 [shape=record,label="{for.cond:                                         \l  %cmp1 = icmp slt i64 %inc, %arr1_size, !dbg !46\l  br i1 %cmp1, label %for.body, label %for.cond.cleanup.loopexit_crit_edge,\l... !dbg !50, !llvm.loop !51\l}"];
+	Node0xab7f100 -> Node0xab3fbe0[constraint=false];
+	Node0xab7f100 -> Node0xab54240;
+	Node0xab54240 [shape=record,label="{for.cond.cleanup.loopexit_crit_edge:              \l  br label %cleanup.loopexit, !dbg !50\l}"];
+	Node0xab54240 -> Node0xab4ee70;
+	Node0xab4ee70 [shape=record,label="{cleanup.loopexit:                                 \l  %retval.0.ph = phi i32 [ 1, %for.cond.cleanup.loopexit_crit_edge ], [ 0,\l... %for.body.cleanup.loopexit_crit_edge ], [ 1, %for.cond.preheader ]\l  br label %cleanup, !dbg !65\l}"];
+	Node0xab4ee70 -> Node0xab92e30;
+	Node0xab92e30 [shape=record,label="{cleanup:                                          \l  %retval.0 = phi i32 [ 0, %entry.split ], [ %retval.0.ph, %cleanup.loopexit ]\l  ret i32 %retval.0, !dbg !65\l}"];
+	Node0xab62e30 [shape=record,label="{for.body.cleanup.loopexit_crit_edge:              \l  br label %cleanup.loopexit, !dbg !64\l}"];
+	Node0xab62e30 -> Node0xab4ee70;
+	colorscheme = "paired12"
+        subgraph cluster_0xab9a060 {
+          label = "Util.c:147-162
+";
+          style = solid;
+          color = 1
+          subgraph cluster_0xab3e8d0 {
+            label = "Util.c:147-162
+Non affine loop bound '***COULDNOTCOMPUTE***' in loop: for.body";
+            style = solid;
+            color = 6
+            subgraph cluster_0xab87b10 {
+              label = "Util.c:149-156
+Non affine loop bound '***COULDNOTCOMPUTE***' in loop: for.body";
+              style = solid;
+              color = 5
+              subgraph cluster_0xab9a490 {
+                label = "Util.c:149-156
+Non affine loop bound '***COULDNOTCOMPUTE***' in loop: for.body";
+                style = solid;
+                color = 7
+                Node0xab3fbe0;
+                Node0xab7f100;
+                Node0xab54240;
+                Node0xab62e30;
+              }
+              Node0xab3a350;
+              Node0xab913d0;
+            }
+            Node0xab63d90;
+            Node0xab4ee70;
+          }
+          Node0xab833e0;
+          Node0xab92e30;
+        }
+}
