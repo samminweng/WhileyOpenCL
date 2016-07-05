@@ -15,6 +15,7 @@ Matrix** copy_array_Matrix(Matrix** _Matrix, long long _Matrix_size){
 }
 void free_Matrix(Matrix* matrix){
 	free(matrix->data);
+	matrix->data = NULL;
 	free(matrix);
 }
 void printf_Matrix(Matrix* matrix){
@@ -475,7 +476,7 @@ int main(int argc, char** args){
 	//assign %4 = %16  : {int[] data,int height,int width}
 	B = _16;
 	//invoke (%17) = (%3, %4) MatrixMult_original:mat_mult : function(MatrixMult_original:Matrix,MatrixMult_original:Matrix)->(MatrixMult_original:Matrix)
-	_17 = mat_mult(_STRUCT_PARAM(A), _STRUCT_PARAM(B));
+	_17 = mat_mult(_COPY_STRUCT_PARAM(A, Matrix), _COPY_STRUCT_PARAM(B, Matrix));
 	//assign %5 = %17  : {int[] data,int height,int width}
 	C = _17;
 	//assert

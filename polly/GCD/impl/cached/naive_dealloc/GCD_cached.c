@@ -168,7 +168,9 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_40);
 	_DECL_DEALLOC(_40);
 	//fieldload %8 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	_DEALLOC_2DArray(_8);
 	_CONV_ARGS(_8);
+	_ADD_DEALLOC(_8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//indexof %10 = %8, %9 : int[][]

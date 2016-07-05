@@ -217,13 +217,17 @@ blklab6:;
 		//invariant
 		{
 			//fieldload %12 = %0 queens : {int num_solutions,{int c,int r}[] queens}
+			_DEALLOC_1DARRAY_STRUCT(_12, POS);
 			_COPY_1DARRAY_STRUCT(_12, nq->queens, POS);
+			_ADD_DEALLOC(_12);
 			//lengthof %13 = %12 : {int c,int r}[]
 			_13 = _12_size;
 			//ifge %1, %13 goto blklab11 : int
 			if(n>=_13){goto blklab11;}
 			//fieldload %14 = %0 queens : {int num_solutions,{int c,int r}[] queens}
+			_DEALLOC_1DARRAY_STRUCT(_14, POS);
 			_COPY_1DARRAY_STRUCT(_14, nq->queens, POS);
+			_ADD_DEALLOC(_14);
 			//lengthof %15 = %14 : {int c,int r}[]
 			_15 = _14_size;
 			//ifeq %2, %15 goto blklab10 : int
@@ -252,7 +256,9 @@ blklab10:;
 			//invariant
 			{
 				//fieldload %18 = %0 queens : {int num_solutions,{int c,int r}[] queens}
+				_DEALLOC_1DARRAY_STRUCT(_18, POS);
 				_COPY_1DARRAY_STRUCT(_18, nq->queens, POS);
+				_ADD_DEALLOC(_18);
 				//lengthof %19 = %18 : {int c,int r}[]
 				_19 = _18_size;
 				//ifge %1, %19 goto blklab15 : int
@@ -262,7 +268,9 @@ blklab10:;
 				//iflt %6, %20 goto blklab16 : int
 				if(i<_20){goto blklab16;}
 				//fieldload %21 = %0 queens : {int num_solutions,{int c,int r}[] queens}
+				_DEALLOC_1DARRAY_STRUCT(_21, POS);
 				_COPY_1DARRAY_STRUCT(_21, nq->queens, POS);
+				_ADD_DEALLOC(_21);
 				//lengthof %22 = %21 : {int c,int r}[]
 				_22 = _21_size;
 				//ifeq %2, %22 goto blklab14 : int
@@ -281,7 +289,9 @@ blklab14:;
 			//ifge %6, %1 goto blklab12 : int
 			if(i>=n){goto blklab12;}
 			//fieldload %23 = %0 queens : {int num_solutions,{int c,int r}[] queens}
+			_DEALLOC_1DARRAY_STRUCT(_23, POS);
 			_COPY_1DARRAY_STRUCT(_23, nq->queens, POS);
+			_ADD_DEALLOC(_23);
 			//indexof %24 = %23, %6 : {int c,int r}[]
 			_24=_23[i];
 			_REMOVE_DEALLOC(_24);
@@ -434,7 +444,9 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_34);
 	_DECL_DEALLOC(_34);
 	//fieldload %7 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	_DEALLOC_2DArray(_7);
 	_CONV_ARGS(_7);
+	_ADD_DEALLOC(_7);
 	//const %8 = 0 : int
 	_8 = 0;
 	//indexof %9 = %7, %8 : int[][]

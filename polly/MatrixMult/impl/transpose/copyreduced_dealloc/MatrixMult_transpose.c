@@ -15,6 +15,7 @@ Matrix** copy_array_Matrix(Matrix** _Matrix, long long _Matrix_size){
 }
 void free_Matrix(Matrix* matrix){
 	free(matrix->data);
+	matrix->data = NULL;
 	free(matrix);
 }
 void printf_Matrix(Matrix* matrix){
@@ -202,7 +203,9 @@ void print_mat(FILE* sys, Matrix* a, _DECL_DEALLOC_PARAM(a)){
 			//fieldload %10 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %11 = %10 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//fieldload %12 = %1 data : {int[] data,int height,int width}
+			_DEALLOC(_12);
 			_UPDATE_1DARRAY(_12, a->data);
+			_REMOVE_DEALLOC(_12);
 			//mul %13 = %2, %3 : int
 			_13=i*width;
 			//add %14 = %13, %5 : int
@@ -347,13 +350,17 @@ Matrix* mat_mult(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_PAR
 	_UPDATE_1DARRAY(data, _16);
 	_TRANSFER_DEALLOC(data, _16);
 	//fieldload %17 = %0 data : {int[] data,int height,int width}
+	_DEALLOC(_17);
 	_UPDATE_1DARRAY(_17, a->data);
+	_REMOVE_DEALLOC(_17);
 	//assign %6 = %17  : int[]
 	_DEALLOC(a_data);
 	_UPDATE_1DARRAY(a_data, _17);
 	_TRANSFER_DEALLOC(a_data, _17);
 	//fieldload %18 = %1 data : {int[] data,int height,int width}
+	_DEALLOC(_18);
 	_UPDATE_1DARRAY(_18, b->data);
+	_REMOVE_DEALLOC(_18);
 	//assign %7 = %18  : int[]
 	_DEALLOC(b_data);
 	_UPDATE_1DARRAY(b_data, _18);
@@ -615,7 +622,9 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_63);
 	_DECL_DEALLOC(_63);
 	//fieldload %7 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	_DEALLOC_2DArray(_7);
 	_CONV_ARGS(_7);
+	_ADD_DEALLOC(_7);
 	//const %8 = 0 : int
 	_8 = 0;
 	//indexof %9 = %7, %8 : int[][]
@@ -664,7 +673,7 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(B, _16);
 	//invoke (%17) = (%3, %4) MatrixMult_transpose:mat_mult : function(MatrixMult_transpose:Matrix,MatrixMult_transpose:Matrix)->(MatrixMult_transpose:Matrix)
 	_DEALLOC_STRUCT(_17, Matrix);
-	_17 = mat_mult(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
+	_17 = mat_mult(_COPY_STRUCT_PARAM(A, Matrix), true, _COPY_STRUCT_PARAM(B, Matrix), true);
 	_ADD_DEALLOC(_17);
 	//assign %5 = %17  : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(C, Matrix);
@@ -673,7 +682,9 @@ int main(int argc, char** args){
 	//assert
 	{
 		//fieldload %18 = %3 data : {int[] data,int height,int width}
+		_DEALLOC(_18);
 		_UPDATE_1DARRAY(_18, A->data);
+		_REMOVE_DEALLOC(_18);
 		//const %19 = 1 : int
 		_19 = 1;
 		//sub %20 = %2, %19 : int
@@ -704,7 +715,9 @@ blklab24:;
 	//assert
 	{
 		//fieldload %28 = %4 data : {int[] data,int height,int width}
+		_DEALLOC(_28);
 		_UPDATE_1DARRAY(_28, B->data);
+		_REMOVE_DEALLOC(_28);
 		//const %29 = 1 : int
 		_29 = 1;
 		//sub %30 = %2, %29 : int
@@ -739,7 +752,9 @@ blklab25:;
 	//assert
 	{
 		//fieldload %39 = %5 data : {int[] data,int height,int width}
+		_DEALLOC(_39);
 		_UPDATE_1DARRAY(_39, C->data);
+		_REMOVE_DEALLOC(_39);
 		//const %40 = 1 : int
 		_40 = 1;
 		//sub %41 = %2, %40 : int
@@ -779,7 +794,9 @@ blklab26:;
 	//fieldload %51 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %52 = %51 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//fieldload %53 = %5 data : {int[] data,int height,int width}
+	_DEALLOC(_53);
 	_UPDATE_1DARRAY(_53, C->data);
+	_REMOVE_DEALLOC(_53);
 	//const %54 = 1 : int
 	_54 = 1;
 	//sub %55 = %2, %54 : int

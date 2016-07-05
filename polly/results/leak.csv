@@ -1,34 +1,194 @@
 Memory Leak (bytes)
-TestCase	Implementation	CodeGen	Compiler	Parameter	definite loss	indirect loss	possible loss	reachable loss
-MatrixMult	original	naive	gcc	15	29480	10824	0	3664
-MatrixMult	original	naive_dealloc	gcc	15	9008	24	0	0
-MatrixMult	original	copyreduced	gcc	15	520	1824	0	3664
-MatrixMult	original	copyreduced_dealloc	gcc	15	8	24	0	0
-MatrixMult	transpose	naive	gcc	15	33080	10824	0	3664
-MatrixMult	transpose	naive_dealloc	gcc	15	9008	24	0	0
-MatrixMult	transpose	copyreduced	gcc	15	2320	1824	0	3664
-MatrixMult	transpose	copyreduced_dealloc	gcc	15	8	24	0	0
-GCD	original	naive	gcc	100	288	32	0	0
-GCD	original	naive_dealloc	gcc	100	8	32	0	0
-GCD	original	copyreduced	gcc	100	288	32	0	0
-GCD	original	copyreduced_dealloc	gcc	100	8	32	0	0
-GCD	cached	naive	gcc	100	799680344	32	400000	80000
-GCD	cached	naive_dealloc	gcc	100	8	32	0	0
-GCD	cached	copyreduced	gcc	100	80344	32	0	0
-GCD	cached	copyreduced_dealloc	gcc	100	8	32	0	0
-CoinGame	original	naive	gcc	100	320600	32	0	0
-CoinGame	original	naive_dealloc	gcc	100	8	32	0	0
-CoinGame	original	copyreduced	gcc	100	80600	32	0	0
-CoinGame	original	copyreduced_dealloc	gcc	100	8	32	0	0
-CoinGame	single	naive	gcc	100	320600	32	0	0
-CoinGame	single	naive_dealloc	gcc	100	8	32	0	0
-CoinGame	single	copyreduced	gcc	100	80600	32	0	0
-CoinGame	single	copyreduced_dealloc	gcc	100	8	32	0	0
-CoinGame	array	naive	gcc	100	325400	32	0	0
-CoinGame	array	naive_dealloc	gcc	100	8	32	0	0
-CoinGame	array	copyreduced	gcc	100	83000	32	0	0
-CoinGame	array	copyreduced_dealloc	gcc	100	8	32	0	0
-NQueens	original	naive	gcc	8	22148824	40713168	192	408
-NQueens	original	naive_dealloc	gcc	8	19961416	39922832	192	0
-NQueens	original	copyreduced	gcc	8	33360	16	0	408
-NQueens	original	copyreduced_dealloc	gcc	8	72	144	0	0
+TestCase	ProgramType	CodeGen	Parameter	Compiler	Thread	definite loss	indirect loss	possible loss	reachable loss
+MatrixMult	original	naive	15	gcc	1	29480	10824	0	3664
+MatrixMult	original	naive	15	clang	1	31248	9024	0	3600
+MatrixMult	original	naive	15	polly	1	31248	9024	0	3600
+MatrixMult	original	naive	15	openmp	1	31248	9024	0	3792
+MatrixMult	original	naive	15	openmp	2	31248	9024	288	5384
+MatrixMult	original	naive	15	openmp	4	25848	9024	6264	5624
+MatrixMult	original	naive_dealloc	15	gcc	1	0	0	0	0
+MatrixMult	original	naive_dealloc	15	clang	1	0	0	0	0
+MatrixMult	original	naive_dealloc	15	polly	1	0	0	0	0
+MatrixMult	original	naive_dealloc	15	openmp	1	0	0	0	192
+MatrixMult	original	naive_dealloc	15	openmp	2	0	0	288	1784
+MatrixMult	original	naive_dealloc	15	openmp	4	0	0	864	2024
+MatrixMult	original	copyreduced	15	gcc	1	584	5424	0	3664
+MatrixMult	original	copyreduced	15	clang	1	488	24	0	9000
+MatrixMult	original	copyreduced	15	polly	1	616	5424	0	3632
+MatrixMult	original	copyreduced	15	openmp	1	552	1824	0	7424
+MatrixMult	original	copyreduced	15	openmp	2	552	24	2088	9016
+MatrixMult	original	copyreduced	15	openmp	4	552	24	2664	9256
+MatrixMult	original	copyreduced_dealloc	15	gcc	1	0	0	0	0
+MatrixMult	original	copyreduced_dealloc	15	clang	1	0	0	0	0
+MatrixMult	original	copyreduced_dealloc	15	polly	1	0	0	0	0
+MatrixMult	original	copyreduced_dealloc	15	openmp	1	0	0	0	192
+MatrixMult	original	copyreduced_dealloc	15	openmp	2	0	0	288	1784
+MatrixMult	original	copyreduced_dealloc	15	openmp	4	0	0	864	2024
+MatrixMult	transpose	naive	15	gcc	1	33080	10824	0	3664
+MatrixMult	transpose	naive	15	clang	1	34848	9024	0	3600
+MatrixMult	transpose	naive	15	polly	1	34848	9024	0	3600
+MatrixMult	transpose	naive	15	openmp	1	34848	9024	0	3792
+MatrixMult	transpose	naive	15	openmp	2	34848	9024	288	5384
+MatrixMult	transpose	naive	15	openmp	4	29448	9024	6264	5624
+MatrixMult	transpose	naive_dealloc	15	gcc	1	0	0	0	0
+MatrixMult	transpose	naive_dealloc	15	clang	1	0	0	0	0
+MatrixMult	transpose	naive_dealloc	15	polly	1	0	0	0	0
+MatrixMult	transpose	naive_dealloc	15	openmp	1	0	0	0	192
+MatrixMult	transpose	naive_dealloc	15	openmp	2	0	0	288	1784
+MatrixMult	transpose	naive_dealloc	15	openmp	4	0	0	864	2024
+MatrixMult	transpose	copyreduced	15	gcc	1	2384	5424	0	3664
+MatrixMult	transpose	copyreduced	15	clang	1	4152	1824	0	5432
+MatrixMult	transpose	copyreduced	15	polly	1	2416	5424	0	3632
+MatrixMult	transpose	copyreduced	15	openmp	1	2352	1824	0	7424
+MatrixMult	transpose	copyreduced	15	openmp	2	2352	1824	288	9016
+MatrixMult	transpose	copyreduced	15	openmp	4	552	1824	2664	9256
+MatrixMult	transpose	copyreduced_dealloc	15	gcc	1	0	0	0	0
+MatrixMult	transpose	copyreduced_dealloc	15	clang	1	0	0	0	0
+MatrixMult	transpose	copyreduced_dealloc	15	polly	1	0	0	0	0
+MatrixMult	transpose	copyreduced_dealloc	15	openmp	1	0	0	0	192
+MatrixMult	transpose	copyreduced_dealloc	15	openmp	2	0	0	288	1784
+MatrixMult	transpose	copyreduced_dealloc	15	openmp	4	0	0	864	2024
+GCD	original	naive	100	gcc	1	288	32	0	0
+GCD	original	naive	100	clang	1	288	32	0	0
+GCD	original	naive	100	polly	1	288	32	0	0
+GCD	original	naive	100	openmp	1	288	32	0	0
+GCD	original	naive	100	openmp	2	288	32	0	0
+GCD	original	naive	100	openmp	4	288	32	0	0
+GCD	original	naive_dealloc	100	gcc	1	0	0	0	0
+GCD	original	naive_dealloc	100	clang	1	0	0	0	0
+GCD	original	naive_dealloc	100	polly	1	0	0	0	0
+GCD	original	naive_dealloc	100	openmp	1	0	0	0	0
+GCD	original	naive_dealloc	100	openmp	2	0	0	0	0
+GCD	original	naive_dealloc	100	openmp	4	0	0	0	0
+GCD	original	copyreduced	100	gcc	1	288	32	0	0
+GCD	original	copyreduced	100	clang	1	288	32	0	0
+GCD	original	copyreduced	100	polly	1	288	32	0	0
+GCD	original	copyreduced	100	openmp	1	288	32	0	0
+GCD	original	copyreduced	100	openmp	2	288	32	0	0
+GCD	original	copyreduced	100	openmp	4	288	32	0	0
+GCD	original	copyreduced_dealloc	100	gcc	1	0	0	0	0
+GCD	original	copyreduced_dealloc	100	clang	1	0	0	0	0
+GCD	original	copyreduced_dealloc	100	polly	1	0	0	0	0
+GCD	original	copyreduced_dealloc	100	openmp	1	0	0	0	0
+GCD	original	copyreduced_dealloc	100	openmp	2	0	0	0	0
+GCD	original	copyreduced_dealloc	100	openmp	4	0	0	0	0
+GCD	cached	naive	100	gcc	1	799680344	32	400000	80000
+GCD	cached	naive	100	clang	1	799680344	32	400000	80000
+GCD	cached	naive	100	polly	1	799680344	32	400000	80000
+GCD	cached	naive	100	openmp	1	799600344	32	480000	80000
+GCD	cached	naive	100	openmp	2	799600344	32	480000	80000
+GCD	cached	naive	100	openmp	4	799600344	32	480000	80000
+GCD	cached	naive_dealloc	100	gcc	1	0	0	0	0
+GCD	cached	naive_dealloc	100	clang	1	0	0	0	0
+GCD	cached	naive_dealloc	100	polly	1	0	0	0	0
+GCD	cached	naive_dealloc	100	openmp	1	0	0	0	0
+GCD	cached	naive_dealloc	100	openmp	2	0	0	0	0
+GCD	cached	naive_dealloc	100	openmp	4	0	0	0	0
+GCD	cached	copyreduced	100	gcc	1	80344	32	0	0
+GCD	cached	copyreduced	100	clang	1	80344	32	0	0
+GCD	cached	copyreduced	100	polly	1	80344	32	0	0
+GCD	cached	copyreduced	100	openmp	1	80344	32	0	0
+GCD	cached	copyreduced	100	openmp	2	80344	32	0	0
+GCD	cached	copyreduced	100	openmp	4	80344	32	0	0
+GCD	cached	copyreduced_dealloc	100	gcc	1	0	0	0	0
+GCD	cached	copyreduced_dealloc	100	clang	1	0	0	0	0
+GCD	cached	copyreduced_dealloc	100	polly	1	0	0	0	0
+GCD	cached	copyreduced_dealloc	100	openmp	1	0	0	0	0
+GCD	cached	copyreduced_dealloc	100	openmp	2	0	0	0	0
+GCD	cached	copyreduced_dealloc	100	openmp	4	0	0	0	0
+CoinGame	original	naive	100	gcc	1	320600	32	0	0
+CoinGame	original	naive	100	clang	1	320600	32	0	0
+CoinGame	original	naive	100	polly	1	320600	32	0	0
+CoinGame	original	naive	100	openmp	1	320600	32	0	0
+CoinGame	original	naive	100	openmp	2	320600	32	0	0
+CoinGame	original	naive	100	openmp	4	320600	32	0	0
+CoinGame	original	naive_dealloc	100	gcc	1	0	0	0	0
+CoinGame	original	naive_dealloc	100	clang	1	0	0	0	0
+CoinGame	original	naive_dealloc	100	polly	1	0	0	0	0
+CoinGame	original	naive_dealloc	100	openmp	1	0	0	0	0
+CoinGame	original	naive_dealloc	100	openmp	2	0	0	0	0
+CoinGame	original	naive_dealloc	100	openmp	4	0	0	0	0
+CoinGame	original	copyreduced	100	gcc	1	80600	32	0	0
+CoinGame	original	copyreduced	100	clang	1	80600	32	0	0
+CoinGame	original	copyreduced	100	polly	1	80600	32	0	0
+CoinGame	original	copyreduced	100	openmp	1	80600	32	0	0
+CoinGame	original	copyreduced	100	openmp	2	80600	32	0	0
+CoinGame	original	copyreduced	100	openmp	4	80600	32	0	0
+CoinGame	original	copyreduced_dealloc	100	gcc	1	0	0	0	0
+CoinGame	original	copyreduced_dealloc	100	clang	1	0	0	0	0
+CoinGame	original	copyreduced_dealloc	100	polly	1	0	0	0	0
+CoinGame	original	copyreduced_dealloc	100	openmp	1	0	0	0	0
+CoinGame	original	copyreduced_dealloc	100	openmp	2	0	0	0	0
+CoinGame	original	copyreduced_dealloc	100	openmp	4	0	0	0	0
+CoinGame	single	naive	100	gcc	1	320600	32	0	0
+CoinGame	single	naive	100	clang	1	240600	32	0	80000
+CoinGame	single	naive	100	polly	1	320600	32	0	0
+CoinGame	single	naive	100	openmp	1	320600	32	0	0
+CoinGame	single	naive	100	openmp	2	320600	32	0	0
+CoinGame	single	naive	100	openmp	4	320600	32	0	0
+CoinGame	single	naive_dealloc	100	gcc	1	0	0	0	0
+CoinGame	single	naive_dealloc	100	clang	1	0	0	0	0
+CoinGame	single	naive_dealloc	100	polly	1	0	0	0	0
+CoinGame	single	naive_dealloc	100	openmp	1	0	0	0	0
+CoinGame	single	naive_dealloc	100	openmp	2	0	0	0	0
+CoinGame	single	naive_dealloc	100	openmp	4	0	0	0	0
+CoinGame	single	copyreduced	100	gcc	1	80600	32	0	0
+CoinGame	single	copyreduced	100	clang	1	600	32	0	80000
+CoinGame	single	copyreduced	100	polly	1	80600	32	0	0
+CoinGame	single	copyreduced	100	openmp	1	80600	32	0	0
+CoinGame	single	copyreduced	100	openmp	2	80600	32	0	0
+CoinGame	single	copyreduced	100	openmp	4	80600	32	0	0
+CoinGame	single	copyreduced_dealloc	100	gcc	1	0	0	0	0
+CoinGame	single	copyreduced_dealloc	100	clang	1	0	0	0	0
+CoinGame	single	copyreduced_dealloc	100	polly	1	0	0	0	0
+CoinGame	single	copyreduced_dealloc	100	openmp	1	0	0	0	0
+CoinGame	single	copyreduced_dealloc	100	openmp	2	0	0	0	0
+CoinGame	single	copyreduced_dealloc	100	openmp	4	0	0	0	0
+CoinGame	array	naive	100	gcc	1	325400	32	0	0
+CoinGame	array	naive	100	clang	1	325400	32	0	0
+CoinGame	array	naive	100	polly	1	325400	32	0	0
+CoinGame	array	naive	100	openmp	1	325400	32	0	0
+CoinGame	array	naive	100	openmp	2	325400	32	0	0
+CoinGame	array	naive	100	openmp	4	325400	32	0	0
+CoinGame	array	naive_dealloc	100	gcc	1	0	0	0	0
+CoinGame	array	naive_dealloc	100	clang	1	0	0	0	0
+CoinGame	array	naive_dealloc	100	polly	1	0	0	0	0
+CoinGame	array	naive_dealloc	100	openmp	1	0	0	0	0
+CoinGame	array	naive_dealloc	100	openmp	2	0	0	0	0
+CoinGame	array	naive_dealloc	100	openmp	4	0	0	0	0
+CoinGame	array	copyreduced	100	gcc	1	83000	32	0	0
+CoinGame	array	copyreduced	100	clang	1	83000	32	0	0
+CoinGame	array	copyreduced	100	polly	1	83000	32	0	0
+CoinGame	array	copyreduced	100	openmp	1	83000	32	0	0
+CoinGame	array	copyreduced	100	openmp	2	83000	32	0	0
+CoinGame	array	copyreduced	100	openmp	4	83000	32	0	0
+CoinGame	array	copyreduced_dealloc	100	gcc	1	0	0	0	0
+CoinGame	array	copyreduced_dealloc	100	clang	1	0	0	0	0
+CoinGame	array	copyreduced_dealloc	100	polly	1	0	0	0	0
+CoinGame	array	copyreduced_dealloc	100	openmp	1	0	0	0	0
+CoinGame	array	copyreduced_dealloc	100	openmp	2	0	0	0	0
+CoinGame	array	copyreduced_dealloc	100	openmp	4	0	0	0	0
+NQueens	original	naive	8	gcc	1	22148824	40713168	192	408
+NQueens	original	naive	8	clang	1	5360896	11247248	0	216
+NQueens	original	naive	8	polly	1	5360896	11247248	0	216
+NQueens	original	naive	8	openmp	1	5360896	11247248	0	216
+NQueens	original	naive	8	openmp	2	5360896	11247248	0	216
+NQueens	original	naive	8	openmp	4	5360896	11247248	0	216
+NQueens	original	naive_dealloc	8	gcc	1	0	0	0	0
+NQueens	original	naive_dealloc	8	clang	1	0	0	0	0
+NQueens	original	naive_dealloc	8	polly	1	0	0	0	0
+NQueens	original	naive_dealloc	8	openmp	1	0	0	0	0
+NQueens	original	naive_dealloc	8	openmp	2	0	0	0	0
+NQueens	original	naive_dealloc	8	openmp	4	0	0	0	0
+NQueens	original	copyreduced	8	gcc	1	33360	16	0	216
+NQueens	original	copyreduced	8	clang	1	33368	208	0	0
+NQueens	original	copyreduced	8	polly	1	33368	208	0	0
+NQueens	original	copyreduced	8	openmp	1	33368	208	0	0
+NQueens	original	copyreduced	8	openmp	2	33368	208	0	0
+NQueens	original	copyreduced	8	openmp	4	33368	208	0	0
+NQueens	original	copyreduced_dealloc	8	gcc	1	0	0	0	0
+NQueens	original	copyreduced_dealloc	8	clang	1	0	0	0	0
+NQueens	original	copyreduced_dealloc	8	polly	1	0	0	0	0
+NQueens	original	copyreduced_dealloc	8	openmp	1	0	0	0	0
+NQueens	original	copyreduced_dealloc	8	openmp	2	0	0	0	0
+NQueens	original	copyreduced_dealloc	8	openmp	4	0	0	0	0

@@ -1,9 +1,11 @@
 #!/bin/bash
 TIMEOUT="1800s"
-export PATH_TO_POLLY_LIB="$HOME/polly/llvm_build/lib"
-export CPPFLAGS="-Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
-alias opt="opt -load ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
-alias pollycc="clang -Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
+# export PATH_TO_POLLY_LIB="$HOME/polly/llvm_build/lib"
+# export CPPFLAGS="-Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
+# alias opt="opt -load ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
+# alias pollycc="clang -Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
+alias opt="opt -O3 -polly"
+alias pollycc="clang -O3 -mllvm -polly"
 ### Get the root working directory
 basedir="$(dirname "$(pwd)")"
 utildir="$basedir/tests/code"
@@ -11,23 +13,23 @@ utildir="$basedir/tests/code"
 generateCode(){
 	testcase=$1
 	program=$2
-	c_type=$3
+	codegen=$3
 	## change to 'testcase' folder
 	cd "$basedir/polly/$testcase/" 
 	# clean and create the folder
-	rm -rf "impl/$program/$c_type"
-	mkdir -p "impl/$program/$c_type"
+	rm -rf "impl/$program/$codegen"
+	mkdir -p "impl/$program/$codegen"
 	# copy the source whiley file to the folder
-	cp $testcase"_"$program.whiley "impl/$program/$c_type/."
+	cp $testcase"_"$program.whiley "impl/$program/$codegen/."
 	#read -p "Press [Enter] to continue..."
 	#### Change folder to the corresponding implementation folder
-	cd "impl/$program/$c_type"
+	cd "impl/$program/$codegen"
 	## Clean up previously generated C code
 	rm -f *.c *.h
 	### Copy Util.c Util.h to 
 	cp $utildir/Util.c $utildir/Util.h .
 	## Translate Whiley programs into naive C code
-	case "$c_type" in
+	case "$codegen" in
 		"naive")
 			### Translate Whiley program into naive C code 
 	    	./../../../../..//bin/wyopcl -code $testcase"_"$program.whiley
@@ -60,7 +62,7 @@ init(){
 detectleaks(){
 	testcase=$1
 	program=$2
-	c_type=$3
+	codegen=$3
 	parameter=$4
 	compiler=$5
 	num_threads=$6
@@ -68,32 +70,33 @@ detectleaks(){
 	# Ref: http://valgrind.org/docs/manual/manual.html
 	# Run Valgrind memcheck tool to detect memory leaks, and write out results to output file.
 	#read -p "Press [Enter] to continue..."	
-	result="$testcase.$program.$c_type.$compiler.$parameter.$num_threads.txt"
+	executable="$testcase.$program.$codegen.$compiler.out"
+	result="$testcase.$program.$codegen.$compiler.$parameter.$num_threads.txt"
 	echo -e -n "Start Detect leaks..." > $result
 	case "$compiler" in
 		"gcc")
 			echo -e -n "Compile C code using GCC -O3..." >> $result
-			gcc -std=c99 -g -O3 $testcase"_"$program.c Util.c -o "out/$testcase.$program.$c_type.$compiler.out"
+			gcc -std=c99 -g -O3 $testcase"_"$program.c Util.c -o "out/$executable.out"
 			;;
 		"clang")
 			echo -e -n "Compile C code using Clang -O3..." >> $result
-			clang -g -O3 $testcase"_"$program.c Util.c -o "out/$testcase.$program.$c_type.$compiler.out"
+			clang -g -O3 $testcase"_"$program.c Util.c -o "out/$executable.out"
 			;;
 		"polly")
 			echo "Optimize C code using Polly..." >> $result
-			pollycc -g -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine\
+			pollycc -g -mllvm -polly-vectorizer=stripmine\
 					-mllvm -polly-process-unprofitable -mllvm -polly-opt-outer-coincidence=yes\
-					$testcase"_"$program.c Util.c -o "out/$testcase.$program.$c_type.$compiler.out"
+					$testcase"_"$program.c Util.c -o "out/$executable.out"
 			;;
 		"openmp")
 			export OMP_NUM_THREADS=$num_threads
 			echo "Optimize C code using OpenMP code with $OMP_NUM_THREADS threads..." >> $result
-			pollycc -g -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine\
+			pollycc -g -mllvm -polly-vectorizer=stripmine\
 					-mllvm -polly-process-unprofitable -mllvm -polly-opt-outer-coincidence=yes\
-					-mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c -o "out/$testcase.$program.$c_type.$compiler.out"
+					-mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c -o "out/$executable.out"
 			;;
 	esac
-	valgrind --tool=memcheck "--log-file=$result" ./out/"$testcase.$program.$c_type.$compiler.out" $parameter
+	valgrind --tool=memcheck "--log-file=$result" ./out/"$executable.out" $parameter
 	#valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all "--log-file=$result" ./out/"$program.$compiler.enableVC.out" $parameter
 	# Added the CPU info
 	cat /proc/cpuinfo >> $result
@@ -106,16 +109,16 @@ detectleaks(){
 exec(){
 	testcase=$1
 	program=$2
-	c_type=$3
+	codegen=$3
 	parameter=$4
-	generateCode $testcase $program $c_type
+	generateCode $testcase $program $codegen
 	# Detect the leaks of generated C code using different compiler
-	detectleaks $testcase $program $c_type $parameter "gcc" 1
-	#detectleaks $testcase $program $c_type $parameter "clang" 1
-	#detectleaks $testcase $program $c_type $parameter "polly" 1
-	#detectleaks $testcase $program $c_type $parameter "openmp" 1
-	#detectleaks $testcase $program $c_type $parameter "openmp" 2
-	#detectleaks $testcase $program $c_type $parameter "openmp" 4
+	detectleaks $testcase $program $codegen $parameter "gcc" 1
+	detectleaks $testcase $program $codegen $parameter "clang" 1
+	detectleaks $testcase $program $codegen $parameter "polly" 1
+	detectleaks $testcase $program $codegen $parameter "openmp" 1
+	detectleaks $testcase $program $codegen $parameter "openmp" 2
+	detectleaks $testcase $program $codegen $parameter "openmp" 4
     # Return to the working directory
     cd $basedir/polly
     #read -p "Press [Enter] to continue..."
