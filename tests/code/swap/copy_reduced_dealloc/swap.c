@@ -77,12 +77,12 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(b, _15);
 	//assign %3 = %1  : int[]
 	_DEALLOC(tmp);
-	_COPY_1DARRAY(tmp, a);
-	_ADD_DEALLOC(tmp);
+	_UPDATE_1DARRAY(tmp, a);
+	_TRANSFER_DEALLOC(tmp, a);
 	//assign %1 = %2  : int[]
 	_DEALLOC(a);
-	_COPY_1DARRAY(a, b);
-	_ADD_DEALLOC(a);
+	_UPDATE_1DARRAY(a, b);
+	_TRANSFER_DEALLOC(a, b);
 	//assign %2 = %3  : int[]
 	_DEALLOC(b);
 	_UPDATE_1DARRAY(b, tmp);

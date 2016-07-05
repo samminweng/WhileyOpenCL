@@ -101,12 +101,12 @@ method main(System.Console sys):
     sys.out.println(N)
     // Initialize matrix A
     Matrix A = init(N, N)
+    assert A.data[(N-1)*N+N-1] == N-1
     // Initialize matrix B
     Matrix B = init(N, N)
+    assert B.data[(N-1)*N+N-1] == N-1
     // Multiply A and B 
     Matrix C = mat_mult(A, B)
-    assert A.data[(N-1)*N+N-1] == N-1
-    assert B.data[(N-1)*N+N-1] == N-1
     // N=20, C[19][19] = 3610
     // N=200, C[199][199] = 3960100
     // N=2000, C[1999][1999] = 3996001000

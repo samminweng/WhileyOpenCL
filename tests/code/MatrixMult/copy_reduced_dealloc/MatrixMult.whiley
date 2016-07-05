@@ -102,10 +102,10 @@ function init(nat height, nat width) -> (Matrix r):
 method main(System.Console sys):
     int max = 20
     null|Matrix A = init(max, max)
-    null|Matrix B = init(max, max)
-    null|Matrix C = multiply(A,B)
     assert A.data[max-1][max-1] == max-1
+    null|Matrix B = init(max, max)
     assert B.data[max-1][max-1] == max-1
+    null|Matrix C = multiply(A,B)
     assert C.data[max-1][max-1] == 3610
     printMat(sys, C)
     sys.out.println_s("Pass MatrixMult test case")

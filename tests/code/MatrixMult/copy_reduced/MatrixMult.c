@@ -353,26 +353,26 @@ int main(int argc, char** args){
 	Matrix* C;
 	long long _5 = 0;
 	Matrix* _6;
-	Matrix* _7;
-	Matrix* _8;
-	_DECL_2DARRAY(_9);
-	long long _10 = 0;
+	_DECL_2DARRAY(_7);
+	long long _8 = 0;
+	long long _9 = 0;
+	_DECL_1DARRAY(_10);
 	long long _11 = 0;
-	_DECL_1DARRAY(_12);
+	long long _12 = 0;
 	long long _13 = 0;
 	long long _14 = 0;
 	long long _15 = 0;
-	long long _16 = 0;
-	long long _17 = 0;
-	_DECL_2DARRAY(_18);
+	Matrix* _16;
+	_DECL_2DARRAY(_17);
+	long long _18 = 0;
 	long long _19 = 0;
-	long long _20 = 0;
-	_DECL_1DARRAY(_21);
+	_DECL_1DARRAY(_20);
+	long long _21 = 0;
 	long long _22 = 0;
 	long long _23 = 0;
 	long long _24 = 0;
 	long long _25 = 0;
-	long long _26 = 0;
+	Matrix* _26;
 	_DECL_2DARRAY(_27);
 	long long _28 = 0;
 	long long _29 = 0;
@@ -391,36 +391,28 @@ int main(int argc, char** args){
 	_6 = init(max, max);
 	//assign %2 = %6  : {int[][] data,int height,int width}
 	A = _6;
-	//invoke (%7) = (%1, %1) MatrixMult:init : function(MatrixMult:nat,MatrixMult:nat)->(MatrixMult:Matrix)
-	_7 = init(max, max);
-	//assign %3 = %7  : {int[][] data,int height,int width}
-	B = _7;
-	//invoke (%8) = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
-	_8 = multiply(_COPY_STRUCT_PARAM(A, Matrix), _COPY_STRUCT_PARAM(B, Matrix));
-	//assign %4 = %8  : {int[][] data,int height,int width}
-	C = _8;
 	//assert
 	{
-		//fieldload %9 = %2 data : {int[][] data,int height,int width}
-		_UPDATE_2DARRAY(_9, A->data);
-		//const %10 = 1 : int
-		_10 = 1;
-		//sub %11 = %1, %10 : int
-		_11=max-_10;
-		//indexof %12 = %9, %11 : int[][]
-		_12=_9[_11];
-		//const %13 = 1 : int
-		_13 = 1;
-		//sub %14 = %1, %13 : int
-		_14=max-_13;
-		//indexof %15 = %12, %14 : int[]
-		_15=_12[_14];
-		//const %16 = 1 : int
-		_16 = 1;
-		//sub %17 = %1, %16 : int
-		_17=max-_16;
-		//ifeq %15, %17 goto blklab27 : int
-		if(_15==_17){goto blklab27;}
+		//fieldload %7 = %2 data : {int[][] data,int height,int width}
+		_UPDATE_2DARRAY(_7, A->data);
+		//const %8 = 1 : int
+		_8 = 1;
+		//sub %9 = %1, %8 : int
+		_9=max-_8;
+		//indexof %10 = %7, %9 : int[][]
+		_10=_7[_9];
+		//const %11 = 1 : int
+		_11 = 1;
+		//sub %12 = %1, %11 : int
+		_12=max-_11;
+		//indexof %13 = %10, %12 : int[]
+		_13=_10[_12];
+		//const %14 = 1 : int
+		_14 = 1;
+		//sub %15 = %1, %14 : int
+		_15=max-_14;
+		//ifeq %13, %15 goto blklab27 : int
+		if(_13==_15){goto blklab27;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -428,28 +420,32 @@ int main(int argc, char** args){
 blklab27:;
 	//assert
 	}
+	//invoke (%16) = (%1, %1) MatrixMult:init : function(MatrixMult:nat,MatrixMult:nat)->(MatrixMult:Matrix)
+	_16 = init(max, max);
+	//assign %3 = %16  : {int[][] data,int height,int width}
+	B = _16;
 	//assert
 	{
-		//fieldload %18 = %3 data : {int[][] data,int height,int width}
-		_UPDATE_2DARRAY(_18, B->data);
-		//const %19 = 1 : int
-		_19 = 1;
-		//sub %20 = %1, %19 : int
-		_20=max-_19;
-		//indexof %21 = %18, %20 : int[][]
-		_21=_18[_20];
-		//const %22 = 1 : int
-		_22 = 1;
-		//sub %23 = %1, %22 : int
-		_23=max-_22;
-		//indexof %24 = %21, %23 : int[]
-		_24=_21[_23];
-		//const %25 = 1 : int
-		_25 = 1;
-		//sub %26 = %1, %25 : int
-		_26=max-_25;
-		//ifeq %24, %26 goto blklab28 : int
-		if(_24==_26){goto blklab28;}
+		//fieldload %17 = %3 data : {int[][] data,int height,int width}
+		_UPDATE_2DARRAY(_17, B->data);
+		//const %18 = 1 : int
+		_18 = 1;
+		//sub %19 = %1, %18 : int
+		_19=max-_18;
+		//indexof %20 = %17, %19 : int[][]
+		_20=_17[_19];
+		//const %21 = 1 : int
+		_21 = 1;
+		//sub %22 = %1, %21 : int
+		_22=max-_21;
+		//indexof %23 = %20, %22 : int[]
+		_23=_20[_22];
+		//const %24 = 1 : int
+		_24 = 1;
+		//sub %25 = %1, %24 : int
+		_25=max-_24;
+		//ifeq %23, %25 goto blklab28 : int
+		if(_23==_25){goto blklab28;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -457,6 +453,10 @@ blklab27:;
 blklab28:;
 	//assert
 	}
+	//invoke (%26) = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
+	_26 = multiply(_STRUCT_PARAM(A), _STRUCT_PARAM(B));
+	//assign %4 = %26  : {int[][] data,int height,int width}
+	C = _26;
 	//assert
 	{
 		//fieldload %27 = %4 data : {int[][] data,int height,int width}
