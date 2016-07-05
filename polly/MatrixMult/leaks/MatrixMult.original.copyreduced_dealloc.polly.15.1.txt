@@ -1,18 +1,50 @@
-==721== Memcheck, a memory error detector
-==721== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==721== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==721== Command: ./out/MatrixMult.original.copyreduced_dealloc.polly.out.out 15
-==721== Parent PID: 3236
-==721== 
-==721== 
-==721== HEAP SUMMARY:
-==721==     in use at exit: 0 bytes in 0 blocks
-==721==   total heap usage: 16 allocs, 16 frees, 9,672 bytes allocated
-==721== 
-==721== All heap blocks were freed -- no leaks are possible
-==721== 
-==721== For counts of detected and suppressed errors, rerun with: -v
-==721== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==18587== Memcheck, a memory error detector
+==18587== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==18587== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==18587== Command: ./out/MatrixMult.original.copyreduced_dealloc.polly.out.out 15
+==18587== Parent PID: 14366
+==18587== 
+==18587== Invalid read of size 8
+==18587==    at 0x40194F: main (MatrixMult_original.c:592)
+==18587==  Address 0x51fc910 is 0 bytes inside a block of size 32 free'd
+==18587==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==18587==    by 0x401847: free_Matrix (MatrixMult_original.c:19)
+==18587==    by 0x401847: mat_mult (MatrixMult_original.c:439)
+==18587==    by 0x40194E: main (MatrixMult_original.c:580)
+==18587== 
+==18587== Invalid read of size 8
+==18587==    at 0x40195D: main (MatrixMult_original.c:613)
+==18587==  Address 0x51fc8c0 is 1,792 bytes inside a block of size 1,800 free'd
+==18587==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==18587==    by 0x40183F: free_Matrix (MatrixMult_original.c:17)
+==18587==    by 0x40183F: mat_mult (MatrixMult_original.c:439)
+==18587==    by 0x40194E: main (MatrixMult_original.c:580)
+==18587== 
+==18587== Invalid read of size 8
+==18587==    at 0x401968: main (MatrixMult_original.c:625)
+==18587==  Address 0x51fd0c0 is 0 bytes inside a block of size 32 free'd
+==18587==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==18587==    by 0x401865: free_Matrix (MatrixMult_original.c:19)
+==18587==    by 0x401865: mat_mult (MatrixMult_original.c:440)
+==18587==    by 0x40194E: main (MatrixMult_original.c:580)
+==18587== 
+==18587== Invalid read of size 8
+==18587==    at 0x40196C: main (MatrixMult_original.c:646)
+==18587==  Address 0x51fd070 is 1,792 bytes inside a block of size 1,800 free'd
+==18587==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==18587==    by 0x40185D: free_Matrix (MatrixMult_original.c:17)
+==18587==    by 0x40185D: mat_mult (MatrixMult_original.c:440)
+==18587==    by 0x40194E: main (MatrixMult_original.c:580)
+==18587== 
+==18587== 
+==18587== HEAP SUMMARY:
+==18587==     in use at exit: 0 bytes in 0 blocks
+==18587==   total heap usage: 12 allocs, 12 frees, 6,008 bytes allocated
+==18587== 
+==18587== All heap blocks were freed -- no leaks are possible
+==18587== 
+==18587== For counts of detected and suppressed errors, rerun with: -v
+==18587== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -20,7 +52,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3898.976
+cpu MHz		: 3899.906
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -47,7 +79,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3895.257
+cpu MHz		: 3498.281
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -74,7 +106,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3794.187
+cpu MHz		: 3881.976
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -101,7 +133,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3878.789
+cpu MHz		: 3744.250
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -155,7 +187,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3898.046
+cpu MHz		: 3827.523
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -182,7 +214,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3898.843
+cpu MHz		: 3785.156
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -209,7 +241,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3833.367
+cpu MHz		: 3860.062
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

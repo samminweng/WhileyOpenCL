@@ -1,25 +1,25 @@
-==4379== Memcheck, a memory error detector
-==4379== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==4379== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==4379== Command: ./out/CoinGame.array.naive_dealloc.openmp.out.out 100
-==4379== Parent PID: 3236
-==4379== 
-==4379== Invalid free() / delete / delete[] / realloc()
-==4379==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4379==    by 0x4010C0: main (CoinGame_array.c:420)
-==4379==  Address 0x56290f0 is 0 bytes inside a block of size 8 free'd
-==4379==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4379==    by 0x4010B0: main (CoinGame_array.c:418)
-==4379== 
-==4379== 
-==4379== HEAP SUMMARY:
-==4379==     in use at exit: 0 bytes in 0 blocks
-==4379==   total heap usage: 15 allocs, 16 frees, 325,432 bytes allocated
-==4379== 
-==4379== All heap blocks were freed -- no leaks are possible
-==4379== 
-==4379== For counts of detected and suppressed errors, rerun with: -v
-==4379== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==20587== Memcheck, a memory error detector
+==20587== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==20587== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==20587== Command: ./out/CoinGame.array.naive_dealloc.openmp.out.out 100
+==20587== Parent PID: 14366
+==20587== 
+==20587== Invalid free() / delete / delete[] / realloc()
+==20587==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==20587==    by 0x4010C0: main (CoinGame_array.c:420)
+==20587==  Address 0x56290f0 is 0 bytes inside a block of size 8 free'd
+==20587==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==20587==    by 0x4010B0: main (CoinGame_array.c:418)
+==20587== 
+==20587== 
+==20587== HEAP SUMMARY:
+==20587==     in use at exit: 0 bytes in 0 blocks
+==20587==   total heap usage: 15 allocs, 16 frees, 325,432 bytes allocated
+==20587== 
+==20587== All heap blocks were freed -- no leaks are possible
+==20587== 
+==20587== For counts of detected and suppressed errors, rerun with: -v
+==20587== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -27,7 +27,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3866.304
+cpu MHz		: 3899.906
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -54,7 +54,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3745.710
+cpu MHz		: 3885.695
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -81,7 +81,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3760.585
+cpu MHz		: 3836.687
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -108,7 +108,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3747.304
+cpu MHz		: 3892.335
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -135,7 +135,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3879.320
+cpu MHz		: 3477.695
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -162,7 +162,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3770.546
+cpu MHz		: 3455.781
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -189,7 +189,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3681.960
+cpu MHz		: 3883.171
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -216,7 +216,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3779.445
+cpu MHz		: 3792.992
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

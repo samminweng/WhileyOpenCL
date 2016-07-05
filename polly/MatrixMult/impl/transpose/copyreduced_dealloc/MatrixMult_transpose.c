@@ -673,7 +673,9 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(B, _16);
 	//invoke (%17) = (%3, %4) MatrixMult_transpose:mat_mult : function(MatrixMult_transpose:Matrix,MatrixMult_transpose:Matrix)->(MatrixMult_transpose:Matrix)
 	_DEALLOC_STRUCT(_17, Matrix);
-	_17 = mat_mult(_COPY_STRUCT_PARAM(A, Matrix), true, _COPY_STRUCT_PARAM(B, Matrix), true);
+	_17 = mat_mult(_STRUCT_PARAM(A), A_dealloc, _STRUCT_PARAM(B), B_dealloc);
+	_REMOVE_DEALLOC(A);
+	_REMOVE_DEALLOC(B);
 	_ADD_DEALLOC(_17);
 	//assign %5 = %17  : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(C, Matrix);
