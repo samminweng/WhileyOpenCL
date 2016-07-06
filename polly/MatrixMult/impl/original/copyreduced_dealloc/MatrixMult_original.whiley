@@ -90,17 +90,17 @@ method main(System.Console sys):
         sys.out.println(size)
         // Initialize matrix A
         Matrix A = init(size, size)
+        //assert A.data[(size-1)*size+size-1] == size-1
         // Initialize matrix B
         Matrix B = init(size, size)
+        //assert B.data[(size-1)*size+size-1] == size-1
         // Multiply A and B 
         Matrix C = mat_mult(A, B)
-        assert A.data[(size-1)*size+size-1] == size-1
-        assert B.data[(size-1)*size+size-1] == size-1
         // N=20, C[19][19] = 3610
         // N=200, C[199][199] = 3960100
         // N=2000, C[1999][1999] = 3996001000
-        if size == 2000:
-            assert C.data[(size-1)*size+size-1] == 3996001000
+        //if size == 2000:
+        //    assert C.data[(size-1)*size+size-1] == 3996001000
         //print_mat(sys, C)
         sys.out.print_s("Matrix C[size-1][size-1] = ")
         sys.out.println(C.data[(size-1)*size+size-1])
