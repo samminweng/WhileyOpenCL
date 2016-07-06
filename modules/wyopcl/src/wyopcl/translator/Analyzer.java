@@ -29,8 +29,8 @@ import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
-import wyopcl.translator.bound.CFGraph;
-import wyopcl.translator.bound.CFGraph.STATUS;
+import wyopcl.translator.bound.BoundGraph;
+import wyopcl.translator.bound.BoundGraph.STATUS;
 
 /**
  * Aims to build control flow graph for a function.
@@ -43,7 +43,7 @@ public abstract class Analyzer {
 	// private static final String prefix = "%";
 	protected Configuration config;
 	// Maps of CFGs
-	protected HashMap<FunctionOrMethod, CFGraph> cfgraphs;
+	protected HashMap<FunctionOrMethod, BoundGraph> cfgraphs;
 	// The boolean flag indicates the byte-code is inside loop structure.
 	private boolean isLoop;
 	// The line number
@@ -57,7 +57,7 @@ public abstract class Analyzer {
 	 * Constructor
 	 */
 	public Analyzer(Configuration config) {
-		this.cfgraphs = new HashMap<FunctionOrMethod, CFGraph>();
+		this.cfgraphs = new HashMap<FunctionOrMethod, BoundGraph>();
 		this.config = config;
 		
 	}
@@ -106,7 +106,7 @@ public abstract class Analyzer {
 	 *            the function name
 	 * @return the cached CFGraph. If no cached graph is found, return null.
 	 */
-	protected CFGraph getCFGraph(FunctionOrMethod function) {
+	protected BoundGraph getCFGraph(FunctionOrMethod function) {
 		if (cfgraphs.containsKey(function))
 			return cfgraphs.get(function);
 		return null;
@@ -119,7 +119,7 @@ public abstract class Analyzer {
 	 * @return
 	 */
 	protected BasicBlock getBlockbyCode(FunctionOrMethod function, Code code) {
-		CFGraph graph = getCFGraph(function);
+		BoundGraph graph = getCFGraph(function);
 		// Get the list of block for the function.
 		for (BasicBlock blk : graph.getBlockList()) {
 			// Get the list of code.
@@ -141,7 +141,7 @@ public abstract class Analyzer {
 	 */
 	protected List<BasicBlock> getBlocks(FunctionOrMethod function) {
 		// Get the graph
-		CFGraph graph = getCFGraph(function);
+		BoundGraph graph = getCFGraph(function);
 		if (graph != null) {
 			// Return the list of blocks.
 			return graph.getBlockList();
@@ -157,14 +157,14 @@ public abstract class Analyzer {
 	 * @return
 	 */
 	protected boolean isCached(FunctionOrMethod function) {
-		CFGraph graph = getCFGraph(function);
+		BoundGraph graph = getCFGraph(function);
 		if (graph != null) {
 			if (graph.getStatus() == STATUS.COMPLETE) {
 				return true;
 			}
 		} else {
 			// Create an graph and symbol control
-			cfgraphs.put(function, new CFGraph());
+			cfgraphs.put(function, new BoundGraph());
 		}
 
 		return false;
@@ -184,7 +184,7 @@ public abstract class Analyzer {
 		// Get the function name.
 		String name = function.name();
 		String dot_string = "digraph " + name + "{\n";
-		CFGraph graph = getCFGraph(function);
+		BoundGraph graph = getCFGraph(function);
 		List<BasicBlock> blks = graph.getBlockList();
 		for (BasicBlock blk : blks) {
 			if (!blk.isLeaf()) {
@@ -277,7 +277,7 @@ public abstract class Analyzer {
 					buildCFG((Codes.Invoke) code, function);
 				} else {
 					// Add the byte-code to the current block in a CFGraph.
-					CFGraph graph = getCFGraph(function);
+					BoundGraph graph = getCFGraph(function);
 					graph.getCurrentBlock().addCode(code);
 				}
 			} catch (Exception ex) {
@@ -299,7 +299,7 @@ public abstract class Analyzer {
 				.collect(Collectors.joining(", "));
 
 		// Get current block
-		CFGraph graph = this.getCFGraph(function);
+		BoundGraph graph = this.getCFGraph(function);
 		BasicBlock parent = graph.getCurrentBlock();
 		// Create an assert block
 		BasicBlock blk = graph.createBasicBlock(label, BlockType.ASSERT, parent);
@@ -320,7 +320,7 @@ public abstract class Analyzer {
 	 */
 	private void buildCFG(Invoke code, FunctionOrMethod function) {
 		// Get the graph
-		CFGraph graph = getCFGraph(function);
+		BoundGraph graph = getCFGraph(function);
 		BasicBlock c_blk = graph.getCurrentBlock();
 		// Get the label name (e.g. swap12).
 		String label = code.name.name() + line;
@@ -340,7 +340,7 @@ public abstract class Analyzer {
 	 */
 	private void buildCFG(Invariant code, FunctionOrMethod function) {
 		// Add the invariant to the current block.
-		CFGraph graph = getCFGraph(function);
+		BoundGraph graph = getCFGraph(function);
 		BasicBlock c_blk = graph.getCurrentBlock();
 		c_blk.addCode(code);
 	}
@@ -356,7 +356,7 @@ public abstract class Analyzer {
 		// in order to identify the bytecode is inside a loop
 		isLoop = true;
 
-		CFGraph graph = getCFGraph(function);
+		BoundGraph graph = getCFGraph(function);
 		BasicBlock c_blk = graph.getCurrentBlock();
 
 		// Create the loop header
@@ -379,7 +379,7 @@ public abstract class Analyzer {
 	private void buildCFG(Codes.Goto code, FunctionOrMethod function) {
 		// Get the label name
 		String label = code.target;
-		CFGraph graph = getCFGraph(function);
+		BoundGraph graph = getCFGraph(function);
 		BasicBlock goto_blk = graph.getBasicBlock(label);
 		if (goto_blk == null) {
 			// Create a new block
@@ -401,7 +401,7 @@ public abstract class Analyzer {
 	private void buildCFG(Codes.Label code, FunctionOrMethod function) {
 		String label = code.label;
 		// Get the CFGraph
-		CFGraph graph = getCFGraph(function);
+		BoundGraph graph = getCFGraph(function);
 		// Get the current block
 		BasicBlock c_blk = graph.getCurrentBlock();
 		// Get the target block (else branch or loop exit).
@@ -424,7 +424,7 @@ public abstract class Analyzer {
 	 * @param function
 	 */
 	private void buildCFG(If code, FunctionOrMethod function) {
-		CFGraph graph = getCFGraph(function);
+		BoundGraph graph = getCFGraph(function);
 
 		// The original condition is 'ifge %0, %1 goto blklab1 : int'
 		// The negated condition is iflt %0, %1 goto blklab1
@@ -481,7 +481,7 @@ public abstract class Analyzer {
 	 */
 	private void buildCFG(Return code, FunctionOrMethod function) {
 		// Get the CFGraph
-		CFGraph graph = getCFGraph(function);
+		BoundGraph graph = getCFGraph(function);
 		BasicBlock blk = graph.getCurrentBlock();
 		// Check if there is any return value. If no, no needs of making a "Return" block.
 		if (code.operands().length > 0) {

@@ -14,7 +14,7 @@ import wyopcl.Configuration;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.Bounds;
-import wyopcl.translator.bound.CFGraph;
+import wyopcl.translator.bound.BoundGraph;
 import wyopcl.translator.bound.constraint.Assign;
 import wyopcl.translator.bound.constraint.Const;
 import wyopcl.translator.bound.constraint.Constraint;
@@ -235,7 +235,7 @@ public class BoundAnalyzer {
 	 * @return the bounds
 	 */
 	public Bounds inferBounds(String name) {
-		CFGraph graph = AnalyzerHelper.getCFGraph(name);
+		BoundGraph graph = AnalyzerHelper.getCFGraph(name);
 
 		// Repeatedly iterates over all blocks, starting from the entry block to the
 		// exit block, and infer the bounds consistent with all the constraints in each block.
@@ -365,7 +365,7 @@ public class BoundAnalyzer {
 		if (isIntType(code.type(0))) {
 			// Add the constraint 'target = operand'
 			if (!AnalyzerHelper.isCached(name)) {
-				CFGraph graph = AnalyzerHelper.getCFGraph(name);
+				BoundGraph graph = AnalyzerHelper.getCFGraph(name);
 				graph.addConstraint(new Assign(target_reg, op_reg));
 			}
 		}
@@ -384,7 +384,7 @@ public class BoundAnalyzer {
 		if (constant instanceof Constant.Integer && !AnalyzerHelper.isCached(name)) {
 			// Add the 'Const' constraint.
 			BigInteger value = ((Constant.Integer) constant).value;
-			CFGraph graph = AnalyzerHelper.getCFGraph(name);
+			BoundGraph graph = AnalyzerHelper.getCFGraph(name);
 			graph.addConstraint(new Const(target_reg, value));
 		}
 
@@ -409,7 +409,7 @@ public class BoundAnalyzer {
 			String op = prefix + code.operand(0);
 			String index = prefix + code.operand(1);
 			// Get the CFGraph
-			CFGraph graph = AnalyzerHelper.getCFGraph(name);
+			BoundGraph graph = AnalyzerHelper.getCFGraph(name);
 			graph.addConstraint(new Equals(target, op));
 		}
 	}
@@ -425,7 +425,7 @@ public class BoundAnalyzer {
 		String right = prefix + code.operand(1);
 		if (!AnalyzerHelper.isCached(name)) {
 			// Get CF graph.
-			CFGraph graph = AnalyzerHelper.getCFGraph(name);
+			BoundGraph graph = AnalyzerHelper.getCFGraph(name);
 			Constraint c = null;
 			Constraint neg_c = null;
 			if (isIntType(code.type(0))) {
@@ -488,7 +488,7 @@ public class BoundAnalyzer {
 		String label = code.label;
 		if (!AnalyzerHelper.isCached(name)) {
 			// Get the CFGraph
-			CFGraph graph = AnalyzerHelper.getCFGraph(name);
+			BoundGraph graph = AnalyzerHelper.getCFGraph(name);
 			// Get the target blk. If it is null, then create a new block.
 			BasicBlock blk = graph.getBasicBlock(label);
 			// Get the current block
@@ -518,7 +518,7 @@ public class BoundAnalyzer {
 
 		if (!AnalyzerHelper.isCached(name)) {
 			// Get the CFGraph
-			CFGraph graph = AnalyzerHelper.getCFGraph(name);
+			BoundGraph graph = AnalyzerHelper.getCFGraph(name);
 			BasicBlock c_blk = graph.getCurrentBlock();
 			// Check if the current blk exits. If so, then proceed the following
 			// procedure.
@@ -555,7 +555,7 @@ public class BoundAnalyzer {
 		String x = prefix + code.operand(0);
 		String y = prefix + code.target(0);
 		// Get a graph
-		CFGraph graph = AnalyzerHelper.getCFGraph(name);
+		BoundGraph graph = AnalyzerHelper.getCFGraph(name);
 		switch (kind) {
 		case NEG:
 			graph.addConstraint(new Negate(x, y));
@@ -612,7 +612,7 @@ public class BoundAnalyzer {
 		// Add the type att
 		if (isIntType(code.type(0)) && !AnalyzerHelper.isCached(name)) {
 			// Get the values
-			CFGraph graph = AnalyzerHelper.getCFGraph(name);
+			BoundGraph graph = AnalyzerHelper.getCFGraph(name);
 			switch (code.kind) {
 			case ADD:
 				// Use the left plus to represent the addition
@@ -676,7 +676,7 @@ public class BoundAnalyzer {
 		if (!AnalyzerHelper.isCached(name)) {
 			// Get the label name
 			String label = code.target;
-			CFGraph graph = AnalyzerHelper.getCFGraph(name);
+			BoundGraph graph = AnalyzerHelper.getCFGraph(name);
 			BasicBlock goto_blk = graph.getBasicBlock(label);
 			// Set the current blk to null blk
 			graph.setCurrentBlock(null);

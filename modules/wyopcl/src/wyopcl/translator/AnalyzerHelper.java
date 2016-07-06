@@ -18,10 +18,10 @@ import wyopcl.Configuration;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.Bounds;
-import wyopcl.translator.bound.CFGraph;
+import wyopcl.translator.bound.BoundGraph;
 import wyopcl.translator.bound.Symbol;
 import wyopcl.translator.bound.SymbolFactory;
-import wyopcl.translator.bound.CFGraph.STATUS;
+import wyopcl.translator.bound.BoundGraph.STATUS;
 import wyopcl.translator.bound.Domain;
 import wyopcl.translator.bound.constraint.Constraint;
 import wyopcl.translator.bound.constraint.Range;
@@ -41,7 +41,7 @@ public final class AnalyzerHelper {
 	private static final String RESET = (char) 27 + "[0m";
 	// Maps of CFGs, symbols
 	private static HashMap<String, SymbolFactory> symbol_factorys = new HashMap<String, SymbolFactory>();
-	private static HashMap<String, CFGraph> cfgraphs = new HashMap<String, CFGraph>();
+	private static HashMap<String, BoundGraph> cfgraphs = new HashMap<String, BoundGraph>();
 
 	/**
 	 * Checks if the CFGraph of the given function exist.
@@ -50,14 +50,14 @@ public final class AnalyzerHelper {
 	 * @return
 	 */
 	public static boolean isCached(String name) {
-		CFGraph graph = getCFGraph(name);
+		BoundGraph graph = getCFGraph(name);
 		if (graph != null) {
 			if (graph.getStatus() == STATUS.COMPLETE) {
 				return true;
 			}
 		} else {
 			// Create an graph and symbol control
-			cfgraphs.put(name, new CFGraph());
+			cfgraphs.put(name, new BoundGraph());
 		}
 
 		return false;
@@ -70,7 +70,7 @@ public final class AnalyzerHelper {
 	 * @param name
 	 */
 	public static void promoteCFGStatus(String name) {
-		CFGraph graph = getCFGraph(name);
+		BoundGraph graph = getCFGraph(name);
 		if (graph.getStatus() == STATUS.INIT) {
 			graph.setStatus(STATUS.PROCESSING);
 		} else if (graph.getStatus() == STATUS.PROCESSING) {
@@ -85,7 +85,7 @@ public final class AnalyzerHelper {
 	 *            the function name
 	 * @return the cached CFGraph. If no cached graph is found, return null.
 	 */
-	public static CFGraph getCFGraph(String name) {
+	public static BoundGraph getCFGraph(String name) {
 		if (cfgraphs.containsKey(name))
 			return cfgraphs.get(name);
 		return null;
@@ -186,7 +186,7 @@ public final class AnalyzerHelper {
 	 *            the bounds of caller function
 	 */
 	public static void propagateInputBoundsToFunctionCall(String caller_name, String callee_name, List<Type> params, int[] operands, Bounds bnd) {
-		CFGraph graph = getCFGraph(callee_name);
+		BoundGraph graph = getCFGraph(callee_name);
 		//clear all the bounds in each block
 		for(BasicBlock blk: graph.getBlockList()){
 			blk.emptyBounds();
@@ -266,7 +266,7 @@ public final class AnalyzerHelper {
 	 * @param bnd
 	 */
 	public static void propagateBoundsFromFunctionCall(String caller_name, String callee_name, String ret_reg, Type ret_type, Bounds bnd) {
-		CFGraph graph = getCFGraph(caller_name);
+		BoundGraph graph = getCFGraph(caller_name);
 		if (isIntType(ret_type)) {
 			// propagate the bounds of return value.
 			graph.addConstraint(new Range(ret_reg, bnd.getLower("return"), bnd.getUpper("return")));
@@ -328,7 +328,7 @@ public final class AnalyzerHelper {
 		}
 
 		String dot_string = "digraph " + name + "{\n";
-		CFGraph graph = getCFGraph(name);
+		BoundGraph graph = getCFGraph(name);
 		List<BasicBlock> blks = graph.getBlockList();
 		for (BasicBlock blk : blks) {
 			if (!blk.isLeaf()) {

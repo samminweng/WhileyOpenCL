@@ -1,4 +1,4 @@
-package wyopcl.translator.bound;
+package wyopcl.translator.cfg;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -8,8 +8,8 @@ import java.util.Collections;
 import java.util.List;
 
 import wyil.lang.Type;
-import wyopcl.translator.bound.BasicBlock.BlockType;
-import wyopcl.translator.bound.constraint.Constraint;
+import wyopcl.translator.cfg.BasicBlock;
+import wyopcl.translator.cfg.BasicBlock.BlockType;
 
 /**
  * Creates, retrieves and stores the blocks for a function. 
@@ -169,51 +169,6 @@ public class CFGraph {
 	}
 
 	/**
-	 *  Propagate the input bounds to entry node
-	 * 
-	 * @param paramType
-	 * @param param
-	 * @param min
-	 * @param max
-	 */
-	public void addInputBounds(List<Type> params, int[] operands, Bounds bnd) {
-		//clear all the bounds in each block
-		for(BasicBlock blk: blocks){
-			blk.emptyBounds();
-		}
-		
-		BasicBlock entry = getBasicBlock("entry", BlockType.ENTRY);
-		//Clear all the constraints/bounds in entry block.		
-		entry.emptyConstraints();
-		int index = 0;
-		for (Type paramType : params) {
-			String param = prefix + index;
-			String operand = prefix + operands[index];
-			// Check parameter type
-			if (isIntType(paramType)) {
-				entry.addBounds(param, bnd.getLower(operand),  bnd.getUpper(operand));
-			}	
-			index++;
-		}
-		
-	}
-
-	/**
-	 * Create if/else branch without adding any constraint.
-	 * @param new_label
-	 */
-	public void createIfElseBranch(String new_label) {
-		BasicBlock c_blk = getCurrentBlock();
-		// Branch out the block
-		// The left block does not have the name
-		BasicBlock leftBlock = createBasicBlock(new_label, BlockType.IF_BRANCH, c_blk);
-		BasicBlock rightBlock = createBasicBlock(new_label, BlockType.ELSE_BRANCH, c_blk);
-		// Set the current block to the left
-		setCurrentBlock(leftBlock);
-	}
-	
-
-	/**
 	 * Branches out the current block to add if/else blocks and set the current block to 
 	 * the if branch (left one).
 	 * 
@@ -222,16 +177,12 @@ public class CFGraph {
 	 * @param c
 	 *            constraint
 	 */
-	public void createIfElseBranch(String new_label, Constraint c, Constraint neg_c) {
+	public void createIfElseBranch(String new_label) {
 		BasicBlock c_blk = getCurrentBlock();
 		// Branch out the block
 		// The left block does not have the name
 		BasicBlock leftBlock = createBasicBlock(new_label, BlockType.IF_BRANCH, c_blk);
 		BasicBlock rightBlock = createBasicBlock(new_label, BlockType.ELSE_BRANCH, c_blk);
-
-		// Add the constraint to the left block
-		leftBlock.addConstraint(neg_c);
-		rightBlock.addConstraint(c);
 		
 		// Set the current block to the left
 		setCurrentBlock(leftBlock);
@@ -261,34 +212,6 @@ public class CFGraph {
 	
 
 	/**
-	 * Creates the loop header, loop body and loop exit and
-	 * set the current block to the loop body.
-	 * 
-	 * @param new_label
-	 *            the name of new branch.
-	 * @param c
-	 *            constraint
-	 */
-	public void createLoopStructure(String new_label, Constraint c, Constraint neg_c) {
-		//Create the loop header
-		BasicBlock loop_header = createBasicBlock(new_label, BlockType.LOOP_HEADER, getCurrentBlock());
-		// Set loop_header to be the current block
-		setCurrentBlock(loop_header);
-		// Set the loop flag to be true.
-		// Check whether to add if-else blocks or loop-condition blocks.
-		BasicBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, loop_header);
-		BasicBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, loop_header);
-		// Connect the loop header with the loop body
-		loop_body.addChild(loop_header);
-		// put the opposite constraint to the loop body
-		loop_body.addConstraint(neg_c);
-		// put the original constraint to the loop_exit
-		loop_exit.addConstraint(c);
-		// Set the current block to be loop body.
-		setCurrentBlock(loop_body);
-	}
-
-	/**
 	 * Given a block type, get a list of blocks. 
 	 * @param blk_type
 	 * @return
@@ -304,14 +227,7 @@ public class CFGraph {
 		return blks;
 	}
 	
-	/**
-	 * Adds the constraint to the current block.
-	 * 
-	 * @param c
-	 */
-	public void addConstraint(Constraint c) {
-		getCurrentBlock().addConstraint(c);
-	}
+	
 
 	/**
 	 * Outputs the control flow graphs (*.dot).

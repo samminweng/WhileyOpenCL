@@ -11,7 +11,7 @@ import wyil.lang.Type;
 import wyil.lang.Codes.Return;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
-import wyopcl.translator.bound.CFGraph;
+import wyopcl.translator.bound.BoundGraph;
 
 /**
  * Stores and computes live variables for each function, including each block's 'IN' and 'OUT' set.
@@ -60,7 +60,7 @@ public class LiveVariables {
 	 * @param graph
 	 * @param liveAnalyzer
 	 */
-	public void computeLiveness(String name, boolean isVerbose, CFGraph graph){
+	public void computeLiveness(String name, boolean isVerbose, BoundGraph graph){
 		List<BasicBlock> blocks = graph.getBlockList();
 		initialize(blocks);
 		int iteration = 1;// Start with 1st iteration.
