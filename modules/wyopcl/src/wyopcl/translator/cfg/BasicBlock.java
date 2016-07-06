@@ -19,10 +19,10 @@ import wyil.lang.CodeBlock;
  *
  */
 public class BasicBlock implements Comparable<BasicBlock> {
-	private CodeBlock codeBlock;// Store all the byte-code for a block
-
-	private List<BasicBlock> childNodes = null;
-	private List<BasicBlock> parentNodes = null;
+	private List<Code> codeBlock;// A list of byte-code for a block
+	
+	private List<BasicBlock> childNodes = null;// A list of child nodes
+	private List<BasicBlock> parentNodes = null;// A list of parent nodes
 	// The branch name
 	private String label;
 	private BlockType type;
@@ -101,7 +101,7 @@ public class BasicBlock implements Comparable<BasicBlock> {
 	 * Private constructor
 	 */
 	private BasicBlock() {
-		this.codeBlock = new CodeBlock();
+		this.codeBlock = new ArrayList<Code>();
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class BasicBlock implements Comparable<BasicBlock> {
 	 * Get the list of codes.
 	 * @return
 	 */
-	public CodeBlock getCodeBlock(){
+	public List<Code> getCodeBlock(){
 		return this.codeBlock;
 	}
 	

@@ -121,11 +121,12 @@ public abstract class Analyzer {
 		// Get the list of block for the function.
 		for (BasicBlock blk : graph.getBlockList()) {
 			// Get the list of code.
-			CodeBlock codeBlk = blk.getCodeBlock();
+			List<Code> codeblk = blk.getCodeBlock();
 			// Check if code blk contains this byte-code.
-			if (codeBlk.bytecodes().contains(code)) {
-				return blk;
+			if (codeblk.contains(code)) {
+					return blk;
 			}
+			
 		}
 
 		return null;

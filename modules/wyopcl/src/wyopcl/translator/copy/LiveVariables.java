@@ -204,7 +204,7 @@ public class LiveVariables {
 	 * @return
 	 */
 	public HashSet<Integer> computeIN(BasicBlock block, HashSet<Integer> in) {
-		List<Code> codes = block.getCodeBlock().bytecodes();
+		List<Code> codes = block.getCodeBlock();
 		in = compute(codes, in);
 		// Update 'in' set of the block.
 		setIN(block, in);
