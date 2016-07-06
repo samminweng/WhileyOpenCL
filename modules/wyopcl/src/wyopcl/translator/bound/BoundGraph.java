@@ -8,11 +8,11 @@ import java.util.Collections;
 import java.util.List;
 
 import wyil.lang.Type;
-import wyopcl.translator.bound.BasicBlock.BlockType;
+import wyopcl.translator.bound.BoundBlock.BlockType;
 import wyopcl.translator.bound.constraint.Constraint;
 
 /**
- * Creates, retrieves and stores the blocks for a function. 
+ * Creates, retrieves and stores basic blocks for a function (bound analysis only).
  *  
  * @author Min-Hsien Weng
  *
@@ -20,9 +20,9 @@ import wyopcl.translator.bound.constraint.Constraint;
 public class BoundGraph {
 	private final String prefix = "%";	
 	// The list of basic block;
-	private List<BasicBlock> blocks;
+	private List<BoundBlock> blocks;
 	// The variables are used in the control flow graph (CFG).
-	private BasicBlock current_blk;
+	private BoundBlock current_blk;
 	// Status
 	public enum STATUS{
 		INIT, PROCESSING, COMPLETE
@@ -32,10 +32,10 @@ public class BoundGraph {
 	
 	public BoundGraph() {
 		// Initialize the variables
-		this.blocks = new ArrayList<BasicBlock>();
+		this.blocks = new ArrayList<BoundBlock>();
 		// Entry and Exit block
 		//BasicBlock exit = createBasicBlock("exit", BlockType.EXIT);
-		BasicBlock entry = createBasicBlock("entry", BlockType.ENTRY);
+		BoundBlock entry = createBasicBlock("entry", BlockType.ENTRY);
 		// First code block.
 		this.current_blk = createBasicBlock("code", BlockType.BLOCK, entry);
 		this.status = STATUS.INIT;
@@ -60,17 +60,17 @@ public class BoundGraph {
 	 *            the parent blk
 	 * @return the blk
 	 */
-	public BasicBlock createBasicBlock(String label, BlockType type, BasicBlock... parents) {
-		BasicBlock blk = getBasicBlock(label, type);
+	public BoundBlock createBasicBlock(String label, BlockType type, BoundBlock... parents) {
+		BoundBlock blk = getBasicBlock(label, type);
 		// Check if the block exists
 		if (blk == null) {
 			//Create a new block
-			blk = new BasicBlock(label, type);
+			blk = new BoundBlock(label, type);
 			//Add this block to the block list.
 			blocks.add(blk);
 		}
 		//Connect the block with the given parent blocks.
-		BasicBlock parent = parents.length > 0 ? parents[0] : null;
+		BoundBlock parent = parents.length > 0 ? parents[0] : null;
 		if (parent != null) {
 			parent.addChild(blk);
 		}
@@ -87,8 +87,8 @@ public class BoundGraph {
 	 * @param label
 	 * @return blk the matched block
 	 */
-	public BasicBlock getBasicBlock(String label) {
-		BasicBlock blk = null;
+	public BoundBlock getBasicBlock(String label) {
+		BoundBlock blk = null;
 		blk = getBasicBlock(label, BlockType.BLOCK);
 		if (blk != null) {
 			return blk;
@@ -115,8 +115,8 @@ public class BoundGraph {
 	 * @param type
 	 * @return
 	 */
-	public BasicBlock getBasicBlock(String label, BlockType type) {
-		for (BasicBlock blk : blocks) {
+	public BoundBlock getBasicBlock(String label, BlockType type) {
+		for (BoundBlock blk : blocks) {
 			if (blk.getLabel().equals(label)) {
 				if (blk.getType().equals(type)) {
 					return blk;
@@ -141,7 +141,7 @@ public class BoundGraph {
 	 * 
 	 * @return
 	 */
-	public List<BasicBlock> getBlockList() {
+	public List<BoundBlock> getBlockList() {
 		return blocks;
 	}
 
@@ -150,7 +150,7 @@ public class BoundGraph {
 	 * 
 	 * @return
 	 */
-	public BasicBlock getCurrentBlock() {
+	public BoundBlock getCurrentBlock() {
 		// If the current block is null, throw out an Runtime exception
 		if (current_blk == null) {
 			// throw new RuntimeException("Current block is null.");
@@ -164,7 +164,7 @@ public class BoundGraph {
 	 * 
 	 * @param blk
 	 */
-	public void setCurrentBlock(BasicBlock blk) {
+	public void setCurrentBlock(BoundBlock blk) {
 		current_blk = blk;
 	}
 
@@ -178,11 +178,11 @@ public class BoundGraph {
 	 */
 	public void addInputBounds(List<Type> params, int[] operands, Bounds bnd) {
 		//clear all the bounds in each block
-		for(BasicBlock blk: blocks){
+		for(BoundBlock blk: blocks){
 			blk.emptyBounds();
 		}
 		
-		BasicBlock entry = getBasicBlock("entry", BlockType.ENTRY);
+		BoundBlock entry = getBasicBlock("entry", BlockType.ENTRY);
 		//Clear all the constraints/bounds in entry block.		
 		entry.emptyConstraints();
 		int index = 0;
@@ -203,11 +203,11 @@ public class BoundGraph {
 	 * @param new_label
 	 */
 	public void createIfElseBranch(String new_label) {
-		BasicBlock c_blk = getCurrentBlock();
+		BoundBlock c_blk = getCurrentBlock();
 		// Branch out the block
 		// The left block does not have the name
-		BasicBlock leftBlock = createBasicBlock(new_label, BlockType.IF_BRANCH, c_blk);
-		BasicBlock rightBlock = createBasicBlock(new_label, BlockType.ELSE_BRANCH, c_blk);
+		BoundBlock leftBlock = createBasicBlock(new_label, BlockType.IF_BRANCH, c_blk);
+		BoundBlock rightBlock = createBasicBlock(new_label, BlockType.ELSE_BRANCH, c_blk);
 		// Set the current block to the left
 		setCurrentBlock(leftBlock);
 	}
@@ -223,11 +223,11 @@ public class BoundGraph {
 	 *            constraint
 	 */
 	public void createIfElseBranch(String new_label, Constraint c, Constraint neg_c) {
-		BasicBlock c_blk = getCurrentBlock();
+		BoundBlock c_blk = getCurrentBlock();
 		// Branch out the block
 		// The left block does not have the name
-		BasicBlock leftBlock = createBasicBlock(new_label, BlockType.IF_BRANCH, c_blk);
-		BasicBlock rightBlock = createBasicBlock(new_label, BlockType.ELSE_BRANCH, c_blk);
+		BoundBlock leftBlock = createBasicBlock(new_label, BlockType.IF_BRANCH, c_blk);
+		BoundBlock rightBlock = createBasicBlock(new_label, BlockType.ELSE_BRANCH, c_blk);
 
 		// Add the constraint to the left block
 		leftBlock.addConstraint(neg_c);
@@ -246,12 +246,12 @@ public class BoundGraph {
 	 */
 	public void createLoopStructure(String new_label) {
 		
-		BasicBlock loop_header = getCurrentBlock();
+		BoundBlock loop_header = getCurrentBlock();
 		//update the label
 		loop_header.setLabel(new_label);
 		// Check whether to add if-else blocks or loop-condition blocks.
-		BasicBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, loop_header);
-		BasicBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, loop_header);
+		BoundBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, loop_header);
+		BoundBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, loop_header);
 		// Connect the loop header with the loop body
 		loop_body.addChild(loop_header);
 		// Set the current block to be loop body.
@@ -271,13 +271,13 @@ public class BoundGraph {
 	 */
 	public void createLoopStructure(String new_label, Constraint c, Constraint neg_c) {
 		//Create the loop header
-		BasicBlock loop_header = createBasicBlock(new_label, BlockType.LOOP_HEADER, getCurrentBlock());
+		BoundBlock loop_header = createBasicBlock(new_label, BlockType.LOOP_HEADER, getCurrentBlock());
 		// Set loop_header to be the current block
 		setCurrentBlock(loop_header);
 		// Set the loop flag to be true.
 		// Check whether to add if-else blocks or loop-condition blocks.
-		BasicBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, loop_header);
-		BasicBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, loop_header);
+		BoundBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, loop_header);
+		BoundBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, loop_header);
 		// Connect the loop header with the loop body
 		loop_body.addChild(loop_header);
 		// put the opposite constraint to the loop body
@@ -293,9 +293,9 @@ public class BoundGraph {
 	 * @param blk_type
 	 * @return
 	 */
-	public List<BasicBlock> getBasicBlockByType(BlockType blk_type){
-		List<BasicBlock> blks = new ArrayList<BasicBlock>();
-		for(BasicBlock blk: blocks){
+	public List<BoundBlock> getBasicBlockByType(BlockType blk_type){
+		List<BoundBlock> blks = new ArrayList<BoundBlock>();
+		for(BoundBlock blk: blocks){
 			if(blk.getType().equals(blk_type)){
 				blks.add(blk);
 			}
@@ -319,14 +319,14 @@ public class BoundGraph {
 	 * @param filename the name of input file.
 	 * @param func_name the name of function.
 	 */
-	public void printCFG(List<BasicBlock> blks, String filename, String func_name){
+	public void printCFG(List<BoundBlock> blks, String filename, String func_name){
 		//Sort the blks.
 		//blk_ctrl.sortedList();
 		String dot_string= "digraph "+func_name+"{\n";		
 
-		for(BasicBlock blk: blks){
+		for(BoundBlock blk: blks){
 			if(!blk.isLeaf()){
-				for(BasicBlock child: blk.getChildNodes()){
+				for(BoundBlock child: blk.getChildNodes()){
 					dot_string += "\""+blk.getLabel()+" [" +blk.getType()+"]\"->\""+ child.getLabel() +" ["+child.getType() + "]\";\n";
 				}
 			}

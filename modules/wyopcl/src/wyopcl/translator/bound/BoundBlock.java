@@ -10,16 +10,19 @@ import wyil.lang.CodeBlock;
 import wyopcl.translator.bound.constraint.Constraint;
 
 /**
- * The basic block for building the control flow graph (CFG).
+ * The bound block is used to build the bound graph (CFG) for bound analysis. 
+ * 
+ * The bound block contains a list of constraints, an union of bounds, and parent/child block (etc).. 
+ * 
  * 
  * @author Min-Hsien Weng
  *
  */
-public class BasicBlock implements Comparable<BasicBlock> {
+public class BoundBlock implements Comparable<BoundBlock> {
 	private CodeBlock codeBlock;// Store all the byte-code for a block
 	private List<Constraint> constraints;
-	private List<BasicBlock> childNodes = null;
-	private List<BasicBlock> parentNodes = null;
+	private List<BoundBlock> childNodes = null;
+	private List<BoundBlock> parentNodes = null;
 	// The branch name
 	private String label;
 	private BlockType type;
@@ -100,7 +103,7 @@ public class BasicBlock implements Comparable<BasicBlock> {
 	/**
 	 * Private constructor
 	 */
-	private BasicBlock() {
+	private BoundBlock() {
 		this.unionOfBounds = new Bounds();
 		this.constraints = new ArrayList<Constraint>();
 		this.codeBlock = new CodeBlock();
@@ -114,7 +117,7 @@ public class BasicBlock implements Comparable<BasicBlock> {
 	 * @param type
 	 *            the type of blk
 	 */
-	public BasicBlock(String label, BlockType type) {
+	public BoundBlock(String label, BlockType type) {
 		// Use the nested constructor to create the BasicBlock object.
 		this();
 		this.label = label;
@@ -161,9 +164,9 @@ public class BasicBlock implements Comparable<BasicBlock> {
 	 * @param blk
 	 *            the child node.
 	 */
-	public void addChild(BasicBlock child) {
+	public void addChild(BoundBlock child) {
 		if (childNodes == null) {
-			childNodes = new ArrayList<BasicBlock>();
+			childNodes = new ArrayList<BoundBlock>();
 		}
 
 		// Check if the child node has been added before.
@@ -175,9 +178,9 @@ public class BasicBlock implements Comparable<BasicBlock> {
 
 	}
 
-	private void addParent(BasicBlock parent) {
+	private void addParent(BoundBlock parent) {
 		if (parentNodes == null) {
-			parentNodes = new ArrayList<BasicBlock>();
+			parentNodes = new ArrayList<BoundBlock>();
 		}
 		parentNodes.add(parent);
 	}
@@ -194,7 +197,7 @@ public class BasicBlock implements Comparable<BasicBlock> {
 	 * 
 	 * @param parent
 	 */
-	public void unionBounds(BasicBlock parent) {
+	public void unionBounds(BoundBlock parent) {
 		// Take the union of bounds of parent node and current node.
 		this.unionOfBounds.union((Bounds) parent.getBounds().clone());
 	}
@@ -253,7 +256,7 @@ public class BasicBlock implements Comparable<BasicBlock> {
 	 * 
 	 * @return
 	 */
-	public List<BasicBlock> getChildNodes() {
+	public List<BoundBlock> getChildNodes() {
 		return childNodes;
 	}
 
@@ -263,7 +266,7 @@ public class BasicBlock implements Comparable<BasicBlock> {
 	 * @return the list of blocks. If no parents is found, return an immutable
 	 *         empty list.
 	 */
-	public List<BasicBlock> getParentNodes() {
+	public List<BoundBlock> getParentNodes() {
 		if (parentNodes == null) {
 			// Return an immutable list
 			return Collections.emptyList();
@@ -377,10 +380,10 @@ public class BasicBlock implements Comparable<BasicBlock> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof BasicBlock)) {
+		if (!(obj instanceof BoundBlock)) {
 			return false;
 		}
-		BasicBlock blk = (BasicBlock) obj;
+		BoundBlock blk = (BoundBlock) obj;
 		if (this.getLabel().equals(blk.getLabel())) {
 			if (this.getType().equals(blk.getType())) {
 				return true;
@@ -393,7 +396,7 @@ public class BasicBlock implements Comparable<BasicBlock> {
 	/**
 	 * Implements for sorting the elements in the list.
 	 */
-	public int compareTo(BasicBlock blk) {
+	public int compareTo(BoundBlock blk) {
 		return this.type.order - blk.type.order;
 	}
 

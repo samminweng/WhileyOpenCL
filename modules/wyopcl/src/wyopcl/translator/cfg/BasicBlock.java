@@ -1,16 +1,19 @@
 package wyopcl.translator.cfg;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.CodeBlock;
-import wyopcl.translator.bound.constraint.Constraint;
+
 
 /**
- * The basic block for building the control flow graph (CFG).
+ * The basic block of building the control flow graph (CFG) is used in live variable analyzer.
+ * 
+ * In constract to bound block, basic block contains a list of parent and child nodes.   
+ * 
+ * 
  * 
  * @author Min-Hsien Weng
  *

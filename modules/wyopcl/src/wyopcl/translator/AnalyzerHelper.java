@@ -15,8 +15,8 @@ import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
-import wyopcl.translator.bound.BasicBlock;
-import wyopcl.translator.bound.BasicBlock.BlockType;
+import wyopcl.translator.bound.BoundBlock;
+import wyopcl.translator.bound.BoundBlock.BlockType;
 import wyopcl.translator.bound.Bounds;
 import wyopcl.translator.bound.BoundGraph;
 import wyopcl.translator.bound.Symbol;
@@ -188,11 +188,11 @@ public final class AnalyzerHelper {
 	public static void propagateInputBoundsToFunctionCall(String caller_name, String callee_name, List<Type> params, int[] operands, Bounds bnd) {
 		BoundGraph graph = getCFGraph(callee_name);
 		//clear all the bounds in each block
-		for(BasicBlock blk: graph.getBlockList()){
+		for(BoundBlock blk: graph.getBlockList()){
 			blk.emptyBounds();
 		}
 		
-		BasicBlock entry = graph.getBasicBlock("entry", BlockType.ENTRY);
+		BoundBlock entry = graph.getBasicBlock("entry", BlockType.ENTRY);
 		//Clear all the constraints/bounds in entry block.		
 		entry.emptyConstraints();
 		int index = 0;
@@ -329,10 +329,10 @@ public final class AnalyzerHelper {
 
 		String dot_string = "digraph " + name + "{\n";
 		BoundGraph graph = getCFGraph(name);
-		List<BasicBlock> blks = graph.getBlockList();
-		for (BasicBlock blk : blks) {
+		List<BoundBlock> blks = graph.getBlockList();
+		for (BoundBlock blk : blks) {
 			if (!blk.isLeaf()) {
-				for (BasicBlock child : blk.getChildNodes()) {
+				for (BoundBlock child : blk.getChildNodes()) {
 					dot_string += "\"" + blk.getLabel() + " [" + blk.getType() + "]\"->\"" + child.getLabel() + " [" + child.getType() + "]\";\n";
 				}
 			}

@@ -11,8 +11,8 @@ import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
-import wyopcl.translator.bound.BasicBlock;
-import wyopcl.translator.bound.BasicBlock.BlockType;
+import wyopcl.translator.bound.BoundBlock;
+import wyopcl.translator.bound.BoundBlock.BlockType;
 import wyopcl.translator.bound.Bounds;
 import wyopcl.translator.bound.BoundGraph;
 import wyopcl.translator.bound.constraint.Assign;
@@ -239,7 +239,7 @@ public class BoundAnalyzer {
 
 		// Repeatedly iterates over all blocks, starting from the entry block to the
 		// exit block, and infer the bounds consistent with all the constraints in each block.
-		List<BasicBlock> list = graph.getBlockList();
+		List<BoundBlock> list = graph.getBlockList();
 		boolean isFixedPoint = false;
 		int iteration = 0;
 		// Stop the loop when the program reaches the fixed point or
@@ -255,7 +255,7 @@ public class BoundAnalyzer {
 			isFixedPoint = true;
 			
 			// Iterate all blocks (Order does not matter).
-			for (BasicBlock blk : list) {
+			for (BoundBlock blk : list) {
 				boolean isChanged = false;
 				// Iterate all the blocks, except Exit block.
 				if (!blk.getType().equals(BlockType.EXIT)) {
@@ -265,7 +265,7 @@ public class BoundAnalyzer {
 					bnd_before = (Bounds) blk.getBounds().clone();
 					// Take the union of parents' bounds to produce the input
 					// bounds for bound inference.
-					for (BasicBlock parent : blk.getParentNodes()) {
+					for (BoundBlock parent : blk.getParentNodes()) {
 						blk.unionBounds(parent);
 					}
 					
@@ -303,7 +303,7 @@ public class BoundAnalyzer {
 			if (iteration == 3) {
 				// After three iterations, widen the bounds of variables whose upper bounds are increasing
 				// or whose lower bounds are decreasing.
-				for (BasicBlock blk : list) {
+				for (BoundBlock blk : list) {
 					//Widen the bounds
 					blk.getBounds().widenBounds(config);					
 				}
@@ -315,8 +315,8 @@ public class BoundAnalyzer {
 		}
 
 		// Take the union of all blocks to produce the bounds of a function.
-		BasicBlock exit_blk = graph.getBasicBlock("exit", BlockType.EXIT);
-		for (BasicBlock blk : list) {
+		BoundBlock exit_blk = graph.getBasicBlock("exit", BlockType.EXIT);
+		for (BoundBlock blk : list) {
 			// Consider the bounds of consistent block and discard the bounds of inconsistent block.
 			if (blk.isConsistent() && blk.getType() != BlockType.EXIT) {
 				exit_blk.unionBounds(blk);
@@ -490,9 +490,9 @@ public class BoundAnalyzer {
 			// Get the CFGraph
 			BoundGraph graph = AnalyzerHelper.getCFGraph(name);
 			// Get the target blk. If it is null, then create a new block.
-			BasicBlock blk = graph.getBasicBlock(label);
+			BoundBlock blk = graph.getBasicBlock(label);
 			// Get the current block
-			BasicBlock c_blk = graph.getCurrentBlock();
+			BoundBlock c_blk = graph.getCurrentBlock();
 			if (c_blk != null && !(c_blk.equals(blk))) {
 				// Check if the target blk is not a loop structure.
 				if (!blk.getType().equals(BlockType.LOOP_EXIT)) {
@@ -519,7 +519,7 @@ public class BoundAnalyzer {
 		if (!AnalyzerHelper.isCached(name)) {
 			// Get the CFGraph
 			BoundGraph graph = AnalyzerHelper.getCFGraph(name);
-			BasicBlock c_blk = graph.getCurrentBlock();
+			BoundBlock c_blk = graph.getCurrentBlock();
 			// Check if the current blk exits. If so, then proceed the following
 			// procedure.
 			if (c_blk != null) {
@@ -677,7 +677,7 @@ public class BoundAnalyzer {
 			// Get the label name
 			String label = code.target;
 			BoundGraph graph = AnalyzerHelper.getCFGraph(name);
-			BasicBlock goto_blk = graph.getBasicBlock(label);
+			BoundBlock goto_blk = graph.getBasicBlock(label);
 			// Set the current blk to null blk
 			graph.setCurrentBlock(null);
 		}

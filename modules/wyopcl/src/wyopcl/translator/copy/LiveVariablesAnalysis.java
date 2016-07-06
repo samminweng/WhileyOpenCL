@@ -23,7 +23,7 @@ import wyil.lang.WyilFile;
 import wyil.util.dfa.BackwardFlowAnalysis;
 import wyopcl.Configuration;
 import wyopcl.translator.Analyzer;
-import wyopcl.translator.bound.BasicBlock;
+import wyopcl.translator.cfg.BasicBlock;
 
 /**
  * Implements Live variable analyzer to check if a register is alive or dead after a code of the function.
