@@ -42,8 +42,6 @@ public abstract class Analyzer {
 	protected Configuration config;
 	// Maps of CFGs
 	protected HashMap<FunctionOrMethod, CFGraph> cfgraphs;
-	// The boolean flag indicates the byte-code is inside loop structure.
-	private boolean isLoop;
 	// The line number
 	private int line;
 	// Wyil byte-code
@@ -86,17 +84,6 @@ public abstract class Analyzer {
 		return null;
 	}
 	
-	/**
-	 * Returns the function
-	 * 
-	 * @param name
-	 * @param type
-	 * @return
-	 */
-	/*private FunctionOrMethod getFunction(String name, Type.FunctionOrMethod type) {
-		return this.module.functionOrMethod(name, type);
-	}*/
-
 	/**
 	 * Given a function name, get the CFGraph.
 	 * 
@@ -351,13 +338,38 @@ public abstract class Analyzer {
 	 * @param function
 	 */
 	private void buildCFG(Loop code, FunctionOrMethod function) {
-		// Set the loop flag to be true,
-		// in order to identify the bytecode is inside a loop
-		isLoop = true;	
+		// Begin a loop
+		
+		// Search for loop condition
+		String loop_cond = "";
+		for(Code c: code.bytecodes()){
+			// The first if-else is the loop condition
+			if(c instanceof Codes.If){
+				// Extract the label
+				loop_cond = ((Codes.If)c).target;
+				break;
+			}
+		}
+		
+		CFGraph graph = getCFGraph(function);
+		BasicBlock c_blk = graph.getCurrentBlock();
+		// Create the loop header
+		BasicBlock loop_header = graph.createBasicBlock(loop_cond, BlockType.LOOP_HEADER, c_blk);
+		// Create the loop body and loop exit
+		BasicBlock loop_body = graph.createBasicBlock(loop_cond, BlockType.LOOP_BODY, loop_header);
+		// Set the current block to be loop body.
+		graph.setCurrentBlock(loop_body);
 		// Get the list of byte-code and iterate through the list.
 		iterateWyilCode(function, code.bytecodes());
-		// Set the flag to be false after finishing iterating all the byte-code.
-		isLoop = false;
+		// After iterating all loop byte-code, link the current block to the loop header 
+		c_blk = graph.getCurrentBlock();
+		c_blk.addChild(loop_header);
+		// Create the loop exit, and add it to the child node of loop header.
+		BasicBlock loop_exit = graph.createBasicBlock(loop_cond, BlockType.LOOP_EXIT, loop_header);
+		// Set the current block to be loop exit.
+		graph.setCurrentBlock(loop_exit);
+		
+		// Finish a loop
 
 	}
 
@@ -445,13 +457,10 @@ public abstract class Analyzer {
 		}
 
 		// Check if the 'if' bytecode is the loop condition.
-		if (isLoop) {
-			// Create a loop body and loop exit.
-			graph.createLoopStructure(code.target);
+		BasicBlock loop_body = graph.getBasicBlock(code.target, BlockType.LOOP_BODY);
+		if (loop_body!= null) {
 			// Added the condition to loop body
-			graph.getBasicBlock(code.target, BlockType.LOOP_BODY).addCode(code);
-			// Set 'isLoop' flag to be false
-			isLoop = false;
+			loop_body.addCode(code);
 		} else {
 			// Create if/else branches, and set the if branch as the current
 			// block.
