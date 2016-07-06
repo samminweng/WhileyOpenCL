@@ -383,11 +383,19 @@ public abstract class Analyzer {
 		// Get the label name
 		String label = code.target;
 		CFGraph graph = getCFGraph(function);
+		// Get current block
+		BasicBlock current_blk = graph.getCurrentBlock();
 		BasicBlock goto_blk = graph.getBasicBlock(label);
 		if (goto_blk == null) {
 			// Create a new block
 			graph.createBasicBlock(label, BlockType.BLOCK);
 		}
+		
+		if(current_blk != null){
+			// Link the current and goto blocks
+			current_blk.addChild(goto_blk);
+		}
+		
 		// Set the current blk to null blk
 		graph.setCurrentBlock(null);
 	}

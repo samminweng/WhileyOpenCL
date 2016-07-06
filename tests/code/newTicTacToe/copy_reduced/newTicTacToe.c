@@ -242,7 +242,7 @@ blklab16:;
 		//update %2.move = %22 : {int move,int[] pieces} -> {int move,int[] pieces}
 		b1->move = _22;
 		//assign %3 = %2  : {int move,int[] pieces}
-		b2 = b1;
+		b2 = copy_Board(b1);
 		//const %23 = null : null
 		_23 = NULL;
 		//assign %2 = %23  : null

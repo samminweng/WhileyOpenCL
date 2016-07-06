@@ -279,8 +279,8 @@ blklab16:;
 		b1->move = _22;
 		//assign %3 = %2  : {int move,int[] pieces}
 		_DEALLOC_STRUCT(b2, Board);
-		b2 = b1;
-		_TRANSFER_DEALLOC(b2, b1);
+		b2 = copy_Board(b1);
+		_ADD_DEALLOC(b2);
 		//const %23 = null : null
 		_23 = NULL;
 		//assign %2 = %23  : null
