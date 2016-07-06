@@ -353,15 +353,7 @@ public abstract class Analyzer {
 	private void buildCFG(Loop code, FunctionOrMethod function) {
 		// Set the loop flag to be true,
 		// in order to identify the bytecode is inside a loop
-		isLoop = true;
-
-		CFGraph graph = getCFGraph(function);
-		BasicBlock c_blk = graph.getCurrentBlock();
-
-		// Create the loop header
-		BasicBlock loop_header = graph.createBasicBlock("", BlockType.LOOP_HEADER, c_blk);
-		// Set the current block to be loop header.
-		graph.setCurrentBlock(loop_header);
+		isLoop = true;	
 		// Get the list of byte-code and iterate through the list.
 		iterateWyilCode(function, code.bytecodes());
 		// Set the flag to be false after finishing iterating all the byte-code.
@@ -458,6 +450,8 @@ public abstract class Analyzer {
 			graph.createLoopStructure(code.target);
 			// Added the condition to loop body
 			graph.getBasicBlock(code.target, BlockType.LOOP_BODY).addCode(code);
+			// Set 'isLoop' flag to be false
+			isLoop = false;
 		} else {
 			// Create if/else branches, and set the if branch as the current
 			// block.

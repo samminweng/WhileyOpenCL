@@ -196,11 +196,10 @@ public class CFGraph {
 	 *            the name of new branch.
 	 */
 	public void createLoopStructure(String new_label) {
-		
-		BasicBlock loop_header = getCurrentBlock();
-		//update the label
-		loop_header.setLabel(new_label);
-		// Check whether to add if-else blocks or loop-condition blocks.
+		BasicBlock c_blk = getCurrentBlock();
+		// Create the loop header
+		BasicBlock loop_header = createBasicBlock(new_label, BlockType.LOOP_HEADER, c_blk);
+		// Create the loop body and loop exit
 		BasicBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, loop_header);
 		BasicBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, loop_header);
 		// Connect the loop header with the loop body
@@ -210,7 +209,6 @@ public class CFGraph {
 	}
 	
 	
-
 	/**
 	 * Given a block type, get a list of blocks. 
 	 * @param blk_type
