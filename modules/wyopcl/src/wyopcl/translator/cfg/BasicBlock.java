@@ -63,29 +63,35 @@ public class BasicBlock implements Comparable<BasicBlock> {
 				return "LOOP_EXIT";
 			}
 		},
-		IF_BRANCH(7) {
+		// The condition
+		COND(7){
+			public String toString() {
+				return "CONDITION";
+			}
+		},
+		IF_BRANCH(8) {
 			public String toString() {
 				return "IF";
 			}
 		},
-		ELSE_BRANCH(8) {
+		ELSE_BRANCH(9) {
 			public String toString() {
 				return "ELSE";
 			}
 		},
 		// Store function call code only.
-		INVOKE(9){
+		INVOKE(10){
 			public String toString(){
 				return "INVOKE";
 			}
 		},
 		// Store return code only.
-		RETURN(10){
+		RETURN(11){
 			public String toString(){
 				return "RETURN";
 			}
 		},		
-		EXIT(11) {
+		EXIT(12) {
 			public String toString() {
 				return "EXIT";
 			}

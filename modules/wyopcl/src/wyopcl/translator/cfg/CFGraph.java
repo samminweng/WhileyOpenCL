@@ -181,9 +181,11 @@ public class CFGraph {
 	public void createIfElseBranch(String new_label) {
 		BasicBlock c_blk = getCurrentBlock();
 		// Branch out the block
-		// The left block does not have the name
-		BasicBlock leftBlock = createBasicBlock(new_label, BlockType.IF_BRANCH, c_blk);
-		BasicBlock rightBlock = createBasicBlock(new_label, BlockType.ELSE_BRANCH, c_blk);
+		// Create the condition block
+		BasicBlock cond = createBasicBlock(new_label, BlockType.COND, c_blk);
+		// Create if/else branch and link them to the condition block
+		BasicBlock leftBlock = createBasicBlock(new_label, BlockType.IF_BRANCH, cond);
+		BasicBlock rightBlock = createBasicBlock(new_label, BlockType.ELSE_BRANCH, cond);
 		
 		// Set the current block to the left
 		setCurrentBlock(leftBlock);

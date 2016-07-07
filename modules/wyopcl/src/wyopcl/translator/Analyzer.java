@@ -174,12 +174,15 @@ public abstract class Analyzer {
 		List<BasicBlock> blks = graph.getBlockList();
 		// Write out each block 
 		for (BasicBlock blk : blks) {
-			// Draw loop structures with grey box shape
 			if(blk.getType() == BlockType.LOOP_BODY || blk.getType() == BlockType.LOOP_HEADER
 			  || blk.getType() == BlockType.LOOP_EXIT){
+				// Draw loop structures with grey box shape
 				dot_string += "\""+ blk.getLabel() + " [" + blk.getType() + "]\""+"[shape=box,style=filled,color=\".7 .3 1.0\"];\n";
-			}else{
-				// Draw if-else branches with box shape
+			}else if(blk.getType() == BlockType.COND){
+				// Draw condition with a diamond shape
+				dot_string += "\""+ blk.getLabel() + " [" + blk.getType() + "]\""+"[shape=diamond];\n";
+			} else{
+				// Draw if-else branches with a box shape
 				dot_string += "\""+ blk.getLabel() + " [" + blk.getType() + "]\""+"[shape=box];\n";
 			}
 		}
