@@ -1,0 +1,397 @@
+Run the original CoinGame on 1000 using openmp and 2 threads...The total amount of money (maximum) Alice gets is 250000
+Pass CoinGame test case
+
+ Performance counter stats for 'out/CoinGame.original.copyreduced_dealloc.openmp.out 1000':
+
+          2.862835      task-clock (msec)         #    0.347 CPUs utilized          
+                 2      context-switches          #    0.699 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+               487      page-faults               #    0.170 M/sec                  
+        10,033,106      cycles                    #    3.505 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        21,076,001      instructions              #    2.10  insns per cycle        
+         3,535,192      branches                  # 1234.857 M/sec                  
+            11,248      branch-misses             #    0.32% of all branches        
+
+       0.008244031 seconds time elapsed
+
+The total amount of money (maximum) Alice gets is 250000
+Pass CoinGame test case
+
+ Performance counter stats for 'out/CoinGame.original.copyreduced_dealloc.openmp.out 1000':
+
+          2.815583      task-clock (msec)         #    0.441 CPUs utilized          
+                 1      context-switches          #    0.355 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+               488      page-faults               #    0.173 M/sec                  
+        10,052,022      cycles                    #    3.570 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        21,016,612      instructions              #    2.09  insns per cycle        
+         3,523,663      branches                  # 1251.486 M/sec                  
+             9,625      branch-misses             #    0.27% of all branches        
+
+       0.006383510 seconds time elapsed
+
+The total amount of money (maximum) Alice gets is 250000
+Pass CoinGame test case
+
+ Performance counter stats for 'out/CoinGame.original.copyreduced_dealloc.openmp.out 1000':
+
+          2.840435      task-clock (msec)         #    0.407 CPUs utilized          
+                 1      context-switches          #    0.352 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+               489      page-faults               #    0.172 M/sec                  
+         9,888,950      cycles                    #    3.481 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        21,063,396      instructions              #    2.13  insns per cycle        
+         3,530,409      branches                  # 1242.911 M/sec                  
+             9,831      branch-misses             #    0.28% of all branches        
+
+       0.006981961 seconds time elapsed
+
+The total amount of money (maximum) Alice gets is 250000
+Pass CoinGame test case
+
+ Performance counter stats for 'out/CoinGame.original.copyreduced_dealloc.openmp.out 1000':
+
+          3.217483      task-clock (msec)         #    0.235 CPUs utilized          
+                 1      context-switches          #    0.311 K/sec                  
+                 1      cpu-migrations            #    0.311 K/sec                  
+             1,000      page-faults               #    0.311 M/sec                  
+        11,237,531      cycles                    #    3.493 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        22,278,533      instructions              #    1.98  insns per cycle        
+         3,738,712      branches                  # 1161.999 M/sec                  
+             9,675      branch-misses             #    0.26% of all branches        
+
+       0.013690042 seconds time elapsed
+
+The total amount of money (maximum) Alice gets is 250000
+Pass CoinGame test case
+
+ Performance counter stats for 'out/CoinGame.original.copyreduced_dealloc.openmp.out 1000':
+
+          2.813928      task-clock (msec)         #    0.252 CPUs utilized          
+                 1      context-switches          #    0.355 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+               488      page-faults               #    0.173 M/sec                  
+        10,085,531      cycles                    #    3.584 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        21,064,705      instructions              #    2.09  insns per cycle        
+         3,532,228      branches                  # 1255.266 M/sec                  
+            10,498      branch-misses             #    0.30% of all branches        
+
+       0.011188513 seconds time elapsed
+
+The total amount of money (maximum) Alice gets is 250000
+Pass CoinGame test case
+
+ Performance counter stats for 'out/CoinGame.original.copyreduced_dealloc.openmp.out 1000':
+
+          2.766635      task-clock (msec)         #    0.404 CPUs utilized          
+                 1      context-switches          #    0.361 K/sec                  
+                 1      cpu-migrations            #    0.361 K/sec                  
+               488      page-faults               #    0.176 M/sec                  
+         9,915,196      cycles                    #    3.584 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        21,034,858      instructions              #    2.12  insns per cycle        
+         3,526,579      branches                  # 1274.682 M/sec                  
+             9,933      branch-misses             #    0.28% of all branches        
+
+       0.006848815 seconds time elapsed
+
+The total amount of money (maximum) Alice gets is 250000
+Pass CoinGame test case
+
+ Performance counter stats for 'out/CoinGame.original.copyreduced_dealloc.openmp.out 1000':
+
+          3.168553      task-clock (msec)         #    0.209 CPUs utilized          
+                 1      context-switches          #    0.316 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+               999      page-faults               #    0.315 M/sec                  
+        11,321,751      cycles                    #    3.573 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        22,305,115      instructions              #    1.97  insns per cycle        
+         3,741,561      branches                  # 1180.842 M/sec                  
+             9,916      branch-misses             #    0.27% of all branches        
+
+       0.015154718 seconds time elapsed
+
+The total amount of money (maximum) Alice gets is 250000
+Pass CoinGame test case
+
+ Performance counter stats for 'out/CoinGame.original.copyreduced_dealloc.openmp.out 1000':
+
+          2.817561      task-clock (msec)         #    0.393 CPUs utilized          
+                 1      context-switches          #    0.355 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+               488      page-faults               #    0.173 M/sec                  
+        10,018,304      cycles                    #    3.556 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        21,043,036      instructions              #    2.10  insns per cycle        
+         3,529,190      branches                  # 1252.569 M/sec                  
+             9,695      branch-misses             #    0.27% of all branches        
+
+       0.007174502 seconds time elapsed
+
+The total amount of money (maximum) Alice gets is 250000
+Pass CoinGame test case
+
+ Performance counter stats for 'out/CoinGame.original.copyreduced_dealloc.openmp.out 1000':
+
+          3.014079      task-clock (msec)         #    0.440 CPUs utilized          
+                 1      context-switches          #    0.332 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+               489      page-faults               #    0.162 M/sec                  
+        10,251,884      cycles                    #    3.401 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        21,046,772      instructions              #    2.05  insns per cycle        
+         3,528,831      branches                  # 1170.783 M/sec                  
+            10,553      branch-misses             #    0.30% of all branches        
+
+       0.006851897 seconds time elapsed
+
+The total amount of money (maximum) Alice gets is 250000
+Pass CoinGame test case
+
+ Performance counter stats for 'out/CoinGame.original.copyreduced_dealloc.openmp.out 1000':
+
+          2.896138      task-clock (msec)         #    0.434 CPUs utilized          
+                 1      context-switches          #    0.345 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+               488      page-faults               #    0.169 M/sec                  
+         9,933,711      cycles                    #    3.430 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        21,049,596      instructions              #    2.12  insns per cycle        
+         3,530,329      branches                  # 1218.978 M/sec                  
+             9,857      branch-misses             #    0.28% of all branches        
+
+       0.006671336 seconds time elapsed
+
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3475.304
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.16
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3475.171
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 2
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.16
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3454.851
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 4
+initial apicid	: 4
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.16
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3412.218
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 6
+initial apicid	: 6
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.16
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 4
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3752.218
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.16
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 5
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3450.734
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 3
+initial apicid	: 3
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.16
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 6
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3539.187
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 5
+initial apicid	: 5
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.16
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 7
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3403.984
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 7
+initial apicid	: 7
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.16
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+Optimize C code using OpenMP code with 2 threads...

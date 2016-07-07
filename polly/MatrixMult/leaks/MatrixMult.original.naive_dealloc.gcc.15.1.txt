@@ -1,25 +1,25 @@
-==13392== Memcheck, a memory error detector
-==13392== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==13392== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==13392== Command: ./out/MatrixMult.original.naive_dealloc.gcc.out.out 15
-==13392== Parent PID: 17128
-==13392== 
-==13392== Invalid free() / delete / delete[] / realloc()
-==13392==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==13392==    by 0x400A5B: main (MatrixMult_original.c:597)
-==13392==  Address 0x51fc0f0 is 0 bytes inside a block of size 8 free'd
-==13392==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==13392==    by 0x4009FD: main (MatrixMult_original.c:593)
-==13392== 
-==13392== 
-==13392== HEAP SUMMARY:
-==13392==     in use at exit: 0 bytes in 0 blocks
-==13392==   total heap usage: 36 allocs, 37 frees, 40,368 bytes allocated
-==13392== 
-==13392== All heap blocks were freed -- no leaks are possible
-==13392== 
-==13392== For counts of detected and suppressed errors, rerun with: -v
-==13392== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==5181== Memcheck, a memory error detector
+==5181== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==5181== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==5181== Command: ./out/MatrixMult.original.naive_dealloc.gcc.out.out 15
+==5181== Parent PID: 17128
+==5181== 
+==5181== Invalid free() / delete / delete[] / realloc()
+==5181==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5181==    by 0x400A5B: main (MatrixMult_original.c:597)
+==5181==  Address 0x51fc0f0 is 0 bytes inside a block of size 8 free'd
+==5181==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5181==    by 0x4009FD: main (MatrixMult_original.c:593)
+==5181== 
+==5181== 
+==5181== HEAP SUMMARY:
+==5181==     in use at exit: 0 bytes in 0 blocks
+==5181==   total heap usage: 36 allocs, 37 frees, 40,368 bytes allocated
+==5181== 
+==5181== All heap blocks were freed -- no leaks are possible
+==5181== 
+==5181== For counts of detected and suppressed errors, rerun with: -v
+==5181== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -27,7 +27,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3639.195
+cpu MHz		: 3896.984
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -54,7 +54,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3579.828
+cpu MHz		: 3878.789
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -81,7 +81,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3775.593
+cpu MHz		: 3811.187
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -108,7 +108,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3699.890
+cpu MHz		: 3696.171
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -135,7 +135,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3738.539
+cpu MHz		: 3892.203
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -162,7 +162,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3893.531
+cpu MHz		: 3596.164
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -189,7 +189,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3498.812
+cpu MHz		: 3803.750
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -216,7 +216,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3667.085
+cpu MHz		: 3805.078
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

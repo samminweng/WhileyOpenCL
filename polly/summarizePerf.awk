@@ -87,23 +87,21 @@ BEGIN {
 	filename=FILENAME;
 	split(filename, arr, "/");
 	split(arr[3], t_array, ".");
-
-	split(t_array[1], ti_array, "_");
 	# Test case
-	testcase=ti_array[1];
+	testcase=t_array[1];
 	# Program type
-	program= ti_array[2];
+	program= t_array[2];
 	# Codegen
-	codegen=t_array[2];
+	codegen=t_array[3];
 	# Compiler 
-	compiler=t_array[3];
+	compiler=t_array[4];
 	# Get parameter
-	parameter = t_array[4];
+	parameter = t_array[5];
 	#pause();
 	# Get threads
 	if(compiler == "openmp"){
 		# number of threads
-		thread = t_array[5];
+		thread = t_array[6];
 	}else{
 		thread = 1;
 	}

@@ -60,10 +60,11 @@ compileAndRun(){
 	parameter=$4
 	compiler=$5
 	num_threads=$6
-	####Create 'out' folder
-    rm -rf "out"
-	mkdir -p "out"
-	executable=$testcase"_"$program.$codegen.$compiler
+	####Create 'out', 'llvm' and 'assembly' folder
+    rm -rf "out" "llvm" "assembly"
+	mkdir -p "out" "llvm" "assembly"
+	### The executable file name
+	executable=$testcase.$program.$codegen.$compiler
     ### Compile C code into executables
 	case "$compiler" in
 		"gcc")
@@ -175,19 +176,18 @@ exec CoinGame original 10000
 exec CoinGame original 20000
 exec CoinGame original 30000
 exec CoinGame original 40000
-exec CoinGame original 50000
+
 exec CoinGame single 1000
 exec CoinGame single 10000
 exec CoinGame single 20000
 exec CoinGame single 30000
 exec CoinGame single 40000
-exec CoinGame single 50000
+
 exec CoinGame array 1000
 exec CoinGame array 10000
 exec CoinGame array 20000
 exec CoinGame array 30000
 exec CoinGame array 40000
-exec CoinGame array 50000
 
 ### Benchmark NQueens
 init NQueens
