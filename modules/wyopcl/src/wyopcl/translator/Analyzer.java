@@ -172,6 +172,18 @@ public abstract class Analyzer {
 		String dot_string = "digraph " + name + "{\n";
 		CFGraph graph = getCFGraph(function);
 		List<BasicBlock> blks = graph.getBlockList();
+		// Write out each block 
+		for (BasicBlock blk : blks) {
+			// Draw loop structures with grey box shape
+			if(blk.getType() == BlockType.LOOP_BODY || blk.getType() == BlockType.LOOP_HEADER
+			  || blk.getType() == BlockType.LOOP_EXIT){
+				dot_string += "\""+ blk.getLabel() + " [" + blk.getType() + "]\""+"[shape=box,style=filled,color=\".7 .3 1.0\"];\n";
+			}else{
+				// Draw if-else branches with box shape
+				dot_string += "\""+ blk.getLabel() + " [" + blk.getType() + "]\""+"[shape=box];\n";
+			}
+		}
+		// Write out the edges between two blocks
 		for (BasicBlock blk : blks) {
 			if (!blk.isLeaf()) {
 				for (BasicBlock child : blk.getChildNodes()) {
