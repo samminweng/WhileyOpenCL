@@ -85,7 +85,7 @@ public class CFGraph {
 	 * If no blocks is matched, then create a new block.
 	 * 
 	 * @param label
-	 * @return blk the matched block
+	 * @return blk the matched block. If not found, return null
 	 */
 	public BasicBlock getBasicBlock(String label) {
 		BasicBlock blk = null;
@@ -104,8 +104,9 @@ public class CFGraph {
 		if(blk != null){
 			return blk;
 		}
-		//If no blocks is found, then return/create a new block.
-		return createBasicBlock(label, BlockType.BLOCK);
+		//If no blocks is found, then return null.
+		return null;
+		//return createBasicBlock(label, BlockType.BLOCK);
 	}
 
 	/***

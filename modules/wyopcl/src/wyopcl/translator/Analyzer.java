@@ -357,6 +357,8 @@ public abstract class Analyzer {
 		BasicBlock loop_header = graph.createBasicBlock(loop_cond, BlockType.LOOP_HEADER, c_blk);
 		// Create the loop body and loop exit
 		BasicBlock loop_body = graph.createBasicBlock(loop_cond, BlockType.LOOP_BODY, loop_header);
+		// Create the loop exit, and add it to the child node of loop header.
+		BasicBlock loop_exit = graph.createBasicBlock(loop_cond, BlockType.LOOP_EXIT, loop_header);
 		// Set the current block to be loop body.
 		graph.setCurrentBlock(loop_body);
 		// Get the list of byte-code and iterate through the list.
@@ -364,8 +366,6 @@ public abstract class Analyzer {
 		// After iterating all loop byte-code, link the current block to the loop header 
 		c_blk = graph.getCurrentBlock();
 		c_blk.addChild(loop_header);
-		// Create the loop exit, and add it to the child node of loop header.
-		BasicBlock loop_exit = graph.createBasicBlock(loop_cond, BlockType.LOOP_EXIT, loop_header);
 		// Set the current block to be loop exit.
 		graph.setCurrentBlock(loop_exit);
 		
@@ -388,7 +388,7 @@ public abstract class Analyzer {
 		BasicBlock goto_blk = graph.getBasicBlock(label);
 		if (goto_blk == null) {
 			// Create a new block
-			graph.createBasicBlock(label, BlockType.BLOCK);
+			goto_blk = graph.createBasicBlock(label, BlockType.BLOCK);
 		}
 		
 		if(current_blk != null){
@@ -417,12 +417,17 @@ public abstract class Analyzer {
 		BasicBlock c_blk = graph.getCurrentBlock();
 		// Get the target block (else branch or loop exit).
 		BasicBlock blk = graph.getBasicBlock(label);
+		if(blk == null){
+			// Create a new block
+			blk = graph.createBasicBlock(label, BlockType.BLOCK);
+		}
 		// Check if target block is loop exit.
 		// If so, no needs to connect current block to target block.
-		if (c_blk != null && (blk != null && !blk.getType().equals(BlockType.LOOP_EXIT))) {
+		if (c_blk != null && !blk.getType().equals(BlockType.LOOP_EXIT)) {
 			// Add current block to the target block.
 			c_blk.addChild(blk);
 		}
+		
 		// Switch the current block to the target block
 		graph.setCurrentBlock(blk);
 
