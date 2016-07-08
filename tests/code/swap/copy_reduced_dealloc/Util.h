@@ -191,8 +191,16 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 				a##_dealloc = false;\
 		  	}\
 		})
+// Deallocate a member whose type is a structure pointer
+#define _DEALLOC_MEMBER_STRUCT(a, b, name) \
+		({\
+			if(a##_dealloc){\
+				free_##name(b);\
+				b = NULL;\
+			}\
+		})
 // Deallocate a member whose type is an array of structure pointers
-#define _DEALLOC_MEMBER_1DARRAY_STRUCT(a, b, name) \
+/*#define _DEALLOC_MEMBER_1DARRAY_STRUCT(a, b, name) \
 		({\
 			if(a##_dealloc){\
 				for(int i=0;i<b##_size;i++){\
@@ -203,14 +211,8 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 				b = NULL;\
 			}\
 		})
-// Deallocate a member whose type is a structure pointer
-#define _DEALLOC_MEMBER_STRUCT(a, b, name) \
-		({\
-			if(a##_dealloc){\
-				free_##name(b);\
-				b = NULL;\
-			}\
-		})
+*/
+
 /**
 * Deallocation Flag Macros
 *

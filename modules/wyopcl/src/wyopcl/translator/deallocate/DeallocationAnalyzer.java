@@ -556,19 +556,13 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @return
 	 */
 	public String addDeallocCode(String struct_var, String lhs, Type lhs_type, Type rhs_type, CodeStores stores) {
-		if (lhs_type instanceof Type.Array) {
-			// Get element type of array type
-			Type elm_type = stores.getArrayElementType((Type.Array) lhs_type);
-			if (stores.isCompoundType(elm_type)) {
-				// Free the lhs structure pointer
-				String struct = CodeGeneratorHelper.translateType(lhs_type, stores).replace("*", "");
-				return "_DEALLOC_MEMBER_1DARRAY_STRUCT(" + struct_var + ", " + lhs + ", " + struct + ");";	
-			}
-		}else if(lhs_type instanceof Type.Record && rhs_type instanceof Type.Record){
+		if (lhs_type instanceof Type.Array || lhs_type instanceof Type.Record){
+		 if(rhs_type instanceof Type.Record){
 			// LHS and RHS are both structures
 			String struct = CodeGeneratorHelper.translateType(rhs_type, stores).replace("*", "");
 			// Use '_DEALLOC_MEMBER_STRUCT' to forcedly release the var
 			return "_DEALLOC_MEMBER_STRUCT("+struct_var+", "+lhs+", "+ struct+");";
+		 }
 		}
 
 		return "";

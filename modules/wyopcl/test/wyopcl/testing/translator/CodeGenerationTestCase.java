@@ -78,7 +78,8 @@ public class CodeGenerationTestCase {
 				"CoinGame2",
 				"CoinGame3",
 				"CoinGame4",
-				"nqueens"
+				"nqueens",
+				"nqueens2"
 				//"lambda"
 		});
 	}
