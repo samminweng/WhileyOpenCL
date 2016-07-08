@@ -199,8 +199,10 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 				b = NULL;\
 			}\
 		})
+/*
+// Currently this marco is not used yet.
 // Deallocate a member whose type is an array of structure pointers
-/*#define _DEALLOC_MEMBER_1DARRAY_STRUCT(a, b, name) \
+#define _DEALLOC_MEMBER_1DARRAY_STRUCT(a, b, name) \
 		({\
 			if(a##_dealloc){\
 				for(int i=0;i<b##_size;i++){\
@@ -214,7 +216,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 */
 
 /**
-* Deallocation Flag Macros
+* Deallocation Flag Macros used in assignment 
 *
 */
 // Add deallocation flag for a given variable

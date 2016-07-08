@@ -1,231 +1,133 @@
-==6622== Memcheck, a memory error detector
-==6622== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==6622== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==6622== Command: ./out/GCD.cached.copyreduced_dealloc.openmp.out.out 100
-==6622== Parent PID: 17128
-==6622== 
-==6622== 
-==6622== HEAP SUMMARY:
-==6622==     in use at exit: 0 bytes in 0 blocks
-==6622==   total heap usage: 7 allocs, 7 frees, 80,376 bytes allocated
-==6622== 
-==6622== All heap blocks were freed -- no leaks are possible
-==6622== 
-==6622== For counts of detected and suppressed errors, rerun with: -v
-==6622== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==27289== Memcheck, a memory error detector
+==27289== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==27289== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==27289== Command: ./out/GCD.cached.copyreduced_dealloc.openmp.out.out 100
+==27289== Parent PID: 2537
+==27289== 
+==27289== 
+==27289== HEAP SUMMARY:
+==27289==     in use at exit: 8 bytes in 1 blocks
+==27289==   total heap usage: 10 allocs, 9 frees, 114,224 bytes allocated
+==27289== 
+==27289== LEAK SUMMARY:
+==27289==    definitely lost: 0 bytes in 0 blocks
+==27289==    indirectly lost: 0 bytes in 0 blocks
+==27289==      possibly lost: 0 bytes in 0 blocks
+==27289==    still reachable: 8 bytes in 1 blocks
+==27289==         suppressed: 0 bytes in 0 blocks
+==27289== Rerun with --leak-check=full to see details of leaked memory
+==27289== 
+==27289== For counts of detected and suppressed errors, rerun with: -v
+==27289== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 processor	: 0
-vendor_id	: GenuineIntel
-cpu family	: 6
-model		: 60
-model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
-stepping	: 3
-microcode	: 0x1c
-cpu MHz		: 3899.109
-cache size	: 8192 KB
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 96
+model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G
+stepping	: 1
+microcode	: 0x600610b
+cpu MHz		: 1400.000
+cache size	: 1024 KB
 physical id	: 0
-siblings	: 8
+siblings	: 4
 core id		: 0
-cpu cores	: 4
-apicid		: 0
+cpu cores	: 2
+apicid		: 16
 initial apicid	: 0
 fpu		: yes
 fpu_exception	: yes
 cpuid level	: 13
 wp		: yes
-flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
-bugs		:
-bogomips	: 6784.16
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb bpext mwaitx cpb hw_pstate vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bugs		: fxsave_leak sysret_ss_attrs
+bogomips	: 4192.11
+TLB size	: 1536 4K pages
 clflush size	: 64
 cache_alignment	: 64
-address sizes	: 39 bits physical, 48 bits virtual
-power management:
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate cpb eff_freq_ro [12] [13]
 
 processor	: 1
-vendor_id	: GenuineIntel
-cpu family	: 6
-model		: 60
-model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
-stepping	: 3
-microcode	: 0x1c
-cpu MHz		: 3885.828
-cache size	: 8192 KB
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 96
+model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G
+stepping	: 1
+microcode	: 0x600610b
+cpu MHz		: 2100.000
+cache size	: 1024 KB
 physical id	: 0
-siblings	: 8
+siblings	: 4
 core id		: 1
-cpu cores	: 4
-apicid		: 2
-initial apicid	: 2
-fpu		: yes
-fpu_exception	: yes
-cpuid level	: 13
-wp		: yes
-flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
-bugs		:
-bogomips	: 6784.16
-clflush size	: 64
-cache_alignment	: 64
-address sizes	: 39 bits physical, 48 bits virtual
-power management:
-
-processor	: 2
-vendor_id	: GenuineIntel
-cpu family	: 6
-model		: 60
-model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
-stepping	: 3
-microcode	: 0x1c
-cpu MHz		: 3729.773
-cache size	: 8192 KB
-physical id	: 0
-siblings	: 8
-core id		: 2
-cpu cores	: 4
-apicid		: 4
-initial apicid	: 4
-fpu		: yes
-fpu_exception	: yes
-cpuid level	: 13
-wp		: yes
-flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
-bugs		:
-bogomips	: 6784.16
-clflush size	: 64
-cache_alignment	: 64
-address sizes	: 39 bits physical, 48 bits virtual
-power management:
-
-processor	: 3
-vendor_id	: GenuineIntel
-cpu family	: 6
-model		: 60
-model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
-stepping	: 3
-microcode	: 0x1c
-cpu MHz		: 3830.843
-cache size	: 8192 KB
-physical id	: 0
-siblings	: 8
-core id		: 3
-cpu cores	: 4
-apicid		: 6
-initial apicid	: 6
-fpu		: yes
-fpu_exception	: yes
-cpuid level	: 13
-wp		: yes
-flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
-bugs		:
-bogomips	: 6784.16
-clflush size	: 64
-cache_alignment	: 64
-address sizes	: 39 bits physical, 48 bits virtual
-power management:
-
-processor	: 4
-vendor_id	: GenuineIntel
-cpu family	: 6
-model		: 60
-model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
-stepping	: 3
-microcode	: 0x1c
-cpu MHz		: 3885.164
-cache size	: 8192 KB
-physical id	: 0
-siblings	: 8
-core id		: 0
-cpu cores	: 4
-apicid		: 1
+cpu cores	: 2
+apicid		: 17
 initial apicid	: 1
 fpu		: yes
 fpu_exception	: yes
 cpuid level	: 13
 wp		: yes
-flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
-bugs		:
-bogomips	: 6784.16
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb bpext mwaitx cpb hw_pstate vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bugs		: fxsave_leak sysret_ss_attrs
+bogomips	: 4192.11
+TLB size	: 1536 4K pages
 clflush size	: 64
 cache_alignment	: 64
-address sizes	: 39 bits physical, 48 bits virtual
-power management:
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate cpb eff_freq_ro [12] [13]
 
-processor	: 5
-vendor_id	: GenuineIntel
-cpu family	: 6
-model		: 60
-model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
-stepping	: 3
-microcode	: 0x1c
-cpu MHz		: 3565.484
-cache size	: 8192 KB
+processor	: 2
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 96
+model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G
+stepping	: 1
+microcode	: 0x600610b
+cpu MHz		: 1400.000
+cache size	: 1024 KB
 physical id	: 0
-siblings	: 8
-core id		: 1
-cpu cores	: 4
-apicid		: 3
+siblings	: 4
+core id		: 2
+cpu cores	: 2
+apicid		: 18
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb bpext mwaitx cpb hw_pstate vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bugs		: fxsave_leak sysret_ss_attrs
+bogomips	: 4192.11
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate cpb eff_freq_ro [12] [13]
+
+processor	: 3
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 96
+model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G
+stepping	: 1
+microcode	: 0x600610b
+cpu MHz		: 1400.000
+cache size	: 1024 KB
+physical id	: 0
+siblings	: 4
+core id		: 3
+cpu cores	: 2
+apicid		: 19
 initial apicid	: 3
 fpu		: yes
 fpu_exception	: yes
 cpuid level	: 13
 wp		: yes
-flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
-bugs		:
-bogomips	: 6784.16
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb bpext mwaitx cpb hw_pstate vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bugs		: fxsave_leak sysret_ss_attrs
+bogomips	: 4192.11
+TLB size	: 1536 4K pages
 clflush size	: 64
 cache_alignment	: 64
-address sizes	: 39 bits physical, 48 bits virtual
-power management:
-
-processor	: 6
-vendor_id	: GenuineIntel
-cpu family	: 6
-model		: 60
-model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
-stepping	: 3
-microcode	: 0x1c
-cpu MHz		: 3708.789
-cache size	: 8192 KB
-physical id	: 0
-siblings	: 8
-core id		: 2
-cpu cores	: 4
-apicid		: 5
-initial apicid	: 5
-fpu		: yes
-fpu_exception	: yes
-cpuid level	: 13
-wp		: yes
-flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
-bugs		:
-bogomips	: 6784.16
-clflush size	: 64
-cache_alignment	: 64
-address sizes	: 39 bits physical, 48 bits virtual
-power management:
-
-processor	: 7
-vendor_id	: GenuineIntel
-cpu family	: 6
-model		: 60
-model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
-stepping	: 3
-microcode	: 0x1c
-cpu MHz		: 3615.023
-cache size	: 8192 KB
-physical id	: 0
-siblings	: 8
-core id		: 3
-cpu cores	: 4
-apicid		: 7
-initial apicid	: 7
-fpu		: yes
-fpu_exception	: yes
-cpuid level	: 13
-wp		: yes
-flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
-bugs		:
-bogomips	: 6784.16
-clflush size	: 64
-cache_alignment	: 64
-address sizes	: 39 bits physical, 48 bits virtual
-power management:
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate cpb eff_freq_ro [12] [13]
 

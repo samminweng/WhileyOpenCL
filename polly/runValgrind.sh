@@ -160,6 +160,10 @@ exec CoinGame array copyreduced_dealloc 100
 # #### NQueen test case
 init NQueens
 exec NQueens original naive 8
-exec NQueens original naive_dealloc  8
-exec NQueens original copyreduced  8
-exec NQueens original copyreduced_dealloc  8
+exec NQueens original naive_dealloc 8
+exec NQueens original copyreduced 8
+exec NQueens original copyreduced_dealloc 8
+exec NQueens integer naive 8
+exec NQueens integer naive_dealloc  8
+exec NQueens integer copyreduced  8
+exec NQueens integer copyreduced_dealloc  8
