@@ -492,7 +492,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			boolean isLive = copyAnalyzer.get().liveAnalyzer.isLive(register, code, function);
 
 			FunctionOrMethod f = this.getFunction(code.name.name());
-			int arguement = mapFunctionArgument(register, code);
+			int arguement = mapFunctionArgumentToCalleeRegister(register, code);
 			boolean isMutated = copyAnalyzer.get().readwriteAnalyzer.isMutated(arguement, f);
 			boolean isReturned = copyAnalyzer.get().returnAnalyzer.isReturned(arguement, f);
 
