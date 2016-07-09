@@ -81,37 +81,28 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 * 
 	 */
 	public boolean isCopyEliminated(int register, Code code, FunctionOrMethod function) {
-		// Special case
-		if(code instanceof Codes.FieldLoad){
-			return true; // The copies can be safely removed.
-		}
-		
-		boolean isCopyAvoided = false; // The copy is needed
 		boolean isLive = this.liveAnalyzer.isLive(register, code, function);
 
 		if (!isLive) {
-			// If the variable is NOT alive, then the copy is avoided.
-			isCopyAvoided = true;
-		} else {
-			// If the variable is alive,
-			if (code instanceof Codes.Invoke) {
-				// For a function call
-				Codes.Invoke functioncall = (Codes.Invoke) code;
-				FunctionOrMethod invoked_function = this.getFunction(functioncall.name.name());
-				if (invoked_function != null) {
-					// Map the register to function argument.
-					int argument = this.mapFunctionArgument(register, functioncall);
-					// Check if parameter is modified inside 'invoked_function'.
-					boolean isMutated = readwriteAnalyzer.isMutated(argument, invoked_function);
-					// 'r' is NOT mutated inside invoked function
-					if (!isMutated) {
-						isCopyAvoided = true;
-					}
+			// If the variable is NOT alive, then the copy can be eliminated.
+			return true;
+		}else if (code instanceof Codes.Invoke) {
+			// For a function call
+			Codes.Invoke functioncall = (Codes.Invoke) code;
+			FunctionOrMethod callee = this.getFunction(functioncall.name.name());
+			if (callee != null) {
+				// Map the register to function argument.
+				int callee_register = this.mapFunctionArgumentToCalleeRegister(register, functioncall);
+				// Check if parameter is modified inside 'invoked_function'.
+				boolean isMutated = readwriteAnalyzer.isMutated(callee_register, callee);
+				// 'r' is NOT mutated inside invoked function
+				if (!isMutated) {
+					return true;
 				}
 			}
-		}
-		
-		return isCopyAvoided;
+		} 
+		// For all the other cases, the copy must be kept.
+		return false;
 	}
 	
 	

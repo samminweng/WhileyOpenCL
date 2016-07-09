@@ -566,20 +566,20 @@ public abstract class Analyzer {
 	 * @param code
 	 * @return the register in calling function
 	 */
-	protected int mapFunctionArgument(int parameter, Codes.Invoke code) {
+	protected int mapFunctionArgumentToCalleeRegister(int parameter, Codes.Invoke code) {
 		// Map the register to input parameter.
 		int[] ops = code.operands();
 		
 		// Find out the index of passed parameter
-		int index =0;
-		while(index<ops.length){
-			if(ops[index] == parameter){
+		int register =0;
+		while(register<ops.length){
+			if(ops[register] == parameter){
 				break;
 			}
-			index++;
+			register++;
 		}
 		
-		return index;// The operand index is also the registers defined in the function.
+		return register;// The operand index is also the registers defined in the function.
 	}
 	
 	/**

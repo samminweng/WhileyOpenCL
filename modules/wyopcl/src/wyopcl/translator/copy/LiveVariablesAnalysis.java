@@ -66,13 +66,21 @@ public class LiveVariablesAnalysis extends Analyzer {
 	 */
 	public boolean isLive(int reg, Code code, FunctionOrMethod f) {
 		boolean isLive = true; // Assume the reg is alive conservatively
-
+		// Special case
+		if(code instanceof Codes.FieldLoad){
+			// The register at fieldload byte-code is used to load a specific field from a record data structure
+			// It is assumed to be NOT alive.
+			return false;
+		}
+		
 		// Check the array is live.
 		BasicBlock blk = getBlockbyCode(f, code);// Get basic block that
 													// contains the given code.
 		if (blk != null) {
 			HashSet<Integer> outSet = getLiveness(f).getOUT(blk);
 			isLive = outSet.contains(reg);
+		}else{
+			throw new RuntimeException("Block not found.");
 		}
 		return isLive;
 	}
