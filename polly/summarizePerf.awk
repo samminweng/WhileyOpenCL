@@ -64,7 +64,7 @@ BEGIN {
 	programs["MatrixMult"]="original transpose";
 	programs["GCD"]="original cached";
 	programs["CoinGame"]="original single array";
-	programs["NQueens"]="original";
+	programs["NQueens"]="original integer";
 	# Code Generation
 	codegens="copyreduced_dealloc";
 	#codegens = "naive naive_dealloc copyreduced copyreduced_dealloc";

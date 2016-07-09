@@ -200,6 +200,15 @@ exec NQueens original 10
 exec NQueens original 12
 exec NQueens original 14
 exec NQueens original 15
+exec NQueens integer 1
+exec NQueens integer 2
+exec NQueens integer 4
+exec NQueens integer 6
+exec NQueens integer 8
+exec NQueens integer 10
+exec NQueens integer 12
+exec NQueens integer 14
+exec NQueens integer 15
 
 ### Benchmark MatrixMult
 ### Original MatrixMult

@@ -4,18 +4,18 @@ Pass MatrixMult test case
 
  Performance counter stats for 'out/MatrixMult.original.copyreduced_dealloc.openmp.out 2400':
 
-       6379.601606      task-clock (msec)         #    1.979 CPUs utilized          
-                16      context-switches          #    0.003 K/sec                  
-                27      cpu-migrations            #    0.004 K/sec                  
+       6366.346462      task-clock (msec)         #    1.969 CPUs utilized          
+                12      context-switches          #    0.002 K/sec                  
+                 8      cpu-migrations            #    0.001 K/sec                  
              1,630      page-faults               #    0.256 K/sec                  
-    24,579,871,906      cycles                    #    3.853 GHz                    
+    24,405,881,468      cycles                    #    3.834 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    83,382,187,311      instructions              #    3.39  insns per cycle        
-     4,385,386,721      branches                  #  687.408 M/sec                  
-        14,112,055      branch-misses             #    0.32% of all branches        
+    83,382,231,135      instructions              #    3.42  insns per cycle        
+     4,385,416,958      branches                  #  688.844 M/sec                  
+        14,019,979      branch-misses             #    0.32% of all branches        
 
-       3.224303159 seconds time elapsed
+       3.233685764 seconds time elapsed
 
 size = 2400
 Matrix C[size-1][size-1] = 6906241200
@@ -23,56 +23,18 @@ Pass MatrixMult test case
 
  Performance counter stats for 'out/MatrixMult.original.copyreduced_dealloc.openmp.out 2400':
 
-       6479.910826      task-clock (msec)         #    1.986 CPUs utilized          
-                 9      context-switches          #    0.001 K/sec                  
-                13      cpu-migrations            #    0.002 K/sec                  
-             1,631      page-faults               #    0.252 K/sec                  
-    24,856,177,793      cycles                    #    3.836 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    83,381,519,389      instructions              #    3.35  insns per cycle        
-     4,385,300,087      branches                  #  676.753 M/sec                  
-        14,000,123      branch-misses             #    0.32% of all branches        
-
-       3.262068680 seconds time elapsed
-
-size = 2400
-Matrix C[size-1][size-1] = 6906241200
-Pass MatrixMult test case
-
- Performance counter stats for 'out/MatrixMult.original.copyreduced_dealloc.openmp.out 2400':
-
-       6327.602629      task-clock (msec)         #    1.965 CPUs utilized          
-                 6      context-switches          #    0.001 K/sec                  
-                 3      cpu-migrations            #    0.000 K/sec                  
-             1,629      page-faults               #    0.257 K/sec                  
-    24,380,961,273      cycles                    #    3.853 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    83,381,030,785      instructions              #    3.42  insns per cycle        
-     4,385,183,478      branches                  #  693.024 M/sec                  
-        13,979,415      branch-misses             #    0.32% of all branches        
-
-       3.220814741 seconds time elapsed
-
-size = 2400
-Matrix C[size-1][size-1] = 6906241200
-Pass MatrixMult test case
-
- Performance counter stats for 'out/MatrixMult.original.copyreduced_dealloc.openmp.out 2400':
-
-       7173.538820      task-clock (msec)         #    1.979 CPUs utilized          
+       6753.504114      task-clock (msec)         #    1.974 CPUs utilized          
                 10      context-switches          #    0.001 K/sec                  
-                 3      cpu-migrations            #    0.000 K/sec                  
-             1,630      page-faults               #    0.227 K/sec                  
-    27,616,729,269      cycles                    #    3.850 GHz                    
+                13      cpu-migrations            #    0.002 K/sec                  
+             1,630      page-faults               #    0.241 K/sec                  
+    25,894,291,445      cycles                    #    3.834 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    83,381,835,521      instructions              #    3.02  insns per cycle        
-     4,385,330,754      branches                  #  611.320 M/sec                  
-        14,021,240      branch-misses             #    0.32% of all branches        
+    83,381,296,230      instructions              #    3.22  insns per cycle        
+     4,385,223,398      branches                  #  649.326 M/sec                  
+        14,105,953      branch-misses             #    0.32% of all branches        
 
-       3.625223694 seconds time elapsed
+       3.421813386 seconds time elapsed
 
 size = 2400
 Matrix C[size-1][size-1] = 6906241200
@@ -80,18 +42,37 @@ Pass MatrixMult test case
 
  Performance counter stats for 'out/MatrixMult.original.copyreduced_dealloc.openmp.out 2400':
 
-       6330.327272      task-clock (msec)         #    1.969 CPUs utilized          
+       6807.056548      task-clock (msec)         #    1.985 CPUs utilized          
+                 8      context-switches          #    0.001 K/sec                  
+                 4      cpu-migrations            #    0.001 K/sec                  
+             1,630      page-faults               #    0.239 K/sec                  
+    26,223,739,052      cycles                    #    3.852 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+    83,381,339,322      instructions              #    3.18  insns per cycle        
+     4,385,241,279      branches                  #  644.220 M/sec                  
+        13,993,362      branch-misses             #    0.32% of all branches        
+
+       3.428729590 seconds time elapsed
+
+size = 2400
+Matrix C[size-1][size-1] = 6906241200
+Pass MatrixMult test case
+
+ Performance counter stats for 'out/MatrixMult.original.copyreduced_dealloc.openmp.out 2400':
+
+       6831.478127      task-clock (msec)         #    1.979 CPUs utilized          
                  8      context-switches          #    0.001 K/sec                  
                  1      cpu-migrations            #    0.000 K/sec                  
-             2,141      page-faults               #    0.338 K/sec                  
-    24,394,278,253      cycles                    #    3.854 GHz                    
+             1,630      page-faults               #    0.239 K/sec                  
+    26,218,713,841      cycles                    #    3.838 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    83,382,496,264      instructions              #    3.42  insns per cycle        
-     4,385,455,727      branches                  #  692.769 M/sec                  
-        13,974,805      branch-misses             #    0.32% of all branches        
+    83,381,607,734      instructions              #    3.18  insns per cycle        
+     4,385,313,203      branches                  #  641.927 M/sec                  
+        14,108,617      branch-misses             #    0.32% of all branches        
 
-       3.214348624 seconds time elapsed
+       3.451125997 seconds time elapsed
 
 size = 2400
 Matrix C[size-1][size-1] = 6906241200
@@ -99,18 +80,18 @@ Pass MatrixMult test case
 
  Performance counter stats for 'out/MatrixMult.original.copyreduced_dealloc.openmp.out 2400':
 
-       7112.839916      task-clock (msec)         #    1.995 CPUs utilized          
+       6322.284457      task-clock (msec)         #    1.967 CPUs utilized          
                  8      context-switches          #    0.001 K/sec                  
-                 1      cpu-migrations            #    0.000 K/sec                  
-             1,631      page-faults               #    0.229 K/sec                  
-    27,405,458,675      cycles                    #    3.853 GHz                    
+                 2      cpu-migrations            #    0.000 K/sec                  
+             1,630      page-faults               #    0.258 K/sec                  
+    24,352,790,293      cycles                    #    3.852 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    83,381,969,947      instructions              #    3.04  insns per cycle        
-     4,385,379,666      branches                  #  616.544 M/sec                  
-        14,111,175      branch-misses             #    0.32% of all branches        
+    83,380,973,325      instructions              #    3.42  insns per cycle        
+     4,385,182,828      branches                  #  693.607 M/sec                  
+        14,180,739      branch-misses             #    0.32% of all branches        
 
-       3.566186633 seconds time elapsed
+       3.214845675 seconds time elapsed
 
 size = 2400
 Matrix C[size-1][size-1] = 6906241200
@@ -118,75 +99,94 @@ Pass MatrixMult test case
 
  Performance counter stats for 'out/MatrixMult.original.copyreduced_dealloc.openmp.out 2400':
 
-       6890.605033      task-clock (msec)         #    1.980 CPUs utilized          
-                 8      context-switches          #    0.001 K/sec                  
-                 1      cpu-migrations            #    0.000 K/sec                  
-             2,141      page-faults               #    0.311 K/sec                  
-    26,521,631,563      cycles                    #    3.849 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    83,383,249,665      instructions              #    3.14  insns per cycle        
-     4,385,614,970      branches                  #  636.463 M/sec                  
-        14,021,551      branch-misses             #    0.32% of all branches        
-
-       3.479615686 seconds time elapsed
-
-size = 2400
-Matrix C[size-1][size-1] = 6906241200
-Pass MatrixMult test case
-
- Performance counter stats for 'out/MatrixMult.original.copyreduced_dealloc.openmp.out 2400':
-
-       6656.471607      task-clock (msec)         #    1.977 CPUs utilized          
-                 8      context-switches          #    0.001 K/sec                  
-                 3      cpu-migrations            #    0.000 K/sec                  
-             1,630      page-faults               #    0.245 K/sec                  
-    25,647,178,004      cycles                    #    3.853 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    83,381,598,134      instructions              #    3.25  insns per cycle        
-     4,385,314,020      branches                  #  658.805 M/sec                  
-        14,214,022      branch-misses             #    0.32% of all branches        
-
-       3.367142105 seconds time elapsed
-
-size = 2400
-Matrix C[size-1][size-1] = 6906241200
-Pass MatrixMult test case
-
- Performance counter stats for 'out/MatrixMult.original.copyreduced_dealloc.openmp.out 2400':
-
-       6527.001590      task-clock (msec)         #    1.993 CPUs utilized          
-                 8      context-switches          #    0.001 K/sec                  
-                 1      cpu-migrations            #    0.000 K/sec                  
-             1,630      page-faults               #    0.250 K/sec                  
-    25,132,962,287      cycles                    #    3.851 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    83,381,494,845      instructions              #    3.32  insns per cycle        
-     4,385,301,761      branches                  #  671.871 M/sec                  
-        13,999,736      branch-misses             #    0.32% of all branches        
-
-       3.274762786 seconds time elapsed
-
-size = 2400
-Matrix C[size-1][size-1] = 6906241200
-Pass MatrixMult test case
-
- Performance counter stats for 'out/MatrixMult.original.copyreduced_dealloc.openmp.out 2400':
-
-       6471.184903      task-clock (msec)         #    1.983 CPUs utilized          
+       6359.328552      task-clock (msec)         #    1.977 CPUs utilized          
                  6      context-switches          #    0.001 K/sec                  
-                 1      cpu-migrations            #    0.000 K/sec                  
-             1,630      page-faults               #    0.252 K/sec                  
-    24,931,740,043      cycles                    #    3.853 GHz                    
+                 2      cpu-migrations            #    0.000 K/sec                  
+             1,630      page-faults               #    0.256 K/sec                  
+    24,503,259,610      cycles                    #    3.853 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    83,381,146,905      instructions              #    3.34  insns per cycle        
-     4,385,205,971      branches                  #  677.651 M/sec                  
-        13,982,236      branch-misses             #    0.32% of all branches        
+    83,380,914,479      instructions              #    3.40  insns per cycle        
+     4,385,161,524      branches                  #  689.564 M/sec                  
+        14,035,170      branch-misses             #    0.32% of all branches        
 
-       3.263028136 seconds time elapsed
+       3.216990286 seconds time elapsed
+
+size = 2400
+Matrix C[size-1][size-1] = 6906241200
+Pass MatrixMult test case
+
+ Performance counter stats for 'out/MatrixMult.original.copyreduced_dealloc.openmp.out 2400':
+
+       6326.939906      task-clock (msec)         #    1.969 CPUs utilized          
+                 8      context-switches          #    0.001 K/sec                  
+                 1      cpu-migrations            #    0.000 K/sec                  
+             1,630      page-faults               #    0.258 K/sec                  
+    24,400,440,541      cycles                    #    3.857 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+    83,381,028,125      instructions              #    3.42  insns per cycle        
+     4,385,202,079      branches                  #  693.100 M/sec                  
+        14,052,938      branch-misses             #    0.32% of all branches        
+
+       3.213898069 seconds time elapsed
+
+size = 2400
+Matrix C[size-1][size-1] = 6906241200
+Pass MatrixMult test case
+
+ Performance counter stats for 'out/MatrixMult.original.copyreduced_dealloc.openmp.out 2400':
+
+       6310.620619      task-clock (msec)         #    1.961 CPUs utilized          
+                 8      context-switches          #    0.001 K/sec                  
+                 1      cpu-migrations            #    0.000 K/sec                  
+             1,630      page-faults               #    0.258 K/sec                  
+    24,358,983,913      cycles                    #    3.860 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+    83,380,973,575      instructions              #    3.42  insns per cycle        
+     4,385,173,396      branches                  #  694.888 M/sec                  
+        13,980,829      branch-misses             #    0.32% of all branches        
+
+       3.218480530 seconds time elapsed
+
+size = 2400
+Matrix C[size-1][size-1] = 6906241200
+Pass MatrixMult test case
+
+ Performance counter stats for 'out/MatrixMult.original.copyreduced_dealloc.openmp.out 2400':
+
+       6784.423177      task-clock (msec)         #    1.970 CPUs utilized          
+                10      context-switches          #    0.001 K/sec                  
+                 2      cpu-migrations            #    0.000 K/sec                  
+             1,630      page-faults               #    0.240 K/sec                  
+    26,119,748,659      cycles                    #    3.850 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+    83,381,162,469      instructions              #    3.19  insns per cycle        
+     4,385,180,268      branches                  #  646.360 M/sec                  
+        13,978,437      branch-misses             #    0.32% of all branches        
+
+       3.443038267 seconds time elapsed
+
+size = 2400
+Matrix C[size-1][size-1] = 6906241200
+Pass MatrixMult test case
+
+ Performance counter stats for 'out/MatrixMult.original.copyreduced_dealloc.openmp.out 2400':
+
+       7450.751229      task-clock (msec)         #    1.979 CPUs utilized          
+                10      context-switches          #    0.001 K/sec                  
+                 4      cpu-migrations            #    0.001 K/sec                  
+             1,630      page-faults               #    0.219 K/sec                  
+    28,560,465,858      cycles                    #    3.833 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+    83,381,692,147      instructions              #    2.92  insns per cycle        
+     4,385,275,280      branches                  #  588.568 M/sec                  
+        14,169,005      branch-misses             #    0.32% of all branches        
+
+       3.765521865 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -195,7 +195,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3800.828
+cpu MHz		: 3700.421
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -222,7 +222,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3895.523
+cpu MHz		: 3899.906
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -249,7 +249,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3898.312
+cpu MHz		: 3898.578
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -276,7 +276,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3764.039
+cpu MHz		: 3727.648
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -303,7 +303,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3747.171
+cpu MHz		: 3715.164
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -330,7 +330,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3464.945
+cpu MHz		: 3845.585
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -357,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3882.507
+cpu MHz		: 3884.101
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -384,7 +384,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3785.554
+cpu MHz		: 3798.570
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

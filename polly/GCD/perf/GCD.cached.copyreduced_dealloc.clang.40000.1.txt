@@ -4,18 +4,18 @@ Pass cached Euclid GCD test case
 
  Performance counter stats for 'out/GCD.cached.copyreduced_dealloc.clang.out 40000':
 
-       7877.433898      task-clock (msec)         #    1.000 CPUs utilized          
-                54      context-switches          #    0.007 K/sec                  
-                 1      cpu-migrations            #    0.000 K/sec                  
-           390,693      page-faults               #    0.050 M/sec                  
-    30,479,584,745      cycles                    #    3.869 GHz                    
+       8358.149933      task-clock (msec)         #    1.000 CPUs utilized          
+                26      context-switches          #    0.003 K/sec                  
+                 7      cpu-migrations            #    0.001 K/sec                  
+           480,118      page-faults               #    0.057 M/sec                  
+    30,688,796,501      cycles                    #    3.672 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    35,800,281,165      instructions              #    1.17  insns per cycle        
-     3,815,187,756      branches                  #  484.319 M/sec                  
-           972,157      branch-misses             #    0.03% of all branches        
+    36,625,926,981      instructions              #    1.19  insns per cycle        
+     3,957,470,488      branches                  #  473.486 M/sec                  
+         1,121,619      branch-misses             #    0.03% of all branches        
 
-       7.879513035 seconds time elapsed
+       8.359733916 seconds time elapsed
 
 N = 40000
 Sum: 12297436800
@@ -23,18 +23,18 @@ Pass cached Euclid GCD test case
 
  Performance counter stats for 'out/GCD.cached.copyreduced_dealloc.clang.out 40000':
 
-       7863.587531      task-clock (msec)         #    1.000 CPUs utilized          
-                 9      context-switches          #    0.001 K/sec                  
-                 2      cpu-migrations            #    0.000 K/sec                  
-           390,183      page-faults               #    0.050 M/sec                  
-    30,408,605,461      cycles                    #    3.867 GHz                    
+       9593.831377      task-clock (msec)         #    1.000 CPUs utilized          
+                11      context-switches          #    0.001 K/sec                  
+                 8      cpu-migrations            #    0.001 K/sec                  
+           480,118      page-faults               #    0.050 M/sec                  
+    37,127,284,503      cycles                    #    3.870 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    35,763,434,329      instructions              #    1.18  insns per cycle        
-     3,811,451,429      branches                  #  484.696 M/sec                  
-           902,422      branch-misses             #    0.02% of all branches        
+    36,620,427,036      instructions              #    0.99  insns per cycle        
+     3,955,162,634      branches                  #  412.261 M/sec                  
+         1,104,110      branch-misses             #    0.03% of all branches        
 
-       7.864985725 seconds time elapsed
+       9.596263557 seconds time elapsed
 
 N = 40000
 Sum: 12297436800
@@ -42,37 +42,18 @@ Pass cached Euclid GCD test case
 
  Performance counter stats for 'out/GCD.cached.copyreduced_dealloc.clang.out 40000':
 
-       7963.831569      task-clock (msec)         #    0.999 CPUs utilized          
-                 7      context-switches          #    0.001 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-           390,184      page-faults               #    0.049 M/sec                  
-    30,795,869,560      cycles                    #    3.867 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    35,746,633,922      instructions              #    1.16  insns per cycle        
-     3,805,854,253      branches                  #  477.892 M/sec                  
-           896,955      branch-misses             #    0.02% of all branches        
-
-       7.970865820 seconds time elapsed
-
-N = 40000
-Sum: 12297436800
-Pass cached Euclid GCD test case
-
- Performance counter stats for 'out/GCD.cached.copyreduced_dealloc.clang.out 40000':
-
-       7838.307723      task-clock (msec)         #    1.000 CPUs utilized          
+       8152.829643      task-clock (msec)         #    1.000 CPUs utilized          
                  7      context-switches          #    0.001 K/sec                  
                  1      cpu-migrations            #    0.000 K/sec                  
-           390,184      page-faults               #    0.050 M/sec                  
-    30,305,970,197      cycles                    #    3.866 GHz                    
+           480,120      page-faults               #    0.059 M/sec                  
+    31,443,489,083      cycles                    #    3.857 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    35,760,907,478      instructions              #    1.18  insns per cycle        
-     3,811,016,152      branches                  #  486.204 M/sec                  
-           903,283      branch-misses             #    0.02% of all branches        
+    36,625,122,301      instructions              #    1.16  insns per cycle        
+     3,956,977,606      branches                  #  485.350 M/sec                  
+         1,093,692      branch-misses             #    0.03% of all branches        
 
-       7.840283958 seconds time elapsed
+       8.154311760 seconds time elapsed
 
 N = 40000
 Sum: 12297436800
@@ -80,18 +61,37 @@ Pass cached Euclid GCD test case
 
  Performance counter stats for 'out/GCD.cached.copyreduced_dealloc.clang.out 40000':
 
-       7825.165906      task-clock (msec)         #    1.000 CPUs utilized          
+       8231.237222      task-clock (msec)         #    1.000 CPUs utilized          
+                 8      context-switches          #    0.001 K/sec                  
+                 1      cpu-migrations            #    0.000 K/sec                  
+           480,120      page-faults               #    0.058 M/sec                  
+    31,653,783,564      cycles                    #    3.846 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+    36,631,354,730      instructions              #    1.16  insns per cycle        
+     3,958,746,245      branches                  #  480.942 M/sec                  
+         1,101,095      branch-misses             #    0.03% of all branches        
+
+       8.233346085 seconds time elapsed
+
+N = 40000
+Sum: 12297436800
+Pass cached Euclid GCD test case
+
+ Performance counter stats for 'out/GCD.cached.copyreduced_dealloc.clang.out 40000':
+
+       8169.785024      task-clock (msec)         #    0.998 CPUs utilized          
                  8      context-switches          #    0.001 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-           390,183      page-faults               #    0.050 M/sec                  
-    30,283,314,633      cycles                    #    3.870 GHz                    
+           480,118      page-faults               #    0.059 M/sec                  
+    31,470,342,605      cycles                    #    3.852 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    35,750,436,016      instructions              #    1.18  insns per cycle        
-     3,807,335,711      branches                  #  486.550 M/sec                  
-           891,957      branch-misses             #    0.02% of all branches        
+    36,615,746,057      instructions              #    1.16  insns per cycle        
+     3,953,343,050      branches                  #  483.898 M/sec                  
+         1,098,538      branch-misses             #    0.03% of all branches        
 
-       7.828003370 seconds time elapsed
+       8.184322580 seconds time elapsed
 
 N = 40000
 Sum: 12297436800
@@ -99,18 +99,18 @@ Pass cached Euclid GCD test case
 
  Performance counter stats for 'out/GCD.cached.copyreduced_dealloc.clang.out 40000':
 
-       7831.728618      task-clock (msec)         #    1.000 CPUs utilized          
+       9529.479972      task-clock (msec)         #    1.000 CPUs utilized          
                  8      context-switches          #    0.001 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-           389,674      page-faults               #    0.050 M/sec                  
-    30,297,399,443      cycles                    #    3.869 GHz                    
+           480,118      page-faults               #    0.050 M/sec                  
+    36,731,489,859      cycles                    #    3.855 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    35,755,730,191      instructions              #    1.18  insns per cycle        
-     3,809,321,050      branches                  #  486.396 M/sec                  
-           892,151      branch-misses             #    0.02% of all branches        
+    36,627,631,668      instructions              #    1.00  insns per cycle        
+     3,957,731,076      branches                  #  415.314 M/sec                  
+         1,088,678      branch-misses             #    0.03% of all branches        
 
-       7.833328363 seconds time elapsed
+       9.532496672 seconds time elapsed
 
 N = 40000
 Sum: 12297436800
@@ -118,18 +118,18 @@ Pass cached Euclid GCD test case
 
  Performance counter stats for 'out/GCD.cached.copyreduced_dealloc.clang.out 40000':
 
-       7839.714306      task-clock (msec)         #    1.000 CPUs utilized          
+       8162.987112      task-clock (msec)         #    1.000 CPUs utilized          
                  8      context-switches          #    0.001 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-           389,671      page-faults               #    0.050 M/sec                  
-    30,282,094,604      cycles                    #    3.863 GHz                    
+           480,120      page-faults               #    0.059 M/sec                  
+    31,446,336,991      cycles                    #    3.852 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    35,758,366,413      instructions              #    1.18  insns per cycle        
-     3,810,596,729      branches                  #  486.063 M/sec                  
-           894,540      branch-misses             #    0.02% of all branches        
+    36,626,408,862      instructions              #    1.16  insns per cycle        
+     3,957,512,057      branches                  #  484.812 M/sec                  
+         1,097,583      branch-misses             #    0.03% of all branches        
 
-       7.843526676 seconds time elapsed
+       8.163566799 seconds time elapsed
 
 N = 40000
 Sum: 12297436800
@@ -137,18 +137,18 @@ Pass cached Euclid GCD test case
 
  Performance counter stats for 'out/GCD.cached.copyreduced_dealloc.clang.out 40000':
 
-       7954.553858      task-clock (msec)         #    1.000 CPUs utilized          
+       8154.322567      task-clock (msec)         #    1.000 CPUs utilized          
                  8      context-switches          #    0.001 K/sec                  
-                 2      cpu-migrations            #    0.000 K/sec                  
-           389,671      page-faults               #    0.049 M/sec                  
-    30,780,458,323      cycles                    #    3.870 GHz                    
+                 1      cpu-migrations            #    0.000 K/sec                  
+           480,120      page-faults               #    0.059 M/sec                  
+    31,500,676,481      cycles                    #    3.863 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    35,754,940,100      instructions              #    1.16  insns per cycle        
-     3,809,251,194      branches                  #  478.877 M/sec                  
-           891,279      branch-misses             #    0.02% of all branches        
+    36,615,369,904      instructions              #    1.16  insns per cycle        
+     3,953,286,981      branches                  #  484.809 M/sec                  
+         1,093,245      branch-misses             #    0.03% of all branches        
 
-       7.955613094 seconds time elapsed
+       8.155919037 seconds time elapsed
 
 N = 40000
 Sum: 12297436800
@@ -156,18 +156,18 @@ Pass cached Euclid GCD test case
 
  Performance counter stats for 'out/GCD.cached.copyreduced_dealloc.clang.out 40000':
 
-       7843.304434      task-clock (msec)         #    0.999 CPUs utilized          
+       8132.527050      task-clock (msec)         #    1.000 CPUs utilized          
                  8      context-switches          #    0.001 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-           389,672      page-faults               #    0.050 M/sec                  
-    30,275,493,543      cycles                    #    3.860 GHz                    
+           480,120      page-faults               #    0.059 M/sec                  
+    31,466,347,422      cycles                    #    3.869 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    35,748,412,316      instructions              #    1.18  insns per cycle        
-     3,806,975,222      branches                  #  485.379 M/sec                  
-           892,207      branch-misses             #    0.02% of all branches        
+    36,613,429,816      instructions              #    1.16  insns per cycle        
+     3,952,951,509      branches                  #  486.067 M/sec                  
+         1,090,494      branch-misses             #    0.03% of all branches        
 
-       7.848334030 seconds time elapsed
+       8.132923527 seconds time elapsed
 
 N = 40000
 Sum: 12297436800
@@ -175,18 +175,18 @@ Pass cached Euclid GCD test case
 
  Performance counter stats for 'out/GCD.cached.copyreduced_dealloc.clang.out 40000':
 
-       7833.719228      task-clock (msec)         #    1.000 CPUs utilized          
-                 7      context-switches          #    0.001 K/sec                  
+       8879.494506      task-clock (msec)         #    1.000 CPUs utilized          
+                 8      context-switches          #    0.001 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-           389,671      page-faults               #    0.050 M/sec                  
-    30,303,771,054      cycles                    #    3.868 GHz                    
+           480,119      page-faults               #    0.054 M/sec                  
+    34,291,084,125      cycles                    #    3.862 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    35,745,206,190      instructions              #    1.18  insns per cycle        
-     3,805,606,601      branches                  #  485.798 M/sec                  
-           894,126      branch-misses             #    0.02% of all branches        
+    36,620,728,097      instructions              #    1.07  insns per cycle        
+     3,955,222,110      branches                  #  445.433 M/sec                  
+         1,097,248      branch-misses             #    0.03% of all branches        
 
-       7.836023240 seconds time elapsed
+       8.880635103 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -195,7 +195,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3896.718
+cpu MHz		: 3810.921
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -222,7 +222,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.375
+cpu MHz		: 3884.898
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -249,7 +249,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3830.976
+cpu MHz		: 3810.789
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -276,7 +276,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3781.570
+cpu MHz		: 3510.898
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -303,7 +303,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3824.734
+cpu MHz		: 3869.359
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -330,7 +330,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3900.039
+cpu MHz		: 3899.109
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -357,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3889.812
+cpu MHz		: 3822.609
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -384,7 +384,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3810.789
+cpu MHz		: 3774.796
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
