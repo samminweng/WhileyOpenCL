@@ -270,7 +270,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.Const code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
 		String lhs = preProcessor(statement, code, function);
-		
+
 		String indent = stores.getIndent(function);
 		if (code.constant.type() instanceof Type.Null) {
 			statement.add(indent + lhs + " = NULL;");
@@ -344,10 +344,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				} else {
 					String struct = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");
 					// An array of structure pointers
-					if(isCopyEliminated){
+					if (isCopyEliminated) {
 						// Have an in-place update
-						return indent + "_UPDATE_1DARRAY("+lhs+", "+rhs+");";			
-					}else{
+						return indent + "_UPDATE_1DARRAY(" + lhs + ", " + rhs + ");";
+					} else {
 						// Copy an array of structures
 						return indent + "_COPY_1DARRAY_STRUCT(" + lhs + ", " + rhs + ", " + struct + ");";
 					}
@@ -514,8 +514,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		return false;
 	}
 
-
-
 	/**
 	 * Translate the rhs of a function call
 	 * 
@@ -525,7 +523,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	private String translateFunctionCall(HashMap<Integer, Boolean> argumentCopyEliminated, Codes.Invoke code,
 			FunctionOrMethod function) {
-		
+
 		String lhs_statement = "";
 		// Translate the lhs side of a function call.
 		// If no return value, no needs for translation.
@@ -535,13 +533,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Call the function and assign the return value to lhs register.
 			lhs_statement = indent + lhs + " = ";
 		}
-		
+
 		// Translate the rhs side of a function call
 		List<String> statement = new ArrayList<String>();
 		for (int operand : code.operands()) {
 			String parameter = stores.getVar(operand, function);
 			Type parameter_type = stores.getRawType(operand, function);
-			
+
 			// Check if the copy of function argument is needed or not
 			// And then generate the corresponding code
 			if (parameter_type instanceof Type.Nominal
@@ -577,45 +575,45 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			} else {
 				throw new RuntimeException("Not Implemented");
 			}
-			
+
 			// Append deallocation flag to the function call
 			this.deallocatedAnalyzer.ifPresent(a -> {
-				Optional<String> dealloc = 
-						a.computeDealloc(operand, code, function, stores, copyAnalyzer);
-				dealloc.ifPresent(callee_dealloc ->{
-					switch(callee_dealloc){
-						case "add_callee":
-							// Assign 'true' to callee's flag
-							statement.add("true");
+				Optional<String> dealloc = a.computeDealloc(operand, code, function, stores, copyAnalyzer);
+				dealloc.ifPresent(callee_dealloc -> {
+					switch (callee_dealloc) {
+					case "add_callee":
+						// Assign 'true' to callee's flag
+						statement.add("true");
 						break;
-						case "rm_callee":
-							statement.add("false");
+					case "rm_callee":
+						statement.add("false");
 						break;
-						case "transfer_callee":
-							statement.add(parameter+"_dealloc");
+					case "transfer_callee":
+						statement.add(parameter + "_dealloc");
 						break;
 					}
 				});
 			});
 		}
 
-		String rhs_statement = statement.stream().filter(s -> !s.equals("")).map(s -> s.toString()).collect(Collectors.joining(", "));
-		
-		// Combine lhs and rhs to the statement
-		return lhs_statement + code.name.name()+ "(" + rhs_statement + ");";
-		
-	
-	}
+		String rhs_statement = statement.stream().filter(s -> !s.equals("")).map(s -> s.toString())
+				.collect(Collectors.joining(", "));
 
+		// Combine lhs and rhs to the statement
+		return lhs_statement + code.name.name() + "(" + rhs_statement + ");";
+
+	}
 
 	/**
 	 * Added de-allocation code to release the memory of lhs register
+	 * 
 	 * @param statement
 	 * @param code
 	 * @param function
 	 * @return lhs variable
 	 */
 	private String preProcessor(List<String> statement, Code code, FunctionOrMethod function) {
+
 		String indent = stores.getIndent(function);
 		String var;
 		Type type;
@@ -625,49 +623,49 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		} else if (code instanceof Codes.Assign) {
 			var = stores.getVar(((Codes.Assign) code).target(0), function);
 			type = stores.getRawType(((Codes.Assign) code).target(0), function);
-		} else if (code instanceof Codes.Const){
-			var = stores.getVar(((Codes.Const)code).target(0), function);
-			type = stores.getRawType(((Codes.Const)code).target(0), function);
-		} else if (code instanceof Codes.FieldLoad){
-			var = stores.getVar(((Codes.FieldLoad)code).target(0), function);
-			type = stores.getRawType(((Codes.FieldLoad)code).target(0), function); 
-		} else if (code instanceof Codes.Invoke){
-			Codes.Invoke invoke = (Codes.Invoke)code;
+		} else if (code instanceof Codes.Const) {
+			var = stores.getVar(((Codes.Const) code).target(0), function);
+			type = stores.getRawType(((Codes.Const) code).target(0), function);
+		} else if (code instanceof Codes.FieldLoad) {
+			var = stores.getVar(((Codes.FieldLoad) code).target(0), function);
+			type = stores.getRawType(((Codes.FieldLoad) code).target(0), function);
+		} else if (code instanceof Codes.Invoke) {
+			Codes.Invoke invoke = (Codes.Invoke) code;
 			// Check if function call returns the values.
-			if(invoke.targets().length>0){
+			if (invoke.targets().length > 0) {
 				var = stores.getVar(invoke.target(0), function);
 				type = stores.getRawType(invoke.target(0), function);
 				if (type instanceof Type.Array) {
-					// Adds the code to propagate size variable 
+					// Adds the code to propagate size variable
 					for (int operand : invoke.operands()) {
 						Type op_type = stores.getRawType(operand, function);
 						if (op_type instanceof Type.Array) {
 							String param = stores.getVar(operand, function);
 							// Propagate the size of return array from input array.
-							statement.add(indent + "_UPDATE_" + stores.getArrayDimension(op_type) 
-							+ "DARRAY_SIZE(" + var + ", " + param + ");");
+							statement.add(indent + "_UPDATE_" + stores.getArrayDimension(op_type) + "DARRAY_SIZE(" + var
+									+ ", " + param + ");");
 						}
 					}
 				}
-			}else{
+			} else {
 				var = null;
 				type = null;
 			}
-		} else if (code instanceof Codes.NewArray){
-			var= stores.getVar(((Codes.NewArray)code).target(0), function);
-			type = stores.getRawType(((Codes.NewArray)code).target(0), function); 
-		} else if (code instanceof Codes.NewRecord){
-			var = stores.getVar(((Codes.NewRecord)code).target(0), function);
-			type = stores.getRawType(((Codes.NewRecord)code).target(0), function); 
-		} else if (code instanceof Codes.Update){
+		} else if (code instanceof Codes.NewArray) {
+			var = stores.getVar(((Codes.NewArray) code).target(0), function);
+			type = stores.getRawType(((Codes.NewArray) code).target(0), function);
+		} else if (code instanceof Codes.NewRecord) {
+			var = stores.getVar(((Codes.NewRecord) code).target(0), function);
+			type = stores.getRawType(((Codes.NewRecord) code).target(0), function);
+		} else if (code instanceof Codes.Update) {
 			// Update bytecode 'update %0.queens[%1] = %32'
-			Codes.Update update = (Codes.Update)code;
+			Codes.Update update = (Codes.Update) code;
 			Type lhs_type = stores.getRawType(update.target(0), function);
 			// Get array variable, e.g. a[i]
 			var = stores.getVar(update.target(0), function);
 			String lhs_var;
 			// Get rhs register (the last operand)
-			int rhs_register = update.operand(update.operands().length -1);
+			int rhs_register = update.operand(update.operands().length - 1);
 			Type rhs_type = stores.getRawType(rhs_register, function);
 			if (lhs_type instanceof Type.Array) {
 				lhs_var = var;
@@ -686,22 +684,21 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			} else {
 				throw new RuntimeException("Not implemented" + code);
 			}
-			
+
 			final String lhs = lhs_var;
 			// Deallocate lhs register
 			this.deallocatedAnalyzer.ifPresent(a -> {
-				statement.add(indent+ a.addDeallocCode(var, lhs, lhs_type, rhs_type, stores));
+				statement.add(indent + a.addDeallocCode(var, lhs, lhs_type, rhs_type, stores));
 			});
 
 			return lhs;
-			
+
 		} else {
 			var = null;
 			type = null;
 			throw new RuntimeException("Not implemented");
 		}
-		
-		
+
 		final String lhs = var;
 		final Type lhs_type = type;
 		// Deallocate lhs register
@@ -710,10 +707,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		});
 
 		return lhs;
+
 	}
 
 	/**
 	 * Update the set with register and generate deallocation code.
+	 * 
 	 * @param isCopyEliminated
 	 * @param register
 	 * @param statement
@@ -723,26 +722,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	private void postProcessor(boolean isCopyEliminated, int register, List<String> statement, Code code,
 			FunctionOrMethod function) {
 		// Update the set with register
-		this.copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, register, code, function));
-		
-		// Compute deallocation flag of lhs register
+		copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, register, code, function));
+
 		this.deallocatedAnalyzer.ifPresent(a -> {
-			if (code instanceof Codes.Assign) {
-				statement.addAll(a.computeDealloc(isCopyEliminated, (Codes.Assign) code, function, stores));
-			} else if (code instanceof Codes.NewArray) {
-				statement.addAll(a.computeDealloc((Codes.NewArray) code, function, stores));
-			} else if (code instanceof Codes.Const) {
-				statement.addAll(a.computeDealloc((Codes.Const) code, function, stores));
-			} else if (code instanceof Codes.ArrayGenerator) {
-				statement.addAll(a.computeDealloc((Codes.ArrayGenerator) code, function, stores));
-			} else if (code instanceof Codes.Update) {
-				statement.addAll(a.computeDealloc((Codes.Update) code, function, stores));
-			} else if (code instanceof Codes.IndexOf){
-				statement.addAll(a.computeDealloc((Codes.IndexOf) code, function, stores));
-			} else if(code instanceof Codes.FieldLoad) {
-				statement.addAll(a.computeDealloc(isCopyEliminated, (Codes.FieldLoad)code, function, stores));
-			}
+			a.postProcessor(isCopyEliminated, register, statement, code, function, stores);
 		});
+		
 	}
 
 	/**
@@ -758,23 +743,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			FunctionOrMethod function) {
 
 		// Iterate copy elimination set and update read-write/return set
-		if (this.copyAnalyzer.isPresent()) {
+		if (copyAnalyzer.isPresent()) {
 			argumentCopyEliminated.entrySet().forEach(entry -> {
 				boolean isCopyEliminated = entry.getValue();
 				int register = entry.getKey();
-				this.copyAnalyzer.get().updateSet(isCopyEliminated, register, code, function);
+				copyAnalyzer.get().updateSet(isCopyEliminated, register, code, function);
 			});
 		}
 
-		// Compute deallocation flag of lhs register
 		this.deallocatedAnalyzer.ifPresent(a -> {
-			if (code instanceof Codes.NewRecord) {
-				statement.addAll(a.computeDealloc((Codes.NewRecord) code, function, stores, argumentCopyEliminated));
-			} else if (code instanceof Codes.Invoke) {
-				statement.addAll(a.computeDealloc((Codes.Invoke) code, function, stores));
-			}
+			a.postProcessor(argumentCopyEliminated, statement, code, function, stores);
 		});
-
 	}
 
 	/**
@@ -861,19 +840,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		} else {
 			// De-allocate lhs register
 			preProcessor(statement, code, function);
-		
+
 			// call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
 			statement.add(translateFunctionCall(argumentCopyEliminated, code, function));
-			
-			// If the copy is not made and the parameter is transferred to callee, 
+
+			// If the copy is not made and the parameter is transferred to callee,
 			// then remove deallocation flags of the parameters.
 			this.deallocatedAnalyzer.ifPresent(a -> {
 				statement.addAll(a.computeDealloc(code, function, stores, copyAnalyzer));
 			});
 		}
-		
+
 		postProcessor(argumentCopyEliminated, statement, code, function);
-		
+
 		// add the statement
 		stores.addAllStatements(code, statement, function);
 	}
@@ -967,7 +946,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 		} else {
 			statement.add(indent + "if(" + lhs
-					// The condition
+			// The condition
 					+ translate(code.op, false) + rhs
 					// The goto statement
 					+ "){" + "goto " + code.target + ";" + "}");
@@ -1046,8 +1025,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Translates the update byte-code into C code, and removes the deallocation flag of rhs variable (a[i] = b; b_dealloc
-	 * = false;) For example,
+	 * Translates the update byte-code into C code, and removes the deallocation flag of rhs variable (a[i] = b;
+	 * b_dealloc = false;) For example,
 	 * 
 	 * <pre>
 	 * <code>
@@ -1075,9 +1054,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.Update code, FunctionOrMethod function) {
 		String indent = stores.getIndent(function);
-		List<String> statement = new ArrayList<String>();	
+		List<String> statement = new ArrayList<String>();
 		String lhs = preProcessor(statement, code, function);
-		
+
 		// Generate update statement, e.g. a[i] = b
 		statement.add(indent + lhs + " = " + stores.getVar(code.result(), function) + ";");
 		boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
@@ -1228,7 +1207,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Get array names
 		String lhs = stores.getVar(code.target(0), function);
 		int length = code.operands().length;
-		if (length > 0) {	
+		if (length > 0) {
 			statement.add(indent + "_NEW_1DARRAY(" + lhs + ", " + length + ", 0);");
 			String s = indent;
 			// Initialize the array
@@ -1284,15 +1263,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			boolean isCopyEliminated;// The copy is NOT needed by default.
 			if (field.equals("args")) {
 				// Convert the arguments into an array of integer array (long long**).
-				statement.add(stores.getIndent(function) + "_CONV_ARGS(" + stores.getVar(code.target(0), function) + ");");
+				statement.add(
+						stores.getIndent(function) + "_CONV_ARGS(" + stores.getVar(code.target(0), function) + ");");
 				isCopyEliminated = false;
 			} else {
 				Type lhs_type = stores.getRawType(code.target(0), function);
 				String rhs = stores.getVar(code.operand(0), function) + "->" + code.field;
 				isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
 				// Generate copy/uncopy assignment code
-				statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, stores.getIndent(function), stores.getVar(code.target(0), function), rhs,
-						isCopyEliminated, stores));
+				statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, stores.getIndent(function),
+						stores.getVar(code.target(0), function), rhs, isCopyEliminated, stores));
 			}
 			postProcessor(isCopyEliminated, code.operand(0), statement, code, function);
 		}
@@ -1449,7 +1429,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		List<String> statement = new ArrayList<String>();
 		// Add deallocation code to lhs structure
 		preProcessor(statement, code, function);
-		
+
 		String indent = stores.getIndent(function);
 		String lhs = stores.getVar(code.target(0), function);
 		Type lhs_type = stores.getRawType(code.target(0), function);
@@ -1468,12 +1448,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String member = members.get(i);
 			String lhs_member = lhs + "->" + member;
 			Type member_type = stores.getRawType(register, function);
-			//Type type = code.type(0).field(member);
+			// Type type = code.type(0).field(member);
 			boolean isCopyEliminated = isCopyEliminated(register, code, function);
 			copyEliminatedMap.put(register, isCopyEliminated);
 
-			statement.addAll(CodeGeneratorHelper.generateAssignmentCode(member_type, indent, lhs_member, rhs, isCopyEliminated,
-					stores));
+			statement.addAll(CodeGeneratorHelper.generateAssignmentCode(member_type, indent, lhs_member, rhs,
+					isCopyEliminated, stores));
 		}
 
 		postProcessor(copyEliminatedMap, statement, code, function);
@@ -1625,12 +1605,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		boolean isCopyEliminated;
 		if (stores.isIntType(elm_type)) {
 			// Generate an array with given size and values.
-			statement.add(indent + "_NEW_" + stores.getArrayDimension(lhs_type) + "DARRAY(" + lhs + ", " + size + ", " + rhs + ");");
+			statement.add(indent + "_NEW_" + stores.getArrayDimension(lhs_type) + "DARRAY(" + lhs + ", " + size + ", "
+					+ rhs + ");");
 			isCopyEliminated = true;
 		} else {
 			// Generate an array of structures
 			String struct = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");
-			statement.add(indent + "_NEW_1DARRAY_STRUCT("+lhs +", "+size+", "+ rhs+ ", "+struct+");");
+			statement.add(indent + "_NEW_1DARRAY_STRUCT(" + lhs + ", " + size + ", " + rhs + ", " + struct + ");");
 			isCopyEliminated = false;
 		}
 

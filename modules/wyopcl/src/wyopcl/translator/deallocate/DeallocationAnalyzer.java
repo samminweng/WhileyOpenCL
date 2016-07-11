@@ -104,7 +104,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeDealloc(Codes.Invoke code, FunctionOrMethod function, CodeStores stores) {
+	private List<String> computeDealloc(Codes.Invoke code, FunctionOrMethod function, CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
 
@@ -144,7 +144,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeDealloc(Codes.ArrayGenerator code, FunctionOrMethod function, CodeStores stores) {
+	private List<String> computeDealloc(Codes.ArrayGenerator code, FunctionOrMethod function, CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
 
@@ -164,7 +164,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeDealloc(Codes.Const code, FunctionOrMethod function, CodeStores stores) {
+	private List<String> computeDealloc(Codes.Const code, FunctionOrMethod function, CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
 
@@ -192,7 +192,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeDealloc(Codes.NewArray code, FunctionOrMethod function, CodeStores stores) {
+	private List<String> computeDealloc(Codes.NewArray code, FunctionOrMethod function, CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
 		int lhs = code.target(0);
@@ -212,7 +212,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeDealloc(Codes.NewRecord code, FunctionOrMethod function, CodeStores stores,
+	private List<String> computeDealloc(Codes.NewRecord code, FunctionOrMethod function, CodeStores stores,
 			HashMap<Integer, Boolean> argumentCopyEliminated) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
@@ -241,7 +241,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeDealloc(boolean isCopyEliminated, Codes.Assign code, FunctionOrMethod function,
+	private List<String> computeDealloc(boolean isCopyEliminated, Codes.Assign code, FunctionOrMethod function,
 			CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
@@ -279,7 +279,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeDealloc(Codes.Update code, FunctionOrMethod function, CodeStores stores) {
+	private List<String> computeDealloc(Codes.Update code, FunctionOrMethod function, CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
 
@@ -299,7 +299,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeDealloc(Codes.IndexOf code, FunctionOrMethod function, CodeStores stores) {
+	private List<String> computeDealloc(Codes.IndexOf code, FunctionOrMethod function, CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
 
@@ -317,7 +317,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public List<String> computeDealloc(boolean isCopyEliminated, Codes.FieldLoad code, FunctionOrMethod function,
+	private List<String> computeDealloc(boolean isCopyEliminated, Codes.FieldLoad code, FunctionOrMethod function,
 			CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
@@ -397,7 +397,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param var
 	 * @return
 	 */
-	protected String addDealloc(int register, FunctionOrMethod function, CodeStores stores) {
+	private String addDealloc(int register, FunctionOrMethod function, CodeStores stores) {
 		Type type = stores.getRawType(register, function);
 		if (stores.isCompoundType(type) || type instanceof Type.Union) {
 			String var = stores.getVar(register, function);
@@ -412,7 +412,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param reg
 	 * @param function
 	 */
-	protected String removeDealloc(int register, FunctionOrMethod function, CodeStores stores) {
+	private String removeDealloc(int register, FunctionOrMethod function, CodeStores stores) {
 		Type type = stores.getRawType(register, function);
 		if (stores.isCompoundType(type) || type instanceof Type.Union) {
 			String var = stores.getVar(register, function);
@@ -439,7 +439,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 *            register
 	 * @param function
 	 */
-	protected String transferDealloc(int lhs, int rhs, FunctionOrMethod function, CodeStores stores) {
+	private String transferDealloc(int lhs, int rhs, FunctionOrMethod function, CodeStores stores) {
 		Type type = stores.getRawType(lhs, function);
 		if (stores.isCompoundType(type) || type instanceof Type.Union) {
 			String lhs_var = stores.getVar(lhs, function);
@@ -468,16 +468,19 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * 
 	 * where 'caller' is the deallocation flag of caller site 'callee' is the deallocation flag of callee site
 	 * 
-	 * @param register function argument
-	 * @param code function call byte-code
-	 * @param function caller function
-	 * @param stores code stores
+	 * @param register
+	 *            function argument
+	 * @param code
+	 *            function call byte-code
+	 * @param function
+	 *            caller function
+	 * @param stores
+	 *            code stores
 	 * @param copyAnalyzer
 	 * @return three outcomes: 'rm_callee', 'add_callee' and 'transfer_callee'
 	 * 
-	 *  'rm_callee': set callee flag to be 'false'
-	 *  'add_callee': set callee flag to be 'true'
-	 *  'transfer_callee': transfers caller's flag to callee, and after the function call, set caller flag to be 'false'
+	 *         'rm_callee': set callee flag to be 'false' 'add_callee': set callee flag to be 'true' 'transfer_callee':
+	 *         transfers caller's flag to callee, and after the function call, set caller flag to be 'false'
 	 * 
 	 */
 	public Optional<String> computeDealloc(int register, Codes.Invoke code, FunctionOrMethod function,
@@ -556,13 +559,13 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @return
 	 */
 	public String addDeallocCode(String struct_var, String lhs, Type lhs_type, Type rhs_type, CodeStores stores) {
-		if (lhs_type instanceof Type.Array || lhs_type instanceof Type.Record){
-		 if(rhs_type instanceof Type.Record){
-			// LHS and RHS are both structures
-			String struct = CodeGeneratorHelper.translateType(rhs_type, stores).replace("*", "");
-			// Use '_DEALLOC_MEMBER_STRUCT' to forcedly release the var
-			return "_DEALLOC_MEMBER_STRUCT("+struct_var+", "+lhs+", "+ struct+");";
-		 }
+		if (lhs_type instanceof Type.Array || lhs_type instanceof Type.Record) {
+			if (rhs_type instanceof Type.Record) {
+				// LHS and RHS are both structures
+				String struct = CodeGeneratorHelper.translateType(rhs_type, stores).replace("*", "");
+				// Use '_DEALLOC_MEMBER_STRUCT' to forcedly release the var
+				return "_DEALLOC_MEMBER_STRUCT(" + struct_var + ", " + lhs + ", " + struct + ");";
+			}
 		}
 
 		return "";
@@ -631,6 +634,58 @@ public class DeallocationAnalyzer extends Analyzer {
 		} else {
 			throw new RuntimeException("Not implemented");
 		}
+	}
+
+	
+
+	/**
+	 * Generate Post-deallocation code.
+	 * 
+	 * @param isCopyEliminated
+	 * @param register
+	 * @param statement
+	 * @param code
+	 * @param function
+	 */
+	public void postProcessor(boolean isCopyEliminated, int register, List<String> statement, Code code,
+			FunctionOrMethod function, CodeStores stores) {
+		
+		// Compute deallocation flag of lhs register
+		if (code instanceof Codes.Assign) {
+			statement.addAll(computeDealloc(isCopyEliminated, (Codes.Assign) code, function, stores));
+		} else if (code instanceof Codes.NewArray) {
+			statement.addAll(computeDealloc((Codes.NewArray) code, function, stores));
+		} else if (code instanceof Codes.Const) {
+			statement.addAll(computeDealloc((Codes.Const) code, function, stores));
+		} else if (code instanceof Codes.ArrayGenerator) {
+			statement.addAll(computeDealloc((Codes.ArrayGenerator) code, function, stores));
+		} else if (code instanceof Codes.Update) {
+			statement.addAll(computeDealloc((Codes.Update) code, function, stores));
+		} else if (code instanceof Codes.IndexOf) {
+			statement.addAll(computeDealloc((Codes.IndexOf) code, function, stores));
+		} else if (code instanceof Codes.FieldLoad) {
+			statement.addAll(computeDealloc(isCopyEliminated, (Codes.FieldLoad) code, function, stores));
+		}
+	}
+
+	/**
+	 * Generate the post-deallocation code
+	 * 
+	 * @param isCopyEliminated
+	 * @param argumentCopyEliminated
+	 * @param statement
+	 * @param code
+	 * @param function
+	 */
+	public void postProcessor(HashMap<Integer, Boolean> argumentCopyEliminated, List<String> statement, Code code,
+			FunctionOrMethod function, CodeStores stores) {
+		// Compute deallocation flag of lhs register
+		if (code instanceof Codes.NewRecord) {
+			statement.addAll(computeDealloc((Codes.NewRecord) code, function, stores, argumentCopyEliminated));
+		} else if (code instanceof Codes.Invoke) {
+			statement.addAll(computeDealloc((Codes.Invoke) code, function, stores));
+		}
+
 	}
 
 	@Override

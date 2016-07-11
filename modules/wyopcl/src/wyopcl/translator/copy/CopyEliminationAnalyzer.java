@@ -21,7 +21,7 @@ import wyopcl.translator.ReturnAnalyzer;
  * @author Min-Hsien Weng
  *
  */
-public class CopyEliminationAnalyzer extends Analyzer {	
+public class CopyEliminationAnalyzer extends Analyzer {
 	// Perform read-write checks
 	public ReadWriteAnalyzer readwriteAnalyzer;
 	// Perform return checks
@@ -37,7 +37,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		this.readwriteAnalyzer = new ReadWriteAnalyzer(config);
 		this.returnAnalyzer = new ReturnAnalyzer(config);
 		this.liveAnalyzer = new LiveVariablesAnalysis(config);
-		
+
 	}
 
 	/**
@@ -52,21 +52,18 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		this.readwriteAnalyzer.apply(module);
 		this.returnAnalyzer.apply(module);
 		this.liveAnalyzer.apply(module);
-		if(this.config.isVerbose()){
+		if (this.config.isVerbose()) {
 			// Iterate each function to determine if copies are needed.
 			postorderTraversalCallGraph(tree);
 		}
 	}
 
 	/**
-	 * Determines whether to make a copy of array using liveness information and mutability property.
-	 * Rules are as below:
+	 * Determines whether to make a copy of array using liveness information and mutability property. Rules are as
+	 * below:
 	 * 
-	 * f mutates b?	   |F	   |F		|T		|T
-	 * f returns b?    |F	   |T		|T		|F
-	 * ----------------------------------------------
-	 * b is live?   T  |No Copy|No Copy |Copy	|Copy
-	 * 				F  |No Copy|No Copy |No Copy|No Copy
+	 * f mutates b? |F |F |T |T f returns b? |F |T |T |F ---------------------------------------------- b is live? T |No
+	 * Copy|No Copy |Copy |Copy F |No Copy|No Copy |No Copy|No Copy
 	 * 
 	 * 
 	 * @param register
@@ -77,35 +74,37 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 *            the caller function
 	 * @return ture if the copy is un-needed and can be avoid. Otherwise, return false.
 	 * 
-	 * Note that The copies are not needed by default in some special forms of byte-code ('FieldLoad')
+	 *         Note that The copies are not needed by default in some special forms of byte-code ('FieldLoad')
 	 * 
 	 */
 	public boolean isCopyEliminated(int register, Code code, FunctionOrMethod function) {
 		boolean isLive = this.liveAnalyzer.isLive(register, code, function);
 
 		if (!isLive) {
-			// If the variable is NOT alive, then the copy can be eliminated.
+			// The register is NOT alive, and thus the copy can be eliminated.
 			return true;
-		}else if (code instanceof Codes.Invoke) {
-			// For a function call
-			Codes.Invoke functioncall = (Codes.Invoke) code;
-			FunctionOrMethod callee = this.getFunction(functioncall.name.name());
-			if (callee != null) {
-				// Map the register to function argument.
-				int callee_register = this.mapFunctionArgumentToCalleeRegister(register, functioncall);
-				// Check if parameter is modified inside 'invoked_function'.
-				boolean isMutated = readwriteAnalyzer.isMutated(callee_register, callee);
-				// 'r' is NOT mutated inside invoked function
-				if (!isMutated) {
-					return true;
+		} else {
+			// The register is alive
+			if (code instanceof Codes.Invoke) {
+				// Special case for a function call
+				Codes.Invoke functioncall = (Codes.Invoke) code;
+				FunctionOrMethod callee = this.getFunction(functioncall.name.name());
+				if (callee != null) {
+					// Map the register to function argument.
+					int callee_register = this.mapFunctionArgumentToCalleeRegister(register, functioncall);
+					// Check if parameter is modified inside 'invoked_function'.
+					boolean isMutated = readwriteAnalyzer.isMutated(callee_register, callee);
+					// 'r' is NOT mutated inside invoked function
+					if (!isMutated) {
+						return true;
+					}
 				}
 			}
-		} 
+		}
 		// For all the other cases, the copy must be kept.
 		return false;
 	}
-	
-	
+
 	/**
 	 * Update the read-write set due to changes to the copy of rhs register
 	 * 
@@ -113,7 +112,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 * @param code
 	 * @param function
 	 */
-	public void updateSet(boolean isCopyAvoided, int register, Code code, FunctionOrMethod function){
+	public void updateSet(boolean isCopyAvoided, int register, Code code, FunctionOrMethod function) {
 		// Based on the copy analysis results, update the readwrite set.
 		this.readwriteAnalyzer.updateSet(isCopyAvoided, register, code, function);
 		this.returnAnalyzer.updateSet(isCopyAvoided, register, code, function);
@@ -123,11 +122,11 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	protected void visit(DefaultMutableTreeNode node) {
 		String name = (String) node.getUserObject();
 		FunctionOrMethod function = (FunctionOrMethod) this.getFunction(name);
-		if(function != null){
+		if (function != null) {
 			// Analyze whether the copy is need for each byte-code
-			for(Code code:function.body().bytecodes()){
-				if(code instanceof Codes.Assign){
-					int rhs = ((Codes.Assign)code).operand(0);
+			for (Code code : function.body().bytecodes()) {
+				if (code instanceof Codes.Assign) {
+					int rhs = ((Codes.Assign) code).operand(0);
 					boolean isCopyEliminated = isCopyEliminated(rhs, code, function);
 				}
 			}
