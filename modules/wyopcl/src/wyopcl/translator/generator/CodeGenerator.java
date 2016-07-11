@@ -605,6 +605,40 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
+	 * Get the LHS register for an update byte-code
+	 * 
+	 * @param code
+	 * @param function
+	 * @return
+	 */
+	private String extractLHSVar(Codes.Update code, FunctionOrMethod function) {
+		String lhs = null;
+		// Get array variable, e.g. a[i]
+		String struct_var = stores.getVar(code.target(0), function);
+		// Get lhs type
+		Type struct_type = stores.getRawType(code.target(0), function);
+		if (struct_type instanceof Type.Array) {
+			lhs = struct_var;
+			// Iterates operands to increase the depths.
+			for (int i = 0; i < code.operands().length - 1; i++) {
+				lhs += "[" + stores.getVar(code.operand(i), function) + "]";
+			}
+		} else if (struct_type instanceof Type.Record || struct_type instanceof Type.Union) {
+			lhs = struct_var;
+			String member = code.fields.get(0);
+			lhs += "->" + member;
+			// check if there are two or more operands. If so, then add 'index' operand.
+			if (code.operands().length > 1) {
+				lhs += "[" + stores.getVar(code.operand(0), function) + "]";
+			}
+		} else {
+			throw new RuntimeException("Not implemented" + code);
+		}
+		
+		return lhs;
+	}
+
+	/**
 	 * Added de-allocation code to release the memory of lhs register
 	 * 
 	 * @param statement
@@ -615,99 +649,73 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	private String preProcessor(List<String> statement, Code code, FunctionOrMethod function) {
 
 		String indent = stores.getIndent(function);
-		String var;
-		Type type;
-		if (code instanceof Codes.ArrayGenerator) {
-			var = stores.getVar(((Codes.ArrayGenerator) code).target(0), function);
-			type = ((Codes.ArrayGenerator) code).type(0);
-		} else if (code instanceof Codes.Assign) {
-			var = stores.getVar(((Codes.Assign) code).target(0), function);
-			type = stores.getRawType(((Codes.Assign) code).target(0), function);
-		} else if (code instanceof Codes.Const) {
-			var = stores.getVar(((Codes.Const) code).target(0), function);
-			type = stores.getRawType(((Codes.Const) code).target(0), function);
-		} else if (code instanceof Codes.FieldLoad) {
-			var = stores.getVar(((Codes.FieldLoad) code).target(0), function);
-			type = stores.getRawType(((Codes.FieldLoad) code).target(0), function);
-		} else if (code instanceof Codes.Invoke) {
-			Codes.Invoke invoke = (Codes.Invoke) code;
-			// Check if function call returns the values.
-			if (invoke.targets().length > 0) {
-				var = stores.getVar(invoke.target(0), function);
-				type = stores.getRawType(invoke.target(0), function);
-				if (type instanceof Type.Array) {
-					// Adds the code to propagate size variable
-					for (int operand : invoke.operands()) {
-						Type op_type = stores.getRawType(operand, function);
-						if (op_type instanceof Type.Array) {
-							String param = stores.getVar(operand, function);
-							// Propagate the size of return array from input array.
-							statement.add(indent + "_UPDATE_" + stores.getArrayDimension(op_type) + "DARRAY_SIZE(" + var
-									+ ", " + param + ");");
-						}
-					}
-				}
-			} else {
-				var = null;
-				type = null;
-			}
-		} else if (code instanceof Codes.NewArray) {
-			var = stores.getVar(((Codes.NewArray) code).target(0), function);
-			type = stores.getRawType(((Codes.NewArray) code).target(0), function);
-		} else if (code instanceof Codes.NewRecord) {
-			var = stores.getVar(((Codes.NewRecord) code).target(0), function);
-			type = stores.getRawType(((Codes.NewRecord) code).target(0), function);
-		} else if (code instanceof Codes.Update) {
+		if (code instanceof Codes.Update) {
 			// Update bytecode 'update %0.queens[%1] = %32'
 			Codes.Update update = (Codes.Update) code;
-			Type lhs_type = stores.getRawType(update.target(0), function);
-			// Get array variable, e.g. a[i]
-			var = stores.getVar(update.target(0), function);
-			String lhs_var;
-			// Get rhs register (the last operand)
-			int rhs_register = update.operand(update.operands().length - 1);
-			Type rhs_type = stores.getRawType(rhs_register, function);
-			if (lhs_type instanceof Type.Array) {
-				lhs_var = var;
-				// Iterates operands to increase the depths.
-				for (int i = 0; i < update.operands().length - 1; i++) {
-					lhs_var += "[" + stores.getVar(update.operand(i), function) + "]";
-				}
-			} else if (lhs_type instanceof Type.Record || lhs_type instanceof Type.Union) {
-				lhs_var = var;
-				String member = update.fields.get(0);
-				lhs_var += "->" + member;
-				// check if there are two or more operands. If so, then add 'index' operand.
-				if (update.operands().length > 1) {
-					lhs_var += "[" + stores.getVar(update.operand(0), function) + "]";
-				}
-			} else {
-				throw new RuntimeException("Not implemented" + code);
-			}
-
-			final String lhs = lhs_var;
+			final String lhs = extractLHSVar(update, function);
 			// Deallocate lhs register
 			this.deallocatedAnalyzer.ifPresent(a -> {
-				statement.add(indent + a.addDeallocCode(var, lhs, lhs_type, rhs_type, stores));
+				statement.add(indent + a.preDealloc(lhs, update, function, stores));
 			});
 
 			return lhs;
 
-		} else {
-			var = null;
-			type = null;
-			throw new RuntimeException("Not implemented");
+		} else{
+			String lhs;
+			Type type = null;
+			if (code instanceof Codes.ArrayGenerator) {
+				lhs = stores.getVar(((Codes.ArrayGenerator) code).target(0), function);
+				type = ((Codes.ArrayGenerator) code).type(0);
+			} else if (code instanceof Codes.Assign) {
+				lhs = stores.getVar(((Codes.Assign) code).target(0), function);
+				type = stores.getRawType(((Codes.Assign) code).target(0), function);
+			} else if (code instanceof Codes.Const) {
+				lhs = stores.getVar(((Codes.Const) code).target(0), function);
+				type = stores.getRawType(((Codes.Const) code).target(0), function);
+			} else if (code instanceof Codes.FieldLoad) {
+				lhs = stores.getVar(((Codes.FieldLoad) code).target(0), function);
+				type = stores.getRawType(((Codes.FieldLoad) code).target(0), function);
+			} else if (code instanceof Codes.Invoke) {
+				Codes.Invoke invoke = (Codes.Invoke) code;
+				// Check if function call returns the values.
+				if (invoke.targets().length > 0) {
+					lhs = stores.getVar(invoke.target(0), function);
+					type = stores.getRawType(invoke.target(0), function);
+					if (type instanceof Type.Array) {
+						// Adds the code to propagate size variable
+						for (int operand : invoke.operands()) {
+							Type op_type = stores.getRawType(operand, function);
+							if (op_type instanceof Type.Array) {
+								String param = stores.getVar(operand, function);
+								// Propagate the size of return array from input array.
+								statement.add(indent + "_UPDATE_" + stores.getArrayDimension(op_type) + "DARRAY_SIZE(" + lhs
+										+ ", " + param + ");");
+							}
+						}
+					}
+				}else{
+					lhs = null;
+				}
+			} else if (code instanceof Codes.NewArray) {
+				lhs = stores.getVar(((Codes.NewArray) code).target(0), function);
+				type = stores.getRawType(((Codes.NewArray) code).target(0), function);
+			} else if (code instanceof Codes.NewRecord) {
+				lhs = stores.getVar(((Codes.NewRecord) code).target(0), function);
+				type = stores.getRawType(((Codes.NewRecord) code).target(0), function);
+			} else {
+				lhs = null;
+				throw new RuntimeException("Not implemented");
+			}
+
+			final Type lhs_type = type;
+			// Deallocate lhs register
+			this.deallocatedAnalyzer.ifPresent(a -> {
+				statement.add(indent + a.preDealloc(lhs, lhs_type, stores));
+			});
+
+			return lhs;
 		}
-
-		final String lhs = var;
-		final Type lhs_type = type;
-		// Deallocate lhs register
-		this.deallocatedAnalyzer.ifPresent(a -> {
-			statement.add(indent + a.addDeallocCode(lhs, lhs_type, stores));
-		});
-
-		return lhs;
-
+		
 	}
 
 	/**
@@ -725,9 +733,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, register, code, function));
 
 		this.deallocatedAnalyzer.ifPresent(a -> {
-			a.postProcessor(isCopyEliminated, register, statement, code, function, stores);
+			a.postDealloc(isCopyEliminated, register, statement, code, function, stores);
 		});
-		
+
 	}
 
 	/**
@@ -752,7 +760,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 
 		this.deallocatedAnalyzer.ifPresent(a -> {
-			a.postProcessor(argumentCopyEliminated, statement, code, function, stores);
+			a.postDealloc(argumentCopyEliminated, statement, code, function, stores);
 		});
 	}
 

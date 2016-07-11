@@ -87,7 +87,7 @@ public class DeallocationAnalyzer extends Analyzer {
 				Type var_type = stores.getRawType(r, function);
 				if (var_type != null && !(var_type instanceof Type.Null)) {
 					String var = stores.getVar(r, function);
-					statements.add(indent + addDeallocCode(var, var_type, stores));
+					statements.add(indent + preDealloc(var, var_type, stores));
 				}
 			}
 		}
@@ -540,7 +540,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Adds the deallocation code to release the lhs of update byte-code. For example,
+	 * Adds the pre-deallocation code to release the lhs variable of update byte-code. For example,
 	 * 
 	 * <pre>
 	 * <code>
@@ -558,16 +558,21 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public String addDeallocCode(String struct_var, String lhs, Type lhs_type, Type rhs_type, CodeStores stores) {
+	public String preDealloc(String lhs, Codes.Update code, FunctionOrMethod function, CodeStores stores) {
+		Type lhs_type = stores.getRawType(code.target(0), function);
+		// Get struct variable, e.g. a[i]
+		String struct_var = stores.getVar(code.target(0), function);
+		Type rhs_type = stores.getRawType(code.operand(code.operands().length - 1), function);
 		if (lhs_type instanceof Type.Array || lhs_type instanceof Type.Record) {
 			if (rhs_type instanceof Type.Record) {
 				// LHS and RHS are both structures
 				String struct = CodeGeneratorHelper.translateType(rhs_type, stores).replace("*", "");
-				// Use '_DEALLOC_MEMBER_STRUCT' to forcedly release the var
+				// Use '_DEALLOC_MEMBER_STRUCT' macro to forcedly release the lhs 
 				return "_DEALLOC_MEMBER_STRUCT(" + struct_var + ", " + lhs + ", " + struct + ");";
 			}
 		}
 
+		// No needs to de-allocate lhs variable.
 		return "";
 
 	}
@@ -588,7 +593,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	public String addDeallocCode(String var, Type type, CodeStores stores) {
+	public String preDealloc(String var, Type type, CodeStores stores) {
 		// NULL check
 		if (var == null || type == null || !stores.isCompoundType(type) && !(type instanceof Type.Union)) {
 			return "";
@@ -647,7 +652,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param code
 	 * @param function
 	 */
-	public void postProcessor(boolean isCopyEliminated, int register, List<String> statement, Code code,
+	public void postDealloc(boolean isCopyEliminated, int register, List<String> statement, Code code,
 			FunctionOrMethod function, CodeStores stores) {
 		
 		// Compute deallocation flag of lhs register
@@ -677,7 +682,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param code
 	 * @param function
 	 */
-	public void postProcessor(HashMap<Integer, Boolean> argumentCopyEliminated, List<String> statement, Code code,
+	public void postDealloc(HashMap<Integer, Boolean> argumentCopyEliminated, List<String> statement, Code code,
 			FunctionOrMethod function, CodeStores stores) {
 		// Compute deallocation flag of lhs register
 		if (code instanceof Codes.NewRecord) {
