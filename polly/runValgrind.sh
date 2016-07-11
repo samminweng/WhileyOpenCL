@@ -76,27 +76,27 @@ detectleaks(){
 	case "$compiler" in
 		"gcc")
 			echo -e -n "Compile C code using GCC -O3..." >> $result
-			gcc -std=c99 -g -O3 $testcase"_"$program.c Util.c -o "out/$executable.out"
+			gcc -std=c99 -g -O3 $testcase"_"$program.c Util.c -o "out/$executable"
 			;;
 		"clang")
 			echo -e -n "Compile C code using Clang -O3..." >> $result
-			clang -g -O3 $testcase"_"$program.c Util.c -o "out/$executable.out"
+			clang -g -O3 $testcase"_"$program.c Util.c -o "out/$executable"
 			;;
 		"polly")
 			echo "Optimize C code using Polly..." >> $result
 			pollycc -g -mllvm -polly-vectorizer=stripmine\
 					-mllvm -polly-process-unprofitable -mllvm -polly-opt-outer-coincidence=yes\
-					$testcase"_"$program.c Util.c -o "out/$executable.out"
+					$testcase"_"$program.c Util.c -o "out/$executable"
 			;;
 		"openmp")
 			export OMP_NUM_THREADS=$num_threads
 			echo "Optimize C code using OpenMP code with $OMP_NUM_THREADS threads..." >> $result
 			pollycc -g -mllvm -polly-vectorizer=stripmine\
 					-mllvm -polly-process-unprofitable -mllvm -polly-opt-outer-coincidence=yes\
-					-mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c -o "out/$executable.out"
+					-mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c -o "out/$executable"
 			;;
 	esac
-	valgrind --tool=memcheck "--log-file=$result" ./out/"$executable.out" $parameter
+	valgrind --tool=memcheck "--log-file=$result" ./out/"$executable" $parameter
 	#valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all "--log-file=$result" ./out/"$program.$compiler.enableVC.out" $parameter
 	# Added the CPU info
 	cat /proc/cpuinfo >> $result
