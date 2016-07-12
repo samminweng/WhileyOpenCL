@@ -1189,7 +1189,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Assign rhs to rhs without any copy, e.g. a = b[i];
 		statement.add(indent + lhs + "=" + rhs + "[" + index + "];");
 
-		postProcessor(false, code.operand(0), statement, code, function);
+		postProcessor(statement, code, function);
 
 		stores.addAllStatements(code, statement, function);
 	}
@@ -1246,7 +1246,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement.add(s);
 		}
 
-		postProcessor(false, code.operand(0), statement, code, function);
+		postProcessor(statement, code, function);
 
 		stores.addAllStatements(code, statement, function);
 	}

@@ -658,12 +658,8 @@ public class DeallocationAnalyzer extends Analyzer {
 		// Compute deallocation flag of lhs register
 		if (code instanceof Codes.Assign) {
 			statement.addAll(computeDealloc(isCopyEliminated, (Codes.Assign) code, function, stores));
-		} else if (code instanceof Codes.NewArray) {
-			statement.addAll(computeDealloc((Codes.NewArray) code, function, stores));
 		} else if (code instanceof Codes.Update) {
 			statement.addAll(computeDealloc((Codes.Update) code, function, stores));
-		} else if (code instanceof Codes.IndexOf) {
-			statement.addAll(computeDealloc((Codes.IndexOf) code, function, stores));
 		} else if (code instanceof Codes.FieldLoad) {
 			statement.addAll(computeDealloc(isCopyEliminated, (Codes.FieldLoad) code, function, stores));
 		}
@@ -685,6 +681,8 @@ public class DeallocationAnalyzer extends Analyzer {
 			statement.addAll(computeDealloc((Codes.NewRecord) code, function, stores, argumentCopyEliminated));
 		} else if (code instanceof Codes.Invoke) {
 			statement.addAll(computeDealloc((Codes.Invoke) code, function, stores));
+		} else {
+			throw new RuntimeException("Not Implemented");
 		}
 
 	}
@@ -703,6 +701,10 @@ public class DeallocationAnalyzer extends Analyzer {
 			statement.addAll(computeDealloc((Codes.ArrayGenerator) code, function, stores));
 		} else if (code instanceof Codes.Const) {
 			statement.addAll(computeDealloc((Codes.Const) code, function, stores));
+		} else if (code instanceof Codes.NewArray) {
+			statement.addAll(computeDealloc((Codes.NewArray) code, function, stores));
+		} else if (code instanceof Codes.IndexOf) {
+			statement.addAll(computeDealloc((Codes.IndexOf) code, function, stores));
 		} else {
 			throw new RuntimeException("Not implemented");
 		}
