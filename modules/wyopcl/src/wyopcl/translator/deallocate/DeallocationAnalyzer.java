@@ -479,8 +479,9 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param copyAnalyzer
 	 * @return three outcomes: 'rm_callee', 'add_callee' and 'transfer_callee'
 	 * 
-	 *         'rm_callee': set callee flag to be 'false' 'add_callee': set callee flag to be 'true' 'transfer_callee':
-	 *         transfers caller's flag to callee, and after the function call, set caller flag to be 'false'
+	 *         'rm_callee': set callee flag to be 'false'
+	 *         'add_callee': set callee flag to be 'true' 
+	 *         'transfer_callee': transfers caller's flag to callee, and after the function call, set caller flag to be 'false'
 	 * 
 	 */
 	public Optional<String> computeDealloc(int register, Codes.Invoke code, FunctionOrMethod function,
