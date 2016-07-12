@@ -660,10 +660,6 @@ public class DeallocationAnalyzer extends Analyzer {
 			statement.addAll(computeDealloc(isCopyEliminated, (Codes.Assign) code, function, stores));
 		} else if (code instanceof Codes.NewArray) {
 			statement.addAll(computeDealloc((Codes.NewArray) code, function, stores));
-		} else if (code instanceof Codes.Const) {
-			statement.addAll(computeDealloc((Codes.Const) code, function, stores));
-		} else if (code instanceof Codes.ArrayGenerator) {
-			statement.addAll(computeDealloc((Codes.ArrayGenerator) code, function, stores));
 		} else if (code instanceof Codes.Update) {
 			statement.addAll(computeDealloc((Codes.Update) code, function, stores));
 		} else if (code instanceof Codes.IndexOf) {
@@ -692,7 +688,27 @@ public class DeallocationAnalyzer extends Analyzer {
 		}
 
 	}
-
+	
+	/**
+	 * Generate the post-deallocation code.
+	 * 
+	 * 
+	 * @param statement
+	 * @param code
+	 * @param function
+	 * @param storese
+	 */
+	public void postDealloc(List<String> statement, Code code, FunctionOrMethod function, CodeStores stores) {
+		if (code instanceof Codes.ArrayGenerator) {
+			statement.addAll(computeDealloc((Codes.ArrayGenerator) code, function, stores));
+		} else if (code instanceof Codes.Const) {
+			statement.addAll(computeDealloc((Codes.Const) code, function, stores));
+		} else {
+			throw new RuntimeException("Not implemented");
+		}
+		
+	}
+	
 	@Override
 	public void apply(WyilFile module) {
 		super.apply(module);
@@ -703,5 +719,7 @@ public class DeallocationAnalyzer extends Analyzer {
 		// TODO Auto-generated method stub
 
 	}
+
+	
 
 }

@@ -294,7 +294,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 
 		// Compute the deallocation flag
-		postProcessor(false, code.target(0), statement, code, function);
+		postProcessor(statement, code, function);
 
 		stores.addAllStatements(code, statement, function);
 	}
@@ -718,6 +718,27 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		
 	}
 
+	/**
+	 * Add post-deallocation code. For some code types,
+	 * there is no rhs variable or lhs and rhs are not alias, e.g. 'ArrayGenerator'
+	 * And thus there is no needs of updating read-write or return sets.
+	 * 
+	 * @param isCopyEliminated
+	 * @param register
+	 * @param statement
+	 * @param code
+	 * @param function
+	 */
+	private void postProcessor(List<String> statement, Code code, FunctionOrMethod function) {
+		
+		
+		// Add the post-deallocation code.
+		this.deallocatedAnalyzer.ifPresent(a -> {
+			a.postDealloc(statement, code, function, stores);
+		});
+
+	}
+	
 	/**
 	 * Update the set with register and generate deallocation code.
 	 * 
@@ -1610,20 +1631,20 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String rhs = stores.getVar(code.operand(0), function);
 		String size = stores.getVar(code.operand(1), function);
 		Type elm_type = stores.getArrayElementType(lhs_type);
-		boolean isCopyEliminated;
+		//boolean isCopyEliminated;
 		if (stores.isIntType(elm_type)) {
 			// Generate an array with given size and values.
 			statement.add(indent + "_NEW_" + stores.getArrayDimension(lhs_type) + "DARRAY(" + lhs + ", " + size + ", "
 					+ rhs + ");");
-			isCopyEliminated = true;
+			//isCopyEliminated = true;
 		} else {
 			// Generate an array of structures
 			String struct = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");
 			statement.add(indent + "_NEW_1DARRAY_STRUCT(" + lhs + ", " + size + ", " + rhs + ", " + struct + ");");
-			isCopyEliminated = false;
+			//isCopyEliminated = false;
 		}
 
-		postProcessor(isCopyEliminated, code.operand(0), statement, code, function);
+		postProcessor(statement, code, function);
 
 		stores.addAllStatements(code, statement, function);
 	}
