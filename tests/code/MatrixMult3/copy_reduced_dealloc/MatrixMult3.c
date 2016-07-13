@@ -140,8 +140,7 @@ blklab2:;
 	//invoke (%21) = (%0, %1, %3) MatrixMult3:matrix : function(MatrixMult3:nat,MatrixMult3:nat,int[])->(MatrixMult3:Matrix)
 	_DEALLOC_STRUCT(_21, Matrix);
 	_21 = matrix(width, height, _1DARRAY_PARAM(data), data_dealloc);
-	_REMOVE_DEALLOC(data);
-	_ADD_DEALLOC(_21);
+	_TRANSFER_DEALLOC(_21, data);
 	//return %21
 	_DEALLOC_STRUCT(r, Matrix);
 	_DEALLOC(data);
@@ -527,8 +526,7 @@ blklab17:;
 	//invoke (%58) = (%3, %4, %5) MatrixMult3:matrix : function(MatrixMult3:nat,MatrixMult3:nat,int[])->(MatrixMult3:Matrix)
 	_DEALLOC_STRUCT(_58, Matrix);
 	_58 = matrix(width, height, _1DARRAY_PARAM(data), data_dealloc);
-	_REMOVE_DEALLOC(data);
-	_ADD_DEALLOC(_58);
+	_TRANSFER_DEALLOC(_58, data);
 	//return %58
 	_DEALLOC_STRUCT(a, Matrix);
 	_DEALLOC_STRUCT(b, Matrix);
@@ -753,9 +751,8 @@ blklab24:;
 	//invoke (%44) = (%1, %2) MatrixMult3:mat_mult : function(MatrixMult3:Matrix,MatrixMult3:Matrix)->(MatrixMult3:Matrix)
 	_DEALLOC_STRUCT(_44, Matrix);
 	_44 = mat_mult(_STRUCT_PARAM(A), A_dealloc, _STRUCT_PARAM(B), B_dealloc);
-	_REMOVE_DEALLOC(A);
-	_REMOVE_DEALLOC(B);
-	_ADD_DEALLOC(_44);
+	_TRANSFER_DEALLOC(_44, A);
+	_TRANSFER_DEALLOC(_44, B);
 	//assign %3 = %44  : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(C, Matrix);
 	C = _44;

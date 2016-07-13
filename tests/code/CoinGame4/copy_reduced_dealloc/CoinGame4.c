@@ -495,8 +495,7 @@ blklab17:;
 			_UPDATE_1DARRAY_SIZE(_41, moves);
 			_DEALLOC(_41);
 			_41 = pickCoin(_1DARRAY_PARAM(moves), moves_dealloc, i, j, n, x, y, z);
-			_REMOVE_DEALLOC(moves);
-			_ADD_DEALLOC(_41);
+			_TRANSFER_DEALLOC(_41, moves);
 			//assign %0 = %41  : int[]
 			_DEALLOC(moves);
 			_UPDATE_1DARRAY(moves, _41);
@@ -576,8 +575,7 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY_SIZE(_8, moves);
 	_DEALLOC(_8);
 	_8 = findMoves(_1DARRAY_PARAM(moves), moves_dealloc, n);
-	_REMOVE_DEALLOC(moves);
-	_ADD_DEALLOC(_8);
+	_TRANSFER_DEALLOC(_8, moves);
 	//assign %2 = %8  : int[]
 	_DEALLOC(moves);
 	_UPDATE_1DARRAY(moves, _8);

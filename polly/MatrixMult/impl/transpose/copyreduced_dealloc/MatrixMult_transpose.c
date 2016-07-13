@@ -140,8 +140,7 @@ blklab2:;
 	//invoke (%21) = (%0, %1, %3) MatrixMult_transpose:matrix : function(MatrixMult_transpose:nat,MatrixMult_transpose:nat,int[])->(MatrixMult_transpose:Matrix)
 	_DEALLOC_STRUCT(_21, Matrix);
 	_21 = matrix(width, height, _1DARRAY_PARAM(data), data_dealloc);
-	_REMOVE_DEALLOC(data);
-	_ADD_DEALLOC(_21);
+	_TRANSFER_DEALLOC(_21, data);
 	//return %21
 	_DEALLOC_STRUCT(r, Matrix);
 	_DEALLOC(data);
@@ -527,8 +526,7 @@ blklab17:;
 	//invoke (%58) = (%3, %4, %5) MatrixMult_transpose:matrix : function(MatrixMult_transpose:nat,MatrixMult_transpose:nat,int[])->(MatrixMult_transpose:Matrix)
 	_DEALLOC_STRUCT(_58, Matrix);
 	_58 = matrix(width, height, _1DARRAY_PARAM(data), data_dealloc);
-	_REMOVE_DEALLOC(data);
-	_ADD_DEALLOC(_58);
+	_TRANSFER_DEALLOC(_58, data);
 	//return %58
 	_DEALLOC_STRUCT(a, Matrix);
 	_DEALLOC_STRUCT(b, Matrix);
@@ -641,9 +639,8 @@ int main(int argc, char** args){
 	//invoke (%17) = (%3, %4) MatrixMult_transpose:mat_mult : function(MatrixMult_transpose:Matrix,MatrixMult_transpose:Matrix)->(MatrixMult_transpose:Matrix)
 	_DEALLOC_STRUCT(_17, Matrix);
 	_17 = mat_mult(_STRUCT_PARAM(A), A_dealloc, _STRUCT_PARAM(B), B_dealloc);
-	_REMOVE_DEALLOC(A);
-	_REMOVE_DEALLOC(B);
-	_ADD_DEALLOC(_17);
+	_TRANSFER_DEALLOC(_17, A);
+	_TRANSFER_DEALLOC(_17, B);
 	//assign %5 = %17  : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(C, Matrix);
 	C = _17;

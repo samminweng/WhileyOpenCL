@@ -365,8 +365,7 @@ blklab12:;
 		//invoke (%33) = (%0, %35, %2) NQueens_original:run : function(NQueens_original:NQueen,int,int)->(NQueens_original:NQueen)
 		_DEALLOC_STRUCT(_33, NQueen);
 		_33 = run(_STRUCT_PARAM(nq), nq_dealloc, _35, dim);
-		_REMOVE_DEALLOC(nq);
-		_ADD_DEALLOC(_33);
+		_TRANSFER_DEALLOC(_33, nq);
 		//assign %0 = %33  : {int num_solutions,{int c,int r}[] queens}
 		_DEALLOC_STRUCT(nq, NQueen);
 		nq = _33;
@@ -492,8 +491,7 @@ int main(int argc, char** args){
 	//invoke (%15) = (%4, %3) NQueens_original:nqueen : function(int,NQueens_original:POS[])->(NQueens_original:NQueen)
 	_DEALLOC_STRUCT(_15, NQueen);
 	_15 = nqueen(num_solutions, _1DARRAY_PARAM(queens), queens_dealloc);
-	_REMOVE_DEALLOC(queens);
-	_ADD_DEALLOC(_15);
+	_TRANSFER_DEALLOC(_15, queens);
 	//assign %5 = %15  : {int num_solutions,{int c,int r}[] queens}
 	_DEALLOC_STRUCT(nq, NQueen);
 	nq = _15;
@@ -503,8 +501,7 @@ int main(int argc, char** args){
 	//invoke (%16) = (%5, %17, %2) NQueens_original:run : function(NQueens_original:NQueen,int,int)->(NQueens_original:NQueen)
 	_DEALLOC_STRUCT(_16, NQueen);
 	_16 = run(_STRUCT_PARAM(nq), nq_dealloc, _17, n);
-	_REMOVE_DEALLOC(nq);
-	_ADD_DEALLOC(_16);
+	_TRANSFER_DEALLOC(_16, nq);
 	//assign %5 = %16  : {int num_solutions,{int c,int r}[] queens}
 	_DEALLOC_STRUCT(nq, NQueen);
 	nq = _16;

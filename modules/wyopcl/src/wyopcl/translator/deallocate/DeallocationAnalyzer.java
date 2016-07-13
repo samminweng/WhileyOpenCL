@@ -128,9 +128,9 @@ public class DeallocationAnalyzer extends Analyzer {
 			}
 		} else {
 			// Add deallocation flag to lhs variable
-			if (code.targets().length > 0) {
-				statements.add(indent + addDealloc(code.target(0), function, stores));
-			}
+			// if (code.targets().length > 0) {
+			// statements.add(indent + addDealloc(code.target(0), function, stores));
+			// }
 		}
 		return statements;
 
@@ -341,7 +341,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Add the post code to compute the deallocation flag of each function parameter, 
+	 * Add the post code to compute the deallocation flag of each function parameter,
 	 * 
 	 * For example,
 	 * 
@@ -363,21 +363,37 @@ public class DeallocationAnalyzer extends Analyzer {
 		List<String> statements = new ArrayList<String>();
 
 		String indent = stores.getIndent(function);
+		boolean isTransferred = false;
 		// Add or transfer out the parameters that do not have the copy
 		for (int register : code.operands()) {
-			Optional<String> dealloc = computeDealloc(register, code, function, stores, copyAnalyzer);
-			dealloc.ifPresent(callee_dealloc -> {
-				// Check callee's deallocation flag
-				if (copyAnalyzer.isPresent()) {
-					// Check if the callee de-allocates the argument
-					if (callee_dealloc.equals("transfer_callee")) {
-						// If so, then deallocation flag is transferred from caller site to callee
-						// And remove the caller's flag
+			String callee_dealloc = computeDealloc(register, code, function, stores, copyAnalyzer);
+			// Check callee's deallocation flag
+			if (copyAnalyzer.isPresent()) {
+				// Check if the callee de-allocates the argument
+				if (callee_dealloc.equals("transfer_callee")) {
+					if(code.targets().length>0){
+						int lhs = code.target(0);
+						Type lhs_type = stores.getRawType(lhs, function);
+						if(stores.isCompoundType(lhs_type)){
+							// If so, then deallocation flag is transferred from caller site to callee
+							statements.add(indent + transferDealloc(lhs, register, function, stores));
+						}else{
+							// Remove the parameter deallocation flag
+							statements.add(indent + removeDealloc(register, function, stores));
+						}
+					}else{
+						// And remove the parameter deallocation flag
 						statements.add(indent + removeDealloc(register, function, stores));
 					}
+					isTransferred = true;
 				}
-				;
-			});
+			}
+		}
+
+		// If the parameter is NOT transferred, add LHS deallocation flag. 
+		if (code.targets().length > 0 && !isTransferred) {
+			// Add the deallocation flag of lhs variable
+			statements.add(indent + addDealloc(code.target(0), function, stores));
 		}
 
 		return statements;
@@ -477,16 +493,15 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param copyAnalyzer
 	 * @return three outcomes: 'rm_callee', 'add_callee' and 'transfer_callee'
 	 * 
-	 *         'rm_callee': set callee flag to be 'false'
-	 *         'add_callee': set callee flag to be 'true' 
-	 *         'transfer_callee': transfers caller's flag to callee, and after the function call, set caller flag to be 'false'
+	 *         'rm_callee': set callee flag to be 'false' 'add_callee': set callee flag to be 'true' 'transfer_callee':
+	 *         transfers caller's flag to callee, and after the function call, set caller flag to be 'false'
 	 * 
 	 */
-	public Optional<String> computeDealloc(int register, Codes.Invoke code, FunctionOrMethod function,
-			CodeStores stores, Optional<CopyEliminationAnalyzer> copyAnalyzer) {
+	public String computeDealloc(int register, Codes.Invoke code, FunctionOrMethod function, CodeStores stores,
+			Optional<CopyEliminationAnalyzer> copyAnalyzer) {
 		Type type = stores.getRawType(register, function);
 		if (!stores.isCompoundType(type)) {
-			return Optional.empty();
+			return "";
 		}
 
 		if (copyAnalyzer.isPresent()) {
@@ -501,15 +516,15 @@ public class DeallocationAnalyzer extends Analyzer {
 			if (!isMutated) {
 				if (!isReturned) {
 					// NOT mutated nor return
-					return Optional.of("rm_callee");
+					return "rm_callee";
 				} else {
 					// NOT mutated but returned
 					if (isLive) {
 						// If 'b' is alive at caller site
-						return Optional.of("rm_callee");
+						return "rm_callee";
 					} else {
 						// If 'b' is NOT alive at caller site
-						return Optional.of("transfer_callee");
+						return "transfer_callee";
 					}
 				}
 			} else {
@@ -517,24 +532,24 @@ public class DeallocationAnalyzer extends Analyzer {
 					// Mutated and returned
 					if (isLive) {
 						// 'b' is alive
-						return Optional.of("add_callee");
+						return "add_callee";
 					} else {
 						// 'b' is NOT alive
-						return Optional.of("transfer_callee");
+						return "transfer_callee";
 					}
 				} else {
 					// Mutated and NOT returned
 					if (isLive) {
 						// 'b' is alive
-						return Optional.of("add_callee");
+						return "add_callee";
 					} else {
-						return Optional.of("transfer_callee");
+						return "transfer_callee";
 					}
 				}
 			}
 		} else {
 			// The copy is needed, so that caller and callee both have the deallocation flags
-			return Optional.of("add_callee");
+			return "add_callee";
 		}
 	}
 
@@ -566,7 +581,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			if (rhs_type instanceof Type.Record) {
 				// LHS and RHS are both structures
 				String struct = CodeGeneratorHelper.translateType(rhs_type, stores).replace("*", "");
-				// Use '_DEALLOC_MEMBER_STRUCT' macro to forcedly release the lhs 
+				// Use '_DEALLOC_MEMBER_STRUCT' macro to forcedly release the lhs
 				return "_DEALLOC_MEMBER_STRUCT(" + struct_var + ", " + lhs + ", " + struct + ");";
 			}
 		}
@@ -640,8 +655,6 @@ public class DeallocationAnalyzer extends Analyzer {
 		}
 	}
 
-	
-
 	/**
 	 * Generate Post-deallocation code.
 	 * 
@@ -653,7 +666,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 */
 	public void postDealloc(boolean isCopyEliminated, int register, List<String> statement, Code code,
 			FunctionOrMethod function, CodeStores stores) {
-		
+
 		// Compute deallocation flag of lhs register
 		if (code instanceof Codes.Assign) {
 			statement.addAll(computeDealloc(isCopyEliminated, (Codes.Assign) code, function, stores));
@@ -673,17 +686,15 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param code
 	 * @param function
 	 */
-	/*public void postDealloc(HashMap<Integer, Boolean> argumentCopyEliminated, List<String> statement, Code code,
-			FunctionOrMethod function, CodeStores stores) {
-		// Compute deallocation flag of lhs register
-		if (code instanceof Codes.NewRecord) {
-			statement.addAll(postDealloc((Codes.NewRecord) code, function, stores, argumentCopyEliminated));
-		} else {
-			throw new RuntimeException("Not Implemented");
-		}
+	/*
+	 * public void postDealloc(HashMap<Integer, Boolean> argumentCopyEliminated, List<String> statement, Code code,
+	 * FunctionOrMethod function, CodeStores stores) { // Compute deallocation flag of lhs register if (code instanceof
+	 * Codes.NewRecord) { statement.addAll(postDealloc((Codes.NewRecord) code, function, stores,
+	 * argumentCopyEliminated)); } else { throw new RuntimeException("Not Implemented"); }
+	 * 
+	 * }
+	 */
 
-	}*/
-	
 	/**
 	 * Generate the post-deallocation code.
 	 * 
@@ -705,9 +716,9 @@ public class DeallocationAnalyzer extends Analyzer {
 		} else {
 			throw new RuntimeException("Not implemented");
 		}
-		
+
 	}
-	
+
 	@Override
 	public void apply(WyilFile module) {
 		super.apply(module);
@@ -718,7 +729,5 @@ public class DeallocationAnalyzer extends Analyzer {
 		// TODO Auto-generated method stub
 
 	}
-
-	
 
 }

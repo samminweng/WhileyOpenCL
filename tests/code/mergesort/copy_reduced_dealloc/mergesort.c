@@ -83,8 +83,7 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	_UPDATE_1DARRAY_SIZE(_16, lhs);
 	_DEALLOC(_16);
 	_16 = sortV1(_1DARRAY_PARAM(lhs), lhs_dealloc, _17, pivot);
-	_REMOVE_DEALLOC(lhs);
-	_ADD_DEALLOC(_16);
+	_TRANSFER_DEALLOC(_16, lhs);
 	//assign %5 = %16  : int[]
 	_DEALLOC(lhs);
 	_UPDATE_1DARRAY(lhs, _16);
@@ -106,8 +105,7 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	_UPDATE_1DARRAY_SIZE(_19, rhs);
 	_DEALLOC(_19);
 	_19 = sortV1(_1DARRAY_PARAM(rhs), rhs_dealloc, _20, _21);
-	_REMOVE_DEALLOC(rhs);
-	_ADD_DEALLOC(_19);
+	_TRANSFER_DEALLOC(_19, rhs);
 	//assign %6 = %19  : int[]
 	_DEALLOC(rhs);
 	_UPDATE_1DARRAY(rhs, _19);
@@ -382,8 +380,7 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY_SIZE(_11, ys);
 	_DEALLOC(_11);
 	_11 = sortV1(_1DARRAY_PARAM(ys), ys_dealloc, _12, _13);
-	_REMOVE_DEALLOC(ys);
-	_ADD_DEALLOC(_11);
+	_TRANSFER_DEALLOC(_11, ys);
 	//assign %1 = %11  : int[]
 	_DEALLOC(ys);
 	_UPDATE_1DARRAY(ys, _11);
@@ -439,8 +436,7 @@ blklab9:;
 	_UPDATE_1DARRAY_SIZE(_25, ys);
 	_DEALLOC(_25);
 	_25 = sortV1(_1DARRAY_PARAM(ys), ys_dealloc, _26, _27);
-	_REMOVE_DEALLOC(ys);
-	_ADD_DEALLOC(_25);
+	_TRANSFER_DEALLOC(_25, ys);
 	//assign %1 = %25  : int[]
 	_DEALLOC(ys);
 	_UPDATE_1DARRAY(ys, _25);
@@ -494,8 +490,7 @@ blklab10:;
 	_UPDATE_1DARRAY_SIZE(_38, ys);
 	_DEALLOC(_38);
 	_38 = sortV1(_1DARRAY_PARAM(ys), ys_dealloc, _39, _40);
-	_REMOVE_DEALLOC(ys);
-	_ADD_DEALLOC(_38);
+	_TRANSFER_DEALLOC(_38, ys);
 	//assign %1 = %38  : int[]
 	_DEALLOC(ys);
 	_UPDATE_1DARRAY(ys, _38);
@@ -551,8 +546,7 @@ blklab11:;
 	_UPDATE_1DARRAY_SIZE(_52, ys);
 	_DEALLOC(_52);
 	_52 = sortV1(_1DARRAY_PARAM(ys), ys_dealloc, _53, _54);
-	_REMOVE_DEALLOC(ys);
-	_ADD_DEALLOC(_52);
+	_TRANSFER_DEALLOC(_52, ys);
 	//assign %1 = %52  : int[]
 	_DEALLOC(ys);
 	_UPDATE_1DARRAY(ys, _52);
@@ -634,8 +628,7 @@ blklab13:;
 	_UPDATE_1DARRAY_SIZE(_70, arr);
 	_DEALLOC(_70);
 	_70 = sortV1(_1DARRAY_PARAM(arr), arr_dealloc, _71, _73);
-	_REMOVE_DEALLOC(arr);
-	_ADD_DEALLOC(_70);
+	_TRANSFER_DEALLOC(_70, arr);
 	//assign %4 = %70  : int[]
 	_DEALLOC(arr);
 	_UPDATE_1DARRAY(arr, _70);
