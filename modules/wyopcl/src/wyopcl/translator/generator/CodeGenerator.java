@@ -760,32 +760,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Update read-write and return sets and generate deallocation flag for lhs register.
-	 * 
-	 * @param isCopyEliminated
-	 * @param argumentCopyEliminated
-	 * @param statement
-	 * @param code
-	 * @param function
-	 */
-	private void postProcessor(HashMap<Integer, Boolean> argumentCopyEliminated, List<String> statement, Code code,
-			FunctionOrMethod function) {
-
-		// Iterate copy elimination set and update read-write/return set
-		if (copyAnalyzer.isPresent()) {
-			argumentCopyEliminated.entrySet().forEach(entry -> {
-				boolean isCopyEliminated = entry.getValue();
-				int register = entry.getKey();
-				copyAnalyzer.get().updateSet(isCopyEliminated, register, code, function);
-			});
-		}
-
-		this.deallocatedAnalyzer.ifPresent(a -> {
-			a.postDealloc(argumentCopyEliminated, statement, code, function, stores);
-		});
-	}
-
-	/**
 	 * Produces the code for <code>Codes.Invoke</code> code. For example, the following WyIL code:
 	 * 
 	 * <pre>
@@ -1505,7 +1479,18 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					isCopyEliminated, stores));
 		}
 
-		postProcessor(copyEliminatedMap, statement, code, function);
+		// Iterate copy elimination set and update read-write/return set
+		if (copyAnalyzer.isPresent()) {
+			copyEliminatedMap.entrySet().forEach(entry -> {
+				boolean isCopyEliminated = entry.getValue();
+				int register = entry.getKey();
+				copyAnalyzer.get().updateSet(isCopyEliminated, register, code, function);
+			});
+		}
+		
+		this.deallocatedAnalyzer.ifPresent(a -> {
+			statement.addAll(a.postDealloc(code, function, stores, copyEliminatedMap));
+		});
 
 		// Get the set of field names and convert it to an array of string.
 		stores.addAllStatements(code, statement, function);

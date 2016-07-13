@@ -212,7 +212,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 * @return
 	 */
-	private List<String> computeDealloc(Codes.NewRecord code, FunctionOrMethod function, CodeStores stores,
+	public List<String> postDealloc(Codes.NewRecord code, FunctionOrMethod function, CodeStores stores,
 			HashMap<Integer, Boolean> argumentCopyEliminated) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
@@ -673,18 +673,16 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param code
 	 * @param function
 	 */
-	public void postDealloc(HashMap<Integer, Boolean> argumentCopyEliminated, List<String> statement, Code code,
+	/*public void postDealloc(HashMap<Integer, Boolean> argumentCopyEliminated, List<String> statement, Code code,
 			FunctionOrMethod function, CodeStores stores) {
 		// Compute deallocation flag of lhs register
 		if (code instanceof Codes.NewRecord) {
-			statement.addAll(computeDealloc((Codes.NewRecord) code, function, stores, argumentCopyEliminated));
-		} else if (code instanceof Codes.Invoke) {
-			statement.addAll(postDealloc((Codes.Invoke) code, function, stores));
+			statement.addAll(postDealloc((Codes.NewRecord) code, function, stores, argumentCopyEliminated));
 		} else {
 			throw new RuntimeException("Not Implemented");
 		}
 
-	}
+	}*/
 	
 	/**
 	 * Generate the post-deallocation code.
