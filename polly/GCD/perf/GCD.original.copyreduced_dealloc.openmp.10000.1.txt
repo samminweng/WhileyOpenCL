@@ -4,132 +4,18 @@ Pass Euclid GCD test case
 
  Performance counter stats for 'out/GCD.original.copyreduced_dealloc.openmp.out 10000':
 
-       5657.206544      task-clock (msec)         #    1.000 CPUs utilized          
-                19      context-switches          #    0.003 K/sec                  
-                 4      cpu-migrations            #    0.001 K/sec                  
-                69      page-faults               #    0.012 K/sec                  
-    21,965,869,005      cycles                    #    3.883 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    28,072,789,797      instructions              #    1.28  insns per cycle        
-    11,067,438,850      branches                  # 1956.343 M/sec                  
-       666,056,102      branch-misses             #    6.02% of all branches        
-
-       5.659480281 seconds time elapsed
-
-N = 10000
-Sum: 684257280
-Pass Euclid GCD test case
-
- Performance counter stats for 'out/GCD.original.copyreduced_dealloc.openmp.out 10000':
-
-       5704.383867      task-clock (msec)         #    1.000 CPUs utilized          
-                 5      context-switches          #    0.001 K/sec                  
-                 5      cpu-migrations            #    0.001 K/sec                  
-                67      page-faults               #    0.012 K/sec                  
-    22,139,062,767      cycles                    #    3.881 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    28,071,317,562      instructions              #    1.27  insns per cycle        
-    11,067,173,482      branches                  # 1940.117 M/sec                  
-       663,950,373      branch-misses             #    6.00% of all branches        
-
-       5.705816341 seconds time elapsed
-
-N = 10000
-Sum: 684257280
-Pass Euclid GCD test case
-
- Performance counter stats for 'out/GCD.original.copyreduced_dealloc.openmp.out 10000':
-
-       6004.114583      task-clock (msec)         #    0.962 CPUs utilized          
-                 8      context-switches          #    0.001 K/sec                  
-                 2      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.011 K/sec                  
-    22,992,058,185      cycles                    #    3.829 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    28,071,552,155      instructions              #    1.22  insns per cycle        
-    11,067,219,524      branches                  # 1843.273 M/sec                  
-       653,539,464      branch-misses             #    5.91% of all branches        
-
-       6.240447669 seconds time elapsed
-
-N = 10000
-Sum: 684257280
-Pass Euclid GCD test case
-
- Performance counter stats for 'out/GCD.original.copyreduced_dealloc.openmp.out 10000':
-
-       5916.045658      task-clock (msec)         #    0.952 CPUs utilized          
-                 5      context-switches          #    0.001 K/sec                  
-                12      cpu-migrations            #    0.002 K/sec                  
-                67      page-faults               #    0.011 K/sec                  
-    22,072,865,023      cycles                    #    3.731 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    28,071,674,790      instructions              #    1.27  insns per cycle        
-    11,067,234,580      branches                  # 1870.715 M/sec                  
-       666,314,833      branch-misses             #    6.02% of all branches        
-
-       6.213335953 seconds time elapsed
-
-N = 10000
-Sum: 684257280
-Pass Euclid GCD test case
-
- Performance counter stats for 'out/GCD.original.copyreduced_dealloc.openmp.out 10000':
-
-       5679.704632      task-clock (msec)         #    1.000 CPUs utilized          
-                 6      context-switches          #    0.001 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.012 K/sec                  
-    22,045,690,967      cycles                    #    3.881 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    28,071,184,772      instructions              #    1.27  insns per cycle        
-    11,067,150,602      branches                  # 1948.543 M/sec                  
-       665,432,272      branch-misses             #    6.01% of all branches        
-
-       5.681370589 seconds time elapsed
-
-N = 10000
-Sum: 684257280
-Pass Euclid GCD test case
-
- Performance counter stats for 'out/GCD.original.copyreduced_dealloc.openmp.out 10000':
-
-       5658.560315      task-clock (msec)         #    1.000 CPUs utilized          
-                 5      context-switches          #    0.001 K/sec                  
-                 4      cpu-migrations            #    0.001 K/sec                  
-                68      page-faults               #    0.012 K/sec                  
-    21,968,252,059      cycles                    #    3.882 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    28,071,220,706      instructions              #    1.28  insns per cycle        
-    11,067,157,184      branches                  # 1955.826 M/sec                  
-       666,082,965      branch-misses             #    6.02% of all branches        
-
-       5.660397016 seconds time elapsed
-
-N = 10000
-Sum: 684257280
-Pass Euclid GCD test case
-
- Performance counter stats for 'out/GCD.original.copyreduced_dealloc.openmp.out 10000':
-
-       5660.148202      task-clock (msec)         #    1.000 CPUs utilized          
-                 6      context-switches          #    0.001 K/sec                  
+       5654.921927      task-clock (msec)         #    0.999 CPUs utilized          
+                12      context-switches          #    0.002 K/sec                  
                  1      cpu-migrations            #    0.000 K/sec                  
                 67      page-faults               #    0.012 K/sec                  
-    21,974,883,485      cycles                    #    3.882 GHz                    
+    21,942,263,096      cycles                    #    3.880 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    28,071,197,618      instructions              #    1.28  insns per cycle        
-    11,067,153,659      branches                  # 1955.276 M/sec                  
-       666,320,686      branch-misses             #    6.02% of all branches        
+    28,071,369,344      instructions              #    1.28  insns per cycle        
+    11,067,186,295      branches                  # 1957.089 M/sec                  
+       666,205,580      branch-misses             #    6.02% of all branches        
 
-       5.661867536 seconds time elapsed
+       5.659028315 seconds time elapsed
 
 N = 10000
 Sum: 684257280
@@ -137,37 +23,18 @@ Pass Euclid GCD test case
 
  Performance counter stats for 'out/GCD.original.copyreduced_dealloc.openmp.out 10000':
 
-       5706.134266      task-clock (msec)         #    1.000 CPUs utilized          
-                 5      context-switches          #    0.001 K/sec                  
-                 1      cpu-migrations            #    0.000 K/sec                  
-                68      page-faults               #    0.012 K/sec                  
-    22,151,516,509      cycles                    #    3.882 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    28,071,193,903      instructions              #    1.27  insns per cycle        
-    11,067,152,978      branches                  # 1939.519 M/sec                  
-       663,454,446      branch-misses             #    5.99% of all branches        
-
-       5.708983564 seconds time elapsed
-
-N = 10000
-Sum: 684257280
-Pass Euclid GCD test case
-
- Performance counter stats for 'out/GCD.original.copyreduced_dealloc.openmp.out 10000':
-
-       5679.017896      task-clock (msec)         #    0.994 CPUs utilized          
+       5832.587223      task-clock (msec)         #    1.000 CPUs utilized          
                  5      context-switches          #    0.001 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.012 K/sec                  
-    22,037,762,405      cycles                    #    3.881 GHz                    
+                67      page-faults               #    0.011 K/sec                  
+    22,669,671,020      cycles                    #    3.887 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    28,071,146,437      instructions              #    1.27  insns per cycle        
-    11,067,144,650      branches                  # 1948.778 M/sec                  
-       664,767,828      branch-misses             #    6.01% of all branches        
+    28,071,236,238      instructions              #    1.24  insns per cycle        
+    11,067,161,821      branches                  # 1897.470 M/sec                  
+       654,477,775      branch-misses             #    5.91% of all branches        
 
-       5.711599731 seconds time elapsed
+       5.834097000 seconds time elapsed
 
 N = 10000
 Sum: 684257280
@@ -175,18 +42,151 @@ Pass Euclid GCD test case
 
  Performance counter stats for 'out/GCD.original.copyreduced_dealloc.openmp.out 10000':
 
-       5700.240324      task-clock (msec)         #    1.000 CPUs utilized          
+       6466.769929      task-clock (msec)         #    0.999 CPUs utilized          
+                 6      context-switches          #    0.001 K/sec                  
+                 1      cpu-migrations            #    0.000 K/sec                  
+                66      page-faults               #    0.010 K/sec                  
+    25,139,260,866      cycles                    #    3.887 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+    28,071,795,069      instructions              #    1.12  insns per cycle        
+    11,067,258,510      branches                  # 1711.404 M/sec                  
+       615,948,503      branch-misses             #    5.57% of all branches        
+
+       6.472962239 seconds time elapsed
+
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
+
+ Performance counter stats for 'out/GCD.original.copyreduced_dealloc.openmp.out 10000':
+
+       6720.576047      task-clock (msec)         #    1.000 CPUs utilized          
+                 5      context-switches          #    0.001 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                67      page-faults               #    0.010 K/sec                  
+    26,123,418,635      cycles                    #    3.887 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+    28,072,014,674      instructions              #    1.07  insns per cycle        
+    11,067,298,004      branches                  # 1646.778 M/sec                  
+       601,528,306      branch-misses             #    5.44% of all branches        
+
+       6.723423538 seconds time elapsed
+
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
+
+ Performance counter stats for 'out/GCD.original.copyreduced_dealloc.openmp.out 10000':
+
+       5647.717236      task-clock (msec)         #    1.000 CPUs utilized          
+                 6      context-switches          #    0.001 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                67      page-faults               #    0.012 K/sec                  
+    21,951,716,532      cycles                    #    3.887 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+    28,071,058,383      instructions              #    1.28  insns per cycle        
+    11,067,132,460      branches                  # 1959.576 M/sec                  
+       666,274,119      branch-misses             #    6.02% of all branches        
+
+       5.649170109 seconds time elapsed
+
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
+
+ Performance counter stats for 'out/GCD.original.copyreduced_dealloc.openmp.out 10000':
+
+       5659.392454      task-clock (msec)         #    0.999 CPUs utilized          
+                 5      context-switches          #    0.001 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                68      page-faults               #    0.012 K/sec                  
+    21,949,165,202      cycles                    #    3.878 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+    28,071,044,144      instructions              #    1.28  insns per cycle        
+    11,067,129,478      branches                  # 1955.533 M/sec                  
+       666,433,289      branch-misses             #    6.02% of all branches        
+
+       5.664843426 seconds time elapsed
+
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
+
+ Performance counter stats for 'out/GCD.original.copyreduced_dealloc.openmp.out 10000':
+
+       6276.582540      task-clock (msec)         #    0.992 CPUs utilized          
+                 6      context-switches          #    0.001 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                67      page-faults               #    0.011 K/sec                  
+    24,371,177,369      cycles                    #    3.883 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+    28,071,635,538      instructions              #    1.15  insns per cycle        
+    11,067,230,661      branches                  # 1763.257 M/sec                  
+       630,693,041      branch-misses             #    5.70% of all branches        
+
+       6.329254227 seconds time elapsed
+
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
+
+ Performance counter stats for 'out/GCD.original.copyreduced_dealloc.openmp.out 10000':
+
+       6217.287163      task-clock (msec)         #    1.000 CPUs utilized          
+                 5      context-switches          #    0.001 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                67      page-faults               #    0.011 K/sec                  
+    24,165,142,458      cycles                    #    3.887 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+    28,071,538,066      instructions              #    1.16  insns per cycle        
+    11,067,216,505      branches                  # 1780.072 M/sec                  
+       633,523,224      branch-misses             #    5.72% of all branches        
+
+       6.218621387 seconds time elapsed
+
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
+
+ Performance counter stats for 'out/GCD.original.copyreduced_dealloc.openmp.out 10000':
+
+       5668.342573      task-clock (msec)         #    1.000 CPUs utilized          
                  6      context-switches          #    0.001 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
                 68      page-faults               #    0.012 K/sec                  
-    22,107,137,700      cycles                    #    3.878 GHz                    
+    21,947,154,672      cycles                    #    3.872 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    28,071,162,252      instructions              #    1.27  insns per cycle        
-    11,067,148,656      branches                  # 1941.523 M/sec                  
-       664,153,226      branch-misses             #    6.00% of all branches        
+    28,071,077,265      instructions              #    1.28  insns per cycle        
+    11,067,135,600      branches                  # 1952.446 M/sec                  
+       666,231,580      branch-misses             #    6.02% of all branches        
 
-       5.702643816 seconds time elapsed
+       5.669568762 seconds time elapsed
+
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
+
+ Performance counter stats for 'out/GCD.original.copyreduced_dealloc.openmp.out 10000':
+
+       5697.132332      task-clock (msec)         #    1.000 CPUs utilized          
+                 5      context-switches          #    0.001 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                65      page-faults               #    0.011 K/sec                  
+    21,939,132,432      cycles                    #    3.851 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+    28,071,084,233      instructions              #    1.28  insns per cycle        
+    11,067,136,262      branches                  # 1942.580 M/sec                  
+       666,182,920      branch-misses             #    6.02% of all branches        
+
+       5.699216951 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -195,7 +195,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3901.367
+cpu MHz		: 3890.210
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -222,7 +222,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3871.484
+cpu MHz		: 3859.132
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -249,7 +249,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3884.632
+cpu MHz		: 3829.781
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -276,7 +276,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3897.250
+cpu MHz		: 3884.101
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -303,7 +303,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3870.820
+cpu MHz		: 3584.210
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -330,7 +330,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.906
+cpu MHz		: 3899.640
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -357,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3798.968
+cpu MHz		: 3901.101
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -384,7 +384,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3834.960
+cpu MHz		: 3828.453
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
