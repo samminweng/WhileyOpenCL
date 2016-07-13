@@ -828,7 +828,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.Invoke code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
 		String indent = stores.getIndent(function);
-		HashMap<Integer, Boolean> argumentCopyEliminated = new HashMap<Integer, Boolean>();
+		
 		// Translate built-in Whiley functions using macros.
 		if (code.name.module().toString().contains("whiley/lang")) {
 			String lhs = stores.getVar(code.target(0), function);
@@ -866,21 +866,41 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);
 			}
+			
+			this.deallocatedAnalyzer.ifPresent(a -> {
+				statement.addAll(a.postDealloc(code, function, stores));
+			});
+			
 		} else {
 			// De-allocate lhs register
 			preProcessor(statement, code, function);
-
+			HashMap<Integer, Boolean> argumentCopyEliminated = new HashMap<Integer, Boolean>();
 			// call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
 			statement.add(translateFunctionCall(argumentCopyEliminated, code, function));
 
 			// If the copy is not made and the parameter is transferred to callee,
 			// then remove deallocation flags of the parameters.
 			this.deallocatedAnalyzer.ifPresent(a -> {
-				statement.addAll(a.computeDealloc(code, function, stores, copyAnalyzer));
+				statement.addAll(a.postDealloc(code, function, stores, copyAnalyzer));
 			});
+			
+			
+			// Iterate copy elimination set and update read-write/return set
+			if (copyAnalyzer.isPresent()) {
+				argumentCopyEliminated.entrySet().forEach(entry -> {
+					boolean isCopyEliminated = entry.getValue();
+					int register = entry.getKey();
+					copyAnalyzer.get().updateSet(isCopyEliminated, register, code, function);
+				});
+			}
+			
+			this.deallocatedAnalyzer.ifPresent(a -> {
+				statement.addAll(a.postDealloc(code, function, stores));
+			});
+			
 		}
 
-		postProcessor(argumentCopyEliminated, statement, code, function);
+		//postProcessor(argumentCopyEliminated, statement, code, function);
 
 		// add the statement
 		stores.addAllStatements(code, statement, function);

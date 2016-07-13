@@ -97,14 +97,14 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Compute deallocation flags for a function call
+	 * Add post-deallocation code to compute deallocation flags after a function call, including
 	 * 
 	 * @param code
 	 * @param function
 	 * @param stores
 	 * @return
 	 */
-	private List<String> computeDealloc(Codes.Invoke code, FunctionOrMethod function, CodeStores stores) {
+	public List<String> postDealloc(Codes.Invoke code, FunctionOrMethod function, CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
 
@@ -341,16 +341,14 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Compute the deallocation flag for each argument of a function call,
-	 * 
-	 * If the deallocation flag is assigned to the calling function and no copy is made, then callee frees the argument.
+	 * Add the post code to compute the deallocation flag of each function parameter, 
 	 * 
 	 * For example,
 	 * 
 	 * <pre>
 	 * <code>
 	 * 		a = f(b, b_dealloc); // 'f' function frees 'b' array
-	 * 		b_dealloc = false; // reset b 'de-alloc' flag to be 'false' 
+	 * 		a_dealloc = b_dealloc; // transfer b's flag to a's flag 
 	 * </code>
 	 * </pre>
 	 * 
@@ -360,7 +358,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param copyAnalyzer
 	 * @return
 	 */
-	public List<String> computeDealloc(Codes.Invoke code, FunctionOrMethod function, CodeStores stores,
+	public List<String> postDealloc(Codes.Invoke code, FunctionOrMethod function, CodeStores stores,
 			Optional<CopyEliminationAnalyzer> copyAnalyzer) {
 		List<String> statements = new ArrayList<String>();
 
@@ -681,7 +679,7 @@ public class DeallocationAnalyzer extends Analyzer {
 		if (code instanceof Codes.NewRecord) {
 			statement.addAll(computeDealloc((Codes.NewRecord) code, function, stores, argumentCopyEliminated));
 		} else if (code instanceof Codes.Invoke) {
-			statement.addAll(computeDealloc((Codes.Invoke) code, function, stores));
+			statement.addAll(postDealloc((Codes.Invoke) code, function, stores));
 		} else {
 			throw new RuntimeException("Not Implemented");
 		}
