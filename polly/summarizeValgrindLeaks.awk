@@ -4,10 +4,11 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcases="Fibonacci Reverse MatrixMult GCD CoinGame NQueens";
+	testcases="Fibonacci Reverse MergeSort MatrixMult GCD CoinGame NQueens";
 	# Program Type
 	programs["Fibonacci"]="original";
 	programs["Reverse"]="original";
+	programs["MergeSort"]="original";
 	programs["MatrixMult"]="original transpose";
 	programs["GCD"]="original cached";
 	programs["CoinGame"]="original single array";
@@ -19,6 +20,7 @@ BEGIN {
 	# Parameter
 	parameters["Fibonacci"]="10";
 	parameters["Reverse"]="10";
+	parameters["MergeSort"]="10";
 	parameters["MatrixMult"]="15";
 	parameters["GCD"]="100";
 	parameters["CoinGame"]="100";
