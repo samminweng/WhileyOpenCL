@@ -1,5 +1,29 @@
 Memory Leak (bytes)
 TestCase	ProgramType	CodeGen	Parameter	Compiler	Thread	definite loss	indirect loss	possible loss	reachable loss
+Fibonacci	original	naive	10	gcc	1	1728	24	0	80
+Fibonacci	original	naive	10	clang	1	1808	24	0	0
+Fibonacci	original	naive	10	polly	1	1808	24	0	0
+Fibonacci	original	naive	10	openmp	1	1808	24	0	0
+Fibonacci	original	naive	10	openmp	2	1808	24	0	0
+Fibonacci	original	naive	10	openmp	4	1808	24	0	0
+Fibonacci	original	naive_dealloc	10	gcc	1	0	0	0	0
+Fibonacci	original	naive_dealloc	10	clang	1	0	0	0	0
+Fibonacci	original	naive_dealloc	10	polly	1	0	0	0	0
+Fibonacci	original	naive_dealloc	10	openmp	1	0	0	0	0
+Fibonacci	original	naive_dealloc	10	openmp	2	0	0	0	0
+Fibonacci	original	naive_dealloc	10	openmp	4	0	0	0	0
+Fibonacci	original	copyreduced	10	gcc	1	208	24	0	80
+Fibonacci	original	copyreduced	10	clang	1	288	24	0	0
+Fibonacci	original	copyreduced	10	polly	1	288	24	0	0
+Fibonacci	original	copyreduced	10	openmp	1	288	24	0	0
+Fibonacci	original	copyreduced	10	openmp	2	288	24	0	0
+Fibonacci	original	copyreduced	10	openmp	4	288	24	0	0
+Fibonacci	original	copyreduced_dealloc	10	gcc	1	0	0	0	0
+Fibonacci	original	copyreduced_dealloc	10	clang	1	0	0	0	0
+Fibonacci	original	copyreduced_dealloc	10	polly	1	0	0	0	0
+Fibonacci	original	copyreduced_dealloc	10	openmp	1	0	0	0	0
+Fibonacci	original	copyreduced_dealloc	10	openmp	2	0	0	0	0
+Fibonacci	original	copyreduced_dealloc	10	openmp	4	0	0	0	0
 Reverse	original	naive	10	gcc	1	632	24	0	88
 Reverse	original	naive	10	clang	1	632	24	0	88
 Reverse	original	naive	10	polly	1	632	24	0	88

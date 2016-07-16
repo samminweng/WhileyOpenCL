@@ -156,14 +156,22 @@ init(){
 	### remove all files inside the folder
 	rm -f "$perfdir/"*.*
 }
-# ### Benchmark Reverse testcase
-init Reverse
-exec Reverse original 1000
-exec Reverse original 10000
-exec Reverse original 100000
-exec Reverse original 1000000
-exec Reverse original 10000000
-exec Reverse original 100000000
+# ### Benchmark Fibonacci testcase
+init Fibonacci
+exec Fibonacci original 10
+exec Fibonacci original 20
+exec Fibonacci original 30
+exec Fibonacci original 40
+exec Fibonacci original 50
+
+# # ### Benchmark Reverse testcase
+# init Reverse
+# exec Reverse original 1000
+# exec Reverse original 10000
+# exec Reverse original 100000
+# exec Reverse original 1000000
+# exec Reverse original 10000000
+# exec Reverse original 100000000
 
 # # ### Benchmark GCD testcase
 # init GCD

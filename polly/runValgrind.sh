@@ -123,12 +123,18 @@ exec(){
     cd $basedir/polly
     #read -p "Press [Enter] to continue..."
 }
-# Reverse test case
-init Reverse
-exec Reverse original naive 10
-exec Reverse original naive_dealloc 10
-exec Reverse original copyreduced 10
-exec Reverse original copyreduced_dealloc 10
+# # Reverse test case
+# init Reverse
+# exec Reverse original naive 10
+# exec Reverse original naive_dealloc 10
+# exec Reverse original copyreduced 10
+# exec Reverse original copyreduced_dealloc 10
+## Fibonacci test case
+init Fibonacci
+exec Fibonacci original naive 10
+exec Fibonacci original naive_dealloc 10
+exec Fibonacci original copyreduced 10
+exec Fibonacci original copyreduced_dealloc 10
 
 # # MatrixMult test case
 # init MatrixMult
