@@ -1,0 +1,396 @@
+Run the original Reverse on 1000000 using openmp and 4 threads...1
+1000000
+Pass Reverse test case
+ Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
+
+        114.263938      task-clock (msec)         #    3.244 CPUs utilized          
+                 6      context-switches          #    0.053 K/sec                  
+                 7      cpu-migrations            #    0.061 K/sec                  
+             1,425      page-faults               #    0.012 M/sec                  
+       400,829,158      cycles                    #    3.508 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        68,037,724      instructions              #    0.17  insns per cycle        
+        14,957,210      branches                  #  130.901 M/sec                  
+            15,379      branch-misses             #    0.10% of all branches        
+
+       0.035222338 seconds time elapsed
+
+1
+1000000
+Pass Reverse test case
+ Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
+
+        114.575733      task-clock (msec)         #    2.485 CPUs utilized          
+                 5      context-switches          #    0.044 K/sec                  
+                 4      cpu-migrations            #    0.035 K/sec                  
+               915      page-faults               #    0.008 M/sec                  
+       407,463,500      cycles                    #    3.556 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        66,742,555      instructions              #    0.16  insns per cycle        
+        14,729,072      branches                  #  128.553 M/sec                  
+            13,787      branch-misses             #    0.09% of all branches        
+
+       0.046100188 seconds time elapsed
+
+1
+1000000
+Pass Reverse test case
+ Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
+
+        111.173294      task-clock (msec)         #    2.781 CPUs utilized          
+                 5      context-switches          #    0.045 K/sec                  
+                 6      cpu-migrations            #    0.054 K/sec                  
+             1,427      page-faults               #    0.013 M/sec                  
+       394,873,737      cycles                    #    3.552 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        68,066,023      instructions              #    0.17  insns per cycle        
+        14,957,366      branches                  #  134.541 M/sec                  
+            14,062      branch-misses             #    0.09% of all branches        
+
+       0.039976609 seconds time elapsed
+
+1
+1000000
+Pass Reverse test case
+ Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
+
+        114.021831      task-clock (msec)         #    3.358 CPUs utilized          
+                 4      context-switches          #    0.035 K/sec                  
+                 3      cpu-migrations            #    0.026 K/sec                  
+               916      page-faults               #    0.008 M/sec                  
+       404,683,790      cycles                    #    3.549 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        66,705,433      instructions              #    0.16  insns per cycle        
+        14,724,842      branches                  #  129.141 M/sec                  
+            12,798      branch-misses             #    0.09% of all branches        
+
+       0.033952011 seconds time elapsed
+
+1
+1000000
+Pass Reverse test case
+ Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
+
+        105.486320      task-clock (msec)         #    3.207 CPUs utilized          
+                 9      context-switches          #    0.085 K/sec                  
+                 6      cpu-migrations            #    0.057 K/sec                  
+               916      page-faults               #    0.009 M/sec                  
+       378,683,258      cycles                    #    3.590 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        66,736,242      instructions              #    0.18  insns per cycle        
+        14,728,236      branches                  #  139.622 M/sec                  
+            12,829      branch-misses             #    0.09% of all branches        
+
+       0.032897214 seconds time elapsed
+
+1
+1000000
+Pass Reverse test case
+ Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
+
+        112.615702      task-clock (msec)         #    2.112 CPUs utilized          
+                 4      context-switches          #    0.036 K/sec                  
+                 7      cpu-migrations            #    0.062 K/sec                  
+               914      page-faults               #    0.008 M/sec                  
+       395,984,095      cycles                    #    3.516 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        66,741,951      instructions              #    0.17  insns per cycle        
+        14,729,263      branches                  #  130.792 M/sec                  
+            12,978      branch-misses             #    0.09% of all branches        
+
+       0.053323071 seconds time elapsed
+
+1
+1000000
+Pass Reverse test case
+ Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
+
+        113.417149      task-clock (msec)         #    3.281 CPUs utilized          
+                 4      context-switches          #    0.035 K/sec                  
+                 4      cpu-migrations            #    0.035 K/sec                  
+               916      page-faults               #    0.008 M/sec                  
+       402,287,887      cycles                    #    3.547 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        66,714,358      instructions              #    0.17  insns per cycle        
+        14,724,337      branches                  #  129.825 M/sec                  
+            13,209      branch-misses             #    0.09% of all branches        
+
+       0.034567636 seconds time elapsed
+
+1
+1000000
+Pass Reverse test case
+ Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
+
+        113.938498      task-clock (msec)         #    3.328 CPUs utilized          
+                 4      context-switches          #    0.035 K/sec                  
+                 8      cpu-migrations            #    0.070 K/sec                  
+               915      page-faults               #    0.008 M/sec                  
+       402,273,879      cycles                    #    3.531 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        66,749,992      instructions              #    0.17  insns per cycle        
+        14,728,887      branches                  #  129.271 M/sec                  
+            13,357      branch-misses             #    0.09% of all branches        
+
+       0.034232860 seconds time elapsed
+
+1
+1000000
+Pass Reverse test case
+ Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
+
+        117.745774      task-clock (msec)         #    2.379 CPUs utilized          
+                 4      context-switches          #    0.034 K/sec                  
+                 6      cpu-migrations            #    0.051 K/sec                  
+               915      page-faults               #    0.008 M/sec                  
+       418,083,364      cycles                    #    3.551 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        66,730,055      instructions              #    0.16  insns per cycle        
+        14,728,964      branches                  #  125.091 M/sec                  
+            13,592      branch-misses             #    0.09% of all branches        
+
+       0.049486639 seconds time elapsed
+
+1
+1000000
+Pass Reverse test case
+ Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
+
+        112.372199      task-clock (msec)         #    1.495 CPUs utilized          
+                 5      context-switches          #    0.044 K/sec                  
+                 4      cpu-migrations            #    0.036 K/sec                  
+               914      page-faults               #    0.008 M/sec                  
+       396,955,982      cycles                    #    3.533 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        66,748,656      instructions              #    0.17  insns per cycle        
+        14,731,778      branches                  #  131.098 M/sec                  
+            14,493      branch-misses             #    0.10% of all branches        
+
+       0.075181770 seconds time elapsed
+
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3400.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.16
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3555.125
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 2
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.16
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3400.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 4
+initial apicid	: 4
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.16
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3400.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 6
+initial apicid	: 6
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.16
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 4
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3635.078
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.16
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 5
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3486.859
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 3
+initial apicid	: 3
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.16
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 6
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3555.125
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 5
+initial apicid	: 5
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.16
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 7
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3555.125
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 7
+initial apicid	: 7
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs		:
+bogomips	: 6784.16
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+

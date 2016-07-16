@@ -123,47 +123,55 @@ exec(){
     cd $basedir/polly
     #read -p "Press [Enter] to continue..."
 }
-# MatrixMult test case
-init MatrixMult
-exec MatrixMult original naive 15
-exec MatrixMult original naive_dealloc 15
-exec MatrixMult original copyreduced 15
-exec MatrixMult original copyreduced_dealloc 15
-exec MatrixMult transpose naive 15
-exec MatrixMult transpose naive_dealloc 15
-exec MatrixMult transpose copyreduced 15
-exec MatrixMult transpose copyreduced_dealloc 15
-### GCD test case
-init GCD
-exec GCD original naive 100
-exec GCD original naive_dealloc 100
-exec GCD original copyreduced 100
-exec GCD original copyreduced_dealloc 100
-exec GCD cached naive 100
-exec GCD cached naive_dealloc 100
-exec GCD cached copyreduced 100
-exec GCD cached copyreduced_dealloc 100
-# ### CoinGame test case
-init CoinGame
-exec CoinGame original naive 100
-exec CoinGame original naive_dealloc 100
-exec CoinGame original copyreduced 100
-exec CoinGame original copyreduced_dealloc 100
-exec CoinGame single naive 100
-exec CoinGame single naive_dealloc 100
-exec CoinGame single copyreduced 100
-exec CoinGame single copyreduced_dealloc 100
-exec CoinGame array naive 100
-exec CoinGame array naive_dealloc 100
-exec CoinGame array copyreduced 100
-exec CoinGame array copyreduced_dealloc 100
-# #### NQueen test case
-init NQueens
-exec NQueens original naive 8
-exec NQueens original naive_dealloc 8
-exec NQueens original copyreduced 8
-exec NQueens original copyreduced_dealloc 8
-exec NQueens integer naive 8
-exec NQueens integer naive_dealloc  8
-exec NQueens integer copyreduced  8
-exec NQueens integer copyreduced_dealloc  8
+# Reverse test case
+init Reverse
+exec Reverse original naive 10
+exec Reverse original naive_dealloc 10
+exec Reverse original copyreduced 10
+exec Reverse original copyreduced_dealloc 10
+
+# # MatrixMult test case
+# init MatrixMult
+# exec MatrixMult original naive 15
+# exec MatrixMult original naive_dealloc 15
+# exec MatrixMult original copyreduced 15
+# exec MatrixMult original copyreduced_dealloc 15
+# exec MatrixMult transpose naive 15
+# exec MatrixMult transpose naive_dealloc 15
+# exec MatrixMult transpose copyreduced 15
+# exec MatrixMult transpose copyreduced_dealloc 15
+# ### GCD test case
+# init GCD
+# exec GCD original naive 100
+# exec GCD original naive_dealloc 100
+# exec GCD original copyreduced 100
+# exec GCD original copyreduced_dealloc 100
+# exec GCD cached naive 100
+# exec GCD cached naive_dealloc 100
+# exec GCD cached copyreduced 100
+# exec GCD cached copyreduced_dealloc 100
+# # ### CoinGame test case
+# init CoinGame
+# exec CoinGame original naive 100
+# exec CoinGame original naive_dealloc 100
+# exec CoinGame original copyreduced 100
+# exec CoinGame original copyreduced_dealloc 100
+# exec CoinGame single naive 100
+# exec CoinGame single naive_dealloc 100
+# exec CoinGame single copyreduced 100
+# exec CoinGame single copyreduced_dealloc 100
+# exec CoinGame array naive 100
+# exec CoinGame array naive_dealloc 100
+# exec CoinGame array copyreduced 100
+# exec CoinGame array copyreduced_dealloc 100
+# # #### NQueen test case
+# init NQueens
+# exec NQueens original naive 8
+# exec NQueens original naive_dealloc 8
+# exec NQueens original copyreduced 8
+# exec NQueens original copyreduced_dealloc 8
+# exec NQueens integer naive 8
+# exec NQueens integer naive_dealloc 8
+# exec NQueens integer copyreduced 8
+# exec NQueens integer copyreduced_dealloc 8
+

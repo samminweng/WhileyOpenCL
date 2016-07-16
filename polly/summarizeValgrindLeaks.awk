@@ -4,8 +4,9 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcases="MatrixMult GCD CoinGame NQueens";
+	testcases="Reverse MatrixMult GCD CoinGame NQueens";
 	# Program Type
+	programs["Reverse"]="original";
 	programs["MatrixMult"]="original transpose";
 	programs["GCD"]="original cached";
 	programs["CoinGame"]="original single array";
@@ -15,6 +16,7 @@ BEGIN {
 	# Compiler
 	compilers = "gcc clang polly openmp";
 	# Parameter
+	parameters["Reverse"]="10";
 	parameters["MatrixMult"]="15";
 	parameters["GCD"]="100";
 	parameters["CoinGame"]="100";

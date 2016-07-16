@@ -1,5 +1,29 @@
 Memory Leak (bytes)
 TestCase	ProgramType	CodeGen	Parameter	Compiler	Thread	definite loss	indirect loss	possible loss	reachable loss
+Reverse	original	naive	10	gcc	1	632	24	0	88
+Reverse	original	naive	10	clang	1	632	24	0	88
+Reverse	original	naive	10	polly	1	632	24	0	88
+Reverse	original	naive	10	openmp	1	632	24	0	88
+Reverse	original	naive	10	openmp	2	632	24	0	88
+Reverse	original	naive	10	openmp	4	632	24	0	88
+Reverse	original	naive_dealloc	10	gcc	1	0	0	0	0
+Reverse	original	naive_dealloc	10	clang	1	0	0	0	0
+Reverse	original	naive_dealloc	10	polly	1	0	0	0	0
+Reverse	original	naive_dealloc	10	openmp	1	0	0	0	0
+Reverse	original	naive_dealloc	10	openmp	2	0	0	0	0
+Reverse	original	naive_dealloc	10	openmp	4	0	0	0	0
+Reverse	original	copyreduced	10	gcc	1	280	24	0	88
+Reverse	original	copyreduced	10	clang	1	368	24	0	0
+Reverse	original	copyreduced	10	polly	1	368	24	0	0
+Reverse	original	copyreduced	10	openmp	1	368	24	0	0
+Reverse	original	copyreduced	10	openmp	2	368	24	0	0
+Reverse	original	copyreduced	10	openmp	4	368	24	0	0
+Reverse	original	copyreduced_dealloc	10	gcc	1	0	0	0	0
+Reverse	original	copyreduced_dealloc	10	clang	1	0	0	0	0
+Reverse	original	copyreduced_dealloc	10	polly	1	0	0	0	0
+Reverse	original	copyreduced_dealloc	10	openmp	1	0	0	0	0
+Reverse	original	copyreduced_dealloc	10	openmp	2	0	0	0	0
+Reverse	original	copyreduced_dealloc	10	openmp	4	0	0	0	0
 MatrixMult	original	naive	15	gcc	1	25880	10824	0	3664
 MatrixMult	original	naive	15	clang	1	31184	5424	0	3664
 MatrixMult	original	naive	15	polly	1	31184	5424	0	3664
