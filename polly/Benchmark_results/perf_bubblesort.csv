@@ -1,4 +1,52 @@
 Execution Time
 TestCase	ProgramType	CodeGen	Compiler	Parameter	Thread	1st	2nd	3rd	4th	5th	6th	7th	8th	9th	10th	Average
+BubbleSort	original	copyreduced_dealloc	gcc	1000	1	       0.010456726 	       0.011007526 	       0.004306272 	       0.004521695 	       0.008551673 	       0.039896717 	       0.011224368 	       0.004358598 	       0.013593830 	       0.021609750 
+BubbleSort	original	copyreduced_dealloc	gcc	10000	1	       0.071369227 	       0.077894127 	       0.073481966 	       0.071070482 	       0.094377673 	       0.082467199 	       0.122996150 	       0.084172208 	       0.096312970 	       0.089900718 
+BubbleSort	original	copyreduced_dealloc	gcc	100000	1	       6.632691523 	       6.658733556 	       6.656714702 	       6.646528849 	       6.601283720 	       6.604966936 	       6.599681151 	       6.609487329 	       6.609901775 	       6.618637555 
+BubbleSort	original	copyreduced_dealloc	gcc	200000	1	      26.514214957 	      26.627908206 	      26.536374942 	      26.458568739 	      31.778022079 	      26.803943567 	      29.454523506 	      28.951223448 	      32.058672961 	      30.921913488 
+BubbleSort	original	copyreduced_dealloc	clang	1000	1	       0.041255445 	       0.011114388 	       0.029781723 	       0.003748800 	       0.003858331 	       0.003882108 	       0.003721133 	       0.004155916 	       0.003510755 	       0.003559512 
+BubbleSort	original	copyreduced_dealloc	clang	10000	1	       0.115364561 	       0.121227307 	       0.039845653 	       0.051243121 	       0.037407047 	       0.039292310 	       0.065300556 	       0.037382037 	       0.047284067 	       0.036955768 
+BubbleSort	original	copyreduced_dealloc	clang	100000	1	       3.294543767 	       3.268374951 	       3.272030063 	       3.307731759 	       3.270434573 	       3.282289319 	       3.268963017 	       3.280397138 	       3.275329124 	       3.274664670 
+BubbleSort	original	copyreduced_dealloc	clang	200000	1	      13.153844926 	      14.478963027 	      14.297886896 	      14.117281854 	      14.497669556 	      14.495774074 	      13.411254463 	      14.215187721 	      13.825505368 	      14.218137127 
+BubbleSort	original	copyreduced_dealloc	polly	1000	1	       0.034011656 	       0.004603078 	       0.022575035 	       0.003978145 	       0.023692079 	       0.004656125 	       0.015869478 	       0.035579787 	       0.004147573 	       0.020791342 
+BubbleSort	original	copyreduced_dealloc	polly	10000	1	       0.101769102 	       0.095085886 	       0.101890892 	       0.087590095 	       0.082314661 	       0.082564413 	       0.072115147 	       0.110030287 	       0.111461664 	       0.132100065 
+BubbleSort	original	copyreduced_dealloc	polly	100000	1	       6.937119008 	       6.908724453 	       6.953504153 	       6.927523131 	       6.958075017 	       6.940249174 	       6.930770221 	       6.921455537 	       7.000309833 	       6.937173271 
+BubbleSort	original	copyreduced_dealloc	polly	200000	1	      27.760931945 	      27.801340581 	      27.718994203 	      28.059212237 	      28.165694006 	      27.771287090 	      27.676390344 	      27.801245313 	      27.645480851 	      27.743236073 
+BubbleSort	original	copyreduced_dealloc	openmp	1000	1	       0.005067398 	       0.036794585 	       0.027091168 	       0.033780451 	       0.004465695 	       0.004575002 	       0.004196087 	       0.012698631 	       0.012807846 	       0.012769794 
+BubbleSort	original	copyreduced_dealloc	openmp	10000	1	       0.081309939 	       0.075339370 	       0.104321906 	       0.072866339 	       0.072365259 	       0.073426122 	       0.078575167 	       0.114034348 	       0.126168753 	       0.117560468 
+BubbleSort	original	copyreduced_dealloc	openmp	100000	1	       6.928803979 	       6.983560163 	       6.971412139 	       6.956800022 	       6.946588132 	       6.905182013 	       6.896542963 	       6.897178848 	       6.914879072 	       6.908402565 
+BubbleSort	original	copyreduced_dealloc	openmp	200000	1	      27.725645006 	      27.629727913 	      28.232731106 	      28.013310050 	      28.052475612 	      28.082906270 	      27.800028326 	      27.680170572 	      28.058705088 	      31.033471766 
+BubbleSort	original	copyreduced_dealloc	openmp	1000	2	       0.010487979 	       0.004596854 	       0.004484300 	       0.009211141 	       0.057568474 	       0.013185677 	       0.042526425 	       0.025376062 	       0.011445468 	       0.026997387 
+BubbleSort	original	copyreduced_dealloc	openmp	10000	2	       0.076219466 	       0.088471831 	       0.094470785 	       0.094028065 	       0.094243232 	       0.092282231 	       0.074860674 	       0.104071092 	       0.096784078 	       0.073017893 
+BubbleSort	original	copyreduced_dealloc	openmp	100000	2	       6.938483298 	       6.930453271 	       6.958032946 	       6.898288049 	       6.891705415 	       6.932207941 	       6.974984166 	       7.101267753 	       6.923063463 	       7.488623456 
+BubbleSort	original	copyreduced_dealloc	openmp	200000	2	      27.767789300 	      28.966802861 	      27.782909854 	      27.663547447 	      29.655590036 	      27.876722376 	      28.637592078 	      28.196259136 	      28.276617135 	      28.220973550 
+BubbleSort	original	copyreduced_dealloc	openmp	1000	4	       0.005009707 	       0.015033786 	       0.018366868 	       0.038072694 	       0.017051842 	       0.020214178 	       0.019740274 	       0.033420394 	       0.004130836 	       0.013011046 
+BubbleSort	original	copyreduced_dealloc	openmp	10000	4	       0.073480743 	       0.085600950 	       0.098560624 	       0.079629266 	       0.074529688 	       0.098259069 	       0.090153382 	       0.077997793 	       0.114694392 	       0.101033874 
+BubbleSort	original	copyreduced_dealloc	openmp	100000	4	       6.937772441 	       7.391753797 	       6.921544462 	       7.031496072 	       7.115562946 	       7.433091281 	       7.836048869 	       7.806309813 	       7.211448426 	       7.004655369 
+BubbleSort	original	copyreduced_dealloc	openmp	200000	4	      29.184306071 	      28.059154801 	      27.759183644 	      27.826933834 	      27.791422176 	      27.805641124 	      27.652497763 	      27.734601406 	      28.036193851 	      27.652951057 
 CPU Utilization
 TestCase	ProgramType	CodeGen	Compiler	Parameter	Thread	1st	2nd	3rd	4th	5th	6th	7th	8th	9th	10th	Average
+BubbleSort	original	copyreduced_dealloc	gcc	1000	1	   0.097 	   0.089 	   0.225 	   0.213 	   0.108 	   0.025 	   0.087 	   0.218 	   0.065 	   0.044 
+BubbleSort	original	copyreduced_dealloc	gcc	10000	1	   0.943 	   0.879 	   0.951 	   0.947 	   0.713 	   0.814 	   0.551 	   0.798 	   0.697 	   0.752 
+BubbleSort	original	copyreduced_dealloc	gcc	100000	1	   0.998 	   0.996 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.998 	   1.000 
+BubbleSort	original	copyreduced_dealloc	gcc	200000	1	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 
+BubbleSort	original	copyreduced_dealloc	clang	1000	1	   0.015 	   0.057 	   0.033 	   0.178 	   0.159 	   0.155 	   0.163 	   0.194 	   0.156 	   0.161 
+BubbleSort	original	copyreduced_dealloc	clang	10000	1	   0.293 	   0.283 	   0.836 	   0.651 	   0.899 	   0.867 	   0.511 	   0.905 	   0.711 	   0.913 
+BubbleSort	original	copyreduced_dealloc	clang	100000	1	   0.999 	   0.999 	   0.999 	   0.988 	   0.999 	   0.995 	   0.999 	   0.995 	   0.999 	   0.998 
+BubbleSort	original	copyreduced_dealloc	clang	200000	1	   0.999 	   0.999 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   0.999 
+BubbleSort	original	copyreduced_dealloc	polly	1000	1	   0.030 	   0.215 	   0.044 	   0.244 	   0.047 	   0.211 	   0.061 	   0.028 	   0.236 	   0.048 
+BubbleSort	original	copyreduced_dealloc	polly	10000	1	   0.676 	   0.755 	   0.677 	   0.788 	   0.852 	   0.843 	   0.956 	   0.630 	   0.624 	   0.525 
+BubbleSort	original	copyreduced_dealloc	polly	100000	1	   0.999 	   0.999 	   1.000 	   0.999 	   0.990 	   0.997 	   0.999 	   1.000 	   0.989 	   0.998 
+BubbleSort	original	copyreduced_dealloc	polly	200000	1	   1.000 	   1.000 	   0.999 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 
+BubbleSort	original	copyreduced_dealloc	openmp	1000	1	   0.221 	   0.029 	   0.041 	   0.032 	   0.249 	   0.235 	   0.246 	   0.084 	   0.080 	   0.079 
+BubbleSort	original	copyreduced_dealloc	openmp	10000	1	   0.851 	   0.953 	   0.694 	   0.948 	   0.953 	   0.950 	   0.874 	   0.622 	   0.551 	   0.598 
+BubbleSort	original	copyreduced_dealloc	openmp	100000	1	   0.999 	   0.999 	   1.000 	   1.000 	   0.999 	   0.999 	   1.000 	   0.999 	   0.999 	   1.000 
+BubbleSort	original	copyreduced_dealloc	openmp	200000	1	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 
+BubbleSort	original	copyreduced_dealloc	openmp	1000	2	   0.192 	   0.429 	   0.412 	   0.217 	   0.035 	   0.153 	   0.043 	   0.071 	   0.170 	   0.075 
+BubbleSort	original	copyreduced_dealloc	openmp	10000	2	   0.940 	   0.831 	   0.763 	   0.778 	   0.770 	   0.791 	   0.978 	   0.679 	   0.734 	   0.974 
+BubbleSort	original	copyreduced_dealloc	openmp	100000	2	   1.000 	   0.996 	   0.997 	   1.000 	   1.000 	   1.000 	   0.997 	   1.000 	   1.000 	   0.999 
+BubbleSort	original	copyreduced_dealloc	openmp	200000	2	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 
+BubbleSort	original	copyreduced_dealloc	openmp	1000	4	   0.736 	   0.239 	   0.191 	   0.094 	   0.198 	   0.212 	   0.211 	   0.107 	   0.873 	   0.312 
+BubbleSort	original	copyreduced_dealloc	openmp	10000	4	   1.010 	   0.991 	   0.827 	   0.929 	   0.989 	   0.756 	   0.823 	   0.955 	   0.651 	   0.733 
+BubbleSort	original	copyreduced_dealloc	openmp	100000	4	   0.999 	   1.001 	   1.001 	   1.001 	   1.000 	   1.001 	   0.998 	   1.001 	   1.000 	   0.989 
+BubbleSort	original	copyreduced_dealloc	openmp	200000	4	   0.991 	   1.001 	   1.001 	   1.001 	   1.001 	   1.001 	   1.001 	   1.001 	   1.001 	   1.001 

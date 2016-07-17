@@ -59,11 +59,12 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcases="Fibonacci Reverse MergeSort newTicTacToe MatrixMult GCD CoinGame NQueens";
+	testcases="Fibonacci Reverse MergeSort BubbleSort newTicTacToe MatrixMult GCD CoinGame NQueens";
 	# Program Types
 	programs["Fibonacci"]="original";
 	programs["Reverse"]="original";
 	programs["MergeSort"]="original";
+	programs["BubbleSort"]="original";
 	programs["newTicTacToe"]="original";
 	programs["MatrixMult"]="original transpose";
 	programs["GCD"]="original cached";
@@ -78,6 +79,7 @@ BEGIN {
 	parameters["Fibonacci"] = "10 20 30 40 50";
 	parameters["Reverse"] = "1000 10000 100000 1000000 10000000 100000000";
 	parameters["MergeSort"] = "1000 10000 100000 1000000 10000000 100000000";
+	parameters["BubbleSort"] = "1000 10000 100000 200000";
 	parameters["newTicTacToe"] = "1000 10000 100000 1000000 10000000 100000000";
 	parameters["MatrixMult"] = "200 400 600 800 1000 1200 1400 1600 1800 2000 2200 2400 2600 2800 3000";
 	parameters["GCD"] = "1000 10000 20000 30000 40000";
