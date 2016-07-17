@@ -4,12 +4,13 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcases="Fibonacci newTicTacToe Reverse MergeSort MatrixMult GCD CoinGame NQueens";
+	testcases="Fibonacci newTicTacToe Reverse MergeSort BubbleSort MatrixMult GCD CoinGame NQueens";
 	# Program Type
 	programs["Fibonacci"]="original";
 	programs["newTicTacToe"]="original";
 	programs["Reverse"]="original";
 	programs["MergeSort"]="original";
+	programs["BubbleSort"]="original";
 	programs["MatrixMult"]="original transpose";
 	programs["GCD"]="original cached";
 	programs["CoinGame"]="original single array";
@@ -17,12 +18,14 @@ BEGIN {
 	# Code Generation
 	codegens = "naive naive_dealloc copyreduced copyreduced_dealloc";
 	# Compiler
-	compilers = "gcc clang polly openmp";
+	compilers = "gcc";
+	#compilers = "gcc clang polly openmp";
 	# Parameter
 	parameters["Fibonacci"]="10";
 	parameters["newTicTacToe"]="10";
 	parameters["Reverse"]="10";
 	parameters["MergeSort"]="10";
+	parameters["BubbleSort"]="10";
 	parameters["MatrixMult"]="15";
 	parameters["GCD"]="100";
 	parameters["CoinGame"]="100";

@@ -182,14 +182,21 @@ init(){
 # exec MergeSort original 10000000
 # exec MergeSort original 100000000
 
-# ### Benchmark newTicTacToe testcase
-init newTicTacToe
-exec newTicTacToe original 1000
-exec newTicTacToe original 10000
-exec newTicTacToe original 100000
-exec newTicTacToe original 1000000
-exec newTicTacToe original 10000000
-exec newTicTacToe original 100000000
+# ### Benchmark BubbleSort testcase
+init BubbleSort
+exec BubbleSort original 1000
+exec BubbleSort original 10000
+exec BubbleSort original 100000
+exec BubbleSort original 200000
+
+# # ### Benchmark newTicTacToe testcase
+# init newTicTacToe
+# exec newTicTacToe original 1000
+# exec newTicTacToe original 10000
+# exec newTicTacToe original 100000
+# exec newTicTacToe original 1000000
+# exec newTicTacToe original 10000000
+# exec newTicTacToe original 100000000
 
 # # ### Benchmark GCD testcase
 # init GCD
