@@ -66,6 +66,7 @@ public class CodeGenerationTestCase {
 				"swap",
 				"reverse",
 				"mergesort",
+				"bubblesort",
 				"newTicTacToe",
 				"MatrixMult",
 				"factorial",
