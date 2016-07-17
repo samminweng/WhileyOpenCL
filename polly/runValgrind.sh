@@ -137,12 +137,19 @@ exec(){
 # exec Reverse original copyreduced 10
 # exec Reverse original copyreduced_dealloc 10
 
-# MergeSort test case
-init MergeSort
-exec MergeSort original naive 10
-exec MergeSort original naive_dealloc 10
-exec MergeSort original copyreduced 10
-exec MergeSort original copyreduced_dealloc 10
+# # MergeSort test case
+# init MergeSort
+# exec MergeSort original naive 10
+# exec MergeSort original naive_dealloc 10
+# exec MergeSort original copyreduced 10
+# exec MergeSort original copyreduced_dealloc 10
+
+# newTicTacToe test case
+init newTicTacToe
+exec newTicTacToe original naive 10
+exec newTicTacToe original naive_dealloc 10
+exec newTicTacToe original copyreduced 10
+exec newTicTacToe original copyreduced_dealloc 10
 
 # # MatrixMult test case
 # init MatrixMult

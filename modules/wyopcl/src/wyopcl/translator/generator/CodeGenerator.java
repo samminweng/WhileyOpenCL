@@ -1371,7 +1371,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				if (input_type instanceof Type.Int) {
 					statement.add(indent + "printf(\"" + f_s + "\\n\", " + input + ");");
 				} else if (input_type instanceof Type.Array) {
-					statement.add(indent + "_1DARRAY_PRINT(" + input + ");");
+					statement.add(indent + "_PRINT_1DARRAY(" + input + ");");
 				} else if (input_type instanceof Type.Nominal) {
 					Type.Nominal nominal = (Type.Nominal) input_type;
 					// Print out a user-defined type structure

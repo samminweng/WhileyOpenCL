@@ -4,9 +4,10 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcases="Fibonacci Reverse MergeSort MatrixMult GCD CoinGame NQueens";
+	testcases="Fibonacci newTicTacToe Reverse MergeSort MatrixMult GCD CoinGame NQueens";
 	# Program Type
 	programs["Fibonacci"]="original";
+	programs["newTicTacToe"]="original";
 	programs["Reverse"]="original";
 	programs["MergeSort"]="original";
 	programs["MatrixMult"]="original transpose";
@@ -19,6 +20,7 @@ BEGIN {
 	compilers = "gcc clang polly openmp";
 	# Parameter
 	parameters["Fibonacci"]="10";
+	parameters["newTicTacToe"]="10";
 	parameters["Reverse"]="10";
 	parameters["MergeSort"]="10";
 	parameters["MatrixMult"]="15";

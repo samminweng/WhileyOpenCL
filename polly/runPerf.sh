@@ -173,14 +173,23 @@ init(){
 # exec Reverse original 10000000
 # exec Reverse original 100000000
 
-# ### Benchmark MergeSort testcase
-init MergeSort
-exec MergeSort original 1000
-exec MergeSort original 10000
-exec MergeSort original 100000
-exec MergeSort original 1000000
-exec MergeSort original 10000000
-exec MergeSort original 100000000
+# # ### Benchmark MergeSort testcase
+# init MergeSort
+# exec MergeSort original 1000
+# exec MergeSort original 10000
+# exec MergeSort original 100000
+# exec MergeSort original 1000000
+# exec MergeSort original 10000000
+# exec MergeSort original 100000000
+
+# ### Benchmark newTicTacToe testcase
+init newTicTacToe
+exec newTicTacToe original 1000
+exec newTicTacToe original 10000
+exec newTicTacToe original 100000
+exec newTicTacToe original 1000000
+exec newTicTacToe original 10000000
+exec newTicTacToe original 100000000
 
 # # ### Benchmark GCD testcase
 # init GCD
