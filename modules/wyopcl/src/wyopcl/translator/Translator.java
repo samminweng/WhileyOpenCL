@@ -50,11 +50,22 @@ public class Translator implements Builder {
 		// Put the in-memory WyIL file to config for later retrieval.
 		this.config.setOption("module", module);
 
+		
+		// Create read-write analyzer
+		ReadWriteAnalyzer readwriteAnalyzer = new ReadWriteAnalyzer(config);
+		// Analyze the byte-code
+		readwriteAnalyzer.apply(module);
+		
+		// Create return analyzer
+		ReturnAnalyzer returnAnalyzer = new ReturnAnalyzer(config);
+		// Analyze the byte-code
+		returnAnalyzer.apply(module);
+		
 		// Check if deallocation analysis is enabled or not
 		Optional<DeallocationAnalyzer> deallocAnalyzer = Optional.empty();
 		if(config.isEnabled("dealloc")){
 			// Create an instance of DealloctionAnalyzer
-			DeallocationAnalyzer analyzer = new DeallocationAnalyzer(config);
+			DeallocationAnalyzer analyzer = new DeallocationAnalyzer(config, readwriteAnalyzer, returnAnalyzer);
 			analyzer.apply(module);
 			// Create a deallocatedAnalyzer that may hold a null analyzer.
 			deallocAnalyzer = Optional.of(analyzer);
@@ -64,7 +75,7 @@ public class Translator implements Builder {
 		// Check if the copy elimination analysis is enabled.
 		Optional<CopyEliminationAnalyzer> copyAnalyzer = Optional.empty();
 		if (config.isEnabled("copy")) {
-			CopyEliminationAnalyzer analyzer = new CopyEliminationAnalyzer(this, config);
+			CopyEliminationAnalyzer analyzer = new CopyEliminationAnalyzer(config, readwriteAnalyzer, returnAnalyzer);
 			analyzer.apply(module);
 			copyAnalyzer = Optional.of(analyzer);
 			message = "Copy elimination analysis completed.\nFile: " + config.getFilename();
