@@ -23,19 +23,21 @@ import wyopcl.translator.ReturnAnalyzer;
  */
 public class CopyEliminationAnalyzer extends Analyzer {
 	// Perform read-write checks
-	public ReadWriteAnalyzer readwriteAnalyzer;
+	private ReadWriteAnalyzer readwriteAnalyzer;
 	// Perform return checks
-	public ReturnAnalyzer returnAnalyzer;
+	private ReturnAnalyzer returnAnalyzer;
 	// Perform liveness checks
 	public LiveVariablesAnalysis liveAnalyzer;
 
 	/**
 	 * Basic Constructor
 	 */
-	public CopyEliminationAnalyzer(Builder builder, Configuration config) {
+	public CopyEliminationAnalyzer(Configuration config,
+								   ReadWriteAnalyzer readwriteAnalyzer, 
+								   ReturnAnalyzer returnAnalyzer) {
 		super(config);
-		this.readwriteAnalyzer = new ReadWriteAnalyzer(config);
-		this.returnAnalyzer = new ReturnAnalyzer(config);
+		this.readwriteAnalyzer = readwriteAnalyzer;
+		this.returnAnalyzer = returnAnalyzer;
 		this.liveAnalyzer = new LiveVariablesAnalysis(config);
 
 	}
@@ -48,9 +50,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	public void apply(WyilFile module) {
 		// Builds up a CFG of the function.
 		super.apply(module);
-		// Builds up a calling graph and perform read-write checks.
-		this.readwriteAnalyzer.apply(module);
-		this.returnAnalyzer.apply(module);
+		// Builds up a calling graph and perform live variable checks.
 		this.liveAnalyzer.apply(module);
 		if (this.config.isVerbose()) {
 			// Iterate each function to determine if copies are needed.

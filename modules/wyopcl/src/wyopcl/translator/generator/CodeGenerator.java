@@ -29,6 +29,8 @@ import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
+import wyopcl.translator.ReadWriteAnalyzer;
+import wyopcl.translator.ReturnAnalyzer;
 import wyopcl.translator.copy.CopyEliminationAnalyzer;
 import wyopcl.translator.deallocate.DeallocationAnalyzer;
 
@@ -38,7 +40,8 @@ import wyopcl.translator.deallocate.DeallocationAnalyzer;
  * @author Min-Hsien Weng
  *
  */
-public class CodeGenerator extends AbstractCodeGenerator {
+public class CodeGenerator extends AbstractCodeGenerator {	
+	// Optional copy and deallocation analyzers
 	private Optional<CopyEliminationAnalyzer> copyAnalyzer = Optional.empty();
 	private Optional<DeallocationAnalyzer> deallocatedAnalyzer = Optional.empty();
 

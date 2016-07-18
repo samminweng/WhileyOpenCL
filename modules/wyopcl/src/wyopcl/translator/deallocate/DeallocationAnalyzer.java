@@ -32,8 +32,16 @@ import wyopcl.translator.generator.CodeStores;
  */
 public class DeallocationAnalyzer extends Analyzer {
 
-	public DeallocationAnalyzer(Configuration config) {
+	// Read-write and return analyzers
+	private ReadWriteAnalyzer readwriteAnalyzer;
+	private ReturnAnalyzer returnAnalyzer;
+
+	public DeallocationAnalyzer(Configuration config,
+								ReadWriteAnalyzer readwriteAnalyzer,
+								ReturnAnalyzer returnAnalyzer) {
 		super(config);
+		this.readwriteAnalyzer = readwriteAnalyzer;
+		this.returnAnalyzer = returnAnalyzer;
 	}
 
 	/**
@@ -371,17 +379,17 @@ public class DeallocationAnalyzer extends Analyzer {
 			if (copyAnalyzer.isPresent()) {
 				// Check if the callee de-allocates the argument
 				if (callee_dealloc.equals("transfer_callee")) {
-					if(code.targets().length>0){
+					if (code.targets().length > 0) {
 						int lhs = code.target(0);
 						Type lhs_type = stores.getRawType(lhs, function);
-						if(stores.isCompoundType(lhs_type)){
+						if (stores.isCompoundType(lhs_type)) {
 							// If so, then deallocation flag is transferred from caller site to callee
 							statements.add(indent + transferDealloc(lhs, register, function, stores));
-						}else{
+						} else {
 							// Remove the parameter deallocation flag
 							statements.add(indent + removeDealloc(register, function, stores));
 						}
-					}else{
+					} else {
 						// And remove the parameter deallocation flag
 						statements.add(indent + removeDealloc(register, function, stores));
 					}
@@ -390,7 +398,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			}
 		}
 
-		// If the parameter is NOT transferred, add LHS deallocation flag. 
+		// If the parameter is NOT transferred, add LHS deallocation flag.
 		if (code.targets().length > 0 && !isTransferred) {
 			// Add the deallocation flag of lhs variable
 			statements.add(indent + addDealloc(code.target(0), function, stores));
@@ -510,8 +518,8 @@ public class DeallocationAnalyzer extends Analyzer {
 
 			FunctionOrMethod f = this.getFunction(code.name.name());
 			int arguement = mapFunctionArgumentToCalleeRegister(register, code);
-			boolean isMutated = copyAnalyzer.get().readwriteAnalyzer.isMutated(arguement, f);
-			boolean isReturned = copyAnalyzer.get().returnAnalyzer.isReturned(arguement, f);
+			boolean isMutated = readwriteAnalyzer.isMutated(arguement, f);
+			boolean isReturned = returnAnalyzer.isReturned(arguement, f);
 
 			if (!isMutated) {
 				if (!isReturned) {
@@ -677,23 +685,6 @@ public class DeallocationAnalyzer extends Analyzer {
 		}
 	}
 
-	/**
-	 * Generate the post-deallocation code
-	 * 
-	 * @param isCopyEliminated
-	 * @param argumentCopyEliminated
-	 * @param statement
-	 * @param code
-	 * @param function
-	 */
-	/*
-	 * public void postDealloc(HashMap<Integer, Boolean> argumentCopyEliminated, List<String> statement, Code code,
-	 * FunctionOrMethod function, CodeStores stores) { // Compute deallocation flag of lhs register if (code instanceof
-	 * Codes.NewRecord) { statement.addAll(postDealloc((Codes.NewRecord) code, function, stores,
-	 * argumentCopyEliminated)); } else { throw new RuntimeException("Not Implemented"); }
-	 * 
-	 * }
-	 */
 
 	/**
 	 * Generate the post-deallocation code.
