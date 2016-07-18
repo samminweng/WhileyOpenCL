@@ -32,16 +32,19 @@ import wyopcl.translator.generator.CodeStores;
  */
 public class DeallocationAnalyzer extends Analyzer {
 
-	// Read-write and return analyzers
+	// Read-write, return and live variable analyzers
 	private ReadWriteAnalyzer readwriteAnalyzer;
 	private ReturnAnalyzer returnAnalyzer;
+	private LiveVariablesAnalysis liveAnalyzer;
 
 	public DeallocationAnalyzer(Configuration config,
 								ReadWriteAnalyzer readwriteAnalyzer,
-								ReturnAnalyzer returnAnalyzer) {
+								ReturnAnalyzer returnAnalyzer,
+								LiveVariablesAnalysis liveAnalyzer) {
 		super(config);
 		this.readwriteAnalyzer = readwriteAnalyzer;
 		this.returnAnalyzer = returnAnalyzer;
+		this.liveAnalyzer = liveAnalyzer;
 	}
 
 	/**
@@ -499,7 +502,9 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 *            code stores
 	 * @param copyAnalyzer
-	 * @return three outcomes: 'rm_callee', 'add_callee' and 'transfer_callee'
+	 * @return three outcomes: 
+	 * 
+	 * 			'rm_callee', 'add_callee' and 'transfer_callee'
 	 * 
 	 *         'rm_callee': set callee flag to be 'false' 'add_callee': set callee flag to be 'true' 'transfer_callee':
 	 *         transfers caller's flag to callee, and after the function call, set caller flag to be 'false'
@@ -512,15 +517,13 @@ public class DeallocationAnalyzer extends Analyzer {
 			return "";
 		}
 
+		FunctionOrMethod f = this.getFunction(code.name.name());
+		int arguement = mapFunctionArgumentToCalleeRegister(register, code);
+		boolean isMutated = readwriteAnalyzer.isMutated(arguement, f);
+		boolean isReturned = returnAnalyzer.isReturned(arguement, f);
+		// Analyze the deallocation flags using live variable, read-write and return analysis
+		boolean isLive = liveAnalyzer.isLive(register, code, function);
 		if (copyAnalyzer.isPresent()) {
-			// Analyze the deallocation flags using live variable, read-write and return analysis
-			boolean isLive = copyAnalyzer.get().liveAnalyzer.isLive(register, code, function);
-
-			FunctionOrMethod f = this.getFunction(code.name.name());
-			int arguement = mapFunctionArgumentToCalleeRegister(register, code);
-			boolean isMutated = readwriteAnalyzer.isMutated(arguement, f);
-			boolean isReturned = returnAnalyzer.isReturned(arguement, f);
-
 			if (!isMutated) {
 				if (!isReturned) {
 					// NOT mutated nor return
@@ -556,6 +559,10 @@ public class DeallocationAnalyzer extends Analyzer {
 				}
 			}
 		} else {
+			
+			
+			
+			
 			// The copy is needed, so that caller and callee both have the deallocation flags
 			return "add_callee";
 		}

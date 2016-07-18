@@ -34,11 +34,12 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 */
 	public CopyEliminationAnalyzer(Configuration config,
 								   ReadWriteAnalyzer readwriteAnalyzer, 
-								   ReturnAnalyzer returnAnalyzer) {
+								   ReturnAnalyzer returnAnalyzer,
+								   LiveVariablesAnalysis liveAnalyzer) {
 		super(config);
 		this.readwriteAnalyzer = readwriteAnalyzer;
 		this.returnAnalyzer = returnAnalyzer;
-		this.liveAnalyzer = new LiveVariablesAnalysis(config);
+		this.liveAnalyzer = liveAnalyzer;
 
 	}
 
@@ -50,8 +51,6 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	public void apply(WyilFile module) {
 		// Builds up a CFG of the function.
 		super.apply(module);
-		// Builds up a calling graph and perform live variable checks.
-		this.liveAnalyzer.apply(module);
 		if (this.config.isVerbose()) {
 			// Iterate each function to determine if copies are needed.
 			postorderTraversalCallGraph(tree);
@@ -78,7 +77,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 * 
 	 */
 	public boolean isCopyEliminated(int register, Code code, FunctionOrMethod function) {
-		boolean isLive = this.liveAnalyzer.isLive(register, code, function);
+		boolean isLive = liveAnalyzer.isLive(register, code, function);
 
 		if (!isLive) {
 			// The register is NOT alive, and thus the copy can be eliminated.
