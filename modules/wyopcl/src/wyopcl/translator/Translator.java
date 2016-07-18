@@ -15,6 +15,7 @@ import wyfs.lang.Path.Root;
 import wyil.lang.WyilFile;
 import wyopcl.Configuration;
 import wyopcl.translator.copy.CopyEliminationAnalyzer;
+import wyopcl.translator.copy.LiveVariablesAnalysis;
 import wyopcl.translator.deallocate.DeallocationAnalyzer;
 import wyopcl.translator.generator.CodeGenerator;
 
@@ -61,11 +62,20 @@ public class Translator implements Builder {
 		// Analyze the byte-code
 		returnAnalyzer.apply(module);
 		
+		// Create live variable analyzer
+		LiveVariablesAnalysis liveAnalyzer = new LiveVariablesAnalysis(config);
+		// Builds up a calling graph and perform live variable checks.
+		liveAnalyzer.apply(module);
+		
+		
 		// Check if deallocation analysis is enabled or not
 		Optional<DeallocationAnalyzer> deallocAnalyzer = Optional.empty();
 		if(config.isEnabled("dealloc")){
 			// Create an instance of DealloctionAnalyzer
-			DeallocationAnalyzer analyzer = new DeallocationAnalyzer(config, readwriteAnalyzer, returnAnalyzer);
+			DeallocationAnalyzer analyzer = new DeallocationAnalyzer(config,
+														readwriteAnalyzer,
+														returnAnalyzer, 
+														liveAnalyzer);
 			analyzer.apply(module);
 			// Create a deallocatedAnalyzer that may hold a null analyzer.
 			deallocAnalyzer = Optional.of(analyzer);
@@ -75,7 +85,10 @@ public class Translator implements Builder {
 		// Check if the copy elimination analysis is enabled.
 		Optional<CopyEliminationAnalyzer> copyAnalyzer = Optional.empty();
 		if (config.isEnabled("copy")) {
-			CopyEliminationAnalyzer analyzer = new CopyEliminationAnalyzer(config, readwriteAnalyzer, returnAnalyzer);
+			CopyEliminationAnalyzer analyzer = new CopyEliminationAnalyzer(config,
+															readwriteAnalyzer,
+															returnAnalyzer,
+															liveAnalyzer);
 			analyzer.apply(module);
 			copyAnalyzer = Optional.of(analyzer);
 			message = "Copy elimination analysis completed.\nFile: " + config.getFilename();
