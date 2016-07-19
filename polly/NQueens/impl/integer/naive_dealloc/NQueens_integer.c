@@ -222,6 +222,7 @@ blklab14:;
 blklab20:;
 			//invoke (%21) = (%8, %1, %5) NQueens_integer:conflict : function(NQueens_integer:POS,int,int)->(bool)
 			_21 = conflict(_COPY_STRUCT_PARAM(p, POS), true, n, col);
+			_ADD_DEALLOC(p);
 			//const %22 = true : bool
 			_22 = true;
 			//ifeq %21, %22 goto blklab21 : bool
@@ -275,6 +276,7 @@ blklab12:;
 		_30=n+_29;
 		//invoke (%28) = (%0, %30, %2) NQueens_integer:run : function(NQueens_integer:POS[],int,int)->(int)
 		_28 = run(copy_array_POS(queens, queens_size), queens_size, true, _30, dim);
+		_ADD_DEALLOC(queens);
 		//add %31 = %4, %28 : int
 		_31=num_solutions+_28;
 		//assign %4 = %31  : int
@@ -384,6 +386,7 @@ int main(int argc, char** args){
 	_14 = 0;
 	//invoke (%13) = (%3, %14, %2) NQueens_integer:run : function(NQueens_integer:POS[],int,int)->(int)
 	_13 = run(copy_array_POS(queens, queens_size), queens_size, true, _14, n);
+	_ADD_DEALLOC(queens);
 	//assign %4 = %13  : int
 	num_solutions = _13;
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
