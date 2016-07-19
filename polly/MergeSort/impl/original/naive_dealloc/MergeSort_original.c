@@ -82,7 +82,7 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	//invoke (%16) = (%5, %17, %4) MergeSort_original:sortV1 : function(int[],int,int)->(int[])
 	_UPDATE_1DARRAY_SIZE(_16, lhs);
 	_DEALLOC(_16);
-	_16 = sortV1(_COPY_1DARRAY_PARAM(lhs), true, _17, pivot);
+	_16 = sortV1(_COPY_1DARRAY_PARAM(lhs), false, _17, pivot);
 	_ADD_DEALLOC(_16);
 	//assign %5 = %16  : int[]
 	_DEALLOC(lhs);
@@ -104,7 +104,7 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	//invoke (%19) = (%6, %20, %21) MergeSort_original:sortV1 : function(int[],int,int)->(int[])
 	_UPDATE_1DARRAY_SIZE(_19, rhs);
 	_DEALLOC(_19);
-	_19 = sortV1(_COPY_1DARRAY_PARAM(rhs), true, _20, _21);
+	_19 = sortV1(_COPY_1DARRAY_PARAM(rhs), false, _20, _21);
 	_ADD_DEALLOC(_19);
 	//assign %6 = %19  : int[]
 	_DEALLOC(rhs);
@@ -340,7 +340,7 @@ blklab10:;
 	//invoke (%15) = (%4, %16, %2) MergeSort_original:sortV1 : function(int[],int,int)->(int[])
 	_UPDATE_1DARRAY_SIZE(_15, arr);
 	_DEALLOC(_15);
-	_15 = sortV1(_COPY_1DARRAY_PARAM(arr), true, _16, max);
+	_15 = sortV1(_COPY_1DARRAY_PARAM(arr), false, _16, max);
 	_ADD_DEALLOC(_15);
 	//assign %4 = %15  : int[]
 	_DEALLOC(arr);

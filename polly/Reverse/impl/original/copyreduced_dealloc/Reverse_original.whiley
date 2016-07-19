@@ -24,8 +24,8 @@ method main(System.Console sys):
             index = index + 1
         //Sort the array
         arr = reverse(arr)
-        /**Check the last element of sorted array */
+        /**Print the last element of sorted array */
         sys.out.println(arr[0])
         sys.out.println(arr[max-1])
         /** Print out the successful message */
-        sys.out.print_s("Pass Reverse test case")
+        sys.out.println_s("Pass Reverse test case")
