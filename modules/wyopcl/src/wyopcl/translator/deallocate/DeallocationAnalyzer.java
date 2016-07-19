@@ -512,15 +512,14 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * f returns b?		|F			|T			      |T			    |F
 	 * -----------------------------------------------------------------------------
 	 * b is alive?  F	|No Copy	|No Copy	      |No Copy	        |No Copy
-	 * 					|'rm_callee'|'transfer_callee'|'none_dealloc'|'transfer_callee'
+	 * 					|'rm_callee'|'none_dealloc'   |'none_dealloc'   |'transfer_callee'
 	 * ---------------------------------------------------------------------------
 	 * 				T	|No Copy	|No Copy	      |Copy		        |Copy
-	 * 					|'rm_callee'|'rm_callee'      |'caller_dealloc'	|'both_dealloc'
+	 * 					|'rm_callee'|'none_dealloc'   |'caller_dealloc'	|'both_dealloc'
 	 * 
 	 * 
 	 * </pre>
 	 * 
-	 * where 'caller' is the deallocation flag of caller site 'callee' is the deallocation flag of callee site
 	 * 
 	 * @param register
 	 *            function argument
@@ -595,10 +594,10 @@ public class DeallocationAnalyzer extends Analyzer {
 					// NOT mutated but returned
 					if (isLive) {
 						// If 'b' is alive at caller site
-						return "rm_callee";
+						return "none_dealloc";
 					} else {
 						// If 'b' is NOT alive at caller site
-						return "transfer_callee";
+						return "none_dealloc";
 					}
 				}
 			} else {
