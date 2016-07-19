@@ -593,6 +593,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				case "transfer_callee":
 					statement.add(parameter + "_dealloc");
 					break;
+				case "caller_dealloc":
+					statement.add("false");
+					break;
 				default:
 					break;// Do nothing
 				}

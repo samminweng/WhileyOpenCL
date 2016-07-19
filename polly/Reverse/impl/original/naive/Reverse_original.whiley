@@ -16,16 +16,16 @@ method main(System.Console sys):
         int max = n
         //Merge sorting on a reverse array 'arr' ([max ... 0])
         int index = 0
-        int[] arr = [0;max+1]
+        int[] arr = [0;max]
         //sys.out.println(arr)
         //Fill in the array in the reverse order (max..0)
-        while index <= max:
+        while index < max:
             arr[index] = max - index 
             index = index + 1
         //Sort the array
         arr = reverse(arr)
-        /**Check the last element of sorted array */
+        /**Print the last element of sorted array */
         sys.out.println(arr[0])
-        sys.out.println(arr[max])
+        sys.out.println(arr[max-1])
         /** Print out the successful message */
-        sys.out.print_s("Pass Reverse test case")
+        sys.out.println_s("Pass Reverse test case")

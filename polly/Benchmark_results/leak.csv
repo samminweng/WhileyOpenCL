@@ -8,9 +8,9 @@ newTicTacToe	original	naive	10	gcc	1	18448	9240	0	168
 newTicTacToe	original	naive_dealloc	10	gcc	1	0	0	0	0
 newTicTacToe	original	copyreduced	10	gcc	1	15568	4920	0	168
 newTicTacToe	original	copyreduced_dealloc	10	gcc	1	0	0	0	0
-Reverse	original	naive	10	gcc	1	632	24	0	88
+Reverse	original	naive	10	gcc	1	592	24	0	80
 Reverse	original	naive_dealloc	10	gcc	1	0	0	0	0
-Reverse	original	copyreduced	10	gcc	1	280	24	0	88
+Reverse	original	copyreduced	10	gcc	1	272	24	0	80
 Reverse	original	copyreduced_dealloc	10	gcc	1	0	0	0	0
 MergeSort	original	naive	10	gcc	1	1536	24	0	80
 MergeSort	original	naive_dealloc	10	gcc	1	0	0	0	0
@@ -32,7 +32,7 @@ GCD	original	naive	100	gcc	1	288	32	0	0
 GCD	original	naive_dealloc	100	gcc	1	0	0	0	0
 GCD	original	copyreduced	100	gcc	1	288	32	0	0
 GCD	original	copyreduced_dealloc	100	gcc	1	0	0	0	0
-GCD	cached	naive	100	gcc	1	799600344	32	480000	80000
+GCD	cached	naive	100	gcc	1	799680344	32	400000	80000
 GCD	cached	naive_dealloc	100	gcc	1	0	0	0	0
 GCD	cached	copyreduced	100	gcc	1	80344	32	0	0
 GCD	cached	copyreduced_dealloc	100	gcc	1	0	0	0	0
@@ -49,7 +49,7 @@ CoinGame	array	naive_dealloc	100	gcc	1	0	0	0	0
 CoinGame	array	copyreduced	100	gcc	1	83000	32	0	0
 CoinGame	array	copyreduced_dealloc	100	gcc	1	0	0	0	0
 NQueens	original	naive	8	gcc	1	22148824	40713168	192	408
-NQueens	original	naive_dealloc	8	gcc	1	0	0	0	0
+NQueens	original	naive_dealloc	8	gcc	1	21136	0	0	0
 NQueens	original	copyreduced	8	gcc	1	33360	16	0	216
 NQueens	original	copyreduced_dealloc	8	gcc	1	0	0	0	0
 NQueens	integer	naive	8	gcc	1	2220240	263440	0	192

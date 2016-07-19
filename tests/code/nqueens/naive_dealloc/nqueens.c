@@ -362,7 +362,8 @@ blklab12:;
 		_35=n+_34;
 		//invoke (%33) = (%0, %35, %2) nqueens:run : function(nqueens:NQueen,int,int)->(nqueens:NQueen)
 		_DEALLOC_STRUCT(_33, NQueen);
-		_33 = run(_COPY_STRUCT_PARAM(nq, NQueen), true, _35, dim);
+		_33 = run(_COPY_STRUCT_PARAM(nq, NQueen), false, _35, dim);
+		_ADD_DEALLOC(nq);
 		_ADD_DEALLOC(_33);
 		//assign %0 = %33  : {int num_solutions,{int c,int r}[] queens}
 		_DEALLOC_STRUCT(nq, NQueen);
@@ -475,7 +476,8 @@ int main(int argc, char** args){
 	_13 = 0;
 	//invoke (%12) = (%4, %13, %1) nqueens:run : function(nqueens:NQueen,int,int)->(nqueens:NQueen)
 	_DEALLOC_STRUCT(_12, NQueen);
-	_12 = run(_COPY_STRUCT_PARAM(nq, NQueen), true, _13, n);
+	_12 = run(_COPY_STRUCT_PARAM(nq, NQueen), false, _13, n);
+	_ADD_DEALLOC(nq);
 	_ADD_DEALLOC(_12);
 	//assign %4 = %12  : {int num_solutions,{int c,int r}[] queens}
 	_DEALLOC_STRUCT(nq, NQueen);

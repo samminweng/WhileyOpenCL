@@ -192,12 +192,11 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 		  	}\
 		})
 // Deallocate a member whose type is a structure pointer
+// This macro does not check 'de-alloc' flag 
 #define _DEALLOC_MEMBER_STRUCT(a, b, name) \
 		({\
-			if(a##_dealloc){\
-				free_##name(b);\
-				b = NULL;\
-			}\
+			free_##name(b);\
+			b = NULL;\
 		})
 /*
 // Currently this marco is not used yet.

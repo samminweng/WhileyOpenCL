@@ -108,19 +108,19 @@ int main(int argc, char** args){
 	_DECL_DEALLOC(_8);
 	long long _9 = 0;
 	long long _10 = 0;
-	long long _11 = 0;
+	_DECL_1DARRAY(_11);
+	_DECL_DEALLOC(_11);
 	long long _12 = 0;
-	_DECL_1DARRAY(_13);
-	_DECL_DEALLOC(_13);
+	long long _13 = 0;
 	long long _14 = 0;
-	long long _15 = 0;
-	long long _16 = 0;
-	_DECL_1DARRAY(_17);
-	_DECL_DEALLOC(_17);
-	void* _18;
-	long long _20 = 0;
-	long long _21 = 0;
-	void* _22;
+	_DECL_1DARRAY(_15);
+	_DECL_DEALLOC(_15);
+	void* _16;
+	long long _18 = 0;
+	long long _19 = 0;
+	void* _20;
+	long long _22 = 0;
+	long long _23 = 0;
 	long long _24 = 0;
 	void* _25;
 	_DECL_1DARRAY(_27);
@@ -152,69 +152,69 @@ int main(int argc, char** args){
 	index = _9;
 	//const %10 = 0 : int
 	_10 = 0;
-	//const %11 = 1 : int
-	_11 = 1;
-	//add %12 = %2, %11 : int
-	_12=max+_11;
-	//arraygen %13 = [10; 12] : int[]
-	_DEALLOC(_13);
-	_NEW_1DARRAY(_13, _12, _10);
-	_ADD_DEALLOC(_13);
-	//assign %4 = %13  : int[]
+	//arraygen %11 = [10; 2] : int[]
+	_DEALLOC(_11);
+	_NEW_1DARRAY(_11, max, _10);
+	_ADD_DEALLOC(_11);
+	//assign %4 = %11  : int[]
 	_DEALLOC(arr);
-	_COPY_1DARRAY(arr, _13);
+	_COPY_1DARRAY(arr, _11);
 	_ADD_DEALLOC(arr);
-	//loop (%3, %4, %14, %15, %16)
+	//loop (%3, %4, %12, %13, %14)
 	while(true){
-		//ifgt %3, %2 goto blklab5 : int
-		if(index>max){goto blklab5;}
-		//sub %14 = %2, %3 : int
-		_14=max-index;
-		//update %4[%3] = %14 : int[] -> int[]
-		arr[index] = _14;
-		//const %15 = 1 : int
-		_15 = 1;
-		//add %16 = %3, %15 : int
-		_16=index+_15;
-		//assign %3 = %16  : int
-		index = _16;
+		//ifge %3, %2 goto blklab5 : int
+		if(index>=max){goto blklab5;}
+		//sub %12 = %2, %3 : int
+		_12=max-index;
+		//update %4[%3] = %12 : int[] -> int[]
+		arr[index] = _12;
+		//const %13 = 1 : int
+		_13 = 1;
+		//add %14 = %3, %13 : int
+		_14=index+_13;
+		//assign %3 = %14  : int
+		index = _14;
 //.blklab6
 blklab6:;
 	}
 //.blklab5
 blklab5:;
-	//invoke (%17) = (%4) Reverse_original:reverse : function(int[])->(int[])
-	_UPDATE_1DARRAY_SIZE(_17, arr);
-	_DEALLOC(_17);
-	_17 = reverse(_COPY_1DARRAY_PARAM(arr), true);
-	_ADD_DEALLOC(_17);
-	//assign %4 = %17  : int[]
+	//invoke (%15) = (%4) Reverse_original:reverse : function(int[])->(int[])
+	_UPDATE_1DARRAY_SIZE(_15, arr);
+	_DEALLOC(_15);
+	_15 = reverse(_COPY_1DARRAY_PARAM(arr), true);
+	_ADD_DEALLOC(_15);
+	//assign %4 = %15  : int[]
 	_DEALLOC(arr);
-	_COPY_1DARRAY(arr, _17);
+	_COPY_1DARRAY(arr, _15);
 	_ADD_DEALLOC(arr);
-	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %19 = %18 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %20 = 0 : int
-	_20 = 0;
-	//indexof %21 = %4, %20 : int[]
-	_21=arr[_20];
-	//indirectinvoke () = %19 (%21) : method(any)->()
-	printf("%lld\n", _21);
-	//fieldload %22 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %23 = %22 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//indexof %24 = %4, %2 : int[]
-	_24=arr[max];
-	//indirectinvoke () = %23 (%24) : method(any)->()
+	//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %17 = %16 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %18 = 0 : int
+	_18 = 0;
+	//indexof %19 = %4, %18 : int[]
+	_19=arr[_18];
+	//indirectinvoke () = %17 (%19) : method(any)->()
+	printf("%lld\n", _19);
+	//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %21 = %20 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %22 = 1 : int
+	_22 = 1;
+	//sub %23 = %2, %22 : int
+	_23=max-_22;
+	//indexof %24 = %4, %23 : int[]
+	_24=arr[_23];
+	//indirectinvoke () = %21 (%24) : method(any)->()
 	printf("%lld\n", _24);
 	//fieldload %25 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %26 = %25 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//fieldload %26 = %25 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %27 = [80,97,115,115,32,82,101,118,101,114,115,101,32,116,101,115,116,32,99,97,115,101] : int[]
 	_DEALLOC(_27);
 	_NEW_1DARRAY(_27, 22, 0);
 	_27[0] = 80; _27[1] = 97; _27[2] = 115; _27[3] = 115; _27[4] = 32; _27[5] = 82; _27[6] = 101; _27[7] = 118; _27[8] = 101; _27[9] = 114; _27[10] = 115; _27[11] = 101; _27[12] = 32; _27[13] = 116; _27[14] = 101; _27[15] = 115; _27[16] = 116; _27[17] = 32; _27[18] = 99; _27[19] = 97; _27[20] = 115; _27[21] = 101; 
 	_ADD_DEALLOC(_27);
 	//indirectinvoke () = %26 (%27) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_27));
+	println_s(_27, _27_size);
 //.blklab4
 blklab4:;
 	//return
@@ -223,8 +223,8 @@ blklab4:;
 	_DEALLOC(_5);
 	_DEALLOC_2DArray(_6);
 	_DEALLOC(_8);
-	_DEALLOC(_13);
-	_DEALLOC(_17);
+	_DEALLOC(_11);
+	_DEALLOC(_15);
 	_DEALLOC(_27);
 	exit(0);
 }
