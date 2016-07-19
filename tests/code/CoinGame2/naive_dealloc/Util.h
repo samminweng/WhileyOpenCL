@@ -194,12 +194,18 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 // Deallocate a member whose type is a structure pointer
 #define _DEALLOC_MEMBER_STRUCT(a, b, name) \
 		({\
+			free_##name(b);\
+			b = NULL;\
+		})
+/*
+#define _DEALLOC_MEMBER_STRUCT(a, b, name) \
+		({\
 			if(a##_dealloc){\
 				free_##name(b);\
 				b = NULL;\
 			}\
 		})
-/*
+
 // Currently this marco is not used yet.
 // Deallocate a member whose type is an array of structure pointers
 #define _DEALLOC_MEMBER_1DARRAY_STRUCT(a, b, name) \
