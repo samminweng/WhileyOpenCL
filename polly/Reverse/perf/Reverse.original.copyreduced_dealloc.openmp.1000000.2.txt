@@ -1,182 +1,192 @@
 Run the original Reverse on 1000000 using openmp and 2 threads...1
 1000000
 Pass Reverse test case
+
  Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
 
-         59.168061      task-clock (msec)         #    1.673 CPUs utilized          
+         61.360041      task-clock (msec)         #    1.707 CPUs utilized          
+                 3      context-switches          #    0.049 K/sec                  
+                 2      cpu-migrations            #    0.033 K/sec                  
+             1,422      page-faults               #    0.023 M/sec                  
+       221,584,354      cycles                    #    3.611 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        63,491,268      instructions              #    0.29  insns per cycle        
+        13,685,624      branches                  #  223.038 M/sec                  
+            12,563      branch-misses             #    0.09% of all branches        
+
+       0.035941009 seconds time elapsed
+
+1
+1000000
+Pass Reverse test case
+
+ Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
+
+         58.391671      task-clock (msec)         #    1.705 CPUs utilized          
                  3      context-switches          #    0.051 K/sec                  
                  1      cpu-migrations            #    0.017 K/sec                  
-               911      page-faults               #    0.015 M/sec                  
-       214,862,168      cycles                    #    3.631 GHz                    
+             1,422      page-faults               #    0.024 M/sec                  
+       217,311,202      cycles                    #    3.722 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        62,309,608      instructions              #    0.29  insns per cycle        
-        13,484,851      branches                  #  227.908 M/sec                  
-            12,949      branch-misses             #    0.10% of all branches        
+        63,461,189      instructions              #    0.29  insns per cycle        
+        13,680,472      branches                  #  234.288 M/sec                  
+            10,691      branch-misses             #    0.08% of all branches        
 
-       0.035362232 seconds time elapsed
+       0.034256218 seconds time elapsed
 
 1
 1000000
 Pass Reverse test case
+
  Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
 
-         57.427230      task-clock (msec)         #    1.259 CPUs utilized          
-                 2      context-switches          #    0.035 K/sec                  
-                 2      cpu-migrations            #    0.035 K/sec                  
-               911      page-faults               #    0.016 M/sec                  
-       216,596,588      cycles                    #    3.772 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        62,322,994      instructions              #    0.29  insns per cycle        
-        13,486,826      branches                  #  234.851 M/sec                  
-            12,017      branch-misses             #    0.09% of all branches        
-
-       0.045599435 seconds time elapsed
-
-1
-1000000
-Pass Reverse test case
- Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
-
-         57.892445      task-clock (msec)         #    1.595 CPUs utilized          
-                 2      context-switches          #    0.035 K/sec                  
-                 1      cpu-migrations            #    0.017 K/sec                  
-             1,422      page-faults               #    0.025 M/sec                  
-       217,729,746      cycles                    #    3.761 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        63,582,143      instructions              #    0.29  insns per cycle        
-        13,703,374      branches                  #  236.704 M/sec                  
-            11,688      branch-misses             #    0.09% of all branches        
-
-       0.036288729 seconds time elapsed
-
-1
-1000000
-Pass Reverse test case
- Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
-
-         57.386780      task-clock (msec)         #    1.553 CPUs utilized          
-                 2      context-switches          #    0.035 K/sec                  
-                 1      cpu-migrations            #    0.017 K/sec                  
-               911      page-faults               #    0.016 M/sec                  
-       216,783,759      cycles                    #    3.778 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        62,298,779      instructions              #    0.29  insns per cycle        
-        13,482,873      branches                  #  234.947 M/sec                  
-            10,969      branch-misses             #    0.08% of all branches        
-
-       0.036962315 seconds time elapsed
-
-1
-1000000
-Pass Reverse test case
- Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
-
-         63.230790      task-clock (msec)         #    1.189 CPUs utilized          
-                 2      context-switches          #    0.032 K/sec                  
-                 2      cpu-migrations            #    0.032 K/sec                  
-               911      page-faults               #    0.014 M/sec                  
-       236,314,008      cycles                    #    3.737 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        62,314,437      instructions              #    0.26  insns per cycle        
-        13,487,568      branches                  #  213.307 M/sec                  
-            11,883      branch-misses             #    0.09% of all branches        
-
-       0.053164427 seconds time elapsed
-
-1
-1000000
-Pass Reverse test case
- Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
-
-         61.959361      task-clock (msec)         #    1.535 CPUs utilized          
-                 2      context-switches          #    0.032 K/sec                  
-                 1      cpu-migrations            #    0.016 K/sec                  
-               911      page-faults               #    0.015 M/sec                  
-       225,887,183      cycles                    #    3.646 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        62,307,903      instructions              #    0.28  insns per cycle        
-        13,483,081      branches                  #  217.612 M/sec                  
-            11,484      branch-misses             #    0.09% of all branches        
-
-       0.040356321 seconds time elapsed
-
-1
-1000000
-Pass Reverse test case
- Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
-
-         59.663509      task-clock (msec)         #    1.431 CPUs utilized          
+         58.508093      task-clock (msec)         #    1.630 CPUs utilized          
                  2      context-switches          #    0.034 K/sec                  
-                 2      cpu-migrations            #    0.034 K/sec                  
-               911      page-faults               #    0.015 M/sec                  
-       217,512,533      cycles                    #    3.646 GHz                    
+                 1      cpu-migrations            #    0.017 K/sec                  
+             1,422      page-faults               #    0.024 M/sec                  
+       217,948,651      cycles                    #    3.725 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        62,302,459      instructions              #    0.29  insns per cycle        
-        13,482,584      branches                  #  225.977 M/sec                  
-            11,306      branch-misses             #    0.08% of all branches        
+        63,443,412      instructions              #    0.29  insns per cycle        
+        13,679,947      branches                  #  233.813 M/sec                  
+            10,153      branch-misses             #    0.07% of all branches        
 
-       0.041697942 seconds time elapsed
+       0.035902540 seconds time elapsed
 
 1
 1000000
 Pass Reverse test case
+
  Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
 
-         63.025655      task-clock (msec)         #    1.695 CPUs utilized          
-                 4      context-switches          #    0.063 K/sec                  
-                 1      cpu-migrations            #    0.016 K/sec                  
-               912      page-faults               #    0.014 M/sec                  
-       237,339,905      cycles                    #    3.766 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        62,320,977      instructions              #    0.26  insns per cycle        
-        13,488,543      branches                  #  214.017 M/sec                  
-            11,811      branch-misses             #    0.09% of all branches        
-
-       0.037192700 seconds time elapsed
-
-1
-1000000
-Pass Reverse test case
- Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
-
-         57.119032      task-clock (msec)         #    1.692 CPUs utilized          
-                 2      context-switches          #    0.035 K/sec                  
-                 2      cpu-migrations            #    0.035 K/sec                  
-             1,422      page-faults               #    0.025 M/sec                  
-       214,360,590      cycles                    #    3.753 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        63,561,805      instructions              #    0.30  insns per cycle        
-        13,695,808      branches                  #  239.777 M/sec                  
-            11,426      branch-misses             #    0.08% of all branches        
-
-       0.033762532 seconds time elapsed
-
-1
-1000000
-Pass Reverse test case
- Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
-
-         57.615609      task-clock (msec)         #    1.691 CPUs utilized          
+         57.829453      task-clock (msec)         #    1.711 CPUs utilized          
                  2      context-switches          #    0.035 K/sec                  
                  1      cpu-migrations            #    0.017 K/sec                  
-             1,422      page-faults               #    0.025 M/sec                  
-       218,382,046      cycles                    #    3.790 GHz                    
+               913      page-faults               #    0.016 M/sec                  
+       212,932,818      cycles                    #    3.682 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        63,614,642      instructions              #    0.29  insns per cycle        
-        13,713,606      branches                  #  238.019 M/sec                  
-            11,533      branch-misses             #    0.08% of all branches        
+        62,181,913      instructions              #    0.29  insns per cycle        
+        13,461,776      branches                  #  232.784 M/sec                  
+            10,936      branch-misses             #    0.08% of all branches        
 
-       0.034076848 seconds time elapsed
+       0.033800257 seconds time elapsed
+
+1
+1000000
+Pass Reverse test case
+
+ Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
+
+         58.058070      task-clock (msec)         #    1.727 CPUs utilized          
+                 2      context-switches          #    0.034 K/sec                  
+                 1      cpu-migrations            #    0.017 K/sec                  
+               911      page-faults               #    0.016 M/sec                  
+       215,164,226      cycles                    #    3.706 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        62,148,263      instructions              #    0.29  insns per cycle        
+        13,451,046      branches                  #  231.683 M/sec                  
+            10,725      branch-misses             #    0.08% of all branches        
+
+       0.033617870 seconds time elapsed
+
+1
+1000000
+Pass Reverse test case
+
+ Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
+
+         58.376721      task-clock (msec)         #    1.744 CPUs utilized          
+                 2      context-switches          #    0.034 K/sec                  
+                 1      cpu-migrations            #    0.017 K/sec                  
+               911      page-faults               #    0.016 M/sec                  
+       215,820,582      cycles                    #    3.697 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        62,211,365      instructions              #    0.29  insns per cycle        
+        13,464,419      branches                  #  230.647 M/sec                  
+             9,829      branch-misses             #    0.07% of all branches        
+
+       0.033471044 seconds time elapsed
+
+1
+1000000
+Pass Reverse test case
+
+ Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
+
+         56.055916      task-clock (msec)         #    1.723 CPUs utilized          
+                 2      context-switches          #    0.036 K/sec                  
+                 1      cpu-migrations            #    0.018 K/sec                  
+               911      page-faults               #    0.016 M/sec                  
+       208,752,303      cycles                    #    3.724 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        62,163,894      instructions              #    0.30  insns per cycle        
+        13,456,035      branches                  #  240.047 M/sec                  
+             9,489      branch-misses             #    0.07% of all branches        
+
+       0.032526214 seconds time elapsed
+
+1
+1000000
+Pass Reverse test case
+
+ Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
+
+         60.978543      task-clock (msec)         #    1.711 CPUs utilized          
+                 2      context-switches          #    0.033 K/sec                  
+                 1      cpu-migrations            #    0.016 K/sec                  
+               912      page-faults               #    0.015 M/sec                  
+       221,829,106      cycles                    #    3.638 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        62,203,915      instructions              #    0.28  insns per cycle        
+        13,464,704      branches                  #  220.811 M/sec                  
+             9,548      branch-misses             #    0.07% of all branches        
+
+       0.035649366 seconds time elapsed
+
+1
+1000000
+Pass Reverse test case
+
+ Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
+
+         58.512865      task-clock (msec)         #    1.741 CPUs utilized          
+                 2      context-switches          #    0.034 K/sec                  
+                 1      cpu-migrations            #    0.017 K/sec                  
+             1,422      page-faults               #    0.024 M/sec                  
+       212,990,199      cycles                    #    3.640 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        63,466,604      instructions              #    0.30  insns per cycle        
+        13,681,130      branches                  #  233.814 M/sec                  
+             9,756      branch-misses             #    0.07% of all branches        
+
+       0.033609507 seconds time elapsed
+
+1
+1000000
+Pass Reverse test case
+
+ Performance counter stats for 'out/Reverse.original.copyreduced_dealloc.openmp.out 1000000':
+
+         56.822908      task-clock (msec)         #    1.733 CPUs utilized          
+                 2      context-switches          #    0.035 K/sec                  
+                 1      cpu-migrations            #    0.018 K/sec                  
+               911      page-faults               #    0.016 M/sec                  
+       207,248,007      cycles                    #    3.647 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        62,178,308      instructions              #    0.30  insns per cycle        
+        13,455,423      branches                  #  236.796 M/sec                  
+             9,603      branch-misses             #    0.07% of all branches        
+
+       0.032782359 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -185,7 +195,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3553.531
+cpu MHz		: 3415.140
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -212,7 +222,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3451.664
+cpu MHz		: 3407.304
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -239,7 +249,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3550.609
+cpu MHz		: 3683.421
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -266,7 +276,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3489.515
+cpu MHz		: 3516.078
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -293,7 +303,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3412.218
+cpu MHz		: 3426.296
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -320,7 +330,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3889.148
+cpu MHz		: 3676.250
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -347,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3889.148
+cpu MHz		: 3669.742
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -374,7 +384,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3728.046
+cpu MHz		: 3402.257
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
