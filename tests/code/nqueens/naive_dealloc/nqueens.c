@@ -309,6 +309,7 @@ blklab14:;
 blklab20:;
 			//invoke (%26) = (%7, %1, %4) nqueens:conflict : function(nqueens:POS,int,int)->(bool)
 			_26 = conflict(_COPY_STRUCT_PARAM(p, POS), true, n, col);
+			_ADD_DEALLOC(p);
 			//const %27 = true : bool
 			_27 = true;
 			//ifeq %26, %27 goto blklab21 : bool
@@ -467,6 +468,7 @@ int main(int argc, char** args){
 	//invoke (%11) = (%3, %2) nqueens:nqueen : function(int,nqueens:POS[])->(nqueens:NQueen)
 	_DEALLOC_STRUCT(_11, NQueen);
 	_11 = nqueen(num_solutions, copy_array_POS(queens, queens_size), queens_size, true);
+	_ADD_DEALLOC(queens);
 	_ADD_DEALLOC(_11);
 	//assign %4 = %11  : {int num_solutions,{int c,int r}[] queens}
 	_DEALLOC_STRUCT(nq, NQueen);

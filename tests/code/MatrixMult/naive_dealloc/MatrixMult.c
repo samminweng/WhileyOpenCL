@@ -210,6 +210,7 @@ blklab13:;
 	//invoke (%34) = (%35, %36, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
 	_DEALLOC_STRUCT(_34, Matrix);
 	_34 = matrix(_35, _36, _COPY_2DARRAY_PARAM(C_data), true);
+	_ADD_DEALLOC(C_data);
 	_ADD_DEALLOC(_34);
 	//return %34
 	_DEALLOC_STRUCT(A, Matrix);
@@ -408,6 +409,7 @@ blklab23:;
 	//invoke (%15) = (%1, %0, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
 	_DEALLOC_STRUCT(_15, Matrix);
 	_15 = matrix(width, height, _COPY_2DARRAY_PARAM(rows), true);
+	_ADD_DEALLOC(rows);
 	_ADD_DEALLOC(_15);
 	//return %15
 	_DEALLOC_STRUCT(r, Matrix);
@@ -555,6 +557,8 @@ blklab28:;
 	//invoke (%26) = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
 	_DEALLOC_STRUCT(_26, Matrix);
 	_26 = multiply(_COPY_STRUCT_PARAM(A, Matrix), true, _COPY_STRUCT_PARAM(B, Matrix), true);
+	_ADD_DEALLOC(A);
+	_ADD_DEALLOC(B);
 	_ADD_DEALLOC(_26);
 	//assign %4 = %26  : {int[][] data,int height,int width}
 	_DEALLOC_STRUCT(C, Matrix);
@@ -592,6 +596,7 @@ blklab29:;
 	}
 	//invoke () = (%0, %4) MatrixMult:printMat : method(whiley/lang/System:Console,MatrixMult:Matrix)->()
 printMat(stdout, _COPY_STRUCT_PARAM(C, Matrix), true);
+	_ADD_DEALLOC(C);
 	//fieldload %35 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %36 = %35 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %37 = [80,97,115,115,32,77,97,116,114,105,120,77,117,108,116,32,116,101,115,116,32,99,97,115,101] : int[]
