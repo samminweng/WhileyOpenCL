@@ -521,9 +521,11 @@ public class DeallocationAnalyzer extends Analyzer {
 		int arguement = mapFunctionArgumentToCalleeRegister(register, code);
 		boolean isMutated = readwriteAnalyzer.isMutated(arguement, f);
 		boolean isReturned = returnAnalyzer.isReturned(arguement, f);
-		// Analyze the deallocation flags using live variable, read-write and return analysis
-		boolean isLive = liveAnalyzer.isLive(register, code, function);
+		
+		// Analyze the copy
 		if (copyAnalyzer.isPresent()) {
+			// Analyze the deallocation flags using live variable, read-write and return analysis
+			boolean isLive = liveAnalyzer.isLive(register, code, function);
 			if (!isMutated) {
 				if (!isReturned) {
 					// NOT mutated nor return
@@ -559,11 +561,18 @@ public class DeallocationAnalyzer extends Analyzer {
 				}
 			}
 		} else {
-			
-			
-			
-			
 			// The copy is needed, so that caller and callee both have the deallocation flags
+			
+			if(!isMutated){
+				if(isReturned){
+					return "caller_dealloc";
+				}
+			}else{
+				if(isReturned){
+					return "caller_dealloc";
+				}
+			}
+			
 			return "add_callee";
 		}
 	}
