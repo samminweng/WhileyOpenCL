@@ -404,6 +404,9 @@ public class DeallocationAnalyzer extends Analyzer {
 					// The parameter is de-allocated by caller
 					// The caller flag must be 'true'
 					statements.add(indent + addDealloc(register, function, stores));
+				}else if(callee_dealloc.equals("both_dealloc")){
+					// The caller flag must be 'true'
+					statements.add(indent + addDealloc(register, function, stores));
 				}
 				
 				
@@ -489,6 +492,19 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * If deallocation analyzer is enabled, then deallocation flags of caller and callee are based on the following
 	 * rules, e.g. a function call 'a = f(b, b_own_f)', Rules are as below:
 	 * 
+	 * De-allocation rules for copy-always-made test case
+	 * <pre> 
+	 * f mutates b?	   |F			   |F			      |T			    |T
+	 * f returns b?	   |F			   |T			      |T			    |F
+	 * -----------------------------------------------------------------------------
+	 * b is alive?	F  |Copy	       |Copy	          |Copy		        |Copy
+	 * 				   |'both_dealloc' |'caller_dealloc'  |'caller_dealloc'	|'both_dealloc'
+	 * -----------------------------------------------------------------------------
+	 * 				T  |Copy	       |Copy	          |Copy	            |Copy
+	 * 				   |'both_dealloc' |'caller_dealloc'  |'caller_dealloc' |'both_dealloc'
+	 * 
+	 * </pre>
+	 * De-allocation rules for copy-reduced test cases
 	 * <pre>
 	 * f mutates b?		|F			|F			      |T			    |T
 	 * f returns b?		|F			|T			      |T			    |F
@@ -578,8 +594,7 @@ public class DeallocationAnalyzer extends Analyzer {
 				}
 			}
 		} else {
-			// The copy is needed, so that caller and callee both have the deallocation flags
-			
+			// The copy is needed
 			if(!isMutated){
 				if(isReturned){
 					return "caller_dealloc";
@@ -589,8 +604,8 @@ public class DeallocationAnalyzer extends Analyzer {
 					return "caller_dealloc";
 				}
 			}
-			
-			return "add_callee";
+			// For other cases, the de-allocation is done at both caller and callee.
+			return "both_dealloc";
 		}
 	}
 

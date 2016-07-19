@@ -153,6 +153,7 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY_SIZE(_5, _11);
 	_DEALLOC(_5);
 	_5 = reverse(_COPY_1DARRAY_PARAM(_11), true);
+	_ADD_DEALLOC(_11);
 	_ADD_DEALLOC(_5);
 	//assign %1 = %5  : int[]
 	_DEALLOC(rs);
@@ -229,6 +230,7 @@ blklab5:;
 	_UPDATE_1DARRAY_SIZE(_27, arr);
 	_DEALLOC(_27);
 	_27 = reverse(_COPY_1DARRAY_PARAM(arr), true);
+	_ADD_DEALLOC(arr);
 	_ADD_DEALLOC(_27);
 	//assign %4 = %27  : int[]
 	_DEALLOC(arr);
