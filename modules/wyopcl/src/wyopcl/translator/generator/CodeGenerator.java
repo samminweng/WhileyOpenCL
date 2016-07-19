@@ -599,6 +599,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				case "both_dealloc":
 					statement.add("true");
 					break;
+				case "none_dealloc":
+					statement.add("false");
+					break;
 				default:
 					break;// Do nothing
 				}
