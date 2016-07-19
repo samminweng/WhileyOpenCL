@@ -195,8 +195,9 @@ blklab6:;
 	//invoke (%15) = (%4) BubbleSort_original:bubbleSort : function(int[])->(int[])
 	_UPDATE_1DARRAY_SIZE(_15, arr);
 	_DEALLOC(_15);
-	_15 = bubbleSort(_1DARRAY_PARAM(arr), arr_dealloc);
-	_TRANSFER_DEALLOC(_15, arr);
+	_15 = bubbleSort(_1DARRAY_PARAM(arr), false);
+	_REMOVE_DEALLOC(arr);
+	_ADD_DEALLOC(_15);
 	//assign %4 = %15  : int[]
 	_DEALLOC(arr);
 	_UPDATE_1DARRAY(arr, _15);
