@@ -46,6 +46,7 @@ blklab0:;
 	_UPDATE_1DARRAY_SIZE(_8, ls);
 	_DEALLOC(_8);
 	_8 = fibonacci(_COPY_1DARRAY_PARAM(ls), false, _10);
+	_ADD_DEALLOC(ls);
 	_ADD_DEALLOC(_8);
 	//assign %0 = %8  : int[]
 	_DEALLOC(ls);
@@ -126,6 +127,7 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY_SIZE(_6, arr);
 	_DEALLOC(_6);
 	_6 = fibonacci(_COPY_1DARRAY_PARAM(arr), false, _8);
+	_ADD_DEALLOC(arr);
 	_ADD_DEALLOC(_6);
 	//assign %2 = %6  : int[]
 	_DEALLOC(arr);

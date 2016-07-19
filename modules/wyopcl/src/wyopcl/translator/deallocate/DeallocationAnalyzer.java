@@ -398,6 +398,15 @@ public class DeallocationAnalyzer extends Analyzer {
 					}
 					isTransferred = true;
 				}
+			}else{
+				
+				if(callee_dealloc.equals("caller_dealloc")){
+					// The parameter is de-allocated by caller
+					// The caller flag must be 'true'
+					statements.add(indent + addDealloc(register, function, stores));
+				}
+				
+				
 			}
 		}
 
@@ -504,10 +513,18 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param copyAnalyzer
 	 * @return three outcomes: 
 	 * 
-	 * 			'rm_callee', 'add_callee' and 'transfer_callee'
-	 * 
-	 *         'rm_callee': set callee flag to be 'false' 'add_callee': set callee flag to be 'true' 'transfer_callee':
-	 *         transfers caller's flag to callee, and after the function call, set caller flag to be 'false'
+	 * 	'rm_callee', 'add_callee' and 'transfer_callee'
+	 *  <ul>
+	 *  <li>'rm_callee': set callee flag to be 'false' 
+	 *  <li>'add_callee': set callee flag to be 'true' 'transfer_callee':
+	 *  <li>'transfers caller's flag to callee, and after the function call, set caller flag to be 'false'
+	 *  <li>'caller_dealloc': set caller's flag to be true and callee's flag to be false.
+	 *  	<pre><code>     
+	 * 		  a = f(b, false)
+	 *        b_dealloc = true
+	 *        a_dealloc = true
+	 * 	    </code></pre>
+	 * </ul>
 	 * 
 	 */
 	public String computeDealloc(int register, Codes.Invoke code, FunctionOrMethod function, CodeStores stores,
