@@ -492,7 +492,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * If deallocation analyzer is enabled, then deallocation flags of caller and callee are based on the following
 	 * rules, e.g. a function call 'a = f(b, b_own_f)', Rules are as below:
 	 * 
-	 * De-allocation rules for copy-always-made test case
+	 * De-allocation rules for copy-made test case
 	 * <pre> 
 	 * f mutates b?	   |F			   |F			      |T			    |T
 	 * f returns b?	   |F			   |T			      |T			    |F
@@ -509,11 +509,13 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * f mutates b?		|F			|F			      |T			    |T
 	 * f returns b?		|F			|T			      |T			    |F
 	 * -----------------------------------------------------------------------------
-	 * b is alive?	T	|No Copy	|No Copy	      |Copy		        |Copy
-	 * 					|'rm_callee'|'rm_callee'      |'add_callee'	    |'add_callee'
-	 * --------------------------------------------------------------------
-	 * 				F	|No Copy	|No Copy	      |No Copy	        |No Copy
+	 * b is alive?  F	|No Copy	|No Copy	      |No Copy	        |No Copy
 	 * 					|'rm_callee'|'transfer_callee'|'transfer_callee'|'transfer_callee'
+	 * ---------------------------------------------------------------------------
+	 * 				T	|No Copy	|No Copy	      |Copy		        |Copy
+	 * 					|'rm_callee'|'rm_callee'      |'caller_dealloc'	|'both_dealloc'
+	 * 
+	 * 
 	 * </pre>
 	 * 
 	 * where 'caller' is the deallocation flag of caller site 'callee' is the deallocation flag of callee site
@@ -540,6 +542,12 @@ public class DeallocationAnalyzer extends Analyzer {
 	 *        b_dealloc = true
 	 *        a_dealloc = true
 	 * 	    </code></pre>
+	 *  <li>'both_dealloc': set flags of both caller and callee to be true.
+	 *  	<pre><code>     
+	 * 		  a = f(b, true)
+	 *        b_dealloc = true
+	 *        a_dealloc = true
+	 * 	    </code></pre>
 	 * </ul>
 	 * 
 	 */
@@ -560,6 +568,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			// Analyze the deallocation flags using live variable, read-write and return analysis
 			boolean isLive = liveAnalyzer.isLive(register, code, function);
 			if (!isMutated) {
+				// NOT mutated
 				if (!isReturned) {
 					// NOT mutated nor return
 					return "rm_callee";
@@ -574,11 +583,12 @@ public class DeallocationAnalyzer extends Analyzer {
 					}
 				}
 			} else {
+				// Mutated
 				if (isReturned) {
 					// Mutated and returned
 					if (isLive) {
 						// 'b' is alive
-						return "add_callee";
+						return "caller_dealloc";
 					} else {
 						// 'b' is NOT alive
 						return "transfer_callee";
@@ -587,7 +597,7 @@ public class DeallocationAnalyzer extends Analyzer {
 					// Mutated and NOT returned
 					if (isLive) {
 						// 'b' is alive
-						return "add_callee";
+						return "both_dealloc";
 					} else {
 						return "transfer_callee";
 					}
