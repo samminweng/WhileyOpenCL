@@ -37,10 +37,8 @@ public class DeallocationAnalyzer extends Analyzer {
 	private ReturnAnalyzer returnAnalyzer;
 	private LiveVariablesAnalysis liveAnalyzer;
 
-	public DeallocationAnalyzer(Configuration config,
-								ReadWriteAnalyzer readwriteAnalyzer,
-								ReturnAnalyzer returnAnalyzer,
-								LiveVariablesAnalysis liveAnalyzer) {
+	public DeallocationAnalyzer(Configuration config, ReadWriteAnalyzer readwriteAnalyzer,
+			ReturnAnalyzer returnAnalyzer, LiveVariablesAnalysis liveAnalyzer) {
 		super(config);
 		this.readwriteAnalyzer = readwriteAnalyzer;
 		this.returnAnalyzer = returnAnalyzer;
@@ -379,37 +377,37 @@ public class DeallocationAnalyzer extends Analyzer {
 		for (int register : code.operands()) {
 			String callee_dealloc = computeDealloc(register, code, function, stores, copyAnalyzer);
 			// Check callee's deallocation flag
-			if (copyAnalyzer.isPresent()) {
-				// Check if the callee de-allocates the argument
-				if (callee_dealloc.equals("transfer_callee")) {
-					if (code.targets().length > 0) {
-						int lhs = code.target(0);
-						Type lhs_type = stores.getRawType(lhs, function);
-						if (stores.isCompoundType(lhs_type)) {
-							// If so, then deallocation flag is transferred from caller site to callee
-							statements.add(indent + transferDealloc(lhs, register, function, stores));
+			if (callee_dealloc.equals("caller_dealloc")) {
+				// The parameter is de-allocated by caller
+				// Set caller flag to be 'true'
+				statements.add(indent + addDealloc(register, function, stores));
+			} else if (callee_dealloc.equals("both_dealloc")) {
+				// Set caller flag to be 'true'
+				statements.add(indent + addDealloc(register, function, stores));
+			}else if (callee_dealloc.equals("none_dealloc")) {
+				// Set caller flag to be 'false'
+				statements.add(indent + removeDealloc(register, function, stores));
+			}else{
+				if (copyAnalyzer.isPresent()) {
+					// Check if the callee de-allocates the argument
+					if (callee_dealloc.equals("transfer_callee")) {
+						if (code.targets().length > 0) {
+							int lhs = code.target(0);
+							Type lhs_type = stores.getRawType(lhs, function);
+							if (stores.isCompoundType(lhs_type)) {
+								// If so, then deallocation flag is transferred from caller site to callee
+								statements.add(indent + transferDealloc(lhs, register, function, stores));
+							} else {
+								// Remove the parameter deallocation flag
+								statements.add(indent + removeDealloc(register, function, stores));
+							}
 						} else {
-							// Remove the parameter deallocation flag
+							// And remove the parameter deallocation flag
 							statements.add(indent + removeDealloc(register, function, stores));
 						}
-					} else {
-						// And remove the parameter deallocation flag
-						statements.add(indent + removeDealloc(register, function, stores));
+						isTransferred = true;
 					}
-					isTransferred = true;
-				}
-			}else{
-				
-				if(callee_dealloc.equals("caller_dealloc")){
-					// The parameter is de-allocated by caller
-					// The caller flag must be 'true'
-					statements.add(indent + addDealloc(register, function, stores));
-				}else if(callee_dealloc.equals("both_dealloc")){
-					// The caller flag must be 'true'
-					statements.add(indent + addDealloc(register, function, stores));
-				}
-				
-				
+				}	
 			}
 		}
 
@@ -492,8 +490,10 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * If deallocation analyzer is enabled, then deallocation flags of caller and callee are based on the following
 	 * rules, e.g. a function call 'a = f(b, b_own_f)', Rules are as below:
 	 * 
-	 * De-allocation rules for copy-always-made test case
-	 * <pre> 
+	 * De-allocation rules for copy-made test case
+	 * 
+	 * <pre>
+	 *  
 	 * f mutates b?	   |F			   |F			      |T			    |T
 	 * f returns b?	   |F			   |T			      |T			    |F
 	 * -----------------------------------------------------------------------------
@@ -504,19 +504,22 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * 				   |'both_dealloc' |'caller_dealloc'  |'caller_dealloc' |'both_dealloc'
 	 * 
 	 * </pre>
+	 * 
 	 * De-allocation rules for copy-reduced test cases
+	 * 
 	 * <pre>
 	 * f mutates b?		|F			|F			      |T			    |T
 	 * f returns b?		|F			|T			      |T			    |F
 	 * -----------------------------------------------------------------------------
-	 * b is alive?	T	|No Copy	|No Copy	      |Copy		        |Copy
-	 * 					|'rm_callee'|'rm_callee'      |'add_callee'	    |'add_callee'
-	 * --------------------------------------------------------------------
-	 * 				F	|No Copy	|No Copy	      |No Copy	        |No Copy
-	 * 					|'rm_callee'|'transfer_callee'|'transfer_callee'|'transfer_callee'
+	 * b is alive?  F	|No Copy	|No Copy	      |No Copy	        |No Copy
+	 * 					|'rm_callee'|'none_dealloc'   |'none_dealloc'   |'transfer_callee'
+	 * ---------------------------------------------------------------------------
+	 * 				T	|No Copy	|No Copy	      |Copy		        |Copy
+	 * 					|'rm_callee'|'none_dealloc'   |'caller_dealloc'	|'both_dealloc'
+	 * 
+	 * 
 	 * </pre>
 	 * 
-	 * where 'caller' is the deallocation flag of caller site 'callee' is the deallocation flag of callee site
 	 * 
 	 * @param register
 	 *            function argument
@@ -527,20 +530,43 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 *            code stores
 	 * @param copyAnalyzer
-	 * @return three outcomes: 
+	 * @return three outcomes:
 	 * 
-	 * 	'rm_callee', 'add_callee' and 'transfer_callee'
-	 *  <ul>
-	 *  <li>'rm_callee': set callee flag to be 'false' 
-	 *  <li>'add_callee': set callee flag to be 'true' 'transfer_callee':
-	 *  <li>'transfers caller's flag to callee, and after the function call, set caller flag to be 'false'
-	 *  <li>'caller_dealloc': set caller's flag to be true and callee's flag to be false.
-	 *  	<pre><code>     
+	 *         'rm_callee', 'add_callee' and 'transfer_callee'
+	 *         <ul>
+	 *         <li>'rm_callee': set callee flag to be 'false'
+	 *         <li>'add_callee': set callee flag to be 'true' 'transfer_callee':
+	 *         <li>'transfers caller's flag to callee, and after the function call, set caller flag to be 'false'
+	 *         <li>'caller_dealloc': set caller's flag to be true and callee's flag to be false.
+	 * 
+	 *         <pre>
+	 * <code>     
 	 * 		  a = f(b, false)
 	 *        b_dealloc = true
 	 *        a_dealloc = true
-	 * 	    </code></pre>
-	 * </ul>
+	 * 	    </code>
+	 *         </pre>
+	 * 
+	 *         <li>'both_dealloc': set both caller and callee's flags to be true.
+	 * 
+	 *         <pre>
+	 * <code>     
+	 * 		  a = f(b, true)
+	 *        b_dealloc = true
+	 *        a_dealloc = true
+	 * 	    </code>
+	 *         </pre>
+	 * 
+	 *         <li>'none_dealloc': set both caller and callee's flags to be false.
+	 * 
+	 *         <pre>
+	 * <code>     
+	 * 		  a = f(b, false)
+	 *        b_dealloc = false
+	 *        a_dealloc = true
+	 * 	    </code>
+	 *         </pre>
+	 *         </ul>
 	 * 
 	 */
 	public String computeDealloc(int register, Codes.Invoke code, FunctionOrMethod function, CodeStores stores,
@@ -554,12 +580,13 @@ public class DeallocationAnalyzer extends Analyzer {
 		int arguement = mapFunctionArgumentToCalleeRegister(register, code);
 		boolean isMutated = readwriteAnalyzer.isMutated(arguement, f);
 		boolean isReturned = returnAnalyzer.isReturned(arguement, f);
-		
+
 		// Analyze the copy
 		if (copyAnalyzer.isPresent()) {
 			// Analyze the deallocation flags using live variable, read-write and return analysis
 			boolean isLive = liveAnalyzer.isLive(register, code, function);
 			if (!isMutated) {
+				// NOT mutated
 				if (!isReturned) {
 					// NOT mutated nor return
 					return "rm_callee";
@@ -567,27 +594,28 @@ public class DeallocationAnalyzer extends Analyzer {
 					// NOT mutated but returned
 					if (isLive) {
 						// If 'b' is alive at caller site
-						return "rm_callee";
+						return "none_dealloc";
 					} else {
 						// If 'b' is NOT alive at caller site
-						return "transfer_callee";
+						return "none_dealloc";
 					}
 				}
 			} else {
+				// Mutated
 				if (isReturned) {
 					// Mutated and returned
 					if (isLive) {
 						// 'b' is alive
-						return "add_callee";
+						return "caller_dealloc";
 					} else {
 						// 'b' is NOT alive
-						return "transfer_callee";
+						return "none_dealloc";
 					}
 				} else {
 					// Mutated and NOT returned
 					if (isLive) {
 						// 'b' is alive
-						return "add_callee";
+						return "both_dealloc";
 					} else {
 						return "transfer_callee";
 					}
@@ -595,12 +623,12 @@ public class DeallocationAnalyzer extends Analyzer {
 			}
 		} else {
 			// The copy is needed
-			if(!isMutated){
-				if(isReturned){
+			if (!isMutated) {
+				if (isReturned) {
 					return "caller_dealloc";
 				}
-			}else{
-				if(isReturned){
+			} else {
+				if (isReturned) {
 					return "caller_dealloc";
 				}
 			}
@@ -732,7 +760,6 @@ public class DeallocationAnalyzer extends Analyzer {
 			statement.addAll(computeDealloc(isCopyEliminated, (Codes.FieldLoad) code, function, stores));
 		}
 	}
-
 
 	/**
 	 * Generate the post-deallocation code.

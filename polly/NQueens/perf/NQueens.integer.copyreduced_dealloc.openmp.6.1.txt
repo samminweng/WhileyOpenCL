@@ -4,18 +4,18 @@ Found 4 solutions.
 
  Performance counter stats for 'out/NQueens.integer.copyreduced_dealloc.openmp.out 6':
 
-          0.353773      task-clock (msec)         #    0.091 CPUs utilized          
+          0.355313      task-clock (msec)         #    0.078 CPUs utilized          
                  2      context-switches          #    0.006 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
                 67      page-faults               #    0.189 M/sec                  
-         1,184,695      cycles                    #    3.349 GHz                    
+         1,191,784      cycles                    #    3.354 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         1,164,739      instructions              #    0.98  insns per cycle        
-           242,566      branches                  #  685.654 M/sec                  
-            10,567      branch-misses             #    4.36% of all branches        
+         1,185,612      instructions              #    0.99  insns per cycle        
+           245,337      branches                  #  690.481 M/sec                  
+            10,620      branch-misses             #    4.33% of all branches        
 
-       0.003898195 seconds time elapsed
+       0.004572327 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 6
@@ -23,18 +23,18 @@ Found 4 solutions.
 
  Performance counter stats for 'out/NQueens.integer.copyreduced_dealloc.openmp.out 6':
 
-          0.302380      task-clock (msec)         #    0.093 CPUs utilized          
+          0.302726      task-clock (msec)         #    0.083 CPUs utilized          
                  1      context-switches          #    0.003 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.222 M/sec                  
-         1,017,989      cycles                    #    3.367 GHz                    
+                67      page-faults               #    0.221 M/sec                  
+         1,019,121      cycles                    #    3.366 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         1,140,403      instructions              #    1.12  insns per cycle        
-           238,473      branches                  #  788.653 M/sec                  
-             9,282      branch-misses             #    3.89% of all branches        
+         1,140,357      instructions              #    1.12  insns per cycle        
+           238,041      branches                  #  786.325 M/sec                  
+             9,087      branch-misses             #    3.82% of all branches        
 
-       0.003262294 seconds time elapsed
+       0.003630540 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 6
@@ -42,75 +42,18 @@ Found 4 solutions.
 
  Performance counter stats for 'out/NQueens.integer.copyreduced_dealloc.openmp.out 6':
 
-          0.303858      task-clock (msec)         #    0.089 CPUs utilized          
-                 1      context-switches          #    0.003 M/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.220 M/sec                  
-         1,022,564      cycles                    #    3.365 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         1,155,888      instructions              #    1.13  insns per cycle        
-           240,371      branches                  #  791.064 M/sec                  
-             9,184      branch-misses             #    3.82% of all branches        
-
-       0.003401018 seconds time elapsed
-
-N-Queen Problem on a N X N Board.
-N = 6
-Found 4 solutions.
-
- Performance counter stats for 'out/NQueens.integer.copyreduced_dealloc.openmp.out 6':
-
-          0.306959      task-clock (msec)         #    0.090 CPUs utilized          
-                 1      context-switches          #    0.003 M/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                66      page-faults               #    0.215 M/sec                  
-         1,032,980      cycles                    #    3.365 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         1,146,525      instructions              #    1.11  insns per cycle        
-           239,188      branches                  #  779.218 M/sec                  
-             9,027      branch-misses             #    3.77% of all branches        
-
-       0.003425653 seconds time elapsed
-
-N-Queen Problem on a N X N Board.
-N = 6
-Found 4 solutions.
-
- Performance counter stats for 'out/NQueens.integer.copyreduced_dealloc.openmp.out 6':
-
-          0.310721      task-clock (msec)         #    0.028 CPUs utilized          
-                 1      context-switches          #    0.003 M/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.216 M/sec                  
-         1,044,508      cycles                    #    3.362 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         1,140,422      instructions              #    1.09  insns per cycle        
-           238,617      branches                  #  767.946 M/sec                  
-            10,015      branch-misses             #    4.20% of all branches        
-
-       0.011062182 seconds time elapsed
-
-N-Queen Problem on a N X N Board.
-N = 6
-Found 4 solutions.
-
- Performance counter stats for 'out/NQueens.integer.copyreduced_dealloc.openmp.out 6':
-
-          0.307843      task-clock (msec)         #    0.091 CPUs utilized          
+          0.307497      task-clock (msec)         #    0.087 CPUs utilized          
                  1      context-switches          #    0.003 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
                 67      page-faults               #    0.218 M/sec                  
-         1,035,879      cycles                    #    3.365 GHz                    
+         1,035,010      cycles                    #    3.366 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         1,141,433      instructions              #    1.10  insns per cycle        
-           238,590      branches                  #  775.038 M/sec                  
-             9,163      branch-misses             #    3.84% of all branches        
+         1,135,161      instructions              #    1.10  insns per cycle        
+           237,500      branches                  #  772.365 M/sec                  
+             9,941      branch-misses             #    4.19% of all branches        
 
-       0.003366482 seconds time elapsed
+       0.003530727 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 6
@@ -118,18 +61,18 @@ Found 4 solutions.
 
  Performance counter stats for 'out/NQueens.integer.copyreduced_dealloc.openmp.out 6':
 
-          0.299123      task-clock (msec)         #    0.086 CPUs utilized          
+          0.307851      task-clock (msec)         #    0.084 CPUs utilized          
                  1      context-switches          #    0.003 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.224 M/sec                  
-         1,006,494      cycles                    #    3.365 GHz                    
+                67      page-faults               #    0.218 M/sec                  
+         1,036,512      cycles                    #    3.367 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         1,140,696      instructions              #    1.13  insns per cycle        
-           238,511      branches                  #  797.368 M/sec                  
-             8,658      branch-misses             #    3.63% of all branches        
+         1,138,882      instructions              #    1.10  insns per cycle        
+           237,979      branches                  #  773.033 M/sec                  
+             9,037      branch-misses             #    3.80% of all branches        
 
-       0.003490221 seconds time elapsed
+       0.003672278 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 6
@@ -137,37 +80,18 @@ Found 4 solutions.
 
  Performance counter stats for 'out/NQueens.integer.copyreduced_dealloc.openmp.out 6':
 
-          0.299108      task-clock (msec)         #    0.086 CPUs utilized          
-                 1      context-switches          #    0.003 M/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.224 M/sec                  
-         1,006,582      cycles                    #    3.365 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         1,134,409      instructions              #    1.13  insns per cycle        
-           237,236      branches                  #  793.145 M/sec                  
-             8,717      branch-misses             #    3.67% of all branches        
-
-       0.003463192 seconds time elapsed
-
-N-Queen Problem on a N X N Board.
-N = 6
-Found 4 solutions.
-
- Performance counter stats for 'out/NQueens.integer.copyreduced_dealloc.openmp.out 6':
-
-          0.305237      task-clock (msec)         #    0.098 CPUs utilized          
+          0.305211      task-clock (msec)         #    0.098 CPUs utilized          
                  1      context-switches          #    0.003 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
                 67      page-faults               #    0.220 M/sec                  
-         1,027,404      cycles                    #    3.366 GHz                    
+         1,027,313      cycles                    #    3.366 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         1,132,191      instructions              #    1.10  insns per cycle        
-           237,634      branches                  #  778.523 M/sec                  
-             9,000      branch-misses             #    3.79% of all branches        
+         1,152,231      instructions              #    1.12  insns per cycle        
+           240,034      branches                  #  786.453 M/sec                  
+             9,089      branch-misses             #    3.79% of all branches        
 
-       0.003100391 seconds time elapsed
+       0.003122948 seconds time elapsed
 
 N-Queen Problem on a N X N Board.
 N = 6
@@ -175,18 +99,94 @@ Found 4 solutions.
 
  Performance counter stats for 'out/NQueens.integer.copyreduced_dealloc.openmp.out 6':
 
-          0.299483      task-clock (msec)         #    0.055 CPUs utilized          
+          0.299838      task-clock (msec)         #    0.086 CPUs utilized          
                  1      context-switches          #    0.003 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.224 M/sec                  
-         1,007,925      cycles                    #    3.366 GHz                    
+                66      page-faults               #    0.220 M/sec                  
+         1,009,124      cycles                    #    3.366 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         1,147,026      instructions              #    1.14  insns per cycle        
-           239,217      branches                  #  798.767 M/sec                  
-             8,919      branch-misses             #    3.73% of all branches        
+         1,116,911      instructions              #    1.11  insns per cycle        
+           234,462      branches                  #  781.962 M/sec                  
+             9,131      branch-misses             #    3.89% of all branches        
 
-       0.005459980 seconds time elapsed
+       0.003505913 seconds time elapsed
+
+N-Queen Problem on a N X N Board.
+N = 6
+Found 4 solutions.
+
+ Performance counter stats for 'out/NQueens.integer.copyreduced_dealloc.openmp.out 6':
+
+          0.301440      task-clock (msec)         #    0.071 CPUs utilized          
+                 1      context-switches          #    0.003 M/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                67      page-faults               #    0.222 M/sec                  
+         1,014,605      cycles                    #    3.366 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+         1,146,960      instructions              #    1.13  insns per cycle        
+           239,149      branches                  #  793.355 M/sec                  
+             8,818      branch-misses             #    3.69% of all branches        
+
+       0.004244183 seconds time elapsed
+
+N-Queen Problem on a N X N Board.
+N = 6
+Found 4 solutions.
+
+ Performance counter stats for 'out/NQueens.integer.copyreduced_dealloc.openmp.out 6':
+
+          0.304181      task-clock (msec)         #    0.076 CPUs utilized          
+                 1      context-switches          #    0.003 M/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                67      page-faults               #    0.220 M/sec                  
+         1,023,462      cycles                    #    3.365 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+         1,155,551      instructions              #    1.13  insns per cycle        
+           240,007      branches                  #  789.027 M/sec                  
+             8,930      branch-misses             #    3.72% of all branches        
+
+       0.003992017 seconds time elapsed
+
+N-Queen Problem on a N X N Board.
+N = 6
+Found 4 solutions.
+
+ Performance counter stats for 'out/NQueens.integer.copyreduced_dealloc.openmp.out 6':
+
+          0.302541      task-clock (msec)         #    0.084 CPUs utilized          
+                 1      context-switches          #    0.003 M/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                68      page-faults               #    0.225 M/sec                  
+         1,018,411      cycles                    #    3.366 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+         1,146,813      instructions              #    1.13  insns per cycle        
+           239,257      branches                  #  790.825 M/sec                  
+             8,883      branch-misses             #    3.71% of all branches        
+
+       0.003610722 seconds time elapsed
+
+N-Queen Problem on a N X N Board.
+N = 6
+Found 4 solutions.
+
+ Performance counter stats for 'out/NQueens.integer.copyreduced_dealloc.openmp.out 6':
+
+          0.302136      task-clock (msec)         #    0.088 CPUs utilized          
+                 1      context-switches          #    0.003 M/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                67      page-faults               #    0.222 M/sec                  
+         1,017,074      cycles                    #    3.366 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+         1,146,248      instructions              #    1.13  insns per cycle        
+           239,076      branches                  #  791.286 M/sec                  
+             8,801      branch-misses             #    3.68% of all branches        
+
+       0.003427310 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -195,7 +195,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3820.085
+cpu MHz		: 3548.351
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -249,7 +249,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.000
+cpu MHz		: 3561.632
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -276,7 +276,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3409.960
+cpu MHz		: 3892.203
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -330,7 +330,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3404.914
+cpu MHz		: 3400.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -357,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3790.203
+cpu MHz		: 3400.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -384,7 +384,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3426.562
+cpu MHz		: 3400.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

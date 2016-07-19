@@ -276,6 +276,7 @@ blklab12:;
 		_30=n+_29;
 		//invoke (%28) = (%0, %30, %2) NQueens_integer:run : function(NQueens_integer:POS[],int,int)->(int)
 		_28 = run(copy_array_POS(queens, queens_size), queens_size, true, _30, dim);
+		_ADD_DEALLOC(queens);
 		//add %31 = %4, %28 : int
 		_31=num_solutions+_28;
 		//assign %4 = %31  : int
