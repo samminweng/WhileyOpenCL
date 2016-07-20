@@ -468,8 +468,9 @@ int main(int argc, char** args){
 	num_solutions = _10;
 	//invoke (%11) = (%3, %2) nqueens:nqueen : function(int,nqueens:POS[])->(nqueens:NQueen)
 	_DEALLOC_STRUCT(_11, NQueen);
-	_11 = nqueen(num_solutions, _1DARRAY_PARAM(queens), queens_dealloc);
-	_TRANSFER_DEALLOC(_11, queens);
+	_11 = nqueen(num_solutions, _1DARRAY_PARAM(queens), false);
+	_REMOVE_DEALLOC(queens);
+	_ADD_DEALLOC(_11);
 	//assign %4 = %11  : {int num_solutions,{int c,int r}[] queens}
 	_DEALLOC_STRUCT(nq, NQueen);
 	nq = _11;

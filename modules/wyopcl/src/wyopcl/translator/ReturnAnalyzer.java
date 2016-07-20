@@ -61,7 +61,12 @@ public class ReturnAnalyzer extends Analyzer {
 					if (invoke.targets().length > 0) {
 						lhs = ((Codes.Invoke) code).target(0);
 					}
-				} 
+				} else if( code instanceof Codes.NewRecord){
+					lhs = ((Codes.NewRecord)code).target(0);
+				} else {
+					throw new RuntimeException("Not implemented");
+				}
+				
 				// Get return set of given function
 				HashSet<Integer> store = stores.get(function);
 				// Check if lhs variable is a return register
