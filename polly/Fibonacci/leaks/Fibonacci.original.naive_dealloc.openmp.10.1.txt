@@ -1,25 +1,25 @@
-==16149== Memcheck, a memory error detector
-==16149== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==16149== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==16149== Command: ./out/Fibonacci.original.naive_dealloc.openmp.out 10
-==16149== Parent PID: 24689
-==16149== 
-==16149== Invalid free() / delete / delete[] / realloc()
-==16149==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16149==    by 0x400ABC: main (Fibonacci_original.c:204)
-==16149==  Address 0x56290f0 is 0 bytes inside a block of size 8 free'd
-==16149==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16149==    by 0x400AAC: main (Fibonacci_original.c:202)
-==16149== 
-==16149== 
-==16149== HEAP SUMMARY:
-==16149==     in use at exit: 0 bytes in 0 blocks
-==16149==   total heap usage: 24 allocs, 25 frees, 1,832 bytes allocated
-==16149== 
-==16149== All heap blocks were freed -- no leaks are possible
-==16149== 
-==16149== For counts of detected and suppressed errors, rerun with: -v
-==16149== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==25556== Memcheck, a memory error detector
+==25556== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==25556== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==25556== Command: ./out/Fibonacci.original.naive_dealloc.openmp.out 10
+==25556== Parent PID: 24689
+==25556== 
+==25556== Invalid free() / delete / delete[] / realloc()
+==25556==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==25556==    by 0x400ABC: main (Fibonacci_original.c:204)
+==25556==  Address 0x56290f0 is 0 bytes inside a block of size 8 free'd
+==25556==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==25556==    by 0x400AAC: main (Fibonacci_original.c:202)
+==25556== 
+==25556== 
+==25556== HEAP SUMMARY:
+==25556==     in use at exit: 0 bytes in 0 blocks
+==25556==   total heap usage: 24 allocs, 25 frees, 1,832 bytes allocated
+==25556== 
+==25556== All heap blocks were freed -- no leaks are possible
+==25556== 
+==25556== For counts of detected and suppressed errors, rerun with: -v
+==25556== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -54,7 +54,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3875.468
+cpu MHz		: 3879.851
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -81,7 +81,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3415.671
+cpu MHz		: 3561.234
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -108,7 +108,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3777.054
+cpu MHz		: 3608.515
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -135,7 +135,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3434.664
+cpu MHz		: 3549.812
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -162,7 +162,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3886.359
+cpu MHz		: 3475.304
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -189,7 +189,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3794.851
+cpu MHz		: 3712.906
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -216,7 +216,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3607.585
+cpu MHz		: 3443.031
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
