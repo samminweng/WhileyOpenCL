@@ -384,35 +384,31 @@ public class DeallocationAnalyzer extends Analyzer {
 			} else if (callee_dealloc.equals("both_dealloc")) {
 				// Set caller flag to be 'true'
 				statements.add(indent + addDealloc(register, function, stores));
-			}else if (callee_dealloc.equals("none_dealloc")) {
+			} else if (callee_dealloc.equals("none_dealloc")) {
 				// Set caller flag to be 'false'
 				statements.add(indent + removeDealloc(register, function, stores));
-			}else{
-				if (copyAnalyzer.isPresent()) {
-					// Check if the callee de-allocates the argument
-					if (callee_dealloc.equals("transfer_callee")) {
-						if (code.targets().length > 0) {
-							int lhs = code.target(0);
-							Type lhs_type = stores.getRawType(lhs, function);
-							if (stores.isCompoundType(lhs_type)) {
-								// If so, then deallocation flag is transferred from caller site to callee
-								statements.add(indent + transferDealloc(lhs, register, function, stores));
-							} else {
-								// Remove the parameter deallocation flag
-								statements.add(indent + removeDealloc(register, function, stores));
-							}
-						} else {
-							// And remove the parameter deallocation flag
-							statements.add(indent + removeDealloc(register, function, stores));
-						}
-						isTransferred = true;
+			} else if (callee_dealloc.equals("transfer_callee")) {
+				if (code.targets().length > 0) {
+					int lhs = code.target(0);
+					Type lhs_type = stores.getRawType(lhs, function);
+					if (stores.isCompoundType(lhs_type)) {
+						// If so, then deallocation flag is transferred from caller site to callee
+						statements.add(indent + transferDealloc(lhs, register, function, stores));
+					} else {
+						// Remove the parameter deallocation flag
+						statements.add(indent + removeDealloc(register, function, stores));
 					}
-				}	
+				} else {
+					// And remove the parameter deallocation flag
+					statements.add(indent + removeDealloc(register, function, stores));
+				}
+				isTransferred = true;
 			}
 		}
 
 		// If the parameter is NOT transferred, add LHS deallocation flag.
-		if (code.targets().length > 0 && !isTransferred) {
+		if (code.targets().length > 0 && !isTransferred)
+		{
 			// Add the deallocation flag of lhs variable
 			statements.add(indent + addDealloc(code.target(0), function, stores));
 		}
@@ -530,41 +526,42 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 *            code stores
 	 * @param copyAnalyzer
-	 * @return three outcomes:
-	 * 
-	 *         'rm_callee', 'add_callee' and 'transfer_callee'
+	 * @return macro names, including:
 	 *         <ul>
 	 *         <li>'rm_callee': set callee flag to be 'false'
-	 *         <li>'add_callee': set callee flag to be 'true' 'transfer_callee':
+	 *         <code>     
+	 * 		  		a = f(b, b_dealloc)
+	 *        		b_dealloc = false
+	 *        		a_dealloc = true
+	 * 	    	</code>
 	 *         <li>'transfers caller's flag to callee, and after the function call, set caller flag to be 'false'
-	 *         <li>'caller_dealloc': set caller's flag to be true and callee's flag to be false.
+	 *         <code>     
+	 * 		  		a = f(b, b_dealloc)
+	 *        		a_dealloc = b_dealloc
+	 *        		b_dealloc = false
+	 * 	    	</code>
 	 * 
-	 *         <pre>
-	 * <code>     
-	 * 		  a = f(b, false)
-	 *        b_dealloc = true
-	 *        a_dealloc = true
-	 * 	    </code>
-	 *         </pre>
+	 *         <li>'caller_dealloc': set caller's flag to be true and callee's flag to be false. <code>     
+	 * 		  		a = f(b, false)
+	 *        		b_dealloc = true
+	 *        		a_dealloc = true
+	 * 	    	</code>
 	 * 
 	 *         <li>'both_dealloc': set both caller and callee's flags to be true.
 	 * 
-	 *         <pre>
-	 * <code>     
-	 * 		  a = f(b, true)
-	 *        b_dealloc = true
-	 *        a_dealloc = true
-	 * 	    </code>
-	 *         </pre>
+	 *         <code>     
+	 * 		  		a = f(b, true)
+	 *        		b_dealloc = true
+	 *        		a_dealloc = true
+	 * 	    	</code>
 	 * 
 	 *         <li>'none_dealloc': set both caller and callee's flags to be false.
 	 * 
-	 *         <pre>
-	 * <code>     
-	 * 		  a = f(b, false)
-	 *        b_dealloc = false
-	 *        a_dealloc = true
-	 * 	    </code>
+	 *         <code>     
+	 * 		  		a = f(b, false)
+	 *        		b_dealloc = false
+	 *        		a_dealloc = true
+	 * 	    	</code>
 	 *         </pre>
 	 *         </ul>
 	 * 
