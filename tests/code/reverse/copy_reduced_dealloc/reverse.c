@@ -152,7 +152,7 @@ int main(int argc, char** args){
 	//invoke (%5) = (%11) reverse:reverse : function(int[])->(int[])
 	_UPDATE_1DARRAY_SIZE(_5, _11);
 	_DEALLOC(_5);
-	_5 = reverse(_1DARRAY_PARAM(_11), false);
+	_5 = reverse(_1DARRAY_PARAM(_11), !_11_dealloc);
 	_ADD_DEALLOC(_5);
 	//assign %1 = %5  : int[]
 	_DEALLOC(rs);
@@ -228,7 +228,7 @@ blklab5:;
 	//invoke (%27) = (%4) reverse:reverse : function(int[])->(int[])
 	_UPDATE_1DARRAY_SIZE(_27, arr);
 	_DEALLOC(_27);
-	_27 = reverse(_1DARRAY_PARAM(arr), false);
+	_27 = reverse(_1DARRAY_PARAM(arr), !arr_dealloc);
 	_ADD_DEALLOC(_27);
 	//assign %4 = %27  : int[]
 	_DEALLOC(arr);

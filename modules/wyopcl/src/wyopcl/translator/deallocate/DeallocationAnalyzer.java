@@ -387,6 +387,8 @@ public class DeallocationAnalyzer extends Analyzer {
 			} else if (callee_dealloc.equals("none_dealloc")) {
 				// Set caller flag to be 'false'
 				statements.add(indent + removeDealloc(register, function, stores));
+			} else if(callee_dealloc.equals("negated_dealloc")) { 
+				// Do nothing to caller's flag
 			} else if (callee_dealloc.equals("transfer_callee")) {
 				if (code.targets().length > 0) {
 					int lhs = code.target(0);
@@ -504,14 +506,14 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * De-allocation rules for copy-reduced test cases
 	 * 
 	 * <pre>
-	 * f mutates b?		|F			|F			      |T			    |T
-	 * f returns b?		|F			|T			      |T			    |F
+	 * f mutates b?		|F					|F			      |T			    |T
+	 * f returns b?		|F					|T			      |T			    |F
 	 * -----------------------------------------------------------------------------
-	 * b is alive?  F	|No Copy	|No Copy	      |No Copy	        |No Copy
-	 * 					|'rm_callee'|'none_dealloc'   |'none_dealloc'   |'transfer_callee'
+	 * b is alive?  F	|No Copy			|No Copy	      |No Copy	        |No Copy
+	 * 					|'negated_dealloc'  |'none_dealloc'   |'none_dealloc'   |'transfer_callee'
 	 * ---------------------------------------------------------------------------
-	 * 				T	|No Copy	|No Copy	      |Copy		        |Copy
-	 * 					|'rm_callee'|'none_dealloc'   |'caller_dealloc'	|'both_dealloc'
+	 * 				T	|No Copy			|No Copy	      |Copy		        |Copy
+	 * 					|'negated_dealloc'	|'none_dealloc'   |'caller_dealloc'	|'both_dealloc'
 	 * 
 	 * 
 	 * </pre>
@@ -528,10 +530,9 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param copyAnalyzer
 	 * @return macro names, including:
 	 *         <ul>
-	 *         <li>'rm_callee': set callee flag to be 'false'
+	 *         <li>'negated_dealloc': passed the negated flag to the function call
 	 *         <code>     
-	 * 		  		a = f(b, b_dealloc)
-	 *        		b_dealloc = false
+	 * 		  		a = f(b, !b_dealloc)
 	 *        		a_dealloc = true
 	 * 	    	</code>
 	 *         <li>'transfers caller's flag to callee, and after the function call, set caller flag to be 'false'
@@ -586,7 +587,11 @@ public class DeallocationAnalyzer extends Analyzer {
 				// NOT mutated
 				if (!isReturned) {
 					// NOT mutated nor return
-					return "rm_callee";
+					if (isLive) {
+						return "negated_dealloc";
+					}else{
+						return "negated_dealloc";
+					}
 				} else {
 					// NOT mutated but returned
 					if (isLive) {
