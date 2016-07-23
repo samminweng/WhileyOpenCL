@@ -70,9 +70,8 @@ ensures C.width == B.width && C.height == A.height:
     //
     return matrix(B.width,A.height,C_data)
 // ========================================================
-// Main
+// Print a matrix
 // ========================================================
-
 method printMat(System.Console sys, Matrix A):
     int i = 0
     while i < A.height:
@@ -98,7 +97,9 @@ function init(nat height, nat width) -> (Matrix r):
             j = j + 1
         i = i + 1
     return matrix(width,height,rows)
-
+// ========================================================
+// Main
+// ========================================================
 method main(System.Console sys):
     int max = 20
     null|Matrix A = init(max, max)

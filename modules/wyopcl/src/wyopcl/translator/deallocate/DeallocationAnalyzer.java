@@ -581,6 +581,9 @@ public class DeallocationAnalyzer extends Analyzer {
 
 		// Analyze the copy
 		if (copyAnalyzer.isPresent()) {
+			// Check if the register is a substructure
+			//boolean isSubStructure = stores.isSubstructure(register, function);
+			
 			// Analyze the deallocation flags using live variable, read-write and return analysis
 			boolean isLive = liveAnalyzer.isLive(register, code, function);
 			if (!isMutated) {

@@ -744,7 +744,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param function
 	 */
 	private void postProcessor(List<String> statement, Code code, FunctionOrMethod function) {
-
+		
+		if(code instanceof Codes.IndexOf){
+			// Check if rhs is a field and load the field to lhs 
+			Codes.IndexOf indexof = (Codes.IndexOf)code;
+			stores.loadField(indexof.target(0), indexof.operand(0), function);
+		}
+		
 		// Add the post-deallocation code.
 		this.deallocatedAnalyzer.ifPresent(a -> {
 			a.postDealloc(statement, code, function, stores);
@@ -763,6 +769,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	private void postProcessor(boolean isCopyEliminated, int register, List<String> statement, Code code,
 			FunctionOrMethod function) {
+		if(isCopyEliminated){
+			if(code instanceof Codes.Assign){
+				// Assignment 
+				Codes.Assign assign = (Codes.Assign)code;
+				int lhs = assign.target(0);
+				//If register is a field, then load the field
+				stores.loadField(lhs, register, function);
+			}
+			
+		}
+		
 		// Update the set with register
 		copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, register, code, function));
 
@@ -1194,7 +1211,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		// Assign rhs to rhs without any copy, e.g. a = b[i];
 		statement.add(indent + lhs + "=" + rhs + "[" + index + "];");
-
+		
 		postProcessor(statement, code, function);
 
 		stores.addAllStatements(code, statement, function);
@@ -1287,11 +1304,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.FieldLoad code, FunctionOrMethod function) {
 		String field = code.field;
 		List<String> statement = new ArrayList<String>();
-		// Skip translation.
+		
+		
 		if (field.equals("out") || field.equals("print") || field.equals("println") || field.equals("print_s")
 				|| field.equals("println_s")) {
-			// Load the field to the target register.
-			stores.loadField(code.target(0), field, function);
+			// Skip translation.
 		} else {
 			// Free lhs variable
 			preProcessor(statement, code, function);
@@ -1311,6 +1328,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 			postProcessor(isCopyEliminated, code.operand(0), statement, code, function);
 		}
+		
+		// Load the field to the target register.
+		stores.loadField(code.target(0), field, function);
+		
 		stores.addAllStatements(code, statement, function);
 	}
 

@@ -106,13 +106,44 @@ public class CodeStores {
 	}
 	
 	/**
-	 * Load fields to code store
+	 * Load a target register to a specific field to code store
 	 * @param target
 	 * @param field
 	 */
 	protected void loadField(int register, String field, FunctionOrMethod function) {
 		CodeStore store = getCodeStore(function);
 		store.loadField(register, field);
+	}
+	
+	/**
+	 * 
+	 * Check if the rhs is a field. If so, then lhs register is also loaded with field 
+	 * 
+	 * @param lhs
+	 * @param rhs
+	 * @param function
+	 */
+	protected void loadField(int lhs, int rhs, FunctionOrMethod function){
+		CodeStore store = getCodeStore(function);
+		// Check if rhs is a field
+		String field = store.getField(rhs);
+		if(field != null){
+			// load lhs to the field
+			store.loadField(lhs, field);
+		}
+	}
+	/**
+	 * Check if a register is a substructure (field).
+	 * 
+	 * @param register
+	 * @param function
+	 * @return true if the register is a substructure.
+	 */
+	public boolean isSubstructure(int register, FunctionOrMethod function){
+		CodeStore store = getCodeStore(function);
+		// Check if the register is a field
+		String field = store.getField(register);
+		return (field==null)? false:true;
 	}
 	
 	/**
@@ -434,13 +465,21 @@ public class CodeStores {
 		return null;
 	}
 	
-	
+	/**
+	 * Store the generated code for a target function.
+	 * 
+	 * It also contains a list of registers that are sub-structures 
+	 * 
+	 * 
+	 * @author Min-Hsien Weng
+	 *
+	 */
 	protected class CodeStore{
 		private String indent;
 		
-		private FunctionOrMethod function;
-		private List<String> statements;// Store the list of translated C code.
-		private HashMap<Integer, String> fields;// Stores the fields of register, e.g. 'println', 'print_s', 'println_s'
+		private FunctionOrMethod function;// Target function
+		private List<String> statements;// List of translated C code.
+		private HashMap<Integer, String> fields;// Store Fields that a register points to, or structure
 		
 		public CodeStore(FunctionOrMethod function) {
 			this.indent = "\t";
