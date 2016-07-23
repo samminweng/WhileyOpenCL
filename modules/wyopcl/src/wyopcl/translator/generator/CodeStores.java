@@ -117,21 +117,38 @@ public class CodeStores {
 	
 	/**
 	 * 
-	 * Check if the rhs is a field. If so, then lhs register is also loaded with field 
+	 * Add 'register' to the substructure set 
 	 * 
 	 * @param lhs
 	 * @param rhs
 	 * @param function
 	 */
-	protected void loadField(int lhs, int rhs, FunctionOrMethod function){
+	protected void addSubStructure(int register, FunctionOrMethod function){
 		CodeStore store = getCodeStore(function);
-		// Check if rhs is a field
-		String field = store.getField(rhs);
-		if(field != null){
-			// load lhs to the field
-			store.loadField(lhs, field);
+		// Check if rhs is a substructure
+		store.addSubStructure(register);
+	}
+	
+	
+	/**
+	 * Check if rhs is a substructure. If so, then lhs is also a substructure.
+	 * 
+	 * @param lhs
+	 * @param rhs
+	 * @param function
+	 */
+	protected void addSubStructure(int lhs, int rhs, FunctionOrMethod function){
+		CodeStore store = getCodeStore(function);
+		// Check if rhs is a substructure
+		if(store.isSubstructure(rhs)){
+			// If so, the lhs register is also a substructure
+			store.addSubStructure(lhs);
 		}
 	}
+	
+	
+	
+	
 	/**
 	 * Check if a register is a substructure (field).
 	 * 
@@ -142,8 +159,7 @@ public class CodeStores {
 	public boolean isSubstructure(int register, FunctionOrMethod function){
 		CodeStore store = getCodeStore(function);
 		// Check if the register is a field
-		String field = store.getField(register);
-		return (field==null)? false:true;
+		return store.isSubstructure(register);
 	}
 	
 	/**
@@ -479,13 +495,15 @@ public class CodeStores {
 		
 		private FunctionOrMethod function;// Target function
 		private List<String> statements;// List of translated C code.
-		private HashMap<Integer, String> fields;// Store Fields that a register points to, or structure
+		private HashMap<Integer, String> fields;// Store fields that registers are loaded with
+		private HashSet<Integer> substructures; // Store the registers that point to a structure 
 		
 		public CodeStore(FunctionOrMethod function) {
 			this.indent = "\t";
 			this.function = function;
 			this.statements = new ArrayList<String>();
 			this.fields = new HashMap<Integer, String>();
+			this.substructures = new HashSet<Integer>();
 		}		
 		
 		/**
@@ -503,6 +521,24 @@ public class CodeStores {
 		 */
 		protected String getField(int reg){
 			return this.fields.get(reg);
+		}
+		
+		/**
+		 * Add the 'r' register to the sub-structure set.
+		 * 
+		 * @param reg
+		 */
+		private void addSubStructure(int r){
+			this.substructures.add(r);
+		}
+		
+		/**
+		 * Check is the 'reg' register points to a substructure
+		 * @param reg
+		 * @return
+		 */
+		private boolean isSubstructure(int r){
+			return this.substructures.contains(r);
 		}
 
 		protected List<String> getStatements() {

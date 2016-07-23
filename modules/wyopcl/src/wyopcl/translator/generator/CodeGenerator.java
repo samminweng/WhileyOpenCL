@@ -413,6 +413,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		} else {
 			boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
 			statement.add(generateAssignmentCode(code, isCopyEliminated, function, stores));
+			
+			if(isCopyEliminated && stores.isCompoundType(lhs_type)){
+				// Check if lhs is a substructure.
+				stores.addSubStructure(code.target(0), code.operand(0), function);				
+			}
 			postProcessor(isCopyEliminated, code.operand(0), statement, code, function);
 		}
 
@@ -738,12 +743,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	private void postProcessor(List<String> statement, Code code, FunctionOrMethod function) {
 		
-		if(code instanceof Codes.IndexOf){
-			// Check if rhs is a field and load the field to lhs 
-			Codes.IndexOf indexof = (Codes.IndexOf)code;
-			stores.loadField(indexof.target(0), indexof.operand(0), function);
-		}
-		
 		// Add the post-deallocation code.
 		this.deallocatedAnalyzer.ifPresent(a -> {
 			a.postDealloc(statement, code, function, stores);
@@ -762,16 +761,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	private void postProcessor(boolean isCopyEliminated, int register, List<String> statement, Code code,
 			FunctionOrMethod function) {
-		if(isCopyEliminated){
-			if(code instanceof Codes.Assign){
-				// Assignment 
-				Codes.Assign assign = (Codes.Assign)code;
-				int lhs = assign.target(0);
-				//If register is a field, then load the field
-				stores.loadField(lhs, register, function);
-			}
-			
-		}
 		
 		// Update the set with register
 		copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, register, code, function));
@@ -1204,6 +1193,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		// Assign rhs to rhs without any copy, e.g. a = b[i];
 		statement.add(indent + lhs + "=" + rhs + "[" + index + "];");
+		
+		// Check if lhs is a structure. If so, then lhs is a substructure
+		Type lhs_type = stores.getRawType(code.target(0), function);
+		if(stores.isCompoundType(lhs_type)){
+			// Add lhs to substructure set
+			stores.addSubStructure(code.target(0), function);
+		}
+		
 		
 		postProcessor(statement, code, function);
 

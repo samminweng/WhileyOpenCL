@@ -221,7 +221,7 @@ blklab14:;
 //.blklab20
 blklab20:;
 			//invoke (%21) = (%8, %1, %5) nqueens2:conflict : function(nqueens2:POS,int,int)->(bool)
-			_21 = conflict(_STRUCT_PARAM(p), !p_dealloc, n, col);
+			_21 = conflict(_STRUCT_PARAM(p), false, n, col);
 			//const %22 = true : bool
 			_22 = true;
 			//ifeq %21, %22 goto blklab21 : bool
