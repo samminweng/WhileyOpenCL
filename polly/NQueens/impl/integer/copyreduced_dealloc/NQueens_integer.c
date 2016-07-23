@@ -221,8 +221,7 @@ blklab14:;
 //.blklab20
 blklab20:;
 			//invoke (%21) = (%8, %1, %5) NQueens_integer:conflict : function(NQueens_integer:POS,int,int)->(bool)
-			_21 = conflict(_STRUCT_PARAM(p), p_dealloc, n, col);
-			_REMOVE_DEALLOC(p);
+			_21 = conflict(_STRUCT_PARAM(p), false, n, col);
 			//const %22 = true : bool
 			_22 = true;
 			//ifeq %21, %22 goto blklab21 : bool
@@ -385,8 +384,7 @@ int main(int argc, char** args){
 	//const %14 = 0 : int
 	_14 = 0;
 	//invoke (%13) = (%3, %14, %2) NQueens_integer:run : function(NQueens_integer:POS[],int,int)->(int)
-	_13 = run(_1DARRAY_PARAM(queens), queens_dealloc, _14, n);
-	_REMOVE_DEALLOC(queens);
+	_13 = run(_1DARRAY_PARAM(queens), !queens_dealloc, _14, n);
 	//assign %4 = %13  : int
 	num_solutions = _13;
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}

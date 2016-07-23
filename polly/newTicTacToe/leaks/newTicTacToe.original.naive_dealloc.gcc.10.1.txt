@@ -1,25 +1,25 @@
-==26409== Memcheck, a memory error detector
-==26409== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==26409== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==26409== Command: ./out/newTicTacToe.original.naive_dealloc.gcc.out 10
-==26409== Parent PID: 7864
-==26409== 
-==26409== Invalid free() / delete / delete[] / realloc()
-==26409==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==26409==    by 0x400D83: main (newTicTacToe_original.c:367)
-==26409==  Address 0x51fc0f0 is 0 bytes inside a block of size 8 free'd
-==26409==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==26409==    by 0x400D3B: main (newTicTacToe_original.c:364)
-==26409== 
-==26409== 
-==26409== HEAP SUMMARY:
-==26409==     in use at exit: 0 bytes in 0 blocks
-==26409==   total heap usage: 474 allocs, 475 frees, 27,856 bytes allocated
-==26409== 
-==26409== All heap blocks were freed -- no leaks are possible
-==26409== 
-==26409== For counts of detected and suppressed errors, rerun with: -v
-==26409== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==19267== Memcheck, a memory error detector
+==19267== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==19267== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==19267== Command: ./out/newTicTacToe.original.naive_dealloc.gcc.out 10
+==19267== Parent PID: 7864
+==19267== 
+==19267== Invalid free() / delete / delete[] / realloc()
+==19267==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==19267==    by 0x400D83: main (newTicTacToe_original.c:367)
+==19267==  Address 0x51fc0f0 is 0 bytes inside a block of size 8 free'd
+==19267==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==19267==    by 0x400D3B: main (newTicTacToe_original.c:364)
+==19267== 
+==19267== 
+==19267== HEAP SUMMARY:
+==19267==     in use at exit: 0 bytes in 0 blocks
+==19267==   total heap usage: 474 allocs, 475 frees, 27,856 bytes allocated
+==19267== 
+==19267== All heap blocks were freed -- no leaks are possible
+==19267== 
+==19267== For counts of detected and suppressed errors, rerun with: -v
+==19267== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -27,7 +27,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3725.125
+cpu MHz		: 3700.554
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -54,7 +54,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3756.867
+cpu MHz		: 3749.828
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -81,7 +81,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3777.453
+cpu MHz		: 3707.859
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -108,7 +108,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3700.953
+cpu MHz		: 3746.375
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -135,7 +135,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3799.500
+cpu MHz		: 3690.726
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -162,7 +162,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3707.992
+cpu MHz		: 3703.476
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -189,7 +189,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3699.890
+cpu MHz		: 3700.023
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -216,7 +216,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3822.609
+cpu MHz		: 3840.671
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
