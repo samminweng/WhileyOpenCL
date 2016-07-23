@@ -752,9 +752,8 @@ blklab24:;
 	}
 	//invoke (%44) = (%1, %2) MatrixMult3:mat_mult : function(MatrixMult3:Matrix,MatrixMult3:Matrix)->(MatrixMult3:Matrix)
 	_DEALLOC_STRUCT(_44, Matrix);
-	_44 = mat_mult(_STRUCT_PARAM(A), A_dealloc, _STRUCT_PARAM(B), B_dealloc);
-	_TRANSFER_DEALLOC(_44, A);
-	_TRANSFER_DEALLOC(_44, B);
+	_44 = mat_mult(_STRUCT_PARAM(A), !A_dealloc, _STRUCT_PARAM(B), !B_dealloc);
+	_ADD_DEALLOC(_44);
 	//assign %3 = %44  : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(C, Matrix);
 	C = _44;

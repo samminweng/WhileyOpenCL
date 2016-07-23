@@ -51,7 +51,7 @@ method main(System.Console sys):
     assert num_solutions == 724
     sys.out.println_s("N-Queen Problem on a N X N Board.")
     sys.out.print_s("N = ")
-    sys.out.println(n)
+    sys.out.println(|queens|)
     sys.out.print_s("Found ")
     sys.out.print(num_solutions)
     sys.out.println_s(" solutions.")
