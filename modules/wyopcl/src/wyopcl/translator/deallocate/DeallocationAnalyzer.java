@@ -392,8 +392,7 @@ public class DeallocationAnalyzer extends Analyzer {
 				} else if(callee_dealloc.equals("negated_dealloc")) { 
 					// Do nothing to caller's flag
 				} else if (callee_dealloc.equals("substruct_dealloc")){
-					// Set caller flag to be 'false'
-					statements.add(indent + removeDealloc(register, function, stores));
+					// Do nothing to caller's flag
 				} else{
 					throw new RuntimeException(callee_dealloc + " NOT implemented");
 				}
