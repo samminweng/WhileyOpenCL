@@ -310,7 +310,6 @@ blklab14:;
 blklab20:;
 			//invoke (%26) = (%7, %1, %4) nqueens:conflict : function(nqueens:POS,int,int)->(bool)
 			_26 = conflict(_STRUCT_PARAM(p), false, n, col);
-			_REMOVE_DEALLOC(p);
 			//const %27 = true : bool
 			_27 = true;
 			//ifeq %26, %27 goto blklab21 : bool

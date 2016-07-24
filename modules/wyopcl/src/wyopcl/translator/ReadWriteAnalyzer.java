@@ -59,7 +59,7 @@ public class ReadWriteAnalyzer extends Analyzer {
 		if (isCopyAvoided) {
 			// Check if code is not const, new array or indexof byte-code
 			if (!(code instanceof Codes.Const) && !(code instanceof Codes.NewArray)
-					&& !(code instanceof Codes.IndexOf)) {
+					&& !(code instanceof Codes.IndexOf) && !(code instanceof Codes.NewRecord)) {
 				// Adds register to readwrite set.
 				HashSet<Integer> store = stores.get(function);
 				// The copy is NOT made, and the RHS register is aliased to lhs
