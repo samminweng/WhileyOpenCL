@@ -372,46 +372,39 @@ public class DeallocationAnalyzer extends Analyzer {
 		List<String> statements = new ArrayList<String>();
 
 		String indent = stores.getIndent(function);
-		boolean isTransferred = false;
 		// Add or transfer out the parameters that do not have the copy
 		for (int register : code.operands()) {
 			String callee_dealloc = computeDealloc(register, code, function, stores, copyAnalyzer);
 			// Check callee's deallocation flag
-			if (callee_dealloc.equals("caller_dealloc")) {
-				// The parameter is de-allocated by caller
-				// Set caller flag to be 'true'
-				statements.add(indent + addDealloc(register, function, stores));
-			} else if (callee_dealloc.equals("both_dealloc")) {
-				// Set caller flag to be 'true'
-				statements.add(indent + addDealloc(register, function, stores));
-			} else if (callee_dealloc.equals("none_dealloc")) {
-				// Set caller flag to be 'false'
-				statements.add(indent + removeDealloc(register, function, stores));
-			} else if(callee_dealloc.equals("negated_dealloc")) { 
-				// Do nothing to caller's flag
-			} else if(callee_dealloc.equals("")){
-				// Do nothing to caller's flag
-			} else if (callee_dealloc.equals("transfer_callee")) {
-				if (code.targets().length > 0) {
-					int lhs = code.target(0);
-					Type lhs_type = stores.getRawType(lhs, function);
-					if (stores.isCompoundType(lhs_type)) {
-						// If so, then deallocation flag is transferred from caller site to callee
-						statements.add(indent + transferDealloc(lhs, register, function, stores));
-					} else {
-						// Remove the parameter deallocation flag
-						statements.add(indent + removeDealloc(register, function, stores));
-					}
-				} else {
-					// And remove the parameter deallocation flag
+			if(callee_dealloc.equals("")){
+				// Do nothing
+			}else{
+				if (callee_dealloc.equals("caller_dealloc")) {
+					// The parameter is de-allocated by caller
+					// Set caller flag to be 'true'
+					statements.add(indent + addDealloc(register, function, stores));
+				} else if (callee_dealloc.equals("both_dealloc")) {
+					// Set caller flag to be 'true'
+					statements.add(indent + addDealloc(register, function, stores));
+				} else if (callee_dealloc.equals("none_dealloc")) {
+					// Set caller flag to be 'false'
 					statements.add(indent + removeDealloc(register, function, stores));
+				} else if(callee_dealloc.equals("negated_dealloc")) { 
+					// Do nothing to caller's flag
+				} else if (callee_dealloc.equals("substruct_dealloc")){
+					// Set caller flag to be 'false'
+					statements.add(indent + removeDealloc(register, function, stores));
+				} else{
+					throw new RuntimeException(callee_dealloc + " NOT implemented");
 				}
-				isTransferred = true;
 			}
+			
+			
+			
 		}
 
 		// If the parameter is NOT transferred, add LHS deallocation flag.
-		if (code.targets().length > 0 && !isTransferred)
+		if (code.targets().length > 0)
 		{
 			// Add the deallocation flag of lhs variable
 			statements.add(indent + addDealloc(code.target(0), function, stores));
