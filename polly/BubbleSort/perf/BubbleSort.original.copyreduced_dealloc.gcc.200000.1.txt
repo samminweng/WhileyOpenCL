@@ -4,18 +4,18 @@ Pass BubbleSort test case
 
  Performance counter stats for 'out/BubbleSort.original.copyreduced_dealloc.gcc.out 200000':
 
-      26356.755688      task-clock (msec)         #    1.000 CPUs utilized          
-                50      context-switches          #    0.002 K/sec                  
-                 4      cpu-migrations            #    0.000 K/sec                  
-               447      page-faults               #    0.017 K/sec                  
-   102,468,388,126      cycles                    #    3.888 GHz                    
+      27425.093143      task-clock (msec)         #    1.000 CPUs utilized          
+                21      context-switches          #    0.001 K/sec                  
+                16      cpu-migrations            #    0.001 K/sec                  
+               447      page-faults               #    0.016 K/sec                  
+   103,350,000,681      cycles                    #    3.768 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   200,028,647,396      instructions              #    1.95  insns per cycle        
-    40,005,216,119      branches                  # 1517.835 M/sec                  
-           231,892      branch-misses             #    0.00% of all branches        
+   200,031,371,714      instructions              #    1.94  insns per cycle        
+    40,005,694,942      branches                  # 1458.726 M/sec                  
+           292,284      branch-misses             #    0.00% of all branches        
 
-      26.350600939 seconds time elapsed
+      27.419477822 seconds time elapsed
 
 1
 200000
@@ -23,18 +23,75 @@ Pass BubbleSort test case
 
  Performance counter stats for 'out/BubbleSort.original.copyreduced_dealloc.gcc.out 200000':
 
-      31278.695620      task-clock (msec)         #    1.000 CPUs utilized          
+      27366.797290      task-clock (msec)         #    1.000 CPUs utilized          
+                21      context-switches          #    0.001 K/sec                  
+                12      cpu-migrations            #    0.000 K/sec                  
+               446      page-faults               #    0.016 K/sec                  
+   103,369,769,139      cycles                    #    3.777 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+   200,028,121,162      instructions              #    1.94  insns per cycle        
+    40,005,110,858      branches                  # 1461.812 M/sec                  
+           256,328      branch-misses             #    0.00% of all branches        
+
+      27.361457524 seconds time elapsed
+
+1
+200000
+Pass BubbleSort test case
+
+ Performance counter stats for 'out/BubbleSort.original.copyreduced_dealloc.gcc.out 200000':
+
+      27326.372661      task-clock (msec)         #    1.000 CPUs utilized          
+                24      context-switches          #    0.001 K/sec                  
+                11      cpu-migrations            #    0.000 K/sec                  
+               444      page-faults               #    0.016 K/sec                  
+   103,456,297,150      cycles                    #    3.786 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+   200,027,970,227      instructions              #    1.93  insns per cycle        
+    40,005,091,339      branches                  # 1463.974 M/sec                  
+           256,734      branch-misses             #    0.00% of all branches        
+
+      27.322721502 seconds time elapsed
+
+1
+200000
+Pass BubbleSort test case
+
+ Performance counter stats for 'out/BubbleSort.original.copyreduced_dealloc.gcc.out 200000':
+
+      27376.906322      task-clock (msec)         #    1.000 CPUs utilized          
+                12      context-switches          #    0.000 K/sec                  
+                 8      cpu-migrations            #    0.000 K/sec                  
+               444      page-faults               #    0.016 K/sec                  
+   103,106,922,241      cycles                    #    3.766 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+   200,027,973,523      instructions              #    1.94  insns per cycle        
+    40,005,090,156      branches                  # 1461.271 M/sec                  
+           250,110      branch-misses             #    0.00% of all branches        
+
+      27.371765247 seconds time elapsed
+
+1
+200000
+Pass BubbleSort test case
+
+ Performance counter stats for 'out/BubbleSort.original.copyreduced_dealloc.gcc.out 200000':
+
+      27489.077944      task-clock (msec)         #    1.000 CPUs utilized          
                 11      context-switches          #    0.000 K/sec                  
-                 3      cpu-migrations            #    0.000 K/sec                  
-               446      page-faults               #    0.014 K/sec                  
-   121,590,145,986      cycles                    #    3.887 GHz                    
+                 0      cpu-migrations            #    0.000 K/sec                  
+               445      page-faults               #    0.016 K/sec                  
+   103,531,254,864      cycles                    #    3.766 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   200,031,460,634      instructions              #    1.65  insns per cycle        
-    40,005,687,738      branches                  # 1279.008 M/sec                  
-           222,796      branch-misses             #    0.00% of all branches        
+   200,028,093,616      instructions              #    1.93  insns per cycle        
+    40,005,113,037      branches                  # 1455.309 M/sec                  
+           244,050      branch-misses             #    0.00% of all branches        
 
-      31.270368755 seconds time elapsed
+      27.482826533 seconds time elapsed
 
 1
 200000
@@ -42,18 +99,56 @@ Pass BubbleSort test case
 
  Performance counter stats for 'out/BubbleSort.original.copyreduced_dealloc.gcc.out 200000':
 
-      26376.615652      task-clock (msec)         #    1.000 CPUs utilized          
+      27349.900232      task-clock (msec)         #    1.000 CPUs utilized          
+                12      context-switches          #    0.000 K/sec                  
+                12      cpu-migrations            #    0.000 K/sec                  
+               445      page-faults               #    0.016 K/sec                  
+   103,211,303,748      cycles                    #    3.774 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+   200,028,183,224      instructions              #    1.94  insns per cycle        
+    40,005,124,519      branches                  # 1462.716 M/sec                  
+           242,535      branch-misses             #    0.00% of all branches        
+
+      27.345479435 seconds time elapsed
+
+1
+200000
+Pass BubbleSort test case
+
+ Performance counter stats for 'out/BubbleSort.original.copyreduced_dealloc.gcc.out 200000':
+
+      27448.803063      task-clock (msec)         #    1.000 CPUs utilized          
+                24      context-switches          #    0.001 K/sec                  
+                15      cpu-migrations            #    0.001 K/sec                  
+               445      page-faults               #    0.016 K/sec                  
+   103,325,497,937      cycles                    #    3.764 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+   200,028,351,786      instructions              #    1.94  insns per cycle        
+    40,005,152,325      branches                  # 1457.446 M/sec                  
+           267,155      branch-misses             #    0.00% of all branches        
+
+      27.443053408 seconds time elapsed
+
+1
+200000
+Pass BubbleSort test case
+
+ Performance counter stats for 'out/BubbleSort.original.copyreduced_dealloc.gcc.out 200000':
+
+      27572.121220      task-clock (msec)         #    1.000 CPUs utilized          
                 11      context-switches          #    0.000 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-               447      page-faults               #    0.017 K/sec                  
-   102,438,365,211      cycles                    #    3.884 GHz                    
+                 2      cpu-migrations            #    0.000 K/sec                  
+               446      page-faults               #    0.016 K/sec                  
+   103,913,925,656      cycles                    #    3.769 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   200,027,047,038      instructions              #    1.95  insns per cycle        
-    40,004,930,747      branches                  # 1516.682 M/sec                  
-           220,374      branch-misses             #    0.00% of all branches        
+   200,028,166,571      instructions              #    1.92  insns per cycle        
+    40,005,123,976      branches                  # 1450.927 M/sec                  
+           251,671      branch-misses             #    0.00% of all branches        
 
-      26.370432764 seconds time elapsed
+      27.567717984 seconds time elapsed
 
 1
 200000
@@ -61,18 +156,18 @@ Pass BubbleSort test case
 
  Performance counter stats for 'out/BubbleSort.original.copyreduced_dealloc.gcc.out 200000':
 
-      26885.365130      task-clock (msec)         #    1.000 CPUs utilized          
-                12      context-switches          #    0.000 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
+      27394.452719      task-clock (msec)         #    1.000 CPUs utilized          
+                13      context-switches          #    0.000 K/sec                  
+                20      cpu-migrations            #    0.001 K/sec                  
                443      page-faults               #    0.016 K/sec                  
-   104,453,803,071      cycles                    #    3.885 GHz                    
+   103,233,333,452      cycles                    #    3.768 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   200,027,390,253      instructions              #    1.91  insns per cycle        
-    40,004,989,256      branches                  # 1487.984 M/sec                  
-           219,006      branch-misses             #    0.00% of all branches        
+   200,028,135,136      instructions              #    1.94  insns per cycle        
+    40,005,118,110      branches                  # 1460.336 M/sec                  
+           248,169      branch-misses             #    0.00% of all branches        
 
-      26.879501852 seconds time elapsed
+      27.397204446 seconds time elapsed
 
 1
 200000
@@ -80,113 +175,18 @@ Pass BubbleSort test case
 
  Performance counter stats for 'out/BubbleSort.original.copyreduced_dealloc.gcc.out 200000':
 
-      31476.894098      task-clock (msec)         #    1.000 CPUs utilized          
-                12      context-switches          #    0.000 K/sec                  
-                 1      cpu-migrations            #    0.000 K/sec                  
-               446      page-faults               #    0.014 K/sec                  
-   122,361,152,363      cycles                    #    3.887 GHz                    
+      27434.626277      task-clock (msec)         #    1.000 CPUs utilized          
+                11      context-switches          #    0.000 K/sec                  
+                 9      cpu-migrations            #    0.000 K/sec                  
+               444      page-faults               #    0.016 K/sec                  
+   103,311,110,809      cycles                    #    3.766 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   200,031,491,907      instructions              #    1.63  insns per cycle        
-    40,005,694,815      branches                  # 1270.954 M/sec                  
-           220,400      branch-misses             #    0.00% of all branches        
+   200,028,117,552      instructions              #    1.94  insns per cycle        
+    40,005,113,633      branches                  # 1458.198 M/sec                  
+           255,334      branch-misses             #    0.00% of all branches        
 
-      31.468014301 seconds time elapsed
-
-1
-200000
-Pass BubbleSort test case
-
- Performance counter stats for 'out/BubbleSort.original.copyreduced_dealloc.gcc.out 200000':
-
-      26358.420643      task-clock (msec)         #    1.000 CPUs utilized          
-                10      context-switches          #    0.000 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-               444      page-faults               #    0.017 K/sec                  
-   102,425,763,122      cycles                    #    3.886 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   200,027,029,362      instructions              #    1.95  insns per cycle        
-    40,004,926,811      branches                  # 1517.729 M/sec                  
-           221,415      branch-misses             #    0.00% of all branches        
-
-      26.352095836 seconds time elapsed
-
-1
-200000
-Pass BubbleSort test case
-
- Performance counter stats for 'out/BubbleSort.original.copyreduced_dealloc.gcc.out 200000':
-
-      26350.649950      task-clock (msec)         #    1.000 CPUs utilized          
-                12      context-switches          #    0.000 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-               445      page-faults               #    0.017 K/sec                  
-   102,435,908,793      cycles                    #    3.887 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   200,026,970,425      instructions              #    1.95  insns per cycle        
-    40,004,917,903      branches                  # 1518.176 M/sec                  
-           219,917      branch-misses             #    0.00% of all branches        
-
-      26.344008392 seconds time elapsed
-
-1
-200000
-Pass BubbleSort test case
-
- Performance counter stats for 'out/BubbleSort.original.copyreduced_dealloc.gcc.out 200000':
-
-      31545.298691      task-clock (msec)         #    1.000 CPUs utilized          
-                12      context-switches          #    0.000 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-               445      page-faults               #    0.014 K/sec                  
-   122,491,776,481      cycles                    #    3.883 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   200,031,549,465      instructions              #    1.63  insns per cycle        
-    40,005,703,566      branches                  # 1268.199 M/sec                  
-           221,314      branch-misses             #    0.00% of all branches        
-
-      31.537197913 seconds time elapsed
-
-1
-200000
-Pass BubbleSort test case
-
- Performance counter stats for 'out/BubbleSort.original.copyreduced_dealloc.gcc.out 200000':
-
-      26881.092608      task-clock (msec)         #    1.000 CPUs utilized          
-                10      context-switches          #    0.000 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-               444      page-faults               #    0.017 K/sec                  
-   104,468,062,718      cycles                    #    3.886 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   200,027,378,136      instructions              #    1.91  insns per cycle        
-    40,004,983,051      branches                  # 1488.220 M/sec                  
-           218,981      branch-misses             #    0.00% of all branches        
-
-      26.874599234 seconds time elapsed
-
-1
-200000
-Pass BubbleSort test case
-
- Performance counter stats for 'out/BubbleSort.original.copyreduced_dealloc.gcc.out 200000':
-
-      26860.880800      task-clock (msec)         #    1.000 CPUs utilized          
-                12      context-switches          #    0.000 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-               443      page-faults               #    0.016 K/sec                  
-   104,447,681,901      cycles                    #    3.888 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-   200,027,380,135      instructions              #    1.92  insns per cycle        
-    40,004,983,328      branches                  # 1489.340 M/sec                  
-           220,176      branch-misses             #    0.00% of all branches        
-
-      26.854215416 seconds time elapsed
+      27.428197378 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -195,7 +195,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3698.828
+cpu MHz		: 3701.218
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -222,7 +222,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.640
+cpu MHz		: 3733.359
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -249,7 +249,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3892.601
+cpu MHz		: 3685.414
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -276,7 +276,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3821.812
+cpu MHz		: 3677.179
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -303,7 +303,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3580.093
+cpu MHz		: 3746.906
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -330,7 +330,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.906
+cpu MHz		: 3898.445
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -357,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3840.406
+cpu MHz		: 3897.914
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -384,7 +384,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3902.828
+cpu MHz		: 3686.875
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

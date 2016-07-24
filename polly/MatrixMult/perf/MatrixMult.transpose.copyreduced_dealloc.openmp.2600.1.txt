@@ -4,18 +4,18 @@ Pass MatrixMult test case
 
  Performance counter stats for 'out/MatrixMult.transpose.copyreduced_dealloc.openmp.out 2600':
 
-       6038.475159      task-clock (msec)         #    0.994 CPUs utilized          
-                13      context-switches          #    0.002 K/sec                  
-                 1      cpu-migrations            #    0.000 K/sec                  
-             2,294      page-faults               #    0.380 K/sec                  
-    23,201,704,603      cycles                    #    3.842 GHz                    
+       6769.095613      task-clock (msec)         #    0.999 CPUs utilized          
+                17      context-switches          #    0.003 K/sec                  
+                10      cpu-migrations            #    0.001 K/sec                  
+             2,294      page-faults               #    0.339 K/sec                  
+    25,427,196,851      cycles                    #    3.756 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    81,903,954,615      instructions              #    3.53  insns per cycle        
-     5,586,489,562      branches                  #  925.149 M/sec                  
-        18,181,254      branch-misses             #    0.33% of all branches        
+    81,905,986,854      instructions              #    3.22  insns per cycle        
+     5,586,848,327      branches                  #  825.346 M/sec                  
+        18,442,628      branch-misses             #    0.33% of all branches        
 
-       6.077242871 seconds time elapsed
+       6.773228591 seconds time elapsed
 
 size = 2600
 Matrix C[size-1][size-1] = 8781241300
@@ -23,37 +23,18 @@ Pass MatrixMult test case
 
  Performance counter stats for 'out/MatrixMult.transpose.copyreduced_dealloc.openmp.out 2600':
 
-       7201.026720      task-clock (msec)         #    1.000 CPUs utilized          
-                 6      context-switches          #    0.001 K/sec                  
-                 1      cpu-migrations            #    0.000 K/sec                  
-             2,294      page-faults               #    0.319 K/sec                  
-    27,939,156,444      cycles                    #    3.880 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    81,904,662,319      instructions              #    2.93  insns per cycle        
-     5,586,609,656      branches                  #  775.807 M/sec                  
-        18,286,232      branch-misses             #    0.33% of all branches        
-
-       7.202360483 seconds time elapsed
-
-size = 2600
-Matrix C[size-1][size-1] = 8781241300
-Pass MatrixMult test case
-
- Performance counter stats for 'out/MatrixMult.transpose.copyreduced_dealloc.openmp.out 2600':
-
-       8089.742476      task-clock (msec)         #    1.000 CPUs utilized          
+       6738.530657      task-clock (msec)         #    0.999 CPUs utilized          
                  7      context-switches          #    0.001 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-             2,294      page-faults               #    0.284 K/sec                  
-    31,421,411,629      cycles                    #    3.884 GHz                    
+                14      cpu-migrations            #    0.002 K/sec                  
+             2,294      page-faults               #    0.340 K/sec                  
+    25,365,865,703      cycles                    #    3.764 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    81,905,414,510      instructions              #    2.61  insns per cycle        
-     5,586,734,946      branches                  #  690.595 M/sec                  
-        18,120,993      branch-misses             #    0.32% of all branches        
+    81,904,613,228      instructions              #    3.23  insns per cycle        
+     5,586,606,746      branches                  #  829.054 M/sec                  
+        18,394,356      branch-misses             #    0.33% of all branches        
 
-       8.090997781 seconds time elapsed
+       6.742067120 seconds time elapsed
 
 size = 2600
 Matrix C[size-1][size-1] = 8781241300
@@ -61,18 +42,18 @@ Pass MatrixMult test case
 
  Performance counter stats for 'out/MatrixMult.transpose.copyreduced_dealloc.openmp.out 2600':
 
-       7195.895791      task-clock (msec)         #    1.000 CPUs utilized          
+       6760.678070      task-clock (msec)         #    0.999 CPUs utilized          
                  6      context-switches          #    0.001 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-             2,294      page-faults               #    0.319 K/sec                  
-    27,924,808,714      cycles                    #    3.881 GHz                    
+             2,293      page-faults               #    0.339 K/sec                  
+    25,343,777,229      cycles                    #    3.749 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    81,904,617,594      instructions              #    2.93  insns per cycle        
-     5,586,607,275      branches                  #  776.360 M/sec                  
-        18,283,615      branch-misses             #    0.33% of all branches        
+    81,904,421,344      instructions              #    3.23  insns per cycle        
+     5,586,575,795      branches                  #  826.334 M/sec                  
+        18,388,368      branch-misses             #    0.33% of all branches        
 
-       7.197058841 seconds time elapsed
+       6.764108523 seconds time elapsed
 
 size = 2600
 Matrix C[size-1][size-1] = 8781241300
@@ -80,37 +61,18 @@ Pass MatrixMult test case
 
  Performance counter stats for 'out/MatrixMult.transpose.copyreduced_dealloc.openmp.out 2600':
 
-       7725.570926      task-clock (msec)         #    1.000 CPUs utilized          
-                 6      context-switches          #    0.001 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-             2,294      page-faults               #    0.297 K/sec                  
-    29,874,914,785      cycles                    #    3.867 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    81,905,150,789      instructions              #    2.74  insns per cycle        
-     5,586,687,082      branches                  #  723.142 M/sec                  
-        17,879,789      branch-misses             #    0.32% of all branches        
-
-       7.726208839 seconds time elapsed
-
-size = 2600
-Matrix C[size-1][size-1] = 8781241300
-Pass MatrixMult test case
-
- Performance counter stats for 'out/MatrixMult.transpose.copyreduced_dealloc.openmp.out 2600':
-
-       7545.858741      task-clock (msec)         #    1.000 CPUs utilized          
+       6692.875923      task-clock (msec)         #    0.999 CPUs utilized          
                  6      context-switches          #    0.001 K/sec                  
                  1      cpu-migrations            #    0.000 K/sec                  
-             1,784      page-faults               #    0.236 K/sec                  
-    29,239,541,620      cycles                    #    3.875 GHz                    
+             2,294      page-faults               #    0.343 K/sec                  
+    25,170,301,451      cycles                    #    3.761 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    81,903,791,960      instructions              #    2.80  insns per cycle        
-     5,586,467,075      branches                  #  740.335 M/sec                  
-        18,276,515      branch-misses             #    0.33% of all branches        
+    81,904,361,573      instructions              #    3.25  insns per cycle        
+     5,586,561,307      branches                  #  834.703 M/sec                  
+        18,385,815      branch-misses             #    0.33% of all branches        
 
-       7.547508196 seconds time elapsed
+       6.696377532 seconds time elapsed
 
 size = 2600
 Matrix C[size-1][size-1] = 8781241300
@@ -118,37 +80,18 @@ Pass MatrixMult test case
 
  Performance counter stats for 'out/MatrixMult.transpose.copyreduced_dealloc.openmp.out 2600':
 
-       5909.755918      task-clock (msec)         #    1.000 CPUs utilized          
-                 5      context-switches          #    0.001 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-             1,783      page-faults               #    0.302 K/sec                  
-    22,925,167,531      cycles                    #    3.879 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    81,902,225,128      instructions              #    3.57  insns per cycle        
-     5,586,192,993      branches                  #  945.249 M/sec                  
-        18,335,089      branch-misses             #    0.33% of all branches        
-
-       5.912670827 seconds time elapsed
-
-size = 2600
-Matrix C[size-1][size-1] = 8781241300
-Pass MatrixMult test case
-
- Performance counter stats for 'out/MatrixMult.transpose.copyreduced_dealloc.openmp.out 2600':
-
-       8387.406841      task-clock (msec)         #    1.000 CPUs utilized          
-                 6      context-switches          #    0.001 K/sec                  
+       7374.733782      task-clock (msec)         #    0.999 CPUs utilized          
+                 9      context-switches          #    0.001 K/sec                  
                  1      cpu-migrations            #    0.000 K/sec                  
-             2,294      page-faults               #    0.274 K/sec                  
-    32,596,669,736      cycles                    #    3.886 GHz                    
+             2,294      page-faults               #    0.311 K/sec                  
+    27,782,988,232      cycles                    #    3.767 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    81,905,696,113      instructions              #    2.51  insns per cycle        
-     5,586,795,236      branches                  #  666.093 M/sec                  
-        18,107,825      branch-misses             #    0.32% of all branches        
+    81,905,045,719      instructions              #    2.95  insns per cycle        
+     5,586,681,468      branches                  #  757.543 M/sec                  
+        18,370,851      branch-misses             #    0.33% of all branches        
 
-       8.388022767 seconds time elapsed
+       7.382308062 seconds time elapsed
 
 size = 2600
 Matrix C[size-1][size-1] = 8781241300
@@ -156,18 +99,18 @@ Pass MatrixMult test case
 
  Performance counter stats for 'out/MatrixMult.transpose.copyreduced_dealloc.openmp.out 2600':
 
-       8475.718509      task-clock (msec)         #    1.000 CPUs utilized          
+       6716.506739      task-clock (msec)         #    0.999 CPUs utilized          
                  7      context-switches          #    0.001 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-             2,294      page-faults               #    0.271 K/sec                  
-    32,913,133,875      cycles                    #    3.883 GHz                    
+                 2      cpu-migrations            #    0.000 K/sec                  
+             2,294      page-faults               #    0.342 K/sec                  
+    25,171,096,967      cycles                    #    3.748 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    81,905,737,540      instructions              #    2.49  insns per cycle        
-     5,586,797,791      branches                  #  659.153 M/sec                  
-        18,107,222      branch-misses             #    0.32% of all branches        
+    81,904,553,219      instructions              #    3.25  insns per cycle        
+     5,586,602,259      branches                  #  831.772 M/sec                  
+        18,425,376      branch-misses             #    0.33% of all branches        
 
-       8.475590838 seconds time elapsed
+       6.723146044 seconds time elapsed
 
 size = 2600
 Matrix C[size-1][size-1] = 8781241300
@@ -175,18 +118,75 @@ Pass MatrixMult test case
 
  Performance counter stats for 'out/MatrixMult.transpose.copyreduced_dealloc.openmp.out 2600':
 
-       7197.352127      task-clock (msec)         #    1.000 CPUs utilized          
-                 5      context-switches          #    0.001 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-             2,295      page-faults               #    0.319 K/sec                  
-    27,907,693,075      cycles                    #    3.877 GHz                    
+       6874.800729      task-clock (msec)         #    0.999 CPUs utilized          
+                 8      context-switches          #    0.001 K/sec                  
+                 7      cpu-migrations            #    0.001 K/sec                  
+             2,294      page-faults               #    0.334 K/sec                  
+    25,816,617,032      cycles                    #    3.755 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-    81,904,623,343      instructions              #    2.93  insns per cycle        
-     5,586,599,839      branches                  #  776.202 M/sec                  
-        18,025,632      branch-misses             #    0.32% of all branches        
+    81,904,625,829      instructions              #    3.17  insns per cycle        
+     5,586,617,954      branches                  #  812.623 M/sec                  
+        18,431,555      branch-misses             #    0.33% of all branches        
 
-       7.198757721 seconds time elapsed
+       6.883886187 seconds time elapsed
+
+size = 2600
+Matrix C[size-1][size-1] = 8781241300
+Pass MatrixMult test case
+
+ Performance counter stats for 'out/MatrixMult.transpose.copyreduced_dealloc.openmp.out 2600':
+
+       6746.966689      task-clock (msec)         #    0.999 CPUs utilized          
+                 5      context-switches          #    0.001 K/sec                  
+                 9      cpu-migrations            #    0.001 K/sec                  
+             2,295      page-faults               #    0.340 K/sec                  
+    25,405,502,901      cycles                    #    3.765 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+    81,904,552,108      instructions              #    3.22  insns per cycle        
+     5,586,590,183      branches                  #  828.015 M/sec                  
+        18,434,598      branch-misses             #    0.33% of all branches        
+
+       6.751409752 seconds time elapsed
+
+size = 2600
+Matrix C[size-1][size-1] = 8781241300
+Pass MatrixMult test case
+
+ Performance counter stats for 'out/MatrixMult.transpose.copyreduced_dealloc.openmp.out 2600':
+
+       6675.188533      task-clock (msec)         #    0.999 CPUs utilized          
+                 6      context-switches          #    0.001 K/sec                  
+                 2      cpu-migrations            #    0.000 K/sec                  
+             1,784      page-faults               #    0.267 K/sec                  
+    25,068,915,481      cycles                    #    3.756 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+    81,903,203,544      instructions              #    3.27  insns per cycle        
+     5,586,374,042      branches                  #  836.886 M/sec                  
+        18,181,263      branch-misses             #    0.33% of all branches        
+
+       6.682818348 seconds time elapsed
+
+size = 2600
+Matrix C[size-1][size-1] = 8781241300
+Pass MatrixMult test case
+
+ Performance counter stats for 'out/MatrixMult.transpose.copyreduced_dealloc.openmp.out 2600':
+
+       6664.441365      task-clock (msec)         #    1.000 CPUs utilized          
+                 5      context-switches          #    0.001 K/sec                  
+                 2      cpu-migrations            #    0.000 K/sec                  
+             2,294      page-faults               #    0.344 K/sec                  
+    25,106,252,335      cycles                    #    3.767 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+    81,904,446,517      instructions              #    3.26  insns per cycle        
+     5,586,579,639      branches                  #  838.267 M/sec                  
+        18,239,283      branch-misses             #    0.33% of all branches        
+
+       6.666549087 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -195,7 +195,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3803.750
+cpu MHz		: 3799.500
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -222,7 +222,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3869.890
+cpu MHz		: 3799.500
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -249,7 +249,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3876.132
+cpu MHz		: 3701.351
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -276,7 +276,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3884.632
+cpu MHz		: 3794.320
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -303,7 +303,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3887.289
+cpu MHz		: 3700.156
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -330,7 +330,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3438.250
+cpu MHz		: 3762.179
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -357,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3878.125
+cpu MHz		: 3700.023
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -384,7 +384,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3901.101
+cpu MHz		: 3700.156
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
