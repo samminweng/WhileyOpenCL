@@ -5,18 +5,18 @@ Pass Fibonacci test case
 
  Performance counter stats for 'out/Fibonacci.original.copyreduced_dealloc.gcc.out 10':
 
-          0.248444      task-clock (msec)         #    0.063 CPUs utilized          
-                 2      context-switches          #    0.008 M/sec                  
+          0.413573      task-clock (msec)         #    0.040 CPUs utilized          
+                 2      context-switches          #    0.005 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                54      page-faults               #    0.217 M/sec                  
-           829,126      cycles                    #    3.337 GHz                    
+                54      page-faults               #    0.131 M/sec                  
+         1,509,178      cycles                    #    3.649 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           623,027      instructions              #    0.75  insns per cycle        
-           122,340      branches                  #  492.425 M/sec                  
-             6,959      branch-misses             #    5.69% of all branches        
+           715,245      instructions              #    0.47  insns per cycle        
+           140,542      branches                  #  339.824 M/sec                  
+             7,600      branch-misses             #    5.41% of all branches        
 
-       0.003960257 seconds time elapsed
+       0.010255674 seconds time elapsed
 
 13
 21
@@ -25,18 +25,18 @@ Pass Fibonacci test case
 
  Performance counter stats for 'out/Fibonacci.original.copyreduced_dealloc.gcc.out 10':
 
-          0.197755      task-clock (msec)         #    0.060 CPUs utilized          
-                 1      context-switches          #    0.005 M/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                54      page-faults               #    0.273 M/sec                  
-           681,859      cycles                    #    3.448 GHz                    
+          0.299021      task-clock (msec)         #    0.024 CPUs utilized          
+                 1      context-switches          #    0.003 M/sec                  
+                 1      cpu-migrations            #    0.003 M/sec                  
+                54      page-faults               #    0.181 M/sec                  
+         1,123,443      cycles                    #    3.757 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           595,179      instructions              #    0.87  insns per cycle        
-           117,526      branches                  #  594.301 M/sec                  
-             5,750      branch-misses             #    4.89% of all branches        
+           690,183      instructions              #    0.61  insns per cycle        
+           136,091      branches                  #  455.122 M/sec                  
+             7,032      branch-misses             #    5.17% of all branches        
 
-       0.003294143 seconds time elapsed
+       0.012348553 seconds time elapsed
 
 13
 21
@@ -45,18 +45,18 @@ Pass Fibonacci test case
 
  Performance counter stats for 'out/Fibonacci.original.copyreduced_dealloc.gcc.out 10':
 
-          0.199166      task-clock (msec)         #    0.057 CPUs utilized          
-                 1      context-switches          #    0.005 M/sec                  
+          0.304080      task-clock (msec)         #    0.052 CPUs utilized          
+                 1      context-switches          #    0.003 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                54      page-faults               #    0.271 M/sec                  
-           667,710      cycles                    #    3.353 GHz                    
+                53      page-faults               #    0.174 M/sec                  
+         1,107,139      cycles                    #    3.641 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           593,447      instructions              #    0.89  insns per cycle        
-           117,263      branches                  #  588.770 M/sec                  
-             5,396      branch-misses             #    4.60% of all branches        
+           688,030      instructions              #    0.62  insns per cycle        
+           135,280      branches                  #  444.883 M/sec                  
+             6,918      branch-misses             #    5.11% of all branches        
 
-       0.003478228 seconds time elapsed
+       0.005796011 seconds time elapsed
 
 13
 21
@@ -65,18 +65,18 @@ Pass Fibonacci test case
 
  Performance counter stats for 'out/Fibonacci.original.copyreduced_dealloc.gcc.out 10':
 
-          0.195397      task-clock (msec)         #    0.053 CPUs utilized          
-                 1      context-switches          #    0.005 M/sec                  
+          0.328111      task-clock (msec)         #    0.079 CPUs utilized          
+                 1      context-switches          #    0.003 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                53      page-faults               #    0.271 M/sec                  
-           654,617      cycles                    #    3.350 GHz                    
+                56      page-faults               #    0.171 M/sec                  
+         1,190,233      cycles                    #    3.628 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           583,583      instructions              #    0.89  insns per cycle        
-           115,332      branches                  #  590.244 M/sec                  
-             5,386      branch-misses             #    4.67% of all branches        
+           707,402      instructions              #    0.59  insns per cycle        
+           139,343      branches                  #  424.683 M/sec                  
+             6,161      branch-misses             #    4.42% of all branches        
 
-       0.003719875 seconds time elapsed
+       0.004150811 seconds time elapsed
 
 13
 21
@@ -85,18 +85,18 @@ Pass Fibonacci test case
 
  Performance counter stats for 'out/Fibonacci.original.copyreduced_dealloc.gcc.out 10':
 
-          0.200595      task-clock (msec)         #    0.064 CPUs utilized          
-                 1      context-switches          #    0.005 M/sec                  
+          0.286673      task-clock (msec)         #    0.054 CPUs utilized          
+                 1      context-switches          #    0.003 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                55      page-faults               #    0.274 M/sec                  
-           671,991      cycles                    #    3.350 GHz                    
+                53      page-faults               #    0.185 M/sec                  
+         1,045,694      cycles                    #    3.648 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           604,356      instructions              #    0.90  insns per cycle        
-           119,089      branches                  #  593.679 M/sec                  
-             5,362      branch-misses             #    4.50% of all branches        
+           687,010      instructions              #    0.66  insns per cycle        
+           135,185      branches                  #  471.565 M/sec                  
+             6,920      branch-misses             #    5.12% of all branches        
 
-       0.003151402 seconds time elapsed
+       0.005306305 seconds time elapsed
 
 13
 21
@@ -105,18 +105,18 @@ Pass Fibonacci test case
 
  Performance counter stats for 'out/Fibonacci.original.copyreduced_dealloc.gcc.out 10':
 
-          0.197857      task-clock (msec)         #    0.060 CPUs utilized          
-                 1      context-switches          #    0.005 M/sec                  
+          0.284288      task-clock (msec)         #    0.066 CPUs utilized          
+                 1      context-switches          #    0.004 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                52      page-faults               #    0.263 M/sec                  
-           663,176      cycles                    #    3.352 GHz                    
+                53      page-faults               #    0.186 M/sec                  
+         1,036,276      cycles                    #    3.645 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           588,100      instructions              #    0.89  insns per cycle        
-           116,347      branches                  #  588.036 M/sec                  
-             5,285      branch-misses             #    4.54% of all branches        
+           694,264      instructions              #    0.67  insns per cycle        
+           136,502      branches                  #  480.154 M/sec                  
+             6,509      branch-misses             #    4.77% of all branches        
 
-       0.003312585 seconds time elapsed
+       0.004317605 seconds time elapsed
 
 13
 21
@@ -125,18 +125,18 @@ Pass Fibonacci test case
 
  Performance counter stats for 'out/Fibonacci.original.copyreduced_dealloc.gcc.out 10':
 
-          0.199173      task-clock (msec)         #    0.059 CPUs utilized          
-                 1      context-switches          #    0.005 M/sec                  
+          0.309509      task-clock (msec)         #    0.069 CPUs utilized          
+                 1      context-switches          #    0.003 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                54      page-faults               #    0.271 M/sec                  
-           667,500      cycles                    #    3.351 GHz                    
+                55      page-faults               #    0.178 M/sec                  
+         1,122,548      cycles                    #    3.627 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           581,076      instructions              #    0.87  insns per cycle        
-           115,700      branches                  #  580.902 M/sec                  
-             5,353      branch-misses             #    4.63% of all branches        
+           694,826      instructions              #    0.62  insns per cycle        
+           137,311      branches                  #  443.641 M/sec                  
+             6,944      branch-misses             #    5.06% of all branches        
 
-       0.003396962 seconds time elapsed
+       0.004492039 seconds time elapsed
 
 13
 21
@@ -145,18 +145,18 @@ Pass Fibonacci test case
 
  Performance counter stats for 'out/Fibonacci.original.copyreduced_dealloc.gcc.out 10':
 
-          0.199764      task-clock (msec)         #    0.031 CPUs utilized          
-                 1      context-switches          #    0.005 M/sec                  
+          0.317402      task-clock (msec)         #    0.062 CPUs utilized          
+                 1      context-switches          #    0.003 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                54      page-faults               #    0.270 M/sec                  
-           669,871      cycles                    #    3.353 GHz                    
+                55      page-faults               #    0.173 M/sec                  
+         1,160,673      cycles                    #    3.657 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           592,649      instructions              #    0.88  insns per cycle        
-           117,294      branches                  #  587.163 M/sec                  
-             5,186      branch-misses             #    4.42% of all branches        
+           699,077      instructions              #    0.60  insns per cycle        
+           137,694      branches                  #  433.816 M/sec                  
+             6,892      branch-misses             #    5.01% of all branches        
 
-       0.006530382 seconds time elapsed
+       0.005105423 seconds time elapsed
 
 13
 21
@@ -165,18 +165,18 @@ Pass Fibonacci test case
 
  Performance counter stats for 'out/Fibonacci.original.copyreduced_dealloc.gcc.out 10':
 
-          0.205700      task-clock (msec)         #    0.051 CPUs utilized          
-                 1      context-switches          #    0.005 M/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                54      page-faults               #    0.263 M/sec                  
-           689,880      cycles                    #    3.354 GHz                    
+          0.321910      task-clock (msec)         #    0.064 CPUs utilized          
+                 1      context-switches          #    0.003 M/sec                  
+                 1      cpu-migrations            #    0.003 M/sec                  
+                56      page-faults               #    0.174 M/sec                  
+         1,175,207      cycles                    #    3.651 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           610,531      instructions              #    0.88  insns per cycle        
-           120,260      branches                  #  584.638 M/sec                  
-             5,545      branch-misses             #    4.61% of all branches        
+           730,512      instructions              #    0.62  insns per cycle        
+           143,426      branches                  #  445.547 M/sec                  
+             6,943      branch-misses             #    4.84% of all branches        
 
-       0.004048462 seconds time elapsed
+       0.005055810 seconds time elapsed
 
 13
 21
@@ -185,18 +185,18 @@ Pass Fibonacci test case
 
  Performance counter stats for 'out/Fibonacci.original.copyreduced_dealloc.gcc.out 10':
 
-          0.199255      task-clock (msec)         #    0.059 CPUs utilized          
-                 1      context-switches          #    0.005 M/sec                  
+          0.311718      task-clock (msec)         #    0.020 CPUs utilized          
+                 1      context-switches          #    0.003 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                54      page-faults               #    0.271 M/sec                  
-           668,089      cycles                    #    3.353 GHz                    
+                54      page-faults               #    0.173 M/sec                  
+         1,142,700      cycles                    #    3.666 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           593,659      instructions              #    0.89  insns per cycle        
-           117,637      branches                  #  590.384 M/sec                  
-             5,327      branch-misses             #    4.53% of all branches        
+           683,395      instructions              #    0.60  insns per cycle        
+           135,139      branches                  #  433.530 M/sec                  
+             6,981      branch-misses             #    5.17% of all branches        
 
-       0.003375738 seconds time elapsed
+       0.015820167 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -205,7 +205,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3399.867
+cpu MHz		: 3827.390
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -232,7 +232,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.000
+cpu MHz		: 3759.656
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -259,7 +259,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3877.328
+cpu MHz		: 3724.726
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -286,7 +286,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3672.265
+cpu MHz		: 3798.570
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -313,7 +313,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.132
+cpu MHz		: 3701.750
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -340,7 +340,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3498.945
+cpu MHz		: 3734.421
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -367,7 +367,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3786.085
+cpu MHz		: 3733.625
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -394,7 +394,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3830.445
+cpu MHz		: 3753.945
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

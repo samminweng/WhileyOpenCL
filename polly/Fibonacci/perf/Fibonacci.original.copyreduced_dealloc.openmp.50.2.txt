@@ -5,18 +5,18 @@ Pass Fibonacci test case
 
  Performance counter stats for 'out/Fibonacci.original.copyreduced_dealloc.openmp.out 50':
 
-          0.295912      task-clock (msec)         #    0.080 CPUs utilized          
-                 2      context-switches          #    0.007 M/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                66      page-faults               #    0.223 M/sec                  
-           989,701      cycles                    #    3.345 GHz                    
+          0.397862      task-clock (msec)         #    0.018 CPUs utilized          
+                 2      context-switches          #    0.005 M/sec                  
+                 1      cpu-migrations            #    0.003 M/sec                  
+                67      page-faults               #    0.168 M/sec                  
+         1,451,836      cycles                    #    3.649 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           800,400      instructions              #    0.81  insns per cycle        
-           159,119      branches                  #  537.724 M/sec                  
-             7,986      branch-misses             #    5.02% of all branches        
+           962,901      instructions              #    0.66  insns per cycle        
+           190,955      branches                  #  479.953 M/sec                  
+             9,000      branch-misses             #    4.71% of all branches        
 
-       0.003706788 seconds time elapsed
+       0.021901696 seconds time elapsed
 
 2971215073
 4807526976
@@ -25,18 +25,18 @@ Pass Fibonacci test case
 
  Performance counter stats for 'out/Fibonacci.original.copyreduced_dealloc.openmp.out 50':
 
-          0.264681      task-clock (msec)         #    0.081 CPUs utilized          
-                 1      context-switches          #    0.004 M/sec                  
+          0.382904      task-clock (msec)         #    0.083 CPUs utilized          
+                 1      context-switches          #    0.003 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.253 M/sec                  
-           889,173      cycles                    #    3.359 GHz                    
+                67      page-faults               #    0.175 M/sec                  
+         1,401,461      cycles                    #    3.660 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           778,978      instructions              #    0.88  insns per cycle        
-           155,617      branches                  #  587.942 M/sec                  
-             8,137      branch-misses             #    5.23% of all branches        
+           935,081      instructions              #    0.67  insns per cycle        
+           185,539      branches                  #  484.557 M/sec                  
+             8,774      branch-misses             #    4.73% of all branches        
 
-       0.003276971 seconds time elapsed
+       0.004635366 seconds time elapsed
 
 2971215073
 4807526976
@@ -45,18 +45,18 @@ Pass Fibonacci test case
 
  Performance counter stats for 'out/Fibonacci.original.copyreduced_dealloc.openmp.out 50':
 
-          0.256150      task-clock (msec)         #    0.075 CPUs utilized          
-                 1      context-switches          #    0.004 M/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.262 M/sec                  
-           860,839      cycles                    #    3.361 GHz                    
+          0.551319      task-clock (msec)         #    0.039 CPUs utilized          
+                 1      context-switches          #    0.002 M/sec                  
+                 1      cpu-migrations            #    0.002 M/sec                  
+                67      page-faults               #    0.122 M/sec                  
+         2,023,737      cycles                    #    3.671 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           797,272      instructions              #    0.93  insns per cycle        
-           158,402      branches                  #  618.395 M/sec                  
-             6,913      branch-misses             #    4.36% of all branches        
+           943,655      instructions              #    0.47  insns per cycle        
+           186,910      branches                  #  339.023 M/sec                  
+             8,471      branch-misses             #    4.53% of all branches        
 
-       0.003413947 seconds time elapsed
+       0.014152438 seconds time elapsed
 
 2971215073
 4807526976
@@ -65,18 +65,18 @@ Pass Fibonacci test case
 
  Performance counter stats for 'out/Fibonacci.original.copyreduced_dealloc.openmp.out 50':
 
-          0.255609      task-clock (msec)         #    0.075 CPUs utilized          
-                 1      context-switches          #    0.004 M/sec                  
+          0.415498      task-clock (msec)         #    0.074 CPUs utilized          
+                 1      context-switches          #    0.002 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                66      page-faults               #    0.258 M/sec                  
-           858,895      cycles                    #    3.360 GHz                    
+                67      page-faults               #    0.161 M/sec                  
+         1,482,454      cycles                    #    3.568 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           781,013      instructions              #    0.91  insns per cycle        
-           156,153      branches                  #  610.906 M/sec                  
-             6,743      branch-misses             #    4.32% of all branches        
+           944,927      instructions              #    0.64  insns per cycle        
+           187,056      branches                  #  450.197 M/sec                  
+             8,470      branch-misses             #    4.53% of all branches        
 
-       0.003413713 seconds time elapsed
+       0.005604797 seconds time elapsed
 
 2971215073
 4807526976
@@ -85,18 +85,18 @@ Pass Fibonacci test case
 
  Performance counter stats for 'out/Fibonacci.original.copyreduced_dealloc.openmp.out 50':
 
-          0.256053      task-clock (msec)         #    0.083 CPUs utilized          
-                 1      context-switches          #    0.004 M/sec                  
+          0.397853      task-clock (msec)         #    0.060 CPUs utilized          
+                 1      context-switches          #    0.003 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                66      page-faults               #    0.258 M/sec                  
-           860,462      cycles                    #    3.360 GHz                    
+                68      page-faults               #    0.171 M/sec                  
+         1,455,182      cycles                    #    3.658 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           802,088      instructions              #    0.93  insns per cycle        
-           158,883      branches                  #  620.508 M/sec                  
-             6,873      branch-misses             #    4.33% of all branches        
+           954,345      instructions              #    0.66  insns per cycle        
+           188,381      branches                  #  473.494 M/sec                  
+             8,410      branch-misses             #    4.46% of all branches        
 
-       0.003069921 seconds time elapsed
+       0.006675281 seconds time elapsed
 
 2971215073
 4807526976
@@ -105,18 +105,18 @@ Pass Fibonacci test case
 
  Performance counter stats for 'out/Fibonacci.original.copyreduced_dealloc.openmp.out 50':
 
-          0.255178      task-clock (msec)         #    0.071 CPUs utilized          
-                 1      context-switches          #    0.004 M/sec                  
+          0.372780      task-clock (msec)         #    0.031 CPUs utilized          
+                 1      context-switches          #    0.003 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.263 M/sec                  
-           857,008      cycles                    #    3.358 GHz                    
+                67      page-faults               #    0.180 M/sec                  
+         1,364,475      cycles                    #    3.660 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           786,624      instructions              #    0.92  insns per cycle        
-           157,136      branches                  #  615.790 M/sec                  
-             6,801      branch-misses             #    4.33% of all branches        
+           957,473      instructions              #    0.70  insns per cycle        
+           188,523      branches                  #  505.722 M/sec                  
+             8,516      branch-misses             #    4.52% of all branches        
 
-       0.003594277 seconds time elapsed
+       0.011910230 seconds time elapsed
 
 2971215073
 4807526976
@@ -125,18 +125,18 @@ Pass Fibonacci test case
 
  Performance counter stats for 'out/Fibonacci.original.copyreduced_dealloc.openmp.out 50':
 
-          0.256537      task-clock (msec)         #    0.069 CPUs utilized          
-                 1      context-switches          #    0.004 M/sec                  
+          0.354412      task-clock (msec)         #    0.070 CPUs utilized          
+                 1      context-switches          #    0.003 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.261 M/sec                  
-           862,169      cycles                    #    3.361 GHz                    
+                67      page-faults               #    0.189 M/sec                  
+         1,293,515      cycles                    #    3.650 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           794,849      instructions              #    0.92  insns per cycle        
-           158,408      branches                  #  617.486 M/sec                  
-             6,922      branch-misses             #    4.37% of all branches        
+           941,559      instructions              #    0.73  insns per cycle        
+           186,630      branches                  #  526.591 M/sec                  
+             8,171      branch-misses             #    4.38% of all branches        
 
-       0.003721064 seconds time elapsed
+       0.005093821 seconds time elapsed
 
 2971215073
 4807526976
@@ -145,18 +145,18 @@ Pass Fibonacci test case
 
  Performance counter stats for 'out/Fibonacci.original.copyreduced_dealloc.openmp.out 50':
 
-          0.255180      task-clock (msec)         #    0.066 CPUs utilized          
-                 1      context-switches          #    0.004 M/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.263 M/sec                  
-           857,423      cycles                    #    3.360 GHz                    
+          0.563779      task-clock (msec)         #    0.111 CPUs utilized          
+                 1      context-switches          #    0.002 M/sec                  
+                 1      cpu-migrations            #    0.002 M/sec                  
+                66      page-faults               #    0.117 M/sec                  
+         2,063,798      cycles                    #    3.661 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           776,894      instructions              #    0.91  insns per cycle        
-           155,383      branches                  #  608.915 M/sec                  
-             6,796      branch-misses             #    4.37% of all branches        
+           935,532      instructions              #    0.45  insns per cycle        
+           185,628      branches                  #  329.257 M/sec                  
+             7,978      branch-misses             #    4.30% of all branches        
 
-       0.003853018 seconds time elapsed
+       0.005067048 seconds time elapsed
 
 2971215073
 4807526976
@@ -165,18 +165,18 @@ Pass Fibonacci test case
 
  Performance counter stats for 'out/Fibonacci.original.copyreduced_dealloc.openmp.out 50':
 
-          0.262343      task-clock (msec)         #    0.081 CPUs utilized          
-                 1      context-switches          #    0.004 M/sec                  
+          0.386750      task-clock (msec)         #    0.076 CPUs utilized          
+                 1      context-switches          #    0.003 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.255 M/sec                  
-           881,058      cycles                    #    3.358 GHz                    
+                67      page-faults               #    0.173 M/sec                  
+         1,453,345      cycles                    #    3.758 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           815,047      instructions              #    0.93  insns per cycle        
-           161,171      branches                  #  614.352 M/sec                  
-             7,997      branch-misses             #    4.96% of all branches        
+           945,661      instructions              #    0.65  insns per cycle        
+           187,299      branches                  #  484.290 M/sec                  
+             8,715      branch-misses             #    4.65% of all branches        
 
-       0.003239681 seconds time elapsed
+       0.005109598 seconds time elapsed
 
 2971215073
 4807526976
@@ -185,18 +185,18 @@ Pass Fibonacci test case
 
  Performance counter stats for 'out/Fibonacci.original.copyreduced_dealloc.openmp.out 50':
 
-          0.254790      task-clock (msec)         #    0.070 CPUs utilized          
-                 1      context-switches          #    0.004 M/sec                  
+          0.483461      task-clock (msec)         #    0.076 CPUs utilized          
+                 1      context-switches          #    0.002 M/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.263 M/sec                  
-           905,719      cycles                    #    3.555 GHz                    
+                68      page-faults               #    0.141 M/sec                  
+         1,768,872      cycles                    #    3.659 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-           811,487      instructions              #    0.90  insns per cycle        
-           160,642      branches                  #  630.488 M/sec                  
-             7,553      branch-misses             #    4.70% of all branches        
+           923,265      instructions              #    0.52  insns per cycle        
+           183,435      branches                  #  379.420 M/sec                  
+             7,861      branch-misses             #    4.29% of all branches        
 
-       0.003620083 seconds time elapsed
+       0.006366955 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -205,7 +205,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3425.101
+cpu MHz		: 3729.507
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -232,7 +232,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.000
+cpu MHz		: 3721.539
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -259,7 +259,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3515.945
+cpu MHz		: 3700.421
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -286,7 +286,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3600.945
+cpu MHz		: 3808.265
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -313,7 +313,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.000
+cpu MHz		: 3700.156
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -340,7 +340,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3832.968
+cpu MHz		: 3699.890
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -367,7 +367,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3430.414
+cpu MHz		: 3734.953
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -394,7 +394,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3863.781
+cpu MHz		: 3727.382
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

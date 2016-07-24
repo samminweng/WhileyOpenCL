@@ -106,13 +106,60 @@ public class CodeStores {
 	}
 	
 	/**
-	 * Load fields to code store
+	 * Load a target register to a specific field to code store
 	 * @param target
 	 * @param field
 	 */
 	protected void loadField(int register, String field, FunctionOrMethod function) {
 		CodeStore store = getCodeStore(function);
 		store.loadField(register, field);
+	}
+	
+	/**
+	 * 
+	 * Add 'register' to the substructure set 
+	 * 
+	 * @param lhs
+	 * @param rhs
+	 * @param function
+	 */
+	protected void addSubStructure(int register, FunctionOrMethod function){
+		CodeStore store = getCodeStore(function);
+		// Check if rhs is a substructure
+		store.addSubStructure(register);
+	}
+	
+	
+	/**
+	 * Check if rhs is a substructure. If so, then lhs is also a substructure.
+	 * 
+	 * @param lhs
+	 * @param rhs
+	 * @param function
+	 */
+	protected void addSubStructure(int lhs, int rhs, FunctionOrMethod function){
+		CodeStore store = getCodeStore(function);
+		// Check if rhs is a substructure
+		if(store.isSubstructure(rhs)){
+			// If so, the lhs register is also a substructure
+			store.addSubStructure(lhs);
+		}
+	}
+	
+	
+	
+	
+	/**
+	 * Check if a register is a substructure (field).
+	 * 
+	 * @param register
+	 * @param function
+	 * @return true if the register is a substructure.
+	 */
+	public boolean isSubstructure(int register, FunctionOrMethod function){
+		CodeStore store = getCodeStore(function);
+		// Check if the register is a field
+		return store.isSubstructure(register);
 	}
 	
 	/**
@@ -434,19 +481,29 @@ public class CodeStores {
 		return null;
 	}
 	
-	
+	/**
+	 * Store the generated code for a target function.
+	 * 
+	 * It also contains a list of registers that are sub-structures 
+	 * 
+	 * 
+	 * @author Min-Hsien Weng
+	 *
+	 */
 	protected class CodeStore{
 		private String indent;
 		
-		private FunctionOrMethod function;
-		private List<String> statements;// Store the list of translated C code.
-		private HashMap<Integer, String> fields;// Stores the fields of register, e.g. 'println', 'print_s', 'println_s'
+		private FunctionOrMethod function;// Target function
+		private List<String> statements;// List of translated C code.
+		private HashMap<Integer, String> fields;// Store fields that registers are loaded with
+		private HashSet<Integer> substructures; // Store the registers that point to a structure 
 		
 		public CodeStore(FunctionOrMethod function) {
 			this.indent = "\t";
 			this.function = function;
 			this.statements = new ArrayList<String>();
 			this.fields = new HashMap<Integer, String>();
+			this.substructures = new HashSet<Integer>();
 		}		
 		
 		/**
@@ -464,6 +521,24 @@ public class CodeStores {
 		 */
 		protected String getField(int reg){
 			return this.fields.get(reg);
+		}
+		
+		/**
+		 * Add the 'r' register to the sub-structure set.
+		 * 
+		 * @param reg
+		 */
+		private void addSubStructure(int r){
+			this.substructures.add(r);
+		}
+		
+		/**
+		 * Check is the 'reg' register points to a substructure
+		 * @param reg
+		 * @return
+		 */
+		private boolean isSubstructure(int r){
+			return this.substructures.contains(r);
 		}
 
 		protected List<String> getStatements() {

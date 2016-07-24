@@ -389,6 +389,8 @@ public class DeallocationAnalyzer extends Analyzer {
 				statements.add(indent + removeDealloc(register, function, stores));
 			} else if(callee_dealloc.equals("negated_dealloc")) { 
 				// Do nothing to caller's flag
+			} else if(callee_dealloc.equals("")){
+				// Do nothing to caller's flag
 			} else if (callee_dealloc.equals("transfer_callee")) {
 				if (code.targets().length > 0) {
 					int lhs = code.target(0);
@@ -530,16 +532,16 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param copyAnalyzer
 	 * @return macro names, including:
 	 *         <ul>
+	 *         <li>'substruct_dealloc': sets the callee's flag to be false.
+	 *         <code>     
+	 * 		  		a = f(b, false)
+	 *        		a_dealloc = true
+	 * 	    	</code>
+	 * 
 	 *         <li>'negated_dealloc': passed the negated flag to the function call
 	 *         <code>     
 	 * 		  		a = f(b, !b_dealloc)
 	 *        		a_dealloc = true
-	 * 	    	</code>
-	 *         <li>'transfers caller's flag to callee, and after the function call, set caller flag to be 'false'
-	 *         <code>     
-	 * 		  		a = f(b, b_dealloc)
-	 *        		a_dealloc = b_dealloc
-	 *        		b_dealloc = false
 	 * 	    	</code>
 	 * 
 	 *         <li>'caller_dealloc': set caller's flag to be true and callee's flag to be false. <code>     
@@ -549,7 +551,6 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * 	    	</code>
 	 * 
 	 *         <li>'both_dealloc': set both caller and callee's flags to be true.
-	 * 
 	 *         <code>     
 	 * 		  		a = f(b, true)
 	 *        		b_dealloc = true
@@ -557,13 +558,12 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * 	    	</code>
 	 * 
 	 *         <li>'none_dealloc': set both caller and callee's flags to be false.
-	 * 
 	 *         <code>     
 	 * 		  		a = f(b, false)
 	 *        		b_dealloc = false
 	 *        		a_dealloc = true
 	 * 	    	</code>
-	 *         </pre>
+	 * 
 	 *         </ul>
 	 * 
 	 */
@@ -581,6 +581,12 @@ public class DeallocationAnalyzer extends Analyzer {
 
 		// Analyze the copy
 		if (copyAnalyzer.isPresent()) {
+			// Check if the register is a substructure
+			boolean isSubStructure = stores.isSubstructure(register, function);
+			if(isSubStructure){
+				return "substruct_dealloc";
+			}
+			
 			// Analyze the deallocation flags using live variable, read-write and return analysis
 			boolean isLive = liveAnalyzer.isLive(register, code, function);
 			if (!isMutated) {
@@ -619,7 +625,7 @@ public class DeallocationAnalyzer extends Analyzer {
 						// 'b' is alive
 						return "both_dealloc";
 					} else {
-						return "transfer_callee";
+						return "negated_dealloc";
 					}
 				}
 			}

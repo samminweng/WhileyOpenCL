@@ -4,37 +4,18 @@ Pass Mergesort test case
 
  Performance counter stats for 'out/MergeSort.original.copyreduced_dealloc.openmp.out 1000':
 
-          1.058217      task-clock (msec)         #    0.217 CPUs utilized          
+          1.303516      task-clock (msec)         #    0.238 CPUs utilized          
                  2      context-switches          #    0.002 M/sec                  
-                 3      cpu-migrations            #    0.003 M/sec                  
-                79      page-faults               #    0.075 M/sec                  
-         3,860,078      cycles                    #    3.648 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         2,698,256      instructions              #    0.70  insns per cycle        
-           590,440      branches                  #  557.957 M/sec                  
-            11,241      branch-misses             #    1.90% of all branches        
-
-       0.004878963 seconds time elapsed
-
-1
-1000
-Pass Mergesort test case
-
- Performance counter stats for 'out/MergeSort.original.copyreduced_dealloc.openmp.out 1000':
-
-          1.354522      task-clock (msec)         #    0.338 CPUs utilized          
-                 1      context-switches          #    0.738 K/sec                  
                  4      cpu-migrations            #    0.003 M/sec                  
-                79      page-faults               #    0.058 M/sec                  
-         4,958,551      cycles                    #    3.661 GHz                    
+                79      page-faults               #    0.061 M/sec                  
+         4,750,501      cycles                    #    3.644 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         3,197,371      instructions              #    0.64  insns per cycle        
-           728,412      branches                  #  537.763 M/sec                  
-            10,310      branch-misses             #    1.42% of all branches        
+         2,872,433      instructions              #    0.60  insns per cycle        
+           624,894      branches                  #  479.391 M/sec                  
+            11,738      branch-misses             #    1.88% of all branches        
 
-       0.004006103 seconds time elapsed
+       0.005476771 seconds time elapsed
 
 1
 1000
@@ -42,18 +23,18 @@ Pass Mergesort test case
 
  Performance counter stats for 'out/MergeSort.original.copyreduced_dealloc.openmp.out 1000':
 
-          1.311143      task-clock (msec)         #    0.292 CPUs utilized          
-                 1      context-switches          #    0.763 K/sec                  
+          1.202547      task-clock (msec)         #    0.271 CPUs utilized          
+                 2      context-switches          #    0.002 M/sec                  
                  3      cpu-migrations            #    0.002 M/sec                  
-                79      page-faults               #    0.060 M/sec                  
-         4,798,665      cycles                    #    3.660 GHz                    
+                79      page-faults               #    0.066 M/sec                  
+         4,380,917      cycles                    #    3.643 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         3,139,321      instructions              #    0.65  insns per cycle        
-           716,537      branches                  #  546.498 M/sec                  
-             9,488      branch-misses             #    1.32% of all branches        
+         2,844,495      instructions              #    0.65  insns per cycle        
+           619,670      branches                  #  515.298 M/sec                  
+            10,909      branch-misses             #    1.76% of all branches        
 
-       0.004494290 seconds time elapsed
+       0.004439817 seconds time elapsed
 
 1
 1000
@@ -61,18 +42,18 @@ Pass Mergesort test case
 
  Performance counter stats for 'out/MergeSort.original.copyreduced_dealloc.openmp.out 1000':
 
-          1.417698      task-clock (msec)         #    0.339 CPUs utilized          
-                 1      context-switches          #    0.705 K/sec                  
-                 3      cpu-migrations            #    0.002 M/sec                  
-                79      page-faults               #    0.056 M/sec                  
-         4,927,771      cycles                    #    3.476 GHz                    
+          1.598156      task-clock (msec)         #    0.128 CPUs utilized          
+                 1      context-switches          #    0.626 K/sec                  
+                 4      cpu-migrations            #    0.003 M/sec                  
+                79      page-faults               #    0.049 M/sec                  
+         5,815,210      cycles                    #    3.639 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         3,162,047      instructions              #    0.64  insns per cycle        
-           718,044      branches                  #  506.486 M/sec                  
-            10,121      branch-misses             #    1.41% of all branches        
+         3,336,809      instructions              #    0.57  insns per cycle        
+           757,726      branches                  #  474.125 M/sec                  
+            11,235      branch-misses             #    1.48% of all branches        
 
-       0.004180684 seconds time elapsed
+       0.012490631 seconds time elapsed
 
 1
 1000
@@ -80,18 +61,18 @@ Pass Mergesort test case
 
  Performance counter stats for 'out/MergeSort.original.copyreduced_dealloc.openmp.out 1000':
 
-          1.342591      task-clock (msec)         #    0.339 CPUs utilized          
-                 1      context-switches          #    0.745 K/sec                  
+          1.203308      task-clock (msec)         #    0.257 CPUs utilized          
+                 2      context-switches          #    0.002 M/sec                  
                  3      cpu-migrations            #    0.002 M/sec                  
-                79      page-faults               #    0.059 M/sec                  
-         4,890,566      cycles                    #    3.643 GHz                    
+                79      page-faults               #    0.066 M/sec                  
+         4,385,049      cycles                    #    3.644 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         3,166,745      instructions              #    0.65  insns per cycle        
-           721,508      branches                  #  537.400 M/sec                  
-            10,042      branch-misses             #    1.39% of all branches        
+         2,852,357      instructions              #    0.65  insns per cycle        
+           617,719      branches                  #  513.351 M/sec                  
+            11,152      branch-misses             #    1.81% of all branches        
 
-       0.003958022 seconds time elapsed
+       0.004679390 seconds time elapsed
 
 1
 1000
@@ -99,18 +80,18 @@ Pass Mergesort test case
 
  Performance counter stats for 'out/MergeSort.original.copyreduced_dealloc.openmp.out 1000':
 
-          1.323384      task-clock (msec)         #    0.354 CPUs utilized          
-                 1      context-switches          #    0.756 K/sec                  
-                 3      cpu-migrations            #    0.002 M/sec                  
-                80      page-faults               #    0.060 M/sec                  
-         4,845,226      cycles                    #    3.661 GHz                    
+          1.637331      task-clock (msec)         #    0.295 CPUs utilized          
+                 1      context-switches          #    0.611 K/sec                  
+                 5      cpu-migrations            #    0.003 M/sec                  
+                79      page-faults               #    0.048 M/sec                  
+         5,987,782      cycles                    #    3.657 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         3,150,871      instructions              #    0.65  insns per cycle        
-           718,977      branches                  #  543.287 M/sec                  
-             9,519      branch-misses             #    1.32% of all branches        
+         3,344,909      instructions              #    0.56  insns per cycle        
+           758,194      branches                  #  463.067 M/sec                  
+            11,153      branch-misses             #    1.47% of all branches        
 
-       0.003735276 seconds time elapsed
+       0.005559518 seconds time elapsed
 
 1
 1000
@@ -118,18 +99,18 @@ Pass Mergesort test case
 
  Performance counter stats for 'out/MergeSort.original.copyreduced_dealloc.openmp.out 1000':
 
-          1.308164      task-clock (msec)         #    0.312 CPUs utilized          
-                 1      context-switches          #    0.764 K/sec                  
-                 3      cpu-migrations            #    0.002 M/sec                  
-                79      page-faults               #    0.060 M/sec                  
-         4,786,524      cycles                    #    3.659 GHz                    
+          4.302003      task-clock (msec)         #    0.525 CPUs utilized          
+                 4      context-switches          #    0.930 K/sec                  
+                 6      cpu-migrations            #    0.001 M/sec                  
+                80      page-faults               #    0.019 M/sec                  
+        15,762,237      cycles                    #    3.664 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         3,118,079      instructions              #    0.65  insns per cycle        
-           711,839      branches                  #  544.151 M/sec                  
-             9,432      branch-misses             #    1.33% of all branches        
+         7,684,843      instructions              #    0.49  insns per cycle        
+         1,997,348      branches                  #  464.283 M/sec                  
+            11,635      branch-misses             #    0.58% of all branches        
 
-       0.004192086 seconds time elapsed
+       0.008194926 seconds time elapsed
 
 1
 1000
@@ -137,18 +118,18 @@ Pass Mergesort test case
 
  Performance counter stats for 'out/MergeSort.original.copyreduced_dealloc.openmp.out 1000':
 
-          1.310664      task-clock (msec)         #    0.344 CPUs utilized          
-                 1      context-switches          #    0.763 K/sec                  
-                 3      cpu-migrations            #    0.002 M/sec                  
-                79      page-faults               #    0.060 M/sec                  
-         4,797,568      cycles                    #    3.660 GHz                    
+          3.197879      task-clock (msec)         #    0.073 CPUs utilized          
+                 1      context-switches          #    0.313 K/sec                  
+                 3      cpu-migrations            #    0.938 K/sec                  
+                79      page-faults               #    0.025 M/sec                  
+        11,626,428      cycles                    #    3.636 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         3,130,696      instructions              #    0.65  insns per cycle        
-           714,343      branches                  #  545.024 M/sec                  
-             9,457      branch-misses             #    1.32% of all branches        
+         5,448,094      instructions              #    0.47  insns per cycle        
+         1,360,133      branches                  #  425.323 M/sec                  
+            11,707      branch-misses             #    0.86% of all branches        
 
-       0.003812030 seconds time elapsed
+       0.044038489 seconds time elapsed
 
 1
 1000
@@ -156,18 +137,18 @@ Pass Mergesort test case
 
  Performance counter stats for 'out/MergeSort.original.copyreduced_dealloc.openmp.out 1000':
 
-          1.316571      task-clock (msec)         #    0.118 CPUs utilized          
-                 1      context-switches          #    0.760 K/sec                  
+          1.212577      task-clock (msec)         #    0.035 CPUs utilized          
+                 1      context-switches          #    0.825 K/sec                  
                  3      cpu-migrations            #    0.002 M/sec                  
-                79      page-faults               #    0.060 M/sec                  
-         4,818,757      cycles                    #    3.660 GHz                    
+                79      page-faults               #    0.065 M/sec                  
+         4,416,980      cycles                    #    3.643 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         3,153,111      instructions              #    0.65  insns per cycle        
-           719,622      branches                  #  546.588 M/sec                  
-             9,584      branch-misses             #    1.33% of all branches        
+         2,811,321      instructions              #    0.64  insns per cycle        
+           612,220      branches                  #  504.892 M/sec                  
+            11,351      branch-misses             #    1.85% of all branches        
 
-       0.011184101 seconds time elapsed
+       0.034445904 seconds time elapsed
 
 1
 1000
@@ -175,18 +156,37 @@ Pass Mergesort test case
 
  Performance counter stats for 'out/MergeSort.original.copyreduced_dealloc.openmp.out 1000':
 
-          1.308999      task-clock (msec)         #    0.353 CPUs utilized          
-                 1      context-switches          #    0.764 K/sec                  
-                 3      cpu-migrations            #    0.002 M/sec                  
-                79      page-faults               #    0.060 M/sec                  
-         4,791,653      cycles                    #    3.661 GHz                    
+          5.620752      task-clock (msec)         #    0.111 CPUs utilized          
+                 4      context-switches          #    0.712 K/sec                  
+                 6      cpu-migrations            #    0.001 M/sec                  
+                79      page-faults               #    0.014 M/sec                  
+        20,421,251      cycles                    #    3.633 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         3,144,774      instructions              #    0.66  insns per cycle        
-           717,283      branches                  #  547.963 M/sec                  
-             9,519      branch-misses             #    1.33% of all branches        
+         9,857,164      instructions              #    0.48  insns per cycle        
+         2,621,792      branches                  #  466.449 M/sec                  
+            11,870      branch-misses             #    0.45% of all branches        
 
-       0.003712992 seconds time elapsed
+       0.050429865 seconds time elapsed
+
+1
+1000
+Pass Mergesort test case
+
+ Performance counter stats for 'out/MergeSort.original.copyreduced_dealloc.openmp.out 1000':
+
+          1.209379      task-clock (msec)         #    0.027 CPUs utilized          
+                 1      context-switches          #    0.827 K/sec                  
+                 4      cpu-migrations            #    0.003 M/sec                  
+                79      page-faults               #    0.065 M/sec                  
+         4,376,574      cycles                    #    3.619 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+         2,841,905      instructions              #    0.65  insns per cycle        
+           616,835      branches                  #  510.043 M/sec                  
+            11,505      branch-misses             #    1.87% of all branches        
+
+       0.044880099 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -195,7 +195,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3700.289
+cpu MHz		: 3773.734
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -222,7 +222,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3745.843
+cpu MHz		: 3703.742
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -249,7 +249,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3843.195
+cpu MHz		: 3853.820
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -276,7 +276,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3768.554
+cpu MHz		: 3693.914
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -303,7 +303,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3700.023
+cpu MHz		: 3718.351
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -330,7 +330,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3403.054
+cpu MHz		: 3681.031
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -357,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3673.460
+cpu MHz		: 3849.835
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -384,7 +384,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3779.976
+cpu MHz		: 3677.046
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

@@ -413,6 +413,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		} else {
 			boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
 			statement.add(generateAssignmentCode(code, isCopyEliminated, function, stores));
+			
+			if(isCopyEliminated && stores.isCompoundType(lhs_type)){
+				// Check if lhs is a substructure.
+				stores.addSubStructure(code.target(0), code.operand(0), function);				
+			}
 			postProcessor(isCopyEliminated, code.operand(0), statement, code, function);
 		}
 
@@ -583,16 +588,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			this.deallocatedAnalyzer.ifPresent(a -> {
 				String callee_dealloc = a.computeDealloc(operand, code, function, stores, copyAnalyzer);
 				switch (callee_dealloc) {
-				case "add_callee":
-					// Assign 'true' to callee's flag
-					statement.add("true");
-					break;
-				case "rm_callee":
-					statement.add("false");
-					break;
-				case "transfer_callee":
-					statement.add(parameter + "_dealloc");
-					break;
 				case "caller_dealloc":
 					statement.add("false");
 					break;
@@ -604,6 +599,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					break;
 				case "negated_dealloc":
 					statement.add("!"+parameter + "_dealloc");
+					break;
+				case "substruct_dealloc":
+					statement.add("false");
 					break;
 				default:
 					break;// Do nothing
@@ -744,7 +742,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param function
 	 */
 	private void postProcessor(List<String> statement, Code code, FunctionOrMethod function) {
-
+		
 		// Add the post-deallocation code.
 		this.deallocatedAnalyzer.ifPresent(a -> {
 			a.postDealloc(statement, code, function, stores);
@@ -763,6 +761,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	private void postProcessor(boolean isCopyEliminated, int register, List<String> statement, Code code,
 			FunctionOrMethod function) {
+		
 		// Update the set with register
 		copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, register, code, function));
 
@@ -1194,7 +1193,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		// Assign rhs to rhs without any copy, e.g. a = b[i];
 		statement.add(indent + lhs + "=" + rhs + "[" + index + "];");
-
+		
+		// Check if lhs is a structure. If so, then lhs is a substructure
+		Type lhs_type = stores.getRawType(code.target(0), function);
+		if(stores.isCompoundType(lhs_type)){
+			// Add lhs to substructure set
+			stores.addSubStructure(code.target(0), function);
+		}
+		
+		
 		postProcessor(statement, code, function);
 
 		stores.addAllStatements(code, statement, function);
@@ -1287,11 +1294,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.FieldLoad code, FunctionOrMethod function) {
 		String field = code.field;
 		List<String> statement = new ArrayList<String>();
-		// Skip translation.
+		
+		
 		if (field.equals("out") || field.equals("print") || field.equals("println") || field.equals("print_s")
 				|| field.equals("println_s")) {
-			// Load the field to the target register.
-			stores.loadField(code.target(0), field, function);
+			// Skip translation.
 		} else {
 			// Free lhs variable
 			preProcessor(statement, code, function);
@@ -1311,6 +1318,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 			postProcessor(isCopyEliminated, code.operand(0), statement, code, function);
 		}
+		
+		// Load the field to the target register.
+		stores.loadField(code.target(0), field, function);
+		
 		stores.addAllStatements(code, statement, function);
 	}
 

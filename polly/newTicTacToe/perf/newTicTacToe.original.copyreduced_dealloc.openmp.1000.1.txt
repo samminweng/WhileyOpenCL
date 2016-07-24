@@ -2,171 +2,171 @@ Run the original newTicTacToe on 1000 using openmp and 1 threads...Pass newTicTa
 
  Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.openmp.out 1000':
 
-          1.221604      task-clock (msec)         #    0.098 CPUs utilized          
+          1.271463      task-clock (msec)         #    0.253 CPUs utilized          
                  2      context-switches          #    0.002 M/sec                  
+                 1      cpu-migrations            #    0.786 K/sec                  
+                67      page-faults               #    0.053 M/sec                  
+         4,673,399      cycles                    #    3.676 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+         9,760,558      instructions              #    2.09  insns per cycle        
+         2,136,225      branches                  # 1680.131 M/sec                  
+            13,165      branch-misses             #    0.62% of all branches        
+
+       0.005032210 seconds time elapsed
+
+Pass newTicTacToe test case
+
+ Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.openmp.out 1000':
+
+          1.247640      task-clock (msec)         #    0.228 CPUs utilized          
+                 1      context-switches          #    0.802 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
+                67      page-faults               #    0.054 M/sec                  
+         4,589,948      cycles                    #    3.679 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+         9,727,342      instructions              #    2.12  insns per cycle        
+         2,130,322      branches                  # 1707.481 M/sec                  
+            12,631      branch-misses             #    0.59% of all branches        
+
+       0.005463045 seconds time elapsed
+
+Pass newTicTacToe test case
+
+ Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.openmp.out 1000':
+
+          1.214383      task-clock (msec)         #    0.229 CPUs utilized          
+                 1      context-switches          #    0.823 K/sec                  
+                 1      cpu-migrations            #    0.823 K/sec                  
                 67      page-faults               #    0.055 M/sec                  
-         4,128,924      cycles                    #    3.380 GHz                    
+         4,461,490      cycles                    #    3.674 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         9,591,878      instructions              #    2.32  insns per cycle        
-         2,104,556      branches                  # 1722.781 M/sec                  
-            12,085      branch-misses             #    0.57% of all branches        
+         9,698,822      instructions              #    2.17  insns per cycle        
+         2,125,918      branches                  # 1750.616 M/sec                  
+            12,219      branch-misses             #    0.57% of all branches        
 
-       0.012411650 seconds time elapsed
+       0.005312088 seconds time elapsed
 
 Pass newTicTacToe test case
 
  Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.openmp.out 1000':
 
-          1.183867      task-clock (msec)         #    0.258 CPUs utilized          
-                 1      context-switches          #    0.845 K/sec                  
+          1.268647      task-clock (msec)         #    0.227 CPUs utilized          
+                 1      context-switches          #    0.788 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                66      page-faults               #    0.056 M/sec                  
-         4,006,686      cycles                    #    3.384 GHz                    
+                67      page-faults               #    0.053 M/sec                  
+         4,666,417      cycles                    #    3.678 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         9,575,111      instructions              #    2.39  insns per cycle        
-         2,100,651      branches                  # 1774.398 M/sec                  
-            11,128      branch-misses             #    0.53% of all branches        
+         9,743,933      instructions              #    2.09  insns per cycle        
+         2,132,721      branches                  # 1681.099 M/sec                  
+            12,501      branch-misses             #    0.59% of all branches        
 
-       0.004590485 seconds time elapsed
+       0.005585155 seconds time elapsed
 
 Pass newTicTacToe test case
 
  Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.openmp.out 1000':
 
-          1.167319      task-clock (msec)         #    0.139 CPUs utilized          
-                 1      context-switches          #    0.857 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.057 M/sec                  
-         3,950,092      cycles                    #    3.384 GHz                    
+          2.130951      task-clock (msec)         #    0.357 CPUs utilized          
+                 1      context-switches          #    0.469 K/sec                  
+                 2      cpu-migrations            #    0.939 K/sec                  
+                67      page-faults               #    0.031 M/sec                  
+         7,895,717      cycles                    #    3.705 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         9,593,895      instructions              #    2.43  insns per cycle        
-         2,103,808      branches                  # 1802.256 M/sec                  
-            10,354      branch-misses             #    0.49% of all branches        
+         9,717,761      instructions              #    1.23  insns per cycle        
+         2,129,225      branches                  #  999.190 M/sec                  
+            11,756      branch-misses             #    0.55% of all branches        
 
-       0.008405830 seconds time elapsed
+       0.005977096 seconds time elapsed
 
 Pass newTicTacToe test case
 
  Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.openmp.out 1000':
 
-          1.162395      task-clock (msec)         #    0.248 CPUs utilized          
-                 1      context-switches          #    0.860 K/sec                  
+          1.263708      task-clock (msec)         #    0.214 CPUs utilized          
+                 1      context-switches          #    0.791 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.058 M/sec                  
-         3,933,583      cycles                    #    3.384 GHz                    
+                67      page-faults               #    0.053 M/sec                  
+         4,645,572      cycles                    #    3.676 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         9,569,262      instructions              #    2.43  insns per cycle        
-         2,100,129      branches                  # 1806.726 M/sec                  
-            10,365      branch-misses             #    0.49% of all branches        
+         9,736,304      instructions              #    2.10  insns per cycle        
+         2,131,338      branches                  # 1686.575 M/sec                  
+            12,242      branch-misses             #    0.57% of all branches        
 
-       0.004678698 seconds time elapsed
+       0.005893479 seconds time elapsed
 
 Pass newTicTacToe test case
 
  Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.openmp.out 1000':
 
-          1.175299      task-clock (msec)         #    0.282 CPUs utilized          
-                 1      context-switches          #    0.851 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.057 M/sec                  
-         3,976,406      cycles                    #    3.383 GHz                    
+          1.246813      task-clock (msec)         #    0.237 CPUs utilized          
+                 1      context-switches          #    0.802 K/sec                  
+                 3      cpu-migrations            #    0.002 M/sec                  
+                67      page-faults               #    0.054 M/sec                  
+         4,550,838      cycles                    #    3.650 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         9,585,231      instructions              #    2.41  insns per cycle        
-         2,102,703      branches                  # 1789.079 M/sec                  
-            10,617      branch-misses             #    0.50% of all branches        
+         9,743,010      instructions              #    2.14  insns per cycle        
+         2,133,146      branches                  # 1710.879 M/sec                  
+            11,639      branch-misses             #    0.55% of all branches        
 
-       0.004164671 seconds time elapsed
+       0.005258665 seconds time elapsed
 
 Pass newTicTacToe test case
 
  Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.openmp.out 1000':
 
-          1.161819      task-clock (msec)         #    0.252 CPUs utilized          
-                 1      context-switches          #    0.861 K/sec                  
+          1.229629      task-clock (msec)         #    0.265 CPUs utilized          
+                 1      context-switches          #    0.813 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.058 M/sec                  
-         3,946,683      cycles                    #    3.397 GHz                    
+                67      page-faults               #    0.054 M/sec                  
+         4,521,714      cycles                    #    3.677 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         9,572,994      instructions              #    2.43  insns per cycle        
-         2,100,976      branches                  # 1808.351 M/sec                  
-            10,453      branch-misses             #    0.50% of all branches        
+         9,720,409      instructions              #    2.15  insns per cycle        
+         2,129,219      branches                  # 1731.595 M/sec                  
+            12,439      branch-misses             #    0.58% of all branches        
 
-       0.004613664 seconds time elapsed
+       0.004632512 seconds time elapsed
 
 Pass newTicTacToe test case
 
  Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.openmp.out 1000':
 
-          1.164716      task-clock (msec)         #    0.249 CPUs utilized          
-                 1      context-switches          #    0.859 K/sec                  
+          1.238136      task-clock (msec)         #    0.224 CPUs utilized          
+                 1      context-switches          #    0.808 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.058 M/sec                  
-         3,964,160      cycles                    #    3.404 GHz                    
+                67      page-faults               #    0.054 M/sec                  
+         4,549,318      cycles                    #    3.674 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         9,598,684      instructions              #    2.42  insns per cycle        
-         2,104,659      branches                  # 1807.015 M/sec                  
-            10,322      branch-misses             #    0.49% of all branches        
+         9,746,474      instructions              #    2.14  insns per cycle        
+         2,133,627      branches                  # 1723.257 M/sec                  
+            11,412      branch-misses             #    0.53% of all branches        
 
-       0.004674180 seconds time elapsed
+       0.005522977 seconds time elapsed
 
 Pass newTicTacToe test case
 
  Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.openmp.out 1000':
 
-          1.168439      task-clock (msec)         #    0.260 CPUs utilized          
-                 1      context-switches          #    0.856 K/sec                  
+          1.217674      task-clock (msec)         #    0.107 CPUs utilized          
+                 1      context-switches          #    0.821 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.057 M/sec                  
-         3,936,681      cycles                    #    3.369 GHz                    
+                66      page-faults               #    0.054 M/sec                  
+         4,481,905      cycles                    #    3.681 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         9,580,327      instructions              #    2.43  insns per cycle        
-         2,101,971      branches                  # 1798.957 M/sec                  
-            10,155      branch-misses             #    0.48% of all branches        
+         9,718,328      instructions              #    2.17  insns per cycle        
+         2,128,659      branches                  # 1748.135 M/sec                  
+            11,496      branch-misses             #    0.54% of all branches        
 
-       0.004501529 seconds time elapsed
-
-Pass newTicTacToe test case
-
- Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.openmp.out 1000':
-
-          1.166359      task-clock (msec)         #    0.271 CPUs utilized          
-                 1      context-switches          #    0.857 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.057 M/sec                  
-         3,946,737      cycles                    #    3.384 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         9,592,494      instructions              #    2.43  insns per cycle        
-         2,103,786      branches                  # 1803.721 M/sec                  
-            10,172      branch-misses             #    0.48% of all branches        
-
-       0.004306010 seconds time elapsed
-
-Pass newTicTacToe test case
-
- Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.openmp.out 1000':
-
-          1.180111      task-clock (msec)         #    0.273 CPUs utilized          
-                 1      context-switches          #    0.847 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                67      page-faults               #    0.057 M/sec                  
-         3,993,695      cycles                    #    3.384 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-         9,583,959      instructions              #    2.40  insns per cycle        
-         2,102,461      branches                  # 1781.579 M/sec                  
-            10,609      branch-misses             #    0.50% of all branches        
-
-       0.004323517 seconds time elapsed
+       0.011382069 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -175,7 +175,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3439.843
+cpu MHz		: 3741.859
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -202,7 +202,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3433.468
+cpu MHz		: 3726.187
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -229,7 +229,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3399.867
+cpu MHz		: 3731.101
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -256,7 +256,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3475.703
+cpu MHz		: 3690.195
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -283,7 +283,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.000
+cpu MHz		: 3739.070
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -310,7 +310,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3532.812
+cpu MHz		: 3698.296
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -337,7 +337,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3428.421
+cpu MHz		: 3717.687
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -364,7 +364,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.265
+cpu MHz		: 3699.890
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
