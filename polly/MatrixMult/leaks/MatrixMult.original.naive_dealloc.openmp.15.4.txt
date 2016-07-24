@@ -1,31 +1,31 @@
-==19969== Memcheck, a memory error detector
-==19969== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==19969== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==19969== Command: ./out/MatrixMult.original.naive_dealloc.openmp.out 15
-==19969== Parent PID: 7864
-==19969== 
-==19969== Invalid free() / delete / delete[] / realloc()
-==19969==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==19969==    by 0x40161A: main (MatrixMult_original.c:601)
-==19969==  Address 0x56290f0 is 0 bytes inside a block of size 8 free'd
-==19969==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==19969==    by 0x4015D7: main (MatrixMult_original.c:597)
-==19969== 
-==19969== 
-==19969== HEAP SUMMARY:
-==19969==     in use at exit: 2,888 bytes in 6 blocks
-==19969==   total heap usage: 44 allocs, 39 frees, 46,840 bytes allocated
-==19969== 
-==19969== LEAK SUMMARY:
-==19969==    definitely lost: 0 bytes in 0 blocks
-==19969==    indirectly lost: 0 bytes in 0 blocks
-==19969==      possibly lost: 864 bytes in 3 blocks
-==19969==    still reachable: 2,024 bytes in 3 blocks
-==19969==         suppressed: 0 bytes in 0 blocks
-==19969== Rerun with --leak-check=full to see details of leaked memory
-==19969== 
-==19969== For counts of detected and suppressed errors, rerun with: -v
-==19969== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==1384== Memcheck, a memory error detector
+==1384== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==1384== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==1384== Command: ./out/MatrixMult.original.naive_dealloc.openmp.out 15
+==1384== Parent PID: 15814
+==1384== 
+==1384== Invalid free() / delete / delete[] / realloc()
+==1384==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1384==    by 0x40161A: main (MatrixMult_original.c:601)
+==1384==  Address 0x56290f0 is 0 bytes inside a block of size 8 free'd
+==1384==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1384==    by 0x4015D7: main (MatrixMult_original.c:597)
+==1384== 
+==1384== 
+==1384== HEAP SUMMARY:
+==1384==     in use at exit: 2,888 bytes in 6 blocks
+==1384==   total heap usage: 44 allocs, 39 frees, 46,840 bytes allocated
+==1384== 
+==1384== LEAK SUMMARY:
+==1384==    definitely lost: 0 bytes in 0 blocks
+==1384==    indirectly lost: 0 bytes in 0 blocks
+==1384==      possibly lost: 864 bytes in 3 blocks
+==1384==    still reachable: 2,024 bytes in 3 blocks
+==1384==         suppressed: 0 bytes in 0 blocks
+==1384== Rerun with --leak-check=full to see details of leaked memory
+==1384== 
+==1384== For counts of detected and suppressed errors, rerun with: -v
+==1384== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -33,7 +33,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3818.492
+cpu MHz		: 3899.906
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -60,7 +60,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3688.734
+cpu MHz		: 3726.851
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -87,7 +87,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3741.195
+cpu MHz		: 3400.265
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -114,7 +114,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3783.828
+cpu MHz		: 3860.460
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -141,7 +141,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3895.789
+cpu MHz		: 3900.570
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -168,7 +168,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3888.351
+cpu MHz		: 3779.843
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -195,7 +195,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3701.218
+cpu MHz		: 3641.718
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -222,7 +222,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3790.734
+cpu MHz		: 3715.296
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
