@@ -123,6 +123,13 @@ exec(){
     cd $basedir/polly
     #read -p "Press [Enter] to continue..."
 }
+## Rectanlge test case
+init Rectangle
+exec Rectangle original naive
+exec Rectangle original naive_dealloc
+exec Rectangle original copyreduced
+exec Rectangle original copyreduced_dealloc
+
 ## Fibonacci test case
 init Fibonacci
 exec Fibonacci original naive 10
