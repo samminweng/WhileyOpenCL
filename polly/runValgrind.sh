@@ -125,10 +125,10 @@ exec(){
 }
 ## Rectanlge test case
 init Rectangle
-exec Rectangle original naive
-exec Rectangle original naive_dealloc
-exec Rectangle original copyreduced
-exec Rectangle original copyreduced_dealloc
+exec Rectangle original naive 0
+exec Rectangle original naive_dealloc 0
+exec Rectangle original copyreduced 0
+exec Rectangle original copyreduced_dealloc 0
 
 ## Fibonacci test case
 init Fibonacci
