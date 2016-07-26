@@ -642,17 +642,22 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * 
 	 * <pre>
 	 * <code>
-	 * if(a_dealloc){ // Free a[i]
-	 * 		free(a[n]);
-	 * 		a[n] = NULL;
-	 * }
-	 * a[n] = b; // Update a[i] with b where b is a structure pointer 
+	 * // Free target lhs variable.
+	 * free(a[n]);
+	 * a[n] = NULL;
+	 * a[n] = b; 
+	 * // Update a[i] with b 
 	 * </code>
 	 * </pre>
 	 * 
-	 * @param struct_var
+	 * The update of substructure does not require to check the top-level de-allocation flag,
+	 * but directly free the substructure. This is because substructure does not have 
+	 * the de-allocation. 
+	 * 
+	 *
 	 * @param lhs
-	 * @param lhs_type
+	 * @param code update byte-code
+	 * @param function function
 	 * @param stores
 	 * @return
 	 */
@@ -665,8 +670,8 @@ public class DeallocationAnalyzer extends Analyzer {
 			if (rhs_type instanceof Type.Record) {
 				// LHS and RHS are both structures
 				String struct = CodeGeneratorHelper.translateType(rhs_type, stores).replace("*", "");
-				// Use '_DEALLOC_MEMBER_STRUCT' macro to forcedly release the lhs
-				return "_DEALLOC_MEMBER_STRUCT(" + struct_var + ", " + lhs + ", " + struct + ");";
+				// Use '_DEALLOC_MEMBER_STRUCT_UPDATECODE' macro to forcedly release the lhs
+				return "_DEALLOC_MEMBER_STRUCT_UPDATECODE(" + struct_var + ", " + lhs + ", " + struct + ");";
 			}
 		}
 

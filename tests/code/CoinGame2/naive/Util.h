@@ -192,14 +192,13 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 		  	}\
 		})
 // Deallocate a member whose type is a structure pointer
-// This macro does not check 'de-alloc' flag 
-/*#define _DEALLOC_MEMBER_STRUCT(a, b, name) \
+// This macro does NOT check 'de-alloc' flag and is used at 'update' byte-code
+#define _DEALLOC_MEMBER_STRUCT_UPDATECODE(a, b, name) \
 		({\
 			free_##name(b);\
 			b = NULL;\
 		})
-*/
-// Currently this marco is not used yet.
+
 // Deallocate a member whose type is an array of structure pointers
 #define _DEALLOC_MEMBER_STRUCT(a, b, name) \
 		({\
@@ -208,6 +207,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 				b = NULL;\
 			}\
 		})
+
 /**
 * Deallocation Flag Macros used in assignment 
 *
