@@ -78,7 +78,7 @@ public final class CodeGeneratorHelper {
 			// Print the member name
 			statement.add("\tprintf(\" " + member + ":\");");
 			// Print the member value
-			if (member_type instanceof Type.Int) {
+			if (member_type instanceof Type.Int || stores.isIntType(member_type)) {
 				// Add field values.
 				statement.add("\tprintf(\"%lld\", " + input_member + ");");
 			} else if (member_type instanceof Type.Array) {

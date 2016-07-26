@@ -22,7 +22,7 @@ void printf_Board(Board* board){
 	printf(" pieces:");
 	_PRINT_1DARRAY(board->pieces);
 	printf(" move:");
-	printf_nat(board->move);
+	printf("%lld", board->move);
 	printf("}");
 }
 Board* EmptyBoard(){
