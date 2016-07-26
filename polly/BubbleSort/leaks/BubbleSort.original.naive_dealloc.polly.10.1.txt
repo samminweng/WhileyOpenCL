@@ -1,32 +1,32 @@
-==27286== Memcheck, a memory error detector
-==27286== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==27286== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==27286== Command: ./out/BubbleSort.original.naive_dealloc.polly.out 10
-==27286== Parent PID: 25482
-==27286== 
-==27286== Invalid write of size 8
-==27286==    at 0x400A8E: main (BubbleSort_original.c:181)
-==27286==  Address 0x51fc220 is 0 bytes after a block of size 80 alloc'd
-==27286==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==27286==    by 0x401406: copy (Util.c:168)
-==27286==    by 0x400888: main (BubbleSort_original.c:174)
-==27286== 
-==27286== Invalid free() / delete / delete[] / realloc()
-==27286==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==27286==    by 0x400BF1: main (BubbleSort_original.c:237)
-==27286==  Address 0x51fc0f0 is 0 bytes inside a block of size 8 free'd
-==27286==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==27286==    by 0x400BE1: main (BubbleSort_original.c:235)
-==27286== 
-==27286== 
-==27286== HEAP SUMMARY:
-==27286==     in use at exit: 0 bytes in 0 blocks
-==27286==   total heap usage: 8 allocs, 9 frees, 560 bytes allocated
-==27286== 
-==27286== All heap blocks were freed -- no leaks are possible
-==27286== 
-==27286== For counts of detected and suppressed errors, rerun with: -v
-==27286== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+==14008== Memcheck, a memory error detector
+==14008== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==14008== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==14008== Command: ./out/BubbleSort.original.naive_dealloc.polly.out 10
+==14008== Parent PID: 31248
+==14008== 
+==14008== Invalid write of size 8
+==14008==    at 0x400A8E: main (BubbleSort_original.c:181)
+==14008==  Address 0x51fc220 is 0 bytes after a block of size 80 alloc'd
+==14008==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==14008==    by 0x401406: copy (Util.c:168)
+==14008==    by 0x400888: main (BubbleSort_original.c:174)
+==14008== 
+==14008== Invalid free() / delete / delete[] / realloc()
+==14008==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==14008==    by 0x400BF1: main (BubbleSort_original.c:237)
+==14008==  Address 0x51fc0f0 is 0 bytes inside a block of size 8 free'd
+==14008==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==14008==    by 0x400BE1: main (BubbleSort_original.c:235)
+==14008== 
+==14008== 
+==14008== HEAP SUMMARY:
+==14008==     in use at exit: 0 bytes in 0 blocks
+==14008==   total heap usage: 8 allocs, 9 frees, 560 bytes allocated
+==14008== 
+==14008== All heap blocks were freed -- no leaks are possible
+==14008== 
+==14008== For counts of detected and suppressed errors, rerun with: -v
+==14008== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -34,7 +34,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.773
+cpu MHz		: 3899.906
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -61,7 +61,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3900.039
+cpu MHz		: 3739.335
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -88,7 +88,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3838.281
+cpu MHz		: 3785.953
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -115,7 +115,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3764.968
+cpu MHz		: 3703.476
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -142,7 +142,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3413.281
+cpu MHz		: 3618.078
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -169,7 +169,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3547.554
+cpu MHz		: 3493.632
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -196,7 +196,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3673.195
+cpu MHz		: 3582.218
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -223,7 +223,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3606.390
+cpu MHz		: 3719.546
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
