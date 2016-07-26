@@ -42,9 +42,9 @@ void free_Rectangle(Rectangle* rectangle){
 void printf_Rectangle(Rectangle* rectangle){
 	printf("{");
 	printf(" p1:");
-	printf("%lld", rectangle->p1);
+	printf_Point(rectangle->p1);
 	printf(" p2:");
-	printf("%lld", rectangle->p2);
+	printf_Point(rectangle->p2);
 	printf("}");
 }
 Rectangle* updateRec(Rectangle* rec, Point* p){

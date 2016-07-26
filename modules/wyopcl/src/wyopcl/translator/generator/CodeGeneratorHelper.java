@@ -78,7 +78,7 @@ public final class CodeGeneratorHelper {
 			// Print the member name
 			statement.add("\tprintf(\" " + member + ":\");");
 			// Print the member value
-			if (member_type instanceof Type.Nominal || member_type instanceof Type.Int) {
+			if (member_type instanceof Type.Int) {
 				// Add field values.
 				statement.add("\tprintf(\"%lld\", " + input_member + ");");
 			} else if (member_type instanceof Type.Array) {
@@ -91,9 +91,11 @@ public final class CodeGeneratorHelper {
 					String struct = translateType(elm_type, stores).replace("*", "");
 					// Print an array of structure pointers using macro
 					statement.add("\t_PRINT_1DARRAY_STRUCT("+struct+","+input_member+");");
-				}
-				
-				
+				}	
+			} else if(member_type instanceof Type.Nominal){
+				Type.Nominal nominal = (Type.Nominal)member_type;
+				// Print out nominal type using predefined print function
+				statement.add("\tprintf_"+nominal.name().name()+"(" + input_member + ");");
 			} else {
 				throw new RuntimeException("Not implemented!");
 			}
