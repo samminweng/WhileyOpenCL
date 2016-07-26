@@ -1,24 +1,24 @@
-==29684== Memcheck, a memory error detector
-==29684== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==29684== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==29684== Command: ./out/newTicTacToe.original.copyreduced.polly.out 10
-==29684== Parent PID: 31248
-==29684== 
-==29684== 
-==29684== HEAP SUMMARY:
-==29684==     in use at exit: 20,656 bytes in 334 blocks
-==29684==   total heap usage: 334 allocs, 0 frees, 20,656 bytes allocated
-==29684== 
-==29684== LEAK SUMMARY:
-==29684==    definitely lost: 15,568 bytes in 262 blocks
-==29684==    indirectly lost: 4,992 bytes in 70 blocks
-==29684==      possibly lost: 0 bytes in 0 blocks
-==29684==    still reachable: 96 bytes in 2 blocks
-==29684==         suppressed: 0 bytes in 0 blocks
-==29684== Rerun with --leak-check=full to see details of leaked memory
-==29684== 
-==29684== For counts of detected and suppressed errors, rerun with: -v
-==29684== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==3042== Memcheck, a memory error detector
+==3042== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==3042== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==3042== Command: ./out/newTicTacToe.original.copyreduced.polly.out 10
+==3042== Parent PID: 31248
+==3042== 
+==3042== 
+==3042== HEAP SUMMARY:
+==3042==     in use at exit: 20,656 bytes in 334 blocks
+==3042==   total heap usage: 334 allocs, 0 frees, 20,656 bytes allocated
+==3042== 
+==3042== LEAK SUMMARY:
+==3042==    definitely lost: 15,568 bytes in 262 blocks
+==3042==    indirectly lost: 4,992 bytes in 70 blocks
+==3042==      possibly lost: 0 bytes in 0 blocks
+==3042==    still reachable: 96 bytes in 2 blocks
+==3042==         suppressed: 0 bytes in 0 blocks
+==3042== Rerun with --leak-check=full to see details of leaked memory
+==3042== 
+==3042== For counts of detected and suppressed errors, rerun with: -v
+==3042== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -53,7 +53,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3673.726
+cpu MHz		: 3601.476
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -80,7 +80,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3860.726
+cpu MHz		: 3608.648
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -107,7 +107,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.265
+cpu MHz		: 3696.437
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -134,7 +134,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3778.648
+cpu MHz		: 3896.187
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -161,7 +161,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3828.585
+cpu MHz		: 3899.507
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -188,7 +188,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3901.632
+cpu MHz		: 3688.734
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -215,7 +215,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3900.304
+cpu MHz		: 3748.632
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
