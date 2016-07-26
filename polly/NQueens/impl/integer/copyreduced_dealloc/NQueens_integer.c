@@ -266,7 +266,7 @@ blklab12:;
 		_27->r = n;
 		_ADD_DEALLOC(_27);
 		//update %0[%1] = %27 : {int c,int r}[] -> {int c,int r}[]
-		_DEALLOC_MEMBER_STRUCT(queens, queens[n], POS);
+		_DEALLOC_MEMBER_STRUCT_UPDATECODE(queens, queens[n], POS);
 		queens[n] = _27;
 		_REMOVE_DEALLOC(_27);
 		//const %29 = 1 : int

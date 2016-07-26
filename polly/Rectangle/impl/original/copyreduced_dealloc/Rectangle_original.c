@@ -55,7 +55,7 @@ Rectangle* updateRec(Rectangle* rec, _DECL_DEALLOC_PARAM(rec), Point* p, _DECL_D
 	Rectangle* r;
 	_DECL_DEALLOC(r);
 	//update %0.p2 = %1 : {{int x,int y} p1,{int x,int y} p2} -> {{int x,int y} p1,{int x,int y} p2}
-	_DEALLOC_MEMBER_STRUCT(rec, rec->p2, Point);
+	_DEALLOC_MEMBER_STRUCT_UPDATECODE(rec, rec->p2, Point);
 	rec->p2 = p;
 	_REMOVE_DEALLOC(p);
 	//return %0

@@ -1,31 +1,25 @@
-==5931== Memcheck, a memory error detector
-==5931== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==5931== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==5931== Command: ./out/NQueens.original.naive_dealloc.openmp.out 8
-==5931== Parent PID: 31248
-==5931== 
-==5931== Invalid free() / delete / delete[] / realloc()
-==5931==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==5931==    by 0x401C59: main (NQueens_original.c:563)
-==5931==  Address 0x56290e0 is 0 bytes inside a block of size 8 free'd
-==5931==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==5931==    by 0x401BCF: main (NQueens_original.c:560)
-==5931== 
-==5931== 
-==5931== HEAP SUMMARY:
-==5931==     in use at exit: 21,136 bytes in 1,321 blocks
-==5931==   total heap usage: 2,932,028 allocs, 2,930,708 frees, 62,114,544 bytes allocated
-==5931== 
-==5931== LEAK SUMMARY:
-==5931==    definitely lost: 21,136 bytes in 1,321 blocks
-==5931==    indirectly lost: 0 bytes in 0 blocks
-==5931==      possibly lost: 0 bytes in 0 blocks
-==5931==    still reachable: 0 bytes in 0 blocks
-==5931==         suppressed: 0 bytes in 0 blocks
-==5931== Rerun with --leak-check=full to see details of leaked memory
-==5931== 
-==5931== For counts of detected and suppressed errors, rerun with: -v
-==5931== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==16238== Memcheck, a memory error detector
+==16238== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==16238== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==16238== Command: ./out/NQueens.original.naive_dealloc.openmp.out 8
+==16238== Parent PID: 31248
+==16238== 
+==16238== Invalid free() / delete / delete[] / realloc()
+==16238==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==16238==    by 0x401BD9: main (NQueens_original.c:563)
+==16238==  Address 0x56290e0 is 0 bytes inside a block of size 8 free'd
+==16238==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==16238==    by 0x401B4F: main (NQueens_original.c:560)
+==16238== 
+==16238== 
+==16238== HEAP SUMMARY:
+==16238==     in use at exit: 0 bytes in 0 blocks
+==16238==   total heap usage: 2,932,028 allocs, 2,932,029 frees, 62,114,544 bytes allocated
+==16238== 
+==16238== All heap blocks were freed -- no leaks are possible
+==16238== 
+==16238== For counts of detected and suppressed errors, rerun with: -v
+==16238== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -60,7 +54,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.531
+cpu MHz		: 3893.929
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -87,7 +81,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3900.968
+cpu MHz		: 3861.523
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -114,7 +108,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3900.171
+cpu MHz		: 3793.656
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -141,7 +135,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3779.710
+cpu MHz		: 3899.773
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -168,7 +162,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3635.210
+cpu MHz		: 3517.406
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -195,7 +189,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3767.359
+cpu MHz		: 3900.835
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -222,7 +216,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3675.984
+cpu MHz		: 3652.875
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
