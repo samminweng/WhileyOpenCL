@@ -37,6 +37,10 @@ Rectangle** copy_array_Rectangle(Rectangle** _Rectangle, long long _Rectangle_si
 	return new_Rectangle;
 }
 void free_Rectangle(Rectangle* rectangle){
+	free_Point(rectangle->p1);
+	rectangle->p1 = NULL;
+	free_Point(rectangle->p2);
+	rectangle->p2 = NULL;
 	free(rectangle);
 }
 void printf_Rectangle(Rectangle* rectangle){
