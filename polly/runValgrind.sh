@@ -123,42 +123,49 @@ exec(){
     cd $basedir/polly
     #read -p "Press [Enter] to continue..."
 }
-## Fibonacci test case
+## Rectanlge test case
+init Rectangle
+exec Rectangle original naive 1
+exec Rectangle original naive_dealloc 1
+exec Rectangle original copyreduced 1
+exec Rectangle original copyreduced_dealloc 1
+
+# Fibonacci test case
 init Fibonacci
 exec Fibonacci original naive 10
 exec Fibonacci original naive_dealloc 10
 exec Fibonacci original copyreduced 10
 exec Fibonacci original copyreduced_dealloc 10
 
-# Reverse test case
+Reverse test case
 init Reverse
 exec Reverse original naive 10
 exec Reverse original naive_dealloc 10
 exec Reverse original copyreduced 10
 exec Reverse original copyreduced_dealloc 10
 
-# MergeSort test case
+MergeSort test case
 init MergeSort
 exec MergeSort original naive 10
 exec MergeSort original naive_dealloc 10
 exec MergeSort original copyreduced 10
 exec MergeSort original copyreduced_dealloc 10
 
-# BubbleSort test case
+BubbleSort test case
 init BubbleSort
 exec BubbleSort original naive 10
 exec BubbleSort original naive_dealloc 10
 exec BubbleSort original copyreduced 10
 exec BubbleSort original copyreduced_dealloc 10
 
-# newTicTacToe test case
+newTicTacToe test case
 init newTicTacToe
 exec newTicTacToe original naive 10
 exec newTicTacToe original naive_dealloc 10
 exec newTicTacToe original copyreduced 10
 exec newTicTacToe original copyreduced_dealloc 10
 
-# MatrixMult test case
+MatrixMult test case
 init MatrixMult
 exec MatrixMult original naive 15
 exec MatrixMult original naive_dealloc 15
@@ -168,7 +175,7 @@ exec MatrixMult transpose naive 15
 exec MatrixMult transpose naive_dealloc 15
 exec MatrixMult transpose copyreduced 15
 exec MatrixMult transpose copyreduced_dealloc 15
-### GCD test case
+## GCD test case
 init GCD
 exec GCD original naive 100
 exec GCD original naive_dealloc 100
@@ -178,7 +185,7 @@ exec GCD cached naive 100
 exec GCD cached naive_dealloc 100
 exec GCD cached copyreduced 100
 exec GCD cached copyreduced_dealloc 100
-# ### CoinGame test case
+### CoinGame test case
 init CoinGame
 exec CoinGame original naive 100
 exec CoinGame original naive_dealloc 100
@@ -192,7 +199,7 @@ exec CoinGame array naive 100
 exec CoinGame array naive_dealloc 100
 exec CoinGame array copyreduced 100
 exec CoinGame array copyreduced_dealloc 100
-# #### NQueen test case
+#### NQueen test case
 init NQueens
 exec NQueens original naive 8
 exec NQueens original naive_dealloc 8
