@@ -1,24 +1,24 @@
-==26108== Memcheck, a memory error detector
-==26108== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==26108== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==26108== Command: ./out/Fibonacci.original.naive.clang.out 10
-==26108== Parent PID: 25482
-==26108== 
-==26108== 
-==26108== HEAP SUMMARY:
-==26108==     in use at exit: 1,832 bytes in 24 blocks
-==26108==   total heap usage: 24 allocs, 0 frees, 1,832 bytes allocated
-==26108== 
-==26108== LEAK SUMMARY:
-==26108==    definitely lost: 1,808 bytes in 23 blocks
-==26108==    indirectly lost: 24 bytes in 1 blocks
-==26108==      possibly lost: 0 bytes in 0 blocks
-==26108==    still reachable: 0 bytes in 0 blocks
-==26108==         suppressed: 0 bytes in 0 blocks
-==26108== Rerun with --leak-check=full to see details of leaked memory
-==26108== 
-==26108== For counts of detected and suppressed errors, rerun with: -v
-==26108== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12830== Memcheck, a memory error detector
+==12830== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==12830== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==12830== Command: ./out/Fibonacci.original.naive.clang.out 10
+==12830== Parent PID: 31248
+==12830== 
+==12830== 
+==12830== HEAP SUMMARY:
+==12830==     in use at exit: 1,832 bytes in 24 blocks
+==12830==   total heap usage: 24 allocs, 0 frees, 1,832 bytes allocated
+==12830== 
+==12830== LEAK SUMMARY:
+==12830==    definitely lost: 1,808 bytes in 23 blocks
+==12830==    indirectly lost: 24 bytes in 1 blocks
+==12830==      possibly lost: 0 bytes in 0 blocks
+==12830==    still reachable: 0 bytes in 0 blocks
+==12830==         suppressed: 0 bytes in 0 blocks
+==12830== Rerun with --leak-check=full to see details of leaked memory
+==12830== 
+==12830== For counts of detected and suppressed errors, rerun with: -v
+==12830== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -53,7 +53,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3493.765
+cpu MHz		: 3898.312
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -80,7 +80,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3659.250
+cpu MHz		: 3814.242
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -107,7 +107,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3785.953
+cpu MHz		: 3732.296
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -134,7 +134,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3432.539
+cpu MHz		: 3611.835
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -161,7 +161,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3461.890
+cpu MHz		: 3471.984
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -188,7 +188,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3772.140
+cpu MHz		: 3759.656
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -215,7 +215,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3542.375
+cpu MHz		: 3659.117
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

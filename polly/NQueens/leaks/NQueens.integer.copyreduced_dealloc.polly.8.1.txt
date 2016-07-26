@@ -1,40 +1,40 @@
-==31086== Memcheck, a memory error detector
-==31086== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==31086== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==31086== Command: ./out/NQueens.integer.copyreduced_dealloc.polly.out 8
-==31086== Parent PID: 25482
-==31086== 
-==31086== Invalid read of size 8
-==31086==    at 0x400F10: main (NQueens_integer.c:438)
-==31086==  Address 0x51fc130 is 0 bytes inside a block of size 64 free'd
-==31086==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==31086==    by 0x400C4F: run (NQueens_integer.c:297)
-==31086==    by 0x400D22: main (NQueens_integer.c:387)
-==31086== 
-==31086== Invalid write of size 8
-==31086==    at 0x400F19: main (NQueens_integer.c:438)
-==31086==  Address 0x51fc130 is 0 bytes inside a block of size 64 free'd
-==31086==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==31086==    by 0x400C4F: run (NQueens_integer.c:297)
-==31086==    by 0x400D22: main (NQueens_integer.c:387)
-==31086== 
-==31086== Invalid free() / delete / delete[] / realloc()
-==31086==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==31086==    by 0x400F32: main (NQueens_integer.c:438)
-==31086==  Address 0x51fc130 is 0 bytes inside a block of size 64 free'd
-==31086==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==31086==    by 0x400C4F: run (NQueens_integer.c:297)
-==31086==    by 0x400D22: main (NQueens_integer.c:387)
-==31086== 
-==31086== 
-==31086== HEAP SUMMARY:
-==31086==     in use at exit: 0 bytes in 0 blocks
-==31086==   total heap usage: 20,576 allocs, 20,577 frees, 428,304 bytes allocated
-==31086== 
-==31086== All heap blocks were freed -- no leaks are possible
-==31086== 
-==31086== For counts of detected and suppressed errors, rerun with: -v
-==31086== ERROR SUMMARY: 17 errors from 3 contexts (suppressed: 0 from 0)
+==17886== Memcheck, a memory error detector
+==17886== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==17886== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==17886== Command: ./out/NQueens.integer.copyreduced_dealloc.polly.out 8
+==17886== Parent PID: 31248
+==17886== 
+==17886== Invalid read of size 8
+==17886==    at 0x400F10: main (NQueens_integer.c:438)
+==17886==  Address 0x51fc130 is 0 bytes inside a block of size 64 free'd
+==17886==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==17886==    by 0x400C4F: run (NQueens_integer.c:297)
+==17886==    by 0x400D22: main (NQueens_integer.c:387)
+==17886== 
+==17886== Invalid write of size 8
+==17886==    at 0x400F19: main (NQueens_integer.c:438)
+==17886==  Address 0x51fc130 is 0 bytes inside a block of size 64 free'd
+==17886==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==17886==    by 0x400C4F: run (NQueens_integer.c:297)
+==17886==    by 0x400D22: main (NQueens_integer.c:387)
+==17886== 
+==17886== Invalid free() / delete / delete[] / realloc()
+==17886==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==17886==    by 0x400F32: main (NQueens_integer.c:438)
+==17886==  Address 0x51fc130 is 0 bytes inside a block of size 64 free'd
+==17886==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==17886==    by 0x400C4F: run (NQueens_integer.c:297)
+==17886==    by 0x400D22: main (NQueens_integer.c:387)
+==17886== 
+==17886== 
+==17886== HEAP SUMMARY:
+==17886==     in use at exit: 0 bytes in 0 blocks
+==17886==   total heap usage: 20,576 allocs, 20,577 frees, 428,304 bytes allocated
+==17886== 
+==17886== All heap blocks were freed -- no leaks are possible
+==17886== 
+==17886== For counts of detected and suppressed errors, rerun with: -v
+==17886== ERROR SUMMARY: 17 errors from 3 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -69,7 +69,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3447.414
+cpu MHz		: 3627.109
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -96,7 +96,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3828.054
+cpu MHz		: 3825.796
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -123,7 +123,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3713.570
+cpu MHz		: 3766.562
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -150,7 +150,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3384.992
+cpu MHz		: 3896.054
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -177,7 +177,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3896.054
+cpu MHz		: 3416.468
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -204,7 +204,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3530.820
+cpu MHz		: 3880.914
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -231,7 +231,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3295.343
+cpu MHz		: 3605.726
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

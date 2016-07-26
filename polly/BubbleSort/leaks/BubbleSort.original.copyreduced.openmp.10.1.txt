@@ -1,31 +1,31 @@
-==27383== Memcheck, a memory error detector
-==27383== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==27383== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==27383== Command: ./out/BubbleSort.original.copyreduced.openmp.out 10
-==27383== Parent PID: 25482
-==27383== 
-==27383== Invalid write of size 8
-==27383==    at 0x400AFE: main (BubbleSort_original.c:160)
-==27383==  Address 0x5629190 is 0 bytes after a block of size 80 alloc'd
-==27383==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==27383==    by 0x400CF5: create1DArray (Util.c:38)
-==27383==    by 0x400906: main (BubbleSort_original.c:152)
-==27383== 
-==27383== 
-==27383== HEAP SUMMARY:
-==27383==     in use at exit: 320 bytes in 5 blocks
-==27383==   total heap usage: 5 allocs, 0 frees, 320 bytes allocated
-==27383== 
-==27383== LEAK SUMMARY:
-==27383==    definitely lost: 216 bytes in 3 blocks
-==27383==    indirectly lost: 24 bytes in 1 blocks
-==27383==      possibly lost: 0 bytes in 0 blocks
-==27383==    still reachable: 80 bytes in 1 blocks
-==27383==         suppressed: 0 bytes in 0 blocks
-==27383== Rerun with --leak-check=full to see details of leaked memory
-==27383== 
-==27383== For counts of detected and suppressed errors, rerun with: -v
-==27383== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==14105== Memcheck, a memory error detector
+==14105== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==14105== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==14105== Command: ./out/BubbleSort.original.copyreduced.openmp.out 10
+==14105== Parent PID: 31248
+==14105== 
+==14105== Invalid write of size 8
+==14105==    at 0x400AFE: main (BubbleSort_original.c:160)
+==14105==  Address 0x5629190 is 0 bytes after a block of size 80 alloc'd
+==14105==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==14105==    by 0x400CF5: create1DArray (Util.c:38)
+==14105==    by 0x400906: main (BubbleSort_original.c:152)
+==14105== 
+==14105== 
+==14105== HEAP SUMMARY:
+==14105==     in use at exit: 320 bytes in 5 blocks
+==14105==   total heap usage: 5 allocs, 0 frees, 320 bytes allocated
+==14105== 
+==14105== LEAK SUMMARY:
+==14105==    definitely lost: 216 bytes in 3 blocks
+==14105==    indirectly lost: 24 bytes in 1 blocks
+==14105==      possibly lost: 0 bytes in 0 blocks
+==14105==    still reachable: 80 bytes in 1 blocks
+==14105==         suppressed: 0 bytes in 0 blocks
+==14105== Rerun with --leak-check=full to see details of leaked memory
+==14105== 
+==14105== For counts of detected and suppressed errors, rerun with: -v
+==14105== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -60,7 +60,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3766.695
+cpu MHz		: 3763.773
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -87,7 +87,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3877.992
+cpu MHz		: 3424.171
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -114,7 +114,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3788.476
+cpu MHz		: 3767.625
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -141,7 +141,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3408.500
+cpu MHz		: 3502.132
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -168,7 +168,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3533.476
+cpu MHz		: 3896.320
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -195,7 +195,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3639.062
+cpu MHz		: 3879.851
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -222,7 +222,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3696.835
+cpu MHz		: 3781.835
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
