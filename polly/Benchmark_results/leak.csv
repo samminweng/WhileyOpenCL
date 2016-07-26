@@ -1,9 +1,9 @@
 Memory Leak (bytes)
 TestCase	ProgramType	CodeGen	Parameter	Compiler	Thread	definite loss	indirect loss	possible loss	reachable loss
-Rectangle	original	naive	0	gcc	1	728	96	0	48
-Rectangle	original	naive_dealloc	0	gcc	1	128	0	0	0
-Rectangle	original	copyreduced	0	gcc	1	536	0	0	0
-Rectangle	original	copyreduced_dealloc	0	gcc	1	32	0	0	0
+Rectangle	original	naive	1	gcc	1	728	96	0	48
+Rectangle	original	naive_dealloc	1	gcc	1	0	0	0	0
+Rectangle	original	copyreduced	1	gcc	1	536	0	0	0
+Rectangle	original	copyreduced_dealloc	1	gcc	1	0	0	0	0
 Fibonacci	original	naive	10	gcc	1	1728	24	0	80
 Fibonacci	original	naive_dealloc	10	gcc	1	0	0	0	0
 Fibonacci	original	copyreduced	10	gcc	1	208	24	0	80

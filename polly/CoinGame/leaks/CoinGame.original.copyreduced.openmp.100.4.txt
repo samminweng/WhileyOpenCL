@@ -1,24 +1,24 @@
-==16383== Memcheck, a memory error detector
-==16383== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==16383== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==16383== Command: ./out/CoinGame.original.copyreduced.openmp.out 100
-==16383== Parent PID: 31248
-==16383== 
-==16383== 
-==16383== HEAP SUMMARY:
-==16383==     in use at exit: 80,632 bytes in 6 blocks
-==16383==   total heap usage: 6 allocs, 0 frees, 80,632 bytes allocated
-==16383== 
-==16383== LEAK SUMMARY:
-==16383==    definitely lost: 80,600 bytes in 5 blocks
-==16383==    indirectly lost: 32 bytes in 1 blocks
-==16383==      possibly lost: 0 bytes in 0 blocks
-==16383==    still reachable: 0 bytes in 0 blocks
-==16383==         suppressed: 0 bytes in 0 blocks
-==16383== Rerun with --leak-check=full to see details of leaked memory
-==16383== 
-==16383== For counts of detected and suppressed errors, rerun with: -v
-==16383== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==31559== Memcheck, a memory error detector
+==31559== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==31559== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==31559== Command: ./out/CoinGame.original.copyreduced.openmp.out 100
+==31559== Parent PID: 31248
+==31559== 
+==31559== 
+==31559== HEAP SUMMARY:
+==31559==     in use at exit: 80,632 bytes in 6 blocks
+==31559==   total heap usage: 6 allocs, 0 frees, 80,632 bytes allocated
+==31559== 
+==31559== LEAK SUMMARY:
+==31559==    definitely lost: 80,600 bytes in 5 blocks
+==31559==    indirectly lost: 32 bytes in 1 blocks
+==31559==      possibly lost: 0 bytes in 0 blocks
+==31559==    still reachable: 0 bytes in 0 blocks
+==31559==         suppressed: 0 bytes in 0 blocks
+==31559== Rerun with --leak-check=full to see details of leaked memory
+==31559== 
+==31559== For counts of detected and suppressed errors, rerun with: -v
+==31559== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -26,7 +26,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 2415.062
+cpu MHz		: 3899.906
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -53,7 +53,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3712.109
+cpu MHz		: 3863.250
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -80,7 +80,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3889.546
+cpu MHz		: 3768.953
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -107,7 +107,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3845.320
+cpu MHz		: 3788.609
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -134,7 +134,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3864.445
+cpu MHz		: 3401.992
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -161,7 +161,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3758.460
+cpu MHz		: 3494.562
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -188,7 +188,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3900.570
+cpu MHz		: 3887.289
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -215,7 +215,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 2429.406
+cpu MHz		: 3675.054
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

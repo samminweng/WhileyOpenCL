@@ -1,25 +1,25 @@
-==14210== Memcheck, a memory error detector
-==14210== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==14210== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==14210== Command: ./out/BubbleSort.original.copyreduced_dealloc.openmp.out 10
-==14210== Parent PID: 31248
-==14210== 
-==14210== Invalid write of size 8
-==14210==    at 0x400B0E: main (BubbleSort_original.c:181)
-==14210==  Address 0x5629190 is 0 bytes after a block of size 80 alloc'd
-==14210==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==14210==    by 0x400D45: create1DArray (Util.c:38)
-==14210==    by 0x400919: main (BubbleSort_original.c:170)
-==14210== 
-==14210== 
-==14210== HEAP SUMMARY:
-==14210==     in use at exit: 0 bytes in 0 blocks
-==14210==   total heap usage: 5 allocs, 5 frees, 320 bytes allocated
-==14210== 
-==14210== All heap blocks were freed -- no leaks are possible
-==14210== 
-==14210== For counts of detected and suppressed errors, rerun with: -v
-==14210== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==29433== Memcheck, a memory error detector
+==29433== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==29433== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==29433== Command: ./out/BubbleSort.original.copyreduced_dealloc.openmp.out 10
+==29433== Parent PID: 31248
+==29433== 
+==29433== Invalid write of size 8
+==29433==    at 0x400B0E: main (BubbleSort_original.c:181)
+==29433==  Address 0x5629190 is 0 bytes after a block of size 80 alloc'd
+==29433==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==29433==    by 0x400D45: create1DArray (Util.c:38)
+==29433==    by 0x400919: main (BubbleSort_original.c:170)
+==29433== 
+==29433== 
+==29433== HEAP SUMMARY:
+==29433==     in use at exit: 0 bytes in 0 blocks
+==29433==   total heap usage: 5 allocs, 5 frees, 320 bytes allocated
+==29433== 
+==29433== All heap blocks were freed -- no leaks are possible
+==29433== 
+==29433== For counts of detected and suppressed errors, rerun with: -v
+==29433== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -54,7 +54,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3499.742
+cpu MHz		: 3584.210
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -81,7 +81,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3870.023
+cpu MHz		: 3875.070
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -108,7 +108,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3868.031
+cpu MHz		: 3561.234
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -135,7 +135,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.109
+cpu MHz		: 3452.726
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -162,7 +162,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3417.265
+cpu MHz		: 3899.507
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -189,7 +189,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3900.835
+cpu MHz		: 3903.093
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -216,7 +216,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3856.875
+cpu MHz		: 3633.750
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
