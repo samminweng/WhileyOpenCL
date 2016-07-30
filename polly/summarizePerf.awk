@@ -59,34 +59,39 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcases="Fibonacci Reverse MergeSort BubbleSort newTicTacToe MatrixMult GCD CoinGame NQueens";
+	#testcases="Fibonacci Reverse MergeSort BubbleSort newTicTacToe MatrixMult GCD CoinGame NQueens";
+	testcases="Reverse newTicTacToe MergeSort BubbleSort MatrixMult";
 	# Program Types
-	programs["Fibonacci"]="original";
 	programs["Reverse"]="original";
+	programs["newTicTacToe"]="original";
 	programs["MergeSort"]="original";
 	programs["BubbleSort"]="original";
-	programs["newTicTacToe"]="original";
-	programs["MatrixMult"]="original transpose";
-	programs["GCD"]="original cached";
-	programs["CoinGame"]="original single array";
-	programs["NQueens"]="original integer";
+	programs["MatrixMult"]="original";
+	#programs["Fibonacci"]="original";
+	
+	#programs["GCD"]="original cached";
+	#programs["CoinGame"]="original single array";
+	#programs["NQueens"]="original integer";
 	# Code Generation
-	codegens="copyreduced_dealloc";
-	#codegens = "naive naive_dealloc copyreduced copyreduced_dealloc";
+	#codegens="copyreduced_dealloc";
+	codegens = "naive naive_dealloc copyreduced copyreduced_dealloc";
 	# Compiler
-	compilers = "gcc clang polly openmp";
+	#compilers = "gcc clang polly openmp";
+	compilers = "gcc";
 	# Parameter
-	parameters["Fibonacci"] = "10 20 30 40 50";
-	parameters["Reverse"] = "1000 10000 100000 1000000 10000000 100000000";
-	parameters["MergeSort"] = "1000 10000 100000 1000000 10000000 100000000";
-	parameters["BubbleSort"] = "1000 10000 100000 200000";
-	parameters["newTicTacToe"] = "1000 10000 100000 1000000 10000000 100000000";
-	parameters["MatrixMult"] = "200 400 600 800 1000 1200 1400 1600 1800 2000 2200 2400 2600 2800 3000";
-	parameters["GCD"] = "1000 10000 20000 30000 40000";
-	parameters["CoinGame"] = "1000 10000 20000 30000 40000";
-	parameters["NQueens"] = "1 2 4 6 8 10 12 14 15";
+	parameters["Reverse"] = "1000000 10000000 100000000";
+	parameters["newTicTacToe"] = "10000 100000 1000000";
+	parameters["MergeSort"] = "100000 1000000 10000000";
+	parameters["BubbleSort"] = "1000 10000 100000";
+	parameters["MatrixMult"] = "100 1000 2000";
+	#parameters["Fibonacci"] = "10 20 30 40 50";
+	
+	#parameters["GCD"] = "1000 10000 20000 30000 40000";
+	#parameters["CoinGame"] = "1000 10000 20000 30000 40000";
+	#parameters["NQueens"] = "1 2 4 6 8 10 12 14 15";
 	# The number of threads
-	threads="1 2 4";
+	#threads="1 2 4";
+	threads="1";
 	# Results
 	cpu_utils[""] = "";
 	exec_times[""] = "";
@@ -156,6 +161,6 @@ END {
 	print "Execution Time";
 	generateReport(exec_times);
 
-	print "CPU Utilization";
-	generateReport(cpu_utils);
+	#print "CPU Utilization";
+	#generateReport(cpu_utils);
 }

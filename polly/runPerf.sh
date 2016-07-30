@@ -32,18 +32,22 @@ generateCode(){
 	## Translate Whiley programs into naive C code
 	case "$codegen" in
 		"naive")
+			echo "#############Generate naive $testcase#################"
 			### Translate Whiley program into naive C code 
 	    	./../../../../..//bin/wyopcl -code $testcase"_"$program.whiley
 	    	;;
 	    "naive_dealloc")
+			echo "#############Generate naive_dealloc $testcase#################"
 			### Translate Whiley program into naive + dealloc C code 
 	    	./../../../../../bin/wyopcl -code -dealloc $testcase"_"$program.whiley
 	    	;;
 	    "copyreduced")
+			echo "#############Generate copyreduced $testcase#################"
 			## Translate Whiley programs into copy_reduced C code
 			./../../../../../bin/wyopcl -code -copy $testcase"_"$program.whiley
 			;;
 		"copyreduced_dealloc")
+			echo "#############Generate copyreduced_dealloc $testcase#################"
 			### Translate Whiley program into copy-eliminated + memory deallocated C code 
 	    	./../../../../../bin/wyopcl -code -copy -dealloc $testcase"_"$program.whiley	
 			;;
@@ -110,7 +114,7 @@ compileAndRun(){
 	export OMP_NUM_THREADS=$num_threads
 	echo -e -n "Run the $program $testcase on $parameter using $compiler and $OMP_NUM_THREADS threads..." >> $result
 	echo "Run the $program $testcase on $parameter using $OMP_NUM_THREADS threads..."
-	for i in {1..1}
+	for i in {1..10}
 	do
 		echo "Begin $i iteration"
 		timeout $TIMEOUT perf stat out/"$executable.out" $parameter >>$result 2>> $result
@@ -131,12 +135,18 @@ compileAndRun(){
 exec(){
 	testcase=$1
 	program=$2
-	codgen=$3
-	parameter=$4
-	## Generate C code
-	generateCode $testcase $program $codgen
-	##read -p "Complete code generation. Press [Enter] to continue..."
-	compileAndRun $testcase $program $codgen $parameter "gcc" 1
+	parameter=$3
+
+	## declare 4 kinds of code generation
+	declare -a codegens=("naive" "naive_dealloc" "copyreduced" "copyreduced_dealloc")
+	## Iterate each codegen
+	for codegen in "${codegens[@]}"
+	do
+		## Generate C code
+		generateCode $testcase $program $codegen
+		##read -p "Complete code generation. Press [Enter] to continue..."
+		compileAndRun $testcase $program $codegen $parameter "gcc" 1
+	done
 	###read -p "Complete. Press [Enter] to continue..."
 	# compileAndRun $testcase $program $codgen $parameter "clang" 1
 	# compileAndRun $testcase $program $codgen $parameter "polly" 1
@@ -163,50 +173,41 @@ init(){
 ###   copy_reduced, copy_reduced + de-allocated)
 ###
 ###########################################
-# ### Benchmark Reverse testcase
-init Reverse
-exec Reverse original naive 10
-exec Reverse original naive_dealloc 10
-exec Reverse original copyreduced 10
-exec Reverse original copyreduced_dealloc 10
+### Benchmark Reverse testcase
+# init Reverse
+# exec Reverse original 1000000
+# exec Reverse original 10000000
+# exec Reverse original 100000000
 
 # # ### Benchmark MergeSort testcase
 # init MergeSort
-# exec MergeSort original naive 1000
-# exec MergeSort original naive_dealloc 1000
-# exec MergeSort original copyreduced 1000
-# exec MergeSort original copyreduced_dealloc 1000
+# exec MergeSort original 100000
+# exec MergeSort original 1000000
+# exec MergeSort original 10000000
 
-# # ### Benchmark BubbleSort testcase
+# # # ### Benchmark newTicTacToe testcase
+# init newTicTacToe
+# exec newTicTacToe original 10000
+# exec newTicTacToe original 100000
+# exec newTicTacToe original 1000000
+
+# # # ### Benchmark BubbleSort testcase
 # init BubbleSort
 # exec BubbleSort original 1000
 # exec BubbleSort original 10000
 # exec BubbleSort original 100000
-# exec BubbleSort original 200000
 
 # ### Benchmark MatrixMult
-# ### Original MatrixMult
-# init MatrixMult
-# exec MatrixMult original 200
-# exec MatrixMult original 400
-# exec MatrixMult original 600
-# exec MatrixMult original 800
-# exec MatrixMult original 1000
-# exec MatrixMult original 1200
-# exec MatrixMult original 1400
-# exec MatrixMult original 1600
-# exec MatrixMult original 1800
-# exec MatrixMult original 2000
-# exec MatrixMult original 2200
-# exec MatrixMult original 2400
-# exec MatrixMult original 2600
-# exec MatrixMult original 2800
-# exec MatrixMult original 3000
+### Original MatrixMult
+init MatrixMult
+exec MatrixMult original 100
+exec MatrixMult original 1000
+exec MatrixMult original 2000
 
 
 #################################################
 ###
-###  Benchmark of copy_reduced + de-allocated C code
+###  Benchmark of copy_reduced + de-allocated C code only
 ###
 ##################################################
 # # ### Benchmark Fibonacci testcase

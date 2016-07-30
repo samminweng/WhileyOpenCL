@@ -2,171 +2,171 @@ Run the original newTicTacToe on 10000 using gcc and 1 threads...Pass newTicTacT
 
  Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.gcc.out 10000':
 
-          8.156612      task-clock (msec)         #    0.629 CPUs utilized          
-                 3      context-switches          #    0.368 K/sec                  
+          8.246447      task-clock (msec)         #    0.116 CPUs utilized          
+                 2      context-switches          #    0.243 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
                 53      page-faults               #    0.006 M/sec                  
-        30,318,500      cycles                    #    3.717 GHz                    
+        30,495,373      cycles                    #    3.698 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        81,369,211      instructions              #    2.68  insns per cycle        
-        19,212,141      branches                  # 2355.407 M/sec                  
-            39,566      branch-misses             #    0.21% of all branches        
+        81,352,851      instructions              #    2.67  insns per cycle        
+        19,209,685      branches                  # 2329.450 M/sec                  
+            44,679      branch-misses             #    0.23% of all branches        
 
-       0.012969500 seconds time elapsed
+       0.071375641 seconds time elapsed
 
 Pass newTicTacToe test case
 
  Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.gcc.out 10000':
 
-         10.977068      task-clock (msec)         #    0.736 CPUs utilized          
-                 1      context-switches          #    0.091 K/sec                  
-                 1      cpu-migrations            #    0.091 K/sec                  
-                52      page-faults               #    0.005 M/sec                  
-        40,481,032      cycles                    #    3.688 GHz                    
+          8.049513      task-clock (msec)         #    0.692 CPUs utilized          
+                 1      context-switches          #    0.124 K/sec                  
+                 2      cpu-migrations            #    0.248 K/sec                  
+                54      page-faults               #    0.007 M/sec                  
+        29,735,414      cycles                    #    3.694 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        81,344,649      instructions              #    2.01  insns per cycle        
-        19,208,217      branches                  # 1749.850 M/sec                  
-            31,621      branch-misses             #    0.16% of all branches        
+        81,341,379      instructions              #    2.74  insns per cycle        
+        19,207,939      branches                  # 2386.224 M/sec                  
+            38,158      branch-misses             #    0.20% of all branches        
 
-       0.014912461 seconds time elapsed
+       0.011630845 seconds time elapsed
 
 Pass newTicTacToe test case
 
  Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.gcc.out 10000':
 
-          9.231247      task-clock (msec)         #    0.652 CPUs utilized          
-                 1      context-switches          #    0.108 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                53      page-faults               #    0.006 M/sec                  
-        33,854,929      cycles                    #    3.667 GHz                    
+          8.145156      task-clock (msec)         #    0.696 CPUs utilized          
+                 1      context-switches          #    0.123 K/sec                  
+                 1      cpu-migrations            #    0.123 K/sec                  
+                54      page-faults               #    0.007 M/sec                  
+        30,011,979      cycles                    #    3.685 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        81,334,975      instructions              #    2.40  insns per cycle        
-        19,206,724      branches                  # 2080.621 M/sec                  
-            35,960      branch-misses             #    0.19% of all branches        
+        81,343,542      instructions              #    2.71  insns per cycle        
+        19,208,072      branches                  # 2358.220 M/sec                  
+            39,011      branch-misses             #    0.20% of all branches        
 
-       0.014157719 seconds time elapsed
+       0.011701811 seconds time elapsed
 
 Pass newTicTacToe test case
 
  Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.gcc.out 10000':
 
-          8.275674      task-clock (msec)         #    0.352 CPUs utilized          
-                 1      context-switches          #    0.121 K/sec                  
+          7.983723      task-clock (msec)         #    0.499 CPUs utilized          
+                 1      context-switches          #    0.125 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
                 54      page-faults               #    0.007 M/sec                  
-        30,505,598      cycles                    #    3.686 GHz                    
+        29,832,761      cycles                    #    3.737 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        81,347,732      instructions              #    2.67  insns per cycle        
-        19,208,848      branches                  # 2321.122 M/sec                  
-            41,351      branch-misses             #    0.22% of all branches        
+        81,331,718      instructions              #    2.73  insns per cycle        
+        19,206,437      branches                  # 2405.699 M/sec                  
+            37,951      branch-misses             #    0.20% of all branches        
 
-       0.023492006 seconds time elapsed
+       0.015995199 seconds time elapsed
 
 Pass newTicTacToe test case
 
  Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.gcc.out 10000':
 
-          8.149538      task-clock (msec)         #    0.696 CPUs utilized          
-                 1      context-switches          #    0.123 K/sec                  
+          8.046032      task-clock (msec)         #    0.360 CPUs utilized          
+                 1      context-switches          #    0.124 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
                 55      page-faults               #    0.007 M/sec                  
-        30,050,194      cycles                    #    3.687 GHz                    
+        29,612,619      cycles                    #    3.680 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        81,349,649      instructions              #    2.71  insns per cycle        
-        19,209,549      branches                  # 2357.133 M/sec                  
-            38,189      branch-misses             #    0.20% of all branches        
+        81,360,459      instructions              #    2.75  insns per cycle        
+        19,211,416      branches                  # 2387.688 M/sec                  
+            36,381      branch-misses             #    0.19% of all branches        
 
-       0.011717050 seconds time elapsed
+       0.022343921 seconds time elapsed
 
 Pass newTicTacToe test case
 
  Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.gcc.out 10000':
 
-          8.204704      task-clock (msec)         #    0.677 CPUs utilized          
-                 1      context-switches          #    0.122 K/sec                  
-                 1      cpu-migrations            #    0.122 K/sec                  
-                54      page-faults               #    0.007 M/sec                  
-        30,852,588      cycles                    #    3.760 GHz                    
+          8.512804      task-clock (msec)         #    0.511 CPUs utilized          
+                 1      context-switches          #    0.117 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                55      page-faults               #    0.006 M/sec                  
+        29,662,503      cycles                    #    3.484 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        81,344,913      instructions              #    2.64  insns per cycle        
-        19,208,694      branches                  # 2341.181 M/sec                  
-            36,388      branch-misses             #    0.19% of all branches        
+        81,343,674      instructions              #    2.74  insns per cycle        
+        19,208,735      branches                  # 2256.452 M/sec                  
+            36,910      branch-misses             #    0.19% of all branches        
 
-       0.012119254 seconds time elapsed
+       0.016654777 seconds time elapsed
 
 Pass newTicTacToe test case
 
  Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.gcc.out 10000':
 
-          9.549914      task-clock (msec)         #    0.698 CPUs utilized          
-                 1      context-switches          #    0.105 K/sec                  
-                 2      cpu-migrations            #    0.209 K/sec                  
-                53      page-faults               #    0.006 M/sec                  
-        35,649,976      cycles                    #    3.733 GHz                    
+          8.324751      task-clock (msec)         #    0.208 CPUs utilized          
+                 1      context-switches          #    0.120 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                55      page-faults               #    0.007 M/sec                  
+        29,955,236      cycles                    #    3.598 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        81,340,931      instructions              #    2.28  insns per cycle        
-        19,207,838      branches                  # 2011.310 M/sec                  
-            34,945      branch-misses             #    0.18% of all branches        
+        81,330,203      instructions              #    2.72  insns per cycle        
+        19,206,359      branches                  # 2307.139 M/sec                  
+            48,526      branch-misses             #    0.25% of all branches        
 
-       0.013681083 seconds time elapsed
+       0.040040807 seconds time elapsed
 
 Pass newTicTacToe test case
 
  Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.gcc.out 10000':
 
-          8.154453      task-clock (msec)         #    0.678 CPUs utilized          
+          8.025147      task-clock (msec)         #    0.164 CPUs utilized          
+                 1      context-switches          #    0.125 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                53      page-faults               #    0.007 M/sec                  
+        29,456,326      cycles                    #    3.671 GHz                    
+                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
+                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
+        81,324,776      instructions              #    2.76  insns per cycle        
+        19,205,031      branches                  # 2393.106 M/sec                  
+            40,570      branch-misses             #    0.21% of all branches        
+
+       0.048939738 seconds time elapsed
+
+Pass newTicTacToe test case
+
+ Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.gcc.out 10000':
+
+          8.153287      task-clock (msec)         #    0.660 CPUs utilized          
                  1      context-switches          #    0.123 K/sec                  
                  0      cpu-migrations            #    0.000 K/sec                  
                 54      page-faults               #    0.007 M/sec                  
-        30,039,830      cycles                    #    3.684 GHz                    
+        29,393,738      cycles                    #    3.605 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        81,334,599      instructions              #    2.71  insns per cycle        
-        19,206,932      branches                  # 2355.392 M/sec                  
-            29,086      branch-misses             #    0.15% of all branches        
+        81,341,993      instructions              #    2.77  insns per cycle        
+        19,207,978      branches                  # 2355.857 M/sec                  
+            35,646      branch-misses             #    0.19% of all branches        
 
-       0.012034578 seconds time elapsed
+       0.012345552 seconds time elapsed
 
 Pass newTicTacToe test case
 
  Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.gcc.out 10000':
 
-          8.179621      task-clock (msec)         #    0.680 CPUs utilized          
-                 1      context-switches          #    0.122 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
+          7.945329      task-clock (msec)         #    0.649 CPUs utilized          
+                 1      context-switches          #    0.126 K/sec                  
+                 1      cpu-migrations            #    0.126 K/sec                  
                 54      page-faults               #    0.007 M/sec                  
-        30,162,578      cycles                    #    3.688 GHz                    
+        29,411,630      cycles                    #    3.702 GHz                    
                  0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
                  0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        81,341,217      instructions              #    2.70  insns per cycle        
-        19,207,662      branches                  # 2348.234 M/sec                  
-            38,704      branch-misses             #    0.20% of all branches        
+        81,338,139      instructions              #    2.77  insns per cycle        
+        19,207,410      branches                  # 2417.447 M/sec                  
+            35,721      branch-misses             #    0.19% of all branches        
 
-       0.012037186 seconds time elapsed
-
-Pass newTicTacToe test case
-
- Performance counter stats for 'out/newTicTacToe.original.copyreduced_dealloc.gcc.out 10000':
-
-         11.134829      task-clock (msec)         #    0.742 CPUs utilized          
-                 2      context-switches          #    0.180 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-                53      page-faults               #    0.005 M/sec                  
-        41,044,491      cycles                    #    3.686 GHz                    
-                 0      stalled-cycles-frontend   #    0.00% frontend cycles idle   
-                 0      stalled-cycles-backend    #    0.00% backend  cycles idle   
-        81,333,376      instructions              #    1.98  insns per cycle        
-        19,206,615      branches                  # 1724.913 M/sec                  
-            31,280      branch-misses             #    0.16% of all branches        
-
-       0.014996760 seconds time elapsed
+       0.012248449 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -175,7 +175,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3743.187
+cpu MHz		: 3436.789
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -189,7 +189,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.16
+bogomips	: 6784.36
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -202,7 +202,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3699.890
+cpu MHz		: 3791.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -216,7 +216,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.16
+bogomips	: 6784.36
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -229,7 +229,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3702.945
+cpu MHz		: 3461.359
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -243,7 +243,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.16
+bogomips	: 6784.36
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -256,7 +256,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3701.351
+cpu MHz		: 3551.406
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -270,7 +270,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.16
+bogomips	: 6784.36
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -283,7 +283,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3697.234
+cpu MHz		: 3405.843
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -297,7 +297,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.16
+bogomips	: 6784.36
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -310,7 +310,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3698.562
+cpu MHz		: 3748.101
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -324,7 +324,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.16
+bogomips	: 6784.36
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -337,7 +337,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3699.890
+cpu MHz		: 3604.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -351,7 +351,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.16
+bogomips	: 6784.36
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -364,7 +364,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3694.312
+cpu MHz		: 3642.781
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -378,7 +378,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.16
+bogomips	: 6784.36
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
