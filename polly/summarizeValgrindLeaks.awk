@@ -5,11 +5,11 @@ BEGIN {
 	FS = "\t";
 	# Test case name
 	#testcases="Rectangle Fibonacci newTicTacToe Reverse MergeSort BubbleSort MatrixMult GCD CoinGame NQueens";
-	testcases="Reverse MergeSort BubbleSort MatrixMult";
+	testcases="Reverse newTicTacToe MergeSort BubbleSort MatrixMult";
 	# Program Type
 	#programs["Rectangle"]="original";
 	#programs["Fibonacci"]="original";
-	#programs["newTicTacToe"]="original";
+	programs["newTicTacToe"]="original";
 	programs["Reverse"]="original";
 	programs["MergeSort"]="original";
 	programs["BubbleSort"]="original";
@@ -25,11 +25,11 @@ BEGIN {
 	# Parameter
 	#parameters["Rectangle"]="1";
 	#parameters["Fibonacci"]="10";
-	#parameters["newTicTacToe"]="10";
+	parameters["newTicTacToe"]="100000";
 	parameters["Reverse"]="10000000";
 	parameters["MergeSort"]="1000000";
 	parameters["BubbleSort"]="10000";
-	parameters["MatrixMult"]="100";
+	parameters["MatrixMult"]="1000";
 	#parameters["GCD"]="100";
 	#parameters["CoinGame"]="100";
 	#parameters["NQueens"]="8";
