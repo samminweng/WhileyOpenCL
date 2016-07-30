@@ -95,7 +95,7 @@ int main(int argc, char** args){
 	//invoke (%6) = (%9) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
 	_STR_TO_INT(_6, _9);
 	//assign %1 = %6  : null|int
-	max = _6;
+	_NEW_INTEGER_POINTER(max, _6);
 	//ifis %1, null goto blklab7 : null|int
 	if(max == NULL) { goto blklab7;}
 	//assign %2 = %1  : int

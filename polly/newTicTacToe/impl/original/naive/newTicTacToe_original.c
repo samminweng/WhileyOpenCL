@@ -172,7 +172,7 @@ int main(int argc, char** args){
 	//invoke (%8) = (%11) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
 	_STR_TO_INT(_8, _11);
 	//assign %1 = %8  : null|int
-	n = _8;
+	_NEW_INTEGER_POINTER(n, _8);
 	//ifis %1, null goto blklab14 : null|int
 	if(n == NULL) { goto blklab14;}
 	//assign %2 = %1  : int

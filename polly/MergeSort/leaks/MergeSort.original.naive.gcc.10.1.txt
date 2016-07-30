@@ -1,24 +1,24 @@
-==12364== Memcheck, a memory error detector
-==12364== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==12364== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==12364== Command: ./out/MergeSort.original.naive.gcc.out 10
-==12364== Parent PID: 31248
-==12364== 
-==12364== 
-==12364== HEAP SUMMARY:
-==12364==     in use at exit: 1,640 bytes in 80 blocks
-==12364==   total heap usage: 80 allocs, 0 frees, 1,640 bytes allocated
-==12364== 
-==12364== LEAK SUMMARY:
-==12364==    definitely lost: 1,536 bytes in 78 blocks
-==12364==    indirectly lost: 24 bytes in 1 blocks
-==12364==      possibly lost: 0 bytes in 0 blocks
-==12364==    still reachable: 80 bytes in 1 blocks
-==12364==         suppressed: 0 bytes in 0 blocks
-==12364== Rerun with --leak-check=full to see details of leaked memory
-==12364== 
-==12364== For counts of detected and suppressed errors, rerun with: -v
-==12364== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==13416== Memcheck, a memory error detector
+==13416== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==13416== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==13416== Command: ./out/MergeSort.original.naive.gcc.out 10
+==13416== Parent PID: 31760
+==13416== 
+==13416== 
+==13416== HEAP SUMMARY:
+==13416==     in use at exit: 1,648 bytes in 81 blocks
+==13416==   total heap usage: 81 allocs, 0 frees, 1,648 bytes allocated
+==13416== 
+==13416== LEAK SUMMARY:
+==13416==    definitely lost: 1,544 bytes in 79 blocks
+==13416==    indirectly lost: 24 bytes in 1 blocks
+==13416==      possibly lost: 0 bytes in 0 blocks
+==13416==    still reachable: 80 bytes in 1 blocks
+==13416==         suppressed: 0 bytes in 0 blocks
+==13416== Rerun with --leak-check=full to see details of leaked memory
+==13416== 
+==13416== For counts of detected and suppressed errors, rerun with: -v
+==13416== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -26,7 +26,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.906
+cpu MHz		: 3898.710
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -53,7 +53,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3487.921
+cpu MHz		: 3617.679
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -80,7 +80,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3876.531
+cpu MHz		: 3832.039
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -107,7 +107,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3775.859
+cpu MHz		: 3645.039
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -134,7 +134,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3701.882
+cpu MHz		: 3488.851
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -161,7 +161,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3749.429
+cpu MHz		: 3825.664
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -188,7 +188,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3853.289
+cpu MHz		: 3866.570
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -215,7 +215,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3900.835
+cpu MHz		: 3765.898
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

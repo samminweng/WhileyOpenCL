@@ -73,6 +73,12 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
  * Create (NEW) Macros
  *
  */
+// Clone an integer pointers
+#define _NEW_INTEGER_POINTER(a, b) \
+ 		({\
+			a = malloc(sizeof(long long));\
+			*a = *b;\
+		})
 // Create an array of integers or integer arrays
 #define _NEW_1DARRAY(a, size, value) a##_size = size; a = create1DArray(value, a##_size);
 #define _NEW_2DARRAY(a, size, value) a##_size = size; a##_size_size = value##_size; a = create2DArray(value, a##_size, a##_size_size);

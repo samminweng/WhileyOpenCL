@@ -164,7 +164,7 @@ int main(int argc, char** args){
 	//invoke (%7) = (%10) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
 	_STR_TO_INT(_7, _10);
 	//assign %1 = %7  : null|int
-	max = _7;
+	_NEW_INTEGER_POINTER(max, _7);
 	//ifis %1, null goto blklab13 : null|int
 	if(max == NULL) { goto blklab13;}
 	//assign %2 = %1  : int

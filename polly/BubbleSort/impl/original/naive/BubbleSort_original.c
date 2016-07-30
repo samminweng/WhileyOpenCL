@@ -137,7 +137,7 @@ int main(int argc, char** args){
 	//invoke (%5) = (%8) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
 	_STR_TO_INT(_5, _8);
 	//assign %1 = %5  : null|int
-	n = _5;
+	_NEW_INTEGER_POINTER(n, _5);
 	//ifis %1, null goto blklab5 : null|int
 	if(n == NULL) { goto blklab5;}
 	//assign %2 = %1  : int

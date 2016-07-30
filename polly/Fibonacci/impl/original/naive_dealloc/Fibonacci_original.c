@@ -127,7 +127,7 @@ int main(int argc, char** args){
 	_REMOVE_DEALLOC(_7);
 	//assign %1 = %4  : null|int
 	_DEALLOC(n);
-	n = _4;
+	_NEW_INTEGER_POINTER(n, _4);
 	_ADD_DEALLOC(n);
 	//ifis %1, null goto blklab2 : null|int
 	if(n == NULL) { goto blklab2;}

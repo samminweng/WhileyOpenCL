@@ -235,7 +235,7 @@ int main(int argc, char** args){
 	//invoke (%5) = (%8) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
 	_STR_TO_INT(_5, _8);
 	//assign %1 = %5  : null|int
-	max = _5;
+	_NEW_INTEGER_POINTER(max, _5);
 	//ifis %1, null goto blklab7 : null|int
 	if(max == NULL) { goto blklab7;}
 	//assign %2 = %1  : int

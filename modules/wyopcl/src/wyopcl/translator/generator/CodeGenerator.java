@@ -325,12 +325,26 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		if (!stores.isCompoundType(lhs_type)) {
 			Type rhs_type = stores.getRawType(code.operand(0), function);
+			// Special case for the assignment of integer pointers 
+			if (lhs_type instanceof Type.Union && rhs_type instanceof Type.Union) {
+				if(isCopyEliminated){
+					// Update lhs with rhs
+					return indent + lhs + " = " + rhs + ";";
+				}else{
+					// Use '_NEW_INTEGER_POINTER' macro to copy an integer pointer (n, _5);
+					return indent + "_NEW_INTEGER_POINTER("+lhs + ", " + rhs + ");";
+				}
+			}
+			
+			// Special case of casting an integer pointer to an integer
 			if (lhs_type instanceof Type.Int && rhs_type instanceof Type.Union) {
 				// Cast an integer pointer to integer, e.g. 'size = *i'
 				return indent + lhs + " = *" + rhs + ";";
 			}
+			
 			// Update lhs with rhs
 			return indent + lhs + " = " + rhs + ";";
+
 		} else {
 			if (lhs_type instanceof Type.Array) {
 				int dimension = stores.getArrayDimension(lhs_type);

@@ -355,7 +355,7 @@ int main(int argc, char** args){
 	_REMOVE_DEALLOC(_8);
 	//assign %1 = %5  : null|int
 	_DEALLOC(max);
-	max = _5;
+	_NEW_INTEGER_POINTER(max, _5);
 	_ADD_DEALLOC(max);
 	//ifis %1, null goto blklab11 : null|int
 	if(max == NULL) { goto blklab11;}
