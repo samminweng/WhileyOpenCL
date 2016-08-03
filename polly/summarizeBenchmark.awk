@@ -7,7 +7,7 @@ function pause(){
 }
 
 function generateReport(results){
-	print "TestCase\tProgramType\tCodeGen\tCompiler\tParameter\tThread\t1st\t2nd\t3rd\t4th\t5th\t6th\t7th\t8th\t9th\t10th\tAverage";
+	print "TestCase\tProgramType\tParameter\tCompiler\tCodeGen\tThread\t1st\t2nd\t3rd\t4th\t5th\t6th\t7th\t8th\t9th\t10th\tAverage";
  	t_total=split(testcases, t_array, " ");
  	for(t=1;t<=t_total;t++){
  		testcase=t_array[t];
@@ -15,29 +15,29 @@ function generateReport(results){
 		program_total=split(programs[testcase], program_array, " ");
 		for(pt=1;pt<=program_total;pt++){
 			program = program_array[pt];
-			# Get CodeGen 
-			codegen_total=split(codegens, codegen_array, " ");
-			for(c=1;c<=codegen_total;c++){
-				codegen=codegen_array[c];
-				## Compiler
-				compilers_total=split(compilers, compiler_array, " ");
-				for(cr=1;cr<=compilers_total;cr++){
-					compiler = compiler_array[cr];
-					th_total=split(threads, th_array, " ");
-					for(th=1;th<=th_total;th++){
-						thread=th_array[th];	
-						# Get the parameter
-						if(parameters[testcase]!=""){
-							## Parameter
-							par_total=split(parameters[testcase], par_array, " ");
-							for(p=1;p<=par_total;p++){
-								parameter = par_array[p];					 							
+			# Get the parameter
+			if(parameters[testcase]!=""){
+				## Parameter
+				par_total=split(parameters[testcase], par_array, " ");
+				for(p=1;p<=par_total;p++){
+					parameter = par_array[p];	
+					## Compiler
+					compilers_total=split(compilers, compiler_array, " ");
+					for(cr=1;cr<=compilers_total;cr++){
+						compiler = compiler_array[cr];
+						# Get CodeGen 
+						codegen_total=split(codegens, codegen_array, " ");
+						for(c=1;c<=codegen_total;c++){
+							codegen=codegen_array[c];					 							
+							th_total=split(threads, th_array, " ");
+							for(th=1;th<=th_total;th++){
+								thread=th_array[th];	
 								key =testcase","program","codegen","compiler","parameter","thread;
 								#print "key="key;
 								#pause();
 								# Check if there is any result.
 								if(counts[key]>0){
-									str = testcase"\t"program"\t"codegen"\t"compiler"\t"parameter"\t"thread;
+									str = testcase"\t"program"\t"parameter"\t"compiler"\t"codegen"\t"thread;
 									## Print out result, e.g. CPU utilization
 				 					for(iteration=1;iteration<=10;iteration++){
 				 						str = str"\t"results[key","iteration];
@@ -79,11 +79,11 @@ BEGIN {
 	#compilers = "gcc clang polly openmp";
 	compilers = "gcc";
 	# Parameter
-	parameters["Reverse"] = "1000000 10000000 100000000";
-	parameters["newTicTacToe"] = "10000 100000 1000000";
-	parameters["MergeSort"] = "100000 1000000 10000000";
-	parameters["BubbleSort"] = "10000 100000 1000000";
-	parameters["MatrixMult"] = "100 1000 2000";
+	parameters["Reverse"] = "1000 10000 100000";
+	parameters["newTicTacToe"] = "1000 10000 100000";
+	parameters["MergeSort"] = "1000 10000 100000";
+	parameters["BubbleSort"] = "1000 10000 100000";
+	parameters["MatrixMult"] = "1000 2000 3000";
 	#parameters["Fibonacci"] = "10 20 30 40 50";
 	
 	#parameters["GCD"] = "1000 10000 20000 30000 40000";

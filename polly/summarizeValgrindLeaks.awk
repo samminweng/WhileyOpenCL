@@ -25,11 +25,11 @@ BEGIN {
 	# Parameter
 	#parameters["Rectangle"]="1";
 	#parameters["Fibonacci"]="10";
-	parameters["newTicTacToe"]="100000";
-	parameters["Reverse"]="10000000";
-	parameters["MergeSort"]="1000000";
-	parameters["BubbleSort"]="10000";
-	parameters["MatrixMult"]="1000";
+	parameters["newTicTacToe"]="1000 10000 100000";
+	parameters["Reverse"]="1000 10000 100000";
+	parameters["MergeSort"]="1000 10000 100000";
+	parameters["BubbleSort"]="1000 10000 100000";
+	parameters["MatrixMult"]="1000 2000 3000";
 	#parameters["GCD"]="100";
 	#parameters["CoinGame"]="100";
 	#parameters["NQueens"]="8";
@@ -112,7 +112,7 @@ BEGIN {
 END {	
 
 	print "Memory Leak (bytes)";
-	print "TestCase\tProgramType\tCodeGen\tParameter\tCompiler\tThread\tdefinite loss\tindirect loss\tpossible loss\treachable loss";
+	print "TestCase\tProgramType\tParameter\tCodeGen\tCompiler\tThread\tdefinite loss\tindirect loss\tpossible loss\treachable loss";
 	t_total=split(testcases, t_array, " ");
 	for(t=1;t<=t_total;t++){
 		testcase=t_array[t];
@@ -120,14 +120,14 @@ END {
 		programs_total=split(programs[testcase], programs_array, " ");
 		for(i=1;i<=programs_total;i++){
 			program = programs_array[i];
-			# Get CodeGen 
-			codegen_total=split(codegens, codegen_array, " ");
-			for(c=1;c<=codegen_total;c++){
-				codegen=codegen_array[c];
-				## Parameter
-				par_total=split(parameters[testcase], par_array, " ");
-				for(p=1;p<=par_total;p++){
-					parameter=par_array[p];
+			## Parameter
+			par_total=split(parameters[testcase], par_array, " ");
+			for(p=1;p<=par_total;p++){
+				parameter=par_array[p];
+				# Get CodeGen 
+				codegen_total=split(codegens, codegen_array, " ");
+				for(c=1;c<=codegen_total;c++){
+					codegen=codegen_array[c];
 					## Compiler
 					compilers_total=split(compilers, compiler_array, " ");
 					for(cr=1;cr<=compilers_total;cr++){
@@ -141,7 +141,7 @@ END {
 							# Check if there is the memory leak result.
 							if(count[key]>0){
 								# FIll in the values
-								str = testcase"\t"program"\t"codegen"\t"parameter"\t"compiler"\t"thread"\t"leaks[key",definiteloss"]+0"\t"leaks[key",indirectloss"]+0"\t"leaks[key",possibleloss"]+0"\t"leaks[key",reachableloss"]+0;
+								str = testcase"\t"program"\t"parameter"\t"codegen"\t"compiler"\t"thread"\t"leaks[key",definiteloss"]+0"\t"leaks[key",indirectloss"]+0"\t"leaks[key",possibleloss"]+0"\t"leaks[key",reachableloss"]+0;
 								print str;
 							}
 						}
