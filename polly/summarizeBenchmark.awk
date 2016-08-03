@@ -82,7 +82,7 @@ BEGIN {
 	parameters["Reverse"] = "1000000 10000000 100000000";
 	parameters["newTicTacToe"] = "10000 100000 1000000";
 	parameters["MergeSort"] = "100000 1000000 10000000";
-	parameters["BubbleSort"] = "1000 10000 100000";
+	parameters["BubbleSort"] = "10000 100000 1000000";
 	parameters["MatrixMult"] = "100 1000 2000";
 	#parameters["Fibonacci"] = "10 20 30 40 50";
 	

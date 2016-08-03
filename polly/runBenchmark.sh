@@ -1,5 +1,5 @@
 #!/bin/bash
-TIMEOUT="1800s"
+TIMEOUT="60s"
 #export PATH_TO_POLLY_LIB="$HOME/polly/llvm_build/lib"
 #export CPPFLAGS="-Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
 #alias opt="opt -load ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
@@ -121,7 +121,8 @@ compileAndRun(){
 		#echo "Finish $i iteration"
 		echo "Beginning the $executables with  $parameter" >>$result
 	    start=`date +%s%N`
-		timeout $TIMEOUT out/"$executable.out" $parameter >> $result
+	    out/"$executable.out" $parameter >> $result
+		#timeout $TIMEOUT out/"$executable.out" $parameter >> $result
 		end=`date +%s%N`
 		exectime=$((end-start))
 		printf '\nParameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter  $exectime >> $result
@@ -139,7 +140,7 @@ exec(){
 
 	## declare 4 kinds of code generation
 	declare -a codegens=("naive" "naive_dealloc" "copyreduced" "copyreduced_dealloc")
-	#declare -a codegens=("naive" "copyreduced_dealloc")
+	#declare -a codegens=("naive")
 	## Iterate each codegen
 	for codegen in "${codegens[@]}"
 	do
@@ -174,36 +175,38 @@ init(){
 ###   copy_reduced, copy_reduced + de-allocated)
 ###
 ###########################################
-### Benchmark Reverse testcase
-init Reverse
-exec Reverse original 1000000
-exec Reverse original 10000000
-exec Reverse original 100000000
-
-# # ### Benchmark MergeSort testcase
-init MergeSort
-exec MergeSort original 100000
-exec MergeSort original 1000000
-exec MergeSort original 10000000
-
-# # # ### Benchmark newTicTacToe testcase
+# # # newTicTacToe test case
 init newTicTacToe
+exec newTicTacToe original 1000
 exec newTicTacToe original 10000
 exec newTicTacToe original 100000
-exec newTicTacToe original 1000000
 
-# # # ### Benchmark BubbleSort testcase
+# Reverse test case
+init Reverse
+exec Reverse original 1000
+exec Reverse original 10000
+exec Reverse original 100000
+
+# # MergeSort test case
+init MergeSort
+exec MergeSort original 1000
+exec MergeSort original 10000
+exec MergeSort original 100000
+
+# # BubbleSort test case
 init BubbleSort
 exec BubbleSort original 1000
 exec BubbleSort original 10000
 exec BubbleSort original 100000
 
-# ### Benchmark MatrixMult
-### Original MatrixMult
-init MatrixMult
-exec MatrixMult original 100
-exec MatrixMult original 1000
-exec MatrixMult original 2000
+# MatrixMult test case
+# init MatrixMult
+# exec MatrixMult original 1000
+# exec MatrixMult original 2000
+# exec MatrixMult original 3000
+#exec MatrixMult original 8000
+# exec MatrixMult original 12000 # Naive code runs out of memory 
+
 
 
 #################################################
