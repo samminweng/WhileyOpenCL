@@ -67,7 +67,8 @@ public class CodeGenerationTestCase {
 				"nqueens",
 				"nqueens2",
 				"FunctionCall1", 
-				"FunctionCall2"
+				"FunctionCall2",
+				"FunctionCall3"
 				//"lambda"
 		});
 	}
