@@ -47,7 +47,7 @@ public class CodeGenerationTestCase {
 	@Parameterized.Parameters(name = "{index}:{0}")
 	public static Collection<String> testCases() {
 		return Arrays.asList(new String[] {
-				/*"rectangle",
+				"rectangle",
 				"swap",
 				"reverse",
 				"mergesort",
@@ -65,8 +65,9 @@ public class CodeGenerationTestCase {
 				"CoinGame3",
 				"CoinGame4",
 				"nqueens",
-				"nqueens2",*/
-				"FunctionCall1"
+				"nqueens2",
+				"FunctionCall1", 
+				"FunctionCall2"
 				//"lambda"
 		});
 	}
