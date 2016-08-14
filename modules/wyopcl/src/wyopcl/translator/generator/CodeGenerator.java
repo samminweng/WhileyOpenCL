@@ -40,7 +40,7 @@ import wyopcl.translator.deallocate.DeallocationAnalyzer;
  * @author Min-Hsien Weng
  *
  */
-public class CodeGenerator extends AbstractCodeGenerator {	
+public class CodeGenerator extends AbstractCodeGenerator {
 	// Optional copy and deallocation analyzers
 	private Optional<CopyEliminationAnalyzer> copyAnalyzer = Optional.empty();
 	private Optional<DeallocationAnalyzer> deallocatedAnalyzer = Optional.empty();
@@ -272,7 +272,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.Const code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
-		String lhs = preProcessor(statement, code, function);
+		String lhs = extractLHSVar(statement, code, function);
 
 		String indent = stores.getIndent(function);
 		if (code.constant.type() instanceof Type.Null) {
@@ -297,7 +297,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 
 		// Compute the deallocation flag
-		postProcessor(statement, code, function);
+		postDealloc(statement, code, function);
 
 		stores.addAllStatements(code, statement, function);
 	}
@@ -325,23 +325,23 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		if (!stores.isCompoundType(lhs_type)) {
 			Type rhs_type = stores.getRawType(code.operand(0), function);
-			// Special case for the assignment of integer pointers 
+			// Special case for the assignment of integer pointers
 			if (lhs_type instanceof Type.Union && rhs_type instanceof Type.Union) {
-				if(isCopyEliminated){
+				if (isCopyEliminated) {
 					// Update lhs with rhs
 					return indent + lhs + " = " + rhs + ";";
-				}else{
+				} else {
 					// Use '_NEW_INTEGER_POINTER' macro to copy an integer pointer (n, _5);
-					return indent + "_NEW_INTEGER_POINTER("+lhs + ", " + rhs + ");";
+					return indent + "_NEW_INTEGER_POINTER(" + lhs + ", " + rhs + ");";
 				}
 			}
-			
+
 			// Special case of casting an integer pointer to an integer
 			if (lhs_type instanceof Type.Int && rhs_type instanceof Type.Union) {
 				// Cast an integer pointer to integer, e.g. 'size = *i'
 				return indent + lhs + " = *" + rhs + ";";
 			}
-			
+
 			// Update lhs with rhs
 			return indent + lhs + " = " + rhs + ";";
 
@@ -415,7 +415,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.Assign code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
-		String lhs = preProcessor(statement, code, function);
+		String lhs = extractLHSVar(statement, code, function);
 		// Get the actual type for lhs variable.
 		String indent = stores.getIndent(function);
 		Type lhs_type = stores.getRawType(code.target(0), function);
@@ -427,12 +427,18 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		} else {
 			boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
 			statement.add(generateAssignmentCode(code, isCopyEliminated, function, stores));
-			
-			if(isCopyEliminated && stores.isCompoundType(lhs_type)){
+
+			if (isCopyEliminated && stores.isCompoundType(lhs_type)) {
 				// Check if lhs is a substructure.
-				stores.addSubStructure(code.target(0), code.operand(0), function);				
+				stores.addSubStructure(code.target(0), code.operand(0), function);
 			}
-			postProcessor(isCopyEliminated, code.operand(0), statement, code, function);
+
+			// Update the set with rhs variable
+			this.copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, code.operand(0), code, function));
+
+			// Add the post-deallocation code
+			this.deallocatedAnalyzer.ifPresent(
+					a -> a.postDealloc(isCopyEliminated, code.operand(0), statement, code, function, stores));
 		}
 
 		// Add the statement to the list of statements.
@@ -612,7 +618,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					statement.add("false");
 					break;
 				case "negated_dealloc":
-					statement.add("!"+parameter + "_dealloc");
+					statement.add("!" + parameter + "_dealloc");
 					break;
 				case "substruct_dealloc":
 					statement.add("false");
@@ -632,40 +638,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Get the LHS register for an update byte-code
-	 * 
-	 * @param code
-	 * @param function
-	 * @return
-	 */
-	private String extractLHSVar(Codes.Update code, FunctionOrMethod function) {
-		String lhs = null;
-		// Get array variable, e.g. a[i]
-		String struct_var = stores.getVar(code.target(0), function);
-		// Get lhs type
-		Type struct_type = stores.getRawType(code.target(0), function);
-		if (struct_type instanceof Type.Array) {
-			lhs = struct_var;
-			// Iterates operands to increase the depths.
-			for (int i = 0; i < code.operands().length - 1; i++) {
-				lhs += "[" + stores.getVar(code.operand(i), function) + "]";
-			}
-		} else if (struct_type instanceof Type.Record || struct_type instanceof Type.Union) {
-			lhs = struct_var;
-			String member = code.fields.get(0);
-			lhs += "->" + member;
-			// check if there are two or more operands. If so, then add 'index' operand.
-			if (code.operands().length > 1) {
-				lhs += "[" + stores.getVar(code.operand(0), function) + "]";
-			}
-		} else {
-			throw new RuntimeException("Not implemented" + code);
-		}
-
-		return lhs;
-	}
-
-	/**
 	 * Added de-allocation code to release the memory of lhs register
 	 * 
 	 * @param statement
@@ -673,16 +645,36 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param function
 	 * @return lhs variable
 	 */
-	private String preProcessor(List<String> statement, Code code, FunctionOrMethod function) {
+	private String extractLHSVar(List<String> statement, Code code, FunctionOrMethod function) {
 
 		String indent = stores.getIndent(function);
 		if (code instanceof Codes.Update) {
 			// Update bytecode 'update %0.queens[%1] = %32'
 			Codes.Update update = (Codes.Update) code;
-			final String lhs = extractLHSVar(update, function);
+			// Get array variable, e.g. a[i]
+			String lhs = stores.getVar(update.target(0), function);
+			// Get lhs type
+			Type struct_type = stores.getRawType(update.target(0), function);
+			if (struct_type instanceof Type.Array) {
+				// Iterates operands to increase the depths.
+				for (int i = 0; i < update.operands().length - 1; i++) {
+					lhs += "[" + stores.getVar(update.operand(i), function) + "]";
+				}
+			} else if (struct_type instanceof Type.Record || struct_type instanceof Type.Union) {
+				String member = update.fields.get(0);
+				lhs += "->" + member;
+				// check if there are two or more operands. If so, then add 'index' operand.
+				if (update.operands().length > 1) {
+					lhs += "[" + stores.getVar(update.operand(0), function) + "]";
+				}
+			} else {
+				// throw new RuntimeException("Not implemented" + code);
+			}
+
+			final String lhs_var = lhs;
 			// Deallocate lhs register
 			this.deallocatedAnalyzer.ifPresent(a -> {
-				statement.add(indent + a.preDealloc(lhs, update, function, stores));
+				statement.add(indent + a.preDealloc(lhs_var, update, function, stores));
 			});
 
 			return lhs;
@@ -746,41 +738,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Add post-deallocation code. For some code types, there is no rhs variable or lhs and rhs are not alias, e.g.
-	 * 'ArrayGenerator' And thus there is no needs of updating read-write or return sets.
+	 * Add post-deallocation code.
 	 * 
-	 * @param isCopyEliminated
-	 * @param register
 	 * @param statement
 	 * @param code
 	 * @param function
 	 */
-	private void postProcessor(List<String> statement, Code code, FunctionOrMethod function) {
-		
+	private void postDealloc(List<String> statement, Code code, FunctionOrMethod function) {
+
 		// Add the post-deallocation code.
 		this.deallocatedAnalyzer.ifPresent(a -> {
 			a.postDealloc(statement, code, function, stores);
-		});
-
-	}
-
-	/**
-	 * Update the set with register and generate deallocation code.
-	 * 
-	 * @param isCopyEliminated
-	 * @param register
-	 * @param statement
-	 * @param code
-	 * @param function
-	 */
-	private void postProcessor(boolean isCopyEliminated, int register, List<String> statement, Code code,
-			FunctionOrMethod function) {
-		
-		// Update the set with register
-		copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, register, code, function));
-
-		this.deallocatedAnalyzer.ifPresent(a -> {
-			a.postDealloc(isCopyEliminated, register, statement, code, function, stores);
 		});
 
 	}
@@ -840,7 +808,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				break;
 			// Slice an array into a new sub-array at given starting and ending index.
 			case "slice":
-				preProcessor(statement, code, function);
+				extractLHSVar(statement, code, function);
 				// Call the 'slice' function.
 				String array = stores.getVar(code.operand(0), function);
 				String start = stores.getVar(code.operand(1), function);
@@ -873,16 +841,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		} else {
 			// De-allocate lhs register
-			preProcessor(statement, code, function);
+			extractLHSVar(statement, code, function);
 			HashMap<Integer, Boolean> argumentCopyEliminated = new HashMap<Integer, Boolean>();
 			// call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
 			statement.add(translateFunctionCall(argumentCopyEliminated, code, function));
-
-			// If the copy is not made and the parameter is transferred to callee,
-			// then remove deallocation flags of the parameters.
-			this.deallocatedAnalyzer.ifPresent(a -> {
-				statement.addAll(a.postDealloc(code, function, stores, copyAnalyzer));
-			});
 
 			// Iterate copy elimination set and update read-write/return set
 			if (copyAnalyzer.isPresent()) {
@@ -893,13 +855,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				});
 			}
 
+			// Generate the post-deallocation code
 			this.deallocatedAnalyzer.ifPresent(a -> {
+				statement.addAll(a.postDealloc(code, function, stores, copyAnalyzer));
 				statement.addAll(a.postDealloc(code, function, stores));
 			});
 
 		}
-
-		// postProcessor(argumentCopyEliminated, statement, code, function);
 
 		// add the statement
 		stores.addAllStatements(code, statement, function);
@@ -1103,12 +1065,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.Update code, FunctionOrMethod function) {
 		String indent = stores.getIndent(function);
 		List<String> statement = new ArrayList<String>();
-		String lhs = preProcessor(statement, code, function);
+		String lhs = extractLHSVar(statement, code, function);
 
 		// Generate update statement, e.g. a[i] = b
 		statement.add(indent + lhs + " = " + stores.getVar(code.result(), function) + ";");
 		boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
-		postProcessor(isCopyEliminated, code.operand(0), statement, code, function);
+
+		// Update the set with rhs variable
+		copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, code.operand(0), code, function));
+
+		this.deallocatedAnalyzer
+				.ifPresent(a -> a.postDealloc(isCopyEliminated, code.operand(0), statement, code, function, stores));
 
 		stores.addAllStatements(code, statement, function);
 	}
@@ -1207,16 +1174,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		// Assign rhs to rhs without any copy, e.g. a = b[i];
 		statement.add(indent + lhs + "=" + rhs + "[" + index + "];");
-		
+
 		// Check if lhs is a structure. If so, then lhs is a substructure
 		Type lhs_type = stores.getRawType(code.target(0), function);
-		if(stores.isCompoundType(lhs_type)){
+		if (stores.isCompoundType(lhs_type)) {
 			// Add lhs to substructure set
 			stores.addSubStructure(code.target(0), function);
 		}
-		
-		
-		postProcessor(statement, code, function);
+
+		postDealloc(statement, code, function);
 
 		stores.addAllStatements(code, statement, function);
 	}
@@ -1258,7 +1224,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.NewArray code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
 		// Free lhs variable
-		preProcessor(statement, code, function);
+		extractLHSVar(statement, code, function);
 		String indent = stores.getIndent(function);
 		// Get array names
 		String lhs = stores.getVar(code.target(0), function);
@@ -1273,7 +1239,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement.add(s);
 		}
 
-		postProcessor(statement, code, function);
+		postDealloc(statement, code, function);
 
 		stores.addAllStatements(code, statement, function);
 	}
@@ -1308,14 +1274,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.FieldLoad code, FunctionOrMethod function) {
 		String field = code.field;
 		List<String> statement = new ArrayList<String>();
-		
-		
+
 		if (field.equals("out") || field.equals("print") || field.equals("println") || field.equals("print_s")
 				|| field.equals("println_s")) {
 			// Skip translation.
 		} else {
 			// Free lhs variable
-			preProcessor(statement, code, function);
+			extractLHSVar(statement, code, function);
 			boolean isCopyEliminated;// The copy is NOT needed by default.
 			if (field.equals("args")) {
 				// Convert the arguments into an array of integer array (long long**).
@@ -1330,12 +1295,18 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, stores.getIndent(function),
 						stores.getVar(code.target(0), function), rhs, isCopyEliminated, stores));
 			}
-			postProcessor(isCopyEliminated, code.operand(0), statement, code, function);
+
+			// Update the set with rhs variable
+			this.copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, code.operand(0), code, function));
+
+			// Add the post-deallocation code
+			this.deallocatedAnalyzer.ifPresent(
+					a -> a.postDealloc(isCopyEliminated, code.operand(0), statement, code, function, stores));
 		}
-		
+
 		// Load the field to the target register.
 		stores.loadField(code.target(0), field, function);
-		
+
 		stores.addAllStatements(code, statement, function);
 	}
 
@@ -1488,7 +1459,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(NewRecord code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
 		// Add deallocation code to lhs structure
-		preProcessor(statement, code, function);
+		extractLHSVar(statement, code, function);
 
 		String indent = stores.getIndent(function);
 		String lhs = stores.getVar(code.target(0), function);
@@ -1666,7 +1637,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	@Override
 	protected void translate(ArrayGenerator code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
-		String lhs = preProcessor(statement, code, function);
+		String lhs = extractLHSVar(statement, code, function);
 
 		String indent = stores.getIndent(function);
 		Type.Array lhs_type = (Type.Array) stores.getRawType(code.target(0), function);
@@ -1686,7 +1657,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// isCopyEliminated = false;
 		}
 
-		postProcessor(statement, code, function);
+		postDealloc(statement, code, function);
 
 		stores.addAllStatements(code, statement, function);
 	}
