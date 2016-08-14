@@ -1,21 +1,13 @@
 package wyopcl.testing.translator;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import org.junit.After;
-import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -52,18 +44,10 @@ public class CodeGenerationTestCase {
 	}
 	
 	
-	public static Collection<String> ignores(){
-		return Arrays.asList(new String[]{
-				"gcd",
-				"CoinGame"
-		});
-	}
-	
-	
 	@Parameterized.Parameters(name = "{index}:{0}")
 	public static Collection<String> testCases() {
 		return Arrays.asList(new String[] {
-				"rectangle",
+				/*"rectangle",
 				"swap",
 				"reverse",
 				"mergesort",
@@ -81,7 +65,8 @@ public class CodeGenerationTestCase {
 				"CoinGame3",
 				"CoinGame4",
 				"nqueens",
-				"nqueens2"
+				"nqueens2",*/
+				"FunctionCall1"
 				//"lambda"
 		});
 	}
