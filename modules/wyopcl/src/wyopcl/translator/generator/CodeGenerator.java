@@ -836,7 +836,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 
 			this.deallocatedAnalyzer.ifPresent(a -> {
-				statement.addAll(a.postDealloc(code, function, stores));
+				statement.addAll(a.postDealloc(code, function, stores, copyAnalyzer));
 			});
 
 		} else {
@@ -858,7 +858,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Generate the post-deallocation code
 			this.deallocatedAnalyzer.ifPresent(a -> {
 				statement.addAll(a.postDealloc(code, function, stores, copyAnalyzer));
-				statement.addAll(a.postDealloc(code, function, stores));
+				//statement.addAll(a.postDealloc(code, function, stores));
 			});
 
 		}
@@ -1114,7 +1114,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if (code.operands().length > 0) {
 				// Add the code to deallocate all variables.
 				this.deallocatedAnalyzer.ifPresent(a -> {
-					statements.addAll(a.addAllDeallocCode(code, function, stores));
+					statements.addAll(a.preDealloc(code, function, stores));
 				});
 				statements.add(indent + "return " + stores.getVar(code.operand(0), function) + ";");
 			}
@@ -1124,7 +1124,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if (function.name().equals("main")) {
 				// Add the code to deallocate all variables.
 				this.deallocatedAnalyzer.ifPresent(a -> {
-					statements.addAll(a.addAllDeallocCode(code, function, stores));
+					statements.addAll(a.preDealloc(code, function, stores));
 				});
 				// Add 'exit(0);'
 				statements.add(indent + "exit(0);");
@@ -1132,7 +1132,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				if (code.operands().length == 0) {
 					// Add the code to deallocate all variables.
 					this.deallocatedAnalyzer.ifPresent(a -> {
-						statements.addAll(a.addAllDeallocCode(code, function, stores));
+						statements.addAll(a.preDealloc(code, function, stores));
 					});
 					statements.add(indent + "return;");
 				} else {

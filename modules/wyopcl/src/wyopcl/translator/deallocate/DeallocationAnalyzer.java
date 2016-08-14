@@ -66,9 +66,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Get a list of deallocation flag and generate the code to free all of them Note that the deallocation of function
-	 * input parameters are skipped by default. Thus, the deallocation releases all the local variables, excluding input
-	 * parameters.
+	 * Get a list of pre-deallocation code to free all the local variables, excluding return variables.
 	 *
 	 * @param code
 	 * @param function
@@ -76,22 +74,22 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @return
 	 *
 	 */
-	public List<String> addAllDeallocCode(Codes.Return code, FunctionOrMethod function, CodeStores stores) {
+	public List<String> preDealloc(Codes.Return code, FunctionOrMethod function, CodeStores stores) {
 		List<String> statements = new ArrayList<String>();
 
 		// Get all registers
 		List<Integer> registers = stores.getAllVars(function);
 
-		// Skip the return values
+		// Get the return variable
 		int ret = -1;
 		if (code.operands().length > 0) {
 			ret = code.operand(0);
 		}
 
 		String indent = stores.getIndent(function);
-		// Skip the deallocation of function parameters.
+		// Iterate all local variables
 		for (int r : registers) {
-			// Skip the deallocation for return value.
+			// Skip the deallocation of return variable.
 			if (r != ret) {
 				Type var_type = stores.getRawType(r, function);
 				if (var_type != null && !(var_type instanceof Type.Null)) {
@@ -105,46 +103,7 @@ public class DeallocationAnalyzer extends Analyzer {
 
 	}
 
-	/**
-	 * Add post-deallocation code to compute deallocation flags after a function call, including
-	 * 
-	 * @param code
-	 * @param function
-	 * @param stores
-	 * @return
-	 */
-	public List<String> postDealloc(Codes.Invoke code, FunctionOrMethod function, CodeStores stores) {
-		String indent = stores.getIndent(function);
-		List<String> statements = new ArrayList<String>();
-
-		if (code.name.module().toString().contains("whiley/lang")) {
-			int lhs = code.target(0);
-			switch (code.name.name()) {
-			case "parse":
-				int rhs = code.operand(0);
-				// Add deallocation flag to lhs.
-				statements.add(indent + addDealloc(lhs, function, stores));
-				// Remove rhs deallocation flag
-				statements.add(indent + removeDealloc(rhs, function, stores));
-				break;
-			case "slice":
-				// Add deallocation flag to lhs.
-				statements.add(indent + addDealloc(lhs, function, stores));
-				break;
-			default:
-				// no change to statement
-				break;
-			}
-		} else {
-			// Add deallocation flag to lhs variable
-			// if (code.targets().length > 0) {
-			// statements.add(indent + addDealloc(code.target(0), function, stores));
-			// }
-		}
-		return statements;
-
-	}
-
+	
 	/**
 	 * Compute deallocation flag of array generator
 	 * 
@@ -372,43 +331,64 @@ public class DeallocationAnalyzer extends Analyzer {
 		List<String> statements = new ArrayList<String>();
 
 		String indent = stores.getIndent(function);
-		// Add or transfer out the parameters that do not have the copy
-		for (int register : code.operands()) {
-			String callee_dealloc = computeDealloc(register, code, function, stores, copyAnalyzer);
-			// Check callee's deallocation flag
-			if(callee_dealloc.equals("")){
-				// Do nothing
-			}else{
-				if (callee_dealloc.equals("caller_dealloc")) {
-					// The parameter is de-allocated by caller
-					// Set caller flag to be 'true'
-					statements.add(indent + addDealloc(register, function, stores));
-				} else if (callee_dealloc.equals("both_dealloc")) {
-					// Set caller flag to be 'true'
-					statements.add(indent + addDealloc(register, function, stores));
-				} else if (callee_dealloc.equals("none_dealloc")) {
-					// Set caller flag to be 'false'
-					statements.add(indent + removeDealloc(register, function, stores));
-				} else if(callee_dealloc.equals("negated_dealloc")) { 
-					// Do nothing to caller's flag
-				} else if (callee_dealloc.equals("substruct_dealloc")){
-					// Do nothing to caller's flag
-				} else{
-					throw new RuntimeException(callee_dealloc + " NOT implemented");
-				}
+		
+		if (code.name.module().toString().contains("whiley/lang")) {
+			int lhs = code.target(0);
+			switch (code.name.name()) {
+			case "parse":
+				int rhs = code.operand(0);
+				// Add deallocation flag to lhs.
+				statements.add(indent + addDealloc(lhs, function, stores));
+				// Remove rhs deallocation flag
+				statements.add(indent + removeDealloc(rhs, function, stores));
+				break;
+			case "slice":
+				// Add deallocation flag to lhs.
+				statements.add(indent + addDealloc(lhs, function, stores));
+				break;
+			default:
+				// no change to statement
+				break;
 			}
-			
-			
-			
-		}
+		}else{
+			// Add or transfer out the parameters that do not have the copy
+			for (int register : code.operands()) {
+				String callee_dealloc = computeDealloc(register, code, function, stores, copyAnalyzer);
+				// Check callee's deallocation flag
+				if(callee_dealloc.equals("")){
+					// Do nothing
+				}else{
+					if (callee_dealloc.equals("caller_dealloc")) {
+						// The parameter is de-allocated by caller
+						// Set caller flag to be 'true'
+						statements.add(indent + addDealloc(register, function, stores));
+					} else if (callee_dealloc.equals("both_dealloc")) {
+						// Set caller flag to be 'true'
+						statements.add(indent + addDealloc(register, function, stores));
+					} else if (callee_dealloc.equals("none_dealloc")) {
+						// Set caller flag to be 'false'
+						statements.add(indent + removeDealloc(register, function, stores));
+					} else if(callee_dealloc.equals("negated_dealloc")) { 
+						// Do nothing to caller's flag
+					} else if (callee_dealloc.equals("substruct_dealloc")){
+						// Do nothing to caller's flag
+					} else{
+						throw new RuntimeException(callee_dealloc + " NOT implemented");
+					}
+				}
+				
+				
+				
+			}
 
-		// If the parameter is NOT transferred, add LHS deallocation flag.
-		if (code.targets().length > 0)
-		{
-			// Add the deallocation flag of lhs variable
-			statements.add(indent + addDealloc(code.target(0), function, stores));
+			// If the parameter is NOT transferred, add LHS deallocation flag.
+			if (code.targets().length > 0)
+			{
+				// Add the deallocation flag of lhs variable
+				statements.add(indent + addDealloc(code.target(0), function, stores));
+			}
 		}
-
+		
 		return statements;
 	}
 
@@ -681,7 +661,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Generate the code to release the memory for a given variable, e.g.
+	 * Generate the pre-deallocation code to release the lhs variable e.g.
 	 * 
 	 * <pre>
 	 * <code>
