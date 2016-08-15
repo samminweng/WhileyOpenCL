@@ -37,10 +37,11 @@ method main(System.Console sys):
 	int width = 5
 	int height = 5
 	int size = width * height
-	int[] pixels = [0;size]
-	// Update one pixel
-	pixels[5] = 256
-	int[] newPixels = [0;size]
+	// Set all pixels to be white
+	int[] pixels = [255;size] 
+	// Update one pixel to be black
+	pixels[5] = 0
+	int[] newPixels = [255;size]
 	// vertical sobel filter
 	int[] v_sobel = [-1,-2,-1,0,0,0,1,2,1]
 	int[] h_sobel = [1,2,1,0,0,0,-1,-2,-1]
@@ -55,10 +56,11 @@ method main(System.Console sys):
 			int t_g = v_g + h_g
 			// Edge threshold (250)
 			if t_g > 250:
-				// Detect an edge
-				newPixels[pos] = 1
-			else:
+				// Detect and color an edge as black 
 				newPixels[pos] = 0
+			else:
+				// Color other pixel as white
+				newPixels[pos] = 255
 			sys.out.print_s("At pos = ")
 			sys.out.print(pos)
 			sys.out.print_s(", newPixels[pos] = ")

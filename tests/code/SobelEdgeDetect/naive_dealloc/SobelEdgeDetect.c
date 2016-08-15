@@ -270,8 +270,8 @@ int main(int argc, char** args){
 	_16=width*height;
 	//assign %3 = %16  : int
 	size = _16;
-	//const %17 = 0 : int
-	_17 = 0;
+	//const %17 = 255 : int
+	_17 = 255;
 	//arraygen %18 = [17; 3] : int[]
 	_DEALLOC(_18);
 	_NEW_1DARRAY(_18, size, _17);
@@ -280,14 +280,14 @@ int main(int argc, char** args){
 	_DEALLOC(pixels);
 	_COPY_1DARRAY(pixels, _18);
 	_ADD_DEALLOC(pixels);
-	//const %19 = 256 : int
-	_19 = 256;
+	//const %19 = 0 : int
+	_19 = 0;
 	//const %20 = 5 : int
 	_20 = 5;
 	//update %4[%20] = %19 : int[] -> int[]
 	pixels[_20] = _19;
-	//const %21 = 0 : int
-	_21 = 0;
+	//const %21 = 255 : int
+	_21 = 255;
 	//arraygen %22 = [21; 3] : int[]
 	_DEALLOC(_22);
 	_NEW_1DARRAY(_22, size, _21);
@@ -404,16 +404,16 @@ int main(int argc, char** args){
 			_56 = 250;
 			//ifle %13, %56 goto blklab11 : int
 			if(t_g<=_56){goto blklab11;}
-			//const %57 = 1 : int
-			_57 = 1;
+			//const %57 = 0 : int
+			_57 = 0;
 			//update %5[%10] = %57 : int[] -> int[]
 			newPixels[pos] = _57;
 			//goto blklab12
 			goto blklab12;
 //.blklab11
 blklab11:;
-			//const %58 = 0 : int
-			_58 = 0;
+			//const %58 = 255 : int
+			_58 = 255;
 			//update %5[%10] = %58 : int[] -> int[]
 			newPixels[pos] = _58;
 //.blklab12
