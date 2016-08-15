@@ -1,7 +1,7 @@
 import whiley.lang.*
-
+import whiley.lang.Math
 // This example code illustrates the image convolution
-// reference: http://www.songho.ca/dsp/convolution/convolution2d_example.html
+// reference: https://en.wikipedia.org/wiki/Sobel_operator
 // Wrap the position into 0..size
 function wrap(int pos, int size) -> int:
 	if pos >= 0:
@@ -30,7 +30,7 @@ function convolution(int[] pixels, int width, int height, int xCenter, int yCent
 			sum = sum + pixel * filterVal
 			filterX = filterX + 1
 		filterY = filterY + 1
-	return sum
+	return Math.abs(sum)
 
 // Main function
 method main(System.Console sys):
@@ -42,14 +42,23 @@ method main(System.Console sys):
 	pixels[5] = 256
 	int[] newPixels = [0;size]
 	// vertical sobel filter
-	int[] sobel = [-1,-2,-1,0,0,0,1,2,1]
+	int[] v_sobel = [-1,-2,-1,0,0,0,1,2,1]
+	int[] h_sobel = [1,2,1,0,0,0,-1,-2,-1]
 	// Iterate each pixel
 	int x = 0
 	while x<width:
 		int y = 0
 		while y<height:
 			int pos = x*width + y
-			newPixels[pos] = convolution(pixels, width, height, x, y, sobel)
+			int v_g = convolution(pixels, width, height, x, y, v_sobel)
+			int h_g = convolution(pixels, width, height, x, y, h_sobel)
+			int t_g = v_g + h_g
+			// Edge threshold (250)
+			if t_g > 250:
+				// Detect an edge
+				newPixels[pos] = 1
+			else:
+				newPixels[pos] = 0
 			sys.out.print_s("At pos = ")
 			sys.out.print(pos)
 			sys.out.print_s(", newPixels[pos] = ")
