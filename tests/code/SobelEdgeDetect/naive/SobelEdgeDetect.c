@@ -5,40 +5,28 @@ long long wrap(long long pos, long long size){
 	long long _4 = 0;
 	long long _5 = 0;
 	long long _6 = 0;
-	long long _7 = 0;
-	long long _8 = 0;
-	long long _9 = 0;
-	long long _10 = 0;
 	//const %3 = 0 : int
 	_3 = 0;
-	//iflt %0, %3 goto blklab0 : int
-	if(pos<_3){goto blklab0;}
-	//iflt %0, %1 goto blklab2 : int
-	if(pos<size){goto blklab2;}
-	//const %4 = 1 : int
-	_4 = 1;
-	//sub %5 = %1, %4 : int
-	_5=size-_4;
-	//sub %6 = %0, %1 : int
-	_6=pos-size;
-	//sub %7 = %5, %6 : int
-	_7=_5-_6;
-	//assign %0 = %7  : int
-	pos = _7;
-//.blklab2
-blklab2:;
+	//ifge %0, %3 goto blklab0 : int
+	if(pos>=_3){goto blklab0;}
+	//const %4 = 0 : int
+	_4 = 0;
+	//sub %5 = %4, %0 : int
+	_5=_4-pos;
+	//assign %0 = %5  : int
+	pos = _5;
 	//goto blklab1
 	goto blklab1;
 //.blklab0
 blklab0:;
-	//const %8 = 1 : int
-	_8 = 1;
-	//neg %9 = %8 : int
-	_9= -_8;
-	//sub %10 = %9, %0 : int
-	_10=_9-pos;
-	//assign %0 = %10  : int
-	pos = _10;
+	//iflt %0, %1 goto blklab2 : int
+	if(pos<size){goto blklab2;}
+	//sub %6 = %0, %1 : int
+	_6=pos-size;
+	//assign %0 = %6  : int
+	pos = _6;
+//.blklab2
+blklab2:;
 //.blklab1
 blklab1:;
 	//return %0
@@ -80,7 +68,6 @@ long long convolution(_DECL_1DARRAY_PARAM(pixels), long long width, long long he
 	long long _36 = 0;
 	long long _37 = 0;
 	long long _38 = 0;
-	long long _39 = 0;
 	//const %16 = 0 : int
 	_16 = 0;
 	//assign %7 = %16  : int
@@ -169,10 +156,8 @@ blklab4:;
 	}
 //.blklab3
 blklab3:;
-	//invoke (%39) = (%7) whiley/lang/Math:abs : function(int)->(int)
-	_39 = llabs(sum);
-	//return %39
-	return _39;
+	//return %7
+	return sum;
 	//return
 }
 
@@ -201,10 +186,10 @@ int main(int argc, char** args){
 	long long _22 = 0;
 	long long _23 = 0;
 	long long _24 = 0;
-	long long _25 = 0;
+	_DECL_1DARRAY(_25);
 	long long _26 = 0;
 	long long _27 = 0;
-	_DECL_1DARRAY(_28);
+	long long _28 = 0;
 	long long _29 = 0;
 	long long _30 = 0;
 	long long _31 = 0;
@@ -214,10 +199,10 @@ int main(int argc, char** args){
 	long long _35 = 0;
 	long long _36 = 0;
 	long long _37 = 0;
-	long long _38 = 0;
+	_DECL_1DARRAY(_38);
 	long long _39 = 0;
 	long long _40 = 0;
-	_DECL_1DARRAY(_41);
+	long long _41 = 0;
 	long long _42 = 0;
 	long long _43 = 0;
 	long long _44 = 0;
@@ -227,29 +212,29 @@ int main(int argc, char** args){
 	long long _48 = 0;
 	long long _49 = 0;
 	long long _50 = 0;
-	long long _51 = 0;
+	_DECL_1DARRAY(_51);
 	long long _52 = 0;
 	long long _53 = 0;
-	_DECL_1DARRAY(_54);
-	long long _55 = 0;
-	long long _56 = 0;
-	long long _57 = 0;
-	long long _58 = 0;
-	long long _59 = 0;
-	long long _60 = 0;
-	long long _61 = 0;
-	long long _62 = 0;
-	long long _63 = 0;
+	void* _54;
+	_DECL_1DARRAY(_56);
+	void* _57;
+	void* _59;
+	_DECL_1DARRAY(_61);
+	void* _62;
 	long long _64 = 0;
-	void* _65;
-	_DECL_1DARRAY(_67);
-	void* _68;
-	void* _70;
-	_DECL_1DARRAY(_72);
-	void* _73;
-	void* _75;
-	_DECL_1DARRAY(_77);
-	void* _78;
+	long long _65 = 0;
+	long long _66 = 0;
+	long long _67 = 0;
+	long long _68 = 0;
+	long long _69 = 0;
+	long long _70 = 0;
+	long long _71 = 0;
+	long long _72 = 0;
+	long long _73 = 0;
+	void* _74;
+	_DECL_1DARRAY(_76);
+	void* _77;
+	long long _79 = 0;
 	long long _80 = 0;
 	long long _81 = 0;
 	long long _82 = 0;
@@ -270,6 +255,44 @@ int main(int argc, char** args){
 	long long _97 = 0;
 	long long _98 = 0;
 	long long _99 = 0;
+	long long _100 = 0;
+	long long _101 = 0;
+	long long _102 = 0;
+	long long _103 = 0;
+	long long _104 = 0;
+	long long _105 = 0;
+	long long _106 = 0;
+	long long _107 = 0;
+	long long _108 = 0;
+	long long _109 = 0;
+	long long _110 = 0;
+	long long _111 = 0;
+	long long _112 = 0;
+	long long _113 = 0;
+	long long _114 = 0;
+	long long _115 = 0;
+	long long _116 = 0;
+	long long _117 = 0;
+	long long _118 = 0;
+	long long _119 = 0;
+	long long _120 = 0;
+	long long _121 = 0;
+	long long _122 = 0;
+	long long _123 = 0;
+	long long _124 = 0;
+	long long _125 = 0;
+	long long _126 = 0;
+	long long _127 = 0;
+	long long _128 = 0;
+	long long _129 = 0;
+	long long _130 = 0;
+	long long _131 = 0;
+	long long _132 = 0;
+	long long _133 = 0;
+	long long _134 = 0;
+	long long _135 = 0;
+	long long _136 = 0;
+	long long _137 = 0;
 	//const %14 = 8 : int
 	_14 = 8;
 	//assign %1 = %14  : int
@@ -290,196 +313,188 @@ int main(int argc, char** args){
 	_COPY_1DARRAY(pixels, _18);
 	//const %19 = 0 : int
 	_19 = 0;
-	//const %20 = 27 : int
-	_20 = 27;
-	//update %4[%20] = %19 : int[] -> int[]
-	pixels[_20] = _19;
-	//const %21 = 0 : int
-	_21 = 0;
-	//const %22 = 28 : int
-	_22 = 28;
-	//update %4[%22] = %21 : int[] -> int[]
-	pixels[_22] = _21;
-	//const %23 = 0 : int
-	_23 = 0;
-	//const %24 = 35 : int
-	_24 = 35;
-	//update %4[%24] = %23 : int[] -> int[]
-	pixels[_24] = _23;
-	//const %25 = 0 : int
-	_25 = 0;
-	//const %26 = 36 : int
-	_26 = 36;
-	//update %4[%26] = %25 : int[] -> int[]
-	pixels[_26] = _25;
-	//const %27 = 255 : int
-	_27 = 255;
-	//arraygen %28 = [27; 3] : int[]
-	_NEW_1DARRAY(_28, size, _27);
-	//assign %5 = %28  : int[]
-	_COPY_1DARRAY(newPixels, _28);
+	//const %20 = 4 : int
+	_20 = 4;
+	//mul %21 = %20, %1 : int
+	_21=_20*width;
+	//const %22 = 4 : int
+	_22 = 4;
+	//add %23 = %21, %22 : int
+	_23=_21+_22;
+	//update %4[%23] = %19 : int[] -> int[]
+	pixels[_23] = _19;
+	//const %24 = 255 : int
+	_24 = 255;
+	//arraygen %25 = [24; 3] : int[]
+	_NEW_1DARRAY(_25, size, _24);
+	//assign %5 = %25  : int[]
+	_COPY_1DARRAY(newPixels, _25);
+	//const %26 = 1 : int
+	_26 = 1;
+	//neg %27 = %26 : int
+	_27= -_26;
+	//const %28 = 0 : int
+	_28 = 0;
 	//const %29 = 1 : int
 	_29 = 1;
-	//neg %30 = %29 : int
-	_30= -_29;
-	//const %31 = 2 : int
-	_31 = 2;
-	//neg %32 = %31 : int
-	_32= -_31;
-	//const %33 = 1 : int
-	_33 = 1;
-	//neg %34 = %33 : int
-	_34= -_33;
-	//const %35 = 0 : int
-	_35 = 0;
+	//const %30 = 2 : int
+	_30 = 2;
+	//neg %31 = %30 : int
+	_31= -_30;
+	//const %32 = 0 : int
+	_32 = 0;
+	//const %33 = 2 : int
+	_33 = 2;
+	//const %34 = 1 : int
+	_34 = 1;
+	//neg %35 = %34 : int
+	_35= -_34;
 	//const %36 = 0 : int
 	_36 = 0;
-	//const %37 = 0 : int
-	_37 = 0;
-	//const %38 = 1 : int
-	_38 = 1;
-	//const %39 = 2 : int
-	_39 = 2;
-	//const %40 = 1 : int
-	_40 = 1;
-	//newlist %41 = (%30, %32, %34, %35, %36, %37, %38, %39, %40) : int[]
-	_NEW_1DARRAY(_41, 9, 0);
-	_41[0] = _30; _41[1] = _32; _41[2] = _34; _41[3] = _35; _41[4] = _36; _41[5] = _37; _41[6] = _38; _41[7] = _39; _41[8] = _40; 
-	//assign %6 = %41  : int[]
-	_COPY_1DARRAY(v_sobel, _41);
-	//const %42 = 1 : int
-	_42 = 1;
-	//const %43 = 2 : int
-	_43 = 2;
-	//const %44 = 1 : int
-	_44 = 1;
-	//const %45 = 0 : int
-	_45 = 0;
-	//const %46 = 0 : int
-	_46 = 0;
-	//const %47 = 0 : int
-	_47 = 0;
-	//const %48 = 1 : int
-	_48 = 1;
-	//neg %49 = %48 : int
-	_49= -_48;
-	//const %50 = 2 : int
-	_50 = 2;
-	//neg %51 = %50 : int
-	_51= -_50;
-	//const %52 = 1 : int
-	_52 = 1;
-	//neg %53 = %52 : int
-	_53= -_52;
-	//newlist %54 = (%42, %43, %44, %45, %46, %47, %49, %51, %53) : int[]
-	_NEW_1DARRAY(_54, 9, 0);
-	_54[0] = _42; _54[1] = _43; _54[2] = _44; _54[3] = _45; _54[4] = _46; _54[5] = _47; _54[6] = _49; _54[7] = _51; _54[8] = _53; 
-	//assign %7 = %54  : int[]
-	_COPY_1DARRAY(h_sobel, _54);
-	//const %55 = 0 : int
-	_55 = 0;
-	//assign %8 = %55  : int
-	x = _55;
-	//loop (%5, %8, %9, %10, %11, %12, %13, %56, %57, %58, %59, %60, %61, %62, %63, %64, %65, %66, %67, %68, %69, %70, %71, %72, %73, %74, %75, %76, %77, %78, %79, %80, %81, %82, %83, %84)
+	//const %37 = 1 : int
+	_37 = 1;
+	//newlist %38 = (%27, %28, %29, %31, %32, %33, %35, %36, %37) : int[]
+	_NEW_1DARRAY(_38, 9, 0);
+	_38[0] = _27; _38[1] = _28; _38[2] = _29; _38[3] = _31; _38[4] = _32; _38[5] = _33; _38[6] = _35; _38[7] = _36; _38[8] = _37; 
+	//assign %6 = %38  : int[]
+	_COPY_1DARRAY(v_sobel, _38);
+	//const %39 = 1 : int
+	_39 = 1;
+	//const %40 = 2 : int
+	_40 = 2;
+	//const %41 = 1 : int
+	_41 = 1;
+	//const %42 = 0 : int
+	_42 = 0;
+	//const %43 = 0 : int
+	_43 = 0;
+	//const %44 = 0 : int
+	_44 = 0;
+	//const %45 = 1 : int
+	_45 = 1;
+	//neg %46 = %45 : int
+	_46= -_45;
+	//const %47 = 2 : int
+	_47 = 2;
+	//neg %48 = %47 : int
+	_48= -_47;
+	//const %49 = 1 : int
+	_49 = 1;
+	//neg %50 = %49 : int
+	_50= -_49;
+	//newlist %51 = (%39, %40, %41, %42, %43, %44, %46, %48, %50) : int[]
+	_NEW_1DARRAY(_51, 9, 0);
+	_51[0] = _39; _51[1] = _40; _51[2] = _41; _51[3] = _42; _51[4] = _43; _51[5] = _44; _51[6] = _46; _51[7] = _48; _51[8] = _50; 
+	//assign %7 = %51  : int[]
+	_COPY_1DARRAY(h_sobel, _51);
+	//const %52 = 0 : int
+	_52 = 0;
+	//assign %8 = %52  : int
+	x = _52;
+	//loop (%5, %8, %9, %10, %11, %12, %13, %53, %54, %55, %56, %57, %58, %59, %60, %61, %62, %63, %64, %65, %66, %67, %68, %69, %70, %71, %72, %73, %74, %75, %76, %77, %78, %79, %80, %81, %82, %83)
 	while(true){
 		//ifge %8, %1 goto blklab7 : int
 		if(x>=width){goto blklab7;}
-		//const %56 = 0 : int
-		_56 = 0;
-		//assign %9 = %56  : int
-		y = _56;
-		//loop (%5, %9, %10, %11, %12, %13, %57, %58, %59, %60, %61, %62, %63, %64, %65, %66, %67, %68, %69, %70, %71, %72, %73, %74, %75, %76, %77, %78, %79, %80, %81, %82)
+		//const %53 = 0 : int
+		_53 = 0;
+		//assign %9 = %53  : int
+		y = _53;
+		//loop (%5, %9, %10, %11, %12, %13, %54, %55, %56, %57, %58, %59, %60, %61, %62, %63, %64, %65, %66, %67, %68, %69, %70, %71, %72, %73, %74, %75, %76, %77, %78, %79, %80, %81)
 		while(true){
 			//ifge %9, %2 goto blklab9 : int
 			if(y>=height){goto blklab9;}
-			//mul %57 = %8, %1 : int
-			_57=x*width;
-			//add %58 = %57, %9 : int
-			_58=_57+y;
-			//assign %10 = %58  : int
-			pos = _58;
-			//invoke (%59) = (%4, %1, %2, %8, %9, %6) SobelEdgeDetect:convolution : function(int[],int,int,int,int,int[])->(int)
-			_59 = convolution(_COPY_1DARRAY_PARAM(pixels), width, height, x, y, _COPY_1DARRAY_PARAM(v_sobel));
-			//assign %11 = %59  : int
-			v_g = _59;
-			//invoke (%60) = (%4, %1, %2, %8, %9, %7) SobelEdgeDetect:convolution : function(int[],int,int,int,int,int[])->(int)
-			_60 = convolution(_COPY_1DARRAY_PARAM(pixels), width, height, x, y, _COPY_1DARRAY_PARAM(h_sobel));
-			//assign %12 = %60  : int
-			h_g = _60;
-			//add %61 = %11, %12 : int
-			_61=v_g+h_g;
-			//assign %13 = %61  : int
-			t_g = _61;
-			//const %62 = 250 : int
-			_62 = 250;
-			//ifle %13, %62 goto blklab11 : int
-			if(t_g<=_62){goto blklab11;}
-			//const %63 = 255 : int
-			_63 = 255;
-			//update %5[%10] = %63 : int[] -> int[]
-			newPixels[pos] = _63;
+			//fieldload %54 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %55 = %54 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//const %56 = [65,116,32,120,32,61,32] : int[]
+			_NEW_1DARRAY(_56, 7, 0);
+			_56[0] = 65; _56[1] = 116; _56[2] = 32; _56[3] = 120; _56[4] = 32; _56[5] = 61; _56[6] = 32; 
+			//indirectinvoke () = %55 (%56) : method(int[])->()
+			printf_s(_1DARRAY_PARAM(_56));
+			//fieldload %57 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %58 = %57 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//indirectinvoke () = %58 (%8) : method(any)->()
+			printf("%lld", x);
+			//fieldload %59 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %60 = %59 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//const %61 = [32,121,32,61,32] : int[]
+			_NEW_1DARRAY(_61, 5, 0);
+			_61[0] = 32; _61[1] = 121; _61[2] = 32; _61[3] = 61; _61[4] = 32; 
+			//indirectinvoke () = %60 (%61) : method(int[])->()
+			printf_s(_1DARRAY_PARAM(_61));
+			//fieldload %62 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %63 = %62 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//indirectinvoke () = %63 (%9) : method(any)->()
+			printf("%lld", y);
+			//mul %64 = %9, %1 : int
+			_64=y*width;
+			//add %65 = %64, %8 : int
+			_65=_64+x;
+			//assign %10 = %65  : int
+			pos = _65;
+			//invoke (%66) = (%4, %1, %2, %8, %9, %6) SobelEdgeDetect:convolution : function(int[],int,int,int,int,int[])->(int)
+			_66 = convolution(_COPY_1DARRAY_PARAM(pixels), width, height, x, y, _COPY_1DARRAY_PARAM(v_sobel));
+			//assign %11 = %66  : int
+			v_g = _66;
+			//invoke (%67) = (%4, %1, %2, %8, %9, %7) SobelEdgeDetect:convolution : function(int[],int,int,int,int,int[])->(int)
+			_67 = convolution(_COPY_1DARRAY_PARAM(pixels), width, height, x, y, _COPY_1DARRAY_PARAM(h_sobel));
+			//assign %12 = %67  : int
+			h_g = _67;
+			//invoke (%68) = (%11) whiley/lang/Math:abs : function(int)->(int)
+			_68 = llabs(v_g);
+			//invoke (%69) = (%12) whiley/lang/Math:abs : function(int)->(int)
+			_69 = llabs(h_g);
+			//add %70 = %68, %69 : int
+			_70=_68+_69;
+			//assign %13 = %70  : int
+			t_g = _70;
+			//const %71 = 128 : int
+			_71 = 128;
+			//ifle %13, %71 goto blklab11 : int
+			if(t_g<=_71){goto blklab11;}
+			//const %72 = 255 : int
+			_72 = 255;
+			//update %5[%10] = %72 : int[] -> int[]
+			newPixels[pos] = _72;
 			//goto blklab12
 			goto blklab12;
 //.blklab11
 blklab11:;
-			//const %64 = 0 : int
-			_64 = 0;
-			//update %5[%10] = %64 : int[] -> int[]
-			newPixels[pos] = _64;
+			//const %73 = 0 : int
+			_73 = 0;
+			//update %5[%10] = %73 : int[] -> int[]
+			newPixels[pos] = _73;
 //.blklab12
 blklab12:;
-			//fieldload %65 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %66 = %65 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//const %67 = [65,116,32,120,32,61,32] : int[]
-			_NEW_1DARRAY(_67, 7, 0);
-			_67[0] = 65; _67[1] = 116; _67[2] = 32; _67[3] = 120; _67[4] = 32; _67[5] = 61; _67[6] = 32; 
-			//indirectinvoke () = %66 (%67) : method(int[])->()
-			printf_s(_1DARRAY_PARAM(_67));
-			//fieldload %68 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %69 = %68 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//indirectinvoke () = %69 (%8) : method(any)->()
-			printf("%lld", x);
-			//fieldload %70 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %71 = %70 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//const %72 = [32,121,32,61,32] : int[]
-			_NEW_1DARRAY(_72, 5, 0);
-			_72[0] = 32; _72[1] = 121; _72[2] = 32; _72[3] = 61; _72[4] = 32; 
-			//indirectinvoke () = %71 (%72) : method(int[])->()
-			printf_s(_1DARRAY_PARAM(_72));
-			//fieldload %73 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %74 = %73 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//indirectinvoke () = %74 (%9) : method(any)->()
-			printf("%lld", y);
-			//fieldload %75 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %76 = %75 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//const %77 = [32,110,101,119,80,105,120,101,108,115,91,112,111,115,93,32,61,32] : int[]
-			_NEW_1DARRAY(_77, 18, 0);
-			_77[0] = 32; _77[1] = 110; _77[2] = 101; _77[3] = 119; _77[4] = 80; _77[5] = 105; _77[6] = 120; _77[7] = 101; _77[8] = 108; _77[9] = 115; _77[10] = 91; _77[11] = 112; _77[12] = 111; _77[13] = 115; _77[14] = 93; _77[15] = 32; _77[16] = 61; _77[17] = 32; 
-			//indirectinvoke () = %76 (%77) : method(int[])->()
-			printf_s(_1DARRAY_PARAM(_77));
-			//fieldload %78 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %79 = %78 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//indexof %80 = %5, %10 : int[]
-			_80=newPixels[pos];
-			//indirectinvoke () = %79 (%80) : method(any)->()
-			printf("%lld\n", _80);
-			//const %81 = 1 : int
-			_81 = 1;
-			//add %82 = %9, %81 : int
-			_82=y+_81;
-			//assign %9 = %82  : int
-			y = _82;
+			//fieldload %74 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %75 = %74 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//const %76 = [32,110,101,119,80,105,120,101,108,115,91,112,111,115,93,32,61,32] : int[]
+			_NEW_1DARRAY(_76, 18, 0);
+			_76[0] = 32; _76[1] = 110; _76[2] = 101; _76[3] = 119; _76[4] = 80; _76[5] = 105; _76[6] = 120; _76[7] = 101; _76[8] = 108; _76[9] = 115; _76[10] = 91; _76[11] = 112; _76[12] = 111; _76[13] = 115; _76[14] = 93; _76[15] = 32; _76[16] = 61; _76[17] = 32; 
+			//indirectinvoke () = %75 (%76) : method(int[])->()
+			printf_s(_1DARRAY_PARAM(_76));
+			//fieldload %77 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %78 = %77 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//indexof %79 = %5, %10 : int[]
+			_79=newPixels[pos];
+			//indirectinvoke () = %78 (%79) : method(any)->()
+			printf("%lld\n", _79);
+			//const %80 = 1 : int
+			_80 = 1;
+			//add %81 = %9, %80 : int
+			_81=y+_80;
+			//assign %9 = %81  : int
+			y = _81;
 //.blklab10
 blklab10:;
 		}
 //.blklab9
 blklab9:;
-		//const %83 = 1 : int
-		_83 = 1;
-		//add %84 = %8, %83 : int
-		_84=x+_83;
-		//assign %8 = %84  : int
-		x = _84;
+		//const %82 = 1 : int
+		_82 = 1;
+		//add %83 = %8, %82 : int
+		_83=x+_82;
+		//assign %8 = %83  : int
+		x = _83;
 //.blklab8
 blklab8:;
 	}
@@ -487,14 +502,20 @@ blklab8:;
 blklab7:;
 	//assert
 	{
-		//const %85 = 18 : int
-		_85 = 18;
-		//indexof %86 = %5, %85 : int[]
-		_86=newPixels[_85];
-		//const %87 = 255 : int
-		_87 = 255;
-		//ifeq %86, %87 goto blklab13 : int
-		if(_86==_87){goto blklab13;}
+		//const %84 = 4 : int
+		_84 = 4;
+		//mul %85 = %84, %1 : int
+		_85=_84*width;
+		//const %86 = 4 : int
+		_86 = 4;
+		//add %87 = %85, %86 : int
+		_87=_85+_86;
+		//indexof %88 = %5, %87 : int[]
+		_88=newPixels[_87];
+		//const %89 = 0 : int
+		_89 = 0;
+		//ifeq %88, %89 goto blklab13 : int
+		if(_88==_89){goto blklab13;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -504,14 +525,20 @@ blklab13:;
 	}
 	//assert
 	{
-		//const %88 = 36 : int
-		_88 = 36;
-		//indexof %89 = %5, %88 : int[]
-		_89=newPixels[_88];
-		//const %90 = 255 : int
-		_90 = 255;
-		//ifeq %89, %90 goto blklab14 : int
-		if(_89==_90){goto blklab14;}
+		//const %90 = 3 : int
+		_90 = 3;
+		//mul %91 = %90, %1 : int
+		_91=_90*width;
+		//const %92 = 3 : int
+		_92 = 3;
+		//add %93 = %91, %92 : int
+		_93=_91+_92;
+		//indexof %94 = %5, %93 : int[]
+		_94=newPixels[_93];
+		//const %95 = 255 : int
+		_95 = 255;
+		//ifeq %94, %95 goto blklab14 : int
+		if(_94==_95){goto blklab14;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -521,14 +548,20 @@ blklab14:;
 	}
 	//assert
 	{
-		//const %91 = 45 : int
-		_91 = 45;
-		//indexof %92 = %5, %91 : int[]
-		_92=newPixels[_91];
-		//const %93 = 255 : int
-		_93 = 255;
-		//ifeq %92, %93 goto blklab15 : int
-		if(_92==_93){goto blklab15;}
+		//const %96 = 3 : int
+		_96 = 3;
+		//mul %97 = %96, %1 : int
+		_97=_96*width;
+		//const %98 = 4 : int
+		_98 = 4;
+		//add %99 = %97, %98 : int
+		_99=_97+_98;
+		//indexof %100 = %5, %99 : int[]
+		_100=newPixels[_99];
+		//const %101 = 255 : int
+		_101 = 255;
+		//ifeq %100, %101 goto blklab15 : int
+		if(_100==_101){goto blklab15;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -538,14 +571,20 @@ blklab15:;
 	}
 	//assert
 	{
-		//const %94 = 0 : int
-		_94 = 0;
-		//indexof %95 = %5, %94 : int[]
-		_95=newPixels[_94];
-		//const %96 = 0 : int
-		_96 = 0;
-		//ifeq %95, %96 goto blklab16 : int
-		if(_95==_96){goto blklab16;}
+		//const %102 = 3 : int
+		_102 = 3;
+		//mul %103 = %102, %1 : int
+		_103=_102*width;
+		//const %104 = 5 : int
+		_104 = 5;
+		//add %105 = %103, %104 : int
+		_105=_103+_104;
+		//indexof %106 = %5, %105 : int[]
+		_106=newPixels[_105];
+		//const %107 = 255 : int
+		_107 = 255;
+		//ifeq %106, %107 goto blklab16 : int
+		if(_106==_107){goto blklab16;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -555,19 +594,117 @@ blklab16:;
 	}
 	//assert
 	{
-		//const %97 = 63 : int
-		_97 = 63;
-		//indexof %98 = %5, %97 : int[]
-		_98=newPixels[_97];
-		//const %99 = 0 : int
-		_99 = 0;
-		//ifeq %98, %99 goto blklab17 : int
-		if(_98==_99){goto blklab17;}
+		//const %108 = 4 : int
+		_108 = 4;
+		//mul %109 = %108, %1 : int
+		_109=_108*width;
+		//const %110 = 3 : int
+		_110 = 3;
+		//add %111 = %109, %110 : int
+		_111=_109+_110;
+		//indexof %112 = %5, %111 : int[]
+		_112=newPixels[_111];
+		//const %113 = 255 : int
+		_113 = 255;
+		//ifeq %112, %113 goto blklab17 : int
+		if(_112==_113){goto blklab17;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
 //.blklab17
 blklab17:;
+	//assert
+	}
+	//assert
+	{
+		//const %114 = 4 : int
+		_114 = 4;
+		//mul %115 = %114, %1 : int
+		_115=_114*width;
+		//const %116 = 5 : int
+		_116 = 5;
+		//add %117 = %115, %116 : int
+		_117=_115+_116;
+		//indexof %118 = %5, %117 : int[]
+		_118=newPixels[_117];
+		//const %119 = 255 : int
+		_119 = 255;
+		//ifeq %118, %119 goto blklab18 : int
+		if(_118==_119){goto blklab18;}
+		//fail
+		fprintf(stderr,"fail");
+		exit(-1);
+//.blklab18
+blklab18:;
+	//assert
+	}
+	//assert
+	{
+		//const %120 = 5 : int
+		_120 = 5;
+		//mul %121 = %120, %1 : int
+		_121=_120*width;
+		//const %122 = 3 : int
+		_122 = 3;
+		//add %123 = %121, %122 : int
+		_123=_121+_122;
+		//indexof %124 = %5, %123 : int[]
+		_124=newPixels[_123];
+		//const %125 = 255 : int
+		_125 = 255;
+		//ifeq %124, %125 goto blklab19 : int
+		if(_124==_125){goto blklab19;}
+		//fail
+		fprintf(stderr,"fail");
+		exit(-1);
+//.blklab19
+blklab19:;
+	//assert
+	}
+	//assert
+	{
+		//const %126 = 5 : int
+		_126 = 5;
+		//mul %127 = %126, %1 : int
+		_127=_126*width;
+		//const %128 = 4 : int
+		_128 = 4;
+		//add %129 = %127, %128 : int
+		_129=_127+_128;
+		//indexof %130 = %5, %129 : int[]
+		_130=newPixels[_129];
+		//const %131 = 255 : int
+		_131 = 255;
+		//ifeq %130, %131 goto blklab20 : int
+		if(_130==_131){goto blklab20;}
+		//fail
+		fprintf(stderr,"fail");
+		exit(-1);
+//.blklab20
+blklab20:;
+	//assert
+	}
+	//assert
+	{
+		//const %132 = 5 : int
+		_132 = 5;
+		//mul %133 = %132, %1 : int
+		_133=_132*width;
+		//const %134 = 5 : int
+		_134 = 5;
+		//add %135 = %133, %134 : int
+		_135=_133+_134;
+		//indexof %136 = %5, %135 : int[]
+		_136=newPixels[_135];
+		//const %137 = 255 : int
+		_137 = 255;
+		//ifeq %136, %137 goto blklab21 : int
+		if(_136==_137){goto blklab21;}
+		//fail
+		fprintf(stderr,"fail");
+		exit(-1);
+//.blklab21
+blklab21:;
 	//assert
 	}
 	//return

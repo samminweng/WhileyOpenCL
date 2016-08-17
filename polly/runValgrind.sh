@@ -139,11 +139,11 @@ exec(){
 #exec newTicTacToe original 10000
 #exec newTicTacToe original 100000
 
-# Reverse test case
-init Reverse
-exec Reverse original 100000
-exec Reverse original 1000000
-exec Reverse original 10000000
+# # Reverse test case
+# init Reverse
+# exec Reverse original 100000
+# exec Reverse original 1000000
+# exec Reverse original 10000000
 
 # # MergeSort test case
 #init MergeSort
@@ -168,19 +168,15 @@ exec Reverse original 10000000
 # exec MatrixMult transpose copyreduced 15
 # exec MatrixMult transpose copyreduced_dealloc 15
 
-# ## Rectanlge test case
-# init Rectangle
-# exec Rectangle original naive 1
-# exec Rectangle original naive_dealloc 1
-# exec Rectangle original copyreduced 1
-# exec Rectangle original copyreduced_dealloc 1
-
 # # Fibonacci test case
 # init Fibonacci
 # exec Fibonacci original naive 10
 # exec Fibonacci original naive_dealloc 10
 # exec Fibonacci original copyreduced 10
 # exec Fibonacci original copyreduced_dealloc 10
+
+
+
 
 
 

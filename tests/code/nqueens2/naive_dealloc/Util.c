@@ -41,7 +41,6 @@ long long* create1DArray(int value, int arr_size){
 		exit(-2);
 	}
 	// Initialize each element with the given value.
-	//memset(arr, value, arr_size*sizeof(long long));
 	for(int i=0;i<arr_size;i++){
 		arr[i] = value;
 	}
