@@ -63,7 +63,7 @@ function matrix(int width, int height, int[] pixels) -> Matrix:
 function wrap(int pos, int size) -> int:
 	if pos < 0:
 		// Negated pos
-		pos = 0 - pos
+		pos = size + pos
 	else:
 		if pos >= size:
 			pos = pos -size

@@ -11,7 +11,7 @@ constant BLACK is 0
 function wrap(int pos, int size) -> int:
 	if pos < 0:
 		// Negated pos
-		pos = 0 - pos
+		pos = size + pos
 	else:
 		if pos >= size:
 			pos = pos -size
@@ -64,12 +64,8 @@ method main(System.Console sys):
 			int pos = y*width + x
 			// Get vertical gradient
 			int v_g = convolution(pixels, width, height, x, y, v_sobel)
-			//sys.out.print_s("v_g = ")
-			//sys.out.println(v_g)
 			// Get horizontal gradient
 			int h_g = convolution(pixels, width, height, x, y, h_sobel)
-			//sys.out.print_s("h_g = ")
-			//sys.out.println(h_g)
 			// Get total gradient
 			int t_g = Math.abs(v_g) + Math.abs(h_g)
 			// Edge threshold (128) Note that large thresholds generate few edges

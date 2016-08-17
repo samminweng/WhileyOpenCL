@@ -52,27 +52,24 @@ long long wrap(long long pos, long long size){
 	long long _3 = 0;
 	long long _4 = 0;
 	long long _5 = 0;
-	long long _6 = 0;
 	//const %3 = 0 : int
 	_3 = 0;
 	//ifge %0, %3 goto blklab0 : int
 	if(pos>=_3){goto blklab0;}
-	//const %4 = 0 : int
-	_4 = 0;
-	//sub %5 = %4, %0 : int
-	_5=_4-pos;
-	//assign %0 = %5  : int
-	pos = _5;
+	//add %4 = %1, %0 : int
+	_4=size+pos;
+	//assign %0 = %4  : int
+	pos = _4;
 	//goto blklab1
 	goto blklab1;
 //.blklab0
 blklab0:;
 	//iflt %0, %1 goto blklab2 : int
 	if(pos<size){goto blklab2;}
-	//sub %6 = %0, %1 : int
-	_6=pos-size;
-	//assign %0 = %6  : int
-	pos = _6;
+	//sub %5 = %0, %1 : int
+	_5=pos-size;
+	//assign %0 = %5  : int
+	pos = _5;
 //.blklab2
 blklab2:;
 //.blklab1

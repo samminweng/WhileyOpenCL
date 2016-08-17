@@ -10,18 +10,19 @@ constant BLACK is 0
 // Wrap the position into 0..size
 function wrap(int pos, int size) -> int:
 	if pos < 0:
-		// Negated pos
-		pos = 0 - pos
+		// Map the negated position from 'size' to 0
+		pos = size + pos
 	else:
 		if pos >= size:
 			pos = pos -size
 	return pos
-// Perform image convolution
-function convolution(int[] pixels, int width, int height, int xCenter, int yCenter, int[] filter) ->int:
+// Perform vertical convolution
+function v_convolution(int[] pixels, int width, int height, int xCenter, int yCenter) ->int:
 	int sum = 0
 	int filterSize = 3
 	int filterHalf = 1
 	int filterY = 0
+	int[] filter = [-1,0,1,-2,0,2,-1,0,1]
 	while filterY < filterSize:
 		int y = wrap(yCenter+filterY - filterHalf, height)
 		int filterX = 0
@@ -36,7 +37,27 @@ function convolution(int[] pixels, int width, int height, int xCenter, int yCent
 			filterX = filterX + 1
 		filterY = filterY + 1
 	return sum
-
+// Perform horizontal convolution
+function h_convolution(int[] pixels, int width, int height, int xCenter, int yCenter) ->int:
+	int sum = 0
+	int filterSize = 3
+	int filterHalf = 1
+	int filterY = 0
+	int[] filter = [1,2,1,0,0,0,-1,-2,-1]
+	while filterY < filterSize:
+		int y = wrap(yCenter+filterY - filterHalf, height)
+		int filterX = 0
+		while filterX < filterSize:
+			int x = wrap(xCenter + filterX - filterHalf, width)
+			// Get pixel
+			int pixel = pixels[y*width+x]
+			// Get filter value
+			int filterVal = filter[filterY*filterSize+filterX]
+			// pixel * filter value 
+			sum = sum + pixel * filterVal
+			filterX = filterX + 1
+		filterY = filterY + 1
+	return sum
 
 // Main function
 method main(System.Console sys):
@@ -54,8 +75,8 @@ method main(System.Console sys):
 		// The output image of sobel edge detection
 		int[] newPixels = [WHITE;size]
 		// vertical and horizontal sobel filter (3x3 kernel)
-		int[] v_sobel = [-1,0,1,-2,0,2,-1,0,1]
-		int[] h_sobel = [1,2,1,0,0,0,-1,-2,-1]
+		//int[] v_sobel = [-1,0,1,-2,0,2,-1,0,1]
+		//int[] h_sobel = [1,2,1,0,0,0,-1,-2,-1]
 		// Perform sobel edge detection
 		int x = 0
 		while x<width:
@@ -67,9 +88,9 @@ method main(System.Console sys):
 				sys.out.print(y)
 				int pos = y*width + x
 				// Get vertical gradient
-				int v_g = convolution(pixels, width, height, x, y, v_sobel)
+				int v_g = v_convolution(pixels, width, height, x, y)
 				// Get horizontal gradient
-				int h_g = convolution(pixels, width, height, x, y, h_sobel)
+				int h_g = h_convolution(pixels, width, height, x, y)
 				// Get total gradient
 				int t_g = Math.abs(v_g) + Math.abs(h_g)
 				// Edge threshold (128) Note that large thresholds generate few edges

@@ -111,8 +111,9 @@ runPolly(){
 
 
 	echo -e -n "[*]Show the region Polly can NOT analyze and reasons" && read
-	pollycc -g -mllvm -polly-opt-outer-coincidence=yes -o "out"/$testcase"_"$program.polly.out\
-	        -Rpass-missed=polly $testcase"_"$program.c Util.c
+	#pollycc -g -mllvm -polly-opt-outer-coincidence=yes -o "out"/$testcase"_"$program.polly.out\
+	pollycc -g -o "out"/$testcase"_"$program.polly.out\
+	        -Rpass-missed=polly-detect $testcase"_"$program.c Util.c
 
 	echo -e -n "[*]Show the regions Polly can analyze and assumption/restrictions" && read
 	pollycc -fcolor-diagnostics -g\
@@ -181,8 +182,8 @@ exec(){
 	parameter=$3
 
 	## declare 4 kinds of code generation
-	declare -a codegens=("naive" "naive_dealloc" "copyreduced" "copyreduced_dealloc")
-	#declare -a codegens=("naive")
+	#declare -a codegens=("naive" "naive_dealloc" "copyreduced" "copyreduced_dealloc")
+	declare -a codegens=("copyreduced_dealloc")
 	## Iterate each codegen
 	for codegen in "${codegens[@]}"
 	do
