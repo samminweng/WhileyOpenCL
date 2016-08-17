@@ -116,7 +116,7 @@ compileAndRun(){
 		#echo "Begin $i iteration"
 		#timeout $TIMEOUT perf stat out/"$executable.out" $parameter >>$result 2>> $result
 		#echo "Finish $i iteration"
-		echo "Beginning the $executables with  $parameter" >>$result
+		echo "Run the $program $testcase on $parameter using $compiler" >>$result
 	    start=`date +%s%N`
 	    out/"$executable.out" $parameter >> $result
 		#timeout $TIMEOUT out/"$executable.out" $parameter >> $result
@@ -146,11 +146,11 @@ exec(){
 		##read -p "Complete code generation. Press [Enter] to continue..."
 		compileAndRun $testcase $program $codegen $parameter "gcc" 1
 		###read -p "Complete. Press [Enter] to continue..."
-		compileAndRun $testcase $program $codegen $parameter "clang" 1
-		compileAndRun $testcase $program $codegen $parameter "polly" 1
-		compileAndRun $testcase $program $codegen $parameter "openmp" 1
-		compileAndRun $testcase $program $codegen $parameter "openmp" 2
-		compileAndRun $testcase $program $codegen $parameter "openmp" 4
+		#compileAndRun $testcase $program $codegen $parameter "clang" 1
+		#compileAndRun $testcase $program $codegen $parameter "polly" 1
+		#compileAndRun $testcase $program $codegen $parameter "openmp" 1
+		#compileAndRun $testcase $program $codegen $parameter "openmp" 2
+		#compileAndRun $testcase $program $codegen $parameter "openmp" 4
 	done
 	
 	# Return to the working directory
@@ -207,7 +207,7 @@ init(){
 
 # Sobel Edge test
 init SobelEdge
-exec SobelEdge original 8
+exec SobelEdge original 128
 
 #################################################
 ###

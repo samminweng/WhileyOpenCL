@@ -165,7 +165,7 @@ exec(){
 
 ## Sobel Edge Detection test case
 init SobelEdge
-exec SobelEdge original 8
+exec SobelEdge original 128
 
 
 

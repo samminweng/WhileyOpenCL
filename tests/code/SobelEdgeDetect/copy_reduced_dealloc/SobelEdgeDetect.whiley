@@ -10,7 +10,7 @@ constant BLACK is 0
 // Wrap the position into 0..size
 function wrap(int pos, int size) -> int:
 	if pos < 0:
-		// Negated pos
+		// Map the negated position from 'size' to 0
 		pos = size + pos
 	else:
 		if pos >= size:
