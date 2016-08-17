@@ -1,9 +1,6 @@
 #!/bin/bash
 TIMEOUT="60s"
-#export PATH_TO_POLLY_LIB="$HOME/polly/llvm_build/lib"
-#export CPPFLAGS="-Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
-#alias opt="opt -load ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
-#alias pollycc="clang -Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
+# Run Polly from clang 
 alias opt="opt -O3 -polly"
 alias pollycc="clang -O3 -mllvm -polly"
 ### Get the root working directory
@@ -148,13 +145,14 @@ exec(){
 		generateCode $testcase $program $codegen
 		##read -p "Complete code generation. Press [Enter] to continue..."
 		compileAndRun $testcase $program $codegen $parameter "gcc" 1
+		###read -p "Complete. Press [Enter] to continue..."
+		compileAndRun $testcase $program $codegen $parameter "clang" 1
+		compileAndRun $testcase $program $codegen $parameter "polly" 1
+		compileAndRun $testcase $program $codegen $parameter "openmp" 1
+		compileAndRun $testcase $program $codegen $parameter "openmp" 2
+		compileAndRun $testcase $program $codegen $parameter "openmp" 4
 	done
-	###read -p "Complete. Press [Enter] to continue..."
-	# compileAndRun $testcase $program $codgen $parameter "clang" 1
-	# compileAndRun $testcase $program $codgen $parameter "polly" 1
-	# compileAndRun $testcase $program $codgen $parameter "openmp" 1
-	# compileAndRun $testcase $program $codgen $parameter "openmp" 2
-	# compileAndRun $testcase $program $codgen $parameter "openmp" 4
+	
 	# Return to the working directory
     cd $basedir/polly
     ###read -p "Press [Enter] to continue..."
@@ -181,11 +179,11 @@ init(){
 #exec newTicTacToe original 10000
 #exec newTicTacToe original 100000
 
-# Reverse test case
-init Reverse
-exec Reverse original 100000
-exec Reverse original 1000000
-exec Reverse original 10000000
+# # Reverse test case
+# init Reverse
+# exec Reverse original 100000
+# exec Reverse original 1000000
+# exec Reverse original 10000000
 
 # # MergeSort test case
 #init MergeSort
@@ -207,7 +205,9 @@ exec Reverse original 10000000
 #exec MatrixMult original 8000
 # exec MatrixMult original 12000 # Naive code runs out of memory 
 
-
+# Sobel Edge test
+init SobelEdge
+exec SobelEdge original 8
 
 #################################################
 ###

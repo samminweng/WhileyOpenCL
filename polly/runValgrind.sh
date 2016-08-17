@@ -163,21 +163,9 @@ exec(){
 # exec MatrixMult original 2000
 # exec MatrixMult original 3000
 
-# exec MatrixMult transpose naive 15
-# exec MatrixMult transpose naive_dealloc 15
-# exec MatrixMult transpose copyreduced 15
-# exec MatrixMult transpose copyreduced_dealloc 15
-
-# # Fibonacci test case
-# init Fibonacci
-# exec Fibonacci original naive 10
-# exec Fibonacci original naive_dealloc 10
-# exec Fibonacci original copyreduced 10
-# exec Fibonacci original copyreduced_dealloc 10
-
-
-
-
+## Sobel Edge Detection test case
+init SobelEdge
+exec SobelEdge original 8
 
 
 

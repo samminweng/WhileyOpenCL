@@ -47,7 +47,7 @@ public class CodeGenerationTestCase {
 	@Parameterized.Parameters(name = "{index}:{0}")
 	public static Collection<String> testCases() {
 		return Arrays.asList(new String[] {
-				/*"rectangle",
+				"rectangle",
 				"swap",
 				"reverse",
 				"mergesort",
@@ -71,7 +71,7 @@ public class CodeGenerationTestCase {
 				"FunctionCall3",
 				"FunctionCall4", 
 				"SobelEdgeDetect",
-				"SobelEdgeDetect1",*/
+				"SobelEdgeDetect1",
 				"SobelEdgeDetect2"
 				//"lambda"
 		});

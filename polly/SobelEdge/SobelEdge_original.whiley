@@ -1,6 +1,6 @@
 import whiley.lang.*
 import whiley.lang.Math
-// This example code illustrates the sobel edge detection
+// This code benchmark the sobel edge detection with matrix size
 // reference: https://en.wikipedia.org/wiki/Sobel_operator
 
 // Define Colour value
@@ -9,12 +9,12 @@ constant BLACK is 0
 
 // Wrap the position into 0..size
 function wrap(int pos, int size) -> int:
-	if pos >= 0:
-		if pos >= size:
-			pos = (size -1) - (pos -size)
-	else:
+	if pos < 0:
 		// Negated pos
-		pos = -1 - pos
+		pos = 0 - pos
+	else:
+		if pos >= size:
+			pos = pos -size
 	return pos
 // Perform image convolution
 function convolution(int[] pixels, int width, int height, int xCenter, int yCenter, int[] filter) ->int:
@@ -35,62 +35,53 @@ function convolution(int[] pixels, int width, int height, int xCenter, int yCent
 			sum = sum + pixel * filterVal
 			filterX = filterX + 1
 		filterY = filterY + 1
-	return Math.abs(sum)
+	return sum
+
 
 // Main function
 method main(System.Console sys):
 	int|null n = Int.parse(sys.args[0])
 	if n != null:
 		int max = n
-		int width = max
-		int height = max
+		int width = 8
+		int height = 8
 		int size = width * height
 		// The input image is a white image of 8 x 8 pixels
 		// with a black square at the center 
 		int[] pixels = [WHITE;size]
-		// Color the middle square (2x2) to be black
-		pixels[27] = BLACK // (3,3)
-		pixels[28] = BLACK // (3,4)
-		pixels[35] = BLACK // (4,3)
-		pixels[36] = BLACK // (4,4)
+		// Place a black square (1x1) at (4,4) position 
+		pixels[4*width+4] = BLACK // (4,4)
 		// The output image of sobel edge detection
 		int[] newPixels = [WHITE;size]
 		// vertical and horizontal sobel filter (3x3 kernel)
-		int[] v_sobel = [-1,-2,-1,0,0,0,1,2,1]
+		int[] v_sobel = [-1,0,1,-2,0,2,-1,0,1]
 		int[] h_sobel = [1,2,1,0,0,0,-1,-2,-1]
 		// Perform sobel edge detection
 		int x = 0
 		while x<width:
 			int y = 0
 			while y<height:
-				int pos = x*width + y
+				sys.out.print_s("At x = ")
+				sys.out.print(x)
+				sys.out.print_s(" y = ")
+				sys.out.print(y)
+				int pos = y*width + x
 				// Get vertical gradient
 				int v_g = convolution(pixels, width, height, x, y, v_sobel)
 				// Get horizontal gradient
 				int h_g = convolution(pixels, width, height, x, y, h_sobel)
 				// Get total gradient
-				int t_g = v_g + h_g
-				// Edge threshold (250) Note that large thresholds generate few edges
-				if t_g > 250:
+				int t_g = Math.abs(v_g) + Math.abs(h_g)
+				// Edge threshold (128) Note that large thresholds generate few edges
+				if t_g > 128:
 					// Color the edge as white 
 					newPixels[pos] = WHITE
 				else:
 					// Color other pixels as black
 					newPixels[pos] = BLACK
+				sys.out.print_s(" newPixels[pos] = ")
+				sys.out.println(newPixels[pos])
 				y = y + 1
 			x = x + 1
-		// A white rectangle (3x3) is at the center (2,2) to (5,5)
-		assert newPixels[18] == WHITE // Pixel (2,2) is white edge
-		assert newPixels[36] == WHITE // Pixel (4,4) is white edge
-		assert newPixels[45] == WHITE // Pixel (5,5) is white edge
-		// The pixels outside the rectagle all are black
-		assert newPixels[0] == BLACK
-		assert newPixels[63] == BLACK
-		sys.out.print_s("At pos = ")
-		sys.out.print(x)
-		sys.out.print_s(" y = ")
-		sys.out.print(y)
-		sys.out.print_s(" newPixels[pos] = ")
-		sys.out.println(newPixels[pos])*/
 
 
