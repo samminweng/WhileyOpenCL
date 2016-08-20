@@ -4,35 +4,40 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	#testcases="Rectangle Fibonacci newTicTacToe Reverse MergeSort BubbleSort MatrixMult GCD CoinGame NQueens";
-	testcases="Reverse newTicTacToe MergeSort BubbleSort MatrixMult";
+	#testcases="Reverse newTicTacToe MergeSort BubbleSort MatrixMult";
+	testcases="SobelEdge";
+	
 	# Program Type
-	#programs["Rectangle"]="original";
 	#programs["Fibonacci"]="original";
-	programs["newTicTacToe"]="original";
-	programs["Reverse"]="original";
-	programs["MergeSort"]="original";
-	programs["BubbleSort"]="original";
-	programs["MatrixMult"]="original transpose";
+	#programs["newTicTacToe"]="original";
+	#programs["Reverse"]="original";
+	#programs["MergeSort"]="original";
+	#programs["BubbleSort"]="original";
+	#programs["MatrixMult"]="original transpose";
 	#programs["GCD"]="original cached";
 	#programs["CoinGame"]="original single array";
 	#programs["NQueens"]="original integer";
+	programs["SobelEdge"]="original";
+
 	# Code Generation
 	codegens = "naive naive_dealloc copyreduced copyreduced_dealloc";
+	
 	# Compiler
 	compilers = "gcc";
 	#compilers = "gcc clang polly openmp";
+	
 	# Parameter
-	#parameters["Rectangle"]="1";
 	#parameters["Fibonacci"]="10";
-	parameters["newTicTacToe"]="1000 10000 100000";
-	parameters["Reverse"]="1000 10000 100000";
-	parameters["MergeSort"]="1000 10000 100000";
-	parameters["BubbleSort"]="1000 10000 100000";
-	parameters["MatrixMult"]="1000 2000 3000";
+	#parameters["newTicTacToe"]="1000 10000 100000";
+	#parameters["Reverse"]="1000 10000 100000";
+	#parameters["MergeSort"]="1000 10000 100000";
+	#parameters["BubbleSort"]="1000 10000 100000";
+	#parameters["MatrixMult"]="1000 2000 3000";
 	#parameters["GCD"]="100";
 	#parameters["CoinGame"]="100";
 	#parameters["NQueens"]="8";
+	parameters["SobelEdge"]="16 64 128";
+
 	# The number of threads
 	#threads="1 2 4";
 	threads="1";
