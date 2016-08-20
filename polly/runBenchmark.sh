@@ -207,6 +207,8 @@ init(){
 
 # Sobel Edge test
 init SobelEdge
+exec SobelEdge original 16
+exec SobelEdge original 64
 exec SobelEdge original 128
 
 #################################################
