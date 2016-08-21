@@ -484,7 +484,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * f returns b?		|F					|T			      |T			    |F
 	 * -----------------------------------------------------------------------------
 	 * b is alive?  F	|No Copy			|No Copy	      |No Copy	        |No Copy
-	 * 					|'negated_dealloc'  |'none_dealloc'   |'none_dealloc'   |'transfer_callee'
+	 * 					|'negated_dealloc'  |'none_dealloc'   |'none_dealloc'   |'negated_dealloc'
 	 * ---------------------------------------------------------------------------
 	 * 				T	|No Copy			|No Copy	      |Copy		        |Copy
 	 * 					|'negated_dealloc'	|'none_dealloc'   |'caller_dealloc'	|'both_dealloc'
