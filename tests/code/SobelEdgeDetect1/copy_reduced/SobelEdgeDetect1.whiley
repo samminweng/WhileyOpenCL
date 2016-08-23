@@ -1,10 +1,5 @@
 import whiley.lang.*
 import whiley.lang.Math
-// This example code illustrates the sobel edge detection with wrapping pixels
-// reference: https://en.wikipedia.org/wiki/Sobel_operator
-
-import whiley.lang.*
-import whiley.lang.Math
 // This example code illustrates the sobel edge detection
 // reference: https://en.wikipedia.org/wiki/Sobel_operator
 
@@ -12,18 +7,6 @@ import whiley.lang.Math
 constant WHITE is 255
 constant BLACK is 0
 
-// Wrap the position into 0..size, which can be replaced with modulo operator
-// For example, size = 10
-// when pos is 
-/*function wrap(int pos, int size) -> int:
-	if pos < 0:
-		// Map the negated position from 'size' to 0
-		pos = size + pos
-	else:
-		if pos >= size:
-			pos = pos -size
-	return pos
-*/
 // ========================================================
 // Perform image convolution
 // ========================================================
