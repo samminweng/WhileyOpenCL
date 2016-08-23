@@ -8,6 +8,7 @@ constant WHITE is 255
 constant BLACK is 0
 
 // Wrap the position into 0..size
+// Use modulos operator
 function wrap(int pos, int size) -> int:
 	if pos < 0:
 		// Map the negated position from 'size' to 0
