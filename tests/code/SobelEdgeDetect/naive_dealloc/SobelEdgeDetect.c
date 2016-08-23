@@ -658,8 +658,8 @@ printImage(stdout, _COPY_1DARRAY_PARAM(newPixels), true, width, height);
 		_25 = 4;
 		//add %26 = %24, %25 : int
 		_26=_24+_25;
-		//indexof %27 = %5, %26 : int[]
-		_27=newPixels[_26];
+		//indexof %27 = %4, %26 : int[]
+		_27=pixels[_26];
 		//const %28 = 0 : int
 		_28 = 0;
 		//ifeq %27, %28 goto blklab16 : int

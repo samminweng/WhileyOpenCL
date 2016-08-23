@@ -301,11 +301,11 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 			//assign %10 = %46  : int
 			pos = _46;
 			//invoke (%47) = (%0, %1, %2, %8, %9, %6) SobelEdgeDetect:convolution : function(int[],int,int,int,int,int[])->(int)
-			_47 = convolution(_1DARRAY_PARAM(pixels), !pixels_dealloc, width, height, x, y, _1DARRAY_PARAM(v_sobel), !v_sobel_dealloc);
+			_47 = convolution(_1DARRAY_PARAM(pixels), false, width, height, x, y, _1DARRAY_PARAM(v_sobel), false);
 			//assign %11 = %47  : int
 			v_g = _47;
 			//invoke (%48) = (%0, %1, %2, %8, %9, %7) SobelEdgeDetect:convolution : function(int[],int,int,int,int,int[])->(int)
-			_48 = convolution(_1DARRAY_PARAM(pixels), !pixels_dealloc, width, height, x, y, _1DARRAY_PARAM(h_sobel), !h_sobel_dealloc);
+			_48 = convolution(_1DARRAY_PARAM(pixels), false, width, height, x, y, _1DARRAY_PARAM(h_sobel), false);
 			//assign %12 = %48  : int
 			h_g = _48;
 			//invoke (%49) = (%11) whiley/lang/Math:abs : function(int)->(int)
@@ -613,7 +613,7 @@ int main(int argc, char** args){
 	//invoke (%16) = (%4, %1, %2) SobelEdgeDetect:sobelEdgeDetection : function(int[],int,int)->(int[])
 	_UPDATE_1DARRAY_SIZE(_16, pixels);
 	_DEALLOC(_16);
-	_16 = sobelEdgeDetection(_1DARRAY_PARAM(pixels), !pixels_dealloc, width, height);
+	_16 = sobelEdgeDetection(_1DARRAY_PARAM(pixels), false, width, height);
 	_ADD_DEALLOC(_16);
 	//assign %5 = %16  : int[]
 	_DEALLOC(newPixels);
@@ -651,8 +651,8 @@ printImage(stdout, _1DARRAY_PARAM(newPixels), !newPixels_dealloc, width, height)
 		_25 = 4;
 		//add %26 = %24, %25 : int
 		_26=_24+_25;
-		//indexof %27 = %5, %26 : int[]
-		_27=newPixels[_26];
+		//indexof %27 = %4, %26 : int[]
+		_27=pixels[_26];
 		//const %28 = 0 : int
 		_28 = 0;
 		//ifeq %27, %28 goto blklab16 : int

@@ -112,7 +112,7 @@ method main(System.Console sys):
 	sys.out.println_s("Filtered Image using Sobel Edge Detection:")
 	printImage(sys, newPixels, width, height)
 	// A black square is at (4,4)
-	assert newPixels[4*width+4] == BLACK  // (4,4)
+	assert pixels[4*width+4] == BLACK  // (4,4)
 	// The pixels around (4,4) all are white 
 	assert newPixels[3*width+3] == WHITE // (3,3)
 	assert newPixels[3*width+4] == WHITE // (3,4)

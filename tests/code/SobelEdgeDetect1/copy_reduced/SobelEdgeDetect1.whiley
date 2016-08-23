@@ -3,12 +3,19 @@ import whiley.lang.Math
 // This example code illustrates the sobel edge detection with wrapping pixels
 // reference: https://en.wikipedia.org/wiki/Sobel_operator
 
+import whiley.lang.*
+import whiley.lang.Math
+// This example code illustrates the sobel edge detection
+// reference: https://en.wikipedia.org/wiki/Sobel_operator
+
 // Define Colour value
 constant WHITE is 255
 constant BLACK is 0
 
-// Wrap the position into 0..size
-function wrap(int pos, int size) -> int:
+// Wrap the position into 0..size, which can be replaced with modulo operator
+// For example, size = 10
+// when pos is 
+/*function wrap(int pos, int size) -> int:
 	if pos < 0:
 		// Map the negated position from 'size' to 0
 		pos = size + pos
@@ -16,18 +23,22 @@ function wrap(int pos, int size) -> int:
 		if pos >= size:
 			pos = pos -size
 	return pos
-
+*/
+// ========================================================
 // Perform image convolution
+// ========================================================
 function convolution(int[] pixels, int width, int height, int xCenter, int yCenter, int[] filter) ->int:
 	int sum = 0
 	int filterSize = 3
 	int filterHalf = 1
 	int filterY = 0
 	while filterY < filterSize:
-		int y = wrap(yCenter+filterY - filterHalf, height)
+		//int y = wrap(yCenter+filterY - filterHalf, height)
+		int y = Math.abs((yCenter+filterY-filterHalf)%height)
 		int filterX = 0
 		while filterX < filterSize:
-			int x = wrap(xCenter + filterX - filterHalf, width)
+			//int x = wrap(xCenter + filterX - filterHalf), width)
+			int x = Math.abs((xCenter + filterX - filterHalf)%width)
 			// Get pixel
 			int pixel = pixels[y*width+x]
 			// Get filter value
@@ -38,16 +49,12 @@ function convolution(int[] pixels, int width, int height, int xCenter, int yCent
 		filterY = filterY + 1
 	return sum
 
-// Main function
-method main(System.Console sys):
-	int width = 8
-	int height = 8
+// ========================================================
+// Perform Sobel edge detection
+// ========================================================
+function sobelEdgeDetection(int[] pixels, int width, int height) -> int[]:
 	int size = width * height
-	// The input is a white image of 8 x 8 pixels 
-	int[] pixels = [WHITE;size]
-	// Place a black square (1x1) at (0,0) position 
-	pixels[0] = BLACK // (0,0)
-	// The output is the edges detected by sobel algorithm
+	// The output image of sobel edge detection
 	int[] newPixels = [WHITE;size]
 	// vertical and horizontal sobel filter (3x3 kernel)
 	int[] v_sobel = [-1,0,1,-2,0,2,-1,0,1]
@@ -57,10 +64,6 @@ method main(System.Console sys):
 	while x<width:
 		int y = 0
 		while y<height:
-			sys.out.print_s("At x = ")
-			sys.out.print(x)
-			sys.out.print_s(" y = ")
-			sys.out.print(y)
 			int pos = y*width + x
 			// Get vertical gradient
 			int v_g = convolution(pixels, width, height, x, y, v_sobel)
@@ -75,10 +78,43 @@ method main(System.Console sys):
 			else:
 				// Color other pixels as black
 				newPixels[pos] = BLACK
-			sys.out.print_s(" newPixels[pos] = ")
-			sys.out.println(newPixels[pos])
 			y = y + 1
 		x = x + 1
+	return newPixels
+
+// ========================================================
+// Print a Image
+// ========================================================
+method printImage(System.Console sys, int[] pixels, int width, int height):
+	int x = 0
+	while x<width:
+		int y = 0
+		while y<height:
+			int pos = y*width + x
+			// Print out each pixel value
+			if pixels[pos] == WHITE:
+				sys.out.print_s("w")
+			else:
+				sys.out.print_s("b")
+			sys.out.print_s(" ")
+			y = y + 1
+		x = x + 1
+		sys.out.println_s("")
+
+// Main function
+method main(System.Console sys):
+	int width = 8
+	int height = 8
+	int size = width * height
+	// The input is a white image of 8 x 8 pixels 
+	int[] pixels = [WHITE;size]
+	// Place a black square (1x1) at (0,0) position 
+	pixels[0] = BLACK // (0,0)
+	int[] newPixels = sobelEdgeDetection(pixels, width, height)
+	sys.out.println_s("Original Image:")
+	printImage(sys, pixels, width, height)
+	sys.out.println_s("Filtered Image using Sobel Edge Detection:")
+	printImage(sys, newPixels, width, height)
 	// A black square is at (0,0)
 	assert newPixels[0] == BLACK  // (0,0)
 	// The pixels at left-top corner are white

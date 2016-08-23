@@ -1,36 +1,4 @@
 #include "SobelEdgeDetect1.h"
-long long wrap(long long pos, long long size){
-	long long _2 = 0;
-	long long _3 = 0;
-	long long _4 = 0;
-	long long _5 = 0;
-	//const %3 = 0 : int
-	_3 = 0;
-	//ifge %0, %3 goto blklab0 : int
-	if(pos>=_3){goto blklab0;}
-	//add %4 = %1, %0 : int
-	_4=size+pos;
-	//assign %0 = %4  : int
-	pos = _4;
-	//goto blklab1
-	goto blklab1;
-//.blklab0
-blklab0:;
-	//iflt %0, %1 goto blklab2 : int
-	if(pos<size){goto blklab2;}
-	//sub %5 = %0, %1 : int
-	_5=pos-size;
-	//assign %0 = %5  : int
-	pos = _5;
-//.blklab2
-blklab2:;
-//.blklab1
-blklab1:;
-	//return %0
-	return pos;
-	//return
-}
-
 long long convolution(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(pixels), long long width, long long height, long long xCenter, long long yCenter, _DECL_1DARRAY_PARAM(filter), _DECL_DEALLOC_PARAM(filter)){
 	long long _6 = 0;
 	long long sum = 0;
@@ -65,6 +33,8 @@ long long convolution(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(pixels), 
 	long long _36 = 0;
 	long long _37 = 0;
 	long long _38 = 0;
+	long long _39 = 0;
+	long long _40 = 0;
 	//const %16 = 0 : int
 	_16 = 0;
 	//assign %7 = %16  : int
@@ -81,78 +51,82 @@ long long convolution(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(pixels), 
 	_19 = 0;
 	//assign %10 = %19  : int
 	filterY = _19;
-	//loop (%7, %10, %11, %12, %13, %14, %15, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38)
+	//loop (%7, %10, %11, %12, %13, %14, %15, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40)
 	while(true){
-		//ifge %10, %8 goto blklab3 : int
-		if(filterY>=filterSize){goto blklab3;}
+		//ifge %10, %8 goto blklab0 : int
+		if(filterY>=filterSize){goto blklab0;}
 		//add %21 = %4, %10 : int
 		_21=yCenter+filterY;
 		//sub %22 = %21, %9 : int
 		_22=_21-filterHalf;
-		//invoke (%20) = (%22, %2) SobelEdgeDetect1:wrap : function(int,int)->(int)
-		_20 = wrap(_22, height);
+		//rem %23 = %22, %2 : int
+		_23=_22%height;
+		//invoke (%20) = (%23) whiley/lang/Math:abs : function(int)->(int)
+		_20 = llabs(_23);
 		//assign %11 = %20  : int
 		y = _20;
-		//const %23 = 0 : int
-		_23 = 0;
-		//assign %12 = %23  : int
-		filterX = _23;
-		//loop (%7, %12, %13, %14, %15, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36)
+		//const %24 = 0 : int
+		_24 = 0;
+		//assign %12 = %24  : int
+		filterX = _24;
+		//loop (%7, %12, %13, %14, %15, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38)
 		while(true){
-			//ifge %12, %8 goto blklab5 : int
-			if(filterX>=filterSize){goto blklab5;}
-			//add %25 = %3, %12 : int
-			_25=xCenter+filterX;
-			//sub %26 = %25, %9 : int
-			_26=_25-filterHalf;
-			//invoke (%24) = (%26, %1) SobelEdgeDetect1:wrap : function(int,int)->(int)
-			_24 = wrap(_26, width);
-			//assign %13 = %24  : int
-			x = _24;
-			//mul %27 = %11, %1 : int
-			_27=y*width;
-			//add %28 = %27, %13 : int
-			_28=_27+x;
-			//indexof %29 = %0, %28 : int[]
-			_29=pixels[_28];
-			//assign %14 = %29  : int
-			pixel = _29;
-			//mul %30 = %10, %8 : int
-			_30=filterY*filterSize;
-			//add %31 = %30, %12 : int
-			_31=_30+filterX;
-			//indexof %32 = %5, %31 : int[]
-			_32=filter[_31];
-			//assign %15 = %32  : int
-			filterVal = _32;
-			//mul %33 = %14, %15 : int
-			_33=pixel*filterVal;
-			//add %34 = %7, %33 : int
-			_34=sum+_33;
-			//assign %7 = %34  : int
-			sum = _34;
-			//const %35 = 1 : int
-			_35 = 1;
-			//add %36 = %12, %35 : int
-			_36=filterX+_35;
-			//assign %12 = %36  : int
-			filterX = _36;
-//.blklab6
-blklab6:;
-		}
-//.blklab5
-blklab5:;
-		//const %37 = 1 : int
-		_37 = 1;
-		//add %38 = %10, %37 : int
-		_38=filterY+_37;
-		//assign %10 = %38  : int
-		filterY = _38;
-//.blklab4
-blklab4:;
-	}
+			//ifge %12, %8 goto blklab2 : int
+			if(filterX>=filterSize){goto blklab2;}
+			//add %26 = %3, %12 : int
+			_26=xCenter+filterX;
+			//sub %27 = %26, %9 : int
+			_27=_26-filterHalf;
+			//rem %28 = %27, %1 : int
+			_28=_27%width;
+			//invoke (%25) = (%28) whiley/lang/Math:abs : function(int)->(int)
+			_25 = llabs(_28);
+			//assign %13 = %25  : int
+			x = _25;
+			//mul %29 = %11, %1 : int
+			_29=y*width;
+			//add %30 = %29, %13 : int
+			_30=_29+x;
+			//indexof %31 = %0, %30 : int[]
+			_31=pixels[_30];
+			//assign %14 = %31  : int
+			pixel = _31;
+			//mul %32 = %10, %8 : int
+			_32=filterY*filterSize;
+			//add %33 = %32, %12 : int
+			_33=_32+filterX;
+			//indexof %34 = %5, %33 : int[]
+			_34=filter[_33];
+			//assign %15 = %34  : int
+			filterVal = _34;
+			//mul %35 = %14, %15 : int
+			_35=pixel*filterVal;
+			//add %36 = %7, %35 : int
+			_36=sum+_35;
+			//assign %7 = %36  : int
+			sum = _36;
+			//const %37 = 1 : int
+			_37 = 1;
+			//add %38 = %12, %37 : int
+			_38=filterX+_37;
+			//assign %12 = %38  : int
+			filterX = _38;
 //.blklab3
 blklab3:;
+		}
+//.blklab2
+blklab2:;
+		//const %39 = 1 : int
+		_39 = 1;
+		//add %40 = %10, %39 : int
+		_40=filterY+_39;
+		//assign %10 = %40  : int
+		filterY = _40;
+//.blklab1
+blklab1:;
+	}
+//.blklab0
+blklab0:;
 	//return %7
 	_DEALLOC(pixels);
 	_DEALLOC(filter);
@@ -160,12 +134,10 @@ blklab3:;
 	//return
 }
 
-int main(int argc, char** args){
-	long long width = 0;
-	long long height = 0;
+long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(pixels), long long width, long long height){
+	_DECL_1DARRAY(_3);
+	_DECL_DEALLOC(_3);
 	long long size = 0;
-	_DECL_1DARRAY(pixels);
-	_DECL_DEALLOC(pixels);
 	_DECL_1DARRAY(newPixels);
 	_DECL_DEALLOC(newPixels);
 	_DECL_1DARRAY(v_sobel);
@@ -180,15 +152,376 @@ int main(int argc, char** args){
 	long long t_g = 0;
 	long long _14 = 0;
 	long long _15 = 0;
-	long long _16 = 0;
+	_DECL_1DARRAY(_16);
+	_DECL_DEALLOC(_16);
 	long long _17 = 0;
-	_DECL_1DARRAY(_18);
-	_DECL_DEALLOC(_18);
+	long long _18 = 0;
 	long long _19 = 0;
 	long long _20 = 0;
 	long long _21 = 0;
-	_DECL_1DARRAY(_22);
-	_DECL_DEALLOC(_22);
+	long long _22 = 0;
+	long long _23 = 0;
+	long long _24 = 0;
+	long long _25 = 0;
+	long long _26 = 0;
+	long long _27 = 0;
+	long long _28 = 0;
+	_DECL_1DARRAY(_29);
+	_DECL_DEALLOC(_29);
+	long long _30 = 0;
+	long long _31 = 0;
+	long long _32 = 0;
+	long long _33 = 0;
+	long long _34 = 0;
+	long long _35 = 0;
+	long long _36 = 0;
+	long long _37 = 0;
+	long long _38 = 0;
+	long long _39 = 0;
+	long long _40 = 0;
+	long long _41 = 0;
+	_DECL_1DARRAY(_42);
+	_DECL_DEALLOC(_42);
+	long long _43 = 0;
+	long long _44 = 0;
+	long long _45 = 0;
+	long long _46 = 0;
+	long long _47 = 0;
+	long long _48 = 0;
+	long long _49 = 0;
+	long long _50 = 0;
+	long long _51 = 0;
+	long long _52 = 0;
+	long long _53 = 0;
+	long long _54 = 0;
+	long long _55 = 0;
+	long long _56 = 0;
+	long long _57 = 0;
+	long long _58 = 0;
+	//mul %14 = %1, %2 : int
+	_14=width*height;
+	//assign %4 = %14  : int
+	size = _14;
+	//const %15 = 255 : int
+	_15 = 255;
+	//arraygen %16 = [15; 4] : int[]
+	_DEALLOC(_16);
+	_NEW_1DARRAY(_16, size, _15);
+	_ADD_DEALLOC(_16);
+	//assign %5 = %16  : int[]
+	_DEALLOC(newPixels);
+	_UPDATE_1DARRAY(newPixels, _16);
+	_TRANSFER_DEALLOC(newPixels, _16);
+	//const %17 = 1 : int
+	_17 = 1;
+	//neg %18 = %17 : int
+	_18= -_17;
+	//const %19 = 0 : int
+	_19 = 0;
+	//const %20 = 1 : int
+	_20 = 1;
+	//const %21 = 2 : int
+	_21 = 2;
+	//neg %22 = %21 : int
+	_22= -_21;
+	//const %23 = 0 : int
+	_23 = 0;
+	//const %24 = 2 : int
+	_24 = 2;
+	//const %25 = 1 : int
+	_25 = 1;
+	//neg %26 = %25 : int
+	_26= -_25;
+	//const %27 = 0 : int
+	_27 = 0;
+	//const %28 = 1 : int
+	_28 = 1;
+	//newlist %29 = (%18, %19, %20, %22, %23, %24, %26, %27, %28) : int[]
+	_DEALLOC(_29);
+	_NEW_1DARRAY(_29, 9, 0);
+	_29[0] = _18; _29[1] = _19; _29[2] = _20; _29[3] = _22; _29[4] = _23; _29[5] = _24; _29[6] = _26; _29[7] = _27; _29[8] = _28; 
+	_ADD_DEALLOC(_29);
+	//assign %6 = %29  : int[]
+	_DEALLOC(v_sobel);
+	_UPDATE_1DARRAY(v_sobel, _29);
+	_TRANSFER_DEALLOC(v_sobel, _29);
+	//const %30 = 1 : int
+	_30 = 1;
+	//const %31 = 2 : int
+	_31 = 2;
+	//const %32 = 1 : int
+	_32 = 1;
+	//const %33 = 0 : int
+	_33 = 0;
+	//const %34 = 0 : int
+	_34 = 0;
+	//const %35 = 0 : int
+	_35 = 0;
+	//const %36 = 1 : int
+	_36 = 1;
+	//neg %37 = %36 : int
+	_37= -_36;
+	//const %38 = 2 : int
+	_38 = 2;
+	//neg %39 = %38 : int
+	_39= -_38;
+	//const %40 = 1 : int
+	_40 = 1;
+	//neg %41 = %40 : int
+	_41= -_40;
+	//newlist %42 = (%30, %31, %32, %33, %34, %35, %37, %39, %41) : int[]
+	_DEALLOC(_42);
+	_NEW_1DARRAY(_42, 9, 0);
+	_42[0] = _30; _42[1] = _31; _42[2] = _32; _42[3] = _33; _42[4] = _34; _42[5] = _35; _42[6] = _37; _42[7] = _39; _42[8] = _41; 
+	_ADD_DEALLOC(_42);
+	//assign %7 = %42  : int[]
+	_DEALLOC(h_sobel);
+	_UPDATE_1DARRAY(h_sobel, _42);
+	_TRANSFER_DEALLOC(h_sobel, _42);
+	//const %43 = 0 : int
+	_43 = 0;
+	//assign %8 = %43  : int
+	x = _43;
+	//loop (%5, %8, %9, %10, %11, %12, %13, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57, %58)
+	while(true){
+		//ifge %8, %1 goto blklab4 : int
+		if(x>=width){goto blklab4;}
+		//const %44 = 0 : int
+		_44 = 0;
+		//assign %9 = %44  : int
+		y = _44;
+		//loop (%5, %9, %10, %11, %12, %13, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54, %55, %56)
+		while(true){
+			//ifge %9, %2 goto blklab6 : int
+			if(y>=height){goto blklab6;}
+			//mul %45 = %9, %1 : int
+			_45=y*width;
+			//add %46 = %45, %8 : int
+			_46=_45+x;
+			//assign %10 = %46  : int
+			pos = _46;
+			//invoke (%47) = (%0, %1, %2, %8, %9, %6) SobelEdgeDetect1:convolution : function(int[],int,int,int,int,int[])->(int)
+			_47 = convolution(_1DARRAY_PARAM(pixels), false, width, height, x, y, _1DARRAY_PARAM(v_sobel), false);
+			//assign %11 = %47  : int
+			v_g = _47;
+			//invoke (%48) = (%0, %1, %2, %8, %9, %7) SobelEdgeDetect1:convolution : function(int[],int,int,int,int,int[])->(int)
+			_48 = convolution(_1DARRAY_PARAM(pixels), false, width, height, x, y, _1DARRAY_PARAM(h_sobel), false);
+			//assign %12 = %48  : int
+			h_g = _48;
+			//invoke (%49) = (%11) whiley/lang/Math:abs : function(int)->(int)
+			_49 = llabs(v_g);
+			//invoke (%50) = (%12) whiley/lang/Math:abs : function(int)->(int)
+			_50 = llabs(h_g);
+			//add %51 = %49, %50 : int
+			_51=_49+_50;
+			//assign %13 = %51  : int
+			t_g = _51;
+			//const %52 = 128 : int
+			_52 = 128;
+			//ifle %13, %52 goto blklab8 : int
+			if(t_g<=_52){goto blklab8;}
+			//const %53 = 255 : int
+			_53 = 255;
+			//update %5[%10] = %53 : int[] -> int[]
+			newPixels[pos] = _53;
+			//goto blklab9
+			goto blklab9;
+//.blklab8
+blklab8:;
+			//const %54 = 0 : int
+			_54 = 0;
+			//update %5[%10] = %54 : int[] -> int[]
+			newPixels[pos] = _54;
+//.blklab9
+blklab9:;
+			//const %55 = 1 : int
+			_55 = 1;
+			//add %56 = %9, %55 : int
+			_56=y+_55;
+			//assign %9 = %56  : int
+			y = _56;
+//.blklab7
+blklab7:;
+		}
+//.blklab6
+blklab6:;
+		//const %57 = 1 : int
+		_57 = 1;
+		//add %58 = %8, %57 : int
+		_58=x+_57;
+		//assign %8 = %58  : int
+		x = _58;
+//.blklab5
+blklab5:;
+	}
+//.blklab4
+blklab4:;
+	//return %5
+	_DEALLOC(pixels);
+	_DEALLOC(_3);
+	_DEALLOC(v_sobel);
+	_DEALLOC(h_sobel);
+	_DEALLOC(_16);
+	_DEALLOC(_29);
+	_DEALLOC(_42);
+	return newPixels;
+	//return
+}
+
+void printImage(FILE* sys, _DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(pixels), long long width, long long height){
+	long long x = 0;
+	long long y = 0;
+	long long pos = 0;
+	long long _7 = 0;
+	long long _8 = 0;
+	long long _9 = 0;
+	long long _10 = 0;
+	long long _11 = 0;
+	long long _12 = 0;
+	void* _13;
+	_DECL_1DARRAY(_15);
+	_DECL_DEALLOC(_15);
+	void* _16;
+	_DECL_1DARRAY(_18);
+	_DECL_DEALLOC(_18);
+	void* _19;
+	_DECL_1DARRAY(_21);
+	_DECL_DEALLOC(_21);
+	long long _22 = 0;
+	long long _23 = 0;
+	long long _24 = 0;
+	long long _25 = 0;
+	void* _26;
+	void* _28;
+	long long _28_size = 0;
+	_DECL_DEALLOC(_28);
+	//const %7 = 0 : int
+	_7 = 0;
+	//assign %4 = %7  : int
+	x = _7;
+	//loop (%4, %5, %6, %8, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28)
+	while(true){
+		//ifge %4, %2 goto blklab10 : int
+		if(x>=width){goto blklab10;}
+		//const %8 = 0 : int
+		_8 = 0;
+		//assign %5 = %8  : int
+		y = _8;
+		//loop (%5, %6, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23)
+		while(true){
+			//ifge %5, %3 goto blklab12 : int
+			if(y>=height){goto blklab12;}
+			//mul %9 = %5, %2 : int
+			_9=y*width;
+			//add %10 = %9, %4 : int
+			_10=_9+x;
+			//assign %6 = %10  : int
+			pos = _10;
+			//indexof %11 = %1, %6 : int[]
+			_11=pixels[pos];
+			//const %12 = 255 : int
+			_12 = 255;
+			//ifne %11, %12 goto blklab14 : int
+			if(_11!=_12){goto blklab14;}
+			//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %14 = %13 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//const %15 = [119] : int[]
+			_DEALLOC(_15);
+			_NEW_1DARRAY(_15, 1, 0);
+			_15[0] = 119; 
+			_ADD_DEALLOC(_15);
+			//indirectinvoke () = %14 (%15) : method(int[])->()
+			printf_s(_1DARRAY_PARAM(_15));
+			//goto blklab15
+			goto blklab15;
+//.blklab14
+blklab14:;
+			//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %17 = %16 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//const %18 = [98] : int[]
+			_DEALLOC(_18);
+			_NEW_1DARRAY(_18, 1, 0);
+			_18[0] = 98; 
+			_ADD_DEALLOC(_18);
+			//indirectinvoke () = %17 (%18) : method(int[])->()
+			printf_s(_1DARRAY_PARAM(_18));
+//.blklab15
+blklab15:;
+			//fieldload %19 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %20 = %19 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//const %21 = [32] : int[]
+			_DEALLOC(_21);
+			_NEW_1DARRAY(_21, 1, 0);
+			_21[0] = 32; 
+			_ADD_DEALLOC(_21);
+			//indirectinvoke () = %20 (%21) : method(int[])->()
+			printf_s(_1DARRAY_PARAM(_21));
+			//const %22 = 1 : int
+			_22 = 1;
+			//add %23 = %5, %22 : int
+			_23=y+_22;
+			//assign %5 = %23  : int
+			y = _23;
+//.blklab13
+blklab13:;
+		}
+//.blklab12
+blklab12:;
+		//const %24 = 1 : int
+		_24 = 1;
+		//add %25 = %4, %24 : int
+		_25=x+_24;
+		//assign %4 = %25  : int
+		x = _25;
+		//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+		//fieldload %27 = %26 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+		//const %28 = [] : void[]
+		_DEALLOC(_28);
+		_NEW_1DARRAY(_28, 0, 0);
+		_ADD_DEALLOC(_28);
+		//indirectinvoke () = %27 (%28) : method(int[])->()
+		println_s(_28, _28_size);
+//.blklab11
+blklab11:;
+	}
+//.blklab10
+blklab10:;
+	//return
+	_DEALLOC(pixels);
+	_DEALLOC(_15);
+	_DEALLOC(_18);
+	_DEALLOC(_21);
+	_DEALLOC(_28);
+	return;
+}
+
+int main(int argc, char** args){
+	long long width = 0;
+	long long height = 0;
+	long long size = 0;
+	_DECL_1DARRAY(pixels);
+	_DECL_DEALLOC(pixels);
+	_DECL_1DARRAY(newPixels);
+	_DECL_DEALLOC(newPixels);
+	long long _6 = 0;
+	long long _7 = 0;
+	long long _8 = 0;
+	long long _9 = 0;
+	_DECL_1DARRAY(_10);
+	_DECL_DEALLOC(_10);
+	long long _11 = 0;
+	long long _12 = 0;
+	_DECL_1DARRAY(_13);
+	_DECL_DEALLOC(_13);
+	void* _14;
+	_DECL_1DARRAY(_16);
+	_DECL_DEALLOC(_16);
+	void* _17;
+	_DECL_1DARRAY(_19);
+	_DECL_DEALLOC(_19);
+	long long _20 = 0;
+	long long _21 = 0;
+	long long _22 = 0;
 	long long _23 = 0;
 	long long _24 = 0;
 	long long _25 = 0;
@@ -201,8 +534,7 @@ int main(int argc, char** args){
 	long long _32 = 0;
 	long long _33 = 0;
 	long long _34 = 0;
-	_DECL_1DARRAY(_35);
-	_DECL_DEALLOC(_35);
+	long long _35 = 0;
 	long long _36 = 0;
 	long long _37 = 0;
 	long long _38 = 0;
@@ -215,356 +547,82 @@ int main(int argc, char** args){
 	long long _45 = 0;
 	long long _46 = 0;
 	long long _47 = 0;
-	_DECL_1DARRAY(_48);
-	_DECL_DEALLOC(_48);
+	long long _48 = 0;
 	long long _49 = 0;
 	long long _50 = 0;
-	void* _51;
-	_DECL_1DARRAY(_53);
-	_DECL_DEALLOC(_53);
-	void* _54;
-	void* _56;
-	_DECL_1DARRAY(_58);
-	_DECL_DEALLOC(_58);
-	void* _59;
-	long long _61 = 0;
-	long long _62 = 0;
-	long long _63 = 0;
-	long long _64 = 0;
-	long long _65 = 0;
-	long long _66 = 0;
-	long long _67 = 0;
-	long long _68 = 0;
-	long long _69 = 0;
-	long long _70 = 0;
-	void* _71;
-	_DECL_1DARRAY(_73);
-	_DECL_DEALLOC(_73);
-	void* _74;
-	long long _76 = 0;
-	long long _77 = 0;
-	long long _78 = 0;
-	long long _79 = 0;
-	long long _80 = 0;
-	long long _81 = 0;
-	long long _82 = 0;
-	long long _83 = 0;
-	long long _84 = 0;
-	long long _85 = 0;
-	long long _86 = 0;
-	long long _87 = 0;
-	long long _88 = 0;
-	long long _89 = 0;
-	long long _90 = 0;
-	long long _91 = 0;
-	long long _92 = 0;
-	long long _93 = 0;
-	long long _94 = 0;
-	long long _95 = 0;
-	long long _96 = 0;
-	long long _97 = 0;
-	long long _98 = 0;
-	long long _99 = 0;
-	long long _100 = 0;
-	long long _101 = 0;
-	long long _102 = 0;
-	long long _103 = 0;
-	long long _104 = 0;
-	long long _105 = 0;
-	long long _106 = 0;
-	long long _107 = 0;
-	long long _108 = 0;
-	long long _109 = 0;
-	long long _110 = 0;
-	long long _111 = 0;
-	long long _112 = 0;
-	long long _113 = 0;
-	long long _114 = 0;
-	long long _115 = 0;
-	//const %14 = 8 : int
-	_14 = 8;
-	//assign %1 = %14  : int
-	width = _14;
-	//const %15 = 8 : int
-	_15 = 8;
-	//assign %2 = %15  : int
-	height = _15;
-	//mul %16 = %1, %2 : int
-	_16=width*height;
-	//assign %3 = %16  : int
-	size = _16;
-	//const %17 = 255 : int
-	_17 = 255;
-	//arraygen %18 = [17; 3] : int[]
-	_DEALLOC(_18);
-	_NEW_1DARRAY(_18, size, _17);
-	_ADD_DEALLOC(_18);
-	//assign %4 = %18  : int[]
+	long long _51 = 0;
+	long long _52 = 0;
+	long long _53 = 0;
+	long long _54 = 0;
+	//const %6 = 8 : int
+	_6 = 8;
+	//assign %1 = %6  : int
+	width = _6;
+	//const %7 = 8 : int
+	_7 = 8;
+	//assign %2 = %7  : int
+	height = _7;
+	//mul %8 = %1, %2 : int
+	_8=width*height;
+	//assign %3 = %8  : int
+	size = _8;
+	//const %9 = 255 : int
+	_9 = 255;
+	//arraygen %10 = [9; 3] : int[]
+	_DEALLOC(_10);
+	_NEW_1DARRAY(_10, size, _9);
+	_ADD_DEALLOC(_10);
+	//assign %4 = %10  : int[]
 	_DEALLOC(pixels);
-	_UPDATE_1DARRAY(pixels, _18);
-	_TRANSFER_DEALLOC(pixels, _18);
-	//const %19 = 0 : int
-	_19 = 0;
-	//const %20 = 0 : int
-	_20 = 0;
-	//update %4[%20] = %19 : int[] -> int[]
-	pixels[_20] = _19;
-	//const %21 = 255 : int
-	_21 = 255;
-	//arraygen %22 = [21; 3] : int[]
-	_DEALLOC(_22);
-	_NEW_1DARRAY(_22, size, _21);
-	_ADD_DEALLOC(_22);
-	//assign %5 = %22  : int[]
+	_UPDATE_1DARRAY(pixels, _10);
+	_TRANSFER_DEALLOC(pixels, _10);
+	//const %11 = 0 : int
+	_11 = 0;
+	//const %12 = 0 : int
+	_12 = 0;
+	//update %4[%12] = %11 : int[] -> int[]
+	pixels[_12] = _11;
+	//invoke (%13) = (%4, %1, %2) SobelEdgeDetect1:sobelEdgeDetection : function(int[],int,int)->(int[])
+	_UPDATE_1DARRAY_SIZE(_13, pixels);
+	_DEALLOC(_13);
+	_13 = sobelEdgeDetection(_1DARRAY_PARAM(pixels), false, width, height);
+	_ADD_DEALLOC(_13);
+	//assign %5 = %13  : int[]
 	_DEALLOC(newPixels);
-	_UPDATE_1DARRAY(newPixels, _22);
-	_TRANSFER_DEALLOC(newPixels, _22);
-	//const %23 = 1 : int
-	_23 = 1;
-	//neg %24 = %23 : int
-	_24= -_23;
-	//const %25 = 0 : int
-	_25 = 0;
-	//const %26 = 1 : int
-	_26 = 1;
-	//const %27 = 2 : int
-	_27 = 2;
-	//neg %28 = %27 : int
-	_28= -_27;
-	//const %29 = 0 : int
-	_29 = 0;
-	//const %30 = 2 : int
-	_30 = 2;
-	//const %31 = 1 : int
-	_31 = 1;
-	//neg %32 = %31 : int
-	_32= -_31;
-	//const %33 = 0 : int
-	_33 = 0;
-	//const %34 = 1 : int
-	_34 = 1;
-	//newlist %35 = (%24, %25, %26, %28, %29, %30, %32, %33, %34) : int[]
-	_DEALLOC(_35);
-	_NEW_1DARRAY(_35, 9, 0);
-	_35[0] = _24; _35[1] = _25; _35[2] = _26; _35[3] = _28; _35[4] = _29; _35[5] = _30; _35[6] = _32; _35[7] = _33; _35[8] = _34; 
-	_ADD_DEALLOC(_35);
-	//assign %6 = %35  : int[]
-	_DEALLOC(v_sobel);
-	_UPDATE_1DARRAY(v_sobel, _35);
-	_TRANSFER_DEALLOC(v_sobel, _35);
-	//const %36 = 1 : int
-	_36 = 1;
-	//const %37 = 2 : int
-	_37 = 2;
-	//const %38 = 1 : int
-	_38 = 1;
-	//const %39 = 0 : int
-	_39 = 0;
-	//const %40 = 0 : int
-	_40 = 0;
-	//const %41 = 0 : int
-	_41 = 0;
-	//const %42 = 1 : int
-	_42 = 1;
-	//neg %43 = %42 : int
-	_43= -_42;
-	//const %44 = 2 : int
-	_44 = 2;
-	//neg %45 = %44 : int
-	_45= -_44;
-	//const %46 = 1 : int
-	_46 = 1;
-	//neg %47 = %46 : int
-	_47= -_46;
-	//newlist %48 = (%36, %37, %38, %39, %40, %41, %43, %45, %47) : int[]
-	_DEALLOC(_48);
-	_NEW_1DARRAY(_48, 9, 0);
-	_48[0] = _36; _48[1] = _37; _48[2] = _38; _48[3] = _39; _48[4] = _40; _48[5] = _41; _48[6] = _43; _48[7] = _45; _48[8] = _47; 
-	_ADD_DEALLOC(_48);
-	//assign %7 = %48  : int[]
-	_DEALLOC(h_sobel);
-	_UPDATE_1DARRAY(h_sobel, _48);
-	_TRANSFER_DEALLOC(h_sobel, _48);
-	//const %49 = 0 : int
-	_49 = 0;
-	//assign %8 = %49  : int
-	x = _49;
-	//loop (%5, %8, %9, %10, %11, %12, %13, %50, %51, %52, %53, %54, %55, %56, %57, %58, %59, %60, %61, %62, %63, %64, %65, %66, %67, %68, %69, %70, %71, %72, %73, %74, %75, %76, %77, %78, %79, %80)
-	while(true){
-		//ifge %8, %1 goto blklab7 : int
-		if(x>=width){goto blklab7;}
-		//const %50 = 0 : int
-		_50 = 0;
-		//assign %9 = %50  : int
-		y = _50;
-		//loop (%5, %9, %10, %11, %12, %13, %51, %52, %53, %54, %55, %56, %57, %58, %59, %60, %61, %62, %63, %64, %65, %66, %67, %68, %69, %70, %71, %72, %73, %74, %75, %76, %77, %78)
-		while(true){
-			//ifge %9, %2 goto blklab9 : int
-			if(y>=height){goto blklab9;}
-			//fieldload %51 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %52 = %51 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//const %53 = [65,116,32,120,32,61,32] : int[]
-			_DEALLOC(_53);
-			_NEW_1DARRAY(_53, 7, 0);
-			_53[0] = 65; _53[1] = 116; _53[2] = 32; _53[3] = 120; _53[4] = 32; _53[5] = 61; _53[6] = 32; 
-			_ADD_DEALLOC(_53);
-			//indirectinvoke () = %52 (%53) : method(int[])->()
-			printf_s(_1DARRAY_PARAM(_53));
-			//fieldload %54 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %55 = %54 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//indirectinvoke () = %55 (%8) : method(any)->()
-			printf("%lld", x);
-			//fieldload %56 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %57 = %56 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//const %58 = [32,121,32,61,32] : int[]
-			_DEALLOC(_58);
-			_NEW_1DARRAY(_58, 5, 0);
-			_58[0] = 32; _58[1] = 121; _58[2] = 32; _58[3] = 61; _58[4] = 32; 
-			_ADD_DEALLOC(_58);
-			//indirectinvoke () = %57 (%58) : method(int[])->()
-			printf_s(_1DARRAY_PARAM(_58));
-			//fieldload %59 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %60 = %59 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//indirectinvoke () = %60 (%9) : method(any)->()
-			printf("%lld", y);
-			//mul %61 = %9, %1 : int
-			_61=y*width;
-			//add %62 = %61, %8 : int
-			_62=_61+x;
-			//assign %10 = %62  : int
-			pos = _62;
-			//invoke (%63) = (%4, %1, %2, %8, %9, %6) SobelEdgeDetect1:convolution : function(int[],int,int,int,int,int[])->(int)
-			_63 = convolution(_1DARRAY_PARAM(pixels), !pixels_dealloc, width, height, x, y, _1DARRAY_PARAM(v_sobel), !v_sobel_dealloc);
-			//assign %11 = %63  : int
-			v_g = _63;
-			//invoke (%64) = (%4, %1, %2, %8, %9, %7) SobelEdgeDetect1:convolution : function(int[],int,int,int,int,int[])->(int)
-			_64 = convolution(_1DARRAY_PARAM(pixels), !pixels_dealloc, width, height, x, y, _1DARRAY_PARAM(h_sobel), !h_sobel_dealloc);
-			//assign %12 = %64  : int
-			h_g = _64;
-			//invoke (%65) = (%11) whiley/lang/Math:abs : function(int)->(int)
-			_65 = llabs(v_g);
-			//invoke (%66) = (%12) whiley/lang/Math:abs : function(int)->(int)
-			_66 = llabs(h_g);
-			//add %67 = %65, %66 : int
-			_67=_65+_66;
-			//assign %13 = %67  : int
-			t_g = _67;
-			//const %68 = 128 : int
-			_68 = 128;
-			//ifle %13, %68 goto blklab11 : int
-			if(t_g<=_68){goto blklab11;}
-			//const %69 = 255 : int
-			_69 = 255;
-			//update %5[%10] = %69 : int[] -> int[]
-			newPixels[pos] = _69;
-			//goto blklab12
-			goto blklab12;
-//.blklab11
-blklab11:;
-			//const %70 = 0 : int
-			_70 = 0;
-			//update %5[%10] = %70 : int[] -> int[]
-			newPixels[pos] = _70;
-//.blklab12
-blklab12:;
-			//fieldload %71 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %72 = %71 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//const %73 = [32,110,101,119,80,105,120,101,108,115,91,112,111,115,93,32,61,32] : int[]
-			_DEALLOC(_73);
-			_NEW_1DARRAY(_73, 18, 0);
-			_73[0] = 32; _73[1] = 110; _73[2] = 101; _73[3] = 119; _73[4] = 80; _73[5] = 105; _73[6] = 120; _73[7] = 101; _73[8] = 108; _73[9] = 115; _73[10] = 91; _73[11] = 112; _73[12] = 111; _73[13] = 115; _73[14] = 93; _73[15] = 32; _73[16] = 61; _73[17] = 32; 
-			_ADD_DEALLOC(_73);
-			//indirectinvoke () = %72 (%73) : method(int[])->()
-			printf_s(_1DARRAY_PARAM(_73));
-			//fieldload %74 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %75 = %74 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//indexof %76 = %5, %10 : int[]
-			_76=newPixels[pos];
-			//indirectinvoke () = %75 (%76) : method(any)->()
-			printf("%lld\n", _76);
-			//const %77 = 1 : int
-			_77 = 1;
-			//add %78 = %9, %77 : int
-			_78=y+_77;
-			//assign %9 = %78  : int
-			y = _78;
-//.blklab10
-blklab10:;
-		}
-//.blklab9
-blklab9:;
-		//const %79 = 1 : int
-		_79 = 1;
-		//add %80 = %8, %79 : int
-		_80=x+_79;
-		//assign %8 = %80  : int
-		x = _80;
-//.blklab8
-blklab8:;
-	}
-//.blklab7
-blklab7:;
+	_UPDATE_1DARRAY(newPixels, _13);
+	_TRANSFER_DEALLOC(newPixels, _13);
+	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %15 = %14 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %16 = [79,114,105,103,105,110,97,108,32,73,109,97,103,101,58] : int[]
+	_DEALLOC(_16);
+	_NEW_1DARRAY(_16, 15, 0);
+	_16[0] = 79; _16[1] = 114; _16[2] = 105; _16[3] = 103; _16[4] = 105; _16[5] = 110; _16[6] = 97; _16[7] = 108; _16[8] = 32; _16[9] = 73; _16[10] = 109; _16[11] = 97; _16[12] = 103; _16[13] = 101; _16[14] = 58; 
+	_ADD_DEALLOC(_16);
+	//indirectinvoke () = %15 (%16) : method(int[])->()
+	println_s(_16, _16_size);
+	//invoke () = (%0, %4, %1, %2) SobelEdgeDetect1:printImage : method(whiley/lang/System:Console,int[],int,int)->()
+printImage(stdout, _1DARRAY_PARAM(pixels), !pixels_dealloc, width, height);
+	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %18 = %17 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %19 = [70,105,108,116,101,114,101,100,32,73,109,97,103,101,32,117,115,105,110,103,32,83,111,98,101,108,32,69,100,103,101,32,68,101,116,101,99,116,105,111,110,58] : int[]
+	_DEALLOC(_19);
+	_NEW_1DARRAY(_19, 42, 0);
+	_19[0] = 70; _19[1] = 105; _19[2] = 108; _19[3] = 116; _19[4] = 101; _19[5] = 114; _19[6] = 101; _19[7] = 100; _19[8] = 32; _19[9] = 73; _19[10] = 109; _19[11] = 97; _19[12] = 103; _19[13] = 101; _19[14] = 32; _19[15] = 117; _19[16] = 115; _19[17] = 105; _19[18] = 110; _19[19] = 103; _19[20] = 32; _19[21] = 83; _19[22] = 111; _19[23] = 98; _19[24] = 101; _19[25] = 108; _19[26] = 32; _19[27] = 69; _19[28] = 100; _19[29] = 103; _19[30] = 101; _19[31] = 32; _19[32] = 68; _19[33] = 101; _19[34] = 116; _19[35] = 101; _19[36] = 99; _19[37] = 116; _19[38] = 105; _19[39] = 111; _19[40] = 110; _19[41] = 58; 
+	_ADD_DEALLOC(_19);
+	//indirectinvoke () = %18 (%19) : method(int[])->()
+	println_s(_19, _19_size);
+	//invoke () = (%0, %5, %1, %2) SobelEdgeDetect1:printImage : method(whiley/lang/System:Console,int[],int,int)->()
+printImage(stdout, _1DARRAY_PARAM(newPixels), !newPixels_dealloc, width, height);
 	//assert
 	{
-		//const %81 = 0 : int
-		_81 = 0;
-		//indexof %82 = %5, %81 : int[]
-		_82=newPixels[_81];
-		//const %83 = 0 : int
-		_83 = 0;
-		//ifeq %82, %83 goto blklab13 : int
-		if(_82==_83){goto blklab13;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab13
-blklab13:;
-	//assert
-	}
-	//assert
-	{
-		//const %84 = 1 : int
-		_84 = 1;
-		//indexof %85 = %5, %84 : int[]
-		_85=newPixels[_84];
-		//const %86 = 255 : int
-		_86 = 255;
-		//ifeq %85, %86 goto blklab14 : int
-		if(_85==_86){goto blklab14;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab14
-blklab14:;
-	//assert
-	}
-	//assert
-	{
-		//indexof %87 = %5, %1 : int[]
-		_87=newPixels[width];
-		//const %88 = 255 : int
-		_88 = 255;
-		//ifeq %87, %88 goto blklab15 : int
-		if(_87==_88){goto blklab15;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab15
-blklab15:;
-	//assert
-	}
-	//assert
-	{
-		//const %89 = 1 : int
-		_89 = 1;
-		//add %90 = %1, %89 : int
-		_90=width+_89;
-		//indexof %91 = %5, %90 : int[]
-		_91=newPixels[_90];
-		//const %92 = 255 : int
-		_92 = 255;
-		//ifeq %91, %92 goto blklab16 : int
-		if(_91==_92){goto blklab16;}
+		//const %20 = 0 : int
+		_20 = 0;
+		//indexof %21 = %5, %20 : int[]
+		_21=newPixels[_20];
+		//const %22 = 0 : int
+		_22 = 0;
+		//ifeq %21, %22 goto blklab16 : int
+		if(_21==_22){goto blklab16;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -574,16 +632,14 @@ blklab16:;
 	}
 	//assert
 	{
-		//const %93 = 7 : int
-		_93 = 7;
-		//mul %94 = %93, %1 : int
-		_94=_93*width;
-		//indexof %95 = %5, %94 : int[]
-		_95=newPixels[_94];
-		//const %96 = 255 : int
-		_96 = 255;
-		//ifeq %95, %96 goto blklab17 : int
-		if(_95==_96){goto blklab17;}
+		//const %23 = 1 : int
+		_23 = 1;
+		//indexof %24 = %5, %23 : int[]
+		_24=newPixels[_23];
+		//const %25 = 255 : int
+		_25 = 255;
+		//ifeq %24, %25 goto blklab17 : int
+		if(_24==_25){goto blklab17;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -593,20 +649,12 @@ blklab17:;
 	}
 	//assert
 	{
-		//const %97 = 7 : int
-		_97 = 7;
-		//mul %98 = %97, %1 : int
-		_98=_97*width;
-		//const %99 = 1 : int
-		_99 = 1;
-		//add %100 = %98, %99 : int
-		_100=_98+_99;
-		//indexof %101 = %5, %100 : int[]
-		_101=newPixels[_100];
-		//const %102 = 255 : int
-		_102 = 255;
-		//ifeq %101, %102 goto blklab18 : int
-		if(_101==_102){goto blklab18;}
+		//indexof %26 = %5, %1 : int[]
+		_26=newPixels[width];
+		//const %27 = 255 : int
+		_27 = 255;
+		//ifeq %26, %27 goto blklab18 : int
+		if(_26==_27){goto blklab18;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -616,14 +664,16 @@ blklab18:;
 	}
 	//assert
 	{
-		//const %103 = 7 : int
-		_103 = 7;
-		//indexof %104 = %5, %103 : int[]
-		_104=newPixels[_103];
-		//const %105 = 255 : int
-		_105 = 255;
-		//ifeq %104, %105 goto blklab19 : int
-		if(_104==_105){goto blklab19;}
+		//const %28 = 1 : int
+		_28 = 1;
+		//add %29 = %1, %28 : int
+		_29=width+_28;
+		//indexof %30 = %5, %29 : int[]
+		_30=newPixels[_29];
+		//const %31 = 255 : int
+		_31 = 255;
+		//ifeq %30, %31 goto blklab19 : int
+		if(_30==_31){goto blklab19;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -633,16 +683,16 @@ blklab19:;
 	}
 	//assert
 	{
-		//const %106 = 7 : int
-		_106 = 7;
-		//add %107 = %1, %106 : int
-		_107=width+_106;
-		//indexof %108 = %5, %107 : int[]
-		_108=newPixels[_107];
-		//const %109 = 255 : int
-		_109 = 255;
-		//ifeq %108, %109 goto blklab20 : int
-		if(_108==_109){goto blklab20;}
+		//const %32 = 7 : int
+		_32 = 7;
+		//mul %33 = %32, %1 : int
+		_33=_32*width;
+		//indexof %34 = %5, %33 : int[]
+		_34=newPixels[_33];
+		//const %35 = 255 : int
+		_35 = 255;
+		//ifeq %34, %35 goto blklab20 : int
+		if(_34==_35){goto blklab20;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -652,20 +702,20 @@ blklab20:;
 	}
 	//assert
 	{
-		//const %110 = 7 : int
-		_110 = 7;
-		//mul %111 = %110, %1 : int
-		_111=_110*width;
-		//const %112 = 7 : int
-		_112 = 7;
-		//add %113 = %111, %112 : int
-		_113=_111+_112;
-		//indexof %114 = %5, %113 : int[]
-		_114=newPixels[_113];
-		//const %115 = 255 : int
-		_115 = 255;
-		//ifeq %114, %115 goto blklab21 : int
-		if(_114==_115){goto blklab21;}
+		//const %36 = 7 : int
+		_36 = 7;
+		//mul %37 = %36, %1 : int
+		_37=_36*width;
+		//const %38 = 1 : int
+		_38 = 1;
+		//add %39 = %37, %38 : int
+		_39=_37+_38;
+		//indexof %40 = %5, %39 : int[]
+		_40=newPixels[_39];
+		//const %41 = 255 : int
+		_41 = 255;
+		//ifeq %40, %41 goto blklab21 : int
+		if(_40==_41){goto blklab21;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -673,18 +723,72 @@ blklab20:;
 blklab21:;
 	//assert
 	}
+	//assert
+	{
+		//const %42 = 7 : int
+		_42 = 7;
+		//indexof %43 = %5, %42 : int[]
+		_43=newPixels[_42];
+		//const %44 = 255 : int
+		_44 = 255;
+		//ifeq %43, %44 goto blklab22 : int
+		if(_43==_44){goto blklab22;}
+		//fail
+		fprintf(stderr,"fail");
+		exit(-1);
+//.blklab22
+blklab22:;
+	//assert
+	}
+	//assert
+	{
+		//const %45 = 7 : int
+		_45 = 7;
+		//add %46 = %1, %45 : int
+		_46=width+_45;
+		//indexof %47 = %5, %46 : int[]
+		_47=newPixels[_46];
+		//const %48 = 255 : int
+		_48 = 255;
+		//ifeq %47, %48 goto blklab23 : int
+		if(_47==_48){goto blklab23;}
+		//fail
+		fprintf(stderr,"fail");
+		exit(-1);
+//.blklab23
+blklab23:;
+	//assert
+	}
+	//assert
+	{
+		//const %49 = 7 : int
+		_49 = 7;
+		//mul %50 = %49, %1 : int
+		_50=_49*width;
+		//const %51 = 7 : int
+		_51 = 7;
+		//add %52 = %50, %51 : int
+		_52=_50+_51;
+		//indexof %53 = %5, %52 : int[]
+		_53=newPixels[_52];
+		//const %54 = 255 : int
+		_54 = 255;
+		//ifeq %53, %54 goto blklab24 : int
+		if(_53==_54){goto blklab24;}
+		//fail
+		fprintf(stderr,"fail");
+		exit(-1);
+//.blklab24
+blklab24:;
+	//assert
+	}
 	//return
 	_DEALLOC(pixels);
 	_DEALLOC(newPixels);
-	_DEALLOC(v_sobel);
-	_DEALLOC(h_sobel);
-	_DEALLOC(_18);
-	_DEALLOC(_22);
-	_DEALLOC(_35);
-	_DEALLOC(_48);
-	_DEALLOC(_53);
-	_DEALLOC(_58);
-	_DEALLOC(_73);
+	_DEALLOC(_10);
+	_DEALLOC(_13);
+	_DEALLOC(_16);
+	_DEALLOC(_19);
 	exit(0);
 }
 

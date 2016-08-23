@@ -370,7 +370,7 @@ public class DeallocationAnalyzer extends Analyzer {
 						statements.add(indent + removeDealloc(register, function, stores));
 					} else if(callee_dealloc.equals("negated_dealloc")) { 
 						// Do nothing to caller's flag
-					} else if (callee_dealloc.equals("substruct_dealloc")){
+					} else if (callee_dealloc.equals("false_dealloc")){
 						// Do nothing to caller's flag
 					} else{
 						throw new RuntimeException(callee_dealloc + " NOT implemented");
@@ -487,7 +487,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * 					|'negated_dealloc'  |'none_dealloc'   |'none_dealloc'   |'negated_dealloc'
 	 * ---------------------------------------------------------------------------
 	 * 				T	|No Copy			|No Copy	      |Copy		        |Copy
-	 * 					|'negated_dealloc'	|'none_dealloc'   |'caller_dealloc'	|'both_dealloc'
+	 * 					|'false_dealloc'	|'none_dealloc'   |'caller_dealloc'	|'both_dealloc'
 	 * 
 	 * 
 	 * </pre>
@@ -504,18 +504,13 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param copyAnalyzer
 	 * @return macro names, including:
 	 *         <ul>
-	 *         <li>'substruct_dealloc': sets the callee's flag to be false.
-	 *         <code>     
-	 * 		  		a = f(b, false)
-	 *        		a_dealloc = true
-	 * 	    	</code>
 	 * 
 	 *         <li>'negated_dealloc': passed the negated flag to the function call
 	 *         <code>     
 	 * 		  		a = f(b, !b_dealloc)
 	 *        		a_dealloc = true
 	 * 	    	</code>
-	 * 
+	 *		   
 	 *         <li>'caller_dealloc': set caller's flag to be true and callee's flag to be false. <code>     
 	 * 		  		a = f(b, false)
 	 *        		b_dealloc = true
@@ -535,7 +530,12 @@ public class DeallocationAnalyzer extends Analyzer {
 	 *        		b_dealloc = false
 	 *        		a_dealloc = true
 	 * 	    	</code>
-	 * 
+	 * 		  <li>'false_dealloc': passes 'false' flag to the function call and does not change the original flags at caller site
+	 *        	This macro can be applied to sub-structure de-allocation and immutable and live passing parameter 
+	 *         <code>     
+	 * 		  		a = f(b, false)
+	 *        		a_dealloc = true
+	 * 	    	</code>
 	 *         </ul>
 	 * 
 	 */
@@ -556,7 +556,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			// Check if the register is a substructure
 			boolean isSubStructure = stores.isSubstructure(register, function);
 			if(isSubStructure){
-				return "substruct_dealloc";
+				return "false_dealloc";
 			}
 			
 			// Analyze the deallocation flags using live variable, read-write and return analysis
@@ -566,7 +566,7 @@ public class DeallocationAnalyzer extends Analyzer {
 				if (!isReturned) {
 					// NOT mutated nor return
 					if (isLive) {
-						return "negated_dealloc";
+						return "false_dealloc";
 					}else{
 						return "negated_dealloc";
 					}

@@ -1,0 +1,36 @@
+digraph convolution{
+"entry [ENTRY]"[shape=box];
+"code [BLOCK]"[shape=box];
+"blklab0 [LOOP_HEADER]"[shape=box,style=filled,color=".7 .3 1.0"];
+"blklab0 [LOOP_BODY]"[shape=box,style=filled,color=".7 .3 1.0"];
+"blklab0 [LOOP_EXIT]"[shape=box,style=filled,color=".7 .3 1.0"];
+"abs14 [INVOKE]"[shape=box];
+"abs14 [BLOCK]"[shape=box];
+"blklab2 [LOOP_HEADER]"[shape=box,style=filled,color=".7 .3 1.0"];
+"blklab2 [LOOP_BODY]"[shape=box,style=filled,color=".7 .3 1.0"];
+"blklab2 [LOOP_EXIT]"[shape=box,style=filled,color=".7 .3 1.0"];
+"abs23 [INVOKE]"[shape=box];
+"abs23 [BLOCK]"[shape=box];
+"blklab3 [BLOCK]"[shape=box];
+"blklab1 [BLOCK]"[shape=box];
+"sum [RETURN]"[shape=box];
+"exit [EXIT]"[shape=box];
+"entry [ENTRY]"->"code [BLOCK]";
+"code [BLOCK]"->"blklab0 [LOOP_HEADER]";
+"blklab0 [LOOP_HEADER]"->"blklab0 [LOOP_BODY]";
+"blklab0 [LOOP_HEADER]"->"blklab0 [LOOP_EXIT]";
+"blklab0 [LOOP_BODY]"->"abs14 [INVOKE]";
+"blklab0 [LOOP_EXIT]"->"sum [RETURN]";
+"abs14 [INVOKE]"->"abs14 [BLOCK]";
+"abs14 [BLOCK]"->"blklab2 [LOOP_HEADER]";
+"blklab2 [LOOP_HEADER]"->"blklab2 [LOOP_BODY]";
+"blklab2 [LOOP_HEADER]"->"blklab2 [LOOP_EXIT]";
+"blklab2 [LOOP_BODY]"->"abs23 [INVOKE]";
+"blklab2 [LOOP_EXIT]"->"blklab1 [BLOCK]";
+"abs23 [INVOKE]"->"abs23 [BLOCK]";
+"abs23 [BLOCK]"->"blklab3 [BLOCK]";
+"blklab3 [BLOCK]"->"blklab2 [LOOP_HEADER]";
+"blklab1 [BLOCK]"->"blklab0 [LOOP_HEADER]";
+"sum [RETURN]"->"exit [EXIT]";
+
+}
