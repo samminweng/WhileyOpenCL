@@ -91,15 +91,15 @@ method main(System.Console sys):
 	int size = width * height
 	// An image of 8 x 8 white pixels 
 	int[] pixels = [WHITE;size]
-	// Place a black pixel at (0,0) position 
+	// Place a black pixel at (0,0) 
 	pixels[0] = BLACK // (0,0)
 	// Place a black pixel 
 	int[] newPixels = sobelEdgeDetection(pixels, width, height)
-	sys.out.println_s("Original Image:")
+	sys.out.println_s("Input Image:")
 	printImage(sys, pixels, width, height)
-	sys.out.println_s("Filtered Image using Sobel Edge Detection:")
+	sys.out.println_s("Sobel Edge Detection:")
 	printImage(sys, newPixels, width, height)
-	// A black square is at (0,0)
+	// A black pixel is at (0,0)
 	assert newPixels[0] == BLACK  // (0,0)
 	// The pixels at left-top corner are white
 	assert newPixels[1] == WHITE // (1,0)

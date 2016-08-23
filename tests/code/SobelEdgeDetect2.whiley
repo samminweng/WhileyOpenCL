@@ -110,9 +110,9 @@ function sobelEdgeDetection(Image input) -> Image:
 			// Map (x, y) to the position at 1D
 			int pos = y*width + x
 			// Get vertical gradient
-			int v_g = convolution(pixels, width, height, x, y, v_sobel)
+			int v_g = convolution(input, x, y, v_sobel)
 			// Get horizontal gradient
-			int h_g = convolution(pixels, width, height, x, y, h_sobel)
+			int h_g = convolution(input, x, y, h_sobel)
 			// Get total gradient
 			int t_g = Math.abs(v_g) + Math.abs(h_g)
 			// Edge threshold (128) Note that large thresholds generate few edges
@@ -134,10 +134,10 @@ method print_image(System.Console sys, Image im):
 	int[] pixels = im.pixels
 	int width = im.width
 	int height = im.height
-	int x = 0
-	while x<width:
-		int y = 0
-		while y<height:
+	int y = 0
+	while y<height:
+		int x = 0
+		while x<width:
 			int pos = y*width + x
 			// Print out each pixel value
 			if pixels[pos] == WHITE:
@@ -145,8 +145,8 @@ method print_image(System.Console sys, Image im):
 			else:
 				sys.out.print_s("b")
 			sys.out.print_s(" ")
-			y = y + 1
-		x = x + 1
+			x = x + 1
+		y = y + 1
 		sys.out.println_s("")
 
 // Main function
@@ -158,11 +158,13 @@ method main(System.Console sys):
 	int[] pixels = [WHITE;size] 
 	// Place a black pixel at (0,0) position 
 	pixels[0] = BLACK // (0,0)
+	// Place a black pixel at (3,4) position 
+	pixels[4*width+3] = BLACK // (3,4)
 	// Create an Image structure to store input image
 	Image input = image(width, height, pixels)
 	// Output the result image that is filtered with sobel edge 
 	Image output = sobelEdgeDetection(input)
 	sys.out.println_s("Input Image:")
 	print_image(sys, input)
-	sys.out.println_s("Output Image:")
+	sys.out.println_s("Sobel Edge Detection:")
 	print_image(sys, output)

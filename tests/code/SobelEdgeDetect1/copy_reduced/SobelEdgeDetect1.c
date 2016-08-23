@@ -341,8 +341,8 @@ blklab4:;
 }
 
 void printImage(FILE* sys, _DECL_1DARRAY_PARAM(pixels), long long width, long long height){
-	long long x = 0;
 	long long y = 0;
+	long long x = 0;
 	long long pos = 0;
 	long long _7 = 0;
 	long long _8 = 0;
@@ -366,22 +366,22 @@ void printImage(FILE* sys, _DECL_1DARRAY_PARAM(pixels), long long width, long lo
 	//const %7 = 0 : int
 	_7 = 0;
 	//assign %4 = %7  : int
-	x = _7;
+	y = _7;
 	//loop (%4, %5, %6, %8, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28)
 	while(true){
-		//ifge %4, %2 goto blklab10 : int
-		if(x>=width){goto blklab10;}
+		//ifge %4, %3 goto blklab10 : int
+		if(y>=height){goto blklab10;}
 		//const %8 = 0 : int
 		_8 = 0;
 		//assign %5 = %8  : int
-		y = _8;
+		x = _8;
 		//loop (%5, %6, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23)
 		while(true){
-			//ifge %5, %3 goto blklab12 : int
-			if(y>=height){goto blklab12;}
-			//mul %9 = %5, %2 : int
+			//ifge %5, %2 goto blklab12 : int
+			if(x>=width){goto blklab12;}
+			//mul %9 = %4, %2 : int
 			_9=y*width;
-			//add %10 = %9, %4 : int
+			//add %10 = %9, %5 : int
 			_10=_9+x;
 			//assign %6 = %10  : int
 			pos = _10;
@@ -421,9 +421,9 @@ blklab15:;
 			//const %22 = 1 : int
 			_22 = 1;
 			//add %23 = %5, %22 : int
-			_23=y+_22;
+			_23=x+_22;
 			//assign %5 = %23  : int
-			y = _23;
+			x = _23;
 //.blklab13
 blklab13:;
 		}
@@ -432,9 +432,9 @@ blklab12:;
 		//const %24 = 1 : int
 		_24 = 1;
 		//add %25 = %4, %24 : int
-		_25=x+_24;
+		_25=y+_24;
 		//assign %4 = %25  : int
-		x = _25;
+		y = _25;
 		//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %27 = %26 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//const %28 = [] : void[]
@@ -534,18 +534,18 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY(newPixels, _13);
 	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %15 = %14 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %16 = [79,114,105,103,105,110,97,108,32,73,109,97,103,101,58] : int[]
-	_NEW_1DARRAY(_16, 15, 0);
-	_16[0] = 79; _16[1] = 114; _16[2] = 105; _16[3] = 103; _16[4] = 105; _16[5] = 110; _16[6] = 97; _16[7] = 108; _16[8] = 32; _16[9] = 73; _16[10] = 109; _16[11] = 97; _16[12] = 103; _16[13] = 101; _16[14] = 58; 
+	//const %16 = [73,110,112,117,116,32,73,109,97,103,101,58] : int[]
+	_NEW_1DARRAY(_16, 12, 0);
+	_16[0] = 73; _16[1] = 110; _16[2] = 112; _16[3] = 117; _16[4] = 116; _16[5] = 32; _16[6] = 73; _16[7] = 109; _16[8] = 97; _16[9] = 103; _16[10] = 101; _16[11] = 58; 
 	//indirectinvoke () = %15 (%16) : method(int[])->()
 	println_s(_16, _16_size);
 	//invoke () = (%0, %4, %1, %2) SobelEdgeDetect1:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 printImage(stdout, _1DARRAY_PARAM(pixels), width, height);
 	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %18 = %17 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %19 = [70,105,108,116,101,114,101,100,32,73,109,97,103,101,32,117,115,105,110,103,32,83,111,98,101,108,32,69,100,103,101,32,68,101,116,101,99,116,105,111,110,58] : int[]
-	_NEW_1DARRAY(_19, 42, 0);
-	_19[0] = 70; _19[1] = 105; _19[2] = 108; _19[3] = 116; _19[4] = 101; _19[5] = 114; _19[6] = 101; _19[7] = 100; _19[8] = 32; _19[9] = 73; _19[10] = 109; _19[11] = 97; _19[12] = 103; _19[13] = 101; _19[14] = 32; _19[15] = 117; _19[16] = 115; _19[17] = 105; _19[18] = 110; _19[19] = 103; _19[20] = 32; _19[21] = 83; _19[22] = 111; _19[23] = 98; _19[24] = 101; _19[25] = 108; _19[26] = 32; _19[27] = 69; _19[28] = 100; _19[29] = 103; _19[30] = 101; _19[31] = 32; _19[32] = 68; _19[33] = 101; _19[34] = 116; _19[35] = 101; _19[36] = 99; _19[37] = 116; _19[38] = 105; _19[39] = 111; _19[40] = 110; _19[41] = 58; 
+	//const %19 = [83,111,98,101,108,32,69,100,103,101,32,68,101,116,101,99,116,105,111,110,58] : int[]
+	_NEW_1DARRAY(_19, 21, 0);
+	_19[0] = 83; _19[1] = 111; _19[2] = 98; _19[3] = 101; _19[4] = 108; _19[5] = 32; _19[6] = 69; _19[7] = 100; _19[8] = 103; _19[9] = 101; _19[10] = 32; _19[11] = 68; _19[12] = 101; _19[13] = 116; _19[14] = 101; _19[15] = 99; _19[16] = 116; _19[17] = 105; _19[18] = 111; _19[19] = 110; _19[20] = 58; 
 	//indirectinvoke () = %18 (%19) : method(int[])->()
 	println_s(_19, _19_size);
 	//invoke () = (%0, %5, %1, %2) SobelEdgeDetect1:printImage : method(whiley/lang/System:Console,int[],int,int)->()
