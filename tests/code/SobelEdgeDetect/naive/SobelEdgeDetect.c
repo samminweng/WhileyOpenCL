@@ -341,8 +341,8 @@ blklab4:;
 }
 
 void printImage(FILE* sys, _DECL_1DARRAY_PARAM(pixels), long long width, long long height){
-	long long x = 0;
 	long long y = 0;
+	long long x = 0;
 	long long pos = 0;
 	long long _7 = 0;
 	long long _8 = 0;
@@ -366,22 +366,22 @@ void printImage(FILE* sys, _DECL_1DARRAY_PARAM(pixels), long long width, long lo
 	//const %7 = 0 : int
 	_7 = 0;
 	//assign %4 = %7  : int
-	x = _7;
+	y = _7;
 	//loop (%4, %5, %6, %8, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28)
 	while(true){
-		//ifge %4, %2 goto blklab10 : int
-		if(x>=width){goto blklab10;}
+		//ifge %4, %3 goto blklab10 : int
+		if(y>=height){goto blklab10;}
 		//const %8 = 0 : int
 		_8 = 0;
 		//assign %5 = %8  : int
-		y = _8;
+		x = _8;
 		//loop (%5, %6, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23)
 		while(true){
-			//ifge %5, %3 goto blklab12 : int
-			if(y>=height){goto blklab12;}
-			//mul %9 = %5, %2 : int
+			//ifge %5, %2 goto blklab12 : int
+			if(x>=width){goto blklab12;}
+			//mul %9 = %4, %2 : int
 			_9=y*width;
-			//add %10 = %9, %4 : int
+			//add %10 = %9, %5 : int
 			_10=_9+x;
 			//assign %6 = %10  : int
 			pos = _10;
@@ -421,9 +421,9 @@ blklab15:;
 			//const %22 = 1 : int
 			_22 = 1;
 			//add %23 = %5, %22 : int
-			_23=y+_22;
+			_23=x+_22;
 			//assign %5 = %23  : int
-			y = _23;
+			x = _23;
 //.blklab13
 blklab13:;
 		}
@@ -432,9 +432,9 @@ blklab12:;
 		//const %24 = 1 : int
 		_24 = 1;
 		//add %25 = %4, %24 : int
-		_25=x+_24;
+		_25=y+_24;
 		//assign %4 = %25  : int
-		x = _25;
+		y = _25;
 		//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %27 = %26 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//const %28 = [] : void[]
@@ -549,8 +549,8 @@ int main(int argc, char** args){
 	_12 = 4;
 	//mul %13 = %12, %1 : int
 	_13=_12*width;
-	//const %14 = 4 : int
-	_14 = 4;
+	//const %14 = 3 : int
+	_14 = 3;
 	//add %15 = %13, %14 : int
 	_15=_13+_14;
 	//update %4[%15] = %11 : int[] -> int[]
@@ -562,18 +562,18 @@ int main(int argc, char** args){
 	_COPY_1DARRAY(newPixels, _16);
 	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %18 = %17 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %19 = [79,114,105,103,105,110,97,108,32,73,109,97,103,101,58] : int[]
-	_NEW_1DARRAY(_19, 15, 0);
-	_19[0] = 79; _19[1] = 114; _19[2] = 105; _19[3] = 103; _19[4] = 105; _19[5] = 110; _19[6] = 97; _19[7] = 108; _19[8] = 32; _19[9] = 73; _19[10] = 109; _19[11] = 97; _19[12] = 103; _19[13] = 101; _19[14] = 58; 
+	//const %19 = [73,110,112,117,116,32,73,109,97,103,101,58] : int[]
+	_NEW_1DARRAY(_19, 12, 0);
+	_19[0] = 73; _19[1] = 110; _19[2] = 112; _19[3] = 117; _19[4] = 116; _19[5] = 32; _19[6] = 73; _19[7] = 109; _19[8] = 97; _19[9] = 103; _19[10] = 101; _19[11] = 58; 
 	//indirectinvoke () = %18 (%19) : method(int[])->()
 	println_s(_19, _19_size);
 	//invoke () = (%0, %4, %1, %2) SobelEdgeDetect:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 printImage(stdout, _COPY_1DARRAY_PARAM(pixels), width, height);
 	//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %21 = %20 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %22 = [70,105,108,116,101,114,101,100,32,73,109,97,103,101,32,117,115,105,110,103,32,83,111,98,101,108,32,69,100,103,101,32,68,101,116,101,99,116,105,111,110,58] : int[]
-	_NEW_1DARRAY(_22, 42, 0);
-	_22[0] = 70; _22[1] = 105; _22[2] = 108; _22[3] = 116; _22[4] = 101; _22[5] = 114; _22[6] = 101; _22[7] = 100; _22[8] = 32; _22[9] = 73; _22[10] = 109; _22[11] = 97; _22[12] = 103; _22[13] = 101; _22[14] = 32; _22[15] = 117; _22[16] = 115; _22[17] = 105; _22[18] = 110; _22[19] = 103; _22[20] = 32; _22[21] = 83; _22[22] = 111; _22[23] = 98; _22[24] = 101; _22[25] = 108; _22[26] = 32; _22[27] = 69; _22[28] = 100; _22[29] = 103; _22[30] = 101; _22[31] = 32; _22[32] = 68; _22[33] = 101; _22[34] = 116; _22[35] = 101; _22[36] = 99; _22[37] = 116; _22[38] = 105; _22[39] = 111; _22[40] = 110; _22[41] = 58; 
+	//const %22 = [83,111,98,101,108,32,69,100,103,101,32,68,101,116,101,99,116,105,111,110,58] : int[]
+	_NEW_1DARRAY(_22, 21, 0);
+	_22[0] = 83; _22[1] = 111; _22[2] = 98; _22[3] = 101; _22[4] = 108; _22[5] = 32; _22[6] = 69; _22[7] = 100; _22[8] = 103; _22[9] = 101; _22[10] = 32; _22[11] = 68; _22[12] = 101; _22[13] = 116; _22[14] = 101; _22[15] = 99; _22[16] = 116; _22[17] = 105; _22[18] = 111; _22[19] = 110; _22[20] = 58; 
 	//indirectinvoke () = %21 (%22) : method(int[])->()
 	println_s(_22, _22_size);
 	//invoke () = (%0, %5, %1, %2) SobelEdgeDetect:printImage : method(whiley/lang/System:Console,int[],int,int)->()
@@ -584,8 +584,8 @@ printImage(stdout, _COPY_1DARRAY_PARAM(newPixels), width, height);
 		_23 = 4;
 		//mul %24 = %23, %1 : int
 		_24=_23*width;
-		//const %25 = 4 : int
-		_25 = 4;
+		//const %25 = 3 : int
+		_25 = 3;
 		//add %26 = %24, %25 : int
 		_26=_24+_25;
 		//indexof %27 = %4, %26 : int[]
@@ -607,8 +607,8 @@ blklab16:;
 		_29 = 3;
 		//mul %30 = %29, %1 : int
 		_30=_29*width;
-		//const %31 = 3 : int
-		_31 = 3;
+		//const %31 = 2 : int
+		_31 = 2;
 		//add %32 = %30, %31 : int
 		_32=_30+_31;
 		//indexof %33 = %5, %32 : int[]
@@ -626,12 +626,12 @@ blklab17:;
 	}
 	//assert
 	{
-		//const %35 = 3 : int
-		_35 = 3;
+		//const %35 = 4 : int
+		_35 = 4;
 		//mul %36 = %35, %1 : int
 		_36=_35*width;
-		//const %37 = 4 : int
-		_37 = 4;
+		//const %37 = 2 : int
+		_37 = 2;
 		//add %38 = %36, %37 : int
 		_38=_36+_37;
 		//indexof %39 = %5, %38 : int[]
@@ -649,12 +649,12 @@ blklab18:;
 	}
 	//assert
 	{
-		//const %41 = 3 : int
-		_41 = 3;
+		//const %41 = 5 : int
+		_41 = 5;
 		//mul %42 = %41, %1 : int
 		_42=_41*width;
-		//const %43 = 5 : int
-		_43 = 5;
+		//const %43 = 2 : int
+		_43 = 2;
 		//add %44 = %42, %43 : int
 		_44=_42+_43;
 		//indexof %45 = %5, %44 : int[]
@@ -672,8 +672,8 @@ blklab19:;
 	}
 	//assert
 	{
-		//const %47 = 4 : int
-		_47 = 4;
+		//const %47 = 3 : int
+		_47 = 3;
 		//mul %48 = %47, %1 : int
 		_48=_47*width;
 		//const %49 = 3 : int
@@ -695,12 +695,12 @@ blklab20:;
 	}
 	//assert
 	{
-		//const %53 = 4 : int
-		_53 = 4;
+		//const %53 = 5 : int
+		_53 = 5;
 		//mul %54 = %53, %1 : int
 		_54=_53*width;
-		//const %55 = 5 : int
-		_55 = 5;
+		//const %55 = 3 : int
+		_55 = 3;
 		//add %56 = %54, %55 : int
 		_56=_54+_55;
 		//indexof %57 = %5, %56 : int[]
@@ -718,12 +718,12 @@ blklab21:;
 	}
 	//assert
 	{
-		//const %59 = 5 : int
-		_59 = 5;
+		//const %59 = 3 : int
+		_59 = 3;
 		//mul %60 = %59, %1 : int
 		_60=_59*width;
-		//const %61 = 3 : int
-		_61 = 3;
+		//const %61 = 4 : int
+		_61 = 4;
 		//add %62 = %60, %61 : int
 		_62=_60+_61;
 		//indexof %63 = %5, %62 : int[]
@@ -741,8 +741,8 @@ blklab22:;
 	}
 	//assert
 	{
-		//const %65 = 5 : int
-		_65 = 5;
+		//const %65 = 4 : int
+		_65 = 4;
 		//mul %66 = %65, %1 : int
 		_66=_65*width;
 		//const %67 = 4 : int
@@ -768,8 +768,8 @@ blklab23:;
 		_71 = 5;
 		//mul %72 = %71, %1 : int
 		_72=_71*width;
-		//const %73 = 5 : int
-		_73 = 5;
+		//const %73 = 4 : int
+		_73 = 4;
 		//add %74 = %72, %73 : int
 		_74=_72+_73;
 		//indexof %75 = %5, %74 : int[]

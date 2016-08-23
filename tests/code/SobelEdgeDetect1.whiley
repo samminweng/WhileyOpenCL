@@ -69,10 +69,10 @@ function sobelEdgeDetection(int[] pixels, int width, int height) -> int[]:
 // Print a Image
 // ========================================================
 method printImage(System.Console sys, int[] pixels, int width, int height):
-	int x = 0
-	while x<width:
-		int y = 0
-		while y<height:
+	int y = 0
+	while y<height:
+		int x = 0
+		while x<width:
 			int pos = y*width + x
 			// Print out each pixel value
 			if pixels[pos] == WHITE:
@@ -80,8 +80,8 @@ method printImage(System.Console sys, int[] pixels, int width, int height):
 			else:
 				sys.out.print_s("b")
 			sys.out.print_s(" ")
-			y = y + 1
-		x = x + 1
+			x = x + 1
+		y = y + 1
 		sys.out.println_s("")
 
 // Main function
@@ -89,10 +89,11 @@ method main(System.Console sys):
 	int width = 8
 	int height = 8
 	int size = width * height
-	// The input is a white image of 8 x 8 pixels 
+	// An image of 8 x 8 white pixels 
 	int[] pixels = [WHITE;size]
-	// Place a black square (1x1) at (0,0) position 
+	// Place a black pixel at (0,0) position 
 	pixels[0] = BLACK // (0,0)
+	// Place a black pixel 
 	int[] newPixels = sobelEdgeDetection(pixels, width, height)
 	sys.out.println_s("Original Image:")
 	printImage(sys, pixels, width, height)
