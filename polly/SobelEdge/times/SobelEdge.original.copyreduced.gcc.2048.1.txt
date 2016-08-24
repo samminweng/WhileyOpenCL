@@ -1,63 +1,213 @@
-Run the original SobelEdge on 64 using gcc and 1 threads...Run the original SobelEdge on 64 using gcc
-At (0, 0) newPixels[pos] = 0
-At (1,0) newPixels[pos] = 255
-At (63, 63) newPixels[pos] = 255
+Run the original SobelEdge on 2048 using gcc and 1 threads...Run the original SobelEdge on 2048 using gcc
+Input Image:
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w b w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+Sobel Edge Detection:
+b b b b b b b b 
+b b b b b b b b 
+b b b b b b b b 
+b b w w w b b b 
+b b w b w b b b 
+b b w w w b b b 
+b b b b b b b b 
+b b b b b b b b 
 
-Parameter:64	ExecutionTime:6613557	nanoseconds.
-Run the original SobelEdge on 64 using gcc
-At (0, 0) newPixels[pos] = 0
-At (1,0) newPixels[pos] = 255
-At (63, 63) newPixels[pos] = 255
+Parameter:2048	ExecutionTime:366195541	nanoseconds.
+Run the original SobelEdge on 2048 using gcc
+Input Image:
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w b w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+Sobel Edge Detection:
+b b b b b b b b 
+b b b b b b b b 
+b b b b b b b b 
+b b w w w b b b 
+b b w b w b b b 
+b b w w w b b b 
+b b b b b b b b 
+b b b b b b b b 
 
-Parameter:64	ExecutionTime:5675543	nanoseconds.
-Run the original SobelEdge on 64 using gcc
-At (0, 0) newPixels[pos] = 0
-At (1,0) newPixels[pos] = 255
-At (63, 63) newPixels[pos] = 255
+Parameter:2048	ExecutionTime:367989006	nanoseconds.
+Run the original SobelEdge on 2048 using gcc
+Input Image:
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w b w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+Sobel Edge Detection:
+b b b b b b b b 
+b b b b b b b b 
+b b b b b b b b 
+b b w w w b b b 
+b b w b w b b b 
+b b w w w b b b 
+b b b b b b b b 
+b b b b b b b b 
 
-Parameter:64	ExecutionTime:5578597	nanoseconds.
-Run the original SobelEdge on 64 using gcc
-At (0, 0) newPixels[pos] = 0
-At (1,0) newPixels[pos] = 255
-At (63, 63) newPixels[pos] = 255
+Parameter:2048	ExecutionTime:359967961	nanoseconds.
+Run the original SobelEdge on 2048 using gcc
+Input Image:
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w b w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+Sobel Edge Detection:
+b b b b b b b b 
+b b b b b b b b 
+b b b b b b b b 
+b b w w w b b b 
+b b w b w b b b 
+b b w w w b b b 
+b b b b b b b b 
+b b b b b b b b 
 
-Parameter:64	ExecutionTime:6011629	nanoseconds.
-Run the original SobelEdge on 64 using gcc
-At (0, 0) newPixels[pos] = 0
-At (1,0) newPixels[pos] = 255
-At (63, 63) newPixels[pos] = 255
+Parameter:2048	ExecutionTime:368422326	nanoseconds.
+Run the original SobelEdge on 2048 using gcc
+Input Image:
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w b w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+Sobel Edge Detection:
+b b b b b b b b 
+b b b b b b b b 
+b b b b b b b b 
+b b w w w b b b 
+b b w b w b b b 
+b b w w w b b b 
+b b b b b b b b 
+b b b b b b b b 
 
-Parameter:64	ExecutionTime:5620278	nanoseconds.
-Run the original SobelEdge on 64 using gcc
-At (0, 0) newPixels[pos] = 0
-At (1,0) newPixels[pos] = 255
-At (63, 63) newPixels[pos] = 255
+Parameter:2048	ExecutionTime:359757420	nanoseconds.
+Run the original SobelEdge on 2048 using gcc
+Input Image:
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w b w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+Sobel Edge Detection:
+b b b b b b b b 
+b b b b b b b b 
+b b b b b b b b 
+b b w w w b b b 
+b b w b w b b b 
+b b w w w b b b 
+b b b b b b b b 
+b b b b b b b b 
 
-Parameter:64	ExecutionTime:6096705	nanoseconds.
-Run the original SobelEdge on 64 using gcc
-At (0, 0) newPixels[pos] = 0
-At (1,0) newPixels[pos] = 255
-At (63, 63) newPixels[pos] = 255
+Parameter:2048	ExecutionTime:373359461	nanoseconds.
+Run the original SobelEdge on 2048 using gcc
+Input Image:
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w b w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+Sobel Edge Detection:
+b b b b b b b b 
+b b b b b b b b 
+b b b b b b b b 
+b b w w w b b b 
+b b w b w b b b 
+b b w w w b b b 
+b b b b b b b b 
+b b b b b b b b 
 
-Parameter:64	ExecutionTime:5761480	nanoseconds.
-Run the original SobelEdge on 64 using gcc
-At (0, 0) newPixels[pos] = 0
-At (1,0) newPixels[pos] = 255
-At (63, 63) newPixels[pos] = 255
+Parameter:2048	ExecutionTime:365275412	nanoseconds.
+Run the original SobelEdge on 2048 using gcc
+Input Image:
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w b w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+Sobel Edge Detection:
+b b b b b b b b 
+b b b b b b b b 
+b b b b b b b b 
+b b w w w b b b 
+b b w b w b b b 
+b b w w w b b b 
+b b b b b b b b 
+b b b b b b b b 
 
-Parameter:64	ExecutionTime:6581155	nanoseconds.
-Run the original SobelEdge on 64 using gcc
-At (0, 0) newPixels[pos] = 0
-At (1,0) newPixels[pos] = 255
-At (63, 63) newPixels[pos] = 255
+Parameter:2048	ExecutionTime:359621925	nanoseconds.
+Run the original SobelEdge on 2048 using gcc
+Input Image:
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w b w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+Sobel Edge Detection:
+b b b b b b b b 
+b b b b b b b b 
+b b b b b b b b 
+b b w w w b b b 
+b b w b w b b b 
+b b w w w b b b 
+b b b b b b b b 
+b b b b b b b b 
 
-Parameter:64	ExecutionTime:6451173	nanoseconds.
-Run the original SobelEdge on 64 using gcc
-At (0, 0) newPixels[pos] = 0
-At (1,0) newPixels[pos] = 255
-At (63, 63) newPixels[pos] = 255
+Parameter:2048	ExecutionTime:367186815	nanoseconds.
+Run the original SobelEdge on 2048 using gcc
+Input Image:
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w b w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+Sobel Edge Detection:
+b b b b b b b b 
+b b b b b b b b 
+b b b b b b b b 
+b b w w w b b b 
+b b w b w b b b 
+b b w w w b b b 
+b b b b b b b b 
+b b b b b b b b 
 
-Parameter:64	ExecutionTime:6227537	nanoseconds.
+Parameter:2048	ExecutionTime:365349603	nanoseconds.
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -65,7 +215,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.000
+cpu MHz		: 3515.015
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -92,7 +242,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.132
+cpu MHz		: 3660.179
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -119,7 +269,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3381.273
+cpu MHz		: 3900.570
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -146,7 +296,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.000
+cpu MHz		: 3899.906
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -173,7 +323,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.000
+cpu MHz		: 3436.921
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -200,7 +350,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3732.960
+cpu MHz		: 3448.875
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -227,7 +377,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3403.187
+cpu MHz		: 3437.320
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -254,7 +404,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3710.250
+cpu MHz		: 3802.820
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

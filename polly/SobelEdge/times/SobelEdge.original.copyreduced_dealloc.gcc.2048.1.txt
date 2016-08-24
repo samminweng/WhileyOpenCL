@@ -1,24 +1,213 @@
-==4401== Memcheck, a memory error detector
-==4401== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==4401== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==4401== Command: ./out/SobelEdge.original.naive.gcc.out 16
-==4401== Parent PID: 4239
-==4401== 
-==4401== 
-==4401== HEAP SUMMARY:
-==4401==     in use at exit: 1,094,592 bytes in 1,043 blocks
-==4401==   total heap usage: 1,043 allocs, 0 frees, 1,094,592 bytes allocated
-==4401== 
-==4401== LEAK SUMMARY:
-==4401==    definitely lost: 1,090,184 bytes in 1,036 blocks
-==4401==    indirectly lost: 24 bytes in 1 blocks
-==4401==      possibly lost: 72 bytes in 1 blocks
-==4401==    still reachable: 4,312 bytes in 5 blocks
-==4401==         suppressed: 0 bytes in 0 blocks
-==4401== Rerun with --leak-check=full to see details of leaked memory
-==4401== 
-==4401== For counts of detected and suppressed errors, rerun with: -v
-==4401== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+Run the original SobelEdge on 2048 using gcc and 1 threads...Run the original SobelEdge on 2048 using gcc
+Input Image:
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w b w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+Sobel Edge Detection:
+b b b b b b b b 
+b b b b b b b b 
+b b b b b b b b 
+b b w w w b b b 
+b b w b w b b b 
+b b w w w b b b 
+b b b b b b b b 
+b b b b b b b b 
+
+Parameter:2048	ExecutionTime:360598504	nanoseconds.
+Run the original SobelEdge on 2048 using gcc
+Input Image:
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w b w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+Sobel Edge Detection:
+b b b b b b b b 
+b b b b b b b b 
+b b b b b b b b 
+b b w w w b b b 
+b b w b w b b b 
+b b w w w b b b 
+b b b b b b b b 
+b b b b b b b b 
+
+Parameter:2048	ExecutionTime:359504859	nanoseconds.
+Run the original SobelEdge on 2048 using gcc
+Input Image:
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w b w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+Sobel Edge Detection:
+b b b b b b b b 
+b b b b b b b b 
+b b b b b b b b 
+b b w w w b b b 
+b b w b w b b b 
+b b w w w b b b 
+b b b b b b b b 
+b b b b b b b b 
+
+Parameter:2048	ExecutionTime:372661492	nanoseconds.
+Run the original SobelEdge on 2048 using gcc
+Input Image:
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w b w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+Sobel Edge Detection:
+b b b b b b b b 
+b b b b b b b b 
+b b b b b b b b 
+b b w w w b b b 
+b b w b w b b b 
+b b w w w b b b 
+b b b b b b b b 
+b b b b b b b b 
+
+Parameter:2048	ExecutionTime:435938854	nanoseconds.
+Run the original SobelEdge on 2048 using gcc
+Input Image:
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w b w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+Sobel Edge Detection:
+b b b b b b b b 
+b b b b b b b b 
+b b b b b b b b 
+b b w w w b b b 
+b b w b w b b b 
+b b w w w b b b 
+b b b b b b b b 
+b b b b b b b b 
+
+Parameter:2048	ExecutionTime:359478009	nanoseconds.
+Run the original SobelEdge on 2048 using gcc
+Input Image:
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w b w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+Sobel Edge Detection:
+b b b b b b b b 
+b b b b b b b b 
+b b b b b b b b 
+b b w w w b b b 
+b b w b w b b b 
+b b w w w b b b 
+b b b b b b b b 
+b b b b b b b b 
+
+Parameter:2048	ExecutionTime:366035857	nanoseconds.
+Run the original SobelEdge on 2048 using gcc
+Input Image:
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w b w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+Sobel Edge Detection:
+b b b b b b b b 
+b b b b b b b b 
+b b b b b b b b 
+b b w w w b b b 
+b b w b w b b b 
+b b w w w b b b 
+b b b b b b b b 
+b b b b b b b b 
+
+Parameter:2048	ExecutionTime:366801925	nanoseconds.
+Run the original SobelEdge on 2048 using gcc
+Input Image:
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w b w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+Sobel Edge Detection:
+b b b b b b b b 
+b b b b b b b b 
+b b b b b b b b 
+b b w w w b b b 
+b b w b w b b b 
+b b w w w b b b 
+b b b b b b b b 
+b b b b b b b b 
+
+Parameter:2048	ExecutionTime:359319456	nanoseconds.
+Run the original SobelEdge on 2048 using gcc
+Input Image:
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w b w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+Sobel Edge Detection:
+b b b b b b b b 
+b b b b b b b b 
+b b b b b b b b 
+b b w w w b b b 
+b b w b w b b b 
+b b w w w b b b 
+b b b b b b b b 
+b b b b b b b b 
+
+Parameter:2048	ExecutionTime:359839421	nanoseconds.
+Run the original SobelEdge on 2048 using gcc
+Input Image:
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w b w w w w 
+w w w w w w w w 
+w w w w w w w w 
+w w w w w w w w 
+Sobel Edge Detection:
+b b b b b b b b 
+b b b b b b b b 
+b b b b b b b b 
+b b w w w b b b 
+b b w b w b b b 
+b b w w w b b b 
+b b b b b b b b 
+b b b b b b b b 
+
+Parameter:2048	ExecutionTime:374239793	nanoseconds.
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -26,7 +215,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.132
+cpu MHz		: 3528.164
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -53,7 +242,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3857.937
+cpu MHz		: 3489.250
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -80,7 +269,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3430.148
+cpu MHz		: 3484.734
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -107,7 +296,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3860.062
+cpu MHz		: 3899.906
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -134,7 +323,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.773
+cpu MHz		: 3417.531
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -161,7 +350,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3825.398
+cpu MHz		: 3402.523
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -188,7 +377,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3668.281
+cpu MHz		: 3426.960
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -215,7 +404,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3725.523
+cpu MHz		: 3423.773
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
