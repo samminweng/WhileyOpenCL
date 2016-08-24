@@ -76,7 +76,7 @@ BEGIN {
 
 	# Code Generation
 	#codegens="copyreduced_dealloc";
-	codegens = "naive naive_dealloc copyreduced copyreduced_dealloc";
+	codegens = "naive_dealloc copyreduced copyreduced_dealloc";
 	# Compiler
 	#compilers = "gcc clang polly openmp";
 	compilers = "gcc";
@@ -90,7 +90,7 @@ BEGIN {
 	#parameters["GCD"] = "1000 10000 20000 30000 40000";
 	#parameters["CoinGame"] = "1000 10000 20000 30000 40000";
 	#parameters["NQueens"] = "1 2 4 6 8 10 12 14 15";
-	parameters["SobelEdge"] = "16 64 128";
+	parameters["SobelEdge"] = "128 256 512 1024 2048";
 
 	# The number of threads
 	#threads="1 2 4";
