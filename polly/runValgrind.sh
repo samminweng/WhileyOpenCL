@@ -26,28 +26,29 @@ generateCode(){
 	cd "impl/$program/$codegen"
 	## Clean up previously generated C code
 	rm -f *.c *.h
-	### Copy Util.c Util.h to 
+	### Copy Util.c Util.h to current folder
 	cp $utildir/Util.c $utildir/Util.h .
 	## Translate Whiley programs into naive C code
 	case "$codegen" in
 		"naive")
-			### Translate Whiley program into naive C code 
-	    	./../../../../..//bin/wyopcl -code $testcase"_"$program.whiley
-	    	;;
-	    "naive_dealloc")
+			### Translate Whiley program into naive C code
+			./../../../../..//bin/wyopcl -code $testcase"_"$program.whiley
+	    		;;
+		"naive_dealloc")
 			### Translate Whiley program into naive + dealloc C code 
-	    	./../../../../../bin/wyopcl -code -dealloc $testcase"_"$program.whiley
-	    	;;
-	    "copyreduced")
+	    		./../../../../../bin/wyopcl -code -dealloc $testcase"_"$program.whiley
+	    		;;
+		"copyreduced")
 			## Translate Whiley programs into copy_reduced C code
 			./../../../../../bin/wyopcl -code -copy $testcase"_"$program.whiley
 			;;
 		"copyreduced_dealloc")
-			### Translate Whiley program into copy-eliminated + memory deallocated C code 
-	    	./../../../../../bin/wyopcl -code -copy -dealloc $testcase"_"$program.whiley	
+			### Translate Whiley program into copy-eliminated + memory deallocated C code
+			./../../../../../bin/wyopcl -code -copy -dealloc $testcase"_"$program.whiley
 			;;
 	esac
 }
+
 ### Create the 'leak' folder and clean up the files
 init(){
 	testcase=$1
@@ -112,7 +113,8 @@ exec(){
 	parameter=$3
 
 	## declare 4 kinds of code generation
-	declare -a codegens=("naive_dealloc" "copyreduced" "copyreduced_dealloc")
+	#declare -a codegens=("naive_dealloc" "copyreduced" "copyreduced_dealloc")
+	declare -a codegens=("naive")
 	## Iterate each codegen
 	for codegen in "${codegens[@]}"
 	do
@@ -164,44 +166,8 @@ exec(){
 # exec MatrixMult original 3000
 
 ## Sobel Edge Detection test case
-init SobelEdge
+#init SobelEdge
 exec SobelEdge original 128
 exec SobelEdge original 256
 exec SobelEdge original 512
-exec SobelEdge original 1024
-
-# ## GCD test case
-# init GCD
-# exec GCD original naive 100
-# exec GCD original naive_dealloc 100
-# exec GCD original copyreduced 100
-# exec GCD original copyreduced_dealloc 100
-# exec GCD cached naive 100
-# exec GCD cached naive_dealloc 100
-# exec GCD cached copyreduced 100
-# exec GCD cached copyreduced_dealloc 100
-# ### CoinGame test case
-# init CoinGame
-# exec CoinGame original naive 100
-# exec CoinGame original naive_dealloc 100
-# exec CoinGame original copyreduced 100
-# exec CoinGame original copyreduced_dealloc 100
-# exec CoinGame single naive 100
-# exec CoinGame single naive_dealloc 100
-# exec CoinGame single copyreduced 100
-# exec CoinGame single copyreduced_dealloc 100
-# exec CoinGame array naive 100
-# exec CoinGame array naive_dealloc 100
-# exec CoinGame array copyreduced 100
-# exec CoinGame array copyreduced_dealloc 100
-# #### NQueen test case
-# init NQueens
-# exec NQueens original naive 8
-# exec NQueens original naive_dealloc 8
-# exec NQueens original copyreduced 8
-# exec NQueens original copyreduced_dealloc 8
-# exec NQueens integer naive 8
-# exec NQueens integer naive_dealloc 8
-# exec NQueens integer copyreduced 8
-# exec NQueens integer copyreduced_dealloc 8
 
