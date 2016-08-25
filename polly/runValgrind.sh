@@ -113,8 +113,8 @@ exec(){
 	parameter=$3
 
 	## declare 4 kinds of code generation
-	#declare -a codegens=("naive_dealloc" "copyreduced" "copyreduced_dealloc")
-	declare -a codegens=("naive")
+	declare -a codegens=("naive" "naive_dealloc" "copyreduced" "copyreduced_dealloc")
+	#declare -a codegens=("naive")
 	## Iterate each codegen
 	for codegen in "${codegens[@]}"
 	do
