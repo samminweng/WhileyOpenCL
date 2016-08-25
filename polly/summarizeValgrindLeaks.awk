@@ -36,7 +36,7 @@ BEGIN {
 	#parameters["GCD"]="100";
 	#parameters["CoinGame"]="100";
 	#parameters["NQueens"]="8";
-	parameters["SobelEdge"]="128 256 512";
+	parameters["SobelEdge"]="32 64 128 256 512";
 
 	# The number of threads
 	#threads="1 2 4";
@@ -143,12 +143,16 @@ END {
 							thread=thread_array[th];
 							# Constitute key
 							key=testcase","program","codegen","parameter","compiler","thread;
+							# FIll in the values
+							str = testcase"\t"program"\t"parameter"\t"codegen"\t"compiler"\t"thread;
 							# Check if there is the memory leak result.
 							if(count[key]>0){
 								# FIll in the values
-								str = testcase"\t"program"\t"parameter"\t"codegen"\t"compiler"\t"thread"\t"leaks[key",definiteloss"]+0"\t"leaks[key",indirectloss"]+0"\t"leaks[key",possibleloss"]+0"\t"leaks[key",reachableloss"]+0;
-								print str;
+								str = str"\t"leaks[key",definiteloss"]+0"\t"leaks[key",indirectloss"]+0"\t"leaks[key",possibleloss"]+0"\t"leaks[key",reachableloss"]+0;
+							}else{
+								str = str"\tNA\tNA\tNA\tNA";
 							}
+							print str;
 						}
 					}
 				}		
