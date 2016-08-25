@@ -302,14 +302,10 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 			pos = _46;
 			//invoke (%47) = (%0, %1, %2, %8, %9, %6) SobelEdgeDetect:convolution : function(int[],int,int,int,int,int[])->(int)
 			_47 = convolution(_COPY_1DARRAY_PARAM(pixels), true, width, height, x, y, _COPY_1DARRAY_PARAM(v_sobel), true);
-			_ADD_DEALLOC(pixels);
-			_ADD_DEALLOC(v_sobel);
 			//assign %11 = %47  : int
 			v_g = _47;
 			//invoke (%48) = (%0, %1, %2, %8, %9, %7) SobelEdgeDetect:convolution : function(int[],int,int,int,int,int[])->(int)
 			_48 = convolution(_COPY_1DARRAY_PARAM(pixels), true, width, height, x, y, _COPY_1DARRAY_PARAM(h_sobel), true);
-			_ADD_DEALLOC(pixels);
-			_ADD_DEALLOC(h_sobel);
 			//assign %12 = %48  : int
 			h_g = _48;
 			//invoke (%49) = (%11) whiley/lang/Math:abs : function(int)->(int)
@@ -618,7 +614,6 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY_SIZE(_16, pixels);
 	_DEALLOC(_16);
 	_16 = sobelEdgeDetection(_COPY_1DARRAY_PARAM(pixels), true, width, height);
-	_ADD_DEALLOC(pixels);
 	_ADD_DEALLOC(_16);
 	//assign %5 = %16  : int[]
 	_DEALLOC(newPixels);
@@ -635,7 +630,6 @@ int main(int argc, char** args){
 	println_s(_19, _19_size);
 	//invoke () = (%0, %4, %1, %2) SobelEdgeDetect:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 printImage(stdout, _COPY_1DARRAY_PARAM(pixels), true, width, height);
-	_ADD_DEALLOC(pixels);
 	//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %21 = %20 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %22 = [83,111,98,101,108,32,69,100,103,101,32,68,101,116,101,99,116,105,111,110,58] : int[]
@@ -647,7 +641,6 @@ printImage(stdout, _COPY_1DARRAY_PARAM(pixels), true, width, height);
 	println_s(_22, _22_size);
 	//invoke () = (%0, %5, %1, %2) SobelEdgeDetect:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 printImage(stdout, _COPY_1DARRAY_PARAM(newPixels), true, width, height);
-	_ADD_DEALLOC(newPixels);
 	//assert
 	{
 		//const %23 = 4 : int

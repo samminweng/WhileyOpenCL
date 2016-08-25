@@ -372,6 +372,8 @@ public class DeallocationAnalyzer extends Analyzer {
 						// Do nothing to caller's flag
 					} else if (callee_dealloc.equals("false_dealloc")){
 						// Do nothing to caller's flag
+					} else if (callee_dealloc.equals("true_dealloc")){
+						// Do nothing to caller's flag
 					} else{
 						throw new RuntimeException(callee_dealloc + " NOT implemented");
 					}
@@ -530,7 +532,12 @@ public class DeallocationAnalyzer extends Analyzer {
 	 *        		b_dealloc = false
 	 *        		a_dealloc = true
 	 * 	    	</code>
-	 * 		  <li>'false_dealloc': passes 'false' flag to the function call and does not change the original flags at caller site
+	 * 		    <li>'true_dealloc': passes 'true' flag to the function call and does not change the original flags at caller site
+	 *         <code>     
+	 * 		  		a = f(b, true)
+	 *        		a_dealloc = true
+	 * 	    	</code>
+	 * 		   <li>'false_dealloc': passes 'false' flag to the function call and does not change the original flags at caller site
 	 *        	This macro can be applied to sub-structure de-allocation and immutable and live passing parameter 
 	 *         <code>     
 	 * 		  		a = f(b, false)
@@ -613,7 +620,7 @@ public class DeallocationAnalyzer extends Analyzer {
 				}
 			}
 			// For other cases, the de-allocation is done at both caller and callee.
-			return "both_dealloc";
+			return "true_dealloc";
 		}
 	}
 

@@ -174,7 +174,6 @@ int main(int argc, char** args){
 	_DEALLOC_STRUCT(_15, Rectangle);
 	_15 = updateRec(_COPY_STRUCT_PARAM(rec, Rectangle), false, _COPY_STRUCT_PARAM(p3, Point), true);
 	_ADD_DEALLOC(rec);
-	_ADD_DEALLOC(p3);
 	_ADD_DEALLOC(_15);
 	//assign %3 = %15  : {{int x,int y} p1,{int x,int y} p2}
 	_DEALLOC_STRUCT(rec, Rectangle);

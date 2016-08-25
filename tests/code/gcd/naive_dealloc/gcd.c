@@ -212,7 +212,6 @@ int main(int argc, char** args){
 			if(j>=n){goto blklab15;}
 			//invoke (%16) = (%3, %4, %1, %2) gcd:gcd_cached : function(int,int,int,int[])->(int)
 			_16 = gcd_cached(i, j, n, _COPY_1DARRAY_PARAM(gcds), true);
-			_ADD_DEALLOC(gcds);
 			//mul %17 = %3, %1 : int
 			_17=i*n;
 			//add %18 = %17, %4 : int

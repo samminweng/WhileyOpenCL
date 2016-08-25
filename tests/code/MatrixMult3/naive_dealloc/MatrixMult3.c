@@ -139,7 +139,6 @@ blklab2:;
 	//invoke (%21) = (%0, %1, %3) MatrixMult3:matrix : function(MatrixMult3:nat,MatrixMult3:nat,int[])->(MatrixMult3:Matrix)
 	_DEALLOC_STRUCT(_21, Matrix);
 	_21 = matrix(width, height, _COPY_1DARRAY_PARAM(data), true);
-	_ADD_DEALLOC(data);
 	_ADD_DEALLOC(_21);
 	//return %21
 	_DEALLOC_STRUCT(r, Matrix);
@@ -526,7 +525,6 @@ blklab17:;
 	//invoke (%58) = (%3, %4, %5) MatrixMult3:matrix : function(MatrixMult3:nat,MatrixMult3:nat,int[])->(MatrixMult3:Matrix)
 	_DEALLOC_STRUCT(_58, Matrix);
 	_58 = matrix(width, height, _COPY_1DARRAY_PARAM(data), true);
-	_ADD_DEALLOC(data);
 	_ADD_DEALLOC(_58);
 	//return %58
 	_DEALLOC_STRUCT(a, Matrix);
@@ -752,8 +750,6 @@ blklab24:;
 	//invoke (%44) = (%1, %2) MatrixMult3:mat_mult : function(MatrixMult3:Matrix,MatrixMult3:Matrix)->(MatrixMult3:Matrix)
 	_DEALLOC_STRUCT(_44, Matrix);
 	_44 = mat_mult(_COPY_STRUCT_PARAM(A, Matrix), true, _COPY_STRUCT_PARAM(B, Matrix), true);
-	_ADD_DEALLOC(A);
-	_ADD_DEALLOC(B);
 	_ADD_DEALLOC(_44);
 	//assign %3 = %44  : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(C, Matrix);
@@ -798,7 +794,6 @@ blklab25:;
 	}
 	//invoke () = (%0, %3) MatrixMult3:print_mat : method(whiley/lang/System:Console,MatrixMult3:Matrix)->()
 print_mat(stdout, _COPY_STRUCT_PARAM(C, Matrix), true);
-	_ADD_DEALLOC(C);
 	//fieldload %57 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %58 = %57 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %59 = [77,97,116,114,105,120,32,67,91,78,45,49,93,91,78,45,49,93,32,61,32] : int[]
