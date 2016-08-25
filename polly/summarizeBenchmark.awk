@@ -35,16 +35,20 @@ function generateReport(results){
 								key =testcase","program","codegen","compiler","parameter","thread;
 								#print "key="key;
 								#pause();
+								str = testcase"\t"program"\t"parameter"\t"compiler"\t"codegen"\t"thread;
 								# Check if there is any result.
 								if(counts[key]>0){
-									str = testcase"\t"program"\t"parameter"\t"compiler"\t"codegen"\t"thread;
 									## Print out result, e.g. CPU utilization
 				 					for(iteration=1;iteration<=10;iteration++){
 				 						str = str"\t"results[key","iteration];
 				 					}
-				 					print str;
-									#pause();
+				 				}else{
+				 					## Print out 'NA' results
+				 					for(iteration=1;iteration<=10;iteration++){
+				 						str = str"\tNA";
+				 					}
 				 				}
+				 				print str;
 							}
 						}
 					} 							
@@ -76,7 +80,7 @@ BEGIN {
 
 	# Code Generation
 	#codegens="copyreduced_dealloc";
-	codegens = "naive_dealloc copyreduced copyreduced_dealloc";
+	codegens = "naive naive_dealloc copyreduced copyreduced_dealloc";
 	# Compiler
 	#compilers = "gcc clang polly openmp";
 	compilers = "gcc";
@@ -90,7 +94,7 @@ BEGIN {
 	#parameters["GCD"] = "1000 10000 20000 30000 40000";
 	#parameters["CoinGame"] = "1000 10000 20000 30000 40000";
 	#parameters["NQueens"] = "1 2 4 6 8 10 12 14 15";
-	parameters["SobelEdge"] = "128 256 512 1024 2048";
+	parameters["SobelEdge"] = "32 64 128 256 512 1024 2048";
 
 	# The number of threads
 	#threads="1 2 4";

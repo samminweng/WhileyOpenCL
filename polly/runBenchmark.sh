@@ -100,7 +100,7 @@ compileAndRun(){
 			;;
 	esac
 	###read -p "Press [Enter] to continue..."
-	result="$basedir/polly/$testcase/times/$executable.$parameter.$num_threads.txt"
+	result="$basedir/polly/$testcase/exectime/$executable.$parameter.$num_threads.txt"
 	export OMP_NUM_THREADS=$num_threads
 	echo -e -n "Run the $program $testcase on $parameter using $compiler and $OMP_NUM_THREADS threads..." >> $result
 	echo "Run the $program $testcase on $parameter using $OMP_NUM_THREADS threads..."
@@ -152,7 +152,7 @@ exec(){
 init(){
 	testcase=$1
 	testcase=$1
-	dir="$basedir/polly/$testcase/times"
+	dir="$basedir/polly/$testcase/exectime"
 	mkdir -p "$dir"
 	### remove all files inside the folder
 	rm -f "$dir/"*.*
@@ -197,7 +197,7 @@ init(){
 # exec MatrixMult original 12000 # Naive code runs out of memory
 
 # Sobel Edge test
-#init SobelEdge
+init SobelEdge
 exec SobelEdge original 32
 exec SobelEdge original 64
 exec SobelEdge original 128
