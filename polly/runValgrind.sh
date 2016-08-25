@@ -1,5 +1,5 @@
 #!/bin/bash
-TIMEOUT="1800s"
+TIMEOUT="5s"
 # export PATH_TO_POLLY_LIB="$HOME/polly/llvm_build/lib"
 # export CPPFLAGS="-Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
 # alias opt="opt -load ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
@@ -113,8 +113,8 @@ exec(){
 	parameter=$3
 
 	## declare 4 kinds of code generation
-	declare -a codegens=("naive" "naive_dealloc" "copyreduced" "copyreduced_dealloc")
-	#declare -a codegens=("naive")
+	#declare -a codegens=("naive_dealloc" "copyreduced" "copyreduced_dealloc")
+	declare -a codegens=("naive")
 	## Iterate each codegen
 	for codegen in "${codegens[@]}"
 	do
@@ -170,4 +170,5 @@ exec(){
 exec SobelEdge original 32
 exec SobelEdge original 64
 exec SobelEdge original 128
-
+#exec SobelEdge original 256
+#exec SobelEdge original 512
