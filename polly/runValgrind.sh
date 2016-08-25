@@ -166,7 +166,7 @@ exec MatrixMult original 2000
 exec MatrixMult original 3000
 
 ## Sobel Edge Detection test case
-init SobelEdge
+#init SobelEdge
 exec SobelEdge original 32
 exec SobelEdge original 64
 exec SobelEdge original 128
