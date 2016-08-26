@@ -4,8 +4,8 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcases="Reverse newTicTacToe MergeSort BubbleSort MatrixMult";
-	#testcases="SobelEdge";
+	#testcases="Reverse newTicTacToe MergeSort BubbleSort MatrixMult";
+	testcases="SobelEdge";
 	
 	# Program Type
 	programs["newTicTacToe"]="original";
@@ -16,7 +16,7 @@ BEGIN {
 	#programs["GCD"]="original cached";
 	#programs["CoinGame"]="original single array";
 	#programs["NQueens"]="original integer";
-	#programs["SobelEdge"]="original";
+	programs["SobelEdge"]="original";
 
 	# Code Generation
 	codegens = "naive naive_dealloc copyreduced copyreduced_dealloc";
@@ -34,7 +34,7 @@ BEGIN {
 	#parameters["GCD"]="100";
 	#parameters["CoinGame"]="100";
 	#parameters["NQueens"]="8";
-	#parameters["SobelEdge"]="32 64 128 256 512";
+	parameters["SobelEdge"]="32 64 128 256 512";
 
 	# The number of threads
 	#threads="1 2 4";

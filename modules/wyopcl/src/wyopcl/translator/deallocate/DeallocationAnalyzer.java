@@ -472,10 +472,10 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * f returns b?	   |F			   |T			      |T			    |F
 	 * -----------------------------------------------------------------------------
 	 * b is alive?	F  |Copy	       |Copy	          |Copy		        |Copy
-	 * 				   |'both_dealloc' |'caller_dealloc'  |'caller_dealloc'	|'both_dealloc'
+	 * 				   |'true_dealloc' |'false_dealloc'  |'false_dealloc'	|'true_dealloc'
 	 * -----------------------------------------------------------------------------
 	 * 				T  |Copy	       |Copy	          |Copy	            |Copy
-	 * 				   |'both_dealloc' |'caller_dealloc'  |'caller_dealloc' |'both_dealloc'
+	 * 				   |'true_dealloc' |'false_dealloc'  |'false_dealloc' |'true_dealloc'
 	 * 
 	 * </pre>
 	 * 
@@ -609,14 +609,16 @@ public class DeallocationAnalyzer extends Analyzer {
 				}
 			}
 		} else {
-			// The copy is needed
+			// Naive code that the copy is always needed.
 			if (!isMutated) {
 				if (isReturned) {
-					return "caller_dealloc";
+					return "false_dealloc";
+					//return "caller_dealloc";
 				}
 			} else {
 				if (isReturned) {
-					return "caller_dealloc";
+					return "false_dealloc";
+					//return "caller_dealloc";
 				}
 			}
 			// For other cases, the de-allocation is done at both caller and callee.
