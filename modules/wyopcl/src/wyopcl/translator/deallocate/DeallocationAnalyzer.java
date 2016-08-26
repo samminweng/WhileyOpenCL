@@ -358,14 +358,7 @@ public class DeallocationAnalyzer extends Analyzer {
 				if(callee_dealloc.equals("")){
 					// Do nothing
 				}else{
-					if (callee_dealloc.equals("caller_dealloc")) {
-						// The parameter is de-allocated by caller
-						// Set caller flag to be 'true'
-						statements.add(indent + addDealloc(register, function, stores));
-					} else if (callee_dealloc.equals("both_dealloc")) {
-						// Set caller flag to be 'true'
-						statements.add(indent + addDealloc(register, function, stores));
-					} else if (callee_dealloc.equals("none_dealloc")) {
+					if (callee_dealloc.equals("none_dealloc")) {
 						// Set caller flag to be 'false'
 						statements.add(indent + removeDealloc(register, function, stores));
 					} else if(callee_dealloc.equals("negated_dealloc")) { 
@@ -472,10 +465,10 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * f returns b?	   |F			   |T			      |T			    |F
 	 * -----------------------------------------------------------------------------
 	 * b is alive?	F  |Copy	       |Copy	          |Copy		        |Copy
-	 * 				   |'true_dealloc' |'false_dealloc'  |'false_dealloc'	|'true_dealloc'
+	 * 				   |'true_dealloc' |'false_dealloc'   |'false_dealloc'	|'true_dealloc'
 	 * -----------------------------------------------------------------------------
 	 * 				T  |Copy	       |Copy	          |Copy	            |Copy
-	 * 				   |'true_dealloc' |'false_dealloc'  |'false_dealloc' |'true_dealloc'
+	 * 				   |'true_dealloc' |'false_dealloc'   |'false_dealloc'   |'true_dealloc'
 	 * 
 	 * </pre>
 	 * 
@@ -489,7 +482,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * 					|'negated_dealloc'  |'none_dealloc'   |'none_dealloc'   |'negated_dealloc'
 	 * ---------------------------------------------------------------------------
 	 * 				T	|No Copy			|No Copy	      |Copy		        |Copy
-	 * 					|'false_dealloc'	|'none_dealloc'   |'caller_dealloc'	|'both_dealloc'
+	 * 					|'false_dealloc'	|'none_dealloc'   |'false_dealloc'	|'true_dealloc'
 	 * 
 	 * 
 	 * </pre>
@@ -512,19 +505,6 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * 		  		a = f(b, !b_dealloc)
 	 *        		a_dealloc = true
 	 * 	    	</code>
-	 *		   
-	 *         <li>'caller_dealloc': set caller's flag to be true and callee's flag to be false. <code>     
-	 * 		  		a = f(b, false)
-	 *        		b_dealloc = true
-	 *        		a_dealloc = true
-	 * 	    	</code>
-	 * 
-	 *         <li>'both_dealloc': set both caller and callee's flags to be true.
-	 *         <code>     
-	 * 		  		a = f(b, true)
-	 *        		b_dealloc = true
-	 *        		a_dealloc = true
-	 * 	    	</code>
 	 * 
 	 *         <li>'none_dealloc': set both caller and callee's flags to be false.
 	 *         <code>     
@@ -534,13 +514,13 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * 	    	</code>
 	 * 		    <li>'true_dealloc': passes 'true' flag to the function call and does not change the original flags at caller site
 	 *         <code>     
-	 * 		  		a = f(b, true)
+	 * 		  		a = f(copy(b), true)
 	 *        		a_dealloc = true
 	 * 	    	</code>
 	 * 		   <li>'false_dealloc': passes 'false' flag to the function call and does not change the original flags at caller site
 	 *        	This macro can be applied to sub-structure de-allocation and immutable and live passing parameter 
 	 *         <code>     
-	 * 		  		a = f(b, false)
+	 * 		  		a = f(copy(b), false)
 	 *        		a_dealloc = true
 	 * 	    	</code>
 	 *         </ul>
@@ -593,7 +573,7 @@ public class DeallocationAnalyzer extends Analyzer {
 					// Mutated and returned
 					if (isLive) {
 						// 'b' is alive
-						return "caller_dealloc";
+						return "false_dealloc";
 					} else {
 						// 'b' is NOT alive
 						return "none_dealloc";
@@ -602,7 +582,7 @@ public class DeallocationAnalyzer extends Analyzer {
 					// Mutated and NOT returned
 					if (isLive) {
 						// 'b' is alive
-						return "both_dealloc";
+						return "true_dealloc";
 					} else {
 						return "negated_dealloc";
 					}
@@ -612,16 +592,15 @@ public class DeallocationAnalyzer extends Analyzer {
 			// Naive code that the copy is always needed.
 			if (!isMutated) {
 				if (isReturned) {
+					// The de-allocation is Not done at callee.
 					return "false_dealloc";
-					//return "caller_dealloc";
 				}
 			} else {
 				if (isReturned) {
 					return "false_dealloc";
-					//return "caller_dealloc";
 				}
 			}
-			// For other cases, the de-allocation is done at both caller and callee.
+			// For other cases, the de-allocation is done at callee.
 			return "true_dealloc";
 		}
 	}

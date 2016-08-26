@@ -608,12 +608,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			this.deallocatedAnalyzer.ifPresent(a -> {
 				String callee_dealloc = a.computeDealloc(operand, code, function, stores, copyAnalyzer);
 				switch (callee_dealloc) {
-				case "caller_dealloc":
-					statement.add("false");
-					break;
-				case "both_dealloc":
-					statement.add("true");
-					break;
 				case "none_dealloc":
 					statement.add("false");
 					break;

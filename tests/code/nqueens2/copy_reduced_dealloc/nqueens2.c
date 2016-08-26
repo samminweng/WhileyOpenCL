@@ -275,7 +275,6 @@ blklab12:;
 		_30=n+_29;
 		//invoke (%28) = (%0, %30, %2) nqueens2:run : function(nqueens2:POS[],int,int)->(int)
 		_28 = run(copy_array_POS(queens, queens_size), queens_size, true, _30, dim);
-		_ADD_DEALLOC(queens);
 		//add %31 = %4, %28 : int
 		_31=num_solutions+_28;
 		//assign %4 = %31  : int
@@ -362,7 +361,6 @@ int main(int argc, char** args){
 	_10 = 0;
 	//invoke (%9) = (%2, %10, %1) nqueens2:run : function(nqueens2:POS[],int,int)->(int)
 	_9 = run(copy_array_POS(queens, queens_size), queens_size, true, _10, n);
-	_ADD_DEALLOC(queens);
 	//assign %3 = %9  : int
 	num_solutions = _9;
 	//assert

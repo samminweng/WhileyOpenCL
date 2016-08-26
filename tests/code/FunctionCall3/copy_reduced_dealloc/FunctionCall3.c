@@ -153,7 +153,6 @@ blklab0:;
 	_UPDATE_1DARRAY_SIZE(_27, b);
 	_DEALLOC(_27);
 	_27 = func(_COPY_1DARRAY_PARAM(b), false);
-	_ADD_DEALLOC(b);
 	_ADD_DEALLOC(_27);
 	//assign %3 = %27  : int[]
 	_DEALLOC(c);

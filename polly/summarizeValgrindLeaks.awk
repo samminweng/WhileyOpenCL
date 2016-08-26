@@ -4,8 +4,7 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	#testcases="Reverse newTicTacToe MergeSort BubbleSort MatrixMult";
-	testcases="SobelEdge";
+	testcases="Reverse newTicTacToe MergeSort BubbleSort MatrixMult SobelEdge";
 	
 	# Program Type
 	programs["newTicTacToe"]="original";
