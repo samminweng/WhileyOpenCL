@@ -656,7 +656,7 @@ blklab20:;
 	}
 	//invoke (%44) = (%1, %2) MatrixMult2:mat_mult : function(MatrixMult2:Matrix,MatrixMult2:Matrix)->(MatrixMult2:Matrix)
 	_DEALLOC_STRUCT(_44, Matrix);
-	_44 = mat_mult(_STRUCT_PARAM(A), !A_dealloc, _STRUCT_PARAM(B), !B_dealloc);
+	_44 = mat_mult(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
 	_ADD_DEALLOC(_44);
 	//assign %3 = %44  : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(C, Matrix);

@@ -354,29 +354,14 @@ public class DeallocationAnalyzer extends Analyzer {
 			// Add or transfer out the parameters that do not have the copy
 			for (int register : code.operands()) {
 				String callee_dealloc = computeDealloc(register, code, function, stores, copyAnalyzer);
-				// Check callee's deallocation flag
-				if(callee_dealloc.equals("")){
-					// Do nothing
-				}else{
-					if (callee_dealloc.equals("none_dealloc")) {
-						// Set caller flag to be 'false'
-						statements.add(indent + removeDealloc(register, function, stores));
-					} else if(callee_dealloc.equals("negated_dealloc")) { 
-						// Do nothing to caller's flag
-					} else if (callee_dealloc.equals("false_dealloc")){
-						// Do nothing to caller's flag
-					} else if (callee_dealloc.equals("true_dealloc")){
-						// Do nothing to caller's flag
-					} else{
-						throw new RuntimeException(callee_dealloc + " NOT implemented");
-					}
-				}
-				
-				
-				
+				if (callee_dealloc.equals("none_dealloc")) {
+					// Set the flag to be 'false' at caller site
+					statements.add(indent + removeDealloc(register, function, stores));
+				}		
 			}
+			
 
-			// If the parameter is NOT transferred, add LHS deallocation flag.
+			//Add LHS deallocation flag.
 			if (code.targets().length > 0)
 			{
 				// Add the deallocation flag of lhs variable
@@ -479,10 +464,10 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * f returns b?		|F					|T			      |T			    |F
 	 * -----------------------------------------------------------------------------
 	 * b is alive?  F	|No Copy			|No Copy	      |No Copy	        |No Copy
-	 * 					|'negated_dealloc'  |'none_dealloc'   |'none_dealloc'   |'negated_dealloc'
+	 * 					|'no_dealloc'       |'none_dealloc'   |'none_dealloc'   |'no_dealloc'
 	 * ---------------------------------------------------------------------------
 	 * 				T	|No Copy			|No Copy	      |Copy		        |Copy
-	 * 					|'false_dealloc'	|'none_dealloc'   |'false_dealloc'	|'true_dealloc'
+	 * 					|'no_dealloc'	    |'none_dealloc'   |'false_dealloc'	|'true_dealloc'
 	 * 
 	 * 
 	 * </pre>
@@ -500,16 +485,16 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @return macro names, including:
 	 *         <ul>
 	 * 
-	 *         <li>'negated_dealloc': passed the negated flag to the function call
+	 *         <li>'no_dealloc': passed the false flag to the function call
 	 *         <code>     
-	 * 		  		a = f(b, !b_dealloc)
+	 * 		  		a = f(b, false)
 	 *        		a_dealloc = true
 	 * 	    	</code>
 	 * 
 	 *         <li>'none_dealloc': set both caller and callee's flags to be false.
 	 *         <code>     
 	 * 		  		a = f(b, false)
-	 *        		b_dealloc = false
+	 * 				b_dealloc = false
 	 *        		a_dealloc = true
 	 * 	    	</code>
 	 * 		    <li>'true_dealloc': passes 'true' flag to the function call and does not change the original flags at caller site
@@ -552,18 +537,18 @@ public class DeallocationAnalyzer extends Analyzer {
 				// NOT mutated
 				if (!isReturned) {
 					// NOT mutated nor return
-					if (isLive) {
-						return "false_dealloc";
+					if (!isLive) {
+						return "no_dealloc";
 					}else{
-						return "negated_dealloc";
+						return "no_dealloc";
 					}
 				} else {
 					// NOT mutated but returned
-					if (isLive) {
-						// If 'b' is alive at caller site
+					if (!isLive) {
+						// If 'b' is NOT alive at caller site
 						return "none_dealloc";
 					} else {
-						// If 'b' is NOT alive at caller site
+						// If 'b' is alive at caller site
 						return "none_dealloc";
 					}
 				}
@@ -571,20 +556,20 @@ public class DeallocationAnalyzer extends Analyzer {
 				// Mutated
 				if (isReturned) {
 					// Mutated and returned
-					if (isLive) {
-						// 'b' is alive
-						return "false_dealloc";
-					} else {
+					if (!isLive) {
 						// 'b' is NOT alive
 						return "none_dealloc";
+					} else {
+						// 'b' is alive
+						return "false_dealloc";
 					}
 				} else {
 					// Mutated and NOT returned
-					if (isLive) {
+					if (!isLive) {
+						return "no_dealloc";
+					} else {
 						// 'b' is alive
 						return "true_dealloc";
-					} else {
-						return "negated_dealloc";
 					}
 				}
 			}

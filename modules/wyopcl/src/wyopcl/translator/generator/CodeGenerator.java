@@ -611,8 +611,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				case "none_dealloc":
 					statement.add("false");
 					break;
-				case "negated_dealloc":
-					statement.add("!" + parameter + "_dealloc");
+				case "no_dealloc":
+					statement.add("false");
 					break;
 				case "false_dealloc":
 					statement.add("false");

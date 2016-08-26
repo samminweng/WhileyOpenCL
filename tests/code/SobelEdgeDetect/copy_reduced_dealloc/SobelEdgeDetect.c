@@ -629,7 +629,7 @@ int main(int argc, char** args){
 	//indirectinvoke () = %18 (%19) : method(int[])->()
 	println_s(_19, _19_size);
 	//invoke () = (%0, %4, %1, %2) SobelEdgeDetect:printImage : method(whiley/lang/System:Console,int[],int,int)->()
-printImage(stdout, _1DARRAY_PARAM(pixels), !pixels_dealloc, width, height);
+printImage(stdout, _1DARRAY_PARAM(pixels), false, width, height);
 	//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %21 = %20 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %22 = [83,111,98,101,108,32,69,100,103,101,32,68,101,116,101,99,116,105,111,110,58] : int[]
@@ -640,7 +640,7 @@ printImage(stdout, _1DARRAY_PARAM(pixels), !pixels_dealloc, width, height);
 	//indirectinvoke () = %21 (%22) : method(int[])->()
 	println_s(_22, _22_size);
 	//invoke () = (%0, %5, %1, %2) SobelEdgeDetect:printImage : method(whiley/lang/System:Console,int[],int,int)->()
-printImage(stdout, _1DARRAY_PARAM(newPixels), !newPixels_dealloc, width, height);
+printImage(stdout, _1DARRAY_PARAM(newPixels), false, width, height);
 	//assert
 	{
 		//const %23 = 4 : int

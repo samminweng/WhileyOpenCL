@@ -727,7 +727,7 @@ int main(int argc, char** args){
 	//indirectinvoke () = %22 (%23) : method(int[])->()
 	println_s(_23, _23_size);
 	//invoke () = (%0, %5) SobelEdgeDetect2:print_image : method(whiley/lang/System:Console,SobelEdgeDetect2:Image)->()
-print_image(stdout, _STRUCT_PARAM(input), !input_dealloc);
+print_image(stdout, _STRUCT_PARAM(input), false);
 	//fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %25 = %24 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %26 = [83,111,98,101,108,32,69,100,103,101,32,68,101,116,101,99,116,105,111,110,58] : int[]
@@ -738,7 +738,7 @@ print_image(stdout, _STRUCT_PARAM(input), !input_dealloc);
 	//indirectinvoke () = %25 (%26) : method(int[])->()
 	println_s(_26, _26_size);
 	//invoke () = (%0, %6) SobelEdgeDetect2:print_image : method(whiley/lang/System:Console,SobelEdgeDetect2:Image)->()
-print_image(stdout, _STRUCT_PARAM(output), !output_dealloc);
+print_image(stdout, _STRUCT_PARAM(output), false);
 	//return
 	_DEALLOC(pixels);
 	_DEALLOC_STRUCT(input, Image);
