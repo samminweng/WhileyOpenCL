@@ -351,10 +351,10 @@ public class DeallocationAnalyzer extends Analyzer {
 				break;
 			}
 		}else{
-			// Add or transfer out the parameters that do not have the copy
+			// Reset the flag of original parameter to be 'false'
 			for (int register : code.operands()) {
 				String callee_dealloc = computeDealloc(register, code, function, stores, copyAnalyzer);
-				if (callee_dealloc.equals("none_dealloc")) {
+				if (callee_dealloc.equals("reset_dealloc")) {
 					// Set the flag to be 'false' at caller site
 					statements.add(indent + removeDealloc(register, function, stores));
 				}		
@@ -446,28 +446,28 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * 
 	 * <pre>
 	 *  
-	 * f mutates b?	   |F			   |F			      |T			    |T
-	 * f returns b?	   |F			   |T			      |T			    |F
+	 * f mutates b?	   |F			     |F			       |T			      |T
+	 * f returns b?	   |F			     |T			       |T			      |F
 	 * -----------------------------------------------------------------------------
-	 * b is alive?	F  |Copy	       |Copy	          |Copy		        |Copy
-	 * 				   |'true_dealloc' |'false_dealloc'   |'false_dealloc'	|'true_dealloc'
+	 * b is alive?	F  |Copy	         |Copy	           |Copy		      |Copy
+	 * 				   |'callee_dealloc' |'caller_dealloc' |'caller_dealloc'  |'callee_dealloc'
 	 * -----------------------------------------------------------------------------
-	 * 				T  |Copy	       |Copy	          |Copy	            |Copy
-	 * 				   |'true_dealloc' |'false_dealloc'   |'false_dealloc'   |'true_dealloc'
+	 * 				T  |Copy	         |Copy	           |Copy	          |Copy
+	 * 				   |'callee_dealloc' |'caller_dealloc' |'caller_dealloc'  |'callee_dealloc'
 	 * 
 	 * </pre>
 	 * 
 	 * De-allocation rules for copy-reduced test cases
 	 * 
 	 * <pre>
-	 * f mutates b?		|F					|F			      |T			    |T
-	 * f returns b?		|F					|T			      |T			    |F
-	 * -----------------------------------------------------------------------------
-	 * b is alive?  F	|No Copy			|No Copy	      |No Copy	        |No Copy
-	 * 					|'no_dealloc'       |'none_dealloc'   |'none_dealloc'   |'no_dealloc'
-	 * ---------------------------------------------------------------------------
-	 * 				T	|No Copy			|No Copy	      |Copy		        |Copy
-	 * 					|'no_dealloc'	    |'none_dealloc'   |'false_dealloc'	|'true_dealloc'
+	 * f mutates b?		|F					|F			       |T			    |T
+	 * f returns b?		|F					|T			       |T			    |F
+	 * ------------------------------------------------------------------------------------------
+	 * b is alive?  F	|No Copy			|No Copy	       |No Copy	        |No Copy
+	 * 					|'retain_dealloc'   |'reset_dealloc'   |'reset_dealloc' |'retain_dealloc'
+	 * ------------------------------------------------------------------------------------------
+	 * 				T	|No Copy			|No Copy	       |Copy		    |Copy
+	 * 					|'retain_dealloc'	|'reset_dealloc'   |'caller_dealloc'|'callee_dealloc'
 	 * 
 	 * 
 	 * </pre>
@@ -485,25 +485,26 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @return macro names, including:
 	 *         <ul>
 	 * 
-	 *         <li>'no_dealloc': passed the false flag to the function call
+	 *         <li>'retain_dealloc': retains the flag of original parameter and passes 'false' flag to callee. 
 	 *         <code>     
 	 * 		  		a = f(b, false)
 	 *        		a_dealloc = true
 	 * 	    	</code>
-	 * 
-	 *         <li>'none_dealloc': set both caller and callee's flags to be false.
+	 *         <li>'reset_dealloc': resets the flag of original parameter and passes 'false' flag to callee.
 	 *         <code>     
 	 * 		  		a = f(b, false)
 	 * 				b_dealloc = false
 	 *        		a_dealloc = true
 	 * 	    	</code>
-	 * 		    <li>'true_dealloc': passes 'true' flag to the function call and does not change the original flags at caller site
+	 * 		    <li>'callee_dealloc': passes the copied parameter to callee along with 'true' flag. 
+	 * 				This macro allows 'callee' to free the passing parameter.
 	 *         <code>     
 	 * 		  		a = f(copy(b), true)
 	 *        		a_dealloc = true
 	 * 	    	</code>
-	 * 		   <li>'false_dealloc': passes 'false' flag to the function call and does not change the original flags at caller site
-	 *        	This macro can be applied to sub-structure de-allocation and immutable and live passing parameter 
+	 * 		   <li>'caller_dealloc': passes the copied parameter to callee along with 'false' flag. 
+	 *  			This macro stops caller freeing the passing parameter, and mainly applied to  
+	 *  			sub-structure or immutable parameter. 
 	 *         <code>     
 	 * 		  		a = f(copy(b), false)
 	 *        		a_dealloc = true
@@ -528,7 +529,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			// Check if the register is a substructure
 			boolean isSubStructure = stores.isSubstructure(register, function);
 			if(isSubStructure){
-				return "false_dealloc";
+				return "caller_dealloc";
 			}
 			
 			// Analyze the deallocation flags using live variable, read-write and return analysis
@@ -538,18 +539,18 @@ public class DeallocationAnalyzer extends Analyzer {
 				if (!isReturned) {
 					// NOT mutated nor return
 					if (!isLive) {
-						return "no_dealloc";
+						return "retain_dealloc";
 					}else{
-						return "no_dealloc";
+						return "retain_dealloc";
 					}
 				} else {
 					// NOT mutated but returned
 					if (!isLive) {
 						// If 'b' is NOT alive at caller site
-						return "none_dealloc";
+						return "reset_dealloc";
 					} else {
 						// If 'b' is alive at caller site
-						return "none_dealloc";
+						return "reset_dealloc";
 					}
 				}
 			} else {
@@ -558,18 +559,18 @@ public class DeallocationAnalyzer extends Analyzer {
 					// Mutated and returned
 					if (!isLive) {
 						// 'b' is NOT alive
-						return "none_dealloc";
+						return "reset_dealloc";
 					} else {
 						// 'b' is alive
-						return "false_dealloc";
+						return "caller_dealloc";
 					}
 				} else {
 					// Mutated and NOT returned
 					if (!isLive) {
-						return "no_dealloc";
+						return "retain_dealloc";
 					} else {
 						// 'b' is alive
-						return "true_dealloc";
+						return "callee_dealloc";
 					}
 				}
 			}
@@ -578,15 +579,15 @@ public class DeallocationAnalyzer extends Analyzer {
 			if (!isMutated) {
 				if (isReturned) {
 					// The de-allocation is Not done at callee.
-					return "false_dealloc";
+					return "caller_dealloc";
 				}
 			} else {
 				if (isReturned) {
-					return "false_dealloc";
+					return "caller_dealloc";
 				}
 			}
 			// For other cases, the de-allocation is done at callee.
-			return "true_dealloc";
+			return "callee_dealloc";
 		}
 	}
 
