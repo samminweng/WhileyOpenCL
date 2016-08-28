@@ -129,7 +129,8 @@ exec(){
 	parameter=$3
 
 	## declare 3 kinds of code generation
-	declare -a codegens=("naive" "naive_dealloc" "copyreduced" "copyreduced_dealloc")
+	#declare -a codegens=("naive" "naive_dealloc" "copyreduced" "copyreduced_dealloc")
+	declare -a codegens=("copyreduced" "copyreduced_dealloc")
 	## Iterate each codegen
 	for codegen in "${codegens[@]}"
 	do
@@ -170,38 +171,38 @@ init(){
 #exec newTicTacToe original 10000
 #exec newTicTacToe original 100000
 
-# # Reverse test case
-# init Reverse
-# exec Reverse original 100000
-# exec Reverse original 1000000
-# exec Reverse original 10000000
+## # Reverse test case
+#init Reverse
+#exec Reverse original 100000
+#exec Reverse original 1000000
+#exec Reverse original 10000000
 
-# # MergeSort test case
+## # MergeSort test case
 #init MergeSort
 #exec MergeSort original 1000
 #exec MergeSort original 10000
 #exec MergeSort original 100000
 
-# # BubbleSort test case
+## # BubbleSort test case
 #init BubbleSort
 #exec BubbleSort original 1000
 #exec BubbleSort original 10000
 #exec BubbleSort original 100000
 
-# MatrixMult test case
-# init MatrixMult
-# exec MatrixMult original 1000
-# exec MatrixMult original 2000
-# exec MatrixMult original 3000
+## MatrixMult test case
+#init MatrixMult
+#exec MatrixMult original 1000
+#exec MatrixMult original 2000
+#exec MatrixMult original 3000
 #exec MatrixMult original 8000
 # exec MatrixMult original 12000 # Naive code runs out of memory
 
 # Sobel Edge test
-init SobelEdge
-exec SobelEdge original 32
-exec SobelEdge original 64
-exec SobelEdge original 128
+#init SobelEdge
+#exec SobelEdge original 32
+#exec SobelEdge original 64
+#exec SobelEdge original 128
 #exec SobelEdge original 256
 #exec SobelEdge original 512
 #exec SobelEdge original 1024
-#exec SobelEdge original 2048
+exec SobelEdge original 2048
