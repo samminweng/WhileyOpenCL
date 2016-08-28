@@ -114,7 +114,7 @@ exec(){
 
 	## declare 4 kinds of code generation
 	#declare -a codegens=("naive" "naive_dealloc" "copyreduced" "copyreduced_dealloc")
-	declare -a codegens=("naive_dealloc" "copyreduced" "copyreduced_dealloc")
+	declare -a codegens=("copyreduced" "copyreduced_dealloc")
 	## Iterate each codegen
 	for codegen in "${codegens[@]}"
 	do
@@ -170,7 +170,7 @@ exec(){
 #exec SobelEdge original 32
 #exec SobelEdge original 64
 #exec SobelEdge original 128
-exec SobelEdge original 256
-exec SobelEdge original 512
+#exec SobelEdge original 256
+#exec SobelEdge original 512
 exec SobelEdge original 1024
-#exec SobelEdge original 2048
+exec SobelEdge original 2048
