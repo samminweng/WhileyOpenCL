@@ -37,12 +37,12 @@ $ cd tests/code
 $ ./../../bin/wyopcl -code swap.whiley && gcc swap.c Util.c -o swap.out && ./swap.out
 
 1.3 Copy Elimination Analysis
-Copy Elimination analysis aims to eliminate the un-necessary copies at Wyil level. 
+Copy Elimination analysis aims to eliminate the un-necessary copies at the program. 
 $ cd tests/code
-$ ./../../bin/wyopcl -copy swap.whiley
+$ ./../../bin/wyopcl -nocopy swap.whiley
 
 1.4 Deallocation Analysis
-Deallocation analysis aims to compute ownership variable set for releasing memory at block end.
+Deallocation analysis aims to add extra mallocs to release un-used memory at function exit.
 $ cd tests/code
 $ ./../../bin/wyopcl -code -dealloc swap.whiley
 
@@ -61,6 +61,3 @@ The unit test results are summarized at 'report/bound/index.html'.
 The code generator is tested with 5 Whiley programs. Use the below commands:
 $ ant test-code
 The unit test results are summarized at 'report/code/index.html'. 
-
-
-

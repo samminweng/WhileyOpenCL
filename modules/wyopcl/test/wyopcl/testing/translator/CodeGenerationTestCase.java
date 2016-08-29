@@ -95,12 +95,12 @@ public class CodeGenerationTestCase {
 	@Test 
 	public void testCopyCCode(){
 		System.out.println("Generate the copy eliminated C code for " + testcase + ".whiley");   
-		util.execCodeGeneration(codeDir, testcase, "copy");
+		util.execCodeGeneration(codeDir, testcase, "nocopy");
 	}
 	
 	@Test 
 	public void testCopyDeallocatedCCode(){
 		System.out.println("Generate the copy eliminated and deallocated C code for " + testcase + ".whiley");   
-		util.execCodeGeneration(codeDir, testcase, "copy", "dealloc");
+		util.execCodeGeneration(codeDir, testcase, "nocopy", "dealloc");
 	}
 }

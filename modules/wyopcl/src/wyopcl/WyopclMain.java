@@ -23,11 +23,11 @@ import wycc.util.OptArg;
 public class WyopclMain extends WycMain {
 	private boolean verbose = false;
 	public static final OptArg[] EXTRA_OPTIONS = {
-			new OptArg("dealloc", "Run the deallocation analysis to release un-used memory"),
+			new OptArg("dealloc", "Run the deallocation analysis to free un-used memory"),
 
 			// Add the 'copy' option to eliminate un-needed copies
-			new OptArg("copy",
-					"Run the copy elimination analysis to eliminate the un-necessary array copies at byte-code level.\n"),
+			new OptArg("nocopy",
+					"Run the copy elimination analysis to eliminate the un-necessary copies.\n"),
 
 			// Add the 'bound' option
 			new OptArg("bound", OptArg.STRING,
@@ -37,7 +37,7 @@ public class WyopclMain extends WycMain {
 			
 
 			// Add the 'code' option
-			new OptArg("code", "Run the code generate to translate the compiled Whiley Program into C code.\n"),
+			new OptArg("code", "Run the code generator to translate the compiled Whiley Program into C code.\n"),
 
 	};
 

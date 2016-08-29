@@ -246,7 +246,7 @@ public final class BaseTestUtil {
 				destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "naive" + File.separator);
 				break;
 			case 1:
-				if(options[0].equals("copy")){
+				if(options[0].equals("nocopy")){
 					// Set working directory to be 'code/TestCaseName/copy'
 					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "copy_reduced" + File.separator);
 				}else if(options[0].equals("dealloc")){
