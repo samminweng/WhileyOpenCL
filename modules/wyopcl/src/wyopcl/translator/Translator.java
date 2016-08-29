@@ -20,7 +20,9 @@ import wyopcl.translator.deallocate.DeallocationAnalyzer;
 import wyopcl.translator.generator.CodeGenerator;
 
 /**
- * Main entry point of translator
+ * Creates the code generator as well as the code analysis, to produce
+ * and optimize the c code.
+ * 
  * 
  * @author Min-Hsien Weng
  *
@@ -48,6 +50,7 @@ public class Translator implements Builder {
 			module = sf.read();			
 		}
 
+		
 		// Put the in-memory WyIL file to config for later retrieval.
 		this.config.setOption("module", module);
 
