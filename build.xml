@@ -15,6 +15,8 @@
     <file name="wyjc/build.xml"/>
     <!--wyopcl-->
     <file name="wyopcl/build.xml"/>
+    <!--wyboogie-->
+    <file name="wyboogie/build.xml"/>
   </filelist>
 
 
@@ -120,7 +122,9 @@
       <include name="lib/jasm-v*.jar"/>
       <include name="lib/maven-ant-tasks*.jar"/>
       <!-- wyopcl -->
-      <include name="bin/wyopcl" />      
+      <include name="bin/wyopcl" />
+      <!-- wyboogie -->
+      <include name="bin/wyboogie"/>
     </fileset>
   </copy>
   <tar destfile="dist/wdk-src-v${version}.tar" longfile="gnu">
@@ -177,6 +181,17 @@
         <filelist>
           <!--wyopcl-->
           <file name="modules/wyopcl/build.xml"/>
+      </filelist>
+    </subant>
+  </target>
+  <!-- ============================================== -->
+  <!-- Special Commands for Whiley2Boogie project     -->
+  <!-- ============================================== -->
+  <!--Test the Boogie code generator with test cases -->
+  <target name="test-boogie" depends="clean, build-all">
+    <subant failonerror="true" target="test-boogie">
+        <filelist>
+          <file name="modules/wyboogie/build.xml"/>
       </filelist>
     </subant>
   </target>

@@ -1,0 +1,167 @@
+<project name="wyboogie" default="build">
+	<import file="../../config.xml"/>
+	<!--Classpath for wyboogie module-->
+	<path id="wyboogie-cp">
+		<fileset dir="../../lib">
+			<include name="*.jar" />
+		</fileset>
+		<pathelement path="../../build" />
+	</path>
+	<target name="compile-wyboogie">
+		<mkdir dir="../../build"/>
+		<javac encoding="UTF-8" debug="true" debuglevel="vars,lines,source" source="1.8" includeantruntime="true">
+			<classpath refid="wyboogie-cp"/>
+			<src path="src"/>
+			<src path="test"/>
+			<include name="*/**"/>
+		</javac>
+		<taskdef name="wyboogie" classname="wyboogie.WyboogieAntTask" classpath="src/:../wyil/src/:../wyc/src:../wyrl/src:../wycs/src:../wybs/src/:../wyjc/src/:../../${JASM_JAR}"/>
+	</target>
+
+	<target name="build" depends="compile-wyboogie">
+		<mkdir dir="tmp"/>
+		<manifest file="tmp/MANIFEST.MF">
+			<attribute name="Built-By" value="${user.name}"/>
+			<attribute name="Main-Class" value="wyboogie.WyboogieMain"/>
+			<attribute name="Implementation-Version" value="${version}"/>
+			<attribute name="Implementation-Title" value="wyboogie-v${version}.jar"/>
+		</manifest>
+		<jar destfile="../../lib/wyboogie-v${version}.jar" manifest="tmp/MANIFEST.MF">
+			<fileset dir="src" includes="*/**/*.class"/>
+			<fileset dir="test" includes="*/**/*.class"/>
+		</jar>
+		<delete dir="tmp"/>
+		<echo message="============================================="/>
+		<echo message="BUILT: lib/${ant.project.name}-v${version}.jar"/>
+		<echo message="============================================="/>
+	</target>
+
+	<target name="dist" depends="build">
+		<mkdir dir="tmp"/>
+		<manifest file="tmp/MANIFEST.MF">
+			<attribute name="Built-By" value="${user.name}"/>
+			<attribute name="Main-Class" value="wyboogie.WyboogieMain"/>
+			<attribute name="Implementation-Version" value="${version}"/>
+			<attribute name="Implementation-Title" value="wyboogie-v${version}.jar"/>
+		</manifest>
+		<unzip src="../../${JASM_JAR}" dest="tmp"/>
+		<jar destfile="../../dist/wyboogie-all-v${version}.jar" manifest="tmp/MANIFEST.MF">
+			<fileset dir="../wybs/src">
+				<include name="wyfs/**/*.class"/>
+				<include name="wybs/**/*.class"/>
+				<include name="wycc/**/*.class"/>
+			</fileset>
+			<fileset dir="../wycs/src">
+				<include name="wycs/**/*.class"/>
+			</fileset>
+			<fileset dir="../wyrl/src">
+				<include name="wyrl/**/*.class"/>
+				<include name="wyautl/**/*.class"/>
+			</fileset>
+			<fileset dir="../wyil/src">
+				<include name="wyautl_old/**/*.class"/>
+				<include name="wyil/**/*.class"/>
+			</fileset>
+			<fileset dir="../wyc/src">
+				<include name="wyc/**/*.class"/>
+			</fileset>
+			<fileset dir="../wyrt/src">
+				<include name="whiley/**/*.wyil"/>
+			</fileset>
+			<fileset dir="../wyjc/src">
+				<include name="whiley/**/*.class"/>
+				<include name="wyjc/**/*.class"/>
+				<include name="wyjvm/**/*.class"/>
+			</fileset>
+			<fileset dir="src">
+				<include name="wyboogie/**/*.class"/>
+			</fileset>
+			<fileset dir="tmp">
+				<include name="jasm/**/*.class"/>
+			</fileset>
+		</jar>
+		<delete dir="tmp"/>
+		<echo message="============================================="/>
+		<echo message="BUILT: dist/${ant.project.name}-all-v${version}.jar"/>
+		<echo message="============================================="/>
+	</target>
+
+	<target name="clean">
+		<delete includeEmptyDirs="true" failonerror="false">
+			<fileset dir="." includes="**/*.class,**/*.wyil,**/*.wyasm"/>
+		</delete>
+		<echo message="============================================="/>
+		<echo message="CLEANED: ${ant.project.name}"/>
+		<echo message="============================================="/>
+	</target>
+
+	<!-- ============================================== -->
+	<!-- Special Commands for Whiley2OpenCL project     -->
+	<!-- ============================================== -->
+	<!-- Class path for Junit -->
+	<path id="junit-classpath">
+		<fileset dir="../../lib">
+			<include name="*.jar" />
+		</fileset>
+		<pathelement path="build" />
+	</path>
+
+	<target name="test-boogie" depends="build">
+		<junit fork="true" dir="${basedir}/../../" failureProperty="tests.failed" printsummary="yes" outputtoformatters="true">
+			<formatter type="plain" usefile="false" />
+			<classpath refid="junit-classpath"/>
+			<batchtest>
+				<fileset dir="${basedir}/test">
+					<include name="**/CodeGenerationTestCase*" />
+				</fileset>
+			</batchtest>
+		</junit>
+		<fail message="Test failure detected, stopping build." if="tests.failed"/>
+	</target>
+
+	<target name="test" depends="test-boogie">
+    </target>
+
+	<!-- Test the bound analyzer with test cases.-->
+	<!-- <target name="test-bound" depends="clean, build">
+	  	<mkdir dir="../report/bound" />
+	  	<junit fork="yes" dir=".">
+	  		<formatter type="plain" usefile="false" />
+	  		<classpath refid="junit-classpath" />
+	  		<formatter type="xml" />
+	  		<batchtest todir="report/bound">
+	  			<fileset dir="modules/wyboogie/test">
+	  				<include name="**/BoundAnalysisTestCase*" />
+	  			</fileset>
+	  		</batchtest>
+	  	</junit>
+	  	<junitreport todir="report">
+	  		<fileset dir="report/bound">
+	  			<include name="TEST-*.xml" />
+	  		</fileset>
+	  		<report todir="report/bound" />
+	  	</junitreport>
+	  </target>-->
+	<!-- Test the bound analyzer with test cases.-->
+	<!--<target name="test-pattern" depends="clean, build">
+	  	<mkdir dir="report/pattern" />
+	  	<junit fork="yes" dir=".">
+	  		<formatter type="plain" usefile="false" />
+	  		<classpath refid="junit-classpath" />
+	  		<formatter type="xml" />
+	  		<batchtest todir="report/pattern">
+	  			<fileset dir="modules/wyboogie/test">
+	  				<include name="**/PatternMatchingTestCase*" />
+	  			</fileset>
+	  		</batchtest>
+	  	</junit>
+	  	<junitreport todir="report">
+	  		<fileset dir="report/pattern">
+	  			<include name="TEST-*.xml" />
+	  		</fileset>
+	  		<report todir="report/pattern" />
+	  	</junitreport>
+	  </target>-->
+	<!--Test the code generator with test cases.-->
+
+</project>
