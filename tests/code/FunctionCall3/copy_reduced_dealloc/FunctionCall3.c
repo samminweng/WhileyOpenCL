@@ -153,9 +153,10 @@ blklab0:;
 	_TRANSFER_DEALLOC(b, _26);
 	//invoke (%27) = (%2) FunctionCall3:func : function(int[])->(int[])
 	{
+		void* b_tmp;
 		_UPDATE_1DARRAY_SIZE(_27, b);
 		_DEALLOC(_27);
-		_27 = func(_COPY_1DARRAY_PARAM(b), false);
+		_27 = func(b_tmp = _COPY_1DARRAY_PARAM(b), false);
 		_ADD_DEALLOC(_27);
 	}
 	//assign %3 = %27  : int[]

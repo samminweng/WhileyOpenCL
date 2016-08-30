@@ -543,14 +543,54 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
+	 * Check the copy of each function parameter. If the copy is needed, then
+	 * generate local temporary variable to reference the copied parameter.
+	 * For example, 'a = func(b)' can be translated into c code:
+	 * <pre><code>
+	 * {
+	 * 		void* b_tmp; // local block variable
+	 * 		a = func(b_tmp=copy(b));
+	 * }
+	 * </code></pre>
+	 * 
+	 * @param code
+	 * @param function
+	 * @return a list of parameter whose copy can be safely reduced.
+	 */
+	private List<Integer> checkParameterCopy(List<String> statements, Codes.Invoke code, FunctionOrMethod function){
+		String indent = stores.getIndent(function);
+		// Create a array to store the parameter whose parameter can be reduced.
+		List<Integer> copyReducedList = new ArrayList<Integer>();
+		for (int operand : code.operands()) {
+			String parameter = stores.getVar(operand, function);
+			Type param_type = stores.getRawType(operand, function);
+			// Check if the parameter is an array or structure 
+			if(stores.isCompoundType(param_type)){
+				// Check if the copy of parameter 
+				boolean isCopyEliminated = isCopyEliminated(operand, code, function);
+				if(isCopyEliminated){
+					// Put the operand to the copy-reduced list 
+					copyReducedList.add(operand);
+				}else{
+					// Generate the temporary block variable to store the copied parameter
+					statements.add(indent + "void* "+ parameter+ "_tmp;");
+				}
+			}
+		}
+		
+		return copyReducedList;
+	}
+	
+	
+	
+	/**
 	 * Translate the rhs of a function call
 	 * 
 	 * @param code
 	 * @param f
 	 * @return
 	 */
-	private String translateFunctionCall(HashMap<Integer, Boolean> argumentCopyEliminated, Codes.Invoke code,
-			FunctionOrMethod function) {
+	private void translateFunctionCall(List<Integer> copyReducedList, List<String> statements, Codes.Invoke code, FunctionOrMethod function) {
 
 		String lhs_statement = "";
 		// Translate the lhs side of a function call.
@@ -565,9 +605,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Translate the rhs side of a function call
 		List<String> statement = new ArrayList<String>();
 		for (int operand : code.operands()) {
+			// Get parameter name
 			String parameter = stores.getVar(operand, function);
 			Type parameter_type = stores.getRawType(operand, function);
-
+			// Check if the copy of parameter is reduced by copy analysis (true: copy is reduced).
+			boolean isCopyEliminated = copyReducedList.contains(operand);
+			
 			// Check if the copy of function argument is needed or not
 			// And then generate the corresponding code
 			if (parameter_type instanceof Type.Nominal
@@ -576,29 +619,32 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			} else if (stores.isIntType(parameter_type)) {
 				statement.add(parameter);
 			} else if (parameter_type instanceof Type.Array) {
-				boolean isCopyEliminated = isCopyEliminated(operand, code, function);
 				Type elm = stores.getArrayElementType((Type.Array) parameter_type);
 				int dimension = stores.getArrayDimension(parameter_type);
 				if (isCopyEliminated) {
 					statement.add("_" + dimension + "DARRAY_PARAM(" + parameter + ")");
 				} else {
+					// Temporary variable is used to reference the extra copy of parameter
+					String tmp_var = parameter+"_tmp";
+					
 					if (stores.isIntType(elm)) {
-						statement.add("_COPY_" + dimension + "DARRAY_PARAM(" + parameter + ")");
+						statement.add(tmp_var+ " = _COPY_" + dimension + "DARRAY_PARAM(" + parameter + ")");
 					} else {
 						String elm_type = CodeGeneratorHelper.translateType(elm, stores).replace("*", "");
 						// Copy the rhs and rhs size
-						statement.add("copy_array_" + elm_type + "(" + parameter + ", " + parameter + "_size), "
+						statement.add(tmp_var + " = copy_array_" + elm_type + "(" + parameter + ", " + parameter + "_size), "
 								+ parameter + "_size");
 					}
 				}
 			} else if (parameter_type instanceof Type.Record || parameter_type instanceof Type.Nominal
 					|| parameter_type instanceof Type.Union) {
-				boolean isCopyEliminated = isCopyEliminated(operand, code, function);
 				String type_name = CodeGeneratorHelper.translateType(parameter_type, stores).replace("*", "");
 				if (isCopyEliminated) {
 					statement.add("_STRUCT_PARAM(" + parameter + ")");
 				} else {
-					statement.add("_COPY_STRUCT_PARAM(" + parameter + ", " + type_name + ")");
+					// Temporary variable is used to reference the extra copy of parameter
+					String tmp_var = parameter+"_tmp";
+					statement.add(tmp_var + " = _COPY_STRUCT_PARAM(" + parameter + ", " + type_name + ")");
 				}
 			} else {
 				throw new RuntimeException("Not Implemented");
@@ -630,8 +676,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				.collect(Collectors.joining(", "));
 
 		// Combine lhs and rhs to the statement
-		return lhs_statement + code.name.name() + "(" + rhs_statement + ");";
+		statements.add(lhs_statement + code.name.name() + "(" + rhs_statement + ");");
 
+		
 	}
 
 	/**
@@ -791,7 +838,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 */
 	protected void translate(Codes.Invoke code, FunctionOrMethod function) {
-		List<String> statement = new ArrayList<String>();
+		List<String> statements = new ArrayList<String>();
 		String indent = stores.getIndent(function);
 
 		// Translate built-in Whiley functions using macros.
@@ -801,78 +848,70 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			switch (code.name.name()) {
 			// Parse a string into an integer.
 			case "parse":
-				statement.add(indent + "_STR_TO_INT(" + lhs + ", " + rhs + ");");
+				statements.add(indent + "_STR_TO_INT(" + lhs + ", " + rhs + ");");
 				break;
 			// Slice an array into a new sub-array at given starting and ending index.
 			case "slice":
-				extractLHSVar(statement, code, function);
+				extractLHSVar(statements, code, function);
 				// Call the 'slice' function.
 				String array = stores.getVar(code.operand(0), function);
 				String start = stores.getVar(code.operand(1), function);
 				String end = stores.getVar(code.operand(2), function);
-				statement.add("_SLICE_ARRAY(" + lhs + ", " + array + ", " + start + ", " + end + ");");
+				statements.add("_SLICE_ARRAY(" + lhs + ", " + array + ", " + start + ", " + end + ");");
 				break;
 			case "toString":
-				statement.add(indent + lhs + " = " + rhs + ";");
+				statements.add(indent + lhs + " = " + rhs + ";");
 				break;
 			case "abs":
 				// Use 'llabs' function to return the absolute value of 'rhs'
 				// because the rhs is a long long integer.
-				statement.add(indent + lhs + " = llabs(" + rhs + ");");
+				statements.add(indent + lhs + " = llabs(" + rhs + ");");
 				break;
 			case "min":
 				String rhs1 = stores.getVar(code.operand(1), function);
-				statement.add(indent + lhs + " = min(" + rhs + ", " + rhs1 + ");");
+				statements.add(indent + lhs + " = min(" + rhs + ", " + rhs1 + ");");
 				break;
 			case "max":
 				rhs1 = stores.getVar(code.operand(1), function);
-				statement.add(indent + lhs + " = max(" + rhs + ", " + rhs1 + ");");
+				statements.add(indent + lhs + " = max(" + rhs + ", " + rhs1 + ");");
 				break;
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);
 			}
 
 			this.deallocatedAnalyzer.ifPresent(a -> {
-				statement.addAll(a.postDealloc(code, function, stores, copyAnalyzer));
+				statements.addAll(a.postDealloc(code, function, stores, copyAnalyzer));
 			});
 
 		} else {
 			
 			// Add the starting clause for the function call
-			statement.add(stores.getIndent(function) +"{");
+			statements.add(stores.getIndent(function) +"{");
 			// Increase the indent
 			stores.increaseIndent(function);
 			
-			// De-allocate lhs register
-			extractLHSVar(statement, code, function);
-			HashMap<Integer, Boolean> argumentCopyEliminated = new HashMap<Integer, Boolean>();
-			// call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
-			statement.add(translateFunctionCall(argumentCopyEliminated, code, function));
+			// Check the copy of parameter
+			List<Integer> copyReducedList = checkParameterCopy(statements, code, function);
 
-			// Iterate copy elimination set and update read-write/return set
-			if (copyAnalyzer.isPresent()) {
-				argumentCopyEliminated.entrySet().forEach(entry -> {
-					boolean isCopyEliminated = entry.getValue();
-					int register = entry.getKey();
-					copyAnalyzer.get().updateSet(isCopyEliminated, register, code, function);
-				});
-			}
+			// De-allocate lhs register
+			extractLHSVar(statements, code, function);
+			// call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
+			translateFunctionCall(copyReducedList, statements, code, function);
 
 			// Generate the post-deallocation code
 			this.deallocatedAnalyzer.ifPresent(a -> {
-				statement.addAll(a.postDealloc(code, function, stores, copyAnalyzer));
-				//statement.addAll(a.postDealloc(code, function, stores));
+				statements.addAll(a.postDealloc(code, function, stores, copyAnalyzer));
 			});
 			
 			// Decrease the indent
 			stores.decreaseIndent(function);
 			
 			// Add the ending clause for the function call
-			statement.add(stores.getIndent(function) +"}");
+			statements.add(stores.getIndent(function) +"}");
 		}
 
 		// add the statement
-		stores.addAllStatements(code, statement, function);
+		stores.addAllStatements(code, statements, function);
 	}
 
 	/**

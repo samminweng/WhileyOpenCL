@@ -222,7 +222,8 @@ blklab14:;
 blklab20:;
 			//invoke (%21) = (%8, %1, %5) nqueens2:conflict : function(nqueens2:POS,int,int)->(bool)
 			{
-				_21 = conflict(_COPY_STRUCT_PARAM(p, POS), true, n, col);
+				void* p_tmp;
+				_21 = conflict(p_tmp = _COPY_STRUCT_PARAM(p, POS), true, n, col);
 			}
 			//const %22 = true : bool
 			_22 = true;
@@ -277,7 +278,8 @@ blklab12:;
 		_30=n+_29;
 		//invoke (%28) = (%0, %30, %2) nqueens2:run : function(nqueens2:POS[],int,int)->(int)
 		{
-			_28 = run(copy_array_POS(queens, queens_size), queens_size, true, _30, dim);
+			void* queens_tmp;
+			_28 = run(queens_tmp = copy_array_POS(queens, queens_size), queens_size, true, _30, dim);
 		}
 		//add %31 = %4, %28 : int
 		_31=num_solutions+_28;
@@ -365,7 +367,8 @@ int main(int argc, char** args){
 	_10 = 0;
 	//invoke (%9) = (%2, %10, %1) nqueens2:run : function(nqueens2:POS[],int,int)->(int)
 	{
-		_9 = run(copy_array_POS(queens, queens_size), queens_size, true, _10, n);
+		void* queens_tmp;
+		_9 = run(queens_tmp = copy_array_POS(queens, queens_size), queens_size, true, _10, n);
 	}
 	//assign %3 = %9  : int
 	num_solutions = _9;

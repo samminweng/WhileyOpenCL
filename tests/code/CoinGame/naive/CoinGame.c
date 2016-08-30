@@ -512,14 +512,16 @@ int main(int argc, char** args){
 	_COPY_1DARRAY(moves, _7);
 	//invoke (%8) = (%2, %1) CoinGame:findMoves : function(int[],int)->(int[])
 	{
+		void* moves_tmp;
 		_UPDATE_1DARRAY_SIZE(_8, moves);
-		_8 = findMoves(_COPY_1DARRAY_PARAM(moves), n);
+		_8 = findMoves(moves_tmp = _COPY_1DARRAY_PARAM(moves), n);
 	}
 	//assign %2 = %8  : int[]
 	_COPY_1DARRAY(moves, _8);
 	//invoke () = (%0, %2, %1) CoinGame:play : method(whiley/lang/System:Console,int[],int)->()
 	{
-play(stdout, _COPY_1DARRAY_PARAM(moves), n);
+		void* moves_tmp;
+play(stdout, moves_tmp = _COPY_1DARRAY_PARAM(moves), n);
 	}
 	//const %9 = 1 : int
 	_9 = 1;

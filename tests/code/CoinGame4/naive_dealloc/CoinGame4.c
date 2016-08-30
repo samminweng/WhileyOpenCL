@@ -499,9 +499,10 @@ blklab16:;
 blklab17:;
 			//invoke (%41) = (%0, %5, %4, %1, %7, %6, %8) CoinGame4:pickCoin : function(int[],int,int,int,int,int,int)->(int[])
 			{
+				void* moves_tmp;
 				_UPDATE_1DARRAY_SIZE(_41, moves);
 				_DEALLOC(_41);
-				_41 = pickCoin(_COPY_1DARRAY_PARAM(moves), false, i, j, n, x, y, z);
+				_41 = pickCoin(moves_tmp = _COPY_1DARRAY_PARAM(moves), false, i, j, n, x, y, z);
 				_ADD_DEALLOC(_41);
 			}
 			//assign %0 = %41  : int[]
@@ -581,9 +582,10 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(moves);
 	//invoke (%8) = (%2, %1) CoinGame4:findMoves : function(int[],int)->(int[])
 	{
+		void* moves_tmp;
 		_UPDATE_1DARRAY_SIZE(_8, moves);
 		_DEALLOC(_8);
-		_8 = findMoves(_COPY_1DARRAY_PARAM(moves), false, n);
+		_8 = findMoves(moves_tmp = _COPY_1DARRAY_PARAM(moves), false, n);
 		_ADD_DEALLOC(_8);
 	}
 	//assign %2 = %8  : int[]
@@ -592,7 +594,8 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(moves);
 	//invoke () = (%0, %2, %1) CoinGame4:play : method(whiley/lang/System:Console,int[],int)->()
 	{
-play(stdout, _COPY_1DARRAY_PARAM(moves), true, n);
+		void* moves_tmp;
+play(stdout, moves_tmp = _COPY_1DARRAY_PARAM(moves), true, n);
 	}
 	//const %9 = 1 : int
 	_9 = 1;

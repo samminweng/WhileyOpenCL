@@ -147,9 +147,10 @@ int main(int argc, char** args){
 	_11 = 6;
 	//invoke (%10) = (%1, %11) FunctionCall4:func : function(int[],int)->(int[])
 	{
+		void* a_tmp;
 		_UPDATE_1DARRAY_SIZE(_10, a);
 		_DEALLOC(_10);
-		_10 = func(_COPY_1DARRAY_PARAM(a), true, _11);
+		_10 = func(a_tmp = _COPY_1DARRAY_PARAM(a), true, _11);
 		_ADD_DEALLOC(_10);
 	}
 	//assign %1 = %10  : int[]
@@ -213,9 +214,10 @@ blklab2:;
 	_29 = 1;
 	//invoke (%28) = (%2, %29) FunctionCall4:func : function(int[],int)->(int[])
 	{
+		void* b_tmp;
 		_UPDATE_1DARRAY_SIZE(_28, b);
 		_DEALLOC(_28);
-		_28 = func(_COPY_1DARRAY_PARAM(b), true, _29);
+		_28 = func(b_tmp = _COPY_1DARRAY_PARAM(b), true, _29);
 		_ADD_DEALLOC(_28);
 	}
 	//assign %3 = %28  : int[]

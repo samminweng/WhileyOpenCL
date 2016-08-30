@@ -68,8 +68,9 @@ int main(int argc, char** args){
 	_COPY_1DARRAY(a, _9);
 	//invoke (%10) = (%1) FunctionCall3:func : function(int[])->(int[])
 	{
+		void* a_tmp;
 		_UPDATE_1DARRAY_SIZE(_10, a);
-		_10 = func(_COPY_1DARRAY_PARAM(a));
+		_10 = func(a_tmp = _COPY_1DARRAY_PARAM(a));
 	}
 	//assign %1 = %10  : int[]
 	_COPY_1DARRAY(a, _10);
@@ -122,8 +123,9 @@ blklab0:;
 	_COPY_1DARRAY(b, _26);
 	//invoke (%27) = (%2) FunctionCall3:func : function(int[])->(int[])
 	{
+		void* b_tmp;
 		_UPDATE_1DARRAY_SIZE(_27, b);
-		_27 = func(_COPY_1DARRAY_PARAM(b));
+		_27 = func(b_tmp = _COPY_1DARRAY_PARAM(b));
 	}
 	//assign %3 = %27  : int[]
 	_COPY_1DARRAY(c, _27);

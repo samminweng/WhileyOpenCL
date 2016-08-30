@@ -551,9 +551,10 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(moves);
 	//invoke (%8) = (%2, %1) CoinGame:findMoves : function(int[],int)->(int[])
 	{
+		void* moves_tmp;
 		_UPDATE_1DARRAY_SIZE(_8, moves);
 		_DEALLOC(_8);
-		_8 = findMoves(_COPY_1DARRAY_PARAM(moves), false, n);
+		_8 = findMoves(moves_tmp = _COPY_1DARRAY_PARAM(moves), false, n);
 		_ADD_DEALLOC(_8);
 	}
 	//assign %2 = %8  : int[]
@@ -562,7 +563,8 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(moves);
 	//invoke () = (%0, %2, %1) CoinGame:play : method(whiley/lang/System:Console,int[],int)->()
 	{
-play(stdout, _COPY_1DARRAY_PARAM(moves), true, n);
+		void* moves_tmp;
+play(stdout, moves_tmp = _COPY_1DARRAY_PARAM(moves), true, n);
 	}
 	//const %9 = 1 : int
 	_9 = 1;

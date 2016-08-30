@@ -122,8 +122,9 @@ blklab0:;
 	_UPDATE_1DARRAY(b, _26);
 	//invoke (%27) = (%2) FunctionCall3:func : function(int[])->(int[])
 	{
+		void* b_tmp;
 		_UPDATE_1DARRAY_SIZE(_27, b);
-		_27 = func(_COPY_1DARRAY_PARAM(b));
+		_27 = func(b_tmp = _COPY_1DARRAY_PARAM(b));
 	}
 	//assign %3 = %27  : int[]
 	_UPDATE_1DARRAY(c, _27);
