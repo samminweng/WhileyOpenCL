@@ -591,19 +591,18 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @return
 	 */
 	private void translateFunctionCall(List<Integer> copyReducedList, List<String> statements, Codes.Invoke code, FunctionOrMethod function) {
-
-		String lhs_statement = "";
-		// Translate the lhs side of a function call.
-		// If no return value, no needs for translation.
+		String indent = stores.getIndent(function);
+		String function_return = indent +"";
+		// Translate the function return
 		if (code.targets().length > 0) {
-			String indent = stores.getIndent(function);
 			String lhs = stores.getVar(code.target(0), function);
-			// Call the function and assign the return value to lhs register.
-			lhs_statement = indent + lhs + " = ";
+			function_return +=  lhs + " = ";
 		}
 
-		// Translate the rhs side of a function call
-		List<String> statement = new ArrayList<String>();
+		// Translate the right hand side of a function call
+		
+		// Go through each parameter 
+		List<String> parameters = new ArrayList<String>();
 		for (int operand : code.operands()) {
 			// Get parameter name
 			String parameter = stores.getVar(operand, function);
@@ -615,24 +614,24 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// And then generate the corresponding code
 			if (parameter_type instanceof Type.Nominal
 					&& ((Type.Nominal) parameter_type).name().name().equals("Console")) {
-				statement.add("stdout");
+				parameters.add("stdout");
 			} else if (stores.isIntType(parameter_type)) {
-				statement.add(parameter);
+				parameters.add(parameter);
 			} else if (parameter_type instanceof Type.Array) {
 				Type elm = stores.getArrayElementType((Type.Array) parameter_type);
 				int dimension = stores.getArrayDimension(parameter_type);
 				if (isCopyEliminated) {
-					statement.add("_" + dimension + "DARRAY_PARAM(" + parameter + ")");
+					parameters.add("_" + dimension + "DARRAY_PARAM(" + parameter + ")");
 				} else {
 					// Temporary variable is used to reference the extra copy of parameter
 					String tmp_var = parameter+"_tmp";
 					
 					if (stores.isIntType(elm)) {
-						statement.add(tmp_var+ " = _COPY_" + dimension + "DARRAY_PARAM(" + parameter + ")");
+						parameters.add(tmp_var+ " = _COPY_" + dimension + "DARRAY_PARAM(" + parameter + ")");
 					} else {
 						String elm_type = CodeGeneratorHelper.translateType(elm, stores).replace("*", "");
 						// Copy the rhs and rhs size
-						statement.add(tmp_var + " = copy_array_" + elm_type + "(" + parameter + ", " + parameter + "_size), "
+						parameters.add(tmp_var + " = copy_array_" + elm_type + "(" + parameter + ", " + parameter + "_size), "
 								+ parameter + "_size");
 					}
 				}
@@ -640,11 +639,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					|| parameter_type instanceof Type.Union) {
 				String type_name = CodeGeneratorHelper.translateType(parameter_type, stores).replace("*", "");
 				if (isCopyEliminated) {
-					statement.add("_STRUCT_PARAM(" + parameter + ")");
+					parameters.add("_STRUCT_PARAM(" + parameter + ")");
 				} else {
 					// Temporary variable is used to reference the extra copy of parameter
 					String tmp_var = parameter+"_tmp";
-					statement.add(tmp_var + " = _COPY_STRUCT_PARAM(" + parameter + ", " + type_name + ")");
+					parameters.add(tmp_var + " = _COPY_STRUCT_PARAM(" + parameter + ", " + type_name + ")");
 				}
 			} else {
 				throw new RuntimeException("Not Implemented");
@@ -652,19 +651,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 			// Append deallocation flag to the function call
 			this.deallocatedAnalyzer.ifPresent(a -> {
-				String callee_dealloc = a.computeDealloc(operand, code, function, stores, copyAnalyzer);
-				switch (callee_dealloc) {
-				case "reset_dealloc":
-					statement.add("false");
+				String macro = a.computeDealloc(operand, code, function, stores, copyAnalyzer);
+				switch (macro) {
+				case "_RESET_DEALLOC":
+					parameters.add("false");
 					break;
-				case "retain_dealloc":
-					statement.add("false");
+				case "_RETAIN_DEALLOC":
+					parameters.add("false");
 					break;
-				case "caller_dealloc":
-					statement.add("false");
+				case "_CALLER_DEALLOC":
+					parameters.add("false");
 					break;
-				case "callee_dealloc":
-					statement.add("true");
+				case "_CALLEE_DEALLOC":
+					parameters.add("true");
 					break;
 				default:
 					break;// Do nothing
@@ -672,11 +671,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			});
 		}
 
-		String rhs_statement = statement.stream().filter(s -> !s.equals("")).map(s -> s.toString())
+		String rhs = parameters.stream().filter(s -> !s.equals("")).map(s -> s.toString())
 				.collect(Collectors.joining(", "));
 
 		// Combine lhs and rhs to the statement
-		statements.add(lhs_statement + code.name.name() + "(" + rhs_statement + ");");
+		statements.add(function_return + code.name.name() + "(" + rhs + ");");
 
 		
 	}

@@ -617,7 +617,7 @@ blklab21:;
 	//invoke () = (%0, %3) MatrixMult2:print_mat : method(whiley/lang/System:Console,MatrixMult2:Matrix)->()
 	{
 		void* C_tmp;
-print_mat(stdout, C_tmp = _COPY_STRUCT_PARAM(C, Matrix));
+		print_mat(stdout, C_tmp = _COPY_STRUCT_PARAM(C, Matrix));
 	}
 	//fieldload %57 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %58 = %57 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

@@ -502,7 +502,7 @@ blklab17:;
 				_UPDATE_1DARRAY_SIZE(_41, moves);
 				_DEALLOC(_41);
 				_41 = pickCoin(_1DARRAY_PARAM(moves), false, i, j, n, x, y, z);
-				_REMOVE_DEALLOC(moves);
+				_RESET_DEALLOC(moves);
 				_ADD_DEALLOC(_41);
 			}
 			//assign %0 = %41  : int[]
@@ -585,7 +585,7 @@ int main(int argc, char** args){
 		_UPDATE_1DARRAY_SIZE(_8, moves);
 		_DEALLOC(_8);
 		_8 = findMoves(_1DARRAY_PARAM(moves), false, n);
-		_REMOVE_DEALLOC(moves);
+		_RESET_DEALLOC(moves);
 		_ADD_DEALLOC(_8);
 	}
 	//assign %2 = %8  : int[]
@@ -594,7 +594,8 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(moves, _8);
 	//invoke () = (%0, %2, %1) CoinGame4:play : method(whiley/lang/System:Console,int[],int)->()
 	{
-play(stdout, _1DARRAY_PARAM(moves), false, n);
+		play(stdout, _1DARRAY_PARAM(moves), false, n);
+		_RETAIN_DEALLOC(moves);
 	}
 	//const %9 = 1 : int
 	_9 = 1;

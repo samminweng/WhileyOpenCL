@@ -212,6 +212,7 @@ blklab13:;
 		void* C_data_tmp;
 		_DEALLOC_STRUCT(_34, Matrix);
 		_34 = matrix(_35, _36, C_data_tmp = _COPY_2DARRAY_PARAM(C_data), true);
+		_CALLEE_DEALLOC(C_data);
 		_ADD_DEALLOC(_34);
 	}
 	//return %34
@@ -413,6 +414,7 @@ blklab23:;
 		void* rows_tmp;
 		_DEALLOC_STRUCT(_15, Matrix);
 		_15 = matrix(width, height, rows_tmp = _COPY_2DARRAY_PARAM(rows), true);
+		_CALLEE_DEALLOC(rows);
 		_ADD_DEALLOC(_15);
 	}
 	//return %15
@@ -568,6 +570,8 @@ blklab28:;
 		void* B_tmp;
 		_DEALLOC_STRUCT(_26, Matrix);
 		_26 = multiply(A_tmp = _COPY_STRUCT_PARAM(A, Matrix), true, B_tmp = _COPY_STRUCT_PARAM(B, Matrix), true);
+		_CALLEE_DEALLOC(A);
+		_CALLEE_DEALLOC(B);
 		_ADD_DEALLOC(_26);
 	}
 	//assign %4 = %26  : {int[][] data,int height,int width}
@@ -607,7 +611,8 @@ blklab29:;
 	//invoke () = (%0, %4) MatrixMult:printMat : method(whiley/lang/System:Console,MatrixMult:Matrix)->()
 	{
 		void* C_tmp;
-printMat(stdout, C_tmp = _COPY_STRUCT_PARAM(C, Matrix), true);
+		printMat(stdout, C_tmp = _COPY_STRUCT_PARAM(C, Matrix), true);
+		_CALLEE_DEALLOC(C);
 	}
 	//fieldload %35 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %36 = %35 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

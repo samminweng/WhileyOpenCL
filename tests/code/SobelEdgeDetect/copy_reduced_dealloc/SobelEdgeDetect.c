@@ -303,12 +303,16 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 			//invoke (%47) = (%0, %1, %2, %8, %9, %6) SobelEdgeDetect:convolution : function(int[],int,int,int,int,int[])->(int)
 			{
 				_47 = convolution(_1DARRAY_PARAM(pixels), false, width, height, x, y, _1DARRAY_PARAM(v_sobel), false);
+				_RETAIN_DEALLOC(pixels);
+				_RETAIN_DEALLOC(v_sobel);
 			}
 			//assign %11 = %47  : int
 			v_g = _47;
 			//invoke (%48) = (%0, %1, %2, %8, %9, %7) SobelEdgeDetect:convolution : function(int[],int,int,int,int,int[])->(int)
 			{
 				_48 = convolution(_1DARRAY_PARAM(pixels), false, width, height, x, y, _1DARRAY_PARAM(h_sobel), false);
+				_RETAIN_DEALLOC(pixels);
+				_RETAIN_DEALLOC(h_sobel);
 			}
 			//assign %12 = %48  : int
 			h_g = _48;
@@ -619,6 +623,7 @@ int main(int argc, char** args){
 		_UPDATE_1DARRAY_SIZE(_16, pixels);
 		_DEALLOC(_16);
 		_16 = sobelEdgeDetection(_1DARRAY_PARAM(pixels), false, width, height);
+		_RETAIN_DEALLOC(pixels);
 		_ADD_DEALLOC(_16);
 	}
 	//assign %5 = %16  : int[]
@@ -636,7 +641,8 @@ int main(int argc, char** args){
 	println_s(_19, _19_size);
 	//invoke () = (%0, %4, %1, %2) SobelEdgeDetect:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
-printImage(stdout, _1DARRAY_PARAM(pixels), false, width, height);
+		printImage(stdout, _1DARRAY_PARAM(pixels), false, width, height);
+		_RETAIN_DEALLOC(pixels);
 	}
 	//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %21 = %20 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -649,7 +655,8 @@ printImage(stdout, _1DARRAY_PARAM(pixels), false, width, height);
 	println_s(_22, _22_size);
 	//invoke () = (%0, %5, %1, %2) SobelEdgeDetect:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
-printImage(stdout, _1DARRAY_PARAM(newPixels), false, width, height);
+		printImage(stdout, _1DARRAY_PARAM(newPixels), false, width, height);
+		_RETAIN_DEALLOC(newPixels);
 	}
 	//assert
 	{

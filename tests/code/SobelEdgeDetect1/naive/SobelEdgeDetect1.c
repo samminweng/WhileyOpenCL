@@ -553,7 +553,7 @@ int main(int argc, char** args){
 	//invoke () = (%0, %4, %1, %2) SobelEdgeDetect1:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
 		void* pixels_tmp;
-printImage(stdout, pixels_tmp = _COPY_1DARRAY_PARAM(pixels), width, height);
+		printImage(stdout, pixels_tmp = _COPY_1DARRAY_PARAM(pixels), width, height);
 	}
 	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %18 = %17 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -565,7 +565,7 @@ printImage(stdout, pixels_tmp = _COPY_1DARRAY_PARAM(pixels), width, height);
 	//invoke () = (%0, %5, %1, %2) SobelEdgeDetect1:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
 		void* newPixels_tmp;
-printImage(stdout, newPixels_tmp = _COPY_1DARRAY_PARAM(newPixels), width, height);
+		printImage(stdout, newPixels_tmp = _COPY_1DARRAY_PARAM(newPixels), width, height);
 	}
 	//assert
 	{

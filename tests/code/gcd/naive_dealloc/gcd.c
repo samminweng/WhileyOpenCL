@@ -214,6 +214,7 @@ int main(int argc, char** args){
 			{
 				void* gcds_tmp;
 				_16 = gcd_cached(i, j, n, gcds_tmp = _COPY_1DARRAY_PARAM(gcds), true);
+				_CALLEE_DEALLOC(gcds);
 			}
 			//mul %17 = %3, %1 : int
 			_17=i*n;

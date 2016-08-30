@@ -305,6 +305,8 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 				void* pixels_tmp;
 				void* v_sobel_tmp;
 				_47 = convolution(pixels_tmp = _COPY_1DARRAY_PARAM(pixels), true, width, height, x, y, v_sobel_tmp = _COPY_1DARRAY_PARAM(v_sobel), true);
+				_CALLEE_DEALLOC(pixels);
+				_CALLEE_DEALLOC(v_sobel);
 			}
 			//assign %11 = %47  : int
 			v_g = _47;
@@ -313,6 +315,8 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 				void* pixels_tmp;
 				void* h_sobel_tmp;
 				_48 = convolution(pixels_tmp = _COPY_1DARRAY_PARAM(pixels), true, width, height, x, y, h_sobel_tmp = _COPY_1DARRAY_PARAM(h_sobel), true);
+				_CALLEE_DEALLOC(pixels);
+				_CALLEE_DEALLOC(h_sobel);
 			}
 			//assign %12 = %48  : int
 			h_g = _48;
@@ -624,6 +628,7 @@ int main(int argc, char** args){
 		_UPDATE_1DARRAY_SIZE(_16, pixels);
 		_DEALLOC(_16);
 		_16 = sobelEdgeDetection(pixels_tmp = _COPY_1DARRAY_PARAM(pixels), true, width, height);
+		_CALLEE_DEALLOC(pixels);
 		_ADD_DEALLOC(_16);
 	}
 	//assign %5 = %16  : int[]
@@ -642,7 +647,8 @@ int main(int argc, char** args){
 	//invoke () = (%0, %4, %1, %2) SobelEdgeDetect:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
 		void* pixels_tmp;
-printImage(stdout, pixels_tmp = _COPY_1DARRAY_PARAM(pixels), true, width, height);
+		printImage(stdout, pixels_tmp = _COPY_1DARRAY_PARAM(pixels), true, width, height);
+		_CALLEE_DEALLOC(pixels);
 	}
 	//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %21 = %20 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -656,7 +662,8 @@ printImage(stdout, pixels_tmp = _COPY_1DARRAY_PARAM(pixels), true, width, height
 	//invoke () = (%0, %5, %1, %2) SobelEdgeDetect:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
 		void* newPixels_tmp;
-printImage(stdout, newPixels_tmp = _COPY_1DARRAY_PARAM(newPixels), true, width, height);
+		printImage(stdout, newPixels_tmp = _COPY_1DARRAY_PARAM(newPixels), true, width, height);
+		_CALLEE_DEALLOC(newPixels);
 	}
 	//assert
 	{

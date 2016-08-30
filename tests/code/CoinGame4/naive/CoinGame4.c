@@ -544,7 +544,7 @@ int main(int argc, char** args){
 	//invoke () = (%0, %2, %1) CoinGame4:play : method(whiley/lang/System:Console,int[],int)->()
 	{
 		void* moves_tmp;
-play(stdout, moves_tmp = _COPY_1DARRAY_PARAM(moves), n);
+		play(stdout, moves_tmp = _COPY_1DARRAY_PARAM(moves), n);
 	}
 	//const %9 = 1 : int
 	_9 = 1;

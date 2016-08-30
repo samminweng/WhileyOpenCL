@@ -642,7 +642,7 @@ int main(int argc, char** args){
 	//invoke () = (%0, %5) SobelEdgeDetect2:print_image : method(whiley/lang/System:Console,SobelEdgeDetect2:Image)->()
 	{
 		void* input_tmp;
-print_image(stdout, input_tmp = _COPY_STRUCT_PARAM(input, Image));
+		print_image(stdout, input_tmp = _COPY_STRUCT_PARAM(input, Image));
 	}
 	//fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %25 = %24 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -654,7 +654,7 @@ print_image(stdout, input_tmp = _COPY_STRUCT_PARAM(input, Image));
 	//invoke () = (%0, %6) SobelEdgeDetect2:print_image : method(whiley/lang/System:Console,SobelEdgeDetect2:Image)->()
 	{
 		void* output_tmp;
-print_image(stdout, output_tmp = _COPY_STRUCT_PARAM(output, Image));
+		print_image(stdout, output_tmp = _COPY_STRUCT_PARAM(output, Image));
 	}
 	//return
 	exit(0);

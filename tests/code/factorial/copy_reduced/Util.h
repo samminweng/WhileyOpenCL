@@ -215,7 +215,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 		})
 
 /**
-* Deallocation Flag Macros used in assignment 
+* Deallocation Macros for assignment 
 *
 */
 // Add deallocation flag for a given variable
@@ -224,6 +224,26 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _REMOVE_DEALLOC(a) a##_dealloc = false;
 // Transfer one variable's deallocation flag to another
 #define _TRANSFER_DEALLOC(a, b) a##_dealloc = b##_dealloc; b##_dealloc = false;
+
+/***
+* Deallocation Macros for function call 'a = func(b)' 
+*
+*/
+// '_CALLER_DEALLOC' macro makes a copy of actual argument and delegates caller
+//  to free passing parameter 'a = func(copy(b), false)'  
+#define _CALLER_DEALLOC(b) 
+// '_CALLEE_DEALLOC' macro makes a copy of actual argument and delegates callee
+// to free the passing parameter 'a = func(copy(b), true)'
+#define _CALLEE_DEALLOC(b) 
+// '_RETAIN_DEALLOC' macro does NOT make the copy of argument and delegates caller
+// to free the passing parameter 'a = func(b, false)'
+#define _RETAIN_DEALLOC(b)
+// '_RESET_DEALLOC' macro does NOT make the copy of argument and delegates caller
+// to reset the flag of actual argument 'a = func(b, false)'  
+#define _RESET_DEALLOC(b) \
+		({\
+			b##_dealloc = false;\
+		})
 /*
 * Other Macros 
 *

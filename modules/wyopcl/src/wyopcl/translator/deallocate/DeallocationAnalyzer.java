@@ -351,17 +351,17 @@ public class DeallocationAnalyzer extends Analyzer {
 				break;
 			}
 		}else{
-			// Reset the flag of original parameter to be 'false'
+			// Apply the macros for each parameter 
 			for (int register : code.operands()) {
-				String callee_dealloc = computeDealloc(register, code, function, stores, copyAnalyzer);
-				if (callee_dealloc.equals("reset_dealloc")) {
-					// Set the flag to be 'false' at caller site
-					statements.add(indent + removeDealloc(register, function, stores));
-				}		
+				String macro = computeDealloc(register, code, function, stores, copyAnalyzer);
+				if(!macro.equals("")){
+					// Added the macros
+					String parameter = stores.getVar(register, function);
+					statements.add(indent + macro+"("+ parameter+ ");");	
+				}
 			}
 			
-
-			//Add LHS deallocation flag.
+			// Add deallocation flag to lhs variable.
 			if (code.targets().length > 0)
 			{
 				// Add the deallocation flag of lhs variable
@@ -529,7 +529,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			// Check if the register is a substructure
 			boolean isSubStructure = stores.isSubstructure(register, function);
 			if(isSubStructure){
-				return "caller_dealloc";
+				return "_CALLER_DEALLOC";
 			}
 			
 			// Analyze the deallocation flags using live variable, read-write and return analysis
@@ -539,18 +539,18 @@ public class DeallocationAnalyzer extends Analyzer {
 				if (!isReturned) {
 					// NOT mutated nor return
 					if (!isLive) {
-						return "retain_dealloc";
+						return "_RETAIN_DEALLOC";
 					}else{
-						return "retain_dealloc";
+						return "_RETAIN_DEALLOC";
 					}
 				} else {
 					// NOT mutated but returned
 					if (!isLive) {
 						// If 'b' is NOT alive at caller site
-						return "reset_dealloc";
+						return "_RESET_DEALLOC";
 					} else {
 						// If 'b' is alive at caller site
-						return "reset_dealloc";
+						return "_RESET_DEALLOC";
 					}
 				}
 			} else {
@@ -559,18 +559,18 @@ public class DeallocationAnalyzer extends Analyzer {
 					// Mutated and returned
 					if (!isLive) {
 						// 'b' is NOT alive
-						return "reset_dealloc";
+						return "_RESET_DEALLOC";
 					} else {
 						// 'b' is alive
-						return "caller_dealloc";
+						return "_CALLER_DEALLOC";
 					}
 				} else {
 					// Mutated and NOT returned
 					if (!isLive) {
-						return "retain_dealloc";
+						return "_RETAIN_DEALLOC";
 					} else {
 						// 'b' is alive
-						return "callee_dealloc";
+						return "_CALLEE_DEALLOC";
 					}
 				}
 			}
@@ -579,15 +579,15 @@ public class DeallocationAnalyzer extends Analyzer {
 			if (!isMutated) {
 				if (isReturned) {
 					// The de-allocation is Not done at callee.
-					return "caller_dealloc";
+					return "_CALLER_DEALLOC";
 				}
 			} else {
 				if (isReturned) {
-					return "caller_dealloc";
+					return "_CALLER_DEALLOC";
 				}
 			}
 			// For other cases, the de-allocation is done at callee.
-			return "callee_dealloc";
+			return "_CALLEE_DEALLOC";
 		}
 	}
 

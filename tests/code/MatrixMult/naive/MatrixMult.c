@@ -501,7 +501,7 @@ blklab29:;
 	//invoke () = (%0, %4) MatrixMult:printMat : method(whiley/lang/System:Console,MatrixMult:Matrix)->()
 	{
 		void* C_tmp;
-printMat(stdout, C_tmp = _COPY_STRUCT_PARAM(C, Matrix));
+		printMat(stdout, C_tmp = _COPY_STRUCT_PARAM(C, Matrix));
 	}
 	//fieldload %35 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %36 = %35 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
