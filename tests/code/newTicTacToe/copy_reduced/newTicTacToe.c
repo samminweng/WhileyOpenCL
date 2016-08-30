@@ -177,11 +177,15 @@ int main(int argc, char** args){
 	//assign %1 = %6  : int
 	repeat = _6;
 	//invoke (%7) = () newTicTacToe:EmptyBoard : function()->(newTicTacToe:Board)
-	_7 = EmptyBoard();
+	{
+		_7 = EmptyBoard();
+	}
 	//assign %2 = %7  : null|{int move,int[] pieces}
 	b1 = _7;
 	//invoke (%8) = () newTicTacToe:EmptyBoard : function()->(newTicTacToe:Board)
-	_8 = EmptyBoard();
+	{
+		_8 = EmptyBoard();
+	}
 	//assign %3 = %8  : null|{int move,int[] pieces}
 	b2 = _8;
 	//const %9 = 0 : int

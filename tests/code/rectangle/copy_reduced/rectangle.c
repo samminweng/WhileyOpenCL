@@ -133,7 +133,9 @@ int main(int argc, char** args){
 	//assign %4 = %14  : {int x,int y}
 	p3 = _14;
 	//invoke (%15) = (%3, %4) rectangle:updateRec : function(rectangle:Rectangle,rectangle:Point)->(rectangle:Rectangle)
-	_15 = updateRec(_STRUCT_PARAM(rec), _STRUCT_PARAM(p3));
+	{
+		_15 = updateRec(_STRUCT_PARAM(rec), _STRUCT_PARAM(p3));
+	}
 	//assign %3 = %15  : {{int x,int y} p1,{int x,int y} p2}
 	rec = _15;
 	//assert

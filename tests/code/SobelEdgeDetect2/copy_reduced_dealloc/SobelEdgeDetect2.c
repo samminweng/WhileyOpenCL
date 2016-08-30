@@ -399,11 +399,15 @@ Image* sobelEdgeDetection(Image* input, _DECL_DEALLOC_PARAM(input)){
 			//assign %10 = %49  : int
 			pos = _49;
 			//invoke (%50) = (%0, %8, %9, %6) SobelEdgeDetect2:convolution : function(SobelEdgeDetect2:Image,int,int,int[])->(int)
-			_50 = convolution(_STRUCT_PARAM(input), false, x, y, _1DARRAY_PARAM(v_sobel), false);
+			{
+				_50 = convolution(_STRUCT_PARAM(input), false, x, y, _1DARRAY_PARAM(v_sobel), false);
+			}
 			//assign %11 = %50  : int
 			v_g = _50;
 			//invoke (%51) = (%0, %8, %9, %7) SobelEdgeDetect2:convolution : function(SobelEdgeDetect2:Image,int,int,int[])->(int)
-			_51 = convolution(_STRUCT_PARAM(input), false, x, y, _1DARRAY_PARAM(h_sobel), false);
+			{
+				_51 = convolution(_STRUCT_PARAM(input), false, x, y, _1DARRAY_PARAM(h_sobel), false);
+			}
 			//assign %12 = %51  : int
 			h_g = _51;
 			//invoke (%52) = (%11) whiley/lang/Math:abs : function(int)->(int)
@@ -455,10 +459,12 @@ blklab5:;
 //.blklab4
 blklab4:;
 	//invoke (%62) = (%3, %4, %5) SobelEdgeDetect2:image : function(int,int,int[])->(SobelEdgeDetect2:Image)
-	_DEALLOC_STRUCT(_62, Image);
-	_62 = image(width, height, _1DARRAY_PARAM(newPixels), false);
-	_REMOVE_DEALLOC(newPixels);
-	_ADD_DEALLOC(_62);
+	{
+		_DEALLOC_STRUCT(_62, Image);
+		_62 = image(width, height, _1DARRAY_PARAM(newPixels), false);
+		_REMOVE_DEALLOC(newPixels);
+		_ADD_DEALLOC(_62);
+	}
 	//return %62
 	_DEALLOC_STRUCT(input, Image);
 	_DEALLOC_STRUCT(_1, Image);
@@ -701,18 +707,22 @@ int main(int argc, char** args){
 	//update %4[%18] = %14 : int[] -> int[]
 	pixels[_18] = _14;
 	//invoke (%19) = (%1, %2, %4) SobelEdgeDetect2:image : function(int,int,int[])->(SobelEdgeDetect2:Image)
-	_DEALLOC_STRUCT(_19, Image);
-	_19 = image(width, height, _1DARRAY_PARAM(pixels), false);
-	_REMOVE_DEALLOC(pixels);
-	_ADD_DEALLOC(_19);
+	{
+		_DEALLOC_STRUCT(_19, Image);
+		_19 = image(width, height, _1DARRAY_PARAM(pixels), false);
+		_REMOVE_DEALLOC(pixels);
+		_ADD_DEALLOC(_19);
+	}
 	//assign %5 = %19  : {int height,int[] pixels,int width}
 	_DEALLOC_STRUCT(input, Image);
 	input = _19;
 	_TRANSFER_DEALLOC(input, _19);
 	//invoke (%20) = (%5) SobelEdgeDetect2:sobelEdgeDetection : function(SobelEdgeDetect2:Image)->(SobelEdgeDetect2:Image)
-	_DEALLOC_STRUCT(_20, Image);
-	_20 = sobelEdgeDetection(_STRUCT_PARAM(input), false);
-	_ADD_DEALLOC(_20);
+	{
+		_DEALLOC_STRUCT(_20, Image);
+		_20 = sobelEdgeDetection(_STRUCT_PARAM(input), false);
+		_ADD_DEALLOC(_20);
+	}
 	//assign %6 = %20  : {int height,int[] pixels,int width}
 	_DEALLOC_STRUCT(output, Image);
 	output = _20;
@@ -727,7 +737,9 @@ int main(int argc, char** args){
 	//indirectinvoke () = %22 (%23) : method(int[])->()
 	println_s(_23, _23_size);
 	//invoke () = (%0, %5) SobelEdgeDetect2:print_image : method(whiley/lang/System:Console,SobelEdgeDetect2:Image)->()
+	{
 print_image(stdout, _STRUCT_PARAM(input), false);
+	}
 	//fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %25 = %24 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %26 = [83,111,98,101,108,32,69,100,103,101,32,68,101,116,101,99,116,105,111,110,58] : int[]
@@ -738,7 +750,9 @@ print_image(stdout, _STRUCT_PARAM(input), false);
 	//indirectinvoke () = %25 (%26) : method(int[])->()
 	println_s(_26, _26_size);
 	//invoke () = (%0, %6) SobelEdgeDetect2:print_image : method(whiley/lang/System:Console,SobelEdgeDetect2:Image)->()
+	{
 print_image(stdout, _STRUCT_PARAM(output), false);
+	}
 	//return
 	_DEALLOC(pixels);
 	_DEALLOC_STRUCT(input, Image);

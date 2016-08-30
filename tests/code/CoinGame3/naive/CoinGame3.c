@@ -290,8 +290,10 @@ int main(int argc, char** args){
 	//assign %2 = %7  : int[]
 	_COPY_1DARRAY(moves, _7);
 	//invoke (%8) = (%2, %1) CoinGame3:findMoves : function(int[],int)->(int[])
-	_UPDATE_1DARRAY_SIZE(_8, moves);
-	_8 = findMoves(_COPY_1DARRAY_PARAM(moves), n);
+	{
+		_UPDATE_1DARRAY_SIZE(_8, moves);
+		_8 = findMoves(_COPY_1DARRAY_PARAM(moves), n);
+	}
 	//assign %2 = %8  : int[]
 	_COPY_1DARRAY(moves, _8);
 	//const %9 = 1 : int

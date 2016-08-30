@@ -198,16 +198,12 @@ public final class CodeGeneratorHelper {
 		String new_copy = "new_" + struct_name;
 		// Define the signature of 'copy_struct' function
 		statement.add(type_name + " " + ("copy_" + struct_name) + "(" + type_name + " " + parameter + "){");
-		;
-
+		
 		// Create a structure pointer
-		statement.add("\t" + type_name + " " + new_copy + " = malloc(sizeof(" + struct_name + "));");// Allocate the
-																										// input in heap
-																										// memory, which
-																										// require
-																										// manual
-																										// de-allocation.
-
+		statement.add("\t" + type_name + " " + new_copy + " = malloc(sizeof(" + struct_name + "));");
+		
+		// Allocate the input in heap  memory, which require manual de-allocation.
+		
 		// Generate the code for each member.
 		record.fields().forEach((member, member_type) -> {
 			String lhs = new_copy + "->" + member;
@@ -246,16 +242,9 @@ public final class CodeGeneratorHelper {
 				+ "){");
 
 		// Create an array of structure pointers, e.g. 'POS** new_array_POS = malloc(_POS_size*sizeof(POS*));'
-		statement.add("\t" + struct + "** " + new_copy + " = malloc(" + size + "*sizeof(" + struct + "*));");// Allocate
-																												// the
-																												// input
-																												// in
-																												// heap
-																												// memory,
-																												// which
-																												// require
-																												// manual
-																												// de-allocation.
+		statement.add("\t" + struct + "** " + new_copy + " = malloc(" + size + "*sizeof(" + struct + "*));");
+		
+		// Allocate the input in heap memory, which require manual de-allocation.
 
 		// Generate the for loop to create each structure pointer, e.g. 'for(int i=0;i< _POS_size;i++){
 		statement.add("\tfor(int i=0;i<" + size + ";i++){");

@@ -301,11 +301,15 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 			//assign %10 = %46  : int
 			pos = _46;
 			//invoke (%47) = (%0, %1, %2, %8, %9, %6) SobelEdgeDetect1:convolution : function(int[],int,int,int,int,int[])->(int)
-			_47 = convolution(_COPY_1DARRAY_PARAM(pixels), true, width, height, x, y, _COPY_1DARRAY_PARAM(v_sobel), true);
+			{
+				_47 = convolution(_COPY_1DARRAY_PARAM(pixels), true, width, height, x, y, _COPY_1DARRAY_PARAM(v_sobel), true);
+			}
 			//assign %11 = %47  : int
 			v_g = _47;
 			//invoke (%48) = (%0, %1, %2, %8, %9, %7) SobelEdgeDetect1:convolution : function(int[],int,int,int,int,int[])->(int)
-			_48 = convolution(_COPY_1DARRAY_PARAM(pixels), true, width, height, x, y, _COPY_1DARRAY_PARAM(h_sobel), true);
+			{
+				_48 = convolution(_COPY_1DARRAY_PARAM(pixels), true, width, height, x, y, _COPY_1DARRAY_PARAM(h_sobel), true);
+			}
 			//assign %12 = %48  : int
 			h_g = _48;
 			//invoke (%49) = (%11) whiley/lang/Math:abs : function(int)->(int)
@@ -583,10 +587,12 @@ int main(int argc, char** args){
 	//update %4[%12] = %11 : int[] -> int[]
 	pixels[_12] = _11;
 	//invoke (%13) = (%4, %1, %2) SobelEdgeDetect1:sobelEdgeDetection : function(int[],int,int)->(int[])
-	_UPDATE_1DARRAY_SIZE(_13, pixels);
-	_DEALLOC(_13);
-	_13 = sobelEdgeDetection(_COPY_1DARRAY_PARAM(pixels), true, width, height);
-	_ADD_DEALLOC(_13);
+	{
+		_UPDATE_1DARRAY_SIZE(_13, pixels);
+		_DEALLOC(_13);
+		_13 = sobelEdgeDetection(_COPY_1DARRAY_PARAM(pixels), true, width, height);
+		_ADD_DEALLOC(_13);
+	}
 	//assign %5 = %13  : int[]
 	_DEALLOC(newPixels);
 	_COPY_1DARRAY(newPixels, _13);
@@ -601,7 +607,9 @@ int main(int argc, char** args){
 	//indirectinvoke () = %15 (%16) : method(int[])->()
 	println_s(_16, _16_size);
 	//invoke () = (%0, %4, %1, %2) SobelEdgeDetect1:printImage : method(whiley/lang/System:Console,int[],int,int)->()
+	{
 printImage(stdout, _COPY_1DARRAY_PARAM(pixels), true, width, height);
+	}
 	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %18 = %17 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %19 = [83,111,98,101,108,32,69,100,103,101,32,68,101,116,101,99,116,105,111,110,58] : int[]
@@ -612,7 +620,9 @@ printImage(stdout, _COPY_1DARRAY_PARAM(pixels), true, width, height);
 	//indirectinvoke () = %18 (%19) : method(int[])->()
 	println_s(_19, _19_size);
 	//invoke () = (%0, %5, %1, %2) SobelEdgeDetect1:printImage : method(whiley/lang/System:Console,int[],int,int)->()
+	{
 printImage(stdout, _COPY_1DARRAY_PARAM(newPixels), true, width, height);
+	}
 	//assert
 	{
 		//const %20 = 0 : int

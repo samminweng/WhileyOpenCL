@@ -41,8 +41,10 @@ blklab0:;
 	//sub %10 = %1, %9 : int
 	_10=n-_9;
 	//invoke (%8) = (%0, %10) Fibonacci:fibonacci : function(int[],int)->(int[])
-	_UPDATE_1DARRAY_SIZE(_8, ls);
-	_8 = fibonacci(_COPY_1DARRAY_PARAM(ls), _10);
+	{
+		_UPDATE_1DARRAY_SIZE(_8, ls);
+		_8 = fibonacci(_COPY_1DARRAY_PARAM(ls), _10);
+	}
 	//assign %0 = %8  : int[]
 	_COPY_1DARRAY(ls, _8);
 	//const %11 = 1 : int
@@ -106,8 +108,10 @@ int main(int argc, char** args){
 	//sub %8 = %1, %7 : int
 	_8=max-_7;
 	//invoke (%6) = (%2, %8) Fibonacci:fibonacci : function(int[],int)->(int[])
-	_UPDATE_1DARRAY_SIZE(_6, arr);
-	_6 = fibonacci(_COPY_1DARRAY_PARAM(arr), _8);
+	{
+		_UPDATE_1DARRAY_SIZE(_6, arr);
+		_6 = fibonacci(_COPY_1DARRAY_PARAM(arr), _8);
+	}
 	//assign %2 = %6  : int[]
 	_COPY_1DARRAY(arr, _6);
 	//assert

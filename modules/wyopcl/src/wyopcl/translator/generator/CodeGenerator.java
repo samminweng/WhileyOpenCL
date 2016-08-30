@@ -837,6 +837,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			});
 
 		} else {
+			
+			// Add the starting clause for the function call
+			statement.add(stores.getIndent(function) +"{");
+			// Increase the indent
+			stores.increaseIndent(function);
+			
 			// De-allocate lhs register
 			extractLHSVar(statement, code, function);
 			HashMap<Integer, Boolean> argumentCopyEliminated = new HashMap<Integer, Boolean>();
@@ -857,7 +863,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement.addAll(a.postDealloc(code, function, stores, copyAnalyzer));
 				//statement.addAll(a.postDealloc(code, function, stores));
 			});
-
+			
+			// Decrease the indent
+			stores.decreaseIndent(function);
+			
+			// Add the ending clause for the function call
+			statement.add(stores.getIndent(function) +"}");
 		}
 
 		// add the statement

@@ -87,10 +87,12 @@ int main(int argc, char** args){
 	_COPY_1DARRAY(a, _9);
 	_ADD_DEALLOC(a);
 	//invoke (%10) = (%1) FunctionCall3:func : function(int[])->(int[])
-	_UPDATE_1DARRAY_SIZE(_10, a);
-	_DEALLOC(_10);
-	_10 = func(_COPY_1DARRAY_PARAM(a), true);
-	_ADD_DEALLOC(_10);
+	{
+		_UPDATE_1DARRAY_SIZE(_10, a);
+		_DEALLOC(_10);
+		_10 = func(_COPY_1DARRAY_PARAM(a), true);
+		_ADD_DEALLOC(_10);
+	}
 	//assign %1 = %10  : int[]
 	_DEALLOC(a);
 	_COPY_1DARRAY(a, _10);
@@ -149,10 +151,12 @@ blklab0:;
 	_COPY_1DARRAY(b, _26);
 	_ADD_DEALLOC(b);
 	//invoke (%27) = (%2) FunctionCall3:func : function(int[])->(int[])
-	_UPDATE_1DARRAY_SIZE(_27, b);
-	_DEALLOC(_27);
-	_27 = func(_COPY_1DARRAY_PARAM(b), true);
-	_ADD_DEALLOC(_27);
+	{
+		_UPDATE_1DARRAY_SIZE(_27, b);
+		_DEALLOC(_27);
+		_27 = func(_COPY_1DARRAY_PARAM(b), true);
+		_ADD_DEALLOC(_27);
+	}
 	//assign %3 = %27  : int[]
 	_DEALLOC(c);
 	_COPY_1DARRAY(c, _27);

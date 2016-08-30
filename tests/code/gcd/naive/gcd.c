@@ -196,7 +196,9 @@ int main(int argc, char** args){
 			//ifge %4, %1 goto blklab15 : int
 			if(j>=n){goto blklab15;}
 			//invoke (%16) = (%3, %4, %1, %2) gcd:gcd_cached : function(int,int,int,int[])->(int)
-			_16 = gcd_cached(i, j, n, _COPY_1DARRAY_PARAM(gcds));
+			{
+				_16 = gcd_cached(i, j, n, _COPY_1DARRAY_PARAM(gcds));
+			}
 			//mul %17 = %3, %1 : int
 			_17=i*n;
 			//add %18 = %17, %4 : int
@@ -212,7 +214,9 @@ int main(int argc, char** args){
 				//indexof %21 = %2, %20 : int[]
 				_21=gcds[_20];
 				//invoke (%22) = (%3, %4) gcd:gcd : function(int,int)->(int)
-				_22 = gcd(i, j);
+				{
+					_22 = gcd(i, j);
+				}
 				//ifeq %21, %22 goto blklab17 : int
 				if(_21==_22){goto blklab17;}
 				//fail

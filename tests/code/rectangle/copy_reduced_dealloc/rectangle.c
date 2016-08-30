@@ -173,11 +173,13 @@ int main(int argc, char** args){
 	p3 = _14;
 	_TRANSFER_DEALLOC(p3, _14);
 	//invoke (%15) = (%3, %4) rectangle:updateRec : function(rectangle:Rectangle,rectangle:Point)->(rectangle:Rectangle)
-	_DEALLOC_STRUCT(_15, Rectangle);
-	_15 = updateRec(_STRUCT_PARAM(rec), false, _STRUCT_PARAM(p3), false);
-	_REMOVE_DEALLOC(rec);
-	_REMOVE_DEALLOC(p3);
-	_ADD_DEALLOC(_15);
+	{
+		_DEALLOC_STRUCT(_15, Rectangle);
+		_15 = updateRec(_STRUCT_PARAM(rec), false, _STRUCT_PARAM(p3), false);
+		_REMOVE_DEALLOC(rec);
+		_REMOVE_DEALLOC(p3);
+		_ADD_DEALLOC(_15);
+	}
 	//assign %3 = %15  : {{int x,int y} p1,{int x,int y} p2}
 	_DEALLOC_STRUCT(rec, Rectangle);
 	rec = _15;
