@@ -186,11 +186,15 @@ int main(int argc, char** args){
 		//ifge %3, %2 goto blklab15 : int
 		if(repeat>=max){goto blklab15;}
 		//invoke (%13) = () newTicTacToe_original:EmptyBoard : function()->(newTicTacToe_original:Board)
-		_13 = EmptyBoard();
+		{
+			_13 = EmptyBoard();
+		}
 		//assign %4 = %13  : null|{int move,int[] pieces}
 		b1 = _13;
 		//invoke (%14) = () newTicTacToe_original:EmptyBoard : function()->(newTicTacToe_original:Board)
-		_14 = EmptyBoard();
+		{
+			_14 = EmptyBoard();
+		}
 		//assign %5 = %14  : null|{int move,int[] pieces}
 		b2 = _14;
 		//const %15 = 0 : int

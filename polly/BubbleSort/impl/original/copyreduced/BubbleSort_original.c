@@ -172,8 +172,10 @@ blklab7:;
 //.blklab6
 blklab6:;
 	//invoke (%15) = (%4) BubbleSort_original:bubbleSort : function(int[])->(int[])
-	_UPDATE_1DARRAY_SIZE(_15, arr);
-	_15 = bubbleSort(_1DARRAY_PARAM(arr));
+	{
+		_UPDATE_1DARRAY_SIZE(_15, arr);
+		_15 = bubbleSort(_1DARRAY_PARAM(arr));
+	}
 	//assign %4 = %15  : int[]
 	_UPDATE_1DARRAY(arr, _15);
 	//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
