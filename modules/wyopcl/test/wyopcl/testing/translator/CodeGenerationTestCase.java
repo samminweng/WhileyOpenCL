@@ -69,7 +69,7 @@ public class CodeGenerationTestCase {
 				"FunctionCall1", 
 				"FunctionCall2",
 				"FunctionCall3",
-				"FunctionCall4", 
+				"FunctionCall4",
 				"SobelEdgeDetect",
 				"SobelEdgeDetect1",
 				"SobelEdgeDetect2"

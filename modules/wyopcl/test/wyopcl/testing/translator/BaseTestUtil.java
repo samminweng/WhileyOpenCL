@@ -7,8 +7,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
@@ -17,6 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Scanner;
 
 import wyc.WycMain;
 import wyc.util.WycBuildTask;
@@ -122,32 +125,50 @@ public final class BaseTestUtil {
 		// Get the runtime.
 		Runtime rt = Runtime.getRuntime();
 		// Compile the C program
-		Process pr;
+		Process process;
 		int exitValue = -1;
+		// Read the output of executables
+		Scanner in_sc = null;
+		Scanner err_sc = null;
 		try {
 			/**
 			 * Due to the limited buffer size, Windows/Linux may fail to write
 			 * the large output from code generator, to the input stream and may
 			 * cause the process to block, and even deadlock.
 			 */
-			pr = rt.exec(cmd, null, workingDir.toFile());
+			process = rt.exec(cmd, null, workingDir.toFile());
+			
 			// Instantly write out the output message to avoid the process to block.
-			BufferedReader stdIn = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-			String s;
-			while ((s = stdIn.readLine()) != null) {
-				System.out.println(s);
+			InputStream input = process.getInputStream();
+			in_sc = new Scanner(input);
+			while(in_sc.hasNextLine()){
+				System.out.println(in_sc.nextLine());
 			}
+			
 			// Get the return value.
-			exitValue = pr.waitFor();
+			exitValue = process.waitFor();
 			if (exitValue != 0) {
 				// If not success, then print error messages.
-				BufferedReader stdError = new BufferedReader(new InputStreamReader(pr.getErrorStream()));
-				while ((s = stdError.readLine()) != null) {
-					System.err.println(s);
+				InputStream error = process.getErrorStream();
+				// Read error stream using scanner and print out each line of error message.
+				err_sc = new Scanner(error);
+				while(err_sc.hasNext()){
+					System.err.println(err_sc.nextLine());
 				}
 			}
 		} catch (IOException | InterruptedException e) {
 			throw new RuntimeException("Errors occurs in executing '" + cmd + "'");
+		}finally{
+			// Close the scanner and stream
+			if(in_sc != null){
+				in_sc.close();
+			}
+			
+			if(err_sc != null){
+				err_sc.close();
+			}
+			
+			
 		}
 		return exitValue;
 	}
