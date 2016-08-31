@@ -303,12 +303,16 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 			//invoke (%47) = (%0, %1, %2, %8, %9, %6) SobelEdge_original:convolution : function(int[],int,int,int,int,int[])->(int)
 			{
 				_47 = convolution(_1DARRAY_PARAM(pixels), false, width, height, x, y, _1DARRAY_PARAM(v_sobel), false);
+				_RETAIN_DEALLOC(pixels);
+				_RETAIN_DEALLOC(v_sobel);
 			}
 			//assign %11 = %47  : int
 			v_g = _47;
 			//invoke (%48) = (%0, %1, %2, %8, %9, %7) SobelEdge_original:convolution : function(int[],int,int,int,int,int[])->(int)
 			{
 				_48 = convolution(_1DARRAY_PARAM(pixels), false, width, height, x, y, _1DARRAY_PARAM(h_sobel), false);
+				_RETAIN_DEALLOC(pixels);
+				_RETAIN_DEALLOC(h_sobel);
 			}
 			//assign %12 = %48  : int
 			h_g = _48;
@@ -596,6 +600,7 @@ int main(int argc, char** args){
 		_UPDATE_1DARRAY_SIZE(_20, pixels);
 		_DEALLOC(_20);
 		_20 = sobelEdgeDetection(_1DARRAY_PARAM(pixels), false, width, height);
+		_RETAIN_DEALLOC(pixels);
 		_ADD_DEALLOC(_20);
 	}
 	//assign %7 = %20  : int[]
@@ -613,7 +618,8 @@ int main(int argc, char** args){
 	println_s(_23, _23_size);
 	//invoke () = (%0, %6, %3, %4) SobelEdge_original:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
-printImage(stdout, _1DARRAY_PARAM(pixels), false, width, height);
+		printImage(stdout, _1DARRAY_PARAM(pixels), false, width, height);
+		_RETAIN_DEALLOC(pixels);
 	}
 	//fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %25 = %24 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -626,7 +632,8 @@ printImage(stdout, _1DARRAY_PARAM(pixels), false, width, height);
 	println_s(_26, _26_size);
 	//invoke () = (%0, %7, %3, %4) SobelEdge_original:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
-printImage(stdout, _1DARRAY_PARAM(newPixels), false, width, height);
+		printImage(stdout, _1DARRAY_PARAM(newPixels), false, width, height);
+		_RETAIN_DEALLOC(newPixels);
 	}
 //.blklab16
 blklab16:;

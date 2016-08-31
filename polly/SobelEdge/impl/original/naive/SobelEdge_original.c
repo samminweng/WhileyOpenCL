@@ -547,7 +547,7 @@ int main(int argc, char** args){
 	//invoke () = (%0, %6, %3, %4) SobelEdge_original:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
 		void* pixels_tmp;
-printImage(stdout, pixels_tmp = _COPY_1DARRAY_PARAM(pixels), width, height);
+		printImage(stdout, pixels_tmp = _COPY_1DARRAY_PARAM(pixels), width, height);
 	}
 	//fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %25 = %24 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -559,7 +559,7 @@ printImage(stdout, pixels_tmp = _COPY_1DARRAY_PARAM(pixels), width, height);
 	//invoke () = (%0, %7, %3, %4) SobelEdge_original:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
 		void* newPixels_tmp;
-printImage(stdout, newPixels_tmp = _COPY_1DARRAY_PARAM(newPixels), width, height);
+		printImage(stdout, newPixels_tmp = _COPY_1DARRAY_PARAM(newPixels), width, height);
 	}
 //.blklab16
 blklab16:;
