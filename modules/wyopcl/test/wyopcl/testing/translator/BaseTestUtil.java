@@ -40,9 +40,6 @@ public final class BaseTestUtil {
 			+ version + ".jar" + File.pathSeparator;
 	final String whiley_runtime_lib = lib_path + "wyrt-" + version + ".jar";
 
-	// Standard output file
-	final File stdout = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
-			+ File.separator + "Report" + File.separator + "report-stdout.txt");
 	// Standard error file
 	final File stderr = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
 			+ File.separator + "Report" + File.separator + "report-stderr.txt");
@@ -143,8 +140,6 @@ public final class BaseTestUtil {
 			 */
 			process = rt.exec(cmd, null, workingDir.toFile());
 
-			// Create a file writer to write output to a file
-			FileWriter writer = new FileWriter(stdout, true);
 
 			// Instantly write out the output message to avoid the process to block.
 			InputStream input = process.getInputStream();
@@ -153,13 +148,10 @@ public final class BaseTestUtil {
 				String line = in_sc.nextLine();
 				// Print out the message on console
 				System.out.println(line);
-				// Write out the message to a file
-				writer.write(line + "\n");
 			}
-			writer.close();
 
 			// Standard error file 
-			writer = new FileWriter(stderr, true);
+			FileWriter writer = new FileWriter(stderr, true);
 
 			// Get the return value.
 			exitValue = process.waitFor();
