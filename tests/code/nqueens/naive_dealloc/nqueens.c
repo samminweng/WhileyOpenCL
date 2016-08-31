@@ -308,7 +308,11 @@ blklab14:;
 //.blklab20
 blklab20:;
 			//invoke (%26) = (%7, %1, %4) nqueens:conflict : function(nqueens:POS,int,int)->(bool)
-			_26 = conflict(_COPY_STRUCT_PARAM(p, POS), true, n, col);
+			{
+				void* p_tmp;
+				_26 = conflict(p_tmp = _COPY_STRUCT_PARAM(p, POS), true, n, col);
+				_CALLEE_DEALLOC(p);
+			}
 			//const %27 = true : bool
 			_27 = true;
 			//ifeq %26, %27 goto blklab21 : bool
@@ -361,9 +365,13 @@ blklab12:;
 		//add %35 = %1, %34 : int
 		_35=n+_34;
 		//invoke (%33) = (%0, %35, %2) nqueens:run : function(nqueens:NQueen,int,int)->(nqueens:NQueen)
-		_DEALLOC_STRUCT(_33, NQueen);
-		_33 = run(_COPY_STRUCT_PARAM(nq, NQueen), false, _35, dim);
-		_ADD_DEALLOC(_33);
+		{
+			void* nq_tmp;
+			_DEALLOC_STRUCT(_33, NQueen);
+			_33 = run(nq_tmp = _COPY_STRUCT_PARAM(nq, NQueen), false, _35, dim);
+			_CALLER_DEALLOC(nq);
+			_ADD_DEALLOC(_33);
+		}
 		//assign %0 = %33  : {int num_solutions,{int c,int r}[] queens}
 		_DEALLOC_STRUCT(nq, NQueen);
 		nq = copy_NQueen(_33);
@@ -464,9 +472,13 @@ int main(int argc, char** args){
 	//assign %3 = %10  : int
 	num_solutions = _10;
 	//invoke (%11) = (%3, %2) nqueens:nqueen : function(int,nqueens:POS[])->(nqueens:NQueen)
-	_DEALLOC_STRUCT(_11, NQueen);
-	_11 = nqueen(num_solutions, copy_array_POS(queens, queens_size), queens_size, true);
-	_ADD_DEALLOC(_11);
+	{
+		void* queens_tmp;
+		_DEALLOC_STRUCT(_11, NQueen);
+		_11 = nqueen(num_solutions, queens_tmp = copy_array_POS(queens, queens_size), queens_size, true);
+		_CALLEE_DEALLOC(queens);
+		_ADD_DEALLOC(_11);
+	}
 	//assign %4 = %11  : {int num_solutions,{int c,int r}[] queens}
 	_DEALLOC_STRUCT(nq, NQueen);
 	nq = copy_NQueen(_11);
@@ -474,9 +486,13 @@ int main(int argc, char** args){
 	//const %13 = 0 : int
 	_13 = 0;
 	//invoke (%12) = (%4, %13, %1) nqueens:run : function(nqueens:NQueen,int,int)->(nqueens:NQueen)
-	_DEALLOC_STRUCT(_12, NQueen);
-	_12 = run(_COPY_STRUCT_PARAM(nq, NQueen), false, _13, n);
-	_ADD_DEALLOC(_12);
+	{
+		void* nq_tmp;
+		_DEALLOC_STRUCT(_12, NQueen);
+		_12 = run(nq_tmp = _COPY_STRUCT_PARAM(nq, NQueen), false, _13, n);
+		_CALLER_DEALLOC(nq);
+		_ADD_DEALLOC(_12);
+	}
 	//assign %4 = %12  : {int num_solutions,{int c,int r}[] queens}
 	_DEALLOC_STRUCT(nq, NQueen);
 	nq = copy_NQueen(_12);

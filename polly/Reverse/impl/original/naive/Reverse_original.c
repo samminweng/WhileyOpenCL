@@ -151,8 +151,11 @@ blklab6:;
 //.blklab5
 blklab5:;
 	//invoke (%15) = (%4) Reverse_original:reverse : function(int[])->(int[])
-	_UPDATE_1DARRAY_SIZE(_15, arr);
-	_15 = reverse(_COPY_1DARRAY_PARAM(arr));
+	{
+		void* arr_tmp;
+		_UPDATE_1DARRAY_SIZE(_15, arr);
+		_15 = reverse(arr_tmp = _COPY_1DARRAY_PARAM(arr));
+	}
 	//assign %4 = %15  : int[]
 	_COPY_1DARRAY(arr, _15);
 	//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}

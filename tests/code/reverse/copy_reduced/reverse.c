@@ -130,8 +130,10 @@ int main(int argc, char** args){
 	_NEW_1DARRAY(_11, 5, 0);
 	_11[0] = _6; _11[1] = _7; _11[2] = _8; _11[3] = _9; _11[4] = _10; 
 	//invoke (%5) = (%11) reverse:reverse : function(int[])->(int[])
-	_UPDATE_1DARRAY_SIZE(_5, _11);
-	_5 = reverse(_1DARRAY_PARAM(_11));
+	{
+		_UPDATE_1DARRAY_SIZE(_5, _11);
+		_5 = reverse(_1DARRAY_PARAM(_11));
+	}
 	//assign %1 = %5  : int[]
 	_UPDATE_1DARRAY(rs, _5);
 	//assert
@@ -196,8 +198,10 @@ blklab6:;
 //.blklab5
 blklab5:;
 	//invoke (%27) = (%4) reverse:reverse : function(int[])->(int[])
-	_UPDATE_1DARRAY_SIZE(_27, arr);
-	_27 = reverse(_1DARRAY_PARAM(arr));
+	{
+		_UPDATE_1DARRAY_SIZE(_27, arr);
+		_27 = reverse(_1DARRAY_PARAM(arr));
+	}
 	//assign %4 = %27  : int[]
 	_UPDATE_1DARRAY(arr, _27);
 	//assert

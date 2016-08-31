@@ -43,11 +43,11 @@ generateCode(){
 	    	;;
 	    "copyreduced")
 			## Translate Whiley programs into copy_reduced C code
-			./../../../../../bin/wyopcl -code -copy $testcase"_"$program.whiley
+			./../../../../../bin/wyopcl -code -nocopy $testcase"_"$program.whiley
 			;;
 		"copyreduced_dealloc")
 			### Translate Whiley program into copy-eliminated + memory deallocated C code 
-	    	./../../../../../bin/wyopcl -code -copy -dealloc $testcase"_"$program.whiley	
+	    	./../../../../../bin/wyopcl -code -nocopy -dealloc $testcase"_"$program.whiley	
 			;;
 	esac
 }

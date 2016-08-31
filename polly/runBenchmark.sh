@@ -40,12 +40,12 @@ generateCode(){
 		"copyreduced")
 			echo "#############Generate copyreduced $testcase#################"
 			## Translate Whiley programs into copy_reduced C code
-			./../../../../../bin/wyopcl -code -copy $testcase"_"$program.whiley
+			./../../../../../bin/wyopcl -code -nocopy $testcase"_"$program.whiley
 			;;
 		"copyreduced_dealloc")
 			echo "#############Generate copyreduced_dealloc $testcase#################"
 			### Translate Whiley program into copy-eliminated + memory deallocated C code
-			./../../../../../bin/wyopcl -code -copy -dealloc $testcase"_"$program.whiley
+			./../../../../../bin/wyopcl -code -nocopy -dealloc $testcase"_"$program.whiley
 			;;
 	esac
 }

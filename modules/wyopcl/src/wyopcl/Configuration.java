@@ -18,7 +18,7 @@ public class Configuration {
 	public Configuration() {
 		// Initial properties based on default properties
 		this.options = new Properties();
-		this.options.put("copy", false);
+		this.options.put("nocopy", false);
 		this.options.put("bound", false);
 		//this.options.put("pattern", false);
 		this.options.put("dealloc", false);

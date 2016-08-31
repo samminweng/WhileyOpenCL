@@ -317,15 +317,21 @@ long long* pickCoin(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), long
 	long long _13 = 0;
 	long long _14 = 0;
 	//invoke (%9) = (%4, %5) CoinGame4:findMin : function(int,int)->(int)
-	_9 = findMin(x, y);
+	{
+		_9 = findMin(x, y);
+	}
 	//add %10 = %1, %9 : int
 	_10=i+_9;
 	//invoke (%11) = (%5, %6) CoinGame4:findMin : function(int,int)->(int)
-	_11 = findMin(y, z);
+	{
+		_11 = findMin(y, z);
+	}
 	//add %12 = %2, %11 : int
 	_12=j+_11;
 	//invoke (%8) = (%10, %12) CoinGame4:findMax : function(int,int)->(int)
-	_8 = findMax(_10, _12);
+	{
+		_8 = findMax(_10, _12);
+	}
 	//mul %13 = %1, %3 : int
 	_13=i*n;
 	//add %14 = %13, %2 : int
@@ -492,11 +498,13 @@ blklab16:;
 //.blklab17
 blklab17:;
 			//invoke (%41) = (%0, %5, %4, %1, %7, %6, %8) CoinGame4:pickCoin : function(int[],int,int,int,int,int,int)->(int[])
-			_UPDATE_1DARRAY_SIZE(_41, moves);
-			_DEALLOC(_41);
-			_41 = pickCoin(_1DARRAY_PARAM(moves), false, i, j, n, x, y, z);
-			_REMOVE_DEALLOC(moves);
-			_ADD_DEALLOC(_41);
+			{
+				_UPDATE_1DARRAY_SIZE(_41, moves);
+				_DEALLOC(_41);
+				_41 = pickCoin(_1DARRAY_PARAM(moves), false, i, j, n, x, y, z);
+				_RESET_DEALLOC(moves);
+				_ADD_DEALLOC(_41);
+			}
 			//assign %0 = %41  : int[]
 			_DEALLOC(moves);
 			_UPDATE_1DARRAY(moves, _41);
@@ -573,17 +581,22 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY(moves, _7);
 	_TRANSFER_DEALLOC(moves, _7);
 	//invoke (%8) = (%2, %1) CoinGame4:findMoves : function(int[],int)->(int[])
-	_UPDATE_1DARRAY_SIZE(_8, moves);
-	_DEALLOC(_8);
-	_8 = findMoves(_1DARRAY_PARAM(moves), false, n);
-	_REMOVE_DEALLOC(moves);
-	_ADD_DEALLOC(_8);
+	{
+		_UPDATE_1DARRAY_SIZE(_8, moves);
+		_DEALLOC(_8);
+		_8 = findMoves(_1DARRAY_PARAM(moves), false, n);
+		_RESET_DEALLOC(moves);
+		_ADD_DEALLOC(_8);
+	}
 	//assign %2 = %8  : int[]
 	_DEALLOC(moves);
 	_UPDATE_1DARRAY(moves, _8);
 	_TRANSFER_DEALLOC(moves, _8);
 	//invoke () = (%0, %2, %1) CoinGame4:play : method(whiley/lang/System:Console,int[],int)->()
-play(stdout, _1DARRAY_PARAM(moves), false, n);
+	{
+		play(stdout, _1DARRAY_PARAM(moves), false, n);
+		_RETAIN_DEALLOC(moves);
+	}
 	//const %9 = 1 : int
 	_9 = 1;
 	//sub %10 = %1, %9 : int

@@ -5,6 +5,7 @@
 #include <time.h>
 #include <ctype.h>
 #include <stdbool.h>
+// Good reference (https://en.wikibooks.org/wiki/C_Programming/Preprocessor)
 // Remove the security check about unsafe 'scanf' or 'sprintf' in VS tool
 // This definition allows the portability of C code across the platforms.
 #define _CRT_SECURE_NO_WARNINGS
@@ -52,6 +53,22 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 //		({ __typeof__ (a) _a = (a); \
 //		   __typeof__ (b) _b = (b); \
 //		   _a < _b ? _a : _b; })
+#endif
+/***
+**  Debug macro prints out message when debug is enabled
+*   The debug can be enabled when compilation, e.g.
+*
+*   	$gcc -D DEBUG *.c -o exec.out
+*
+*   Reference: https://gcc.gnu.org/onlinedocs/gcc/Preprocessor-Options.html
+**/
+#ifdef DEBUG
+#define num2str(x) str(x)
+#define str(x) #x
+// Print out the message
+#define DEBUG_PRINT(msg) if(DEBUG){fputs(msg " at (LINE:" num2str(__LINE__) " FILE: " __FILE__ ")\n", stderr);}
+#else
+#define DEBUG_PRINT(msg) // Do nothing
 #endif
 /***
  *
@@ -215,7 +232,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 		})
 
 /**
-* Deallocation Flag Macros used in assignment 
+* Deallocation Macros for assignment 
 *
 */
 // Add deallocation flag for a given variable
@@ -224,6 +241,36 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _REMOVE_DEALLOC(a) a##_dealloc = false;
 // Transfer one variable's deallocation flag to another
 #define _TRANSFER_DEALLOC(a, b) a##_dealloc = b##_dealloc; b##_dealloc = false;
+
+/***
+* Deallocation Macros for function call 'a = func(b)' 
+*
+*/
+// '_CALLER_DEALLOC' macro makes a copy of actual argument and delegates caller
+//  to free passing parameter 'a = func(copy(b), false)'  
+#define _CALLER_DEALLOC(b) \
+		({\
+			DEBUG_PRINT("_CALLER_DEALLOC macro");\
+		})
+// '_CALLEE_DEALLOC' macro makes a copy of actual argument and delegates callee
+// to free the passing parameter 'a = func(copy(b), true)'
+#define _CALLEE_DEALLOC(b) \
+		({\
+			DEBUG_PRINT("_CALLEE_DEALLOC macro");\
+		}) 
+// '_RETAIN_DEALLOC' macro does NOT make the copy of argument and delegates caller
+// to free the passing parameter 'a = func(b, false)'
+#define _RETAIN_DEALLOC(b) \
+		({\
+			DEBUG_PRINT("_RETAIN_DEALLOC macro");\
+		}) 
+// '_RESET_DEALLOC' macro does NOT make the copy of argument and delegates caller
+// to reset the flag of actual argument 'a = func(b, false)'  
+#define _RESET_DEALLOC(b) \
+		({\
+			DEBUG_PRINT("_RETAIN_DEALLOC macro");\
+			b##_dealloc = false;\
+		})
 /*
 * Other Macros 
 *

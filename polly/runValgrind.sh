@@ -40,11 +40,11 @@ generateCode(){
 	    		;;
 		"copyreduced")
 			## Translate Whiley programs into copy_reduced C code
-			./../../../../../bin/wyopcl -code -copy $testcase"_"$program.whiley
+			./../../../../../bin/wyopcl -code -nocopy $testcase"_"$program.whiley
 			;;
 		"copyreduced_dealloc")
 			### Translate Whiley program into copy-eliminated + memory deallocated C code
-			./../../../../../bin/wyopcl -code -copy -dealloc $testcase"_"$program.whiley
+			./../../../../../bin/wyopcl -code -nocopy -dealloc $testcase"_"$program.whiley
 			;;
 	esac
 }
@@ -113,8 +113,7 @@ exec(){
 	parameter=$3
 
 	## declare 4 kinds of code generation
-	#declare -a codegens=("naive" "naive_dealloc" "copyreduced" "copyreduced_dealloc")
-	declare -a codegens=("copyreduced" "copyreduced_dealloc")
+	declare -a codegens=("naive" "naive_dealloc" "copyreduced" "copyreduced_dealloc")
 	## Iterate each codegen
 	for codegen in "${codegens[@]}"
 	do
@@ -166,11 +165,11 @@ exec(){
 #exec MatrixMult original 3000
 
 ## Sobel Edge Detection test case
-#init SobelEdge
-#exec SobelEdge original 32
+init SobelEdge
+exec SobelEdge original 32
 #exec SobelEdge original 64
 #exec SobelEdge original 128
 #exec SobelEdge original 256
 #exec SobelEdge original 512
-exec SobelEdge original 1024
-exec SobelEdge original 2048
+#exec SobelEdge original 1024
+#exec SobelEdge original 2048

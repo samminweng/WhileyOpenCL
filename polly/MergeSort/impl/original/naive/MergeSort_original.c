@@ -69,8 +69,11 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	//const %17 = 0 : int
 	_17 = 0;
 	//invoke (%16) = (%5, %17, %4) MergeSort_original:sortV1 : function(int[],int,int)->(int[])
-	_UPDATE_1DARRAY_SIZE(_16, lhs);
-	_16 = sortV1(_COPY_1DARRAY_PARAM(lhs), _17, pivot);
+	{
+		void* lhs_tmp;
+		_UPDATE_1DARRAY_SIZE(_16, lhs);
+		_16 = sortV1(lhs_tmp = _COPY_1DARRAY_PARAM(lhs), _17, pivot);
+	}
 	//assign %5 = %16  : int[]
 	_COPY_1DARRAY(lhs, _16);
 	//invoke (%18) = (%0, %4, %2) whiley/lang/Array:slice : function(int[],int,int)->(int[])
@@ -83,8 +86,11 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	//sub %21 = %2, %4 : int
 	_21=end-pivot;
 	//invoke (%19) = (%6, %20, %21) MergeSort_original:sortV1 : function(int[],int,int)->(int[])
-	_UPDATE_1DARRAY_SIZE(_19, rhs);
-	_19 = sortV1(_COPY_1DARRAY_PARAM(rhs), _20, _21);
+	{
+		void* rhs_tmp;
+		_UPDATE_1DARRAY_SIZE(_19, rhs);
+		_19 = sortV1(rhs_tmp = _COPY_1DARRAY_PARAM(rhs), _20, _21);
+	}
 	//assign %6 = %19  : int[]
 	_COPY_1DARRAY(rhs, _19);
 	//const %22 = 0 : int
@@ -289,8 +295,11 @@ blklab10:;
 	//const %16 = 0 : int
 	_16 = 0;
 	//invoke (%15) = (%4, %16, %2) MergeSort_original:sortV1 : function(int[],int,int)->(int[])
-	_UPDATE_1DARRAY_SIZE(_15, arr);
-	_15 = sortV1(_COPY_1DARRAY_PARAM(arr), _16, max);
+	{
+		void* arr_tmp;
+		_UPDATE_1DARRAY_SIZE(_15, arr);
+		_15 = sortV1(arr_tmp = _COPY_1DARRAY_PARAM(arr), _16, max);
+	}
 	//assign %4 = %15  : int[]
 	_COPY_1DARRAY(arr, _15);
 	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}

@@ -209,10 +209,12 @@ blklab13:;
 	//fieldload %36 = %0 height : {int[][] data,int height,int width}
 	_36 = A->height;
 	//invoke (%34) = (%35, %36, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
-	_DEALLOC_STRUCT(_34, Matrix);
-	_34 = matrix(_35, _36, _2DARRAY_PARAM(C_data), false);
-	_REMOVE_DEALLOC(C_data);
-	_ADD_DEALLOC(_34);
+	{
+		_DEALLOC_STRUCT(_34, Matrix);
+		_34 = matrix(_35, _36, _2DARRAY_PARAM(C_data), false);
+		_RESET_DEALLOC(C_data);
+		_ADD_DEALLOC(_34);
+	}
 	//return %34
 	_DEALLOC_STRUCT(A, Matrix);
 	_DEALLOC_STRUCT(B, Matrix);
@@ -408,10 +410,12 @@ blklab24:;
 //.blklab23
 blklab23:;
 	//invoke (%15) = (%1, %0, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
-	_DEALLOC_STRUCT(_15, Matrix);
-	_15 = matrix(width, height, _2DARRAY_PARAM(rows), false);
-	_REMOVE_DEALLOC(rows);
-	_ADD_DEALLOC(_15);
+	{
+		_DEALLOC_STRUCT(_15, Matrix);
+		_15 = matrix(width, height, _2DARRAY_PARAM(rows), false);
+		_RESET_DEALLOC(rows);
+		_ADD_DEALLOC(_15);
+	}
 	//return %15
 	_DEALLOC_STRUCT(r, Matrix);
 	_DEALLOC_2DArray(rows);
@@ -476,9 +480,11 @@ int main(int argc, char** args){
 	//assign %1 = %5  : int
 	max = _5;
 	//invoke (%6) = (%1, %1) MatrixMult:init : function(MatrixMult:nat,MatrixMult:nat)->(MatrixMult:Matrix)
-	_DEALLOC_STRUCT(_6, Matrix);
-	_6 = init(max, max);
-	_ADD_DEALLOC(_6);
+	{
+		_DEALLOC_STRUCT(_6, Matrix);
+		_6 = init(max, max);
+		_ADD_DEALLOC(_6);
+	}
 	//assign %2 = %6  : {int[][] data,int height,int width}
 	_DEALLOC_STRUCT(A, Matrix);
 	A = _6;
@@ -516,9 +522,11 @@ blklab27:;
 	//assert
 	}
 	//invoke (%16) = (%1, %1) MatrixMult:init : function(MatrixMult:nat,MatrixMult:nat)->(MatrixMult:Matrix)
-	_DEALLOC_STRUCT(_16, Matrix);
-	_16 = init(max, max);
-	_ADD_DEALLOC(_16);
+	{
+		_DEALLOC_STRUCT(_16, Matrix);
+		_16 = init(max, max);
+		_ADD_DEALLOC(_16);
+	}
 	//assign %3 = %16  : {int[][] data,int height,int width}
 	_DEALLOC_STRUCT(B, Matrix);
 	B = _16;
@@ -556,9 +564,13 @@ blklab28:;
 	//assert
 	}
 	//invoke (%26) = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
-	_DEALLOC_STRUCT(_26, Matrix);
-	_26 = multiply(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
-	_ADD_DEALLOC(_26);
+	{
+		_DEALLOC_STRUCT(_26, Matrix);
+		_26 = multiply(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
+		_RETAIN_DEALLOC(A);
+		_RETAIN_DEALLOC(B);
+		_ADD_DEALLOC(_26);
+	}
 	//assign %4 = %26  : {int[][] data,int height,int width}
 	_DEALLOC_STRUCT(C, Matrix);
 	C = _26;
@@ -594,7 +606,10 @@ blklab29:;
 	//assert
 	}
 	//invoke () = (%0, %4) MatrixMult:printMat : method(whiley/lang/System:Console,MatrixMult:Matrix)->()
-printMat(stdout, _STRUCT_PARAM(C), false);
+	{
+		printMat(stdout, _STRUCT_PARAM(C), false);
+		_RETAIN_DEALLOC(C);
+	}
 	//fieldload %35 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %36 = %35 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %37 = [80,97,115,115,32,77,97,116,114,105,120,77,117,108,116,32,116,101,115,116,32,99,97,115,101] : int[]

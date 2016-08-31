@@ -398,11 +398,23 @@ Image* sobelEdgeDetection(Image* input, _DECL_DEALLOC_PARAM(input)){
 			//assign %10 = %49  : int
 			pos = _49;
 			//invoke (%50) = (%0, %8, %9, %6) SobelEdgeDetect2:convolution : function(SobelEdgeDetect2:Image,int,int,int[])->(int)
-			_50 = convolution(_COPY_STRUCT_PARAM(input, Image), true, x, y, _COPY_1DARRAY_PARAM(v_sobel), true);
+			{
+				void* input_tmp;
+				void* v_sobel_tmp;
+				_50 = convolution(input_tmp = _COPY_STRUCT_PARAM(input, Image), true, x, y, v_sobel_tmp = _COPY_1DARRAY_PARAM(v_sobel), true);
+				_CALLEE_DEALLOC(input);
+				_CALLEE_DEALLOC(v_sobel);
+			}
 			//assign %11 = %50  : int
 			v_g = _50;
 			//invoke (%51) = (%0, %8, %9, %7) SobelEdgeDetect2:convolution : function(SobelEdgeDetect2:Image,int,int,int[])->(int)
-			_51 = convolution(_COPY_STRUCT_PARAM(input, Image), true, x, y, _COPY_1DARRAY_PARAM(h_sobel), true);
+			{
+				void* input_tmp;
+				void* h_sobel_tmp;
+				_51 = convolution(input_tmp = _COPY_STRUCT_PARAM(input, Image), true, x, y, h_sobel_tmp = _COPY_1DARRAY_PARAM(h_sobel), true);
+				_CALLEE_DEALLOC(input);
+				_CALLEE_DEALLOC(h_sobel);
+			}
 			//assign %12 = %51  : int
 			h_g = _51;
 			//invoke (%52) = (%11) whiley/lang/Math:abs : function(int)->(int)
@@ -454,9 +466,13 @@ blklab5:;
 //.blklab4
 blklab4:;
 	//invoke (%62) = (%3, %4, %5) SobelEdgeDetect2:image : function(int,int,int[])->(SobelEdgeDetect2:Image)
-	_DEALLOC_STRUCT(_62, Image);
-	_62 = image(width, height, _COPY_1DARRAY_PARAM(newPixels), true);
-	_ADD_DEALLOC(_62);
+	{
+		void* newPixels_tmp;
+		_DEALLOC_STRUCT(_62, Image);
+		_62 = image(width, height, newPixels_tmp = _COPY_1DARRAY_PARAM(newPixels), true);
+		_CALLEE_DEALLOC(newPixels);
+		_ADD_DEALLOC(_62);
+	}
 	//return %62
 	_DEALLOC_STRUCT(input, Image);
 	_DEALLOC_STRUCT(_1, Image);
@@ -699,17 +715,25 @@ int main(int argc, char** args){
 	//update %4[%18] = %14 : int[] -> int[]
 	pixels[_18] = _14;
 	//invoke (%19) = (%1, %2, %4) SobelEdgeDetect2:image : function(int,int,int[])->(SobelEdgeDetect2:Image)
-	_DEALLOC_STRUCT(_19, Image);
-	_19 = image(width, height, _COPY_1DARRAY_PARAM(pixels), true);
-	_ADD_DEALLOC(_19);
+	{
+		void* pixels_tmp;
+		_DEALLOC_STRUCT(_19, Image);
+		_19 = image(width, height, pixels_tmp = _COPY_1DARRAY_PARAM(pixels), true);
+		_CALLEE_DEALLOC(pixels);
+		_ADD_DEALLOC(_19);
+	}
 	//assign %5 = %19  : {int height,int[] pixels,int width}
 	_DEALLOC_STRUCT(input, Image);
 	input = copy_Image(_19);
 	_ADD_DEALLOC(input);
 	//invoke (%20) = (%5) SobelEdgeDetect2:sobelEdgeDetection : function(SobelEdgeDetect2:Image)->(SobelEdgeDetect2:Image)
-	_DEALLOC_STRUCT(_20, Image);
-	_20 = sobelEdgeDetection(_COPY_STRUCT_PARAM(input, Image), true);
-	_ADD_DEALLOC(_20);
+	{
+		void* input_tmp;
+		_DEALLOC_STRUCT(_20, Image);
+		_20 = sobelEdgeDetection(input_tmp = _COPY_STRUCT_PARAM(input, Image), true);
+		_CALLEE_DEALLOC(input);
+		_ADD_DEALLOC(_20);
+	}
 	//assign %6 = %20  : {int height,int[] pixels,int width}
 	_DEALLOC_STRUCT(output, Image);
 	output = copy_Image(_20);
@@ -724,7 +748,11 @@ int main(int argc, char** args){
 	//indirectinvoke () = %22 (%23) : method(int[])->()
 	println_s(_23, _23_size);
 	//invoke () = (%0, %5) SobelEdgeDetect2:print_image : method(whiley/lang/System:Console,SobelEdgeDetect2:Image)->()
-print_image(stdout, _COPY_STRUCT_PARAM(input, Image), true);
+	{
+		void* input_tmp;
+		print_image(stdout, input_tmp = _COPY_STRUCT_PARAM(input, Image), true);
+		_CALLEE_DEALLOC(input);
+	}
 	//fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %25 = %24 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %26 = [83,111,98,101,108,32,69,100,103,101,32,68,101,116,101,99,116,105,111,110,58] : int[]
@@ -735,7 +763,11 @@ print_image(stdout, _COPY_STRUCT_PARAM(input, Image), true);
 	//indirectinvoke () = %25 (%26) : method(int[])->()
 	println_s(_26, _26_size);
 	//invoke () = (%0, %6) SobelEdgeDetect2:print_image : method(whiley/lang/System:Console,SobelEdgeDetect2:Image)->()
-print_image(stdout, _COPY_STRUCT_PARAM(output, Image), true);
+	{
+		void* output_tmp;
+		print_image(stdout, output_tmp = _COPY_STRUCT_PARAM(output, Image), true);
+		_CALLEE_DEALLOC(output);
+	}
 	//return
 	_DEALLOC(pixels);
 	_DEALLOC_STRUCT(input, Image);

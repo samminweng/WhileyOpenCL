@@ -137,9 +137,12 @@ blklab3:;
 //.blklab2
 blklab2:;
 	//invoke (%21) = (%0, %1, %3) MatrixMult_original:matrix : function(MatrixMult_original:nat,MatrixMult_original:nat,int[])->(MatrixMult_original:Matrix)
-	_DEALLOC_STRUCT(_21, Matrix);
-	_21 = matrix(width, height, _COPY_1DARRAY_PARAM(data), true);
-	_ADD_DEALLOC(_21);
+	{
+		void* data_tmp;
+		_DEALLOC_STRUCT(_21, Matrix);
+		_21 = matrix(width, height, data_tmp = _COPY_1DARRAY_PARAM(data), true);
+		_ADD_DEALLOC(_21);
+	}
 	//return %21
 	_DEALLOC_STRUCT(r, Matrix);
 	_DEALLOC(data);
@@ -429,9 +432,12 @@ blklab14:;
 //.blklab13
 blklab13:;
 	//invoke (%40) = (%3, %4, %5) MatrixMult_original:matrix : function(MatrixMult_original:nat,MatrixMult_original:nat,int[])->(MatrixMult_original:Matrix)
-	_DEALLOC_STRUCT(_40, Matrix);
-	_40 = matrix(width, height, _COPY_1DARRAY_PARAM(data), true);
-	_ADD_DEALLOC(_40);
+	{
+		void* data_tmp;
+		_DEALLOC_STRUCT(_40, Matrix);
+		_40 = matrix(width, height, data_tmp = _COPY_1DARRAY_PARAM(data), true);
+		_ADD_DEALLOC(_40);
+	}
 	//return %40
 	_DEALLOC_STRUCT(a, Matrix);
 	_DEALLOC_STRUCT(b, Matrix);
@@ -524,25 +530,33 @@ int main(int argc, char** args){
 	//indirectinvoke () = %14 (%2) : method(any)->()
 	printf("%lld\n", size);
 	//invoke (%15) = (%2, %2) MatrixMult_original:init : function(MatrixMult_original:nat,MatrixMult_original:nat)->(MatrixMult_original:Matrix)
-	_DEALLOC_STRUCT(_15, Matrix);
-	_15 = init(size, size);
-	_ADD_DEALLOC(_15);
+	{
+		_DEALLOC_STRUCT(_15, Matrix);
+		_15 = init(size, size);
+		_ADD_DEALLOC(_15);
+	}
 	//assign %3 = %15  : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(A, Matrix);
 	A = copy_Matrix(_15);
 	_ADD_DEALLOC(A);
 	//invoke (%16) = (%2, %2) MatrixMult_original:init : function(MatrixMult_original:nat,MatrixMult_original:nat)->(MatrixMult_original:Matrix)
-	_DEALLOC_STRUCT(_16, Matrix);
-	_16 = init(size, size);
-	_ADD_DEALLOC(_16);
+	{
+		_DEALLOC_STRUCT(_16, Matrix);
+		_16 = init(size, size);
+		_ADD_DEALLOC(_16);
+	}
 	//assign %4 = %16  : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(B, Matrix);
 	B = copy_Matrix(_16);
 	_ADD_DEALLOC(B);
 	//invoke (%17) = (%3, %4) MatrixMult_original:mat_mult : function(MatrixMult_original:Matrix,MatrixMult_original:Matrix)->(MatrixMult_original:Matrix)
-	_DEALLOC_STRUCT(_17, Matrix);
-	_17 = mat_mult(_COPY_STRUCT_PARAM(A, Matrix), true, _COPY_STRUCT_PARAM(B, Matrix), true);
-	_ADD_DEALLOC(_17);
+	{
+		void* A_tmp;
+		void* B_tmp;
+		_DEALLOC_STRUCT(_17, Matrix);
+		_17 = mat_mult(A_tmp = _COPY_STRUCT_PARAM(A, Matrix), true, B_tmp = _COPY_STRUCT_PARAM(B, Matrix), true);
+		_ADD_DEALLOC(_17);
+	}
 	//assign %5 = %17  : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(C, Matrix);
 	C = copy_Matrix(_17);

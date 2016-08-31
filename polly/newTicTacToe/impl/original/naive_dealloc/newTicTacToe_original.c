@@ -214,17 +214,21 @@ int main(int argc, char** args){
 		//ifge %3, %2 goto blklab15 : int
 		if(repeat>=max){goto blklab15;}
 		//invoke (%13) = () newTicTacToe_original:EmptyBoard : function()->(newTicTacToe_original:Board)
-		_DEALLOC_STRUCT(_13, Board);
-		_13 = EmptyBoard();
-		_ADD_DEALLOC(_13);
+		{
+			_DEALLOC_STRUCT(_13, Board);
+			_13 = EmptyBoard();
+			_ADD_DEALLOC(_13);
+		}
 		//assign %4 = %13  : null|{int move,int[] pieces}
 		_DEALLOC_STRUCT(b1, Board);
 		b1 = copy_Board(_13);
 		_ADD_DEALLOC(b1);
 		//invoke (%14) = () newTicTacToe_original:EmptyBoard : function()->(newTicTacToe_original:Board)
-		_DEALLOC_STRUCT(_14, Board);
-		_14 = EmptyBoard();
-		_ADD_DEALLOC(_14);
+		{
+			_DEALLOC_STRUCT(_14, Board);
+			_14 = EmptyBoard();
+			_ADD_DEALLOC(_14);
+		}
 		//assign %5 = %14  : null|{int move,int[] pieces}
 		_DEALLOC_STRUCT(b2, Board);
 		b2 = copy_Board(_14);

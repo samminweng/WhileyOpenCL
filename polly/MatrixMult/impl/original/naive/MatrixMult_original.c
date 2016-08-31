@@ -123,7 +123,10 @@ blklab3:;
 //.blklab2
 blklab2:;
 	//invoke (%21) = (%0, %1, %3) MatrixMult_original:matrix : function(MatrixMult_original:nat,MatrixMult_original:nat,int[])->(MatrixMult_original:Matrix)
-	_21 = matrix(width, height, _COPY_1DARRAY_PARAM(data));
+	{
+		void* data_tmp;
+		_21 = matrix(width, height, data_tmp = _COPY_1DARRAY_PARAM(data));
+	}
 	//return %21
 	return _21;
 	//return
@@ -377,7 +380,10 @@ blklab14:;
 //.blklab13
 blklab13:;
 	//invoke (%40) = (%3, %4, %5) MatrixMult_original:matrix : function(MatrixMult_original:nat,MatrixMult_original:nat,int[])->(MatrixMult_original:Matrix)
-	_40 = matrix(width, height, _COPY_1DARRAY_PARAM(data));
+	{
+		void* data_tmp;
+		_40 = matrix(width, height, data_tmp = _COPY_1DARRAY_PARAM(data));
+	}
 	//return %40
 	return _40;
 	//return
@@ -438,15 +444,23 @@ int main(int argc, char** args){
 	//indirectinvoke () = %14 (%2) : method(any)->()
 	printf("%lld\n", size);
 	//invoke (%15) = (%2, %2) MatrixMult_original:init : function(MatrixMult_original:nat,MatrixMult_original:nat)->(MatrixMult_original:Matrix)
-	_15 = init(size, size);
+	{
+		_15 = init(size, size);
+	}
 	//assign %3 = %15  : {int[] data,int height,int width}
 	A = copy_Matrix(_15);
 	//invoke (%16) = (%2, %2) MatrixMult_original:init : function(MatrixMult_original:nat,MatrixMult_original:nat)->(MatrixMult_original:Matrix)
-	_16 = init(size, size);
+	{
+		_16 = init(size, size);
+	}
 	//assign %4 = %16  : {int[] data,int height,int width}
 	B = copy_Matrix(_16);
 	//invoke (%17) = (%3, %4) MatrixMult_original:mat_mult : function(MatrixMult_original:Matrix,MatrixMult_original:Matrix)->(MatrixMult_original:Matrix)
-	_17 = mat_mult(_COPY_STRUCT_PARAM(A, Matrix), _COPY_STRUCT_PARAM(B, Matrix));
+	{
+		void* A_tmp;
+		void* B_tmp;
+		_17 = mat_mult(A_tmp = _COPY_STRUCT_PARAM(A, Matrix), B_tmp = _COPY_STRUCT_PARAM(B, Matrix));
+	}
 	//assign %5 = %17  : {int[] data,int height,int width}
 	C = copy_Matrix(_17);
 	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}

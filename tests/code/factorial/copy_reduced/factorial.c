@@ -24,7 +24,9 @@ blklab0:;
 	//sub %6 = %0, %5 : int
 	_6=n-_5;
 	//invoke (%4) = (%6) factorial:factorial : function(int)->(int)
-	_4 = factorial(_6);
+	{
+		_4 = factorial(_6);
+	}
 	//mul %7 = %0, %4 : int
 	_7=n*_4;
 	//return %7
@@ -44,7 +46,9 @@ int main(int argc, char** args){
 	//const %3 = 5 : int
 	_3 = 5;
 	//invoke (%2) = (%3) factorial:factorial : function(int)->(int)
-	_2 = factorial(_3);
+	{
+		_2 = factorial(_3);
+	}
 	//assign %1 = %2  : int
 	f = _2;
 	//assert

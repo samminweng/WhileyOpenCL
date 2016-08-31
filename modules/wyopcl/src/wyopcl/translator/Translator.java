@@ -20,16 +20,49 @@ import wyopcl.translator.deallocate.DeallocationAnalyzer;
 import wyopcl.translator.generator.CodeGenerator;
 
 /**
- * Main entry point of translator
+ * Creates the code generator as well as the code analysis, to produce and optimize the c code.
+ * 
  * 
  * @author Min-Hsien Weng
  *
  */
 public class Translator implements Builder {
 	private Configuration config;
+	// Function analysis
+	private ReadWriteAnalyzer readwriteAnalyzer;
+	private ReturnAnalyzer returnAnalyzer;
+	private LiveVariablesAnalysis liveAnalyzer;
 
 	public Translator(Configuration config) {
 		this.config = config;
+	}
+
+	/**
+	 * Instantiate all function analysis because those function analyzers are requested parameter for copy or
+	 * de-allocation analyzer
+	 */
+	private void instantiate(WyilFile module) {
+		
+		if(readwriteAnalyzer == null){
+			// Create read-write analyzer
+			readwriteAnalyzer = new ReadWriteAnalyzer(config);
+			// Analyze the byte-code
+			readwriteAnalyzer.apply(module);
+		}
+		
+		if(returnAnalyzer == null){
+			// Create return analyzer
+			returnAnalyzer = new ReturnAnalyzer(config);
+			// Analyze the byte-code
+			returnAnalyzer.apply(module);
+		}
+		
+		if(liveAnalyzer == null){
+			// Create live variable analyzer
+			liveAnalyzer = new LiveVariablesAnalysis(config);
+			// Builds up a calling graph and perform live variable checks.
+			liveAnalyzer.apply(module);
+		}
 	}
 
 	@Override
@@ -45,66 +78,48 @@ public class Translator implements Builder {
 			// Path.Root dst = p.second();
 			@SuppressWarnings("unchecked")
 			Path.Entry<WyilFile> sf = (Path.Entry<WyilFile>) p.first();
-			module = sf.read();			
+			module = sf.read();
 		}
 
 		// Put the in-memory WyIL file to config for later retrieval.
 		this.config.setOption("module", module);
 
-		
-		// Create read-write analyzer
-		ReadWriteAnalyzer readwriteAnalyzer = new ReadWriteAnalyzer(config);
-		// Analyze the byte-code
-		readwriteAnalyzer.apply(module);
-		
-		// Create return analyzer
-		ReturnAnalyzer returnAnalyzer = new ReturnAnalyzer(config);
-		// Analyze the byte-code
-		returnAnalyzer.apply(module);
-		
-		// Create live variable analyzer
-		LiveVariablesAnalysis liveAnalyzer = new LiveVariablesAnalysis(config);
-		// Builds up a calling graph and perform live variable checks.
-		liveAnalyzer.apply(module);
-		
-		
+		// Check if the copy elimination analysis is enabled.
+		Optional<CopyEliminationAnalyzer> copyAnalyzer = Optional.empty();
+		if (config.isEnabled("nocopy")) {
+			instantiate(module);
+			CopyEliminationAnalyzer analyzer = new CopyEliminationAnalyzer(config, readwriteAnalyzer, returnAnalyzer,
+					liveAnalyzer);
+			analyzer.apply(module);
+			copyAnalyzer = Optional.of(analyzer);
+			message += "\nCopy elimination analysis completed. File: " + config.getFilename()+".wyil";
+		}
+
 		// Check if deallocation analysis is enabled or not
 		Optional<DeallocationAnalyzer> deallocAnalyzer = Optional.empty();
-		if(config.isEnabled("dealloc")){
+		if (config.isEnabled("dealloc")) {
+			instantiate(module);
 			// Create an instance of DealloctionAnalyzer
-			DeallocationAnalyzer analyzer = new DeallocationAnalyzer(config,
-														readwriteAnalyzer,
-														returnAnalyzer, 
-														liveAnalyzer);
+			DeallocationAnalyzer analyzer = new DeallocationAnalyzer(config, readwriteAnalyzer, returnAnalyzer,
+					liveAnalyzer);
 			analyzer.apply(module);
 			// Create a deallocatedAnalyzer that may hold a null analyzer.
 			deallocAnalyzer = Optional.of(analyzer);
-			message = "Deallocation analysis completed.\nFile: " + config.getFilename();
-		}
-		
-		// Check if the copy elimination analysis is enabled.
-		Optional<CopyEliminationAnalyzer> copyAnalyzer = Optional.empty();
-		if (config.isEnabled("copy")) {
-			CopyEliminationAnalyzer analyzer = new CopyEliminationAnalyzer(config,
-															readwriteAnalyzer,
-															returnAnalyzer,
-															liveAnalyzer);
-			analyzer.apply(module);
-			copyAnalyzer = Optional.of(analyzer);
-			message = "Copy elimination analysis completed.\nFile: " + config.getFilename();
+			message += "\nDeallocation analysis completed.\nFile: " + config.getFilename()+".wyil";
 		}
 
+		// Check if the bound analysis is enabled.
 		if (config.isEnabled("bound")) {
 			analyzeBounds(module);
-			message = "Bound analysis completed.\nFile: " + config.getFilename();
+			message += "\nBound analysis completed. File: " + config.getFilename();
 		}
-		
+
 		// Reads the in-memory WyIL file and generates the code in C
 		if (config.isEnabled("code")) {
 			CodeGenerator generator = new CodeGenerator(config, copyAnalyzer, deallocAnalyzer);
 			generator.apply(module);
-			message = "Code Generation completed.\nFile: " + config.getFilename() + ".c, " + config.getFilename()
-			+ ".h";
+			message += "\nCode Generation completed. File: " + config.getFilename() + ".c, " + config.getFilename()
+					+ ".h";
 		}
 
 		long endTime = System.currentTimeMillis();
@@ -113,11 +128,10 @@ public class Translator implements Builder {
 	}
 
 	/**
-	 * Takes the in-memory wyil file and analyzes the bounds of integer
-	 * variables in Main function. If any function call is encountered, then
-	 * propagate the input bounds to the callee and then analyze the bounds and
-	 * produces the context-sensitive bounds for the invoked function. The
-	 * bounds of return value is propagated to the caller function.
+	 * Takes the in-memory wyil file and analyzes the bounds of integer variables in Main function. If any function call
+	 * is encountered, then propagate the input bounds to the callee and then analyze the bounds and produces the
+	 * context-sensitive bounds for the invoked function. The bounds of return value is propagated to the caller
+	 * function.
 	 * 
 	 * @param module
 	 */
@@ -134,15 +148,6 @@ public class Translator implements Builder {
 		}
 	}
 
-	/*
-	public static FunctionOrMethod patternMatchingandTransformation(Configuration config, FunctionOrMethod functionOrMethod) {
-  		// Begin the function	
-  		PatternMatcher matcher = new PatternMatcher(config);
-  		Pattern pattern = matcher.analyzePattern(functionOrMethod);
-  		//If no pattern is found or the transformation failed, then return the original functional code block.
-  		return functionOrMethod;
-  	}
- 	*/
 	@Override
 	public Project project() {
 		// TODO Auto-generated method stub
