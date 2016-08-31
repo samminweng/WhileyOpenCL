@@ -495,6 +495,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 *         <ul>
 	 * 
 	 *         <li>'retain_dealloc': retains the flag of original parameter and passes 'false' flag to callee. 
+	 *         		This macro is applied to sub-structure or immutable parameter
 	 *         <code>     
 	 * 		  		a = f(b, false)
 	 *        		a_dealloc = true
@@ -512,8 +513,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 *        		a_dealloc = true
 	 * 	    	</code>
 	 * 		   <li>'caller_dealloc': passes the copied parameter to callee along with 'false' flag. 
-	 *  			This macro stops caller freeing the passing parameter, and mainly applied to  
-	 *  			sub-structure or immutable parameter. 
+	 *  			This macro stops caller freeing the passing parameter. 
 	 *         <code>     
 	 * 		  		a = f(copy(b), false)
 	 *        		a_dealloc = true
@@ -538,7 +538,8 @@ public class DeallocationAnalyzer extends Analyzer {
 			// Check if the register is a substructure
 			boolean isSubStructure = stores.isSubstructure(register, function);
 			if(isSubStructure){
-				return "_CALLER_DEALLOC";
+				// The substructure is passed to function call with 'false' flag
+				return "_RETAIN_DEALLOC";
 			}
 			
 			// Analyze the deallocation flags using live variable, read-write and return analysis

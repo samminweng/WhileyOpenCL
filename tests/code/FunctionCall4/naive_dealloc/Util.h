@@ -260,21 +260,14 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 		})
 // '_CALLEE_DEALLOC' macro makes a copy of actual argument and delegates callee
 // to free the passing parameter 'a = func(copy(b), true)'
-#define _CALLEE_DEALLOC(b) \
-		({\
-			DEBUG_PRINT("Apply '_CALLEE_DEALLOC' macro on " str(#b));\
-		}) 
+#define _CALLEE_DEALLOC(b)
 // '_RETAIN_DEALLOC' macro does NOT make the copy of argument and delegates caller
 // to free the passing parameter 'a = func(b, false)'
-#define _RETAIN_DEALLOC(b) \
-		({\
-			DEBUG_PRINT("Apply '_RETAIN_DEALLOC' macro on " str(#b));\
-		}) 
+#define _RETAIN_DEALLOC(b)
 // '_RESET_DEALLOC' macro does NOT make the copy of argument and delegates caller
 // to reset the flag of actual argument 'a = func(b, false)'  
 #define _RESET_DEALLOC(b) \
 		({\
-			DEBUG_PRINT("Apply '_RETAIN_DEALLOC' macro on " str(#b));\
 			b##_dealloc = false;\
 		})
 /*

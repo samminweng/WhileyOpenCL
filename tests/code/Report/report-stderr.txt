@@ -70,40 +70,10 @@
 === Naive + deallocated C code for nqueens.whiley ===
 === Naive C code for nqueens.whiley ===
 === Copy reduced + deallocated C code for nqueens.whiley ===
-In file included from nqueens.h:1:0,
-                 from nqueens.c:1:
-nqueens.c: In function ‘run’:
-nqueens.c:314:26: error: ‘p_tmp’ undeclared (first use in this function)
-     _CALLER_DEALLOC(_26, p);
-                          ^
-Util.h:255:12: note: in definition of macro ‘_CALLER_DEALLOC’
-    if(a != b##_tmp){\
-            ^
-nqueens.c:314:26: note: each undeclared identifier is reported only once for each function it appears in
-     _CALLER_DEALLOC(_26, p);
-                          ^
-Util.h:255:12: note: in definition of macro ‘_CALLER_DEALLOC’
-    if(a != b##_tmp){\
-            ^
 === Copy reduced C code for nqueens2.whiley ===
 === Naive + deallocated C code for nqueens2.whiley ===
 === Naive C code for nqueens2.whiley ===
 === Copy reduced + deallocated C code for nqueens2.whiley ===
-In file included from nqueens2.h:1:0,
-                 from nqueens2.c:1:
-nqueens2.c: In function ‘run’:
-nqueens2.c:226:26: error: ‘p_tmp’ undeclared (first use in this function)
-     _CALLER_DEALLOC(_21, p);
-                          ^
-Util.h:255:12: note: in definition of macro ‘_CALLER_DEALLOC’
-    if(a != b##_tmp){\
-            ^
-nqueens2.c:226:26: note: each undeclared identifier is reported only once for each function it appears in
-     _CALLER_DEALLOC(_21, p);
-                          ^
-Util.h:255:12: note: in definition of macro ‘_CALLER_DEALLOC’
-    if(a != b##_tmp){\
-            ^
 === Copy reduced C code for FunctionCall1.whiley ===
 === Naive + deallocated C code for FunctionCall1.whiley ===
 === Naive C code for FunctionCall1.whiley ===
@@ -204,40 +174,10 @@ Util.h:255:12: note: in definition of macro ‘_CALLER_DEALLOC’
 === Naive + deallocated C code for nqueens.whiley ===
 === Naive C code for nqueens.whiley ===
 === Copy reduced + deallocated C code for nqueens.whiley ===
-In file included from nqueens.h:1:0,
-                 from nqueens.c:1:
-nqueens.c: In function ‘run’:
-nqueens.c:314:26: error: ‘p_tmp’ undeclared (first use in this function)
-     _CALLER_DEALLOC(_26, p);
-                          ^
-Util.h:255:12: note: in definition of macro ‘_CALLER_DEALLOC’
-    if(a != b##_tmp){\
-            ^
-nqueens.c:314:26: note: each undeclared identifier is reported only once for each function it appears in
-     _CALLER_DEALLOC(_26, p);
-                          ^
-Util.h:255:12: note: in definition of macro ‘_CALLER_DEALLOC’
-    if(a != b##_tmp){\
-            ^
 === Copy reduced C code for nqueens2.whiley ===
 === Naive + deallocated C code for nqueens2.whiley ===
 === Naive C code for nqueens2.whiley ===
 === Copy reduced + deallocated C code for nqueens2.whiley ===
-In file included from nqueens2.h:1:0,
-                 from nqueens2.c:1:
-nqueens2.c: In function ‘run’:
-nqueens2.c:226:26: error: ‘p_tmp’ undeclared (first use in this function)
-     _CALLER_DEALLOC(_21, p);
-                          ^
-Util.h:255:12: note: in definition of macro ‘_CALLER_DEALLOC’
-    if(a != b##_tmp){\
-            ^
-nqueens2.c:226:26: note: each undeclared identifier is reported only once for each function it appears in
-     _CALLER_DEALLOC(_21, p);
-                          ^
-Util.h:255:12: note: in definition of macro ‘_CALLER_DEALLOC’
-    if(a != b##_tmp){\
-            ^
 === Copy reduced C code for FunctionCall1.whiley ===
 === Naive + deallocated C code for FunctionCall1.whiley ===
 === Naive C code for FunctionCall1.whiley ===
