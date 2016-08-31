@@ -77,11 +77,11 @@ detectleaks(){
 	case "$compiler" in
 		"gcc")
 			echo -e -n "Compile C code using GCC -O3..." >> $result
-			gcc -std=c99 -g -O3 $testcase"_"$program.c Util.c -o "out/$executable"
+			gcc -std=c99 -g -O3 -D DEBUG $testcase"_"$program.c Util.c -o "out/$executable"
 			;;
 		"clang")
 			echo -e -n "Compile C code using Clang -O3..." >> $result
-			clang -g -O3 $testcase"_"$program.c Util.c -o "out/$executable"
+			clang -g -O3 -D DEBUG $testcase"_"$program.c Util.c -o "out/$executable"
 			;;
 		"polly")
 			echo "Optimize C code using Polly..." >> $result
@@ -136,7 +136,7 @@ exec(){
 
 # # # newTicTacToe test case
 #init newTicTacToe
-#exec newTicTacToe original 1000
+#exec newTicTacToe original 1
 #exec newTicTacToe original 10000
 #exec newTicTacToe original 100000
 
@@ -154,7 +154,7 @@ exec(){
 
 # # BubbleSort test case
 #init BubbleSort
-#exec BubbleSort original 1000
+#exec BubbleSort original 10
 #exec BubbleSort original 10000
 #exec BubbleSort original 100000
 
@@ -165,8 +165,8 @@ exec(){
 #exec MatrixMult original 3000
 
 ## Sobel Edge Detection test case
-init SobelEdge
-exec SobelEdge original 32
+#init SobelEdge
+#exec SobelEdge original 8
 #exec SobelEdge original 64
 #exec SobelEdge original 128
 #exec SobelEdge original 256

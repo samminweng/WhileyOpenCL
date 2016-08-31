@@ -6,6 +6,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -18,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
+import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Scanner;
 
@@ -37,6 +39,14 @@ public final class BaseTestUtil {
 			+ File.pathSeparator + lib_path + "wyil-" + version + ".jar" + File.pathSeparator + lib_path + "wyc-"
 			+ version + ".jar" + File.pathSeparator;
 	final String whiley_runtime_lib = lib_path + "wyrt-" + version + ".jar";
+
+	// Standard output file
+	final File stdout = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
+			+ File.separator + "Report" + File.separator + "report-stdout.txt");
+	// Standard error file
+	final File stderr = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
+			+ File.separator + "Report" + File.separator + "report-stderr.txt");
+
 	Process p;
 
 	public BaseTestUtil() {
@@ -44,17 +54,15 @@ public final class BaseTestUtil {
 	}
 
 	/**
-	 * Execute the wyopcl with the given option and check if the executed result
-	 * match with the expected output file.
+	 * Execute the wyopcl with the given option and check if the executed result match with the expected output file.
 	 * 
 	 * @param pb
 	 *            the process builder
 	 * @param output_reader
-	 *            the reader of the output (console/file). Execute the process
-	 *            and read the output results as a buffered reader.
+	 *            the reader of the output (console/file). Execute the process and read the output results as a buffered
+	 *            reader.
 	 * @param expected_reader
-	 *            the reader of the predefined output file (*.sysout). Read the
-	 *            expected output file.
+	 *            the reader of the predefined output file (*.sysout). Read the expected output file.
 	 * @throws IOException
 	 */
 	private void assertOutput(BufferedReader output_reader, BufferedReader expected_reader) throws IOException {
@@ -73,8 +81,7 @@ public final class BaseTestUtil {
 	}
 
 	/**
-	 * Analyze the bounds of a Whiley program using naive or gradual widening
-	 * strategy.
+	 * Analyze the bounds of a Whiley program using naive or gradual widening strategy.
 	 * 
 	 * @param path_whiley
 	 * @param widen
@@ -110,7 +117,6 @@ public final class BaseTestUtil {
 		pb = null;
 	}
 
-	
 	/**
 	 * Use Java process to execute the command line .
 	 * 
@@ -132,19 +138,29 @@ public final class BaseTestUtil {
 		Scanner err_sc = null;
 		try {
 			/**
-			 * Due to the limited buffer size, Windows/Linux may fail to write
-			 * the large output from code generator, to the input stream and may
-			 * cause the process to block, and even deadlock.
+			 * Due to the limited buffer size, Windows/Linux may fail to write the large output from code generator, to
+			 * the input stream and may cause the process to block, and even deadlock.
 			 */
 			process = rt.exec(cmd, null, workingDir.toFile());
-			
+
+			// Create a file writer to write output to a file
+			FileWriter writer = new FileWriter(stdout, true);
+
 			// Instantly write out the output message to avoid the process to block.
 			InputStream input = process.getInputStream();
 			in_sc = new Scanner(input);
-			while(in_sc.hasNextLine()){
-				System.out.println(in_sc.nextLine());
+			while (in_sc.hasNextLine()) {
+				String line = in_sc.nextLine();
+				// Print out the message on console
+				System.out.println(line);
+				// Write out the message to a file
+				writer.write(line + "\n");
 			}
-			
+			writer.close();
+
+			// Standard error file 
+			writer = new FileWriter(stderr, true);
+
 			// Get the return value.
 			exitValue = process.waitFor();
 			if (exitValue != 0) {
@@ -152,30 +168,34 @@ public final class BaseTestUtil {
 				InputStream error = process.getErrorStream();
 				// Read error stream using scanner and print out each line of error message.
 				err_sc = new Scanner(error);
-				while(err_sc.hasNext()){
-					System.err.println(err_sc.nextLine());
+				while (err_sc.hasNext()) {
+					String line = err_sc.nextLine();
+					System.err.println(line);
+					writer.write(line + "\n");
 				}
 			}
+
+			writer.close();
+
 		} catch (IOException | InterruptedException e) {
 			throw new RuntimeException("Errors occurs in executing '" + cmd + "'");
-		}finally{
+		} finally {
 			// Close the scanner and stream
-			if(in_sc != null){
+			if (in_sc != null) {
 				in_sc.close();
 			}
-			
-			if(err_sc != null){
+
+			if (err_sc != null) {
 				err_sc.close();
 			}
-			
-			
+
 		}
 		return exitValue;
 	}
 
 	/**
-	 * Check that 'destDir' exists and Create 'destDir' folder. If so, delete
-	 * existing 'destDir' folder. And then create 'destDir' directory.
+	 * Check that 'destDir' exists and Create 'destDir' folder. If so, delete existing 'destDir' folder. And then create
+	 * 'destDir' directory.
 	 * 
 	 * @param destDir
 	 */
@@ -204,12 +224,14 @@ public final class BaseTestUtil {
 			throw new AssertionError("Fails to create the " + destDir + " folder");
 		}
 	}
+
 	/**
 	 * Use GCC C99 standard to compile the generated C code into executables.
+	 * 
 	 * @param testcase
 	 * @param destDir
 	 */
-	private void compileAndRunCCode(String testcase, Path destDir){
+	private void compileAndRunCCode(String testcase, Path destDir) {
 		// Get Operation System.
 		// 4. Compile and run the C code.
 		if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
@@ -218,12 +240,12 @@ public final class BaseTestUtil {
 			String path = System.getenv("PATH");// Get PATH environment variable.
 			if (path.contains("MinGW")) {
 				// Check the exit value. If not 0, the compilation has errors.
-				assertEquals(runCmd("cmd /c gcc -std=c99 *.c  -o " + testcase + ".out", destDir), 0);
+				assertEquals(runCmd("cmd /c gcc -std=c99 -D DEBUG *.c  -o " + testcase + ".out", destDir), 0);
 			} else if (path.contains("cygwin")) {
 				// Gcc is a link (Windows command does not get it), so call its actual name (i.e. gcc-3 or gcc-4)
-				assertEquals(runCmd("cmd /c gcc-4 -std=c99 *.c  -o " + testcase + ".out", destDir), 0);
+				assertEquals(runCmd("cmd /c gcc-4 -std=c99 -D DEBUG *.c  -o " + testcase + ".out", destDir), 0);
 				// Run the output file.
-				//assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
+				// assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
 			} else {
 				throw new RuntimeException("Missing C compiler, such as gcc or MinGW.");
 			}
@@ -232,19 +254,17 @@ public final class BaseTestUtil {
 			assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
 		} else {
 			// Use C99 standard to Compile the C program into *.out and place it in current working directory
-			assertEquals(runCmd("gcc -std=c99 Util.c " +testcase+".c -o " + testcase + ".out", destDir), 0);
+			assertEquals(runCmd("gcc -std=c99 -D DEBUG Util.c " + testcase + ".c -o " + testcase + ".out", destDir), 0);
 			// Run the generated out file
 			assertEquals(runCmd("./" + testcase + ".out", destDir), 0);
 		}
 
 	}
 
-
 	/**
 	 * Translate a Whiley program into the C code.
 	 * 
-	 * The validation is to compile and run the generated C code and check if
-	 * the exit value is 0.
+	 * The validation is to compile and run the generated C code and check if the exit value is 0.
 	 * 
 	 *
 	 * @param sourceDir
@@ -260,30 +280,32 @@ public final class BaseTestUtil {
 		try {
 			Path destDir;
 			// Separate the generated C code.
-			switch(options.length){
+			switch (options.length) {
 			case 0:
 				// No extra options
 				// Set destDir directory to be 'code/TestCaseName/naive'
 				destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "naive" + File.separator);
 				break;
 			case 1:
-				if(options[0].equals("nocopy")){
+				if (options[0].equals("nocopy")) {
 					// Set working directory to be 'code/TestCaseName/copy'
-					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "copy_reduced" + File.separator);
-				}else if(options[0].equals("dealloc")){
+					destDir = Paths.get(
+							sourceDir + File.separator + testcase + File.separator + "copy_reduced" + File.separator);
+				} else if (options[0].equals("dealloc")) {
 					// Applies de-allocation analysis on naive C code
-					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "naive_dealloc" + File.separator);	
-				}else{
+					destDir = Paths.get(
+							sourceDir + File.separator + testcase + File.separator + "naive_dealloc" + File.separator);
+				} else {
 					throw new RuntimeException("Not Implemented");
 				}
 				break;
 			case 2:
-				destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "copy_reduced_dealloc" + File.separator);
+				destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "copy_reduced_dealloc"
+						+ File.separator);
 				break;
 			default:
 				throw new RuntimeException("Not implemented");
 			}
-
 
 			// Create destDir
 			createDestDir(destDir);
@@ -316,7 +338,7 @@ public final class BaseTestUtil {
 
 			// Get Operation System.
 			compileAndRunCCode(testcase, destDir);
-			
+
 			// Delete the Wyil files inside folder
 			Files.deleteIfExists(FileSystems.getDefault().getPath(sourceDir + testcase + ".wyil"));
 		} catch (Exception e) {
@@ -333,21 +355,13 @@ public final class BaseTestUtil {
 		}
 	}
 
-	/*public void execCopyAnalysis(Path path, String testcase) {
-		// Run commmands
-		String cmd = "java -cp " + classpath + " wyopcl.WyopclMain -bp " + whiley_runtime_lib + " -code -copy"
-				+ " " + testcase + ".whiley";
-		Path destDir = Paths.get(path + File.separator + testcase + File.separator);
-		// Generate Copy-eliminated C code
-		runCmd(cmd, destDir);
-		// Compile and run the generated C code
-		compileAndRunCCode(testcase, destDir);
-		// Delete the Wyil files inside folder
-		try {
-			Files.deleteIfExists(FileSystems.getDefault().getPath(destDir + testcase + ".wyil"));
-		} catch (IOException e) {
-			throw new RuntimeException("Errors!!!");
-		}
-	}*/
+	/*
+	 * public void execCopyAnalysis(Path path, String testcase) { // Run commmands String cmd = "java -cp " + classpath
+	 * + " wyopcl.WyopclMain -bp " + whiley_runtime_lib + " -code -copy" + " " + testcase + ".whiley"; Path destDir =
+	 * Paths.get(path + File.separator + testcase + File.separator); // Generate Copy-eliminated C code runCmd(cmd,
+	 * destDir); // Compile and run the generated C code compileAndRunCCode(testcase, destDir); // Delete the Wyil files
+	 * inside folder try { Files.deleteIfExists(FileSystems.getDefault().getPath(destDir + testcase + ".wyil")); } catch
+	 * (IOException e) { throw new RuntimeException("Errors!!!"); } }
+	 */
 
 }

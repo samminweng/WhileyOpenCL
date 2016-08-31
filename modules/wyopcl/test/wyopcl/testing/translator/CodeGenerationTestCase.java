@@ -1,8 +1,11 @@
 package wyopcl.testing.translator;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -21,11 +24,25 @@ import org.junit.runners.Parameterized;
 public class CodeGenerationTestCase {
 	private BaseTestUtil util;
 	final Path codeDir = Paths.get(System.getProperty("user.dir")+ File.separator + "tests" + File.separator + "code");
-	private String testcase;// Store test case
+	private String testcase;// A list of test cases
+	// Standard output file
+	final File stdout = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
+			+ File.separator + "Report"+ File.separator +"report-stdout.txt");
+	// Standard error file
+	final File stderr = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
+			+ File.separator + "Report" + File.separator + "report-stderr.txt");
 	
 	
 	@Before
-	public void initialize() {
+	public void initialize() throws IOException {
+		// Create standard output and error file
+		if (!stdout.exists()) {
+			stdout.createNewFile();
+		}
+		if(!stderr.exists()){
+			stderr.createNewFile();
+		}
+		
 		util = new BaseTestUtil();
 	}
 	
@@ -81,26 +98,35 @@ public class CodeGenerationTestCase {
 	
 	
 	@Test
-	public void testNaiveCCode(){
-		System.out.println("Generate the naive C code for " + testcase + ".whiley");
+	public void testNaiveCCode() throws IOException{
+		String line = "=== Naive C code for " + testcase + ".whiley ===\n";
+		System.out.print(line);
+		Files.write(stdout.toPath(), line.getBytes(), StandardOpenOption.APPEND);
 		util.execCodeGeneration(codeDir, testcase);
 	}
 	
 	@Test
-	public void testNaiveDeallocatedCCode(){
-		System.out.println("Generate the naive and deallocated C code for " + testcase + ".whiley");   
+	public void testNaiveDeallocatedCCode() throws IOException{
+		String line = "=== Naive + deallocated C code for " + testcase + ".whiley ===\n";
+		System.out.print(line);
+		Files.write(stdout.toPath(), line.getBytes(), StandardOpenOption.APPEND); 
 		util.execCodeGeneration(codeDir, testcase, "dealloc");
 	}
 	
 	@Test 
-	public void testCopyCCode(){
-		System.out.println("Generate the copy eliminated C code for " + testcase + ".whiley");   
+	public void testCopyCCode() throws IOException{
+		String line = "=== Copy reduced C code for " + testcase + ".whiley ===\n";
+		System.out.print(line);
+		Files.write(stdout.toPath(), line.getBytes(), StandardOpenOption.APPEND); 
+		//System.out.println();   
 		util.execCodeGeneration(codeDir, testcase, "nocopy");
 	}
 	
 	@Test 
-	public void testCopyDeallocatedCCode(){
-		System.out.println("Generate the copy eliminated and deallocated C code for " + testcase + ".whiley");   
+	public void testCopyDeallocatedCCode() throws IOException{
+		String line = "=== Copy eliminated + deallocated C code for " + testcase + ".whiley ===\n";
+		System.out.print(line);
+		Files.write(stdout.toPath(), line.getBytes(), StandardOpenOption.APPEND);
 		util.execCodeGeneration(codeDir, testcase, "nocopy", "dealloc");
 	}
 }

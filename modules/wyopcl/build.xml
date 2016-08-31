@@ -127,9 +127,9 @@
 		</junit>
 		<fail message="Test failure detected, stopping build." if="tests.failed"/>
 	</target>
-	<target name="test" depends="test-code">
+	<!--<target name="test" depends="test-code">
     </target>
-
+	-->
 	<!-- Test the bound analyzer with test cases.-->
 	<!-- <target name="test-bound" depends="clean, build">
 	  	<mkdir dir="../report/bound" />

@@ -355,9 +355,18 @@ public class DeallocationAnalyzer extends Analyzer {
 			for (int register : code.operands()) {
 				String macro = computeDealloc(register, code, function, stores, copyAnalyzer);
 				if(!macro.equals("")){
-					// Added the macros
+					// Get parameter name
 					String parameter = stores.getVar(register, function);
-					statements.add(indent + macro+"("+ parameter+ ");");	
+					if(macro.equals("_CALLER_DEALLOC")){
+						// Get function return
+						String ret = stores.getVar(code.target(0), function);
+						// Applied macro with 'ret' and 'parameter'
+						statements.add(indent+macro+"("+ret+", "+parameter+");");
+					}else{
+						// Added the macros
+						
+						statements.add(indent + macro+"("+ parameter+ ");");	
+					}
 				}
 			}
 			

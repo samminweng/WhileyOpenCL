@@ -9,8 +9,6 @@
 // Remove the security check about unsafe 'scanf' or 'sprintf' in VS tool
 // This definition allows the portability of C code across the platforms.
 #define _CRT_SECURE_NO_WARNINGS
-// Enable debugging message
-#define DEBUG 1
 /**
  * Built-in functions
 */
@@ -58,10 +56,15 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #endif
 /***
 **  Debug macro prints out message when debug is enabled
+*   The debug can be enabled when compilation, e.g.
+*
+*   	$gcc -D DEBUG *.c -o exec.out
+*
+*   Reference: https://gcc.gnu.org/onlinedocs/gcc/Preprocessor-Options.html
 **/
-#ifdef DEBUG
 #define num2str(x) str(x)
 #define str(x) #x
+#ifdef DEBUG
 // Print out the message
 #define DEBUG_PRINT(msg) if(DEBUG){fputs(msg " at (LINE:" num2str(__LINE__) " FILE: " __FILE__ ")\n", stderr);}
 #else
@@ -244,9 +247,15 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 *
 */
 // '_CALLER_DEALLOC' macro makes a copy of actual argument and delegates caller
-//  to free passing parameter 'a = func(copy(b), false)'  
-#define _CALLER_DEALLOC(b) \
+//  to free passing parameter 'a = func(copy(b), false)'
+// This macro also print out error message when memory leaks are detected
+#define _CALLER_DEALLOC(a, b) \
 		({\
+			if(a != b){\
+				fputs("Memory Leaks at LINE:" num2str(__LINE__) " FILE: " __FILE__ "\n", stderr);\
+			}else{\
+				fputs("'a' and 'b' are the same at LINE:" num2str(__LINE__) " FILE: " __FILE__ "\n", stderr);\
+			}\
 			DEBUG_PRINT("_CALLER_DEALLOC macro");\
 		})
 // '_CALLEE_DEALLOC' macro makes a copy of actual argument and delegates callee
