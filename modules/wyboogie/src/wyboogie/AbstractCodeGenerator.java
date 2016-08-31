@@ -1,6 +1,9 @@
 package wyboogie;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -47,12 +50,14 @@ import wyil.lang.WyilFile.FunctionOrMethod;
 
 /**
  * Main entry point of translator
- * 
+ *
  * @author Min-Hsien Weng
  * @author Mark Utting
  *
  */
 public abstract class AbstractCodeGenerator implements Builder {
+	protected CodeStores stores;
+	protected String currentFile;
 
 	public AbstractCodeGenerator() {
 	}
@@ -61,8 +66,6 @@ public abstract class AbstractCodeGenerator implements Builder {
 	public Set<Entry<?>> build(Collection<Pair<Entry<?>, Root>> delta) throws IOException {
 		Runtime runtime = Runtime.getRuntime();
 		long start = System.currentTimeMillis();
-		long memory = runtime.freeMemory();
-		String message = "";
 		WyilFile module = null;
 
 		HashSet<Path.Entry<?>> generatedFiles = new HashSet<Path.Entry<?>>();
@@ -70,23 +73,25 @@ public abstract class AbstractCodeGenerator implements Builder {
 			// Path.Root dst = p.second();
 			@SuppressWarnings("unchecked")
 			Path.Entry<WyilFile> sf = (Path.Entry<WyilFile>) p.first();
-			module = sf.read();			
+			module = sf.read();
 		}
-		
-		// Reads the in-memory WyIL file and generates the code in C
-		generateCode(module);
-		String name = module.filename().replaceAll("\\.whiley", "");
-		message = "Code Generation completed.\nFile: " + name + ".boogie";
+		this.stores = new CodeStores(false, module);
+		this.currentFile = module.filename().replaceAll("\\.whiley", "");
 
+		// Reads the in-memory WyIL file and generates the Boogie code.
+		generateCode(module);
+		String message = "Code Generation completed. File: " + currentFile + ".bpl";
+
+		long memory = runtime.freeMemory();
 		long endTime = System.currentTimeMillis();
-		System.out.println(message + " Time: " + (endTime - start) + " ms Memory Usage: " + memory);
+		System.out.println(message + " Time: " + (endTime - start) + " ms Free Memory: " + memory);
 		return generatedFiles;
 	}
 
 	protected void generateCode(WyilFile module) {
-		System.out.println("TODO");
+		this.apply(module);
 	}
-	
+
 	@Override
 	public Project project() {
 		// TODO Auto-generated method stub
@@ -136,10 +141,6 @@ public abstract class AbstractCodeGenerator implements Builder {
 
 	protected abstract void translate(AssertOrAssume code, FunctionOrMethod function);
 
-	protected abstract String declareFunction(FunctionOrMethod function);
-
-	protected abstract List<String> declareVariables(FunctionOrMethod function);
-
 	protected abstract void translate(Debug code, FunctionOrMethod function);
 
 	protected abstract void translate(Lambda code, FunctionOrMethod function);
@@ -158,7 +159,7 @@ public abstract class AbstractCodeGenerator implements Builder {
 	 * Iterates over the list of byte-code to generate the corresponding C code.
 	 * Checks the type of the wyil code and dispatches the code to the analyzer
 	 * for being executed by the <code>analyze(code)</code>
-	 * 
+	 *
 	 * @param code
 	 * @param func_name
 	 */
@@ -236,7 +237,67 @@ public abstract class AbstractCodeGenerator implements Builder {
 			// Print out the error message along with code.
 			throw new RuntimeException(ex.getMessage() + " at " + code, null);
 		}
-
 	}
 
+	/**
+	 * Given a function, defines all local variables.
+	 *
+	 * It does not initialise them, since in Boogie all variable
+	 * declarations must come before any assignment statements.
+	 *
+	 * @param function
+	 * @return a list of declaration strings.
+	 */
+	protected abstract List<String> declareVariables(FunctionOrMethod function);
+
+	/**
+	 * Given a function, translates it into function declaration
+	 * including function name and input parameters.
+	 *
+	 * <pre>
+	 * <code>
+	 * long long* reverse(long long* ls, long long ls_size)
+	 * </code>
+	 * </pre>
+	 *
+	 * where 'reverse' is function name and its input declaration
+	 *
+	 * @param function
+	 * @return the function declaration.
+	 */
+	protected abstract String declareFunction(FunctionOrMethod function);
+
+	/**
+	 * Write out all the generated code for the given function/method.
+	 *
+	 * The generated code starts with variable declarations,
+	 * followed by a list of statements.
+	 *
+	 * @param function
+	 */
+	protected void writeFunction(FunctionOrMethod function) {
+		String file_name = this.currentFile + ".bpl";
+		System.out.println("writeFunction" + Paths.get(file_name));
+
+		// Function header
+		List<String> boogie = new ArrayList<String>();
+		String keyword = function.isFunction() ? "function " : "procedure ";
+		// TODO: add requires ensures modifies...
+		boogie.add(keyword + this.declareFunction(function) + ";");
+
+		// Function body
+		// (We do not generate 'implementation' header, because it is not needed,
+		// and we don't want the 'where' constraints in the declarations.
+		// boogie.add("implementation " + this.declareFunction(function) );
+		boogie.add("{");
+		boogie.addAll(this.declareVariables(function));
+		boogie.addAll(stores.getStatements(function));
+		boogie.add("}\n");
+		try {
+			// Create a new one or over-write an existing one.
+			Files.write(Paths.get(file_name), boogie); //, StandardOpenOption.APPEND);
+		} catch (IOException e) {
+			throw new RuntimeException("Errors occur in write " + file_name + ".  " + e);
+		}
+	}
 }
