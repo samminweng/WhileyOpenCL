@@ -111,6 +111,8 @@
 		<pathelement path="build" />
 	</path>
 	<target name="test-code" depends="build">
+		<!-- Empty the output file of standard error -->
+		<delete file="../../tests/code/Report/report-stderr.txt"/>
 		<!-- ================================= 
 			'showoutput' option enable junit to sends any output instantly 
 			reference: https://ant.apache.org/manual/Tasks/junit.html
@@ -119,7 +121,7 @@
 		<junit fork="true" showoutput="yes" dir="${basedir}/../../" failureProperty="tests.failed" printsummary="yes" outputtoformatters="true">
 			<formatter type="plain" usefile="false" />
 			<classpath refid="junit-classpath"/>
-			<batchtest  >
+			<batchtest>
 				<fileset dir="${basedir}/test">
 					<include name="**/CodeGenerationTestCase*" />
 				</fileset>

@@ -114,7 +114,7 @@ public class CodeGenerationTestCase {
 
 	@Test
 	public void testCopyDeallocatedCCode() throws IOException {
-		String line = "=== Copy eliminated + deallocated C code for " + testcase + ".whiley ===\n";
+		String line = "=== Copy reduced + deallocated C code for " + testcase + ".whiley ===\n";
 		System.out.print(line);
 		Files.write(stderr.toPath(), line.getBytes(), StandardOpenOption.APPEND);
 		util.execCodeGeneration(codeDir, testcase, "nocopy", "dealloc");
