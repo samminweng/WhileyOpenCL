@@ -84,7 +84,7 @@ _SLICE_ARRAY(_15, items, start, pivot);
 		_UPDATE_1DARRAY_SIZE(_16, lhs);
 		_DEALLOC(_16);
 		_16 = sortV1(_1DARRAY_PARAM(lhs), false, _17, pivot);
-		_REMOVE_DEALLOC(lhs);
+		_RESET_DEALLOC(lhs);
 		_ADD_DEALLOC(_16);
 	}
 	//assign %5 = %16  : int[]
@@ -109,7 +109,7 @@ _SLICE_ARRAY(_18, items, pivot, end);
 		_UPDATE_1DARRAY_SIZE(_19, rhs);
 		_DEALLOC(_19);
 		_19 = sortV1(_1DARRAY_PARAM(rhs), false, _20, _21);
-		_REMOVE_DEALLOC(rhs);
+		_RESET_DEALLOC(rhs);
 		_ADD_DEALLOC(_19);
 	}
 	//assign %6 = %19  : int[]
@@ -348,7 +348,7 @@ blklab10:;
 		_UPDATE_1DARRAY_SIZE(_15, arr);
 		_DEALLOC(_15);
 		_15 = sortV1(_1DARRAY_PARAM(arr), false, _16, max);
-		_REMOVE_DEALLOC(arr);
+		_RESET_DEALLOC(arr);
 		_ADD_DEALLOC(_15);
 	}
 	//assign %4 = %15  : int[]

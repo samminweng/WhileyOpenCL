@@ -184,6 +184,7 @@ blklab5:;
 		_UPDATE_1DARRAY_SIZE(_15, arr);
 		_DEALLOC(_15);
 		_15 = reverse(_1DARRAY_PARAM(arr), false);
+		_RETAIN_DEALLOC(arr);
 		_ADD_DEALLOC(_15);
 	}
 	//assign %4 = %15  : int[]

@@ -148,7 +148,9 @@ int main(int argc, char** args){
 			//ifge %5, %2 goto blklab10 : int
 			if(j>=n){goto blklab10;}
 			//invoke (%18) = (%4, %5) GCD_original:gcd : function(int,int)->(int)
-			_18 = gcd(i, j);
+			{
+				_18 = gcd(i, j);
+			}
 			//add %19 = %3, %18 : int
 			_19=sum+_18;
 			//assign %3 = %19  : int

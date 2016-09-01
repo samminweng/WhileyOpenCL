@@ -271,11 +271,13 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY(moves, _11);
 	_TRANSFER_DEALLOC(moves, _11);
 	//invoke (%12) = (%3, %2) CoinGame_single:findMoves : function(int[],int)->(int[])
-	_UPDATE_1DARRAY_SIZE(_12, moves);
-	_DEALLOC(_12);
-	_12 = findMoves(_1DARRAY_PARAM(moves), false, n);
-	_REMOVE_DEALLOC(moves);
-	_ADD_DEALLOC(_12);
+	{
+		_UPDATE_1DARRAY_SIZE(_12, moves);
+		_DEALLOC(_12);
+		_12 = findMoves(_1DARRAY_PARAM(moves), false, n);
+		_RESET_DEALLOC(moves);
+		_ADD_DEALLOC(_12);
+	}
 	//assign %3 = %12  : int[]
 	_DEALLOC(moves);
 	_UPDATE_1DARRAY(moves, _12);

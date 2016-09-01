@@ -328,8 +328,11 @@ int main(int argc, char** args){
 	//assign %3 = %11  : int[]
 	_COPY_1DARRAY(moves, _11);
 	//invoke (%12) = (%3, %2) CoinGame_array:findMoves : function(int[],int)->(int[])
-	_UPDATE_1DARRAY_SIZE(_12, moves);
-	_12 = findMoves(_COPY_1DARRAY_PARAM(moves), n);
+	{
+		void* moves_tmp;
+		_UPDATE_1DARRAY_SIZE(_12, moves);
+		_12 = findMoves(moves_tmp = _COPY_1DARRAY_PARAM(moves), n);
+	}
 	//assign %3 = %12  : int[]
 	_COPY_1DARRAY(moves, _12);
 	//const %13 = 1 : int

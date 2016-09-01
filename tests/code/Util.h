@@ -254,7 +254,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _CALLER_DEALLOC(a, b) \
 		({\
 			DEBUG_PRINT("Applied _CALLER_DEALLOC");\
-			if(a != b##_tmp){\			
+			if(a != b##_tmp){\
 				DEBUG_PRINT("Detected memory Leaks at " str(#b)"_tmp");\
 			}\
 		})
@@ -265,7 +265,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 // to free the passing parameter 'a = func(b, false)'
 #define _RETAIN_DEALLOC(b) DEBUG_PRINT("Applied _RETAIN_DEALLOC");
 // '_RESET_DEALLOC' macro does NOT make the copy of argument and delegates caller
-// to reset the flag of actual argument 'a = func(b, false)'  
+// to reset the flag of actual argument 'a = func(b, false)'
 #define _RESET_DEALLOC(b) \
 		({\
 			DEBUG_PRINT("Applied _RESET_DEALLOC");\

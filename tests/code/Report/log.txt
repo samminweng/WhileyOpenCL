@@ -33,9 +33,9 @@ DEBUG: Applied _RETAIN_DEALLOC (LINE:570 FILE: MatrixMult.c) in copy_reduced_dea
 DEBUG: Applied _RETAIN_DEALLOC (LINE:571 FILE: MatrixMult.c) in copy_reduced_dealloc folder
 DEBUG: Applied _RETAIN_DEALLOC (LINE:611 FILE: MatrixMult.c) in copy_reduced_dealloc folder
 DEBUG: Applied _CALLER_DEALLOC (LINE:51 FILE: Fibonacci.c) in naive_dealloc folder
-DEBUG: Memory Leaks at "ls"_tmp (LINE:51 FILE: Fibonacci.c) in naive_dealloc folder
+DEBUG: Detected memory Leaks at "ls"_tmp (LINE:51 FILE: Fibonacci.c) in naive_dealloc folder
 DEBUG: Applied _CALLER_DEALLOC (LINE:135 FILE: Fibonacci.c) in naive_dealloc folder
-DEBUG: Memory Leaks at "arr"_tmp (LINE:135 FILE: Fibonacci.c) in naive_dealloc folder
+DEBUG: Detected memory Leaks at "arr"_tmp (LINE:135 FILE: Fibonacci.c) in naive_dealloc folder
 DEBUG: Applied _RESET_DEALLOC (LINE:50 FILE: Fibonacci.c) in copy_reduced_dealloc folder
 DEBUG: Applied _RESET_DEALLOC (LINE:133 FILE: Fibonacci.c) in copy_reduced_dealloc folder
 DEBUG: Applied _CALLEE_DEALLOC (LINE:144 FILE: MatrixMult2.c) in naive_dealloc folder
@@ -72,7 +72,7 @@ DEBUG: Applied _CALLER_DEALLOC (LINE:333 FILE: CoinGame3.c) in naive_dealloc fol
 DEBUG: Applied _RESET_DEALLOC (LINE:332 FILE: CoinGame3.c) in copy_reduced_dealloc folder
 DEBUG: Applied _CALLER_DEALLOC (LINE:506 FILE: CoinGame4.c) in naive_dealloc folder
 DEBUG: Applied _CALLER_DEALLOC (LINE:590 FILE: CoinGame4.c) in naive_dealloc folder
-DEBUG: Memory Leaks at "moves"_tmp (LINE:590 FILE: CoinGame4.c) in naive_dealloc folder
+DEBUG: Detected memory Leaks at "moves"_tmp (LINE:590 FILE: CoinGame4.c) in naive_dealloc folder
 DEBUG: Applied _CALLEE_DEALLOC (LINE:601 FILE: CoinGame4.c) in naive_dealloc folder
 DEBUG: Applied _RESET_DEALLOC (LINE:505 FILE: CoinGame4.c) in copy_reduced_dealloc folder
 DEBUG: Applied _RESET_DEALLOC (LINE:588 FILE: CoinGame4.c) in copy_reduced_dealloc folder
@@ -80,9 +80,9 @@ DEBUG: Applied _RETAIN_DEALLOC (LINE:598 FILE: CoinGame4.c) in copy_reduced_deal
 DEBUG: Applied _CALLEE_DEALLOC (LINE:479 FILE: nqueens.c) in naive_dealloc folder
 DEBUG: Applied _CALLEE_DEALLOC (LINE:314 FILE: nqueens.c) in naive_dealloc folder
 DEBUG: Applied _CALLER_DEALLOC (LINE:372 FILE: nqueens.c) in naive_dealloc folder
-DEBUG: Memory Leaks at "nq"_tmp (LINE:372 FILE: nqueens.c) in naive_dealloc folder
+DEBUG: Detected memory Leaks at "nq"_tmp (LINE:372 FILE: nqueens.c) in naive_dealloc folder
 DEBUG: Applied _CALLER_DEALLOC (LINE:493 FILE: nqueens.c) in naive_dealloc folder
-DEBUG: Memory Leaks at "nq"_tmp (LINE:493 FILE: nqueens.c) in naive_dealloc folder
+DEBUG: Detected memory Leaks at "nq"_tmp (LINE:493 FILE: nqueens.c) in naive_dealloc folder
 DEBUG: Applied _RESET_DEALLOC (LINE:477 FILE: nqueens.c) in copy_reduced_dealloc folder
 DEBUG: Applied _RETAIN_DEALLOC (LINE:314 FILE: nqueens.c) in copy_reduced_dealloc folder
 DEBUG: Applied _RESET_DEALLOC (LINE:371 FILE: nqueens.c) in copy_reduced_dealloc folder
@@ -98,7 +98,7 @@ DEBUG: Applied _CALLEE_DEALLOC (LINE:169 FILE: FunctionCall1.c) in naive_dealloc
 DEBUG: Applied _RESET_DEALLOC (LINE:102 FILE: FunctionCall1.c) in copy_reduced_dealloc folder
 DEBUG: Applied _CALLER_DEALLOC (LINE:168 FILE: FunctionCall1.c) in copy_reduced_dealloc folder
 DEBUG: Applied _CALLER_DEALLOC (LINE:122 FILE: FunctionCall2.c) in naive_dealloc folder
-DEBUG: Memory Leaks at "a"_tmp (LINE:122 FILE: FunctionCall2.c) in naive_dealloc folder
+DEBUG: Detected memory Leaks at "a"_tmp (LINE:122 FILE: FunctionCall2.c) in naive_dealloc folder
 DEBUG: Applied _CALLER_DEALLOC (LINE:190 FILE: FunctionCall2.c) in naive_dealloc folder
 DEBUG: Applied _RESET_DEALLOC (LINE:121 FILE: FunctionCall2.c) in copy_reduced_dealloc folder
 DEBUG: Applied _CALLER_DEALLOC (LINE:189 FILE: FunctionCall2.c) in copy_reduced_dealloc folder
@@ -110,7 +110,7 @@ DEBUG: Applied _CALLEE_DEALLOC (LINE:154 FILE: FunctionCall4.c) in naive_dealloc
 DEBUG: Applied _CALLEE_DEALLOC (LINE:222 FILE: FunctionCall4.c) in naive_dealloc folder
 DEBUG: Applied _RESET_DEALLOC (LINE:153 FILE: FunctionCall4.c) in copy_reduced_dealloc folder
 DEBUG: Applied _CALLER_DEALLOC (LINE:221 FILE: FunctionCall4.c) in copy_reduced_dealloc folder
-DEBUG: Memory Leaks at "b"_tmp (LINE:221 FILE: FunctionCall4.c) in copy_reduced_dealloc folder
+DEBUG: Detected memory Leaks at "b"_tmp (LINE:221 FILE: FunctionCall4.c) in copy_reduced_dealloc folder
 DEBUG: Applied _CALLEE_DEALLOC (LINE:308 FILE: SobelEdgeDetect.c) in naive_dealloc folder
 DEBUG: Applied _CALLEE_DEALLOC (LINE:309 FILE: SobelEdgeDetect.c) in naive_dealloc folder
 DEBUG: Applied _CALLEE_DEALLOC (LINE:318 FILE: SobelEdgeDetect.c) in naive_dealloc folder
@@ -192,9 +192,9 @@ DEBUG: Applied _RETAIN_DEALLOC (LINE:570 FILE: MatrixMult.c) in copy_reduced_dea
 DEBUG: Applied _RETAIN_DEALLOC (LINE:571 FILE: MatrixMult.c) in copy_reduced_dealloc folder
 DEBUG: Applied _RETAIN_DEALLOC (LINE:611 FILE: MatrixMult.c) in copy_reduced_dealloc folder
 DEBUG: Applied _CALLER_DEALLOC (LINE:51 FILE: Fibonacci.c) in naive_dealloc folder
-DEBUG: Memory Leaks at "ls"_tmp (LINE:51 FILE: Fibonacci.c) in naive_dealloc folder
+DEBUG: Detected memory Leaks at "ls"_tmp (LINE:51 FILE: Fibonacci.c) in naive_dealloc folder
 DEBUG: Applied _CALLER_DEALLOC (LINE:135 FILE: Fibonacci.c) in naive_dealloc folder
-DEBUG: Memory Leaks at "arr"_tmp (LINE:135 FILE: Fibonacci.c) in naive_dealloc folder
+DEBUG: Detected memory Leaks at "arr"_tmp (LINE:135 FILE: Fibonacci.c) in naive_dealloc folder
 DEBUG: Applied _RESET_DEALLOC (LINE:50 FILE: Fibonacci.c) in copy_reduced_dealloc folder
 DEBUG: Applied _RESET_DEALLOC (LINE:133 FILE: Fibonacci.c) in copy_reduced_dealloc folder
 DEBUG: Applied _CALLEE_DEALLOC (LINE:144 FILE: MatrixMult2.c) in naive_dealloc folder
@@ -231,7 +231,7 @@ DEBUG: Applied _CALLER_DEALLOC (LINE:333 FILE: CoinGame3.c) in naive_dealloc fol
 DEBUG: Applied _RESET_DEALLOC (LINE:332 FILE: CoinGame3.c) in copy_reduced_dealloc folder
 DEBUG: Applied _CALLER_DEALLOC (LINE:506 FILE: CoinGame4.c) in naive_dealloc folder
 DEBUG: Applied _CALLER_DEALLOC (LINE:590 FILE: CoinGame4.c) in naive_dealloc folder
-DEBUG: Memory Leaks at "moves"_tmp (LINE:590 FILE: CoinGame4.c) in naive_dealloc folder
+DEBUG: Detected memory Leaks at "moves"_tmp (LINE:590 FILE: CoinGame4.c) in naive_dealloc folder
 DEBUG: Applied _CALLEE_DEALLOC (LINE:601 FILE: CoinGame4.c) in naive_dealloc folder
 DEBUG: Applied _RESET_DEALLOC (LINE:505 FILE: CoinGame4.c) in copy_reduced_dealloc folder
 DEBUG: Applied _RESET_DEALLOC (LINE:588 FILE: CoinGame4.c) in copy_reduced_dealloc folder
@@ -239,9 +239,9 @@ DEBUG: Applied _RETAIN_DEALLOC (LINE:598 FILE: CoinGame4.c) in copy_reduced_deal
 DEBUG: Applied _CALLEE_DEALLOC (LINE:479 FILE: nqueens.c) in naive_dealloc folder
 DEBUG: Applied _CALLEE_DEALLOC (LINE:314 FILE: nqueens.c) in naive_dealloc folder
 DEBUG: Applied _CALLER_DEALLOC (LINE:372 FILE: nqueens.c) in naive_dealloc folder
-DEBUG: Memory Leaks at "nq"_tmp (LINE:372 FILE: nqueens.c) in naive_dealloc folder
+DEBUG: Detected memory Leaks at "nq"_tmp (LINE:372 FILE: nqueens.c) in naive_dealloc folder
 DEBUG: Applied _CALLER_DEALLOC (LINE:493 FILE: nqueens.c) in naive_dealloc folder
-DEBUG: Memory Leaks at "nq"_tmp (LINE:493 FILE: nqueens.c) in naive_dealloc folder
+DEBUG: Detected memory Leaks at "nq"_tmp (LINE:493 FILE: nqueens.c) in naive_dealloc folder
 DEBUG: Applied _RESET_DEALLOC (LINE:477 FILE: nqueens.c) in copy_reduced_dealloc folder
 DEBUG: Applied _RETAIN_DEALLOC (LINE:314 FILE: nqueens.c) in copy_reduced_dealloc folder
 DEBUG: Applied _RESET_DEALLOC (LINE:371 FILE: nqueens.c) in copy_reduced_dealloc folder
@@ -257,7 +257,7 @@ DEBUG: Applied _CALLEE_DEALLOC (LINE:169 FILE: FunctionCall1.c) in naive_dealloc
 DEBUG: Applied _RESET_DEALLOC (LINE:102 FILE: FunctionCall1.c) in copy_reduced_dealloc folder
 DEBUG: Applied _CALLER_DEALLOC (LINE:168 FILE: FunctionCall1.c) in copy_reduced_dealloc folder
 DEBUG: Applied _CALLER_DEALLOC (LINE:122 FILE: FunctionCall2.c) in naive_dealloc folder
-DEBUG: Memory Leaks at "a"_tmp (LINE:122 FILE: FunctionCall2.c) in naive_dealloc folder
+DEBUG: Detected memory Leaks at "a"_tmp (LINE:122 FILE: FunctionCall2.c) in naive_dealloc folder
 DEBUG: Applied _CALLER_DEALLOC (LINE:190 FILE: FunctionCall2.c) in naive_dealloc folder
 DEBUG: Applied _RESET_DEALLOC (LINE:121 FILE: FunctionCall2.c) in copy_reduced_dealloc folder
 DEBUG: Applied _CALLER_DEALLOC (LINE:189 FILE: FunctionCall2.c) in copy_reduced_dealloc folder
@@ -269,7 +269,7 @@ DEBUG: Applied _CALLEE_DEALLOC (LINE:154 FILE: FunctionCall4.c) in naive_dealloc
 DEBUG: Applied _CALLEE_DEALLOC (LINE:222 FILE: FunctionCall4.c) in naive_dealloc folder
 DEBUG: Applied _RESET_DEALLOC (LINE:153 FILE: FunctionCall4.c) in copy_reduced_dealloc folder
 DEBUG: Applied _CALLER_DEALLOC (LINE:221 FILE: FunctionCall4.c) in copy_reduced_dealloc folder
-DEBUG: Memory Leaks at "b"_tmp (LINE:221 FILE: FunctionCall4.c) in copy_reduced_dealloc folder
+DEBUG: Detected memory Leaks at "b"_tmp (LINE:221 FILE: FunctionCall4.c) in copy_reduced_dealloc folder
 DEBUG: Applied _CALLEE_DEALLOC (LINE:308 FILE: SobelEdgeDetect.c) in naive_dealloc folder
 DEBUG: Applied _CALLEE_DEALLOC (LINE:309 FILE: SobelEdgeDetect.c) in naive_dealloc folder
 DEBUG: Applied _CALLEE_DEALLOC (LINE:318 FILE: SobelEdgeDetect.c) in naive_dealloc folder

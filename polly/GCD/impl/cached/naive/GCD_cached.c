@@ -209,7 +209,10 @@ int main(int argc, char** args){
 			//ifge %6, %2 goto blklab16 : int
 			if(j>=n){goto blklab16;}
 			//invoke (%22) = (%5, %6, %2, %3) GCD_cached:gcd_cached : function(int,int,int,int[])->(int)
-			_22 = gcd_cached(i, j, n, _COPY_1DARRAY_PARAM(gcds));
+			{
+				void* gcds_tmp;
+				_22 = gcd_cached(i, j, n, gcds_tmp = _COPY_1DARRAY_PARAM(gcds));
+			}
 			//mul %23 = %5, %2 : int
 			_23=i*n;
 			//add %24 = %23, %6 : int

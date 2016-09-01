@@ -271,11 +271,14 @@ int main(int argc, char** args){
 	_COPY_1DARRAY(moves, _11);
 	_ADD_DEALLOC(moves);
 	//invoke (%12) = (%3, %2) CoinGame_single:findMoves : function(int[],int)->(int[])
-	_UPDATE_1DARRAY_SIZE(_12, moves);
-	_DEALLOC(_12);
-	_12 = findMoves(_COPY_1DARRAY_PARAM(moves), false, n);
-	_ADD_DEALLOC(moves);
-	_ADD_DEALLOC(_12);
+	{
+		void* moves_tmp;
+		_UPDATE_1DARRAY_SIZE(_12, moves);
+		_DEALLOC(_12);
+		_12 = findMoves(moves_tmp = _COPY_1DARRAY_PARAM(moves), false, n);
+		_CALLER_DEALLOC(_12, moves);
+		_ADD_DEALLOC(_12);
+	}
 	//assign %3 = %12  : int[]
 	_DEALLOC(moves);
 	_COPY_1DARRAY(moves, _12);
