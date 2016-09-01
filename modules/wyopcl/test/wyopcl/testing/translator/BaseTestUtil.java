@@ -21,6 +21,8 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import wyc.WycMain;
@@ -40,9 +42,9 @@ public final class BaseTestUtil {
 			+ version + ".jar" + File.pathSeparator;
 	final String whiley_runtime_lib = lib_path + "wyrt-" + version + ".jar";
 
-	// Standard error file
-	final File stderr = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
-			+ File.separator + "Report" + File.separator + "report-stderr.txt");
+	// Log file
+	final File logfile = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
+			+ File.separator + "Report" + File.separator + "log.txt");
 
 	Process p;
 
@@ -140,18 +142,25 @@ public final class BaseTestUtil {
 			 */
 			process = rt.exec(cmd, null, workingDir.toFile());
 
-
+			// Store messages with an array list, to avoid duplicate messages and reduce log file size
+			List<String> messages = new ArrayList<String>();
 			// Instantly write out the output message to avoid the process to block.
 			InputStream input = process.getInputStream();
 			in_sc = new Scanner(input);
 			while (in_sc.hasNextLine()) {
 				String line = in_sc.nextLine();
-				// Print out the message on console
-				System.out.println(line);
+				// De-bugging message can be ignored, to speed up ant task
+				if(line.startsWith("DEBUG:")){
+					// Store debugging messages only
+					line = line+ " in "+workingDir.getFileName()+" folder\n";
+					if(!messages.contains(line)){
+						messages.add(line);
+					}
+				}else{
+					// Print out the message on console
+					System.out.println(line);
+				}
 			}
-
-			// Standard error file 
-			FileWriter writer = new FileWriter(stderr, true);
 
 			// Get the return value.
 			exitValue = process.waitFor();
@@ -163,10 +172,21 @@ public final class BaseTestUtil {
 				while (err_sc.hasNext()) {
 					String line = err_sc.nextLine();
 					System.err.println(line);
-					writer.write(line + "\n");
+					messages.add(line+"\n");
 				}
 			}
 
+			
+			// Create log file to write out debug and error messages
+			if (!logfile.exists()) {
+				logfile.createNewFile();
+			}
+			FileWriter writer = new FileWriter(logfile, true);
+			for(String line: messages){
+				// Write out error message
+				writer.write(line);
+			}
+			
 			writer.close();
 
 		} catch (IOException | InterruptedException e) {

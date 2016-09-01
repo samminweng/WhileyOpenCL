@@ -27,16 +27,9 @@ public class CodeGenerationTestCase {
 	private BaseTestUtil util;
 	final Path codeDir = Paths.get(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code");
 	private String testcase;// A list of test cases
-	// Standard error file
-	final File stderr = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
-			+ File.separator + "Report" + File.separator + "report-stderr.txt");
 
 	@Before
 	public void initialize() throws IOException {
-		// Create standard output and error file
-		if (!stderr.exists()) {
-			stderr.createNewFile();
-		}
 		util = new BaseTestUtil();
 	}
 
@@ -47,12 +40,23 @@ public class CodeGenerationTestCase {
 	}
 
 	/**
+	 * Print out the messages to console and file
+	 * @param line
+	 * @throws IOException
+	 */
+	private void printMsg(String line){
+		System.out.print(line);
+	}
+	
+	
+	/**
 	 * Pass the test case parameters as the arguments to the method
 	 * 
 	 * @param testcase
 	 */
 	public CodeGenerationTestCase(String testcase) {
-		this.testcase = testcase;
+		this.testcase = testcase;		
+		printMsg("=== "+testcase+" ===\n");
 	}
 
 	@Parameterized.Parameters(name = "{index}:{0}")
@@ -89,34 +93,26 @@ public class CodeGenerationTestCase {
 	}
 
 	@Test
-	public void testNaiveCCode() throws IOException {
-		String line = "=== Naive C code for " + testcase + ".whiley ===\n";
-		System.out.print(line);
-		Files.write(stderr.toPath(), line.getBytes(), StandardOpenOption.APPEND);
+	public void testNaiveCCode() {
+		printMsg( "Naive C code \n");
 		util.execCodeGeneration(codeDir, testcase);
 	}
 
 	@Test
-	public void testNaiveDeallocatedCCode() throws IOException {
-		String line = "=== Naive + deallocated C code for " + testcase + ".whiley ===\n";
-		System.out.print(line);
-		Files.write(stderr.toPath(), line.getBytes(), StandardOpenOption.APPEND);
+	public void testNaiveDeallocatedCCode() {
+		printMsg("Naive + deallocated C code \n");
 		util.execCodeGeneration(codeDir, testcase, "dealloc");
 	}
 
 	@Test
-	public void testCopyCCode() throws IOException {
-		String line = "=== Copy reduced C code for " + testcase + ".whiley ===\n";
-		System.out.print(line);
-		Files.write(stderr.toPath(), line.getBytes(), StandardOpenOption.APPEND);
+	public void testCopyCCode() {
+		printMsg("Copy reduced C code \n");
 		util.execCodeGeneration(codeDir, testcase, "nocopy");
 	}
 
 	@Test
-	public void testCopyDeallocatedCCode() throws IOException {
-		String line = "=== Copy reduced + deallocated C code for " + testcase + ".whiley ===\n";
-		System.out.print(line);
-		Files.write(stderr.toPath(), line.getBytes(), StandardOpenOption.APPEND);
+	public void testCopyDeallocatedCCode() {
+		printMsg("Copy reduced + deallocated C code \n");
 		util.execCodeGeneration(codeDir, testcase, "nocopy", "dealloc");
 	}
 }

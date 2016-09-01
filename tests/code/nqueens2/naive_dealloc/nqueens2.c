@@ -343,8 +343,8 @@ int main(int argc, char** args){
 	void* _26;
 	_DECL_1DARRAY(_28);
 	_DECL_DEALLOC(_28);
-	//const %4 = 10 : int
-	_4 = 10;
+	//const %4 = 8 : int
+	_4 = 8;
 	//assign %1 = %4  : int
 	n = _4;
 	//const %5 = 0 : int
@@ -377,8 +377,8 @@ int main(int argc, char** args){
 	num_solutions = _9;
 	//assert
 	{
-		//const %11 = 724 : int
-		_11 = 724;
+		//const %11 = 92 : int
+		_11 = 92;
 		//ifeq %3, %11 goto blklab23 : int
 		if(num_solutions==_11){goto blklab23;}
 		//fail
