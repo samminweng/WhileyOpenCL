@@ -255,7 +255,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 		({\
 			DEBUG_PRINT("Applied _CALLER_DEALLOC");\
 			if(a != b##_tmp){\			
-				DEBUG_PRINT("Memory Leaks at " str(#b)"_tmp");\
+				DEBUG_PRINT("Detected memory Leaks at " str(#b)"_tmp");\
 			}\
 		})
 // '_CALLEE_DEALLOC' macro makes a copy of actual argument and delegates callee
