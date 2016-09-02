@@ -176,10 +176,8 @@ int main(int argc, char** args){
 	{
 		_DEALLOC_STRUCT(_15, Rectangle);
 		_15 = updateRec(_STRUCT_PARAM(rec), false, _STRUCT_PARAM(p3), false);
-		//rec:true-true-false
-		_RESET_DEALLOC(rec);
-		//p3:false-true-false
-		_RESET_DEALLOC(p3);
+		_RESET_DEALLOC(rec, "true-true-false");
+		_RESET_DEALLOC(p3, "false-true-false");
 		_ADD_DEALLOC(_15);
 	}
 	//assign %3 = %15  : {{int x,int y} p1,{int x,int y} p2}

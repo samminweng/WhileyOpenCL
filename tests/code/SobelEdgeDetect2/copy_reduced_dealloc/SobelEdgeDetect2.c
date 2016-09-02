@@ -401,20 +401,16 @@ Image* sobelEdgeDetection(Image* input, _DECL_DEALLOC_PARAM(input)){
 			//invoke (%50) = (%0, %8, %9, %6) SobelEdgeDetect2:convolution : function(SobelEdgeDetect2:Image,int,int,int[])->(int)
 			{
 				_50 = convolution(_STRUCT_PARAM(input), false, x, y, _1DARRAY_PARAM(v_sobel), false);
-				//input:false-false-true
-				_RETAIN_DEALLOC(input);
-				//v_sobel:false-false-true
-				_RETAIN_DEALLOC(v_sobel);
+				_RETAIN_DEALLOC(input, "false-false-true");
+				_RETAIN_DEALLOC(v_sobel, "false-false-true");
 			}
 			//assign %11 = %50  : int
 			v_g = _50;
 			//invoke (%51) = (%0, %8, %9, %7) SobelEdgeDetect2:convolution : function(SobelEdgeDetect2:Image,int,int,int[])->(int)
 			{
 				_51 = convolution(_STRUCT_PARAM(input), false, x, y, _1DARRAY_PARAM(h_sobel), false);
-				//input:false-false-true
-				_RETAIN_DEALLOC(input);
-				//h_sobel:false-false-true
-				_RETAIN_DEALLOC(h_sobel);
+				_RETAIN_DEALLOC(input, "false-false-true");
+				_RETAIN_DEALLOC(h_sobel, "false-false-true");
 			}
 			//assign %12 = %51  : int
 			h_g = _51;
@@ -470,8 +466,7 @@ blklab4:;
 	{
 		_DEALLOC_STRUCT(_62, Image);
 		_62 = image(width, height, _1DARRAY_PARAM(newPixels), false);
-		//newPixels:false-true-false
-		_RESET_DEALLOC(newPixels);
+		_RESET_DEALLOC(newPixels, "false-true-false");
 		_ADD_DEALLOC(_62);
 	}
 	//return %62
@@ -719,8 +714,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC_STRUCT(_19, Image);
 		_19 = image(width, height, _1DARRAY_PARAM(pixels), false);
-		//pixels:false-true-false
-		_RESET_DEALLOC(pixels);
+		_RESET_DEALLOC(pixels, "false-true-false");
 		_ADD_DEALLOC(_19);
 	}
 	//assign %5 = %19  : {int height,int[] pixels,int width}
@@ -731,8 +725,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC_STRUCT(_20, Image);
 		_20 = sobelEdgeDetection(_STRUCT_PARAM(input), false);
-		//input:false-false-true
-		_RETAIN_DEALLOC(input);
+		_RETAIN_DEALLOC(input, "false-false-true");
 		_ADD_DEALLOC(_20);
 	}
 	//assign %6 = %20  : {int height,int[] pixels,int width}
@@ -751,8 +744,7 @@ int main(int argc, char** args){
 	//invoke () = (%0, %5) SobelEdgeDetect2:print_image : method(whiley/lang/System:Console,SobelEdgeDetect2:Image)->()
 	{
 		print_image(stdout, _STRUCT_PARAM(input), false);
-		//input:false-false-false
-		_RETAIN_DEALLOC(input);
+		_RETAIN_DEALLOC(input, "false-false-false");
 	}
 	//fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %25 = %24 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -766,8 +758,7 @@ int main(int argc, char** args){
 	//invoke () = (%0, %6) SobelEdgeDetect2:print_image : method(whiley/lang/System:Console,SobelEdgeDetect2:Image)->()
 	{
 		print_image(stdout, _STRUCT_PARAM(output), false);
-		//output:false-false-false
-		_RETAIN_DEALLOC(output);
+		_RETAIN_DEALLOC(output, "false-false-false");
 	}
 	//return
 	_DEALLOC(pixels);

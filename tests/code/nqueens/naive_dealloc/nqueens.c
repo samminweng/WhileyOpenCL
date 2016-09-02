@@ -311,8 +311,7 @@ blklab20:;
 			{
 				void* p_tmp;
 				_26 = conflict(p_tmp = _COPY_STRUCT_PARAM(p, POS), true, n, col);
-				//p:false-false-false
-				_CALLEE_DEALLOC(p);
+				_CALLEE_DEALLOC(p, "false-false-false");
 			}
 			//const %27 = true : bool
 			_27 = true;
@@ -370,8 +369,7 @@ blklab12:;
 			void* nq_tmp;
 			_DEALLOC_STRUCT(_33, NQueen);
 			_33 = run(nq_tmp = _COPY_STRUCT_PARAM(nq, NQueen), false, _35, dim);
-			//nq:true-true-false
-			_CALLER_DEALLOC(_33, nq);
+			_CALLER_DEALLOC(_33, nq, "true-true-false");
 			_ADD_DEALLOC(_33);
 		}
 		//assign %0 = %33  : {int num_solutions,{int c,int r}[] queens}
@@ -478,8 +476,7 @@ int main(int argc, char** args){
 		void* queens_tmp;
 		_DEALLOC_STRUCT(_11, NQueen);
 		_11 = nqueen(num_solutions, queens_tmp = copy_array_POS(queens, queens_size), queens_size, true);
-		//queens:false-false-false
-		_CALLEE_DEALLOC(queens);
+		_CALLEE_DEALLOC(queens, "false-false-false");
 		_ADD_DEALLOC(_11);
 	}
 	//assign %4 = %11  : {int num_solutions,{int c,int r}[] queens}
@@ -493,8 +490,7 @@ int main(int argc, char** args){
 		void* nq_tmp;
 		_DEALLOC_STRUCT(_12, NQueen);
 		_12 = run(nq_tmp = _COPY_STRUCT_PARAM(nq, NQueen), false, _13, n);
-		//nq:true-true-false
-		_CALLER_DEALLOC(_12, nq);
+		_CALLER_DEALLOC(_12, nq, "true-true-false");
 		_ADD_DEALLOC(_12);
 	}
 	//assign %4 = %12  : {int num_solutions,{int c,int r}[] queens}

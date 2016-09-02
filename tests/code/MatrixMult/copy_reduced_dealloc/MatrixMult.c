@@ -212,8 +212,7 @@ blklab13:;
 	{
 		_DEALLOC_STRUCT(_34, Matrix);
 		_34 = matrix(_35, _36, _2DARRAY_PARAM(C_data), false);
-		//C_data:false-true-false
-		_RESET_DEALLOC(C_data);
+		_RESET_DEALLOC(C_data, "false-true-false");
 		_ADD_DEALLOC(_34);
 	}
 	//return %34
@@ -414,8 +413,7 @@ blklab23:;
 	{
 		_DEALLOC_STRUCT(_15, Matrix);
 		_15 = matrix(width, height, _2DARRAY_PARAM(rows), false);
-		//rows:false-true-false
-		_RESET_DEALLOC(rows);
+		_RESET_DEALLOC(rows, "false-true-false");
 		_ADD_DEALLOC(_15);
 	}
 	//return %15
@@ -569,10 +567,8 @@ blklab28:;
 	{
 		_DEALLOC_STRUCT(_26, Matrix);
 		_26 = multiply(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
-		//A:false-false-false
-		_RETAIN_DEALLOC(A);
-		//B:false-false-false
-		_RETAIN_DEALLOC(B);
+		_RETAIN_DEALLOC(A, "false-false-false");
+		_RETAIN_DEALLOC(B, "false-false-false");
 		_ADD_DEALLOC(_26);
 	}
 	//assign %4 = %26  : {int[][] data,int height,int width}
@@ -612,8 +608,7 @@ blklab29:;
 	//invoke () = (%0, %4) MatrixMult:printMat : method(whiley/lang/System:Console,MatrixMult:Matrix)->()
 	{
 		printMat(stdout, _STRUCT_PARAM(C), false);
-		//C:false-false-false
-		_RETAIN_DEALLOC(C);
+		_RETAIN_DEALLOC(C, "false-false-false");
 	}
 	//fieldload %35 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %36 = %35 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

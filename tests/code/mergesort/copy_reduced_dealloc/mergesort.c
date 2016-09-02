@@ -84,8 +84,7 @@ _SLICE_ARRAY(_15, items, start, pivot);
 		_UPDATE_1DARRAY_SIZE(_16, lhs);
 		_DEALLOC(_16);
 		_16 = sortV1(_1DARRAY_PARAM(lhs), false, _17, pivot);
-		//lhs:true-true-false
-		_RESET_DEALLOC(lhs);
+		_RESET_DEALLOC(lhs, "true-true-false");
 		_ADD_DEALLOC(_16);
 	}
 	//assign %5 = %16  : int[]
@@ -110,8 +109,7 @@ _SLICE_ARRAY(_18, items, pivot, end);
 		_UPDATE_1DARRAY_SIZE(_19, rhs);
 		_DEALLOC(_19);
 		_19 = sortV1(_1DARRAY_PARAM(rhs), false, _20, _21);
-		//rhs:true-true-false
-		_RESET_DEALLOC(rhs);
+		_RESET_DEALLOC(rhs, "true-true-false");
 		_ADD_DEALLOC(_19);
 	}
 	//assign %6 = %19  : int[]
@@ -389,8 +387,7 @@ int main(int argc, char** args){
 		_UPDATE_1DARRAY_SIZE(_11, ys);
 		_DEALLOC(_11);
 		_11 = sortV1(_1DARRAY_PARAM(ys), false, _12, _13);
-		//ys:true-true-false
-		_RESET_DEALLOC(ys);
+		_RESET_DEALLOC(ys, "true-true-false");
 		_ADD_DEALLOC(_11);
 	}
 	//assign %1 = %11  : int[]
@@ -449,8 +446,7 @@ blklab9:;
 		_UPDATE_1DARRAY_SIZE(_25, ys);
 		_DEALLOC(_25);
 		_25 = sortV1(_1DARRAY_PARAM(ys), false, _26, _27);
-		//ys:true-true-false
-		_RESET_DEALLOC(ys);
+		_RESET_DEALLOC(ys, "true-true-false");
 		_ADD_DEALLOC(_25);
 	}
 	//assign %1 = %25  : int[]
@@ -507,8 +503,7 @@ blklab10:;
 		_UPDATE_1DARRAY_SIZE(_38, ys);
 		_DEALLOC(_38);
 		_38 = sortV1(_1DARRAY_PARAM(ys), false, _39, _40);
-		//ys:true-true-false
-		_RESET_DEALLOC(ys);
+		_RESET_DEALLOC(ys, "true-true-false");
 		_ADD_DEALLOC(_38);
 	}
 	//assign %1 = %38  : int[]
@@ -567,8 +562,7 @@ blklab11:;
 		_UPDATE_1DARRAY_SIZE(_52, ys);
 		_DEALLOC(_52);
 		_52 = sortV1(_1DARRAY_PARAM(ys), false, _53, _54);
-		//ys:true-true-false
-		_RESET_DEALLOC(ys);
+		_RESET_DEALLOC(ys, "true-true-false");
 		_ADD_DEALLOC(_52);
 	}
 	//assign %1 = %52  : int[]
@@ -653,8 +647,7 @@ blklab13:;
 		_UPDATE_1DARRAY_SIZE(_70, arr);
 		_DEALLOC(_70);
 		_70 = sortV1(_1DARRAY_PARAM(arr), false, _71, _73);
-		//arr:true-true-false
-		_RESET_DEALLOC(arr);
+		_RESET_DEALLOC(arr, "true-true-false");
 		_ADD_DEALLOC(_70);
 	}
 	//assign %4 = %70  : int[]

@@ -303,20 +303,16 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 			//invoke (%47) = (%0, %1, %2, %8, %9, %6) SobelEdgeDetect1:convolution : function(int[],int,int,int,int,int[])->(int)
 			{
 				_47 = convolution(_1DARRAY_PARAM(pixels), false, width, height, x, y, _1DARRAY_PARAM(v_sobel), false);
-				//pixels:false-false-true
-				_RETAIN_DEALLOC(pixels);
-				//v_sobel:false-false-true
-				_RETAIN_DEALLOC(v_sobel);
+				_RETAIN_DEALLOC(pixels, "false-false-true");
+				_RETAIN_DEALLOC(v_sobel, "false-false-true");
 			}
 			//assign %11 = %47  : int
 			v_g = _47;
 			//invoke (%48) = (%0, %1, %2, %8, %9, %7) SobelEdgeDetect1:convolution : function(int[],int,int,int,int,int[])->(int)
 			{
 				_48 = convolution(_1DARRAY_PARAM(pixels), false, width, height, x, y, _1DARRAY_PARAM(h_sobel), false);
-				//pixels:false-false-true
-				_RETAIN_DEALLOC(pixels);
-				//h_sobel:false-false-true
-				_RETAIN_DEALLOC(h_sobel);
+				_RETAIN_DEALLOC(pixels, "false-false-true");
+				_RETAIN_DEALLOC(h_sobel, "false-false-true");
 			}
 			//assign %12 = %48  : int
 			h_g = _48;
@@ -599,8 +595,7 @@ int main(int argc, char** args){
 		_UPDATE_1DARRAY_SIZE(_13, pixels);
 		_DEALLOC(_13);
 		_13 = sobelEdgeDetection(_1DARRAY_PARAM(pixels), false, width, height);
-		//pixels:false-false-true
-		_RETAIN_DEALLOC(pixels);
+		_RETAIN_DEALLOC(pixels, "false-false-true");
 		_ADD_DEALLOC(_13);
 	}
 	//assign %5 = %13  : int[]
@@ -619,8 +614,7 @@ int main(int argc, char** args){
 	//invoke () = (%0, %4, %1, %2) SobelEdgeDetect1:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
 		printImage(stdout, _1DARRAY_PARAM(pixels), false, width, height);
-		//pixels:false-false-false
-		_RETAIN_DEALLOC(pixels);
+		_RETAIN_DEALLOC(pixels, "false-false-false");
 	}
 	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %18 = %17 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -634,8 +628,7 @@ int main(int argc, char** args){
 	//invoke () = (%0, %5, %1, %2) SobelEdgeDetect1:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
 		printImage(stdout, _1DARRAY_PARAM(newPixels), false, width, height);
-		//newPixels:false-false-false
-		_RETAIN_DEALLOC(newPixels);
+		_RETAIN_DEALLOC(newPixels, "false-false-false");
 	}
 	//assert
 	{

@@ -226,8 +226,7 @@ int main(int argc, char** args){
 		_UPDATE_1DARRAY_SIZE(_11, ys);
 		_DEALLOC(_11);
 		_11 = bubbleSort(_1DARRAY_PARAM(ys), false);
-		//ys:true-true-false
-		_RESET_DEALLOC(ys);
+		_RESET_DEALLOC(ys, "true-true-false");
 		_ADD_DEALLOC(_11);
 	}
 	//assign %1 = %11  : int[]
@@ -286,8 +285,7 @@ blklab5:;
 		_UPDATE_1DARRAY_SIZE(_25, ys);
 		_DEALLOC(_25);
 		_25 = bubbleSort(_1DARRAY_PARAM(ys), false);
-		//ys:true-true-false
-		_RESET_DEALLOC(ys);
+		_RESET_DEALLOC(ys, "true-true-false");
 		_ADD_DEALLOC(_25);
 	}
 	//assign %1 = %25  : int[]
@@ -344,8 +342,7 @@ blklab6:;
 		_UPDATE_1DARRAY_SIZE(_38, ys);
 		_DEALLOC(_38);
 		_38 = bubbleSort(_1DARRAY_PARAM(ys), false);
-		//ys:true-true-false
-		_RESET_DEALLOC(ys);
+		_RESET_DEALLOC(ys, "true-true-false");
 		_ADD_DEALLOC(_38);
 	}
 	//assign %1 = %38  : int[]
@@ -404,8 +401,7 @@ blklab7:;
 		_UPDATE_1DARRAY_SIZE(_52, ys);
 		_DEALLOC(_52);
 		_52 = bubbleSort(_1DARRAY_PARAM(ys), false);
-		//ys:true-true-false
-		_RESET_DEALLOC(ys);
+		_RESET_DEALLOC(ys, "true-true-false");
 		_ADD_DEALLOC(_52);
 	}
 	//assign %1 = %52  : int[]
@@ -484,8 +480,7 @@ blklab9:;
 		_UPDATE_1DARRAY_SIZE(_68, arr);
 		_DEALLOC(_68);
 		_68 = bubbleSort(_1DARRAY_PARAM(arr), false);
-		//arr:true-true-false
-		_RESET_DEALLOC(arr);
+		_RESET_DEALLOC(arr, "true-true-false");
 		_ADD_DEALLOC(_68);
 	}
 	//assign %4 = %68  : int[]
