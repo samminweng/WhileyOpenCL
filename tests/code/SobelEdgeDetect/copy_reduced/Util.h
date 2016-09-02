@@ -253,22 +253,22 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 // either at caller nor callee.
 #define _CALLER_DEALLOC(a, b) \
 		({\
-			DEBUG_PRINT("Applied _CALLER_DEALLOC");\
+			DEBUG_PRINT("_CALLER_DEALLOC macro");\
 			if(a != b##_tmp){\
-				DEBUG_PRINT("Detected memory Leaks at " str(#b)"_tmp");\
+				DEBUG_PRINT("Memory leaks at " str(#b)"_tmp");\
 			}\
 		})
 // '_CALLEE_DEALLOC' macro makes a copy of actual argument and delegates callee
 // to free the passing parameter 'a = func(copy(b), true)'
-#define _CALLEE_DEALLOC(b) DEBUG_PRINT("Applied _CALLEE_DEALLOC");
+#define _CALLEE_DEALLOC(b) DEBUG_PRINT("_CALLEE_DEALLOC macro");
 // '_RETAIN_DEALLOC' macro does NOT make the copy of argument and delegates caller
 // to free the passing parameter 'a = func(b, false)'
-#define _RETAIN_DEALLOC(b) DEBUG_PRINT("Applied _RETAIN_DEALLOC");
+#define _RETAIN_DEALLOC(b) DEBUG_PRINT("_RETAIN_DEALLOC");
 // '_RESET_DEALLOC' macro does NOT make the copy of argument and delegates caller
 // to reset the flag of actual argument 'a = func(b, false)'
 #define _RESET_DEALLOC(b) \
 		({\
-			DEBUG_PRINT("Applied _RESET_DEALLOC");\
+			DEBUG_PRINT("_RESET_DEALLOC macro");\
 			b##_dealloc = false;\
 		})
 /*

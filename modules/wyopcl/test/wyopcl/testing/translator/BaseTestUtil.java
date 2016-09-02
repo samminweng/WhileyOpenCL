@@ -22,8 +22,11 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import wyc.WycMain;
 import wyc.util.WycBuildTask;
@@ -117,6 +120,16 @@ public final class BaseTestUtil {
 	}
 
 	/**
+	 * Write
+	 * @throws IOException 
+	 */
+	private void writeLogs(HashMap<String, Long> logs) throws IOException {
+
+		
+
+	}
+
+	/**
 	 * Use Java process to execute the command line .
 	 * 
 	 * @param cmd
@@ -150,13 +163,11 @@ public final class BaseTestUtil {
 			while (in_sc.hasNextLine()) {
 				String line = in_sc.nextLine();
 				// De-bugging message can be ignored, to speed up ant task
-				if(line.startsWith("DEBUG:")){
+				if (line.startsWith("DEBUG:")) {
 					// Store debugging messages only
-					line = line+ " in "+workingDir.getFileName()+" folder\n";
-					if(!messages.contains(line)){
-						messages.add(line);
-					}
-				}else{
+					line = line + " in " + workingDir.getFileName() + " folder";
+					messages.add(line);
+				} else {
 					// Print out the message on console
 					System.out.println(line);
 				}
@@ -172,20 +183,26 @@ public final class BaseTestUtil {
 				while (err_sc.hasNext()) {
 					String line = err_sc.nextLine();
 					System.err.println(line);
-					messages.add(line+"\n");
+					messages.add(line);
 				}
 			}
 
-			
+			// Aggregate the message and count the number of occurrence
+			// And output the results as a hashmap
+			Map<String, Long> logs = messages.stream()
+					.collect(Collectors.groupingBy(msg -> msg, Collectors.counting()));
 			// Create log file to write out debug and error messages
 			if (!logfile.exists()) {
 				logfile.createNewFile();
 			}
 			FileWriter writer = new FileWriter(logfile, true);
-			for(String line: messages){
-				// Write out error message
-				writer.write(line);
-			}
+			logs.forEach((line, count) -> {
+				try {
+					writer.write(line + "\tFrequency: " + count+"\n");
+				} catch (IOException e) {
+					throw new RuntimeException("Error erors while writing "+logfile+ " file.");
+				}
+			});
 			
 			writer.close();
 
