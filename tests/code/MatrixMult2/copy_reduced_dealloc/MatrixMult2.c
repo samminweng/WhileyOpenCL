@@ -141,6 +141,7 @@ blklab2:;
 	{
 		_DEALLOC_STRUCT(_21, Matrix);
 		_21 = matrix(width, height, _1DARRAY_PARAM(data), false);
+		//data:false-true-false
 		_RESET_DEALLOC(data);
 		_ADD_DEALLOC(_21);
 	}
@@ -436,6 +437,7 @@ blklab13:;
 	{
 		_DEALLOC_STRUCT(_40, Matrix);
 		_40 = matrix(width, height, _1DARRAY_PARAM(data), false);
+		//data:false-true-false
 		_RESET_DEALLOC(data);
 		_ADD_DEALLOC(_40);
 	}
@@ -666,7 +668,9 @@ blklab20:;
 	{
 		_DEALLOC_STRUCT(_44, Matrix);
 		_44 = mat_mult(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
+		//A:false-false-false
 		_RETAIN_DEALLOC(A);
+		//B:false-false-false
 		_RETAIN_DEALLOC(B);
 		_ADD_DEALLOC(_44);
 	}
@@ -714,6 +718,7 @@ blklab21:;
 	//invoke () = (%0, %3) MatrixMult2:print_mat : method(whiley/lang/System:Console,MatrixMult2:Matrix)->()
 	{
 		print_mat(stdout, _STRUCT_PARAM(C), false);
+		//C:false-false-true
 		_RETAIN_DEALLOC(C);
 	}
 	//fieldload %57 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}

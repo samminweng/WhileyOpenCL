@@ -329,6 +329,7 @@ int main(int argc, char** args){
 		_UPDATE_1DARRAY_SIZE(_8, moves);
 		_DEALLOC(_8);
 		_8 = findMoves(_1DARRAY_PARAM(moves), false, n);
+		//moves:true-true-false
 		_RESET_DEALLOC(moves);
 		_ADD_DEALLOC(_8);
 	}

@@ -141,6 +141,7 @@ blklab2:;
 		void* data_tmp;
 		_DEALLOC_STRUCT(_21, Matrix);
 		_21 = matrix(width, height, data_tmp = _COPY_1DARRAY_PARAM(data), true);
+		//data:false-false-false
 		_CALLEE_DEALLOC(data);
 		_ADD_DEALLOC(_21);
 	}
@@ -531,6 +532,7 @@ blklab17:;
 		void* data_tmp;
 		_DEALLOC_STRUCT(_58, Matrix);
 		_58 = matrix(width, height, data_tmp = _COPY_1DARRAY_PARAM(data), true);
+		//data:false-false-false
 		_CALLEE_DEALLOC(data);
 		_ADD_DEALLOC(_58);
 	}
@@ -765,7 +767,9 @@ blklab24:;
 		void* B_tmp;
 		_DEALLOC_STRUCT(_44, Matrix);
 		_44 = mat_mult(A_tmp = _COPY_STRUCT_PARAM(A, Matrix), true, B_tmp = _COPY_STRUCT_PARAM(B, Matrix), true);
+		//A:false-false-false
 		_CALLEE_DEALLOC(A);
+		//B:false-false-false
 		_CALLEE_DEALLOC(B);
 		_ADD_DEALLOC(_44);
 	}
@@ -814,6 +818,7 @@ blklab25:;
 	{
 		void* C_tmp;
 		print_mat(stdout, C_tmp = _COPY_STRUCT_PARAM(C, Matrix), true);
+		//C:false-false-true
 		_CALLEE_DEALLOC(C);
 	}
 	//fieldload %57 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}

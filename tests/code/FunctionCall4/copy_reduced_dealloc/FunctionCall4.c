@@ -150,6 +150,7 @@ int main(int argc, char** args){
 		_UPDATE_1DARRAY_SIZE(_10, a);
 		_DEALLOC(_10);
 		_10 = func(_1DARRAY_PARAM(a), false, _11);
+		//a:true-true-false
 		_RESET_DEALLOC(a);
 		_ADD_DEALLOC(_10);
 	}
@@ -218,6 +219,7 @@ blklab2:;
 		_UPDATE_1DARRAY_SIZE(_28, b);
 		_DEALLOC(_28);
 		_28 = func(b_tmp = _COPY_1DARRAY_PARAM(b), false, _29);
+		//b:true-true-true
 		_CALLER_DEALLOC(_28, b);
 		_ADD_DEALLOC(_28);
 	}

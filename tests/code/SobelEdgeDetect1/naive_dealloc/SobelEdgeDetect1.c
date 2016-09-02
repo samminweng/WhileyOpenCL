@@ -305,7 +305,9 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 				void* pixels_tmp;
 				void* v_sobel_tmp;
 				_47 = convolution(pixels_tmp = _COPY_1DARRAY_PARAM(pixels), true, width, height, x, y, v_sobel_tmp = _COPY_1DARRAY_PARAM(v_sobel), true);
+				//pixels:false-false-true
 				_CALLEE_DEALLOC(pixels);
+				//v_sobel:false-false-true
 				_CALLEE_DEALLOC(v_sobel);
 			}
 			//assign %11 = %47  : int
@@ -315,7 +317,9 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 				void* pixels_tmp;
 				void* h_sobel_tmp;
 				_48 = convolution(pixels_tmp = _COPY_1DARRAY_PARAM(pixels), true, width, height, x, y, h_sobel_tmp = _COPY_1DARRAY_PARAM(h_sobel), true);
+				//pixels:false-false-true
 				_CALLEE_DEALLOC(pixels);
+				//h_sobel:false-false-true
 				_CALLEE_DEALLOC(h_sobel);
 			}
 			//assign %12 = %48  : int
@@ -600,6 +604,7 @@ int main(int argc, char** args){
 		_UPDATE_1DARRAY_SIZE(_13, pixels);
 		_DEALLOC(_13);
 		_13 = sobelEdgeDetection(pixels_tmp = _COPY_1DARRAY_PARAM(pixels), true, width, height);
+		//pixels:false-false-true
 		_CALLEE_DEALLOC(pixels);
 		_ADD_DEALLOC(_13);
 	}
@@ -620,6 +625,7 @@ int main(int argc, char** args){
 	{
 		void* pixels_tmp;
 		printImage(stdout, pixels_tmp = _COPY_1DARRAY_PARAM(pixels), true, width, height);
+		//pixels:false-false-false
 		_CALLEE_DEALLOC(pixels);
 	}
 	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
@@ -635,6 +641,7 @@ int main(int argc, char** args){
 	{
 		void* newPixels_tmp;
 		printImage(stdout, newPixels_tmp = _COPY_1DARRAY_PARAM(newPixels), true, width, height);
+		//newPixels:false-false-false
 		_CALLEE_DEALLOC(newPixels);
 	}
 	//assert

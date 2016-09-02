@@ -652,22 +652,30 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Append deallocation flag to the function call
 			this.deallocatedAnalyzer.ifPresent(a -> {
 				String macro = a.computeDealloc(operand, code, function, stores, copyAnalyzer);
-				switch (macro) {
-				case "_RESET_DEALLOC":
-					parameters.add("false");
-					break;
-				case "_RETAIN_DEALLOC":
-					parameters.add("false");
-					break;
-				case "_CALLER_DEALLOC":
-					parameters.add("false");
-					break;
-				case "_CALLEE_DEALLOC":
-					parameters.add("true");
-					break;
-				default:
-					break;// Do nothing
+				if(!macro.equals("")){
+					// Split the macro into an array of two string
+					String[] parts = macro.split("\t");
+					String macro_name = parts[0];// Get the macro
+					switch (macro_name) {
+					case "_RESET_DEALLOC":
+						parameters.add("false");
+						break;
+					case "_RETAIN_DEALLOC":
+						parameters.add("false");
+						break;
+					case "_CALLER_DEALLOC":
+						parameters.add("false");
+						break;
+					case "_CALLEE_DEALLOC":
+						parameters.add("true");
+						break;
+					default:
+						break;
+					}
+				}else{
+					// Do nothing
 				}
+				
 			});
 		}
 

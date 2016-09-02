@@ -555,6 +555,7 @@ int main(int argc, char** args){
 		_UPDATE_1DARRAY_SIZE(_8, moves);
 		_DEALLOC(_8);
 		_8 = findMoves(moves_tmp = _COPY_1DARRAY_PARAM(moves), false, n);
+		//moves:true-true-false
 		_CALLER_DEALLOC(_8, moves);
 		_ADD_DEALLOC(_8);
 	}
@@ -566,6 +567,7 @@ int main(int argc, char** args){
 	{
 		void* moves_tmp;
 		play(stdout, moves_tmp = _COPY_1DARRAY_PARAM(moves), true, n);
+		//moves:false-false-true
 		_CALLEE_DEALLOC(moves);
 	}
 	//const %9 = 1 : int

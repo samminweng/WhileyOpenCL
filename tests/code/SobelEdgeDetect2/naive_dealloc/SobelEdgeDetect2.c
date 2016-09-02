@@ -402,7 +402,9 @@ Image* sobelEdgeDetection(Image* input, _DECL_DEALLOC_PARAM(input)){
 				void* input_tmp;
 				void* v_sobel_tmp;
 				_50 = convolution(input_tmp = _COPY_STRUCT_PARAM(input, Image), true, x, y, v_sobel_tmp = _COPY_1DARRAY_PARAM(v_sobel), true);
+				//input:false-false-true
 				_CALLEE_DEALLOC(input);
+				//v_sobel:false-false-true
 				_CALLEE_DEALLOC(v_sobel);
 			}
 			//assign %11 = %50  : int
@@ -412,7 +414,9 @@ Image* sobelEdgeDetection(Image* input, _DECL_DEALLOC_PARAM(input)){
 				void* input_tmp;
 				void* h_sobel_tmp;
 				_51 = convolution(input_tmp = _COPY_STRUCT_PARAM(input, Image), true, x, y, h_sobel_tmp = _COPY_1DARRAY_PARAM(h_sobel), true);
+				//input:false-false-true
 				_CALLEE_DEALLOC(input);
+				//h_sobel:false-false-true
 				_CALLEE_DEALLOC(h_sobel);
 			}
 			//assign %12 = %51  : int
@@ -470,6 +474,7 @@ blklab4:;
 		void* newPixels_tmp;
 		_DEALLOC_STRUCT(_62, Image);
 		_62 = image(width, height, newPixels_tmp = _COPY_1DARRAY_PARAM(newPixels), true);
+		//newPixels:false-false-false
 		_CALLEE_DEALLOC(newPixels);
 		_ADD_DEALLOC(_62);
 	}
@@ -719,6 +724,7 @@ int main(int argc, char** args){
 		void* pixels_tmp;
 		_DEALLOC_STRUCT(_19, Image);
 		_19 = image(width, height, pixels_tmp = _COPY_1DARRAY_PARAM(pixels), true);
+		//pixels:false-false-false
 		_CALLEE_DEALLOC(pixels);
 		_ADD_DEALLOC(_19);
 	}
@@ -731,6 +737,7 @@ int main(int argc, char** args){
 		void* input_tmp;
 		_DEALLOC_STRUCT(_20, Image);
 		_20 = sobelEdgeDetection(input_tmp = _COPY_STRUCT_PARAM(input, Image), true);
+		//input:false-false-true
 		_CALLEE_DEALLOC(input);
 		_ADD_DEALLOC(_20);
 	}
@@ -751,6 +758,7 @@ int main(int argc, char** args){
 	{
 		void* input_tmp;
 		print_image(stdout, input_tmp = _COPY_STRUCT_PARAM(input, Image), true);
+		//input:false-false-false
 		_CALLEE_DEALLOC(input);
 	}
 	//fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
@@ -766,6 +774,7 @@ int main(int argc, char** args){
 	{
 		void* output_tmp;
 		print_image(stdout, output_tmp = _COPY_STRUCT_PARAM(output, Image), true);
+		//output:false-false-false
 		_CALLEE_DEALLOC(output);
 	}
 	//return

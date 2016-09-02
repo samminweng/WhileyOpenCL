@@ -357,16 +357,25 @@ public class DeallocationAnalyzer extends Analyzer {
 				if(!macro.equals("")){
 					// Get parameter name
 					String parameter = stores.getVar(register, function);
-					if(macro.equals("_CALLER_DEALLOC")){
+					// Split the macro into an array of two string
+					String[] parts = macro.split("\t");
+					// Get macro name
+					String macro_name = parts[0];
+					// Get check results (mutable, return and live checks on parameter)
+					String checks = parts[1];
+					// Write the checks results as a comments
+					statements.add(indent+"//"+parameter+":"+checks);
+					if(macro_name.equals("_CALLER_DEALLOC")){
 						// Get function return
 						String ret = stores.getVar(code.target(0), function);
 						// Applied macro with 'ret' and 'parameter'
-						statements.add(indent+macro+"("+ret+", "+parameter+");");
+						statements.add(indent+macro_name+"("+ret+", "+parameter+");");
 					}else{
 						// Added the macros
-						
-						statements.add(indent + macro+"("+ parameter+ ");");	
+						statements.add(indent + macro_name+"("+ parameter+ ");");	
 					}
+					
+					
 				}
 			}
 			
@@ -491,7 +500,12 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 *            code stores
 	 * @param copyAnalyzer
-	 * @return macro names, including:
+	 * @return a string that contains macro name "\t" A "-" B "-"C, e.g. 
+	 * 	       where A is the mutable check
+	 *               B is the return check
+	 *               C is the Live variable check
+	 * 
+	 *        De-allocation macros include:
 	 *         <ul>
 	 * 
 	 *         <li>'retain_dealloc': retains the flag of original parameter and passes 'false' flag to callee. 
@@ -532,35 +546,36 @@ public class DeallocationAnalyzer extends Analyzer {
 		int arguement = mapFunctionArgumentToCalleeRegister(register, code);
 		boolean isMutated = readwriteAnalyzer.isMutated(arguement, f);
 		boolean isReturned = returnAnalyzer.isReturned(arguement, f);
-
+		// Analyze the deallocation flags using live variable, read-write and return analysis
+		boolean isLive = liveAnalyzer.isLive(register, code, function);
+		
+		String checks = isMutated +"-"+isReturned+"-"+isLive;
 		// Analyze the copy
 		if (copyAnalyzer.isPresent()) {
 			// Check if the register is a substructure
 			boolean isSubStructure = stores.isSubstructure(register, function);
 			if(isSubStructure){
 				// The substructure is passed to function call with 'false' flag
-				return "_RETAIN_DEALLOC";
+				return "_RETAIN_DEALLOC"+"\t"+checks;
 			}
 			
-			// Analyze the deallocation flags using live variable, read-write and return analysis
-			boolean isLive = liveAnalyzer.isLive(register, code, function);
 			if (!isMutated) {
 				// NOT mutated
 				if (!isReturned) {
 					// NOT mutated nor return
 					if (!isLive) {
-						return "_RETAIN_DEALLOC";
+						return "_RETAIN_DEALLOC"+"\t"+checks;
 					}else{
-						return "_RETAIN_DEALLOC";
+						return "_RETAIN_DEALLOC"+"\t"+checks;
 					}
 				} else {
 					// NOT mutated but returned
 					if (!isLive) {
 						// If 'b' is NOT alive at caller site
-						return "_RESET_DEALLOC";
+						return "_RESET_DEALLOC"+"\t"+checks;
 					} else {
 						// If 'b' is alive at caller site
-						return "_RESET_DEALLOC";
+						return "_RESET_DEALLOC"+"\t"+checks;
 					}
 				}
 			} else {
@@ -569,18 +584,18 @@ public class DeallocationAnalyzer extends Analyzer {
 					// Mutated and returned
 					if (!isLive) {
 						// 'b' is NOT alive
-						return "_RESET_DEALLOC";
+						return "_RESET_DEALLOC"+"\t"+checks;
 					} else {
 						// 'b' is alive
-						return "_CALLER_DEALLOC";
+						return "_CALLER_DEALLOC"+"\t"+checks;
 					}
 				} else {
 					// Mutated and NOT returned
 					if (!isLive) {
-						return "_RETAIN_DEALLOC";
+						return "_RETAIN_DEALLOC"+"\t"+checks;
 					} else {
 						// 'b' is alive
-						return "_CALLEE_DEALLOC";
+						return "_CALLEE_DEALLOC"+"\t"+checks;
 					}
 				}
 			}
@@ -589,15 +604,15 @@ public class DeallocationAnalyzer extends Analyzer {
 			if (!isMutated) {
 				if (isReturned) {
 					// The de-allocation is Not done at callee.
-					return "_CALLER_DEALLOC";
+					return "_CALLER_DEALLOC"+"\t"+checks;
 				}
 			} else {
 				if (isReturned) {
-					return "_CALLER_DEALLOC";
+					return "_CALLER_DEALLOC"+"\t"+checks;
 				}
 			}
 			// For other cases, the de-allocation is done at callee.
-			return "_CALLEE_DEALLOC";
+			return "_CALLEE_DEALLOC"+"\t"+checks;
 		}
 	}
 

@@ -223,6 +223,7 @@ blklab20:;
 			//invoke (%21) = (%8, %1, %5) nqueens2:conflict : function(nqueens2:POS,int,int)->(bool)
 			{
 				_21 = conflict(_STRUCT_PARAM(p), false, n, col);
+				//p:false-false-false
 				_RETAIN_DEALLOC(p);
 			}
 			//const %22 = true : bool
@@ -280,6 +281,7 @@ blklab12:;
 		{
 			void* queens_tmp;
 			_28 = run(queens_tmp = copy_array_POS(queens, queens_size), queens_size, true, _30, dim);
+			//queens:true-false-true
 			_CALLEE_DEALLOC(queens);
 		}
 		//add %31 = %4, %28 : int
@@ -370,6 +372,7 @@ int main(int argc, char** args){
 	{
 		void* queens_tmp;
 		_9 = run(queens_tmp = copy_array_POS(queens, queens_size), queens_size, true, _10, n);
+		//queens:true-false-true
 		_CALLEE_DEALLOC(queens);
 	}
 	//assign %3 = %9  : int
