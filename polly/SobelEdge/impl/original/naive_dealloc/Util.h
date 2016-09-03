@@ -66,7 +66,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define str(x) #x
 #ifdef DEBUG
 // Print out the message
-#define DEBUG_PRINT(msg) if(DEBUG){fputs(msg " at (LINE:" num2str(__LINE__) " FILE: " __FILE__ ")\n", stderr);}
+#define DEBUG_PRINT(msg) if(DEBUG){fputs("DEBUG: " msg " (LINE:" num2str(__LINE__) " FILE: " __FILE__ ")\n", stdout);}
 #else
 #define DEBUG_PRINT(msg) // Do nothing
 #endif
@@ -243,38 +243,36 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _TRANSFER_DEALLOC(a, b) a##_dealloc = b##_dealloc; b##_dealloc = false;
 
 /***
-* Deallocation Macros for function call 'a = func(b)' 
+*
+* Deallocation Macros for function call 'a = func(b)'
 *
 */
 // '_CALLER_DEALLOC' macro makes a copy of actual argument and delegates caller
 //  to free passing parameter 'a = func(copy(b), false)'
-// This macro also print out error message when memory leaks are detected
-#define _CALLER_DEALLOC(a, b) \
+// This macro also print out debugging message on memory leaks, due to 
+// the fact a and b_tmp (extra copy) are not aliased and the copy is not freed
+// either at caller nor callee. 
+
+// 'result' contains the analysis results of parameter 'b', e.g. 'true-true-false' 
+// Mutable check = true, return check = true, live variable check = false
+#define _CALLER_DEALLOC(a, b, result) \
 		({\
-			if(a != b){\
-				fputs("Memory Leaks at LINE:" num2str(__LINE__) " FILE: " __FILE__ "\n", stderr);\
-			}else{\
-				fputs("'a' and 'b' are the same at LINE:" num2str(__LINE__) " FILE: " __FILE__ "\n", stderr);\
+			DEBUG_PRINT("_CALLER_DEALLOC macro on "str(#b) " ("str(result)")");\
+			if(a != b##_tmp){\
+				DEBUG_PRINT("Memory leaks at " str(#b)"_tmp");\
 			}\
-			DEBUG_PRINT("_CALLER_DEALLOC macro");\
 		})
 // '_CALLEE_DEALLOC' macro makes a copy of actual argument and delegates callee
 // to free the passing parameter 'a = func(copy(b), true)'
-#define _CALLEE_DEALLOC(b) \
-		({\
-			DEBUG_PRINT("_CALLEE_DEALLOC macro");\
-		}) 
+#define _CALLEE_DEALLOC(b, result) DEBUG_PRINT("_CALLEE_DEALLOC macro on "str(#b) " ("str(result)")");
 // '_RETAIN_DEALLOC' macro does NOT make the copy of argument and delegates caller
 // to free the passing parameter 'a = func(b, false)'
-#define _RETAIN_DEALLOC(b) \
-		({\
-			DEBUG_PRINT("_RETAIN_DEALLOC macro");\
-		}) 
+#define _RETAIN_DEALLOC(b, result) DEBUG_PRINT("_RETAIN_DEALLOC macro on "str(#b) " ("str(result)")");
 // '_RESET_DEALLOC' macro does NOT make the copy of argument and delegates caller
-// to reset the flag of actual argument 'a = func(b, false)'  
-#define _RESET_DEALLOC(b) \
+// to reset the flag of actual argument 'a = func(b, false)'
+#define _RESET_DEALLOC(b, result) \
 		({\
-			DEBUG_PRINT("_RETAIN_DEALLOC macro");\
+			DEBUG_PRINT("_RESET_DEALLOC macro on "str(#b) " ("str(result)")");\
 			b##_dealloc = false;\
 		})
 /*

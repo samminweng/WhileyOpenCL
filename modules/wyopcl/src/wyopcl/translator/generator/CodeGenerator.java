@@ -176,7 +176,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Given a function, translates it into function declaration including function name and input parameters, e.g.
+	 * Given a function, translates it into function declaration including
+	 * function name and input parameters, e.g.
 	 * 
 	 * <pre>
 	 * <code>
@@ -281,14 +282,34 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if (code.constant.type() instanceof Type.Array) {
 				// Cast the constant to an array
 				Constant.Array list = (Constant.Array) code.constant;
-				statement.add(indent + "_NEW_1DARRAY(" + lhs + ", " + list.values.size() + ", 0);");
-				if (!list.values.isEmpty()) {
-					// Assign values to each element
-					String s = indent;
-					for (int i = 0; i < list.values.size(); i++) {
-						s += lhs + "[" + i + "] = " + list.values.get(i) + "; ";
+				// Get element type
+				Type elm_type = list.type().element();
+				// Special case for BYTE type
+				if (elm_type instanceof Type.Byte) {
+					// Create an array of bytes
+					statement.add(indent + "_NEW_1DARRAY_BYTE(" + lhs + ", " + list.values.size() + ");");
+					if (!list.values.isEmpty()) {
+						// Assign values to each element
+						String s = indent;
+						for (int i = 0; i < list.values.size(); i++) {
+							// Get binary code
+							String value = list.values.get(i).toString().replace("b", "");
+							// Binary representation in C starts with '0b', e.g.
+							// '0b01001100'
+							s += lhs + "[" + i + "] = 0b" + value + "; ";
+						}
+						statement.add(s);
 					}
-					statement.add(s);
+				} else {
+					statement.add(indent + "_NEW_1DARRAY(" + lhs + ", " + list.values.size() + ", 0);");
+					if (!list.values.isEmpty()) {
+						// Assign values to each element
+						String s = indent;
+						for (int i = 0; i < list.values.size(); i++) {
+							s += lhs + "[" + i + "] = " + list.values.get(i) + "; ";
+						}
+						statement.add(s);
+					}
 				}
 			} else {
 				// Add a statement
@@ -331,7 +352,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					// Update lhs with rhs
 					return indent + lhs + " = " + rhs + ";";
 				} else {
-					// Use '_NEW_INTEGER_POINTER' macro to copy an integer pointer (n, _5);
+					// Use '_NEW_INTEGER_POINTER' macro to copy an integer
+					// pointer (n, _5);
 					return indent + "_NEW_INTEGER_POINTER(" + lhs + ", " + rhs + ");";
 				}
 			}
@@ -397,17 +419,18 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * </code>
 	 * </pre>
 	 * 
-	 * Note that we need to copy input parameter(_5) to ensure value-semantics in Whiley, but the copy can eliminated by
-	 * our copy analyzer. For example,
+	 * Note that we need to copy input parameter(_5) to ensure value-semantics
+	 * in Whiley, but the copy can eliminated by our copy analyzer. For example,
 	 * <p>
 	 * <code> _4 = _5;//Remove the copy.</code>
 	 * </p>
 	 * 
 	 * Special cases:
 	 * <ul>
-	 * <li>Referenced array: reference type is free of array copies in nature as it extracts the value from the register
-	 * and assigns to target register. But if the referenced value is an array, we still need to propagate the array
-	 * size to new register.</li>
+	 * <li>Referenced array: reference type is free of array copies in nature as
+	 * it extracts the value from the register and assigns to target register.
+	 * But if the referenced value is an array, we still need to propagate the
+	 * array size to new register.</li>
 	 * 
 	 * </ul>
 	 * 
@@ -470,7 +493,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Generates the code for <code>Codes.BinaryOperator</code> code. For example,
+	 * Generates the code for <code>Codes.BinaryOperator</code> code. For
+	 * example,
 	 * 
 	 * <pre>
 	 * <code>
@@ -527,7 +551,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Checks if the copy of given register is needed or not, based on liveness information.
+	 * Checks if the copy of given register is needed or not, based on liveness
+	 * information.
 	 * 
 	 * @param register
 	 * @param code
@@ -544,45 +569,47 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 	/**
 	 * Check the copy of each function parameter. If the copy is needed, then
-	 * generate local temporary variable to reference the copied parameter.
-	 * For example, 'a = func(b)' can be translated into c code:
-	 * <pre><code>
+	 * generate local temporary variable to reference the copied parameter. For
+	 * example, 'a = func(b)' can be translated into c code:
+	 * 
+	 * <pre>
+	 * <code>
 	 * {
 	 * 		void* b_tmp; // local block variable
 	 * 		a = func(b_tmp=copy(b));
 	 * }
-	 * </code></pre>
+	 * </code>
+	 * </pre>
 	 * 
 	 * @param code
 	 * @param function
 	 * @return a list of parameter whose copy can be safely reduced.
 	 */
-	private List<Integer> checkParameterCopy(List<String> statements, Codes.Invoke code, FunctionOrMethod function){
+	private List<Integer> checkParameterCopy(List<String> statements, Codes.Invoke code, FunctionOrMethod function) {
 		String indent = stores.getIndent(function);
 		// Create a array to store the parameter whose parameter can be reduced.
 		List<Integer> copyReducedList = new ArrayList<Integer>();
 		for (int operand : code.operands()) {
 			String parameter = stores.getVar(operand, function);
 			Type param_type = stores.getRawType(operand, function);
-			// Check if the parameter is an array or structure 
-			if(stores.isCompoundType(param_type)){
-				// Check if the copy of parameter 
+			// Check if the parameter is an array or structure
+			if (stores.isCompoundType(param_type)) {
+				// Check if the copy of parameter
 				boolean isCopyEliminated = isCopyEliminated(operand, code, function);
-				if(isCopyEliminated){
-					// Put the operand to the copy-reduced list 
+				if (isCopyEliminated) {
+					// Put the operand to the copy-reduced list
 					copyReducedList.add(operand);
-				}else{
-					// Generate the temporary block variable to store the copied parameter
-					statements.add(indent + "void* "+ parameter+ "_tmp;");
+				} else {
+					// Generate the temporary block variable to store the copied
+					// parameter
+					statements.add(indent + "void* " + parameter + "_tmp;");
 				}
 			}
 		}
-		
+
 		return copyReducedList;
 	}
-	
-	
-	
+
 	/**
 	 * Translate the rhs of a function call
 	 * 
@@ -590,26 +617,28 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param f
 	 * @return
 	 */
-	private void translateFunctionCall(List<Integer> copyReducedList, List<String> statements, Codes.Invoke code, FunctionOrMethod function) {
+	private void translateFunctionCall(List<Integer> copyReducedList, List<String> statements, Codes.Invoke code,
+			FunctionOrMethod function) {
 		String indent = stores.getIndent(function);
-		String function_return = indent +"";
+		String function_return = indent + "";
 		// Translate the function return
 		if (code.targets().length > 0) {
 			String lhs = stores.getVar(code.target(0), function);
-			function_return +=  lhs + " = ";
+			function_return += lhs + " = ";
 		}
 
 		// Translate the right hand side of a function call
-		
-		// Go through each parameter 
+
+		// Go through each parameter
 		List<String> parameters = new ArrayList<String>();
 		for (int operand : code.operands()) {
 			// Get parameter name
 			String parameter = stores.getVar(operand, function);
 			Type parameter_type = stores.getRawType(operand, function);
-			// Check if the copy of parameter is reduced by copy analysis (true: copy is reduced).
+			// Check if the copy of parameter is reduced by copy analysis (true:
+			// copy is reduced).
 			boolean isCopyEliminated = copyReducedList.contains(operand);
-			
+
 			// Check if the copy of function argument is needed or not
 			// And then generate the corresponding code
 			if (parameter_type instanceof Type.Nominal
@@ -623,16 +652,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				if (isCopyEliminated) {
 					parameters.add("_" + dimension + "DARRAY_PARAM(" + parameter + ")");
 				} else {
-					// Temporary variable is used to reference the extra copy of parameter
-					String tmp_var = parameter+"_tmp";
-					
+					// Temporary variable is used to reference the extra copy of
+					// parameter
+					String tmp_var = parameter + "_tmp";
+
 					if (stores.isIntType(elm)) {
-						parameters.add(tmp_var+ " = _COPY_" + dimension + "DARRAY_PARAM(" + parameter + ")");
+						parameters.add(tmp_var + " = _COPY_" + dimension + "DARRAY_PARAM(" + parameter + ")");
 					} else {
 						String elm_type = CodeGeneratorHelper.translateType(elm, stores).replace("*", "");
 						// Copy the rhs and rhs size
-						parameters.add(tmp_var + " = copy_array_" + elm_type + "(" + parameter + ", " + parameter + "_size), "
-								+ parameter + "_size");
+						parameters.add(tmp_var + " = copy_array_" + elm_type + "(" + parameter + ", " + parameter
+								+ "_size), " + parameter + "_size");
 					}
 				}
 			} else if (parameter_type instanceof Type.Record || parameter_type instanceof Type.Nominal
@@ -641,8 +671,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				if (isCopyEliminated) {
 					parameters.add("_STRUCT_PARAM(" + parameter + ")");
 				} else {
-					// Temporary variable is used to reference the extra copy of parameter
-					String tmp_var = parameter+"_tmp";
+					// Temporary variable is used to reference the extra copy of
+					// parameter
+					String tmp_var = parameter + "_tmp";
 					parameters.add(tmp_var + " = _COPY_STRUCT_PARAM(" + parameter + ", " + type_name + ")");
 				}
 			} else {
@@ -652,7 +683,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Append deallocation flag to the function call
 			this.deallocatedAnalyzer.ifPresent(a -> {
 				String macro = a.computeDealloc(operand, code, function, stores, copyAnalyzer);
-				if(!macro.equals("")){
+				if (!macro.equals("")) {
 					// Split the macro into an array of two string
 					String[] parts = macro.split("\t");
 					String macro_name = parts[0];// Get the macro
@@ -672,10 +703,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					default:
 						break;
 					}
-				}else{
+				} else {
 					// Do nothing
 				}
-				
+
 			});
 		}
 
@@ -685,7 +716,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Combine lhs and rhs to the statement
 		statements.add(function_return + code.name.name() + "(" + rhs + ");");
 
-		
 	}
 
 	/**
@@ -714,7 +744,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			} else if (struct_type instanceof Type.Record || struct_type instanceof Type.Union) {
 				String member = update.fields.get(0);
 				lhs += "->" + member;
-				// check if there are two or more operands. If so, then add 'index' operand.
+				// check if there are two or more operands. If so, then add
+				// 'index' operand.
 				if (update.operands().length > 1) {
 					lhs += "[" + stores.getVar(update.operand(0), function) + "]";
 				}
@@ -757,7 +788,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 							Type op_type = stores.getRawType(operand, function);
 							if (op_type instanceof Type.Array) {
 								String param = stores.getVar(operand, function);
-								// Propagate the size of return array from input array.
+								// Propagate the size of return array from input
+								// array.
 								statement.add(indent + "_UPDATE_" + stores.getArrayDimension(op_type) + "DARRAY_SIZE("
 										+ lhs + ", " + param + ");");
 							}
@@ -805,7 +837,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Produces the code for <code>Codes.Invoke</code> code. For example, the following WyIL code:
+	 * Produces the code for <code>Codes.Invoke</code> code. For example, the
+	 * following WyIL code:
 	 * 
 	 * <pre>
 	 * <code>invoke %12 = (%1) While_Valid_1:reverse : function([int]) -> [int]</code>
@@ -820,13 +853,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * </code>
 	 * </pre>
 	 * 
-	 * Before invoking the function, copy the array ('xs') first and then pass the cloned array to the function. So that
-	 * the original array will not be overwritten and its value is safely preserved.
+	 * Before invoking the function, copy the array ('xs') first and then pass
+	 * the cloned array to the function. So that the original array will not be
+	 * overwritten and its value is safely preserved.
 	 * 
 	 * Special cases:
 	 * <ul>
 	 * <li>Parse Integer<br>
-	 * <code>invoke %5 = (%8) whiley/lang/Int:parse : function(whiley/lang/ASCII:string) -> null|int</code> <br>
+	 * <code>invoke %5 = (%8) whiley/lang/Int:parse : function(whiley/lang/ASCII:string) -> null|int</code>
+	 * <br>
 	 * can translate this into <br>
 	 * <code>_5=parseInteger(_8);</code>
 	 * <li>Slice Array<br>
@@ -857,7 +892,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			case "parse":
 				statements.add(indent + "_STR_TO_INT(" + lhs + ", " + rhs + ");");
 				break;
-			// Slice an array into a new sub-array at given starting and ending index.
+			// Slice an array into a new sub-array at given starting and ending
+			// index.
 			case "slice":
 				extractLHSVar(statements, code, function);
 				// Call the 'slice' function.
@@ -882,6 +918,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				rhs1 = stores.getVar(code.operand(1), function);
 				statements.add(indent + lhs + " = max(" + rhs + ", " + rhs1 + ");");
 				break;
+			case "fromBytes":
+				// Call built-in 'fromBytes' function to convert 'byte[]' to a
+				// string
+				statements.add(indent + lhs + " = fromBytes(" + rhs + ", " + rhs + "_size);");
+				break;
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);
 			}
@@ -891,12 +932,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			});
 
 		} else {
-			
+
 			// Add the starting clause for the function call
-			statements.add(stores.getIndent(function) +"{");
+			statements.add(stores.getIndent(function) + "{");
 			// Increase the indent
 			stores.increaseIndent(function);
-			
+
 			// Check the copy of parameter
 			List<Integer> copyReducedList = checkParameterCopy(statements, code, function);
 
@@ -909,12 +950,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			this.deallocatedAnalyzer.ifPresent(a -> {
 				statements.addAll(a.postDealloc(code, function, stores, copyAnalyzer));
 			});
-			
+
 			// Decrease the indent
 			stores.decreaseIndent(function);
-			
+
 			// Add the ending clause for the function call
-			statements.add(stores.getIndent(function) +"}");
+			statements.add(stores.getIndent(function) + "}");
 		}
 
 		// add the statement
@@ -922,8 +963,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Translated the Whiley comparator into C comparison operators, e.g. EQ := '=='. If the negated option is provided,
-	 * then the comparator is first negated and then converted into C code.
+	 * Translated the Whiley comparator into C comparison operators, e.g. EQ :=
+	 * '=='. If the negated option is provided, then the comparator is first
+	 * negated and then converted into C code.
 	 * 
 	 * @param op
 	 *            Whiley comparator
@@ -973,11 +1015,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Generates the code for <code>Codes.If</code> code. For example, For example, the byte-code:
-	 * <code> ifeq %1, %38 goto blklab2 : [int]</code> can be translated into C code:
+	 * Generates the code for <code>Codes.If</code> code. For example, For
+	 * example, the byte-code: <code> ifeq %1, %38 goto blklab2 : [int]</code>
+	 * can be translated into C code:
 	 * <code>_IFEQ_ARRAY(_1, _38, blklab2);</code>
 	 * 
-	 * Note that _IFEQ_ARRAY macro checks if both of arrays are the same (1: true, 0:false).
+	 * Note that _IFEQ_ARRAY macro checks if both of arrays are the same (1:
+	 * true, 0:false).
 	 * 
 	 * <pre>
 	 * <code>
@@ -1020,9 +1064,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Translates the <code>Codes.AssertOrAssume</code> byte-code. This function iterates over the list of byte-code in
-	 * each assertion or assumption and translated each byte-code. The translated C code is surrounded by two brackets
-	 * ('{' and '}') with an indentation.
+	 * Translates the <code>Codes.AssertOrAssume</code> byte-code. This function
+	 * iterates over the list of byte-code in each assertion or assumption and
+	 * translated each byte-code. The translated C code is surrounded by two
+	 * brackets ('{' and '}') with an indentation.
 	 * 
 	 * @param code
 	 */
@@ -1049,7 +1094,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Translated the <code>Codes.Label</code> byte-code into C code. For example,
+	 * Translated the <code>Codes.Label</code> byte-code into C code. For
+	 * example,
 	 * 
 	 * <pre>
 	 * <code>
@@ -1089,8 +1135,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Translates the update byte-code into C code, and removes the deallocation flag of rhs variable (a[i] = b;
-	 * b_dealloc = false;) For example,
+	 * Translates the update byte-code into C code, and removes the deallocation
+	 * flag of rhs variable (a[i] = b; b_dealloc = false;) For example,
 	 * 
 	 * <pre>
 	 * <code>
@@ -1111,7 +1157,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * Special cases
 	 * <ul>
 	 * <li>Referenced array: the update of reference is different, for example,
-	 * <code>update (*%0)[%6] = %51 : &[int] -> &[int]</code> can transform this to: <code>(*_0)[_6] = _51;</code>
+	 * <code>update (*%0)[%6] = %51 : &[int] -> &[int]</code> can transform this
+	 * to: <code>(*_0)[_6] = _51;</code>
 	 * 
 	 * 
 	 * @param code
@@ -1140,7 +1187,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Translates the <code>Codes.Return</code> byte-code into C code. For example,
+	 * Translates the <code>Codes.Return</code> byte-code into C code. For
+	 * example,
 	 * 
 	 * <pre>
 	 * <code>
@@ -1261,8 +1309,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * </pre>
 	 * 
 	 * 
-	 * Note that if the new list is an empty list, then its element type is a 'void', which is not supposed to store any
-	 * value. For example,
+	 * Note that if the new list is an empty list, then its element type is a
+	 * 'void', which is not supposed to store any value. For example,
 	 * 
 	 * <pre>
 	 * <code>
@@ -1270,8 +1318,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * </code>
 	 * </pre>
 	 * 
-	 * In this case, the void type is converted into integer type by default because there is no type mapping to the
-	 * 'void' type in C. And there is no translation either.
+	 * In this case, the void type is converted into integer type by default
+	 * because there is no type mapping to the 'void' type in C. And there is no
+	 * translation either.
 	 * 
 	 * @param code
 	 */
@@ -1317,9 +1366,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * Special case:
 	 * <ul>
-	 * <li>Note that at this stage, the field load code that loads <code>System.out.println</code> is not translated
-	 * into any C code.</li>
-	 * <li>The field code, that loads <code>fieldload %6 = %0 args</code> is translated into
+	 * <li>Note that at this stage, the field load code that loads
+	 * <code>System.out.println</code> is not translated into any C code.</li>
+	 * <li>The field code, that loads <code>fieldload %6 = %0 args</code> is
+	 * translated into
 	 * <code>_6 = convertArgsToIntArray(argc, args, _6_size);</code>
 	 * 
 	 * @param code
@@ -1337,7 +1387,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			extractLHSVar(statement, code, function);
 			boolean isCopyEliminated;// The copy is NOT needed by default.
 			if (field.equals("args")) {
-				// Convert the arguments into an array of integer array (long long**).
+				// Convert the arguments into an array of integer array (long
+				// long**).
 				statement.add(
 						stores.getIndent(function) + "_CONV_ARGS(" + stores.getVar(code.target(0), function) + ");");
 				isCopyEliminated = false;
@@ -1395,8 +1446,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * where 'indirect_printf' function is defined in 'Util.c'.
 	 * 
-	 * If the input type is an instance of user defined type, then get the type declaration first and convert it into
-	 * the corresponding type.
+	 * If the input type is an instance of user defined type, then get the type
+	 * declaration first and convert it into the corresponding type.
 	 * 
 	 * @param code
 	 *            Codes.IndirectInvoke byte-code
@@ -1463,8 +1514,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Iterate over the list of loop byte-code and translate each code into C code. To separate the bytecode inside a
-	 * loop from the main byte-code, the loop flag is enabled and the indentation is increased.
+	 * Iterate over the list of loop byte-code and translate each code into C
+	 * code. To separate the bytecode inside a loop from the main byte-code, the
+	 * loop flag is enabled and the indentation is increased.
 	 * 
 	 * @param code
 	 */
@@ -1505,8 +1557,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * </code>
 	 * </pre>
 	 * 
-	 * @TODO Fix the sequence of fields in a record type as the order of fields is in the reversed direction of
-	 *       operands.
+	 * @TODO Fix the sequence of fields in a record type as the order of fields
+	 *       is in the reversed direction of operands.
 	 * 
 	 * @param code
 	 */
@@ -1518,7 +1570,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String indent = stores.getIndent(function);
 		String lhs = stores.getVar(code.target(0), function);
 		Type lhs_type = stores.getRawType(code.target(0), function);
-		// Assign lhs structure members with rhs member, e.g. 'a.pieces = copy(b, b_size);'
+		// Assign lhs structure members with rhs member, e.g. 'a.pieces =
+		// copy(b, b_size);'
 		statement.add(indent + lhs + " = malloc(sizeof("
 				+ CodeGeneratorHelper.translateType(lhs_type, stores).replace("*", "") + "));");
 
@@ -1559,8 +1612,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Write out the generated C code, which starts with variable declarations, followed by a list of statements and a
-	 * list of free statements at the end.
+	 * Write out the generated C code, which starts with variable declarations,
+	 * followed by a list of statements and a list of free statements at the
+	 * end.
 	 * 
 	 * @param writer
 	 */
@@ -1594,10 +1648,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Translate ifis Wyil code into C code. This code checks that the register is the given value.
+	 * Translate ifis Wyil code into C code. This code checks that the register
+	 * is the given value.
 	 * 
-	 * For example, the ifis Wyil code <code>ifis %1, null goto blklab6 : null|int</code> can be translated int C code
-	 * <code>if(_1 == NULL) {goto blklab6;}
+	 * For example, the ifis Wyil code
+	 * <code>ifis %1, null goto blklab6 : null|int</code> can be translated int
+	 * C code <code>if(_1 == NULL) {goto blklab6;}
 	 * 
 	 */
 	@Override
@@ -1615,8 +1671,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Translate deference Wyil code into C code. Deference in C is to use '*' operator to get the value of lhs operand
-	 * and assign it to rhs operand.
+	 * Translate deference Wyil code into C code. Deference in C is to use '*'
+	 * operator to get the value of lhs operand and assign it to rhs operand.
 	 * 
 	 * For example, <code>
 	 * deref %16 = %0 : &[int]
@@ -1646,8 +1702,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Translate newobject Wyil code into C code. The newObject code creates a new object from the value of 'rhs' and
-	 * assign the address of new object to 'lhs'.
+	 * Translate newobject Wyil code into C code. The newObject code creates a
+	 * new object from the value of 'rhs' and assign the address of new object
+	 * to 'lhs'.
 	 * 
 	 * For example, <code>
 	 * newobject %4 = %3 : &[void]
@@ -1666,7 +1723,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/***
-	 * Generates a multi-dimensional array with 'genXDArray' built-in C function in C, e.g.
+	 * Generates a multi-dimensional array with 'genXDArray' built-in C function
+	 * in C, e.g.
 	 * 
 	 * <pre>
 	 * <code>
@@ -1813,9 +1871,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 	/**
 	 * Translates the lambda expression into anonymous function in C.
-	 * <http://stackoverflow.com/questions/10405436/anonymous-functions-using-gcc-statement-expressions> Currently, we
-	 * translate the lambda function into GCC anonymous function, e.g.
-	 * <code>lambda %3 = (_) lambda:$lambda88 : function(int)->(int)</code> can be translated into:
+	 * <http://stackoverflow.com/questions/10405436/anonymous-functions-using-gcc-statement-expressions>
+	 * Currently, we translate the lambda function into GCC anonymous function,
+	 * e.g. <code>lambda %3 = (_) lambda:$lambda88 : function(int)->(int)</code>
+	 * can be translated into:
 	 * 
 	 * <pre>
 	 * <code>

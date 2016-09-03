@@ -197,7 +197,7 @@ blklab6:;
 		_UPDATE_1DARRAY_SIZE(_15, arr);
 		_DEALLOC(_15);
 		_15 = bubbleSort(_1DARRAY_PARAM(arr), false);
-		_RESET_DEALLOC(arr);
+		_RESET_DEALLOC(arr, "true-true-false");
 		_ADD_DEALLOC(_15);
 	}
 	//assign %4 = %15  : int[]

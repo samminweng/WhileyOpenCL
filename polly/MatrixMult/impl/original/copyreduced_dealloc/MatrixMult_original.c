@@ -141,7 +141,7 @@ blklab2:;
 	{
 		_DEALLOC_STRUCT(_21, Matrix);
 		_21 = matrix(width, height, _1DARRAY_PARAM(data), false);
-		_RESET_DEALLOC(data);
+		_RESET_DEALLOC(data, "false-true-false");
 		_ADD_DEALLOC(_21);
 	}
 	//return %21
@@ -436,7 +436,7 @@ blklab13:;
 	{
 		_DEALLOC_STRUCT(_40, Matrix);
 		_40 = matrix(width, height, _1DARRAY_PARAM(data), false);
-		_RESET_DEALLOC(data);
+		_RESET_DEALLOC(data, "false-true-false");
 		_ADD_DEALLOC(_40);
 	}
 	//return %40
@@ -554,8 +554,8 @@ int main(int argc, char** args){
 	{
 		_DEALLOC_STRUCT(_17, Matrix);
 		_17 = mat_mult(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
-		_RETAIN_DEALLOC(A);
-		_RETAIN_DEALLOC(B);
+		_RETAIN_DEALLOC(A, "false-false-false");
+		_RETAIN_DEALLOC(B, "false-false-false");
 		_ADD_DEALLOC(_17);
 	}
 	//assign %5 = %17  : {int[] data,int height,int width}

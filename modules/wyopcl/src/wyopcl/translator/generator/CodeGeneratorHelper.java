@@ -437,7 +437,11 @@ public final class CodeGeneratorHelper {
 		if (type instanceof Type.Bool) {
 			return "bool";
 		}
-
+		// byte type
+		if (type instanceof Type.Byte){
+			return "BYTE";
+		}
+				
 		throw new RuntimeException("Not Implemented!");
 	}
 

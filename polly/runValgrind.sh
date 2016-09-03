@@ -134,70 +134,68 @@ exec(){
 
 
 ### newTicTacToe test case ###
-#init newTicTacToe
-#exec newTicTacToe original 1000
-#exec newTicTacToe original 10000
-#exec newTicTacToe original 100000
+init newTicTacToe
+exec newTicTacToe original 1000
+exec newTicTacToe original 10000
+exec newTicTacToe original 100000
 
 ### Reverse test case##
-#init Reverse
-#exec Reverse original 100000
-#exec Reverse original 1000000
-#exec Reverse original 10000000
+init Reverse
+exec Reverse original 100000
+exec Reverse original 1000000
+exec Reverse original 10000000
 
 ## # MergeSort test case##
-#init MergeSort
-#exec MergeSort original 1000
-#exec MergeSort original 10000
-#exec MergeSort original 100000
+init MergeSort
+exec MergeSort original 1000
+exec MergeSort original 10000
+exec MergeSort original 100000
 
 ## # BubbleSort test case##
-#init BubbleSort
-#exec BubbleSort original 10
-#exec BubbleSort original 10000
-#exec BubbleSort original 100000
+init BubbleSort
+exec BubbleSort original 10
+exec BubbleSort original 10000
+exec BubbleSort original 100000
 
 # MatrixMult test case##
-#init MatrixMult
-#exec MatrixMult original 1000
-#exec MatrixMult original 2000
-#exec MatrixMult original 3000
+init MatrixMult
+exec MatrixMult original 1000
+exec MatrixMult original 2000
+exec MatrixMult original 3000
 
 ### Fibonacci test case###
-#init Fibonacci
-#exec Fibonacci original 10
-#exec Fibonacci original 50
-#exec Fibonacci original 90
+init Fibonacci
+exec Fibonacci original 10
+exec Fibonacci original 50
+exec Fibonacci original 90
 
 ### GCD (Greatest Common Divisor) test case###
-#init GCD
-#exec GCD original 100
+init GCD
+exec GCD original 100
 exec GCD original 150
-#exec GCD original 200
-#exec GCD cached 100
+exec GCD original 200
+exec GCD cached 100
 exec GCD cached 150
-#exec GCD cached 200
+exec GCD cached 200
 
 ### CoinGame test case ###
-#init CoinGame
-#exec CoinGame original 1000
-#exec CoinGame original 2000
-#exec CoinGame original 3000
-
-#exec CoinGame single 1000
-#exec CoinGame single 2000
-#exec CoinGame single 3000
-
-#exec CoinGame array 1000
-#exec CoinGame array 2000
-#exec CoinGame array 3000
+init CoinGame
+exec CoinGame original 1000
+exec CoinGame original 2000
+exec CoinGame original 3000
+exec CoinGame single 1000
+exec CoinGame single 2000
+exec CoinGame single 3000
+exec CoinGame array 1000
+exec CoinGame array 2000
+exec CoinGame array 3000
 
 
 ## Sobel Edge Detection test case
-#init SobelEdge
-#exec SobelEdge original 8
-#exec SobelEdge original 64
-#exec SobelEdge original 128
+init SobelEdge
+exec SobelEdge original 8
+exec SobelEdge original 64
+exec SobelEdge original 128
 #exec SobelEdge original 256
 #exec SobelEdge original 512
 #exec SobelEdge original 1024

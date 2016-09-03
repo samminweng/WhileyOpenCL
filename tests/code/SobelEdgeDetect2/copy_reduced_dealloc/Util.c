@@ -37,7 +37,7 @@ long long* create1DArray(int value, int arr_size){
 	// Allocate the array
 	arr = (long long*)malloc(arr_size*sizeof(long long));
 	if(arr == NULL){
-		printf("fail to allocate the memory at create1DArray function in Util.c\n");
+		fprintf(stderr, "fail to allocate the memory at create1DArray function in Util.c\n");
 		exit(-2);
 	}
 	// Initialize each element with the given value.
@@ -54,7 +54,7 @@ long long** create2DArray(long long* arr,  long long n, long long m){
 	// Allocate the array
 	_2DArray = (long long**)malloc(n*sizeof(long long*));
 	if(_2DArray == NULL){
-		printf("fail to allocate the memory at gen2DArray function in Util.c\n");
+		fprintf(stderr, "fail to allocate the memory at gen2DArray function in Util.c\n");
 		exit(-2);
 	}
 	long long size = m*sizeof(long long);
@@ -62,7 +62,7 @@ long long** create2DArray(long long* arr,  long long n, long long m){
 		// Copy the input array and assign it to matrix.
 		_2DArray[i] = (long long*)malloc(size);
 		if(_2DArray[i] == NULL){
-			printf("fail to allocate the memory at gen2DArray function in Util.c\n");
+			fprintf(stderr, "fail to allocate the memory at gen2DArray function in Util.c\n");
 			exit(-2);
 		}
 		memcpy(_2DArray[i], arr, size);
@@ -104,13 +104,13 @@ long long** convertArgsToIntArray(int argc, char** args){
 	long long max_j;
 	//Check if there is any command line argument
 	if(argc < 2){
-		printf("Missing the command line arguments\n");
+		fprintf(stderr, "Missing the command line arguments\n");
 		exit(-2);
 	}
 	//Allocate the target array ('arr').
 	arr = (long long**) malloc((argc-1)*sizeof(long long*));
 	if(arr == NULL){
-		printf("fail to allocate the memory at convertCharToInt function in Util.c\n");
+		fprintf(stderr, "fail to allocate the memory at convertCharToInt function in Util.c\n");
 		exit(-2);
 	}
 	//Convert each argument into an array of digits	
@@ -125,7 +125,7 @@ long long** convertArgsToIntArray(int argc, char** args){
 			//And calculate the arr_size
 			while(args[i][max_j] != '\0'){
 				if(!isdigit(args[i][max_j])){
-					printf("None numbers is passed via command line arguments\n");
+					fprintf(stderr,"None numbers is passed via command line arguments\n");
 					exit(-2);
 				}
 				max_j++;
@@ -170,7 +170,7 @@ long long* copy(long long *arr, long long size) {
 	ptr = (long long*) malloc(size * sizeof(long long));
 	//ptr = (long long*)tcmalloc(size*sizeof(long long));
 	if (ptr == NULL) {
-		printf("fail to malloc at clone function in Util.c\n");
+		fprintf(stderr, "fail to malloc at clone function in Util.c\n");
 		exit(-2);
 	}
 	//Use memcpy to clone an array
@@ -183,14 +183,14 @@ long long** copy2DArray(long long **arr, long long x, long long y){
 	long long i = 0;
 	newMatrix = (long long**)malloc(x*sizeof(long long*));
 	if(newMatrix == NULL){
-		printf("fail to malloc newMatrix at clone2DArray function in Util.c\n");
+		fprintf(stderr, "fail to malloc newMatrix at clone2DArray function in Util.c\n");
 		exit(-2);
 	}
 	long long size = y*sizeof(long long);
 	for(i=0;i<x;i++){
 		newMatrix[i] = (long long*)malloc(size);
 		if(newMatrix[i] == NULL){
-			printf("fail to malloc newMatrix[i] at clone2DArray function in Util.c\n");
+			fprintf(stderr, "fail to malloc newMatrix[i] at clone2DArray function in Util.c\n");
 			exit(-2);
 		}
 		memcpy(newMatrix[i], arr[i], size);
@@ -213,7 +213,7 @@ long long* append(long long *arr1, long long arr1_size,
 	ret_arr = (long long*) realloc(arr1, size * sizeof(long long));
 	//Check if the memory allocation is successful.
 	if (ret_arr == NULL) {
-		printf("fail to allocate the memory at append function in Util.c\n");
+		fprintf(stderr, "fail to allocate the memory at append function in Util.c\n");
 		exit(-2);
 	}
 	//Fill in op_2 array
@@ -327,7 +327,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 		}
 		ret = (long long*) realloc(ret, allocated_size * sizeof(long long));
 		if (ret == NULL) {
-			printf("fail to realloc at optimized_append functon in Util.c\n");
+			fprintf(stderr, "fail to realloc at optimized_append functon in Util.c\n");
 			exit(-2);
 		}
 	}
@@ -337,4 +337,36 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 	}
 	*ret_size = *op_1_size + *op_2_size;
 	return ret;
+}
+
+/*
+ * Create an array of BYTE
+ */
+BYTE* create1DArray_BYTE(int arr_size){
+	BYTE* arr = NULL;
+	// Allocate the array
+	arr = (BYTE*)malloc(arr_size*sizeof(BYTE));
+	if(arr == NULL){
+		fprintf(stderr, "fail to allocate the memory at create1DArray_BYTE function in Util.c\n");
+		exit(-2);
+	}
+	return arr;
+}
+
+/*
+ * Convert an array of BYTE to an integer array
+ */
+long long* fromBytes(BYTE* input, long long size){
+	// Create an array of integer
+	long long* arr = (long long*)malloc(size*sizeof(long long));
+	if(arr == NULL){
+		fprintf(stderr, "fail to allocate the memory at fromBytes function in Util.c\n");
+		exit(-2);
+	}
+	for(int i=0;i<size;i++){
+		BYTE b = input[i];
+		// Convert 'char' to ASCII code (integer)
+		arr[i] = b;
+	}
+	return arr;
 }

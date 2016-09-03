@@ -5,6 +5,8 @@
 #include <time.h>
 #include <ctype.h>
 #include <stdbool.h>
+// Define byte type in c as there is byte primitive type
+typedef unsigned char BYTE;
 // Good reference (https://en.wikibooks.org/wiki/C_Programming/Preprocessor)
 // Remove the security check about unsafe 'scanf' or 'sprintf' in VS tool
 // This definition allows the portability of C code across the platforms.
@@ -17,13 +19,16 @@ void indirect_printf(long long input);
 //No overlapping is allowed: function name must be different.
 void printf_s(long long* input, long long input_size);
 void println_s(long long* input, long long input_size);
-// Parser a string into an integer
+// Parse a string into an integer
 long long* parseStringToInt(long long* arr);
-// 1D Array Operator
+// Convert an array of bytes to an array of char
+long long* fromBytes(BYTE* arr, long long arr_size);
+// 1D Array
 long long** convertArgsToIntArray(int argc, char** args);
 long long* copy(long long *arr, long long size);
 long long* create1DArray(int value, int arr_size);
 int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2, long long arr2_size);
+BYTE* create1DArray_BYTE(int arr_size);
 // 2D Array Operator
 long long** copy2DArray(long long **arr, long long x, long long y);
 long long** create2DArray(long long* arr,  long long x, long long y);
@@ -108,6 +113,8 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
  			}\
  			a##_size = size;\
  		})
+// Create an array of BYTE
+#define _NEW_1DARRAY_BYTE(a, size) a##_size = size; a = create1DArray_BYTE(a##_size);
 /***
  * Copy Macros
  *

@@ -236,7 +236,7 @@ int main(int argc, char** args){
 			//invoke (%22) = (%5, %6, %2, %3) GCD_cached:gcd_cached : function(int,int,int,int[])->(int)
 			{
 				_22 = gcd_cached(i, j, n, _1DARRAY_PARAM(gcds), false);
-				_RETAIN_DEALLOC(gcds);
+				_RETAIN_DEALLOC(gcds, "false-false-true");
 			}
 			//mul %23 = %5, %2 : int
 			_23=i*n;
