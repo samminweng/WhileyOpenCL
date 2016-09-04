@@ -124,9 +124,11 @@ long long* fromBytes(BYTE* arr, long long arr_size);
  * Copy Macros
  *
  */
-// Copy an array and pass it as function argument
+// Copy an array and pass it as function parameter
 #define _COPY_1DARRAY_PARAM(a) copy1DArray(a, a##_size), a##_size
 #define _COPY_2DARRAY_PARAM(a) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size
+// Pass the copied BYTE array as function parameter 
+#define _COPY_1DARRAY_BYTE_PARAM(a) copy1DArray_BYTE(a, a##_size), a##_size 
 #define _COPY_STRUCT_PARAM(a, name) copy_##name(a)
 #define _COPY_1DARRAY_STRUCT(a, b, name) \
 		({\

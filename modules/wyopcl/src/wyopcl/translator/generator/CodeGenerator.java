@@ -669,11 +669,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				if (isCopyEliminated) {
 					parameters.add("_" + dimension + "DARRAY_PARAM(" + parameter + ")");
 				} else {
-					// Temporary variable is used to reference the extra copy of
-					// parameter
+					// Temporary variable is used to reference the extra copy of parameter
 					String tmp_var = parameter + "_tmp";
 
-					if (stores.isIntType(elm)) {
+					if(elm instanceof Type.Byte){
+						parameters.add(tmp_var + " = _COPY_" + dimension + "DARRAY_BYTE_PARAM(" + parameter + ")");
+					}else if (stores.isIntType(elm)) {
 						parameters.add(tmp_var + " = _COPY_" + dimension + "DARRAY_PARAM(" + parameter + ")");
 					} else {
 						String elm_type = CodeGeneratorHelper.translateType(elm, stores).replace("*", "");

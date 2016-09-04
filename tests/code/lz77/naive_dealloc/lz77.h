@@ -9,4 +9,5 @@ void printf_Match(Match* _match);
 Match* copy_Match(Match* _match);
 void free_Match(Match* _match);
 long long match(BYTE* data, long long data_size, _DECL_DEALLOC_PARAM(data), long long offset, long long end);
+Match* findLongestMatch(BYTE* data, long long data_size, _DECL_DEALLOC_PARAM(data), long long pos);
 int main(int argc, char** args);

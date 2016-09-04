@@ -34,7 +34,7 @@ function match(byte[] data, nat offset, nat end) -> int:
     return len
 
 // pos is current position in input value
-/*function findLongestMatch(byte[] data, nat pos) -> Match:
+function findLongestMatch(byte[] data, nat pos) -> Match:
     //ensures offset >= 0 && offset <= 255
     //ensures len >= 0 && len <= 255:
     //
@@ -54,7 +54,7 @@ function match(byte[] data, nat offset, nat end) -> int:
     // Return a 'Match' object
     return {offset:bestOffset, len:bestLen}
 
-
+/*
 // Compress 'data' byte array into another byte array
 function compress(byte[] data) -> byte[]:
 	nat pos = 0

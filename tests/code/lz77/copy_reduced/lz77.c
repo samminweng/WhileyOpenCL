@@ -90,6 +90,84 @@ blklab1:;
 	//return
 }
 
+Match* findLongestMatch(BYTE* data, long long data_size, long long pos){
+	Match* _2;
+	long long bestOffset = 0;
+	long long bestLen = 0;
+	long long start = 0;
+	long long offset = 0;
+	long long len = 0;
+	long long _8 = 0;
+	long long _9 = 0;
+	long long _10 = 0;
+	long long _11 = 0;
+	long long _12 = 0;
+	long long _13 = 0;
+	long long _14 = 0;
+	long long _15 = 0;
+	long long _16 = 0;
+	long long _17 = 0;
+	Match* _18;
+	//const %8 = 0 : int
+	_8 = 0;
+	//assign %3 = %8  : int
+	bestOffset = _8;
+	//const %9 = 0 : int
+	_9 = 0;
+	//assign %4 = %9  : int
+	bestLen = _9;
+	//const %11 = 255 : int
+	_11 = 255;
+	//sub %12 = %1, %11 : int
+	_12=pos-_11;
+	//const %13 = 0 : int
+	_13 = 0;
+	//invoke (%10) = (%12, %13) whiley/lang/Math:max : function(int,int)->(int)
+	_10 = max(_12, _13);
+	//assign %5 = %10  : int
+	start = _10;
+	//assign %6 = %5  : int
+	offset = start;
+	//loop (%3, %4, %6, %7, %14, %15, %16, %17)
+	while(true){
+		//ifge %6, %1 goto blklab3 : int
+		if(offset>=pos){goto blklab3;}
+		//invoke (%14) = (%0, %6, %1) lz77:match : function(byte[],lz77:nat,lz77:nat)->(int)
+		{
+			_14 = match(_1DARRAY_PARAM(data), offset, pos);
+		}
+		//assign %7 = %14  : int
+		len = _14;
+		//ifle %7, %4 goto blklab5 : int
+		if(len<=bestLen){goto blklab5;}
+		//sub %15 = %1, %6 : int
+		_15=pos-offset;
+		//assign %3 = %15  : int
+		bestOffset = _15;
+		//assign %4 = %7  : int
+		bestLen = len;
+//.blklab5
+blklab5:;
+		//const %16 = 1 : int
+		_16 = 1;
+		//add %17 = %6, %16 : int
+		_17=offset+_16;
+		//assign %6 = %17  : int
+		offset = _17;
+//.blklab4
+blklab4:;
+	}
+//.blklab3
+blklab3:;
+	//newrecord %18 = (%4, %3) : {int len,int offset}
+	_18 = malloc(sizeof(Match));
+	_18->len = bestLen;
+	_18->offset = bestOffset;
+	//return %18
+	return _18;
+	//return
+}
+
 int main(int argc, char** args){
 	_DECL_1DARRAY_BYTE(data);
 	_DECL_1DARRAY_BYTE(_2);
