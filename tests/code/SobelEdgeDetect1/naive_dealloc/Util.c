@@ -353,13 +353,17 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 /*
  * Create an array of BYTE
  */
-BYTE* create1DArray_BYTE(int arr_size){
+BYTE* create1DArray_BYTE(int arr_size, BYTE value){
 	BYTE* arr = NULL;
 	// Allocate the array
 	arr = (BYTE*)malloc(arr_size*sizeof(BYTE));
 	if(arr == NULL){
 		fprintf(stderr, "fail to allocate the memory at create1DArray_BYTE function in Util.c\n");
 		exit(-2);
+	}
+	// Assign value
+	for(int i =0;i<arr_size;i++){
+		arr[i] = value;
 	}
 	return arr;
 }

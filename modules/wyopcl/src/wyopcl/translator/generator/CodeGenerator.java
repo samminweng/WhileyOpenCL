@@ -283,10 +283,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String lhs = extractLHSVar(statement, code, function);
 
 		String indent = stores.getIndent(function);
-		if (code.constant.type() instanceof Type.Null) {
+		Constant constant = code.constant;
+		if (constant.type() instanceof Type.Null) {
 			statement.add(indent + lhs + " = NULL;");
 		} else {
-			if (code.constant.type() instanceof Type.Array) {
+			if(constant.type() instanceof Type.Byte){
+				// Declare a BYTE constant
+				statement.add(indent+lhs+" = 0b"+constant.toString().replaceAll("b", "")+";");
+			}else if (constant.type() instanceof Type.Array) {
 				// Cast the constant to an array
 				Constant.Array list = (Constant.Array) code.constant;
 				// Get element type
@@ -320,7 +324,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				}
 			} else {
 				// Add a statement
-				statement.add(indent + lhs + " = " + code.constant + ";");
+				statement.add(indent + lhs + " = " + constant + ";");
 			}
 		}
 
@@ -1776,17 +1780,20 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String rhs = stores.getVar(code.operand(0), function);
 		String size = stores.getVar(code.operand(1), function);
 		Type elm_type = stores.getArrayElementType(lhs_type);
-		// boolean isCopyEliminated;
-		if (stores.isIntType(elm_type)) {
-			// Generate an array with given size and values.
-			statement.add(indent + "_NEW_" + stores.getArrayDimension(lhs_type) + "DARRAY(" + lhs + ", " + size + ", "
+		// Get array dimension
+		int dimension = stores.getArrayDimension(lhs_type);
+		if(elm_type instanceof Type.Byte){
+			// Generate a BYTE array and assign its value
+			statement.add(indent + "_NEW_"+dimension+ "DARRAY_BYTE_VALUE(" + lhs + ", " + size + ", "
 					+ rhs + ");");
-			// isCopyEliminated = true;
+		} else if (stores.isIntType(elm_type)) {
+			// Generate an array with given size and values.
+			statement.add(indent + "_NEW_" + dimension + "DARRAY(" + lhs + ", " + size + ", "
+					+ rhs + ");");
 		} else {
 			// Generate an array of structures
 			String struct = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");
 			statement.add(indent + "_NEW_1DARRAY_STRUCT(" + lhs + ", " + size + ", " + rhs + ", " + struct + ");");
-			// isCopyEliminated = false;
 		}
 
 		postDealloc(statement, code, function);

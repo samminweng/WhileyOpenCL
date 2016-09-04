@@ -54,7 +54,7 @@ function findLongestMatch(byte[] data, nat pos) -> Match:
     // Return a 'Match' object
     return {offset:bestOffset, len:bestLen}
 
-/*
+
 // Compress 'data' byte array into another byte array
 function compress(byte[] data) -> byte[]:
 	nat pos = 0
@@ -64,7 +64,6 @@ function compress(byte[] data) -> byte[]:
 		Match m = findLongestMatch(data, pos)
 		pos = pos + 1
 	return output
-*/
 
 method main(System.Console sys):
 	// Create an array of bytes, that represents a string 

@@ -177,6 +177,79 @@ blklab3:;
 	//return
 }
 
+BYTE* compress(BYTE* data, long long data_size, _DECL_DEALLOC_PARAM(data)){
+	_DECL_1DARRAY_BYTE(_1);
+	_DECL_DEALLOC(_1);
+	long long pos = 0;
+	_DECL_1DARRAY_BYTE(output);
+	_DECL_DEALLOC(output);
+	Match* m;
+	_DECL_DEALLOC(m);
+	long long _5 = 0;
+	BYTE _6;
+	long long _7 = 0;
+	_DECL_1DARRAY_BYTE(_8);
+	_DECL_DEALLOC(_8);
+	long long _9 = 0;
+	Match* _10;
+	_DECL_DEALLOC(_10);
+	long long _11 = 0;
+	long long _12 = 0;
+	//const %5 = 0 : int
+	_5 = 0;
+	//assign %2 = %5  : int
+	pos = _5;
+	//const %6 = 00000000b : byte
+	_6 = 0b00000000;
+	//const %7 = 0 : int
+	_7 = 0;
+	//arraygen %8 = [6; 7] : byte[]
+	_DEALLOC(_8);
+	_NEW_1DARRAY_BYTE_VALUE(_8, _7, _6);
+	_ADD_DEALLOC(_8);
+	//assign %3 = %8  : byte[]
+	_DEALLOC(output);
+	_COPY_1DARRAY_BYTE(output, _8);
+	_ADD_DEALLOC(output);
+	//loop (%2, %4, %9, %10, %11, %12)
+	while(true){
+		//lengthof %9 = %0 : byte[]
+		_9 = data_size;
+		//ifge %2, %9 goto blklab6 : int
+		if(pos>=_9){goto blklab6;}
+		//invoke (%10) = (%0, %2) lz77:findLongestMatch : function(byte[],lz77:nat)->(lz77:Match)
+		{
+			void* data_tmp;
+			_DEALLOC_STRUCT(_10, Match);
+			_10 = findLongestMatch(data_tmp = _COPY_1DARRAY_BYTE_PARAM(data), true, pos);
+			_CALLEE_DEALLOC(data, "false-false-true");
+			_ADD_DEALLOC(_10);
+		}
+		//assign %4 = %10  : {int len,int offset}
+		_DEALLOC_STRUCT(m, Match);
+		m = copy_Match(_10);
+		_ADD_DEALLOC(m);
+		//const %11 = 1 : int
+		_11 = 1;
+		//add %12 = %2, %11 : int
+		_12=pos+_11;
+		//assign %2 = %12  : int
+		pos = _12;
+//.blklab7
+blklab7:;
+	}
+//.blklab6
+blklab6:;
+	//return %3
+	_DEALLOC(data);
+	_DEALLOC(_1);
+	_DEALLOC_STRUCT(m, Match);
+	_DEALLOC(_8);
+	_DEALLOC_STRUCT(_10, Match);
+	return output;
+	//return
+}
+
 int main(int argc, char** args){
 	_DECL_1DARRAY_BYTE(data);
 	_DECL_DEALLOC(data);
