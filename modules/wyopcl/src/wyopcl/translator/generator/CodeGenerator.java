@@ -109,15 +109,22 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			} else {
 				if (type instanceof Type.Null) {
 					declarations.add(indent + "void* " + var + ";");
+				} else if(type instanceof Type.Byte){
+					declarations.add(indent + "BYTE " + var + ";");
 				} else if (type instanceof Type.Int) {
 					String translateType = CodeGeneratorHelper.translateType(type, stores);
 					declarations.add(indent + translateType + " " + var + " = 0;");
 				} else if (type instanceof Type.Array) {
+					// Get the array dimension
+					int dimension = stores.getArrayDimension(type);
 					// Check elm type is an integer
 					Type elm_type = stores.getArrayElementType((Type.Array) type);
-					if (stores.isIntType(elm_type)) {
-						int dimension = stores.getArrayDimension(type);
-						// Declare array variable
+					// Add variable declaration
+					if(elm_type instanceof Type.Byte){
+						// Declare a BYTE array 
+						declarations.add(indent + "_DECL_" + dimension + "DARRAY_BYTE(" + var + ");");
+					}else if (stores.isIntType(elm_type)) {
+						// Declare an integer array 
 						declarations.add(indent + "_DECL_" + dimension + "DARRAY(" + var + ");");
 					} else {
 						String translateType = CodeGeneratorHelper.translateType(elm_type, stores);

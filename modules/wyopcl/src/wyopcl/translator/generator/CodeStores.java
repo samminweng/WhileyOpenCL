@@ -334,6 +334,11 @@ public class CodeStores {
 				return false;
 			}
 			
+			// Byte type is not a compound type
+			if(type instanceof Type.Byte){
+				return false;
+			}
+			
 			if(isIntType(type) || type instanceof Type.FunctionOrMethod ||
 					type instanceof Type.Bool){
 				return false;			

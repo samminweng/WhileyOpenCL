@@ -85,6 +85,8 @@ long long* fromBytes(BYTE* arr, long long arr_size);
  */
 // Define 1D array of integers
 #define _DECL_1DARRAY(a) long long* a = NULL; long long a##_size = 0;
+// Define 1D array of BYTE
+#define _DECL_1DARRAY_BYTE(a) BYTE* a = NULL; long long a##_size = 0;
 // Define 2D array variable
 #define _DECL_2DARRAY(a) long long** a = NULL; long long a##_size = 0; long long a##_size_size = 0;
 // Define the deallocation flag

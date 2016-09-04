@@ -1,10 +1,100 @@
 #include "lz77.h"
+Match* copy_Match(Match* _Match){
+	Match* new_Match = malloc(sizeof(Match));
+	new_Match->len = _Match->len;
+	new_Match->offset = _Match->offset;
+	return new_Match;
+}
+Match** copy_array_Match(Match** _Match, long long _Match_size){
+	Match** new_Match = malloc(_Match_size*sizeof(Match*));
+	for(int i=0;i<_Match_size;i++){
+		new_Match[i] = copy_Match(_Match[i]);
+	}
+	return new_Match;
+}
+void free_Match(Match* match){
+	free(match);
+}
+void printf_Match(Match* match){
+	printf("{");
+	printf(" len:");
+	printf("%lld", match->len);
+	printf(" offset:");
+	printf("%lld", match->offset);
+	printf("}");
+}
+long long match(BYTE* data, long long data_size, _DECL_DEALLOC_PARAM(data), long long offset, long long end){
+	long long _3 = 0;
+	long long pos = 0;
+	long long len = 0;
+	long long _6 = 0;
+	long long _7 = 0;
+	BYTE _8;
+	BYTE _9;
+	long long _10 = 0;
+	long long _11 = 0;
+	long long _12 = 0;
+	long long _13 = 0;
+	long long _14 = 0;
+	long long _15 = 0;
+	long long _16 = 0;
+	//assign %4 = %2  : int
+	pos = end;
+	//const %6 = 0 : int
+	_6 = 0;
+	//assign %5 = %6  : int
+	len = _6;
+	//loop (%1, %4, %5, %7, %8, %9, %10, %11, %12, %13, %14, %15, %16)
+	while(true){
+		//ifge %1, %4 goto blklab1 : int
+		if(offset>=pos){goto blklab1;}
+		//lengthof %7 = %0 : byte[]
+		_7 = data_size;
+		//ifge %4, %7 goto blklab1 : int
+		if(pos>=_7){goto blklab1;}
+		//indexof %8 = %0, %1 : byte[]
+		_8=data[offset];
+		//indexof %9 = %0, %4 : byte[]
+		_9=data[pos];
+		//ifne %8, %9 goto blklab1 : byte
+		if(_8!=_9){goto blklab1;}
+		//const %10 = 255 : int
+		_10 = 255;
+		//ifge %5, %10 goto blklab1 : int
+		if(len>=_10){goto blklab1;}
+		//const %11 = 1 : int
+		_11 = 1;
+		//add %12 = %1, %11 : int
+		_12=offset+_11;
+		//assign %1 = %12  : int
+		offset = _12;
+		//const %13 = 1 : int
+		_13 = 1;
+		//add %14 = %4, %13 : int
+		_14=pos+_13;
+		//assign %4 = %14  : int
+		pos = _14;
+		//const %15 = 1 : int
+		_15 = 1;
+		//add %16 = %5, %15 : int
+		_16=len+_15;
+		//assign %5 = %16  : int
+		len = _16;
+//.blklab2
+blklab2:;
+	}
+//.blklab1
+blklab1:;
+	//return %5
+	_DEALLOC(data);
+	return len;
+	//return
+}
+
 int main(int argc, char** args){
-	BYTE* data;
-	long long data_size = 0;
+	_DECL_1DARRAY_BYTE(data);
 	_DECL_DEALLOC(data);
-	BYTE* _2;
-	long long _2_size = 0;
+	_DECL_1DARRAY_BYTE(_2);
 	_DECL_DEALLOC(_2);
 	void* _3;
 	_DECL_1DARRAY(_5);
