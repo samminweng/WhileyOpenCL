@@ -87,7 +87,8 @@ public class CodeGenerationTestCase {
 				"FunctionCall4",
 				"SobelEdgeDetect",
 				"SobelEdgeDetect1",
-				"SobelEdgeDetect2"
+				"SobelEdgeDetect2", 
+				"lz77"
 				// "lambda"
 		});
 	}

@@ -373,14 +373,24 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Get element type
 				Type elm_type = stores.getArrayElementType((Type.Array) lhs_type);
 
-				if (stores.isIntType(elm_type)) {
+				// Special case of BYTE array
+				if(elm_type instanceof Type.Byte){
+					// Check if the lhs copy is needed or not
+					if (isCopyEliminated) {
+						// Have in-place update
+						return indent + "_UPDATE_" + dimension + "DARRAY(" + lhs + ", " + rhs + ");";
+					} else {
+						// Have a copied assignment
+						return indent + "_COPY_" + dimension + "DARRAY_BYTE(" + lhs + ", " + rhs + ");";
+					}					
+				}else if (stores.isIntType(elm_type)) {
 					// Check if the lhs copy is needed or not
 					if (isCopyEliminated) {
 						return indent + "_UPDATE_" + dimension + "DARRAY(" + lhs + ", " + rhs + ");";
 					} else {
 						return indent + "_COPY_" + dimension + "DARRAY(" + lhs + ", " + rhs + ");";
 					}
-				} else {
+				}else {
 					String struct = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");
 					// An array of structure pointers
 					if (isCopyEliminated) {
@@ -919,9 +929,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statements.add(indent + lhs + " = max(" + rhs + ", " + rhs1 + ");");
 				break;
 			case "fromBytes":
-				// Call built-in 'fromBytes' function to convert 'byte[]' to a
-				// string
+				// Call built-in 'fromBytes' function to convert 'byte[]' to a string
 				statements.add(indent + lhs + " = fromBytes(" + rhs + ", " + rhs + "_size);");
+				// Propagate the size variable 
+				statements.add(indent + lhs+"_size = "+ rhs+"_size;");
 				break;
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);

@@ -162,15 +162,26 @@ int isArrayEqual(long long* arr1, long long arr1_size,
 	//Both of arrays are the same. Return true
 	return 1;
 }
-
-//Copy an array
-long long* copy(long long *arr, long long size) {
+// Copy an array of BYTE
+BYTE* copy1DArray_BYTE(BYTE *arr, long long size){
+	BYTE *ptr = NULL;
+	ptr = (BYTE*)malloc(size*sizeof(BYTE));
+	if(ptr == NULL){
+		fprintf(stderr, "failed to malloc at copy1DArray_BYTE function in Util.c\n");
+		exit(-2);
+	}
+	// Copy 'arr' to 'ptr' array
+	memcpy(ptr, arr, size*sizeof(BYTE));
+	return ptr;
+}
+//Copy an integer array
+long long* copy1DArray(long long *arr, long long size) {
 	long long *ptr = NULL;
 	//Clone all the values from board array due to immutable Whiley value
 	ptr = (long long*) malloc(size * sizeof(long long));
 	//ptr = (long long*)tcmalloc(size*sizeof(long long));
 	if (ptr == NULL) {
-		fprintf(stderr, "fail to malloc at clone function in Util.c\n");
+		fprintf(stderr, "fail to malloc at copy1DArray function in Util.c\n");
 		exit(-2);
 	}
 	//Use memcpy to clone an array
@@ -183,14 +194,14 @@ long long** copy2DArray(long long **arr, long long x, long long y){
 	long long i = 0;
 	newMatrix = (long long**)malloc(x*sizeof(long long*));
 	if(newMatrix == NULL){
-		fprintf(stderr, "fail to malloc newMatrix at clone2DArray function in Util.c\n");
+		fprintf(stderr, "fail to malloc at copy2DArray function in Util.c\n");
 		exit(-2);
 	}
 	long long size = y*sizeof(long long);
 	for(i=0;i<x;i++){
 		newMatrix[i] = (long long*)malloc(size);
 		if(newMatrix[i] == NULL){
-			fprintf(stderr, "fail to malloc newMatrix[i] at clone2DArray function in Util.c\n");
+			fprintf(stderr, "fail to malloc at clone2DArray function in Util.c\n");
 			exit(-2);
 		}
 		memcpy(newMatrix[i], arr[i], size);
@@ -213,7 +224,7 @@ long long* append(long long *arr1, long long arr1_size,
 	ret_arr = (long long*) realloc(arr1, size * sizeof(long long));
 	//Check if the memory allocation is successful.
 	if (ret_arr == NULL) {
-		fprintf(stderr, "fail to allocate the memory at append function in Util.c\n");
+		fprintf(stderr, "fail to malloc at append function in Util.c\n");
 		exit(-2);
 	}
 	//Fill in op_2 array

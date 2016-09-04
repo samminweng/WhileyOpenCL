@@ -5,15 +5,13 @@
 #include <time.h>
 #include <ctype.h>
 #include <stdbool.h>
-// Define byte type in c as there is byte primitive type
-typedef unsigned char BYTE;
 // Good reference (https://en.wikibooks.org/wiki/C_Programming/Preprocessor)
 // Remove the security check about unsafe 'scanf' or 'sprintf' in VS tool
 // This definition allows the portability of C code across the platforms.
 #define _CRT_SECURE_NO_WARNINGS
 /**
  * Built-in functions
-*/
+ */
 void printf1DArray(long long* input, long long input_size);
 void indirect_printf(long long input);
 //No overlapping is allowed: function name must be different.
@@ -21,25 +19,30 @@ void printf_s(long long* input, long long input_size);
 void println_s(long long* input, long long input_size);
 // Parse a string into an integer
 long long* parseStringToInt(long long* arr);
-// Convert an array of bytes to an array of char
-long long* fromBytes(BYTE* arr, long long arr_size);
 // 1D Array
 long long** convertArgsToIntArray(int argc, char** args);
-long long* copy(long long *arr, long long size);
+long long* copy1DArray(long long *arr, long long size);
 long long* create1DArray(int value, int arr_size);
 int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2, long long arr2_size);
-BYTE* create1DArray_BYTE(int arr_size);
 // 2D Array Operator
 long long** copy2DArray(long long **arr, long long x, long long y);
 long long** create2DArray(long long* arr,  long long x, long long y);
 void free2DArray(long long** ptr, long long size);
 void printf2DArray(long long** input, long long input_size, long long input_size_size);
-// List Operator.
+// ArrayList Operators
 long long* slice(long long* arr, long long arr_size, long long start, long long end);
 long long* append(long long *arr1, long long arr1_size, long long* arr2, long long arr2_size);
 long long* sublist(long long* arr, int start, int end);
 int isPowerof2(long long value);
 long long* optimized_append(long long* op_1, long long* op_1_size, long long* op_2, long long* op_2_size, long long* ret_size);
+
+// Define BYTE type due to missing byte primitive type in C languate
+typedef unsigned char BYTE;
+//Built-in functions for BYTE type
+BYTE* create1DArray_BYTE(int size);//Create a BYTE array of given array size 
+BYTE* copy1DArray_BYTE(BYTE *arr, long long size); // Copy a BYTE array
+// Convert an array of bytes to an array of char
+long long* fromBytes(BYTE* arr, long long arr_size);
 /**
  * Macro Section
 **/
@@ -120,7 +123,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
  *
  */
 // Copy an array and pass it as function argument
-#define _COPY_1DARRAY_PARAM(a) copy(a, a##_size), a##_size
+#define _COPY_1DARRAY_PARAM(a) copy1DArray(a, a##_size), a##_size
 #define _COPY_2DARRAY_PARAM(a) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size
 #define _COPY_STRUCT_PARAM(a, name) copy_##name(a)
 #define _COPY_1DARRAY_STRUCT(a, b, name) \
@@ -131,7 +134,8 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
  		  	}\
  			a##_size = b##_size;\
 		})
-#define _COPY_1DARRAY(a, b) a##_size = b##_size; a = copy(b, b##_size);
+#define _COPY_1DARRAY(a, b) a##_size = b##_size; a = copy1DArray(b, b##_size);
+#define _COPY_1DARRAY_BYTE(a, b) a##_size = b##_size; a = copy1DArray_BYTE(b, b##_size);
 #define _COPY_2DARRAY(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = copy2DArray(b, b##_size, b##_size_size);
 /***
  * In-place Update Macros

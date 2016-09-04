@@ -687,8 +687,8 @@ public class DeallocationAnalyzer extends Analyzer {
 			Type elem_type = stores.getArrayElementType(arr_type);
 			int dimension = stores.getArrayDimension(arr_type);
 
-			// For integer array or NULL array
-			if (stores.isIntType(elem_type) || elem_type instanceof Type.Void) {
+			// For integer array, byte array or NULL array
+			if (stores.isIntType(elem_type) || elem_type instanceof Type.Void || elem_type instanceof Type.Byte) {
 				if (dimension == 2) {
 					return "_DEALLOC_2DArray(" + var + ");";
 				} else {
