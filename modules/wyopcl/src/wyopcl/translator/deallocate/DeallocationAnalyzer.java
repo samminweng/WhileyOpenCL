@@ -346,6 +346,10 @@ public class DeallocationAnalyzer extends Analyzer {
 				// Add deallocation flag to lhs.
 				statements.add(indent + addDealloc(lhs, function, stores));
 				break;
+			case "fromBytes":
+				// Assign flag to lhs
+				statements.add(indent+ addDealloc(lhs, function, stores));
+				break;
 			default:
 				// no change to statement
 				break;

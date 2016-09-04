@@ -23,6 +23,7 @@ int main(int argc, char** args){
 	//fieldload %6 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %7 = %6 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%8) = (%1) whiley/lang/ASCII:fromBytes : function(byte[])->(whiley/lang/ASCII:string)
+	_UPDATE_1DARRAY_SIZE(_8, data);
 	_8 = fromBytes(data, data_size);
 	_8_size = data_size;
 	//indirectinvoke () = %7 (%8) : method(int[])->()

@@ -929,6 +929,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statements.add(indent + lhs + " = max(" + rhs + ", " + rhs1 + ");");
 				break;
 			case "fromBytes":
+				extractLHSVar(statements, code, function);// Extra and free lhs variable before function call.
 				// Call built-in 'fromBytes' function to convert 'byte[]' to a string
 				statements.add(indent + lhs + " = fromBytes(" + rhs + ", " + rhs + "_size);");
 				// Propagate the size variable 
