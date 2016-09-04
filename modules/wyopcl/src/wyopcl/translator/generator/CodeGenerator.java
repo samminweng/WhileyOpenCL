@@ -665,6 +665,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if (parameter_type instanceof Type.Nominal
 					&& ((Type.Nominal) parameter_type).name().name().equals("Console")) {
 				parameters.add("stdout");
+			} else if (parameter_type instanceof Type.Byte){
+				parameters.add(parameter);
 			} else if (stores.isIntType(parameter_type)) {
 				parameters.add(parameter);
 			} else if (parameter_type instanceof Type.Array) {
@@ -914,8 +916,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			case "parse":
 				statements.add(indent + "_STR_TO_INT(" + lhs + ", " + rhs + ");");
 				break;
-			// Slice an array into a new sub-array at given starting and ending
-			// index.
+			// Slice an array into a new sub-array at given starting and ending index.
 			case "slice":
 				extractLHSVar(statements, code, function);
 				// Call the 'slice' function.
@@ -940,13 +941,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				rhs1 = stores.getVar(code.operand(1), function);
 				statements.add(indent + lhs + " = max(" + rhs + ", " + rhs1 + ");");
 				break;
+			case "toUnsignedByte":
+				// Convert an integer to byte
+				statements.add(indent + lhs + " = toUnsignedByte(" + rhs + ");");
+				break;
 			case "fromBytes":
 				extractLHSVar(statements, code, function);// Extra and free lhs variable before function call.
 				// Call built-in 'fromBytes' function to convert 'byte[]' to a string
 				statements.add(indent + lhs + " = fromBytes(" + rhs + ", " + rhs + "_size);");
 				// Propagate the size variable 
 				statements.add(indent + lhs+"_size = "+ rhs+"_size;");
-				break;
+				break;			
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);
 			}

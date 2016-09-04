@@ -43,6 +43,8 @@ BYTE* create1DArray_BYTE(int size, BYTE value);//Create a BYTE array of given ar
 BYTE* copy1DArray_BYTE(BYTE *arr, long long size); // Copy a BYTE array
 // Convert an array of bytes to an array of char
 long long* fromBytes(BYTE* arr, long long arr_size);
+// Convert an integer to byte
+BYTE toUnsignedByte(long long value);
 /**
  * Macro Section
 **/
