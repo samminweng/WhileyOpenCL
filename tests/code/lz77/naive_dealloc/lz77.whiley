@@ -15,7 +15,7 @@ constant text is [01100001b, 01100001b, 01100011b, 01100001b, 01100001b,
 type nat is (int x) where x >= 0
 // Match type
 type Match is ({nat offset, nat len} this)
-// DATA type
+// DATA type (item: byte arra, length: the length of 'item' array)
 type Data is ({byte[] items, int length} this)
 
 // Find the matched entry
@@ -35,10 +35,11 @@ function match(byte[] data, nat offset, nat end) -> int:
     return len
 
 // pos is current position in input value
-function findLongestMatch(byte[] data, nat pos) -> Match:
+function findLongestMatch(Data input, nat pos) -> Match:
     //ensures offset >= 0 && offset <= 255
     //ensures len >= 0 && len <= 255:
     //
+    byte[] data = input.items
     nat bestOffset = 0
     nat bestLen = 0
     int start = Math.max(pos - 255,0)
@@ -47,7 +48,7 @@ function findLongestMatch(byte[] data, nat pos) -> Match:
     while offset < pos:
         //where offset >= 0 && pos >= 0 && bestOffset >= 0 && bestLen >= 0
         //where bestOffset <= 255 && pos - offset <= 255 && bestLen <= 255:
-        int len = match(data,offset,pos)
+        int len = match(data, offset, pos)
         if len > bestLen:
             bestOffset = pos - offset
             bestLen = len
@@ -56,9 +57,10 @@ function findLongestMatch(byte[] data, nat pos) -> Match:
     return {offset:bestOffset, len:bestLen}
 
 // This is temporary and should be removed
-function append_byte(byte[] items, byte item) -> byte[]:
+function append_byte(Data data, byte item) -> Data:
 	//ensures |nitems| == |items| + 1:
 	//
+	byte[] items = data.items
 	byte[] nitems = [0b; |items| + 1]
 	int i = 0
 	//
@@ -70,40 +72,35 @@ function append_byte(byte[] items, byte item) -> byte[]:
 		i = i + 1
 	//
 	nitems[i] = item    
-	//
-	return nitems
+	int length = data.length + 1
+	return {items:nitems, length:length}
 
 // Append 'u1' to bytes array
-function write_u1(byte[] bytes, int u1) -> byte[]:
+function write_u1(Data data, int u1) -> Data:
     //requires u1 >= 0 && u1 <= 255:
     //
-    return append_byte(bytes, Int.toUnsignedByte(u1))
+    return append_byte(data, Int.toUnsignedByte(u1))
 
-// Compress 'data' byte array into another byte array
-function compress(Data data) -> Data:
-	byte[] input = data.items
+// Compress 'input' data into 'output' data 
+function compress(Data input) -> Data:
 	nat pos = 0
-	byte[] output = [0b;0]
-	// Length of output array
-	int length = 0
+    // The output byte array
+	Data output = {items:[0b;0], length:0}
 	// Iterate each byte in 'data'
-	while pos < data.length:
+	while pos < input.length:
 		Match m = findLongestMatch(input, pos)
 		int offset = m.offset
 		int len = m.len
 		output = write_u1(output, offset)
-		length = length + 1
 		if offset == 0:
-			output = append_byte(output, input[pos])
-			length = length + 1
+			output = append_byte(output, input.items[pos])
 			pos = pos + 1
 		else:
 			output = write_u1(output, len)
-			length = length + 1
 			pos = pos + len
 		// Increment 'pos' counter
 		pos = pos + 1
-	return {items:output, length:length}
+	return output
 
 method main(System.Console sys):
 	// Create an array of bytes, that represents a string 
@@ -113,6 +110,7 @@ method main(System.Console sys):
 	sys.out.print(data.length)
 	sys.out.println_s(" bytes")
 	Data compress_data = compress(data)
-	sys.out.print_s("COMPRESSED:   ")
+	sys.out.print_s("COMPRESSED Data:   ")
+	//sys.out.println_s(ASCII.fromBytes(compress_data.items))
 	sys.out.print(compress_data.length)
 	sys.out.println_s(" bytes")
