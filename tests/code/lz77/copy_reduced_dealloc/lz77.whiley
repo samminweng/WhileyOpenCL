@@ -7,15 +7,16 @@
 import * from whiley.lang.System
 import whiley.lang.*
 
-// The binary representation of 'LZ 77 compression' string
-constant text is [01001100b, 01011010b, 00100000b, 00110111b, 00110111b,
-				  00100000b, 01100011b, 01101111b, 01101101b, 01110000b,
-				  01110010b, 01100101b, 01110011b, 01110011b, 01101001b,
-				  01101111b, 01101110b]
+// The binary representation of 'aacaacabcabaaac' string
+constant text is [01100001b, 01100001b, 01100011b, 01100001b, 01100001b,
+                  01100011b, 01100001b, 01100010b, 01100011b, 01100001b,
+                  01100010b, 01100001b, 01100001b, 01100001b, 01100011b]
 // Positive integer type
 type nat is (int x) where x >= 0
 // Match type
 type Match is ({nat offset, nat len} this)
+// DATA type
+type Data is ({byte[] items, int length} this)
 
 // Find the matched entry
 function match(byte[] data, nat offset, nat end) -> int:
@@ -54,20 +55,64 @@ function findLongestMatch(byte[] data, nat pos) -> Match:
     // Return a 'Match' object
     return {offset:bestOffset, len:bestLen}
 
+// This is temporary and should be removed
+function append_byte(byte[] items, byte item) -> byte[]:
+	//ensures |nitems| == |items| + 1:
+	//
+	byte[] nitems = [0b; |items| + 1]
+	int i = 0
+	//
+	while i < |items|:
+		//where i >= 0 && i <= |items|
+		//where |nitems| == |items| + 1:
+		//
+		nitems[i] = items[i]
+		i = i + 1
+	//
+	nitems[i] = item    
+	//
+	return nitems
+
+// Append 'u1' to bytes array
+function write_u1(byte[] bytes, int u1) -> byte[]:
+    //requires u1 >= 0 && u1 <= 255:
+    //
+    return append_byte(bytes, Int.toUnsignedByte(u1))
 
 // Compress 'data' byte array into another byte array
-function compress(byte[] data) -> byte[]:
+function compress(Data data) -> Data:
+	byte[] input = data.items
 	nat pos = 0
 	byte[] output = [0b;0]
+	// Length of output array
+	int length = 0
 	// Iterate each byte in 'data'
-	while pos < |data|:
-		Match m = findLongestMatch(data, pos)
+	while pos < data.length:
+		Match m = findLongestMatch(input, pos)
+		int offset = m.offset
+		int len = m.len
+		output = write_u1(output, offset)
+		length = length + 1
+		if offset == 0:
+			output = append_byte(output, input[pos])
+			length = length + 1
+			pos = pos + 1
+		else:
+			output = write_u1(output, len)
+			length = length + 1
+			pos = pos + len
+		// Increment 'pos' counter
 		pos = pos + 1
-	return output
+	return {items:output, length:length}
 
 method main(System.Console sys):
 	// Create an array of bytes, that represents a string 
-	byte[] data = text
-	sys.out.println_s("Data:         ")
-	sys.out.println_s(ASCII.fromBytes(data))
-
+	Data data = {items:text, length:|text|}
+	sys.out.print_s("Data:         ")
+	sys.out.println_s(ASCII.fromBytes(data.items))
+	sys.out.print(data.length)
+	sys.out.println_s(" bytes")
+	Data compress_data = compress(data)
+	sys.out.print_s("COMPRESSED:   ")
+	sys.out.print(compress_data.length)
+	sys.out.println_s(" bytes")

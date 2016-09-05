@@ -85,17 +85,19 @@ BYTE toUnsignedByte(long long value);
  * Declaration Macros
  *
  */
-// Define 1D array of integers
+// Declare 1D array of integers
 #define _DECL_1DARRAY(a) long long* a = NULL; long long a##_size = 0;
-// Define 1D array of BYTE
+// Declare 1D array of BYTE
 #define _DECL_1DARRAY_BYTE(a) BYTE* a = NULL; long long a##_size = 0;
-// Define 2D array variable
+// Declare 2D array variable
 #define _DECL_2DARRAY(a) long long** a = NULL; long long a##_size = 0; long long a##_size_size = 0;
-// Define the deallocation flag
+// Declare the deallocation flag
 #define _DECL_DEALLOC(a) bool a##_dealloc = false;
 #define _DECL_DEALLOC_PARAM(a) bool a##_dealloc
 #define _DECL_1DARRAY_PARAM(a) long long* a, long long a##_size
 #define _DECL_1DARRAY_MEMBER(a) long long* a; long long a##_size;
+// Declare a BYTE array
+#define _DECL_1DARRAY_MEMBER_BYTE(a) BYTE* a; long long a##_size; 
 #define _DECL_2DARRAY_PARAM(a) long long** a, long long a##_size, long long a##_size_size
 #define _DECL_2DARRAY_MEMBER(a) long long** a; long long a##_size; long long a##_size_size;
 /***
@@ -166,6 +168,8 @@ BYTE toUnsignedByte(long long value);
 */
 // Print an array of integers
 #define _PRINT_1DARRAY(a) printf1DArray(a, a##_size);
+// Print an array of Bytes using '%s' format
+#define _PRINT_1DARRAY_BYTE(a) printf("%s", a);
 // Print two dimensional arrays of integers
 #define _PRINT_2DARRAY(a) printf2DArray(a, a##_size, a##_size_size);
 // Print an array of structure pointer

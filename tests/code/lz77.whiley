@@ -15,6 +15,8 @@ constant text is [01100001b, 01100001b, 01100011b, 01100001b, 01100001b,
 type nat is (int x) where x >= 0
 // Match type
 type Match is ({nat offset, nat len} this)
+// DATA type
+type Data is ({byte[] items, int length} this)
 
 // Find the matched entry
 function match(byte[] data, nat offset, nat end) -> int:
@@ -78,33 +80,40 @@ function write_u1(byte[] bytes, int u1) -> byte[]:
     return append_byte(bytes, Int.toUnsignedByte(u1))
 
 // Compress 'data' byte array into another byte array
-function compress(byte[] data) -> byte[]:
+function compress(Data data) -> Data:
+	byte[] input = data.items
 	nat pos = 0
+    // The output byte array
 	byte[] output = [0b;0]
+	// Length of output array
+	int length = 0
 	// Iterate each byte in 'data'
-	while pos < |data|:
-		Match m = findLongestMatch(data, pos)
+	while pos < data.length:
+		Match m = findLongestMatch(input, pos)
 		int offset = m.offset
 		int len = m.len
 		output = write_u1(output, offset)
+		length = length + 1
 		if offset == 0:
-			output = append_byte(output, data[pos])
+			output = append_byte(output, input[pos])
+			length = length + 1
 			pos = pos + 1
 		else:
 			output = write_u1(output, len)
+			length = length + 1
 			pos = pos + len
 		// Increment 'pos' counter
 		pos = pos + 1
-	return output
+	return {items:output, length:length}
 
 method main(System.Console sys):
 	// Create an array of bytes, that represents a string 
-	byte[] data = text
+	Data data = {items:text, length:|text|}
 	sys.out.print_s("Data:         ")
-	sys.out.println_s(ASCII.fromBytes(data))
-	sys.out.print_s(Int.toString(|data|))
+	sys.out.println_s(ASCII.fromBytes(data.items))
+	sys.out.print(data.length)
 	sys.out.println_s(" bytes")
-	byte[] compress_data = compress(data)
+	Data compress_data = compress(data)
 	sys.out.print_s("COMPRESSED:   ")
-	sys.out.print_s(Int.toString(|compress_data|))
+	sys.out.print(compress_data.length)
 	sys.out.println_s(" bytes")

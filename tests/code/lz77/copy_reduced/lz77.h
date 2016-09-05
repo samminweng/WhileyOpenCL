@@ -1,5 +1,5 @@
 #include "Util.h"
-#define text [01001100b,01011010b,00100000b,00110111b,00110111b,00100000b,01100011b,01101111b,01101101b,01110000b,01110010b,01100101b,01110011b,01110011b,01101001b,01101111b,01101110b]
+#define text [01100001b,01100001b,01100011b,01100001b,01100001b,01100011b,01100001b,01100010b,01100011b,01100001b,01100010b,01100001b,01100001b,01100001b,01100011b]
 typedef long long nat;
 typedef struct{
 	long long len;
@@ -8,7 +8,16 @@ typedef struct{
 void printf_Match(Match* _match);
 Match* copy_Match(Match* _match);
 void free_Match(Match* _match);
+typedef struct{
+	long long length;
+	_DECL_1DARRAY_MEMBER_BYTE(items);
+} Data;
+void printf_Data(Data* _data);
+Data* copy_Data(Data* _data);
+void free_Data(Data* _data);
 long long match(BYTE* data, long long data_size, long long offset, long long end);
 Match* findLongestMatch(BYTE* data, long long data_size, long long pos);
-BYTE* compress(BYTE* data, long long data_size);
+BYTE* append_byte(BYTE* items, long long items_size, BYTE item);
+BYTE* write_u1(BYTE* bytes, long long bytes_size, long long u1);
+Data* compress(Data* data);
 int main(int argc, char** args);

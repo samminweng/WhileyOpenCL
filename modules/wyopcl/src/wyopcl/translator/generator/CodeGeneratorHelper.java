@@ -78,13 +78,21 @@ public final class CodeGeneratorHelper {
 			// Print the member name
 			statement.add("\tprintf(\" " + member + ":\");");
 			// Print the member value
-			if (member_type instanceof Type.Int || stores.isIntType(member_type)) {
-				// Add field values.
+			if(member_type instanceof Type.Byte){
+				// Print Byte (unsigned char)
+				statement.add("\tprintf(\"%c\", " + input_member + ");");
+			}else if (member_type instanceof Type.Int || stores.isIntType(member_type)) {
+				// Print integer value.
 				statement.add("\tprintf(\"%lld\", " + input_member + ");");
 			} else if (member_type instanceof Type.Array) {
 				// Check the element type
 				Type elm_type = stores.getArrayElementType((Type.Array) member_type);
-				if (stores.isIntType(elm_type)) {
+				if(elm_type instanceof Type.Byte){
+					// Print an array of BYTE
+					statement
+					.add("\t_PRINT_" + stores.getArrayDimension(member_type) + "DARRAY_BYTE(" + input_member + ");");
+					
+				}else if (stores.isIntType(elm_type)) {
 					// Print an array of integers
 					statement
 							.add("\t_PRINT_" + stores.getArrayDimension(member_type) + "DARRAY(" + input_member + ");");
@@ -124,9 +132,17 @@ public final class CodeGeneratorHelper {
 		List<String> statement = new ArrayList<String>();
 		if (type instanceof Type.Array) {
 			Type elm_type = stores.getArrayElementType((Type.Array) type);
-			if (stores.isIntType(elm_type)) {
-				// An array of integers
-				int dimension = stores.getArrayDimension(type);
+			// Get array dimension
+			int dimension = stores.getArrayDimension(type);
+			// Generate the assignment for BYTE array
+			if(elm_type instanceof Type.Byte){
+				// Check if the lhs copy is needed or not
+				if (isCopyEliminated) {
+					statement.add(indent + "_UPDATE_" + dimension + "DARRAY(" + lhs + ", " + rhs + ");");
+				} else {
+					statement.add(indent + "_COPY_" + dimension + "DARRAY_BYTE(" + lhs + ", " + rhs + ");");
+				}
+			}else if (stores.isIntType(elm_type)) {				
 				// Check if the lhs copy is needed or not
 				if (isCopyEliminated) {
 					statement.add(indent + "_UPDATE_" + dimension + "DARRAY(" + lhs + ", " + rhs + ");");
@@ -302,7 +318,7 @@ public final class CodeGeneratorHelper {
 				if (member_type instanceof Type.Array) {
 					// Check element type
 					Type elm_type = stores.getArrayElementType((Type.Array) member_type);
-					if (stores.isIntType(elm_type)) {
+					if (stores.isIntType(elm_type) || elm_type instanceof Type.Byte) {
 						// An array of integers
 						if (stores.getArrayDimension(member_type) == 2) {
 							// Free an array of integer arrays by using 'free2DArray' function
@@ -493,10 +509,13 @@ public final class CodeGeneratorHelper {
 		// Gather all members
 		record.fields().forEach((member, member_type) -> {
 			if (member_type instanceof Type.Array) {
+				// Get array 
+				int dimension = stores.getArrayDimension(member_type);
 				Type elm_type = stores.getArrayElementType((Type.Array) member_type);
-				if (stores.isIntType(elm_type)) {
-					// Declare an array of integers
-					int dimension = stores.getArrayDimension(member_type);
+				if(elm_type instanceof Type.Byte){
+					statements.add("\t_DECL_" + dimension + "DARRAY_MEMBER_BYTE(" + member + ");");
+				}else if (stores.isIntType(elm_type)) {
+					// Declare an array of integers					
 					statements.add("\t_DECL_" + dimension + "DARRAY_MEMBER(" + member + ");");
 				} else {
 					String struct = translateType(elm_type, stores).replace("*", "");
