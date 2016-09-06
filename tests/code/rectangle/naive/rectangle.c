@@ -143,7 +143,7 @@ int main(int argc, char** args){
 	//assert
 	{
 		//fieldload %16 = %3 p2 : {{int x,int y} p1,{int x,int y} p2}
-		_16 = copy_Point(rec->p2);
+		_16 = rec->p2;
 		//fieldload %17 = %16 x : {int x,int y}
 		_17 = _16->x;
 		//const %18 = 6 : int
@@ -160,7 +160,7 @@ blklab0:;
 	//assert
 	{
 		//fieldload %19 = %3 p2 : {{int x,int y} p1,{int x,int y} p2}
-		_19 = copy_Point(rec->p2);
+		_19 = rec->p2;
 		//fieldload %20 = %19 y : {int x,int y}
 		_20 = _19->y;
 		//const %21 = 8 : int
@@ -191,7 +191,7 @@ blklab1:;
 	//fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %29 = %28 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//fieldload %30 = %3 p2 : {{int x,int y} p1,{int x,int y} p2}
-	_30 = copy_Point(rec->p2);
+	_30 = rec->p2;
 	//fieldload %31 = %30 x : {int x,int y}
 	_31 = _30->x;
 	//indirectinvoke () = %29 (%31) : method(any)->()
@@ -206,7 +206,7 @@ blklab1:;
 	//fieldload %35 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %36 = %35 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//fieldload %37 = %3 p2 : {{int x,int y} p1,{int x,int y} p2}
-	_37 = copy_Point(rec->p2);
+	_37 = rec->p2;
 	//fieldload %38 = %37 y : {int x,int y}
 	_38 = _37->y;
 	//indirectinvoke () = %36 (%38) : method(any)->()

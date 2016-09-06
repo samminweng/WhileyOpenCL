@@ -15,9 +15,10 @@ typedef struct{
 void printf_Data(Data* _data);
 Data* copy_Data(Data* _data);
 void free_Data(Data* _data);
-long long match(BYTE* data, long long data_size, long long offset, long long end);
+long long match(Data* input, long long offset, long long end);
 Match* findLongestMatch(Data* input, long long pos);
 Data* append_byte(Data* data, BYTE item);
 Data* write_u1(Data* data, long long u1);
 Data* compress(Data* input);
+Data* decompress(Data* input);
 int main(int argc, char** args);

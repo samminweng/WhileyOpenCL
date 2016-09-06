@@ -943,7 +943,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				break;
 			case "toUnsignedByte":
 				// Convert an integer to byte
-				statements.add(indent + lhs + " = toUnsignedByte(" + rhs + ");");
+				statements.add(indent + lhs + " = (BYTE)" + rhs + ";");
 				break;
 			case "fromBytes":
 				extractLHSVar(statements, code, function);// Extra and free lhs variable before function call.
@@ -951,7 +951,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statements.add(indent + lhs + " = fromBytes(" + rhs + ", " + rhs + "_size);");
 				// Propagate the size variable 
 				statements.add(indent + lhs+"_size = "+ rhs+"_size;");
-				break;			
+				break;
+			case "toUnsignedInt": 
+				// Convert a byte to integer
+				statements.add(indent+ lhs + " = (unsigned int)"+rhs+";");
+				break;
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);
 			}
@@ -1424,7 +1428,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			} else {
 				Type lhs_type = stores.getRawType(code.target(0), function);
 				String rhs = stores.getVar(code.operand(0), function) + "->" + code.field;
-				isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
+				isCopyEliminated = true;
+				//isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
 				// Generate copy/uncopy assignment code
 				statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, stores.getIndent(function),
 						stores.getVar(code.target(0), function), rhs, isCopyEliminated, stores));

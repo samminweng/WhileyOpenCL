@@ -74,8 +74,8 @@ function write_u1(Data data, int u1) -> Data:
     return append_byte(data, Int.toUnsignedByte(u1))
 
 // Compress 'input' data into 'output' data 
-// method compress(Data input, System.Console sys) -> Data:
-method compress(Data input) -> Data:
+//method compress(Data input, System.Console sys) -> Data:
+function compress(Data input) -> Data:
 	nat pos = 0
 	// The output byte array
 	Data output = {items:[0b;0], length:0}
@@ -96,11 +96,11 @@ method compress(Data input) -> Data:
 		else:
 			output = write_u1(output, len)
 			pos = pos + len
-		// Increment 'pos' counter
-		//sys.out.println_s(ASCII.fromBytes(output.items))
+	   // Print out 'output' byte array
+	   //sys.out.println_s(ASCII.fromBytes(output.items))
 	return output
 
-// method decompress(Data input, System.Console sys) -> Data:
+//method decompress(Data input, System.Console sys) -> Data:
 function decompress(Data input) -> Data:
     Data output = {items:[0b;0], length:0}
     byte[] data = input.items
@@ -112,16 +112,16 @@ function decompress(Data input) -> Data:
         pos = pos + 2
         //sys.out.println_s("================Decompression=============")
         //sys.out.print_s("Header:")
-        //sys.out.println(header)
+        //sys.out.println(Byte.toUnsignedInt(header))
         //sys.out.print_s("Item:")
-        //sys.out.println(item)
+        //sys.out.println(Byte.toUnsignedInt(item))
         if header == 00000000b:
             output = append_byte(output, item)
         else:
             int offset = Byte.toUnsignedInt(header)
             int len = Byte.toUnsignedInt(item)
             int start = |output.items| - offset
-            int i = Math.max(start, 0)
+            int i = start
             //sys.out.println_s("Get previous items:")
             while i < (start+len):
                 // Get byte from output array
@@ -143,7 +143,7 @@ method main(System.Console sys):
     //Data compress_data = compress(data, sys)
     Data compress_data = compress(data)
     sys.out.print_s("COMPRESSED Data:   ")
-    //sys.out.println_s(ASCII.fromBytes(compress_data.items))
+    sys.out.println_s(ASCII.fromBytes(compress_data.items))
     sys.out.print(compress_data.length)
     sys.out.println_s(" bytes")
     //Data decompress_data = decompress(compress_data, sys)

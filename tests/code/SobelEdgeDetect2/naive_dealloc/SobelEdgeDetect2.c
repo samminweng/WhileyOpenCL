@@ -93,8 +93,8 @@ long long convolution(Image* A, _DECL_DEALLOC_PARAM(A), long long xCenter, long 
 	long long _44 = 0;
 	//fieldload %17 = %0 pixels : {int height,int[] pixels,int width}
 	_DEALLOC(_17);
-	_COPY_1DARRAY(_17, A->pixels);
-	_ADD_DEALLOC(_17);
+	_UPDATE_1DARRAY(_17, A->pixels);
+	_REMOVE_DEALLOC(_17);
 	//assign %5 = %17  : int[]
 	_DEALLOC(pixels);
 	_COPY_1DARRAY(pixels, _17);
@@ -283,8 +283,8 @@ Image* sobelEdgeDetection(Image* input, _DECL_DEALLOC_PARAM(input)){
 	_DECL_DEALLOC(_62);
 	//fieldload %14 = %0 pixels : {int height,int[] pixels,int width}
 	_DEALLOC(_14);
-	_COPY_1DARRAY(_14, input->pixels);
-	_ADD_DEALLOC(_14);
+	_UPDATE_1DARRAY(_14, input->pixels);
+	_REMOVE_DEALLOC(_14);
 	//assign %2 = %14  : int[]
 	_DEALLOC(pixels);
 	_COPY_1DARRAY(pixels, _14);
@@ -525,8 +525,8 @@ void print_image(FILE* sys, Image* im, _DECL_DEALLOC_PARAM(im)){
 	_DECL_DEALLOC(_32);
 	//fieldload %8 = %1 pixels : {int height,int[] pixels,int width}
 	_DEALLOC(_8);
-	_COPY_1DARRAY(_8, im->pixels);
-	_ADD_DEALLOC(_8);
+	_UPDATE_1DARRAY(_8, im->pixels);
+	_REMOVE_DEALLOC(_8);
 	//assign %2 = %8  : int[]
 	_DEALLOC(pixels);
 	_COPY_1DARRAY(pixels, _8);

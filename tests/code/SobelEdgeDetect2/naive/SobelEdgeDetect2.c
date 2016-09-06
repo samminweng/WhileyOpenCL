@@ -84,7 +84,7 @@ long long convolution(Image* A, long long xCenter, long long yCenter, _DECL_1DAR
 	long long _43 = 0;
 	long long _44 = 0;
 	//fieldload %17 = %0 pixels : {int height,int[] pixels,int width}
-	_COPY_1DARRAY(_17, A->pixels);
+	_UPDATE_1DARRAY(_17, A->pixels);
 	//assign %5 = %17  : int[]
 	_COPY_1DARRAY(pixels, _17);
 	//fieldload %18 = %0 width : {int height,int[] pixels,int width}
@@ -256,7 +256,7 @@ Image* sobelEdgeDetection(Image* input){
 	long long _61 = 0;
 	Image* _62;
 	//fieldload %14 = %0 pixels : {int height,int[] pixels,int width}
-	_COPY_1DARRAY(_14, input->pixels);
+	_UPDATE_1DARRAY(_14, input->pixels);
 	//assign %2 = %14  : int[]
 	_COPY_1DARRAY(pixels, _14);
 	//fieldload %15 = %0 width : {int height,int[] pixels,int width}
@@ -459,7 +459,7 @@ void print_image(FILE* sys, Image* im){
 	void* _32;
 	long long _32_size = 0;
 	//fieldload %8 = %1 pixels : {int height,int[] pixels,int width}
-	_COPY_1DARRAY(_8, im->pixels);
+	_UPDATE_1DARRAY(_8, im->pixels);
 	//assign %2 = %8  : int[]
 	_COPY_1DARRAY(pixels, _8);
 	//fieldload %9 = %1 width : {int height,int[] pixels,int width}

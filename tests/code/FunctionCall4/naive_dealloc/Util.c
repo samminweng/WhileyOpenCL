@@ -385,12 +385,3 @@ long long* fromBytes(BYTE* input, long long size){
 	}
 	return arr;
 }
-
-/**
-* Convert an integer to byte
-*/
-BYTE toUnsignedByte(long long value){
-	if(value == 0) return 0;
-	if(value == 1) return 1;
-	return (value%2) + 10 * toUnsignedByte(value/2);
-}

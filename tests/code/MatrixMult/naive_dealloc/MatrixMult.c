@@ -146,8 +146,8 @@ Matrix* multiply(Matrix* A, _DECL_DEALLOC_PARAM(A), Matrix* B, _DECL_DEALLOC_PAR
 				if(k>=_19){goto blklab17;}
 				//fieldload %20 = %0 data : {int[][] data,int height,int width}
 				_DEALLOC_2DArray(_20);
-				_COPY_2DARRAY(_20, A->data);
-				_ADD_DEALLOC(_20);
+				_UPDATE_2DARRAY(_20, A->data);
+				_REMOVE_DEALLOC(_20);
 				//indexof %21 = %20, %4 : int[][]
 				_21=_20[i];
 				_REMOVE_DEALLOC(_21);
@@ -155,8 +155,8 @@ Matrix* multiply(Matrix* A, _DECL_DEALLOC_PARAM(A), Matrix* B, _DECL_DEALLOC_PAR
 				_22=_21[k];
 				//fieldload %23 = %1 data : {int[][] data,int height,int width}
 				_DEALLOC_2DArray(_23);
-				_COPY_2DARRAY(_23, B->data);
-				_ADD_DEALLOC(_23);
+				_UPDATE_2DARRAY(_23, B->data);
+				_REMOVE_DEALLOC(_23);
 				//indexof %24 = %23, %7 : int[][]
 				_24=_23[k];
 				_REMOVE_DEALLOC(_24);
@@ -278,8 +278,8 @@ void printMat(FILE* sys, Matrix* A, _DECL_DEALLOC_PARAM(A)){
 			//fieldload %9 = %8 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//fieldload %10 = %1 data : {int[][] data,int height,int width}
 			_DEALLOC_2DArray(_10);
-			_COPY_2DARRAY(_10, A->data);
-			_ADD_DEALLOC(_10);
+			_UPDATE_2DARRAY(_10, A->data);
+			_REMOVE_DEALLOC(_10);
 			//indexof %11 = %10, %2 : int[][]
 			_11=_10[i];
 			_REMOVE_DEALLOC(_11);
@@ -494,8 +494,8 @@ int main(int argc, char** args){
 	{
 		//fieldload %7 = %2 data : {int[][] data,int height,int width}
 		_DEALLOC_2DArray(_7);
-		_COPY_2DARRAY(_7, A->data);
-		_ADD_DEALLOC(_7);
+		_UPDATE_2DARRAY(_7, A->data);
+		_REMOVE_DEALLOC(_7);
 		//const %8 = 1 : int
 		_8 = 1;
 		//sub %9 = %1, %8 : int
@@ -536,8 +536,8 @@ blklab27:;
 	{
 		//fieldload %17 = %3 data : {int[][] data,int height,int width}
 		_DEALLOC_2DArray(_17);
-		_COPY_2DARRAY(_17, B->data);
-		_ADD_DEALLOC(_17);
+		_UPDATE_2DARRAY(_17, B->data);
+		_REMOVE_DEALLOC(_17);
 		//const %18 = 1 : int
 		_18 = 1;
 		//sub %19 = %1, %18 : int
@@ -582,8 +582,8 @@ blklab28:;
 	{
 		//fieldload %27 = %4 data : {int[][] data,int height,int width}
 		_DEALLOC_2DArray(_27);
-		_COPY_2DARRAY(_27, C->data);
-		_ADD_DEALLOC(_27);
+		_UPDATE_2DARRAY(_27, C->data);
+		_REMOVE_DEALLOC(_27);
 		//const %28 = 1 : int
 		_28 = 1;
 		//sub %29 = %1, %28 : int

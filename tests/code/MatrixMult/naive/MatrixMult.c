@@ -124,13 +124,13 @@ Matrix* multiply(Matrix* A, Matrix* B){
 				//ifge %7, %19 goto blklab17 : int
 				if(k>=_19){goto blklab17;}
 				//fieldload %20 = %0 data : {int[][] data,int height,int width}
-				_COPY_2DARRAY(_20, A->data);
+				_UPDATE_2DARRAY(_20, A->data);
 				//indexof %21 = %20, %4 : int[][]
 				_21=_20[i];
 				//indexof %22 = %21, %7 : int[]
 				_22=_21[k];
 				//fieldload %23 = %1 data : {int[][] data,int height,int width}
-				_COPY_2DARRAY(_23, B->data);
+				_UPDATE_2DARRAY(_23, B->data);
 				//indexof %24 = %23, %7 : int[][]
 				_24=_23[k];
 				//indexof %25 = %24, %5 : int[]
@@ -233,7 +233,7 @@ void printMat(FILE* sys, Matrix* A){
 			//fieldload %8 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %9 = %8 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//fieldload %10 = %1 data : {int[][] data,int height,int width}
-			_COPY_2DARRAY(_10, A->data);
+			_UPDATE_2DARRAY(_10, A->data);
 			//indexof %11 = %10, %2 : int[][]
 			_11=_10[i];
 			//indexof %12 = %11, %3 : int[]
@@ -402,7 +402,7 @@ int main(int argc, char** args){
 	//assert
 	{
 		//fieldload %7 = %2 data : {int[][] data,int height,int width}
-		_COPY_2DARRAY(_7, A->data);
+		_UPDATE_2DARRAY(_7, A->data);
 		//const %8 = 1 : int
 		_8 = 1;
 		//sub %9 = %1, %8 : int
@@ -437,7 +437,7 @@ blklab27:;
 	//assert
 	{
 		//fieldload %17 = %3 data : {int[][] data,int height,int width}
-		_COPY_2DARRAY(_17, B->data);
+		_UPDATE_2DARRAY(_17, B->data);
 		//const %18 = 1 : int
 		_18 = 1;
 		//sub %19 = %1, %18 : int
@@ -474,7 +474,7 @@ blklab28:;
 	//assert
 	{
 		//fieldload %27 = %4 data : {int[][] data,int height,int width}
-		_COPY_2DARRAY(_27, C->data);
+		_UPDATE_2DARRAY(_27, C->data);
 		//const %28 = 1 : int
 		_28 = 1;
 		//sub %29 = %1, %28 : int

@@ -182,7 +182,7 @@ void print_mat(FILE* sys, Matrix* a){
 			//fieldload %10 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %11 = %10 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//fieldload %12 = %1 data : {int[] data,int height,int width}
-			_COPY_1DARRAY(_12, a->data);
+			_UPDATE_1DARRAY(_12, a->data);
 			//mul %13 = %2, %3 : int
 			_13=i*width;
 			//add %14 = %13, %5 : int
@@ -287,11 +287,11 @@ Matrix* mat_mult(Matrix* a, Matrix* b){
 	//assign %5 = %15  : int[]
 	_COPY_1DARRAY(data, _15);
 	//fieldload %16 = %0 data : {int[] data,int height,int width}
-	_COPY_1DARRAY(_16, a->data);
+	_UPDATE_1DARRAY(_16, a->data);
 	//assign %6 = %16  : int[]
 	_COPY_1DARRAY(a_data, _16);
 	//fieldload %17 = %1 data : {int[] data,int height,int width}
-	_COPY_1DARRAY(_17, b->data);
+	_UPDATE_1DARRAY(_17, b->data);
 	//assign %7 = %17  : int[]
 	_COPY_1DARRAY(b_data, _17);
 	//const %18 = 0 : int
@@ -486,7 +486,7 @@ int main(int argc, char** args){
 	//assert
 	{
 		//fieldload %13 = %1 data : {int[] data,int height,int width}
-		_COPY_1DARRAY(_13, A->data);
+		_UPDATE_1DARRAY(_13, A->data);
 		//const %14 = 20 : int
 		_14 = 20;
 		//const %15 = 1 : int
@@ -535,7 +535,7 @@ blklab19:;
 	//assert
 	{
 		//fieldload %30 = %2 data : {int[] data,int height,int width}
-		_COPY_1DARRAY(_30, B->data);
+		_UPDATE_1DARRAY(_30, B->data);
 		//const %31 = 20 : int
 		_31 = 20;
 		//const %32 = 1 : int
@@ -582,7 +582,7 @@ blklab20:;
 	//assert
 	{
 		//fieldload %45 = %3 data : {int[] data,int height,int width}
-		_COPY_1DARRAY(_45, C->data);
+		_UPDATE_1DARRAY(_45, C->data);
 		//const %46 = 20 : int
 		_46 = 20;
 		//const %47 = 1 : int
@@ -629,7 +629,7 @@ blklab21:;
 	//fieldload %60 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %61 = %60 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//fieldload %62 = %3 data : {int[] data,int height,int width}
-	_COPY_1DARRAY(_62, C->data);
+	_UPDATE_1DARRAY(_62, C->data);
 	//const %63 = 20 : int
 	_63 = 20;
 	//const %64 = 1 : int
