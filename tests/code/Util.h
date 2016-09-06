@@ -22,10 +22,25 @@ typedef enum {
 	T_BYTE // Byte type
 } TYPENUM;
 
+
 /**
- * Built-in functions
+*Built-in generic typed functions for BYTE and Integer Types
+*
+***/
+//Create an array and initialize the array value 
+void* create1DArray(int value, int arr_size, TYPENUM type);
+// Copy an array to another array
+void* copy1DArray(void* arr, long long size, TYPENUM type);
+// Print out an array
+void printf1DArray(void* input, long long input_size, TYPENUM type);
+
+// Freed an array of arrays
+void free2DArray(void** ptr, long long size);
+
+
+/**
+ * Other built-in functions
  */
-void printf1DArray(long long* input, long long input_size);
 void indirect_printf(long long input);
 //No overlapping is allowed: function name must be different.
 void printf_s(long long* input, long long input_size);
@@ -34,12 +49,10 @@ void println_s(long long* input, long long input_size);
 long long* parseStringToInt(long long* arr);
 // 1D Array
 long long** convertArgsToIntArray(int argc, char** args);
-
 int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2, long long arr2_size);
 // 2D Array Operator
 long long** copy2DArray(long long **arr, long long x, long long y);
 long long** create2DArray(long long* arr,  long long x, long long y);
-void free2DArray(long long** ptr, long long size);
 void printf2DArray(long long** input, long long input_size, long long input_size_size);
 // ArrayList Operators
 long long* slice(long long* arr, long long arr_size, long long start, long long end);
@@ -49,14 +62,6 @@ int isPowerof2(long long value);
 long long* optimized_append(long long* op_1, long long* op_1_size, long long* op_2, long long* op_2_size, long long* ret_size);
 // Convert an array of bytes to an array of long long
 long long* fromBytes(BYTE* arr, long long arr_size);
-/**
-*Built-in functions for BYTE and Integer Types
-*
-***/
-//Create an array and initialize the array value 
-void* create1DArray(int value, int arr_size, TYPENUM type);
-// Copy an array to another array
-void* copy1DArray(void* arr, long long size, TYPENUM type);
 
 /**
  * Macro Section
@@ -184,9 +189,9 @@ void* copy1DArray(void* arr, long long size, TYPENUM type);
 * 
 */
 // Print an array of integers
-#define _PRINT_1DARRAY(a) printf1DArray(a, a##_size);
+#define _PRINT_1DARRAY(a) printf1DArray(a, a##_size, T_INT);
 // Print an array of Bytes using '%s' format
-#define _PRINT_1DARRAY_BYTE(a) printf("%s", a);
+#define _PRINT_1DARRAY_BYTE(a) printf1DArray(a, a##_size, T_BYTE);
 // Print two dimensional arrays of integers
 #define _PRINT_2DARRAY(a) printf2DArray(a, a##_size, a##_size_size);
 // Print an array of structure pointer
