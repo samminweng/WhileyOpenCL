@@ -73,17 +73,61 @@ BYTE* create1DArray_BYTE(BYTE value, int arr_size){
  * Create an array with given size and initial value.
  */
 void* create1DArray(int value, int arr_size, TYPENUM type){
-	void* a;
+	void* ptr = NULL;
 	switch(type){
 		case T_INT:
-			a = create1DArray_LONG(value, arr_size);
+			ptr = create1DArray_LONG(value, arr_size);
 			break;
 		case T_BYTE:
-			a = create1DArray_BYTE(value, arr_size);
+			ptr = create1DArray_BYTE(value, arr_size);
 			break;
 	}
-	return a;
+	return ptr;
 }
+
+
+// Copy an array of BYTE
+BYTE* copy1DArray_BYTE(BYTE *arr, long long size){
+	BYTE *ptr = NULL;
+	ptr = (BYTE*)malloc(size*sizeof(BYTE));
+	if(ptr == NULL){
+		fprintf(stderr, "failed to malloc at copy1DArray_BYTE function in Util.c\n");
+		exit(-2);
+	}
+	// Copy 'arr' to 'ptr' array
+	memcpy(ptr, arr, size*sizeof(BYTE));
+	return ptr;
+}
+//Copy an integer array
+long long* copy1DArray_LONG(long long *arr, long long size) {
+	long long *ptr = NULL;
+	//Clone all the values from board array due to immutable Whiley value
+	ptr = (long long*) malloc(size * sizeof(long long));
+	//ptr = (long long*)tcmalloc(size*sizeof(long long));
+	if (ptr == NULL) {
+		fprintf(stderr, "fail to malloc at copy1DArray_LONG function in Util.c\n");
+		exit(-2);
+	}
+	//Use memcpy to clone an array
+	memcpy(ptr, arr, size * sizeof(long long));
+	return ptr;
+}
+
+//Copy an integer array
+void* copy1DArray(void *arr, long long size, TYPENUM type) {
+	void* ptr;
+	switch(type){
+		case T_INT:
+			ptr = copy1DArray_LONG(arr, size);
+			break;
+		case T_BYTE:
+			ptr = copy1DArray_BYTE(arr, size);
+			break;
+	}
+	return ptr;
+}
+
+
 
 /**
  * Create an 2D array of given dimensions (n * m)
@@ -201,32 +245,7 @@ int isArrayEqual(long long* arr1, long long arr1_size,
 	//Both of arrays are the same. Return true
 	return 1;
 }
-// Copy an array of BYTE
-BYTE* copy1DArray_BYTE(BYTE *arr, long long size){
-	BYTE *ptr = NULL;
-	ptr = (BYTE*)malloc(size*sizeof(BYTE));
-	if(ptr == NULL){
-		fprintf(stderr, "failed to malloc at copy1DArray_BYTE function in Util.c\n");
-		exit(-2);
-	}
-	// Copy 'arr' to 'ptr' array
-	memcpy(ptr, arr, size*sizeof(BYTE));
-	return ptr;
-}
-//Copy an integer array
-long long* copy1DArray(long long *arr, long long size) {
-	long long *ptr = NULL;
-	//Clone all the values from board array due to immutable Whiley value
-	ptr = (long long*) malloc(size * sizeof(long long));
-	//ptr = (long long*)tcmalloc(size*sizeof(long long));
-	if (ptr == NULL) {
-		fprintf(stderr, "fail to malloc at copy1DArray function in Util.c\n");
-		exit(-2);
-	}
-	//Use memcpy to clone an array
-	memcpy(ptr, arr, size * sizeof(long long));
-	return ptr;
-}
+
 // Clone 2D array with given array size.
 long long** copy2DArray(long long **arr, long long x, long long y){
 	long long **newMatrix = NULL;

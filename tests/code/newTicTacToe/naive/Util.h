@@ -34,9 +34,9 @@ void println_s(long long* input, long long input_size);
 long long* parseStringToInt(long long* arr);
 // 1D Array
 long long** convertArgsToIntArray(int argc, char** args);
-long long* copy1DArray(long long *arr, long long size);
-//Given array size and array type, create an array and initialize the array value 
-void* create1DArray(int value, int arr_size, TYPENUM type);
+
+
+
 int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2, long long arr2_size);
 // 2D Array Operator
 long long** copy2DArray(long long **arr, long long x, long long y);
@@ -49,11 +49,18 @@ long long* append(long long *arr1, long long arr1_size, long long* arr2, long lo
 long long* sublist(long long* arr, int start, int end);
 int isPowerof2(long long value);
 long long* optimized_append(long long* op_1, long long* op_1_size, long long* op_2, long long* op_2_size, long long* ret_size);
+/**
+*Built-in functions for BYTE and Integer Types
+*
+***/
+//Create an array and initialize the array value 
+void* create1DArray(int value, int arr_size, TYPENUM type);
 
-
-//Built-in functions for BYTE type
-BYTE* copy1DArray_BYTE(BYTE *arr, long long size); // Copy a BYTE array
-// Convert an array of bytes to an array of char
+// Copy an array to another array
+void* copy1DArray(void* arr, long long size, TYPENUM type);
+//long long* copy1DArray(long long *arr, long long size);
+//BYTE* copy1DArray_BYTE(BYTE *arr, long long size); // Copy a BYTE array
+// Convert an array of bytes to an array of long long
 long long* fromBytes(BYTE* arr, long long arr_size);
 /**
  * Macro Section
@@ -144,10 +151,10 @@ long long* fromBytes(BYTE* arr, long long arr_size);
  *
  */
 // Copy an array and pass it as function parameter
-#define _COPY_1DARRAY_PARAM(a) copy1DArray(a, a##_size), a##_size
+#define _COPY_1DARRAY_PARAM(a) copy1DArray(a, a##_size, T_INT), a##_size
 #define _COPY_2DARRAY_PARAM(a) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size
 // Pass the copied BYTE array as function parameter 
-#define _COPY_1DARRAY_BYTE_PARAM(a) copy1DArray_BYTE(a, a##_size), a##_size 
+#define _COPY_1DARRAY_BYTE_PARAM(a) copy1DArray(a, a##_size, T_BYTE), a##_size 
 #define _COPY_STRUCT_PARAM(a, name) copy_##name(a)
 #define _COPY_1DARRAY_STRUCT(a, b, name) \
 		({\
@@ -157,8 +164,8 @@ long long* fromBytes(BYTE* arr, long long arr_size);
  		  	}\
  			a##_size = b##_size;\
 		})
-#define _COPY_1DARRAY(a, b) a##_size = b##_size; a = copy1DArray(b, b##_size);
-#define _COPY_1DARRAY_BYTE(a, b) a##_size = b##_size; a = copy1DArray_BYTE(b, b##_size);
+#define _COPY_1DARRAY(a, b) a##_size = b##_size; a = copy1DArray(b, b##_size, T_INT);
+#define _COPY_1DARRAY_BYTE(a, b) a##_size = b##_size; a = copy1DArray_BYTE(b, b##_size, T_BYTE);
 #define _COPY_2DARRAY(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = copy2DArray(b, b##_size, b##_size_size);
 /***
  * In-place Update Macros
