@@ -9,6 +9,19 @@
 // Remove the security check about unsafe 'scanf' or 'sprintf' in VS tool
 // This definition allows the portability of C code across the platforms.
 #define _CRT_SECURE_NO_WARNINGS
+
+// Define BYTE type due to missing byte primitive type in C languate
+typedef unsigned char BYTE;
+/***
+*
+* Declare an enumerated type to indicate the type and select the corresponding function 
+*
+*/
+typedef enum {
+	T_INT, // Integer type
+	T_BYTE // Byte type
+} TYPENUM;
+
 /**
  * Built-in functions
  */
@@ -22,7 +35,8 @@ long long* parseStringToInt(long long* arr);
 // 1D Array
 long long** convertArgsToIntArray(int argc, char** args);
 long long* copy1DArray(long long *arr, long long size);
-long long* create1DArray(int value, int arr_size);
+//Given array size and array type, create an array and initialize the array value 
+void* create1DArray(int value, int arr_size, TYPENUM type);
 int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2, long long arr2_size);
 // 2D Array Operator
 long long** copy2DArray(long long **arr, long long x, long long y);
@@ -36,10 +50,8 @@ long long* sublist(long long* arr, int start, int end);
 int isPowerof2(long long value);
 long long* optimized_append(long long* op_1, long long* op_1_size, long long* op_2, long long* op_2_size, long long* ret_size);
 
-// Define BYTE type due to missing byte primitive type in C languate
-typedef unsigned char BYTE;
+
 //Built-in functions for BYTE type
-BYTE* create1DArray_BYTE(BYTE value, int arr_size);//Create a BYTE array of given array size 
 BYTE* copy1DArray_BYTE(BYTE *arr, long long size); // Copy a BYTE array
 // Convert an array of bytes to an array of char
 long long* fromBytes(BYTE* arr, long long arr_size);
@@ -109,8 +121,8 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 			*a = *b;\
 		})
 // Create an array of integers or integer arrays
-#define _NEW_1DARRAY(a, size, value) a##_size = size; a = create1DArray(value, a##_size);
-#define _NEW_1DARRAY_BYTE_VALUE(a, size, value) a##_size = size; a = create1DArray_BYTE(value, a##_size);
+#define _NEW_1DARRAY(a, size, value) a##_size = size; a = create1DArray(value, a##_size, T_INT);
+#define _NEW_1DARRAY_BYTE_VALUE(a, size, value) a##_size = size; a = create1DArray(value, a##_size, T_BYTE);
 // Use '_Generic' selection, supported in GCC 4.9 (later), to choose proper creation function at compile time 
 /*#define _NEW_1DARRAY(a, size, value) \
  		({\

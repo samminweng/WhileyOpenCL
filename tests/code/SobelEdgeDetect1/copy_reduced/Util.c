@@ -29,10 +29,13 @@ long long* slice(long long* arr, long long arr_size, long long start, long long 
 	return sub_arr;
 }
 
+
+
 /**
  * Create an array with given size and initial value.
  */
-long long* create1DArray(int value, int arr_size){
+long long* create1DArray_LONG(int value, int arr_size){
+	
 	long long* arr = NULL;
 	// Allocate the array
 	arr = (long long*)malloc(arr_size*sizeof(long long));
@@ -46,7 +49,6 @@ long long* create1DArray(int value, int arr_size){
 	}
 	return arr;
 }
-
 /*
  * Create an array of BYTE
  */
@@ -63,6 +65,24 @@ BYTE* create1DArray_BYTE(BYTE value, int arr_size){
 		arr[i] = value;
 	}
 	return arr;
+}
+
+
+
+/**
+ * Create an array with given size and initial value.
+ */
+void* create1DArray(int value, int arr_size, TYPENUM type){
+	void* a;
+	switch(type){
+		case T_INT:
+			a = create1DArray_LONG(value, arr_size);
+			break;
+		case T_BYTE:
+			a = create1DArray_BYTE(value, arr_size);
+			break;
+	}
+	return a;
 }
 
 /**

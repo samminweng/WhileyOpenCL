@@ -1,7 +1,7 @@
 #!/bin/bash
 TIMEOUT="3600s"
 # Run Polly from clang
-alias opt="opt -O3 -polly"
+#alias opt="opt -O3 -polly"
 alias pollycc="clang -O3 -mllvm -polly"
 ### Get the root working directory
 basedir="$(dirname "$(pwd)")"
@@ -104,7 +104,7 @@ compileAndRun(){
 	export OMP_NUM_THREADS=$num_threads
 	echo -e -n "Run the $program $testcase on $parameter using $compiler and $OMP_NUM_THREADS threads..." >> $result
 	echo "Run the $program $testcase on $parameter using $OMP_NUM_THREADS threads..."
-	for i in {1..1}
+	for i in {1..10}
 	do
 		#echo "Begin $i iteration"
 		#timeout $TIMEOUT perf stat out/"$executable.out" $parameter >>$result 2>> $result
@@ -239,8 +239,9 @@ init(){
 #exec SobelEdge original 2048
 
 ## LZ77 test case
-#init LZ77
-#exec LZ77 original 10
-#exec LZ77 original 100
-#exec LZ77 original 1000
-exec LZ77 original 1000000
+init LZ77
+exec LZ77 original 10
+exec LZ77 original 100
+exec LZ77 original 1000
+exec LZ77 original 10000
+exec LZ77 original 100000
