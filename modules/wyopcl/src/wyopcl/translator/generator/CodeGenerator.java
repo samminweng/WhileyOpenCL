@@ -298,7 +298,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Special case for BYTE type
 				if (elm_type instanceof Type.Byte) {
 					// Create an array of bytes
-					statement.add(indent + "_NEW_1DARRAY_BYTE(" + lhs + ", " + list.values.size() + ");");
+					statement.add(indent + "_NEW_1DARRAY_BYTE_VALUE(" + lhs + ", " + list.values.size() + ", 0b0);");
 					if (!list.values.isEmpty()) {
 						// Assign values to each element
 						String s = indent;

@@ -46,6 +46,25 @@ long long* create1DArray(int value, int arr_size){
 	}
 	return arr;
 }
+
+/*
+ * Create an array of BYTE
+ */
+BYTE* create1DArray_BYTE(BYTE value, int arr_size){
+	BYTE* arr = NULL;
+	// Allocate the array
+	arr = (BYTE*)malloc(arr_size*sizeof(BYTE));
+	if(arr == NULL){
+		fprintf(stderr, "fail to allocate the memory at create1DArray_BYTE function in Util.c\n");
+		exit(-2);
+	}
+	// Assign value
+	for(int i =0;i<arr_size;i++){
+		arr[i] = value;
+	}
+	return arr;
+}
+
 /**
  * Create an 2D array of given dimensions (n * m)
  */
@@ -350,23 +369,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 	return ret;
 }
 
-/*
- * Create an array of BYTE
- */
-BYTE* create1DArray_BYTE(int arr_size, BYTE value){
-	BYTE* arr = NULL;
-	// Allocate the array
-	arr = (BYTE*)malloc(arr_size*sizeof(BYTE));
-	if(arr == NULL){
-		fprintf(stderr, "fail to allocate the memory at create1DArray_BYTE function in Util.c\n");
-		exit(-2);
-	}
-	// Assign value
-	for(int i =0;i<arr_size;i++){
-		arr[i] = value;
-	}
-	return arr;
-}
+
 
 /*
  * Convert an array of BYTE to an integer array

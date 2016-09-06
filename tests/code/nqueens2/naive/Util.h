@@ -39,7 +39,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 // Define BYTE type due to missing byte primitive type in C languate
 typedef unsigned char BYTE;
 //Built-in functions for BYTE type
-BYTE* create1DArray_BYTE(int size, BYTE value);//Create a BYTE array of given array size 
+BYTE* create1DArray_BYTE(BYTE value, int arr_size);//Create a BYTE array of given array size 
 BYTE* copy1DArray_BYTE(BYTE *arr, long long size); // Copy a BYTE array
 // Convert an array of bytes to an array of char
 long long* fromBytes(BYTE* arr, long long arr_size);
@@ -110,6 +110,14 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 		})
 // Create an array of integers or integer arrays
 #define _NEW_1DARRAY(a, size, value) a##_size = size; a = create1DArray(value, a##_size);
+#define _NEW_1DARRAY_BYTE_VALUE(a, size, value) a##_size = size; a = create1DArray_BYTE(value, a##_size);
+// Use '_Generic' selection, supported in GCC 4.9 (later), to choose proper creation function at compile time 
+/*#define _NEW_1DARRAY(a, size, value) \
+ 		({\
+ 			a##_size = size;\
+ 			a = _Generic(a, BYTE*: create1DArray_BYTE , default: create1DArray)(value, a##_size);\
+ 		})
+*/
 #define _NEW_2DARRAY(a, size, value) a##_size = size; a##_size_size = value##_size; a = create2DArray(value, a##_size, a##_size_size);
 // Create an array of structure pointers
 #define _NEW_1DARRAY_STRUCT(a, size, b, name) \
@@ -120,9 +128,6 @@ long long* fromBytes(BYTE* arr, long long arr_size);
  			}\
  			a##_size = size;\
  		})
-// Create an array of BYTE
-#define _NEW_1DARRAY_BYTE(a, size) a##_size = size; a = create1DArray_BYTE(a##_size, 0b0);
-#define _NEW_1DARRAY_BYTE_VALUE(a, size, value) a##_size = size; a = create1DArray_BYTE(a##_size, value);
 /***
  * Copy Macros
  *
