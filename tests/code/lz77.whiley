@@ -132,10 +132,23 @@ function decompress(Data input) -> Data:
         //sys.out.println_s(ASCII.fromBytes(output.items))
     // all done!
     return output
+// Initialize the input array with constant text
+function init(int repeat) -> Data:
+    int length = repeat * 15
+    // Create a BYTE array 
+    byte[] items = [0b;length]
+    // Initialize the array at each position with the value from constant 'text' array 
+    int pos =0
+    while pos < length:
+        items[pos] = text[pos%15]
+        pos = pos + 1
+    return {items:items, length:length}
 
 method main(System.Console sys):
     // Create an array of bytes, that represents a string 
-    Data data = {items:text, length:|text|}
+    //Data data = {items:text, length:|text|}
+    // Create a byte array with repeated text
+    Data data = init(2)
     sys.out.print_s("Data:         ")
     sys.out.println_s(ASCII.fromBytes(data.items))
     sys.out.print(data.length)

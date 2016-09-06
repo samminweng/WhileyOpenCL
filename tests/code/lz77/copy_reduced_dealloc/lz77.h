@@ -21,4 +21,5 @@ Data* append_byte(Data* data, _DECL_DEALLOC_PARAM(data), BYTE item);
 Data* write_u1(Data* data, _DECL_DEALLOC_PARAM(data), long long u1);
 Data* compress(Data* input, _DECL_DEALLOC_PARAM(input));
 Data* decompress(Data* input, _DECL_DEALLOC_PARAM(input));
+Data* init(long long repeat);
 int main(int argc, char** args);

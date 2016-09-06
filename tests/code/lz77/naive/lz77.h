@@ -21,4 +21,5 @@ Data* append_byte(Data* data, BYTE item);
 Data* write_u1(Data* data, long long u1);
 Data* compress(Data* input);
 Data* decompress(Data* input);
+Data* init(long long repeat);
 int main(int argc, char** args);
