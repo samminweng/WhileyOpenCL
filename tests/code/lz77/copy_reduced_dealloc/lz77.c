@@ -261,7 +261,7 @@ Data* append_byte(Data* data, _DECL_DEALLOC_PARAM(data), BYTE item){
 	_11=_9+_10;
 	//arraygen %12 = [8; 11] : byte[]
 	_DEALLOC(_12);
-	_NEW_1DARRAY_BYTE_VALUE(_12, _11, _8);
+	_NEW_1DARRAY(_12, _11, _8, T_BYTE);
 	_ADD_DEALLOC(_12);
 	//assign %4 = %12  : byte[]
 	_DEALLOC(nitems);
@@ -388,7 +388,7 @@ Data* compress(Data* input, _DECL_DEALLOC_PARAM(input)){
 	_9 = 0;
 	//arraygen %10 = [8; 9] : byte[]
 	_DEALLOC(_10);
-	_NEW_1DARRAY_BYTE_VALUE(_10, _9, _8);
+	_NEW_1DARRAY(_10, _9, _8, T_BYTE);
 	_ADD_DEALLOC(_10);
 	//const %11 = 0 : int
 	_11 = 0;
@@ -563,7 +563,7 @@ Data* decompress(Data* input, _DECL_DEALLOC_PARAM(input)){
 	_12 = 0;
 	//arraygen %13 = [11; 12] : byte[]
 	_DEALLOC(_13);
-	_NEW_1DARRAY_BYTE_VALUE(_13, _12, _11);
+	_NEW_1DARRAY(_13, _12, _11, T_BYTE);
 	_ADD_DEALLOC(_13);
 	//const %14 = 0 : int
 	_14 = 0;
@@ -747,7 +747,7 @@ Data* init(long long repeat){
 	_7 = 0b00000000;
 	//arraygen %8 = [7; 2] : byte[]
 	_DEALLOC(_8);
-	_NEW_1DARRAY_BYTE_VALUE(_8, length, _7);
+	_NEW_1DARRAY(_8, length, _7, T_BYTE);
 	_ADD_DEALLOC(_8);
 	//assign %3 = %8  : byte[]
 	_DEALLOC(items);
@@ -763,7 +763,7 @@ Data* init(long long repeat){
 		if(pos>=length){goto blklab18;}
 		//const %10 = [01100001b,01100001b,01100011b,01100001b,01100001b,01100011b,01100001b,01100010b,01100011b,01100001b,01100010b,01100001b,01100001b,01100001b,01100011b] : byte[]
 		_DEALLOC(_10);
-		_NEW_1DARRAY_BYTE_VALUE(_10, 15, 0b0);
+		_NEW_1DARRAY(_10, 15, 0b0, T_BYTE);
 		_10[0] = 0b01100001; _10[1] = 0b01100001; _10[2] = 0b01100011; _10[3] = 0b01100001; _10[4] = 0b01100001; _10[5] = 0b01100011; _10[6] = 0b01100001; _10[7] = 0b01100010; _10[8] = 0b01100011; _10[9] = 0b01100001; _10[10] = 0b01100010; _10[11] = 0b01100001; _10[12] = 0b01100001; _10[13] = 0b01100001; _10[14] = 0b01100011; 
 		_ADD_DEALLOC(_10);
 		//const %11 = 15 : int
@@ -870,7 +870,7 @@ int main(int argc, char** args){
 	//fieldload %7 = %6 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %8 = [68,97,116,97,58,32,32,32,32,32,32,32,32,32] : int[]
 	_DEALLOC(_8);
-	_NEW_1DARRAY(_8, 14, 0);
+	_NEW_1DARRAY(_8, 14, 0, T_INT);
 	_8[0] = 68; _8[1] = 97; _8[2] = 116; _8[3] = 97; _8[4] = 58; _8[5] = 32; _8[6] = 32; _8[7] = 32; _8[8] = 32; _8[9] = 32; _8[10] = 32; _8[11] = 32; _8[12] = 32; _8[13] = 32; 
 	_ADD_DEALLOC(_8);
 	//indirectinvoke () = %7 (%8) : method(int[])->()
@@ -899,7 +899,7 @@ int main(int argc, char** args){
 	//fieldload %17 = %16 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %18 = [32,98,121,116,101,115] : int[]
 	_DEALLOC(_18);
-	_NEW_1DARRAY(_18, 6, 0);
+	_NEW_1DARRAY(_18, 6, 0, T_INT);
 	_18[0] = 32; _18[1] = 98; _18[2] = 121; _18[3] = 116; _18[4] = 101; _18[5] = 115; 
 	_ADD_DEALLOC(_18);
 	//indirectinvoke () = %17 (%18) : method(int[])->()
@@ -919,7 +919,7 @@ int main(int argc, char** args){
 	//fieldload %21 = %20 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %22 = [67,79,77,80,82,69,83,83,69,68,32,68,97,116,97,58,32,32,32] : int[]
 	_DEALLOC(_22);
-	_NEW_1DARRAY(_22, 19, 0);
+	_NEW_1DARRAY(_22, 19, 0, T_INT);
 	_22[0] = 67; _22[1] = 79; _22[2] = 77; _22[3] = 80; _22[4] = 82; _22[5] = 69; _22[6] = 83; _22[7] = 83; _22[8] = 69; _22[9] = 68; _22[10] = 32; _22[11] = 68; _22[12] = 97; _22[13] = 116; _22[14] = 97; _22[15] = 58; _22[16] = 32; _22[17] = 32; _22[18] = 32; 
 	_ADD_DEALLOC(_22);
 	//indirectinvoke () = %21 (%22) : method(int[])->()
@@ -948,7 +948,7 @@ int main(int argc, char** args){
 	//fieldload %31 = %30 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %32 = [32,98,121,116,101,115] : int[]
 	_DEALLOC(_32);
-	_NEW_1DARRAY(_32, 6, 0);
+	_NEW_1DARRAY(_32, 6, 0, T_INT);
 	_32[0] = 32; _32[1] = 98; _32[2] = 121; _32[3] = 116; _32[4] = 101; _32[5] = 115; 
 	_ADD_DEALLOC(_32);
 	//indirectinvoke () = %31 (%32) : method(int[])->()
@@ -968,7 +968,7 @@ int main(int argc, char** args){
 	//fieldload %35 = %34 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %36 = [68,69,67,79,77,80,82,69,83,83,69,68,58,32,32,32] : int[]
 	_DEALLOC(_36);
-	_NEW_1DARRAY(_36, 16, 0);
+	_NEW_1DARRAY(_36, 16, 0, T_INT);
 	_36[0] = 68; _36[1] = 69; _36[2] = 67; _36[3] = 79; _36[4] = 77; _36[5] = 80; _36[6] = 82; _36[7] = 69; _36[8] = 83; _36[9] = 83; _36[10] = 69; _36[11] = 68; _36[12] = 58; _36[13] = 32; _36[14] = 32; _36[15] = 32; 
 	_ADD_DEALLOC(_36);
 	//indirectinvoke () = %35 (%36) : method(int[])->()
@@ -997,7 +997,7 @@ int main(int argc, char** args){
 	//fieldload %45 = %44 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %46 = [32,98,121,116,101,115] : int[]
 	_DEALLOC(_46);
-	_NEW_1DARRAY(_46, 6, 0);
+	_NEW_1DARRAY(_46, 6, 0, T_INT);
 	_46[0] = 32; _46[1] = 98; _46[2] = 121; _46[3] = 116; _46[4] = 101; _46[5] = 115; 
 	_ADD_DEALLOC(_46);
 	//indirectinvoke () = %45 (%46) : method(int[])->()

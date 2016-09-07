@@ -80,19 +80,19 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), long long n){
 		//const %10 = 0 : int
 		_10 = 0;
 		//arraygen %11 = [10; 1] : int[]
-		_NEW_1DARRAY(_11, n, _10);
+		_NEW_1DARRAY(_11, n, _10, T_INT);
 		//assign %4 = %11  : int[]
 		_UPDATE_1DARRAY(x, _11);
 		//const %12 = 0 : int
 		_12 = 0;
 		//arraygen %13 = [12; 1] : int[]
-		_NEW_1DARRAY(_13, n, _12);
+		_NEW_1DARRAY(_13, n, _12, T_INT);
 		//assign %5 = %13  : int[]
 		_UPDATE_1DARRAY(y, _13);
 		//const %14 = 0 : int
 		_14 = 0;
 		//arraygen %15 = [14; 1] : int[]
-		_NEW_1DARRAY(_15, n, _14);
+		_NEW_1DARRAY(_15, n, _14, T_INT);
 		//assign %6 = %15  : int[]
 		_UPDATE_1DARRAY(z, _15);
 		//assign %7 = %3  : int
@@ -311,7 +311,7 @@ int main(int argc, char** args){
 	//mul %6 = %1, %1 : int
 	_6=n*n;
 	//arraygen %7 = [5; 6] : int[]
-	_NEW_1DARRAY(_7, _6, _5);
+	_NEW_1DARRAY(_7, _6, _5, T_INT);
 	//assign %2 = %7  : int[]
 	_UPDATE_1DARRAY(moves, _7);
 	//invoke (%8) = (%2, %1) CoinGame2:findMoves : function(int[],int)->(int[])
@@ -345,7 +345,7 @@ blklab11:;
 	//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %14 = %13 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %15 = [84,104,101,32,116,111,116,97,108,32,97,109,111,117,110,116,32,111,102,32,109,111,110,101,121,32,40,109,97,120,105,109,117,109,41,32,65,108,105,99,101,32,103,101,116,115,32,105,115,32] : int[]
-	_NEW_1DARRAY(_15, 50, 0);
+	_NEW_1DARRAY(_15, 50, 0, T_INT);
 	_15[0] = 84; _15[1] = 104; _15[2] = 101; _15[3] = 32; _15[4] = 116; _15[5] = 111; _15[6] = 116; _15[7] = 97; _15[8] = 108; _15[9] = 32; _15[10] = 97; _15[11] = 109; _15[12] = 111; _15[13] = 117; _15[14] = 110; _15[15] = 116; _15[16] = 32; _15[17] = 111; _15[18] = 102; _15[19] = 32; _15[20] = 109; _15[21] = 111; _15[22] = 110; _15[23] = 101; _15[24] = 121; _15[25] = 32; _15[26] = 40; _15[27] = 109; _15[28] = 97; _15[29] = 120; _15[30] = 105; _15[31] = 109; _15[32] = 117; _15[33] = 109; _15[34] = 41; _15[35] = 32; _15[36] = 65; _15[37] = 108; _15[38] = 105; _15[39] = 99; _15[40] = 101; _15[41] = 32; _15[42] = 103; _15[43] = 101; _15[44] = 116; _15[45] = 115; _15[46] = 32; _15[47] = 105; _15[48] = 115; _15[49] = 32; 
 	//indirectinvoke () = %14 (%15) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_15));
@@ -356,7 +356,7 @@ blklab11:;
 	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %19 = %18 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %20 = [80,97,115,115,32,67,111,105,110,71,97,109,101,32,116,101,115,116,32,99,97,115,101] : int[]
-	_NEW_1DARRAY(_20, 23, 0);
+	_NEW_1DARRAY(_20, 23, 0, T_INT);
 	_20[0] = 80; _20[1] = 97; _20[2] = 115; _20[3] = 115; _20[4] = 32; _20[5] = 67; _20[6] = 111; _20[7] = 105; _20[8] = 110; _20[9] = 71; _20[10] = 97; _20[11] = 109; _20[12] = 101; _20[13] = 32; _20[14] = 116; _20[15] = 101; _20[16] = 115; _20[17] = 116; _20[18] = 32; _20[19] = 99; _20[20] = 97; _20[21] = 115; _20[22] = 101; 
 	//indirectinvoke () = %19 (%20) : method(int[])->()
 	println_s(_20, _20_size);

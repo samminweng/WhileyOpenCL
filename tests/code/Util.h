@@ -111,9 +111,9 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 #define _DECL_DEALLOC(a) bool a##_dealloc = false;
 #define _DECL_DEALLOC_PARAM(a) bool a##_dealloc
 #define _DECL_1DARRAY_PARAM(a) long long* a, long long a##_size
-#define _DECL_1DARRAY_MEMBER(a) long long* a; long long a##_size;
-// Declare a BYTE array
+ // Declare a BYTE array
 #define _DECL_1DARRAY_MEMBER_BYTE(a) BYTE* a; long long a##_size; 
+#define _DECL_1DARRAY_MEMBER(a) long long* a; long long a##_size;
 #define _DECL_2DARRAY_PARAM(a) long long** a, long long a##_size, long long a##_size_size
 #define _DECL_2DARRAY_MEMBER(a) long long** a; long long a##_size; long long a##_size_size;
 /***
@@ -127,16 +127,15 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 			*a = *b;\
 		})
 // Create an array of integers or integer arrays
-#define _NEW_1DARRAY(a, size, value) a##_size = size; a = create1DArray(value, a##_size, T_INT);
-#define _NEW_1DARRAY_BYTE_VALUE(a, size, value) a##_size = size; a = create1DArray(value, a##_size, T_BYTE);
+#define _NEW_1DARRAY(a, size, value, type) a##_size = size; a = create1DArray(value, a##_size, type);
+#define _NEW_2DARRAY(a, size, value, type) a##_size = size; a##_size_size = value##_size; a = create2DArray(value, a##_size, a##_size_size);
+// Create an array of structure pointers
 // Use '_Generic' selection, supported in GCC 4.9 (later), to choose proper creation function at compile time 
 /*#define _NEW_1DARRAY(a, size, value) \
  		({\
  			a##_size = size;\
  			a = _Generic(a, BYTE*: create1DArray_BYTE , default: create1DArray)(value, a##_size);\
  		})*/
-#define _NEW_2DARRAY(a, size, value) a##_size = size; a##_size_size = value##_size; a = create2DArray(value, a##_size, a##_size_size);
-// Create an array of structure pointers
 #define _NEW_1DARRAY_STRUCT(a, size, b, name) \
  		({\
  			a = malloc(size*sizeof(name*));\

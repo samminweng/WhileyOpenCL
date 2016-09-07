@@ -100,7 +100,7 @@ int main(int argc, char** args){
 	//const %4 = 0 : int
 	_4 = 0;
 	//arraygen %5 = [4; 1] : int[]
-	_NEW_1DARRAY(_5, max, _4);
+	_NEW_1DARRAY(_5, max, _4, T_INT);
 	//assign %2 = %5  : int[]
 	_UPDATE_1DARRAY(arr, _5);
 	//const %7 = 1 : int
@@ -137,7 +137,7 @@ int main(int argc, char** args){
 		//const %18 = 34 : int
 		_18 = 34;
 		//newlist %19 = (%9, %10, %11, %12, %13, %14, %15, %16, %17, %18) : int[]
-		_NEW_1DARRAY(_19, 10, 0);
+		_NEW_1DARRAY(_19, 10, 0, T_INT);
 		_19[0] = _9; _19[1] = _10; _19[2] = _11; _19[3] = _12; _19[4] = _13; _19[5] = _14; _19[6] = _15; _19[7] = _16; _19[8] = _17; _19[9] = _18; 
 		//ifeq %2, %19 goto blklab2 : int[]
 		_IFEQ_ARRAY(arr, _19, blklab2);
@@ -155,7 +155,7 @@ blklab2:;
 	//fieldload %22 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %23 = %22 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %24 = [80,97,115,115,32,70,105,98,111,110,97,99,99,105,32,116,101,115,116,32,99,97,115,101] : int[]
-	_NEW_1DARRAY(_24, 24, 0);
+	_NEW_1DARRAY(_24, 24, 0, T_INT);
 	_24[0] = 80; _24[1] = 97; _24[2] = 115; _24[3] = 115; _24[4] = 32; _24[5] = 70; _24[6] = 105; _24[7] = 98; _24[8] = 111; _24[9] = 110; _24[10] = 97; _24[11] = 99; _24[12] = 99; _24[13] = 105; _24[14] = 32; _24[15] = 116; _24[16] = 101; _24[17] = 115; _24[18] = 116; _24[19] = 32; _24[20] = 99; _24[21] = 97; _24[22] = 115; _24[23] = 101; 
 	//indirectinvoke () = %23 (%24) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_24));

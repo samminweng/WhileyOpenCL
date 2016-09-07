@@ -298,7 +298,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Special case for BYTE type
 				if (elm_type instanceof Type.Byte) {
 					// Create an array of bytes
-					statement.add(indent + "_NEW_1DARRAY_BYTE_VALUE(" + lhs + ", " + list.values.size() + ", 0b0);");
+					statement.add(indent + "_NEW_1DARRAY(" + lhs + ", " + list.values.size() + ", 0b0, T_BYTE);");
 					if (!list.values.isEmpty()) {
 						// Assign values to each element
 						String s = indent;
@@ -312,7 +312,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						statement.add(s);
 					}
 				} else {
-					statement.add(indent + "_NEW_1DARRAY(" + lhs + ", " + list.values.size() + ", 0);");
+					statement.add(indent + "_NEW_1DARRAY(" + lhs + ", " + list.values.size() + ", 0, T_INT);");
 					if (!list.values.isEmpty()) {
 						// Assign values to each element
 						String s = indent;
@@ -1369,7 +1369,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String lhs = stores.getVar(code.target(0), function);
 		int length = code.operands().length;
 		if (length > 0) {
-			statement.add(indent + "_NEW_1DARRAY(" + lhs + ", " + length + ", 0);");
+			statement.add(indent + "_NEW_1DARRAY(" + lhs + ", " + length + ", 0, T_INT);");
 			String s = indent;
 			// Initialize the array
 			for (int i = 0; i < code.operands().length; i++) {
@@ -1797,12 +1797,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		int dimension = stores.getArrayDimension(lhs_type);
 		if(elm_type instanceof Type.Byte){
 			// Generate a BYTE array and assign its value
-			statement.add(indent + "_NEW_"+dimension+ "DARRAY_BYTE_VALUE(" + lhs + ", " + size + ", "
-					+ rhs + ");");
+			statement.add(indent + "_NEW_"+dimension+ "DARRAY(" + lhs + ", " + size + ", "
+					+ rhs + ", T_BYTE);");
 		} else if (stores.isIntType(elm_type)) {
 			// Generate an array with given size and values.
 			statement.add(indent + "_NEW_" + dimension + "DARRAY(" + lhs + ", " + size + ", "
-					+ rhs + ");");
+					+ rhs + ", T_INT);");
 		} else {
 			// Generate an array of structures
 			String struct = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");

@@ -104,7 +104,7 @@ int main(int argc, char** args){
 	_8 = 0;
 	//newlist %9 = (%4, %5, %6, %7, %8) : int[]
 	_DEALLOC(_9);
-	_NEW_1DARRAY(_9, 5, 0);
+	_NEW_1DARRAY(_9, 5, 0, T_INT);
 	_9[0] = _4; _9[1] = _5; _9[2] = _6; _9[3] = _7; _9[4] = _8; 
 	_ADD_DEALLOC(_9);
 	//assign %1 = %9  : int[]
@@ -147,7 +147,7 @@ blklab2:;
 	//fieldload %16 = %15 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %17 = [97,91,50,93,61] : int[]
 	_DEALLOC(_17);
-	_NEW_1DARRAY(_17, 5, 0);
+	_NEW_1DARRAY(_17, 5, 0, T_INT);
 	_17[0] = 97; _17[1] = 91; _17[2] = 50; _17[3] = 93; _17[4] = 61; 
 	_ADD_DEALLOC(_17);
 	//indirectinvoke () = %16 (%17) : method(int[])->()
@@ -172,7 +172,7 @@ blklab2:;
 	_26 = 0;
 	//newlist %27 = (%22, %23, %24, %25, %26) : int[]
 	_DEALLOC(_27);
-	_NEW_1DARRAY(_27, 5, 0);
+	_NEW_1DARRAY(_27, 5, 0, T_INT);
 	_27[0] = _22; _27[1] = _23; _27[2] = _24; _27[3] = _25; _27[4] = _26; 
 	_ADD_DEALLOC(_27);
 	//assign %2 = %27  : int[]
@@ -232,7 +232,7 @@ blklab4:;
 	//fieldload %37 = %36 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %38 = [98,91,50,93,61] : int[]
 	_DEALLOC(_38);
-	_NEW_1DARRAY(_38, 5, 0);
+	_NEW_1DARRAY(_38, 5, 0, T_INT);
 	_38[0] = 98; _38[1] = 91; _38[2] = 50; _38[3] = 93; _38[4] = 61; 
 	_ADD_DEALLOC(_38);
 	//indirectinvoke () = %37 (%38) : method(int[])->()
@@ -249,7 +249,7 @@ blklab4:;
 	//fieldload %44 = %43 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %45 = [99,91,50,93,61] : int[]
 	_DEALLOC(_45);
-	_NEW_1DARRAY(_45, 5, 0);
+	_NEW_1DARRAY(_45, 5, 0, T_INT);
 	_45[0] = 99; _45[1] = 91; _45[2] = 50; _45[3] = 93; _45[4] = 61; 
 	_ADD_DEALLOC(_45);
 	//indirectinvoke () = %44 (%45) : method(int[])->()

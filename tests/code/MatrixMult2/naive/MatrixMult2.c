@@ -67,7 +67,7 @@ Matrix* init(long long width, long long height){
 	//mul %7 = %0, %1 : int
 	_7=width*height;
 	//arraygen %8 = [6; 7] : int[]
-	_NEW_1DARRAY(_8, _7, _6);
+	_NEW_1DARRAY(_8, _7, _6, T_INT);
 	//assign %3 = %8  : int[]
 	_COPY_1DARRAY(data, _8);
 	//const %9 = 0 : int
@@ -194,7 +194,7 @@ void print_mat(FILE* sys, Matrix* a){
 			//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %17 = %16 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %18 = [32] : int[]
-			_NEW_1DARRAY(_18, 1, 0);
+			_NEW_1DARRAY(_18, 1, 0, T_INT);
 			_18[0] = 32; 
 			//indirectinvoke () = %17 (%18) : method(int[])->()
 			printf_s(_1DARRAY_PARAM(_18));
@@ -218,7 +218,7 @@ blklab8:;
 		//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %24 = %23 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//const %25 = [] : void[]
-		_NEW_1DARRAY(_25, 0, 0);
+		_NEW_1DARRAY(_25, 0, 0, T_INT);
 		//indirectinvoke () = %24 (%25) : method(int[])->()
 		println_s(_25, _25_size);
 //.blklab7
@@ -283,7 +283,7 @@ Matrix* mat_mult(Matrix* a, Matrix* b){
 	//mul %14 = %3, %4 : int
 	_14=width*height;
 	//arraygen %15 = [13; 14] : int[]
-	_NEW_1DARRAY(_15, _14, _13);
+	_NEW_1DARRAY(_15, _14, _13, T_INT);
 	//assign %5 = %15  : int[]
 	_COPY_1DARRAY(data, _15);
 	//fieldload %16 = %0 data : {int[] data,int height,int width}
@@ -463,7 +463,7 @@ int main(int argc, char** args){
 	//fieldload %4 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %5 = %4 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %6 = [78,32,61,32] : int[]
-	_NEW_1DARRAY(_6, 4, 0);
+	_NEW_1DARRAY(_6, 4, 0, T_INT);
 	_6[0] = 78; _6[1] = 32; _6[2] = 61; _6[3] = 32; 
 	//indirectinvoke () = %5 (%6) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_6));
@@ -622,7 +622,7 @@ blklab21:;
 	//fieldload %57 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %58 = %57 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %59 = [77,97,116,114,105,120,32,67,91,78,45,49,93,91,78,45,49,93,32,61,32] : int[]
-	_NEW_1DARRAY(_59, 21, 0);
+	_NEW_1DARRAY(_59, 21, 0, T_INT);
 	_59[0] = 77; _59[1] = 97; _59[2] = 116; _59[3] = 114; _59[4] = 105; _59[5] = 120; _59[6] = 32; _59[7] = 67; _59[8] = 91; _59[9] = 78; _59[10] = 45; _59[11] = 49; _59[12] = 93; _59[13] = 91; _59[14] = 78; _59[15] = 45; _59[16] = 49; _59[17] = 93; _59[18] = 32; _59[19] = 61; _59[20] = 32; 
 	//indirectinvoke () = %58 (%59) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_59));
@@ -655,7 +655,7 @@ blklab21:;
 	//fieldload %73 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %74 = %73 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %75 = [80,97,115,115,32,77,97,116,114,105,120,77,117,108,116,50,32,116,101,115,116,32,99,97,115,101] : int[]
-	_NEW_1DARRAY(_75, 26, 0);
+	_NEW_1DARRAY(_75, 26, 0, T_INT);
 	_75[0] = 80; _75[1] = 97; _75[2] = 115; _75[3] = 115; _75[4] = 32; _75[5] = 77; _75[6] = 97; _75[7] = 116; _75[8] = 114; _75[9] = 105; _75[10] = 120; _75[11] = 77; _75[12] = 117; _75[13] = 108; _75[14] = 116; _75[15] = 50; _75[16] = 32; _75[17] = 116; _75[18] = 101; _75[19] = 115; _75[20] = 116; _75[21] = 32; _75[22] = 99; _75[23] = 97; _75[24] = 115; _75[25] = 101; 
 	//indirectinvoke () = %74 (%75) : method(int[])->()
 	println_s(_75, _75_size);

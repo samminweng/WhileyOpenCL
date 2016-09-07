@@ -193,7 +193,7 @@ int main(int argc, char** args){
 	//const %9 = 2 : int
 	_9 = 2;
 	//newlist %10 = (%5, %6, %7, %8, %9) : int[]
-	_NEW_1DARRAY(_10, 5, 0);
+	_NEW_1DARRAY(_10, 5, 0, T_INT);
 	_10[0] = _5; _10[1] = _6; _10[2] = _7; _10[3] = _8; _10[4] = _9; 
 	//assign %1 = %10  : int[]
 	_COPY_1DARRAY(ys, _10);
@@ -218,7 +218,7 @@ int main(int argc, char** args){
 		//const %16 = 7 : int
 		_16 = 7;
 		//newlist %17 = (%12, %13, %14, %15, %16) : int[]
-		_NEW_1DARRAY(_17, 5, 0);
+		_NEW_1DARRAY(_17, 5, 0, T_INT);
 		_17[0] = _12; _17[1] = _13; _17[2] = _14; _17[3] = _15; _17[4] = _16; 
 		//ifeq %1, %17 goto blklab5 : int[]
 		_IFEQ_ARRAY(ys, _17, blklab5);
@@ -242,7 +242,7 @@ blklab5:;
 	//const %23 = 2 : int
 	_23 = 2;
 	//newlist %24 = (%20, %21, %22, %23) : int[]
-	_NEW_1DARRAY(_24, 4, 0);
+	_NEW_1DARRAY(_24, 4, 0, T_INT);
 	_24[0] = _20; _24[1] = _21; _24[2] = _22; _24[3] = _23; 
 	//assign %1 = %24  : int[]
 	_COPY_1DARRAY(ys, _24);
@@ -265,7 +265,7 @@ blklab5:;
 		//const %29 = 7 : int
 		_29 = 7;
 		//newlist %30 = (%26, %27, %28, %29) : int[]
-		_NEW_1DARRAY(_30, 4, 0);
+		_NEW_1DARRAY(_30, 4, 0, T_INT);
 		_30[0] = _26; _30[1] = _27; _30[2] = _28; _30[3] = _29; 
 		//ifeq %1, %30 goto blklab6 : int[]
 		_IFEQ_ARRAY(ys, _30, blklab6);
@@ -289,7 +289,7 @@ blklab6:;
 	//const %36 = 4 : int
 	_36 = 4;
 	//newlist %37 = (%33, %34, %35, %36) : int[]
-	_NEW_1DARRAY(_37, 4, 0);
+	_NEW_1DARRAY(_37, 4, 0, T_INT);
 	_37[0] = _33; _37[1] = _34; _37[2] = _35; _37[3] = _36; 
 	//assign %1 = %37  : int[]
 	_COPY_1DARRAY(ys, _37);
@@ -312,7 +312,7 @@ blklab6:;
 		//const %42 = 4 : int
 		_42 = 4;
 		//newlist %43 = (%39, %40, %41, %42) : int[]
-		_NEW_1DARRAY(_43, 4, 0);
+		_NEW_1DARRAY(_43, 4, 0, T_INT);
 		_43[0] = _39; _43[1] = _40; _43[2] = _41; _43[3] = _42; 
 		//ifeq %1, %43 goto blklab7 : int[]
 		_IFEQ_ARRAY(ys, _43, blklab7);
@@ -338,7 +338,7 @@ blklab7:;
 	//const %50 = 5 : int
 	_50 = 5;
 	//newlist %51 = (%46, %47, %48, %49, %50) : int[]
-	_NEW_1DARRAY(_51, 5, 0);
+	_NEW_1DARRAY(_51, 5, 0, T_INT);
 	_51[0] = _46; _51[1] = _47; _51[2] = _48; _51[3] = _49; _51[4] = _50; 
 	//assign %1 = %51  : int[]
 	_COPY_1DARRAY(ys, _51);
@@ -363,7 +363,7 @@ blklab7:;
 		//const %57 = 5 : int
 		_57 = 5;
 		//newlist %58 = (%53, %54, %55, %56, %57) : int[]
-		_NEW_1DARRAY(_58, 5, 0);
+		_NEW_1DARRAY(_58, 5, 0, T_INT);
 		_58[0] = _53; _58[1] = _54; _58[2] = _55; _58[3] = _56; _58[4] = _57; 
 		//ifeq %1, %58 goto blklab8 : int[]
 		_IFEQ_ARRAY(ys, _58, blklab8);
@@ -389,7 +389,7 @@ blklab8:;
 	//const %63 = 0 : int
 	_63 = 0;
 	//arraygen %64 = [63; 2] : int[]
-	_NEW_1DARRAY(_64, max, _63);
+	_NEW_1DARRAY(_64, max, _63, T_INT);
 	//assign %4 = %64  : int[]
 	_COPY_1DARRAY(arr, _64);
 	//loop (%3, %4, %65, %66, %67)
@@ -442,7 +442,7 @@ blklab9:;
 		//const %78 = 10 : int
 		_78 = 10;
 		//newlist %79 = (%69, %70, %71, %72, %73, %74, %75, %76, %77, %78) : int[]
-		_NEW_1DARRAY(_79, 10, 0);
+		_NEW_1DARRAY(_79, 10, 0, T_INT);
 		_79[0] = _69; _79[1] = _70; _79[2] = _71; _79[3] = _72; _79[4] = _73; _79[5] = _74; _79[6] = _75; _79[7] = _76; _79[8] = _77; _79[9] = _78; 
 		//ifeq %4, %79 goto blklab11 : int[]
 		_IFEQ_ARRAY(arr, _79, blklab11);
@@ -460,7 +460,7 @@ blklab11:;
 	//fieldload %82 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %83 = %82 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %84 = [80,97,115,115,32,66,117,98,98,108,101,83,111,114,116,32,116,101,115,116,32,99,97,115,101] : int[]
-	_NEW_1DARRAY(_84, 25, 0);
+	_NEW_1DARRAY(_84, 25, 0, T_INT);
 	_84[0] = 80; _84[1] = 97; _84[2] = 115; _84[3] = 115; _84[4] = 32; _84[5] = 66; _84[6] = 117; _84[7] = 98; _84[8] = 98; _84[9] = 108; _84[10] = 101; _84[11] = 83; _84[12] = 111; _84[13] = 114; _84[14] = 116; _84[15] = 32; _84[16] = 116; _84[17] = 101; _84[18] = 115; _84[19] = 116; _84[20] = 32; _84[21] = 99; _84[22] = 97; _84[23] = 115; _84[24] = 101; 
 	//indirectinvoke () = %83 (%84) : method(int[])->()
 	println_s(_84, _84_size);

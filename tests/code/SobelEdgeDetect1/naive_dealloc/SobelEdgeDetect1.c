@@ -206,7 +206,7 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 	_15 = 255;
 	//arraygen %16 = [15; 4] : int[]
 	_DEALLOC(_16);
-	_NEW_1DARRAY(_16, size, _15);
+	_NEW_1DARRAY(_16, size, _15, T_INT);
 	_ADD_DEALLOC(_16);
 	//assign %5 = %16  : int[]
 	_DEALLOC(newPixels);
@@ -238,7 +238,7 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 	_28 = 1;
 	//newlist %29 = (%18, %19, %20, %22, %23, %24, %26, %27, %28) : int[]
 	_DEALLOC(_29);
-	_NEW_1DARRAY(_29, 9, 0);
+	_NEW_1DARRAY(_29, 9, 0, T_INT);
 	_29[0] = _18; _29[1] = _19; _29[2] = _20; _29[3] = _22; _29[4] = _23; _29[5] = _24; _29[6] = _26; _29[7] = _27; _29[8] = _28; 
 	_ADD_DEALLOC(_29);
 	//assign %6 = %29  : int[]
@@ -271,7 +271,7 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 	_41= -_40;
 	//newlist %42 = (%30, %31, %32, %33, %34, %35, %37, %39, %41) : int[]
 	_DEALLOC(_42);
-	_NEW_1DARRAY(_42, 9, 0);
+	_NEW_1DARRAY(_42, 9, 0, T_INT);
 	_42[0] = _30; _42[1] = _31; _42[2] = _32; _42[3] = _33; _42[4] = _34; _42[5] = _35; _42[6] = _37; _42[7] = _39; _42[8] = _41; 
 	_ADD_DEALLOC(_42);
 	//assign %7 = %42  : int[]
@@ -439,7 +439,7 @@ void printImage(FILE* sys, _DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(pixe
 			//fieldload %14 = %13 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %15 = [119] : int[]
 			_DEALLOC(_15);
-			_NEW_1DARRAY(_15, 1, 0);
+			_NEW_1DARRAY(_15, 1, 0, T_INT);
 			_15[0] = 119; 
 			_ADD_DEALLOC(_15);
 			//indirectinvoke () = %14 (%15) : method(int[])->()
@@ -452,7 +452,7 @@ blklab14:;
 			//fieldload %17 = %16 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %18 = [98] : int[]
 			_DEALLOC(_18);
-			_NEW_1DARRAY(_18, 1, 0);
+			_NEW_1DARRAY(_18, 1, 0, T_INT);
 			_18[0] = 98; 
 			_ADD_DEALLOC(_18);
 			//indirectinvoke () = %17 (%18) : method(int[])->()
@@ -463,7 +463,7 @@ blklab15:;
 			//fieldload %20 = %19 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %21 = [32] : int[]
 			_DEALLOC(_21);
-			_NEW_1DARRAY(_21, 1, 0);
+			_NEW_1DARRAY(_21, 1, 0, T_INT);
 			_21[0] = 32; 
 			_ADD_DEALLOC(_21);
 			//indirectinvoke () = %20 (%21) : method(int[])->()
@@ -489,7 +489,7 @@ blklab12:;
 		//fieldload %27 = %26 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//const %28 = [] : void[]
 		_DEALLOC(_28);
-		_NEW_1DARRAY(_28, 0, 0);
+		_NEW_1DARRAY(_28, 0, 0, T_INT);
 		_ADD_DEALLOC(_28);
 		//indirectinvoke () = %27 (%28) : method(int[])->()
 		println_s(_28, _28_size);
@@ -582,7 +582,7 @@ int main(int argc, char** args){
 	_9 = 255;
 	//arraygen %10 = [9; 3] : int[]
 	_DEALLOC(_10);
-	_NEW_1DARRAY(_10, size, _9);
+	_NEW_1DARRAY(_10, size, _9, T_INT);
 	_ADD_DEALLOC(_10);
 	//assign %4 = %10  : int[]
 	_DEALLOC(pixels);
@@ -611,7 +611,7 @@ int main(int argc, char** args){
 	//fieldload %15 = %14 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %16 = [73,110,112,117,116,32,73,109,97,103,101,58] : int[]
 	_DEALLOC(_16);
-	_NEW_1DARRAY(_16, 12, 0);
+	_NEW_1DARRAY(_16, 12, 0, T_INT);
 	_16[0] = 73; _16[1] = 110; _16[2] = 112; _16[3] = 117; _16[4] = 116; _16[5] = 32; _16[6] = 73; _16[7] = 109; _16[8] = 97; _16[9] = 103; _16[10] = 101; _16[11] = 58; 
 	_ADD_DEALLOC(_16);
 	//indirectinvoke () = %15 (%16) : method(int[])->()
@@ -626,7 +626,7 @@ int main(int argc, char** args){
 	//fieldload %18 = %17 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %19 = [83,111,98,101,108,32,69,100,103,101,32,68,101,116,101,99,116,105,111,110,58] : int[]
 	_DEALLOC(_19);
-	_NEW_1DARRAY(_19, 21, 0);
+	_NEW_1DARRAY(_19, 21, 0, T_INT);
 	_19[0] = 83; _19[1] = 111; _19[2] = 98; _19[3] = 101; _19[4] = 108; _19[5] = 32; _19[6] = 69; _19[7] = 100; _19[8] = 103; _19[9] = 101; _19[10] = 32; _19[11] = 68; _19[12] = 101; _19[13] = 116; _19[14] = 101; _19[15] = 99; _19[16] = 116; _19[17] = 105; _19[18] = 111; _19[19] = 110; _19[20] = 58; 
 	_ADD_DEALLOC(_19);
 	//indirectinvoke () = %18 (%19) : method(int[])->()

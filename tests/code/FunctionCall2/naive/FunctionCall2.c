@@ -85,7 +85,7 @@ int main(int argc, char** args){
 	//const %8 = 0 : int
 	_8 = 0;
 	//newlist %9 = (%4, %5, %6, %7, %8) : int[]
-	_NEW_1DARRAY(_9, 5, 0);
+	_NEW_1DARRAY(_9, 5, 0, T_INT);
 	_9[0] = _4; _9[1] = _5; _9[2] = _6; _9[3] = _7; _9[4] = _8; 
 	//assign %1 = %9  : int[]
 	_COPY_1DARRAY(a, _9);
@@ -119,7 +119,7 @@ blklab2:;
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %16 = %15 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %17 = [97,91,50,93,61] : int[]
-	_NEW_1DARRAY(_17, 5, 0);
+	_NEW_1DARRAY(_17, 5, 0, T_INT);
 	_17[0] = 97; _17[1] = 91; _17[2] = 50; _17[3] = 93; _17[4] = 61; 
 	//indirectinvoke () = %16 (%17) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_17));
@@ -142,7 +142,7 @@ blklab2:;
 	//const %26 = 0 : int
 	_26 = 0;
 	//newlist %27 = (%22, %23, %24, %25, %26) : int[]
-	_NEW_1DARRAY(_27, 5, 0);
+	_NEW_1DARRAY(_27, 5, 0, T_INT);
 	_27[0] = _22; _27[1] = _23; _27[2] = _24; _27[3] = _25; _27[4] = _26; 
 	//assign %2 = %27  : int[]
 	_COPY_1DARRAY(b, _27);
@@ -193,7 +193,7 @@ blklab4:;
 	//fieldload %36 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %37 = %36 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %38 = [98,91,50,93,61] : int[]
-	_NEW_1DARRAY(_38, 5, 0);
+	_NEW_1DARRAY(_38, 5, 0, T_INT);
 	_38[0] = 98; _38[1] = 91; _38[2] = 50; _38[3] = 93; _38[4] = 61; 
 	//indirectinvoke () = %37 (%38) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_38));
@@ -208,7 +208,7 @@ blklab4:;
 	//fieldload %43 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %44 = %43 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %45 = [99,91,50,93,61] : int[]
-	_NEW_1DARRAY(_45, 5, 0);
+	_NEW_1DARRAY(_45, 5, 0, T_INT);
 	_45[0] = 99; _45[1] = 91; _45[2] = 50; _45[3] = 93; _45[4] = 61; 
 	//indirectinvoke () = %44 (%45) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_45));
