@@ -198,7 +198,7 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), long long width, long
 	//arraygen %16 = [15; 4] : int[]
 	_NEW_1DARRAY(_16, size, _15, T_INT);
 	//assign %5 = %16  : int[]
-	_COPY_1DARRAY(newPixels, _16);
+	_COPY_1DARRAY(newPixels, _16, T_INT);
 	//const %17 = 1 : int
 	_17 = 1;
 	//neg %18 = %17 : int
@@ -227,7 +227,7 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), long long width, long
 	_NEW_1DARRAY(_29, 9, 0, T_INT);
 	_29[0] = _18; _29[1] = _19; _29[2] = _20; _29[3] = _22; _29[4] = _23; _29[5] = _24; _29[6] = _26; _29[7] = _27; _29[8] = _28; 
 	//assign %6 = %29  : int[]
-	_COPY_1DARRAY(v_sobel, _29);
+	_COPY_1DARRAY(v_sobel, _29, T_INT);
 	//const %30 = 1 : int
 	_30 = 1;
 	//const %31 = 2 : int
@@ -256,7 +256,7 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), long long width, long
 	_NEW_1DARRAY(_42, 9, 0, T_INT);
 	_42[0] = _30; _42[1] = _31; _42[2] = _32; _42[3] = _33; _42[4] = _34; _42[5] = _35; _42[6] = _37; _42[7] = _39; _42[8] = _41; 
 	//assign %7 = %42  : int[]
-	_COPY_1DARRAY(h_sobel, _42);
+	_COPY_1DARRAY(h_sobel, _42, T_INT);
 	//const %43 = 0 : int
 	_43 = 0;
 	//assign %8 = %43  : int
@@ -283,7 +283,7 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), long long width, long
 			{
 				void* pixels_tmp;
 				void* v_sobel_tmp;
-				_47 = convolution(pixels_tmp = _COPY_1DARRAY_PARAM(pixels), width, height, x, y, v_sobel_tmp = _COPY_1DARRAY_PARAM(v_sobel));
+				_47 = convolution(pixels_tmp = _COPY_1DARRAY_PARAM(pixels, T_INT), width, height, x, y, v_sobel_tmp = _COPY_1DARRAY_PARAM(v_sobel, T_INT));
 			}
 			//assign %11 = %47  : int
 			v_g = _47;
@@ -291,7 +291,7 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), long long width, long
 			{
 				void* pixels_tmp;
 				void* h_sobel_tmp;
-				_48 = convolution(pixels_tmp = _COPY_1DARRAY_PARAM(pixels), width, height, x, y, h_sobel_tmp = _COPY_1DARRAY_PARAM(h_sobel));
+				_48 = convolution(pixels_tmp = _COPY_1DARRAY_PARAM(pixels, T_INT), width, height, x, y, h_sobel_tmp = _COPY_1DARRAY_PARAM(h_sobel, T_INT));
 			}
 			//assign %12 = %48  : int
 			h_g = _48;
@@ -528,7 +528,7 @@ int main(int argc, char** args){
 	//arraygen %10 = [9; 3] : int[]
 	_NEW_1DARRAY(_10, size, _9, T_INT);
 	//assign %4 = %10  : int[]
-	_COPY_1DARRAY(pixels, _10);
+	_COPY_1DARRAY(pixels, _10, T_INT);
 	//const %11 = 0 : int
 	_11 = 0;
 	//const %12 = 0 : int
@@ -539,10 +539,10 @@ int main(int argc, char** args){
 	{
 		void* pixels_tmp;
 		_UPDATE_1DARRAY_SIZE(_13, pixels);
-		_13 = sobelEdgeDetection(pixels_tmp = _COPY_1DARRAY_PARAM(pixels), width, height);
+		_13 = sobelEdgeDetection(pixels_tmp = _COPY_1DARRAY_PARAM(pixels, T_INT), width, height);
 	}
 	//assign %5 = %13  : int[]
-	_COPY_1DARRAY(newPixels, _13);
+	_COPY_1DARRAY(newPixels, _13, T_INT);
 	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %15 = %14 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %16 = [73,110,112,117,116,32,73,109,97,103,101,58] : int[]
@@ -553,7 +553,7 @@ int main(int argc, char** args){
 	//invoke () = (%0, %4, %1, %2) SobelEdgeDetect1:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
 		void* pixels_tmp;
-		printImage(stdout, pixels_tmp = _COPY_1DARRAY_PARAM(pixels), width, height);
+		printImage(stdout, pixels_tmp = _COPY_1DARRAY_PARAM(pixels, T_INT), width, height);
 	}
 	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %18 = %17 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -565,7 +565,7 @@ int main(int argc, char** args){
 	//invoke () = (%0, %5, %1, %2) SobelEdgeDetect1:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
 		void* newPixels_tmp;
-		printImage(stdout, newPixels_tmp = _COPY_1DARRAY_PARAM(newPixels), width, height);
+		printImage(stdout, newPixels_tmp = _COPY_1DARRAY_PARAM(newPixels, T_INT), width, height);
 	}
 	//assert
 	{

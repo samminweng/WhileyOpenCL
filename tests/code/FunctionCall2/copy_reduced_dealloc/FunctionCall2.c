@@ -185,7 +185,7 @@ blklab2:;
 		void* b_tmp;
 		_UPDATE_1DARRAY_SIZE(_28, b);
 		_DEALLOC(_28);
-		_28 = func(b_tmp = _COPY_1DARRAY_PARAM(b), false, _29);
+		_28 = func(b_tmp = _COPY_1DARRAY_PARAM(b, T_INT), false, _29);
 		_CALLER_DEALLOC(_28, b, "true-true-true");
 		_ADD_DEALLOC(_28);
 	}

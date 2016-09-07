@@ -1,7 +1,7 @@
 #include "SobelEdgeDetect2.h"
 Image* copy_Image(Image* _Image){
 	Image* new_Image = malloc(sizeof(Image));
-	_COPY_1DARRAY(new_Image->pixels, _Image->pixels);
+	_COPY_1DARRAY(new_Image->pixels, _Image->pixels, T_INT);
 	new_Image->width = _Image->width;
 	new_Image->height = _Image->height;
 	return new_Image;
@@ -37,7 +37,7 @@ Image* image(long long width, long long height, _DECL_1DARRAY_PARAM(pixels), _DE
 	_DEALLOC_STRUCT(_4, Image);
 	_4 = malloc(sizeof(Image));
 	_4->height = height;
-	_COPY_1DARRAY(_4->pixels, pixels);
+	_COPY_1DARRAY(_4->pixels, pixels, T_INT);
 	_4->width = width;
 	_ADD_DEALLOC(_4);
 	//return %4
@@ -97,7 +97,7 @@ long long convolution(Image* A, _DECL_DEALLOC_PARAM(A), long long xCenter, long 
 	_REMOVE_DEALLOC(_17);
 	//assign %5 = %17  : int[]
 	_DEALLOC(pixels);
-	_COPY_1DARRAY(pixels, _17);
+	_COPY_1DARRAY(pixels, _17, T_INT);
 	_ADD_DEALLOC(pixels);
 	//fieldload %18 = %0 width : {int height,int[] pixels,int width}
 	_18 = A->width;
@@ -287,7 +287,7 @@ Image* sobelEdgeDetection(Image* input, _DECL_DEALLOC_PARAM(input)){
 	_REMOVE_DEALLOC(_14);
 	//assign %2 = %14  : int[]
 	_DEALLOC(pixels);
-	_COPY_1DARRAY(pixels, _14);
+	_COPY_1DARRAY(pixels, _14, T_INT);
 	_ADD_DEALLOC(pixels);
 	//fieldload %15 = %0 width : {int height,int[] pixels,int width}
 	_15 = input->width;
@@ -307,7 +307,7 @@ Image* sobelEdgeDetection(Image* input, _DECL_DEALLOC_PARAM(input)){
 	_ADD_DEALLOC(_19);
 	//assign %5 = %19  : int[]
 	_DEALLOC(newPixels);
-	_COPY_1DARRAY(newPixels, _19);
+	_COPY_1DARRAY(newPixels, _19, T_INT);
 	_ADD_DEALLOC(newPixels);
 	//const %20 = 1 : int
 	_20 = 1;
@@ -340,7 +340,7 @@ Image* sobelEdgeDetection(Image* input, _DECL_DEALLOC_PARAM(input)){
 	_ADD_DEALLOC(_32);
 	//assign %6 = %32  : int[]
 	_DEALLOC(v_sobel);
-	_COPY_1DARRAY(v_sobel, _32);
+	_COPY_1DARRAY(v_sobel, _32, T_INT);
 	_ADD_DEALLOC(v_sobel);
 	//const %33 = 1 : int
 	_33 = 1;
@@ -373,7 +373,7 @@ Image* sobelEdgeDetection(Image* input, _DECL_DEALLOC_PARAM(input)){
 	_ADD_DEALLOC(_45);
 	//assign %7 = %45  : int[]
 	_DEALLOC(h_sobel);
-	_COPY_1DARRAY(h_sobel, _45);
+	_COPY_1DARRAY(h_sobel, _45, T_INT);
 	_ADD_DEALLOC(h_sobel);
 	//const %46 = 0 : int
 	_46 = 0;
@@ -401,7 +401,7 @@ Image* sobelEdgeDetection(Image* input, _DECL_DEALLOC_PARAM(input)){
 			{
 				void* input_tmp;
 				void* v_sobel_tmp;
-				_50 = convolution(input_tmp = _COPY_STRUCT_PARAM(input, Image), true, x, y, v_sobel_tmp = _COPY_1DARRAY_PARAM(v_sobel), true);
+				_50 = convolution(input_tmp = _COPY_STRUCT_PARAM(input, Image), true, x, y, v_sobel_tmp = _COPY_1DARRAY_PARAM(v_sobel, T_INT), true);
 				_CALLEE_DEALLOC(input, "false-false-true");
 				_CALLEE_DEALLOC(v_sobel, "false-false-true");
 			}
@@ -411,7 +411,7 @@ Image* sobelEdgeDetection(Image* input, _DECL_DEALLOC_PARAM(input)){
 			{
 				void* input_tmp;
 				void* h_sobel_tmp;
-				_51 = convolution(input_tmp = _COPY_STRUCT_PARAM(input, Image), true, x, y, h_sobel_tmp = _COPY_1DARRAY_PARAM(h_sobel), true);
+				_51 = convolution(input_tmp = _COPY_STRUCT_PARAM(input, Image), true, x, y, h_sobel_tmp = _COPY_1DARRAY_PARAM(h_sobel, T_INT), true);
 				_CALLEE_DEALLOC(input, "false-false-true");
 				_CALLEE_DEALLOC(h_sobel, "false-false-true");
 			}
@@ -469,7 +469,7 @@ blklab4:;
 	{
 		void* newPixels_tmp;
 		_DEALLOC_STRUCT(_62, Image);
-		_62 = image(width, height, newPixels_tmp = _COPY_1DARRAY_PARAM(newPixels), true);
+		_62 = image(width, height, newPixels_tmp = _COPY_1DARRAY_PARAM(newPixels, T_INT), true);
 		_CALLEE_DEALLOC(newPixels, "false-false-false");
 		_ADD_DEALLOC(_62);
 	}
@@ -529,7 +529,7 @@ void print_image(FILE* sys, Image* im, _DECL_DEALLOC_PARAM(im)){
 	_REMOVE_DEALLOC(_8);
 	//assign %2 = %8  : int[]
 	_DEALLOC(pixels);
-	_COPY_1DARRAY(pixels, _8);
+	_COPY_1DARRAY(pixels, _8, T_INT);
 	_ADD_DEALLOC(pixels);
 	//fieldload %9 = %1 width : {int height,int[] pixels,int width}
 	_9 = im->width;
@@ -694,7 +694,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_11);
 	//assign %4 = %11  : int[]
 	_DEALLOC(pixels);
-	_COPY_1DARRAY(pixels, _11);
+	_COPY_1DARRAY(pixels, _11, T_INT);
 	_ADD_DEALLOC(pixels);
 	//const %12 = 0 : int
 	_12 = 0;
@@ -718,7 +718,7 @@ int main(int argc, char** args){
 	{
 		void* pixels_tmp;
 		_DEALLOC_STRUCT(_19, Image);
-		_19 = image(width, height, pixels_tmp = _COPY_1DARRAY_PARAM(pixels), true);
+		_19 = image(width, height, pixels_tmp = _COPY_1DARRAY_PARAM(pixels, T_INT), true);
 		_CALLEE_DEALLOC(pixels, "false-false-false");
 		_ADD_DEALLOC(_19);
 	}

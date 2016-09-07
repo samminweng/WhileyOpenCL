@@ -173,7 +173,7 @@ blklab2:;
 	{
 		void* b_tmp;
 		_UPDATE_1DARRAY_SIZE(_28, b);
-		_28 = func(b_tmp = _COPY_1DARRAY_PARAM(b), _29);
+		_28 = func(b_tmp = _COPY_1DARRAY_PARAM(b, T_INT), _29);
 	}
 	//assign %3 = %28  : int[]
 	_UPDATE_1DARRAY(c, _28);

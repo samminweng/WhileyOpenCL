@@ -73,19 +73,19 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), long long n){
 	//arraygen %10 = [9; 1] : int[]
 	_NEW_1DARRAY(_10, n, _9, T_INT);
 	//assign %3 = %10  : int[]
-	_COPY_1DARRAY(x, _10);
+	_COPY_1DARRAY(x, _10, T_INT);
 	//const %11 = 0 : int
 	_11 = 0;
 	//arraygen %12 = [11; 1] : int[]
 	_NEW_1DARRAY(_12, n, _11, T_INT);
 	//assign %4 = %12  : int[]
-	_COPY_1DARRAY(y, _12);
+	_COPY_1DARRAY(y, _12, T_INT);
 	//const %13 = 0 : int
 	_13 = 0;
 	//arraygen %14 = [13; 1] : int[]
 	_NEW_1DARRAY(_14, n, _13, T_INT);
 	//assign %5 = %14  : int[]
-	_COPY_1DARRAY(z, _14);
+	_COPY_1DARRAY(z, _14, T_INT);
 	//const %15 = 0 : int
 	_15 = 0;
 	//assign %6 = %15  : int
@@ -288,15 +288,15 @@ int main(int argc, char** args){
 	//arraygen %7 = [5; 6] : int[]
 	_NEW_1DARRAY(_7, _6, _5, T_INT);
 	//assign %2 = %7  : int[]
-	_COPY_1DARRAY(moves, _7);
+	_COPY_1DARRAY(moves, _7, T_INT);
 	//invoke (%8) = (%2, %1) CoinGame3:findMoves : function(int[],int)->(int[])
 	{
 		void* moves_tmp;
 		_UPDATE_1DARRAY_SIZE(_8, moves);
-		_8 = findMoves(moves_tmp = _COPY_1DARRAY_PARAM(moves), n);
+		_8 = findMoves(moves_tmp = _COPY_1DARRAY_PARAM(moves, T_INT), n);
 	}
 	//assign %2 = %8  : int[]
-	_COPY_1DARRAY(moves, _8);
+	_COPY_1DARRAY(moves, _8, T_INT);
 	//const %9 = 1 : int
 	_9 = 1;
 	//sub %10 = %1, %9 : int

@@ -178,7 +178,7 @@ int main(int argc, char** args){
 	//arraygen %13 = [11; 12] : int[]
 	_NEW_1DARRAY(_13, _12, _11, T_INT);
 	//assign %2 = %13  : int[]
-	_COPY_1DARRAY(gcds, _13);
+	_COPY_1DARRAY(gcds, _13, T_INT);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %3 = %14  : int
@@ -198,7 +198,7 @@ int main(int argc, char** args){
 			//invoke (%16) = (%3, %4, %1, %2) gcd:gcd_cached : function(int,int,int,int[])->(int)
 			{
 				void* gcds_tmp;
-				_16 = gcd_cached(i, j, n, gcds_tmp = _COPY_1DARRAY_PARAM(gcds));
+				_16 = gcd_cached(i, j, n, gcds_tmp = _COPY_1DARRAY_PARAM(gcds, T_INT));
 			}
 			//mul %17 = %3, %1 : int
 			_17=i*n;

@@ -547,25 +547,25 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_7);
 	//assign %2 = %7  : int[]
 	_DEALLOC(moves);
-	_COPY_1DARRAY(moves, _7);
+	_COPY_1DARRAY(moves, _7, T_INT);
 	_ADD_DEALLOC(moves);
 	//invoke (%8) = (%2, %1) CoinGame:findMoves : function(int[],int)->(int[])
 	{
 		void* moves_tmp;
 		_UPDATE_1DARRAY_SIZE(_8, moves);
 		_DEALLOC(_8);
-		_8 = findMoves(moves_tmp = _COPY_1DARRAY_PARAM(moves), false, n);
+		_8 = findMoves(moves_tmp = _COPY_1DARRAY_PARAM(moves, T_INT), false, n);
 		_CALLER_DEALLOC(_8, moves, "true-true-false");
 		_ADD_DEALLOC(_8);
 	}
 	//assign %2 = %8  : int[]
 	_DEALLOC(moves);
-	_COPY_1DARRAY(moves, _8);
+	_COPY_1DARRAY(moves, _8, T_INT);
 	_ADD_DEALLOC(moves);
 	//invoke () = (%0, %2, %1) CoinGame:play : method(whiley/lang/System:Console,int[],int)->()
 	{
 		void* moves_tmp;
-		play(stdout, moves_tmp = _COPY_1DARRAY_PARAM(moves), true, n);
+		play(stdout, moves_tmp = _COPY_1DARRAY_PARAM(moves, T_INT), true, n);
 		_CALLEE_DEALLOC(moves, "false-false-true");
 	}
 	//const %9 = 1 : int

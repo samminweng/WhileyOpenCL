@@ -140,14 +140,14 @@ public final class CodeGeneratorHelper {
 				if (isCopyEliminated) {
 					statement.add(indent + "_UPDATE_" + dimension + "DARRAY(" + lhs + ", " + rhs + ");");
 				} else {
-					statement.add(indent + "_COPY_" + dimension + "DARRAY_BYTE(" + lhs + ", " + rhs + ");");
+					statement.add(indent + "_COPY_" + dimension + "DARRAY(" + lhs + ", " + rhs + ", T_BYTE);");
 				}
 			}else if (stores.isIntType(elm_type)) {				
 				// Check if the lhs copy is needed or not
 				if (isCopyEliminated) {
 					statement.add(indent + "_UPDATE_" + dimension + "DARRAY(" + lhs + ", " + rhs + ");");
 				} else {
-					statement.add(indent + "_COPY_" + dimension + "DARRAY(" + lhs + ", " + rhs + ");");
+					statement.add(indent + "_COPY_" + dimension + "DARRAY(" + lhs + ", " + rhs + ", T_INT);");
 				}
 			} else {
 				// An array of structure pointers

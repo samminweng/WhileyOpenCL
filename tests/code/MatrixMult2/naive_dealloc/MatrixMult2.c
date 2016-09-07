@@ -1,7 +1,7 @@
 #include "MatrixMult2.h"
 Matrix* copy_Matrix(Matrix* _Matrix){
 	Matrix* new_Matrix = malloc(sizeof(Matrix));
-	_COPY_1DARRAY(new_Matrix->data, _Matrix->data);
+	_COPY_1DARRAY(new_Matrix->data, _Matrix->data, T_INT);
 	new_Matrix->width = _Matrix->width;
 	new_Matrix->height = _Matrix->height;
 	return new_Matrix;
@@ -36,7 +36,7 @@ Matrix* matrix(long long width, long long height, _DECL_1DARRAY_PARAM(data), _DE
 	//newrecord %4 = (%2, %1, %0) : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(_4, Matrix);
 	_4 = malloc(sizeof(Matrix));
-	_COPY_1DARRAY(_4->data, data);
+	_COPY_1DARRAY(_4->data, data, T_INT);
 	_4->height = height;
 	_4->width = width;
 	_ADD_DEALLOC(_4);
@@ -82,7 +82,7 @@ Matrix* init(long long width, long long height){
 	_ADD_DEALLOC(_8);
 	//assign %3 = %8  : int[]
 	_DEALLOC(data);
-	_COPY_1DARRAY(data, _8);
+	_COPY_1DARRAY(data, _8, T_INT);
 	_ADD_DEALLOC(data);
 	//const %9 = 0 : int
 	_9 = 0;
@@ -140,7 +140,7 @@ blklab2:;
 	{
 		void* data_tmp;
 		_DEALLOC_STRUCT(_21, Matrix);
-		_21 = matrix(width, height, data_tmp = _COPY_1DARRAY_PARAM(data), true);
+		_21 = matrix(width, height, data_tmp = _COPY_1DARRAY_PARAM(data, T_INT), true);
 		_CALLEE_DEALLOC(data, "false-false-false");
 		_ADD_DEALLOC(_21);
 	}
@@ -329,7 +329,7 @@ Matrix* mat_mult(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_PAR
 	_ADD_DEALLOC(_15);
 	//assign %5 = %15  : int[]
 	_DEALLOC(data);
-	_COPY_1DARRAY(data, _15);
+	_COPY_1DARRAY(data, _15, T_INT);
 	_ADD_DEALLOC(data);
 	//fieldload %16 = %0 data : {int[] data,int height,int width}
 	_DEALLOC(_16);
@@ -337,7 +337,7 @@ Matrix* mat_mult(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_PAR
 	_REMOVE_DEALLOC(_16);
 	//assign %6 = %16  : int[]
 	_DEALLOC(a_data);
-	_COPY_1DARRAY(a_data, _16);
+	_COPY_1DARRAY(a_data, _16, T_INT);
 	_ADD_DEALLOC(a_data);
 	//fieldload %17 = %1 data : {int[] data,int height,int width}
 	_DEALLOC(_17);
@@ -345,7 +345,7 @@ Matrix* mat_mult(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_PAR
 	_REMOVE_DEALLOC(_17);
 	//assign %7 = %17  : int[]
 	_DEALLOC(b_data);
-	_COPY_1DARRAY(b_data, _17);
+	_COPY_1DARRAY(b_data, _17, T_INT);
 	_ADD_DEALLOC(b_data);
 	//const %18 = 0 : int
 	_18 = 0;
@@ -436,7 +436,7 @@ blklab13:;
 	{
 		void* data_tmp;
 		_DEALLOC_STRUCT(_40, Matrix);
-		_40 = matrix(width, height, data_tmp = _COPY_1DARRAY_PARAM(data), true);
+		_40 = matrix(width, height, data_tmp = _COPY_1DARRAY_PARAM(data, T_INT), true);
 		_CALLEE_DEALLOC(data, "false-false-false");
 		_ADD_DEALLOC(_40);
 	}

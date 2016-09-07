@@ -44,10 +44,10 @@ blklab0:;
 	{
 		void* ls_tmp;
 		_UPDATE_1DARRAY_SIZE(_8, ls);
-		_8 = fibonacci(ls_tmp = _COPY_1DARRAY_PARAM(ls), _10);
+		_8 = fibonacci(ls_tmp = _COPY_1DARRAY_PARAM(ls, T_INT), _10);
 	}
 	//assign %0 = %8  : int[]
-	_COPY_1DARRAY(ls, _8);
+	_COPY_1DARRAY(ls, _8, T_INT);
 	//const %11 = 1 : int
 	_11 = 1;
 	//sub %12 = %1, %11 : int
@@ -103,7 +103,7 @@ int main(int argc, char** args){
 	//arraygen %5 = [4; 1] : int[]
 	_NEW_1DARRAY(_5, max, _4, T_INT);
 	//assign %2 = %5  : int[]
-	_COPY_1DARRAY(arr, _5);
+	_COPY_1DARRAY(arr, _5, T_INT);
 	//const %7 = 1 : int
 	_7 = 1;
 	//sub %8 = %1, %7 : int
@@ -112,10 +112,10 @@ int main(int argc, char** args){
 	{
 		void* arr_tmp;
 		_UPDATE_1DARRAY_SIZE(_6, arr);
-		_6 = fibonacci(arr_tmp = _COPY_1DARRAY_PARAM(arr), _8);
+		_6 = fibonacci(arr_tmp = _COPY_1DARRAY_PARAM(arr, T_INT), _8);
 	}
 	//assign %2 = %6  : int[]
-	_COPY_1DARRAY(arr, _6);
+	_COPY_1DARRAY(arr, _6, T_INT);
 	//assert
 	{
 		//const %9 = 0 : int

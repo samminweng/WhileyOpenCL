@@ -1,7 +1,7 @@
 #include "SobelEdgeDetect2.h"
 Image* copy_Image(Image* _Image){
 	Image* new_Image = malloc(sizeof(Image));
-	_COPY_1DARRAY(new_Image->pixels, _Image->pixels);
+	_COPY_1DARRAY(new_Image->pixels, _Image->pixels, T_INT);
 	new_Image->width = _Image->width;
 	new_Image->height = _Image->height;
 	return new_Image;
@@ -34,7 +34,7 @@ Image* image(long long width, long long height, _DECL_1DARRAY_PARAM(pixels)){
 	//newrecord %4 = (%1, %2, %0) : {int height,int[] pixels,int width}
 	_4 = malloc(sizeof(Image));
 	_4->height = height;
-	_COPY_1DARRAY(_4->pixels, pixels);
+	_COPY_1DARRAY(_4->pixels, pixels, T_INT);
 	_4->width = width;
 	//return %4
 	return _4;
@@ -86,7 +86,7 @@ long long convolution(Image* A, long long xCenter, long long yCenter, _DECL_1DAR
 	//fieldload %17 = %0 pixels : {int height,int[] pixels,int width}
 	_UPDATE_1DARRAY(_17, A->pixels);
 	//assign %5 = %17  : int[]
-	_COPY_1DARRAY(pixels, _17);
+	_COPY_1DARRAY(pixels, _17, T_INT);
 	//fieldload %18 = %0 width : {int height,int[] pixels,int width}
 	_18 = A->width;
 	//assign %6 = %18  : int
@@ -258,7 +258,7 @@ Image* sobelEdgeDetection(Image* input){
 	//fieldload %14 = %0 pixels : {int height,int[] pixels,int width}
 	_UPDATE_1DARRAY(_14, input->pixels);
 	//assign %2 = %14  : int[]
-	_COPY_1DARRAY(pixels, _14);
+	_COPY_1DARRAY(pixels, _14, T_INT);
 	//fieldload %15 = %0 width : {int height,int[] pixels,int width}
 	_15 = input->width;
 	//assign %3 = %15  : int
@@ -274,7 +274,7 @@ Image* sobelEdgeDetection(Image* input){
 	//arraygen %19 = [17; 18] : int[]
 	_NEW_1DARRAY(_19, _18, _17, T_INT);
 	//assign %5 = %19  : int[]
-	_COPY_1DARRAY(newPixels, _19);
+	_COPY_1DARRAY(newPixels, _19, T_INT);
 	//const %20 = 1 : int
 	_20 = 1;
 	//neg %21 = %20 : int
@@ -303,7 +303,7 @@ Image* sobelEdgeDetection(Image* input){
 	_NEW_1DARRAY(_32, 9, 0, T_INT);
 	_32[0] = _21; _32[1] = _22; _32[2] = _23; _32[3] = _25; _32[4] = _26; _32[5] = _27; _32[6] = _29; _32[7] = _30; _32[8] = _31; 
 	//assign %6 = %32  : int[]
-	_COPY_1DARRAY(v_sobel, _32);
+	_COPY_1DARRAY(v_sobel, _32, T_INT);
 	//const %33 = 1 : int
 	_33 = 1;
 	//const %34 = 2 : int
@@ -332,7 +332,7 @@ Image* sobelEdgeDetection(Image* input){
 	_NEW_1DARRAY(_45, 9, 0, T_INT);
 	_45[0] = _33; _45[1] = _34; _45[2] = _35; _45[3] = _36; _45[4] = _37; _45[5] = _38; _45[6] = _40; _45[7] = _42; _45[8] = _44; 
 	//assign %7 = %45  : int[]
-	_COPY_1DARRAY(h_sobel, _45);
+	_COPY_1DARRAY(h_sobel, _45, T_INT);
 	//const %46 = 0 : int
 	_46 = 0;
 	//assign %8 = %46  : int
@@ -359,7 +359,7 @@ Image* sobelEdgeDetection(Image* input){
 			{
 				void* input_tmp;
 				void* v_sobel_tmp;
-				_50 = convolution(input_tmp = _COPY_STRUCT_PARAM(input, Image), x, y, v_sobel_tmp = _COPY_1DARRAY_PARAM(v_sobel));
+				_50 = convolution(input_tmp = _COPY_STRUCT_PARAM(input, Image), x, y, v_sobel_tmp = _COPY_1DARRAY_PARAM(v_sobel, T_INT));
 			}
 			//assign %11 = %50  : int
 			v_g = _50;
@@ -367,7 +367,7 @@ Image* sobelEdgeDetection(Image* input){
 			{
 				void* input_tmp;
 				void* h_sobel_tmp;
-				_51 = convolution(input_tmp = _COPY_STRUCT_PARAM(input, Image), x, y, h_sobel_tmp = _COPY_1DARRAY_PARAM(h_sobel));
+				_51 = convolution(input_tmp = _COPY_STRUCT_PARAM(input, Image), x, y, h_sobel_tmp = _COPY_1DARRAY_PARAM(h_sobel, T_INT));
 			}
 			//assign %12 = %51  : int
 			h_g = _51;
@@ -422,7 +422,7 @@ blklab4:;
 	//invoke (%62) = (%3, %4, %5) SobelEdgeDetect2:image : function(int,int,int[])->(SobelEdgeDetect2:Image)
 	{
 		void* newPixels_tmp;
-		_62 = image(width, height, newPixels_tmp = _COPY_1DARRAY_PARAM(newPixels));
+		_62 = image(width, height, newPixels_tmp = _COPY_1DARRAY_PARAM(newPixels, T_INT));
 	}
 	//return %62
 	return _62;
@@ -461,7 +461,7 @@ void print_image(FILE* sys, Image* im){
 	//fieldload %8 = %1 pixels : {int height,int[] pixels,int width}
 	_UPDATE_1DARRAY(_8, im->pixels);
 	//assign %2 = %8  : int[]
-	_COPY_1DARRAY(pixels, _8);
+	_COPY_1DARRAY(pixels, _8, T_INT);
 	//fieldload %9 = %1 width : {int height,int[] pixels,int width}
 	_9 = im->width;
 	//assign %3 = %9  : int
@@ -599,7 +599,7 @@ int main(int argc, char** args){
 	//arraygen %11 = [10; 3] : int[]
 	_NEW_1DARRAY(_11, size, _10, T_INT);
 	//assign %4 = %11  : int[]
-	_COPY_1DARRAY(pixels, _11);
+	_COPY_1DARRAY(pixels, _11, T_INT);
 	//const %12 = 0 : int
 	_12 = 0;
 	//const %13 = 0 : int
@@ -621,7 +621,7 @@ int main(int argc, char** args){
 	//invoke (%19) = (%1, %2, %4) SobelEdgeDetect2:image : function(int,int,int[])->(SobelEdgeDetect2:Image)
 	{
 		void* pixels_tmp;
-		_19 = image(width, height, pixels_tmp = _COPY_1DARRAY_PARAM(pixels));
+		_19 = image(width, height, pixels_tmp = _COPY_1DARRAY_PARAM(pixels, T_INT));
 	}
 	//assign %5 = %19  : {int height,int[] pixels,int width}
 	input = copy_Image(_19);

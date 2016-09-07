@@ -10,7 +10,7 @@ long long* func(_DECL_1DARRAY_PARAM(s), long long n){
 	//ifle %1, %4 goto blklab0 : int
 	if(n<=_4){goto blklab0;}
 	//assign %3 = %0  : int[]
-	_COPY_1DARRAY(t, s);
+	_COPY_1DARRAY(t, s, T_INT);
 	//const %5 = 3 : int
 	_5 = 3;
 	//const %6 = 2 : int
@@ -88,17 +88,17 @@ int main(int argc, char** args){
 	_NEW_1DARRAY(_9, 5, 0, T_INT);
 	_9[0] = _4; _9[1] = _5; _9[2] = _6; _9[3] = _7; _9[4] = _8; 
 	//assign %1 = %9  : int[]
-	_COPY_1DARRAY(a, _9);
+	_COPY_1DARRAY(a, _9, T_INT);
 	//const %11 = 6 : int
 	_11 = 6;
 	//invoke (%10) = (%1, %11) FunctionCall2:func : function(int[],int)->(int[])
 	{
 		void* a_tmp;
 		_UPDATE_1DARRAY_SIZE(_10, a);
-		_10 = func(a_tmp = _COPY_1DARRAY_PARAM(a), _11);
+		_10 = func(a_tmp = _COPY_1DARRAY_PARAM(a, T_INT), _11);
 	}
 	//assign %1 = %10  : int[]
-	_COPY_1DARRAY(a, _10);
+	_COPY_1DARRAY(a, _10, T_INT);
 	//assert
 	{
 		//const %12 = 2 : int
@@ -145,17 +145,17 @@ blklab2:;
 	_NEW_1DARRAY(_27, 5, 0, T_INT);
 	_27[0] = _22; _27[1] = _23; _27[2] = _24; _27[3] = _25; _27[4] = _26; 
 	//assign %2 = %27  : int[]
-	_COPY_1DARRAY(b, _27);
+	_COPY_1DARRAY(b, _27, T_INT);
 	//const %29 = 1 : int
 	_29 = 1;
 	//invoke (%28) = (%2, %29) FunctionCall2:func : function(int[],int)->(int[])
 	{
 		void* b_tmp;
 		_UPDATE_1DARRAY_SIZE(_28, b);
-		_28 = func(b_tmp = _COPY_1DARRAY_PARAM(b), _29);
+		_28 = func(b_tmp = _COPY_1DARRAY_PARAM(b, T_INT), _29);
 	}
 	//assign %3 = %28  : int[]
-	_COPY_1DARRAY(c, _28);
+	_COPY_1DARRAY(c, _28, T_INT);
 	//assert
 	{
 		//const %30 = 2 : int

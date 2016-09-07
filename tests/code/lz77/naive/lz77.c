@@ -26,7 +26,7 @@ void printf_Match(Match* match){
 Data* copy_Data(Data* _Data){
 	Data* new_Data = malloc(sizeof(Data));
 	new_Data->length = _Data->length;
-	_COPY_1DARRAY_BYTE(new_Data->items, _Data->items);
+	_COPY_1DARRAY(new_Data->items, _Data->items, T_BYTE);
 	return new_Data;
 }
 Data** copy_array_Data(Data** _Data, long long _Data_size){
@@ -75,7 +75,7 @@ long long match(Data* input, long long offset, long long end){
 	//fieldload %8 = %0 items : {byte[] items,int length}
 	_UPDATE_1DARRAY(_8, input->items);
 	//assign %6 = %8  : byte[]
-	_COPY_1DARRAY_BYTE(data, _8);
+	_COPY_1DARRAY(data, _8, T_BYTE);
 	//loop (%1, %4, %5, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18)
 	while(true){
 		//ifge %1, %4 goto blklab1 : int
@@ -225,7 +225,7 @@ Data* append_byte(Data* data, BYTE item){
 	//fieldload %7 = %0 items : {byte[] items,int length}
 	_UPDATE_1DARRAY(_7, data->items);
 	//assign %3 = %7  : byte[]
-	_COPY_1DARRAY_BYTE(items, _7);
+	_COPY_1DARRAY(items, _7, T_BYTE);
 	//const %8 = 00000000b : byte
 	_8 = 0b00000000;
 	//lengthof %9 = %3 : byte[]
@@ -237,7 +237,7 @@ Data* append_byte(Data* data, BYTE item){
 	//arraygen %12 = [8; 11] : byte[]
 	_NEW_1DARRAY(_12, _11, _8, T_BYTE);
 	//assign %4 = %12  : byte[]
-	_COPY_1DARRAY_BYTE(nitems, _12);
+	_COPY_1DARRAY(nitems, _12, T_BYTE);
 	//const %13 = 0 : int
 	_13 = 0;
 	//assign %5 = %13  : int
@@ -275,7 +275,7 @@ blklab6:;
 	length = _20;
 	//newrecord %21 = (%4, %6) : {byte[] items,int length}
 	_21 = malloc(sizeof(Data));
-	_COPY_1DARRAY_BYTE(_21->items, nitems);
+	_COPY_1DARRAY(_21->items, nitems, T_BYTE);
 	_21->length = length;
 	//return %21
 	return _21;
@@ -338,7 +338,7 @@ Data* compress(Data* input){
 	_11 = 0;
 	//newrecord %12 = (%10, %11) : {byte[] items,int length}
 	_12 = malloc(sizeof(Data));
-	_COPY_1DARRAY_BYTE(_12->items, _10);
+	_COPY_1DARRAY(_12->items, _10, T_BYTE);
 	_12->length = _11;
 	//assign %3 = %12  : {byte[] items,int length}
 	output = copy_Data(_12);
@@ -468,14 +468,14 @@ Data* decompress(Data* input){
 	_14 = 0;
 	//newrecord %15 = (%13, %14) : {byte[] items,int length}
 	_15 = malloc(sizeof(Data));
-	_COPY_1DARRAY_BYTE(_15->items, _13);
+	_COPY_1DARRAY(_15->items, _13, T_BYTE);
 	_15->length = _14;
 	//assign %2 = %15  : {byte[] items,int length}
 	output = copy_Data(_15);
 	//fieldload %16 = %0 items : {byte[] items,int length}
 	_UPDATE_1DARRAY(_16, input->items);
 	//assign %3 = %16  : byte[]
-	_COPY_1DARRAY_BYTE(data, _16);
+	_COPY_1DARRAY(data, _16, T_BYTE);
 	//const %17 = 0 : int
 	_17 = 0;
 	//assign %4 = %17  : int
@@ -611,7 +611,7 @@ Data* init(long long repeat){
 	//arraygen %8 = [7; 2] : byte[]
 	_NEW_1DARRAY(_8, length, _7, T_BYTE);
 	//assign %3 = %8  : byte[]
-	_COPY_1DARRAY_BYTE(items, _8);
+	_COPY_1DARRAY(items, _8, T_BYTE);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %4 = %9  : int
@@ -644,7 +644,7 @@ blklab19:;
 blklab18:;
 	//newrecord %16 = (%3, %2) : {byte[] items,int length}
 	_16 = malloc(sizeof(Data));
-	_COPY_1DARRAY_BYTE(_16->items, items);
+	_COPY_1DARRAY(_16->items, items, T_BYTE);
 	_16->length = length;
 	//return %16
 	return _16;

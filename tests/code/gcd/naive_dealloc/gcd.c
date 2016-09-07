@@ -192,7 +192,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_13);
 	//assign %2 = %13  : int[]
 	_DEALLOC(gcds);
-	_COPY_1DARRAY(gcds, _13);
+	_COPY_1DARRAY(gcds, _13, T_INT);
 	_ADD_DEALLOC(gcds);
 	//const %14 = 0 : int
 	_14 = 0;
@@ -213,7 +213,7 @@ int main(int argc, char** args){
 			//invoke (%16) = (%3, %4, %1, %2) gcd:gcd_cached : function(int,int,int,int[])->(int)
 			{
 				void* gcds_tmp;
-				_16 = gcd_cached(i, j, n, gcds_tmp = _COPY_1DARRAY_PARAM(gcds), true);
+				_16 = gcd_cached(i, j, n, gcds_tmp = _COPY_1DARRAY_PARAM(gcds, T_INT), true);
 				_CALLEE_DEALLOC(gcds, "false-false-true");
 			}
 			//mul %17 = %3, %1 : int

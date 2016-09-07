@@ -509,19 +509,19 @@ int main(int argc, char** args){
 	//arraygen %7 = [5; 6] : int[]
 	_NEW_1DARRAY(_7, _6, _5, T_INT);
 	//assign %2 = %7  : int[]
-	_COPY_1DARRAY(moves, _7);
+	_COPY_1DARRAY(moves, _7, T_INT);
 	//invoke (%8) = (%2, %1) CoinGame:findMoves : function(int[],int)->(int[])
 	{
 		void* moves_tmp;
 		_UPDATE_1DARRAY_SIZE(_8, moves);
-		_8 = findMoves(moves_tmp = _COPY_1DARRAY_PARAM(moves), n);
+		_8 = findMoves(moves_tmp = _COPY_1DARRAY_PARAM(moves, T_INT), n);
 	}
 	//assign %2 = %8  : int[]
-	_COPY_1DARRAY(moves, _8);
+	_COPY_1DARRAY(moves, _8, T_INT);
 	//invoke () = (%0, %2, %1) CoinGame:play : method(whiley/lang/System:Console,int[],int)->()
 	{
 		void* moves_tmp;
-		play(stdout, moves_tmp = _COPY_1DARRAY_PARAM(moves), n);
+		play(stdout, moves_tmp = _COPY_1DARRAY_PARAM(moves, T_INT), n);
 	}
 	//const %9 = 1 : int
 	_9 = 1;

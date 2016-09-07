@@ -75,7 +75,7 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	_ADD_DEALLOC(_15);
 	//assign %5 = %15  : int[]
 	_DEALLOC(lhs);
-	_COPY_1DARRAY(lhs, _15);
+	_COPY_1DARRAY(lhs, _15, T_INT);
 	_ADD_DEALLOC(lhs);
 	//const %17 = 0 : int
 	_17 = 0;
@@ -84,13 +84,13 @@ _SLICE_ARRAY(_15, items, start, pivot);
 		void* lhs_tmp;
 		_UPDATE_1DARRAY_SIZE(_16, lhs);
 		_DEALLOC(_16);
-		_16 = sortV1(lhs_tmp = _COPY_1DARRAY_PARAM(lhs), false, _17, pivot);
+		_16 = sortV1(lhs_tmp = _COPY_1DARRAY_PARAM(lhs, T_INT), false, _17, pivot);
 		_CALLER_DEALLOC(_16, lhs, "true-true-false");
 		_ADD_DEALLOC(_16);
 	}
 	//assign %5 = %16  : int[]
 	_DEALLOC(lhs);
-	_COPY_1DARRAY(lhs, _16);
+	_COPY_1DARRAY(lhs, _16, T_INT);
 	_ADD_DEALLOC(lhs);
 	//invoke (%18) = (%0, %4, %2) whiley/lang/Array:slice : function(int[],int,int)->(int[])
 	_UPDATE_1DARRAY_SIZE(_18, items);
@@ -99,7 +99,7 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	_ADD_DEALLOC(_18);
 	//assign %6 = %18  : int[]
 	_DEALLOC(rhs);
-	_COPY_1DARRAY(rhs, _18);
+	_COPY_1DARRAY(rhs, _18, T_INT);
 	_ADD_DEALLOC(rhs);
 	//const %20 = 0 : int
 	_20 = 0;
@@ -110,13 +110,13 @@ _SLICE_ARRAY(_18, items, pivot, end);
 		void* rhs_tmp;
 		_UPDATE_1DARRAY_SIZE(_19, rhs);
 		_DEALLOC(_19);
-		_19 = sortV1(rhs_tmp = _COPY_1DARRAY_PARAM(rhs), false, _20, _21);
+		_19 = sortV1(rhs_tmp = _COPY_1DARRAY_PARAM(rhs, T_INT), false, _20, _21);
 		_CALLER_DEALLOC(_19, rhs, "true-true-false");
 		_ADD_DEALLOC(_19);
 	}
 	//assign %6 = %19  : int[]
 	_DEALLOC(rhs);
-	_COPY_1DARRAY(rhs, _19);
+	_COPY_1DARRAY(rhs, _19, T_INT);
 	_ADD_DEALLOC(rhs);
 	//const %22 = 0 : int
 	_22 = 0;
@@ -378,7 +378,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_10);
 	//assign %1 = %10  : int[]
 	_DEALLOC(ys);
-	_COPY_1DARRAY(ys, _10);
+	_COPY_1DARRAY(ys, _10, T_INT);
 	_ADD_DEALLOC(ys);
 	//const %12 = 0 : int
 	_12 = 0;
@@ -389,13 +389,13 @@ int main(int argc, char** args){
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_11, ys);
 		_DEALLOC(_11);
-		_11 = sortV1(ys_tmp = _COPY_1DARRAY_PARAM(ys), false, _12, _13);
+		_11 = sortV1(ys_tmp = _COPY_1DARRAY_PARAM(ys, T_INT), false, _12, _13);
 		_CALLER_DEALLOC(_11, ys, "true-true-false");
 		_ADD_DEALLOC(_11);
 	}
 	//assign %1 = %11  : int[]
 	_DEALLOC(ys);
-	_COPY_1DARRAY(ys, _11);
+	_COPY_1DARRAY(ys, _11, T_INT);
 	_ADD_DEALLOC(ys);
 	//assert
 	{
@@ -438,7 +438,7 @@ blklab9:;
 	_ADD_DEALLOC(_24);
 	//assign %1 = %24  : int[]
 	_DEALLOC(ys);
-	_COPY_1DARRAY(ys, _24);
+	_COPY_1DARRAY(ys, _24, T_INT);
 	_ADD_DEALLOC(ys);
 	//const %26 = 0 : int
 	_26 = 0;
@@ -449,13 +449,13 @@ blklab9:;
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_25, ys);
 		_DEALLOC(_25);
-		_25 = sortV1(ys_tmp = _COPY_1DARRAY_PARAM(ys), false, _26, _27);
+		_25 = sortV1(ys_tmp = _COPY_1DARRAY_PARAM(ys, T_INT), false, _26, _27);
 		_CALLER_DEALLOC(_25, ys, "true-true-false");
 		_ADD_DEALLOC(_25);
 	}
 	//assign %1 = %25  : int[]
 	_DEALLOC(ys);
-	_COPY_1DARRAY(ys, _25);
+	_COPY_1DARRAY(ys, _25, T_INT);
 	_ADD_DEALLOC(ys);
 	//assert
 	{
@@ -496,7 +496,7 @@ blklab10:;
 	_ADD_DEALLOC(_37);
 	//assign %1 = %37  : int[]
 	_DEALLOC(ys);
-	_COPY_1DARRAY(ys, _37);
+	_COPY_1DARRAY(ys, _37, T_INT);
 	_ADD_DEALLOC(ys);
 	//const %39 = 0 : int
 	_39 = 0;
@@ -507,13 +507,13 @@ blklab10:;
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_38, ys);
 		_DEALLOC(_38);
-		_38 = sortV1(ys_tmp = _COPY_1DARRAY_PARAM(ys), false, _39, _40);
+		_38 = sortV1(ys_tmp = _COPY_1DARRAY_PARAM(ys, T_INT), false, _39, _40);
 		_CALLER_DEALLOC(_38, ys, "true-true-false");
 		_ADD_DEALLOC(_38);
 	}
 	//assign %1 = %38  : int[]
 	_DEALLOC(ys);
-	_COPY_1DARRAY(ys, _38);
+	_COPY_1DARRAY(ys, _38, T_INT);
 	_ADD_DEALLOC(ys);
 	//assert
 	{
@@ -556,7 +556,7 @@ blklab11:;
 	_ADD_DEALLOC(_51);
 	//assign %1 = %51  : int[]
 	_DEALLOC(ys);
-	_COPY_1DARRAY(ys, _51);
+	_COPY_1DARRAY(ys, _51, T_INT);
 	_ADD_DEALLOC(ys);
 	//const %53 = 0 : int
 	_53 = 0;
@@ -567,13 +567,13 @@ blklab11:;
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_52, ys);
 		_DEALLOC(_52);
-		_52 = sortV1(ys_tmp = _COPY_1DARRAY_PARAM(ys), false, _53, _54);
+		_52 = sortV1(ys_tmp = _COPY_1DARRAY_PARAM(ys, T_INT), false, _53, _54);
 		_CALLER_DEALLOC(_52, ys, "true-true-false");
 		_ADD_DEALLOC(_52);
 	}
 	//assign %1 = %52  : int[]
 	_DEALLOC(ys);
-	_COPY_1DARRAY(ys, _52);
+	_COPY_1DARRAY(ys, _52, T_INT);
 	_ADD_DEALLOC(ys);
 	//assert
 	{
@@ -621,7 +621,7 @@ blklab12:;
 	_ADD_DEALLOC(_66);
 	//assign %4 = %66  : int[]
 	_DEALLOC(arr);
-	_COPY_1DARRAY(arr, _66);
+	_COPY_1DARRAY(arr, _66, T_INT);
 	_ADD_DEALLOC(arr);
 	//loop (%3, %4, %67, %68, %69)
 	while(true){
@@ -653,13 +653,13 @@ blklab13:;
 		void* arr_tmp;
 		_UPDATE_1DARRAY_SIZE(_70, arr);
 		_DEALLOC(_70);
-		_70 = sortV1(arr_tmp = _COPY_1DARRAY_PARAM(arr), false, _71, _73);
+		_70 = sortV1(arr_tmp = _COPY_1DARRAY_PARAM(arr, T_INT), false, _71, _73);
 		_CALLER_DEALLOC(_70, arr, "true-true-false");
 		_ADD_DEALLOC(_70);
 	}
 	//assign %4 = %70  : int[]
 	_DEALLOC(arr);
-	_COPY_1DARRAY(arr, _70);
+	_COPY_1DARRAY(arr, _70, T_INT);
 	_ADD_DEALLOC(arr);
 	//assert
 	{

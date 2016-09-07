@@ -1,7 +1,7 @@
 #include "MatrixMult3.h"
 Matrix* copy_Matrix(Matrix* _Matrix){
 	Matrix* new_Matrix = malloc(sizeof(Matrix));
-	_COPY_1DARRAY(new_Matrix->data, _Matrix->data);
+	_COPY_1DARRAY(new_Matrix->data, _Matrix->data, T_INT);
 	new_Matrix->width = _Matrix->width;
 	new_Matrix->height = _Matrix->height;
 	return new_Matrix;
@@ -33,7 +33,7 @@ Matrix* matrix(long long width, long long height, _DECL_1DARRAY_PARAM(data)){
 	Matrix* _4;
 	//newrecord %4 = (%2, %1, %0) : {int[] data,int height,int width}
 	_4 = malloc(sizeof(Matrix));
-	_COPY_1DARRAY(_4->data, data);
+	_COPY_1DARRAY(_4->data, data, T_INT);
 	_4->height = height;
 	_4->width = width;
 	//return %4
@@ -69,7 +69,7 @@ Matrix* init(long long width, long long height){
 	//arraygen %8 = [6; 7] : int[]
 	_NEW_1DARRAY(_8, _7, _6, T_INT);
 	//assign %3 = %8  : int[]
-	_COPY_1DARRAY(data, _8);
+	_COPY_1DARRAY(data, _8, T_INT);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %4 = %9  : int
@@ -125,7 +125,7 @@ blklab2:;
 	//invoke (%21) = (%0, %1, %3) MatrixMult3:matrix : function(MatrixMult3:nat,MatrixMult3:nat,int[])->(MatrixMult3:Matrix)
 	{
 		void* data_tmp;
-		_21 = matrix(width, height, data_tmp = _COPY_1DARRAY_PARAM(data));
+		_21 = matrix(width, height, data_tmp = _COPY_1DARRAY_PARAM(data, T_INT));
 	}
 	//return %21
 	return _21;
@@ -303,15 +303,15 @@ Matrix* mat_mult(Matrix* a, Matrix* b){
 	//arraygen %16 = [14; 15] : int[]
 	_NEW_1DARRAY(_16, _15, _14, T_INT);
 	//assign %5 = %16  : int[]
-	_COPY_1DARRAY(data, _16);
+	_COPY_1DARRAY(data, _16, T_INT);
 	//fieldload %17 = %0 data : {int[] data,int height,int width}
 	_UPDATE_1DARRAY(_17, a->data);
 	//assign %6 = %17  : int[]
-	_COPY_1DARRAY(a_data, _17);
+	_COPY_1DARRAY(a_data, _17, T_INT);
 	//fieldload %18 = %1 data : {int[] data,int height,int width}
 	_UPDATE_1DARRAY(_18, b->data);
 	//assign %7 = %18  : int[]
-	_COPY_1DARRAY(b_data, _18);
+	_COPY_1DARRAY(b_data, _18, T_INT);
 	//const %19 = 0 : int
 	_19 = 0;
 	//mul %20 = %3, %4 : int
@@ -319,7 +319,7 @@ Matrix* mat_mult(Matrix* a, Matrix* b){
 	//arraygen %21 = [19; 20] : int[]
 	_NEW_1DARRAY(_21, _20, _19, T_INT);
 	//assign %8 = %21  : int[]
-	_COPY_1DARRAY(b_t, _21);
+	_COPY_1DARRAY(b_t, _21, T_INT);
 	//const %22 = 0 : int
 	_22 = 0;
 	//assign %9 = %22  : int
@@ -470,7 +470,7 @@ blklab17:;
 	//invoke (%58) = (%3, %4, %5) MatrixMult3:matrix : function(MatrixMult3:nat,MatrixMult3:nat,int[])->(MatrixMult3:Matrix)
 	{
 		void* data_tmp;
-		_58 = matrix(width, height, data_tmp = _COPY_1DARRAY_PARAM(data));
+		_58 = matrix(width, height, data_tmp = _COPY_1DARRAY_PARAM(data, T_INT));
 	}
 	//return %58
 	return _58;

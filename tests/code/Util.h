@@ -148,12 +148,13 @@ long long* fromBytes(BYTE* arr, long long arr_size);
  * Copy Macros
  *
  */
-// Copy an array and pass it as function parameter
-#define _COPY_1DARRAY_PARAM(a) copy1DArray(a, a##_size, T_INT), a##_size
-#define _COPY_2DARRAY_PARAM(a) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size
-// Pass the copied BYTE array as function parameter 
-#define _COPY_1DARRAY_BYTE_PARAM(a) copy1DArray(a, a##_size, T_BYTE), a##_size 
+// Copy an array of integers or bytes, and pass the copy as a function parameter
+#define _COPY_1DARRAY_PARAM(a, type) copy1DArray(a, a##_size, type), a##_size 
+#define _COPY_2DARRAY_PARAM(a, type) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size
 #define _COPY_STRUCT_PARAM(a, name) copy_##name(a)
+// Make a copy and assign the copy to a variable
+#define _COPY_1DARRAY(a, b, type) a##_size = b##_size; a = copy1DArray(b, b##_size, type);
+#define _COPY_2DARRAY(a, b, type) a##_size = b##_size; a##_size_size = b##_size_size; a = copy2DArray(b, b##_size, b##_size_size);
 #define _COPY_1DARRAY_STRUCT(a, b, name) \
 		({\
 			a = malloc(b##_size*sizeof(name*));\
@@ -162,9 +163,6 @@ long long* fromBytes(BYTE* arr, long long arr_size);
  		  	}\
  			a##_size = b##_size;\
 		})
-#define _COPY_1DARRAY(a, b) a##_size = b##_size; a = copy1DArray(b, b##_size, T_INT);
-#define _COPY_1DARRAY_BYTE(a, b) a##_size = b##_size; a = copy1DArray_BYTE(b, b##_size, T_BYTE);
-#define _COPY_2DARRAY(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = copy2DArray(b, b##_size, b##_size_size);
 /***
  * In-place Update Macros
  *

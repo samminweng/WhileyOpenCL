@@ -196,15 +196,15 @@ int main(int argc, char** args){
 	_NEW_1DARRAY(_10, 5, 0, T_INT);
 	_10[0] = _5; _10[1] = _6; _10[2] = _7; _10[3] = _8; _10[4] = _9; 
 	//assign %1 = %10  : int[]
-	_COPY_1DARRAY(ys, _10);
+	_COPY_1DARRAY(ys, _10, T_INT);
 	//invoke (%11) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_11, ys);
-		_11 = bubbleSort(ys_tmp = _COPY_1DARRAY_PARAM(ys));
+		_11 = bubbleSort(ys_tmp = _COPY_1DARRAY_PARAM(ys, T_INT));
 	}
 	//assign %1 = %11  : int[]
-	_COPY_1DARRAY(ys, _11);
+	_COPY_1DARRAY(ys, _11, T_INT);
 	//assert
 	{
 		//const %12 = 1 : int
@@ -245,15 +245,15 @@ blklab5:;
 	_NEW_1DARRAY(_24, 4, 0, T_INT);
 	_24[0] = _20; _24[1] = _21; _24[2] = _22; _24[3] = _23; 
 	//assign %1 = %24  : int[]
-	_COPY_1DARRAY(ys, _24);
+	_COPY_1DARRAY(ys, _24, T_INT);
 	//invoke (%25) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_25, ys);
-		_25 = bubbleSort(ys_tmp = _COPY_1DARRAY_PARAM(ys));
+		_25 = bubbleSort(ys_tmp = _COPY_1DARRAY_PARAM(ys, T_INT));
 	}
 	//assign %1 = %25  : int[]
-	_COPY_1DARRAY(ys, _25);
+	_COPY_1DARRAY(ys, _25, T_INT);
 	//assert
 	{
 		//const %26 = 2 : int
@@ -292,15 +292,15 @@ blklab6:;
 	_NEW_1DARRAY(_37, 4, 0, T_INT);
 	_37[0] = _33; _37[1] = _34; _37[2] = _35; _37[3] = _36; 
 	//assign %1 = %37  : int[]
-	_COPY_1DARRAY(ys, _37);
+	_COPY_1DARRAY(ys, _37, T_INT);
 	//invoke (%38) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_38, ys);
-		_38 = bubbleSort(ys_tmp = _COPY_1DARRAY_PARAM(ys));
+		_38 = bubbleSort(ys_tmp = _COPY_1DARRAY_PARAM(ys, T_INT));
 	}
 	//assign %1 = %38  : int[]
-	_COPY_1DARRAY(ys, _38);
+	_COPY_1DARRAY(ys, _38, T_INT);
 	//assert
 	{
 		//const %39 = 1 : int
@@ -341,15 +341,15 @@ blklab7:;
 	_NEW_1DARRAY(_51, 5, 0, T_INT);
 	_51[0] = _46; _51[1] = _47; _51[2] = _48; _51[3] = _49; _51[4] = _50; 
 	//assign %1 = %51  : int[]
-	_COPY_1DARRAY(ys, _51);
+	_COPY_1DARRAY(ys, _51, T_INT);
 	//invoke (%52) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_52, ys);
-		_52 = bubbleSort(ys_tmp = _COPY_1DARRAY_PARAM(ys));
+		_52 = bubbleSort(ys_tmp = _COPY_1DARRAY_PARAM(ys, T_INT));
 	}
 	//assign %1 = %52  : int[]
-	_COPY_1DARRAY(ys, _52);
+	_COPY_1DARRAY(ys, _52, T_INT);
 	//assert
 	{
 		//const %53 = 1 : int
@@ -391,7 +391,7 @@ blklab8:;
 	//arraygen %64 = [63; 2] : int[]
 	_NEW_1DARRAY(_64, max, _63, T_INT);
 	//assign %4 = %64  : int[]
-	_COPY_1DARRAY(arr, _64);
+	_COPY_1DARRAY(arr, _64, T_INT);
 	//loop (%3, %4, %65, %66, %67)
 	while(true){
 		//ifge %3, %2 goto blklab9 : int
@@ -415,10 +415,10 @@ blklab9:;
 	{
 		void* arr_tmp;
 		_UPDATE_1DARRAY_SIZE(_68, arr);
-		_68 = bubbleSort(arr_tmp = _COPY_1DARRAY_PARAM(arr));
+		_68 = bubbleSort(arr_tmp = _COPY_1DARRAY_PARAM(arr, T_INT));
 	}
 	//assign %4 = %68  : int[]
-	_COPY_1DARRAY(arr, _68);
+	_COPY_1DARRAY(arr, _68, T_INT);
 	//assert
 	{
 		//const %69 = 1 : int

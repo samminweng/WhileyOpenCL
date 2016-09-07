@@ -210,7 +210,7 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 	_ADD_DEALLOC(_16);
 	//assign %5 = %16  : int[]
 	_DEALLOC(newPixels);
-	_COPY_1DARRAY(newPixels, _16);
+	_COPY_1DARRAY(newPixels, _16, T_INT);
 	_ADD_DEALLOC(newPixels);
 	//const %17 = 1 : int
 	_17 = 1;
@@ -243,7 +243,7 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 	_ADD_DEALLOC(_29);
 	//assign %6 = %29  : int[]
 	_DEALLOC(v_sobel);
-	_COPY_1DARRAY(v_sobel, _29);
+	_COPY_1DARRAY(v_sobel, _29, T_INT);
 	_ADD_DEALLOC(v_sobel);
 	//const %30 = 1 : int
 	_30 = 1;
@@ -276,7 +276,7 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 	_ADD_DEALLOC(_42);
 	//assign %7 = %42  : int[]
 	_DEALLOC(h_sobel);
-	_COPY_1DARRAY(h_sobel, _42);
+	_COPY_1DARRAY(h_sobel, _42, T_INT);
 	_ADD_DEALLOC(h_sobel);
 	//const %43 = 0 : int
 	_43 = 0;
@@ -304,7 +304,7 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 			{
 				void* pixels_tmp;
 				void* v_sobel_tmp;
-				_47 = convolution(pixels_tmp = _COPY_1DARRAY_PARAM(pixels), true, width, height, x, y, v_sobel_tmp = _COPY_1DARRAY_PARAM(v_sobel), true);
+				_47 = convolution(pixels_tmp = _COPY_1DARRAY_PARAM(pixels, T_INT), true, width, height, x, y, v_sobel_tmp = _COPY_1DARRAY_PARAM(v_sobel, T_INT), true);
 				_CALLEE_DEALLOC(pixels, "false-false-true");
 				_CALLEE_DEALLOC(v_sobel, "false-false-true");
 			}
@@ -314,7 +314,7 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 			{
 				void* pixels_tmp;
 				void* h_sobel_tmp;
-				_48 = convolution(pixels_tmp = _COPY_1DARRAY_PARAM(pixels), true, width, height, x, y, h_sobel_tmp = _COPY_1DARRAY_PARAM(h_sobel), true);
+				_48 = convolution(pixels_tmp = _COPY_1DARRAY_PARAM(pixels, T_INT), true, width, height, x, y, h_sobel_tmp = _COPY_1DARRAY_PARAM(h_sobel, T_INT), true);
 				_CALLEE_DEALLOC(pixels, "false-false-true");
 				_CALLEE_DEALLOC(h_sobel, "false-false-true");
 			}
@@ -586,7 +586,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_10);
 	//assign %4 = %10  : int[]
 	_DEALLOC(pixels);
-	_COPY_1DARRAY(pixels, _10);
+	_COPY_1DARRAY(pixels, _10, T_INT);
 	_ADD_DEALLOC(pixels);
 	//const %11 = 0 : int
 	_11 = 0;
@@ -599,13 +599,13 @@ int main(int argc, char** args){
 		void* pixels_tmp;
 		_UPDATE_1DARRAY_SIZE(_13, pixels);
 		_DEALLOC(_13);
-		_13 = sobelEdgeDetection(pixels_tmp = _COPY_1DARRAY_PARAM(pixels), true, width, height);
+		_13 = sobelEdgeDetection(pixels_tmp = _COPY_1DARRAY_PARAM(pixels, T_INT), true, width, height);
 		_CALLEE_DEALLOC(pixels, "false-false-true");
 		_ADD_DEALLOC(_13);
 	}
 	//assign %5 = %13  : int[]
 	_DEALLOC(newPixels);
-	_COPY_1DARRAY(newPixels, _13);
+	_COPY_1DARRAY(newPixels, _13, T_INT);
 	_ADD_DEALLOC(newPixels);
 	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %15 = %14 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -619,7 +619,7 @@ int main(int argc, char** args){
 	//invoke () = (%0, %4, %1, %2) SobelEdgeDetect1:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
 		void* pixels_tmp;
-		printImage(stdout, pixels_tmp = _COPY_1DARRAY_PARAM(pixels), true, width, height);
+		printImage(stdout, pixels_tmp = _COPY_1DARRAY_PARAM(pixels, T_INT), true, width, height);
 		_CALLEE_DEALLOC(pixels, "false-false-false");
 	}
 	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
@@ -634,7 +634,7 @@ int main(int argc, char** args){
 	//invoke () = (%0, %5, %1, %2) SobelEdgeDetect1:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
 		void* newPixels_tmp;
-		printImage(stdout, newPixels_tmp = _COPY_1DARRAY_PARAM(newPixels), true, width, height);
+		printImage(stdout, newPixels_tmp = _COPY_1DARRAY_PARAM(newPixels, T_INT), true, width, height);
 		_CALLEE_DEALLOC(newPixels, "false-false-false");
 	}
 	//assert

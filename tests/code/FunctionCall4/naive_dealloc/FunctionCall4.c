@@ -22,7 +22,7 @@ long long* func(_DECL_1DARRAY_PARAM(s), _DECL_DEALLOC_PARAM(s), long long n){
 	if(n<=_5){goto blklab0;}
 	//assign %3 = %0  : int[]
 	_DEALLOC(t);
-	_COPY_1DARRAY(t, s);
+	_COPY_1DARRAY(t, s, T_INT);
 	_ADD_DEALLOC(t);
 	//const %6 = 3 : int
 	_6 = 3;
@@ -57,7 +57,7 @@ blklab0:;
 	_ADD_DEALLOC(_13);
 	//assign %4 = %13  : int[]
 	_DEALLOC(new_t);
-	_COPY_1DARRAY(new_t, _13);
+	_COPY_1DARRAY(new_t, _13, T_INT);
 	_ADD_DEALLOC(new_t);
 	//return %4
 	_DEALLOC(s);
@@ -141,7 +141,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_9);
 	//assign %1 = %9  : int[]
 	_DEALLOC(a);
-	_COPY_1DARRAY(a, _9);
+	_COPY_1DARRAY(a, _9, T_INT);
 	_ADD_DEALLOC(a);
 	//const %11 = 6 : int
 	_11 = 6;
@@ -150,13 +150,13 @@ int main(int argc, char** args){
 		void* a_tmp;
 		_UPDATE_1DARRAY_SIZE(_10, a);
 		_DEALLOC(_10);
-		_10 = func(a_tmp = _COPY_1DARRAY_PARAM(a), true, _11);
+		_10 = func(a_tmp = _COPY_1DARRAY_PARAM(a, T_INT), true, _11);
 		_CALLEE_DEALLOC(a, "false-false-false");
 		_ADD_DEALLOC(_10);
 	}
 	//assign %1 = %10  : int[]
 	_DEALLOC(a);
-	_COPY_1DARRAY(a, _10);
+	_COPY_1DARRAY(a, _10, T_INT);
 	_ADD_DEALLOC(a);
 	//assert
 	{
@@ -209,7 +209,7 @@ blklab2:;
 	_ADD_DEALLOC(_27);
 	//assign %2 = %27  : int[]
 	_DEALLOC(b);
-	_COPY_1DARRAY(b, _27);
+	_COPY_1DARRAY(b, _27, T_INT);
 	_ADD_DEALLOC(b);
 	//const %29 = 1 : int
 	_29 = 1;
@@ -218,13 +218,13 @@ blklab2:;
 		void* b_tmp;
 		_UPDATE_1DARRAY_SIZE(_28, b);
 		_DEALLOC(_28);
-		_28 = func(b_tmp = _COPY_1DARRAY_PARAM(b), true, _29);
+		_28 = func(b_tmp = _COPY_1DARRAY_PARAM(b, T_INT), true, _29);
 		_CALLEE_DEALLOC(b, "false-false-true");
 		_ADD_DEALLOC(_28);
 	}
 	//assign %3 = %28  : int[]
 	_DEALLOC(c);
-	_COPY_1DARRAY(c, _28);
+	_COPY_1DARRAY(c, _28, T_INT);
 	_ADD_DEALLOC(c);
 	//assert
 	{
