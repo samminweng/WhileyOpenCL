@@ -130,12 +130,6 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 #define _NEW_1DARRAY(a, size, value, type) a##_size = size; a = create1DArray(value, a##_size, type);
 #define _NEW_2DARRAY(a, size, value, type) a##_size = size; a##_size_size = value##_size; a = create2DArray(value, a##_size, a##_size_size);
 // Create an array of structure pointers
-// Use '_Generic' selection, supported in GCC 4.9 (later), to choose proper creation function at compile time 
-/*#define _NEW_1DARRAY(a, size, value) \
- 		({\
- 			a##_size = size;\
- 			a = _Generic(a, BYTE*: create1DArray_BYTE , default: create1DArray)(value, a##_size);\
- 		})*/
 #define _NEW_1DARRAY_STRUCT(a, size, b, name) \
  		({\
  			a = malloc(size*sizeof(name*));\
@@ -183,12 +177,10 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 *  Print Macros
 * 
 */
-// Print an array of integers
-#define _PRINT_1DARRAY(a) printf1DArray(a, a##_size, T_INT);
-// Print an array of Bytes using '%s' format
-#define _PRINT_1DARRAY_BYTE(a) printf1DArray(a, a##_size, T_BYTE);
+// Print an array of integers or bytes
+#define _PRINT_1DARRAY(a, type) printf1DArray(a, a##_size, type);
 // Print two dimensional arrays of integers
-#define _PRINT_2DARRAY(a) printf2DArray(a, a##_size, a##_size_size);
+#define _PRINT_2DARRAY(a, type) printf2DArray(a, a##_size, a##_size_size);
 // Print an array of structure pointer
 #define _PRINT_1DARRAY_STRUCT(name, a) \
 		({\

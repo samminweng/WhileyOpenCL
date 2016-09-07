@@ -21,7 +21,7 @@ void free_Image(Image* image){
 void printf_Image(Image* image){
 	printf("{");
 	printf(" pixels:");
-	_PRINT_1DARRAY(image->pixels);
+	_PRINT_1DARRAY(image->pixels, T_INT);
 	printf(" width:");
 	printf("%lld", image->width);
 	printf(" height:");

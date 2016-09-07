@@ -348,11 +348,11 @@ void printf1DArray(void* arr, long long size, TYPENUM type) {
 			printf1DArray_LONG((long long*)arr, size);
 			break;
 		case T_BYTE:
+			// Print an array of Bytes using '%s' format
 			printf("%s", (BYTE *)arr);
 			break;
 	}
 }
-
 
 // Print out the first 10 array in an 2D array
 void printf2DArray(long long** input, long long input_size, long long input_size_size){

@@ -87,15 +87,14 @@ public final class CodeGeneratorHelper {
 			} else if (member_type instanceof Type.Array) {
 				// Check the element type
 				Type elm_type = stores.getArrayElementType((Type.Array) member_type);
+				int dimension = stores.getArrayDimension(member_type);
 				if(elm_type instanceof Type.Byte){
 					// Print an array of BYTE
-					statement
-					.add("\t_PRINT_" + stores.getArrayDimension(member_type) + "DARRAY_BYTE(" + input_member + ");");
+					statement.add("\t_PRINT_" + dimension + "DARRAY(" + input_member + ", T_BYTE);");
 					
 				}else if (stores.isIntType(elm_type)) {
 					// Print an array of integers
-					statement
-							.add("\t_PRINT_" + stores.getArrayDimension(member_type) + "DARRAY(" + input_member + ");");
+					statement.add("\t_PRINT_" + dimension + "DARRAY(" + input_member + ", T_INT);");
 				} else {
 					String struct = translateType(elm_type, stores).replace("*", "");
 					// Print an array of structure pointers using macro
