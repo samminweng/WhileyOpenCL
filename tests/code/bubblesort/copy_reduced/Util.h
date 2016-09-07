@@ -33,10 +33,8 @@ void* create1DArray(int value, int arr_size, TYPENUM type);
 void* copy1DArray(void* arr, long long size, TYPENUM type);
 // Print out an array
 void printf1DArray(void* input, long long input_size, TYPENUM type);
-
 // Freed an array of arrays
 void free2DArray(void** ptr, long long size);
-
 
 /**
  * Other built-in functions
@@ -296,7 +294,6 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 // This macro also print out debugging message on memory leaks, due to 
 // the fact a and b_tmp (extra copy) are not aliased and the copy is not freed
 // either at caller nor callee. 
-
 // 'result' contains the analysis results of parameter 'b', e.g. 'true-true-false' 
 // Mutable check = true, return check = true, live variable check = false
 #define _CALLER_DEALLOC(a, b, result) \
@@ -319,6 +316,8 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 			DEBUG_PRINT("_RESET_DEALLOC macro on "str(#b) " ("str(result)")");\
 			b##_dealloc = false;\
 		})
+// '_SUBSTRUCTURE_DEALLOC' macro applies the subtructure parameter
+#define _SUBSTRUCTURE_DEALLOC(b, result) DEBUG_PRINT("_SUBSTRUCTURE_DEALLOC macro on "str(#b) " ("str(result)")");
 /*
 * Other Macros 
 *

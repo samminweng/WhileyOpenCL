@@ -712,6 +712,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					String[] parts = macro.split("\t");
 					String macro_name = parts[0];// Get the macro
 					switch (macro_name) {
+					case "_SUBSTRUCTURE_DEALLOC":
+						parameters.add("false");
+						break;
 					case "_RESET_DEALLOC":
 						parameters.add("false");
 						break;

@@ -509,7 +509,12 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * 
 	 *        De-allocation macros include:
 	 *         <ul>
-	 * 
+	 * 		    <li>'substructure_dealloc': retains the flag of original parameter and passes 'false' flag to callee. 
+	 *         		This macro is applied to sub-structure only
+	 *         <code>     
+	 * 		  		a = f(b, false)
+	 *        		a_dealloc = true
+	 * 	    	</code>
 	 *         <li>'retain_dealloc': retains the flag of original parameter and passes 'false' flag to callee. 
 	 *         		This macro is applied to sub-structure or immutable parameter
 	 *         <code>     
@@ -558,7 +563,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			boolean isSubStructure = stores.isSubstructure(register, function);
 			if(isSubStructure){
 				// The substructure is passed to function call with 'false' flag
-				return "_RETAIN_DEALLOC"+"\t"+checks;
+				return "_SUBSTRUCTURE_DEALLOC"+"\t"+checks;
 			}
 			
 			if (!isMutated) {

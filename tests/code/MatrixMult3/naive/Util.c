@@ -345,10 +345,10 @@ void printf1DArray_LONG(long long* input, long long input_size) {
 void printf1DArray(void* arr, long long size, TYPENUM type) {
 	switch(type){
 		case T_INT:
-			printf1DArray_LONG(arr, size);
+			printf1DArray_LONG((long long*)arr, size);
 			break;
 		case T_BYTE:
-			printf("%s", arr);
+			printf("%s", (BYTE *)arr);
 			break;
 	}
 }

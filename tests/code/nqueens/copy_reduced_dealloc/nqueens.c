@@ -311,7 +311,7 @@ blklab20:;
 			//invoke (%26) = (%7, %1, %4) nqueens:conflict : function(nqueens:POS,int,int)->(bool)
 			{
 				_26 = conflict(_STRUCT_PARAM(p), false, n, col);
-				_RETAIN_DEALLOC(p, "false-false-false");
+				_SUBSTRUCTURE_DEALLOC(p, "false-false-false");
 			}
 			//const %27 = true : bool
 			_27 = true;
