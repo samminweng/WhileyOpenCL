@@ -503,7 +503,7 @@ blklab17:;
 				_UPDATE_1DARRAY_SIZE(_41, moves);
 				_DEALLOC(_41);
 				_41 = pickCoin(moves_tmp = _COPY_1DARRAY_PARAM(moves, T_INT), false, i, j, n, x, y, z);
-				_CALLER_DEALLOC(_41, moves, "true-true-false");
+				_CALLER_DEALLOC(_41, moves, "true-true-false" , "findMoves");
 				_ADD_DEALLOC(_41);
 			}
 			//assign %0 = %41  : int[]
@@ -587,7 +587,7 @@ int main(int argc, char** args){
 		_UPDATE_1DARRAY_SIZE(_8, moves);
 		_DEALLOC(_8);
 		_8 = findMoves(moves_tmp = _COPY_1DARRAY_PARAM(moves, T_INT), false, n);
-		_CALLER_DEALLOC(_8, moves, "true-true-false");
+		_CALLER_DEALLOC(_8, moves, "true-true-false" , "main");
 		_ADD_DEALLOC(_8);
 	}
 	//assign %2 = %8  : int[]
@@ -598,7 +598,7 @@ int main(int argc, char** args){
 	{
 		void* moves_tmp;
 		play(stdout, moves_tmp = _COPY_1DARRAY_PARAM(moves, T_INT), true, n);
-		_CALLEE_DEALLOC(moves, "false-false-true");
+		_CALLEE_DEALLOC(moves, "false-false-true" , "main");
 	}
 	//const %9 = 1 : int
 	_9 = 1;

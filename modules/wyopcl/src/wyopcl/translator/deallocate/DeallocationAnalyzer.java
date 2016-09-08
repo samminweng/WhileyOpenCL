@@ -367,16 +367,18 @@ public class DeallocationAnalyzer extends Analyzer {
 					String macro_name = parts[0];
 					// Get check results (mutable, return and live checks on parameter)
 					String checks = parts[1];
+					// Get function name
+					String func_name = function.name();
 					// Write the checks results as a comments
 					//statements.add(indent+"//"+parameter+":"+checks);
 					if(macro_name.equals("_CALLER_DEALLOC")){
 						// Get function return
 						String ret = stores.getVar(code.target(0), function);
 						// Applied macro with 'ret' and 'parameter'
-						statements.add(indent+macro_name+"("+ret+", "+parameter+", \""+checks+"\");");
+						statements.add(indent+macro_name+"("+ret+", "+parameter+", \""+checks+"\" , \""+func_name+"\");");
 					}else{
 						// Added the macros
-						statements.add(indent + macro_name+"("+ parameter+", \""+checks+"\");");	
+						statements.add(indent + macro_name+"("+ parameter+", \""+checks+"\" , \""+func_name+"\");");	
 					}
 				}
 			}

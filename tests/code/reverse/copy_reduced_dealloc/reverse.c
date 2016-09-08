@@ -154,7 +154,7 @@ int main(int argc, char** args){
 		_UPDATE_1DARRAY_SIZE(_5, _11);
 		_DEALLOC(_5);
 		_5 = reverse(_1DARRAY_PARAM(_11), false);
-		_RETAIN_DEALLOC(_11, "false-false-false");
+		_RETAIN_DEALLOC(_11, "false-false-false" , "main");
 		_ADD_DEALLOC(_5);
 	}
 	//assign %1 = %5  : int[]
@@ -233,7 +233,7 @@ blklab5:;
 		_UPDATE_1DARRAY_SIZE(_27, arr);
 		_DEALLOC(_27);
 		_27 = reverse(_1DARRAY_PARAM(arr), false);
-		_RETAIN_DEALLOC(arr, "false-false-false");
+		_RETAIN_DEALLOC(arr, "false-false-false" , "main");
 		_ADD_DEALLOC(_27);
 	}
 	//assign %4 = %27  : int[]

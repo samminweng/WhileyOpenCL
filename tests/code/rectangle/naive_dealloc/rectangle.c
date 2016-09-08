@@ -176,8 +176,8 @@ int main(int argc, char** args){
 		void* p3_tmp;
 		_DEALLOC_STRUCT(_15, Rectangle);
 		_15 = updateRec(rec_tmp = _COPY_STRUCT_PARAM(rec, Rectangle), false, p3_tmp = _COPY_STRUCT_PARAM(p3, Point), true);
-		_CALLER_DEALLOC(_15, rec, "true-true-false");
-		_CALLEE_DEALLOC(p3, "false-false-false");
+		_CALLER_DEALLOC(_15, rec, "true-true-false" , "main");
+		_CALLEE_DEALLOC(p3, "false-false-false" , "main");
 		_ADD_DEALLOC(_15);
 	}
 	//assign %3 = %15  : {{int x,int y} p1,{int x,int y} p2}

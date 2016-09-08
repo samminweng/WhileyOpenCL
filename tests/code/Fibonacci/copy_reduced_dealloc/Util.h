@@ -283,30 +283,30 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 // This macro also print out debugging message on memory leaks, due to 
 // the fact a and b_tmp (extra copy) are not aliased and the copy is not freed
 // either at caller nor callee. 
-// 'result' contains the analysis results of parameter 'b', e.g. 'true-true-false' 
+// 'checks' contains the analysis results of parameter 'b', e.g. 'true-true-false' 
 // Mutable check = true, return check = true, live variable check = false
-#define _CALLER_DEALLOC(a, b, result) \
+#define _CALLER_DEALLOC(a, b, checks, func_name) \
 		({\
-			DEBUG_PRINT("_CALLER_DEALLOC macro on "str(#b) " ("str(result)")");\
+			DEBUG_PRINT("_CALLER_DEALLOC macro on ( "str(checks)" "str(#b) " "str(func_name)" )");\
 			if(a != b##_tmp){\
-				DEBUG_PRINT("Memory leaks at " str(#b)"_tmp");\
+				DEBUG_PRINT("Potential memory leaks at ( "str(checks)" "str(#b)"_tmp" " "str(func_name)" )");\
 			}\
 		})
 // '_CALLEE_DEALLOC' macro makes a copy of actual argument and delegates callee
 // to free the passing parameter 'a = func(copy(b), true)'
-#define _CALLEE_DEALLOC(b, result) DEBUG_PRINT("_CALLEE_DEALLOC macro on "str(#b) " ("str(result)")");
+#define _CALLEE_DEALLOC(b, checks, func_name) DEBUG_PRINT("_CALLEE_DEALLOC macro on ( "str(checks)" "str(#b) " "str(func_name)" )");
 // '_RETAIN_DEALLOC' macro does NOT make the copy of argument and delegates caller
 // to free the passing parameter 'a = func(b, false)'
-#define _RETAIN_DEALLOC(b, result) DEBUG_PRINT("_RETAIN_DEALLOC macro on "str(#b) " ("str(result)")");
+#define _RETAIN_DEALLOC(b, checks, func_name) DEBUG_PRINT("_RETAIN_DEALLOC macro on  ( "str(checks)" "str(#b) " "str(func_name)" )");
 // '_RESET_DEALLOC' macro does NOT make the copy of argument and delegates caller
 // to reset the flag of actual argument 'a = func(b, false)'
-#define _RESET_DEALLOC(b, result) \
+#define _RESET_DEALLOC(b, checks, func_name) \
 		({\
-			DEBUG_PRINT("_RESET_DEALLOC macro on "str(#b) " ("str(result)")");\
+			DEBUG_PRINT("_RESET_DEALLOC macro on  ( "str(checks)" "str(#b) " "str(func_name)" )");\
 			b##_dealloc = false;\
 		})
 // '_SUBSTRUCTURE_DEALLOC' macro applies the subtructure parameter
-#define _SUBSTRUCTURE_DEALLOC(b, result) DEBUG_PRINT("_SUBSTRUCTURE_DEALLOC macro on "str(#b) " ("str(result)")");
+#define _SUBSTRUCTURE_DEALLOC(b, checks, func_name) DEBUG_PRINT("_SUBSTRUCTURE_DEALLOC macro on  ( "str(checks)" "str(#b) " "str(func_name)" )");
 /*
 * Other Macros 
 *
