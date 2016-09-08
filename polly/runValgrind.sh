@@ -132,77 +132,83 @@ exec(){
     #read -p "Press [Enter] to continue..."
 }
 
+### Reverse test case##
+init Reverse
+exec Reverse original 10000
+exec Reverse original 20000
+exec Reverse original 30000
 
-# ### newTicTacToe test case ###
-# init newTicTacToe
-# exec newTicTacToe original 1000
-# exec newTicTacToe original 10000
-# exec newTicTacToe original 100000
+### newTicTacToe test case ###
+init newTicTacToe
+exec newTicTacToe original 1000
+exec newTicTacToe original 2000
+exec newTicTacToe original 3000
 
-# ### Reverse test case##
-# init Reverse
-# exec Reverse original 100000
-# exec Reverse original 1000000
-# exec Reverse original 10000000
+## # MergeSort test case##
+init MergeSort
+exec MergeSort original 10000
+exec MergeSort original 20000
+exec MergeSort original 30000
 
-# ## # MergeSort test case##
-# init MergeSort
-# exec MergeSort original 1000
-# exec MergeSort original 10000
-# exec MergeSort original 100000
+## # BubbleSort test case##
+init BubbleSort
+exec BubbleSort original 1000
+exec BubbleSort original 2000
+exec BubbleSort original 3000
 
-# ## # BubbleSort test case##
-# init BubbleSort
-# exec BubbleSort original 10
-# exec BubbleSort original 10000
-# exec BubbleSort original 100000
+# MatrixMult test case##
+init MatrixMult
+exec MatrixMult original 100
+exec MatrixMult original 200
+exec MatrixMult original 300
+exec MatrixMult transpose 100
+exec MatrixMult transpose 200
+exec MatrixMult transpose 300
 
-# # MatrixMult test case##
-# init MatrixMult
-# exec MatrixMult original 1000
-# exec MatrixMult original 2000
-# exec MatrixMult original 3000
+### Fibonacci test case###
+init Fibonacci
+exec Fibonacci original 10
+exec Fibonacci original 20
+exec Fibonacci original 30
 
-# ### Fibonacci test case###
-# init Fibonacci
-# exec Fibonacci original 10
-# exec Fibonacci original 50
-# exec Fibonacci original 90
+### GCD (Greatest Common Divisor) test case###
+init GCD
+exec GCD original 10
+exec GCD original 20
+exec GCD original 30
+exec GCD cached 10
+exec GCD cached 20
+exec GCD cached 30
 
-# ### GCD (Greatest Common Divisor) test case###
-# init GCD
-# exec GCD original 100
-# exec GCD original 150
-# exec GCD original 200
-# exec GCD cached 100
-# exec GCD cached 150
-# exec GCD cached 200
+### CoinGame test case ###
+init CoinGame
+exec CoinGame original 100
+exec CoinGame original 200
+exec CoinGame original 300
+exec CoinGame single 100
+exec CoinGame single 200
+exec CoinGame single 300
+exec CoinGame array 100
+exec CoinGame array 200
+exec CoinGame array 300
 
-# ### CoinGame test case ###
-# init CoinGame
-# exec CoinGame original 1000
-# exec CoinGame original 2000
-# exec CoinGame original 3000
-# exec CoinGame single 1000
-# exec CoinGame single 2000
-# exec CoinGame single 3000
-# exec CoinGame array 1000
-# exec CoinGame array 2000
-# exec CoinGame array 3000
+## Sobel Edge Detection test case
+init SobelEdge
+exec SobelEdge original 32
+exec SobelEdge original 64
+exec SobelEdge original 128
 
-
-# ## Sobel Edge Detection test case
-# init SobelEdge
-# exec SobelEdge original 8
-# exec SobelEdge original 64
-# exec SobelEdge original 128
-# #exec SobelEdge original 256
-# #exec SobelEdge original 512
-# #exec SobelEdge original 1024
-# #exec SobelEdge original 2048
-
-## LZ77 test case
+# LZ77 test case
 init LZ77
-exec LZ77 original 10
 exec LZ77 original 100
-exec LZ77 original 1000
+exec LZ77 original 200
+exec LZ77 original 300
+
+### NQueen test case
+init NQueens
+exec NQueens original 8
+exec NQueens original 9
+exec NQueens original 10
+exec NQueens integer 8
+exec NQueens integer 9
+exec NQueens integer 10

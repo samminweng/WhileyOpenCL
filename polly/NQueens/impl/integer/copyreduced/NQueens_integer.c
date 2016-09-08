@@ -209,7 +209,9 @@ blklab14:;
 //.blklab20
 blklab20:;
 			//invoke (%21) = (%8, %1, %5) NQueens_integer:conflict : function(NQueens_integer:POS,int,int)->(bool)
-			_21 = conflict(_STRUCT_PARAM(p), n, col);
+			{
+				_21 = conflict(_STRUCT_PARAM(p), n, col);
+			}
 			//const %22 = true : bool
 			_22 = true;
 			//ifeq %21, %22 goto blklab21 : bool
@@ -258,7 +260,10 @@ blklab12:;
 		//add %30 = %1, %29 : int
 		_30=n+_29;
 		//invoke (%28) = (%0, %30, %2) NQueens_integer:run : function(NQueens_integer:POS[],int,int)->(int)
-		_28 = run(copy_array_POS(queens, queens_size), queens_size, _30, dim);
+		{
+			void* queens_tmp;
+			_28 = run(queens_tmp = copy_array_POS(queens, queens_size), queens_size, _30, dim);
+		}
 		//add %31 = %4, %28 : int
 		_31=num_solutions+_28;
 		//assign %4 = %31  : int
@@ -339,20 +344,22 @@ int main(int argc, char** args){
 	//const %14 = 0 : int
 	_14 = 0;
 	//invoke (%13) = (%3, %14, %2) NQueens_integer:run : function(NQueens_integer:POS[],int,int)->(int)
-	_13 = run(_1DARRAY_PARAM(queens), _14, n);
+	{
+		_13 = run(_1DARRAY_PARAM(queens), _14, n);
+	}
 	//assign %4 = %13  : int
 	num_solutions = _13;
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %16 = %15 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %17 = [78,45,81,117,101,101,110,32,80,114,111,98,108,101,109,32,111,110,32,97,32,78,32,88,32,78,32,66,111,97,114,100,46] : int[]
-	_NEW_1DARRAY(_17, 33, 0);
+	_NEW_1DARRAY(_17, 33, 0, T_INT);
 	_17[0] = 78; _17[1] = 45; _17[2] = 81; _17[3] = 117; _17[4] = 101; _17[5] = 101; _17[6] = 110; _17[7] = 32; _17[8] = 80; _17[9] = 114; _17[10] = 111; _17[11] = 98; _17[12] = 108; _17[13] = 101; _17[14] = 109; _17[15] = 32; _17[16] = 111; _17[17] = 110; _17[18] = 32; _17[19] = 97; _17[20] = 32; _17[21] = 78; _17[22] = 32; _17[23] = 88; _17[24] = 32; _17[25] = 78; _17[26] = 32; _17[27] = 66; _17[28] = 111; _17[29] = 97; _17[30] = 114; _17[31] = 100; _17[32] = 46; 
 	//indirectinvoke () = %16 (%17) : method(int[])->()
 	println_s(_17, _17_size);
 	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %19 = %18 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %20 = [78,32,61,32] : int[]
-	_NEW_1DARRAY(_20, 4, 0);
+	_NEW_1DARRAY(_20, 4, 0, T_INT);
 	_20[0] = 78; _20[1] = 32; _20[2] = 61; _20[3] = 32; 
 	//indirectinvoke () = %19 (%20) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_20));
@@ -363,7 +370,7 @@ int main(int argc, char** args){
 	//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %24 = %23 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %25 = [70,111,117,110,100,32] : int[]
-	_NEW_1DARRAY(_25, 6, 0);
+	_NEW_1DARRAY(_25, 6, 0, T_INT);
 	_25[0] = 70; _25[1] = 111; _25[2] = 117; _25[3] = 110; _25[4] = 100; _25[5] = 32; 
 	//indirectinvoke () = %24 (%25) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_25));
@@ -374,7 +381,7 @@ int main(int argc, char** args){
 	//fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %29 = %28 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %30 = [32,115,111,108,117,116,105,111,110,115,46] : int[]
-	_NEW_1DARRAY(_30, 11, 0);
+	_NEW_1DARRAY(_30, 11, 0, T_INT);
 	_30[0] = 32; _30[1] = 115; _30[2] = 111; _30[3] = 108; _30[4] = 117; _30[5] = 116; _30[6] = 105; _30[7] = 111; _30[8] = 110; _30[9] = 115; _30[10] = 46; 
 	//indirectinvoke () = %29 (%30) : method(int[])->()
 	println_s(_30, _30_size);

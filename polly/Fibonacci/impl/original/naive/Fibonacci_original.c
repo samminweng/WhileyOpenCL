@@ -44,10 +44,10 @@ blklab0:;
 	{
 		void* ls_tmp;
 		_UPDATE_1DARRAY_SIZE(_8, ls);
-		_8 = fibonacci(ls_tmp = _COPY_1DARRAY_PARAM(ls), _10);
+		_8 = fibonacci(ls_tmp = _COPY_1DARRAY_PARAM(ls, T_INT), _10);
 	}
 	//assign %0 = %8  : int[]
-	_COPY_1DARRAY(ls, _8);
+	_COPY_1DARRAY(ls, _8, T_INT);
 	//const %11 = 1 : int
 	_11 = 1;
 	//sub %12 = %1, %11 : int
@@ -115,9 +115,9 @@ int main(int argc, char** args){
 	//const %8 = 0 : int
 	_8 = 0;
 	//arraygen %9 = [8; 2] : int[]
-	_NEW_1DARRAY(_9, max, _8);
+	_NEW_1DARRAY(_9, max, _8, T_INT);
 	//assign %3 = %9  : int[]
-	_COPY_1DARRAY(arr, _9);
+	_COPY_1DARRAY(arr, _9, T_INT);
 	//const %11 = 1 : int
 	_11 = 1;
 	//sub %12 = %2, %11 : int
@@ -126,10 +126,10 @@ int main(int argc, char** args){
 	{
 		void* arr_tmp;
 		_UPDATE_1DARRAY_SIZE(_10, arr);
-		_10 = fibonacci(arr_tmp = _COPY_1DARRAY_PARAM(arr), _12);
+		_10 = fibonacci(arr_tmp = _COPY_1DARRAY_PARAM(arr, T_INT), _12);
 	}
 	//assign %3 = %10  : int[]
-	_COPY_1DARRAY(arr, _10);
+	_COPY_1DARRAY(arr, _10, T_INT);
 	//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %14 = %13 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %15 = 3 : int
@@ -163,7 +163,7 @@ int main(int argc, char** args){
 	//fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %29 = %28 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %30 = [80,97,115,115,32,70,105,98,111,110,97,99,99,105,32,116,101,115,116,32,99,97,115,101] : int[]
-	_NEW_1DARRAY(_30, 24, 0);
+	_NEW_1DARRAY(_30, 24, 0, T_INT);
 	_30[0] = 80; _30[1] = 97; _30[2] = 115; _30[3] = 115; _30[4] = 32; _30[5] = 70; _30[6] = 105; _30[7] = 98; _30[8] = 111; _30[9] = 110; _30[10] = 97; _30[11] = 99; _30[12] = 99; _30[13] = 105; _30[14] = 32; _30[15] = 116; _30[16] = 101; _30[17] = 115; _30[18] = 116; _30[19] = 32; _30[20] = 99; _30[21] = 97; _30[22] = 115; _30[23] = 101; 
 	//indirectinvoke () = %29 (%30) : method(int[])->()
 	println_s(_30, _30_size);

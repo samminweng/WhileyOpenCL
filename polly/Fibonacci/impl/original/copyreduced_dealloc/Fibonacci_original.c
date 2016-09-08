@@ -115,7 +115,7 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_30);
 	_DECL_DEALLOC(_30);
 	//fieldload %5 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	_DEALLOC_2DArray(_5);
+	_DEALLOC_2DArray(_5, T_INT);
 	_CONV_ARGS(_5);
 	_ADD_DEALLOC(_5);
 	//const %6 = 0 : int
@@ -139,7 +139,7 @@ int main(int argc, char** args){
 	_8 = 0;
 	//arraygen %9 = [8; 2] : int[]
 	_DEALLOC(_9);
-	_NEW_1DARRAY(_9, max, _8);
+	_NEW_1DARRAY(_9, max, _8, T_INT);
 	_ADD_DEALLOC(_9);
 	//assign %3 = %9  : int[]
 	_DEALLOC(arr);
@@ -195,7 +195,7 @@ int main(int argc, char** args){
 	//fieldload %29 = %28 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %30 = [80,97,115,115,32,70,105,98,111,110,97,99,99,105,32,116,101,115,116,32,99,97,115,101] : int[]
 	_DEALLOC(_30);
-	_NEW_1DARRAY(_30, 24, 0);
+	_NEW_1DARRAY(_30, 24, 0, T_INT);
 	_30[0] = 80; _30[1] = 97; _30[2] = 115; _30[3] = 115; _30[4] = 32; _30[5] = 70; _30[6] = 105; _30[7] = 98; _30[8] = 111; _30[9] = 110; _30[10] = 97; _30[11] = 99; _30[12] = 99; _30[13] = 105; _30[14] = 32; _30[15] = 116; _30[16] = 101; _30[17] = 115; _30[18] = 116; _30[19] = 32; _30[20] = 99; _30[21] = 97; _30[22] = 115; _30[23] = 101; 
 	_ADD_DEALLOC(_30);
 	//indirectinvoke () = %29 (%30) : method(int[])->()
@@ -206,7 +206,7 @@ blklab2:;
 	_DEALLOC(n);
 	_DEALLOC(arr);
 	_DEALLOC(_4);
-	_DEALLOC_2DArray(_5);
+	_DEALLOC_2DArray(_5, T_INT);
 	_DEALLOC(_7);
 	_DEALLOC(_9);
 	_DEALLOC(_10);

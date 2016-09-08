@@ -1779,10 +1779,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * <pre>
 	 * <code>
-	 * a_size = c;
-	 *	if(a_dealloc){free2DArray(a, a_size); a_dealloc = false;}
+	 * _DEALLOC_2DArray(a, T_INT);	
+	 * a = gen2DArray(b, b_size, b_size_size);
+	 * a_size = b_size;
 	 * a_size_size = __size;
-	 * a = gen2DArray(b, a_size, a_size_size);
 	 * a_dealloc = true;
 	 * </code>
 	 * </pre>

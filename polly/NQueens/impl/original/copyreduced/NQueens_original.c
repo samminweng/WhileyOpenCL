@@ -267,7 +267,9 @@ blklab14:;
 //.blklab20
 blklab20:;
 			//invoke (%26) = (%7, %1, %4) NQueens_original:conflict : function(NQueens_original:POS,int,int)->(bool)
-			_26 = conflict(_STRUCT_PARAM(p), n, col);
+			{
+				_26 = conflict(_STRUCT_PARAM(p), n, col);
+			}
 			//const %27 = true : bool
 			_27 = true;
 			//ifeq %26, %27 goto blklab21 : bool
@@ -316,7 +318,9 @@ blklab12:;
 		//add %35 = %1, %34 : int
 		_35=n+_34;
 		//invoke (%33) = (%0, %35, %2) NQueens_original:run : function(NQueens_original:NQueen,int,int)->(NQueens_original:NQueen)
-		_33 = run(_STRUCT_PARAM(nq), _35, dim);
+		{
+			_33 = run(_STRUCT_PARAM(nq), _35, dim);
+		}
 		//assign %0 = %33  : {int num_solutions,{int c,int r}[] queens}
 		nq = _33;
 //.blklab22
@@ -401,26 +405,30 @@ int main(int argc, char** args){
 	//assign %4 = %14  : int
 	num_solutions = _14;
 	//invoke (%15) = (%4, %3) NQueens_original:nqueen : function(int,NQueens_original:POS[])->(NQueens_original:NQueen)
-	_15 = nqueen(num_solutions, _1DARRAY_PARAM(queens));
+	{
+		_15 = nqueen(num_solutions, _1DARRAY_PARAM(queens));
+	}
 	//assign %5 = %15  : {int num_solutions,{int c,int r}[] queens}
 	nq = _15;
 	//const %17 = 0 : int
 	_17 = 0;
 	//invoke (%16) = (%5, %17, %2) NQueens_original:run : function(NQueens_original:NQueen,int,int)->(NQueens_original:NQueen)
-	_16 = run(_STRUCT_PARAM(nq), _17, n);
+	{
+		_16 = run(_STRUCT_PARAM(nq), _17, n);
+	}
 	//assign %5 = %16  : {int num_solutions,{int c,int r}[] queens}
 	nq = _16;
 	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %19 = %18 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %20 = [78,45,81,117,101,101,110,32,80,114,111,98,108,101,109,32,111,110,32,97,32,78,32,88,32,78,32,66,111,97,114,100,46] : int[]
-	_NEW_1DARRAY(_20, 33, 0);
+	_NEW_1DARRAY(_20, 33, 0, T_INT);
 	_20[0] = 78; _20[1] = 45; _20[2] = 81; _20[3] = 117; _20[4] = 101; _20[5] = 101; _20[6] = 110; _20[7] = 32; _20[8] = 80; _20[9] = 114; _20[10] = 111; _20[11] = 98; _20[12] = 108; _20[13] = 101; _20[14] = 109; _20[15] = 32; _20[16] = 111; _20[17] = 110; _20[18] = 32; _20[19] = 97; _20[20] = 32; _20[21] = 78; _20[22] = 32; _20[23] = 88; _20[24] = 32; _20[25] = 78; _20[26] = 32; _20[27] = 66; _20[28] = 111; _20[29] = 97; _20[30] = 114; _20[31] = 100; _20[32] = 46; 
 	//indirectinvoke () = %19 (%20) : method(int[])->()
 	println_s(_20, _20_size);
 	//fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %22 = %21 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %23 = [78,32,61,32] : int[]
-	_NEW_1DARRAY(_23, 4, 0);
+	_NEW_1DARRAY(_23, 4, 0, T_INT);
 	_23[0] = 78; _23[1] = 32; _23[2] = 61; _23[3] = 32; 
 	//indirectinvoke () = %22 (%23) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_23));
@@ -431,7 +439,7 @@ int main(int argc, char** args){
 	//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %27 = %26 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %28 = [70,111,117,110,100,32] : int[]
-	_NEW_1DARRAY(_28, 6, 0);
+	_NEW_1DARRAY(_28, 6, 0, T_INT);
 	_28[0] = 70; _28[1] = 111; _28[2] = 117; _28[3] = 110; _28[4] = 100; _28[5] = 32; 
 	//indirectinvoke () = %27 (%28) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_28));
@@ -444,7 +452,7 @@ int main(int argc, char** args){
 	//fieldload %32 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %33 = %32 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %34 = [32,115,111,108,117,116,105,111,110,115,46] : int[]
-	_NEW_1DARRAY(_34, 11, 0);
+	_NEW_1DARRAY(_34, 11, 0, T_INT);
 	_34[0] = 32; _34[1] = 115; _34[2] = 111; _34[3] = 108; _34[4] = 117; _34[5] = 116; _34[6] = 105; _34[7] = 111; _34[8] = 110; _34[9] = 115; _34[10] = 46; 
 	//indirectinvoke () = %33 (%34) : method(int[])->()
 	println_s(_34, _34_size);

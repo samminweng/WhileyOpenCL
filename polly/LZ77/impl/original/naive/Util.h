@@ -9,10 +9,36 @@
 // Remove the security check about unsafe 'scanf' or 'sprintf' in VS tool
 // This definition allows the portability of C code across the platforms.
 #define _CRT_SECURE_NO_WARNINGS
+
+// Define BYTE type due to missing byte primitive type in C languate
+typedef unsigned char BYTE;
+/***
+*
+* Declare an enumerated type to indicate the type and select the corresponding function 
+*
+*/
+typedef enum {
+	T_INT, // Integer type
+	T_BYTE // Byte type
+} TYPENUM;
+
+
 /**
- * Built-in functions
+*Built-in generic typed functions for BYTE and Integer Types
+*
+***/
+//Create an array and initialize the array value 
+void* create1DArray(int value, int arr_size, TYPENUM type);
+// Copy an array to another array
+void* copy1DArray(void* arr, long long size, TYPENUM type);
+// Print out an array
+void printf1DArray(void* input, long long input_size, TYPENUM type);
+// Freed an array of arrays
+void free2DArray(void* ptr, long long size, TYPENUM type);
+
+/**
+ * Other built-in functions
  */
-void printf1DArray(long long* input, long long input_size);
 void indirect_printf(long long input);
 //No overlapping is allowed: function name must be different.
 void printf_s(long long* input, long long input_size);
@@ -21,13 +47,10 @@ void println_s(long long* input, long long input_size);
 long long* parseStringToInt(long long* arr);
 // 1D Array
 long long** convertArgsToIntArray(int argc, char** args);
-long long* copy1DArray(long long *arr, long long size);
-long long* create1DArray(int value, int arr_size);
 int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2, long long arr2_size);
 // 2D Array Operator
 long long** copy2DArray(long long **arr, long long x, long long y);
 long long** create2DArray(long long* arr,  long long x, long long y);
-void free2DArray(long long** ptr, long long size);
 void printf2DArray(long long** input, long long input_size, long long input_size_size);
 // ArrayList Operators
 long long* slice(long long* arr, long long arr_size, long long start, long long end);
@@ -35,14 +58,9 @@ long long* append(long long *arr1, long long arr1_size, long long* arr2, long lo
 long long* sublist(long long* arr, int start, int end);
 int isPowerof2(long long value);
 long long* optimized_append(long long* op_1, long long* op_1_size, long long* op_2, long long* op_2_size, long long* ret_size);
-
-// Define BYTE type due to missing byte primitive type in C languate
-typedef unsigned char BYTE;
-//Built-in functions for BYTE type
-BYTE* create1DArray_BYTE(int size, BYTE value);//Create a BYTE array of given array size 
-BYTE* copy1DArray_BYTE(BYTE *arr, long long size); // Copy a BYTE array
-// Convert an array of bytes to an array of char
+// Convert an array of bytes to an array of long long
 long long* fromBytes(BYTE* arr, long long arr_size);
+
 /**
  * Macro Section
 **/
@@ -93,9 +111,9 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 #define _DECL_DEALLOC(a) bool a##_dealloc = false;
 #define _DECL_DEALLOC_PARAM(a) bool a##_dealloc
 #define _DECL_1DARRAY_PARAM(a) long long* a, long long a##_size
-#define _DECL_1DARRAY_MEMBER(a) long long* a; long long a##_size;
-// Declare a BYTE array
+ // Declare a BYTE array
 #define _DECL_1DARRAY_MEMBER_BYTE(a) BYTE* a; long long a##_size; 
+#define _DECL_1DARRAY_MEMBER(a) long long* a; long long a##_size;
 #define _DECL_2DARRAY_PARAM(a) long long** a, long long a##_size, long long a##_size_size
 #define _DECL_2DARRAY_MEMBER(a) long long** a; long long a##_size; long long a##_size_size;
 /***
@@ -109,8 +127,8 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 			*a = *b;\
 		})
 // Create an array of integers or integer arrays
-#define _NEW_1DARRAY(a, size, value) a##_size = size; a = create1DArray(value, a##_size);
-#define _NEW_2DARRAY(a, size, value) a##_size = size; a##_size_size = value##_size; a = create2DArray(value, a##_size, a##_size_size);
+#define _NEW_1DARRAY(a, size, value, type) a##_size = size; a = create1DArray(value, a##_size, type);
+#define _NEW_2DARRAY(a, size, value, type) a##_size = size; a##_size_size = value##_size; a = create2DArray(value, a##_size, a##_size_size);
 // Create an array of structure pointers
 #define _NEW_1DARRAY_STRUCT(a, size, b, name) \
  		({\
@@ -120,19 +138,17 @@ long long* fromBytes(BYTE* arr, long long arr_size);
  			}\
  			a##_size = size;\
  		})
-// Create an array of BYTE
-#define _NEW_1DARRAY_BYTE(a, size) a##_size = size; a = create1DArray_BYTE(a##_size, 0b0);
-#define _NEW_1DARRAY_BYTE_VALUE(a, size, value) a##_size = size; a = create1DArray_BYTE(a##_size, value);
 /***
  * Copy Macros
  *
  */
-// Copy an array and pass it as function parameter
-#define _COPY_1DARRAY_PARAM(a) copy1DArray(a, a##_size), a##_size
-#define _COPY_2DARRAY_PARAM(a) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size
-// Pass the copied BYTE array as function parameter 
-#define _COPY_1DARRAY_BYTE_PARAM(a) copy1DArray_BYTE(a, a##_size), a##_size 
+// Copy an array of integers or bytes, and pass the copy as a function parameter
+#define _COPY_1DARRAY_PARAM(a, type) copy1DArray(a, a##_size, type), a##_size 
+#define _COPY_2DARRAY_PARAM(a, type) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size
 #define _COPY_STRUCT_PARAM(a, name) copy_##name(a)
+// Make a copy and assign the copy to a variable
+#define _COPY_1DARRAY(a, b, type) a##_size = b##_size; a = copy1DArray(b, b##_size, type);
+#define _COPY_2DARRAY(a, b, type) a##_size = b##_size; a##_size_size = b##_size_size; a = copy2DArray(b, b##_size, b##_size_size);
 #define _COPY_1DARRAY_STRUCT(a, b, name) \
 		({\
 			a = malloc(b##_size*sizeof(name*));\
@@ -141,9 +157,6 @@ long long* fromBytes(BYTE* arr, long long arr_size);
  		  	}\
  			a##_size = b##_size;\
 		})
-#define _COPY_1DARRAY(a, b) a##_size = b##_size; a = copy1DArray(b, b##_size);
-#define _COPY_1DARRAY_BYTE(a, b) a##_size = b##_size; a = copy1DArray_BYTE(b, b##_size);
-#define _COPY_2DARRAY(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = copy2DArray(b, b##_size, b##_size_size);
 /***
  * In-place Update Macros
  *
@@ -164,12 +177,10 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 *  Print Macros
 * 
 */
-// Print an array of integers
-#define _PRINT_1DARRAY(a) printf1DArray(a, a##_size);
-// Print an array of Bytes using '%s' format
-#define _PRINT_1DARRAY_BYTE(a) printf("%s", a);
+// Print an array of integers or bytes
+#define _PRINT_1DARRAY(a, type) printf1DArray(a, a##_size, type);
 // Print two dimensional arrays of integers
-#define _PRINT_2DARRAY(a) printf2DArray(a, a##_size, a##_size_size);
+#define _PRINT_2DARRAY(a, type) printf2DArray(a, a##_size, a##_size_size);
 // Print an array of structure pointer
 #define _PRINT_1DARRAY_STRUCT(name, a) \
 		({\
@@ -202,11 +213,11 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 				a##_dealloc=false;\
 			}\
 		})
-// Deallocate an array of integer arrays
-#define _DEALLOC_2DArray(a) \
+// Deallocate an array of an array
+#define _DEALLOC_2DArray(a, type) \
 		({\
 			if(a##_dealloc){\
-				free2DArray(a, a##_size);\
+				free2DArray(a, a##_size, type);\
 				a = NULL;\
 				a##_dealloc = false;\
 			}\
@@ -272,14 +283,13 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 // This macro also print out debugging message on memory leaks, due to 
 // the fact a and b_tmp (extra copy) are not aliased and the copy is not freed
 // either at caller nor callee. 
-
 // 'result' contains the analysis results of parameter 'b', e.g. 'true-true-false' 
 // Mutable check = true, return check = true, live variable check = false
 #define _CALLER_DEALLOC(a, b, result) \
 		({\
 			DEBUG_PRINT("_CALLER_DEALLOC macro on "str(#b) " ("str(result)")");\
 			if(a != b##_tmp){\
-				DEBUG_PRINT("Memory leaks at " str(#b)"_tmp");\
+				DEBUG_PRINT("Potential memory leaks at " str(#b)"_tmp");\
 			}\
 		})
 // '_CALLEE_DEALLOC' macro makes a copy of actual argument and delegates callee
@@ -295,6 +305,8 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 			DEBUG_PRINT("_RESET_DEALLOC macro on "str(#b) " ("str(result)")");\
 			b##_dealloc = false;\
 		})
+// '_SUBSTRUCTURE_DEALLOC' macro applies the subtructure parameter
+#define _SUBSTRUCTURE_DEALLOC(b, result) DEBUG_PRINT("_SUBSTRUCTURE_DEALLOC macro on "str(#b) " ("str(result)")");
 /*
 * Other Macros 
 *

@@ -34,7 +34,7 @@ void* copy1DArray(void* arr, long long size, TYPENUM type);
 // Print out an array
 void printf1DArray(void* input, long long input_size, TYPENUM type);
 // Freed an array of arrays
-void free2DArray(void** ptr, long long size);
+void free2DArray(void* ptr, long long size, TYPENUM type);
 
 /**
  * Other built-in functions
@@ -213,11 +213,11 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 				a##_dealloc=false;\
 			}\
 		})
-// Deallocate an array of integer arrays
-#define _DEALLOC_2DArray(a) \
+// Deallocate an array of an array
+#define _DEALLOC_2DArray(a, type) \
 		({\
 			if(a##_dealloc){\
-				free2DArray(a, a##_size);\
+				free2DArray(a, a##_size, type);\
 				a = NULL;\
 				a##_dealloc = false;\
 			}\

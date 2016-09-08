@@ -268,7 +268,7 @@ int main(int argc, char** args){
 	//const %10 = 0 : int
 	_10 = 0;
 	//arraygen %11 = [10; 2] : int[]
-	_NEW_1DARRAY(_11, max, _10);
+	_NEW_1DARRAY(_11, max, _10, T_INT);
 	//assign %4 = %11  : int[]
 	_UPDATE_1DARRAY(arr, _11);
 	//loop (%3, %4, %12, %13, %14)
@@ -320,7 +320,7 @@ blklab10:;
 	//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %27 = %26 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %28 = [80,97,115,115,32,77,101,114,103,101,115,111,114,116,32,116,101,115,116,32,99,97,115,101] : int[]
-	_NEW_1DARRAY(_28, 24, 0);
+	_NEW_1DARRAY(_28, 24, 0, T_INT);
 	_28[0] = 80; _28[1] = 97; _28[2] = 115; _28[3] = 115; _28[4] = 32; _28[5] = 77; _28[6] = 101; _28[7] = 114; _28[8] = 103; _28[9] = 101; _28[10] = 115; _28[11] = 111; _28[12] = 114; _28[13] = 116; _28[14] = 32; _28[15] = 116; _28[16] = 101; _28[17] = 115; _28[18] = 116; _28[19] = 32; _28[20] = 99; _28[21] = 97; _28[22] = 115; _28[23] = 101; 
 	//indirectinvoke () = %27 (%28) : method(int[])->()
 	println_s(_28, _28_size);

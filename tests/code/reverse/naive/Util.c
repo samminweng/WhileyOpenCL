@@ -1,18 +1,29 @@
 #include "Util.h"
-//Global variable
-/**
- * Free a pointer of a pointer
- */
-void free2DArray(void** ptr, long long size){
-	long long i;
+// Free an array of integers array, i.e. int[][]  
+void free2DArray_LONG(long long** ptr, long long size){
 	// Free each sub-pointer.
-	for(i=0;i<size;i++){
+	for(int i=0;i<size;i++){
 		free(ptr[i]);
 		ptr[i] = NULL;
 	}
 	// Free top-level pointer.
 	free(ptr);
 	ptr = NULL;
+}
+
+/**
+ * Free a pointer of a pointer
+ */
+void free2DArray(void* ptr, long long size, TYPENUM type){
+	switch(type){
+		case T_INT:
+			free2DArray_LONG((long long**)ptr, size);
+			break;
+		case T_BYTE:
+			fprintf(stderr, "Not implemented at 'free2DArray' functon in Util.c\n");
+			exit(-2);
+			break;
+	}
 }
 
 /**

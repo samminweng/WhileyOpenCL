@@ -1,18 +1,29 @@
 #include "Util.h"
-//Global variable
-/**
- * Free a pointer of a pointer
- */
-void free2DArray(long long** ptr, long long size){
-	long long i;
+// Free an array of integers array, i.e. int[][]  
+void free2DArray_LONG(long long** ptr, long long size){
 	// Free each sub-pointer.
-	for(i=0;i<size;i++){
+	for(int i=0;i<size;i++){
 		free(ptr[i]);
 		ptr[i] = NULL;
 	}
 	// Free top-level pointer.
 	free(ptr);
 	ptr = NULL;
+}
+
+/**
+ * Free a pointer of a pointer
+ */
+void free2DArray(void* ptr, long long size, TYPENUM type){
+	switch(type){
+		case T_INT:
+			free2DArray_LONG((long long**)ptr, size);
+			break;
+		case T_BYTE:
+			fprintf(stderr, "Not implemented at 'free2DArray' functon in Util.c\n");
+			exit(-2);
+			break;
+	}
 }
 
 /**
@@ -29,10 +40,13 @@ long long* slice(long long* arr, long long arr_size, long long start, long long 
 	return sub_arr;
 }
 
+
+
 /**
  * Create an array with given size and initial value.
  */
-long long* create1DArray(int value, int arr_size){
+long long* create1DArray_LONG(int value, int arr_size){
+	
 	long long* arr = NULL;
 	// Allocate the array
 	arr = (long long*)malloc(arr_size*sizeof(long long));
@@ -46,7 +60,6 @@ long long* create1DArray(int value, int arr_size){
 	}
 	return arr;
 }
-
 /*
  * Create an array of BYTE
  */
@@ -64,6 +77,68 @@ BYTE* create1DArray_BYTE(BYTE value, int arr_size){
 	}
 	return arr;
 }
+
+
+
+/**
+ * Create an array with given size and initial value.
+ */
+void* create1DArray(int value, int arr_size, TYPENUM type){
+	void* ptr = NULL;
+	switch(type){
+		case T_INT:
+			ptr = create1DArray_LONG(value, arr_size);
+			break;
+		case T_BYTE:
+			ptr = create1DArray_BYTE(value, arr_size);
+			break;
+	}
+	return ptr;
+}
+
+// Copy an array of BYTE
+BYTE* copy1DArray_BYTE(BYTE *arr, long long size){
+	BYTE *ptr = NULL;
+	ptr = (BYTE*)malloc(size*sizeof(BYTE));
+	if(ptr == NULL){
+		fprintf(stderr, "failed to malloc at copy1DArray_BYTE function in Util.c\n");
+		exit(-2);
+	}
+	// Copy 'arr' to 'ptr' array
+	memcpy(ptr, arr, size*sizeof(BYTE));
+	return ptr;
+}
+
+//Copy an integer array
+long long* copy1DArray_LONG(long long *arr, long long size) {
+	long long *ptr = NULL;
+	//Clone all the values from board array due to immutable Whiley value
+	ptr = (long long*) malloc(size * sizeof(long long));
+	//ptr = (long long*)tcmalloc(size*sizeof(long long));
+	if (ptr == NULL) {
+		fprintf(stderr, "fail to malloc at copy1DArray_LONG function in Util.c\n");
+		exit(-2);
+	}
+	//Use memcpy to clone an array
+	memcpy(ptr, arr, size * sizeof(long long));
+	return ptr;
+}
+
+//Copy an integer array
+void* copy1DArray(void *arr, long long size, TYPENUM type) {
+	void* ptr;
+	switch(type){
+		case T_INT:
+			ptr = copy1DArray_LONG(arr, size);
+			break;
+		case T_BYTE:
+			ptr = copy1DArray_BYTE(arr, size);
+			break;
+	}
+	return ptr;
+}
+
+
 
 /**
  * Create an 2D array of given dimensions (n * m)
@@ -181,32 +256,7 @@ int isArrayEqual(long long* arr1, long long arr1_size,
 	//Both of arrays are the same. Return true
 	return 1;
 }
-// Copy an array of BYTE
-BYTE* copy1DArray_BYTE(BYTE *arr, long long size){
-	BYTE *ptr = NULL;
-	ptr = (BYTE*)malloc(size*sizeof(BYTE));
-	if(ptr == NULL){
-		fprintf(stderr, "failed to malloc at copy1DArray_BYTE function in Util.c\n");
-		exit(-2);
-	}
-	// Copy 'arr' to 'ptr' array
-	memcpy(ptr, arr, size*sizeof(BYTE));
-	return ptr;
-}
-//Copy an integer array
-long long* copy1DArray(long long *arr, long long size) {
-	long long *ptr = NULL;
-	//Clone all the values from board array due to immutable Whiley value
-	ptr = (long long*) malloc(size * sizeof(long long));
-	//ptr = (long long*)tcmalloc(size*sizeof(long long));
-	if (ptr == NULL) {
-		fprintf(stderr, "fail to malloc at copy1DArray function in Util.c\n");
-		exit(-2);
-	}
-	//Use memcpy to clone an array
-	memcpy(ptr, arr, size * sizeof(long long));
-	return ptr;
-}
+
 // Clone 2D array with given array size.
 long long** copy2DArray(long long **arr, long long x, long long y){
 	long long **newMatrix = NULL;
@@ -277,9 +327,11 @@ void indirect_printf(long long input) {
 	printf("%lld\n", input);
 }
 
-/**Print out an array of long long integers. If the array size > 10, then 
-print the first 10 items and the last item.*/
-void printf1DArray(long long* input, long long input_size) {
+/*
+* Print out an array of long long integers. If the array size > 10, then 
+* print the first 10 items and the last item.
+*/
+void printf1DArray_LONG(long long* input, long long input_size) {
 	long long i = 0;
 	//Determines whether to add ','.
 	int isFirst = true;
@@ -300,17 +352,30 @@ void printf1DArray(long long* input, long long input_size) {
 	}
 	printf("]");
 }
+// Print out an array
+void printf1DArray(void* arr, long long size, TYPENUM type) {
+	switch(type){
+		case T_INT:
+			printf1DArray_LONG((long long*)arr, size);
+			break;
+		case T_BYTE:
+			// Print an array of Bytes using '%s' format
+			printf("%s", (BYTE *)arr);
+			break;
+	}
+}
+
 // Print out the first 10 array in an 2D array
 void printf2DArray(long long** input, long long input_size, long long input_size_size){
 	long long i = 0;
 	int max_i = 10;
 	printf("[");
 	for (i = 0; i < input_size && i < max_i; i++) {
-		printf1DArray(input[i], input_size_size);
+		printf1DArray_LONG(input[i], input_size_size);
 	}
 	if (input_size > i) {
 		printf(" ...\n"); 
-		printf1DArray(input[input_size - 1], input_size_size);
+		printf1DArray_LONG(input[input_size - 1], input_size_size);
 	}
 	printf("]");
 }

@@ -320,8 +320,8 @@ public final class CodeGeneratorHelper {
 					if (stores.isIntType(elm_type) || elm_type instanceof Type.Byte) {
 						// An array of integers
 						if (stores.getArrayDimension(member_type) == 2) {
-							// Free an array of integer arrays by using 'free2DArray' function
-							statement.add("\tfree2DArray(" + input_member + ", " + input_member + "_size);");
+							// Free an array of integer arrays by using '_DEALLOC_2DArray' macro
+							statement.add("\tfree2DArray(" + input_member + ", " + input_member + "_size, T_INT);");
 						} else {
 							statement.add("\tfree(" + input_member + ");");
 						}

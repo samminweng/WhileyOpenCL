@@ -1,7 +1,7 @@
 #include "newTicTacToe_original.h"
 Board* copy_Board(Board* _Board){
 	Board* new_Board = malloc(sizeof(Board));
-	_COPY_1DARRAY(new_Board->pieces, _Board->pieces);
+	_COPY_1DARRAY(new_Board->pieces, _Board->pieces, T_INT);
 	new_Board->move = _Board->move;
 	return new_Board;
 }
@@ -20,7 +20,7 @@ void free_Board(Board* board){
 void printf_Board(Board* board){
 	printf("{");
 	printf(" pieces:");
-	_PRINT_1DARRAY(board->pieces);
+	_PRINT_1DARRAY(board->pieces, T_INT);
 	printf(" move:");
 	printf("%lld", board->move);
 	printf("}");
@@ -60,7 +60,7 @@ Board* EmptyBoard(){
 	//const %10 = 0 : int
 	_10 = 0;
 	//newlist %11 = (%2, %3, %4, %5, %6, %7, %8, %9, %10) : int[]
-	_NEW_1DARRAY(_11, 9, 0);
+	_NEW_1DARRAY(_11, 9, 0, T_INT);
 	_11[0] = _2; _11[1] = _3; _11[2] = _4; _11[3] = _5; _11[4] = _6; _11[5] = _7; _11[6] = _8; _11[7] = _9; _11[8] = _10; 
 	//newrecord %12 = (%1, %11) : {int move,int[] pieces}
 	_12 = malloc(sizeof(Board));
@@ -204,14 +204,14 @@ int main(int argc, char** args){
 		//loop (%4, %5, %6, %7, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33)
 		while(true){
 			//const %16 = [0,1,2,3,4,5,6,7,8] : int[]
-			_NEW_1DARRAY(_16, 9, 0);
+			_NEW_1DARRAY(_16, 9, 0, T_INT);
 			_16[0] = 0; _16[1] = 1; _16[2] = 2; _16[3] = 3; _16[4] = 4; _16[5] = 5; _16[6] = 6; _16[7] = 7; _16[8] = 8; 
 			//lengthof %17 = %16 : int[]
 			_17 = _16_size;
 			//ifge %6, %17 goto blklab17 : int
 			if(i>=_17){goto blklab17;}
 			//const %18 = [0,1,2,3,4,5,6,7,8] : int[]
-			_NEW_1DARRAY(_18, 9, 0);
+			_NEW_1DARRAY(_18, 9, 0, T_INT);
 			_18[0] = 0; _18[1] = 1; _18[2] = 2; _18[3] = 3; _18[4] = 4; _18[5] = 5; _18[6] = 6; _18[7] = 7; _18[8] = 8; 
 			//indexof %19 = %18, %6 : int[]
 			_19=_18[i];
@@ -308,7 +308,7 @@ blklab15:;
 	//fieldload %36 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %37 = %36 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %38 = [80,97,115,115,32,110,101,119,84,105,99,84,97,99,84,111,101,32,116,101,115,116,32,99,97,115,101] : int[]
-	_NEW_1DARRAY(_38, 27, 0);
+	_NEW_1DARRAY(_38, 27, 0, T_INT);
 	_38[0] = 80; _38[1] = 97; _38[2] = 115; _38[3] = 115; _38[4] = 32; _38[5] = 110; _38[6] = 101; _38[7] = 119; _38[8] = 84; _38[9] = 105; _38[10] = 99; _38[11] = 84; _38[12] = 97; _38[13] = 99; _38[14] = 84; _38[15] = 111; _38[16] = 101; _38[17] = 32; _38[18] = 116; _38[19] = 101; _38[20] = 115; _38[21] = 116; _38[22] = 32; _38[23] = 99; _38[24] = 97; _38[25] = 115; _38[26] = 101; 
 	//indirectinvoke () = %37 (%38) : method(int[])->()
 	println_s(_38, _38_size);

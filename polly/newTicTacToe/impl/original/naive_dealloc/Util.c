@@ -1,18 +1,29 @@
 #include "Util.h"
-//Global variable
-/**
- * Free a pointer of a pointer
- */
-void free2DArray(long long** ptr, long long size){
-	long long i;
+// Free an array of integers array, i.e. int[][]  
+void free2DArray_LONG(long long** ptr, long long size){
 	// Free each sub-pointer.
-	for(i=0;i<size;i++){
+	for(int i=0;i<size;i++){
 		free(ptr[i]);
 		ptr[i] = NULL;
 	}
 	// Free top-level pointer.
 	free(ptr);
 	ptr = NULL;
+}
+
+/**
+ * Free a pointer of a pointer
+ */
+void free2DArray(void* ptr, long long size, TYPENUM type){
+	switch(type){
+		case T_INT:
+			free2DArray_LONG((long long**)ptr, size);
+			break;
+		case T_BYTE:
+			fprintf(stderr, "Not implemented at 'free2DArray' functon in Util.c\n");
+			exit(-2);
+			break;
+	}
 }
 
 /**
@@ -29,15 +40,18 @@ long long* slice(long long* arr, long long arr_size, long long start, long long 
 	return sub_arr;
 }
 
+
+
 /**
  * Create an array with given size and initial value.
  */
-long long* create1DArray(int value, int arr_size){
+long long* create1DArray_LONG(int value, int arr_size){
+	
 	long long* arr = NULL;
 	// Allocate the array
 	arr = (long long*)malloc(arr_size*sizeof(long long));
 	if(arr == NULL){
-		printf("fail to allocate the memory at create1DArray function in Util.c\n");
+		fprintf(stderr, "fail to allocate the memory at create1DArray function in Util.c\n");
 		exit(-2);
 	}
 	// Initialize each element with the given value.
@@ -46,6 +60,86 @@ long long* create1DArray(int value, int arr_size){
 	}
 	return arr;
 }
+/*
+ * Create an array of BYTE
+ */
+BYTE* create1DArray_BYTE(BYTE value, int arr_size){
+	BYTE* arr = NULL;
+	// Allocate the array
+	arr = (BYTE*)malloc(arr_size*sizeof(BYTE));
+	if(arr == NULL){
+		fprintf(stderr, "fail to allocate the memory at create1DArray_BYTE function in Util.c\n");
+		exit(-2);
+	}
+	// Assign value
+	for(int i =0;i<arr_size;i++){
+		arr[i] = value;
+	}
+	return arr;
+}
+
+
+
+/**
+ * Create an array with given size and initial value.
+ */
+void* create1DArray(int value, int arr_size, TYPENUM type){
+	void* ptr = NULL;
+	switch(type){
+		case T_INT:
+			ptr = create1DArray_LONG(value, arr_size);
+			break;
+		case T_BYTE:
+			ptr = create1DArray_BYTE(value, arr_size);
+			break;
+	}
+	return ptr;
+}
+
+// Copy an array of BYTE
+BYTE* copy1DArray_BYTE(BYTE *arr, long long size){
+	BYTE *ptr = NULL;
+	ptr = (BYTE*)malloc(size*sizeof(BYTE));
+	if(ptr == NULL){
+		fprintf(stderr, "failed to malloc at copy1DArray_BYTE function in Util.c\n");
+		exit(-2);
+	}
+	// Copy 'arr' to 'ptr' array
+	memcpy(ptr, arr, size*sizeof(BYTE));
+	return ptr;
+}
+
+//Copy an integer array
+long long* copy1DArray_LONG(long long *arr, long long size) {
+	long long *ptr = NULL;
+	//Clone all the values from board array due to immutable Whiley value
+	ptr = (long long*) malloc(size * sizeof(long long));
+	//ptr = (long long*)tcmalloc(size*sizeof(long long));
+	if (ptr == NULL) {
+		fprintf(stderr, "fail to malloc at copy1DArray_LONG function in Util.c\n");
+		exit(-2);
+	}
+	//Use memcpy to clone an array
+	memcpy(ptr, arr, size * sizeof(long long));
+	return ptr;
+}
+
+//Copy an integer array
+void* copy1DArray(void *arr, long long size, TYPENUM type) {
+	void* ptr;
+	switch(type){
+		case T_INT:
+			ptr = copy1DArray_LONG(arr, size);
+			break;
+		case T_BYTE:
+			ptr = copy1DArray_BYTE(arr, size);
+			break;
+	}
+	return ptr;
+}
+
+
+
 /**
  * Create an 2D array of given dimensions (n * m)
  */
@@ -54,7 +148,7 @@ long long** create2DArray(long long* arr,  long long n, long long m){
 	// Allocate the array
 	_2DArray = (long long**)malloc(n*sizeof(long long*));
 	if(_2DArray == NULL){
-		printf("fail to allocate the memory at gen2DArray function in Util.c\n");
+		fprintf(stderr, "fail to allocate the memory at gen2DArray function in Util.c\n");
 		exit(-2);
 	}
 	long long size = m*sizeof(long long);
@@ -62,7 +156,7 @@ long long** create2DArray(long long* arr,  long long n, long long m){
 		// Copy the input array and assign it to matrix.
 		_2DArray[i] = (long long*)malloc(size);
 		if(_2DArray[i] == NULL){
-			printf("fail to allocate the memory at gen2DArray function in Util.c\n");
+			fprintf(stderr, "fail to allocate the memory at gen2DArray function in Util.c\n");
 			exit(-2);
 		}
 		memcpy(_2DArray[i], arr, size);
@@ -104,13 +198,13 @@ long long** convertArgsToIntArray(int argc, char** args){
 	long long max_j;
 	//Check if there is any command line argument
 	if(argc < 2){
-		printf("Missing the command line arguments\n");
+		fprintf(stderr, "Missing the command line arguments\n");
 		exit(-2);
 	}
 	//Allocate the target array ('arr').
 	arr = (long long**) malloc((argc-1)*sizeof(long long*));
 	if(arr == NULL){
-		printf("fail to allocate the memory at convertCharToInt function in Util.c\n");
+		fprintf(stderr, "fail to allocate the memory at convertCharToInt function in Util.c\n");
 		exit(-2);
 	}
 	//Convert each argument into an array of digits	
@@ -125,7 +219,7 @@ long long** convertArgsToIntArray(int argc, char** args){
 			//And calculate the arr_size
 			while(args[i][max_j] != '\0'){
 				if(!isdigit(args[i][max_j])){
-					printf("None numbers is passed via command line arguments\n");
+					fprintf(stderr,"None numbers is passed via command line arguments\n");
 					exit(-2);
 				}
 				max_j++;
@@ -163,34 +257,20 @@ int isArrayEqual(long long* arr1, long long arr1_size,
 	return 1;
 }
 
-//Copy an array
-long long* copy(long long *arr, long long size) {
-	long long *ptr = NULL;
-	//Clone all the values from board array due to immutable Whiley value
-	ptr = (long long*) malloc(size * sizeof(long long));
-	//ptr = (long long*)tcmalloc(size*sizeof(long long));
-	if (ptr == NULL) {
-		printf("fail to malloc at clone function in Util.c\n");
-		exit(-2);
-	}
-	//Use memcpy to clone an array
-	memcpy(ptr, arr, size * sizeof(long long));
-	return ptr;
-}
 // Clone 2D array with given array size.
 long long** copy2DArray(long long **arr, long long x, long long y){
 	long long **newMatrix = NULL;
 	long long i = 0;
 	newMatrix = (long long**)malloc(x*sizeof(long long*));
 	if(newMatrix == NULL){
-		printf("fail to malloc newMatrix at clone2DArray function in Util.c\n");
+		fprintf(stderr, "fail to malloc at copy2DArray function in Util.c\n");
 		exit(-2);
 	}
 	long long size = y*sizeof(long long);
 	for(i=0;i<x;i++){
 		newMatrix[i] = (long long*)malloc(size);
 		if(newMatrix[i] == NULL){
-			printf("fail to malloc newMatrix[i] at clone2DArray function in Util.c\n");
+			fprintf(stderr, "fail to malloc at clone2DArray function in Util.c\n");
 			exit(-2);
 		}
 		memcpy(newMatrix[i], arr[i], size);
@@ -213,7 +293,7 @@ long long* append(long long *arr1, long long arr1_size,
 	ret_arr = (long long*) realloc(arr1, size * sizeof(long long));
 	//Check if the memory allocation is successful.
 	if (ret_arr == NULL) {
-		printf("fail to allocate the memory at append function in Util.c\n");
+		fprintf(stderr, "fail to malloc at append function in Util.c\n");
 		exit(-2);
 	}
 	//Fill in op_2 array
@@ -247,9 +327,11 @@ void indirect_printf(long long input) {
 	printf("%lld\n", input);
 }
 
-/**Print out an array of long long integers. If the array size > 10, then 
-print the first 10 items and the last item.*/
-void printf1DArray(long long* input, long long input_size) {
+/*
+* Print out an array of long long integers. If the array size > 10, then 
+* print the first 10 items and the last item.
+*/
+void printf1DArray_LONG(long long* input, long long input_size) {
 	long long i = 0;
 	//Determines whether to add ','.
 	int isFirst = true;
@@ -270,17 +352,30 @@ void printf1DArray(long long* input, long long input_size) {
 	}
 	printf("]");
 }
+// Print out an array
+void printf1DArray(void* arr, long long size, TYPENUM type) {
+	switch(type){
+		case T_INT:
+			printf1DArray_LONG((long long*)arr, size);
+			break;
+		case T_BYTE:
+			// Print an array of Bytes using '%s' format
+			printf("%s", (BYTE *)arr);
+			break;
+	}
+}
+
 // Print out the first 10 array in an 2D array
 void printf2DArray(long long** input, long long input_size, long long input_size_size){
 	long long i = 0;
 	int max_i = 10;
 	printf("[");
 	for (i = 0; i < input_size && i < max_i; i++) {
-		printf1DArray(input[i], input_size_size);
+		printf1DArray_LONG(input[i], input_size_size);
 	}
 	if (input_size > i) {
 		printf(" ...\n"); 
-		printf1DArray(input[input_size - 1], input_size_size);
+		printf1DArray_LONG(input[input_size - 1], input_size_size);
 	}
 	printf("]");
 }
@@ -327,7 +422,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 		}
 		ret = (long long*) realloc(ret, allocated_size * sizeof(long long));
 		if (ret == NULL) {
-			printf("fail to realloc at optimized_append functon in Util.c\n");
+			fprintf(stderr, "fail to realloc at optimized_append functon in Util.c\n");
 			exit(-2);
 		}
 	}
@@ -337,4 +432,24 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 	}
 	*ret_size = *op_1_size + *op_2_size;
 	return ret;
+}
+
+
+
+/*
+ * Convert an array of BYTE to an integer array
+ */
+long long* fromBytes(BYTE* input, long long size){
+	// Create an array of integer
+	long long* arr = (long long*)malloc(size*sizeof(long long));
+	if(arr == NULL){
+		fprintf(stderr, "fail to allocate the memory at fromBytes function in Util.c\n");
+		exit(-2);
+	}
+	for(int i=0;i<size;i++){
+		BYTE b = input[i];
+		// Convert 'char' to ASCII code (integer)
+		arr[i] = b;
+	}
+	return arr;
 }
