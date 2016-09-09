@@ -85,7 +85,7 @@ _SLICE_ARRAY(_15, items, start, pivot);
 		_UPDATE_1DARRAY_SIZE(_16, lhs);
 		_DEALLOC(_16);
 		_16 = sortV1(lhs_tmp = _COPY_1DARRAY_PARAM(lhs, T_INT), false, _17, pivot);
-		_CALLER_DEALLOC(_16, lhs, "true-true-false");
+		_CALLER_DEALLOC(_16, lhs, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_16);
 	}
 	//assign %5 = %16  : int[]
@@ -111,7 +111,7 @@ _SLICE_ARRAY(_18, items, pivot, end);
 		_UPDATE_1DARRAY_SIZE(_19, rhs);
 		_DEALLOC(_19);
 		_19 = sortV1(rhs_tmp = _COPY_1DARRAY_PARAM(rhs, T_INT), false, _20, _21);
-		_CALLER_DEALLOC(_19, rhs, "true-true-false");
+		_CALLER_DEALLOC(_19, rhs, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_19);
 	}
 	//assign %6 = %19  : int[]
@@ -351,7 +351,7 @@ blklab10:;
 		_UPDATE_1DARRAY_SIZE(_15, arr);
 		_DEALLOC(_15);
 		_15 = sortV1(arr_tmp = _COPY_1DARRAY_PARAM(arr, T_INT), false, _16, max);
-		_CALLER_DEALLOC(_15, arr, "true-true-false");
+		_CALLER_DEALLOC(_15, arr, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_15);
 	}
 	//assign %4 = %15  : int[]

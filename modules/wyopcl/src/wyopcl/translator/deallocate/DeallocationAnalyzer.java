@@ -103,7 +103,6 @@ public class DeallocationAnalyzer extends Analyzer {
 
 	}
 
-	
 	/**
 	 * Compute deallocation flag of array generator
 	 * 
@@ -331,7 +330,7 @@ public class DeallocationAnalyzer extends Analyzer {
 		List<String> statements = new ArrayList<String>();
 
 		String indent = stores.getIndent(function);
-		
+
 		if (code.name.module().toString().contains("whiley/lang")) {
 			int lhs = code.target(0);
 			switch (code.name.name()) {
@@ -348,17 +347,17 @@ public class DeallocationAnalyzer extends Analyzer {
 				break;
 			case "fromBytes":
 				// Assign flag to lhs
-				statements.add(indent+ addDealloc(lhs, function, stores));
+				statements.add(indent + addDealloc(lhs, function, stores));
 				break;
 			default:
 				// no change to statement
 				break;
 			}
-		}else{
-			// Apply the macros for each parameter 
+		} else {
+			// Apply the macros for each parameter
 			for (int register : code.operands()) {
 				String macro = computeDealloc(register, code, function, stores, copyAnalyzer);
-				if(!macro.equals("")){
+				if (!macro.equals("")) {
 					// Get parameter name
 					String parameter = stores.getVar(register, function);
 					// Split the macro into an array of two string
@@ -369,28 +368,57 @@ public class DeallocationAnalyzer extends Analyzer {
 					String checks = parts[1];
 					// Get function name
 					String func_name = code.name.name();
-					// Write the checks results as a comments
-					//statements.add(indent+"//"+parameter+":"+checks);
-					if(macro_name.equals("_CALLER_DEALLOC")){
+					// Get parameter type
+					Type parameter_type = stores.getRawType(register, function);
+					// Write the checks results as a parameter to macro
+					// statements.add(indent+"//"+parameter+":"+checks);
+					if (macro_name.equals("_CALLER_DEALLOC")) {
 						// Get function return
 						String ret = stores.getVar(code.target(0), function);
-						// Applied macro with 'ret' and 'parameter'
-						statements.add(indent+macro_name+"("+ret+", "+parameter+", \""+checks+"\" , \""+func_name+"\");");
-					}else{
+						if (stores.isCompoundType(parameter_type)) {
+							if (parameter_type instanceof Type.Array) {
+								Type elm_type = stores.getArrayElementType((Type.Array) parameter_type);
+								if (elm_type instanceof Type.Byte || stores.isIntType(elm_type)) {
+									// Applied caller macro and used standard 'free' function to release extra copy
+									statements.add(indent + macro_name + "(" + ret + ", " + parameter + ", \"" + checks
+											+ "\" , \"" + func_name + "\");");
+								} else {
+									// An array of structures
+									// Translate the type
+									String type_name = CodeGeneratorHelper.translateType(parameter_type, stores)
+											.replace("*", "");
+									// Applied caller_struct macro and used structure free function to release extra copy
+									statements.add(indent + macro_name + "_STRUCT(" + ret + ", " + parameter + ", \""
+											+ checks + "\" , \"" + func_name + "\", " + type_name + ");");
+								}
+							} else {
+								// Structure type
+								String type_name = CodeGeneratorHelper.translateType(parameter_type, stores)
+										.replace("*", "");
+								// Applied caller_struct macro and used structure free function to release extra copy
+								statements.add(indent + macro_name + "_STRUCT(" + ret + ", " + parameter + ", \""
+										+ checks + "\" , \"" + func_name + "\", " + type_name + ");");
+							}
+						} else {
+							// Applied caller macro and used standard 'free' function to release extra copy
+							statements.add(indent + macro_name + "(" + ret + ", " + parameter + ", \"" + checks
+									+ "\" , \"" + func_name + "\");");
+						}
+					} else {
 						// Added the macros
-						statements.add(indent + macro_name+"("+ parameter+", \""+checks+"\" , \""+func_name+"\");");	
+						statements.add(indent + macro_name + "(" + parameter + ", \"" + checks + "\" , \"" + func_name
+								+ "\");");
 					}
 				}
 			}
-			
+
 			// Add deallocation flag to lhs variable.
-			if (code.targets().length > 0)
-			{
+			if (code.targets().length > 0) {
 				// Add the deallocation flag of lhs variable
 				statements.add(indent + addDealloc(code.target(0), function, stores));
 			}
 		}
-		
+
 		return statements;
 	}
 
@@ -504,40 +532,33 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param stores
 	 *            code stores
 	 * @param copyAnalyzer
-	 * @return a string that contains macro name "\t" A "-" B "-"C, e.g. 
-	 * 	       where A is the mutable check
-	 *               B is the return check
-	 *               C is the Live variable check
+	 * @return a string that contains macro name "\t" A "-" B "-"C, e.g. where A is the mutable check B is the return
+	 *         check C is the Live variable check
 	 * 
-	 *        De-allocation macros include:
+	 *         De-allocation macros include:
 	 *         <ul>
-	 * 		    <li>'substructure_dealloc': retains the flag of original parameter and passes 'false' flag to callee. 
-	 *         		This macro is applied to sub-structure only
-	 *         <code>     
+	 *         <li>'substructure_dealloc': retains the flag of original parameter and passes 'false' flag to callee.
+	 *         This macro is applied to sub-structure only <code>     
 	 * 		  		a = f(b, false)
 	 *        		a_dealloc = true
 	 * 	    	</code>
-	 *         <li>'retain_dealloc': retains the flag of original parameter and passes 'false' flag to callee. 
-	 *         		This macro is applied to sub-structure or immutable parameter
-	 *         <code>     
+	 *         <li>'retain_dealloc': retains the flag of original parameter and passes 'false' flag to callee. This
+	 *         macro is applied to sub-structure or immutable parameter <code>     
 	 * 		  		a = f(b, false)
 	 *        		a_dealloc = true
 	 * 	    	</code>
-	 *         <li>'reset_dealloc': resets the flag of original parameter and passes 'false' flag to callee.
-	 *         <code>     
+	 *         <li>'reset_dealloc': resets the flag of original parameter and passes 'false' flag to callee. <code>     
 	 * 		  		a = f(b, false)
 	 * 				b_dealloc = false
 	 *        		a_dealloc = true
 	 * 	    	</code>
-	 * 		    <li>'callee_dealloc': passes the copied parameter to callee along with 'true' flag. 
-	 * 				This macro allows 'callee' to free the passing parameter.
-	 *         <code>     
+	 *         <li>'callee_dealloc': passes the copied parameter to callee along with 'true' flag. This macro allows
+	 *         'callee' to free the passing parameter. <code>     
 	 * 		  		a = f(copy(b), true)
 	 *        		a_dealloc = true
 	 * 	    	</code>
-	 * 		   <li>'caller_dealloc': passes the copied parameter to callee along with 'false' flag. 
-	 *  			This macro stops caller freeing the passing parameter. 
-	 *         <code>     
+	 *         <li>'caller_dealloc': passes the copied parameter to callee along with 'false' flag. This macro stops
+	 *         caller freeing the passing parameter. <code>     
 	 * 		  		a = f(copy(b), false)
 	 *        		a_dealloc = true
 	 * 	    	</code>
@@ -557,34 +578,34 @@ public class DeallocationAnalyzer extends Analyzer {
 		boolean isReturned = returnAnalyzer.isReturned(arguement, f);
 		// Analyze the deallocation flags using live variable, read-write and return analysis
 		boolean isLive = liveAnalyzer.isLive(register, code, function);
-		
-		String checks = isMutated +"-"+isReturned+"-"+isLive;
+
+		String checks = isMutated + "-" + isReturned + "-" + isLive;
 		// Analyze the copy
 		if (copyAnalyzer.isPresent()) {
 			// Check if the register is a substructure
 			boolean isSubStructure = stores.isSubstructure(register, function);
-			if(isSubStructure){
+			if (isSubStructure) {
 				// The substructure is passed to function call with 'false' flag
-				return "_SUBSTRUCTURE_DEALLOC"+"\t"+checks;
+				return "_SUBSTRUCTURE_DEALLOC" + "\t" + checks;
 			}
-			
+
 			if (!isMutated) {
 				// NOT mutated
 				if (!isReturned) {
 					// NOT mutated nor return
 					if (!isLive) {
-						return "_RETAIN_DEALLOC"+"\t"+checks;
-					}else{
-						return "_RETAIN_DEALLOC"+"\t"+checks;
+						return "_RETAIN_DEALLOC" + "\t" + checks;
+					} else {
+						return "_RETAIN_DEALLOC" + "\t" + checks;
 					}
 				} else {
 					// NOT mutated but returned
 					if (!isLive) {
 						// If 'b' is NOT alive at caller site
-						return "_RESET_DEALLOC"+"\t"+checks;
+						return "_RESET_DEALLOC" + "\t" + checks;
 					} else {
 						// If 'b' is alive at caller site
-						return "_RESET_DEALLOC"+"\t"+checks;
+						return "_RESET_DEALLOC" + "\t" + checks;
 					}
 				}
 			} else {
@@ -593,18 +614,18 @@ public class DeallocationAnalyzer extends Analyzer {
 					// Mutated and returned
 					if (!isLive) {
 						// 'b' is NOT alive
-						return "_RESET_DEALLOC"+"\t"+checks;
+						return "_RESET_DEALLOC" + "\t" + checks;
 					} else {
 						// 'b' is alive
-						return "_CALLER_DEALLOC"+"\t"+checks;
+						return "_CALLER_DEALLOC" + "\t" + checks;
 					}
 				} else {
 					// Mutated and NOT returned
 					if (!isLive) {
-						return "_RETAIN_DEALLOC"+"\t"+checks;
+						return "_RETAIN_DEALLOC" + "\t" + checks;
 					} else {
 						// 'b' is alive
-						return "_CALLEE_DEALLOC"+"\t"+checks;
+						return "_CALLEE_DEALLOC" + "\t" + checks;
 					}
 				}
 			}
@@ -613,15 +634,15 @@ public class DeallocationAnalyzer extends Analyzer {
 			if (!isMutated) {
 				if (isReturned) {
 					// The de-allocation is Not done at callee.
-					return "_CALLER_DEALLOC"+"\t"+checks;
+					return "_CALLER_DEALLOC" + "\t" + checks;
 				}
 			} else {
 				if (isReturned) {
-					return "_CALLER_DEALLOC"+"\t"+checks;
+					return "_CALLER_DEALLOC" + "\t" + checks;
 				}
 			}
 			// For other cases, the de-allocation is done at callee.
-			return "_CALLEE_DEALLOC"+"\t"+checks;
+			return "_CALLEE_DEALLOC" + "\t" + checks;
 		}
 	}
 
@@ -638,14 +659,15 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * </code>
 	 * </pre>
 	 * 
-	 * The update of substructure does not require to check the top-level de-allocation flag,
-	 * but directly free the substructure. This is because substructure does not have 
-	 * the de-allocation. 
+	 * The update of substructure does not require to check the top-level de-allocation flag, but directly free the
+	 * substructure. This is because substructure does not have the de-allocation.
 	 * 
 	 *
 	 * @param lhs
-	 * @param code update byte-code
-	 * @param function function
+	 * @param code
+	 *            update byte-code
+	 * @param function
+	 *            function
 	 * @param stores
 	 * @return
 	 */

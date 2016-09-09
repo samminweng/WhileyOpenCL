@@ -185,7 +185,7 @@ blklab5:;
 		_UPDATE_1DARRAY_SIZE(_15, arr);
 		_DEALLOC(_15);
 		_15 = reverse(arr_tmp = _COPY_1DARRAY_PARAM(arr, T_INT), true);
-		_CALLEE_DEALLOC(arr, "false-false-false");
+		_CALLEE_DEALLOC(arr, "false-false-false" , "reverse");
 		_ADD_DEALLOC(_15);
 	}
 	//assign %4 = %15  : int[]

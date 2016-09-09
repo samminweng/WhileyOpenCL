@@ -369,7 +369,7 @@ blklab12:;
 			void* nq_tmp;
 			_DEALLOC_STRUCT(_33, NQueen);
 			_33 = run(nq_tmp = _COPY_STRUCT_PARAM(nq, NQueen), false, _35, dim);
-			_CALLER_DEALLOC(_33, nq, "true-true-false" , "run");
+			_CALLER_DEALLOC_STRUCT(_33, nq, "true-true-false" , "run", NQueen);
 			_ADD_DEALLOC(_33);
 		}
 		//assign %0 = %33  : {int num_solutions,{int c,int r}[] queens}
@@ -490,7 +490,7 @@ int main(int argc, char** args){
 		void* nq_tmp;
 		_DEALLOC_STRUCT(_12, NQueen);
 		_12 = run(nq_tmp = _COPY_STRUCT_PARAM(nq, NQueen), false, _13, n);
-		_CALLER_DEALLOC(_12, nq, "true-true-false" , "run");
+		_CALLER_DEALLOC_STRUCT(_12, nq, "true-true-false" , "run", NQueen);
 		_ADD_DEALLOC(_12);
 	}
 	//assign %4 = %12  : {int num_solutions,{int c,int r}[] queens}

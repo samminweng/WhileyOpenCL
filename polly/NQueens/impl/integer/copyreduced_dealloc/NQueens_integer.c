@@ -223,7 +223,7 @@ blklab20:;
 			//invoke (%21) = (%8, %1, %5) NQueens_integer:conflict : function(NQueens_integer:POS,int,int)->(bool)
 			{
 				_21 = conflict(_STRUCT_PARAM(p), false, n, col);
-				_SUBSTRUCTURE_DEALLOC(p, "false-false-false");
+				_SUBSTRUCTURE_DEALLOC(p, "false-false-false" , "conflict");
 			}
 			//const %22 = true : bool
 			_22 = true;
@@ -280,7 +280,7 @@ blklab12:;
 		{
 			void* queens_tmp;
 			_28 = run(queens_tmp = copy_array_POS(queens, queens_size), queens_size, true, _30, dim);
-			_CALLEE_DEALLOC(queens, "true-false-true");
+			_CALLEE_DEALLOC(queens, "true-false-true" , "run");
 		}
 		//add %31 = %4, %28 : int
 		_31=num_solutions+_28;
@@ -392,7 +392,7 @@ int main(int argc, char** args){
 	//invoke (%13) = (%3, %14, %2) NQueens_integer:run : function(NQueens_integer:POS[],int,int)->(int)
 	{
 		_13 = run(_1DARRAY_PARAM(queens), false, _14, n);
-		_RETAIN_DEALLOC(queens, "true-false-false");
+		_RETAIN_DEALLOC(queens, "true-false-false" , "run");
 	}
 	//assign %4 = %13  : int
 	num_solutions = _13;
