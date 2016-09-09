@@ -305,8 +305,8 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 				void* pixels_tmp;
 				void* v_sobel_tmp;
 				_47 = convolution(pixels_tmp = _COPY_1DARRAY_PARAM(pixels, T_INT), true, width, height, x, y, v_sobel_tmp = _COPY_1DARRAY_PARAM(v_sobel, T_INT), true);
-				_CALLEE_DEALLOC(pixels, "false-false-true" , "sobelEdgeDetection");
-				_CALLEE_DEALLOC(v_sobel, "false-false-true" , "sobelEdgeDetection");
+				_CALLEE_DEALLOC(pixels, "false-false-true" , "convolution");
+				_CALLEE_DEALLOC(v_sobel, "false-false-true" , "convolution");
 			}
 			//assign %11 = %47  : int
 			v_g = _47;
@@ -315,8 +315,8 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 				void* pixels_tmp;
 				void* h_sobel_tmp;
 				_48 = convolution(pixels_tmp = _COPY_1DARRAY_PARAM(pixels, T_INT), true, width, height, x, y, h_sobel_tmp = _COPY_1DARRAY_PARAM(h_sobel, T_INT), true);
-				_CALLEE_DEALLOC(pixels, "false-false-true" , "sobelEdgeDetection");
-				_CALLEE_DEALLOC(h_sobel, "false-false-true" , "sobelEdgeDetection");
+				_CALLEE_DEALLOC(pixels, "false-false-true" , "convolution");
+				_CALLEE_DEALLOC(h_sobel, "false-false-true" , "convolution");
 			}
 			//assign %12 = %48  : int
 			h_g = _48;
@@ -628,7 +628,7 @@ int main(int argc, char** args){
 		_UPDATE_1DARRAY_SIZE(_16, pixels);
 		_DEALLOC(_16);
 		_16 = sobelEdgeDetection(pixels_tmp = _COPY_1DARRAY_PARAM(pixels, T_INT), true, width, height);
-		_CALLEE_DEALLOC(pixels, "false-false-true" , "main");
+		_CALLEE_DEALLOC(pixels, "false-false-true" , "sobelEdgeDetection");
 		_ADD_DEALLOC(_16);
 	}
 	//assign %5 = %16  : int[]
@@ -648,7 +648,7 @@ int main(int argc, char** args){
 	{
 		void* pixels_tmp;
 		printImage(stdout, pixels_tmp = _COPY_1DARRAY_PARAM(pixels, T_INT), true, width, height);
-		_CALLEE_DEALLOC(pixels, "false-false-false" , "main");
+		_CALLEE_DEALLOC(pixels, "false-false-false" , "printImage");
 	}
 	//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %21 = %20 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -663,7 +663,7 @@ int main(int argc, char** args){
 	{
 		void* newPixels_tmp;
 		printImage(stdout, newPixels_tmp = _COPY_1DARRAY_PARAM(newPixels, T_INT), true, width, height);
-		_CALLEE_DEALLOC(newPixels, "false-false-false" , "main");
+		_CALLEE_DEALLOC(newPixels, "false-false-false" , "printImage");
 	}
 	//assert
 	{

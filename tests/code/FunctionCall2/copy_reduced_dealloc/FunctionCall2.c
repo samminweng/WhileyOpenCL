@@ -118,7 +118,7 @@ int main(int argc, char** args){
 		_UPDATE_1DARRAY_SIZE(_10, a);
 		_DEALLOC(_10);
 		_10 = func(_1DARRAY_PARAM(a), false, _11);
-		_RESET_DEALLOC(a, "true-true-false" , "main");
+		_RESET_DEALLOC(a, "true-true-false" , "func");
 		_ADD_DEALLOC(_10);
 	}
 	//assign %1 = %10  : int[]
@@ -186,7 +186,7 @@ blklab2:;
 		_UPDATE_1DARRAY_SIZE(_28, b);
 		_DEALLOC(_28);
 		_28 = func(b_tmp = _COPY_1DARRAY_PARAM(b, T_INT), false, _29);
-		_CALLER_DEALLOC(_28, b, "true-true-true" , "main");
+		_CALLER_DEALLOC(_28, b, "true-true-true" , "func");
 		_ADD_DEALLOC(_28);
 	}
 	//assign %3 = %28  : int[]

@@ -290,6 +290,8 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 			DEBUG_PRINT("_CALLER_DEALLOC macro on ( "str(checks)" "str(#b) " "str(func_name)" )");\
 			if(a != b##_tmp){\
 				DEBUG_PRINT("Potential memory leaks at ( "str(checks)" "str(#b)"_tmp" " "str(func_name)" )");\
+				free(b##_tmp);\
+				b##_tmp = NULL;\
 			}\
 		})
 // '_CALLEE_DEALLOC' macro makes a copy of actual argument and delegates callee

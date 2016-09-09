@@ -132,7 +132,7 @@ int main(int argc, char** args){
 		_UPDATE_1DARRAY_SIZE(_6, arr);
 		_DEALLOC(_6);
 		_6 = fibonacci(arr_tmp = _COPY_1DARRAY_PARAM(arr, T_INT), false, _8);
-		_CALLER_DEALLOC(_6, arr, "true-true-false" , "main");
+		_CALLER_DEALLOC(_6, arr, "true-true-false" , "fibonacci");
 		_ADD_DEALLOC(_6);
 	}
 	//assign %2 = %6  : int[]

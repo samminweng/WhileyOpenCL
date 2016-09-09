@@ -141,7 +141,7 @@ blklab2:;
 		void* data_tmp;
 		_DEALLOC_STRUCT(_21, Matrix);
 		_21 = matrix(width, height, data_tmp = _COPY_1DARRAY_PARAM(data, T_INT), true);
-		_CALLEE_DEALLOC(data, "false-false-false" , "init");
+		_CALLEE_DEALLOC(data, "false-false-false" , "matrix");
 		_ADD_DEALLOC(_21);
 	}
 	//return %21
@@ -531,7 +531,7 @@ blklab17:;
 		void* data_tmp;
 		_DEALLOC_STRUCT(_58, Matrix);
 		_58 = matrix(width, height, data_tmp = _COPY_1DARRAY_PARAM(data, T_INT), true);
-		_CALLEE_DEALLOC(data, "false-false-false" , "mat_mult");
+		_CALLEE_DEALLOC(data, "false-false-false" , "matrix");
 		_ADD_DEALLOC(_58);
 	}
 	//return %58
@@ -765,8 +765,8 @@ blklab24:;
 		void* B_tmp;
 		_DEALLOC_STRUCT(_44, Matrix);
 		_44 = mat_mult(A_tmp = _COPY_STRUCT_PARAM(A, Matrix), true, B_tmp = _COPY_STRUCT_PARAM(B, Matrix), true);
-		_CALLEE_DEALLOC(A, "false-false-false" , "main");
-		_CALLEE_DEALLOC(B, "false-false-false" , "main");
+		_CALLEE_DEALLOC(A, "false-false-false" , "mat_mult");
+		_CALLEE_DEALLOC(B, "false-false-false" , "mat_mult");
 		_ADD_DEALLOC(_44);
 	}
 	//assign %3 = %44  : {int[] data,int height,int width}
@@ -814,7 +814,7 @@ blklab25:;
 	{
 		void* C_tmp;
 		print_mat(stdout, C_tmp = _COPY_STRUCT_PARAM(C, Matrix), true);
-		_CALLEE_DEALLOC(C, "false-false-true" , "main");
+		_CALLEE_DEALLOC(C, "false-false-true" , "print_mat");
 	}
 	//fieldload %57 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %58 = %57 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

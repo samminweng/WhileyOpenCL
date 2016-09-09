@@ -179,7 +179,7 @@ Match* findLongestMatch(Data* input, _DECL_DEALLOC_PARAM(input), long long pos){
 		{
 			void* input_tmp;
 			_14 = match(input_tmp = _COPY_STRUCT_PARAM(input, Data), true, offset, pos);
-			_CALLEE_DEALLOC(input, "false-false-true" , "findLongestMatch");
+			_CALLEE_DEALLOC(input, "false-false-true" , "match");
 		}
 		//assign %7 = %14  : int
 		len = _14;
@@ -333,7 +333,7 @@ Data* write_u1(Data* data, _DECL_DEALLOC_PARAM(data), long long u1){
 		void* data_tmp;
 		_DEALLOC_STRUCT(_3, Data);
 		_3 = append_byte(data_tmp = _COPY_STRUCT_PARAM(data, Data), true, _4);
-		_CALLEE_DEALLOC(data, "false-false-false" , "write_u1");
+		_CALLEE_DEALLOC(data, "false-false-false" , "append_byte");
 		_ADD_DEALLOC(_3);
 	}
 	//return %3
@@ -414,7 +414,7 @@ Data* compress(Data* input, _DECL_DEALLOC_PARAM(input)){
 			void* input_tmp;
 			_DEALLOC_STRUCT(_14, Match);
 			_14 = findLongestMatch(input_tmp = _COPY_STRUCT_PARAM(input, Data), true, pos);
-			_CALLEE_DEALLOC(input, "false-false-true" , "compress");
+			_CALLEE_DEALLOC(input, "false-false-true" , "findLongestMatch");
 			_ADD_DEALLOC(_14);
 		}
 		//assign %4 = %14  : {int len,int offset}
@@ -434,7 +434,7 @@ Data* compress(Data* input, _DECL_DEALLOC_PARAM(input)){
 			void* output_tmp;
 			_DEALLOC_STRUCT(_17, Data);
 			_17 = write_u1(output_tmp = _COPY_STRUCT_PARAM(output, Data), true, offset);
-			_CALLEE_DEALLOC(output, "false-false-false" , "compress");
+			_CALLEE_DEALLOC(output, "false-false-false" , "write_u1");
 			_ADD_DEALLOC(_17);
 		}
 		//assign %3 = %17  : {byte[] items,int length}
@@ -456,7 +456,7 @@ Data* compress(Data* input, _DECL_DEALLOC_PARAM(input)){
 			void* output_tmp;
 			_DEALLOC_STRUCT(_19, Data);
 			_19 = append_byte(output_tmp = _COPY_STRUCT_PARAM(output, Data), true, _21);
-			_CALLEE_DEALLOC(output, "false-false-false" , "compress");
+			_CALLEE_DEALLOC(output, "false-false-false" , "append_byte");
 			_ADD_DEALLOC(_19);
 		}
 		//assign %3 = %19  : {byte[] items,int length}
@@ -478,7 +478,7 @@ blklab10:;
 			void* output_tmp;
 			_DEALLOC_STRUCT(_24, Data);
 			_24 = write_u1(output_tmp = _COPY_STRUCT_PARAM(output, Data), true, len);
-			_CALLEE_DEALLOC(output, "false-false-false" , "compress");
+			_CALLEE_DEALLOC(output, "false-false-false" , "write_u1");
 			_ADD_DEALLOC(_24);
 		}
 		//assign %3 = %24  : {byte[] items,int length}
@@ -630,7 +630,7 @@ Data* decompress(Data* input, _DECL_DEALLOC_PARAM(input)){
 			void* output_tmp;
 			_DEALLOC_STRUCT(_28, Data);
 			_28 = append_byte(output_tmp = _COPY_STRUCT_PARAM(output, Data), true, item);
-			_CALLEE_DEALLOC(output, "false-false-false" , "decompress");
+			_CALLEE_DEALLOC(output, "false-false-false" , "append_byte");
 			_ADD_DEALLOC(_28);
 		}
 		//assign %2 = %28  : {byte[] items,int length}
@@ -680,7 +680,7 @@ blklab14:;
 				void* output_tmp;
 				_DEALLOC_STRUCT(_37, Data);
 				_37 = append_byte(output_tmp = _COPY_STRUCT_PARAM(output, Data), true, item);
-				_CALLEE_DEALLOC(output, "false-false-false" , "decompress");
+				_CALLEE_DEALLOC(output, "false-false-false" , "append_byte");
 				_ADD_DEALLOC(_37);
 			}
 			//assign %2 = %37  : {byte[] items,int length}
@@ -913,7 +913,7 @@ int main(int argc, char** args){
 		void* data_tmp;
 		_DEALLOC_STRUCT(_19, Data);
 		_19 = compress(data_tmp = _COPY_STRUCT_PARAM(data, Data), true);
-		_CALLEE_DEALLOC(data, "false-false-false" , "main");
+		_CALLEE_DEALLOC(data, "false-false-false" , "compress");
 		_ADD_DEALLOC(_19);
 	}
 	//assign %2 = %19  : {byte[] items,int length}
@@ -963,7 +963,7 @@ int main(int argc, char** args){
 		void* compress_data_tmp;
 		_DEALLOC_STRUCT(_33, Data);
 		_33 = decompress(compress_data_tmp = _COPY_STRUCT_PARAM(compress_data, Data), true);
-		_CALLEE_DEALLOC(compress_data, "false-false-false" , "main");
+		_CALLEE_DEALLOC(compress_data, "false-false-false" , "decompress");
 		_ADD_DEALLOC(_33);
 	}
 	//assign %3 = %33  : {byte[] items,int length}

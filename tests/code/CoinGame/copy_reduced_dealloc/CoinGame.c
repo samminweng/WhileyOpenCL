@@ -554,7 +554,7 @@ int main(int argc, char** args){
 		_UPDATE_1DARRAY_SIZE(_8, moves);
 		_DEALLOC(_8);
 		_8 = findMoves(_1DARRAY_PARAM(moves), false, n);
-		_RESET_DEALLOC(moves, "true-true-false" , "main");
+		_RESET_DEALLOC(moves, "true-true-false" , "findMoves");
 		_ADD_DEALLOC(_8);
 	}
 	//assign %2 = %8  : int[]
@@ -564,7 +564,7 @@ int main(int argc, char** args){
 	//invoke () = (%0, %2, %1) CoinGame:play : method(whiley/lang/System:Console,int[],int)->()
 	{
 		play(stdout, _1DARRAY_PARAM(moves), false, n);
-		_RETAIN_DEALLOC(moves, "false-false-true" , "main");
+		_RETAIN_DEALLOC(moves, "false-false-true" , "play");
 	}
 	//const %9 = 1 : int
 	_9 = 1;

@@ -402,8 +402,8 @@ Image* sobelEdgeDetection(Image* input, _DECL_DEALLOC_PARAM(input)){
 				void* input_tmp;
 				void* v_sobel_tmp;
 				_50 = convolution(input_tmp = _COPY_STRUCT_PARAM(input, Image), true, x, y, v_sobel_tmp = _COPY_1DARRAY_PARAM(v_sobel, T_INT), true);
-				_CALLEE_DEALLOC(input, "false-false-true" , "sobelEdgeDetection");
-				_CALLEE_DEALLOC(v_sobel, "false-false-true" , "sobelEdgeDetection");
+				_CALLEE_DEALLOC(input, "false-false-true" , "convolution");
+				_CALLEE_DEALLOC(v_sobel, "false-false-true" , "convolution");
 			}
 			//assign %11 = %50  : int
 			v_g = _50;
@@ -412,8 +412,8 @@ Image* sobelEdgeDetection(Image* input, _DECL_DEALLOC_PARAM(input)){
 				void* input_tmp;
 				void* h_sobel_tmp;
 				_51 = convolution(input_tmp = _COPY_STRUCT_PARAM(input, Image), true, x, y, h_sobel_tmp = _COPY_1DARRAY_PARAM(h_sobel, T_INT), true);
-				_CALLEE_DEALLOC(input, "false-false-true" , "sobelEdgeDetection");
-				_CALLEE_DEALLOC(h_sobel, "false-false-true" , "sobelEdgeDetection");
+				_CALLEE_DEALLOC(input, "false-false-true" , "convolution");
+				_CALLEE_DEALLOC(h_sobel, "false-false-true" , "convolution");
 			}
 			//assign %12 = %51  : int
 			h_g = _51;
@@ -470,7 +470,7 @@ blklab4:;
 		void* newPixels_tmp;
 		_DEALLOC_STRUCT(_62, Image);
 		_62 = image(width, height, newPixels_tmp = _COPY_1DARRAY_PARAM(newPixels, T_INT), true);
-		_CALLEE_DEALLOC(newPixels, "false-false-false" , "sobelEdgeDetection");
+		_CALLEE_DEALLOC(newPixels, "false-false-false" , "image");
 		_ADD_DEALLOC(_62);
 	}
 	//return %62
@@ -719,7 +719,7 @@ int main(int argc, char** args){
 		void* pixels_tmp;
 		_DEALLOC_STRUCT(_19, Image);
 		_19 = image(width, height, pixels_tmp = _COPY_1DARRAY_PARAM(pixels, T_INT), true);
-		_CALLEE_DEALLOC(pixels, "false-false-false" , "main");
+		_CALLEE_DEALLOC(pixels, "false-false-false" , "image");
 		_ADD_DEALLOC(_19);
 	}
 	//assign %5 = %19  : {int height,int[] pixels,int width}
@@ -731,7 +731,7 @@ int main(int argc, char** args){
 		void* input_tmp;
 		_DEALLOC_STRUCT(_20, Image);
 		_20 = sobelEdgeDetection(input_tmp = _COPY_STRUCT_PARAM(input, Image), true);
-		_CALLEE_DEALLOC(input, "false-false-true" , "main");
+		_CALLEE_DEALLOC(input, "false-false-true" , "sobelEdgeDetection");
 		_ADD_DEALLOC(_20);
 	}
 	//assign %6 = %20  : {int height,int[] pixels,int width}
@@ -751,7 +751,7 @@ int main(int argc, char** args){
 	{
 		void* input_tmp;
 		print_image(stdout, input_tmp = _COPY_STRUCT_PARAM(input, Image), true);
-		_CALLEE_DEALLOC(input, "false-false-false" , "main");
+		_CALLEE_DEALLOC(input, "false-false-false" , "print_image");
 	}
 	//fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %25 = %24 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -766,7 +766,7 @@ int main(int argc, char** args){
 	{
 		void* output_tmp;
 		print_image(stdout, output_tmp = _COPY_STRUCT_PARAM(output, Image), true);
-		_CALLEE_DEALLOC(output, "false-false-false" , "main");
+		_CALLEE_DEALLOC(output, "false-false-false" , "print_image");
 	}
 	//return
 	_DEALLOC(pixels);

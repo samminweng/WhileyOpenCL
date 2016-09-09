@@ -368,7 +368,7 @@ public class DeallocationAnalyzer extends Analyzer {
 					// Get check results (mutable, return and live checks on parameter)
 					String checks = parts[1];
 					// Get function name
-					String func_name = function.name();
+					String func_name = code.name.name();
 					// Write the checks results as a comments
 					//statements.add(indent+"//"+parameter+":"+checks);
 					if(macro_name.equals("_CALLER_DEALLOC")){

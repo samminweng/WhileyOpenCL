@@ -224,7 +224,7 @@ blklab20:;
 			{
 				void* p_tmp;
 				_21 = conflict(p_tmp = _COPY_STRUCT_PARAM(p, POS), true, n, col);
-				_CALLEE_DEALLOC(p, "false-false-false" , "run");
+				_CALLEE_DEALLOC(p, "false-false-false" , "conflict");
 			}
 			//const %22 = true : bool
 			_22 = true;
@@ -371,7 +371,7 @@ int main(int argc, char** args){
 	{
 		void* queens_tmp;
 		_9 = run(queens_tmp = copy_array_POS(queens, queens_size), queens_size, true, _10, n);
-		_CALLEE_DEALLOC(queens, "true-false-true" , "main");
+		_CALLEE_DEALLOC(queens, "true-false-true" , "run");
 	}
 	//assign %3 = %9  : int
 	num_solutions = _9;
