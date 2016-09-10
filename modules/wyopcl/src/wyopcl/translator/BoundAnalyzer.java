@@ -85,7 +85,7 @@ public class BoundAnalyzer {
 		// If not, run the CFG building procedure.
 		if (AnalyzerHelper.isCached(name)) {
 			AnalyzerHelper.promoteCFGStatus(name);
-		}
+		}	
 
 	}
 
@@ -150,11 +150,9 @@ public class BoundAnalyzer {
 					} else if (code instanceof Codes.Const) {
 						analyze((Codes.Const) code, name);
 					} else if (code instanceof Codes.Debug) {
-						// DebugInterpreter.getInstance().interpret((Codes.Debug)code,
-						// stackframe);
+						// Do nothing
 					} else if (code instanceof Codes.Dereference) {
-						// DereferenceInterpreter.getInstance().interpret((Codes.Dereference)code,
-						// stackframe);
+						// Do nothing
 					} else if (code instanceof Codes.FieldLoad) {
 						analyze((Codes.FieldLoad) code, name);
 					} else if (code instanceof Codes.Fail) {
@@ -164,41 +162,33 @@ public class BoundAnalyzer {
 					} else if (code instanceof Codes.If) {
 						analyze((Codes.If) code, name);
 					} else if (code instanceof Codes.IfIs) {
-						// IfIsInterpreter.getInstance().interpret((Codes.IfIs)code,
-						// stackframe);
+						// Do nothing
 					} else if (code instanceof Codes.IndexOf) {
 						analyze((Codes.IndexOf) code, name);
 					} else if (code instanceof Codes.IndirectInvoke) {
-						// IndirectInvokeInterpreter.getInstance().interpret((Codes.IndirectInvoke)code,
-						// stackframe);
+						// Do nothing
 					} else if (code instanceof Codes.Invert) {
-						// InvertInterpreter.getInstance().interpret((Codes.Invert)code,
-						// stackframe);
+						// Do nothing
 					} else if (code instanceof Codes.Loop) {
 						analyze((Codes.Loop) code, name);
 					} else if (code instanceof Codes.Label) {
 						analyze((Codes.Label) code, name);
 					} else if (code instanceof Codes.Lambda) {
-						// LambdaInterpreter.getInstance().interpret((Codes.Lambda)code,
-						// stackframe);
+						// Do nothing
 					} else if (code instanceof Codes.LengthOf) {
 						analyze((Codes.LengthOf) code, name);
 					} else if (code instanceof Codes.Move) {
 						throw new RuntimeException("Not implemented!");
 					} else if (code instanceof Codes.NewRecord) {
-						// NewRecordInterpreter.getInstance().interpret((Codes.NewRecord)code,
-						// stackframe);
+						// Do nothing
 					} else if (code instanceof Codes.Return) {
 						analyze((Codes.Return) code, name);
 					} else if (code instanceof Codes.NewObject) {
-						// NewObjectInterpreter.getInstance().interpret((Codes.NewObject)code,
-						// stackframe);
+						// Do nothing
 					} else if (code instanceof Codes.Nop) {
-						// NopInterpreter.getInstance().interpret((Codes.Nop)code,
-						// stackframe);
+						// Do nothing
 					} else if (code instanceof Codes.Switch) {
-						// SwitchInterpreter.getInstance().interpret((Codes.Switch)code,
-						// stackframe);
+						// Do nothing
 					} else if (code instanceof Codes.UnaryOperator) {
 						analyze((Codes.UnaryOperator) code, name);
 					} else if (code instanceof Codes.Update) {
@@ -316,6 +306,15 @@ public class BoundAnalyzer {
 
 		// Take the union of all blocks to produce the bounds of a function.
 		BoundBlock exit_blk = graph.getBasicBlock("exit", BlockType.EXIT);
+		// Check if there is any exit block, e.g. main function does not always have exit block 
+		// because it may not have the return 
+		if(exit_blk == null){
+			// Get current block
+			BoundBlock current_block = graph.getCurrentBlock();
+			exit_blk = graph.createBasicBlock("exit", BlockType.EXIT, current_block);
+		}
+		
+		
 		for (BoundBlock blk : list) {
 			// Consider the bounds of consistent block and discard the bounds of inconsistent block.
 			if (blk.isConsistent() && blk.getType() != BlockType.EXIT) {
@@ -512,11 +511,18 @@ public class BoundAnalyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.Return code, String name) {
+		// check if there is any return value
+		if(code.operands().length ==0){
+			return; // Do nothing
+		}
+		
 		// Get the return operand
 		String retOp = prefix + code.operand(0);
 		Type type = code.type(0);
 
 		if (!AnalyzerHelper.isCached(name)) {
+			
+			
 			// Get the CFGraph
 			BoundGraph graph = AnalyzerHelper.getCFGraph(name);
 			BoundBlock c_blk = graph.getCurrentBlock();
@@ -529,7 +535,11 @@ public class BoundAnalyzer {
 					c_blk.addConstraint((new Assign("return", retOp)));
 				}
 				// Connect the current block with exit block.
-				c_blk.addChild(graph.getBasicBlock("exit", BlockType.EXIT));
+				BoundBlock exit_block = graph.getBasicBlock("exit", BlockType.EXIT);
+				if(exit_block == null){
+					exit_block = graph.createBasicBlock("exit", BlockType.EXIT, c_blk);
+				}
+				c_blk.addChild(exit_block);
 				graph.setCurrentBlock(null);
 			}
 		}
