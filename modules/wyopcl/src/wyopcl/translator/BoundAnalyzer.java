@@ -48,7 +48,7 @@ public class BoundAnalyzer {
 	
 	
 	// Static instance
-	private static BoundAnalyzer instance;
+	//private static BoundAnalyzer instance;
 
 	/**
 	 * Constructor
@@ -57,12 +57,12 @@ public class BoundAnalyzer {
 		this.module = module;
 	}
 
-	public static BoundAnalyzer getInstance(WyilFile module) {
+	/*public static BoundAnalyzer getInstance(WyilFile module) {
 		if(instance == null){
 			instance = new BoundAnalyzer(module);
 		}
 		return instance;
-	}
+	}*/
 
 	/**
 	 * Build up Control Flow Graph.

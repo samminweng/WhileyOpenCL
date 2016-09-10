@@ -178,7 +178,6 @@ init(){
 # exec newTicTacToe original 10000
 # exec newTicTacToe original 100000
 
-
 # ## # MergeSort test case
 # init MergeSort
 # exec MergeSort original 1000
@@ -233,26 +232,28 @@ init(){
 # exec CoinGame array 3000
 
 
-###Sobel Edge test
-init SobelEdge
-exec SobelEdge original 256
-exec SobelEdge original 512
-exec SobelEdge original 1024
+# ###Sobel Edge test
+# init SobelEdge
+# exec SobelEdge original 256
+# exec SobelEdge original 512
+# exec SobelEdge original 1024
 
-## LZ77 test case
-init LZ77
-exec LZ77 original 1000
-exec LZ77 original 10000
-exec LZ77 original 100000
+# ## LZ77 test case
+# init LZ77
+# exec LZ77 original 1000
+# exec LZ77 original 10000
+# exec LZ77 original 100000
 
 ## NQueen test case
-init NQueen
-exec NQueen original 10
-exec NQueen original 12
-exec NQueen original 14
-exec NQueen original 15
+init NQueens
+exec NQueens original 8
+exec NQueens original 10
+exec NQueens original 12
+exec NQueens original 14
+exec NQueens original 15
 
-exec NQueen integer 10
-exec NQueen integer 12
-exec NQueen integer 14
-exec NQueen integer 15
+exec NQueens integer 8
+exec NQueens integer 10
+exec NQueens integer 12
+exec NQueens integer 14
+exec NQueens integer 15

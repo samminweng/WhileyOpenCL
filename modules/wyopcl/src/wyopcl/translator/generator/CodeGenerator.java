@@ -29,6 +29,7 @@ import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
+import wyopcl.translator.BoundAnalyzer;
 import wyopcl.translator.ReadWriteAnalyzer;
 import wyopcl.translator.ReturnAnalyzer;
 import wyopcl.translator.copy.CopyEliminationAnalyzer;
@@ -44,7 +45,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	// Optional copy and deallocation analyzers
 	private Optional<CopyEliminationAnalyzer> copyAnalyzer = Optional.empty();
 	private Optional<DeallocationAnalyzer> deallocatedAnalyzer = Optional.empty();
-
+	// Optional bound analyzer
+	private Optional<BoundAnalyzer> boundAnalyzer = Optional.empty();
 	/**
 	 * Constructor
 	 * 
@@ -56,10 +58,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	public CodeGenerator(Configuration config, Optional<CopyEliminationAnalyzer> copyAnalyzer,
-			Optional<DeallocationAnalyzer> deallcAnalyzer) {
+			Optional<DeallocationAnalyzer> deallcAnalyzer, Optional<BoundAnalyzer> boundAnalyzer) {
 		this(config);
 		this.copyAnalyzer = copyAnalyzer;
 		this.deallocatedAnalyzer = deallcAnalyzer;
+		this.boundAnalyzer = boundAnalyzer;
 	}
 
 	/**

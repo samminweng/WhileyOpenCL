@@ -9,7 +9,7 @@ ensures r > 0:
             return 2
     return 0
 
-method main(System.Console sys) -> void:
+method main(System.Console sys):
     sys.out.println(f(1))
     sys.out.println(f(10))
     sys.out.println(f(11))

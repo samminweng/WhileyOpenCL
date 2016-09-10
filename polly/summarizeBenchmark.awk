@@ -63,37 +63,38 @@ BEGIN {
 	filename = "";
 	FS = "\n";
 	# Test case name
-	testcases="Reverse newTicTacToe MergeSort BubbleSort MatrixMult SobelEdge";
+	testcases="Reverse newTicTacToe MergeSort BubbleSort MatrixMult Fibonacci GCD CoinGame SobelEdge LZ77 NQueens";
 
 	# Program Types
 	programs["Reverse"]="original";
 	programs["newTicTacToe"]="original";
 	programs["MergeSort"]="original";
 	programs["BubbleSort"]="original";
-	programs["MatrixMult"]="original";
-	#programs["Fibonacci"]="original";
-	#programs["GCD"]="original cached";
-	#programs["CoinGame"]="original single array";
-	#programs["NQueens"]="original integer";
+	programs["MatrixMult"]="original transpose";
+	programs["Fibonacci"]="original";
+	programs["GCD"]="original cached";
+	programs["CoinGame"]="original single array";
 	programs["SobelEdge"]="original";
+	programs["LZ77"]="original";
+	programs["NQueens"]="original integer";
 
 	# Code Generation
-	#codegens="copyreduced_dealloc";
-	codegens = "naive naive_dealloc copyreduced copyreduced_dealloc";
+	codegens = "naive_dealloc copyreduced copyreduced_dealloc";
 	# Compiler
 	#compilers = "gcc clang polly openmp";
 	compilers = "gcc";
 	# Parameter
-	parameters["Reverse"] = "100000 1000000 10000000";
-	parameters["newTicTacToe"] = "1000 10000 100000";
-	parameters["MergeSort"] = "1000 10000 100000";
-	parameters["BubbleSort"] = "1000 10000 100000";
-	parameters["MatrixMult"] = "1000 2000 3000";
-	#parameters["Fibonacci"] = "10 20 30 40 50";
-	#parameters["GCD"] = "1000 10000 20000 30000 40000";
-	#parameters["CoinGame"] = "1000 10000 20000 30000 40000";
-	#parameters["NQueens"] = "1 2 4 6 8 10 12 14 15";
-	parameters["SobelEdge"] = "32 64 128 256 512 1024 2048";
+	parameters["Reverse"]="100000 1000000 10000000";
+	parameters["newTicTacToe"]="1000 10000 100000";
+	parameters["MergeSort"]="1000 10000 100000";
+	parameters["BubbleSort"]="1000 10000 100000";
+	parameters["MatrixMult"]="1000 2000 3000";
+	parameters["Fibonacci"]="10 50 90";
+	parameters["GCD"]="100 150 200";
+	parameters["CoinGame"]="1000 2000 3000";
+	parameters["SobelEdge"] = "256 512 1024";
+	parameters["LZ77"]="1000 10000 100000";
+	parameters["NQueens"]="8 10 12 14 15";
 
 	# The number of threads
 	#threads="1 2 4";

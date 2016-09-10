@@ -109,14 +109,30 @@ public class Translator implements Builder {
 		}
 
 		// Check if the bound analysis is enabled.
+		Optional<BoundAnalyzer> boundAnalyzer = Optional.empty();
 		if (config.isEnabled("bound")) {
-			analyzeBounds(module);
+			/**
+			 * Takes the in-memory wyil file and analyzes the bounds of integer variables in Main function. If any function call
+			 * is encountered, then propagate the input bounds to the callee and then analyze the bounds and produces the
+			 * context-sensitive bounds for the invoked function. The bounds of return value is propagated to the caller
+			 * function.
+			 */
+			BoundAnalyzer analyzer = new BoundAnalyzer(module);
+			try {
+				// Start with main function.
+				analyzer.buildCFG(config, "main");
+				// Infer the bounds at the end of main function.
+				analyzer.inferBounds("main");
+			} catch (Exception e) {
+				throw new RuntimeException("Errors on Bound Analysis");
+			}
+			boundAnalyzer = Optional.of(analyzer);
 			message += "\nBound analysis completed. File: " + config.getFilename();
 		}
 
 		// Reads the in-memory WyIL file and generates the code in C
 		if (config.isEnabled("code")) {
-			CodeGenerator generator = new CodeGenerator(config, copyAnalyzer, deallocAnalyzer);
+			CodeGenerator generator = new CodeGenerator(config, copyAnalyzer, deallocAnalyzer, boundAnalyzer);
 			generator.apply(module);
 			message += "\nCode Generation completed. File: " + config.getFilename() + ".c, " + config.getFilename()
 					+ ".h";
@@ -125,27 +141,6 @@ public class Translator implements Builder {
 		long endTime = System.currentTimeMillis();
 		System.out.println(message + " Time: " + (endTime - start) + " ms Memory Usage: " + memory);
 		return generatedFiles;
-	}
-
-	/**
-	 * Takes the in-memory wyil file and analyzes the bounds of integer variables in Main function. If any function call
-	 * is encountered, then propagate the input bounds to the callee and then analyze the bounds and produces the
-	 * context-sensitive bounds for the invoked function. The bounds of return value is propagated to the caller
-	 * function.
-	 * 
-	 * @param module
-	 */
-	private void analyzeBounds(WyilFile module) {
-		BoundAnalyzer boundAnalyzer = BoundAnalyzer.getInstance(module);
-		try {
-			// Start with main function.
-			boundAnalyzer.buildCFG(config, "main");
-			// Infer the bounds at the end of main function.
-			boundAnalyzer.inferBounds("main");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	@Override

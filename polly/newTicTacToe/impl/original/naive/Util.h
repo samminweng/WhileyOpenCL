@@ -231,7 +231,6 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 				a##_dealloc = false;\
 			}\
 		})
-	
 // Deallocate an array of structure pointers
 #define _DEALLOC_1DARRAY_STRUCT(a, name) \
 		({\
@@ -252,7 +251,6 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 			free_##name(b);\
 			b = NULL;\
 		})
-
 // Deallocate a member whose type is an array of structure pointers
 #define _DEALLOC_MEMBER_STRUCT(a, b, name) \
 		({\
@@ -291,6 +289,16 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 			if(a != b##_tmp){\
 				DEBUG_PRINT("Potential memory leaks at ( "str(checks)" "str(#b)"_tmp" " "str(func_name)" )");\
 				free(b##_tmp);\
+				b##_tmp = NULL;\
+			}\
+		})
+// Free the extra copy of the structure using built-in structure free function
+#define _CALLER_DEALLOC_STRUCT(a, b, checks, func_name, name) \
+		({\
+			DEBUG_PRINT("_CALLER_DEALLOC macro on ( "str(checks)" "str(#b) " "str(func_name)" )");\
+			if(a != b##_tmp){\
+				DEBUG_PRINT("Potential memory leaks at ( "str(checks)" "str(#b)"_tmp" " "str(func_name)" )");\
+				free_##name(b##_tmp);\
 				b##_tmp = NULL;\
 			}\
 		})

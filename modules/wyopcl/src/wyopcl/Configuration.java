@@ -20,7 +20,6 @@ public class Configuration {
 		this.options = new Properties();
 		this.options.put("nocopy", false);
 		this.options.put("bound", false);
-		//this.options.put("pattern", false);
 		this.options.put("dealloc", false);
 		this.options.put("code", false);
 		this.options.put("verbose", false);
@@ -56,34 +55,35 @@ public class Configuration {
 			return;	
 		}
 		if(option.equals("module")){
-			//this.module = (WyilFile) value;
+			// Get file name
 			this.filename = ((WyilFile) value).filename().split(".whiley")[0];
 			// Remove the prefix of file name './' on Linux.
 			// e.g. the file name of './While_Valid_1.whiley' is 'While_Valid_1.whiley'
 			filename = filename.replace("./", "");
 			// Remove the prefix of file name '.\While_Valid_1.whiley' on Windows.
 			filename = filename.replace(".\\", "");
-		}else if (option.equals("bound")){
-			// Check if the value is not null.
-			if (value != null) {
-				if (value.toString().equals("gradual")) {
-					this.options.put("widen", "gradual");
-				} else {
-					this.options.put("widen", "naive");
-				}
-			}
-		}else{
+		}else {
 			this.options.put(option, true);
+			if (option.equals("bound")){
+				// Get the widen strategy (naive or gradual)
+				if (value != null) {
+					if (value.toString().equals("gradual")) {
+						this.options.put("widen", "gradual");
+					} else {
+						this.options.put("widen", "naive");
+					}
+				}
+			}		
 		}
 	}
 
 	/**
-	 * Get the value of the given option.
+	 * Check if the given option is enabled or not
 	 * 
 	 * @return the mode. If no mode is set, return null.
 	 */
 	public boolean isEnabled(String option) {
-		return (boolean) this.options.get(option);
+		return (boolean)this.options.get(option);
 	}
 
 	/**
@@ -92,10 +92,7 @@ public class Configuration {
 	 * @return
 	 */
 	public boolean isGradualWiden() {
-		if (this.options.get("widen").equals("gradual")) {
-			return true;
-		}
-		return false;
+		return this.options.get("widen").equals("gradual");
 	}
 
 }
