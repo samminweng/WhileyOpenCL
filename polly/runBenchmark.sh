@@ -159,13 +159,13 @@ init(){
 	### remove all files inside the folder
 	rm -f "$dir/"*.*
 }
-############################################
-###
-###  Benchmark 3 kinds of generated code
-###  (naive + de-allocated,
-###   copy_reduced, copy_reduced + de-allocated)
-###
-###########################################
+# ############################################
+# ###
+# ###  Benchmark 3 kinds of generated code
+# ###  (naive + de-allocated,
+# ###   copy_reduced, copy_reduced + de-allocated)
+# ###
+# ###########################################
 # ## # Reverse test case
 # init Reverse
 # exec Reverse original 100000
@@ -238,22 +238,24 @@ init(){
 # exec SobelEdge original 512
 # exec SobelEdge original 1024
 
-# ## LZ77 test case
-# init LZ77
-# exec LZ77 original 1000
-# exec LZ77 original 10000
-# exec LZ77 original 100000
+## LZ77 test case
+#nit LZ77
+#exec LZ77 original 1000
+#exec LZ77 original 10000
+#exec LZ77 original 100000
+exec LZ77 original 200000
+exec LZ77 original 300000
 
 ## NQueen test case
-init NQueens
-exec NQueens original 8
-exec NQueens original 10
-exec NQueens original 12
-exec NQueens original 14
-exec NQueens original 15
+# init NQueens
+# exec NQueens original 8
+# exec NQueens original 10
+# exec NQueens original 12
+# exec NQueens original 14
+# exec NQueens original 15
 
-exec NQueens integer 8
-exec NQueens integer 10
-exec NQueens integer 12
-exec NQueens integer 14
-exec NQueens integer 15
+# exec NQueens integer 8
+# exec NQueens integer 10
+# exec NQueens integer 12
+# exec NQueens integer 14
+# exec NQueens integer 15
