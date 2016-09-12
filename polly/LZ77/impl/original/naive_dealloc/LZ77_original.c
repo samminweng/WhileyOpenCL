@@ -26,7 +26,7 @@ void printf_Match(Match* match){
 Data* copy_Data(Data* _Data){
 	Data* new_Data = malloc(sizeof(Data));
 	new_Data->length = _Data->length;
-	_COPY_1DARRAY(new_Data->items, _Data->items, T_BYTE);
+	_COPY_1DARRAY_BYTE(new_Data->items, _Data->items);
 	return new_Data;
 }
 Data** copy_array_Data(Data** _Data, long long _Data_size){
@@ -46,7 +46,7 @@ void printf_Data(Data* data){
 	printf(" length:");
 	printf("%lld", data->length);
 	printf(" items:");
-	_PRINT_1DARRAY(data->items, T_BYTE);
+	_PRINT_1DARRAY_BYTE(data->items);
 	printf("}");
 }
 long long match(Data* input, _DECL_DEALLOC_PARAM(input), long long offset, long long end){
@@ -80,7 +80,7 @@ long long match(Data* input, _DECL_DEALLOC_PARAM(input), long long offset, long 
 	_REMOVE_DEALLOC(_8);
 	//assign %6 = %8  : byte[]
 	_DEALLOC(data);
-	_COPY_1DARRAY(data, _8, T_BYTE);
+	_COPY_1DARRAY_BYTE(data, _8);
 	_ADD_DEALLOC(data);
 	//loop (%1, %4, %5, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18)
 	while(true){
@@ -178,7 +178,7 @@ Match* findLongestMatch(Data* input, _DECL_DEALLOC_PARAM(input), long long pos){
 		//invoke (%14) = (%0, %6, %1) LZ77_original:match : function(LZ77_original:Data,LZ77_original:nat,LZ77_original:nat)->(int)
 		{
 			void* input_tmp;
-			_14 = match(input_tmp = _COPY_STRUCT_PARAM(input, Data), true, offset, pos);
+			_14 = match(_COPY_STRUCT_PARAM(input, Data), true, offset, pos);
 			_CALLEE_DEALLOC(input, "false-false-true" , "match");
 		}
 		//assign %7 = %14  : int
@@ -250,7 +250,7 @@ Data* append_byte(Data* data, _DECL_DEALLOC_PARAM(data), BYTE item){
 	_REMOVE_DEALLOC(_7);
 	//assign %3 = %7  : byte[]
 	_DEALLOC(items);
-	_COPY_1DARRAY(items, _7, T_BYTE);
+	_COPY_1DARRAY_BYTE(items, _7);
 	_ADD_DEALLOC(items);
 	//const %8 = 00000000b : byte
 	_8 = 0b00000000;
@@ -262,11 +262,11 @@ Data* append_byte(Data* data, _DECL_DEALLOC_PARAM(data), BYTE item){
 	_11=_9+_10;
 	//arraygen %12 = [8; 11] : byte[]
 	_DEALLOC(_12);
-	_NEW_1DARRAY(_12, _11, _8, T_BYTE);
+	_NEW_1DARRAY_BYTE(_12, _11, _8);
 	_ADD_DEALLOC(_12);
 	//assign %4 = %12  : byte[]
 	_DEALLOC(nitems);
-	_COPY_1DARRAY(nitems, _12, T_BYTE);
+	_COPY_1DARRAY_BYTE(nitems, _12);
 	_ADD_DEALLOC(nitems);
 	//const %13 = 0 : int
 	_13 = 0;
@@ -306,7 +306,7 @@ blklab6:;
 	//newrecord %21 = (%4, %6) : {byte[] items,int length}
 	_DEALLOC_STRUCT(_21, Data);
 	_21 = malloc(sizeof(Data));
-	_COPY_1DARRAY(_21->items, nitems, T_BYTE);
+	_COPY_1DARRAY_BYTE(_21->items, nitems);
 	_21->length = length;
 	_ADD_DEALLOC(_21);
 	//return %21
@@ -332,7 +332,7 @@ Data* write_u1(Data* data, _DECL_DEALLOC_PARAM(data), long long u1){
 	{
 		void* data_tmp;
 		_DEALLOC_STRUCT(_3, Data);
-		_3 = append_byte(data_tmp = _COPY_STRUCT_PARAM(data, Data), true, _4);
+		_3 = append_byte(_COPY_STRUCT_PARAM(data, Data), true, _4);
 		_CALLEE_DEALLOC(data, "false-false-false" , "append_byte");
 		_ADD_DEALLOC(_3);
 	}
@@ -389,14 +389,14 @@ Data* compress(Data* input, _DECL_DEALLOC_PARAM(input)){
 	_9 = 0;
 	//arraygen %10 = [8; 9] : byte[]
 	_DEALLOC(_10);
-	_NEW_1DARRAY(_10, _9, _8, T_BYTE);
+	_NEW_1DARRAY_BYTE(_10, _9, _8);
 	_ADD_DEALLOC(_10);
 	//const %11 = 0 : int
 	_11 = 0;
 	//newrecord %12 = (%10, %11) : {byte[] items,int length}
 	_DEALLOC_STRUCT(_12, Data);
 	_12 = malloc(sizeof(Data));
-	_COPY_1DARRAY(_12->items, _10, T_BYTE);
+	_COPY_1DARRAY_BYTE(_12->items, _10);
 	_12->length = _11;
 	_ADD_DEALLOC(_12);
 	//assign %3 = %12  : {byte[] items,int length}
@@ -413,7 +413,7 @@ Data* compress(Data* input, _DECL_DEALLOC_PARAM(input)){
 		{
 			void* input_tmp;
 			_DEALLOC_STRUCT(_14, Match);
-			_14 = findLongestMatch(input_tmp = _COPY_STRUCT_PARAM(input, Data), true, pos);
+			_14 = findLongestMatch(_COPY_STRUCT_PARAM(input, Data), true, pos);
 			_CALLEE_DEALLOC(input, "false-false-true" , "findLongestMatch");
 			_ADD_DEALLOC(_14);
 		}
@@ -433,7 +433,7 @@ Data* compress(Data* input, _DECL_DEALLOC_PARAM(input)){
 		{
 			void* output_tmp;
 			_DEALLOC_STRUCT(_17, Data);
-			_17 = write_u1(output_tmp = _COPY_STRUCT_PARAM(output, Data), true, offset);
+			_17 = write_u1(_COPY_STRUCT_PARAM(output, Data), true, offset);
 			_CALLEE_DEALLOC(output, "false-false-false" , "write_u1");
 			_ADD_DEALLOC(_17);
 		}
@@ -455,7 +455,7 @@ Data* compress(Data* input, _DECL_DEALLOC_PARAM(input)){
 		{
 			void* output_tmp;
 			_DEALLOC_STRUCT(_19, Data);
-			_19 = append_byte(output_tmp = _COPY_STRUCT_PARAM(output, Data), true, _21);
+			_19 = append_byte(_COPY_STRUCT_PARAM(output, Data), true, _21);
 			_CALLEE_DEALLOC(output, "false-false-false" , "append_byte");
 			_ADD_DEALLOC(_19);
 		}
@@ -477,7 +477,7 @@ blklab10:;
 		{
 			void* output_tmp;
 			_DEALLOC_STRUCT(_24, Data);
-			_24 = write_u1(output_tmp = _COPY_STRUCT_PARAM(output, Data), true, len);
+			_24 = write_u1(_COPY_STRUCT_PARAM(output, Data), true, len);
 			_CALLEE_DEALLOC(output, "false-false-false" , "write_u1");
 			_ADD_DEALLOC(_24);
 		}
@@ -567,14 +567,14 @@ Data* decompress(Data* input, _DECL_DEALLOC_PARAM(input)){
 	_12 = 0;
 	//arraygen %13 = [11; 12] : byte[]
 	_DEALLOC(_13);
-	_NEW_1DARRAY(_13, _12, _11, T_BYTE);
+	_NEW_1DARRAY_BYTE(_13, _12, _11);
 	_ADD_DEALLOC(_13);
 	//const %14 = 0 : int
 	_14 = 0;
 	//newrecord %15 = (%13, %14) : {byte[] items,int length}
 	_DEALLOC_STRUCT(_15, Data);
 	_15 = malloc(sizeof(Data));
-	_COPY_1DARRAY(_15->items, _13, T_BYTE);
+	_COPY_1DARRAY_BYTE(_15->items, _13);
 	_15->length = _14;
 	_ADD_DEALLOC(_15);
 	//assign %2 = %15  : {byte[] items,int length}
@@ -587,7 +587,7 @@ Data* decompress(Data* input, _DECL_DEALLOC_PARAM(input)){
 	_REMOVE_DEALLOC(_16);
 	//assign %3 = %16  : byte[]
 	_DEALLOC(data);
-	_COPY_1DARRAY(data, _16, T_BYTE);
+	_COPY_1DARRAY_BYTE(data, _16);
 	_ADD_DEALLOC(data);
 	//const %17 = 0 : int
 	_17 = 0;
@@ -629,7 +629,7 @@ Data* decompress(Data* input, _DECL_DEALLOC_PARAM(input)){
 		{
 			void* output_tmp;
 			_DEALLOC_STRUCT(_28, Data);
-			_28 = append_byte(output_tmp = _COPY_STRUCT_PARAM(output, Data), true, item);
+			_28 = append_byte(_COPY_STRUCT_PARAM(output, Data), true, item);
 			_CALLEE_DEALLOC(output, "false-false-false" , "append_byte");
 			_ADD_DEALLOC(_28);
 		}
@@ -679,7 +679,7 @@ blklab14:;
 			{
 				void* output_tmp;
 				_DEALLOC_STRUCT(_37, Data);
-				_37 = append_byte(output_tmp = _COPY_STRUCT_PARAM(output, Data), true, item);
+				_37 = append_byte(_COPY_STRUCT_PARAM(output, Data), true, item);
 				_CALLEE_DEALLOC(output, "false-false-false" , "append_byte");
 				_ADD_DEALLOC(_37);
 			}
@@ -752,11 +752,11 @@ Data* init(long long repeat){
 	_7 = 0b00000000;
 	//arraygen %8 = [7; 2] : byte[]
 	_DEALLOC(_8);
-	_NEW_1DARRAY(_8, length, _7, T_BYTE);
+	_NEW_1DARRAY_BYTE(_8, length, _7);
 	_ADD_DEALLOC(_8);
 	//assign %3 = %8  : byte[]
 	_DEALLOC(items);
-	_COPY_1DARRAY(items, _8, T_BYTE);
+	_COPY_1DARRAY_BYTE(items, _8);
 	_ADD_DEALLOC(items);
 	//const %9 = 0 : int
 	_9 = 0;
@@ -768,7 +768,7 @@ Data* init(long long repeat){
 		if(pos>=length){goto blklab18;}
 		//const %10 = [01100001b,01100001b,01100011b,01100001b,01100001b,01100011b,01100001b,01100010b,01100011b,01100001b,01100010b,01100001b,01100001b,01100001b,01100011b] : byte[]
 		_DEALLOC(_10);
-		_NEW_1DARRAY(_10, 15, 0b0, T_BYTE);
+		_NEW_1DARRAY_BYTE(_10, 15, 0b0);
 		_10[0] = 0b01100001; _10[1] = 0b01100001; _10[2] = 0b01100011; _10[3] = 0b01100001; _10[4] = 0b01100001; _10[5] = 0b01100011; _10[6] = 0b01100001; _10[7] = 0b01100010; _10[8] = 0b01100011; _10[9] = 0b01100001; _10[10] = 0b01100010; _10[11] = 0b01100001; _10[12] = 0b01100001; _10[13] = 0b01100001; _10[14] = 0b01100011; 
 		_ADD_DEALLOC(_10);
 		//const %11 = 15 : int
@@ -793,7 +793,7 @@ blklab18:;
 	//newrecord %16 = (%3, %2) : {byte[] items,int length}
 	_DEALLOC_STRUCT(_16, Data);
 	_16 = malloc(sizeof(Data));
-	_COPY_1DARRAY(_16->items, items, T_BYTE);
+	_COPY_1DARRAY_BYTE(_16->items, items);
 	_16->length = length;
 	_ADD_DEALLOC(_16);
 	//return %16
@@ -853,7 +853,7 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_39);
 	_DECL_DEALLOC(_39);
 	//fieldload %7 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	_DEALLOC_2DArray(_7, T_INT);
+	_DEALLOC_2DARRAY_LONGLONG(_7);
 	_CONV_ARGS(_7);
 	_ADD_DEALLOC(_7);
 	//const %8 = 0 : int
@@ -887,7 +887,7 @@ int main(int argc, char** args){
 	//fieldload %12 = %11 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %13 = [68,97,116,97,58,32,32,32,32,32,32,32,32,32] : int[]
 	_DEALLOC(_13);
-	_NEW_1DARRAY(_13, 14, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_13, 14, 0);
 	_13[0] = 68; _13[1] = 97; _13[2] = 116; _13[3] = 97; _13[4] = 58; _13[5] = 32; _13[6] = 32; _13[7] = 32; _13[8] = 32; _13[9] = 32; _13[10] = 32; _13[11] = 32; _13[12] = 32; _13[13] = 32; 
 	_ADD_DEALLOC(_13);
 	//indirectinvoke () = %12 (%13) : method(int[])->()
@@ -902,7 +902,7 @@ int main(int argc, char** args){
 	//fieldload %18 = %17 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %19 = [32,98,121,116,101,115] : int[]
 	_DEALLOC(_19);
-	_NEW_1DARRAY(_19, 6, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_19, 6, 0);
 	_19[0] = 32; _19[1] = 98; _19[2] = 121; _19[3] = 116; _19[4] = 101; _19[5] = 115; 
 	_ADD_DEALLOC(_19);
 	//indirectinvoke () = %18 (%19) : method(int[])->()
@@ -911,7 +911,7 @@ int main(int argc, char** args){
 	{
 		void* data_tmp;
 		_DEALLOC_STRUCT(_20, Data);
-		_20 = compress(data_tmp = _COPY_STRUCT_PARAM(data, Data), true);
+		_20 = compress(_COPY_STRUCT_PARAM(data, Data), true);
 		_CALLEE_DEALLOC(data, "false-false-false" , "compress");
 		_ADD_DEALLOC(_20);
 	}
@@ -923,7 +923,7 @@ int main(int argc, char** args){
 	//fieldload %22 = %21 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %23 = [67,79,77,80,82,69,83,83,69,68,32,68,97,116,97,58,32,32,32] : int[]
 	_DEALLOC(_23);
-	_NEW_1DARRAY(_23, 19, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_23, 19, 0);
 	_23[0] = 67; _23[1] = 79; _23[2] = 77; _23[3] = 80; _23[4] = 82; _23[5] = 69; _23[6] = 83; _23[7] = 83; _23[8] = 69; _23[9] = 68; _23[10] = 32; _23[11] = 68; _23[12] = 97; _23[13] = 116; _23[14] = 97; _23[15] = 58; _23[16] = 32; _23[17] = 32; _23[18] = 32; 
 	_ADD_DEALLOC(_23);
 	//indirectinvoke () = %22 (%23) : method(int[])->()
@@ -938,7 +938,7 @@ int main(int argc, char** args){
 	//fieldload %28 = %27 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %29 = [32,98,121,116,101,115] : int[]
 	_DEALLOC(_29);
-	_NEW_1DARRAY(_29, 6, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_29, 6, 0);
 	_29[0] = 32; _29[1] = 98; _29[2] = 121; _29[3] = 116; _29[4] = 101; _29[5] = 115; 
 	_ADD_DEALLOC(_29);
 	//indirectinvoke () = %28 (%29) : method(int[])->()
@@ -947,7 +947,7 @@ int main(int argc, char** args){
 	{
 		void* compress_data_tmp;
 		_DEALLOC_STRUCT(_30, Data);
-		_30 = decompress(compress_data_tmp = _COPY_STRUCT_PARAM(compress_data, Data), true);
+		_30 = decompress(_COPY_STRUCT_PARAM(compress_data, Data), true);
 		_CALLEE_DEALLOC(compress_data, "false-false-false" , "decompress");
 		_ADD_DEALLOC(_30);
 	}
@@ -959,7 +959,7 @@ int main(int argc, char** args){
 	//fieldload %32 = %31 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %33 = [68,69,67,79,77,80,82,69,83,83,69,68,58,32,32,32] : int[]
 	_DEALLOC(_33);
-	_NEW_1DARRAY(_33, 16, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_33, 16, 0);
 	_33[0] = 68; _33[1] = 69; _33[2] = 67; _33[3] = 79; _33[4] = 77; _33[5] = 80; _33[6] = 82; _33[7] = 69; _33[8] = 83; _33[9] = 83; _33[10] = 69; _33[11] = 68; _33[12] = 58; _33[13] = 32; _33[14] = 32; _33[15] = 32; 
 	_ADD_DEALLOC(_33);
 	//indirectinvoke () = %32 (%33) : method(int[])->()
@@ -974,7 +974,7 @@ int main(int argc, char** args){
 	//fieldload %38 = %37 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %39 = [32,98,121,116,101,115] : int[]
 	_DEALLOC(_39);
-	_NEW_1DARRAY(_39, 6, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_39, 6, 0);
 	_39[0] = 32; _39[1] = 98; _39[2] = 121; _39[3] = 116; _39[4] = 101; _39[5] = 115; 
 	_ADD_DEALLOC(_39);
 	//indirectinvoke () = %38 (%39) : method(int[])->()
@@ -987,7 +987,7 @@ blklab20:;
 	_DEALLOC_STRUCT(compress_data, Data);
 	_DEALLOC_STRUCT(decompress_data, Data);
 	_DEALLOC(_6);
-	_DEALLOC_2DArray(_7, T_INT);
+	_DEALLOC_2DARRAY_LONGLONG(_7);
 	_DEALLOC(_9);
 	_DEALLOC_STRUCT(_10, Data);
 	_DEALLOC(_13);

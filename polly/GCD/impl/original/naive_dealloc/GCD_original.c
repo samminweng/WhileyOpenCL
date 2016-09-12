@@ -94,7 +94,7 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_31);
 	_DECL_DEALLOC(_31);
 	//fieldload %7 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	_DEALLOC_2DArray(_7, T_INT);
+	_DEALLOC_2DARRAY_LONGLONG(_7);
 	_CONV_ARGS(_7);
 	_ADD_DEALLOC(_7);
 	//const %8 = 0 : int
@@ -118,7 +118,7 @@ int main(int argc, char** args){
 	//fieldload %11 = %10 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %12 = [78,32,61,32] : int[]
 	_DEALLOC(_12);
-	_NEW_1DARRAY(_12, 4, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_12, 4, 0);
 	_12[0] = 78; _12[1] = 32; _12[2] = 61; _12[3] = 32; 
 	_ADD_DEALLOC(_12);
 	//indirectinvoke () = %11 (%12) : method(int[])->()
@@ -181,7 +181,7 @@ blklab8:;
 	//fieldload %25 = %24 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %26 = [83,117,109,58,32] : int[]
 	_DEALLOC(_26);
-	_NEW_1DARRAY(_26, 5, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_26, 5, 0);
 	_26[0] = 83; _26[1] = 117; _26[2] = 109; _26[3] = 58; _26[4] = 32; 
 	_ADD_DEALLOC(_26);
 	//indirectinvoke () = %25 (%26) : method(int[])->()
@@ -194,7 +194,7 @@ blklab8:;
 	//fieldload %30 = %29 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %31 = [80,97,115,115,32,69,117,99,108,105,100,32,71,67,68,32,116,101,115,116,32,99,97,115,101] : int[]
 	_DEALLOC(_31);
-	_NEW_1DARRAY(_31, 25, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_31, 25, 0);
 	_31[0] = 80; _31[1] = 97; _31[2] = 115; _31[3] = 115; _31[4] = 32; _31[5] = 69; _31[6] = 117; _31[7] = 99; _31[8] = 108; _31[9] = 105; _31[10] = 100; _31[11] = 32; _31[12] = 71; _31[13] = 67; _31[14] = 68; _31[15] = 32; _31[16] = 116; _31[17] = 101; _31[18] = 115; _31[19] = 116; _31[20] = 32; _31[21] = 99; _31[22] = 97; _31[23] = 115; _31[24] = 101; 
 	_ADD_DEALLOC(_31);
 	//indirectinvoke () = %30 (%31) : method(int[])->()
@@ -204,7 +204,7 @@ blklab7:;
 	//return
 	_DEALLOC(max);
 	_DEALLOC(_6);
-	_DEALLOC_2DArray(_7, T_INT);
+	_DEALLOC_2DARRAY_LONGLONG(_7);
 	_DEALLOC(_9);
 	_DEALLOC(_12);
 	_DEALLOC(_26);

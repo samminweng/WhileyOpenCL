@@ -1,6 +1,6 @@
 #include "Util.h"
 // Free an array of arrays, i.e. int[][]  
-void free2DArray_LONGLONG(long long** ptr, long long size){
+void free2DArray_LONGLONG(long long** ptr, size_t size){
 	// Free each sub-pointer.
 	for(int i=0;i<size;i++){
 		free(ptr[i]);
@@ -15,7 +15,7 @@ void free2DArray_LONGLONG(long long** ptr, long long size){
 /**
  * Slice the array into two array from start to end (exclusively).
  */
-long long* slice(long long* arr, long long arr_size, long long start, long long end){
+long long* slice(long long* arr, size_t arr_size, int start, int end){
 	long long* sub_arr = NULL;
 	sub_arr = (long long*)malloc((end - start)*sizeof(long long));
 	if(sub_arr == NULL){
@@ -31,7 +31,7 @@ long long* slice(long long* arr, long long arr_size, long long start, long long 
 /**
  * Given array size and initial value, create an array of long long integers. 
  */
-long long* create1DArray_LONGLONG(long long value, int arr_size){
+long long* create1DArray_LONGLONG(long long value, size_t arr_size){
 	
 	long long* arr = NULL;
 	// Allocate the array
@@ -41,7 +41,7 @@ long long* create1DArray_LONGLONG(long long value, int arr_size){
 		exit(-2);
 	}
 	// Initialize each element with the given value.
-	for(int i=0;i<arr_size;i++){
+	for(size_t i=0;i<arr_size;i++){
 		arr[i] = value;
 	}
 	return arr;
@@ -49,7 +49,7 @@ long long* create1DArray_LONGLONG(long long value, int arr_size){
 /*
  * Given array size and initial value, create an array of BYTE
  */
-BYTE* create1DArray_BYTE(BYTE value, int arr_size){
+BYTE* create1DArray_BYTE(BYTE value, size_t arr_size){
 	BYTE* arr = NULL;
 	// Allocate the array
 	arr = (BYTE*)malloc(arr_size*sizeof(BYTE));
@@ -58,14 +58,14 @@ BYTE* create1DArray_BYTE(BYTE value, int arr_size){
 		exit(-2);
 	}
 	// Assign value
-	for(int i =0;i<arr_size;i++){
+	for(size_t i =0;i<arr_size;i++){
 		arr[i] = value;
 	}
 	return arr;
 }
 
 // Copy an array of BYTE
-BYTE* copy1DArray_BYTE(BYTE *arr, long long size){
+BYTE* copy1DArray_BYTE(BYTE *arr, size_t size){
 	BYTE *ptr = NULL;
 	ptr = (BYTE*)malloc(size*sizeof(BYTE));
 	if(ptr == NULL){
@@ -78,7 +78,7 @@ BYTE* copy1DArray_BYTE(BYTE *arr, long long size){
 }
 
 //Copy an integer array
-long long* copy1DArray_LONGLONG(long long *arr, long long size){
+long long* copy1DArray_LONGLONG(long long *arr, size_t size){
 	long long *ptr = NULL;
 	//Clone all the values from board array due to immutable Whiley value
 	ptr = (long long*) malloc(size * sizeof(long long));
@@ -95,7 +95,7 @@ long long* copy1DArray_LONGLONG(long long *arr, long long size){
 /**
  * Create an 2D array of given dimensions (n * m)
  */
-long long** create2DArray_LONGLONG(long long* arr,  long long n, long long m){
+long long** create2DArray_LONGLONG(long long* arr, size_t n, size_t m){
 	long long** _2DArray = NULL;
 	// Allocate the array
 	_2DArray = (long long**)malloc(n*sizeof(long long*));
@@ -104,7 +104,7 @@ long long** create2DArray_LONGLONG(long long* arr,  long long n, long long m){
 		exit(-2);
 	}
 	long long size = m*sizeof(long long);
-	for(long long i=0;i<n;i++){
+	for(size_t i=0;i<n;i++){
 		// Copy the input array and assign it to matrix.
 		_2DArray[i] = (long long*)malloc(size);
 		if(_2DArray[i] == NULL){
@@ -124,7 +124,7 @@ long long** create2DArray_LONGLONG(long long* arr,  long long n, long long m){
  * 
  */
 long long* parseStringToInt(long long* arr){
-	long long i=0;
+	size_t i=0;
 	long long value=0;
 	while(arr[i]>=0&&arr[i]<=9){
 		value = value*10+arr[i];
@@ -144,10 +144,6 @@ long long* parseStringToInt(long long* arr){
  **/
 long long** convertArgsToIntArray(int argc, char** args){
 	long long** arr;
-	long long arr_size;
-	long long i;
-	long long j;
-	long long max_j;
 	//Check if there is any command line argument
 	if(argc < 2){
 		fprintf(stderr, "Missing the command line arguments\n");
@@ -160,13 +156,13 @@ long long** convertArgsToIntArray(int argc, char** args){
 		exit(-2);
 	}
 	//Convert each argument into an array of digits	
-	arr_size=0;
+	size_t arr_size=0;
 	//Skip 1st arguement as it is the exec file name.
-	for(i=1;i<argc;i++){
+	for(size_t i=1;i<argc;i++){
 		//Check args[i][0] is an integer or not.
 		if(isdigit(args[i][0])){
 			//Allocated the array of 'arr'.
-			max_j=0;
+			size_t max_j=0;
 			//check if the char is a number or it is not ending char.
 			//And calculate the arr_size
 			while(args[i][max_j] != '\0'){
@@ -179,6 +175,7 @@ long long** convertArgsToIntArray(int argc, char** args){
 			//Allocate the array of arr[arr_size]
 			arr[arr_size] = (long long*)malloc((max_j+1)*sizeof(long long));
 			//Fill in the array
+			size_t j;
 			for(j=0;j<max_j;j++){
 				arr[arr_size][j] = args[i][j] - '0';
 			}
@@ -192,15 +189,13 @@ long long** convertArgsToIntArray(int argc, char** args){
 }
 
 //Check if both arrays are the same. 1: true, 0: false.
-int isArrayEqual(long long* arr1, long long arr1_size,
-		long long* arr2, long long arr2_size) {
-	long long i = 0;
+int isArrayEqual(long long* arr1, size_t arr1_size, long long* arr2, size_t arr2_size) {
 	//Check if array size is the same.
 	if (arr1_size != arr2_size) {
 		return 0;
 	}
 	//Compare each element.
-	for (i = 0; i < arr1_size; i++) {
+	for (size_t i = 0; i < arr1_size; i++) {
 		if (arr1[i] != arr2[i]) {
 			return 0;
 		}
@@ -210,16 +205,15 @@ int isArrayEqual(long long* arr1, long long arr1_size,
 }
 
 // Clone 2D array with given array size.
-long long** copy2DArray_LONGLONG(long long **arr, long long x, long long y){
+long long** copy2DArray_LONGLONG(long long **arr, size_t x, size_t y){
 	long long **newMatrix = NULL;
-	long long i = 0;
 	newMatrix = (long long**)malloc(x*sizeof(long long*));
 	if(newMatrix == NULL){
 		fprintf(stderr, "fail to malloc at copy2DArray_LONGLONG function in Util.c\n");
 		exit(-2);
 	}
-	long long size = y*sizeof(long long);
-	for(i=0;i<x;i++){
+	size_t size = y*sizeof(long long);
+	for(size_t i=0;i<x;i++){
 		newMatrix[i] = (long long*)malloc(size);
 		if(newMatrix[i] == NULL){
 			fprintf(stderr, "fail to malloc at copy2DArray_LONGLONG function in Util.c\n");
@@ -235,8 +229,7 @@ long long** copy2DArray_LONGLONG(long long **arr, long long x, long long y){
  * This append function meets value semantics
  * as it creates a new array and makes no change to op1 and op2 arrays.
  */
-long long* append(long long *arr1, long long arr1_size,
-		long long* arr2, long long arr2_size) {
+long long* append(long long *arr1, size_t arr1_size, long long* arr2, size_t arr2_size) {
 	long long *ret_arr = NULL;
 	long long size = 0;
 	//Get the size of return array.
@@ -283,14 +276,14 @@ void indirect_printf(long long input) {
 * Print out an array of long long integers. If the array size > 10, then 
 * print the first 10 items and the last item.
 */
-void printf1DArray_LONGLONG(long long* input, long long input_size) {
-	long long i = 0;
+void printf1DArray_LONGLONG(long long* input, size_t input_size) {
 	//Determines whether to add ','.
 	int isFirst = true;
 	int max_i = 10;
 	printf("[");
+	size_t i;
 	//Print the first 10 items
-	for (i = 0; i < input_size && i < max_i; i++) {
+	for(i = 0; i < input_size && i < max_i; i++) {
 		if (isFirst) {
 			printf("%lld", input[i]);
 			isFirst = false;
@@ -305,15 +298,14 @@ void printf1DArray_LONGLONG(long long* input, long long input_size) {
 	printf("]");
 }
 // Print out an array of bye
-void printf1DArray_BYTE(BYTE* input, long long input_size) {
+void printf1DArray_BYTE(BYTE* input, size_t input_size) {
 	printf("%s", input);
 }
 // Print out the first 10 array in an 2D array
-void printf2DArray_LONGLONG(long long** input, long long input_size, long long input_size_size){
-	long long i = 0;
-	int max_i = 10;
+void printf2DArray_LONGLONG(long long** input, size_t input_size, size_t input_size_size){
 	printf("[");
-	for (i = 0; i < input_size && i < max_i; i++) {
+	size_t i;
+	for (i = 0; i < input_size && i < 10; i++) {
 		printf1DArray_LONGLONG(input[i], input_size_size);
 	}
 	if (input_size > i) {
@@ -326,9 +318,8 @@ void printf2DArray_LONGLONG(long long** input, long long input_size, long long i
 /**
  * Print out an array of ASCII numbers into an array of chars.
  */
-void printf_s(long long* input, long long input_size) {
-	long long i = 0;
-	for (i = 0; i < input_size ; i++) {
+void printf_s(long long* input, size_t input_size) {
+	for (size_t i = 0; i < input_size ; i++) {
 		// Make int to char
 		char c = input[i];
 		printf("%c", c);
@@ -337,7 +328,7 @@ void printf_s(long long* input, long long input_size) {
 /**
  * Print out an array of integers with a new line.
  */
-void println_s(long long* input, long long input_size) {
+void println_s(long long* input, size_t input_size) {
 	printf_s(input, input_size);
 	printf("\n");
 }
@@ -350,10 +341,9 @@ int isPowerof2(long long value) {
 	return ((value != 0) && !(value & (value - 1)));
 }
 //Optimizes the Append function by resizing the array by the power of 2. This reduces the number of resizing tasks.
-long long* optimized_append(long long* op_1, long long* op_1_size, long long* op_2, long long* op_2_size, long long* ret_size) {
-	long long i;
+long long* optimized_append(long long* op_1, size_t* op_1_size, long long* op_2, size_t* op_2_size, size_t* ret_size) {
 	long long *ret;
-	long long allocated_size;
+	size_t allocated_size;
 	//Assign the res with op. That means both of them address to same memory location. In other word, copy the array.
 	ret = op_1;
 	//Check if the size is a power of 2. If so, then reallocate the array size.
@@ -370,26 +360,24 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 		}
 	}
 	//Update the item in the appended list.
-	for (i = 0; i < *op_2_size; i++) {
+	for (size_t i = 0; i < *op_2_size; i++) {
 		ret[*op_1_size + i] = op_2[i];
 	}
 	*ret_size = *op_1_size + *op_2_size;
 	return ret;
 }
 
-
-
 /*
  * Convert an array of BYTE to an integer array
  */
-long long* fromBytes(BYTE* input, long long size){
+long long* fromBytes(BYTE* input, size_t size){
 	// Create an array of integer
 	long long* arr = (long long*)malloc(size*sizeof(long long));
 	if(arr == NULL){
 		fprintf(stderr, "fail to allocate the memory at fromBytes function in Util.c\n");
 		exit(-2);
 	}
-	for(int i=0;i<size;i++){
+	for(size_t i=0;i<size;i++){
 		BYTE b = input[i];
 		// Convert 'char' to ASCII code (integer)
 		arr[i] = b;

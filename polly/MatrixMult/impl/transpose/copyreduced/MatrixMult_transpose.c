@@ -1,7 +1,7 @@
 #include "MatrixMult_transpose.h"
 Matrix* copy_Matrix(Matrix* _Matrix){
 	Matrix* new_Matrix = malloc(sizeof(Matrix));
-	_COPY_1DARRAY(new_Matrix->data, _Matrix->data, T_INT);
+	_COPY_1DARRAY_LONGLONG(new_Matrix->data, _Matrix->data);
 	new_Matrix->width = _Matrix->width;
 	new_Matrix->height = _Matrix->height;
 	return new_Matrix;
@@ -21,7 +21,7 @@ void free_Matrix(Matrix* matrix){
 void printf_Matrix(Matrix* matrix){
 	printf("{");
 	printf(" data:");
-	_PRINT_1DARRAY(matrix->data, T_INT);
+	_PRINT_1DARRAY_LONGLONG(matrix->data);
 	printf(" width:");
 	printf("%lld", matrix->width);
 	printf(" height:");
@@ -67,7 +67,7 @@ Matrix* init(long long width, long long height){
 	//mul %7 = %0, %1 : int
 	_7=width*height;
 	//arraygen %8 = [6; 7] : int[]
-	_NEW_1DARRAY(_8, _7, _6, T_INT);
+	_NEW_1DARRAY_LONGLONG(_8, _7, _6);
 	//assign %3 = %8  : int[]
 	_UPDATE_1DARRAY(data, _8);
 	//const %9 = 0 : int
@@ -193,7 +193,7 @@ void print_mat(FILE* sys, Matrix* a){
 			//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %17 = %16 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %18 = [32] : int[]
-			_NEW_1DARRAY(_18, 1, 0, T_INT);
+			_NEW_1DARRAY_LONGLONG(_18, 1, 0);
 			_18[0] = 32; 
 			//indirectinvoke () = %17 (%18) : method(int[])->()
 			printf_s(_1DARRAY_PARAM(_18));
@@ -217,7 +217,7 @@ blklab8:;
 		//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %24 = %23 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//const %25 = [] : void[]
-		_NEW_1DARRAY(_25, 0, 0, T_INT);
+		_NEW_1DARRAY_LONGLONG(_25, 0, 0);
 		//indirectinvoke () = %24 (%25) : method(int[])->()
 		println_s(_25, _25_size);
 //.blklab7
@@ -300,7 +300,7 @@ Matrix* mat_mult(Matrix* a, Matrix* b){
 	//mul %15 = %3, %4 : int
 	_15=width*height;
 	//arraygen %16 = [14; 15] : int[]
-	_NEW_1DARRAY(_16, _15, _14, T_INT);
+	_NEW_1DARRAY_LONGLONG(_16, _15, _14);
 	//assign %5 = %16  : int[]
 	_UPDATE_1DARRAY(data, _16);
 	//fieldload %17 = %0 data : {int[] data,int height,int width}
@@ -316,7 +316,7 @@ Matrix* mat_mult(Matrix* a, Matrix* b){
 	//mul %20 = %3, %4 : int
 	_20=width*height;
 	//arraygen %21 = [19; 20] : int[]
-	_NEW_1DARRAY(_21, _20, _19, T_INT);
+	_NEW_1DARRAY_LONGLONG(_21, _20, _19);
 	//assign %8 = %21  : int[]
 	_UPDATE_1DARRAY(b_t, _21);
 	//const %22 = 0 : int
@@ -521,7 +521,7 @@ int main(int argc, char** args){
 	//fieldload %10 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %11 = %10 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %12 = [115,105,122,101,32,61,32] : int[]
-	_NEW_1DARRAY(_12, 7, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_12, 7, 0);
 	_12[0] = 115; _12[1] = 105; _12[2] = 122; _12[3] = 101; _12[4] = 32; _12[5] = 61; _12[6] = 32; 
 	//indirectinvoke () = %11 (%12) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_12));
@@ -550,7 +550,7 @@ int main(int argc, char** args){
 	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %19 = %18 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %20 = [77,97,116,114,105,120,32,67,91,115,105,122,101,45,49,93,91,115,105,122,101,45,49,93,32,61,32] : int[]
-	_NEW_1DARRAY(_20, 27, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_20, 27, 0);
 	_20[0] = 77; _20[1] = 97; _20[2] = 116; _20[3] = 114; _20[4] = 105; _20[5] = 120; _20[6] = 32; _20[7] = 67; _20[8] = 91; _20[9] = 115; _20[10] = 105; _20[11] = 122; _20[12] = 101; _20[13] = 45; _20[14] = 49; _20[15] = 93; _20[16] = 91; _20[17] = 115; _20[18] = 105; _20[19] = 122; _20[20] = 101; _20[21] = 45; _20[22] = 49; _20[23] = 93; _20[24] = 32; _20[25] = 61; _20[26] = 32; 
 	//indirectinvoke () = %19 (%20) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_20));
@@ -577,7 +577,7 @@ int main(int argc, char** args){
 	//fieldload %31 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %32 = %31 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %33 = [80,97,115,115,32,77,97,116,114,105,120,77,117,108,116,32,116,101,115,116,32,99,97,115,101] : int[]
-	_NEW_1DARRAY(_33, 25, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_33, 25, 0);
 	_33[0] = 80; _33[1] = 97; _33[2] = 115; _33[3] = 115; _33[4] = 32; _33[5] = 77; _33[6] = 97; _33[7] = 116; _33[8] = 114; _33[9] = 105; _33[10] = 120; _33[11] = 77; _33[12] = 117; _33[13] = 108; _33[14] = 116; _33[15] = 32; _33[16] = 116; _33[17] = 101; _33[18] = 115; _33[19] = 116; _33[20] = 32; _33[21] = 99; _33[22] = 97; _33[23] = 115; _33[24] = 101; 
 	//indirectinvoke () = %32 (%33) : method(int[])->()
 	println_s(_33, _33_size);

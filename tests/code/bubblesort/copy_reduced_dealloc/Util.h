@@ -17,55 +17,55 @@ typedef unsigned char BYTE;
 * Declare an enumerated type to indicate the type and select the corresponding function 
 *
 */
-typedef enum {
+/*typedef enum {
 	T_INT, // Integer type
 	T_BYTE // Byte type
 } TYPENUM;
-
+*/
 /**
 *Built-in operation for 1D array of byte and integers
 *
 ***/
 //Create an array of long long integers 
-long long* create1DArray_LONGLONG(long long value, int arr_size);
-BYTE* create1DArray_BYTE(BYTE value, int arr_size);
+long long* create1DArray_LONGLONG(long long value, size_t arr_size);
+BYTE* create1DArray_BYTE(BYTE value, size_t arr_size);
 // Copy an array to another array
-long long* copy1DArray_LONGLONG(long long *arr, long long size);
-BYTE* copy1DArray_BYTE(BYTE *arr, long long size);
+long long* copy1DArray_LONGLONG(long long *arr, size_t size);
+BYTE* copy1DArray_BYTE(BYTE *arr, size_t size);
 // Print out an array
-void printf1DArray_LONGLONG(long long* input, long long input_size);
-void printf1DArray_BYTE(BYTE* input, long long input_size);
+void printf1DArray_LONGLONG(long long* input, size_t input_size);
+void printf1DArray_BYTE(BYTE* input, size_t input_size);
 /**
 *Built-in operation for 2D array of byte and integers
 *
 ***/
 // Create an array of integer arrays
-long long** create2DArray_LONGLONG(long long* arr,  long long n, long long m);
-long long** copy2DArray_LONGLONG(long long **arr, long long x, long long y);
+long long** create2DArray_LONGLONG(long long* arr, size_t n, size_t m);
+long long** copy2DArray_LONGLONG(long long **arr, size_t x, size_t y);
 // Free an array of arrays
-void free2DArray_LONGLONG(long long** ptr, long long size);
+void free2DArray_LONGLONG(long long** ptr, size_t size);
 // Print out 2D array
-void printf2DArray_LONGLONG(long long** input, long long input_size, long long input_size_size);
-int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2, long long arr2_size);
+void printf2DArray_LONGLONG(long long** input, size_t input_size, size_t input_size_size);
+int isArrayEqual(long long* arr1, size_t arr1_size, long long* arr2, size_t arr2_size);
 /**
  * Other built-in functions
  */
 void indirect_printf(long long input);
 //No overlapping is allowed: function name must be different.
-void printf_s(long long* input, long long input_size);
-void println_s(long long* input, long long input_size);
+void printf_s(long long* input, size_t input_size);
+void println_s(long long* input, size_t input_size);
 // Parse a string into an integer
 long long* parseStringToInt(long long* arr);
 // 1D Array
 long long** convertArgsToIntArray(int argc, char** args);
 // ArrayList Operators
-long long* slice(long long* arr, long long arr_size, long long start, long long end);
-long long* append(long long *arr1, long long arr1_size, long long* arr2, long long arr2_size);
+long long* slice(long long* arr, size_t arr_size, int start, int end);
+long long* append(long long *arr1, size_t arr1_size, long long* arr2, size_t arr2_size);
 long long* sublist(long long* arr, int start, int end);
 int isPowerof2(long long value);
-long long* optimized_append(long long* op_1, long long* op_1_size, long long* op_2, long long* op_2_size, long long* ret_size);
+long long* optimized_append(long long* op_1, size_t* op_1_size, long long* op_2, size_t* op_2_size, size_t* ret_size);
 // Convert an array of bytes to an array of long long
-long long* fromBytes(BYTE* arr, long long arr_size);
+long long* fromBytes(BYTE* arr, size_t arr_size);
 
 /**
  * Macro Section
@@ -108,19 +108,19 @@ long long* fromBytes(BYTE* arr, long long arr_size);
  *
  */
 // Declare 1D array of integers or bytes
-#define _DECL_1DARRAY(a) long long* a = NULL; long long a##_size = 0;
-#define _DECL_1DARRAY_BYTE(a) BYTE* a = NULL; long long a##_size = 0;
+#define _DECL_1DARRAY(a) long long* a = NULL; size_t a##_size = 0;
+#define _DECL_1DARRAY_BYTE(a) BYTE* a = NULL; size_t a##_size = 0;
 // Declare 2D array variable
-#define _DECL_2DARRAY(a) long long** a = NULL; long long a##_size = 0; long long a##_size_size = 0;
+#define _DECL_2DARRAY(a) long long** a = NULL; size_t a##_size = 0; size_t a##_size_size = 0;
 // Declare the deallocation flag
 #define _DECL_DEALLOC(a) bool a##_dealloc = false;
 #define _DECL_DEALLOC_PARAM(a) bool a##_dealloc
-#define _DECL_1DARRAY_PARAM(a) long long* a, long long a##_size
+#define _DECL_1DARRAY_PARAM(a) long long* a, size_t a##_size
  // Declare a BYTE array
-#define _DECL_1DARRAY_MEMBER_BYTE(a) BYTE* a; long long a##_size; 
-#define _DECL_1DARRAY_MEMBER(a) long long* a; long long a##_size;
-#define _DECL_2DARRAY_PARAM(a) long long** a, long long a##_size, long long a##_size_size
-#define _DECL_2DARRAY_MEMBER(a) long long** a; long long a##_size; long long a##_size_size;
+#define _DECL_1DARRAY_MEMBER_BYTE(a) BYTE* a; size_t a##_size; 
+#define _DECL_1DARRAY_MEMBER(a) long long* a; size_t a##_size;
+#define _DECL_2DARRAY_PARAM(a) long long** a, size_t a##_size, size_t a##_size_size
+#define _DECL_2DARRAY_MEMBER(a) long long** a; size_t a##_size; size_t a##_size_size;
 /***
  * Create (NEW) Macros
  *
@@ -138,7 +138,7 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 #define _NEW_1DARRAY_STRUCT(a, size, b, name) \
  		({\
  			a = malloc(size*sizeof(name*));\
- 			for(int i=0;i<size;i++){\
+ 			for(size_t i=0;i<size;i++){\
  				a[i] = copy_##name(b);\
  			}\
  			a##_size = size;\
@@ -164,7 +164,7 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 #define _COPY_1DARRAY_STRUCT(a, b, name) \
 		({\
 			a = malloc(b##_size*sizeof(name*));\
-			for(int i=0;i<b##_size;i++){\
+			for(size_t i=0;i<b##_size;i++){\
  				a[i] = copy_##name(b[i]);\
  		  	}\
  			a##_size = b##_size;\
@@ -197,7 +197,7 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 // Print an array of structure pointer
 #define _PRINT_1DARRAY_STRUCT(name, a) \
 		({\
-			for(int i=0;i<a##_size;i++){\
+			for(size_t i=0;i<a##_size;i++){\
 				printf_##name(a[i]);\
 			}\
 		})
@@ -209,7 +209,7 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 // The standard structure member function code to free an array of structure pointers
 #define _FREE_1DARRAY_STRUCT(a, name) \
 		({\
-			for(int i=0;i<a##_size;i++){\
+			for(size_t i=0;i<a##_size;i++){\
 				free_##name(a[i]);\
 				a[i] = NULL;\
 			}\

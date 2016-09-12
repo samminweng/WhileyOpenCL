@@ -65,22 +65,22 @@ long long* sortV1(_DECL_1DARRAY_PARAM(items), long long start, long long end){
 	_UPDATE_1DARRAY_SIZE(_15, items);
 _SLICE_ARRAY(_15, items, start, pivot);
 	//assign %5 = %15  : int[]
-	_COPY_1DARRAY(lhs, _15, T_INT);
+	_COPY_1DARRAY_LONGLONG(lhs, _15);
 	//const %17 = 0 : int
 	_17 = 0;
 	//invoke (%16) = (%5, %17, %4) MergeSort_original:sortV1 : function(int[],int,int)->(int[])
 	{
 		void* lhs_tmp;
 		_UPDATE_1DARRAY_SIZE(_16, lhs);
-		_16 = sortV1(lhs_tmp = _COPY_1DARRAY_PARAM(lhs, T_INT), _17, pivot);
+		_16 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(lhs), _17, pivot);
 	}
 	//assign %5 = %16  : int[]
-	_COPY_1DARRAY(lhs, _16, T_INT);
+	_COPY_1DARRAY_LONGLONG(lhs, _16);
 	//invoke (%18) = (%0, %4, %2) whiley/lang/Array:slice : function(int[],int,int)->(int[])
 	_UPDATE_1DARRAY_SIZE(_18, items);
 _SLICE_ARRAY(_18, items, pivot, end);
 	//assign %6 = %18  : int[]
-	_COPY_1DARRAY(rhs, _18, T_INT);
+	_COPY_1DARRAY_LONGLONG(rhs, _18);
 	//const %20 = 0 : int
 	_20 = 0;
 	//sub %21 = %2, %4 : int
@@ -89,10 +89,10 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	{
 		void* rhs_tmp;
 		_UPDATE_1DARRAY_SIZE(_19, rhs);
-		_19 = sortV1(rhs_tmp = _COPY_1DARRAY_PARAM(rhs, T_INT), _20, _21);
+		_19 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(rhs), _20, _21);
 	}
 	//assign %6 = %19  : int[]
-	_COPY_1DARRAY(rhs, _19, T_INT);
+	_COPY_1DARRAY_LONGLONG(rhs, _19);
 	//const %22 = 0 : int
 	_22 = 0;
 	//assign %7 = %22  : int
@@ -270,9 +270,9 @@ int main(int argc, char** args){
 	//const %10 = 0 : int
 	_10 = 0;
 	//arraygen %11 = [10; 2] : int[]
-	_NEW_1DARRAY(_11, max, _10, T_INT);
+	_NEW_1DARRAY_LONGLONG(_11, max, _10);
 	//assign %4 = %11  : int[]
-	_COPY_1DARRAY(arr, _11, T_INT);
+	_COPY_1DARRAY_LONGLONG(arr, _11);
 	//loop (%3, %4, %12, %13, %14)
 	while(true){
 		//ifge %3, %2 goto blklab10 : int
@@ -298,10 +298,10 @@ blklab10:;
 	{
 		void* arr_tmp;
 		_UPDATE_1DARRAY_SIZE(_15, arr);
-		_15 = sortV1(arr_tmp = _COPY_1DARRAY_PARAM(arr, T_INT), _16, max);
+		_15 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(arr), _16, max);
 	}
 	//assign %4 = %15  : int[]
-	_COPY_1DARRAY(arr, _15, T_INT);
+	_COPY_1DARRAY_LONGLONG(arr, _15);
 	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %18 = %17 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %19 = 0 : int
@@ -323,7 +323,7 @@ blklab10:;
 	//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %27 = %26 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %28 = [80,97,115,115,32,77,101,114,103,101,115,111,114,116,32,116,101,115,116,32,99,97,115,101] : int[]
-	_NEW_1DARRAY(_28, 24, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_28, 24, 0);
 	_28[0] = 80; _28[1] = 97; _28[2] = 115; _28[3] = 115; _28[4] = 32; _28[5] = 77; _28[6] = 101; _28[7] = 114; _28[8] = 103; _28[9] = 101; _28[10] = 115; _28[11] = 111; _28[12] = 114; _28[13] = 116; _28[14] = 32; _28[15] = 116; _28[16] = 101; _28[17] = 115; _28[18] = 116; _28[19] = 32; _28[20] = 99; _28[21] = 97; _28[22] = 115; _28[23] = 101; 
 	//indirectinvoke () = %27 (%28) : method(int[])->()
 	println_s(_28, _28_size);

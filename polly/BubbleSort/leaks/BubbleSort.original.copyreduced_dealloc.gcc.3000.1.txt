@@ -1,26 +1,25 @@
-==6993== Memcheck, a memory error detector
-==6993== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==6993== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==6993== Command: ./out/BubbleSort.original.copyreduced_dealloc.gcc.out 3000
-==6993== Parent PID: 7419
-==6993== 
-==6993== Invalid write of size 8
-==6993==    at 0x400A12: main (BubbleSort_original.c:181)
-==6993==  Address 0x5201f10 is 0 bytes after a block of size 24,000 alloc'd
-==6993==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6993==    by 0x400F7B: create1DArray_LONG (Util.c:52)
-==6993==    by 0x400F7B: create1DArray (Util.c:90)
-==6993==    by 0x400774: main (BubbleSort_original.c:170)
-==6993== 
-==6993== 
-==6993== HEAP SUMMARY:
-==6993==     in use at exit: 0 bytes in 0 blocks
-==6993==   total heap usage: 5 allocs, 5 frees, 24,256 bytes allocated
-==6993== 
-==6993== All heap blocks were freed -- no leaks are possible
-==6993== 
-==6993== For counts of detected and suppressed errors, rerun with: -v
-==6993== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==8931== Memcheck, a memory error detector
+==8931== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==8931== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==8931== Command: ./out/BubbleSort.original.copyreduced_dealloc.gcc.out 3000
+==8931== Parent PID: 7419
+==8931== 
+==8931== Invalid write of size 8
+==8931==    at 0x400A0C: main (BubbleSort_original.c:181)
+==8931==  Address 0x5201f10 is 0 bytes after a block of size 24,000 alloc'd
+==8931==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==8931==    by 0x400CE8: create1DArray_LONGLONG (Util.c:38)
+==8931==    by 0x400772: main (BubbleSort_original.c:170)
+==8931== 
+==8931== 
+==8931== HEAP SUMMARY:
+==8931==     in use at exit: 0 bytes in 0 blocks
+==8931==   total heap usage: 5 allocs, 5 frees, 24,256 bytes allocated
+==8931== 
+==8931== All heap blocks were freed -- no leaks are possible
+==8931== 
+==8931== For counts of detected and suppressed errors, rerun with: -v
+==8931== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -28,7 +27,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3700.421
+cpu MHz		: 3713.039
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -55,7 +54,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3702.546
+cpu MHz		: 3724.195
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -82,7 +81,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3709.453
+cpu MHz		: 3765.500
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -109,7 +108,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3704.937
+cpu MHz		: 3719.812
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -136,7 +135,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3704.007
+cpu MHz		: 3847.312
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -163,7 +162,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3700.687
+cpu MHz		: 3819.289
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -190,7 +189,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3709.453
+cpu MHz		: 3804.812
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -217,7 +216,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3700.421
+cpu MHz		: 3704.406
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

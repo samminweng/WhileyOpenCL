@@ -75,7 +75,7 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	_ADD_DEALLOC(_15);
 	//assign %5 = %15  : int[]
 	_DEALLOC(lhs);
-	_COPY_1DARRAY(lhs, _15, T_INT);
+	_COPY_1DARRAY_LONGLONG(lhs, _15);
 	_ADD_DEALLOC(lhs);
 	//const %17 = 0 : int
 	_17 = 0;
@@ -84,13 +84,13 @@ _SLICE_ARRAY(_15, items, start, pivot);
 		void* lhs_tmp;
 		_UPDATE_1DARRAY_SIZE(_16, lhs);
 		_DEALLOC(_16);
-		_16 = sortV1(lhs_tmp = _COPY_1DARRAY_PARAM(lhs, T_INT), false, _17, pivot);
+		_16 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(lhs), false, _17, pivot);
 		_CALLER_DEALLOC(_16, lhs, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_16);
 	}
 	//assign %5 = %16  : int[]
 	_DEALLOC(lhs);
-	_COPY_1DARRAY(lhs, _16, T_INT);
+	_COPY_1DARRAY_LONGLONG(lhs, _16);
 	_ADD_DEALLOC(lhs);
 	//invoke (%18) = (%0, %4, %2) whiley/lang/Array:slice : function(int[],int,int)->(int[])
 	_UPDATE_1DARRAY_SIZE(_18, items);
@@ -99,7 +99,7 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	_ADD_DEALLOC(_18);
 	//assign %6 = %18  : int[]
 	_DEALLOC(rhs);
-	_COPY_1DARRAY(rhs, _18, T_INT);
+	_COPY_1DARRAY_LONGLONG(rhs, _18);
 	_ADD_DEALLOC(rhs);
 	//const %20 = 0 : int
 	_20 = 0;
@@ -110,13 +110,13 @@ _SLICE_ARRAY(_18, items, pivot, end);
 		void* rhs_tmp;
 		_UPDATE_1DARRAY_SIZE(_19, rhs);
 		_DEALLOC(_19);
-		_19 = sortV1(rhs_tmp = _COPY_1DARRAY_PARAM(rhs, T_INT), false, _20, _21);
+		_19 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(rhs), false, _20, _21);
 		_CALLER_DEALLOC(_19, rhs, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_19);
 	}
 	//assign %6 = %19  : int[]
 	_DEALLOC(rhs);
-	_COPY_1DARRAY(rhs, _19, T_INT);
+	_COPY_1DARRAY_LONGLONG(rhs, _19);
 	_ADD_DEALLOC(rhs);
 	//const %22 = 0 : int
 	_22 = 0;
@@ -290,7 +290,7 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_28);
 	_DECL_DEALLOC(_28);
 	//fieldload %6 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	_DEALLOC_2DArray(_6, T_INT);
+	_DEALLOC_2DARRAY_LONGLONG(_6);
 	_CONV_ARGS(_6);
 	_ADD_DEALLOC(_6);
 	//const %7 = 0 : int
@@ -318,11 +318,11 @@ int main(int argc, char** args){
 	_10 = 0;
 	//arraygen %11 = [10; 2] : int[]
 	_DEALLOC(_11);
-	_NEW_1DARRAY(_11, max, _10, T_INT);
+	_NEW_1DARRAY_LONGLONG(_11, max, _10);
 	_ADD_DEALLOC(_11);
 	//assign %4 = %11  : int[]
 	_DEALLOC(arr);
-	_COPY_1DARRAY(arr, _11, T_INT);
+	_COPY_1DARRAY_LONGLONG(arr, _11);
 	_ADD_DEALLOC(arr);
 	//loop (%3, %4, %12, %13, %14)
 	while(true){
@@ -350,13 +350,13 @@ blklab10:;
 		void* arr_tmp;
 		_UPDATE_1DARRAY_SIZE(_15, arr);
 		_DEALLOC(_15);
-		_15 = sortV1(arr_tmp = _COPY_1DARRAY_PARAM(arr, T_INT), false, _16, max);
+		_15 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(arr), false, _16, max);
 		_CALLER_DEALLOC(_15, arr, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_15);
 	}
 	//assign %4 = %15  : int[]
 	_DEALLOC(arr);
-	_COPY_1DARRAY(arr, _15, T_INT);
+	_COPY_1DARRAY_LONGLONG(arr, _15);
 	_ADD_DEALLOC(arr);
 	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %18 = %17 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -380,7 +380,7 @@ blklab10:;
 	//fieldload %27 = %26 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %28 = [80,97,115,115,32,77,101,114,103,101,115,111,114,116,32,116,101,115,116,32,99,97,115,101] : int[]
 	_DEALLOC(_28);
-	_NEW_1DARRAY(_28, 24, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_28, 24, 0);
 	_28[0] = 80; _28[1] = 97; _28[2] = 115; _28[3] = 115; _28[4] = 32; _28[5] = 77; _28[6] = 101; _28[7] = 114; _28[8] = 103; _28[9] = 101; _28[10] = 115; _28[11] = 111; _28[12] = 114; _28[13] = 116; _28[14] = 32; _28[15] = 116; _28[16] = 101; _28[17] = 115; _28[18] = 116; _28[19] = 32; _28[20] = 99; _28[21] = 97; _28[22] = 115; _28[23] = 101; 
 	_ADD_DEALLOC(_28);
 	//indirectinvoke () = %27 (%28) : method(int[])->()
@@ -391,7 +391,7 @@ blklab9:;
 	_DEALLOC(n);
 	_DEALLOC(arr);
 	_DEALLOC(_5);
-	_DEALLOC_2DArray(_6, T_INT);
+	_DEALLOC_2DARRAY_LONGLONG(_6);
 	_DEALLOC(_8);
 	_DEALLOC(_11);
 	_DEALLOC(_15);

@@ -72,19 +72,19 @@ long long* findMoves(_DECL_1DARRAY_PARAM(moves), long long n){
 	//const %9 = 0 : int
 	_9 = 0;
 	//arraygen %10 = [9; 1] : int[]
-	_NEW_1DARRAY(_10, n, _9, T_INT);
+	_NEW_1DARRAY_LONGLONG(_10, n, _9);
 	//assign %3 = %10  : int[]
 	_UPDATE_1DARRAY(x, _10);
 	//const %11 = 0 : int
 	_11 = 0;
 	//arraygen %12 = [11; 1] : int[]
-	_NEW_1DARRAY(_12, n, _11, T_INT);
+	_NEW_1DARRAY_LONGLONG(_12, n, _11);
 	//assign %4 = %12  : int[]
 	_UPDATE_1DARRAY(y, _12);
 	//const %13 = 0 : int
 	_13 = 0;
 	//arraygen %14 = [13; 1] : int[]
-	_NEW_1DARRAY(_14, n, _13, T_INT);
+	_NEW_1DARRAY_LONGLONG(_14, n, _13);
 	//assign %5 = %14  : int[]
 	_UPDATE_1DARRAY(z, _14);
 	//const %15 = 0 : int
@@ -324,7 +324,7 @@ int main(int argc, char** args){
 	//mul %10 = %2, %2 : int
 	_10=n*n;
 	//arraygen %11 = [9; 10] : int[]
-	_NEW_1DARRAY(_11, _10, _9, T_INT);
+	_NEW_1DARRAY_LONGLONG(_11, _10, _9);
 	//assign %3 = %11  : int[]
 	_UPDATE_1DARRAY(moves, _11);
 	//invoke (%12) = (%3, %2) CoinGame_array:findMoves : function(int[],int)->(int[])
@@ -345,7 +345,7 @@ int main(int argc, char** args){
 	//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %17 = %16 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %18 = [84,104,101,32,116,111,116,97,108,32,97,109,111,117,110,116,32,111,102,32,109,111,110,101,121,32,40,109,97,120,105,109,117,109,41,32,65,108,105,99,101,32,103,101,116,115,32,105,115,32] : int[]
-	_NEW_1DARRAY(_18, 50, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_18, 50, 0);
 	_18[0] = 84; _18[1] = 104; _18[2] = 101; _18[3] = 32; _18[4] = 116; _18[5] = 111; _18[6] = 116; _18[7] = 97; _18[8] = 108; _18[9] = 32; _18[10] = 97; _18[11] = 109; _18[12] = 111; _18[13] = 117; _18[14] = 110; _18[15] = 116; _18[16] = 32; _18[17] = 111; _18[18] = 102; _18[19] = 32; _18[20] = 109; _18[21] = 111; _18[22] = 110; _18[23] = 101; _18[24] = 121; _18[25] = 32; _18[26] = 40; _18[27] = 109; _18[28] = 97; _18[29] = 120; _18[30] = 105; _18[31] = 109; _18[32] = 117; _18[33] = 109; _18[34] = 41; _18[35] = 32; _18[36] = 65; _18[37] = 108; _18[38] = 105; _18[39] = 99; _18[40] = 101; _18[41] = 32; _18[42] = 103; _18[43] = 101; _18[44] = 116; _18[45] = 115; _18[46] = 32; _18[47] = 105; _18[48] = 115; _18[49] = 32; 
 	//indirectinvoke () = %17 (%18) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_18));
@@ -356,7 +356,7 @@ int main(int argc, char** args){
 	//fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %22 = %21 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %23 = [80,97,115,115,32,67,111,105,110,71,97,109,101,32,116,101,115,116,32,99,97,115,101] : int[]
-	_NEW_1DARRAY(_23, 23, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_23, 23, 0);
 	_23[0] = 80; _23[1] = 97; _23[2] = 115; _23[3] = 115; _23[4] = 32; _23[5] = 67; _23[6] = 111; _23[7] = 105; _23[8] = 110; _23[9] = 71; _23[10] = 97; _23[11] = 109; _23[12] = 101; _23[13] = 32; _23[14] = 116; _23[15] = 101; _23[16] = 115; _23[17] = 116; _23[18] = 32; _23[19] = 99; _23[20] = 97; _23[21] = 115; _23[22] = 101; 
 	//indirectinvoke () = %22 (%23) : method(int[])->()
 	println_s(_23, _23_size);

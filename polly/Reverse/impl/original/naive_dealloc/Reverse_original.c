@@ -30,11 +30,11 @@ long long* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls)){
 	_7 = ls_size;
 	//arraygen %8 = [6; 7] : int[]
 	_DEALLOC(_8);
-	_NEW_1DARRAY(_8, _7, _6, T_INT);
+	_NEW_1DARRAY_LONGLONG(_8, _7, _6);
 	_ADD_DEALLOC(_8);
 	//assign %3 = %8  : int[]
 	_DEALLOC(r);
-	_COPY_1DARRAY(r, _8, T_INT);
+	_COPY_1DARRAY_LONGLONG(r, _8);
 	_ADD_DEALLOC(r);
 	//loop (%2, %3, %4, %9, %10, %11, %12, %13, %14, %15, %16, %17)
 	while(true){
@@ -126,7 +126,7 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_27);
 	_DECL_DEALLOC(_27);
 	//fieldload %6 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	_DEALLOC_2DArray(_6, T_INT);
+	_DEALLOC_2DARRAY_LONGLONG(_6);
 	_CONV_ARGS(_6);
 	_ADD_DEALLOC(_6);
 	//const %7 = 0 : int
@@ -154,11 +154,11 @@ int main(int argc, char** args){
 	_10 = 0;
 	//arraygen %11 = [10; 2] : int[]
 	_DEALLOC(_11);
-	_NEW_1DARRAY(_11, max, _10, T_INT);
+	_NEW_1DARRAY_LONGLONG(_11, max, _10);
 	_ADD_DEALLOC(_11);
 	//assign %4 = %11  : int[]
 	_DEALLOC(arr);
-	_COPY_1DARRAY(arr, _11, T_INT);
+	_COPY_1DARRAY_LONGLONG(arr, _11);
 	_ADD_DEALLOC(arr);
 	//loop (%3, %4, %12, %13, %14)
 	while(true){
@@ -184,13 +184,13 @@ blklab5:;
 		void* arr_tmp;
 		_UPDATE_1DARRAY_SIZE(_15, arr);
 		_DEALLOC(_15);
-		_15 = reverse(arr_tmp = _COPY_1DARRAY_PARAM(arr, T_INT), true);
+		_15 = reverse(_COPY_1DARRAY_PARAM_LONGLONG(arr), true);
 		_CALLEE_DEALLOC(arr, "false-false-false" , "reverse");
 		_ADD_DEALLOC(_15);
 	}
 	//assign %4 = %15  : int[]
 	_DEALLOC(arr);
-	_COPY_1DARRAY(arr, _15, T_INT);
+	_COPY_1DARRAY_LONGLONG(arr, _15);
 	_ADD_DEALLOC(arr);
 	//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %17 = %16 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -214,7 +214,7 @@ blklab5:;
 	//fieldload %26 = %25 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %27 = [80,97,115,115,32,82,101,118,101,114,115,101,32,116,101,115,116,32,99,97,115,101] : int[]
 	_DEALLOC(_27);
-	_NEW_1DARRAY(_27, 22, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_27, 22, 0);
 	_27[0] = 80; _27[1] = 97; _27[2] = 115; _27[3] = 115; _27[4] = 32; _27[5] = 82; _27[6] = 101; _27[7] = 118; _27[8] = 101; _27[9] = 114; _27[10] = 115; _27[11] = 101; _27[12] = 32; _27[13] = 116; _27[14] = 101; _27[15] = 115; _27[16] = 116; _27[17] = 32; _27[18] = 99; _27[19] = 97; _27[20] = 115; _27[21] = 101; 
 	_ADD_DEALLOC(_27);
 	//indirectinvoke () = %26 (%27) : method(int[])->()
@@ -225,7 +225,7 @@ blklab4:;
 	_DEALLOC(n);
 	_DEALLOC(arr);
 	_DEALLOC(_5);
-	_DEALLOC_2DArray(_6, T_INT);
+	_DEALLOC_2DARRAY_LONGLONG(_6);
 	_DEALLOC(_8);
 	_DEALLOC(_11);
 	_DEALLOC(_15);

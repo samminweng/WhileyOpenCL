@@ -47,13 +47,13 @@ blklab0:;
 		void* ls_tmp;
 		_UPDATE_1DARRAY_SIZE(_8, ls);
 		_DEALLOC(_8);
-		_8 = fibonacci(ls_tmp = _COPY_1DARRAY_PARAM(ls, T_INT), false, _10);
+		_8 = fibonacci(_COPY_1DARRAY_PARAM_LONGLONG(ls), false, _10);
 		_CALLER_DEALLOC(_8, ls, "true-true-false" , "fibonacci");
 		_ADD_DEALLOC(_8);
 	}
 	//assign %0 = %8  : int[]
 	_DEALLOC(ls);
-	_COPY_1DARRAY(ls, _8, T_INT);
+	_COPY_1DARRAY_LONGLONG(ls, _8);
 	_ADD_DEALLOC(ls);
 	//const %11 = 1 : int
 	_11 = 1;
@@ -116,7 +116,7 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_30);
 	_DECL_DEALLOC(_30);
 	//fieldload %5 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	_DEALLOC_2DArray(_5, T_INT);
+	_DEALLOC_2DARRAY_LONGLONG(_5);
 	_CONV_ARGS(_5);
 	_ADD_DEALLOC(_5);
 	//const %6 = 0 : int
@@ -140,11 +140,11 @@ int main(int argc, char** args){
 	_8 = 0;
 	//arraygen %9 = [8; 2] : int[]
 	_DEALLOC(_9);
-	_NEW_1DARRAY(_9, max, _8, T_INT);
+	_NEW_1DARRAY_LONGLONG(_9, max, _8);
 	_ADD_DEALLOC(_9);
 	//assign %3 = %9  : int[]
 	_DEALLOC(arr);
-	_COPY_1DARRAY(arr, _9, T_INT);
+	_COPY_1DARRAY_LONGLONG(arr, _9);
 	_ADD_DEALLOC(arr);
 	//const %11 = 1 : int
 	_11 = 1;
@@ -155,13 +155,13 @@ int main(int argc, char** args){
 		void* arr_tmp;
 		_UPDATE_1DARRAY_SIZE(_10, arr);
 		_DEALLOC(_10);
-		_10 = fibonacci(arr_tmp = _COPY_1DARRAY_PARAM(arr, T_INT), false, _12);
+		_10 = fibonacci(_COPY_1DARRAY_PARAM_LONGLONG(arr), false, _12);
 		_CALLER_DEALLOC(_10, arr, "true-true-false" , "fibonacci");
 		_ADD_DEALLOC(_10);
 	}
 	//assign %3 = %10  : int[]
 	_DEALLOC(arr);
-	_COPY_1DARRAY(arr, _10, T_INT);
+	_COPY_1DARRAY_LONGLONG(arr, _10);
 	_ADD_DEALLOC(arr);
 	//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %14 = %13 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -197,7 +197,7 @@ int main(int argc, char** args){
 	//fieldload %29 = %28 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %30 = [80,97,115,115,32,70,105,98,111,110,97,99,99,105,32,116,101,115,116,32,99,97,115,101] : int[]
 	_DEALLOC(_30);
-	_NEW_1DARRAY(_30, 24, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_30, 24, 0);
 	_30[0] = 80; _30[1] = 97; _30[2] = 115; _30[3] = 115; _30[4] = 32; _30[5] = 70; _30[6] = 105; _30[7] = 98; _30[8] = 111; _30[9] = 110; _30[10] = 97; _30[11] = 99; _30[12] = 99; _30[13] = 105; _30[14] = 32; _30[15] = 116; _30[16] = 101; _30[17] = 115; _30[18] = 116; _30[19] = 32; _30[20] = 99; _30[21] = 97; _30[22] = 115; _30[23] = 101; 
 	_ADD_DEALLOC(_30);
 	//indirectinvoke () = %29 (%30) : method(int[])->()
@@ -208,7 +208,7 @@ blklab2:;
 	_DEALLOC(n);
 	_DEALLOC(arr);
 	_DEALLOC(_4);
-	_DEALLOC_2DArray(_5, T_INT);
+	_DEALLOC_2DARRAY_LONGLONG(_5);
 	_DEALLOC(_7);
 	_DEALLOC(_9);
 	_DEALLOC(_10);
