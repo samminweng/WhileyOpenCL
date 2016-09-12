@@ -43,9 +43,9 @@ long long* slice(long long* arr, long long arr_size, long long start, long long 
 
 
 /**
- * Create an array with given size and initial value.
+ * Given array size and initial value, create an array of long long integers. 
  */
-long long* create1DArray_LONG(int value, int arr_size){
+long long* create1DArray_LONGLONG(long long value, int arr_size){
 	
 	long long* arr = NULL;
 	// Allocate the array
@@ -61,7 +61,7 @@ long long* create1DArray_LONG(int value, int arr_size){
 	return arr;
 }
 /*
- * Create an array of BYTE
+ * Given array size and initial value, create an array of BYTE
  */
 BYTE* create1DArray_BYTE(BYTE value, int arr_size){
 	BYTE* arr = NULL;
@@ -76,24 +76,6 @@ BYTE* create1DArray_BYTE(BYTE value, int arr_size){
 		arr[i] = value;
 	}
 	return arr;
-}
-
-
-
-/**
- * Create an array with given size and initial value.
- */
-void* create1DArray(int value, int arr_size, TYPENUM type){
-	void* ptr = NULL;
-	switch(type){
-		case T_INT:
-			ptr = create1DArray_LONG(value, arr_size);
-			break;
-		case T_BYTE:
-			ptr = create1DArray_BYTE(value, arr_size);
-			break;
-	}
-	return ptr;
 }
 
 // Copy an array of BYTE
@@ -143,7 +125,7 @@ void* copy1DArray(void *arr, long long size, TYPENUM type) {
 /**
  * Create an 2D array of given dimensions (n * m)
  */
-long long** create2DArray(long long* arr,  long long n, long long m){
+long long** create2DArray_LONGLONG(long long* arr,  long long n, long long m){
 	long long** _2DArray = NULL;
 	// Allocate the array
 	_2DArray = (long long**)malloc(n*sizeof(long long*));

@@ -40,7 +40,7 @@ int main(int argc, char** args){
 	//const %8 = 0 : int
 	_8 = 0;
 	//newlist %9 = (%4, %5, %6, %7, %8) : int[]
-	_NEW_1DARRAY(_9, 5, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_9, 5, 0);
 	_9[0] = _4; _9[1] = _5; _9[2] = _6; _9[3] = _7; _9[4] = _8; 
 	//assign %1 = %9  : int[]
 	_COPY_1DARRAY(a, _9, T_INT);
@@ -55,7 +55,7 @@ int main(int argc, char** args){
 	//const %14 = 1 : int
 	_14 = 1;
 	//newlist %15 = (%10, %11, %12, %13, %14) : int[]
-	_NEW_1DARRAY(_15, 5, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_15, 5, 0);
 	_15[0] = _10; _15[1] = _11; _15[2] = _12; _15[3] = _13; _15[4] = _14; 
 	//assign %2 = %15  : int[]
 	_COPY_1DARRAY(b, _15, T_INT);
@@ -78,7 +78,7 @@ int main(int argc, char** args){
 		//const %20 = 1 : int
 		_20 = 1;
 		//newlist %21 = (%16, %17, %18, %19, %20) : int[]
-		_NEW_1DARRAY(_21, 5, 0, T_INT);
+		_NEW_1DARRAY_LONGLONG(_21, 5, 0);
 		_21[0] = _16; _21[1] = _17; _21[2] = _18; _21[3] = _19; _21[4] = _20; 
 		//ifeq %1, %21 goto blklab0 : int[]
 		_IFEQ_ARRAY(a, _21, blklab0);
@@ -102,7 +102,7 @@ blklab0:;
 		//const %26 = 0 : int
 		_26 = 0;
 		//newlist %27 = (%22, %23, %24, %25, %26) : int[]
-		_NEW_1DARRAY(_27, 5, 0, T_INT);
+		_NEW_1DARRAY_LONGLONG(_27, 5, 0);
 		_27[0] = _22; _27[1] = _23; _27[2] = _24; _27[3] = _25; _27[4] = _26; 
 		//ifeq %2, %27 goto blklab1 : int[]
 		_IFEQ_ARRAY(b, _27, blklab1);
@@ -116,7 +116,7 @@ blklab1:;
 	//fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %29 = %28 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %30 = [80,97,115,115,32,115,119,97,112,32,116,101,115,116,32,99,97,115,101] : int[]
-	_NEW_1DARRAY(_30, 19, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_30, 19, 0);
 	_30[0] = 80; _30[1] = 97; _30[2] = 115; _30[3] = 115; _30[4] = 32; _30[5] = 115; _30[6] = 119; _30[7] = 97; _30[8] = 112; _30[9] = 32; _30[10] = 116; _30[11] = 101; _30[12] = 115; _30[13] = 116; _30[14] = 32; _30[15] = 99; _30[16] = 97; _30[17] = 115; _30[18] = 101; 
 	//indirectinvoke () = %29 (%30) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_30));

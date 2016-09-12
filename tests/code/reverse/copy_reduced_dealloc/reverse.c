@@ -30,7 +30,7 @@ long long* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls)){
 	_7 = ls_size;
 	//arraygen %8 = [6; 7] : int[]
 	_DEALLOC(_8);
-	_NEW_1DARRAY(_8, _7, _6, T_INT);
+	_NEW_1DARRAY_LONGLONG(_8, _7, _6);
 	_ADD_DEALLOC(_8);
 	//assign %3 = %8  : int[]
 	_DEALLOC(r);
@@ -146,7 +146,7 @@ int main(int argc, char** args){
 	_10 = 5;
 	//newlist %11 = (%6, %7, %8, %9, %10) : int[]
 	_DEALLOC(_11);
-	_NEW_1DARRAY(_11, 5, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_11, 5, 0);
 	_11[0] = _6; _11[1] = _7; _11[2] = _8; _11[3] = _9; _11[4] = _10; 
 	_ADD_DEALLOC(_11);
 	//invoke (%5) = (%11) reverse:reverse : function(int[])->(int[])
@@ -175,7 +175,7 @@ int main(int argc, char** args){
 		_16 = 1;
 		//newlist %17 = (%12, %13, %14, %15, %16) : int[]
 		_DEALLOC(_17);
-		_NEW_1DARRAY(_17, 5, 0, T_INT);
+		_NEW_1DARRAY_LONGLONG(_17, 5, 0);
 		_17[0] = _12; _17[1] = _13; _17[2] = _14; _17[3] = _15; _17[4] = _16; 
 		_ADD_DEALLOC(_17);
 		//ifeq %1, %17 goto blklab4 : int[]
@@ -203,7 +203,7 @@ blklab4:;
 	_22=max+_21;
 	//arraygen %23 = [20; 22] : int[]
 	_DEALLOC(_23);
-	_NEW_1DARRAY(_23, _22, _20, T_INT);
+	_NEW_1DARRAY_LONGLONG(_23, _22, _20);
 	_ADD_DEALLOC(_23);
 	//assign %4 = %23  : int[]
 	_DEALLOC(arr);
@@ -274,7 +274,7 @@ blklab8:;
 	//fieldload %33 = %32 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %34 = [80,97,115,115,32,114,101,118,101,114,115,101,32,116,101,115,116,32,99,97,115,101] : int[]
 	_DEALLOC(_34);
-	_NEW_1DARRAY(_34, 22, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_34, 22, 0);
 	_34[0] = 80; _34[1] = 97; _34[2] = 115; _34[3] = 115; _34[4] = 32; _34[5] = 114; _34[6] = 101; _34[7] = 118; _34[8] = 101; _34[9] = 114; _34[10] = 115; _34[11] = 101; _34[12] = 32; _34[13] = 116; _34[14] = 101; _34[15] = 115; _34[16] = 116; _34[17] = 32; _34[18] = 99; _34[19] = 97; _34[20] = 115; _34[21] = 101; 
 	_ADD_DEALLOC(_34);
 	//indirectinvoke () = %33 (%34) : method(int[])->()

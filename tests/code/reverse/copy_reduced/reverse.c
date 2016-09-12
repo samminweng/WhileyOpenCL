@@ -26,7 +26,7 @@ long long* reverse(_DECL_1DARRAY_PARAM(ls)){
 	//lengthof %7 = %0 : int[]
 	_7 = ls_size;
 	//arraygen %8 = [6; 7] : int[]
-	_NEW_1DARRAY(_8, _7, _6, T_INT);
+	_NEW_1DARRAY_LONGLONG(_8, _7, _6);
 	//assign %3 = %8  : int[]
 	_UPDATE_1DARRAY(r, _8);
 	//loop (%2, %3, %4, %9, %10, %11, %12, %13, %14, %15, %16, %17)
@@ -127,7 +127,7 @@ int main(int argc, char** args){
 	//const %10 = 5 : int
 	_10 = 5;
 	//newlist %11 = (%6, %7, %8, %9, %10) : int[]
-	_NEW_1DARRAY(_11, 5, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_11, 5, 0);
 	_11[0] = _6; _11[1] = _7; _11[2] = _8; _11[3] = _9; _11[4] = _10; 
 	//invoke (%5) = (%11) reverse:reverse : function(int[])->(int[])
 	{
@@ -149,7 +149,7 @@ int main(int argc, char** args){
 		//const %16 = 1 : int
 		_16 = 1;
 		//newlist %17 = (%12, %13, %14, %15, %16) : int[]
-		_NEW_1DARRAY(_17, 5, 0, T_INT);
+		_NEW_1DARRAY_LONGLONG(_17, 5, 0);
 		_17[0] = _12; _17[1] = _13; _17[2] = _14; _17[3] = _15; _17[4] = _16; 
 		//ifeq %1, %17 goto blklab4 : int[]
 		_IFEQ_ARRAY(rs, _17, blklab4);
@@ -175,7 +175,7 @@ blklab4:;
 	//add %22 = %2, %21 : int
 	_22=max+_21;
 	//arraygen %23 = [20; 22] : int[]
-	_NEW_1DARRAY(_23, _22, _20, T_INT);
+	_NEW_1DARRAY_LONGLONG(_23, _22, _20);
 	//assign %4 = %23  : int[]
 	_UPDATE_1DARRAY(arr, _23);
 	//loop (%3, %4, %24, %25, %26)
@@ -237,7 +237,7 @@ blklab8:;
 	//fieldload %32 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %33 = %32 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %34 = [80,97,115,115,32,114,101,118,101,114,115,101,32,116,101,115,116,32,99,97,115,101] : int[]
-	_NEW_1DARRAY(_34, 22, 0, T_INT);
+	_NEW_1DARRAY_LONGLONG(_34, 22, 0);
 	_34[0] = 80; _34[1] = 97; _34[2] = 115; _34[3] = 115; _34[4] = 32; _34[5] = 114; _34[6] = 101; _34[7] = 118; _34[8] = 101; _34[9] = 114; _34[10] = 115; _34[11] = 101; _34[12] = 32; _34[13] = 116; _34[14] = 101; _34[15] = 115; _34[16] = 116; _34[17] = 32; _34[18] = 99; _34[19] = 97; _34[20] = 115; _34[21] = 101; 
 	//indirectinvoke () = %33 (%34) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_34));

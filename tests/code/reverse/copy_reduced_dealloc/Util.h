@@ -22,17 +22,23 @@ typedef enum {
 	T_BYTE // Byte type
 } TYPENUM;
 
-
 /**
-*Built-in generic typed functions for BYTE and Integer Types
+*Built-in operation for 1D array of byte and integers
 *
 ***/
-//Create an array and initialize the array value 
-void* create1DArray(int value, int arr_size, TYPENUM type);
+//Create an array of long long integers 
+long long* create1DArray_LONGLONG(long long value, int arr_size);
+BYTE* create1DArray_BYTE(BYTE value, int arr_size);
 // Copy an array to another array
 void* copy1DArray(void* arr, long long size, TYPENUM type);
 // Print out an array
 void printf1DArray(void* input, long long input_size, TYPENUM type);
+/**
+*Built-in operation for 2D array of byte and integers
+*
+***/
+// Create an array of integer arrays
+long long** create2DArray_LONGLONG(long long* arr,  long long n, long long m);
 // Freed an array of arrays
 void free2DArray(void* ptr, long long size, TYPENUM type);
 
@@ -50,7 +56,6 @@ long long** convertArgsToIntArray(int argc, char** args);
 int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2, long long arr2_size);
 // 2D Array Operator
 long long** copy2DArray(long long **arr, long long x, long long y);
-long long** create2DArray(long long* arr,  long long x, long long y);
 void printf2DArray(long long** input, long long input_size, long long input_size_size);
 // ArrayList Operators
 long long* slice(long long* arr, long long arr_size, long long start, long long end);
@@ -127,8 +132,8 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 			*a = *b;\
 		})
 // Create an array of integers or integer arrays
-#define _NEW_1DARRAY(a, size, value, type) a##_size = size; a = create1DArray(value, a##_size, type);
-#define _NEW_2DARRAY(a, size, value, type) a##_size = size; a##_size_size = value##_size; a = create2DArray(value, a##_size, a##_size_size);
+#define _NEW_1DARRAY_LONGLONG(a, size, value) a##_size = size; a = create1DArray_LONGLONG(value, a##_size);
+#define _NEW_1DARRAY_BYTE(a, size, value) a##_size = size; a = create1DArray_BYTE(value, a##_size);
 // Create an array of structure pointers
 #define _NEW_1DARRAY_STRUCT(a, size, b, name) \
  		({\
@@ -138,6 +143,7 @@ long long* fromBytes(BYTE* arr, long long arr_size);
  			}\
  			a##_size = size;\
  		})
+#define _NEW_2DARRAY_LONGLONG(a, size, value) a##_size = size; a##_size_size = value##_size; a = create2DArray_LONGLONG(value, a##_size, a##_size_size);
 /***
  * Copy Macros
  *
