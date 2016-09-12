@@ -1,7 +1,7 @@
 #include "MatrixMult.h"
 Matrix* copy_Matrix(Matrix* _Matrix){
 	Matrix* new_Matrix = malloc(sizeof(Matrix));
-	_COPY_2DARRAY(new_Matrix->data, _Matrix->data, T_INT);
+	_COPY_2DARRAY_LONGLONG(new_Matrix->data, _Matrix->data);
 	new_Matrix->width = _Matrix->width;
 	new_Matrix->height = _Matrix->height;
 	return new_Matrix;
@@ -36,7 +36,7 @@ Matrix* matrix(long long width, long long height, _DECL_2DARRAY_PARAM(data), _DE
 	//newrecord %4 = (%2, %1, %0) : {int[][] data,int height,int width}
 	_DEALLOC_STRUCT(_4, Matrix);
 	_4 = malloc(sizeof(Matrix));
-	_COPY_2DARRAY(_4->data, data, T_INT);
+	_COPY_2DARRAY_LONGLONG(_4->data, data);
 	_4->height = height;
 	_4->width = width;
 	_ADD_DEALLOC(_4);
@@ -108,7 +108,7 @@ Matrix* multiply(Matrix* A, _DECL_DEALLOC_PARAM(A), Matrix* B, _DECL_DEALLOC_PAR
 	_ADD_DEALLOC(_12);
 	//assign %3 = %12  : int[][]
 	_DEALLOC_2DArray(C_data, T_INT);
-	_COPY_2DARRAY(C_data, _12, T_INT);
+	_COPY_2DARRAY_LONGLONG(C_data, _12);
 	_ADD_DEALLOC(C_data);
 	//const %13 = 0 : int
 	_13 = 0;
@@ -211,7 +211,7 @@ blklab13:;
 	{
 		void* C_data_tmp;
 		_DEALLOC_STRUCT(_34, Matrix);
-		_34 = matrix(_35, _36, C_data_tmp = _COPY_2DARRAY_PARAM(C_data, T_INT), true);
+		_34 = matrix(_35, _36, C_data_tmp = _COPY_2DARRAY_PARAM_LONGLONG(C_data), true);
 		_CALLEE_DEALLOC(C_data, "false-false-false" , "matrix");
 		_ADD_DEALLOC(_34);
 	}
@@ -367,7 +367,7 @@ Matrix* init(long long height, long long width){
 	_ADD_DEALLOC(_8);
 	//assign %3 = %8  : int[][]
 	_DEALLOC_2DArray(rows, T_INT);
-	_COPY_2DARRAY(rows, _8, T_INT);
+	_COPY_2DARRAY_LONGLONG(rows, _8);
 	_ADD_DEALLOC(rows);
 	//const %9 = 0 : int
 	_9 = 0;
@@ -413,7 +413,7 @@ blklab23:;
 	{
 		void* rows_tmp;
 		_DEALLOC_STRUCT(_15, Matrix);
-		_15 = matrix(width, height, rows_tmp = _COPY_2DARRAY_PARAM(rows, T_INT), true);
+		_15 = matrix(width, height, rows_tmp = _COPY_2DARRAY_PARAM_LONGLONG(rows), true);
 		_CALLEE_DEALLOC(rows, "false-false-false" , "matrix");
 		_ADD_DEALLOC(_15);
 	}

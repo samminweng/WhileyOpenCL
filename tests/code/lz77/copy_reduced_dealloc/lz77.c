@@ -26,7 +26,7 @@ void printf_Match(Match* match){
 Data* copy_Data(Data* _Data){
 	Data* new_Data = malloc(sizeof(Data));
 	new_Data->length = _Data->length;
-	_COPY_1DARRAY(new_Data->items, _Data->items, T_BYTE);
+	_COPY_1DARRAY_BYTE(new_Data->items, _Data->items);
 	return new_Data;
 }
 Data** copy_array_Data(Data** _Data, long long _Data_size){

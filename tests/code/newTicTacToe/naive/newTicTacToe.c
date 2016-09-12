@@ -1,7 +1,7 @@
 #include "newTicTacToe.h"
 Board* copy_Board(Board* _Board){
 	Board* new_Board = malloc(sizeof(Board));
-	_COPY_1DARRAY(new_Board->pieces, _Board->pieces, T_INT);
+	_COPY_1DARRAY_LONGLONG(new_Board->pieces, _Board->pieces);
 	new_Board->move = _Board->move;
 	return new_Board;
 }
@@ -65,7 +65,7 @@ Board* EmptyBoard(){
 	//newrecord %12 = (%1, %11) : {int move,int[] pieces}
 	_12 = malloc(sizeof(Board));
 	_12->move = _1;
-	_COPY_1DARRAY(_12->pieces, _11, T_INT);
+	_COPY_1DARRAY_LONGLONG(_12->pieces, _11);
 	//return %12
 	return _12;
 	//return

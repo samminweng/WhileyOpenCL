@@ -219,20 +219,20 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_10);
 	//assign %1 = %10  : int[]
 	_DEALLOC(ys);
-	_COPY_1DARRAY(ys, _10, T_INT);
+	_COPY_1DARRAY_LONGLONG(ys, _10);
 	_ADD_DEALLOC(ys);
 	//invoke (%11) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_11, ys);
 		_DEALLOC(_11);
-		_11 = bubbleSort(ys_tmp = _COPY_1DARRAY_PARAM(ys, T_INT), false);
+		_11 = bubbleSort(ys_tmp = _COPY_1DARRAY_PARAM_LONGLONG(ys), false);
 		_CALLER_DEALLOC(_11, ys, "true-true-false" , "bubbleSort");
 		_ADD_DEALLOC(_11);
 	}
 	//assign %1 = %11  : int[]
 	_DEALLOC(ys);
-	_COPY_1DARRAY(ys, _11, T_INT);
+	_COPY_1DARRAY_LONGLONG(ys, _11);
 	_ADD_DEALLOC(ys);
 	//assert
 	{
@@ -279,20 +279,20 @@ blklab5:;
 	_ADD_DEALLOC(_24);
 	//assign %1 = %24  : int[]
 	_DEALLOC(ys);
-	_COPY_1DARRAY(ys, _24, T_INT);
+	_COPY_1DARRAY_LONGLONG(ys, _24);
 	_ADD_DEALLOC(ys);
 	//invoke (%25) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_25, ys);
 		_DEALLOC(_25);
-		_25 = bubbleSort(ys_tmp = _COPY_1DARRAY_PARAM(ys, T_INT), false);
+		_25 = bubbleSort(ys_tmp = _COPY_1DARRAY_PARAM_LONGLONG(ys), false);
 		_CALLER_DEALLOC(_25, ys, "true-true-false" , "bubbleSort");
 		_ADD_DEALLOC(_25);
 	}
 	//assign %1 = %25  : int[]
 	_DEALLOC(ys);
-	_COPY_1DARRAY(ys, _25, T_INT);
+	_COPY_1DARRAY_LONGLONG(ys, _25);
 	_ADD_DEALLOC(ys);
 	//assert
 	{
@@ -337,20 +337,20 @@ blklab6:;
 	_ADD_DEALLOC(_37);
 	//assign %1 = %37  : int[]
 	_DEALLOC(ys);
-	_COPY_1DARRAY(ys, _37, T_INT);
+	_COPY_1DARRAY_LONGLONG(ys, _37);
 	_ADD_DEALLOC(ys);
 	//invoke (%38) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_38, ys);
 		_DEALLOC(_38);
-		_38 = bubbleSort(ys_tmp = _COPY_1DARRAY_PARAM(ys, T_INT), false);
+		_38 = bubbleSort(ys_tmp = _COPY_1DARRAY_PARAM_LONGLONG(ys), false);
 		_CALLER_DEALLOC(_38, ys, "true-true-false" , "bubbleSort");
 		_ADD_DEALLOC(_38);
 	}
 	//assign %1 = %38  : int[]
 	_DEALLOC(ys);
-	_COPY_1DARRAY(ys, _38, T_INT);
+	_COPY_1DARRAY_LONGLONG(ys, _38);
 	_ADD_DEALLOC(ys);
 	//assert
 	{
@@ -397,20 +397,20 @@ blklab7:;
 	_ADD_DEALLOC(_51);
 	//assign %1 = %51  : int[]
 	_DEALLOC(ys);
-	_COPY_1DARRAY(ys, _51, T_INT);
+	_COPY_1DARRAY_LONGLONG(ys, _51);
 	_ADD_DEALLOC(ys);
 	//invoke (%52) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_52, ys);
 		_DEALLOC(_52);
-		_52 = bubbleSort(ys_tmp = _COPY_1DARRAY_PARAM(ys, T_INT), false);
+		_52 = bubbleSort(ys_tmp = _COPY_1DARRAY_PARAM_LONGLONG(ys), false);
 		_CALLER_DEALLOC(_52, ys, "true-true-false" , "bubbleSort");
 		_ADD_DEALLOC(_52);
 	}
 	//assign %1 = %52  : int[]
 	_DEALLOC(ys);
-	_COPY_1DARRAY(ys, _52, T_INT);
+	_COPY_1DARRAY_LONGLONG(ys, _52);
 	_ADD_DEALLOC(ys);
 	//assert
 	{
@@ -458,7 +458,7 @@ blklab8:;
 	_ADD_DEALLOC(_64);
 	//assign %4 = %64  : int[]
 	_DEALLOC(arr);
-	_COPY_1DARRAY(arr, _64, T_INT);
+	_COPY_1DARRAY_LONGLONG(arr, _64);
 	_ADD_DEALLOC(arr);
 	//loop (%3, %4, %65, %66, %67)
 	while(true){
@@ -484,13 +484,13 @@ blklab9:;
 		void* arr_tmp;
 		_UPDATE_1DARRAY_SIZE(_68, arr);
 		_DEALLOC(_68);
-		_68 = bubbleSort(arr_tmp = _COPY_1DARRAY_PARAM(arr, T_INT), false);
+		_68 = bubbleSort(arr_tmp = _COPY_1DARRAY_PARAM_LONGLONG(arr), false);
 		_CALLER_DEALLOC(_68, arr, "true-true-false" , "bubbleSort");
 		_ADD_DEALLOC(_68);
 	}
 	//assign %4 = %68  : int[]
 	_DEALLOC(arr);
-	_COPY_1DARRAY(arr, _68, T_INT);
+	_COPY_1DARRAY_LONGLONG(arr, _68);
 	_ADD_DEALLOC(arr);
 	//assert
 	{

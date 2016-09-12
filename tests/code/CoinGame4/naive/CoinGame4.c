@@ -468,10 +468,10 @@ blklab17:;
 			{
 				void* moves_tmp;
 				_UPDATE_1DARRAY_SIZE(_41, moves);
-				_41 = pickCoin(moves_tmp = _COPY_1DARRAY_PARAM(moves, T_INT), i, j, n, x, y, z);
+				_41 = pickCoin(moves_tmp = _COPY_1DARRAY_PARAM_LONGLONG(moves), i, j, n, x, y, z);
 			}
 			//assign %0 = %41  : int[]
-			_COPY_1DARRAY(moves, _41, T_INT);
+			_COPY_1DARRAY_LONGLONG(moves, _41);
 			//const %42 = 1 : int
 			_42 = 1;
 			//add %43 = %4, %42 : int
@@ -532,19 +532,19 @@ int main(int argc, char** args){
 	//arraygen %7 = [5; 6] : int[]
 	_NEW_1DARRAY_LONGLONG(_7, _6, _5);
 	//assign %2 = %7  : int[]
-	_COPY_1DARRAY(moves, _7, T_INT);
+	_COPY_1DARRAY_LONGLONG(moves, _7);
 	//invoke (%8) = (%2, %1) CoinGame4:findMoves : function(int[],int)->(int[])
 	{
 		void* moves_tmp;
 		_UPDATE_1DARRAY_SIZE(_8, moves);
-		_8 = findMoves(moves_tmp = _COPY_1DARRAY_PARAM(moves, T_INT), n);
+		_8 = findMoves(moves_tmp = _COPY_1DARRAY_PARAM_LONGLONG(moves), n);
 	}
 	//assign %2 = %8  : int[]
-	_COPY_1DARRAY(moves, _8, T_INT);
+	_COPY_1DARRAY_LONGLONG(moves, _8);
 	//invoke () = (%0, %2, %1) CoinGame4:play : method(whiley/lang/System:Console,int[],int)->()
 	{
 		void* moves_tmp;
-		play(stdout, moves_tmp = _COPY_1DARRAY_PARAM(moves, T_INT), n);
+		play(stdout, moves_tmp = _COPY_1DARRAY_PARAM_LONGLONG(moves), n);
 	}
 	//const %9 = 1 : int
 	_9 = 1;

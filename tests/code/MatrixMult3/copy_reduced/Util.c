@@ -92,7 +92,7 @@ BYTE* copy1DArray_BYTE(BYTE *arr, long long size){
 }
 
 //Copy an integer array
-long long* copy1DArray_LONG(long long *arr, long long size) {
+long long* copy1DArray_LONGLONG(long long *arr, long long size){
 	long long *ptr = NULL;
 	//Clone all the values from board array due to immutable Whiley value
 	ptr = (long long*) malloc(size * sizeof(long long));
@@ -105,22 +105,6 @@ long long* copy1DArray_LONG(long long *arr, long long size) {
 	memcpy(ptr, arr, size * sizeof(long long));
 	return ptr;
 }
-
-//Copy an integer array
-void* copy1DArray(void *arr, long long size, TYPENUM type) {
-	void* ptr;
-	switch(type){
-		case T_INT:
-			ptr = copy1DArray_LONG(arr, size);
-			break;
-		case T_BYTE:
-			ptr = copy1DArray_BYTE(arr, size);
-			break;
-	}
-	return ptr;
-}
-
-
 
 /**
  * Create an 2D array of given dimensions (n * m)
@@ -240,19 +224,19 @@ int isArrayEqual(long long* arr1, long long arr1_size,
 }
 
 // Clone 2D array with given array size.
-long long** copy2DArray(long long **arr, long long x, long long y){
+long long** copy2DArray_LONGLONG(long long **arr, long long x, long long y){
 	long long **newMatrix = NULL;
 	long long i = 0;
 	newMatrix = (long long**)malloc(x*sizeof(long long*));
 	if(newMatrix == NULL){
-		fprintf(stderr, "fail to malloc at copy2DArray function in Util.c\n");
+		fprintf(stderr, "fail to malloc at copy2DArray_LONGLONG function in Util.c\n");
 		exit(-2);
 	}
 	long long size = y*sizeof(long long);
 	for(i=0;i<x;i++){
 		newMatrix[i] = (long long*)malloc(size);
 		if(newMatrix[i] == NULL){
-			fprintf(stderr, "fail to malloc at clone2DArray function in Util.c\n");
+			fprintf(stderr, "fail to malloc at copy2DArray_LONGLONG function in Util.c\n");
 			exit(-2);
 		}
 		memcpy(newMatrix[i], arr[i], size);

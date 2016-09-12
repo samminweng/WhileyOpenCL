@@ -1,7 +1,7 @@
 #include "MatrixMult.h"
 Matrix* copy_Matrix(Matrix* _Matrix){
 	Matrix* new_Matrix = malloc(sizeof(Matrix));
-	_COPY_2DARRAY(new_Matrix->data, _Matrix->data, T_INT);
+	_COPY_2DARRAY_LONGLONG(new_Matrix->data, _Matrix->data);
 	new_Matrix->width = _Matrix->width;
 	new_Matrix->height = _Matrix->height;
 	return new_Matrix;

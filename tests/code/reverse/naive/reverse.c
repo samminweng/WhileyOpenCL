@@ -28,7 +28,7 @@ long long* reverse(_DECL_1DARRAY_PARAM(ls)){
 	//arraygen %8 = [6; 7] : int[]
 	_NEW_1DARRAY_LONGLONG(_8, _7, _6);
 	//assign %3 = %8  : int[]
-	_COPY_1DARRAY(r, _8, T_INT);
+	_COPY_1DARRAY_LONGLONG(r, _8);
 	//loop (%2, %3, %4, %9, %10, %11, %12, %13, %14, %15, %16, %17)
 	while(true){
 		//invariant
@@ -133,10 +133,10 @@ int main(int argc, char** args){
 	{
 		void* _11_tmp;
 		_UPDATE_1DARRAY_SIZE(_5, _11);
-		_5 = reverse(_11_tmp = _COPY_1DARRAY_PARAM(_11, T_INT));
+		_5 = reverse(_11_tmp = _COPY_1DARRAY_PARAM_LONGLONG(_11));
 	}
 	//assign %1 = %5  : int[]
-	_COPY_1DARRAY(rs, _5, T_INT);
+	_COPY_1DARRAY_LONGLONG(rs, _5);
 	//assert
 	{
 		//const %12 = 5 : int
@@ -178,7 +178,7 @@ blklab4:;
 	//arraygen %23 = [20; 22] : int[]
 	_NEW_1DARRAY_LONGLONG(_23, _22, _20);
 	//assign %4 = %23  : int[]
-	_COPY_1DARRAY(arr, _23, T_INT);
+	_COPY_1DARRAY_LONGLONG(arr, _23);
 	//loop (%3, %4, %24, %25, %26)
 	while(true){
 		//ifgt %3, %2 goto blklab5 : int
@@ -202,10 +202,10 @@ blklab5:;
 	{
 		void* arr_tmp;
 		_UPDATE_1DARRAY_SIZE(_27, arr);
-		_27 = reverse(arr_tmp = _COPY_1DARRAY_PARAM(arr, T_INT));
+		_27 = reverse(arr_tmp = _COPY_1DARRAY_PARAM_LONGLONG(arr));
 	}
 	//assign %4 = %27  : int[]
-	_COPY_1DARRAY(arr, _27, T_INT);
+	_COPY_1DARRAY_LONGLONG(arr, _27);
 	//assert
 	{
 		//const %28 = 0 : int

@@ -26,7 +26,7 @@ void printf_Match(Match* match){
 Data* copy_Data(Data* _Data){
 	Data* new_Data = malloc(sizeof(Data));
 	new_Data->length = _Data->length;
-	_COPY_1DARRAY(new_Data->items, _Data->items, T_BYTE);
+	_COPY_1DARRAY_BYTE(new_Data->items, _Data->items);
 	return new_Data;
 }
 Data** copy_array_Data(Data** _Data, long long _Data_size){
@@ -80,7 +80,7 @@ long long match(Data* input, _DECL_DEALLOC_PARAM(input), long long offset, long 
 	_REMOVE_DEALLOC(_8);
 	//assign %6 = %8  : byte[]
 	_DEALLOC(data);
-	_COPY_1DARRAY(data, _8, T_BYTE);
+	_COPY_1DARRAY_BYTE(data, _8);
 	_ADD_DEALLOC(data);
 	//loop (%1, %4, %5, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18)
 	while(true){
@@ -250,7 +250,7 @@ Data* append_byte(Data* data, _DECL_DEALLOC_PARAM(data), BYTE item){
 	_REMOVE_DEALLOC(_7);
 	//assign %3 = %7  : byte[]
 	_DEALLOC(items);
-	_COPY_1DARRAY(items, _7, T_BYTE);
+	_COPY_1DARRAY_BYTE(items, _7);
 	_ADD_DEALLOC(items);
 	//const %8 = 00000000b : byte
 	_8 = 0b00000000;
@@ -266,7 +266,7 @@ Data* append_byte(Data* data, _DECL_DEALLOC_PARAM(data), BYTE item){
 	_ADD_DEALLOC(_12);
 	//assign %4 = %12  : byte[]
 	_DEALLOC(nitems);
-	_COPY_1DARRAY(nitems, _12, T_BYTE);
+	_COPY_1DARRAY_BYTE(nitems, _12);
 	_ADD_DEALLOC(nitems);
 	//const %13 = 0 : int
 	_13 = 0;
@@ -306,7 +306,7 @@ blklab6:;
 	//newrecord %21 = (%4, %6) : {byte[] items,int length}
 	_DEALLOC_STRUCT(_21, Data);
 	_21 = malloc(sizeof(Data));
-	_COPY_1DARRAY(_21->items, nitems, T_BYTE);
+	_COPY_1DARRAY_BYTE(_21->items, nitems);
 	_21->length = length;
 	_ADD_DEALLOC(_21);
 	//return %21
@@ -396,7 +396,7 @@ Data* compress(Data* input, _DECL_DEALLOC_PARAM(input)){
 	//newrecord %12 = (%10, %11) : {byte[] items,int length}
 	_DEALLOC_STRUCT(_12, Data);
 	_12 = malloc(sizeof(Data));
-	_COPY_1DARRAY(_12->items, _10, T_BYTE);
+	_COPY_1DARRAY_BYTE(_12->items, _10);
 	_12->length = _11;
 	_ADD_DEALLOC(_12);
 	//assign %3 = %12  : {byte[] items,int length}
@@ -574,7 +574,7 @@ Data* decompress(Data* input, _DECL_DEALLOC_PARAM(input)){
 	//newrecord %15 = (%13, %14) : {byte[] items,int length}
 	_DEALLOC_STRUCT(_15, Data);
 	_15 = malloc(sizeof(Data));
-	_COPY_1DARRAY(_15->items, _13, T_BYTE);
+	_COPY_1DARRAY_BYTE(_15->items, _13);
 	_15->length = _14;
 	_ADD_DEALLOC(_15);
 	//assign %2 = %15  : {byte[] items,int length}
@@ -587,7 +587,7 @@ Data* decompress(Data* input, _DECL_DEALLOC_PARAM(input)){
 	_REMOVE_DEALLOC(_16);
 	//assign %3 = %16  : byte[]
 	_DEALLOC(data);
-	_COPY_1DARRAY(data, _16, T_BYTE);
+	_COPY_1DARRAY_BYTE(data, _16);
 	_ADD_DEALLOC(data);
 	//const %17 = 0 : int
 	_17 = 0;
@@ -756,7 +756,7 @@ Data* init(long long repeat){
 	_ADD_DEALLOC(_8);
 	//assign %3 = %8  : byte[]
 	_DEALLOC(items);
-	_COPY_1DARRAY(items, _8, T_BYTE);
+	_COPY_1DARRAY_BYTE(items, _8);
 	_ADD_DEALLOC(items);
 	//const %9 = 0 : int
 	_9 = 0;
@@ -793,7 +793,7 @@ blklab18:;
 	//newrecord %16 = (%3, %2) : {byte[] items,int length}
 	_DEALLOC_STRUCT(_16, Data);
 	_16 = malloc(sizeof(Data));
-	_COPY_1DARRAY(_16->items, items, T_BYTE);
+	_COPY_1DARRAY_BYTE(_16->items, items);
 	_16->length = length;
 	_ADD_DEALLOC(_16);
 	//return %16

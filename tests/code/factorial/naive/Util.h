@@ -30,7 +30,8 @@ typedef enum {
 long long* create1DArray_LONGLONG(long long value, int arr_size);
 BYTE* create1DArray_BYTE(BYTE value, int arr_size);
 // Copy an array to another array
-void* copy1DArray(void* arr, long long size, TYPENUM type);
+long long* copy1DArray_LONGLONG(long long *arr, long long size);
+BYTE* copy1DArray_BYTE(BYTE *arr, long long size);
 // Print out an array
 void printf1DArray(void* input, long long input_size, TYPENUM type);
 /**
@@ -39,6 +40,7 @@ void printf1DArray(void* input, long long input_size, TYPENUM type);
 ***/
 // Create an array of integer arrays
 long long** create2DArray_LONGLONG(long long* arr,  long long n, long long m);
+long long** copy2DArray_LONGLONG(long long **arr, long long x, long long y);
 // Freed an array of arrays
 void free2DArray(void* ptr, long long size, TYPENUM type);
 
@@ -55,7 +57,7 @@ long long* parseStringToInt(long long* arr);
 long long** convertArgsToIntArray(int argc, char** args);
 int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2, long long arr2_size);
 // 2D Array Operator
-long long** copy2DArray(long long **arr, long long x, long long y);
+
 void printf2DArray(long long** input, long long input_size, long long input_size_size);
 // ArrayList Operators
 long long* slice(long long* arr, long long arr_size, long long start, long long end);
@@ -106,9 +108,8 @@ long long* fromBytes(BYTE* arr, long long arr_size);
  * Declaration Macros
  *
  */
-// Declare 1D array of integers
+// Declare 1D array of integers or bytes
 #define _DECL_1DARRAY(a) long long* a = NULL; long long a##_size = 0;
-// Declare 1D array of BYTE
 #define _DECL_1DARRAY_BYTE(a) BYTE* a = NULL; long long a##_size = 0;
 // Declare 2D array variable
 #define _DECL_2DARRAY(a) long long** a = NULL; long long a##_size = 0; long long a##_size_size = 0;
@@ -148,13 +149,15 @@ long long* fromBytes(BYTE* arr, long long arr_size);
  * Copy Macros
  *
  */
-// Copy an array of integers or bytes, and pass the copy as a function parameter
-#define _COPY_1DARRAY_PARAM(a, type) copy1DArray(a, a##_size, type), a##_size 
-#define _COPY_2DARRAY_PARAM(a, type) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size
+// Pass the copied array as a function parameter
+#define _COPY_1DARRAY_PARAM_LONGLONG(a) copy1DArray_LONGLONG(a, a##_size), a##_size
+#define _COPY_1DARRAY_PARAM_BYTE(a) copy1DArray_BYTE(a, a##_size), a##_size 
+#define _COPY_2DARRAY_PARAM_LONGLONG(a) copy2DArray_LONGLONG(a, a##_size, a##_size_size), a##_size, a##_size_size
 #define _COPY_STRUCT_PARAM(a, name) copy_##name(a)
-// Make a copy and assign the copy to a variable
-#define _COPY_1DARRAY(a, b, type) a##_size = b##_size; a = copy1DArray(b, b##_size, type);
-#define _COPY_2DARRAY(a, b, type) a##_size = b##_size; a##_size_size = b##_size_size; a = copy2DArray(b, b##_size, b##_size_size);
+// Assign the copied array to a variable
+#define _COPY_1DARRAY_LONGLONG(a, b) a##_size = b##_size; a = copy1DArray_LONGLONG(b, b##_size);
+#define _COPY_1DARRAY_BYTE(a, b) a##_size = b##_size; a = copy1DArray_BYTE(b, b##_size);
+#define _COPY_2DARRAY_LONGLONG(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = copy2DArray_LONGLONG(b, b##_size, b##_size_size);
 #define _COPY_1DARRAY_STRUCT(a, b, name) \
 		({\
 			a = malloc(b##_size*sizeof(name*));\

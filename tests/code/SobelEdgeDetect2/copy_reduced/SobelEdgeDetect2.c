@@ -1,7 +1,7 @@
 #include "SobelEdgeDetect2.h"
 Image* copy_Image(Image* _Image){
 	Image* new_Image = malloc(sizeof(Image));
-	_COPY_1DARRAY(new_Image->pixels, _Image->pixels, T_INT);
+	_COPY_1DARRAY_LONGLONG(new_Image->pixels, _Image->pixels);
 	new_Image->width = _Image->width;
 	new_Image->height = _Image->height;
 	return new_Image;
