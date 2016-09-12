@@ -46,7 +46,7 @@ void printf_Data(Data* data){
 	printf(" length:");
 	printf("%lld", data->length);
 	printf(" items:");
-	_PRINT_1DARRAY(data->items, T_BYTE);
+	_PRINT_1DARRAY_BYTE(data->items);
 	printf("}");
 }
 long long match(Data* input, long long offset, long long end){

@@ -21,7 +21,7 @@ void free_Matrix(Matrix* matrix){
 void printf_Matrix(Matrix* matrix){
 	printf("{");
 	printf(" data:");
-	_PRINT_2DARRAY(matrix->data, T_INT);
+	_PRINT_2DARRAY_LONGLONG(matrix->data);
 	printf(" width:");
 	printf("%lld", matrix->width);
 	printf(" height:");

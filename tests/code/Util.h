@@ -33,7 +33,8 @@ BYTE* create1DArray_BYTE(BYTE value, int arr_size);
 long long* copy1DArray_LONGLONG(long long *arr, long long size);
 BYTE* copy1DArray_BYTE(BYTE *arr, long long size);
 // Print out an array
-void printf1DArray(void* input, long long input_size, TYPENUM type);
+void printf1DArray_LONGLONG(long long* input, long long input_size);
+void printf1DArray_BYTE(BYTE* input, long long input_size);
 /**
 *Built-in operation for 2D array of byte and integers
 *
@@ -43,7 +44,9 @@ long long** create2DArray_LONGLONG(long long* arr,  long long n, long long m);
 long long** copy2DArray_LONGLONG(long long **arr, long long x, long long y);
 // Free an array of arrays
 void free2DArray_LONGLONG(long long** ptr, long long size);
-
+// Print out 2D array
+void printf2DArray_LONGLONG(long long** input, long long input_size, long long input_size_size);
+int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2, long long arr2_size);
 /**
  * Other built-in functions
  */
@@ -55,10 +58,6 @@ void println_s(long long* input, long long input_size);
 long long* parseStringToInt(long long* arr);
 // 1D Array
 long long** convertArgsToIntArray(int argc, char** args);
-int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2, long long arr2_size);
-// 2D Array Operator
-
-void printf2DArray(long long** input, long long input_size, long long input_size_size);
 // ArrayList Operators
 long long* slice(long long* arr, long long arr_size, long long start, long long end);
 long long* append(long long *arr1, long long arr1_size, long long* arr2, long long arr2_size);
@@ -191,9 +190,10 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 * 
 */
 // Print an array of integers or bytes
-#define _PRINT_1DARRAY(a, type) printf1DArray(a, a##_size, type);
+#define _PRINT_1DARRAY_LONGLONG(a) printf1DArray_LONGLONG(a, a##_size);
+#define _PRINT_1DARRAY_BYTE(a) printf1DArray_BYTE(a, a##_size);
 // Print two dimensional arrays of integers
-#define _PRINT_2DARRAY(a, type) printf2DArray(a, a##_size, a##_size_size);
+#define _PRINT_2DARRAY_LONGLONG(a) printf2DArray_LONGLONG(a, a##_size, a##_size_size);
 // Print an array of structure pointer
 #define _PRINT_1DARRAY_STRUCT(name, a) \
 		({\

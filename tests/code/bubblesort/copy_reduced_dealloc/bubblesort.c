@@ -262,7 +262,7 @@ blklab5:;
 	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %19 = %18 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %19 (%1) : method(any)->()
-	_PRINT_1DARRAY(ys, T_INT);
+	_PRINT_1DARRAY_LONGLONG(ys);
 	//const %20 = 3 : int
 	_20 = 3;
 	//const %21 = 4 : int
@@ -319,7 +319,7 @@ blklab6:;
 	//fieldload %31 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %32 = %31 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %32 (%1) : method(any)->()
-	_PRINT_1DARRAY(ys, T_INT);
+	_PRINT_1DARRAY_LONGLONG(ys);
 	//const %33 = 1 : int
 	_33 = 1;
 	//const %34 = 2 : int
@@ -376,7 +376,7 @@ blklab7:;
 	//fieldload %44 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %45 = %44 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %45 (%1) : method(any)->()
-	_PRINT_1DARRAY(ys, T_INT);
+	_PRINT_1DARRAY_LONGLONG(ys);
 	//const %46 = 1 : int
 	_46 = 1;
 	//const %47 = 2 : int
@@ -437,7 +437,7 @@ blklab8:;
 	//fieldload %59 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %60 = %59 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %60 (%1) : method(any)->()
-	_PRINT_1DARRAY(ys, T_INT);
+	_PRINT_1DARRAY_LONGLONG(ys);
 	//const %61 = 10 : int
 	_61 = 10;
 	//assign %2 = %61  : int
@@ -526,7 +526,7 @@ blklab11:;
 	//fieldload %80 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %81 = %80 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %81 (%4) : method(any)->()
-	_PRINT_1DARRAY(arr, T_INT);
+	_PRINT_1DARRAY_LONGLONG(arr);
 	//fieldload %82 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %83 = %82 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %84 = [80,97,115,115,32,66,117,98,98,108,101,83,111,114,116,32,116,101,115,116,32,99,97,115,101] : int[]
