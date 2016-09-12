@@ -354,7 +354,7 @@ int main(int argc, char** args){
 		void* moves_tmp;
 		_UPDATE_1DARRAY_SIZE(_8, moves);
 		_DEALLOC(_8);
-		_8 = findMoves(moves_tmp = _COPY_1DARRAY_PARAM_LONGLONG(moves), false, n);
+		_8 = findMoves(_COPY_1DARRAY_PARAM_LONGLONG(moves), false, n);
 		_CALLER_DEALLOC(_8, moves, "true-true-false" , "findMoves");
 		_ADD_DEALLOC(_8);
 	}

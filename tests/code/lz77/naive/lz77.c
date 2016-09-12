@@ -167,7 +167,7 @@ Match* findLongestMatch(Data* input, long long pos){
 		//invoke (%14) = (%0, %6, %1) lz77:match : function(lz77:Data,lz77:nat,lz77:nat)->(int)
 		{
 			void* input_tmp;
-			_14 = match(input_tmp = _COPY_STRUCT_PARAM(input, Data), offset, pos);
+			_14 = match(_COPY_STRUCT_PARAM(input, Data), offset, pos);
 		}
 		//assign %7 = %14  : int
 		len = _14;
@@ -291,7 +291,7 @@ Data* write_u1(Data* data, long long u1){
 	//invoke (%3) = (%0, %4) lz77:append_byte : function(lz77:Data,byte)->(lz77:Data)
 	{
 		void* data_tmp;
-		_3 = append_byte(data_tmp = _COPY_STRUCT_PARAM(data, Data), _4);
+		_3 = append_byte(_COPY_STRUCT_PARAM(data, Data), _4);
 	}
 	//return %3
 	return _3;
@@ -351,7 +351,7 @@ Data* compress(Data* input){
 		//invoke (%14) = (%0, %2) lz77:findLongestMatch : function(lz77:Data,lz77:nat)->(lz77:Match)
 		{
 			void* input_tmp;
-			_14 = findLongestMatch(input_tmp = _COPY_STRUCT_PARAM(input, Data), pos);
+			_14 = findLongestMatch(_COPY_STRUCT_PARAM(input, Data), pos);
 		}
 		//assign %4 = %14  : {int len,int offset}
 		m = copy_Match(_14);
@@ -366,7 +366,7 @@ Data* compress(Data* input){
 		//invoke (%17) = (%3, %5) lz77:write_u1 : function(lz77:Data,int)->(lz77:Data)
 		{
 			void* output_tmp;
-			_17 = write_u1(output_tmp = _COPY_STRUCT_PARAM(output, Data), offset);
+			_17 = write_u1(_COPY_STRUCT_PARAM(output, Data), offset);
 		}
 		//assign %3 = %17  : {byte[] items,int length}
 		output = copy_Data(_17);
@@ -381,7 +381,7 @@ Data* compress(Data* input){
 		//invoke (%19) = (%3, %21) lz77:append_byte : function(lz77:Data,byte)->(lz77:Data)
 		{
 			void* output_tmp;
-			_19 = append_byte(output_tmp = _COPY_STRUCT_PARAM(output, Data), _21);
+			_19 = append_byte(_COPY_STRUCT_PARAM(output, Data), _21);
 		}
 		//assign %3 = %19  : {byte[] items,int length}
 		output = copy_Data(_19);
@@ -398,7 +398,7 @@ blklab10:;
 		//invoke (%24) = (%3, %6) lz77:write_u1 : function(lz77:Data,int)->(lz77:Data)
 		{
 			void* output_tmp;
-			_24 = write_u1(output_tmp = _COPY_STRUCT_PARAM(output, Data), len);
+			_24 = write_u1(_COPY_STRUCT_PARAM(output, Data), len);
 		}
 		//assign %3 = %24  : {byte[] items,int length}
 		output = copy_Data(_24);
@@ -515,7 +515,7 @@ Data* decompress(Data* input){
 		//invoke (%28) = (%2, %6) lz77:append_byte : function(lz77:Data,byte)->(lz77:Data)
 		{
 			void* output_tmp;
-			_28 = append_byte(output_tmp = _COPY_STRUCT_PARAM(output, Data), item);
+			_28 = append_byte(_COPY_STRUCT_PARAM(output, Data), item);
 		}
 		//assign %2 = %28  : {byte[] items,int length}
 		output = copy_Data(_28);
@@ -556,7 +556,7 @@ blklab14:;
 			//invoke (%37) = (%2, %6) lz77:append_byte : function(lz77:Data,byte)->(lz77:Data)
 			{
 				void* output_tmp;
-				_37 = append_byte(output_tmp = _COPY_STRUCT_PARAM(output, Data), item);
+				_37 = append_byte(_COPY_STRUCT_PARAM(output, Data), item);
 			}
 			//assign %2 = %37  : {byte[] items,int length}
 			output = copy_Data(_37);
@@ -727,7 +727,7 @@ int main(int argc, char** args){
 	//invoke (%19) = (%1) lz77:compress : function(lz77:Data)->(lz77:Data)
 	{
 		void* data_tmp;
-		_19 = compress(data_tmp = _COPY_STRUCT_PARAM(data, Data));
+		_19 = compress(_COPY_STRUCT_PARAM(data, Data));
 	}
 	//assign %2 = %19  : {byte[] items,int length}
 	compress_data = copy_Data(_19);
@@ -764,7 +764,7 @@ int main(int argc, char** args){
 	//invoke (%33) = (%2) lz77:decompress : function(lz77:Data)->(lz77:Data)
 	{
 		void* compress_data_tmp;
-		_33 = decompress(compress_data_tmp = _COPY_STRUCT_PARAM(compress_data, Data));
+		_33 = decompress(_COPY_STRUCT_PARAM(compress_data, Data));
 	}
 	//assign %3 = %33  : {byte[] items,int length}
 	decompress_data = copy_Data(_33);

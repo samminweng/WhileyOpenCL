@@ -304,7 +304,7 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 			{
 				void* pixels_tmp;
 				void* v_sobel_tmp;
-				_47 = convolution(pixels_tmp = _COPY_1DARRAY_PARAM_LONGLONG(pixels), true, width, height, x, y, v_sobel_tmp = _COPY_1DARRAY_PARAM_LONGLONG(v_sobel), true);
+				_47 = convolution(_COPY_1DARRAY_PARAM_LONGLONG(pixels), true, width, height, x, y, _COPY_1DARRAY_PARAM_LONGLONG(v_sobel), true);
 				_CALLEE_DEALLOC(pixels, "false-false-true" , "convolution");
 				_CALLEE_DEALLOC(v_sobel, "false-false-true" , "convolution");
 			}
@@ -314,7 +314,7 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 			{
 				void* pixels_tmp;
 				void* h_sobel_tmp;
-				_48 = convolution(pixels_tmp = _COPY_1DARRAY_PARAM_LONGLONG(pixels), true, width, height, x, y, h_sobel_tmp = _COPY_1DARRAY_PARAM_LONGLONG(h_sobel), true);
+				_48 = convolution(_COPY_1DARRAY_PARAM_LONGLONG(pixels), true, width, height, x, y, _COPY_1DARRAY_PARAM_LONGLONG(h_sobel), true);
 				_CALLEE_DEALLOC(pixels, "false-false-true" , "convolution");
 				_CALLEE_DEALLOC(h_sobel, "false-false-true" , "convolution");
 			}
@@ -599,7 +599,7 @@ int main(int argc, char** args){
 		void* pixels_tmp;
 		_UPDATE_1DARRAY_SIZE(_13, pixels);
 		_DEALLOC(_13);
-		_13 = sobelEdgeDetection(pixels_tmp = _COPY_1DARRAY_PARAM_LONGLONG(pixels), true, width, height);
+		_13 = sobelEdgeDetection(_COPY_1DARRAY_PARAM_LONGLONG(pixels), true, width, height);
 		_CALLEE_DEALLOC(pixels, "false-false-true" , "sobelEdgeDetection");
 		_ADD_DEALLOC(_13);
 	}
@@ -619,7 +619,7 @@ int main(int argc, char** args){
 	//invoke () = (%0, %4, %1, %2) SobelEdgeDetect1:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
 		void* pixels_tmp;
-		printImage(stdout, pixels_tmp = _COPY_1DARRAY_PARAM_LONGLONG(pixels), true, width, height);
+		printImage(stdout, _COPY_1DARRAY_PARAM_LONGLONG(pixels), true, width, height);
 		_CALLEE_DEALLOC(pixels, "false-false-false" , "printImage");
 	}
 	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
@@ -634,7 +634,7 @@ int main(int argc, char** args){
 	//invoke () = (%0, %5, %1, %2) SobelEdgeDetect1:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
 		void* newPixels_tmp;
-		printImage(stdout, newPixels_tmp = _COPY_1DARRAY_PARAM_LONGLONG(newPixels), true, width, height);
+		printImage(stdout, _COPY_1DARRAY_PARAM_LONGLONG(newPixels), true, width, height);
 		_CALLEE_DEALLOC(newPixels, "false-false-false" , "printImage");
 	}
 	//assert

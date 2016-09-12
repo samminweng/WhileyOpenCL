@@ -78,7 +78,7 @@ int main(int argc, char** args){
 	{
 		void* a_tmp;
 		_UPDATE_1DARRAY_SIZE(_10, a);
-		_10 = func(a_tmp = _COPY_1DARRAY_PARAM_LONGLONG(a));
+		_10 = func(_COPY_1DARRAY_PARAM_LONGLONG(a));
 	}
 	//assign %1 = %10  : int[]
 	_COPY_1DARRAY_LONGLONG(a, _10);
@@ -133,7 +133,7 @@ blklab0:;
 	{
 		void* b_tmp;
 		_UPDATE_1DARRAY_SIZE(_27, b);
-		_27 = func(b_tmp = _COPY_1DARRAY_PARAM_LONGLONG(b));
+		_27 = func(_COPY_1DARRAY_PARAM_LONGLONG(b));
 	}
 	//assign %3 = %27  : int[]
 	_COPY_1DARRAY_LONGLONG(c, _27);

@@ -283,7 +283,7 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), long long width, long
 			{
 				void* pixels_tmp;
 				void* v_sobel_tmp;
-				_47 = convolution(pixels_tmp = _COPY_1DARRAY_PARAM_LONGLONG(pixels), width, height, x, y, v_sobel_tmp = _COPY_1DARRAY_PARAM_LONGLONG(v_sobel));
+				_47 = convolution(_COPY_1DARRAY_PARAM_LONGLONG(pixels), width, height, x, y, _COPY_1DARRAY_PARAM_LONGLONG(v_sobel));
 			}
 			//assign %11 = %47  : int
 			v_g = _47;
@@ -291,7 +291,7 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), long long width, long
 			{
 				void* pixels_tmp;
 				void* h_sobel_tmp;
-				_48 = convolution(pixels_tmp = _COPY_1DARRAY_PARAM_LONGLONG(pixels), width, height, x, y, h_sobel_tmp = _COPY_1DARRAY_PARAM_LONGLONG(h_sobel));
+				_48 = convolution(_COPY_1DARRAY_PARAM_LONGLONG(pixels), width, height, x, y, _COPY_1DARRAY_PARAM_LONGLONG(h_sobel));
 			}
 			//assign %12 = %48  : int
 			h_g = _48;
@@ -539,7 +539,7 @@ int main(int argc, char** args){
 	{
 		void* pixels_tmp;
 		_UPDATE_1DARRAY_SIZE(_13, pixels);
-		_13 = sobelEdgeDetection(pixels_tmp = _COPY_1DARRAY_PARAM_LONGLONG(pixels), width, height);
+		_13 = sobelEdgeDetection(_COPY_1DARRAY_PARAM_LONGLONG(pixels), width, height);
 	}
 	//assign %5 = %13  : int[]
 	_COPY_1DARRAY_LONGLONG(newPixels, _13);
@@ -553,7 +553,7 @@ int main(int argc, char** args){
 	//invoke () = (%0, %4, %1, %2) SobelEdgeDetect1:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
 		void* pixels_tmp;
-		printImage(stdout, pixels_tmp = _COPY_1DARRAY_PARAM_LONGLONG(pixels), width, height);
+		printImage(stdout, _COPY_1DARRAY_PARAM_LONGLONG(pixels), width, height);
 	}
 	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %18 = %17 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -565,7 +565,7 @@ int main(int argc, char** args){
 	//invoke () = (%0, %5, %1, %2) SobelEdgeDetect1:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
 		void* newPixels_tmp;
-		printImage(stdout, newPixels_tmp = _COPY_1DARRAY_PARAM_LONGLONG(newPixels), width, height);
+		printImage(stdout, _COPY_1DARRAY_PARAM_LONGLONG(newPixels), width, height);
 	}
 	//assert
 	{

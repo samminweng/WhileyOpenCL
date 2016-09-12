@@ -25,8 +25,8 @@ void printf_Point(Point* point){
 }
 Rectangle* copy_Rectangle(Rectangle* _Rectangle){
 	Rectangle* new_Rectangle = malloc(sizeof(Rectangle));
-	new_Rectangle->p1 = copy_Point(_Rectangle->p1);
-	new_Rectangle->p2 = copy_Point(_Rectangle->p2);
+	_COPY_STRUCT(new_Rectangle->p1, _Rectangle->p1, Point);
+	_COPY_STRUCT(new_Rectangle->p2, _Rectangle->p2, Point);
 	return new_Rectangle;
 }
 Rectangle** copy_array_Rectangle(Rectangle** _Rectangle, long long _Rectangle_size){
@@ -149,8 +149,8 @@ int main(int argc, char** args){
 	//newrecord %11 = (%1, %2) : {{int x,int y} p1,{int x,int y} p2}
 	_DEALLOC_STRUCT(_11, Rectangle);
 	_11 = malloc(sizeof(Rectangle));
-	_11->p1 = copy_Point(p1);
-	_11->p2 = copy_Point(p2);
+	_COPY_STRUCT(_11->p1, p1, Point);
+	_COPY_STRUCT(_11->p2, p2, Point);
 	_ADD_DEALLOC(_11);
 	//assign %3 = %11  : {{int x,int y} p1,{int x,int y} p2}
 	_DEALLOC_STRUCT(rec, Rectangle);
@@ -175,7 +175,7 @@ int main(int argc, char** args){
 		void* rec_tmp;
 		void* p3_tmp;
 		_DEALLOC_STRUCT(_15, Rectangle);
-		_15 = updateRec(rec_tmp = _COPY_STRUCT_PARAM(rec, Rectangle), false, p3_tmp = _COPY_STRUCT_PARAM(p3, Point), true);
+		_15 = updateRec(_COPY_STRUCT_PARAM(rec, Rectangle), false, _COPY_STRUCT_PARAM(p3, Point), true);
 		_CALLER_DEALLOC_STRUCT(_15, rec, "true-true-false" , "updateRec", Rectangle);
 		_CALLEE_DEALLOC(p3, "false-false-false" , "updateRec");
 		_ADD_DEALLOC(_15);

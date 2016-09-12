@@ -149,12 +149,16 @@ long long* fromBytes(BYTE* arr, long long arr_size);
  * Copy Macros
  *
  */
+// Pass the copied structure (void* a_tmp) as a function parameter
+#define _COPY_STRUCT_PARAM(a, name) a##_tmp = copy_##name(a)
 // Pass the copied array as a function parameter
-#define _COPY_1DARRAY_PARAM_LONGLONG(a) copy1DArray_LONGLONG(a, a##_size), a##_size
-#define _COPY_1DARRAY_PARAM_BYTE(a) copy1DArray_BYTE(a, a##_size), a##_size 
-#define _COPY_2DARRAY_PARAM_LONGLONG(a) copy2DArray_LONGLONG(a, a##_size, a##_size_size), a##_size, a##_size_size
-#define _COPY_STRUCT_PARAM(a, name) copy_##name(a)
+#define _COPY_1DARRAY_PARAM_LONGLONG(a) a##_tmp = copy1DArray_LONGLONG(a, a##_size), a##_size
+#define _COPY_1DARRAY_PARAM_BYTE(a) a##_tmp = copy1DArray_BYTE(a, a##_size), a##_size 
+#define _COPY_2DARRAY_PARAM_LONGLONG(a) a##_tmp = copy2DArray_LONGLONG(a, a##_size, a##_size_size), a##_size, a##_size_size
+// Pass the copied array of structures as a function parameter
+#define _COPY_1DARRAY_PARAM_STRUCT(a, name) a##_tmp = copy_array_##name(a, a##_size), a##_size 
 // Assign the copied array to a variable
+#define _COPY_STRUCT(a, b, name) a = copy_##name(b);
 #define _COPY_1DARRAY_LONGLONG(a, b) a##_size = b##_size; a = copy1DArray_LONGLONG(b, b##_size);
 #define _COPY_1DARRAY_BYTE(a, b) a##_size = b##_size; a = copy1DArray_BYTE(b, b##_size);
 #define _COPY_2DARRAY_LONGLONG(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = copy2DArray_LONGLONG(b, b##_size, b##_size_size);

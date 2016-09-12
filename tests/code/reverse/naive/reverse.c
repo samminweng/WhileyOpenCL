@@ -133,7 +133,7 @@ int main(int argc, char** args){
 	{
 		void* _11_tmp;
 		_UPDATE_1DARRAY_SIZE(_5, _11);
-		_5 = reverse(_11_tmp = _COPY_1DARRAY_PARAM_LONGLONG(_11));
+		_5 = reverse(_COPY_1DARRAY_PARAM_LONGLONG(_11));
 	}
 	//assign %1 = %5  : int[]
 	_COPY_1DARRAY_LONGLONG(rs, _5);
@@ -202,7 +202,7 @@ blklab5:;
 	{
 		void* arr_tmp;
 		_UPDATE_1DARRAY_SIZE(_27, arr);
-		_27 = reverse(arr_tmp = _COPY_1DARRAY_PARAM_LONGLONG(arr));
+		_27 = reverse(_COPY_1DARRAY_PARAM_LONGLONG(arr));
 	}
 	//assign %4 = %27  : int[]
 	_COPY_1DARRAY_LONGLONG(arr, _27);

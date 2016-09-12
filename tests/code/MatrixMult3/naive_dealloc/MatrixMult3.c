@@ -140,7 +140,7 @@ blklab2:;
 	{
 		void* data_tmp;
 		_DEALLOC_STRUCT(_21, Matrix);
-		_21 = matrix(width, height, data_tmp = _COPY_1DARRAY_PARAM_LONGLONG(data), true);
+		_21 = matrix(width, height, _COPY_1DARRAY_PARAM_LONGLONG(data), true);
 		_CALLEE_DEALLOC(data, "false-false-false" , "matrix");
 		_ADD_DEALLOC(_21);
 	}
@@ -530,7 +530,7 @@ blklab17:;
 	{
 		void* data_tmp;
 		_DEALLOC_STRUCT(_58, Matrix);
-		_58 = matrix(width, height, data_tmp = _COPY_1DARRAY_PARAM_LONGLONG(data), true);
+		_58 = matrix(width, height, _COPY_1DARRAY_PARAM_LONGLONG(data), true);
 		_CALLEE_DEALLOC(data, "false-false-false" , "matrix");
 		_ADD_DEALLOC(_58);
 	}
@@ -764,7 +764,7 @@ blklab24:;
 		void* A_tmp;
 		void* B_tmp;
 		_DEALLOC_STRUCT(_44, Matrix);
-		_44 = mat_mult(A_tmp = _COPY_STRUCT_PARAM(A, Matrix), true, B_tmp = _COPY_STRUCT_PARAM(B, Matrix), true);
+		_44 = mat_mult(_COPY_STRUCT_PARAM(A, Matrix), true, _COPY_STRUCT_PARAM(B, Matrix), true);
 		_CALLEE_DEALLOC(A, "false-false-false" , "mat_mult");
 		_CALLEE_DEALLOC(B, "false-false-false" , "mat_mult");
 		_ADD_DEALLOC(_44);
@@ -813,7 +813,7 @@ blklab25:;
 	//invoke () = (%0, %3) MatrixMult3:print_mat : method(whiley/lang/System:Console,MatrixMult3:Matrix)->()
 	{
 		void* C_tmp;
-		print_mat(stdout, C_tmp = _COPY_STRUCT_PARAM(C, Matrix), true);
+		print_mat(stdout, _COPY_STRUCT_PARAM(C, Matrix), true);
 		_CALLEE_DEALLOC(C, "false-false-true" , "print_mat");
 	}
 	//fieldload %57 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}

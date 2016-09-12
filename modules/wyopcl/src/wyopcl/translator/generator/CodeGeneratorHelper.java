@@ -163,8 +163,8 @@ public final class CodeGeneratorHelper {
 			if (isCopyEliminated || !stores.isCompoundType(type)) {
 				statement.add(indent + lhs + " = " + rhs + ";");
 			} else {
-				statement.add(
-						indent + lhs + " = copy_" + translateType(type, stores).replace("*", "") + "(" + rhs + ");");
+				String elm_type = translateType(type, stores).replace("*", "");
+				statement.add(indent + "_COPY_STRUCT(" + lhs +", "+ rhs+ ", "+ elm_type+");");
 			}
 		}
 

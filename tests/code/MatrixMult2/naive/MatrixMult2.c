@@ -125,7 +125,7 @@ blklab2:;
 	//invoke (%21) = (%0, %1, %3) MatrixMult2:matrix : function(MatrixMult2:nat,MatrixMult2:nat,int[])->(MatrixMult2:Matrix)
 	{
 		void* data_tmp;
-		_21 = matrix(width, height, data_tmp = _COPY_1DARRAY_PARAM_LONGLONG(data));
+		_21 = matrix(width, height, _COPY_1DARRAY_PARAM_LONGLONG(data));
 	}
 	//return %21
 	return _21;
@@ -382,7 +382,7 @@ blklab13:;
 	//invoke (%40) = (%3, %4, %5) MatrixMult2:matrix : function(MatrixMult2:nat,MatrixMult2:nat,int[])->(MatrixMult2:Matrix)
 	{
 		void* data_tmp;
-		_40 = matrix(width, height, data_tmp = _COPY_1DARRAY_PARAM_LONGLONG(data));
+		_40 = matrix(width, height, _COPY_1DARRAY_PARAM_LONGLONG(data));
 	}
 	//return %40
 	return _40;
@@ -575,7 +575,7 @@ blklab20:;
 	{
 		void* A_tmp;
 		void* B_tmp;
-		_44 = mat_mult(A_tmp = _COPY_STRUCT_PARAM(A, Matrix), B_tmp = _COPY_STRUCT_PARAM(B, Matrix));
+		_44 = mat_mult(_COPY_STRUCT_PARAM(A, Matrix), _COPY_STRUCT_PARAM(B, Matrix));
 	}
 	//assign %3 = %44  : {int[] data,int height,int width}
 	C = copy_Matrix(_44);
@@ -617,7 +617,7 @@ blklab21:;
 	//invoke () = (%0, %3) MatrixMult2:print_mat : method(whiley/lang/System:Console,MatrixMult2:Matrix)->()
 	{
 		void* C_tmp;
-		print_mat(stdout, C_tmp = _COPY_STRUCT_PARAM(C, Matrix));
+		print_mat(stdout, _COPY_STRUCT_PARAM(C, Matrix));
 	}
 	//fieldload %57 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %58 = %57 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

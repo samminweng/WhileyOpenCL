@@ -680,17 +680,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					parameters.add("_" + dimension + "DARRAY_PARAM(" + parameter + ")");
 				} else {
 					// Temporary variable is used to reference the extra copy of parameter
-					String tmp_var = parameter + "_tmp";
+					//String tmp_var = parameter + "_tmp";
 
 					if(elm instanceof Type.Byte){
-						parameters.add(tmp_var + " = _COPY_" + dimension + "DARRAY_PARAM_BYTE(" + parameter + ")");
+						parameters.add("_COPY_" + dimension + "DARRAY_PARAM_BYTE(" + parameter + ")");
 					}else if (stores.isIntType(elm)) {
-						parameters.add(tmp_var + " = _COPY_" + dimension + "DARRAY_PARAM_LONGLONG(" + parameter + ")");
+						parameters.add("_COPY_" + dimension + "DARRAY_PARAM_LONGLONG(" + parameter + ")");
 					} else {
 						String elm_type = CodeGeneratorHelper.translateType(elm, stores).replace("*", "");
-						// Copy the rhs and rhs size
-						parameters.add(tmp_var + " = copy_array_" + elm_type + "(" + parameter + ", " + parameter
-								+ "_size), " + parameter + "_size");
+						// Copy the array of structures and pass it as a function parameter
+						parameters.add("_COPY_1DARRAY_PARAM_STRUCT" + "(" + parameter + ", " + elm_type + ")");
 					}
 				}
 			} else if (parameter_type instanceof Type.Record || parameter_type instanceof Type.Nominal
@@ -701,8 +700,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				} else {
 					// Temporary variable is used to reference the extra copy of
 					// parameter
-					String tmp_var = parameter + "_tmp";
-					parameters.add(tmp_var + " = _COPY_STRUCT_PARAM(" + parameter + ", " + type_name + ")");
+					//String tmp_var = parameter + "_tmp";
+					parameters.add("_COPY_STRUCT_PARAM(" + parameter + ", " + type_name + ")");
 				}
 			} else {
 				throw new RuntimeException("Not Implemented");

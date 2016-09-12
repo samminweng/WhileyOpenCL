@@ -84,7 +84,7 @@ _SLICE_ARRAY(_15, items, start, pivot);
 		void* lhs_tmp;
 		_UPDATE_1DARRAY_SIZE(_16, lhs);
 		_DEALLOC(_16);
-		_16 = sortV1(lhs_tmp = _COPY_1DARRAY_PARAM_LONGLONG(lhs), false, _17, pivot);
+		_16 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(lhs), false, _17, pivot);
 		_CALLER_DEALLOC(_16, lhs, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_16);
 	}
@@ -110,7 +110,7 @@ _SLICE_ARRAY(_18, items, pivot, end);
 		void* rhs_tmp;
 		_UPDATE_1DARRAY_SIZE(_19, rhs);
 		_DEALLOC(_19);
-		_19 = sortV1(rhs_tmp = _COPY_1DARRAY_PARAM_LONGLONG(rhs), false, _20, _21);
+		_19 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(rhs), false, _20, _21);
 		_CALLER_DEALLOC(_19, rhs, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_19);
 	}
@@ -389,7 +389,7 @@ int main(int argc, char** args){
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_11, ys);
 		_DEALLOC(_11);
-		_11 = sortV1(ys_tmp = _COPY_1DARRAY_PARAM_LONGLONG(ys), false, _12, _13);
+		_11 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(ys), false, _12, _13);
 		_CALLER_DEALLOC(_11, ys, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_11);
 	}
@@ -449,7 +449,7 @@ blklab9:;
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_25, ys);
 		_DEALLOC(_25);
-		_25 = sortV1(ys_tmp = _COPY_1DARRAY_PARAM_LONGLONG(ys), false, _26, _27);
+		_25 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(ys), false, _26, _27);
 		_CALLER_DEALLOC(_25, ys, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_25);
 	}
@@ -507,7 +507,7 @@ blklab10:;
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_38, ys);
 		_DEALLOC(_38);
-		_38 = sortV1(ys_tmp = _COPY_1DARRAY_PARAM_LONGLONG(ys), false, _39, _40);
+		_38 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(ys), false, _39, _40);
 		_CALLER_DEALLOC(_38, ys, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_38);
 	}
@@ -567,7 +567,7 @@ blklab11:;
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_52, ys);
 		_DEALLOC(_52);
-		_52 = sortV1(ys_tmp = _COPY_1DARRAY_PARAM_LONGLONG(ys), false, _53, _54);
+		_52 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(ys), false, _53, _54);
 		_CALLER_DEALLOC(_52, ys, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_52);
 	}
@@ -653,7 +653,7 @@ blklab13:;
 		void* arr_tmp;
 		_UPDATE_1DARRAY_SIZE(_70, arr);
 		_DEALLOC(_70);
-		_70 = sortV1(arr_tmp = _COPY_1DARRAY_PARAM_LONGLONG(arr), false, _71, _73);
+		_70 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(arr), false, _71, _73);
 		_CALLER_DEALLOC(_70, arr, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_70);
 	}

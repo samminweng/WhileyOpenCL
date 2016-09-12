@@ -150,7 +150,7 @@ int main(int argc, char** args){
 		void* a_tmp;
 		_UPDATE_1DARRAY_SIZE(_10, a);
 		_DEALLOC(_10);
-		_10 = func(a_tmp = _COPY_1DARRAY_PARAM_LONGLONG(a), true, _11);
+		_10 = func(_COPY_1DARRAY_PARAM_LONGLONG(a), true, _11);
 		_CALLEE_DEALLOC(a, "false-false-false" , "func");
 		_ADD_DEALLOC(_10);
 	}
@@ -218,7 +218,7 @@ blklab2:;
 		void* b_tmp;
 		_UPDATE_1DARRAY_SIZE(_28, b);
 		_DEALLOC(_28);
-		_28 = func(b_tmp = _COPY_1DARRAY_PARAM_LONGLONG(b), true, _29);
+		_28 = func(_COPY_1DARRAY_PARAM_LONGLONG(b), true, _29);
 		_CALLEE_DEALLOC(b, "false-false-true" , "func");
 		_ADD_DEALLOC(_28);
 	}

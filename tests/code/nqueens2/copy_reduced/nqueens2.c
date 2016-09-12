@@ -262,7 +262,7 @@ blklab12:;
 		//invoke (%28) = (%0, %30, %2) nqueens2:run : function(nqueens2:POS[],int,int)->(int)
 		{
 			void* queens_tmp;
-			_28 = run(queens_tmp = copy_array_POS(queens, queens_size), queens_size, _30, dim);
+			_28 = run(_COPY_1DARRAY_PARAM_STRUCT(queens, POS), _30, dim);
 		}
 		//add %31 = %4, %28 : int
 		_31=num_solutions+_28;
@@ -334,7 +334,7 @@ int main(int argc, char** args){
 	//invoke (%9) = (%2, %10, %1) nqueens2:run : function(nqueens2:POS[],int,int)->(int)
 	{
 		void* queens_tmp;
-		_9 = run(queens_tmp = copy_array_POS(queens, queens_size), queens_size, _10, n);
+		_9 = run(_COPY_1DARRAY_PARAM_STRUCT(queens, POS), _10, n);
 	}
 	//assign %3 = %9  : int
 	num_solutions = _9;

@@ -25,8 +25,8 @@ void printf_Point(Point* point){
 }
 Rectangle* copy_Rectangle(Rectangle* _Rectangle){
 	Rectangle* new_Rectangle = malloc(sizeof(Rectangle));
-	new_Rectangle->p1 = copy_Point(_Rectangle->p1);
-	new_Rectangle->p2 = copy_Point(_Rectangle->p2);
+	_COPY_STRUCT(new_Rectangle->p1, _Rectangle->p1, Point);
+	_COPY_STRUCT(new_Rectangle->p2, _Rectangle->p2, Point);
 	return new_Rectangle;
 }
 Rectangle** copy_array_Rectangle(Rectangle** _Rectangle, long long _Rectangle_size){
@@ -118,8 +118,8 @@ int main(int argc, char** args){
 	p2 = copy_Point(_10);
 	//newrecord %11 = (%1, %2) : {{int x,int y} p1,{int x,int y} p2}
 	_11 = malloc(sizeof(Rectangle));
-	_11->p1 = copy_Point(p1);
-	_11->p2 = copy_Point(p2);
+	_COPY_STRUCT(_11->p1, p1, Point);
+	_COPY_STRUCT(_11->p2, p2, Point);
 	//assign %3 = %11  : {{int x,int y} p1,{int x,int y} p2}
 	rec = copy_Rectangle(_11);
 	//const %12 = 6 : int
@@ -136,7 +136,7 @@ int main(int argc, char** args){
 	{
 		void* rec_tmp;
 		void* p3_tmp;
-		_15 = updateRec(rec_tmp = _COPY_STRUCT_PARAM(rec, Rectangle), p3_tmp = _COPY_STRUCT_PARAM(p3, Point));
+		_15 = updateRec(_COPY_STRUCT_PARAM(rec, Rectangle), _COPY_STRUCT_PARAM(p3, Point));
 	}
 	//assign %3 = %15  : {{int x,int y} p1,{int x,int y} p2}
 	rec = copy_Rectangle(_15);

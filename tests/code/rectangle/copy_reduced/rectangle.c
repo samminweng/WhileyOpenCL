@@ -25,8 +25,8 @@ void printf_Point(Point* point){
 }
 Rectangle* copy_Rectangle(Rectangle* _Rectangle){
 	Rectangle* new_Rectangle = malloc(sizeof(Rectangle));
-	new_Rectangle->p1 = copy_Point(_Rectangle->p1);
-	new_Rectangle->p2 = copy_Point(_Rectangle->p2);
+	_COPY_STRUCT(new_Rectangle->p1, _Rectangle->p1, Point);
+	_COPY_STRUCT(new_Rectangle->p2, _Rectangle->p2, Point);
 	return new_Rectangle;
 }
 Rectangle** copy_array_Rectangle(Rectangle** _Rectangle, long long _Rectangle_size){
