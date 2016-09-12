@@ -14,7 +14,7 @@ Matrix** copy_array_Matrix(Matrix** _Matrix, long long _Matrix_size){
 	return new_Matrix;
 }
 void free_Matrix(Matrix* matrix){
-	free2DArray(matrix->data, matrix->data_size, T_INT);
+	free2DArray_LONGLONG(matrix->data, matrix->data_size);
 	matrix->data = NULL;
 	free(matrix);
 }

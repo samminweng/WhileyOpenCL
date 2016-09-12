@@ -711,7 +711,6 @@ public class DeallocationAnalyzer extends Analyzer {
 		if (var == null || type == null || !stores.isCompoundType(type) && !(type instanceof Type.Union)) {
 			return "";
 		}
-
 		// Get function name
 		String name = "";
 		// Check if var_type is a structure
@@ -723,7 +722,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			// For integer array, byte array or NULL array
 			if (stores.isIntType(elem_type) || elem_type instanceof Type.Void || elem_type instanceof Type.Byte) {
 				if (dimension == 2) {
-					return "_DEALLOC_2DArray(" + var + ", T_INT);";
+					return "_DEALLOC_2DARRAY_LONGLONG(" + var + ");";
 				} else {
 					// Release the previously allocated variable, e.g. an array of integers
 					return "_DEALLOC(" + var + ");";
@@ -736,9 +735,7 @@ public class DeallocationAnalyzer extends Analyzer {
 				} else {
 					throw new RuntimeException("Not implemented");
 				}
-
 			}
-
 		} else if (type instanceof Type.Record) {
 			name = CodeGeneratorHelper.translateType(type, stores).replace("*", "");
 			return "_DEALLOC_STRUCT(" + var + ", " + name + ");";

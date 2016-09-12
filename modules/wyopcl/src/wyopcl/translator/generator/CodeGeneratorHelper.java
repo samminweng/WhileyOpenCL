@@ -321,7 +321,7 @@ public final class CodeGeneratorHelper {
 						// An array of integers
 						if (stores.getArrayDimension(member_type) == 2) {
 							// Free an array of integer arrays by using '_DEALLOC_2DArray' macro
-							statement.add("\tfree2DArray(" + input_member + ", " + input_member + "_size, T_INT);");
+							statement.add("\tfree2DArray_LONGLONG(" + input_member + ", " + input_member + "_size);");
 						} else {
 							statement.add("\tfree(" + input_member + ");");
 						}

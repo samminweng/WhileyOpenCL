@@ -1782,7 +1782,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * <pre>
 	 * <code>
-	 * _DEALLOC_2DArray(a, T_INT);	
+	 * _DEALLOC_2DArray_LONGLONG(a);	
 	 * a = gen2DArray(b, b_size, b_size_size);
 	 * a_size = b_size;
 	 * a_size_size = __size;

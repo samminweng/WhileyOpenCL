@@ -42,7 +42,7 @@ void printf1DArray(void* input, long long input_size, TYPENUM type);
 long long** create2DArray_LONGLONG(long long* arr,  long long n, long long m);
 long long** copy2DArray_LONGLONG(long long **arr, long long x, long long y);
 // Freed an array of arrays
-void free2DArray(void* ptr, long long size, TYPENUM type);
+void free2DArray_LONGLONG(long long** ptr, long long size);
 
 /**
  * Other built-in functions
@@ -227,10 +227,10 @@ long long* fromBytes(BYTE* arr, long long arr_size);
 			}\
 		})
 // Deallocate an array of an array
-#define _DEALLOC_2DArray(a, type) \
+#define _DEALLOC_2DARRAY_LONGLONG(a) \
 		({\
 			if(a##_dealloc){\
-				free2DArray(a, a##_size, type);\
+				free2DArray_LONGLONG(a, a##_size);\
 				a = NULL;\
 				a##_dealloc = false;\
 			}\

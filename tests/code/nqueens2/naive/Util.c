@@ -1,6 +1,6 @@
 #include "Util.h"
-// Free an array of integers array, i.e. int[][]  
-void free2DArray_LONG(long long** ptr, long long size){
+// Free an array of arrays, i.e. int[][]  
+void free2DArray_LONGLONG(long long** ptr, long long size){
 	// Free each sub-pointer.
 	for(int i=0;i<size;i++){
 		free(ptr[i]);
@@ -11,20 +11,6 @@ void free2DArray_LONG(long long** ptr, long long size){
 	ptr = NULL;
 }
 
-/**
- * Free a pointer of a pointer
- */
-void free2DArray(void* ptr, long long size, TYPENUM type){
-	switch(type){
-		case T_INT:
-			free2DArray_LONG((long long**)ptr, size);
-			break;
-		case T_BYTE:
-			fprintf(stderr, "Not implemented at 'free2DArray' functon in Util.c\n");
-			exit(-2);
-			break;
-	}
-}
 
 /**
  * Slice the array into two array from start to end (exclusively).
