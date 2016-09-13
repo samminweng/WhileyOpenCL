@@ -1,5 +1,5 @@
 #include "FunctionCall4.h"
-long long* func(_DECL_1DARRAY_PARAM(s), long long n){
+long long* func(_DECL_1DARRAY_PARAM(s), long long n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
 	_DECL_1DARRAY(t);
 	_DECL_1DARRAY(new_t);
@@ -25,6 +25,7 @@ long long* func(_DECL_1DARRAY_PARAM(s), long long n){
 	//update %3[%7] = %6 : int[] -> int[]
 	t[_7] = _6;
 	//return %3
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(t);
 	return t;
 	//goto blklab1
 	goto blklab1;
@@ -46,6 +47,7 @@ blklab0:;
 	//assign %4 = %13  : int[]
 	_UPDATE_1DARRAY(new_t, _13);
 	//return %4
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(new_t);
 	return new_t;
 //.blklab1
 blklab1:;
@@ -116,7 +118,7 @@ int main(int argc, char** args){
 	//invoke (%10) = (%1, %11) FunctionCall4:func : function(int[],int)->(int[])
 	{
 		_UPDATE_1DARRAY_SIZE(_10, a);
-		_10 = func(_1DARRAY_PARAM(a), _11);
+		_10 = func(_1DARRAY_PARAM(a), _11, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 	}
 	//assign %1 = %10  : int[]
 	_UPDATE_1DARRAY(a, _10);
@@ -173,7 +175,7 @@ blklab2:;
 	{
 		void* b_tmp;
 		_UPDATE_1DARRAY_SIZE(_28, b);
-		_28 = func(_COPY_1DARRAY_PARAM_LONGLONG(b), _29);
+		_28 = func(_COPY_1DARRAY_PARAM_LONGLONG(b), _29, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 	}
 	//assign %3 = %28  : int[]
 	_UPDATE_1DARRAY(c, _28);

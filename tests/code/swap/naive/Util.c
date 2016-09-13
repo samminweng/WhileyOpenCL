@@ -26,8 +26,6 @@ long long* slice(long long* arr, size_t arr_size, int start, int end){
 	return sub_arr;
 }
 
-
-
 /**
  * Given array size and initial value, create an array of long long integers. 
  */

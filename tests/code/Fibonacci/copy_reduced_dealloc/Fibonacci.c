@@ -1,5 +1,5 @@
 #include "Fibonacci.h"
-long long* fibonacci(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls), long long n){
+long long* fibonacci(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls), long long n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
 	_DECL_DEALLOC(_2);
 	long long _3 = 0;
@@ -46,7 +46,7 @@ blklab0:;
 	{
 		_UPDATE_1DARRAY_SIZE(_8, ls);
 		_DEALLOC(_8);
-		_8 = fibonacci(_1DARRAY_PARAM(ls), false, _10);
+		_8 = fibonacci(_1DARRAY_PARAM(ls), false, _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_RESET_DEALLOC(ls, "true-true-false" , "fibonacci");
 		_ADD_DEALLOC(_8);
 	}
@@ -75,6 +75,7 @@ blklab1:;
 	//return %0
 	_DEALLOC(_2);
 	_DEALLOC(_8);
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(ls);
 	return ls;
 	//return
 }
@@ -129,7 +130,7 @@ int main(int argc, char** args){
 	{
 		_UPDATE_1DARRAY_SIZE(_6, arr);
 		_DEALLOC(_6);
-		_6 = fibonacci(_1DARRAY_PARAM(arr), false, _8);
+		_6 = fibonacci(_1DARRAY_PARAM(arr), false, _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		_RESET_DEALLOC(arr, "true-true-false" , "fibonacci");
 		_ADD_DEALLOC(_6);
 	}

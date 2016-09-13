@@ -134,7 +134,7 @@ blklab0:;
 	//return
 }
 
-long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(pixels), long long width, long long height){
+long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(pixels), long long width, long long height, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_3);
 	_DECL_DEALLOC(_3);
 	long long size = 0;
@@ -376,6 +376,7 @@ blklab4:;
 	_DEALLOC(_16);
 	_DEALLOC(_29);
 	_DEALLOC(_42);
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(newPixels);
 	return newPixels;
 	//return
 }
@@ -599,7 +600,7 @@ int main(int argc, char** args){
 		void* pixels_tmp;
 		_UPDATE_1DARRAY_SIZE(_13, pixels);
 		_DEALLOC(_13);
-		_13 = sobelEdgeDetection(_COPY_1DARRAY_PARAM_LONGLONG(pixels), true, width, height);
+		_13 = sobelEdgeDetection(_COPY_1DARRAY_PARAM_LONGLONG(pixels), true, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_13));
 		_CALLEE_DEALLOC(pixels, "false-false-true" , "sobelEdgeDetection");
 		_ADD_DEALLOC(_13);
 	}

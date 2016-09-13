@@ -1,5 +1,5 @@
 #include "bubblesort.h"
-long long* bubbleSort(_DECL_1DARRAY_PARAM(items)){
+long long* bubbleSort(_DECL_1DARRAY_PARAM(items), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
 	long long length = 0;
 	long long last_swapped = 0;
@@ -99,6 +99,7 @@ blklab1:;
 //.blklab0
 blklab0:;
 	//return %0
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(items);
 	return items;
 	//return
 }
@@ -200,7 +201,7 @@ int main(int argc, char** args){
 	//invoke (%11) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		_UPDATE_1DARRAY_SIZE(_11, ys);
-		_11 = bubbleSort(_1DARRAY_PARAM(ys));
+		_11 = bubbleSort(_1DARRAY_PARAM(ys), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 	}
 	//assign %1 = %11  : int[]
 	_UPDATE_1DARRAY(ys, _11);
@@ -248,7 +249,7 @@ blklab5:;
 	//invoke (%25) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		_UPDATE_1DARRAY_SIZE(_25, ys);
-		_25 = bubbleSort(_1DARRAY_PARAM(ys));
+		_25 = bubbleSort(_1DARRAY_PARAM(ys), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 	}
 	//assign %1 = %25  : int[]
 	_UPDATE_1DARRAY(ys, _25);
@@ -294,7 +295,7 @@ blklab6:;
 	//invoke (%38) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		_UPDATE_1DARRAY_SIZE(_38, ys);
-		_38 = bubbleSort(_1DARRAY_PARAM(ys));
+		_38 = bubbleSort(_1DARRAY_PARAM(ys), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 	}
 	//assign %1 = %38  : int[]
 	_UPDATE_1DARRAY(ys, _38);
@@ -342,7 +343,7 @@ blklab7:;
 	//invoke (%52) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		_UPDATE_1DARRAY_SIZE(_52, ys);
-		_52 = bubbleSort(_1DARRAY_PARAM(ys));
+		_52 = bubbleSort(_1DARRAY_PARAM(ys), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 	}
 	//assign %1 = %52  : int[]
 	_UPDATE_1DARRAY(ys, _52);
@@ -410,7 +411,7 @@ blklab9:;
 	//invoke (%68) = (%4) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		_UPDATE_1DARRAY_SIZE(_68, arr);
-		_68 = bubbleSort(_1DARRAY_PARAM(arr));
+		_68 = bubbleSort(_1DARRAY_PARAM(arr), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
 	}
 	//assign %4 = %68  : int[]
 	_UPDATE_1DARRAY(arr, _68);

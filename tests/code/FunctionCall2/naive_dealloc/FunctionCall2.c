@@ -1,5 +1,5 @@
 #include "FunctionCall2.h"
-long long* func(_DECL_1DARRAY_PARAM(s), _DECL_DEALLOC_PARAM(s), long long n){
+long long* func(_DECL_1DARRAY_PARAM(s), _DECL_DEALLOC_PARAM(s), long long n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
 	_DECL_DEALLOC(_2);
 	_DECL_1DARRAY(t);
@@ -24,6 +24,7 @@ long long* func(_DECL_1DARRAY_PARAM(s), _DECL_DEALLOC_PARAM(s), long long n){
 	//return %3
 	_DEALLOC(s);
 	_DEALLOC(_2);
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(t);
 	return t;
 	//goto blklab1
 	goto blklab1;
@@ -32,6 +33,7 @@ blklab0:;
 	//return %0
 	_DEALLOC(_2);
 	_DEALLOC(t);
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(s);
 	return s;
 //.blklab1
 blklab1:;
@@ -118,7 +120,7 @@ int main(int argc, char** args){
 		void* a_tmp;
 		_UPDATE_1DARRAY_SIZE(_10, a);
 		_DEALLOC(_10);
-		_10 = func(_COPY_1DARRAY_PARAM_LONGLONG(a), false, _11);
+		_10 = func(_COPY_1DARRAY_PARAM_LONGLONG(a), false, _11, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 		_CALLER_DEALLOC(_10, a, "false-true-false" , "func");
 		_ADD_DEALLOC(_10);
 	}
@@ -186,7 +188,7 @@ blklab2:;
 		void* b_tmp;
 		_UPDATE_1DARRAY_SIZE(_28, b);
 		_DEALLOC(_28);
-		_28 = func(_COPY_1DARRAY_PARAM_LONGLONG(b), false, _29);
+		_28 = func(_COPY_1DARRAY_PARAM_LONGLONG(b), false, _29, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 		_CALLER_DEALLOC(_28, b, "false-true-true" , "func");
 		_ADD_DEALLOC(_28);
 	}

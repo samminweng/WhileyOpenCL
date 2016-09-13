@@ -1,10 +1,11 @@
 #include "FunctionCall3.h"
-long long* func(_DECL_1DARRAY_PARAM(s)){
+long long* func(_DECL_1DARRAY_PARAM(s), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
 	_DECL_1DARRAY(t);
 	//assign %2 = %0  : int[]
 	_COPY_1DARRAY_LONGLONG(t, s);
 	//return %2
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(t);
 	return t;
 	//return
 }
@@ -70,7 +71,7 @@ int main(int argc, char** args){
 	{
 		void* a_tmp;
 		_UPDATE_1DARRAY_SIZE(_10, a);
-		_10 = func(_COPY_1DARRAY_PARAM_LONGLONG(a));
+		_10 = func(_COPY_1DARRAY_PARAM_LONGLONG(a), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 	}
 	//assign %1 = %10  : int[]
 	_COPY_1DARRAY_LONGLONG(a, _10);
@@ -125,7 +126,7 @@ blklab0:;
 	{
 		void* b_tmp;
 		_UPDATE_1DARRAY_SIZE(_27, b);
-		_27 = func(_COPY_1DARRAY_PARAM_LONGLONG(b));
+		_27 = func(_COPY_1DARRAY_PARAM_LONGLONG(b), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 	}
 	//assign %3 = %27  : int[]
 	_COPY_1DARRAY_LONGLONG(c, _27);

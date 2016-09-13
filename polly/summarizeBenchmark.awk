@@ -93,7 +93,7 @@ BEGIN {
 	parameters["GCD"]="100 150 200";
 	parameters["CoinGame"]="1000 2000 3000";
 	parameters["SobelEdge"] = "256 512 1024";
-	parameters["LZ77"]="1000 10000 100000";
+	parameters["LZ77"]="1000 10000 50000";
 	parameters["NQueens"]="8 10 12 14 15";
 
 	# The number of threads

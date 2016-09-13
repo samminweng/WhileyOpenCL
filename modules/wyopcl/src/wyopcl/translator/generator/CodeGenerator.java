@@ -208,9 +208,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			declaration = "int main(int argc, char** args)";
 		} else {
 			// Translate function declaration in C
+			// Get the return type
+			Type ret_type = null;
 			if (function.type().returns().size() > 0) {
+				ret_type = function.type().returns().get(0);
 				// Translate return type
-				declaration += CodeGeneratorHelper.translateType(function.type().returns().get(0), stores);
+				declaration += CodeGeneratorHelper.translateType(ret_type, stores);
 			} else {
 				// no return values
 				declaration += "void";
@@ -221,6 +224,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			List<Type> params = function.type().params();
 			// Generate input parameters separated by comma
 			List<String> parameters = new ArrayList<String>();
+			// Parameters are defined in the order as the source Whiley program
 			for (int op = 0; op < params.size(); op++) {
 				Type parameter_type = params.get(op);
 				String var = stores.getVar(op, function);
@@ -252,6 +256,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				});
 			}
 
+			// Check if the return type is an array
+			if(ret_type != null && ret_type instanceof Type.Array){
+				Type.Array arr_type = (Type.Array)ret_type;
+				// Get array dimension
+				int dimension = stores.getArrayDimension(arr_type);
+				// Declare the call-by-reference size variable for output array, e.g. 'size_t* a_size' 
+				parameters.add("_DECL_"+dimension+"DARRAYSIZE_PARAM_CALLBYREFERENCE");
+				
+			}
+			// Separate each parameter with ',' sign
 			declaration += parameters.stream().map(i -> i.toString()).collect(Collectors.joining(", "));
 
 			declaration += ")";
@@ -739,7 +753,23 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 			});
 		}
-
+		
+		// Add extra call-by-ref size parameter for output array
+		if(code.targets().length>0){
+			// Get the return type
+			Type ret_type = stores.getRawType(code.target(0), function);
+			// Check if the return is an array 
+			if(ret_type instanceof Type.Array){
+				// Get array dimension
+				int dimension = stores.getArrayDimension((Type.Array)ret_type);
+				// Get return variable
+				String ret_var = stores.getVar(code.target(0), function);
+				// Pass the call-by-ref size variable to the function call
+				parameters.add("_"+dimension+"DARRAYSIZE_PARAM_CALLBYREFERENCE("+ret_var+")");
+			}
+		}
+		
+		// Separate each parameter with ',' sign
 		String rhs = parameters.stream().filter(s -> !s.equals("")).map(s -> s.toString())
 				.collect(Collectors.joining(", "));
 
@@ -1251,17 +1281,30 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		// Add return statements
 		if (function.isFunction()) {
-			// Generate a statement that returns a value to a calling function
+			// Generate return statement for a function
 			if (code.operands().length > 0) {
 				// Add the code to deallocate all variables.
 				this.deallocatedAnalyzer.ifPresent(a -> {
 					statements.addAll(a.preDealloc(code, function, stores));
 				});
-				statements.add(indent + "return " + stores.getVar(code.operand(0), function) + ";");
+				
+				// Get return variable
+				String ret_var = stores.getVar(code.operand(0), function);
+				
+				// Get the return type
+				Type ret_type = code.type(0);
+				if(ret_type instanceof Type.Array){
+					Type.Array arr_type = (Type.Array)ret_type;
+					// Get the array dimension
+					int dimension = stores.getArrayDimension(arr_type);
+					// Propagate the size of output array to passing call-by-reference parameter
+					statements.add(indent + "_UPDATE_"+dimension+"DARRAYSZIE_PARAM_CALLBYREFERENCE(" + ret_var + ");");
+				}
+				
+				statements.add(indent + "return " + ret_var + ";");
 			}
-			// Skip the translation of return statement for a function
 		} else {
-			// Generate system exit statement
+			// Generate exit statement for a method
 			if (function.name().equals("main")) {
 				// Add the code to deallocate all variables.
 				this.deallocatedAnalyzer.ifPresent(a -> {

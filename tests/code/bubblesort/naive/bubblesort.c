@@ -1,5 +1,5 @@
 #include "bubblesort.h"
-long long* bubbleSort(_DECL_1DARRAY_PARAM(items)){
+long long* bubbleSort(_DECL_1DARRAY_PARAM(items), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
 	long long length = 0;
 	long long last_swapped = 0;
@@ -99,6 +99,7 @@ blklab1:;
 //.blklab0
 blklab0:;
 	//return %0
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(items);
 	return items;
 	//return
 }
@@ -201,7 +202,7 @@ int main(int argc, char** args){
 	{
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_11, ys);
-		_11 = bubbleSort(_COPY_1DARRAY_PARAM_LONGLONG(ys));
+		_11 = bubbleSort(_COPY_1DARRAY_PARAM_LONGLONG(ys), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 	}
 	//assign %1 = %11  : int[]
 	_COPY_1DARRAY_LONGLONG(ys, _11);
@@ -250,7 +251,7 @@ blklab5:;
 	{
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_25, ys);
-		_25 = bubbleSort(_COPY_1DARRAY_PARAM_LONGLONG(ys));
+		_25 = bubbleSort(_COPY_1DARRAY_PARAM_LONGLONG(ys), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 	}
 	//assign %1 = %25  : int[]
 	_COPY_1DARRAY_LONGLONG(ys, _25);
@@ -297,7 +298,7 @@ blklab6:;
 	{
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_38, ys);
-		_38 = bubbleSort(_COPY_1DARRAY_PARAM_LONGLONG(ys));
+		_38 = bubbleSort(_COPY_1DARRAY_PARAM_LONGLONG(ys), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 	}
 	//assign %1 = %38  : int[]
 	_COPY_1DARRAY_LONGLONG(ys, _38);
@@ -346,7 +347,7 @@ blklab7:;
 	{
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_52, ys);
-		_52 = bubbleSort(_COPY_1DARRAY_PARAM_LONGLONG(ys));
+		_52 = bubbleSort(_COPY_1DARRAY_PARAM_LONGLONG(ys), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 	}
 	//assign %1 = %52  : int[]
 	_COPY_1DARRAY_LONGLONG(ys, _52);
@@ -415,7 +416,7 @@ blklab9:;
 	{
 		void* arr_tmp;
 		_UPDATE_1DARRAY_SIZE(_68, arr);
-		_68 = bubbleSort(_COPY_1DARRAY_PARAM_LONGLONG(arr));
+		_68 = bubbleSort(_COPY_1DARRAY_PARAM_LONGLONG(arr), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
 	}
 	//assign %4 = %68  : int[]
 	_COPY_1DARRAY_LONGLONG(arr, _68);

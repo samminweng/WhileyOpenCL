@@ -1,5 +1,5 @@
 #include "CoinGame2.h"
-long long* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), long long n){
+long long* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), long long n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
 	_DECL_DEALLOC(_2);
 	long long s = 0;
@@ -306,6 +306,7 @@ blklab0:;
 	_DEALLOC(_11);
 	_DEALLOC(_13);
 	_DEALLOC(_15);
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(moves);
 	return moves;
 	//return
 }
@@ -353,7 +354,7 @@ int main(int argc, char** args){
 	{
 		_UPDATE_1DARRAY_SIZE(_8, moves);
 		_DEALLOC(_8);
-		_8 = findMoves(_1DARRAY_PARAM(moves), false, n);
+		_8 = findMoves(_1DARRAY_PARAM(moves), false, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_RESET_DEALLOC(moves, "true-true-false" , "findMoves");
 		_ADD_DEALLOC(_8);
 	}

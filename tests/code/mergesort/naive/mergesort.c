@@ -1,5 +1,5 @@
 #include "mergesort.h"
-long long* sortV1(_DECL_1DARRAY_PARAM(items), long long start, long long end){
+long long* sortV1(_DECL_1DARRAY_PARAM(items), long long start, long long end, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_3);
 	long long pivot = 0;
 	_DECL_1DARRAY(lhs);
@@ -72,7 +72,7 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	{
 		void* lhs_tmp;
 		_UPDATE_1DARRAY_SIZE(_16, lhs);
-		_16 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(lhs), _17, pivot);
+		_16 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(lhs), _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 	}
 	//assign %5 = %16  : int[]
 	_COPY_1DARRAY_LONGLONG(lhs, _16);
@@ -89,7 +89,7 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	{
 		void* rhs_tmp;
 		_UPDATE_1DARRAY_SIZE(_19, rhs);
-		_19 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(rhs), _20, _21);
+		_19 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(rhs), _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
 	}
 	//assign %6 = %19  : int[]
 	_COPY_1DARRAY_LONGLONG(rhs, _19);
@@ -219,6 +219,7 @@ blklab7:;
 //.blklab0
 blklab0:;
 	//return %0
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(items);
 	return items;
 	//return
 }
@@ -334,7 +335,7 @@ int main(int argc, char** args){
 	{
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_11, ys);
-		_11 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(ys), _12, _13);
+		_11 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(ys), _12, _13, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 	}
 	//assign %1 = %11  : int[]
 	_COPY_1DARRAY_LONGLONG(ys, _11);
@@ -383,7 +384,7 @@ blklab9:;
 	{
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_25, ys);
-		_25 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(ys), _26, _27);
+		_25 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(ys), _26, _27, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 	}
 	//assign %1 = %25  : int[]
 	_COPY_1DARRAY_LONGLONG(ys, _25);
@@ -430,7 +431,7 @@ blklab10:;
 	{
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_38, ys);
-		_38 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(ys), _39, _40);
+		_38 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(ys), _39, _40, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 	}
 	//assign %1 = %38  : int[]
 	_COPY_1DARRAY_LONGLONG(ys, _38);
@@ -479,7 +480,7 @@ blklab11:;
 	{
 		void* ys_tmp;
 		_UPDATE_1DARRAY_SIZE(_52, ys);
-		_52 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(ys), _53, _54);
+		_52 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(ys), _53, _54, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 	}
 	//assign %1 = %52  : int[]
 	_COPY_1DARRAY_LONGLONG(ys, _52);
@@ -554,7 +555,7 @@ blklab13:;
 	{
 		void* arr_tmp;
 		_UPDATE_1DARRAY_SIZE(_70, arr);
-		_70 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(arr), _71, _73);
+		_70 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(arr), _71, _73, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_70));
 	}
 	//assign %4 = %70  : int[]
 	_COPY_1DARRAY_LONGLONG(arr, _70);

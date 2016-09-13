@@ -1,5 +1,5 @@
 #include "reverse.h"
-long long* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls)){
+long long* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
 	_DECL_DEALLOC(_1);
 	long long i = 0;
@@ -88,6 +88,7 @@ blklab0:;
 	_DEALLOC(ls);
 	_DEALLOC(_1);
 	_DEALLOC(_8);
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(r);
 	return r;
 	//return
 }
@@ -154,7 +155,7 @@ int main(int argc, char** args){
 		void* _11_tmp;
 		_UPDATE_1DARRAY_SIZE(_5, _11);
 		_DEALLOC(_5);
-		_5 = reverse(_COPY_1DARRAY_PARAM_LONGLONG(_11), true);
+		_5 = reverse(_COPY_1DARRAY_PARAM_LONGLONG(_11), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
 		_CALLEE_DEALLOC(_11, "false-false-false" , "reverse");
 		_ADD_DEALLOC(_5);
 	}
@@ -234,7 +235,7 @@ blklab5:;
 		void* arr_tmp;
 		_UPDATE_1DARRAY_SIZE(_27, arr);
 		_DEALLOC(_27);
-		_27 = reverse(_COPY_1DARRAY_PARAM_LONGLONG(arr), true);
+		_27 = reverse(_COPY_1DARRAY_PARAM_LONGLONG(arr), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 		_CALLEE_DEALLOC(arr, "false-false-false" , "reverse");
 		_ADD_DEALLOC(_27);
 	}

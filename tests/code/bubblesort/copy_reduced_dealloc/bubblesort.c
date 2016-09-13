@@ -1,5 +1,5 @@
 #include "bubblesort.h"
-long long* bubbleSort(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items)){
+long long* bubbleSort(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
 	_DECL_DEALLOC(_1);
 	long long length = 0;
@@ -101,6 +101,7 @@ blklab1:;
 blklab0:;
 	//return %0
 	_DEALLOC(_1);
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(items);
 	return items;
 	//return
 }
@@ -225,7 +226,7 @@ int main(int argc, char** args){
 	{
 		_UPDATE_1DARRAY_SIZE(_11, ys);
 		_DEALLOC(_11);
-		_11 = bubbleSort(_1DARRAY_PARAM(ys), false);
+		_11 = bubbleSort(_1DARRAY_PARAM(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		_RESET_DEALLOC(ys, "true-true-false" , "bubbleSort");
 		_ADD_DEALLOC(_11);
 	}
@@ -284,7 +285,7 @@ blklab5:;
 	{
 		_UPDATE_1DARRAY_SIZE(_25, ys);
 		_DEALLOC(_25);
-		_25 = bubbleSort(_1DARRAY_PARAM(ys), false);
+		_25 = bubbleSort(_1DARRAY_PARAM(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 		_RESET_DEALLOC(ys, "true-true-false" , "bubbleSort");
 		_ADD_DEALLOC(_25);
 	}
@@ -341,7 +342,7 @@ blklab6:;
 	{
 		_UPDATE_1DARRAY_SIZE(_38, ys);
 		_DEALLOC(_38);
-		_38 = bubbleSort(_1DARRAY_PARAM(ys), false);
+		_38 = bubbleSort(_1DARRAY_PARAM(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 		_RESET_DEALLOC(ys, "true-true-false" , "bubbleSort");
 		_ADD_DEALLOC(_38);
 	}
@@ -400,7 +401,7 @@ blklab7:;
 	{
 		_UPDATE_1DARRAY_SIZE(_52, ys);
 		_DEALLOC(_52);
-		_52 = bubbleSort(_1DARRAY_PARAM(ys), false);
+		_52 = bubbleSort(_1DARRAY_PARAM(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 		_RESET_DEALLOC(ys, "true-true-false" , "bubbleSort");
 		_ADD_DEALLOC(_52);
 	}
@@ -479,7 +480,7 @@ blklab9:;
 	{
 		_UPDATE_1DARRAY_SIZE(_68, arr);
 		_DEALLOC(_68);
-		_68 = bubbleSort(_1DARRAY_PARAM(arr), false);
+		_68 = bubbleSort(_1DARRAY_PARAM(arr), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
 		_RESET_DEALLOC(arr, "true-true-false" , "bubbleSort");
 		_ADD_DEALLOC(_68);
 	}

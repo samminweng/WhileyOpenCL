@@ -1,5 +1,5 @@
 #include "CoinGame2.h"
-long long* findMoves(_DECL_1DARRAY_PARAM(moves), long long n){
+long long* findMoves(_DECL_1DARRAY_PARAM(moves), long long n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
 	long long s = 0;
 	_DECL_1DARRAY(x);
@@ -280,6 +280,7 @@ blklab1:;
 //.blklab0
 blklab0:;
 	//return %0
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(moves);
 	return moves;
 	//return
 }
@@ -317,7 +318,7 @@ int main(int argc, char** args){
 	//invoke (%8) = (%2, %1) CoinGame2:findMoves : function(int[],int)->(int[])
 	{
 		_UPDATE_1DARRAY_SIZE(_8, moves);
-		_8 = findMoves(_1DARRAY_PARAM(moves), n);
+		_8 = findMoves(_1DARRAY_PARAM(moves), n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 	}
 	//assign %2 = %8  : int[]
 	_UPDATE_1DARRAY(moves, _8);
