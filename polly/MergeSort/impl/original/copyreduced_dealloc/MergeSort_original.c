@@ -1,5 +1,5 @@
 #include "MergeSort_original.h"
-long long* sortV1(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), long long start, long long end){
+long long* sortV1(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), long long start, long long end, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_3);
 	_DECL_DEALLOC(_3);
 	long long pivot = 0;
@@ -83,7 +83,7 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	{
 		_UPDATE_1DARRAY_SIZE(_16, lhs);
 		_DEALLOC(_16);
-		_16 = sortV1(_1DARRAY_PARAM(lhs), false, _17, pivot);
+		_16 = sortV1(_1DARRAY_PARAM(lhs), false, _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		_RESET_DEALLOC(lhs, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_16);
 	}
@@ -108,7 +108,7 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	{
 		_UPDATE_1DARRAY_SIZE(_19, rhs);
 		_DEALLOC(_19);
-		_19 = sortV1(_1DARRAY_PARAM(rhs), false, _20, _21);
+		_19 = sortV1(_1DARRAY_PARAM(rhs), false, _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
 		_RESET_DEALLOC(rhs, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_19);
 	}
@@ -249,6 +249,7 @@ blklab0:;
 	_DEALLOC(_16);
 	_DEALLOC(_18);
 	_DEALLOC(_19);
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(items);
 	return items;
 	//return
 }
@@ -347,7 +348,7 @@ blklab10:;
 	{
 		_UPDATE_1DARRAY_SIZE(_15, arr);
 		_DEALLOC(_15);
-		_15 = sortV1(_1DARRAY_PARAM(arr), false, _16, max);
+		_15 = sortV1(_1DARRAY_PARAM(arr), false, _16, max, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
 		_RESET_DEALLOC(arr, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_15);
 	}

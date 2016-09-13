@@ -132,7 +132,7 @@ blklab0:;
 	//return
 }
 
-long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), long long width, long long height){
+long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), long long width, long long height, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_3);
 	long long size = 0;
 	_DECL_1DARRAY(newPixels);
@@ -344,6 +344,7 @@ blklab5:;
 //.blklab4
 blklab4:;
 	//return %5
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(newPixels);
 	return newPixels;
 	//return
 }
@@ -533,7 +534,7 @@ int main(int argc, char** args){
 	{
 		void* pixels_tmp;
 		_UPDATE_1DARRAY_SIZE(_20, pixels);
-		_20 = sobelEdgeDetection(_COPY_1DARRAY_PARAM_LONGLONG(pixels), width, height);
+		_20 = sobelEdgeDetection(_COPY_1DARRAY_PARAM_LONGLONG(pixels), width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
 	}
 	//assign %7 = %20  : int[]
 	_COPY_1DARRAY_LONGLONG(newPixels, _20);

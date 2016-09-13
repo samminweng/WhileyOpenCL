@@ -8,18 +8,11 @@ typedef struct{
 void printf_Match(Match* _match);
 Match* copy_Match(Match* _match);
 void free_Match(Match* _match);
-typedef struct{
-	long long length;
-	_DECL_1DARRAY_MEMBER_BYTE(items);
-} Data;
-void printf_Data(Data* _data);
-Data* copy_Data(Data* _data);
-void free_Data(Data* _data);
-long long match(Data* input, long long offset, long long end);
-Match* findLongestMatch(Data* input, long long pos);
-Data* append_byte(Data* data, BYTE item);
-Data* write_u1(Data* data, long long u1);
-Data* compress(Data* input);
-Data* decompress(Data* input);
-Data* init(long long repeat);
+long long match(BYTE* data, long long data_size, long long offset, long long end);
+Match* findLongestMatch(BYTE* data, long long data_size, long long pos);
+BYTE* append_byte(BYTE* items, long long items_size, BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE);
+BYTE* write_u1(BYTE* bytes, long long bytes_size, long long u1, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE);
+BYTE* compress(BYTE* data, long long data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE);
+BYTE* decompress(BYTE* data, long long data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE);
+BYTE* init(long long repeat, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE);
 int main(int argc, char** args);

@@ -116,11 +116,26 @@ long long* fromBytes(BYTE* arr, size_t arr_size);
 #define _DECL_DEALLOC(a) bool a##_dealloc = false;
 #define _DECL_DEALLOC_PARAM(a) bool a##_dealloc
 #define _DECL_1DARRAY_PARAM(a) long long* a, size_t a##_size
- // Declare a BYTE array
-#define _DECL_1DARRAY_MEMBER_BYTE(a) BYTE* a; size_t a##_size; 
-#define _DECL_1DARRAY_MEMBER(a) long long* a; size_t a##_size;
 #define _DECL_2DARRAY_PARAM(a) long long** a, size_t a##_size, size_t a##_size_size
+#define _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE size_t* _size_call_by_ref
+#define _DECL_2DARRAYSIZE_PARAM_CALLBYREFERENCE size_t* _size_call_by_ref, size_t _size_size_call_by_ref
+// Declare a BYTE array
+#define _DECL_1DARRAY_MEMBER(a) long long* a; size_t a##_size;
+#define _DECL_1DARRAY_MEMBER_BYTE(a) BYTE* a; size_t a##_size; 
 #define _DECL_2DARRAY_MEMBER(a) long long** a; size_t a##_size; size_t a##_size_size;
+/*
+* Passing parameter Macros
+*
+*/
+// Pass a structure parameter
+#define _STRUCT_PARAM(a) a
+// Pass a 1D array and array size
+#define _1DARRAY_PARAM(a) a, a##_size
+// Pass 2D array variable along with two array size variable
+#define _2DARRAY_PARAM(a) a, a##_size, a##_size_size
+// Pass call-by-reference array size
+#define _1DARRAYSIZE_PARAM_CALLBYREFERENCE(a) &a##_size
+#define _2DARRAYSIZE_PARAM_CALLBYREFERENCE(a) &a##_size, &a##_size_size
 /***
  * Create (NEW) Macros
  *
@@ -138,7 +153,7 @@ long long* fromBytes(BYTE* arr, size_t arr_size);
 #define _NEW_1DARRAY_STRUCT(a, size, b, name) \
  		({\
  			a = malloc(size*sizeof(name*));\
- 			for(int i=0;i<size;i++){\
+ 			for(size_t i=0;i<size;i++){\
  				a[i] = copy_##name(b);\
  			}\
  			a##_size = size;\
@@ -164,7 +179,7 @@ long long* fromBytes(BYTE* arr, size_t arr_size);
 #define _COPY_1DARRAY_STRUCT(a, b, name) \
 		({\
 			a = malloc(b##_size*sizeof(name*));\
-			for(int i=0;i<b##_size;i++){\
+			for(size_t i=0;i<b##_size;i++){\
  				a[i] = copy_##name(b[i]);\
  		  	}\
  			a##_size = b##_size;\
@@ -179,12 +194,10 @@ long long* fromBytes(BYTE* arr, size_t arr_size);
 // Update the array size
 #define _UPDATE_1DARRAY_SIZE(a, b) a##_size = b##_size;
 #define _UPDATE_2DARRAY_SIZE(a, b) a##_size = b##_size; a##_size_size = b##_size_size;
-// Concatenate struct and deallocation flag
-#define _STRUCT_PARAM(a) a
-// Concatenate 1D array variable, array size variable and deallocation flag
-#define _1DARRAY_PARAM(a) a, a##_size
-// Concatenate 2D array variable and array size variable
-#define _2DARRAY_PARAM(a) a, a##_size, a##_size_size
+// Update the call-by-reference passing parameter with the size variable of 1D array
+#define _UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(a) *_size_call_by_ref = a##_size
+// Update the call-by-reference passing parameter with the size variable of 2D array
+#define _UPDATE_2DARRAYSZIE_PARAM_CALLBYREFERENCE(a) *_size_call_by_ref = a##_size; *_size_size_call_by_ref = a##_size_size;
 /***
 *  Print Macros
 * 
@@ -197,7 +210,7 @@ long long* fromBytes(BYTE* arr, size_t arr_size);
 // Print an array of structure pointer
 #define _PRINT_1DARRAY_STRUCT(name, a) \
 		({\
-			for(int i=0;i<a##_size;i++){\
+			for(size_t i=0;i<a##_size;i++){\
 				printf_##name(a[i]);\
 			}\
 		})
@@ -209,7 +222,7 @@ long long* fromBytes(BYTE* arr, size_t arr_size);
 // The standard structure member function code to free an array of structure pointers
 #define _FREE_1DARRAY_STRUCT(a, name) \
 		({\
-			for(int i=0;i<a##_size;i++){\
+			for(size_t i=0;i<a##_size;i++){\
 				free_##name(a[i]);\
 				a[i] = NULL;\
 			}\

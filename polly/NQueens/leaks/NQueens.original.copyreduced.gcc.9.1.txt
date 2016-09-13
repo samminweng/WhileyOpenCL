@@ -1,24 +1,24 @@
-==17150== Memcheck, a memory error detector
-==17150== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==17150== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==17150== Command: ./out/NQueens.original.copyreduced.gcc.out 9
-==17150== Parent PID: 7419
-==17150== 
-==17150== 
-==17150== HEAP SUMMARY:
-==17150==     in use at exit: 135,008 bytes in 8,412 blocks
-==17150==   total heap usage: 8,412 allocs, 0 frees, 135,008 bytes allocated
-==17150== 
-==17150== LEAK SUMMARY:
-==17150==    definitely lost: 134,752 bytes in 8,400 blocks
-==17150==    indirectly lost: 16 bytes in 1 blocks
-==17150==      possibly lost: 0 bytes in 0 blocks
-==17150==    still reachable: 240 bytes in 11 blocks
-==17150==         suppressed: 0 bytes in 0 blocks
-==17150== Rerun with --leak-check=full to see details of leaked memory
-==17150== 
-==17150== For counts of detected and suppressed errors, rerun with: -v
-==17150== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==15120== Memcheck, a memory error detector
+==15120== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==15120== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==15120== Command: ./out/NQueens.original.copyreduced.gcc.out 9
+==15120== Parent PID: 7419
+==15120== 
+==15120== 
+==15120== HEAP SUMMARY:
+==15120==     in use at exit: 135,008 bytes in 8,412 blocks
+==15120==   total heap usage: 8,412 allocs, 0 frees, 135,008 bytes allocated
+==15120== 
+==15120== LEAK SUMMARY:
+==15120==    definitely lost: 134,752 bytes in 8,400 blocks
+==15120==    indirectly lost: 16 bytes in 1 blocks
+==15120==      possibly lost: 0 bytes in 0 blocks
+==15120==    still reachable: 240 bytes in 11 blocks
+==15120==         suppressed: 0 bytes in 0 blocks
+==15120== Rerun with --leak-check=full to see details of leaked memory
+==15120== 
+==15120== For counts of detected and suppressed errors, rerun with: -v
+==15120== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -26,7 +26,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3701.882
+cpu MHz		: 3676.117
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -53,7 +53,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3701.882
+cpu MHz		: 3600.414
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -80,7 +80,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3705.734
+cpu MHz		: 3845.585
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -107,7 +107,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3703.875
+cpu MHz		: 3551.007
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -134,7 +134,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3700.023
+cpu MHz		: 3898.578
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -161,7 +161,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3701.750
+cpu MHz		: 3699.890
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -188,7 +188,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3699.890
+cpu MHz		: 3570.132
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -215,7 +215,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3700.289
+cpu MHz		: 3801.757
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

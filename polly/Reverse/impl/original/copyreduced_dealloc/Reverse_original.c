@@ -1,5 +1,5 @@
 #include "Reverse_original.h"
-long long* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls)){
+long long* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
 	_DECL_DEALLOC(_1);
 	long long i = 0;
@@ -88,6 +88,7 @@ blklab0:;
 	_DEALLOC(ls);
 	_DEALLOC(_1);
 	_DEALLOC(_8);
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(r);
 	return r;
 	//return
 }
@@ -183,7 +184,7 @@ blklab5:;
 	{
 		_UPDATE_1DARRAY_SIZE(_15, arr);
 		_DEALLOC(_15);
-		_15 = reverse(_1DARRAY_PARAM(arr), false);
+		_15 = reverse(_1DARRAY_PARAM(arr), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
 		_RETAIN_DEALLOC(arr, "false-false-false" , "reverse");
 		_ADD_DEALLOC(_15);
 	}

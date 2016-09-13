@@ -1,5 +1,5 @@
 #include "BubbleSort_original.h"
-long long* bubbleSort(_DECL_1DARRAY_PARAM(items)){
+long long* bubbleSort(_DECL_1DARRAY_PARAM(items), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
 	long long length = 0;
 	long long last_swapped = 0;
@@ -99,6 +99,7 @@ blklab1:;
 //.blklab0
 blklab0:;
 	//return %0
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(items);
 	return items;
 	//return
 }
@@ -175,7 +176,7 @@ blklab6:;
 	{
 		void* arr_tmp;
 		_UPDATE_1DARRAY_SIZE(_15, arr);
-		_15 = bubbleSort(_COPY_1DARRAY_PARAM_LONGLONG(arr));
+		_15 = bubbleSort(_COPY_1DARRAY_PARAM_LONGLONG(arr), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
 	}
 	//assign %4 = %15  : int[]
 	_COPY_1DARRAY_LONGLONG(arr, _15);

@@ -1,17 +1,4 @@
 #include "Util.h"
-// Free an array of arrays, i.e. int[][]  
-void free2DArray_LONGLONG(long long** ptr, size_t size){
-	// Free each sub-pointer.
-	for(int i=0;i<size;i++){
-		free(ptr[i]);
-		ptr[i] = NULL;
-	}
-	// Free top-level pointer.
-	free(ptr);
-	ptr = NULL;
-}
-
-
 /**
  * Slice the array into two array from start to end (exclusively).
  */
@@ -89,31 +76,6 @@ long long* copy1DArray_LONGLONG(long long *arr, size_t size){
 	memcpy(ptr, arr, size * sizeof(long long));
 	return ptr;
 }
-
-/**
- * Create an 2D array of given dimensions (n * m)
- */
-long long** create2DArray_LONGLONG(long long* arr, size_t n, size_t m){
-	long long** _2DArray = NULL;
-	// Allocate the array
-	_2DArray = (long long**)malloc(n*sizeof(long long*));
-	if(_2DArray == NULL){
-		fprintf(stderr, "fail to allocate the memory at gen2DArray function in Util.c\n");
-		exit(-2);
-	}
-	long long size = m*sizeof(long long);
-	for(size_t i=0;i<n;i++){
-		// Copy the input array and assign it to matrix.
-		_2DArray[i] = (long long*)malloc(size);
-		if(_2DArray[i] == NULL){
-			fprintf(stderr, "fail to allocate the memory at gen2DArray function in Util.c\n");
-			exit(-2);
-		}
-		memcpy(_2DArray[i], arr, size);
-	}
-	return _2DArray;
-}
-
 
 /**
  *  Combine an array of integers into an integer,
@@ -202,69 +164,109 @@ int isArrayEqual(long long* arr1, size_t arr1_size, long long* arr2, size_t arr2
 	return 1;
 }
 
-// Clone 2D array with given array size.
-long long** copy2DArray_LONGLONG(long long **arr, size_t x, size_t y){
-	long long **newMatrix = NULL;
-	newMatrix = (long long**)malloc(x*sizeof(long long*));
-	if(newMatrix == NULL){
-		fprintf(stderr, "fail to malloc at copy2DArray_LONGLONG function in Util.c\n");
+
+/* 
+
+//Create 2D array using an array of pointers, i.e. allocating each sub-array in different memory space
+long long** create2DArray_LONGLONG(long long* arr, size_t n, size_t m){
+	long long** _2DArray = NULL;
+	// Allocate the array
+	_2DArray = (long long**)malloc(n*sizeof(long long*));
+	if(_2DArray == NULL){
+		fprintf(stderr, "fail to allocate the memory at create2DArray_LONGLONG function in Util.c\n");
 		exit(-2);
 	}
-	size_t size = y*sizeof(long long);
-	for(size_t i=0;i<x;i++){
-		newMatrix[i] = (long long*)malloc(size);
-		if(newMatrix[i] == NULL){
-			fprintf(stderr, "fail to malloc at copy2DArray_LONGLONG function in Util.c\n");
+	long long size = m*sizeof(long long);
+	for(size_t i=0;i<n;i++){
+		// Copy the input array and assign it to matrix.
+		_2DArray[i] = (long long*)malloc(size);
+		if(_2DArray[i] == NULL){
+			fprintf(stderr, "fail to allocate the memory at create2DArray_LONGLONG function in Util.c\n");
 			exit(-2);
 		}
-		memcpy(newMatrix[i], arr[i], size);
+		memcpy(_2DArray[i], arr, size);
 	}
-	return newMatrix;
+	return _2DArray;
+}
+
+
+// Free 2D array 
+void free2DArray_LONGLONG(long long** ptr, size_t size){
+	// Free each sub-pointer.
+	for(int i=0;i<size;i++){
+		free(ptr[i]);
+		ptr[i] = NULL;
+	}
+	// Free upper-level pointer.
+	free(ptr);
+	ptr = NULL;
+}
+*
+*/
+
+// Free an array of arrays
+void free2DArray_LONGLONG(long long** ptr, size_t size){
+	// Free the first pointer as it is actually allocated 
+	free(ptr[0]);
+	// Free upper-level pointer.
+	free(ptr);
+	ptr = NULL;
 }
 
 /**
- * Append op1 and op2 arrays into a new array.
- * This append function meets value semantics
- * as it creates a new array and makes no change to op1 and op2 arrays.
+ * Given 1D array, create an 2D array of given dimensions (n * m) using one chuck of contiguous memory space  
  */
-long long* append(long long *arr1, size_t arr1_size, long long* arr2, size_t arr2_size) {
-	long long *ret_arr = NULL;
-	long long size = 0;
-	//Get the size of return array.
-	size = arr1_size + arr2_size;
-	//Allocate the return array.
-	ret_arr = (long long*) realloc(arr1, size * sizeof(long long));
-	//Check if the memory allocation is successful.
-	if (ret_arr == NULL) {
-		fprintf(stderr, "fail to malloc at append function in Util.c\n");
+long long** create2DArray_LONGLONG(long long* arr, size_t n, size_t m){
+	long long** _2DArray = NULL;
+	// Allocate an array of pointers
+	_2DArray = (long long**)malloc(n*sizeof(long long*));
+	if(_2DArray == NULL){
+		fprintf(stderr, "fail to allocate the memory at create2DArray_LONGLONG function in Util.c\n");
 		exit(-2);
 	}
-	//Fill in op_2 array
-	memcpy(&ret_arr[arr1_size], arr2, arr2_size * sizeof(long long));
-	//Return the array
-	return ret_arr;
+	// The size of each row
+	size_t r_size = m*sizeof(long long);
+	// Create a chuck of contiguous memory space to store all array elements
+	_2DArray[0] = (long long*)malloc(r_size*n);
+	if(_2DArray[0] == NULL){
+		fprintf(stderr, "fail to allocate the memory at create2DArray_LONGLONG function in Util.c\n");
+		exit(-2);
+	}
+
+	// Flatten the allocated memory to a list of pointers
+	for(size_t i=0;i<n;i++){
+		// Compute the address and assign the address to each pointer 
+		_2DArray[i] = (*_2DArray+ i* m);
+		// Copy the input array 'arr' to each sub-array
+		memcpy(_2DArray[i], arr, r_size);
+	}
+	return _2DArray;
+}
+/**
+* Clone 2D array with given array size.
+*/
+long long** copy2DArray_LONGLONG(long long **arr, size_t n, size_t m){
+	long long** _2DArray = (long long**)malloc(n*sizeof(long long*));
+	if(_2DArray == NULL){
+		fprintf(stderr, "fail to malloc at copy2DArray_LONGLONG function in Util.c\n");
+		exit(-2);
+	}
+	size_t r_size = m*sizeof(long long);
+	// Create a chuck of contiguous memory space
+	_2DArray[0] = (long long*)malloc(r_size*n);
+	if(_2DArray[0] == NULL){
+		fprintf(stderr, "fail to malloc at copy2DArray_LONGLONG function in Util.c\n");
+		exit(-2);
+	}
+	
+	for(size_t i=0;i<n;i++){
+		// Compute the address and assign the address to each pointer 
+		_2DArray[i] = (*_2DArray+ i* m);
+		memcpy(_2DArray[i], arr[i], r_size);
+	}
+	return _2DArray;
 }
 
-//Append op_2 to op_1 and return the op_1.
-//Resize the list one bye one and append each item to the list. Use the 'call by the reference' to update the array size.
-//see http://rosettacode.org/wiki/Array_concatenation#C
-/*long long* append(long long* op_1, long long* op_1_size, long long* op_2, long long* op_2_size, long long* ret_size){
-long long i = 0;
-long long *ret =NULL;
-long long allocated_size = 0;
-//Assign the ret with op. That means both of them address to same memory location. In other word, copy the array.
-ret = op_1;
-//The allocated size is the original list size plus the right list size.
-allocated_size = *op_1_size+*op_2_size;
-//Resize the array size of 'ret'.
-ret = (long long*)realloc(ret, allocated_size*sizeof(long long));
-if(ret == NULL) {fprintf(stderr,"fail to realloc"); exit(0);}
-
-//Copy the items from op_2 source and append them to the pointer of ret array at index of op_1_size.
-memcpy(&ret[*op_1_size], op_2, *op_2_size*sizeof(long long));
- *ret_size = *op_1_size+*op_2_size;
-return ret;
-}*/
 /**Print out a long long integer*/
 void indirect_printf(long long input) {
 	printf("%lld\n", input);
@@ -329,6 +331,30 @@ void printf_s(long long* input, size_t input_size) {
 void println_s(long long* input, size_t input_size) {
 	printf_s(input, input_size);
 	printf("\n");
+}
+
+
+/**
+ * Append op1 and op2 arrays into a new array.
+ * This append function meets value semantics
+ * as it creates a new array and makes no change to op1 and op2 arrays.
+ */
+long long* append(long long *arr1, size_t arr1_size, long long* arr2, size_t arr2_size) {
+	long long *ret_arr = NULL;
+	long long size = 0;
+	//Get the size of return array.
+	size = arr1_size + arr2_size;
+	//Allocate the return array.
+	ret_arr = (long long*) realloc(arr1, size * sizeof(long long));
+	//Check if the memory allocation is successful.
+	if (ret_arr == NULL) {
+		fprintf(stderr, "fail to malloc at append function in Util.c\n");
+		exit(-2);
+	}
+	//Fill in op_2 array
+	memcpy(&ret_arr[arr1_size], arr2, arr2_size * sizeof(long long));
+	//Return the array
+	return ret_arr;
 }
 //Check if the number is a power of 2.
 //See also http://www.exploringbinary.com/ten-ways-to-check-if-an-integer-is-a-power-of-two-in-c/

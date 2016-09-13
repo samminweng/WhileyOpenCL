@@ -26,8 +26,6 @@ long long* slice(long long* arr, size_t arr_size, int start, int end){
 	return sub_arr;
 }
 
-
-
 /**
  * Given array size and initial value, create an array of long long integers. 
  */
@@ -124,7 +122,7 @@ long long** create2DArray_LONGLONG(long long* arr, size_t n, size_t m){
  * 
  */
 long long* parseStringToInt(long long* arr){
-	long long i=0;
+	size_t i=0;
 	long long value=0;
 	while(arr[i]>=0&&arr[i]<=9){
 		value = value*10+arr[i];
@@ -189,8 +187,7 @@ long long** convertArgsToIntArray(int argc, char** args){
 }
 
 //Check if both arrays are the same. 1: true, 0: false.
-int isArrayEqual(long long* arr1, size_t arr1_size,
-		long long* arr2, size_t arr2_size) {
+int isArrayEqual(long long* arr1, size_t arr1_size, long long* arr2, size_t arr2_size) {
 	//Check if array size is the same.
 	if (arr1_size != arr2_size) {
 		return 0;
@@ -213,7 +210,7 @@ long long** copy2DArray_LONGLONG(long long **arr, size_t x, size_t y){
 		fprintf(stderr, "fail to malloc at copy2DArray_LONGLONG function in Util.c\n");
 		exit(-2);
 	}
-	long long size = y*sizeof(long long);
+	size_t size = y*sizeof(long long);
 	for(size_t i=0;i<x;i++){
 		newMatrix[i] = (long long*)malloc(size);
 		if(newMatrix[i] == NULL){

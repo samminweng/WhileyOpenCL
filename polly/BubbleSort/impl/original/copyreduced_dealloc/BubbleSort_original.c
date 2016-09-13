@@ -1,5 +1,5 @@
 #include "BubbleSort_original.h"
-long long* bubbleSort(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items)){
+long long* bubbleSort(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
 	_DECL_DEALLOC(_1);
 	long long length = 0;
@@ -101,6 +101,7 @@ blklab1:;
 blklab0:;
 	//return %0
 	_DEALLOC(_1);
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(items);
 	return items;
 	//return
 }
@@ -196,7 +197,7 @@ blklab6:;
 	{
 		_UPDATE_1DARRAY_SIZE(_15, arr);
 		_DEALLOC(_15);
-		_15 = bubbleSort(_1DARRAY_PARAM(arr), false);
+		_15 = bubbleSort(_1DARRAY_PARAM(arr), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
 		_RESET_DEALLOC(arr, "true-true-false" , "bubbleSort");
 		_ADD_DEALLOC(_15);
 	}
