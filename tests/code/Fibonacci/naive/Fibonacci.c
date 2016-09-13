@@ -43,7 +43,6 @@ blklab0:;
 	//invoke (%8) = (%0, %10) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
 		void* ls_tmp;
-		_UPDATE_1DARRAY_SIZE(_8, ls);
 		_8 = fibonacci(_COPY_1DARRAY_PARAM_LONGLONG(ls), _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 	}
 	//assign %0 = %8  : int[]
@@ -112,7 +111,6 @@ int main(int argc, char** args){
 	//invoke (%6) = (%2, %8) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
 		void* arr_tmp;
-		_UPDATE_1DARRAY_SIZE(_6, arr);
 		_6 = fibonacci(_COPY_1DARRAY_PARAM_LONGLONG(arr), _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 	}
 	//assign %2 = %6  : int[]

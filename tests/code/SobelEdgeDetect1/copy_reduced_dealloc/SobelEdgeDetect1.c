@@ -593,7 +593,6 @@ int main(int argc, char** args){
 	pixels[_12] = _11;
 	//invoke (%13) = (%4, %1, %2) SobelEdgeDetect1:sobelEdgeDetection : function(int[],int,int)->(int[])
 	{
-		_UPDATE_1DARRAY_SIZE(_13, pixels);
 		_DEALLOC(_13);
 		_13 = sobelEdgeDetection(_1DARRAY_PARAM(pixels), false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_13));
 		_RETAIN_DEALLOC(pixels, "false-false-true" , "sobelEdgeDetection");

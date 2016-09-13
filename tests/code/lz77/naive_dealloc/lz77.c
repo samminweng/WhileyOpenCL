@@ -254,7 +254,6 @@ BYTE* write_u1(BYTE* bytes, long long bytes_size, _DECL_DEALLOC_PARAM(bytes), lo
 	//invoke (%3) = (%0, %4) lz77:append_byte : function(byte[],byte)->(byte[])
 	{
 		void* bytes_tmp;
-		_UPDATE_1DARRAY_SIZE(_3, bytes);
 		_DEALLOC(_3);
 		_3 = append_byte(_COPY_1DARRAY_PARAM_BYTE(bytes), true, _4, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
 		_CALLEE_DEALLOC(bytes, "false-false-false" , "append_byte");
@@ -346,7 +345,6 @@ BYTE* compress(BYTE* data, long long data_size, _DECL_DEALLOC_PARAM(data), _DECL
 		//invoke (%14) = (%1, %4) lz77:write_u1 : function(byte[],int)->(byte[])
 		{
 			void* output_tmp;
-			_UPDATE_1DARRAY_SIZE(_14, output);
 			_DEALLOC(_14);
 			_14 = write_u1(_COPY_1DARRAY_PARAM_BYTE(output), true, offset, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_14));
 			_CALLEE_DEALLOC(output, "false-false-false" , "write_u1");
@@ -365,7 +363,6 @@ BYTE* compress(BYTE* data, long long data_size, _DECL_DEALLOC_PARAM(data), _DECL
 		//invoke (%16) = (%1, %17) lz77:append_byte : function(byte[],byte)->(byte[])
 		{
 			void* output_tmp;
-			_UPDATE_1DARRAY_SIZE(_16, output);
 			_DEALLOC(_16);
 			_16 = append_byte(_COPY_1DARRAY_PARAM_BYTE(output), true, _17, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 			_CALLEE_DEALLOC(output, "false-false-false" , "append_byte");
@@ -388,7 +385,6 @@ blklab10:;
 		//invoke (%20) = (%1, %5) lz77:write_u1 : function(byte[],int)->(byte[])
 		{
 			void* output_tmp;
-			_UPDATE_1DARRAY_SIZE(_20, output);
 			_DEALLOC(_20);
 			_20 = write_u1(_COPY_1DARRAY_PARAM_BYTE(output), true, len, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
 			_CALLEE_DEALLOC(output, "false-false-false" , "write_u1");
@@ -510,7 +506,6 @@ BYTE* decompress(BYTE* data, long long data_size, _DECL_DEALLOC_PARAM(data), _DE
 		//invoke (%23) = (%1, %4) lz77:append_byte : function(byte[],byte)->(byte[])
 		{
 			void* output_tmp;
-			_UPDATE_1DARRAY_SIZE(_23, output);
 			_DEALLOC(_23);
 			_23 = append_byte(_COPY_1DARRAY_PARAM_BYTE(output), true, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 			_CALLEE_DEALLOC(output, "false-false-false" , "append_byte");
@@ -553,7 +548,6 @@ blklab14:;
 			//invoke (%30) = (%1, %4) lz77:append_byte : function(byte[],byte)->(byte[])
 			{
 				void* output_tmp;
-				_UPDATE_1DARRAY_SIZE(_30, output);
 				_DEALLOC(_30);
 				_30 = append_byte(_COPY_1DARRAY_PARAM_BYTE(output), true, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
 				_CALLEE_DEALLOC(output, "false-false-false" , "append_byte");
@@ -736,7 +730,6 @@ int main(int argc, char** args){
 	//fieldload %9 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %10 = %9 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%11) = (%1) whiley/lang/ASCII:fromBytes : function(byte[])->(whiley/lang/ASCII:string)
-	_UPDATE_1DARRAY_SIZE(_11, data);
 	_DEALLOC(_11);
 	_11 = fromBytes(data, data_size);
 	_11_size = data_size;
@@ -761,7 +754,6 @@ int main(int argc, char** args){
 	//invoke (%18) = (%1) lz77:compress : function(byte[])->(byte[])
 	{
 		void* data_tmp;
-		_UPDATE_1DARRAY_SIZE(_18, data);
 		_DEALLOC(_18);
 		_18 = compress(_COPY_1DARRAY_PARAM_BYTE(data), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
 		_CALLEE_DEALLOC(data, "false-false-false" , "compress");
@@ -783,7 +775,6 @@ int main(int argc, char** args){
 	//fieldload %22 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %23 = %22 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%24) = (%2) whiley/lang/ASCII:fromBytes : function(byte[])->(whiley/lang/ASCII:string)
-	_UPDATE_1DARRAY_SIZE(_24, compress_data);
 	_DEALLOC(_24);
 	_24 = fromBytes(compress_data, compress_data_size);
 	_24_size = compress_data_size;
@@ -808,7 +799,6 @@ int main(int argc, char** args){
 	//invoke (%31) = (%2) lz77:decompress : function(byte[])->(byte[])
 	{
 		void* compress_data_tmp;
-		_UPDATE_1DARRAY_SIZE(_31, compress_data);
 		_DEALLOC(_31);
 		_31 = decompress(_COPY_1DARRAY_PARAM_BYTE(compress_data), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_31));
 		_CALLEE_DEALLOC(compress_data, "false-false-false" , "decompress");
@@ -830,7 +820,6 @@ int main(int argc, char** args){
 	//fieldload %35 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %36 = %35 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%37) = (%3) whiley/lang/ASCII:fromBytes : function(byte[])->(whiley/lang/ASCII:string)
-	_UPDATE_1DARRAY_SIZE(_37, decompress_data);
 	_DEALLOC(_37);
 	_37 = fromBytes(decompress_data, decompress_data_size);
 	_37_size = decompress_data_size;

@@ -95,7 +95,6 @@ int main(int argc, char** args){
 	_11 = 6;
 	//invoke (%10) = (%1, %11) FunctionCall2:func : function(int[],int)->(int[])
 	{
-		_UPDATE_1DARRAY_SIZE(_10, a);
 		_10 = func(_1DARRAY_PARAM(a), _11, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 	}
 	//assign %1 = %10  : int[]
@@ -152,7 +151,6 @@ blklab2:;
 	//invoke (%28) = (%2, %29) FunctionCall2:func : function(int[],int)->(int[])
 	{
 		void* b_tmp;
-		_UPDATE_1DARRAY_SIZE(_28, b);
 		_28 = func(_COPY_1DARRAY_PARAM_LONGLONG(b), _29, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 	}
 	//assign %3 = %28  : int[]

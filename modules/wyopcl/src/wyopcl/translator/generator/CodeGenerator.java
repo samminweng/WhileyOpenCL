@@ -842,7 +842,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				if (invoke.targets().length > 0) {
 					lhs = stores.getVar(invoke.target(0), function);
 					type = stores.getRawType(invoke.target(0), function);
-					if (type instanceof Type.Array) {
+					/*if (type instanceof Type.Array) {
 						// Adds the code to propagate size variable
 						for (int operand : invoke.operands()) {
 							Type op_type = stores.getRawType(operand, function);
@@ -854,7 +854,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 										+ lhs + ", " + param + ");");
 							}
 						}
-					}
+					}*/
 				} else {
 					lhs = null;
 				}

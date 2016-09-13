@@ -500,7 +500,6 @@ blklab16:;
 blklab17:;
 			//invoke (%41) = (%0, %5, %4, %1, %7, %6, %8) CoinGame4:pickCoin : function(int[],int,int,int,int,int,int)->(int[])
 			{
-				_UPDATE_1DARRAY_SIZE(_41, moves);
 				_DEALLOC(_41);
 				_41 = pickCoin(_1DARRAY_PARAM(moves), false, i, j, n, x, y, z, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_41));
 				_RESET_DEALLOC(moves, "true-true-false" , "pickCoin");
@@ -584,7 +583,6 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(moves, _7);
 	//invoke (%8) = (%2, %1) CoinGame4:findMoves : function(int[],int)->(int[])
 	{
-		_UPDATE_1DARRAY_SIZE(_8, moves);
 		_DEALLOC(_8);
 		_8 = findMoves(_1DARRAY_PARAM(moves), false, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_RESET_DEALLOC(moves, "true-true-false" , "findMoves");

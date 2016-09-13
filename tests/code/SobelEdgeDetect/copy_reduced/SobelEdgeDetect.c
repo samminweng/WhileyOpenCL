@@ -562,7 +562,6 @@ int main(int argc, char** args){
 	pixels[_15] = _11;
 	//invoke (%16) = (%4, %1, %2) SobelEdgeDetect:sobelEdgeDetection : function(int[],int,int)->(int[])
 	{
-		_UPDATE_1DARRAY_SIZE(_16, pixels);
 		_16 = sobelEdgeDetection(_1DARRAY_PARAM(pixels), width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 	}
 	//assign %5 = %16  : int[]

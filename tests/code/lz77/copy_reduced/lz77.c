@@ -234,7 +234,6 @@ BYTE* write_u1(BYTE* bytes, long long bytes_size, long long u1, _DECL_1DARRAYSIZ
 	_4 = (BYTE)u1;
 	//invoke (%3) = (%0, %4) lz77:append_byte : function(byte[],byte)->(byte[])
 	{
-		_UPDATE_1DARRAY_SIZE(_3, bytes);
 		_3 = append_byte(_1DARRAY_PARAM(bytes), _4, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
 	}
 	//assign %2 = %3  : byte[]
@@ -301,7 +300,6 @@ BYTE* compress(BYTE* data, long long data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYRE
 		len = _13;
 		//invoke (%14) = (%1, %4) lz77:write_u1 : function(byte[],int)->(byte[])
 		{
-			_UPDATE_1DARRAY_SIZE(_14, output);
 			_14 = write_u1(_1DARRAY_PARAM(output), offset, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_14));
 		}
 		//assign %1 = %14  : byte[]
@@ -314,7 +312,6 @@ BYTE* compress(BYTE* data, long long data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYRE
 		_17=data[pos];
 		//invoke (%16) = (%1, %17) lz77:append_byte : function(byte[],byte)->(byte[])
 		{
-			_UPDATE_1DARRAY_SIZE(_16, output);
 			_16 = append_byte(_1DARRAY_PARAM(output), _17, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		}
 		//assign %1 = %16  : byte[]
@@ -331,7 +328,6 @@ BYTE* compress(BYTE* data, long long data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYRE
 blklab10:;
 		//invoke (%20) = (%1, %5) lz77:write_u1 : function(byte[],int)->(byte[])
 		{
-			_UPDATE_1DARRAY_SIZE(_20, output);
 			_20 = write_u1(_1DARRAY_PARAM(output), len, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
 		}
 		//assign %1 = %20  : byte[]
@@ -432,7 +428,6 @@ BYTE* decompress(BYTE* data, long long data_size, _DECL_1DARRAYSIZE_PARAM_CALLBY
 		if(header!=_22){goto blklab14;}
 		//invoke (%23) = (%1, %4) lz77:append_byte : function(byte[],byte)->(byte[])
 		{
-			_UPDATE_1DARRAY_SIZE(_23, output);
 			_23 = append_byte(_1DARRAY_PARAM(output), item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 		}
 		//assign %1 = %23  : byte[]
@@ -469,7 +464,6 @@ blklab14:;
 			item = _29;
 			//invoke (%30) = (%1, %4) lz77:append_byte : function(byte[],byte)->(byte[])
 			{
-				_UPDATE_1DARRAY_SIZE(_30, output);
 				_30 = append_byte(_1DARRAY_PARAM(output), item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
 			}
 			//assign %1 = %30  : byte[]
@@ -611,7 +605,6 @@ int main(int argc, char** args){
 	//fieldload %9 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %10 = %9 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%11) = (%1) whiley/lang/ASCII:fromBytes : function(byte[])->(whiley/lang/ASCII:string)
-	_UPDATE_1DARRAY_SIZE(_11, data);
 	_11 = fromBytes(data, data_size);
 	_11_size = data_size;
 	//indirectinvoke () = %10 (%11) : method(int[])->()
@@ -631,7 +624,6 @@ int main(int argc, char** args){
 	println_s(_17, _17_size);
 	//invoke (%18) = (%1) lz77:compress : function(byte[])->(byte[])
 	{
-		_UPDATE_1DARRAY_SIZE(_18, data);
 		_18 = compress(_1DARRAY_PARAM(data), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
 	}
 	//assign %2 = %18  : byte[]
@@ -646,7 +638,6 @@ int main(int argc, char** args){
 	//fieldload %22 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %23 = %22 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%24) = (%2) whiley/lang/ASCII:fromBytes : function(byte[])->(whiley/lang/ASCII:string)
-	_UPDATE_1DARRAY_SIZE(_24, compress_data);
 	_24 = fromBytes(compress_data, compress_data_size);
 	_24_size = compress_data_size;
 	//indirectinvoke () = %23 (%24) : method(int[])->()
@@ -666,7 +657,6 @@ int main(int argc, char** args){
 	println_s(_30, _30_size);
 	//invoke (%31) = (%2) lz77:decompress : function(byte[])->(byte[])
 	{
-		_UPDATE_1DARRAY_SIZE(_31, compress_data);
 		_31 = decompress(_1DARRAY_PARAM(compress_data), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_31));
 	}
 	//assign %3 = %31  : byte[]
@@ -681,7 +671,6 @@ int main(int argc, char** args){
 	//fieldload %35 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %36 = %35 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%37) = (%3) whiley/lang/ASCII:fromBytes : function(byte[])->(whiley/lang/ASCII:string)
-	_UPDATE_1DARRAY_SIZE(_37, decompress_data);
 	_37 = fromBytes(decompress_data, decompress_data_size);
 	_37_size = decompress_data_size;
 	//indirectinvoke () = %36 (%37) : method(int[])->()

@@ -69,7 +69,6 @@ long long* sortV1(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), long l
 	//assign %4 = %14  : int
 	pivot = _14;
 	//invoke (%15) = (%0, %1, %4) whiley/lang/Array:slice : function(int[],int,int)->(int[])
-	_UPDATE_1DARRAY_SIZE(_15, items);
 	_DEALLOC(_15);
 _SLICE_ARRAY(_15, items, start, pivot);
 	_ADD_DEALLOC(_15);
@@ -81,7 +80,6 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	_17 = 0;
 	//invoke (%16) = (%5, %17, %4) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		_UPDATE_1DARRAY_SIZE(_16, lhs);
 		_DEALLOC(_16);
 		_16 = sortV1(_1DARRAY_PARAM(lhs), false, _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		_RESET_DEALLOC(lhs, "true-true-false" , "sortV1");
@@ -92,7 +90,6 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	_UPDATE_1DARRAY(lhs, _16);
 	_TRANSFER_DEALLOC(lhs, _16);
 	//invoke (%18) = (%0, %4, %2) whiley/lang/Array:slice : function(int[],int,int)->(int[])
-	_UPDATE_1DARRAY_SIZE(_18, items);
 	_DEALLOC(_18);
 _SLICE_ARRAY(_18, items, pivot, end);
 	_ADD_DEALLOC(_18);
@@ -106,7 +103,6 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	_21=end-pivot;
 	//invoke (%19) = (%6, %20, %21) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		_UPDATE_1DARRAY_SIZE(_19, rhs);
 		_DEALLOC(_19);
 		_19 = sortV1(_1DARRAY_PARAM(rhs), false, _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
 		_RESET_DEALLOC(rhs, "true-true-false" , "sortV1");
@@ -385,7 +381,6 @@ int main(int argc, char** args){
 	_13 = 5;
 	//invoke (%11) = (%1, %12, %13) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		_UPDATE_1DARRAY_SIZE(_11, ys);
 		_DEALLOC(_11);
 		_11 = sortV1(_1DARRAY_PARAM(ys), false, _12, _13, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		_RESET_DEALLOC(ys, "true-true-false" , "sortV1");
@@ -444,7 +439,6 @@ blklab9:;
 	_27 = 4;
 	//invoke (%25) = (%1, %26, %27) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		_UPDATE_1DARRAY_SIZE(_25, ys);
 		_DEALLOC(_25);
 		_25 = sortV1(_1DARRAY_PARAM(ys), false, _26, _27, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 		_RESET_DEALLOC(ys, "true-true-false" , "sortV1");
@@ -501,7 +495,6 @@ blklab10:;
 	_40 = 4;
 	//invoke (%38) = (%1, %39, %40) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		_UPDATE_1DARRAY_SIZE(_38, ys);
 		_DEALLOC(_38);
 		_38 = sortV1(_1DARRAY_PARAM(ys), false, _39, _40, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 		_RESET_DEALLOC(ys, "true-true-false" , "sortV1");
@@ -560,7 +553,6 @@ blklab11:;
 	_54 = 5;
 	//invoke (%52) = (%1, %53, %54) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		_UPDATE_1DARRAY_SIZE(_52, ys);
 		_DEALLOC(_52);
 		_52 = sortV1(_1DARRAY_PARAM(ys), false, _53, _54, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 		_RESET_DEALLOC(ys, "true-true-false" , "sortV1");
@@ -645,7 +637,6 @@ blklab13:;
 	_73=max+_72;
 	//invoke (%70) = (%4, %71, %73) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		_UPDATE_1DARRAY_SIZE(_70, arr);
 		_DEALLOC(_70);
 		_70 = sortV1(_1DARRAY_PARAM(arr), false, _71, _73, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_70));
 		_RESET_DEALLOC(arr, "true-true-false" , "sortV1");

@@ -44,7 +44,6 @@ blklab0:;
 	_10=n-_9;
 	//invoke (%8) = (%0, %10) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
-		_UPDATE_1DARRAY_SIZE(_8, ls);
 		_DEALLOC(_8);
 		_8 = fibonacci(_1DARRAY_PARAM(ls), false, _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_RESET_DEALLOC(ls, "true-true-false" , "fibonacci");
@@ -128,7 +127,6 @@ int main(int argc, char** args){
 	_8=max-_7;
 	//invoke (%6) = (%2, %8) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
-		_UPDATE_1DARRAY_SIZE(_6, arr);
 		_DEALLOC(_6);
 		_6 = fibonacci(_1DARRAY_PARAM(arr), false, _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		_RESET_DEALLOC(arr, "true-true-false" , "fibonacci");

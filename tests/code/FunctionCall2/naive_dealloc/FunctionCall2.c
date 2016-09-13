@@ -118,7 +118,6 @@ int main(int argc, char** args){
 	//invoke (%10) = (%1, %11) FunctionCall2:func : function(int[],int)->(int[])
 	{
 		void* a_tmp;
-		_UPDATE_1DARRAY_SIZE(_10, a);
 		_DEALLOC(_10);
 		_10 = func(_COPY_1DARRAY_PARAM_LONGLONG(a), false, _11, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 		_CALLER_DEALLOC(_10, a, "false-true-false" , "func");
@@ -186,7 +185,6 @@ blklab2:;
 	//invoke (%28) = (%2, %29) FunctionCall2:func : function(int[],int)->(int[])
 	{
 		void* b_tmp;
-		_UPDATE_1DARRAY_SIZE(_28, b);
 		_DEALLOC(_28);
 		_28 = func(_COPY_1DARRAY_PARAM_LONGLONG(b), false, _29, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 		_CALLER_DEALLOC(_28, b, "false-true-true" , "func");

@@ -225,7 +225,6 @@ int main(int argc, char** args){
 	//invoke (%11) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		void* ys_tmp;
-		_UPDATE_1DARRAY_SIZE(_11, ys);
 		_DEALLOC(_11);
 		_11 = bubbleSort(_COPY_1DARRAY_PARAM_LONGLONG(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		_CALLER_DEALLOC(_11, ys, "true-true-false" , "bubbleSort");
@@ -285,7 +284,6 @@ blklab5:;
 	//invoke (%25) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		void* ys_tmp;
-		_UPDATE_1DARRAY_SIZE(_25, ys);
 		_DEALLOC(_25);
 		_25 = bubbleSort(_COPY_1DARRAY_PARAM_LONGLONG(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 		_CALLER_DEALLOC(_25, ys, "true-true-false" , "bubbleSort");
@@ -343,7 +341,6 @@ blklab6:;
 	//invoke (%38) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		void* ys_tmp;
-		_UPDATE_1DARRAY_SIZE(_38, ys);
 		_DEALLOC(_38);
 		_38 = bubbleSort(_COPY_1DARRAY_PARAM_LONGLONG(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 		_CALLER_DEALLOC(_38, ys, "true-true-false" , "bubbleSort");
@@ -403,7 +400,6 @@ blklab7:;
 	//invoke (%52) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		void* ys_tmp;
-		_UPDATE_1DARRAY_SIZE(_52, ys);
 		_DEALLOC(_52);
 		_52 = bubbleSort(_COPY_1DARRAY_PARAM_LONGLONG(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 		_CALLER_DEALLOC(_52, ys, "true-true-false" , "bubbleSort");
@@ -483,7 +479,6 @@ blklab9:;
 	//invoke (%68) = (%4) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		void* arr_tmp;
-		_UPDATE_1DARRAY_SIZE(_68, arr);
 		_DEALLOC(_68);
 		_68 = bubbleSort(_COPY_1DARRAY_PARAM_LONGLONG(arr), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
 		_CALLER_DEALLOC(_68, arr, "true-true-false" , "bubbleSort");
