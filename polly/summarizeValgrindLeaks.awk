@@ -11,7 +11,7 @@ BEGIN {
 	programs["newTicTacToe"]="original";
 	programs["MergeSort"]="original";
 	programs["BubbleSort"]="original";
-	programs["MatrixMult"]="original transpose";
+	programs["MatrixMult"]="original transpose 2DArray";
 	programs["Fibonacci"]="original";
 	programs["GCD"]="original cached";
 	programs["CoinGame"]="original single array";

@@ -200,6 +200,9 @@ exec MatrixMult original 3000
 exec MatrixMult transpose 1000
 exec MatrixMult transpose 2000
 exec MatrixMult transpose 3000
+exec MatrixMult 2DArray 1000
+exec MatrixMult 2DArray 2000
+exec MatrixMult 2DArray 3000
 
 
 ## Fibonacci test case
