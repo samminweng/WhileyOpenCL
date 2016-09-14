@@ -1,17 +1,24 @@
 package wyopcl.testing.translator;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Collection;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+@RunWith(Parameterized.class)
 public class BoundAnalysisTestCase {
 	private BaseTestUtil util;
-	final String valid_path = System.getProperty("user.dir")+ File.separator + "tests" + File.separator + "bounds" + File.separator;
-
+	final Path codeDir = Paths.get(System.getProperty("user.dir")+ File.separator + "tests" + File.separator + "bounds");
+	private String testcase;// A list of test cases
+	
 	@Before
-	public void setUp() throws Exception {
+	public void initialize() throws Exception {
 		util = new BaseTestUtil();
 	}
 
@@ -21,8 +28,31 @@ public class BoundAnalysisTestCase {
 		util = null;
 	}
 	
+	/**
+	 * Pass the test case parameters as the arguments to the method
+	 * 
+	 * @param testcase
+	 */
+	public BoundAnalysisTestCase(String testcase) {
+		this.testcase = testcase;		
+		System.out.print("=== "+testcase+" ===\n");
+	}
+	
+	@Parameterized.Parameters(name = "{index}:{0}")
+	public static Collection<String> testCases() {		
+		// Add a list of test cases
+		return Arrays.asList(new String[] { 
+				"IfElse"
+		});
+	}
 	
 	@Test
+	public void testNaiveCCode() {
+		System.out.print("Naive Bound C code \n");
+		util.execCodeGeneration(codeDir, testcase, "bound", "naive");
+	}
+	
+	/*@Test
 	public void test_WhileLoop_Naive() {
 		util.execBoundAnalysis(valid_path, "WhileLoop", "bound", "naive");
 	}
@@ -62,5 +92,5 @@ public class BoundAnalysisTestCase {
 	public void test_ListAppend_Valid_3_Gradual() {
 		util.execBoundAnalysis(valid_path, "ListAppend_Valid_3", "bound", "gradual");
 	}
-	
+	*/
 }

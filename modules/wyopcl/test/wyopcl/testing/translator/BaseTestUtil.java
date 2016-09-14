@@ -49,6 +49,14 @@ public final class BaseTestUtil {
 	final File logfile = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
 			+ File.separator + "Report" + File.separator + "log.txt");
 
+	// Util.c file
+	final File utilcfile = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
+			+ File.separator + "Util.c");
+	// Util.h file
+	final File utilhfile = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
+			+ File.separator + "Util.h");
+	
+	
 	Process p;
 
 	public BaseTestUtil() {
@@ -308,6 +316,8 @@ public final class BaseTestUtil {
 	public void execCodeGeneration(Path sourceDir, String testcase, String... options) {
 		try {
 			Path destDir;
+			// Widen strategy
+			String widen = null;
 			// Separate the generated C code.
 			switch (options.length) {
 			case 0:
@@ -329,8 +339,14 @@ public final class BaseTestUtil {
 				}
 				break;
 			case 2:
-				destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "copy_reduced_dealloc"
-						+ File.separator);
+				if(options[0].equals("bound")){
+					widen = options[1];
+					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "bound_naive"
+							+ File.separator);
+				}else{
+					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "copy_reduced_dealloc"
+							+ File.separator);
+				}				
 				break;
 			default:
 				throw new RuntimeException("Not implemented");
@@ -345,17 +361,22 @@ public final class BaseTestUtil {
 			Files.copy(whileyFile, Paths.get(destDir + File.separator + testcase + ".whiley"));
 
 			// 2. Copy Util.c and Util.h from parent folder to destDir
-			Files.copy(Paths.get(destDir.getParent().getParent() + File.separator + "Util.c"),
+			Files.copy(utilcfile.toPath(),
 					Paths.get(destDir + File.separator + "Util.c"));
-			Files.copy(Paths.get(destDir.getParent().getParent() + File.separator + "Util.h"),
+			Files.copy(utilhfile.toPath(),
 					Paths.get(destDir + File.separator + "Util.h"));
 
 			// 3. Generate the C code.
 			String cmd = "java -cp " + classpath + " wyopcl.WyopclMain -bp " + whiley_runtime_lib + " -code";
 			// Add extra optimization option.
 			for (String option : options) {
-				// Run the code generator with optimization.
-				cmd += " -" + option;
+				if(option.equals("naive") || option.equals("widen")){
+					// Run the code generator with optimization.
+					cmd += " " + option;
+				}else{
+					// Run the code generator with optimization.
+					cmd += " -" + option;
+				}			
 			}
 			// Add test case name
 			cmd += " " + testcase + ".whiley";

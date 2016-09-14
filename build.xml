@@ -184,6 +184,15 @@
       </filelist>
     </subant>
   </target>
+  <!--Test the code generator with test cases -->
+  <target name="test-bound" depends="clean, build-all">
+	<subant failonerror="true" target="test-bound">
+		<filelist>
+	    	<!--wyopcl-->
+	        <file name="modules/wyopcl/build.xml"/>
+	    </filelist>
+	</subant>
+  </target>
   <!-- ============================================== -->
   <!-- Special Commands for Whiley2Boogie project     -->
   <!-- ============================================== -->

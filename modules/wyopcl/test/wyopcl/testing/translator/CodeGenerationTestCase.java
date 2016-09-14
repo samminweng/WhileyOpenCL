@@ -40,23 +40,13 @@ public class CodeGenerationTestCase {
 	}
 
 	/**
-	 * Print out the messages to console and file
-	 * @param line
-	 * @throws IOException
-	 */
-	private void printMsg(String line){
-		System.out.print(line);
-	}
-	
-	
-	/**
 	 * Pass the test case parameters as the arguments to the method
 	 * 
 	 * @param testcase
 	 */
 	public CodeGenerationTestCase(String testcase) {
 		this.testcase = testcase;		
-		printMsg("=== "+testcase+" ===\n");
+		System.out.print("=== "+testcase+" ===\n");
 	}
 
 	@Parameterized.Parameters(name = "{index}:{0}")
@@ -95,25 +85,25 @@ public class CodeGenerationTestCase {
 
 	@Test
 	public void testNaiveCCode() {
-		printMsg( "Naive C code \n");
+		System.out.print("Naive C code \n");
 		util.execCodeGeneration(codeDir, testcase);
 	}
 
 	@Test
 	public void testNaiveDeallocatedCCode() {
-		printMsg("Naive + deallocated C code \n");
+		System.out.print("Naive + deallocated C code \n");
 		util.execCodeGeneration(codeDir, testcase, "dealloc");
 	}
 
 	@Test
 	public void testCopyCCode() {
-		printMsg("Copy reduced C code \n");
+		System.out.print("Copy reduced C code \n");
 		util.execCodeGeneration(codeDir, testcase, "nocopy");
 	}
 
 	@Test
 	public void testCopyDeallocatedCCode() {
-		printMsg("Copy reduced + deallocated C code \n");
+		System.out.print("Copy reduced + deallocated C code \n");
 		util.execCodeGeneration(codeDir, testcase, "nocopy", "dealloc");
 	}
 }
