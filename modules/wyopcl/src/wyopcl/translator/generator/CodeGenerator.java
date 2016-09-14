@@ -113,7 +113,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				} else if(type instanceof Type.Byte){
 					declarations.add(indent + "BYTE " + var + ";");
 				} else if (type instanceof Type.Int) {
-					String translateType = CodeGeneratorHelper.translateType(type, stores);
+					String translateType;
+					if(boundAnalyzer.isPresent()){
+						translateType = boundAnalyzer.get().suggestIntegerType(reg, function);
+					}else{
+						// Use the long long integer
+						translateType = CodeGeneratorHelper.translateType(type, stores);
+					}
 					declarations.add(indent + translateType + " " + var + " = 0;");
 				} else if (type instanceof Type.Array) {
 					// Get the array dimension

@@ -1,6 +1,7 @@
 package wyopcl.translator.bound;
 
 import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.List;
 import wyil.lang.Code;
 import wyil.lang.Codes;
@@ -12,6 +13,7 @@ import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 import wyopcl.translator.bound.BoundBlock.BlockType;
+import wyopcl.translator.bound.Bounds.Threshold;
 import wyopcl.translator.bound.constraint.Assign;
 import wyopcl.translator.bound.constraint.Const;
 import wyopcl.translator.bound.constraint.Constraint;
@@ -42,12 +44,17 @@ public class BoundAnalyzer {
 	// The line number
 	private int line;
 	private WyilFile module;
+	
+	// Store the bounds for all functions
+	private HashMap<String, Bounds> boundMap;
+	
 
 	/**
 	 * Constructor
 	 */
 	public BoundAnalyzer(WyilFile module) {
 		this.module = module;
+		this.boundMap = new HashMap<String, Bounds>();
 	}
 
 	/**
@@ -59,7 +66,6 @@ public class BoundAnalyzer {
 	 */
 	public void buildCFG(Configuration config, String name) {
 		this.config = config;
-		//FunctionOrMethod functionOrMethod = AnalyzerHelper.getFunctionOrMethod(config, name);
 		FunctionOrMethod functionOrMethod = this.module.functionOrMethod(name).get(0);
 		
 		if (!BoundAnalyzerHelper.isCached(name)) {
@@ -113,7 +119,7 @@ public class BoundAnalyzer {
 	private void iterateBytecode(String name, List<Code> code_blk) {
 		// Parse each byte-code and add the constraints accordingly.
 		for (Code code : code_blk) {
-			if (!BoundAnalyzerHelper.isCached(name)) {
+			if (this.config.isVerbose() && !BoundAnalyzerHelper.isCached(name)) {
 				// Get the Block.Entry and print out each byte-code
 				line = printWyILCode(code, name, line);
 			}
@@ -125,7 +131,9 @@ public class BoundAnalyzer {
 				try {
 					if (code instanceof Codes.Invariant) {
 						analyze((Codes.Invariant) code, name);
-					} else if (code instanceof Codes.Assign) {
+					}else if (code instanceof Codes.Assert){
+						analyze((Codes.Assert)code, name);
+					}else if (code instanceof Codes.Assign) {
 						analyze((Codes.Assign) code, name);
 					} else if (code instanceof Codes.Assume){
 						analyze((Codes.Assume)code, name);
@@ -218,8 +226,7 @@ public class BoundAnalyzer {
 		List<BoundBlock> list = graph.getBlockList();
 		boolean isFixedPoint = false;
 		int iteration = 0;
-		// Stop the loop when the program reaches the fixed point or
-		// max-iterations
+		// Stop the loop when the program reaches the fixed point or max-iterations
 		// by using AND operator to combine these two condition.
 		// If both of two conditions are evaluated to be true, then enter the
 		// loop.
@@ -309,9 +316,16 @@ public class BoundAnalyzer {
 		}
 		// Produce the aggregated bounds of a function.
 		Bounds bnds = exit_blk.getBounds();
+		//if (config.isVerbose()) {
 		// Print out bounds along with size information.
 		BoundAnalyzerHelper.printBoundsAndSize(this.module, bnds, name);
-		BoundAnalyzerHelper.printCFG(config, name);
+		//BoundAnalyzerHelper.printCFG(config, name);
+		//}
+		
+		// Put the bounds to HashMap
+		boundMap.put(name, bnds);		
+		
+		// Return the inferred bounds
 		return bnds;
 	}
 
@@ -327,6 +341,10 @@ public class BoundAnalyzer {
 		// graph.enabledInvariant();
 		// iterateBytecode(name, code.bytecodes());
 		// graph.disabledInvariant();
+	}
+	
+	private void analyze(Codes.Assert code, String name){
+		iterateBytecode(name, code.bytecodes());
 	}
 	
 	
@@ -721,6 +739,48 @@ public class BoundAnalyzer {
 		
 		return false;
 	}
+	
+	
+	/**
+	 * Suggest the integer types (
+	 * @param register
+	 * @param function
+	 * @return
+	 */
+	public String suggestIntegerType(int register, FunctionOrMethod function){
+		// Get the function name
+		String func_name = function.name().toString();
+		// Get the bounds
+		Bounds bounds = this.boundMap.get(func_name);
+		// Check if the bound is inferred not. If not, then infer the bounds
+		if(bounds == null){
+			bounds = this.inferBounds(func_name);
+		}
+			
+		// Get the domain of register
+		BigInteger l_bnd = bounds.getLower(prefix+register);
+		BigInteger u_bnd = bounds.getUpper(prefix+register);
+		
+		if(l_bnd != null && u_bnd != null){
+			// The range is between short integer
+			if(l_bnd.compareTo(Threshold.SHRT_MIN.getValue())>= 0 
+					&& u_bnd.compareTo(Threshold.SHRT_MAX.getValue())<=0){
+				return "short int";
+			}
+			
+			// The range is between long integer 
+			if(l_bnd.compareTo(Threshold.INT_MIN.getValue())>= 0 
+					&& u_bnd.compareTo(Threshold.INT_MAX.getValue())<=0){
+				return "long int";
+			}
+			
+		}		
+		// The default integer type
+		return "long long"; // Use long long type
+		
+	}
+	
+	
 	
 	/**
 	 * Get the list of bytecode of the invoked function and infer the bounds of
