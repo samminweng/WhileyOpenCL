@@ -1,4 +1,4 @@
-package wyopcl.translator;
+package wyopcl.translator.bound;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -6,24 +6,15 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 import wyil.attributes.VariableDeclarations;
 import wyil.attributes.VariableDeclarations.Declaration;
-import wyil.lang.Code;
 import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
-import wyopcl.translator.bound.BoundBlock;
 import wyopcl.translator.bound.BoundBlock.BlockType;
-import wyopcl.translator.bound.Bounds;
-import wyopcl.translator.bound.BoundGraph;
-import wyopcl.translator.bound.Symbol;
-import wyopcl.translator.bound.SymbolFactory;
 import wyopcl.translator.bound.BoundGraph.STATUS;
-import wyopcl.translator.bound.Domain;
-import wyopcl.translator.bound.constraint.Constraint;
 import wyopcl.translator.bound.constraint.Range;
 /**
  * Aims to assist the analyzer to build up CFGraph, propagate bounds
@@ -32,13 +23,8 @@ import wyopcl.translator.bound.constraint.Range;
  * @author Min-Hsien Weng
  *
  */
-public final class AnalyzerHelper {
-	private static final String prefix = "%";
-	// Color code
-	private static final String GRAY = (char) 27 + "[30;1m";
-	private static final String BLUE = (char) 27 + "[34;1m";
-	private static final String RED = (char) 27 + "[31;1m";
-	private static final String RESET = (char) 27 + "[0m";
+final class BoundAnalyzerHelper {
+	private static final String prefix = "_";
 	// Maps of CFGs, symbols
 	private static HashMap<String, SymbolFactory> symbol_factorys = new HashMap<String, SymbolFactory>();
 	private static HashMap<String, BoundGraph> cfgraphs = new HashMap<String, BoundGraph>();
@@ -110,7 +96,7 @@ public final class AnalyzerHelper {
 	 * 
 	 * @param domain
 	 *            the domain that contains the register and bounds.
-	 * @return the variable name (starting with "%")
+	 * @return the variable name (starting with "_")
 	 */
 	private static String getVarName(int reg, VariableDeclarations variables) {
 		// Check if the register has been kept in the functional variable
@@ -124,7 +110,7 @@ public final class AnalyzerHelper {
 				}
 			}
 		}
-		return "%"+reg;
+		return prefix+reg;
 	}
 
 	/**
@@ -142,8 +128,9 @@ public final class AnalyzerHelper {
 		// Print out the bounds
 		for (Domain d : sortedDomains) {
 			String varName = d.getName();
-			if(d.getReg() >= 0){
-				varName = getVarName(d.getReg(), variables);
+			int register = d.getReg();
+			if(register >= 0){
+				varName = getVarName(register, variables);
 			}			
 			str += "\tdomain(" + varName + ")\t=" + d.getBounds() + "\n";
 		}
@@ -154,8 +141,8 @@ public final class AnalyzerHelper {
 		// Print out the size of available variables
 		for (Symbol symbol : sortedSymbols) {
 			String varName = symbol.getName();
-			if(symbol.getName().contains("%")){
-				int reg = Integer.parseInt(symbol.getName().split("%")[1]);
+			if(symbol.getName().contains(prefix)){
+				int reg = Integer.parseInt(symbol.getName().split(prefix)[1]);
 				varName = getVarName(reg, variables);
 			}
 			// print the 'size' att
@@ -267,7 +254,7 @@ public final class AnalyzerHelper {
 	 */
 	public static void propagateBoundsFromFunctionCall(String caller_name, String callee_name, String ret_reg, Type ret_type, Bounds bnd) {
 		BoundGraph graph = getCFGraph(caller_name);
-		if (isIntType(ret_type)) {
+		if (ret_type != null && isIntType(ret_type)) {
 			// propagate the bounds of return value.
 			graph.addConstraint(new Range(ret_reg, bnd.getLower("return"), bnd.getUpper("return")));
 		}
@@ -292,24 +279,6 @@ public final class AnalyzerHelper {
 			
 		}
 	}
-
-	/**
-	 * TODO : Add the type check to find the extract function declaration.
-	 * 
-	 * Gets the function declaration by name.
-	 * 
-	 * 
-	 * @param config
-	 * @param name
-	 *            the function name
-	 *            
-	 * @return
-	 */
-	/*public static FunctionOrMethod getFunctionOrMethod(Configuration config, String name) {
-		WyilFile module = config.getWyilFile();
-		return module.functionOrMethod(name).get(0);
-	}*/
-
 
 	/**
 	 * Outputs the control flow graphs (*.dot).
@@ -344,8 +313,7 @@ public final class AnalyzerHelper {
 			cfg_writer.println(dot_string);
 			cfg_writer.close();
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException("Error in printCFG function");
 		}
 	}
 	

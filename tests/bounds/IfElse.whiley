@@ -10,8 +10,13 @@ ensures r > 0:
     return 0
 
 method main(System.Console sys):
-    sys.out.println(f(1))
-    sys.out.println(f(10))
-    sys.out.println(f(11))
-    sys.out.println(f(1212))
-    sys.out.println(f(-1212))
+    int a = f(1)
+    sys.out.println(a)
+    int b = f(10)
+    sys.out.println(b)
+    /*int c = f(11)
+    sys.out.println(c)
+    int d = f(1212)
+    sys.out.println(d)
+    int e = f(-1212)
+    sys.out.println(e)*/

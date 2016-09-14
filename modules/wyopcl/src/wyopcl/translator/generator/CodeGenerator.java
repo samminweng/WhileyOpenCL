@@ -29,9 +29,7 @@ import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
-import wyopcl.translator.BoundAnalyzer;
-import wyopcl.translator.ReadWriteAnalyzer;
-import wyopcl.translator.ReturnAnalyzer;
+import wyopcl.translator.bound.BoundAnalyzer;
 import wyopcl.translator.copy.CopyEliminationAnalyzer;
 import wyopcl.translator.deallocate.DeallocationAnalyzer;
 

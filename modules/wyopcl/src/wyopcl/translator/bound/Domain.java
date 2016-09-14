@@ -5,8 +5,9 @@ import java.util.Comparator;
 
 
 public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain> {
+	private final String prefix = "_";
 	private final String name;
-	private String var_name;
+	
 	private BigInteger lower_bound = null;
 	private BigInteger upper_bound = null;
 	// Indicate the upper bound is increasing with iterations.
@@ -34,12 +35,12 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	 */
 	public int getReg(){
 		//return the register no.
-		if(name.matches("^%\\d.*")){
-			if(name.contains("_")){
-				String[] name_str = name.split("_");
-				return Integer.parseInt(name_str[0].substring(1));
+		if(name.matches("^"+prefix+"\\d.*")){
+			if(name.contains(prefix)){
+				String[] name_str = name.split(prefix);
+				return Integer.parseInt(name_str[1]);
 			}
-			return Integer.parseInt(name.split("^%")[1]);
+			return Integer.parseInt(name.split("^"+prefix)[1]);
 		}
 	
 		return -1;

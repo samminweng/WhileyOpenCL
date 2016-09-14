@@ -14,6 +14,7 @@ import wyfs.lang.Path.Entry;
 import wyfs.lang.Path.Root;
 import wyil.lang.WyilFile;
 import wyopcl.Configuration;
+import wyopcl.translator.bound.BoundAnalyzer;
 import wyopcl.translator.copy.CopyEliminationAnalyzer;
 import wyopcl.translator.copy.LiveVariablesAnalysis;
 import wyopcl.translator.deallocate.DeallocationAnalyzer;
