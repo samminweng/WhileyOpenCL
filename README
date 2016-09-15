@@ -52,12 +52,10 @@ Unit Testing
 ============================================================================================
 1. Whiley-to-OpenCL translator
 1.1 Bound Analyzer
-The bound analyzer is being tested with several Whiley programs. Use the below commands:
-$ ant test-bound
-The unit test results are summarized at 'report/bound/index.html'. 
-
+The bound analyzer is being tested with 1 Whiley programs. Use the below commands:
+$ ant test-bound 
 
 1.2 Code Generator
-The code generator is tested with 5 Whiley programs. Use the below commands:
+The code generator is tested with 27 Whiley programs. Use the below commands:
 $ ant test-code
-The unit test results are summarized at 'report/code/index.html'. 
+

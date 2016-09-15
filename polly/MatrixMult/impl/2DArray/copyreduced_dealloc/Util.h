@@ -12,16 +12,6 @@
 
 // Define BYTE type due to missing byte primitive type in C languate
 typedef unsigned char BYTE;
-/***
-*
-* Declare an enumerated type to indicate the type and select the corresponding function 
-*
-*/
-/*typedef enum {
-	T_INT, // Integer type
-	T_BYTE // Byte type
-} TYPENUM;
-*/
 /**
 *Built-in operation for 1D array of byte and integers
 *
@@ -51,7 +41,6 @@ int isArrayEqual(long long* arr1, size_t arr1_size, long long* arr2, size_t arr2
  * Other built-in functions
  */
 void indirect_printf(long long input);
-//No overlapping is allowed: function name must be different.
 void printf_s(long long* input, size_t input_size);
 void println_s(long long* input, size_t input_size);
 // Parse a string into an integer
@@ -60,10 +49,6 @@ long long* parseStringToInt(long long* arr);
 long long** convertArgsToIntArray(int argc, char** args);
 // ArrayList Operators
 long long* slice(long long* arr, size_t arr_size, int start, int end);
-long long* append(long long *arr1, size_t arr1_size, long long* arr2, size_t arr2_size);
-long long* sublist(long long* arr, int start, int end);
-int isPowerof2(long long value);
-long long* optimized_append(long long* op_1, size_t* op_1_size, long long* op_2, size_t* op_2_size, size_t* ret_size);
 // Convert an array of bytes to an array of long long
 long long* fromBytes(BYTE* arr, size_t arr_size);
 
@@ -115,11 +100,13 @@ long long* fromBytes(BYTE* arr, size_t arr_size);
 // Declare the deallocation flag
 #define _DECL_DEALLOC(a) bool a##_dealloc = false;
 #define _DECL_DEALLOC_PARAM(a) bool a##_dealloc
+// Declare the passing parameter
 #define _DECL_1DARRAY_PARAM(a) long long* a, size_t a##_size
 #define _DECL_2DARRAY_PARAM(a) long long** a, size_t a##_size, size_t a##_size_size
+// Declare a call-by-reference parameter for output array size
 #define _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE size_t* _size_call_by_ref
 #define _DECL_2DARRAYSIZE_PARAM_CALLBYREFERENCE size_t* _size_call_by_ref, size_t _size_size_call_by_ref
-// Declare a BYTE array
+// Declare a structure member
 #define _DECL_1DARRAY_MEMBER(a) long long* a; size_t a##_size;
 #define _DECL_1DARRAY_MEMBER_BYTE(a) BYTE* a; size_t a##_size; 
 #define _DECL_2DARRAY_MEMBER(a) long long** a; size_t a##_size; size_t a##_size_size;
@@ -188,12 +175,9 @@ long long* fromBytes(BYTE* arr, size_t arr_size);
  * In-place Update Macros
  *
  */
-// Update an array of integers or structure pointers
+// Update an array of integers or structure pointers along with array size
 #define _UPDATE_1DARRAY(a, b) a##_size = b##_size; a = b;
 #define _UPDATE_2DARRAY(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = b;
-// Update the array size
-#define _UPDATE_1DARRAY_SIZE(a, b) a##_size = b##_size;
-#define _UPDATE_2DARRAY_SIZE(a, b) a##_size = b##_size; a##_size_size = b##_size_size;
 // Update the call-by-reference passing parameter with the size variable of 1D array
 #define _UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(a) *_size_call_by_ref = a##_size
 // Update the call-by-reference passing parameter with the size variable of 2D array
@@ -285,7 +269,6 @@ long long* fromBytes(BYTE* arr, size_t arr_size);
 				b = NULL;\
 			}\
 		})
-
 /**
 * Deallocation Macros for assignment 
 *

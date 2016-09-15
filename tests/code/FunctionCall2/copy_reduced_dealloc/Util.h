@@ -12,16 +12,6 @@
 
 // Define BYTE type due to missing byte primitive type in C languate
 typedef unsigned char BYTE;
-/***
-*
-* Declare an enumerated type to indicate the type and select the corresponding function 
-*
-*/
-/*typedef enum {
-	T_INT, // Integer type
-	T_BYTE // Byte type
-} TYPENUM;
-*/
 /**
 *Built-in operation for 1D array of byte and integers
 *

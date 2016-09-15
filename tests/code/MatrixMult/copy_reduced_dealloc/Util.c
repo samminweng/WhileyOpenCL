@@ -163,10 +163,7 @@ int isArrayEqual(long long* arr1, size_t arr1_size, long long* arr2, size_t arr2
 	//Both of arrays are the same. Return true
 	return 1;
 }
-
-
-/* 
-
+/*
 //Create 2D array using an array of pointers, i.e. allocating each sub-array in different memory space
 long long** create2DArray_LONGLONG(long long* arr, size_t n, size_t m){
 	long long** _2DArray = NULL;
@@ -188,6 +185,25 @@ long long** create2DArray_LONGLONG(long long* arr, size_t n, size_t m){
 	}
 	return _2DArray;
 }
+// Clone a 2D array 
+long long** copy2DArray_LONGLONG(long long **arr, size_t n, size_t m){
+	long long** _2DArray = (long long**)malloc(n*sizeof(long long*));
+	if(_2DArray == NULL){
+		fprintf(stderr, "fail to malloc at copy2DArray_LONGLONG function in Util.c\n");
+		exit(-2);
+	}
+	long long size = m*sizeof(long long);
+	for(size_t i=0;i<n;i++){
+		// Allocate an 1D array
+		_2DArray[i] = (long long*)malloc(size);
+		if(_2DArray[i] == NULL){
+			fprintf(stderr, "fail to allocate the memory at create2DArray_LONGLONG function in Util.c\n");
+			exit(-2);
+		}
+		memcpy(_2DArray[i], arr[i], size);
+	}
+	return _2DArray;
+}
 
 
 // Free 2D array 
@@ -201,10 +217,9 @@ void free2DArray_LONGLONG(long long** ptr, size_t size){
 	free(ptr);
 	ptr = NULL;
 }
-*
 */
 
-// Free an array of arrays
+// Free a flat 2D array
 void free2DArray_LONGLONG(long long** ptr, size_t size){
 	// Free the first pointer as it is actually allocated 
 	free(ptr[0]);
@@ -212,10 +227,8 @@ void free2DArray_LONGLONG(long long** ptr, size_t size){
 	free(ptr);
 	ptr = NULL;
 }
-
-/**
- * Given 1D array, create an 2D array of given dimensions (n * m) using one chuck of contiguous memory space  
- */
+// Flatten 2D array into 1D array
+/// Given 1D array, create an 2D array of given dimensions (n * m) using one chuck of contiguous memory space
 long long** create2DArray_LONGLONG(long long* arr, size_t n, size_t m){
 	long long** _2DArray = NULL;
 	// Allocate an array of pointers
@@ -242,9 +255,8 @@ long long** create2DArray_LONGLONG(long long* arr, size_t n, size_t m){
 	}
 	return _2DArray;
 }
-/**
-* Clone 2D array with given array size.
-*/
+
+/// Clone 2D flat array with given array size.
 long long** copy2DArray_LONGLONG(long long **arr, size_t n, size_t m){
 	long long** _2DArray = (long long**)malloc(n*sizeof(long long*));
 	if(_2DArray == NULL){
