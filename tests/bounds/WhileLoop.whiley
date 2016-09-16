@@ -10,5 +10,7 @@ requires limit <= 1000000:
     return sum
     
 method main(System.Console sys):
-    sys.out.println(f(5))    
-    sys.out.println(f(50000))
+    int a = f(5)
+    sys.out.println(a)
+    int b = f(50000)
+    sys.out.println(b)

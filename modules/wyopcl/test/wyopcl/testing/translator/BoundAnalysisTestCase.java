@@ -52,10 +52,13 @@ public class BoundAnalysisTestCase {
 		util.execCodeGeneration(codeDir, testcase, "bound", "naive");
 	}
 	
-	/*@Test
+	@Test
 	public void test_WhileLoop_Naive() {
-		util.execBoundAnalysis(valid_path, "WhileLoop", "bound", "naive");
+		System.out.print("Widen Bound C code \n");
+		util.execCodeGeneration(codeDir, testcase, "bound", "widen");
 	}
+	
+	/*
 	
 	@Test
 	public void test_WhileLoop_Gradual() {

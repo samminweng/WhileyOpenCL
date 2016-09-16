@@ -13,16 +13,20 @@ ensures r > 0:
     return 9223372036854775807
 
 method main(System.Console sys):
-    int a = f(1) //short int
+    // a: uint16_t
+    int a = f(1) 
     assert a == 32767
     sys.out.println(a)
-    int b = f(10) // long long
+    // b: uint64_t
+    int b = f(10) 
     assert b == 9223372036854775807
     sys.out.println(b)
-    int c = f(11) // long int
+    // c: uint32_t
+    int c = f(11) 
     assert c == 2147483647
     sys.out.println(c)
-    /*int d = f(1212)
+    // d = [32767..2147483647] d: uint32 
+    int d = f(1212)
     sys.out.println(d)
-    int e = f(-1212)
-    sys.out.println(e)*/
+    d = f(-1212)
+    sys.out.println(d)

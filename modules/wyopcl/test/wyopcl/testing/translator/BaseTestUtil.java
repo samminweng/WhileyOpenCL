@@ -341,7 +341,7 @@ public final class BaseTestUtil {
 			case 2:
 				if(options[0].equals("bound")){
 					widen = options[1];
-					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "bound_naive"
+					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "bound_"+widen
 							+ File.separator);
 				}else{
 					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "copy_reduced_dealloc"

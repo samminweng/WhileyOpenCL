@@ -742,7 +742,23 @@ public class BoundAnalyzer {
 	
 	
 	/**
-	 * Suggest the integer types (
+	 * Use the bound results to suggest the proper integer type, i.e.
+	 * 
+	 * <ul>
+	 * 
+	 * <li>int16_t: 16-bit integer from −32,768 to 32,767
+	 * <li>uint16_t: unsigned 16-bit integers from 0 to 65,535 
+	 * 
+	 * <li>int32_t: 32-bit integer from −2,147,483,648 to 2,147,483,647
+	 * <li>uint32_t: unsigned 32-bit integers from 0 to 4,294,967,295 
+	 * 
+	 * <li>int64_t: 64-bit integer from −9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
+	 * <li>uint64_t: unsigned 64-bit integers from 0 to 18,446,744,073,709,551,615
+	 * 
+	 * </ul>
+	 * 
+	 * 
+	 * See https://en.wikipedia.org/wiki/Integer_(computer_science)
 	 * @param register
 	 * @param function
 	 * @return
@@ -762,22 +778,42 @@ public class BoundAnalyzer {
 		BigInteger u_bnd = bounds.getUpper(prefix+register);
 		
 		if(l_bnd != null && u_bnd != null){
-			// The range is between short integer
-			if(l_bnd.compareTo(Threshold.SHRT_MIN.getValue())>= 0 
-					&& u_bnd.compareTo(Threshold.SHRT_MAX.getValue())<=0){
-				return "short int";
+			// Check lower bound >= 0
+			if(l_bnd.compareTo(BigInteger.ZERO)>=0){
+				// Used unsigned integer types
+				
+				// Unsigned 16-bit integer
+				if(u_bnd.compareTo(Threshold._UI16_MAX.getValue())<=0){
+					return "uint16_t";
+				}
+				
+				// Unsigned 32-bit integer
+				if(u_bnd.compareTo(Threshold._UI32_MAX.getValue())<=0){
+					return "uint32_t";
+				}
+				
+				// Unsigned 64-bit integers
+				return "uint64_t";
+				
+			}else{
+				// 16-bit integers 
+				if(l_bnd.compareTo(Threshold._I16_MIN.getValue())>=0
+						&& u_bnd.compareTo(Threshold._I16_MAX.getValue())<=0){
+					return "int16_t";
+				}
+				
+				// 32-bit integers
+				if(l_bnd.compareTo(Threshold._I32_MIN.getValue())>=0
+						&& u_bnd.compareTo(Threshold._I32_MAX.getValue())<=0){
+					return "int32_t";
+				}
+	
+				// The default 64-bit integer 
+				return "int64_t"; 
 			}
-			
-			// The range is between long integer 
-			if(l_bnd.compareTo(Threshold.INT_MIN.getValue())>= 0 
-					&& u_bnd.compareTo(Threshold.INT_MAX.getValue())<=0){
-				return "long int";
-			}
-			
-		}		
-		// The default integer type
-		return "long long"; // Use long long type
-		
+		}
+		// The default 64-bit integer 
+		return "int64_t"; 
 	}
 	
 	

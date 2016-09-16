@@ -28,29 +28,44 @@ public class Bounds implements Cloneable {
 				return new BigInteger("-9223372036854775808");
 			}
 		},
-		INT_MIN() {
+		_I32_MIN() {
 			public BigInteger getValue() {
 				return new BigInteger("-2147483648");
 			}
 		},
-		SHRT_MIN() {
+		_I16_MIN() {
 			public BigInteger getValue() {
 				return new BigInteger("-32768");
 			}
 		},
-		SHRT_MAX() {
+		_I16_MAX() {
 			public BigInteger getValue() {
 				return new BigInteger("32767");
 			}
 		},
-		INT_MAX() {
+		_UI16_MAX(){
+			public BigInteger getValue() {
+				return new BigInteger("65535");
+			}
+		},		
+		_I32_MAX() {
 			public BigInteger getValue() {
 				return new BigInteger("2147483647");
+			}
+		},
+		_UI32_MAX() {
+			public BigInteger getValue() {
+				return new BigInteger("4294967295");
 			}
 		},
 		_I64_MAX() {
 			public BigInteger getValue() {
 				return new BigInteger("9223372036854775807");
+			}
+		},
+		_UI64_MAX() {
+			public BigInteger getValue() {
+				return new BigInteger("18446744073709551615");
 			}
 		};
 
@@ -301,11 +316,11 @@ public class Bounds implements Cloneable {
 		BigInteger max = getUpper(name);
 		if (max != null) {
 			// Check the max values and widen the upper bound
-			BigInteger threshold = Threshold.SHRT_MAX.getValue();
+			BigInteger threshold = Threshold._I16_MAX.getValue();
 			if (max.compareTo(threshold) < 0) {
 				return widenUpperBound(name, threshold);
 			} else {
-				threshold = Threshold.INT_MAX.getValue();
+				threshold = Threshold._I32_MAX.getValue();
 				if (max.compareTo(threshold) < 0) {
 					return widenUpperBound(name, threshold);
 				} else {
@@ -334,11 +349,11 @@ public class Bounds implements Cloneable {
 		BigInteger min = getLower(name);
 		if (min != null) {
 			// Check the max values and widen the upper bound
-			BigInteger threshold = Threshold.SHRT_MIN.getValue();
+			BigInteger threshold = Threshold._I16_MIN.getValue();
 			if (min.compareTo(threshold) < 0) {
 				return widenLowerBound(name, threshold);
 			} else {
-				threshold = Threshold.INT_MIN.getValue();
+				threshold = Threshold._I32_MIN.getValue();
 				if (min.compareTo(threshold) < 0) {
 					return widenLowerBound(name, threshold);
 				} else {
