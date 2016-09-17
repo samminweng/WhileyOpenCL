@@ -362,8 +362,11 @@ public final class CodeGeneratorHelper {
 	 */
 	public static String translateType(Type type, CodeStores stores) {
 		if (type instanceof Type.Nominal) {
+			String nominal_name = ((Type.Nominal) type).name().name();
+			
+			
 			// Check is type is a System.Console.
-			if (((Type.Nominal) type).name().name().equals("Console")) {
+			if (nominal_name.equals("Console") || nominal_name.equals("Reader")) {
 				// Use FILE type.
 				return "FILE*";
 			}
@@ -398,6 +401,12 @@ public final class CodeGeneratorHelper {
 			if (fields.containsKey("args")) {
 				return "int argc, char** args";
 			}
+			
+			// Check if the fields has readAll method
+			if(fields.containsKey("readAll")){
+				return "void*";
+			}
+			
 			// Get the user-defined type
 			return Optional.ofNullable(stores.getUserDefinedType(type)).get().name() + "*";
 

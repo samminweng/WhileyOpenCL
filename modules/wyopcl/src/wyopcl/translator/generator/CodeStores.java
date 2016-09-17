@@ -18,6 +18,7 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.FieldLoad;
 import wyil.lang.Type;
+import wyil.lang.Type.Nominal;
 import wyil.lang.Type.Record;
 import wyil.lang.Type.Record.State;
 import wyil.lang.WyilFile;
@@ -114,6 +115,7 @@ public class CodeStores {
 		CodeStore store = getCodeStore(function);
 		store.loadField(register, field);
 	}
+	
 	
 	/**
 	 * 
@@ -640,7 +642,14 @@ public class CodeStores {
 			Declaration declaration = vars.get(reg);
 			Type type = declaration.type();
 			// Return the 'system console' Nominal type.
-			if(type instanceof Type.Nominal && !((Type.Nominal)type).name().name().equals("Console")){
+			if(type instanceof Type.Nominal){
+				Type.Nominal nominal = (Type.Nominal)type;
+				if(nominal.name().name().equals("Console")
+					||	nominal.name().name().equals("Reader")){
+					return nominal;
+				}
+				
+				
 				WyilFile.Type user_type = getUserDefinedType((Type.Nominal) type);
 				if(user_type != null){
 					return user_type.type();

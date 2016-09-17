@@ -115,36 +115,54 @@ long long** convertArgsToIntArray(int argc, char** args){
 		fprintf(stderr, "fail to allocate the memory at convertCharToInt function in Util.c\n");
 		exit(-2);
 	}
-	//Convert each argument into an array of digits	
-	size_t arr_size=0;
+
 	//Skip 1st arguement as it is the exec file name.
 	for(size_t i=1;i<argc;i++){
-		//Check args[i][0] is an integer or not.
+		// Array index
+		size_t index=i-1;
+		// The length of each argument
+		size_t max=0;
+		// Check if the argument is an integer
 		if(isdigit(args[i][0])){
-			//Allocated the array of 'arr'.
-			size_t max_j=0;
-			//check if the char is a number or it is not ending char.
-			//And calculate the arr_size
-			while(args[i][max_j] != '\0'){
-				if(!isdigit(args[i][max_j])){
+			// Convert an integer into an array of digits
+			// Calculate the array size
+			while(args[i][max] != '\0'){
+				if(!isdigit(args[i][max])){
 					fprintf(stderr,"None numbers is passed via command line arguments\n");
 					exit(-2);
 				}
-				max_j++;
+				max++;
 			}
+
 			//Allocate the array of arr[arr_size]
-			arr[arr_size] = (long long*)malloc((max_j+1)*sizeof(long long));
+			arr[index] = (long long*)malloc((max+1)*sizeof(long long));
+
 			//Fill in the array
 			size_t j;
-			for(j=0;j<max_j;j++){
-				arr[arr_size][j] = args[i][j] - '0';
+			for(j=0;j<max;j++){
+				arr[index][j] = args[i][j] - '0';
 			}
-			//Adding the negative value to indicate the end of the array. 
-			arr[arr_size][j] = -1;
-			arr_size++;
-		}
-	}
+			//Add '\0' to indicate the end of the array.
+			arr[index][j] = -1;
+		}else{
+			// Convert a string to an array of ASCII code (integer)
+			//And calculate the arr_size
+			while(args[i][max] != '\0'){
+				max++;
+			}
+			//Allocate the array of arr[arr_size]
+			arr[index] = (long long*)malloc((max+1)*sizeof(long long));
 
+			//Fill in the array
+			size_t j;
+			for(j=0;j<max;j++){
+				arr[index][j] = args[i][j] - '0';
+			}
+			//Add '\0' to indicate the end of the array.
+			arr[index][j] = '\0';
+		}
+
+	}
 	return arr;
 }
 
@@ -420,3 +438,59 @@ long long* fromBytes(BYTE* input, size_t size){
 	}
 	return arr;
 }
+
+// Read the input file name (ASCII code) and output a file pointer
+FILE* Reader(long long* arr){
+	// Chars array
+	char filename[1024];
+	// Convert an array of ASCII code to an string
+	size_t i=0;
+	while(arr[i]!='\0'){
+		char c = (char)(arr[i] + '0');
+		filename[i] = c;
+		i = i + 1;
+	}
+	// Add the ending char
+	filename[i] = '\0';
+
+	// Open a file pointer
+	FILE *fp = fopen(filename, "r");
+	if(fp == NULL){
+		fprintf(stderr, "fail to open the file name at 'Reader' function in Util.c\n");
+		exit(-2);
+	}
+
+	return fp;
+}
+
+// Read all lines of a file and output a BYTE array
+BYTE* readAll(FILE *file, size_t* _size){
+	BYTE c;
+	// Calculate the output size
+	size_t size = 0;
+	while(feof(file) != true){
+      c = fgetc(file);
+      printf("%c", c);
+      size = size + 1;
+	}
+	// Set the file position to the beginning of the file
+	rewind(file);
+
+	// Allocated byte array
+	BYTE* arr = (BYTE*)malloc((size)*sizeof(BYTE));
+	if(arr == NULL){
+		fprintf(stderr, "fail to allocate the array at 'readAll' function in Util.c\n");
+		exit(-2);
+	}
+
+	// Read the file to 'arr' array
+	fgets(arr, size, file);
+
+	// Close the file
+	fclose(file);
+
+	*_size = size;
+	return arr;
+}
+
+

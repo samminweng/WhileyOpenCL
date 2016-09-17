@@ -286,7 +286,9 @@ void printMat(FILE* sys, Matrix* A, _DECL_DEALLOC_PARAM(A)){
 			//indexof %12 = %11, %3 : int[]
 			_12=_11[j];
 			//indirectinvoke () = %9 (%12) : method(any)->()
-			printf("%lld", _12);
+			{
+				printf("%lld", _12);
+			}
 			//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %14 = %13 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %15 = [32] : int[]
@@ -295,7 +297,9 @@ void printMat(FILE* sys, Matrix* A, _DECL_DEALLOC_PARAM(A)){
 			_15[0] = 32; 
 			_ADD_DEALLOC(_15);
 			//indirectinvoke () = %14 (%15) : method(int[])->()
-			printf_s(_1DARRAY_PARAM(_15));
+			{
+				printf_s(_1DARRAY_PARAM(_15));
+			}
 			//const %16 = 1 : int
 			_16 = 1;
 			//add %17 = %3, %16 : int
@@ -320,7 +324,9 @@ blklab21:;
 		_NEW_1DARRAY_LONGLONG(_22, 0, 0);
 		_ADD_DEALLOC(_22);
 		//indirectinvoke () = %21 (%22) : method(int[])->()
-		println_s(_22, _22_size);
+		{
+			println_s(_22, _22_size);
+		}
 //.blklab20
 blklab20:;
 	}
@@ -618,7 +624,9 @@ blklab29:;
 	_37[0] = 80; _37[1] = 97; _37[2] = 115; _37[3] = 115; _37[4] = 32; _37[5] = 77; _37[6] = 97; _37[7] = 116; _37[8] = 114; _37[9] = 105; _37[10] = 120; _37[11] = 77; _37[12] = 117; _37[13] = 108; _37[14] = 116; _37[15] = 32; _37[16] = 116; _37[17] = 101; _37[18] = 115; _37[19] = 116; _37[20] = 32; _37[21] = 99; _37[22] = 97; _37[23] = 115; _37[24] = 101; 
 	_ADD_DEALLOC(_37);
 	//indirectinvoke () = %36 (%37) : method(int[])->()
-	println_s(_37, _37_size);
+	{
+		println_s(_37, _37_size);
+	}
 	//return
 	_DEALLOC_STRUCT(A, Matrix);
 	_DEALLOC_STRUCT(B, Matrix);

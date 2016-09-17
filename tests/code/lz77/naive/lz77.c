@@ -123,7 +123,9 @@ Match* findLongestMatch(BYTE* data, long long data_size, long long pos){
 	//const %13 = 0 : int
 	_13 = 0;
 	//invoke (%10) = (%12, %13) whiley/lang/Math:max : function(int,int)->(int)
-	_10 = max(_12, _13);
+	{
+		_10 = max(_12, _13);
+	}
 	//assign %5 = %10  : int
 	start = _10;
 	//assign %6 = %5  : int
@@ -232,7 +234,9 @@ BYTE* write_u1(BYTE* bytes, long long bytes_size, long long u1, _DECL_1DARRAYSIZ
 	_DECL_1DARRAY_BYTE(_3);
 	BYTE _4;
 	//invoke (%4) = (%1) whiley/lang/Int:toUnsignedByte : function(whiley/lang/Int:u8)->(byte)
-	_4 = (BYTE)u1;
+	{
+		_4 = (BYTE)u1;
+	}
 	//invoke (%3) = (%0, %4) lz77:append_byte : function(byte[],byte)->(byte[])
 	{
 		void* bytes_tmp;
@@ -444,11 +448,15 @@ BYTE* decompress(BYTE* data, long long data_size, _DECL_1DARRAYSIZE_PARAM_CALLBY
 //.blklab14
 blklab14:;
 		//invoke (%24) = (%3) whiley/lang/Byte:toUnsignedInt : function(byte)->(whiley/lang/Int:uint)
-		_24 = (unsigned int)header;
+		{
+			_24 = (unsigned int)header;
+		}
 		//assign %5 = %24  : int
 		offset = _24;
 		//invoke (%25) = (%4) whiley/lang/Byte:toUnsignedInt : function(byte)->(whiley/lang/Int:uint)
-		_25 = (unsigned int)item;
+		{
+			_25 = (unsigned int)item;
+		}
 		//assign %6 = %25  : int
 		len = _25;
 		//lengthof %26 = %1 : byte[]
@@ -609,27 +617,37 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_LONGLONG(_8, 14, 0);
 	_8[0] = 68; _8[1] = 97; _8[2] = 116; _8[3] = 97; _8[4] = 58; _8[5] = 32; _8[6] = 32; _8[7] = 32; _8[8] = 32; _8[9] = 32; _8[10] = 32; _8[11] = 32; _8[12] = 32; _8[13] = 32; 
 	//indirectinvoke () = %7 (%8) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_8));
+	{
+		printf_s(_1DARRAY_PARAM(_8));
+	}
 	//fieldload %9 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %10 = %9 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%11) = (%1) whiley/lang/ASCII:fromBytes : function(byte[])->(whiley/lang/ASCII:string)
-	_11 = fromBytes(data, data_size);
-	_11_size = data_size;
+	{
+		_11 = fromBytes(data, data_size);
+		_11_size = data_size;
+	}
 	//indirectinvoke () = %10 (%11) : method(int[])->()
-	println_s(_11, _11_size);
+	{
+		println_s(_11, _11_size);
+	}
 	//fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %13 = %12 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//lengthof %14 = %1 : byte[]
 	_14 = data_size;
 	//indirectinvoke () = %13 (%14) : method(any)->()
-	printf("%lld", _14);
+	{
+		printf("%lld", _14);
+	}
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %16 = %15 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %17 = [32,98,121,116,101,115] : int[]
 	_NEW_1DARRAY_LONGLONG(_17, 6, 0);
 	_17[0] = 32; _17[1] = 98; _17[2] = 121; _17[3] = 116; _17[4] = 101; _17[5] = 115; 
 	//indirectinvoke () = %16 (%17) : method(int[])->()
-	println_s(_17, _17_size);
+	{
+		println_s(_17, _17_size);
+	}
 	//invoke (%18) = (%1) lz77:compress : function(byte[])->(byte[])
 	{
 		void* data_tmp;
@@ -643,27 +661,37 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_LONGLONG(_21, 19, 0);
 	_21[0] = 67; _21[1] = 79; _21[2] = 77; _21[3] = 80; _21[4] = 82; _21[5] = 69; _21[6] = 83; _21[7] = 83; _21[8] = 69; _21[9] = 68; _21[10] = 32; _21[11] = 68; _21[12] = 97; _21[13] = 116; _21[14] = 97; _21[15] = 58; _21[16] = 32; _21[17] = 32; _21[18] = 32; 
 	//indirectinvoke () = %20 (%21) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_21));
+	{
+		printf_s(_1DARRAY_PARAM(_21));
+	}
 	//fieldload %22 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %23 = %22 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%24) = (%2) whiley/lang/ASCII:fromBytes : function(byte[])->(whiley/lang/ASCII:string)
-	_24 = fromBytes(compress_data, compress_data_size);
-	_24_size = compress_data_size;
+	{
+		_24 = fromBytes(compress_data, compress_data_size);
+		_24_size = compress_data_size;
+	}
 	//indirectinvoke () = %23 (%24) : method(int[])->()
-	println_s(_24, _24_size);
+	{
+		println_s(_24, _24_size);
+	}
 	//fieldload %25 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %26 = %25 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//lengthof %27 = %2 : byte[]
 	_27 = compress_data_size;
 	//indirectinvoke () = %26 (%27) : method(any)->()
-	printf("%lld", _27);
+	{
+		printf("%lld", _27);
+	}
 	//fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %29 = %28 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %30 = [32,98,121,116,101,115] : int[]
 	_NEW_1DARRAY_LONGLONG(_30, 6, 0);
 	_30[0] = 32; _30[1] = 98; _30[2] = 121; _30[3] = 116; _30[4] = 101; _30[5] = 115; 
 	//indirectinvoke () = %29 (%30) : method(int[])->()
-	println_s(_30, _30_size);
+	{
+		println_s(_30, _30_size);
+	}
 	//invoke (%31) = (%2) lz77:decompress : function(byte[])->(byte[])
 	{
 		void* compress_data_tmp;
@@ -677,27 +705,37 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_LONGLONG(_34, 16, 0);
 	_34[0] = 68; _34[1] = 69; _34[2] = 67; _34[3] = 79; _34[4] = 77; _34[5] = 80; _34[6] = 82; _34[7] = 69; _34[8] = 83; _34[9] = 83; _34[10] = 69; _34[11] = 68; _34[12] = 58; _34[13] = 32; _34[14] = 32; _34[15] = 32; 
 	//indirectinvoke () = %33 (%34) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_34));
+	{
+		printf_s(_1DARRAY_PARAM(_34));
+	}
 	//fieldload %35 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %36 = %35 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%37) = (%3) whiley/lang/ASCII:fromBytes : function(byte[])->(whiley/lang/ASCII:string)
-	_37 = fromBytes(decompress_data, decompress_data_size);
-	_37_size = decompress_data_size;
+	{
+		_37 = fromBytes(decompress_data, decompress_data_size);
+		_37_size = decompress_data_size;
+	}
 	//indirectinvoke () = %36 (%37) : method(int[])->()
-	println_s(_37, _37_size);
+	{
+		println_s(_37, _37_size);
+	}
 	//fieldload %38 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %39 = %38 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//lengthof %40 = %3 : byte[]
 	_40 = decompress_data_size;
 	//indirectinvoke () = %39 (%40) : method(any)->()
-	printf("%lld", _40);
+	{
+		printf("%lld", _40);
+	}
 	//fieldload %41 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %42 = %41 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %43 = [32,98,121,116,101,115] : int[]
 	_NEW_1DARRAY_LONGLONG(_43, 6, 0);
 	_43[0] = 32; _43[1] = 98; _43[2] = 121; _43[3] = 116; _43[4] = 101; _43[5] = 115; 
 	//indirectinvoke () = %42 (%43) : method(int[])->()
-	println_s(_43, _43_size);
+	{
+		println_s(_43, _43_size);
+	}
 	//return
 	exit(0);
 }

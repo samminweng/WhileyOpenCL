@@ -486,11 +486,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String indent = stores.getIndent(function);
 		Type lhs_type = stores.getRawType(code.target(0), function);
 		String rhs = stores.getVar(code.operand(0), function);
-		if (lhs_type instanceof Type.Function) {
+		// The type of file reader is NULL  
+		if(lhs_type instanceof Type.Nominal && ((Type.Nominal) lhs_type).name().name().equals("Reader")){
+			// Have in-place update
+			statement.add(indent+lhs + " = "+rhs+";");			
+		}else	if (lhs_type instanceof Type.Function) {
 			statement.add(indent + declareLambda(lhs, (Type.Function) lhs_type) + ";");
 			// Point lhs to lambda function.
 			statement.add(indent + lhs + " = " + rhs + ";");
-		} else {
+		}else {
 			boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
 			statement.add(generateAssignmentCode(code, isCopyEliminated, function, stores));
 
@@ -945,10 +949,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.Invoke code, FunctionOrMethod function) {
 		List<String> statements = new ArrayList<String>();
+		// Add the starting clause for the function call
+		statements.add(stores.getIndent(function) + "{");
+		// Increase the indent
+		stores.increaseIndent(function);
+		
 		String indent = stores.getIndent(function);
-
+		String module = code.name.module().toString();
 		// Translate built-in Whiley functions using macros.
-		if (code.name.module().toString().contains("whiley/lang")) {
+		if (module.contains("whiley/lang")) {
 			String lhs = stores.getVar(code.target(0), function);
 			String rhs = stores.getVar(code.operand(0), function);
 			switch (code.name.name()) {
@@ -1003,13 +1012,18 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			this.deallocatedAnalyzer.ifPresent(a -> {
 				statements.addAll(a.postDealloc(code, function, stores, copyAnalyzer));
 			});
-
-		} else {
-
-			// Add the starting clause for the function call
-			statements.add(stores.getIndent(function) + "{");
-			// Increase the indent
-			stores.increaseIndent(function);
+		}else if(module.contains("whiley/io")){
+			String lhs = stores.getVar(code.target(0), function);
+			String rhs = stores.getVar(code.operand(0), function);
+			switch (code.name.name()) {
+			case "Reader":
+				// Read a file name (an array of ASCII code) and output an file pointer
+				statements.add(indent+ lhs + " = Reader("+rhs+");");
+				break;
+			default:
+				throw new RuntimeException("Un-implemented code:" + code);
+			}			
+		} else {		
 
 			// Check the copy of parameter
 			List<Integer> copyReducedList = checkParameterCopy(statements, code, function);
@@ -1023,14 +1037,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			this.deallocatedAnalyzer.ifPresent(a -> {
 				statements.addAll(a.postDealloc(code, function, stores, copyAnalyzer));
 			});
-
-			// Decrease the indent
-			stores.decreaseIndent(function);
-
-			// Add the ending clause for the function call
-			statements.add(stores.getIndent(function) + "}");
 		}
 
+		// Decrease the indent
+		stores.decreaseIndent(function);
+
+		// Add the ending clause for the function call
+		statements.add(stores.getIndent(function) + "}");
 		// add the statement
 		stores.addAllStatements(code, statements, function);
 	}
@@ -1362,7 +1375,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		// Assign rhs to rhs without any copy, e.g. a = b[i];
 		statement.add(indent + lhs + "=" + rhs + "[" + index + "];");
-
+		
 		// Check if lhs is a structure. If so, then lhs is a substructure
 		Type lhs_type = stores.getRawType(code.target(0), function);
 		if (stores.isCompoundType(lhs_type)) {
@@ -1467,14 +1480,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		if (field.equals("out") || field.equals("print") || field.equals("println") || field.equals("print_s")
 				|| field.equals("println_s")) {
-			// Skip translation.
+			// Load the field to the target register.
+			stores.loadField(code.target(0), field, function);
+		} else if (field.equals("readAll")){
+			// Get the file pointer 
+			String fileptr = stores.getVar(code.operand(0), function);
+			// Load the field and file pointer to the target register.
+			stores.loadField(code.target(0), field+"\t"+fileptr, function);
 		} else {
 			// Free lhs variable
 			extractLHSVar(statement, code, function);
 			boolean isCopyEliminated;// The copy is NOT needed by default.
 			if (field.equals("args")) {
-				// Convert the arguments into an array of integer array (long
-				// long**).
+				// Convert the arguments into an array of integer array (long long**).
 				statement.add(
 						stores.getIndent(function) + "_CONV_ARGS(" + stores.getVar(code.target(0), function) + ");");
 				isCopyEliminated = false;
@@ -1494,10 +1512,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Add the post-deallocation code
 			this.deallocatedAnalyzer.ifPresent(
 					a -> a.postDealloc(isCopyEliminated, code.operand(0), statement, code, function, stores));
+			// Load the field to the target register.
+			stores.loadField(code.target(0), field, function);
 		}
-
-		// Load the field to the target register.
-		stores.loadField(code.target(0), field, function);
 
 		stores.addAllStatements(code, statement, function);
 	}
@@ -1542,7 +1559,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.IndirectInvoke code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
-		String indent = stores.getIndent(function);
+		
+		// Add the starting clause for the function call
+		statement.add(stores.getIndent(function) + "{");
+		// Increase the indent
+		stores.increaseIndent(function);
+		String indent = stores.getIndent(function);		
 		if (code.type(0) instanceof Type.Function) {
 			// Get the lambda expression
 			String lhs = stores.getVar(code.target(0), function);
@@ -1551,52 +1573,69 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement.add(indent + lhs + " = " + rhs + "(" + parameter + ");");
 		} else if (code.type(0) instanceof Type.Method) {
 			// Get the function name, e.g. 'printf'.
-			String print_name = stores.getField(code.operand(0), function);
-			// Get the input
-			String input = stores.getVar(code.operand(1), function);
-			Type input_type = stores.getRawType(code.operand(1), function);
-			String f_s = "%lld";// Specify the format to 'printf' function, e.g.
-			// '%lld'
-			switch (print_name) {
-			case "print":
-				statement.add(indent + "printf(\"" + f_s + "\", " + input + ");");
-				break;
-			case "print_s":
-				int dimension = stores.getArrayDimension(input_type);
-				statement.add(indent + "printf_s(_" + dimension + "DARRAY_PARAM(" + input + "));");
-				break;
-			case "println_s":
-				// dimension = stores.getArrayDimension(input_type);
-				statement.add(indent + "println_s(" + input + ", " + input + "_size);");
-				break;
-			case "println":
-				// Check input's type to call different println function.
-				if (input_type instanceof Type.Int) {
-					statement.add(indent + "printf(\"" + f_s + "\\n\", " + input + ");");
-				} else if (input_type instanceof Type.Array) {
-					Type elm_type = stores.getArrayElementType((Type.Array)input_type);
-					// Print out arrays w.r.t. array element type
-					if(elm_type instanceof Type.Byte){
-						statement.add(indent + "_PRINT_1DARRAY_BYTE(" + input + ");");
-					}else{
-						statement.add(indent + "_PRINT_1DARRAY_LONGLONG(" + input + ");");
+			String func_name = stores.getField(code.operand(0), function);
+			if(func_name.contains("readAll")){
+				// Get input file pointer
+				String input_ptr = func_name.split("\t")[1];
+				// Get output variable
+				String output = stores.getVar(code.target(0), function);
+				// Read a file as an array of Bytes
+				statement.add(indent+ output + " = readAll("+input_ptr+", &"+output+"_size);");
+				// Add deallocation flag
+				this.deallocatedAnalyzer.ifPresent(a ->{
+					statement.add(indent+ "_ADD_DEALLOC("+output+");");
+				});
+			}else{
+				// Get the input
+				String input = stores.getVar(code.operand(1), function);
+				Type input_type = stores.getRawType(code.operand(1), function);
+				switch (func_name) {
+				case "print":
+					statement.add(indent + "printf(\"" + "%lld" + "\", " + input + ");");
+					break;
+				case "print_s":
+					int dimension = stores.getArrayDimension(input_type);
+					statement.add(indent + "printf_s(_" + dimension + "DARRAY_PARAM(" + input + "));");
+					break;
+				case "println_s":
+					// dimension = stores.getArrayDimension(input_type);
+					statement.add(indent + "println_s(" + input + ", " + input + "_size);");
+					break;
+				case "println":
+					// Check input's type to call different println function.
+					if (input_type instanceof Type.Int) {
+						statement.add(indent + "printf(\"" + "%lld" + "\\n\", " + input + ");");
+					} else if (input_type instanceof Type.Array) {
+						Type elm_type = stores.getArrayElementType((Type.Array)input_type);
+						// Print out arrays w.r.t. array element type
+						if(elm_type instanceof Type.Byte){
+							statement.add(indent + "_PRINT_1DARRAY_BYTE(" + input + ");");
+						}else{
+							statement.add(indent + "_PRINT_1DARRAY_LONGLONG(" + input + ");");
+						}
+					} else if (input_type instanceof Type.Nominal) {
+						Type.Nominal nominal = (Type.Nominal) input_type;
+						// Print out a user-defined type structure
+						statement.add(indent + "printf_" + nominal.name().name() + "(" + input + ");");
+					} else if (input_type instanceof Type.Union) {
+						statement.add(indent + "printf(\"" + "%lld" + "\\n\", " + input + ");");
+					} else {
+						throw new RuntimeException("Not implemented." + code);
 					}
-				} else if (input_type instanceof Type.Nominal) {
-					Type.Nominal nominal = (Type.Nominal) input_type;
-					// Print out a user-defined type structure
-					statement.add(indent + "printf_" + nominal.name().name() + "(" + input + ");");
-				} else if (input_type instanceof Type.Union) {
-					statement.add(indent + "printf(\"" + f_s + "\\n\", " + input + ");");
-				} else {
+					break;
+				default:
 					throw new RuntimeException("Not implemented." + code);
 				}
-				break;
-			default:
-				throw new RuntimeException("Not implemented." + code);
 			}
 		} else {
 			throw new RuntimeException("Not implemented." + code);
 		}
+		
+		// Decrease the indent
+		stores.decreaseIndent(function);
+
+		// Add the ending clause for the function call
+		statement.add(stores.getIndent(function) + "}");
 		stores.addAllStatements(code, statement, function);
 	}
 

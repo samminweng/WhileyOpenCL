@@ -62,7 +62,9 @@ long long* sortV1(_DECL_1DARRAY_PARAM(items), long long start, long long end, _D
 	//assign %4 = %14  : int
 	pivot = _14;
 	//invoke (%15) = (%0, %1, %4) whiley/lang/Array:slice : function(int[],int,int)->(int[])
+	{
 _SLICE_ARRAY(_15, items, start, pivot);
+	}
 	//assign %5 = %15  : int[]
 	_COPY_1DARRAY_LONGLONG(lhs, _15);
 	//const %17 = 0 : int
@@ -75,7 +77,9 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	//assign %5 = %16  : int[]
 	_COPY_1DARRAY_LONGLONG(lhs, _16);
 	//invoke (%18) = (%0, %4, %2) whiley/lang/Array:slice : function(int[],int,int)->(int[])
+	{
 _SLICE_ARRAY(_18, items, pivot, end);
+	}
 	//assign %6 = %18  : int[]
 	_COPY_1DARRAY_LONGLONG(rhs, _18);
 	//const %20 = 0 : int
@@ -592,7 +596,9 @@ blklab15:;
 	_NEW_1DARRAY_LONGLONG(_88, 24, 0);
 	_88[0] = 80; _88[1] = 97; _88[2] = 115; _88[3] = 115; _88[4] = 32; _88[5] = 109; _88[6] = 101; _88[7] = 114; _88[8] = 103; _88[9] = 101; _88[10] = 115; _88[11] = 111; _88[12] = 114; _88[13] = 116; _88[14] = 32; _88[15] = 116; _88[16] = 101; _88[17] = 115; _88[18] = 116; _88[19] = 32; _88[20] = 99; _88[21] = 97; _88[22] = 115; _88[23] = 101; 
 	//indirectinvoke () = %87 (%88) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_88));
+	{
+		printf_s(_1DARRAY_PARAM(_88));
+	}
 	//return
 	exit(0);
 }

@@ -152,7 +152,9 @@ blklab2:;
 	_17[0] = 97; _17[1] = 91; _17[2] = 50; _17[3] = 93; _17[4] = 61; 
 	_ADD_DEALLOC(_17);
 	//indirectinvoke () = %16 (%17) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_17));
+	{
+		printf_s(_1DARRAY_PARAM(_17));
+	}
 	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %19 = %18 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %20 = 2 : int
@@ -160,7 +162,9 @@ blklab2:;
 	//indexof %21 = %1, %20 : int[]
 	_21=a[_20];
 	//indirectinvoke () = %19 (%21) : method(any)->()
-	printf("%lld\n", _21);
+	{
+		printf("%lld\n", _21);
+	}
 	//const %22 = 0 : int
 	_22 = 0;
 	//const %23 = 0 : int
@@ -236,7 +240,9 @@ blklab4:;
 	_38[0] = 98; _38[1] = 91; _38[2] = 50; _38[3] = 93; _38[4] = 61; 
 	_ADD_DEALLOC(_38);
 	//indirectinvoke () = %37 (%38) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_38));
+	{
+		printf_s(_1DARRAY_PARAM(_38));
+	}
 	//fieldload %39 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %40 = %39 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %41 = 2 : int
@@ -244,7 +250,9 @@ blklab4:;
 	//indexof %42 = %2, %41 : int[]
 	_42=b[_41];
 	//indirectinvoke () = %40 (%42) : method(any)->()
-	printf("%lld\n", _42);
+	{
+		printf("%lld\n", _42);
+	}
 	//fieldload %43 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %44 = %43 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %45 = [99,91,50,93,61] : int[]
@@ -253,7 +261,9 @@ blklab4:;
 	_45[0] = 99; _45[1] = 91; _45[2] = 50; _45[3] = 93; _45[4] = 61; 
 	_ADD_DEALLOC(_45);
 	//indirectinvoke () = %44 (%45) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_45));
+	{
+		printf_s(_1DARRAY_PARAM(_45));
+	}
 	//fieldload %46 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %47 = %46 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %48 = 2 : int
@@ -261,7 +271,9 @@ blklab4:;
 	//indexof %49 = %3, %48 : int[]
 	_49=c[_48];
 	//indirectinvoke () = %47 (%49) : method(any)->()
-	printf("%lld\n", _49);
+	{
+		printf("%lld\n", _49);
+	}
 	//return
 	_DEALLOC(a);
 	_DEALLOC(b);

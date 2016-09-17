@@ -62,7 +62,9 @@ long long convolution(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(pixels), 
 		//rem %23 = %22, %2 : int
 		_23=_22%height;
 		//invoke (%20) = (%23) whiley/lang/Math:abs : function(int)->(int)
-		_20 = llabs(_23);
+		{
+			_20 = llabs(_23);
+		}
 		//assign %11 = %20  : int
 		y = _20;
 		//const %24 = 0 : int
@@ -80,7 +82,9 @@ long long convolution(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(pixels), 
 			//rem %28 = %27, %1 : int
 			_28=_27%width;
 			//invoke (%25) = (%28) whiley/lang/Math:abs : function(int)->(int)
-			_25 = llabs(_28);
+			{
+				_25 = llabs(_28);
+			}
 			//assign %13 = %25  : int
 			x = _25;
 			//mul %29 = %11, %1 : int
@@ -317,9 +321,13 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 			//assign %12 = %48  : int
 			h_g = _48;
 			//invoke (%49) = (%11) whiley/lang/Math:abs : function(int)->(int)
-			_49 = llabs(v_g);
+			{
+				_49 = llabs(v_g);
+			}
 			//invoke (%50) = (%12) whiley/lang/Math:abs : function(int)->(int)
-			_50 = llabs(h_g);
+			{
+				_50 = llabs(h_g);
+			}
 			//add %51 = %49, %50 : int
 			_51=_49+_50;
 			//assign %13 = %51  : int
@@ -440,7 +448,9 @@ void printImage(FILE* sys, _DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(pixe
 			_15[0] = 119; 
 			_ADD_DEALLOC(_15);
 			//indirectinvoke () = %14 (%15) : method(int[])->()
-			printf_s(_1DARRAY_PARAM(_15));
+			{
+				printf_s(_1DARRAY_PARAM(_15));
+			}
 			//goto blklab15
 			goto blklab15;
 //.blklab14
@@ -453,7 +463,9 @@ blklab14:;
 			_18[0] = 98; 
 			_ADD_DEALLOC(_18);
 			//indirectinvoke () = %17 (%18) : method(int[])->()
-			printf_s(_1DARRAY_PARAM(_18));
+			{
+				printf_s(_1DARRAY_PARAM(_18));
+			}
 //.blklab15
 blklab15:;
 			//fieldload %19 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
@@ -464,7 +476,9 @@ blklab15:;
 			_21[0] = 32; 
 			_ADD_DEALLOC(_21);
 			//indirectinvoke () = %20 (%21) : method(int[])->()
-			printf_s(_1DARRAY_PARAM(_21));
+			{
+				printf_s(_1DARRAY_PARAM(_21));
+			}
 			//const %22 = 1 : int
 			_22 = 1;
 			//add %23 = %5, %22 : int
@@ -489,7 +503,9 @@ blklab12:;
 		_NEW_1DARRAY_LONGLONG(_28, 0, 0);
 		_ADD_DEALLOC(_28);
 		//indirectinvoke () = %27 (%28) : method(int[])->()
-		println_s(_28, _28_size);
+		{
+			println_s(_28, _28_size);
+		}
 //.blklab11
 blklab11:;
 	}
@@ -610,7 +626,9 @@ int main(int argc, char** args){
 	_16[0] = 73; _16[1] = 110; _16[2] = 112; _16[3] = 117; _16[4] = 116; _16[5] = 32; _16[6] = 73; _16[7] = 109; _16[8] = 97; _16[9] = 103; _16[10] = 101; _16[11] = 58; 
 	_ADD_DEALLOC(_16);
 	//indirectinvoke () = %15 (%16) : method(int[])->()
-	println_s(_16, _16_size);
+	{
+		println_s(_16, _16_size);
+	}
 	//invoke () = (%0, %4, %1, %2) SobelEdgeDetect1:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
 		printImage(stdout, _1DARRAY_PARAM(pixels), false, width, height);
@@ -624,7 +642,9 @@ int main(int argc, char** args){
 	_19[0] = 83; _19[1] = 111; _19[2] = 98; _19[3] = 101; _19[4] = 108; _19[5] = 32; _19[6] = 69; _19[7] = 100; _19[8] = 103; _19[9] = 101; _19[10] = 32; _19[11] = 68; _19[12] = 101; _19[13] = 116; _19[14] = 101; _19[15] = 99; _19[16] = 116; _19[17] = 105; _19[18] = 111; _19[19] = 110; _19[20] = 58; 
 	_ADD_DEALLOC(_19);
 	//indirectinvoke () = %18 (%19) : method(int[])->()
-	println_s(_19, _19_size);
+	{
+		println_s(_19, _19_size);
+	}
 	//invoke () = (%0, %5, %1, %2) SobelEdgeDetect1:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
 		printImage(stdout, _1DARRAY_PARAM(newPixels), false, width, height);

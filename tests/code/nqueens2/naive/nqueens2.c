@@ -60,13 +60,17 @@ blklab0:;
 	//sub %12 = %5, %2 : int
 	_12=c-col;
 	//invoke (%11) = (%12) whiley/lang/Math:abs : function(int)->(int)
-	_11 = llabs(_12);
+	{
+		_11 = llabs(_12);
+	}
 	//assign %6 = %11  : int
 	colDiff = _11;
 	//sub %14 = %4, %1 : int
 	_14=r-row;
 	//invoke (%13) = (%14) whiley/lang/Math:abs : function(int)->(int)
-	_13 = llabs(_14);
+	{
+		_13 = llabs(_14);
+	}
 	//assign %7 = %13  : int
 	rowDiff = _13;
 	//ifeq %6, %7 goto blklab2 : int
@@ -358,38 +362,50 @@ blklab23:;
 	_NEW_1DARRAY_LONGLONG(_14, 33, 0);
 	_14[0] = 78; _14[1] = 45; _14[2] = 81; _14[3] = 117; _14[4] = 101; _14[5] = 101; _14[6] = 110; _14[7] = 32; _14[8] = 80; _14[9] = 114; _14[10] = 111; _14[11] = 98; _14[12] = 108; _14[13] = 101; _14[14] = 109; _14[15] = 32; _14[16] = 111; _14[17] = 110; _14[18] = 32; _14[19] = 97; _14[20] = 32; _14[21] = 78; _14[22] = 32; _14[23] = 88; _14[24] = 32; _14[25] = 78; _14[26] = 32; _14[27] = 66; _14[28] = 111; _14[29] = 97; _14[30] = 114; _14[31] = 100; _14[32] = 46; 
 	//indirectinvoke () = %13 (%14) : method(int[])->()
-	println_s(_14, _14_size);
+	{
+		println_s(_14, _14_size);
+	}
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %16 = %15 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %17 = [78,32,61,32] : int[]
 	_NEW_1DARRAY_LONGLONG(_17, 4, 0);
 	_17[0] = 78; _17[1] = 32; _17[2] = 61; _17[3] = 32; 
 	//indirectinvoke () = %16 (%17) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_17));
+	{
+		printf_s(_1DARRAY_PARAM(_17));
+	}
 	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %19 = %18 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//lengthof %20 = %2 : {int c,int r}[]
 	_20 = queens_size;
 	//indirectinvoke () = %19 (%20) : method(any)->()
-	printf("%lld\n", _20);
+	{
+		printf("%lld\n", _20);
+	}
 	//fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %22 = %21 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %23 = [70,111,117,110,100,32] : int[]
 	_NEW_1DARRAY_LONGLONG(_23, 6, 0);
 	_23[0] = 70; _23[1] = 111; _23[2] = 117; _23[3] = 110; _23[4] = 100; _23[5] = 32; 
 	//indirectinvoke () = %22 (%23) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_23));
+	{
+		printf_s(_1DARRAY_PARAM(_23));
+	}
 	//fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %25 = %24 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %25 (%3) : method(any)->()
-	printf("%lld", num_solutions);
+	{
+		printf("%lld", num_solutions);
+	}
 	//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %27 = %26 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %28 = [32,115,111,108,117,116,105,111,110,115,46] : int[]
 	_NEW_1DARRAY_LONGLONG(_28, 11, 0);
 	_28[0] = 32; _28[1] = 115; _28[2] = 111; _28[3] = 108; _28[4] = 117; _28[5] = 116; _28[6] = 105; _28[7] = 111; _28[8] = 110; _28[9] = 115; _28[10] = 46; 
 	//indirectinvoke () = %27 (%28) : method(int[])->()
-	println_s(_28, _28_size);
+	{
+		println_s(_28, _28_size);
+	}
 	//return
 	exit(0);
 }
