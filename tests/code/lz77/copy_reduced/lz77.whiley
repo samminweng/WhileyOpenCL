@@ -4,13 +4,10 @@
  * See: http://en.wikipedia.org/wiki/LZ77_and_LZ78
  *      https://github.com/Whiley/WyBench/blob/master/src/009_lz77/Main.whiley
  */
+import * from whiley.io.File
 import * from whiley.lang.System
 import whiley.lang.*
 
-// The binary representation of 'aacaacabcabaaac' string
-constant text is [01100001b, 01100001b, 01100011b, 01100001b, 01100001b,
-                  01100011b, 01100001b, 01100010b, 01100011b, 01100001b,
-                  01100010b, 01100001b, 01100001b, 01100001b, 01100011b]
 // Positive integer type
 type nat is (int x) where x >= 0
 // Match type 
@@ -73,16 +70,11 @@ function compress(byte[] data) -> (byte[] output):
 	nat pos = 0
 	// Initialize the output array of bytes
 	output = [0b;0]
-	//sys.out.println_s("================Compression==================")
 	// Iterate each byte in 'data'
 	while pos < |data|:
 		Match m = findLongestMatch(data, pos)
 		int offset = m.offset
 		int len = m.len
-		//sys.out.print_s("offset:")
-		//sys.out.println(offset)
-		//sys.out.print_s("len:")
-		//sys.out.println(len)
 		output = write_u1(output, offset)
 		if offset == 0:
 			output = append_byte(output, data[pos])
@@ -103,11 +95,6 @@ function decompress(byte[] data) -> (byte[] output):
         byte header = data[pos]
         byte item = data[pos+1]
         pos = pos + 2
-        //sys.out.println_s("================Decompression=============")
-        //sys.out.print_s("Header:")
-        //sys.out.println(Byte.toUnsignedInt(header))
-        //sys.out.print_s("Item:")
-        //sys.out.println(Byte.toUnsignedInt(item))
         if header == 00000000b:
             output = append_byte(output, item)
         else:
@@ -115,31 +102,19 @@ function decompress(byte[] data) -> (byte[] output):
             int len = Byte.toUnsignedInt(item)
             int start = |output| - offset
             int i = start
-            //sys.out.println_s("Get previous items:")
             while i < (start+len):
                 // Get byte from output array
                 item = output[i]
                 //sys.out.println(item)
                 output = append_byte(output, item)
                 i = i + 1
-        //sys.out.println_s(ASCII.fromBytes(output.items))
     // all done!
     return output
-// Initialize the input array with constant text
-function init(int repeat) -> (byte[] items):
-    int length = repeat * 15
-    // Create a BYTE array 
-    items = [0b;length]
-    // Initialize the array at each position with the value from constant 'text' array 
-    int pos =0
-    while pos < length:
-        items[pos] = text[pos%15]
-        pos = pos + 1
-    return items
 
 method main(System.Console sys):
     // Create a byte array with repeated text
-    byte[] data = init(2)
+    File.Reader file = File.Reader("small.in")
+    byte[] data = file.readAll()
     sys.out.print_s("Data:         ")
     sys.out.println_s(ASCII.fromBytes(data))
     sys.out.print(|data|)

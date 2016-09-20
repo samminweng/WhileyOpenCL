@@ -115,7 +115,9 @@ int main(int argc, char** args){
 	//indexof %8 = %6, %7 : int[][]
 	_8=_6[_7];
 	//invoke (%5) = (%8) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
-	_STR_TO_INT(_5, _8);
+	{
+		_STR_TO_INT(_5, _8);
+	}
 	//assign %1 = %5  : null|int
 	_NEW_INTEGER_POINTER(n, _5);
 	//ifis %1, null goto blklab4 : null|int
@@ -154,7 +156,6 @@ blklab5:;
 	//invoke (%15) = (%4) Reverse_original:reverse : function(int[])->(int[])
 	{
 		void* arr_tmp;
-		_UPDATE_1DARRAY_SIZE(_15, arr);
 		_15 = reverse(_COPY_1DARRAY_PARAM_LONGLONG(arr), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
 	}
 	//assign %4 = %15  : int[]
@@ -166,7 +167,9 @@ blklab5:;
 	//indexof %19 = %4, %18 : int[]
 	_19=arr[_18];
 	//indirectinvoke () = %17 (%19) : method(any)->()
-	printf("%lld\n", _19);
+	{
+		printf("%lld\n", _19);
+	}
 	//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %21 = %20 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %22 = 1 : int
@@ -176,14 +179,18 @@ blklab5:;
 	//indexof %24 = %4, %23 : int[]
 	_24=arr[_23];
 	//indirectinvoke () = %21 (%24) : method(any)->()
-	printf("%lld\n", _24);
+	{
+		printf("%lld\n", _24);
+	}
 	//fieldload %25 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %26 = %25 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %27 = [80,97,115,115,32,82,101,118,101,114,115,101,32,116,101,115,116,32,99,97,115,101] : int[]
 	_NEW_1DARRAY_LONGLONG(_27, 22, 0);
 	_27[0] = 80; _27[1] = 97; _27[2] = 115; _27[3] = 115; _27[4] = 32; _27[5] = 82; _27[6] = 101; _27[7] = 118; _27[8] = 101; _27[9] = 114; _27[10] = 115; _27[11] = 101; _27[12] = 32; _27[13] = 116; _27[14] = 101; _27[15] = 115; _27[16] = 116; _27[17] = 32; _27[18] = 99; _27[19] = 97; _27[20] = 115; _27[21] = 101; 
 	//indirectinvoke () = %26 (%27) : method(int[])->()
-	println_s(_27, _27_size);
+	{
+		println_s(_27, _27_size);
+	}
 //.blklab4
 blklab4:;
 	//return

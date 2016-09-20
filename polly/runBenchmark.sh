@@ -111,8 +111,16 @@ compileAndRun(){
 		#echo "Finish $i iteration"
 		echo "Run the $program $testcase on $parameter using $compiler" >>$result
 		start=`date +%s%N`
-		timeout $TIMEOUT out/"$executable.out" $parameter >> $result
-		#timeout $TIMEOUT out/"$executable.out" $parameter >> $result
+		## LZ test case
+		case $testcase in
+			"LZ77")
+				timeout $TIMEOUT out/"$executable.out" "$basedir/polly/$testcase/$parameter.in" >> $result 
+				;;
+			*)
+				## Other cases
+				timeout $TIMEOUT out/"$executable.out" $parameter >> $result
+				;;
+		esac
 		end=`date +%s%N`
 		exectime=$((end-start))
 		printf '\nParameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter  $exectime >> $result
@@ -131,7 +139,7 @@ exec(){
 	## declare 4 kinds of code generation
 	#declare -a codegens=("naive" "naive_dealloc" "copyreduced" "copyreduced_dealloc")
 	## declare 3 kinds of code generation
-	declare -a codegens=("naive_dealloc" "copyreduced" "copyreduced_dealloc")
+	declare -a codegens=("naive_dealloc" "copyreduced_dealloc")
 	## Iterate each codegen
 	for codegen in "${codegens[@]}"
 	do
@@ -200,9 +208,9 @@ init(){
 #exec MatrixMult transpose 1000
 #exec MatrixMult transpose 2000
 #exec MatrixMult transpose 3000
-exec MatrixMult 2DArray 1000
-exec MatrixMult 2DArray 2000
-exec MatrixMult 2DArray 3000
+# exec MatrixMult 2DArray 1000
+# exec MatrixMult 2DArray 2000
+# exec MatrixMult 2DArray 3000
 
 
 # ## Fibonacci test case
@@ -242,10 +250,10 @@ exec MatrixMult 2DArray 3000
 # exec SobelEdge original 1024
 
 # ## LZ77 test case
-# init LZ77
-# exec LZ77 original 1000
-# exec LZ77 original 10000
-# exec LZ77 original 50000
+init LZ77
+exec LZ77 original small
+exec LZ77 original medium
+exec LZ77 original large
 
 # ## NQueen test case
 # init NQueens

@@ -366,7 +366,7 @@ public final class BaseTestUtil {
 			Files.copy(utilhfile.toPath(),
 					Paths.get(destDir + File.separator + "Util.h"));
 			// (Optional) Copy 'small.in' to destDir  
-			if(testcase.equals("fileread")){
+			if(testcase.equals("fileread") || testcase.equals("lz77")){
 				// 'small.in
 				File smallin = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
 						+ File.separator + "small.in");

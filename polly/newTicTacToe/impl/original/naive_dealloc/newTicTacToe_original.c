@@ -194,9 +194,11 @@ int main(int argc, char** args){
 	_11=_9[_10];
 	_REMOVE_DEALLOC(_11);
 	//invoke (%8) = (%11) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
-	_STR_TO_INT(_8, _11);
-	_ADD_DEALLOC(_8);
-	_REMOVE_DEALLOC(_11);
+	{
+		_STR_TO_INT(_8, _11);
+		_ADD_DEALLOC(_8);
+		_REMOVE_DEALLOC(_11);
+	}
 	//assign %1 = %8  : null|int
 	_DEALLOC(n);
 	_NEW_INTEGER_POINTER(n, _8);
@@ -361,7 +363,9 @@ blklab15:;
 	_38[0] = 80; _38[1] = 97; _38[2] = 115; _38[3] = 115; _38[4] = 32; _38[5] = 110; _38[6] = 101; _38[7] = 119; _38[8] = 84; _38[9] = 105; _38[10] = 99; _38[11] = 84; _38[12] = 97; _38[13] = 99; _38[14] = 84; _38[15] = 111; _38[16] = 101; _38[17] = 32; _38[18] = 116; _38[19] = 101; _38[20] = 115; _38[21] = 116; _38[22] = 32; _38[23] = 99; _38[24] = 97; _38[25] = 115; _38[26] = 101; 
 	_ADD_DEALLOC(_38);
 	//indirectinvoke () = %37 (%38) : method(int[])->()
-	println_s(_38, _38_size);
+	{
+		println_s(_38, _38_size);
+	}
 //.blklab14
 blklab14:;
 	//return

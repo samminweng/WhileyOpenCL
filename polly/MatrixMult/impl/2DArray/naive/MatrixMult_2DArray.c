@@ -239,14 +239,18 @@ void printMat(FILE* sys, Matrix* A){
 			//indexof %12 = %11, %3 : int[]
 			_12=_11[j];
 			//indirectinvoke () = %9 (%12) : method(any)->()
-			printf("%lld", _12);
+			{
+				printf("%lld", _12);
+			}
 			//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %14 = %13 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %15 = [32] : int[]
 			_NEW_1DARRAY_LONGLONG(_15, 1, 0);
 			_15[0] = 32; 
 			//indirectinvoke () = %14 (%15) : method(int[])->()
-			printf_s(_1DARRAY_PARAM(_15));
+			{
+				printf_s(_1DARRAY_PARAM(_15));
+			}
 			//const %16 = 1 : int
 			_16 = 1;
 			//add %17 = %3, %16 : int
@@ -269,7 +273,9 @@ blklab21:;
 		//const %22 = [] : void[]
 		_NEW_1DARRAY_LONGLONG(_22, 0, 0);
 		//indirectinvoke () = %21 (%22) : method(int[])->()
-		println_s(_22, _22_size);
+		{
+			println_s(_22, _22_size);
+		}
 //.blklab20
 blklab20:;
 	}
@@ -387,7 +393,9 @@ int main(int argc, char** args){
 	//indexof %9 = %7, %8 : int[][]
 	_9=_7[_8];
 	//invoke (%6) = (%9) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
-	_STR_TO_INT(_6, _9);
+	{
+		_STR_TO_INT(_6, _9);
+	}
 	//assign %1 = %6  : null|int
 	_NEW_INTEGER_POINTER(max, _6);
 	//ifis %1, null goto blklab27 : null|int
@@ -400,11 +408,15 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_LONGLONG(_12, 7, 0);
 	_12[0] = 115; _12[1] = 105; _12[2] = 122; _12[3] = 101; _12[4] = 32; _12[5] = 61; _12[6] = 32; 
 	//indirectinvoke () = %11 (%12) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_12));
+	{
+		printf_s(_1DARRAY_PARAM(_12));
+	}
 	//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %14 = %13 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %14 (%2) : method(any)->()
-	printf("%lld\n", size);
+	{
+		printf("%lld\n", size);
+	}
 	//invoke (%15) = (%2, %2) MatrixMult_2DArray:init : function(MatrixMult_2DArray:nat,MatrixMult_2DArray:nat)->(MatrixMult_2DArray:Matrix)
 	{
 		_15 = init(size, size);
@@ -431,7 +443,9 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_LONGLONG(_20, 27, 0);
 	_20[0] = 77; _20[1] = 97; _20[2] = 116; _20[3] = 114; _20[4] = 105; _20[5] = 120; _20[6] = 32; _20[7] = 67; _20[8] = 91; _20[9] = 115; _20[10] = 105; _20[11] = 122; _20[12] = 101; _20[13] = 45; _20[14] = 49; _20[15] = 93; _20[16] = 91; _20[17] = 115; _20[18] = 105; _20[19] = 122; _20[20] = 101; _20[21] = 45; _20[22] = 49; _20[23] = 93; _20[24] = 32; _20[25] = 61; _20[26] = 32; 
 	//indirectinvoke () = %19 (%20) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_20));
+	{
+		printf_s(_1DARRAY_PARAM(_20));
+	}
 	//fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %22 = %21 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//fieldload %23 = %5 data : {int[][] data,int height,int width}
@@ -449,14 +463,18 @@ int main(int argc, char** args){
 	//indexof %29 = %26, %28 : int[]
 	_29=_26[_28];
 	//indirectinvoke () = %22 (%29) : method(any)->()
-	printf("%lld\n", _29);
+	{
+		printf("%lld\n", _29);
+	}
 	//fieldload %30 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %31 = %30 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %32 = [80,97,115,115,32,77,97,116,114,105,120,77,117,108,116,32,116,101,115,116,32,99,97,115,101] : int[]
 	_NEW_1DARRAY_LONGLONG(_32, 25, 0);
 	_32[0] = 80; _32[1] = 97; _32[2] = 115; _32[3] = 115; _32[4] = 32; _32[5] = 77; _32[6] = 97; _32[7] = 116; _32[8] = 114; _32[9] = 105; _32[10] = 120; _32[11] = 77; _32[12] = 117; _32[13] = 108; _32[14] = 116; _32[15] = 32; _32[16] = 116; _32[17] = 101; _32[18] = 115; _32[19] = 116; _32[20] = 32; _32[21] = 99; _32[22] = 97; _32[23] = 115; _32[24] = 101; 
 	//indirectinvoke () = %31 (%32) : method(int[])->()
-	println_s(_32, _32_size);
+	{
+		println_s(_32, _32_size);
+	}
 //.blklab27
 blklab27:;
 	//return

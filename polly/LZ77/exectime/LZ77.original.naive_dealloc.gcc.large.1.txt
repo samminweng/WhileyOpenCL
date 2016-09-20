@@ -1,18 +1,63 @@
-==22058== Memcheck, a memory error detector
-==22058== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==22058== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==22058== Command: ./out/LZ77.original.copyreduced_dealloc.gcc.out 100
-==22058== Parent PID: 7419
-==22058== 
-==22058== 
-==22058== HEAP SUMMARY:
-==22058==     in use at exit: 0 bytes in 0 blocks
-==22058==   total heap usage: 3,054 allocs, 3,054 frees, 1,150,964 bytes allocated
-==22058== 
-==22058== All heap blocks were freed -- no leaks are possible
-==22058== 
-==22058== For counts of detected and suppressed errors, rerun with: -v
-==22058== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+Run the original LZ77 on large using gcc and 1 threads...Run the original LZ77 on large using gcc
+Data:         574970 bytes
+COMPRESSED Data:   4514 bytes
+DECOMPRESSED:   574970 bytes
+
+Parameter:large	ExecutionTime:96017006732	nanoseconds.
+Run the original LZ77 on large using gcc
+Data:         574970 bytes
+COMPRESSED Data:   4514 bytes
+DECOMPRESSED:   574970 bytes
+
+Parameter:large	ExecutionTime:95958494419	nanoseconds.
+Run the original LZ77 on large using gcc
+Data:         574970 bytes
+COMPRESSED Data:   4514 bytes
+DECOMPRESSED:   574970 bytes
+
+Parameter:large	ExecutionTime:96055174639	nanoseconds.
+Run the original LZ77 on large using gcc
+Data:         574970 bytes
+COMPRESSED Data:   4514 bytes
+DECOMPRESSED:   574970 bytes
+
+Parameter:large	ExecutionTime:95982063617	nanoseconds.
+Run the original LZ77 on large using gcc
+Data:         574970 bytes
+COMPRESSED Data:   4514 bytes
+DECOMPRESSED:   574970 bytes
+
+Parameter:large	ExecutionTime:95787950353	nanoseconds.
+Run the original LZ77 on large using gcc
+Data:         574970 bytes
+COMPRESSED Data:   4514 bytes
+DECOMPRESSED:   574970 bytes
+
+Parameter:large	ExecutionTime:95763636581	nanoseconds.
+Run the original LZ77 on large using gcc
+Data:         574970 bytes
+COMPRESSED Data:   4514 bytes
+DECOMPRESSED:   574970 bytes
+
+Parameter:large	ExecutionTime:96053807505	nanoseconds.
+Run the original LZ77 on large using gcc
+Data:         574970 bytes
+COMPRESSED Data:   4514 bytes
+DECOMPRESSED:   574970 bytes
+
+Parameter:large	ExecutionTime:96018487981	nanoseconds.
+Run the original LZ77 on large using gcc
+Data:         574970 bytes
+COMPRESSED Data:   4514 bytes
+DECOMPRESSED:   574970 bytes
+
+Parameter:large	ExecutionTime:96128043962	nanoseconds.
+Run the original LZ77 on large using gcc
+Data:         574970 bytes
+COMPRESSED Data:   4514 bytes
+DECOMPRESSED:   574970 bytes
+
+Parameter:large	ExecutionTime:95858932545	nanoseconds.
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -20,7 +65,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3730.835
+cpu MHz		: 3622.992
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -47,7 +92,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3699.890
+cpu MHz		: 3714.632
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -74,7 +119,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3730.835
+cpu MHz		: 3899.906
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -101,7 +146,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3699.890
+cpu MHz		: 3897.117
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -128,7 +173,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3699.890
+cpu MHz		: 3768.289
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -155,7 +200,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3699.890
+cpu MHz		: 3824.070
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -182,7 +227,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3700.554
+cpu MHz		: 3898.445
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -209,7 +254,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3699.890
+cpu MHz		: 3629.101
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

@@ -44,7 +44,6 @@ blklab0:;
 	_10=n-_9;
 	//invoke (%8) = (%0, %10) Fibonacci_original:fibonacci : function(int[],int)->(int[])
 	{
-		_UPDATE_1DARRAY_SIZE(_8, ls);
 		_DEALLOC(_8);
 		_8 = fibonacci(_1DARRAY_PARAM(ls), false, _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_RESET_DEALLOC(ls, "true-true-false" , "fibonacci");
@@ -125,9 +124,11 @@ int main(int argc, char** args){
 	_7=_5[_6];
 	_REMOVE_DEALLOC(_7);
 	//invoke (%4) = (%7) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
-	_STR_TO_INT(_4, _7);
-	_ADD_DEALLOC(_4);
-	_REMOVE_DEALLOC(_7);
+	{
+		_STR_TO_INT(_4, _7);
+		_ADD_DEALLOC(_4);
+		_REMOVE_DEALLOC(_7);
+	}
 	//assign %1 = %4  : null|int
 	_DEALLOC(n);
 	n = _4;
@@ -152,7 +153,6 @@ int main(int argc, char** args){
 	_12=max-_11;
 	//invoke (%10) = (%3, %12) Fibonacci_original:fibonacci : function(int[],int)->(int[])
 	{
-		_UPDATE_1DARRAY_SIZE(_10, arr);
 		_DEALLOC(_10);
 		_10 = fibonacci(_1DARRAY_PARAM(arr), false, _12, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 		_RESET_DEALLOC(arr, "true-true-false" , "fibonacci");
@@ -171,7 +171,9 @@ int main(int argc, char** args){
 	//indexof %17 = %3, %16 : int[]
 	_17=arr[_16];
 	//indirectinvoke () = %14 (%17) : method(any)->()
-	printf("%lld\n", _17);
+	{
+		printf("%lld\n", _17);
+	}
 	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %19 = %18 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %20 = 2 : int
@@ -181,7 +183,9 @@ int main(int argc, char** args){
 	//indexof %22 = %3, %21 : int[]
 	_22=arr[_21];
 	//indirectinvoke () = %19 (%22) : method(any)->()
-	printf("%lld\n", _22);
+	{
+		printf("%lld\n", _22);
+	}
 	//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %24 = %23 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %25 = 1 : int
@@ -191,7 +195,9 @@ int main(int argc, char** args){
 	//indexof %27 = %3, %26 : int[]
 	_27=arr[_26];
 	//indirectinvoke () = %24 (%27) : method(any)->()
-	printf("%lld\n", _27);
+	{
+		printf("%lld\n", _27);
+	}
 	//fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %29 = %28 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %30 = [80,97,115,115,32,70,105,98,111,110,97,99,99,105,32,116,101,115,116,32,99,97,115,101] : int[]
@@ -200,7 +206,9 @@ int main(int argc, char** args){
 	_30[0] = 80; _30[1] = 97; _30[2] = 115; _30[3] = 115; _30[4] = 32; _30[5] = 70; _30[6] = 105; _30[7] = 98; _30[8] = 111; _30[9] = 110; _30[10] = 97; _30[11] = 99; _30[12] = 99; _30[13] = 105; _30[14] = 32; _30[15] = 116; _30[16] = 101; _30[17] = 115; _30[18] = 116; _30[19] = 32; _30[20] = 99; _30[21] = 97; _30[22] = 115; _30[23] = 101; 
 	_ADD_DEALLOC(_30);
 	//indirectinvoke () = %29 (%30) : method(int[])->()
-	println_s(_30, _30_size);
+	{
+		println_s(_30, _30_size);
+	}
 //.blklab2
 blklab2:;
 	//return

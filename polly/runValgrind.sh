@@ -97,7 +97,18 @@ detectleaks(){
 					-mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c -o "out/$executable"
 			;;
 	esac
-	valgrind --tool=memcheck "--log-file=$result" ./out/"$executable" $parameter
+
+	## LZ test case
+	case $testcase in
+		"LZ77")
+			valgrind --tool=memcheck "--log-file=$result" ./out/"$executable" "$basedir/polly/$testcase/$parameter.in"
+			;;
+		*)
+			## Other cases
+			valgrind --tool=memcheck "--log-file=$result" ./out/"$executable" $parameter
+			;;
+	esac
+	
 	#valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all "--log-file=$result" ./out/"$program.$compiler.enableVC.out" $parameter
 	# Added the CPU info
 	cat /proc/cpuinfo >> $result
@@ -132,7 +143,7 @@ exec(){
     #read -p "Press [Enter] to continue..."
 }
 
-### Reverse test case##
+# ### Reverse test case##
 init Reverse
 exec Reverse original 10000
 exec Reverse original 20000
@@ -203,9 +214,9 @@ exec SobelEdge original 128
 
 # LZ77 test case
 init LZ77
-exec LZ77 original 100
-exec LZ77 original 200
-exec LZ77 original 300
+exec LZ77 original small
+exec LZ77 original medium
+#exec LZ77 original large
 
 ### NQueen test case
 init NQueens

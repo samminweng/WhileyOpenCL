@@ -126,7 +126,9 @@ Match* findLongestMatch(BYTE* data, long long data_size, _DECL_DEALLOC_PARAM(dat
 	//const %13 = 0 : int
 	_13 = 0;
 	//invoke (%10) = (%12, %13) whiley/lang/Math:max : function(int,int)->(int)
-	_10 = max(_12, _13);
+	{
+		_10 = max(_12, _13);
+	}
 	//assign %5 = %10  : int
 	start = _10;
 	//assign %6 = %5  : int
@@ -250,11 +252,12 @@ BYTE* write_u1(BYTE* bytes, long long bytes_size, _DECL_DEALLOC_PARAM(bytes), lo
 	_DECL_DEALLOC(_3);
 	BYTE _4;
 	//invoke (%4) = (%1) whiley/lang/Int:toUnsignedByte : function(whiley/lang/Int:u8)->(byte)
-	_4 = (BYTE)u1;
+	{
+		_4 = (BYTE)u1;
+	}
 	//invoke (%3) = (%0, %4) LZ77_original:append_byte : function(byte[],byte)->(byte[])
 	{
 		void* bytes_tmp;
-		_UPDATE_1DARRAY_SIZE(_3, bytes);
 		_DEALLOC(_3);
 		_3 = append_byte(_COPY_1DARRAY_PARAM_BYTE(bytes), true, _4, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
 		_CALLEE_DEALLOC(bytes, "false-false-false" , "append_byte");
@@ -346,7 +349,6 @@ BYTE* compress(BYTE* data, long long data_size, _DECL_DEALLOC_PARAM(data), _DECL
 		//invoke (%14) = (%1, %4) LZ77_original:write_u1 : function(byte[],int)->(byte[])
 		{
 			void* output_tmp;
-			_UPDATE_1DARRAY_SIZE(_14, output);
 			_DEALLOC(_14);
 			_14 = write_u1(_COPY_1DARRAY_PARAM_BYTE(output), true, offset, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_14));
 			_CALLEE_DEALLOC(output, "false-false-false" , "write_u1");
@@ -365,7 +367,6 @@ BYTE* compress(BYTE* data, long long data_size, _DECL_DEALLOC_PARAM(data), _DECL
 		//invoke (%16) = (%1, %17) LZ77_original:append_byte : function(byte[],byte)->(byte[])
 		{
 			void* output_tmp;
-			_UPDATE_1DARRAY_SIZE(_16, output);
 			_DEALLOC(_16);
 			_16 = append_byte(_COPY_1DARRAY_PARAM_BYTE(output), true, _17, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 			_CALLEE_DEALLOC(output, "false-false-false" , "append_byte");
@@ -388,7 +389,6 @@ blklab10:;
 		//invoke (%20) = (%1, %5) LZ77_original:write_u1 : function(byte[],int)->(byte[])
 		{
 			void* output_tmp;
-			_UPDATE_1DARRAY_SIZE(_20, output);
 			_DEALLOC(_20);
 			_20 = write_u1(_COPY_1DARRAY_PARAM_BYTE(output), true, len, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
 			_CALLEE_DEALLOC(output, "false-false-false" , "write_u1");
@@ -510,7 +510,6 @@ BYTE* decompress(BYTE* data, long long data_size, _DECL_DEALLOC_PARAM(data), _DE
 		//invoke (%23) = (%1, %4) LZ77_original:append_byte : function(byte[],byte)->(byte[])
 		{
 			void* output_tmp;
-			_UPDATE_1DARRAY_SIZE(_23, output);
 			_DEALLOC(_23);
 			_23 = append_byte(_COPY_1DARRAY_PARAM_BYTE(output), true, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 			_CALLEE_DEALLOC(output, "false-false-false" , "append_byte");
@@ -525,11 +524,15 @@ BYTE* decompress(BYTE* data, long long data_size, _DECL_DEALLOC_PARAM(data), _DE
 //.blklab14
 blklab14:;
 		//invoke (%24) = (%3) whiley/lang/Byte:toUnsignedInt : function(byte)->(whiley/lang/Int:uint)
-		_24 = (unsigned int)header;
+		{
+			_24 = (unsigned int)header;
+		}
 		//assign %5 = %24  : int
 		offset = _24;
 		//invoke (%25) = (%4) whiley/lang/Byte:toUnsignedInt : function(byte)->(whiley/lang/Int:uint)
-		_25 = (unsigned int)item;
+		{
+			_25 = (unsigned int)item;
+		}
 		//assign %6 = %25  : int
 		len = _25;
 		//lengthof %26 = %1 : byte[]
@@ -553,7 +556,6 @@ blklab14:;
 			//invoke (%30) = (%1, %4) LZ77_original:append_byte : function(byte[],byte)->(byte[])
 			{
 				void* output_tmp;
-				_UPDATE_1DARRAY_SIZE(_30, output);
 				_DEALLOC(_30);
 				_30 = append_byte(_COPY_1DARRAY_PARAM_BYTE(output), true, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
 				_CALLEE_DEALLOC(output, "false-false-false" , "append_byte");
@@ -591,99 +593,23 @@ blklab12:;
 	//return
 }
 
-BYTE* init(long long repeat, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
-	_DECL_1DARRAY_BYTE(items);
-	_DECL_DEALLOC(items);
-	long long length = 0;
-	long long pos = 0;
-	long long _4 = 0;
-	long long _5 = 0;
-	BYTE _6;
-	_DECL_1DARRAY_BYTE(_7);
-	_DECL_DEALLOC(_7);
-	long long _8 = 0;
-	_DECL_1DARRAY_BYTE(_9);
-	_DECL_DEALLOC(_9);
-	long long _10 = 0;
-	long long _11 = 0;
-	BYTE _12;
-	long long _13 = 0;
-	long long _14 = 0;
-	//const %4 = 15 : int
-	_4 = 15;
-	//mul %5 = %0, %4 : int
-	_5=repeat*_4;
-	//assign %2 = %5  : int
-	length = _5;
-	//const %6 = 00000000b : byte
-	_6 = 0b00000000;
-	//arraygen %7 = [6; 2] : byte[]
-	_DEALLOC(_7);
-	_NEW_1DARRAY_BYTE(_7, length, _6);
-	_ADD_DEALLOC(_7);
-	//assign %1 = %7  : byte[]
-	_DEALLOC(items);
-	_COPY_1DARRAY_BYTE(items, _7);
-	_ADD_DEALLOC(items);
-	//const %8 = 0 : int
-	_8 = 0;
-	//assign %3 = %8  : int
-	pos = _8;
-	//loop (%1, %3, %9, %10, %11, %12, %13, %14)
-	while(true){
-		//ifge %3, %2 goto blklab18 : int
-		if(pos>=length){goto blklab18;}
-		//const %9 = [01100001b,01100001b,01100011b,01100001b,01100001b,01100011b,01100001b,01100010b,01100011b,01100001b,01100010b,01100001b,01100001b,01100001b,01100011b] : byte[]
-		_DEALLOC(_9);
-		_NEW_1DARRAY_BYTE(_9, 15, 0b0);
-		_9[0] = 0b01100001; _9[1] = 0b01100001; _9[2] = 0b01100011; _9[3] = 0b01100001; _9[4] = 0b01100001; _9[5] = 0b01100011; _9[6] = 0b01100001; _9[7] = 0b01100010; _9[8] = 0b01100011; _9[9] = 0b01100001; _9[10] = 0b01100010; _9[11] = 0b01100001; _9[12] = 0b01100001; _9[13] = 0b01100001; _9[14] = 0b01100011; 
-		_ADD_DEALLOC(_9);
-		//const %10 = 15 : int
-		_10 = 15;
-		//rem %11 = %3, %10 : int
-		_11=pos%_10;
-		//indexof %12 = %9, %11 : byte[]
-		_12=_9[_11];
-		//update %1[%3] = %12 : byte[] -> byte[]
-		items[pos] = _12;
-		//const %13 = 1 : int
-		_13 = 1;
-		//add %14 = %3, %13 : int
-		_14=pos+_13;
-		//assign %3 = %14  : int
-		pos = _14;
-//.blklab19
-blklab19:;
-	}
-//.blklab18
-blklab18:;
-	//return %1
-	_DEALLOC(_7);
-	_DEALLOC(_9);
-	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(items);
-	return items;
-	//return
-}
-
 int main(int argc, char** args){
-	long long* n;
-	_DECL_DEALLOC(n);
-	long long repeat = 0;
+	FILE* file;
 	_DECL_1DARRAY_BYTE(data);
 	_DECL_DEALLOC(data);
 	_DECL_1DARRAY_BYTE(compress_data);
 	_DECL_DEALLOC(compress_data);
 	_DECL_1DARRAY_BYTE(decompress_data);
 	_DECL_DEALLOC(decompress_data);
-	long long* _6;
+	void* _5;
+	_DECL_DEALLOC(_5);
+	_DECL_2DARRAY(_6);
 	_DECL_DEALLOC(_6);
-	_DECL_2DARRAY(_7);
-	_DECL_DEALLOC(_7);
-	long long _8 = 0;
-	_DECL_1DARRAY(_9);
+	long long _7 = 0;
+	_DECL_1DARRAY(_8);
+	_DECL_DEALLOC(_8);
+	_DECL_1DARRAY_BYTE(_9);
 	_DECL_DEALLOC(_9);
-	_DECL_1DARRAY_BYTE(_10);
-	_DECL_DEALLOC(_10);
 	void* _11;
 	_DECL_1DARRAY(_13);
 	_DECL_DEALLOC(_13);
@@ -712,36 +638,30 @@ int main(int argc, char** args){
 	void* _37;
 	_DECL_1DARRAY(_39);
 	_DECL_DEALLOC(_39);
-	//fieldload %7 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	_DEALLOC_2DARRAY_LONGLONG(_7);
-	_CONV_ARGS(_7);
-	_ADD_DEALLOC(_7);
-	//const %8 = 0 : int
-	_8 = 0;
-	//indexof %9 = %7, %8 : int[][]
-	_9=_7[_8];
-	_REMOVE_DEALLOC(_9);
-	//invoke (%6) = (%9) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
-	_STR_TO_INT(_6, _9);
+	//fieldload %6 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	_DEALLOC_2DARRAY_LONGLONG(_6);
+	_CONV_ARGS(_6);
 	_ADD_DEALLOC(_6);
-	_REMOVE_DEALLOC(_9);
-	//assign %1 = %6  : null|int
-	_DEALLOC(n);
-	_NEW_INTEGER_POINTER(n, _6);
-	_ADD_DEALLOC(n);
-	//ifis %1, null goto blklab20 : null|int
-	if(n == NULL) { goto blklab20;}
-	//assign %2 = %1  : int
-	repeat = *n;
-	//invoke (%10) = (%2) LZ77_original:init : function(int)->(byte[])
+	//const %7 = 0 : int
+	_7 = 0;
+	//indexof %8 = %6, %7 : int[][]
+	_8=_6[_7];
+	_REMOVE_DEALLOC(_8);
+	//invoke (%5) = (%8) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
 	{
-		_DEALLOC(_10);
-		_10 = init(repeat, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
-		_ADD_DEALLOC(_10);
+		_5 = Reader(_8);
 	}
-	//assign %3 = %10  : byte[]
+	//assign %1 = %5  : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
+	file = _5;
+	//fieldload %10 = %1 readAll : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
+	//indirectinvoke (%9) = %10 () : method()->(byte[])
+	{
+		_9 = readAll(file, &_9_size);
+		_ADD_DEALLOC(_9);
+	}
+	//assign %2 = %9  : byte[]
 	_DEALLOC(data);
-	_COPY_1DARRAY_BYTE(data, _10);
+	_COPY_1DARRAY_BYTE(data, _9);
 	_ADD_DEALLOC(data);
 	//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %12 = %11 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -751,13 +671,17 @@ int main(int argc, char** args){
 	_13[0] = 68; _13[1] = 97; _13[2] = 116; _13[3] = 97; _13[4] = 58; _13[5] = 32; _13[6] = 32; _13[7] = 32; _13[8] = 32; _13[9] = 32; _13[10] = 32; _13[11] = 32; _13[12] = 32; _13[13] = 32; 
 	_ADD_DEALLOC(_13);
 	//indirectinvoke () = %12 (%13) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_13));
+	{
+		printf_s(_1DARRAY_PARAM(_13));
+	}
 	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %15 = %14 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//lengthof %16 = %3 : byte[]
+	//lengthof %16 = %2 : byte[]
 	_16 = data_size;
 	//indirectinvoke () = %15 (%16) : method(any)->()
-	printf("%lld", _16);
+	{
+		printf("%lld", _16);
+	}
 	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %18 = %17 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %19 = [32,98,121,116,101,115] : int[]
@@ -766,17 +690,18 @@ int main(int argc, char** args){
 	_19[0] = 32; _19[1] = 98; _19[2] = 121; _19[3] = 116; _19[4] = 101; _19[5] = 115; 
 	_ADD_DEALLOC(_19);
 	//indirectinvoke () = %18 (%19) : method(int[])->()
-	println_s(_19, _19_size);
-	//invoke (%20) = (%3) LZ77_original:compress : function(byte[])->(byte[])
+	{
+		println_s(_19, _19_size);
+	}
+	//invoke (%20) = (%2) LZ77_original:compress : function(byte[])->(byte[])
 	{
 		void* data_tmp;
-		_UPDATE_1DARRAY_SIZE(_20, data);
 		_DEALLOC(_20);
 		_20 = compress(_COPY_1DARRAY_PARAM_BYTE(data), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
 		_CALLEE_DEALLOC(data, "false-false-false" , "compress");
 		_ADD_DEALLOC(_20);
 	}
-	//assign %4 = %20  : byte[]
+	//assign %3 = %20  : byte[]
 	_DEALLOC(compress_data);
 	_COPY_1DARRAY_BYTE(compress_data, _20);
 	_ADD_DEALLOC(compress_data);
@@ -788,13 +713,17 @@ int main(int argc, char** args){
 	_23[0] = 67; _23[1] = 79; _23[2] = 77; _23[3] = 80; _23[4] = 82; _23[5] = 69; _23[6] = 83; _23[7] = 83; _23[8] = 69; _23[9] = 68; _23[10] = 32; _23[11] = 68; _23[12] = 97; _23[13] = 116; _23[14] = 97; _23[15] = 58; _23[16] = 32; _23[17] = 32; _23[18] = 32; 
 	_ADD_DEALLOC(_23);
 	//indirectinvoke () = %22 (%23) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_23));
+	{
+		printf_s(_1DARRAY_PARAM(_23));
+	}
 	//fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %25 = %24 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//lengthof %26 = %4 : byte[]
+	//lengthof %26 = %3 : byte[]
 	_26 = compress_data_size;
 	//indirectinvoke () = %25 (%26) : method(any)->()
-	printf("%lld", _26);
+	{
+		printf("%lld", _26);
+	}
 	//fieldload %27 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %28 = %27 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %29 = [32,98,121,116,101,115] : int[]
@@ -803,17 +732,18 @@ int main(int argc, char** args){
 	_29[0] = 32; _29[1] = 98; _29[2] = 121; _29[3] = 116; _29[4] = 101; _29[5] = 115; 
 	_ADD_DEALLOC(_29);
 	//indirectinvoke () = %28 (%29) : method(int[])->()
-	println_s(_29, _29_size);
-	//invoke (%30) = (%4) LZ77_original:decompress : function(byte[])->(byte[])
+	{
+		println_s(_29, _29_size);
+	}
+	//invoke (%30) = (%3) LZ77_original:decompress : function(byte[])->(byte[])
 	{
 		void* compress_data_tmp;
-		_UPDATE_1DARRAY_SIZE(_30, compress_data);
 		_DEALLOC(_30);
 		_30 = decompress(_COPY_1DARRAY_PARAM_BYTE(compress_data), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
 		_CALLEE_DEALLOC(compress_data, "false-false-false" , "decompress");
 		_ADD_DEALLOC(_30);
 	}
-	//assign %5 = %30  : byte[]
+	//assign %4 = %30  : byte[]
 	_DEALLOC(decompress_data);
 	_COPY_1DARRAY_BYTE(decompress_data, _30);
 	_ADD_DEALLOC(decompress_data);
@@ -825,13 +755,17 @@ int main(int argc, char** args){
 	_33[0] = 68; _33[1] = 69; _33[2] = 67; _33[3] = 79; _33[4] = 77; _33[5] = 80; _33[6] = 82; _33[7] = 69; _33[8] = 83; _33[9] = 83; _33[10] = 69; _33[11] = 68; _33[12] = 58; _33[13] = 32; _33[14] = 32; _33[15] = 32; 
 	_ADD_DEALLOC(_33);
 	//indirectinvoke () = %32 (%33) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_33));
+	{
+		printf_s(_1DARRAY_PARAM(_33));
+	}
 	//fieldload %34 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %35 = %34 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//lengthof %36 = %5 : byte[]
+	//lengthof %36 = %4 : byte[]
 	_36 = decompress_data_size;
 	//indirectinvoke () = %35 (%36) : method(any)->()
-	printf("%lld", _36);
+	{
+		printf("%lld", _36);
+	}
 	//fieldload %37 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %38 = %37 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %39 = [32,98,121,116,101,115] : int[]
@@ -840,18 +774,17 @@ int main(int argc, char** args){
 	_39[0] = 32; _39[1] = 98; _39[2] = 121; _39[3] = 116; _39[4] = 101; _39[5] = 115; 
 	_ADD_DEALLOC(_39);
 	//indirectinvoke () = %38 (%39) : method(int[])->()
-	println_s(_39, _39_size);
-//.blklab20
-blklab20:;
+	{
+		println_s(_39, _39_size);
+	}
 	//return
-	_DEALLOC(n);
+	if(file != NULL){fclose(file); file = NULL;}
 	_DEALLOC(data);
 	_DEALLOC(compress_data);
 	_DEALLOC(decompress_data);
-	_DEALLOC(_6);
-	_DEALLOC_2DARRAY_LONGLONG(_7);
+	_DEALLOC_2DARRAY_LONGLONG(_6);
+	_DEALLOC(_8);
 	_DEALLOC(_9);
-	_DEALLOC(_10);
 	_DEALLOC(_13);
 	_DEALLOC(_19);
 	_DEALLOC(_20);

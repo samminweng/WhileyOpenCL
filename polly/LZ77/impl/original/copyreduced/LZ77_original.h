@@ -1,5 +1,4 @@
 #include "Util.h"
-#define text [01100001b,01100001b,01100011b,01100001b,01100001b,01100011b,01100001b,01100010b,01100011b,01100001b,01100010b,01100001b,01100001b,01100001b,01100011b]
 typedef long long nat;
 typedef struct{
 	long long len;
@@ -14,5 +13,4 @@ BYTE* append_byte(BYTE* items, long long items_size, BYTE item, _DECL_1DARRAYSIZ
 BYTE* write_u1(BYTE* bytes, long long bytes_size, long long u1, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE);
 BYTE* compress(BYTE* data, long long data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE);
 BYTE* decompress(BYTE* data, long long data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE);
-BYTE* init(long long repeat, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE);
 int main(int argc, char** args);

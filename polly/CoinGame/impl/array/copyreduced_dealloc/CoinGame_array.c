@@ -351,9 +351,11 @@ int main(int argc, char** args){
 	_8=_6[_7];
 	_REMOVE_DEALLOC(_8);
 	//invoke (%5) = (%8) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
-	_STR_TO_INT(_5, _8);
-	_ADD_DEALLOC(_5);
-	_REMOVE_DEALLOC(_8);
+	{
+		_STR_TO_INT(_5, _8);
+		_ADD_DEALLOC(_5);
+		_REMOVE_DEALLOC(_8);
+	}
 	//assign %1 = %5  : null|int
 	_DEALLOC(max);
 	max = _5;
@@ -376,7 +378,6 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(moves, _11);
 	//invoke (%12) = (%3, %2) CoinGame_array:findMoves : function(int[],int)->(int[])
 	{
-		_UPDATE_1DARRAY_SIZE(_12, moves);
 		_DEALLOC(_12);
 		_12 = findMoves(_1DARRAY_PARAM(moves), false, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_12));
 		_RESET_DEALLOC(moves, "true-true-false" , "findMoves");
@@ -402,11 +403,15 @@ int main(int argc, char** args){
 	_18[0] = 84; _18[1] = 104; _18[2] = 101; _18[3] = 32; _18[4] = 116; _18[5] = 111; _18[6] = 116; _18[7] = 97; _18[8] = 108; _18[9] = 32; _18[10] = 97; _18[11] = 109; _18[12] = 111; _18[13] = 117; _18[14] = 110; _18[15] = 116; _18[16] = 32; _18[17] = 111; _18[18] = 102; _18[19] = 32; _18[20] = 109; _18[21] = 111; _18[22] = 110; _18[23] = 101; _18[24] = 121; _18[25] = 32; _18[26] = 40; _18[27] = 109; _18[28] = 97; _18[29] = 120; _18[30] = 105; _18[31] = 109; _18[32] = 117; _18[33] = 109; _18[34] = 41; _18[35] = 32; _18[36] = 65; _18[37] = 108; _18[38] = 105; _18[39] = 99; _18[40] = 101; _18[41] = 32; _18[42] = 103; _18[43] = 101; _18[44] = 116; _18[45] = 115; _18[46] = 32; _18[47] = 105; _18[48] = 115; _18[49] = 32; 
 	_ADD_DEALLOC(_18);
 	//indirectinvoke () = %17 (%18) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_18));
+	{
+		printf_s(_1DARRAY_PARAM(_18));
+	}
 	//fieldload %19 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %20 = %19 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %20 (%4) : method(any)->()
-	printf("%lld\n", sum_alice);
+	{
+		printf("%lld\n", sum_alice);
+	}
 	//fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %22 = %21 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %23 = [80,97,115,115,32,67,111,105,110,71,97,109,101,32,116,101,115,116,32,99,97,115,101] : int[]
@@ -415,7 +420,9 @@ int main(int argc, char** args){
 	_23[0] = 80; _23[1] = 97; _23[2] = 115; _23[3] = 115; _23[4] = 32; _23[5] = 67; _23[6] = 111; _23[7] = 105; _23[8] = 110; _23[9] = 71; _23[10] = 97; _23[11] = 109; _23[12] = 101; _23[13] = 32; _23[14] = 116; _23[15] = 101; _23[16] = 115; _23[17] = 116; _23[18] = 32; _23[19] = 99; _23[20] = 97; _23[21] = 115; _23[22] = 101; 
 	_ADD_DEALLOC(_23);
 	//indirectinvoke () = %22 (%23) : method(int[])->()
-	println_s(_23, _23_size);
+	{
+		println_s(_23, _23_size);
+	}
 //.blklab11
 blklab11:;
 	//return

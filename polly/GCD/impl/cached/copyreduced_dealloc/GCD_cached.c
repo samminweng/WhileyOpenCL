@@ -177,9 +177,11 @@ int main(int argc, char** args){
 	_10=_8[_9];
 	_REMOVE_DEALLOC(_10);
 	//invoke (%7) = (%10) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
-	_STR_TO_INT(_7, _10);
-	_ADD_DEALLOC(_7);
-	_REMOVE_DEALLOC(_10);
+	{
+		_STR_TO_INT(_7, _10);
+		_ADD_DEALLOC(_7);
+		_REMOVE_DEALLOC(_10);
+	}
 	//assign %1 = %7  : null|int
 	_DEALLOC(max);
 	max = _7;
@@ -196,11 +198,15 @@ int main(int argc, char** args){
 	_13[0] = 78; _13[1] = 32; _13[2] = 61; _13[3] = 32; 
 	_ADD_DEALLOC(_13);
 	//indirectinvoke () = %12 (%13) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_13));
+	{
+		printf_s(_1DARRAY_PARAM(_13));
+	}
 	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %15 = %14 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %15 (%2) : method(any)->()
-	printf("%lld\n", n);
+	{
+		printf("%lld\n", n);
+	}
 	//const %16 = 0 : int
 	_16 = 0;
 	//mul %17 = %2, %2 : int
@@ -284,11 +290,15 @@ blklab14:;
 	_35[0] = 83; _35[1] = 117; _35[2] = 109; _35[3] = 58; _35[4] = 32; 
 	_ADD_DEALLOC(_35);
 	//indirectinvoke () = %34 (%35) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_35));
+	{
+		printf_s(_1DARRAY_PARAM(_35));
+	}
 	//fieldload %36 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %37 = %36 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %37 (%4) : method(any)->()
-	printf("%lld\n", sum);
+	{
+		printf("%lld\n", sum);
+	}
 	//fieldload %38 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %39 = %38 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %40 = [80,97,115,115,32,99,97,99,104,101,100,32,69,117,99,108,105,100,32,71,67,68,32,116,101,115,116,32,99,97,115,101] : int[]
@@ -297,7 +307,9 @@ blklab14:;
 	_40[0] = 80; _40[1] = 97; _40[2] = 115; _40[3] = 115; _40[4] = 32; _40[5] = 99; _40[6] = 97; _40[7] = 99; _40[8] = 104; _40[9] = 101; _40[10] = 100; _40[11] = 32; _40[12] = 69; _40[13] = 117; _40[14] = 99; _40[15] = 108; _40[16] = 105; _40[17] = 100; _40[18] = 32; _40[19] = 71; _40[20] = 67; _40[21] = 68; _40[22] = 32; _40[23] = 116; _40[24] = 101; _40[25] = 115; _40[26] = 116; _40[27] = 32; _40[28] = 99; _40[29] = 97; _40[30] = 115; _40[31] = 101; 
 	_ADD_DEALLOC(_40);
 	//indirectinvoke () = %39 (%40) : method(int[])->()
-	println_s(_40, _40_size);
+	{
+		println_s(_40, _40_size);
+	}
 //.blklab13
 blklab13:;
 	//return

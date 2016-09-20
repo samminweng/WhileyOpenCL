@@ -104,13 +104,17 @@ blklab0:;
 	//sub %12 = %5, %2 : int
 	_12=c-col;
 	//invoke (%11) = (%12) whiley/lang/Math:abs : function(int)->(int)
-	_11 = llabs(_12);
+	{
+		_11 = llabs(_12);
+	}
 	//assign %6 = %11  : int
 	colDiff = _11;
 	//sub %14 = %4, %1 : int
 	_14=r-row;
 	//invoke (%13) = (%14) whiley/lang/Math:abs : function(int)->(int)
-	_13 = llabs(_14);
+	{
+		_13 = llabs(_14);
+	}
 	//assign %7 = %13  : int
 	rowDiff = _13;
 	//ifeq %6, %7 goto blklab2 : int
@@ -461,9 +465,11 @@ int main(int argc, char** args){
 	_9=_7[_8];
 	_REMOVE_DEALLOC(_9);
 	//invoke (%6) = (%9) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
-	_STR_TO_INT(_6, _9);
-	_ADD_DEALLOC(_6);
-	_REMOVE_DEALLOC(_9);
+	{
+		_STR_TO_INT(_6, _9);
+		_ADD_DEALLOC(_6);
+		_REMOVE_DEALLOC(_9);
+	}
 	//assign %1 = %6  : null|int
 	_DEALLOC(max);
 	_NEW_INTEGER_POINTER(max, _6);
@@ -528,7 +534,9 @@ int main(int argc, char** args){
 	_20[0] = 78; _20[1] = 45; _20[2] = 81; _20[3] = 117; _20[4] = 101; _20[5] = 101; _20[6] = 110; _20[7] = 32; _20[8] = 80; _20[9] = 114; _20[10] = 111; _20[11] = 98; _20[12] = 108; _20[13] = 101; _20[14] = 109; _20[15] = 32; _20[16] = 111; _20[17] = 110; _20[18] = 32; _20[19] = 97; _20[20] = 32; _20[21] = 78; _20[22] = 32; _20[23] = 88; _20[24] = 32; _20[25] = 78; _20[26] = 32; _20[27] = 66; _20[28] = 111; _20[29] = 97; _20[30] = 114; _20[31] = 100; _20[32] = 46; 
 	_ADD_DEALLOC(_20);
 	//indirectinvoke () = %19 (%20) : method(int[])->()
-	println_s(_20, _20_size);
+	{
+		println_s(_20, _20_size);
+	}
 	//fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %22 = %21 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %23 = [78,32,61,32] : int[]
@@ -537,11 +545,15 @@ int main(int argc, char** args){
 	_23[0] = 78; _23[1] = 32; _23[2] = 61; _23[3] = 32; 
 	_ADD_DEALLOC(_23);
 	//indirectinvoke () = %22 (%23) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_23));
+	{
+		printf_s(_1DARRAY_PARAM(_23));
+	}
 	//fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %25 = %24 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %25 (%2) : method(any)->()
-	printf("%lld\n", n);
+	{
+		printf("%lld\n", n);
+	}
 	//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %27 = %26 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %28 = [70,111,117,110,100,32] : int[]
@@ -550,13 +562,17 @@ int main(int argc, char** args){
 	_28[0] = 70; _28[1] = 111; _28[2] = 117; _28[3] = 110; _28[4] = 100; _28[5] = 32; 
 	_ADD_DEALLOC(_28);
 	//indirectinvoke () = %27 (%28) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_28));
+	{
+		printf_s(_1DARRAY_PARAM(_28));
+	}
 	//fieldload %29 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %30 = %29 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//fieldload %31 = %5 num_solutions : {int num_solutions,{int c,int r}[] queens}
 	_31 = nq->num_solutions;
 	//indirectinvoke () = %30 (%31) : method(any)->()
-	printf("%lld", _31);
+	{
+		printf("%lld", _31);
+	}
 	//fieldload %32 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %33 = %32 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %34 = [32,115,111,108,117,116,105,111,110,115,46] : int[]
@@ -565,7 +581,9 @@ int main(int argc, char** args){
 	_34[0] = 32; _34[1] = 115; _34[2] = 111; _34[3] = 108; _34[4] = 117; _34[5] = 116; _34[6] = 105; _34[7] = 111; _34[8] = 110; _34[9] = 115; _34[10] = 46; 
 	_ADD_DEALLOC(_34);
 	//indirectinvoke () = %33 (%34) : method(int[])->()
-	println_s(_34, _34_size);
+	{
+		println_s(_34, _34_size);
+	}
 //.blklab23
 blklab23:;
 	//return

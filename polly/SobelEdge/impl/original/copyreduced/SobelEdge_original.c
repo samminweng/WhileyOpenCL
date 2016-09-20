@@ -62,7 +62,9 @@ long long convolution(_DECL_1DARRAY_PARAM(pixels), long long width, long long he
 		//rem %23 = %22, %2 : int
 		_23=_22%height;
 		//invoke (%20) = (%23) whiley/lang/Math:abs : function(int)->(int)
-		_20 = llabs(_23);
+		{
+			_20 = llabs(_23);
+		}
 		//assign %11 = %20  : int
 		y = _20;
 		//const %24 = 0 : int
@@ -80,7 +82,9 @@ long long convolution(_DECL_1DARRAY_PARAM(pixels), long long width, long long he
 			//rem %28 = %27, %1 : int
 			_28=_27%width;
 			//invoke (%25) = (%28) whiley/lang/Math:abs : function(int)->(int)
-			_25 = llabs(_28);
+			{
+				_25 = llabs(_28);
+			}
 			//assign %13 = %25  : int
 			x = _25;
 			//mul %29 = %11, %1 : int
@@ -292,9 +296,13 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), long long width, long
 			//assign %12 = %48  : int
 			h_g = _48;
 			//invoke (%49) = (%11) whiley/lang/Math:abs : function(int)->(int)
-			_49 = llabs(v_g);
+			{
+				_49 = llabs(v_g);
+			}
 			//invoke (%50) = (%12) whiley/lang/Math:abs : function(int)->(int)
-			_50 = llabs(h_g);
+			{
+				_50 = llabs(h_g);
+			}
 			//add %51 = %49, %50 : int
 			_51=_49+_50;
 			//assign %13 = %51  : int
@@ -408,7 +416,9 @@ void printImage(FILE* sys, _DECL_1DARRAY_PARAM(pixels), long long width, long lo
 			_NEW_1DARRAY_LONGLONG(_17, 1, 0);
 			_17[0] = 119; 
 			//indirectinvoke () = %16 (%17) : method(int[])->()
-			printf_s(_1DARRAY_PARAM(_17));
+			{
+				printf_s(_1DARRAY_PARAM(_17));
+			}
 			//goto blklab15
 			goto blklab15;
 //.blklab14
@@ -419,7 +429,9 @@ blklab14:;
 			_NEW_1DARRAY_LONGLONG(_20, 1, 0);
 			_20[0] = 98; 
 			//indirectinvoke () = %19 (%20) : method(int[])->()
-			printf_s(_1DARRAY_PARAM(_20));
+			{
+				printf_s(_1DARRAY_PARAM(_20));
+			}
 //.blklab15
 blklab15:;
 			//fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
@@ -428,7 +440,9 @@ blklab15:;
 			_NEW_1DARRAY_LONGLONG(_23, 1, 0);
 			_23[0] = 32; 
 			//indirectinvoke () = %22 (%23) : method(int[])->()
-			printf_s(_1DARRAY_PARAM(_23));
+			{
+				printf_s(_1DARRAY_PARAM(_23));
+			}
 			//const %24 = 1 : int
 			_24 = 1;
 			//add %25 = %5, %24 : int
@@ -451,7 +465,9 @@ blklab12:;
 		//const %30 = [] : void[]
 		_NEW_1DARRAY_LONGLONG(_30, 0, 0);
 		//indirectinvoke () = %29 (%30) : method(int[])->()
-		println_s(_30, _30_size);
+		{
+			println_s(_30, _30_size);
+		}
 //.blklab11
 blklab11:;
 	}
@@ -493,7 +509,9 @@ int main(int argc, char** args){
 	//indexof %11 = %9, %10 : int[][]
 	_11=_9[_10];
 	//invoke (%8) = (%11) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
-	_STR_TO_INT(_8, _11);
+	{
+		_STR_TO_INT(_8, _11);
+	}
 	//assign %1 = %8  : null|int
 	n = _8;
 	//ifis %1, null goto blklab16 : null|int
@@ -528,7 +546,6 @@ int main(int argc, char** args){
 	pixels[_19] = _15;
 	//invoke (%20) = (%6, %3, %4) SobelEdge_original:sobelEdgeDetection : function(int[],int,int)->(int[])
 	{
-		_UPDATE_1DARRAY_SIZE(_20, pixels);
 		_20 = sobelEdgeDetection(_1DARRAY_PARAM(pixels), width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
 	}
 	//assign %7 = %20  : int[]
@@ -539,7 +556,9 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_LONGLONG(_23, 12, 0);
 	_23[0] = 73; _23[1] = 110; _23[2] = 112; _23[3] = 117; _23[4] = 116; _23[5] = 32; _23[6] = 73; _23[7] = 109; _23[8] = 97; _23[9] = 103; _23[10] = 101; _23[11] = 58; 
 	//indirectinvoke () = %22 (%23) : method(int[])->()
-	println_s(_23, _23_size);
+	{
+		println_s(_23, _23_size);
+	}
 	//invoke () = (%0, %6, %3, %4) SobelEdge_original:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
 		printImage(stdout, _1DARRAY_PARAM(pixels), width, height);
@@ -550,7 +569,9 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_LONGLONG(_26, 21, 0);
 	_26[0] = 83; _26[1] = 111; _26[2] = 98; _26[3] = 101; _26[4] = 108; _26[5] = 32; _26[6] = 69; _26[7] = 100; _26[8] = 103; _26[9] = 101; _26[10] = 32; _26[11] = 68; _26[12] = 101; _26[13] = 116; _26[14] = 101; _26[15] = 99; _26[16] = 116; _26[17] = 105; _26[18] = 111; _26[19] = 110; _26[20] = 58; 
 	//indirectinvoke () = %25 (%26) : method(int[])->()
-	println_s(_26, _26_size);
+	{
+		println_s(_26, _26_size);
+	}
 	//invoke () = (%0, %7, %3, %4) SobelEdge_original:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
 		printImage(stdout, _1DARRAY_PARAM(newPixels), width, height);

@@ -36,7 +36,7 @@ BEGIN {
 	parameters["GCD"]="10 20 30";
 	parameters["CoinGame"]="100 200 300";
 	parameters["SobelEdge"]="32 64 128";
-	parameters["LZ77"]="100 200 300";
+	parameters["LZ77"]="small medium";
 	parameters["NQueens"]="8 9 10";
 
 	# The number of threads

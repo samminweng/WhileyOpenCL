@@ -5,13 +5,16 @@
 #include <time.h>
 #include <ctype.h>
 #include <stdbool.h>
+#include <stdint.h> // use 'int16_t' 'int32_t' 'int64_t'
 // Good reference (https://en.wikibooks.org/wiki/C_Programming/Preprocessor)
 // Remove the security check about unsafe 'scanf' or 'sprintf' in VS tool
 // This definition allows the portability of C code across the platforms.
 #define _CRT_SECURE_NO_WARNINGS
 
 // Define BYTE type due to missing byte primitive type in C languate
-typedef unsigned char BYTE;
+typedef uint8_t BYTE;
+
+
 /**
 *Built-in operation for 1D array of byte and integers
 *
@@ -51,6 +54,9 @@ long long** convertArgsToIntArray(int argc, char** args);
 long long* slice(long long* arr, size_t arr_size, int start, int end);
 // Convert an array of bytes to an array of long long
 long long* fromBytes(BYTE* arr, size_t arr_size);
+// Return a file pointer
+FILE* Reader(long long* arr);
+BYTE* readAll(FILE *file, size_t* _size);
 
 /**
  * Macro Section
@@ -105,7 +111,7 @@ long long* fromBytes(BYTE* arr, size_t arr_size);
 #define _DECL_2DARRAY_PARAM(a) long long** a, size_t a##_size, size_t a##_size_size
 // Declare a call-by-reference parameter for output array size
 #define _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE size_t* _size_call_by_ref
-#define _DECL_2DARRAYSIZE_PARAM_CALLBYREFERENCE size_t* _size_call_by_ref, size_t _size_size_call_by_ref
+#define _DECL_2DARRAYSIZE_PARAM_CALLBYREFERENCE size_t* _size_call_by_ref, size_t* _size_size_call_by_ref
 // Declare a structure member
 #define _DECL_1DARRAY_MEMBER(a) long long* a; size_t a##_size;
 #define _DECL_1DARRAY_MEMBER_BYTE(a) BYTE* a; size_t a##_size; 

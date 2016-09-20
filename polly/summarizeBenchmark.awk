@@ -16,43 +16,40 @@ function generateReport(results){
 		for(pt=1;pt<=program_total;pt++){
 			program = program_array[pt];
 			# Get the parameter
-			if(parameters[testcase]!=""){
-				## Parameter
-				par_total=split(parameters[testcase], par_array, " ");
-				for(p=1;p<=par_total;p++){
-					parameter = par_array[p];	
-					## Compiler
-					compilers_total=split(compilers, compiler_array, " ");
-					for(cr=1;cr<=compilers_total;cr++){
-						compiler = compiler_array[cr];
-						# Get CodeGen 
-						codegen_total=split(codegens, codegen_array, " ");
-						for(c=1;c<=codegen_total;c++){
-							codegen=codegen_array[c];					 							
-							th_total=split(threads, th_array, " ");
-							for(th=1;th<=th_total;th++){
-								thread=th_array[th];	
-								key =testcase","program","codegen","compiler","parameter","thread;
-								#print "key="key;
-								#pause();
-								str = testcase"\t"program"\t"parameter"\t"compiler"\t"codegen"\t"thread;
-								# Check if there is any result.
-								if(counts[key]>0){
-									## Print out result, e.g. CPU utilization
-				 					for(iteration=1;iteration<=10;iteration++){
-				 						str = str"\t"results[key","iteration];
-				 					}
-				 				}else{
-				 					## Print out 'NA' results
-				 					for(iteration=1;iteration<=10;iteration++){
-				 						str = str"\tNA";
-				 					}
-				 				}
-				 				print str;
-							}
+			par_total=split(parameters[testcase], par_array, " ");
+			for(p=1;p<=par_total;p++){
+				parameter = par_array[p];
+				## Compiler
+				compilers_total=split(compilers, compiler_array, " ");
+				for(cr=1;cr<=compilers_total;cr++){
+					compiler = compiler_array[cr];
+					# Get CodeGen 
+					codegen_total=split(codegens, codegen_array, " ");
+					for(c=1;c<=codegen_total;c++){
+						codegen=codegen_array[c];					 							
+						th_total=split(threads, th_array, " ");
+						for(th=1;th<=th_total;th++){
+							thread=th_array[th];	
+							key =testcase","program","codegen","compiler","parameter","thread;
+							#print "key="key;
+							#pause();
+							str = testcase"\t"program"\t"parameter"\t"compiler"\t"codegen"\t"thread;
+							# Check if there is any result.
+							if(counts[key]>0){
+								## Print out result, e.g. CPU utilization
+			 					for(iteration=1;iteration<=10;iteration++){
+			 						str = str"\t"results[key","iteration];
+			 					}
+			 				}else{
+			 					## Print out 'NA' results
+			 					for(iteration=1;iteration<=10;iteration++){
+			 						str = str"\tNA";
+			 					}
+			 				}
+			 				print str;
 						}
-					} 							
-				}
+					}
+				} 							
 			}
 		}
 	}
@@ -64,23 +61,24 @@ BEGIN {
 	FS = "\n";
 	# Test case name
 	# testcases="Reverse newTicTacToe MergeSort BubbleSort MatrixMult Fibonacci GCD CoinGame SobelEdge LZ77 NQueens";
-	testcases="MatrixMult";
+	testcases="LZ77";
 
 	# Program Types
 	# programs["Reverse"]="original";
 	# programs["newTicTacToe"]="original";
 	# programs["MergeSort"]="original";
 	# programs["BubbleSort"]="original";
-	programs["MatrixMult"]="2DArray Flatten2DArray";
+	# programs["MatrixMult"]="2DArray Flatten2DArray";
 	# programs["Fibonacci"]="original";
 	# programs["GCD"]="original cached";
 	# programs["CoinGame"]="original single array";
 	# programs["SobelEdge"]="original";
-	# programs["LZ77"]="original";
+	programs["LZ77"]="original";
 	# programs["NQueens"]="original integer";
 
 	# Code Generation
-	codegens = "naive_dealloc copyreduced copyreduced_dealloc";
+	# codegens = "naive_dealloc copyreduced copyreduced_dealloc";
+	codegens = "naive_dealloc copyreduced_dealloc";
 	# Compiler
 	#compilers = "gcc clang polly openmp";
 	compilers = "gcc";
@@ -89,12 +87,12 @@ BEGIN {
 	# parameters["newTicTacToe"]="1000 10000 100000";
 	# parameters["MergeSort"]="1000 10000 100000";
 	# parameters["BubbleSort"]="1000 10000 100000";
-	parameters["MatrixMult"]="1000 2000 3000";
+	# parameters["MatrixMult"]="1000 2000 3000";
 	# parameters["Fibonacci"]="10 50 90";
 	# parameters["GCD"]="100 150 200";
 	# parameters["CoinGame"]="1000 2000 3000";
 	# parameters["SobelEdge"] = "256 512 1024";
-	# parameters["LZ77"]="1000 10000 50000";
+	parameters["LZ77"]="small medium large";
 	# parameters["NQueens"]="8 10 12 14 15";
 
 	# The number of threads
@@ -133,7 +131,7 @@ BEGIN {
 	
 	# Get the execution time
 	if($1 ~ /ExecutionTime:/){
-		#print $1;
+		##print $1;
 		#pause();
 		## Increment the iteration
 		counts[key]++;
@@ -141,18 +139,18 @@ BEGIN {
 		iteration=counts[key];
 		# Get execution time
 		split($1, arr, "ExecutionTime:");
-		#print "arr[2]="arr[2];
+		##print "arr[2]="arr[2];
 		#pause();
 		split(arr[2], time_arr, " ");
 		exec_time=time_arr[1];
-		#print "exec_time"exec_time;
-		#pause();
+		##print "exec_time"exec_time;
+		##pause();
 		## Get the iteration
 		time_key = key","iteration;
 		exec_times[time_key]=exec_time;
 		### Debug code
 		#print "exec_times["time_key"]="exec_times[time_key];
-		#pause();
+		##pause();
 		
 	}
 }

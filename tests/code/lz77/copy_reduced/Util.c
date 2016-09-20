@@ -156,7 +156,9 @@ long long** convertArgsToIntArray(int argc, char** args){
 			//Fill in the array
 			size_t j;
 			for(j=0;j<max;j++){
-				arr[index][j] = args[i][j] - '0';
+				// Convert the char to integers
+				long long long_i = args[i][j];
+				arr[index][j] = long_i;
 			}
 			//Add '\0' to indicate the end of the array.
 			arr[index][j] = '\0';
@@ -484,7 +486,10 @@ BYTE* readAll(FILE *file, size_t* _size){
 	}
 
 	// Read the file to 'arr' array
-	fgets(arr, size, file);
+	if(fgets(arr, size, file) == NULL){
+		fprintf(stderr, "fail to read file to the array at 'readAll' function in Util.c\n");
+		exit(-2);
+	}
 
 	*_size = size;
 	return arr;
