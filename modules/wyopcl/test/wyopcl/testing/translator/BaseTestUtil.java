@@ -365,6 +365,16 @@ public final class BaseTestUtil {
 					Paths.get(destDir + File.separator + "Util.c"));
 			Files.copy(utilhfile.toPath(),
 					Paths.get(destDir + File.separator + "Util.h"));
+			// (Optional) Copy 'small.in' to destDir  
+			if(testcase.equals("fileread")){
+				// 'small.in
+				File smallin = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
+						+ File.separator + "small.in");
+				
+				Files.copy(smallin.toPath(), Paths.get(destDir + File.separator + "small.in"));
+				
+			}
+			
 
 			// 3. Generate the C code.
 			String cmd = "java -cp " + classpath + " wyopcl.WyopclMain -bp " + whiley_runtime_lib + " -code";

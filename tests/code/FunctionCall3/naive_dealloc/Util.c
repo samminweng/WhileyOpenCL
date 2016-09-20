@@ -446,7 +446,7 @@ FILE* Reader(long long* arr){
 	// Convert an array of ASCII code to an string
 	size_t i=0;
 	while(arr[i]!='\0'){
-		char c = (char)(arr[i] + '0');
+		char c = arr[i];
 		filename[i] = c;
 		i = i + 1;
 	}
@@ -470,7 +470,7 @@ BYTE* readAll(FILE *file, size_t* _size){
 	size_t size = 0;
 	while(feof(file) != true){
       c = fgetc(file);
-      printf("%c", c);
+      //printf("%c", c);
       size = size + 1;
 	}
 	// Set the file position to the beginning of the file
@@ -485,9 +485,6 @@ BYTE* readAll(FILE *file, size_t* _size){
 
 	// Read the file to 'arr' array
 	fgets(arr, size, file);
-
-	// Close the file
-	fclose(file);
 
 	*_size = size;
 	return arr;

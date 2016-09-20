@@ -78,7 +78,8 @@ public class CodeGenerationTestCase {
 				"SobelEdgeDetect",
 				"SobelEdgeDetect1",
 				"SobelEdgeDetect2", 
-				"lz77"
+				"lz77", 
+				"fileread"
 				// "lambda"
 		});
 	}
@@ -105,5 +106,6 @@ public class CodeGenerationTestCase {
 	public void testCopyDeallocatedCCode() {
 		System.out.print("Copy reduced + deallocated C code \n");
 		util.execCodeGeneration(codeDir, testcase, "nocopy", "dealloc");
-	}
+	}	
+	
 }

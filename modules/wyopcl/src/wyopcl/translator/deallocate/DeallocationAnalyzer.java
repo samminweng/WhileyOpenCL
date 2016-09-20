@@ -92,8 +92,34 @@ public class DeallocationAnalyzer extends Analyzer {
 			// Skip the deallocation of return variable.
 			if (r != ret) {
 				Type var_type = stores.getRawType(r, function);
-				if (var_type != null && !(var_type instanceof Type.Null)) {
+				
+				if (var_type != null){
+					if(var_type instanceof Type.Null){
+						continue;// Jump to next iteration
+					}
 					String var = stores.getVar(r, function);
+					// Check if var is Console
+					if(var_type instanceof Type.Nominal){
+						String nominal = ((Type.Nominal)var_type).name().name();
+						if(nominal.equals("Console")){
+							// Skip deallocation as they are allocated by system
+							continue;
+						}else{
+							// Close the file pointer
+							statements.add(indent+"if("+var+" != NULL){fclose("+var+"); "+var+" = NULL;}");
+							continue;
+						}
+					}
+					// Check if type is a record
+					if(var_type instanceof Type.Record){
+						Type.Record record = (Type.Record)var_type;
+						if(record.fields().containsKey("readAll")){
+							// Skip the de-allocation
+							continue;
+						}
+					}
+					
+					// Apply deallocation marco on other cases.
 					statements.add(indent + preDealloc(var, var_type, stores));
 				}
 			}
