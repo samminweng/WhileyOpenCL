@@ -307,7 +307,7 @@ public class Bounds implements Cloneable {
 
 	/**
 	 * Widens the upper bounds against a list of max values of integer types.
-	 * (i.e. short, int and long long).
+	 * (i.e. int16_t, int32_t and int64_t).
 	 * 
 	 * @param name
 	 * @return
@@ -340,7 +340,7 @@ public class Bounds implements Cloneable {
 
 	/**
 	 * Widens the lower bounds against a list of min values of integer types.
-	 * (i.e. short, int and long long).
+	 * (i.e. int16_t, int32_t and int64_t).
 	 * 
 	 * @param name
 	 * @return

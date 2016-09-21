@@ -5,7 +5,7 @@ POS* copy_POS(POS* _POS){
 	new_POS->c = _POS->c;
 	return new_POS;
 }
-POS** copy_array_POS(POS** _POS, long long _POS_size){
+POS** copy_array_POS(POS** _POS, size_t _POS_size){
 	POS** new_POS = malloc(_POS_size*sizeof(POS*));
 	for(int i=0;i<_POS_size;i++){
 		new_POS[i] = copy_POS(_POS[i]);
@@ -29,7 +29,7 @@ NQueen* copy_NQueen(NQueen* _NQueen){
 	new_NQueen->num_solutions = _NQueen->num_solutions;
 	return new_NQueen;
 }
-NQueen** copy_array_NQueen(NQueen** _NQueen, long long _NQueen_size){
+NQueen** copy_array_NQueen(NQueen** _NQueen, size_t _NQueen_size){
 	NQueen** new_NQueen = malloc(_NQueen_size*sizeof(NQueen*));
 	for(int i=0;i<_NQueen_size;i++){
 		new_NQueen[i] = copy_NQueen(_NQueen[i]);
@@ -48,7 +48,7 @@ void printf_NQueen(NQueen* nqueen){
 	printf("%lld", nqueen->num_solutions);
 	printf("}");
 }
-NQueen* nqueen(long long num_solutions, POS** queens, long long queens_size){
+NQueen* nqueen(int64_t num_solutions, POS** queens, size_t queens_size){
 	NQueen* nq;
 	NQueen* _3;
 	//newrecord %3 = (%0, %1) : {int num_solutions,{int c,int r}[] queens}
@@ -60,20 +60,20 @@ NQueen* nqueen(long long num_solutions, POS** queens, long long queens_size){
 	//return
 }
 
-long long conflict(POS* p, long long row, long long col){
-	long long _3;
-	long long r = 0;
-	long long c = 0;
-	long long colDiff = 0;
-	long long rowDiff = 0;
-	long long _8 = 0;
-	long long _9 = 0;
-	long long _10;
-	long long _11 = 0;
-	long long _12 = 0;
-	long long _13 = 0;
-	long long _14 = 0;
-	long long _15;
+int64_t conflict(POS* p, int64_t row, int64_t col){
+	int64_t _3;
+	int64_t r = 0;
+	int64_t c = 0;
+	int64_t colDiff = 0;
+	int64_t rowDiff = 0;
+	int64_t _8 = 0;
+	int64_t _9 = 0;
+	int64_t _10;
+	int64_t _11 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
+	int64_t _15;
 	//fieldload %8 = %0 r : {int c,int r}
 	_8 = p->r;
 	//assign %4 = %8  : int
@@ -127,47 +127,47 @@ blklab3:;
 	//return
 }
 
-NQueen* run(NQueen* nq, long long n, long long dim){
+NQueen* run(NQueen* nq, int64_t n, int64_t dim){
 	NQueen* _3;
-	long long col = 0;
-	long long isSolution;
-	long long i = 0;
+	int64_t col = 0;
+	int64_t isSolution;
+	int64_t i = 0;
 	POS* p;
-	long long _8 = 0;
-	long long _9 = 0;
-	long long _10 = 0;
-	long long _11 = 0;
+	int64_t _8 = 0;
+	int64_t _9 = 0;
+	int64_t _10 = 0;
+	int64_t _11 = 0;
 	POS** _12;
-	long long _12_size = 0;
-	long long _13 = 0;
+	size_t _12_size = 0;
+	int64_t _13 = 0;
 	POS** _14;
-	long long _14_size = 0;
-	long long _15 = 0;
-	long long _16;
-	long long _17 = 0;
+	size_t _14_size = 0;
+	int64_t _15 = 0;
+	int64_t _16;
+	int64_t _17 = 0;
 	POS** _18;
-	long long _18_size = 0;
-	long long _19 = 0;
-	long long _20 = 0;
+	size_t _18_size = 0;
+	int64_t _19 = 0;
+	int64_t _20 = 0;
 	POS** _21;
-	long long _21_size = 0;
-	long long _22 = 0;
+	size_t _21_size = 0;
+	int64_t _22 = 0;
 	POS** _23;
-	long long _23_size = 0;
+	size_t _23_size = 0;
 	POS* _24;
-	long long _25;
-	long long _26;
-	long long _27;
-	long long _28;
-	long long _29 = 0;
-	long long _30 = 0;
-	long long _31;
+	int64_t _25;
+	int64_t _26;
+	int64_t _27;
+	int64_t _28;
+	int64_t _29 = 0;
+	int64_t _30 = 0;
+	int64_t _31;
 	POS* _32;
 	NQueen* _33;
-	long long _34 = 0;
-	long long _35 = 0;
-	long long _36 = 0;
-	long long _37 = 0;
+	int64_t _34 = 0;
+	int64_t _35 = 0;
+	int64_t _36 = 0;
+	int64_t _37 = 0;
 	//ifne %2, %1 goto blklab6 : int
 	if(dim!=n){goto blklab6;}
 	//fieldload %8 = %0 num_solutions : {int num_solutions,{int c,int r}[] queens}
@@ -350,23 +350,23 @@ blklab7:;
 }
 
 int main(int argc, char** args){
-	long long n = 0;
+	int64_t n = 0;
 	POS** queens;
-	long long queens_size = 0;
-	long long num_solutions = 0;
+	size_t queens_size = 0;
+	int64_t num_solutions = 0;
 	NQueen* nq;
-	long long _5 = 0;
-	long long _6 = 0;
-	long long _7 = 0;
+	int64_t _5 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
 	POS* _8;
 	POS** _9;
-	long long _9_size = 0;
-	long long _10 = 0;
+	size_t _9_size = 0;
+	int64_t _10 = 0;
 	NQueen* _11;
 	NQueen* _12;
-	long long _13 = 0;
-	long long _14 = 0;
-	long long _15 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
+	int64_t _15 = 0;
 	void* _16;
 	_DECL_1DARRAY(_18);
 	void* _19;
@@ -375,7 +375,7 @@ int main(int argc, char** args){
 	void* _24;
 	_DECL_1DARRAY(_26);
 	void* _27;
-	long long _29 = 0;
+	int64_t _29 = 0;
 	void* _30;
 	_DECL_1DARRAY(_32);
 	//const %5 = 8 : int
@@ -432,7 +432,7 @@ blklab23:;
 	//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %17 = %16 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %18 = [78,45,81,117,101,101,110,32,80,114,111,98,108,101,109,32,111,110,32,97,32,78,32,88,32,78,32,66,111,97,114,100,46] : int[]
-	_NEW_1DARRAY_LONGLONG(_18, 33, 0);
+	_NEW_1DARRAY_int64_t(_18, 33, 0);
 	_18[0] = 78; _18[1] = 45; _18[2] = 81; _18[3] = 117; _18[4] = 101; _18[5] = 101; _18[6] = 110; _18[7] = 32; _18[8] = 80; _18[9] = 114; _18[10] = 111; _18[11] = 98; _18[12] = 108; _18[13] = 101; _18[14] = 109; _18[15] = 32; _18[16] = 111; _18[17] = 110; _18[18] = 32; _18[19] = 97; _18[20] = 32; _18[21] = 78; _18[22] = 32; _18[23] = 88; _18[24] = 32; _18[25] = 78; _18[26] = 32; _18[27] = 66; _18[28] = 111; _18[29] = 97; _18[30] = 114; _18[31] = 100; _18[32] = 46; 
 	//indirectinvoke () = %17 (%18) : method(int[])->()
 	{
@@ -441,7 +441,7 @@ blklab23:;
 	//fieldload %19 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %20 = %19 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %21 = [78,32,61,32] : int[]
-	_NEW_1DARRAY_LONGLONG(_21, 4, 0);
+	_NEW_1DARRAY_int64_t(_21, 4, 0);
 	_21[0] = 78; _21[1] = 32; _21[2] = 61; _21[3] = 32; 
 	//indirectinvoke () = %20 (%21) : method(int[])->()
 	{
@@ -456,7 +456,7 @@ blklab23:;
 	//fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %25 = %24 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %26 = [70,111,117,110,100,32] : int[]
-	_NEW_1DARRAY_LONGLONG(_26, 6, 0);
+	_NEW_1DARRAY_int64_t(_26, 6, 0);
 	_26[0] = 70; _26[1] = 111; _26[2] = 117; _26[3] = 110; _26[4] = 100; _26[5] = 32; 
 	//indirectinvoke () = %25 (%26) : method(int[])->()
 	{
@@ -473,7 +473,7 @@ blklab23:;
 	//fieldload %30 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %31 = %30 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %32 = [32,115,111,108,117,116,105,111,110,115,46] : int[]
-	_NEW_1DARRAY_LONGLONG(_32, 11, 0);
+	_NEW_1DARRAY_int64_t(_32, 11, 0);
 	_32[0] = 32; _32[1] = 115; _32[2] = 111; _32[3] = 108; _32[4] = 117; _32[5] = 116; _32[6] = 105; _32[7] = 111; _32[8] = 110; _32[9] = 115; _32[10] = 46; 
 	//indirectinvoke () = %31 (%32) : method(int[])->()
 	{

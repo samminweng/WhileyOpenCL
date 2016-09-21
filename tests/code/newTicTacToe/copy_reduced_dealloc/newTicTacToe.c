@@ -1,11 +1,11 @@
 #include "newTicTacToe.h"
 Board* copy_Board(Board* _Board){
 	Board* new_Board = malloc(sizeof(Board));
-	_COPY_1DARRAY_LONGLONG(new_Board->pieces, _Board->pieces);
+	_COPY_1DARRAY_int64_t(new_Board->pieces, _Board->pieces);
 	new_Board->move = _Board->move;
 	return new_Board;
 }
-Board** copy_array_Board(Board** _Board, long long _Board_size){
+Board** copy_array_Board(Board** _Board, size_t _Board_size){
 	Board** new_Board = malloc(_Board_size*sizeof(Board*));
 	for(int i=0;i<_Board_size;i++){
 		new_Board[i] = copy_Board(_Board[i]);
@@ -20,7 +20,7 @@ void free_Board(Board* board){
 void printf_Board(Board* board){
 	printf("{");
 	printf(" pieces:");
-	_PRINT_1DARRAY_LONGLONG(board->pieces);
+	_PRINT_1DARRAY_int64_t(board->pieces);
 	printf(" move:");
 	printf("%lld", board->move);
 	printf("}");
@@ -28,16 +28,16 @@ void printf_Board(Board* board){
 Board* EmptyBoard(){
 	Board* r;
 	_DECL_DEALLOC(r);
-	long long _1 = 0;
-	long long _2 = 0;
-	long long _3 = 0;
-	long long _4 = 0;
-	long long _5 = 0;
-	long long _6 = 0;
-	long long _7 = 0;
-	long long _8 = 0;
-	long long _9 = 0;
-	long long _10 = 0;
+	int64_t _1 = 0;
+	int64_t _2 = 0;
+	int64_t _3 = 0;
+	int64_t _4 = 0;
+	int64_t _5 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
+	int64_t _8 = 0;
+	int64_t _9 = 0;
+	int64_t _10 = 0;
 	_DECL_1DARRAY(_11);
 	_DECL_DEALLOC(_11);
 	Board* _12;
@@ -64,7 +64,7 @@ Board* EmptyBoard(){
 	_10 = 0;
 	//newlist %11 = (%2, %3, %4, %5, %6, %7, %8, %9, %10) : int[]
 	_DEALLOC(_11);
-	_NEW_1DARRAY_LONGLONG(_11, 9, 0);
+	_NEW_1DARRAY_int64_t(_11, 9, 0);
 	_11[0] = _2; _11[1] = _3; _11[2] = _4; _11[3] = _5; _11[4] = _6; _11[5] = _7; _11[6] = _8; _11[7] = _9; _11[8] = _10; 
 	_ADD_DEALLOC(_11);
 	//newrecord %12 = (%1, %11) : {int move,int[] pieces}
@@ -81,18 +81,18 @@ Board* EmptyBoard(){
 	//return
 }
 
-long long countOf(_DECL_1DARRAY_PARAM(pieces), _DECL_DEALLOC_PARAM(pieces), long long s){
-	long long r = 0;
-	long long count = 0;
-	long long i = 0;
-	long long _5 = 0;
-	long long _6 = 0;
-	long long _7 = 0;
-	long long _8 = 0;
-	long long _9 = 0;
-	long long _10 = 0;
-	long long _11 = 0;
-	long long _12 = 0;
+int64_t countOf(_DECL_1DARRAY_PARAM(pieces), _DECL_DEALLOC_PARAM(pieces), int64_t s){
+	int64_t r = 0;
+	int64_t count = 0;
+	int64_t i = 0;
+	int64_t _5 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
+	int64_t _8 = 0;
+	int64_t _9 = 0;
+	int64_t _10 = 0;
+	int64_t _11 = 0;
+	int64_t _12 = 0;
 	//const %5 = 0 : int
 	_5 = 0;
 	//assign %3 = %5  : int
@@ -137,58 +137,58 @@ blklab11:;
 }
 
 int main(int argc, char** args){
-	long long repeat = 0;
+	int64_t repeat = 0;
 	Board* b1;
 	_DECL_DEALLOC(b1);
 	Board* b2;
 	_DECL_DEALLOC(b2);
-	long long i = 0;
-	long long p = 0;
-	long long _6 = 0;
+	int64_t i = 0;
+	int64_t p = 0;
+	int64_t _6 = 0;
 	Board* _7;
 	_DECL_DEALLOC(_7);
 	Board* _8;
 	_DECL_DEALLOC(_8);
-	long long _9 = 0;
+	int64_t _9 = 0;
 	_DECL_1DARRAY(_10);
 	_DECL_DEALLOC(_10);
-	long long _11 = 0;
+	int64_t _11 = 0;
 	_DECL_1DARRAY(_12);
 	_DECL_DEALLOC(_12);
-	long long _13 = 0;
-	long long _14 = 0;
-	long long _15 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
+	int64_t _15 = 0;
 	void* _16;
 	_DECL_1DARRAY(_18);
 	_DECL_DEALLOC(_18);
-	long long _19 = 0;
-	long long _20 = 0;
-	long long _21 = 0;
-	long long _22 = 0;
+	int64_t _19 = 0;
+	int64_t _20 = 0;
+	int64_t _21 = 0;
+	int64_t _22 = 0;
 	void* _23;
 	void* _24;
 	_DECL_1DARRAY(_26);
 	_DECL_DEALLOC(_26);
-	long long _27 = 0;
-	long long _28 = 0;
-	long long _29 = 0;
-	long long _30 = 0;
+	int64_t _27 = 0;
+	int64_t _28 = 0;
+	int64_t _29 = 0;
+	int64_t _30 = 0;
 	void* _31;
-	long long _32 = 0;
-	long long _33 = 0;
-	long long _34 = 0;
-	long long _35 = 0;
+	int64_t _32 = 0;
+	int64_t _33 = 0;
+	int64_t _34 = 0;
+	int64_t _35 = 0;
 	_DECL_1DARRAY(_36);
 	_DECL_DEALLOC(_36);
-	long long _37 = 0;
-	long long _38 = 0;
-	long long _39 = 0;
-	long long _40 = 0;
-	long long _41 = 0;
-	long long _42 = 0;
-	long long _43 = 0;
-	long long _44 = 0;
-	long long _45 = 0;
+	int64_t _37 = 0;
+	int64_t _38 = 0;
+	int64_t _39 = 0;
+	int64_t _40 = 0;
+	int64_t _41 = 0;
+	int64_t _42 = 0;
+	int64_t _43 = 0;
+	int64_t _44 = 0;
+	int64_t _45 = 0;
 	_DECL_1DARRAY(_46);
 	_DECL_DEALLOC(_46);
 	void* _47;
@@ -226,7 +226,7 @@ int main(int argc, char** args){
 	while(true){
 		//const %10 = [0,1,2,3,4,5,6,7,8] : int[]
 		_DEALLOC(_10);
-		_NEW_1DARRAY_LONGLONG(_10, 9, 0);
+		_NEW_1DARRAY_int64_t(_10, 9, 0);
 		_10[0] = 0; _10[1] = 1; _10[2] = 2; _10[3] = 3; _10[4] = 4; _10[5] = 5; _10[6] = 6; _10[7] = 7; _10[8] = 8; 
 		_ADD_DEALLOC(_10);
 		//lengthof %11 = %10 : int[]
@@ -235,7 +235,7 @@ int main(int argc, char** args){
 		if(i>=_11){goto blklab14;}
 		//const %12 = [0,1,2,3,4,5,6,7,8] : int[]
 		_DEALLOC(_12);
-		_NEW_1DARRAY_LONGLONG(_12, 9, 0);
+		_NEW_1DARRAY_int64_t(_12, 9, 0);
 		_12[0] = 0; _12[1] = 1; _12[2] = 2; _12[3] = 3; _12[4] = 4; _12[5] = 5; _12[6] = 6; _12[7] = 7; _12[8] = 8; 
 		_ADD_DEALLOC(_12);
 		//indexof %13 = %12, %4 : int[]
@@ -264,7 +264,7 @@ blklab16:;
 		//fieldload %17 = %16 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//const %18 = [112,108,97,121,32,49,39,115,32,116,117,114,110,32,40,67,73,82,67,76,69,41] : int[]
 		_DEALLOC(_18);
-		_NEW_1DARRAY_LONGLONG(_18, 22, 0);
+		_NEW_1DARRAY_int64_t(_18, 22, 0);
 		_18[0] = 112; _18[1] = 108; _18[2] = 97; _18[3] = 121; _18[4] = 32; _18[5] = 49; _18[6] = 39; _18[7] = 115; _18[8] = 32; _18[9] = 116; _18[10] = 117; _18[11] = 114; _18[12] = 110; _18[13] = 32; _18[14] = 40; _18[15] = 67; _18[16] = 73; _18[17] = 82; _18[18] = 67; _18[19] = 76; _18[20] = 69; _18[21] = 41; 
 		_ADD_DEALLOC(_18);
 		//indirectinvoke () = %17 (%18) : method(int[])->()
@@ -303,7 +303,7 @@ blklab19:;
 		//fieldload %25 = %24 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//const %26 = [80,108,97,121,32,50,39,115,32,116,117,114,110,32,40,67,82,79,83,83,41] : int[]
 		_DEALLOC(_26);
-		_NEW_1DARRAY_LONGLONG(_26, 21, 0);
+		_NEW_1DARRAY_int64_t(_26, 21, 0);
 		_26[0] = 80; _26[1] = 108; _26[2] = 97; _26[3] = 121; _26[4] = 32; _26[5] = 50; _26[6] = 39; _26[7] = 115; _26[8] = 32; _26[9] = 116; _26[10] = 117; _26[11] = 114; _26[12] = 110; _26[13] = 32; _26[14] = 40; _26[15] = 67; _26[16] = 82; _26[17] = 79; _26[18] = 83; _26[19] = 83; _26[20] = 41; 
 		_ADD_DEALLOC(_26);
 		//indirectinvoke () = %25 (%26) : method(int[])->()
@@ -407,7 +407,7 @@ blklab23:;
 		_45 = 1;
 		//newlist %46 = (%37, %38, %39, %40, %41, %42, %43, %44, %45) : int[]
 		_DEALLOC(_46);
-		_NEW_1DARRAY_LONGLONG(_46, 9, 0);
+		_NEW_1DARRAY_int64_t(_46, 9, 0);
 		_46[0] = _37; _46[1] = _38; _46[2] = _39; _46[3] = _40; _46[4] = _41; _46[5] = _42; _46[6] = _43; _46[7] = _44; _46[8] = _45; 
 		_ADD_DEALLOC(_46);
 		//ifeq %36, %46 goto blklab25 : int[]
@@ -425,7 +425,7 @@ blklab25:;
 	//fieldload %48 = %47 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %49 = [80,97,115,115,32,110,101,119,32,84,105,99,84,97,99,84,111,101,32,116,101,115,116,32,99,97,115,101] : int[]
 	_DEALLOC(_49);
-	_NEW_1DARRAY_LONGLONG(_49, 28, 0);
+	_NEW_1DARRAY_int64_t(_49, 28, 0);
 	_49[0] = 80; _49[1] = 97; _49[2] = 115; _49[3] = 115; _49[4] = 32; _49[5] = 110; _49[6] = 101; _49[7] = 119; _49[8] = 32; _49[9] = 84; _49[10] = 105; _49[11] = 99; _49[12] = 84; _49[13] = 97; _49[14] = 99; _49[15] = 84; _49[16] = 111; _49[17] = 101; _49[18] = 32; _49[19] = 116; _49[20] = 101; _49[21] = 115; _49[22] = 116; _49[23] = 32; _49[24] = 99; _49[25] = 97; _49[26] = 115; _49[27] = 101; 
 	_ADD_DEALLOC(_49);
 	//indirectinvoke () = %48 (%49) : method(int[])->()

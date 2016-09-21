@@ -1,3 +1,3 @@
 #include "Util.h"
-long long factorial(long long n);
+int64_t factorial(int64_t n);
 int main(int argc, char** args);

@@ -1,40 +1,40 @@
 #include "SobelEdgeDetect.h"
-long long convolution(_DECL_1DARRAY_PARAM(pixels), long long width, long long height, long long xCenter, long long yCenter, _DECL_1DARRAY_PARAM(filter)){
-	long long _6 = 0;
-	long long sum = 0;
-	long long filterSize = 0;
-	long long filterHalf = 0;
-	long long filterY = 0;
-	long long y = 0;
-	long long filterX = 0;
-	long long x = 0;
-	long long pixel = 0;
-	long long filterVal = 0;
-	long long _16 = 0;
-	long long _17 = 0;
-	long long _18 = 0;
-	long long _19 = 0;
-	long long _20 = 0;
-	long long _21 = 0;
-	long long _22 = 0;
-	long long _23 = 0;
-	long long _24 = 0;
-	long long _25 = 0;
-	long long _26 = 0;
-	long long _27 = 0;
-	long long _28 = 0;
-	long long _29 = 0;
-	long long _30 = 0;
-	long long _31 = 0;
-	long long _32 = 0;
-	long long _33 = 0;
-	long long _34 = 0;
-	long long _35 = 0;
-	long long _36 = 0;
-	long long _37 = 0;
-	long long _38 = 0;
-	long long _39 = 0;
-	long long _40 = 0;
+int64_t convolution(_DECL_1DARRAY_PARAM(pixels), int64_t width, int64_t height, int64_t xCenter, int64_t yCenter, _DECL_1DARRAY_PARAM(filter)){
+	int64_t _6 = 0;
+	int64_t sum = 0;
+	int64_t filterSize = 0;
+	int64_t filterHalf = 0;
+	int64_t filterY = 0;
+	int64_t y = 0;
+	int64_t filterX = 0;
+	int64_t x = 0;
+	int64_t pixel = 0;
+	int64_t filterVal = 0;
+	int64_t _16 = 0;
+	int64_t _17 = 0;
+	int64_t _18 = 0;
+	int64_t _19 = 0;
+	int64_t _20 = 0;
+	int64_t _21 = 0;
+	int64_t _22 = 0;
+	int64_t _23 = 0;
+	int64_t _24 = 0;
+	int64_t _25 = 0;
+	int64_t _26 = 0;
+	int64_t _27 = 0;
+	int64_t _28 = 0;
+	int64_t _29 = 0;
+	int64_t _30 = 0;
+	int64_t _31 = 0;
+	int64_t _32 = 0;
+	int64_t _33 = 0;
+	int64_t _34 = 0;
+	int64_t _35 = 0;
+	int64_t _36 = 0;
+	int64_t _37 = 0;
+	int64_t _38 = 0;
+	int64_t _39 = 0;
+	int64_t _40 = 0;
 	//const %16 = 0 : int
 	_16 = 0;
 	//assign %7 = %16  : int
@@ -136,63 +136,63 @@ blklab0:;
 	//return
 }
 
-long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), long long width, long long height, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), int64_t width, int64_t height, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_3);
-	long long size = 0;
+	int64_t size = 0;
 	_DECL_1DARRAY(newPixels);
 	_DECL_1DARRAY(v_sobel);
 	_DECL_1DARRAY(h_sobel);
-	long long x = 0;
-	long long y = 0;
-	long long pos = 0;
-	long long v_g = 0;
-	long long h_g = 0;
-	long long t_g = 0;
-	long long _14 = 0;
-	long long _15 = 0;
+	int64_t x = 0;
+	int64_t y = 0;
+	int64_t pos = 0;
+	int64_t v_g = 0;
+	int64_t h_g = 0;
+	int64_t t_g = 0;
+	int64_t _14 = 0;
+	int64_t _15 = 0;
 	_DECL_1DARRAY(_16);
-	long long _17 = 0;
-	long long _18 = 0;
-	long long _19 = 0;
-	long long _20 = 0;
-	long long _21 = 0;
-	long long _22 = 0;
-	long long _23 = 0;
-	long long _24 = 0;
-	long long _25 = 0;
-	long long _26 = 0;
-	long long _27 = 0;
-	long long _28 = 0;
+	int64_t _17 = 0;
+	int64_t _18 = 0;
+	int64_t _19 = 0;
+	int64_t _20 = 0;
+	int64_t _21 = 0;
+	int64_t _22 = 0;
+	int64_t _23 = 0;
+	int64_t _24 = 0;
+	int64_t _25 = 0;
+	int64_t _26 = 0;
+	int64_t _27 = 0;
+	int64_t _28 = 0;
 	_DECL_1DARRAY(_29);
-	long long _30 = 0;
-	long long _31 = 0;
-	long long _32 = 0;
-	long long _33 = 0;
-	long long _34 = 0;
-	long long _35 = 0;
-	long long _36 = 0;
-	long long _37 = 0;
-	long long _38 = 0;
-	long long _39 = 0;
-	long long _40 = 0;
-	long long _41 = 0;
+	int64_t _30 = 0;
+	int64_t _31 = 0;
+	int64_t _32 = 0;
+	int64_t _33 = 0;
+	int64_t _34 = 0;
+	int64_t _35 = 0;
+	int64_t _36 = 0;
+	int64_t _37 = 0;
+	int64_t _38 = 0;
+	int64_t _39 = 0;
+	int64_t _40 = 0;
+	int64_t _41 = 0;
 	_DECL_1DARRAY(_42);
-	long long _43 = 0;
-	long long _44 = 0;
-	long long _45 = 0;
-	long long _46 = 0;
-	long long _47 = 0;
-	long long _48 = 0;
-	long long _49 = 0;
-	long long _50 = 0;
-	long long _51 = 0;
-	long long _52 = 0;
-	long long _53 = 0;
-	long long _54 = 0;
-	long long _55 = 0;
-	long long _56 = 0;
-	long long _57 = 0;
-	long long _58 = 0;
+	int64_t _43 = 0;
+	int64_t _44 = 0;
+	int64_t _45 = 0;
+	int64_t _46 = 0;
+	int64_t _47 = 0;
+	int64_t _48 = 0;
+	int64_t _49 = 0;
+	int64_t _50 = 0;
+	int64_t _51 = 0;
+	int64_t _52 = 0;
+	int64_t _53 = 0;
+	int64_t _54 = 0;
+	int64_t _55 = 0;
+	int64_t _56 = 0;
+	int64_t _57 = 0;
+	int64_t _58 = 0;
 	//mul %14 = %1, %2 : int
 	_14=width*height;
 	//assign %4 = %14  : int
@@ -200,7 +200,7 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), long long width, long
 	//const %15 = 255 : int
 	_15 = 255;
 	//arraygen %16 = [15; 4] : int[]
-	_NEW_1DARRAY_LONGLONG(_16, size, _15);
+	_NEW_1DARRAY_int64_t(_16, size, _15);
 	//assign %5 = %16  : int[]
 	_UPDATE_1DARRAY(newPixels, _16);
 	//const %17 = 1 : int
@@ -228,7 +228,7 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), long long width, long
 	//const %28 = 1 : int
 	_28 = 1;
 	//newlist %29 = (%18, %19, %20, %22, %23, %24, %26, %27, %28) : int[]
-	_NEW_1DARRAY_LONGLONG(_29, 9, 0);
+	_NEW_1DARRAY_int64_t(_29, 9, 0);
 	_29[0] = _18; _29[1] = _19; _29[2] = _20; _29[3] = _22; _29[4] = _23; _29[5] = _24; _29[6] = _26; _29[7] = _27; _29[8] = _28; 
 	//assign %6 = %29  : int[]
 	_UPDATE_1DARRAY(v_sobel, _29);
@@ -257,7 +257,7 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), long long width, long
 	//neg %41 = %40 : int
 	_41= -_40;
 	//newlist %42 = (%30, %31, %32, %33, %34, %35, %37, %39, %41) : int[]
-	_NEW_1DARRAY_LONGLONG(_42, 9, 0);
+	_NEW_1DARRAY_int64_t(_42, 9, 0);
 	_42[0] = _30; _42[1] = _31; _42[2] = _32; _42[3] = _33; _42[4] = _34; _42[5] = _35; _42[6] = _37; _42[7] = _39; _42[8] = _41; 
 	//assign %7 = %42  : int[]
 	_UPDATE_1DARRAY(h_sobel, _42);
@@ -353,29 +353,29 @@ blklab4:;
 	//return
 }
 
-void printImage(FILE* sys, _DECL_1DARRAY_PARAM(pixels), long long width, long long height){
-	long long y = 0;
-	long long x = 0;
-	long long pos = 0;
-	long long _7 = 0;
-	long long _8 = 0;
-	long long _9 = 0;
-	long long _10 = 0;
-	long long _11 = 0;
-	long long _12 = 0;
+void printImage(FILE* sys, _DECL_1DARRAY_PARAM(pixels), int64_t width, int64_t height){
+	int64_t y = 0;
+	int64_t x = 0;
+	int64_t pos = 0;
+	int64_t _7 = 0;
+	int64_t _8 = 0;
+	int64_t _9 = 0;
+	int64_t _10 = 0;
+	int64_t _11 = 0;
+	int64_t _12 = 0;
 	void* _13;
 	_DECL_1DARRAY(_15);
 	void* _16;
 	_DECL_1DARRAY(_18);
 	void* _19;
 	_DECL_1DARRAY(_21);
-	long long _22 = 0;
-	long long _23 = 0;
-	long long _24 = 0;
-	long long _25 = 0;
+	int64_t _22 = 0;
+	int64_t _23 = 0;
+	int64_t _24 = 0;
+	int64_t _25 = 0;
 	void* _26;
 	void* _28;
-	long long _28_size = 0;
+	size_t _28_size = 0;
 	//const %7 = 0 : int
 	_7 = 0;
 	//assign %4 = %7  : int
@@ -407,7 +407,7 @@ void printImage(FILE* sys, _DECL_1DARRAY_PARAM(pixels), long long width, long lo
 			//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %14 = %13 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %15 = [119] : int[]
-			_NEW_1DARRAY_LONGLONG(_15, 1, 0);
+			_NEW_1DARRAY_int64_t(_15, 1, 0);
 			_15[0] = 119; 
 			//indirectinvoke () = %14 (%15) : method(int[])->()
 			{
@@ -420,7 +420,7 @@ blklab14:;
 			//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %17 = %16 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %18 = [98] : int[]
-			_NEW_1DARRAY_LONGLONG(_18, 1, 0);
+			_NEW_1DARRAY_int64_t(_18, 1, 0);
 			_18[0] = 98; 
 			//indirectinvoke () = %17 (%18) : method(int[])->()
 			{
@@ -431,7 +431,7 @@ blklab15:;
 			//fieldload %19 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %20 = %19 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %21 = [32] : int[]
-			_NEW_1DARRAY_LONGLONG(_21, 1, 0);
+			_NEW_1DARRAY_int64_t(_21, 1, 0);
 			_21[0] = 32; 
 			//indirectinvoke () = %20 (%21) : method(int[])->()
 			{
@@ -457,7 +457,7 @@ blklab12:;
 		//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %27 = %26 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//const %28 = [] : void[]
-		_NEW_1DARRAY_LONGLONG(_28, 0, 0);
+		_NEW_1DARRAY_int64_t(_28, 0, 0);
 		//indirectinvoke () = %27 (%28) : method(int[])->()
 		{
 			println_s(_28, _28_size);
@@ -472,80 +472,80 @@ blklab10:;
 }
 
 int main(int argc, char** args){
-	long long width = 0;
-	long long height = 0;
-	long long size = 0;
+	int64_t width = 0;
+	int64_t height = 0;
+	int64_t size = 0;
 	_DECL_1DARRAY(pixels);
 	_DECL_1DARRAY(newPixels);
-	long long _6 = 0;
-	long long _7 = 0;
-	long long _8 = 0;
-	long long _9 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
+	int64_t _8 = 0;
+	int64_t _9 = 0;
 	_DECL_1DARRAY(_10);
-	long long _11 = 0;
-	long long _12 = 0;
-	long long _13 = 0;
-	long long _14 = 0;
-	long long _15 = 0;
+	int64_t _11 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
+	int64_t _15 = 0;
 	_DECL_1DARRAY(_16);
 	void* _17;
 	_DECL_1DARRAY(_19);
 	void* _20;
 	_DECL_1DARRAY(_22);
-	long long _23 = 0;
-	long long _24 = 0;
-	long long _25 = 0;
-	long long _26 = 0;
-	long long _27 = 0;
-	long long _28 = 0;
-	long long _29 = 0;
-	long long _30 = 0;
-	long long _31 = 0;
-	long long _32 = 0;
-	long long _33 = 0;
-	long long _34 = 0;
-	long long _35 = 0;
-	long long _36 = 0;
-	long long _37 = 0;
-	long long _38 = 0;
-	long long _39 = 0;
-	long long _40 = 0;
-	long long _41 = 0;
-	long long _42 = 0;
-	long long _43 = 0;
-	long long _44 = 0;
-	long long _45 = 0;
-	long long _46 = 0;
-	long long _47 = 0;
-	long long _48 = 0;
-	long long _49 = 0;
-	long long _50 = 0;
-	long long _51 = 0;
-	long long _52 = 0;
-	long long _53 = 0;
-	long long _54 = 0;
-	long long _55 = 0;
-	long long _56 = 0;
-	long long _57 = 0;
-	long long _58 = 0;
-	long long _59 = 0;
-	long long _60 = 0;
-	long long _61 = 0;
-	long long _62 = 0;
-	long long _63 = 0;
-	long long _64 = 0;
-	long long _65 = 0;
-	long long _66 = 0;
-	long long _67 = 0;
-	long long _68 = 0;
-	long long _69 = 0;
-	long long _70 = 0;
-	long long _71 = 0;
-	long long _72 = 0;
-	long long _73 = 0;
-	long long _74 = 0;
-	long long _75 = 0;
-	long long _76 = 0;
+	int64_t _23 = 0;
+	int64_t _24 = 0;
+	int64_t _25 = 0;
+	int64_t _26 = 0;
+	int64_t _27 = 0;
+	int64_t _28 = 0;
+	int64_t _29 = 0;
+	int64_t _30 = 0;
+	int64_t _31 = 0;
+	int64_t _32 = 0;
+	int64_t _33 = 0;
+	int64_t _34 = 0;
+	int64_t _35 = 0;
+	int64_t _36 = 0;
+	int64_t _37 = 0;
+	int64_t _38 = 0;
+	int64_t _39 = 0;
+	int64_t _40 = 0;
+	int64_t _41 = 0;
+	int64_t _42 = 0;
+	int64_t _43 = 0;
+	int64_t _44 = 0;
+	int64_t _45 = 0;
+	int64_t _46 = 0;
+	int64_t _47 = 0;
+	int64_t _48 = 0;
+	int64_t _49 = 0;
+	int64_t _50 = 0;
+	int64_t _51 = 0;
+	int64_t _52 = 0;
+	int64_t _53 = 0;
+	int64_t _54 = 0;
+	int64_t _55 = 0;
+	int64_t _56 = 0;
+	int64_t _57 = 0;
+	int64_t _58 = 0;
+	int64_t _59 = 0;
+	int64_t _60 = 0;
+	int64_t _61 = 0;
+	int64_t _62 = 0;
+	int64_t _63 = 0;
+	int64_t _64 = 0;
+	int64_t _65 = 0;
+	int64_t _66 = 0;
+	int64_t _67 = 0;
+	int64_t _68 = 0;
+	int64_t _69 = 0;
+	int64_t _70 = 0;
+	int64_t _71 = 0;
+	int64_t _72 = 0;
+	int64_t _73 = 0;
+	int64_t _74 = 0;
+	int64_t _75 = 0;
+	int64_t _76 = 0;
 	//const %6 = 8 : int
 	_6 = 8;
 	//assign %1 = %6  : int
@@ -561,7 +561,7 @@ int main(int argc, char** args){
 	//const %9 = 255 : int
 	_9 = 255;
 	//arraygen %10 = [9; 3] : int[]
-	_NEW_1DARRAY_LONGLONG(_10, size, _9);
+	_NEW_1DARRAY_int64_t(_10, size, _9);
 	//assign %4 = %10  : int[]
 	_UPDATE_1DARRAY(pixels, _10);
 	//const %11 = 0 : int
@@ -585,7 +585,7 @@ int main(int argc, char** args){
 	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %18 = %17 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %19 = [73,110,112,117,116,32,73,109,97,103,101,58] : int[]
-	_NEW_1DARRAY_LONGLONG(_19, 12, 0);
+	_NEW_1DARRAY_int64_t(_19, 12, 0);
 	_19[0] = 73; _19[1] = 110; _19[2] = 112; _19[3] = 117; _19[4] = 116; _19[5] = 32; _19[6] = 73; _19[7] = 109; _19[8] = 97; _19[9] = 103; _19[10] = 101; _19[11] = 58; 
 	//indirectinvoke () = %18 (%19) : method(int[])->()
 	{
@@ -598,7 +598,7 @@ int main(int argc, char** args){
 	//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %21 = %20 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %22 = [83,111,98,101,108,32,69,100,103,101,32,68,101,116,101,99,116,105,111,110,58] : int[]
-	_NEW_1DARRAY_LONGLONG(_22, 21, 0);
+	_NEW_1DARRAY_int64_t(_22, 21, 0);
 	_22[0] = 83; _22[1] = 111; _22[2] = 98; _22[3] = 101; _22[4] = 108; _22[5] = 32; _22[6] = 69; _22[7] = 100; _22[8] = 103; _22[9] = 101; _22[10] = 32; _22[11] = 68; _22[12] = 101; _22[13] = 116; _22[14] = 101; _22[15] = 99; _22[16] = 116; _22[17] = 105; _22[18] = 111; _22[19] = 110; _22[20] = 58; 
 	//indirectinvoke () = %21 (%22) : method(int[])->()
 	{

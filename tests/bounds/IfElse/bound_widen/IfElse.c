@@ -1,5 +1,5 @@
 #include "IfElse.h"
-long long f(long long x){
+int64_t f(int64_t x){
 	int64_t r = 0;
 	uint16_t _2 = 0;
 	uint16_t _3 = 0;
@@ -85,7 +85,9 @@ blklab4:;
 	//fieldload %8 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %9 = %8 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %9 (%1) : method(any)->()
-	printf("%lld\n", a);
+	{
+		printf("%lld\n", a);
+	}
 	//const %11 = 10 : int
 	_11 = 10;
 	//invoke (%10) = (%11) IfElse:f : function(int)->(int)
@@ -110,7 +112,9 @@ blklab5:;
 	//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %14 = %13 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %14 (%2) : method(any)->()
-	printf("%lld\n", b);
+	{
+		printf("%lld\n", b);
+	}
 	//const %16 = 11 : int
 	_16 = 11;
 	//invoke (%15) = (%16) IfElse:f : function(int)->(int)
@@ -135,7 +139,9 @@ blklab6:;
 	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %19 = %18 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %19 (%3) : method(any)->()
-	printf("%lld\n", c);
+	{
+		printf("%lld\n", c);
+	}
 	//const %21 = 1212 : int
 	_21 = 1212;
 	//invoke (%20) = (%21) IfElse:f : function(int)->(int)
@@ -147,7 +153,9 @@ blklab6:;
 	//fieldload %22 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %23 = %22 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %23 (%4) : method(any)->()
-	printf("%lld\n", d);
+	{
+		printf("%lld\n", d);
+	}
 	//const %25 = 1212 : int
 	_25 = 1212;
 	//neg %26 = %25 : int
@@ -161,7 +169,9 @@ blklab6:;
 	//fieldload %27 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %28 = %27 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %28 (%4) : method(any)->()
-	printf("%lld\n", d);
+	{
+		printf("%lld\n", d);
+	}
 	//return
 	exit(0);
 }

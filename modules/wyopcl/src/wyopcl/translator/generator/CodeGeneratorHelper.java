@@ -94,7 +94,7 @@ public final class CodeGeneratorHelper {
 					
 				}else if (stores.isIntType(elm_type)) {
 					// Print an array of integers
-					statement.add("\t_PRINT_" + dimension + "DARRAY_LONGLONG(" + input_member + ");");
+					statement.add("\t_PRINT_" + dimension + "DARRAY_int64_t(" + input_member + ");");
 				} else {
 					String struct = translateType(elm_type, stores).replace("*", "");
 					// Print an array of structure pointers using macro
@@ -146,7 +146,7 @@ public final class CodeGeneratorHelper {
 				if (isCopyEliminated) {
 					statement.add(indent + "_UPDATE_" + dimension + "DARRAY(" + lhs + ", " + rhs + ");");
 				} else {
-					statement.add(indent + "_COPY_" + dimension + "DARRAY_LONGLONG(" + lhs + ", " + rhs + ");");
+					statement.add(indent + "_COPY_" + dimension + "DARRAY_int64_t(" + lhs + ", " + rhs + ");");
 				}
 			} else {
 				// An array of structure pointers
@@ -237,7 +237,7 @@ public final class CodeGeneratorHelper {
 	 * Given an array of structures and array size, make a copy of an array of structures.
 	 * 
 	 * <pre>
-	 * <code> POS** copy_array_POS(POS** _POS, long long _POS_size){ POS** new_array_POS =
+	 * <code> POS** copy_array_POS(POS** _POS, size_t _POS_size){ POS** new_array_POS =
 	 * malloc(_POS_size*sizeof(POS*)); for(int i=0;i< _POS_size;i++){ new_array_POS[i]= copy_POS(_POS[i]); }
 	 *
 	 * return new_array_POS; }
@@ -252,8 +252,8 @@ public final class CodeGeneratorHelper {
 		String parameter = "_" + struct;
 		String size = parameter + "_size";
 		String new_copy = "new_" + struct;
-		// Define the function signature, e.g. 'POS** copy_array_POS(POS** _POS, long long _POS_size){
-		statement.add(struct + "** " + "copy_array_" + struct + "(" + struct + "** " + parameter + ", long long " + size
+		// Define the function signature, e.g. 'POS** copy_array_POS(POS** _POS, size_t _POS_size){
+		statement.add(struct + "** " + "copy_array_" + struct + "(" + struct + "** " + parameter + ", size_t " + size
 				+ "){");
 
 		// Create an array of structure pointers, e.g. 'POS** new_array_POS = malloc(_POS_size*sizeof(POS*));'
@@ -321,7 +321,7 @@ public final class CodeGeneratorHelper {
 						// An array of integers
 						if (stores.getArrayDimension(member_type) == 2) {
 							// Free an array of integer arrays by using '_DEALLOC_2DArray' macro
-							statement.add("\tfree2DArray_LONGLONG(" + input_member + ", " + input_member + "_size);");
+							statement.add("\tfree2DArray_int64_t(" + input_member + ", " + input_member + "_size);");
 						} else {
 							statement.add("\tfree(" + input_member + ");");
 						}
@@ -377,7 +377,8 @@ public final class CodeGeneratorHelper {
 		}
 
 		if (type instanceof Type.Int || type instanceof Type.Bool) {
-			return "long long";
+			// Return 64-bit integers
+			return "int64_t";
 		}
 
 		if (type instanceof Type.Array) {
@@ -416,7 +417,8 @@ public final class CodeGeneratorHelper {
 			Type.Union u = (Type.Union) type;
 			// Check if type is 'union' type of INT and NULL
 			if (u.bounds().contains(Type.Int.T_INT) && u.bounds().contains(Type.Null.T_NULL)) {
-				return "long long*";
+				// Return an array of 64-bit integers
+				return "int64_t*";
 			}
 
 			return Optional.ofNullable(stores.getUserDefinedType(type)).get().name() + "*";
@@ -438,7 +440,7 @@ public final class CodeGeneratorHelper {
 		}
 
 		if (type instanceof Type.Function) {
-			// Function pointers, e.g. long long (*)(long long)
+			// Function pointers, e.g. int64_t (*)(int64_t)
 			Type.Function func_type = (Type.Function) type;
 			// Return type (single return value)
 			String str = translateType(func_type.returns().get(0), stores);
@@ -494,7 +496,7 @@ public final class CodeGeneratorHelper {
 	 * <code>
 	 * typedef struct{
 	 *		Square* pieces;
-	 *		long long pieces_size;
+	 *		int64_t pieces_size;
 	 * 		nat move;
 	 * } Board;<br>
 	 * </code>
@@ -529,7 +531,8 @@ public final class CodeGeneratorHelper {
 					String struct = translateType(elm_type, stores).replace("*", "");
 					// Declare an array of structure pointers, e.g. POS**
 					statements.add("\t" + struct + "** " + member + ";");
-					statements.add("\tlong long " + member + "_size;");
+					// Declare the array size variable
+					statements.add("\tsize_t " + member + "_size;");
 				}
 
 			} else {

@@ -748,7 +748,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			// For integer array, byte array or NULL array
 			if (stores.isIntType(elem_type) || elem_type instanceof Type.Void || elem_type instanceof Type.Byte) {
 				if (dimension == 2) {
-					return "_DEALLOC_2DARRAY_LONGLONG(" + var + ");";
+					return "_DEALLOC_2DARRAY_int64_t(" + var + ");";
 				} else {
 					// Release the previously allocated variable, e.g. an array of integers
 					return "_DEALLOC(" + var + ");";

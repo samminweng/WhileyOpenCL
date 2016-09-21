@@ -1,7 +1,7 @@
 #include "Util.h"
 typedef struct{
-	long long x;
-	long long y;
+	int64_t x;
+	int64_t y;
 } Point;
 void printf_Point(Point* _point);
 Point* copy_Point(Point* _point);

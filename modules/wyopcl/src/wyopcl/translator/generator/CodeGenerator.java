@@ -117,7 +117,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					if(boundAnalyzer.isPresent()){
 						translateType = boundAnalyzer.get().suggestIntegerType(reg, function);
 					}else{
-						// Use the long long integer
+						// Use the int64_t integer
 						translateType = CodeGeneratorHelper.translateType(type, stores);
 					}
 					declarations.add(indent + translateType + " " + var + " = 0;");
@@ -136,7 +136,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					} else {
 						String translateType = CodeGeneratorHelper.translateType(elm_type, stores);
 						declarations.add(indent + translateType + "* " + var + ";");
-						declarations.add(indent + "long long " + var + "_size = 0;");
+						// Declare array size variable as 'size_t' type
+						declarations.add(indent + "size_t " + var + "_size = 0;");
 					}
 				} else if (type instanceof Type.Reference && ((Type.Reference) type).element() instanceof Type.Array) {
 					// Declare array variable
@@ -195,7 +196,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * <pre>
 	 * <code>
-	 * long long* reverse(long long* ls, long long ls_size)
+	 * int64_t* reverse(int64_t* ls, size_t ls_size)
 	 * </code>
 	 * </pre>
 	 * 
@@ -239,11 +240,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						int dimension = stores.getArrayDimension(parameter_type);
 						parameters.add("_DECL_" + dimension + "DARRAY_PARAM(" + var + ")");
 					} else {
-						// E.g. POS* var, long long var_size
+						// E.g. POS* var, size_t var_size
 						String elem_type = CodeGeneratorHelper.translateType(parameter_type, stores);
-						parameters.add(elem_type + " " + var + ", long long " + var + "_size");
+						// Declare a 'size_t' size variable
+						parameters.add(elem_type + " " + var + ", size_t " + var + "_size");
 					}
-
 				} else {
 					if (parameter_type instanceof Type.Function) {
 						// Add lambda function pointer
@@ -292,7 +293,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * <pre>
 	 * <code>_33_size = 19;
-	 * _33=(long long*)malloc(19*sizeof(long long));
+	 * _33=(int64_t*)malloc(19*sizeof(int64_t));
 	 * _33[0] = 80; _33[1] = 97; _33[2] = 115; _33[3] = 115; _33[4] = 32; _33[5] = 115; _33[6] = 119; _33[7] = 97; _33[8] = 112; _33[9] = 32; _33[10] = 116; _33[11] = 101; _33[12] = 115; _33[13] = 116; _33[14] = 32; _33[15] = 99; _33[16] = 97; _33[17] = 115; _33[18] = 101; </code>
 	 * </pre>
 	 * 
@@ -333,7 +334,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						statement.add(s);
 					}
 				} else {
-					statement.add(indent + "_NEW_1DARRAY_LONGLONG(" + lhs + ", " + list.values.size() + ", 0);");
+					statement.add(indent + "_NEW_1DARRAY_int64_t(" + lhs + ", " + list.values.size() + ", 0);");
 					if (!list.values.isEmpty()) {
 						// Assign values to each element
 						String s = indent;
@@ -420,7 +421,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					if (isCopyEliminated) {
 						return indent + "_UPDATE_" + dimension + "DARRAY(" + lhs + ", " + rhs + ");";
 					} else {
-						return indent + "_COPY_" + dimension + "DARRAY_LONGLONG(" + lhs + ", " + rhs + ");";
+						return indent + "_COPY_" + dimension + "DARRAY_int64_t(" + lhs + ", " + rhs + ");";
 					}
 				}else {
 					String struct = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");
@@ -707,7 +708,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					if(elm instanceof Type.Byte){
 						parameters.add("_COPY_" + dimension + "DARRAY_PARAM_BYTE(" + parameter + ")");
 					}else if (stores.isIntType(elm)) {
-						parameters.add("_COPY_" + dimension + "DARRAY_PARAM_LONGLONG(" + parameter + ")");
+						parameters.add("_COPY_" + dimension + "DARRAY_PARAM_int64_t(" + parameter + ")");
 					} else {
 						String elm_type = CodeGeneratorHelper.translateType(elm, stores).replace("*", "");
 						// Copy the array of structures and pass it as a function parameter
@@ -979,7 +980,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				break;
 			case "abs":
 				// Use 'llabs' function to return the absolute value of 'rhs'
-				// because the rhs is a long long integer.
+				// because the rhs is a int64_t integer.
 				statements.add(indent + lhs + " = llabs(" + rhs + ");");
 				break;
 			case "min":
@@ -1402,7 +1403,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * <pre>
 	 * <code>
 	 * _10_size = 9;
-	 * _10 = malloc(_10_size*sizeof(long long));
+	 * _10 = malloc(_10_size*sizeof(int64_t));
 	 * _10[0] = _1; _10[1] = _2; _10[2] = _3; _10[3] = _4; _10[4] = _5; _10[5] = _6; _10[6] = _7; _10[7] = _8; _10[8] = _9;
 	 * </code>
 	 * </pre>
@@ -1432,7 +1433,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String lhs = stores.getVar(code.target(0), function);
 		int length = code.operands().length;
 		if (length > 0) {
-			statement.add(indent + "_NEW_1DARRAY_LONGLONG(" + lhs + ", " + length + ", 0);");
+			statement.add(indent + "_NEW_1DARRAY_int64_t(" + lhs + ", " + length + ", 0);");
 			String s = indent;
 			// Initialize the array
 			for (int i = 0; i < code.operands().length; i++) {
@@ -1492,7 +1493,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			extractLHSVar(statement, code, function);
 			boolean isCopyEliminated;// The copy is NOT needed by default.
 			if (field.equals("args")) {
-				// Convert the arguments into an array of integer array (long long**).
+				// Convert the arguments into an array of integer array (int64_t**).
 				statement.add(
 						stores.getIndent(function) + "_CONV_ARGS(" + stores.getVar(code.target(0), function) + ");");
 				isCopyEliminated = false;
@@ -1611,7 +1612,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						if(elm_type instanceof Type.Byte){
 							statement.add(indent + "_PRINT_1DARRAY_BYTE(" + input + ");");
 						}else{
-							statement.add(indent + "_PRINT_1DARRAY_LONGLONG(" + input + ");");
+							statement.add(indent + "_PRINT_1DARRAY_int64_t(" + input + ");");
 						}
 					} else if (input_type instanceof Type.Nominal) {
 						Type.Nominal nominal = (Type.Nominal) input_type;
@@ -1841,7 +1842,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * For example, <code>
 	 * newobject %4 = %3 : &[void]
 	 * </code> can translate this into <code>
-	 * long long* _3_value = copy(_3, _3_size);
+	 * int64_t* _3_value = copy(_3, _3_size);
 	 * _4 =(void**)&(_3_value);
 	 * _4_size = _3_size;
 	 * </code>
@@ -1868,7 +1869,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * <pre>
 	 * <code>
-	 * _DEALLOC_2DArray_LONGLONG(a);	
+	 * _DEALLOC_2DArray_int64_t(a);	
 	 * a = gen2DArray(b, b_size, b_size_size);
 	 * a_size = b_size;
 	 * a_size_size = __size;
@@ -1896,7 +1897,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					+ rhs + ");");
 		} else if (stores.isIntType(elm_type)) {
 			// Generate an array with given size and values.
-			statement.add(indent + "_NEW_" + dimension + "DARRAY_LONGLONG(" + lhs + ", " + size + ", "
+			statement.add(indent + "_NEW_" + dimension + "DARRAY_int64_t(" + lhs + ", " + size + ", "
 					+ rhs + ");");
 		} else {
 			// Generate an array of structures
@@ -1913,7 +1914,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * Write the user defined data types to *.h file, e.g. <code>
 	 * typedef struct{
 	 *		Square* pieces;
-	 *		long long pieces_size;
+	 *		size_t pieces_size;
 	 * 		nat move;
 	 * } Board;<br>
 	 * </code> Also, add a 'print' function to print out the structure.
@@ -2014,7 +2015,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * <pre>
 	 * <code>
 	 *  $lambda88(NULL);
-	 *  long long (*twice)(long long);
+	 *  int64_t (*twice)(int64_t);
 	 *	twice = $lambda88;
 	 * </code>
 	 * </pre>

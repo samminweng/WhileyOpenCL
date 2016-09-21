@@ -1,40 +1,40 @@
 #include "SobelEdgeDetect1.h"
-long long convolution(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(pixels), long long width, long long height, long long xCenter, long long yCenter, _DECL_1DARRAY_PARAM(filter), _DECL_DEALLOC_PARAM(filter)){
-	long long _6 = 0;
-	long long sum = 0;
-	long long filterSize = 0;
-	long long filterHalf = 0;
-	long long filterY = 0;
-	long long y = 0;
-	long long filterX = 0;
-	long long x = 0;
-	long long pixel = 0;
-	long long filterVal = 0;
-	long long _16 = 0;
-	long long _17 = 0;
-	long long _18 = 0;
-	long long _19 = 0;
-	long long _20 = 0;
-	long long _21 = 0;
-	long long _22 = 0;
-	long long _23 = 0;
-	long long _24 = 0;
-	long long _25 = 0;
-	long long _26 = 0;
-	long long _27 = 0;
-	long long _28 = 0;
-	long long _29 = 0;
-	long long _30 = 0;
-	long long _31 = 0;
-	long long _32 = 0;
-	long long _33 = 0;
-	long long _34 = 0;
-	long long _35 = 0;
-	long long _36 = 0;
-	long long _37 = 0;
-	long long _38 = 0;
-	long long _39 = 0;
-	long long _40 = 0;
+int64_t convolution(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(pixels), int64_t width, int64_t height, int64_t xCenter, int64_t yCenter, _DECL_1DARRAY_PARAM(filter), _DECL_DEALLOC_PARAM(filter)){
+	int64_t _6 = 0;
+	int64_t sum = 0;
+	int64_t filterSize = 0;
+	int64_t filterHalf = 0;
+	int64_t filterY = 0;
+	int64_t y = 0;
+	int64_t filterX = 0;
+	int64_t x = 0;
+	int64_t pixel = 0;
+	int64_t filterVal = 0;
+	int64_t _16 = 0;
+	int64_t _17 = 0;
+	int64_t _18 = 0;
+	int64_t _19 = 0;
+	int64_t _20 = 0;
+	int64_t _21 = 0;
+	int64_t _22 = 0;
+	int64_t _23 = 0;
+	int64_t _24 = 0;
+	int64_t _25 = 0;
+	int64_t _26 = 0;
+	int64_t _27 = 0;
+	int64_t _28 = 0;
+	int64_t _29 = 0;
+	int64_t _30 = 0;
+	int64_t _31 = 0;
+	int64_t _32 = 0;
+	int64_t _33 = 0;
+	int64_t _34 = 0;
+	int64_t _35 = 0;
+	int64_t _36 = 0;
+	int64_t _37 = 0;
+	int64_t _38 = 0;
+	int64_t _39 = 0;
+	int64_t _40 = 0;
 	//const %16 = 0 : int
 	_16 = 0;
 	//assign %7 = %16  : int
@@ -138,70 +138,70 @@ blklab0:;
 	//return
 }
 
-long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(pixels), long long width, long long height, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(pixels), int64_t width, int64_t height, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_3);
 	_DECL_DEALLOC(_3);
-	long long size = 0;
+	int64_t size = 0;
 	_DECL_1DARRAY(newPixels);
 	_DECL_DEALLOC(newPixels);
 	_DECL_1DARRAY(v_sobel);
 	_DECL_DEALLOC(v_sobel);
 	_DECL_1DARRAY(h_sobel);
 	_DECL_DEALLOC(h_sobel);
-	long long x = 0;
-	long long y = 0;
-	long long pos = 0;
-	long long v_g = 0;
-	long long h_g = 0;
-	long long t_g = 0;
-	long long _14 = 0;
-	long long _15 = 0;
+	int64_t x = 0;
+	int64_t y = 0;
+	int64_t pos = 0;
+	int64_t v_g = 0;
+	int64_t h_g = 0;
+	int64_t t_g = 0;
+	int64_t _14 = 0;
+	int64_t _15 = 0;
 	_DECL_1DARRAY(_16);
 	_DECL_DEALLOC(_16);
-	long long _17 = 0;
-	long long _18 = 0;
-	long long _19 = 0;
-	long long _20 = 0;
-	long long _21 = 0;
-	long long _22 = 0;
-	long long _23 = 0;
-	long long _24 = 0;
-	long long _25 = 0;
-	long long _26 = 0;
-	long long _27 = 0;
-	long long _28 = 0;
+	int64_t _17 = 0;
+	int64_t _18 = 0;
+	int64_t _19 = 0;
+	int64_t _20 = 0;
+	int64_t _21 = 0;
+	int64_t _22 = 0;
+	int64_t _23 = 0;
+	int64_t _24 = 0;
+	int64_t _25 = 0;
+	int64_t _26 = 0;
+	int64_t _27 = 0;
+	int64_t _28 = 0;
 	_DECL_1DARRAY(_29);
 	_DECL_DEALLOC(_29);
-	long long _30 = 0;
-	long long _31 = 0;
-	long long _32 = 0;
-	long long _33 = 0;
-	long long _34 = 0;
-	long long _35 = 0;
-	long long _36 = 0;
-	long long _37 = 0;
-	long long _38 = 0;
-	long long _39 = 0;
-	long long _40 = 0;
-	long long _41 = 0;
+	int64_t _30 = 0;
+	int64_t _31 = 0;
+	int64_t _32 = 0;
+	int64_t _33 = 0;
+	int64_t _34 = 0;
+	int64_t _35 = 0;
+	int64_t _36 = 0;
+	int64_t _37 = 0;
+	int64_t _38 = 0;
+	int64_t _39 = 0;
+	int64_t _40 = 0;
+	int64_t _41 = 0;
 	_DECL_1DARRAY(_42);
 	_DECL_DEALLOC(_42);
-	long long _43 = 0;
-	long long _44 = 0;
-	long long _45 = 0;
-	long long _46 = 0;
-	long long _47 = 0;
-	long long _48 = 0;
-	long long _49 = 0;
-	long long _50 = 0;
-	long long _51 = 0;
-	long long _52 = 0;
-	long long _53 = 0;
-	long long _54 = 0;
-	long long _55 = 0;
-	long long _56 = 0;
-	long long _57 = 0;
-	long long _58 = 0;
+	int64_t _43 = 0;
+	int64_t _44 = 0;
+	int64_t _45 = 0;
+	int64_t _46 = 0;
+	int64_t _47 = 0;
+	int64_t _48 = 0;
+	int64_t _49 = 0;
+	int64_t _50 = 0;
+	int64_t _51 = 0;
+	int64_t _52 = 0;
+	int64_t _53 = 0;
+	int64_t _54 = 0;
+	int64_t _55 = 0;
+	int64_t _56 = 0;
+	int64_t _57 = 0;
+	int64_t _58 = 0;
 	//mul %14 = %1, %2 : int
 	_14=width*height;
 	//assign %4 = %14  : int
@@ -210,11 +210,11 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 	_15 = 255;
 	//arraygen %16 = [15; 4] : int[]
 	_DEALLOC(_16);
-	_NEW_1DARRAY_LONGLONG(_16, size, _15);
+	_NEW_1DARRAY_int64_t(_16, size, _15);
 	_ADD_DEALLOC(_16);
 	//assign %5 = %16  : int[]
 	_DEALLOC(newPixels);
-	_COPY_1DARRAY_LONGLONG(newPixels, _16);
+	_COPY_1DARRAY_int64_t(newPixels, _16);
 	_ADD_DEALLOC(newPixels);
 	//const %17 = 1 : int
 	_17 = 1;
@@ -242,12 +242,12 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 	_28 = 1;
 	//newlist %29 = (%18, %19, %20, %22, %23, %24, %26, %27, %28) : int[]
 	_DEALLOC(_29);
-	_NEW_1DARRAY_LONGLONG(_29, 9, 0);
+	_NEW_1DARRAY_int64_t(_29, 9, 0);
 	_29[0] = _18; _29[1] = _19; _29[2] = _20; _29[3] = _22; _29[4] = _23; _29[5] = _24; _29[6] = _26; _29[7] = _27; _29[8] = _28; 
 	_ADD_DEALLOC(_29);
 	//assign %6 = %29  : int[]
 	_DEALLOC(v_sobel);
-	_COPY_1DARRAY_LONGLONG(v_sobel, _29);
+	_COPY_1DARRAY_int64_t(v_sobel, _29);
 	_ADD_DEALLOC(v_sobel);
 	//const %30 = 1 : int
 	_30 = 1;
@@ -275,12 +275,12 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 	_41= -_40;
 	//newlist %42 = (%30, %31, %32, %33, %34, %35, %37, %39, %41) : int[]
 	_DEALLOC(_42);
-	_NEW_1DARRAY_LONGLONG(_42, 9, 0);
+	_NEW_1DARRAY_int64_t(_42, 9, 0);
 	_42[0] = _30; _42[1] = _31; _42[2] = _32; _42[3] = _33; _42[4] = _34; _42[5] = _35; _42[6] = _37; _42[7] = _39; _42[8] = _41; 
 	_ADD_DEALLOC(_42);
 	//assign %7 = %42  : int[]
 	_DEALLOC(h_sobel);
-	_COPY_1DARRAY_LONGLONG(h_sobel, _42);
+	_COPY_1DARRAY_int64_t(h_sobel, _42);
 	_ADD_DEALLOC(h_sobel);
 	//const %43 = 0 : int
 	_43 = 0;
@@ -308,7 +308,7 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 			{
 				void* pixels_tmp;
 				void* v_sobel_tmp;
-				_47 = convolution(_COPY_1DARRAY_PARAM_LONGLONG(pixels), true, width, height, x, y, _COPY_1DARRAY_PARAM_LONGLONG(v_sobel), true);
+				_47 = convolution(_COPY_1DARRAY_PARAM_int64_t(pixels), true, width, height, x, y, _COPY_1DARRAY_PARAM_int64_t(v_sobel), true);
 				_CALLEE_DEALLOC(pixels, "false-false-true" , "convolution");
 				_CALLEE_DEALLOC(v_sobel, "false-false-true" , "convolution");
 			}
@@ -318,7 +318,7 @@ long long* sobelEdgeDetection(_DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(p
 			{
 				void* pixels_tmp;
 				void* h_sobel_tmp;
-				_48 = convolution(_COPY_1DARRAY_PARAM_LONGLONG(pixels), true, width, height, x, y, _COPY_1DARRAY_PARAM_LONGLONG(h_sobel), true);
+				_48 = convolution(_COPY_1DARRAY_PARAM_int64_t(pixels), true, width, height, x, y, _COPY_1DARRAY_PARAM_int64_t(h_sobel), true);
 				_CALLEE_DEALLOC(pixels, "false-false-true" , "convolution");
 				_CALLEE_DEALLOC(h_sobel, "false-false-true" , "convolution");
 			}
@@ -389,16 +389,16 @@ blklab4:;
 	//return
 }
 
-void printImage(FILE* sys, _DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(pixels), long long width, long long height){
-	long long y = 0;
-	long long x = 0;
-	long long pos = 0;
-	long long _7 = 0;
-	long long _8 = 0;
-	long long _9 = 0;
-	long long _10 = 0;
-	long long _11 = 0;
-	long long _12 = 0;
+void printImage(FILE* sys, _DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(pixels), int64_t width, int64_t height){
+	int64_t y = 0;
+	int64_t x = 0;
+	int64_t pos = 0;
+	int64_t _7 = 0;
+	int64_t _8 = 0;
+	int64_t _9 = 0;
+	int64_t _10 = 0;
+	int64_t _11 = 0;
+	int64_t _12 = 0;
 	void* _13;
 	_DECL_1DARRAY(_15);
 	_DECL_DEALLOC(_15);
@@ -408,13 +408,13 @@ void printImage(FILE* sys, _DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(pixe
 	void* _19;
 	_DECL_1DARRAY(_21);
 	_DECL_DEALLOC(_21);
-	long long _22 = 0;
-	long long _23 = 0;
-	long long _24 = 0;
-	long long _25 = 0;
+	int64_t _22 = 0;
+	int64_t _23 = 0;
+	int64_t _24 = 0;
+	int64_t _25 = 0;
 	void* _26;
 	void* _28;
-	long long _28_size = 0;
+	size_t _28_size = 0;
 	_DECL_DEALLOC(_28);
 	//const %7 = 0 : int
 	_7 = 0;
@@ -448,7 +448,7 @@ void printImage(FILE* sys, _DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(pixe
 			//fieldload %14 = %13 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %15 = [119] : int[]
 			_DEALLOC(_15);
-			_NEW_1DARRAY_LONGLONG(_15, 1, 0);
+			_NEW_1DARRAY_int64_t(_15, 1, 0);
 			_15[0] = 119; 
 			_ADD_DEALLOC(_15);
 			//indirectinvoke () = %14 (%15) : method(int[])->()
@@ -463,7 +463,7 @@ blklab14:;
 			//fieldload %17 = %16 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %18 = [98] : int[]
 			_DEALLOC(_18);
-			_NEW_1DARRAY_LONGLONG(_18, 1, 0);
+			_NEW_1DARRAY_int64_t(_18, 1, 0);
 			_18[0] = 98; 
 			_ADD_DEALLOC(_18);
 			//indirectinvoke () = %17 (%18) : method(int[])->()
@@ -476,7 +476,7 @@ blklab15:;
 			//fieldload %20 = %19 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %21 = [32] : int[]
 			_DEALLOC(_21);
-			_NEW_1DARRAY_LONGLONG(_21, 1, 0);
+			_NEW_1DARRAY_int64_t(_21, 1, 0);
 			_21[0] = 32; 
 			_ADD_DEALLOC(_21);
 			//indirectinvoke () = %20 (%21) : method(int[])->()
@@ -504,7 +504,7 @@ blklab12:;
 		//fieldload %27 = %26 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//const %28 = [] : void[]
 		_DEALLOC(_28);
-		_NEW_1DARRAY_LONGLONG(_28, 0, 0);
+		_NEW_1DARRAY_int64_t(_28, 0, 0);
 		_ADD_DEALLOC(_28);
 		//indirectinvoke () = %27 (%28) : method(int[])->()
 		{
@@ -525,21 +525,21 @@ blklab10:;
 }
 
 int main(int argc, char** args){
-	long long width = 0;
-	long long height = 0;
-	long long size = 0;
+	int64_t width = 0;
+	int64_t height = 0;
+	int64_t size = 0;
 	_DECL_1DARRAY(pixels);
 	_DECL_DEALLOC(pixels);
 	_DECL_1DARRAY(newPixels);
 	_DECL_DEALLOC(newPixels);
-	long long _6 = 0;
-	long long _7 = 0;
-	long long _8 = 0;
-	long long _9 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
+	int64_t _8 = 0;
+	int64_t _9 = 0;
 	_DECL_1DARRAY(_10);
 	_DECL_DEALLOC(_10);
-	long long _11 = 0;
-	long long _12 = 0;
+	int64_t _11 = 0;
+	int64_t _12 = 0;
 	_DECL_1DARRAY(_13);
 	_DECL_DEALLOC(_13);
 	void* _14;
@@ -548,41 +548,41 @@ int main(int argc, char** args){
 	void* _17;
 	_DECL_1DARRAY(_19);
 	_DECL_DEALLOC(_19);
-	long long _20 = 0;
-	long long _21 = 0;
-	long long _22 = 0;
-	long long _23 = 0;
-	long long _24 = 0;
-	long long _25 = 0;
-	long long _26 = 0;
-	long long _27 = 0;
-	long long _28 = 0;
-	long long _29 = 0;
-	long long _30 = 0;
-	long long _31 = 0;
-	long long _32 = 0;
-	long long _33 = 0;
-	long long _34 = 0;
-	long long _35 = 0;
-	long long _36 = 0;
-	long long _37 = 0;
-	long long _38 = 0;
-	long long _39 = 0;
-	long long _40 = 0;
-	long long _41 = 0;
-	long long _42 = 0;
-	long long _43 = 0;
-	long long _44 = 0;
-	long long _45 = 0;
-	long long _46 = 0;
-	long long _47 = 0;
-	long long _48 = 0;
-	long long _49 = 0;
-	long long _50 = 0;
-	long long _51 = 0;
-	long long _52 = 0;
-	long long _53 = 0;
-	long long _54 = 0;
+	int64_t _20 = 0;
+	int64_t _21 = 0;
+	int64_t _22 = 0;
+	int64_t _23 = 0;
+	int64_t _24 = 0;
+	int64_t _25 = 0;
+	int64_t _26 = 0;
+	int64_t _27 = 0;
+	int64_t _28 = 0;
+	int64_t _29 = 0;
+	int64_t _30 = 0;
+	int64_t _31 = 0;
+	int64_t _32 = 0;
+	int64_t _33 = 0;
+	int64_t _34 = 0;
+	int64_t _35 = 0;
+	int64_t _36 = 0;
+	int64_t _37 = 0;
+	int64_t _38 = 0;
+	int64_t _39 = 0;
+	int64_t _40 = 0;
+	int64_t _41 = 0;
+	int64_t _42 = 0;
+	int64_t _43 = 0;
+	int64_t _44 = 0;
+	int64_t _45 = 0;
+	int64_t _46 = 0;
+	int64_t _47 = 0;
+	int64_t _48 = 0;
+	int64_t _49 = 0;
+	int64_t _50 = 0;
+	int64_t _51 = 0;
+	int64_t _52 = 0;
+	int64_t _53 = 0;
+	int64_t _54 = 0;
 	//const %6 = 8 : int
 	_6 = 8;
 	//assign %1 = %6  : int
@@ -599,11 +599,11 @@ int main(int argc, char** args){
 	_9 = 255;
 	//arraygen %10 = [9; 3] : int[]
 	_DEALLOC(_10);
-	_NEW_1DARRAY_LONGLONG(_10, size, _9);
+	_NEW_1DARRAY_int64_t(_10, size, _9);
 	_ADD_DEALLOC(_10);
 	//assign %4 = %10  : int[]
 	_DEALLOC(pixels);
-	_COPY_1DARRAY_LONGLONG(pixels, _10);
+	_COPY_1DARRAY_int64_t(pixels, _10);
 	_ADD_DEALLOC(pixels);
 	//const %11 = 0 : int
 	_11 = 0;
@@ -615,19 +615,19 @@ int main(int argc, char** args){
 	{
 		void* pixels_tmp;
 		_DEALLOC(_13);
-		_13 = sobelEdgeDetection(_COPY_1DARRAY_PARAM_LONGLONG(pixels), true, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_13));
+		_13 = sobelEdgeDetection(_COPY_1DARRAY_PARAM_int64_t(pixels), true, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_13));
 		_CALLEE_DEALLOC(pixels, "false-false-true" , "sobelEdgeDetection");
 		_ADD_DEALLOC(_13);
 	}
 	//assign %5 = %13  : int[]
 	_DEALLOC(newPixels);
-	_COPY_1DARRAY_LONGLONG(newPixels, _13);
+	_COPY_1DARRAY_int64_t(newPixels, _13);
 	_ADD_DEALLOC(newPixels);
 	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %15 = %14 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %16 = [73,110,112,117,116,32,73,109,97,103,101,58] : int[]
 	_DEALLOC(_16);
-	_NEW_1DARRAY_LONGLONG(_16, 12, 0);
+	_NEW_1DARRAY_int64_t(_16, 12, 0);
 	_16[0] = 73; _16[1] = 110; _16[2] = 112; _16[3] = 117; _16[4] = 116; _16[5] = 32; _16[6] = 73; _16[7] = 109; _16[8] = 97; _16[9] = 103; _16[10] = 101; _16[11] = 58; 
 	_ADD_DEALLOC(_16);
 	//indirectinvoke () = %15 (%16) : method(int[])->()
@@ -637,14 +637,14 @@ int main(int argc, char** args){
 	//invoke () = (%0, %4, %1, %2) SobelEdgeDetect1:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
 		void* pixels_tmp;
-		printImage(stdout, _COPY_1DARRAY_PARAM_LONGLONG(pixels), true, width, height);
+		printImage(stdout, _COPY_1DARRAY_PARAM_int64_t(pixels), true, width, height);
 		_CALLEE_DEALLOC(pixels, "false-false-false" , "printImage");
 	}
 	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %18 = %17 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %19 = [83,111,98,101,108,32,69,100,103,101,32,68,101,116,101,99,116,105,111,110,58] : int[]
 	_DEALLOC(_19);
-	_NEW_1DARRAY_LONGLONG(_19, 21, 0);
+	_NEW_1DARRAY_int64_t(_19, 21, 0);
 	_19[0] = 83; _19[1] = 111; _19[2] = 98; _19[3] = 101; _19[4] = 108; _19[5] = 32; _19[6] = 69; _19[7] = 100; _19[8] = 103; _19[9] = 101; _19[10] = 32; _19[11] = 68; _19[12] = 101; _19[13] = 116; _19[14] = 101; _19[15] = 99; _19[16] = 116; _19[17] = 105; _19[18] = 111; _19[19] = 110; _19[20] = 58; 
 	_ADD_DEALLOC(_19);
 	//indirectinvoke () = %18 (%19) : method(int[])->()
@@ -654,7 +654,7 @@ int main(int argc, char** args){
 	//invoke () = (%0, %5, %1, %2) SobelEdgeDetect1:printImage : method(whiley/lang/System:Console,int[],int,int)->()
 	{
 		void* newPixels_tmp;
-		printImage(stdout, _COPY_1DARRAY_PARAM_LONGLONG(newPixels), true, width, height);
+		printImage(stdout, _COPY_1DARRAY_PARAM_int64_t(newPixels), true, width, height);
 		_CALLEE_DEALLOC(newPixels, "false-false-false" , "printImage");
 	}
 	//assert

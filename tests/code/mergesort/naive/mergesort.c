@@ -1,52 +1,52 @@
 #include "mergesort.h"
-long long* sortV1(_DECL_1DARRAY_PARAM(items), long long start, long long end, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* sortV1(_DECL_1DARRAY_PARAM(items), int64_t start, int64_t end, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_3);
-	long long pivot = 0;
+	int64_t pivot = 0;
 	_DECL_1DARRAY(lhs);
 	_DECL_1DARRAY(rhs);
-	long long l = 0;
-	long long r = 0;
-	long long i = 0;
-	long long _10 = 0;
-	long long _11 = 0;
-	long long _12 = 0;
-	long long _13 = 0;
-	long long _14 = 0;
+	int64_t l = 0;
+	int64_t r = 0;
+	int64_t i = 0;
+	int64_t _10 = 0;
+	int64_t _11 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
 	_DECL_1DARRAY(_15);
 	_DECL_1DARRAY(_16);
-	long long _17 = 0;
+	int64_t _17 = 0;
 	_DECL_1DARRAY(_18);
 	_DECL_1DARRAY(_19);
-	long long _20 = 0;
-	long long _21 = 0;
-	long long _22 = 0;
-	long long _23 = 0;
-	long long _24 = 0;
-	long long _25 = 0;
-	long long _26 = 0;
-	long long _27 = 0;
-	long long _28 = 0;
-	long long _29 = 0;
-	long long _30 = 0;
-	long long _31 = 0;
-	long long _32 = 0;
-	long long _33 = 0;
-	long long _34 = 0;
-	long long _35 = 0;
-	long long _36 = 0;
-	long long _37 = 0;
-	long long _38 = 0;
-	long long _39 = 0;
-	long long _40 = 0;
-	long long _41 = 0;
-	long long _42 = 0;
-	long long _43 = 0;
-	long long _44 = 0;
-	long long _45 = 0;
-	long long _46 = 0;
-	long long _47 = 0;
-	long long _48 = 0;
-	long long _49 = 0;
+	int64_t _20 = 0;
+	int64_t _21 = 0;
+	int64_t _22 = 0;
+	int64_t _23 = 0;
+	int64_t _24 = 0;
+	int64_t _25 = 0;
+	int64_t _26 = 0;
+	int64_t _27 = 0;
+	int64_t _28 = 0;
+	int64_t _29 = 0;
+	int64_t _30 = 0;
+	int64_t _31 = 0;
+	int64_t _32 = 0;
+	int64_t _33 = 0;
+	int64_t _34 = 0;
+	int64_t _35 = 0;
+	int64_t _36 = 0;
+	int64_t _37 = 0;
+	int64_t _38 = 0;
+	int64_t _39 = 0;
+	int64_t _40 = 0;
+	int64_t _41 = 0;
+	int64_t _42 = 0;
+	int64_t _43 = 0;
+	int64_t _44 = 0;
+	int64_t _45 = 0;
+	int64_t _46 = 0;
+	int64_t _47 = 0;
+	int64_t _48 = 0;
+	int64_t _49 = 0;
 	//const %10 = 1 : int
 	_10 = 1;
 	//add %11 = %1, %10 : int
@@ -66,22 +66,22 @@ long long* sortV1(_DECL_1DARRAY_PARAM(items), long long start, long long end, _D
 _SLICE_ARRAY(_15, items, start, pivot);
 	}
 	//assign %5 = %15  : int[]
-	_COPY_1DARRAY_LONGLONG(lhs, _15);
+	_COPY_1DARRAY_int64_t(lhs, _15);
 	//const %17 = 0 : int
 	_17 = 0;
 	//invoke (%16) = (%5, %17, %4) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
 		void* lhs_tmp;
-		_16 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(lhs), _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
+		_16 = sortV1(_COPY_1DARRAY_PARAM_int64_t(lhs), _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 	}
 	//assign %5 = %16  : int[]
-	_COPY_1DARRAY_LONGLONG(lhs, _16);
+	_COPY_1DARRAY_int64_t(lhs, _16);
 	//invoke (%18) = (%0, %4, %2) whiley/lang/Array:slice : function(int[],int,int)->(int[])
 	{
 _SLICE_ARRAY(_18, items, pivot, end);
 	}
 	//assign %6 = %18  : int[]
-	_COPY_1DARRAY_LONGLONG(rhs, _18);
+	_COPY_1DARRAY_int64_t(rhs, _18);
 	//const %20 = 0 : int
 	_20 = 0;
 	//sub %21 = %2, %4 : int
@@ -89,10 +89,10 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	//invoke (%19) = (%6, %20, %21) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
 		void* rhs_tmp;
-		_19 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(rhs), _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
+		_19 = sortV1(_COPY_1DARRAY_PARAM_int64_t(rhs), _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
 	}
 	//assign %6 = %19  : int[]
-	_COPY_1DARRAY_LONGLONG(rhs, _19);
+	_COPY_1DARRAY_int64_t(rhs, _19);
 	//const %22 = 0 : int
 	_22 = 0;
 	//assign %7 = %22  : int
@@ -226,89 +226,89 @@ blklab0:;
 
 int main(int argc, char** args){
 	_DECL_1DARRAY(ys);
-	long long max = 0;
-	long long index = 0;
+	int64_t max = 0;
+	int64_t index = 0;
 	_DECL_1DARRAY(arr);
-	long long _5 = 0;
-	long long _6 = 0;
-	long long _7 = 0;
-	long long _8 = 0;
-	long long _9 = 0;
+	int64_t _5 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
+	int64_t _8 = 0;
+	int64_t _9 = 0;
 	_DECL_1DARRAY(_10);
 	_DECL_1DARRAY(_11);
-	long long _12 = 0;
-	long long _13 = 0;
-	long long _14 = 0;
-	long long _15 = 0;
-	long long _16 = 0;
-	long long _17 = 0;
-	long long _18 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
+	int64_t _15 = 0;
+	int64_t _16 = 0;
+	int64_t _17 = 0;
+	int64_t _18 = 0;
 	_DECL_1DARRAY(_19);
-	long long _20 = 0;
-	long long _21 = 0;
-	long long _22 = 0;
-	long long _23 = 0;
+	int64_t _20 = 0;
+	int64_t _21 = 0;
+	int64_t _22 = 0;
+	int64_t _23 = 0;
 	_DECL_1DARRAY(_24);
 	_DECL_1DARRAY(_25);
-	long long _26 = 0;
-	long long _27 = 0;
-	long long _28 = 0;
-	long long _29 = 0;
-	long long _30 = 0;
-	long long _31 = 0;
+	int64_t _26 = 0;
+	int64_t _27 = 0;
+	int64_t _28 = 0;
+	int64_t _29 = 0;
+	int64_t _30 = 0;
+	int64_t _31 = 0;
 	_DECL_1DARRAY(_32);
-	long long _33 = 0;
-	long long _34 = 0;
-	long long _35 = 0;
-	long long _36 = 0;
+	int64_t _33 = 0;
+	int64_t _34 = 0;
+	int64_t _35 = 0;
+	int64_t _36 = 0;
 	_DECL_1DARRAY(_37);
 	_DECL_1DARRAY(_38);
-	long long _39 = 0;
-	long long _40 = 0;
-	long long _41 = 0;
-	long long _42 = 0;
-	long long _43 = 0;
-	long long _44 = 0;
+	int64_t _39 = 0;
+	int64_t _40 = 0;
+	int64_t _41 = 0;
+	int64_t _42 = 0;
+	int64_t _43 = 0;
+	int64_t _44 = 0;
 	_DECL_1DARRAY(_45);
-	long long _46 = 0;
-	long long _47 = 0;
-	long long _48 = 0;
-	long long _49 = 0;
-	long long _50 = 0;
+	int64_t _46 = 0;
+	int64_t _47 = 0;
+	int64_t _48 = 0;
+	int64_t _49 = 0;
+	int64_t _50 = 0;
 	_DECL_1DARRAY(_51);
 	_DECL_1DARRAY(_52);
-	long long _53 = 0;
-	long long _54 = 0;
-	long long _55 = 0;
-	long long _56 = 0;
-	long long _57 = 0;
-	long long _58 = 0;
-	long long _59 = 0;
+	int64_t _53 = 0;
+	int64_t _54 = 0;
+	int64_t _55 = 0;
+	int64_t _56 = 0;
+	int64_t _57 = 0;
+	int64_t _58 = 0;
+	int64_t _59 = 0;
 	_DECL_1DARRAY(_60);
-	long long _61 = 0;
-	long long _62 = 0;
-	long long _63 = 0;
-	long long _64 = 0;
-	long long _65 = 0;
+	int64_t _61 = 0;
+	int64_t _62 = 0;
+	int64_t _63 = 0;
+	int64_t _64 = 0;
+	int64_t _65 = 0;
 	_DECL_1DARRAY(_66);
-	long long _67 = 0;
-	long long _68 = 0;
-	long long _69 = 0;
+	int64_t _67 = 0;
+	int64_t _68 = 0;
+	int64_t _69 = 0;
 	_DECL_1DARRAY(_70);
-	long long _71 = 0;
-	long long _72 = 0;
-	long long _73 = 0;
-	long long _74 = 0;
-	long long _75 = 0;
-	long long _76 = 0;
-	long long _77 = 0;
-	long long _78 = 0;
-	long long _79 = 0;
-	long long _80 = 0;
-	long long _81 = 0;
-	long long _82 = 0;
-	long long _83 = 0;
-	long long _84 = 0;
+	int64_t _71 = 0;
+	int64_t _72 = 0;
+	int64_t _73 = 0;
+	int64_t _74 = 0;
+	int64_t _75 = 0;
+	int64_t _76 = 0;
+	int64_t _77 = 0;
+	int64_t _78 = 0;
+	int64_t _79 = 0;
+	int64_t _80 = 0;
+	int64_t _81 = 0;
+	int64_t _82 = 0;
+	int64_t _83 = 0;
+	int64_t _84 = 0;
 	_DECL_1DARRAY(_85);
 	void* _86;
 	_DECL_1DARRAY(_88);
@@ -323,10 +323,10 @@ int main(int argc, char** args){
 	//const %9 = 2 : int
 	_9 = 2;
 	//newlist %10 = (%5, %6, %7, %8, %9) : int[]
-	_NEW_1DARRAY_LONGLONG(_10, 5, 0);
+	_NEW_1DARRAY_int64_t(_10, 5, 0);
 	_10[0] = _5; _10[1] = _6; _10[2] = _7; _10[3] = _8; _10[4] = _9; 
 	//assign %1 = %10  : int[]
-	_COPY_1DARRAY_LONGLONG(ys, _10);
+	_COPY_1DARRAY_int64_t(ys, _10);
 	//const %12 = 0 : int
 	_12 = 0;
 	//const %13 = 5 : int
@@ -334,10 +334,10 @@ int main(int argc, char** args){
 	//invoke (%11) = (%1, %12, %13) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
 		void* ys_tmp;
-		_11 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(ys), _12, _13, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
+		_11 = sortV1(_COPY_1DARRAY_PARAM_int64_t(ys), _12, _13, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 	}
 	//assign %1 = %11  : int[]
-	_COPY_1DARRAY_LONGLONG(ys, _11);
+	_COPY_1DARRAY_int64_t(ys, _11);
 	//assert
 	{
 		//const %14 = 1 : int
@@ -351,7 +351,7 @@ int main(int argc, char** args){
 		//const %18 = 7 : int
 		_18 = 7;
 		//newlist %19 = (%14, %15, %16, %17, %18) : int[]
-		_NEW_1DARRAY_LONGLONG(_19, 5, 0);
+		_NEW_1DARRAY_int64_t(_19, 5, 0);
 		_19[0] = _14; _19[1] = _15; _19[2] = _16; _19[3] = _17; _19[4] = _18; 
 		//ifeq %1, %19 goto blklab9 : int[]
 		_IFEQ_ARRAY(ys, _19, blklab9);
@@ -371,10 +371,10 @@ blklab9:;
 	//const %23 = 2 : int
 	_23 = 2;
 	//newlist %24 = (%20, %21, %22, %23) : int[]
-	_NEW_1DARRAY_LONGLONG(_24, 4, 0);
+	_NEW_1DARRAY_int64_t(_24, 4, 0);
 	_24[0] = _20; _24[1] = _21; _24[2] = _22; _24[3] = _23; 
 	//assign %1 = %24  : int[]
-	_COPY_1DARRAY_LONGLONG(ys, _24);
+	_COPY_1DARRAY_int64_t(ys, _24);
 	//const %26 = 0 : int
 	_26 = 0;
 	//const %27 = 4 : int
@@ -382,10 +382,10 @@ blklab9:;
 	//invoke (%25) = (%1, %26, %27) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
 		void* ys_tmp;
-		_25 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(ys), _26, _27, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
+		_25 = sortV1(_COPY_1DARRAY_PARAM_int64_t(ys), _26, _27, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 	}
 	//assign %1 = %25  : int[]
-	_COPY_1DARRAY_LONGLONG(ys, _25);
+	_COPY_1DARRAY_int64_t(ys, _25);
 	//assert
 	{
 		//const %28 = 2 : int
@@ -397,7 +397,7 @@ blklab9:;
 		//const %31 = 7 : int
 		_31 = 7;
 		//newlist %32 = (%28, %29, %30, %31) : int[]
-		_NEW_1DARRAY_LONGLONG(_32, 4, 0);
+		_NEW_1DARRAY_int64_t(_32, 4, 0);
 		_32[0] = _28; _32[1] = _29; _32[2] = _30; _32[3] = _31; 
 		//ifeq %1, %32 goto blklab10 : int[]
 		_IFEQ_ARRAY(ys, _32, blklab10);
@@ -417,10 +417,10 @@ blklab10:;
 	//const %36 = 4 : int
 	_36 = 4;
 	//newlist %37 = (%33, %34, %35, %36) : int[]
-	_NEW_1DARRAY_LONGLONG(_37, 4, 0);
+	_NEW_1DARRAY_int64_t(_37, 4, 0);
 	_37[0] = _33; _37[1] = _34; _37[2] = _35; _37[3] = _36; 
 	//assign %1 = %37  : int[]
-	_COPY_1DARRAY_LONGLONG(ys, _37);
+	_COPY_1DARRAY_int64_t(ys, _37);
 	//const %39 = 0 : int
 	_39 = 0;
 	//const %40 = 4 : int
@@ -428,10 +428,10 @@ blklab10:;
 	//invoke (%38) = (%1, %39, %40) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
 		void* ys_tmp;
-		_38 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(ys), _39, _40, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
+		_38 = sortV1(_COPY_1DARRAY_PARAM_int64_t(ys), _39, _40, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 	}
 	//assign %1 = %38  : int[]
-	_COPY_1DARRAY_LONGLONG(ys, _38);
+	_COPY_1DARRAY_int64_t(ys, _38);
 	//assert
 	{
 		//const %41 = 1 : int
@@ -443,7 +443,7 @@ blklab10:;
 		//const %44 = 4 : int
 		_44 = 4;
 		//newlist %45 = (%41, %42, %43, %44) : int[]
-		_NEW_1DARRAY_LONGLONG(_45, 4, 0);
+		_NEW_1DARRAY_int64_t(_45, 4, 0);
 		_45[0] = _41; _45[1] = _42; _45[2] = _43; _45[3] = _44; 
 		//ifeq %1, %45 goto blklab11 : int[]
 		_IFEQ_ARRAY(ys, _45, blklab11);
@@ -465,10 +465,10 @@ blklab11:;
 	//const %50 = 5 : int
 	_50 = 5;
 	//newlist %51 = (%46, %47, %48, %49, %50) : int[]
-	_NEW_1DARRAY_LONGLONG(_51, 5, 0);
+	_NEW_1DARRAY_int64_t(_51, 5, 0);
 	_51[0] = _46; _51[1] = _47; _51[2] = _48; _51[3] = _49; _51[4] = _50; 
 	//assign %1 = %51  : int[]
-	_COPY_1DARRAY_LONGLONG(ys, _51);
+	_COPY_1DARRAY_int64_t(ys, _51);
 	//const %53 = 0 : int
 	_53 = 0;
 	//const %54 = 5 : int
@@ -476,10 +476,10 @@ blklab11:;
 	//invoke (%52) = (%1, %53, %54) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
 		void* ys_tmp;
-		_52 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(ys), _53, _54, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
+		_52 = sortV1(_COPY_1DARRAY_PARAM_int64_t(ys), _53, _54, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 	}
 	//assign %1 = %52  : int[]
-	_COPY_1DARRAY_LONGLONG(ys, _52);
+	_COPY_1DARRAY_int64_t(ys, _52);
 	//assert
 	{
 		//const %55 = 1 : int
@@ -493,7 +493,7 @@ blklab11:;
 		//const %59 = 5 : int
 		_59 = 5;
 		//newlist %60 = (%55, %56, %57, %58, %59) : int[]
-		_NEW_1DARRAY_LONGLONG(_60, 5, 0);
+		_NEW_1DARRAY_int64_t(_60, 5, 0);
 		_60[0] = _55; _60[1] = _56; _60[2] = _57; _60[3] = _58; _60[4] = _59; 
 		//ifeq %1, %60 goto blklab12 : int[]
 		_IFEQ_ARRAY(ys, _60, blklab12);
@@ -519,9 +519,9 @@ blklab12:;
 	//add %65 = %2, %64 : int
 	_65=max+_64;
 	//arraygen %66 = [63; 65] : int[]
-	_NEW_1DARRAY_LONGLONG(_66, _65, _63);
+	_NEW_1DARRAY_int64_t(_66, _65, _63);
 	//assign %4 = %66  : int[]
-	_COPY_1DARRAY_LONGLONG(arr, _66);
+	_COPY_1DARRAY_int64_t(arr, _66);
 	//loop (%3, %4, %67, %68, %69)
 	while(true){
 		//ifgt %3, %2 goto blklab13 : int
@@ -550,10 +550,10 @@ blklab13:;
 	//invoke (%70) = (%4, %71, %73) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
 		void* arr_tmp;
-		_70 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(arr), _71, _73, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_70));
+		_70 = sortV1(_COPY_1DARRAY_PARAM_int64_t(arr), _71, _73, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_70));
 	}
 	//assign %4 = %70  : int[]
-	_COPY_1DARRAY_LONGLONG(arr, _70);
+	_COPY_1DARRAY_int64_t(arr, _70);
 	//assert
 	{
 		//const %74 = 0 : int
@@ -579,7 +579,7 @@ blklab13:;
 		//const %84 = 10 : int
 		_84 = 10;
 		//newlist %85 = (%74, %75, %76, %77, %78, %79, %80, %81, %82, %83, %84) : int[]
-		_NEW_1DARRAY_LONGLONG(_85, 11, 0);
+		_NEW_1DARRAY_int64_t(_85, 11, 0);
 		_85[0] = _74; _85[1] = _75; _85[2] = _76; _85[3] = _77; _85[4] = _78; _85[5] = _79; _85[6] = _80; _85[7] = _81; _85[8] = _82; _85[9] = _83; _85[10] = _84; 
 		//ifeq %4, %85 goto blklab15 : int[]
 		_IFEQ_ARRAY(arr, _85, blklab15);
@@ -593,7 +593,7 @@ blklab15:;
 	//fieldload %86 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %87 = %86 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %88 = [80,97,115,115,32,109,101,114,103,101,115,111,114,116,32,116,101,115,116,32,99,97,115,101] : int[]
-	_NEW_1DARRAY_LONGLONG(_88, 24, 0);
+	_NEW_1DARRAY_int64_t(_88, 24, 0);
 	_88[0] = 80; _88[1] = 97; _88[2] = 115; _88[3] = 115; _88[4] = 32; _88[5] = 109; _88[6] = 101; _88[7] = 114; _88[8] = 103; _88[9] = 101; _88[10] = 115; _88[11] = 111; _88[12] = 114; _88[13] = 116; _88[14] = 32; _88[15] = 116; _88[16] = 101; _88[17] = 115; _88[18] = 116; _88[19] = 32; _88[20] = 99; _88[21] = 97; _88[22] = 115; _88[23] = 101; 
 	//indirectinvoke () = %87 (%88) : method(int[])->()
 	{

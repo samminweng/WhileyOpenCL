@@ -5,7 +5,7 @@ Match* copy_Match(Match* _Match){
 	new_Match->offset = _Match->offset;
 	return new_Match;
 }
-Match** copy_array_Match(Match** _Match, long long _Match_size){
+Match** copy_array_Match(Match** _Match, size_t _Match_size){
 	Match** new_Match = malloc(_Match_size*sizeof(Match*));
 	for(int i=0;i<_Match_size;i++){
 		new_Match[i] = copy_Match(_Match[i]);
@@ -23,21 +23,21 @@ void printf_Match(Match* match){
 	printf("%lld", match->offset);
 	printf("}");
 }
-long long match(BYTE* data, long long data_size, long long offset, long long end){
-	long long _3 = 0;
-	long long pos = 0;
-	long long len = 0;
-	long long _6 = 0;
-	long long _7 = 0;
+int64_t match(BYTE* data, size_t data_size, int64_t offset, int64_t end){
+	int64_t _3 = 0;
+	int64_t pos = 0;
+	int64_t len = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
 	BYTE _8;
 	BYTE _9;
-	long long _10 = 0;
-	long long _11 = 0;
-	long long _12 = 0;
-	long long _13 = 0;
-	long long _14 = 0;
-	long long _15 = 0;
-	long long _16 = 0;
+	int64_t _10 = 0;
+	int64_t _11 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
+	int64_t _15 = 0;
+	int64_t _16 = 0;
 	//assign %4 = %2  : int
 	pos = end;
 	//const %6 = 0 : int
@@ -90,23 +90,23 @@ blklab1:;
 	//return
 }
 
-Match* findLongestMatch(BYTE* data, long long data_size, long long pos){
+Match* findLongestMatch(BYTE* data, size_t data_size, int64_t pos){
 	Match* m;
-	long long bestOffset = 0;
-	long long bestLen = 0;
-	long long start = 0;
-	long long offset = 0;
-	long long len = 0;
-	long long _8 = 0;
-	long long _9 = 0;
-	long long _10 = 0;
-	long long _11 = 0;
-	long long _12 = 0;
-	long long _13 = 0;
-	long long _14 = 0;
-	long long _15 = 0;
-	long long _16 = 0;
-	long long _17 = 0;
+	int64_t bestOffset = 0;
+	int64_t bestLen = 0;
+	int64_t start = 0;
+	int64_t offset = 0;
+	int64_t len = 0;
+	int64_t _8 = 0;
+	int64_t _9 = 0;
+	int64_t _10 = 0;
+	int64_t _11 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
+	int64_t _15 = 0;
+	int64_t _16 = 0;
+	int64_t _17 = 0;
 	Match* _18;
 	//const %8 = 0 : int
 	_8 = 0;
@@ -170,19 +170,19 @@ blklab3:;
 	//return
 }
 
-BYTE* append_byte(BYTE* items, long long items_size, BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* append_byte(BYTE* items, size_t items_size, BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(nitems);
-	long long i = 0;
+	int64_t i = 0;
 	BYTE _4;
-	long long _5 = 0;
-	long long _6 = 0;
-	long long _7 = 0;
+	int64_t _5 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
 	_DECL_1DARRAY_BYTE(_8);
-	long long _9 = 0;
-	long long _10 = 0;
+	int64_t _9 = 0;
+	int64_t _10 = 0;
 	BYTE _11;
-	long long _12 = 0;
-	long long _13 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
 	//const %4 = 00000000b : byte
 	_4 = 0b00000000;
 	//lengthof %5 = %0 : byte[]
@@ -228,7 +228,7 @@ blklab6:;
 	//return
 }
 
-BYTE* write_u1(BYTE* bytes, long long bytes_size, long long u1, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* write_u1(BYTE* bytes, size_t bytes_size, int64_t u1, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(output);
 	_DECL_1DARRAY_BYTE(_3);
 	BYTE _4;
@@ -248,28 +248,28 @@ BYTE* write_u1(BYTE* bytes, long long bytes_size, long long u1, _DECL_1DARRAYSIZ
 	//return
 }
 
-BYTE* compress(BYTE* data, long long data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* compress(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(output);
-	long long pos = 0;
+	int64_t pos = 0;
 	Match* m;
-	long long offset = 0;
-	long long len = 0;
-	long long _6 = 0;
+	int64_t offset = 0;
+	int64_t len = 0;
+	int64_t _6 = 0;
 	BYTE _7;
-	long long _8 = 0;
+	int64_t _8 = 0;
 	_DECL_1DARRAY_BYTE(_9);
-	long long _10 = 0;
+	int64_t _10 = 0;
 	Match* _11;
-	long long _12 = 0;
-	long long _13 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
 	_DECL_1DARRAY_BYTE(_14);
-	long long _15 = 0;
+	int64_t _15 = 0;
 	_DECL_1DARRAY_BYTE(_16);
 	BYTE _17;
-	long long _18 = 0;
-	long long _19 = 0;
+	int64_t _18 = 0;
+	int64_t _19 = 0;
 	_DECL_1DARRAY_BYTE(_20);
-	long long _21 = 0;
+	int64_t _21 = 0;
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %2 = %6  : int
@@ -353,39 +353,39 @@ blklab8:;
 	//return
 }
 
-BYTE* decompress(BYTE* data, long long data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* decompress(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(output);
-	long long pos = 0;
+	int64_t pos = 0;
 	BYTE header;
 	BYTE item;
-	long long offset = 0;
-	long long len = 0;
-	long long start = 0;
-	long long i = 0;
+	int64_t offset = 0;
+	int64_t len = 0;
+	int64_t start = 0;
+	int64_t i = 0;
 	BYTE _9;
-	long long _10 = 0;
+	int64_t _10 = 0;
 	_DECL_1DARRAY_BYTE(_11);
-	long long _12 = 0;
-	long long _13 = 0;
-	long long _14 = 0;
-	long long _15 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
+	int64_t _15 = 0;
 	BYTE _16;
-	long long _17 = 0;
-	long long _18 = 0;
+	int64_t _17 = 0;
+	int64_t _18 = 0;
 	BYTE _19;
-	long long _20 = 0;
-	long long _21 = 0;
+	int64_t _20 = 0;
+	int64_t _21 = 0;
 	BYTE _22;
 	_DECL_1DARRAY_BYTE(_23);
-	long long _24 = 0;
-	long long _25 = 0;
-	long long _26 = 0;
-	long long _27 = 0;
-	long long _28 = 0;
+	int64_t _24 = 0;
+	int64_t _25 = 0;
+	int64_t _26 = 0;
+	int64_t _27 = 0;
+	int64_t _28 = 0;
 	BYTE _29;
 	_DECL_1DARRAY_BYTE(_30);
-	long long _31 = 0;
-	long long _32 = 0;
+	int64_t _31 = 0;
+	int64_t _32 = 0;
 	//const %9 = 00000000b : byte
 	_9 = 0b00000000;
 	//const %10 = 0 : int
@@ -513,7 +513,7 @@ int main(int argc, char** args){
 	void* _12;
 	_DECL_1DARRAY(_14);
 	void* _15;
-	long long _17 = 0;
+	int64_t _17 = 0;
 	void* _18;
 	_DECL_1DARRAY(_20);
 	_DECL_1DARRAY_BYTE(_21);
@@ -522,7 +522,7 @@ int main(int argc, char** args){
 	void* _25;
 	_DECL_1DARRAY(_27);
 	void* _28;
-	long long _30 = 0;
+	int64_t _30 = 0;
 	void* _31;
 	_DECL_1DARRAY(_33);
 	_DECL_1DARRAY_BYTE(_34);
@@ -531,11 +531,11 @@ int main(int argc, char** args){
 	void* _38;
 	_DECL_1DARRAY(_40);
 	void* _41;
-	long long _43 = 0;
+	int64_t _43 = 0;
 	void* _44;
 	_DECL_1DARRAY(_46);
 	//const %6 = [115,109,97,108,108,46,105,110] : int[]
-	_NEW_1DARRAY_LONGLONG(_6, 8, 0);
+	_NEW_1DARRAY_int64_t(_6, 8, 0);
 	_6[0] = 115; _6[1] = 109; _6[2] = 97; _6[3] = 108; _6[4] = 108; _6[5] = 46; _6[6] = 105; _6[7] = 110; 
 	//invoke (%5) = (%6) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
 	{
@@ -553,7 +553,7 @@ int main(int argc, char** args){
 	//fieldload %9 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %10 = %9 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %11 = [68,97,116,97,58,32,32,32,32,32,32,32,32,32] : int[]
-	_NEW_1DARRAY_LONGLONG(_11, 14, 0);
+	_NEW_1DARRAY_int64_t(_11, 14, 0);
 	_11[0] = 68; _11[1] = 97; _11[2] = 116; _11[3] = 97; _11[4] = 58; _11[5] = 32; _11[6] = 32; _11[7] = 32; _11[8] = 32; _11[9] = 32; _11[10] = 32; _11[11] = 32; _11[12] = 32; _11[13] = 32; 
 	//indirectinvoke () = %10 (%11) : method(int[])->()
 	{
@@ -581,7 +581,7 @@ int main(int argc, char** args){
 	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %19 = %18 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %20 = [32,98,121,116,101,115] : int[]
-	_NEW_1DARRAY_LONGLONG(_20, 6, 0);
+	_NEW_1DARRAY_int64_t(_20, 6, 0);
 	_20[0] = 32; _20[1] = 98; _20[2] = 121; _20[3] = 116; _20[4] = 101; _20[5] = 115; 
 	//indirectinvoke () = %19 (%20) : method(int[])->()
 	{
@@ -596,7 +596,7 @@ int main(int argc, char** args){
 	//fieldload %22 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %23 = %22 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %24 = [67,79,77,80,82,69,83,83,69,68,32,68,97,116,97,58,32,32,32] : int[]
-	_NEW_1DARRAY_LONGLONG(_24, 19, 0);
+	_NEW_1DARRAY_int64_t(_24, 19, 0);
 	_24[0] = 67; _24[1] = 79; _24[2] = 77; _24[3] = 80; _24[4] = 82; _24[5] = 69; _24[6] = 83; _24[7] = 83; _24[8] = 69; _24[9] = 68; _24[10] = 32; _24[11] = 68; _24[12] = 97; _24[13] = 116; _24[14] = 97; _24[15] = 58; _24[16] = 32; _24[17] = 32; _24[18] = 32; 
 	//indirectinvoke () = %23 (%24) : method(int[])->()
 	{
@@ -624,7 +624,7 @@ int main(int argc, char** args){
 	//fieldload %31 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %32 = %31 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %33 = [32,98,121,116,101,115] : int[]
-	_NEW_1DARRAY_LONGLONG(_33, 6, 0);
+	_NEW_1DARRAY_int64_t(_33, 6, 0);
 	_33[0] = 32; _33[1] = 98; _33[2] = 121; _33[3] = 116; _33[4] = 101; _33[5] = 115; 
 	//indirectinvoke () = %32 (%33) : method(int[])->()
 	{
@@ -639,7 +639,7 @@ int main(int argc, char** args){
 	//fieldload %35 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %36 = %35 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %37 = [68,69,67,79,77,80,82,69,83,83,69,68,58,32,32,32] : int[]
-	_NEW_1DARRAY_LONGLONG(_37, 16, 0);
+	_NEW_1DARRAY_int64_t(_37, 16, 0);
 	_37[0] = 68; _37[1] = 69; _37[2] = 67; _37[3] = 79; _37[4] = 77; _37[5] = 80; _37[6] = 82; _37[7] = 69; _37[8] = 83; _37[9] = 83; _37[10] = 69; _37[11] = 68; _37[12] = 58; _37[13] = 32; _37[14] = 32; _37[15] = 32; 
 	//indirectinvoke () = %36 (%37) : method(int[])->()
 	{
@@ -667,7 +667,7 @@ int main(int argc, char** args){
 	//fieldload %44 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %45 = %44 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %46 = [32,98,121,116,101,115] : int[]
-	_NEW_1DARRAY_LONGLONG(_46, 6, 0);
+	_NEW_1DARRAY_int64_t(_46, 6, 0);
 	_46[0] = 32; _46[1] = 98; _46[2] = 121; _46[3] = 116; _46[4] = 101; _46[5] = 115; 
 	//indirectinvoke () = %45 (%46) : method(int[])->()
 	{

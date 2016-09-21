@@ -1,3 +1,3 @@
 #include "Util.h"
-long long f(long long x);
+int64_t f(int64_t x);
 int main(int argc, char** args);

@@ -1,11 +1,11 @@
 #include "FunctionCall1.h"
-long long* func(_DECL_1DARRAY_PARAM(s), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* func(_DECL_1DARRAY_PARAM(s), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
 	_DECL_1DARRAY(t);
-	long long _3 = 0;
-	long long _4 = 0;
+	int64_t _3 = 0;
+	int64_t _4 = 0;
 	//assign %2 = %0  : int[]
-	_COPY_1DARRAY_LONGLONG(t, s);
+	_COPY_1DARRAY_int64_t(t, s);
 	//const %3 = 3 : int
 	_3 = 3;
 	//const %4 = 2 : int
@@ -22,44 +22,44 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(a);
 	_DECL_1DARRAY(b);
 	_DECL_1DARRAY(c);
-	long long _4 = 0;
-	long long _5 = 0;
-	long long _6 = 0;
-	long long _7 = 0;
-	long long _8 = 0;
+	int64_t _4 = 0;
+	int64_t _5 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
+	int64_t _8 = 0;
 	_DECL_1DARRAY(_9);
 	_DECL_1DARRAY(_10);
-	long long _11 = 0;
-	long long _12 = 0;
-	long long _13 = 0;
+	int64_t _11 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
 	void* _14;
 	_DECL_1DARRAY(_16);
 	void* _17;
-	long long _19 = 0;
-	long long _20 = 0;
-	long long _21 = 0;
-	long long _22 = 0;
-	long long _23 = 0;
-	long long _24 = 0;
-	long long _25 = 0;
+	int64_t _19 = 0;
+	int64_t _20 = 0;
+	int64_t _21 = 0;
+	int64_t _22 = 0;
+	int64_t _23 = 0;
+	int64_t _24 = 0;
+	int64_t _25 = 0;
 	_DECL_1DARRAY(_26);
 	_DECL_1DARRAY(_27);
-	long long _28 = 0;
-	long long _29 = 0;
-	long long _30 = 0;
-	long long _31 = 0;
-	long long _32 = 0;
-	long long _33 = 0;
+	int64_t _28 = 0;
+	int64_t _29 = 0;
+	int64_t _30 = 0;
+	int64_t _31 = 0;
+	int64_t _32 = 0;
+	int64_t _33 = 0;
 	void* _34;
 	_DECL_1DARRAY(_36);
 	void* _37;
-	long long _39 = 0;
-	long long _40 = 0;
+	int64_t _39 = 0;
+	int64_t _40 = 0;
 	void* _41;
 	_DECL_1DARRAY(_43);
 	void* _44;
-	long long _46 = 0;
-	long long _47 = 0;
+	int64_t _46 = 0;
+	int64_t _47 = 0;
 	//const %4 = 0 : int
 	_4 = 0;
 	//const %5 = 0 : int
@@ -71,17 +71,17 @@ int main(int argc, char** args){
 	//const %8 = 0 : int
 	_8 = 0;
 	//newlist %9 = (%4, %5, %6, %7, %8) : int[]
-	_NEW_1DARRAY_LONGLONG(_9, 5, 0);
+	_NEW_1DARRAY_int64_t(_9, 5, 0);
 	_9[0] = _4; _9[1] = _5; _9[2] = _6; _9[3] = _7; _9[4] = _8; 
 	//assign %1 = %9  : int[]
-	_COPY_1DARRAY_LONGLONG(a, _9);
+	_COPY_1DARRAY_int64_t(a, _9);
 	//invoke (%10) = (%1) FunctionCall1:func : function(int[])->(int[])
 	{
 		void* a_tmp;
-		_10 = func(_COPY_1DARRAY_PARAM_LONGLONG(a), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
+		_10 = func(_COPY_1DARRAY_PARAM_int64_t(a), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 	}
 	//assign %1 = %10  : int[]
-	_COPY_1DARRAY_LONGLONG(a, _10);
+	_COPY_1DARRAY_int64_t(a, _10);
 	//assert
 	{
 		//const %11 = 2 : int
@@ -102,7 +102,7 @@ blklab0:;
 	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %15 = %14 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %16 = [97,91,50,93,61] : int[]
-	_NEW_1DARRAY_LONGLONG(_16, 5, 0);
+	_NEW_1DARRAY_int64_t(_16, 5, 0);
 	_16[0] = 97; _16[1] = 91; _16[2] = 50; _16[3] = 93; _16[4] = 61; 
 	//indirectinvoke () = %15 (%16) : method(int[])->()
 	{
@@ -129,17 +129,17 @@ blklab0:;
 	//const %25 = 0 : int
 	_25 = 0;
 	//newlist %26 = (%21, %22, %23, %24, %25) : int[]
-	_NEW_1DARRAY_LONGLONG(_26, 5, 0);
+	_NEW_1DARRAY_int64_t(_26, 5, 0);
 	_26[0] = _21; _26[1] = _22; _26[2] = _23; _26[3] = _24; _26[4] = _25; 
 	//assign %2 = %26  : int[]
-	_COPY_1DARRAY_LONGLONG(b, _26);
+	_COPY_1DARRAY_int64_t(b, _26);
 	//invoke (%27) = (%2) FunctionCall1:func : function(int[])->(int[])
 	{
 		void* b_tmp;
-		_27 = func(_COPY_1DARRAY_PARAM_LONGLONG(b), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
+		_27 = func(_COPY_1DARRAY_PARAM_int64_t(b), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 	}
 	//assign %3 = %27  : int[]
-	_COPY_1DARRAY_LONGLONG(c, _27);
+	_COPY_1DARRAY_int64_t(c, _27);
 	//assert
 	{
 		//const %28 = 2 : int
@@ -177,7 +177,7 @@ blklab2:;
 	//fieldload %34 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %35 = %34 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %36 = [98,91,50,93,61] : int[]
-	_NEW_1DARRAY_LONGLONG(_36, 5, 0);
+	_NEW_1DARRAY_int64_t(_36, 5, 0);
 	_36[0] = 98; _36[1] = 91; _36[2] = 50; _36[3] = 93; _36[4] = 61; 
 	//indirectinvoke () = %35 (%36) : method(int[])->()
 	{
@@ -196,7 +196,7 @@ blklab2:;
 	//fieldload %41 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %42 = %41 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %43 = [99,91,50,93,61] : int[]
-	_NEW_1DARRAY_LONGLONG(_43, 5, 0);
+	_NEW_1DARRAY_int64_t(_43, 5, 0);
 	_43[0] = 99; _43[1] = 91; _43[2] = 50; _43[3] = 93; _43[4] = 61; 
 	//indirectinvoke () = %42 (%43) : method(int[])->()
 	{

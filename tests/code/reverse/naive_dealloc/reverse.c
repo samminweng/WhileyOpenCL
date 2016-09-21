@@ -1,25 +1,25 @@
 #include "reverse.h"
-long long* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
 	_DECL_DEALLOC(_1);
-	long long i = 0;
+	int64_t i = 0;
 	_DECL_1DARRAY(r);
 	_DECL_DEALLOC(r);
-	long long item = 0;
-	long long _5 = 0;
-	long long _6 = 0;
-	long long _7 = 0;
+	int64_t item = 0;
+	int64_t _5 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
 	_DECL_1DARRAY(_8);
 	_DECL_DEALLOC(_8);
-	long long _9 = 0;
-	long long _10 = 0;
-	long long _11 = 0;
-	long long _12 = 0;
-	long long _13 = 0;
-	long long _14 = 0;
-	long long _15 = 0;
-	long long _16 = 0;
-	long long _17 = 0;
+	int64_t _9 = 0;
+	int64_t _10 = 0;
+	int64_t _11 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
+	int64_t _15 = 0;
+	int64_t _16 = 0;
+	int64_t _17 = 0;
 	//lengthof %5 = %0 : int[]
 	_5 = ls_size;
 	//assign %2 = %5  : int
@@ -30,11 +30,11 @@ long long* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls), _DECL_1DARR
 	_7 = ls_size;
 	//arraygen %8 = [6; 7] : int[]
 	_DEALLOC(_8);
-	_NEW_1DARRAY_LONGLONG(_8, _7, _6);
+	_NEW_1DARRAY_int64_t(_8, _7, _6);
 	_ADD_DEALLOC(_8);
 	//assign %3 = %8  : int[]
 	_DEALLOC(r);
-	_COPY_1DARRAY_LONGLONG(r, _8);
+	_COPY_1DARRAY_int64_t(r, _8);
 	_ADD_DEALLOC(r);
 	//loop (%2, %3, %4, %9, %10, %11, %12, %13, %14, %15, %16, %17)
 	while(true){
@@ -96,42 +96,42 @@ blklab0:;
 int main(int argc, char** args){
 	_DECL_1DARRAY(rs);
 	_DECL_DEALLOC(rs);
-	long long max = 0;
-	long long index = 0;
+	int64_t max = 0;
+	int64_t index = 0;
 	_DECL_1DARRAY(arr);
 	_DECL_DEALLOC(arr);
 	_DECL_1DARRAY(_5);
 	_DECL_DEALLOC(_5);
-	long long _6 = 0;
-	long long _7 = 0;
-	long long _8 = 0;
-	long long _9 = 0;
-	long long _10 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
+	int64_t _8 = 0;
+	int64_t _9 = 0;
+	int64_t _10 = 0;
 	_DECL_1DARRAY(_11);
 	_DECL_DEALLOC(_11);
-	long long _12 = 0;
-	long long _13 = 0;
-	long long _14 = 0;
-	long long _15 = 0;
-	long long _16 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
+	int64_t _15 = 0;
+	int64_t _16 = 0;
 	_DECL_1DARRAY(_17);
 	_DECL_DEALLOC(_17);
-	long long _18 = 0;
-	long long _19 = 0;
-	long long _20 = 0;
-	long long _21 = 0;
-	long long _22 = 0;
+	int64_t _18 = 0;
+	int64_t _19 = 0;
+	int64_t _20 = 0;
+	int64_t _21 = 0;
+	int64_t _22 = 0;
 	_DECL_1DARRAY(_23);
 	_DECL_DEALLOC(_23);
-	long long _24 = 0;
-	long long _25 = 0;
-	long long _26 = 0;
+	int64_t _24 = 0;
+	int64_t _25 = 0;
+	int64_t _26 = 0;
 	_DECL_1DARRAY(_27);
 	_DECL_DEALLOC(_27);
-	long long _28 = 0;
-	long long _29 = 0;
-	long long _30 = 0;
-	long long _31 = 0;
+	int64_t _28 = 0;
+	int64_t _29 = 0;
+	int64_t _30 = 0;
+	int64_t _31 = 0;
 	void* _32;
 	_DECL_1DARRAY(_34);
 	_DECL_DEALLOC(_34);
@@ -147,20 +147,20 @@ int main(int argc, char** args){
 	_10 = 5;
 	//newlist %11 = (%6, %7, %8, %9, %10) : int[]
 	_DEALLOC(_11);
-	_NEW_1DARRAY_LONGLONG(_11, 5, 0);
+	_NEW_1DARRAY_int64_t(_11, 5, 0);
 	_11[0] = _6; _11[1] = _7; _11[2] = _8; _11[3] = _9; _11[4] = _10; 
 	_ADD_DEALLOC(_11);
 	//invoke (%5) = (%11) reverse:reverse : function(int[])->(int[])
 	{
 		void* _11_tmp;
 		_DEALLOC(_5);
-		_5 = reverse(_COPY_1DARRAY_PARAM_LONGLONG(_11), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
+		_5 = reverse(_COPY_1DARRAY_PARAM_int64_t(_11), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
 		_CALLEE_DEALLOC(_11, "false-false-false" , "reverse");
 		_ADD_DEALLOC(_5);
 	}
 	//assign %1 = %5  : int[]
 	_DEALLOC(rs);
-	_COPY_1DARRAY_LONGLONG(rs, _5);
+	_COPY_1DARRAY_int64_t(rs, _5);
 	_ADD_DEALLOC(rs);
 	//assert
 	{
@@ -176,7 +176,7 @@ int main(int argc, char** args){
 		_16 = 1;
 		//newlist %17 = (%12, %13, %14, %15, %16) : int[]
 		_DEALLOC(_17);
-		_NEW_1DARRAY_LONGLONG(_17, 5, 0);
+		_NEW_1DARRAY_int64_t(_17, 5, 0);
 		_17[0] = _12; _17[1] = _13; _17[2] = _14; _17[3] = _15; _17[4] = _16; 
 		_ADD_DEALLOC(_17);
 		//ifeq %1, %17 goto blklab4 : int[]
@@ -204,11 +204,11 @@ blklab4:;
 	_22=max+_21;
 	//arraygen %23 = [20; 22] : int[]
 	_DEALLOC(_23);
-	_NEW_1DARRAY_LONGLONG(_23, _22, _20);
+	_NEW_1DARRAY_int64_t(_23, _22, _20);
 	_ADD_DEALLOC(_23);
 	//assign %4 = %23  : int[]
 	_DEALLOC(arr);
-	_COPY_1DARRAY_LONGLONG(arr, _23);
+	_COPY_1DARRAY_int64_t(arr, _23);
 	_ADD_DEALLOC(arr);
 	//loop (%3, %4, %24, %25, %26)
 	while(true){
@@ -233,13 +233,13 @@ blklab5:;
 	{
 		void* arr_tmp;
 		_DEALLOC(_27);
-		_27 = reverse(_COPY_1DARRAY_PARAM_LONGLONG(arr), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
+		_27 = reverse(_COPY_1DARRAY_PARAM_int64_t(arr), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 		_CALLEE_DEALLOC(arr, "false-false-false" , "reverse");
 		_ADD_DEALLOC(_27);
 	}
 	//assign %4 = %27  : int[]
 	_DEALLOC(arr);
-	_COPY_1DARRAY_LONGLONG(arr, _27);
+	_COPY_1DARRAY_int64_t(arr, _27);
 	_ADD_DEALLOC(arr);
 	//assert
 	{
@@ -275,7 +275,7 @@ blklab8:;
 	//fieldload %33 = %32 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %34 = [80,97,115,115,32,114,101,118,101,114,115,101,32,116,101,115,116,32,99,97,115,101] : int[]
 	_DEALLOC(_34);
-	_NEW_1DARRAY_LONGLONG(_34, 22, 0);
+	_NEW_1DARRAY_int64_t(_34, 22, 0);
 	_34[0] = 80; _34[1] = 97; _34[2] = 115; _34[3] = 115; _34[4] = 32; _34[5] = 114; _34[6] = 101; _34[7] = 118; _34[8] = 101; _34[9] = 114; _34[10] = 115; _34[11] = 101; _34[12] = 32; _34[13] = 116; _34[14] = 101; _34[15] = 115; _34[16] = 116; _34[17] = 32; _34[18] = 99; _34[19] = 97; _34[20] = 115; _34[21] = 101; 
 	_ADD_DEALLOC(_34);
 	//indirectinvoke () = %33 (%34) : method(int[])->()

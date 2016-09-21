@@ -1,22 +1,22 @@
 #include "Reverse_original.h"
-long long* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
-	long long i = 0;
+	int64_t i = 0;
 	_DECL_1DARRAY(r);
-	long long item = 0;
-	long long _5 = 0;
-	long long _6 = 0;
-	long long _7 = 0;
+	int64_t item = 0;
+	int64_t _5 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
 	_DECL_1DARRAY(_8);
-	long long _9 = 0;
-	long long _10 = 0;
-	long long _11 = 0;
-	long long _12 = 0;
-	long long _13 = 0;
-	long long _14 = 0;
-	long long _15 = 0;
-	long long _16 = 0;
-	long long _17 = 0;
+	int64_t _9 = 0;
+	int64_t _10 = 0;
+	int64_t _11 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
+	int64_t _15 = 0;
+	int64_t _16 = 0;
+	int64_t _17 = 0;
 	//lengthof %5 = %0 : int[]
 	_5 = ls_size;
 	//assign %2 = %5  : int
@@ -26,9 +26,9 @@ long long* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERE
 	//lengthof %7 = %0 : int[]
 	_7 = ls_size;
 	//arraygen %8 = [6; 7] : int[]
-	_NEW_1DARRAY_LONGLONG(_8, _7, _6);
+	_NEW_1DARRAY_int64_t(_8, _7, _6);
 	//assign %3 = %8  : int[]
-	_COPY_1DARRAY_LONGLONG(r, _8);
+	_COPY_1DARRAY_int64_t(r, _8);
 	//loop (%2, %3, %4, %9, %10, %11, %12, %13, %14, %15, %16, %17)
 	while(true){
 		//invariant
@@ -84,28 +84,28 @@ blklab0:;
 }
 
 int main(int argc, char** args){
-	long long* n;
-	long long max = 0;
-	long long index = 0;
+	int64_t* n;
+	int64_t max = 0;
+	int64_t index = 0;
 	_DECL_1DARRAY(arr);
-	long long* _5;
+	int64_t* _5;
 	_DECL_2DARRAY(_6);
-	long long _7 = 0;
+	int64_t _7 = 0;
 	_DECL_1DARRAY(_8);
-	long long _9 = 0;
-	long long _10 = 0;
+	int64_t _9 = 0;
+	int64_t _10 = 0;
 	_DECL_1DARRAY(_11);
-	long long _12 = 0;
-	long long _13 = 0;
-	long long _14 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
 	_DECL_1DARRAY(_15);
 	void* _16;
-	long long _18 = 0;
-	long long _19 = 0;
+	int64_t _18 = 0;
+	int64_t _19 = 0;
 	void* _20;
-	long long _22 = 0;
-	long long _23 = 0;
-	long long _24 = 0;
+	int64_t _22 = 0;
+	int64_t _23 = 0;
+	int64_t _24 = 0;
 	void* _25;
 	_DECL_1DARRAY(_27);
 	//fieldload %6 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
@@ -131,9 +131,9 @@ int main(int argc, char** args){
 	//const %10 = 0 : int
 	_10 = 0;
 	//arraygen %11 = [10; 2] : int[]
-	_NEW_1DARRAY_LONGLONG(_11, max, _10);
+	_NEW_1DARRAY_int64_t(_11, max, _10);
 	//assign %4 = %11  : int[]
-	_COPY_1DARRAY_LONGLONG(arr, _11);
+	_COPY_1DARRAY_int64_t(arr, _11);
 	//loop (%3, %4, %12, %13, %14)
 	while(true){
 		//ifge %3, %2 goto blklab5 : int
@@ -156,10 +156,10 @@ blklab5:;
 	//invoke (%15) = (%4) Reverse_original:reverse : function(int[])->(int[])
 	{
 		void* arr_tmp;
-		_15 = reverse(_COPY_1DARRAY_PARAM_LONGLONG(arr), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
+		_15 = reverse(_COPY_1DARRAY_PARAM_int64_t(arr), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
 	}
 	//assign %4 = %15  : int[]
-	_COPY_1DARRAY_LONGLONG(arr, _15);
+	_COPY_1DARRAY_int64_t(arr, _15);
 	//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %17 = %16 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %18 = 0 : int
@@ -185,7 +185,7 @@ blklab5:;
 	//fieldload %25 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %26 = %25 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %27 = [80,97,115,115,32,82,101,118,101,114,115,101,32,116,101,115,116,32,99,97,115,101] : int[]
-	_NEW_1DARRAY_LONGLONG(_27, 22, 0);
+	_NEW_1DARRAY_int64_t(_27, 22, 0);
 	_27[0] = 80; _27[1] = 97; _27[2] = 115; _27[3] = 115; _27[4] = 32; _27[5] = 82; _27[6] = 101; _27[7] = 118; _27[8] = 101; _27[9] = 114; _27[10] = 115; _27[11] = 101; _27[12] = 32; _27[13] = 116; _27[14] = 101; _27[15] = 115; _27[16] = 116; _27[17] = 32; _27[18] = 99; _27[19] = 97; _27[20] = 115; _27[21] = 101; 
 	//indirectinvoke () = %26 (%27) : method(int[])->()
 	{

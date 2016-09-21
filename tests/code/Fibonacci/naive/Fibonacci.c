@@ -1,21 +1,21 @@
 #include "Fibonacci.h"
-long long* fibonacci(_DECL_1DARRAY_PARAM(ls), long long n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* fibonacci(_DECL_1DARRAY_PARAM(ls), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
-	long long _3 = 0;
-	long long _4 = 0;
-	long long _5 = 0;
-	long long _6 = 0;
-	long long _7 = 0;
+	int64_t _3 = 0;
+	int64_t _4 = 0;
+	int64_t _5 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
 	_DECL_1DARRAY(_8);
-	long long _9 = 0;
-	long long _10 = 0;
-	long long _11 = 0;
-	long long _12 = 0;
-	long long _13 = 0;
-	long long _14 = 0;
-	long long _15 = 0;
-	long long _16 = 0;
-	long long _17 = 0;
+	int64_t _9 = 0;
+	int64_t _10 = 0;
+	int64_t _11 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
+	int64_t _15 = 0;
+	int64_t _16 = 0;
+	int64_t _17 = 0;
 	//const %3 = 1 : int
 	_3 = 1;
 	//ifgt %1, %3 goto blklab0 : int
@@ -43,10 +43,10 @@ blklab0:;
 	//invoke (%8) = (%0, %10) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
 		void* ls_tmp;
-		_8 = fibonacci(_COPY_1DARRAY_PARAM_LONGLONG(ls), _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
+		_8 = fibonacci(_COPY_1DARRAY_PARAM_int64_t(ls), _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 	}
 	//assign %0 = %8  : int[]
-	_COPY_1DARRAY_LONGLONG(ls, _8);
+	_COPY_1DARRAY_int64_t(ls, _8);
 	//const %11 = 1 : int
 	_11 = 1;
 	//sub %12 = %1, %11 : int
@@ -72,24 +72,24 @@ blklab1:;
 }
 
 int main(int argc, char** args){
-	long long max = 0;
+	int64_t max = 0;
 	_DECL_1DARRAY(arr);
-	long long _3 = 0;
-	long long _4 = 0;
+	int64_t _3 = 0;
+	int64_t _4 = 0;
 	_DECL_1DARRAY(_5);
 	_DECL_1DARRAY(_6);
-	long long _7 = 0;
-	long long _8 = 0;
-	long long _9 = 0;
-	long long _10 = 0;
-	long long _11 = 0;
-	long long _12 = 0;
-	long long _13 = 0;
-	long long _14 = 0;
-	long long _15 = 0;
-	long long _16 = 0;
-	long long _17 = 0;
-	long long _18 = 0;
+	int64_t _7 = 0;
+	int64_t _8 = 0;
+	int64_t _9 = 0;
+	int64_t _10 = 0;
+	int64_t _11 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
+	int64_t _15 = 0;
+	int64_t _16 = 0;
+	int64_t _17 = 0;
+	int64_t _18 = 0;
 	_DECL_1DARRAY(_19);
 	void* _20;
 	void* _22;
@@ -101,9 +101,9 @@ int main(int argc, char** args){
 	//const %4 = 0 : int
 	_4 = 0;
 	//arraygen %5 = [4; 1] : int[]
-	_NEW_1DARRAY_LONGLONG(_5, max, _4);
+	_NEW_1DARRAY_int64_t(_5, max, _4);
 	//assign %2 = %5  : int[]
-	_COPY_1DARRAY_LONGLONG(arr, _5);
+	_COPY_1DARRAY_int64_t(arr, _5);
 	//const %7 = 1 : int
 	_7 = 1;
 	//sub %8 = %1, %7 : int
@@ -111,10 +111,10 @@ int main(int argc, char** args){
 	//invoke (%6) = (%2, %8) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
 		void* arr_tmp;
-		_6 = fibonacci(_COPY_1DARRAY_PARAM_LONGLONG(arr), _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
+		_6 = fibonacci(_COPY_1DARRAY_PARAM_int64_t(arr), _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 	}
 	//assign %2 = %6  : int[]
-	_COPY_1DARRAY_LONGLONG(arr, _6);
+	_COPY_1DARRAY_int64_t(arr, _6);
 	//assert
 	{
 		//const %9 = 0 : int
@@ -138,7 +138,7 @@ int main(int argc, char** args){
 		//const %18 = 34 : int
 		_18 = 34;
 		//newlist %19 = (%9, %10, %11, %12, %13, %14, %15, %16, %17, %18) : int[]
-		_NEW_1DARRAY_LONGLONG(_19, 10, 0);
+		_NEW_1DARRAY_int64_t(_19, 10, 0);
 		_19[0] = _9; _19[1] = _10; _19[2] = _11; _19[3] = _12; _19[4] = _13; _19[5] = _14; _19[6] = _15; _19[7] = _16; _19[8] = _17; _19[9] = _18; 
 		//ifeq %2, %19 goto blklab2 : int[]
 		_IFEQ_ARRAY(arr, _19, blklab2);
@@ -158,7 +158,7 @@ blklab2:;
 	//fieldload %22 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %23 = %22 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %24 = [80,97,115,115,32,70,105,98,111,110,97,99,99,105,32,116,101,115,116,32,99,97,115,101] : int[]
-	_NEW_1DARRAY_LONGLONG(_24, 24, 0);
+	_NEW_1DARRAY_int64_t(_24, 24, 0);
 	_24[0] = 80; _24[1] = 97; _24[2] = 115; _24[3] = 115; _24[4] = 32; _24[5] = 70; _24[6] = 105; _24[7] = 98; _24[8] = 111; _24[9] = 110; _24[10] = 97; _24[11] = 99; _24[12] = 99; _24[13] = 105; _24[14] = 32; _24[15] = 116; _24[16] = 101; _24[17] = 115; _24[18] = 116; _24[19] = 32; _24[20] = 99; _24[21] = 97; _24[22] = 115; _24[23] = 101; 
 	//indirectinvoke () = %23 (%24) : method(int[])->()
 	{
