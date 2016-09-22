@@ -23,9 +23,9 @@ void printf_Matrix(Matrix* matrix){
 	printf(" data:");
 	_PRINT_1DARRAY_int64_t(matrix->data);
 	printf(" width:");
-	printf("%lld", matrix->width);
+	printf("%"PRId64, matrix->width);
 	printf(" height:");
-	printf("%lld", matrix->height);
+	printf("%"PRId64, matrix->height);
 	printf("}");
 }
 Matrix* matrix(int64_t width, int64_t height, _DECL_1DARRAY_PARAM(data), _DECL_DEALLOC_PARAM(data)){
@@ -216,7 +216,7 @@ void print_mat(FILE* sys, Matrix* a, _DECL_DEALLOC_PARAM(a)){
 			_15=_12[_14];
 			//indirectinvoke () = %11 (%15) : method(any)->()
 			{
-				printf("%lld", _15);
+				printf("%"PRId64, _15);
 			}
 			//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %17 = %16 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -561,7 +561,7 @@ int main(int argc, char** args){
 	_9 = 20;
 	//indirectinvoke () = %8 (%9) : method(any)->()
 	{
-		printf("%lld\n", _9);
+		printf("%"PRId64"\n", _9);
 	}
 	//const %11 = 20 : int
 	_11 = 20;
@@ -769,7 +769,7 @@ blklab21:;
 	_72=_62[_71];
 	//indirectinvoke () = %61 (%72) : method(any)->()
 	{
-		printf("%lld\n", _72);
+		printf("%"PRId64"\n", _72);
 	}
 	//fieldload %73 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %74 = %73 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

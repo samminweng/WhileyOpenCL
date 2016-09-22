@@ -184,7 +184,7 @@ int main(int argc, char** args){
 	//fieldload %10 = %9 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %10 (%1) : method(any)->()
 	{
-		printf("%lld\n", n);
+		printf("%"PRId64"\n", n);
 	}
 	//const %11 = 0 : int
 	_11 = 0;
@@ -262,7 +262,7 @@ blklab17:;
 			//fieldload %27 = %26 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//indirectinvoke () = %27 (%3) : method(any)->()
 			{
-				printf("%lld", i);
+				printf("%"PRId64, i);
 			}
 			//fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %29 = %28 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -279,7 +279,7 @@ blklab17:;
 			//fieldload %32 = %31 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//indirectinvoke () = %32 (%4) : method(any)->()
 			{
-				printf("%lld", j);
+				printf("%"PRId64, j);
 			}
 			//fieldload %33 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %34 = %33 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -302,7 +302,7 @@ blklab17:;
 			_40=gcds[_39];
 			//indirectinvoke () = %37 (%40) : method(any)->()
 			{
-				printf("%lld\n", _40);
+				printf("%"PRId64"\n", _40);
 			}
 			//const %41 = 1 : int
 			_41 = 1;

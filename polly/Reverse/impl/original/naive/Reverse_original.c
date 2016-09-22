@@ -168,7 +168,7 @@ blklab5:;
 	_19=arr[_18];
 	//indirectinvoke () = %17 (%19) : method(any)->()
 	{
-		printf("%lld\n", _19);
+		printf("%"PRId64"\n", _19);
 	}
 	//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %21 = %20 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -180,7 +180,7 @@ blklab5:;
 	_24=arr[_23];
 	//indirectinvoke () = %21 (%24) : method(any)->()
 	{
-		printf("%lld\n", _24);
+		printf("%"PRId64"\n", _24);
 	}
 	//fieldload %25 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %26 = %25 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

@@ -22,7 +22,7 @@ void printf_Board(Board* board){
 	printf(" pieces:");
 	_PRINT_1DARRAY_int64_t(board->pieces);
 	printf(" move:");
-	printf("%lld", board->move);
+	printf("%"PRId64, board->move);
 	printf("}");
 }
 Board* EmptyBoard(){

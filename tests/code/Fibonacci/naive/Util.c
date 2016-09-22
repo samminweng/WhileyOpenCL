@@ -301,7 +301,7 @@ int64_t** copy2DArray_int64_t(int64_t **arr, size_t n, size_t m){
 
 /**Print out a int64_t integer*/
 void indirect_printf(int64_t input) {
-	printf("%lld\n", input);
+	printf("%"PRId64"\n", input);
 }
 
 /*
@@ -317,15 +317,15 @@ void printf1DArray_int64_t(int64_t* input, size_t input_size) {
 	//Print the first 10 items
 	for(i = 0; i < input_size && i < max_i; i++) {
 		if (isFirst) {
-			printf("%lld", input[i]);
+			printf("%"PRId64"\n", input[i]);
 			isFirst = false;
 		} else {
-			printf(",%lld", input[i]);
+			printf(",%"PRId64, input[i]);
 		}
 	}
 	//Print the '...' to represent the remaing items and the last item.
 	if (input_size > i) {
-		printf(" ... %lld", input[input_size - 1]);
+		printf(" ... %"PRId64, input[input_size - 1]);
 	}
 	printf("]");
 }

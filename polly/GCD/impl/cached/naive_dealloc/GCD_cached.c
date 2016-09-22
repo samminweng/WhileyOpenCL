@@ -1,11 +1,11 @@
 #include "GCD_cached.h"
-long long gcd(long long a, long long b){
-	long long _2 = 0;
-	long long _3 = 0;
-	long long _4 = 0;
-	long long _5 = 0;
-	long long _6 = 0;
-	long long _7 = 0;
+int64_t gcd(int64_t a, int64_t b){
+	int64_t _2 = 0;
+	int64_t _3 = 0;
+	int64_t _4 = 0;
+	int64_t _5 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
 	//const %3 = 0 : int
 	_3 = 0;
 	//ifne %0, %3 goto blklab1 : int
@@ -59,15 +59,15 @@ blklab2:;
 	//return
 }
 
-long long gcd_cached(long long a, long long b, long long n, _DECL_1DARRAY_PARAM(gcds), _DECL_DEALLOC_PARAM(gcds)){
-	long long _4 = 0;
-	long long _5 = 0;
-	long long _6 = 0;
-	long long _7 = 0;
-	long long _8 = 0;
-	long long _9 = 0;
-	long long _10 = 0;
-	long long _11 = 0;
+int64_t gcd_cached(int64_t a, int64_t b, int64_t n, _DECL_1DARRAY_PARAM(gcds), _DECL_DEALLOC_PARAM(gcds)){
+	int64_t _4 = 0;
+	int64_t _5 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
+	int64_t _8 = 0;
+	int64_t _9 = 0;
+	int64_t _10 = 0;
+	int64_t _11 = 0;
 	//const %5 = 0 : int
 	_5 = 0;
 	//ifne %0, %5 goto blklab7 : int
@@ -123,43 +123,43 @@ blklab8:;
 }
 
 int main(int argc, char** args){
-	long long* max;
+	int64_t* max;
 	_DECL_DEALLOC(max);
-	long long n = 0;
+	int64_t n = 0;
 	_DECL_1DARRAY(gcds);
 	_DECL_DEALLOC(gcds);
-	long long sum = 0;
-	long long i = 0;
-	long long j = 0;
-	long long* _7;
+	int64_t sum = 0;
+	int64_t i = 0;
+	int64_t j = 0;
+	int64_t* _7;
 	_DECL_DEALLOC(_7);
 	_DECL_2DARRAY(_8);
 	_DECL_DEALLOC(_8);
-	long long _9 = 0;
+	int64_t _9 = 0;
 	_DECL_1DARRAY(_10);
 	_DECL_DEALLOC(_10);
 	void* _11;
 	_DECL_1DARRAY(_13);
 	_DECL_DEALLOC(_13);
 	void* _14;
-	long long _16 = 0;
-	long long _17 = 0;
+	int64_t _16 = 0;
+	int64_t _17 = 0;
 	_DECL_1DARRAY(_18);
 	_DECL_DEALLOC(_18);
-	long long _19 = 0;
-	long long _20 = 0;
-	long long _21 = 0;
-	long long _22 = 0;
-	long long _23 = 0;
-	long long _24 = 0;
-	long long _25 = 0;
-	long long _26 = 0;
-	long long _27 = 0;
-	long long _28 = 0;
-	long long _29 = 0;
-	long long _30 = 0;
-	long long _31 = 0;
-	long long _32 = 0;
+	int64_t _19 = 0;
+	int64_t _20 = 0;
+	int64_t _21 = 0;
+	int64_t _22 = 0;
+	int64_t _23 = 0;
+	int64_t _24 = 0;
+	int64_t _25 = 0;
+	int64_t _26 = 0;
+	int64_t _27 = 0;
+	int64_t _28 = 0;
+	int64_t _29 = 0;
+	int64_t _30 = 0;
+	int64_t _31 = 0;
+	int64_t _32 = 0;
 	void* _33;
 	_DECL_1DARRAY(_35);
 	_DECL_DEALLOC(_35);
@@ -168,7 +168,7 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_40);
 	_DECL_DEALLOC(_40);
 	//fieldload %8 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	_DEALLOC_2DARRAY_LONGLONG(_8);
+	_DEALLOC_2DARRAY_int64_t(_8);
 	_CONV_ARGS(_8);
 	_ADD_DEALLOC(_8);
 	//const %9 = 0 : int
@@ -194,7 +194,7 @@ int main(int argc, char** args){
 	//fieldload %12 = %11 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %13 = [78,32,61,32] : int[]
 	_DEALLOC(_13);
-	_NEW_1DARRAY_LONGLONG(_13, 4, 0);
+	_NEW_1DARRAY_int64_t(_13, 4, 0);
 	_13[0] = 78; _13[1] = 32; _13[2] = 61; _13[3] = 32; 
 	_ADD_DEALLOC(_13);
 	//indirectinvoke () = %12 (%13) : method(int[])->()
@@ -205,7 +205,7 @@ int main(int argc, char** args){
 	//fieldload %15 = %14 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %15 (%2) : method(any)->()
 	{
-		printf("%lld\n", n);
+		printf("%"PRId64"\n", n);
 	}
 	//const %16 = 0 : int
 	_16 = 0;
@@ -213,11 +213,11 @@ int main(int argc, char** args){
 	_17=n*n;
 	//arraygen %18 = [16; 17] : int[]
 	_DEALLOC(_18);
-	_NEW_1DARRAY_LONGLONG(_18, _17, _16);
+	_NEW_1DARRAY_int64_t(_18, _17, _16);
 	_ADD_DEALLOC(_18);
 	//assign %3 = %18  : int[]
 	_DEALLOC(gcds);
-	_COPY_1DARRAY_LONGLONG(gcds, _18);
+	_COPY_1DARRAY_int64_t(gcds, _18);
 	_ADD_DEALLOC(gcds);
 	//const %19 = 0 : int
 	_19 = 0;
@@ -242,7 +242,7 @@ int main(int argc, char** args){
 			//invoke (%22) = (%5, %6, %2, %3) GCD_cached:gcd_cached : function(int,int,int,int[])->(int)
 			{
 				void* gcds_tmp;
-				_22 = gcd_cached(i, j, n, _COPY_1DARRAY_PARAM_LONGLONG(gcds), true);
+				_22 = gcd_cached(i, j, n, _COPY_1DARRAY_PARAM_int64_t(gcds), true);
 				_CALLEE_DEALLOC(gcds, "false-false-true" , "gcd_cached");
 			}
 			//mul %23 = %5, %2 : int
@@ -287,7 +287,7 @@ blklab14:;
 	//fieldload %34 = %33 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %35 = [83,117,109,58,32] : int[]
 	_DEALLOC(_35);
-	_NEW_1DARRAY_LONGLONG(_35, 5, 0);
+	_NEW_1DARRAY_int64_t(_35, 5, 0);
 	_35[0] = 83; _35[1] = 117; _35[2] = 109; _35[3] = 58; _35[4] = 32; 
 	_ADD_DEALLOC(_35);
 	//indirectinvoke () = %34 (%35) : method(int[])->()
@@ -298,13 +298,13 @@ blklab14:;
 	//fieldload %37 = %36 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %37 (%4) : method(any)->()
 	{
-		printf("%lld\n", sum);
+		printf("%"PRId64"\n", sum);
 	}
 	//fieldload %38 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %39 = %38 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %40 = [80,97,115,115,32,99,97,99,104,101,100,32,69,117,99,108,105,100,32,71,67,68,32,116,101,115,116,32,99,97,115,101] : int[]
 	_DEALLOC(_40);
-	_NEW_1DARRAY_LONGLONG(_40, 32, 0);
+	_NEW_1DARRAY_int64_t(_40, 32, 0);
 	_40[0] = 80; _40[1] = 97; _40[2] = 115; _40[3] = 115; _40[4] = 32; _40[5] = 99; _40[6] = 97; _40[7] = 99; _40[8] = 104; _40[9] = 101; _40[10] = 100; _40[11] = 32; _40[12] = 69; _40[13] = 117; _40[14] = 99; _40[15] = 108; _40[16] = 105; _40[17] = 100; _40[18] = 32; _40[19] = 71; _40[20] = 67; _40[21] = 68; _40[22] = 32; _40[23] = 116; _40[24] = 101; _40[25] = 115; _40[26] = 116; _40[27] = 32; _40[28] = 99; _40[29] = 97; _40[30] = 115; _40[31] = 101; 
 	_ADD_DEALLOC(_40);
 	//indirectinvoke () = %39 (%40) : method(int[])->()
@@ -317,7 +317,7 @@ blklab13:;
 	_DEALLOC(max);
 	_DEALLOC(gcds);
 	_DEALLOC(_7);
-	_DEALLOC_2DARRAY_LONGLONG(_8);
+	_DEALLOC_2DARRAY_int64_t(_8);
 	_DEALLOC(_10);
 	_DEALLOC(_13);
 	_DEALLOC(_18);

@@ -5,7 +5,9 @@
 #include <time.h>
 #include <ctype.h>
 #include <stdbool.h>
-#include <stdint.h> // use 'int16_t' 'int32_t' 'int64_t'
+// http://en.cppreference.com/w/c/types/integer
+#include <stdint.h> // use extact-width types, i.e. 'int16_t' 'int32_t' 'int64_t'
+#include <inttypes.h> // use PRId64 macro to print 'int16_t' integer
 // Good reference (https://en.wikibooks.org/wiki/C_Programming/Preprocessor)
 // Remove the security check about unsafe 'scanf' or 'sprintf' in VS tool
 // This definition allows the portability of C code across the platforms.
@@ -19,43 +21,43 @@ typedef uint8_t BYTE;
 *Built-in operation for 1D array of byte and integers
 *
 ***/
-//Create an array of long long integers 
-long long* create1DArray_LONGLONG(long long value, size_t arr_size);
+//Create an array of int64_t integers 
+int64_t* create1DArray_int64_t(int64_t value, size_t arr_size);
 BYTE* create1DArray_BYTE(BYTE value, size_t arr_size);
 // Copy an array to another array
-long long* copy1DArray_LONGLONG(long long *arr, size_t size);
+int64_t* copy1DArray_int64_t(int64_t *arr, size_t size);
 BYTE* copy1DArray_BYTE(BYTE *arr, size_t size);
 // Print out an array
-void printf1DArray_LONGLONG(long long* input, size_t input_size);
+void printf1DArray_int64_t(int64_t* input, size_t input_size);
 void printf1DArray_BYTE(BYTE* input, size_t input_size);
 /**
 *Built-in operation for 2D array of byte and integers
 *
 ***/
 // Create an array of integer arrays
-long long** create2DArray_LONGLONG(long long* arr, size_t n, size_t m);
-long long** copy2DArray_LONGLONG(long long **arr, size_t x, size_t y);
+int64_t** create2DArray_int64_t(int64_t* arr, size_t n, size_t m);
+int64_t** copy2DArray_int64_t(int64_t **arr, size_t x, size_t y);
 // Free an array of arrays
-void free2DArray_LONGLONG(long long** ptr, size_t size);
+void free2DArray_int64_t(int64_t** ptr, size_t size);
 // Print out 2D array
-void printf2DArray_LONGLONG(long long** input, size_t input_size, size_t input_size_size);
-int isArrayEqual(long long* arr1, size_t arr1_size, long long* arr2, size_t arr2_size);
+void printf2DArray_int64_t(int64_t** input, size_t input_size, size_t input_size_size);
+int isArrayEqual(int64_t* arr1, size_t arr1_size, int64_t* arr2, size_t arr2_size);
 /**
  * Other built-in functions
  */
-void indirect_printf(long long input);
-void printf_s(long long* input, size_t input_size);
-void println_s(long long* input, size_t input_size);
+void indirect_printf(int64_t input);
+void printf_s(int64_t* input, size_t input_size);
+void println_s(int64_t* input, size_t input_size);
 // Parse a string into an integer
-long long* parseStringToInt(long long* arr);
+int64_t* parseStringToInt(int64_t* arr);
 // 1D Array
-long long** convertArgsToIntArray(int argc, char** args);
+int64_t** convertArgsToIntArray(int argc, char** args);
 // ArrayList Operators
-long long* slice(long long* arr, size_t arr_size, int start, int end);
-// Convert an array of bytes to an array of long long
-long long* fromBytes(BYTE* arr, size_t arr_size);
+int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
+// Convert an array of bytes to an array of int64_t
+int64_t* fromBytes(BYTE* arr, size_t arr_size);
 // Return a file pointer
-FILE* Reader(long long* arr);
+FILE* Reader(int64_t* arr);
 BYTE* readAll(FILE *file, size_t* _size);
 
 /**
@@ -99,23 +101,23 @@ BYTE* readAll(FILE *file, size_t* _size);
  *
  */
 // Declare 1D array of integers or bytes
-#define _DECL_1DARRAY(a) long long* a = NULL; size_t a##_size = 0;
+#define _DECL_1DARRAY(a) int64_t* a = NULL; size_t a##_size = 0;
 #define _DECL_1DARRAY_BYTE(a) BYTE* a = NULL; size_t a##_size = 0;
 // Declare 2D array variable
-#define _DECL_2DARRAY(a) long long** a = NULL; size_t a##_size = 0; size_t a##_size_size = 0;
+#define _DECL_2DARRAY(a) int64_t** a = NULL; size_t a##_size = 0; size_t a##_size_size = 0;
 // Declare the deallocation flag
 #define _DECL_DEALLOC(a) bool a##_dealloc = false;
 #define _DECL_DEALLOC_PARAM(a) bool a##_dealloc
 // Declare the passing parameter
-#define _DECL_1DARRAY_PARAM(a) long long* a, size_t a##_size
-#define _DECL_2DARRAY_PARAM(a) long long** a, size_t a##_size, size_t a##_size_size
+#define _DECL_1DARRAY_PARAM(a) int64_t* a, size_t a##_size
+#define _DECL_2DARRAY_PARAM(a) int64_t** a, size_t a##_size, size_t a##_size_size
 // Declare a call-by-reference parameter for output array size
 #define _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE size_t* _size_call_by_ref
 #define _DECL_2DARRAYSIZE_PARAM_CALLBYREFERENCE size_t* _size_call_by_ref, size_t* _size_size_call_by_ref
 // Declare a structure member
-#define _DECL_1DARRAY_MEMBER(a) long long* a; size_t a##_size;
+#define _DECL_1DARRAY_MEMBER(a) int64_t* a; size_t a##_size;
 #define _DECL_1DARRAY_MEMBER_BYTE(a) BYTE* a; size_t a##_size; 
-#define _DECL_2DARRAY_MEMBER(a) long long** a; size_t a##_size; size_t a##_size_size;
+#define _DECL_2DARRAY_MEMBER(a) int64_t** a; size_t a##_size; size_t a##_size_size;
 /*
 * Passing parameter Macros
 *
@@ -136,11 +138,11 @@ BYTE* readAll(FILE *file, size_t* _size);
 // Clone an integer pointers
 #define _NEW_INTEGER_POINTER(a, b) \
  		({\
-			a = malloc(sizeof(long long));\
+			a = malloc(sizeof(int64_t));\
 			*a = *b;\
 		})
 // Create an array of integers or integer arrays
-#define _NEW_1DARRAY_LONGLONG(a, size, value) a##_size = size; a = create1DArray_LONGLONG(value, a##_size);
+#define _NEW_1DARRAY_int64_t(a, size, value) a##_size = size; a = create1DArray_int64_t(value, a##_size);
 #define _NEW_1DARRAY_BYTE(a, size, value) a##_size = size; a = create1DArray_BYTE(value, a##_size);
 // Create an array of structure pointers
 #define _NEW_1DARRAY_STRUCT(a, size, b, name) \
@@ -151,7 +153,7 @@ BYTE* readAll(FILE *file, size_t* _size);
  			}\
  			a##_size = size;\
  		})
-#define _NEW_2DARRAY_LONGLONG(a, size, value) a##_size = size; a##_size_size = value##_size; a = create2DArray_LONGLONG(value, a##_size, a##_size_size);
+#define _NEW_2DARRAY_int64_t(a, size, value) a##_size = size; a##_size_size = value##_size; a = create2DArray_int64_t(value, a##_size, a##_size_size);
 /***
  * Copy Macros
  *
@@ -159,16 +161,16 @@ BYTE* readAll(FILE *file, size_t* _size);
 // Pass the copied structure (void* a_tmp) as a function parameter
 #define _COPY_STRUCT_PARAM(a, name) a##_tmp = copy_##name(a)
 // Pass the copied array as a function parameter
-#define _COPY_1DARRAY_PARAM_LONGLONG(a) a##_tmp = copy1DArray_LONGLONG(a, a##_size), a##_size
+#define _COPY_1DARRAY_PARAM_int64_t(a) a##_tmp = copy1DArray_int64_t(a, a##_size), a##_size
 #define _COPY_1DARRAY_PARAM_BYTE(a) a##_tmp = copy1DArray_BYTE(a, a##_size), a##_size 
-#define _COPY_2DARRAY_PARAM_LONGLONG(a) a##_tmp = copy2DArray_LONGLONG(a, a##_size, a##_size_size), a##_size, a##_size_size
+#define _COPY_2DARRAY_PARAM_int64_t(a) a##_tmp = copy2DArray_int64_t(a, a##_size, a##_size_size), a##_size, a##_size_size
 // Pass the copied array of structures as a function parameter
 #define _COPY_1DARRAY_PARAM_STRUCT(a, name) a##_tmp = copy_array_##name(a, a##_size), a##_size 
 // Assign the copied array to a variable
 #define _COPY_STRUCT(a, b, name) a = copy_##name(b);
-#define _COPY_1DARRAY_LONGLONG(a, b) a##_size = b##_size; a = copy1DArray_LONGLONG(b, b##_size);
+#define _COPY_1DARRAY_int64_t(a, b) a##_size = b##_size; a = copy1DArray_int64_t(b, b##_size);
 #define _COPY_1DARRAY_BYTE(a, b) a##_size = b##_size; a = copy1DArray_BYTE(b, b##_size);
-#define _COPY_2DARRAY_LONGLONG(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = copy2DArray_LONGLONG(b, b##_size, b##_size_size);
+#define _COPY_2DARRAY_int64_t(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = copy2DArray_int64_t(b, b##_size, b##_size_size);
 #define _COPY_1DARRAY_STRUCT(a, b, name) \
 		({\
 			a = malloc(b##_size*sizeof(name*));\
@@ -193,10 +195,10 @@ BYTE* readAll(FILE *file, size_t* _size);
 * 
 */
 // Print an array of integers or bytes
-#define _PRINT_1DARRAY_LONGLONG(a) printf1DArray_LONGLONG(a, a##_size);
+#define _PRINT_1DARRAY_int64_t(a) printf1DArray_int64_t(a, a##_size);
 #define _PRINT_1DARRAY_BYTE(a) printf1DArray_BYTE(a, a##_size);
 // Print two dimensional arrays of integers
-#define _PRINT_2DARRAY_LONGLONG(a) printf2DArray_LONGLONG(a, a##_size, a##_size_size);
+#define _PRINT_2DARRAY_int64_t(a) printf2DArray_int64_t(a, a##_size, a##_size_size);
 // Print an array of structure pointer
 #define _PRINT_1DARRAY_STRUCT(name, a) \
 		({\
@@ -230,10 +232,10 @@ BYTE* readAll(FILE *file, size_t* _size);
 			}\
 		})
 // Deallocate an array of an array of integers
-#define _DEALLOC_2DARRAY_LONGLONG(a) \
+#define _DEALLOC_2DARRAY_int64_t(a) \
 		({\
 			if(a##_dealloc){\
-				free2DArray_LONGLONG(a, a##_size);\
+				free2DArray_int64_t(a, a##_size);\
 				a = NULL;\
 				a##_dealloc = false;\
 			}\

@@ -212,13 +212,13 @@ exec SobelEdge original 32
 exec SobelEdge original 64
 exec SobelEdge original 128
 
-# LZ77 test case
+LZ77 test case
 init LZ77
 exec LZ77 original small
 exec LZ77 original medium
 #exec LZ77 original large
 
-### NQueen test case
+# ### NQueen test case
 init NQueens
 exec NQueens original 8
 exec NQueens original 9

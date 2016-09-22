@@ -1,3 +1,3 @@
 #include "Util.h"
-long long* fibonacci(_DECL_1DARRAY_PARAM(ls), long long n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE);
+int64_t* fibonacci(_DECL_1DARRAY_PARAM(ls), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE);
 int main(int argc, char** args);

@@ -83,7 +83,7 @@ public final class CodeGeneratorHelper {
 				statement.add("\tprintf(\"%c\", " + input_member + ");");
 			}else if (member_type instanceof Type.Int || stores.isIntType(member_type)) {
 				// Print integer value.
-				statement.add("\tprintf(\"%lld\", " + input_member + ");");
+				statement.add("\tprintf(\"%\"PRId64, " + input_member + ");");
 			} else if (member_type instanceof Type.Array) {
 				// Check the element type
 				Type elm_type = stores.getArrayElementType((Type.Array) member_type);

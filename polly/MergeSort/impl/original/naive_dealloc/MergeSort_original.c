@@ -1,59 +1,59 @@
 #include "MergeSort_original.h"
-long long* sortV1(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), long long start, long long end, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* sortV1(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), int64_t start, int64_t end, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_3);
 	_DECL_DEALLOC(_3);
-	long long pivot = 0;
+	int64_t pivot = 0;
 	_DECL_1DARRAY(lhs);
 	_DECL_DEALLOC(lhs);
 	_DECL_1DARRAY(rhs);
 	_DECL_DEALLOC(rhs);
-	long long l = 0;
-	long long r = 0;
-	long long i = 0;
-	long long _10 = 0;
-	long long _11 = 0;
-	long long _12 = 0;
-	long long _13 = 0;
-	long long _14 = 0;
+	int64_t l = 0;
+	int64_t r = 0;
+	int64_t i = 0;
+	int64_t _10 = 0;
+	int64_t _11 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
 	_DECL_1DARRAY(_15);
 	_DECL_DEALLOC(_15);
 	_DECL_1DARRAY(_16);
 	_DECL_DEALLOC(_16);
-	long long _17 = 0;
+	int64_t _17 = 0;
 	_DECL_1DARRAY(_18);
 	_DECL_DEALLOC(_18);
 	_DECL_1DARRAY(_19);
 	_DECL_DEALLOC(_19);
-	long long _20 = 0;
-	long long _21 = 0;
-	long long _22 = 0;
-	long long _23 = 0;
-	long long _24 = 0;
-	long long _25 = 0;
-	long long _26 = 0;
-	long long _27 = 0;
-	long long _28 = 0;
-	long long _29 = 0;
-	long long _30 = 0;
-	long long _31 = 0;
-	long long _32 = 0;
-	long long _33 = 0;
-	long long _34 = 0;
-	long long _35 = 0;
-	long long _36 = 0;
-	long long _37 = 0;
-	long long _38 = 0;
-	long long _39 = 0;
-	long long _40 = 0;
-	long long _41 = 0;
-	long long _42 = 0;
-	long long _43 = 0;
-	long long _44 = 0;
-	long long _45 = 0;
-	long long _46 = 0;
-	long long _47 = 0;
-	long long _48 = 0;
-	long long _49 = 0;
+	int64_t _20 = 0;
+	int64_t _21 = 0;
+	int64_t _22 = 0;
+	int64_t _23 = 0;
+	int64_t _24 = 0;
+	int64_t _25 = 0;
+	int64_t _26 = 0;
+	int64_t _27 = 0;
+	int64_t _28 = 0;
+	int64_t _29 = 0;
+	int64_t _30 = 0;
+	int64_t _31 = 0;
+	int64_t _32 = 0;
+	int64_t _33 = 0;
+	int64_t _34 = 0;
+	int64_t _35 = 0;
+	int64_t _36 = 0;
+	int64_t _37 = 0;
+	int64_t _38 = 0;
+	int64_t _39 = 0;
+	int64_t _40 = 0;
+	int64_t _41 = 0;
+	int64_t _42 = 0;
+	int64_t _43 = 0;
+	int64_t _44 = 0;
+	int64_t _45 = 0;
+	int64_t _46 = 0;
+	int64_t _47 = 0;
+	int64_t _48 = 0;
+	int64_t _49 = 0;
 	//const %10 = 1 : int
 	_10 = 1;
 	//add %11 = %1, %10 : int
@@ -76,7 +76,7 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	}
 	//assign %5 = %15  : int[]
 	_DEALLOC(lhs);
-	_COPY_1DARRAY_LONGLONG(lhs, _15);
+	_COPY_1DARRAY_int64_t(lhs, _15);
 	_ADD_DEALLOC(lhs);
 	//const %17 = 0 : int
 	_17 = 0;
@@ -84,13 +84,13 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	{
 		void* lhs_tmp;
 		_DEALLOC(_16);
-		_16 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(lhs), false, _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
+		_16 = sortV1(_COPY_1DARRAY_PARAM_int64_t(lhs), false, _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		_CALLER_DEALLOC(_16, lhs, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_16);
 	}
 	//assign %5 = %16  : int[]
 	_DEALLOC(lhs);
-	_COPY_1DARRAY_LONGLONG(lhs, _16);
+	_COPY_1DARRAY_int64_t(lhs, _16);
 	_ADD_DEALLOC(lhs);
 	//invoke (%18) = (%0, %4, %2) whiley/lang/Array:slice : function(int[],int,int)->(int[])
 	{
@@ -100,7 +100,7 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	}
 	//assign %6 = %18  : int[]
 	_DEALLOC(rhs);
-	_COPY_1DARRAY_LONGLONG(rhs, _18);
+	_COPY_1DARRAY_int64_t(rhs, _18);
 	_ADD_DEALLOC(rhs);
 	//const %20 = 0 : int
 	_20 = 0;
@@ -110,13 +110,13 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	{
 		void* rhs_tmp;
 		_DEALLOC(_19);
-		_19 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(rhs), false, _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
+		_19 = sortV1(_COPY_1DARRAY_PARAM_int64_t(rhs), false, _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
 		_CALLER_DEALLOC(_19, rhs, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_19);
 	}
 	//assign %6 = %19  : int[]
 	_DEALLOC(rhs);
-	_COPY_1DARRAY_LONGLONG(rhs, _19);
+	_COPY_1DARRAY_int64_t(rhs, _19);
 	_ADD_DEALLOC(rhs);
 	//const %22 = 0 : int
 	_22 = 0;
@@ -257,41 +257,41 @@ blklab0:;
 }
 
 int main(int argc, char** args){
-	long long* n;
+	int64_t* n;
 	_DECL_DEALLOC(n);
-	long long max = 0;
-	long long index = 0;
+	int64_t max = 0;
+	int64_t index = 0;
 	_DECL_1DARRAY(arr);
 	_DECL_DEALLOC(arr);
-	long long* _5;
+	int64_t* _5;
 	_DECL_DEALLOC(_5);
 	_DECL_2DARRAY(_6);
 	_DECL_DEALLOC(_6);
-	long long _7 = 0;
+	int64_t _7 = 0;
 	_DECL_1DARRAY(_8);
 	_DECL_DEALLOC(_8);
-	long long _9 = 0;
-	long long _10 = 0;
+	int64_t _9 = 0;
+	int64_t _10 = 0;
 	_DECL_1DARRAY(_11);
 	_DECL_DEALLOC(_11);
-	long long _12 = 0;
-	long long _13 = 0;
-	long long _14 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
 	_DECL_1DARRAY(_15);
 	_DECL_DEALLOC(_15);
-	long long _16 = 0;
+	int64_t _16 = 0;
 	void* _17;
-	long long _19 = 0;
-	long long _20 = 0;
+	int64_t _19 = 0;
+	int64_t _20 = 0;
 	void* _21;
-	long long _23 = 0;
-	long long _24 = 0;
-	long long _25 = 0;
+	int64_t _23 = 0;
+	int64_t _24 = 0;
+	int64_t _25 = 0;
 	void* _26;
 	_DECL_1DARRAY(_28);
 	_DECL_DEALLOC(_28);
 	//fieldload %6 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	_DEALLOC_2DARRAY_LONGLONG(_6);
+	_DEALLOC_2DARRAY_int64_t(_6);
 	_CONV_ARGS(_6);
 	_ADD_DEALLOC(_6);
 	//const %7 = 0 : int
@@ -321,11 +321,11 @@ int main(int argc, char** args){
 	_10 = 0;
 	//arraygen %11 = [10; 2] : int[]
 	_DEALLOC(_11);
-	_NEW_1DARRAY_LONGLONG(_11, max, _10);
+	_NEW_1DARRAY_int64_t(_11, max, _10);
 	_ADD_DEALLOC(_11);
 	//assign %4 = %11  : int[]
 	_DEALLOC(arr);
-	_COPY_1DARRAY_LONGLONG(arr, _11);
+	_COPY_1DARRAY_int64_t(arr, _11);
 	_ADD_DEALLOC(arr);
 	//loop (%3, %4, %12, %13, %14)
 	while(true){
@@ -352,13 +352,13 @@ blklab10:;
 	{
 		void* arr_tmp;
 		_DEALLOC(_15);
-		_15 = sortV1(_COPY_1DARRAY_PARAM_LONGLONG(arr), false, _16, max, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
+		_15 = sortV1(_COPY_1DARRAY_PARAM_int64_t(arr), false, _16, max, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
 		_CALLER_DEALLOC(_15, arr, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_15);
 	}
 	//assign %4 = %15  : int[]
 	_DEALLOC(arr);
-	_COPY_1DARRAY_LONGLONG(arr, _15);
+	_COPY_1DARRAY_int64_t(arr, _15);
 	_ADD_DEALLOC(arr);
 	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %18 = %17 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -368,7 +368,7 @@ blklab10:;
 	_20=arr[_19];
 	//indirectinvoke () = %18 (%20) : method(any)->()
 	{
-		printf("%lld\n", _20);
+		printf("%"PRId64"\n", _20);
 	}
 	//fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %22 = %21 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -380,13 +380,13 @@ blklab10:;
 	_25=arr[_24];
 	//indirectinvoke () = %22 (%25) : method(any)->()
 	{
-		printf("%lld\n", _25);
+		printf("%"PRId64"\n", _25);
 	}
 	//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %27 = %26 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %28 = [80,97,115,115,32,77,101,114,103,101,115,111,114,116,32,116,101,115,116,32,99,97,115,101] : int[]
 	_DEALLOC(_28);
-	_NEW_1DARRAY_LONGLONG(_28, 24, 0);
+	_NEW_1DARRAY_int64_t(_28, 24, 0);
 	_28[0] = 80; _28[1] = 97; _28[2] = 115; _28[3] = 115; _28[4] = 32; _28[5] = 77; _28[6] = 101; _28[7] = 114; _28[8] = 103; _28[9] = 101; _28[10] = 115; _28[11] = 111; _28[12] = 114; _28[13] = 116; _28[14] = 32; _28[15] = 116; _28[16] = 101; _28[17] = 115; _28[18] = 116; _28[19] = 32; _28[20] = 99; _28[21] = 97; _28[22] = 115; _28[23] = 101; 
 	_ADD_DEALLOC(_28);
 	//indirectinvoke () = %27 (%28) : method(int[])->()
@@ -399,7 +399,7 @@ blklab9:;
 	_DEALLOC(n);
 	_DEALLOC(arr);
 	_DEALLOC(_5);
-	_DEALLOC_2DARRAY_LONGLONG(_6);
+	_DEALLOC_2DARRAY_int64_t(_6);
 	_DEALLOC(_8);
 	_DEALLOC(_11);
 	_DEALLOC(_15);

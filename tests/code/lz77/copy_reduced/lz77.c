@@ -18,9 +18,9 @@ void free_Match(Match* match){
 void printf_Match(Match* match){
 	printf("{");
 	printf(" len:");
-	printf("%lld", match->len);
+	printf("%"PRId64, match->len);
 	printf(" offset:");
-	printf("%lld", match->offset);
+	printf("%"PRId64, match->offset);
 	printf("}");
 }
 int64_t match(BYTE* data, size_t data_size, int64_t offset, int64_t end){
@@ -576,7 +576,7 @@ int main(int argc, char** args){
 	_17 = data_size;
 	//indirectinvoke () = %16 (%17) : method(any)->()
 	{
-		printf("%lld", _17);
+		printf("%"PRId64, _17);
 	}
 	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %19 = %18 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -619,7 +619,7 @@ int main(int argc, char** args){
 	_30 = compress_data_size;
 	//indirectinvoke () = %29 (%30) : method(any)->()
 	{
-		printf("%lld", _30);
+		printf("%"PRId64, _30);
 	}
 	//fieldload %31 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %32 = %31 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -662,7 +662,7 @@ int main(int argc, char** args){
 	_43 = decompress_data_size;
 	//indirectinvoke () = %42 (%43) : method(any)->()
 	{
-		printf("%lld", _43);
+		printf("%"PRId64, _43);
 	}
 	//fieldload %44 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %45 = %44 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

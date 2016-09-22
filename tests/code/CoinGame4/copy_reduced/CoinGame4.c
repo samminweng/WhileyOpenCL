@@ -164,7 +164,7 @@ blklab5:;
 		//fieldload %40 = %39 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//indirectinvoke () = %40 (%5) : method(any)->()
 		{
-			printf("%lld", i);
+			printf("%"PRId64, i);
 		}
 		//fieldload %41 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %42 = %41 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -179,7 +179,7 @@ blklab5:;
 		//fieldload %45 = %44 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//indirectinvoke () = %45 (%8) : method(any)->()
 		{
-			printf("%lld", coin);
+			printf("%"PRId64, coin);
 		}
 		//fieldload %46 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %47 = %46 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -265,7 +265,7 @@ blklab8:;
 	//fieldload %66 = %65 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %66 (%7) : method(any)->()
 	{
-		printf("%lld\n", sum_bob);
+		printf("%"PRId64"\n", sum_bob);
 	}
 	//return
 	return;
@@ -584,7 +584,7 @@ int main(int argc, char** args){
 	//fieldload %16 = %15 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %16 (%3) : method(any)->()
 	{
-		printf("%lld\n", sum_alice);
+		printf("%"PRId64"\n", sum_alice);
 	}
 	//assert
 	{

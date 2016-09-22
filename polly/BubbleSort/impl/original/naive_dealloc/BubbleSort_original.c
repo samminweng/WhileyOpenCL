@@ -1,28 +1,28 @@
 #include "BubbleSort_original.h"
-long long* bubbleSort(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* bubbleSort(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
 	_DECL_DEALLOC(_1);
-	long long length = 0;
-	long long last_swapped = 0;
-	long long index = 0;
-	long long tmp = 0;
-	long long _6 = 0;
-	long long _7 = 0;
-	long long _8 = 0;
-	long long _9 = 0;
-	long long _10 = 0;
-	long long _11 = 0;
-	long long _12 = 0;
-	long long _13 = 0;
-	long long _14 = 0;
-	long long _15 = 0;
-	long long _16 = 0;
-	long long _17 = 0;
-	long long _18 = 0;
-	long long _19 = 0;
-	long long _20 = 0;
-	long long _21 = 0;
-	long long _22 = 0;
+	int64_t length = 0;
+	int64_t last_swapped = 0;
+	int64_t index = 0;
+	int64_t tmp = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
+	int64_t _8 = 0;
+	int64_t _9 = 0;
+	int64_t _10 = 0;
+	int64_t _11 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
+	int64_t _15 = 0;
+	int64_t _16 = 0;
+	int64_t _17 = 0;
+	int64_t _18 = 0;
+	int64_t _19 = 0;
+	int64_t _20 = 0;
+	int64_t _21 = 0;
+	int64_t _22 = 0;
 	//lengthof %6 = %0 : int[]
 	_6 = items_size;
 	//assign %2 = %6  : int
@@ -107,40 +107,40 @@ blklab0:;
 }
 
 int main(int argc, char** args){
-	long long* n;
+	int64_t* n;
 	_DECL_DEALLOC(n);
-	long long max = 0;
-	long long index = 0;
+	int64_t max = 0;
+	int64_t index = 0;
 	_DECL_1DARRAY(arr);
 	_DECL_DEALLOC(arr);
-	long long* _5;
+	int64_t* _5;
 	_DECL_DEALLOC(_5);
 	_DECL_2DARRAY(_6);
 	_DECL_DEALLOC(_6);
-	long long _7 = 0;
+	int64_t _7 = 0;
 	_DECL_1DARRAY(_8);
 	_DECL_DEALLOC(_8);
-	long long _9 = 0;
-	long long _10 = 0;
+	int64_t _9 = 0;
+	int64_t _10 = 0;
 	_DECL_1DARRAY(_11);
 	_DECL_DEALLOC(_11);
-	long long _12 = 0;
-	long long _13 = 0;
-	long long _14 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
 	_DECL_1DARRAY(_15);
 	_DECL_DEALLOC(_15);
 	void* _16;
-	long long _18 = 0;
-	long long _19 = 0;
+	int64_t _18 = 0;
+	int64_t _19 = 0;
 	void* _20;
-	long long _22 = 0;
-	long long _23 = 0;
-	long long _24 = 0;
+	int64_t _22 = 0;
+	int64_t _23 = 0;
+	int64_t _24 = 0;
 	void* _25;
 	_DECL_1DARRAY(_27);
 	_DECL_DEALLOC(_27);
 	//fieldload %6 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	_DEALLOC_2DARRAY_LONGLONG(_6);
+	_DEALLOC_2DARRAY_int64_t(_6);
 	_CONV_ARGS(_6);
 	_ADD_DEALLOC(_6);
 	//const %7 = 0 : int
@@ -170,11 +170,11 @@ int main(int argc, char** args){
 	_10 = 0;
 	//arraygen %11 = [10; 2] : int[]
 	_DEALLOC(_11);
-	_NEW_1DARRAY_LONGLONG(_11, max, _10);
+	_NEW_1DARRAY_int64_t(_11, max, _10);
 	_ADD_DEALLOC(_11);
 	//assign %4 = %11  : int[]
 	_DEALLOC(arr);
-	_COPY_1DARRAY_LONGLONG(arr, _11);
+	_COPY_1DARRAY_int64_t(arr, _11);
 	_ADD_DEALLOC(arr);
 	//loop (%3, %4, %12, %13, %14)
 	while(true){
@@ -199,13 +199,13 @@ blklab6:;
 	{
 		void* arr_tmp;
 		_DEALLOC(_15);
-		_15 = bubbleSort(_COPY_1DARRAY_PARAM_LONGLONG(arr), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
+		_15 = bubbleSort(_COPY_1DARRAY_PARAM_int64_t(arr), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
 		_CALLER_DEALLOC(_15, arr, "true-true-false" , "bubbleSort");
 		_ADD_DEALLOC(_15);
 	}
 	//assign %4 = %15  : int[]
 	_DEALLOC(arr);
-	_COPY_1DARRAY_LONGLONG(arr, _15);
+	_COPY_1DARRAY_int64_t(arr, _15);
 	_ADD_DEALLOC(arr);
 	//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %17 = %16 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -215,7 +215,7 @@ blklab6:;
 	_19=arr[_18];
 	//indirectinvoke () = %17 (%19) : method(any)->()
 	{
-		printf("%lld\n", _19);
+		printf("%"PRId64"\n", _19);
 	}
 	//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %21 = %20 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -227,13 +227,13 @@ blklab6:;
 	_24=arr[_23];
 	//indirectinvoke () = %21 (%24) : method(any)->()
 	{
-		printf("%lld\n", _24);
+		printf("%"PRId64"\n", _24);
 	}
 	//fieldload %25 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %26 = %25 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %27 = [80,97,115,115,32,66,117,98,98,108,101,83,111,114,116,32,116,101,115,116,32,99,97,115,101] : int[]
 	_DEALLOC(_27);
-	_NEW_1DARRAY_LONGLONG(_27, 25, 0);
+	_NEW_1DARRAY_int64_t(_27, 25, 0);
 	_27[0] = 80; _27[1] = 97; _27[2] = 115; _27[3] = 115; _27[4] = 32; _27[5] = 66; _27[6] = 117; _27[7] = 98; _27[8] = 98; _27[9] = 108; _27[10] = 101; _27[11] = 83; _27[12] = 111; _27[13] = 114; _27[14] = 116; _27[15] = 32; _27[16] = 116; _27[17] = 101; _27[18] = 115; _27[19] = 116; _27[20] = 32; _27[21] = 99; _27[22] = 97; _27[23] = 115; _27[24] = 101; 
 	_ADD_DEALLOC(_27);
 	//indirectinvoke () = %26 (%27) : method(int[])->()
@@ -246,7 +246,7 @@ blklab5:;
 	_DEALLOC(n);
 	_DEALLOC(arr);
 	_DEALLOC(_5);
-	_DEALLOC_2DARRAY_LONGLONG(_6);
+	_DEALLOC_2DARRAY_int64_t(_6);
 	_DEALLOC(_8);
 	_DEALLOC(_11);
 	_DEALLOC(_15);

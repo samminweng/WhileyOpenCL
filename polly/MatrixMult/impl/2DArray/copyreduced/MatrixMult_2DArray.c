@@ -1,12 +1,12 @@
 #include "MatrixMult_2DArray.h"
 Matrix* copy_Matrix(Matrix* _Matrix){
 	Matrix* new_Matrix = malloc(sizeof(Matrix));
-	_COPY_2DARRAY_LONGLONG(new_Matrix->data, _Matrix->data);
+	_COPY_2DARRAY_int64_t(new_Matrix->data, _Matrix->data);
 	new_Matrix->width = _Matrix->width;
 	new_Matrix->height = _Matrix->height;
 	return new_Matrix;
 }
-Matrix** copy_array_Matrix(Matrix** _Matrix, long long _Matrix_size){
+Matrix** copy_array_Matrix(Matrix** _Matrix, size_t _Matrix_size){
 	Matrix** new_Matrix = malloc(_Matrix_size*sizeof(Matrix*));
 	for(int i=0;i<_Matrix_size;i++){
 		new_Matrix[i] = copy_Matrix(_Matrix[i]);
@@ -14,21 +14,21 @@ Matrix** copy_array_Matrix(Matrix** _Matrix, long long _Matrix_size){
 	return new_Matrix;
 }
 void free_Matrix(Matrix* matrix){
-	free2DArray_LONGLONG(matrix->data, matrix->data_size);
+	free2DArray_int64_t(matrix->data, matrix->data_size);
 	matrix->data = NULL;
 	free(matrix);
 }
 void printf_Matrix(Matrix* matrix){
 	printf("{");
 	printf(" data:");
-	_PRINT_2DARRAY_LONGLONG(matrix->data);
+	_PRINT_2DARRAY_int64_t(matrix->data);
 	printf(" width:");
-	printf("%lld", matrix->width);
+	printf("%"PRId64, matrix->width);
 	printf(" height:");
-	printf("%lld", matrix->height);
+	printf("%"PRId64, matrix->height);
 	printf("}");
 }
-Matrix* matrix(long long width, long long height, _DECL_2DARRAY_PARAM(data)){
+Matrix* matrix(int64_t width, int64_t height, _DECL_2DARRAY_PARAM(data)){
 	Matrix* r;
 	Matrix* _4;
 	//newrecord %4 = (%2, %1, %0) : {int[][] data,int height,int width}
@@ -44,49 +44,49 @@ Matrix* matrix(long long width, long long height, _DECL_2DARRAY_PARAM(data)){
 Matrix* multiply(Matrix* A, Matrix* B){
 	Matrix* C;
 	_DECL_2DARRAY(C_data);
-	long long i = 0;
-	long long j = 0;
-	long long r = 0;
-	long long k = 0;
-	long long _8 = 0;
-	long long _9 = 0;
+	int64_t i = 0;
+	int64_t j = 0;
+	int64_t r = 0;
+	int64_t k = 0;
+	int64_t _8 = 0;
+	int64_t _9 = 0;
 	_DECL_1DARRAY(_10);
-	long long _11 = 0;
+	int64_t _11 = 0;
 	_DECL_2DARRAY(_12);
-	long long _13 = 0;
-	long long _14 = 0;
-	long long _15 = 0;
-	long long _16 = 0;
-	long long _17 = 0;
-	long long _18 = 0;
-	long long _19 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
+	int64_t _15 = 0;
+	int64_t _16 = 0;
+	int64_t _17 = 0;
+	int64_t _18 = 0;
+	int64_t _19 = 0;
 	_DECL_2DARRAY(_20);
 	_DECL_1DARRAY(_21);
-	long long _22 = 0;
+	int64_t _22 = 0;
 	_DECL_2DARRAY(_23);
 	_DECL_1DARRAY(_24);
-	long long _25 = 0;
-	long long _26 = 0;
-	long long _27 = 0;
-	long long _28 = 0;
-	long long _29 = 0;
-	long long _30 = 0;
-	long long _31 = 0;
-	long long _32 = 0;
-	long long _33 = 0;
+	int64_t _25 = 0;
+	int64_t _26 = 0;
+	int64_t _27 = 0;
+	int64_t _28 = 0;
+	int64_t _29 = 0;
+	int64_t _30 = 0;
+	int64_t _31 = 0;
+	int64_t _32 = 0;
+	int64_t _33 = 0;
 	Matrix* _34;
-	long long _35 = 0;
-	long long _36 = 0;
+	int64_t _35 = 0;
+	int64_t _36 = 0;
 	//const %8 = 0 : int
 	_8 = 0;
 	//fieldload %9 = %1 width : {int[][] data,int height,int width}
 	_9 = B->width;
 	//arraygen %10 = [8; 9] : int[]
-	_NEW_1DARRAY_LONGLONG(_10, _9, _8);
+	_NEW_1DARRAY_int64_t(_10, _9, _8);
 	//fieldload %11 = %0 height : {int[][] data,int height,int width}
 	_11 = A->height;
 	//arraygen %12 = [10; 11] : int[][]
-	_NEW_2DARRAY_LONGLONG(_12, _11, _10);
+	_NEW_2DARRAY_int64_t(_12, _11, _10);
 	//assign %3 = %12  : int[][]
 	_UPDATE_2DARRAY(C_data, _12);
 	//const %13 = 0 : int
@@ -190,25 +190,25 @@ blklab13:;
 }
 
 void printMat(FILE* sys, Matrix* A){
-	long long i = 0;
-	long long j = 0;
-	long long _4 = 0;
-	long long _5 = 0;
-	long long _6 = 0;
-	long long _7 = 0;
+	int64_t i = 0;
+	int64_t j = 0;
+	int64_t _4 = 0;
+	int64_t _5 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
 	void* _8;
 	_DECL_2DARRAY(_10);
 	_DECL_1DARRAY(_11);
-	long long _12 = 0;
+	int64_t _12 = 0;
 	void* _13;
 	_DECL_1DARRAY(_15);
-	long long _16 = 0;
-	long long _17 = 0;
-	long long _18 = 0;
-	long long _19 = 0;
+	int64_t _16 = 0;
+	int64_t _17 = 0;
+	int64_t _18 = 0;
+	int64_t _19 = 0;
 	void* _20;
 	void* _22;
-	long long _22_size = 0;
+	size_t _22_size = 0;
 	//const %4 = 0 : int
 	_4 = 0;
 	//assign %2 = %4  : int
@@ -239,12 +239,12 @@ void printMat(FILE* sys, Matrix* A){
 			_12=_11[j];
 			//indirectinvoke () = %9 (%12) : method(any)->()
 			{
-				printf("%lld", _12);
+				printf("%"PRId64, _12);
 			}
 			//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %14 = %13 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %15 = [32] : int[]
-			_NEW_1DARRAY_LONGLONG(_15, 1, 0);
+			_NEW_1DARRAY_int64_t(_15, 1, 0);
 			_15[0] = 32; 
 			//indirectinvoke () = %14 (%15) : method(int[])->()
 			{
@@ -270,7 +270,7 @@ blklab21:;
 		//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %21 = %20 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//const %22 = [] : void[]
-		_NEW_1DARRAY_LONGLONG(_22, 0, 0);
+		_NEW_1DARRAY_int64_t(_22, 0, 0);
 		//indirectinvoke () = %21 (%22) : method(int[])->()
 		{
 			println_s(_22, _22_size);
@@ -284,27 +284,27 @@ blklab19:;
 	return;
 }
 
-Matrix* init(long long height, long long width){
+Matrix* init(int64_t height, int64_t width){
 	Matrix* r;
 	_DECL_2DARRAY(rows);
-	long long i = 0;
-	long long j = 0;
-	long long _6 = 0;
+	int64_t i = 0;
+	int64_t j = 0;
+	int64_t _6 = 0;
 	_DECL_1DARRAY(_7);
 	_DECL_2DARRAY(_8);
-	long long _9 = 0;
-	long long _10 = 0;
-	long long _11 = 0;
-	long long _12 = 0;
-	long long _13 = 0;
-	long long _14 = 0;
+	int64_t _9 = 0;
+	int64_t _10 = 0;
+	int64_t _11 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
 	Matrix* _15;
 	//const %6 = 0 : int
 	_6 = 0;
 	//arraygen %7 = [6; 1] : int[]
-	_NEW_1DARRAY_LONGLONG(_7, width, _6);
+	_NEW_1DARRAY_int64_t(_7, width, _6);
 	//arraygen %8 = [7; 0] : int[][]
-	_NEW_2DARRAY_LONGLONG(_8, height, _7);
+	_NEW_2DARRAY_int64_t(_8, height, _7);
 	//assign %3 = %8  : int[][]
 	_UPDATE_2DARRAY(rows, _8);
 	//const %9 = 0 : int
@@ -357,14 +357,14 @@ blklab23:;
 }
 
 int main(int argc, char** args){
-	long long* max;
-	long long size = 0;
+	int64_t* max;
+	int64_t size = 0;
 	Matrix* A;
 	Matrix* B;
 	Matrix* C;
-	long long* _6;
+	int64_t* _6;
 	_DECL_2DARRAY(_7);
-	long long _8 = 0;
+	int64_t _8 = 0;
 	_DECL_1DARRAY(_9);
 	void* _10;
 	_DECL_1DARRAY(_12);
@@ -376,12 +376,12 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_20);
 	void* _21;
 	_DECL_2DARRAY(_23);
-	long long _24 = 0;
-	long long _25 = 0;
+	int64_t _24 = 0;
+	int64_t _25 = 0;
 	_DECL_1DARRAY(_26);
-	long long _27 = 0;
-	long long _28 = 0;
-	long long _29 = 0;
+	int64_t _27 = 0;
+	int64_t _28 = 0;
+	int64_t _29 = 0;
 	void* _30;
 	_DECL_1DARRAY(_32);
 	//fieldload %7 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
@@ -403,7 +403,7 @@ int main(int argc, char** args){
 	//fieldload %10 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %11 = %10 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %12 = [115,105,122,101,32,61,32] : int[]
-	_NEW_1DARRAY_LONGLONG(_12, 7, 0);
+	_NEW_1DARRAY_int64_t(_12, 7, 0);
 	_12[0] = 115; _12[1] = 105; _12[2] = 122; _12[3] = 101; _12[4] = 32; _12[5] = 61; _12[6] = 32; 
 	//indirectinvoke () = %11 (%12) : method(int[])->()
 	{
@@ -413,7 +413,7 @@ int main(int argc, char** args){
 	//fieldload %14 = %13 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %14 (%2) : method(any)->()
 	{
-		printf("%lld\n", size);
+		printf("%"PRId64"\n", size);
 	}
 	//invoke (%15) = (%2, %2) MatrixMult_2DArray:init : function(MatrixMult_2DArray:nat,MatrixMult_2DArray:nat)->(MatrixMult_2DArray:Matrix)
 	{
@@ -436,7 +436,7 @@ int main(int argc, char** args){
 	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %19 = %18 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %20 = [77,97,116,114,105,120,32,67,91,115,105,122,101,45,49,93,91,115,105,122,101,45,49,93,32,61,32] : int[]
-	_NEW_1DARRAY_LONGLONG(_20, 27, 0);
+	_NEW_1DARRAY_int64_t(_20, 27, 0);
 	_20[0] = 77; _20[1] = 97; _20[2] = 116; _20[3] = 114; _20[4] = 105; _20[5] = 120; _20[6] = 32; _20[7] = 67; _20[8] = 91; _20[9] = 115; _20[10] = 105; _20[11] = 122; _20[12] = 101; _20[13] = 45; _20[14] = 49; _20[15] = 93; _20[16] = 91; _20[17] = 115; _20[18] = 105; _20[19] = 122; _20[20] = 101; _20[21] = 45; _20[22] = 49; _20[23] = 93; _20[24] = 32; _20[25] = 61; _20[26] = 32; 
 	//indirectinvoke () = %19 (%20) : method(int[])->()
 	{
@@ -460,12 +460,12 @@ int main(int argc, char** args){
 	_29=_26[_28];
 	//indirectinvoke () = %22 (%29) : method(any)->()
 	{
-		printf("%lld\n", _29);
+		printf("%"PRId64"\n", _29);
 	}
 	//fieldload %30 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %31 = %30 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %32 = [80,97,115,115,32,77,97,116,114,105,120,77,117,108,116,32,116,101,115,116,32,99,97,115,101] : int[]
-	_NEW_1DARRAY_LONGLONG(_32, 25, 0);
+	_NEW_1DARRAY_int64_t(_32, 25, 0);
 	_32[0] = 80; _32[1] = 97; _32[2] = 115; _32[3] = 115; _32[4] = 32; _32[5] = 77; _32[6] = 97; _32[7] = 116; _32[8] = 114; _32[9] = 105; _32[10] = 120; _32[11] = 77; _32[12] = 117; _32[13] = 108; _32[14] = 116; _32[15] = 32; _32[16] = 116; _32[17] = 101; _32[18] = 115; _32[19] = 116; _32[20] = 32; _32[21] = 99; _32[22] = 97; _32[23] = 115; _32[24] = 101; 
 	//indirectinvoke () = %31 (%32) : method(int[])->()
 	{

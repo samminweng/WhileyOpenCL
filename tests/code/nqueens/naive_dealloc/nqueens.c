@@ -18,9 +18,9 @@ void free_POS(POS* pos){
 void printf_POS(POS* pos){
 	printf("{");
 	printf(" r:");
-	printf("%lld", pos->r);
+	printf("%"PRId64, pos->r);
 	printf(" c:");
-	printf("%lld", pos->c);
+	printf("%"PRId64, pos->c);
 	printf("}");
 }
 NQueen* copy_NQueen(NQueen* _NQueen){
@@ -45,7 +45,7 @@ void printf_NQueen(NQueen* nqueen){
 	printf(" queens:");
 	_PRINT_1DARRAY_STRUCT(POS,nqueen->queens);
 	printf(" num_solutions:");
-	printf("%lld", nqueen->num_solutions);
+	printf("%"PRId64, nqueen->num_solutions);
 	printf("}");
 }
 NQueen* nqueen(int64_t num_solutions, POS** queens, size_t queens_size, _DECL_DEALLOC_PARAM(queens)){
@@ -542,7 +542,7 @@ blklab23:;
 	//fieldload %23 = %22 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %23 (%1) : method(any)->()
 	{
-		printf("%lld\n", n);
+		printf("%"PRId64"\n", n);
 	}
 	//fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %25 = %24 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -561,7 +561,7 @@ blklab23:;
 	_29 = nq->num_solutions;
 	//indirectinvoke () = %28 (%29) : method(any)->()
 	{
-		printf("%lld", _29);
+		printf("%"PRId64, _29);
 	}
 	//fieldload %30 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %31 = %30 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

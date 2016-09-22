@@ -23,9 +23,9 @@ void printf_Image(Image* image){
 	printf(" pixels:");
 	_PRINT_1DARRAY_int64_t(image->pixels);
 	printf(" width:");
-	printf("%lld", image->width);
+	printf("%"PRId64, image->width);
 	printf(" height:");
-	printf("%lld", image->height);
+	printf("%"PRId64, image->height);
 	printf("}");
 }
 Image* image(int64_t width, int64_t height, _DECL_1DARRAY_PARAM(pixels), _DECL_DEALLOC_PARAM(pixels)){

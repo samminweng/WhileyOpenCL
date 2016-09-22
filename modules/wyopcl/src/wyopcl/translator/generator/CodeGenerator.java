@@ -1592,7 +1592,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				Type input_type = stores.getRawType(code.operand(1), function);
 				switch (func_name) {
 				case "print":
-					statement.add(indent + "printf(\"" + "%lld" + "\", " + input + ");");
+					statement.add(indent + "printf(\"" + "%\"PRId64, " + input + ");");
 					break;
 				case "print_s":
 					int dimension = stores.getArrayDimension(input_type);
@@ -1605,7 +1605,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				case "println":
 					// Check input's type to call different println function.
 					if (input_type instanceof Type.Int) {
-						statement.add(indent + "printf(\"" + "%lld" + "\\n\", " + input + ");");
+						statement.add(indent + "printf(\"" + "%\"PRId64"+"\"\\n\", " + input + ");");
 					} else if (input_type instanceof Type.Array) {
 						Type elm_type = stores.getArrayElementType((Type.Array)input_type);
 						// Print out arrays w.r.t. array element type
@@ -1619,7 +1619,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						// Print out a user-defined type structure
 						statement.add(indent + "printf_" + nominal.name().name() + "(" + input + ");");
 					} else if (input_type instanceof Type.Union) {
-						statement.add(indent + "printf(\"" + "%lld" + "\\n\", " + input + ");");
+						statement.add(indent + "printf(\"" + "%\"PRId64"+"\"\\n\", " + input + ");");
 					} else {
 						throw new RuntimeException("Not implemented." + code);
 					}

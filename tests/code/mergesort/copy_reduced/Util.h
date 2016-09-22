@@ -5,7 +5,9 @@
 #include <time.h>
 #include <ctype.h>
 #include <stdbool.h>
+// http://en.cppreference.com/w/c/types/integer
 #include <stdint.h> // use extact-width types, i.e. 'int16_t' 'int32_t' 'int64_t'
+#include <inttypes.h> // use PRId64 macro to print 'int16_t' integer
 // Good reference (https://en.wikibooks.org/wiki/C_Programming/Preprocessor)
 // Remove the security check about unsafe 'scanf' or 'sprintf' in VS tool
 // This definition allows the portability of C code across the platforms.

@@ -23,9 +23,9 @@ void printf_Matrix(Matrix* matrix){
 	printf(" data:");
 	_PRINT_2DARRAY_int64_t(matrix->data);
 	printf(" width:");
-	printf("%lld", matrix->width);
+	printf("%"PRId64, matrix->width);
 	printf(" height:");
-	printf("%lld", matrix->height);
+	printf("%"PRId64, matrix->height);
 	printf("}");
 }
 Matrix* matrix(int64_t width, int64_t height, _DECL_2DARRAY_PARAM(data)){
@@ -240,7 +240,7 @@ void printMat(FILE* sys, Matrix* A){
 			_12=_11[j];
 			//indirectinvoke () = %9 (%12) : method(any)->()
 			{
-				printf("%lld", _12);
+				printf("%"PRId64, _12);
 			}
 			//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %14 = %13 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

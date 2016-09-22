@@ -18,9 +18,9 @@ void free_POS(POS* pos){
 void printf_POS(POS* pos){
 	printf("{");
 	printf(" r:");
-	printf("%lld", pos->r);
+	printf("%"PRId64, pos->r);
 	printf(" c:");
-	printf("%lld", pos->c);
+	printf("%"PRId64, pos->c);
 	printf("}");
 }
 int64_t conflict(POS* p, int64_t row, int64_t col){
@@ -380,7 +380,7 @@ blklab23:;
 	_20 = queens_size;
 	//indirectinvoke () = %19 (%20) : method(any)->()
 	{
-		printf("%lld\n", _20);
+		printf("%"PRId64"\n", _20);
 	}
 	//fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %22 = %21 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -395,7 +395,7 @@ blklab23:;
 	//fieldload %25 = %24 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %25 (%3) : method(any)->()
 	{
-		printf("%lld", num_solutions);
+		printf("%"PRId64, num_solutions);
 	}
 	//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %27 = %26 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

@@ -194,7 +194,7 @@ blklab2:;
 	_21=a[_20];
 	//indirectinvoke () = %19 (%21) : method(any)->()
 	{
-		printf("%lld\n", _21);
+		printf("%"PRId64"\n", _21);
 	}
 	//const %22 = 0 : int
 	_22 = 0;
@@ -282,7 +282,7 @@ blklab4:;
 	_42=b[_41];
 	//indirectinvoke () = %40 (%42) : method(any)->()
 	{
-		printf("%lld\n", _42);
+		printf("%"PRId64"\n", _42);
 	}
 	//fieldload %43 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %44 = %43 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -303,7 +303,7 @@ blklab4:;
 	_49=c[_48];
 	//indirectinvoke () = %47 (%49) : method(any)->()
 	{
-		printf("%lld\n", _49);
+		printf("%"PRId64"\n", _49);
 	}
 	//return
 	_DEALLOC(a);

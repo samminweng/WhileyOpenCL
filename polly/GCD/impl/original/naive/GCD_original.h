@@ -1,4 +1,4 @@
 #include "Util.h"
-typedef long long nat;
-long long gcd(long long a, long long b);
+typedef int64_t nat;
+int64_t gcd(int64_t a, int64_t b);
 int main(int argc, char** args);

@@ -18,9 +18,9 @@ void free_Point(Point* point){
 void printf_Point(Point* point){
 	printf("{");
 	printf(" x:");
-	printf("%lld", point->x);
+	printf("%"PRId64, point->x);
 	printf(" y:");
-	printf("%lld", point->y);
+	printf("%"PRId64, point->y);
 	printf("}");
 }
 Rectangle* copy_Rectangle(Rectangle* _Rectangle){
@@ -254,7 +254,7 @@ blklab1:;
 	_31 = _30->x;
 	//indirectinvoke () = %29 (%31) : method(any)->()
 	{
-		printf("%lld\n", _31);
+		printf("%"PRId64"\n", _31);
 	}
 	//fieldload %32 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %33 = %32 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -277,7 +277,7 @@ blklab1:;
 	_38 = _37->y;
 	//indirectinvoke () = %36 (%38) : method(any)->()
 	{
-		printf("%lld\n", _38);
+		printf("%"PRId64"\n", _38);
 	}
 	//fieldload %39 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %40 = %39 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

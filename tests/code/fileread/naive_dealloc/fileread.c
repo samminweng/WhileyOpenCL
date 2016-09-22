@@ -55,7 +55,7 @@ int main(int argc, char** args){
 	_12 = data_size;
 	//indirectinvoke () = %11 (%12) : method(any)->()
 	{
-		printf("%lld", _12);
+		printf("%"PRId64, _12);
 	}
 	//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %14 = %13 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

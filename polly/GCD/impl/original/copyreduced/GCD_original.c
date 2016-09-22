@@ -1,11 +1,11 @@
 #include "GCD_original.h"
-long long gcd(long long a, long long b){
-	long long _2 = 0;
-	long long _3 = 0;
-	long long _4 = 0;
-	long long _5 = 0;
-	long long _6 = 0;
-	long long _7 = 0;
+int64_t gcd(int64_t a, int64_t b){
+	int64_t _2 = 0;
+	int64_t _3 = 0;
+	int64_t _4 = 0;
+	int64_t _5 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
 	//const %3 = 0 : int
 	_3 = 0;
 	//ifne %0, %3 goto blklab1 : int
@@ -60,27 +60,27 @@ blklab2:;
 }
 
 int main(int argc, char** args){
-	long long* max;
-	long long n = 0;
-	long long sum = 0;
-	long long i = 0;
-	long long j = 0;
-	long long* _6;
+	int64_t* max;
+	int64_t n = 0;
+	int64_t sum = 0;
+	int64_t i = 0;
+	int64_t j = 0;
+	int64_t* _6;
 	_DECL_2DARRAY(_7);
-	long long _8 = 0;
+	int64_t _8 = 0;
 	_DECL_1DARRAY(_9);
 	void* _10;
 	_DECL_1DARRAY(_12);
 	void* _13;
-	long long _15 = 0;
-	long long _16 = 0;
-	long long _17 = 0;
-	long long _18 = 0;
-	long long _19 = 0;
-	long long _20 = 0;
-	long long _21 = 0;
-	long long _22 = 0;
-	long long _23 = 0;
+	int64_t _15 = 0;
+	int64_t _16 = 0;
+	int64_t _17 = 0;
+	int64_t _18 = 0;
+	int64_t _19 = 0;
+	int64_t _20 = 0;
+	int64_t _21 = 0;
+	int64_t _22 = 0;
+	int64_t _23 = 0;
 	void* _24;
 	_DECL_1DARRAY(_26);
 	void* _27;
@@ -105,7 +105,7 @@ int main(int argc, char** args){
 	//fieldload %10 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %11 = %10 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %12 = [78,32,61,32] : int[]
-	_NEW_1DARRAY_LONGLONG(_12, 4, 0);
+	_NEW_1DARRAY_int64_t(_12, 4, 0);
 	_12[0] = 78; _12[1] = 32; _12[2] = 61; _12[3] = 32; 
 	//indirectinvoke () = %11 (%12) : method(int[])->()
 	{
@@ -115,7 +115,7 @@ int main(int argc, char** args){
 	//fieldload %14 = %13 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %14 (%2) : method(any)->()
 	{
-		printf("%lld\n", n);
+		printf("%"PRId64"\n", n);
 	}
 	//const %15 = 0 : int
 	_15 = 0;
@@ -170,7 +170,7 @@ blklab8:;
 	//fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %25 = %24 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %26 = [83,117,109,58,32] : int[]
-	_NEW_1DARRAY_LONGLONG(_26, 5, 0);
+	_NEW_1DARRAY_int64_t(_26, 5, 0);
 	_26[0] = 83; _26[1] = 117; _26[2] = 109; _26[3] = 58; _26[4] = 32; 
 	//indirectinvoke () = %25 (%26) : method(int[])->()
 	{
@@ -180,12 +180,12 @@ blklab8:;
 	//fieldload %28 = %27 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %28 (%3) : method(any)->()
 	{
-		printf("%lld\n", sum);
+		printf("%"PRId64"\n", sum);
 	}
 	//fieldload %29 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %30 = %29 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %31 = [80,97,115,115,32,69,117,99,108,105,100,32,71,67,68,32,116,101,115,116,32,99,97,115,101] : int[]
-	_NEW_1DARRAY_LONGLONG(_31, 25, 0);
+	_NEW_1DARRAY_int64_t(_31, 25, 0);
 	_31[0] = 80; _31[1] = 97; _31[2] = 115; _31[3] = 115; _31[4] = 32; _31[5] = 69; _31[6] = 117; _31[7] = 99; _31[8] = 108; _31[9] = 105; _31[10] = 100; _31[11] = 32; _31[12] = 71; _31[13] = 67; _31[14] = 68; _31[15] = 32; _31[16] = 116; _31[17] = 101; _31[18] = 115; _31[19] = 116; _31[20] = 32; _31[21] = 99; _31[22] = 97; _31[23] = 115; _31[24] = 101; 
 	//indirectinvoke () = %30 (%31) : method(int[])->()
 	{
