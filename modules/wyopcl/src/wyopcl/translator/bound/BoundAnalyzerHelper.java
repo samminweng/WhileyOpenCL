@@ -15,6 +15,7 @@ import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 import wyopcl.translator.bound.BoundBlock.BlockType;
 import wyopcl.translator.bound.BoundGraph.STATUS;
+import wyopcl.translator.bound.constraint.Assign;
 import wyopcl.translator.bound.constraint.Range;
 /**
  * Aims to assist the analyzer to build up CFGraph, propagate bounds
@@ -185,11 +186,18 @@ final class BoundAnalyzerHelper {
 		int index = 0;
 		for (Type paramType : params) {
 			String param = prefix + index;
-			String operand = prefix + operands[index];
+			String operand = prefix + operands[index];// The registers at caller side
 			// Check parameter type
 			if (isIntType(paramType)) {
 				entry.addBounds(param, bnd.getLower(operand),  bnd.getUpper(operand));
-			}	
+			}
+			// Pass the bounds of array size to calling function
+			if(paramType instanceof Type.Array){
+				String param_size = param + "_size";
+				String operand_size = operand + "_size";
+				// Pass the bounds size
+				entry.addBounds(param_size, bnd.getLower(operand_size),  bnd.getUpper(operand_size));
+			}
 			index++;
 		}
 	}
@@ -226,7 +234,8 @@ final class BoundAnalyzerHelper {
 	public static void addSizeInfo(String name, String reg, BigInteger size){
 		SymbolFactory sym_factory = getSymbolFactory(name);
 		// Get the 'size' attribute from
-		sym_factory.putAttribute(reg, "size", size);
+		sym_factory.putAttribute(reg, "size", size);	
+		
 	}
 	/**
 	 * Get the size info for 
@@ -254,10 +263,19 @@ final class BoundAnalyzerHelper {
 	 */
 	public static void propagateBoundsFromFunctionCall(String caller_name, String callee_name, String ret_reg, Type ret_type, Bounds bnd) {
 		BoundGraph graph = getCFGraph(caller_name);
-		if (ret_type != null && isIntType(ret_type)) {
-			// propagate the bounds of return value.
-			graph.addConstraint(new Range(ret_reg, bnd.getLower("return"), bnd.getUpper("return")));
+		if (ret_type != null){
+			if(isIntType(ret_type)) {
+				// propagate the bounds of return value.
+				graph.addConstraint(new Range(ret_reg, bnd.getLower("return"), bnd.getUpper("return")));
+			}
+			// Pass the array size of return array to caller size.
+			if(ret_type instanceof Type.Array){
+				// propagate the bounds of return array size.
+				graph.addConstraint(new Range(ret_reg+"_size", bnd.getLower("return_size"), bnd.getUpper("return_size")));
+			}
+			
 		}
+		
 	}
 	
 	/**

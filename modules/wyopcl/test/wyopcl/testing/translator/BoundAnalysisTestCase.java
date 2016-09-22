@@ -43,7 +43,8 @@ public class BoundAnalysisTestCase {
 		// Add a list of test cases
 		return Arrays.asList(new String[] { 
 				"IfElse", 
-				"WhileLoop"
+				"WhileLoop", 
+				"While_Valid_1"
 		});
 	}
 	

@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import wyil.lang.Code;
 import wyil.lang.Codes;
+import wyil.lang.Codes.ArrayGenerator;
 import wyil.lang.Codes.Fail;
+import wyil.lang.Codes.NewArray;
 import wyil.lang.Codes.UnaryOperatorKind;
 import wyil.lang.Constant;
 import wyil.lang.Type;
@@ -177,8 +179,8 @@ public class BoundAnalyzer {
 						// Do nothing
 					} else if (code instanceof Codes.Return) {
 						analyze((Codes.Return) code, name);
-					} else if (code instanceof Codes.NewObject) {
-						// Do nothing
+					} else if (code instanceof Codes.NewArray) {
+						analyze((Codes.NewArray)code, name);
 					} else if (code instanceof Codes.Nop) {
 						// Do nothing
 					} else if (code instanceof Codes.Switch) {
@@ -187,6 +189,8 @@ public class BoundAnalyzer {
 						analyze((Codes.UnaryOperator) code, name);
 					} else if (code instanceof Codes.Update) {
 						analyze((Codes.Update) code, name);
+					} else if (code instanceof Codes.ArrayGenerator) {
+						analyze((Codes.ArrayGenerator)code, name);						
 					} else {
 						throw new RuntimeException("unknown wyil code encountered (" + code + ")");
 					}
@@ -195,6 +199,43 @@ public class BoundAnalyzer {
 				}
 			}
 		}
+	}
+	
+	
+	/**
+	 * Generate an array with a given array
+	 * arraygen %8 = [6; 7] : int[]
+	 * 
+	 * @param code
+	 * @param name
+	 */
+	private void analyze(ArrayGenerator code, String name) {
+		String target_reg = prefix + code.target(0);
+		String input_reg = prefix + code.operand(1);
+		
+		// Add 'size' attribute to target array
+		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(name);
+		graph.addConstraint(new Assign(target_reg+"_size", input_reg));
+		
+	}
+
+	/**
+	 * Create a new array. For example, 
+	 * newlist %8 = (%3, %4, %5, %6, %7) : int[]
+	 * 
+	 * 
+	 * @param code
+	 * @param name
+	 */
+	private void analyze(NewArray code, String name) {
+		// Get the target register
+		String target_reg = prefix + code.target(0);
+		
+		BigInteger size = BigInteger.valueOf(code.operands().length);
+		// Add 'size' attribute to target array
+		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(name);
+		graph.addConstraint(new Const(target_reg+"_size", size));
+		
 	}
 
 	/**
@@ -310,7 +351,8 @@ public class BoundAnalyzer {
 		
 		for (BoundBlock blk : list) {
 			// Consider the bounds of consistent block and discard the bounds of inconsistent block.
-			if (blk.isConsistent() && blk.getType() != BlockType.EXIT) {
+			//if (blk.isConsistent() && blk.getType() != BlockType.EXIT) {
+			if (blk.getType() != BlockType.EXIT) {
 				exit_blk.unionBounds(blk);
 			}
 		}
@@ -357,11 +399,9 @@ public class BoundAnalyzer {
 		String target_reg = prefix + code.target(0);
 		String op_reg = prefix + code.operand(0);
 		if (code.type(0) instanceof Type.Array) {
-			// Get the 'size' attribute 
-			BigInteger size = BoundAnalyzerHelper.getSizeInfo(name, op_reg);
-			if (size != null) {
-				BoundAnalyzerHelper.addSizeInfo(name, target_reg, size);
-			}
+			// Add the constraint to the size variable of target array
+			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(name);
+			graph.addConstraint(new Assign(target_reg+"_size", op_reg+"_size"));
 		}
 
 		// Check if the assigned value is an integer
@@ -394,7 +434,10 @@ public class BoundAnalyzer {
 		if (constant instanceof Constant.Array) {
 			// Get the list and extract the size info.
 			BigInteger size = BigInteger.valueOf((((Constant.Array) constant).values).size());
-			BoundAnalyzerHelper.addSizeInfo(name, target_reg, size);
+			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(name);
+			graph.addConstraint(new Const(target_reg+"_size", size));
+			
+			//BoundAnalyzerHelper.addSizeInfo(name, target_reg, size);
 		}
 
 	}
@@ -526,34 +569,36 @@ public class BoundAnalyzer {
 
 		if (!BoundAnalyzerHelper.isCached(name)) {
 			
-			
 			// Get the CFGraph
 			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(name);
 			BoundBlock c_blk = graph.getCurrentBlock();
 			// Check if the current blk exits. If so, then proceed the following
 			// procedure.
 			if (c_blk != null) {
+				// Create a return block 
+				BoundBlock return_block = graph.createBasicBlock("return", BlockType.RETURN, c_blk);
+				
 				// Check if the return type is integer.
-				if (isIntType(code.type(0))) {
+				if (isIntType(type)) {
 					// Add the 'Equals' constraint to the return (ret) variable.
-					c_blk.addConstraint((new Assign("return", retOp)));
+					return_block.addConstraint((new Assign("return", retOp)));
 				}
+				
+				// Add the bounds of size variable
+				if(type instanceof Type.Array){
+					return_block.addConstraint((new Assign("return_size", retOp+"_size")));
+				}
+				
 				// Connect the current block with exit block.
 				BoundBlock exit_block = graph.getBasicBlock("exit", BlockType.EXIT);
 				if(exit_block == null){
-					exit_block = graph.createBasicBlock("exit", BlockType.EXIT, c_blk);
+					exit_block = graph.createBasicBlock("exit", BlockType.EXIT, return_block);
 				}
-				c_blk.addChild(exit_block);
+				return_block.addChild(exit_block);
+				
 				graph.setCurrentBlock(null);
 			}
 		}
-
-		if (type instanceof Type.Array) {
-			// Get 'size' info from the register of return value.
-			BigInteger size = (BigInteger) BoundAnalyzerHelper.getSizeInfo(name, retOp);
-			BoundAnalyzerHelper.addSizeInfo(name, "return", size);
-		}
-
 	}
 
 	
@@ -583,19 +628,19 @@ public class BoundAnalyzer {
 	/**
 	 * Extract LengthOf byte-code.
 	 * 
+	 * 'lengthof %5 = %0'
+	 * 
+	 * 
 	 * @param code
 	 */
 	private void analyze(Codes.LengthOf code, String name) {
-		//SymbolFactory sym_factory = BoundAnalyzerHelper.getSymbolFactory(name);
 		// Get the size att
 		String op_reg = prefix + code.operand(0);
 		String target_reg = prefix + code.target(0);
-		//Type type = code.type(0);
-		BigInteger size = (BigInteger) BoundAnalyzerHelper.getSizeInfo(name, op_reg);
-		if(size != null){
-			// Add 'size' att
-			BoundAnalyzerHelper.addSizeInfo(name, target_reg, size);
-		}
+		
+		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(name);
+		graph.addConstraint(new Assign(target_reg, op_reg+"_size"));
+	
 	}
 
 	/**
@@ -837,7 +882,7 @@ public class BoundAnalyzer {
 			// Infer the bounds of caller function.
 			Bounds input_bnds = inferBounds(caller_name);
 
-			BoundAnalyzerHelper.propagateSizeInfoToFunctionCall(caller_name, callee_name, callee.type().params(), code.operands());
+			//BoundAnalyzerHelper.propagateSizeInfoToFunctionCall(caller_name, callee_name, callee.type().params(), code.operands());
 			// Build CFGraph for callee.
 			buildCFG(config, callee_name);
 			// Propagate the bounds of input parameters to the function.
@@ -856,7 +901,7 @@ public class BoundAnalyzer {
 			// Promote the status of callee's CF graph to be 'complete'
 			BoundAnalyzerHelper.promoteCFGStatus(callee_name);
 			BoundAnalyzerHelper.propagateBoundsFromFunctionCall(caller_name, callee_name, prefix + code.target(0), ret_type, ret_bnd);
-			BoundAnalyzerHelper.propagateSizeFromFunctionCall(caller_name, callee_name, prefix + code.target(0), code.type(0));
+			//BoundAnalyzerHelper.propagateSizeFromFunctionCall(caller_name, callee_name, prefix + code.target(0), code.type(0));
 			//Reset the line number
 			this.line = caller_line;
 		}
