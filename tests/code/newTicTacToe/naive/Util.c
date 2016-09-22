@@ -317,7 +317,7 @@ void printf1DArray_int64_t(int64_t* input, size_t input_size) {
 	//Print the first 10 items
 	for(i = 0; i < input_size && i < max_i; i++) {
 		if (isFirst) {
-			printf("%"PRId64"\n", input[i]);
+			printf("%"PRId64, input[i]);
 			isFirst = false;
 		} else {
 			printf(",%"PRId64, input[i]);

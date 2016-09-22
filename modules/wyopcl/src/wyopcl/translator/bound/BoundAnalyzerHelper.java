@@ -127,12 +127,19 @@ final class BoundAnalyzerHelper {
 		String str = "Bound Analysis of " + name + ":\n";
 		List<Domain> sortedDomains = bnds.sortedDomains();
 		// Print out the bounds
-		for (Domain d : sortedDomains) {
-			String varName = d.getName();
+		for (Domain d : sortedDomains) {			
 			int register = d.getReg();
+			String varName = "";
 			if(register >= 0){
 				varName = getVarName(register, variables);
-			}			
+				// Check if the domain is array size variable 
+				if(d.getName().contains("_size")){
+					varName += "_size";
+				}
+			}else{
+				// Use domain name
+				varName = d.getName();
+			}
 			str += "\tdomain(" + varName + ")\t=" + d.getBounds() + "\n";
 		}
 
