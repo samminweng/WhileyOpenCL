@@ -79,7 +79,8 @@ public class CodeGenerationTestCase {
 				"SobelEdgeDetect1",
 				"SobelEdgeDetect2", 
 				"lz77", 
-				"fileread"
+				"fileread",
+				"lz77_2"
 				// "lambda"
 		});
 	}
