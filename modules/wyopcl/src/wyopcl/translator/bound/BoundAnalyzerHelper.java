@@ -27,7 +27,7 @@ import wyopcl.translator.bound.constraint.Range;
 final class BoundAnalyzerHelper {
 	private static final String prefix = "_";
 	// Maps of CFGs, symbols
-	private static HashMap<String, SymbolFactory> symbol_factorys = new HashMap<String, SymbolFactory>();
+	//private static HashMap<String, SymbolFactory> symbol_factorys = new HashMap<String, SymbolFactory>();
 	private static HashMap<String, BoundGraph> cfgraphs = new HashMap<String, BoundGraph>();
 
 	/**
@@ -85,12 +85,12 @@ final class BoundAnalyzerHelper {
 	 *            the function name
 	 * @return
 	 */
-	private static SymbolFactory getSymbolFactory(String name) {
+	/*private static SymbolFactory getSymbolFactory(String name) {
 		if (!symbol_factorys.containsKey(name)) {
 			symbol_factorys.put(name, new SymbolFactory());
 		}
 		return symbol_factorys.get(name);
-	}
+	}*/
 
 	/**
 	 * Given the register, get the variable name from variable declarations.
@@ -143,7 +143,7 @@ final class BoundAnalyzerHelper {
 			str += "\tdomain(" + varName + ")\t=" + d.getBounds() + "\n";
 		}
 
-		SymbolFactory factory = getSymbolFactory(name);
+		/*SymbolFactory factory = getSymbolFactory(name);
 
 		List<Symbol> sortedSymbols = factory.sortedSymbols();
 		// Print out the size of available variables
@@ -156,7 +156,7 @@ final class BoundAnalyzerHelper {
 			// print the 'size' att
 			Object size = symbol.getAttribute("size");
 			str += "\tsize(" + varName + ")\t= " + size + "\n";
-		}
+		}*/
 
 		str += "Consistency=" + bnds.checkBoundConsistency();
 		System.out.println(str);
@@ -215,7 +215,7 @@ final class BoundAnalyzerHelper {
 	 * @param params
 	 * @param operands
 	 */
-	public static void propagateSizeInfoToFunctionCall(String caller_name, String callee_name, List<Type> params, int[] operands) {
+	/*public static void propagateSizeInfoToFunctionCall(String caller_name, String callee_name, List<Type> params, int[] operands) {
 		// Pass the bounds of input parameters.
 		for (int index=0;index < params.size();index++) {			
 			String op_reg = prefix + operands[index];
@@ -231,25 +231,25 @@ final class BoundAnalyzerHelper {
 			}
 			
 		}
-	}
+	}*/
 
 	/**
 	 * Add size info for the specific register.
 	 * @param name the function name
 	 * @param reg register
 	 */
-	public static void addSizeInfo(String name, String reg, BigInteger size){
+	/*public static void addSizeInfo(String name, String reg, BigInteger size){
 		SymbolFactory sym_factory = getSymbolFactory(name);
 		// Get the 'size' attribute from
 		sym_factory.putAttribute(reg, "size", size);	
 		
-	}
+	}*/
 	/**
 	 * Get the size info for 
 	 * @param name the function name
 	 * @param reg register
 	 */
-	public static BigInteger getSizeInfo(String name, String reg){
+	/*public static BigInteger getSizeInfo(String name, String reg){
 		SymbolFactory sym_factory = getSymbolFactory(name);
 		Object size = sym_factory.getAttribute(reg, "size");
 		if(size != null){
@@ -258,7 +258,7 @@ final class BoundAnalyzerHelper {
 		
 		return null;
 	}
-
+	*/
 
 	/**
 	 * Propagate the bounds of return value to the caller.
@@ -292,7 +292,7 @@ final class BoundAnalyzerHelper {
 	 * @param ret_reg
 	 * @param ret_type
 	 */
-	public static void propagateSizeFromFunctionCall(String caller_name, String callee_name, String ret_reg, Type ret_type) {
+	/*public static void propagateSizeFromFunctionCall(String caller_name, String callee_name, String ret_reg, Type ret_type) {
 		//Check if the return value is a list.
 		if (ret_type instanceof Type.Array) {
 			// Get 'size' attribute from callee
@@ -303,7 +303,7 @@ final class BoundAnalyzerHelper {
 			}
 			
 		}
-	}
+	}*/
 
 	/**
 	 * Outputs the control flow graphs (*.dot).

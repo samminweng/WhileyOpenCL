@@ -38,21 +38,21 @@ blklab2:;
 }
 
 int main(int argc, char** args){
-	uint16_t a = 0;
+	uint64_t a = 0;
 	uint64_t b = 0;
-	uint32_t c = 0;
+	uint64_t c = 0;
 	uint64_t d = 0;
 	uint64_t _5 = 0;
 	uint16_t _6 = 0;
-	uint16_t _7 = 0;
+	int64_t _7 = 0;
 	void* _8;
 	uint64_t _10 = 0;
 	uint16_t _11 = 0;
-	uint64_t _12 = 0;
+	int64_t _12 = 0;
 	void* _13;
 	uint64_t _15 = 0;
 	uint16_t _16 = 0;
-	uint32_t _17 = 0;
+	int64_t _17 = 0;
 	void* _18;
 	uint64_t _20 = 0;
 	uint16_t _21 = 0;

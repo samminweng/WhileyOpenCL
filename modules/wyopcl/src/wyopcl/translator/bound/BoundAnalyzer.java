@@ -72,6 +72,12 @@ public class BoundAnalyzer {
 		
 		if (!BoundAnalyzerHelper.isCached(name)) {
 			BoundAnalyzerHelper.promoteCFGStatus(name);
+		}else{
+			// The control flow graph has been cached
+			// Get the graph
+			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(name);
+			BoundBlock entry = graph.getBasicBlock("entry", BlockType.ENTRY);
+			graph.setCurrentBlock(entry);			
 		}
 		this.line = 0;
 		iterateBytecode(name, functionOrMethod.body().bytecodes());
@@ -132,13 +138,13 @@ public class BoundAnalyzer {
 				// Parse each byte-code and add the constraints accordingly.
 				try {
 					if (code instanceof Codes.Invariant) {
-						analyze((Codes.Invariant) code, name);
+						//analyze((Codes.Invariant) code, name);
 					}else if (code instanceof Codes.Assert){
-						analyze((Codes.Assert)code, name);
+						///analyze((Codes.Assert)code, name);
 					}else if (code instanceof Codes.Assign) {
 						analyze((Codes.Assign) code, name);
 					} else if (code instanceof Codes.Assume){
-						analyze((Codes.Assume)code, name);
+						//analyze((Codes.Assume)code, name);
 					} else if (code instanceof Codes.BinaryOperator) {
 						analyze((Codes.BinaryOperator) code, name);
 					} else if (code instanceof Codes.Convert) {
@@ -358,11 +364,12 @@ public class BoundAnalyzer {
 		}
 		// Produce the aggregated bounds of a function.
 		Bounds bnds = exit_blk.getBounds();
-		//if (config.isVerbose()) {
-		// Print out bounds along with size information.
 		BoundAnalyzerHelper.printBoundsAndSize(this.module, bnds, name);
-		//BoundAnalyzerHelper.printCFG(config, name);
-		//}
+		
+		if (config.isVerbose()) {
+			// Print out bounds along with size information.
+			BoundAnalyzerHelper.printCFG(config, name);
+		}
 		
 		// Put the bounds to HashMap
 		boundMap.put(name, bnds);		
@@ -378,7 +385,7 @@ public class BoundAnalyzer {
 	 * @param code
 	 *            Invariant {@link wyil.lang.Codes.Invariant}
 	 */
-	private void analyze(Codes.Invariant code, String name) {
+	/*private void analyze(Codes.Invariant code, String name) {
 		// Skip the byte-code inside an invariant
 		// graph.enabledInvariant();
 		// iterateBytecode(name, code.bytecodes());
@@ -386,14 +393,14 @@ public class BoundAnalyzer {
 	}
 	
 	private void analyze(Codes.Assert code, String name){
-		iterateBytecode(name, code.bytecodes());
+		//iterateBytecode(name, code.bytecodes());
 	}
 	
 	
 	private void analyze(Codes.Assume code, String name){
-		iterateBytecode(name, code.bytecodes());
+		//iterateBytecode(name, code.bytecodes());
 	}
-	
+	*/
 
 	private void analyze(Codes.Assign code, String name) {
 		String target_reg = prefix + code.target(0);

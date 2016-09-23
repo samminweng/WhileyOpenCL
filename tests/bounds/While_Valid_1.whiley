@@ -13,6 +13,8 @@ method main(System.Console sys):
     int[] rs = reverse([1, 2, 3, 4, 5])
     assert rs == [5,4,3,2,1]
     sys.out.println(rs)
+    int[] rs2 = reverse([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    sys.out.println(rs2)
 /* The transformed reversed function with r_size and r_capacity
 function reverse([int] ls) => [int]:
     int i = |ls|
