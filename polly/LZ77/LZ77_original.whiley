@@ -126,8 +126,8 @@ method main(System.Console sys):
     sys.out.print(|compress_data|)
     sys.out.println_s(" bytes")
     // Decompress the data to a string
-    byte[] decompress_data = decompress(compress_data)
-    sys.out.print_s("DECOMPRESSED:   ")
+    //byte[] decompress_data = decompress(compress_data)
+    //sys.out.print_s("DECOMPRESSED:   ")
     //sys.out.println_s(ASCII.fromBytes(decompress_data))
-    sys.out.print(|decompress_data|)
-    sys.out.println_s(" bytes")
+    //sys.out.print(|decompress_data|)
+    //sys.out.println_s(" bytes")

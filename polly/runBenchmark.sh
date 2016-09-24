@@ -254,6 +254,9 @@ init LZ77
 exec LZ77 original small
 exec LZ77 original medium
 exec LZ77 original large
+exec LZ77 fastcompress small
+exec LZ77 fastcompress medium
+exec LZ77 fastcompress large
 
 # ## NQueen test case
 # init NQueens

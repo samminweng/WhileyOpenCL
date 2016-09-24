@@ -1,63 +1,53 @@
 Run the original LZ77 on large using gcc and 1 threads...Run the original LZ77 on large using gcc
 Data:         574970 bytes
 COMPRESSED Data:   4514 bytes
-DECOMPRESSED:   574970 bytes
 
-Parameter:large	ExecutionTime:16741447241	nanoseconds.
+Parameter:large	ExecutionTime:111131222	nanoseconds.
 Run the original LZ77 on large using gcc
 Data:         574970 bytes
 COMPRESSED Data:   4514 bytes
-DECOMPRESSED:   574970 bytes
 
-Parameter:large	ExecutionTime:16823194137	nanoseconds.
+Parameter:large	ExecutionTime:113825919	nanoseconds.
 Run the original LZ77 on large using gcc
 Data:         574970 bytes
 COMPRESSED Data:   4514 bytes
-DECOMPRESSED:   574970 bytes
 
-Parameter:large	ExecutionTime:16667208314	nanoseconds.
+Parameter:large	ExecutionTime:109174673	nanoseconds.
 Run the original LZ77 on large using gcc
 Data:         574970 bytes
 COMPRESSED Data:   4514 bytes
-DECOMPRESSED:   574970 bytes
 
-Parameter:large	ExecutionTime:16678450107	nanoseconds.
+Parameter:large	ExecutionTime:109746361	nanoseconds.
 Run the original LZ77 on large using gcc
 Data:         574970 bytes
 COMPRESSED Data:   4514 bytes
-DECOMPRESSED:   574970 bytes
 
-Parameter:large	ExecutionTime:16745796324	nanoseconds.
+Parameter:large	ExecutionTime:110212733	nanoseconds.
 Run the original LZ77 on large using gcc
 Data:         574970 bytes
 COMPRESSED Data:   4514 bytes
-DECOMPRESSED:   574970 bytes
 
-Parameter:large	ExecutionTime:16641061503	nanoseconds.
+Parameter:large	ExecutionTime:202870200	nanoseconds.
 Run the original LZ77 on large using gcc
 Data:         574970 bytes
 COMPRESSED Data:   4514 bytes
-DECOMPRESSED:   574970 bytes
 
-Parameter:large	ExecutionTime:16666253779	nanoseconds.
+Parameter:large	ExecutionTime:109612660	nanoseconds.
 Run the original LZ77 on large using gcc
 Data:         574970 bytes
 COMPRESSED Data:   4514 bytes
-DECOMPRESSED:   574970 bytes
 
-Parameter:large	ExecutionTime:16612415531	nanoseconds.
+Parameter:large	ExecutionTime:110585845	nanoseconds.
 Run the original LZ77 on large using gcc
 Data:         574970 bytes
 COMPRESSED Data:   4514 bytes
-DECOMPRESSED:   574970 bytes
 
-Parameter:large	ExecutionTime:16618365345	nanoseconds.
+Parameter:large	ExecutionTime:110857982	nanoseconds.
 Run the original LZ77 on large using gcc
 Data:         574970 bytes
 COMPRESSED Data:   4514 bytes
-DECOMPRESSED:   574970 bytes
 
-Parameter:large	ExecutionTime:16631676595	nanoseconds.
+Parameter:large	ExecutionTime:110542615	nanoseconds.
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -65,7 +55,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3800.164
+cpu MHz		: 3843.992
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -79,7 +69,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.28
+bogomips	: 6784.01
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -92,7 +82,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3734.554
+cpu MHz		: 3849.968
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -106,7 +96,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.28
+bogomips	: 6784.01
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -119,7 +109,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.507
+cpu MHz		: 3898.578
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -133,7 +123,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.28
+bogomips	: 6784.01
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -146,7 +136,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3873.343
+cpu MHz		: 3610.109
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -160,7 +150,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.28
+bogomips	: 6784.01
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -173,7 +163,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3847.046
+cpu MHz		: 3432.671
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -187,7 +177,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.28
+bogomips	: 6784.01
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -200,7 +190,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3885.960
+cpu MHz		: 3457.507
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -214,7 +204,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.28
+bogomips	: 6784.01
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -227,7 +217,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3900.039
+cpu MHz		: 3664.828
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -241,7 +231,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.28
+bogomips	: 6784.01
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -254,7 +244,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3821.546
+cpu MHz		: 3415.671
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -268,7 +258,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.28
+bogomips	: 6784.01
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
