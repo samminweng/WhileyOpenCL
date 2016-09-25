@@ -32,10 +32,10 @@ public class PatternMatcher {
 	public PatternMatcher(Configuration config){
 		this.config = config;
 		this.avail_Patterns = new ArrayList<Class<? extends Pattern>>();
-		this.avail_Patterns.add(BuildListFirstPattern.class);
-		this.avail_Patterns.add(BuildListPattern.class);
-		this.avail_Patterns.add(WhileLoopDecrPattern.class);
-		this.avail_Patterns.add(WhileLoopIncrPattern.class);	
+		//this.avail_Patterns.add(BuildListFirstPattern.class);
+		//this.avail_Patterns.add(BuildListPattern.class);
+		//this.avail_Patterns.add(WhileLoopDecrPattern.class);
+		//this.avail_Patterns.add(WhileLoopIncrPattern.class);	
 	}	
 
 	/**

@@ -23,6 +23,8 @@ public class Configuration {
 		this.options.put("dealloc", false);
 		this.options.put("code", false);
 		this.options.put("verbose", false);
+		// Pattern matching option
+		this.options.put("pattern", false);
 	}
 
 	/**
@@ -66,14 +68,15 @@ public class Configuration {
 			this.options.put(option, true);
 			if (option.equals("bound")){
 				// Get the widen strategy (naive or gradual)
-				if (value != null) {
-					if (value.toString().equals("gradual")) {
-						this.options.put("widen", "gradual");
-					} else {
-						this.options.put("widen", "naive");
-					}
+				if (value.toString().equals("gradual")) {
+					this.options.put("widen", "gradual");
+				} else {
+					this.options.put("widen", "naive");
 				}
-			}		
+			}else if(option.equals("pattern")){
+				// Get the function name
+				this.options.put("function_name", value.toString());				
+			}
 		}
 	}
 
@@ -95,4 +98,13 @@ public class Configuration {
 		return this.options.get("widen").equals("gradual");
 	}
 
+	/**
+	 * Get the function name that will be applied with 
+	 * pattern matching.
+	 * 
+	 * @return
+	 */
+	public String getFunctionName(){
+		return (String)this.options.get("function_name");
+	}
 }

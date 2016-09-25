@@ -327,7 +327,7 @@ void printf1DArray_int64_t(int64_t* input, size_t input_size) {
 	if (input_size > i) {
 		printf(" ... %"PRId64, input[input_size - 1]);
 	}
-	printf("]");
+	printf("]\n");
 }
 // Print out an array of bye
 void printf1DArray_BYTE(BYTE* input, size_t input_size) {
@@ -344,7 +344,7 @@ void printf2DArray_int64_t(int64_t** input, size_t input_size, size_t input_size
 		printf(" ...\n"); 
 		printf1DArray_int64_t(input[input_size - 1], input_size_size);
 	}
-	printf("]");
+	printf("]\n");
 }
 
 /**

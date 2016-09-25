@@ -23,6 +23,8 @@ import wycc.util.OptArg;
 public class WyopclMain extends WycMain {
 	private boolean verbose = false;
 	public static final OptArg[] EXTRA_OPTIONS = {
+			
+			// Add the 'dealloc' to release the unused memory using macro system
 			new OptArg("dealloc", "Run the deallocation analysis to free un-used memory"),
 
 			// Add the 'copy' option to eliminate un-needed copies
@@ -35,6 +37,11 @@ public class WyopclMain extends WycMain {
 							+ "\t\t\t   [naive]\tWidening the bounds to infinity.\n"
 							+ "\t\t\t   [gradual]\tWidening the bounds to Int16, Int32, Int64 and infinity."),
 			
+			// Add the 'pattern' option
+			new OptArg("pattern", OptArg.STRING,
+					"Run pattern macthing on a specific function:\n"
+					+"\t\t\t   [function_name]\tThe function name that will be applied with pattern matching.\n"
+					),
 
 			// Add the 'code' option
 			new OptArg("code", "Run the code generator to translate the compiled Whiley Program into C code.\n"),

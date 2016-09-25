@@ -3,6 +3,7 @@ package wyopcl.translator;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -13,12 +14,14 @@ import wyfs.lang.Path;
 import wyfs.lang.Path.Entry;
 import wyfs.lang.Path.Root;
 import wyil.lang.WyilFile;
+import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 import wyopcl.translator.bound.BoundAnalyzer;
 import wyopcl.translator.copy.CopyEliminationAnalyzer;
 import wyopcl.translator.copy.LiveVariablesAnalysis;
 import wyopcl.translator.deallocate.DeallocationAnalyzer;
 import wyopcl.translator.generator.CodeGenerator;
+import wyopcl.translator.symbolic.PatternMatcher;
 
 /**
  * Creates the code generator as well as the code analysis, to produce and optimize the c code.
@@ -109,6 +112,31 @@ public class Translator implements Builder {
 			message += "\nDeallocation analysis completed.\nFile: " + config.getFilename()+".wyil";
 		}
 
+		// Check if pattern matching is enabled
+		Optional<PatternMatcher> pattern = Optional.empty();
+		if(config.isEnabled("pattern")){
+			// Get the function name
+			String func_name = config.getFunctionName();
+			// Get the WyIL code by given function name
+			List<FunctionOrMethod> funcs = module.functionOrMethod(func_name);
+			if(funcs == null|| (funcs != null && funcs.isEmpty())){
+				throw new RuntimeException("Could not find '"+func_name+ "' function. File: " + config.getFilename());
+			}
+			// Get the WyIL code
+			FunctionOrMethod function = funcs.get(0);
+			PatternMatcher matcher = new PatternMatcher(config);
+			try{
+				// Perform pattern matching
+				
+			}catch(Exception ex){
+				throw new RuntimeException("Errors on Pattern Matching"); 
+			}
+			pattern = Optional.of(matcher);
+			message += "\nPerform pattern matching on"+ func_name+" completed. File: " + config.getFilename();
+		}
+		
+		
+		
 		// Check if the bound analysis is enabled.
 		Optional<BoundAnalyzer> boundAnalyzer = Optional.empty();
 		if (config.isEnabled("bound")) {
