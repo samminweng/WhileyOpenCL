@@ -113,7 +113,7 @@ public class ExprFactory {
 			if(ret.targets().length > 0){
 				expr = new Expr(prefix+ret.target(0), code);
 			}
-		}else if(code instanceof Codes.Label){
+		}else if(code instanceof Codes.Label || code instanceof Codes.Invariant || code instanceof Codes.Update){
 			// Skip the code
 		} else  {
 			throw new RuntimeException("Not implemented");

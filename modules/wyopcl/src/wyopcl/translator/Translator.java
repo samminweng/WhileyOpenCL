@@ -135,7 +135,7 @@ public class Translator implements Builder {
 				throw new RuntimeException("Errors on Pattern Matching"); 
 			}
 			patternMatcher = Optional.of(matcher);
-			message += "\nPerform pattern matching on"+ func_name+" completed. File: " + config.getFilename();
+			message += "\nPerform pattern matching on "+ func_name+" completed. File: " + config.getFilename();
 		}
 		
 		
