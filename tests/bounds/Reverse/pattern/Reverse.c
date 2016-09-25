@@ -1,22 +1,22 @@
-#include "While_Valid_1.h"
+#include "Reverse.h"
 int64_t* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
-	uint16_t i = 0;
+	int64_t i = 0;
 	_DECL_1DARRAY(r);
 	int64_t item = 0;
-	uint16_t _5 = 0;
-	uint16_t _6 = 0;
-	uint16_t _7 = 0;
+	int64_t _5 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
 	_DECL_1DARRAY(_8);
 	int64_t _9 = 0;
 	int64_t _10 = 0;
 	int64_t _11 = 0;
-	uint16_t _12 = 0;
-	uint16_t _13 = 0;
-	uint16_t _14 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
 	int64_t _15 = 0;
-	int16_t _16 = 0;
-	uint16_t _17 = 0;
+	int64_t _16 = 0;
+	int64_t _17 = 0;
 	//lengthof %5 = %0 : int[]
 	_5 = ls_size;
 	//assign %2 = %5  : int
@@ -87,11 +87,11 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(rs);
 	_DECL_1DARRAY(rs2);
 	_DECL_1DARRAY(_3);
-	uint16_t _4 = 0;
-	uint16_t _5 = 0;
-	uint16_t _6 = 0;
-	uint16_t _7 = 0;
-	uint16_t _8 = 0;
+	int64_t _4 = 0;
+	int64_t _5 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
+	int64_t _8 = 0;
 	_DECL_1DARRAY(_9);
 	int64_t _10 = 0;
 	int64_t _11 = 0;
@@ -101,16 +101,16 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_15);
 	void* _16;
 	_DECL_1DARRAY(_18);
-	uint16_t _19 = 0;
-	uint16_t _20 = 0;
-	uint16_t _21 = 0;
-	uint16_t _22 = 0;
-	uint16_t _23 = 0;
-	uint16_t _24 = 0;
-	uint16_t _25 = 0;
-	uint16_t _26 = 0;
-	uint16_t _27 = 0;
-	uint16_t _28 = 0;
+	int64_t _19 = 0;
+	int64_t _20 = 0;
+	int64_t _21 = 0;
+	int64_t _22 = 0;
+	int64_t _23 = 0;
+	int64_t _24 = 0;
+	int64_t _25 = 0;
+	int64_t _26 = 0;
+	int64_t _27 = 0;
+	int64_t _28 = 0;
 	_DECL_1DARRAY(_29);
 	void* _30;
 	//const %4 = 1 : int
@@ -126,7 +126,7 @@ int main(int argc, char** args){
 	//newlist %9 = (%4, %5, %6, %7, %8) : int[]
 	_NEW_1DARRAY_int64_t(_9, 5, 0);
 	_9[0] = _4; _9[1] = _5; _9[2] = _6; _9[3] = _7; _9[4] = _8; 
-	//invoke (%3) = (%9) While_Valid_1:reverse : function(int[])->(int[])
+	//invoke (%3) = (%9) Reverse:reverse : function(int[])->(int[])
 	{
 		void* _9_tmp;
 		_3 = reverse(_COPY_1DARRAY_PARAM_int64_t(_9), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
@@ -186,7 +186,7 @@ blklab4:;
 	//newlist %29 = (%19, %20, %21, %22, %23, %24, %25, %26, %27, %28) : int[]
 	_NEW_1DARRAY_int64_t(_29, 10, 0);
 	_29[0] = _19; _29[1] = _20; _29[2] = _21; _29[3] = _22; _29[4] = _23; _29[5] = _24; _29[6] = _25; _29[7] = _26; _29[8] = _27; _29[9] = _28; 
-	//invoke (%18) = (%29) While_Valid_1:reverse : function(int[])->(int[])
+	//invoke (%18) = (%29) Reverse:reverse : function(int[])->(int[])
 	{
 		void* _29_tmp;
 		_18 = reverse(_COPY_1DARRAY_PARAM_int64_t(_29), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));

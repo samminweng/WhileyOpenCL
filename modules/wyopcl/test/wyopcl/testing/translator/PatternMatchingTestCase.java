@@ -1,7 +1,8 @@
 package wyopcl.testing.translator;
 
-import java.io.File;
+import static org.junit.Assert.*;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -13,10 +14,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
-public class BoundAnalysisTestCase {
+public class PatternMatchingTestCase {
+
 	private BaseTestUtil util;
 	final Path codeDir = Paths.get(System.getProperty("user.dir")+ File.separator + "tests" + File.separator + "bounds");
 	private String testcase;// A list of test cases
+	private String func_name;// The function names that are used for testing pattern matching	
 	
 	@Before
 	public void initialize() throws Exception {
@@ -34,34 +37,28 @@ public class BoundAnalysisTestCase {
 	 * 
 	 * @param testcase
 	 */
-	public BoundAnalysisTestCase(String testcase) {
+	public PatternMatchingTestCase(String testcase, String func_name) {
 		this.testcase = testcase;
+		this.func_name = func_name;
 		System.out.print("=== "+testcase+" ===\n");
 	}
 	
 	@Parameterized.Parameters(name = "{index}:{0}")
-	public static Collection<String> testCases() {
+	public static Collection<String[]> testCases() {
 		
 		// Add a list of test cases
-		return Arrays.asList(new String[] { 
-				"IfElse", 
-				"WhileLoop",
-				"Reverse",
-				"ArrayAppend"
+		return Arrays.asList(new String[][] { 
+				{"IfElse", "f"}, 
+				{"WhileLoop", "f"},
+				{"Reverse", "reverse"},
+				{"ArrayAppend", "appendArray"}
 		});
 	}
 	
 	@Test
-	public void testBoundNaiveWiden() {
-		System.out.print("Bound Analysis: Naive Widen Bound\n");
-		util.execCodeGeneration(codeDir, testcase, "bound", "naive");
+	public void testPatternMatching(){
+		System.out.print("Pattern Matching: "+func_name+" function\n");
+		util.execCodeGeneration(codeDir, testcase, "pattern", func_name);	
 	}
-	
-	@Test
-	public void testBoundGradualWiden() {
-		System.out.print("Bound Analysis: Gradual Widen Bound\n");
-		util.execCodeGeneration(codeDir, testcase, "bound", "widen");
-	}
-	
-	
+
 }

@@ -327,7 +327,7 @@ void printf1DArray_int64_t(int64_t* input, size_t input_size) {
 	if (input_size > i) {
 		printf(" ... %"PRId64, input[input_size - 1]);
 	}
-	printf("]");
+	printf("]\n");
 }
 // Print out an array of bye
 void printf1DArray_BYTE(BYTE* input, size_t input_size) {
@@ -344,7 +344,7 @@ void printf2DArray_int64_t(int64_t** input, size_t input_size, size_t input_size
 		printf(" ...\n"); 
 		printf1DArray_int64_t(input[input_size - 1], input_size_size);
 	}
-	printf("]");
+	printf("]\n");
 }
 
 /**
@@ -371,7 +371,7 @@ void println_s(int64_t* input, size_t input_size) {
  * This append function meets value semantics
  * as it creates a new array and makes no change to op1 and op2 arrays.
  */
-int64_t* append(int64_t *arr1, size_t arr1_size, int64_t* arr2, size_t arr2_size) {
+/*int64_t* append(int64_t *arr1, size_t arr1_size, int64_t* arr2, size_t arr2_size) {
 	int64_t *ret_arr = NULL;
 	int64_t size = 0;
 	//Get the size of return array.
@@ -387,7 +387,7 @@ int64_t* append(int64_t *arr1, size_t arr1_size, int64_t* arr2, size_t arr2_size
 	memcpy(&ret_arr[arr1_size], arr2, arr2_size * sizeof(int64_t));
 	//Return the array
 	return ret_arr;
-}
+}*/
 //Check if the number is a power of 2.
 //See also http://www.exploringbinary.com/ten-ways-to-check-if-an-integer-is-a-power-of-two-in-c/
 int isPowerof2(int64_t value) {

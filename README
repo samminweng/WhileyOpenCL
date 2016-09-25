@@ -55,11 +55,14 @@ Unit Testing
 ============================================================================================
 1. Whiley-to-OpenCL translator
 1.1 Bound Analyzer
-The bound analyzer is being tested with 4 Whiley programs And pattern matching is tested with 
-1 Whiley program. Use the below commands:
-$ ant test-bound 
+The bound analyzer is being tested with 4 Whiley programs. Use the below commands:
+$ ant test-bound
 
-1.2 Code Generator
+1.2 Pattern Matching
+The pattern matching is being tested with 4 Whiley programs. Use the below commands:
+$ ant test-pattern
+
+1.3 Code Generator
 The code generator is tested with 29 Whiley programs. Use the below commands:
 $ ant test-code
 

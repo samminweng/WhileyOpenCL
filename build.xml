@@ -193,6 +193,15 @@
 	    </filelist>
 	</subant>
   </target>
+  <!--Test the pattern matching with test cases -->
+  <target name="test-pattern" depends="clean, build-all">
+  <subant failonerror="true" target="test-pattern">
+    <filelist>
+        <!--wyopcl-->
+          <file name="modules/wyopcl/build.xml"/>
+      </filelist>
+  </subant>
+  </target>
   <!-- ============================================== -->
   <!-- Special Commands for Whiley2Boogie project     -->
   <!-- ============================================== -->
