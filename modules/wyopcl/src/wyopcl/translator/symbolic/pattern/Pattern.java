@@ -19,7 +19,7 @@ import wyopcl.translator.symbolic.pattern.expression.ExprFactory;
  *
  */
 public class Pattern extends Object {
-	protected final String prefix = "%";
+	protected final String prefix = "_";
 	protected Configuration config;
 	public String pattern_name;//The pattern name
 	public boolean isNil;//The flag indicates whether this pattern is matched with any given pattern (True: not matched False: Matched).

@@ -22,6 +22,7 @@ import wyopcl.translator.copy.LiveVariablesAnalysis;
 import wyopcl.translator.deallocate.DeallocationAnalyzer;
 import wyopcl.translator.generator.CodeGenerator;
 import wyopcl.translator.symbolic.PatternMatcher;
+import wyopcl.translator.symbolic.pattern.Pattern;
 
 /**
  * Creates the code generator as well as the code analysis, to produce and optimize the c code.
@@ -113,7 +114,7 @@ public class Translator implements Builder {
 		}
 
 		// Check if pattern matching is enabled
-		Optional<PatternMatcher> pattern = Optional.empty();
+		Optional<PatternMatcher> patternMatcher = Optional.empty();
 		if(config.isEnabled("pattern")){
 			// Get the function name
 			String func_name = config.getFunctionName();
@@ -123,15 +124,17 @@ public class Translator implements Builder {
 				throw new RuntimeException("Could not find '"+func_name+ "' function. File: " + config.getFilename());
 			}
 			// Get the WyIL code
-			FunctionOrMethod function = funcs.get(0);
+			FunctionOrMethod functionOrMethod = funcs.get(0);
 			PatternMatcher matcher = new PatternMatcher(config);
 			try{
 				// Perform pattern matching
-				
+				Pattern pattern = matcher.analyzePattern(functionOrMethod);
+				// Print out the matched pattern
+				System.out.println(pattern);				
 			}catch(Exception ex){
 				throw new RuntimeException("Errors on Pattern Matching"); 
 			}
-			pattern = Optional.of(matcher);
+			patternMatcher = Optional.of(matcher);
 			message += "\nPerform pattern matching on"+ func_name+" completed. File: " + config.getFilename();
 		}
 		

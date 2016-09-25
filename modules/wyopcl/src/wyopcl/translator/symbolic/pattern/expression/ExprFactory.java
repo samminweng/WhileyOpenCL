@@ -17,7 +17,7 @@ import wyopcl.Configuration;
  */
 public class ExprFactory {
 	private final Configuration config;
-	private final String prefix = "%";
+	private final String prefix = "_";
 	private HashMap<String, Expr> expressiontable;// Store the register along
 													// with the corresponding
 													// expression.
@@ -91,21 +91,30 @@ public class ExprFactory {
 				((LinearExpr) expr).addVar(BigInteger.ONE, prefix + binOp.operand(0));
 				((LinearExpr) expr).addVar(BigInteger.ONE.negate(), prefix + binOp.operand(1));// -1*v2
 				break;
-			/*case RANGE:
-				// target = [op_0 ... op_1]
-				expr = new RangeExpr(prefix + binOp.target(), (LinearExpr) getExpr(prefix + binOp.operand(0)), (LinearExpr) getExpr(prefix
-						+ binOp.operand(1)));
-				break;*/
 			default:
 				throw new RuntimeException(binOp.kind + "Not implemented");
 			}
 		} else if (code instanceof Codes.LengthOf) {
 			expr = new LinearExpr(prefix + ((Codes.LengthOf) code).target(0));
-			Codes.LengthOf lengthOf = (Codes.LengthOf) code;
-			((LinearExpr) expr).addVar(BigInteger.ONE, "|" + prefix + lengthOf.operand(0) + "|");
+			((LinearExpr) expr).addVar(BigInteger.ONE, "|" + prefix + ((Codes.LengthOf) code).operand(0) + "|");
 		} else if (code instanceof Codes.IndexOf) {
-			Codes.IndexOf indexof = (Codes.IndexOf) code;
-			expr = new Expr(prefix + indexof.target(0), code);
+			expr = new Expr(prefix + ((Codes.IndexOf) code).target(0), code);
+		} else if(code instanceof Codes.ArrayGenerator){
+			expr = new Expr(prefix + ((Codes.ArrayGenerator)code).target(0), code);
+		} else if(code instanceof Codes.If){
+			//expr = new Expr(prefix + ((Codes.If)code).target(0), code);
+		} else if(code instanceof Codes.Invoke){
+			Codes.Invoke invoke = (Codes.Invoke)code;
+			if(invoke.targets().length>0){
+				expr = new Expr(prefix + invoke.target(0), code);
+			}			
+		} else if(code instanceof Codes.Return){ 
+			Codes.Return ret = (Codes.Return)code;
+			if(ret.targets().length > 0){
+				expr = new Expr(prefix+ret.target(0), code);
+			}
+		}else if(code instanceof Codes.Label){
+			// Skip the code
 		} else  {
 			throw new RuntimeException("Not implemented");
 		}

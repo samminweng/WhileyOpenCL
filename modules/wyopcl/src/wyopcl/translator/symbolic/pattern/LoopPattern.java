@@ -52,7 +52,7 @@ public abstract class LoopPattern extends Pattern {
 	 *            the starting line of code
 	 * @return the next line number after initial value assignment
 	 */
-	protected abstract int init(List<Code> code_blk, String var, int line);
+	protected abstract int init(List<Code> code_blk, String var);
 	
 
 	/**

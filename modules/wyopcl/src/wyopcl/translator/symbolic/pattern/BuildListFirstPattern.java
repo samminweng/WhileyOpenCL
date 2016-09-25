@@ -82,10 +82,10 @@ public final class BuildListFirstPattern extends WhileLoopPattern {
 	 * @return the line number that the code contains the loop bytecode
 	 */
 	@Override
-	protected int init(List<Code> code_blk, String var, int line) {
+	protected int init(List<Code> code_blk, String var) {
 		// Search for the initial value assignment.
-		int index = line;
-		for (; index < code_blk.size(); index++) {
+		int index;
+		for (index = 0; index < code_blk.size(); index++) {
 			Code code = code_blk.get(index);
 			// Check if this code assigns the value to the loop variable.
 			if (!isInvariant(code)) {

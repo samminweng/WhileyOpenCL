@@ -1,4 +1,4 @@
-package wyopcl.translator.symbolic.pattern;
+/*package wyopcl.translator.symbolic.pattern;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -13,7 +13,7 @@ import wyopcl.translator.symbolic.pattern.expression.Expr;
 import wyopcl.translator.symbolic.pattern.expression.LinearExpr;
 import wyopcl.translator.symbolic.pattern.expression.RangeExpr;
 
-/**
+*//**
  * The 'ForAll' pattern is similar to 'WhileLoop' pattern. It includes the
  * 'init_before', 'init', 'init_after', 'loop_header', 'loop_body' and
  * 'loop_exit'. For example, a 'forall' loop iterates over a range (%1), as
@@ -47,7 +47,7 @@ import wyopcl.translator.symbolic.pattern.expression.RangeExpr;
  * 
  * @author Min-Hsien Weng
  *
- */
+ *//*
 @Deprecated
 public class ForAllRangePattern extends LoopPattern {
 	protected String sourceOp;
@@ -62,8 +62,8 @@ public class ForAllRangePattern extends LoopPattern {
 			this.line = this.init(blk, this.sourceOp, this.line);
 			// Check if the loop pattern is constructed successfully.
 			if (this.init != null) {
-				/*Codes.ForAll forall = (Codes.ForAll) blk.get(this.line);
-				this.line = this.forall(forall, this.line);*/
+				Codes.ForAll forall = (Codes.ForAll) blk.get(this.line);
+				this.line = this.forall(forall, this.line);
 				if (this.loop_bound != null) {
 					this.line = this.loop_exit(blk, this.line);
 					this.pattern_name = "ForAllRange";
@@ -73,15 +73,15 @@ public class ForAllRangePattern extends LoopPattern {
 		}
 	}
 
-	/**
+	*//**
 	 * Put the forall byte-code onto 'loop_header' part and put the list of
 	 * byte-code to 'loop_body' part.
 	 * 
 	 * @param forall
 	 * @param line
 	 * @return
-	 */
-	/*protected int forall(Codes.ForAll forall, int line) {
+	 *//*
+	protected int forall(Codes.ForAll forall, int line) {
 		AddCodeToPatternPart(forall, "loop_header");
 		if (forall.modifiedOperands.length >= 2) {
 			// Get the expression
@@ -94,9 +94,9 @@ public class ForAllRangePattern extends LoopPattern {
 			}
 		}
 		return ++line;
-	}*/
+	}
 
-	/**
+	*//**
 	 * Iterate over the list of byte-code inside a forall loop and put the code
 	 * onto 'loop_body' part.
 	 * 
@@ -104,7 +104,7 @@ public class ForAllRangePattern extends LoopPattern {
 	 * @param loop_var
 	 * @param line
 	 * @return
-	 */
+	 *//*
 	@Override
 	protected void loopbody(List<Code> code_blk, int line) {
 		int index = line;
@@ -129,19 +129,19 @@ public class ForAllRangePattern extends LoopPattern {
 	protected String loop_var(List<Code> blk) {
 		for (int index = 0; index < blk.size(); index++) {
 			Code code = blk.get(index);
-			/*if (code instanceof Codes.ForAll) {
+			if (code instanceof Codes.ForAll) {
 				// Forall loop
 				Codes.ForAll forall = (Codes.ForAll) code;
 				this.sourceOp = prefix + forall.sourceOperand;
 				// The loop variable is the index operand
 				return prefix + forall.indexOperand;
-			}*/
+			}
 		}
 		return null;
 	}
 
 	
-	/**
+	*//**
 	 * Get the expression that assigns the initial value the loop variable and
 	 * split the list of code in 'init_pre',' 'init' and 'init_after' parts.
 	 * 
@@ -152,7 +152,7 @@ public class ForAllRangePattern extends LoopPattern {
 	 * @param line
 	 *            the starting line of code
 	 * @return the next line number after initial value assignment
-	 */
+	 *//*
 	protected int init(List<Code> code_blk, String var, int line) {
 		// Search for the initial value assignment.
 		int index = line;
@@ -198,3 +198,4 @@ public class ForAllRangePattern extends LoopPattern {
 		return numberOfIterations;
 	}
 }
+*/

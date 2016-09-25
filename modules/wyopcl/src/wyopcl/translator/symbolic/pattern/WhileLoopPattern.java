@@ -38,10 +38,9 @@ public abstract class WhileLoopPattern extends LoopPattern {
 		// If the list of code contains the loop variable, then proceed the
 		// pattern matching.
 		if (loop_var != null) {
-			// Split the code before loop byte into three parts: init_before,
-			// init, init_after.
+			// Split the code before loop byte into three parts: init_before, init, init_after.
 			List<Code> blk = functionOrMethod.body().bytecodes();
-			this.line = this.init(blk, this.loop_var, this.line);
+			this.line = this.init(blk, this.loop_var);
 			// Check if the loop pattern is constructed successfully.
 			if (this.init != null) {
 				this.line = while_cond((Loop) blk.get(this.line));
@@ -55,33 +54,55 @@ public abstract class WhileLoopPattern extends LoopPattern {
 	}
 
 	/**
-	 * Extract the list variable from the list of code by searching for the
+	 * Extract the loop variable from the list of code by searching for the
 	 * 'Codes.Loop' bytecode
 	 *
 	 * @return the variable (string). If not found, return null.
 	 */
 	protected String loop_var(List<Code> blk) {
+		String loop_var = null;
 		for (int index = 0; index < blk.size(); index++) {
 			Code code = blk.get(index);
 			if (code instanceof Codes.Loop) {
 				// Check if the list of bytecode contains a loop bytecode.
-				// While loop
-				Codes.Loop loop = (Codes.Loop) code;
-				// Iterate the modified operands. By default, the loop
-				// variable is the first modified operands.
-				if (loop.modifiedOperands.length >= 1) {
-					return prefix + loop.modifiedOperands[0];
+				Codes.Loop loop = (Codes.Loop) code;				 
+				boolean isFound = false;
+				// The left and right operand
+				int left=-1, right = -1;
+				// Iterate each byte-code inside the loop to find the loop variable
+				for(Code c: loop.bytecodes()){
+					// Find the loop condition 
+					if(isFound == false && c instanceof Codes.If){
+						Codes.If if_code = (Codes.If)c;
+						// Get the left and right operands
+						left = if_code.operand(0);
+						right = if_code.operand(1);
+						isFound = true;
+					}
+					
+					// Get the assignment to update the loop variable
+					if(isFound == true && c instanceof Codes.Assign){
+						// Update the left or right operand
+						Codes.Assign assign = (Codes.Assign)c;
+						int target = assign.target(0);
+						// Check the target appears on the condition
+						if(target == left || target == right){
+							// loop variable is the target 
+							loop_var = prefix+target;
+							break;// Exit the loop
+						}
+					}
 				}
 			}
 		}
-		return null;
+		return loop_var;
 	}
 
 	/**
 	 * Get the expression that assigns the initial value the loop variable and
 	 * split the list of code in 'init_pre',' 'init' and 'init_after' parts.
 	 * 
-	 * @param code_blk
+	 * @param blk
 	 *            the list of code.
 	 * @param var
 	 *            the variable that is updated by the initial assignment.
@@ -89,19 +110,23 @@ public abstract class WhileLoopPattern extends LoopPattern {
 	 *            the starting line of code
 	 * @return the next line number after initial value assignment
 	 */
-	protected int init(List<Code> code_blk, String var, int line) {
+	protected int init(List<Code> blk, String loop_var) {
 		// Search for the initial value assignment.
-		int index = line;
-		for (; index < code_blk.size(); index++) {
-			Code code = code_blk.get(index);
+		int index;
+		for (index = 0; index < blk.size(); index++) {
+			Code code = blk.get(index);
 			// Check if this code assigns the value to the loop variable.
-			if (!isInvariant(code)) {
-				// check if the loop variable is used in the assignment for
-				// while loop pattern
-				if (code instanceof Codes.Assign && var.equals(prefix + ((Codes.Assign) code).target(0))) {
-					// Add the code to the 'init' part
-					AddCodeToPatternPart(code, "init");
-					break;
+			if (!(code instanceof Codes.Invariant)) {
+				// Get the assignment for loop variable
+				if (code instanceof Codes.Assign){
+					Codes.Assign assign = (Codes.Assign)code;
+					String var = prefix +assign.target(0);
+					
+					if(loop_var.equals(var)){
+						// Add the code to the 'init' part
+						AddCodeToPatternPart(code, "init");
+						break;
+					}
 				}
 			}
 			// Otherwise, add the code to the 'init_before' part
@@ -109,8 +134,8 @@ public abstract class WhileLoopPattern extends LoopPattern {
 		}
 
 		// Search for the loop condition
-		for (index += 1; index < code_blk.size(); index++) {
-			Code code = code_blk.get(index);
+		for (index += 1; index < blk.size(); index++) {
+			Code code = blk.get(index);
 			// Search for loop bytecode
 			if (!isInvariant(code) && (code instanceof Codes.Loop)) {
 				break;
@@ -181,8 +206,6 @@ public abstract class WhileLoopPattern extends LoopPattern {
 	 * @return the ending line number.
 	 */
 	protected int while_cond(Codes.Loop loop) {
-		// Add the loop bytecode to loop_header
-		AddCodeToPatternPart(loop, "loop_header");
 		// Get the list of byte-code inside a loop
 		List<Code> loop_blk = loop.bytecodes();
 		int index;
@@ -266,9 +289,9 @@ public abstract class WhileLoopPattern extends LoopPattern {
 
 	@Override
 	protected void loopbody(List<Code> loop_blk, int line) {
-		int index = line;
+		int index;
 		// Put the code in 'loopbody_before' part.
-		for (; index < loop_blk.size(); index++) {
+		for (index = line; index < loop_blk.size(); index++) {
 			Code code = loop_blk.get(index);
 			// Search for the binOp that subtracts the loop variable with a
 			// constant.

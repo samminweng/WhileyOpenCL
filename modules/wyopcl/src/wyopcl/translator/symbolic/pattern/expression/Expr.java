@@ -5,7 +5,7 @@ import wyil.lang.Codes;
 
 public class Expr implements Cloneable{
 	protected String target;
-	protected final String prefix ="%";
+	protected final String prefix ="_";
 	protected Code code;
 	
 	public Expr(String target){

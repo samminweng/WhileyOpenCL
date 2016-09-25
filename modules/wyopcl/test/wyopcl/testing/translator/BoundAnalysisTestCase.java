@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 
 import org.junit.After;
 import org.junit.Before;
@@ -16,6 +17,10 @@ public class BoundAnalysisTestCase {
 	private BaseTestUtil util;
 	final Path codeDir = Paths.get(System.getProperty("user.dir")+ File.separator + "tests" + File.separator + "bounds");
 	private String testcase;// A list of test cases
+	
+	// The function names that are used for testing pattern matching
+	//private static HashMap<String, String> pattern_matching;
+	
 	
 	@Before
 	public void initialize() throws Exception {
@@ -39,64 +44,42 @@ public class BoundAnalysisTestCase {
 	}
 	
 	@Parameterized.Parameters(name = "{index}:{0}")
-	public static Collection<String> testCases() {		
+	public static Collection<String> testCases() {
+		
+		/*pattern_matching = new HashMap<String, String>()
+		{{
+			//put("ArrayAppend", "appendArray");
+		}};
+		*/
 		// Add a list of test cases
 		return Arrays.asList(new String[] { 
 				"IfElse", 
 				"WhileLoop", 
 				"While_Valid_1",
-				"ArrayAppend"
+				//"ArrayAppend"
 		});
 	}
 	
 	@Test
-	public void testNaiveCCode() {
-		System.out.print("Naive Bound C code \n");
+	public void testNaiveWiden() {
+		System.out.print("Naive Widen Bound\n");
 		util.execCodeGeneration(codeDir, testcase, "bound", "naive");
 	}
 	
 	@Test
-	public void test_WhileLoop_Naive() {
-		System.out.print("Widen Bound C code \n");
+	public void testGradualWiden() {
+		System.out.print("Gradual Widen Bound\n");
 		util.execCodeGeneration(codeDir, testcase, "bound", "widen");
 	}
 	
-	/*
+	/*@Test
+	public void testPatternMatching(){
+		if(pattern_matching.containsKey(testcase)){
+			System.out.print("Pattern Matching\n");
+			String func_name = pattern_matching.get(testcase);
+			util.execCodeGeneration(codeDir, testcase, "pattern", func_name);
+		}
+		
+	}*/
 	
-	@Test
-	public void test_WhileLoop_Gradual() {
-		util.execBoundAnalysis(valid_path, "WhileLoop", "bound", "gradual");
-	}	
-	
-
-	@Test
-	public void test_IfElse_Valid_2_Naive() {
-		util.execBoundAnalysis(valid_path, "IfElse_Valid_2", "bound", "naive");
-	}
-	
-	@Test
-	public void test_IfElse_Valid_2_Gradual() {
-		util.execBoundAnalysis(valid_path, "IfElse_Valid_2", "bound", "gradual");
-	}
-	
-	@Test
-	public void test_BoolList_Valid_2_Naive() {
-		util.execBoundAnalysis(valid_path, "BoolList_Valid_2", "bound", "naive");
-	}
-	
-	@Test
-	public void test_BoolList_Valid_2_Gradual() {
-		util.execBoundAnalysis(valid_path, "BoolList_Valid_2", "bound", "gradual");
-	}
-	
-	@Test
-	public void test_ListAppend_Valid_3_Naive() {
-		util.execBoundAnalysis(valid_path, "ListAppend_Valid_3", "bound", "naive");
-	}
-	
-	@Test
-	public void test_ListAppend_Valid_3_Gradual() {
-		util.execBoundAnalysis(valid_path, "ListAppend_Valid_3", "bound", "gradual");
-	}
-	*/
 }
