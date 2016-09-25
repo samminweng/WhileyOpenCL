@@ -26,25 +26,28 @@ Usage
 The Whiley-to-OpenCL translator is written in Java and aims to generate C/OpenCL code and proof obligation. At this stage, we will use the prime example as the main test case (perhaps we need more) to manually generate its OpenCL code and produce the proof obligations in SMT syntax, which allows us to make use of different SMT solvers (e.g. Z3). 
 ----------------------------------------------------------------------
 1.1 Bound Analyzer
-Bound analyzer aims to infer the bounds and check the bounds consistent with all constraints. To run the bound analyzer, use the below commands:
+Bound analyzer aims to infer the bounds and check the bounds consistent with all constraints.
 $ cd tests/bounds && ./../../bin/wyopcl -bound naive WhileLoop.whiley 
 Or use the gradual widening strategy to get more precise bounds.
 $ ./../../bin/wyopcl -bound gradual WhileLoop.whiley
 
-1.2 Code Generator
-Code Generator aims to translate the Whiley program into C code.
-$ cd tests/code
-$ ./../../bin/wyopcl -code swap.whiley && gcc swap.c Util.c -o swap.out && ./swap.out
+1.2 Pattern Matching
+Pattern matching aims to match the pattern on a specific function.
+$ cd tests/bounds && ./../../bin/wyopcl -pattern appendArray ArrayAppend.whiley 
 
 1.3 Copy Elimination Analysis
 Copy Elimination analysis aims to eliminate the un-necessary copies at the program. 
-$ cd tests/code
-$ ./../../bin/wyopcl -nocopy swap.whiley
+$ cd tests/code && ./../../bin/wyopcl -nocopy swap.whiley
 
 1.4 Deallocation Analysis
 Deallocation analysis aims to add extra mallocs to release un-used memory at function exit.
-$ cd tests/code
-$ ./../../bin/wyopcl -code -dealloc swap.whiley
+$ cd tests/code && ./../../bin/wyopcl -code -dealloc swap.whiley
+
+1.5 Code Generator
+Code Generator aims to translate the Whiley program into C code.
+$ cd tests/code && ./../../bin/wyopcl -code swap.whiley 
+$ gcc swap.c Util.c -o swap.out && ./swap.out
+
 
 
 ============================================================================================
@@ -52,10 +55,11 @@ Unit Testing
 ============================================================================================
 1. Whiley-to-OpenCL translator
 1.1 Bound Analyzer
-The bound analyzer is being tested with 1 Whiley programs. Use the below commands:
+The bound analyzer is being tested with 4 Whiley programs And pattern matching is tested with 
+1 Whiley program. Use the below commands:
 $ ant test-bound 
 
 1.2 Code Generator
-The code generator is tested with 27 Whiley programs. Use the below commands:
+The code generator is tested with 29 Whiley programs. Use the below commands:
 $ ant test-code
 

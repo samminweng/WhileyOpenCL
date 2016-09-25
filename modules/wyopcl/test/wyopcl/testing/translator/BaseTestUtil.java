@@ -318,6 +318,8 @@ public final class BaseTestUtil {
 			Path destDir;
 			// Widen strategy
 			String widen = null;
+			// The function name for pattern matching 
+			String func_name = null;
 			// Separate the generated C code.
 			switch (options.length) {
 			case 0:
@@ -343,7 +345,11 @@ public final class BaseTestUtil {
 					widen = options[1];
 					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "bound_"+widen
 							+ File.separator);
-				}else{
+				} else if(options[0].equals("pattern")){
+					func_name = options[1];
+					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "pattern"
+							+ File.separator);
+				} else{
 					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "copy_reduced_dealloc"
 							+ File.separator);
 				}				
@@ -378,14 +384,18 @@ public final class BaseTestUtil {
 
 			// 3. Generate the C code.
 			String cmd = "java -cp " + classpath + " wyopcl.WyopclMain -bp " + whiley_runtime_lib + " -code";
-			// Add extra optimization option.
-			for (String option : options) {
-				if(option.equals("naive") || option.equals("widen")){
-					// Run the code generator with optimization.
-					cmd += " " + option;
+			// Run the code generator with optimization.
+			int index=0;;
+			while(index<options.length){
+				String option = options[index];
+				if(option.equals("bound") || option.equals("pattern")){
+					// Append two options 
+					cmd += " -" + option + " " +options[index+1];
+					index += 2;
 				}else{
-					// Run the code generator with optimization.
+					// Add extra option.
 					cmd += " -" + option;
+					index++;
 				}			
 			}
 			// Add test case name
