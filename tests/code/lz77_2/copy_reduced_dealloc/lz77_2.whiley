@@ -46,7 +46,7 @@ function findLongestMatch(byte[] data, nat pos) -> (Match m):
     // Return a 'Match' object
     return {offset:bestOffset, len:bestLen}
 
-// Append a byte to the byte array inside 'Data' structure
+// Append a byte to the byte array
 // This is temporary and should be removed
 function append_byte(byte[] items, byte item) -> (byte[] nitems):
 	//ensures |nitems| == |items| + 1:

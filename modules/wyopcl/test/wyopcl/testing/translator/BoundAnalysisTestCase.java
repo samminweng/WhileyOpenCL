@@ -44,7 +44,8 @@ public class BoundAnalysisTestCase {
 		return Arrays.asList(new String[] { 
 				"IfElse", 
 				"WhileLoop", 
-				"While_Valid_1"
+				"While_Valid_1",
+				"ArrayAppend"
 		});
 	}
 	
