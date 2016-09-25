@@ -14,8 +14,6 @@
 			<src path="src"/>
 			<src path="test"/>
 			<include name="*/**"/>
-			<!-- Excluding Pattern Transformer -->
-			<exclude name="**/wyopcl/translator/symbolic/**"/>
 			<!-- Excluding Interpreter -->
 			<exclude name="wyopcl/util/**"/>
 			<exclude name="wyopcl/testing/interpreter/**"/>

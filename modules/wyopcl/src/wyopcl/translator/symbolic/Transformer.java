@@ -1,4 +1,4 @@
-package wyopcl.translator.symbolic.pattern.transform;
+package wyopcl.translator.symbolic;
 
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.symbolic.pattern.Pattern;

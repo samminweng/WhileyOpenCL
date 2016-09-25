@@ -9,9 +9,9 @@ import wyil.lang.Codes.Loop;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyil.lang.Type;
 import wyopcl.Configuration;
+import wyopcl.translator.symbolic.Transformable;
+import wyopcl.translator.symbolic.Transformer;
 import wyopcl.translator.symbolic.pattern.expression.Expr;
-import wyopcl.translator.symbolic.pattern.transform.Transformable;
-import wyopcl.translator.symbolic.pattern.transform.Transformer;
 
 
 /**

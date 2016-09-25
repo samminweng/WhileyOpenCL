@@ -1,4 +1,4 @@
-package wyopcl.translator.symbolic.pattern.transform;
+package wyopcl.translator.symbolic;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

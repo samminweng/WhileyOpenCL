@@ -7,9 +7,6 @@ import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.symbolic.pattern.Pattern;
-import wyopcl.translator.symbolic.pattern.transform.BuildListPatternTransformer;
-import wyopcl.translator.symbolic.pattern.transform.Transformable;
-import wyopcl.translator.symbolic.pattern.transform.Transformer;
 /**
  * 
  * Given a pattern, searches for the suitable transformer to do program transformation and outputs the transformed code.
