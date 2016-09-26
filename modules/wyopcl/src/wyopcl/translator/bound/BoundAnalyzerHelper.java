@@ -26,8 +26,7 @@ import wyopcl.translator.bound.constraint.Range;
  */
 final class BoundAnalyzerHelper {
 	private static final String prefix = "_";
-	// Maps of CFGs, symbols
-	//private static HashMap<String, SymbolFactory> symbol_factorys = new HashMap<String, SymbolFactory>();
+	// Maps of CFGs
 	private static HashMap<String, BoundGraph> cfgraphs = new HashMap<String, BoundGraph>();
 
 	/**
