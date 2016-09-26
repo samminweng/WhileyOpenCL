@@ -21,7 +21,7 @@ import wyil.lang.Codes.LengthOf;
 import wyil.lang.Type.Int;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyil.util.AttributedCodeBlock;
-import wyopcl.translator.symbolic.pattern.BuildListPattern;
+import wyopcl.translator.symbolic.pattern.AppendArrayPattern;
 import wyopcl.translator.symbolic.pattern.Pattern;
 
 /**
@@ -133,7 +133,7 @@ public class BuildListPatternTransformer extends Transformer {
 	 * @param blk
 	 * @param p
 	 */
-	private void init_before(List<Code> blk, BuildListPattern p) {
+	private void init_before(List<Code> blk, AppendArrayPattern p) {
 		blk.addAll(p.getPartByName("init_before"));
 		// Infer the register of input list from lengthof bytecode of
 		// 'init_before' part.
@@ -148,7 +148,7 @@ public class BuildListPatternTransformer extends Transformer {
 	 * @param blk
 	 * @param p
 	 */
-	private void init(List<Code> blk, BuildListPattern p) {
+	private void init(List<Code> blk, AppendArrayPattern p) {
 		Codes.Assign assign = (Codes.Assign) (p.getPartByName("init")).get(0);
 		this.reg_loop_var = assign.target(0);
 		blk.add(assign);
@@ -171,7 +171,7 @@ public class BuildListPatternTransformer extends Transformer {
 	 * @param blk
 	 * @param p
 	 */
-	private void init_after(List<Code> blk, BuildListPattern p) {
+	private void init_after(List<Code> blk, AppendArrayPattern p) {
 		// Add the initial assignment of list capacity.
 		// Get the length of the input list
 		int reg_target = getAvailableReg(Type.Array(Type.Int.T_INT, false));
@@ -197,9 +197,9 @@ public class BuildListPatternTransformer extends Transformer {
 	 * @param p
 	 *            the original pattern.
 	 */
-	private void list_init(List<Code> blk, BuildListPattern p) {
+	private void list_init(List<Code> blk, AppendArrayPattern p) {
 		//Get list var from the original BuildList pattern.
-		this.reg_list = Integer.parseInt(p.list_var.replace("%", ""));
+		this.reg_list = Integer.parseInt(p.array_var.replace("%", ""));
 		// Create an Assign byte-code
 		blk.add(Codes.Assign(Type.Array(Type.Int.T_INT, false), reg_list, reg_input_list));
 	}
@@ -221,7 +221,7 @@ public class BuildListPatternTransformer extends Transformer {
 	 * @param p
 	 *            the original pattern.
 	 */
-	private void list_size_init(List<Code> blk, BuildListPattern p) {
+	private void list_size_init(List<Code> blk, AppendArrayPattern p) {
 		int reg_zero = getAvailableReg(Type.Int.T_INT);
 		blk.add(Codes.Const(reg_zero, Constant.V_INTEGER(BigInteger.ZERO)));
 		this.reg_list_size = getAvailableReg(Type.Int.T_INT);
@@ -264,7 +264,7 @@ public class BuildListPatternTransformer extends Transformer {
 	 * @param p
 	 *            the original pattern.
 	 */
-	private void loop(List<Code> blk, BuildListPattern p) {
+	private void loop(List<Code> blk, AppendArrayPattern p) {
 		// ArrayList maintains the order.
 		ArrayList<Integer> ops = new ArrayList<Integer>();
 		ops.add(this.reg_loop_var);
@@ -333,7 +333,7 @@ public class BuildListPatternTransformer extends Transformer {
 	 * </code>
 	 * </pre>
 	 */
-	private void loop_exit(List<Code> blk, BuildListPattern p) {
+	private void loop_exit(List<Code> blk, AppendArrayPattern p) {
 		blk.addAll(p.getPartByName("loop_exit"));
 		// Add an assertion to ensure the range of list size.
 		List<Code> assertion_blk = new ArrayList<Code>();
@@ -356,7 +356,7 @@ public class BuildListPatternTransformer extends Transformer {
 	 * @param p
 	 * @return a function block with updated variable declarations.
 	 */
-	private FunctionOrMethod transform(BuildListPattern p) {
+	private FunctionOrMethod transform(AppendArrayPattern p) {
 
 		List<Code> blk = new ArrayList<Code>();// Store all the bytecode for the
 												// new pattern.
@@ -412,10 +412,10 @@ public class BuildListPatternTransformer extends Transformer {
 	public FunctionOrMethod transform(Pattern pattern) {
 		// Check if the input pattern is a BuildListPattern. If not, return
 		// null.
-		if (!(pattern instanceof BuildListPattern))
+		if (!(pattern instanceof AppendArrayPattern))
 			return null;
 
-		return transform((BuildListPattern) pattern);
+		return transform((AppendArrayPattern) pattern);
 	}
 
 }
