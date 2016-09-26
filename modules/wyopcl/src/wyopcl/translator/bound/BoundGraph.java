@@ -253,8 +253,6 @@ public class BoundGraph {
 		// Check whether to add if-else blocks or loop-condition blocks.
 		BoundBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, loop_header);
 		BoundBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, loop_header);
-		// Connect the loop header with the loop body
-		loop_body.addChild(loop_header);
 		// Set the current block to be loop body.
 		setCurrentBlock(loop_body);
 	}
@@ -273,14 +271,10 @@ public class BoundGraph {
 	public void createLoopStructure(String new_label, Constraint c, Constraint neg_c) {
 		//Create the loop header
 		BoundBlock loop_header = createBasicBlock(new_label, BlockType.LOOP_HEADER, getCurrentBlock());
-		// Set loop_header to be the current block
-		setCurrentBlock(loop_header);
 		// Set the loop flag to be true.
 		// Check whether to add if-else blocks or loop-condition blocks.
 		BoundBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, loop_header);
 		BoundBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, loop_header);
-		// Connect the loop header with the loop body
-		loop_body.addChild(loop_header);
 		// put the opposite constraint to the loop body
 		loop_body.addConstraint(neg_c);
 		// put the original constraint to the loop_exit

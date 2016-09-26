@@ -26,7 +26,6 @@ import wyopcl.translator.bound.constraint.LeftPlus;
 import wyopcl.translator.bound.constraint.LessThan;
 import wyopcl.translator.bound.constraint.LessThanEquals;
 import wyopcl.translator.bound.constraint.Negate;
-import wyopcl.translator.bound.constraint.Union;
 
 /***
  * A class is to store all the constraints, produced from the wyil file, with
@@ -476,6 +475,7 @@ public class BoundAnalyzer {
 	private void analyze(Codes.If code, String name) {
 		String left = prefix + code.operand(0);
 		String right = prefix + code.operand(1);
+		String label = code.target;
 		if (!BoundAnalyzerHelper.isCached(name)) {
 			// Get CF graph.
 			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(name);
@@ -547,8 +547,14 @@ public class BoundAnalyzer {
 			// Get the current block
 			BoundBlock c_blk = graph.getCurrentBlock();
 			if (c_blk != null && !(c_blk.equals(blk))) {
-				// Check if the target blk is not a loop structure.
-				if (!blk.getType().equals(BlockType.LOOP_EXIT)) {
+				// Check if the target blk is a loop structure.
+				if (blk.getType().equals(BlockType.LOOP_EXIT)) {
+					// current block -> loop header
+					// Get the loop header
+					BoundBlock loop_header = graph.getBasicBlock(label, BlockType.LOOP_HEADER);
+					// current block -> loop header
+					c_blk.addChild(loop_header);
+				}else{
 					c_blk.addChild(blk);
 				}
 			}
@@ -661,6 +667,13 @@ public class BoundAnalyzer {
 		isLoop = true;
 		// Get the list of byte-code and iterate through the list.
 		iterateBytecode(name, code.bytecodes());
+		
+		// Link the current block and loop header		
+		//BoundGraph graph = BoundAnalyzerHelper.getCFGraph(name);
+		// Get the current block
+		//BoundBlock current_blk = graph.getCurrentBlock();
+		
+		
 		// Set the flag to be false after finishing iterating all the byte-code.
 		isLoop = false;
 	}

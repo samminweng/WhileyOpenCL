@@ -51,7 +51,7 @@ public class PatternMatchingTestCase {
 				{"IfElse", "f"}, 
 				{"WhileLoop", "f"},
 				{"Reverse", "reverse"},
-				{"ArrayAppend", "appendArray"}
+				{"AppendArray", "appendArray"}
 		});
 	}
 	

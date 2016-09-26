@@ -1,17 +1,17 @@
-#include "ArrayAppend.h"
+#include "AppendArray.h"
 int64_t* append(_DECL_1DARRAY_PARAM(items), int64_t item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(nitems);
-	uint16_t i = 0;
-	uint16_t _4 = 0;
-	uint16_t _5 = 0;
-	uint16_t _6 = 0;
-	uint16_t _7 = 0;
+	int64_t i = 0;
+	int64_t _4 = 0;
+	int64_t _5 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
 	_DECL_1DARRAY(_8);
-	uint16_t _9 = 0;
-	uint16_t _10 = 0;
+	int64_t _9 = 0;
+	int64_t _10 = 0;
 	int64_t _11 = 0;
-	uint16_t _12 = 0;
-	uint16_t _13 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
 	//const %4 = 0 : int
 	_4 = 0;
 	//lengthof %5 = %0 : int[]
@@ -59,22 +59,22 @@ blklab0:;
 
 int64_t* appendArray(_DECL_1DARRAY_PARAM(data), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(output);
-	uint16_t pos = 0;
-	uint16_t _3 = 0;
-	uint16_t _4 = 0;
-	uint16_t _5 = 0;
+	int64_t pos = 0;
+	int64_t _3 = 0;
+	int64_t _4 = 0;
+	int64_t _5 = 0;
 	_DECL_1DARRAY(_6);
-	uint16_t _7 = 0;
+	int64_t _7 = 0;
 	_DECL_1DARRAY(_8);
 	int64_t _9 = 0;
-	uint16_t _10 = 0;
+	int64_t _10 = 0;
 	int64_t _11 = 0;
 	_DECL_1DARRAY(_12);
 	int64_t _13 = 0;
-	uint16_t _14 = 0;
+	int64_t _14 = 0;
 	int64_t _15 = 0;
-	uint16_t _16 = 0;
-	uint16_t _17 = 0;
+	int64_t _16 = 0;
+	int64_t _17 = 0;
 	//const %3 = 0 : int
 	_3 = 0;
 	//assign %2 = %3  : int
@@ -99,7 +99,7 @@ int64_t* appendArray(_DECL_1DARRAY_PARAM(data), _DECL_1DARRAYSIZE_PARAM_CALLBYRE
 		_10 = 10;
 		//add %11 = %9, %10 : int
 		_11=_9+_10;
-		//invoke (%8) = (%1, %11) ArrayAppend:append : function(int[],int)->(int[])
+		//invoke (%8) = (%1, %11) AppendArray:append : function(int[],int)->(int[])
 		{
 			void* output_tmp;
 			_8 = append(_COPY_1DARRAY_PARAM_int64_t(output), _11, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
@@ -112,7 +112,7 @@ int64_t* appendArray(_DECL_1DARRAY_PARAM(data), _DECL_1DARRAYSIZE_PARAM_CALLBYRE
 		_14 = 10;
 		//add %15 = %13, %14 : int
 		_15=_13+_14;
-		//invoke (%12) = (%1, %15) ArrayAppend:append : function(int[],int)->(int[])
+		//invoke (%12) = (%1, %15) AppendArray:append : function(int[],int)->(int[])
 		{
 			void* output_tmp;
 			_12 = append(_COPY_1DARRAY_PARAM_int64_t(output), _15, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_12));
@@ -138,36 +138,36 @@ blklab2:;
 
 int64_t* fastAppendArray(_DECL_1DARRAY_PARAM(data), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(output);
-	uint16_t pos = 0;
-	uint16_t size = 0;
+	int64_t pos = 0;
+	int64_t size = 0;
 	_DECL_1DARRAY(output_1);
-	uint16_t size_1 = 0;
-	uint16_t _6 = 0;
-	uint16_t _7 = 0;
-	uint16_t _8 = 0;
-	uint16_t _9 = 0;
+	int64_t size_1 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
+	int64_t _8 = 0;
+	int64_t _9 = 0;
 	int64_t _10 = 0;
 	_DECL_1DARRAY(_11);
-	uint16_t _12 = 0;
-	uint16_t _13 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
 	int64_t _14 = 0;
-	uint16_t _15 = 0;
+	int64_t _15 = 0;
 	int64_t _16 = 0;
-	uint16_t _17 = 0;
-	uint16_t _18 = 0;
+	int64_t _17 = 0;
+	int64_t _18 = 0;
 	int64_t _19 = 0;
-	uint16_t _20 = 0;
+	int64_t _20 = 0;
 	int64_t _21 = 0;
-	uint16_t _22 = 0;
-	uint16_t _23 = 0;
-	uint16_t _24 = 0;
-	uint16_t _25 = 0;
-	uint16_t _26 = 0;
+	int64_t _22 = 0;
+	int64_t _23 = 0;
+	int64_t _24 = 0;
+	int64_t _25 = 0;
+	int64_t _26 = 0;
 	_DECL_1DARRAY(_27);
-	uint16_t _28 = 0;
+	int64_t _28 = 0;
 	int64_t _29 = 0;
-	uint16_t _30 = 0;
-	uint16_t _31 = 0;
+	int64_t _30 = 0;
+	int64_t _31 = 0;
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %2 = %6  : int
@@ -272,11 +272,11 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(data);
 	_DECL_1DARRAY(arr);
 	_DECL_1DARRAY(arr1);
-	uint16_t _4 = 0;
-	uint16_t _5 = 0;
-	uint16_t _6 = 0;
-	uint16_t _7 = 0;
-	uint16_t _8 = 0;
+	int64_t _4 = 0;
+	int64_t _5 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
+	int64_t _8 = 0;
 	_DECL_1DARRAY(_9);
 	_DECL_1DARRAY(_10);
 	int64_t _11 = 0;
@@ -319,7 +319,7 @@ int main(int argc, char** args){
 	_9[0] = _4; _9[1] = _5; _9[2] = _6; _9[3] = _7; _9[4] = _8; 
 	//assign %1 = %9  : int[]
 	_COPY_1DARRAY_int64_t(data, _9);
-	//invoke (%10) = (%1) ArrayAppend:appendArray : function(int[])->(int[])
+	//invoke (%10) = (%1) AppendArray:appendArray : function(int[])->(int[])
 	{
 		void* data_tmp;
 		_10 = appendArray(_COPY_1DARRAY_PARAM_int64_t(data), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
@@ -366,7 +366,7 @@ blklab8:;
 	{
 		_PRINT_1DARRAY_int64_t(arr);
 	}
-	//invoke (%24) = (%1) ArrayAppend:fastAppendArray : function(int[])->(int[])
+	//invoke (%24) = (%1) AppendArray:fastAppendArray : function(int[])->(int[])
 	{
 		void* data_tmp;
 		_24 = fastAppendArray(_COPY_1DARRAY_PARAM_int64_t(data), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
