@@ -2,7 +2,7 @@
 int64_t f(int64_t x){
 	int64_t r = 0;
 	uint16_t _2 = 0;
-	uint16_t _3 = 0;
+	int64_t _3 = 0;
 	int64_t _4 = 0;
 	int64_t _5 = 0;
 	int64_t _6 = 0;

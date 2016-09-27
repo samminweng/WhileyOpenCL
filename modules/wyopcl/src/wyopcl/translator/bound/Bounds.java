@@ -299,7 +299,10 @@ public class Bounds implements Cloneable {
 				// Widen the upper bound
 				this.widenUpperBound(var, new_max);
 			} else {
-				this.addUpperBound(var, new_max);
+				// Add upper bound when the old upper bound is inf 
+				if(new_max != null && old_max == null ){
+					this.addUpperBound(var, new_max);
+				}	
 			}
 
 		}

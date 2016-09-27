@@ -33,9 +33,14 @@ public class LessThan extends Constraint {
 		min_y = bnd.getLower(y);
 		max_y = bnd.getUpper(y);
 
-		//Propagate 'upper bound of y - 1' to lower bound of x.
+		//Propagate 'upper bound of y - 1' to upper bound of x.
 		if (max_y != null){
 			bnd.isChanged |= bnd.addUpperBound(x, max_y.subtract(BigInteger.ONE));
+		}
+		
+		//Propagate the 'lower bound of y -1'  to  lower bound of x
+		if(min_y != null){
+			bnd.isChanged |= bnd.addLowerBound(x, min_y.subtract(BigInteger.ONE));
 		}
 
 		return bnd.isChanged;

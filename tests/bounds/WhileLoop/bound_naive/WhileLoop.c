@@ -56,7 +56,7 @@ blklab1:;
 
 int64_t f2(int64_t limit){
 	int64_t _1 = 0;
-	int16_t i = 0;
+	int32_t i = 0;
 	int64_t sum = 0;
 	int16_t _4 = 0;
 	uint16_t _5 = 0;
