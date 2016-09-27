@@ -1,5 +1,4 @@
 package wyopcl.translator.bound.constraint;
-import static wycc.lang.SyntaxError.internalFailure;
 
 import java.math.BigInteger;
 
@@ -41,18 +40,6 @@ public class Negate extends Constraint{
 				//min (max_y, !min_x)
 				bnd.isChanged |= bnd.setUpperBound(y, min_x.negate());
 			}
-
-
-			/*// Add the lower bound of x variable.
-			if (max_y != null) {
-				//max (min_y, !min_x)
-				bnd.isChanged |= bnd.addLowerBound(x, max_y.negate());
-			}
-			// Add the upper bound of x variable.
-			if (min_y != null) {
-				//min (max_y, !min_x)
-				bnd.isChanged |= bnd.addUpperBound(x, min_y.negate());
-			}*/
 
 		return bnd.isChanged;
 	}

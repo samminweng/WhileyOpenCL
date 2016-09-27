@@ -50,6 +50,7 @@ public class PatternMatchingTestCase {
 		return Arrays.asList(new String[][] { 
 				{"IfElse", "f"}, 
 				{"WhileLoop", "f"},
+				{"WhileLoop", "f2"},
 				{"Reverse", "reverse"},
 				{"AppendArray", "appendArray"}
 		});

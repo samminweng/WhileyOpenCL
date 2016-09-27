@@ -16,7 +16,7 @@ import wyopcl.translator.symbolic.pattern.expression.LinearExpr;
 /**
  * The while-loop pattern gets the loop header, loop condition and loop update.
  * and splits the list of code into 'loop_header', 'loopbody_before',
- * 'loopbody_update' and 'loopbody_after' parts.
+ * 'loopbody_update', 'loopbody_after' and 'loop_exit' parts.
  * 
  * @author Min-Hsien Weng
  *
@@ -334,4 +334,26 @@ public abstract class WhileLoopPattern extends LoopPattern {
 
 	}
 
+	
+	/**
+	 * Adds the code to the loop exit
+	 * 
+	 * @param blk
+	 * @param line
+	 */
+	protected int loop_exit(List<Code> blk, int line) {
+		int index = line;
+		// Put the remaining code into the 'loop_exit' part
+		for (; index < blk.size(); index++) {
+			Code code = blk.get(index);
+			if (code instanceof Codes.Return) {
+				AddCodeToPatternPart(code, "return");
+			} else {				
+				// Create the expression and put it into the table.
+				AddCodeToPatternPart(code, "loop_exit");
+			}
+		}
+		return index;
+	}
+	
 }

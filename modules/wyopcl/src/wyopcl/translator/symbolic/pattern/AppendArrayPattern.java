@@ -17,8 +17,7 @@ import wyopcl.translator.symbolic.pattern.expression.Expr;
  * The AppendArray pattern initializes an empty array and then go through a
  * while-loop to append one item to the array. This pattern 
  * 
- * The AppendArray pattern contains 'init_before', 'init', 'init_after',
- * 'loop_header', 'loopbody_before'
+ * The AppendArray pattern extends 
  * 
  * @author Min-Hsien Weng
  *

@@ -1,17 +1,17 @@
 #include "Reverse.h"
 int64_t* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
-	uint16_t i = 0;
+	int64_t i = 0;
 	_DECL_1DARRAY(r);
 	int64_t item = 0;
-	uint16_t _5 = 0;
-	uint16_t _6 = 0;
-	uint16_t _7 = 0;
+	int64_t _5 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
 	_DECL_1DARRAY(_8);
 	int64_t _9 = 0;
 	int64_t _10 = 0;
 	int64_t _11 = 0;
-	uint16_t _12 = 0;
+	int64_t _12 = 0;
 	int64_t _13 = 0;
 	int64_t _14 = 0;
 	int64_t _15 = 0;
@@ -87,11 +87,11 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(rs);
 	_DECL_1DARRAY(rs2);
 	_DECL_1DARRAY(_3);
-	uint16_t _4 = 0;
-	uint16_t _5 = 0;
-	uint16_t _6 = 0;
-	uint16_t _7 = 0;
-	uint16_t _8 = 0;
+	int64_t _4 = 0;
+	int64_t _5 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
+	int64_t _8 = 0;
 	_DECL_1DARRAY(_9);
 	int64_t _10 = 0;
 	int64_t _11 = 0;
@@ -101,16 +101,16 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_15);
 	void* _16;
 	_DECL_1DARRAY(_18);
-	uint16_t _19 = 0;
-	uint16_t _20 = 0;
-	uint16_t _21 = 0;
-	uint16_t _22 = 0;
-	uint16_t _23 = 0;
-	uint16_t _24 = 0;
-	uint16_t _25 = 0;
-	uint16_t _26 = 0;
-	uint16_t _27 = 0;
-	uint16_t _28 = 0;
+	int64_t _19 = 0;
+	int64_t _20 = 0;
+	int64_t _21 = 0;
+	int64_t _22 = 0;
+	int64_t _23 = 0;
+	int64_t _24 = 0;
+	int64_t _25 = 0;
+	int64_t _26 = 0;
+	int64_t _27 = 0;
+	int64_t _28 = 0;
 	_DECL_1DARRAY(_29);
 	void* _30;
 	//const %4 = 1 : int

@@ -10,6 +10,7 @@ import wyil.lang.Type;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 import wyopcl.translator.symbolic.pattern.BuildListFirstPattern;
+import wyopcl.translator.symbolic.pattern.LoopPattern;
 import wyopcl.translator.symbolic.pattern.AppendArrayPattern;
 import wyopcl.translator.symbolic.pattern.NullPattern;
 import wyopcl.translator.symbolic.pattern.Pattern;
@@ -46,7 +47,8 @@ public class PatternMatcher {
 	 * @return pattern. If not found, return null.
 	 */
 	public Pattern analyzePattern(FunctionOrMethod functionOrMethod){
-		Pattern pattern = null;		
+		Pattern pattern = null;	
+		
 		//Iterate over all the available patterns.
 		for(Class<? extends Pattern> avail_Pattern: avail_Patterns){
 			try {

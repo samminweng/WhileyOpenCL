@@ -3,9 +3,9 @@ int64_t f(int64_t x){
 	int64_t r = 0;
 	uint16_t _2 = 0;
 	uint16_t _3 = 0;
-	uint16_t _4 = 0;
-	uint32_t _5 = 0;
-	uint64_t _6 = 0;
+	int64_t _4 = 0;
+	int64_t _5 = 0;
+	int64_t _6 = 0;
 	//const %2 = 10 : int
 	_2 = 10;
 	//ifge %0, %2 goto blklab1 : int
@@ -38,11 +38,11 @@ blklab2:;
 }
 
 int main(int argc, char** args){
-	uint64_t a = 0;
+	int64_t a = 0;
 	uint64_t b = 0;
-	uint64_t c = 0;
-	uint64_t d = 0;
-	uint64_t _5 = 0;
+	int64_t c = 0;
+	int64_t d = 0;
+	int64_t _5 = 0;
 	uint16_t _6 = 0;
 	int64_t _7 = 0;
 	void* _8;
@@ -50,14 +50,14 @@ int main(int argc, char** args){
 	uint16_t _11 = 0;
 	int64_t _12 = 0;
 	void* _13;
-	uint64_t _15 = 0;
+	int64_t _15 = 0;
 	uint16_t _16 = 0;
 	int64_t _17 = 0;
 	void* _18;
-	uint64_t _20 = 0;
+	int64_t _20 = 0;
 	uint16_t _21 = 0;
 	void* _22;
-	uint64_t _24 = 0;
+	int64_t _24 = 0;
 	uint16_t _25 = 0;
 	int16_t _26 = 0;
 	void* _27;

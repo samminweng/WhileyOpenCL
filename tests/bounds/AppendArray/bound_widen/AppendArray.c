@@ -10,8 +10,8 @@ int64_t* append(_DECL_1DARRAY_PARAM(items), int64_t item, _DECL_1DARRAYSIZE_PARA
 	uint16_t _9 = 0;
 	uint16_t _10 = 0;
 	int64_t _11 = 0;
-	uint16_t _12 = 0;
-	uint16_t _13 = 0;
+	int64_t _12 = 0;
+	int64_t _13 = 0;
 	//const %4 = 0 : int
 	_4 = 0;
 	//lengthof %5 = %0 : int[]
@@ -139,7 +139,7 @@ blklab2:;
 int64_t* fastAppendArray(_DECL_1DARRAY_PARAM(data), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(output);
 	uint16_t pos = 0;
-	uint16_t size = 0;
+	int64_t size = 0;
 	_DECL_1DARRAY(output_1);
 	uint16_t size_1 = 0;
 	uint16_t _6 = 0;
@@ -154,20 +154,20 @@ int64_t* fastAppendArray(_DECL_1DARRAY_PARAM(data), _DECL_1DARRAYSIZE_PARAM_CALL
 	uint16_t _15 = 0;
 	int64_t _16 = 0;
 	uint16_t _17 = 0;
-	uint16_t _18 = 0;
+	int64_t _18 = 0;
 	int64_t _19 = 0;
 	uint16_t _20 = 0;
 	int64_t _21 = 0;
 	uint16_t _22 = 0;
-	uint16_t _23 = 0;
+	int64_t _23 = 0;
 	uint16_t _24 = 0;
 	uint16_t _25 = 0;
 	uint16_t _26 = 0;
 	_DECL_1DARRAY(_27);
 	uint16_t _28 = 0;
 	int64_t _29 = 0;
-	uint16_t _30 = 0;
-	uint16_t _31 = 0;
+	int64_t _30 = 0;
+	int64_t _31 = 0;
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %2 = %6  : int

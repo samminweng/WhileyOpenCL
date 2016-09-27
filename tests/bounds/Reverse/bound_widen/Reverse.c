@@ -12,11 +12,11 @@ int64_t* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENC
 	int64_t _10 = 0;
 	int64_t _11 = 0;
 	uint16_t _12 = 0;
-	uint16_t _13 = 0;
-	uint16_t _14 = 0;
+	int64_t _13 = 0;
+	int64_t _14 = 0;
 	int64_t _15 = 0;
-	int16_t _16 = 0;
-	uint16_t _17 = 0;
+	int64_t _16 = 0;
+	int64_t _17 = 0;
 	//lengthof %5 = %0 : int[]
 	_5 = ls_size;
 	//assign %2 = %5  : int

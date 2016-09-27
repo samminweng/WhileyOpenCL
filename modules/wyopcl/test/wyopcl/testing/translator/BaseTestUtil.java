@@ -347,7 +347,7 @@ public final class BaseTestUtil {
 							+ File.separator);
 				} else if(options[0].equals("pattern")){
 					func_name = options[1];
-					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "pattern"
+					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "pattern_"+func_name
 							+ File.separator);
 				} else{
 					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "copy_reduced_dealloc"
