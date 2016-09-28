@@ -157,8 +157,8 @@ int main(int argc, char** args){
 blklab6:;
 	//assert
 	}
-	//const %14 = 50000 : int
-	_14 = 50000;
+	//const %14 = 65537 : int
+	_14 = 65537;
 	//invoke (%13) = (%14) WhileLoop:f : function(int)->(int)
 	{
 		_13 = f(_14);
@@ -171,8 +171,8 @@ blklab6:;
 	{
 		printf("%"PRId64"\n", c);
 	}
-	//const %18 = 50000 : int
-	_18 = 50000;
+	//const %18 = 65537 : int
+	_18 = 65537;
 	//invoke (%17) = (%18) WhileLoop:f2 : function(int)->(int)
 	{
 		_17 = f2(_18);

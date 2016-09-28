@@ -286,7 +286,9 @@ public class Bounds implements Cloneable {
 			if (new_min == null || (new_min != null && old_min != null && new_min.compareTo(old_min) < 0)) {
 				this.widenLowerBound(var, new_min);
 			} else {
-				this.addLowerBound(var, new_min);
+				if(new_min != null && old_min == null){
+					this.addLowerBound(var, new_min);
+				}				
 			}
 
 			// Upper bounds

@@ -1,7 +1,7 @@
 #include "Reverse.h"
 int64_t* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
-	uint16_t i = 0;
+	int16_t i = 0;
 	_DECL_1DARRAY(r);
 	int64_t item = 0;
 	uint16_t _5 = 0;
@@ -12,10 +12,10 @@ int64_t* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENC
 	int64_t _10 = 0;
 	int64_t _11 = 0;
 	uint16_t _12 = 0;
-	int64_t _13 = 0;
+	uint16_t _13 = 0;
 	int64_t _14 = 0;
 	int64_t _15 = 0;
-	int64_t _16 = 0;
+	int16_t _16 = 0;
 	int64_t _17 = 0;
 	//lengthof %5 = %0 : int[]
 	_5 = ls_size;

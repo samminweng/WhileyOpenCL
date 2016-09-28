@@ -24,9 +24,9 @@ method main(System.Console sys):
     int b = f2(5)
     sys.out.println(b)
     assert a == b
-    int c = f(50000)
+    int c = f(65537)// 2^16 (65536)
     sys.out.println(c)
-    int d = f2(50000)
+    int d = f2(65537)
     sys.out.println(d)
     assert c == d
 

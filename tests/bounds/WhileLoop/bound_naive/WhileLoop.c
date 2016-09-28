@@ -1,14 +1,14 @@
 #include "WhileLoop.h"
 int64_t f(int64_t limit){
 	int64_t _1 = 0;
-	uint16_t i = 0;
+	uint32_t i = 0;
 	int64_t sum = 0;
 	uint16_t _4 = 0;
 	uint16_t _5 = 0;
 	int64_t _6 = 0;
 	int64_t _7 = 0;
 	uint16_t _8 = 0;
-	uint16_t _9 = 0;
+	uint32_t _9 = 0;
 	//const %4 = 0 : int
 	_4 = 0;
 	//assign %2 = %4  : int
@@ -59,7 +59,7 @@ int64_t f2(int64_t limit){
 	int32_t i = 0;
 	int64_t sum = 0;
 	int16_t _4 = 0;
-	uint16_t _5 = 0;
+	uint32_t _5 = 0;
 	uint16_t _6 = 0;
 	uint16_t _7 = 0;
 	int64_t _8 = 0;
@@ -113,10 +113,10 @@ int main(int argc, char** args){
 	uint16_t _10 = 0;
 	void* _11;
 	int64_t _13 = 0;
-	uint16_t _14 = 0;
+	uint32_t _14 = 0;
 	void* _15;
 	int64_t _17 = 0;
-	uint16_t _18 = 0;
+	uint32_t _18 = 0;
 	void* _19;
 	//const %6 = 5 : int
 	_6 = 5;
@@ -157,8 +157,8 @@ int main(int argc, char** args){
 blklab6:;
 	//assert
 	}
-	//const %14 = 50000 : int
-	_14 = 50000;
+	//const %14 = 65537 : int
+	_14 = 65537;
 	//invoke (%13) = (%14) WhileLoop:f : function(int)->(int)
 	{
 		_13 = f(_14);
@@ -171,8 +171,8 @@ blklab6:;
 	{
 		printf("%"PRId64"\n", c);
 	}
-	//const %18 = 50000 : int
-	_18 = 50000;
+	//const %18 = 65537 : int
+	_18 = 65537;
 	//invoke (%17) = (%18) WhileLoop:f2 : function(int)->(int)
 	{
 		_17 = f2(_18);
