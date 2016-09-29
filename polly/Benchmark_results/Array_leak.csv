@@ -1,0 +1,26 @@
+Memory Leak (bytes)
+TestCase	ProgramType	Parameter	CodeGen	Compiler	Thread	definite loss	indirect loss	possible loss	reachable loss
+Array	appendarray	100	naive	gcc	1	164816	32	0	0
+Array	appendarray	100	naive_dealloc	gcc	1	0	0	0	0
+Array	appendarray	100	copyreduced	gcc	1	41216	32	0	0
+Array	appendarray	100	copyreduced_dealloc	gcc	1	0	0	0	0
+Array	appendarray	1000	naive	gcc	1	16048016	40	0	0
+Array	appendarray	1000	naive_dealloc	gcc	1	0	0	0	0
+Array	appendarray	1000	copyreduced	gcc	1	4012016	40	0	0
+Array	appendarray	1000	copyreduced_dealloc	gcc	1	0	0	0	0
+Array	appendarray	10000	naive	gcc	1	1600304192	48	175824	0
+Array	appendarray	10000	naive_dealloc	gcc	1	0	0	0	0
+Array	appendarray	10000	copyreduced	gcc	1	399985792	48	134224	0
+Array	appendarray	10000	copyreduced_dealloc	gcc	1	0	0	0	0
+Array	populatearray	100	naive	gcc	1	9616	32	0	0
+Array	populatearray	100	naive_dealloc	gcc	1	0	0	0	0
+Array	populatearray	100	copyreduced	gcc	1	3216	32	0	0
+Array	populatearray	100	copyreduced_dealloc	gcc	1	0	0	0	0
+Array	populatearray	1000	naive	gcc	1	96016	40	0	0
+Array	populatearray	1000	naive_dealloc	gcc	1	0	0	0	0
+Array	populatearray	1000	copyreduced	gcc	1	32016	40	0	0
+Array	populatearray	1000	copyreduced_dealloc	gcc	1	0	0	0	0
+Array	populatearray	10000	naive	gcc	1	960016	48	0	0
+Array	populatearray	10000	naive_dealloc	gcc	1	0	0	0	0
+Array	populatearray	10000	copyreduced	gcc	1	320016	48	0	0
+Array	populatearray	10000	copyreduced_dealloc	gcc	1	0	0	0	0

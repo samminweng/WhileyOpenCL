@@ -61,7 +61,7 @@ BEGIN {
 	FS = "\n";
 	# Test case name
 	# testcases="Reverse newTicTacToe MergeSort BubbleSort MatrixMult Fibonacci GCD CoinGame SobelEdge LZ77 NQueens";
-	testcases="LZ77";
+	testcases="Array";
 
 	# Program Types
 	# programs["Reverse"]="original";
@@ -73,8 +73,9 @@ BEGIN {
 	# programs["GCD"]="original cached";
 	# programs["CoinGame"]="original single array";
 	# programs["SobelEdge"]="original";
-	programs["LZ77"]="appendarray populatearray";
+	# programs["LZ77"]="appendarray populatearray";
 	# programs["NQueens"]="original integer";
+	programs["Array"]="appendarray populatearray";
 
 	# Code Generation
 	# codegens = "naive_dealloc copyreduced copyreduced_dealloc";
@@ -92,8 +93,9 @@ BEGIN {
 	# parameters["GCD"]="100 150 200";
 	# parameters["CoinGame"]="1000 2000 3000";
 	# parameters["SobelEdge"] = "256 512 1024";
-	parameters["LZ77"]="small medium large";
+	# parameters["LZ77"]="small medium large";
 	# parameters["NQueens"]="8 10 12 14 15";
+	parameters["Array"]="10000 100000 1000000";
 
 	# The number of threads
 	#threads="1 2 4";

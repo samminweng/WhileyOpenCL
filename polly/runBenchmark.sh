@@ -249,14 +249,26 @@ init(){
 # exec SobelEdge original 512
 # exec SobelEdge original 1024
 
-# ## LZ77 test case
-init LZ77
-exec LZ77 appendarray small
-exec LZ77 appendarray medium
-exec LZ77 appendarray large
-exec LZ77 populatearray small
-exec LZ77 populatearray medium
-exec LZ77 populatearray large
+
+#######Array test case
+init Array
+exec Array appendarray 10000
+exec Array appendarray 100000
+exec Array appendarray 1000000
+
+exec Array populatearray 10000
+exec Array populatearray 100000
+exec Array populatearray 1000000
+
+
+# # ## LZ77 test case
+# init LZ77
+# exec LZ77 appendarray small
+# exec LZ77 appendarray medium
+# exec LZ77 appendarray large
+# exec LZ77 populatearray small
+# exec LZ77 populatearray medium
+# exec LZ77 populatearray large
 
 # ## NQueen test case
 # init NQueens
