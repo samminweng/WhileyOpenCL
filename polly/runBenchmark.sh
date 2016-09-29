@@ -251,12 +251,12 @@ init(){
 
 # ## LZ77 test case
 init LZ77
-exec LZ77 original small
-exec LZ77 original medium
-exec LZ77 original large
-exec LZ77 fastcompress small
-exec LZ77 fastcompress medium
-exec LZ77 fastcompress large
+exec LZ77 appendarray small
+exec LZ77 appendarray medium
+exec LZ77 appendarray large
+exec LZ77 populatearray small
+exec LZ77 populatearray medium
+exec LZ77 populatearray large
 
 # ## NQueen test case
 # init NQueens

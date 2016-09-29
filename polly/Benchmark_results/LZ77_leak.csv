@@ -1,18 +1,18 @@
 Memory Leak (bytes)
 TestCase	ProgramType	Parameter	CodeGen	Compiler	Thread	definite loss	indirect loss	possible loss	reachable loss
-LZ77	original	small	naive	gcc	1	23655	440	0	598
-LZ77	original	small	naive_dealloc	gcc	1	0	0	0	0
-LZ77	original	small	copyreduced	gcc	1	2412	440	0	598
-LZ77	original	small	copyreduced_dealloc	gcc	1	0	0	0	0
-LZ77	original	medium	naive	gcc	1	5006297	448	0	2150
-LZ77	original	medium	naive_dealloc	gcc	1	0	0	0	0
-LZ77	original	medium	copyreduced	gcc	1	9923	448	0	2150
-LZ77	original	medium	copyreduced_dealloc	gcc	1	0	0	0	0
-LZ77	fastcompress	small	naive	gcc	1	15112	440	0	598
-LZ77	fastcompress	small	naive_dealloc	gcc	1	0	0	0	0
-LZ77	fastcompress	small	copyreduced	gcc	1	932	440	0	598
-LZ77	fastcompress	small	copyreduced_dealloc	gcc	1	0	0	0	0
-LZ77	fastcompress	medium	naive	gcc	1	4965572	448	0	2150
-LZ77	fastcompress	medium	naive_dealloc	gcc	1	0	0	0	0
-LZ77	fastcompress	medium	copyreduced	gcc	1	4702	448	0	2150
-LZ77	fastcompress	medium	copyreduced_dealloc	gcc	1	0	0	0	0
+LZ77	appendarray	small	naive	gcc	1	23655	440	0	598
+LZ77	appendarray	small	naive_dealloc	gcc	1	0	0	0	0
+LZ77	appendarray	small	copyreduced	gcc	1	2412	440	0	598
+LZ77	appendarray	small	copyreduced_dealloc	gcc	1	0	0	0	0
+LZ77	appendarray	medium	naive	gcc	1	5006297	448	0	2150
+LZ77	appendarray	medium	naive_dealloc	gcc	1	0	0	0	0
+LZ77	appendarray	medium	copyreduced	gcc	1	9923	448	0	2150
+LZ77	appendarray	medium	copyreduced_dealloc	gcc	1	0	0	0	0
+LZ77	populatearray	small	naive	gcc	1	15168	440	0	598
+LZ77	populatearray	small	naive_dealloc	gcc	1	0	0	0	0
+LZ77	populatearray	small	copyreduced	gcc	1	932	440	0	598
+LZ77	populatearray	small	copyreduced_dealloc	gcc	1	0	0	0	0
+LZ77	populatearray	medium	naive	gcc	1	4965702	448	0	2150
+LZ77	populatearray	medium	naive_dealloc	gcc	1	0	0	0	0
+LZ77	populatearray	medium	copyreduced	gcc	1	4702	448	0	2150
+LZ77	populatearray	medium	copyreduced_dealloc	gcc	1	0	0	0	0

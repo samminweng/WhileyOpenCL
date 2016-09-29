@@ -53,7 +53,8 @@ function fastAppendArray(int[] data) -> (int[] output):
 	while size_1 < size:
 		output_1[size_1] = output[size_1]
 		size_1 = size_1 + 1
-	return output_1
+	output = output_1
+	return output
 
 method main(System.Console sys):
 	int[] data = [1, 2, 3, 4, 5]

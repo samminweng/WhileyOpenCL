@@ -73,7 +73,7 @@ BEGIN {
 	# programs["GCD"]="original cached";
 	# programs["CoinGame"]="original single array";
 	# programs["SobelEdge"]="original";
-	programs["LZ77"]="original fastcompress";
+	programs["LZ77"]="appendarray populatearray";
 	# programs["NQueens"]="original integer";
 
 	# Code Generation

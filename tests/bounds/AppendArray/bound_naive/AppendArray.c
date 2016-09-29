@@ -262,9 +262,11 @@ blklab7:;
 	}
 //.blklab6
 blklab6:;
-	//return %4
-	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(output_1);
-	return output_1;
+	//assign %1 = %4  : int[]
+	_COPY_1DARRAY_int64_t(output, output_1);
+	//return %1
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(output);
+	return output;
 	//return
 }
 
