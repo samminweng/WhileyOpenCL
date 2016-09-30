@@ -139,7 +139,7 @@ exec(){
 	## declare 4 kinds of code generation
 	#declare -a codegens=("naive" "naive_dealloc" "copyreduced" "copyreduced_dealloc")
 	## declare 3 kinds of code generation
-	declare -a codegens=("naive_dealloc" "copyreduced_dealloc")
+	declare -a codegens=("copyreduced_dealloc")
 	## Iterate each codegen
 	for codegen in "${codegens[@]}"
 	do
@@ -251,21 +251,21 @@ init(){
 
 
 #######Array test case
-init Array
-exec Array appendarray 10000
-exec Array appendarray 100000
-exec Array appendarray 1000000
+# init Array
+# exec Array appendarray 10000
+# exec Array appendarray 100000
+# exec Array appendarray 1000000
 
-exec Array populatearray 10000
-exec Array populatearray 100000
-exec Array populatearray 1000000
+# exec Array populatearray 10000
+# exec Array populatearray 100000
+# exec Array populatearray 1000000
 
 
 # # ## LZ77 test case
-# init LZ77
-# exec LZ77 appendarray small
-# exec LZ77 appendarray medium
-# exec LZ77 appendarray large
+init LZ77
+exec LZ77 appendarray small
+exec LZ77 appendarray medium
+exec LZ77 appendarray large
 # exec LZ77 populatearray small
 # exec LZ77 populatearray medium
 # exec LZ77 populatearray large

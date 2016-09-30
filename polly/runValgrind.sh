@@ -214,13 +214,13 @@ exec(){
 # exec SobelEdge original 128
 
 #######Array test case
-init Array
-exec Array appendarray 100
-exec Array appendarray 1000
-exec Array appendarray 10000
-exec Array populatearray 100
-exec Array populatearray 1000
-exec Array populatearray 10000
+# init Array
+# exec Array appendarray 100
+# exec Array appendarray 1000
+# exec Array appendarray 10000
+# exec Array populatearray 100
+# exec Array populatearray 1000
+# exec Array populatearray 10000
 
 # ####LZ77 test case
 # init LZ77
@@ -228,6 +228,7 @@ exec Array populatearray 10000
 # exec LZ77 appendarray medium
 # exec LZ77 populatearray small
 # exec LZ77 populatearray medium
+exec LZ77 appendarray large
 
 
 # # ### NQueen test case
