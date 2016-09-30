@@ -1019,7 +1019,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			switch (code.name.name()) {
 			case "Reader":
 				// Read a file name (an array of ASCII code) and output an file pointer
-				statements.add(indent+ lhs + " = Reader("+rhs+");");
+				statements.add(indent+ lhs + " = Reader("+rhs+",  "+rhs+"_size);");
 				break;
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);

@@ -7,7 +7,7 @@ import * from whiley.lang.System
 import whiley.lang.*
 
 method main(System.Console sys):
-    File.Reader file = File.Reader("small.in")
+    File.Reader file = File.Reader("medium.in")
     //File.Reader file = File.Reader(sys.args[0])
     byte[] data = file.readAll()
     sys.out.print_s("READ:         ")

@@ -57,7 +57,7 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 // Convert an array of bytes to an array of int64_t
 int64_t* fromBytes(BYTE* arr, size_t arr_size);
 // Return a file pointer
-FILE* Reader(int64_t* arr);
+FILE* Reader(int64_t* arr, size_t arr_size);
 BYTE* readAll(FILE *file, size_t* _size);
 
 /**

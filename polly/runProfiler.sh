@@ -206,9 +206,9 @@ init(){
 	rm -f "$profdir/"*.*
 }
 
-init CoinGame
-#exec CoinGame original gcc 40000 1
-exec CoinGame original clang 40000 1
+# init CoinGame
+# exec CoinGame original gcc 40000 1
+# exec CoinGame original clang 40000 1
 # exec original CoinGame polly 40000 1
 
 # exec single CoinGame gcc 40000 1

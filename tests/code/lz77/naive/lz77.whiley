@@ -113,7 +113,7 @@ function decompress(byte[] data) -> (byte[] output):
 
 method main(System.Console sys):
     // Create a byte array with repeated text
-    File.Reader file = File.Reader("small.in")
+    File.Reader file = File.Reader("medium.in")
     byte[] data = file.readAll()
     sys.out.print_s("Data:         ")
     sys.out.println_s(ASCII.fromBytes(data))
@@ -122,7 +122,7 @@ method main(System.Console sys):
     // Compress the data with LZ algorithm
     byte[] compress_data = compress(data)
     sys.out.print_s("COMPRESSED Data:   ")
-    sys.out.println_s(ASCII.fromBytes(compress_data))
+    //sys.out.println_s(ASCII.fromBytes(compress_data))
     sys.out.print(|compress_data|)
     sys.out.println_s(" bytes")
     // Decompress the data to a string
@@ -131,3 +131,5 @@ method main(System.Console sys):
     sys.out.println_s(ASCII.fromBytes(decompress_data))
     sys.out.print(|decompress_data|)
     sys.out.println_s(" bytes")
+    // Array size of 'data' array == Array size of 'decompress_data'
+    assert |data| == |decompress_data|

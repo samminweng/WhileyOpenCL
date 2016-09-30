@@ -442,18 +442,23 @@ int64_t* fromBytes(BYTE* input, size_t size){
 }
 
 // Read the input file name (ASCII code) and output a file pointer
-FILE* Reader(int64_t* arr){
+FILE* Reader(int64_t* arr, size_t arr_size){
 	// Chars array
-	char filename[1024];
+	char tmp[1024];
 	// Convert an array of ASCII code to an string
 	size_t i=0;
-	while(arr[i]!='\0'){
+	while(i<arr_size){
 		char c = arr[i];
-		filename[i] = c;
+		tmp[i] = c;
 		i = i + 1;
 	}
-	// Add the ending char
-	filename[i] = '\0';
+	// Add the ending (null-terminated)
+	tmp[i] = '\0';
+
+	char filename[arr_size+1];
+	// Copy 'tmp' string to filename;
+	strcpy(filename, tmp);
+	printf("%s\n", filename);
 
 	// Open a file pointer
 	FILE *fp = fopen(filename, "r");
@@ -485,8 +490,9 @@ BYTE* readAll(FILE *file, size_t* _size){
 		exit(-2);
 	}
 
-	// Read the file to 'arr' array
-	if(fgets(arr, size, file) == NULL){
+	// Read the file to 'arr' array. Note 'fgets' reads a string upto '\n'
+	fread(arr, size, 1, file);
+	if(arr == NULL){
 		fprintf(stderr, "fail to read file to the array at 'readAll' function in Util.c\n");
 		exit(-2);
 	}
