@@ -687,6 +687,17 @@ int main(int argc, char** args){
 blklab18:;
 	//assert
 	}
+	//assert
+	{
+		//ifeq %2, %4 goto blklab19 : byte[]
+		_IFEQ_ARRAY_BYTE(data, decompress_data, blklab19);
+		//fail
+		fprintf(stderr,"fail");
+		exit(-1);
+//.blklab19
+blklab19:;
+	//assert
+	}
 	//return
 	exit(0);
 }

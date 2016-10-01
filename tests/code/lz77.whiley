@@ -133,3 +133,5 @@ method main(System.Console sys):
     sys.out.println_s(" bytes")
     // Array size of 'data' array == Array size of 'decompress_data'
     assert |data| == |decompress_data|
+    // Verify the 'data' array 
+    assert data == decompress_data

@@ -1105,7 +1105,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * Generates the code for <code>Codes.If</code> code. For example, For
 	 * example, the byte-code: <code> ifeq %1, %38 goto blklab2 : [int]</code>
 	 * can be translated into C code:
-	 * <code>_IFEQ_ARRAY(_1, _38, blklab2);</code>
+	 * <code>_IFEQ_ARRAY_int64_t(_1, _38, blklab2);</code>
 	 * 
 	 * Note that _IFEQ_ARRAY macro checks if both of arrays are the same (1:
 	 * true, 0:false).
@@ -1134,11 +1134,20 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		List<String> statement = new ArrayList<String>();
 		// Added a special case to compare two arrays.
-		if (code.type(0) instanceof Type.Array) {
-			if (code.op.equals(Comparator.EQ)) {
-				// Use the '_IFEQ_ARRAY' macro to compare two arrays
-				statement.add(indent + "_IFEQ_ARRAY(" + lhs + ", " + rhs + ", " + code.target + ");");
+		if (code.type(0) instanceof Type.Array&& code.op.equals(Comparator.EQ)) {
+			// Get array element type
+			Type elem_type = stores.getArrayElementType((Type.Array)code.type(0));
+			// Compare two arrays
+			if(elem_type instanceof Type.Byte){
+				// Use the '_IFEQ_ARRAY_int64_t' macro to compare two arrays of integers
+				statement.add(indent + "_IFEQ_ARRAY_BYTE(" + lhs + ", " + rhs + ", " + code.target + ");");				
+			}else if(stores.isIntType(elem_type)){
+				// Use the '_IFEQ_ARRAY_int64_t' macro to compare two arrays of integers
+				statement.add(indent + "_IFEQ_ARRAY_int64_t(" + lhs + ", " + rhs + ", " + code.target + ");");
+			}else{
+				throw new RuntimeException("Not implemented");
 			}
+
 		} else {
 			statement.add(indent + "if(" + lhs
 			// The condition

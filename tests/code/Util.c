@@ -168,20 +168,36 @@ int64_t** convertArgsToIntArray(int argc, char** args){
 	return arr;
 }
 
-//Check if both arrays are the same. 1: true, 0: false.
-int isArrayEqual(int64_t* arr1, size_t arr1_size, int64_t* arr2, size_t arr2_size) {
+//Check if two arrays of integers are the same 
+bool isArrayEqual_int64_t(int64_t* arr1, size_t arr1_size, int64_t* arr2, size_t arr2_size) {
 	//Check if array size is the same.
 	if (arr1_size != arr2_size) {
-		return 0;
+		return false;
 	}
 	//Compare each element.
 	for (size_t i = 0; i < arr1_size; i++) {
 		if (arr1[i] != arr2[i]) {
-			return 0;
+			return false;
+		}
+	}
+	//Two arrays are the same. Return true
+	return true;
+}
+
+//Check if two arrays of BYTE are the same
+bool isArrayEqual_BYTE(BYTE* arr1, size_t arr1_size, BYTE* arr2, size_t arr2_size) {
+	//Check if array size is the same.
+	if (arr1_size != arr2_size) {
+		return false;
+	}
+	//Compare each element.
+	for (size_t i = 0; i < arr1_size; i++) {
+		if (arr1[i] != arr2[i]) {
+			return false;
 		}
 	}
 	//Both of arrays are the same. Return true
-	return 1;
+	return true;
 }
 /*
 //Create 2D array using an array of pointers, i.e. allocating each sub-array in different memory space

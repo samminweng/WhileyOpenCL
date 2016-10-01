@@ -41,7 +41,9 @@ int64_t** copy2DArray_int64_t(int64_t **arr, size_t x, size_t y);
 void free2DArray_int64_t(int64_t** ptr, size_t size);
 // Print out 2D array
 void printf2DArray_int64_t(int64_t** input, size_t input_size, size_t input_size_size);
-int isArrayEqual(int64_t* arr1, size_t arr1_size, int64_t* arr2, size_t arr2_size);
+// Compare two arrays
+bool isArrayEqual_int64_t(int64_t* arr1, size_t arr1_size, int64_t* arr2, size_t arr2_size);
+bool isArrayEqual_BYTE(BYTE* arr1, size_t arr1_size, BYTE* arr2, size_t arr2_size);
 /**
  * Other built-in functions
  */
@@ -347,4 +349,6 @@ BYTE* readAll(FILE *file, size_t* _size);
 // Slice an array 'b' into a new array 'a' 
 #define _SLICE_ARRAY(a, b, start, end) a = slice(b, b##_size, start, end); a##_size = end - start;
 // Compare two arrays of integers
-#define _IFEQ_ARRAY(a, b, blklab) if(isArrayEqual(a, a##_size, b, b##_size)==1){goto blklab;}
+#define _IFEQ_ARRAY_int64_t(a, b, blklab) if(isArrayEqual_int64_t(a, a##_size, b, b##_size)){goto blklab;}
+// Compare two arrays of BYTE
+#define _IFEQ_ARRAY_BYTE(a, b, blklab) if(isArrayEqual_BYTE(a, a##_size, b, b##_size)==1){goto blklab;}
