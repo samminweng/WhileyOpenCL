@@ -60,31 +60,36 @@ function append_byte(byte[] items, byte item) -> (byte[] nitems):
 	return nitems
 
 // Append 'u1' to the byte array
-function write_u1(byte[] bytes, int u1) -> (byte[] output):
+/*function write_u1(byte[] bytes, int u1) -> (byte[] output):
     //requires u1 >= 0 && u1 <= 255:
     output = append_byte(bytes, Int.toUnsignedByte(u1))
     return output
+*/
 
 // Compress 'input' array into 'output' array
 function compress(byte[] data) -> (byte[] output):
-	nat pos = 0
-	// Initialize the output array of bytes
-	output = [0b;0]
-	// Iterate each byte in 'data'
-	while pos < |data|:
-		Match m = findLongestMatch(data, pos)
-		int offset = m.offset
-		int len = m.len
-		output = write_u1(output, offset)
-		if offset == 0:
-			output = append_byte(output, data[pos])
-			pos = pos + 1
-		else:
-			output = write_u1(output, len)
-			pos = pos + len
-	   // Print out 'output' byte array
-	   //sys.out.println_s(ASCII.fromBytes(output.items))
-	return output
+    nat pos = 0
+    // Initialize the output array of bytes
+    output = [0b;0]
+    // Iterate each byte in 'data'
+    while pos < |data|:
+        Match m = findLongestMatch(data, pos)
+        // Encode the match to 'offset-length' pair
+        // The distance to the longest match
+        byte offset = Int.toUnsignedByte(m.offset)
+        // The length of the match
+        byte length = Int.toUnsignedByte(m.len)
+        if offset == 00000000b:
+            // No match is found. Put the first byte of look-ahead array
+            length = data[pos]
+            pos = pos + 1
+        else:
+            // Skip the matched bytes
+            pos = pos + m.len
+        // Write 'offset-length' pair to the output array 
+        output = append_byte(output, offset)
+        output = append_byte(output, length)
+    return output
 
 // Decompress 'input' array to a string
 function decompress(byte[] data) -> (byte[] output):

@@ -229,49 +229,30 @@ blklab6:;
 	//return
 }
 
-BYTE* write_u1(BYTE* bytes, size_t bytes_size, int64_t u1, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
-	_DECL_1DARRAY_BYTE(output);
-	_DECL_1DARRAY_BYTE(_3);
-	BYTE _4;
-	//invoke (%4) = (%1) whiley/lang/Int:toUnsignedByte : function(whiley/lang/Int:u8)->(byte)
-	{
-		_4 = (BYTE)u1;
-	}
-	//invoke (%3) = (%0, %4) lz77:append_byte : function(byte[],byte)->(byte[])
-	{
-		void* bytes_tmp;
-		_3 = append_byte(_COPY_1DARRAY_PARAM_BYTE(bytes), _4, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
-	}
-	//assign %2 = %3  : byte[]
-	_COPY_1DARRAY_BYTE(output, _3);
-	//return %2
-	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(output);
-	return output;
-	//return
-}
-
 BYTE* compress(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(output);
 	int64_t pos = 0;
 	Match* m;
-	int64_t offset = 0;
-	int64_t len = 0;
+	BYTE offset;
+	BYTE length;
 	int64_t _6 = 0;
 	BYTE _7;
 	int64_t _8 = 0;
 	_DECL_1DARRAY_BYTE(_9);
 	int64_t _10 = 0;
 	Match* _11;
-	int64_t _12 = 0;
+	BYTE _12;
 	int64_t _13 = 0;
-	_DECL_1DARRAY_BYTE(_14);
+	BYTE _14;
 	int64_t _15 = 0;
-	_DECL_1DARRAY_BYTE(_16);
+	BYTE _16;
 	BYTE _17;
 	int64_t _18 = 0;
 	int64_t _19 = 0;
-	_DECL_1DARRAY_BYTE(_20);
+	int64_t _20 = 0;
 	int64_t _21 = 0;
+	_DECL_1DARRAY_BYTE(_22);
+	_DECL_1DARRAY_BYTE(_23);
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %2 = %6  : int
@@ -284,7 +265,7 @@ BYTE* compress(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFER
 	_NEW_1DARRAY_BYTE(_9, _8, _7);
 	//assign %1 = %9  : byte[]
 	_COPY_1DARRAY_BYTE(output, _9);
-	//loop (%1, %2, %3, %4, %5, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21)
+	//loop (%1, %2, %3, %4, %5, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23)
 	while(true){
 		//lengthof %10 = %0 : byte[]
 		_10 = data_size;
@@ -297,34 +278,30 @@ BYTE* compress(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFER
 		}
 		//assign %3 = %11  : {int len,int offset}
 		m = copy_Match(_11);
-		//fieldload %12 = %3 offset : {int len,int offset}
-		_12 = m->offset;
-		//assign %4 = %12  : int
-		offset = _12;
-		//fieldload %13 = %3 len : {int len,int offset}
-		_13 = m->len;
-		//assign %5 = %13  : int
-		len = _13;
-		//invoke (%14) = (%1, %4) lz77:write_u1 : function(byte[],int)->(byte[])
+		//fieldload %13 = %3 offset : {int len,int offset}
+		_13 = m->offset;
+		//invoke (%12) = (%13) whiley/lang/Int:toUnsignedByte : function(whiley/lang/Int:u8)->(byte)
 		{
-			void* output_tmp;
-			_14 = write_u1(_COPY_1DARRAY_PARAM_BYTE(output), offset, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_14));
+			_12 = (BYTE)_13;
 		}
-		//assign %1 = %14  : byte[]
-		_COPY_1DARRAY_BYTE(output, _14);
-		//const %15 = 0 : int
-		_15 = 0;
-		//ifne %4, %15 goto blklab10 : int
-		if(offset!=_15){goto blklab10;}
+		//assign %4 = %12  : byte
+		offset = _12;
+		//fieldload %15 = %3 len : {int len,int offset}
+		_15 = m->len;
+		//invoke (%14) = (%15) whiley/lang/Int:toUnsignedByte : function(whiley/lang/Int:u8)->(byte)
+		{
+			_14 = (BYTE)_15;
+		}
+		//assign %5 = %14  : byte
+		length = _14;
+		//const %16 = 00000000b : byte
+		_16 = 0b00000000;
+		//ifne %4, %16 goto blklab10 : byte
+		if(offset!=_16){goto blklab10;}
 		//indexof %17 = %0, %2 : byte[]
 		_17=data[pos];
-		//invoke (%16) = (%1, %17) lz77:append_byte : function(byte[],byte)->(byte[])
-		{
-			void* output_tmp;
-			_16 = append_byte(_COPY_1DARRAY_PARAM_BYTE(output), _17, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
-		}
-		//assign %1 = %16  : byte[]
-		_COPY_1DARRAY_BYTE(output, _16);
+		//assign %5 = %17  : byte
+		length = _17;
 		//const %18 = 1 : int
 		_18 = 1;
 		//add %19 = %2, %18 : int
@@ -335,19 +312,28 @@ BYTE* compress(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFER
 		goto blklab11;
 //.blklab10
 blklab10:;
-		//invoke (%20) = (%1, %5) lz77:write_u1 : function(byte[],int)->(byte[])
-		{
-			void* output_tmp;
-			_20 = write_u1(_COPY_1DARRAY_PARAM_BYTE(output), len, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
-		}
-		//assign %1 = %20  : byte[]
-		_COPY_1DARRAY_BYTE(output, _20);
-		//add %21 = %2, %5 : int
-		_21=pos+len;
+		//fieldload %20 = %3 len : {int len,int offset}
+		_20 = m->len;
+		//add %21 = %2, %20 : int
+		_21=pos+_20;
 		//assign %2 = %21  : int
 		pos = _21;
 //.blklab11
 blklab11:;
+		//invoke (%22) = (%1, %4) lz77:append_byte : function(byte[],byte)->(byte[])
+		{
+			void* output_tmp;
+			_22 = append_byte(_COPY_1DARRAY_PARAM_BYTE(output), offset, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
+		}
+		//assign %1 = %22  : byte[]
+		_COPY_1DARRAY_BYTE(output, _22);
+		//invoke (%23) = (%1, %5) lz77:append_byte : function(byte[],byte)->(byte[])
+		{
+			void* output_tmp;
+			_23 = append_byte(_COPY_1DARRAY_PARAM_BYTE(output), length, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
+		}
+		//assign %1 = %23  : byte[]
+		_COPY_1DARRAY_BYTE(output, _23);
 //.blklab9
 blklab9:;
 	}
