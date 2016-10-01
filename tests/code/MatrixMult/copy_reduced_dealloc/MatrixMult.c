@@ -151,6 +151,7 @@ Matrix* multiply(Matrix* A, _DECL_DEALLOC_PARAM(A), Matrix* B, _DECL_DEALLOC_PAR
 				_REMOVE_DEALLOC(_20);
 				//indexof %21 = %20, %4 : int[][]
 				_21=_20[i];
+				_21_size = _20_size_size;
 				_REMOVE_DEALLOC(_21);
 				//indexof %22 = %21, %7 : int[]
 				_22=_21[k];
@@ -160,6 +161,7 @@ Matrix* multiply(Matrix* A, _DECL_DEALLOC_PARAM(A), Matrix* B, _DECL_DEALLOC_PAR
 				_REMOVE_DEALLOC(_23);
 				//indexof %24 = %23, %7 : int[][]
 				_24=_23[k];
+				_24_size = _23_size_size;
 				_REMOVE_DEALLOC(_24);
 				//indexof %25 = %24, %5 : int[]
 				_25=_24[j];
@@ -282,6 +284,7 @@ void printMat(FILE* sys, Matrix* A, _DECL_DEALLOC_PARAM(A)){
 			_REMOVE_DEALLOC(_10);
 			//indexof %11 = %10, %2 : int[][]
 			_11=_10[i];
+			_11_size = _10_size_size;
 			_REMOVE_DEALLOC(_11);
 			//indexof %12 = %11, %3 : int[]
 			_12=_11[j];
@@ -507,6 +510,7 @@ int main(int argc, char** args){
 		_9=max-_8;
 		//indexof %10 = %7, %9 : int[][]
 		_10=_7[_9];
+		_10_size = _7_size_size;
 		_REMOVE_DEALLOC(_10);
 		//const %11 = 1 : int
 		_11 = 1;
@@ -549,6 +553,7 @@ blklab27:;
 		_19=max-_18;
 		//indexof %20 = %17, %19 : int[][]
 		_20=_17[_19];
+		_20_size = _17_size_size;
 		_REMOVE_DEALLOC(_20);
 		//const %21 = 1 : int
 		_21 = 1;
@@ -593,6 +598,7 @@ blklab28:;
 		_29=max-_28;
 		//indexof %30 = %27, %29 : int[][]
 		_30=_27[_29];
+		_30_size = _27_size_size;
 		_REMOVE_DEALLOC(_30);
 		//const %31 = 1 : int
 		_31 = 1;

@@ -164,7 +164,7 @@ int main(int argc, char** args){
 		_19[0] = _9; _19[1] = _10; _19[2] = _11; _19[3] = _12; _19[4] = _13; _19[5] = _14; _19[6] = _15; _19[7] = _16; _19[8] = _17; _19[9] = _18; 
 		_ADD_DEALLOC(_19);
 		//ifeq %2, %19 goto blklab2 : int[]
-		_IFEQ_ARRAY(arr, _19, blklab2);
+		_IFEQ_ARRAY_int64_t(arr, _19, blklab2);
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);

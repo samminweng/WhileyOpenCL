@@ -101,7 +101,7 @@ detectleaks(){
 	## LZ test case
 	case $testcase in
 		"LZ77")
-			valgrind --tool=memcheck "--log-file=$result" ./out/"$executable" "$basedir/polly/$testcase/$parameter.in"
+			valgrind --tool=memcheck "--log-file=$result" ./out/"$executable" "$basedir/polly/$testcase/$parameter"
 			;;
 		*)
 			## Other cases
@@ -223,13 +223,11 @@ exec(){
 # exec Array populatearray 10000
 
 # ####LZ77 test case
-# init LZ77
-# exec LZ77 appendarray small
-# exec LZ77 appendarray medium
-# exec LZ77 populatearray small
-# exec LZ77 populatearray medium
-exec LZ77 appendarray large
-
+init LZ77
+exec LZ77 appendarray "small.in"
+exec LZ77 appendarray "medium.in"
+exec LZ77 populatearray "small.in"
+exec LZ77 populatearray "medium.in"
 
 # # ### NQueen test case
 # init NQueens

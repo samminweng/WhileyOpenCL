@@ -251,7 +251,7 @@ int main(int argc, char** args){
 		_17[0] = _12; _17[1] = _13; _17[2] = _14; _17[3] = _15; _17[4] = _16; 
 		_ADD_DEALLOC(_17);
 		//ifeq %1, %17 goto blklab5 : int[]
-		_IFEQ_ARRAY(ys, _17, blklab5);
+		_IFEQ_ARRAY_int64_t(ys, _17, blklab5);
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -309,7 +309,7 @@ blklab5:;
 		_30[0] = _26; _30[1] = _27; _30[2] = _28; _30[3] = _29; 
 		_ADD_DEALLOC(_30);
 		//ifeq %1, %30 goto blklab6 : int[]
-		_IFEQ_ARRAY(ys, _30, blklab6);
+		_IFEQ_ARRAY_int64_t(ys, _30, blklab6);
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -367,7 +367,7 @@ blklab6:;
 		_43[0] = _39; _43[1] = _40; _43[2] = _41; _43[3] = _42; 
 		_ADD_DEALLOC(_43);
 		//ifeq %1, %43 goto blklab7 : int[]
-		_IFEQ_ARRAY(ys, _43, blklab7);
+		_IFEQ_ARRAY_int64_t(ys, _43, blklab7);
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -429,7 +429,7 @@ blklab7:;
 		_58[0] = _53; _58[1] = _54; _58[2] = _55; _58[3] = _56; _58[4] = _57; 
 		_ADD_DEALLOC(_58);
 		//ifeq %1, %58 goto blklab8 : int[]
-		_IFEQ_ARRAY(ys, _58, blklab8);
+		_IFEQ_ARRAY_int64_t(ys, _58, blklab8);
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -519,7 +519,7 @@ blklab9:;
 		_79[0] = _69; _79[1] = _70; _79[2] = _71; _79[3] = _72; _79[4] = _73; _79[5] = _74; _79[6] = _75; _79[7] = _76; _79[8] = _77; _79[9] = _78; 
 		_ADD_DEALLOC(_79);
 		//ifeq %4, %79 goto blklab11 : int[]
-		_IFEQ_ARRAY(arr, _79, blklab11);
+		_IFEQ_ARRAY_int64_t(arr, _79, blklab11);
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);

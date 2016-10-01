@@ -1389,6 +1389,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Check if lhs is a structure. If so, then lhs is a substructure
 		Type lhs_type = stores.getRawType(code.target(0), function);
 		if (stores.isCompoundType(lhs_type)) {
+			// Check if the lhs_type is an array
+			if(lhs_type instanceof Type.Array){
+				// Update the array size at left-handed size 
+				statement.add(indent + lhs+"_size = "+rhs+"_size_size;");
+			}
+			
 			// Add lhs to substructure set
 			stores.addSubStructure(code.target(0), function);
 		}

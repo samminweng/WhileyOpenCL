@@ -53,7 +53,7 @@ void println_s(int64_t* input, size_t input_size);
 // Parse a string into an integer
 int64_t* parseStringToInt(int64_t* arr);
 // 1D Array
-int64_t** convertArgsToIntArray(int argc, char** args);
+int64_t** convertArgsToIntArray(int argc, char** args, size_t *arr_size, size_t *arr_size_size);
 // ArrayList Operators
 int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 // Convert an array of bytes to an array of int64_t
@@ -343,7 +343,7 @@ BYTE* readAll(FILE *file, size_t* _size);
 //Nullify the array variable
 #define _NULLIFY(a) a = NULL;
 // Converts command line arguments into integer arrays
-#define _CONV_ARGS(a) a = convertArgsToIntArray(argc, args); a##_size = argc - 1;
+#define _CONV_ARGS(a) a = convertArgsToIntArray(argc, args, &a##_size, &a##_size_size);
 // Parse a string into an integer
 #define _STR_TO_INT(a, b) a = parseStringToInt(b);
 // Slice an array 'b' into a new array 'a' 

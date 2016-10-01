@@ -49,23 +49,33 @@ function findLongestMatch(byte[] data, nat pos) -> (Match m):
 // Append a byte to the byte array
 // This is temporary and should be removed
 function append_byte(byte[] items, byte item) -> (byte[] nitems):
-	//ensures |nitems| == |items| + 1:
-	//
-	nitems = [0b; |items| + 1]
-	int i = 0
-	//
-	while i < |items|:
-		nitems[i] = items[i]
-		i = i + 1
-	//
-	nitems[i] = item
-	return nitems
+    //ensures |nitems| == |items| + 1:
+    //
+    nitems = [0b; |items| + 1]
+    int i = 0
+    //
+    while i < |items|:
+        nitems[i] = items[i]
+        i = i + 1
+    //
+    nitems[i] = item
+    return nitems
 
 // Append 'u1' to the byte array
-function write_u1(byte[] bytes, int u1) -> (byte[] output):
+/*function write_u1(byte[] bytes, int u1) -> (byte[] output):
     //requires u1 >= 0 && u1 <= 255:
     output = append_byte(bytes, Int.toUnsignedByte(u1))
     return output
+*/
+
+// Populate the input array to the array of given array size
+function populate(byte[] items, nat size) -> (byte[] nitems):
+    nitems = [0b; size]
+    int i = 0
+    while i < size:
+        nitems[i] = items[i]
+        i = i + 1
+    return nitems
 
 /* 
 * Pre-allocate the output array with extra space and then copy output array
@@ -81,30 +91,24 @@ function compress(byte[] data) -> (byte[] output):
     // Iterate each byte in 'data'
     while pos < |data|:
         Match m = findLongestMatch(data, pos)
-        int offset = m.offset
-        int len = m.len
-        //output = write_u1(output, offset)
-        output[size] = Int.toUnsignedByte(offset)
-        size = size + 1
-        if offset == 0:
-            //output = append_byte(output, data[pos])
-            output[size] = data[pos]
-            size = size + 1
+        // Encode the match to 'offset-length' pair
+        byte offset = Int.toUnsignedByte(m.offset)
+        byte length = Int.toUnsignedByte(m.len)
+        if offset == 00000000b:
+            // Put the next byte
+            length = data[pos]
             pos = pos + 1
         else:
-            //output = write_u1(output, len)
-            output[size] = Int.toUnsignedByte(len)
-            size = size + 1
-            pos = pos + len
+            // Skip the matched bytes
+            pos = pos + m.len
+        // write the encoded pair
+        output[size] = offset
+        size = size + 1
+        output[size] = length
+        size = size + 1
     // Reallocate the output array
-    byte[] output2 = [0b;size]
-    // Copy 'output' array to 'output2' array
-    nat size2 = 0
-    while size2 < size:
-        output2[size2] = output[size2]
-        size2 = size2 + 1
+    output = populate(output, size)
     // Return the array
-    output = output2
     return output
 
 // Decompress 'input' array to a string
@@ -147,8 +151,10 @@ method main(System.Console sys):
     sys.out.print(|compress_data|)
     sys.out.println_s(" bytes")
     // Decompress the data to a string
-    //byte[] decompress_data = decompress(compress_data)
-    //sys.out.print_s("DECOMPRESSED:   ")
-    //sys.out.println_s(ASCII.fromBytes(decompress_data))
-    //sys.out.print(|decompress_data|)
-    //sys.out.println_s(" bytes")
+    byte[] decompress_data = decompress(compress_data)
+    sys.out.print_s("DECOMPRESSED:   ")
+    sys.out.println_s(ASCII.fromBytes(decompress_data))
+    sys.out.print(|decompress_data|)
+    sys.out.println_s(" bytes")
+    assert |data| == |decompress_data|
+    assert data == decompress_data

@@ -411,7 +411,7 @@ blklab23:;
 		_46[0] = _37; _46[1] = _38; _46[2] = _39; _46[3] = _40; _46[4] = _41; _46[5] = _42; _46[6] = _43; _46[7] = _44; _46[8] = _45; 
 		_ADD_DEALLOC(_46);
 		//ifeq %36, %46 goto blklab25 : int[]
-		_IFEQ_ARRAY(_36, _46, blklab25);
+		_IFEQ_ARRAY_int64_t(_36, _46, blklab25);
 //.blklab26
 blklab26:;
 		//fail

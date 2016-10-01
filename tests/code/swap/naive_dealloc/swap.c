@@ -105,7 +105,7 @@ int main(int argc, char** args){
 		_21[0] = _16; _21[1] = _17; _21[2] = _18; _21[3] = _19; _21[4] = _20; 
 		_ADD_DEALLOC(_21);
 		//ifeq %1, %21 goto blklab0 : int[]
-		_IFEQ_ARRAY(a, _21, blklab0);
+		_IFEQ_ARRAY_int64_t(a, _21, blklab0);
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -131,7 +131,7 @@ blklab0:;
 		_27[0] = _22; _27[1] = _23; _27[2] = _24; _27[3] = _25; _27[4] = _26; 
 		_ADD_DEALLOC(_27);
 		//ifeq %2, %27 goto blklab1 : int[]
-		_IFEQ_ARRAY(b, _27, blklab1);
+		_IFEQ_ARRAY_int64_t(b, _27, blklab1);
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);

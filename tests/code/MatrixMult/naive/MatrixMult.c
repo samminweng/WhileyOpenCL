@@ -127,12 +127,14 @@ Matrix* multiply(Matrix* A, Matrix* B){
 				_UPDATE_2DARRAY(_20, A->data);
 				//indexof %21 = %20, %4 : int[][]
 				_21=_20[i];
+				_21_size = _20_size_size;
 				//indexof %22 = %21, %7 : int[]
 				_22=_21[k];
 				//fieldload %23 = %1 data : {int[][] data,int height,int width}
 				_UPDATE_2DARRAY(_23, B->data);
 				//indexof %24 = %23, %7 : int[][]
 				_24=_23[k];
+				_24_size = _23_size_size;
 				//indexof %25 = %24, %5 : int[]
 				_25=_24[j];
 				//mul %26 = %22, %25 : int
@@ -236,6 +238,7 @@ void printMat(FILE* sys, Matrix* A){
 			_UPDATE_2DARRAY(_10, A->data);
 			//indexof %11 = %10, %2 : int[][]
 			_11=_10[i];
+			_11_size = _10_size_size;
 			//indexof %12 = %11, %3 : int[]
 			_12=_11[j];
 			//indirectinvoke () = %9 (%12) : method(any)->()
@@ -415,6 +418,7 @@ int main(int argc, char** args){
 		_9=max-_8;
 		//indexof %10 = %7, %9 : int[][]
 		_10=_7[_9];
+		_10_size = _7_size_size;
 		//const %11 = 1 : int
 		_11 = 1;
 		//sub %12 = %1, %11 : int
@@ -450,6 +454,7 @@ blklab27:;
 		_19=max-_18;
 		//indexof %20 = %17, %19 : int[][]
 		_20=_17[_19];
+		_20_size = _17_size_size;
 		//const %21 = 1 : int
 		_21 = 1;
 		//sub %22 = %1, %21 : int
@@ -487,6 +492,7 @@ blklab28:;
 		_29=max-_28;
 		//indexof %30 = %27, %29 : int[][]
 		_30=_27[_29];
+		_30_size = _27_size_size;
 		//const %31 = 1 : int
 		_31 = 1;
 		//sub %32 = %1, %31 : int

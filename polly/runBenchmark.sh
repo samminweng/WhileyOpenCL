@@ -114,7 +114,7 @@ compileAndRun(){
 		## LZ test case
 		case $testcase in
 			"LZ77")
-				timeout $TIMEOUT out/"$executable.out" "$basedir/polly/$testcase/$parameter.in" >> $result 
+				timeout $TIMEOUT out/"$executable.out" "$basedir/polly/$testcase/$parameter" >> $result 
 				;;
 			*)
 				## Other cases
@@ -263,12 +263,12 @@ init(){
 
 # # ## LZ77 test case
 init LZ77
-exec LZ77 appendarray small
-exec LZ77 appendarray medium
-exec LZ77 appendarray large
-# exec LZ77 populatearray small
-# exec LZ77 populatearray medium
-# exec LZ77 populatearray large
+exec LZ77 appendarray "small.in"
+exec LZ77 appendarray "medium.in"
+exec LZ77 appendarray "large.in"
+exec LZ77 populatearray "small.in"
+exec LZ77 populatearray "medium.in"
+exec LZ77 populatearray "large.in"
 
 # ## NQueen test case
 # init NQueens
