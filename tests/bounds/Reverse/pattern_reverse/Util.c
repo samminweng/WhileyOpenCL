@@ -102,7 +102,7 @@ int64_t* parseStringToInt(int64_t* arr){
  *  The arr_size is passed by reference, so its value is updated after
  *  the function call.
  **/
-int64_t** convertArgsToIntArray(int argc, char** args){
+int64_t** convertArgsToIntArray(int argc, char** args, size_t *arr_size, size_t *arr_size_size){
 	int64_t** arr;
 	//Check if there is any command line argument
 	if(argc < 2){
@@ -116,72 +116,99 @@ int64_t** convertArgsToIntArray(int argc, char** args){
 		exit(-2);
 	}
 
+	// Update the output array size
+	*arr_size = argc -1;
+
 	//Skip 1st arguement as it is the exec file name.
 	for(size_t i=1;i<argc;i++){
 		// Array index
 		size_t index=i-1;
 		// The length of each argument
-		size_t max=0;
+		size_t length=0;
 		// Check if the argument is an integer
 		if(isdigit(args[i][0])){
 			// Convert an integer into an array of digits
 			// Calculate the array size
-			while(args[i][max] != '\0'){
-				if(!isdigit(args[i][max])){
+			while(args[i][length] != '\0'){
+				if(!isdigit(args[i][length])){
 					fprintf(stderr,"None numbers is passed via command line arguments\n");
 					exit(-2);
 				}
-				max++;
+				length++;
 			}
 
 			//Allocate the array of arr[arr_size]
-			arr[index] = (int64_t*)malloc((max+1)*sizeof(int64_t));
+			arr[index] = (int64_t*)malloc((length+1)*sizeof(int64_t));
 
 			//Fill in the array
 			size_t j;
-			for(j=0;j<max;j++){
+			for(j=0;j<length;j++){
 				arr[index][j] = args[i][j] - '0';
 			}
 			//Add '\0' to indicate the end of the array.
 			arr[index][j] = -1;
+
+			// Update the array size with length
+			*arr_size_size = length + 1;
+
 		}else{
 			// Convert a string to an array of ASCII code (integer)
 			//And calculate the arr_size
-			while(args[i][max] != '\0'){
-				max++;
+			while(args[i][length] != '\0'){
+				length++;
 			}
 			//Allocate the array of arr[arr_size]
-			arr[index] = (int64_t*)malloc((max+1)*sizeof(int64_t));
+			arr[index] = (int64_t*)malloc((length+1)*sizeof(int64_t));
 
 			//Fill in the array
 			size_t j;
-			for(j=0;j<max;j++){
+			for(j=0;j<length;j++){
 				// Convert the char to integers
 				int64_t long_i = args[i][j];
 				arr[index][j] = long_i;
 			}
 			//Add '\0' to indicate the end of the array.
 			arr[index][j] = '\0';
-		}
 
+			// Update the array size with length
+			*arr_size_size = length + 1;
+
+		}
 	}
+
 	return arr;
 }
 
-//Check if both arrays are the same. 1: true, 0: false.
-int isArrayEqual(int64_t* arr1, size_t arr1_size, int64_t* arr2, size_t arr2_size) {
+//Check if two arrays of integers are the same 
+bool isArrayEqual_int64_t(int64_t* arr1, size_t arr1_size, int64_t* arr2, size_t arr2_size) {
 	//Check if array size is the same.
 	if (arr1_size != arr2_size) {
-		return 0;
+		return false;
 	}
 	//Compare each element.
 	for (size_t i = 0; i < arr1_size; i++) {
 		if (arr1[i] != arr2[i]) {
-			return 0;
+			return false;
+		}
+	}
+	//Two arrays are the same. Return true
+	return true;
+}
+
+//Check if two arrays of BYTE are the same
+bool isArrayEqual_BYTE(BYTE* arr1, size_t arr1_size, BYTE* arr2, size_t arr2_size) {
+	//Check if array size is the same.
+	if (arr1_size != arr2_size) {
+		return false;
+	}
+	//Compare each element.
+	for (size_t i = 0; i < arr1_size; i++) {
+		if (arr1[i] != arr2[i]) {
+			return false;
 		}
 	}
 	//Both of arrays are the same. Return true
-	return 1;
+	return true;
 }
 /*
 //Create 2D array using an array of pointers, i.e. allocating each sub-array in different memory space
@@ -442,18 +469,23 @@ int64_t* fromBytes(BYTE* input, size_t size){
 }
 
 // Read the input file name (ASCII code) and output a file pointer
-FILE* Reader(int64_t* arr){
+FILE* Reader(int64_t* arr, size_t arr_size){
 	// Chars array
-	char filename[1024];
+	char tmp[1024];
 	// Convert an array of ASCII code to an string
 	size_t i=0;
-	while(arr[i]!='\0'){
+	while(i<arr_size){
 		char c = arr[i];
-		filename[i] = c;
+		tmp[i] = c;
 		i = i + 1;
 	}
-	// Add the ending char
-	filename[i] = '\0';
+	// Add the ending (null-terminated)
+	tmp[i] = '\0';
+
+	char filename[arr_size+1];
+	// Copy 'tmp' string to filename;
+	strcpy(filename, tmp);
+	//printf("%s\n", filename);
 
 	// Open a file pointer
 	FILE *fp = fopen(filename, "r");
@@ -485,8 +517,10 @@ BYTE* readAll(FILE *file, size_t* _size){
 		exit(-2);
 	}
 
-	// Read the file to 'arr' array
-	if(fgets(arr, size, file) == NULL){
+	// Read the file to 'arr' array. Note 'fgets' reads a string upto '\n'
+	// The return of 'fread' function is 0 when the file is successfully loaded to array
+	size_t result = fread(arr, size, 1, file);
+	if(result != 0){
 		fprintf(stderr, "fail to read file to the array at 'readAll' function in Util.c\n");
 		exit(-2);
 	}

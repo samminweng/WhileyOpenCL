@@ -67,7 +67,7 @@ public abstract class LoopPattern extends Pattern {
 	 * @param loop_blk the code block inside a loop
 	 * @return
 	 */
-	protected abstract void loopbody(List<Code> loop_blk, int line);
+	protected abstract void loop_body(List<Code> loop_blk, int line);
 	
 	
 	/**

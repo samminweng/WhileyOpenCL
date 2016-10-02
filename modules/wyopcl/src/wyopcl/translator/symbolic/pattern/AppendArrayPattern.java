@@ -2,6 +2,7 @@ package wyopcl.translator.symbolic.pattern;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import wyil.attributes.VariableDeclarations;
 import wyil.lang.Code;
@@ -128,22 +129,27 @@ public final class AppendArrayPattern extends WhileLoopPattern implements Transf
 		return appends;
 	}
 
+	
 	@Override
 	public String toString() {
 		String result = super.toString();
-		result += "\n" + pattern_name + " && loop_var(" + loop_var + ") && array_var(" + array_var + ") && ";
+		result += "\n" + pattern_name + ":"
+				+ "\n\tloop_var(" + loop_var + ") && ";
 		if (incr != null) {
 			result += "incr(" + loop_var + ", " + incr + ")";
 		}
 		if (decr != null) {
 			result += "decr(" + loop_var + ", " + decr + ")";
 		}
-		result += " && init(" + loop_var + ", " + init + ") && array_init(" + this.array_init + ")\n " 
-				+ " && array_append (" + this.array_append.size() + " 'append' function call)\n"
-				+ " && while_cond(" + loop_var + ", " + comparatorOp + ", " + loop_bound + ")\n"
-				+ "\n=>loop_iters(" + loop_var + ", " + getNumberOfIterations() + ")";
+		result += "&& init(" + loop_var + ", " + init + ") "
+				+ "\n\t&& array_var(" + array_var + ")"
+				+ "\n\t&& array_init(" + this.array_init + ")" 
+				+ "\n\t&& array_append (" 
+				+ "\n\t\t"+this.array_append.stream().map(Object::toString)
+									.collect(Collectors.joining("\n\t\t"))+ " )"
+				+ "\n\t&& while_cond(" + loop_var + ", " + comparatorOp + ", " + loop_bound + ")"
+				+ "\n\t=> loop_iters(" + loop_var + ", " + getNumberOfIterations() + ")";
 		return result;
-
 	}
 
 	@Override

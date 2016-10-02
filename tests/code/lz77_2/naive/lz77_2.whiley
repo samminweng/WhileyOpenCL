@@ -48,7 +48,7 @@ function findLongestMatch(byte[] data, nat pos) -> (Match m):
 
 // Append a byte to the byte array
 // This is temporary and should be removed
-function append_byte(byte[] items, byte item) -> (byte[] nitems):
+function append(byte[] items, byte item) -> (byte[] nitems):
 	//ensures |nitems| == |items| + 1:
 	//
 	nitems = [0b; |items| + 1]
@@ -121,7 +121,7 @@ function decompress(byte[] data) -> (byte[] output):
         byte item = data[pos+1]
         pos = pos + 2
         if header == 00000000b:
-            output = append_byte(output, item)
+            output = append(output, item)
         else:
             int offset = Byte.toUnsignedInt(header)
             int len = Byte.toUnsignedInt(item)
@@ -131,7 +131,7 @@ function decompress(byte[] data) -> (byte[] output):
                 // Get byte from output array
                 item = output[i]
                 //sys.out.println(item)
-                output = append_byte(output, item)
+                output = append(output, item)
                 i = i + 1
     // all done!
     return output

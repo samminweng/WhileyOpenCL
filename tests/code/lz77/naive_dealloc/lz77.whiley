@@ -46,7 +46,7 @@ function findLongestMatch(byte[] data, nat pos) -> (Match m):
 
 // Append a byte to the byte array inside 'Data' structure
 // This is temporary and should be removed
-function append_byte(byte[] items, byte item) -> (byte[] nitems):
+function append(byte[] items, byte item) -> (byte[] nitems):
 	//ensures |nitems| == |items| + 1:
 	//
 	nitems = [0b; |items| + 1]
@@ -58,6 +58,15 @@ function append_byte(byte[] items, byte item) -> (byte[] nitems):
 	//
 	nitems[i] = item
 	return nitems
+
+// Populate the input array to the array of given array size
+function populate(byte[] items, nat size) -> (byte[] nitems):
+    nitems = [0b; size]
+    int i = 0
+    while i < size:
+        nitems[i] = items[i]
+        i = i + 1
+    return nitems
 
 // Append 'u1' to the byte array
 /*function write_u1(byte[] bytes, int u1) -> (byte[] output):
@@ -87,8 +96,8 @@ function compress(byte[] data) -> (byte[] output):
             // Skip the matched bytes
             pos = pos + m.len
         // Write 'offset-length' pair to the output array 
-        output = append_byte(output, offset)
-        output = append_byte(output, length)
+        output = append(output, offset)
+        output = append(output, length)
     return output
 
 // Decompress 'input' array to a string
@@ -101,7 +110,7 @@ function decompress(byte[] data) -> (byte[] output):
         byte item = data[pos+1]
         pos = pos + 2
         if header == 00000000b:
-            output = append_byte(output, item)
+            output = append(output, item)
         else:
             int offset = Byte.toUnsignedInt(header)
             int len = Byte.toUnsignedInt(item)
@@ -111,7 +120,7 @@ function decompress(byte[] data) -> (byte[] output):
                 // Get byte from output array
                 item = output[i]
                 //sys.out.println(item)
-                output = append_byte(output, item)
+                output = append(output, item)
                 i = i + 1
     // all done!
     return output

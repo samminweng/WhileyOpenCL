@@ -354,7 +354,7 @@ int main(int argc, char** args){
 		_NEW_1DARRAY_int64_t(_21, 10, 0);
 		_21[0] = _11; _21[1] = _12; _21[2] = _13; _21[3] = _14; _21[4] = _15; _21[5] = _16; _21[6] = _17; _21[7] = _18; _21[8] = _19; _21[9] = _20; 
 		//ifeq %2, %21 goto blklab8 : int[]
-		_IFEQ_ARRAY(arr, _21, blklab8);
+		_IFEQ_ARRAY_int64_t(arr, _21, blklab8);
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -401,7 +401,7 @@ blklab8:;
 		_NEW_1DARRAY_int64_t(_35, 10, 0);
 		_35[0] = _25; _35[1] = _26; _35[2] = _27; _35[3] = _28; _35[4] = _29; _35[5] = _30; _35[6] = _31; _35[7] = _32; _35[8] = _33; _35[9] = _34; 
 		//ifeq %3, %35 goto blklab9 : int[]
-		_IFEQ_ARRAY(arr1, _35, blklab9);
+		_IFEQ_ARRAY_int64_t(arr1, _35, blklab9);
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);

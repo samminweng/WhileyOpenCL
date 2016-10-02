@@ -73,6 +73,8 @@ public class ExprFactory {
 				expr = new LinearExpr(prefix + ((Codes.Const) code).target());
 				// c0
 				((LinearExpr) expr).addConstant(((Constant.Integer) constant.constant).value);
+			} else if(constant.constant instanceof Constant.Byte){
+				// Skip the code
 			} else {
 				throw new RuntimeException("Not implemented");
 			}
@@ -113,10 +115,11 @@ public class ExprFactory {
 			if(ret.targets().length > 0){
 				expr = new Expr(prefix+ret.target(0), code);
 			}
-		}else if(code instanceof Codes.Label || code instanceof Codes.Invariant || code instanceof Codes.Update){
+		}else if(code instanceof Codes.Label || code instanceof Codes.Invariant || code instanceof Codes.Update
+				|| code instanceof Codes.FieldLoad || code instanceof Codes.Goto){
 			// Skip the code
 		} else  {
-			throw new RuntimeException("Not implemented");
+			throw new RuntimeException("Not implemented "+ code);
 		}
 		return expr;
 	}

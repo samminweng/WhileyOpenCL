@@ -149,7 +149,7 @@ int main(int argc, char** args){
 		_NEW_1DARRAY_int64_t(_15, 5, 0);
 		_15[0] = _10; _15[1] = _11; _15[2] = _12; _15[3] = _13; _15[4] = _14; 
 		//ifeq %1, %15 goto blklab4 : int[]
-		_IFEQ_ARRAY(rs, _15, blklab4);
+		_IFEQ_ARRAY_int64_t(rs, _15, blklab4);
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);

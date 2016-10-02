@@ -33,9 +33,10 @@ public final class WhileLoopDecrPattern extends WhileLoopPattern{
 	@Override
 	public String toString() {
 		String result = super.toString();		
-		result += "\n" + pattern_name + "&& loop_var("+loop_var+") && decr("+loop_var+", "+decr+")"
-				+ " && init("+loop_var+", "+init+") &&  while_cond("+loop_var+", "+comparatorOp+", "+loop_bound+")"
-				+ "\n=>loop_iters("+loop_var+", " + getNumberOfIterations()+")";
+		result += "\n" + pattern_name + ":"
+				+ "\n\tloop_var("+loop_var+") && decr("+loop_var+", "+decr+")" + "&& init("+loop_var+", "+init+")"
+				+ "\n\t&& while_cond("+loop_var+", "+comparatorOp+", "+loop_bound+")"
+				+ "\n\t=>loop_iters("+loop_var+", " + getNumberOfIterations()+")";
 		return result;
 	}
 	

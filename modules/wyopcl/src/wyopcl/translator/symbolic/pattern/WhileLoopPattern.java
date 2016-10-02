@@ -249,7 +249,7 @@ public abstract class WhileLoopPattern extends LoopPattern {
 			}
 		}
 
-		loopbody(loop_blk, index);
+		loop_body(loop_blk, index);
 
 		return ++this.line;
 	}
@@ -288,10 +288,10 @@ public abstract class WhileLoopPattern extends LoopPattern {
 	}
 
 	@Override
-	protected void loopbody(List<Code> loop_blk, int line) {
-		int index;
+	protected void loop_body(List<Code> loop_blk, int line) {
+		int index = line;
 		// Put the code in 'loopbody_before' part.
-		for (index = line; index < loop_blk.size(); index++) {
+		while (index < loop_blk.size()) {
 			Code code = loop_blk.get(index);
 			// Search for the binOp that subtracts the loop variable with a
 			// constant.
@@ -304,13 +304,13 @@ public abstract class WhileLoopPattern extends LoopPattern {
 			} else {
 				AddCodeToPatternPart(code, "loopbody_before");
 			}
+			index++;
 		}
 		//Search for the code of re-assigning values to the loop variable and put the prior code to the 'loopbody_update' part.
-		for (; index < loop_blk.size(); index++) {
+		while (index < loop_blk.size()) {
 			Code code = loop_blk.get(index);
 			AddCodeToPatternPart(code, "loopbody_update");
-			// Search for the decrement that assigns the value to the loop
-			// var.
+			// Search for the decrement/increment that re-assigns the loop variable.
 			if (code instanceof Codes.Assign) {
 				// Check if the assignment bytecode is to over-write the
 				// value of loop variable.
@@ -320,18 +320,20 @@ public abstract class WhileLoopPattern extends LoopPattern {
 					// Get the increment and decrement.
 					incr = factory.extractIncrement(assign, loop_var);
 					decr = factory.extractDecrement(assign, loop_var);
+					index++;
 					break;
 				}
 			}
+			index++;
 		}
 
 		//Put the remaining code to 'loopbody_after' part.
-		for (; index < loop_blk.size(); index++) {
+		while (index < loop_blk.size()) {
 			Code code = loop_blk.get(index);
 			// Create the expression and put it into the table.
 			AddCodeToPatternPart(code, "loopbody_after");
+			index++;
 		}
-
 	}
 
 	

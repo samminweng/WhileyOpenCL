@@ -485,7 +485,7 @@ FILE* Reader(int64_t* arr, size_t arr_size){
 	char filename[arr_size+1];
 	// Copy 'tmp' string to filename;
 	strcpy(filename, tmp);
-	printf("%s\n", filename);
+	//printf("%s\n", filename);
 
 	// Open a file pointer
 	FILE *fp = fopen(filename, "r");

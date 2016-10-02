@@ -144,7 +144,7 @@ public final class BuildListFirstPattern extends WhileLoopPattern {
 	 * @return
 	 */
 	@Override
-	protected void loopbody(List<Code> loop_blk, int line) {
+	protected void loop_body(List<Code> loop_blk, int line) {
 		int index = line;
 		// Put the code in 'loopbody_before' part.
 		for (; index < loop_blk.size(); index++) {
