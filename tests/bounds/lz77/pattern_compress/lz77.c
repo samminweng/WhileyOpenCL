@@ -297,6 +297,16 @@ BYTE* compress(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFER
 	int64_t _21 = 0;
 	_DECL_1DARRAY_BYTE(_22);
 	_DECL_1DARRAY_BYTE(_23);
+	int64_t _24 = 0;
+	int64_t _25 = 0;
+	int64_t _26 = 0;
+	int64_t _27 = 0;
+	int64_t _28 = 0;
+	int64_t _29 = 0;
+	int64_t _30 = 0;
+	int64_t _31 = 0;
+	int64_t _32 = 0;
+	_DECL_1DARRAY_BYTE(_33);
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %2 = %6  : int
@@ -305,11 +315,21 @@ BYTE* compress(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFER
 	_7 = 0b00000000;
 	//const %8 = 0 : int
 	_8 = 0;
-	//arraygen %9 = [7; 8] : byte[]
-	_NEW_1DARRAY_BYTE(_9, _8, _7);
+	//const %24 = 2 : int
+	_24 = 2;
+	//lengthof %25 = %0 : byte[]
+	_25 = data_size;
+	//mul %26 = %24, %25 : int
+	_26=_24*_25;
+	//arraygen %9 = [7; 26] : byte[]
+	_NEW_1DARRAY_BYTE(_9, _26, _7);
+	//const %27 = 0 : int
+	_27 = 0;
+	//assign %28 = %27  : int
+	_28 = _27;
 	//assign %1 = %9  : byte[]
 	_COPY_1DARRAY_BYTE(output, _9);
-	//loop (%1, %2, %3, %4, %5, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23)
+	//loop (%1, %2, %3, %4, %5, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %28)
 	while(true){
 		//lengthof %10 = %0 : byte[]
 		_10 = data_size;
@@ -364,25 +384,34 @@ blklab12:;
 		pos = _21;
 //.blklab13
 blklab13:;
-		//invoke (%22) = (%1, %4) lz77:append : function(byte[],byte)->(byte[])
-		{
-			void* output_tmp;
-			_22 = append(_COPY_1DARRAY_PARAM_BYTE(output), offset, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
-		}
-		//assign %1 = %22  : byte[]
-		_COPY_1DARRAY_BYTE(output, _22);
-		//invoke (%23) = (%1, %5) lz77:append : function(byte[],byte)->(byte[])
-		{
-			void* output_tmp;
-			_23 = append(_COPY_1DARRAY_PARAM_BYTE(output), length, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
-		}
-		//assign %1 = %23  : byte[]
-		_COPY_1DARRAY_BYTE(output, _23);
+		//update %1[%28] = %4 : byte[] -> byte[]
+		output[_28] = offset;
+		//const %29 = 1 : int
+		_29 = 1;
+		//add %30 = %28, %29 : int
+		_30=_28+_29;
+		//assign %28 = %30  : int
+		_28 = _30;
+		//update %1[%28] = %5 : byte[] -> byte[]
+		output[_28] = length;
+		//const %31 = 1 : int
+		_31 = 1;
+		//add %32 = %28, %31 : int
+		_32=_28+_31;
+		//assign %28 = %32  : int
+		_28 = _32;
 //.blklab11
 blklab11:;
 	}
 //.blklab10
 blklab10:;
+	//invoke (%33) = (%1, %28) lz77:populate : function(byte[],int)->(byte[])
+	{
+		void* output_tmp;
+		_33 = populate(_COPY_1DARRAY_PARAM_BYTE(output), _28, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
+	}
+	//assign %1 = %33  : byte[]
+	_COPY_1DARRAY_BYTE(output, _33);
 	//return %1
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(output);
 	return output;

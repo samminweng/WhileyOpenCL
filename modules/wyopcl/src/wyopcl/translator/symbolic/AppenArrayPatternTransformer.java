@@ -87,9 +87,11 @@ public class AppenArrayPatternTransformer extends Transformer {
 	 * @return
 	 */
 	private int getNextRegister(Type type) {
+		// The next register is the size of declarations
+		int next_reg =declarations.size();
+		// Add the declaration for next register
 		this.declarations.add(new Declaration(type, null));
-		// The register is 'the number of declarations -1' 
-		return declarations.size() - 1;
+		return next_reg;
 	}
 	
 	/**
@@ -173,7 +175,7 @@ public class AppenArrayPatternTransformer extends Transformer {
 	private void array_gen(List<Code> blk, AppendArrayPattern p) {
 		// Add 'Const' code  (the number of 'append' function calls)
 		int r_const = getNextRegister(Type.Int.T_INT);
-		Const const_num = Codes.Const(getNextRegister(Type.Int.T_INT), Constant.V_INTEGER(BigInteger.valueOf(p.array_append.size())));
+		Const const_num = Codes.Const(r_const, Constant.V_INTEGER(BigInteger.valueOf(p.array_append.size())));
 		blk.add(const_num);
 		
 		// Add 'lengthof' code to obtain the size of input array
@@ -327,11 +329,53 @@ public class AppenArrayPatternTransformer extends Transformer {
 		}
 		// Put array size to 'modifiedOps' 
 		modifiedOps[i] = this.r_array_size;
-//		// Create a new loop byte-code with loop var, list_var and list_size
+		// Create a new loop byte-code with loop var, list_var and list_size
 		Code new_loop = Codes.Loop(modifiedOps, loop_blk);
 		blk.add(new_loop);
 	}
 
+	
+	/**
+	 * 
+	 * Adds an extra 'populate' function to fill in the output array 
+	 * and an extra restrict the range of array size.
+	 * For example,
+	 * 
+	 * <pre><code>
+	 * invoke (%30) = (%1, %3) lz77_2:populate : function(byte[],int)->(byte[])
+     * assign %1 = %30  : byte[]
+	 * </code></pre>
+	 * where %1 is the output array and %3 is the item
+	 * * 
+	 * @param blk
+	 * @param p
+	 */
+	private void populate_array(List<Code> blk, AppendArrayPattern p) {
+
+		// Add 'populate' function call
+		int r_ret = getNextRegister(Type.Array(Type.Byte.T_BYTE, false));
+		int[] targets = { r_ret };
+		int[] operands = { this.r_array, this.r_array_size };
+
+		// Get the path id from config
+		NameID name = new NameID(config.getPathID(), "populate");
+		// Get the return type
+		ArrayList<Type> ret_type = p.functionOrMethod.type().returns();
+		// Get the parameter type
+		ArrayList<Type> param_type = new ArrayList<Type>();
+		param_type.add(Type.Array(Type.Byte.T_BYTE, false));
+		param_type.add(Type.Int.T_INT);
+
+		Codes.Invoke invoke = Codes.Invoke(Type.Function(ret_type, param_type), targets, operands, name);
+		blk.add(invoke);
+
+		// Add assignment
+		Codes.Assign assign = Codes.Assign(Type.Array(Type.Byte.T_BYTE, false), this.r_array, r_ret);
+		blk.add(assign);
+
+	}
+	
+	
 	/**
 	 * Adds an extra 'populate' function to fill in the output array and restrict the range of array size.
 	 * For example,
@@ -343,29 +387,23 @@ public class AppenArrayPatternTransformer extends Transformer {
 	 * where %1 is the output array and %3 is the item
 	 */
 	private void loop_exit(List<Code> blk, AppendArrayPattern p) {
-	
-		// Add 'populate' function call 
-		int r_invoke = getNextRegister(Type.Int.T_INT);
-		int[] targets = {r_invoke};
-		int[] operands = {this.r_array, this.r_array_size};
+		// Get label from 
+		List<Code> loop_exit = p.getPartByName("loop_exit");
+		// Get the first 'label' code
+		int i = 0;
+		Codes.Label label = (Codes.Label)loop_exit.get(i);
+		blk.add(label);
+		i++;
 		
-		// Get the path id from config
-		NameID name = new NameID(config.getPathID(), "populate");
-		// Get the return type
-		ArrayList<Type> ret_type = p.functionOrMethod.type().returns();
-		// Get the parameter type
-		ArrayList<Type> param_type = new ArrayList<Type>();
-		param_type.add(Type.Array(Type.Byte.T_BYTE, false));
-		param_type.add(Type.Int.T_INT);
+		// Generate 'populate' function call
+		populate_array(blk, p);		
 		
-		Codes.Invoke invoke = Codes.Invoke(Type.Function(ret_type, param_type), targets, operands, name);
-		blk.add(invoke);
+		// Add the remaining code
+		while(i < loop_exit.size()){
+			blk.add(loop_exit.get(i));
+			i++;
+		}
 		
-		// Add assignment 
-		Codes.Assign assign = Codes.Assign(Type.Array(Type.Byte.T_BYTE, false), this.r_array, r_invoke);
-		blk.add(assign);		
-		
-		blk.addAll(p.getPartByName("loop_exit"));
 //		// Add an assertion to ensure the range of list size.
 //		List<Code> assertion_blk = new ArrayList<Code>();
 //		String gotoLabel = CodeUtils.freshLabel();

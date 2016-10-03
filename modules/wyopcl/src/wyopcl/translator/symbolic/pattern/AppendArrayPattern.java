@@ -33,6 +33,8 @@ public final class AppendArrayPattern extends WhileLoopPattern implements Transf
 		super(config, functionOrMethod);
 		// Check if the function contains the while-loop
 		if (this.incr != null || this.decr != null) {
+			// Put the 'loop_exit' code block
+			this.line = this.loop_exit(functionOrMethod.body().bytecodes(), this.line);			
 			// Get the code block
 			List<Code> blk = functionOrMethod.body().bytecodes();
 			// Find the array variable

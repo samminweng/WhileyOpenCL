@@ -349,14 +349,12 @@ public abstract class WhileLoopPattern extends LoopPattern {
 	protected int loop_exit(List<Code> blk, int line) {
 		int index = line;
 		// Put the remaining code into the 'loop_exit' part
-		for (; index < blk.size(); index++) {
+		while (index < blk.size()) {
 			Code code = blk.get(index);
-			if (code instanceof Codes.Return) {
-				AddCodeToPatternPart(code, "return");
-			} else {				
-				// Create the expression and put it into the table.
-				AddCodeToPatternPart(code, "loop_exit");
-			}
+			// Create the expression and put it into the table.
+			AddCodeToPatternPart(code, "loop_exit");
+			//}
+			index++;
 		}
 		return index;
 	}

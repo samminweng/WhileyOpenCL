@@ -31,9 +31,9 @@ $ cd tests/bounds && ./../../bin/wyopcl -bound naive WhileLoop.whiley
 Or use the gradual widening strategy to get more precise bounds.
 $ ./../../bin/wyopcl -bound gradual WhileLoop.whiley
 
-1.2 Pattern Matching
-Pattern matching aims to match the pattern on a specific function.
-$ cd tests/bounds && ./../../bin/wyopcl -pattern appendArray ArrayAppend.whiley 
+1.2 Pattern Matching and Pattern Transformation
+Pattern matching aims to match patterns and transform the code of a specific function code. Currently, only 'AppendArray' pattern can be transformed to 'PopulateArray' pattern.
+$ cd tests/bounds && ./../../bin/wyopcl -pattern compress lz77.whiley 
 
 1.3 Copy Elimination Analysis
 Copy Elimination analysis aims to eliminate the un-necessary copies at the program. 
@@ -49,7 +49,6 @@ $ cd tests/code && ./../../bin/wyopcl -code swap.whiley
 $ gcc swap.c Util.c -o swap.out && ./swap.out
 
 
-
 ============================================================================================
 Unit Testing
 ============================================================================================
@@ -58,7 +57,7 @@ Unit Testing
 The bound analyzer is being tested with 4 Whiley programs. Use the below commands:
 $ ant test-bound
 
-1.2 Pattern Matching
+1.2 Pattern Matching and Pattern Transformation
 The pattern matching is being tested with 4 Whiley programs. Use the below commands:
 $ ant test-pattern
 
