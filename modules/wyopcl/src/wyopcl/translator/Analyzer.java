@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -48,6 +49,8 @@ public abstract class Analyzer {
 	protected WyilFile module;
 	// The tree node of calling graph
 	protected DefaultMutableTreeNode tree;
+	// The transformed functions
+	protected Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap;
 
 	/**
 	 * Constructor
@@ -55,7 +58,6 @@ public abstract class Analyzer {
 	public Analyzer(Configuration config) {
 		this.cfgraphs = new HashMap<FunctionOrMethod, CFGraph>();
 		this.config = config;
-		
 	}
 
 	/**
@@ -63,11 +65,14 @@ public abstract class Analyzer {
 	 * 
 	 * @param module
 	 */
-	public void apply(WyilFile module) {
+	public void apply(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
 		this.module = module;
+		this.transformFuncMap = transformFuncMap;
 		this.buildCallGraph(module);
 		// Iterate each function to build up CFG
 		for (FunctionOrMethod function : module.functionOrMethods()) {
+			// Check if the function is transformed 
+			function = this.getFunction(function.name());
 			this.buildCFG(function);
 		}
 	}
@@ -79,8 +84,15 @@ public abstract class Analyzer {
 	 * @return function. Return null if the function is not defined in whiley program.
 	 */
 	protected FunctionOrMethod getFunction(String name) {
-		if (!this.module.functionOrMethod(name).isEmpty())
-			return this.module.functionOrMethod(name).get(0);
+		if (!this.module.functionOrMethod(name).isEmpty()){
+			FunctionOrMethod function = this.module.functionOrMethod(name).get(0);
+			if(transformFuncMap.isPresent() && transformFuncMap.get().containsKey(function)){ 
+				FunctionOrMethod transformedFunc = transformFuncMap.get().get(function);
+				return transformedFunc;				
+			}
+			return function;
+		}
+			
 		return null;
 	}
 	

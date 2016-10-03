@@ -824,8 +824,8 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	@Override
-	public void apply(WyilFile module) {
-		super.apply(module);
+	public void apply(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
+		super.apply(module, transformFuncMap);
 	}
 
 	@Override

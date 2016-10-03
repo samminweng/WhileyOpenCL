@@ -8,46 +8,7 @@ alias opt="opt -O3 -polly"
 alias pollycc="clang -O3 -mllvm -polly"
 ### Get the root working directory
 basedir="$(dirname "$(pwd)")"
-utildir="$basedir/tests/code"
-### Generate C code
-generateCode(){
-	testcase=$1
-	program=$2
-	codegen=$3
-	## change to 'testcase' folder
-	cd "$basedir/polly/$testcase/" 
-	# clean and create the folder
-	rm -rf "impl/$program/$codegen"
-	mkdir -p "impl/$program/$codegen"
-	# copy the source whiley file to the folder
-	cp $testcase"_"$program.whiley "impl/$program/$codegen/."
-	#read -p "Press [Enter] to continue..."
-	#### Change folder to the corresponding implementation folder
-	cd "impl/$program/$codegen"
-	## Clean up previously generated C code
-	rm -f *.c *.h
-	### Copy Util.c Util.h to current folder
-	cp $utildir/Util.c $utildir/Util.h .
-	## Translate Whiley programs into naive C code
-	case "$codegen" in
-		"naive")
-			### Translate Whiley program into naive C code
-			./../../../../..//bin/wyopcl -code $testcase"_"$program.whiley
-	    		;;
-		"naive_dealloc")
-			### Translate Whiley program into naive + dealloc C code 
-	    		./../../../../../bin/wyopcl -code -dealloc $testcase"_"$program.whiley
-	    		;;
-		"copyreduced")
-			## Translate Whiley programs into copy_reduced C code
-			./../../../../../bin/wyopcl -code -nocopy $testcase"_"$program.whiley
-			;;
-		"copyreduced_dealloc")
-			### Translate Whiley program into copy-eliminated + memory deallocated C code
-			./../../../../../bin/wyopcl -code -nocopy -dealloc $testcase"_"$program.whiley
-			;;
-	esac
-}
+UTILDIR="$basedir/tests/code"
 
 ### Create the 'leak' folder and clean up the files
 init(){
@@ -57,6 +18,68 @@ init(){
 	### remove all files inside the folder
 	rm -f "$leakdir/"*.*
 }
+
+## Declare an associative array for pattern matching
+declare -A patterns=( [LZ77]=compress )
+### Generate C code
+generateCode(){
+	testcase=$1
+	program=$2
+	codegen=$3
+	enabledpattern=$4
+	
+	if [ $enabledpattern == 1 ] 
+	then
+		### Enable pattern transformation
+		codeDir="$basedir/polly/$testcase/impl/$program/patern/$codegen"
+	else
+		### Disable pattern transformation
+		codeDir="$basedir/polly/$testcase/impl/$program/nopatern/$codegen"
+	fi
+	###echo $codeDir
+	## Clean the folder
+	rm -rf "$codeDir"
+	mkdir -p "$codeDir"
+	# copy the source whiley file to the folder
+	cp $basedir/polly/$testcase/$testcase"_"$program.whiley "$codeDir"
+	### Copy Util.c Util.h to current folder
+	cp $UTILDIR/Util.c $UTILDIR/Util.h "$codeDir"
+
+	## Change to 'codeDIR'
+	cd $codeDir
+
+	### Disable pattern transformation
+	wyopcl=./../../../../../../bin/wyopcl
+	if [ $enabledpattern == 1 ] 
+	then
+		## Get the pattern
+		pattern=${patterns[$testcase]}
+		### Enable pattern transformation
+		wyopcl=$wyopcl" -pattern $pattern"	
+	fi
+	###echo $wyopcl
+	## Translate Whiley programs into naive C code
+	case "$codegen" in
+		"naive")
+			### Translate Whiley program into naive C code
+			$wyopcl -code $testcase"_"$program.whiley
+			;;
+		"naive_dealloc")
+			### Translate Whiley program into naive + dealloc C code 
+			$wyopcl -code -dealloc $testcase"_"$program.whiley
+			;;
+		"copyreduced")
+			## Translate Whiley programs into copy_reduced C code
+			$wyopcl -code -nocopy $testcase"_"$program.whiley
+			;;
+		"copyreduced_dealloc")
+			### Translate Whiley program into copy-eliminated + memory deallocated C code
+			$wyopcl -code -nocopy -dealloc $testcase"_"$program.whiley
+			;;
+	esac
+}
+
+
 ##
 ## Run Polly on the C code and collects the memory usage of the generated C code
 ##
@@ -64,15 +87,15 @@ detectleaks(){
 	testcase=$1
 	program=$2
 	codegen=$3
-	parameter=$4
-	compiler=$5
-	num_threads=$6
+	enabledpattern=$4
+	parameter=$5
+	compiler=$6
+	num_threads=$7
 	mkdir -p out
 	# Ref: http://valgrind.org/docs/manual/manual.html
 	# Run Valgrind memcheck tool to detect memory leaks, and write out results to output file.
-	#read -p "Press [Enter] to continue..."	
-	executable="$testcase.$program.$codegen.$compiler.out"
-	result="$testcase.$program.$codegen.$compiler.$parameter.$num_threads.txt"
+	executable="$testcase.$program.$codegen.$enabledpattern.$compiler.out"
+	result="$testcase.$program.$codegen.$enabledpattern.$compiler.$parameter.$num_threads.txt"
 	echo -e -n "Start Detect leaks..." > $result
 	case "$compiler" in
 		"gcc")
@@ -122,25 +145,37 @@ exec(){
 	testcase=$1
 	program=$2
 	parameter=$3
+	
+	## declare two kinds of pattern matching
+	declare -a enabledpatterns=(0 1)
 
 	## declare 4 kinds of code generation
-	declare -a codegens=("naive" "naive_dealloc" "copyreduced" "copyreduced_dealloc")
-	#declare -a codegens=("naive_dealloc" "copyreduced_dealloc")
-	## Iterate each codegen
+	#declare -a codegens=("naive" "naive_dealloc" "copyreduced" "copyreduced_dealloc")
+	declare -a codegens=("naive_dealloc" "copyreduced_dealloc")
+
+	# ## Iterate each codegen
 	for codegen in "${codegens[@]}"
 	do
-		# Generate C code
-		generateCode $testcase $program $codegen
-		# Detect the leaks of generated C code using different compiler
-		detectleaks $testcase $program $codegen $parameter "gcc" 1
+		for enabledpattern in "${enabledpatterns[@]}"
+		do
+			# Generate C code with disabled pattern 
+	 		generateCode $testcase $program $codegen $enabledpattern
+	 		# Detect the leaks of generated C code using different compiler
+	 		detectleaks $testcase $program $codegen $enabledpattern $parameter "gcc" 1
+	 	done
+	 	# Generate C code with enabled pattern 
+	 	#generateCode $testcase $program $codegen 1
+	 	# Detect the leaks of generated C code using different compiler
+	 	# detectleaks $testcase $program $pattern $codegen $parameter "gcc" 1
 	done
-	#detectleaks $testcase $program $codegen $parameter "clang" 1
-	#detectleaks $testcase $program $codegen $parameter "polly" 1
-	#detectleaks $testcase $program $codegen $parameter "openmp" 1
-	#detectleaks $testcase $program $codegen $parameter "openmp" 2
-	#detectleaks $testcase $program $codegen $parameter "openmp" 4
-    # Return to the working directory
-    cd $basedir/polly
+	# #detectleaks $testcase $program $codegen $parameter "clang" 1
+	# #detectleaks $testcase $program $codegen $parameter "polly" 1
+	# #detectleaks $testcase $program $codegen $parameter "openmp" 1
+	# #detectleaks $testcase $program $codegen $parameter "openmp" 2
+	# #detectleaks $testcase $program $codegen $parameter "openmp" 4
+	# #Return to the working directory
+ 	cd $basedir/polly
+
     #read -p "Press [Enter] to continue..."
 }
 
@@ -213,21 +248,10 @@ exec(){
 # exec SobelEdge original 64
 # exec SobelEdge original 128
 
-#######Array test case
-# init Array
-# exec Array appendarray 100
-# exec Array appendarray 1000
-# exec Array appendarray 10000
-# exec Array populatearray 100
-# exec Array populatearray 1000
-# exec Array populatearray 10000
-
 # ####LZ77 test case
 init LZ77
-exec LZ77 appendarray "small.in"
-exec LZ77 appendarray "medium.in"
-exec LZ77 populatearray "small.in"
-exec LZ77 populatearray "medium.in"
+exec LZ77 original "small.in"
+exec LZ77 original "medium.in"
 
 # # ### NQueen test case
 # init NQueens

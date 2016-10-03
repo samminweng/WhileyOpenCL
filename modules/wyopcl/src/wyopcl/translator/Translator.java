@@ -48,27 +48,27 @@ public class Translator implements Builder {
 	 * Instantiate all function analysis because those function analyzers are requested parameter for copy or
 	 * de-allocation analyzer
 	 */
-	private void instantiate(WyilFile module) {
+	private void instantiate(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
 		
 		if(readwriteAnalyzer == null){
 			// Create read-write analyzer
 			readwriteAnalyzer = new ReadWriteAnalyzer(config);
 			// Analyze the byte-code
-			readwriteAnalyzer.apply(module);
+			readwriteAnalyzer.apply(module, transformFuncMap);
 		}
 		
 		if(returnAnalyzer == null){
 			// Create return analyzer
 			returnAnalyzer = new ReturnAnalyzer(config);
 			// Analyze the byte-code
-			returnAnalyzer.apply(module);
+			returnAnalyzer.apply(module, transformFuncMap);
 		}
 		
 		if(liveAnalyzer == null){
 			// Create live variable analyzer
 			liveAnalyzer = new LiveVariablesAnalysis(config);
 			// Builds up a calling graph and perform live variable checks.
-			liveAnalyzer.apply(module);
+			liveAnalyzer.apply(module, transformFuncMap);
 		}
 	}
 
@@ -80,6 +80,7 @@ public class Translator implements Builder {
 		String message = "";
 		WyilFile module = null;
 
+		// Compile whiley program into WyIL code
 		HashSet<Path.Entry<?>> generatedFiles = new HashSet<Path.Entry<?>>();
 		for (Pair<Path.Entry<?>, Path.Root> p : delta) {
 			// Path.Root dst = p.second();
@@ -90,31 +91,7 @@ public class Translator implements Builder {
 
 		// Put the in-memory WyIL file to config for later retrieval.
 		this.config.setOption("module", module);
-
-		// Check if the copy elimination analysis is enabled.
-		Optional<CopyEliminationAnalyzer> copyAnalyzer = Optional.empty();
-		if (config.isEnabled("nocopy")) {
-			instantiate(module);
-			CopyEliminationAnalyzer analyzer = new CopyEliminationAnalyzer(config, readwriteAnalyzer, returnAnalyzer,
-					liveAnalyzer);
-			analyzer.apply(module);
-			copyAnalyzer = Optional.of(analyzer);
-			message += "\nCopy elimination analysis completed. File: " + config.getFilename()+".wyil";
-		}
-
-		// Check if deallocation analysis is enabled or not
-		Optional<DeallocationAnalyzer> deallocAnalyzer = Optional.empty();
-		if (config.isEnabled("dealloc")) {
-			instantiate(module);
-			// Create an instance of DealloctionAnalyzer
-			DeallocationAnalyzer analyzer = new DeallocationAnalyzer(config, readwriteAnalyzer, returnAnalyzer,
-					liveAnalyzer);
-			analyzer.apply(module);
-			// Create a deallocatedAnalyzer that may hold a null analyzer.
-			deallocAnalyzer = Optional.of(analyzer);
-			message += "\nDeallocation analysis completed.\nFile: " + config.getFilename()+".wyil";
-		}
-
+		
 		// Store the byte-code of transformed function 
 		Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap = Optional.empty();
 		// Check if pattern matching is enabled. 
@@ -158,8 +135,32 @@ public class Translator implements Builder {
 			message += " File: " + config.getFilename()+".wyil";
 		}
 		
-		
-		
+
+		// Check if the copy elimination analysis is enabled.
+		Optional<CopyEliminationAnalyzer> copyAnalyzer = Optional.empty();
+		if (config.isEnabled("nocopy")) {
+			instantiate(module, transformFuncMap);
+			CopyEliminationAnalyzer analyzer = new CopyEliminationAnalyzer(config,
+					readwriteAnalyzer, returnAnalyzer, liveAnalyzer);
+			analyzer.apply(module, transformFuncMap);
+			copyAnalyzer = Optional.of(analyzer);
+			message += "\nCopy elimination analysis completed. File: " + config.getFilename()+".wyil";
+		}
+
+		// Check if deallocation analysis is enabled or not
+		Optional<DeallocationAnalyzer> deallocAnalyzer = Optional.empty();
+		if (config.isEnabled("dealloc")) {
+			instantiate(module, transformFuncMap);
+			// Create an instance of DealloctionAnalyzer
+			DeallocationAnalyzer analyzer = new DeallocationAnalyzer(config, readwriteAnalyzer, returnAnalyzer,
+					liveAnalyzer);
+			analyzer.apply(module, transformFuncMap);
+			// Create a deallocatedAnalyzer that may hold a null analyzer.
+			deallocAnalyzer = Optional.of(analyzer);
+			message += "\nDeallocation analysis completed.\nFile: " + config.getFilename()+".wyil";
+		}
+
+
 		// Check if the bound analysis is enabled.
 		Optional<BoundAnalyzer> boundAnalyzer = Optional.empty();
 		if (config.isEnabled("bound")) {

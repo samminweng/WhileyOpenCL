@@ -4,6 +4,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
@@ -202,8 +203,8 @@ public class ReadWriteAnalyzer extends Analyzer {
 	 *
 	 * @param module
 	 */
-	public void apply(WyilFile module) {
-		super.apply(module);
+	public void apply(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
+		super.apply(module, transformFuncMap);
 		// Traverse the tree in post-order and find out whether a variable is read-write or not
 		postorderTraversalCallGraph(tree);
 

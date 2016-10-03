@@ -127,7 +127,7 @@ function decompress(byte[] data) -> (byte[] output):
 
 method main(System.Console sys):
     // Create a byte array with repeated text
-    File.Reader file = File.Reader("medium.in")
+    File.Reader file = File.Reader(sys.args[0])
     byte[] data = file.readAll()
     sys.out.print_s("Data:         ")
     sys.out.println_s(ASCII.fromBytes(data))

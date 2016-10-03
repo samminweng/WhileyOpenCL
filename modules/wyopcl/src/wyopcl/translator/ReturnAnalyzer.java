@@ -3,6 +3,7 @@ package wyopcl.translator;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Optional;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -114,8 +115,8 @@ public class ReturnAnalyzer extends Analyzer {
 	 *
 	 * @param module
 	 */
-	public void apply(WyilFile module) {
-		super.apply(module);
+	public void apply(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
+		super.apply(module, transformFuncMap);
 		postorderTraversalCallGraph(tree);
 	}
 

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -50,9 +51,9 @@ public class LiveVariablesAnalysis extends Analyzer {
 	 * 
 	 * @param module
 	 */
-	public void apply(WyilFile module) {
+	public void apply(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
 		// Builds up a CFG of the function.
-		super.apply(module);
+		super.apply(module, transformFuncMap);
 		postorderTraversalCallGraph(tree);
 	}
 
