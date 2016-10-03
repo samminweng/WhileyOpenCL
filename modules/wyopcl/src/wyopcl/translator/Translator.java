@@ -130,22 +130,32 @@ public class Translator implements Builder {
 			}
 			// Get the WyIL code
 			FunctionOrMethod functionOrMethod = funcs.get(0);
+			Pattern pattern;
+			// Perform pattern matching
 			PatternMatcher matcher = new PatternMatcher(config);
-			PatternTransformer transformer = new PatternTransformer();
-			
 			try{
-				// Perform pattern matching
-				Pattern pattern = matcher.analyzePattern(functionOrMethod);
+				pattern = matcher.analyzePattern(functionOrMethod);
 				// Print out the matched pattern
-				System.out.println(pattern);
-				// Try to transform the pattern if possible
-				FunctionOrMethod transformedFunctionOrMethod = transformer.transformPatternUsingVisitor(pattern);
-				map.put(functionOrMethod, transformedFunctionOrMethod);
+				message += "\nPattern matching on "+ func_name+" function completed. \n" + pattern;
 			}catch(Exception ex){
 				throw new RuntimeException("Errors on Pattern Matching"); 
 			}
+			// Transform the pattern if possible
+			PatternTransformer transformer = new PatternTransformer(config);
+			try{
+				// Output the transformed function
+				FunctionOrMethod transformedFunctionOrMethod = transformer.transformPatternUsingVisitor(pattern);
+				if(transformedFunctionOrMethod != null){
+					map.put(functionOrMethod, transformedFunctionOrMethod);
+					// Print out the matched transformation
+					message += "\nPattern transformation on "+ func_name+" function completed. ";
+				}				
+			}catch(Exception ex){
+				throw new RuntimeException("Errors on Pattern Transformation"); 
+			}
+			
 			transformFuncMap = Optional.of(map);
-			message += "\nPerform pattern matching on "+ func_name+" completed. File: " + config.getFilename();
+			message += " File: " + config.getFilename()+".wyil";
 		}
 		
 		
@@ -174,7 +184,7 @@ public class Translator implements Builder {
 
 		// Reads the in-memory WyIL file and generates the code in C
 		if (config.isEnabled("code")) {
-			CodeGenerator generator = new CodeGenerator(config, copyAnalyzer, deallocAnalyzer, boundAnalyzer);
+			CodeGenerator generator = new CodeGenerator(config, copyAnalyzer, deallocAnalyzer, boundAnalyzer, transformFuncMap);
 			generator.apply(module);
 			message += "\nCode Generation completed. File: " + config.getFilename() + ".c, " + config.getFilename()
 					+ ".h";

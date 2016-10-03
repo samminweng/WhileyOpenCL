@@ -6,6 +6,7 @@ import java.util.List;
 import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
 import wyil.lang.WyilFile.FunctionOrMethod;
+import wyopcl.Configuration;
 import wyopcl.translator.symbolic.pattern.Pattern;
 /**
  * 
@@ -14,12 +15,14 @@ import wyopcl.translator.symbolic.pattern.Pattern;
  *
  */
 public class PatternTransformer {
+	private Configuration config;
 	private List<Transformer> avail_transformers;
-	public PatternTransformer(){
+	public PatternTransformer(Configuration config){
+		this.config = config;		
 		this.avail_transformers = new ArrayList<Transformer>();
 		//Added the available transformer.
 		//this.avail_transformers.add(new WhileLoopIncrPatternTransformer());
-		this.avail_transformers.add(new AppenArrayPatternTransformer());
+		this.avail_transformers.add(new AppenArrayPatternTransformer(config));
 	}
 	
 	/**

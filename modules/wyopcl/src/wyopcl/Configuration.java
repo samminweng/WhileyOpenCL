@@ -3,6 +3,8 @@ package wyopcl;
 import java.util.Properties;
 
 import wycc.lang.NameID;
+import wyfs.lang.Path;
+import wyfs.lang.Path.ID;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 
@@ -12,6 +14,7 @@ import wyil.lang.WyilFile.FunctionOrMethod;
  * @author Min-Hsien Weng
  */
 public class Configuration {
+	private Path.ID pathid;
 	private String filename;// The processing file name
 	private Properties options;
 
@@ -45,6 +48,13 @@ public class Configuration {
 		return this.filename;
 	}
 
+	/**
+	 * Get the path id (used for nameID)
+	 * @return
+	 */
+	public Path.ID getPathID(){
+		return this.pathid;
+	}
 	
 	/**
 	 * Add the option and value.
@@ -57,13 +67,16 @@ public class Configuration {
 			return;	
 		}
 		if(option.equals("module")){
+			WyilFile module = (WyilFile) value;
 			// Get file name
-			this.filename = ((WyilFile) value).filename().split(".whiley")[0];
+			this.filename = module.filename().split(".whiley")[0];
 			// Remove the prefix of file name './' on Linux.
 			// e.g. the file name of './While_Valid_1.whiley' is 'While_Valid_1.whiley'
-			filename = filename.replace("./", "");
+			this.filename = filename.replace("./", "");
 			// Remove the prefix of file name '.\While_Valid_1.whiley' on Windows.
-			filename = filename.replace(".\\", "");
+			this.filename = filename.replace(".\\", "");
+			// Get path id
+			this.pathid = module.id();			
 		}else {
 			this.options.put(option, true);
 			if (option.equals("bound")){

@@ -45,6 +45,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	private Optional<DeallocationAnalyzer> deallocatedAnalyzer = Optional.empty();
 	// Optional bound analyzer
 	private Optional<BoundAnalyzer> boundAnalyzer = Optional.empty();
+	// Optional transformed function 
+	private Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap = Optional.empty();
+	
 	/**
 	 * Constructor
 	 * 
@@ -56,11 +59,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	public CodeGenerator(Configuration config, Optional<CopyEliminationAnalyzer> copyAnalyzer,
-			Optional<DeallocationAnalyzer> deallcAnalyzer, Optional<BoundAnalyzer> boundAnalyzer) {
+			Optional<DeallocationAnalyzer> deallcAnalyzer, Optional<BoundAnalyzer> boundAnalyzer,
+			Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
 		this(config);
 		this.copyAnalyzer = copyAnalyzer;
 		this.deallocatedAnalyzer = deallcAnalyzer;
 		this.boundAnalyzer = boundAnalyzer;
+		this.transformFuncMap = transformFuncMap;
 	}
 
 	/**
@@ -81,12 +86,26 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		// Translate each function
 		for (FunctionOrMethod function : module.functionOrMethods()) {
-			for (Code code : function.body().bytecodes()) {
-				// Iterate and translate each code into the target language.
-				this.iterateCode(code, function);
+			// Check if the function is transformed
+			if(transformFuncMap.isPresent()&& transformFuncMap.get().containsKey(function)){
+				// Get the transformed function
+				FunctionOrMethod transformFunc = transformFuncMap.get().get(function);
+				// Generate the function block
+				for (Code code : transformFunc.body().bytecodes()) {
+					// Iterate and translate each code into the target language.
+					this.iterateCode(code, transformFunc);
+				}
+				// Write the code
+				this.writeFunction(transformFunc);				
+			}else{
+				// Generate the function block
+				for (Code code : function.body().bytecodes()) {
+					// Iterate and translate each code into the target language.
+					this.iterateCode(code, function);
+				}
+				// Write the code
+				this.writeFunction(function);
 			}
-			// Write the code
-			this.writeFunction(function);
 		}
 	}
 

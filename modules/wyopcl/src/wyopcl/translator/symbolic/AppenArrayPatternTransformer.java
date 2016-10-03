@@ -26,6 +26,7 @@ import wyil.lang.Codes.LengthOf;
 import wyil.lang.Type.Int;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyil.util.AttributedCodeBlock;
+import wyopcl.Configuration;
 import wyopcl.translator.symbolic.pattern.AppendArrayPattern;
 import wyopcl.translator.symbolic.pattern.Pattern;
 
@@ -66,16 +67,17 @@ import wyopcl.translator.symbolic.pattern.Pattern;
  * 
  */
 public class AppenArrayPatternTransformer extends Transformer {
-	private int available_reg;
+	private Configuration config;
 	private int r_input_arr;
 	private int r_array;
 	private int r_array_size;
 	private String prefix = "_";
-	private List<Declaration> vars;
+	private List<Declaration> declarations;
 	/**
 	 * Constructor
 	 */
-	public AppenArrayPatternTransformer() {
+	public AppenArrayPatternTransformer(Configuration config) {
+		this.config = config;
 	}
 
 	/**
@@ -84,16 +86,12 @@ public class AppenArrayPatternTransformer extends Transformer {
 	 * @param p
 	 * @return
 	 */
-	private int getAvailableReg(Type type) {
-		this.vars.add(new Declaration(type, available_reg+""));
-		//Increment the available register for the next call.
-		available_reg++;
-		return available_reg;
+	private int getNextRegister(Type type) {
+		this.declarations.add(new Declaration(type, null));
+		// The register is 'the number of declarations -1' 
+		return declarations.size() - 1;
 	}
 	
-	
-	
-
 	/**
 	 * Copy 'init_before' part of p pattern.
 	 * 
@@ -174,17 +172,17 @@ public class AppenArrayPatternTransformer extends Transformer {
 	 */
 	private void array_gen(List<Code> blk, AppendArrayPattern p) {
 		// Add 'Const' code  (the number of 'append' function calls)
-		int r_const = getAvailableReg(Type.Int.T_INT);
-		Const const_num = Codes.Const(getAvailableReg(Type.Int.T_INT), Constant.V_INTEGER(BigInteger.valueOf(p.array_append.size())));
+		int r_const = getNextRegister(Type.Int.T_INT);
+		Const const_num = Codes.Const(getNextRegister(Type.Int.T_INT), Constant.V_INTEGER(BigInteger.valueOf(p.array_append.size())));
 		blk.add(const_num);
 		
 		// Add 'lengthof' code to obtain the size of input array
-		int r_lengthof = getAvailableReg(Type.Int.T_INT);
+		int r_lengthof = getNextRegister(Type.Int.T_INT);
 		LengthOf lengthof = Codes.LengthOf(Type.Array(Type.Byte.T_BYTE, false), r_lengthof, this.r_input_arr);
 		blk.add(lengthof);
 		
 		// Add 'mul' code  (r_const * r_lengthof)
-		int r_mul = getAvailableReg(Type.Int.T_INT);
+		int r_mul = getNextRegister(Type.Int.T_INT);
 		BinaryOperator binOp = Codes.BinaryOperator(Type.Int.T_INT, r_mul, r_const, r_lengthof, BinaryOperatorKind.MUL);
 		blk.add(binOp);
 		
@@ -213,9 +211,9 @@ public class AppenArrayPatternTransformer extends Transformer {
 	 *            the original pattern.
 	 */
 	private void array_size_init(List<Code> blk, AppendArrayPattern p) {
-		int r_const = getAvailableReg(Type.Int.T_INT);
+		int r_const = getNextRegister(Type.Int.T_INT);
 		blk.add(Codes.Const(r_const, Constant.V_INTEGER(BigInteger.ZERO)));
-		this.r_array_size = getAvailableReg(Type.Int.T_INT);
+		this.r_array_size = getNextRegister(Type.Int.T_INT);
 		blk.add(Codes.Assign(Type.Int.T_INT, r_array_size, r_const));
 	}
 
@@ -267,10 +265,10 @@ public class AppenArrayPatternTransformer extends Transformer {
 
 						// Increment the array size
 						// const %26 = 1 : int
-						int r_const = getAvailableReg(Type.Int.T_INT);
+						int r_const = getNextRegister(Type.Int.T_INT);
 						loop_blk.add(Codes.Const(r_const, Constant.V_INTEGER(BigInteger.ONE)));
 						// add %27 = %4, %26 : int
-						int r_add = getAvailableReg(Type.Int.T_INT);
+						int r_add = getNextRegister(Type.Int.T_INT);
 						loop_blk.add(Codes.BinaryOperator(Type.Int.T_INT, r_add, this.r_array_size, r_const,
 								BinaryOperatorKind.ADD));
 						// assign %4 = %20 : int
@@ -346,13 +344,21 @@ public class AppenArrayPatternTransformer extends Transformer {
 	 */
 	private void loop_exit(List<Code> blk, AppendArrayPattern p) {
 	
-		
 		// Add 'populate' function call 
-		int r_invoke = getAvailableReg(Type.Int.T_INT);
+		int r_invoke = getNextRegister(Type.Int.T_INT);
 		int[] targets = {r_invoke};
 		int[] operands = {this.r_array, this.r_array_size};
-		NameID name = new NameID(null, "populate");
-		Codes.Invoke invoke = Codes.Invoke(null, targets, operands, name);
+		
+		// Get the path id from config
+		NameID name = new NameID(config.getPathID(), "populate");
+		// Get the return type
+		ArrayList<Type> ret_type = p.functionOrMethod.type().returns();
+		// Get the parameter type
+		ArrayList<Type> param_type = new ArrayList<Type>();
+		param_type.add(Type.Array(Type.Byte.T_BYTE, false));
+		param_type.add(Type.Int.T_INT);
+		
+		Codes.Invoke invoke = Codes.Invoke(Type.Function(ret_type, param_type), targets, operands, name);
 		blk.add(invoke);
 		
 		// Add assignment 
@@ -382,7 +388,7 @@ public class AppenArrayPatternTransformer extends Transformer {
 	 * @return a function block with updated variable declarations.
 	 */
 	private FunctionOrMethod transform(AppendArrayPattern p) {
-		
+		// Get the register of input array
 		this.r_input_arr = Integer.parseInt(p.input_array.replace(prefix, ""));
 		// Get the register of output array 
 		this.r_array = Integer.parseInt(p.output_array.replace(prefix, ""));
@@ -390,11 +396,10 @@ public class AppenArrayPatternTransformer extends Transformer {
 		// Store all the byte-code for the  new pattern.
 		List<Code> blk = new ArrayList<Code>();
 		VariableDeclarations p_vars = p.functionOrMethod.attribute(VariableDeclarations.class);
-		this.available_reg = p_vars.size()+1;
-		this.vars = new ArrayList<Declaration>();
+		this.declarations = new ArrayList<Declaration>();
 		//Add all the declarations from p pattern.
 		for(int i=0;i<p_vars.size();i++){
-			this.vars.add(p_vars.get(i));
+			this.declarations.add(p_vars.get(i));
 		}		
 		
 		// Create 'init_before' part.
@@ -409,7 +414,7 @@ public class AppenArrayPatternTransformer extends Transformer {
 		loop_exit(blk, p);
 		//Create a function block.
 		List<Attribute> attributes = new ArrayList<Attribute>();
-		attributes.add(new VariableDeclarations(this.vars));
+		attributes.add(new VariableDeclarations(this.declarations));
 		FunctionOrMethod TransformedFunc = new FunctionOrMethod(p.functionOrMethod.modifiers(), 
 				p.functionOrMethod.name(),
 				p.functionOrMethod.type(),
@@ -428,7 +433,7 @@ public class AppenArrayPatternTransformer extends Transformer {
 	 * 'BuildListFirstPattern' type.
 	 * 
 	 * @param pattern
-	 * @param vars the variable declarations.
+	 * @param declarations the variable declarations.
 	 * @return a list of code based on the design of 'BuildListFirstPattern'.
 	 */
 	@Override
