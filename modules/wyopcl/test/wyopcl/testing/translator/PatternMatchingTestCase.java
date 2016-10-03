@@ -57,9 +57,27 @@ public class PatternMatchingTestCase {
 	}
 	
 	@Test
-	public void testPatternMatching(){
-		System.out.print("Pattern Matching: "+func_name+" function\n");
-		util.execCodeGeneration(codeDir, testcase, "pattern", func_name);	
+	public void testPatternNaiveCCode(){
+		System.out.print("Pattern: "+func_name+" function on naive C code \n");
+		util.execCodeGeneration(codeDir, testcase, "pattern", func_name, "naive");	
 	}
 
+	@Test
+	public void testPatternNaiveDeallocatedCCode(){
+		System.out.print("Pattern: "+func_name+" function on naive + deallocated C code \n");
+		util.execCodeGeneration(codeDir, testcase, "pattern", func_name, "dealloc");	
+	}
+	
+	@Test
+	public void testPatternNoCopyCCode() {
+		System.out.print("Pattern: "+func_name+" function on copy reduced C code \n");
+		util.execCodeGeneration(codeDir, testcase, "pattern", func_name, "nocopy");
+	}
+	
+	@Test
+	public void testPatternNoCopyDeallocatedCCode() {
+		System.out.print("Copy reduced + deallocated C code \n");
+		util.execCodeGeneration(codeDir, testcase, "pattern", func_name, "nocopy", "dealloc");
+	}
+	
 }

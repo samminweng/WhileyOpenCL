@@ -344,15 +344,34 @@ public final class BaseTestUtil {
 				if(options[0].equals("bound")){
 					widen = options[1];
 					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "bound_"+widen
-							+ File.separator);
-				} else if(options[0].equals("pattern")){
-					func_name = options[1];
-					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "pattern_"+func_name
-							+ File.separator);
+							+ File.separator+"naive");
 				} else{
 					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "copy_reduced_dealloc"
 							+ File.separator);
 				}				
+				break;
+			case 3:
+				if(options[0].equals("pattern")){
+					// Get function name
+					func_name = options[1];
+					// Get code generation option
+					String codegen = options[2];
+					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "pattern_"+func_name
+							+ File.separator+codegen);
+				}else{
+					throw new RuntimeException("Not implemented");
+				}
+				break;
+			case 4:
+				// Generate the patten + no copy + deallocated c code
+				if(options[0].equals("pattern")){
+					// Get function name
+					func_name = options[1];
+					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "pattern_"+func_name
+							+ File.separator+"copy_reduced_dealloc");
+				}else{
+					throw new RuntimeException("Not implemented");
+				}
 				break;
 			default:
 				throw new RuntimeException("Not implemented");
@@ -388,15 +407,19 @@ public final class BaseTestUtil {
 			int index=0;;
 			while(index<options.length){
 				String option = options[index];
-				if(option.equals("bound") || option.equals("pattern")){
-					// Append two options 
-					cmd += " -" + option + " " +options[index+1];
-					index += 2;
-				}else{
-					// Add extra option.
-					cmd += " -" + option;
-					index++;
-				}			
+				// Skip "naive" code generation option
+				if(!option.equals("naive")){
+					// Bound and pattern options  
+					if(option.equals("bound") || option.equals("pattern")){
+						// Append two options 
+						cmd += " -" + option + " " +options[index+1];
+						index++;
+					}else{
+						// Add extra option.
+						cmd += " -" + option;
+					}
+				}
+				index++;
 			}
 			// Add test case name
 			cmd += " " + testcase + ".whiley";
