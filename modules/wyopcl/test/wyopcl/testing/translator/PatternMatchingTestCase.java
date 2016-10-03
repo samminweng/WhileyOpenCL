@@ -52,7 +52,6 @@ public class PatternMatchingTestCase {
 				{"WhileLoop", "f"},
 				{"WhileLoop", "f2"},
 				{"Reverse", "reverse"},
-				{"AppendArray", "appendArray"},
 				{"lz77", "compress"}
 		});
 	}

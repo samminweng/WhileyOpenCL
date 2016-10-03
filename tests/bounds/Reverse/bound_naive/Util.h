@@ -41,7 +41,9 @@ int64_t** copy2DArray_int64_t(int64_t **arr, size_t x, size_t y);
 void free2DArray_int64_t(int64_t** ptr, size_t size);
 // Print out 2D array
 void printf2DArray_int64_t(int64_t** input, size_t input_size, size_t input_size_size);
-int isArrayEqual(int64_t* arr1, size_t arr1_size, int64_t* arr2, size_t arr2_size);
+// Compare two arrays
+bool isArrayEqual_int64_t(int64_t* arr1, size_t arr1_size, int64_t* arr2, size_t arr2_size);
+bool isArrayEqual_BYTE(BYTE* arr1, size_t arr1_size, BYTE* arr2, size_t arr2_size);
 /**
  * Other built-in functions
  */
@@ -51,13 +53,13 @@ void println_s(int64_t* input, size_t input_size);
 // Parse a string into an integer
 int64_t* parseStringToInt(int64_t* arr);
 // 1D Array
-int64_t** convertArgsToIntArray(int argc, char** args);
+int64_t** convertArgsToIntArray(int argc, char** args, size_t *arr_size, size_t *arr_size_size);
 // ArrayList Operators
 int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 // Convert an array of bytes to an array of int64_t
 int64_t* fromBytes(BYTE* arr, size_t arr_size);
 // Return a file pointer
-FILE* Reader(int64_t* arr);
+FILE* Reader(int64_t* arr, size_t arr_size);
 BYTE* readAll(FILE *file, size_t* _size);
 
 /**
@@ -341,10 +343,12 @@ BYTE* readAll(FILE *file, size_t* _size);
 //Nullify the array variable
 #define _NULLIFY(a) a = NULL;
 // Converts command line arguments into integer arrays
-#define _CONV_ARGS(a) a = convertArgsToIntArray(argc, args); a##_size = argc - 1;
+#define _CONV_ARGS(a) a = convertArgsToIntArray(argc, args, &a##_size, &a##_size_size);
 // Parse a string into an integer
 #define _STR_TO_INT(a, b) a = parseStringToInt(b);
 // Slice an array 'b' into a new array 'a' 
 #define _SLICE_ARRAY(a, b, start, end) a = slice(b, b##_size, start, end); a##_size = end - start;
 // Compare two arrays of integers
-#define _IFEQ_ARRAY(a, b, blklab) if(isArrayEqual(a, a##_size, b, b##_size)==1){goto blklab;}
+#define _IFEQ_ARRAY_int64_t(a, b, blklab) if(isArrayEqual_int64_t(a, a##_size, b, b##_size)){goto blklab;}
+// Compare two arrays of BYTE
+#define _IFEQ_ARRAY_BYTE(a, b, blklab) if(isArrayEqual_BYTE(a, a##_size, b, b##_size)==1){goto blklab;}

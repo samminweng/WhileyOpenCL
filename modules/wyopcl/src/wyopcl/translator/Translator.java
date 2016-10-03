@@ -2,6 +2,7 @@ package wyopcl.translator;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +23,7 @@ import wyopcl.translator.copy.LiveVariablesAnalysis;
 import wyopcl.translator.deallocate.DeallocationAnalyzer;
 import wyopcl.translator.generator.CodeGenerator;
 import wyopcl.translator.symbolic.PatternMatcher;
+import wyopcl.translator.symbolic.PatternTransformer;
 import wyopcl.translator.symbolic.pattern.Pattern;
 
 /**
@@ -113,9 +115,12 @@ public class Translator implements Builder {
 			message += "\nDeallocation analysis completed.\nFile: " + config.getFilename()+".wyil";
 		}
 
-		// Check if pattern matching is enabled
-		Optional<PatternMatcher> patternMatcher = Optional.empty();
+		// Store the byte-code of transformed function 
+		Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap = Optional.empty();
+		// Check if pattern matching is enabled. 
 		if(config.isEnabled("pattern")){
+			// Create the hash map
+			HashMap<FunctionOrMethod, FunctionOrMethod> map = new HashMap<FunctionOrMethod, FunctionOrMethod>();
 			// Get the function name
 			String func_name = config.getFunctionName();
 			// Get the WyIL code by given function name
@@ -126,15 +131,20 @@ public class Translator implements Builder {
 			// Get the WyIL code
 			FunctionOrMethod functionOrMethod = funcs.get(0);
 			PatternMatcher matcher = new PatternMatcher(config);
+			PatternTransformer transformer = new PatternTransformer();
+			
 			try{
 				// Perform pattern matching
 				Pattern pattern = matcher.analyzePattern(functionOrMethod);
 				// Print out the matched pattern
-				System.out.println(pattern);				
+				System.out.println(pattern);
+				// Try to transform the pattern if possible
+				FunctionOrMethod transformedFunctionOrMethod = transformer.transformPatternUsingVisitor(pattern);
+				map.put(functionOrMethod, transformedFunctionOrMethod);
 			}catch(Exception ex){
 				throw new RuntimeException("Errors on Pattern Matching"); 
 			}
-			patternMatcher = Optional.of(matcher);
+			transformFuncMap = Optional.of(map);
 			message += "\nPerform pattern matching on "+ func_name+" completed. File: " + config.getFilename();
 		}
 		

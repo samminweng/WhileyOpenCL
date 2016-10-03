@@ -47,8 +47,7 @@ public class BoundAnalysisTestCase {
 				"IfElse", 
 				"WhileLoop",
 				"Reverse",
-				"AppendArray"
-		});
+			});
 	}
 	
 	@Test

@@ -60,7 +60,7 @@ function append(byte[] items, byte item) -> (byte[] nitems):
 	return nitems
 
 // Populate the input array to the array of given array size
-function populate(byte[] items, nat size) -> (byte[] nitems):
+function populate(byte[] items, int size) -> (byte[] nitems):
     nitems = [0b; size]
     int i = 0
     while i < size:

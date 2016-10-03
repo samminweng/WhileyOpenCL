@@ -16,16 +16,17 @@ import wyopcl.translator.symbolic.Transformer;
 import wyopcl.translator.symbolic.pattern.expression.Expr;
 /**
  * The AppendArray pattern initializes an empty array and then go through a
- * while-loop to append one item to the array. This pattern 
+ * while-loop to append one item to the array. For example, 
  * 
- * The AppendArray pattern extends 
+ * 
  * 
  * @author Min-Hsien Weng
  *
  */
 public final class AppendArrayPattern extends WhileLoopPattern implements Transformable {
-	public String array_var;
-	public Code array_init;
+	public String output_array;
+	public String input_array;
+	public Codes.ArrayGenerator array_gen;
 	public List<Code> array_append;
 
 	public AppendArrayPattern(Configuration config, FunctionOrMethod functionOrMethod) {
@@ -35,10 +36,10 @@ public final class AppendArrayPattern extends WhileLoopPattern implements Transf
 			// Get the code block
 			List<Code> blk = functionOrMethod.body().bytecodes();
 			// Find the array variable
-			this.array_var = array_var(blk);
+			this.output_array = array_var(blk);
 			// If not, then continue iterating the list of code.
 			// Otherwise, stop constructing the BuildListPattern.
-			if (this.array_var != null && this.array_init != null) {
+			if (this.output_array != null && this.array_gen != null) {
 				this.array_append = array_append((Codes.Loop) blk.get(this.line));
 				if (this.array_append != null) {
 					this.pattern_name = "AppendArray";
@@ -74,10 +75,20 @@ public final class AppendArrayPattern extends WhileLoopPattern implements Transf
 					if (right == array_register) {
 						// Re-assign the register of array variable
 						array_register = left;
-						this.array_init = array_gen;
+						this.array_gen = array_gen;
 					}
 				}
 			} else if (code instanceof Codes.Loop) {
+				// Get input array 
+				Codes.Loop loop = (Codes.Loop)code;
+				// Get the first lengthof code to get the size of input array
+				for(Code c:loop.bytecodes()){
+					if(c instanceof Codes.LengthOf){
+						this.input_array = prefix+((Codes.LengthOf)c).operand(0);
+						break;
+					}
+				}
+				
 				this.line = index;
 				// Stop the search
 				break;
@@ -114,7 +125,7 @@ public final class AppendArrayPattern extends WhileLoopPattern implements Transf
 					if(next_code instanceof Codes.Assign){
 						Codes.Assign assign = (Codes.Assign)next_code;
 						int left = assign.target(0);
-						if(array_var.equals(prefix+left)){
+						if(output_array.equals(prefix+left)){
 							// Add the 
 							appends.add(invoke);
 						}
@@ -142,8 +153,8 @@ public final class AppendArrayPattern extends WhileLoopPattern implements Transf
 			result += "decr(" + loop_var + ", " + decr + ")";
 		}
 		result += "&& init(" + loop_var + ", " + init + ") "
-				+ "\n\t&& array_var(" + array_var + ")"
-				+ "\n\t&& array_init(" + this.array_init + ")" 
+				+ "\n\t&& array_var(" + output_array + ")"
+				+ "\n\t&& array_init(" + this.array_gen + ")" 
 				+ "\n\t&& array_append (" 
 				+ "\n\t\t"+this.array_append.stream().map(Object::toString)
 									.collect(Collectors.joining("\n\t\t"))+ " )"

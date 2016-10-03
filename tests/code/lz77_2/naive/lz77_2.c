@@ -400,7 +400,7 @@ blklab11:;
 	}
 //.blklab10
 blklab10:;
-	//invoke (%30) = (%1, %3) lz77_2:populate : function(byte[],lz77_2:nat)->(byte[])
+	//invoke (%30) = (%1, %3) lz77_2:populate : function(byte[],int)->(byte[])
 	{
 		void* output_tmp;
 		_30 = populate(_COPY_1DARRAY_PARAM_BYTE(output), size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));

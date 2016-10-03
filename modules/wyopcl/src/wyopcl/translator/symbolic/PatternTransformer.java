@@ -19,7 +19,7 @@ public class PatternTransformer {
 		this.avail_transformers = new ArrayList<Transformer>();
 		//Added the available transformer.
 		//this.avail_transformers.add(new WhileLoopIncrPatternTransformer());
-		this.avail_transformers.add(new BuildListPatternTransformer());
+		this.avail_transformers.add(new AppenArrayPatternTransformer());
 	}
 	
 	/**

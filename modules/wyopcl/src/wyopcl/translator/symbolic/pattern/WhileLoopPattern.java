@@ -22,7 +22,9 @@ import wyopcl.translator.symbolic.pattern.expression.LinearExpr;
  *
  */
 public abstract class WhileLoopPattern extends LoopPattern {
-	// Expressions related to the while-loop condition.
+	// The byte-code of loop block.
+	public Codes.Loop loop;
+	// The increment/decrement of loop variable
 	protected BigInteger decr;
 	protected BigInteger incr;
 
@@ -138,6 +140,7 @@ public abstract class WhileLoopPattern extends LoopPattern {
 			Code code = blk.get(index);
 			// Search for loop bytecode
 			if (!isInvariant(code) && (code instanceof Codes.Loop)) {
+				this.loop = (Codes.Loop)code;
 				break;
 			}
 			AddCodeToPatternPart(code, "init_after");
