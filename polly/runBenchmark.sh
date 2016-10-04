@@ -1,54 +1,80 @@
 #!/bin/bash
 TIMEOUT="3600s"
+## Set shell script to UTF-8
+export LANG=C.UTF-8
 # Run Polly from clang
 #alias opt="opt -O3 -polly"
 alias pollycc="clang -O3 -mllvm -polly"
 ### Get the root working directory
 basedir="$(dirname "$(pwd)")"
-utildir="$basedir/tests/code"
+UTILDIR="$basedir/tests/code"
+
+### Create the folder and/or clean up the files
+init(){
+	testcase=$1
+	dir="$basedir/polly/$testcase/exectime"
+	mkdir -p "$dir"
+	### remove all files inside the folder
+	rm -f "$dir/"*.*
+}
 
 ### Generate C code
 generateCode(){
 	testcase=$1
 	program=$2
 	codegen=$3
-	## change to 'testcase' folder
-	cd "$basedir/polly/$testcase/"
-	# clean and create the folder
-	rm -f "impl/$program/$codegen/*.*"
-	mkdir -p "impl/$program/$codegen"
+	enabledpattern=$4
+
+	if [ $enabledpattern == 1 ] 
+	then
+		### Enable pattern transformation
+		codeDir="$basedir/polly/$testcase/impl/$program/patern/$codegen"
+		pattern=$5
+	else
+		### Disable pattern transformation
+		codeDir="$basedir/polly/$testcase/impl/$program/nopatern/$codegen"
+	fi
+	###echo $codeDir
+	## Clean the folder
+	rm -rf "$codeDir"
+	mkdir -p "$codeDir"
 	# copy the source whiley file to the folder
-	cp $testcase"_"$program.whiley "impl/$program/$codegen/."
-	#### Change folder to the corresponding implementation folder
-	cd "impl/$program/$codegen"
-	## Clean up previously generated C code
-	rm -f *.c *.h
-	### Copy Util.c Util.h to the folder of generated code
-	cp $utildir/Util.c $utildir/Util.h .
+	cp $basedir/polly/$testcase/$testcase"_"$program.whiley "$codeDir"
+	### Copy Util.c Util.h to current folder
+	cp $UTILDIR/Util.c $UTILDIR/Util.h "$codeDir"
+
+	## Change to 'codeDIR'
+	cd $codeDir
+
+	### Disable pattern transformation
+	wyopcl=./../../../../../../bin/wyopcl
+	if [ $enabledpattern == 1 ] 
+	then
+		### Enable pattern transformation
+		wyopcl=$wyopcl" -pattern $pattern"	
+	fi
+	echo $codegen
 	## Translate Whiley programs into naive C code
 	case "$codegen" in
 		"naive")
-			echo "#############Generate naive $testcase#################"
 			### Translate Whiley program into naive C code
-			./../../../../..//bin/wyopcl -code $testcase"_"$program.whiley
+			$wyopcl -code $testcase"_"$program.whiley
 			;;
-	    	"naive_dealloc")
-			echo "#############Generate naive_dealloc $testcase#################"
-			### Translate Whiley program into naive + dealloc C code
-			./../../../../../bin/wyopcl -code -dealloc $testcase"_"$program.whiley
-	    		;;
+		"naive_dealloc")
+			### Translate Whiley program into naive + dealloc C code 
+			$wyopcl -code -dealloc $testcase"_"$program.whiley
+			;;
 		"copyreduced")
-			echo "#############Generate copyreduced $testcase#################"
 			## Translate Whiley programs into copy_reduced C code
-			./../../../../../bin/wyopcl -code -nocopy $testcase"_"$program.whiley
+			$wyopcl -code -nocopy $testcase"_"$program.whiley
 			;;
 		"copyreduced_dealloc")
-			echo "#############Generate copyreduced_dealloc $testcase#################"
 			### Translate Whiley program into copy-eliminated + memory deallocated C code
-			./../../../../../bin/wyopcl -code -nocopy -dealloc $testcase"_"$program.whiley
+			$wyopcl -code -nocopy -dealloc $testcase"_"$program.whiley
 			;;
 	esac
 }
+
 
 ##
 ## Compile the program and run the executable with given parameters
@@ -57,33 +83,35 @@ compileAndRun(){
 	testcase=$1
 	program=$2
 	codegen=$3
-	parameter=$4
-	compiler=$5
-	num_threads=$6
+	enabledpattern=$4
+	parameter=$5
+	compiler=$6
+	num_threads=$7
 	####Create 'out', 'llvm' and 'assembly' folder
-    	rm -rf "out" "llvm" "assembly"
+    rm -rf "out" "llvm" "assembly"
 	mkdir -p "out" "llvm" "assembly"
 	### The executable file name
-	executable=$testcase.$program.$codegen.$compiler
-    	### Compile C code into executables
+	executable="$testcase.$program.$codegen.$enabledpattern.$compiler.out"
+	result="$basedir/polly/$testcase/exectime/$executable.$parameter.$num_threads.txt"
+    ### Compile C code into executables
 	case "$compiler" in
 		"gcc")
 			##echo gcc -std=c99 -O3 $testcase"_"$program.c Util.c -o out/"$testcase.$program.$codegen.$compiler.out"
-			gcc -std=c99 -O3 $testcase"_"$program.c Util.c -o out/$executable.out
+			gcc -std=c99 -O3 $testcase"_"$program.c Util.c -o "out/$executable"
 			;;
 		"clang")
-			clang -O3 $testcase"_"$program.c Util.c -o out/$executable.out
+			clang -O3 $testcase"_"$program.c Util.c -o "out/$executable"
 			;;
 		"polly")
 			###'-polly-process-unprofitable' option forces Polly to generate sequential code
 			pollycc -mllvm -polly-vectorizer=stripmine\
 	        		-S -emit-llvm -mllvm -polly-process-unprofitable\
 					-mllvm -polly-opt-outer-coincidence=yes\
-	        		$testcase"_"$program.c -o "llvm"/$executable.ll
+	        		$testcase"_"$program.c -o "llvm/$executable.ll"
 			### Use 'llc' to compile LLVM code into assembly code
-			llc "llvm"/$executable.ll -o "assembly"/$executable.s
+			llc "llvm/$executable.ll" -o "assembly/$executable.s"
 			### Use 'clang' to compile .s file and link with 'libUtil.a'
-			clang "assembly"/$executable.s Util.c -o out/$executable.out
+			clang "assembly/$executable.s" Util.c -o "out/$executable"
 			;;
 		"openmp")
 			echo "Optimize C code using OpenMP code with $OMP_NUM_THREADS threads..." >> $result
@@ -92,38 +120,36 @@ compileAndRun(){
 			pollycc -mllvm -polly-vectorizer=stripmine -S -emit-llvm\
 	        		-mllvm -polly-parallel -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
 					-mllvm -polly-opt-outer-coincidence=yes\
-	        		$testcase"_"$program.c -o "llvm"/$executable.ll
+	        		$testcase"_"$program.c -o "llvm/$executable.ll"
 			### Use 'llc' to compile LLVM code into assembly code
-			llc "llvm"/$executable.ll -o "assembly"/$executable.s
+			llc "llvm/$executable.ll" -o "assembly/$executable.s"
 			### Use 'clang' to compile .s file and link with 'Util.c'
-			clang "assembly"/$executable.s Util.c -lgomp -o "out"/$executable.out
+			clang "assembly/$executable.s" Util.c -lgomp -o "out/$executable"
+			###Export the number of threads for OpenMP code
+			export OMP_NUM_THREADS=$num_threads
 			;;
 	esac
-	###read -p "Press [Enter] to continue..."
-	result="$basedir/polly/$testcase/exectime/$executable.$parameter.$num_threads.txt"
-	export OMP_NUM_THREADS=$num_threads
-	echo -e -n "Run the $program $testcase on $parameter using $compiler and $OMP_NUM_THREADS threads..." >> $result
+	
+	echo "Run the $program $testcase on $parameter using $compiler and $OMP_NUM_THREADS threads...\n" > $result
 	echo "Run the $program $testcase on $parameter using $OMP_NUM_THREADS threads..."
 	for i in {1..10}
 	do
-		#echo "Begin $i iteration"
+		echo "Run the $program $testcase on $parameter using $compiler" >> $result
+		echo "Begin $i iteration" >> $result
 		#timeout $TIMEOUT perf stat out/"$executable.out" $parameter >>$result 2>> $result
-		#echo "Finish $i iteration"
-		echo "Run the $program $testcase on $parameter using $compiler" >>$result
 		start=`date +%s%N`
 		## LZ test case
-		case $testcase in
-			"LZ77")
-				timeout $TIMEOUT out/"$executable.out" "$basedir/polly/$testcase/$parameter" >> $result 
-				;;
-			*)
-				## Other cases
-				timeout $TIMEOUT out/"$executable.out" $parameter >> $result
-				;;
-		esac
+		if [ $testcase = "LZ77" ]
+		then
+			timeout $TIMEOUT "out/$executable" "$basedir/polly/$testcase/$parameter" >> $result
+		else
+			## Other cases
+			timeout $TIMEOUT "out/$executable" $parameter >> $result
+		fi
 		end=`date +%s%N`
 		exectime=$((end-start))
-		printf '\nParameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter  $exectime >> $result
+		printf '\nParameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter $exectime >> $result
+		echo "Finish $i iteration" >> $result
 	done
 	### Output the hardware info.
 	cat /proc/cpuinfo >> $result
@@ -136,37 +162,40 @@ exec(){
 	program=$2
 	parameter=$3
 
+	## Declare an associative array for pattern matching
+	declare -A patterns=( [LZ77]=compress )
+
 	## declare 4 kinds of code generation
 	#declare -a codegens=("naive" "naive_dealloc" "copyreduced" "copyreduced_dealloc")
-	## declare 3 kinds of code generation
-	declare -a codegens=("copyreduced_dealloc")
-	## Iterate each codegen
+	declare -a codegens=("naive_dealloc" "copyreduced_dealloc")
+
+
+	# ## Iterate each codegen
 	for codegen in "${codegens[@]}"
 	do
-		## Generate C code
-		generateCode $testcase $program $codegen
-		##read -p "Complete code generation. Press [Enter] to continue..."
-		compileAndRun $testcase $program $codegen $parameter "gcc" 1
-		###read -p "Complete. Press [Enter] to continue..."
-		#compileAndRun $testcase $program $codegen $parameter "clang" 1
-		#compileAndRun $testcase $program $codegen $parameter "polly" 1
-		#compileAndRun $testcase $program $codegen $parameter "openmp" 1
-		#compileAndRun $testcase $program $codegen $parameter "openmp" 2
-		#compileAndRun $testcase $program $codegen $parameter "openmp" 4
+		## disabled the pattern
+		enabledpattern=0
+		# Generate C code with disabled pattern 
+		generateCode $testcase $program $codegen $enabledpattern
+		# Detect the leaks of generated C code using different compiler
+		compileAndRun $testcase $program $codegen $enabledpattern $parameter "gcc" 1
+		# ## Get the pattern option 
+		# pattern=${patterns[$testcase]}
+		# if [ pattern ]
+		# then
+		# 	# Enable the pattern matching
+		# 	enabledpattern=1
+		# 	# Generate C code with enabled pattern 
+		# 	generateCode $testcase $program $codegen $enabledpattern $pattern
+		# 	# Detect the leaks of generated C code using different compiler
+		# 	compileAndRun $testcase $program $codegen $enabledpattern $parameter "gcc" 1
+		# fi
 	done
-	# Return to the working directory
-	cd $basedir/polly
+	# #Return to the working directory
+ 	cd $basedir/polly
 	###read -p "Press [Enter] to continue..."
 }
-### Create the folder and/or clean up the files
-init(){
-	testcase=$1
-	testcase=$1
-	dir="$basedir/polly/$testcase/exectime"
-	mkdir -p "$dir"
-	### remove all files inside the folder
-	rm -f "$dir/"*.*
-}
+
 # ############################################
 # ###
 # ###  Benchmark 3 kinds of generated code
@@ -263,12 +292,9 @@ init(){
 
 # # ## LZ77 test case
 init LZ77
-exec LZ77 appendarray "small.in"
-exec LZ77 appendarray "medium.in"
-exec LZ77 appendarray "large.in"
-exec LZ77 populatearray "small.in"
-exec LZ77 populatearray "medium.in"
-exec LZ77 populatearray "large.in"
+exec LZ77 original "small.in"
+exec LZ77 original "medium.in"
+#exec LZ77 original "large.in"
 
 # ## NQueen test case
 # init NQueens

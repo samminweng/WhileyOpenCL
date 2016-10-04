@@ -19,19 +19,19 @@ init(){
 	rm -f "$leakdir/"*.*
 }
 
-## Declare an associative array for pattern matching
-declare -A patterns=( [LZ77]=compress )
+
 ### Generate C code
 generateCode(){
 	testcase=$1
 	program=$2
 	codegen=$3
 	enabledpattern=$4
-	
+
 	if [ $enabledpattern == 1 ] 
 	then
 		### Enable pattern transformation
 		codeDir="$basedir/polly/$testcase/impl/$program/patern/$codegen"
+		pattern=$5
 	else
 		### Disable pattern transformation
 		codeDir="$basedir/polly/$testcase/impl/$program/nopatern/$codegen"
@@ -52,12 +52,10 @@ generateCode(){
 	wyopcl=./../../../../../../bin/wyopcl
 	if [ $enabledpattern == 1 ] 
 	then
-		## Get the pattern
-		pattern=${patterns[$testcase]}
 		### Enable pattern transformation
 		wyopcl=$wyopcl" -pattern $pattern"	
 	fi
-	###echo $wyopcl
+	echo $codegen
 	## Translate Whiley programs into naive C code
 	case "$codegen" in
 		"naive")
@@ -122,15 +120,13 @@ detectleaks(){
 	esac
 
 	## LZ test case
-	case $testcase in
-		"LZ77")
-			valgrind --tool=memcheck "--log-file=$result" ./out/"$executable" "$basedir/polly/$testcase/$parameter"
-			;;
-		*)
-			## Other cases
-			valgrind --tool=memcheck "--log-file=$result" ./out/"$executable" $parameter
-			;;
-	esac
+	if [ $testcase = "LZ77" ]
+	then
+		valgrind --tool=memcheck "--log-file=$result" ./out/"$executable" "$basedir/polly/$testcase/$parameter"
+	else
+		## Other cases
+		valgrind --tool=memcheck "--log-file=$result" ./out/"$executable" $parameter
+	fi
 	
 	#valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all "--log-file=$result" ./out/"$program.$compiler.enableVC.out" $parameter
 	# Added the CPU info
@@ -145,28 +141,35 @@ exec(){
 	testcase=$1
 	program=$2
 	parameter=$3
-	
-	## declare two kinds of pattern matching
-	declare -a enabledpatterns=(0 1)
+
+	## Declare an associative array for pattern matching
+	declare -A patterns=( [LZ77]=compress )
 
 	## declare 4 kinds of code generation
-	#declare -a codegens=("naive" "naive_dealloc" "copyreduced" "copyreduced_dealloc")
-	declare -a codegens=("naive_dealloc" "copyreduced_dealloc")
+	declare -a codegens=("naive" "naive_dealloc" "copyreduced" "copyreduced_dealloc")
+	#declare -a codegens=("naive_dealloc" "copyreduced_dealloc")
+
 
 	# ## Iterate each codegen
 	for codegen in "${codegens[@]}"
 	do
-		for enabledpattern in "${enabledpatterns[@]}"
-		do
-			# Generate C code with disabled pattern 
-	 		generateCode $testcase $program $codegen $enabledpattern
-	 		# Detect the leaks of generated C code using different compiler
-	 		detectleaks $testcase $program $codegen $enabledpattern $parameter "gcc" 1
-	 	done
-	 	# Generate C code with enabled pattern 
-	 	#generateCode $testcase $program $codegen 1
-	 	# Detect the leaks of generated C code using different compiler
-	 	# detectleaks $testcase $program $pattern $codegen $parameter "gcc" 1
+		## disabled the pattern
+		enabledpattern=0
+		# Generate C code with disabled pattern 
+		generateCode $testcase $program $codegen $enabledpattern
+		# Detect the leaks of generated C code using different compiler
+		detectleaks $testcase $program $codegen $enabledpattern $parameter "gcc" 1
+		## Get the pattern option 
+		pattern=${patterns[$testcase]}
+		if [ pattern ]
+		then
+			# Enable the pattern matching
+			enabledpattern=1
+			# Generate C code with enabled pattern 
+			generateCode $testcase $program $codegen $enabledpattern $pattern
+			# Detect the leaks of generated C code using different compiler
+			detectleaks $testcase $program $codegen $enabledpattern $parameter "gcc" 1
+		fi
 	done
 	# #detectleaks $testcase $program $codegen $parameter "clang" 1
 	# #detectleaks $testcase $program $codegen $parameter "polly" 1

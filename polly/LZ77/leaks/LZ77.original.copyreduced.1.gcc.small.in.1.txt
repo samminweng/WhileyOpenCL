@@ -1,80 +1,80 @@
-==770== Memcheck, a memory error detector
-==770== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==770== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==770== Command: ./out/LZ77.original.copyreduced_dealloc.1.gcc.out /home/mw169/workspace/WhileyOpenCL/polly/LZ77/medium.in
-==770== Parent PID: 4766
-==770== 
-==770== Conditional jump or move depends on uninitialised value(s)
-==770==    at 0x4EB16F1: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:867)
-==770==    by 0x4E8190F: vfprintf (vfprintf.c:1661)
-==770==    by 0x4F402B7: __printf_chk (printf_chk.c:35)
-==770==    by 0x402F51: printf (stdio2.h:104)
-==770==    by 0x402F51: printf_s (Util.c:384)
-==770==    by 0x402F51: println_s (Util.c:391)
-==770==    by 0x400ACB: main (LZ77_original.c:740)
-==770== 
-==770== Conditional jump or move depends on uninitialised value(s)
-==770==    at 0x4EB171E: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:875)
-==770==    by 0x4E8190F: vfprintf (vfprintf.c:1661)
-==770==    by 0x4F402B7: __printf_chk (printf_chk.c:35)
-==770==    by 0x402F51: printf (stdio2.h:104)
-==770==    by 0x402F51: printf_s (Util.c:384)
-==770==    by 0x402F51: println_s (Util.c:391)
-==770==    by 0x400ACB: main (LZ77_original.c:740)
-==770== 
-==770== Conditional jump or move depends on uninitialised value(s)
-==770==    at 0x4E81913: vfprintf (vfprintf.c:1661)
-==770==    by 0x4F402B7: __printf_chk (printf_chk.c:35)
-==770==    by 0x402F51: printf (stdio2.h:104)
-==770==    by 0x402F51: printf_s (Util.c:384)
-==770==    by 0x402F51: println_s (Util.c:391)
-==770==    by 0x400ACB: main (LZ77_original.c:740)
-==770== 
-==770== Syscall param write(buf) points to uninitialised byte(s)
-==770==    at 0x4F22710: __write_nocancel (syscall-template.S:81)
-==770==    by 0x4EAFF02: _IO_file_write@@GLIBC_2.2.5 (fileops.c:1261)
-==770==    by 0x4EB13DB: new_do_write (fileops.c:538)
-==770==    by 0x4EB13DB: _IO_do_write@@GLIBC_2.2.5 (fileops.c:511)
-==770==    by 0x4EB05A0: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1332)
-==770==    by 0x4E80D0F: vfprintf (vfprintf.c:1340)
-==770==    by 0x4F402B7: __printf_chk (printf_chk.c:35)
-==770==    by 0x400ACB: main (LZ77_original.c:740)
-==770==  Address 0x4028000 is not stack'd, malloc'd or (recently) free'd
-==770== 
-==770== Conditional jump or move depends on uninitialised value(s)
-==770==    at 0x40178E: match (LZ77_original.c:60)
-==770==    by 0x40178E: findLongestMatch (LZ77_original.c:142)
-==770==    by 0x40178E: compress (LZ77_original.c:375)
-==770==    by 0x400B41: main (LZ77_original.c:764)
-==770== 
-==770== Conditional jump or move depends on uninitialised value(s)
-==770==    at 0x401774: match (LZ77_original.c:60)
-==770==    by 0x401774: findLongestMatch (LZ77_original.c:142)
-==770==    by 0x401774: compress (LZ77_original.c:375)
-==770==    by 0x400B41: main (LZ77_original.c:764)
-==770== 
-==770== Conditional jump or move depends on uninitialised value(s)
-==770==    at 0x4E81913: vfprintf (vfprintf.c:1661)
-==770==    by 0x4F402B7: __printf_chk (printf_chk.c:35)
-==770==    by 0x402F51: printf (stdio2.h:104)
-==770==    by 0x402F51: printf_s (Util.c:384)
-==770==    by 0x402F51: println_s (Util.c:391)
-==770==    by 0x400D47: main (LZ77_original.c:835)
-==770== 
-==770== Conditional jump or move depends on uninitialised value(s)
-==770==    at 0x402A77: isArrayEqual_BYTE (Util.c:206)
-==770==    by 0x400DF6: main (LZ77_original.c:874)
-==770== 
-==770== 
-==770== HEAP SUMMARY:
-==770==     in use at exit: 0 bytes in 0 blocks
-==770==   total heap usage: 2,373 allocs, 2,373 frees, 1,297,739 bytes allocated
-==770== 
-==770== All heap blocks were freed -- no leaks are possible
-==770== 
-==770== For counts of detected and suppressed errors, rerun with: -v
-==770== Use --track-origins=yes to see where uninitialised values come from
-==770== ERROR SUMMARY: 267 errors from 8 contexts (suppressed: 0 from 0)
+==32717== Memcheck, a memory error detector
+==32717== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==32717== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==32717== Command: ./out/LZ77.original.copyreduced.1.gcc.out /home/mw169/workspace/WhileyOpenCL/polly/LZ77/small.in
+==32717== Parent PID: 4766
+==32717== 
+==32717== Conditional jump or move depends on uninitialised value(s)
+==32717==    at 0x4EB16F1: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:867)
+==32717==    by 0x4E8190F: vfprintf (vfprintf.c:1661)
+==32717==    by 0x4F402B7: __printf_chk (printf_chk.c:35)
+==32717==    by 0x402C91: printf (stdio2.h:104)
+==32717==    by 0x402C91: printf_s (Util.c:384)
+==32717==    by 0x402C91: println_s (Util.c:391)
+==32717==    by 0x400A52: main (LZ77_original.c:639)
+==32717== 
+==32717== Conditional jump or move depends on uninitialised value(s)
+==32717==    at 0x4EB171E: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:875)
+==32717==    by 0x4E8190F: vfprintf (vfprintf.c:1661)
+==32717==    by 0x4F402B7: __printf_chk (printf_chk.c:35)
+==32717==    by 0x402C91: printf (stdio2.h:104)
+==32717==    by 0x402C91: printf_s (Util.c:384)
+==32717==    by 0x402C91: println_s (Util.c:391)
+==32717==    by 0x400A52: main (LZ77_original.c:639)
+==32717== 
+==32717== Conditional jump or move depends on uninitialised value(s)
+==32717==    at 0x4E81913: vfprintf (vfprintf.c:1661)
+==32717==    by 0x4F402B7: __printf_chk (printf_chk.c:35)
+==32717==    by 0x402C91: printf (stdio2.h:104)
+==32717==    by 0x402C91: printf_s (Util.c:384)
+==32717==    by 0x402C91: println_s (Util.c:391)
+==32717==    by 0x400A52: main (LZ77_original.c:639)
+==32717== 
+==32717== Syscall param write(buf) points to uninitialised byte(s)
+==32717==    at 0x4F22710: __write_nocancel (syscall-template.S:81)
+==32717==    by 0x4EAFF02: _IO_file_write@@GLIBC_2.2.5 (fileops.c:1261)
+==32717==    by 0x4EB13DB: new_do_write (fileops.c:538)
+==32717==    by 0x4EB13DB: _IO_do_write@@GLIBC_2.2.5 (fileops.c:511)
+==32717==    by 0x4EB05A0: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1332)
+==32717==    by 0x4E80D0F: vfprintf (vfprintf.c:1340)
+==32717==    by 0x4F402B7: __printf_chk (printf_chk.c:35)
+==32717==    by 0x400A52: main (LZ77_original.c:639)
+==32717==  Address 0x4028000 is not stack'd, malloc'd or (recently) free'd
+==32717== 
+==32717== Conditional jump or move depends on uninitialised value(s)
+==32717==    at 0x401547: match (LZ77_original.c:60)
+==32717==    by 0x401547: findLongestMatch (LZ77_original.c:139)
+==32717==    by 0x401547: compress (LZ77_original.c:339)
+==32717==    by 0x400ABE: main (LZ77_original.c:660)
+==32717== 
+==32717== Conditional jump or move depends on uninitialised value(s)
+==32717==    at 0x4E81913: vfprintf (vfprintf.c:1661)
+==32717==    by 0x4F402B7: __printf_chk (printf_chk.c:35)
+==32717==    by 0x402C91: printf (stdio2.h:104)
+==32717==    by 0x402C91: printf_s (Util.c:384)
+==32717==    by 0x402C91: println_s (Util.c:391)
+==32717==    by 0x400CA1: main (LZ77_original.c:714)
+==32717== 
+==32717== Conditional jump or move depends on uninitialised value(s)
+==32717==    at 0x4027B7: isArrayEqual_BYTE (Util.c:206)
+==32717==    by 0x400D35: main (LZ77_original.c:751)
+==32717== 
+==32717== 
+==32717== HEAP SUMMARY:
+==32717==     in use at exit: 3,159 bytes in 75 blocks
+==32717==   total heap usage: 75 allocs, 0 frees, 3,159 bytes allocated
+==32717== 
+==32717== LEAK SUMMARY:
+==32717==    definitely lost: 2,089 bytes in 71 blocks
+==32717==    indirectly lost: 440 bytes in 1 blocks
+==32717==      possibly lost: 0 bytes in 0 blocks
+==32717==    still reachable: 630 bytes in 3 blocks
+==32717==         suppressed: 0 bytes in 0 blocks
+==32717== Rerun with --leak-check=full to see details of leaked memory
+==32717== 
+==32717== For counts of detected and suppressed errors, rerun with: -v
+==32717== Use --track-origins=yes to see where uninitialised values come from
+==32717== ERROR SUMMARY: 39 errors from 7 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -82,7 +82,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3889.546
+cpu MHz		: 3853.421
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -109,7 +109,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3810.257
+cpu MHz		: 3803.750
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -136,7 +136,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3855.015
+cpu MHz		: 3808.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -163,7 +163,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3784.492
+cpu MHz		: 3866.437
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -190,7 +190,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3843.460
+cpu MHz		: 3879.453
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -217,7 +217,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3816.632
+cpu MHz		: 3884.101
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -244,7 +244,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3823.804
+cpu MHz		: 3773.468
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -271,7 +271,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3864.578
+cpu MHz		: 3845.320
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
