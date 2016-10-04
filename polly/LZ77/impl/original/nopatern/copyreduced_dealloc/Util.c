@@ -338,20 +338,21 @@ void indirect_printf(int64_t input) {
 void printf1DArray_int64_t(int64_t* input, size_t input_size) {
 	//Determines whether to add ','.
 	int isFirst = true;
-	int max_i = 10;
+	//int max = 30;
 	printf("[");
-	size_t i;
+	size_t i = 0;
 	//Print the first 10 items
-	for(i = 0; i < input_size && i < max_i; i++) {
+	while(i < input_size && i < MAX_LENGTH) {
 		if (isFirst) {
 			printf("%"PRId64, input[i]);
 			isFirst = false;
 		} else {
 			printf(",%"PRId64, input[i]);
 		}
+		i++;
 	}
 	//Print the '...' to represent the remaing items and the last item.
-	if (input_size > i) {
+	if (input_size > MAX_LENGTH) {
 		printf(" ... %"PRId64, input[input_size - 1]);
 	}
 	printf("]\n");
@@ -362,12 +363,13 @@ void printf1DArray_BYTE(BYTE* input, size_t input_size) {
 }
 // Print out the first 10 array in an 2D array
 void printf2DArray_int64_t(int64_t** input, size_t input_size, size_t input_size_size){
-	printf("[");
-	size_t i;
-	for (i = 0; i < input_size && i < 10; i++) {
+	printf("[");	
+	size_t i = 0;
+	while (i < input_size && i < MAX_LENGTH) {
 		printf1DArray_int64_t(input[i], input_size_size);
+		i++;
 	}
-	if (input_size > i) {
+	if (input_size > MAX_LENGTH) {
 		printf(" ...\n"); 
 		printf1DArray_int64_t(input[input_size - 1], input_size_size);
 	}
@@ -378,10 +380,21 @@ void printf2DArray_int64_t(int64_t** input, size_t input_size, size_t input_size
  * Print out an array of ASCII numbers into an array of chars.
  */
 void printf_s(int64_t* input, size_t input_size) {
-	for (size_t i = 0; i < input_size ; i++) {
+	// Print the first MAX_LENGTH chars
+	size_t i =0;
+	while (i < input_size && i < MAX_LENGTH) {
 		// Make int to char
 		char c = input[i];
-		printf("%c", c);
+		// Check if c is NOT EOF and skip 'EOF' char 
+		// Note 0 (ASCII NUL) indicates the EOF
+		if(c>0){
+			printf("%c", c);
+		}
+		i++;
+	}
+	// Print the last char
+	if (input_size > MAX_LENGTH) {
+		printf(" ... ");
 	}
 }
 /**
@@ -499,19 +512,18 @@ FILE* Reader(int64_t* arr, size_t arr_size){
 
 // Read all lines of a file and output a BYTE array
 BYTE* readAll(FILE *file, size_t* _size){
-	BYTE c;
 	// Calculate the output size
 	size_t size = 0;
 	while(feof(file) != true){
-      c = fgetc(file);
+      BYTE c = fgetc(file);
       //printf("%c", c);
       size = size + 1;
 	}
 	// Set the file position to the beginning of the file
 	rewind(file);
 
-	// Allocated byte array
-	BYTE* arr = (BYTE*)malloc((size)*sizeof(BYTE));
+	// Allocated byte array. Note the last char (EOF)
+	BYTE* arr = (BYTE*)malloc(size*sizeof(BYTE));
 	if(arr == NULL){
 		fprintf(stderr, "fail to allocate the array at 'readAll' function in Util.c\n");
 		exit(-2);

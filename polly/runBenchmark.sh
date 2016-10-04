@@ -130,7 +130,7 @@ compileAndRun(){
 			;;
 	esac
 	
-	echo "Run the $program $testcase on $parameter using $compiler and $OMP_NUM_THREADS threads...\n" > $result
+	echo "Run the $program $testcase on $parameter using $compiler and $OMP_NUM_THREADS threads..." > $result
 	echo "Run the $program $testcase on $parameter using $OMP_NUM_THREADS threads..."
 	for i in {1..10}
 	do
@@ -179,17 +179,17 @@ exec(){
 		generateCode $testcase $program $codegen $enabledpattern
 		# Detect the leaks of generated C code using different compiler
 		compileAndRun $testcase $program $codegen $enabledpattern $parameter "gcc" 1
-		# ## Get the pattern option 
-		# pattern=${patterns[$testcase]}
-		# if [ pattern ]
-		# then
-		# 	# Enable the pattern matching
-		# 	enabledpattern=1
-		# 	# Generate C code with enabled pattern 
-		# 	generateCode $testcase $program $codegen $enabledpattern $pattern
-		# 	# Detect the leaks of generated C code using different compiler
-		# 	compileAndRun $testcase $program $codegen $enabledpattern $parameter "gcc" 1
-		# fi
+		## Get the pattern option 
+		pattern=${patterns[$testcase]}
+		if [ pattern ]
+		then
+			# Enable the pattern matching
+			enabledpattern=1
+			# Generate C code with enabled pattern 
+			generateCode $testcase $program $codegen $enabledpattern $pattern
+			# Detect the leaks of generated C code using different compiler
+			compileAndRun $testcase $program $codegen $enabledpattern $parameter "gcc" 1
+		fi
 	done
 	# #Return to the working directory
  	cd $basedir/polly
@@ -294,7 +294,7 @@ exec(){
 init LZ77
 exec LZ77 original "small.in"
 exec LZ77 original "medium.in"
-#exec LZ77 original "large.in"
+exec LZ77 original "large.in"
 
 # ## NQueen test case
 # init NQueens

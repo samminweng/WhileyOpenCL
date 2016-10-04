@@ -12,6 +12,9 @@
 // Remove the security check about unsafe 'scanf' or 'sprintf' in VS tool
 // This definition allows the portability of C code across the platforms.
 #define _CRT_SECURE_NO_WARNINGS
+// Specify the maximal amounts of chars that are printed out using 'printf' function 
+#define MAX_LENGTH 100
+
 
 // Define BYTE type due to missing byte primitive type in C languate
 typedef uint8_t BYTE;

@@ -608,13 +608,13 @@ int main(int argc, char** args){
 	//assign %2 = %7  : byte[]
 	_UPDATE_1DARRAY(data, _7);
 	//fieldload %9 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %10 = %9 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//fieldload %10 = %9 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %11 = [68,97,116,97,58,32,32,32,32,32,32,32,32,32] : int[]
 	_NEW_1DARRAY_int64_t(_11, 14, 0);
 	_11[0] = 68; _11[1] = 97; _11[2] = 116; _11[3] = 97; _11[4] = 58; _11[5] = 32; _11[6] = 32; _11[7] = 32; _11[8] = 32; _11[9] = 32; _11[10] = 32; _11[11] = 32; _11[12] = 32; _11[13] = 32; 
 	//indirectinvoke () = %10 (%11) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_11));
+		println_s(_11, _11_size);
 	}
 	//fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %13 = %12 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -683,13 +683,13 @@ int main(int argc, char** args){
 	//assign %4 = %31  : byte[]
 	_UPDATE_1DARRAY(decompress_data, _31);
 	//fieldload %32 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %33 = %32 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//fieldload %33 = %32 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %34 = [68,69,67,79,77,80,82,69,83,83,69,68,58,32,32,32] : int[]
 	_NEW_1DARRAY_int64_t(_34, 16, 0);
 	_34[0] = 68; _34[1] = 69; _34[2] = 67; _34[3] = 79; _34[4] = 77; _34[5] = 80; _34[6] = 82; _34[7] = 69; _34[8] = 83; _34[9] = 83; _34[10] = 69; _34[11] = 68; _34[12] = 58; _34[13] = 32; _34[14] = 32; _34[15] = 32; 
 	//indirectinvoke () = %33 (%34) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_34));
+		println_s(_34, _34_size);
 	}
 	//fieldload %35 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %36 = %35 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

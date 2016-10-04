@@ -681,7 +681,7 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY(data, _7);
 	_TRANSFER_DEALLOC(data, _7);
 	//fieldload %9 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %10 = %9 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//fieldload %10 = %9 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %11 = [68,97,116,97,58,32,32,32,32,32,32,32,32,32] : int[]
 	_DEALLOC(_11);
 	_NEW_1DARRAY_int64_t(_11, 14, 0);
@@ -689,7 +689,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_11);
 	//indirectinvoke () = %10 (%11) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_11));
+		println_s(_11, _11_size);
 	}
 	//fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %13 = %12 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -735,7 +735,7 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY(compress_data, _21);
 	_TRANSFER_DEALLOC(compress_data, _21);
 	//fieldload %22 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %23 = %22 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//fieldload %23 = %22 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %24 = [67,79,77,80,82,69,83,83,69,68,32,68,97,116,97,58,32,32,32] : int[]
 	_DEALLOC(_24);
 	_NEW_1DARRAY_int64_t(_24, 19, 0);
@@ -743,7 +743,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_24);
 	//indirectinvoke () = %23 (%24) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_24));
+		println_s(_24, _24_size);
 	}
 	//fieldload %25 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %26 = %25 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -776,7 +776,7 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY(decompress_data, _31);
 	_TRANSFER_DEALLOC(decompress_data, _31);
 	//fieldload %32 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %33 = %32 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//fieldload %33 = %32 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %34 = [68,69,67,79,77,80,82,69,83,83,69,68,58,32,32,32] : int[]
 	_DEALLOC(_34);
 	_NEW_1DARRAY_int64_t(_34, 16, 0);
@@ -784,7 +784,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_34);
 	//indirectinvoke () = %33 (%34) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_34));
+		println_s(_34, _34_size);
 	}
 	//fieldload %35 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %36 = %35 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
