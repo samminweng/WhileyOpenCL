@@ -2,7 +2,7 @@
 int64_t f(int64_t x){
 	int64_t r = 0;
 	uint16_t _2 = 0;
-	int64_t _3 = 0;
+	uint16_t _3 = 0;
 	int64_t _4 = 0;
 	int64_t _5 = 0;
 	int64_t _6 = 0;
@@ -38,12 +38,12 @@ blklab2:;
 }
 
 int main(int argc, char** args){
-	int64_t a = 0;
+	uint16_t a = 0;
 	uint16_t b = 0;
 	uint16_t c = 0;
 	uint16_t d = 0;
-	int64_t e = 0;
-	int64_t _6 = 0;
+	uint16_t e = 0;
+	uint16_t _6 = 0;
 	uint16_t _7 = 0;
 	int64_t _8 = 0;
 	void* _9;
@@ -59,7 +59,7 @@ int main(int argc, char** args){
 	uint16_t _22 = 0;
 	int64_t _23 = 0;
 	void* _24;
-	int64_t _26 = 0;
+	uint16_t _26 = 0;
 	uint16_t _27 = 0;
 	int16_t _28 = 0;
 	int64_t _29 = 0;

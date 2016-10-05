@@ -131,78 +131,77 @@ public class BoundAnalyzer {
 				line = printWyILCode(code, name, line);
 			}
 
-			if (code instanceof Codes.Invoke) {
-				analyze((Codes.Invoke) code, name);
-			} else {
-				// Parse each byte-code and add the constraints accordingly.
-				try {
-					if (code instanceof Codes.Invariant) {
-						//analyze((Codes.Invariant) code, name);
-					}else if (code instanceof Codes.Assert){
-						///analyze((Codes.Assert)code, name);
-					}else if (code instanceof Codes.Assign) {
-						analyze((Codes.Assign) code, name);
-					} else if (code instanceof Codes.Assume){
-						//analyze((Codes.Assume)code, name);
-					} else if (code instanceof Codes.BinaryOperator) {
-						analyze((Codes.BinaryOperator) code, name);
-					} else if (code instanceof Codes.Convert) {
-						analyze((Codes.Convert) code, name);
-					} else if (code instanceof Codes.Const) {
-						analyze((Codes.Const) code, name);
-					} else if (code instanceof Codes.Debug) {
-						// Do nothing
-					} else if (code instanceof Codes.Dereference) {
-						// Do nothing
-					} else if (code instanceof Codes.FieldLoad) {
-						analyze((Codes.FieldLoad) code, name);
-					} else if (code instanceof Codes.Fail) {
-						analyze((Codes.Fail) code, name);
-					} else if (code instanceof Codes.Goto) {
-						analyze((Codes.Goto) code, name);
-					} else if (code instanceof Codes.If) {
-						analyze((Codes.If) code, name);
-					} else if (code instanceof Codes.IfIs) {
-						// Do nothing
-					} else if (code instanceof Codes.IndexOf) {
-						analyze((Codes.IndexOf) code, name);
-					} else if (code instanceof Codes.IndirectInvoke) {
-						// Do nothing
-					} else if (code instanceof Codes.Invert) {
-						// Do nothing
-					} else if (code instanceof Codes.Loop) {
-						analyze((Codes.Loop) code, name);
-					} else if (code instanceof Codes.Label) {
-						analyze((Codes.Label) code, name);
-					} else if (code instanceof Codes.Lambda) {
-						// Do nothing
-					} else if (code instanceof Codes.LengthOf) {
-						analyze((Codes.LengthOf) code, name);
-					} else if (code instanceof Codes.Move) {
-						throw new RuntimeException("Not implemented!");
-					} else if (code instanceof Codes.NewRecord) {
-						// Do nothing
-					} else if (code instanceof Codes.Return) {
-						analyze((Codes.Return) code, name);
-					} else if (code instanceof Codes.NewArray) {
-						analyze((Codes.NewArray)code, name);
-					} else if (code instanceof Codes.Nop) {
-						// Do nothing
-					} else if (code instanceof Codes.Switch) {
-						// Do nothing
-					} else if (code instanceof Codes.UnaryOperator) {
-						analyze((Codes.UnaryOperator) code, name);
-					} else if (code instanceof Codes.Update) {
-						analyze((Codes.Update) code, name);
-					} else if (code instanceof Codes.ArrayGenerator) {
-						analyze((Codes.ArrayGenerator)code, name);						
-					} else {
-						throw new RuntimeException("unknown wyil code encountered (" + code + ")");
-					}
-				} catch (Exception ex) {
-					throw new RuntimeException(ex.getMessage());
+			// Parse each byte-code and add the constraints accordingly.
+			try {
+				if (code instanceof Codes.Invoke) {
+					analyze((Codes.Invoke) code, name);
+				} else if (code instanceof Codes.Invariant) {
+					// analyze((Codes.Invariant) code, name);
+				} else if (code instanceof Codes.Assert) {
+					/// analyze((Codes.Assert)code, name);
+				} else if (code instanceof Codes.Assign) {
+					analyze((Codes.Assign) code, name);
+				} else if (code instanceof Codes.Assume) {
+					// analyze((Codes.Assume)code, name);
+				} else if (code instanceof Codes.BinaryOperator) {
+					analyze((Codes.BinaryOperator) code, name);
+				} else if (code instanceof Codes.Convert) {
+					analyze((Codes.Convert) code, name);
+				} else if (code instanceof Codes.Const) {
+					analyze((Codes.Const) code, name);
+				} else if (code instanceof Codes.Debug) {
+					// Do nothing
+				} else if (code instanceof Codes.Dereference) {
+					// Do nothing
+				} else if (code instanceof Codes.FieldLoad) {
+					analyze((Codes.FieldLoad) code, name);
+				} else if (code instanceof Codes.Fail) {
+					analyze((Codes.Fail) code, name);
+				} else if (code instanceof Codes.Goto) {
+					analyze((Codes.Goto) code, name);
+				} else if (code instanceof Codes.If) {
+					analyze((Codes.If) code, name);
+				} else if (code instanceof Codes.IfIs) {
+					// Do nothing
+				} else if (code instanceof Codes.IndexOf) {
+					analyze((Codes.IndexOf) code, name);
+				} else if (code instanceof Codes.IndirectInvoke) {
+					// Do nothing
+				} else if (code instanceof Codes.Invert) {
+					// Do nothing
+				} else if (code instanceof Codes.Loop) {
+					analyze((Codes.Loop) code, name);
+				} else if (code instanceof Codes.Label) {
+					analyze((Codes.Label) code, name);
+				} else if (code instanceof Codes.Lambda) {
+					// Do nothing
+				} else if (code instanceof Codes.LengthOf) {
+					analyze((Codes.LengthOf) code, name);
+				} else if (code instanceof Codes.Move) {
+					throw new RuntimeException("Not implemented!");
+				} else if (code instanceof Codes.NewRecord) {
+					// Do nothing
+				} else if (code instanceof Codes.Return) {
+					analyze((Codes.Return) code, name);
+				} else if (code instanceof Codes.NewArray) {
+					analyze((Codes.NewArray) code, name);
+				} else if (code instanceof Codes.Nop) {
+					// Do nothing
+				} else if (code instanceof Codes.Switch) {
+					// Do nothing
+				} else if (code instanceof Codes.UnaryOperator) {
+					analyze((Codes.UnaryOperator) code, name);
+				} else if (code instanceof Codes.Update) {
+					analyze((Codes.Update) code, name);
+				} else if (code instanceof Codes.ArrayGenerator) {
+					analyze((Codes.ArrayGenerator) code, name);
+				} else {
+					throw new RuntimeException("unknown wyil code encountered (" + code + ")");
 				}
+			} catch (Exception ex) {
+				throw new RuntimeException(ex.getMessage());
 			}
+			
 		}
 	}
 	
@@ -357,7 +356,6 @@ public class BoundAnalyzer {
 		for (BoundBlock blk : list) {
 			// Consider the bounds of consistent block and discard the bounds of inconsistent block.
 			if (blk.isConsistent() && blk.getType() != BlockType.EXIT) {
-			//if (blk.getType() != BlockType.EXIT) {
 				exit_blk.unionBounds(blk);
 			}
 		}
@@ -589,12 +587,12 @@ public class BoundAnalyzer {
 			// procedure.
 			if (c_blk != null) {
 				// Create a return block 
-				BoundBlock return_block = graph.createBasicBlock("return", BlockType.RETURN, c_blk);
+				BoundBlock return_block = graph.createBasicBlock("return"+retOp, BlockType.RETURN, c_blk);
 				
 				// Check if the return type is integer.
 				if (isIntType(type)) {
 					// Add the 'Equals' constraint to the return (ret) variable.
-					return_block.addConstraint((new Assign("return", retOp)));
+					return_block.addConstraint((new Assign("return"+retOp, retOp)));
 				}
 				
 				// Add the bounds of size variable
@@ -667,12 +665,6 @@ public class BoundAnalyzer {
 		isLoop = true;
 		// Get the list of byte-code and iterate through the list.
 		iterateBytecode(name, code.bytecodes());
-		
-		// Link the current block and loop header		
-		//BoundGraph graph = BoundAnalyzerHelper.getCFGraph(name);
-		// Get the current block
-		//BoundBlock current_blk = graph.getCurrentBlock();
-		
 		
 		// Set the flag to be false after finishing iterating all the byte-code.
 		isLoop = false;

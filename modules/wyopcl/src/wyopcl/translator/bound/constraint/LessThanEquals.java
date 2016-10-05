@@ -9,11 +9,21 @@ import wyopcl.translator.bound.Domain;
 
 
 /**
- * Implements the propagation rule for constraint <code>x <= y</code> from 'y' to 'x'. It adds the upper bound  from 'y' to 'x' without making any change to 'y'.
+ * Implements the propagation rule for constraint 
+ * <code>
+ * x <= y
+ * </code> 
+ * 
+ * It adds the upper bound from 'y' to 'x' without making any change to 'y'.
  * For example, the following bounds and constraints:
- * <p><code> D(x) = [1..11], D(y)=[10..10], x < y</code></p> 
+ * <pre><code>
+ * D(x) = [1..11], D(y)=[10..10], x < y
+ * </code></p> 
  * can be inferred as below:
- * <p><code>D(x) = [1..10], D(y)=[10..10]</code></p>
+ * <pre><code>
+ * D(x) = [1..10], D(y)=[10..10]
+ * </code>
+ * </p>
  * @author Min-Hsien Weng
  *
  */
@@ -35,13 +45,13 @@ public class LessThanEquals extends Constraint {
 		min_y = bnd.getLower(y);
 		max_y = bnd.getUpper(y);
 		//Propagate the upper bound from y to x.
-		if (max_y != null){
+		if(max_y != null){
 			bnd.isChanged |= bnd.addUpperBound(x, max_y);
 		}	
-		//Propagate the lower bound from x to y.
-		if(min_x != null){
-			bnd.isChanged |= bnd.addLowerBound(y, min_x);
-		}		
+//		//Propagate the lower bound from x to y.
+//		if(min_y != null){
+//			bnd.isChanged |= bnd.addLowerBound(x, min_y);
+//		}		
 		
 
 		return bnd.isChanged;

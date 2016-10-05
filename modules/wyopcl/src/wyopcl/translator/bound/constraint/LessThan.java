@@ -5,12 +5,20 @@ import java.math.BigInteger;
 import wyopcl.translator.bound.Bounds;
 
 /**
- * Implements the propagation rule for constraint <code>x < y</code> from 'y' to 'x'. It gets the upper bound from 'y'
- * and decrements the bound by '1'. And then it adds the new upper bound to 'x' without making any change to 'y'.
- * </p>For example, the following bounds and constraints:
- * <p><code> D(x) = [1..11], D(y)=[10..10], x < y</code></p> 
+ * Implements the propagation rule for constraint
+ * <code>
+ * x < y
+ * </code> 
+ * 
+ * It gets the upper bound of 'max_y-1' to x without changes to y. 
+ * For example, the following bounds and constraints:
+ * <p><code> 
+ * D(x) = [1..1], D(y)=[10..10], x < y
+ * </code></p> 
  * can be inferred as below:
- * <p><code>D(x) = [1..9], D(y)=[10..10]</code></p>
+ * <p><code>
+ * 	D(x) = [1..1], D(y)=[10..10]
+ * </code></p>
  * @author Min-Hsien Weng
  *
  */
@@ -34,14 +42,14 @@ public class LessThan extends Constraint {
 		max_y = bnd.getUpper(y);
 
 		//Propagate 'upper bound of y - 1' to upper bound of x.
-		if (max_y != null){
+		if(max_y != null){
 			bnd.isChanged |= bnd.addUpperBound(x, max_y.subtract(BigInteger.ONE));
 		}
 		
-		//Propagate the 'lower bound of y -1'  to  lower bound of x
-		if(min_y != null){
-			bnd.isChanged |= bnd.addLowerBound(x, min_y.subtract(BigInteger.ONE));
-		}
+//		//Propagate the 'lower bound of y -1'  to  lower bound of x
+//		if(min_y != null){
+//			bnd.isChanged |= bnd.addLowerBound(x, min_y.subtract(BigInteger.ONE));
+//		}
 
 		return bnd.isChanged;
 

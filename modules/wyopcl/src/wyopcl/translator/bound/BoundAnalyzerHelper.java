@@ -6,6 +6,8 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import wyil.attributes.VariableDeclarations;
 import wyil.attributes.VariableDeclarations.Declaration;
@@ -271,14 +273,22 @@ final class BoundAnalyzerHelper {
 		BoundGraph graph = getCFGraph(caller_name);
 		if (ret_type != null){
 			if(isIntType(ret_type)) {
-				// propagate the bounds of return value.
-				graph.addConstraint(new Range(ret_reg, bnd.getLower("return"), bnd.getUpper("return")));
+				// Get the bounds of return variable
+				Domain ret_bound;
+				for(Entry<String, Domain> bound: bnd.getBounds().entrySet()){
+					if(bound.getKey().contains("return")){
+						ret_bound = bound.getValue();
+						// propagate the bounds of return value.
+						graph.addConstraint(new Range(ret_reg, ret_bound.getLowerBound(), ret_bound.getUpperBound()));
+						break;
+					}
+				}
 			}
-			// Pass the array size of return array to caller size.
-			if(ret_type instanceof Type.Array){
-				// propagate the bounds of return array size.
-				graph.addConstraint(new Range(ret_reg+"_size", bnd.getLower("return_size"), bnd.getUpper("return_size")));
-			}
+//			// Pass the array size of return array to caller size.
+//			if(ret_type instanceof Type.Array){
+//				// propagate the bounds of return array size.
+//				graph.addConstraint(new Range(ret_reg+"_size", bnd.getLower("return_size"), bnd.getUpper("return_size")));
+//			}
 			
 		}
 		

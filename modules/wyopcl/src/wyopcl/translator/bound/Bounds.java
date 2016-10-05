@@ -228,13 +228,15 @@ public class Bounds implements Cloneable {
 		try {
 			new_domain = (Domain) existing_domain.clone();
 			new_domain.setLowerBound(new_min);
+			if(existing_domain.getLowerBound() == null){
+				// Update the bound
+				bounds.put(name, new_domain);
+				return true;
+			}
+			
 			if (!existing_domain.equals(new_domain)) {
-				// Check the lower bound and update the lower bound
-				// When the existing bound in '-infinity' Or the new lower bound
-				// is
-				// 'larger'.
-				if (new_domain.compareTo(existing_domain) > 0) {
-					// new_domain.setMin(new_min);
+				// Check new lower bound > existing lower bound (stronger) 
+				if (new_domain.getLowerBound().compareTo(existing_domain.getLowerBound()) > 0) {
 					bounds.put(name, new_domain);
 					return true;
 				}
@@ -259,9 +261,15 @@ public class Bounds implements Cloneable {
 		try {
 			new_domain = (Domain) existing_domain.clone();
 			new_domain.setUpperBound(new_max);
+			if(existing_domain.getUpperBound() == null){
+				// Update the upper bound
+				bounds.put(name, new_domain);
+				return true;
+			}
+			
 			if (!existing_domain.equals(new_domain)) {
 				// Check new domain is smaller (stronger) than existing one.
-				if (new_domain.compareTo(existing_domain) < 0) {
+				if (new_domain.getUpperBound().compareTo(existing_domain.getUpperBound()) < 0) {
 					bounds.put(name, new_domain);
 					return true;
 				}

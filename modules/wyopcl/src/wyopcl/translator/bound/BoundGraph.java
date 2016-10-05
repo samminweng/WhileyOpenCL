@@ -61,14 +61,10 @@ public class BoundGraph {
 	 * @return the blk
 	 */
 	public BoundBlock createBasicBlock(String label, BlockType type, BoundBlock... parents) {
-		BoundBlock blk = getBasicBlock(label, type);
-		// Check if the block exists
-		if (blk == null) {
-			//Create a new block
-			blk = new BoundBlock(label, type);
-			//Add this block to the block list.
-			blocks.add(blk);
-		}
+		//Create a new block
+		BoundBlock	blk = new BoundBlock(label, type);
+		//Add this block to the block list.
+		blocks.add(blk);
 		//Connect the block with the given parent blocks.
 		BoundBlock parent = parents.length > 0 ? parents[0] : null;
 		if (parent != null) {

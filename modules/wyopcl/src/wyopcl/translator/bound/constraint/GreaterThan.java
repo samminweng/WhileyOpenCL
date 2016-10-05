@@ -4,11 +4,20 @@ import java.math.BigInteger;
 
 import wyopcl.translator.bound.Bounds;
 /**
- * Implements the propagation rule for constraint <code>x > y</code> from 'y' to 'x'. It gets the lower bound from 'y' and increments the bound by '1'. 
- * And then it adds the new lower bound to 'x' without making any change to 'y'. For example, the following bounds and constraints:
- * <p><code> D(x) = [1..11], D(y)=[10..10], x > y</code></p> 
+ * Implements the propagation rule for constraint <code>x > y</code> 
+ * 
+ * It gets the lower bound from 'y' and increments the bound by '1'. 
+ * And then it adds the new lower bound to 'x' without making any change to 'y'. 
+ * 
+ * For example, the following bounds and constraints:
+ * <p><code> 
+ * D(x) = [1..11], D(y)=[10..10], x > y
+ * 
+ * </code></p> 
  * can be inferred as below:
- * <p><code>D(x) = [11..11], D(y)=[10..10]</code></p>
+ * <p><code>
+ * D(x) = [11..11], D(y)=[10..10]
+ * </code></p>
  * @author Min-Hsien Weng
  *
  */
@@ -34,7 +43,12 @@ public class GreaterThan extends Constraint {
 		//Propagate 'min_y + 1' to lower bound of x 
 		if(min_y != null){
 			bnd.isChanged |= bnd.addLowerBound(x, min_y.add(BigInteger.ONE));
-		}		
+		}
+		
+//		//Propagate the upper bound from y to x.
+//		if(max_y != null){
+//			bnd.isChanged |= bnd.addUpperBound(x, max_y.add(BigInteger.ONE));
+//		}
 
 		return bnd.isChanged;
 
