@@ -1,194 +1,35 @@
-Run the original LZ77 on medium.in using gcc and 1 threads...
-Run the original LZ77 on medium.in using gcc
-Begin 1 iteration
-Data:         
-// Copyright (c) 2011, David J. Pearce (djp@ecs.vuw.ac.nz)
-// All rights reserved.
-//
-// Redistribut ... 
-1582 bytes
-COMPRESSED Data:   
-1552 bytes
-DECOMPRESSED:   
-// Copyright (c) 2011, David J. Pearce (djp@ecs.vuw.ac.nz)
-// All rights reserved.
-//
-// Redistribut ... 
-1582 bytes
-
-Parameter:medium.in	ExecutionTime:17572254	nanoseconds.
-Finish 1 iteration
-Run the original LZ77 on medium.in using gcc
-Begin 2 iteration
-Data:         
-// Copyright (c) 2011, David J. Pearce (djp@ecs.vuw.ac.nz)
-// All rights reserved.
-//
-// Redistribut ... 
-1582 bytes
-COMPRESSED Data:   
-1552 bytes
-DECOMPRESSED:   
-// Copyright (c) 2011, David J. Pearce (djp@ecs.vuw.ac.nz)
-// All rights reserved.
-//
-// Redistribut ... 
-1582 bytes
-
-Parameter:medium.in	ExecutionTime:17197990	nanoseconds.
-Finish 2 iteration
-Run the original LZ77 on medium.in using gcc
-Begin 3 iteration
-Data:         
-// Copyright (c) 2011, David J. Pearce (djp@ecs.vuw.ac.nz)
-// All rights reserved.
-//
-// Redistribut ... 
-1582 bytes
-COMPRESSED Data:   
-1552 bytes
-DECOMPRESSED:   
-// Copyright (c) 2011, David J. Pearce (djp@ecs.vuw.ac.nz)
-// All rights reserved.
-//
-// Redistribut ... 
-1582 bytes
-
-Parameter:medium.in	ExecutionTime:18069137	nanoseconds.
-Finish 3 iteration
-Run the original LZ77 on medium.in using gcc
-Begin 4 iteration
-Data:         
-// Copyright (c) 2011, David J. Pearce (djp@ecs.vuw.ac.nz)
-// All rights reserved.
-//
-// Redistribut ... 
-1582 bytes
-COMPRESSED Data:   
-1552 bytes
-DECOMPRESSED:   
-// Copyright (c) 2011, David J. Pearce (djp@ecs.vuw.ac.nz)
-// All rights reserved.
-//
-// Redistribut ... 
-1582 bytes
-
-Parameter:medium.in	ExecutionTime:18830059	nanoseconds.
-Finish 4 iteration
-Run the original LZ77 on medium.in using gcc
-Begin 5 iteration
-Data:         
-// Copyright (c) 2011, David J. Pearce (djp@ecs.vuw.ac.nz)
-// All rights reserved.
-//
-// Redistribut ... 
-1582 bytes
-COMPRESSED Data:   
-1552 bytes
-DECOMPRESSED:   
-// Copyright (c) 2011, David J. Pearce (djp@ecs.vuw.ac.nz)
-// All rights reserved.
-//
-// Redistribut ... 
-1582 bytes
-
-Parameter:medium.in	ExecutionTime:18651242	nanoseconds.
-Finish 5 iteration
-Run the original LZ77 on medium.in using gcc
-Begin 6 iteration
-Data:         
-// Copyright (c) 2011, David J. Pearce (djp@ecs.vuw.ac.nz)
-// All rights reserved.
-//
-// Redistribut ... 
-1582 bytes
-COMPRESSED Data:   
-1552 bytes
-DECOMPRESSED:   
-// Copyright (c) 2011, David J. Pearce (djp@ecs.vuw.ac.nz)
-// All rights reserved.
-//
-// Redistribut ... 
-1582 bytes
-
-Parameter:medium.in	ExecutionTime:19398151	nanoseconds.
-Finish 6 iteration
-Run the original LZ77 on medium.in using gcc
-Begin 7 iteration
-Data:         
-// Copyright (c) 2011, David J. Pearce (djp@ecs.vuw.ac.nz)
-// All rights reserved.
-//
-// Redistribut ... 
-1582 bytes
-COMPRESSED Data:   
-1552 bytes
-DECOMPRESSED:   
-// Copyright (c) 2011, David J. Pearce (djp@ecs.vuw.ac.nz)
-// All rights reserved.
-//
-// Redistribut ... 
-1582 bytes
-
-Parameter:medium.in	ExecutionTime:16651440	nanoseconds.
-Finish 7 iteration
-Run the original LZ77 on medium.in using gcc
-Begin 8 iteration
-Data:         
-// Copyright (c) 2011, David J. Pearce (djp@ecs.vuw.ac.nz)
-// All rights reserved.
-//
-// Redistribut ... 
-1582 bytes
-COMPRESSED Data:   
-1552 bytes
-DECOMPRESSED:   
-// Copyright (c) 2011, David J. Pearce (djp@ecs.vuw.ac.nz)
-// All rights reserved.
-//
-// Redistribut ... 
-1582 bytes
-
-Parameter:medium.in	ExecutionTime:17241405	nanoseconds.
-Finish 8 iteration
-Run the original LZ77 on medium.in using gcc
-Begin 9 iteration
-Data:         
-// Copyright (c) 2011, David J. Pearce (djp@ecs.vuw.ac.nz)
-// All rights reserved.
-//
-// Redistribut ... 
-1582 bytes
-COMPRESSED Data:   
-1552 bytes
-DECOMPRESSED:   
-// Copyright (c) 2011, David J. Pearce (djp@ecs.vuw.ac.nz)
-// All rights reserved.
-//
-// Redistribut ... 
-1582 bytes
-
-Parameter:medium.in	ExecutionTime:17542788	nanoseconds.
-Finish 9 iteration
-Run the original LZ77 on medium.in using gcc
-Begin 10 iteration
-Data:         
-// Copyright (c) 2011, David J. Pearce (djp@ecs.vuw.ac.nz)
-// All rights reserved.
-//
-// Redistribut ... 
-1582 bytes
-COMPRESSED Data:   
-1552 bytes
-DECOMPRESSED:   
-// Copyright (c) 2011, David J. Pearce (djp@ecs.vuw.ac.nz)
-// All rights reserved.
-//
-// Redistribut ... 
-1582 bytes
-
-Parameter:medium.in	ExecutionTime:17451108	nanoseconds.
-Finish 10 iteration
+==2593== Memcheck, a memory error detector
+==2593== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==2593== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==2593== Command: ./out/LZ77.original.copyreduced_dealloc.1.gcc.1.medium.in.out /home/mw169/workspace/WhileyOpenCL/polly/LZ77/medium.in
+==2593== Parent PID: 4123
+==2593== 
+==2593== Conditional jump or move depends on uninitialised value(s)
+==2593==    at 0x40178E: match (LZ77_original.c:60)
+==2593==    by 0x40178E: findLongestMatch (LZ77_original.c:142)
+==2593==    by 0x40178E: compress (LZ77_original.c:375)
+==2593==    by 0x400B41: main (LZ77_original.c:764)
+==2593== 
+==2593== Conditional jump or move depends on uninitialised value(s)
+==2593==    at 0x401774: match (LZ77_original.c:60)
+==2593==    by 0x401774: findLongestMatch (LZ77_original.c:142)
+==2593==    by 0x401774: compress (LZ77_original.c:375)
+==2593==    by 0x400B41: main (LZ77_original.c:764)
+==2593== 
+==2593== Conditional jump or move depends on uninitialised value(s)
+==2593==    at 0x402A77: isArrayEqual_BYTE (Util.c:206)
+==2593==    by 0x400DF6: main (LZ77_original.c:874)
+==2593== 
+==2593== 
+==2593== HEAP SUMMARY:
+==2593==     in use at exit: 0 bytes in 0 blocks
+==2593==   total heap usage: 2,373 allocs, 2,373 frees, 1,297,739 bytes allocated
+==2593== 
+==2593== All heap blocks were freed -- no leaks are possible
+==2593== 
+==2593== For counts of detected and suppressed errors, rerun with: -v
+==2593== Use --track-origins=yes to see where uninitialised values come from
+==2593== ERROR SUMMARY: 259 errors from 3 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -196,7 +37,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3823.007
+cpu MHz		: 3809.195
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -210,7 +51,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.79
+bogomips	: 6783.93
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -223,7 +64,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3861.257
+cpu MHz		: 3400.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -237,7 +78,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.79
+bogomips	: 6783.93
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -250,7 +91,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3754.742
+cpu MHz		: 3861.257
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -264,7 +105,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.79
+bogomips	: 6783.93
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -277,7 +118,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3457.375
+cpu MHz		: 3820.750
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -291,7 +132,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.79
+bogomips	: 6783.93
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -304,7 +145,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3712.507
+cpu MHz		: 3755.539
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -318,7 +159,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.79
+bogomips	: 6783.93
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -331,7 +172,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3874.937
+cpu MHz		: 3402.125
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -345,7 +186,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.79
+bogomips	: 6783.93
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -358,7 +199,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3793.523
+cpu MHz		: 3851.960
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -372,7 +213,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.79
+bogomips	: 6783.93
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -385,7 +226,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3517.007
+cpu MHz		: 3901.234
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -399,7 +240,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6784.79
+bogomips	: 6783.93
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual

@@ -91,8 +91,8 @@ compileAndRun(){
     rm -rf "out" "llvm" "assembly"
 	mkdir -p "out" "llvm" "assembly"
 	### The executable file name
-	executable="$testcase.$program.$codegen.$enabledpattern.$compiler.out"
-	result="$basedir/polly/$testcase/exectime/$executable.$parameter.$num_threads.txt"
+	executable="$testcase.$program.$codegen.$enabledpattern.$compiler.$num_threads.$parameter.out"
+	result="$basedir/polly/$testcase/exectime/$executable.txt"
     ### Compile C code into executables
 	case "$compiler" in
 		"gcc")
@@ -130,8 +130,8 @@ compileAndRun(){
 			;;
 	esac
 	
-	echo "Run the $program $testcase on $parameter using $compiler and $OMP_NUM_THREADS threads..." > $result
-	echo "Run the $program $testcase on $parameter using $OMP_NUM_THREADS threads..."
+	echo "Run the $program $testcase on $parameter using $compiler and $num_threads threads..." > $result
+	echo "Run the $program $testcase on $parameter using $num_threads threads..."
 	for i in {1..10}
 	do
 		echo "Run the $program $testcase on $parameter using $compiler" >> $result

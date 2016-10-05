@@ -92,8 +92,8 @@ detectleaks(){
 	mkdir -p out
 	# Ref: http://valgrind.org/docs/manual/manual.html
 	# Run Valgrind memcheck tool to detect memory leaks, and write out results to output file.
-	executable="$testcase.$program.$codegen.$enabledpattern.$compiler.out"
-	result="$testcase.$program.$codegen.$enabledpattern.$compiler.$parameter.$num_threads.txt"
+	executable="$testcase.$program.$codegen.$enabledpattern.$compiler.$num_threads.$parameter.out"
+	result="$basedir/polly/$testcase/leaks/$executable.txt"
 	echo -e -n "Start Detect leaks..." > $result
 	case "$compiler" in
 		"gcc")
@@ -122,17 +122,15 @@ detectleaks(){
 	## LZ test case
 	if [ $testcase = "LZ77" ]
 	then
-		valgrind --tool=memcheck "--log-file=$result" ./out/"$executable" "$basedir/polly/$testcase/$parameter"
+		valgrind --tool=memcheck "--log-file=$result" "./out/$executable" "$basedir/polly/$testcase/$parameter"
 	else
 		## Other cases
-		valgrind --tool=memcheck "--log-file=$result" ./out/"$executable" $parameter
+		valgrind --tool=memcheck "--log-file=$result" "./out/$executable" $parameter
 	fi
 	
 	#valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all "--log-file=$result" ./out/"$program.$compiler.enableVC.out" $parameter
 	# Added the CPU info
 	cat /proc/cpuinfo >> $result
-	# move result to leaks folder
-	mv $result $basedir/polly/$testcase/leaks/.
 }
 # 
 # Run Valgrind to detect memory leaks

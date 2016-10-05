@@ -1,18 +1,18 @@
 Memory Leak (bytes)
-TestCase	ProgramType	Parameter	CodeGen	Compiler	Thread	definite loss	indirect loss	possible loss	reachable loss
-LZ77	appendarray	small	naive	gcc	1	23655	440	0	598
-LZ77	appendarray	small	naive_dealloc	gcc	1	0	0	0	0
-LZ77	appendarray	small	copyreduced	gcc	1	2412	440	0	598
-LZ77	appendarray	small	copyreduced_dealloc	gcc	1	0	0	0	0
-LZ77	appendarray	medium	naive	gcc	1	5006297	448	0	2150
-LZ77	appendarray	medium	naive_dealloc	gcc	1	0	0	0	0
-LZ77	appendarray	medium	copyreduced	gcc	1	9923	448	0	2150
-LZ77	appendarray	medium	copyreduced_dealloc	gcc	1	0	0	0	0
-LZ77	populatearray	small	naive	gcc	1	15168	440	0	598
-LZ77	populatearray	small	naive_dealloc	gcc	1	0	0	0	0
-LZ77	populatearray	small	copyreduced	gcc	1	932	440	0	598
-LZ77	populatearray	small	copyreduced_dealloc	gcc	1	0	0	0	0
-LZ77	populatearray	medium	naive	gcc	1	4965702	448	0	2150
-LZ77	populatearray	medium	naive_dealloc	gcc	1	0	0	0	0
-LZ77	populatearray	medium	copyreduced	gcc	1	4702	448	0	2150
-LZ77	populatearray	medium	copyreduced_dealloc	gcc	1	0	0	0	0
+TestCase	ProgramType	Compiler	Pattern	Parameter	CodeGen	Thread	definite loss	indirect loss	possible loss	reachable loss
+LZ77	original	gcc	disabled	small	naive	1	25796	440	0	630
+LZ77	original	gcc	disabled	small	naive_dealloc	1	0	0	0	0
+LZ77	original	gcc	disabled	small	copyreduced	1	3680	440	0	630
+LZ77	original	gcc	disabled	small	copyreduced_dealloc	1	0	0	0	0
+LZ77	original	gcc	disabled	medium	naive	1	283937552	448	6328	3732
+LZ77	original	gcc	disabled	medium	naive_dealloc	1	0	0	0	0
+LZ77	original	gcc	disabled	medium	copyreduced	1	2493971	448	0	3732
+LZ77	original	gcc	disabled	medium	copyreduced_dealloc	1	0	0	0	0
+LZ77	original	gcc	enabled	small	naive	1	19370	440	0	630
+LZ77	original	gcc	enabled	small	naive_dealloc	1	0	0	0	0
+LZ77	original	gcc	enabled	small	copyreduced	1	2089	440	0	630
+LZ77	original	gcc	enabled	small	copyreduced_dealloc	1	0	0	0	0
+LZ77	original	gcc	enabled	medium	naive	1	279132740	448	6328	3732
+LZ77	original	gcc	enabled	medium	naive_dealloc	1	0	0	0	0
+LZ77	original	gcc	enabled	medium	copyreduced	1	1293559	448	0	3732
+LZ77	original	gcc	enabled	medium	copyreduced_dealloc	1	0	0	0	0

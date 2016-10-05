@@ -395,8 +395,6 @@ void printf_s(int64_t* input, size_t input_size) {
 	// Print the last char
 	if (input_size > MAX_LENGTH) {
 		printf(" ... ");
-		char c = input[input_size - 1];
-		printf("%c", c);
 	}
 }
 /**
