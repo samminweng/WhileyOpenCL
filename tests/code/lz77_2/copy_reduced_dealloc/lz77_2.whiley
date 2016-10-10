@@ -68,8 +68,10 @@ function append(byte[] items, byte item) -> (byte[] nitems):
     return output
 */
 
-// Populate the input array to the array of given array size
-function populate(byte[] items, int size) -> (byte[] nitems):
+// Resize the input array to the array of given array size
+function resize(byte[] items, int size) -> (byte[] nitems)
+requires |items| >= size
+ensures |nitems| == size:
     nitems = [0b; size]
     int i = 0
     while i < size:
@@ -84,10 +86,11 @@ function populate(byte[] items, int size) -> (byte[] nitems):
 //Compress 'input' array into 'output' array
 function compress(byte[] data) -> (byte[] output):
     nat pos = 0
+    nat arr_capacity=2*|data|
     // Initialize the output array of bytes
-    output = [0b;2*|data|]
+    output = [0b;arr_capacity]
     // Array size
-    nat size = 0
+    nat arr_size = 0
     // Iterate each byte in 'data'
     while pos < |data|:
         Match m = findLongestMatch(data, pos)
@@ -102,12 +105,14 @@ function compress(byte[] data) -> (byte[] output):
             // Skip the matched bytes
             pos = pos + m.len
         // write the encoded pair
-        output[size] = offset
-        size = size + 1
-        output[size] = length
-        size = size + 1
+        output[arr_size] = offset
+        arr_size = arr_size + 1
+        output[arr_size] = length
+        arr_size = arr_size + 1
+    // Add extra invariant to ensure array capacity >= array size
+    assert arr_capacity >= arr_size
     // Reallocate the output array
-    output = populate(output, size)
+    output = resize(output, arr_size)
     // Return the array
     return output
 
