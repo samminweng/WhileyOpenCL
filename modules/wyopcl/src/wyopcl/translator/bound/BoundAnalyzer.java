@@ -361,6 +361,7 @@ public class BoundAnalyzer {
 		}
 		// Produce the aggregated bounds of a function.
 		Bounds bnds = exit_blk.getBounds();
+		
 		BoundAnalyzerHelper.printBoundsAndSize(this.module, bnds, name);
 		
 		if (config.isVerbose()) {
@@ -592,7 +593,7 @@ public class BoundAnalyzer {
 				// Check if the return type is integer.
 				if (isIntType(type)) {
 					// Add the 'Equals' constraint to the return (ret) variable.
-					return_block.addConstraint((new Assign("return"+retOp, retOp)));
+					return_block.addConstraint((new Assign("return", retOp)));
 				}
 				
 				// Add the bounds of size variable

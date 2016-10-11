@@ -25,3 +25,9 @@ method main(System.Console sys):
     int e = f(-1212)
     assert e == 1
     sys.out.println(d)
+    int x = 1
+    x = 10
+    //// x = [1 ... 10]
+    int y = f(x)
+    sys.out.println(y)
+

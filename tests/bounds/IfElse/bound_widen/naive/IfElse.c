@@ -3,9 +3,9 @@ int64_t f(int64_t x){
 	int64_t r = 0;
 	uint16_t _2 = 0;
 	uint16_t _3 = 0;
-	int64_t _4 = 0;
+	uint16_t _4 = 0;
 	int64_t _5 = 0;
-	int64_t _6 = 0;
+	uint16_t _6 = 0;
 	//const %2 = 10 : int
 	_2 = 10;
 	//ifge %0, %2 goto blklab1 : int
@@ -43,41 +43,47 @@ int main(int argc, char** args){
 	uint16_t c = 0;
 	uint16_t d = 0;
 	uint16_t e = 0;
-	uint16_t _6 = 0;
-	uint16_t _7 = 0;
-	int64_t _8 = 0;
-	void* _9;
-	uint16_t _11 = 0;
-	uint16_t _12 = 0;
-	int64_t _13 = 0;
-	void* _14;
-	uint16_t _16 = 0;
-	uint16_t _17 = 0;
-	int64_t _18 = 0;
-	void* _19;
-	uint16_t _21 = 0;
-	uint16_t _22 = 0;
-	int64_t _23 = 0;
-	void* _24;
-	uint16_t _26 = 0;
-	uint16_t _27 = 0;
-	int16_t _28 = 0;
-	int64_t _29 = 0;
-	void* _30;
-	//const %7 = 1 : int
-	_7 = 1;
-	//invoke (%6) = (%7) IfElse:f : function(int)->(int)
+	uint16_t x = 0;
+	uint16_t y = 0;
+	uint16_t _8 = 0;
+	uint16_t _9 = 0;
+	int64_t _10 = 0;
+	void* _11;
+	uint16_t _13 = 0;
+	uint16_t _14 = 0;
+	int64_t _15 = 0;
+	void* _16;
+	uint16_t _18 = 0;
+	uint16_t _19 = 0;
+	int64_t _20 = 0;
+	void* _21;
+	uint16_t _23 = 0;
+	uint16_t _24 = 0;
+	int64_t _25 = 0;
+	void* _26;
+	uint16_t _28 = 0;
+	uint16_t _29 = 0;
+	int16_t _30 = 0;
+	int64_t _31 = 0;
+	void* _32;
+	uint16_t _34 = 0;
+	uint16_t _35 = 0;
+	uint16_t _36 = 0;
+	void* _37;
+	//const %9 = 1 : int
+	_9 = 1;
+	//invoke (%8) = (%9) IfElse:f : function(int)->(int)
 	{
-		_6 = f(_7);
+		_8 = f(_9);
 	}
-	//assign %1 = %6  : int
-	a = _6;
+	//assign %1 = %8  : int
+	a = _8;
 	//assert
 	{
-		//const %8 = 1 : int
-		_8 = 1;
-		//ifeq %1, %8 goto blklab4 : int
-		if(a==_8){goto blklab4;}
+		//const %10 = 1 : int
+		_10 = 1;
+		//ifeq %1, %10 goto blklab4 : int
+		if(a==_10){goto blklab4;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -85,26 +91,26 @@ int main(int argc, char** args){
 blklab4:;
 	//assert
 	}
-	//fieldload %9 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %10 = %9 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//indirectinvoke () = %10 (%1) : method(any)->()
+	//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %12 = %11 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %12 (%1) : method(any)->()
 	{
 		printf("%"PRId64"\n", a);
 	}
-	//const %12 = 10 : int
-	_12 = 10;
-	//invoke (%11) = (%12) IfElse:f : function(int)->(int)
+	//const %14 = 10 : int
+	_14 = 10;
+	//invoke (%13) = (%14) IfElse:f : function(int)->(int)
 	{
-		_11 = f(_12);
+		_13 = f(_14);
 	}
-	//assign %2 = %11  : int
-	b = _11;
+	//assign %2 = %13  : int
+	b = _13;
 	//assert
 	{
-		//const %13 = 0 : int
-		_13 = 0;
-		//ifeq %2, %13 goto blklab5 : int
-		if(b==_13){goto blklab5;}
+		//const %15 = 0 : int
+		_15 = 0;
+		//ifeq %2, %15 goto blklab5 : int
+		if(b==_15){goto blklab5;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -112,26 +118,26 @@ blklab4:;
 blklab5:;
 	//assert
 	}
-	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %15 = %14 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//indirectinvoke () = %15 (%2) : method(any)->()
+	//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %17 = %16 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %17 (%2) : method(any)->()
 	{
 		printf("%"PRId64"\n", b);
 	}
-	//const %17 = 11 : int
-	_17 = 11;
-	//invoke (%16) = (%17) IfElse:f : function(int)->(int)
+	//const %19 = 11 : int
+	_19 = 11;
+	//invoke (%18) = (%19) IfElse:f : function(int)->(int)
 	{
-		_16 = f(_17);
+		_18 = f(_19);
 	}
-	//assign %3 = %16  : int
-	c = _16;
+	//assign %3 = %18  : int
+	c = _18;
 	//assert
 	{
-		//const %18 = 2 : int
-		_18 = 2;
-		//ifeq %3, %18 goto blklab6 : int
-		if(c==_18){goto blklab6;}
+		//const %20 = 2 : int
+		_20 = 2;
+		//ifeq %3, %20 goto blklab6 : int
+		if(c==_20){goto blklab6;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -139,26 +145,26 @@ blklab5:;
 blklab6:;
 	//assert
 	}
-	//fieldload %19 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %20 = %19 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//indirectinvoke () = %20 (%3) : method(any)->()
+	//fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %22 = %21 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %22 (%3) : method(any)->()
 	{
 		printf("%"PRId64"\n", c);
 	}
-	//const %22 = 1212 : int
-	_22 = 1212;
-	//invoke (%21) = (%22) IfElse:f : function(int)->(int)
+	//const %24 = 1212 : int
+	_24 = 1212;
+	//invoke (%23) = (%24) IfElse:f : function(int)->(int)
 	{
-		_21 = f(_22);
+		_23 = f(_24);
 	}
-	//assign %4 = %21  : int
-	d = _21;
+	//assign %4 = %23  : int
+	d = _23;
 	//assert
 	{
-		//const %23 = 2 : int
-		_23 = 2;
-		//ifeq %4, %23 goto blklab7 : int
-		if(d==_23){goto blklab7;}
+		//const %25 = 2 : int
+		_25 = 2;
+		//ifeq %4, %25 goto blklab7 : int
+		if(d==_25){goto blklab7;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -166,28 +172,28 @@ blklab6:;
 blklab7:;
 	//assert
 	}
-	//fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %25 = %24 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//indirectinvoke () = %25 (%4) : method(any)->()
+	//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %27 = %26 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %27 (%4) : method(any)->()
 	{
 		printf("%"PRId64"\n", d);
 	}
-	//const %27 = 1212 : int
-	_27 = 1212;
-	//neg %28 = %27 : int
-	_28= -_27;
-	//invoke (%26) = (%28) IfElse:f : function(int)->(int)
+	//const %29 = 1212 : int
+	_29 = 1212;
+	//neg %30 = %29 : int
+	_30= -_29;
+	//invoke (%28) = (%30) IfElse:f : function(int)->(int)
 	{
-		_26 = f(_28);
+		_28 = f(_30);
 	}
-	//assign %5 = %26  : int
-	e = _26;
+	//assign %5 = %28  : int
+	e = _28;
 	//assert
 	{
-		//const %29 = 1 : int
-		_29 = 1;
-		//ifeq %5, %29 goto blklab8 : int
-		if(e==_29){goto blklab8;}
+		//const %31 = 1 : int
+		_31 = 1;
+		//ifeq %5, %31 goto blklab8 : int
+		if(e==_31){goto blklab8;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -195,11 +201,31 @@ blklab7:;
 blklab8:;
 	//assert
 	}
-	//fieldload %30 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %31 = %30 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//indirectinvoke () = %31 (%4) : method(any)->()
+	//fieldload %32 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %33 = %32 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %33 (%4) : method(any)->()
 	{
 		printf("%"PRId64"\n", d);
+	}
+	//const %34 = 1 : int
+	_34 = 1;
+	//assign %6 = %34  : int
+	x = _34;
+	//const %35 = 10 : int
+	_35 = 10;
+	//assign %6 = %35  : int
+	x = _35;
+	//invoke (%36) = (%6) IfElse:f : function(int)->(int)
+	{
+		_36 = f(x);
+	}
+	//assign %7 = %36  : int
+	y = _36;
+	//fieldload %37 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %38 = %37 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %38 (%7) : method(any)->()
+	{
+		printf("%"PRId64"\n", y);
 	}
 	//return
 	exit(0);

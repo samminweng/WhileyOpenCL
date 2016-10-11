@@ -71,18 +71,22 @@ BYTE* readAll(FILE *file, size_t* _size);
 // Define 'max' and 'min' macro
 // Compute max and min without branches (http://graphics.stanford.edu/~seander/bithacks.html#IntegerMinOrMax)
 #ifndef max
-//#define max(a,b) \
-//		({ __typeof__ (a) _a = (a); \
-//		   __typeof__ (b) _b = (b); \
-//		   _a > _b ? _a : _b; })
+/*
+#define max(a,b) \
+		({ __typeof__ (a) _a = (a); \
+		   __typeof__ (b) _b = (b); \
+		   _a > _b ? _a : _b; })
+*/
 #define max(a, b) a ^ ((a ^ b) & -(a < b))
 #endif
 #ifndef min
 #define min(a, b) b ^ ((a ^ b) & -(a < b));
-//#define min(a,b) \
-//		({ __typeof__ (a) _a = (a); \
-//		   __typeof__ (b) _b = (b); \
-//		   _a < _b ? _a : _b; })
+/*
+#define min(a,b) \
+		({ __typeof__ (a) _a = (a); \
+		   __typeof__ (b) _b = (b); \
+		   _a < _b ? _a : _b; })
+*/
 #endif
 /***
 **  Debug macro prints out message when debug is enabled
