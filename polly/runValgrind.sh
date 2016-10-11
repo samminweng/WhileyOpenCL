@@ -87,7 +87,7 @@ detectleaks(){
 	compiler=$6
 	num_threads=$7
 	mkdir -p out
-	if [ $enabledpattern == 1]
+	if [ $enabledpattern == 1 ]
 	then 
 		executable="$testcase.$program.$codegen.enabledpattern.$compiler.$num_threads.$parameter.out"
 	else

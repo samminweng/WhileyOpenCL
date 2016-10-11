@@ -294,9 +294,9 @@ exec(){
 		enabledpattern=0
 		# Generate C code with disabled pattern 
 		generateCode $testcase $program $codegen $enabledpattern
-		# Profile the generated C code using different profiler
+		# Profile the generated C code 
 		rungprof $testcase $program $codegen $enabledpattern $parameter "gcc" 1		
-		runcallgrind $testcase $program $codegen $enabledpattern $parameter "gcc" 1
+		##runcallgrind $testcase $program $codegen $enabledpattern $parameter "gcc" 1
 		# Get the pattern option 
 		pattern=${patterns[$testcase]}
 		if [ pattern ]
@@ -305,9 +305,9 @@ exec(){
 			enabledpattern=1
 			# Generate C code with enabled pattern 
 			generateCode $testcase $program $codegen $enabledpattern $pattern
-			# Profile the generated C code using different profiler
+			# Profile the generated C code 
 			rungprof $testcase $program $codegen $enabledpattern $parameter "gcc" 1
-			runcallgrind $testcase $program $codegen $enabledpattern $parameter "gcc" 1
+			###runcallgrind $testcase $program $codegen $enabledpattern $parameter "gcc" 1
 		fi
 	done
 	# #detectleaks $testcase $program $codegen $parameter "clang" 1
