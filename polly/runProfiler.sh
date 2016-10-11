@@ -323,4 +323,4 @@ exec(){
 
 # ####LZ77 test case
 init LZ77
-exec LZ77 original "medium.in"
+exec LZ77 original "large.in"
