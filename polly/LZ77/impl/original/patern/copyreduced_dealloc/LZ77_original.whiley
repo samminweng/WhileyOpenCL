@@ -59,8 +59,10 @@ function append(byte[] items, byte item) -> (byte[] nitems):
     nitems[i] = item
     return nitems
 
-// Populate the input array to the array of given array size
-function populate(byte[] items, int size) -> (byte[] nitems):
+// Resize the input array to the array of given array size
+function resize(byte[] items, int size) -> (byte[] nitems)
+requires |items| >= size
+ensures |nitems| == size:
     nitems = [0b; size]
     int i = 0
     while i < size:
@@ -139,13 +141,13 @@ method main(System.Console sys):
     //sys.out.println_s(ASCII.fromBytes(compress_data))
     sys.out.print(|compress_data|)
     sys.out.println_s(" bytes")
-    // Decompress the data to a string
-    byte[] decompress_data = decompress(compress_data)
-    sys.out.println_s("DECOMPRESSED:   ")
-    sys.out.println_s(ASCII.fromBytes(decompress_data))
-    sys.out.print(|decompress_data|)
-    sys.out.println_s(" bytes")
-    // Array size of 'data' array == Array size of 'decompress_data'
-    assert |data| == |decompress_data|
-    // Verify the 'data' array 
-    assert data == decompress_data
+    // // Decompress the data to a string
+    // byte[] decompress_data = decompress(compress_data)
+    // sys.out.println_s("DECOMPRESSED:   ")
+    // sys.out.println_s(ASCII.fromBytes(decompress_data))
+    // sys.out.print(|decompress_data|)
+    // sys.out.println_s(" bytes")
+    // // Array size of 'data' array == Array size of 'decompress_data'
+    // assert |data| == |decompress_data|
+    // // Verify the 'data' array 
+    // assert data == decompress_data

@@ -1,0 +1,39 @@
+--------------------------------------------------------------------------------
+Profile data file 'callgrind.out.27429' (creator: callgrind-3.10.1)
+--------------------------------------------------------------------------------
+I1 cache: 
+D1 cache: 
+LL cache: 
+Timerange: Basic block 0 - 4177765
+Trigger: Program termination
+Profiled target:  ./out/LZ77.original.copyreduced_dealloc.enabledpattern.gcc.1.medium.in.out /home/mw169/workspace/WhileyOpenCL/polly/LZ77/medium.in (PID 27429, part 1)
+Events recorded:  Ir
+Events shown:     Ir
+Event sort order: Ir
+Thresholds:       99
+Include dirs:     
+User annotated:   
+Auto-annotation:  off
+
+--------------------------------------------------------------------------------
+        Ir 
+--------------------------------------------------------------------------------
+24,214,457  PROGRAM TOTALS
+
+--------------------------------------------------------------------------------
+       Ir  file:function
+--------------------------------------------------------------------------------
+9,943,370  ???:match [/home/mw169/workspace/WhileyOpenCL/polly/LZ77/impl/original/patern/copyreduced_dealloc/out/LZ77.original.copyreduced_dealloc.enabledpattern.gcc.1.medium.in.out]
+5,395,246  /build/eglibc-oGUzwX/eglibc-2.19/gmon/mcount.c:__mcount_internal [/lib/x86_64-linux-gnu/libc-2.19.so]
+4,726,527  ???:findLongestMatch [/home/mw169/workspace/WhileyOpenCL/polly/LZ77/impl/original/patern/copyreduced_dealloc/out/LZ77.original.copyreduced_dealloc.enabledpattern.gcc.1.medium.in.out]
+3,480,740  /build/eglibc-oGUzwX/eglibc-2.19/gmon/../sysdeps/x86_64/_mcount.S:mcount [/lib/x86_64-linux-gnu/libc-2.19.so]
+   64,103  ???:compress [/home/mw169/workspace/WhileyOpenCL/polly/LZ77/impl/original/patern/copyreduced_dealloc/out/LZ77.original.copyreduced_dealloc.enabledpattern.gcc.1.medium.in.out]
+   56,988  /build/eglibc-oGUzwX/eglibc-2.19/libio/feof.c:feof [/lib/x86_64-linux-gnu/libc-2.19.so]
+   56,131  /build/eglibc-oGUzwX/eglibc-2.19/elf/dl-addr.c:_dl_addr [/lib/x86_64-linux-gnu/libc-2.19.so]
+   55,481  /build/eglibc-oGUzwX/eglibc-2.19/malloc/malloc.c:_int_free [/lib/x86_64-linux-gnu/libc-2.19.so]
+   45,612  /build/eglibc-oGUzwX/eglibc-2.19/malloc/malloc.c:_int_malloc [/lib/x86_64-linux-gnu/libc-2.19.so]
+   42,716  /build/eglibc-oGUzwX/eglibc-2.19/libio/getc.c:getc [/lib/x86_64-linux-gnu/libc-2.19.so]
+   42,492  ???:create1DArray_BYTE [/home/mw169/workspace/WhileyOpenCL/polly/LZ77/impl/original/patern/copyreduced_dealloc/out/LZ77.original.copyreduced_dealloc.enabledpattern.gcc.1.medium.in.out]
+   32,651  ???:resize [/home/mw169/workspace/WhileyOpenCL/polly/LZ77/impl/original/patern/copyreduced_dealloc/out/LZ77.original.copyreduced_dealloc.enabledpattern.gcc.1.medium.in.out]
+   32,308  /build/eglibc-oGUzwX/eglibc-2.19/malloc/malloc.c:malloc [/lib/x86_64-linux-gnu/libc-2.19.so]
+

@@ -245,7 +245,7 @@ blklab6:;
 	//return
 }
 
-BYTE* populate(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64_t size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* resize(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64_t size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(nitems);
 	_DECL_DEALLOC(nitems);
 	int64_t i = 0;
@@ -272,8 +272,8 @@ BYTE* populate(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64
 	i = _6;
 	//loop (%2, %3, %7, %8, %9)
 	while(true){
-		//ifge %3, %1 goto blklab8 : int
-		if(i>=size){goto blklab8;}
+		//ifge %3, %1 goto blklab10 : int
+		if(i>=size){goto blklab10;}
 		//indexof %7 = %0, %3 : byte[]
 		_7=items[i];
 		//update %2[%3] = %7 : byte[] -> byte[]
@@ -284,11 +284,11 @@ BYTE* populate(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64
 		_9=i+_8;
 		//assign %3 = %9  : int
 		i = _9;
-//.blklab9
-blklab9:;
+//.blklab11
+blklab11:;
 	}
-//.blklab8
-blklab8:;
+//.blklab10
+blklab10:;
 	//return %2
 	_DEALLOC(items);
 	_DEALLOC(_5);
@@ -347,8 +347,8 @@ BYTE* compress(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_1D
 	while(true){
 		//lengthof %10 = %0 : byte[]
 		_10 = data_size;
-		//ifge %2, %10 goto blklab10 : int
-		if(pos>=_10){goto blklab10;}
+		//ifge %2, %10 goto blklab12 : int
+		if(pos>=_10){goto blklab12;}
 		//invoke (%11) = (%0, %2) LZ77_original:findLongestMatch : function(byte[],LZ77_original:nat)->(LZ77_original:Match)
 		{
 			void* data_tmp;
@@ -379,8 +379,8 @@ BYTE* compress(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_1D
 		length = _14;
 		//const %16 = 00000000b : byte
 		_16 = 0b00000000;
-		//ifne %4, %16 goto blklab12 : byte
-		if(offset!=_16){goto blklab12;}
+		//ifne %4, %16 goto blklab14 : byte
+		if(offset!=_16){goto blklab14;}
 		//indexof %17 = %0, %2 : byte[]
 		_17=data[pos];
 		//assign %5 = %17  : byte
@@ -391,18 +391,18 @@ BYTE* compress(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_1D
 		_19=pos+_18;
 		//assign %2 = %19  : int
 		pos = _19;
-		//goto blklab13
-		goto blklab13;
-//.blklab12
-blklab12:;
+		//goto blklab15
+		goto blklab15;
+//.blklab14
+blklab14:;
 		//fieldload %20 = %3 len : {int len,int offset}
 		_20 = m->len;
 		//add %21 = %2, %20 : int
 		_21=pos+_20;
 		//assign %2 = %21  : int
 		pos = _21;
-//.blklab13
-blklab13:;
+//.blklab15
+blklab15:;
 		//invoke (%22) = (%1, %4) LZ77_original:append : function(byte[],byte)->(byte[])
 		{
 			void* output_tmp;
@@ -427,11 +427,11 @@ blklab13:;
 		_DEALLOC(output);
 		_COPY_1DARRAY_BYTE(output, _23);
 		_ADD_DEALLOC(output);
-//.blklab11
-blklab11:;
+//.blklab13
+blklab13:;
 	}
-//.blklab10
-blklab10:;
+//.blklab12
+blklab12:;
 	//return %1
 	_DEALLOC(data);
 	_DEALLOC_STRUCT(m, Match);
@@ -505,8 +505,8 @@ BYTE* decompress(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 		_14=pos+_13;
 		//lengthof %15 = %0 : byte[]
 		_15 = data_size;
-		//ifge %14, %15 goto blklab14 : int
-		if(_14>=_15){goto blklab14;}
+		//ifge %14, %15 goto blklab16 : int
+		if(_14>=_15){goto blklab16;}
 		//indexof %16 = %0, %2 : byte[]
 		_16=data[pos];
 		//assign %3 = %16  : byte
@@ -527,8 +527,8 @@ BYTE* decompress(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 		pos = _21;
 		//const %22 = 00000000b : byte
 		_22 = 0b00000000;
-		//ifne %3, %22 goto blklab16 : byte
-		if(header!=_22){goto blklab16;}
+		//ifne %3, %22 goto blklab18 : byte
+		if(header!=_22){goto blklab18;}
 		//invoke (%23) = (%1, %4) LZ77_original:append : function(byte[],byte)->(byte[])
 		{
 			void* output_tmp;
@@ -541,10 +541,10 @@ BYTE* decompress(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 		_DEALLOC(output);
 		_COPY_1DARRAY_BYTE(output, _23);
 		_ADD_DEALLOC(output);
-		//goto blklab17
-		goto blklab17;
-//.blklab16
-blklab16:;
+		//goto blklab19
+		goto blklab19;
+//.blklab18
+blklab18:;
 		//invoke (%24) = (%3) whiley/lang/Byte:toUnsignedInt : function(byte)->(whiley/lang/Int:uint)
 		{
 			_24 = (unsigned int)header;
@@ -569,8 +569,8 @@ blklab16:;
 		while(true){
 			//add %28 = %7, %6 : int
 			_28=start+len;
-			//ifge %8, %28 goto blklab18 : int
-			if(i>=_28){goto blklab18;}
+			//ifge %8, %28 goto blklab20 : int
+			if(i>=_28){goto blklab20;}
 			//indexof %29 = %1, %8 : byte[]
 			_29=output[i];
 			//assign %4 = %29  : byte
@@ -593,18 +593,18 @@ blklab16:;
 			_32=i+_31;
 			//assign %8 = %32  : int
 			i = _32;
+//.blklab21
+blklab21:;
+		}
+//.blklab20
+blklab20:;
 //.blklab19
 blklab19:;
-		}
-//.blklab18
-blklab18:;
 //.blklab17
 blklab17:;
-//.blklab15
-blklab15:;
 	}
-//.blklab14
-blklab14:;
+//.blklab16
+blklab16:;
 	//return %1
 	_DEALLOC(data);
 	_DEALLOC(_11);
@@ -621,263 +621,160 @@ int main(int argc, char** args){
 	_DECL_DEALLOC(data);
 	_DECL_1DARRAY_BYTE(compress_data);
 	_DECL_DEALLOC(compress_data);
-	_DECL_1DARRAY_BYTE(decompress_data);
-	_DECL_DEALLOC(decompress_data);
-	void* _5;
+	void* _4;
+	_DECL_DEALLOC(_4);
+	_DECL_2DARRAY(_5);
 	_DECL_DEALLOC(_5);
-	_DECL_2DARRAY(_6);
-	_DECL_DEALLOC(_6);
-	int64_t _7 = 0;
-	_DECL_1DARRAY(_8);
+	int64_t _6 = 0;
+	_DECL_1DARRAY(_7);
+	_DECL_DEALLOC(_7);
+	_DECL_1DARRAY_BYTE(_8);
 	_DECL_DEALLOC(_8);
-	_DECL_1DARRAY_BYTE(_9);
-	_DECL_DEALLOC(_9);
-	void* _11;
-	_DECL_1DARRAY(_13);
-	_DECL_DEALLOC(_13);
-	void* _14;
-	_DECL_1DARRAY(_16);
-	_DECL_DEALLOC(_16);
-	void* _17;
-	int64_t _19 = 0;
-	void* _20;
-	_DECL_1DARRAY(_22);
+	void* _10;
+	_DECL_1DARRAY(_12);
+	_DECL_DEALLOC(_12);
+	void* _13;
+	_DECL_1DARRAY(_15);
+	_DECL_DEALLOC(_15);
+	void* _16;
+	int64_t _18 = 0;
+	void* _19;
+	_DECL_1DARRAY(_21);
+	_DECL_DEALLOC(_21);
+	_DECL_1DARRAY_BYTE(_22);
 	_DECL_DEALLOC(_22);
-	_DECL_1DARRAY_BYTE(_23);
-	_DECL_DEALLOC(_23);
-	void* _24;
-	_DECL_1DARRAY(_26);
-	_DECL_DEALLOC(_26);
-	void* _27;
-	int64_t _29 = 0;
-	void* _30;
-	_DECL_1DARRAY(_32);
-	_DECL_DEALLOC(_32);
-	_DECL_1DARRAY_BYTE(_33);
-	_DECL_DEALLOC(_33);
-	void* _34;
-	_DECL_1DARRAY(_36);
-	_DECL_DEALLOC(_36);
-	void* _37;
-	_DECL_1DARRAY(_39);
-	_DECL_DEALLOC(_39);
-	void* _40;
-	int64_t _42 = 0;
-	void* _43;
-	_DECL_1DARRAY(_45);
-	_DECL_DEALLOC(_45);
-	int64_t _46 = 0;
-	int64_t _47 = 0;
-	//fieldload %6 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	_DEALLOC_2DARRAY_int64_t(_6);
-	_CONV_ARGS(_6);
-	_ADD_DEALLOC(_6);
-	//const %7 = 0 : int
-	_7 = 0;
-	//indexof %8 = %6, %7 : int[][]
-	_8=_6[_7];
-	_8_size = _6_size_size;
-	_REMOVE_DEALLOC(_8);
-	//invoke (%5) = (%8) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
+	void* _23;
+	_DECL_1DARRAY(_25);
+	_DECL_DEALLOC(_25);
+	void* _26;
+	int64_t _28 = 0;
+	void* _29;
+	_DECL_1DARRAY(_31);
+	_DECL_DEALLOC(_31);
+	//fieldload %5 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	_DEALLOC_2DARRAY_int64_t(_5);
+	_CONV_ARGS(_5);
+	_ADD_DEALLOC(_5);
+	//const %6 = 0 : int
+	_6 = 0;
+	//indexof %7 = %5, %6 : int[][]
+	_7=_5[_6];
+	_7_size = _5_size_size;
+	_REMOVE_DEALLOC(_7);
+	//invoke (%4) = (%7) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
 	{
-		_5 = Reader(_8,  _8_size);
+		_4 = Reader(_7,  _7_size);
 	}
-	//assign %1 = %5  : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
-	file = _5;
-	//fieldload %10 = %1 readAll : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
-	//indirectinvoke (%9) = %10 () : method()->(byte[])
+	//assign %1 = %4  : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
+	file = _4;
+	//fieldload %9 = %1 readAll : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
+	//indirectinvoke (%8) = %9 () : method()->(byte[])
 	{
-		_9 = readAll(file, &_9_size);
-		_ADD_DEALLOC(_9);
+		_8 = readAll(file, &_8_size);
+		_ADD_DEALLOC(_8);
 	}
-	//assign %2 = %9  : byte[]
+	//assign %2 = %8  : byte[]
 	_DEALLOC(data);
-	_COPY_1DARRAY_BYTE(data, _9);
+	_COPY_1DARRAY_BYTE(data, _8);
 	_ADD_DEALLOC(data);
-	//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %12 = %11 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %13 = [68,97,116,97,58,32,32,32,32,32,32,32,32,32] : int[]
-	_DEALLOC(_13);
-	_NEW_1DARRAY_int64_t(_13, 14, 0);
-	_13[0] = 68; _13[1] = 97; _13[2] = 116; _13[3] = 97; _13[4] = 58; _13[5] = 32; _13[6] = 32; _13[7] = 32; _13[8] = 32; _13[9] = 32; _13[10] = 32; _13[11] = 32; _13[12] = 32; _13[13] = 32; 
-	_ADD_DEALLOC(_13);
-	//indirectinvoke () = %12 (%13) : method(int[])->()
+	//fieldload %10 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %11 = %10 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %12 = [68,97,116,97,58,32,32,32,32,32,32,32,32,32] : int[]
+	_DEALLOC(_12);
+	_NEW_1DARRAY_int64_t(_12, 14, 0);
+	_12[0] = 68; _12[1] = 97; _12[2] = 116; _12[3] = 97; _12[4] = 58; _12[5] = 32; _12[6] = 32; _12[7] = 32; _12[8] = 32; _12[9] = 32; _12[10] = 32; _12[11] = 32; _12[12] = 32; _12[13] = 32; 
+	_ADD_DEALLOC(_12);
+	//indirectinvoke () = %11 (%12) : method(int[])->()
 	{
-		println_s(_13, _13_size);
+		println_s(_12, _12_size);
 	}
-	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %15 = %14 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//invoke (%16) = (%2) whiley/lang/ASCII:fromBytes : function(byte[])->(whiley/lang/ASCII:string)
+	//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %14 = %13 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//invoke (%15) = (%2) whiley/lang/ASCII:fromBytes : function(byte[])->(whiley/lang/ASCII:string)
 	{
-		_DEALLOC(_16);
-		_16 = fromBytes(data, data_size);
-		_16_size = data_size;
-		_ADD_DEALLOC(_16);
+		_DEALLOC(_15);
+		_15 = fromBytes(data, data_size);
+		_15_size = data_size;
+		_ADD_DEALLOC(_15);
 	}
-	//indirectinvoke () = %15 (%16) : method(int[])->()
+	//indirectinvoke () = %14 (%15) : method(int[])->()
 	{
-		println_s(_16, _16_size);
+		println_s(_15, _15_size);
 	}
-	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %18 = %17 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//lengthof %19 = %2 : byte[]
-	_19 = data_size;
-	//indirectinvoke () = %18 (%19) : method(any)->()
+	//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %17 = %16 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//lengthof %18 = %2 : byte[]
+	_18 = data_size;
+	//indirectinvoke () = %17 (%18) : method(any)->()
 	{
-		printf("%"PRId64, _19);
+		printf("%"PRId64, _18);
 	}
-	//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %21 = %20 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %22 = [32,98,121,116,101,115] : int[]
-	_DEALLOC(_22);
-	_NEW_1DARRAY_int64_t(_22, 6, 0);
-	_22[0] = 32; _22[1] = 98; _22[2] = 121; _22[3] = 116; _22[4] = 101; _22[5] = 115; 
-	_ADD_DEALLOC(_22);
-	//indirectinvoke () = %21 (%22) : method(int[])->()
+	//fieldload %19 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %20 = %19 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %21 = [32,98,121,116,101,115] : int[]
+	_DEALLOC(_21);
+	_NEW_1DARRAY_int64_t(_21, 6, 0);
+	_21[0] = 32; _21[1] = 98; _21[2] = 121; _21[3] = 116; _21[4] = 101; _21[5] = 115; 
+	_ADD_DEALLOC(_21);
+	//indirectinvoke () = %20 (%21) : method(int[])->()
 	{
-		println_s(_22, _22_size);
+		println_s(_21, _21_size);
 	}
-	//invoke (%23) = (%2) LZ77_original:compress : function(byte[])->(byte[])
+	//invoke (%22) = (%2) LZ77_original:compress : function(byte[])->(byte[])
 	{
 		void* data_tmp;
-		_DEALLOC(_23);
-		_23 = compress(_COPY_1DARRAY_PARAM_BYTE(data), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
+		_DEALLOC(_22);
+		_22 = compress(_COPY_1DARRAY_PARAM_BYTE(data), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
 		_CALLEE_DEALLOC(data, "false-false-false" , "compress");
-		_ADD_DEALLOC(_23);
+		_ADD_DEALLOC(_22);
 	}
-	//assign %3 = %23  : byte[]
+	//assign %3 = %22  : byte[]
 	_DEALLOC(compress_data);
-	_COPY_1DARRAY_BYTE(compress_data, _23);
+	_COPY_1DARRAY_BYTE(compress_data, _22);
 	_ADD_DEALLOC(compress_data);
-	//fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %25 = %24 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %26 = [67,79,77,80,82,69,83,83,69,68,32,68,97,116,97,58,32,32,32] : int[]
-	_DEALLOC(_26);
-	_NEW_1DARRAY_int64_t(_26, 19, 0);
-	_26[0] = 67; _26[1] = 79; _26[2] = 77; _26[3] = 80; _26[4] = 82; _26[5] = 69; _26[6] = 83; _26[7] = 83; _26[8] = 69; _26[9] = 68; _26[10] = 32; _26[11] = 68; _26[12] = 97; _26[13] = 116; _26[14] = 97; _26[15] = 58; _26[16] = 32; _26[17] = 32; _26[18] = 32; 
-	_ADD_DEALLOC(_26);
-	//indirectinvoke () = %25 (%26) : method(int[])->()
+	//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %24 = %23 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %25 = [67,79,77,80,82,69,83,83,69,68,32,68,97,116,97,58,32,32,32] : int[]
+	_DEALLOC(_25);
+	_NEW_1DARRAY_int64_t(_25, 19, 0);
+	_25[0] = 67; _25[1] = 79; _25[2] = 77; _25[3] = 80; _25[4] = 82; _25[5] = 69; _25[6] = 83; _25[7] = 83; _25[8] = 69; _25[9] = 68; _25[10] = 32; _25[11] = 68; _25[12] = 97; _25[13] = 116; _25[14] = 97; _25[15] = 58; _25[16] = 32; _25[17] = 32; _25[18] = 32; 
+	_ADD_DEALLOC(_25);
+	//indirectinvoke () = %24 (%25) : method(int[])->()
 	{
-		println_s(_26, _26_size);
+		println_s(_25, _25_size);
 	}
-	//fieldload %27 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %28 = %27 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//lengthof %29 = %3 : byte[]
-	_29 = compress_data_size;
-	//indirectinvoke () = %28 (%29) : method(any)->()
+	//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %27 = %26 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//lengthof %28 = %3 : byte[]
+	_28 = compress_data_size;
+	//indirectinvoke () = %27 (%28) : method(any)->()
 	{
-		printf("%"PRId64, _29);
+		printf("%"PRId64, _28);
 	}
-	//fieldload %30 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %31 = %30 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %32 = [32,98,121,116,101,115] : int[]
-	_DEALLOC(_32);
-	_NEW_1DARRAY_int64_t(_32, 6, 0);
-	_32[0] = 32; _32[1] = 98; _32[2] = 121; _32[3] = 116; _32[4] = 101; _32[5] = 115; 
-	_ADD_DEALLOC(_32);
-	//indirectinvoke () = %31 (%32) : method(int[])->()
+	//fieldload %29 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %30 = %29 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %31 = [32,98,121,116,101,115] : int[]
+	_DEALLOC(_31);
+	_NEW_1DARRAY_int64_t(_31, 6, 0);
+	_31[0] = 32; _31[1] = 98; _31[2] = 121; _31[3] = 116; _31[4] = 101; _31[5] = 115; 
+	_ADD_DEALLOC(_31);
+	//indirectinvoke () = %30 (%31) : method(int[])->()
 	{
-		println_s(_32, _32_size);
-	}
-	//invoke (%33) = (%3) LZ77_original:decompress : function(byte[])->(byte[])
-	{
-		void* compress_data_tmp;
-		_DEALLOC(_33);
-		_33 = decompress(_COPY_1DARRAY_PARAM_BYTE(compress_data), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
-		_CALLEE_DEALLOC(compress_data, "false-false-false" , "decompress");
-		_ADD_DEALLOC(_33);
-	}
-	//assign %4 = %33  : byte[]
-	_DEALLOC(decompress_data);
-	_COPY_1DARRAY_BYTE(decompress_data, _33);
-	_ADD_DEALLOC(decompress_data);
-	//fieldload %34 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %35 = %34 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %36 = [68,69,67,79,77,80,82,69,83,83,69,68,58,32,32,32] : int[]
-	_DEALLOC(_36);
-	_NEW_1DARRAY_int64_t(_36, 16, 0);
-	_36[0] = 68; _36[1] = 69; _36[2] = 67; _36[3] = 79; _36[4] = 77; _36[5] = 80; _36[6] = 82; _36[7] = 69; _36[8] = 83; _36[9] = 83; _36[10] = 69; _36[11] = 68; _36[12] = 58; _36[13] = 32; _36[14] = 32; _36[15] = 32; 
-	_ADD_DEALLOC(_36);
-	//indirectinvoke () = %35 (%36) : method(int[])->()
-	{
-		println_s(_36, _36_size);
-	}
-	//fieldload %37 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %38 = %37 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//invoke (%39) = (%4) whiley/lang/ASCII:fromBytes : function(byte[])->(whiley/lang/ASCII:string)
-	{
-		_DEALLOC(_39);
-		_39 = fromBytes(decompress_data, decompress_data_size);
-		_39_size = decompress_data_size;
-		_ADD_DEALLOC(_39);
-	}
-	//indirectinvoke () = %38 (%39) : method(int[])->()
-	{
-		println_s(_39, _39_size);
-	}
-	//fieldload %40 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %41 = %40 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//lengthof %42 = %4 : byte[]
-	_42 = decompress_data_size;
-	//indirectinvoke () = %41 (%42) : method(any)->()
-	{
-		printf("%"PRId64, _42);
-	}
-	//fieldload %43 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %44 = %43 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %45 = [32,98,121,116,101,115] : int[]
-	_DEALLOC(_45);
-	_NEW_1DARRAY_int64_t(_45, 6, 0);
-	_45[0] = 32; _45[1] = 98; _45[2] = 121; _45[3] = 116; _45[4] = 101; _45[5] = 115; 
-	_ADD_DEALLOC(_45);
-	//indirectinvoke () = %44 (%45) : method(int[])->()
-	{
-		println_s(_45, _45_size);
-	}
-	//assert
-	{
-		//lengthof %46 = %2 : byte[]
-		_46 = data_size;
-		//lengthof %47 = %4 : byte[]
-		_47 = decompress_data_size;
-		//ifeq %46, %47 goto blklab20 : int
-		if(_46==_47){goto blklab20;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab20
-blklab20:;
-	//assert
-	}
-	//assert
-	{
-		//ifeq %2, %4 goto blklab21 : byte[]
-		_IFEQ_ARRAY_BYTE(data, decompress_data, blklab21);
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab21
-blklab21:;
-	//assert
+		println_s(_31, _31_size);
 	}
 	//return
 	if(file != NULL){fclose(file); file = NULL;}
 	_DEALLOC(data);
 	_DEALLOC(compress_data);
-	_DEALLOC(decompress_data);
-	_DEALLOC_2DARRAY_int64_t(_6);
+	_DEALLOC_2DARRAY_int64_t(_5);
+	_DEALLOC(_7);
 	_DEALLOC(_8);
-	_DEALLOC(_9);
-	_DEALLOC(_13);
-	_DEALLOC(_16);
+	_DEALLOC(_12);
+	_DEALLOC(_15);
+	_DEALLOC(_21);
 	_DEALLOC(_22);
-	_DEALLOC(_23);
-	_DEALLOC(_26);
-	_DEALLOC(_32);
-	_DEALLOC(_33);
-	_DEALLOC(_36);
-	_DEALLOC(_39);
-	_DEALLOC(_45);
+	_DEALLOC(_25);
+	_DEALLOC(_31);
 	exit(0);
 }
 

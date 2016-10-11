@@ -1,9 +1,5 @@
 #!/bin/bash
-TIMEOUT="5s"
-# export PATH_TO_POLLY_LIB="$HOME/polly/llvm_build/lib"
-# export CPPFLAGS="-Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
-# alias opt="opt -load ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
-# alias pollycc="clang -Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
+TIMEOUT="1800s"
 alias opt="opt -O3 -polly"
 alias pollycc="clang -O3 -mllvm -polly"
 ### Get the root working directory
@@ -36,7 +32,8 @@ generateCode(){
 		### Disable pattern transformation
 		codeDir="$basedir/polly/$testcase/impl/$program/nopatern/$codegen"
 	fi
-	###echo $codeDir
+	#echo $codeDir
+	#read -p "Press [Enter] to continue..."
 	## Clean the folder
 	rm -rf "$codeDir"
 	mkdir -p "$codeDir"
@@ -55,7 +52,7 @@ generateCode(){
 		### Enable pattern transformation
 		wyopcl=$wyopcl" -pattern $pattern"	
 	fi
-	echo $codegen
+	#echo $codegen
 	## Translate Whiley programs into naive C code
 	case "$codegen" in
 		"naive")
@@ -90,10 +87,17 @@ detectleaks(){
 	compiler=$6
 	num_threads=$7
 	mkdir -p out
+	if [ $enabledpattern == 1]
+	then 
+		executable="$testcase.$program.$codegen.enabledpattern.$compiler.$num_threads.$parameter.out"
+	else
+		executable="$testcase.$program.$codegen.disabledpattern.$compiler.$num_threads.$parameter.out"
+	fi
+
 	# Ref: http://valgrind.org/docs/manual/manual.html
 	# Run Valgrind memcheck tool to detect memory leaks, and write out results to output file.
-	executable="$testcase.$program.$codegen.$enabledpattern.$compiler.$num_threads.$parameter.out"
 	result="$basedir/polly/$testcase/leaks/$executable.txt"
+	#read -p "Press [Enter] to continue..."
 	echo -e -n "Start Detect leaks..." > $result
 	case "$compiler" in
 		"gcc")
@@ -118,6 +122,7 @@ detectleaks(){
 					-mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c -o "out/$executable"
 			;;
 	esac
+	#read -p "Press [Enter] to continue..."
 
 	## LZ test case
 	if [ $testcase = "LZ77" ]

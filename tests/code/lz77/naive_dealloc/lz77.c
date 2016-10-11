@@ -245,7 +245,7 @@ blklab6:;
 	//return
 }
 
-BYTE* populate(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64_t size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* resize(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64_t size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(nitems);
 	_DECL_DEALLOC(nitems);
 	int64_t i = 0;
@@ -272,8 +272,8 @@ BYTE* populate(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64
 	i = _6;
 	//loop (%2, %3, %7, %8, %9)
 	while(true){
-		//ifge %3, %1 goto blklab8 : int
-		if(i>=size){goto blklab8;}
+		//ifge %3, %1 goto blklab10 : int
+		if(i>=size){goto blklab10;}
 		//indexof %7 = %0, %3 : byte[]
 		_7=items[i];
 		//update %2[%3] = %7 : byte[] -> byte[]
@@ -284,11 +284,11 @@ BYTE* populate(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64
 		_9=i+_8;
 		//assign %3 = %9  : int
 		i = _9;
-//.blklab9
-blklab9:;
+//.blklab11
+blklab11:;
 	}
-//.blklab8
-blklab8:;
+//.blklab10
+blklab10:;
 	//return %2
 	_DEALLOC(items);
 	_DEALLOC(_5);
@@ -347,8 +347,8 @@ BYTE* compress(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_1D
 	while(true){
 		//lengthof %10 = %0 : byte[]
 		_10 = data_size;
-		//ifge %2, %10 goto blklab10 : int
-		if(pos>=_10){goto blklab10;}
+		//ifge %2, %10 goto blklab12 : int
+		if(pos>=_10){goto blklab12;}
 		//invoke (%11) = (%0, %2) lz77:findLongestMatch : function(byte[],lz77:nat)->(lz77:Match)
 		{
 			void* data_tmp;
@@ -379,8 +379,8 @@ BYTE* compress(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_1D
 		length = _14;
 		//const %16 = 00000000b : byte
 		_16 = 0b00000000;
-		//ifne %4, %16 goto blklab12 : byte
-		if(offset!=_16){goto blklab12;}
+		//ifne %4, %16 goto blklab14 : byte
+		if(offset!=_16){goto blklab14;}
 		//indexof %17 = %0, %2 : byte[]
 		_17=data[pos];
 		//assign %5 = %17  : byte
@@ -391,18 +391,18 @@ BYTE* compress(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_1D
 		_19=pos+_18;
 		//assign %2 = %19  : int
 		pos = _19;
-		//goto blklab13
-		goto blklab13;
-//.blklab12
-blklab12:;
+		//goto blklab15
+		goto blklab15;
+//.blklab14
+blklab14:;
 		//fieldload %20 = %3 len : {int len,int offset}
 		_20 = m->len;
 		//add %21 = %2, %20 : int
 		_21=pos+_20;
 		//assign %2 = %21  : int
 		pos = _21;
-//.blklab13
-blklab13:;
+//.blklab15
+blklab15:;
 		//invoke (%22) = (%1, %4) lz77:append : function(byte[],byte)->(byte[])
 		{
 			void* output_tmp;
@@ -427,11 +427,11 @@ blklab13:;
 		_DEALLOC(output);
 		_COPY_1DARRAY_BYTE(output, _23);
 		_ADD_DEALLOC(output);
-//.blklab11
-blklab11:;
+//.blklab13
+blklab13:;
 	}
-//.blklab10
-blklab10:;
+//.blklab12
+blklab12:;
 	//return %1
 	_DEALLOC(data);
 	_DEALLOC_STRUCT(m, Match);
@@ -505,8 +505,8 @@ BYTE* decompress(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 		_14=pos+_13;
 		//lengthof %15 = %0 : byte[]
 		_15 = data_size;
-		//ifge %14, %15 goto blklab14 : int
-		if(_14>=_15){goto blklab14;}
+		//ifge %14, %15 goto blklab16 : int
+		if(_14>=_15){goto blklab16;}
 		//indexof %16 = %0, %2 : byte[]
 		_16=data[pos];
 		//assign %3 = %16  : byte
@@ -527,8 +527,8 @@ BYTE* decompress(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 		pos = _21;
 		//const %22 = 00000000b : byte
 		_22 = 0b00000000;
-		//ifne %3, %22 goto blklab16 : byte
-		if(header!=_22){goto blklab16;}
+		//ifne %3, %22 goto blklab18 : byte
+		if(header!=_22){goto blklab18;}
 		//invoke (%23) = (%1, %4) lz77:append : function(byte[],byte)->(byte[])
 		{
 			void* output_tmp;
@@ -541,10 +541,10 @@ BYTE* decompress(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 		_DEALLOC(output);
 		_COPY_1DARRAY_BYTE(output, _23);
 		_ADD_DEALLOC(output);
-		//goto blklab17
-		goto blklab17;
-//.blklab16
-blklab16:;
+		//goto blklab19
+		goto blklab19;
+//.blklab18
+blklab18:;
 		//invoke (%24) = (%3) whiley/lang/Byte:toUnsignedInt : function(byte)->(whiley/lang/Int:uint)
 		{
 			_24 = (unsigned int)header;
@@ -569,8 +569,8 @@ blklab16:;
 		while(true){
 			//add %28 = %7, %6 : int
 			_28=start+len;
-			//ifge %8, %28 goto blklab18 : int
-			if(i>=_28){goto blklab18;}
+			//ifge %8, %28 goto blklab20 : int
+			if(i>=_28){goto blklab20;}
 			//indexof %29 = %1, %8 : byte[]
 			_29=output[i];
 			//assign %4 = %29  : byte
@@ -593,18 +593,18 @@ blklab16:;
 			_32=i+_31;
 			//assign %8 = %32  : int
 			i = _32;
+//.blklab21
+blklab21:;
+		}
+//.blklab20
+blklab20:;
 //.blklab19
 blklab19:;
-		}
-//.blklab18
-blklab18:;
 //.blklab17
 blklab17:;
-//.blklab15
-blklab15:;
 	}
-//.blklab14
-blklab14:;
+//.blklab16
+blklab16:;
 	//return %1
 	_DEALLOC(data);
 	_DEALLOC(_11);
@@ -832,24 +832,24 @@ int main(int argc, char** args){
 		_44 = data_size;
 		//lengthof %45 = %4 : byte[]
 		_45 = decompress_data_size;
-		//ifeq %44, %45 goto blklab20 : int
-		if(_44==_45){goto blklab20;}
+		//ifeq %44, %45 goto blklab22 : int
+		if(_44==_45){goto blklab22;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-//.blklab20
-blklab20:;
+//.blklab22
+blklab22:;
 	//assert
 	}
 	//assert
 	{
-		//ifeq %2, %4 goto blklab21 : byte[]
-		_IFEQ_ARRAY_BYTE(data, decompress_data, blklab21);
+		//ifeq %2, %4 goto blklab23 : byte[]
+		_IFEQ_ARRAY_BYTE(data, decompress_data, blklab23);
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-//.blklab21
-blklab21:;
+//.blklab23
+blklab23:;
 	//assert
 	}
 	//return

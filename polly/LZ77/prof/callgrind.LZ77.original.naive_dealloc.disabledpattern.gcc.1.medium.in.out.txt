@@ -1,0 +1,38 @@
+--------------------------------------------------------------------------------
+Profile data file 'callgrind.out.27233' (creator: callgrind-3.10.1)
+--------------------------------------------------------------------------------
+I1 cache: 
+D1 cache: 
+LL cache: 
+Timerange: Basic block 0 - 28756972
+Trigger: Program termination
+Profiled target:  ./out/LZ77.original.naive_dealloc.disabledpattern.gcc.1.medium.in.out /home/mw169/workspace/WhileyOpenCL/polly/LZ77/medium.in (PID 27233, part 1)
+Events recorded:  Ir
+Events shown:     Ir
+Event sort order: Ir
+Thresholds:       99
+Include dirs:     
+User annotated:   
+Auto-annotation:  off
+
+--------------------------------------------------------------------------------
+         Ir 
+--------------------------------------------------------------------------------
+186,228,200  PROGRAM TOTALS
+
+--------------------------------------------------------------------------------
+        Ir  file:function
+--------------------------------------------------------------------------------
+53,785,402  /build/eglibc-oGUzwX/eglibc-2.19/string/../sysdeps/x86_64/multiarch/memcpy-sse2-unaligned.S:__memcpy_sse2_unaligned [/lib/x86_64-linux-gnu/libc-2.19.so]
+27,825,032  ???:append [/home/mw169/workspace/WhileyOpenCL/polly/LZ77/impl/original/nopatern/naive_dealloc/out/LZ77.original.naive_dealloc.disabledpattern.gcc.1.medium.in.out]
+25,013,621  /build/eglibc-oGUzwX/eglibc-2.19/malloc/malloc.c:_int_malloc [/lib/x86_64-linux-gnu/libc-2.19.so]
+18,470,065  /build/eglibc-oGUzwX/eglibc-2.19/malloc/malloc.c:_int_free [/lib/x86_64-linux-gnu/libc-2.19.so]
+11,054,402  /build/eglibc-oGUzwX/eglibc-2.19/gmon/mcount.c:__mcount_internal [/lib/x86_64-linux-gnu/libc-2.19.so]
+10,978,136  ???:match [/home/mw169/workspace/WhileyOpenCL/polly/LZ77/impl/original/nopatern/naive_dealloc/out/LZ77.original.naive_dealloc.disabledpattern.gcc.1.medium.in.out]
+10,883,424  ???:create1DArray_BYTE [/home/mw169/workspace/WhileyOpenCL/polly/LZ77/impl/original/nopatern/naive_dealloc/out/LZ77.original.naive_dealloc.disabledpattern.gcc.1.medium.in.out]
+ 7,421,492  /build/eglibc-oGUzwX/eglibc-2.19/malloc/malloc.c:malloc [/lib/x86_64-linux-gnu/libc-2.19.so]
+ 7,131,760  /build/eglibc-oGUzwX/eglibc-2.19/gmon/../sysdeps/x86_64/_mcount.S:mcount [/lib/x86_64-linux-gnu/libc-2.19.so]
+ 5,765,953  ???:findLongestMatch [/home/mw169/workspace/WhileyOpenCL/polly/LZ77/impl/original/nopatern/naive_dealloc/out/LZ77.original.naive_dealloc.disabledpattern.gcc.1.medium.in.out]
+ 4,447,429  ???:copy1DArray_BYTE [/home/mw169/workspace/WhileyOpenCL/polly/LZ77/impl/original/nopatern/naive_dealloc/out/LZ77.original.naive_dealloc.disabledpattern.gcc.1.medium.in.out]
+ 2,715,180  /build/eglibc-oGUzwX/eglibc-2.19/malloc/malloc.c:free [/lib/x86_64-linux-gnu/libc-2.19.so]
+

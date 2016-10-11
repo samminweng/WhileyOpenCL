@@ -32,7 +32,7 @@ import wyopcl.translator.symbolic.pattern.Pattern;
 
 /**
  * 
- * Transforms the 'AppendArrayPattern' to 'PopulateArrayPattern'. 
+ * Transforms the 'AppendArrayPattern' to 'resizeArrayPattern'. 
  * The 'AppendArrayPattern'
  * <pre><code>
  * int pos = 0
@@ -45,7 +45,7 @@ import wyopcl.translator.symbolic.pattern.Pattern;
  *	output = append(output, data[pos]+10)
  *	pos = pos + 1
  * </code></pre>
- * can be transformed into 'PopulateArrayPattern'
+ * can be transformed into 'resizeArrayPattern'
  * <pre><code>
  * int pos = 0
  * // Initialize the output array
@@ -62,7 +62,7 @@ import wyopcl.translator.symbolic.pattern.Pattern;
  *	size = size + 1
  *	pos = pos + 1
  * // Create the output array with actual array size
- * output = populate(output, size)
+ * output = resize(output, size)
  * </code></pre>
  * 
  */
@@ -71,6 +71,7 @@ public class AppenArrayPatternTransformer extends Transformer {
 	private int r_input_arr;
 	private int r_array;
 	private int r_array_size;
+	private int r_array_capacity;
 	private String prefix = "_";
 	private List<Declaration> declarations;
 	/**
@@ -150,7 +151,7 @@ public class AppenArrayPatternTransformer extends Transformer {
 	}
 
 	/**
-	 * Transform the 'array_gen' part of the 'PopulateArrayPattern'. For example,
+	 * Transform the 'array_gen' part of the 'ResizeArrayPattern'. For example,
 	 * <pre><code>
 	 * const %7 = 00000000b : byte             
      * const %8 = 0 : int
@@ -184,14 +185,14 @@ public class AppenArrayPatternTransformer extends Transformer {
 		blk.add(lengthof);
 		
 		// Add 'mul' code  (r_const * r_lengthof)
-		int r_mul = getNextRegister(Type.Int.T_INT);
-		BinaryOperator binOp = Codes.BinaryOperator(Type.Int.T_INT, r_mul, r_const, r_lengthof, BinaryOperatorKind.MUL);
+		this.r_array_capacity = getNextRegister(Type.Int.T_INT);
+		BinaryOperator binOp = Codes.BinaryOperator(Type.Int.T_INT, this.r_array_capacity, r_const, r_lengthof, BinaryOperatorKind.MUL);
 		blk.add(binOp);
 		
 		// Add new 'array_gen' code (r_var = [r_init; r_mul])
 		int r_var = p.array_gen.target(0);
 		int r_init = p.array_gen.operand(0);
-		ArrayGenerator new_array_gen = Codes.ArrayGenerator(Type.Array(Type.Byte.T_BYTE, false), r_var, r_init, r_mul);
+		ArrayGenerator new_array_gen = Codes.ArrayGenerator(Type.Array(Type.Byte.T_BYTE, false), r_var, r_init, this.r_array_capacity);
 		blk.add(new_array_gen);
 	}
 
@@ -336,13 +337,22 @@ public class AppenArrayPatternTransformer extends Transformer {
 
 	
 	/**
+	 * Add an extra invariant to ensure array capacity >= array size.
+	 * <pre><code>
+	 * //assert
+	 * {
+	 *		//ifge %3, %4 goto blklab16 : int	
+	 *		//fail	
+	 *		//.blklab16
+	 *	//assert
+	 * }
+	 *</code></pre> 
 	 * 
-	 * Adds an extra 'populate' function to fill in the output array 
-	 * and an extra restrict the range of array size.
+	 * Adds an extra 'resize' function call to resize the input array.
 	 * For example,
 	 * 
 	 * <pre><code>
-	 * invoke (%30) = (%1, %3) lz77_2:populate : function(byte[],int)->(byte[])
+	 * invoke (%30) = (%1, %3) lz77_2:resize : function(byte[],int)->(byte[])
      * assign %1 = %30  : byte[]
 	 * </code></pre>
 	 * where %1 is the output array and %3 is the item
@@ -350,15 +360,26 @@ public class AppenArrayPatternTransformer extends Transformer {
 	 * @param blk
 	 * @param p
 	 */
-	private void populate_array(List<Code> blk, AppendArrayPattern p) {
+	private void resize_array(List<Code> blk, AppendArrayPattern p) {
 
-		// Add 'populate' function call
+		// Add an assertion to ensure array capacity>= array size
+		List<Code> assertion_blk = new ArrayList<Code>();
+		String gotoLabel = CodeUtils.freshLabel();
+		// ifge %3, %4 goto blklab16 : int
+		assertion_blk.add(Codes.If(Type.Int.T_INT, this.r_array_capacity, this.r_array_size, Comparator.GTEQ, gotoLabel));
+		// fail "insufficient array capacity would lead to 'out-of-bounded' error"
+		assertion_blk.add(Codes.Fail());
+		// .blklab5
+		assertion_blk.add(Codes.Label(gotoLabel));
+		blk.add(Codes.Assert(assertion_blk));
+				
+		// Add 'resize' function call
 		int r_ret = getNextRegister(Type.Array(Type.Byte.T_BYTE, false));
 		int[] targets = { r_ret };
 		int[] operands = { this.r_array, this.r_array_size };
 
 		// Get the path id from config
-		NameID name = new NameID(config.getPathID(), "populate");
+		NameID name = new NameID(config.getPathID(), "resize");
 		// Get the return type
 		ArrayList<Type> ret_type = p.functionOrMethod.type().returns();
 		// Get the parameter type
@@ -377,11 +398,12 @@ public class AppenArrayPatternTransformer extends Transformer {
 	
 	
 	/**
-	 * Adds an extra 'populate' function to fill in the output array and restrict the range of array size.
+	 * Adds an extra 'resize' function call to resize the output array 
+	 * and restrict the range of array size.
 	 * For example,
 	 * 
 	 * <pre><code>
-	 * invoke (%30) = (%1, %3) lz77_2:populate : function(byte[],int)->(byte[])
+	 * invoke (%30) = (%1, %3) lz77_2:resize : function(byte[],int)->(byte[])
      * assign %1 = %30  : byte[]
 	 * </code></pre>
 	 * where %1 is the output array and %3 is the item
@@ -395,8 +417,8 @@ public class AppenArrayPatternTransformer extends Transformer {
 		blk.add(label);
 		i++;
 		
-		// Generate 'populate' function call
-		populate_array(blk, p);		
+		// Generate 'resize' function call
+		resize_array(blk, p);		
 		
 		// Add the remaining code
 		while(i < loop_exit.size()){
@@ -404,16 +426,7 @@ public class AppenArrayPatternTransformer extends Transformer {
 			i++;
 		}
 		
-//		// Add an assertion to ensure the range of list size.
-//		List<Code> assertion_blk = new ArrayList<Code>();
-//		String gotoLabel = CodeUtils.freshLabel();
-//		// ifeq %4, %2 goto blklab5 : int
-//		assertion_blk.add(Codes.If(Type.Int.T_INT, this.reg_list_size, this.reg_list_capacity, Comparator.EQ, gotoLabel));
-//		// fail ""index out of bounds (negative)""
-//		assertion_blk.add(Codes.Fail());
-//		// .blklab5
-//		assertion_blk.add(Codes.Label(gotoLabel));
-//		blk.add(Codes.Assert(assertion_blk));
+
 
 	}
 

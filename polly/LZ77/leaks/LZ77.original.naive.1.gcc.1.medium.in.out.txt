@@ -1,41 +1,41 @@
-==2300== Memcheck, a memory error detector
-==2300== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==2300== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==2300== Command: ./out/LZ77.original.naive.1.gcc.1.medium.in.out /home/mw169/workspace/WhileyOpenCL/polly/LZ77/medium.in
-==2300== Parent PID: 4123
-==2300== 
-==2300== Conditional jump or move depends on uninitialised value(s)
-==2300==    at 0x40161D: match (LZ77_original.c:60)
-==2300==    by 0x40161D: findLongestMatch (LZ77_original.c:140)
-==2300==    by 0x40161D: compress (LZ77_original.c:341)
-==2300==    by 0x400AD4: main (LZ77_original.c:666)
-==2300== 
-==2300== Conditional jump or move depends on uninitialised value(s)
-==2300==    at 0x4015F3: match (LZ77_original.c:60)
-==2300==    by 0x4015F3: findLongestMatch (LZ77_original.c:140)
-==2300==    by 0x4015F3: compress (LZ77_original.c:341)
-==2300==    by 0x400AD4: main (LZ77_original.c:666)
-==2300== 
-==2300== Conditional jump or move depends on uninitialised value(s)
-==2300==    at 0x402927: isArrayEqual_BYTE (Util.c:206)
-==2300==    by 0x400D6C: main (LZ77_original.c:758)
-==2300== 
-==2300== 
-==2300== HEAP SUMMARY:
-==2300==     in use at exit: 279,143,248 bytes in 181,142 blocks
-==2300==   total heap usage: 181,142 allocs, 0 frees, 279,143,248 bytes allocated
-==2300== 
-==2300== LEAK SUMMARY:
-==2300==    definitely lost: 279,132,740 bytes in 181,134 blocks
-==2300==    indirectly lost: 448 bytes in 1 blocks
-==2300==      possibly lost: 6,328 bytes in 4 blocks
-==2300==    still reachable: 3,732 bytes in 3 blocks
-==2300==         suppressed: 0 bytes in 0 blocks
-==2300== Rerun with --leak-check=full to see details of leaked memory
-==2300== 
-==2300== For counts of detected and suppressed errors, rerun with: -v
-==2300== Use --track-origins=yes to see where uninitialised values come from
-==2300== ERROR SUMMARY: 259 errors from 3 contexts (suppressed: 0 from 0)
+==9394== Memcheck, a memory error detector
+==9394== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==9394== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==9394== Command: ./out/LZ77.original.naive.1.gcc.1.medium.in.out /home/mw169/workspace/WhileyOpenCL/polly/LZ77/medium.in
+==9394== Parent PID: 4322
+==9394== 
+==9394== Conditional jump or move depends on uninitialised value(s)
+==9394==    at 0x40161D: match (LZ77_original.c:60)
+==9394==    by 0x40161D: findLongestMatch (LZ77_original.c:140)
+==9394==    by 0x40161D: compress (LZ77_original.c:341)
+==9394==    by 0x400AD4: main (LZ77_original.c:677)
+==9394== 
+==9394== Conditional jump or move depends on uninitialised value(s)
+==9394==    at 0x4015F3: match (LZ77_original.c:60)
+==9394==    by 0x4015F3: findLongestMatch (LZ77_original.c:140)
+==9394==    by 0x4015F3: compress (LZ77_original.c:341)
+==9394==    by 0x400AD4: main (LZ77_original.c:677)
+==9394== 
+==9394== Conditional jump or move depends on uninitialised value(s)
+==9394==    at 0x402927: isArrayEqual_BYTE (Util.c:206)
+==9394==    by 0x400D6C: main (LZ77_original.c:769)
+==9394== 
+==9394== 
+==9394== HEAP SUMMARY:
+==9394==     in use at exit: 279,143,248 bytes in 181,142 blocks
+==9394==   total heap usage: 181,142 allocs, 0 frees, 279,143,248 bytes allocated
+==9394== 
+==9394== LEAK SUMMARY:
+==9394==    definitely lost: 279,132,740 bytes in 181,134 blocks
+==9394==    indirectly lost: 448 bytes in 1 blocks
+==9394==      possibly lost: 6,328 bytes in 4 blocks
+==9394==    still reachable: 3,732 bytes in 3 blocks
+==9394==         suppressed: 0 bytes in 0 blocks
+==9394== Rerun with --leak-check=full to see details of leaked memory
+==9394== 
+==9394== For counts of detected and suppressed errors, rerun with: -v
+==9394== Use --track-origins=yes to see where uninitialised values come from
+==9394== ERROR SUMMARY: 259 errors from 3 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -43,7 +43,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3832.835
+cpu MHz		: 3828.984
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -57,7 +57,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6783.93
+bogomips	: 6784.50
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -70,7 +70,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3741.992
+cpu MHz		: 3625.781
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -84,7 +84,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6783.93
+bogomips	: 6784.50
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -97,7 +97,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.773
+cpu MHz		: 3891.539
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -111,7 +111,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6783.93
+bogomips	: 6784.50
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -124,7 +124,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3843.328
+cpu MHz		: 3789.140
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -138,7 +138,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6783.93
+bogomips	: 6784.50
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -151,7 +151,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3794.984
+cpu MHz		: 3802.687
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -165,7 +165,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6783.93
+bogomips	: 6784.50
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -178,7 +178,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3880.515
+cpu MHz		: 3562.695
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -192,7 +192,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6783.93
+bogomips	: 6784.50
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -205,7 +205,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3893.929
+cpu MHz		: 3720.343
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -219,7 +219,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6783.93
+bogomips	: 6784.50
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -232,7 +232,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3896.984
+cpu MHz		: 3895.257
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -246,7 +246,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 6783.93
+bogomips	: 6784.50
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual

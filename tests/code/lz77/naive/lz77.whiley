@@ -59,8 +59,10 @@ function append(byte[] items, byte item) -> (byte[] nitems):
     nitems[i] = item
     return nitems
 
-// Populate the input array to the array of given array size
-function populate(byte[] items, int size) -> (byte[] nitems):
+// Resize the input array to the array of given array size
+function resize(byte[] items, int size) -> (byte[] nitems)
+requires |items| >= size
+ensures |nitems| == size:
     nitems = [0b; size]
     int i = 0
     while i < size:
