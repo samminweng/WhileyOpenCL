@@ -102,7 +102,7 @@ detectleaks(){
 	case "$compiler" in
 		"gcc")
 			echo -e -n "Compile C code using GCC -O3..." >> $result
-			gcc -std=c99 -g -O3 $testcase"_"$program.c Util.c -o "out/$executable"
+			gcc -std=c11 -g -O3 $testcase"_"$program.c Util.c -o "out/$executable"
 			;;
 		"clang")
 			echo -e -n "Compile C code using Clang -O3..." >> $result

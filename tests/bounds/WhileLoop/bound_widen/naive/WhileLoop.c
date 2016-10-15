@@ -35,6 +35,7 @@ blklab3:;
 		//ifge %2, %0 goto blklab1 : int
 		if(i>=limit){goto blklab1;}
 		//add %7 = %3, %2 : int
+		_DETECT_INT_ADD_OVERFLOW(sum,i,_7);
 		_7=sum+i;
 		//assign %3 = %7  : int
 		sum = _7;

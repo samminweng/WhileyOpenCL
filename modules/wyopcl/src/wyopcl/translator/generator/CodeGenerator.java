@@ -577,31 +577,65 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * </code>
 	 * </pre>
 	 * 
+	 * When the bound analysis is enabled and any of the operands has infinite bounds, then add overflow checks
+	 * Currently, the checks supports only three overflows (add, sub, mul) 
+	 * 
 	 * @param code
 	 */
 	protected void translate(Codes.BinaryOperator code, FunctionOrMethod function) {
-		String lhs = stores.getVar(code.target(0), function);
-		String rhs0 = stores.getVar(code.operand(0), function);
-		// Append 'integer' member for union type
-		String rhs1 = stores.getVar(code.operand(1), function);
-
-		String stat = stores.getIndent(function);
-		stat += lhs + "=" + rhs0;
+		List<String> statement = new ArrayList<String>();
+		String indent = stores.getIndent(function);
+		// Get the variable name
+		String res = stores.getVar(code.target(0), function);
+		String op1 = stores.getVar(code.operand(0), function);
+		String op2 = stores.getVar(code.operand(1), function);
+		
+		// Add extra overflow check
+		this.boundAnalyzer.ifPresent(analyser->{
+			// Get the bounds of result and two operand
+			boolean isUnbounded = false;
+			// Check the left-handed side operand
+			isUnbounded |= analyser.isUnBounded(code.target(0), function);			
+			// Check two right-handed side operand
+			isUnbounded |= analyser.isUnBounded(code.operand(0), function);
+			isUnbounded |= analyser.isUnBounded(code.operand(0), function);
+			// If any operand is un-bounded, then add overflow checking
+			if(isUnbounded){
+				switch (code.kind) {
+				case ADD:
+					statement.add(indent+"_DETECT_INT_ADD_OVERFLOW("+op1+","+op2+","+res+");");
+					break;
+				case SUB:
+					statement.add(indent+"_DETECT_INT_SUB_OVERFLOW("+op1+","+op2+","+res+");");
+					break;
+				case MUL:
+					statement.add(indent+"_DETECT_INT_MUL_OVERFLOW("+op1+","+op2+","+res+");");
+					break;
+				default:
+					// Do nothing
+					break;
+				}
+			}
+		});
+		
+		
+		// Translate the arithmetic operation
+		String stat = indent + res + "=" + op1;
 		switch (code.kind) {
 		case ADD:
-			stat += "+" + rhs1 + ";";
+			stat += "+" + op2 + ";";
 			break;
 		case SUB:
-			stat += "-" + rhs1 + ";";
+			stat += "-" + op2 + ";";
 			break;
 		case MUL:
-			stat += "*" + rhs1 + ";";
+			stat += "*" + op2 + ";";
 			break;
 		case DIV:
-			stat += "/" + rhs1 + ";";
+			stat += "/" + op2 + ";";
 			break;
 		case REM:
-			stat += "%" + rhs1 + ";";
+			stat += "%" + op2 + ";";
 			break;
 		case BITWISEOR:
 			break;
@@ -614,7 +648,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		case RIGHTSHIFT:
 			break;
 		}
-		stores.addStatement(code, stat, function);
+		statement.add(stat);
+		
+		// Add the generated code
+		stores.addAllStatements(code, statement, function);
 	}
 
 	/**

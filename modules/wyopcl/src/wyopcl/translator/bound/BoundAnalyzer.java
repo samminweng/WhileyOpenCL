@@ -793,10 +793,56 @@ public class BoundAnalyzer {
 		if (type instanceof Type.Array) {
 			return isIntType(((Type.Array) type).element());
 		}
-
 		
 		return false;
 	}
+	
+	
+	/**
+	 * 
+	 * 
+	 * @param function
+	 * @return
+	 */
+	private Bounds getBounds(FunctionOrMethod function) {
+
+		// Get the function name
+		String func_name = function.name().toString();
+		// Get the bounds
+		Bounds bounds = this.boundMap.get(func_name);
+		// Check if the bound is inferred not. If not, then infer the bounds
+		if (bounds == null) {
+			bounds = this.inferBounds(func_name);
+		}
+		return bounds;
+	}
+	
+	
+	
+	/**
+	 * Check the bounds of given register is +/- infinity 
+	 * 
+	 * 
+	 * @param register
+	 * @param function
+	 * @return true for unbounded register.
+	 */
+	public boolean isUnBounded(int register, FunctionOrMethod function) {
+		// Get the bounds
+		Bounds bounds = getBounds(function);
+	
+		// Get the domain of register
+		BigInteger l_bnd = bounds.getLower(prefix + register);
+		BigInteger u_bnd = bounds.getUpper(prefix + register);
+		
+		if(l_bnd == null || u_bnd == null){
+			return true;
+		}
+
+		return false;
+	}
+	
+	
 	
 	
 	/**
@@ -822,19 +868,14 @@ public class BoundAnalyzer {
 	 * @return
 	 */
 	public String suggestIntegerType(int register, FunctionOrMethod function){
-		// Get the function name
-		String func_name = function.name().toString();
+		
 		// Get the bounds
-		Bounds bounds = this.boundMap.get(func_name);
-		// Check if the bound is inferred not. If not, then infer the bounds
-		if(bounds == null){
-			bounds = this.inferBounds(func_name);
-		}
+		Bounds bounds = getBounds(function);
 			
 		// Get the domain of register
 		BigInteger l_bnd = bounds.getLower(prefix+register);
 		BigInteger u_bnd = bounds.getUpper(prefix+register);
-		
+		// Check the register is unbounded or not.
 		if(l_bnd != null && u_bnd != null){
 			// Check lower bound >= 0
 			if(l_bnd.compareTo(BigInteger.ZERO)>=0){

@@ -100,7 +100,7 @@ runcallgrind(){
 	## Compile C code with -pg option to write profile information for gprof
 	echo -e -n "[*]Compile $program using GCC" 
 	## O3 optimizes and inlines the function, but loses the track of function call 
-	gcc -O0 -std=c99 -Wall -pg -fno-inline-functions-called-once $testcase"_"$program.c Util.c -o "out/$executable"
+	gcc -O0 -std=c11 -Wall -pg -fno-inline-functions-called-once $testcase"_"$program.c Util.c -o "out/$executable"
 
 	## Execute the program
 	echo -e -n "[*]Run $program executable to produce profile files"

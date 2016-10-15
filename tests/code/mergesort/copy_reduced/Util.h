@@ -348,7 +348,7 @@ BYTE* readAll(FILE *file, size_t* _size);
 * Overflow Checking Macros for arithmetic operations
 * https://gcc.gnu.org/onlinedocs/gcc/Integer-Overflow-Builtins.html
 */
-// Detect the addition overflow
+// Detect the addition overflow 'c = a + b'
 #define _DETECT_INT_ADD_OVERFLOW(a, b, c)\
 	({\
 		if(__builtin_add_overflow(a, b, &c)){\

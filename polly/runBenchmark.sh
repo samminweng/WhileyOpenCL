@@ -96,8 +96,7 @@ compileAndRun(){
     ### Compile C code into executables
 	case "$compiler" in
 		"gcc")
-			##echo gcc -std=c99 -O3 $testcase"_"$program.c Util.c -o out/"$testcase.$program.$codegen.$compiler.out"
-			gcc -std=c99 -O3 $testcase"_"$program.c Util.c -o "out/$executable"
+			gcc -std=c11 -O3 $testcase"_"$program.c Util.c -o "out/$executable"
 			;;
 		"clang")
 			clang -O3 $testcase"_"$program.c Util.c -o "out/$executable"

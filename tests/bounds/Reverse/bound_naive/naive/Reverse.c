@@ -59,6 +59,7 @@ blklab2:;
 		//lengthof %13 = %0 : int[]
 		_13 = ls_size;
 		//sub %14 = %13, %2 : int
+		_DETECT_INT_SUB_OVERFLOW(_13,i,_14);
 		_14=_13-i;
 		//indexof %15 = %0, %14 : int[]
 		_15=ls[_14];
@@ -67,6 +68,7 @@ blklab2:;
 		//const %16 = 1 : int
 		_16 = 1;
 		//sub %17 = %2, %16 : int
+		_DETECT_INT_SUB_OVERFLOW(i,_16,_17);
 		_17=i-_16;
 		//assign %2 = %17  : int
 		i = _17;

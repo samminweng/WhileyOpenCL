@@ -6,7 +6,7 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end){
 	int64_t* sub_arr = NULL;
 	sub_arr = (int64_t*)malloc((end - start)*sizeof(int64_t));
 	if(sub_arr == NULL){
-		printf("fail to allocate the memory at slice function in Util.c\n");
+		fputs("fail to allocate the memory at slice function in Util.c\n", stderr);
 		exit(-2);
 	}	
 	memcpy(sub_arr, &arr[start], (end - start)*sizeof(int64_t));
@@ -22,7 +22,7 @@ int64_t* create1DArray_int64_t(int64_t value, size_t arr_size){
 	// Allocate the array
 	arr = (int64_t*)malloc(arr_size*sizeof(int64_t));
 	if(arr == NULL){
-		fprintf(stderr, "fail to allocate the memory at create1DArray function in Util.c\n");
+		fputs("fail to allocate the memory at create1DArray function in Util.c\n", stderr);
 		exit(-2);
 	}
 	// Initialize each element with the given value.
@@ -39,7 +39,7 @@ BYTE* create1DArray_BYTE(BYTE value, size_t arr_size){
 	// Allocate the array
 	arr = (BYTE*)malloc(arr_size*sizeof(BYTE));
 	if(arr == NULL){
-		fprintf(stderr, "fail to allocate the memory at create1DArray_BYTE function in Util.c\n");
+		fputs("fail to allocate the memory at create1DArray_BYTE function in Util.c\n", stderr);
 		exit(-2);
 	}
 	// Assign value
@@ -54,7 +54,7 @@ BYTE* copy1DArray_BYTE(BYTE *arr, size_t size){
 	BYTE *ptr = NULL;
 	ptr = (BYTE*)malloc(size*sizeof(BYTE));
 	if(ptr == NULL){
-		fprintf(stderr, "failed to malloc at copy1DArray_BYTE function in Util.c\n");
+		fputs("failed to malloc at copy1DArray_BYTE function in Util.c\n", stderr);
 		exit(-2);
 	}
 	// Copy 'arr' to 'ptr' array
@@ -69,7 +69,7 @@ int64_t* copy1DArray_int64_t(int64_t *arr, size_t size){
 	ptr = (int64_t*) malloc(size * sizeof(int64_t));
 	//ptr = (int64_t*)tcmalloc(size*sizeof(int64_t));
 	if (ptr == NULL) {
-		fprintf(stderr, "fail to malloc at copy1DArray_LONG function in Util.c\n");
+		fputs("fail to malloc at copy1DArray_LONG function in Util.c\n", stderr);
 		exit(-2);
 	}
 	//Use memcpy to clone an array
@@ -106,13 +106,13 @@ int64_t** convertArgsToIntArray(int argc, char** args, size_t *arr_size, size_t 
 	int64_t** arr;
 	//Check if there is any command line argument
 	if(argc < 2){
-		fprintf(stderr, "Missing the command line arguments\n");
+		fputs("Missing the command line arguments\n", stderr);
 		exit(-2);
 	}
 	//Allocate the target array ('arr').
 	arr = (int64_t**) malloc((argc-1)*sizeof(int64_t*));
 	if(arr == NULL){
-		fprintf(stderr, "fail to allocate the memory at convertCharToInt function in Util.c\n");
+		fputs("fail to allocate the memory at convertCharToInt function in Util.c\n", stderr);
 		exit(-2);
 	}
 
@@ -131,7 +131,7 @@ int64_t** convertArgsToIntArray(int argc, char** args, size_t *arr_size, size_t 
 			// Calculate the array size
 			while(args[i][length] != '\0'){
 				if(!isdigit(args[i][length])){
-					fprintf(stderr,"None numbers is passed via command line arguments\n");
+					fputs("None numbers is passed via command line arguments\n", stderr);
 					exit(-2);
 				}
 				length++;
@@ -217,7 +217,7 @@ int64_t** create2DArray_int64_t(int64_t* arr, size_t n, size_t m){
 	// Allocate the array
 	_2DArray = (int64_t**)malloc(n*sizeof(int64_t*));
 	if(_2DArray == NULL){
-		fprintf(stderr, "fail to allocate the memory at create2DArray_int64_t function in Util.c\n");
+		fputs(stderr, "fail to allocate the memory at create2DArray_int64_t function in Util.c\n");
 		exit(-2);
 	}
 	int64_t size = m*sizeof(int64_t);
@@ -225,7 +225,7 @@ int64_t** create2DArray_int64_t(int64_t* arr, size_t n, size_t m){
 		// Copy the input array and assign it to matrix.
 		_2DArray[i] = (int64_t*)malloc(size);
 		if(_2DArray[i] == NULL){
-			fprintf(stderr, "fail to allocate the memory at create2DArray_int64_t function in Util.c\n");
+			fputs(stderr, "fail to allocate the memory at create2DArray_int64_t function in Util.c\n");
 			exit(-2);
 		}
 		memcpy(_2DArray[i], arr, size);
@@ -236,7 +236,7 @@ int64_t** create2DArray_int64_t(int64_t* arr, size_t n, size_t m){
 int64_t** copy2DArray_int64_t(int64_t **arr, size_t n, size_t m){
 	int64_t** _2DArray = (int64_t**)malloc(n*sizeof(int64_t*));
 	if(_2DArray == NULL){
-		fprintf(stderr, "fail to malloc at copy2DArray_int64_t function in Util.c\n");
+		fputs(stderr, "fail to malloc at copy2DArray_int64_t function in Util.c\n");
 		exit(-2);
 	}
 	int64_t size = m*sizeof(int64_t);
@@ -244,7 +244,7 @@ int64_t** copy2DArray_int64_t(int64_t **arr, size_t n, size_t m){
 		// Allocate an 1D array
 		_2DArray[i] = (int64_t*)malloc(size);
 		if(_2DArray[i] == NULL){
-			fprintf(stderr, "fail to allocate the memory at create2DArray_int64_t function in Util.c\n");
+			fputs(stderr, "fail to allocate the memory at create2DArray_int64_t function in Util.c\n");
 			exit(-2);
 		}
 		memcpy(_2DArray[i], arr[i], size);
@@ -281,7 +281,7 @@ int64_t** create2DArray_int64_t(int64_t* arr, size_t n, size_t m){
 	// Allocate an array of pointers
 	_2DArray = (int64_t**)malloc(n*sizeof(int64_t*));
 	if(_2DArray == NULL){
-		fprintf(stderr, "fail to allocate the memory at create2DArray_int64_t function in Util.c\n");
+		fputs("fail to allocate the memory at create2DArray_int64_t function in Util.c\n", stderr);
 		exit(-2);
 	}
 	// The size of each row
@@ -289,7 +289,7 @@ int64_t** create2DArray_int64_t(int64_t* arr, size_t n, size_t m){
 	// Create a chuck of contiguous memory space to store all array elements
 	_2DArray[0] = (int64_t*)malloc(r_size*n);
 	if(_2DArray[0] == NULL){
-		fprintf(stderr, "fail to allocate the memory at create2DArray_int64_t function in Util.c\n");
+		fputs("fail to allocate the memory at create2DArray_int64_t function in Util.c\n", stderr);
 		exit(-2);
 	}
 
@@ -307,14 +307,14 @@ int64_t** create2DArray_int64_t(int64_t* arr, size_t n, size_t m){
 int64_t** copy2DArray_int64_t(int64_t **arr, size_t n, size_t m){
 	int64_t** _2DArray = (int64_t**)malloc(n*sizeof(int64_t*));
 	if(_2DArray == NULL){
-		fprintf(stderr, "fail to malloc at copy2DArray_int64_t function in Util.c\n");
+		fputs("fail to malloc at copy2DArray_int64_t function in Util.c\n", stderr);
 		exit(-2);
 	}
 	size_t r_size = m*sizeof(int64_t);
 	// Create a chuck of contiguous memory space
 	_2DArray[0] = (int64_t*)malloc(r_size*n);
 	if(_2DArray[0] == NULL){
-		fprintf(stderr, "fail to malloc at copy2DArray_int64_t function in Util.c\n");
+		fputs("fail to malloc at copy2DArray_int64_t function in Util.c\n", stderr);
 		exit(-2);
 	}
 	
@@ -420,7 +420,7 @@ void println_s(int64_t* input, size_t input_size) {
 	ret_arr = (int64_t*) realloc(arr1, size * sizeof(int64_t));
 	//Check if the memory allocation is successful.
 	if (ret_arr == NULL) {
-		fprintf(stderr, "fail to malloc at append function in Util.c\n");
+		fputs(stderr, "fail to malloc at append function in Util.c\n");
 		exit(-2);
 	}
 	//Fill in op_2 array
@@ -451,7 +451,7 @@ int64_t* optimized_append(int64_t* op_1, size_t* op_1_size, int64_t* op_2, size_
 		}
 		ret = (int64_t*) realloc(ret, allocated_size * sizeof(int64_t));
 		if (ret == NULL) {
-			fprintf(stderr, "fail to realloc at optimized_append functon in Util.c\n");
+			fputs("fail to realloc at optimized_append functon in Util.c\n", stderr);
 			exit(-2);
 		}
 	}
@@ -470,7 +470,7 @@ int64_t* fromBytes(BYTE* input, size_t size){
 	// Create an array of integer
 	int64_t* arr = (int64_t*)malloc(size*sizeof(int64_t));
 	if(arr == NULL){
-		fprintf(stderr, "fail to allocate the memory at fromBytes function in Util.c\n");
+		fputs("fail to allocate the memory at fromBytes function in Util.c\n", stderr);
 		exit(-2);
 	}
 	for(size_t i=0;i<size;i++){
@@ -503,7 +503,7 @@ FILE* Reader(int64_t* arr, size_t arr_size){
 	// Open a file pointer
 	FILE *fp = fopen(filename, "r");
 	if(fp == NULL){
-		fprintf(stderr, "fail to open the file name at 'Reader' function in Util.c\n");
+		fputs("fail to open the file name at 'Reader' function in Util.c\n", stderr);
 		exit(-2);
 	}
 
@@ -525,7 +525,7 @@ BYTE* readAll(FILE *file, size_t* _size){
 	// Allocated byte array. Note the last char (EOF)
 	BYTE* arr = (BYTE*)malloc(size*sizeof(BYTE));
 	if(arr == NULL){
-		fprintf(stderr, "fail to allocate the array at 'readAll' function in Util.c\n");
+		fputs("fail to allocate the array at 'readAll' function in Util.c\n", stderr);
 		exit(-2);
 	}
 
@@ -533,7 +533,7 @@ BYTE* readAll(FILE *file, size_t* _size){
 	// The return of 'fread' function is 0 when the file is successfully loaded to array
 	size_t result = fread(arr, size, 1, file);
 	if(result != 0){
-		fprintf(stderr, "fail to read file to the array at 'readAll' function in Util.c\n");
+		fputs("fail to read file to the array at 'readAll' function in Util.c\n", stderr);
 		exit(-2);
 	}
 
