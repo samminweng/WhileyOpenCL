@@ -127,15 +127,7 @@ public final class BaseTestUtil {
 		pb = null;
 	}
 
-	/**
-	 * Write
-	 * @throws IOException 
-	 */
-	private void writeLogs(HashMap<String, Long> logs) throws IOException {
-
-		
-
-	}
+	
 
 	/**
 	 * Use Java process to execute the command line .
@@ -263,7 +255,7 @@ public final class BaseTestUtil {
 	}
 
 	/**
-	 * Use GCC C99 standard to compile the generated C code into executables.
+	 * Use GCC 5.x C11 standard to compile the generated C code into executables.
 	 * 
 	 * @param testcase
 	 * @param destDir
@@ -277,13 +269,13 @@ public final class BaseTestUtil {
 			String path = System.getenv("PATH");// Get PATH environment variable.
 			if (path.contains("MinGW")) {
 				// Check the exit value. If not 0, the compilation has errors.
-				assertEquals(runCmd("cmd /c gcc -std=c99 -D DEBUG *.c  -o " + testcase + ".out", destDir), 0);
-			} else if (path.contains("cygwin")) {
+				assertEquals(runCmd("cmd /c gcc -std=c11 -D DEBUG *.c  -o " + testcase + ".out", destDir), 0);
+			} /*else if (path.contains("cygwin")) {
 				// Gcc is a link (Windows command does not get it), so call its actual name (i.e. gcc-3 or gcc-4)
-				assertEquals(runCmd("cmd /c gcc-4 -std=c99 -D DEBUG *.c  -o " + testcase + ".out", destDir), 0);
+				assertEquals(runCmd("cmd /c gcc-4 -std=c11 -D DEBUG *.c  -o " + testcase + ".out", destDir), 0);
 				// Run the output file.
 				// assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
-			} else {
+			}*/ else {
 				throw new RuntimeException("Missing C compiler, such as gcc or MinGW.");
 			}
 
