@@ -346,8 +346,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						for (int i = 0; i < list.values.size(); i++) {
 							// Get binary code
 							String value = list.values.get(i).toString().replace("b", "");
-							// Binary representation in C starts with '0b', e.g.
-							// '0b01001100'
+							// Binary representation in C starts with '0b', e.g. '0b01001100'
 							s += lhs + "[" + i + "] = 0b" + value + "; ";
 						}
 						statement.add(s);
@@ -1474,7 +1473,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * <pre>
 	 * <code>
 	 * _10_size = 9;
-	 * _10 = malloc(_10_size*sizeof(int64_t));
+	 * _NEW_1DARRAY_int64_t(_10, 9, 0);
 	 * _10[0] = _1; _10[1] = _2; _10[2] = _3; _10[3] = _4; _10[4] = _5; _10[5] = _6; _10[6] = _7; _10[7] = _8; _10[8] = _9;
 	 * </code>
 	 * </pre>
@@ -1504,7 +1503,18 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String lhs = stores.getVar(code.target(0), function);
 		int length = code.operands().length;
 		if (length > 0) {
-			statement.add(indent + "_NEW_1DARRAY_int64_t(" + lhs + ", " + length + ", 0);");
+			// Check the array element type
+			Type elm_type = code.type(0).element();
+			// Create the array using '_NEW' macro
+			if(elm_type instanceof Type.Byte){
+				statement.add(indent + "_NEW_1DARRAY_BYTE(" + lhs + ", " + length + ", 0b0);");
+			}else if(elm_type instanceof Type.Int){
+				statement.add(indent + "_NEW_1DARRAY_int64_t(" + lhs + ", " + length + ", 0);");
+			}else{
+				throw new RuntimeException("Not implemented");
+			}
+			
+			
 			String s = indent;
 			// Initialize the array
 			for (int i = 0; i < code.operands().length; i++) {

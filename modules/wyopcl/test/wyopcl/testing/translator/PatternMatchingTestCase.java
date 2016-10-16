@@ -47,11 +47,10 @@ public class PatternMatchingTestCase {
 	public static Collection<String[]> testCases() {
 		
 		// Add a list of test cases
-		return Arrays.asList(new String[][] { 
-				{"IfElse", "f"}, 
+		return Arrays.asList(new String[][] {
 				{"WhileLoop", "f"},
-				//{"WhileLoop", "f2"},
-				{"Reverse", "reverse"},
+				{"WhileLoop1", "foo"},
+				{"AppendArray", "f"},
 				{"lz77", "compress"},
 				{"lz77", "decompress"}
 		});

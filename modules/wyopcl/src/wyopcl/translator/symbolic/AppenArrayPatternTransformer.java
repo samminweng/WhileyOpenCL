@@ -241,19 +241,21 @@ public class AppenArrayPatternTransformer extends Transformer {
 	 * @param p append array pattern
 	 */
 	private void array_update(List<Code> loop_blk, AppendArrayPattern p) {
-		List<Code> loopbody_after = p.getPartByName("loopbody_after");
+		//List<Code> loopbody_after = p.getPartByName("loopbody_after");
+		List<Code> loop_bytecode = p.loop.bytecodes();
+		
 		int i = 0;
-		while (i < loopbody_after.size()) {
-			Code code = loopbody_after.get(i);
+		while (i < loop_bytecode.size()) {
+			Code code = loop_bytecode.get(i);
 			// Check if the code is an append function call
 			if (code instanceof Codes.Invoke) {
 				Codes.Invoke invoke = (Codes.Invoke) code;
-				int r_ret = invoke.target(0);
-				int r_item = invoke.operand(1);
 				// Check the function name
 				if (invoke.name.name().equals("append")) {
+					int r_ret = invoke.target(0);
+					int r_item = invoke.operand(1);
 					// Get the next assignment
-					Codes.Assign assign = (Codes.Assign) loopbody_after.get(i+1);
+					Codes.Assign assign = (Codes.Assign) loop_bytecode.get(i+1);
 					int r_output = assign.operand(0);
 					// Check if the assignment over-write the function return
 					if(r_output == r_ret){
@@ -311,12 +313,6 @@ public class AppenArrayPatternTransformer extends Transformer {
 		
 		// new loop block
 		List<Code> loop_blk = new ArrayList<Code>();
-		// Add loop header part 
-		loop_blk.addAll(p.getPartByName("loop_header"));
-		
-		// Add the 'loopbody_before' and 'loopbody_update' part without changes.
-		loop_blk.addAll(p.getPartByName("loopbody_before"));
-		loop_blk.addAll(p.getPartByName("loopbody_update"));
 
 		// Get the loopbody_after code
 		array_update(loop_blk, p);

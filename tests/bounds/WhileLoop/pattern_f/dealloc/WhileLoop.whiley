@@ -19,15 +19,7 @@ requires limit <= 1000000:
 //     return sum
     
 method main(System.Console sys):
-    int a = f(5)
+    int a = f(50000)
     sys.out.println(a)
-    // int b = f2(5)
-    // sys.out.println(b)
-    // assert a == b
-    // int c = f(65537)// 2^16 (65536)
-    // sys.out.println(c)
-    // int d = f2(65537)
-    // sys.out.println(d)
-    // assert c == d
-
+    assert a == 1249975000
 
