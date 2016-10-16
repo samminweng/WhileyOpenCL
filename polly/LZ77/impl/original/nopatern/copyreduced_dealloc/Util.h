@@ -343,6 +343,35 @@ BYTE* readAll(FILE *file, size_t* _size);
 		})
 // '_SUBSTRUCTURE_DEALLOC' macro applies the subtructure parameter
 #define _SUBSTRUCTURE_DEALLOC(b, checks, func_name) DEBUG_PRINT("_SUBSTRUCTURE_DEALLOC macro on  ( "str(checks)" "str(#b) " "str(func_name)" )");
+/***
+*
+* Overflow Checking Macros for arithmetic operations
+* https://gcc.gnu.org/onlinedocs/gcc/Integer-Overflow-Builtins.html
+*/
+// Detect the addition overflow 'c = a + b'
+#define _DETECT_INT_ADD_OVERFLOW(a, b, c)\
+	({\
+		if(__builtin_add_overflow(a, b, &c)){\
+			fputs("Detected ADD Overflow on "str(c) " = "str(a) " + " str(b)"\n", stderr);\
+			exit(-2);\
+		}\
+	})
+// Detect the subtraction overflow
+#define _DETECT_INT_SUB_OVERFLOW(a, b, c)\
+	({\
+		if(__builtin_sub_overflow(a, b, &c)){\
+			fputs("Detected SUB Overflow on "str(c) " = "str(a) " - " str(b)"\n", stderr);\
+			exit(-2);\
+		}\
+	})
+// Detect the multiplication overflow
+#define _DETECT_INT_MUL_OVERFLOW(a, b, c)\
+	({\
+		if(__builtin_mul_overflow(a, b, &c)){\
+			fputs("Detected MUL Overflow on "str(c) " = "str(a) " * " str(b)"\n", stderr);\
+			exit(-2);\
+		}\
+	})
 /*
 * Other Macros 
 *

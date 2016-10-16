@@ -299,8 +299,9 @@ exec(){
 		##runcallgrind $testcase $program $codegen $enabledpattern $parameter "gcc" 1
 		# Get the pattern option 
 		pattern=${patterns[$testcase]}
-		if [ pattern ]
+		if [ $pattern ]
 		then
+			
 			# Enable the pattern matching
 			enabledpattern=1
 			# Generate C code with enabled pattern 

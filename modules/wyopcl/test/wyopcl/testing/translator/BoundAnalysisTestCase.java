@@ -46,7 +46,8 @@ public class BoundAnalysisTestCase {
 		return Arrays.asList(new String[] { 
 				"IfElse", 
 				"WhileLoop",
-				"Reverse",
+				"WhileLoop1",
+				//"Reverse",
 			});
 	}
 	

@@ -2,7 +2,7 @@ import * from whiley.lang.System
 
 // Append an integer to the input array and return the array 
 // This is temporary and should be removed
-function append(int[] items, int item) -> (int[] nitems):
+function append(byte[] items, int item) -> (int[] nitems):
 	//
 	nitems = [0; |items| + 1]
 	int i = 0
@@ -15,7 +15,7 @@ function append(int[] items, int item) -> (int[] nitems):
 	return nitems
 
 // Populate the input array to the array of given array size
-function populate(int[] items, int size) -> (int[] nitems):
+function resize(int[] items, int size) -> (int[] nitems):
 	nitems = [0; size]
 	int i = 0
 	while i < size:
