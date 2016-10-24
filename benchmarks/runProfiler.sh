@@ -3,13 +3,13 @@ TIMEOUT="1800s"
 alias opt="opt -O3 -polly"
 alias pollycc="clang -O3 -mllvm -polly"
 ### Get the root working directory
-basedir="$(dirname "$(pwd)")"
-UTILDIR="$basedir/tests/code"
+UTILDIR="$(dirname "$(pwd)")/tests/code"
+BENCHMARKDIR="$(pwd)"
 
 ### Create the 'profile' folder and clean up the files
 init(){
 	testcase=$1
-	profDir="$basedir/polly/$testcase/prof"
+	profDir="$BENCHMARKDIR/$testcase/prof"
 	mkdir -p "$profDir"
 	### remove all files inside the folder
 	rm -f "$profDir/"*.*
@@ -26,11 +26,11 @@ generateCode(){
 	if [ $enabledpattern == 1 ] 
 	then
 		### Enable pattern transformation
-		codeDir="$basedir/polly/$testcase/impl/$program/patern/$codegen"
+		codeDir="$BENCHMARKDIR/$testcase/impl/$program/patern/$codegen"
 		pattern=$5
 	else
 		### Disable pattern transformation
-		codeDir="$basedir/polly/$testcase/impl/$program/nopatern/$codegen"
+		codeDir="$BENCHMARKDIR/$testcase/impl/$program/nopatern/$codegen"
 	fi
 	#echo $codeDir
 	#read -p "Press [Enter] to continue..."
@@ -38,7 +38,7 @@ generateCode(){
 	rm -rf "$codeDir"
 	mkdir -p "$codeDir"
 	# copy the source whiley file to the folder
-	cp $basedir/polly/$testcase/$testcase"_"$program.whiley "$codeDir"
+	cp $BENCHMARKDIR/$testcase/$testcase"_"$program.whiley "$codeDir"
 	### Copy Util.c Util.h to current folder
 	cp $UTILDIR/Util.c $UTILDIR/Util.h "$codeDir"
 
@@ -107,7 +107,7 @@ runcallgrind(){
 	## LZ test case
 	if [ $testcase = "LZ77" ]
 	then
-		valgrind --tool=callgrind "./out/$executable" "$basedir/polly/$testcase/$parameter"
+		valgrind --tool=callgrind "./out/$executable" "$BENCHMARKDIR/$testcase/$parameter"
 	else
 		## Other cases
 		valgrind --tool=callgrind "./out/$executable" $parameter
@@ -121,7 +121,7 @@ runcallgrind(){
 	#cat $callgrind_report | less
 
 	echo -e -n "[*]Complete GProf Analysis ($gprof_report)" 
-	mv $callgrind_report "$basedir/polly/$testcase/prof"
+	mv $callgrind_report "$BENCHMARKDIR/$testcase/prof"
 	## Delete callgrind output file
 	rm -f callgrind.out.*
 }
@@ -160,7 +160,7 @@ rungprof(){
 	## LZ test case
 	if [ $testcase = "LZ77" ]
 	then
-		time "./out/$executable" "$basedir/polly/$testcase/$parameter"
+		time "./out/$executable" "$BENCHMARKDIR/$testcase/$parameter"
 	else
 		## Other cases
 		time "./out/$executable" $parameter
@@ -175,7 +175,7 @@ rungprof(){
 	#cat $gprof_report | less
 
 	echo -e -n "[*]Complete GProf Analysis ($gprof_report)" 
-	mv $gprof_report "$basedir/polly/$testcase/prof"
+	mv $gprof_report "$BENCHMARKDIR/$testcase/prof"
 	## Delete gmon.out
 	rm -f gmon.out
 }
@@ -317,11 +317,18 @@ exec(){
 	# #detectleaks $testcase $program $codegen $parameter "openmp" 2
 	# #detectleaks $testcase $program $codegen $parameter "openmp" 4
 	# #Return to the working directory
- 	cd $basedir/polly
+ 	cd $BENCHMARKDIR
 
     #read -p "Press [Enter] to continue..."
 }
 
-# ####LZ77 test case
-init LZ77
-exec LZ77 original "large.in"
+# # ####LZ77 test case
+# init LZ77
+# exec LZ77 original "large.in"
+
+
+## MatrixMult test case
+init MatrixMult
+exec MatrixMult original 1000
+exec MatrixMult original 2000
+exec MatrixMult original 3000

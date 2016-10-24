@@ -19,3 +19,8 @@ set term png
 set output "reverse.png"
 replot
 set term x11
+## Output a EPS file
+set term eps
+set output "reverse.eps"
+replot
+set term x11
