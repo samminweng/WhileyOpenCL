@@ -366,7 +366,7 @@ public final class CodeGeneratorHelper {
 			
 			
 			// Check is type is a System.Console.
-			if (nominal_name.equals("Console") || nominal_name.equals("Reader")) {
+			if (nominal_name.equals("Console") || nominal_name.equals("Reader") || nominal_name.equals("Writer")) {
 				// Use FILE type.
 				return "FILE*";
 			}
@@ -403,8 +403,8 @@ public final class CodeGeneratorHelper {
 				return "int argc, char** args";
 			}
 			
-			// Check if the fields has readAll method
-			if(fields.containsKey("readAll")){
+			// Check if the fields is FILE input/output methods
+			if(fields.containsKey("readAll")|| fields.containsKey("write") || fields.containsKey("close")){
 				return "void*";
 			}
 			

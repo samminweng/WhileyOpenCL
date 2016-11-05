@@ -645,7 +645,8 @@ public class CodeStores {
 			if(type instanceof Type.Nominal){
 				Type.Nominal nominal = (Type.Nominal)type;
 				if(nominal.name().name().equals("Console")
-					||	nominal.name().name().equals("Reader")){
+					|| nominal.name().name().equals("Reader")
+					|| nominal.name().name().equals("Writer")){
 					return nominal;
 				}
 				

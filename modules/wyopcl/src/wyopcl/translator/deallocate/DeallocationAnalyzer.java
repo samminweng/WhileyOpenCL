@@ -113,7 +113,7 @@ public class DeallocationAnalyzer extends Analyzer {
 					// Check if type is a record
 					if(var_type instanceof Type.Record){
 						Type.Record record = (Type.Record)var_type;
-						if(record.fields().containsKey("readAll")){
+						if(record.fields().containsKey("readAll")||record.fields().containsKey("write")){
 							// Skip the de-allocation
 							continue;
 						}

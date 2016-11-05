@@ -16,7 +16,7 @@ int main(int argc, char** args){
 	_4[0] = 109; _4[1] = 101; _4[2] = 100; _4[3] = 105; _4[4] = 117; _4[5] = 109; _4[6] = 46; _4[7] = 105; _4[8] = 110; 
 	//invoke (%3) = (%4) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
 	{
-		_3 = Reader(_4,  _4_size);
+		_3 = Reader(_4, _4_size);
 	}
 	//assign %1 = %3  : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
 	file = _3;

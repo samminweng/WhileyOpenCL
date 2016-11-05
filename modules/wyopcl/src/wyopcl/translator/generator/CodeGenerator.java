@@ -506,7 +506,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		Type lhs_type = stores.getRawType(code.target(0), function);
 		String rhs = stores.getVar(code.operand(0), function);
 		// The type of file reader is NULL  
-		if(lhs_type instanceof Type.Nominal && ((Type.Nominal) lhs_type).name().name().equals("Reader")){
+		if(lhs_type instanceof Type.Nominal && ((Type.Nominal) lhs_type).name().name().equals("Reader")
+				&& ((Type.Nominal) lhs_type).name().name().equals("Writer")){
 			// Have in-place update
 			statement.add(indent+lhs + " = "+rhs+";");			
 		}else	if (lhs_type instanceof Type.Function) {
@@ -1074,7 +1075,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			switch (code.name.name()) {
 			case "Reader":
 				// Read a file name (an array of ASCII code) and output an file pointer
-				statements.add(indent+ lhs + " = Reader("+rhs+",  "+rhs+"_size);");
+				statements.add(indent+ lhs + " = Reader("+rhs+", "+rhs+"_size);");
+				break;
+			case "Writer":
+				// Open a file to write the byte array
+				statements.add(indent+ lhs + " = Writer("+rhs+", "+rhs+"_size);");
 				break;
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);
@@ -1564,8 +1569,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				|| field.equals("println_s")) {
 			// Load the field to the target register.
 			stores.loadField(code.target(0), field, function);
-		} else if (field.equals("readAll")){
-			// Get the file pointer 
+		} else if (field.equals("readAll")||field.equals("write")||field.equals("close")){
+			// Get file pointer 
 			String fileptr = stores.getVar(code.operand(0), function);
 			// Load the field and file pointer to the target register.
 			stores.loadField(code.target(0), field+"\t"+fileptr, function);
@@ -1656,21 +1661,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		} else if (code.type(0) instanceof Type.Method) {
 			// Get the function name, e.g. 'printf'.
 			String func_name = stores.getField(code.operand(0), function);
-			if(func_name.contains("readAll")){
-				// Get input file pointer
-				String input_ptr = func_name.split("\t")[1];
-				// Get output variable
-				String output = stores.getVar(code.target(0), function);
-				// Read a file as an array of Bytes
-				statement.add(indent+ output + " = readAll("+input_ptr+", &"+output+"_size);");
-				// Add deallocation flag
-				this.deallocatedAnalyzer.ifPresent(a ->{
-					statement.add(indent+ "_ADD_DEALLOC("+output+");");
-				});
-			}else{
-				// Get the input
-				String input = stores.getVar(code.operand(1), function);
-				Type input_type = stores.getRawType(code.operand(1), function);
+			// Get the input
+			String input = null;
+			Type input_type = null;
+			if(func_name.contains("print")){
+				input = stores.getVar(code.operand(1), function);
+				input_type = stores.getRawType(code.operand(1), function);
 				switch (func_name) {
 				case "print":
 					statement.add(indent + "printf(\"" + "%\"PRId64, " + input + ");");
@@ -1708,7 +1704,34 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				default:
 					throw new RuntimeException("Not implemented." + code);
 				}
+			}else if (func_name.contains("readAll")){
+				// Get file pointer
+				String ptr = func_name.split("\t")[1];
+				// Get output variable
+				String output = stores.getVar(code.target(0), function);
+				// Read a file as an array of Bytes
+				statement.add(indent+ output + " = readAll("+ptr+", &"+output+"_size);");
+				// Add deallocation flag
+				this.deallocatedAnalyzer.ifPresent(a ->{
+					statement.add(indent+ "_ADD_DEALLOC("+output+");");
+				});
+			}else if(func_name.contains("write")){
+				// Get file pointer
+				String ptr = func_name.split("\t")[1];
+				// Get byte array at index '1'
+				String arr = stores.getVar(code.operand(1), function);
+				// Read a file as an array of Bytes
+				statement.add(indent+"fwrite("+arr+", 1, "+arr+"_size, "+ptr+");");
+			}else if(func_name.contains("close")){
+				// Close the file pointer
+				String ptr = func_name.split("\t")[1];
+				// Close and nullify the file 
+				statement.add(indent+"fclose("+ptr+");");
+				statement.add(indent+""+ptr+" = NULL;");
+			}else{
+				throw new RuntimeException("Not implemented." + code);
 			}
+			
 		} else {
 			throw new RuntimeException("Not implemented." + code);
 		}

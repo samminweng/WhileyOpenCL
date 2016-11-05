@@ -389,7 +389,12 @@ public final class BaseTestUtil {
 						+ File.separator + "medium.in");
 				
 				Files.copy(smallin.toPath(), Paths.get(destDir + File.separator + "medium.in"));
-				
+			}else if (testcase.equals("filewrite")){
+				// image.jpg
+				File smallin = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
+						+ File.separator + "image.jpg");
+				// Copy 'image.jpg' to folder
+				Files.copy(smallin.toPath(), Paths.get(destDir + File.separator + "image.jpg"));
 			}
 			
 

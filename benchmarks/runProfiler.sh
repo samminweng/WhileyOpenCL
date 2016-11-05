@@ -326,9 +326,16 @@ exec(){
 # init LZ77
 # exec LZ77 original "large.in"
 
+## MatrixMult test case
+init BubbleSort
+exec BubbleSort original 1000
+exec BubbleSort original 10000
+exec BubbleSort original 100000
+
+
 
 ## MatrixMult test case
-init MatrixMult
-exec MatrixMult original 1000
-exec MatrixMult original 2000
-exec MatrixMult original 3000
+#init MatrixMult
+#exec MatrixMult original 1000
+#exec MatrixMult original 2000
+#exec MatrixMult original 3000

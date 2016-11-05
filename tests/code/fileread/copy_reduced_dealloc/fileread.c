@@ -24,7 +24,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_4);
 	//invoke (%3) = (%4) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
 	{
-		_3 = Reader(_4,  _4_size);
+		_3 = Reader(_4, _4_size);
 	}
 	//assign %1 = %3  : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
 	file = _3;
