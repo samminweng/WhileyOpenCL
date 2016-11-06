@@ -391,10 +391,10 @@ public final class BaseTestUtil {
 				Files.copy(smallin.toPath(), Paths.get(destDir + File.separator + "medium.in"));
 			}else if (testcase.equals("filewrite") || testcase.equals("SobelEdge3")){
 				// image.jpg
-				File smallin = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
-						+ File.separator + "image.jpg");
+				File in = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
+						+ File.separator + "image.in");
 				// Copy 'image.jpg' to folder
-				Files.copy(smallin.toPath(), Paths.get(destDir + File.separator + "image.jpg"));
+				Files.copy(in.toPath(), Paths.get(destDir + File.separator + "image.in"));
 			}
 			
 

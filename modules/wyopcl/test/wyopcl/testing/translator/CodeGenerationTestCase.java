@@ -77,7 +77,7 @@ public class CodeGenerationTestCase {
 				"FunctionCall4",
 				"SobelEdge1",
 				"SobelEdge2",
-				"SobelEdge3",//Read 'image.jpg (32x32) as a byte array 
+				"SobelEdge3",//Read 'image.in (16x16) as a byte array 
 				"fileread",
 				"filewrite",
 				"lz77",

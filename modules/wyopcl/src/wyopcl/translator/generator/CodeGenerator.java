@@ -1062,6 +1062,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Convert a byte to integer
 				statements.add(indent+ lhs + " = (unsigned int)"+rhs+";");
 				break;
+			case "toByte":
+				// Convert an integer to a byte
+				statements.add(indent+ lhs + " = (BYTE)"+rhs+";");
+				break;
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);
 			}

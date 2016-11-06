@@ -1,10 +1,10 @@
 import * from whiley.io.File
+import * from whiley.lang.System
 import whiley.lang.*
 import whiley.lang.Math
 // This example code illustrates sobel edge detction on black/white pictures
-// with additional 'image' structure 
+// with additional 'image' structure and write output as a 'output.in' file for verification
 // reference: https://en.wikipedia.org/wiki/Sobel_operator
-
 // Define Colour value
 constant WHITE is 11111111b
 constant BLACK is 0b
@@ -65,7 +65,7 @@ function sobelEdgeDetection(Image input) -> Image:
 	int width = input.width
 	int height = input.height
 	// The output image of sobel edge detection
-	byte[] newPixels = [WHITE;width*height]
+	byte[] newPixels = [WHITE;|pixels|]
 	// vertical and horizontal sobel filter (3x3 kernel)
 	int[] v_sobel = [-1,0,1,-2,0,2,-1,0,1]
 	int[] h_sobel = [1,2,1,0,0,0,-1,-2,-1]
@@ -100,41 +100,39 @@ method print_image(System.Console sys, Image im):
 	int width = im.width
 	int height = im.height
 	int y = 0
-	//byte[] output = [WHITE;width*height]
+	byte[] output = [WHITE;|pixels|]
 	while y<height:
 		int x = 0
 		while x<width:
 			int pos = y*width + x
 			// Print out each pixel value
 			if pixels[pos] == WHITE:
-				//output[pos]=WHITE
-				sys.out.print_s("w")
+				output[pos] = ASCII.toByte(' ')
+				sys.out.print_s(" ")
 			else:
-				//output[pos]=BLACK
+				output[pos] = ASCII.toByte('b')
 				sys.out.print_s("b")
 			sys.out.print_s(" ")
 			x = x + 1
 		y = y + 1
 		sys.out.println_s("")
 	// Write output to a file
-	//File.Writer w = File.Writer("output.jpg")
-	//w.write(output)
-	//w.close()
+	File.Writer w = File.Writer("output.in")
+	w.write(output)
+	w.close()
 
 // Main function
 method main(System.Console sys):
-	int width = 32
-	int height = 32
+	int width = 16
+	int height = 16
 	int size = width * height
-	File.Reader file = File.Reader("image.jpg")
+	// 'image.in' (16x16)
+	File.Reader file = File.Reader("image.in")
 	// Read an image as a byte array
 	byte[] pixels = file.readAll()
 	// Create an Image structure to store input image
 	Image input = image(width, height, pixels)
 	// Output the result image that is filtered with sobel edge 
 	Image output = sobelEdgeDetection(input)
-	sys.out.println_s("Input Image:")
-	print_image(sys, input)
 	sys.out.println_s("Output Image:")
 	print_image(sys, output)
-	
