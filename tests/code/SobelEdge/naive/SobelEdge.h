@@ -1,0 +1,7 @@
+#include "Util.h"
+#define WHITE 11111111b
+#define BLACK 00000000b
+int64_t convolution(BYTE* pixels, size_t pixels_size, int64_t width, int64_t height, int64_t xCenter, int64_t yCenter, _DECL_1DARRAY_PARAM(filter));
+BYTE* sobelEdgeDetection(BYTE* pixels, size_t pixels_size, int64_t width, int64_t height, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE);
+void printImage(FILE* sys, BYTE* pixels, size_t pixels_size, int64_t width, int64_t height);
+int main(int argc, char** args);
