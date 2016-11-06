@@ -389,7 +389,7 @@ public final class BaseTestUtil {
 						+ File.separator + "medium.in");
 				
 				Files.copy(smallin.toPath(), Paths.get(destDir + File.separator + "medium.in"));
-			}else if (testcase.equals("filewrite")){
+			}else if (testcase.equals("filewrite") || testcase.equals("SobelEdge3")){
 				// image.jpg
 				File smallin = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
 						+ File.separator + "image.jpg");
