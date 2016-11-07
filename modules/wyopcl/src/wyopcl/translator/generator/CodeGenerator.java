@@ -1725,7 +1725,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Get byte array at index '1'
 				String arr = stores.getVar(code.operand(1), function);
 				// Read a file as an array of Bytes
-				statement.add(indent+"fwrite("+arr+", 1, "+arr+"_size, "+ptr+");");
+				statement.add(indent+"writeAll("+ptr+", "+arr+", "+arr+"_size);");
 			}else if(func_name.contains("close")){
 				// Close the file pointer
 				String ptr = func_name.split("\t")[1];

@@ -65,6 +65,7 @@ int64_t* fromBytes(BYTE* arr, size_t arr_size);
 FILE* Reader(int64_t* arr, size_t arr_size);
 FILE* Writer(int64_t* arr, size_t arr_size);
 BYTE* readAll(FILE *file, size_t* _size);
+void writeAll(FILE *file, BYTE* arr, size_t arr_size);
 /**
  * Macro Section
 **/

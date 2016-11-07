@@ -529,8 +529,8 @@ FILE* Writer(int64_t* arr, size_t arr_size){
 	strcpy(filename, tmp);
 	//printf("%s\n", filename);
 
-	// 'w+': Truncate the file to zero and create a file pointer
-	FILE *fp = fopen(filename, "w+");
+	// 'w': Create a file pointer
+	FILE *fp = fopen(filename, "w");
 	if(fp == NULL){
 		fputs("fail to open the file name at 'Writer' function in Util.c\n", stderr);
 		exit(-2);
@@ -538,8 +538,6 @@ FILE* Writer(int64_t* arr, size_t arr_size){
 
 	return fp;
 }
-
-
 
 // Read all lines of a file and output a BYTE array
 BYTE* readAll(FILE *file, size_t* _size){
@@ -572,3 +570,17 @@ BYTE* readAll(FILE *file, size_t* _size){
 	return arr;
 }
 
+// Write an BYTE array to a file
+void writeAll(FILE *file, BYTE* arr, size_t arr_size){
+	// Count the number of byte (except for EOF)
+	size_t count=0;
+	while(count<arr_size){
+		// Check if the byte is not EOF
+		if(arr[count]==0){
+			break;
+		}
+		count++;
+	}
+	// Write out the file
+	fwrite(arr, sizeof(BYTE), count, file);
+}

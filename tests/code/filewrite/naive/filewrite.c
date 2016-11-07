@@ -69,7 +69,7 @@ int main(int argc, char** args){
 	//fieldload %20 = %3 write : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
 	//indirectinvoke (%19) = %20 (%2) : method(byte[])->(int)
 	{
-		fwrite(data, 1, data_size, w);
+		writeAll(w, data, data_size);
 	}
 	//fieldload %21 = %3 close : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
 	//indirectinvoke () = %21 () : method()->()
