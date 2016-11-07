@@ -43,18 +43,15 @@ public final class BaseTestUtil {
 			+ lib_path + "wycs-" + version + ".jar" + File.pathSeparator + lib_path + "wybs-" + version + ".jar"
 			+ File.pathSeparator + lib_path + "wyil-" + version + ".jar" + File.pathSeparator + lib_path + "wyc-"
 			+ version + ".jar" + File.pathSeparator;
+	
 	final String whiley_runtime_lib = lib_path + "wyrt-" + version + ".jar";
 
 	// Log file
-	final File logfile = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
-			+ File.separator + "Report" + File.separator + "log.txt");
-
+	final File logfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "log.txt");
 	// Util.c file
-	final File utilcfile = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
-			+ File.separator + "Util.c");
+	final File utilcfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "Util.c");
 	// Util.h file
-	final File utilhfile = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
-			+ File.separator + "Util.h");
+	final File utilhfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "Util.h");
 	
 	
 	Process p;
@@ -223,22 +220,21 @@ public final class BaseTestUtil {
 	}
 
 	/**
-	 * Check that 'destDir' exists and Create 'destDir' folder. If so, delete existing 'destDir' folder. And then create
-	 * 'destDir' directory.
+	 * Check that 'path' exists and Create 'path' folder.
 	 * 
-	 * @param destDir
+	 * @param path
 	 */
-	private void createDestDir(Path destDir) {
+	private void createFolder(Path path) {
 		try {
 			// Check the parent folder exits.
-			if (!Files.exists(destDir.getParent())) {
-				Files.createDirectories(destDir.getParent());
+			if (!Files.exists(path.getParent())) {
+				Files.createDirectories(path.getParent());
 			}
 			// Create the destDir folder.
-			if (Files.exists(destDir)) {
+			if (Files.exists(path)) {
 				// If destDir exists, then delete it.
 				// Recursively Delete files in the destDir folder.
-				Files.walkFileTree(destDir, new SimpleFileVisitor<Path>() {
+				Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
 					@Override
 					public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 						Files.delete(file);
@@ -247,10 +243,10 @@ public final class BaseTestUtil {
 				});
 			} else {
 				// Create destDir subfolder
-				Files.createDirectories(destDir);
+				Files.createDirectories(path);
 			}
 		} catch (Exception ex) {
-			throw new AssertionError("Fails to create the " + destDir + " folder");
+			throw new AssertionError("Fails to create the " + path + " folder");
 		}
 	}
 
@@ -290,6 +286,31 @@ public final class BaseTestUtil {
 
 	}
 
+	/***
+	 * Verify the output file is the same as the one of naive code
+	 * 
+	 * 
+	 * @param testcase
+	 * @param sourceDir
+	 * @param codegen
+	 */
+	public void verifyOutput(String testcase, Path sourceDir, String codegen){
+		if(testcase.contains("SobelEdge")){
+			// The output file of naive code
+			Path naiveDir = Paths.get(sourceDir + File.separator + testcase + File.separator
+					+ "naive" + File.separator + "output.txt");
+			// The new output file  
+			Path codegenDir = Paths.get(sourceDir + File.separator + testcase + File.separator
+					+ codegen + File.separator + "output.txt");
+			
+			
+		}
+		
+		return;
+	}
+	
+	
+	
 	/**
 	 * Translate a Whiley program into the C code.
 	 * 
@@ -323,7 +344,7 @@ public final class BaseTestUtil {
 				if (options[0].equals("nocopy")) {
 					// Set working directory to be 'code/TestCaseName/copy'
 					destDir = Paths.get(
-							sourceDir + File.separator + testcase + File.separator + "copy_reduced" + File.separator);
+							sourceDir + File.separator + testcase + File.separator + "nocopy" + File.separator);
 				} else if (options[0].equals("dealloc")) {
 					// Applies de-allocation analysis on naive C code
 					destDir = Paths.get(
@@ -338,7 +359,7 @@ public final class BaseTestUtil {
 					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "bound_"+widen
 							+ File.separator+"naive");
 				} else{
-					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "copy_reduced_dealloc"
+					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "nocopy_dealloc"
 							+ File.separator);
 				}				
 				break;
@@ -360,7 +381,7 @@ public final class BaseTestUtil {
 					// Get function name
 					func_name = options[1];
 					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "pattern_"+func_name
-							+ File.separator+"copy_reduced_dealloc");
+							+ File.separator+"nocopy_dealloc");
 				}else{
 					throw new RuntimeException("Not implemented");
 				}
@@ -370,7 +391,7 @@ public final class BaseTestUtil {
 			}
 
 			// Create destDir
-			createDestDir(destDir);
+			createFolder(destDir);
 
 			// 1. Copy source Whiley program to destDir directory.
 			Path whileyFile = Paths.get(sourceDir + File.separator + testcase + ".whiley");
@@ -385,19 +406,15 @@ public final class BaseTestUtil {
 			// (Optional) Copy 'small.in' to destDir  
 			if(testcase.equals("fileread") || testcase.equals("lz77") || testcase.equals("lz77_2")){
 				// 'medium.in
-				File smallin = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
-						+ File.separator + "medium.in");
-				
+				File smallin = new File(sourceDir + File.separator + "medium.in");
 				Files.copy(smallin.toPath(), Paths.get(destDir + File.separator + "medium.in"));
 			}else if (testcase.equals("filewrite") || testcase.equals("SobelEdge3")){
 				// image.jpg
-				File in = new File(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code"
-						+ File.separator + "image.in");
+				File in = new File(sourceDir + File.separator + "image.in");
 				// Copy 'image.jpg' to folder
 				Files.copy(in.toPath(), Paths.get(destDir + File.separator + "image.in"));
 			}
 			
-
 			// 3. Generate the C code.
 			String cmd = "java -cp " + classpath + " wyopcl.WyopclMain -bp " + whiley_runtime_lib + " -code";
 			// Run the code generator with optimization.
@@ -431,6 +448,7 @@ public final class BaseTestUtil {
 
 			// Delete the Wyil files inside folder
 			Files.deleteIfExists(FileSystems.getDefault().getPath(sourceDir + testcase + ".wyil"));
+		
 		} catch (Exception e) {
 			terminate();
 			throw new RuntimeException("Test file: " + testcase + ".whiley", e);
@@ -444,14 +462,5 @@ public final class BaseTestUtil {
 			p = null;
 		}
 	}
-
-	/*
-	 * public void execCopyAnalysis(Path path, String testcase) { // Run commmands String cmd = "java -cp " + classpath
-	 * + " wyopcl.WyopclMain -bp " + whiley_runtime_lib + " -code -copy" + " " + testcase + ".whiley"; Path destDir =
-	 * Paths.get(path + File.separator + testcase + File.separator); // Generate Copy-eliminated C code runCmd(cmd,
-	 * destDir); // Compile and run the generated C code compileAndRunCCode(testcase, destDir); // Delete the Wyil files
-	 * inside folder try { Files.deleteIfExists(FileSystems.getDefault().getPath(destDir + testcase + ".wyil")); } catch
-	 * (IOException e) { throw new RuntimeException("Errors!!!"); } }
-	 */
 
 }

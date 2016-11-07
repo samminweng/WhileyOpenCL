@@ -75,9 +75,9 @@ public class CodeGenerationTestCase {
 				"FunctionCall2",
 				"FunctionCall3",
 				"FunctionCall4",
-				"SobelEdge1",
-				"SobelEdge2",
-				"SobelEdge3",//Read 'image.in (16x32) as a byte array 
+				"SobelEdge1", // Create an on-memory byte 
+				"SobelEdge2", // Create an on-memory byte 
+				"SobelEdge3",//Read 'image.in' as a byte array 
 				"fileread",
 				"filewrite",
 				"lz77",

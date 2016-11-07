@@ -539,10 +539,10 @@ void write_image(FILE* sys, Image* im, _DECL_DEALLOC_PARAM(im)){
 	_10=width*height;
 	//assign %5 = %10  : int
 	size = _10;
-	//const %12 = [111,117,116,112,117,116,46,105,110] : int[]
+	//const %12 = [111,117,116,112,117,116,46,116,120,116] : int[]
 	_DEALLOC(_12);
-	_NEW_1DARRAY_int64_t(_12, 9, 0);
-	_12[0] = 111; _12[1] = 117; _12[2] = 116; _12[3] = 112; _12[4] = 117; _12[5] = 116; _12[6] = 46; _12[7] = 105; _12[8] = 110; 
+	_NEW_1DARRAY_int64_t(_12, 10, 0);
+	_12[0] = 111; _12[1] = 117; _12[2] = 116; _12[3] = 112; _12[4] = 117; _12[5] = 116; _12[6] = 46; _12[7] = 116; _12[8] = 120; _12[9] = 116; 
 	_ADD_DEALLOC(_12);
 	//invoke (%11) = (%12) whiley/io/File:Writer : method(whiley/lang/ASCII:string)->(whiley/io/File:Writer)
 	{

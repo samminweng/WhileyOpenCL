@@ -1,12 +1,14 @@
+import * from whiley.io.File
+import * from whiley.lang.System
 import whiley.lang.*
 import whiley.lang.Math
 // This example code illustrates sobel edge detction on black/white pictures
-// with additional 'image' structure 
+// and write the output as a file 
 // reference: https://en.wikipedia.org/wiki/Sobel_operator
-
 // Define Colour value
-constant WHITE is 11111111b
-constant BLACK is 0b
+constant SPACE is 00100000b // ASCII code of space (' ') 
+constant BLACK is 01100010b // ASCII code of 'b' 
+
 
 // Define 'Image' class
 type Image is ({
@@ -64,7 +66,7 @@ function sobelEdgeDetection(Image input) -> Image:
 	int width = input.width
 	int height = input.height
 	// The output image of sobel edge detection
-	byte[] newPixels = [WHITE;width*height]
+	byte[] newPixels = [SPACE;width*height]
 	// vertical and horizontal sobel filter (3x3 kernel)
 	int[] v_sobel = [-1,0,1,-2,0,2,-1,0,1]
 	int[] h_sobel = [1,2,1,0,0,0,-1,-2,-1]
@@ -84,7 +86,7 @@ function sobelEdgeDetection(Image input) -> Image:
 			// Edge threshold (128) Note that large thresholds generate few edges
 			if t_g > 128:
 				// Color the edge as white 
-				newPixels[pos] = WHITE
+				newPixels[pos] = SPACE
 			else:
 				// Color other pixels as black
 				newPixels[pos] = BLACK
@@ -106,8 +108,8 @@ method print_image(System.Console sys, Image im):
 		while x<width:
 			int pos = y*width + x
 			// Print out each pixel value
-			if pixels[pos] == WHITE:
-				sys.out.print_s("w")
+			if pixels[pos] == SPACE:
+				sys.out.print_s(" ")
 			else:
 				sys.out.print_s("b")
 			sys.out.print_s(" ")
@@ -121,7 +123,7 @@ method main(System.Console sys):
 	int height = 8
 	int size = width * height
 	// Set all pixels to be white
-	byte[] pixels = [WHITE;size] 
+	byte[] pixels = [SPACE;size] 
 	// Place a black pixel at (0,0) position 
 	pixels[0] = BLACK // (0,0)
 	// Place a black pixel at (3,4) position 
@@ -134,3 +136,7 @@ method main(System.Console sys):
 	print_image(sys, input)
 	sys.out.println_s("Sobel Edge Detection:")
 	print_image(sys, output)
+	// Write output to a file
+	File.Writer w = File.Writer("output.txt")
+	w.write(output.pixels)
+	w.close()

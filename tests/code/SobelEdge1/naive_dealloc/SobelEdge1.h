@@ -1,6 +1,6 @@
 #include "Util.h"
-#define WHITE 11111111b
-#define BLACK 00000000b
+#define SPACE 00100000b
+#define BLACK 01100010b
 int64_t convolution(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM(pixels), int64_t width, int64_t height, int64_t xCenter, int64_t yCenter, _DECL_1DARRAY_PARAM(filter), _DECL_DEALLOC_PARAM(filter));
 BYTE* sobelEdgeDetection(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM(pixels), int64_t width, int64_t height, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE);
 void printImage(FILE* sys, BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM(pixels), int64_t width, int64_t height);

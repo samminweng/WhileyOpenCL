@@ -306,8 +306,8 @@ Image* sobelEdgeDetection(Image* input, _DECL_DEALLOC_PARAM(input)){
 	_16 = input->height;
 	//assign %4 = %16  : int
 	height = _16;
-	//const %17 = 11111111b : byte
-	_17 = 0b11111111;
+	//const %17 = 00100000b : byte
+	_17 = 0b00100000;
 	//mul %18 = %3, %4 : int
 	_18=width*height;
 	//arraygen %19 = [17; 18] : byte[]
@@ -442,16 +442,16 @@ Image* sobelEdgeDetection(Image* input, _DECL_DEALLOC_PARAM(input)){
 			_55 = 128;
 			//ifle %13, %55 goto blklab8 : int
 			if(t_g<=_55){goto blklab8;}
-			//const %56 = 11111111b : byte
-			_56 = 0b11111111;
+			//const %56 = 00100000b : byte
+			_56 = 0b00100000;
 			//update %5[%10] = %56 : byte[] -> byte[]
 			newPixels[pos] = _56;
 			//goto blklab9
 			goto blklab9;
 //.blklab8
 blklab8:;
-			//const %57 = 00000000b : byte
-			_57 = 0b00000000;
+			//const %57 = 01100010b : byte
+			_57 = 0b01100010;
 			//update %5[%10] = %57 : byte[] -> byte[]
 			newPixels[pos] = _57;
 //.blklab9
@@ -576,16 +576,16 @@ void print_image(FILE* sys, Image* im, _DECL_DEALLOC_PARAM(im)){
 			pos = _14;
 			//indexof %15 = %2, %7 : byte[]
 			_15=pixels[pos];
-			//const %16 = 11111111b : byte
-			_16 = 0b11111111;
+			//const %16 = 00100000b : byte
+			_16 = 0b00100000;
 			//ifne %15, %16 goto blklab14 : byte
 			if(_15!=_16){goto blklab14;}
 			//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %18 = %17 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//const %19 = [119] : int[]
+			//const %19 = [32] : int[]
 			_DEALLOC(_19);
 			_NEW_1DARRAY_int64_t(_19, 1, 0);
-			_19[0] = 119; 
+			_19[0] = 32; 
 			_ADD_DEALLOC(_19);
 			//indirectinvoke () = %18 (%19) : method(int[])->()
 			{
@@ -672,103 +672,111 @@ int main(int argc, char** args){
 	_DECL_DEALLOC(input);
 	Image* output;
 	_DECL_DEALLOC(output);
-	int64_t _7 = 0;
+	FILE* w;
 	int64_t _8 = 0;
 	int64_t _9 = 0;
-	BYTE _10;
-	_DECL_1DARRAY_BYTE(_11);
-	_DECL_DEALLOC(_11);
-	BYTE _12;
-	int64_t _13 = 0;
-	BYTE _14;
-	int64_t _15 = 0;
+	int64_t _10 = 0;
+	BYTE _11;
+	_DECL_1DARRAY_BYTE(_12);
+	_DECL_DEALLOC(_12);
+	BYTE _13;
+	int64_t _14 = 0;
+	BYTE _15;
 	int64_t _16 = 0;
 	int64_t _17 = 0;
 	int64_t _18 = 0;
-	Image* _19;
-	_DECL_DEALLOC(_19);
+	int64_t _19 = 0;
 	Image* _20;
 	_DECL_DEALLOC(_20);
-	void* _21;
-	_DECL_1DARRAY(_23);
-	_DECL_DEALLOC(_23);
-	void* _24;
-	_DECL_1DARRAY(_26);
-	_DECL_DEALLOC(_26);
-	//const %7 = 8 : int
-	_7 = 8;
-	//assign %1 = %7  : int
-	width = _7;
+	Image* _21;
+	_DECL_DEALLOC(_21);
+	void* _22;
+	_DECL_1DARRAY(_24);
+	_DECL_DEALLOC(_24);
+	void* _25;
+	_DECL_1DARRAY(_27);
+	_DECL_DEALLOC(_27);
+	void* _28;
+	_DECL_DEALLOC(_28);
+	_DECL_1DARRAY(_29);
+	_DECL_DEALLOC(_29);
+	int64_t _30 = 0;
+	_DECL_1DARRAY_BYTE(_32);
+	_DECL_DEALLOC(_32);
 	//const %8 = 8 : int
 	_8 = 8;
-	//assign %2 = %8  : int
-	height = _8;
-	//mul %9 = %1, %2 : int
-	_9=width*height;
-	//assign %3 = %9  : int
-	size = _9;
-	//const %10 = 11111111b : byte
-	_10 = 0b11111111;
-	//arraygen %11 = [10; 3] : byte[]
-	_DEALLOC(_11);
-	_NEW_1DARRAY_BYTE(_11, size, _10);
-	_ADD_DEALLOC(_11);
-	//assign %4 = %11  : byte[]
+	//assign %1 = %8  : int
+	width = _8;
+	//const %9 = 8 : int
+	_9 = 8;
+	//assign %2 = %9  : int
+	height = _9;
+	//mul %10 = %1, %2 : int
+	_10=width*height;
+	//assign %3 = %10  : int
+	size = _10;
+	//const %11 = 00100000b : byte
+	_11 = 0b00100000;
+	//arraygen %12 = [11; 3] : byte[]
+	_DEALLOC(_12);
+	_NEW_1DARRAY_BYTE(_12, size, _11);
+	_ADD_DEALLOC(_12);
+	//assign %4 = %12  : byte[]
 	_DEALLOC(pixels);
-	_COPY_1DARRAY_BYTE(pixels, _11);
+	_COPY_1DARRAY_BYTE(pixels, _12);
 	_ADD_DEALLOC(pixels);
-	//const %12 = 00000000b : byte
-	_12 = 0b00000000;
-	//const %13 = 0 : int
-	_13 = 0;
-	//update %4[%13] = %12 : byte[] -> byte[]
-	pixels[_13] = _12;
-	//const %14 = 00000000b : byte
-	_14 = 0b00000000;
-	//const %15 = 4 : int
-	_15 = 4;
-	//mul %16 = %15, %1 : int
-	_16=_15*width;
-	//const %17 = 3 : int
-	_17 = 3;
-	//add %18 = %16, %17 : int
-	_18=_16+_17;
-	//update %4[%18] = %14 : byte[] -> byte[]
-	pixels[_18] = _14;
-	//invoke (%19) = (%1, %2, %4) SobelEdge2:image : function(int,int,byte[])->(SobelEdge2:Image)
+	//const %13 = 01100010b : byte
+	_13 = 0b01100010;
+	//const %14 = 0 : int
+	_14 = 0;
+	//update %4[%14] = %13 : byte[] -> byte[]
+	pixels[_14] = _13;
+	//const %15 = 01100010b : byte
+	_15 = 0b01100010;
+	//const %16 = 4 : int
+	_16 = 4;
+	//mul %17 = %16, %1 : int
+	_17=_16*width;
+	//const %18 = 3 : int
+	_18 = 3;
+	//add %19 = %17, %18 : int
+	_19=_17+_18;
+	//update %4[%19] = %15 : byte[] -> byte[]
+	pixels[_19] = _15;
+	//invoke (%20) = (%1, %2, %4) SobelEdge2:image : function(int,int,byte[])->(SobelEdge2:Image)
 	{
 		void* pixels_tmp;
-		_DEALLOC_STRUCT(_19, Image);
-		_19 = image(width, height, _COPY_1DARRAY_PARAM_BYTE(pixels), true);
-		_CALLEE_DEALLOC(pixels, "false-false-false" , "image");
-		_ADD_DEALLOC(_19);
-	}
-	//assign %5 = %19  : {int height,byte[] pixels,int width}
-	_DEALLOC_STRUCT(input, Image);
-	input = copy_Image(_19);
-	_ADD_DEALLOC(input);
-	//invoke (%20) = (%5) SobelEdge2:sobelEdgeDetection : function(SobelEdge2:Image)->(SobelEdge2:Image)
-	{
-		void* input_tmp;
 		_DEALLOC_STRUCT(_20, Image);
-		_20 = sobelEdgeDetection(_COPY_STRUCT_PARAM(input, Image), true);
-		_CALLEE_DEALLOC(input, "false-false-true" , "sobelEdgeDetection");
+		_20 = image(width, height, _COPY_1DARRAY_PARAM_BYTE(pixels), true);
+		_CALLEE_DEALLOC(pixels, "false-false-false" , "image");
 		_ADD_DEALLOC(_20);
 	}
-	//assign %6 = %20  : {int height,byte[] pixels,int width}
-	_DEALLOC_STRUCT(output, Image);
-	output = copy_Image(_20);
-	_ADD_DEALLOC(output);
-	//fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %22 = %21 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %23 = [73,110,112,117,116,32,73,109,97,103,101,58] : int[]
-	_DEALLOC(_23);
-	_NEW_1DARRAY_int64_t(_23, 12, 0);
-	_23[0] = 73; _23[1] = 110; _23[2] = 112; _23[3] = 117; _23[4] = 116; _23[5] = 32; _23[6] = 73; _23[7] = 109; _23[8] = 97; _23[9] = 103; _23[10] = 101; _23[11] = 58; 
-	_ADD_DEALLOC(_23);
-	//indirectinvoke () = %22 (%23) : method(int[])->()
+	//assign %5 = %20  : {int height,byte[] pixels,int width}
+	_DEALLOC_STRUCT(input, Image);
+	input = copy_Image(_20);
+	_ADD_DEALLOC(input);
+	//invoke (%21) = (%5) SobelEdge2:sobelEdgeDetection : function(SobelEdge2:Image)->(SobelEdge2:Image)
 	{
-		println_s(_23, _23_size);
+		void* input_tmp;
+		_DEALLOC_STRUCT(_21, Image);
+		_21 = sobelEdgeDetection(_COPY_STRUCT_PARAM(input, Image), true);
+		_CALLEE_DEALLOC(input, "false-false-true" , "sobelEdgeDetection");
+		_ADD_DEALLOC(_21);
+	}
+	//assign %6 = %21  : {int height,byte[] pixels,int width}
+	_DEALLOC_STRUCT(output, Image);
+	output = copy_Image(_21);
+	_ADD_DEALLOC(output);
+	//fieldload %22 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %23 = %22 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %24 = [73,110,112,117,116,32,73,109,97,103,101,58] : int[]
+	_DEALLOC(_24);
+	_NEW_1DARRAY_int64_t(_24, 12, 0);
+	_24[0] = 73; _24[1] = 110; _24[2] = 112; _24[3] = 117; _24[4] = 116; _24[5] = 32; _24[6] = 73; _24[7] = 109; _24[8] = 97; _24[9] = 103; _24[10] = 101; _24[11] = 58; 
+	_ADD_DEALLOC(_24);
+	//indirectinvoke () = %23 (%24) : method(int[])->()
+	{
+		println_s(_24, _24_size);
 	}
 	//invoke () = (%0, %5) SobelEdge2:print_image : method(whiley/lang/System:Console,SobelEdge2:Image)->()
 	{
@@ -776,32 +784,61 @@ int main(int argc, char** args){
 		print_image(stdout, _COPY_STRUCT_PARAM(input, Image), true);
 		_CALLEE_DEALLOC(input, "false-false-false" , "print_image");
 	}
-	//fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %25 = %24 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %26 = [83,111,98,101,108,32,69,100,103,101,32,68,101,116,101,99,116,105,111,110,58] : int[]
-	_DEALLOC(_26);
-	_NEW_1DARRAY_int64_t(_26, 21, 0);
-	_26[0] = 83; _26[1] = 111; _26[2] = 98; _26[3] = 101; _26[4] = 108; _26[5] = 32; _26[6] = 69; _26[7] = 100; _26[8] = 103; _26[9] = 101; _26[10] = 32; _26[11] = 68; _26[12] = 101; _26[13] = 116; _26[14] = 101; _26[15] = 99; _26[16] = 116; _26[17] = 105; _26[18] = 111; _26[19] = 110; _26[20] = 58; 
-	_ADD_DEALLOC(_26);
-	//indirectinvoke () = %25 (%26) : method(int[])->()
+	//fieldload %25 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %26 = %25 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %27 = [83,111,98,101,108,32,69,100,103,101,32,68,101,116,101,99,116,105,111,110,58] : int[]
+	_DEALLOC(_27);
+	_NEW_1DARRAY_int64_t(_27, 21, 0);
+	_27[0] = 83; _27[1] = 111; _27[2] = 98; _27[3] = 101; _27[4] = 108; _27[5] = 32; _27[6] = 69; _27[7] = 100; _27[8] = 103; _27[9] = 101; _27[10] = 32; _27[11] = 68; _27[12] = 101; _27[13] = 116; _27[14] = 101; _27[15] = 99; _27[16] = 116; _27[17] = 105; _27[18] = 111; _27[19] = 110; _27[20] = 58; 
+	_ADD_DEALLOC(_27);
+	//indirectinvoke () = %26 (%27) : method(int[])->()
 	{
-		println_s(_26, _26_size);
+		println_s(_27, _27_size);
 	}
 	//invoke () = (%0, %6) SobelEdge2:print_image : method(whiley/lang/System:Console,SobelEdge2:Image)->()
 	{
 		void* output_tmp;
 		print_image(stdout, _COPY_STRUCT_PARAM(output, Image), true);
-		_CALLEE_DEALLOC(output, "false-false-false" , "print_image");
+		_CALLEE_DEALLOC(output, "false-false-true" , "print_image");
+	}
+	//const %29 = [111,117,116,112,117,116,46,116,120,116] : int[]
+	_DEALLOC(_29);
+	_NEW_1DARRAY_int64_t(_29, 10, 0);
+	_29[0] = 111; _29[1] = 117; _29[2] = 116; _29[3] = 112; _29[4] = 117; _29[5] = 116; _29[6] = 46; _29[7] = 116; _29[8] = 120; _29[9] = 116; 
+	_ADD_DEALLOC(_29);
+	//invoke (%28) = (%29) whiley/io/File:Writer : method(whiley/lang/ASCII:string)->(whiley/io/File:Writer)
+	{
+		_28 = Writer(_29, _29_size);
+	}
+	//assign %7 = %28  : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
+	w = _28;
+	//fieldload %31 = %7 write : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
+	//fieldload %32 = %6 pixels : {int height,byte[] pixels,int width}
+	_DEALLOC(_32);
+	_UPDATE_1DARRAY(_32, output->pixels);
+	_REMOVE_DEALLOC(_32);
+	//indirectinvoke (%30) = %31 (%32) : method(byte[])->(int)
+	{
+		writeAll(w, _32, _32_size);
+	}
+	//fieldload %33 = %7 close : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
+	//indirectinvoke () = %33 () : method()->()
+	{
+		fclose(w);
+		w = NULL;
 	}
 	//return
 	_DEALLOC(pixels);
 	_DEALLOC_STRUCT(input, Image);
 	_DEALLOC_STRUCT(output, Image);
-	_DEALLOC(_11);
-	_DEALLOC_STRUCT(_19, Image);
+	if(w != NULL){fclose(w); w = NULL;}
+	_DEALLOC(_12);
 	_DEALLOC_STRUCT(_20, Image);
-	_DEALLOC(_23);
-	_DEALLOC(_26);
+	_DEALLOC_STRUCT(_21, Image);
+	_DEALLOC(_24);
+	_DEALLOC(_27);
+	_DEALLOC(_29);
+	_DEALLOC(_32);
 	exit(0);
 }
 

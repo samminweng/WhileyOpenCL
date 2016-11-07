@@ -1,9 +1,8 @@
 #include "Util.h"
-#define WHITE 01110111b
+#define SPACE 00100000b
 #define BLACK 01100010b
 #define NEWLINE 00001010b
 #define EOF 00000000b
-#define SPACE 00100000b
 typedef struct{
 	_DECL_1DARRAY_MEMBER_BYTE(pixels);
 	int64_t width;

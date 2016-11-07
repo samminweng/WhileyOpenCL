@@ -6,11 +6,11 @@ import whiley.lang.Math
 // with additional 'image' structure and write output as a 'output.in' file for verification
 // reference: https://en.wikipedia.org/wiki/Sobel_operator
 // Define Colour value (https://mothereff.in/binary-ascii)
-constant WHITE is 01110111b // ASCII code of 'w'
+constant SPACE is 00100000b // ASCII code of space (' ') 
 constant BLACK is 01100010b // ASCII code of 'b' 
 constant NEWLINE is 00001010b // ASCII code of 'newline'
 constant EOF is 0b // End of file
-constant SPACE is 00100000b
+
 
 // Define 'Image' class
 type Image is ({
@@ -105,7 +105,7 @@ method write_image(System.Console sys, Image im):
 	int height = im.height
 	int size = width*height
 	// Write output to a file
-	File.Writer w = File.Writer("output.in")
+	File.Writer w = File.Writer("output.txt")
 	w.write(pixels)
 	w.close()
 

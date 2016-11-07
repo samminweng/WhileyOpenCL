@@ -1,11 +1,12 @@
+import * from whiley.io.File
+import * from whiley.lang.System
 import whiley.lang.*
 import whiley.lang.Math
 // This example code illustrates 'cross-edge' sobel edge detection
 // reference: https://en.wikipedia.org/wiki/Sobel_operator
-
 // Define Colour value
-constant WHITE is 11111111b
-constant BLACK is 0b
+constant SPACE is 00100000b // ASCII code of space (' ') 
+constant BLACK is 01100010b // ASCII code of 'b' 
 
 // ========================================================
 // Perform image convolution
@@ -38,7 +39,7 @@ function convolution(byte[] pixels, int width, int height, int xCenter, int yCen
 function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
 	int size = width * height
 	// The output image of sobel edge detection
-	byte[] newPixels = [WHITE;size]
+	byte[] newPixels = [SPACE;size]
 	// vertical and horizontal sobel filter (3x3 kernel)
 	int[] v_sobel = [-1,0,1,-2,0,2,-1,0,1]
 	int[] h_sobel = [1,2,1,0,0,0,-1,-2,-1]
@@ -56,8 +57,8 @@ function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
 			int t_g = Math.abs(v_g) + Math.abs(h_g)
 			// Edge threshold (128) Note that large thresholds generate few edges
 			if t_g > 128:
-				// Color the edge as white 
-				newPixels[pos] = WHITE
+				// Color the edge as a space
+				newPixels[pos] = SPACE
 			else:
 				// Color other pixels as black
 				newPixels[pos] = BLACK
@@ -75,8 +76,8 @@ method printImage(System.Console sys, byte[] pixels, int width, int height):
 		while x<width:
 			int pos = y*width + x
 			// Print out each pixel value
-			if pixels[pos] == WHITE:
-				sys.out.print_s("w")
+			if pixels[pos] == SPACE:
+				sys.out.print_s(" ")
 			else:
 				sys.out.print_s("b")
 			sys.out.print_s(" ")
@@ -90,7 +91,7 @@ method main(System.Console sys):
 	int height = 8
 	int size = width * height
 	// An image of 8 x 8 white pixels 
-	byte[] pixels = [WHITE;size]
+	byte[] pixels = [SPACE;size]
 	// Place a black pixel at (0,0) 
 	pixels[0] = BLACK // (0,0)
 	// Place a black pixel 
@@ -99,19 +100,22 @@ method main(System.Console sys):
 	printImage(sys, pixels, width, height)
 	sys.out.println_s("Sobel Edge Detection:")
 	printImage(sys, newPixels, width, height)
+	// Write output to a file
+	File.Writer w = File.Writer("output.txt")
+	w.write(newPixels)
+	w.close()
 	// A black pixel is at (0,0)
 	assert newPixels[0] == BLACK  // (0,0)
 	// The pixels at left-top corner are white
-	assert newPixels[1] == WHITE // (1,0)
-	assert newPixels[width] == WHITE // (0,1)
-	assert newPixels[width+1] == WHITE // (1,1)
+	assert newPixels[1] == SPACE // (1,0)
+	assert newPixels[width] == SPACE // (0,1)
+	assert newPixels[width+1] == SPACE // (1,1)
 	// The pixels at left-bottom corner are white, due to wrapping pixels
-	assert newPixels[7*width] == WHITE // (0,7)
-	assert newPixels[7*width+1] == WHITE // (1,7)
+	assert newPixels[7*width] == SPACE // (0,7)
+	assert newPixels[7*width+1] == SPACE // (1,7)
 	// The pixels at right-top corner are white
-	assert newPixels[7] == WHITE // (7,0)
-	assert newPixels[width+7] == WHITE // (7,1)
+	assert newPixels[7] == SPACE // (7,0)
+	assert newPixels[width+7] == SPACE // (7,1)
 	// The pixels at right-bottom corner are white
-	assert newPixels[7*width+7]  == WHITE // (7,7)
-
+	assert newPixels[7*width+7]  == SPACE // (7,7)
 
