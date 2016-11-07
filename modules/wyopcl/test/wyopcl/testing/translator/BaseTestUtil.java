@@ -28,6 +28,8 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import org.apache.maven.artifact.ant.shaded.FileUtils;
+
 import wyc.WycMain;
 import wyc.util.WycBuildTask;
 import wyopcl.WyopclMain;
@@ -297,12 +299,16 @@ public final class BaseTestUtil {
 	public void verifyOutput(String testcase, Path sourceDir, String codegen){
 		if(testcase.contains("SobelEdge")){
 			// The output file of naive code
-			Path naiveDir = Paths.get(sourceDir + File.separator + testcase + File.separator
+			File naiveOutput = new File(sourceDir + File.separator + testcase + File.separator
 					+ "naive" + File.separator + "output.txt");
 			// The new output file  
-			Path codegenDir = Paths.get(sourceDir + File.separator + testcase + File.separator
+			File codegenOutput = new File(sourceDir + File.separator + testcase + File.separator
 					+ codegen + File.separator + "output.txt");
-			
+			try {
+				FileUtils.contentEquals(naiveOutput, codegenOutput);
+			} catch (IOException e) {
+				throw new RuntimeException("Outputs are not the same");
+			}
 			
 		}
 		

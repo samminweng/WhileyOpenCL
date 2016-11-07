@@ -96,18 +96,24 @@ public class CodeGenerationTestCase {
 	public void testNaiveDeallocatedCCode() {
 		System.out.print("Naive + deallocated C code \n");
 		util.execCodeGeneration(codeDir, testcase, "dealloc");
+		// Check output 
+		util.verifyOutput(testcase, codeDir, "dealloc");
 	}
 
 	@Test
 	public void testCopyCCode() {
 		System.out.print("Copy reduced C code \n");
 		util.execCodeGeneration(codeDir, testcase, "nocopy");
+		// Check output 
+		util.verifyOutput(testcase, codeDir, "nocopy");
 	}
 
 	@Test
 	public void testCopyDeallocatedCCode() {
 		System.out.print("Copy reduced + deallocated C code \n");
 		util.execCodeGeneration(codeDir, testcase, "nocopy", "dealloc");
+		// Check output 
+		util.verifyOutput(testcase, codeDir, "nocopy_dealloc");
 	}	
 	
 }
