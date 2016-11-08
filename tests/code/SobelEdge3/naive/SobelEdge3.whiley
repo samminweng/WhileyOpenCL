@@ -68,7 +68,7 @@ function sobelEdgeDetection(Image input) -> Image:
 	int width = input.width
 	int height = input.height
 	// The output image of sobel edge detection
-	byte[] newPixels = pixels
+	byte[] newPixels = [SPACE;width*height]
 	// vertical and horizontal sobel filter (3x3 kernel)
 	int[] v_sobel = [-1,0,1,-2,0,2,-1,0,1]
 	int[] h_sobel = [1,2,1,0,0,0,-1,-2,-1]
@@ -87,12 +87,11 @@ function sobelEdgeDetection(Image input) -> Image:
 				// Get total gradient
 				int t_g = Math.abs(v_g) + Math.abs(h_g)
 				// Edge threshold (128) Note that large thresholds generate few edges
-				if t_g > 128:
-					// Color the edge as white/space 
-					newPixels[pos] = SPACE
-				else:
-					// Color other pixels as black
+				if t_g <= 128:
+					// Color the pixel as black
 					newPixels[pos] = BLACK
+			else:
+				newPixels[pos] = pixels[pos]
 			y = y + 1
 		x = x + 1
 	// Store resulting 'newPixels' array with a Image structure
@@ -101,9 +100,6 @@ function sobelEdgeDetection(Image input) -> Image:
 // Output the image to a file
 method write_image(System.Console sys, Image im):
 	byte[] pixels = im.pixels
-	int width = im.width
-	int height = im.height
-	int size = width*height
 	// Write output to a file
 	File.Writer w = File.Writer("output.txt")
 	w.write(pixels)

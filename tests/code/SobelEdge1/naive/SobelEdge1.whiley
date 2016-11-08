@@ -39,7 +39,7 @@ function convolution(byte[] pixels, int width, int height, int xCenter, int yCen
 function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
 	int size = width * height
 	// The output image of sobel edge detection
-	byte[] newPixels = [SPACE;size]
+	byte[] newPixels = [SPACE;size] // A blank picture
 	// vertical and horizontal sobel filter (3x3 kernel)
 	int[] v_sobel = [-1,0,1,-2,0,2,-1,0,1]
 	int[] h_sobel = [1,2,1,0,0,0,-1,-2,-1]
@@ -56,10 +56,7 @@ function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
 			// Get total gradient
 			int t_g = Math.abs(v_g) + Math.abs(h_g)
 			// Edge threshold (128) Note that large thresholds generate few edges
-			if t_g > 128:
-				// Color the edge as a space
-				newPixels[pos] = SPACE
-			else:
+			if t_g <= 128:
 				// Color other pixels as black
 				newPixels[pos] = BLACK
 			y = y + 1

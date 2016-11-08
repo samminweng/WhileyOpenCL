@@ -283,13 +283,12 @@ Image* sobelEdgeDetection(Image* input, _DECL_DEALLOC_PARAM(input)){
 	int64_t _54 = 0;
 	int64_t _55 = 0;
 	BYTE _56;
-	BYTE _57;
+	int64_t _57 = 0;
 	int64_t _58 = 0;
 	int64_t _59 = 0;
 	int64_t _60 = 0;
-	int64_t _61 = 0;
-	Image* _62;
-	_DECL_DEALLOC(_62);
+	Image* _61;
+	_DECL_DEALLOC(_61);
 	//fieldload %14 = %0 pixels : {int height,byte[] pixels,int width}
 	_DEALLOC(_14);
 	_UPDATE_1DARRAY(_14, input->pixels);
@@ -388,7 +387,7 @@ Image* sobelEdgeDetection(Image* input, _DECL_DEALLOC_PARAM(input)){
 	_46 = 0;
 	//assign %8 = %46  : int
 	x = _46;
-	//loop (%5, %8, %9, %10, %11, %12, %13, %47, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57, %58, %59, %60, %61)
+	//loop (%5, %8, %9, %10, %11, %12, %13, %47, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57, %58, %59, %60)
 	while(true){
 		//ifge %8, %3 goto blklab4 : int
 		if(x>=width){goto blklab4;}
@@ -396,7 +395,7 @@ Image* sobelEdgeDetection(Image* input, _DECL_DEALLOC_PARAM(input)){
 		_47 = 0;
 		//assign %9 = %47  : int
 		y = _47;
-		//loop (%5, %9, %10, %11, %12, %13, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57, %58, %59)
+		//loop (%5, %9, %10, %11, %12, %13, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57, %58)
 		while(true){
 			//ifge %9, %4 goto blklab6 : int
 			if(y>=height){goto blklab6;}
@@ -440,53 +439,45 @@ Image* sobelEdgeDetection(Image* input, _DECL_DEALLOC_PARAM(input)){
 			t_g = _54;
 			//const %55 = 128 : int
 			_55 = 128;
-			//ifle %13, %55 goto blklab8 : int
-			if(t_g<=_55){goto blklab8;}
-			//const %56 = 00100000b : byte
-			_56 = 0b00100000;
+			//ifgt %13, %55 goto blklab8 : int
+			if(t_g>_55){goto blklab8;}
+			//const %56 = 01100010b : byte
+			_56 = 0b01100010;
 			//update %5[%10] = %56 : byte[] -> byte[]
 			newPixels[pos] = _56;
-			//goto blklab9
-			goto blklab9;
 //.blklab8
 blklab8:;
-			//const %57 = 01100010b : byte
-			_57 = 0b01100010;
-			//update %5[%10] = %57 : byte[] -> byte[]
-			newPixels[pos] = _57;
-//.blklab9
-blklab9:;
-			//const %58 = 1 : int
-			_58 = 1;
-			//add %59 = %9, %58 : int
-			_59=y+_58;
-			//assign %9 = %59  : int
-			y = _59;
+			//const %57 = 1 : int
+			_57 = 1;
+			//add %58 = %9, %57 : int
+			_58=y+_57;
+			//assign %9 = %58  : int
+			y = _58;
 //.blklab7
 blklab7:;
 		}
 //.blklab6
 blklab6:;
-		//const %60 = 1 : int
-		_60 = 1;
-		//add %61 = %8, %60 : int
-		_61=x+_60;
-		//assign %8 = %61  : int
-		x = _61;
+		//const %59 = 1 : int
+		_59 = 1;
+		//add %60 = %8, %59 : int
+		_60=x+_59;
+		//assign %8 = %60  : int
+		x = _60;
 //.blklab5
 blklab5:;
 	}
 //.blklab4
 blklab4:;
-	//invoke (%62) = (%3, %4, %5) SobelEdge2:image : function(int,int,byte[])->(SobelEdge2:Image)
+	//invoke (%61) = (%3, %4, %5) SobelEdge2:image : function(int,int,byte[])->(SobelEdge2:Image)
 	{
 		void* newPixels_tmp;
-		_DEALLOC_STRUCT(_62, Image);
-		_62 = image(width, height, _COPY_1DARRAY_PARAM_BYTE(newPixels), true);
+		_DEALLOC_STRUCT(_61, Image);
+		_61 = image(width, height, _COPY_1DARRAY_PARAM_BYTE(newPixels), true);
 		_CALLEE_DEALLOC(newPixels, "false-false-false" , "image");
-		_ADD_DEALLOC(_62);
+		_ADD_DEALLOC(_61);
 	}
-	//return %62
+	//return %61
 	_DEALLOC_STRUCT(input, Image);
 	_DEALLOC_STRUCT(_1, Image);
 	_DEALLOC(pixels);
@@ -497,7 +488,7 @@ blklab4:;
 	_DEALLOC(_19);
 	_DEALLOC(_32);
 	_DEALLOC(_45);
-	return _62;
+	return _61;
 	//return
 }
 
@@ -558,16 +549,16 @@ void print_image(FILE* sys, Image* im, _DECL_DEALLOC_PARAM(im)){
 	y = _11;
 	//loop (%5, %6, %7, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32)
 	while(true){
-		//ifge %5, %4 goto blklab10 : int
-		if(y>=height){goto blklab10;}
+		//ifge %5, %4 goto blklab9 : int
+		if(y>=height){goto blklab9;}
 		//const %12 = 0 : int
 		_12 = 0;
 		//assign %6 = %12  : int
 		x = _12;
 		//loop (%6, %7, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27)
 		while(true){
-			//ifge %6, %3 goto blklab12 : int
-			if(x>=width){goto blklab12;}
+			//ifge %6, %3 goto blklab11 : int
+			if(x>=width){goto blklab11;}
 			//mul %13 = %5, %3 : int
 			_13=y*width;
 			//add %14 = %13, %6 : int
@@ -578,8 +569,8 @@ void print_image(FILE* sys, Image* im, _DECL_DEALLOC_PARAM(im)){
 			_15=pixels[pos];
 			//const %16 = 00100000b : byte
 			_16 = 0b00100000;
-			//ifne %15, %16 goto blklab14 : byte
-			if(_15!=_16){goto blklab14;}
+			//ifne %15, %16 goto blklab13 : byte
+			if(_15!=_16){goto blklab13;}
 			//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %18 = %17 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %19 = [32] : int[]
@@ -591,10 +582,10 @@ void print_image(FILE* sys, Image* im, _DECL_DEALLOC_PARAM(im)){
 			{
 				printf_s(_1DARRAY_PARAM(_19));
 			}
-			//goto blklab15
-			goto blklab15;
-//.blklab14
-blklab14:;
+			//goto blklab14
+			goto blklab14;
+//.blklab13
+blklab13:;
 			//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %21 = %20 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %22 = [98] : int[]
@@ -606,8 +597,8 @@ blklab14:;
 			{
 				printf_s(_1DARRAY_PARAM(_22));
 			}
-//.blklab15
-blklab15:;
+//.blklab14
+blklab14:;
 			//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %24 = %23 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %25 = [32] : int[]
@@ -625,11 +616,11 @@ blklab15:;
 			_27=x+_26;
 			//assign %6 = %27  : int
 			x = _27;
-//.blklab13
-blklab13:;
-		}
 //.blklab12
 blklab12:;
+		}
+//.blklab11
+blklab11:;
 		//const %28 = 1 : int
 		_28 = 1;
 		//add %29 = %5, %28 : int
@@ -646,11 +637,11 @@ blklab12:;
 		{
 			println_s(_32, _32_size);
 		}
-//.blklab11
-blklab11:;
-	}
 //.blklab10
 blklab10:;
+	}
+//.blklab9
+blklab9:;
 	//return
 	_DEALLOC_STRUCT(im, Image);
 	_DEALLOC(pixels);

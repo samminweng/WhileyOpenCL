@@ -193,11 +193,10 @@ BYTE* sobelEdgeDetection(BYTE* pixels, size_t pixels_size, int64_t width, int64_
 	int64_t _51 = 0;
 	int64_t _52 = 0;
 	BYTE _53;
-	BYTE _54;
+	int64_t _54 = 0;
 	int64_t _55 = 0;
 	int64_t _56 = 0;
 	int64_t _57 = 0;
-	int64_t _58 = 0;
 	//mul %14 = %1, %2 : int
 	_14=width*height;
 	//assign %4 = %14  : int
@@ -270,7 +269,7 @@ BYTE* sobelEdgeDetection(BYTE* pixels, size_t pixels_size, int64_t width, int64_
 	_43 = 0;
 	//assign %8 = %43  : int
 	x = _43;
-	//loop (%5, %8, %9, %10, %11, %12, %13, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57, %58)
+	//loop (%5, %8, %9, %10, %11, %12, %13, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57)
 	while(true){
 		//ifge %8, %1 goto blklab4 : int
 		if(x>=width){goto blklab4;}
@@ -278,7 +277,7 @@ BYTE* sobelEdgeDetection(BYTE* pixels, size_t pixels_size, int64_t width, int64_
 		_44 = 0;
 		//assign %9 = %44  : int
 		y = _44;
-		//loop (%5, %9, %10, %11, %12, %13, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54, %55, %56)
+		//loop (%5, %9, %10, %11, %12, %13, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54, %55)
 		while(true){
 			//ifge %9, %2 goto blklab6 : int
 			if(y>=height){goto blklab6;}
@@ -314,39 +313,31 @@ BYTE* sobelEdgeDetection(BYTE* pixels, size_t pixels_size, int64_t width, int64_
 			t_g = _51;
 			//const %52 = 128 : int
 			_52 = 128;
-			//ifle %13, %52 goto blklab8 : int
-			if(t_g<=_52){goto blklab8;}
-			//const %53 = 00100000b : byte
-			_53 = 0b00100000;
+			//ifgt %13, %52 goto blklab8 : int
+			if(t_g>_52){goto blklab8;}
+			//const %53 = 01100010b : byte
+			_53 = 0b01100010;
 			//update %5[%10] = %53 : byte[] -> byte[]
 			newPixels[pos] = _53;
-			//goto blklab9
-			goto blklab9;
 //.blklab8
 blklab8:;
-			//const %54 = 01100010b : byte
-			_54 = 0b01100010;
-			//update %5[%10] = %54 : byte[] -> byte[]
-			newPixels[pos] = _54;
-//.blklab9
-blklab9:;
-			//const %55 = 1 : int
-			_55 = 1;
-			//add %56 = %9, %55 : int
-			_56=y+_55;
-			//assign %9 = %56  : int
-			y = _56;
+			//const %54 = 1 : int
+			_54 = 1;
+			//add %55 = %9, %54 : int
+			_55=y+_54;
+			//assign %9 = %55  : int
+			y = _55;
 //.blklab7
 blklab7:;
 		}
 //.blklab6
 blklab6:;
-		//const %57 = 1 : int
-		_57 = 1;
-		//add %58 = %8, %57 : int
-		_58=x+_57;
-		//assign %8 = %58  : int
-		x = _58;
+		//const %56 = 1 : int
+		_56 = 1;
+		//add %57 = %8, %56 : int
+		_57=x+_56;
+		//assign %8 = %57  : int
+		x = _57;
 //.blklab5
 blklab5:;
 	}
@@ -387,16 +378,16 @@ void printImage(FILE* sys, BYTE* pixels, size_t pixels_size, int64_t width, int6
 	y = _7;
 	//loop (%4, %5, %6, %8, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28)
 	while(true){
-		//ifge %4, %3 goto blklab10 : int
-		if(y>=height){goto blklab10;}
+		//ifge %4, %3 goto blklab9 : int
+		if(y>=height){goto blklab9;}
 		//const %8 = 0 : int
 		_8 = 0;
 		//assign %5 = %8  : int
 		x = _8;
 		//loop (%5, %6, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23)
 		while(true){
-			//ifge %5, %2 goto blklab12 : int
-			if(x>=width){goto blklab12;}
+			//ifge %5, %2 goto blklab11 : int
+			if(x>=width){goto blklab11;}
 			//mul %9 = %4, %2 : int
 			_9=y*width;
 			//add %10 = %9, %5 : int
@@ -407,8 +398,8 @@ void printImage(FILE* sys, BYTE* pixels, size_t pixels_size, int64_t width, int6
 			_11=pixels[pos];
 			//const %12 = 00100000b : byte
 			_12 = 0b00100000;
-			//ifne %11, %12 goto blklab14 : byte
-			if(_11!=_12){goto blklab14;}
+			//ifne %11, %12 goto blklab13 : byte
+			if(_11!=_12){goto blklab13;}
 			//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %14 = %13 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %15 = [32] : int[]
@@ -418,10 +409,10 @@ void printImage(FILE* sys, BYTE* pixels, size_t pixels_size, int64_t width, int6
 			{
 				printf_s(_1DARRAY_PARAM(_15));
 			}
-			//goto blklab15
-			goto blklab15;
-//.blklab14
-blklab14:;
+			//goto blklab14
+			goto blklab14;
+//.blklab13
+blklab13:;
 			//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %17 = %16 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %18 = [98] : int[]
@@ -431,8 +422,8 @@ blklab14:;
 			{
 				printf_s(_1DARRAY_PARAM(_18));
 			}
-//.blklab15
-blklab15:;
+//.blklab14
+blklab14:;
 			//fieldload %19 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %20 = %19 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %21 = [32] : int[]
@@ -448,11 +439,11 @@ blklab15:;
 			_23=x+_22;
 			//assign %5 = %23  : int
 			x = _23;
-//.blklab13
-blklab13:;
-		}
 //.blklab12
 blklab12:;
+		}
+//.blklab11
+blklab11:;
 		//const %24 = 1 : int
 		_24 = 1;
 		//add %25 = %4, %24 : int
@@ -467,11 +458,11 @@ blklab12:;
 		{
 			println_s(_28, _28_size);
 		}
-//.blklab11
-blklab11:;
-	}
 //.blklab10
 blklab10:;
+	}
+//.blklab9
+blklab9:;
 	//return
 	return;
 }
@@ -617,13 +608,13 @@ int main(int argc, char** args){
 		_27=newPixels[_26];
 		//const %28 = 01100010b : byte
 		_28 = 0b01100010;
-		//ifeq %27, %28 goto blklab16 : byte
-		if(_27==_28){goto blklab16;}
+		//ifeq %27, %28 goto blklab15 : byte
+		if(_27==_28){goto blklab15;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-//.blklab16
-blklab16:;
+//.blklab15
+blklab15:;
 	//assert
 	}
 	//assert
@@ -634,13 +625,13 @@ blklab16:;
 		_30=newPixels[_29];
 		//const %31 = 00100000b : byte
 		_31 = 0b00100000;
-		//ifeq %30, %31 goto blklab17 : byte
-		if(_30==_31){goto blklab17;}
+		//ifeq %30, %31 goto blklab16 : byte
+		if(_30==_31){goto blklab16;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-//.blklab17
-blklab17:;
+//.blklab16
+blklab16:;
 	//assert
 	}
 	//assert
@@ -649,13 +640,13 @@ blklab17:;
 		_32=newPixels[width];
 		//const %33 = 00100000b : byte
 		_33 = 0b00100000;
-		//ifeq %32, %33 goto blklab18 : byte
-		if(_32==_33){goto blklab18;}
+		//ifeq %32, %33 goto blklab17 : byte
+		if(_32==_33){goto blklab17;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-//.blklab18
-blklab18:;
+//.blklab17
+blklab17:;
 	//assert
 	}
 	//assert
@@ -668,13 +659,13 @@ blklab18:;
 		_36=newPixels[_35];
 		//const %37 = 00100000b : byte
 		_37 = 0b00100000;
-		//ifeq %36, %37 goto blklab19 : byte
-		if(_36==_37){goto blklab19;}
+		//ifeq %36, %37 goto blklab18 : byte
+		if(_36==_37){goto blklab18;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-//.blklab19
-blklab19:;
+//.blklab18
+blklab18:;
 	//assert
 	}
 	//assert
@@ -687,13 +678,13 @@ blklab19:;
 		_40=newPixels[_39];
 		//const %41 = 00100000b : byte
 		_41 = 0b00100000;
-		//ifeq %40, %41 goto blklab20 : byte
-		if(_40==_41){goto blklab20;}
+		//ifeq %40, %41 goto blklab19 : byte
+		if(_40==_41){goto blklab19;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-//.blklab20
-blklab20:;
+//.blklab19
+blklab19:;
 	//assert
 	}
 	//assert
@@ -710,13 +701,13 @@ blklab20:;
 		_46=newPixels[_45];
 		//const %47 = 00100000b : byte
 		_47 = 0b00100000;
-		//ifeq %46, %47 goto blklab21 : byte
-		if(_46==_47){goto blklab21;}
+		//ifeq %46, %47 goto blklab20 : byte
+		if(_46==_47){goto blklab20;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-//.blklab21
-blklab21:;
+//.blklab20
+blklab20:;
 	//assert
 	}
 	//assert
@@ -727,13 +718,13 @@ blklab21:;
 		_49=newPixels[_48];
 		//const %50 = 00100000b : byte
 		_50 = 0b00100000;
-		//ifeq %49, %50 goto blklab22 : byte
-		if(_49==_50){goto blklab22;}
+		//ifeq %49, %50 goto blklab21 : byte
+		if(_49==_50){goto blklab21;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-//.blklab22
-blklab22:;
+//.blklab21
+blklab21:;
 	//assert
 	}
 	//assert
@@ -746,13 +737,13 @@ blklab22:;
 		_53=newPixels[_52];
 		//const %54 = 00100000b : byte
 		_54 = 0b00100000;
-		//ifeq %53, %54 goto blklab23 : byte
-		if(_53==_54){goto blklab23;}
+		//ifeq %53, %54 goto blklab22 : byte
+		if(_53==_54){goto blklab22;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-//.blklab23
-blklab23:;
+//.blklab22
+blklab22:;
 	//assert
 	}
 	//assert
@@ -769,13 +760,13 @@ blklab23:;
 		_59=newPixels[_58];
 		//const %60 = 00100000b : byte
 		_60 = 0b00100000;
-		//ifeq %59, %60 goto blklab24 : byte
-		if(_59==_60){goto blklab24;}
+		//ifeq %59, %60 goto blklab23 : byte
+		if(_59==_60){goto blklab23;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-//.blklab24
-blklab24:;
+//.blklab23
+blklab23:;
 	//assert
 	}
 	//return

@@ -84,10 +84,7 @@ function sobelEdgeDetection(Image input) -> Image:
 			// Get total gradient
 			int t_g = Math.abs(v_g) + Math.abs(h_g)
 			// Edge threshold (128) Note that large thresholds generate few edges
-			if t_g > 128:
-				// Color the edge as white 
-				newPixels[pos] = SPACE
-			else:
+			if t_g <= 128:
 				// Color other pixels as black
 				newPixels[pos] = BLACK
 			y = y + 1
