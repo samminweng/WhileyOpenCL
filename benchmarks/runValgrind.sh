@@ -63,11 +63,11 @@ generateCode(){
 			### Translate Whiley program into naive + dealloc C code 
 			$wyopcl -code -dealloc $testcase"_"$program.whiley
 			;;
-		"copyreduced")
+		"nocopy")
 			## Translate Whiley programs into copy_reduced C code
 			$wyopcl -code -nocopy $testcase"_"$program.whiley
 			;;
-		"copyreduced_dealloc")
+		"nocopy_dealloc")
 			### Translate Whiley program into copy-eliminated + memory deallocated C code
 			$wyopcl -code -nocopy -dealloc $testcase"_"$program.whiley
 			;;
@@ -149,8 +149,8 @@ exec(){
 	declare -A patterns=( [LZ77]=compress )
 
 	## declare 4 kinds of code generation
-	declare -a codegens=("naive" "naive_dealloc" "copyreduced" "copyreduced_dealloc")
-	#declare -a codegens=("naive_dealloc" "copyreduced_dealloc")
+	declare -a codegens=("naive" "naive_dealloc" "nocopy" "nocopy_dealloc")
+	#declare -a codegens=("naive_dealloc" "nocopy_dealloc")
 
 
 	# ## Iterate each codegen
@@ -249,11 +249,11 @@ exec MatrixMult original 3000
 # exec CoinGame array 200
 # exec CoinGame array 300
 
-# ## Sobel Edge Detection test case
-# init SobelEdge
-# exec SobelEdge original 32
-# exec SobelEdge original 64
-# exec SobelEdge original 128
+# # ## Sobel Edge Detection test case
+init SobelEdge
+exec SobelEdge original 32
+exec SobelEdge original 64
+exec SobelEdge original 128
 
 # # ### NQueen test case
 # init NQueens

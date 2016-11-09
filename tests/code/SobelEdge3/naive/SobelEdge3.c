@@ -460,41 +460,6 @@ blklab4:;
 	//return
 }
 
-void write_image(FILE* sys, Image* im){
-	_DECL_1DARRAY_BYTE(pixels);
-	FILE* w;
-	_DECL_1DARRAY_BYTE(_4);
-	void* _5;
-	_DECL_1DARRAY(_6);
-	int64_t _7 = 0;
-	//fieldload %4 = %1 pixels : {int height,byte[] pixels,int width}
-	_UPDATE_1DARRAY(_4, im->pixels);
-	//assign %2 = %4  : byte[]
-	_COPY_1DARRAY_BYTE(pixels, _4);
-	//const %6 = [111,117,116,112,117,116,46,116,120,116] : int[]
-	_NEW_1DARRAY_int64_t(_6, 10, 0);
-	_6[0] = 111; _6[1] = 117; _6[2] = 116; _6[3] = 112; _6[4] = 117; _6[5] = 116; _6[6] = 46; _6[7] = 116; _6[8] = 120; _6[9] = 116; 
-	//invoke (%5) = (%6) whiley/io/File:Writer : method(whiley/lang/ASCII:string)->(whiley/io/File:Writer)
-	{
-		_5 = Writer(_6, _6_size);
-	}
-	//assign %3 = %5  : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
-	w = _5;
-	//fieldload %8 = %3 write : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
-	//indirectinvoke (%7) = %8 (%2) : method(byte[])->(int)
-	{
-		writeAll(w, pixels, pixels_size);
-	}
-	//fieldload %9 = %3 close : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
-	//indirectinvoke () = %9 () : method()->()
-	{
-		fclose(w);
-		w = NULL;
-	}
-	//return
-	return;
-}
-
 int main(int argc, char** args){
 	int64_t width = 0;
 	int64_t height = 0;
@@ -503,88 +468,110 @@ int main(int argc, char** args){
 	_DECL_1DARRAY_BYTE(pixels);
 	Image* input;
 	Image* output;
-	int64_t _8 = 0;
+	FILE* w;
 	int64_t _9 = 0;
 	int64_t _10 = 0;
-	void* _11;
-	_DECL_1DARRAY(_12);
-	_DECL_1DARRAY_BYTE(_13);
-	Image* _15;
+	int64_t _11 = 0;
+	void* _12;
+	_DECL_1DARRAY(_13);
+	_DECL_1DARRAY_BYTE(_14);
 	Image* _16;
-	void* _17;
-	_DECL_1DARRAY(_19);
-	_DECL_1DARRAY_BYTE(_20);
-	int64_t _21 = 0;
-	_DECL_1DARRAY_BYTE(_22);
+	Image* _17;
+	void* _18;
+	_DECL_1DARRAY(_20);
+	void* _21;
+	_DECL_1DARRAY(_22);
 	int64_t _23 = 0;
-	//const %8 = 33 : int
-	_8 = 33;
-	//assign %1 = %8  : int
-	width = _8;
-	//const %9 = 16 : int
-	_9 = 16;
-	//assign %2 = %9  : int
-	height = _9;
-	//mul %10 = %1, %2 : int
-	_10=width*height;
-	//assign %3 = %10  : int
-	size = _10;
-	//const %12 = [105,109,97,103,101,46,105,110] : int[]
-	_NEW_1DARRAY_int64_t(_12, 8, 0);
-	_12[0] = 105; _12[1] = 109; _12[2] = 97; _12[3] = 103; _12[4] = 101; _12[5] = 46; _12[6] = 105; _12[7] = 110; 
-	//invoke (%11) = (%12) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
+	_DECL_1DARRAY_BYTE(_25);
+	_DECL_1DARRAY_BYTE(_27);
+	int64_t _28 = 0;
+	_DECL_1DARRAY_BYTE(_29);
+	int64_t _30 = 0;
+	//const %9 = 33 : int
+	_9 = 33;
+	//assign %1 = %9  : int
+	width = _9;
+	//const %10 = 16 : int
+	_10 = 16;
+	//assign %2 = %10  : int
+	height = _10;
+	//mul %11 = %1, %2 : int
+	_11=width*height;
+	//assign %3 = %11  : int
+	size = _11;
+	//const %13 = [105,109,97,103,101,46,105,110] : int[]
+	_NEW_1DARRAY_int64_t(_13, 8, 0);
+	_13[0] = 105; _13[1] = 109; _13[2] = 97; _13[3] = 103; _13[4] = 101; _13[5] = 46; _13[6] = 105; _13[7] = 110; 
+	//invoke (%12) = (%13) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
 	{
-		_11 = Reader(_12, _12_size);
+		_12 = Reader(_13, _13_size);
 	}
-	//assign %4 = %11  : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
-	file = _11;
-	//fieldload %14 = %4 readAll : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
-	//indirectinvoke (%13) = %14 () : method()->(byte[])
+	//assign %4 = %12  : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
+	file = _12;
+	//fieldload %15 = %4 readAll : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
+	//indirectinvoke (%14) = %15 () : method()->(byte[])
 	{
-		_13 = readAll(file, &_13_size);
+		_14 = readAll(file, &_14_size);
 	}
-	//assign %5 = %13  : byte[]
-	_COPY_1DARRAY_BYTE(pixels, _13);
-	//invoke (%15) = (%1, %2, %5) SobelEdge3:image : function(int,int,byte[])->(SobelEdge3:Image)
+	//assign %5 = %14  : byte[]
+	_COPY_1DARRAY_BYTE(pixels, _14);
+	//invoke (%16) = (%1, %2, %5) SobelEdge3:image : function(int,int,byte[])->(SobelEdge3:Image)
 	{
 		void* pixels_tmp;
-		_15 = image(width, height, _COPY_1DARRAY_PARAM_BYTE(pixels));
+		_16 = image(width, height, _COPY_1DARRAY_PARAM_BYTE(pixels));
 	}
-	//assign %6 = %15  : {int height,byte[] pixels,int width}
-	input = copy_Image(_15);
-	//invoke (%16) = (%6) SobelEdge3:sobelEdgeDetection : function(SobelEdge3:Image)->(SobelEdge3:Image)
+	//assign %6 = %16  : {int height,byte[] pixels,int width}
+	input = copy_Image(_16);
+	//invoke (%17) = (%6) SobelEdge3:sobelEdgeDetection : function(SobelEdge3:Image)->(SobelEdge3:Image)
 	{
 		void* input_tmp;
-		_16 = sobelEdgeDetection(_COPY_STRUCT_PARAM(input, Image));
+		_17 = sobelEdgeDetection(_COPY_STRUCT_PARAM(input, Image));
 	}
-	//assign %7 = %16  : {int height,byte[] pixels,int width}
-	output = copy_Image(_16);
-	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %18 = %17 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %19 = [79,117,116,112,117,116,32,73,109,97,103,101,58] : int[]
-	_NEW_1DARRAY_int64_t(_19, 13, 0);
-	_19[0] = 79; _19[1] = 117; _19[2] = 116; _19[3] = 112; _19[4] = 117; _19[5] = 116; _19[6] = 32; _19[7] = 73; _19[8] = 109; _19[9] = 97; _19[10] = 103; _19[11] = 101; _19[12] = 58; 
-	//indirectinvoke () = %18 (%19) : method(int[])->()
+	//assign %7 = %17  : {int height,byte[] pixels,int width}
+	output = copy_Image(_17);
+	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %19 = %18 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %20 = [79,117,116,112,117,116,32,73,109,97,103,101,58] : int[]
+	_NEW_1DARRAY_int64_t(_20, 13, 0);
+	_20[0] = 79; _20[1] = 117; _20[2] = 116; _20[3] = 112; _20[4] = 117; _20[5] = 116; _20[6] = 32; _20[7] = 73; _20[8] = 109; _20[9] = 97; _20[10] = 103; _20[11] = 101; _20[12] = 58; 
+	//indirectinvoke () = %19 (%20) : method(int[])->()
 	{
-		println_s(_19, _19_size);
+		println_s(_20, _20_size);
 	}
-	//invoke () = (%0, %7) SobelEdge3:write_image : method(whiley/lang/System:Console,SobelEdge3:Image)->()
+	//const %22 = [111,117,116,112,117,116,46,116,120,116] : int[]
+	_NEW_1DARRAY_int64_t(_22, 10, 0);
+	_22[0] = 111; _22[1] = 117; _22[2] = 116; _22[3] = 112; _22[4] = 117; _22[5] = 116; _22[6] = 46; _22[7] = 116; _22[8] = 120; _22[9] = 116; 
+	//invoke (%21) = (%22) whiley/io/File:Writer : method(whiley/lang/ASCII:string)->(whiley/io/File:Writer)
 	{
-		void* output_tmp;
-		write_image(stdout, _COPY_STRUCT_PARAM(output, Image));
+		_21 = Writer(_22, _22_size);
+	}
+	//assign %8 = %21  : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
+	w = _21;
+	//fieldload %24 = %8 write : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
+	//fieldload %25 = %7 pixels : {int height,byte[] pixels,int width}
+	_UPDATE_1DARRAY(_25, output->pixels);
+	//indirectinvoke (%23) = %24 (%25) : method(byte[])->(int)
+	{
+		writeAll(w, _25, _25_size);
+	}
+	//fieldload %26 = %8 close : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
+	//indirectinvoke () = %26 () : method()->()
+	{
+		fclose(w);
+		w = NULL;
 	}
 	//assert
 	{
-		//fieldload %20 = %7 pixels : {int height,byte[] pixels,int width}
-		_UPDATE_1DARRAY(_20, output->pixels);
-		//lengthof %21 = %20 : byte[]
-		_21 = _20_size;
-		//fieldload %22 = %6 pixels : {int height,byte[] pixels,int width}
-		_UPDATE_1DARRAY(_22, input->pixels);
-		//lengthof %23 = %22 : byte[]
-		_23 = _22_size;
-		//ifeq %21, %23 goto blklab11 : int
-		if(_21==_23){goto blklab11;}
+		//fieldload %27 = %7 pixels : {int height,byte[] pixels,int width}
+		_UPDATE_1DARRAY(_27, output->pixels);
+		//lengthof %28 = %27 : byte[]
+		_28 = _27_size;
+		//fieldload %29 = %6 pixels : {int height,byte[] pixels,int width}
+		_UPDATE_1DARRAY(_29, input->pixels);
+		//lengthof %30 = %29 : byte[]
+		_30 = _29_size;
+		//ifeq %28, %30 goto blklab11 : int
+		if(_28==_30){goto blklab11;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);

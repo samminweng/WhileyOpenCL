@@ -1,31 +1,30 @@
+import * from whiley.io.File
+import * from whiley.lang.System
 import whiley.lang.*
 import whiley.lang.Math
-// This example code illustrates the sobel edge detection
+// This example code illustrates 'cross-edge' sobel edge detection
 // reference: https://en.wikipedia.org/wiki/Sobel_operator
-
 // Define Colour value
-constant WHITE is 255
-constant BLACK is 0
+constant SPACE is 00100000b // ASCII code of space (' ') 
+constant BLACK is 01100010b // ASCII code of 'b' 
 
 // ========================================================
 // Perform image convolution
 // ========================================================
-function convolution(int[] pixels, int width, int height, int xCenter, int yCenter, int[] filter) ->int:
+function convolution(byte[] pixels, int width, int height, int xCenter, int yCenter, int[] filter) ->int:
 	int sum = 0
 	int filterSize = 3
 	int filterHalf = 1
 	int filterY = 0
 	while filterY < filterSize:
-		// Wrap the position into 0..size, which can be replaced with modulo operator
-		// When size = 10 and pos = -1 => pos % size = 9
-		// When size = 10 and pos = 11 => pos % size = 1
+		//int y = wrap(yCenter+filterY - filterHalf, height)
 		int y = Math.abs((yCenter+filterY-filterHalf)%height)
 		int filterX = 0
 		while filterX < filterSize:
 			//int x = wrap(xCenter + filterX - filterHalf), width)
 			int x = Math.abs((xCenter + filterX - filterHalf)%width)
 			// Get pixel
-			int pixel = pixels[y*width+x]
+			int pixel = Byte.toUnsignedInt(pixels[y*width+x])
 			// Get filter value
 			int filterVal = filter[filterY*filterSize+filterX]
 			// pixel * filter value 
@@ -37,10 +36,10 @@ function convolution(int[] pixels, int width, int height, int xCenter, int yCent
 // ========================================================
 // Perform Sobel edge detection
 // ========================================================
-function sobelEdgeDetection(int[] pixels, int width, int height) -> int[]:
+function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
 	int size = width * height
 	// The output image of sobel edge detection
-	int[] newPixels = [WHITE;size]
+	byte[] newPixels = [SPACE;size] // A blank picture
 	// vertical and horizontal sobel filter (3x3 kernel)
 	int[] v_sobel = [-1,0,1,-2,0,2,-1,0,1]
 	int[] h_sobel = [1,2,1,0,0,0,-1,-2,-1]
@@ -57,10 +56,7 @@ function sobelEdgeDetection(int[] pixels, int width, int height) -> int[]:
 			// Get total gradient
 			int t_g = Math.abs(v_g) + Math.abs(h_g)
 			// Edge threshold (128) Note that large thresholds generate few edges
-			if t_g > 128:
-				// Color the edge as white 
-				newPixels[pos] = WHITE
-			else:
+			if t_g <= 128:
 				// Color other pixels as black
 				newPixels[pos] = BLACK
 			y = y + 1
@@ -68,25 +64,24 @@ function sobelEdgeDetection(int[] pixels, int width, int height) -> int[]:
 	return newPixels
 
 // ========================================================
-// Print 8 x 8 area of input image, to ensure the results
-// Sobel edge detection
+// Print a Image
 // ========================================================
-method printImage(System.Console sys, int[] pixels, int width, int height):
+/*method printImage(System.Console sys, byte[] pixels, int width, int height):
 	int y = 0
-	// Print 16 x 16 area 
-	while y<8:
+	while y<height:
 		int x = 0
-		while x<8:
+		while x<width:
 			int pos = y*width + x
 			// Print out each pixel value
-			if pixels[pos] == WHITE:
-				sys.out.print_s("w")
+			if pixels[pos] == SPACE:
+				sys.out.print_s(" ")
 			else:
 				sys.out.print_s("b")
 			sys.out.print_s(" ")
 			x = x + 1
 		y = y + 1
 		sys.out.println_s("")
+*/
 // Main function
 method main(System.Console sys):
 	int|null n = Int.parse(sys.args[0])
@@ -94,14 +89,13 @@ method main(System.Console sys):
 		int max = n
 		int width = max
 		int height = max
-		int size = width * height
 		// The input image is a white image of 8 x 8 pixels
 		// with a black pixel at the center 
-		int[] pixels = [WHITE;size]
+		byte[] pixels = [SPACE;width * height]
 		// Place a black pixel at (3,4) position 
 		pixels[4*width+3] = BLACK // (3,4)
-		int[] newPixels = sobelEdgeDetection(pixels, width, height)
-		sys.out.println_s("Input Image:")
-		printImage(sys, pixels, width, height)
-		sys.out.println_s("Sobel Edge Detection:")
-		printImage(sys, newPixels, width, height)
+		byte[] newPixels = sobelEdgeDetection(pixels, width, height)
+		// Write 'newPixels' as a file
+		File.Writer w = File.Writer("output.txt")
+		w.write(newPixels)
+		w.close()

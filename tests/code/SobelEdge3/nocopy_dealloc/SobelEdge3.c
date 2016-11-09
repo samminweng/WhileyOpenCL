@@ -515,56 +515,6 @@ blklab4:;
 	//return
 }
 
-void write_image(FILE* sys, Image* im, _DECL_DEALLOC_PARAM(im)){
-	_DECL_1DARRAY_BYTE(pixels);
-	_DECL_DEALLOC(pixels);
-	FILE* w;
-	_DECL_1DARRAY_BYTE(_4);
-	_DECL_DEALLOC(_4);
-	void* _5;
-	_DECL_DEALLOC(_5);
-	_DECL_1DARRAY(_6);
-	_DECL_DEALLOC(_6);
-	int64_t _7 = 0;
-	//fieldload %4 = %1 pixels : {int height,byte[] pixels,int width}
-	_DEALLOC(_4);
-	_UPDATE_1DARRAY(_4, im->pixels);
-	_REMOVE_DEALLOC(_4);
-	//assign %2 = %4  : byte[]
-	_DEALLOC(pixels);
-	_UPDATE_1DARRAY(pixels, _4);
-	_TRANSFER_DEALLOC(pixels, _4);
-	//const %6 = [111,117,116,112,117,116,46,116,120,116] : int[]
-	_DEALLOC(_6);
-	_NEW_1DARRAY_int64_t(_6, 10, 0);
-	_6[0] = 111; _6[1] = 117; _6[2] = 116; _6[3] = 112; _6[4] = 117; _6[5] = 116; _6[6] = 46; _6[7] = 116; _6[8] = 120; _6[9] = 116; 
-	_ADD_DEALLOC(_6);
-	//invoke (%5) = (%6) whiley/io/File:Writer : method(whiley/lang/ASCII:string)->(whiley/io/File:Writer)
-	{
-		_5 = Writer(_6, _6_size);
-	}
-	//assign %3 = %5  : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
-	w = _5;
-	//fieldload %8 = %3 write : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
-	//indirectinvoke (%7) = %8 (%2) : method(byte[])->(int)
-	{
-		writeAll(w, pixels, pixels_size);
-	}
-	//fieldload %9 = %3 close : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
-	//indirectinvoke () = %9 () : method()->()
-	{
-		fclose(w);
-		w = NULL;
-	}
-	//return
-	_DEALLOC_STRUCT(im, Image);
-	_DEALLOC(pixels);
-	if(w != NULL){fclose(w); w = NULL;}
-	_DEALLOC(_4);
-	_DEALLOC(_6);
-	return;
-}
-
 int main(int argc, char** args){
 	int64_t width = 0;
 	int64_t height = 0;
@@ -576,115 +526,144 @@ int main(int argc, char** args){
 	_DECL_DEALLOC(input);
 	Image* output;
 	_DECL_DEALLOC(output);
-	int64_t _8 = 0;
+	FILE* w;
 	int64_t _9 = 0;
 	int64_t _10 = 0;
-	void* _11;
-	_DECL_DEALLOC(_11);
-	_DECL_1DARRAY(_12);
+	int64_t _11 = 0;
+	void* _12;
 	_DECL_DEALLOC(_12);
-	_DECL_1DARRAY_BYTE(_13);
+	_DECL_1DARRAY(_13);
 	_DECL_DEALLOC(_13);
-	Image* _15;
-	_DECL_DEALLOC(_15);
+	_DECL_1DARRAY_BYTE(_14);
+	_DECL_DEALLOC(_14);
 	Image* _16;
 	_DECL_DEALLOC(_16);
-	void* _17;
-	_DECL_1DARRAY(_19);
-	_DECL_DEALLOC(_19);
-	_DECL_1DARRAY_BYTE(_20);
+	Image* _17;
+	_DECL_DEALLOC(_17);
+	void* _18;
+	_DECL_1DARRAY(_20);
 	_DECL_DEALLOC(_20);
-	int64_t _21 = 0;
-	_DECL_1DARRAY_BYTE(_22);
+	void* _21;
+	_DECL_DEALLOC(_21);
+	_DECL_1DARRAY(_22);
 	_DECL_DEALLOC(_22);
 	int64_t _23 = 0;
-	//const %8 = 33 : int
-	_8 = 33;
-	//assign %1 = %8  : int
-	width = _8;
-	//const %9 = 16 : int
-	_9 = 16;
-	//assign %2 = %9  : int
-	height = _9;
-	//mul %10 = %1, %2 : int
-	_10=width*height;
-	//assign %3 = %10  : int
-	size = _10;
-	//const %12 = [105,109,97,103,101,46,105,110] : int[]
-	_DEALLOC(_12);
-	_NEW_1DARRAY_int64_t(_12, 8, 0);
-	_12[0] = 105; _12[1] = 109; _12[2] = 97; _12[3] = 103; _12[4] = 101; _12[5] = 46; _12[6] = 105; _12[7] = 110; 
-	_ADD_DEALLOC(_12);
-	//invoke (%11) = (%12) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
+	_DECL_1DARRAY_BYTE(_25);
+	_DECL_DEALLOC(_25);
+	_DECL_1DARRAY_BYTE(_27);
+	_DECL_DEALLOC(_27);
+	int64_t _28 = 0;
+	_DECL_1DARRAY_BYTE(_29);
+	_DECL_DEALLOC(_29);
+	int64_t _30 = 0;
+	//const %9 = 33 : int
+	_9 = 33;
+	//assign %1 = %9  : int
+	width = _9;
+	//const %10 = 16 : int
+	_10 = 16;
+	//assign %2 = %10  : int
+	height = _10;
+	//mul %11 = %1, %2 : int
+	_11=width*height;
+	//assign %3 = %11  : int
+	size = _11;
+	//const %13 = [105,109,97,103,101,46,105,110] : int[]
+	_DEALLOC(_13);
+	_NEW_1DARRAY_int64_t(_13, 8, 0);
+	_13[0] = 105; _13[1] = 109; _13[2] = 97; _13[3] = 103; _13[4] = 101; _13[5] = 46; _13[6] = 105; _13[7] = 110; 
+	_ADD_DEALLOC(_13);
+	//invoke (%12) = (%13) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
 	{
-		_11 = Reader(_12, _12_size);
+		_12 = Reader(_13, _13_size);
 	}
-	//assign %4 = %11  : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
-	file = _11;
-	//fieldload %14 = %4 readAll : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
-	//indirectinvoke (%13) = %14 () : method()->(byte[])
+	//assign %4 = %12  : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
+	file = _12;
+	//fieldload %15 = %4 readAll : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
+	//indirectinvoke (%14) = %15 () : method()->(byte[])
 	{
-		_13 = readAll(file, &_13_size);
-		_ADD_DEALLOC(_13);
+		_14 = readAll(file, &_14_size);
+		_ADD_DEALLOC(_14);
 	}
-	//assign %5 = %13  : byte[]
+	//assign %5 = %14  : byte[]
 	_DEALLOC(pixels);
-	_UPDATE_1DARRAY(pixels, _13);
-	_TRANSFER_DEALLOC(pixels, _13);
-	//invoke (%15) = (%1, %2, %5) SobelEdge3:image : function(int,int,byte[])->(SobelEdge3:Image)
-	{
-		_DEALLOC_STRUCT(_15, Image);
-		_15 = image(width, height, _1DARRAY_PARAM(pixels), false);
-		_RESET_DEALLOC(pixels, "false-true-false" , "image");
-		_ADD_DEALLOC(_15);
-	}
-	//assign %6 = %15  : {int height,byte[] pixels,int width}
-	_DEALLOC_STRUCT(input, Image);
-	input = _15;
-	_TRANSFER_DEALLOC(input, _15);
-	//invoke (%16) = (%6) SobelEdge3:sobelEdgeDetection : function(SobelEdge3:Image)->(SobelEdge3:Image)
+	_UPDATE_1DARRAY(pixels, _14);
+	_TRANSFER_DEALLOC(pixels, _14);
+	//invoke (%16) = (%1, %2, %5) SobelEdge3:image : function(int,int,byte[])->(SobelEdge3:Image)
 	{
 		_DEALLOC_STRUCT(_16, Image);
-		_16 = sobelEdgeDetection(_STRUCT_PARAM(input), false);
-		_RETAIN_DEALLOC(input, "false-false-false" , "sobelEdgeDetection");
+		_16 = image(width, height, _1DARRAY_PARAM(pixels), false);
+		_RESET_DEALLOC(pixels, "false-true-false" , "image");
 		_ADD_DEALLOC(_16);
 	}
-	//assign %7 = %16  : {int height,byte[] pixels,int width}
-	_DEALLOC_STRUCT(output, Image);
-	output = _16;
-	_TRANSFER_DEALLOC(output, _16);
-	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %18 = %17 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %19 = [79,117,116,112,117,116,32,73,109,97,103,101,58] : int[]
-	_DEALLOC(_19);
-	_NEW_1DARRAY_int64_t(_19, 13, 0);
-	_19[0] = 79; _19[1] = 117; _19[2] = 116; _19[3] = 112; _19[4] = 117; _19[5] = 116; _19[6] = 32; _19[7] = 73; _19[8] = 109; _19[9] = 97; _19[10] = 103; _19[11] = 101; _19[12] = 58; 
-	_ADD_DEALLOC(_19);
-	//indirectinvoke () = %18 (%19) : method(int[])->()
+	//assign %6 = %16  : {int height,byte[] pixels,int width}
+	_DEALLOC_STRUCT(input, Image);
+	input = _16;
+	_TRANSFER_DEALLOC(input, _16);
+	//invoke (%17) = (%6) SobelEdge3:sobelEdgeDetection : function(SobelEdge3:Image)->(SobelEdge3:Image)
 	{
-		println_s(_19, _19_size);
+		_DEALLOC_STRUCT(_17, Image);
+		_17 = sobelEdgeDetection(_STRUCT_PARAM(input), false);
+		_RETAIN_DEALLOC(input, "false-false-false" , "sobelEdgeDetection");
+		_ADD_DEALLOC(_17);
 	}
-	//invoke () = (%0, %7) SobelEdge3:write_image : method(whiley/lang/System:Console,SobelEdge3:Image)->()
+	//assign %7 = %17  : {int height,byte[] pixels,int width}
+	_DEALLOC_STRUCT(output, Image);
+	output = _17;
+	_TRANSFER_DEALLOC(output, _17);
+	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %19 = %18 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %20 = [79,117,116,112,117,116,32,73,109,97,103,101,58] : int[]
+	_DEALLOC(_20);
+	_NEW_1DARRAY_int64_t(_20, 13, 0);
+	_20[0] = 79; _20[1] = 117; _20[2] = 116; _20[3] = 112; _20[4] = 117; _20[5] = 116; _20[6] = 32; _20[7] = 73; _20[8] = 109; _20[9] = 97; _20[10] = 103; _20[11] = 101; _20[12] = 58; 
+	_ADD_DEALLOC(_20);
+	//indirectinvoke () = %19 (%20) : method(int[])->()
 	{
-		write_image(stdout, _STRUCT_PARAM(output), false);
-		_RETAIN_DEALLOC(output, "false-false-false" , "write_image");
+		println_s(_20, _20_size);
+	}
+	//const %22 = [111,117,116,112,117,116,46,116,120,116] : int[]
+	_DEALLOC(_22);
+	_NEW_1DARRAY_int64_t(_22, 10, 0);
+	_22[0] = 111; _22[1] = 117; _22[2] = 116; _22[3] = 112; _22[4] = 117; _22[5] = 116; _22[6] = 46; _22[7] = 116; _22[8] = 120; _22[9] = 116; 
+	_ADD_DEALLOC(_22);
+	//invoke (%21) = (%22) whiley/io/File:Writer : method(whiley/lang/ASCII:string)->(whiley/io/File:Writer)
+	{
+		_21 = Writer(_22, _22_size);
+	}
+	//assign %8 = %21  : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
+	w = _21;
+	//fieldload %24 = %8 write : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
+	//fieldload %25 = %7 pixels : {int height,byte[] pixels,int width}
+	_DEALLOC(_25);
+	_UPDATE_1DARRAY(_25, output->pixels);
+	_REMOVE_DEALLOC(_25);
+	//indirectinvoke (%23) = %24 (%25) : method(byte[])->(int)
+	{
+		writeAll(w, _25, _25_size);
+	}
+	//fieldload %26 = %8 close : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
+	//indirectinvoke () = %26 () : method()->()
+	{
+		fclose(w);
+		w = NULL;
 	}
 	//assert
 	{
-		//fieldload %20 = %7 pixels : {int height,byte[] pixels,int width}
-		_DEALLOC(_20);
-		_UPDATE_1DARRAY(_20, output->pixels);
-		_REMOVE_DEALLOC(_20);
-		//lengthof %21 = %20 : byte[]
-		_21 = _20_size;
-		//fieldload %22 = %6 pixels : {int height,byte[] pixels,int width}
-		_DEALLOC(_22);
-		_UPDATE_1DARRAY(_22, input->pixels);
-		_REMOVE_DEALLOC(_22);
-		//lengthof %23 = %22 : byte[]
-		_23 = _22_size;
-		//ifeq %21, %23 goto blklab11 : int
-		if(_21==_23){goto blklab11;}
+		//fieldload %27 = %7 pixels : {int height,byte[] pixels,int width}
+		_DEALLOC(_27);
+		_UPDATE_1DARRAY(_27, output->pixels);
+		_REMOVE_DEALLOC(_27);
+		//lengthof %28 = %27 : byte[]
+		_28 = _27_size;
+		//fieldload %29 = %6 pixels : {int height,byte[] pixels,int width}
+		_DEALLOC(_29);
+		_UPDATE_1DARRAY(_29, input->pixels);
+		_REMOVE_DEALLOC(_29);
+		//lengthof %30 = %29 : byte[]
+		_30 = _29_size;
+		//ifeq %28, %30 goto blklab11 : int
+		if(_28==_30){goto blklab11;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -697,13 +676,16 @@ blklab11:;
 	_DEALLOC(pixels);
 	_DEALLOC_STRUCT(input, Image);
 	_DEALLOC_STRUCT(output, Image);
-	_DEALLOC(_12);
+	if(w != NULL){fclose(w); w = NULL;}
 	_DEALLOC(_13);
-	_DEALLOC_STRUCT(_15, Image);
+	_DEALLOC(_14);
 	_DEALLOC_STRUCT(_16, Image);
-	_DEALLOC(_19);
+	_DEALLOC_STRUCT(_17, Image);
 	_DEALLOC(_20);
 	_DEALLOC(_22);
+	_DEALLOC(_25);
+	_DEALLOC(_27);
+	_DEALLOC(_29);
 	exit(0);
 }
 

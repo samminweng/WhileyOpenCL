@@ -571,7 +571,7 @@ int main(int argc, char** args){
 	_7_size = _5_size_size;
 	//invoke (%4) = (%7) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
 	{
-		_4 = Reader(_7,  _7_size);
+		_4 = Reader(_7, _7_size);
 	}
 	//assign %1 = %4  : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
 	file = _4;

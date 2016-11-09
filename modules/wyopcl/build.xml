@@ -111,7 +111,7 @@
 	<!--Test the code generator with test cases.-->
 	<target name="test-code" depends="build" >
 		<!-- Empty the output file of standard error -->
-		<delete file="../../tests/code/Report/log.txt"/>
+		<delete file="../../tests/code/log.txt"/>
 		<!-- ================================= 
 			'showoutput' option enable junit to sends any output instantly 
 			reference: https://ant.apache.org/manual/Tasks/junit.html

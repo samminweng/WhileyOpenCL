@@ -4,8 +4,7 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
-	##testcases="Reverse newTicTacToe MergeSort BubbleSort MatrixMult Fibonacci GCD CoinGame SobelEdge NQueens LZ77";
+	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge";
 	
 	## Program Type
 	programs["Reverse"]="original";
@@ -17,14 +16,14 @@ BEGIN {
 	# programs["Fibonacci"]="original";
 	# programs["GCD"]="original cached";
 	# programs["CoinGame"]="original single array";	
-	# programs["SobelEdge"]="original";
+	programs["SobelEdge"]="original";
 	# ## Recursive function call
 	# programs["NQueens"]="original integer";
 	# ### Pattern transformation
 	# programs["LZ77"]="original";
 
 	# Code Generation
-	codegens = "naive naive_dealloc copyreduced copyreduced_dealloc";
+	codegens = "naive naive_dealloc nocopy nocopy_dealloc";
 
 	# Pattern matching 
 	patterns = "disabled enabled";
@@ -41,7 +40,7 @@ BEGIN {
 	# parameters["Fibonacci"]="10 20 30";
 	# parameters["GCD"]="10 20 30";
 	# parameters["CoinGame"]="100 200 300";
-	# parameters["SobelEdge"]="32 64 128";	
+	parameters["SobelEdge"]="32 64 128";	
 	# ## Recursive function call
 	# 
 	# parameters["NQueens"]="8 9 10";

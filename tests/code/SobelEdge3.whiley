@@ -97,14 +97,6 @@ function sobelEdgeDetection(Image input) -> Image:
 	// Store resulting 'newPixels' array with a Image structure
 	return image(width, height, newPixels)
 
-// Output the image to a file
-method write_image(System.Console sys, Image im):
-	byte[] pixels = im.pixels
-	// Write output to a file
-	File.Writer w = File.Writer("output.txt")
-	w.write(pixels)
-	w.close()
-
 // Main function
 method main(System.Console sys):
 	int width = 33
@@ -119,6 +111,9 @@ method main(System.Console sys):
 	// Output the result image that is filtered with sobel edge 
 	Image output = sobelEdgeDetection(input)
 	sys.out.println_s("Output Image:")
-	write_image(sys, output)
+	// Write output to a file
+	File.Writer w = File.Writer("output.txt")
+	w.write(output.pixels)
+	w.close()
 	// Ensure array sizes 
 	assert |output.pixels| == |input.pixels|

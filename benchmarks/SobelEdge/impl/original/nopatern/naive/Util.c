@@ -481,7 +481,7 @@ int64_t* fromBytes(BYTE* input, size_t size){
 	return arr;
 }
 
-// Read the input file name (ASCII code) and output a file pointer
+// Read the file name (ASCII code) and output a file pointer
 FILE* Reader(int64_t* arr, size_t arr_size){
 	// Chars array
 	char tmp[1024];
@@ -504,6 +504,35 @@ FILE* Reader(int64_t* arr, size_t arr_size){
 	FILE *fp = fopen(filename, "r");
 	if(fp == NULL){
 		fputs("fail to open the file name at 'Reader' function in Util.c\n", stderr);
+		exit(-2);
+	}
+
+	return fp;
+}
+
+// Read the file name (ASCII code) and output a file pointer
+FILE* Writer(int64_t* arr, size_t arr_size){
+	// Chars array
+	char tmp[1024];
+	// Convert an array of ASCII code to an string
+	size_t i=0;
+	while(i<arr_size){
+		char c = arr[i];
+		tmp[i] = c;
+		i = i + 1;
+	}
+	// Add the ending (null-terminated)
+	tmp[i] = '\0';
+
+	char filename[arr_size+1];
+	// Copy 'tmp' string to filename;
+	strcpy(filename, tmp);
+	//printf("%s\n", filename);
+
+	// 'w': Create a file pointer
+	FILE *fp = fopen(filename, "w");
+	if(fp == NULL){
+		fputs("fail to open the file name at 'Writer' function in Util.c\n", stderr);
 		exit(-2);
 	}
 
@@ -541,4 +570,17 @@ BYTE* readAll(FILE *file, size_t* _size){
 	return arr;
 }
 
-
+// Write an BYTE array to a file
+void writeAll(FILE *file, BYTE* arr, size_t arr_size){
+	// Count the number of byte (except for EOF)
+	size_t count=0;
+	while(count<arr_size){
+		// Check if the byte is not EOF
+		if(arr[count]==0){
+			break;
+		}
+		count++;
+	}
+	// Write out the file
+	fwrite(arr, sizeof(BYTE), count, file);
+}

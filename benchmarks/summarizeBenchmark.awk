@@ -60,7 +60,7 @@ BEGIN {
 	filename = "";
 	FS = "\n";
 	## Test case name
-	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
+	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge LZ77";
 	###testcases="Reverse newTicTacToe BubbleSort MatrixMult Fibonacci GCD CoinGame SobelEdge MergeSort NQueens LZ77";
 
 	## Program Type
@@ -73,14 +73,14 @@ BEGIN {
 	# programs["Fibonacci"]="original";
 	# programs["GCD"]="original cached";
 	# programs["CoinGame"]="original single array";	
-	# programs["SobelEdge"]="original";
+	programs["SobelEdge"]="original";
 	# ## Recursive function call
 	# programs["NQueens"]="original integer";
 	# ### Pattern transformation
-	# programs["LZ77"]="original";
+	programs["LZ77"]="original";
 
 	# Code Generation
-	codegens = "naive naive_dealloc copyreduced copyreduced_dealloc";
+	codegens = "naive naive_dealloc nocopy nocopy_dealloc";
 	# Pattern matching 
 	patterns = "disabled enabled";
 	# Compiler
@@ -96,11 +96,11 @@ BEGIN {
 	# parameters["Fibonacci"]="10 50 90";
 	# parameters["GCD"]="100 150 200";
 	# parameters["CoinGame"]="1000 2000 3000";
-	# parameters["SobelEdge"]="256 512 1024";	
+	parameters["SobelEdge"]="256 512 1024";	
 	## Recursive function call
 	# parameters["NQueens"]="8 10 12 14";
 	# ### pattern transformation
-	# parameters["LZ77"]="small medium large";
+	parameters["LZ77"]="small medium large";
 
 	# The number of threads
 	#threads="1 2 4";
@@ -123,7 +123,7 @@ BEGIN {
 	codegen=t_array[3];
 	# Pattern
 	pattern=t_array[4];
-	if(pattern == 0){
+	if(pattern == "disabledpattern"){
 		pattern="disabled";
 	}else{
 		pattern="enabled";
