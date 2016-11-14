@@ -219,10 +219,10 @@ exec(){
 # exec newTicTacToe original 100000
 
 # ## # MergeSort test case
-# init MergeSort
-# exec MergeSort original 1000
-# exec MergeSort original 10000
-# exec MergeSort original 100000
+init MergeSort
+exec MergeSort original 1000
+exec MergeSort original 10000
+exec MergeSort original 100000
 
 # ## # BubbleSort test case
 # init BubbleSort
@@ -291,8 +291,8 @@ exec(){
 # exec NQueens integer 12
 # exec NQueens integer 14
 
-#### LZ77 test case
-init LZ77
-exec LZ77 original "small.in"
-exec LZ77 original "medium.in"
-exec LZ77 original "large.in"
+# #### LZ77 test case
+# init LZ77
+# exec LZ77 original "small.in"
+# exec LZ77 original "medium.in"
+# exec LZ77 original "large.in"

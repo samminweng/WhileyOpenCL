@@ -6,6 +6,27 @@ set ylabel "Average Execution Time (Second)"
 set style line 1 lw 3 ps 0.5 # Set thick lines
 set style line 3 lw 3 ps 0.5 # Set thick lines
 #set style line 2 lw 3 ps 0.5 # Set thick lines
+set key left top ## Set key on left top corner
+
+# ########Sobel Edge test case
+# set title "Sobel Edge Test Case"
+# set xlabel "Problem Size"
+# set xrange [256:1024]
+# set term pngcairo
+# set output "sobeledge.png"
+# plot "./dat/sobeledge.dat" using 1:2 title 'Naive' with linespoints ls 1, \
+# 	 "./dat/sobeledge.dat" using 1:3 title 'Naive + De-allocated' with linespoints ls 4, \
+# 	 "./dat/sobeledge.dat" using 1:4 title 'Copy Eliminated' with linespoints ls 2, \
+# 	 "./dat/sobeledge.dat" using 1:5 title 'Copy Eliminated + De-allocated' with linespoints ls 3
+# set term x11
+# unset output
+# ## Output a eps
+# set terminal postscript eps enhanced color font 'Helvetica,10'
+# set output './eps/sobeledge.eps'
+# replot
+# set term x11
+# unset output
+
 ########Matrix Mult test case
 set title "MatrixMult Test Case"
 set xlabel "Problem Size"
