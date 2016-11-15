@@ -40,7 +40,7 @@ BEGIN {
 	# parameters["Fibonacci"]="10 20 30";
 	# parameters["GCD"]="10 20 30";
 	# parameters["CoinGame"]="100 200 300";
-	parameters["SobelEdge"]="64 128 256";	
+	parameters["SobelEdge"]="8 16 32 64 128 256";	
 	# ## Recursive function call
 	# 
 	# parameters["NQueens"]="8 9 10";
