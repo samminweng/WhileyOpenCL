@@ -85,25 +85,25 @@ exec(){
 }
 
 ## Reverse test case
-init Reverse
-exec Reverse original 100000
-exec Reverse original 1000000 ### Too long running time
+#init Reverse
+#exec Reverse original 100000
+#exec Reverse original 1000000 ### Too long running time
+# exec Reverse original 10000000
+# ## TicTacToe test case
+# init newTicTacToe
+# exec newTicTacToe original 1000
+# exec newTicTacToe original 10000
+# exec newTicTacToe original 100000
 
-## TicTacToe test case
-init newTicTacToe
-exec newTicTacToe original 1000
-exec newTicTacToe original 10000
-exec newTicTacToe original 100000
+# ### MergeSort test case
+# init MergeSort
+# exec MergeSort original 1000
+# exec MergeSort original 10000
+# exec MergeSort original 100000
 
-### MergeSort test case
-init MergeSort
-exec MergeSort original 1000
-exec MergeSort original 10000
-exec MergeSort original 100000
-
-## # MatrixMult test case
-init MatrixMult
-exec MatrixMult original 1000 ## Too long running time
+# ## # MatrixMult test case
+# init MatrixMult
+# exec MatrixMult original 1000 ## Too long running time
 #exec MatrixMult original 2000
 #exec MatrixMult original 3000
 

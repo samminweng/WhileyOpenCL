@@ -171,7 +171,7 @@ exec(){
 
 	## declare 4 kinds of code generation
 	declare -a codegens=("naive" "naive_dealloc" "nocopy" "nocopy_dealloc")
-	#declare -a codegens=("naive_dealloc" "nocopy_dealloc")
+	#declare -a codegens=("naive" "naive_dealloc" "nocopy")
 
 
 	# ## Iterate each codegen
@@ -235,7 +235,7 @@ exec(){
 # exec MatrixMult original 1000
 # exec MatrixMult original 2000
 # exec MatrixMult original 3000
-exec MatrixMult original 8000
+#exec MatrixMult original 8000
 ##exec MatrixMult original 12000 # Naive code runs out of memory
 # # # exec MatrixMult transpose 1000
 # # # exec MatrixMult transpose 2000

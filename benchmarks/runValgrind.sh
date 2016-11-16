@@ -215,6 +215,7 @@ exec(){
 # exec MatrixMult original 1000
 # exec MatrixMult original 2000
 # exec MatrixMult original 3000
+exec MatrixMult original 8000
 # exec MatrixMult transpose 100
 # exec MatrixMult transpose 200
 # exec MatrixMult transpose 300

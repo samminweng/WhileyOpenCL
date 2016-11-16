@@ -1,0 +1,40 @@
+==5737== Memcheck, a memory error detector
+==5737== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==5737== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==5737== Command: ./out/MatrixMult.original.naive.disabledpattern.gcc.1.8000.out 8000
+==5737== Parent PID: 5662
+==5737== 
+==5737== Warning: set address range perms: large range [0x55fc040, 0x23e44040) (undefined)
+==5737== Warning: set address range perms: large range [0x3a048040, 0x58890040) (undefined)
+==5737== Warning: set address range perms: large range [0x58891040, 0x770d9040) (undefined)
+==5737== Warning: set address range perms: large range [0x770da040, 0x95922040) (undefined)
+==5737== Warning: set address range perms: large range [0x95923040, 0xb416b040) (undefined)
+==5737== Warning: set address range perms: large range [0xb416c040, 0xd29b4040) (undefined)
+==5737== Warning: set address range perms: large range [0xd29b5040, 0xf11fd040) (undefined)
+==5737== Warning: set address range perms: large range [0xf11fe040, 0x10fa46040) (undefined)
+==5737== Warning: set address range perms: large range [0x10fa47040, 0x12e28f040) (undefined)
+==5737== Warning: set address range perms: large range [0x12e290040, 0x14cad8040) (undefined)
+==5737== Warning: set address range perms: large range [0x14cad9040, 0x16b321040) (undefined)
+==5737== Warning: set address range perms: large range [0x16b322040, 0x189b6a040) (undefined)
+==5737== Warning: set address range perms: large range [0x189b6b040, 0x1a83b3040) (undefined)
+==5737== Warning: set address range perms: large range [0x1a83b4040, 0x1c6bfc040) (undefined)
+==5737== Warning: set address range perms: large range [0x1c6bfd040, 0x1e5445040) (undefined)
+==5737== Warning: set address range perms: large range [0x1e5446040, 0x203c8e040) (undefined)
+==5737== Warning: set address range perms: large range [0x203c8f040, 0x2224d7040) (undefined)
+==5737== Warning: set address range perms: large range [0x2224d8040, 0x240d20040) (undefined)
+==5737== Warning: set address range perms: large range [0x240d21040, 0x25f569040) (undefined)
+==5737== 
+==5737== HEAP SUMMARY:
+==5737==     in use at exit: 9,728,000,784 bytes in 33 blocks
+==5737==   total heap usage: 33 allocs, 0 frees, 9,728,000,784 bytes allocated
+==5737== 
+==5737== LEAK SUMMARY:
+==5737==    definitely lost: 680 bytes in 11 blocks
+==5737==    indirectly lost: 40 bytes in 1 blocks
+==5737==      possibly lost: 8,704,000,000 bytes in 17 blocks
+==5737==    still reachable: 1,024,000,064 bytes in 4 blocks
+==5737==         suppressed: 0 bytes in 0 blocks
+==5737== Rerun with --leak-check=full to see details of leaked memory
+==5737== 
+==5737== For counts of detected and suppressed errors, rerun with: -v
+==5737== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
