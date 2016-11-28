@@ -1,12 +1,14 @@
 #include "AppendArray.h"
-BYTE* append(BYTE* items, size_t items_size, BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* append(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(nitems);
+	_DECL_DEALLOC(nitems);
 	int64_t i = 0;
 	BYTE _4;
 	int64_t _5 = 0;
 	int64_t _6 = 0;
 	int64_t _7 = 0;
 	_DECL_1DARRAY_BYTE(_8);
+	_DECL_DEALLOC(_8);
 	int64_t _9 = 0;
 	int64_t _10 = 0;
 	BYTE _11;
@@ -21,9 +23,13 @@ BYTE* append(BYTE* items, size_t items_size, BYTE item, _DECL_1DARRAYSIZE_PARAM_
 	//add %7 = %5, %6 : int
 	_7=_5+_6;
 	//arraygen %8 = [4; 7] : byte[]
+	_DEALLOC(_8);
 	_NEW_1DARRAY_BYTE(_8, _7, _4);
+	_ADD_DEALLOC(_8);
 	//assign %2 = %8  : byte[]
-	_COPY_1DARRAY_BYTE(nitems, _8);
+	_DEALLOC(nitems);
+	_UPDATE_1DARRAY(nitems, _8);
+	_TRANSFER_DEALLOC(nitems, _8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %3 = %9  : int
@@ -52,16 +58,20 @@ blklab1:;
 	//update %2[%3] = %1 : byte[] -> byte[]
 	nitems[i] = item;
 	//return %2
+	_DEALLOC(items);
+	_DEALLOC(_8);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(nitems);
 	return nitems;
 	//return
 }
 
-BYTE* resize(BYTE* items, size_t items_size, int64_t size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* resize(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64_t size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(nitems);
+	_DECL_DEALLOC(nitems);
 	int64_t i = 0;
 	BYTE _4;
 	_DECL_1DARRAY_BYTE(_5);
+	_DECL_DEALLOC(_5);
 	int64_t _6 = 0;
 	BYTE _7;
 	int64_t _8 = 0;
@@ -69,9 +79,13 @@ BYTE* resize(BYTE* items, size_t items_size, int64_t size, _DECL_1DARRAYSIZE_PAR
 	//const %4 = 00000000b : byte
 	_4 = 0b00000000;
 	//arraygen %5 = [4; 1] : byte[]
+	_DEALLOC(_5);
 	_NEW_1DARRAY_BYTE(_5, size, _4);
+	_ADD_DEALLOC(_5);
 	//assign %2 = %5  : byte[]
-	_COPY_1DARRAY_BYTE(nitems, _5);
+	_DEALLOC(nitems);
+	_UPDATE_1DARRAY(nitems, _5);
+	_TRANSFER_DEALLOC(nitems, _5);
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %3 = %6  : int
@@ -96,22 +110,28 @@ blklab6:;
 //.blklab5
 blklab5:;
 	//return %2
+	_DEALLOC(items);
+	_DEALLOC(_5);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(nitems);
 	return nitems;
 	//return
 }
 
-BYTE* f(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* f(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(output);
+	_DECL_DEALLOC(output);
 	int64_t pos = 0;
 	int64_t _3 = 0;
 	BYTE _4;
 	int64_t _5 = 0;
 	_DECL_1DARRAY_BYTE(_6);
+	_DECL_DEALLOC(_6);
 	int64_t _7 = 0;
 	_DECL_1DARRAY_BYTE(_8);
+	_DECL_DEALLOC(_8);
 	BYTE _9;
 	_DECL_1DARRAY_BYTE(_10);
+	_DECL_DEALLOC(_10);
 	BYTE _11;
 	int64_t _12 = 0;
 	int64_t _13 = 0;
@@ -125,6 +145,7 @@ BYTE* f(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	int64_t _21 = 0;
 	int64_t _22 = 0;
 	_DECL_1DARRAY_BYTE(_23);
+	_DECL_DEALLOC(_23);
 	//const %3 = 0 : int
 	_3 = 0;
 	//assign %2 = %3  : int
@@ -140,13 +161,17 @@ BYTE* f(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	//mul %16 = %14, %15 : int
 	_16=_14*_15;
 	//arraygen %6 = [4; 16] : byte[]
+	_DEALLOC(_6);
 	_NEW_1DARRAY_BYTE(_6, _16, _4);
+	_ADD_DEALLOC(_6);
 	//const %17 = 0 : int
 	_17 = 0;
 	//assign %18 = %17  : int
 	_18 = _17;
 	//assign %1 = %6  : byte[]
-	_COPY_1DARRAY_BYTE(output, _6);
+	_DEALLOC(output);
+	_UPDATE_1DARRAY(output, _6);
+	_TRANSFER_DEALLOC(output, _6);
 	//loop (%1, %2, %7, %8, %9, %10, %11, %12, %13, %18)
 	while(true){
 		//lengthof %7 = %0 : byte[]
@@ -199,12 +224,21 @@ blklab10:;
 	}
 	//invoke (%23) = (%1, %18) AppendArray:resize : function(byte[],int)->(byte[])
 	{
-		void* output_tmp;
-		_23 = resize(_COPY_1DARRAY_PARAM_BYTE(output), _18, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
+		_DEALLOC(_23);
+		_23 = resize(_1DARRAY_PARAM(output), false, _18, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
+		_RETAIN_DEALLOC(output, "false-false-false" , "resize");
+		_ADD_DEALLOC(_23);
 	}
 	//assign %1 = %23  : byte[]
-	_COPY_1DARRAY_BYTE(output, _23);
+	_DEALLOC(output);
+	_UPDATE_1DARRAY(output, _23);
+	_TRANSFER_DEALLOC(output, _23);
 	//return %1
+	_DEALLOC(data);
+	_DEALLOC(_6);
+	_DEALLOC(_8);
+	_DEALLOC(_10);
+	_DEALLOC(_23);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(output);
 	return output;
 	//return
@@ -212,12 +246,16 @@ blklab10:;
 
 int main(int argc, char** args){
 	_DECL_1DARRAY_BYTE(data);
+	_DECL_DEALLOC(data);
 	_DECL_1DARRAY_BYTE(arr);
+	_DECL_DEALLOC(arr);
 	BYTE _3;
 	BYTE _4;
 	BYTE _5;
 	_DECL_1DARRAY_BYTE(_6);
+	_DECL_DEALLOC(_6);
 	_DECL_1DARRAY_BYTE(_7);
+	_DECL_DEALLOC(_7);
 	BYTE _8;
 	BYTE _9;
 	BYTE _10;
@@ -225,8 +263,10 @@ int main(int argc, char** args){
 	BYTE _12;
 	BYTE _13;
 	_DECL_1DARRAY_BYTE(_14);
+	_DECL_DEALLOC(_14);
 	void* _15;
 	_DECL_1DARRAY(_17);
+	_DECL_DEALLOC(_17);
 	//const %3 = 01100001b : byte
 	_3 = 0b01100001;
 	//const %4 = 01100010b : byte
@@ -234,17 +274,25 @@ int main(int argc, char** args){
 	//const %5 = 01100011b : byte
 	_5 = 0b01100011;
 	//newlist %6 = (%3, %4, %5) : byte[]
+	_DEALLOC(_6);
 	_NEW_1DARRAY_BYTE(_6, 3, 0b0);
 	_6[0] = _3; _6[1] = _4; _6[2] = _5; 
+	_ADD_DEALLOC(_6);
 	//assign %1 = %6  : byte[]
-	_COPY_1DARRAY_BYTE(data, _6);
+	_DEALLOC(data);
+	_UPDATE_1DARRAY(data, _6);
+	_TRANSFER_DEALLOC(data, _6);
 	//invoke (%7) = (%1) AppendArray:f : function(byte[])->(byte[])
 	{
-		void* data_tmp;
-		_7 = f(_COPY_1DARRAY_PARAM_BYTE(data), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_7));
+		_DEALLOC(_7);
+		_7 = f(_1DARRAY_PARAM(data), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_7));
+		_RETAIN_DEALLOC(data, "false-false-false" , "f");
+		_ADD_DEALLOC(_7);
 	}
 	//assign %2 = %7  : byte[]
-	_COPY_1DARRAY_BYTE(arr, _7);
+	_DEALLOC(arr);
+	_UPDATE_1DARRAY(arr, _7);
+	_TRANSFER_DEALLOC(arr, _7);
 	//assert
 	{
 		//const %8 = 00000000b : byte
@@ -260,8 +308,10 @@ int main(int argc, char** args){
 		//const %13 = 01100011b : byte
 		_13 = 0b01100011;
 		//newlist %14 = (%8, %9, %10, %11, %12, %13) : byte[]
+		_DEALLOC(_14);
 		_NEW_1DARRAY_BYTE(_14, 6, 0b0);
 		_14[0] = _8; _14[1] = _9; _14[2] = _10; _14[3] = _11; _14[4] = _12; _14[5] = _13; 
+		_ADD_DEALLOC(_14);
 		//ifeq %2, %14 goto blklab9 : byte[]
 		_IFEQ_ARRAY_BYTE(arr, _14, blklab9);
 		//fail
@@ -275,14 +325,22 @@ blklab9:;
 	//fieldload %16 = %15 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%17) = (%2) whiley/lang/ASCII:fromBytes : function(byte[])->(whiley/lang/ASCII:string)
 	{
+		_DEALLOC(_17);
 		_17 = fromBytes(arr, arr_size);
 		_17_size = arr_size;
+		_ADD_DEALLOC(_17);
 	}
 	//indirectinvoke () = %16 (%17) : method(int[])->()
 	{
 		println_s(_17, _17_size);
 	}
 	//return
+	_DEALLOC(data);
+	_DEALLOC(arr);
+	_DEALLOC(_6);
+	_DEALLOC(_7);
+	_DEALLOC(_14);
+	_DEALLOC(_17);
 	exit(0);
 }
 

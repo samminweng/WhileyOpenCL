@@ -188,8 +188,8 @@ blklab8:;
 blklab7:;
 	//assert
 	{
-		//ifge %16, %18 goto blklab10 : int
-		if(_16>=_18){goto blklab10;}
+		//ifle %18, %16 goto blklab10 : int
+		if(_18<=_16){goto blklab10;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);

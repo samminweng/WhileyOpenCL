@@ -407,8 +407,8 @@ blklab13:;
 blklab12:;
 	//assert
 	{
-		//ifge %26, %28 goto blklab24 : int
-		if(_26>=_28){goto blklab24;}
+		//ifle %28, %26 goto blklab24 : int
+		if(_28<=_26){goto blklab24;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -617,7 +617,7 @@ int main(int argc, char** args){
 	_6[0] = 109; _6[1] = 101; _6[2] = 100; _6[3] = 105; _6[4] = 117; _6[5] = 109; _6[6] = 46; _6[7] = 105; _6[8] = 110; 
 	//invoke (%5) = (%6) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
 	{
-		_5 = Reader(_6,  _6_size);
+		_5 = Reader(_6, _6_size);
 	}
 	//assign %1 = %5  : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
 	file = _5;

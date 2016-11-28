@@ -61,6 +61,8 @@ import wyopcl.translator.symbolic.pattern.Pattern;
  *	output[size] = data[pos]+10
  *	size = size + 1
  *	pos = pos + 1
+ * // Check if array size <= array capacity
+ * assert size <= capacity (2*|data|)
  * // Create the output array with actual array size
  * output = resize(output, size)
  * </code></pre>
@@ -358,11 +360,11 @@ public class AppenArrayPatternTransformer extends Transformer {
 	 */
 	private void resize_array(List<Code> blk, AppendArrayPattern p) {
 
-		// Add an assertion to ensure array capacity>= array size
+		// Add an assertion to ensure array size <= array capacity
 		List<Code> assertion_blk = new ArrayList<Code>();
 		String gotoLabel = CodeUtils.freshLabel();
-		// ifge %3, %4 goto blklab16 : int
-		assertion_blk.add(Codes.If(Type.Int.T_INT, this.r_array_capacity, this.r_array_size, Comparator.GTEQ, gotoLabel));
+		// ifgt %3, %4 goto blklab16 : int
+		assertion_blk.add(Codes.If(Type.Int.T_INT, this.r_array_size, this.r_array_capacity, Comparator.LTEQ, gotoLabel));
 		// fail "insufficient array capacity would lead to 'out-of-bounded' error"
 		assertion_blk.add(Codes.Fail());
 		// .blklab5
