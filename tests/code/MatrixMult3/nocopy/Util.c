@@ -358,8 +358,15 @@ void printf1DArray_int64_t(int64_t* input, size_t input_size) {
 	printf("]\n");
 }
 // Print out an array of bye
+// Print out an array of bye
 void printf1DArray_BYTE(BYTE* input, size_t input_size) {
-	printf("%s", input);
+	size_t i=0;
+	while(i<input_size){
+		// Print out the byte as two digits of hexadecimal
+		printf(" %02x ", input[i]);
+		i++;
+	}
+	printf("\n");
 }
 // Print out the first 10 array in an 2D array
 void printf2DArray_int64_t(int64_t** input, size_t input_size, size_t input_size_size){

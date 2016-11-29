@@ -11,9 +11,9 @@ int main(int argc, char** args){
 	int64_t _12 = 0;
 	void* _13;
 	_DECL_1DARRAY(_15);
-	//const %4 = [109,101,100,105,117,109,46,105,110] : int[]
-	_NEW_1DARRAY_int64_t(_4, 9, 0);
-	_4[0] = 109; _4[1] = 101; _4[2] = 100; _4[3] = 105; _4[4] = 117; _4[5] = 109; _4[6] = 46; _4[7] = 105; _4[8] = 110; 
+	//const %4 = [115,109,97,108,108,46,105,110] : int[]
+	_NEW_1DARRAY_int64_t(_4, 8, 0);
+	_4[0] = 115; _4[1] = 109; _4[2] = 97; _4[3] = 108; _4[4] = 108; _4[5] = 46; _4[6] = 105; _4[7] = 110; 
 	//invoke (%3) = (%4) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
 	{
 		_3 = Reader(_4, _4_size);

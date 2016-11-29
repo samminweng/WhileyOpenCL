@@ -411,9 +411,9 @@ public final class BaseTestUtil {
 					Paths.get(destDir + File.separator + "Util.h"));
 			// (Optional) Copy 'small.in' to destDir  
 			if(testcase.equals("fileread") || testcase.equals("lz77") || testcase.equals("lz77_2")){
-				// 'medium.in
-				File smallin = new File(sourceDir + File.separator + "medium.in");
-				Files.copy(smallin.toPath(), Paths.get(destDir + File.separator + "medium.in"));
+				// 'small.in
+				File smallin = new File(sourceDir + File.separator + "small.in");
+				Files.copy(smallin.toPath(), Paths.get(destDir + File.separator + "small.in"));
 			}else if (testcase.equals("filewrite") || testcase.equals("SobelEdge3")){
 				// image.jpg
 				File in = new File(sourceDir + File.separator + "image.in");

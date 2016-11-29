@@ -1,0 +1,1041 @@
+Compiled from "./MatrixMult_original.whiley"
+public final class MatrixMult_original {
+  public static boolean nat$typeof(java.math.BigInteger);
+    Code:
+       0: getstatic     #109                // Field constant$0:Ljava/math/BigInteger;
+       3: astore_1
+       4: aload_0
+       5: aload_1
+       6: invokevirtual #29                 // Method java/math/BigInteger.compareTo:(Ljava/math/BigInteger;)I
+       9: ifge          15
+      12: goto          17
+      15: iconst_1
+      16: ireturn
+      17: iconst_0
+      18: ireturn
+
+  public static boolean Matrix$typeof(wyjc.runtime.WyRecord);
+    Code:
+       0: aload_0
+       1: ldc           #82                 // String data
+       3: invokevirtual #111                // Method wyjc/runtime/WyRecord.get:(Ljava/lang/String;)Ljava/lang/Object;
+       6: checkcast     #113                // class wyjc/runtime/WyArray
+       9: astore_1
+      10: aload_1
+      11: invokeinterface #107,  1          // InterfaceMethod java/lang/Iterable.iterator:()Ljava/util/Iterator;
+      16: astore_2
+      17: aload_2
+      18: invokeinterface #65,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      23: ifeq          39
+      26: aload_2
+      27: invokeinterface #120,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      32: checkcast     #132                // class java/math/BigInteger
+      35: astore_3
+      36: goto          17
+      39: aload_0
+      40: ldc           #18                 // String height
+      42: invokevirtual #111                // Method wyjc/runtime/WyRecord.get:(Ljava/lang/String;)Ljava/lang/Object;
+      45: checkcast     #132                // class java/math/BigInteger
+      48: astore_1
+      49: aload_0
+      50: ldc           #72                 // String width
+      52: invokevirtual #111                // Method wyjc/runtime/WyRecord.get:(Ljava/lang/String;)Ljava/lang/Object;
+      55: checkcast     #132                // class java/math/BigInteger
+      58: astore_1
+      59: iconst_1
+      60: ireturn
+      61: iconst_0
+      62: ireturn
+
+  static wyjc.runtime.WyRecord matrix$_9d7ZOP8g1$C0FN$F6$m0FP$V6$C0FS$k5$o0kM$w5$m0FP$R5$d0VQ$35$gC$s5$W0$SRB7h3L0Va$7B$c2$t$7C$k2Va$cD$N2$u$sA$T2$t$7C$D2Vo$kC$12$qB$P1Vk$VD$Z2Vo$$jAw2(java.math.BigInteger, java.math.BigInteger, wyjc.runtime.WyArray);
+    Code:
+       0: new           #50                 // class wyjc/runtime/WyRecord
+       3: dup
+       4: invokespecial #13                 // Method wyjc/runtime/WyRecord."<init>":()V
+       7: dup
+       8: ldc           #82                 // String data
+      10: aload_2
+      11: invokevirtual #78                 // Method wyjc/runtime/WyRecord.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      14: pop
+      15: dup
+      16: ldc           #18                 // String height
+      18: aload_1
+      19: invokevirtual #78                 // Method wyjc/runtime/WyRecord.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      22: pop
+      23: dup
+      24: ldc           #72                 // String width
+      26: aload_0
+      27: invokevirtual #78                 // Method wyjc/runtime/WyRecord.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      30: pop
+      31: astore        4
+      33: aload         4
+      35: areturn
+      36: areturn
+      37: return
+
+  static wyjc.runtime.WyRecord init$Y9b73d_k9$o3$W0$S$76$d0$T$o3$p0$Q$F6$U0kQ$76$d0kO$Z5$i0FN$kq$VQ$35$opHN4$P1Vk$VD$Z2Vo$$E$P1Vu$VC$c2Vj$sC$Z2Vo$sB$H2$r$7B$Nn$c8$12$u$FD$H2$wy(java.math.BigInteger, java.math.BigInteger);
+    Code:
+       0: getstatic     #109                // Field constant$0:Ljava/math/BigInteger;
+       3: astore        6
+       5: aload_0
+       6: aload_1
+       7: invokevirtual #68                 // Method java/math/BigInteger.multiply:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+      10: astore        7
+      12: aload         6
+      14: aload         7
+      16: invokestatic  #125                // Method wyjc/runtime/WyArray.generate:(Ljava/lang/Object;Ljava/math/BigInteger;)Lwyjc/runtime/WyArray;
+      19: astore        8
+      21: aload         8
+      23: astore_3
+      24: getstatic     #109                // Field constant$0:Ljava/math/BigInteger;
+      27: astore        9
+      29: aload         9
+      31: astore        4
+      33: aload         4
+      35: aload_1
+      36: invokevirtual #29                 // Method java/math/BigInteger.compareTo:(Ljava/math/BigInteger;)I
+      39: ifge          165
+      42: getstatic     #109                // Field constant$0:Ljava/math/BigInteger;
+      45: astore        10
+      47: aload         10
+      49: astore        5
+      51: aload         5
+      53: aload_0
+      54: invokevirtual #29                 // Method java/math/BigInteger.compareTo:(Ljava/math/BigInteger;)I
+      57: ifge          144
+      60: aload         4
+      62: aload_0
+      63: invokevirtual #68                 // Method java/math/BigInteger.multiply:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+      66: astore        11
+      68: aload         11
+      70: aload         5
+      72: invokevirtual #3                  // Method java/math/BigInteger.add:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+      75: astore        12
+      77: aload_3
+      78: aload         12
+      80: invokestatic  #75                 // Method wyjc/runtime/WyArray.get:(Lwyjc/runtime/WyArray;Ljava/math/BigInteger;)Ljava/lang/Object;
+      83: checkcast     #132                // class java/math/BigInteger
+      86: astore        13
+      88: aload         13
+      90: aload         4
+      92: invokevirtual #3                  // Method java/math/BigInteger.add:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+      95: astore        14
+      97: aload         4
+      99: aload_0
+     100: invokevirtual #68                 // Method java/math/BigInteger.multiply:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     103: astore        15
+     105: aload         15
+     107: aload         5
+     109: invokevirtual #3                  // Method java/math/BigInteger.add:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     112: astore        16
+     114: aload_3
+     115: aload         16
+     117: aload         14
+     119: invokestatic  #31                 // Method wyjc/runtime/WyArray.set:(Lwyjc/runtime/WyArray;Ljava/math/BigInteger;Ljava/lang/Object;)Lwyjc/runtime/WyArray;
+     122: astore_3
+     123: getstatic     #108                // Field constant$1:Ljava/math/BigInteger;
+     126: astore        17
+     128: aload         5
+     130: aload         17
+     132: invokevirtual #3                  // Method java/math/BigInteger.add:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     135: astore        18
+     137: aload         18
+     139: astore        5
+     141: goto          51
+     144: getstatic     #108                // Field constant$1:Ljava/math/BigInteger;
+     147: astore        19
+     149: aload         4
+     151: aload         19
+     153: invokevirtual #3                  // Method java/math/BigInteger.add:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     156: astore        20
+     158: aload         20
+     160: astore        4
+     162: goto          33
+     165: aload_0
+     166: aload_1
+     167: aload_3
+     168: invokestatic  #88                 // Method matrix$_9d7ZOP8g1$C0FN$F6$m0FP$V6$C0FS$k5$o0kM$w5$m0FP$R5$d0VQ$35$gC$s5$W0$SRB7h3L0Va$7B$c2$t$7C$k2Va$cD$N2$u$sA$T2$t$7C$D2Vo$kC$12$qB$P1Vk$VD$Z2Vo$$jAw2:(Ljava/math/BigInteger;Ljava/math/BigInteger;Lwyjc/runtime/WyArray;)Lwyjc/runtime/WyRecord;
+     171: astore        21
+     173: aload         21
+     175: areturn
+     176: areturn
+     177: return
+
+  static void print_mat$2A_FZL1e$kS$V5$d0$Q$J5$t0kA$k5$W0VQ$R5$j$kJ$Z6$n0$S$J5$hS$B3$j0VQ$B6$j0$Q$JLAWK$c8$12$u$FD$H2$w$c8$e2$q$VD$y1Vr$FD$H2Vn$7C$R2Vk$VC2Va$7B$c2$t$7C$kA(wyjc.runtime.WyRecord, wyjc.runtime.WyRecord);
+    Code:
+       0: getstatic     #109                // Field constant$0:Ljava/math/BigInteger;
+       3: astore        6
+       5: aload         6
+       7: astore_2
+       8: aload_1
+       9: ldc           #72                 // String width
+      11: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+      14: checkcast     #132                // class java/math/BigInteger
+      17: astore        7
+      19: aload         7
+      21: astore_3
+      22: aload_1
+      23: ldc           #18                 // String height
+      25: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+      28: checkcast     #132                // class java/math/BigInteger
+      31: astore        8
+      33: aload         8
+      35: astore        4
+      37: aload_2
+      38: aload         4
+      40: invokevirtual #29                 // Method java/math/BigInteger.compareTo:(Ljava/math/BigInteger;)I
+      43: ifge          267
+      46: getstatic     #109                // Field constant$0:Ljava/math/BigInteger;
+      49: astore        9
+      51: aload         9
+      53: astore        5
+      55: aload         5
+      57: aload_3
+      58: invokevirtual #29                 // Method java/math/BigInteger.compareTo:(Ljava/math/BigInteger;)I
+      61: ifge          205
+      64: aload_0
+      65: ldc           #52                 // String out
+      67: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+      70: checkcast     #50                 // class wyjc/runtime/WyRecord
+      73: astore        10
+      75: aload         10
+      77: ldc           #161                // String print
+      79: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+      82: checkcast     #122                // class wyjc/runtime/WyLambda
+      85: astore        11
+      87: aload_1
+      88: ldc           #82                 // String data
+      90: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+      93: checkcast     #113                // class wyjc/runtime/WyArray
+      96: astore        12
+      98: aload_2
+      99: aload_3
+     100: invokevirtual #68                 // Method java/math/BigInteger.multiply:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     103: astore        13
+     105: aload         13
+     107: aload         5
+     109: invokevirtual #3                  // Method java/math/BigInteger.add:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     112: astore        14
+     114: aload         12
+     116: aload         14
+     118: invokestatic  #75                 // Method wyjc/runtime/WyArray.get:(Lwyjc/runtime/WyArray;Ljava/math/BigInteger;)Ljava/lang/Object;
+     121: checkcast     #132                // class java/math/BigInteger
+     124: astore        15
+     126: aload         11
+     128: iconst_1
+     129: anewarray     #28                 // class java/lang/Object
+     132: dup
+     133: iconst_0
+     134: aload         15
+     136: aastore
+     137: invokevirtual #77                 // Method wyjc/runtime/WyLambda.call:([Ljava/lang/Object;)Ljava/lang/Object;
+     140: pop
+     141: aload_0
+     142: ldc           #52                 // String out
+     144: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+     147: checkcast     #50                 // class wyjc/runtime/WyRecord
+     150: astore        16
+     152: aload         16
+     154: ldc           #59                 // String print_s
+     156: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+     159: checkcast     #122                // class wyjc/runtime/WyLambda
+     162: astore        17
+     164: getstatic     #104                // Field constant$2:Lwyjc/runtime/WyArray;
+     167: astore        18
+     169: aload         17
+     171: iconst_1
+     172: anewarray     #28                 // class java/lang/Object
+     175: dup
+     176: iconst_0
+     177: aload         18
+     179: aastore
+     180: invokevirtual #77                 // Method wyjc/runtime/WyLambda.call:([Ljava/lang/Object;)Ljava/lang/Object;
+     183: pop
+     184: getstatic     #108                // Field constant$1:Ljava/math/BigInteger;
+     187: astore        19
+     189: aload         5
+     191: aload         19
+     193: invokevirtual #3                  // Method java/math/BigInteger.add:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     196: astore        20
+     198: aload         20
+     200: astore        5
+     202: goto          55
+     205: getstatic     #108                // Field constant$1:Ljava/math/BigInteger;
+     208: astore        21
+     210: aload_2
+     211: aload         21
+     213: invokevirtual #3                  // Method java/math/BigInteger.add:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     216: astore        22
+     218: aload         22
+     220: astore_2
+     221: aload_0
+     222: ldc           #52                 // String out
+     224: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+     227: checkcast     #50                 // class wyjc/runtime/WyRecord
+     230: astore        23
+     232: aload         23
+     234: ldc           #142                // String println_s
+     236: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+     239: checkcast     #122                // class wyjc/runtime/WyLambda
+     242: astore        24
+     244: getstatic     #99                 // Field constant$3:Lwyjc/runtime/WyArray;
+     247: astore        25
+     249: aload         24
+     251: iconst_1
+     252: anewarray     #28                 // class java/lang/Object
+     255: dup
+     256: iconst_0
+     257: aload         25
+     259: aastore
+     260: invokevirtual #77                 // Method wyjc/runtime/WyLambda.call:([Ljava/lang/Object;)Ljava/lang/Object;
+     263: pop
+     264: goto          37
+     267: return
+
+  static wyjc.runtime.WyRecord mat_mult$X9b71d_k9$o3$W0$S$76$d0$T$o3$p0$Q$F6$U0kQ$76$d0kO$Z5$i0FN$ka0FI$35$o0VR$Z5$sx2(wyjc.runtime.WyRecord, wyjc.runtime.WyRecord);
+    Code:
+       0: aload_1
+       1: ldc           #72                 // String width
+       3: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+       6: checkcast     #132                // class java/math/BigInteger
+       9: astore        11
+      11: aload         11
+      13: astore_3
+      14: aload_0
+      15: ldc           #18                 // String height
+      17: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+      20: checkcast     #132                // class java/math/BigInteger
+      23: astore        12
+      25: aload         12
+      27: astore        4
+      29: getstatic     #109                // Field constant$0:Ljava/math/BigInteger;
+      32: astore        13
+      34: aload_3
+      35: aload         4
+      37: invokevirtual #68                 // Method java/math/BigInteger.multiply:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+      40: astore        14
+      42: aload         13
+      44: aload         14
+      46: invokestatic  #125                // Method wyjc/runtime/WyArray.generate:(Ljava/lang/Object;Ljava/math/BigInteger;)Lwyjc/runtime/WyArray;
+      49: astore        15
+      51: aload         15
+      53: astore        5
+      55: aload_0
+      56: ldc           #82                 // String data
+      58: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+      61: checkcast     #113                // class wyjc/runtime/WyArray
+      64: astore        16
+      66: aload         16
+      68: astore        6
+      70: aload_1
+      71: ldc           #82                 // String data
+      73: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+      76: checkcast     #113                // class wyjc/runtime/WyArray
+      79: astore        17
+      81: aload         17
+      83: astore        7
+      85: getstatic     #109                // Field constant$0:Ljava/math/BigInteger;
+      88: astore        18
+      90: aload         18
+      92: astore        8
+      94: aload         8
+      96: aload         4
+      98: invokevirtual #29                 // Method java/math/BigInteger.compareTo:(Ljava/math/BigInteger;)I
+     101: ifge          336
+     104: getstatic     #109                // Field constant$0:Ljava/math/BigInteger;
+     107: astore        19
+     109: aload         19
+     111: astore        9
+     113: aload         9
+     115: aload_3
+     116: invokevirtual #29                 // Method java/math/BigInteger.compareTo:(Ljava/math/BigInteger;)I
+     119: ifge          315
+     122: getstatic     #109                // Field constant$0:Ljava/math/BigInteger;
+     125: astore        20
+     127: aload         20
+     129: astore        10
+     131: aload         10
+     133: aload_3
+     134: invokevirtual #29                 // Method java/math/BigInteger.compareTo:(Ljava/math/BigInteger;)I
+     137: ifge          294
+     140: aload         8
+     142: aload_3
+     143: invokevirtual #68                 // Method java/math/BigInteger.multiply:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     146: astore        21
+     148: aload         21
+     150: aload         9
+     152: invokevirtual #3                  // Method java/math/BigInteger.add:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     155: astore        22
+     157: aload         5
+     159: aload         22
+     161: invokestatic  #75                 // Method wyjc/runtime/WyArray.get:(Lwyjc/runtime/WyArray;Ljava/math/BigInteger;)Ljava/lang/Object;
+     164: checkcast     #132                // class java/math/BigInteger
+     167: astore        23
+     169: aload         8
+     171: aload_3
+     172: invokevirtual #68                 // Method java/math/BigInteger.multiply:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     175: astore        24
+     177: aload         24
+     179: aload         10
+     181: invokevirtual #3                  // Method java/math/BigInteger.add:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     184: astore        25
+     186: aload         6
+     188: aload         25
+     190: invokestatic  #75                 // Method wyjc/runtime/WyArray.get:(Lwyjc/runtime/WyArray;Ljava/math/BigInteger;)Ljava/lang/Object;
+     193: checkcast     #132                // class java/math/BigInteger
+     196: astore        26
+     198: aload         10
+     200: aload_3
+     201: invokevirtual #68                 // Method java/math/BigInteger.multiply:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     204: astore        27
+     206: aload         27
+     208: aload         9
+     210: invokevirtual #3                  // Method java/math/BigInteger.add:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     213: astore        28
+     215: aload         7
+     217: aload         28
+     219: invokestatic  #75                 // Method wyjc/runtime/WyArray.get:(Lwyjc/runtime/WyArray;Ljava/math/BigInteger;)Ljava/lang/Object;
+     222: checkcast     #132                // class java/math/BigInteger
+     225: astore        29
+     227: aload         26
+     229: aload         29
+     231: invokevirtual #68                 // Method java/math/BigInteger.multiply:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     234: astore        30
+     236: aload         23
+     238: aload         30
+     240: invokevirtual #3                  // Method java/math/BigInteger.add:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     243: astore        31
+     245: aload         8
+     247: aload_3
+     248: invokevirtual #68                 // Method java/math/BigInteger.multiply:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     251: astore        32
+     253: aload         32
+     255: aload         9
+     257: invokevirtual #3                  // Method java/math/BigInteger.add:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     260: astore        33
+     262: aload         5
+     264: aload         33
+     266: aload         31
+     268: invokestatic  #31                 // Method wyjc/runtime/WyArray.set:(Lwyjc/runtime/WyArray;Ljava/math/BigInteger;Ljava/lang/Object;)Lwyjc/runtime/WyArray;
+     271: astore        5
+     273: getstatic     #108                // Field constant$1:Ljava/math/BigInteger;
+     276: astore        34
+     278: aload         10
+     280: aload         34
+     282: invokevirtual #3                  // Method java/math/BigInteger.add:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     285: astore        35
+     287: aload         35
+     289: astore        10
+     291: goto          131
+     294: getstatic     #108                // Field constant$1:Ljava/math/BigInteger;
+     297: astore        36
+     299: aload         9
+     301: aload         36
+     303: invokevirtual #3                  // Method java/math/BigInteger.add:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     306: astore        37
+     308: aload         37
+     310: astore        9
+     312: goto          113
+     315: getstatic     #108                // Field constant$1:Ljava/math/BigInteger;
+     318: astore        38
+     320: aload         8
+     322: aload         38
+     324: invokevirtual #3                  // Method java/math/BigInteger.add:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     327: astore        39
+     329: aload         39
+     331: astore        8
+     333: goto          94
+     336: aload_3
+     337: aload         4
+     339: aload         5
+     341: invokestatic  #88                 // Method matrix$_9d7ZOP8g1$C0FN$F6$m0FP$V6$C0FS$k5$o0kM$w5$m0FP$R5$d0VQ$35$gC$s5$W0$SRB7h3L0Va$7B$c2$t$7C$k2Va$cD$N2$u$sA$T2$t$7C$D2Vo$kC$12$qB$P1Vk$VD$Z2Vo$$jAw2:(Ljava/math/BigInteger;Ljava/math/BigInteger;Lwyjc/runtime/WyArray;)Lwyjc/runtime/WyRecord;
+     344: astore        40
+     346: aload         40
+     348: areturn
+     349: areturn
+     350: return
+
+  static void main$1AY7P8c1$r0$P$Z5$g0FO$Z6$j$$Q$35$i0kO$w1$I0FT$B6$o0FO$oq0kF$w5$i0kR$w5$g0FOz(wyjc.runtime.WyRecord);
+    Code:
+       0: aload_0
+       1: ldc           #158                // String args
+       3: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+       6: checkcast     #113                // class wyjc/runtime/WyArray
+       9: astore        7
+      11: getstatic     #109                // Field constant$0:Ljava/math/BigInteger;
+      14: astore        8
+      16: aload         7
+      18: aload         8
+      20: invokestatic  #75                 // Method wyjc/runtime/WyArray.get:(Lwyjc/runtime/WyArray;Ljava/math/BigInteger;)Ljava/lang/Object;
+      23: checkcast     #113                // class wyjc/runtime/WyArray
+      26: astore        9
+      28: aload         9
+      30: invokestatic  #15                 // Method whiley/lang/Int.parse$_9_FXL1d$kS$V5$d0$Q$J5$t0kA$k5$W0VQ$R5$j$FF$B4$20FH$ZZ0kR$F6$m0FP$s5$bW1Oc8RW2:(Lwyjc/runtime/WyArray;)Ljava/lang/Object;
+      33: astore        6
+      35: aload         6
+      37: astore_1
+      38: aload_1
+      39: ifnonnull     47
+      42: aload_1
+      43: astore_1
+      44: goto          358
+      47: aload_1
+      48: checkcast     #132                // class java/math/BigInteger
+      51: astore_1
+      52: aload_1
+      53: astore_2
+      54: aload_0
+      55: ldc           #52                 // String out
+      57: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+      60: checkcast     #50                 // class wyjc/runtime/WyRecord
+      63: astore        10
+      65: aload         10
+      67: ldc           #59                 // String print_s
+      69: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+      72: checkcast     #122                // class wyjc/runtime/WyLambda
+      75: astore        11
+      77: getstatic     #87                 // Field constant$4:Lwyjc/runtime/WyArray;
+      80: astore        12
+      82: aload         11
+      84: iconst_1
+      85: anewarray     #28                 // class java/lang/Object
+      88: dup
+      89: iconst_0
+      90: aload         12
+      92: aastore
+      93: invokevirtual #77                 // Method wyjc/runtime/WyLambda.call:([Ljava/lang/Object;)Ljava/lang/Object;
+      96: pop
+      97: aload_0
+      98: ldc           #52                 // String out
+     100: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+     103: checkcast     #50                 // class wyjc/runtime/WyRecord
+     106: astore        13
+     108: aload         13
+     110: ldc           #146                // String println
+     112: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+     115: checkcast     #122                // class wyjc/runtime/WyLambda
+     118: astore        14
+     120: aload         14
+     122: iconst_1
+     123: anewarray     #28                 // class java/lang/Object
+     126: dup
+     127: iconst_0
+     128: aload_2
+     129: aastore
+     130: invokevirtual #77                 // Method wyjc/runtime/WyLambda.call:([Ljava/lang/Object;)Ljava/lang/Object;
+     133: pop
+     134: aload_2
+     135: aload_2
+     136: invokestatic  #159                // Method init$Y9b73d_k9$o3$W0$S$76$d0$T$o3$p0$Q$F6$U0kQ$76$d0kO$Z5$i0FN$kq$VQ$35$opHN4$P1Vk$VD$Z2Vo$$E$P1Vu$VC$c2Vj$sC$Z2Vo$sB$H2$r$7B$Nn$c8$12$u$FD$H2$wy:(Ljava/math/BigInteger;Ljava/math/BigInteger;)Lwyjc/runtime/WyRecord;
+     139: astore        15
+     141: aload         15
+     143: astore_3
+     144: aload_2
+     145: aload_2
+     146: invokestatic  #159                // Method init$Y9b73d_k9$o3$W0$S$76$d0$T$o3$p0$Q$F6$U0kQ$76$d0kO$Z5$i0FN$kq$VQ$35$opHN4$P1Vk$VD$Z2Vo$$E$P1Vu$VC$c2Vj$sC$Z2Vo$sB$H2$r$7B$Nn$c8$12$u$FD$H2$wy:(Ljava/math/BigInteger;Ljava/math/BigInteger;)Lwyjc/runtime/WyRecord;
+     149: astore        16
+     151: aload         16
+     153: astore        4
+     155: aload_3
+     156: aload         4
+     158: invokestatic  #48                 // Method mat_mult$X9b71d_k9$o3$W0$S$76$d0$T$o3$p0$Q$F6$U0kQ$76$d0kO$Z5$i0FN$ka0FI$35$o0VR$Z5$sx2:(Lwyjc/runtime/WyRecord;Lwyjc/runtime/WyRecord;)Lwyjc/runtime/WyRecord;
+     161: astore        17
+     163: aload         17
+     165: astore        5
+     167: aload_0
+     168: ldc           #52                 // String out
+     170: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+     173: checkcast     #50                 // class wyjc/runtime/WyRecord
+     176: astore        18
+     178: aload         18
+     180: ldc           #59                 // String print_s
+     182: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+     185: checkcast     #122                // class wyjc/runtime/WyLambda
+     188: astore        19
+     190: getstatic     #85                 // Field constant$5:Lwyjc/runtime/WyArray;
+     193: astore        20
+     195: aload         19
+     197: iconst_1
+     198: anewarray     #28                 // class java/lang/Object
+     201: dup
+     202: iconst_0
+     203: aload         20
+     205: aastore
+     206: invokevirtual #77                 // Method wyjc/runtime/WyLambda.call:([Ljava/lang/Object;)Ljava/lang/Object;
+     209: pop
+     210: aload_0
+     211: ldc           #52                 // String out
+     213: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+     216: checkcast     #50                 // class wyjc/runtime/WyRecord
+     219: astore        21
+     221: aload         21
+     223: ldc           #146                // String println
+     225: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+     228: checkcast     #122                // class wyjc/runtime/WyLambda
+     231: astore        22
+     233: aload         5
+     235: ldc           #82                 // String data
+     237: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+     240: checkcast     #113                // class wyjc/runtime/WyArray
+     243: astore        23
+     245: getstatic     #108                // Field constant$1:Ljava/math/BigInteger;
+     248: astore        24
+     250: aload_2
+     251: aload         24
+     253: invokevirtual #89                 // Method java/math/BigInteger.subtract:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     256: astore        25
+     258: aload         25
+     260: aload_2
+     261: invokevirtual #68                 // Method java/math/BigInteger.multiply:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     264: astore        26
+     266: aload         26
+     268: aload_2
+     269: invokevirtual #3                  // Method java/math/BigInteger.add:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     272: astore        27
+     274: getstatic     #108                // Field constant$1:Ljava/math/BigInteger;
+     277: astore        28
+     279: aload         27
+     281: aload         28
+     283: invokevirtual #89                 // Method java/math/BigInteger.subtract:(Ljava/math/BigInteger;)Ljava/math/BigInteger;
+     286: astore        29
+     288: aload         23
+     290: aload         29
+     292: invokestatic  #75                 // Method wyjc/runtime/WyArray.get:(Lwyjc/runtime/WyArray;Ljava/math/BigInteger;)Ljava/lang/Object;
+     295: checkcast     #132                // class java/math/BigInteger
+     298: astore        30
+     300: aload         22
+     302: iconst_1
+     303: anewarray     #28                 // class java/lang/Object
+     306: dup
+     307: iconst_0
+     308: aload         30
+     310: aastore
+     311: invokevirtual #77                 // Method wyjc/runtime/WyLambda.call:([Ljava/lang/Object;)Ljava/lang/Object;
+     314: pop
+     315: aload_0
+     316: ldc           #52                 // String out
+     318: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+     321: checkcast     #50                 // class wyjc/runtime/WyRecord
+     324: astore        31
+     326: aload         31
+     328: ldc           #142                // String println_s
+     330: invokestatic  #32                 // Method wyjc/runtime/WyRecord.get:(Lwyjc/runtime/WyRecord;Ljava/lang/String;)Ljava/lang/Object;
+     333: checkcast     #122                // class wyjc/runtime/WyLambda
+     336: astore        32
+     338: getstatic     #93                 // Field constant$6:Lwyjc/runtime/WyArray;
+     341: astore        33
+     343: aload         32
+     345: iconst_1
+     346: anewarray     #28                 // class java/lang/Object
+     349: dup
+     350: iconst_0
+     351: aload         33
+     353: aastore
+     354: invokevirtual #77                 // Method wyjc/runtime/WyLambda.call:([Ljava/lang/Object;)Ljava/lang/Object;
+     357: pop
+     358: return
+
+  public static {};
+    Code:
+       0: iconst_0
+       1: i2l
+       2: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+       5: putstatic     #109                // Field constant$0:Ljava/math/BigInteger;
+       8: new           #113                // class wyjc/runtime/WyArray
+      11: dup
+      12: bipush        25
+      14: invokespecial #119                // Method wyjc/runtime/WyArray."<init>":(I)V
+      17: dup
+      18: bipush        80
+      20: i2l
+      21: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+      24: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+      27: pop
+      28: dup
+      29: bipush        97
+      31: i2l
+      32: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+      35: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+      38: pop
+      39: dup
+      40: bipush        115
+      42: i2l
+      43: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+      46: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+      49: pop
+      50: dup
+      51: bipush        115
+      53: i2l
+      54: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+      57: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+      60: pop
+      61: dup
+      62: bipush        32
+      64: i2l
+      65: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+      68: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+      71: pop
+      72: dup
+      73: bipush        77
+      75: i2l
+      76: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+      79: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+      82: pop
+      83: dup
+      84: bipush        97
+      86: i2l
+      87: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+      90: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+      93: pop
+      94: dup
+      95: bipush        116
+      97: i2l
+      98: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     101: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     104: pop
+     105: dup
+     106: bipush        114
+     108: i2l
+     109: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     112: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     115: pop
+     116: dup
+     117: bipush        105
+     119: i2l
+     120: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     123: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     126: pop
+     127: dup
+     128: bipush        120
+     130: i2l
+     131: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     134: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     137: pop
+     138: dup
+     139: bipush        77
+     141: i2l
+     142: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     145: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     148: pop
+     149: dup
+     150: bipush        117
+     152: i2l
+     153: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     156: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     159: pop
+     160: dup
+     161: bipush        108
+     163: i2l
+     164: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     167: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     170: pop
+     171: dup
+     172: bipush        116
+     174: i2l
+     175: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     178: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     181: pop
+     182: dup
+     183: bipush        32
+     185: i2l
+     186: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     189: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     192: pop
+     193: dup
+     194: bipush        116
+     196: i2l
+     197: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     200: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     203: pop
+     204: dup
+     205: bipush        101
+     207: i2l
+     208: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     211: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     214: pop
+     215: dup
+     216: bipush        115
+     218: i2l
+     219: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     222: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     225: pop
+     226: dup
+     227: bipush        116
+     229: i2l
+     230: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     233: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     236: pop
+     237: dup
+     238: bipush        32
+     240: i2l
+     241: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     244: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     247: pop
+     248: dup
+     249: bipush        99
+     251: i2l
+     252: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     255: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     258: pop
+     259: dup
+     260: bipush        97
+     262: i2l
+     263: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     266: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     269: pop
+     270: dup
+     271: bipush        115
+     273: i2l
+     274: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     277: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     280: pop
+     281: dup
+     282: bipush        101
+     284: i2l
+     285: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     288: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     291: pop
+     292: putstatic     #93                 // Field constant$6:Lwyjc/runtime/WyArray;
+     295: iconst_1
+     296: i2l
+     297: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     300: putstatic     #108                // Field constant$1:Ljava/math/BigInteger;
+     303: new           #113                // class wyjc/runtime/WyArray
+     306: dup
+     307: iconst_0
+     308: invokespecial #119                // Method wyjc/runtime/WyArray."<init>":(I)V
+     311: putstatic     #99                 // Field constant$3:Lwyjc/runtime/WyArray;
+     314: new           #113                // class wyjc/runtime/WyArray
+     317: dup
+     318: bipush        7
+     320: invokespecial #119                // Method wyjc/runtime/WyArray."<init>":(I)V
+     323: dup
+     324: bipush        115
+     326: i2l
+     327: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     330: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     333: pop
+     334: dup
+     335: bipush        105
+     337: i2l
+     338: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     341: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     344: pop
+     345: dup
+     346: bipush        122
+     348: i2l
+     349: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     352: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     355: pop
+     356: dup
+     357: bipush        101
+     359: i2l
+     360: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     363: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     366: pop
+     367: dup
+     368: bipush        32
+     370: i2l
+     371: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     374: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     377: pop
+     378: dup
+     379: bipush        61
+     381: i2l
+     382: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     385: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     388: pop
+     389: dup
+     390: bipush        32
+     392: i2l
+     393: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     396: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     399: pop
+     400: putstatic     #87                 // Field constant$4:Lwyjc/runtime/WyArray;
+     403: new           #113                // class wyjc/runtime/WyArray
+     406: dup
+     407: bipush        27
+     409: invokespecial #119                // Method wyjc/runtime/WyArray."<init>":(I)V
+     412: dup
+     413: bipush        77
+     415: i2l
+     416: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     419: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     422: pop
+     423: dup
+     424: bipush        97
+     426: i2l
+     427: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     430: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     433: pop
+     434: dup
+     435: bipush        116
+     437: i2l
+     438: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     441: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     444: pop
+     445: dup
+     446: bipush        114
+     448: i2l
+     449: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     452: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     455: pop
+     456: dup
+     457: bipush        105
+     459: i2l
+     460: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     463: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     466: pop
+     467: dup
+     468: bipush        120
+     470: i2l
+     471: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     474: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     477: pop
+     478: dup
+     479: bipush        32
+     481: i2l
+     482: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     485: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     488: pop
+     489: dup
+     490: bipush        67
+     492: i2l
+     493: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     496: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     499: pop
+     500: dup
+     501: bipush        91
+     503: i2l
+     504: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     507: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     510: pop
+     511: dup
+     512: bipush        115
+     514: i2l
+     515: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     518: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     521: pop
+     522: dup
+     523: bipush        105
+     525: i2l
+     526: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     529: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     532: pop
+     533: dup
+     534: bipush        122
+     536: i2l
+     537: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     540: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     543: pop
+     544: dup
+     545: bipush        101
+     547: i2l
+     548: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     551: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     554: pop
+     555: dup
+     556: bipush        45
+     558: i2l
+     559: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     562: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     565: pop
+     566: dup
+     567: bipush        49
+     569: i2l
+     570: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     573: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     576: pop
+     577: dup
+     578: bipush        93
+     580: i2l
+     581: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     584: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     587: pop
+     588: dup
+     589: bipush        91
+     591: i2l
+     592: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     595: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     598: pop
+     599: dup
+     600: bipush        115
+     602: i2l
+     603: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     606: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     609: pop
+     610: dup
+     611: bipush        105
+     613: i2l
+     614: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     617: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     620: pop
+     621: dup
+     622: bipush        122
+     624: i2l
+     625: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     628: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     631: pop
+     632: dup
+     633: bipush        101
+     635: i2l
+     636: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     639: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     642: pop
+     643: dup
+     644: bipush        45
+     646: i2l
+     647: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     650: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     653: pop
+     654: dup
+     655: bipush        49
+     657: i2l
+     658: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     661: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     664: pop
+     665: dup
+     666: bipush        93
+     668: i2l
+     669: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     672: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     675: pop
+     676: dup
+     677: bipush        32
+     679: i2l
+     680: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     683: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     686: pop
+     687: dup
+     688: bipush        61
+     690: i2l
+     691: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     694: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     697: pop
+     698: dup
+     699: bipush        32
+     701: i2l
+     702: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     705: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     708: pop
+     709: putstatic     #85                 // Field constant$5:Lwyjc/runtime/WyArray;
+     712: new           #113                // class wyjc/runtime/WyArray
+     715: dup
+     716: iconst_1
+     717: invokespecial #119                // Method wyjc/runtime/WyArray."<init>":(I)V
+     720: dup
+     721: bipush        32
+     723: i2l
+     724: invokestatic  #143                // Method java/math/BigInteger.valueOf:(J)Ljava/math/BigInteger;
+     727: invokevirtual #37                 // Method wyjc/runtime/WyArray.add:(Ljava/lang/Object;)Z
+     730: pop
+     731: putstatic     #104                // Field constant$2:Lwyjc/runtime/WyArray;
+     734: return
+
+  public static void main(java.lang.String[]);
+    Code:
+       0: aload_0
+       1: invokestatic  #115                // Method wyjc/runtime/Util.systemConsole:([Ljava/lang/String;)Lwyjc/runtime/WyRecord;
+       4: invokestatic  #11                 // Method main$1AY7P8c1$r0$P$Z5$g0FO$Z6$j$$Q$35$i0kO$w1$I0FT$B6$o0FO$oq0kF$w5$i0kR$w5$g0FOz:(Lwyjc/runtime/WyRecord;)V
+       7: return
+}
