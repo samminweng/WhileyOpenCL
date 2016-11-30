@@ -60,7 +60,7 @@ BEGIN {
 	filename = "";
 	FS = "\n";
 	## Test case name
-	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge";
+	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge LZ77";
 	###testcases="Reverse newTicTacToe BubbleSort MatrixMult Fibonacci GCD CoinGame SobelEdge MergeSort NQueens LZ77";
 
 	## Program Type
@@ -100,7 +100,7 @@ BEGIN {
 	## Recursive function call
 	# parameters["NQueens"]="8 10 12 14";
 	# ### pattern transformation
-	#parameters["LZ77"]="small medium large";
+	parameters["LZ77"]="small medium large";
 
 	# The number of threads
 	#threads="1 2 4";

@@ -4,7 +4,7 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge";
+	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge LZ77";
 	
 	## Program Type
 	programs["Reverse"]="original";
@@ -20,7 +20,7 @@ BEGIN {
 	# ## Recursive function call
 	# programs["NQueens"]="original integer";
 	# ### Pattern transformation
-	# programs["LZ77"]="original";
+	programs["LZ77"]="original";
 
 	# Code Generation
 	codegens = "naive naive_dealloc nocopy nocopy_dealloc";
@@ -45,7 +45,7 @@ BEGIN {
 	# 
 	# parameters["NQueens"]="8 9 10";
 	# ### pattern transformation
-	# parameters["LZ77"]="small medium";
+	parameters["LZ77"]="small medium large";
 	
 
 	# The number of threads

@@ -206,35 +206,35 @@ exec(){
 # # ###  (naive + de-allocated, copy_reduced, copy_reduced + de-allocated)
 # # ###
 # # ###########################################
-# ## # Reverse test case
-init Reverse
-exec Reverse original 100000
-exec Reverse original 1000000
-exec Reverse original 10000000
+# # ## # Reverse test case
+# init Reverse
+# exec Reverse original 100000
+# exec Reverse original 1000000
+# exec Reverse original 10000000
 
-# # # # newTicTacToe test case
-init newTicTacToe
-exec newTicTacToe original 1000
-exec newTicTacToe original 10000
-exec newTicTacToe original 100000
+# # # # # newTicTacToe test case
+# init newTicTacToe
+# exec newTicTacToe original 1000
+# exec newTicTacToe original 10000
+# exec newTicTacToe original 100000
 
-# # ## # MergeSort test case
-init MergeSort
-exec MergeSort original 1000
-exec MergeSort original 10000
-exec MergeSort original 100000
+# # # ## # MergeSort test case
+# init MergeSort
+# exec MergeSort original 1000
+# exec MergeSort original 10000
+# exec MergeSort original 100000
 
-# ## # BubbleSort test case
-init BubbleSort
-exec BubbleSort original 1000
-exec BubbleSort original 10000
-exec BubbleSort original 100000
+# # ## # BubbleSort test case
+# init BubbleSort
+# exec BubbleSort original 1000
+# exec BubbleSort original 10000
+# exec BubbleSort original 100000
 
-# # MatrixMult test case
-init MatrixMult
-exec MatrixMult original 1000
-exec MatrixMult original 2000
-exec MatrixMult original 3000
+# # # MatrixMult test case
+# init MatrixMult
+# exec MatrixMult original 1000
+# exec MatrixMult original 2000
+# exec MatrixMult original 3000
 #exec MatrixMult original 8000
 ##exec MatrixMult original 12000 # Naive code runs out of memory
 # # # exec MatrixMult transpose 1000
@@ -296,8 +296,8 @@ exec MatrixMult original 3000
 # exec NQueens integer 12
 # exec NQueens integer 14
 
-# #### LZ77 test case
-# init LZ77
-# exec LZ77 original "small.in"
-# exec LZ77 original "medium.in"
-# exec LZ77 original "large.in"
+#### LZ77 test case
+init LZ77
+exec LZ77 original "small.in"
+exec LZ77 original "medium.in"
+exec LZ77 original "large.in"

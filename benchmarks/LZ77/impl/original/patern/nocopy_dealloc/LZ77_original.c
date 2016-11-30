@@ -445,8 +445,8 @@ blklab13:;
 blklab12:;
 	//assert
 	{
-		//ifge %26, %28 goto blklab22 : int
-		if(_26>=_28){goto blklab22;}
+		//ifle %28, %26 goto blklab22 : int
+		if(_28<=_26){goto blklab22;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
