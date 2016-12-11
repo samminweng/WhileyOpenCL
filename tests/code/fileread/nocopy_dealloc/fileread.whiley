@@ -3,7 +3,7 @@
 * http://netpbm.sourceforge.net/doc/pbm.html
 P1
 # feep.pbm
-24 7
+32 32
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 0 1 1 1 1 0 0 1 1 1 1 0 0 1 1 1 1 0 0 1 1 1 1 0
 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 1 0
@@ -11,10 +11,10 @@ P1
 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0
 0 1 0 0 0 0 0 1 1 1 1 0 0 1 1 1 1 0 0 1 0 0 0 0
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
+....
 # P1: file type
-# 24: width
-# 7: height
+# 32: width
+# 32: height
 *
 */
 import * from whiley.io.File
@@ -23,8 +23,8 @@ import whiley.lang.*
 
 method main(System.Console sys):
     File.Reader file = File.Reader("feep.pbm")
-    int width=24
-    int height=7
+    int width=32
+    int height=32
     byte[] data = file.readAll()
     sys.out.print_s("READ:         ")
     sys.out.print(|data|)

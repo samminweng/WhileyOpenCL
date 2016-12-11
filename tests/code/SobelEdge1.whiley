@@ -64,55 +64,42 @@ function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
 	return newPixels
 
 // ========================================================
-// Print a Image
+// Print a pbm image
 // ========================================================
-method printImage(System.Console sys, byte[] pixels, int width, int height):
-	int y = 0
-	while y<height:
-		int x = 0
-		while x<width:
-			int pos = y*width + x
-			// Print out each pixel value
-			if pixels[pos] == SPACE:
-				sys.out.print_s(" ")
-			else:
-				sys.out.print_s("b")
-			sys.out.print_s(" ")
-			x = x + 1
-		y = y + 1
-		sys.out.println_s("")
+method print_pbm(System.Console sys, int width, int height, byte[] pixels):
+    // File type
+    sys.out.println_s("P1")
+    // Width + height
+    sys.out.print(width)
+    sys.out.print_s(" ")
+    sys.out.println(height)
+    // An array of bytes with an row of pixels in width
+    int j = 0
+    while j<height:
+        int i = 0
+        while i<width:
+            int pos = j*width + i
+            if pixels[pos] == SPACE:
+                sys.out.print(0)
+            else:
+            	// Print out edges
+                sys.out.print(1)
+            // Each pixel is separated by a space
+            sys.out.print_s(" ")
+            i = i + 1
+        // Add a newline
+        sys.out.println_s("")
+        j = j + 1
 
 // Main function
 method main(System.Console sys):
-	int width = 8
-	int height = 8
+	// Read feep.bpm
+	File.Reader r = File.Reader("feep.pbm")
+	int width =32
+	int height = 32
 	int size = width * height
-	// An image of 8 x 8 white pixels 
-	byte[] pixels = [SPACE;size]
-	// Place a black pixel at (0,0) 
-	pixels[0] = BLACK // (0,0)
+	byte[] pixels = r.readAll()
 	// Place a black pixel 
 	byte[] newPixels = sobelEdgeDetection(pixels, width, height)
-	sys.out.println_s("Input Image:")
-	printImage(sys, pixels, width, height)
 	sys.out.println_s("Sobel Edge Detection:")
-	printImage(sys, newPixels, width, height)
-	// Write output to a file
-	File.Writer w = File.Writer("output.txt")
-	w.write(newPixels)
-	w.close()
-	// A black pixel is at (0,0)
-	assert newPixels[0] == BLACK  // (0,0)
-	// The pixels at left-top corner are white
-	assert newPixels[1] == SPACE // (1,0)
-	assert newPixels[width] == SPACE // (0,1)
-	assert newPixels[width+1] == SPACE // (1,1)
-	// The pixels at left-bottom corner are white, due to wrapping pixels
-	assert newPixels[7*width] == SPACE // (0,7)
-	assert newPixels[7*width+1] == SPACE // (1,7)
-	// The pixels at right-top corner are white
-	assert newPixels[7] == SPACE // (7,0)
-	assert newPixels[width+7] == SPACE // (7,1)
-	// The pixels at right-bottom corner are white
-	assert newPixels[7*width+7]  == SPACE // (7,7)
-
+	print_pbm(sys, width, height, newPixels)

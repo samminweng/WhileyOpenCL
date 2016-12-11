@@ -26,12 +26,12 @@ int main(int argc, char** args){
 	}
 	//assign %1 = %5  : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
 	file = _5;
-	//const %7 = 24 : int
-	_7 = 24;
+	//const %7 = 32 : int
+	_7 = 32;
 	//assign %2 = %7  : int
 	width = _7;
-	//const %8 = 7 : int
-	_8 = 7;
+	//const %8 = 32 : int
+	_8 = 32;
 	//assign %3 = %8  : int
 	height = _8;
 	//fieldload %10 = %1 readAll : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}

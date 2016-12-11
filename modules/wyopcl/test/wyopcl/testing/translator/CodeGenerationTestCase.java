@@ -78,9 +78,10 @@ public class CodeGenerationTestCase {
 				"lz77",
 				"lz77_2",
 				"fileread", //Read 'feep.pbm' as a byte array
-				"fileread2",// Read 'feep.pbm' and output the array to console  
+				"fileread2",// Read 'feep.pbm' and output the array to console 
+				"SobelEdge1", // Read 'feep.pbm', detect the edges and output the resulting array
 				/*
-				"SobelEdge1", // Create an on-memory byte 
+				// Create an on-memory byte 
 				"SobelEdge2", // Create an on-memory byte 
 				"SobelEdge3",
 				*/

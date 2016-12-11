@@ -594,7 +594,15 @@ BYTE* readPBM(FILE *file, size_t* _size){
 		// Read one byte
 		while (fscanf(file, "%u", &b) == 1){
 			if(b != ' ' && b != '\n'){
-				arr[arr_ind] = (BYTE)b;
+				if(b == 1){
+					// b is an edge, represent by 'b'
+					arr[arr_ind] = (BYTE)98;
+				}else if(b == 0){
+					// b is an space
+					arr[arr_ind] = (BYTE)32;
+				}else{
+					arr[arr_ind] = (BYTE)b;
+				}
 				arr_ind++;
 			}
 		}

@@ -7,7 +7,13 @@ import * from whiley.io.File
 import * from whiley.lang.System
 import whiley.lang.*
 
-method print_pbm(System.Console sys, int width, int height, byte[] data):
+constant SPACE is 00100000b // ASCII code of space (' ') 
+constant BLACK is 01100010b // ASCII code of 'b'
+
+// ========================================================
+// Print a pbm image
+// ========================================================
+method print_pbm(System.Console sys, int width, int height, byte[] pixels):
     // File type
     sys.out.println_s("P1")
     // Width + height
@@ -20,17 +26,20 @@ method print_pbm(System.Console sys, int width, int height, byte[] data):
         int i = 0
         while i<width:
             int pos = j*width + i
-            sys.out.print(Byte.toUnsignedInt(data[pos]))
+            if pixels[pos] == SPACE:
+                sys.out.print(0)
+            else:
+                sys.out.print(1)
             // Each pixel is separated by a space
             sys.out.print_s(" ")
             i = i + 1
         // Add a newline
         sys.out.println_s("")
-        j = j + 1   
+        j = j + 1 
 
 method main(System.Console sys):
     File.Reader r = File.Reader("feep.pbm")
-    int width=24
-    int height=7
-    byte[] data = r.readAll()
-    print_pbm(sys, width, height, data)
+    int width=32
+    int height=32
+    byte[] pixels = r.readAll()
+    print_pbm(sys, width, height, pixels)

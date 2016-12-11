@@ -353,115 +353,149 @@ blklab4:;
 	//return
 }
 
-void printImage(FILE* sys, BYTE* pixels, size_t pixels_size, int64_t width, int64_t height){
-	int64_t y = 0;
-	int64_t x = 0;
+void print_pbm(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t pixels_size){
+	int64_t j = 0;
+	int64_t i = 0;
 	int64_t pos = 0;
-	int64_t _7 = 0;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	BYTE _11;
-	BYTE _12;
-	void* _13;
-	_DECL_1DARRAY(_15);
-	void* _16;
-	_DECL_1DARRAY(_18);
-	void* _19;
-	_DECL_1DARRAY(_21);
-	int64_t _22 = 0;
-	int64_t _23 = 0;
-	int64_t _24 = 0;
+	void* _7;
+	_DECL_1DARRAY(_9);
+	void* _10;
+	void* _12;
+	_DECL_1DARRAY(_14);
+	void* _15;
+	int64_t _17 = 0;
+	int64_t _18 = 0;
+	int64_t _19 = 0;
+	int64_t _20 = 0;
+	BYTE _21;
+	BYTE _22;
+	void* _23;
 	int64_t _25 = 0;
 	void* _26;
-	void* _28;
-	size_t _28_size = 0;
-	//const %7 = 0 : int
-	_7 = 0;
-	//assign %4 = %7  : int
-	y = _7;
-	//loop (%4, %5, %6, %8, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28)
+	int64_t _28 = 0;
+	void* _29;
+	_DECL_1DARRAY(_31);
+	int64_t _32 = 0;
+	int64_t _33 = 0;
+	void* _34;
+	void* _36;
+	size_t _36_size = 0;
+	int64_t _37 = 0;
+	int64_t _38 = 0;
+	//fieldload %7 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %8 = %7 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %9 = [80,49] : int[]
+	_NEW_1DARRAY_int64_t(_9, 2, 0);
+	_9[0] = 80; _9[1] = 49; 
+	//indirectinvoke () = %8 (%9) : method(int[])->()
+	{
+		println_s(_9, _9_size);
+	}
+	//fieldload %10 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %11 = %10 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %11 (%1) : method(any)->()
+	{
+		printf("%"PRId64, width);
+	}
+	//fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %13 = %12 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %14 = [32] : int[]
+	_NEW_1DARRAY_int64_t(_14, 1, 0);
+	_14[0] = 32; 
+	//indirectinvoke () = %13 (%14) : method(int[])->()
+	{
+		printf_s(_1DARRAY_PARAM(_14));
+	}
+	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %16 = %15 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %16 (%2) : method(any)->()
+	{
+		printf("%"PRId64"\n", height);
+	}
+	//const %17 = 0 : int
+	_17 = 0;
+	//assign %4 = %17  : int
+	j = _17;
+	//loop (%4, %5, %6, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38)
 	while(true){
-		//ifge %4, %3 goto blklab9 : int
-		if(y>=height){goto blklab9;}
-		//const %8 = 0 : int
-		_8 = 0;
-		//assign %5 = %8  : int
-		x = _8;
-		//loop (%5, %6, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23)
+		//ifge %4, %2 goto blklab9 : int
+		if(j>=height){goto blklab9;}
+		//const %18 = 0 : int
+		_18 = 0;
+		//assign %5 = %18  : int
+		i = _18;
+		//loop (%5, %6, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33)
 		while(true){
-			//ifge %5, %2 goto blklab11 : int
-			if(x>=width){goto blklab11;}
-			//mul %9 = %4, %2 : int
-			_9=y*width;
-			//add %10 = %9, %5 : int
-			_10=_9+x;
-			//assign %6 = %10  : int
-			pos = _10;
-			//indexof %11 = %1, %6 : byte[]
-			_11=pixels[pos];
-			//const %12 = 00100000b : byte
-			_12 = 0b00100000;
-			//ifne %11, %12 goto blklab13 : byte
-			if(_11!=_12){goto blklab13;}
-			//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %14 = %13 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//const %15 = [32] : int[]
-			_NEW_1DARRAY_int64_t(_15, 1, 0);
-			_15[0] = 32; 
-			//indirectinvoke () = %14 (%15) : method(int[])->()
+			//ifge %5, %1 goto blklab11 : int
+			if(i>=width){goto blklab11;}
+			//mul %19 = %4, %1 : int
+			_19=j*width;
+			//add %20 = %19, %5 : int
+			_20=_19+i;
+			//assign %6 = %20  : int
+			pos = _20;
+			//indexof %21 = %3, %6 : byte[]
+			_21=pixels[pos];
+			//const %22 = 00100000b : byte
+			_22 = 0b00100000;
+			//ifne %21, %22 goto blklab13 : byte
+			if(_21!=_22){goto blklab13;}
+			//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %24 = %23 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//const %25 = 0 : int
+			_25 = 0;
+			//indirectinvoke () = %24 (%25) : method(any)->()
 			{
-				printf_s(_1DARRAY_PARAM(_15));
+				printf("%"PRId64, _25);
 			}
 			//goto blklab14
 			goto blklab14;
 //.blklab13
 blklab13:;
-			//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %17 = %16 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//const %18 = [98] : int[]
-			_NEW_1DARRAY_int64_t(_18, 1, 0);
-			_18[0] = 98; 
-			//indirectinvoke () = %17 (%18) : method(int[])->()
+			//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %27 = %26 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//const %28 = 1 : int
+			_28 = 1;
+			//indirectinvoke () = %27 (%28) : method(any)->()
 			{
-				printf_s(_1DARRAY_PARAM(_18));
+				printf("%"PRId64, _28);
 			}
 //.blklab14
 blklab14:;
-			//fieldload %19 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %20 = %19 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//const %21 = [32] : int[]
-			_NEW_1DARRAY_int64_t(_21, 1, 0);
-			_21[0] = 32; 
-			//indirectinvoke () = %20 (%21) : method(int[])->()
+			//fieldload %29 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %30 = %29 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//const %31 = [32] : int[]
+			_NEW_1DARRAY_int64_t(_31, 1, 0);
+			_31[0] = 32; 
+			//indirectinvoke () = %30 (%31) : method(int[])->()
 			{
-				printf_s(_1DARRAY_PARAM(_21));
+				printf_s(_1DARRAY_PARAM(_31));
 			}
-			//const %22 = 1 : int
-			_22 = 1;
-			//add %23 = %5, %22 : int
-			_23=x+_22;
-			//assign %5 = %23  : int
-			x = _23;
+			//const %32 = 1 : int
+			_32 = 1;
+			//add %33 = %5, %32 : int
+			_33=i+_32;
+			//assign %5 = %33  : int
+			i = _33;
 //.blklab12
 blklab12:;
 		}
 //.blklab11
 blklab11:;
-		//const %24 = 1 : int
-		_24 = 1;
-		//add %25 = %4, %24 : int
-		_25=y+_24;
-		//assign %4 = %25  : int
-		y = _25;
-		//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-		//fieldload %27 = %26 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-		//const %28 = [] : void[]
-		_NEW_1DARRAY_int64_t(_28, 0, 0);
-		//indirectinvoke () = %27 (%28) : method(int[])->()
+		//fieldload %34 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+		//fieldload %35 = %34 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+		//const %36 = [] : void[]
+		_NEW_1DARRAY_int64_t(_36, 0, 0);
+		//indirectinvoke () = %35 (%36) : method(int[])->()
 		{
-			println_s(_28, _28_size);
+			println_s(_36, _36_size);
 		}
+		//const %37 = 1 : int
+		_37 = 1;
+		//add %38 = %4, %37 : int
+		_38=j+_37;
+		//assign %4 = %38  : int
+		j = _38;
 //.blklab10
 blklab10:;
 	}
@@ -472,309 +506,69 @@ blklab9:;
 }
 
 int main(int argc, char** args){
+	FILE* r;
 	int64_t width = 0;
 	int64_t height = 0;
 	int64_t size = 0;
 	_DECL_1DARRAY_BYTE(pixels);
 	_DECL_1DARRAY_BYTE(newPixels);
-	FILE* w;
-	int64_t _7 = 0;
-	int64_t _8 = 0;
+	void* _7;
+	_DECL_1DARRAY(_8);
 	int64_t _9 = 0;
-	BYTE _10;
-	_DECL_1DARRAY_BYTE(_11);
-	BYTE _12;
-	int64_t _13 = 0;
+	int64_t _10 = 0;
+	int64_t _11 = 0;
+	_DECL_1DARRAY_BYTE(_12);
 	_DECL_1DARRAY_BYTE(_14);
 	void* _15;
 	_DECL_1DARRAY(_17);
-	void* _18;
-	_DECL_1DARRAY(_20);
-	void* _21;
-	_DECL_1DARRAY(_22);
-	int64_t _23 = 0;
-	int64_t _26 = 0;
-	BYTE _27;
-	BYTE _28;
-	int64_t _29 = 0;
-	BYTE _30;
-	BYTE _31;
-	BYTE _32;
-	BYTE _33;
-	int64_t _34 = 0;
-	int64_t _35 = 0;
-	BYTE _36;
-	BYTE _37;
-	int64_t _38 = 0;
-	int64_t _39 = 0;
-	BYTE _40;
-	BYTE _41;
-	int64_t _42 = 0;
-	int64_t _43 = 0;
-	int64_t _44 = 0;
-	int64_t _45 = 0;
-	BYTE _46;
-	BYTE _47;
-	int64_t _48 = 0;
-	BYTE _49;
-	BYTE _50;
-	int64_t _51 = 0;
-	int64_t _52 = 0;
-	BYTE _53;
-	BYTE _54;
-	int64_t _55 = 0;
-	int64_t _56 = 0;
-	int64_t _57 = 0;
-	int64_t _58 = 0;
-	BYTE _59;
-	BYTE _60;
-	//const %7 = 8 : int
-	_7 = 8;
-	//assign %1 = %7  : int
-	width = _7;
-	//const %8 = 8 : int
-	_8 = 8;
-	//assign %2 = %8  : int
-	height = _8;
-	//mul %9 = %1, %2 : int
-	_9=width*height;
-	//assign %3 = %9  : int
-	size = _9;
-	//const %10 = 00100000b : byte
-	_10 = 0b00100000;
-	//arraygen %11 = [10; 3] : byte[]
-	_NEW_1DARRAY_BYTE(_11, size, _10);
-	//assign %4 = %11  : byte[]
-	_COPY_1DARRAY_BYTE(pixels, _11);
-	//const %12 = 01100010b : byte
-	_12 = 0b01100010;
-	//const %13 = 0 : int
-	_13 = 0;
-	//update %4[%13] = %12 : byte[] -> byte[]
-	pixels[_13] = _12;
-	//invoke (%14) = (%4, %1, %2) SobelEdge1:sobelEdgeDetection : function(byte[],int,int)->(byte[])
+	//const %8 = [102,101,101,112,46,112,98,109] : int[]
+	_NEW_1DARRAY_int64_t(_8, 8, 0);
+	_8[0] = 102; _8[1] = 101; _8[2] = 101; _8[3] = 112; _8[4] = 46; _8[5] = 112; _8[6] = 98; _8[7] = 109; 
+	//invoke (%7) = (%8) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
+	{
+		_7 = Reader(_8, _8_size);
+	}
+	//assign %1 = %7  : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
+	r = _7;
+	//const %9 = 32 : int
+	_9 = 32;
+	//assign %2 = %9  : int
+	width = _9;
+	//const %10 = 32 : int
+	_10 = 32;
+	//assign %3 = %10  : int
+	height = _10;
+	//mul %11 = %2, %3 : int
+	_11=width*height;
+	//assign %4 = %11  : int
+	size = _11;
+	//fieldload %13 = %1 readAll : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
+	//indirectinvoke (%12) = %13 () : method()->(byte[])
+	{
+		_12 = readAll(r, &_12_size);
+	}
+	//assign %5 = %12  : byte[]
+	_COPY_1DARRAY_BYTE(pixels, _12);
+	//invoke (%14) = (%5, %2, %3) SobelEdge1:sobelEdgeDetection : function(byte[],int,int)->(byte[])
 	{
 		void* pixels_tmp;
 		_14 = sobelEdgeDetection(_COPY_1DARRAY_PARAM_BYTE(pixels), width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_14));
 	}
-	//assign %5 = %14  : byte[]
+	//assign %6 = %14  : byte[]
 	_COPY_1DARRAY_BYTE(newPixels, _14);
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %16 = %15 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %17 = [73,110,112,117,116,32,73,109,97,103,101,58] : int[]
-	_NEW_1DARRAY_int64_t(_17, 12, 0);
-	_17[0] = 73; _17[1] = 110; _17[2] = 112; _17[3] = 117; _17[4] = 116; _17[5] = 32; _17[6] = 73; _17[7] = 109; _17[8] = 97; _17[9] = 103; _17[10] = 101; _17[11] = 58; 
+	//const %17 = [83,111,98,101,108,32,69,100,103,101,32,68,101,116,101,99,116,105,111,110,58] : int[]
+	_NEW_1DARRAY_int64_t(_17, 21, 0);
+	_17[0] = 83; _17[1] = 111; _17[2] = 98; _17[3] = 101; _17[4] = 108; _17[5] = 32; _17[6] = 69; _17[7] = 100; _17[8] = 103; _17[9] = 101; _17[10] = 32; _17[11] = 68; _17[12] = 101; _17[13] = 116; _17[14] = 101; _17[15] = 99; _17[16] = 116; _17[17] = 105; _17[18] = 111; _17[19] = 110; _17[20] = 58; 
 	//indirectinvoke () = %16 (%17) : method(int[])->()
 	{
 		println_s(_17, _17_size);
 	}
-	//invoke () = (%0, %4, %1, %2) SobelEdge1:printImage : method(whiley/lang/System:Console,byte[],int,int)->()
-	{
-		void* pixels_tmp;
-		printImage(stdout, _COPY_1DARRAY_PARAM_BYTE(pixels), width, height);
-	}
-	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %19 = %18 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %20 = [83,111,98,101,108,32,69,100,103,101,32,68,101,116,101,99,116,105,111,110,58] : int[]
-	_NEW_1DARRAY_int64_t(_20, 21, 0);
-	_20[0] = 83; _20[1] = 111; _20[2] = 98; _20[3] = 101; _20[4] = 108; _20[5] = 32; _20[6] = 69; _20[7] = 100; _20[8] = 103; _20[9] = 101; _20[10] = 32; _20[11] = 68; _20[12] = 101; _20[13] = 116; _20[14] = 101; _20[15] = 99; _20[16] = 116; _20[17] = 105; _20[18] = 111; _20[19] = 110; _20[20] = 58; 
-	//indirectinvoke () = %19 (%20) : method(int[])->()
-	{
-		println_s(_20, _20_size);
-	}
-	//invoke () = (%0, %5, %1, %2) SobelEdge1:printImage : method(whiley/lang/System:Console,byte[],int,int)->()
+	//invoke () = (%0, %2, %3, %6) SobelEdge1:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
 		void* newPixels_tmp;
-		printImage(stdout, _COPY_1DARRAY_PARAM_BYTE(newPixels), width, height);
-	}
-	//const %22 = [111,117,116,112,117,116,46,116,120,116] : int[]
-	_NEW_1DARRAY_int64_t(_22, 10, 0);
-	_22[0] = 111; _22[1] = 117; _22[2] = 116; _22[3] = 112; _22[4] = 117; _22[5] = 116; _22[6] = 46; _22[7] = 116; _22[8] = 120; _22[9] = 116; 
-	//invoke (%21) = (%22) whiley/io/File:Writer : method(whiley/lang/ASCII:string)->(whiley/io/File:Writer)
-	{
-		_21 = Writer(_22, _22_size);
-	}
-	//assign %6 = %21  : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
-	w = _21;
-	//fieldload %24 = %6 write : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
-	//indirectinvoke (%23) = %24 (%5) : method(byte[])->(int)
-	{
-		writeAll(w, newPixels, newPixels_size);
-	}
-	//fieldload %25 = %6 close : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
-	//indirectinvoke () = %25 () : method()->()
-	{
-		fclose(w);
-		w = NULL;
-	}
-	//assert
-	{
-		//const %26 = 0 : int
-		_26 = 0;
-		//indexof %27 = %5, %26 : byte[]
-		_27=newPixels[_26];
-		//const %28 = 01100010b : byte
-		_28 = 0b01100010;
-		//ifeq %27, %28 goto blklab15 : byte
-		if(_27==_28){goto blklab15;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab15
-blklab15:;
-	//assert
-	}
-	//assert
-	{
-		//const %29 = 1 : int
-		_29 = 1;
-		//indexof %30 = %5, %29 : byte[]
-		_30=newPixels[_29];
-		//const %31 = 00100000b : byte
-		_31 = 0b00100000;
-		//ifeq %30, %31 goto blklab16 : byte
-		if(_30==_31){goto blklab16;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab16
-blklab16:;
-	//assert
-	}
-	//assert
-	{
-		//indexof %32 = %5, %1 : byte[]
-		_32=newPixels[width];
-		//const %33 = 00100000b : byte
-		_33 = 0b00100000;
-		//ifeq %32, %33 goto blklab17 : byte
-		if(_32==_33){goto blklab17;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab17
-blklab17:;
-	//assert
-	}
-	//assert
-	{
-		//const %34 = 1 : int
-		_34 = 1;
-		//add %35 = %1, %34 : int
-		_35=width+_34;
-		//indexof %36 = %5, %35 : byte[]
-		_36=newPixels[_35];
-		//const %37 = 00100000b : byte
-		_37 = 0b00100000;
-		//ifeq %36, %37 goto blklab18 : byte
-		if(_36==_37){goto blklab18;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab18
-blklab18:;
-	//assert
-	}
-	//assert
-	{
-		//const %38 = 7 : int
-		_38 = 7;
-		//mul %39 = %38, %1 : int
-		_39=_38*width;
-		//indexof %40 = %5, %39 : byte[]
-		_40=newPixels[_39];
-		//const %41 = 00100000b : byte
-		_41 = 0b00100000;
-		//ifeq %40, %41 goto blklab19 : byte
-		if(_40==_41){goto blklab19;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab19
-blklab19:;
-	//assert
-	}
-	//assert
-	{
-		//const %42 = 7 : int
-		_42 = 7;
-		//mul %43 = %42, %1 : int
-		_43=_42*width;
-		//const %44 = 1 : int
-		_44 = 1;
-		//add %45 = %43, %44 : int
-		_45=_43+_44;
-		//indexof %46 = %5, %45 : byte[]
-		_46=newPixels[_45];
-		//const %47 = 00100000b : byte
-		_47 = 0b00100000;
-		//ifeq %46, %47 goto blklab20 : byte
-		if(_46==_47){goto blklab20;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab20
-blklab20:;
-	//assert
-	}
-	//assert
-	{
-		//const %48 = 7 : int
-		_48 = 7;
-		//indexof %49 = %5, %48 : byte[]
-		_49=newPixels[_48];
-		//const %50 = 00100000b : byte
-		_50 = 0b00100000;
-		//ifeq %49, %50 goto blklab21 : byte
-		if(_49==_50){goto blklab21;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab21
-blklab21:;
-	//assert
-	}
-	//assert
-	{
-		//const %51 = 7 : int
-		_51 = 7;
-		//add %52 = %1, %51 : int
-		_52=width+_51;
-		//indexof %53 = %5, %52 : byte[]
-		_53=newPixels[_52];
-		//const %54 = 00100000b : byte
-		_54 = 0b00100000;
-		//ifeq %53, %54 goto blklab22 : byte
-		if(_53==_54){goto blklab22;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab22
-blklab22:;
-	//assert
-	}
-	//assert
-	{
-		//const %55 = 7 : int
-		_55 = 7;
-		//mul %56 = %55, %1 : int
-		_56=_55*width;
-		//const %57 = 7 : int
-		_57 = 7;
-		//add %58 = %56, %57 : int
-		_58=_56+_57;
-		//indexof %59 = %5, %58 : byte[]
-		_59=newPixels[_58];
-		//const %60 = 00100000b : byte
-		_60 = 0b00100000;
-		//ifeq %59, %60 goto blklab23 : byte
-		if(_59==_60){goto blklab23;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab23
-blklab23:;
-	//assert
+		print_pbm(stdout, width, height, _COPY_1DARRAY_PARAM_BYTE(newPixels));
 	}
 	//return
 	exit(0);
