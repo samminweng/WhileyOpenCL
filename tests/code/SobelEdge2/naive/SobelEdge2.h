@@ -12,5 +12,5 @@ void free_Image(Image* _image);
 Image* image(int64_t width, int64_t height, BYTE* pixels, size_t pixels_size);
 int64_t convolution(Image* A, int64_t xCenter, int64_t yCenter, _DECL_1DARRAY_PARAM(filter));
 Image* sobelEdgeDetection(Image* input);
-void print_image(FILE* sys, Image* im);
+void print_pbm(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t pixels_size);
 int main(int argc, char** args);

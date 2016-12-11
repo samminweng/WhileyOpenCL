@@ -92,48 +92,44 @@ function sobelEdgeDetection(Image input) -> Image:
 	// Store resulting 'newPixels' array with a Image structure
 	return image(width, height, newPixels)
 
-//========================================================
-// Print out a Image 
-// ========================================================   
-method print_image(System.Console sys, Image im):
-	byte[] pixels = im.pixels
-	int width = im.width
-	int height = im.height
-	int y = 0
-	while y<height:
-		int x = 0
-		while x<width:
-			int pos = y*width + x
-			// Print out each pixel value
-			if pixels[pos] == SPACE:
-				sys.out.print_s(" ")
-			else:
-				sys.out.print_s("b")
-			sys.out.print_s(" ")
-			x = x + 1
-		y = y + 1
-		sys.out.println_s("")
+// ========================================================
+// Print a pbm image
+// ========================================================
+method print_pbm(System.Console sys, int width, int height, byte[] pixels):
+    // File type
+    sys.out.println_s("P1")
+    // Width + height
+    sys.out.print(width)
+    sys.out.print_s(" ")
+    sys.out.println(height)
+    // An array of bytes with an row of pixels in width
+    int j = 0
+    while j<height:
+        int i = 0
+        while i<width:
+            int pos = j*width + i
+            if pixels[pos] == SPACE:
+                sys.out.print(0)
+            else:
+            	// Print out edges
+                sys.out.print(1)
+            // Each pixel is separated by a space
+            sys.out.print_s(" ")
+            i = i + 1
+        // Add a newline
+        sys.out.println_s("")
+        j = j + 1
 
 // Main function
 method main(System.Console sys):
-	int width = 8
-	int height = 8
+	// Read feep.bpm
+	File.Reader r = File.Reader("feep.pbm")
+	int width =32
+	int height = 32
 	int size = width * height
-	// Set all pixels to be white
-	byte[] pixels = [SPACE;size] 
-	// Place a black pixel at (0,0) position 
-	pixels[0] = BLACK // (0,0)
-	// Place a black pixel at (3,4) position 
-	pixels[4*width+3] = BLACK // (3,4)
+	byte[] pixels = r.readAll()
 	// Create an Image structure to store input image
 	Image input = image(width, height, pixels)
 	// Output the result image that is filtered with sobel edge 
 	Image output = sobelEdgeDetection(input)
-	sys.out.println_s("Input Image:")
-	print_image(sys, input)
-	sys.out.println_s("Sobel Edge Detection:")
-	print_image(sys, output)
-	// Write output to a file
-	File.Writer w = File.Writer("output.txt")
-	w.write(output.pixels)
-	w.close()
+	print_pbm(sys, output.width, output.height, output.pixels)

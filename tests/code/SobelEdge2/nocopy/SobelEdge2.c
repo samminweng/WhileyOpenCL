@@ -428,133 +428,149 @@ blklab4:;
 	//return
 }
 
-void print_image(FILE* sys, Image* im){
-	_DECL_1DARRAY_BYTE(pixels);
-	int64_t width = 0;
-	int64_t height = 0;
-	int64_t y = 0;
-	int64_t x = 0;
+void print_pbm(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t pixels_size){
+	int64_t j = 0;
+	int64_t i = 0;
 	int64_t pos = 0;
-	_DECL_1DARRAY_BYTE(_8);
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
-	int64_t _13 = 0;
-	int64_t _14 = 0;
-	BYTE _15;
-	BYTE _16;
-	void* _17;
-	_DECL_1DARRAY(_19);
-	void* _20;
-	_DECL_1DARRAY(_22);
+	void* _7;
+	_DECL_1DARRAY(_9);
+	void* _10;
+	void* _12;
+	_DECL_1DARRAY(_14);
+	void* _15;
+	int64_t _17 = 0;
+	int64_t _18 = 0;
+	int64_t _19 = 0;
+	int64_t _20 = 0;
+	BYTE _21;
+	BYTE _22;
 	void* _23;
-	_DECL_1DARRAY(_25);
-	int64_t _26 = 0;
-	int64_t _27 = 0;
+	int64_t _25 = 0;
+	void* _26;
 	int64_t _28 = 0;
-	int64_t _29 = 0;
-	void* _30;
-	void* _32;
-	size_t _32_size = 0;
-	//fieldload %8 = %1 pixels : {int height,byte[] pixels,int width}
-	_UPDATE_1DARRAY(_8, im->pixels);
-	//assign %2 = %8  : byte[]
-	_UPDATE_1DARRAY(pixels, _8);
-	//fieldload %9 = %1 width : {int height,byte[] pixels,int width}
-	_9 = im->width;
-	//assign %3 = %9  : int
-	width = _9;
-	//fieldload %10 = %1 height : {int height,byte[] pixels,int width}
-	_10 = im->height;
-	//assign %4 = %10  : int
-	height = _10;
-	//const %11 = 0 : int
-	_11 = 0;
-	//assign %5 = %11  : int
-	y = _11;
-	//loop (%5, %6, %7, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32)
+	void* _29;
+	_DECL_1DARRAY(_31);
+	int64_t _32 = 0;
+	int64_t _33 = 0;
+	void* _34;
+	void* _36;
+	size_t _36_size = 0;
+	int64_t _37 = 0;
+	int64_t _38 = 0;
+	//fieldload %7 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %8 = %7 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %9 = [80,49] : int[]
+	_NEW_1DARRAY_int64_t(_9, 2, 0);
+	_9[0] = 80; _9[1] = 49; 
+	//indirectinvoke () = %8 (%9) : method(int[])->()
+	{
+		println_s(_9, _9_size);
+	}
+	//fieldload %10 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %11 = %10 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %11 (%1) : method(any)->()
+	{
+		printf("%"PRId64, width);
+	}
+	//fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %13 = %12 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %14 = [32] : int[]
+	_NEW_1DARRAY_int64_t(_14, 1, 0);
+	_14[0] = 32; 
+	//indirectinvoke () = %13 (%14) : method(int[])->()
+	{
+		printf_s(_1DARRAY_PARAM(_14));
+	}
+	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %16 = %15 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %16 (%2) : method(any)->()
+	{
+		printf("%"PRId64"\n", height);
+	}
+	//const %17 = 0 : int
+	_17 = 0;
+	//assign %4 = %17  : int
+	j = _17;
+	//loop (%4, %5, %6, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38)
 	while(true){
-		//ifge %5, %4 goto blklab9 : int
-		if(y>=height){goto blklab9;}
-		//const %12 = 0 : int
-		_12 = 0;
-		//assign %6 = %12  : int
-		x = _12;
-		//loop (%6, %7, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27)
+		//ifge %4, %2 goto blklab9 : int
+		if(j>=height){goto blklab9;}
+		//const %18 = 0 : int
+		_18 = 0;
+		//assign %5 = %18  : int
+		i = _18;
+		//loop (%5, %6, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33)
 		while(true){
-			//ifge %6, %3 goto blklab11 : int
-			if(x>=width){goto blklab11;}
-			//mul %13 = %5, %3 : int
-			_13=y*width;
-			//add %14 = %13, %6 : int
-			_14=_13+x;
-			//assign %7 = %14  : int
-			pos = _14;
-			//indexof %15 = %2, %7 : byte[]
-			_15=pixels[pos];
-			//const %16 = 00100000b : byte
-			_16 = 0b00100000;
-			//ifne %15, %16 goto blklab13 : byte
-			if(_15!=_16){goto blklab13;}
-			//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %18 = %17 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//const %19 = [32] : int[]
-			_NEW_1DARRAY_int64_t(_19, 1, 0);
-			_19[0] = 32; 
-			//indirectinvoke () = %18 (%19) : method(int[])->()
+			//ifge %5, %1 goto blklab11 : int
+			if(i>=width){goto blklab11;}
+			//mul %19 = %4, %1 : int
+			_19=j*width;
+			//add %20 = %19, %5 : int
+			_20=_19+i;
+			//assign %6 = %20  : int
+			pos = _20;
+			//indexof %21 = %3, %6 : byte[]
+			_21=pixels[pos];
+			//const %22 = 00100000b : byte
+			_22 = 0b00100000;
+			//ifne %21, %22 goto blklab13 : byte
+			if(_21!=_22){goto blklab13;}
+			//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %24 = %23 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//const %25 = 0 : int
+			_25 = 0;
+			//indirectinvoke () = %24 (%25) : method(any)->()
 			{
-				printf_s(_1DARRAY_PARAM(_19));
+				printf("%"PRId64, _25);
 			}
 			//goto blklab14
 			goto blklab14;
 //.blklab13
 blklab13:;
-			//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %21 = %20 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//const %22 = [98] : int[]
-			_NEW_1DARRAY_int64_t(_22, 1, 0);
-			_22[0] = 98; 
-			//indirectinvoke () = %21 (%22) : method(int[])->()
+			//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %27 = %26 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//const %28 = 1 : int
+			_28 = 1;
+			//indirectinvoke () = %27 (%28) : method(any)->()
 			{
-				printf_s(_1DARRAY_PARAM(_22));
+				printf("%"PRId64, _28);
 			}
 //.blklab14
 blklab14:;
-			//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %24 = %23 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//const %25 = [32] : int[]
-			_NEW_1DARRAY_int64_t(_25, 1, 0);
-			_25[0] = 32; 
-			//indirectinvoke () = %24 (%25) : method(int[])->()
+			//fieldload %29 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %30 = %29 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//const %31 = [32] : int[]
+			_NEW_1DARRAY_int64_t(_31, 1, 0);
+			_31[0] = 32; 
+			//indirectinvoke () = %30 (%31) : method(int[])->()
 			{
-				printf_s(_1DARRAY_PARAM(_25));
+				printf_s(_1DARRAY_PARAM(_31));
 			}
-			//const %26 = 1 : int
-			_26 = 1;
-			//add %27 = %6, %26 : int
-			_27=x+_26;
-			//assign %6 = %27  : int
-			x = _27;
+			//const %32 = 1 : int
+			_32 = 1;
+			//add %33 = %5, %32 : int
+			_33=i+_32;
+			//assign %5 = %33  : int
+			i = _33;
 //.blklab12
 blklab12:;
 		}
 //.blklab11
 blklab11:;
-		//const %28 = 1 : int
-		_28 = 1;
-		//add %29 = %5, %28 : int
-		_29=y+_28;
-		//assign %5 = %29  : int
-		y = _29;
-		//fieldload %30 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-		//fieldload %31 = %30 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-		//const %32 = [] : void[]
-		_NEW_1DARRAY_int64_t(_32, 0, 0);
-		//indirectinvoke () = %31 (%32) : method(int[])->()
+		//fieldload %34 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+		//fieldload %35 = %34 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+		//const %36 = [] : void[]
+		_NEW_1DARRAY_int64_t(_36, 0, 0);
+		//indirectinvoke () = %35 (%36) : method(int[])->()
 		{
-			println_s(_32, _32_size);
+			println_s(_36, _36_size);
 		}
+		//const %37 = 1 : int
+		_37 = 1;
+		//add %38 = %4, %37 : int
+		_38=j+_37;
+		//assign %4 = %38  : int
+		j = _38;
 //.blklab10
 blklab10:;
 	}
@@ -565,130 +581,73 @@ blklab9:;
 }
 
 int main(int argc, char** args){
+	FILE* r;
 	int64_t width = 0;
 	int64_t height = 0;
 	int64_t size = 0;
 	_DECL_1DARRAY_BYTE(pixels);
 	Image* input;
 	Image* output;
-	FILE* w;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
+	void* _8;
+	_DECL_1DARRAY(_9);
 	int64_t _10 = 0;
-	BYTE _11;
-	_DECL_1DARRAY_BYTE(_12);
-	BYTE _13;
-	int64_t _14 = 0;
-	BYTE _15;
-	int64_t _16 = 0;
+	int64_t _11 = 0;
+	int64_t _12 = 0;
+	_DECL_1DARRAY_BYTE(_13);
+	Image* _15;
+	Image* _16;
 	int64_t _17 = 0;
 	int64_t _18 = 0;
-	int64_t _19 = 0;
-	Image* _20;
-	Image* _21;
-	void* _22;
-	_DECL_1DARRAY(_24);
-	void* _25;
-	_DECL_1DARRAY(_27);
-	void* _28;
-	_DECL_1DARRAY(_29);
-	int64_t _30 = 0;
-	_DECL_1DARRAY_BYTE(_32);
-	//const %8 = 8 : int
-	_8 = 8;
-	//assign %1 = %8  : int
-	width = _8;
-	//const %9 = 8 : int
-	_9 = 8;
-	//assign %2 = %9  : int
-	height = _9;
-	//mul %10 = %1, %2 : int
-	_10=width*height;
-	//assign %3 = %10  : int
-	size = _10;
-	//const %11 = 00100000b : byte
-	_11 = 0b00100000;
-	//arraygen %12 = [11; 3] : byte[]
-	_NEW_1DARRAY_BYTE(_12, size, _11);
-	//assign %4 = %12  : byte[]
-	_UPDATE_1DARRAY(pixels, _12);
-	//const %13 = 01100010b : byte
-	_13 = 0b01100010;
-	//const %14 = 0 : int
-	_14 = 0;
-	//update %4[%14] = %13 : byte[] -> byte[]
-	pixels[_14] = _13;
-	//const %15 = 01100010b : byte
-	_15 = 0b01100010;
-	//const %16 = 4 : int
-	_16 = 4;
-	//mul %17 = %16, %1 : int
-	_17=_16*width;
-	//const %18 = 3 : int
-	_18 = 3;
-	//add %19 = %17, %18 : int
-	_19=_17+_18;
-	//update %4[%19] = %15 : byte[] -> byte[]
-	pixels[_19] = _15;
-	//invoke (%20) = (%1, %2, %4) SobelEdge2:image : function(int,int,byte[])->(SobelEdge2:Image)
+	_DECL_1DARRAY_BYTE(_19);
+	//const %9 = [102,101,101,112,46,112,98,109] : int[]
+	_NEW_1DARRAY_int64_t(_9, 8, 0);
+	_9[0] = 102; _9[1] = 101; _9[2] = 101; _9[3] = 112; _9[4] = 46; _9[5] = 112; _9[6] = 98; _9[7] = 109; 
+	//invoke (%8) = (%9) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
 	{
-		_20 = image(width, height, _1DARRAY_PARAM(pixels));
+		_8 = Reader(_9, _9_size);
 	}
-	//assign %5 = %20  : {int height,byte[] pixels,int width}
-	input = _20;
-	//invoke (%21) = (%5) SobelEdge2:sobelEdgeDetection : function(SobelEdge2:Image)->(SobelEdge2:Image)
+	//assign %1 = %8  : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
+	r = _8;
+	//const %10 = 32 : int
+	_10 = 32;
+	//assign %2 = %10  : int
+	width = _10;
+	//const %11 = 32 : int
+	_11 = 32;
+	//assign %3 = %11  : int
+	height = _11;
+	//mul %12 = %2, %3 : int
+	_12=width*height;
+	//assign %4 = %12  : int
+	size = _12;
+	//fieldload %14 = %1 readAll : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
+	//indirectinvoke (%13) = %14 () : method()->(byte[])
 	{
-		_21 = sobelEdgeDetection(_STRUCT_PARAM(input));
+		_13 = readAll(r, &_13_size);
 	}
-	//assign %6 = %21  : {int height,byte[] pixels,int width}
-	output = _21;
-	//fieldload %22 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %23 = %22 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %24 = [73,110,112,117,116,32,73,109,97,103,101,58] : int[]
-	_NEW_1DARRAY_int64_t(_24, 12, 0);
-	_24[0] = 73; _24[1] = 110; _24[2] = 112; _24[3] = 117; _24[4] = 116; _24[5] = 32; _24[6] = 73; _24[7] = 109; _24[8] = 97; _24[9] = 103; _24[10] = 101; _24[11] = 58; 
-	//indirectinvoke () = %23 (%24) : method(int[])->()
+	//assign %5 = %13  : byte[]
+	_UPDATE_1DARRAY(pixels, _13);
+	//invoke (%15) = (%2, %3, %5) SobelEdge2:image : function(int,int,byte[])->(SobelEdge2:Image)
 	{
-		println_s(_24, _24_size);
+		_15 = image(width, height, _1DARRAY_PARAM(pixels));
 	}
-	//invoke () = (%0, %5) SobelEdge2:print_image : method(whiley/lang/System:Console,SobelEdge2:Image)->()
+	//assign %6 = %15  : {int height,byte[] pixels,int width}
+	input = _15;
+	//invoke (%16) = (%6) SobelEdge2:sobelEdgeDetection : function(SobelEdge2:Image)->(SobelEdge2:Image)
 	{
-		print_image(stdout, _STRUCT_PARAM(input));
+		_16 = sobelEdgeDetection(_STRUCT_PARAM(input));
 	}
-	//fieldload %25 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %26 = %25 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %27 = [83,111,98,101,108,32,69,100,103,101,32,68,101,116,101,99,116,105,111,110,58] : int[]
-	_NEW_1DARRAY_int64_t(_27, 21, 0);
-	_27[0] = 83; _27[1] = 111; _27[2] = 98; _27[3] = 101; _27[4] = 108; _27[5] = 32; _27[6] = 69; _27[7] = 100; _27[8] = 103; _27[9] = 101; _27[10] = 32; _27[11] = 68; _27[12] = 101; _27[13] = 116; _27[14] = 101; _27[15] = 99; _27[16] = 116; _27[17] = 105; _27[18] = 111; _27[19] = 110; _27[20] = 58; 
-	//indirectinvoke () = %26 (%27) : method(int[])->()
+	//assign %7 = %16  : {int height,byte[] pixels,int width}
+	output = _16;
+	//fieldload %17 = %7 width : {int height,byte[] pixels,int width}
+	_17 = output->width;
+	//fieldload %18 = %7 height : {int height,byte[] pixels,int width}
+	_18 = output->height;
+	//fieldload %19 = %7 pixels : {int height,byte[] pixels,int width}
+	_UPDATE_1DARRAY(_19, output->pixels);
+	//invoke () = (%0, %17, %18, %19) SobelEdge2:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
-		println_s(_27, _27_size);
-	}
-	//invoke () = (%0, %6) SobelEdge2:print_image : method(whiley/lang/System:Console,SobelEdge2:Image)->()
-	{
-		print_image(stdout, _STRUCT_PARAM(output));
-	}
-	//const %29 = [111,117,116,112,117,116,46,116,120,116] : int[]
-	_NEW_1DARRAY_int64_t(_29, 10, 0);
-	_29[0] = 111; _29[1] = 117; _29[2] = 116; _29[3] = 112; _29[4] = 117; _29[5] = 116; _29[6] = 46; _29[7] = 116; _29[8] = 120; _29[9] = 116; 
-	//invoke (%28) = (%29) whiley/io/File:Writer : method(whiley/lang/ASCII:string)->(whiley/io/File:Writer)
-	{
-		_28 = Writer(_29, _29_size);
-	}
-	//assign %7 = %28  : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
-	w = _28;
-	//fieldload %31 = %7 write : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
-	//fieldload %32 = %6 pixels : {int height,byte[] pixels,int width}
-	_UPDATE_1DARRAY(_32, output->pixels);
-	//indirectinvoke (%30) = %31 (%32) : method(byte[])->(int)
-	{
-		writeAll(w, _32, _32_size);
-	}
-	//fieldload %33 = %7 close : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
-	//indirectinvoke () = %33 () : method()->()
-	{
-		fclose(w);
-		w = NULL;
+		print_pbm(stdout, _17, _18, _1DARRAY_PARAM(_19));
 	}
 	//return
 	exit(0);

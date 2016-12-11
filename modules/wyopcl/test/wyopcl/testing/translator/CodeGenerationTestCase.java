@@ -80,11 +80,7 @@ public class CodeGenerationTestCase {
 				"fileread", //Read 'feep.pbm' as a byte array
 				"fileread2",// Read 'feep.pbm' and output the array to console 
 				"SobelEdge1", // Read 'feep.pbm', detect the edges and output the resulting array
-				/*
-				// Create an on-memory byte 
-				"SobelEdge2", // Create an on-memory byte 
-				"SobelEdge3",
-				*/
+				"SobelEdge2", // Similar to 'SobelEdge1' with additional 'image' structure
 		});
 	}
 
@@ -106,7 +102,7 @@ public class CodeGenerationTestCase {
 	public void testNoCopyCCode() {
 		System.out.print("Copy eliminated C code \n");
 		util.execCodeGeneration(codeDir, testcase, "nocopy");
-		// Check output 
+		// Verify output of sobel edges
 		util.verifyOutput(testcase, codeDir, "nocopy");
 	}
 

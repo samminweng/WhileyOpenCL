@@ -317,13 +317,13 @@ public final class BaseTestUtil {
 	 * @param codegen
 	 */
 	public void verifyOutput(String testcase, Path sourceDir, String codegen){
-		if(testcase.contains("SobelEdge")){
+		if(testcase.equals("SobelEdge1")||testcase.equals("SobelEdge2")){
 			// The output file of naive code
 			File naiveOutput = new File(sourceDir + File.separator + testcase + File.separator
-					+ "naive" + File.separator + "output.txt");
+					+ "naive" + File.separator + "output.pbm");
 			// The new output file  
 			File codegenOutput = new File(sourceDir + File.separator + testcase + File.separator
-					+ codegen + File.separator + "output.txt");
+					+ codegen + File.separator + "output.pbm");
 			try {
 				FileUtils.contentEquals(naiveOutput, codegenOutput);
 			} catch (IOException e) {
@@ -435,7 +435,8 @@ public final class BaseTestUtil {
 				File smallin = new File(sourceDir + File.separator + "small.in");
 				Files.copy(smallin.toPath(), Paths.get(destDir + File.separator + "small.in"));
 				
-			}else if (testcase.equals("fileread") || testcase.equals("fileread2") || testcase.equals("SobelEdge1")){
+			}else if (testcase.equals("fileread") || testcase.equals("fileread2")
+					|| testcase.equals("SobelEdge1") || testcase.equals("SobelEdge2")){
 				// A PBM image file
 				File in = new File(sourceDir + File.separator + "feep.pbm");
 				// Copy 'feep.pbm' to folder
@@ -473,7 +474,7 @@ public final class BaseTestUtil {
 			assertEquals(Files.exists(Paths.get(destDir + File.separator + testcase + ".h")), true);
 
 			// Get Operation System.
-			if(testcase.equals("SobelEdge1")){
+			if(testcase.equals("SobelEdge1")|| testcase.equals("SobelEdge2")){
 				// Write output to a PBM file
 				compileAndRunCCode(testcase, destDir, true);
 			}else{
