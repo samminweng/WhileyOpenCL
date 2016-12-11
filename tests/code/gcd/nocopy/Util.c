@@ -545,15 +545,77 @@ FILE* Writer(int64_t* arr, size_t arr_size){
 
 	return fp;
 }
+// Check if file is a pbm
+bool isPBMFile(FILE *file){
+	char* line = NULL;
+	size_t length = 0;
+	// Get the first line, which should be 'P1\n'
+	if(getline(&line, &length, file) != -1){
+		// Get line length
+		size_t len=strlen(line);
+		if(len==3){
+			// Check if line is P1
+			if(line[0]=='P' && line[1]=='1' && line[2]=='\n'){
+				return true;
+			}
+		}
+	}
 
-// Read all lines of a file and output a BYTE array
-BYTE* readAll(FILE *file, size_t* _size){
+	return false;
+}
+// Read an image as an array of bytes
+BYTE* readPBM(FILE *file, size_t* _size){
+	char* line = NULL;
+	size_t length = 0;
+	size_t width = 0;
+	size_t height = 0;
+	// Read 'width' and 'height' from a file
+	while(getline(&line, &length, file) != -1){
+		// Check if the line is a comment
+		if(line[0]!='#'){
+			sscanf(line, "%d %d\n", &width, &height);
+			break;
+		}
+	}
+
+	size_t size = width * height;
+
+	// Allocated byte array. Note the last char (EOF)
+	BYTE* arr = (BYTE*)malloc(size*sizeof(BYTE));
+	if(arr == NULL){
+		fputs("fail to allocate the array at 'readPBM' function in Util.c\n", stderr);
+		exit(-2);
+	}
+
+	// Read a file line-by-line and pyt each byte to the array
+	size_t arr_ind = 0;
+	while(getline(&line, &length, file) != -1){
+		size_t i=0;
+		while(i<width){
+			arr[arr_ind]= line[i];
+			arr_ind++;
+			i++;
+		}
+	}
+
+	*_size = size;
+
+	return arr;
+}
+
+
+// Read a file from the beginning to end
+BYTE* readFile(FILE *file, size_t* _size){
+	// Set the file position to the beginning of the file
+	rewind(file);
+
 	// Calculate the output size
 	size_t size = 0;
+
 	while(feof(file) != true){
-      BYTE c = fgetc(file);
-      //printf("%c", c);
-      size = size + 1;
+		BYTE c = fgetc(file);
+		//printf("%c", c);
+		size = size + 1;
 	}
 	// Set the file position to the beginning of the file
 	rewind(file);
@@ -575,6 +637,20 @@ BYTE* readAll(FILE *file, size_t* _size){
 
 	*_size = size;
 	return arr;
+
+}
+
+// Read all lines of a file and output a BYTE array
+BYTE* readAll(FILE *file, size_t* _size){
+	// Check if file is a pbm
+	bool ispbm=isPBMFile(file);
+
+	if(ispbm){
+		return readPBM(file, _size);
+	}else{
+		// Do the normal reading
+		return readFile(file, _size);
+	}
 }
 
 // Write an BYTE array to a file

@@ -1,57 +1,86 @@
 #include "fileread.h"
 int main(int argc, char** args){
 	FILE* file;
+	int64_t width = 0;
+	int64_t height = 0;
 	_DECL_1DARRAY_BYTE(data);
-	void* _3;
-	_DECL_1DARRAY(_4);
-	_DECL_1DARRAY_BYTE(_5);
-	void* _7;
-	_DECL_1DARRAY(_9);
-	void* _10;
-	int64_t _12 = 0;
-	void* _13;
-	_DECL_1DARRAY(_15);
-	//const %4 = [115,109,97,108,108,46,105,110] : int[]
-	_NEW_1DARRAY_int64_t(_4, 8, 0);
-	_4[0] = 115; _4[1] = 109; _4[2] = 97; _4[3] = 108; _4[4] = 108; _4[5] = 46; _4[6] = 105; _4[7] = 110; 
-	//invoke (%3) = (%4) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
+	void* _5;
+	_DECL_1DARRAY(_6);
+	int64_t _7 = 0;
+	int64_t _8 = 0;
+	_DECL_1DARRAY_BYTE(_9);
+	void* _11;
+	_DECL_1DARRAY(_13);
+	void* _14;
+	int64_t _16 = 0;
+	void* _17;
+	_DECL_1DARRAY(_19);
+	int64_t _20 = 0;
+	int64_t _21 = 0;
+	//const %6 = [102,101,101,112,46,112,98,109] : int[]
+	_NEW_1DARRAY_int64_t(_6, 8, 0);
+	_6[0] = 102; _6[1] = 101; _6[2] = 101; _6[3] = 112; _6[4] = 46; _6[5] = 112; _6[6] = 98; _6[7] = 109; 
+	//invoke (%5) = (%6) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
 	{
-		_3 = Reader(_4, _4_size);
+		_5 = Reader(_6, _6_size);
 	}
-	//assign %1 = %3  : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
-	file = _3;
-	//fieldload %6 = %1 readAll : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
-	//indirectinvoke (%5) = %6 () : method()->(byte[])
+	//assign %1 = %5  : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
+	file = _5;
+	//const %7 = 24 : int
+	_7 = 24;
+	//assign %2 = %7  : int
+	width = _7;
+	//const %8 = 7 : int
+	_8 = 7;
+	//assign %3 = %8  : int
+	height = _8;
+	//fieldload %10 = %1 readAll : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
+	//indirectinvoke (%9) = %10 () : method()->(byte[])
 	{
-		_5 = readAll(file, &_5_size);
+		_9 = readAll(file, &_9_size);
 	}
-	//assign %2 = %5  : byte[]
-	_UPDATE_1DARRAY(data, _5);
-	//fieldload %7 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %8 = %7 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %9 = [82,69,65,68,58,32,32,32,32,32,32,32,32,32] : int[]
-	_NEW_1DARRAY_int64_t(_9, 14, 0);
-	_9[0] = 82; _9[1] = 69; _9[2] = 65; _9[3] = 68; _9[4] = 58; _9[5] = 32; _9[6] = 32; _9[7] = 32; _9[8] = 32; _9[9] = 32; _9[10] = 32; _9[11] = 32; _9[12] = 32; _9[13] = 32; 
-	//indirectinvoke () = %8 (%9) : method(int[])->()
+	//assign %4 = %9  : byte[]
+	_UPDATE_1DARRAY(data, _9);
+	//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %12 = %11 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %13 = [82,69,65,68,58,32,32,32,32,32,32,32,32,32] : int[]
+	_NEW_1DARRAY_int64_t(_13, 14, 0);
+	_13[0] = 82; _13[1] = 69; _13[2] = 65; _13[3] = 68; _13[4] = 58; _13[5] = 32; _13[6] = 32; _13[7] = 32; _13[8] = 32; _13[9] = 32; _13[10] = 32; _13[11] = 32; _13[12] = 32; _13[13] = 32; 
+	//indirectinvoke () = %12 (%13) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_9));
+		printf_s(_1DARRAY_PARAM(_13));
 	}
-	//fieldload %10 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %11 = %10 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//lengthof %12 = %2 : byte[]
-	_12 = data_size;
-	//indirectinvoke () = %11 (%12) : method(any)->()
+	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %15 = %14 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//lengthof %16 = %4 : byte[]
+	_16 = data_size;
+	//indirectinvoke () = %15 (%16) : method(any)->()
 	{
-		printf("%"PRId64, _12);
+		printf("%"PRId64, _16);
 	}
-	//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %14 = %13 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %15 = [32,98,121,116,101,115] : int[]
-	_NEW_1DARRAY_int64_t(_15, 6, 0);
-	_15[0] = 32; _15[1] = 98; _15[2] = 121; _15[3] = 116; _15[4] = 101; _15[5] = 115; 
-	//indirectinvoke () = %14 (%15) : method(int[])->()
+	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %18 = %17 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %19 = [32,98,121,116,101,115] : int[]
+	_NEW_1DARRAY_int64_t(_19, 6, 0);
+	_19[0] = 32; _19[1] = 98; _19[2] = 121; _19[3] = 116; _19[4] = 101; _19[5] = 115; 
+	//indirectinvoke () = %18 (%19) : method(int[])->()
 	{
-		println_s(_15, _15_size);
+		println_s(_19, _19_size);
+	}
+	//assert
+	{
+		//lengthof %20 = %4 : byte[]
+		_20 = data_size;
+		//mul %21 = %2, %3 : int
+		_21=width*height;
+		//ifeq %20, %21 goto blklab0 : int
+		if(_20==_21){goto blklab0;}
+		//fail
+		fprintf(stderr,"fail");
+		exit(-1);
+//.blklab0
+blklab0:;
+	//assert
 	}
 	//return
 	exit(0);

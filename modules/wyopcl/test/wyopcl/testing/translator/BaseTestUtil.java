@@ -410,15 +410,16 @@ public final class BaseTestUtil {
 			Files.copy(utilhfile.toPath(),
 					Paths.get(destDir + File.separator + "Util.h"));
 			// (Optional) Copy 'small.in' to destDir  
-			if(testcase.equals("fileread") || testcase.equals("lz77") || testcase.equals("lz77_2")){
+			if(testcase.equals("lz77") || testcase.equals("lz77_2")){
 				// 'small.in
 				File smallin = new File(sourceDir + File.separator + "small.in");
 				Files.copy(smallin.toPath(), Paths.get(destDir + File.separator + "small.in"));
-			}else if (testcase.equals("filewrite") || testcase.equals("SobelEdge3")){
-				// image.jpg
-				File in = new File(sourceDir + File.separator + "image.in");
-				// Copy 'image.jpg' to folder
-				Files.copy(in.toPath(), Paths.get(destDir + File.separator + "image.in"));
+				
+			}else if (testcase.equals("fileread") || testcase.equals("filewrite") || testcase.equals("SobelEdge3")){
+				// A PBM image file
+				File in = new File(sourceDir + File.separator + "feep.pbm");
+				// Copy 'feep.pbm' to folder
+				Files.copy(in.toPath(), Paths.get(destDir + File.separator + "feep.pbm"));
 			}
 			
 			// 3. Generate the C code.

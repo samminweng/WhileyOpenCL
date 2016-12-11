@@ -75,14 +75,14 @@ public class CodeGenerationTestCase {
 				"FunctionCall2",
 				"FunctionCall3",
 				"FunctionCall4",
+				"lz77",
+				"lz77_2",
+				"fileread",//Read 'feep.pbm' as a byte array
+				/*"filewrite",
 				"SobelEdge1", // Create an on-memory byte 
 				"SobelEdge2", // Create an on-memory byte 
-				"SobelEdge3",//Read 'image.in' as a byte array 
-				"fileread",
-				"filewrite",
-				"lz77",
-				"lz77_2"
-				// "lambda"
+				"SobelEdge3",
+				*/
 		});
 	}
 
