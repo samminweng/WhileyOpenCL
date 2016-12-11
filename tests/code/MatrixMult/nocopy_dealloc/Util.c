@@ -589,12 +589,14 @@ BYTE* readPBM(FILE *file, size_t* _size){
 
 	// Read a file line-by-line and pyt each byte to the array
 	size_t arr_ind = 0;
-	while(getline(&line, &length, file) != -1){
-		size_t i=0;
-		while(i<width){
-			arr[arr_ind]= line[i];
-			arr_ind++;
-			i++;
+	while(feof(file) != true){
+		uint8_t b;
+		// Read one byte
+		while (fscanf(file, "%u", &b) == 1){
+			if(b != ' ' && b != '\n'){
+				arr[arr_ind] = (BYTE)b;
+				arr_ind++;
+			}
 		}
 	}
 

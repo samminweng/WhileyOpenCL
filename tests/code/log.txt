@@ -149,6 +149,8 @@ DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "compress_data" "decompress" ) (LINE:810 FILE: lz77_2.c) in nocopy_dealloc folder	Frequency: 1
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "resize" ) (LINE:457 FILE: lz77_2.c) in nocopy_dealloc folder	Frequency: 1
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "findLongestMatch" ) (LINE:372 FILE: lz77_2.c) in nocopy_dealloc folder	Frequency: 9
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "print_pbm" ) (LINE:199 FILE: fileread2.c) in naive_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "data" "print_pbm" ) (LINE:198 FILE: fileread2.c) in nocopy_dealloc folder	Frequency: 1
 DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "rec" "updateRec" ) (LINE:179 FILE: rectangle.c) in naive_dealloc folder	Frequency: 1
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "p3" "updateRec" ) (LINE:180 FILE: rectangle.c) in naive_dealloc folder	Frequency: 1
 DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "rec" "updateRec" ) (LINE:179 FILE: rectangle.c) in nocopy_dealloc folder	Frequency: 1
@@ -300,3 +302,5 @@ DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "compress_data" "decompress" ) (LINE:810 FILE: lz77_2.c) in nocopy_dealloc folder	Frequency: 1
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "resize" ) (LINE:457 FILE: lz77_2.c) in nocopy_dealloc folder	Frequency: 1
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "findLongestMatch" ) (LINE:372 FILE: lz77_2.c) in nocopy_dealloc folder	Frequency: 9
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "print_pbm" ) (LINE:199 FILE: fileread2.c) in naive_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "data" "print_pbm" ) (LINE:198 FILE: fileread2.c) in nocopy_dealloc folder	Frequency: 1

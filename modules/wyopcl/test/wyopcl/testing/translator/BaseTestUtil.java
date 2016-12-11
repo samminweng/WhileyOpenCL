@@ -415,7 +415,7 @@ public final class BaseTestUtil {
 				File smallin = new File(sourceDir + File.separator + "small.in");
 				Files.copy(smallin.toPath(), Paths.get(destDir + File.separator + "small.in"));
 				
-			}else if (testcase.equals("fileread") || testcase.equals("filewrite") || testcase.equals("SobelEdge3")){
+			}else if (testcase.equals("fileread") || testcase.equals("fileread2") || testcase.equals("SobelEdge3")){
 				// A PBM image file
 				File in = new File(sourceDir + File.separator + "feep.pbm");
 				// Copy 'feep.pbm' to folder

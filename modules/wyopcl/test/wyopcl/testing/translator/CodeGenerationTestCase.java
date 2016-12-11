@@ -77,8 +77,9 @@ public class CodeGenerationTestCase {
 				"FunctionCall4",
 				"lz77",
 				"lz77_2",
-				"fileread",//Read 'feep.pbm' as a byte array
-				/*"filewrite",
+				"fileread", //Read 'feep.pbm' as a byte array
+				"fileread2",// Read 'feep.pbm' and output the array to console  
+				/*
 				"SobelEdge1", // Create an on-memory byte 
 				"SobelEdge2", // Create an on-memory byte 
 				"SobelEdge3",
