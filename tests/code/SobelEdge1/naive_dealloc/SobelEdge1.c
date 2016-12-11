@@ -574,9 +574,6 @@ int main(int argc, char** args){
 	_DECL_DEALLOC(_12);
 	_DECL_1DARRAY_BYTE(_14);
 	_DECL_DEALLOC(_14);
-	void* _15;
-	_DECL_1DARRAY(_17);
-	_DECL_DEALLOC(_17);
 	//const %8 = [102,101,101,112,46,112,98,109] : int[]
 	_DEALLOC(_8);
 	_NEW_1DARRAY_int64_t(_8, 8, 0);
@@ -622,17 +619,6 @@ int main(int argc, char** args){
 	_DEALLOC(newPixels);
 	_COPY_1DARRAY_BYTE(newPixels, _14);
 	_ADD_DEALLOC(newPixels);
-	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %16 = %15 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %17 = [83,111,98,101,108,32,69,100,103,101,32,68,101,116,101,99,116,105,111,110,58] : int[]
-	_DEALLOC(_17);
-	_NEW_1DARRAY_int64_t(_17, 21, 0);
-	_17[0] = 83; _17[1] = 111; _17[2] = 98; _17[3] = 101; _17[4] = 108; _17[5] = 32; _17[6] = 69; _17[7] = 100; _17[8] = 103; _17[9] = 101; _17[10] = 32; _17[11] = 68; _17[12] = 101; _17[13] = 116; _17[14] = 101; _17[15] = 99; _17[16] = 116; _17[17] = 105; _17[18] = 111; _17[19] = 110; _17[20] = 58; 
-	_ADD_DEALLOC(_17);
-	//indirectinvoke () = %16 (%17) : method(int[])->()
-	{
-		println_s(_17, _17_size);
-	}
 	//invoke () = (%0, %2, %3, %6) SobelEdge1:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
 		void* newPixels_tmp;
@@ -646,7 +632,6 @@ int main(int argc, char** args){
 	_DEALLOC(_8);
 	_DEALLOC(_12);
 	_DEALLOC(_14);
-	_DEALLOC(_17);
 	exit(0);
 }
 

@@ -5,11 +5,13 @@ import static org.junit.Assert.assertEquals;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
@@ -138,7 +140,7 @@ public final class BaseTestUtil {
 	 * @param workingDir
 	 *            Working directory
 	 */
-	private int runCmd(String cmd, Path workingDir) {
+	private int runCmd(String cmd, Path workingDir, boolean isWriteOut) {
 		// Get the runtime.
 		Runtime rt = Runtime.getRuntime();
 		// Compile the C program
@@ -159,6 +161,16 @@ public final class BaseTestUtil {
 			// Instantly write out the output message to avoid the process to block.
 			InputStream input = process.getInputStream();
 			in_sc = new Scanner(input);
+			FileWriter pbmwriter = null;
+			if(isWriteOut){
+				// Write output as a PBM file.
+				File pbmfile = new File(workingDir+ File.separator +"output.pbm");
+				pbmfile.delete();
+				pbmfile.createNewFile();
+				// Create a writer
+				pbmwriter = new FileWriter(pbmfile, true);
+			}
+			
 			while (in_sc.hasNextLine()) {
 				String line = in_sc.nextLine();
 				// De-bugging message can be ignored, to speed up ant task
@@ -169,9 +181,16 @@ public final class BaseTestUtil {
 				} else {
 					// Print out the message on console
 					System.out.println(line);
+					if(isWriteOut){
+						// Write out line to a file
+						pbmwriter.write(line+"\n");
+					}		
 				}
 			}
-
+			// Close the writer
+			if(isWriteOut){
+				pbmwriter.close();
+			}
 			// Get the return value.
 			exitValue = process.waitFor();
 			if (exitValue != 0) {
@@ -257,8 +276,9 @@ public final class BaseTestUtil {
 	 * 
 	 * @param testcase
 	 * @param destDir
+	 * @param isWriteOut decides whether to write output to a file or not.
 	 */
-	private void compileAndRunCCode(String testcase, Path destDir) {
+	private void compileAndRunCCode(String testcase, Path destDir, boolean isWriteOut) {
 		// Get Operation System.
 		// 4. Compile and run the C code.
 		if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
@@ -267,7 +287,7 @@ public final class BaseTestUtil {
 			String path = System.getenv("PATH");// Get PATH environment variable.
 			if (path.contains("MinGW")) {
 				// Check the exit value. If not 0, the compilation has errors.
-				assertEquals(runCmd("cmd /c gcc -std=c11 -D DEBUG *.c  -o " + testcase + ".out", destDir), 0);
+				assertEquals(runCmd("cmd /c gcc -std=c11 -D DEBUG *.c  -o " + testcase + ".out", destDir, isWriteOut), 0);
 			} /*else if (path.contains("cygwin")) {
 				// Gcc is a link (Windows command does not get it), so call its actual name (i.e. gcc-3 or gcc-4)
 				assertEquals(runCmd("cmd /c gcc-4 -std=c11 -D DEBUG *.c  -o " + testcase + ".out", destDir), 0);
@@ -278,12 +298,12 @@ public final class BaseTestUtil {
 			}
 
 			// Run the output file.
-			assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
+			assertEquals(runCmd("cmd /c " + testcase + ".out", destDir, isWriteOut), 0);
 		} else {
-			// Use C99 standard to Compile the C program into *.out and place it in current working directory
-			assertEquals(runCmd("gcc -std=c99 -D DEBUG Util.c " + testcase + ".c -o " + testcase + ".out", destDir), 0);
+			// Use C11 standard to Compile the C program into *.out and place it in current working directory
+			assertEquals(runCmd("gcc -std=c11 -D DEBUG Util.c " + testcase + ".c -o " + testcase + ".out", destDir, isWriteOut), 0);
 			// Run the generated out file
-			assertEquals(runCmd("./" + testcase + ".out", destDir), 0);
+			assertEquals(runCmd("./" + testcase + ".out", destDir, isWriteOut), 0);
 		}
 
 	}
@@ -444,14 +464,21 @@ public final class BaseTestUtil {
 			}
 			// Add test case name
 			cmd += " " + testcase + ".whiley";
-			runCmd(cmd, destDir);
+			
+			// Generate the C code
+			runCmd(cmd, destDir, false);
 
 			// Check if *.c and *.h files are generated or not.
 			assertEquals(Files.exists(Paths.get(destDir + File.separator + testcase + ".c")), true);
 			assertEquals(Files.exists(Paths.get(destDir + File.separator + testcase + ".h")), true);
 
 			// Get Operation System.
-			compileAndRunCCode(testcase, destDir);
+			if(testcase.equals("SobelEdge1")){
+				// Write output to a PBM file
+				compileAndRunCCode(testcase, destDir, true);
+			}else{
+				compileAndRunCCode(testcase, destDir, false);
+			}
 
 			// Delete the Wyil files inside folder
 			Files.deleteIfExists(FileSystems.getDefault().getPath(sourceDir + testcase + ".wyil"));

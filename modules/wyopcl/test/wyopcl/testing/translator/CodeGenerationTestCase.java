@@ -103,16 +103,16 @@ public class CodeGenerationTestCase {
 	}
 
 	@Test
-	public void testCopyCCode() {
-		System.out.print("Copy reduced C code \n");
+	public void testNoCopyCCode() {
+		System.out.print("Copy eliminated C code \n");
 		util.execCodeGeneration(codeDir, testcase, "nocopy");
 		// Check output 
 		util.verifyOutput(testcase, codeDir, "nocopy");
 	}
 
 	@Test
-	public void testCopyDeallocatedCCode() {
-		System.out.print("Copy reduced + deallocated C code \n");
+	public void testNoCopyDeallocatedCCode() {
+		System.out.print("Copy eliminated + deallocated C code \n");
 		util.execCodeGeneration(codeDir, testcase, "nocopy", "dealloc");
 		// Check output 
 		util.verifyOutput(testcase, codeDir, "nocopy_dealloc");

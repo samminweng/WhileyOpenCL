@@ -82,6 +82,7 @@ method print_pbm(System.Console sys, int width, int height, byte[] pixels):
             if pixels[pos] == SPACE:
                 sys.out.print(0)
             else:
+            	// Print out edges
                 sys.out.print(1)
             // Each pixel is separated by a space
             sys.out.print_s(" ")
@@ -100,5 +101,5 @@ method main(System.Console sys):
 	byte[] pixels = r.readAll()
 	// Place a black pixel 
 	byte[] newPixels = sobelEdgeDetection(pixels, width, height)
-	sys.out.println_s("Sobel Edge Detection:")
+	//sys.out.println_s("Sobel Edge Detection:")
 	print_pbm(sys, width, height, newPixels)

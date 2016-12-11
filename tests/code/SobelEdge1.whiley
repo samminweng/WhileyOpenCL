@@ -101,5 +101,5 @@ method main(System.Console sys):
 	byte[] pixels = r.readAll()
 	// Place a black pixel 
 	byte[] newPixels = sobelEdgeDetection(pixels, width, height)
-	sys.out.println_s("Sobel Edge Detection:")
+	//sys.out.println_s("Sobel Edge Detection:")
 	print_pbm(sys, width, height, newPixels)
