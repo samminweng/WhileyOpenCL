@@ -7,6 +7,16 @@ import whiley.lang.Math
 // Define Colour value
 constant SPACE is 00100000b // ASCII code of space (' ') 
 constant BLACK is 01100010b // ASCII code of 'b' 
+constant TH is 64 // Large thresholds generate few edges
+// Wrap the pixels to the size
+function wrap(int pos, int size) -> int:
+	if pos>=size:
+		return (size -1) - (pos - size)
+	else:
+		if pos <0:
+			return -1 - pos
+		else:
+			return pos
 
 // ========================================================
 // Perform image convolution
@@ -17,12 +27,12 @@ function convolution(byte[] pixels, int width, int height, int xCenter, int yCen
 	int filterHalf = 1
 	int filterY = 0
 	while filterY < filterSize:
-		//int y = wrap(yCenter+filterY - filterHalf, height)
-		int y = Math.abs((yCenter+filterY-filterHalf)%height)
+		int y = wrap(yCenter+filterY - filterHalf, height)
+		//int y = Math.abs((yCenter+filterY-filterHalf)%height)
 		int filterX = 0
 		while filterX < filterSize:
-			//int x = wrap(xCenter + filterX - filterHalf), width)
-			int x = Math.abs((xCenter + filterX - filterHalf)%width)
+			int x = wrap(xCenter + filterX - filterHalf, width)
+			//int x = Math.abs((xCenter + filterX - filterHalf)%width)
 			// Get pixel
 			int pixel = Byte.toUnsignedInt(pixels[y*width+x])
 			// Get filter value
@@ -53,10 +63,10 @@ function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
 			int v_g = convolution(pixels, width, height, x, y, v_sobel)
 			// Get horizontal gradient
 			int h_g = convolution(pixels, width, height, x, y, h_sobel)
-			// Get total gradient
+			// Estimate total gradient using 'abs' function
 			int t_g = Math.abs(v_g) + Math.abs(h_g)
-			// Edge threshold (128) Note that large thresholds generate few edges
-			if t_g <= 128:
+			// Edge threshold 
+			if t_g <= TH:
 				// Color other pixels as black
 				newPixels[pos] = BLACK
 			y = y + 1

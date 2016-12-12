@@ -15,6 +15,16 @@ Note NETPBM library is required to do the conversion (http://netpbm.sourceforge.
 constant SPACE is 00100000b // ASCII code of space (' ') 
 constant BLACK is 01100010b // ASCII code of 'b' 
 constant TH is 16 // Control the number of edges
+
+function wrap(int pos, int size) -> int:
+	if pos>=size:
+		return (size -1) - (pos - size)
+	else:
+		if pos <0:
+			return -1 - pos
+		else:
+			return pos
+
 // ========================================================
 // Perform image convolution
 // ========================================================
@@ -24,12 +34,12 @@ function convolution(byte[] pixels, int width, int height, int xCenter, int yCen
 	int filterHalf = 1
 	int filterY = 0
 	while filterY < filterSize:
-		//int y = wrap(yCenter+filterY - filterHalf, height)
-		int y = Math.abs((yCenter+filterY-filterHalf)%height)
+		int y = wrap(yCenter+filterY - filterHalf, height)
+		//int y = Math.abs((yCenter+filterY-filterHalf)%height)
 		int filterX = 0
 		while filterX < filterSize:
-			//int x = wrap(xCenter + filterX - filterHalf), width)
-			int x = Math.abs((xCenter + filterX - filterHalf)%width)
+			int x = wrap(xCenter + filterX - filterHalf, width)
+			//int x = Math.abs((xCenter + filterX - filterHalf)%width)
 			// Get pixel
 			int pixel = Byte.toUnsignedInt(pixels[y*width+x])
 			// Get filter value

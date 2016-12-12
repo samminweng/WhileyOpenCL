@@ -1,4 +1,55 @@
 #include "SobelEdge1.h"
+int64_t wrap(int64_t pos, int64_t size){
+	int64_t _2 = 0;
+	int64_t _3 = 0;
+	int64_t _4 = 0;
+	int64_t _5 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
+	int64_t _8 = 0;
+	int64_t _9 = 0;
+	int64_t _10 = 0;
+	//iflt %0, %1 goto blklab0 : int
+	if(pos<size){goto blklab0;}
+	//const %3 = 1 : int
+	_3 = 1;
+	//sub %4 = %1, %3 : int
+	_4=size-_3;
+	//sub %5 = %0, %1 : int
+	_5=pos-size;
+	//sub %6 = %4, %5 : int
+	_6=_4-_5;
+	//return %6
+	return _6;
+	//goto blklab1
+	goto blklab1;
+//.blklab0
+blklab0:;
+	//const %7 = 0 : int
+	_7 = 0;
+	//ifge %0, %7 goto blklab2 : int
+	if(pos>=_7){goto blklab2;}
+	//const %8 = 1 : int
+	_8 = 1;
+	//neg %9 = %8 : int
+	_9= -_8;
+	//sub %10 = %9, %0 : int
+	_10=_9-pos;
+	//return %10
+	return _10;
+	//goto blklab3
+	goto blklab3;
+//.blklab2
+blklab2:;
+	//return %0
+	return pos;
+//.blklab3
+blklab3:;
+//.blklab1
+blklab1:;
+	//return
+}
+
 int64_t convolution(BYTE* pixels, size_t pixels_size, int64_t width, int64_t height, int64_t xCenter, int64_t yCenter, _DECL_1DARRAY_PARAM(filter)){
 	int64_t _6 = 0;
 	int64_t sum = 0;
@@ -24,9 +75,9 @@ int64_t convolution(BYTE* pixels, size_t pixels_size, int64_t width, int64_t hei
 	int64_t _27 = 0;
 	int64_t _28 = 0;
 	int64_t _29 = 0;
-	int64_t _30 = 0;
+	BYTE _30;
 	int64_t _31 = 0;
-	BYTE _32;
+	int64_t _32 = 0;
 	int64_t _33 = 0;
 	int64_t _34 = 0;
 	int64_t _35 = 0;
@@ -34,8 +85,6 @@ int64_t convolution(BYTE* pixels, size_t pixels_size, int64_t width, int64_t hei
 	int64_t _37 = 0;
 	int64_t _38 = 0;
 	int64_t _39 = 0;
-	int64_t _40 = 0;
-	int64_t _41 = 0;
 	//const %16 = 0 : int
 	_16 = 0;
 	//assign %7 = %16  : int
@@ -52,90 +101,86 @@ int64_t convolution(BYTE* pixels, size_t pixels_size, int64_t width, int64_t hei
 	_19 = 0;
 	//assign %10 = %19  : int
 	filterY = _19;
-	//loop (%7, %10, %11, %12, %13, %14, %15, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41)
+	//loop (%7, %10, %11, %12, %13, %14, %15, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39)
 	while(true){
-		//ifge %10, %8 goto blklab0 : int
-		if(filterY>=filterSize){goto blklab0;}
+		//ifge %10, %8 goto blklab4 : int
+		if(filterY>=filterSize){goto blklab4;}
 		//add %21 = %4, %10 : int
 		_21=yCenter+filterY;
 		//sub %22 = %21, %9 : int
 		_22=_21-filterHalf;
-		//rem %23 = %22, %2 : int
-		_23=_22%height;
-		//invoke (%20) = (%23) whiley/lang/Math:abs : function(int)->(int)
+		//invoke (%20) = (%22, %2) SobelEdge1:wrap : function(int,int)->(int)
 		{
-			_20 = llabs(_23);
+			_20 = wrap(_22, height);
 		}
 		//assign %11 = %20  : int
 		y = _20;
-		//const %24 = 0 : int
-		_24 = 0;
-		//assign %12 = %24  : int
-		filterX = _24;
-		//loop (%7, %12, %13, %14, %15, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39)
+		//const %23 = 0 : int
+		_23 = 0;
+		//assign %12 = %23  : int
+		filterX = _23;
+		//loop (%7, %12, %13, %14, %15, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37)
 		while(true){
-			//ifge %12, %8 goto blklab2 : int
-			if(filterX>=filterSize){goto blklab2;}
-			//add %26 = %3, %12 : int
-			_26=xCenter+filterX;
-			//sub %27 = %26, %9 : int
-			_27=_26-filterHalf;
-			//rem %28 = %27, %1 : int
-			_28=_27%width;
-			//invoke (%25) = (%28) whiley/lang/Math:abs : function(int)->(int)
+			//ifge %12, %8 goto blklab6 : int
+			if(filterX>=filterSize){goto blklab6;}
+			//add %25 = %3, %12 : int
+			_25=xCenter+filterX;
+			//sub %26 = %25, %9 : int
+			_26=_25-filterHalf;
+			//invoke (%24) = (%26, %1) SobelEdge1:wrap : function(int,int)->(int)
 			{
-				_25 = llabs(_28);
+				_24 = wrap(_26, width);
 			}
-			//assign %13 = %25  : int
-			x = _25;
-			//mul %30 = %11, %1 : int
-			_30=y*width;
-			//add %31 = %30, %13 : int
-			_31=_30+x;
-			//indexof %32 = %0, %31 : byte[]
-			_32=pixels[_31];
-			//invoke (%29) = (%32) whiley/lang/Byte:toUnsignedInt : function(byte)->(whiley/lang/Int:uint)
+			//assign %13 = %24  : int
+			x = _24;
+			//mul %28 = %11, %1 : int
+			_28=y*width;
+			//add %29 = %28, %13 : int
+			_29=_28+x;
+			//indexof %30 = %0, %29 : byte[]
+			_30=pixels[_29];
+			//invoke (%27) = (%30) whiley/lang/Byte:toUnsignedInt : function(byte)->(whiley/lang/Int:uint)
 			{
-				_29 = (unsigned int)_32;
+				_27 = (unsigned int)_30;
 			}
-			//assign %14 = %29  : int
-			pixel = _29;
-			//mul %33 = %10, %8 : int
-			_33=filterY*filterSize;
-			//add %34 = %33, %12 : int
-			_34=_33+filterX;
-			//indexof %35 = %5, %34 : int[]
-			_35=filter[_34];
-			//assign %15 = %35  : int
-			filterVal = _35;
-			//mul %36 = %14, %15 : int
-			_36=pixel*filterVal;
-			//add %37 = %7, %36 : int
-			_37=sum+_36;
-			//assign %7 = %37  : int
-			sum = _37;
-			//const %38 = 1 : int
-			_38 = 1;
-			//add %39 = %12, %38 : int
-			_39=filterX+_38;
-			//assign %12 = %39  : int
-			filterX = _39;
-//.blklab3
-blklab3:;
+			//assign %14 = %27  : int
+			pixel = _27;
+			//mul %31 = %10, %8 : int
+			_31=filterY*filterSize;
+			//add %32 = %31, %12 : int
+			_32=_31+filterX;
+			//indexof %33 = %5, %32 : int[]
+			_33=filter[_32];
+			//assign %15 = %33  : int
+			filterVal = _33;
+			//mul %34 = %14, %15 : int
+			_34=pixel*filterVal;
+			//add %35 = %7, %34 : int
+			_35=sum+_34;
+			//assign %7 = %35  : int
+			sum = _35;
+			//const %36 = 1 : int
+			_36 = 1;
+			//add %37 = %12, %36 : int
+			_37=filterX+_36;
+			//assign %12 = %37  : int
+			filterX = _37;
+//.blklab7
+blklab7:;
 		}
-//.blklab2
-blklab2:;
-		//const %40 = 1 : int
-		_40 = 1;
-		//add %41 = %10, %40 : int
-		_41=filterY+_40;
-		//assign %10 = %41  : int
-		filterY = _41;
-//.blklab1
-blklab1:;
+//.blklab6
+blklab6:;
+		//const %38 = 1 : int
+		_38 = 1;
+		//add %39 = %10, %38 : int
+		_39=filterY+_38;
+		//assign %10 = %39  : int
+		filterY = _39;
+//.blklab5
+blklab5:;
 	}
-//.blklab0
-blklab0:;
+//.blklab4
+blklab4:;
 	//return %7
 	return sum;
 	//return
@@ -271,16 +316,16 @@ BYTE* sobelEdgeDetection(BYTE* pixels, size_t pixels_size, int64_t width, int64_
 	x = _43;
 	//loop (%5, %8, %9, %10, %11, %12, %13, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57)
 	while(true){
-		//ifge %8, %1 goto blklab4 : int
-		if(x>=width){goto blklab4;}
+		//ifge %8, %1 goto blklab8 : int
+		if(x>=width){goto blklab8;}
 		//const %44 = 0 : int
 		_44 = 0;
 		//assign %9 = %44  : int
 		y = _44;
 		//loop (%5, %9, %10, %11, %12, %13, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54, %55)
 		while(true){
-			//ifge %9, %2 goto blklab6 : int
-			if(y>=height){goto blklab6;}
+			//ifge %9, %2 goto blklab10 : int
+			if(y>=height){goto blklab10;}
 			//mul %45 = %9, %1 : int
 			_45=y*width;
 			//add %46 = %45, %8 : int
@@ -315,38 +360,38 @@ BYTE* sobelEdgeDetection(BYTE* pixels, size_t pixels_size, int64_t width, int64_
 			_51=_49+_50;
 			//assign %13 = %51  : int
 			t_g = _51;
-			//const %52 = 128 : int
-			_52 = 128;
-			//ifgt %13, %52 goto blklab8 : int
-			if(t_g>_52){goto blklab8;}
+			//const %52 = 64 : int
+			_52 = 64;
+			//ifgt %13, %52 goto blklab12 : int
+			if(t_g>_52){goto blklab12;}
 			//const %53 = 01100010b : byte
 			_53 = 0b01100010;
 			//update %5[%10] = %53 : byte[] -> byte[]
 			newPixels[pos] = _53;
-//.blklab8
-blklab8:;
+//.blklab12
+blklab12:;
 			//const %54 = 1 : int
 			_54 = 1;
 			//add %55 = %9, %54 : int
 			_55=y+_54;
 			//assign %9 = %55  : int
 			y = _55;
-//.blklab7
-blklab7:;
+//.blklab11
+blklab11:;
 		}
-//.blklab6
-blklab6:;
+//.blklab10
+blklab10:;
 		//const %56 = 1 : int
 		_56 = 1;
 		//add %57 = %8, %56 : int
 		_57=x+_56;
 		//assign %8 = %57  : int
 		x = _57;
-//.blklab5
-blklab5:;
+//.blklab9
+blklab9:;
 	}
-//.blklab4
-blklab4:;
+//.blklab8
+blklab8:;
 	//return %5
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(newPixels);
 	return newPixels;
@@ -418,16 +463,16 @@ void print_pbm(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t pi
 	j = _17;
 	//loop (%4, %5, %6, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38)
 	while(true){
-		//ifge %4, %2 goto blklab9 : int
-		if(j>=height){goto blklab9;}
+		//ifge %4, %2 goto blklab13 : int
+		if(j>=height){goto blklab13;}
 		//const %18 = 0 : int
 		_18 = 0;
 		//assign %5 = %18  : int
 		i = _18;
 		//loop (%5, %6, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33)
 		while(true){
-			//ifge %5, %1 goto blklab11 : int
-			if(i>=width){goto blklab11;}
+			//ifge %5, %1 goto blklab15 : int
+			if(i>=width){goto blklab15;}
 			//mul %19 = %4, %1 : int
 			_19=j*width;
 			//add %20 = %19, %5 : int
@@ -438,8 +483,8 @@ void print_pbm(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t pi
 			_21=pixels[pos];
 			//const %22 = 00100000b : byte
 			_22 = 0b00100000;
-			//ifne %21, %22 goto blklab13 : byte
-			if(_21!=_22){goto blklab13;}
+			//ifne %21, %22 goto blklab17 : byte
+			if(_21!=_22){goto blklab17;}
 			//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %24 = %23 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %25 = 0 : int
@@ -448,10 +493,10 @@ void print_pbm(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t pi
 			{
 				printf("%"PRId64, _25);
 			}
-			//goto blklab14
-			goto blklab14;
-//.blklab13
-blklab13:;
+			//goto blklab18
+			goto blklab18;
+//.blklab17
+blklab17:;
 			//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %27 = %26 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %28 = 1 : int
@@ -460,8 +505,8 @@ blklab13:;
 			{
 				printf("%"PRId64, _28);
 			}
-//.blklab14
-blklab14:;
+//.blklab18
+blklab18:;
 			//fieldload %29 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %30 = %29 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %31 = [32] : int[]
@@ -477,11 +522,11 @@ blklab14:;
 			_33=i+_32;
 			//assign %5 = %33  : int
 			i = _33;
-//.blklab12
-blklab12:;
+//.blklab16
+blklab16:;
 		}
-//.blklab11
-blklab11:;
+//.blklab15
+blklab15:;
 		//fieldload %34 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %35 = %34 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//const %36 = [] : void[]
@@ -496,11 +541,11 @@ blklab11:;
 		_38=j+_37;
 		//assign %4 = %38  : int
 		j = _38;
-//.blklab10
-blklab10:;
+//.blklab14
+blklab14:;
 	}
-//.blklab9
-blklab9:;
+//.blklab13
+blklab13:;
 	//return
 	return;
 }
