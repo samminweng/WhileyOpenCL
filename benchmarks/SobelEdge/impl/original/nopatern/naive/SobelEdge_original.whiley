@@ -2,12 +2,19 @@ import * from whiley.io.File
 import * from whiley.lang.System
 import whiley.lang.*
 import whiley.lang.Math
-// This example code illustrates 'cross-edge' sobel edge detection
-// reference: https://en.wikipedia.org/wiki/Sobel_operator
-// Define Colour value
+/* Source images are downloaded from 
+1. cln1.GIF (http://homepages.inf.ed.ac.uk/rbf/HIPR2/sobel.htm)
+
+
+The source GIF,JPG can be converted to pnm file and then to plain pbm using
+$ giftopnm cln1.GIF > small.pnm
+$ pnmtoplainpnm small.pnm > small.pbm
+
+Note NETPBM library is required to do the conversion (http://netpbm.sourceforge.net/)
+*/
 constant SPACE is 00100000b // ASCII code of space (' ') 
 constant BLACK is 01100010b // ASCII code of 'b' 
-
+constant TH is 16 // Control the number of edges
 // ========================================================
 // Perform image convolution
 // ========================================================
@@ -56,7 +63,7 @@ function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
 			// Get total gradient
 			int t_g = Math.abs(v_g) + Math.abs(h_g)
 			// Edge threshold (128) Note that large thresholds generate few edges
-			if t_g <= 128:
+			if t_g <= TH:
 				// Color other pixels as black
 				newPixels[pos] = BLACK
 			y = y + 1
@@ -64,38 +71,41 @@ function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
 	return newPixels
 
 // ========================================================
-// Print a Image
+// Print a pbm image
 // ========================================================
-/*method printImage(System.Console sys, byte[] pixels, int width, int height):
-	int y = 0
-	while y<height:
-		int x = 0
-		while x<width:
-			int pos = y*width + x
-			// Print out each pixel value
-			if pixels[pos] == SPACE:
-				sys.out.print_s(" ")
-			else:
-				sys.out.print_s("b")
-			sys.out.print_s(" ")
-			x = x + 1
-		y = y + 1
-		sys.out.println_s("")
-*/
+method print_pbm(System.Console sys, int width, int height, byte[] pixels):
+    // File type
+    sys.out.println_s("P1")
+    // Width + height
+    sys.out.print(width)
+    sys.out.print_s(" ")
+    sys.out.println(height)
+    // An array of bytes with an row of pixels in width
+    int j = 0
+    while j<height:
+        int i = 0
+        while i<width:
+            int pos = j*width + i
+            if pixels[pos] == SPACE:
+                sys.out.print(0)
+            else:
+                sys.out.print(1)  
+		    // Each pixel is separated by a space
+            sys.out.print_s(" ")
+            i = i + 1
+        // Add a newline
+        sys.out.println_s("")
+        j = j + 1
+
 // Main function
 method main(System.Console sys):
-	int|null n = Int.parse(sys.args[0])
+	File.Reader file = File.Reader(sys.args[0])
+	int|null n = Int.parse(sys.args[1])
 	if n != null:
 		int max = n
 		int width = max
 		int height = max
-		// The input image is a white image of 8 x 8 pixels
-		// with a black pixel at the center 
-		byte[] pixels = [SPACE;width * height]
-		// Place a black pixel at (3,4) position 
-		pixels[4*width+3] = BLACK // (3,4)
+		// Read a PBM image as a byte array
+		byte[] pixels = file.readAll()
 		byte[] newPixels = sobelEdgeDetection(pixels, width, height)
-		// Write 'newPixels' as a file
-		File.Writer w = File.Writer("output.txt")
-		w.write(newPixels)
-		w.close()
+		print_pbm(sys, width, height, newPixels)

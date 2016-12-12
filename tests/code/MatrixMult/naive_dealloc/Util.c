@@ -118,11 +118,10 @@ int64_t** convertArgsToIntArray(int argc, char** args, size_t *arr_size, size_t 
 
 	// Update the output array size
 	*arr_size = argc -1;
-
+	// Array index
+	size_t index=0;
 	//Skip 1st arguement as it is the exec file name.
 	for(size_t i=1;i<argc;i++){
-		// Array index
-		size_t index=i-1;
 		// The length of each argument
 		size_t length=0;
 		// Check if the argument is an integer
@@ -172,8 +171,8 @@ int64_t** convertArgsToIntArray(int argc, char** args, size_t *arr_size, size_t 
 
 			// Update the array size with length
 			*arr_size_size = length + 1;
-
 		}
+		index++;
 	}
 
 	return arr;
@@ -494,11 +493,13 @@ FILE* Reader(int64_t* arr, size_t arr_size){
 	char tmp[1024];
 	// Convert an array of ASCII code to an string
 	size_t i=0;
-	while(i<arr_size){
+	// Iterate through all the chars
+	while(arr[i] !='\0'){
 		char c = arr[i];
 		tmp[i] = c;
 		i = i + 1;
 	}
+	arr_size = i;
 	// Add the ending (null-terminated)
 	tmp[i] = '\0';
 

@@ -340,8 +340,8 @@ BYTE* sobelEdgeDetection(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM(p
 			_51=_49+_50;
 			//assign %13 = %51  : int
 			t_g = _51;
-			//const %52 = 128 : int
-			_52 = 128;
+			//const %52 = 16 : int
+			_52 = 16;
 			//ifgt %13, %52 goto blklab8 : int
 			if(t_g>_52){goto blklab8;}
 			//const %53 = 01100010b : byte
@@ -385,7 +385,177 @@ blklab4:;
 	//return
 }
 
+void print_pbm(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM(pixels)){
+	int64_t j = 0;
+	int64_t i = 0;
+	int64_t pos = 0;
+	void* _7;
+	_DECL_1DARRAY(_9);
+	_DECL_DEALLOC(_9);
+	void* _10;
+	void* _12;
+	_DECL_1DARRAY(_14);
+	_DECL_DEALLOC(_14);
+	void* _15;
+	int64_t _17 = 0;
+	int64_t _18 = 0;
+	int64_t _19 = 0;
+	int64_t _20 = 0;
+	BYTE _21;
+	BYTE _22;
+	void* _23;
+	int64_t _25 = 0;
+	void* _26;
+	int64_t _28 = 0;
+	void* _29;
+	_DECL_1DARRAY(_31);
+	_DECL_DEALLOC(_31);
+	int64_t _32 = 0;
+	int64_t _33 = 0;
+	void* _34;
+	void* _36;
+	size_t _36_size = 0;
+	_DECL_DEALLOC(_36);
+	int64_t _37 = 0;
+	int64_t _38 = 0;
+	//fieldload %7 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %8 = %7 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %9 = [80,49] : int[]
+	_DEALLOC(_9);
+	_NEW_1DARRAY_int64_t(_9, 2, 0);
+	_9[0] = 80; _9[1] = 49; 
+	_ADD_DEALLOC(_9);
+	//indirectinvoke () = %8 (%9) : method(int[])->()
+	{
+		println_s(_9, _9_size);
+	}
+	//fieldload %10 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %11 = %10 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %11 (%1) : method(any)->()
+	{
+		printf("%"PRId64, width);
+	}
+	//fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %13 = %12 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %14 = [32] : int[]
+	_DEALLOC(_14);
+	_NEW_1DARRAY_int64_t(_14, 1, 0);
+	_14[0] = 32; 
+	_ADD_DEALLOC(_14);
+	//indirectinvoke () = %13 (%14) : method(int[])->()
+	{
+		printf_s(_1DARRAY_PARAM(_14));
+	}
+	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %16 = %15 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %16 (%2) : method(any)->()
+	{
+		printf("%"PRId64"\n", height);
+	}
+	//const %17 = 0 : int
+	_17 = 0;
+	//assign %4 = %17  : int
+	j = _17;
+	//loop (%4, %5, %6, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38)
+	while(true){
+		//ifge %4, %2 goto blklab9 : int
+		if(j>=height){goto blklab9;}
+		//const %18 = 0 : int
+		_18 = 0;
+		//assign %5 = %18  : int
+		i = _18;
+		//loop (%5, %6, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33)
+		while(true){
+			//ifge %5, %1 goto blklab11 : int
+			if(i>=width){goto blklab11;}
+			//mul %19 = %4, %1 : int
+			_19=j*width;
+			//add %20 = %19, %5 : int
+			_20=_19+i;
+			//assign %6 = %20  : int
+			pos = _20;
+			//indexof %21 = %3, %6 : byte[]
+			_21=pixels[pos];
+			//const %22 = 00100000b : byte
+			_22 = 0b00100000;
+			//ifne %21, %22 goto blklab13 : byte
+			if(_21!=_22){goto blklab13;}
+			//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %24 = %23 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//const %25 = 0 : int
+			_25 = 0;
+			//indirectinvoke () = %24 (%25) : method(any)->()
+			{
+				printf("%"PRId64, _25);
+			}
+			//goto blklab14
+			goto blklab14;
+//.blklab13
+blklab13:;
+			//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %27 = %26 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//const %28 = 1 : int
+			_28 = 1;
+			//indirectinvoke () = %27 (%28) : method(any)->()
+			{
+				printf("%"PRId64, _28);
+			}
+//.blklab14
+blklab14:;
+			//fieldload %29 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %30 = %29 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//const %31 = [32] : int[]
+			_DEALLOC(_31);
+			_NEW_1DARRAY_int64_t(_31, 1, 0);
+			_31[0] = 32; 
+			_ADD_DEALLOC(_31);
+			//indirectinvoke () = %30 (%31) : method(int[])->()
+			{
+				printf_s(_1DARRAY_PARAM(_31));
+			}
+			//const %32 = 1 : int
+			_32 = 1;
+			//add %33 = %5, %32 : int
+			_33=i+_32;
+			//assign %5 = %33  : int
+			i = _33;
+//.blklab12
+blklab12:;
+		}
+//.blklab11
+blklab11:;
+		//fieldload %34 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+		//fieldload %35 = %34 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+		//const %36 = [] : void[]
+		_DEALLOC(_36);
+		_NEW_1DARRAY_int64_t(_36, 0, 0);
+		_ADD_DEALLOC(_36);
+		//indirectinvoke () = %35 (%36) : method(int[])->()
+		{
+			println_s(_36, _36_size);
+		}
+		//const %37 = 1 : int
+		_37 = 1;
+		//add %38 = %4, %37 : int
+		_38=j+_37;
+		//assign %4 = %38  : int
+		j = _38;
+//.blklab10
+blklab10:;
+	}
+//.blklab9
+blklab9:;
+	//return
+	_DEALLOC(pixels);
+	_DEALLOC(_9);
+	_DEALLOC(_14);
+	_DEALLOC(_31);
+	_DEALLOC(_36);
+	return;
+}
+
 int main(int argc, char** args){
+	FILE* file;
 	int64_t* n;
 	_DECL_DEALLOC(n);
 	int64_t max = 0;
@@ -395,30 +565,24 @@ int main(int argc, char** args){
 	_DECL_DEALLOC(pixels);
 	_DECL_1DARRAY_BYTE(newPixels);
 	_DECL_DEALLOC(newPixels);
-	FILE* w;
-	int64_t* _8;
+	void* _8;
 	_DECL_DEALLOC(_8);
 	_DECL_2DARRAY(_9);
 	_DECL_DEALLOC(_9);
 	int64_t _10 = 0;
 	_DECL_1DARRAY(_11);
 	_DECL_DEALLOC(_11);
-	BYTE _12;
-	int64_t _13 = 0;
-	_DECL_1DARRAY_BYTE(_14);
-	_DECL_DEALLOC(_14);
-	BYTE _15;
-	int64_t _16 = 0;
-	int64_t _17 = 0;
-	int64_t _18 = 0;
-	int64_t _19 = 0;
-	_DECL_1DARRAY_BYTE(_20);
-	_DECL_DEALLOC(_20);
-	void* _21;
-	_DECL_DEALLOC(_21);
-	_DECL_1DARRAY(_22);
-	_DECL_DEALLOC(_22);
-	int64_t _23 = 0;
+	int64_t* _12;
+	_DECL_DEALLOC(_12);
+	_DECL_2DARRAY(_13);
+	_DECL_DEALLOC(_13);
+	int64_t _14 = 0;
+	_DECL_1DARRAY(_15);
+	_DECL_DEALLOC(_15);
+	_DECL_1DARRAY_BYTE(_16);
+	_DECL_DEALLOC(_16);
+	_DECL_1DARRAY_BYTE(_18);
+	_DECL_DEALLOC(_18);
 	//fieldload %9 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	_DEALLOC_2DARRAY_int64_t(_9);
 	_CONV_ARGS(_9);
@@ -429,95 +593,82 @@ int main(int argc, char** args){
 	_11=_9[_10];
 	_11_size = _9_size_size;
 	_REMOVE_DEALLOC(_11);
-	//invoke (%8) = (%11) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
+	//invoke (%8) = (%11) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
 	{
-		_STR_TO_INT(_8, _11);
-		_ADD_DEALLOC(_8);
-		_REMOVE_DEALLOC(_11);
+		_8 = Reader(_11, _11_size);
 	}
-	//assign %1 = %8  : null|int
+	//assign %1 = %8  : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
+	file = _8;
+	//fieldload %13 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	_DEALLOC_2DARRAY_int64_t(_13);
+	_CONV_ARGS(_13);
+	_ADD_DEALLOC(_13);
+	//const %14 = 1 : int
+	_14 = 1;
+	//indexof %15 = %13, %14 : int[][]
+	_15=_13[_14];
+	_15_size = _13_size_size;
+	_REMOVE_DEALLOC(_15);
+	//invoke (%12) = (%15) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
+	{
+		_STR_TO_INT(_12, _15);
+		_ADD_DEALLOC(_12);
+		_REMOVE_DEALLOC(_15);
+	}
+	//assign %2 = %12  : null|int
 	_DEALLOC(n);
-	_NEW_INTEGER_POINTER(n, _8);
+	_NEW_INTEGER_POINTER(n, _12);
 	_ADD_DEALLOC(n);
-	//ifis %1, null goto blklab9 : null|int
-	if(n == NULL) { goto blklab9;}
-	//assign %2 = %1  : int
-	max = *n;
+	//ifis %2, null goto blklab15 : null|int
+	if(n == NULL) { goto blklab15;}
 	//assign %3 = %2  : int
+	max = *n;
+	//assign %4 = %3  : int
 	width = max;
-	//assign %4 = %2  : int
+	//assign %5 = %3  : int
 	height = max;
-	//const %12 = 00100000b : byte
-	_12 = 0b00100000;
-	//mul %13 = %3, %4 : int
-	_13=width*height;
-	//arraygen %14 = [12; 13] : byte[]
-	_DEALLOC(_14);
-	_NEW_1DARRAY_BYTE(_14, _13, _12);
-	_ADD_DEALLOC(_14);
-	//assign %5 = %14  : byte[]
+	//fieldload %17 = %1 readAll : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
+	//indirectinvoke (%16) = %17 () : method()->(byte[])
+	{
+		_16 = readAll(file, &_16_size);
+		_ADD_DEALLOC(_16);
+	}
+	//assign %6 = %16  : byte[]
 	_DEALLOC(pixels);
-	_COPY_1DARRAY_BYTE(pixels, _14);
+	_COPY_1DARRAY_BYTE(pixels, _16);
 	_ADD_DEALLOC(pixels);
-	//const %15 = 01100010b : byte
-	_15 = 0b01100010;
-	//const %16 = 4 : int
-	_16 = 4;
-	//mul %17 = %16, %3 : int
-	_17=_16*width;
-	//const %18 = 3 : int
-	_18 = 3;
-	//add %19 = %17, %18 : int
-	_19=_17+_18;
-	//update %5[%19] = %15 : byte[] -> byte[]
-	pixels[_19] = _15;
-	//invoke (%20) = (%5, %3, %4) SobelEdge_original:sobelEdgeDetection : function(byte[],int,int)->(byte[])
+	//invoke (%18) = (%6, %4, %5) SobelEdge_original:sobelEdgeDetection : function(byte[],int,int)->(byte[])
 	{
 		void* pixels_tmp;
-		_DEALLOC(_20);
-		_20 = sobelEdgeDetection(_COPY_1DARRAY_PARAM_BYTE(pixels), true, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
+		_DEALLOC(_18);
+		_18 = sobelEdgeDetection(_COPY_1DARRAY_PARAM_BYTE(pixels), true, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
 		_CALLEE_DEALLOC(pixels, "false-false-false" , "sobelEdgeDetection");
-		_ADD_DEALLOC(_20);
+		_ADD_DEALLOC(_18);
 	}
-	//assign %6 = %20  : byte[]
+	//assign %7 = %18  : byte[]
 	_DEALLOC(newPixels);
-	_COPY_1DARRAY_BYTE(newPixels, _20);
+	_COPY_1DARRAY_BYTE(newPixels, _18);
 	_ADD_DEALLOC(newPixels);
-	//const %22 = [111,117,116,112,117,116,46,116,120,116] : int[]
-	_DEALLOC(_22);
-	_NEW_1DARRAY_int64_t(_22, 10, 0);
-	_22[0] = 111; _22[1] = 117; _22[2] = 116; _22[3] = 112; _22[4] = 117; _22[5] = 116; _22[6] = 46; _22[7] = 116; _22[8] = 120; _22[9] = 116; 
-	_ADD_DEALLOC(_22);
-	//invoke (%21) = (%22) whiley/io/File:Writer : method(whiley/lang/ASCII:string)->(whiley/io/File:Writer)
+	//invoke () = (%0, %4, %5, %7) SobelEdge_original:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
-		_21 = Writer(_22, _22_size);
+		void* newPixels_tmp;
+		print_pbm(stdout, width, height, _COPY_1DARRAY_PARAM_BYTE(newPixels), true);
+		_CALLEE_DEALLOC(newPixels, "false-false-false" , "print_pbm");
 	}
-	//assign %7 = %21  : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
-	w = _21;
-	//fieldload %24 = %7 write : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
-	//indirectinvoke (%23) = %24 (%6) : method(byte[])->(int)
-	{
-		writeAll(w, newPixels, newPixels_size);
-	}
-	//fieldload %25 = %7 close : {method()->() close,method()->() flush,method(byte[])->(int) write,...}
-	//indirectinvoke () = %25 () : method()->()
-	{
-		fclose(w);
-		w = NULL;
-	}
-//.blklab9
-blklab9:;
+//.blklab15
+blklab15:;
 	//return
+	if(file != NULL){fclose(file); file = NULL;}
 	_DEALLOC(n);
 	_DEALLOC(pixels);
 	_DEALLOC(newPixels);
-	if(w != NULL){fclose(w); w = NULL;}
-	_DEALLOC(_8);
 	_DEALLOC_2DARRAY_int64_t(_9);
 	_DEALLOC(_11);
-	_DEALLOC(_14);
-	_DEALLOC(_20);
-	_DEALLOC(_22);
+	_DEALLOC(_12);
+	_DEALLOC_2DARRAY_int64_t(_13);
+	_DEALLOC(_15);
+	_DEALLOC(_16);
+	_DEALLOC(_18);
 	exit(0);
 }
 

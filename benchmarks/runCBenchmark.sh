@@ -9,6 +9,16 @@ alias pollycc="clang -O3 -mllvm -polly"
 UTILDIR="$(dirname "$(pwd)")/tests/code"
 BENCHMARKDIR="$(pwd)"
 
+## Declare an associative array for sobeledge
+declare -A images=( [small.pbm]=64 )
+## Declare an associative array for pattern matching
+declare -A patterns=( [LZ77]=compress )
+
+## declare 4 kinds of code generation
+declare -a codegens=("naive" "naive_dealloc" "nocopy" "nocopy_dealloc")
+#declare -a codegens=("naive" "naive_dealloc" "nocopy")
+
+
 ### Create the folder and/or clean up the files
 init(){
 	testcase=$1
@@ -147,8 +157,20 @@ compileAndRun(){
 		then
 			timeout $TIMEOUT "out/$executable" "$BENCHMARKDIR/$testcase/$parameter" >> $result
 		else
-			## Other cases
-			timeout $TIMEOUT "out/$executable" $parameter >> $result
+			if [ $testcase = "SobelEdge" ]
+			then
+				#echo $parameter
+				size=${images[$parameter]}
+				echo "Size = "$size 
+				## Copy PBM image to folder
+				cp "$BENCHMARKDIR/$testcase/image/$parameter" .
+				##read -p "Press [Enter] to continue..."
+				timeout $TIMEOUT "out/$executable" $parameter $size > "output.pbm"
+				##read -p "Press [Enter] to continue..."
+			else
+				## Other cases
+				timeout $TIMEOUT "out/$executable" $parameter >> $result
+			fi
 		fi
 		end=`date +%s%N`
 		exectime=$((end-start))
@@ -165,14 +187,6 @@ exec(){
 	testcase=$1
 	program=$2
 	parameter=$3
-
-	## Declare an associative array for pattern matching
-	declare -A patterns=( [LZ77]=compress )
-
-	## declare 4 kinds of code generation
-	declare -a codegens=("naive" "naive_dealloc" "nocopy" "nocopy_dealloc")
-	#declare -a codegens=("naive" "naive_dealloc" "nocopy")
-
 
 	# ## Iterate each codegen
 	for codegen in "${codegens[@]}"
@@ -273,11 +287,8 @@ exec(){
 
 
 # # ###Sobel Edge test
-# init SobelEdge
-# exec SobelEdge original 8
-# exec SobelEdge original 16
-# exec SobelEdge original 32
-# exec SobelEdge original 64
+init SobelEdge
+exec SobelEdge original "small.pbm"
 # exec SobelEdge original 128
 # exec SobelEdge original 256
 # exec SobelEdge original 512
@@ -297,7 +308,7 @@ exec(){
 # exec NQueens integer 14
 
 #### LZ77 test case
-init LZ77
-exec LZ77 original "small.in"
-exec LZ77 original "medium.in"
-exec LZ77 original "large.in"
+#init LZ77
+#exec LZ77 original "small.in"
+#exec LZ77 original "medium.in"
+#exec LZ77 original "large.in"
