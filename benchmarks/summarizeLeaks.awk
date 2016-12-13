@@ -4,7 +4,7 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge LZ77";
+	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult LZ77 SobelEdge";
 	
 	## Program Type
 	programs["Reverse"]="original";
@@ -40,7 +40,7 @@ BEGIN {
 	# parameters["Fibonacci"]="10 20 30";
 	# parameters["GCD"]="10 20 30";
 	# parameters["CoinGame"]="100 200 300";
-	parameters["SobelEdge"]="8 16 32 64 128 256";	
+	parameters["SobelEdge"]="32 64 128";	
 	# ## Recursive function call
 	# 
 	# parameters["NQueens"]="8 9 10";
@@ -77,7 +77,15 @@ BEGIN {
 	# Get the number of threads
 	thread = t_array[6];
 	# Get parameter
-	parameter = t_array[7];
+	if(testcase == "SobelEdge"){
+		split(t_array[7], tmp, "x");
+		parameter = tmp[2];
+		##print "parameter" parameter;
+	}else{
+		parameter = t_array[7];
+	}
+
+	
 	key=testcase","program","codegen","pattern","compiler","parameter","thread;
 	count[key]++;
 	#print key "," count[key];

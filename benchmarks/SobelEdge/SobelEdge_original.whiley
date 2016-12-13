@@ -9,6 +9,8 @@ $ pbmtext -plain -width 64 -space 4 -lspace 2 FEEPFEEPFEEPFEE > image64x64.pbm
 $ pbmtext -plain -width 128 -space 8 -lspace 4 FEEPFEEPFEEPFEEPFEEPFEEPFEEPFEEPFEEPFEEPFEEPFEEP > image128x128.pbm
 $ pbmtext -plain -width 256 -space 16 -lspace 8 FEEP..FEEPF > image256x256.pbm
 $ pbmtext -plain -width 512 -space 32 -lspace 16 ... > image512x512.pbm
+$ pbmtext -plain -width 1024 -space 64 -lspace 32 ... > image1024x1024.pbm
+
 http://netpbm.sourceforge.net/doc/pbmtext.html
 
 Note NETPBM library is required to do the conversion (http://netpbm.sourceforge.net/)

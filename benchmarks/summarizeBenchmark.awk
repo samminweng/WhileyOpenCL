@@ -60,7 +60,7 @@ BEGIN {
 	filename = "";
 	FS = "\n";
 	## Test case name
-	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge LZ77";
+	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult LZ77 SobelEdge";
 	###testcases="Reverse newTicTacToe BubbleSort MatrixMult Fibonacci GCD CoinGame SobelEdge MergeSort NQueens LZ77";
 
 	## Program Type
@@ -96,7 +96,7 @@ BEGIN {
 	# parameters["Fibonacci"]="10 50 90";
 	# parameters["GCD"]="100 150 200";
 	# parameters["CoinGame"]="1000 2000 3000";
-	parameters["SobelEdge"]="8 16 32 64 128 256 512 1024";	
+	parameters["SobelEdge"]="32 64 128 256 512 1024";	
 	## Recursive function call
 	# parameters["NQueens"]="8 10 12 14";
 	# ### pattern transformation
@@ -134,8 +134,12 @@ BEGIN {
 	thread = t_array[6];
 
 	# Get parameter
-	parameter = t_array[7];
-	#pause();
+	if(testcase == "SobelEdge"){
+		split(t_array[7], tmp, "x");
+		parameter = tmp[2];
+	}else{
+		parameter = t_array[7];
+	}
 	
 	key=testcase","program","codegen","pattern","compiler","parameter","thread;
 	##print "key="key;

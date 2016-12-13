@@ -10,13 +10,14 @@ UTILDIR="$(dirname "$(pwd)")/tests/code"
 BENCHMARKDIR="$(pwd)"
 
 ## Declare an associative array for image size in sobeledge test case
-declare -A widths=( [image32x32.pbm]=32 [image64x64.pbm]=64 [image128x128.pbm]=128 [image256x256.pbm]=256 [image512x512.pbm]=512 )
+declare -A widths=( [image32x32.pbm]=32 [image64x64.pbm]=64 [image128x128.pbm]=128 \
+                    [image256x256.pbm]=256 [image512x512.pbm]=512 [image1024x1024.pbm]=1024 )
 ## Declare an associative array for pattern matching
 declare -A patterns=( [LZ77]=compress )
 
 ## declare 4 kinds of code generation
 declare -a codegens=("naive" "naive_dealloc" "nocopy" "nocopy_dealloc")
-#declare -a codegens=("naive" "naive_dealloc" "nocopy")
+##declare -a codegens=("naive_dealloc" "nocopy" "nocopy_dealloc")
 
 
 ### Create the folder and/or clean up the files
@@ -98,7 +99,7 @@ compileAndRun(){
 	compiler=$6
 	num_threads=$7
 	####Create 'out', 'llvm' and 'assembly' folder
-    rm -rf "out" "llvm" "assembly"
+	rm -rf "out" "llvm" "assembly"
 	mkdir -p "out" "llvm" "assembly"
 	### The executable file name
 	if [ $enabledpattern == 1 ]
@@ -108,7 +109,7 @@ compileAndRun(){
 		executable="$testcase.$program.$codegen.disabledpattern.$compiler.$num_threads.$parameter.out"
 	fi
 	result="$BENCHMARKDIR/$testcase/exectime/GCC/$executable.txt"
-    ### Compile C code into executables
+	### Compile C code into executables
 	case "$compiler" in
 		"gcc")
 			gcc -std=c11 -O3 $testcase"_"$program.c Util.c -o "out/$executable"
@@ -143,7 +144,7 @@ compileAndRun(){
 			export OMP_NUM_THREADS=$num_threads
 			;;
 	esac
-	
+
 	echo "Run the $program $testcase on $parameter using $compiler and $num_threads threads..." > $result
 	echo "Run the $program $testcase on $parameter using $num_threads threads..."
 	for i in {1..10}
@@ -163,7 +164,7 @@ compileAndRun(){
 				width=${widths[$parameter]}
 				echo "width = "$width
 				## Copy PBM image to folder
-				cp "$BENCHMARKDIR/$testcase/image/$parameter" .				
+				cp "$BENCHMARKDIR/$testcase/image/$parameter" .
 				mkdir -p "$BENCHMARKDIR/$testcase/image/output/$codegen"
 				##read -p "Press [Enter] to continue..."
 				timeout $TIMEOUT "out/$executable" $parameter $width > "$BENCHMARKDIR/$testcase/image/output/$codegen/output$widthx$width.pbm"
@@ -294,7 +295,7 @@ exec SobelEdge original "image64x64.pbm"
 exec SobelEdge original "image128x128.pbm"
 exec SobelEdge original "image256x256.pbm"
 exec SobelEdge original "image512x512.pbm"
-# exec SobelEdge original 1024
+exec SobelEdge original "image1024x1024.pbm"
 
 
 # ## NQueen test case
