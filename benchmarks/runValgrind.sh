@@ -6,6 +6,17 @@ alias pollycc="clang -O3 -mllvm -polly"
 UTILDIR="$(dirname "$(pwd)")/tests/code"
 BENCHMARKDIR="$(pwd)"
 
+## Declare an associative array for image size in sobeledge test case
+declare -A widths=( [image32x32.pbm]=32 [image64x64.pbm]=64 [image128x128.pbm]=128 \
+	                [image256x256.pbm]=256 [image512x512.pbm]=512 )
+## Declare an associative array for pattern matching
+declare -A patterns=( [LZ77]=compress )
+
+## declare 4 kinds of code generation
+declare -a codegens=("naive" "naive_dealloc" "nocopy" "nocopy_dealloc")
+##declare -a codegens=("naive_dealloc" "nocopy" "nocopy_dealloc")
+
+
 ### Create the 'leak' folder and clean up the files
 init(){
 	testcase=$1
@@ -129,8 +140,20 @@ detectleaks(){
 	then
 		valgrind --tool=memcheck "--log-file=$result" "./out/$executable" "$BENCHMARKDIR/$testcase/$parameter"
 	else
-		## Other cases
-		valgrind --tool=memcheck "--log-file=$result" "./out/$executable" $parameter
+		if [ $testcase = "SobelEdge" ]
+		then
+			#echo $parameter
+			width=${widths[$parameter]}
+			echo "width = "$width
+			## Copy PBM image to folder
+			cp "$BENCHMARKDIR/$testcase/image/$parameter" .				
+			mkdir -p "$BENCHMARKDIR/$testcase/image/output/$codegen"
+			### Detect the memory leaks
+			valgrind --tool=memcheck "--log-file=$result" "./out/$executable" $parameter $width > "$BENCHMARKDIR/$testcase/image/output/$codegen/output$widthx$width.pbm"
+		else
+			## Other cases
+			valgrind --tool=memcheck "--log-file=$result" "./out/$executable" $parameter
+		fi
 	fi
 	
 	#valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all "--log-file=$result" ./out/"$program.$compiler.enableVC.out" $parameter
@@ -144,14 +167,6 @@ exec(){
 	testcase=$1
 	program=$2
 	parameter=$3
-
-	## Declare an associative array for pattern matching
-	declare -A patterns=( [LZ77]=compress )
-
-	## declare 4 kinds of code generation
-	#declare -a codegens=("naive" "naive_dealloc" "nocopy" "nocopy_dealloc")
-	declare -a codegens=("naive_dealloc" "nocopy" "nocopy_dealloc")
-
 
 	# ## Iterate each codegen
 	for codegen in "${codegens[@]}"
@@ -250,14 +265,11 @@ exec(){
 # exec CoinGame array 200
 # exec CoinGame array 300
 
-# # # ## Sobel Edge Detection test case
-# init SobelEdge
-# exec SobelEdge original 8
-# exec SobelEdge original 16
-# exec SobelEdge original 32
-# exec SobelEdge original 64
-# exec SobelEdge original 128
-# exec SobelEdge original 256
+# # ###Sobel Edge test
+init SobelEdge
+exec SobelEdge original "image32x32.pbm"
+exec SobelEdge original "image64x64.pbm"
+exec SobelEdge original "image128x128.pbm"
 
 # # ### NQueen test case
 # init NQueens
@@ -272,6 +284,6 @@ exec(){
 #init LZ77
 #exec LZ77 original "small.in"
 #exec LZ77 original "medium.in"
-exec LZ77 original "large.in"
+#exec LZ77 original "large.in"
 
 

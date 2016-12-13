@@ -10,7 +10,7 @@ UTILDIR="$(dirname "$(pwd)")/tests/code"
 BENCHMARKDIR="$(pwd)"
 
 ## Declare an associative array for image size in sobeledge test case
-declare -A widths=( [image32x32.pbm]=32 [image64x64.pbm]=64 [image128x128.pbm]=128 )
+declare -A widths=( [image32x32.pbm]=32 [image64x64.pbm]=64 [image128x128.pbm]=128 [image256x256.pbm]=256 [image512x512.pbm]=512 )
 ## Declare an associative array for pattern matching
 declare -A patterns=( [LZ77]=compress )
 
@@ -292,8 +292,8 @@ init SobelEdge
 exec SobelEdge original "image32x32.pbm"
 exec SobelEdge original "image64x64.pbm"
 exec SobelEdge original "image128x128.pbm"
-# exec SobelEdge original 256
-# exec SobelEdge original 512
+exec SobelEdge original "image256x256.pbm"
+exec SobelEdge original "image512x512.pbm"
 # exec SobelEdge original 1024
 
 

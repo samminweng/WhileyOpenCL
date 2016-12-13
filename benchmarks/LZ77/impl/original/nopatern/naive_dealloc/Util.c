@@ -118,11 +118,10 @@ int64_t** convertArgsToIntArray(int argc, char** args, size_t *arr_size, size_t 
 
 	// Update the output array size
 	*arr_size = argc -1;
-
+	// Array index
+	size_t index=0;
 	//Skip 1st arguement as it is the exec file name.
 	for(size_t i=1;i<argc;i++){
-		// Array index
-		size_t index=i-1;
 		// The length of each argument
 		size_t length=0;
 		// Check if the argument is an integer
@@ -172,8 +171,8 @@ int64_t** convertArgsToIntArray(int argc, char** args, size_t *arr_size, size_t 
 
 			// Update the array size with length
 			*arr_size_size = length + 1;
-
 		}
+		index++;
 	}
 
 	return arr;
@@ -494,11 +493,13 @@ FILE* Reader(int64_t* arr, size_t arr_size){
 	char tmp[1024];
 	// Convert an array of ASCII code to an string
 	size_t i=0;
-	while(i<arr_size){
+	// Iterate through all the chars
+	while(arr[i] !='\0'){
 		char c = arr[i];
 		tmp[i] = c;
 		i = i + 1;
 	}
+	arr_size = i;
 	// Add the ending (null-terminated)
 	tmp[i] = '\0';
 
@@ -545,15 +546,88 @@ FILE* Writer(int64_t* arr, size_t arr_size){
 
 	return fp;
 }
+// Check if file is a pbm
+bool isPBMFile(FILE *file){
+	char* line = NULL;
+	size_t length = 0;
+	// Get the first line, which should be 'P1\n'
+	if(getline(&line, &length, file) != -1){
+		// Get line length
+		size_t len=strlen(line);
+		if(len==3){
+			// Check if line is P1
+			if(line[0]=='P' && line[1]=='1' && line[2]=='\n'){
+				return true;
+			}
+		}
+	}
 
-// Read all lines of a file and output a BYTE array
-BYTE* readAll(FILE *file, size_t* _size){
+	return false;
+}
+// Read an image as an array of bytes
+BYTE* readPBM(FILE *file, size_t* _size){
+	char* line = NULL;
+	size_t length = 0;
+	size_t width = 0;
+	size_t height = 0;
+	// Read 'width' and 'height' from a file
+	while(getline(&line, &length, file) != -1){
+		// Check if the line is a comment
+		if(line[0]!='#'){
+			sscanf(line, "%d %d\n", &width, &height);
+			break;
+		}
+	}
+
+	size_t size = width * height;
+
+	// Allocated byte array. Note the last char (EOF)
+	BYTE* arr = (BYTE*)malloc(size*sizeof(BYTE));
+	if(arr == NULL){
+		fputs("fail to allocate the array at 'readPBM' function in Util.c\n", stderr);
+		exit(-2);
+	}
+
+	// Read a file line-by-line and pyt each byte to the array
+	size_t arr_ind = 0;
+
+	char c;
+	// Read one byte
+	while((c = getc(file)) != EOF){
+		BYTE b;
+		if(c != ' ' && c != '\n'){
+			b = (BYTE)c;
+			if(b == '1'){
+				// b is an edge, represent by 'b'
+				arr[arr_ind] = (BYTE)98;
+			}else if(b == '0'){
+				// b is an space
+				arr[arr_ind] = (BYTE)32;
+			}else{
+				arr[arr_ind] = (BYTE)b;
+			}
+			arr_ind++;
+		}
+	}
+
+	*_size = size;
+
+	return arr;
+}
+
+
+// Read a file from the beginning to end
+BYTE* readFile(FILE *file, size_t* _size){
+	// Set the file position to the beginning of the file
+	rewind(file);
+
 	// Calculate the output size
 	size_t size = 0;
+
 	while(feof(file) != true){
-      BYTE c = fgetc(file);
-      //printf("%c", c);
-      size = size + 1;
+		BYTE c = fgetc(file);
+		//printf("%c", c);
+		size = size + 1;
 	}
 	// Set the file position to the beginning of the file
 	rewind(file);
@@ -575,6 +649,20 @@ BYTE* readAll(FILE *file, size_t* _size){
 
 	*_size = size;
 	return arr;
+
+}
+
+// Read all lines of a file and output a BYTE array
+BYTE* readAll(FILE *file, size_t* _size){
+	// Check if file is a pbm
+	bool ispbm=isPBMFile(file);
+
+	if(ispbm){
+		return readPBM(file, _size);
+	}else{
+		// Do the normal reading
+		return readFile(file, _size);
+	}
 }
 
 // Write an BYTE array to a file
