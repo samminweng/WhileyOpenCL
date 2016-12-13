@@ -4,8 +4,9 @@ import whiley.lang.*
 import whiley.lang.Math
 /* 
 The source image is created by 'pbmtext', which converts 'FEEP' text into plain pbm file
-$ pbmtext -plain -width 64 -space 4 FEEP > 64x64.pbm
-
+$ pbmtext -plain -width 32 FEEPFEEP > image32x32.pbm
+$ pbmtext -plain -width 64 -space 4 -lspace 2 FEEPFEEPFEEPFEE > image64x64.pbm
+$ pbmtext -plain -width 128 -space 8 -lspace 4 FEEPFEEPFEEPFEEPFEEPFEEPFEEPFEEPFEEPFEEPFEEPFEEP > image128x128.pbm
 
 http://netpbm.sourceforge.net/doc/pbmtext.html
 
@@ -13,7 +14,7 @@ Note NETPBM library is required to do the conversion (http://netpbm.sourceforge.
 */
 constant SPACE is 00100000b // ASCII code of space (' ') 
 constant BLACK is 01100010b // ASCII code of 'b' 
-constant TH is 32 // Control the number of edges
+constant TH is 64 // Control the number of edges
 
 function wrap(int pos, int size) -> int:
 	if pos>=size:

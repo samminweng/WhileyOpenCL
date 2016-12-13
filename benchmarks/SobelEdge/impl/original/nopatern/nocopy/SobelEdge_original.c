@@ -362,8 +362,8 @@ BYTE* sobelEdgeDetection(BYTE* pixels, size_t pixels_size, int64_t width, int64_
 			_51=_49+_50;
 			//assign %13 = %51  : int
 			t_g = _51;
-			//const %52 = 32 : int
-			_52 = 32;
+			//const %52 = 64 : int
+			_52 = 64;
 			//ifgt %13, %52 goto blklab12 : int
 			if(t_g>_52){goto blklab12;}
 			//const %53 = 01100010b : byte

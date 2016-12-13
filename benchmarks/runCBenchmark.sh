@@ -10,7 +10,7 @@ UTILDIR="$(dirname "$(pwd)")/tests/code"
 BENCHMARKDIR="$(pwd)"
 
 ## Declare an associative array for image size in sobeledge test case
-declare -A widths=( [32x32.pbm]=32 )
+declare -A widths=( [image32x32.pbm]=32 [image64x64.pbm]=64 [image128x128.pbm]=128 )
 ## Declare an associative array for pattern matching
 declare -A patterns=( [LZ77]=compress )
 
@@ -163,9 +163,10 @@ compileAndRun(){
 				width=${widths[$parameter]}
 				echo "width = "$width
 				## Copy PBM image to folder
-				cp "$BENCHMARKDIR/$testcase/image/$parameter" .
+				cp "$BENCHMARKDIR/$testcase/image/$parameter" .				
+				mkdir -p "$BENCHMARKDIR/$testcase/image/output/$codegen"
 				##read -p "Press [Enter] to continue..."
-				timeout $TIMEOUT "out/$executable" $parameter $width > "output.pbm"
+				timeout $TIMEOUT "out/$executable" $parameter $width > "$BENCHMARKDIR/$testcase/image/output/$codegen/output$widthx$width.pbm"
 				##read -p "Press [Enter] to continue..."
 			else
 				## Other cases
@@ -288,8 +289,9 @@ exec(){
 
 # # ###Sobel Edge test
 init SobelEdge
-exec SobelEdge original "small.pbm"
-# exec SobelEdge original 128
+exec SobelEdge original "image32x32.pbm"
+exec SobelEdge original "image64x64.pbm"
+exec SobelEdge original "image128x128.pbm"
 # exec SobelEdge original 256
 # exec SobelEdge original 512
 # exec SobelEdge original 1024
