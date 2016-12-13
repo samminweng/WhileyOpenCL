@@ -9,8 +9,8 @@ alias pollycc="clang -O3 -mllvm -polly"
 UTILDIR="$(dirname "$(pwd)")/tests/code"
 BENCHMARKDIR="$(pwd)"
 
-## Declare an associative array for sobeledge
-declare -A images=( [small.pbm]=64 )
+## Declare an associative array for image size in sobeledge test case
+declare -A widths=( [32x32.pbm]=32 )
 ## Declare an associative array for pattern matching
 declare -A patterns=( [LZ77]=compress )
 
@@ -160,12 +160,12 @@ compileAndRun(){
 			if [ $testcase = "SobelEdge" ]
 			then
 				#echo $parameter
-				size=${images[$parameter]}
-				echo "Size = "$size 
+				width=${widths[$parameter]}
+				echo "width = "$width
 				## Copy PBM image to folder
 				cp "$BENCHMARKDIR/$testcase/image/$parameter" .
 				##read -p "Press [Enter] to continue..."
-				timeout $TIMEOUT "out/$executable" $parameter $size > "output.pbm"
+				timeout $TIMEOUT "out/$executable" $parameter $width > "output.pbm"
 				##read -p "Press [Enter] to continue..."
 			else
 				## Other cases

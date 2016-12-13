@@ -590,22 +590,23 @@ BYTE* readPBM(FILE *file, size_t* _size){
 
 	// Read a file line-by-line and pyt each byte to the array
 	size_t arr_ind = 0;
-	while(feof(file) != true){
-		uint8_t b;
-		// Read one byte
-		while (fscanf(file, "%u", &b) == 1){
-			if(b != ' ' && b != '\n'){
-				if(b == 1){
-					// b is an edge, represent by 'b'
-					arr[arr_ind] = (BYTE)98;
-				}else if(b == 0){
-					// b is an space
-					arr[arr_ind] = (BYTE)32;
-				}else{
-					arr[arr_ind] = (BYTE)b;
-				}
-				arr_ind++;
+
+	char c;
+	// Read one byte
+	while((c = getc(file)) != EOF){
+		BYTE b;
+		if(c != ' ' && c != '\n'){
+			b = (BYTE)c;
+			if(b == '1'){
+				// b is an edge, represent by 'b'
+				arr[arr_ind] = (BYTE)98;
+			}else if(b == '0'){
+				// b is an space
+				arr[arr_ind] = (BYTE)32;
+			}else{
+				arr[arr_ind] = (BYTE)b;
 			}
+			arr_ind++;
 		}
 	}
 

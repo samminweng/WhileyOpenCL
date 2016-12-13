@@ -75,9 +75,9 @@ int64_t convolution(BYTE* pixels, size_t pixels_size, int64_t width, int64_t hei
 	int64_t _27 = 0;
 	int64_t _28 = 0;
 	int64_t _29 = 0;
-	BYTE _30;
+	int64_t _30 = 0;
 	int64_t _31 = 0;
-	int64_t _32 = 0;
+	BYTE _32;
 	int64_t _33 = 0;
 	int64_t _34 = 0;
 	int64_t _35 = 0;
@@ -85,6 +85,8 @@ int64_t convolution(BYTE* pixels, size_t pixels_size, int64_t width, int64_t hei
 	int64_t _37 = 0;
 	int64_t _38 = 0;
 	int64_t _39 = 0;
+	int64_t _40 = 0;
+	int64_t _41 = 0;
 	//const %16 = 0 : int
 	_16 = 0;
 	//assign %7 = %16  : int
@@ -101,7 +103,7 @@ int64_t convolution(BYTE* pixels, size_t pixels_size, int64_t width, int64_t hei
 	_19 = 0;
 	//assign %10 = %19  : int
 	filterY = _19;
-	//loop (%7, %10, %11, %12, %13, %14, %15, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39)
+	//loop (%7, %10, %11, %12, %13, %14, %15, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41)
 	while(true){
 		//ifge %10, %8 goto blklab4 : int
 		if(filterY>=filterSize){goto blklab4;}
@@ -109,73 +111,77 @@ int64_t convolution(BYTE* pixels, size_t pixels_size, int64_t width, int64_t hei
 		_21=yCenter+filterY;
 		//sub %22 = %21, %9 : int
 		_22=_21-filterHalf;
-		//invoke (%20) = (%22, %2) SobelEdge_original:wrap : function(int,int)->(int)
+		//rem %23 = %22, %2 : int
+		_23=_22%height;
+		//invoke (%20) = (%23) whiley/lang/Math:abs : function(int)->(int)
 		{
-			_20 = wrap(_22, height);
+			_20 = llabs(_23);
 		}
 		//assign %11 = %20  : int
 		y = _20;
-		//const %23 = 0 : int
-		_23 = 0;
-		//assign %12 = %23  : int
-		filterX = _23;
-		//loop (%7, %12, %13, %14, %15, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37)
+		//const %24 = 0 : int
+		_24 = 0;
+		//assign %12 = %24  : int
+		filterX = _24;
+		//loop (%7, %12, %13, %14, %15, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39)
 		while(true){
 			//ifge %12, %8 goto blklab6 : int
 			if(filterX>=filterSize){goto blklab6;}
-			//add %25 = %3, %12 : int
-			_25=xCenter+filterX;
-			//sub %26 = %25, %9 : int
-			_26=_25-filterHalf;
-			//invoke (%24) = (%26, %1) SobelEdge_original:wrap : function(int,int)->(int)
+			//add %26 = %3, %12 : int
+			_26=xCenter+filterX;
+			//sub %27 = %26, %9 : int
+			_27=_26-filterHalf;
+			//rem %28 = %27, %1 : int
+			_28=_27%width;
+			//invoke (%25) = (%28) whiley/lang/Math:abs : function(int)->(int)
 			{
-				_24 = wrap(_26, width);
+				_25 = llabs(_28);
 			}
-			//assign %13 = %24  : int
-			x = _24;
-			//mul %28 = %11, %1 : int
-			_28=y*width;
-			//add %29 = %28, %13 : int
-			_29=_28+x;
-			//indexof %30 = %0, %29 : byte[]
-			_30=pixels[_29];
-			//invoke (%27) = (%30) whiley/lang/Byte:toUnsignedInt : function(byte)->(whiley/lang/Int:uint)
+			//assign %13 = %25  : int
+			x = _25;
+			//mul %30 = %11, %1 : int
+			_30=y*width;
+			//add %31 = %30, %13 : int
+			_31=_30+x;
+			//indexof %32 = %0, %31 : byte[]
+			_32=pixels[_31];
+			//invoke (%29) = (%32) whiley/lang/Byte:toUnsignedInt : function(byte)->(whiley/lang/Int:uint)
 			{
-				_27 = (unsigned int)_30;
+				_29 = (unsigned int)_32;
 			}
-			//assign %14 = %27  : int
-			pixel = _27;
-			//mul %31 = %10, %8 : int
-			_31=filterY*filterSize;
-			//add %32 = %31, %12 : int
-			_32=_31+filterX;
-			//indexof %33 = %5, %32 : int[]
-			_33=filter[_32];
-			//assign %15 = %33  : int
-			filterVal = _33;
-			//mul %34 = %14, %15 : int
-			_34=pixel*filterVal;
-			//add %35 = %7, %34 : int
-			_35=sum+_34;
-			//assign %7 = %35  : int
-			sum = _35;
-			//const %36 = 1 : int
-			_36 = 1;
-			//add %37 = %12, %36 : int
-			_37=filterX+_36;
-			//assign %12 = %37  : int
-			filterX = _37;
+			//assign %14 = %29  : int
+			pixel = _29;
+			//mul %33 = %10, %8 : int
+			_33=filterY*filterSize;
+			//add %34 = %33, %12 : int
+			_34=_33+filterX;
+			//indexof %35 = %5, %34 : int[]
+			_35=filter[_34];
+			//assign %15 = %35  : int
+			filterVal = _35;
+			//mul %36 = %14, %15 : int
+			_36=pixel*filterVal;
+			//add %37 = %7, %36 : int
+			_37=sum+_36;
+			//assign %7 = %37  : int
+			sum = _37;
+			//const %38 = 1 : int
+			_38 = 1;
+			//add %39 = %12, %38 : int
+			_39=filterX+_38;
+			//assign %12 = %39  : int
+			filterX = _39;
 //.blklab7
 blklab7:;
 		}
 //.blklab6
 blklab6:;
-		//const %38 = 1 : int
-		_38 = 1;
-		//add %39 = %10, %38 : int
-		_39=filterY+_38;
-		//assign %10 = %39  : int
-		filterY = _39;
+		//const %40 = 1 : int
+		_40 = 1;
+		//add %41 = %10, %40 : int
+		_41=filterY+_40;
+		//assign %10 = %41  : int
+		filterY = _41;
 //.blklab5
 blklab5:;
 	}
@@ -360,8 +366,8 @@ BYTE* sobelEdgeDetection(BYTE* pixels, size_t pixels_size, int64_t width, int64_
 			_51=_49+_50;
 			//assign %13 = %51  : int
 			t_g = _51;
-			//const %52 = 16 : int
-			_52 = 16;
+			//const %52 = 32 : int
+			_52 = 32;
 			//ifgt %13, %52 goto blklab12 : int
 			if(t_g>_52){goto blklab12;}
 			//const %53 = 01100010b : byte

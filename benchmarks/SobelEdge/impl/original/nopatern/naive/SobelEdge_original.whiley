@@ -2,19 +2,18 @@ import * from whiley.io.File
 import * from whiley.lang.System
 import whiley.lang.*
 import whiley.lang.Math
-/* Source images are downloaded from 
-1. cln1.GIF (http://homepages.inf.ed.ac.uk/rbf/HIPR2/sobel.htm)
+/* 
+The source image is created by 'pbmtext', which converts 'FEEP' text into plain pbm file
+$ pbmtext -plain -width 64 -space 4 FEEP > small.pbm
 
 
-The source GIF,JPG can be converted to pnm file and then to plain pbm using
-$ giftopnm cln1.GIF > small.pnm
-$ pnmtoplainpnm small.pnm > small.pbm
+http://netpbm.sourceforge.net/doc/pbmtext.html
 
 Note NETPBM library is required to do the conversion (http://netpbm.sourceforge.net/)
 */
 constant SPACE is 00100000b // ASCII code of space (' ') 
 constant BLACK is 01100010b // ASCII code of 'b' 
-constant TH is 16 // Control the number of edges
+constant TH is 32 // Control the number of edges
 
 function wrap(int pos, int size) -> int:
 	if pos>=size:
@@ -34,12 +33,12 @@ function convolution(byte[] pixels, int width, int height, int xCenter, int yCen
 	int filterHalf = 1
 	int filterY = 0
 	while filterY < filterSize:
-		int y = wrap(yCenter+filterY - filterHalf, height)
-		//int y = Math.abs((yCenter+filterY-filterHalf)%height)
+		//int y = wrap(yCenter+filterY - filterHalf, height)
+		int y = Math.abs((yCenter+filterY-filterHalf)%height)
 		int filterX = 0
 		while filterX < filterSize:
-			int x = wrap(xCenter + filterX - filterHalf, width)
-			//int x = Math.abs((xCenter + filterX - filterHalf)%width)
+			//int x = wrap(xCenter + filterX - filterHalf, width)
+			int x = Math.abs((xCenter + filterX - filterHalf)%width)
 			// Get pixel
 			int pixel = Byte.toUnsignedInt(pixels[y*width+x])
 			// Get filter value

@@ -38,7 +38,7 @@ method print_pbm(System.Console sys, int width, int height, byte[] pixels):
         j = j + 1 
 
 method main(System.Console sys):
-    File.Reader r = File.Reader("feep.pbm")
+    File.Reader r = File.Reader("image32x32.pbm")
     int width=32
     int height=32
     byte[] pixels = r.readAll()

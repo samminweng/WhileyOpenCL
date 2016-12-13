@@ -438,9 +438,9 @@ public final class BaseTestUtil {
 			}else if (testcase.equals("fileread") || testcase.equals("fileread2")
 					|| testcase.equals("SobelEdge1") || testcase.equals("SobelEdge2")){
 				// A PBM image file
-				File in = new File(sourceDir + File.separator + "feep.pbm");
+				File in = new File(sourceDir + File.separator + "image32x32.pbm");
 				// Copy 'feep.pbm' to folder
-				Files.copy(in.toPath(), Paths.get(destDir + File.separator + "feep.pbm"));
+				Files.copy(in.toPath(), Paths.get(destDir + File.separator + "image32x32.pbm"));
 			}
 			
 			// 3. Generate the C code.

@@ -104,7 +104,7 @@ method print_pbm(System.Console sys, int width, int height, byte[] pixels):
 // Main function
 method main(System.Console sys):
 	// Read feep.bpm
-	File.Reader r = File.Reader("feep.pbm")
+	File.Reader r = File.Reader("image32x32.pbm")
 	int width =32
 	int height = 32
 	int size = width * height
