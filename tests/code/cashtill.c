@@ -1,5 +1,4 @@
 #include "cashtill.h"
-typedef int64_t* Cash;
 int64_t* cash(){
 	_DECL_1DARRAY(_0);
 	int64_t _1 = 0;
@@ -163,7 +162,7 @@ blklab4:;
 	//return
 }
 
-int64_t total(int64_t* c){
+int64_t total(_DECL_1DARRAY_PARAM(c)){
 	int64_t _1 = 0;
 	int64_t r = 0;
 	int64_t i = 0;
@@ -220,7 +219,7 @@ blklab9:;
 	//return
 }
 
-int64_t contained(int64_t* first, int64_t* second){
+int64_t contained(_DECL_1DARRAY_PARAM(first), _DECL_1DARRAY_PARAM(second)){
 	int64_t _2;
 	int64_t i = 0;
 	int64_t _4 = 0;
@@ -271,7 +270,7 @@ blklab11:;
 	//return
 }
 
-int64_t* add(int64_t* first, int64_t* second){
+int64_t* add(_DECL_1DARRAY_PARAM(first), _DECL_1DARRAY_PARAM(second)){
 	_DECL_1DARRAY(r);
 	int64_t i = 0;
 	int64_t _4 = 0;
@@ -316,7 +315,7 @@ blklab15:;
 	//return
 }
 
-int64_t* subtract(int64_t* first, int64_t* second){
+int64_t* subtract(_DECL_1DARRAY_PARAM(first), _DECL_1DARRAY_PARAM(second)){
 	_DECL_1DARRAY(r);
 	int64_t i = 0;
 	int64_t _4 = 0;
@@ -361,7 +360,7 @@ blklab19:;
 	//return
 }
 
-int64_t* calculateChange(int64_t* till, int64_t change){
+int64_t* calculateChange(_DECL_1DARRAY_PARAM(till), int64_t change){
 	int64_t* r;
 	int64_t i = 0;
 	_DECL_1DARRAY(tmp);
@@ -484,7 +483,7 @@ blklab26:;
 	//return
 }
 
-BYTE* toString(int64_t* c){
+BYTE* toString(_DECL_1DARRAY_PARAM(c)){
 	void* _1;
 	void* r;
 	int64_t firstTime;
@@ -619,7 +618,7 @@ blklab35:;
 	//return
 }
 
-int64_t* buy(FILE* console, int64_t* till, int64_t* given, int64_t cost){
+int64_t* buy(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_1DARRAY_PARAM(given), int64_t cost){
 	_DECL_1DARRAY(_4);
 	int64_t* change;
 	void* _6;

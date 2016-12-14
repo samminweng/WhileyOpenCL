@@ -329,27 +329,41 @@ public class CodeStores {
 	 * @param union
 	 * @return true
 	 */
-	public boolean isUnionOfArrayIntType(Type.Union union){
-		Iterator<Type> iterator = union.bounds().iterator();
-		while(iterator.hasNext()){
-			Type t = iterator.next();
-			if(t instanceof Type.Null){
-				continue;
-			}else if(t instanceof Type.Nominal){
-				wyil.lang.WyilFile.Type nominal = getUserDefinedType((Type.Nominal)t);
-				if(nominal!=null){
-					// Check if the union type is an array type.
-					if(nominal.type() instanceof Type.Array){
-						return true;//  
+	public boolean isUnionOfArrayIntType(Type type){
+		// Union type
+		if(type instanceof Type.Union){
+			Type.Union union = (Type.Union)type;
+			Iterator<Type> iterator = union.bounds().iterator();
+			while(iterator.hasNext()){
+				Type t = iterator.next();
+				if(t instanceof Type.Null){
+					continue;
+				}else if(t instanceof Type.Nominal){
+					wyil.lang.WyilFile.Type nominal = getUserDefinedType((Type.Nominal)t);
+					if(nominal!=null){
+						// Check if the union type is an array type.
+						if(nominal.type() instanceof Type.Array){
+							return true;//  
+						}
+					}
+				}else if(t instanceof Type.Array){
+					Type element = ((Type.Array)t).element();
+					if(isIntType(element)){
+						return true;
 					}
 				}
-			}else if(t instanceof Type.Array){
-				Type element = ((Type.Array)t).element();
-				if(isIntType(element)){
-					return true;
+			}
+		}else if (type instanceof Type.Nominal){
+			wyil.lang.WyilFile.Type nominal = getUserDefinedType((Type.Nominal)type);
+			if(nominal!=null){
+				// Check if the union type is an array type.
+				if(nominal.type() instanceof Type.Array){
+					return true;//  
 				}
 			}
+			
 		}
+		
 		
 		return false;
 	}

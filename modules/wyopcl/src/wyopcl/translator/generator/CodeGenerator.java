@@ -265,6 +265,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						// Declare a 'size_t' size variable
 						parameters.add(elem_type + " " + var + ", size_t " + var + "_size");
 					}
+				} else if (parameter_type instanceof Type.Nominal 
+						&& stores.isUnionOfArrayIntType(parameter_type)){
+					// Pass the parameter along with size variable
+					parameters.add("_DECL_1DARRAY_PARAM(" + var + ")");
 				} else {
 					if (parameter_type instanceof Type.Function) {
 						// Add lambda function pointer
@@ -2071,7 +2075,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				Type element= ((Type.Array)type).element();
 				if(stores.isIntType(element)){
 					// Define user type as a type of integer array 
-					statements.add("typedef "+CodeGeneratorHelper.translateType(type, stores)+ " " + type_name +";");
+					structs.add("typedef "+CodeGeneratorHelper.translateType(type, stores)+ " " + type_name +";");
 				}else{
 					throw new RuntimeException("Not Implemented!");
 				}
