@@ -25,6 +25,7 @@ import wyil.lang.Codes.NewObject;
 import wyil.lang.Codes.NewRecord;
 import wyil.lang.Codes.UnaryOperator;
 import wyil.lang.Constant;
+import wyil.lang.Modifier;
 import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
@@ -162,8 +163,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					// Declare array variable
 					int dimension = stores.getArrayDimension(type);
 					declarations.add(indent + "_DECL_" + dimension + "DARRAY(" + var + ");");
-				} else if (type instanceof Type.Record || type instanceof Type.Nominal || type instanceof Type.Union
-						|| type instanceof Type.Bool) {
+				} else if (type instanceof Type.Record || type instanceof Type.Nominal 
+						|| type instanceof Type.Union || type instanceof Type.Bool) {
 					String translateType = CodeGeneratorHelper.translateType(type, stores);
 					declarations.add(indent + translateType + " " + var + ";");
 				} else {
@@ -397,6 +398,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		if (!stores.isCompoundType(lhs_type)) {
 			Type rhs_type = stores.getRawType(code.operand(0), function);
+			// Special case for the assignment of int[]|null
+			if(lhs_type instanceof Type.Union && stores.isUnionOfArrayIntType((Type.Union)lhs_type)){
+				if (isCopyEliminated) {
+					// Have in-place update 
+					return indent + "_UPDATE_1DARRAY(" + lhs + ", " + rhs + ");";
+				} else {
+					// 
+					return indent + "_COPY_1DARRAY_int64_t(" + lhs + ", " + rhs + ");";
+				}
+			}
+			
 			// Special case for the assignment of integer pointers
 			if (lhs_type instanceof Type.Union && rhs_type instanceof Type.Union) {
 				if (isCopyEliminated) {
@@ -452,7 +464,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						return indent + "_COPY_1DARRAY_STRUCT(" + lhs + ", " + rhs + ", " + struct + ");";
 					}
 				}
-			} else {
+			}else {
 				// Structure type
 				if (isCopyEliminated) {
 					return indent + lhs + " = " + rhs + ";";
@@ -861,7 +873,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String lhs = stores.getVar(update.target(0), function);
 			// Get lhs type
 			Type struct_type = stores.getRawType(update.target(0), function);
-			if (struct_type instanceof Type.Array) {
+			if (struct_type instanceof Type.Array ||
+				(struct_type instanceof Type.Union && stores.isUnionOfArrayIntType((Type.Union)struct_type))) {
 				// Iterates operands to increase the depths.
 				for (int i = 0; i < update.operands().length - 1; i++) {
 					lhs += "[" + stores.getVar(update.operand(i), function) + "]";
@@ -2038,6 +2051,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Check if userType is a typedef structure.
 			if (type instanceof Type.Int) {
 				structs.add("typedef " + CodeGeneratorHelper.translateType(type, stores) + " " + type_name + ";");
+			} else if (type instanceof Type.Array ){
+				// An array of integers
+				Type element= ((Type.Array)type).element();
+				if(stores.isIntType(element)){
+					// Define user type as a type of integer array 
+					statements.add("typedef "+CodeGeneratorHelper.translateType(type, stores)+ " " + type_name +";");
+				}else{
+					throw new RuntimeException("Not Implemented!");
+				}
 			} else if (type instanceof Type.Record) {
 				structs.addAll(CodeGeneratorHelper.generateStructDef(type, stores));
 				statements.addAll(CodeGeneratorHelper.generateStructFunction(type, stores));

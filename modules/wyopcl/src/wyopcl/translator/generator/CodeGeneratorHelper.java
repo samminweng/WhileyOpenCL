@@ -416,11 +416,12 @@ public final class CodeGeneratorHelper {
 		if (type instanceof Type.Union) {
 			Type.Union u = (Type.Union) type;
 			// Check if type is 'union' type of INT and NULL
-			if (u.bounds().contains(Type.Int.T_INT) && u.bounds().contains(Type.Null.T_NULL)) {
+			if (u.bounds().contains(Type.Int.T_INT) && u.bounds().contains(Type.Null.T_NULL)
+				|| stores.isUnionOfArrayIntType(u)) {
 				// Return an array of 64-bit integers
 				return "int64_t*";
 			}
-
+			
 			return Optional.ofNullable(stores.getUserDefinedType(type)).get().name() + "*";
 		}
 

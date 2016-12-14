@@ -320,6 +320,35 @@ public class CodeStores {
 		return elmType;
 	}
 	
+	
+	/**
+	 * Check if the union type is an union of int[]|null
+	 * 
+	 * 
+	 * 
+	 * @param union
+	 * @return true
+	 */
+	public boolean isUnionOfArrayIntType(Type.Union union){
+		Iterator<Type> iterator = union.bounds().iterator();
+		while(iterator.hasNext()){
+			Type t = iterator.next();
+			if(t instanceof Type.Nominal){
+				wyil.lang.WyilFile.Type nominal = getUserDefinedType((Type.Nominal)t);
+				if(nominal!=null){
+					// Check if the union type is an array type.
+					if(nominal.type() instanceof Type.Array){
+						return true;//  
+					}
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	
+	
 	/**
 	 * Check if the type of given register is an array or record (excluding 'print' fields)
 	 * 
@@ -372,6 +401,11 @@ public class CodeStores {
 			}
 			
 			if(type instanceof Type.Union){
+				// Check if the union type is an integer array
+				if(isUnionOfArrayIntType((Type.Union)type)){
+					return false; // Not a compound type
+				}
+				
 				// The record may be null or non-null
 				Optional<Record> record = Optional.ofNullable(getRecordType((Type.Union)type));
 				if(record.isPresent()){
