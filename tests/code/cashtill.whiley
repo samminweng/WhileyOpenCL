@@ -30,10 +30,10 @@ constant Value is [
  */
 type Cash is (nat[] ns) where |ns| == |Value|
 
-function Cash() -> Cash:
+function cash() -> Cash:
     return [0,0,0,0,0,0,0,0]
 
-function Cash(nat[] coins) -> Cash
+function cash(nat[] coins) -> Cash
 // No coin in coins larger than permitted values
 requires all { i in 0..|coins| | coins[i] < |Value| }:
     Cash cash = [0,0,0,0,0,0,0,0]
@@ -125,7 +125,7 @@ function calculateChange(Cash till, nat change) -> (null|Cash r)
 ensures r is Cash ==> (contained(till,r) && total(r) == change):
     //
     if change == 0:
-        return Cash()
+        return cash()
     else:
         // exhaustive search through all possible coins
         nat i = 0
@@ -208,7 +208,7 @@ public method main(System.Console console):
     console.out.print_s("Till: ")
     console.out.println_s(toString(till))
     // now, run through some sequences...
-    till = buy(console,till,Cash([ONE_DOLLAR]),85)
-    till = buy(console,till,Cash([ONE_DOLLAR]),105)
-    till = buy(console,till,Cash([TEN_DOLLARS]),5)
-    till = buy(console,till,Cash([FIVE_DOLLARS]),305)
+    till = buy(console,till,cash([ONE_DOLLAR]),85)
+    till = buy(console,till,cash([ONE_DOLLAR]),105)
+    till = buy(console,till,cash([TEN_DOLLARS]),5)
+    till = buy(console,till,cash([FIVE_DOLLARS]),305)
