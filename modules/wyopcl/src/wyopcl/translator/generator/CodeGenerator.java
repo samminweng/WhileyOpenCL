@@ -126,9 +126,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Get the variable name.
 			String var = stores.getVar(reg, function);
 			if (type instanceof Type.FunctionOrMethod) {
-				// Skip translation
+				continue;// Skip translation
 			} else {
-				if (type instanceof Type.Null) {
+				if (type == null || type instanceof Type.Null) {
 					declarations.add(indent + "void* " + var + ";");
 				} else if(type instanceof Type.Byte){
 					declarations.add(indent + "BYTE " + var + ";");
@@ -163,7 +163,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					// Declare array variable
 					int dimension = stores.getArrayDimension(type);
 					declarations.add(indent + "_DECL_" + dimension + "DARRAY(" + var + ");");
-				} else if (type instanceof Type.Record || type instanceof Type.Nominal 
+				}else if (type instanceof Type.Record || type instanceof Type.Nominal 
 						|| type instanceof Type.Union || type instanceof Type.Bool) {
 					String translateType = CodeGeneratorHelper.translateType(type, stores);
 					declarations.add(indent + translateType + " " + var + ";");
@@ -517,12 +517,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String indent = stores.getIndent(function);
 		Type lhs_type = stores.getRawType(code.target(0), function);
 		String rhs = stores.getVar(code.operand(0), function);
-		// The type of file reader is NULL  
-		if(lhs_type instanceof Type.Nominal && ((Type.Nominal) lhs_type).name().name().equals("Reader")
-				&& ((Type.Nominal) lhs_type).name().name().equals("Writer")){
+		// The type of file reader is NULL 
+		if(lhs_type == null || lhs_type instanceof Type.Null){
+			statement.add(indent+lhs + " = "+rhs+";");			
+		}else if(lhs_type instanceof Type.Nominal 
+			&& ((Type.Nominal) lhs_type).name().name().equals("Reader")
+			&& ((Type.Nominal) lhs_type).name().name().equals("Writer")){
+			// Special case for File read/write
 			// Have in-place update
 			statement.add(indent+lhs + " = "+rhs+";");			
-		}else	if (lhs_type instanceof Type.Function) {
+		}else if (lhs_type instanceof Type.Function) {
 			statement.add(indent + declareLambda(lhs, (Type.Function) lhs_type) + ";");
 			// Point lhs to lambda function.
 			statement.add(indent + lhs + " = " + rhs + ";");
@@ -1079,6 +1083,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Convert an integer to a byte
 				statements.add(indent+ lhs + " = (BYTE)"+rhs+";");
 				break;
+			case "append":
+				// Append  array to another array, e.g. 'invoke (%13) = (%2, %14) whiley/lang/Array:append'
+				String rhs_arr  = stores.getVar(code.operand(0), function);
+				String rhs1_arr = stores.getVar(code.operand(1), function);
+				statements.add(indent+ lhs + " = ArrayAppend("+rhs_arr+", "+rhs1_arr+");");
+				break;
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);
 			}
@@ -1423,7 +1433,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						statements.addAll(a.preDealloc(code, function, stores));
 					});
 					statements.add(indent + "return;");
-				} else {
+				}else if(code.operands().length == 1){
+					// Get return variable
+					String ret = stores.getVar(code.operand(0), function);
+					statements.add(indent + "return " + ret + ";");
+				}else {
+						
 					throw new RuntimeException("Not implemented for return statement in a method");
 				}
 			}

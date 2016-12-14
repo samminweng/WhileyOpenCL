@@ -364,13 +364,19 @@ public final class CodeGeneratorHelper {
 		if (type instanceof Type.Nominal) {
 			String nominal_name = ((Type.Nominal) type).name().name();
 			
-			
 			// Check is type is a System.Console.
-			if (nominal_name.equals("Console") || nominal_name.equals("Reader") || nominal_name.equals("Writer")) {
+			if (nominal_name.equals("Console") || nominal_name.equals("Reader")
+					|| nominal_name.equals("Writer")) {
 				// Use FILE type.
 				return "FILE*";
 			}
 
+			// string type
+			if(nominal_name.equals("string")){
+				// Use an array of bytes (BYTE*)
+				return "BYTE*";
+			}
+			
 			// The existential type, e.g. 'Board' is an nominal type in TicTacToe test case.
 			WyilFile.Type nominal = Optional.of(stores.getUserDefinedType(type)).get();
 			return translateType(nominal.type(), stores);
@@ -416,8 +422,8 @@ public final class CodeGeneratorHelper {
 		if (type instanceof Type.Union) {
 			Type.Union u = (Type.Union) type;
 			// Check if type is 'union' type of INT and NULL
-			if (u.bounds().contains(Type.Int.T_INT) && u.bounds().contains(Type.Null.T_NULL)
-				|| stores.isUnionOfArrayIntType(u)) {
+			if (stores.isUnionOfArrayIntType(u) 
+					|| (u.bounds().contains(Type.Int.T_INT) && u.bounds().contains(Type.Null.T_NULL))) {
 				// Return an array of 64-bit integers
 				return "int64_t*";
 			}

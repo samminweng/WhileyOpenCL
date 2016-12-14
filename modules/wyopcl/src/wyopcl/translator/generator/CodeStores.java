@@ -333,13 +333,20 @@ public class CodeStores {
 		Iterator<Type> iterator = union.bounds().iterator();
 		while(iterator.hasNext()){
 			Type t = iterator.next();
-			if(t instanceof Type.Nominal){
+			if(t instanceof Type.Null){
+				continue;
+			}else if(t instanceof Type.Nominal){
 				wyil.lang.WyilFile.Type nominal = getUserDefinedType((Type.Nominal)t);
 				if(nominal!=null){
 					// Check if the union type is an array type.
 					if(nominal.type() instanceof Type.Array){
 						return true;//  
 					}
+				}
+			}else if(t instanceof Type.Array){
+				Type element = ((Type.Array)t).element();
+				if(isIntType(element)){
+					return true;
 				}
 			}
 		}
