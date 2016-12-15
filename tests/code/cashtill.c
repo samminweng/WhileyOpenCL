@@ -1,5 +1,5 @@
 #include "cashtill.h"
-int64_t* cash(){
+int64_t* cash(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_0);
 	int64_t _1 = 0;
 	int64_t _2 = 0;
@@ -35,7 +35,7 @@ int64_t* cash(){
 	//return
 }
 
-int64_t* cash(_DECL_1DARRAY_PARAM(coins)){
+int64_t* updatecash(_DECL_1DARRAY_PARAM(coins), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
 	_DECL_1DARRAY(cash);
 	int64_t i = 0;
@@ -270,7 +270,7 @@ blklab11:;
 	//return
 }
 
-int64_t* add(_DECL_1DARRAY_PARAM(first), _DECL_1DARRAY_PARAM(second)){
+int64_t* add(_DECL_1DARRAY_PARAM(first), _DECL_1DARRAY_PARAM(second), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(r);
 	int64_t i = 0;
 	int64_t _4 = 0;
@@ -315,7 +315,7 @@ blklab15:;
 	//return
 }
 
-int64_t* subtract(_DECL_1DARRAY_PARAM(first), _DECL_1DARRAY_PARAM(second)){
+int64_t* subtract(_DECL_1DARRAY_PARAM(first), _DECL_1DARRAY_PARAM(second), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(r);
 	int64_t i = 0;
 	int64_t _4 = 0;
@@ -360,11 +360,11 @@ blklab19:;
 	//return
 }
 
-int64_t* calculateChange(_DECL_1DARRAY_PARAM(till), int64_t change){
-	int64_t* r;
+int64_t* calculateChange(_DECL_1DARRAY_PARAM(till), int64_t change, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_1DARRAY(r);
 	int64_t i = 0;
 	_DECL_1DARRAY(tmp);
-	int64_t* chg;
+	_DECL_1DARRAY(chg);
 	int64_t _6 = 0;
 	_DECL_1DARRAY(_7);
 	int64_t _8 = 0;
@@ -376,7 +376,7 @@ int64_t* calculateChange(_DECL_1DARRAY_PARAM(till), int64_t change){
 	int64_t _14 = 0;
 	int64_t _15 = 0;
 	int64_t _16 = 0;
-	int64_t* _17;
+	_DECL_1DARRAY(_17);
 	_DECL_1DARRAY(_18);
 	int64_t _19 = 0;
 	int64_t _20 = 0;
@@ -484,8 +484,8 @@ blklab26:;
 }
 
 BYTE* toString(_DECL_1DARRAY_PARAM(c)){
-	void* _1;
-	void* r;
+	BYTE* _1;
+	BYTE* r;
 	int64_t firstTime;
 	int64_t i = 0;
 	int64_t amt = 0;
@@ -618,9 +618,9 @@ blklab35:;
 	//return
 }
 
-int64_t* buy(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_1DARRAY_PARAM(given), int64_t cost){
+int64_t* buy(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_1DARRAY_PARAM(given), int64_t cost, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_4);
-	int64_t* change;
+	_DECL_1DARRAY(change);
 	void* _6;
 	_DECL_1DARRAY(_8);
 	void* _9;
@@ -636,7 +636,7 @@ int64_t* buy(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_1DARRAY_PARAM(given
 	int64_t _24 = 0;
 	void* _25;
 	_DECL_1DARRAY(_27);
-	int64_t* _28;
+	_DECL_1DARRAY(_28);
 	int64_t _29 = 0;
 	int64_t _30 = 0;
 	void* _31;
@@ -774,7 +774,7 @@ blklab38:;
 	//fieldload %38 = %37 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%39) = (%5) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
-		_39 = toString(_COPY_STRUCT_PARAM(change, int64_t), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_39));
+		_39 = toString(_COPY_1DARRAY_PARAM_int64_t(change), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_39));
 	}
 	//indirectinvoke () = %38 (%39) : method(int[])->()
 	{
@@ -791,7 +791,7 @@ blklab38:;
 	//invoke (%41) = (%1, %5) cashtill:subtract : function(cashtill:Cash,cashtill:Cash)->(cashtill:Cash)
 	{
 		void* till_tmp;
-		_41 = subtract(_COPY_1DARRAY_PARAM_int64_t(till), _COPY_STRUCT_PARAM(change, int64_t), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_41));
+		_41 = subtract(_COPY_1DARRAY_PARAM_int64_t(till), _COPY_1DARRAY_PARAM_int64_t(change), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_41));
 	}
 	//assign %1 = %41  : int[]
 	_COPY_1DARRAY_int64_t(till, _41);
@@ -906,10 +906,10 @@ int main(int argc, char** args){
 	//newlist %20 = (%19) : int[]
 	_NEW_1DARRAY_int64_t(_20, 1, 0);
 	_20[0] = _19; 
-	//invoke (%18) = (%20) cashtill:cash : function(cashtill:nat[])->(cashtill:Cash)
+	//invoke (%18) = (%20) cashtill:updatecash : function(cashtill:nat[])->(cashtill:Cash)
 	{
 		void* _20_tmp;
-		_18 = cash(_COPY_1DARRAY_PARAM_int64_t(_20), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
+		_18 = updatecash(_COPY_1DARRAY_PARAM_int64_t(_20), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
 	}
 	//const %21 = 85 : int
 	_21 = 85;
@@ -926,10 +926,10 @@ int main(int argc, char** args){
 	//newlist %25 = (%24) : int[]
 	_NEW_1DARRAY_int64_t(_25, 1, 0);
 	_25[0] = _24; 
-	//invoke (%23) = (%25) cashtill:cash : function(cashtill:nat[])->(cashtill:Cash)
+	//invoke (%23) = (%25) cashtill:updatecash : function(cashtill:nat[])->(cashtill:Cash)
 	{
 		void* _25_tmp;
-		_23 = cash(_COPY_1DARRAY_PARAM_int64_t(_25), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
+		_23 = updatecash(_COPY_1DARRAY_PARAM_int64_t(_25), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 	}
 	//const %26 = 105 : int
 	_26 = 105;
@@ -946,10 +946,10 @@ int main(int argc, char** args){
 	//newlist %30 = (%29) : int[]
 	_NEW_1DARRAY_int64_t(_30, 1, 0);
 	_30[0] = _29; 
-	//invoke (%28) = (%30) cashtill:cash : function(cashtill:nat[])->(cashtill:Cash)
+	//invoke (%28) = (%30) cashtill:updatecash : function(cashtill:nat[])->(cashtill:Cash)
 	{
 		void* _30_tmp;
-		_28 = cash(_COPY_1DARRAY_PARAM_int64_t(_30), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
+		_28 = updatecash(_COPY_1DARRAY_PARAM_int64_t(_30), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 	}
 	//const %31 = 5 : int
 	_31 = 5;
@@ -966,10 +966,10 @@ int main(int argc, char** args){
 	//newlist %35 = (%34) : int[]
 	_NEW_1DARRAY_int64_t(_35, 1, 0);
 	_35[0] = _34; 
-	//invoke (%33) = (%35) cashtill:cash : function(cashtill:nat[])->(cashtill:Cash)
+	//invoke (%33) = (%35) cashtill:updatecash : function(cashtill:nat[])->(cashtill:Cash)
 	{
 		void* _35_tmp;
-		_33 = cash(_COPY_1DARRAY_PARAM_int64_t(_35), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
+		_33 = updatecash(_COPY_1DARRAY_PARAM_int64_t(_35), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
 	}
 	//const %36 = 305 : int
 	_36 = 305;

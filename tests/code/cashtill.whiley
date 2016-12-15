@@ -33,7 +33,9 @@ type Cash is (nat[] ns) where |ns| == |Value|
 function cash() -> Cash:
     return [0,0,0,0,0,0,0,0]
 
-function cash(nat[] coins) -> Cash
+
+// Rename cash function to 'updatecash', to avoid name conflicts.
+function updatecash(nat[] coins) -> Cash
 // No coin in coins larger than permitted values
 requires all { i in 0..|coins| | coins[i] < |Value| }:
     Cash cash = [0,0,0,0,0,0,0,0]
@@ -208,7 +210,7 @@ public method main(System.Console console):
     console.out.print_s("Till: ")
     console.out.println_s(toString(till))
     // now, run through some sequences...
-    till = buy(console,till,cash([ONE_DOLLAR]),85)
-    till = buy(console,till,cash([ONE_DOLLAR]),105)
-    till = buy(console,till,cash([TEN_DOLLARS]),5)
-    till = buy(console,till,cash([FIVE_DOLLARS]),305)
+    till = buy(console,till,updatecash([ONE_DOLLAR]),85)
+    till = buy(console,till,updatecash([ONE_DOLLAR]),105)
+    till = buy(console,till,updatecash([TEN_DOLLARS]),5)
+    till = buy(console,till,updatecash([FIVE_DOLLARS]),305)

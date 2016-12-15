@@ -699,9 +699,12 @@ public class CodeStores {
 			// Return the 'system console' Nominal type.
 			if(type instanceof Type.Nominal){
 				Type.Nominal nominal = (Type.Nominal)type;
+				// Special case for ASCII.string
 				if(nominal.name().name().equals("Console")
 					|| nominal.name().name().equals("Reader")
-					|| nominal.name().name().equals("Writer")){
+					|| nominal.name().name().equals("Writer")
+					|| nominal.name().name().equals("string")
+						){
 					return nominal;
 				}
 				
