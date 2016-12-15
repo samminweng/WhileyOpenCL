@@ -168,6 +168,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						|| (type instanceof Type.Nominal && stores.isUnionOfArrayIntType(type))){
 					// Check if union type is null|int[] or nomial type is aliased to int[]
 					declarations.add(indent + "_DECL_1DARRAY(" + var + ");");
+				} else if(type instanceof Type.Nominal && ((Type.Nominal)type).name().name().equals("string")){
+					// Special case for ASCII.String type 
+					// Declare an array of bytes
+					declarations.add(indent + "_DECL_1DARRAY_BYTE(" + var + ");");
 				} else if (type instanceof Type.Record || type instanceof Type.Nominal 
 						|| type instanceof Type.Union || type instanceof Type.Bool) {
 					String translateType = CodeGeneratorHelper.translateType(type, stores);

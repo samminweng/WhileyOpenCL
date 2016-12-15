@@ -484,8 +484,8 @@ blklab26:;
 }
 
 BYTE* toString(_DECL_1DARRAY_PARAM(c)){
-	BYTE* _1;
-	BYTE* r;
+	_DECL_1DARRAY_BYTE(_1);
+	_DECL_1DARRAY_BYTE(r);
 	int64_t firstTime;
 	int64_t i = 0;
 	int64_t amt = 0;
