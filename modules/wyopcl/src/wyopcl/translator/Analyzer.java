@@ -656,15 +656,13 @@ public abstract class Analyzer {
 			Codes.Invoke invoke = (Codes.Invoke) code;
 			// Get the calling function.
 			FunctionOrMethod callingfunction = getCallingFunction(invoke);
-			
-			// Create the tree node and append the node to the parent node
-			DefaultMutableTreeNode node = new DefaultMutableTreeNode(callingfunction);
-			parentNode.add(node);
-
 			// Check if function are defined in the program.
 			// Check if calling function is not recursive function.
 			// TreeNode can not be recursively added to the function.
 			if (callingfunction != null && !callingfunction.equals(function)) {
+				// Create the tree node and append the node to the parent node
+				DefaultMutableTreeNode node = new DefaultMutableTreeNode(callingfunction);
+				parentNode.add(node);
 				// Iterate the calling function
 				for (Code c : callingfunction.body().bytecodes()) {
 					buildCallGraph(c, callingfunction, node);
@@ -726,13 +724,17 @@ public abstract class Analyzer {
 	protected void buildCallGraph(WyilFile module) {
 		// Ensure the tree is built once
 		if (tree == null) {
+			
+			// Create a root function
+			tree = new DefaultMutableTreeNode("root"); 
+			
 			// Build call graph, starting with main function (root node)
 			FunctionOrMethod main = module.functionOrMethod("main").get(0);
-			tree = new DefaultMutableTreeNode(main);
+			DefaultMutableTreeNode mainNode = new DefaultMutableTreeNode(main);
 			
 			// Go through main function
 			for (Code code : main.body().bytecodes()) {
-				buildCallGraph(code, main, tree);
+				buildCallGraph(code, main, mainNode);
 			}
 			
 			

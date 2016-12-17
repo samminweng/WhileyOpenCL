@@ -162,3 +162,47 @@ blklab4:;
 	//return
 }
 
+int main(int argc, char** args){
+	_DECL_1DARRAY(empty);
+	_DECL_1DARRAY(till);
+	_DECL_1DARRAY(_3);
+	int64_t _4 = 0;
+	int64_t _5 = 0;
+	int64_t _6 = 0;
+	int64_t _7 = 0;
+	int64_t _8 = 0;
+	int64_t _9 = 0;
+	int64_t _10 = 0;
+	int64_t _11 = 0;
+	_DECL_1DARRAY(_12);
+	//invoke (%3) = () FunctionOverload2:Cash : function()->(FunctionOverload2:Cash)
+	{
+		_3 = _Cash_(_1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
+	}
+	//assign %1 = %3  : int[]
+	_UPDATE_1DARRAY(empty, _3);
+	//const %4 = 5 : int
+	_4 = 5;
+	//const %5 = 3 : int
+	_5 = 3;
+	//const %6 = 3 : int
+	_6 = 3;
+	//const %7 = 1 : int
+	_7 = 1;
+	//const %8 = 1 : int
+	_8 = 1;
+	//const %9 = 3 : int
+	_9 = 3;
+	//const %10 = 0 : int
+	_10 = 0;
+	//const %11 = 0 : int
+	_11 = 0;
+	//newlist %12 = (%4, %5, %6, %7, %8, %9, %10, %11) : int[]
+	_NEW_1DARRAY_int64_t(_12, 8, 0);
+	_12[0] = _4; _12[1] = _5; _12[2] = _6; _12[3] = _7; _12[4] = _8; _12[5] = _9; _12[6] = _10; _12[7] = _11; 
+	//assign %2 = %12  : int[]
+	_UPDATE_1DARRAY(till, _12);
+	//return
+	exit(0);
+}
+

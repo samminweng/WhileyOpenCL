@@ -191,8 +191,12 @@ public class ReadWriteAnalyzer extends Analyzer {
 
 		// Print out the node information (path).
 		if (!currentNode.isRoot()) {
-			FunctionOrMethod parent = (FunctionOrMethod) ((DefaultMutableTreeNode) currentNode.getParent()).getUserObject();
-			System.out.println(parent + "->" + function.name());
+			DefaultMutableTreeNode parent = (DefaultMutableTreeNode)currentNode.getParent();
+			if(parent.getUserObject() instanceof FunctionOrMethod){
+				System.out.println(((FunctionOrMethod)parent.getUserObject()).name() + "->" + function.name());
+			}else{
+				System.out.println(((String)parent.getUserObject()) + "->" + function.name());
+			}
 		}
 	}
 

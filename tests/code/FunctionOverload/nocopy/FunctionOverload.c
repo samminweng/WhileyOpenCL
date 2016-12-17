@@ -35,3 +35,16 @@ int64_t* _Cash_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	//return
 }
 
+int main(int argc, char** args){
+	_DECL_1DARRAY(empty);
+	_DECL_1DARRAY(_2);
+	//invoke (%2) = () FunctionOverload:Cash : function()->(FunctionOverload:Cash)
+	{
+		_2 = _Cash_(_1DARRAYSIZE_PARAM_CALLBYREFERENCE(_2));
+	}
+	//assign %1 = %2  : int[]
+	_UPDATE_1DARRAY(empty, _2);
+	//return
+	exit(0);
+}
+
