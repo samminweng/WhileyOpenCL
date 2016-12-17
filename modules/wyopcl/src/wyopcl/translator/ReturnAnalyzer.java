@@ -86,8 +86,7 @@ public class ReturnAnalyzer extends Analyzer {
 	@Override
 	protected void visit(DefaultMutableTreeNode currentNode) {
 		// Compute the return set for the give node
-		String name = (String) currentNode.getUserObject();
-		FunctionOrMethod function = (FunctionOrMethod) this.getFunction(name);
+		FunctionOrMethod function = (FunctionOrMethod) currentNode.getUserObject();
 
 		if (function != null) {
 			HashSet<Integer> store;

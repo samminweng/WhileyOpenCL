@@ -38,34 +38,62 @@ public class CodeStores {
 	private List<wyil.lang.WyilFile.Type> userTypes;// Store all the user-defined types at source level, e.g. Board.
 	protected HashMap<FunctionOrMethod, CodeStore> stores; // Store generated code for each function
 	// Store the function names, e.g. _Cash_
-	private HashMap<String, FunctionOrMethod> functionNames;
-	
+	private HashMap<FunctionOrMethod, String> functionNames;
 	
 	public CodeStores(boolean isVerbose, WyilFile module){
 		this.isVerbose = isVerbose;
 		this.userTypes = (List<wyil.lang.WyilFile.Type>) module.types();
 		this.functions = new ArrayList<FunctionOrMethod>(module.functionOrMethods());
 		this.stores = new HashMap<FunctionOrMethod, CodeStore>();
-		this.functionNames = new HashMap<String, FunctionOrMethod>();
+		this.functionNames = new HashMap<FunctionOrMethod, String>();
+		initFunctionNames(module);
 	}
 	
 	/**
-	 * Given a function byte code, add or retrieves the name of the function, e.g. _Cash_
+	 * Adds an unique number to the suffix of a function name
 	 * 
-	 * @param func
+	 * @param func_name
 	 * @return
 	 */
-	public String getFunctionName(FunctionOrMethod function){
-		// Add a function name e.g. _Cash_
-		String name = prefix+function.name()+prefix;
-		// Add a new name to the map
-		if(!functionNames.containsValue(function)){
-			// Put it to the map
-			functionNames.put(name, function);
-		}
-		// Return the function name
+	private String getUniqueFunctionName(String func_name){
+		String name;
+		// Rename the function name by adding a number
+		int i=1;
+		do{
+			// Recursively create a new function name, e.g. _Cash_1_
+			name = prefix+func_name+prefix+i+prefix;
+			i++;
+		}while(functionNames.containsValue(name)); // If the name is duplicated
+		
 		return name;
 	}
+	
+	/**
+	 * Go through each function/method and add its function name to the map. 
+	 * 
+	 * @param module
+	 */
+	private void initFunctionNames(WyilFile module){
+		// Go through all functions or methods
+		for(FunctionOrMethod function: module.functionOrMethods()){
+			// Skip main function
+			if(function.name().equals("main")){
+				// Add 'main' without any change
+				functionNames.put(function, "main");
+				continue;
+			}
+			
+			// Add a function name e.g. _Cash_
+			String name = prefix+function.name()+prefix;
+			// Check if the function name exists.
+			if(functionNames.containsValue(name)){
+				name = getUniqueFunctionName(function.name());
+			}
+			// Put the name to map
+			functionNames.put(function, name);
+		}
+	}
+	
 	
 	/**
 	 * Get the function byte using name and type
@@ -74,7 +102,7 @@ public class CodeStores {
 	 * @param type
 	 * @return
 	 */
-	private FunctionOrMethod getFunction(String name, Type.FunctionOrMethod type){
+	protected FunctionOrMethod getFunction(String name, Type.FunctionOrMethod type){
 		// Get the function byte with function name and type
 		for(FunctionOrMethod func: functions){
 			if(func.name().equals(name)
@@ -86,6 +114,16 @@ public class CodeStores {
 		return null;
 	}
 	
+	/**
+	 * Given a function byte code, add or retrieves the name of the function, e.g. _Cash_
+	 * 
+	 * @param func
+	 * @return
+	 */
+	public String getFunctionName(FunctionOrMethod function){
+		// Return the function name
+		return functionNames.get(function);
+	}
 	
 	/**
 	 * Given a invoke byte code, gets the name of called function 
@@ -94,17 +132,10 @@ public class CodeStores {
 	 * @return
 	 */
 	public String getFunctionName(Codes.Invoke code){
+		// Get the function byte
+		FunctionOrMethod func = getFunction(code.name.name(), code.type(0));
 		// Get function name
-		String name = prefix+code.name.name()+prefix;
-		// Check if the function is added to the map
-		if(!functionNames.containsKey(name)){
-			// Get the function byte
-			FunctionOrMethod func = getFunction(code.name.name(), code.type(0));
-			// Put the name to map
-			functionNames.put(name, func);
-		}
-		
-		return name;		
+		return functionNames.get(func);
 	}
 	
 	/**

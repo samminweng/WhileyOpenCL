@@ -40,24 +40,3 @@ int64_t* _Cash_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	//return
 }
 
-int main(int argc, char** args){
-	_DECL_1DARRAY(empty);
-	_DECL_DEALLOC(empty);
-	_DECL_1DARRAY(_2);
-	_DECL_DEALLOC(_2);
-	//invoke (%2) = () FunctionOverload:Cash : function()->(FunctionOverload:Cash)
-	{
-		_DEALLOC(_2);
-		_2 = _Cash_(_1DARRAYSIZE_PARAM_CALLBYREFERENCE(_2));
-		_ADD_DEALLOC(_2);
-	}
-	//assign %1 = %2  : int[]
-	_DEALLOC(empty);
-	_UPDATE_1DARRAY(empty, _2);
-	_TRANSFER_DEALLOC(empty, _2);
-	//return
-	_DEALLOC(empty);
-	_DEALLOC(_2);
-	exit(0);
-}
-

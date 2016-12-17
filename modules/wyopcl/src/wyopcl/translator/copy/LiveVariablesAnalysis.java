@@ -162,8 +162,7 @@ public class LiveVariablesAnalysis extends Analyzer {
 	@Override
 	protected void visit(DefaultMutableTreeNode node) {
 		// Apply live analysis on each calling function
-		String name = (String) node.getUserObject();
-		FunctionOrMethod function = (FunctionOrMethod) this.getFunction(name);
+		FunctionOrMethod function = (FunctionOrMethod) node.getUserObject();
 		if(function != null){
 			computeLiveness(function);
 		}

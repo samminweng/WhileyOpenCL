@@ -16,6 +16,7 @@ import wyil.attributes.VariableDeclarations;
 import wyil.lang.Code;
 import wyil.lang.CodeBlock;
 import wyil.lang.Codes;
+import wyil.lang.Type;
 import wyil.lang.Codes.Assert;
 import wyil.lang.Codes.Comparator;
 import wyil.lang.Codes.If;
@@ -72,7 +73,7 @@ public abstract class Analyzer {
 		// Iterate each function to build up CFG
 		for (FunctionOrMethod function : module.functionOrMethods()) {
 			// Check if the function is transformed 
-			function = this.getFunction(function.name());
+			function = this.getFunction(function);
 			this.buildCFG(function);
 		}
 	}
@@ -83,18 +84,41 @@ public abstract class Analyzer {
 	 * @param name
 	 * @return function. Return null if the function is not defined in whiley program.
 	 */
-	protected FunctionOrMethod getFunction(String name) {
+	protected FunctionOrMethod getFunction(FunctionOrMethod function) {
+		String name = function.name();
 		if (!this.module.functionOrMethod(name).isEmpty()){
-			FunctionOrMethod function = this.module.functionOrMethod(name).get(0);
+			// Check if the function has been transformed into a new function byte-code.
 			if(transformFuncMap.isPresent() && transformFuncMap.get().containsKey(function)){ 
 				FunctionOrMethod transformedFunc = transformFuncMap.get().get(function);
 				return transformedFunc;				
 			}
-			return function;
 		}
-			
+		
+		return function;
+	}
+	
+	/**
+	 * 
+	 * @param code
+	 * @return
+	 */
+	protected FunctionOrMethod getCallingFunction(Codes.Invoke code) {
+		String name = code.name.name();
+		wyil.lang.Type.FunctionOrMethod type = code.type(0);
+		if (!this.module.functionOrMethod(name).isEmpty()){
+			// Get the function byte with function name and type
+			for(FunctionOrMethod func: this.module.functionOrMethods()){
+				if(func.name().equals(name)
+						&&func.type().equals(type)){
+					// Put the function name to the map
+					return func;
+				}
+			}
+		}
+		
 		return null;
 	}
+	
 	
 	/**
 	 * Given a function name, get the CFGraph.
@@ -630,13 +654,13 @@ public abstract class Analyzer {
 	protected void buildCallGraph(Code code, FunctionOrMethod function, DefaultMutableTreeNode parentNode) {
 		if (code instanceof Codes.Invoke) {
 			Codes.Invoke invoke = (Codes.Invoke) code;
+			// Get the calling function.
+			FunctionOrMethod callingfunction = getCallingFunction(invoke);
+			
 			// Create the tree node and append the node to the parent node
-			DefaultMutableTreeNode node = new DefaultMutableTreeNode(invoke.name.name());
+			DefaultMutableTreeNode node = new DefaultMutableTreeNode(callingfunction);
 			parentNode.add(node);
 
-			// Get the calling function.
-			FunctionOrMethod callingfunction = getFunction(invoke.name.name());
-			
 			// Check if function are defined in the program.
 			// Check if calling function is not recursive function.
 			// TreeNode can not be recursively added to the function.
@@ -702,23 +726,19 @@ public abstract class Analyzer {
 	protected void buildCallGraph(WyilFile module) {
 		// Ensure the tree is built once
 		if (tree == null) {
-			// Create the root node
-			tree = new DefaultMutableTreeNode("rootNode");
-			
-			// Build call graph, starting with main function.
+			// Build call graph, starting with main function (root node)
 			FunctionOrMethod main = module.functionOrMethod("main").get(0);
-			DefaultMutableTreeNode mainNode = new DefaultMutableTreeNode("main");
-			tree.add(mainNode);
+			tree = new DefaultMutableTreeNode(main);
 			
 			// Go through main function
 			for (Code code : main.body().bytecodes()) {
-				buildCallGraph(code, main, mainNode);
+				buildCallGraph(code, main, tree);
 			}
 			
 			
 			// Discover un-used or un-called functions to the tree
 			for(FunctionOrMethod function: module.functionOrMethods()){
-				DefaultMutableTreeNode node = new DefaultMutableTreeNode(function.name());
+				DefaultMutableTreeNode node = new DefaultMutableTreeNode(function);
 				// Check if the node function is added to the tree
 				boolean isFound = findCallGraph(node);
 				if(!isFound){

@@ -1,0 +1,19 @@
+digraph Cash{
+"entry [ENTRY]"[shape=box];
+"code [BLOCK]"[shape=box];
+"blklab4 [LOOP_HEADER]"[shape=box,style=filled,color=".7 .3 1.0"];
+"blklab4 [LOOP_BODY]"[shape=box,style=filled,color=".7 .3 1.0"];
+"blklab4 [LOOP_EXIT]"[shape=box,style=filled,color=".7 .3 1.0"];
+"blklab5 [BLOCK]"[shape=box];
+"cash [RETURN]"[shape=box];
+"exit [EXIT]"[shape=box];
+"entry [ENTRY]"->"code [BLOCK]";
+"code [BLOCK]"->"blklab4 [LOOP_HEADER]";
+"blklab4 [LOOP_HEADER]"->"blklab4 [LOOP_BODY]";
+"blklab4 [LOOP_HEADER]"->"blklab4 [LOOP_EXIT]";
+"blklab4 [LOOP_BODY]"->"blklab5 [BLOCK]";
+"blklab4 [LOOP_EXIT]"->"cash [RETURN]";
+"blklab5 [BLOCK]"->"blklab4 [LOOP_HEADER]";
+"cash [RETURN]"->"exit [EXIT]";
+
+}

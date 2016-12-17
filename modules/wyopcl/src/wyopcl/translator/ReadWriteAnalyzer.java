@@ -174,8 +174,7 @@ public class ReadWriteAnalyzer extends Analyzer {
 	@Override
 	protected void visit(DefaultMutableTreeNode currentNode) {
 		// Compute the readwrite set for the give node
-		String name = (String) currentNode.getUserObject();
-		FunctionOrMethod function = (FunctionOrMethod) this.getFunction(name);
+		FunctionOrMethod function = (FunctionOrMethod) currentNode.getUserObject();
 		HashSet<Integer> store;
 		if (!stores.containsKey(function)) {
 			stores.put(function, new HashSet<Integer>());
@@ -192,8 +191,8 @@ public class ReadWriteAnalyzer extends Analyzer {
 
 		// Print out the node information (path).
 		if (!currentNode.isRoot()) {
-			String parent = (String) ((DefaultMutableTreeNode) currentNode.getParent()).getUserObject();
-			System.out.println(parent + "->" + name);
+			FunctionOrMethod parent = (FunctionOrMethod) ((DefaultMutableTreeNode) currentNode.getParent()).getUserObject();
+			System.out.println(parent + "->" + function.name());
 		}
 	}
 

@@ -88,7 +88,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			if (code instanceof Codes.Invoke) {
 				// Special case for a function call
 				Codes.Invoke functioncall = (Codes.Invoke) code;
-				FunctionOrMethod callee = this.getFunction(functioncall.name.name());
+				FunctionOrMethod callee = this.getCallingFunction(functioncall);
 				if (callee != null) {
 					// Map the register to function argument.
 					int callee_register = this.mapFunctionArgumentToCalleeRegister(register, functioncall);
@@ -120,8 +120,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 
 	@Override
 	protected void visit(DefaultMutableTreeNode node) {
-		String name = (String) node.getUserObject();
-		FunctionOrMethod function = (FunctionOrMethod) this.getFunction(name);
+		FunctionOrMethod function = (FunctionOrMethod) node.getUserObject();
 		if (function != null) {
 			// Analyze whether the copy is need for each byte-code
 			for (Code code : function.body().bytecodes()) {

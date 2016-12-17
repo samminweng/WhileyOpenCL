@@ -52,7 +52,7 @@ public class CodeGenerationTestCase {
 	@Parameterized.Parameters(name = "{index}:{0}")
 	public static Collection<String> testCases() {
 		return Arrays.asList(new String[] { 
-				"rectangle",
+				/*"rectangle",
 				"swap",
 				"reverse",
 				"mergesort",
@@ -74,14 +74,16 @@ public class CodeGenerationTestCase {
 				"FunctionCall1",
 				"FunctionCall2",
 				"FunctionCall3",
-				"FunctionCall4",
-				"FunctionOverload", // Define types and functions with the same name  
-				"lz77",
+				"FunctionCall4",*/
+				"FunctionOverload", // Define types and functions with the same name 
+				"FunctionOverload2", // Define two functions with the same name
+				/*"lz77",
 				"lz77_2",
 				"fileread", //Read 'feep.pbm' as a byte array
 				"fileread2",// Read 'feep.pbm' and output the array to console 
 				"SobelEdge1", // Read 'feep.pbm', detect the edges and output the resulting array
 				"SobelEdge2", // Similar to 'SobelEdge1' with additional 'image' structure
+				*/
 		});
 	}
 
