@@ -252,8 +252,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// no return values
 				declaration += "void";
 			}
-			// Function names
-			declaration += " " + function.name() + "(";
+			// Function name, e.g. _Cash_
+			declaration += " " + stores.getFunctionName(function) + "(";
 
 			List<Type> params = function.type().params();
 			// Generate input parameters separated by comma
@@ -880,8 +880,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String rhs = parameters.stream().filter(s -> !s.equals("")).map(s -> s.toString())
 				.collect(Collectors.joining(", "));
 
+		// Get the invoked function name
+		String func_name = stores.getFunctionName(code); 
+		
 		// Combine lhs and rhs to the statement
-		statements.add(function_return + code.name.name() + "(" + rhs + ");");
+		//statements.add(function_return + code.name.name() + "(" + rhs + ");");
+		statements.add(function_return + func_name + "(" + rhs + ");");
 
 	}
 

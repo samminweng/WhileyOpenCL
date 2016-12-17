@@ -23,7 +23,7 @@ void printf_Match(Match* match){
 	printf("%"PRId64, match->offset);
 	printf("}");
 }
-int64_t match(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), int64_t offset, int64_t end){
+int64_t _match_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), int64_t offset, int64_t end){
 	int64_t _3 = 0;
 	int64_t pos = 0;
 	int64_t len = 0;
@@ -91,7 +91,7 @@ blklab1:;
 	//return
 }
 
-Match* findLongestMatch(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), int64_t pos){
+Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), int64_t pos){
 	Match* m;
 	_DECL_DEALLOC(m);
 	int64_t bestOffset = 0;
@@ -140,7 +140,7 @@ Match* findLongestMatch(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data),
 		//invoke (%14) = (%0, %6, %1) lz77:match : function(byte[],lz77:nat,lz77:nat)->(int)
 		{
 			void* data_tmp;
-			_14 = match(_COPY_1DARRAY_PARAM_BYTE(data), true, offset, pos);
+			_14 = _match_(_COPY_1DARRAY_PARAM_BYTE(data), true, offset, pos);
 			_CALLEE_DEALLOC(data, "false-false-true" , "match");
 		}
 		//assign %7 = %14  : int
@@ -179,7 +179,7 @@ blklab3:;
 	//return
 }
 
-BYTE* append(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* _append_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(nitems);
 	_DECL_DEALLOC(nitems);
 	int64_t i = 0;
@@ -245,7 +245,7 @@ blklab6:;
 	//return
 }
 
-BYTE* resize(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64_t size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* _resize_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64_t size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(nitems);
 	_DECL_DEALLOC(nitems);
 	int64_t i = 0;
@@ -297,7 +297,7 @@ blklab10:;
 	//return
 }
 
-BYTE* compress(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* _compress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(output);
 	_DECL_DEALLOC(output);
 	int64_t pos = 0;
@@ -353,7 +353,7 @@ BYTE* compress(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_1D
 		{
 			void* data_tmp;
 			_DEALLOC_STRUCT(_11, Match);
-			_11 = findLongestMatch(_COPY_1DARRAY_PARAM_BYTE(data), true, pos);
+			_11 = _findLongestMatch_(_COPY_1DARRAY_PARAM_BYTE(data), true, pos);
 			_CALLEE_DEALLOC(data, "false-false-true" , "findLongestMatch");
 			_ADD_DEALLOC(_11);
 		}
@@ -407,7 +407,7 @@ blklab15:;
 		{
 			void* output_tmp;
 			_DEALLOC(_22);
-			_22 = append(_COPY_1DARRAY_PARAM_BYTE(output), true, offset, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
+			_22 = _append_(_COPY_1DARRAY_PARAM_BYTE(output), true, offset, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
 			_CALLEE_DEALLOC(output, "false-false-false" , "append");
 			_ADD_DEALLOC(_22);
 		}
@@ -419,7 +419,7 @@ blklab15:;
 		{
 			void* output_tmp;
 			_DEALLOC(_23);
-			_23 = append(_COPY_1DARRAY_PARAM_BYTE(output), true, length, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
+			_23 = _append_(_COPY_1DARRAY_PARAM_BYTE(output), true, length, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 			_CALLEE_DEALLOC(output, "false-false-false" , "append");
 			_ADD_DEALLOC(_23);
 		}
@@ -444,7 +444,7 @@ blklab12:;
 	//return
 }
 
-BYTE* decompress(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(output);
 	_DECL_DEALLOC(output);
 	int64_t pos = 0;
@@ -533,7 +533,7 @@ BYTE* decompress(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 		{
 			void* output_tmp;
 			_DEALLOC(_23);
-			_23 = append(_COPY_1DARRAY_PARAM_BYTE(output), true, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
+			_23 = _append_(_COPY_1DARRAY_PARAM_BYTE(output), true, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 			_CALLEE_DEALLOC(output, "false-false-false" , "append");
 			_ADD_DEALLOC(_23);
 		}
@@ -579,7 +579,7 @@ blklab18:;
 			{
 				void* output_tmp;
 				_DEALLOC(_30);
-				_30 = append(_COPY_1DARRAY_PARAM_BYTE(output), true, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
+				_30 = _append_(_COPY_1DARRAY_PARAM_BYTE(output), true, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
 				_CALLEE_DEALLOC(output, "false-false-false" , "append");
 				_ADD_DEALLOC(_30);
 			}
@@ -734,7 +734,7 @@ int main(int argc, char** args){
 	{
 		void* data_tmp;
 		_DEALLOC(_21);
-		_21 = compress(_COPY_1DARRAY_PARAM_BYTE(data), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_21));
+		_21 = _compress_(_COPY_1DARRAY_PARAM_BYTE(data), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_21));
 		_CALLEE_DEALLOC(data, "false-false-false" , "compress");
 		_ADD_DEALLOC(_21);
 	}
@@ -782,7 +782,7 @@ int main(int argc, char** args){
 	{
 		void* compress_data_tmp;
 		_DEALLOC(_33);
-		_33 = decompress(_COPY_1DARRAY_PARAM_BYTE(compress_data), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
+		_33 = _decompress_(_COPY_1DARRAY_PARAM_BYTE(compress_data), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
 		_CALLEE_DEALLOC(compress_data, "false-false-false" , "decompress");
 		_ADD_DEALLOC(_33);
 	}

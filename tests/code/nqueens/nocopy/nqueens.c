@@ -48,7 +48,7 @@ void printf_NQueen(NQueen* nqueen){
 	printf("%"PRId64, nqueen->num_solutions);
 	printf("}");
 }
-NQueen* nqueen(int64_t num_solutions, POS** queens, size_t queens_size){
+NQueen* _nqueen_(int64_t num_solutions, POS** queens, size_t queens_size){
 	NQueen* nq;
 	NQueen* _3;
 	//newrecord %3 = (%0, %1) : {int num_solutions,{int c,int r}[] queens}
@@ -60,7 +60,7 @@ NQueen* nqueen(int64_t num_solutions, POS** queens, size_t queens_size){
 	//return
 }
 
-int64_t conflict(POS* p, int64_t row, int64_t col){
+int64_t _conflict_(POS* p, int64_t row, int64_t col){
 	int64_t _3;
 	int64_t r = 0;
 	int64_t c = 0;
@@ -127,7 +127,7 @@ blklab3:;
 	//return
 }
 
-NQueen* run(NQueen* nq, int64_t n, int64_t dim){
+NQueen* _run_(NQueen* nq, int64_t n, int64_t dim){
 	NQueen* _3;
 	int64_t col = 0;
 	int64_t isSolution;
@@ -272,7 +272,7 @@ blklab14:;
 blklab20:;
 			//invoke (%26) = (%7, %1, %4) nqueens:conflict : function(nqueens:POS,int,int)->(bool)
 			{
-				_26 = conflict(_STRUCT_PARAM(p), n, col);
+				_26 = _conflict_(_STRUCT_PARAM(p), n, col);
 			}
 			//const %27 = true : bool
 			_27 = true;
@@ -323,7 +323,7 @@ blklab12:;
 		_35=n+_34;
 		//invoke (%33) = (%0, %35, %2) nqueens:run : function(nqueens:NQueen,int,int)->(nqueens:NQueen)
 		{
-			_33 = run(_STRUCT_PARAM(nq), _35, dim);
+			_33 = _run_(_STRUCT_PARAM(nq), _35, dim);
 		}
 		//assign %0 = %33  : {int num_solutions,{int c,int r}[] queens}
 		nq = _33;
@@ -398,7 +398,7 @@ int main(int argc, char** args){
 	num_solutions = _10;
 	//invoke (%11) = (%3, %2) nqueens:nqueen : function(int,nqueens:POS[])->(nqueens:NQueen)
 	{
-		_11 = nqueen(num_solutions, _1DARRAY_PARAM(queens));
+		_11 = _nqueen_(num_solutions, _1DARRAY_PARAM(queens));
 	}
 	//assign %4 = %11  : {int num_solutions,{int c,int r}[] queens}
 	nq = _11;
@@ -406,7 +406,7 @@ int main(int argc, char** args){
 	_13 = 0;
 	//invoke (%12) = (%4, %13, %1) nqueens:run : function(nqueens:NQueen,int,int)->(nqueens:NQueen)
 	{
-		_12 = run(_STRUCT_PARAM(nq), _13, n);
+		_12 = _run_(_STRUCT_PARAM(nq), _13, n);
 	}
 	//assign %4 = %12  : {int num_solutions,{int c,int r}[] queens}
 	nq = _12;

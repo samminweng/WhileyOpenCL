@@ -51,7 +51,7 @@ void printf_Rectangle(Rectangle* rectangle){
 	printf_Point(rectangle->p2);
 	printf("}");
 }
-Rectangle* updateRec(Rectangle* rec, _DECL_DEALLOC_PARAM(rec), Point* p, _DECL_DEALLOC_PARAM(p)){
+Rectangle* _updateRec_(Rectangle* rec, _DECL_DEALLOC_PARAM(rec), Point* p, _DECL_DEALLOC_PARAM(p)){
 	Rectangle* r;
 	_DECL_DEALLOC(r);
 	//update %0.p2 = %1 : {{int x,int y} p1,{int x,int y} p2} -> {{int x,int y} p1,{int x,int y} p2}
@@ -175,7 +175,7 @@ int main(int argc, char** args){
 	//invoke (%15) = (%3, %4) rectangle:updateRec : function(rectangle:Rectangle,rectangle:Point)->(rectangle:Rectangle)
 	{
 		_DEALLOC_STRUCT(_15, Rectangle);
-		_15 = updateRec(_STRUCT_PARAM(rec), false, _STRUCT_PARAM(p3), false);
+		_15 = _updateRec_(_STRUCT_PARAM(rec), false, _STRUCT_PARAM(p3), false);
 		_RESET_DEALLOC(rec, "true-true-false" , "updateRec");
 		_RESET_DEALLOC(p3, "false-true-false" , "updateRec");
 		_ADD_DEALLOC(_15);

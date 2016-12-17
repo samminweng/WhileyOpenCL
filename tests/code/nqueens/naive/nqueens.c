@@ -48,7 +48,7 @@ void printf_NQueen(NQueen* nqueen){
 	printf("%"PRId64, nqueen->num_solutions);
 	printf("}");
 }
-NQueen* nqueen(int64_t num_solutions, POS** queens, size_t queens_size){
+NQueen* _nqueen_(int64_t num_solutions, POS** queens, size_t queens_size){
 	NQueen* nq;
 	NQueen* _3;
 	//newrecord %3 = (%0, %1) : {int num_solutions,{int c,int r}[] queens}
@@ -60,7 +60,7 @@ NQueen* nqueen(int64_t num_solutions, POS** queens, size_t queens_size){
 	//return
 }
 
-int64_t conflict(POS* p, int64_t row, int64_t col){
+int64_t _conflict_(POS* p, int64_t row, int64_t col){
 	int64_t _3;
 	int64_t r = 0;
 	int64_t c = 0;
@@ -127,7 +127,7 @@ blklab3:;
 	//return
 }
 
-NQueen* run(NQueen* nq, int64_t n, int64_t dim){
+NQueen* _run_(NQueen* nq, int64_t n, int64_t dim){
 	NQueen* _3;
 	int64_t col = 0;
 	int64_t isSolution;
@@ -273,7 +273,7 @@ blklab20:;
 			//invoke (%26) = (%7, %1, %4) nqueens:conflict : function(nqueens:POS,int,int)->(bool)
 			{
 				void* p_tmp;
-				_26 = conflict(_COPY_STRUCT_PARAM(p, POS), n, col);
+				_26 = _conflict_(_COPY_STRUCT_PARAM(p, POS), n, col);
 			}
 			//const %27 = true : bool
 			_27 = true;
@@ -325,7 +325,7 @@ blklab12:;
 		//invoke (%33) = (%0, %35, %2) nqueens:run : function(nqueens:NQueen,int,int)->(nqueens:NQueen)
 		{
 			void* nq_tmp;
-			_33 = run(_COPY_STRUCT_PARAM(nq, NQueen), _35, dim);
+			_33 = _run_(_COPY_STRUCT_PARAM(nq, NQueen), _35, dim);
 		}
 		//assign %0 = %33  : {int num_solutions,{int c,int r}[] queens}
 		nq = copy_NQueen(_33);
@@ -401,7 +401,7 @@ int main(int argc, char** args){
 	//invoke (%11) = (%3, %2) nqueens:nqueen : function(int,nqueens:POS[])->(nqueens:NQueen)
 	{
 		void* queens_tmp;
-		_11 = nqueen(num_solutions, _COPY_1DARRAY_PARAM_STRUCT(queens, POS));
+		_11 = _nqueen_(num_solutions, _COPY_1DARRAY_PARAM_STRUCT(queens, POS));
 	}
 	//assign %4 = %11  : {int num_solutions,{int c,int r}[] queens}
 	nq = copy_NQueen(_11);
@@ -410,7 +410,7 @@ int main(int argc, char** args){
 	//invoke (%12) = (%4, %13, %1) nqueens:run : function(nqueens:NQueen,int,int)->(nqueens:NQueen)
 	{
 		void* nq_tmp;
-		_12 = run(_COPY_STRUCT_PARAM(nq, NQueen), _13, n);
+		_12 = _run_(_COPY_STRUCT_PARAM(nq, NQueen), _13, n);
 	}
 	//assign %4 = %12  : {int num_solutions,{int c,int r}[] queens}
 	nq = copy_NQueen(_12);

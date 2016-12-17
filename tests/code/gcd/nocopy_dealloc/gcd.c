@@ -1,5 +1,5 @@
 #include "gcd.h"
-int64_t gcd(int64_t a, int64_t b){
+int64_t _gcd_(int64_t a, int64_t b){
 	int64_t _2 = 0;
 	int64_t _3 = 0;
 	int64_t _4 = 0;
@@ -59,7 +59,7 @@ blklab2:;
 	//return
 }
 
-int64_t gcd_cached(int64_t a, int64_t b, int64_t n, _DECL_1DARRAY_PARAM(gcds), _DECL_DEALLOC_PARAM(gcds)){
+int64_t _gcd_cached_(int64_t a, int64_t b, int64_t n, _DECL_1DARRAY_PARAM(gcds), _DECL_DEALLOC_PARAM(gcds)){
 	int64_t _4 = 0;
 	int64_t _5 = 0;
 	int64_t _6 = 0;
@@ -216,7 +216,7 @@ int main(int argc, char** args){
 			if(j>=n){goto blklab15;}
 			//invoke (%16) = (%3, %4, %1, %2) gcd:gcd_cached : function(int,int,int,int[])->(int)
 			{
-				_16 = gcd_cached(i, j, n, _1DARRAY_PARAM(gcds), false);
+				_16 = _gcd_cached_(i, j, n, _1DARRAY_PARAM(gcds), false);
 				_RETAIN_DEALLOC(gcds, "false-false-true" , "gcd_cached");
 			}
 			//mul %17 = %3, %1 : int
@@ -235,7 +235,7 @@ int main(int argc, char** args){
 				_21=gcds[_20];
 				//invoke (%22) = (%3, %4) gcd:gcd : function(int,int)->(int)
 				{
-					_22 = gcd(i, j);
+					_22 = _gcd_(i, j);
 				}
 				//ifeq %21, %22 goto blklab17 : int
 				if(_21==_22){goto blklab17;}

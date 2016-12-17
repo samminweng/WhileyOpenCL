@@ -9,8 +9,8 @@ typedef struct{
 void printf_Matrix(Matrix* _matrix);
 Matrix* copy_Matrix(Matrix* _matrix);
 void free_Matrix(Matrix* _matrix);
-Matrix* matrix(int64_t width, int64_t height, _DECL_1DARRAY_PARAM(data), _DECL_DEALLOC_PARAM(data));
-Matrix* init(int64_t width, int64_t height);
-void print_mat(FILE* sys, Matrix* a, _DECL_DEALLOC_PARAM(a));
-Matrix* mat_mult(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_PARAM(b));
+Matrix* _matrix_(int64_t width, int64_t height, _DECL_1DARRAY_PARAM(data), _DECL_DEALLOC_PARAM(data));
+Matrix* _init_(int64_t width, int64_t height);
+void _print_mat_(FILE* sys, Matrix* a, _DECL_DEALLOC_PARAM(a));
+Matrix* _mat_mult_(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_PARAM(b));
 int main(int argc, char** args);

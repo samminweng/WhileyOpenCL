@@ -1,5 +1,5 @@
 #include "fileread2.h"
-void print_pbm(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t pixels_size){
+void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t pixels_size){
 	int64_t j = 0;
 	int64_t i = 0;
 	int64_t pos = 0;
@@ -187,7 +187,7 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY(pixels, _9);
 	//invoke () = (%0, %2, %3, %4) fileread2:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
-		print_pbm(stdout, width, height, _1DARRAY_PARAM(pixels));
+		_print_pbm_(stdout, width, height, _1DARRAY_PARAM(pixels));
 	}
 	//return
 	exit(0);

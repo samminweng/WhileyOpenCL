@@ -1,5 +1,5 @@
 #include "bubblesort.h"
-int64_t* bubbleSort(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _bubbleSort_(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
 	_DECL_DEALLOC(_1);
 	int64_t length = 0;
@@ -226,7 +226,7 @@ int main(int argc, char** args){
 	{
 		void* ys_tmp;
 		_DEALLOC(_11);
-		_11 = bubbleSort(_COPY_1DARRAY_PARAM_int64_t(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
+		_11 = _bubbleSort_(_COPY_1DARRAY_PARAM_int64_t(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		_CALLER_DEALLOC(_11, ys, "true-true-false" , "bubbleSort");
 		_ADD_DEALLOC(_11);
 	}
@@ -287,7 +287,7 @@ blklab5:;
 	{
 		void* ys_tmp;
 		_DEALLOC(_25);
-		_25 = bubbleSort(_COPY_1DARRAY_PARAM_int64_t(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
+		_25 = _bubbleSort_(_COPY_1DARRAY_PARAM_int64_t(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 		_CALLER_DEALLOC(_25, ys, "true-true-false" , "bubbleSort");
 		_ADD_DEALLOC(_25);
 	}
@@ -346,7 +346,7 @@ blklab6:;
 	{
 		void* ys_tmp;
 		_DEALLOC(_38);
-		_38 = bubbleSort(_COPY_1DARRAY_PARAM_int64_t(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
+		_38 = _bubbleSort_(_COPY_1DARRAY_PARAM_int64_t(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 		_CALLER_DEALLOC(_38, ys, "true-true-false" , "bubbleSort");
 		_ADD_DEALLOC(_38);
 	}
@@ -407,7 +407,7 @@ blklab7:;
 	{
 		void* ys_tmp;
 		_DEALLOC(_52);
-		_52 = bubbleSort(_COPY_1DARRAY_PARAM_int64_t(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
+		_52 = _bubbleSort_(_COPY_1DARRAY_PARAM_int64_t(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 		_CALLER_DEALLOC(_52, ys, "true-true-false" , "bubbleSort");
 		_ADD_DEALLOC(_52);
 	}
@@ -488,7 +488,7 @@ blklab9:;
 	{
 		void* arr_tmp;
 		_DEALLOC(_68);
-		_68 = bubbleSort(_COPY_1DARRAY_PARAM_int64_t(arr), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
+		_68 = _bubbleSort_(_COPY_1DARRAY_PARAM_int64_t(arr), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
 		_CALLER_DEALLOC(_68, arr, "true-true-false" , "bubbleSort");
 		_ADD_DEALLOC(_68);
 	}

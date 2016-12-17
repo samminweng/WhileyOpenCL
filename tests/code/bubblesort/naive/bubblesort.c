@@ -1,5 +1,5 @@
 #include "bubblesort.h"
-int64_t* bubbleSort(_DECL_1DARRAY_PARAM(items), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _bubbleSort_(_DECL_1DARRAY_PARAM(items), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
 	int64_t length = 0;
 	int64_t last_swapped = 0;
@@ -201,7 +201,7 @@ int main(int argc, char** args){
 	//invoke (%11) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		void* ys_tmp;
-		_11 = bubbleSort(_COPY_1DARRAY_PARAM_int64_t(ys), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
+		_11 = _bubbleSort_(_COPY_1DARRAY_PARAM_int64_t(ys), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 	}
 	//assign %1 = %11  : int[]
 	_COPY_1DARRAY_int64_t(ys, _11);
@@ -251,7 +251,7 @@ blklab5:;
 	//invoke (%25) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		void* ys_tmp;
-		_25 = bubbleSort(_COPY_1DARRAY_PARAM_int64_t(ys), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
+		_25 = _bubbleSort_(_COPY_1DARRAY_PARAM_int64_t(ys), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 	}
 	//assign %1 = %25  : int[]
 	_COPY_1DARRAY_int64_t(ys, _25);
@@ -299,7 +299,7 @@ blklab6:;
 	//invoke (%38) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		void* ys_tmp;
-		_38 = bubbleSort(_COPY_1DARRAY_PARAM_int64_t(ys), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
+		_38 = _bubbleSort_(_COPY_1DARRAY_PARAM_int64_t(ys), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 	}
 	//assign %1 = %38  : int[]
 	_COPY_1DARRAY_int64_t(ys, _38);
@@ -349,7 +349,7 @@ blklab7:;
 	//invoke (%52) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		void* ys_tmp;
-		_52 = bubbleSort(_COPY_1DARRAY_PARAM_int64_t(ys), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
+		_52 = _bubbleSort_(_COPY_1DARRAY_PARAM_int64_t(ys), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 	}
 	//assign %1 = %52  : int[]
 	_COPY_1DARRAY_int64_t(ys, _52);
@@ -419,7 +419,7 @@ blklab9:;
 	//invoke (%68) = (%4) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		void* arr_tmp;
-		_68 = bubbleSort(_COPY_1DARRAY_PARAM_int64_t(arr), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
+		_68 = _bubbleSort_(_COPY_1DARRAY_PARAM_int64_t(arr), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
 	}
 	//assign %4 = %68  : int[]
 	_COPY_1DARRAY_int64_t(arr, _68);

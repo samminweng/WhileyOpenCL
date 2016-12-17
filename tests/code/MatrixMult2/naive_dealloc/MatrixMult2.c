@@ -28,7 +28,7 @@ void printf_Matrix(Matrix* matrix){
 	printf("%"PRId64, matrix->height);
 	printf("}");
 }
-Matrix* matrix(int64_t width, int64_t height, _DECL_1DARRAY_PARAM(data), _DECL_DEALLOC_PARAM(data)){
+Matrix* _matrix_(int64_t width, int64_t height, _DECL_1DARRAY_PARAM(data), _DECL_DEALLOC_PARAM(data)){
 	Matrix* r;
 	_DECL_DEALLOC(r);
 	Matrix* _4;
@@ -47,7 +47,7 @@ Matrix* matrix(int64_t width, int64_t height, _DECL_1DARRAY_PARAM(data), _DECL_D
 	//return
 }
 
-Matrix* init(int64_t width, int64_t height){
+Matrix* _init_(int64_t width, int64_t height){
 	Matrix* r;
 	_DECL_DEALLOC(r);
 	_DECL_1DARRAY(data);
@@ -140,7 +140,7 @@ blklab2:;
 	{
 		void* data_tmp;
 		_DEALLOC_STRUCT(_21, Matrix);
-		_21 = matrix(width, height, _COPY_1DARRAY_PARAM_int64_t(data), true);
+		_21 = _matrix_(width, height, _COPY_1DARRAY_PARAM_int64_t(data), true);
 		_CALLEE_DEALLOC(data, "false-false-false" , "matrix");
 		_ADD_DEALLOC(_21);
 	}
@@ -152,7 +152,7 @@ blklab2:;
 	//return
 }
 
-void print_mat(FILE* sys, Matrix* a, _DECL_DEALLOC_PARAM(a)){
+void _print_mat_(FILE* sys, Matrix* a, _DECL_DEALLOC_PARAM(a)){
 	int64_t i = 0;
 	int64_t width = 0;
 	int64_t height = 0;
@@ -269,7 +269,7 @@ blklab6:;
 	return;
 }
 
-Matrix* mat_mult(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_PARAM(b)){
+Matrix* _mat_mult_(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_PARAM(b)){
 	Matrix* c;
 	_DECL_DEALLOC(c);
 	int64_t width = 0;
@@ -442,7 +442,7 @@ blklab13:;
 	{
 		void* data_tmp;
 		_DEALLOC_STRUCT(_40, Matrix);
-		_40 = matrix(width, height, _COPY_1DARRAY_PARAM_int64_t(data), true);
+		_40 = _matrix_(width, height, _COPY_1DARRAY_PARAM_int64_t(data), true);
 		_CALLEE_DEALLOC(data, "false-false-false" , "matrix");
 		_ADD_DEALLOC(_40);
 	}
@@ -570,7 +570,7 @@ int main(int argc, char** args){
 	//invoke (%10) = (%11, %12) MatrixMult2:init : function(MatrixMult2:nat,MatrixMult2:nat)->(MatrixMult2:Matrix)
 	{
 		_DEALLOC_STRUCT(_10, Matrix);
-		_10 = init(_11, _12);
+		_10 = _init_(_11, _12);
 		_ADD_DEALLOC(_10);
 	}
 	//assign %1 = %10  : {int[] data,int height,int width}
@@ -625,7 +625,7 @@ blklab19:;
 	//invoke (%27) = (%28, %29) MatrixMult2:init : function(MatrixMult2:nat,MatrixMult2:nat)->(MatrixMult2:Matrix)
 	{
 		_DEALLOC_STRUCT(_27, Matrix);
-		_27 = init(_28, _29);
+		_27 = _init_(_28, _29);
 		_ADD_DEALLOC(_27);
 	}
 	//assign %2 = %27  : {int[] data,int height,int width}
@@ -678,7 +678,7 @@ blklab20:;
 		void* A_tmp;
 		void* B_tmp;
 		_DEALLOC_STRUCT(_44, Matrix);
-		_44 = mat_mult(_COPY_STRUCT_PARAM(A, Matrix), true, _COPY_STRUCT_PARAM(B, Matrix), true);
+		_44 = _mat_mult_(_COPY_STRUCT_PARAM(A, Matrix), true, _COPY_STRUCT_PARAM(B, Matrix), true);
 		_CALLEE_DEALLOC(A, "false-false-false" , "mat_mult");
 		_CALLEE_DEALLOC(B, "false-false-false" , "mat_mult");
 		_ADD_DEALLOC(_44);
@@ -727,7 +727,7 @@ blklab21:;
 	//invoke () = (%0, %3) MatrixMult2:print_mat : method(whiley/lang/System:Console,MatrixMult2:Matrix)->()
 	{
 		void* C_tmp;
-		print_mat(stdout, _COPY_STRUCT_PARAM(C, Matrix), true);
+		_print_mat_(stdout, _COPY_STRUCT_PARAM(C, Matrix), true);
 		_CALLEE_DEALLOC(C, "false-false-true" , "print_mat");
 	}
 	//fieldload %57 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}

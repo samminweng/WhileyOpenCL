@@ -1,5 +1,5 @@
 #include "CoinGame.h"
-void play(FILE* sys, _DECL_1DARRAY_PARAM(moves), int64_t n){
+void _play_(FILE* sys, _DECL_1DARRAY_PARAM(moves), int64_t n){
 	int64_t left = 0;
 	int64_t right = 0;
 	int64_t i = 0;
@@ -271,7 +271,7 @@ blklab8:;
 	return;
 }
 
-int64_t* findMoves(_DECL_1DARRAY_PARAM(moves), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
 	int64_t s = 0;
 	int64_t j = 0;
@@ -534,14 +534,14 @@ int main(int argc, char** args){
 	//invoke (%8) = (%2, %1) CoinGame:findMoves : function(int[],int)->(int[])
 	{
 		void* moves_tmp;
-		_8 = findMoves(_COPY_1DARRAY_PARAM_int64_t(moves), n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
+		_8 = _findMoves_(_COPY_1DARRAY_PARAM_int64_t(moves), n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 	}
 	//assign %2 = %8  : int[]
 	_COPY_1DARRAY_int64_t(moves, _8);
 	//invoke () = (%0, %2, %1) CoinGame:play : method(whiley/lang/System:Console,int[],int)->()
 	{
 		void* moves_tmp;
-		play(stdout, _COPY_1DARRAY_PARAM_int64_t(moves), n);
+		_play_(stdout, _COPY_1DARRAY_PARAM_int64_t(moves), n);
 	}
 	//const %9 = 1 : int
 	_9 = 1;

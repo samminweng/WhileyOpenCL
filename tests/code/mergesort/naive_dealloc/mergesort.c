@@ -1,5 +1,5 @@
 #include "mergesort.h"
-int64_t* sortV1(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), int64_t start, int64_t end, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _sortV1_(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), int64_t start, int64_t end, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_3);
 	_DECL_DEALLOC(_3);
 	int64_t pivot = 0;
@@ -84,7 +84,7 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	{
 		void* lhs_tmp;
 		_DEALLOC(_16);
-		_16 = sortV1(_COPY_1DARRAY_PARAM_int64_t(lhs), false, _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
+		_16 = _sortV1_(_COPY_1DARRAY_PARAM_int64_t(lhs), false, _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		_CALLER_DEALLOC(_16, lhs, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_16);
 	}
@@ -110,7 +110,7 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	{
 		void* rhs_tmp;
 		_DEALLOC(_19);
-		_19 = sortV1(_COPY_1DARRAY_PARAM_int64_t(rhs), false, _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
+		_19 = _sortV1_(_COPY_1DARRAY_PARAM_int64_t(rhs), false, _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
 		_CALLER_DEALLOC(_19, rhs, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_19);
 	}
@@ -389,7 +389,7 @@ int main(int argc, char** args){
 	{
 		void* ys_tmp;
 		_DEALLOC(_11);
-		_11 = sortV1(_COPY_1DARRAY_PARAM_int64_t(ys), false, _12, _13, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
+		_11 = _sortV1_(_COPY_1DARRAY_PARAM_int64_t(ys), false, _12, _13, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		_CALLER_DEALLOC(_11, ys, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_11);
 	}
@@ -448,7 +448,7 @@ blklab9:;
 	{
 		void* ys_tmp;
 		_DEALLOC(_25);
-		_25 = sortV1(_COPY_1DARRAY_PARAM_int64_t(ys), false, _26, _27, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
+		_25 = _sortV1_(_COPY_1DARRAY_PARAM_int64_t(ys), false, _26, _27, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 		_CALLER_DEALLOC(_25, ys, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_25);
 	}
@@ -505,7 +505,7 @@ blklab10:;
 	{
 		void* ys_tmp;
 		_DEALLOC(_38);
-		_38 = sortV1(_COPY_1DARRAY_PARAM_int64_t(ys), false, _39, _40, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
+		_38 = _sortV1_(_COPY_1DARRAY_PARAM_int64_t(ys), false, _39, _40, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 		_CALLER_DEALLOC(_38, ys, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_38);
 	}
@@ -564,7 +564,7 @@ blklab11:;
 	{
 		void* ys_tmp;
 		_DEALLOC(_52);
-		_52 = sortV1(_COPY_1DARRAY_PARAM_int64_t(ys), false, _53, _54, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
+		_52 = _sortV1_(_COPY_1DARRAY_PARAM_int64_t(ys), false, _53, _54, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 		_CALLER_DEALLOC(_52, ys, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_52);
 	}
@@ -649,7 +649,7 @@ blklab13:;
 	{
 		void* arr_tmp;
 		_DEALLOC(_70);
-		_70 = sortV1(_COPY_1DARRAY_PARAM_int64_t(arr), false, _71, _73, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_70));
+		_70 = _sortV1_(_COPY_1DARRAY_PARAM_int64_t(arr), false, _71, _73, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_70));
 		_CALLER_DEALLOC(_70, arr, "true-true-false" , "sortV1");
 		_ADD_DEALLOC(_70);
 	}

@@ -1,5 +1,5 @@
 #include "CoinGame3.h"
-int64_t* findMoves(_DECL_1DARRAY_PARAM(moves), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
 	_DECL_1DARRAY(x);
 	_DECL_1DARRAY(y);
@@ -299,7 +299,7 @@ int main(int argc, char** args){
 	//invoke (%8) = (%2, %1) CoinGame3:findMoves : function(int[],int)->(int[])
 	{
 		void* moves_tmp;
-		_8 = findMoves(_COPY_1DARRAY_PARAM_int64_t(moves), n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
+		_8 = _findMoves_(_COPY_1DARRAY_PARAM_int64_t(moves), n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 	}
 	//assign %2 = %8  : int[]
 	_COPY_1DARRAY_int64_t(moves, _8);

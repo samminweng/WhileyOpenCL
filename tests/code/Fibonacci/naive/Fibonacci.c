@@ -1,5 +1,5 @@
 #include "Fibonacci.h"
-int64_t* fibonacci(_DECL_1DARRAY_PARAM(ls), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _fibonacci_(_DECL_1DARRAY_PARAM(ls), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
 	int64_t _3 = 0;
 	int64_t _4 = 0;
@@ -43,7 +43,7 @@ blklab0:;
 	//invoke (%8) = (%0, %10) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
 		void* ls_tmp;
-		_8 = fibonacci(_COPY_1DARRAY_PARAM_int64_t(ls), _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
+		_8 = _fibonacci_(_COPY_1DARRAY_PARAM_int64_t(ls), _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 	}
 	//assign %0 = %8  : int[]
 	_COPY_1DARRAY_int64_t(ls, _8);
@@ -111,7 +111,7 @@ int main(int argc, char** args){
 	//invoke (%6) = (%2, %8) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
 		void* arr_tmp;
-		_6 = fibonacci(_COPY_1DARRAY_PARAM_int64_t(arr), _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
+		_6 = _fibonacci_(_COPY_1DARRAY_PARAM_int64_t(arr), _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 	}
 	//assign %2 = %6  : int[]
 	_COPY_1DARRAY_int64_t(arr, _6);

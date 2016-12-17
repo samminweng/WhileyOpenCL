@@ -1,5 +1,5 @@
 #include "Fibonacci.h"
-int64_t* fibonacci(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _fibonacci_(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
 	_DECL_DEALLOC(_2);
 	int64_t _3 = 0;
@@ -45,7 +45,7 @@ blklab0:;
 	//invoke (%8) = (%0, %10) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
 		_DEALLOC(_8);
-		_8 = fibonacci(_1DARRAY_PARAM(ls), false, _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
+		_8 = _fibonacci_(_1DARRAY_PARAM(ls), false, _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_RESET_DEALLOC(ls, "true-true-false" , "fibonacci");
 		_ADD_DEALLOC(_8);
 	}
@@ -128,7 +128,7 @@ int main(int argc, char** args){
 	//invoke (%6) = (%2, %8) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
 		_DEALLOC(_6);
-		_6 = fibonacci(_1DARRAY_PARAM(arr), false, _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
+		_6 = _fibonacci_(_1DARRAY_PARAM(arr), false, _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		_RESET_DEALLOC(arr, "true-true-false" , "fibonacci");
 		_ADD_DEALLOC(_6);
 	}

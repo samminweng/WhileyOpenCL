@@ -23,7 +23,7 @@ void printf_POS(POS* pos){
 	printf("%"PRId64, pos->c);
 	printf("}");
 }
-int64_t conflict(POS* p, int64_t row, int64_t col){
+int64_t _conflict_(POS* p, int64_t row, int64_t col){
 	int64_t _3;
 	int64_t r = 0;
 	int64_t c = 0;
@@ -90,7 +90,7 @@ blklab3:;
 	//return
 }
 
-int64_t run(POS** queens, size_t queens_size, int64_t n, int64_t dim){
+int64_t _run_(POS** queens, size_t queens_size, int64_t n, int64_t dim){
 	int64_t _3 = 0;
 	int64_t num_solutions = 0;
 	int64_t col = 0;
@@ -215,7 +215,7 @@ blklab20:;
 			//invoke (%21) = (%8, %1, %5) nqueens2:conflict : function(nqueens2:POS,int,int)->(bool)
 			{
 				void* p_tmp;
-				_21 = conflict(_COPY_STRUCT_PARAM(p, POS), n, col);
+				_21 = _conflict_(_COPY_STRUCT_PARAM(p, POS), n, col);
 			}
 			//const %22 = true : bool
 			_22 = true;
@@ -267,7 +267,7 @@ blklab12:;
 		//invoke (%28) = (%0, %30, %2) nqueens2:run : function(nqueens2:POS[],int,int)->(int)
 		{
 			void* queens_tmp;
-			_28 = run(_COPY_1DARRAY_PARAM_STRUCT(queens, POS), _30, dim);
+			_28 = _run_(_COPY_1DARRAY_PARAM_STRUCT(queens, POS), _30, dim);
 		}
 		//add %31 = %4, %28 : int
 		_31=num_solutions+_28;
@@ -339,7 +339,7 @@ int main(int argc, char** args){
 	//invoke (%9) = (%2, %10, %1) nqueens2:run : function(nqueens2:POS[],int,int)->(int)
 	{
 		void* queens_tmp;
-		_9 = run(_COPY_1DARRAY_PARAM_STRUCT(queens, POS), _10, n);
+		_9 = _run_(_COPY_1DARRAY_PARAM_STRUCT(queens, POS), _10, n);
 	}
 	//assign %3 = %9  : int
 	num_solutions = _9;

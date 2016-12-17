@@ -1,5 +1,5 @@
 #include "factorial.h"
-int64_t factorial(int64_t n){
+int64_t _factorial_(int64_t n){
 	int64_t _1 = 0;
 	int64_t _2 = 0;
 	int64_t _3 = 0;
@@ -25,7 +25,7 @@ blklab0:;
 	_6=n-_5;
 	//invoke (%4) = (%6) factorial:factorial : function(int)->(int)
 	{
-		_4 = factorial(_6);
+		_4 = _factorial_(_6);
 	}
 	//mul %7 = %0, %4 : int
 	_7=n*_4;
@@ -48,7 +48,7 @@ int main(int argc, char** args){
 	_3 = 5;
 	//invoke (%2) = (%3) factorial:factorial : function(int)->(int)
 	{
-		_2 = factorial(_3);
+		_2 = _factorial_(_3);
 	}
 	//assign %1 = %2  : int
 	f = _2;

@@ -1,5 +1,5 @@
 #include "bubblesort.h"
-int64_t* bubbleSort(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _bubbleSort_(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
 	_DECL_DEALLOC(_1);
 	int64_t length = 0;
@@ -225,7 +225,7 @@ int main(int argc, char** args){
 	//invoke (%11) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		_DEALLOC(_11);
-		_11 = bubbleSort(_1DARRAY_PARAM(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
+		_11 = _bubbleSort_(_1DARRAY_PARAM(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		_RESET_DEALLOC(ys, "true-true-false" , "bubbleSort");
 		_ADD_DEALLOC(_11);
 	}
@@ -285,7 +285,7 @@ blklab5:;
 	//invoke (%25) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		_DEALLOC(_25);
-		_25 = bubbleSort(_1DARRAY_PARAM(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
+		_25 = _bubbleSort_(_1DARRAY_PARAM(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 		_RESET_DEALLOC(ys, "true-true-false" , "bubbleSort");
 		_ADD_DEALLOC(_25);
 	}
@@ -343,7 +343,7 @@ blklab6:;
 	//invoke (%38) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		_DEALLOC(_38);
-		_38 = bubbleSort(_1DARRAY_PARAM(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
+		_38 = _bubbleSort_(_1DARRAY_PARAM(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 		_RESET_DEALLOC(ys, "true-true-false" , "bubbleSort");
 		_ADD_DEALLOC(_38);
 	}
@@ -403,7 +403,7 @@ blklab7:;
 	//invoke (%52) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		_DEALLOC(_52);
-		_52 = bubbleSort(_1DARRAY_PARAM(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
+		_52 = _bubbleSort_(_1DARRAY_PARAM(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 		_RESET_DEALLOC(ys, "true-true-false" , "bubbleSort");
 		_ADD_DEALLOC(_52);
 	}
@@ -483,7 +483,7 @@ blklab9:;
 	//invoke (%68) = (%4) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		_DEALLOC(_68);
-		_68 = bubbleSort(_1DARRAY_PARAM(arr), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
+		_68 = _bubbleSort_(_1DARRAY_PARAM(arr), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
 		_RESET_DEALLOC(arr, "true-true-false" , "bubbleSort");
 		_ADD_DEALLOC(_68);
 	}

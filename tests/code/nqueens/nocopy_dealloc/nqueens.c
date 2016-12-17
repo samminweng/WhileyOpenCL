@@ -48,7 +48,7 @@ void printf_NQueen(NQueen* nqueen){
 	printf("%"PRId64, nqueen->num_solutions);
 	printf("}");
 }
-NQueen* nqueen(int64_t num_solutions, POS** queens, size_t queens_size, _DECL_DEALLOC_PARAM(queens)){
+NQueen* _nqueen_(int64_t num_solutions, POS** queens, size_t queens_size, _DECL_DEALLOC_PARAM(queens)){
 	NQueen* nq;
 	_DECL_DEALLOC(nq);
 	NQueen* _3;
@@ -67,7 +67,7 @@ NQueen* nqueen(int64_t num_solutions, POS** queens, size_t queens_size, _DECL_DE
 	//return
 }
 
-int64_t conflict(POS* p, _DECL_DEALLOC_PARAM(p), int64_t row, int64_t col){
+int64_t _conflict_(POS* p, _DECL_DEALLOC_PARAM(p), int64_t row, int64_t col){
 	int64_t _3;
 	int64_t r = 0;
 	int64_t c = 0;
@@ -136,7 +136,7 @@ blklab3:;
 	//return
 }
 
-NQueen* run(NQueen* nq, _DECL_DEALLOC_PARAM(nq), int64_t n, int64_t dim){
+NQueen* _run_(NQueen* nq, _DECL_DEALLOC_PARAM(nq), int64_t n, int64_t dim){
 	NQueen* _3;
 	_DECL_DEALLOC(_3);
 	int64_t col = 0;
@@ -314,7 +314,7 @@ blklab14:;
 blklab20:;
 			//invoke (%26) = (%7, %1, %4) nqueens:conflict : function(nqueens:POS,int,int)->(bool)
 			{
-				_26 = conflict(_STRUCT_PARAM(p), false, n, col);
+				_26 = _conflict_(_STRUCT_PARAM(p), false, n, col);
 				_SUBSTRUCTURE_DEALLOC(p, "false-false-false" , "conflict");
 			}
 			//const %27 = true : bool
@@ -371,7 +371,7 @@ blklab12:;
 		//invoke (%33) = (%0, %35, %2) nqueens:run : function(nqueens:NQueen,int,int)->(nqueens:NQueen)
 		{
 			_DEALLOC_STRUCT(_33, NQueen);
-			_33 = run(_STRUCT_PARAM(nq), false, _35, dim);
+			_33 = _run_(_STRUCT_PARAM(nq), false, _35, dim);
 			_RESET_DEALLOC(nq, "true-true-false" , "run");
 			_ADD_DEALLOC(_33);
 		}
@@ -477,7 +477,7 @@ int main(int argc, char** args){
 	//invoke (%11) = (%3, %2) nqueens:nqueen : function(int,nqueens:POS[])->(nqueens:NQueen)
 	{
 		_DEALLOC_STRUCT(_11, NQueen);
-		_11 = nqueen(num_solutions, _1DARRAY_PARAM(queens), false);
+		_11 = _nqueen_(num_solutions, _1DARRAY_PARAM(queens), false);
 		_RESET_DEALLOC(queens, "false-true-false" , "nqueen");
 		_ADD_DEALLOC(_11);
 	}
@@ -490,7 +490,7 @@ int main(int argc, char** args){
 	//invoke (%12) = (%4, %13, %1) nqueens:run : function(nqueens:NQueen,int,int)->(nqueens:NQueen)
 	{
 		_DEALLOC_STRUCT(_12, NQueen);
-		_12 = run(_STRUCT_PARAM(nq), false, _13, n);
+		_12 = _run_(_STRUCT_PARAM(nq), false, _13, n);
 		_RESET_DEALLOC(nq, "true-true-false" , "run");
 		_ADD_DEALLOC(_12);
 	}

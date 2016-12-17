@@ -1,5 +1,5 @@
 #include "CoinGame1.h"
-int64_t* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
 	_DECL_DEALLOC(_2);
 	int64_t s = 0;
@@ -256,7 +256,7 @@ int main(int argc, char** args){
 	//invoke (%8) = (%2, %1) CoinGame1:findMoves : function(int[],int)->(int[])
 	{
 		_DEALLOC(_8);
-		_8 = findMoves(_1DARRAY_PARAM(moves), false, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
+		_8 = _findMoves_(_1DARRAY_PARAM(moves), false, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_RESET_DEALLOC(moves, "true-true-false" , "findMoves");
 		_ADD_DEALLOC(_8);
 	}

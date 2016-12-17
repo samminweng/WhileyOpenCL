@@ -28,7 +28,7 @@ void printf_Matrix(Matrix* matrix){
 	printf("%"PRId64, matrix->height);
 	printf("}");
 }
-Matrix* matrix(int64_t width, int64_t height, _DECL_2DARRAY_PARAM(data)){
+Matrix* _matrix_(int64_t width, int64_t height, _DECL_2DARRAY_PARAM(data)){
 	Matrix* r;
 	Matrix* _4;
 	//newrecord %4 = (%2, %1, %0) : {int[][] data,int height,int width}
@@ -41,7 +41,7 @@ Matrix* matrix(int64_t width, int64_t height, _DECL_2DARRAY_PARAM(data)){
 	//return
 }
 
-Matrix* multiply(Matrix* A, Matrix* B){
+Matrix* _multiply_(Matrix* A, Matrix* B){
 	Matrix* C;
 	_DECL_2DARRAY(C_data);
 	int64_t i = 0;
@@ -184,14 +184,14 @@ blklab13:;
 	_36 = A->height;
 	//invoke (%34) = (%35, %36, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
 	{
-		_34 = matrix(_35, _36, _2DARRAY_PARAM(C_data));
+		_34 = _matrix_(_35, _36, _2DARRAY_PARAM(C_data));
 	}
 	//return %34
 	return _34;
 	//return
 }
 
-void printMat(FILE* sys, Matrix* A){
+void _printMat_(FILE* sys, Matrix* A){
 	int64_t i = 0;
 	int64_t j = 0;
 	int64_t _4 = 0;
@@ -287,7 +287,7 @@ blklab19:;
 	return;
 }
 
-Matrix* init(int64_t height, int64_t width){
+Matrix* _init_(int64_t height, int64_t width){
 	Matrix* r;
 	_DECL_2DARRAY(rows);
 	int64_t i = 0;
@@ -352,7 +352,7 @@ blklab24:;
 blklab23:;
 	//invoke (%15) = (%1, %0, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
 	{
-		_15 = matrix(width, height, _2DARRAY_PARAM(rows));
+		_15 = _matrix_(width, height, _2DARRAY_PARAM(rows));
 	}
 	//return %15
 	return _15;
@@ -402,7 +402,7 @@ int main(int argc, char** args){
 	max = _5;
 	//invoke (%6) = (%1, %1) MatrixMult:init : function(MatrixMult:nat,MatrixMult:nat)->(MatrixMult:Matrix)
 	{
-		_6 = init(max, max);
+		_6 = _init_(max, max);
 	}
 	//assign %2 = %6  : {int[][] data,int height,int width}
 	A = _6;
@@ -438,7 +438,7 @@ blklab27:;
 	}
 	//invoke (%16) = (%1, %1) MatrixMult:init : function(MatrixMult:nat,MatrixMult:nat)->(MatrixMult:Matrix)
 	{
-		_16 = init(max, max);
+		_16 = _init_(max, max);
 	}
 	//assign %3 = %16  : {int[][] data,int height,int width}
 	B = _16;
@@ -474,7 +474,7 @@ blklab28:;
 	}
 	//invoke (%26) = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
 	{
-		_26 = multiply(_STRUCT_PARAM(A), _STRUCT_PARAM(B));
+		_26 = _multiply_(_STRUCT_PARAM(A), _STRUCT_PARAM(B));
 	}
 	//assign %4 = %26  : {int[][] data,int height,int width}
 	C = _26;
@@ -508,7 +508,7 @@ blklab29:;
 	}
 	//invoke () = (%0, %4) MatrixMult:printMat : method(whiley/lang/System:Console,MatrixMult:Matrix)->()
 	{
-		printMat(stdout, _STRUCT_PARAM(C));
+		_printMat_(stdout, _STRUCT_PARAM(C));
 	}
 	//fieldload %35 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %36 = %35 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

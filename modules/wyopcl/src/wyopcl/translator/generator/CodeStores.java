@@ -37,14 +37,75 @@ public class CodeStores {
 	private List<FunctionOrMethod> functions;
 	private List<wyil.lang.WyilFile.Type> userTypes;// Store all the user-defined types at source level, e.g. Board.
 	protected HashMap<FunctionOrMethod, CodeStore> stores; // Store generated code for each function
+	// Store the function names, e.g. _Cash_
+	private HashMap<String, FunctionOrMethod> functionNames;
+	
 	
 	public CodeStores(boolean isVerbose, WyilFile module){
 		this.isVerbose = isVerbose;
 		this.userTypes = (List<wyil.lang.WyilFile.Type>) module.types();
 		this.functions = new ArrayList<FunctionOrMethod>(module.functionOrMethods());
 		this.stores = new HashMap<FunctionOrMethod, CodeStore>();
+		this.functionNames = new HashMap<String, FunctionOrMethod>();
 	}
 	
+	/**
+	 * Given a function byte code, add or retrieves the name of the function, e.g. _Cash_
+	 * 
+	 * @param func
+	 * @return
+	 */
+	public String getFunctionName(FunctionOrMethod function){
+		// Add a function name e.g. _Cash_
+		String name = prefix+function.name()+prefix;
+		// Add a new name to the map
+		if(!functionNames.containsValue(function)){
+			// Put it to the map
+			functionNames.put(name, function);
+		}
+		// Return the function name
+		return name;
+	}
+	
+	/**
+	 * Get the function byte using name and type
+	 * 
+	 * @param name
+	 * @param type
+	 * @return
+	 */
+	private FunctionOrMethod getFunction(String name, Type.FunctionOrMethod type){
+		// Get the function byte with function name and type
+		for(FunctionOrMethod func: functions){
+			if(func.name().equals(name)
+					&&func.type().equals(type)){
+				// Put the function name to the map
+				return func;
+			}
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * Given a invoke byte code, gets the name of called function 
+	 * 
+	 * @param func_type
+	 * @return
+	 */
+	public String getFunctionName(Codes.Invoke code){
+		// Get function name
+		String name = prefix+code.name.name()+prefix;
+		// Check if the function is added to the map
+		if(!functionNames.containsKey(name)){
+			// Get the function byte
+			FunctionOrMethod func = getFunction(code.name.name(), code.type(0));
+			// Put the name to map
+			functionNames.put(name, func);
+		}
+		
+		return name;		
+	}
 	
 	/**
 	 * Get the code store of the given function.

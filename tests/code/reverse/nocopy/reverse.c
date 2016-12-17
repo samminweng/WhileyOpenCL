@@ -1,5 +1,5 @@
 #include "reverse.h"
-int64_t* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _reverse_(_DECL_1DARRAY_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
 	int64_t i = 0;
 	_DECL_1DARRAY(r);
@@ -132,7 +132,7 @@ int main(int argc, char** args){
 	_11[0] = _6; _11[1] = _7; _11[2] = _8; _11[3] = _9; _11[4] = _10; 
 	//invoke (%5) = (%11) reverse:reverse : function(int[])->(int[])
 	{
-		_5 = reverse(_1DARRAY_PARAM(_11), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
+		_5 = _reverse_(_1DARRAY_PARAM(_11), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
 	}
 	//assign %1 = %5  : int[]
 	_UPDATE_1DARRAY(rs, _5);
@@ -199,7 +199,7 @@ blklab6:;
 blklab5:;
 	//invoke (%27) = (%4) reverse:reverse : function(int[])->(int[])
 	{
-		_27 = reverse(_1DARRAY_PARAM(arr), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
+		_27 = _reverse_(_1DARRAY_PARAM(arr), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 	}
 	//assign %4 = %27  : int[]
 	_UPDATE_1DARRAY(arr, _27);

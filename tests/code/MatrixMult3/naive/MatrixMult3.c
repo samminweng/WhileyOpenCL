@@ -28,7 +28,7 @@ void printf_Matrix(Matrix* matrix){
 	printf("%"PRId64, matrix->height);
 	printf("}");
 }
-Matrix* matrix(int64_t width, int64_t height, _DECL_1DARRAY_PARAM(data)){
+Matrix* _matrix_(int64_t width, int64_t height, _DECL_1DARRAY_PARAM(data)){
 	Matrix* r;
 	Matrix* _4;
 	//newrecord %4 = (%2, %1, %0) : {int[] data,int height,int width}
@@ -41,7 +41,7 @@ Matrix* matrix(int64_t width, int64_t height, _DECL_1DARRAY_PARAM(data)){
 	//return
 }
 
-Matrix* init(int64_t width, int64_t height){
+Matrix* _init_(int64_t width, int64_t height){
 	Matrix* r;
 	_DECL_1DARRAY(data);
 	int64_t i = 0;
@@ -125,14 +125,14 @@ blklab2:;
 	//invoke (%21) = (%0, %1, %3) MatrixMult3:matrix : function(MatrixMult3:nat,MatrixMult3:nat,int[])->(MatrixMult3:Matrix)
 	{
 		void* data_tmp;
-		_21 = matrix(width, height, _COPY_1DARRAY_PARAM_int64_t(data));
+		_21 = _matrix_(width, height, _COPY_1DARRAY_PARAM_int64_t(data));
 	}
 	//return %21
 	return _21;
 	//return
 }
 
-void print_mat(FILE* sys, Matrix* a){
+void _print_mat_(FILE* sys, Matrix* a){
 	int64_t i = 0;
 	int64_t width = 0;
 	int64_t height = 0;
@@ -236,7 +236,7 @@ blklab6:;
 	return;
 }
 
-Matrix* mat_mult(Matrix* a, Matrix* b){
+Matrix* _mat_mult_(Matrix* a, Matrix* b){
 	Matrix* c;
 	int64_t width = 0;
 	int64_t height = 0;
@@ -476,7 +476,7 @@ blklab17:;
 	//invoke (%58) = (%3, %4, %5) MatrixMult3:matrix : function(MatrixMult3:nat,MatrixMult3:nat,int[])->(MatrixMult3:Matrix)
 	{
 		void* data_tmp;
-		_58 = matrix(width, height, _COPY_1DARRAY_PARAM_int64_t(data));
+		_58 = _matrix_(width, height, _COPY_1DARRAY_PARAM_int64_t(data));
 	}
 	//return %58
 	return _58;
@@ -577,7 +577,7 @@ int main(int argc, char** args){
 	_12 = 20;
 	//invoke (%10) = (%11, %12) MatrixMult3:init : function(MatrixMult3:nat,MatrixMult3:nat)->(MatrixMult3:Matrix)
 	{
-		_10 = init(_11, _12);
+		_10 = _init_(_11, _12);
 	}
 	//assign %1 = %10  : {int[] data,int height,int width}
 	A = copy_Matrix(_10);
@@ -626,7 +626,7 @@ blklab23:;
 	_29 = 20;
 	//invoke (%27) = (%28, %29) MatrixMult3:init : function(MatrixMult3:nat,MatrixMult3:nat)->(MatrixMult3:Matrix)
 	{
-		_27 = init(_28, _29);
+		_27 = _init_(_28, _29);
 	}
 	//assign %2 = %27  : {int[] data,int height,int width}
 	B = copy_Matrix(_27);
@@ -673,7 +673,7 @@ blklab24:;
 	{
 		void* A_tmp;
 		void* B_tmp;
-		_44 = mat_mult(_COPY_STRUCT_PARAM(A, Matrix), _COPY_STRUCT_PARAM(B, Matrix));
+		_44 = _mat_mult_(_COPY_STRUCT_PARAM(A, Matrix), _COPY_STRUCT_PARAM(B, Matrix));
 	}
 	//assign %3 = %44  : {int[] data,int height,int width}
 	C = copy_Matrix(_44);
@@ -715,7 +715,7 @@ blklab25:;
 	//invoke () = (%0, %3) MatrixMult3:print_mat : method(whiley/lang/System:Console,MatrixMult3:Matrix)->()
 	{
 		void* C_tmp;
-		print_mat(stdout, _COPY_STRUCT_PARAM(C, Matrix));
+		_print_mat_(stdout, _COPY_STRUCT_PARAM(C, Matrix));
 	}
 	//fieldload %57 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %58 = %57 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

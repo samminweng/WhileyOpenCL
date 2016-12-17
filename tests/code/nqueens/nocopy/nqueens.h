@@ -14,7 +14,7 @@ typedef struct{
 void printf_NQueen(NQueen* _nqueen);
 NQueen* copy_NQueen(NQueen* _nqueen);
 void free_NQueen(NQueen* _nqueen);
-NQueen* nqueen(int64_t num_solutions, POS** queens, size_t queens_size);
-int64_t conflict(POS* p, int64_t row, int64_t col);
-NQueen* run(NQueen* nq, int64_t n, int64_t dim);
+NQueen* _nqueen_(int64_t num_solutions, POS** queens, size_t queens_size);
+int64_t _conflict_(POS* p, int64_t row, int64_t col);
+NQueen* _run_(NQueen* nq, int64_t n, int64_t dim);
 int main(int argc, char** args);

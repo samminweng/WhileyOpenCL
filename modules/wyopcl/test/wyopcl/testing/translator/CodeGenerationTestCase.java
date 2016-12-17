@@ -75,6 +75,7 @@ public class CodeGenerationTestCase {
 				"FunctionCall2",
 				"FunctionCall3",
 				"FunctionCall4",
+				"FunctionOverload", // Define types and functions with the same name  
 				"lz77",
 				"lz77_2",
 				"fileread", //Read 'feep.pbm' as a byte array

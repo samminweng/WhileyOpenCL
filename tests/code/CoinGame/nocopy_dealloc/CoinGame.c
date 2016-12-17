@@ -1,5 +1,5 @@
 #include "CoinGame.h"
-void play(FILE* sys, _DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int64_t n){
+void _play_(FILE* sys, _DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int64_t n){
 	int64_t left = 0;
 	int64_t right = 0;
 	int64_t i = 0;
@@ -300,7 +300,7 @@ blklab8:;
 	return;
 }
 
-int64_t* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
 	_DECL_DEALLOC(_2);
 	int64_t s = 0;
@@ -573,7 +573,7 @@ int main(int argc, char** args){
 	//invoke (%8) = (%2, %1) CoinGame:findMoves : function(int[],int)->(int[])
 	{
 		_DEALLOC(_8);
-		_8 = findMoves(_1DARRAY_PARAM(moves), false, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
+		_8 = _findMoves_(_1DARRAY_PARAM(moves), false, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_RESET_DEALLOC(moves, "true-true-false" , "findMoves");
 		_ADD_DEALLOC(_8);
 	}
@@ -583,7 +583,7 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(moves, _8);
 	//invoke () = (%0, %2, %1) CoinGame:play : method(whiley/lang/System:Console,int[],int)->()
 	{
-		play(stdout, _1DARRAY_PARAM(moves), false, n);
+		_play_(stdout, _1DARRAY_PARAM(moves), false, n);
 		_RETAIN_DEALLOC(moves, "false-false-true" , "play");
 	}
 	//const %9 = 1 : int

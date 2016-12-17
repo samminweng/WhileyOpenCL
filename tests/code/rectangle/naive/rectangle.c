@@ -51,7 +51,7 @@ void printf_Rectangle(Rectangle* rectangle){
 	printf_Point(rectangle->p2);
 	printf("}");
 }
-Rectangle* updateRec(Rectangle* rec, Point* p){
+Rectangle* _updateRec_(Rectangle* rec, Point* p){
 	Rectangle* r;
 	//update %0.p2 = %1 : {{int x,int y} p1,{int x,int y} p2} -> {{int x,int y} p1,{int x,int y} p2}
 	rec->p2 = p;
@@ -136,7 +136,7 @@ int main(int argc, char** args){
 	{
 		void* rec_tmp;
 		void* p3_tmp;
-		_15 = updateRec(_COPY_STRUCT_PARAM(rec, Rectangle), _COPY_STRUCT_PARAM(p3, Point));
+		_15 = _updateRec_(_COPY_STRUCT_PARAM(rec, Rectangle), _COPY_STRUCT_PARAM(p3, Point));
 	}
 	//assign %3 = %15  : {{int x,int y} p1,{int x,int y} p2}
 	rec = copy_Rectangle(_15);

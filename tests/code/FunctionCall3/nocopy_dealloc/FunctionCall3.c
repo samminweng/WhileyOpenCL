@@ -1,5 +1,5 @@
 #include "FunctionCall3.h"
-int64_t* func(_DECL_1DARRAY_PARAM(s), _DECL_DEALLOC_PARAM(s), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _func_(_DECL_1DARRAY_PARAM(s), _DECL_DEALLOC_PARAM(s), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
 	_DECL_DEALLOC(_1);
 	_DECL_1DARRAY(t);
@@ -90,7 +90,7 @@ int main(int argc, char** args){
 	//invoke (%10) = (%1) FunctionCall3:func : function(int[])->(int[])
 	{
 		_DEALLOC(_10);
-		_10 = func(_1DARRAY_PARAM(a), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
+		_10 = _func_(_1DARRAY_PARAM(a), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 		_RESET_DEALLOC(a, "true-true-false" , "func");
 		_ADD_DEALLOC(_10);
 	}
@@ -159,7 +159,7 @@ blklab0:;
 	{
 		void* b_tmp;
 		_DEALLOC(_27);
-		_27 = func(_COPY_1DARRAY_PARAM_int64_t(b), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
+		_27 = _func_(_COPY_1DARRAY_PARAM_int64_t(b), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 		_CALLER_DEALLOC(_27, b, "true-true-true" , "func");
 		_ADD_DEALLOC(_27);
 	}

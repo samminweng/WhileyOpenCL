@@ -23,7 +23,7 @@ void printf_Match(Match* match){
 	printf("%"PRId64, match->offset);
 	printf("}");
 }
-int64_t match(BYTE* data, size_t data_size, int64_t offset, int64_t end){
+int64_t _match_(BYTE* data, size_t data_size, int64_t offset, int64_t end){
 	int64_t _3 = 0;
 	int64_t pos = 0;
 	int64_t len = 0;
@@ -90,7 +90,7 @@ blklab1:;
 	//return
 }
 
-Match* findLongestMatch(BYTE* data, size_t data_size, int64_t pos){
+Match* _findLongestMatch_(BYTE* data, size_t data_size, int64_t pos){
 	Match* m;
 	int64_t bestOffset = 0;
 	int64_t bestLen = 0;
@@ -136,7 +136,7 @@ Match* findLongestMatch(BYTE* data, size_t data_size, int64_t pos){
 		if(offset>=pos){goto blklab3;}
 		//invoke (%14) = (%0, %6, %1) lz77:match : function(byte[],lz77:nat,lz77:nat)->(int)
 		{
-			_14 = match(_1DARRAY_PARAM(data), offset, pos);
+			_14 = _match_(_1DARRAY_PARAM(data), offset, pos);
 		}
 		//assign %7 = %14  : int
 		len = _14;
@@ -170,7 +170,7 @@ blklab3:;
 	//return
 }
 
-BYTE* append(BYTE* items, size_t items_size, BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* _append_(BYTE* items, size_t items_size, BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(nitems);
 	int64_t i = 0;
 	BYTE _4;
@@ -228,7 +228,7 @@ blklab6:;
 	//return
 }
 
-BYTE* resize(BYTE* items, size_t items_size, int64_t size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* _resize_(BYTE* items, size_t items_size, int64_t size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(nitems);
 	int64_t i = 0;
 	BYTE _4;
@@ -272,7 +272,7 @@ blklab10:;
 	//return
 }
 
-BYTE* compress(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* _compress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(output);
 	int64_t pos = 0;
 	Match* m;
@@ -316,7 +316,7 @@ BYTE* compress(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFER
 		if(pos>=_10){goto blklab12;}
 		//invoke (%11) = (%0, %2) lz77:findLongestMatch : function(byte[],lz77:nat)->(lz77:Match)
 		{
-			_11 = findLongestMatch(_1DARRAY_PARAM(data), pos);
+			_11 = _findLongestMatch_(_1DARRAY_PARAM(data), pos);
 		}
 		//assign %3 = %11  : {int len,int offset}
 		m = _11;
@@ -364,13 +364,13 @@ blklab14:;
 blklab15:;
 		//invoke (%22) = (%1, %4) lz77:append : function(byte[],byte)->(byte[])
 		{
-			_22 = append(_1DARRAY_PARAM(output), offset, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
+			_22 = _append_(_1DARRAY_PARAM(output), offset, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
 		}
 		//assign %1 = %22  : byte[]
 		_UPDATE_1DARRAY(output, _22);
 		//invoke (%23) = (%1, %5) lz77:append : function(byte[],byte)->(byte[])
 		{
-			_23 = append(_1DARRAY_PARAM(output), length, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
+			_23 = _append_(_1DARRAY_PARAM(output), length, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 		}
 		//assign %1 = %23  : byte[]
 		_UPDATE_1DARRAY(output, _23);
@@ -385,7 +385,7 @@ blklab12:;
 	//return
 }
 
-BYTE* decompress(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(output);
 	int64_t pos = 0;
 	BYTE header;
@@ -464,7 +464,7 @@ BYTE* decompress(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREF
 		if(header!=_22){goto blklab18;}
 		//invoke (%23) = (%1, %4) lz77:append : function(byte[],byte)->(byte[])
 		{
-			_23 = append(_1DARRAY_PARAM(output), item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
+			_23 = _append_(_1DARRAY_PARAM(output), item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 		}
 		//assign %1 = %23  : byte[]
 		_UPDATE_1DARRAY(output, _23);
@@ -504,7 +504,7 @@ blklab18:;
 			item = _29;
 			//invoke (%30) = (%1, %4) lz77:append : function(byte[],byte)->(byte[])
 			{
-				_30 = append(_1DARRAY_PARAM(output), item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
+				_30 = _append_(_1DARRAY_PARAM(output), item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
 			}
 			//assign %1 = %30  : byte[]
 			_UPDATE_1DARRAY(output, _30);
@@ -622,7 +622,7 @@ int main(int argc, char** args){
 	}
 	//invoke (%21) = (%2) lz77:compress : function(byte[])->(byte[])
 	{
-		_21 = compress(_1DARRAY_PARAM(data), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_21));
+		_21 = _compress_(_1DARRAY_PARAM(data), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_21));
 	}
 	//assign %3 = %21  : byte[]
 	_UPDATE_1DARRAY(compress_data, _21);
@@ -660,7 +660,7 @@ int main(int argc, char** args){
 	}
 	//invoke (%33) = (%3) lz77:decompress : function(byte[])->(byte[])
 	{
-		_33 = decompress(_1DARRAY_PARAM(compress_data), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
+		_33 = _decompress_(_1DARRAY_PARAM(compress_data), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
 	}
 	//assign %4 = %33  : byte[]
 	_UPDATE_1DARRAY(decompress_data, _33);

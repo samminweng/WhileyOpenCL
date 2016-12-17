@@ -1,5 +1,5 @@
 #include "Fibonacci.h"
-int64_t* fibonacci(_DECL_1DARRAY_PARAM(ls), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _fibonacci_(_DECL_1DARRAY_PARAM(ls), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
 	int64_t _3 = 0;
 	int64_t _4 = 0;
@@ -42,7 +42,7 @@ blklab0:;
 	_10=n-_9;
 	//invoke (%8) = (%0, %10) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
-		_8 = fibonacci(_1DARRAY_PARAM(ls), _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
+		_8 = _fibonacci_(_1DARRAY_PARAM(ls), _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 	}
 	//assign %0 = %8  : int[]
 	_UPDATE_1DARRAY(ls, _8);
@@ -109,7 +109,7 @@ int main(int argc, char** args){
 	_8=max-_7;
 	//invoke (%6) = (%2, %8) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
-		_6 = fibonacci(_1DARRAY_PARAM(arr), _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
+		_6 = _fibonacci_(_1DARRAY_PARAM(arr), _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 	}
 	//assign %2 = %6  : int[]
 	_UPDATE_1DARRAY(arr, _6);

@@ -1,5 +1,5 @@
 #include "FunctionCall3.h"
-int64_t* func(_DECL_1DARRAY_PARAM(s), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _func_(_DECL_1DARRAY_PARAM(s), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
 	_DECL_1DARRAY(t);
 	//assign %2 = %0  : int[]
@@ -69,7 +69,7 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY(a, _9);
 	//invoke (%10) = (%1) FunctionCall3:func : function(int[])->(int[])
 	{
-		_10 = func(_1DARRAY_PARAM(a), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
+		_10 = _func_(_1DARRAY_PARAM(a), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 	}
 	//assign %1 = %10  : int[]
 	_UPDATE_1DARRAY(a, _10);
@@ -127,7 +127,7 @@ blklab0:;
 	//invoke (%27) = (%2) FunctionCall3:func : function(int[])->(int[])
 	{
 		void* b_tmp;
-		_27 = func(_COPY_1DARRAY_PARAM_int64_t(b), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
+		_27 = _func_(_COPY_1DARRAY_PARAM_int64_t(b), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 	}
 	//assign %3 = %27  : int[]
 	_UPDATE_1DARRAY(c, _27);
