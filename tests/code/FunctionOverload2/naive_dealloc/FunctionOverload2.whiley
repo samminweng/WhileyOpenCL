@@ -37,4 +37,4 @@ requires all { i in 0..|coins| | coins[i] < |Value| }:
 
 public method main(System.Console console):
     Cash empty = Cash()
-    Cash till = [5,3,3,1,1,3,0,0]
+    Cash till = Cash([5,3,3,1,1,3,0,0])

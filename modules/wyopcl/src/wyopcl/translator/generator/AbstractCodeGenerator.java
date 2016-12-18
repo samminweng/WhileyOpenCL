@@ -142,8 +142,10 @@ public abstract class AbstractCodeGenerator {
 	protected void iterateCode(Code code, FunctionOrMethod function) {
 
 		try {
-			// enable the assertion
-			if (code instanceof Codes.AssertOrAssume) {
+			if(code instanceof Codes.Invariant){
+				return; // Skip the translations of loop invariant
+			}else if (code instanceof Codes.AssertOrAssume) {
+				// enable the assertion
 				translate((Codes.AssertOrAssume) code, function);
 			} else if (code instanceof Codes.Assign) {
 				translate((Codes.Assign) code, function);

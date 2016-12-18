@@ -92,43 +92,6 @@ int64_t* _Cash_1_(_DECL_1DARRAY_PARAM(coins), _DECL_1DARRAYSIZE_PARAM_CALLBYREFE
 	i = _14;
 	//loop (%2, %3, %4, %15, %16, %17, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29)
 	while(true){
-		//invariant
-		{
-			//lengthof %15 = %2 : int[]
-			_15 = cash_size;
-			//const %16 = [1,5,10,20,50,100,500,1000] : int[]
-			_NEW_1DARRAY_int64_t(_16, 8, 0);
-			_16[0] = 1; _16[1] = 5; _16[2] = 10; _16[3] = 20; _16[4] = 50; _16[5] = 100; _16[6] = 500; _16[7] = 1000; 
-			//lengthof %17 = %16 : int[]
-			_17 = _16_size;
-			//ifne %15, %17 goto blklab7 : int
-			if(_15!=_17){goto blklab7;}
-			//const %19 = 0 : int
-			_19 = 0;
-			//lengthof %20 = %2 : int[]
-			_20 = cash_size;
-			//quantify %18 in %19..%20(%21, %22)
-			while(true){
-				//indexof %21 = %2, %18 : int[]
-				_21=cash[_18];
-				//const %22 = 0 : int
-				_22 = 0;
-				//iflt %21, %22 goto blklab8 : int
-				if(_21<_22){goto blklab8;}
-			}
-			//goto blklab6
-			goto blklab6;
-//.blklab8
-blklab8:;
-//.blklab7
-blklab7:;
-			//fail
-			fprintf(stderr,"fail");
-			exit(-1);
-//.blklab6
-blklab6:;
-		//invariant
-		}
 		//lengthof %23 = %0 : int[]
 		_23 = coins_size;
 		//ifge %3, %23 goto blklab4 : int
@@ -166,7 +129,7 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(empty);
 	_DECL_1DARRAY(till);
 	_DECL_1DARRAY(_3);
-	int64_t _4 = 0;
+	_DECL_1DARRAY(_4);
 	int64_t _5 = 0;
 	int64_t _6 = 0;
 	int64_t _7 = 0;
@@ -174,34 +137,40 @@ int main(int argc, char** args){
 	int64_t _9 = 0;
 	int64_t _10 = 0;
 	int64_t _11 = 0;
-	_DECL_1DARRAY(_12);
+	int64_t _12 = 0;
+	_DECL_1DARRAY(_13);
 	//invoke (%3) = () FunctionOverload2:Cash : function()->(FunctionOverload2:Cash)
 	{
 		_3 = _Cash_(_1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
 	}
 	//assign %1 = %3  : int[]
 	_COPY_1DARRAY_int64_t(empty, _3);
-	//const %4 = 5 : int
-	_4 = 5;
-	//const %5 = 3 : int
-	_5 = 3;
+	//const %5 = 5 : int
+	_5 = 5;
 	//const %6 = 3 : int
 	_6 = 3;
-	//const %7 = 1 : int
-	_7 = 1;
+	//const %7 = 3 : int
+	_7 = 3;
 	//const %8 = 1 : int
 	_8 = 1;
-	//const %9 = 3 : int
-	_9 = 3;
-	//const %10 = 0 : int
-	_10 = 0;
+	//const %9 = 1 : int
+	_9 = 1;
+	//const %10 = 3 : int
+	_10 = 3;
 	//const %11 = 0 : int
 	_11 = 0;
-	//newlist %12 = (%4, %5, %6, %7, %8, %9, %10, %11) : int[]
-	_NEW_1DARRAY_int64_t(_12, 8, 0);
-	_12[0] = _4; _12[1] = _5; _12[2] = _6; _12[3] = _7; _12[4] = _8; _12[5] = _9; _12[6] = _10; _12[7] = _11; 
-	//assign %2 = %12  : int[]
-	_COPY_1DARRAY_int64_t(till, _12);
+	//const %12 = 0 : int
+	_12 = 0;
+	//newlist %13 = (%5, %6, %7, %8, %9, %10, %11, %12) : int[]
+	_NEW_1DARRAY_int64_t(_13, 8, 0);
+	_13[0] = _5; _13[1] = _6; _13[2] = _7; _13[3] = _8; _13[4] = _9; _13[5] = _10; _13[6] = _11; _13[7] = _12; 
+	//invoke (%4) = (%13) FunctionOverload2:Cash : function(FunctionOverload2:nat[])->(FunctionOverload2:Cash)
+	{
+		void* _13_tmp;
+		_4 = _Cash_1_(_COPY_1DARRAY_PARAM_int64_t(_13), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_4));
+	}
+	//assign %2 = %4  : int[]
+	_COPY_1DARRAY_int64_t(till, _4);
 	//return
 	exit(0);
 }
