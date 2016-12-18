@@ -274,8 +274,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						// Declare a 'size_t' size variable
 						parameters.add(elem_type + " " + var + ", size_t " + var + "_size");
 					}
-				} else if (parameter_type instanceof Type.Nominal 
-						&& stores.isUnionOfArrayIntType(parameter_type)){
+				} else if (stores.isUnionOfArrayIntType(parameter_type)){
 					// Pass the parameter along with size variable
 					parameters.add("_DECL_1DARRAY_PARAM(" + var + ")");
 				} else {
@@ -294,20 +293,23 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				});
 			}
 
-			// Add the extra size variable of return array
-			if(ret_type != null && ret_type instanceof Type.Array){
-				Type.Array arr_type = (Type.Array)ret_type;
-				// Get array dimension
-				int dimension = stores.getArrayDimension(arr_type);
-				// Declare the call-by-reference size variable for output array, e.g. 'size_t* a_size' 
-				parameters.add("_DECL_"+dimension+"DARRAYSIZE_PARAM_CALLBYREFERENCE");
+			// Pass the extra size variable of return array
+			if(ret_type != null){
+				if(ret_type instanceof Type.Array){
+					Type.Array arr_type = (Type.Array)ret_type;
+					// Get array dimension
+					int dimension = stores.getArrayDimension(arr_type);
+					// Declare the call-by-reference size variable for output array, e.g. 'size_t* a_size' 
+					parameters.add("_DECL_"+dimension+"DARRAYSIZE_PARAM_CALLBYREFERENCE");
+				}else if(stores.isUnionOfArrayIntType(ret_type)){
+					// The return type is aliased to array type, e.g. string 
+					// Pass the size variable as a reference
+					parameters.add("_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE");
+				}else{
+					// For other types, no extra parameter is required.
+				}
 			}
-			// Check if the return type is an aliased integer array type
-			if(ret_type != null && stores.isUnionOfArrayIntType(ret_type)){
-				// Pass an additional size variable for return 
-				parameters.add("_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE");
-			}
-			
+				
 			// Separate each parameter with ',' sign
 			declaration += parameters.stream().map(i -> i.toString()).collect(Collectors.joining(", "));
 

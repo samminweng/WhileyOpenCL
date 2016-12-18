@@ -1,7 +1,7 @@
 #include "toString.h"
-BYTE* _toString_(_DECL_1DARRAY_PARAM(c)){
-	_DECL_1DARRAY_BYTE(_1);
-	_DECL_1DARRAY_BYTE(r);
+BYTE* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_1DARRAY(_1);
+	_DECL_1DARRAY(r);
 	int64_t firstTime;
 	int64_t i = 0;
 	int64_t amt = 0;

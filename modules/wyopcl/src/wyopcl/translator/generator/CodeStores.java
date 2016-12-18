@@ -446,10 +446,17 @@ public class CodeStores {
 				}
 			}
 		}else if (type instanceof Type.Nominal){
-			wyil.lang.WyilFile.Type nominal = getUserDefinedType((Type.Nominal)type);
-			if(nominal!=null){
+			// Special case for ASCII::String
+			Type.Nominal nominal = (Type.Nominal)type;
+			if(nominal.name().toString().equals("whiley/lang/ASCII:string")){
+				return true;// String is a byte array.
+			}
+			
+			// Get the user type
+			wyil.lang.WyilFile.Type userType = getUserDefinedType((Type.Nominal)type);
+			if(userType!=null){
 				// Check if the union type is an array type.
-				if(nominal.type() instanceof Type.Array){
+				if(userType.type() instanceof Type.Array){
 					return true;//  
 				}
 			}
