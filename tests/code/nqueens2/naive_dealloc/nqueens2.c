@@ -151,25 +151,6 @@ blklab6:;
 	col = _11;
 	//loop (%0, %4, %5, %6, %7, %8, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33)
 	while(true){
-		//invariant
-		{
-			//lengthof %12 = %0 : {int c,int r}[]
-			_12 = queens_size;
-			//ifge %1, %12 goto blklab11 : int
-			if(n>=_12){goto blklab11;}
-			//lengthof %13 = %0 : {int c,int r}[]
-			_13 = queens_size;
-			//ifeq %2, %13 goto blklab10 : int
-			if(dim==_13){goto blklab10;}
-//.blklab11
-blklab11:;
-			//fail
-			fprintf(stderr,"fail");
-			exit(-1);
-//.blklab10
-blklab10:;
-		//invariant
-		}
 		//ifge %5, %2 goto blklab8 : int
 		if(col>=dim){goto blklab8;}
 		//const %14 = true : bool
@@ -182,31 +163,6 @@ blklab10:;
 		i = _15;
 		//loop (%6, %7, %8, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25)
 		while(true){
-			//invariant
-			{
-				//lengthof %16 = %0 : {int c,int r}[]
-				_16 = queens_size;
-				//ifge %1, %16 goto blklab15 : int
-				if(n>=_16){goto blklab15;}
-				//const %17 = 0 : int
-				_17 = 0;
-				//iflt %7, %17 goto blklab16 : int
-				if(i<_17){goto blklab16;}
-				//lengthof %18 = %0 : {int c,int r}[]
-				_18 = queens_size;
-				//ifeq %2, %18 goto blklab14 : int
-				if(dim==_18){goto blklab14;}
-//.blklab16
-blklab16:;
-//.blklab15
-blklab15:;
-				//fail
-				fprintf(stderr,"fail");
-				exit(-1);
-//.blklab14
-blklab14:;
-			//invariant
-			}
 			//ifge %7, %1 goto blklab12 : int
 			if(i>=n){goto blklab12;}
 			//indexof %19 = %0, %7 : {int c,int r}[]

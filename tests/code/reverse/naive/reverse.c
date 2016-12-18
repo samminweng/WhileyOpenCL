@@ -31,27 +31,6 @@ int64_t* _reverse_(_DECL_1DARRAY_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERE
 	_COPY_1DARRAY_int64_t(r, _8);
 	//loop (%2, %3, %4, %9, %10, %11, %12, %13, %14, %15, %16, %17)
 	while(true){
-		//invariant
-		{
-			//lengthof %9 = %0 : int[]
-			_9 = ls_size;
-			//ifgt %2, %9 goto blklab3 : int
-			if(i>_9){goto blklab3;}
-			//lengthof %10 = %3 : int[]
-			_10 = r_size;
-			//lengthof %11 = %0 : int[]
-			_11 = ls_size;
-			//ifeq %10, %11 goto blklab2 : int
-			if(_10==_11){goto blklab2;}
-//.blklab3
-blklab3:;
-			//fail
-			fprintf(stderr,"fail");
-			exit(-1);
-//.blklab2
-blklab2:;
-		//invariant
-		}
 		//const %12 = 0 : int
 		_12 = 0;
 		//ifle %2, %12 goto blklab0 : int

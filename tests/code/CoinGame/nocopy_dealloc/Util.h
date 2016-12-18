@@ -163,7 +163,10 @@ void writeAll(FILE *file, BYTE* arr, size_t arr_size);
  			}\
  			a##_size = size;\
  		})
+// Create 2D array and initialize each subarray with the value
 #define _NEW_2DARRAY_int64_t(a, size, value) a##_size = size; a##_size_size = value##_size; a = create2DArray_int64_t(value, a##_size, a##_size_size);
+// Create an empty 2D array without initial values
+#define _NEW_2DARRAY_int64_t_EMPTY(a, _size, _size_size) a = create2DArray_int64_empty(_size, _size_size); 
 /***
  * Copy Macros
  *

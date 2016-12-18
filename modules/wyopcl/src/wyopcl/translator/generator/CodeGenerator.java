@@ -335,6 +335,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * _33[0] = 80; _33[1] = 97; _33[2] = 115; _33[3] = 115; _33[4] = 32; _33[5] = 115; _33[6] = 119; _33[7] = 97; _33[8] = 112; _33[9] = 32; _33[10] = 116; _33[11] = 101; _33[12] = 115; _33[13] = 116; _33[14] = 32; _33[15] = 99; _33[16] = 97; _33[17] = 115; _33[18] = 101; </code>
 	 * </pre>
 	 * 
+	 * For a given 2D array
+	 * 
+	 * <pre>
+	 * _NEW_2DARRAY_int64_t_EMPTY(_21, 8, 3);
+	 * {
+			int tmp[] = {49, 99};
+			memcpy(_21[0], tmp, 2*sizeof(int64_t));
+		}....
+	 * </pre>
 	 * @param code
 	 * @see Codes.Const
 	 */
@@ -371,14 +380,51 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						statement.add(s);
 					}
 				} else {
-					statement.add(indent + "_NEW_1DARRAY_int64_t(" + lhs + ", " + list.values.size() + ", 0);");
-					if (!list.values.isEmpty()) {
-						// Assign values to each element
-						String s = indent;
+					// Get array dimension
+					int dimension = stores.getArrayDimension(constant.type());
+					if(dimension == 1){
+						statement.add(indent + "_NEW_1DARRAY_int64_t(" + lhs + ", " + list.values.size() + ", 0);");
+						if (!list.values.isEmpty()) {
+							// Assign values to each element
+							String s = indent;
+							for (int i = 0; i < list.values.size(); i++) {
+								s += lhs + "[" + i + "] = " + list.values.get(i) + "; ";
+							}
+							statement.add(s);
+						}
+					}else if (dimension == 2){
+						// Create a 2D array
+						int _1d_size = list.values.size(); // Get size of 1st dimension
+						// the size of 2nd array : go through each sub-array to get maximal subarray size
+						int _2d_size = 0;
+						for(int i=0; i<list.values.size();i++){
+							Constant.Array subarray = (Constant.Array)list.values.get(i);
+							if(subarray.values.size() > _2d_size){
+								_2d_size = subarray.values.size();
+							}
+						}
+						
+						// Generate the code
+						statement.add(indent + "_NEW_2DARRAY_int64_t_EMPTY(" + lhs + ", " + _1d_size + ", "+_2d_size+");");
+						
+						// Assign the value to each sub-array
+						// {
+						//		int64_t tmp[] = {49, 99};
+						//		memcpy(_21[0], tmp, 2*sizeof(int64_t));
+						// }
+						String s = "";
 						for (int i = 0; i < list.values.size(); i++) {
-							s += lhs + "[" + i + "] = " + list.values.get(i) + "; ";
+							Constant.Array subitem = ((Constant.Array)list.values.get(i));
+							ArrayList<Constant> subarray = subitem.values;
+							s += indent+"{\n"+ indent + "\tint64_t tmp[] = ";
+							// Convert the subarray to a string, e.g. {49, 99};
+							s += subarray.toString().replaceAll("^\\[", "{").replaceAll("\\]", "}") + ";\n";
+							// Copy the subarray to lhs array, e.g. memcpy(_21[0], tmp, 2*sizeof(int64_t));
+							s += indent + "\tmemcpy("+lhs+"["+i+"], tmp, "+subarray.size()+"*sizeof(int64_t));\n";
+							s += indent+"}\n";
 						}
 						statement.add(s);
+						
 					}
 				}
 			} else {

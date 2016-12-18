@@ -16,19 +16,6 @@ int64_t _gcd_(int64_t a, int64_t b){
 blklab1:;
 	//loop (%0, %1, %4, %5, %6, %7)
 	while(true){
-		//invariant
-		{
-			//const %4 = 0 : int
-			_4 = 0;
-			//ifge %0, %4 goto blklab4 : int
-			if(a>=_4){goto blklab4;}
-			//fail
-			fprintf(stderr,"fail");
-			exit(-1);
-//.blklab4
-blklab4:;
-		//invariant
-		}
 		//const %5 = 0 : int
 		_5 = 0;
 		//ifeq %1, %5 goto blklab2 : int

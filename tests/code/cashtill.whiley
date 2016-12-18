@@ -166,13 +166,13 @@ function toString(Cash c) -> ASCII.string:
     return r
     
 constant Descriptions is [
-    "01c",
-    "05c",
+    "1c",
+    "5c",
     "10c",
     "20c",
     "50c",
-    "$01",
-    "$05",
+    "$1",
+    "$5",
     "$10"
 ]
 

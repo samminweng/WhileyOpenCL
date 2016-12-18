@@ -273,6 +273,7 @@ void free2DArray_int64_t(int64_t** ptr, size_t size){
 	free(ptr);
 	ptr = NULL;
 }
+
 // Flatten 2D array into 1D array
 /// Given 1D array, create an 2D array of given dimensions (n * m) using one chuck of contiguous memory space
 int64_t** create2DArray_int64_t(int64_t* arr, size_t n, size_t m){

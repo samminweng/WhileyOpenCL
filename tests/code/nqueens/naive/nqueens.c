@@ -190,29 +190,6 @@ blklab6:;
 	col = _11;
 	//loop (%0, %4, %5, %6, %7, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37)
 	while(true){
-		//invariant
-		{
-			//fieldload %12 = %0 queens : {int num_solutions,{int c,int r}[] queens}
-			_UPDATE_1DARRAY(_12, nq->queens);
-			//lengthof %13 = %12 : {int c,int r}[]
-			_13 = _12_size;
-			//ifge %1, %13 goto blklab11 : int
-			if(n>=_13){goto blklab11;}
-			//fieldload %14 = %0 queens : {int num_solutions,{int c,int r}[] queens}
-			_UPDATE_1DARRAY(_14, nq->queens);
-			//lengthof %15 = %14 : {int c,int r}[]
-			_15 = _14_size;
-			//ifeq %2, %15 goto blklab10 : int
-			if(dim==_15){goto blklab10;}
-//.blklab11
-blklab11:;
-			//fail
-			fprintf(stderr,"fail");
-			exit(-1);
-//.blklab10
-blklab10:;
-		//invariant
-		}
 		//ifge %4, %2 goto blklab8 : int
 		if(col>=dim){goto blklab8;}
 		//const %16 = true : bool
@@ -225,35 +202,6 @@ blklab10:;
 		i = _17;
 		//loop (%5, %6, %7, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30)
 		while(true){
-			//invariant
-			{
-				//fieldload %18 = %0 queens : {int num_solutions,{int c,int r}[] queens}
-				_UPDATE_1DARRAY(_18, nq->queens);
-				//lengthof %19 = %18 : {int c,int r}[]
-				_19 = _18_size;
-				//ifge %1, %19 goto blklab15 : int
-				if(n>=_19){goto blklab15;}
-				//const %20 = 0 : int
-				_20 = 0;
-				//iflt %6, %20 goto blklab16 : int
-				if(i<_20){goto blklab16;}
-				//fieldload %21 = %0 queens : {int num_solutions,{int c,int r}[] queens}
-				_UPDATE_1DARRAY(_21, nq->queens);
-				//lengthof %22 = %21 : {int c,int r}[]
-				_22 = _21_size;
-				//ifeq %2, %22 goto blklab14 : int
-				if(dim==_22){goto blklab14;}
-//.blklab16
-blklab16:;
-//.blklab15
-blklab15:;
-				//fail
-				fprintf(stderr,"fail");
-				exit(-1);
-//.blklab14
-blklab14:;
-			//invariant
-			}
 			//ifge %6, %1 goto blklab12 : int
 			if(i>=n){goto blklab12;}
 			//fieldload %23 = %0 queens : {int num_solutions,{int c,int r}[] queens}
