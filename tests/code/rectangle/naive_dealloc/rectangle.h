@@ -13,3 +13,5 @@ typedef struct{
 void printf_Rectangle(Rectangle* _rectangle);
 Rectangle* copy_Rectangle(Rectangle* _rectangle);
 void free_Rectangle(Rectangle* _rectangle);
+Rectangle* _updateRec_(Rectangle* rec, _DECL_DEALLOC_PARAM(rec), Point* p, _DECL_DEALLOC_PARAM(p));
+int main(int argc, char** args);

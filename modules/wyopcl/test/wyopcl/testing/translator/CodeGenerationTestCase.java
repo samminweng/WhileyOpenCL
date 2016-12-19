@@ -52,8 +52,8 @@ public class CodeGenerationTestCase {
 	@Parameterized.Parameters(name = "{index}:{0}")
 	public static Collection<String> testCases() {
 		return Arrays.asList(new String[] { 
-				/*"rectangle",
-				"swap",
+				"rectangle",
+				/*"swap",
 				"reverse",
 				"mergesort",
 				"bubblesort",

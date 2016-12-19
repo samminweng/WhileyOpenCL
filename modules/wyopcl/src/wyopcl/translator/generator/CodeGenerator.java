@@ -962,7 +962,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Get lhs type
 			Type struct_type = stores.getRawType(update.target(0), function);
 			if (struct_type instanceof Type.Array
-					|| stores.isAliasedIntArrayType((Type.Union)struct_type)) {
+					|| stores.isAliasedIntArrayType(struct_type)) {
 				// Iterates operands to increase the depths.
 				for (int i = 0; i < update.operands().length - 1; i++) {
 					lhs += "[" + stores.getVar(update.operand(i), function) + "]";
