@@ -141,7 +141,7 @@ int main(int argc, char** args){
 		println_s(r, r_size);
 	}
 	//return
-	if(r != NULL){fclose(r); r = NULL;}
+	_DEALLOC(r);
 	_DEALLOC(_2);
 	_DEALLOC(_3);
 	_DEALLOC(_4);

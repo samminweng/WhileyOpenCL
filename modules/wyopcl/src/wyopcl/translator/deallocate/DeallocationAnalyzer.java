@@ -100,8 +100,12 @@ public class DeallocationAnalyzer extends Analyzer {
 					String var = stores.getVar(r, function);
 					// Check if var is Console
 					if(var_type instanceof Type.Nominal){
-						String nominal = ((Type.Nominal)var_type).name().name();
-						if(nominal.equals("Console")){
+						Type.Nominal nominal = ((Type.Nominal)var_type);
+						if(nominal.toString().equals("whiley/lang/ASCII:string")){
+							// Release the string (an integer array)
+							statements.add(indent + preDealloc(var, var_type, stores));
+							continue;
+						}else if(nominal.name().name().equals("Console")){
 							// Skip deallocation as they are allocated by system
 							continue;
 						}else{
