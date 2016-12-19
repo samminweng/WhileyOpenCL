@@ -54,9 +54,12 @@ public final class BaseTestUtil {
 	final File logfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "log.txt");
 	// Util.c file
 	final File utilcfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "Util.c");
+	// WyRT.c file stores built-in functions at WyRT runtime
+	final File wyrtcfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "WyRT.c");
 	// Util.h file
 	final File utilhfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "Util.h");
-	
+	// WyRT.h file 
+	final File wyrthfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "WyRT.h");
 	
 	Process p;
 
@@ -287,7 +290,7 @@ public final class BaseTestUtil {
 			String path = System.getenv("PATH");// Get PATH environment variable.
 			if (path.contains("MinGW")) {
 				// Check the exit value. If not 0, the compilation has errors.
-				assertEquals(runCmd("cmd /c gcc -std=c11 -D DEBUG *.c  -o " + testcase + ".out", destDir, isWriteOut), 0);
+				assertEquals(runCmd("cmd /c gcc -std=c11 -D DEBUG *.c -o " + testcase + ".out", destDir, isWriteOut), 0);
 			} /*else if (path.contains("cygwin")) {
 				// Gcc is a link (Windows command does not get it), so call its actual name (i.e. gcc-3 or gcc-4)
 				assertEquals(runCmd("cmd /c gcc-4 -std=c11 -D DEBUG *.c  -o " + testcase + ".out", destDir), 0);
@@ -301,7 +304,7 @@ public final class BaseTestUtil {
 			assertEquals(runCmd("cmd /c " + testcase + ".out", destDir, isWriteOut), 0);
 		} else {
 			// Use C11 standard to Compile the C program into *.out and place it in current working directory
-			assertEquals(runCmd("gcc -std=c11 -D DEBUG Util.c " + testcase + ".c -o " + testcase + ".out", destDir, isWriteOut), 0);
+			assertEquals(runCmd("gcc -std=c11 -D DEBUG Util.c WyRT.c "+testcase+".c -o " + testcase + ".out", destDir, isWriteOut), 0);
 			// Run the generated out file
 			assertEquals(runCmd("./" + testcase + ".out", destDir, isWriteOut), 0);
 		}
@@ -424,11 +427,16 @@ public final class BaseTestUtil {
 			// Copy source.whiley to destDir folder
 			Files.copy(whileyFile, Paths.get(destDir + File.separator + testcase + ".whiley"));
 
-			// 2. Copy Util.c and Util.h from parent folder to destDir
+			// 2. Copy Util.c/WyRT.c and Util.h/WyRT.h to destDir
 			Files.copy(utilcfile.toPath(),
 					Paths.get(destDir + File.separator + "Util.c"));
+			Files.copy(wyrtcfile.toPath(),
+					Paths.get(destDir + File.separator + "WyRT.c"));
 			Files.copy(utilhfile.toPath(),
 					Paths.get(destDir + File.separator + "Util.h"));
+			Files.copy(wyrthfile.toPath(),
+					Paths.get(destDir + File.separator + "WyRT.h"));
+			
 			// (Optional) Copy 'small.in' to destDir  
 			if(testcase.equals("lz77") || testcase.equals("lz77_2")){
 				// 'small.in

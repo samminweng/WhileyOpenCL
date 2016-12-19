@@ -52,8 +52,8 @@ public class CodeGenerationTestCase {
 	@Parameterized.Parameters(name = "{index}:{0}")
 	public static Collection<String> testCases() {
 		return Arrays.asList(new String[] { 
-				"rectangle",
-				/*"swap",
+				/*"rectangle",
+				"swap",
 				"reverse",
 				"mergesort",
 				"bubblesort",
@@ -78,7 +78,8 @@ public class CodeGenerationTestCase {
 				"FunctionOverload", // Define types and functions with the same name 
 				"FunctionOverload2", // Define two functions with the same name
 				*/
-				"ArrayAppend", // Test 'append' function at WyIL runtime library
+				"ArrayAppend", // Test 'append' function
+				"ArrayAppend2", // Test 'append' function at WyRT runtime library
 				/*"lz77",
 				"lz77_2",
 				"fileread", //Read 'feep.pbm' as a byte array

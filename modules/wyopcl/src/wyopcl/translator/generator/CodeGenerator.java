@@ -1155,10 +1155,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statements.add(indent+ lhs + " = (BYTE)"+rhs+";");
 				break;
 			case "append":
-				// Append  array to another array, e.g. 'invoke (%13) = (%2, %14) whiley/lang/Array:append'
+				// Append an array to another array, e.g. 'invoke (%13) = (%2, %14) whiley/lang/Array:append'
 				String rhs_arr  = stores.getVar(code.operand(0), function);
 				String rhs1_arr = stores.getVar(code.operand(1), function);
-				statements.add(indent+ lhs + " = ArrayAppend("+rhs_arr+", "+rhs1_arr+");");
+				// Call built-in ArrayAppend function in WyRT.c
+				statements.add(indent+ lhs + " = ArrayAppend(_1DARRAY_PARAM("+rhs_arr+"), _1DARRAY_PARAM("+rhs1_arr+"), "
+												+ "_1DARRAYSIZE_PARAM_CALLBYREFERENCE("+lhs+"));");
 				break;
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);
