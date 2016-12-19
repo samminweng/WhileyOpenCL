@@ -164,8 +164,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					// Declare array variable
 					int dimension = stores.getArrayDimension(type);
 					declarations.add(indent + "_DECL_" + dimension + "DARRAY(" + var + ");");
-				} else if((type instanceof Type.Union && stores.isUnionOfArrayIntType(type))  
-						|| (type instanceof Type.Nominal && stores.isUnionOfArrayIntType(type))){
+				} else if((type instanceof Type.Union && stores.isAliasedIntArrayType(type))  
+						|| (type instanceof Type.Nominal && stores.isAliasedIntArrayType(type))){
 					// Check if union type is null|int[] or nomial type is aliased to int[]
 					declarations.add(indent + "_DECL_1DARRAY(" + var + ");");
 				} else if(type instanceof Type.Nominal && ((Type.Nominal)type).name().name().equals("string")){
@@ -274,7 +274,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						// Declare a 'size_t' size variable
 						parameters.add(elem_type + " " + var + ", size_t " + var + "_size");
 					}
-				} else if (stores.isUnionOfArrayIntType(parameter_type)){
+				} else if (stores.isAliasedIntArrayType(parameter_type)){
 					// Pass the parameter along with size variable
 					parameters.add("_DECL_1DARRAY_PARAM(" + var + ")");
 				} else {
@@ -301,7 +301,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					int dimension = stores.getArrayDimension(arr_type);
 					// Declare the call-by-reference size variable for output array, e.g. 'size_t* a_size' 
 					parameters.add("_DECL_"+dimension+"DARRAYSIZE_PARAM_CALLBYREFERENCE");
-				}else if(stores.isUnionOfArrayIntType(ret_type)){
+				}else if(stores.isAliasedIntArrayType(ret_type)){
 					// The return type is aliased to array type, e.g. string 
 					// Pass the size variable as a reference
 					parameters.add("_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE");
@@ -465,7 +465,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		if (!stores.isCompoundType(lhs_type)) {
 			Type rhs_type = stores.getRawType(code.operand(0), function);
 			// Special case for the assignment of int[]|null
-			if(lhs_type instanceof Type.Union && stores.isUnionOfArrayIntType((Type.Union)lhs_type)){
+			if(stores.isAliasedIntArrayType(lhs_type)){
 				if (isCopyEliminated) {
 					// Have in-place update 
 					return indent + "_UPDATE_1DARRAY(" + lhs + ", " + rhs + ");";
@@ -530,7 +530,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						return indent + "_COPY_1DARRAY_STRUCT(" + lhs + ", " + rhs + ", " + struct + ");";
 					}
 				}
-			}else {
+			} else if(stores.isAliasedIntArrayType(lhs_type)){
+				// The type is alised to an integer array, e.g. string 
+				if (isCopyEliminated) {
+					return indent + "_UPDATE_1DARRAY(" + lhs + ", " + rhs + ");";
+				} else {
+					return indent + "_COPY_1DARRAY_int64_t(" + lhs + ", " + rhs + ");";
+				}
+			} else {
 				// Structure type
 				if (isCopyEliminated) {
 					return indent + lhs + " = " + rhs + ";";
@@ -834,8 +841,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				parameters.add(parameter);
 			} else if (stores.isIntType(parameter_type)) {
 				parameters.add(parameter);
-			} else if ((parameter_type instanceof Type.Union || parameter_type instanceof Type.Nominal) 
-					&& stores.isUnionOfArrayIntType(parameter_type)){
+			} else if (stores.isAliasedIntArrayType(parameter_type)){
 				// Type is aliased to an integer array
 				if (isCopyEliminated) {
 					// Pass the parameter without copy
@@ -955,8 +961,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String lhs = stores.getVar(update.target(0), function);
 			// Get lhs type
 			Type struct_type = stores.getRawType(update.target(0), function);
-			if (struct_type instanceof Type.Array ||
-				(struct_type instanceof Type.Union && stores.isUnionOfArrayIntType((Type.Union)struct_type))) {
+			if (struct_type instanceof Type.Array
+					|| stores.isAliasedIntArrayType((Type.Union)struct_type)) {
 				// Iterates operands to increase the depths.
 				for (int i = 0; i < update.operands().length - 1; i++) {
 					lhs += "[" + stores.getVar(update.operand(i), function) + "]";
@@ -1002,19 +1008,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				if (invoke.targets().length > 0) {
 					lhs = stores.getVar(invoke.target(0), function);
 					type = stores.getRawType(invoke.target(0), function);
-					/*if (type instanceof Type.Array) {
-						// Adds the code to propagate size variable
-						for (int operand : invoke.operands()) {
-							Type op_type = stores.getRawType(operand, function);
-							if (op_type instanceof Type.Array) {
-								String param = stores.getVar(operand, function);
-								// Propagate the size of return array from input
-								// array.
-								statement.add(indent + "_UPDATE_" + stores.getArrayDimension(op_type) + "DARRAY_SIZE("
-										+ lhs + ", " + param + ");");
-							}
-						}
-					}*/
 				} else {
 					lhs = null;
 				}

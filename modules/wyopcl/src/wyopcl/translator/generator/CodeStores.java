@@ -421,7 +421,7 @@ public class CodeStores {
 	 * @param union
 	 * @return true
 	 */
-	public boolean isUnionOfArrayIntType(Type type){
+	public boolean isAliasedIntArrayType(Type type){
 		// Union type
 		if(type instanceof Type.Union){
 			Type.Union union = (Type.Union)type;
@@ -480,62 +480,68 @@ public class CodeStores {
 		// Check if type aliased to INT type.
 		if(type instanceof Type.Array){
 			return true;
-		}else{
-			if(type instanceof Type.Null){
-				return false;
-			}
-			
-			// Byte type is not a compound type
-			if(type instanceof Type.Byte){
-				return false;
-			}
-			
-			if(isIntType(type) || type instanceof Type.FunctionOrMethod ||
-					type instanceof Type.Bool){
-				return false;			
-			}
-			
-			if(type instanceof Type.Record){
-				Type.Record record = (Type.Record)type;
-				// Check if the variable contains 'printf' field. 
-				long nonePrintFields = record.fields().keySet().stream()
-						.filter(f -> !f.contains("print") && !f.contains("println") && !f.contains("print_s") && !f.contains("println_s") )
-						.count();
-
-				// If NOT a printf field, then add ownership.
-				if(nonePrintFields>0){
-					return true;
-				}else{
-					return false;
-				}
-			}
-			
-			if(type instanceof Type.Nominal){
-				// Get nominal type
-				Optional<wyil.lang.WyilFile.Type> nominal = Optional.ofNullable(getUserDefinedType(type));
-				if(nominal.isPresent()){
-					return isCompoundType(nominal.get().type());
-				}else{
-					return false;
-				}
-			}
-			
-			if(type instanceof Type.Union){
-				// Check if the union type is an integer array
-				if(isUnionOfArrayIntType((Type.Union)type)){
-					return false; // Not a compound type
-				}
-				
-				// The record may be null or non-null
-				Optional<Record> record = Optional.ofNullable(getRecordType((Type.Union)type));
-				if(record.isPresent()){
-					return isCompoundType(record.get());
-				}else{
-					return true;
-				}
-			}
-			throw new RuntimeException("Not Implemented");
 		}
+		if(type instanceof Type.Null){
+			return false;
+		}
+
+		// Byte type is not a compound type
+		if(type instanceof Type.Byte){
+			return false;
+		}
+
+		if(isIntType(type) || type instanceof Type.FunctionOrMethod ||
+				type instanceof Type.Bool){
+			return false;			
+		}
+
+		if(type instanceof Type.Record){
+			Type.Record record = (Type.Record)type;
+			// Check if the variable contains 'printf' field. 
+			long nonePrintFields = record.fields().keySet().stream()
+					.filter(f -> !f.contains("print") && !f.contains("println") && !f.contains("print_s") && !f.contains("println_s") )
+					.count();
+
+			// If NOT a printf field, then add ownership.
+			if(nonePrintFields>0){
+				return true;
+			}else{
+				return false;
+			}
+		}
+
+		if(type instanceof Type.Nominal){				
+			// Special case
+			Type.Nominal nominal = (Type.Nominal)type;
+			if(nominal.name().toString().equals("whiley/lang/ASCII:string")){
+				return true; // A string is an integer array
+			}
+
+			// Get nominal type
+			Optional<wyil.lang.WyilFile.Type> user_type = Optional.ofNullable(getUserDefinedType(type));
+			if(user_type.isPresent()){
+				return isCompoundType(user_type.get().type());
+			}else{
+				return false;
+			}
+		}
+
+		if(type instanceof Type.Union){
+			// Check if the union type is an integer array
+			if(isAliasedIntArrayType((Type.Union)type)){
+				return false; // Not a compound type
+			}
+
+			// The record may be null or non-null
+			Optional<Record> record = Optional.ofNullable(getRecordType((Type.Union)type));
+			if(record.isPresent()){
+				return isCompoundType(record.get());
+			}else{
+				return true;
+			}
+		}
+		throw new RuntimeException("Not Implemented");
+		
 	}
 	
 	/**

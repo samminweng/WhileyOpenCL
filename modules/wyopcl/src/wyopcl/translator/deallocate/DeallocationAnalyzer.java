@@ -762,6 +762,9 @@ public class DeallocationAnalyzer extends Analyzer {
 					throw new RuntimeException("Not implemented");
 				}
 			}
+		}else if (stores.isAliasedIntArrayType(type)){
+			// Release an aliased array type, e.g. a string
+			return "_DEALLOC(" + var + ");";
 		} else if (type instanceof Type.Record) {
 			name = CodeGeneratorHelper.translateType(type, stores).replace("*", "");
 			return "_DEALLOC_STRUCT(" + var + ", " + name + ");";
