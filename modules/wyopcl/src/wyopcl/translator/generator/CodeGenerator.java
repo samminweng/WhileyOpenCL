@@ -920,9 +920,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Get the return type
 			Type ret_type = stores.getRawType(code.target(0), function);
 			// Check if the return is an array 
-			if(ret_type instanceof Type.Array){
+			if(ret_type instanceof Type.Array || stores.isAliasedIntArrayType(ret_type)){
 				// Get array dimension
-				int dimension = stores.getArrayDimension((Type.Array)ret_type);
+				int dimension = stores.getArrayDimension(ret_type);
 				// Get return variable
 				String ret_var = stores.getVar(code.target(0), function);
 				// Pass the call-by-ref size variable to the function call
@@ -1502,20 +1502,24 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Add 'exit(0);'
 				statements.add(indent + "exit(0);");
 			} else {
-				if (code.operands().length == 0) {
-					// Add the code to deallocate all variables.
-					this.deallocatedAnalyzer.ifPresent(a -> {
-						statements.addAll(a.preDealloc(code, function, stores));
-					});
-					statements.add(indent + "return;");
-				}else if(code.operands().length == 1){
-					// Get return variable
-					String ret = stores.getVar(code.operand(0), function);
-					statements.add(indent + "return " + ret + ";");
-				}else {
-						
-					throw new RuntimeException("Not implemented for return statement in a method");
+				// Check if the return type matches with method declaration
+				if(function.type().returns().size() == code.operands().length){
+					if (code.operands().length == 0) {
+						// Add the code to deallocate all variables.
+						this.deallocatedAnalyzer.ifPresent(a -> {
+							statements.addAll(a.preDealloc(code, function, stores));
+						});
+						statements.add(indent + "return;");
+					}else if(code.operands().length == 1){
+						// Get return variable
+						String ret = stores.getVar(code.operand(0), function);
+						statements.add(indent + "return " + ret + ";");
+					}else {						
+						throw new RuntimeException("Not implemented for return statement in a method");
+					}
 				}
+				
+				
 			}
 		}
 

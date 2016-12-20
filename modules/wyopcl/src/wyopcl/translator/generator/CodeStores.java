@@ -329,11 +329,18 @@ public class CodeStores {
 	 */
 	public int getArrayDimension(Type type){
 		int dimension = 0;
-		// Compute array dimension.
-		while(type != null && type instanceof Type.Array){
-			type = ((Type.Array)type).element();
-			dimension++;
+		
+		if(type instanceof Type.Array){
+			// Compute array dimension.
+			while(type != null && type instanceof Type.Array){
+				type = ((Type.Array)type).element();
+				dimension++;
+			}
+		}else if(isAliasedIntArrayType(type)){
+			// Check if the type is aliased to integer array type 
+			dimension = 1;
 		}
+		
 
 		return dimension;
 	}
@@ -528,8 +535,8 @@ public class CodeStores {
 
 		if(type instanceof Type.Union){
 			// Check if the union type is an integer array
-			if(isAliasedIntArrayType((Type.Union)type)){
-				return false; // Not a compound type
+			if(isAliasedIntArrayType(type)){
+				return true; // Not a compound type
 			}
 
 			// The record may be null or non-null
