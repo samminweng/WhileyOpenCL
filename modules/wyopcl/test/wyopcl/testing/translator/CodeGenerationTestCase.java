@@ -79,6 +79,7 @@ public class CodeGenerationTestCase {
 				"FunctionOverload2", // Define two functions with the same name
 				"ArrayAppend", // Test 'append' function
 				"ArrayAppend2", // Test 'append' function at WyRT runtime library
+				"ArrayAppend3", // Test 'toString' function in cashtill test case
 				"lz77",
 				"lz77_2",
 				"fileread", //Read 'feep.pbm' as a byte array
