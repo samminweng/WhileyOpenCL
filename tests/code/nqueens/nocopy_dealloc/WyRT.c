@@ -1,6 +1,15 @@
 // This file stores built-in functions in wyrt modules.
 #include "WyRT.h"
-int64_t* ArrayAppend(_DECL_1DARRAY_PARAM(lhs), _DECL_1DARRAY_PARAM(rhs), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+
+int64_t* Int_toString(int64_t item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_1DARRAY(r);
+	// Create 1D array with size of 1 and value of 'item'.
+	_NEW_1DARRAY_int64_t(r, 1, '0'+item);
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(r);
+	return r;
+}
+
+int64_t* Array_Append(_DECL_1DARRAY_PARAM(lhs), _DECL_1DARRAY_PARAM(rhs), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
 	_DECL_DEALLOC(_2);
 	_DECL_1DARRAY(rs);

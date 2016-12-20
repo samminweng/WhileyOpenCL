@@ -1120,7 +1120,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statements.add("_SLICE_ARRAY(" + lhs + ", " + array + ", " + start + ", " + end + ");");
 				break;
 			case "toString":
-				statements.add(indent + lhs + " = " + rhs + ";");
+				// Convert an integer to a string (an integer array of ASCII code)
+				// Call WyRT built-in 'InttoString' function
+				statements.add(indent + lhs + " = Int_toString(" + rhs + ", _1DARRAYSIZE_PARAM_CALLBYREFERENCE("+lhs+"));");
 				break;
 			case "abs":
 				// Use 'llabs' function to return the absolute value of 'rhs'
@@ -1159,7 +1161,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				String rhs_arr  = stores.getVar(code.operand(0), function);
 				String rhs1_arr = stores.getVar(code.operand(1), function);
 				// Call built-in ArrayAppend function in WyRT.c
-				statements.add(indent+ lhs + " = ArrayAppend(_1DARRAY_PARAM("+rhs_arr+"), _1DARRAY_PARAM("+rhs1_arr+"), "
+				statements.add(indent+ lhs + " = Array_Append(_1DARRAY_PARAM("+rhs_arr+"), _1DARRAY_PARAM("+rhs1_arr+"), "
 												+ "_1DARRAYSIZE_PARAM_CALLBYREFERENCE("+lhs+"));");
 				break;
 			default:
