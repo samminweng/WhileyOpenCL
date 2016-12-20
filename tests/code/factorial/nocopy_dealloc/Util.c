@@ -236,6 +236,12 @@ int64_t** create2DArray_int64_t_empty(size_t n, size_t m){
 		exit(-2);
 	}
 
+	// Flatten the allocated memory to a list of pointers
+	for(size_t i=0;i<n;i++){
+		// Compute the address and assign the address to each pointer
+		_2DArray[i] = (*_2DArray+ i* m);
+	}
+
 	return _2DArray;
 }
 
@@ -250,7 +256,7 @@ int64_t** create2DArray_int64_t(int64_t* arr, size_t n, size_t m){
 	// Flatten the allocated memory to a list of pointers
 	for(size_t i=0;i<n;i++){
 		// Compute the address and assign the address to each pointer 
-		_2DArray[i] = (*_2DArray+ i* m);
+		//_2DArray[i] = (*_2DArray+ i* m);
 		// Copy the input array 'arr' to each sub-array
 		memcpy(_2DArray[i], arr, r_size);
 	}
@@ -264,7 +270,7 @@ int64_t** copy2DArray_int64_t(int64_t **arr, size_t n, size_t m){
 	size_t r_size = m*sizeof(int64_t);
 	for(size_t i=0;i<n;i++){
 		// Compute the address and assign the address to each pointer 
-		_2DArray[i] = (*_2DArray+ i* m);
+		//_2DArray[i] = (*_2DArray+ i* m);
 		memcpy(_2DArray[i], arr[i], r_size);
 	}
 	return _2DArray;

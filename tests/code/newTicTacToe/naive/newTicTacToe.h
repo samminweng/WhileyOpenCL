@@ -12,3 +12,6 @@ typedef struct{
 void printf_Board(Board* _board);
 Board* copy_Board(Board* _board);
 void free_Board(Board* _board);
+Board* _EmptyBoard_();
+int64_t _countOf_(_DECL_1DARRAY_PARAM(pieces), int64_t s);
+int main(int argc, char** args);
