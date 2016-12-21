@@ -1481,11 +1481,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				String ret_var = stores.getVar(code.operand(0), function);
 				
 				// Get the return type
-				Type ret_type = code.type(0);
-				if(ret_type instanceof Type.Array){
-					Type.Array arr_type = (Type.Array)ret_type;
+				Type ret_type = stores.getRawType(code.operand(0), function);
+				if(ret_type instanceof Type.Array || stores.isAliasedIntArrayType(ret_type)){
+					//Type.Array arr_type = (Type.Array)ret_type;
 					// Get the array dimension
-					int dimension = stores.getArrayDimension(arr_type);
+					int dimension = stores.getArrayDimension(ret_type);
 					// Propagate the size of output array to passing call-by-reference parameter
 					statements.add(indent + "_UPDATE_"+dimension+"DARRAYSZIE_PARAM_CALLBYREFERENCE(" + ret_var + ");");
 				}
@@ -1511,9 +1511,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						});
 						statements.add(indent + "return;");
 					}else if(code.operands().length == 1){
-						// Get return variable
-						String ret = stores.getVar(code.operand(0), function);
-						statements.add(indent + "return " + ret + ";");
+						// Get return variable		
+						String ret_var = stores.getVar(code.operand(0), function);
+						// Get the return type
+						Type ret_type = stores.getRawType(code.operand(0), function);
+						if(ret_type instanceof Type.Array || stores.isAliasedIntArrayType(ret_type)){
+							//Type.Array arr_type = (Type.Array)ret_type;
+							// Get the array dimension
+							int dimension = stores.getArrayDimension(ret_type);
+							// Propagate the size of output array to passing call-by-reference parameter
+							statements.add(indent + "_UPDATE_"+dimension+"DARRAYSZIE_PARAM_CALLBYREFERENCE(" + ret_var + ");");
+						}
+						
+						statements.add(indent + "return " + ret_var + ";");
 					}else {						
 						throw new RuntimeException("Not implemented for return statement in a method");
 					}

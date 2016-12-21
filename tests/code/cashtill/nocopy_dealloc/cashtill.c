@@ -406,6 +406,7 @@ int64_t* _calculateChange_(_DECL_1DARRAY_PARAM(till), _DECL_DEALLOC_PARAM(till),
 	_DEALLOC(_12);
 	_DEALLOC(_17);
 	_DEALLOC(_18);
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(_7);
 	return _7;
 	//goto blklab26
 	goto blklab26;
@@ -486,6 +487,7 @@ blklab25:;
 		_DEALLOC(_12);
 		_DEALLOC(_17);
 		_DEALLOC(_18);
+		_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(chg);
 		return chg;
 //.blklab30
 blklab30:;
@@ -994,6 +996,7 @@ blklab39:;
 //.blklab37
 blklab37:;
 	//return %1
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(till);
 	return till;
 	//return
 }
