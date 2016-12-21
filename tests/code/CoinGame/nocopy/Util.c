@@ -51,6 +51,11 @@ BYTE* create1DArray_BYTE(BYTE value, size_t arr_size){
 
 // Copy an array of BYTE
 BYTE* copy1DArray_BYTE(BYTE *arr, size_t size){
+	// Check if the array is NULL. If so, return NULL.
+	if(arr == NULL){
+		return NULL;
+	}
+
 	BYTE *ptr = NULL;
 	ptr = (BYTE*)malloc(size*sizeof(BYTE));
 	if(ptr == NULL){
@@ -64,6 +69,11 @@ BYTE* copy1DArray_BYTE(BYTE *arr, size_t size){
 
 //Copy an integer array
 int64_t* copy1DArray_int64_t(int64_t *arr, size_t size){
+	// Check if the array is NULL. If so, return NULL.
+	if(arr == NULL){
+		return NULL;
+	}
+
 	int64_t *ptr = NULL;
 	//Clone all the values from board array due to immutable Whiley value
 	ptr = (int64_t*) malloc(size * sizeof(int64_t));
@@ -265,6 +275,11 @@ int64_t** create2DArray_int64_t(int64_t* arr, size_t n, size_t m){
 
 /// Clone 2D flat array with given array size.
 int64_t** copy2DArray_int64_t(int64_t **arr, size_t n, size_t m){
+	// Check if the array is NULL. If so, return NULL.
+	if(arr == NULL){
+		return NULL;
+	}
+	
 	int64_t** _2DArray = create2DArray_int64_t_empty(n, m);
 	
 	size_t r_size = m*sizeof(int64_t);

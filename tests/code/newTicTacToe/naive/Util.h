@@ -298,7 +298,7 @@ void writeAll(FILE *file, BYTE* arr, size_t arr_size);
 *
 */
 // Add deallocation flag for a given variable
-#define _ADD_DEALLOC(a) a##_dealloc = true;
+#define _ADD_DEALLOC(a) if(a != NULL) {a##_dealloc = true;}else{a##_dealloc = false;}
 // Take out a variable's deallocation flag
 #define _REMOVE_DEALLOC(a) a##_dealloc = false;
 // Transfer one variable's deallocation flag to another
