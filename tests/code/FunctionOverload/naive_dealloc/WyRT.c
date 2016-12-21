@@ -3,8 +3,25 @@
 
 int64_t* Int_toString(int64_t item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(r);
-	// Create 1D array with size of 1 and value of 'item'.
-	_NEW_1DARRAY_int64_t(r, 1, '0'+item);
+
+	int64_t value = item;
+	size_t i=0;
+	// Calculate the length of item
+	do{
+		// Increment the size
+		r_size++;
+	}while((value = value/10)>0);
+
+	// Create an integer array
+	r = malloc(r_size*sizeof(int64_t));
+	i=r_size;
+	// Convert an integer to 'r' integer array
+	do{
+		i--;
+		// Get remain
+		r[i] = item%10+'0';
+	}while((item = item/10)>0);
+
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(r);
 	return r;
 }

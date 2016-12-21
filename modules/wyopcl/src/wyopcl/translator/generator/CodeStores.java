@@ -336,7 +336,7 @@ public class CodeStores {
 				type = ((Type.Array)type).element();
 				dimension++;
 			}
-		}else if(isAliasedIntArrayType(type)){
+		}else if(isIntArrayOrAliasedType(type)){
 			// Check if the type is aliased to integer array type 
 			dimension = 1;
 		}
@@ -410,13 +410,20 @@ public class CodeStores {
 	 * @param type
 	 * @return
 	 */
-	public Type getArrayElementType(Type.Array type){
-		Type elmType = type.element();
-		if(elmType instanceof Type.Array){
-			return getArrayElementType((Type.Array)elmType);
+	public Type getArrayElementType(Type type){
+		if(type instanceof Type.Array){
+			Type elmType = ((Type.Array)type).element();
+			if(elmType instanceof Type.Array){
+				return getArrayElementType((Type.Array)elmType);
+			}	
+			return elmType;
+		}
+		if(isIntArrayOrAliasedType(type)){
+			return Type.T_INT; // The element type of aliased integer array is integer type
 		}
 		
-		return elmType;
+		// For other cases, return null.
+		return null;
 	}
 	
 	
@@ -428,7 +435,11 @@ public class CodeStores {
 	 * @param union
 	 * @return true
 	 */
-	public boolean isAliasedIntArrayType(Type type){
+	public boolean isIntArrayOrAliasedType(Type type){
+		if(type instanceof Type.Array){
+			return true;
+		}
+		
 		// Union type
 		if(type instanceof Type.Union){
 			Type.Union union = (Type.Union)type;
@@ -535,7 +546,7 @@ public class CodeStores {
 
 		if(type instanceof Type.Union){
 			// Check if the union type is an integer array
-			if(isAliasedIntArrayType(type)){
+			if(isIntArrayOrAliasedType(type)){
 				return true; // Not a compound type
 			}
 
