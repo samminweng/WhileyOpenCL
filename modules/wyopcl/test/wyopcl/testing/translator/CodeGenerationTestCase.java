@@ -52,7 +52,7 @@ public class CodeGenerationTestCase {
 	@Parameterized.Parameters(name = "{index}:{0}")
 	public static Collection<String> testCases() {
 		return Arrays.asList(new String[] { 
-				"rectangle",
+				/*"rectangle",
 				"swap",
 				"reverse",
 				"mergesort",
@@ -79,15 +79,15 @@ public class CodeGenerationTestCase {
 				"FunctionOverload2", // Define two functions with the same name
 				"ArrayAppend", // Test 'append' function
 				"ArrayAppend2", // Test 'append' function at WyRT runtime library
-				"ArrayAppend3", // Test 'toString' function in cashtill test case
+				"ArrayAppend3", // Test 'toString' function in cashtill test case */
 				"cashtill",
-				"lz77",
+				/*"lz77",
 				"lz77_2",
 				"fileread", //Read 'feep.pbm' as a byte array
 				"fileread2",// Read 'feep.pbm' and output the array to console 
 				"SobelEdge1", // Read 'feep.pbm', detect the edges and output the resulting array
 				"SobelEdge2", // Similar to 'SobelEdge1' with additional 'image' structure
-				
+				*/
 		});
 	}
 

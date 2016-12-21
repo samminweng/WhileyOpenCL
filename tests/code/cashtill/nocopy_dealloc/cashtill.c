@@ -1028,6 +1028,30 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_20);
 	_DECL_DEALLOC(_20);
 	int64_t _21 = 0;
+	_DECL_1DARRAY(_22);
+	_DECL_DEALLOC(_22);
+	_DECL_1DARRAY(_23);
+	_DECL_DEALLOC(_23);
+	int64_t _24 = 0;
+	_DECL_1DARRAY(_25);
+	_DECL_DEALLOC(_25);
+	int64_t _26 = 0;
+	_DECL_1DARRAY(_27);
+	_DECL_DEALLOC(_27);
+	_DECL_1DARRAY(_28);
+	_DECL_DEALLOC(_28);
+	int64_t _29 = 0;
+	_DECL_1DARRAY(_30);
+	_DECL_DEALLOC(_30);
+	int64_t _31 = 0;
+	_DECL_1DARRAY(_32);
+	_DECL_DEALLOC(_32);
+	_DECL_1DARRAY(_33);
+	_DECL_DEALLOC(_33);
+	int64_t _34 = 0;
+	_DECL_1DARRAY(_35);
+	_DECL_DEALLOC(_35);
+	int64_t _36 = 0;
 	//const %2 = 5 : int
 	_2 = 5;
 	//const %3 = 3 : int
@@ -1105,6 +1129,90 @@ int main(int argc, char** args){
 	_DEALLOC(till);
 	_UPDATE_1DARRAY(till, _17);
 	_TRANSFER_DEALLOC(till, _17);
+	//const %24 = 5 : int
+	_24 = 5;
+	//newlist %25 = (%24) : int[]
+	_DEALLOC(_25);
+	_NEW_1DARRAY_int64_t(_25, 1, 0);
+	_25[0] = _24; 
+	_ADD_DEALLOC(_25);
+	//invoke (%23) = (%25) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
+	{
+		_DEALLOC(_23);
+		_23 = _Cash_1_(_1DARRAY_PARAM(_25), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
+		_RETAIN_DEALLOC(_25, "false-false-false" , "Cash");
+		_ADD_DEALLOC(_23);
+	}
+	//const %26 = 105 : int
+	_26 = 105;
+	//invoke (%22) = (%0, %1, %23, %26) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
+	{
+		_DEALLOC(_22);
+		_22 = _buy_(stdout, _1DARRAY_PARAM(till), false, _1DARRAY_PARAM(_23), false, _26, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
+		_RESET_DEALLOC(till, "true-true-false" , "buy");
+		_RETAIN_DEALLOC(_23, "false-false-false" , "buy");
+		_ADD_DEALLOC(_22);
+	}
+	//assign %1 = %22  : int[]
+	_DEALLOC(till);
+	_UPDATE_1DARRAY(till, _22);
+	_TRANSFER_DEALLOC(till, _22);
+	//const %29 = 7 : int
+	_29 = 7;
+	//newlist %30 = (%29) : int[]
+	_DEALLOC(_30);
+	_NEW_1DARRAY_int64_t(_30, 1, 0);
+	_30[0] = _29; 
+	_ADD_DEALLOC(_30);
+	//invoke (%28) = (%30) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
+	{
+		_DEALLOC(_28);
+		_28 = _Cash_1_(_1DARRAY_PARAM(_30), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
+		_RETAIN_DEALLOC(_30, "false-false-false" , "Cash");
+		_ADD_DEALLOC(_28);
+	}
+	//const %31 = 5 : int
+	_31 = 5;
+	//invoke (%27) = (%0, %1, %28, %31) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
+	{
+		_DEALLOC(_27);
+		_27 = _buy_(stdout, _1DARRAY_PARAM(till), false, _1DARRAY_PARAM(_28), false, _31, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
+		_RESET_DEALLOC(till, "true-true-false" , "buy");
+		_RETAIN_DEALLOC(_28, "false-false-false" , "buy");
+		_ADD_DEALLOC(_27);
+	}
+	//assign %1 = %27  : int[]
+	_DEALLOC(till);
+	_UPDATE_1DARRAY(till, _27);
+	_TRANSFER_DEALLOC(till, _27);
+	//const %34 = 6 : int
+	_34 = 6;
+	//newlist %35 = (%34) : int[]
+	_DEALLOC(_35);
+	_NEW_1DARRAY_int64_t(_35, 1, 0);
+	_35[0] = _34; 
+	_ADD_DEALLOC(_35);
+	//invoke (%33) = (%35) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
+	{
+		_DEALLOC(_33);
+		_33 = _Cash_1_(_1DARRAY_PARAM(_35), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
+		_RETAIN_DEALLOC(_35, "false-false-false" , "Cash");
+		_ADD_DEALLOC(_33);
+	}
+	//const %36 = 305 : int
+	_36 = 305;
+	//invoke (%32) = (%0, %1, %33, %36) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
+	{
+		_DEALLOC(_32);
+		_32 = _buy_(stdout, _1DARRAY_PARAM(till), false, _1DARRAY_PARAM(_33), false, _36, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_32));
+		_RESET_DEALLOC(till, "true-true-false" , "buy");
+		_RETAIN_DEALLOC(_33, "false-false-false" , "buy");
+		_ADD_DEALLOC(_32);
+	}
+	//assign %1 = %32  : int[]
+	_DEALLOC(till);
+	_UPDATE_1DARRAY(till, _32);
+	_TRANSFER_DEALLOC(till, _32);
 	//return
 	_DEALLOC(till);
 	_DEALLOC(_10);
@@ -1113,6 +1221,15 @@ int main(int argc, char** args){
 	_DEALLOC(_17);
 	_DEALLOC(_18);
 	_DEALLOC(_20);
+	_DEALLOC(_22);
+	_DEALLOC(_23);
+	_DEALLOC(_25);
+	_DEALLOC(_27);
+	_DEALLOC(_28);
+	_DEALLOC(_30);
+	_DEALLOC(_32);
+	_DEALLOC(_33);
+	_DEALLOC(_35);
 	exit(0);
 }
 

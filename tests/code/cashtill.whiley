@@ -212,6 +212,6 @@ public method main(System.Console console):
     console.out.println_s(toString(till))
     // now, run through some sequences...
     till = buy(console,till,Cash([ONE_DOLLAR]),85)
-    //till = buy(console,till,Cash([ONE_DOLLAR]),105)
-    //till = buy(console,till,Cash([TEN_DOLLARS]),5)
-    //till = buy(console,till,Cash([FIVE_DOLLARS]),305)
+    till = buy(console,till,Cash([ONE_DOLLAR]),105)
+    till = buy(console,till,Cash([TEN_DOLLARS]),5)
+    till = buy(console,till,Cash([FIVE_DOLLARS]),305)
