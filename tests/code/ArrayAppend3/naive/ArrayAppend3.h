@@ -12,5 +12,5 @@
 #define Descriptions [[49,99],[53,99],[49,48,99],[50,48,99],[53,48,99],[36,49],[36,53],[36,49,48]]
 typedef int64_t nat;
 typedef int64_t* Cash;
-BYTE* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE);
+int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE);
 int main(int argc, char** args);

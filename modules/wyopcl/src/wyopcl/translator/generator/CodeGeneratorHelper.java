@@ -373,8 +373,8 @@ public final class CodeGeneratorHelper {
 
 			// string type
 			if(nominal_name.equals("string")){
-				// Use an array of bytes (BYTE*)
-				return "BYTE*";
+				// Use an array of integers (BYTE*)
+				return "int64_t*";
 			}
 			
 			// The existential type, e.g. 'Board' is an nominal type in TicTacToe test case.
