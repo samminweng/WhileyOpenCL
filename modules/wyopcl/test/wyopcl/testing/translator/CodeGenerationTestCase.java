@@ -79,7 +79,7 @@ public class CodeGenerationTestCase {
 				"FunctionOverload2", // Define two functions with the same name
 				"ArrayAppend", // Test 'append' function
 				"ArrayAppend2", // Test 'append' function at WyRT runtime library
-				"ArrayAppend3", // Test 'toString' function in cashtill test case 
+				"ArrayAppend3", // Test 'toString' function in cashtill test case
 				"cashtill",
 				"lz77",
 				"lz77_2",

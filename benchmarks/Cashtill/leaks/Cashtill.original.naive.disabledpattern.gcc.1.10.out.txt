@@ -1,72 +1,72 @@
-==3135== Memcheck, a memory error detector
-==3135== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==3135== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==3135== Command: ./out/Cashtill.original.naive.disabledpattern.gcc.1.10.out 10
-==3135== Parent PID: 6006
-==3135== 
-==3135== Conditional jump or move depends on uninitialised value(s)
-==3135==    at 0x4035F5: printf_s (Util.c:362)
-==3135==    by 0x4035F5: println_s (Util.c:376)
-==3135==    by 0x401D80: _buy_ (Cashtill_original.c:706)
-==3135==    by 0x400D5C: main (Cashtill_original.c:974)
-==3135== 
-==3135== Conditional jump or move depends on uninitialised value(s)
-==3135==    at 0x4035F5: printf_s (Util.c:362)
-==3135==    by 0x4035F5: println_s (Util.c:376)
-==3135==    by 0x401D80: _buy_ (Cashtill_original.c:706)
-==3135==    by 0x400E33: main (Cashtill_original.c:994)
-==3135== 
-==3135== Conditional jump or move depends on uninitialised value(s)
-==3135==    at 0x4035F5: printf_s (Util.c:362)
-==3135==    by 0x4035F5: println_s (Util.c:376)
-==3135==    by 0x401D80: _buy_ (Cashtill_original.c:706)
-==3135==    by 0x400FEB: main (Cashtill_original.c:1034)
-==3135== 
-==3135== Conditional jump or move depends on uninitialised value(s)
-==3135==    at 0x4035F5: printf_s (Util.c:362)
-==3135==    by 0x4035F5: println_s (Util.c:376)
-==3135==    by 0x400C93: main (Cashtill_original.c:956)
-==3135== 
-==3135== Conditional jump or move depends on uninitialised value(s)
-==3135==    at 0x4035F5: printf_s (Util.c:362)
-==3135==    by 0x4035F5: println_s (Util.c:376)
-==3135==    by 0x401F6D: _buy_ (Cashtill_original.c:779)
-==3135==    by 0x400D5C: main (Cashtill_original.c:974)
-==3135== 
-==3135== Conditional jump or move depends on uninitialised value(s)
-==3135==    at 0x4035F5: printf_s (Util.c:362)
-==3135==    by 0x4035F5: println_s (Util.c:376)
-==3135==    by 0x40217C: _buy_ (Cashtill_original.c:815)
-==3135==    by 0x400D5C: main (Cashtill_original.c:974)
-==3135== 
-==3135== Conditional jump or move depends on uninitialised value(s)
-==3135==    at 0x4035F5: printf_s (Util.c:362)
-==3135==    by 0x4035F5: println_s (Util.c:376)
-==3135==    by 0x401F6D: _buy_ (Cashtill_original.c:779)
-==3135==    by 0x400FEB: main (Cashtill_original.c:1034)
-==3135== 
-==3135== Conditional jump or move depends on uninitialised value(s)
-==3135==    at 0x4035F5: printf_s (Util.c:362)
-==3135==    by 0x4035F5: println_s (Util.c:376)
-==3135==    by 0x40217C: _buy_ (Cashtill_original.c:815)
-==3135==    by 0x400FEB: main (Cashtill_original.c:1034)
-==3135== 
-==3135== 
-==3135== HEAP SUMMARY:
-==3135==     in use at exit: 98,589,968 bytes in 1,539,384 blocks
-==3135==   total heap usage: 1,539,384 allocs, 0 frees, 98,589,968 bytes allocated
-==3135== 
-==3135== LEAK SUMMARY:
-==3135==    definitely lost: 98,561,848 bytes in 1,539,234 blocks
-==3135==    indirectly lost: 27,864 bytes in 146 blocks
-==3135==      possibly lost: 192 bytes in 3 blocks
-==3135==    still reachable: 64 bytes in 1 blocks
-==3135==         suppressed: 0 bytes in 0 blocks
-==3135== Rerun with --leak-check=full to see details of leaked memory
-==3135== 
-==3135== For counts of detected and suppressed errors, rerun with: -v
-==3135== Use --track-origins=yes to see where uninitialised values come from
-==3135== ERROR SUMMARY: 85 errors from 8 contexts (suppressed: 0 from 0)
+==4821== Memcheck, a memory error detector
+==4821== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==4821== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==4821== Command: ./out/Cashtill.original.naive.disabledpattern.gcc.1.10.out 10
+==4821== Parent PID: 6006
+==4821== 
+==4821== Conditional jump or move depends on uninitialised value(s)
+==4821==    at 0x4035F5: printf_s (Util.c:362)
+==4821==    by 0x4035F5: println_s (Util.c:376)
+==4821==    by 0x401D80: _buy_ (Cashtill_original.c:706)
+==4821==    by 0x400D5C: main (Cashtill_original.c:974)
+==4821== 
+==4821== Conditional jump or move depends on uninitialised value(s)
+==4821==    at 0x4035F5: printf_s (Util.c:362)
+==4821==    by 0x4035F5: println_s (Util.c:376)
+==4821==    by 0x401D80: _buy_ (Cashtill_original.c:706)
+==4821==    by 0x400E33: main (Cashtill_original.c:994)
+==4821== 
+==4821== Conditional jump or move depends on uninitialised value(s)
+==4821==    at 0x4035F5: printf_s (Util.c:362)
+==4821==    by 0x4035F5: println_s (Util.c:376)
+==4821==    by 0x401D80: _buy_ (Cashtill_original.c:706)
+==4821==    by 0x400FEB: main (Cashtill_original.c:1034)
+==4821== 
+==4821== Conditional jump or move depends on uninitialised value(s)
+==4821==    at 0x4035F5: printf_s (Util.c:362)
+==4821==    by 0x4035F5: println_s (Util.c:376)
+==4821==    by 0x400C93: main (Cashtill_original.c:956)
+==4821== 
+==4821== Conditional jump or move depends on uninitialised value(s)
+==4821==    at 0x4035F5: printf_s (Util.c:362)
+==4821==    by 0x4035F5: println_s (Util.c:376)
+==4821==    by 0x401F6D: _buy_ (Cashtill_original.c:779)
+==4821==    by 0x400D5C: main (Cashtill_original.c:974)
+==4821== 
+==4821== Conditional jump or move depends on uninitialised value(s)
+==4821==    at 0x4035F5: printf_s (Util.c:362)
+==4821==    by 0x4035F5: println_s (Util.c:376)
+==4821==    by 0x40217C: _buy_ (Cashtill_original.c:815)
+==4821==    by 0x400D5C: main (Cashtill_original.c:974)
+==4821== 
+==4821== Conditional jump or move depends on uninitialised value(s)
+==4821==    at 0x4035F5: printf_s (Util.c:362)
+==4821==    by 0x4035F5: println_s (Util.c:376)
+==4821==    by 0x401F6D: _buy_ (Cashtill_original.c:779)
+==4821==    by 0x400FEB: main (Cashtill_original.c:1034)
+==4821== 
+==4821== Conditional jump or move depends on uninitialised value(s)
+==4821==    at 0x4035F5: printf_s (Util.c:362)
+==4821==    by 0x4035F5: println_s (Util.c:376)
+==4821==    by 0x40217C: _buy_ (Cashtill_original.c:815)
+==4821==    by 0x400FEB: main (Cashtill_original.c:1034)
+==4821== 
+==4821== 
+==4821== HEAP SUMMARY:
+==4821==     in use at exit: 98,589,968 bytes in 1,539,384 blocks
+==4821==   total heap usage: 1,539,384 allocs, 0 frees, 98,589,968 bytes allocated
+==4821== 
+==4821== LEAK SUMMARY:
+==4821==    definitely lost: 98,561,848 bytes in 1,539,234 blocks
+==4821==    indirectly lost: 27,864 bytes in 146 blocks
+==4821==      possibly lost: 192 bytes in 3 blocks
+==4821==    still reachable: 64 bytes in 1 blocks
+==4821==         suppressed: 0 bytes in 0 blocks
+==4821== Rerun with --leak-check=full to see details of leaked memory
+==4821== 
+==4821== For counts of detected and suppressed errors, rerun with: -v
+==4821== Use --track-origins=yes to see where uninitialised values come from
+==4821== ERROR SUMMARY: 85 errors from 8 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -74,7 +74,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3843.593
+cpu MHz		: 3850.234
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -101,7 +101,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3834.828
+cpu MHz		: 3823.406
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -128,7 +128,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3891.140
+cpu MHz		: 3884.500
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -155,7 +155,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3858.468
+cpu MHz		: 3896.718
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -182,7 +182,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3676.515
+cpu MHz		: 3714.500
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -209,7 +209,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3872.679
+cpu MHz		: 3896.585
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -236,7 +236,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3857.937
+cpu MHz		: 3820.085
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -263,7 +263,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3627.906
+cpu MHz		: 3883.171
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

@@ -1019,6 +1019,24 @@ blklab39:;
 //.blklab37
 blklab37:;
 	//return %1
+	_DEALLOC(given);
+	_DEALLOC(_4);
+	_DEALLOC(change);
+	_DEALLOC(_8);
+	_DEALLOC(_11);
+	_DEALLOC(_14);
+	_DEALLOC(_17);
+	_DEALLOC(_20);
+	_DEALLOC(_23);
+	_DEALLOC(_27);
+	_DEALLOC(_28);
+	_DEALLOC(_33);
+	_DEALLOC(_36);
+	_DEALLOC(_39);
+	_DEALLOC(_40);
+	_DEALLOC(_41);
+	_DEALLOC(_44);
+	_DEALLOC(_47);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(till);
 	return till;
 	//return

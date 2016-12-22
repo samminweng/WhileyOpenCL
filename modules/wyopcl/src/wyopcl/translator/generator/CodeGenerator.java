@@ -1497,11 +1497,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			} else {
 				// Check if the return type matches with method declaration
 				if(function.type().returns().size() == code.operands().length){
+					// Add the code to deallocate all variables.
+					this.deallocatedAnalyzer.ifPresent(a -> {
+						statements.addAll(a.preDealloc(code, function, stores));
+					});
 					if (code.operands().length == 0) {
-						// Add the code to deallocate all variables.
-						this.deallocatedAnalyzer.ifPresent(a -> {
-							statements.addAll(a.preDealloc(code, function, stores));
-						});
 						statements.add(indent + "return;");
 					}else if(code.operands().length == 1){
 						// Get return variable		
@@ -1514,8 +1514,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 							int dimension = stores.getArrayDimension(ret_type);
 							// Propagate the size of output array to passing call-by-reference parameter
 							statements.add(indent + "_UPDATE_"+dimension+"DARRAYSZIE_PARAM_CALLBYREFERENCE(" + ret_var + ");");
-						}
-						
+						}						
 						statements.add(indent + "return " + ret_var + ";");
 					}else {						
 						throw new RuntimeException("Not implemented for return statement in a method");
