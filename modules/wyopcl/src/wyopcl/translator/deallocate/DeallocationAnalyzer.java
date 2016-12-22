@@ -379,6 +379,12 @@ public class DeallocationAnalyzer extends Analyzer {
 				// Assign flag to lhs
 				statements.add(indent + addDealloc(lhs, function, stores));
 				break;
+			case "append":
+				statements.add(indent + addDealloc(lhs, function, stores));
+				break;
+			case "toString":
+				statements.add(indent + addDealloc(lhs, function, stores));
+				break;
 			default:
 				// no change to statement
 				break;

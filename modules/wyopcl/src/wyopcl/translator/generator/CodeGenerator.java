@@ -1099,20 +1099,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			case "parse":
 				statements.add(indent + "_STR_TO_INT(" + lhs + ", " + rhs + ");");
 				break;
-			// Slice an array into a new sub-array at given starting and ending index.
-			case "slice":
-				extractLHSVar(statements, code, function);
-				// Call the 'slice' function.
-				String array = stores.getVar(code.operand(0), function);
-				String start = stores.getVar(code.operand(1), function);
-				String end = stores.getVar(code.operand(2), function);
-				statements.add("_SLICE_ARRAY(" + lhs + ", " + array + ", " + start + ", " + end + ");");
-				break;
-			case "toString":
-				// Convert an integer to a string (an integer array of ASCII code)
-				// Call WyRT built-in 'InttoString' function
-				statements.add(indent + lhs + " = Int_toString(" + rhs + ", _1DARRAYSIZE_PARAM_CALLBYREFERENCE("+lhs+"));");
-				break;
 			case "abs":
 				// Use 'llabs' function to return the absolute value of 'rhs'
 				// because the rhs is a int64_t integer.
@@ -1145,7 +1131,25 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Convert an integer to a byte
 				statements.add(indent+ lhs + " = (BYTE)"+rhs+";");
 				break;
+			case "toString":
+				lhs = extractLHSVar(statements, code, function);
+				// Convert an integer to a string (an integer array of ASCII code)
+				// Call WyRT built-in 'InttoString' function
+				statements.add(indent + lhs + " = Int_toString(" + rhs + ", _1DARRAYSIZE_PARAM_CALLBYREFERENCE("+lhs+"));");
+				break;
+				// Slice an array into a new sub-array at given starting and ending index.
+			case "slice":
+				// Extract lhs variable and free the variable (if de-allocation analysis enabled)
+				lhs = extractLHSVar(statements, code, function);
+				// Call the 'slice' function.
+				String array = stores.getVar(code.operand(0), function);
+				String start = stores.getVar(code.operand(1), function);
+				String end = stores.getVar(code.operand(2), function);
+				statements.add("_SLICE_ARRAY(" + lhs + ", " + array + ", " + start + ", " + end + ");");
+				break;
 			case "append":
+				// Free the left-handed side variable 
+				lhs = extractLHSVar(statements, code, function);;				
 				// Append an array to another array, e.g. 'invoke (%13) = (%2, %14) whiley/lang/Array:append'
 				String rhs_arr  = stores.getVar(code.operand(0), function);
 				String rhs1_arr = stores.getVar(code.operand(1), function);

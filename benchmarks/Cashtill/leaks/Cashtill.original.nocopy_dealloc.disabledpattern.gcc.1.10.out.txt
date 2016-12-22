@@ -1,145 +1,145 @@
-==5528== Memcheck, a memory error detector
-==5528== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==5528== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==5528== Command: ./out/Cashtill.original.nocopy_dealloc.disabledpattern.gcc.1.10.out 10
-==5528== Parent PID: 6006
-==5528== 
-==5528== Conditional jump or move depends on uninitialised value(s)
-==5528==    at 0x403C25: printf_s (Util.c:362)
-==5528==    by 0x403C25: println_s (Util.c:376)
-==5528==    by 0x402435: _buy_ (Cashtill_original.c:859)
-==5528==    by 0x400D8D: main (Cashtill_original.c:1194)
-==5528== 
-==5528== Conditional jump or move depends on uninitialised value(s)
-==5528==    at 0x403C25: printf_s (Util.c:362)
-==5528==    by 0x403C25: println_s (Util.c:376)
-==5528==    by 0x402435: _buy_ (Cashtill_original.c:859)
-==5528==    by 0x400E49: main (Cashtill_original.c:1222)
-==5528== 
-==5528== Conditional jump or move depends on uninitialised value(s)
-==5528==    at 0x403C25: printf_s (Util.c:362)
-==5528==    by 0x403C25: println_s (Util.c:376)
-==5528==    by 0x402435: _buy_ (Cashtill_original.c:859)
-==5528==    by 0x400FC3: main (Cashtill_original.c:1278)
-==5528== 
-==5528== Conditional jump or move depends on uninitialised value(s)
-==5528==    at 0x403C25: printf_s (Util.c:362)
-==5528==    by 0x403C25: println_s (Util.c:376)
-==5528==    by 0x400CDF: main (Cashtill_original.c:1173)
-==5528== 
-==5528== Conditional jump or move depends on uninitialised value(s)
-==5528==    at 0x403C25: printf_s (Util.c:362)
-==5528==    by 0x403C25: println_s (Util.c:376)
-==5528==    by 0x402617: _buy_ (Cashtill_original.c:944)
-==5528==    by 0x400D8D: main (Cashtill_original.c:1194)
-==5528== 
-==5528== Conditional jump or move depends on uninitialised value(s)
-==5528==    at 0x403C25: printf_s (Util.c:362)
-==5528==    by 0x403C25: println_s (Util.c:376)
-==5528==    by 0x4027DC: _buy_ (Cashtill_original.c:992)
-==5528==    by 0x400D8D: main (Cashtill_original.c:1194)
-==5528== 
-==5528== Conditional jump or move depends on uninitialised value(s)
-==5528==    at 0x403C25: printf_s (Util.c:362)
-==5528==    by 0x403C25: println_s (Util.c:376)
-==5528==    by 0x402617: _buy_ (Cashtill_original.c:944)
-==5528==    by 0x400FC3: main (Cashtill_original.c:1278)
-==5528== 
-==5528== Conditional jump or move depends on uninitialised value(s)
-==5528==    at 0x403C25: printf_s (Util.c:362)
-==5528==    by 0x403C25: println_s (Util.c:376)
-==5528==    by 0x4027DC: _buy_ (Cashtill_original.c:992)
-==5528==    by 0x400FC3: main (Cashtill_original.c:1278)
-==5528== 
-==5528== Conditional jump or move depends on uninitialised value(s)
-==5528==    at 0x4EB16F1: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:867)
-==5528==    by 0x4EA7A7D: putchar (putchar.c:29)
-==5528==    by 0x403C2F: printf_s (Util.c:363)
-==5528==    by 0x403C2F: println_s (Util.c:376)
-==5528==    by 0x402435: _buy_ (Cashtill_original.c:859)
-==5528==    by 0x400FC3: main (Cashtill_original.c:1278)
-==5528== 
-==5528== Conditional jump or move depends on uninitialised value(s)
-==5528==    at 0x4EB171E: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:875)
-==5528==    by 0x4EA7A7D: putchar (putchar.c:29)
-==5528==    by 0x403C2F: printf_s (Util.c:363)
-==5528==    by 0x403C2F: println_s (Util.c:376)
-==5528==    by 0x402435: _buy_ (Cashtill_original.c:859)
-==5528==    by 0x400FC3: main (Cashtill_original.c:1278)
-==5528== 
-==5528== Syscall param write(buf) points to uninitialised byte(s)
-==5528==    at 0x4F22710: __write_nocancel (syscall-template.S:81)
-==5528==    by 0x4EAFF02: _IO_file_write@@GLIBC_2.2.5 (fileops.c:1261)
-==5528==    by 0x4EB13DB: new_do_write (fileops.c:538)
-==5528==    by 0x4EB13DB: _IO_do_write@@GLIBC_2.2.5 (fileops.c:511)
-==5528==    by 0x4EB17B2: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:876)
-==5528==    by 0x4EA7A7D: putchar (putchar.c:29)
-==5528==    by 0x402435: _buy_ (Cashtill_original.c:859)
-==5528==    by 0x400FC3: main (Cashtill_original.c:1278)
-==5528==  Address 0x4026016 is not stack'd, malloc'd or (recently) free'd
-==5528== 
-==5528== Conditional jump or move depends on uninitialised value(s)
-==5528==    at 0x4EB16F1: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:867)
-==5528==    by 0x4EA7A7D: putchar (putchar.c:29)
-==5528==    by 0x403C2F: printf_s (Util.c:363)
-==5528==    by 0x403C2F: println_s (Util.c:376)
-==5528==    by 0x402617: _buy_ (Cashtill_original.c:944)
-==5528==    by 0x400FC3: main (Cashtill_original.c:1278)
-==5528== 
-==5528== Conditional jump or move depends on uninitialised value(s)
-==5528==    at 0x4EB171E: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:875)
-==5528==    by 0x4EA7A7D: putchar (putchar.c:29)
-==5528==    by 0x403C2F: printf_s (Util.c:363)
-==5528==    by 0x403C2F: println_s (Util.c:376)
-==5528==    by 0x402617: _buy_ (Cashtill_original.c:944)
-==5528==    by 0x400FC3: main (Cashtill_original.c:1278)
-==5528== 
-==5528== Conditional jump or move depends on uninitialised value(s)
-==5528==    at 0x4EB16F1: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:867)
-==5528==    by 0x4EA7A7D: putchar (putchar.c:29)
-==5528==    by 0x403C2F: printf_s (Util.c:363)
-==5528==    by 0x403C2F: println_s (Util.c:376)
-==5528==    by 0x4027DC: _buy_ (Cashtill_original.c:992)
-==5528==    by 0x400FC3: main (Cashtill_original.c:1278)
-==5528== 
-==5528== Conditional jump or move depends on uninitialised value(s)
-==5528==    at 0x4EB171E: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:875)
-==5528==    by 0x4EA7A7D: putchar (putchar.c:29)
-==5528==    by 0x403C2F: printf_s (Util.c:363)
-==5528==    by 0x403C2F: println_s (Util.c:376)
-==5528==    by 0x4027DC: _buy_ (Cashtill_original.c:992)
-==5528==    by 0x400FC3: main (Cashtill_original.c:1278)
-==5528== 
-==5528== Conditional jump or move depends on uninitialised value(s)
-==5528==    at 0x4EB16F1: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:867)
-==5528==    by 0x4EA7A7D: putchar (putchar.c:29)
-==5528==    by 0x403C2F: printf_s (Util.c:363)
-==5528==    by 0x403C2F: println_s (Util.c:376)
-==5528==    by 0x400CDF: main (Cashtill_original.c:1173)
-==5528== 
-==5528== Conditional jump or move depends on uninitialised value(s)
-==5528==    at 0x4EB171E: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:875)
-==5528==    by 0x4EA7A7D: putchar (putchar.c:29)
-==5528==    by 0x403C2F: printf_s (Util.c:363)
-==5528==    by 0x403C2F: println_s (Util.c:376)
-==5528==    by 0x400CDF: main (Cashtill_original.c:1173)
-==5528== 
-==5528== 
-==5528== HEAP SUMMARY:
-==5528==     in use at exit: 98,440 bytes in 915 blocks
-==5528==   total heap usage: 1,154,288 allocs, 1,153,373 frees, 73,913,480 bytes allocated
-==5528== 
-==5528== LEAK SUMMARY:
-==5528==    definitely lost: 98,440 bytes in 915 blocks
-==5528==    indirectly lost: 0 bytes in 0 blocks
-==5528==      possibly lost: 0 bytes in 0 blocks
-==5528==    still reachable: 0 bytes in 0 blocks
-==5528==         suppressed: 0 bytes in 0 blocks
-==5528== Rerun with --leak-check=full to see details of leaked memory
-==5528== 
-==5528== For counts of detected and suppressed errors, rerun with: -v
-==5528== Use --track-origins=yes to see where uninitialised values come from
-==5528== ERROR SUMMARY: 162 errors from 17 contexts (suppressed: 0 from 0)
+==3294== Memcheck, a memory error detector
+==3294== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==3294== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==3294== Command: ./out/Cashtill.original.nocopy_dealloc.disabledpattern.gcc.1.10.out 10
+==3294== Parent PID: 6006
+==3294== 
+==3294== Conditional jump or move depends on uninitialised value(s)
+==3294==    at 0x403CA5: printf_s (Util.c:362)
+==3294==    by 0x403CA5: println_s (Util.c:376)
+==3294==    by 0x4024B5: _buy_ (Cashtill_original.c:871)
+==3294==    by 0x400D8D: main (Cashtill_original.c:1206)
+==3294== 
+==3294== Conditional jump or move depends on uninitialised value(s)
+==3294==    at 0x403CA5: printf_s (Util.c:362)
+==3294==    by 0x403CA5: println_s (Util.c:376)
+==3294==    by 0x4024B5: _buy_ (Cashtill_original.c:871)
+==3294==    by 0x400E49: main (Cashtill_original.c:1234)
+==3294== 
+==3294== Conditional jump or move depends on uninitialised value(s)
+==3294==    at 0x403CA5: printf_s (Util.c:362)
+==3294==    by 0x403CA5: println_s (Util.c:376)
+==3294==    by 0x4024B5: _buy_ (Cashtill_original.c:871)
+==3294==    by 0x400FC3: main (Cashtill_original.c:1290)
+==3294== 
+==3294== Conditional jump or move depends on uninitialised value(s)
+==3294==    at 0x403CA5: printf_s (Util.c:362)
+==3294==    by 0x403CA5: println_s (Util.c:376)
+==3294==    by 0x400CDF: main (Cashtill_original.c:1185)
+==3294== 
+==3294== Conditional jump or move depends on uninitialised value(s)
+==3294==    at 0x403CA5: printf_s (Util.c:362)
+==3294==    by 0x403CA5: println_s (Util.c:376)
+==3294==    by 0x402697: _buy_ (Cashtill_original.c:956)
+==3294==    by 0x400D8D: main (Cashtill_original.c:1206)
+==3294== 
+==3294== Conditional jump or move depends on uninitialised value(s)
+==3294==    at 0x403CA5: printf_s (Util.c:362)
+==3294==    by 0x403CA5: println_s (Util.c:376)
+==3294==    by 0x40285C: _buy_ (Cashtill_original.c:1004)
+==3294==    by 0x400D8D: main (Cashtill_original.c:1206)
+==3294== 
+==3294== Conditional jump or move depends on uninitialised value(s)
+==3294==    at 0x403CA5: printf_s (Util.c:362)
+==3294==    by 0x403CA5: println_s (Util.c:376)
+==3294==    by 0x402697: _buy_ (Cashtill_original.c:956)
+==3294==    by 0x400FC3: main (Cashtill_original.c:1290)
+==3294== 
+==3294== Conditional jump or move depends on uninitialised value(s)
+==3294==    at 0x403CA5: printf_s (Util.c:362)
+==3294==    by 0x403CA5: println_s (Util.c:376)
+==3294==    by 0x40285C: _buy_ (Cashtill_original.c:1004)
+==3294==    by 0x400FC3: main (Cashtill_original.c:1290)
+==3294== 
+==3294== Conditional jump or move depends on uninitialised value(s)
+==3294==    at 0x4EB16F1: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:867)
+==3294==    by 0x4EA7A7D: putchar (putchar.c:29)
+==3294==    by 0x403CAF: printf_s (Util.c:363)
+==3294==    by 0x403CAF: println_s (Util.c:376)
+==3294==    by 0x4024B5: _buy_ (Cashtill_original.c:871)
+==3294==    by 0x400FC3: main (Cashtill_original.c:1290)
+==3294== 
+==3294== Conditional jump or move depends on uninitialised value(s)
+==3294==    at 0x4EB171E: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:875)
+==3294==    by 0x4EA7A7D: putchar (putchar.c:29)
+==3294==    by 0x403CAF: printf_s (Util.c:363)
+==3294==    by 0x403CAF: println_s (Util.c:376)
+==3294==    by 0x4024B5: _buy_ (Cashtill_original.c:871)
+==3294==    by 0x400FC3: main (Cashtill_original.c:1290)
+==3294== 
+==3294== Syscall param write(buf) points to uninitialised byte(s)
+==3294==    at 0x4F22710: __write_nocancel (syscall-template.S:81)
+==3294==    by 0x4EAFF02: _IO_file_write@@GLIBC_2.2.5 (fileops.c:1261)
+==3294==    by 0x4EB13DB: new_do_write (fileops.c:538)
+==3294==    by 0x4EB13DB: _IO_do_write@@GLIBC_2.2.5 (fileops.c:511)
+==3294==    by 0x4EB17B2: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:876)
+==3294==    by 0x4EA7A7D: putchar (putchar.c:29)
+==3294==    by 0x4024B5: _buy_ (Cashtill_original.c:871)
+==3294==    by 0x400FC3: main (Cashtill_original.c:1290)
+==3294==  Address 0x4026016 is not stack'd, malloc'd or (recently) free'd
+==3294== 
+==3294== Conditional jump or move depends on uninitialised value(s)
+==3294==    at 0x4EB16F1: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:867)
+==3294==    by 0x4EA7A7D: putchar (putchar.c:29)
+==3294==    by 0x403CAF: printf_s (Util.c:363)
+==3294==    by 0x403CAF: println_s (Util.c:376)
+==3294==    by 0x402697: _buy_ (Cashtill_original.c:956)
+==3294==    by 0x400FC3: main (Cashtill_original.c:1290)
+==3294== 
+==3294== Conditional jump or move depends on uninitialised value(s)
+==3294==    at 0x4EB171E: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:875)
+==3294==    by 0x4EA7A7D: putchar (putchar.c:29)
+==3294==    by 0x403CAF: printf_s (Util.c:363)
+==3294==    by 0x403CAF: println_s (Util.c:376)
+==3294==    by 0x402697: _buy_ (Cashtill_original.c:956)
+==3294==    by 0x400FC3: main (Cashtill_original.c:1290)
+==3294== 
+==3294== Conditional jump or move depends on uninitialised value(s)
+==3294==    at 0x4EB16F1: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:867)
+==3294==    by 0x4EA7A7D: putchar (putchar.c:29)
+==3294==    by 0x403CAF: printf_s (Util.c:363)
+==3294==    by 0x403CAF: println_s (Util.c:376)
+==3294==    by 0x40285C: _buy_ (Cashtill_original.c:1004)
+==3294==    by 0x400FC3: main (Cashtill_original.c:1290)
+==3294== 
+==3294== Conditional jump or move depends on uninitialised value(s)
+==3294==    at 0x4EB171E: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:875)
+==3294==    by 0x4EA7A7D: putchar (putchar.c:29)
+==3294==    by 0x403CAF: printf_s (Util.c:363)
+==3294==    by 0x403CAF: println_s (Util.c:376)
+==3294==    by 0x40285C: _buy_ (Cashtill_original.c:1004)
+==3294==    by 0x400FC3: main (Cashtill_original.c:1290)
+==3294== 
+==3294== Conditional jump or move depends on uninitialised value(s)
+==3294==    at 0x4EB16F1: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:867)
+==3294==    by 0x4EA7A7D: putchar (putchar.c:29)
+==3294==    by 0x403CAF: printf_s (Util.c:363)
+==3294==    by 0x403CAF: println_s (Util.c:376)
+==3294==    by 0x400CDF: main (Cashtill_original.c:1185)
+==3294== 
+==3294== Conditional jump or move depends on uninitialised value(s)
+==3294==    at 0x4EB171E: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:875)
+==3294==    by 0x4EA7A7D: putchar (putchar.c:29)
+==3294==    by 0x403CAF: printf_s (Util.c:363)
+==3294==    by 0x403CAF: println_s (Util.c:376)
+==3294==    by 0x400CDF: main (Cashtill_original.c:1185)
+==3294== 
+==3294== 
+==3294== HEAP SUMMARY:
+==3294==     in use at exit: 36,600 bytes in 320 blocks
+==3294==   total heap usage: 1,154,288 allocs, 1,153,968 frees, 73,913,480 bytes allocated
+==3294== 
+==3294== LEAK SUMMARY:
+==3294==    definitely lost: 36,600 bytes in 320 blocks
+==3294==    indirectly lost: 0 bytes in 0 blocks
+==3294==      possibly lost: 0 bytes in 0 blocks
+==3294==    still reachable: 0 bytes in 0 blocks
+==3294==         suppressed: 0 bytes in 0 blocks
+==3294== Rerun with --leak-check=full to see details of leaked memory
+==3294== 
+==3294== For counts of detected and suppressed errors, rerun with: -v
+==3294== Use --track-origins=yes to see where uninitialised values come from
+==3294== ERROR SUMMARY: 178 errors from 17 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -147,7 +147,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3862.851
+cpu MHz		: 3847.976
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -174,7 +174,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3868.429
+cpu MHz		: 3782.632
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -201,7 +201,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3897.648
+cpu MHz		: 3895.523
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -228,7 +228,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3864.312
+cpu MHz		: 3764.968
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -255,7 +255,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3734.554
+cpu MHz		: 3881.578
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -282,7 +282,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3823.804
+cpu MHz		: 3861.523
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -309,7 +309,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3889.945
+cpu MHz		: 3862.187
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -336,7 +336,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3797.375
+cpu MHz		: 3846.781
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

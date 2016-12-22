@@ -522,7 +522,7 @@ blklab26:;
 	//return
 }
 
-BYTE* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
 	_DECL_DEALLOC(_1);
 	_DECL_1DARRAY(r);
@@ -606,7 +606,9 @@ BYTE* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRAYSI
 		_ADD_DEALLOC(_14);
 		//invoke (%13) = (%2, %14) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
+			_DEALLOC(_13);
 			_13 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_14), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_13));
+			_ADD_DEALLOC(_13);
 		}
 		//assign %2 = %13  : int[]
 		_DEALLOC(r);
@@ -620,11 +622,15 @@ blklab34:;
 		firstTime = _15;
 		//invoke (%17) = (%5) whiley/lang/Int:toString : function(int)->(whiley/lang/ASCII:string)
 		{
+			_DEALLOC(_17);
 			_17 = Int_toString(amt, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_17));
+			_ADD_DEALLOC(_17);
 		}
 		//invoke (%16) = (%2, %17) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
+			_DEALLOC(_16);
 			_16 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_17), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
+			_ADD_DEALLOC(_16);
 		}
 		//assign %2 = %16  : int[]
 		_DEALLOC(r);
@@ -637,7 +643,9 @@ blklab34:;
 		_ADD_DEALLOC(_19);
 		//invoke (%18) = (%2, %19) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
+			_DEALLOC(_18);
 			_18 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_19), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
+			_ADD_DEALLOC(_18);
 		}
 		//assign %2 = %18  : int[]
 		_DEALLOC(r);
@@ -686,7 +694,9 @@ blklab34:;
 		_REMOVE_DEALLOC(_22);
 		//invoke (%20) = (%2, %22) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
+			_DEALLOC(_20);
 			_20 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_22), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
+			_ADD_DEALLOC(_20);
 		}
 		//assign %2 = %20  : int[]
 		_DEALLOC(r);
@@ -818,7 +828,9 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_DEALLOC_PARAM(til
 	//fieldload %13 = %12 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%14) = (%3) whiley/lang/Int:toString : function(int)->(whiley/lang/ASCII:string)
 	{
+		_DEALLOC(_14);
 		_14 = Int_toString(cost, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_14));
+		_ADD_DEALLOC(_14);
 	}
 	//indirectinvoke () = %13 (%14) : method(int[])->()
 	{
