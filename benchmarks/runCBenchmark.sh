@@ -39,11 +39,11 @@ generateCode(){
 	if [ $enabledpattern == 1 ] 
 	then
 		### Enable pattern transformation
-		codeDir="$BENCHMARKDIR/$testcase/impl/$program/patern/$codegen"
+		codeDir="$BENCHMARKDIR/$testcase/impl/$program/C/pattern/$codegen"
 		pattern=$5
 	else
 		### Disable pattern transformation
-		codeDir="$BENCHMARKDIR/$testcase/impl/$program/nopatern/$codegen"
+		codeDir="$BENCHMARKDIR/$testcase/impl/$program/C/nopattern/$codegen"
 	fi
 	###echo $codeDir
 	## Clean the folder
@@ -52,13 +52,13 @@ generateCode(){
 	# copy the source whiley file to the folder
 	cp $BENCHMARKDIR/$testcase/$testcase"_"$program.whiley "$codeDir"
 	### Copy Util.c Util.h to current folder
-	cp $UTILDIR/Util.c $UTILDIR/Util.h "$codeDir"
+	cp $UTILDIR/Util.c $UTILDIR/Util.h $UTILDIR/WyRT.h $UTILDIR/WyRT.c "$codeDir"
 
 	## Change to 'codeDIR'
 	cd $codeDir
 
 	### Disable pattern transformation
-	wyopcl=./../../../../../../bin/wyopcl
+	wyopcl=./../../../../../../../bin/wyopcl
 	if [ $enabledpattern == 1 ] 
 	then
 		### Enable pattern transformation
@@ -112,10 +112,10 @@ compileAndRun(){
 	### Compile C code into executables
 	case "$compiler" in
 		"gcc")
-			gcc -std=c11 -O3 $testcase"_"$program.c Util.c -o "out/$executable"
+			gcc -std=c11 -O3 $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
 			;;
 		"clang")
-			clang -O3 $testcase"_"$program.c Util.c -o "out/$executable"
+			clang -O3 $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
 			;;
 		"polly")
 			###'-polly-process-unprofitable' option forces Polly to generate sequential code
@@ -126,7 +126,7 @@ compileAndRun(){
 			### Use 'llc' to compile LLVM code into assembly code
 			llc "llvm/$executable.ll" -o "assembly/$executable.s"
 			### Use 'clang' to compile .s file and link with 'libUtil.a'
-			clang "assembly/$executable.s" Util.c -o "out/$executable"
+			clang "assembly/$executable.s" Util.c WyRT.c -o "out/$executable"
 			;;
 		"openmp")
 			echo "Optimize C code using OpenMP code with $OMP_NUM_THREADS threads..." >> $result
@@ -139,7 +139,7 @@ compileAndRun(){
 			### Use 'llc' to compile LLVM code into assembly code
 			llc "llvm/$executable.ll" -o "assembly/$executable.s"
 			### Use 'clang' to compile .s file and link with 'Util.c'
-			clang "assembly/$executable.s" Util.c -lgomp -o "out/$executable"
+			clang "assembly/$executable.s" Util.c WyRT.c -lgomp -o "out/$executable"
 			###Export the number of threads for OpenMP code
 			export OMP_NUM_THREADS=$num_threads
 			;;
@@ -289,13 +289,13 @@ exec(){
 
 
 # # ###Sobel Edge test
-init SobelEdge
-exec SobelEdge original "image32x32.pbm"
-exec SobelEdge original "image64x64.pbm"
-exec SobelEdge original "image128x128.pbm"
-exec SobelEdge original "image256x256.pbm"
-exec SobelEdge original "image512x512.pbm"
-exec SobelEdge original "image1024x1024.pbm"
+#init SobelEdge
+#exec SobelEdge original "image32x32.pbm"
+#exec SobelEdge original "image64x64.pbm"
+#exec SobelEdge original "image128x128.pbm"
+#exec SobelEdge original "image256x256.pbm"
+#exec SobelEdge original "image512x512.pbm"
+#exec SobelEdge original "image1024x1024.pbm"
 
 
 # ## NQueen test case
@@ -315,3 +315,7 @@ exec SobelEdge original "image1024x1024.pbm"
 #exec LZ77 original "small.in"
 #exec LZ77 original "medium.in"
 #exec LZ77 original "large.in"
+
+### Cashtill test case
+init Cashtill
+exec Cashtill original 10

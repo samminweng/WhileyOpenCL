@@ -516,8 +516,9 @@ FILE* Writer(int64_t* arr, size_t arr_size){
 bool isPBMFile(FILE *file){
 	char* line = NULL;
 	size_t length = 0;
+	size_t line_len; // Get the length of a line
 	// Get the first line, which should be 'P1\n'
-	if(getline(&line, &length, file) != -1){
+	if((line_len = getline(&line, &length, file))!= -1){
 		// Get line length
 		size_t len=strlen(line);
 		if(len==3){

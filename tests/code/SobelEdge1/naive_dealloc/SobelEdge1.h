@@ -1,4 +1,5 @@
 #include "Util.h"
+#include "WyRT.h"
 #define SPACE 00100000b
 #define BLACK 01100010b
 #define TH 64

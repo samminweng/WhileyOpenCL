@@ -1,4 +1,5 @@
 #include "Util.h"
+#include "WyRT.h"
 typedef int64_t nat;
 typedef struct{
 	int64_t len;

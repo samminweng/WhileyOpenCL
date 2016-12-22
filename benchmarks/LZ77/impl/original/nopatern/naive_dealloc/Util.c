@@ -51,6 +51,11 @@ BYTE* create1DArray_BYTE(BYTE value, size_t arr_size){
 
 // Copy an array of BYTE
 BYTE* copy1DArray_BYTE(BYTE *arr, size_t size){
+	// Check if the array is NULL. If so, return NULL.
+	if(arr == NULL){
+		return NULL;
+	}
+
 	BYTE *ptr = NULL;
 	ptr = (BYTE*)malloc(size*sizeof(BYTE));
 	if(ptr == NULL){
@@ -64,6 +69,11 @@ BYTE* copy1DArray_BYTE(BYTE *arr, size_t size){
 
 //Copy an integer array
 int64_t* copy1DArray_int64_t(int64_t *arr, size_t size){
+	// Check if the array is NULL. If so, return NULL.
+	if(arr == NULL){
+		return NULL;
+	}
+
 	int64_t *ptr = NULL;
 	//Clone all the values from board array due to immutable Whiley value
 	ptr = (int64_t*) malloc(size * sizeof(int64_t));
@@ -209,61 +219,6 @@ bool isArrayEqual_BYTE(BYTE* arr1, size_t arr1_size, BYTE* arr2, size_t arr2_siz
 	//Both of arrays are the same. Return true
 	return true;
 }
-/*
-//Create 2D array using an array of pointers, i.e. allocating each sub-array in different memory space
-int64_t** create2DArray_int64_t(int64_t* arr, size_t n, size_t m){
-	int64_t** _2DArray = NULL;
-	// Allocate the array
-	_2DArray = (int64_t**)malloc(n*sizeof(int64_t*));
-	if(_2DArray == NULL){
-		fputs(stderr, "fail to allocate the memory at create2DArray_int64_t function in Util.c\n");
-		exit(-2);
-	}
-	int64_t size = m*sizeof(int64_t);
-	for(size_t i=0;i<n;i++){
-		// Copy the input array and assign it to matrix.
-		_2DArray[i] = (int64_t*)malloc(size);
-		if(_2DArray[i] == NULL){
-			fputs(stderr, "fail to allocate the memory at create2DArray_int64_t function in Util.c\n");
-			exit(-2);
-		}
-		memcpy(_2DArray[i], arr, size);
-	}
-	return _2DArray;
-}
-// Clone a 2D array 
-int64_t** copy2DArray_int64_t(int64_t **arr, size_t n, size_t m){
-	int64_t** _2DArray = (int64_t**)malloc(n*sizeof(int64_t*));
-	if(_2DArray == NULL){
-		fputs(stderr, "fail to malloc at copy2DArray_int64_t function in Util.c\n");
-		exit(-2);
-	}
-	int64_t size = m*sizeof(int64_t);
-	for(size_t i=0;i<n;i++){
-		// Allocate an 1D array
-		_2DArray[i] = (int64_t*)malloc(size);
-		if(_2DArray[i] == NULL){
-			fputs(stderr, "fail to allocate the memory at create2DArray_int64_t function in Util.c\n");
-			exit(-2);
-		}
-		memcpy(_2DArray[i], arr[i], size);
-	}
-	return _2DArray;
-}
-
-
-// Free 2D array 
-void free2DArray_int64_t(int64_t** ptr, size_t size){
-	// Free each sub-pointer.
-	for(int i=0;i<size;i++){
-		free(ptr[i]);
-		ptr[i] = NULL;
-	}
-	// Free upper-level pointer.
-	free(ptr);
-	ptr = NULL;
-}
-*/
 
 // Free a flat 2D array
 void free2DArray_int64_t(int64_t** ptr, size_t size){
@@ -273,14 +228,13 @@ void free2DArray_int64_t(int64_t** ptr, size_t size){
 	free(ptr);
 	ptr = NULL;
 }
-// Flatten 2D array into 1D array
-/// Given 1D array, create an 2D array of given dimensions (n * m) using one chuck of contiguous memory space
-int64_t** create2DArray_int64_t(int64_t* arr, size_t n, size_t m){
+
+int64_t** create2DArray_int64_t_empty(size_t n, size_t m){
 	int64_t** _2DArray = NULL;
 	// Allocate an array of pointers
 	_2DArray = (int64_t**)malloc(n*sizeof(int64_t*));
 	if(_2DArray == NULL){
-		fputs("fail to allocate the memory at create2DArray_int64_t function in Util.c\n", stderr);
+		fputs("fail to allocate the memory at create2DArray_int64_t_empty function in Util.c\n", stderr);
 		exit(-2);
 	}
 	// The size of each row
@@ -288,14 +242,31 @@ int64_t** create2DArray_int64_t(int64_t* arr, size_t n, size_t m){
 	// Create a chuck of contiguous memory space to store all array elements
 	_2DArray[0] = (int64_t*)malloc(r_size*n);
 	if(_2DArray[0] == NULL){
-		fputs("fail to allocate the memory at create2DArray_int64_t function in Util.c\n", stderr);
+		fputs("fail to allocate the memory at create2DArray_int64_t_empty function in Util.c\n", stderr);
 		exit(-2);
 	}
 
 	// Flatten the allocated memory to a list of pointers
 	for(size_t i=0;i<n;i++){
-		// Compute the address and assign the address to each pointer 
+		// Compute the address and assign the address to each pointer
 		_2DArray[i] = (*_2DArray+ i* m);
+	}
+
+	return _2DArray;
+}
+
+
+// Flatten 2D array into 1D array
+/// Given 1D array, create an 2D array of given dimensions (n * m) using one chuck of contiguous memory space
+int64_t** create2DArray_int64_t(int64_t* arr, size_t n, size_t m){
+	int64_t** _2DArray = create2DArray_int64_t_empty(n, m);
+
+	// The size of each row
+	size_t r_size = m*sizeof(int64_t);
+	// Flatten the allocated memory to a list of pointers
+	for(size_t i=0;i<n;i++){
+		// Compute the address and assign the address to each pointer 
+		//_2DArray[i] = (*_2DArray+ i* m);
 		// Copy the input array 'arr' to each sub-array
 		memcpy(_2DArray[i], arr, r_size);
 	}
@@ -304,22 +275,17 @@ int64_t** create2DArray_int64_t(int64_t* arr, size_t n, size_t m){
 
 /// Clone 2D flat array with given array size.
 int64_t** copy2DArray_int64_t(int64_t **arr, size_t n, size_t m){
-	int64_t** _2DArray = (int64_t**)malloc(n*sizeof(int64_t*));
-	if(_2DArray == NULL){
-		fputs("fail to malloc at copy2DArray_int64_t function in Util.c\n", stderr);
-		exit(-2);
-	}
-	size_t r_size = m*sizeof(int64_t);
-	// Create a chuck of contiguous memory space
-	_2DArray[0] = (int64_t*)malloc(r_size*n);
-	if(_2DArray[0] == NULL){
-		fputs("fail to malloc at copy2DArray_int64_t function in Util.c\n", stderr);
-		exit(-2);
+	// Check if the array is NULL. If so, return NULL.
+	if(arr == NULL){
+		return NULL;
 	}
 	
+	int64_t** _2DArray = create2DArray_int64_t_empty(n, m);
+	
+	size_t r_size = m*sizeof(int64_t);
 	for(size_t i=0;i<n;i++){
 		// Compute the address and assign the address to each pointer 
-		_2DArray[i] = (*_2DArray+ i* m);
+		//_2DArray[i] = (*_2DArray+ i* m);
 		memcpy(_2DArray[i], arr[i], r_size);
 	}
 	return _2DArray;

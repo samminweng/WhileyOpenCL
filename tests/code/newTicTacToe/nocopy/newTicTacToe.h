@@ -1,4 +1,5 @@
 #include "Util.h"
+#include "WyRT.h"
 #define BLANK 0
 #define CIRCLE 1
 #define CROSS 2

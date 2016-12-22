@@ -1,4 +1,5 @@
 #include "Util.h"
+#include "WyRT.h"
 #define ONE_CENT 0
 #define FIVE_CENTS 1
 #define TEN_CENTS 2

@@ -2208,8 +2208,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	private void writeIncludes() {
 		String file_name = this.config.getFilename();
-		// Writes out #include "Util.h" to test_case.h
-		String includes = "#include \"Util.h\"\n";
+		// Include "Util.h" "WyRT.h" to test_case.h
+		String includes = "#include \"Util.h\"\n"+
+						  "#include \"WyRT.h\"\n";
+		
 		try {
 			// Create a new one or over-write an existing one.
 			Files.write(Paths.get(file_name + ".h"), includes.getBytes(), StandardOpenOption.CREATE,

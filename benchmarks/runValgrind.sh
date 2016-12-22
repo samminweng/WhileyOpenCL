@@ -37,11 +37,11 @@ generateCode(){
 	if [ $enabledpattern == 1 ] 
 	then
 		### Enable pattern transformation
-		codeDir="$BENCHMARKDIR/$testcase/impl/$program/patern/$codegen"
+		codeDir="$BENCHMARKDIR/$testcase/impl/$program/C/pattern/$codegen"
 		pattern=$5
 	else
 		### Disable pattern transformation
-		codeDir="$BENCHMARKDIR/$testcase/impl/$program/nopatern/$codegen"
+		codeDir="$BENCHMARKDIR/$testcase/impl/$program/C/nopattern/$codegen"
 	fi
 	#echo $codeDir
 	#read -p "Press [Enter] to continue..."
@@ -50,14 +50,14 @@ generateCode(){
 	mkdir -p "$codeDir"
 	# copy the source whiley file to the folder
 	cp $BENCHMARKDIR/$testcase/$testcase"_"$program.whiley "$codeDir"
-	### Copy Util.c Util.h to current folder
-	cp $UTILDIR/Util.c $UTILDIR/Util.h "$codeDir"
+	### Copy Util.c Util.h WyRT.c WyRT.h to current folder
+	cp $UTILDIR/Util.c $UTILDIR/Util.h $UTILDIR/WyRT.h $UTILDIR/WyRT.c "$codeDir"
 
 	## Change to 'codeDIR'
 	cd $codeDir
 
 	### Disable pattern transformation
-	wyopcl=./../../../../../../bin/wyopcl
+	wyopcl=./../../../../../../../bin/wyopcl
 	if [ $enabledpattern == 1 ] 
 	then
 		### Enable pattern transformation
@@ -113,24 +113,24 @@ detectleaks(){
 	case "$compiler" in
 		"gcc")
 			echo -e -n "Compile C code using GCC -O3..." >> $result
-			gcc -std=c11 -g -O3 $testcase"_"$program.c Util.c -o "out/$executable"
+			gcc -std=c11 -g -O3 $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
 			;;
 		"clang")
 			echo -e -n "Compile C code using Clang -O3..." >> $result
-			clang -g -O3 -D DEBUG $testcase"_"$program.c Util.c -o "out/$executable"
+			clang -g -O3 -D DEBUG $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
 			;;
 		"polly")
 			echo "Optimize C code using Polly..." >> $result
 			pollycc -g -mllvm -polly-vectorizer=stripmine\
 					-mllvm -polly-process-unprofitable -mllvm -polly-opt-outer-coincidence=yes\
-					$testcase"_"$program.c Util.c -o "out/$executable"
+					$testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
 			;;
 		"openmp")
 			export OMP_NUM_THREADS=$num_threads
 			echo "Optimize C code using OpenMP code with $OMP_NUM_THREADS threads..." >> $result
 			pollycc -g -mllvm -polly-vectorizer=stripmine\
 					-mllvm -polly-process-unprofitable -mllvm -polly-opt-outer-coincidence=yes\
-					-mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c -o "out/$executable"
+					-mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
 			;;
 	esac
 	##read -p "Press [Enter] to continue...$parameter"
@@ -266,10 +266,10 @@ exec(){
 # exec CoinGame array 300
 
 # # ###Sobel Edge test
-init SobelEdge
-exec SobelEdge original "image32x32.pbm"
-exec SobelEdge original "image64x64.pbm"
-exec SobelEdge original "image128x128.pbm"
+#init SobelEdge
+#exec SobelEdge original "image32x32.pbm"
+#exec SobelEdge original "image64x64.pbm"
+#exec SobelEdge original "image128x128.pbm"
 
 # # ### NQueen test case
 # init NQueens
@@ -286,4 +286,7 @@ exec SobelEdge original "image128x128.pbm"
 #exec LZ77 original "medium.in"
 #exec LZ77 original "large.in"
 
+#### Cashtill test case
+init Cashtill
+exec Cashtill original 10
 

@@ -51,6 +51,11 @@ BYTE* create1DArray_BYTE(BYTE value, size_t arr_size){
 
 // Copy an array of BYTE
 BYTE* copy1DArray_BYTE(BYTE *arr, size_t size){
+	// Check if the array is NULL. If so, return NULL.
+	if(arr == NULL){
+		return NULL;
+	}
+
 	BYTE *ptr = NULL;
 	ptr = (BYTE*)malloc(size*sizeof(BYTE));
 	if(ptr == NULL){
@@ -64,6 +69,11 @@ BYTE* copy1DArray_BYTE(BYTE *arr, size_t size){
 
 //Copy an integer array
 int64_t* copy1DArray_int64_t(int64_t *arr, size_t size){
+	// Check if the array is NULL. If so, return NULL.
+	if(arr == NULL){
+		return NULL;
+	}
+
 	int64_t *ptr = NULL;
 	//Clone all the values from board array due to immutable Whiley value
 	ptr = (int64_t*) malloc(size * sizeof(int64_t));
@@ -118,11 +128,10 @@ int64_t** convertArgsToIntArray(int argc, char** args, size_t *arr_size, size_t 
 
 	// Update the output array size
 	*arr_size = argc -1;
-
+	// Array index
+	size_t index=0;
 	//Skip 1st arguement as it is the exec file name.
 	for(size_t i=1;i<argc;i++){
-		// Array index
-		size_t index=i-1;
 		// The length of each argument
 		size_t length=0;
 		// Check if the argument is an integer
@@ -172,8 +181,8 @@ int64_t** convertArgsToIntArray(int argc, char** args, size_t *arr_size, size_t 
 
 			// Update the array size with length
 			*arr_size_size = length + 1;
-
 		}
+		index++;
 	}
 
 	return arr;
@@ -210,61 +219,6 @@ bool isArrayEqual_BYTE(BYTE* arr1, size_t arr1_size, BYTE* arr2, size_t arr2_siz
 	//Both of arrays are the same. Return true
 	return true;
 }
-/*
-//Create 2D array using an array of pointers, i.e. allocating each sub-array in different memory space
-int64_t** create2DArray_int64_t(int64_t* arr, size_t n, size_t m){
-	int64_t** _2DArray = NULL;
-	// Allocate the array
-	_2DArray = (int64_t**)malloc(n*sizeof(int64_t*));
-	if(_2DArray == NULL){
-		fputs(stderr, "fail to allocate the memory at create2DArray_int64_t function in Util.c\n");
-		exit(-2);
-	}
-	int64_t size = m*sizeof(int64_t);
-	for(size_t i=0;i<n;i++){
-		// Copy the input array and assign it to matrix.
-		_2DArray[i] = (int64_t*)malloc(size);
-		if(_2DArray[i] == NULL){
-			fputs(stderr, "fail to allocate the memory at create2DArray_int64_t function in Util.c\n");
-			exit(-2);
-		}
-		memcpy(_2DArray[i], arr, size);
-	}
-	return _2DArray;
-}
-// Clone a 2D array 
-int64_t** copy2DArray_int64_t(int64_t **arr, size_t n, size_t m){
-	int64_t** _2DArray = (int64_t**)malloc(n*sizeof(int64_t*));
-	if(_2DArray == NULL){
-		fputs(stderr, "fail to malloc at copy2DArray_int64_t function in Util.c\n");
-		exit(-2);
-	}
-	int64_t size = m*sizeof(int64_t);
-	for(size_t i=0;i<n;i++){
-		// Allocate an 1D array
-		_2DArray[i] = (int64_t*)malloc(size);
-		if(_2DArray[i] == NULL){
-			fputs(stderr, "fail to allocate the memory at create2DArray_int64_t function in Util.c\n");
-			exit(-2);
-		}
-		memcpy(_2DArray[i], arr[i], size);
-	}
-	return _2DArray;
-}
-
-
-// Free 2D array 
-void free2DArray_int64_t(int64_t** ptr, size_t size){
-	// Free each sub-pointer.
-	for(int i=0;i<size;i++){
-		free(ptr[i]);
-		ptr[i] = NULL;
-	}
-	// Free upper-level pointer.
-	free(ptr);
-	ptr = NULL;
-}
-*/
 
 // Free a flat 2D array
 void free2DArray_int64_t(int64_t** ptr, size_t size){
@@ -274,14 +228,13 @@ void free2DArray_int64_t(int64_t** ptr, size_t size){
 	free(ptr);
 	ptr = NULL;
 }
-// Flatten 2D array into 1D array
-/// Given 1D array, create an 2D array of given dimensions (n * m) using one chuck of contiguous memory space
-int64_t** create2DArray_int64_t(int64_t* arr, size_t n, size_t m){
+
+int64_t** create2DArray_int64_t_empty(size_t n, size_t m){
 	int64_t** _2DArray = NULL;
 	// Allocate an array of pointers
 	_2DArray = (int64_t**)malloc(n*sizeof(int64_t*));
 	if(_2DArray == NULL){
-		fputs("fail to allocate the memory at create2DArray_int64_t function in Util.c\n", stderr);
+		fputs("fail to allocate the memory at create2DArray_int64_t_empty function in Util.c\n", stderr);
 		exit(-2);
 	}
 	// The size of each row
@@ -289,14 +242,31 @@ int64_t** create2DArray_int64_t(int64_t* arr, size_t n, size_t m){
 	// Create a chuck of contiguous memory space to store all array elements
 	_2DArray[0] = (int64_t*)malloc(r_size*n);
 	if(_2DArray[0] == NULL){
-		fputs("fail to allocate the memory at create2DArray_int64_t function in Util.c\n", stderr);
+		fputs("fail to allocate the memory at create2DArray_int64_t_empty function in Util.c\n", stderr);
 		exit(-2);
 	}
 
 	// Flatten the allocated memory to a list of pointers
 	for(size_t i=0;i<n;i++){
-		// Compute the address and assign the address to each pointer 
+		// Compute the address and assign the address to each pointer
 		_2DArray[i] = (*_2DArray+ i* m);
+	}
+
+	return _2DArray;
+}
+
+
+// Flatten 2D array into 1D array
+/// Given 1D array, create an 2D array of given dimensions (n * m) using one chuck of contiguous memory space
+int64_t** create2DArray_int64_t(int64_t* arr, size_t n, size_t m){
+	int64_t** _2DArray = create2DArray_int64_t_empty(n, m);
+
+	// The size of each row
+	size_t r_size = m*sizeof(int64_t);
+	// Flatten the allocated memory to a list of pointers
+	for(size_t i=0;i<n;i++){
+		// Compute the address and assign the address to each pointer 
+		//_2DArray[i] = (*_2DArray+ i* m);
 		// Copy the input array 'arr' to each sub-array
 		memcpy(_2DArray[i], arr, r_size);
 	}
@@ -305,22 +275,17 @@ int64_t** create2DArray_int64_t(int64_t* arr, size_t n, size_t m){
 
 /// Clone 2D flat array with given array size.
 int64_t** copy2DArray_int64_t(int64_t **arr, size_t n, size_t m){
-	int64_t** _2DArray = (int64_t**)malloc(n*sizeof(int64_t*));
-	if(_2DArray == NULL){
-		fputs("fail to malloc at copy2DArray_int64_t function in Util.c\n", stderr);
-		exit(-2);
-	}
-	size_t r_size = m*sizeof(int64_t);
-	// Create a chuck of contiguous memory space
-	_2DArray[0] = (int64_t*)malloc(r_size*n);
-	if(_2DArray[0] == NULL){
-		fputs("fail to malloc at copy2DArray_int64_t function in Util.c\n", stderr);
-		exit(-2);
+	// Check if the array is NULL. If so, return NULL.
+	if(arr == NULL){
+		return NULL;
 	}
 	
+	int64_t** _2DArray = create2DArray_int64_t_empty(n, m);
+	
+	size_t r_size = m*sizeof(int64_t);
 	for(size_t i=0;i<n;i++){
 		// Compute the address and assign the address to each pointer 
-		_2DArray[i] = (*_2DArray+ i* m);
+		//_2DArray[i] = (*_2DArray+ i* m);
 		memcpy(_2DArray[i], arr[i], r_size);
 	}
 	return _2DArray;
@@ -494,11 +459,13 @@ FILE* Reader(int64_t* arr, size_t arr_size){
 	char tmp[1024];
 	// Convert an array of ASCII code to an string
 	size_t i=0;
-	while(i<arr_size){
+	// Iterate through all the chars
+	while(arr[i] !='\0'){
 		char c = arr[i];
 		tmp[i] = c;
 		i = i + 1;
 	}
+	arr_size = i;
 	// Add the ending (null-terminated)
 	tmp[i] = '\0';
 
@@ -545,15 +512,88 @@ FILE* Writer(int64_t* arr, size_t arr_size){
 
 	return fp;
 }
+// Check if file is a pbm
+bool isPBMFile(FILE *file){
+	char* line = NULL;
+	size_t length = 0;
+	// Get the first line, which should be 'P1\n'
+	if(getline(&line, &length, file) != -1){
+		// Get line length
+		size_t len=strlen(line);
+		if(len==3){
+			// Check if line is P1
+			if(line[0]=='P' && line[1]=='1' && line[2]=='\n'){
+				return true;
+			}
+		}
+	}
 
-// Read all lines of a file and output a BYTE array
-BYTE* readAll(FILE *file, size_t* _size){
+	return false;
+}
+// Read an image as an array of bytes
+BYTE* readPBM(FILE *file, size_t* _size){
+	char* line = NULL;
+	size_t length = 0;
+	size_t width = 0;
+	size_t height = 0;
+	// Read 'width' and 'height' from a file
+	while(getline(&line, &length, file) != -1){
+		// Check if the line is a comment
+		if(line[0]!='#'){
+			sscanf(line, "%d %d\n", &width, &height);
+			break;
+		}
+	}
+
+	size_t size = width * height;
+
+	// Allocated byte array. Note the last char (EOF)
+	BYTE* arr = (BYTE*)malloc(size*sizeof(BYTE));
+	if(arr == NULL){
+		fputs("fail to allocate the array at 'readPBM' function in Util.c\n", stderr);
+		exit(-2);
+	}
+
+	// Read a file line-by-line and pyt each byte to the array
+	size_t arr_ind = 0;
+
+	char c;
+	// Read one byte
+	while((c = getc(file)) != EOF){
+		BYTE b;
+		if(c != ' ' && c != '\n'){
+			b = (BYTE)c;
+			if(b == '1'){
+				// b is an edge, represent by 'b'
+				arr[arr_ind] = (BYTE)98;
+			}else if(b == '0'){
+				// b is an space
+				arr[arr_ind] = (BYTE)32;
+			}else{
+				arr[arr_ind] = (BYTE)b;
+			}
+			arr_ind++;
+		}
+	}
+
+	*_size = size;
+
+	return arr;
+}
+
+
+// Read a file from the beginning to end
+BYTE* readFile(FILE *file, size_t* _size){
+	// Set the file position to the beginning of the file
+	rewind(file);
+
 	// Calculate the output size
 	size_t size = 0;
+
 	while(feof(file) != true){
-      BYTE c = fgetc(file);
-      //printf("%c", c);
-      size = size + 1;
+		BYTE c = fgetc(file);
+		//printf("%c", c);
+		size = size + 1;
 	}
 	// Set the file position to the beginning of the file
 	rewind(file);
@@ -575,6 +615,20 @@ BYTE* readAll(FILE *file, size_t* _size){
 
 	*_size = size;
 	return arr;
+
+}
+
+// Read all lines of a file and output a BYTE array
+BYTE* readAll(FILE *file, size_t* _size){
+	// Check if file is a pbm
+	bool ispbm=isPBMFile(file);
+
+	if(ispbm){
+		return readPBM(file, _size);
+	}else{
+		// Do the normal reading
+		return readFile(file, _size);
+	}
 }
 
 // Write an BYTE array to a file

@@ -1,4 +1,5 @@
 #include "Util.h"
+#include "WyRT.h"
 void _play_(FILE* sys, _DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int64_t n);
 int64_t _findMin_(int64_t a, int64_t b);
 int64_t _findMax_(int64_t a, int64_t b);

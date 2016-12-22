@@ -1,4 +1,5 @@
 #include "Util.h"
+#include "WyRT.h"
 #define N 20
 typedef int64_t nat;
 typedef struct{

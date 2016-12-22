@@ -207,7 +207,10 @@ public method buy(System.Console console, Cash till, Cash given, int cost) -> Ca
  * Test Harness
  */
 public method main(System.Console console):
+    // A cashtill is initialized with some coins
     Cash till = [5,3,3,1,1,3,0,0]
+    // An empty cashtill
+    //Cash till = Cash()
     console.out.print_s("Till: ")
     console.out.println_s(toString(till))
     // now, run through some sequences...
