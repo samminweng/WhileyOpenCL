@@ -608,10 +608,10 @@ public class DeallocationAnalyzer extends Analyzer {
 			return "";
 		}
 
-		FunctionOrMethod f = this.getCallingFunction(code);
+		FunctionOrMethod callingfunction = this.getCallingFunction(code);
 		int arguement = mapFunctionArgumentToCalleeRegister(register, code);
-		boolean isMutated = readwriteAnalyzer.isMutated(arguement, f);
-		boolean isReturned = returnAnalyzer.isReturned(arguement, f);
+		boolean isMutated = readwriteAnalyzer.isMutated(arguement, callingfunction);
+		boolean isReturned = returnAnalyzer.isReturned(arguement, callingfunction);
 		// Analyze the deallocation flags using live variable, read-write and return analysis
 		boolean isLive = liveAnalyzer.isLive(register, code, function);
 

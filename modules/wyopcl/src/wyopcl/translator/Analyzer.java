@@ -123,7 +123,8 @@ public abstract class Analyzer {
 			for(FunctionOrMethod func: this.module.functionOrMethods()){
 				if(func.name().equals(name)
 						&&func.type().equals(type)){
-					// Put the function name to the map
+					// Get the function
+					func = this.getFunction(func);
 					return func;
 				}
 			}
