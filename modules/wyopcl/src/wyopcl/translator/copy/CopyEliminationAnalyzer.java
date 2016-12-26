@@ -122,6 +122,8 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	protected void visit(DefaultMutableTreeNode node) {
 		FunctionOrMethod function = (FunctionOrMethod) node.getUserObject();
 		if (function != null) {
+			// Check and Get the transformed function
+			function = this.getFunction(function);
 			// Analyze whether the copy is need for each byte-code
 			for (Code code : function.body().bytecodes()) {
 				if (code instanceof Codes.Assign) {

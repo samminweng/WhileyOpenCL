@@ -151,8 +151,6 @@ public class LiveVariablesAnalysis extends Analyzer {
 	 */
 	private void computeLiveness(FunctionOrMethod function) {
 		LiveVariables liveness = new LiveVariables();
-		// Check if the function has been transformed. If so, use the transformed one.		
-		function = this.getFunction(function);
 		CFGraph cfGraph = this.getCFGraph(function);
 		if(cfGraph != null){
 			liveness.computeLiveness(function.name(), config.isVerbose(), cfGraph);
@@ -172,6 +170,8 @@ public class LiveVariablesAnalysis extends Analyzer {
 		// Apply live analysis on each calling function
 		FunctionOrMethod function = (FunctionOrMethod) node.getUserObject();
 		if(function != null){
+			// Check if the function has been transformed. If so, use the transformed one.		
+			function = this.getFunction(function);
 			computeLiveness(function);
 		}
 	}

@@ -175,29 +175,36 @@ public class ReadWriteAnalyzer extends Analyzer {
 	protected void visit(DefaultMutableTreeNode currentNode) {
 		// Compute the readwrite set for the give node
 		FunctionOrMethod function = (FunctionOrMethod) currentNode.getUserObject();
-		HashSet<Integer> store;
-		if (!stores.containsKey(function)) {
-			stores.put(function, new HashSet<Integer>());
-		}
-
+		
 		if (function != null) {
+			// Get the transformed function
+			function = this.getFunction(function);
+			
+			HashSet<Integer> store;
+			if (!stores.containsKey(function)) {
+				stores.put(function, new HashSet<Integer>());
+			}
+			
 			// Store read-write registers
 			store = stores.get(function);
 			// Go through each bytecode and add lhs register to read-write set
 			for (Code code : function.body().bytecodes()) {
 				iterateBytecode(code, store);
 			}
+			
+			// Print out the node information (path).
+			if (!currentNode.isRoot()) {
+				DefaultMutableTreeNode parent = (DefaultMutableTreeNode)currentNode.getParent();
+				if(parent.getUserObject() instanceof FunctionOrMethod){
+					System.out.println(((FunctionOrMethod)parent.getUserObject()).name() + "->" + function.name());
+				}else{
+					System.out.println(((String)parent.getUserObject()) + "->" + function.name());
+				}
+			}
+			
 		}
 
-		// Print out the node information (path).
-		if (!currentNode.isRoot()) {
-			DefaultMutableTreeNode parent = (DefaultMutableTreeNode)currentNode.getParent();
-			if(parent.getUserObject() instanceof FunctionOrMethod){
-				System.out.println(((FunctionOrMethod)parent.getUserObject()).name() + "->" + function.name());
-			}else{
-				System.out.println(((String)parent.getUserObject()) + "->" + function.name());
-			}
-		}
+		
 	}
 
 	/**

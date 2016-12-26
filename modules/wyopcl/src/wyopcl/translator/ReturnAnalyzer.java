@@ -87,8 +87,9 @@ public class ReturnAnalyzer extends Analyzer {
 	protected void visit(DefaultMutableTreeNode currentNode) {
 		// Compute the return set for the give node
 		FunctionOrMethod function = (FunctionOrMethod) currentNode.getUserObject();
-
 		if (function != null) {
+			// Get the transformed function if so.
+			function = this.getFunction(function);
 			HashSet<Integer> store;
 			if (!stores.containsKey(function)) {
 				stores.put(function, new HashSet<Integer>());
