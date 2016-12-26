@@ -50,6 +50,20 @@ public class CodeStores {
 	}
 	
 	/**
+	 * Add the transformed function byte-code to the function name map.
+	 * 
+	 * @param function
+	 * @param transformedFunction
+	 */
+	public void addTransformFunctionName(FunctionOrMethod function, FunctionOrMethod transformedFunction){
+		// Get the name of original function 
+		String name = getFunctionName(function);
+		// The name of transformed function is the same as the original one
+		this.functionNames.put(transformedFunction, name);
+	}
+	
+	
+	/**
 	 * Adds an unique number to the suffix of a function name
 	 * 
 	 * @param func_name

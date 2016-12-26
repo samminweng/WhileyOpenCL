@@ -393,11 +393,11 @@ public final class BaseTestUtil {
 				}				
 				break;
 			case 3:
-				if(options[0].equals("pattern")){
+				// Get code generation option
+				String codegen = options[0];
+				if(options[1].equals("pattern")){
 					// Get function name
-					func_name = options[1];
-					// Get code generation option
-					String codegen = options[2];
+					func_name = options[2];					
 					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "pattern_"+func_name
 							+ File.separator+codegen);
 				}else{
@@ -437,11 +437,11 @@ public final class BaseTestUtil {
 			Files.copy(wyrthfile.toPath(),
 					Paths.get(destDir + File.separator + "WyRT.h"));
 			
-			// (Optional) Copy 'small.in' to destDir  
+			// (Optional) Copy 'medium.in' to destDir  
 			if(testcase.equals("lz77") || testcase.equals("lz77_2")){
 				// 'small.in
-				File smallin = new File(sourceDir + File.separator + "small.in");
-				Files.copy(smallin.toPath(), Paths.get(destDir + File.separator + "small.in"));
+				File small = new File(sourceDir + File.separator + "small.in");
+				Files.copy(small.toPath(), Paths.get(destDir + File.separator + "small.in"));
 				
 			}else if (testcase.equals("fileread") || testcase.equals("fileread2")
 					|| testcase.equals("SobelEdge1") || testcase.equals("SobelEdge2")){

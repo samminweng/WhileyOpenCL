@@ -265,12 +265,6 @@ exec(){
 # exec CoinGame array 200
 # exec CoinGame array 300
 
-# # ###Sobel Edge test
-#init SobelEdge
-#exec SobelEdge original "image32x32.pbm"
-#exec SobelEdge original "image64x64.pbm"
-#exec SobelEdge original "image128x128.pbm"
-
 # # ### NQueen test case
 # init NQueens
 # exec NQueens original 8
@@ -280,13 +274,21 @@ exec(){
 # exec NQueens integer 9
 # exec NQueens integer 10
 
+# # ###Sobel Edge test
+init SobelEdge
+exec SobelEdge original "image32x32.pbm"
+exec SobelEdge original "image64x64.pbm"
+exec SobelEdge original "image128x128.pbm"
+
 # # ####LZ77 test case
-#init LZ77
-#exec LZ77 original "small.in"
-#exec LZ77 original "medium.in"
+init LZ77
+exec LZ77 original "small.in"
+exec LZ77 original "medium.in"
 #exec LZ77 original "large.in"
 
 #### Cashtill test case
 init Cashtill
+exec Cashtill original 1
 exec Cashtill original 10
+exec Cashtill original 100
 

@@ -170,13 +170,22 @@ compileAndRun(){
 				timeout $TIMEOUT "out/$executable" $parameter $width > "$BENCHMARKDIR/$testcase/image/output/$codegen/output$widthx$width.pbm"
 				##read -p "Press [Enter] to continue..."
 			else
-				## Other cases
-				timeout $TIMEOUT "out/$executable" $parameter >> $result
+				if [ $testcase = "Cashtill" ]
+				then 
+					### Output the result to console without writing it to the file
+					timeout $TIMEOUT "out/$executable" $parameter
+				else
+					## Other cases
+					timeout $TIMEOUT "out/$executable" $parameter >> $result
+				fi
 			fi
 		fi
-		end=`date +%s%N`
-		exectime=$((end-start))
-		printf '\nParameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter $exectime >> $result
+		## Check exit status
+		if [ "$?" = "0" ]; then
+			end=`date +%s%N`
+			exectime=$((end-start))
+			printf '\nParameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter $exectime >> $result
+		fi
 		echo "Finish $i iteration" >> $result
 	done
 	### Output the hardware info.
@@ -287,17 +296,6 @@ exec(){
 # # exec CoinGame array 2000
 # # exec CoinGame array 3000
 
-
-# # ###Sobel Edge test
-#init SobelEdge
-#exec SobelEdge original "image32x32.pbm"
-#exec SobelEdge original "image64x64.pbm"
-#exec SobelEdge original "image128x128.pbm"
-#exec SobelEdge original "image256x256.pbm"
-#exec SobelEdge original "image512x512.pbm"
-#exec SobelEdge original "image1024x1024.pbm"
-
-
 # ## NQueen test case
 # init NQueens
 # exec NQueens original 8
@@ -310,12 +308,24 @@ exec(){
 # exec NQueens integer 12
 # exec NQueens integer 14
 
+# # ###Sobel Edge test
+init SobelEdge
+exec SobelEdge original "image32x32.pbm"
+exec SobelEdge original "image64x64.pbm"
+exec SobelEdge original "image128x128.pbm"
+exec SobelEdge original "image256x256.pbm"
+exec SobelEdge original "image512x512.pbm"
+exec SobelEdge original "image1024x1024.pbm"
+
 #### LZ77 test case
-#init LZ77
-#exec LZ77 original "small.in"
-#exec LZ77 original "medium.in"
-#exec LZ77 original "large.in"
+init LZ77
+exec LZ77 original "small.in"
+exec LZ77 original "medium.in"
+exec LZ77 original "large.in"
 
 ### Cashtill test case
 init Cashtill
-exec Cashtill original 10
+exec Cashtill original 100
+exec Cashtill original 1000
+exec Cashtill original 10000
+exec Cashtill original 100000

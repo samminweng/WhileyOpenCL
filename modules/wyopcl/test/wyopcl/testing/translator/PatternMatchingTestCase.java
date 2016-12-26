@@ -48,36 +48,36 @@ public class PatternMatchingTestCase {
 		
 		// Add a list of test cases
 		return Arrays.asList(new String[][] {
-				{"WhileLoop", "f"},
-				{"WhileLoop1", "foo"},
-				{"AppendArray", "f"},
+				//{"WhileLoop", "f"},
+				//{"WhileLoop1", "foo"},
+				//{"AppendArray", "f"},
 				{"lz77", "compress"},
-				{"lz77", "decompress"}
+				//{"lz77", "decompress"}
 		});
 	}
 	
 	@Test
 	public void testPatternNaiveCCode(){
 		System.out.print("Pattern: "+func_name+" function on naive C code \n");
-		util.execCodeGeneration(codeDir, testcase, "pattern", func_name, "naive");	
+		util.execCodeGeneration(codeDir, testcase, "naive", "pattern", func_name);	
 	}
 
 	@Test
 	public void testPatternNaiveDeallocatedCCode(){
 		System.out.print("Pattern: "+func_name+" function on naive + deallocated C code \n");
-		util.execCodeGeneration(codeDir, testcase, "pattern", func_name, "dealloc");	
+		util.execCodeGeneration(codeDir, testcase, "dealloc", "pattern", func_name);	
 	}
 	
 	@Test
 	public void testPatternNoCopyCCode() {
 		System.out.print("Pattern: "+func_name+" function on copy reduced C code \n");
-		util.execCodeGeneration(codeDir, testcase, "pattern", func_name, "nocopy");
+		util.execCodeGeneration(codeDir, testcase, "nocopy", "pattern", func_name);
 	}
 	
 	@Test
 	public void testPatternNoCopyDeallocatedCCode() {
 		System.out.print("Copy reduced + deallocated C code \n");
-		util.execCodeGeneration(codeDir, testcase, "pattern", func_name, "nocopy", "dealloc");
+		util.execCodeGeneration(codeDir, testcase, "nocopy", "dealloc", "pattern", func_name);
 	}
 	
 }

@@ -75,11 +75,24 @@ public abstract class Analyzer {
 			// Check if the function is transformed 
 			function = this.getFunction(function);
 			this.buildCFG(function);
+			
 		}
+		
+		// Build up CFG for transformed function
+		if(transformFuncMap.isPresent()){
+			for(FunctionOrMethod transformedFunction : transformFuncMap.get().values()){
+				this.buildCFG(transformedFunction);
+			}
+		}
+		
+		
 	}
 
+	
+	
+	
 	/**
-	 * Get the function by name
+	 * Get the function. If the function has been transformed, then return the transformed one.
 	 * 
 	 * @param name
 	 * @return function. Return null if the function is not defined in whiley program.

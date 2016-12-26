@@ -60,7 +60,7 @@ BEGIN {
 	filename = "";
 	FS = "\n";
 	## Test case name
-	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult LZ77 SobelEdge";
+	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult LZ77 SobelEdge Cashtill";
 	###testcases="Reverse newTicTacToe BubbleSort MatrixMult Fibonacci GCD CoinGame SobelEdge MergeSort NQueens LZ77";
 
 	## Program Type
@@ -78,6 +78,7 @@ BEGIN {
 	# programs["NQueens"]="original integer";
 	# ### Pattern transformation
 	programs["LZ77"]="original";
+	programs["Cashtill"]="original";
 
 	# Code Generation
 	codegens = "naive naive_dealloc nocopy nocopy_dealloc";
@@ -101,6 +102,7 @@ BEGIN {
 	# parameters["NQueens"]="8 10 12 14";
 	# ### pattern transformation
 	parameters["LZ77"]="small medium large";
+	parameters["Cashtill"]="1000 10000 100000";
 
 	# The number of threads
 	#threads="1 2 4";
@@ -142,7 +144,8 @@ BEGIN {
 	}
 	
 	key=testcase","program","codegen","pattern","compiler","parameter","thread;
-	##print "key="key;
+	print "key="key;
+	pause();
 	
 	# Get the execution time
 	if($1 ~ /ExecutionTime:/){

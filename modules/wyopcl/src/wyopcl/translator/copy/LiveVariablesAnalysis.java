@@ -25,6 +25,7 @@ import wyil.util.dfa.BackwardFlowAnalysis;
 import wyopcl.Configuration;
 import wyopcl.translator.Analyzer;
 import wyopcl.translator.cfg.BasicBlock;
+import wyopcl.translator.cfg.CFGraph;
 
 /**
  * Implements Live variable analyzer to check if a register is alive or dead after a code of the function.
@@ -150,12 +151,19 @@ public class LiveVariablesAnalysis extends Analyzer {
 	 */
 	private void computeLiveness(FunctionOrMethod function) {
 		LiveVariables liveness = new LiveVariables();
-		liveness.computeLiveness(function.name(), config.isVerbose(), this.getCFGraph(function));
-		// Store the liveness analysis for the function.
-		livenessStore.put(function, liveness);
-		// Print out analysis result
-		if (config.isVerbose()) {
-			printLivenss(function);
+		// Check if the function has been transformed. If so, use the transformed one.		
+		function = this.getFunction(function);
+		CFGraph cfGraph = this.getCFGraph(function);
+		if(cfGraph != null){
+			liveness.computeLiveness(function.name(), config.isVerbose(), cfGraph);
+			// Store the liveness analysis for the function.
+			livenessStore.put(function, liveness);
+			// Print out analysis result
+			if (config.isVerbose()) {
+				printLivenss(function);
+			}
+		}else{
+			throw new RuntimeException("Not building CFG for "+function);
 		}
 	}
 

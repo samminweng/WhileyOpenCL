@@ -90,14 +90,18 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Check if the function is transformed
 			if(transformFuncMap.isPresent()&& transformFuncMap.get().containsKey(function)){
 				// Get the transformed function
-				FunctionOrMethod transformFunc = transformFuncMap.get().get(function);
+				FunctionOrMethod transformedFunc = transformFuncMap.get().get(function);
+				
+				// Add the function name to the transformed function
+				stores.addTransformFunctionName(function, transformedFunc);
+				
 				// Generate the function block
-				for (Code code : transformFunc.body().bytecodes()) {
+				for (Code code : transformedFunc.body().bytecodes()) {
 					// Iterate and translate each code into the target language.
-					this.iterateCode(code, transformFunc);
+					this.iterateCode(code, transformedFunc);
 				}
 				// Write the code
-				this.writeFunction(transformFunc);				
+				this.writeFunction(transformedFunc);				
 			}else{
 				// Generate the function block
 				for (Code code : function.body().bytecodes()) {
