@@ -1,36 +1,44 @@
-==4349== Memcheck, a memory error detector
-==4349== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==4349== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==4349== Command: ./out/LZ77.original.naive.disabledpattern.gcc.1.small.in.out /home/mw169/workspace/WhileyOpenCL/benchmarks/LZ77/small.in
-==4349== Parent PID: 4290
-==4349== 
-==4349== Conditional jump or move depends on uninitialised value(s)
-==4349==    at 0x403CA5: printf_s (Util.c:362)
-==4349==    by 0x403CA5: println_s (Util.c:376)
-==4349==    by 0x400C40: main (LZ77_original.c:603)
-==4349== 
-==4349== Conditional jump or move depends on uninitialised value(s)
-==4349==    at 0x4019CA: _match_ (LZ77_original.c:60)
-==4349==    by 0x4019CA: _findLongestMatch_ (LZ77_original.c:140)
-==4349==    by 0x4019CA: _compress_ (LZ77_original.c:321)
-==4349==    by 0x400CB2: main (LZ77_original.c:625)
-==4349== 
-==4349== 
-==4349== HEAP SUMMARY:
-==4349==     in use at exit: 24,560 bytes in 786 blocks
-==4349==   total heap usage: 787 allocs, 1 frees, 24,620 bytes allocated
-==4349== 
-==4349== LEAK SUMMARY:
-==4349==    definitely lost: 23,481 bytes in 783 blocks
-==4349==    indirectly lost: 480 bytes in 1 blocks
-==4349==      possibly lost: 0 bytes in 0 blocks
-==4349==    still reachable: 599 bytes in 2 blocks
-==4349==         suppressed: 0 bytes in 0 blocks
-==4349== Rerun with --leak-check=full to see details of leaked memory
-==4349== 
-==4349== For counts of detected and suppressed errors, rerun with: -v
-==4349== Use --track-origins=yes to see where uninitialised values come from
-==4349== ERROR SUMMARY: 31 errors from 2 contexts (suppressed: 0 from 0)
+==15517== Memcheck, a memory error detector
+==15517== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==15517== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==15517== Command: ./out/LZ77.original.naive.disabledpattern.gcc.1.small.in.out /home/mw169/workspace/WhileyOpenCL/benchmarks/LZ77/small.in
+==15517== Parent PID: 4290
+==15517== 
+==15517== Invalid read of size 8
+==15517==    at 0x40426A: Reader (Util.c:463)
+==15517==    by 0x400B32: main (LZ77_original.c:574)
+==15517==  Address 0x51fc270 is 0 bytes after a block of size 480 alloc'd
+==15517==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15517==    by 0x402F8E: convertArgsToIntArray (Util.c:170)
+==15517==    by 0x400B25: main (LZ77_original.c:566)
+==15517== 
+==15517== Conditional jump or move depends on uninitialised value(s)
+==15517==    at 0x403C55: printf_s (Util.c:362)
+==15517==    by 0x403C55: println_s (Util.c:376)
+==15517==    by 0x400BF0: main (LZ77_original.c:603)
+==15517== 
+==15517== Conditional jump or move depends on uninitialised value(s)
+==15517==    at 0x40197A: _match_ (LZ77_original.c:60)
+==15517==    by 0x40197A: _findLongestMatch_ (LZ77_original.c:140)
+==15517==    by 0x40197A: _compress_ (LZ77_original.c:321)
+==15517==    by 0x400C62: main (LZ77_original.c:625)
+==15517== 
+==15517== 
+==15517== HEAP SUMMARY:
+==15517==     in use at exit: 24,440 bytes in 785 blocks
+==15517==   total heap usage: 786 allocs, 1 frees, 24,500 bytes allocated
+==15517== 
+==15517== LEAK SUMMARY:
+==15517==    definitely lost: 23,361 bytes in 782 blocks
+==15517==    indirectly lost: 480 bytes in 1 blocks
+==15517==      possibly lost: 0 bytes in 0 blocks
+==15517==    still reachable: 599 bytes in 2 blocks
+==15517==         suppressed: 0 bytes in 0 blocks
+==15517== Rerun with --leak-check=full to see details of leaked memory
+==15517== 
+==15517== For counts of detected and suppressed errors, rerun with: -v
+==15517== Use --track-origins=yes to see where uninitialised values come from
+==15517== ERROR SUMMARY: 32 errors from 3 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -38,7 +46,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3799.234
+cpu MHz		: 3889.148
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -65,7 +73,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3862.851
+cpu MHz		: 3400.132
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -92,7 +100,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3833.500
+cpu MHz		: 3400.132
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -119,7 +127,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3882.906
+cpu MHz		: 3537.726
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -146,7 +154,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3477.429
+cpu MHz		: 3892.203
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -173,7 +181,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3872.281
+cpu MHz		: 3677.843
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -200,7 +208,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3704.539
+cpu MHz		: 3893.265
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -227,7 +235,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3898.976
+cpu MHz		: 3793.390
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

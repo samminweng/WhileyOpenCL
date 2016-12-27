@@ -460,10 +460,14 @@ FILE* Reader(int64_t* arr, size_t arr_size){
 	// Convert an array of ASCII code to an string
 	size_t i=0;
 	// Iterate through all the chars
-	while(i < arr_size){
+	while(i < arr_size || arr[i] != '\0'){
 		char c = arr[i];
 		tmp[i] = c;
 		i = i + 1;
+	}
+
+	if(i > arr_size){
+		arr_size = i;
 	}
 
 	// Declare the filename with given array size
@@ -532,14 +536,16 @@ bool isPBMFile(FILE *file){
 }
 // Read an image as an array of bytes
 BYTE* readPBM(FILE *file, size_t* _size){
-	char* line = NULL;
-	size_t length = 0;
+	char line[MAX_LINE_LENGTH];
+	size_t length = MAX_LINE_LENGTH;
 	size_t width = 0;
 	size_t height = 0;
 	// Read 'width' and 'height' from a file
-	while(getline(&line, &length, file) != -1){
+	//while(getline(&line, &length, file) != -1){
+	while(fgets(line, length, file) != NULL){
 		// Check if the line is a comment
 		if(line[0]!='#'){
+			// Read the height and width
 			sscanf(line, "%d %d\n", &width, &height);
 			break;
 		}

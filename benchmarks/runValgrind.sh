@@ -275,10 +275,10 @@ exec(){
 # exec NQueens integer 10
 
 # # ###Sobel Edge test
-#init SobelEdge
-#exec SobelEdge original "image32x32.pbm"
-#exec SobelEdge original "image64x64.pbm"
-#exec SobelEdge original "image128x128.pbm"
+init SobelEdge
+exec SobelEdge original "image32x32.pbm"
+exec SobelEdge original "image64x64.pbm"
+exec SobelEdge original "image128x128.pbm"
 
 # # ####LZ77 test case
 init LZ77
@@ -287,8 +287,8 @@ exec LZ77 original "medium.in"
 #exec LZ77 original "large.in"
 
 # #### Cashtill test case
-#init Cashtill
-#exec Cashtill original 1
-#exec Cashtill original 10
-#exec Cashtill original 100
+init Cashtill
+exec Cashtill original 1
+exec Cashtill original 10
+exec Cashtill original 100
 
