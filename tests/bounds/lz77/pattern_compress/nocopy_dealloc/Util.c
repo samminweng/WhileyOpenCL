@@ -466,9 +466,10 @@ FILE* Reader(int64_t* arr, size_t arr_size){
 		i = i + 1;
 	}
 
-	char filename[arr_size];
+	// Declare the filename with given array size
+	char* filename = malloc(arr_size*sizeof(char));
 	// Copy 'tmp' string to filename;
-	strcpy(filename, tmp);
+	strncpy(filename, tmp, arr_size);
 	//printf("%s\n", filename);
 
 	// Open a file pointer
@@ -477,6 +478,9 @@ FILE* Reader(int64_t* arr, size_t arr_size){
 		fputs("fail to open the file name at 'Reader' function in Util.c\n", stderr);
 		exit(-2);
 	}
+
+	// Free the file name.
+	free(filename);
 
 	return fp;
 }

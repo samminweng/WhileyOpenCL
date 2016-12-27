@@ -393,9 +393,9 @@ public final class BaseTestUtil {
 				}				
 				break;
 			case 3:
-				// Get code generation option
-				String codegen = options[0];
 				if(options[1].equals("pattern")){
+					// Get code generation option
+					String codegen = options[0];
 					// Get function name
 					func_name = options[2];					
 					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "pattern_"+func_name
@@ -405,12 +405,15 @@ public final class BaseTestUtil {
 				}
 				break;
 			case 4:
+				
 				// Generate the patten + no copy + deallocated c code
-				if(options[0].equals("pattern")){
+				if(options[2].equals("pattern")){
+					String nocopy = options[0];
+					String dealloc = options[1];
 					// Get function name
-					func_name = options[1];
+					func_name = options[3];
 					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "pattern_"+func_name
-							+ File.separator+"nocopy_dealloc");
+							+ File.separator+nocopy+"_"+dealloc);
 				}else{
 					throw new RuntimeException("Not implemented");
 				}
