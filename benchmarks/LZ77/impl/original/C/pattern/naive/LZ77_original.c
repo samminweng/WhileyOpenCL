@@ -273,7 +273,7 @@ blklab10:;
 	//return
 }
 
-BYTE* null(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* _compress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(output);
 	int64_t pos = 0;
 	Match* m;

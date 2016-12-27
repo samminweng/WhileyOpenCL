@@ -460,18 +460,16 @@ FILE* Reader(int64_t* arr, size_t arr_size){
 	// Convert an array of ASCII code to an string
 	size_t i=0;
 	// Iterate through all the chars
-	while(arr[i] !='\0'){
+	while(i < arr_size){
 		char c = arr[i];
 		tmp[i] = c;
 		i = i + 1;
 	}
-	arr_size = i;
-	// Add the ending (null-terminated)
-	tmp[i] = '\0';
 
-	char filename[arr_size+1];
+	// Declare the filename with given array size
+	char* filename = malloc(arr_size*sizeof(char));
 	// Copy 'tmp' string to filename;
-	strcpy(filename, tmp);
+	strncpy(filename, tmp, arr_size);
 	//printf("%s\n", filename);
 
 	// Open a file pointer
@@ -480,6 +478,9 @@ FILE* Reader(int64_t* arr, size_t arr_size){
 		fputs("fail to open the file name at 'Reader' function in Util.c\n", stderr);
 		exit(-2);
 	}
+
+	// Free the file name.
+	free(filename);
 
 	return fp;
 }

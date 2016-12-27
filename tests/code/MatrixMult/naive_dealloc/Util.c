@@ -515,11 +515,9 @@ FILE* Writer(int64_t* arr, size_t arr_size){
 }
 // Check if file is a pbm
 bool isPBMFile(FILE *file){
-	char* line = NULL;
-	size_t length = 0;
-	size_t line_len; // Get the length of a line
+	char line[1024];
 	// Get the first line, which should be 'P1\n'
-	if((line_len = getline(&line, &length, file))!= -1){
+	if(fgets(line, 1024, file)!= NULL){
 		// Get line length
 		size_t len=strlen(line);
 		if(len==3){
