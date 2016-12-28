@@ -20,7 +20,7 @@ function generateReport(results){
 			for(cr=1;cr<=compilers_total;cr++){
 				compiler=compiler_array[cr];
 				## Get pattern 
-				patterns_total=split(patterns, pattern_array, " ");
+				patterns_total=split(patterns[testcase], pattern_array, " ");
 				for(pt=1; pt<=patterns_total;pt++){
 					pattern=pattern_array[pt];
 					# Get the parameter
@@ -43,9 +43,14 @@ function generateReport(results){
 									## Print out result, e.g. CPU utilization
 				 					for(iteration=1;iteration<=10;iteration++){
 				 						str = str"\t"results[key","iteration];
+				 					}				 					
+				 				}else{
+				 					## No results are found. 
+				 					for(iteration=1;iteration<=10;iteration++){
+				 						str = str"\tNaN";
 				 					}
-				 					print str;
 				 				}
+				 				print str;
 							}
 						}
 					}
@@ -83,10 +88,17 @@ BEGIN {
 	# Code Generation
 	codegens = "naive naive_dealloc nocopy nocopy_dealloc";
 	# Pattern matching 
-	patterns = "disabled enabled";
+	patterns["Reverse"] = "disabled";
+	patterns["newTicTacToe"] = "disabled";
+	patterns["BubbleSort"] = "disabled";
+	patterns["MergeSort"] = "disabled";
+	patterns["MatrixMult"] = "disabled";
+	patterns["LZ77"] = "disabled enabled";
+	patterns["SobelEdge"] = "disabled";
+	patterns["Cashtill"] = "disabled";
 	# Compiler
 	#compilers = "gcc clang polly openmp";
-	compilers = "Java gcc";
+	compilers = "gcc";
 	### Parameter
 	# Parameter
 	parameters["Reverse"]="100000 1000000 10000000";
@@ -144,8 +156,8 @@ BEGIN {
 	}
 	
 	key=testcase","program","codegen","pattern","compiler","parameter","thread;
-	print "key="key;
-	pause();
+	##print "key="key;
+	##pause();
 	
 	# Get the execution time
 	if($1 ~ /ExecutionTime:/){
