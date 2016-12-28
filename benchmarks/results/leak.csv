@@ -20,9 +20,9 @@ newTicTacToe	original	gcc	disabled	10000	naive	1	18240192	9359832	96	168
 newTicTacToe	original	gcc	disabled	10000	naive_dealloc	1	0	0	0	0
 newTicTacToe	original	gcc	disabled	10000	nocopy	1	15360208	5039904	0	168
 newTicTacToe	original	gcc	disabled	10000	nocopy_dealloc	1	0	0	0	0
-newTicTacToe	original	gcc	disabled	100000	naive	1	182399976	93599768	384	168
+newTicTacToe	original	gcc	disabled	100000	naive	1	182400120	93599840	168	168
 newTicTacToe	original	gcc	disabled	100000	naive_dealloc	1	0	0	0	0
-newTicTacToe	original	gcc	disabled	100000	nocopy	1	153600112	50399840	168	168
+newTicTacToe	original	gcc	disabled	100000	nocopy	1	153600160	50399768	192	168
 newTicTacToe	original	gcc	disabled	100000	nocopy_dealloc	1	0	0	0	0
 BubbleSort	original	gcc	disabled	1000	naive	1	24224	40	0	8000
 BubbleSort	original	gcc	disabled	1000	naive_dealloc	1	0	0	0	0
@@ -44,7 +44,7 @@ MergeSort	original	gcc	disabled	10000	naive	1	4515928	48	0	80000
 MergeSort	original	gcc	disabled	10000	naive_dealloc	1	0	0	0	0
 MergeSort	original	gcc	disabled	10000	nocopy	1	1069136	48	0	80000
 MergeSort	original	gcc	disabled	10000	nocopy_dealloc	1	0	0	0	0
-MergeSort	original	gcc	disabled	100000	naive	1	55648048	56	157864	800000
+MergeSort	original	gcc	disabled	100000	naive	1	55655896	56	150016	800000
 MergeSort	original	gcc	disabled	100000	naive_dealloc	1	0	0	0	0
 MergeSort	original	gcc	disabled	100000	nocopy	1	13351536	56	96	800000
 MergeSort	original	gcc	disabled	100000	nocopy_dealloc	1	0	0	0	0
@@ -64,7 +64,7 @@ LZ77	original	gcc	disabled	small	naive	1	23361	480	0	599
 LZ77	original	gcc	disabled	small	naive_dealloc	1	0	0	0	0
 LZ77	original	gcc	disabled	small	nocopy	1	2791	480	0	599
 LZ77	original	gcc	disabled	small	nocopy_dealloc	1	0	0	0	0
-LZ77	original	gcc	disabled	medium	naive	1	278906646	488	15820	2150
+LZ77	original	gcc	disabled	medium	naive	1	278903482	488	18984	2150
 LZ77	original	gcc	disabled	medium	naive_dealloc	1	0	0	0	0
 LZ77	original	gcc	disabled	medium	nocopy	1	1230568	488	0	2150
 LZ77	original	gcc	disabled	medium	nocopy_dealloc	1	0	0	0	0
@@ -72,7 +72,7 @@ LZ77	original	gcc	enabled	small	naive	1	16935	480	0	599
 LZ77	original	gcc	enabled	small	naive_dealloc	1	0	0	0	0
 LZ77	original	gcc	enabled	small	nocopy	1	1200	480	0	599
 LZ77	original	gcc	enabled	small	nocopy_dealloc	1	0	0	0	0
-LZ77	original	gcc	enabled	medium	naive	1	274100252	488	17402	2150
+LZ77	original	gcc	enabled	medium	naive	1	274101834	488	15820	2150
 LZ77	original	gcc	enabled	medium	naive_dealloc	1	0	0	0	0
 LZ77	original	gcc	enabled	medium	nocopy	1	30156	488	0	2150
 LZ77	original	gcc	enabled	medium	nocopy_dealloc	1	0	0	0	0

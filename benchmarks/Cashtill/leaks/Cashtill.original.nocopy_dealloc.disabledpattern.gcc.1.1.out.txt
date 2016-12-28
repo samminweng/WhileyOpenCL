@@ -1,37 +1,37 @@
-==16456== Memcheck, a memory error detector
-==16456== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==16456== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==16456== Command: ./out/Cashtill.original.nocopy_dealloc.disabledpattern.gcc.1.1.out 1
-==16456== Parent PID: 4290
-==16456== 
-==16456== Conditional jump or move depends on uninitialised value(s)
-==16456==    at 0x403F15: printf_s (Util.c:362)
-==16456==    by 0x403F15: println_s (Util.c:376)
-==16456==    by 0x4024ED: _buy_ (Cashtill_original.c:871)
-==16456==    by 0x400D8D: main (Cashtill_original.c:1224)
-==16456== 
-==16456== Conditional jump or move depends on uninitialised value(s)
-==16456==    at 0x403F15: printf_s (Util.c:362)
-==16456==    by 0x403F15: println_s (Util.c:376)
-==16456==    by 0x4024ED: _buy_ (Cashtill_original.c:871)
-==16456==    by 0x400E49: main (Cashtill_original.c:1252)
-==16456== 
-==16456== Conditional jump or move depends on uninitialised value(s)
-==16456==    at 0x403F15: printf_s (Util.c:362)
-==16456==    by 0x403F15: println_s (Util.c:376)
-==16456==    by 0x4024ED: _buy_ (Cashtill_original.c:871)
-==16456==    by 0x400FC3: main (Cashtill_original.c:1308)
-==16456== 
-==16456== 
-==16456== HEAP SUMMARY:
-==16456==     in use at exit: 0 bytes in 0 blocks
-==16456==   total heap usage: 131 allocs, 131 frees, 8,536 bytes allocated
-==16456== 
-==16456== All heap blocks were freed -- no leaks are possible
-==16456== 
-==16456== For counts of detected and suppressed errors, rerun with: -v
-==16456== Use --track-origins=yes to see where uninitialised values come from
-==16456== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
+==14938== Memcheck, a memory error detector
+==14938== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==14938== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==14938== Command: ./out/Cashtill.original.nocopy_dealloc.disabledpattern.gcc.1.1.out 1
+==14938== Parent PID: 4421
+==14938== 
+==14938== Conditional jump or move depends on uninitialised value(s)
+==14938==    at 0x403F15: printf_s (Util.c:362)
+==14938==    by 0x403F15: println_s (Util.c:376)
+==14938==    by 0x4024ED: _buy_ (Cashtill_original.c:871)
+==14938==    by 0x400D8D: main (Cashtill_original.c:1224)
+==14938== 
+==14938== Conditional jump or move depends on uninitialised value(s)
+==14938==    at 0x403F15: printf_s (Util.c:362)
+==14938==    by 0x403F15: println_s (Util.c:376)
+==14938==    by 0x4024ED: _buy_ (Cashtill_original.c:871)
+==14938==    by 0x400E49: main (Cashtill_original.c:1252)
+==14938== 
+==14938== Conditional jump or move depends on uninitialised value(s)
+==14938==    at 0x403F15: printf_s (Util.c:362)
+==14938==    by 0x403F15: println_s (Util.c:376)
+==14938==    by 0x4024ED: _buy_ (Cashtill_original.c:871)
+==14938==    by 0x400FC3: main (Cashtill_original.c:1308)
+==14938== 
+==14938== 
+==14938== HEAP SUMMARY:
+==14938==     in use at exit: 0 bytes in 0 blocks
+==14938==   total heap usage: 131 allocs, 131 frees, 8,536 bytes allocated
+==14938== 
+==14938== All heap blocks were freed -- no leaks are possible
+==14938== 
+==14938== For counts of detected and suppressed errors, rerun with: -v
+==14938== Use --track-origins=yes to see where uninitialised values come from
+==14938== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -39,7 +39,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3739.070
+cpu MHz		: 3860.195
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -66,7 +66,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3719.015
+cpu MHz		: 3793.921
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -93,7 +93,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3874.140
+cpu MHz		: 3895.125
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -120,7 +120,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3887.554
+cpu MHz		: 3809.593
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -147,7 +147,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3699.890
+cpu MHz		: 3641.187
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -174,7 +174,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3800.031
+cpu MHz		: 3734.156
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -201,7 +201,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3887.421
+cpu MHz		: 3895.523
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -228,7 +228,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3831.906
+cpu MHz		: 3601.476
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

@@ -1,36 +1,36 @@
-==14956== Memcheck, a memory error detector
-==14956== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==14956== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==14956== Command: ./out/SobelEdge.original.naive_dealloc.disabledpattern.gcc.1.image32x32.pbm.out image32x32.pbm 32
-==14956== Parent PID: 4290
-==14956== 
-==14956== Syscall param open(filename) points to unaddressable byte(s)
-==14956==    at 0x4F224C0: __open_nocancel (syscall-template.S:81)
-==14956==    by 0x4EB0EC7: _IO_file_open (fileops.c:228)
-==14956==    by 0x4EB0EC7: _IO_file_fopen@@GLIBC_2.2.5 (fileops.c:333)
-==14956==    by 0x4EA53D3: __fopen_internal (iofopen.c:90)
-==14956==    by 0x402E7A: Reader (Util.c:480)
-==14956==    by 0x400BE9: main (SobelEdge_original.c:649)
-==14956==  Address 0x51fc1be is 0 bytes after a block of size 14 alloc'd
-==14956==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==14956==    by 0x402E5C: Reader (Util.c:474)
-==14956==    by 0x400BE9: main (SobelEdge_original.c:649)
-==14956== 
-==14956== 
-==14956== HEAP SUMMARY:
-==14956==     in use at exit: 48 bytes in 2 blocks
-==14956==   total heap usage: 5,175 allocs, 5,173 frees, 2,261,198 bytes allocated
-==14956== 
-==14956== LEAK SUMMARY:
-==14956==    definitely lost: 48 bytes in 2 blocks
-==14956==    indirectly lost: 0 bytes in 0 blocks
-==14956==      possibly lost: 0 bytes in 0 blocks
-==14956==    still reachable: 0 bytes in 0 blocks
-==14956==         suppressed: 0 bytes in 0 blocks
-==14956== Rerun with --leak-check=full to see details of leaked memory
-==14956== 
-==14956== For counts of detected and suppressed errors, rerun with: -v
-==14956== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==13438== Memcheck, a memory error detector
+==13438== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==13438== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==13438== Command: ./out/SobelEdge.original.naive_dealloc.disabledpattern.gcc.1.image32x32.pbm.out image32x32.pbm 32
+==13438== Parent PID: 4421
+==13438== 
+==13438== Syscall param open(filename) points to unaddressable byte(s)
+==13438==    at 0x4F224C0: __open_nocancel (syscall-template.S:81)
+==13438==    by 0x4EB0EC7: _IO_file_open (fileops.c:228)
+==13438==    by 0x4EB0EC7: _IO_file_fopen@@GLIBC_2.2.5 (fileops.c:333)
+==13438==    by 0x4EA53D3: __fopen_internal (iofopen.c:90)
+==13438==    by 0x402E7A: Reader (Util.c:480)
+==13438==    by 0x400BE9: main (SobelEdge_original.c:649)
+==13438==  Address 0x51fc1be is 0 bytes after a block of size 14 alloc'd
+==13438==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13438==    by 0x402E5C: Reader (Util.c:474)
+==13438==    by 0x400BE9: main (SobelEdge_original.c:649)
+==13438== 
+==13438== 
+==13438== HEAP SUMMARY:
+==13438==     in use at exit: 48 bytes in 2 blocks
+==13438==   total heap usage: 5,177 allocs, 5,175 frees, 4,358,350 bytes allocated
+==13438== 
+==13438== LEAK SUMMARY:
+==13438==    definitely lost: 48 bytes in 2 blocks
+==13438==    indirectly lost: 0 bytes in 0 blocks
+==13438==      possibly lost: 0 bytes in 0 blocks
+==13438==    still reachable: 0 bytes in 0 blocks
+==13438==         suppressed: 0 bytes in 0 blocks
+==13438== Rerun with --leak-check=full to see details of leaked memory
+==13438== 
+==13438== For counts of detected and suppressed errors, rerun with: -v
+==13438== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -38,7 +38,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3673.460
+cpu MHz		: 3773.335
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -65,7 +65,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3837.351
+cpu MHz		: 3874.273
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -92,7 +92,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.640
+cpu MHz		: 3899.375
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -119,7 +119,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3865.640
+cpu MHz		: 3897.781
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -146,7 +146,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3781.968
+cpu MHz		: 3424.968
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -173,7 +173,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3847.843
+cpu MHz		: 3720.742
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -200,7 +200,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3858.468
+cpu MHz		: 3899.109
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -227,7 +227,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3516.078
+cpu MHz		: 3646.367
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
