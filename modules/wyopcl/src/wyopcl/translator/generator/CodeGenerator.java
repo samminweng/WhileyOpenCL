@@ -402,16 +402,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						// Create a 2D array
 						int _1d_size = list.values.size(); // Get size of 1st dimension
 						// the size of 2nd array : go through each sub-array to get maximal subarray size
-						int _2d_size = 0;
+						int _max_2d_size = 0;
 						for(int i=0; i<list.values.size();i++){
 							Constant.Array subarray = (Constant.Array)list.values.get(i);
-							if(subarray.values.size() > _2d_size){
-								_2d_size = subarray.values.size();
+							if(subarray.values.size() > _max_2d_size){
+								_max_2d_size = subarray.values.size();
 							}
 						}
 						
 						// Generate the code
-						statement.add(indent + "_NEW_2DARRAY_int64_t_EMPTY(" + lhs + ", " + _1d_size + ", "+_2d_size+");");
+						statement.add(indent + "_NEW_2DARRAY_int64_t_EMPTY(" + lhs + ", " + _1d_size + ", "+_max_2d_size+");");
 						
 						// Assign the value to each sub-array
 						// {
@@ -420,13 +420,31 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						// }
 						String s = "";
 						for (int i = 0; i < list.values.size(); i++) {
-							Constant.Array subitem = ((Constant.Array)list.values.get(i));
-							ArrayList<Constant> subarray = subitem.values;
-							s += indent+"{\n"+ indent + "\tint64_t tmp[] = ";
-							// Convert the subarray to a string, e.g. {49, 99};
-							s += subarray.toString().replaceAll("^\\[", "{").replaceAll("\\]", "}") + ";\n";
+							ArrayList<Constant> subitem = (((Constant.Array)list.values.get(i))).values;
+							//ArrayList<String> subarray = new ArrayList<String>();
+							// Generate the code
+							s += indent+"{\n"+ indent + "\tint64_t tmp[] = {";
+							int sub_index=0;
+							boolean isFirst = true;
+							// Get the array size and convert the array to a string, e.g. {49, 99};
+							while(sub_index<_max_2d_size){
+								if(isFirst==false){
+									s+= ", "; // Add the comma (',') to separate each item 
+								}
+								// Get each item. If no item is found, add '\0' 
+								if(sub_index<subitem.size()){
+									s += subitem.get(sub_index).toString();
+								}else{
+									// Add '\0' char to subarray so each subarray has the same length
+									s += "\'\\0\'";
+								}
+								sub_index++;
+								isFirst= false;
+							}
+							s += "};\n";
+							
 							// Copy the subarray to lhs array, e.g. memcpy(_21[0], tmp, 2*sizeof(int64_t));
-							s += indent + "\tmemcpy("+lhs+"["+i+"], tmp, "+subarray.size()+"*sizeof(int64_t));\n";
+							s += indent + "\tmemcpy("+lhs+"["+i+"], tmp, "+_max_2d_size+"*sizeof(int64_t));\n";
 							s += indent+"}\n";
 						}
 						statement.add(s);
