@@ -1,45 +1,45 @@
-==4103== Memcheck, a memory error detector
-==4103== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==4103== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==4103== Command: ./out/LZ77.original.naive.disabledpattern.gcc.1.medium.in.out /home/mw169/workspace/WhileyOpenCL/benchmarks/LZ77/medium.in
-==4103== Parent PID: 4421
-==4103== 
-==4103== Invalid read of size 8
-==4103==    at 0x404243: Reader (Util.c:463)
-==4103==    by 0x400AF2: main (LZ77_original.c:574)
-==4103==  Address 0x51fc278 is 0 bytes after a block of size 488 alloc'd
-==4103==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4103==    by 0x402F4E: convertArgsToIntArray (Util.c:170)
-==4103==    by 0x400AE5: main (LZ77_original.c:566)
-==4103== 
-==4103== Conditional jump or move depends on uninitialised value(s)
-==4103==    at 0x401965: _match_ (LZ77_original.c:60)
-==4103==    by 0x401965: _findLongestMatch_ (LZ77_original.c:140)
-==4103==    by 0x401965: _compress_ (LZ77_original.c:321)
-==4103==    by 0x400C22: main (LZ77_original.c:625)
-==4103== 
-==4103== Conditional jump or move depends on uninitialised value(s)
-==4103==    at 0x40193A: _match_ (LZ77_original.c:60)
-==4103==    by 0x40193A: _findLongestMatch_ (LZ77_original.c:140)
-==4103==    by 0x40193A: _compress_ (LZ77_original.c:321)
-==4103==    by 0x400C22: main (LZ77_original.c:625)
-==4103== 
-==4103== 
-==4103== HEAP SUMMARY:
-==4103==     in use at exit: 278,925,104 bytes in 181,011 blocks
-==4103==   total heap usage: 181,014 allocs, 3 frees, 281,022,317 bytes allocated
-==4103== 
-==4103== LEAK SUMMARY:
-==4103==    definitely lost: 278,905,064 bytes in 180,997 blocks
-==4103==    indirectly lost: 488 bytes in 1 blocks
-==4103==      possibly lost: 17,402 bytes in 11 blocks
-==4103==    still reachable: 2,150 bytes in 2 blocks
-==4103==         suppressed: 0 bytes in 0 blocks
-==4103== Rerun with --leak-check=full to see details of leaked memory
-==4103== 
-==4103== For counts of detected and suppressed errors, rerun with: -v
-==4103== Use --track-origins=yes to see where uninitialised values come from
-==4103== ERROR SUMMARY: 259 errors from 3 contexts (suppressed: 0 from 0)
+==32285== Memcheck, a memory error detector
+==32285== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==32285== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==32285== Command: ./out/LZ77.original.naive.disabledpattern.gcc.1.medium.in.out /home/mw169/workspace/WhileyOpenCL/benchmarks/LZ77/medium.in
+==32285== Parent PID: 4421
+==32285== 
+==32285== Invalid read of size 8
+==32285==    at 0x404243: Reader (Util.c:463)
+==32285==    by 0x400AF2: main (LZ77_original.c:574)
+==32285==  Address 0x51fc278 is 0 bytes after a block of size 488 alloc'd
+==32285==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==32285==    by 0x402F4E: convertArgsToIntArray (Util.c:170)
+==32285==    by 0x400AE5: main (LZ77_original.c:566)
+==32285== 
+==32285== Conditional jump or move depends on uninitialised value(s)
+==32285==    at 0x401965: _match_ (LZ77_original.c:60)
+==32285==    by 0x401965: _findLongestMatch_ (LZ77_original.c:140)
+==32285==    by 0x401965: _compress_ (LZ77_original.c:321)
+==32285==    by 0x400C22: main (LZ77_original.c:625)
+==32285== 
+==32285== Conditional jump or move depends on uninitialised value(s)
+==32285==    at 0x40193A: _match_ (LZ77_original.c:60)
+==32285==    by 0x40193A: _findLongestMatch_ (LZ77_original.c:140)
+==32285==    by 0x40193A: _compress_ (LZ77_original.c:321)
+==32285==    by 0x400C22: main (LZ77_original.c:625)
+==32285== 
+==32285== 
+==32285== HEAP SUMMARY:
+==32285==     in use at exit: 278,925,104 bytes in 181,011 blocks
+==32285==   total heap usage: 181,014 allocs, 3 frees, 281,022,317 bytes allocated
+==32285== 
+==32285== LEAK SUMMARY:
+==32285==    definitely lost: 278,905,064 bytes in 180,997 blocks
+==32285==    indirectly lost: 488 bytes in 1 blocks
+==32285==      possibly lost: 17,402 bytes in 11 blocks
+==32285==    still reachable: 2,150 bytes in 2 blocks
+==32285==         suppressed: 0 bytes in 0 blocks
+==32285== Rerun with --leak-check=full to see details of leaked memory
+==32285== 
+==32285== For counts of detected and suppressed errors, rerun with: -v
+==32285== Use --track-origins=yes to see where uninitialised values come from
+==32285== ERROR SUMMARY: 259 errors from 3 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -47,7 +47,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3889.015
+cpu MHz		: 3867.632
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -74,7 +74,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3880.117
+cpu MHz		: 3820.218
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -101,7 +101,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3892.601
+cpu MHz		: 3891.273
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -128,7 +128,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3894.328
+cpu MHz		: 3749.562
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -155,7 +155,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3856.078
+cpu MHz		: 3802.289
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -182,7 +182,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3898.710
+cpu MHz		: 3802.687
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -209,7 +209,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3870.421
+cpu MHz		: 3726.187
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -236,7 +236,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.507
+cpu MHz		: 3892.335
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

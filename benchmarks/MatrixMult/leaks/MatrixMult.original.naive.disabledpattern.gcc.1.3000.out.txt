@@ -1,24 +1,24 @@
-==8514== Memcheck, a memory error detector
-==8514== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==8514== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==8514== Command: ./out/MatrixMult.original.naive.disabledpattern.gcc.1.3000.out 3000
-==8514== Parent PID: 4421
-==8514== 
-==8514== 
-==8514== HEAP SUMMARY:
-==8514==     in use at exit: 1,368,000,784 bytes in 33 blocks
-==8514==   total heap usage: 33 allocs, 0 frees, 1,368,000,784 bytes allocated
-==8514== 
-==8514== LEAK SUMMARY:
-==8514==    definitely lost: 680 bytes in 11 blocks
-==8514==    indirectly lost: 40 bytes in 1 blocks
-==8514==      possibly lost: 1,224,000,000 bytes in 17 blocks
-==8514==    still reachable: 144,000,064 bytes in 4 blocks
-==8514==         suppressed: 0 bytes in 0 blocks
-==8514== Rerun with --leak-check=full to see details of leaked memory
-==8514== 
-==8514== For counts of detected and suppressed errors, rerun with: -v
-==8514== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==30765== Memcheck, a memory error detector
+==30765== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==30765== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==30765== Command: ./out/MatrixMult.original.naive.disabledpattern.gcc.1.3000.out 3000
+==30765== Parent PID: 4421
+==30765== 
+==30765== 
+==30765== HEAP SUMMARY:
+==30765==     in use at exit: 1,368,000,784 bytes in 33 blocks
+==30765==   total heap usage: 33 allocs, 0 frees, 1,368,000,784 bytes allocated
+==30765== 
+==30765== LEAK SUMMARY:
+==30765==    definitely lost: 680 bytes in 11 blocks
+==30765==    indirectly lost: 40 bytes in 1 blocks
+==30765==      possibly lost: 1,224,000,000 bytes in 17 blocks
+==30765==    still reachable: 144,000,064 bytes in 4 blocks
+==30765==         suppressed: 0 bytes in 0 blocks
+==30765== Rerun with --leak-check=full to see details of leaked memory
+==30765== 
+==30765== For counts of detected and suppressed errors, rerun with: -v
+==30765== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -26,7 +26,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3900.171
+cpu MHz		: 3852.226
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -53,7 +53,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3865.773
+cpu MHz		: 3899.906
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -80,7 +80,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3901.234
+cpu MHz		: 3860.328
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -107,7 +107,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3869.226
+cpu MHz		: 3809.859
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -134,7 +134,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3872.414
+cpu MHz		: 3870.023
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -161,7 +161,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3765.234
+cpu MHz		: 3898.046
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -188,7 +188,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3866.304
+cpu MHz		: 3876.265
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -215,7 +215,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.773
+cpu MHz		: 3858.601
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

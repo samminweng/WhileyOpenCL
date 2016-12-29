@@ -456,7 +456,7 @@ int64_t* fromBytes(BYTE* input, size_t size){
 // Read the file name (ASCII code) and output a file pointer
 FILE* Reader(int64_t* arr, size_t arr_size){
 	// Chars array
-	char tmp[1024];
+	char* tmp = malloc(MAX_LINE_LENGTH*sizeof(char));
 	// Convert an array of ASCII code to an string
 	size_t i=0;
 	// Iterate through all the chars
@@ -483,30 +483,33 @@ FILE* Reader(int64_t* arr, size_t arr_size){
 		exit(-2);
 	}
 
-	// Free the file name.
+	// Free the file name and tmp arrays
 	free(filename);
-
+	free(tmp);
 	return fp;
 }
 
 // Read the file name (ASCII code) and output a file pointer
 FILE* Writer(int64_t* arr, size_t arr_size){
 	// Chars array
-	char tmp[1024];
+	char* tmp = malloc(MAX_LINE_LENGTH*sizeof(char));
 	// Convert an array of ASCII code to an string
 	size_t i=0;
-	while(i<arr_size){
+	// Iterate through all the chars
+	while(i < arr_size || arr[i] != '\0'){
 		char c = arr[i];
 		tmp[i] = c;
 		i = i + 1;
 	}
-	// Add the ending (null-terminated)
-	tmp[i] = '\0';
 
-	char filename[arr_size+1];
+	if(i > arr_size){
+		arr_size = i;
+	}
+
+	// Declare the filename with given array size
+	char* filename = malloc(arr_size*sizeof(char));
 	// Copy 'tmp' string to filename;
-	strcpy(filename, tmp);
-	//printf("%s\n", filename);
+	strncpy(filename, tmp, arr_size);
 
 	// 'w': Create a file pointer
 	FILE *fp = fopen(filename, "w");
@@ -515,11 +518,15 @@ FILE* Writer(int64_t* arr, size_t arr_size){
 		exit(-2);
 	}
 
+	// Free the file name and tmp arrays
+	free(filename);
+	free(tmp);
 	return fp;
 }
 // Check if file is a pbm
 bool isPBMFile(FILE *file){
-	char line[MAX_LINE_LENGTH];
+	char* line = malloc(MAX_LINE_LENGTH*sizeof(char));
+	bool isPBMFormat = false;
 	// Get the first line, which should be 'P1\n'
 	if(fgets(line, MAX_LINE_LENGTH, file)!= NULL){
 		// Get line length
@@ -527,16 +534,18 @@ bool isPBMFile(FILE *file){
 		if(len==3){
 			// Check if line is P1
 			if(line[0]=='P' && line[1]=='1' && line[2]=='\n'){
-				return true; // The file is a PBM 
+				isPBMFormat=true; // The file is a PBM 
 			}
 		}
 	}
+	// Free the line
+	free(line);
 	// The file is not a PBM
-	return false;
+	return isPBMFormat;
 }
 // Read an image as an array of bytes
 BYTE* readPBM(FILE *file, size_t* _size){
-	char line[MAX_LINE_LENGTH];
+	char* line = malloc(MAX_LINE_LENGTH*sizeof(char));
 	size_t length = MAX_LINE_LENGTH;
 	size_t width = 0;
 	size_t height = 0;
@@ -550,6 +559,8 @@ BYTE* readPBM(FILE *file, size_t* _size){
 			break;
 		}
 	}
+	// Free 'line' as it is not used anymore
+	free(line);
 
 	size_t size = width * height;
 
