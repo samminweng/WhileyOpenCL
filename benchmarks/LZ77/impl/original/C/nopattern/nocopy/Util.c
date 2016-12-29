@@ -456,7 +456,7 @@ int64_t* fromBytes(BYTE* input, size_t size){
 // Read the file name (ASCII code) and output a file pointer
 FILE* Reader(int64_t* arr, size_t arr_size){
 	// Chars array
-	char tmp[1024];
+	char* tmp = malloc(MAX_LINE_LENGTH*sizeof(char));
 	// Convert an array of ASCII code to an string
 	size_t i=0;
 	// Iterate through all the chars
@@ -483,30 +483,33 @@ FILE* Reader(int64_t* arr, size_t arr_size){
 		exit(-2);
 	}
 
-	// Free the file name.
+	// Free the file name and tmp arrays
 	free(filename);
-
+	free(tmp);
 	return fp;
 }
 
 // Read the file name (ASCII code) and output a file pointer
 FILE* Writer(int64_t* arr, size_t arr_size){
 	// Chars array
-	char tmp[1024];
+	char* tmp = malloc(MAX_LINE_LENGTH*sizeof(char));
 	// Convert an array of ASCII code to an string
 	size_t i=0;
-	while(i<arr_size){
+	// Iterate through all the chars
+	while(i < arr_size || arr[i] != '\0'){
 		char c = arr[i];
 		tmp[i] = c;
 		i = i + 1;
 	}
-	// Add the ending (null-terminated)
-	tmp[i] = '\0';
 
-	char filename[arr_size+1];
+	if(i > arr_size){
+		arr_size = i;
+	}
+
+	// Declare the filename with given array size
+	char* filename = malloc(arr_size*sizeof(char));
 	// Copy 'tmp' string to filename;
-	strcpy(filename, tmp);
-	//printf("%s\n", filename);
+	strncpy(filename, tmp, arr_size);
 
 	// 'w': Create a file pointer
 	FILE *fp = fopen(filename, "w");
@@ -515,6 +518,9 @@ FILE* Writer(int64_t* arr, size_t arr_size){
 		exit(-2);
 	}
 
+	// Free the file name and tmp arrays
+	free(filename);
+	free(tmp);
 	return fp;
 }
 // Check if file is a pbm

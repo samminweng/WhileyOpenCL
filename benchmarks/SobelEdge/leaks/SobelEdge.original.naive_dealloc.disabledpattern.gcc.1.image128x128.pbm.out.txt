@@ -1,41 +1,41 @@
-==13846== Memcheck, a memory error detector
-==13846== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==13846== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==13846== Command: ./out/SobelEdge.original.naive_dealloc.disabledpattern.gcc.1.image128x128.pbm.out image128x128.pbm 128
-==13846== Parent PID: 4421
-==13846== 
-==13846== Syscall param open(filename) points to unaddressable byte(s)
-==13846==    at 0x4F224C0: __open_nocancel (syscall-template.S:81)
-==13846==    by 0x4EB0EC7: _IO_file_open (fileops.c:228)
-==13846==    by 0x4EB0EC7: _IO_file_fopen@@GLIBC_2.2.5 (fileops.c:333)
-==13846==    by 0x4EA53D3: __fopen_internal (iofopen.c:90)
-==13846==    by 0x402E7A: Reader (Util.c:480)
-==13846==    by 0x400BE9: main (SobelEdge_original.c:649)
-==13846==  Address 0x51fc1d0 is 0 bytes after a block of size 16 alloc'd
-==13846==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==13846==    by 0x402E5C: Reader (Util.c:474)
-==13846==    by 0x400BE9: main (SobelEdge_original.c:649)
-==13846== 
-==13846== Conditional jump or move depends on uninitialised value(s)
-==13846==    at 0x4013E3: _sobelEdgeDetection_ (SobelEdge_original.c:397)
-==13846==    by 0x400C74: main (SobelEdge_original.c:695)
-==13846== 
-==13846== 
-==13846== HEAP SUMMARY:
-==13846==     in use at exit: 64 bytes in 2 blocks
-==13846==   total heap usage: 82,073 allocs, 82,071 frees, 541,574,400 bytes allocated
-==13846== 
-==13846== LEAK SUMMARY:
-==13846==    definitely lost: 64 bytes in 2 blocks
-==13846==    indirectly lost: 0 bytes in 0 blocks
-==13846==      possibly lost: 0 bytes in 0 blocks
-==13846==    still reachable: 0 bytes in 0 blocks
-==13846==         suppressed: 0 bytes in 0 blocks
-==13846== Rerun with --leak-check=full to see details of leaked memory
-==13846== 
-==13846== For counts of detected and suppressed errors, rerun with: -v
-==13846== Use --track-origins=yes to see where uninitialised values come from
-==13846== ERROR SUMMARY: 257 errors from 2 contexts (suppressed: 0 from 0)
+==916== Memcheck, a memory error detector
+==916== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==916== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==916== Command: ./out/SobelEdge.original.naive_dealloc.disabledpattern.gcc.1.image128x128.pbm.out image128x128.pbm 128
+==916== Parent PID: 4421
+==916== 
+==916== Syscall param open(filename) points to unaddressable byte(s)
+==916==    at 0x4F224C0: __open_nocancel (syscall-template.S:81)
+==916==    by 0x4EB0EC7: _IO_file_open (fileops.c:228)
+==916==    by 0x4EB0EC7: _IO_file_fopen@@GLIBC_2.2.5 (fileops.c:333)
+==916==    by 0x4EA53D3: __fopen_internal (iofopen.c:90)
+==916==    by 0x402E44: Reader (Util.c:480)
+==916==    by 0x400B99: main (SobelEdge_original.c:649)
+==916==  Address 0x52fc210 is 0 bytes after a block of size 16 alloc'd
+==916==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==916==    by 0x402E26: Reader (Util.c:474)
+==916==    by 0x400B99: main (SobelEdge_original.c:649)
+==916== 
+==916== Conditional jump or move depends on uninitialised value(s)
+==916==    at 0x401393: _sobelEdgeDetection_ (SobelEdge_original.c:397)
+==916==    by 0x400C24: main (SobelEdge_original.c:695)
+==916== 
+==916== 
+==916== HEAP SUMMARY:
+==916==     in use at exit: 64 bytes in 2 blocks
+==916==   total heap usage: 82,074 allocs, 82,072 frees, 542,622,976 bytes allocated
+==916== 
+==916== LEAK SUMMARY:
+==916==    definitely lost: 64 bytes in 2 blocks
+==916==    indirectly lost: 0 bytes in 0 blocks
+==916==      possibly lost: 0 bytes in 0 blocks
+==916==    still reachable: 0 bytes in 0 blocks
+==916==         suppressed: 0 bytes in 0 blocks
+==916== Rerun with --leak-check=full to see details of leaked memory
+==916== 
+==916== For counts of detected and suppressed errors, rerun with: -v
+==916== Use --track-origins=yes to see where uninitialised values come from
+==916== ERROR SUMMARY: 257 errors from 2 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -43,7 +43,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3856.875
+cpu MHz		: 3800.695
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -70,7 +70,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3900.570
+cpu MHz		: 3603.867
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -97,7 +97,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.773
+cpu MHz		: 3899.507
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -124,7 +124,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3571.460
+cpu MHz		: 3758.460
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -151,7 +151,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3859.796
+cpu MHz		: 3631.492
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -178,7 +178,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3639.328
+cpu MHz		: 3601.742
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -205,7 +205,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.906
+cpu MHz		: 3763.507
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -232,7 +232,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3817.960
+cpu MHz		: 3429.484
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

@@ -15,7 +15,7 @@
 // Specify the maximal amounts of chars that are printed out using 'printf' function 
 #define MAX_LENGTH 100
 // Specify the maximal number of chars that a line in PBM should be read
-#define MAX_LINE_LENGTH 1024
+#define MAX_LINE_LENGTH 1024*1024
 
 // Define BYTE type due to missing byte primitive type in C languate
 typedef uint8_t BYTE;
