@@ -1,44 +1,44 @@
-==1124== Memcheck, a memory error detector
-==1124== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==1124== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==1124== Command: ./out/LZ77.original.naive.enabledpattern.gcc.1.small.in.out /home/mw169/workspace/WhileyOpenCL/benchmarks/LZ77/small.in
-==1124== Parent PID: 4421
-==1124== 
-==1124== Invalid read of size 8
-==1124==    at 0x403E33: Reader (Util.c:463)
-==1124==    by 0x400AF2: main (LZ77_original.c:614)
-==1124==  Address 0x51fc270 is 0 bytes after a block of size 480 alloc'd
-==1124==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1124==    by 0x402B3E: convertArgsToIntArray (Util.c:170)
-==1124==    by 0x400AE5: main (LZ77_original.c:606)
-==1124== 
-==1124== Conditional jump or move depends on uninitialised value(s)
-==1124==    at 0x403805: printf_s (Util.c:362)
-==1124==    by 0x403805: println_s (Util.c:376)
-==1124==    by 0x400BB0: main (LZ77_original.c:643)
-==1124== 
-==1124== Conditional jump or move depends on uninitialised value(s)
-==1124==    at 0x401943: _match_ (LZ77_original.c:60)
-==1124==    by 0x401943: _findLongestMatch_ (LZ77_original.c:140)
-==1124==    by 0x401943: _compress_ (LZ77_original.c:341)
-==1124==    by 0x400C22: main (LZ77_original.c:665)
-==1124== 
-==1124== 
-==1124== HEAP SUMMARY:
-==1124==     in use at exit: 18,014 bytes in 557 blocks
-==1124==   total heap usage: 560 allocs, 3 frees, 2,115,226 bytes allocated
-==1124== 
-==1124== LEAK SUMMARY:
-==1124==    definitely lost: 16,935 bytes in 554 blocks
-==1124==    indirectly lost: 480 bytes in 1 blocks
-==1124==      possibly lost: 0 bytes in 0 blocks
-==1124==    still reachable: 599 bytes in 2 blocks
-==1124==         suppressed: 0 bytes in 0 blocks
-==1124== Rerun with --leak-check=full to see details of leaked memory
-==1124== 
-==1124== For counts of detected and suppressed errors, rerun with: -v
-==1124== Use --track-origins=yes to see where uninitialised values come from
-==1124== ERROR SUMMARY: 32 errors from 3 contexts (suppressed: 0 from 0)
+==3602== Memcheck, a memory error detector
+==3602== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==3602== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==3602== Command: ./out/LZ77.original.naive.enabledpattern.gcc.1.small.in.out /home/mw169/workspace/WhileyOpenCL/benchmarks/LZ77/small.in
+==3602== Parent PID: 4421
+==3602== 
+==3602== Invalid read of size 8
+==3602==    at 0x403E33: Reader (Util.c:463)
+==3602==    by 0x400AF2: main (LZ77_original.c:614)
+==3602==  Address 0x51fc270 is 0 bytes after a block of size 480 alloc'd
+==3602==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3602==    by 0x402B3E: convertArgsToIntArray (Util.c:170)
+==3602==    by 0x400AE5: main (LZ77_original.c:606)
+==3602== 
+==3602== Conditional jump or move depends on uninitialised value(s)
+==3602==    at 0x403805: printf_s (Util.c:362)
+==3602==    by 0x403805: println_s (Util.c:376)
+==3602==    by 0x400BB0: main (LZ77_original.c:643)
+==3602== 
+==3602== Conditional jump or move depends on uninitialised value(s)
+==3602==    at 0x401943: _match_ (LZ77_original.c:60)
+==3602==    by 0x401943: _findLongestMatch_ (LZ77_original.c:140)
+==3602==    by 0x401943: _compress_ (LZ77_original.c:341)
+==3602==    by 0x400C22: main (LZ77_original.c:665)
+==3602== 
+==3602== 
+==3602== HEAP SUMMARY:
+==3602==     in use at exit: 18,014 bytes in 557 blocks
+==3602==   total heap usage: 560 allocs, 3 frees, 2,115,226 bytes allocated
+==3602== 
+==3602== LEAK SUMMARY:
+==3602==    definitely lost: 16,935 bytes in 554 blocks
+==3602==    indirectly lost: 480 bytes in 1 blocks
+==3602==      possibly lost: 0 bytes in 0 blocks
+==3602==    still reachable: 599 bytes in 2 blocks
+==3602==         suppressed: 0 bytes in 0 blocks
+==3602== Rerun with --leak-check=full to see details of leaked memory
+==3602== 
+==3602== For counts of detected and suppressed errors, rerun with: -v
+==3602== Use --track-origins=yes to see where uninitialised values come from
+==3602== ERROR SUMMARY: 32 errors from 3 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -46,7 +46,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3901.101
+cpu MHz		: 3838.546
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -73,7 +73,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3875.203
+cpu MHz		: 3853.421
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -100,7 +100,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3744.648
+cpu MHz		: 3893.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -127,7 +127,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3412.484
+cpu MHz		: 3773.070
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -154,7 +154,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3796.445
+cpu MHz		: 3899.375
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -181,7 +181,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3852.359
+cpu MHz		: 3887.156
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -208,7 +208,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3737.343
+cpu MHz		: 3876.664
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -235,7 +235,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3892.734
+cpu MHz		: 3740.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

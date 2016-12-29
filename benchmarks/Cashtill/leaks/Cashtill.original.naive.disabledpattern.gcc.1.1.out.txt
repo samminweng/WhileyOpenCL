@@ -1,43 +1,24 @@
-==1919== Memcheck, a memory error detector
-==1919== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==1919== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==1919== Command: ./out/Cashtill.original.naive.disabledpattern.gcc.1.1.out 1
-==1919== Parent PID: 4421
-==1919== 
-==1919== Conditional jump or move depends on uninitialised value(s)
-==1919==    at 0x4035A5: printf_s (Util.c:362)
-==1919==    by 0x4035A5: println_s (Util.c:376)
-==1919==    by 0x401D30: _buy_ (Cashtill_original.c:706)
-==1919==    by 0x400D0C: main (Cashtill_original.c:974)
-==1919== 
-==1919== Conditional jump or move depends on uninitialised value(s)
-==1919==    at 0x4035A5: printf_s (Util.c:362)
-==1919==    by 0x4035A5: println_s (Util.c:376)
-==1919==    by 0x401D30: _buy_ (Cashtill_original.c:706)
-==1919==    by 0x400DE3: main (Cashtill_original.c:994)
-==1919== 
-==1919== Conditional jump or move depends on uninitialised value(s)
-==1919==    at 0x4035A5: printf_s (Util.c:362)
-==1919==    by 0x4035A5: println_s (Util.c:376)
-==1919==    by 0x401D30: _buy_ (Cashtill_original.c:706)
-==1919==    by 0x400F9B: main (Cashtill_original.c:1034)
-==1919== 
-==1919== 
-==1919== HEAP SUMMARY:
-==1919==     in use at exit: 11,008 bytes in 185 blocks
-==1919==   total heap usage: 185 allocs, 0 frees, 11,008 bytes allocated
-==1919== 
-==1919== LEAK SUMMARY:
-==1919==    definitely lost: 10,160 bytes in 179 blocks
-==1919==    indirectly lost: 784 bytes in 5 blocks
-==1919==      possibly lost: 0 bytes in 0 blocks
-==1919==    still reachable: 64 bytes in 1 blocks
-==1919==         suppressed: 0 bytes in 0 blocks
-==1919== Rerun with --leak-check=full to see details of leaked memory
-==1919== 
-==1919== For counts of detected and suppressed errors, rerun with: -v
-==1919== Use --track-origins=yes to see where uninitialised values come from
-==1919== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
+==4549== Memcheck, a memory error detector
+==4549== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==4549== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==4549== Command: ./out/Cashtill.original.naive.disabledpattern.gcc.1.1.out 1
+==4549== Parent PID: 4421
+==4549== 
+==4549== 
+==4549== HEAP SUMMARY:
+==4549==     in use at exit: 11,008 bytes in 185 blocks
+==4549==   total heap usage: 185 allocs, 0 frees, 11,008 bytes allocated
+==4549== 
+==4549== LEAK SUMMARY:
+==4549==    definitely lost: 10,160 bytes in 179 blocks
+==4549==    indirectly lost: 784 bytes in 5 blocks
+==4549==      possibly lost: 0 bytes in 0 blocks
+==4549==    still reachable: 64 bytes in 1 blocks
+==4549==         suppressed: 0 bytes in 0 blocks
+==4549== Rerun with --leak-check=full to see details of leaked memory
+==4549== 
+==4549== For counts of detected and suppressed errors, rerun with: -v
+==4549== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -45,7 +26,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3821.546
+cpu MHz		: 3893.664
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -72,7 +53,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3855.945
+cpu MHz		: 3764.968
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -99,7 +80,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.773
+cpu MHz		: 3762.710
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -126,7 +107,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3823.937
+cpu MHz		: 3862.187
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -153,7 +134,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3723.132
+cpu MHz		: 3888.484
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -180,7 +161,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3499.078
+cpu MHz		: 3801.359
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -207,7 +188,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3878.125
+cpu MHz		: 3863.914
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -234,7 +215,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3668.414
+cpu MHz		: 3745.312
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

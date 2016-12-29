@@ -1,72 +1,24 @@
-==2325== Memcheck, a memory error detector
-==2325== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==2325== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==2325== Command: ./out/Cashtill.original.naive.disabledpattern.gcc.1.100.out 100
-==2325== Parent PID: 4421
-==2325== 
-==2325== Conditional jump or move depends on uninitialised value(s)
-==2325==    at 0x4035A5: printf_s (Util.c:362)
-==2325==    by 0x4035A5: println_s (Util.c:376)
-==2325==    by 0x401D30: _buy_ (Cashtill_original.c:706)
-==2325==    by 0x400D0C: main (Cashtill_original.c:974)
-==2325== 
-==2325== Conditional jump or move depends on uninitialised value(s)
-==2325==    at 0x4035A5: printf_s (Util.c:362)
-==2325==    by 0x4035A5: println_s (Util.c:376)
-==2325==    by 0x401D30: _buy_ (Cashtill_original.c:706)
-==2325==    by 0x400DE3: main (Cashtill_original.c:994)
-==2325== 
-==2325== Conditional jump or move depends on uninitialised value(s)
-==2325==    at 0x4035A5: printf_s (Util.c:362)
-==2325==    by 0x4035A5: println_s (Util.c:376)
-==2325==    by 0x401D30: _buy_ (Cashtill_original.c:706)
-==2325==    by 0x400F9B: main (Cashtill_original.c:1034)
-==2325== 
-==2325== Conditional jump or move depends on uninitialised value(s)
-==2325==    at 0x4035A5: printf_s (Util.c:362)
-==2325==    by 0x4035A5: println_s (Util.c:376)
-==2325==    by 0x400C43: main (Cashtill_original.c:956)
-==2325== 
-==2325== Conditional jump or move depends on uninitialised value(s)
-==2325==    at 0x4035A5: printf_s (Util.c:362)
-==2325==    by 0x4035A5: println_s (Util.c:376)
-==2325==    by 0x401F1D: _buy_ (Cashtill_original.c:779)
-==2325==    by 0x400D0C: main (Cashtill_original.c:974)
-==2325== 
-==2325== Conditional jump or move depends on uninitialised value(s)
-==2325==    at 0x4035A5: printf_s (Util.c:362)
-==2325==    by 0x4035A5: println_s (Util.c:376)
-==2325==    by 0x40212C: _buy_ (Cashtill_original.c:815)
-==2325==    by 0x400D0C: main (Cashtill_original.c:974)
-==2325== 
-==2325== Conditional jump or move depends on uninitialised value(s)
-==2325==    at 0x4035A5: printf_s (Util.c:362)
-==2325==    by 0x4035A5: println_s (Util.c:376)
-==2325==    by 0x401F1D: _buy_ (Cashtill_original.c:779)
-==2325==    by 0x400F9B: main (Cashtill_original.c:1034)
-==2325== 
-==2325== Conditional jump or move depends on uninitialised value(s)
-==2325==    at 0x4035A5: printf_s (Util.c:362)
-==2325==    by 0x4035A5: println_s (Util.c:376)
-==2325==    by 0x40212C: _buy_ (Cashtill_original.c:815)
-==2325==    by 0x400F9B: main (Cashtill_original.c:1034)
-==2325== 
-==2325== 
-==2325== HEAP SUMMARY:
-==2325==     in use at exit: 985,899,256 bytes in 15,393,804 blocks
-==2325==   total heap usage: 15,393,804 allocs, 0 frees, 985,899,256 bytes allocated
-==2325== 
-==2325== LEAK SUMMARY:
-==2325==    definitely lost: 985,620,440 bytes in 15,392,347 blocks
-==2325==    indirectly lost: 278,432 bytes in 1,451 blocks
-==2325==      possibly lost: 320 bytes in 5 blocks
-==2325==    still reachable: 64 bytes in 1 blocks
-==2325==         suppressed: 0 bytes in 0 blocks
-==2325== Rerun with --leak-check=full to see details of leaked memory
-==2325== 
-==2325== For counts of detected and suppressed errors, rerun with: -v
-==2325== Use --track-origins=yes to see where uninitialised values come from
-==2325== ERROR SUMMARY: 850 errors from 8 contexts (suppressed: 0 from 0)
+==4999== Memcheck, a memory error detector
+==4999== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==4999== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==4999== Command: ./out/Cashtill.original.naive.disabledpattern.gcc.1.100.out 100
+==4999== Parent PID: 4421
+==4999== 
+==4999== 
+==4999== HEAP SUMMARY:
+==4999==     in use at exit: 985,899,256 bytes in 15,393,804 blocks
+==4999==   total heap usage: 15,393,804 allocs, 0 frees, 985,899,256 bytes allocated
+==4999== 
+==4999== LEAK SUMMARY:
+==4999==    definitely lost: 985,620,440 bytes in 15,392,347 blocks
+==4999==    indirectly lost: 278,432 bytes in 1,451 blocks
+==4999==      possibly lost: 320 bytes in 5 blocks
+==4999==    still reachable: 64 bytes in 1 blocks
+==4999==         suppressed: 0 bytes in 0 blocks
+==4999== Rerun with --leak-check=full to see details of leaked memory
+==4999== 
+==4999== For counts of detected and suppressed errors, rerun with: -v
+==4999== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -74,7 +26,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3900.703
+cpu MHz		: 3847.578
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -101,7 +53,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3798.039
+cpu MHz		: 3898.710
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -128,7 +80,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3885.695
+cpu MHz		: 3884.898
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -155,7 +107,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3800.164
+cpu MHz		: 3826.195
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -182,7 +134,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3867.101
+cpu MHz		: 3901.234
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -209,7 +161,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3831.773
+cpu MHz		: 3899.906
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -236,7 +188,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.242
+cpu MHz		: 3842.796
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -263,7 +215,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3845.984
+cpu MHz		: 3883.304
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

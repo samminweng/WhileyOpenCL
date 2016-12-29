@@ -650,16 +650,16 @@ blklab34:;
 		_DEALLOC(r);
 		_UPDATE_1DARRAY(r, _18);
 		_TRANSFER_DEALLOC(r, _18);
-		//const %21 = [[49,99],[53,99],[49,48,99],[50,48,99],[53,48,99],[36,49],[36,53],[36,49,48]] : int[][]
+		//const %21 = [[32,49,99],[32,53,99],[49,48,99],[50,48,99],[53,48,99],[32,36,49],[32,36,53],[36,49,48]] : int[][]
 		_DEALLOC_2DARRAY_int64_t(_21);
 		_NEW_2DARRAY_int64_t_EMPTY(_21, 8, 3);
 		{
-			int64_t tmp[] = {49, 99};
-			memcpy(_21[0], tmp, 2*sizeof(int64_t));
+			int64_t tmp[] = {32, 49, 99};
+			memcpy(_21[0], tmp, 3*sizeof(int64_t));
 		}
 		{
-			int64_t tmp[] = {53, 99};
-			memcpy(_21[1], tmp, 2*sizeof(int64_t));
+			int64_t tmp[] = {32, 53, 99};
+			memcpy(_21[1], tmp, 3*sizeof(int64_t));
 		}
 		{
 			int64_t tmp[] = {49, 48, 99};
@@ -674,12 +674,12 @@ blklab34:;
 			memcpy(_21[4], tmp, 3*sizeof(int64_t));
 		}
 		{
-			int64_t tmp[] = {36, 49};
-			memcpy(_21[5], tmp, 2*sizeof(int64_t));
+			int64_t tmp[] = {32, 36, 49};
+			memcpy(_21[5], tmp, 3*sizeof(int64_t));
 		}
 		{
-			int64_t tmp[] = {36, 53};
-			memcpy(_21[6], tmp, 2*sizeof(int64_t));
+			int64_t tmp[] = {32, 36, 53};
+			memcpy(_21[6], tmp, 3*sizeof(int64_t));
 		}
 		{
 			int64_t tmp[] = {36, 49, 48};

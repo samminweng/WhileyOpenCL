@@ -1,139 +1,18 @@
-==2498== Memcheck, a memory error detector
-==2498== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==2498== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==2498== Command: ./out/Cashtill.original.nocopy_dealloc.disabledpattern.gcc.1.100.out 100
-==2498== Parent PID: 4421
-==2498== 
-==2498== Conditional jump or move depends on uninitialised value(s)
-==2498==    at 0x403EC5: printf_s (Util.c:362)
-==2498==    by 0x403EC5: println_s (Util.c:376)
-==2498==    by 0x40249D: _buy_ (Cashtill_original.c:871)
-==2498==    by 0x400D3D: main (Cashtill_original.c:1224)
-==2498== 
-==2498== Conditional jump or move depends on uninitialised value(s)
-==2498==    at 0x403EC5: printf_s (Util.c:362)
-==2498==    by 0x403EC5: println_s (Util.c:376)
-==2498==    by 0x40249D: _buy_ (Cashtill_original.c:871)
-==2498==    by 0x400DF9: main (Cashtill_original.c:1252)
-==2498== 
-==2498== Conditional jump or move depends on uninitialised value(s)
-==2498==    at 0x403EC5: printf_s (Util.c:362)
-==2498==    by 0x403EC5: println_s (Util.c:376)
-==2498==    by 0x40249D: _buy_ (Cashtill_original.c:871)
-==2498==    by 0x400F73: main (Cashtill_original.c:1308)
-==2498== 
-==2498== Conditional jump or move depends on uninitialised value(s)
-==2498==    at 0x403EC5: printf_s (Util.c:362)
-==2498==    by 0x403EC5: println_s (Util.c:376)
-==2498==    by 0x400C8F: main (Cashtill_original.c:1203)
-==2498== 
-==2498== Conditional jump or move depends on uninitialised value(s)
-==2498==    at 0x403EC5: printf_s (Util.c:362)
-==2498==    by 0x403EC5: println_s (Util.c:376)
-==2498==    by 0x40269F: _buy_ (Cashtill_original.c:956)
-==2498==    by 0x400D3D: main (Cashtill_original.c:1224)
-==2498== 
-==2498== Conditional jump or move depends on uninitialised value(s)
-==2498==    at 0x403EC5: printf_s (Util.c:362)
-==2498==    by 0x403EC5: println_s (Util.c:376)
-==2498==    by 0x40289F: _buy_ (Cashtill_original.c:1004)
-==2498==    by 0x400D3D: main (Cashtill_original.c:1224)
-==2498== 
-==2498== Conditional jump or move depends on uninitialised value(s)
-==2498==    at 0x403EC5: printf_s (Util.c:362)
-==2498==    by 0x403EC5: println_s (Util.c:376)
-==2498==    by 0x40269F: _buy_ (Cashtill_original.c:956)
-==2498==    by 0x400F73: main (Cashtill_original.c:1308)
-==2498== 
-==2498== Conditional jump or move depends on uninitialised value(s)
-==2498==    at 0x403EC5: printf_s (Util.c:362)
-==2498==    by 0x403EC5: println_s (Util.c:376)
-==2498==    by 0x40289F: _buy_ (Cashtill_original.c:1004)
-==2498==    by 0x400F73: main (Cashtill_original.c:1308)
-==2498== 
-==2498== Conditional jump or move depends on uninitialised value(s)
-==2498==    at 0x4EB16F1: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:867)
-==2498==    by 0x4EA7A7D: putchar (putchar.c:29)
-==2498==    by 0x403ECF: printf_s (Util.c:363)
-==2498==    by 0x403ECF: println_s (Util.c:376)
-==2498==    by 0x40269F: _buy_ (Cashtill_original.c:956)
-==2498==    by 0x400F73: main (Cashtill_original.c:1308)
-==2498== 
-==2498== Conditional jump or move depends on uninitialised value(s)
-==2498==    at 0x4EB171E: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:875)
-==2498==    by 0x4EA7A7D: putchar (putchar.c:29)
-==2498==    by 0x403ECF: printf_s (Util.c:363)
-==2498==    by 0x403ECF: println_s (Util.c:376)
-==2498==    by 0x40269F: _buy_ (Cashtill_original.c:956)
-==2498==    by 0x400F73: main (Cashtill_original.c:1308)
-==2498== 
-==2498== Syscall param write(buf) points to uninitialised byte(s)
-==2498==    at 0x4F22710: __write_nocancel (syscall-template.S:81)
-==2498==    by 0x4EAFF02: _IO_file_write@@GLIBC_2.2.5 (fileops.c:1261)
-==2498==    by 0x4EB13DB: new_do_write (fileops.c:538)
-==2498==    by 0x4EB13DB: _IO_do_write@@GLIBC_2.2.5 (fileops.c:511)
-==2498==    by 0x4EB17B2: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:876)
-==2498==    by 0x4EA7A7D: putchar (putchar.c:29)
-==2498==    by 0x40269F: _buy_ (Cashtill_original.c:956)
-==2498==    by 0x400F73: main (Cashtill_original.c:1308)
-==2498==  Address 0x4026014 is not stack'd, malloc'd or (recently) free'd
-==2498== 
-==2498== Conditional jump or move depends on uninitialised value(s)
-==2498==    at 0x4EB16F1: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:867)
-==2498==    by 0x4EA7A7D: putchar (putchar.c:29)
-==2498==    by 0x403ECF: printf_s (Util.c:363)
-==2498==    by 0x403ECF: println_s (Util.c:376)
-==2498==    by 0x40249D: _buy_ (Cashtill_original.c:871)
-==2498==    by 0x400F73: main (Cashtill_original.c:1308)
-==2498== 
-==2498== Conditional jump or move depends on uninitialised value(s)
-==2498==    at 0x4EB171E: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:875)
-==2498==    by 0x4EA7A7D: putchar (putchar.c:29)
-==2498==    by 0x403ECF: printf_s (Util.c:363)
-==2498==    by 0x403ECF: println_s (Util.c:376)
-==2498==    by 0x40249D: _buy_ (Cashtill_original.c:871)
-==2498==    by 0x400F73: main (Cashtill_original.c:1308)
-==2498== 
-==2498== Conditional jump or move depends on uninitialised value(s)
-==2498==    at 0x4EB16F1: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:867)
-==2498==    by 0x4EA7A7D: putchar (putchar.c:29)
-==2498==    by 0x403ECF: printf_s (Util.c:363)
-==2498==    by 0x403ECF: println_s (Util.c:376)
-==2498==    by 0x400C8F: main (Cashtill_original.c:1203)
-==2498== 
-==2498== Conditional jump or move depends on uninitialised value(s)
-==2498==    at 0x4EB171E: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:875)
-==2498==    by 0x4EA7A7D: putchar (putchar.c:29)
-==2498==    by 0x403ECF: printf_s (Util.c:363)
-==2498==    by 0x403ECF: println_s (Util.c:376)
-==2498==    by 0x400C8F: main (Cashtill_original.c:1203)
-==2498== 
-==2498== Conditional jump or move depends on uninitialised value(s)
-==2498==    at 0x4EB16F1: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:867)
-==2498==    by 0x4EA7A7D: putchar (putchar.c:29)
-==2498==    by 0x403ECF: printf_s (Util.c:363)
-==2498==    by 0x403ECF: println_s (Util.c:376)
-==2498==    by 0x40289F: _buy_ (Cashtill_original.c:1004)
-==2498==    by 0x400D3D: main (Cashtill_original.c:1224)
-==2498== 
-==2498== Conditional jump or move depends on uninitialised value(s)
-==2498==    at 0x4EB171E: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:875)
-==2498==    by 0x4EA7A7D: putchar (putchar.c:29)
-==2498==    by 0x403ECF: printf_s (Util.c:363)
-==2498==    by 0x403ECF: println_s (Util.c:376)
-==2498==    by 0x40289F: _buy_ (Cashtill_original.c:1004)
-==2498==    by 0x400D3D: main (Cashtill_original.c:1224)
-==2498== 
-==2498== 
-==2498== HEAP SUMMARY:
-==2498==     in use at exit: 0 bytes in 0 blocks
-==2498==   total heap usage: 11,542,853 allocs, 11,542,853 frees, 739,134,448 bytes allocated
-==2498== 
-==2498== All heap blocks were freed -- no leaks are possible
-==2498== 
-==2498== For counts of detected and suppressed errors, rerun with: -v
-==2498== Use --track-origins=yes to see where uninitialised values come from
-==2498== ERROR SUMMARY: 2426 errors from 17 contexts (suppressed: 0 from 0)
+==5243== Memcheck, a memory error detector
+==5243== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==5243== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==5243== Command: ./out/Cashtill.original.nocopy_dealloc.disabledpattern.gcc.1.100.out 100
+==5243== Parent PID: 4421
+==5243== 
+==5243== 
+==5243== HEAP SUMMARY:
+==5243==     in use at exit: 0 bytes in 0 blocks
+==5243==   total heap usage: 11,542,853 allocs, 11,542,853 frees, 739,134,448 bytes allocated
+==5243== 
+==5243== All heap blocks were freed -- no leaks are possible
+==5243== 
+==5243== For counts of detected and suppressed errors, rerun with: -v
+==5243== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -141,7 +20,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3887.289
+cpu MHz		: 3895.656
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -168,7 +47,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3836.023
+cpu MHz		: 3871.882
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -195,7 +74,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3844.390
+cpu MHz		: 3853.687
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -222,7 +101,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3727.781
+cpu MHz		: 3900.304
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -249,7 +128,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3827.390
+cpu MHz		: 3899.906
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -276,7 +155,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3891.937
+cpu MHz		: 3783.828
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -303,7 +182,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3812.515
+cpu MHz		: 3876.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -330,7 +209,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3885.828
+cpu MHz		: 3883.304
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

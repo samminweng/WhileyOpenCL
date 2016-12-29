@@ -165,15 +165,15 @@ function toString(Cash c) -> ASCII.string:
     if r == "":
         r = "(nothing)"
     return r
-    
+// Add a space (' ') to make each item have the same length
 constant Descriptions is [
-    "1c",
-    "5c",
+    " 1c",
+    " 5c",
     "10c",
     "20c",
     "50c",
-    "$1",
-    "$5",
+    " $1",
+    " $5",
     "$10"
 ]
 
