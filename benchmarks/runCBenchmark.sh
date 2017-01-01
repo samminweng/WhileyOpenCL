@@ -326,8 +326,10 @@ exec(){
 # ### Cashtill test case
 init Cashtill
 exec Cashtill original 1000
+exec Cashtill original 1200
+exec Cashtill original 1400
+exec Cashtill original 1600
+exec Cashtill original 1800
 exec Cashtill original 2000
-exec Cashtill original 3000
-# exec Cashtill original 1000
 # exec Cashtill original 10000
 # exec Cashtill original 100000

@@ -114,7 +114,7 @@ BEGIN {
 	# parameters["NQueens"]="8 10 12 14";
 	# ### pattern transformation
 	parameters["LZ77"]="small medium large";
-	parameters["Cashtill"]="1000 10000 100000";
+	parameters["Cashtill"]="1000 1200 1400 1600 1800 2000";
 
 	# The number of threads
 	#threads="1 2 4";
