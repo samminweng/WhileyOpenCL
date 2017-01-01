@@ -201,35 +201,35 @@ exec(){
     #read -p "Press [Enter] to continue..."
 }
 
-# # # ### Reverse test case##
-init Reverse
-exec Reverse original 100000
-exec Reverse original 1000000
-exec Reverse original 10000000
+# # # # ### Reverse test case##
+# init Reverse
+# exec Reverse original 100000
+# exec Reverse original 1000000
+# exec Reverse original 10000000
 
-# # ### newTicTacToe test case ###
-init newTicTacToe
-exec newTicTacToe original 1000
-exec newTicTacToe original 10000
-exec newTicTacToe original 100000
+# # # ### newTicTacToe test case ###
+# init newTicTacToe
+# exec newTicTacToe original 1000
+# exec newTicTacToe original 10000
+# exec newTicTacToe original 100000
 
-# # ## # MergeSort test case##
-init MergeSort
-exec MergeSort original 1000
-exec MergeSort original 10000
-exec MergeSort original 100000
+# # # ## # MergeSort test case##
+# init MergeSort
+# exec MergeSort original 1000
+# exec MergeSort original 10000
+# exec MergeSort original 100000
 
-# # ## # BubbleSort test case##
-init BubbleSort
-exec BubbleSort original 1000
-exec BubbleSort original 10000
-exec BubbleSort original 100000
+# # # ## # BubbleSort test case##
+# init BubbleSort
+# exec BubbleSort original 1000
+# exec BubbleSort original 10000
+# exec BubbleSort original 100000
 
-# # # MatrixMult test case##
-init MatrixMult
-exec MatrixMult original 1000
-exec MatrixMult original 2000
-exec MatrixMult original 3000
+# # # # MatrixMult test case##
+# init MatrixMult
+# exec MatrixMult original 1000
+# exec MatrixMult original 2000
+# exec MatrixMult original 3000
 #exec MatrixMult original 8000
 # exec MatrixMult transpose 100
 # exec MatrixMult transpose 200
@@ -274,21 +274,26 @@ exec MatrixMult original 3000
 # exec NQueens integer 9
 # exec NQueens integer 10
 
-# # ###Sobel Edge test
-init SobelEdge
-exec SobelEdge original "image32x32.pbm"
-exec SobelEdge original "image64x64.pbm"
-exec SobelEdge original "image128x128.pbm"
+# # # ###Sobel Edge test
+# init SobelEdge
+# exec SobelEdge original "image32x32.pbm"
+# exec SobelEdge original "image64x64.pbm"
+# exec SobelEdge original "image128x128.pbm"
 
-# # ####LZ77 test case
-init LZ77
-exec LZ77 original "small.in"
-exec LZ77 original "medium.in"
-#exec LZ77 original "large.in"
+# # # ####LZ77 test case
+# init LZ77
+# exec LZ77 original "small.in"
+# exec LZ77 original "medium.in"
+# #exec LZ77 original "large.in"
 
-# #### Cashtill test case
-init Cashtill
-exec Cashtill original 1
-exec Cashtill original 10
-exec Cashtill original 100
+# # #### Cashtill test case
+# init Cashtill
+# exec Cashtill original 1
+# exec Cashtill original 10
+# exec Cashtill original 100
 
+# #### AppendArrayPattern test case
+init AppendArrayPattern
+exec AppendArrayPattern original 1
+exec AppendArrayPattern original 10
+exec AppendArrayPattern original 100

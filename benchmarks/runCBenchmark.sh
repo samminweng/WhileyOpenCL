@@ -323,13 +323,20 @@ exec(){
 # exec LZ77 original "medium.in"
 # exec LZ77 original "large.in"
 
-# ### Cashtill test case
-init Cashtill
-exec Cashtill original 1000
-exec Cashtill original 1200
-exec Cashtill original 1400
-exec Cashtill original 1600
-exec Cashtill original 1800
-exec Cashtill original 2000
-# exec Cashtill original 10000
-# exec Cashtill original 100000
+# # ### Cashtill test case
+# init Cashtill
+# exec Cashtill original 1000
+# exec Cashtill original 1200
+# exec Cashtill original 1400
+# exec Cashtill original 1600
+# exec Cashtill original 1800
+# exec Cashtill original 2000
+
+# #### AppendArrayPattern test case
+init AppendArrayPattern
+exec AppendArrayPattern original 1000
+exec AppendArrayPattern original 10000
+exec AppendArrayPattern original 100000
+exec AppendArrayPattern original 1000000
+exec AppendArrayPattern original 10000000
+exec AppendArrayPattern original 100000000
