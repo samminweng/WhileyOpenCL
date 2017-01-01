@@ -14,8 +14,9 @@
 #define _CRT_SECURE_NO_WARNINGS
 // Specify the maximal amounts of chars that are printed out using 'printf' function 
 #define MAX_LENGTH 100
-// Specify the maximal number of chars that a line in PBM should be
-#define MAX_LINE_LENGTH 1024*8
+// Specify the maximal number of chars that a line in PBM should be read
+// i.e. 16384 bytes, to avoid using too many memory space and stop the sobel edge
+#define MAX_LINE_LENGTH 1024*16
 
 // Define BYTE type due to missing byte primitive type in C languate
 typedef uint8_t BYTE;

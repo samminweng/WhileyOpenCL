@@ -48,11 +48,8 @@ public class PatternMatchingTestCase {
 		
 		// Add a list of test cases
 		return Arrays.asList(new String[][] {
-				//{"WhileLoop", "f"},
-				//{"WhileLoop1", "foo"},
-				//{"AppendArray", "f"},
+				{"AppendArrayPattern", "comp"},
 				{"lz77", "compress"},
-				//{"lz77", "decompress"}
 		});
 	}
 	

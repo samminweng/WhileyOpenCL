@@ -32,17 +32,19 @@ ensures |nitems| == size:
     return nitems
 
 // Append two integers to an array at each iteration 
-function f(byte[] data) -> (byte[] output):
-	int pos = 0
-	// Initialize the output array
-	output = [0b;0]
-	// Iterate each integer in 'data' array
-	while pos < |data|:
-		// Append two items to 'output'
-		output = append(output, Int.toUnsignedByte(pos))
-		output = append(output, data[pos])
-		pos = pos + 1
-	return output
+function comp(byte[] data) -> (byte[] output):
+    int pos = 0
+    // Initialize the output array
+    output = [0b;0]
+    // Iterate each integer in 'data' array
+    while pos < |data|:
+        byte item = data[pos]
+        byte length = Int.toUnsignedByte(pos)
+        pos = pos + 1
+        // Append two items to 'output'
+        output = append(output, length)
+        output = append(output, item)
+    return output
 
 // /*
 // * The transformed 'f' function pre-allocates
@@ -69,8 +71,8 @@ function f(byte[] data) -> (byte[] output):
 // 	return output
 
 method main(System.Console sys):
-	// The byte array of 'abc' (ref:http://sticksandstones.kstrom.com/appen.html)
+	// The byte array of 'abc' 
 	byte[] data = [01100001b, 01100010b, 01100011b]
-	byte[] arr = f(data)
+	byte[] arr = comp(data)
 	assert arr == [0b, 01100001b, 1b, 01100010b, 10b, 01100011b]
-	sys.out.println_s(ASCII.fromBytes(arr))
+	sys.out.print(|arr|)
