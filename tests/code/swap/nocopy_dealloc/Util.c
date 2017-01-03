@@ -547,8 +547,8 @@ bool isPBMFile(FILE *file){
 BYTE* readPBM(FILE *file, size_t* _size){
 	char* line = malloc(MAX_LINE_LENGTH*sizeof(char));
 	size_t length = MAX_LINE_LENGTH;
-	size_t width = 0;
-	size_t height = 0;
+	int width = 0;
+	int height = 0;
 	// Read 'width' and 'height' from a file
 	//while(getline(&line, &length, file) != -1){
 	while(fgets(line, length, file) != NULL){

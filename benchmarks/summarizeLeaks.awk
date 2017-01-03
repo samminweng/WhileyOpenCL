@@ -4,7 +4,7 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult LZ77 SobelEdge Cashtill";
+	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult LZ77 SobelEdge Cashtill AppendArrayPattern";
 	
 	## Program Type
 	programs["Reverse"]="original";
@@ -22,12 +22,22 @@ BEGIN {
 	# ### Pattern transformation
 	programs["LZ77"]="original";
 	programs["Cashtill"]="original";
+	programs["AppendArrayPattern"]="original";
 
 	# Code Generation
 	codegens = "naive naive_dealloc nocopy nocopy_dealloc";
 
 	# Pattern matching 
-	patterns = "disabled enabled";
+	# Pattern matching 
+	patterns["Reverse"] = "disabled";
+	patterns["newTicTacToe"] = "disabled";
+	patterns["BubbleSort"] = "disabled";
+	patterns["MergeSort"] = "disabled";
+	patterns["MatrixMult"] = "disabled";
+	patterns["LZ77"] = "disabled enabled";
+	patterns["SobelEdge"] = "disabled";
+	patterns["Cashtill"] = "disabled";
+	patterns["AppendArrayPattern"] = "disabled enabled";
 	# Compiler
 	compilers = "gcc";
 	#compilers = "gcc clang polly openmp";
@@ -48,7 +58,7 @@ BEGIN {
 	# ### pattern transformation
 	parameters["LZ77"]="small medium large";
 	parameters["Cashtill"]="1 10 100";
-	
+	parameters["AppendArrayPattern"]="10 100 1000";
 
 	# The number of threads
 	#threads="1 2 4";
@@ -157,7 +167,7 @@ END {
 			for(cr=1;cr<=compilers_total;cr++){
 				compiler = compiler_array[cr];
 				## Get pattern 
-				patterns_total=split(patterns, pattern_array, " ");
+				patterns_total=split(patterns[testcase], pattern_array, " ");
 				for(pt=1; pt<=patterns_total;pt++){
 					pattern=pattern_array[pt];
 					## Parameter

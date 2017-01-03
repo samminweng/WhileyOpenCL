@@ -13,7 +13,7 @@ BENCHMARKDIR="$(pwd)"
 declare -A widths=( [image32x32.pbm]=32 [image64x64.pbm]=64 [image128x128.pbm]=128 \
                     [image256x256.pbm]=256 [image512x512.pbm]=512 [image1024x1024.pbm]=1024 )
 ## Declare an associative array for pattern matching
-declare -A patterns=( [LZ77]=compress )
+declare -A patterns=( [LZ77]=compress [AppendArrayPattern]=comp )
 
 ## declare 4 kinds of code generation
 declare -a codegens=("naive" "naive_dealloc" "nocopy" "nocopy_dealloc")
@@ -333,10 +333,8 @@ exec(){
 # exec Cashtill original 2000
 
 # #### AppendArrayPattern test case
-init AppendArrayPattern
-exec AppendArrayPattern original 1000
-exec AppendArrayPattern original 10000
-exec AppendArrayPattern original 100000
-exec AppendArrayPattern original 1000000
-exec AppendArrayPattern original 10000000
-exec AppendArrayPattern original 100000000
+#init AppendArrayPattern
+exec AppendArrayPattern original 100
+#exec AppendArrayPattern original 1000
+#exec AppendArrayPattern original 10000
+#exec AppendArrayPattern original 100000
