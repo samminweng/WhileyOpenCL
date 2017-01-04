@@ -237,23 +237,23 @@ exec(){
 # exec Reverse original 1000000
 # exec Reverse original 10000000
 
-# # # # # # newTicTacToe test case
+# # # # # # # newTicTacToe test case
 # init newTicTacToe
 # exec newTicTacToe original 1000
 # exec newTicTacToe original 10000
 # exec newTicTacToe original 100000
 
-# # # # ## # MergeSort test case
-# init MergeSort
-# exec MergeSort original 1000
-# exec MergeSort original 10000
-# exec MergeSort original 100000
-
-# # # ## # BubbleSort test case
+# # # # ## # BubbleSort test case
 # init BubbleSort
 # exec BubbleSort original 1000
 # exec BubbleSort original 10000
 # exec BubbleSort original 100000
+
+# # # ## # MergeSort test case
+init MergeSort
+exec MergeSort original 1000
+exec MergeSort original 10000
+exec MergeSort original 100000
 
 # # # # MatrixMult test case
 # init MatrixMult
@@ -334,7 +334,7 @@ exec(){
 
 # #### AppendArrayPattern test case
 #init AppendArrayPattern
-exec AppendArrayPattern original 100
+#exec AppendArrayPattern original 100
 #exec AppendArrayPattern original 1000
 #exec AppendArrayPattern original 10000
 #exec AppendArrayPattern original 100000
