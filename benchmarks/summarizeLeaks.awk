@@ -190,8 +190,10 @@ END {
 								if(count[key]>0){
 									# FIll in the values
 									str = str"\t"leaks[key",definiteloss"]+0"\t"leaks[key",indirectloss"]+0"\t"leaks[key",possibleloss"]+0"\t"leaks[key",reachableloss"]+0;
-									print str;
-								}								
+								}else{
+									str = str"\tNaN\tNaN\tNaN\tNaN"
+								}	
+								print str;							
 							}
 						}
 					}		

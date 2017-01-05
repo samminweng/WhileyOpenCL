@@ -13,8 +13,8 @@ declare -A widths=( [image32x32.pbm]=32 [image64x64.pbm]=64 [image128x128.pbm]=1
 declare -A patterns=( [LZ77]=compress [AppendArrayPattern]=comp )
 
 ## declare 4 kinds of code generation
-declare -a codegens=("naive" "naive_dealloc" "nocopy" "nocopy_dealloc")
-##declare -a codegens=("naive_dealloc" "nocopy" "nocopy_dealloc")
+##declare -a codegens=("naive" "naive_dealloc" "nocopy" "nocopy_dealloc")
+declare -a codegens=("naive_dealloc" "nocopy" "nocopy_dealloc")
 
 
 ### Create the 'leak' folder and clean up the files
@@ -284,7 +284,7 @@ exec(){
 # init LZ77
 # exec LZ77 original "small.in"
 # exec LZ77 original "medium.in"
-# #exec LZ77 original "large.in"
+exec LZ77 original "large.in"
 
 # # #### Cashtill test case
 # init Cashtill
@@ -292,8 +292,8 @@ exec(){
 # exec Cashtill original 10
 # exec Cashtill original 100
 
-# #### AppendArrayPattern test case
-init AppendArrayPattern
-exec AppendArrayPattern original 10
-exec AppendArrayPattern original 100
-exec AppendArrayPattern original 1000
+# # #### AppendArrayPattern test case
+# init AppendArrayPattern
+# exec AppendArrayPattern original 10
+# exec AppendArrayPattern original 100
+# exec AppendArrayPattern original 1000
