@@ -16,7 +16,7 @@ function generateReport(results){
 		for(pt=1;pt<=program_total;pt++){
 			program = program_array[pt];
 			## Compiler
-			compilers_total=split(compilers, compiler_array, " ");
+			compilers_total=split(compilers[testcase], compiler_array, " ");
 			for(cr=1;cr<=compilers_total;cr++){
 				compiler=compiler_array[cr];
 				## Get pattern 
@@ -47,7 +47,7 @@ function generateReport(results){
 				 				}else{
 				 					## No results are found. 
 				 					for(iteration=1;iteration<=10;iteration++){
-				 						str = str"\tNaN";
+				 						str = str"\tOOM";
 				 					}
 				 				}
 				 				print str;
@@ -99,7 +99,15 @@ BEGIN {
 	patterns["AppendArrayPattern"] = "disabled enabled";
 	# Compiler
 	#compilers = "gcc clang polly openmp";
-	compilers = "gcc";
+	compilers["Reverse"] = "gcc";
+	compilers["newTicTacToe"] = "gcc";
+	compilers["BubbleSort"] = "gcc";
+	compilers["MergeSort"] = "gcc";
+	compilers["MatrixMult"] = "gcc";	
+	compilers["LZ77"] = "gcc";
+	compilers["SobelEdge"] = "gcc";
+	compilers["Cashtill"] = "gcc";
+	compilers["AppendArrayPattern"] = "gcc";
 	### Parameter
 	# Parameter
 	parameters["Reverse"]="100000 1000000 10000000";
@@ -119,7 +127,6 @@ BEGIN {
 	parameters["AppendArrayPattern"]="1000 10000 100000";
 
 	# The number of threads
-	#threads="1 2 4";
 	threads="1";
 	# Results
 	cpu_utils[""] = "";
@@ -135,26 +142,31 @@ BEGIN {
 	testcase=t_array[1];
 	# Program type
 	program=t_array[2];
+	# Compiler 
+	compiler=t_array[3];
 	# Codegen
-	codegen=t_array[3];
+	codegen=t_array[4];
 	# Pattern
-	pattern=t_array[4];
+	pattern=t_array[5];
 	if(pattern == "disabledpattern"){
 		pattern="disabled";
 	}else{
 		pattern="enabled";
 	}
-	# Compiler 
-	compiler=t_array[5];
-	# Get the number of threads
-	thread = t_array[6];
-
+	
 	# Get parameter
 	if(testcase == "SobelEdge"){
-		split(t_array[7], tmp, "x");
+		split(t_array[6], tmp, "x");
 		parameter = tmp[2];
 	}else{
-		parameter = t_array[7];
+		parameter = t_array[6];
+	}
+
+	# Get the number of threads
+	if(testcase == "LZ77" || testcase == "SobelEdge"){
+		thread = t_array[8];
+	}else{
+		thread = t_array[7];
 	}
 	
 	key=testcase","program","codegen","pattern","compiler","parameter","thread;

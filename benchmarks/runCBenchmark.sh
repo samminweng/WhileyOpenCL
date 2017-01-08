@@ -1,29 +1,49 @@
 #!/bin/bash
-TIMEOUT="3600s"
+TIMEOUT="1800s"
 ## Set shell script to UTF-8
 export LANG=C.UTF-8
 # Run Polly from clang
-#alias opt="opt -O3 -polly"
 alias pollycc="clang -O3 -mllvm -polly"
 ### Get the root working directory
 UTILDIR="$(dirname "$(pwd)")/tests/code"
 BENCHMARKDIR="$(pwd)"
 
-## Declare an associative array for image size in sobeledge test case
-declare -A widths=( [image32x32.pbm]=32 [image64x64.pbm]=64 [image128x128.pbm]=128 \
-                    [image256x256.pbm]=256 [image512x512.pbm]=512 [image1024x1024.pbm]=1024 )
-## Declare an associative array for pattern matching
-declare -A patterns=( [LZ77]=compress [AppendArrayPattern]=comp )
+## declare compiler used for compilation
+declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" \
+					   [MergeSort]="gcc" [MatrixMult]="gcc polly openmp" \
+					   [LZ77]="gcc" [SobelEdge]="gcc" [Cashtill]="gcc" \
+					   [AppendArrayPattern]="gcc" )
 
 ## declare 4 kinds of code generation
 declare -a codegens=("naive" "naive_dealloc" "nocopy" "nocopy_dealloc")
 ##declare -a codegens=("naive_dealloc" "nocopy" "nocopy_dealloc")
 
+## Declare an associative array for pattern matching
+declare -A patterns=( [LZ77]=compress [AppendArrayPattern]=comp )
+
+## declare the number of threads
+declare -a threads=( 1 2 3 4 )
+
+### declare parameters
+declare -A parameters=( [Reverse]="100000 1000000 10000000" [newTicTacToe]="1000 10000 100000" \
+						[BubbleSort]="1000 10000 100000" [MergeSort]="1000 10000 100000" \
+						[MatrixMult]="1000 2000 3000" \
+						[LZ77]="small.in medium.in large.in" \
+						[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm image256x256.pbm image512x512.pbm image1024x1024.pbm" \
+						#[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm" \
+						[Cashtill]="1000 1200 1400 1600 1800 2000" \
+						#[Cashtill]="100 200 300"
+						[AppendArrayPattern]="100 1000 10000" \
+						#[AppendArrayPattern]="100 200 300" \
+					   )
+## Declare an associative array for image size in sobeledge test case
+declare -A widths=( [image32x32.pbm]=32 [image64x64.pbm]=64 [image128x128.pbm]=128 \
+                    [image256x256.pbm]=256 [image512x512.pbm]=512 [image1024x1024.pbm]=1024 )
 
 ### Create the folder and/or clean up the files
 init(){
 	testcase=$1
-	dir="$BENCHMARKDIR/$testcase/exectime/GCC"
+	dir="$BENCHMARKDIR/$testcase/exectime/C"
 	mkdir -p "$dir"
 	### remove all files inside the folder
 	rm -f "$dir/"*.*
@@ -33,18 +53,13 @@ init(){
 generateCode(){
 	testcase=$1
 	program=$2
-	codegen=$3
-	enabledpattern=$4
+	compiler=$3
+	codegen=$4
+	pattern=$5
+	
+	### the folder of generated code
+	codeDir="$BENCHMARKDIR/$testcase/impl/$program/C/$compiler/$pattern/$codegen"
 
-	if [ $enabledpattern == 1 ] 
-	then
-		### Enable pattern transformation
-		codeDir="$BENCHMARKDIR/$testcase/impl/$program/C/pattern/$codegen"
-		pattern=$5
-	else
-		### Disable pattern transformation
-		codeDir="$BENCHMARKDIR/$testcase/impl/$program/C/nopattern/$codegen"
-	fi
 	###echo $codeDir
 	## Clean the folder
 	rm -rf "$codeDir"
@@ -58,12 +73,14 @@ generateCode(){
 	cd $codeDir
 
 	### Disable pattern transformation
-	wyopcl=./../../../../../../../bin/wyopcl
-	if [ $enabledpattern == 1 ] 
+	wyopcl=./../../../../../../../../bin/wyopcl
+	if [ $pattern = "enabledpattern" ] 
 	then
+		func=${patterns[$testcase]}
 		### Enable pattern transformation
-		wyopcl=$wyopcl" -pattern $pattern"	
+		wyopcl=$wyopcl" -pattern $func"	
 	fi
+	
 	echo $codegen
 	## Translate Whiley programs into naive C code
 	case "$codegen" in
@@ -84,31 +101,30 @@ generateCode(){
 			$wyopcl -code -nocopy -dealloc $testcase"_"$program.whiley
 			;;
 	esac
+
 }
 
 
 ##
-## Compile the program and run the executable with given parameters
+## Compile the program and 
 ##
-compileAndRun(){
+compile(){
 	testcase=$1
 	program=$2
-	codegen=$3
-	enabledpattern=$4
-	parameter=$5
-	compiler=$6
-	num_threads=$7
+	compiler=$3
+	codegen=$4
+	pattern=$5
+
+	### the folder of generated code
+	codeDir="$BENCHMARKDIR/$testcase/impl/$program/C/$compiler/$pattern/$codegen"
+	cd $codeDir
+	
 	####Create 'out', 'llvm' and 'assembly' folder
 	rm -rf "out" "llvm" "assembly"
 	mkdir -p "out" "llvm" "assembly"
 	### The executable file name
-	if [ $enabledpattern == 1 ]
-	then 
-		executable="$testcase.$program.$codegen.enabledpattern.$compiler.$num_threads.$parameter.out"
-	else
-		executable="$testcase.$program.$codegen.disabledpattern.$compiler.$num_threads.$parameter.out"
-	fi
-	result="$BENCHMARKDIR/$testcase/exectime/GCC/$executable.txt"
+	executable="$testcase.$program.$compiler.$codegen.$pattern.out"
+	
 	### Compile C code into executables
 	case "$compiler" in
 		"gcc")
@@ -119,9 +135,9 @@ compileAndRun(){
 			;;
 		"polly")
 			###'-polly-process-unprofitable' option forces Polly to generate sequential code
-			pollycc -mllvm -polly-vectorizer=stripmine\
-	        		-S -emit-llvm -mllvm -polly-process-unprofitable\
-					-mllvm -polly-opt-outer-coincidence=yes\
+			pollycc -mllvm -polly-vectorizer=stripmine \
+	        		-S -emit-llvm -mllvm -polly-process-unprofitable \
+					-mllvm -polly-opt-outer-coincidence=yes \
 	        		$testcase"_"$program.c -o "llvm/$executable.ll"
 			### Use 'llc' to compile LLVM code into assembly code
 			llc "llvm/$executable.ll" -o "assembly/$executable.s"
@@ -129,24 +145,49 @@ compileAndRun(){
 			clang "assembly/$executable.s" Util.c WyRT.c -o "out/$executable"
 			;;
 		"openmp")
-			echo "Optimize C code using OpenMP code with $OMP_NUM_THREADS threads..." >> $result
+			echo "Optimize C code using OpenMP code ..."
 			### '-polly-parallel-force' forces Polly to generate OpenMP code
-			export OMP_NUM_THREADS=$num_threads
-			pollycc -mllvm -polly-vectorizer=stripmine -S -emit-llvm\
-	        		-mllvm -polly-parallel -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
-					-mllvm -polly-opt-outer-coincidence=yes\
+			pollycc -mllvm -polly-vectorizer=stripmine -S -emit-llvm \
+	        		-mllvm -polly-parallel -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force \
+					-mllvm -polly-opt-outer-coincidence=yes \
 	        		$testcase"_"$program.c -o "llvm/$executable.ll"
 			### Use 'llc' to compile LLVM code into assembly code
 			llc "llvm/$executable.ll" -o "assembly/$executable.s"
 			### Use 'clang' to compile .s file and link with 'Util.c'
 			clang "assembly/$executable.s" Util.c WyRT.c -lgomp -o "out/$executable"
-			###Export the number of threads for OpenMP code
-			export OMP_NUM_THREADS=$num_threads
 			;;
 	esac
+}
+## Run the executable with given parameters
+run(){
+	testcase=$1
+	program=$2
+	compiler=$3
+	codegen=$4
+	pattern=$5
+	parameter=$6
+	thread=$7
 
-	echo "Run the $program $testcase on $parameter using $compiler and $num_threads threads..." > $result
-	echo "Run the $program $testcase on $parameter using $num_threads threads..."
+	### the folder of generated code
+	codeDir="$BENCHMARKDIR/$testcase/impl/$program/C/$compiler/$pattern/$codegen"
+	cd $codeDir
+
+	prefix="$testcase.$program.$compiler.$codegen.$pattern"
+	### The file of executable
+	executable="$prefix.out"
+	
+	## Output the file of execution time 
+	mkdir -p "$BENCHMARKDIR/$testcase/exectime/C"
+	result="$BENCHMARKDIR/$testcase/exectime/C/$prefix.$parameter.$thread.txt"
+
+	###Export the number of threads for OpenMP code
+	if [ $compiler = "openmp" ]
+	then
+		export OMP_NUM_THREADS=$thread
+	fi
+	
+	echo "Run the $program $testcase on $parameter using $compiler and $thread threads..." > $result
+	echo "Run the $program $testcase on $parameter using $thread threads..."
 	for i in {1..10}
 	do
 		echo "Run the $program $testcase on $parameter using $compiler" >> $result
@@ -190,35 +231,69 @@ compileAndRun(){
 	done
 	### Output the hardware info.
 	cat /proc/cpuinfo >> $result
+
 }
+
 #
 # Execute benchmarks
 #
 exec(){
 	testcase=$1
 	program=$2
-	parameter=$3
 
-	# ## Iterate each codegen
-	for codegen in "${codegens[@]}"
+	for compiler_arr in "${compilers[$testcase]}"
 	do
-		## disabled the pattern
-		enabledpattern=0
-		# Generate C code with disabled pattern 
-		generateCode $testcase $program $codegen $enabledpattern
-		# Detect the leaks of generated C code using different compiler
-		compileAndRun $testcase $program $codegen $enabledpattern $parameter "gcc" 1
-		## Get the pattern option 
-		pattern=${patterns[$testcase]}
-		if [ $pattern ]
-		then
-			# Enable the pattern matching
-			enabledpattern=1
-			# Generate C code with enabled pattern 
-			generateCode $testcase $program $codegen $enabledpattern $pattern
-			# Detect the leaks of generated C code using different compiler
-			compileAndRun $testcase $program $codegen $enabledpattern $parameter "gcc" 1
-		fi
+		for compiler in $compiler_arr
+		do
+			echo $compiler
+			# ## Iterate each codegen
+			for codegen in "${codegens[@]}"
+			do
+				echo $codegen		
+				# Generate C code with disabled pattern 
+				generateCode $testcase $program $compiler $codegen "disabledpattern" 
+				# Detect the leaks of generated C code using different compiler
+				compile $testcase $program $compiler $codegen "disabledpattern"
+
+				# ## Get the pattern option 
+				func=${patterns[$testcase]}
+				if [ $func ]
+				then
+					echo $func
+					# Generate C code with enabled pattern matching and transform 
+					generateCode $testcase $program $compiler $codegen "enabledpattern"
+					# Detect the leaks of generated C code using different compiler
+					compile $testcase $program $compiler $codegen "enabledpattern"
+				fi
+
+				for param_arr in "${parameters[$testcase]}"
+				do
+					for parameter in $param_arr
+					do
+						echo "parameter "$parameter
+						if [ $compiler = "openmp" ]
+						then
+							### Run the executable with multiple threads (1, 2, 3, 4)
+							for thread in "${threads[@]}"
+							do
+								echo "thread " . $thread
+								run $testcase $program $compiler $codegen "disabledpattern" $parameter $thread
+							done
+						else
+						 	run $testcase $program $compiler $codegen "disabledpattern" $parameter 1
+						fi
+
+						# ## Get the pattern option 
+						func=${patterns[$testcase]}
+						if [ $func ]
+						then							
+							## Run the executable
+							run $testcase $program $compiler $codegen "enabledpattern" $parameter 1
+						fi
+					done
+				done
+			done
+		done
 	done
 	# #Return to the working directory
  	cd $BENCHMARKDIR
@@ -227,47 +302,53 @@ exec(){
 
 # # ############################################
 # # ###
-# # ###  Benchmark 2 kinds of generated code
+# # ###  Benchmark the generated code
 # # ###  (naive + de-allocated, copy_reduced, copy_reduced + de-allocated)
 # # ###
 # # ###########################################
 # # ## # Reverse test case
-# init Reverse
-# exec Reverse original 100000
-# exec Reverse original 1000000
-# exec Reverse original 10000000
+init Reverse
+exec Reverse original
 
 # # # # # # # newTicTacToe test case
-# init newTicTacToe
-# exec newTicTacToe original 1000
-# exec newTicTacToe original 10000
-# exec newTicTacToe original 100000
+init newTicTacToe
+exec newTicTacToe original
 
 # # # # ## # BubbleSort test case
-# init BubbleSort
-# exec BubbleSort original 1000
-# exec BubbleSort original 10000
-# exec BubbleSort original 100000
+init BubbleSort
+exec BubbleSort original
 
-# # # ## # MergeSort test case
+# # # # ## # MergeSort test case
 init MergeSort
-exec MergeSort original 1000
-exec MergeSort original 10000
-exec MergeSort original 100000
+exec MergeSort original
 
 # # # # MatrixMult test case
-# init MatrixMult
-# exec MatrixMult original 1000
-# exec MatrixMult original 2000
-# exec MatrixMult original 3000
-#exec MatrixMult original 8000
-##exec MatrixMult original 12000 # Naive code runs out of memory
-# # # exec MatrixMult transpose 1000
-# # # exec MatrixMult transpose 2000
-# # # exec MatrixMult transpose 3000
-# # # exec MatrixMult 2DArray 1000
-# # # exec MatrixMult 2DArray 2000
-# # # exec MatrixMult 2DArray 3000
+init MatrixMult
+exec MatrixMult original
+####exec MatrixMult original 12000 # Naive code runs out of memory
+# # exec MatrixMult transpose 1000
+# # exec MatrixMult transpose 2000
+# # exec MatrixMult transpose 3000
+# # exec MatrixMult 2DArray 1000
+# # exec MatrixMult 2DArray 2000
+# # exec MatrixMult 2DArray 3000
+
+#### LZ77 test case
+init LZ77
+exec LZ77 original
+
+# # ###Sobel Edge test
+init SobelEdge
+exec SobelEdge original
+
+# ### Cashtill test case
+init Cashtill
+exec Cashtill original
+
+# #### AppendArrayPattern test case
+init AppendArrayPattern
+exec AppendArrayPattern original 
+
 
 # # ## Fibonacci test case
 # # init Fibonacci
@@ -308,33 +389,3 @@ exec MergeSort original 100000
 # exec NQueens integer 12
 # exec NQueens integer 14
 
-# # # ###Sobel Edge test
-# init SobelEdge
-# exec SobelEdge original "image32x32.pbm"
-# exec SobelEdge original "image64x64.pbm"
-# exec SobelEdge original "image128x128.pbm"
-# exec SobelEdge original "image256x256.pbm"
-# exec SobelEdge original "image512x512.pbm"
-# exec SobelEdge original "image1024x1024.pbm"
-
-# #### LZ77 test case
-# init LZ77
-# exec LZ77 original "small.in"
-# exec LZ77 original "medium.in"
-# exec LZ77 original "large.in"
-
-# # ### Cashtill test case
-# init Cashtill
-# exec Cashtill original 1000
-# exec Cashtill original 1200
-# exec Cashtill original 1400
-# exec Cashtill original 1600
-# exec Cashtill original 1800
-# exec Cashtill original 2000
-
-# #### AppendArrayPattern test case
-#init AppendArrayPattern
-#exec AppendArrayPattern original 100
-#exec AppendArrayPattern original 1000
-#exec AppendArrayPattern original 10000
-#exec AppendArrayPattern original 100000
