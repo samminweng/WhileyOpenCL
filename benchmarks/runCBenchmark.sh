@@ -1,5 +1,5 @@
 #!/bin/bash
-TIMEOUT="1800s"
+TIMEOUT="3600s"
 ## Set shell script to UTF-8
 export LANG=C.UTF-8
 # Run Polly from clang
@@ -16,7 +16,7 @@ declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" \
 
 ## declare 4 kinds of code generation
 declare -a codegens=("naive" "naive_dealloc" "nocopy" "nocopy_dealloc")
-##declare -a codegens=("naive_dealloc" "nocopy" "nocopy_dealloc")
+##declare -a codegens=("naive")
 
 ## Declare an associative array for pattern matching
 declare -A patterns=( [LZ77]=compress [AppendArrayPattern]=comp )
@@ -28,12 +28,12 @@ declare -a threads=( 1 2 3 4 )
 declare -A parameters=( [Reverse]="100000 1000000 10000000" [newTicTacToe]="1000 10000 100000" \
 						[BubbleSort]="1000 10000 100000" [MergeSort]="1000 10000 100000" \
 						[MatrixMult]="1000 2000 3000" \
-						[LZ77]="small.in medium.in large.in" \
+						[LZ77]="input1x.in input2x.in input3x.in" \
 						[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm image256x256.pbm image512x512.pbm image1024x1024.pbm" \
 						#[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm" \
 						[Cashtill]="1000 1200 1400 1600 1800 2000" \
 						#[Cashtill]="100 200 300"
-						[AppendArrayPattern]="100 1000 10000" \
+						[AppendArrayPattern]="10000 20000 40000 60000 80000 100000" \
 						#[AppendArrayPattern]="100 200 300" \
 					   )
 ## Declare an associative array for image size in sobeledge test case
@@ -306,25 +306,25 @@ exec(){
 # # ###  (naive + de-allocated, copy_reduced, copy_reduced + de-allocated)
 # # ###
 # # ###########################################
-# # ## # Reverse test case
-init Reverse
-exec Reverse original
+# # # ## # Reverse test case
+# init Reverse
+# exec Reverse original
 
-# # # # # # # newTicTacToe test case
-init newTicTacToe
-exec newTicTacToe original
+# # # # # # # # newTicTacToe test case
+# init newTicTacToe
+# exec newTicTacToe original
 
-# # # # ## # BubbleSort test case
-init BubbleSort
-exec BubbleSort original
+# # # # # ## # BubbleSort test case
+# init BubbleSort
+# exec BubbleSort original
 
-# # # # ## # MergeSort test case
-init MergeSort
-exec MergeSort original
+# # # # # ## # MergeSort test case
+# init MergeSort
+# exec MergeSort original
 
-# # # # MatrixMult test case
-init MatrixMult
-exec MatrixMult original
+# # # # # MatrixMult test case
+# init MatrixMult
+# exec MatrixMult original
 ####exec MatrixMult original 12000 # Naive code runs out of memory
 # # exec MatrixMult transpose 1000
 # # exec MatrixMult transpose 2000
@@ -333,22 +333,21 @@ exec MatrixMult original
 # # exec MatrixMult 2DArray 2000
 # # exec MatrixMult 2DArray 3000
 
+# # ###Sobel Edge test
+#init SobelEdge
+#exec SobelEdge original
+
+# ### Cashtill test case
+#init Cashtill
+#exec Cashtill original
+
+# #### AppendArrayPattern test case
+#init AppendArrayPattern
+#exec AppendArrayPattern original 
+
 #### LZ77 test case
 init LZ77
 exec LZ77 original
-
-# # ###Sobel Edge test
-init SobelEdge
-exec SobelEdge original
-
-# ### Cashtill test case
-init Cashtill
-exec Cashtill original
-
-# #### AppendArrayPattern test case
-init AppendArrayPattern
-exec AppendArrayPattern original 
-
 
 # # ## Fibonacci test case
 # # init Fibonacci

@@ -64,14 +64,12 @@ BEGIN {
 	
 	programs["MatrixMult"]="original";
 	
-
 	# Code Generation
 	codegens = "naive naive_dealloc nocopy nocopy_dealloc";
 	# Pattern matching	
 	patterns["MatrixMult"] = "disabled";
 	
-	# Compiler
-	#compilers = "gcc clang polly openmp";		
+	# Compiler		
 	compilers["MatrixMult"] = "gcc polly openmp";	
 	### Parameter	
 	parameters["MatrixMult"]="1000 2000 3000";	

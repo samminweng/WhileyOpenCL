@@ -65,7 +65,7 @@ BEGIN {
 	filename = "";
 	FS = "\n";
 	## Test case name
-	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult LZ77 SobelEdge Cashtill AppendArrayPattern";
+	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge Cashtill AppendArrayPattern";
 
 	## Program Type
 	programs["Reverse"]="original";
@@ -122,9 +122,9 @@ BEGIN {
 	## Recursive function call
 	# parameters["NQueens"]="8 10 12 14";
 	# ### pattern transformation
-	parameters["LZ77"]="small medium large";
+	parameters["LZ77"]="small medium large largest";
 	parameters["Cashtill"]="1000 1200 1400 1600 1800 2000";
-	parameters["AppendArrayPattern"]="1000 10000 100000";
+	parameters["AppendArrayPattern"]="10000 20000 40000 60000 80000 100000";
 
 	# The number of threads
 	threads="1";
