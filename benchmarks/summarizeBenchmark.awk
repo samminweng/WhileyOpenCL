@@ -65,8 +65,8 @@ BEGIN {
 	filename = "";
 	FS = "\n";
 	## Test case name
-	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge Cashtill AppendArrayPattern";
-
+	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge Cashtill AppendArrayPattern LZ77";
+	
 	## Program Type
 	programs["Reverse"]="original";
 	programs["newTicTacToe"]="original";
@@ -118,11 +118,11 @@ BEGIN {
 	# parameters["Fibonacci"]="10 50 90";
 	# parameters["GCD"]="100 150 200";
 	# parameters["CoinGame"]="1000 2000 3000";
-	parameters["SobelEdge"]="32 64 128 256 512 1024";	
+	parameters["SobelEdge"]="image32x32 image64x64 image128x128 image256x256 image512x512 image1024x1024";	
 	## Recursive function call
 	# parameters["NQueens"]="8 10 12 14";
 	# ### pattern transformation
-	parameters["LZ77"]="small medium large largest";
+	parameters["LZ77"]="input1x input2x input3x input4x input5x input6x input7x input8x input9x input10x";
 	parameters["Cashtill"]="1000 1200 1400 1600 1800 2000";
 	parameters["AppendArrayPattern"]="10000 20000 40000 60000 80000 100000";
 
@@ -132,7 +132,7 @@ BEGIN {
 	cpu_utils[""] = "";
 	exec_times[""] = "";
 	counts[""]=0;
-	#if (!fn) fn="std.out"
+	if (!fn) fn="std.out"
 }
 {
 	filename=FILENAME;
@@ -193,7 +193,7 @@ BEGIN {
 		time_key = key","iteration;
 		exec_times[time_key]=exec_time;
 		### Debug code
-		#print "exec_times["time_key"]="exec_times[time_key];
+		##print "exec_times["time_key"]="exec_times[time_key];
 		##pause();
 		
 	}

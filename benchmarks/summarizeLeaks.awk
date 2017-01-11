@@ -4,8 +4,8 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult LZ77 SobelEdge Cashtill AppendArrayPattern";
-	
+	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult Cashtill SobelEdge AppendArrayPattern LZ77";
+
 	## Program Type
 	programs["Reverse"]="original";
 	programs["newTicTacToe"]="original";
@@ -51,14 +51,14 @@ BEGIN {
 	# parameters["Fibonacci"]="10 20 30";
 	# parameters["GCD"]="10 20 30";
 	# parameters["CoinGame"]="100 200 300";
-	parameters["SobelEdge"]="32 64 128";	
+	parameters["SobelEdge"]="image32x32 image64x64 image128x128";	
 	# ## Recursive function call
 	# 
 	# parameters["NQueens"]="8 9 10";
+	parameters["Cashtill"]="100 200 300";
 	# ### pattern transformation
-	parameters["LZ77"]="small medium large";
-	parameters["Cashtill"]="1 10 100";
 	parameters["AppendArrayPattern"]="10 100 1000";
+	parameters["LZ77"]="input1x input2x input3x";
 
 	# The number of threads
 	#threads="1 2 4";
@@ -71,30 +71,30 @@ BEGIN {
 	filename=FILENAME;
 	split(filename, arr, "/");
 	split(arr[3], t_array, ".");
-	# Test case
+		# Test case
 	testcase=t_array[1];
-	# implementation type
+	# Program type
 	program=t_array[2];
+	# Compiler 
+	compiler=t_array[3];
 	# Codegen
-	codegen=t_array[3];
+	codegen=t_array[4];
 	# Pattern
-	pattern=t_array[4];
+	pattern=t_array[5];
 	if(pattern == "disabledpattern"){
 		pattern="disabled";
 	}else{
 		pattern="enabled";
 	}
-	# Compiler 
-	compiler=t_array[5];
+	
+	# Get parameter	
+	parameter = t_array[6];	
+
 	# Get the number of threads
-	thread = t_array[6];
-	# Get parameter
-	if(testcase == "SobelEdge"){
-		split(t_array[7], tmp, "x");
-		parameter = tmp[2];
-		##print "parameter" parameter;
+	if(testcase == "LZ77" || testcase == "SobelEdge"){
+		thread = t_array[8];
 	}else{
-		parameter = t_array[7];
+		thread = t_array[7];
 	}
 
 	
@@ -190,10 +190,8 @@ END {
 								if(count[key]>0){
 									# FIll in the values
 									str = str"\t"leaks[key",definiteloss"]+0"\t"leaks[key",indirectloss"]+0"\t"leaks[key",possibleloss"]+0"\t"leaks[key",reachableloss"]+0;
-								}else{
-									str = str"\tNaN\tNaN\tNaN\tNaN"
-								}	
-								print str;							
+									print str;
+								}					
 							}
 						}
 					}		
