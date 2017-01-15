@@ -28,7 +28,8 @@ declare -a threads=( 1 2 3 4 )
 declare -A parameters=( [Reverse]="100000 1000000 10000000" [newTicTacToe]="1000 10000 100000" \
 						[BubbleSort]="1000 10000 100000" [MergeSort]="1000 10000 100000" \
 						[MatrixMult]="1000 2000 3000" \
-						[LZ77]="input1x.in input2x.in input3x.in input4x.in input5x.in input6x.in input7x.in input8x.in input9x.in input10x.in" \
+						[LZ77]="input1x.in input2x.in input4x.in input8x.in input16x.in input32x.in input64x.in input128x.in input256x.in input512x.in input1024x.in" \
+						#[LZ77]="input8x.in" \
 						[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm image256x256.pbm image512x512.pbm image1024x1024.pbm" \
 						#[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm" \
 						[Cashtill]="1000 1200 1400 1600 1800 2000" \
@@ -221,11 +222,24 @@ run(){
 				fi
 			fi
 		fi
+		## Get exit code
+		exitcode="$?"
+		## Exit code of time out 
+		if [ "$exitcode" == "124" ]
+		then
+			printf "\nOOT: Run out of time $TIMEOUT\n" >> $result
+			break 1 ## Break the for loop
+		fi
+		##
 		## Check exit status
-		if [ "$?" = "0" ]; then
+		if [ "$exitcode" = "0" ]
+		then
 			end=`date +%s%N`
 			exectime=$((end-start))
-			printf '\nParameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter $exectime >> $result
+			printf '\nParameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter $exectime >> $result			
+		else
+			printf "\nOOM:Run out of memory\n" >> $result
+			break 1 ## Break the for loop
 		fi
 		echo "Finish $i iteration" >> $result
 	done

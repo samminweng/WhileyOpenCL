@@ -45,10 +45,14 @@ function generateReport(results){
 				 						str = str"\t"results[key","iteration];
 				 					}				 					
 				 				}else{
-				 					## No results are found. 
-				 					for(iteration=1;iteration<=10;iteration++){
-				 						str = str"\tOOM";
-				 					}
+				 					## Out of memory 
+			 						if(counts[key] == -1){
+			 							str = str"\tOOM";
+			 						}
+			 						## Out of time
+			 						if(counts[key] == -2){
+			 							str = str"\tOOT";
+			 						}
 				 				}
 				 				print str;
 							}
@@ -122,7 +126,7 @@ BEGIN {
 	## Recursive function call
 	# parameters["NQueens"]="8 10 12 14";
 	# ### pattern transformation
-	parameters["LZ77"]="input1x input2x input3x input4x input5x input6x input7x input8x input9x input10x";
+	parameters["LZ77"]="input1x input2x input4x input8x input16x input32x input64x input128x input256x input512x input1024x";
 	parameters["Cashtill"]="1000 1200 1400 1600 1800 2000";
 	parameters["AppendArrayPattern"]="10000 20000 40000 60000 80000 100000";
 
@@ -155,12 +159,7 @@ BEGIN {
 	}
 	
 	# Get parameter
-	if(testcase == "SobelEdge"){
-		split(t_array[6], tmp, "x");
-		parameter = tmp[2];
-	}else{
-		parameter = t_array[6];
-	}
+	parameter = t_array[6];
 
 	# Get the number of threads
 	if(testcase == "LZ77" || testcase == "SobelEdge"){
@@ -176,6 +175,7 @@ BEGIN {
 	# Get the execution time
 	if($1 ~ /ExecutionTime:/){
 		##print $1;
+		#print "key="key;
 		#pause();
 		## Increment the iteration
 		counts[key]++;
@@ -195,8 +195,24 @@ BEGIN {
 		### Debug code
 		##print "exec_times["time_key"]="exec_times[time_key];
 		##pause();
-		
 	}
+
+	# Get out-of-memory error 
+	if($1 == "OOM:Run out of memory"){
+		#print "key="key;
+		counts[key] = -1;
+		#print $1;
+		#pause();
+	}
+
+	# Get out-of-time error
+	if($1 == "OOT: Run out of time 3600s"){
+		#print "key="key;
+		counts[key] = -2;
+		#print $1;
+		#pause();
+	}
+
 }
 END {
 	
