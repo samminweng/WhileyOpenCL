@@ -102,7 +102,6 @@ BEGIN {
 	patterns["Cashtill"] = "disabled";
 	patterns["AppendArrayPattern"] = "disabled enabled";
 	# Compiler
-	#compilers = "gcc clang polly openmp";
 	compilers["Reverse"] = "gcc";
 	compilers["newTicTacToe"] = "gcc";
 	compilers["BubbleSort"] = "gcc";

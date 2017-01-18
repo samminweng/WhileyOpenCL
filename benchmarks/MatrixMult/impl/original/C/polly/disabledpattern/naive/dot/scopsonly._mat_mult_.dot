@@ -1,0 +1,91 @@
+digraph "Scop Graph for '_mat_mult_' function" {
+	label="Scop Graph for '_mat_mult_' function";
+
+	Node0xb88d2c0 [shape=record,label="{entry}"];
+	Node0xb88d2c0 -> Node0xb9753f0;
+	Node0xb9753f0 [shape=record,label="{entry.split}"];
+	Node0xb9753f0 -> Node0xb8b80e0;
+	Node0xb9753f0 -> Node0xb8839e0;
+	Node0xb8b80e0 [shape=record,label="{while.cond10.preheader.lr.ph}"];
+	Node0xb8b80e0 -> Node0xb8e5a30;
+	Node0xb8e5a30 [shape=record,label="{while.cond10.preheader}"];
+	Node0xb8e5a30 -> Node0xb8e5ad0;
+	Node0xb8e5a30 -> Node0xb8daab0;
+	Node0xb8e5ad0 [shape=record,label="{while.cond15.preheader.lr.ph}"];
+	Node0xb8e5ad0 -> Node0xb8829d0;
+	Node0xb8829d0 [shape=record,label="{while.cond15.preheader}"];
+	Node0xb8829d0 -> Node0xb89b9c0;
+	Node0xb8829d0 -> Node0xb89b9e0;
+	Node0xb89b9c0 [shape=record,label="{if.end19.lr.ph}"];
+	Node0xb89b9c0 -> Node0xb89ba00;
+	Node0xb89ba00 [shape=record,label="{if.end19}"];
+	Node0xb89ba00 -> Node0xb89ba00[constraint=false];
+	Node0xb89ba00 -> Node0xb89ba60;
+	Node0xb89ba60 [shape=record,label="{while.cond15.blklab17_crit_edge}"];
+	Node0xb89ba60 -> Node0xb89b9e0;
+	Node0xb89b9e0 [shape=record,label="{blklab17}"];
+	Node0xb89b9e0 -> Node0xb8829d0[constraint=false];
+	Node0xb89b9e0 -> Node0xb8b80c0;
+	Node0xb8b80c0 [shape=record,label="{while.cond10.blklab15_crit_edge}"];
+	Node0xb8b80c0 -> Node0xb8daab0;
+	Node0xb8daab0 [shape=record,label="{blklab15}"];
+	Node0xb8daab0 -> Node0xb8e5a30[constraint=false];
+	Node0xb8daab0 -> Node0xb8db900;
+	Node0xb8db900 [shape=record,label="{while.cond.blklab13_crit_edge}"];
+	Node0xb8db900 -> Node0xb8839e0;
+	Node0xb8839e0 [shape=record,label="{blklab13}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xb899e10 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xb973b20 {
+            label = "Non affine loop bound '(-1 + %1)' in loop: while.cond10.preheader";
+            style = solid;
+            color = 6
+            subgraph cluster_0xb89b840 {
+              label = "";
+              style = filled;
+              color = 3              subgraph cluster_0xb8960e0 {
+                label = "";
+                style = solid;
+                color = 7
+                subgraph cluster_0xb88a350 {
+                  label = "";
+                  style = solid;
+                  color = 9
+                  subgraph cluster_0xb8ddbb0 {
+                    label = "";
+                    style = solid;
+                    color = 11
+                    subgraph cluster_0xb8bc460 {
+                      label = "";
+                      style = solid;
+                      color = 1
+                      subgraph cluster_0xb972280 {
+                        label = "";
+                        style = solid;
+                        color = 6
+                        Node0xb89ba00;
+                      }
+                      Node0xb8829d0;
+                      Node0xb89b9c0;
+                      Node0xb89ba60;
+                    }
+                    Node0xb89b9e0;
+                  }
+                  Node0xb8e5a30;
+                  Node0xb8e5ad0;
+                  Node0xb8b80c0;
+                }
+                Node0xb8daab0;
+              }
+              Node0xb8db900;
+            }
+            Node0xb9753f0;
+            Node0xb8b80e0;
+          }
+          Node0xb88d2c0;
+          Node0xb8839e0;
+        }
+}

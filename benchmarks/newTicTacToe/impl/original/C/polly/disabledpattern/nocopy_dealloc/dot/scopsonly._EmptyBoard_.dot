@@ -1,0 +1,15 @@
+digraph "Scop Graph for '_EmptyBoard_' function" {
+	label="Scop Graph for '_EmptyBoard_' function";
+
+	Node0xba2a790 [shape=record,label="{entry}"];
+	Node0xba2a790 -> Node0xbb21b10;
+	Node0xbb21b10 [shape=record,label="{entry.split}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xbb2b830 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0xba2a790;
+          Node0xbb21b10;
+        }
+}

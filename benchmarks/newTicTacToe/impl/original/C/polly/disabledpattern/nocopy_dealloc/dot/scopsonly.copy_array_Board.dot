@@ -1,0 +1,39 @@
+digraph "Scop Graph for 'copy_array_Board' function" {
+	label="Scop Graph for 'copy_array_Board' function";
+
+	Node0xbb2b1e0 [shape=record,label="{entry}"];
+	Node0xbb2b1e0 -> Node0xba32700;
+	Node0xba32700 [shape=record,label="{entry.split}"];
+	Node0xba32700 -> Node0xbb2a820;
+	Node0xba32700 -> Node0xbaec440;
+	Node0xbb2a820 [shape=record,label="{for.cond.cleanup}"];
+	Node0xbaec440 [shape=record,label="{for.body.lr.ph}"];
+	Node0xbaec440 -> Node0xbb24090;
+	Node0xbb24090 [shape=record,label="{for.body}"];
+	Node0xbb24090 -> Node0xbb24090[constraint=false];
+	Node0xbb24090 -> Node0xbaeb9e0;
+	Node0xbaeb9e0 [shape=record,label="{for.cond.for.cond.cleanup_crit_edge}"];
+	Node0xbaeb9e0 -> Node0xbb2a820;
+	colorscheme = "paired12"
+        subgraph cluster_0xbb23e90 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xbaec970 {
+            label = "Call instruction:   %call = tail call noalias i8* @malloc(i64 %mul) #5";
+            style = solid;
+            color = 6
+            subgraph cluster_0xbb2ca60 {
+              label = "Call instruction:   %call2 = tail call %struct.Board* @copy_Board(%struct.Board* %1)";
+              style = solid;
+              color = 5
+              Node0xbb24090;
+            }
+            Node0xba32700;
+            Node0xbaec440;
+            Node0xbaeb9e0;
+          }
+          Node0xbb2b1e0;
+          Node0xbb2a820;
+        }
+}

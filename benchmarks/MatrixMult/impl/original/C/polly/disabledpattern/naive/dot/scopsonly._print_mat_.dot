@@ -1,0 +1,63 @@
+digraph "Scop Graph for '_print_mat_' function" {
+	label="Scop Graph for '_print_mat_' function";
+
+	Node0xb8b7ee0 [shape=record,label="{entry}"];
+	Node0xb8b7ee0 -> Node0xb89cfd0;
+	Node0xb89cfd0 [shape=record,label="{entry.split}"];
+	Node0xb89cfd0 -> Node0xb881720;
+	Node0xb89cfd0 -> Node0xb8bf120;
+	Node0xb881720 [shape=record,label="{while.cond3.preheader.lr.ph}"];
+	Node0xb881720 -> Node0xb979480;
+	Node0xb979480 [shape=record,label="{while.cond3.preheader}"];
+	Node0xb979480 -> Node0xb8dbbf0;
+	Node0xb979480 -> Node0xb88d3d0;
+	Node0xb8dbbf0 [shape=record,label="{if.end7.lr.ph}"];
+	Node0xb8dbbf0 -> Node0xb8ac920;
+	Node0xb8ac920 [shape=record,label="{if.end7}"];
+	Node0xb8ac920 -> Node0xb8ac920[constraint=false];
+	Node0xb8ac920 -> Node0xb8e2850;
+	Node0xb8e2850 [shape=record,label="{while.cond3.blklab8_crit_edge}"];
+	Node0xb8e2850 -> Node0xb88d3d0;
+	Node0xb88d3d0 [shape=record,label="{blklab8}"];
+	Node0xb88d3d0 -> Node0xb979480[constraint=false];
+	Node0xb88d3d0 -> Node0xb773bf0;
+	Node0xb773bf0 [shape=record,label="{while.cond.blklab6_crit_edge}"];
+	Node0xb773bf0 -> Node0xb8bf120;
+	Node0xb8bf120 [shape=record,label="{blklab6}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xb8e58f0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xb8e6270 {
+            label = "Non affine loop bound '(-1 + %1)' in loop: while.cond3.preheader";
+            style = solid;
+            color = 6
+            subgraph cluster_0xb8979d0 {
+              label = "Call instruction:   %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.3, i64 0, i64 0), i64 %3)";
+              style = solid;
+              color = 5
+              subgraph cluster_0xb8db410 {
+                label = "Call instruction:   %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.3, i64 0, i64 0), i64 %3)";
+                style = solid;
+                color = 7
+                subgraph cluster_0xb8bd240 {
+                  label = "Call instruction:   %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.3, i64 0, i64 0), i64 %3)";
+                  style = solid;
+                  color = 9
+                  Node0xb8ac920;
+                }
+                Node0xb979480;
+                Node0xb8dbbf0;
+                Node0xb8e2850;
+              }
+              Node0xb88d3d0;
+            }
+            Node0xb89cfd0;
+            Node0xb881720;
+            Node0xb773bf0;
+          }
+          Node0xb8b7ee0;
+          Node0xb8bf120;
+        }
+}

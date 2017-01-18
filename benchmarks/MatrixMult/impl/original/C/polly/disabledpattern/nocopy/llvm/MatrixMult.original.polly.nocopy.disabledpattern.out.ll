@@ -189,11 +189,6 @@ polly.loop_header.preheader:                      ; preds = %polly.start
   %5 = add nsw i64 %width, -1
   %polly.fdiv_q.shr58 = ashr i64 %5, 5
   %polly.loop_guard63 = icmp sgt i64 %polly.fdiv_q.shr58, -1
-  %pexp.p_div_q = lshr i64 %width, 2
-  %6 = add nsw i64 %pexp.p_div_q, -1
-  %pexp.pdiv_r = and i64 %width, 3
-  %polly.loop_guard96 = icmp eq i64 %pexp.pdiv_r, 0
-  %7 = and i64 %width, -4
   br label %polly.loop_header
 
 polly.loop_header:                                ; preds = %polly.loop_exit62, %polly.loop_header.preheader
@@ -201,146 +196,177 @@ polly.loop_header:                                ; preds = %polly.loop_exit62, 
   br i1 %polly.loop_guard63, label %polly.loop_header60.preheader, label %polly.loop_exit62
 
 polly.loop_header60.preheader:                    ; preds = %polly.loop_header
-  %8 = shl nsw i64 %polly.indvar, 5
-  %9 = sub nsw i64 %height, %8
-  %10 = add nsw i64 %9, -1
-  %11 = icmp slt i64 %10, 31
-  %12 = select i1 %11, i64 %10, i64 31
-  %polly.loop_guard72 = icmp sgt i64 %12, -1
-  %polly.adjust_ub75 = add i64 %12, -1
-  br label %polly.loop_header60
+  %6 = shl nsw i64 %polly.indvar, 5
+  %7 = sub nsw i64 %height, %6
+  %8 = add nsw i64 %7, -1
+  %9 = icmp slt i64 %8, 31
+  %10 = select i1 %9, i64 %8, i64 31
+  %polly.loop_guard72 = icmp sgt i64 %10, -1
+  %polly.adjust_ub75 = add i64 %10, -1
+  br i1 %polly.loop_guard72, label %polly.loop_header60.us.preheader, label %polly.loop_exit62
 
-polly.loop_exit62.loopexit:                       ; preds = %polly.loop_exit71
+polly.loop_header60.us.preheader:                 ; preds = %polly.loop_header60.preheader
+  br label %polly.loop_header60.us
+
+polly.loop_header60.us:                           ; preds = %polly.loop_header60.us.preheader, %polly.loop_exit71.loopexit.us
+  %polly.indvar64.us = phi i64 [ %polly.indvar_next65.us, %polly.loop_exit71.loopexit.us ], [ 0, %polly.loop_header60.us.preheader ]
+  %11 = shl i64 %polly.indvar64.us, 5
+  %12 = sub i64 %11, %width
+  %13 = icmp sgt i64 %12, -32
+  %smax111 = select i1 %13, i64 %12, i64 -32
+  %14 = sub i64 -2, %smax111
+  %15 = icmp sgt i64 %14, -1
+  %smax112 = select i1 %15, i64 %14, i64 -1
+  %16 = add i64 %smax112, -2
+  %17 = lshr i64 %16, 2
+  %18 = shl i64 %polly.indvar64.us, 5
+  %19 = sub i64 %18, %width
+  %20 = icmp sgt i64 %19, -32
+  %smax = select i1 %20, i64 %19, i64 -32
+  %21 = sub i64 -2, %smax
+  %22 = icmp sgt i64 %21, -1
+  %smax106 = select i1 %22, i64 %21, i64 -1
+  %23 = add i64 %smax106, 2
+  %24 = shl nsw i64 %polly.indvar64.us, 5
+  %25 = sub nsw i64 %width, %24
+  %26 = add nsw i64 %25, -1
+  %27 = icmp slt i64 %26, 31
+  %28 = select i1 %27, i64 %26, i64 31
+  %polly.loop_guard81.us = icmp sgt i64 %28, -1
+  %polly.adjust_ub84.us = add i64 %28, -1
+  br i1 %polly.loop_guard81.us, label %polly.loop_header69.us.us.preheader, label %polly.loop_exit71.loopexit.us
+
+polly.loop_header69.us.us.preheader:              ; preds = %polly.loop_header60.us
+  %min.iters.check = icmp ult i64 %23, 4
+  %n.vec = and i64 %23, -4
+  %cmp.zero = icmp eq i64 %n.vec, 0
+  %29 = and i64 %17, 1
+  %lcmp.mod = icmp eq i64 %29, 0
+  %30 = icmp eq i64 %17, 0
+  %cmp.n = icmp eq i64 %23, %n.vec
+  br label %polly.loop_header69.us.us
+
+polly.loop_exit71.loopexit.us.loopexit:           ; preds = %polly.loop_exit80.loopexit.us.us
+  br label %polly.loop_exit71.loopexit.us
+
+polly.loop_exit71.loopexit.us:                    ; preds = %polly.loop_exit71.loopexit.us.loopexit, %polly.loop_header60.us
+  %polly.indvar_next65.us = add nuw nsw i64 %polly.indvar64.us, 1
+  %exitcond = icmp eq i64 %polly.indvar64.us, %polly.fdiv_q.shr58
+  br i1 %exitcond, label %polly.loop_exit62.loopexit, label %polly.loop_header60.us
+
+polly.loop_header69.us.us:                        ; preds = %polly.loop_header69.us.us.preheader, %polly.loop_exit80.loopexit.us.us
+  %polly.indvar73.us.us = phi i64 [ %polly.indvar_next74.us.us, %polly.loop_exit80.loopexit.us.us ], [ 0, %polly.loop_header69.us.us.preheader ]
+  %31 = add nuw nsw i64 %polly.indvar73.us.us, %6
+  %32 = mul i64 %31, %width
+  %33 = add i64 %32, %24
+  br i1 %min.iters.check, label %polly.loop_header78.us.us.preheader, label %min.iters.checked
+
+polly.loop_header78.us.us.preheader:              ; preds = %middle.block, %min.iters.checked, %polly.loop_header69.us.us
+  %polly.indvar82.us.us.ph = phi i64 [ 0, %min.iters.checked ], [ 0, %polly.loop_header69.us.us ], [ %n.vec, %middle.block ]
+  br label %polly.loop_header78.us.us
+
+min.iters.checked:                                ; preds = %polly.loop_header69.us.us
+  br i1 %cmp.zero, label %polly.loop_header78.us.us.preheader, label %vector.ph
+
+vector.ph:                                        ; preds = %min.iters.checked
+  %broadcast.splatinsert109 = insertelement <2 x i64> undef, i64 %31, i32 0
+  %broadcast.splat110 = shufflevector <2 x i64> %broadcast.splatinsert109, <2 x i64> undef, <2 x i32> zeroinitializer
+  br i1 %lcmp.mod, label %vector.body.prol.preheader, label %vector.body.prol.loopexit.unr-lcssa
+
+vector.body.prol.preheader:                       ; preds = %vector.ph
+  br label %vector.body.prol
+
+vector.body.prol:                                 ; preds = %vector.body.prol.preheader
+  %34 = add i64 %32, %24
+  %35 = getelementptr i64, i64* %call, i64 %34
+  %36 = bitcast i64* %35 to <2 x i64>*
+  %wide.load.prol = load <2 x i64>, <2 x i64>* %36, align 8, !alias.scope !12, !noalias !14
+  %37 = getelementptr i64, i64* %35, i64 2
+  %38 = bitcast i64* %37 to <2 x i64>*
+  %wide.load108.prol = load <2 x i64>, <2 x i64>* %38, align 8, !alias.scope !12, !noalias !14
+  %39 = add nsw <2 x i64> %wide.load.prol, %broadcast.splat110
+  %40 = add nsw <2 x i64> %wide.load108.prol, %broadcast.splat110
+  %41 = bitcast i64* %35 to <2 x i64>*
+  store <2 x i64> %39, <2 x i64>* %41, align 8, !alias.scope !12, !noalias !14
+  %42 = bitcast i64* %37 to <2 x i64>*
+  store <2 x i64> %40, <2 x i64>* %42, align 8, !alias.scope !12, !noalias !14
+  br label %vector.body.prol.loopexit.unr-lcssa
+
+vector.body.prol.loopexit.unr-lcssa:              ; preds = %vector.ph, %vector.body.prol
+  %index.unr.ph = phi i64 [ 4, %vector.body.prol ], [ 0, %vector.ph ]
+  br label %vector.body.prol.loopexit
+
+vector.body.prol.loopexit:                        ; preds = %vector.body.prol.loopexit.unr-lcssa
+  br i1 %30, label %middle.block, label %vector.ph.new
+
+vector.ph.new:                                    ; preds = %vector.body.prol.loopexit
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph.new
+  %index = phi i64 [ %index.unr.ph, %vector.ph.new ], [ %index.next.1, %vector.body ]
+  %43 = add i64 %33, %index
+  %44 = getelementptr i64, i64* %call, i64 %43
+  %45 = bitcast i64* %44 to <2 x i64>*
+  %wide.load = load <2 x i64>, <2 x i64>* %45, align 8, !alias.scope !12, !noalias !14
+  %46 = getelementptr i64, i64* %44, i64 2
+  %47 = bitcast i64* %46 to <2 x i64>*
+  %wide.load108 = load <2 x i64>, <2 x i64>* %47, align 8, !alias.scope !12, !noalias !14
+  %48 = add nsw <2 x i64> %wide.load, %broadcast.splat110
+  %49 = add nsw <2 x i64> %wide.load108, %broadcast.splat110
+  %50 = bitcast i64* %44 to <2 x i64>*
+  store <2 x i64> %48, <2 x i64>* %50, align 8, !alias.scope !12, !noalias !14
+  %51 = bitcast i64* %46 to <2 x i64>*
+  store <2 x i64> %49, <2 x i64>* %51, align 8, !alias.scope !12, !noalias !14
+  %index.next = add i64 %index, 4
+  %52 = add i64 %33, %index.next
+  %53 = getelementptr i64, i64* %call, i64 %52
+  %54 = bitcast i64* %53 to <2 x i64>*
+  %wide.load.1 = load <2 x i64>, <2 x i64>* %54, align 8, !alias.scope !12, !noalias !14
+  %55 = getelementptr i64, i64* %53, i64 2
+  %56 = bitcast i64* %55 to <2 x i64>*
+  %wide.load108.1 = load <2 x i64>, <2 x i64>* %56, align 8, !alias.scope !12, !noalias !14
+  %57 = add nsw <2 x i64> %wide.load.1, %broadcast.splat110
+  %58 = add nsw <2 x i64> %wide.load108.1, %broadcast.splat110
+  %59 = bitcast i64* %53 to <2 x i64>*
+  store <2 x i64> %57, <2 x i64>* %59, align 8, !alias.scope !12, !noalias !14
+  %60 = bitcast i64* %55 to <2 x i64>*
+  store <2 x i64> %58, <2 x i64>* %60, align 8, !alias.scope !12, !noalias !14
+  %index.next.1 = add i64 %index, 8
+  %61 = icmp eq i64 %index.next.1, %n.vec
+  br i1 %61, label %middle.block.unr-lcssa, label %vector.body, !llvm.loop !15
+
+middle.block.unr-lcssa:                           ; preds = %vector.body
+  br label %middle.block
+
+middle.block:                                     ; preds = %vector.body.prol.loopexit, %middle.block.unr-lcssa
+  br i1 %cmp.n, label %polly.loop_exit80.loopexit.us.us, label %polly.loop_header78.us.us.preheader
+
+polly.loop_exit80.loopexit.us.us.loopexit:        ; preds = %polly.loop_header78.us.us
+  br label %polly.loop_exit80.loopexit.us.us
+
+polly.loop_exit80.loopexit.us.us:                 ; preds = %polly.loop_exit80.loopexit.us.us.loopexit, %middle.block
+  %polly.indvar_next74.us.us = add nuw nsw i64 %polly.indvar73.us.us, 1
+  %polly.loop_cond76.us.us = icmp sgt i64 %polly.indvar73.us.us, %polly.adjust_ub75
+  br i1 %polly.loop_cond76.us.us, label %polly.loop_exit71.loopexit.us.loopexit, label %polly.loop_header69.us.us
+
+polly.loop_header78.us.us:                        ; preds = %polly.loop_header78.us.us.preheader, %polly.loop_header78.us.us
+  %polly.indvar82.us.us = phi i64 [ %polly.indvar_next83.us.us, %polly.loop_header78.us.us ], [ %polly.indvar82.us.us.ph, %polly.loop_header78.us.us.preheader ]
+  %62 = add i64 %33, %polly.indvar82.us.us
+  %scevgep.us.us = getelementptr i64, i64* %call, i64 %62
+  %_p_scalar_.us.us = load i64, i64* %scevgep.us.us, align 8, !alias.scope !12, !noalias !14
+  %p_add7.us.us = add nsw i64 %_p_scalar_.us.us, %31
+  store i64 %p_add7.us.us, i64* %scevgep.us.us, align 8, !alias.scope !12, !noalias !14
+  %polly.indvar_next83.us.us = add nuw nsw i64 %polly.indvar82.us.us, 1
+  %polly.loop_cond85.us.us = icmp sgt i64 %polly.indvar82.us.us, %polly.adjust_ub84.us
+  br i1 %polly.loop_cond85.us.us, label %polly.loop_exit80.loopexit.us.us.loopexit, label %polly.loop_header78.us.us, !llvm.loop !18
+
+polly.loop_exit62.loopexit:                       ; preds = %polly.loop_exit71.loopexit.us
   br label %polly.loop_exit62
 
-polly.loop_exit62:                                ; preds = %polly.loop_exit62.loopexit, %polly.loop_header
+polly.loop_exit62:                                ; preds = %polly.loop_exit62.loopexit, %polly.loop_header60.preheader, %polly.loop_header
   %polly.indvar_next = add nuw nsw i64 %polly.indvar, 1
-  %exitcond142 = icmp eq i64 %polly.indvar, %polly.fdiv_q.shr
-  br i1 %exitcond142, label %blklab2.loopexit, label %polly.loop_header, !llvm.loop !12
-
-polly.loop_header60:                              ; preds = %polly.loop_exit71, %polly.loop_header60.preheader
-  %polly.indvar64 = phi i64 [ %polly.indvar_next65, %polly.loop_exit71 ], [ 0, %polly.loop_header60.preheader ]
-  br i1 %polly.loop_guard72, label %polly.loop_header69.preheader, label %polly.loop_exit71
-
-polly.loop_header69.preheader:                    ; preds = %polly.loop_header60
-  %13 = mul nsw i64 %polly.indvar64, -8
-  %14 = add nsw i64 %6, %13
-  %15 = icmp slt i64 %14, 7
-  %16 = select i1 %15, i64 %14, i64 7
-  %polly.loop_guard81 = icmp sgt i64 %16, -1
-  %17 = shl i64 %polly.indvar64, 5
-  %18 = or i64 %17, 31
-  %19 = icmp slt i64 %18, %width
-  %polly.adjust_ub84 = add i64 %16, -1
-  br i1 %polly.loop_guard81, label %polly.loop_header69.us.preheader, label %polly.loop_header69.preheader.split
-
-polly.loop_header69.us.preheader:                 ; preds = %polly.loop_header69.preheader
-  %brmerge = or i1 %19, %polly.loop_guard96
-  br label %polly.loop_header69.us
-
-polly.loop_header69.us:                           ; preds = %polly.loop_header69.us.preheader, %polly.merge.us
-  %polly.indvar73.us = phi i64 [ %polly.indvar_next74.us, %polly.merge.us ], [ 0, %polly.loop_header69.us.preheader ]
-  %20 = add nuw nsw i64 %polly.indvar73.us, %8
-  %21 = mul i64 %20, %width
-  %22 = add i64 %21, %17
-  %23 = insertelement <2 x i64> undef, i64 %20, i32 0
-  %24 = shufflevector <2 x i64> %23, <2 x i64> undef, <2 x i32> zeroinitializer
-  %25 = insertelement <2 x i64> undef, i64 %20, i32 0
-  %26 = shufflevector <2 x i64> %25, <2 x i64> undef, <2 x i32> zeroinitializer
-  br label %polly.loop_header78.us
-
-polly.loop_header78.us:                           ; preds = %polly.loop_header69.us, %polly.loop_header78.us
-  %polly.indvar82.us = phi i64 [ %polly.indvar_next83.us, %polly.loop_header78.us ], [ 0, %polly.loop_header69.us ]
-  %27 = shl i64 %polly.indvar82.us, 2
-  %28 = add i64 %22, %27
-  %scevgep.us = getelementptr i64, i64* %call, i64 %28
-  %29 = bitcast i64* %scevgep.us to <2 x i64>*
-  %30 = load <2 x i64>, <2 x i64>* %29, align 8, !alias.scope !13, !noalias !15
-  %31 = add nsw <2 x i64> %30, %24
-  %32 = bitcast i64* %scevgep.us to <2 x i64>*
-  store <2 x i64> %31, <2 x i64>* %32, align 8, !alias.scope !13, !noalias !15
-  %33 = add i64 %28, 2
-  %scevgep.us.2 = getelementptr i64, i64* %call, i64 %33
-  %34 = bitcast i64* %scevgep.us.2 to <2 x i64>*
-  %35 = load <2 x i64>, <2 x i64>* %34, align 8, !alias.scope !13, !noalias !15
-  %36 = add nsw <2 x i64> %35, %26
-  %37 = bitcast i64* %scevgep.us.2 to <2 x i64>*
-  store <2 x i64> %36, <2 x i64>* %37, align 8, !alias.scope !13, !noalias !15
-  %polly.indvar_next83.us = add nuw nsw i64 %polly.indvar82.us, 1
-  %polly.loop_cond85.us = icmp sgt i64 %polly.indvar82.us, %polly.adjust_ub84
-  br i1 %polly.loop_cond85.us, label %polly.cond.loopexit.us, label %polly.loop_header78.us
-
-polly.loop_header93.us:                           ; preds = %polly.loop_header93.us, %polly.loop_header93.preheader.us
-  %polly.indvar97.us = phi i64 [ %polly.indvar_next98.us, %polly.loop_header93.us ], [ 0, %polly.loop_header93.preheader.us ]
-  %38 = add i64 %39, %polly.indvar97.us
-  %scevgep103.us = getelementptr i64, i64* %call, i64 %38
-  %_p_scalar_104.us = load i64, i64* %scevgep103.us, align 8, !alias.scope !13, !noalias !15, !llvm.mem.parallel_loop_access !16
-  %p_add7105.us = add nsw i64 %_p_scalar_104.us, %20
-  store i64 %p_add7105.us, i64* %scevgep103.us, align 8, !alias.scope !13, !noalias !15, !llvm.mem.parallel_loop_access !16
-  %polly.indvar_next98.us = add nuw nsw i64 %polly.indvar97.us, 1
-  %exitcond140 = icmp eq i64 %polly.indvar_next98.us, %pexp.pdiv_r
-  br i1 %exitcond140, label %polly.merge.us.loopexit, label %polly.loop_header93.us, !llvm.loop !18
-
-polly.merge.us.loopexit:                          ; preds = %polly.loop_header93.us
-  br label %polly.merge.us
-
-polly.merge.us:                                   ; preds = %polly.merge.us.loopexit, %polly.cond.loopexit.us
-  %polly.indvar_next74.us = add nuw nsw i64 %polly.indvar73.us, 1
-  %polly.loop_cond76.us = icmp sgt i64 %polly.indvar73.us, %polly.adjust_ub75
-  br i1 %polly.loop_cond76.us, label %polly.loop_exit71.loopexit, label %polly.loop_header69.us
-
-polly.loop_header93.preheader.us:                 ; preds = %polly.cond.loopexit.us
-  %39 = add i64 %21, %7
-  br label %polly.loop_header93.us
-
-polly.cond.loopexit.us:                           ; preds = %polly.loop_header78.us
-  br i1 %brmerge, label %polly.merge.us, label %polly.loop_header93.preheader.us
-
-polly.loop_header69.preheader.split:              ; preds = %polly.loop_header69.preheader
-  br i1 %19, label %polly.loop_exit71, label %polly.loop_header69.preheader172
-
-polly.loop_header69.preheader172:                 ; preds = %polly.loop_header69.preheader.split
-  br label %polly.loop_header69
-
-polly.loop_exit71.loopexit:                       ; preds = %polly.merge.us
-  br label %polly.loop_exit71
-
-polly.loop_exit71.loopexit173:                    ; preds = %polly.merge
-  br label %polly.loop_exit71
-
-polly.loop_exit71:                                ; preds = %polly.loop_exit71.loopexit173, %polly.loop_exit71.loopexit, %polly.loop_header69.preheader.split, %polly.loop_header60
-  %polly.indvar_next65 = add nuw nsw i64 %polly.indvar64, 1
-  %exitcond141 = icmp eq i64 %polly.indvar64, %polly.fdiv_q.shr58
-  br i1 %exitcond141, label %polly.loop_exit62.loopexit, label %polly.loop_header60
-
-polly.loop_header69:                              ; preds = %polly.loop_header69.preheader172, %polly.merge
-  %polly.indvar73 = phi i64 [ %polly.indvar_next74, %polly.merge ], [ 0, %polly.loop_header69.preheader172 ]
-  br i1 %polly.loop_guard96, label %polly.merge, label %polly.loop_header93.preheader
-
-polly.merge.loopexit:                             ; preds = %polly.loop_header93
-  br label %polly.merge
-
-polly.merge:                                      ; preds = %polly.merge.loopexit, %polly.loop_header69
-  %polly.indvar_next74 = add nuw nsw i64 %polly.indvar73, 1
-  %polly.loop_cond76 = icmp sgt i64 %polly.indvar73, %polly.adjust_ub75
-  br i1 %polly.loop_cond76, label %polly.loop_exit71.loopexit173, label %polly.loop_header69
-
-polly.loop_header93.preheader:                    ; preds = %polly.loop_header69
-  %40 = add nuw nsw i64 %polly.indvar73, %8
-  %41 = mul i64 %40, %width
-  %42 = add i64 %41, %7
-  br label %polly.loop_header93
-
-polly.loop_header93:                              ; preds = %polly.loop_header93, %polly.loop_header93.preheader
-  %polly.indvar97 = phi i64 [ %polly.indvar_next98, %polly.loop_header93 ], [ 0, %polly.loop_header93.preheader ]
-  %43 = add i64 %42, %polly.indvar97
-  %scevgep103 = getelementptr i64, i64* %call, i64 %43
-  %_p_scalar_104 = load i64, i64* %scevgep103, align 8, !alias.scope !13, !noalias !15, !llvm.mem.parallel_loop_access !16
-  %p_add7105 = add nsw i64 %_p_scalar_104, %40
-  store i64 %p_add7105, i64* %scevgep103, align 8, !alias.scope !13, !noalias !15, !llvm.mem.parallel_loop_access !16
-  %polly.indvar_next98 = add nuw nsw i64 %polly.indvar97, 1
-  %exitcond = icmp eq i64 %polly.indvar_next98, %pexp.pdiv_r
-  br i1 %exitcond, label %polly.merge.loopexit, label %polly.loop_header93, !llvm.loop !22
+  %exitcond105 = icmp eq i64 %polly.indvar, %polly.fdiv_q.shr
+  br i1 %exitcond105, label %blklab2.loopexit, label %polly.loop_header
 }
 
 declare i64* @create1DArray_int64_t(i64, i64) local_unnamed_addr #3
@@ -473,8 +499,8 @@ while.cond7.preheader.preheader:                  ; preds = %polly.split_new_and
   br i1 %cmp9107, label %while.cond7.preheader.us.preheader, label %blklab13
 
 while.cond7.preheader.us.preheader:               ; preds = %while.cond7.preheader.preheader
-  %xtraiter387 = and i64 %0, 1
-  %lcmp.mod388 = icmp eq i64 %xtraiter387, 0
+  %xtraiter299 = and i64 %0, 1
+  %lcmp.mod300 = icmp eq i64 %xtraiter299, 0
   %13 = icmp eq i64 %0, 1
   br label %while.cond7.preheader.us
 
@@ -489,7 +515,7 @@ while.cond12.preheader.us.us:                     ; preds = %while.cond7.prehead
   %add.us.us = add nsw i64 %j.0108.us.us, %mul17.us
   %arrayidx.us.us = getelementptr inbounds i64, i64* %call, i64 %add.us.us
   %.pre = load i64, i64* %arrayidx.us.us, align 8, !tbaa !8
-  br i1 %lcmp.mod388, label %if.end16.us.us.prol.loopexit.unr-lcssa, label %if.end16.us.us.prol.preheader
+  br i1 %lcmp.mod300, label %if.end16.us.us.prol.loopexit.unr-lcssa, label %if.end16.us.us.prol.preheader
 
 if.end16.us.us.prol.preheader:                    ; preds = %while.cond12.preheader.us.us
   br label %if.end16.us.us.prol
@@ -553,15 +579,15 @@ if.end16.us.us:                                   ; preds = %if.end16.us.us, %wh
 blklab15.loopexit.us-lcssa.us.us:                 ; preds = %blklab17.loopexit.us.us
   %add31.us = add nuw nsw i64 %i.0111.us, 1
   %exitcond114.us = icmp eq i64 %add31.us, %1
-  br i1 %exitcond114.us, label %blklab13.loopexit384, label %while.cond7.preheader.us
+  br i1 %exitcond114.us, label %blklab13.loopexit294, label %while.cond7.preheader.us
 
 blklab13.loopexit:                                ; preds = %polly.loop_exit186
   br label %blklab13
 
-blklab13.loopexit384:                             ; preds = %blklab15.loopexit.us-lcssa.us.us
+blklab13.loopexit294:                             ; preds = %blklab15.loopexit.us-lcssa.us.us
   br label %blklab13
 
-blklab13:                                         ; preds = %blklab13.loopexit384, %blklab13.loopexit, %while.cond7.preheader.preheader, %polly.start, %entry
+blklab13:                                         ; preds = %blklab13.loopexit294, %blklab13.loopexit, %while.cond7.preheader.preheader, %polly.start, %entry
   %call.i = tail call noalias i8* @malloc(i64 32) #8
   %21 = bitcast i8* %call.i to %struct.Matrix*
   %data_size1.i = getelementptr inbounds i8, i8* %call.i, i64 8
@@ -588,20 +614,7 @@ polly.loop_header.preheader:                      ; preds = %polly.start
   %polly.fdiv_q.shr182 = ashr i64 %26, 5
   %polly.loop_guard187 = icmp sgt i64 %polly.fdiv_q.shr182, -1
   %pexp.p_div_q = lshr i64 %26, 5
-  %pexp.p_div_q217 = lshr i64 %0, 2
-  %27 = add nsw i64 %pexp.p_div_q217, -1
-  %pexp.pdiv_r = and i64 %0, 3
-  %polly.loop_guard241 = icmp eq i64 %pexp.pdiv_r, 0
-  %28 = and i64 %0, -4
-  %29 = add nsw i64 %pexp.pdiv_r, -1
-  %xtraiter385 = and i64 %0, 1
-  %lcmp.mod386 = icmp eq i64 %xtraiter385, 0
-  %30 = mul i64 %28, %0
-  %31 = icmp eq i64 %29, 0
-  %xtraiter = and i64 %0, 1
-  %lcmp.mod = icmp eq i64 %xtraiter, 0
-  %32 = mul i64 %28, %0
-  %33 = icmp eq i64 %29, 0
+  %ident.check = icmp eq i64 %0, 1
   br label %polly.loop_header
 
 polly.loop_header:                                ; preds = %polly.loop_exit186, %polly.loop_header.preheader
@@ -609,13 +622,13 @@ polly.loop_header:                                ; preds = %polly.loop_exit186,
   br i1 %polly.loop_guard187, label %polly.loop_header184.preheader, label %polly.loop_exit186
 
 polly.loop_header184.preheader:                   ; preds = %polly.loop_header
-  %34 = shl nsw i64 %polly.indvar, 5
-  %35 = sub nsw i64 %1, %34
-  %36 = add nsw i64 %35, -1
-  %37 = icmp slt i64 %36, 31
-  %38 = select i1 %37, i64 %36, i64 31
-  %polly.loop_guard203 = icmp sgt i64 %38, -1
-  %polly.adjust_ub206 = add i64 %38, -1
+  %27 = shl nsw i64 %polly.indvar, 5
+  %28 = sub nsw i64 %1, %27
+  %29 = add nsw i64 %28, -1
+  %30 = icmp slt i64 %29, 31
+  %31 = select i1 %30, i64 %29, i64 31
+  %polly.loop_guard203 = icmp sgt i64 %31, -1
+  %polly.adjust_ub206 = add i64 %31, -1
   br label %polly.loop_header184
 
 polly.loop_exit186.loopexit:                      ; preds = %polly.loop_exit194
@@ -623,286 +636,237 @@ polly.loop_exit186.loopexit:                      ; preds = %polly.loop_exit194
 
 polly.loop_exit186:                               ; preds = %polly.loop_exit186.loopexit, %polly.loop_header
   %polly.indvar_next = add nuw nsw i64 %polly.indvar, 1
-  %exitcond339 = icmp eq i64 %polly.indvar, %polly.fdiv_q.shr
-  br i1 %exitcond339, label %blklab13.loopexit, label %polly.loop_header, !llvm.loop !23
+  %exitcond284 = icmp eq i64 %polly.indvar, %polly.fdiv_q.shr
+  br i1 %exitcond284, label %blklab13.loopexit, label %polly.loop_header
 
 polly.loop_header184:                             ; preds = %polly.loop_exit194, %polly.loop_header184.preheader
   %polly.indvar188 = phi i64 [ %polly.indvar_next189, %polly.loop_exit194 ], [ 0, %polly.loop_header184.preheader ]
-  %39 = shl nsw i64 %polly.indvar188, 5
-  %40 = sub nsw i64 %0, %39
-  %41 = add nsw i64 %40, -1
-  %42 = icmp slt i64 %41, 31
-  %43 = select i1 %42, i64 %41, i64 31
-  %polly.loop_guard212 = icmp sgt i64 %43, -1
-  %polly.adjust_ub215 = add i64 %43, -1
+  %32 = shl nsw i64 %polly.indvar188, 5
+  %33 = sub nsw i64 %0, %32
+  %34 = add nsw i64 %33, -1
+  %35 = icmp slt i64 %34, 31
+  %36 = select i1 %35, i64 %34, i64 31
+  %polly.loop_guard212 = icmp sgt i64 %36, -1
+  %polly.adjust_ub215 = add i64 %36, -1
   br label %polly.loop_header192
 
 polly.loop_exit194:                               ; preds = %polly.loop_exit202
   %polly.indvar_next189 = add nuw nsw i64 %polly.indvar188, 1
-  %exitcond338 = icmp eq i64 %polly.indvar188, %polly.fdiv_q.shr182
-  br i1 %exitcond338, label %polly.loop_exit186.loopexit, label %polly.loop_header184
+  %exitcond283 = icmp eq i64 %polly.indvar188, %polly.fdiv_q.shr182
+  br i1 %exitcond283, label %polly.loop_exit186.loopexit, label %polly.loop_header184
 
 polly.loop_header192:                             ; preds = %polly.loop_exit202, %polly.loop_header184
   %polly.indvar195 = phi i64 [ 0, %polly.loop_header184 ], [ %polly.indvar_next196, %polly.loop_exit202 ]
+  %37 = shl i64 %polly.indvar195, 5
+  %38 = sub i64 %37, %0
+  %39 = icmp sgt i64 %38, -32
+  %smax297 = select i1 %39, i64 %38, i64 -32
+  %40 = sub i64 -2, %smax297
+  %41 = icmp sgt i64 %40, -1
+  %smax298 = select i1 %41, i64 %40, i64 -1
+  %42 = add i64 %smax298, -2
+  %43 = lshr i64 %42, 2
+  %44 = shl i64 %polly.indvar195, 5
+  %45 = sub i64 %44, %0
+  %46 = icmp sgt i64 %45, -32
+  %smax = select i1 %46, i64 %45, i64 -32
+  %47 = sub i64 -2, %smax
+  %48 = icmp sgt i64 %47, -1
+  %smax287 = select i1 %48, i64 %47, i64 -1
+  %49 = add i64 %smax287, 2
   br i1 %polly.loop_guard203, label %polly.loop_header200.preheader, label %polly.loop_exit202
 
 polly.loop_header200.preheader:                   ; preds = %polly.loop_header192
-  %44 = mul nsw i64 %polly.indvar195, -8
-  %45 = add nsw i64 %27, %44
-  %46 = icmp slt i64 %45, 7
-  %47 = select i1 %46, i64 %45, i64 7
-  %polly.loop_guard222 = icmp sgt i64 %47, -1
-  %48 = shl i64 %polly.indvar195, 5
-  %49 = or i64 %48, 31
-  %50 = icmp slt i64 %49, %0
-  %polly.adjust_ub225 = add i64 %47, -1
-  %brmerge = or i1 %50, %polly.loop_guard241
-  br label %polly.loop_header200
+  %50 = shl nsw i64 %polly.indvar195, 5
+  %51 = sub nsw i64 %0, %50
+  %52 = add nsw i64 %51, -1
+  %53 = icmp slt i64 %52, 31
+  %54 = select i1 %53, i64 %52, i64 31
+  %polly.loop_guard221 = icmp sgt i64 %54, -1
+  %polly.adjust_ub224 = add i64 %54, -1
+  br i1 %polly.loop_guard212, label %polly.loop_header200.us.preheader, label %polly.loop_exit202
 
-polly.loop_exit202.loopexit:                      ; preds = %polly.loop_exit211
+polly.loop_header200.us.preheader:                ; preds = %polly.loop_header200.preheader
+  %min.iters.check = icmp ult i64 %49, 4
+  %n.vec = and i64 %49, -4
+  %cmp.zero = icmp ne i64 %n.vec, 0
+  %or.cond = and i1 %cmp.zero, %ident.check
+  %55 = and i64 %43, 1
+  %lcmp.mod = icmp eq i64 %55, 0
+  %56 = mul i64 %50, %0
+  %57 = icmp eq i64 %43, 0
+  %cmp.n = icmp eq i64 %49, %n.vec
+  br label %polly.loop_header200.us
+
+polly.loop_header200.us:                          ; preds = %polly.loop_header200.us.preheader, %polly.loop_exit211.loopexit.us
+  %polly.indvar204.us = phi i64 [ %polly.indvar_next205.us, %polly.loop_exit211.loopexit.us ], [ 0, %polly.loop_header200.us.preheader ]
+  %58 = add nuw nsw i64 %polly.indvar204.us, %27
+  %59 = mul i64 %58, %0
+  br i1 %polly.loop_guard221, label %polly.loop_header209.us.us.preheader, label %polly.loop_exit211.loopexit.us
+
+polly.loop_header209.us.us.preheader:             ; preds = %polly.loop_header200.us
+  %60 = add i64 %50, %59
+  %61 = getelementptr i64, i64* %2, i64 %60
+  %62 = bitcast i64* %61 to <2 x i64>*
+  %63 = getelementptr i64, i64* %61, i64 2
+  %64 = bitcast i64* %63 to <2 x i64>*
+  br label %polly.loop_header209.us.us
+
+polly.loop_exit211.loopexit.us.loopexit:          ; preds = %polly.loop_exit220.loopexit.us.us
+  br label %polly.loop_exit211.loopexit.us
+
+polly.loop_exit211.loopexit.us:                   ; preds = %polly.loop_exit211.loopexit.us.loopexit, %polly.loop_header200.us
+  %polly.indvar_next205.us = add nuw nsw i64 %polly.indvar204.us, 1
+  %polly.loop_cond207.us = icmp sgt i64 %polly.indvar204.us, %polly.adjust_ub206
+  br i1 %polly.loop_cond207.us, label %polly.loop_exit202.loopexit, label %polly.loop_header200.us
+
+polly.loop_header209.us.us:                       ; preds = %polly.loop_header209.us.us.preheader, %polly.loop_exit220.loopexit.us.us
+  %polly.indvar213.us.us = phi i64 [ %polly.indvar_next214.us.us, %polly.loop_exit220.loopexit.us.us ], [ 0, %polly.loop_header209.us.us.preheader ]
+  %65 = add nuw nsw i64 %polly.indvar213.us.us, %32
+  %66 = add i64 %65, %59
+  %scevgep.us.us = getelementptr i64, i64* %call, i64 %66
+  %scevgep.promoted.us.us = load i64, i64* %scevgep.us.us, align 8, !alias.scope !20, !noalias !22
+  br i1 %min.iters.check, label %polly.loop_header218.us.us.preheader, label %min.iters.checked
+
+polly.loop_header218.us.us.preheader:             ; preds = %min.iters.checked, %middle.block, %polly.loop_header209.us.us
+  %p_add25231.us.us.ph = phi i64 [ %scevgep.promoted.us.us, %min.iters.checked ], [ %scevgep.promoted.us.us, %polly.loop_header209.us.us ], [ %109, %middle.block ]
+  %polly.indvar222.us.us.ph = phi i64 [ 0, %min.iters.checked ], [ 0, %polly.loop_header209.us.us ], [ %n.vec, %middle.block ]
+  br label %polly.loop_header218.us.us
+
+min.iters.checked:                                ; preds = %polly.loop_header209.us.us
+  %67 = insertelement <2 x i64> <i64 undef, i64 0>, i64 %scevgep.promoted.us.us, i32 0
+  br i1 %or.cond, label %vector.body.preheader, label %polly.loop_header218.us.us.preheader
+
+vector.body.preheader:                            ; preds = %min.iters.checked
+  br i1 %lcmp.mod, label %vector.body.prol.preheader, label %vector.body.prol.loopexit.unr-lcssa
+
+vector.body.prol.preheader:                       ; preds = %vector.body.preheader
+  br label %vector.body.prol
+
+vector.body.prol:                                 ; preds = %vector.body.prol.preheader
+  %wide.load.prol = load <2 x i64>, <2 x i64>* %62, align 8, !alias.scope !23, !noalias !25
+  %wide.load290.prol = load <2 x i64>, <2 x i64>* %64, align 8, !alias.scope !23, !noalias !25
+  %68 = add i64 %56, %65
+  %69 = getelementptr i64, i64* %3, i64 %68
+  %70 = bitcast i64* %69 to <2 x i64>*
+  %wide.load291.prol = load <2 x i64>, <2 x i64>* %70, align 8, !alias.scope !24, !noalias !26
+  %71 = getelementptr i64, i64* %69, i64 2
+  %72 = bitcast i64* %71 to <2 x i64>*
+  %wide.load292.prol = load <2 x i64>, <2 x i64>* %72, align 8, !alias.scope !24, !noalias !26
+  %73 = mul nsw <2 x i64> %wide.load291.prol, %wide.load.prol
+  %74 = mul nsw <2 x i64> %wide.load292.prol, %wide.load290.prol
+  %75 = add nsw <2 x i64> %73, %67
+  br label %vector.body.prol.loopexit.unr-lcssa
+
+vector.body.prol.loopexit.unr-lcssa:              ; preds = %vector.body.preheader, %vector.body.prol
+  %.lcssa295.unr.ph = phi <2 x i64> [ %75, %vector.body.prol ], [ undef, %vector.body.preheader ]
+  %.lcssa.unr.ph = phi <2 x i64> [ %74, %vector.body.prol ], [ undef, %vector.body.preheader ]
+  %index.unr.ph = phi i64 [ 4, %vector.body.prol ], [ 0, %vector.body.preheader ]
+  %vec.phi.unr.ph = phi <2 x i64> [ %75, %vector.body.prol ], [ %67, %vector.body.preheader ]
+  %vec.phi288.unr.ph = phi <2 x i64> [ %74, %vector.body.prol ], [ zeroinitializer, %vector.body.preheader ]
+  br label %vector.body.prol.loopexit
+
+vector.body.prol.loopexit:                        ; preds = %vector.body.prol.loopexit.unr-lcssa
+  br i1 %57, label %middle.block, label %vector.body.preheader.new
+
+vector.body.preheader.new:                        ; preds = %vector.body.prol.loopexit
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.body.preheader.new
+  %index = phi i64 [ %index.unr.ph, %vector.body.preheader.new ], [ %index.next.1, %vector.body ]
+  %vec.phi = phi <2 x i64> [ %vec.phi.unr.ph, %vector.body.preheader.new ], [ %106, %vector.body ]
+  %vec.phi288 = phi <2 x i64> [ %vec.phi288.unr.ph, %vector.body.preheader.new ], [ %107, %vector.body ]
+  %76 = add nsw i64 %index, %50
+  %77 = add i64 %76, %59
+  %78 = getelementptr i64, i64* %2, i64 %77
+  %79 = bitcast i64* %78 to <2 x i64>*
+  %wide.load = load <2 x i64>, <2 x i64>* %79, align 8, !alias.scope !23, !noalias !25
+  %80 = getelementptr i64, i64* %78, i64 2
+  %81 = bitcast i64* %80 to <2 x i64>*
+  %wide.load290 = load <2 x i64>, <2 x i64>* %81, align 8, !alias.scope !23, !noalias !25
+  %82 = mul i64 %76, %0
+  %83 = add i64 %82, %65
+  %84 = getelementptr i64, i64* %3, i64 %83
+  %85 = bitcast i64* %84 to <2 x i64>*
+  %wide.load291 = load <2 x i64>, <2 x i64>* %85, align 8, !alias.scope !24, !noalias !26
+  %86 = getelementptr i64, i64* %84, i64 2
+  %87 = bitcast i64* %86 to <2 x i64>*
+  %wide.load292 = load <2 x i64>, <2 x i64>* %87, align 8, !alias.scope !24, !noalias !26
+  %88 = mul nsw <2 x i64> %wide.load291, %wide.load
+  %89 = mul nsw <2 x i64> %wide.load292, %wide.load290
+  %90 = add nsw <2 x i64> %88, %vec.phi
+  %91 = add nsw <2 x i64> %89, %vec.phi288
+  %index.next = add i64 %index, 4
+  %92 = add nsw i64 %index.next, %50
+  %93 = add i64 %92, %59
+  %94 = getelementptr i64, i64* %2, i64 %93
+  %95 = bitcast i64* %94 to <2 x i64>*
+  %wide.load.1 = load <2 x i64>, <2 x i64>* %95, align 8, !alias.scope !23, !noalias !25
+  %96 = getelementptr i64, i64* %94, i64 2
+  %97 = bitcast i64* %96 to <2 x i64>*
+  %wide.load290.1 = load <2 x i64>, <2 x i64>* %97, align 8, !alias.scope !23, !noalias !25
+  %98 = mul i64 %92, %0
+  %99 = add i64 %98, %65
+  %100 = getelementptr i64, i64* %3, i64 %99
+  %101 = bitcast i64* %100 to <2 x i64>*
+  %wide.load291.1 = load <2 x i64>, <2 x i64>* %101, align 8, !alias.scope !24, !noalias !26
+  %102 = getelementptr i64, i64* %100, i64 2
+  %103 = bitcast i64* %102 to <2 x i64>*
+  %wide.load292.1 = load <2 x i64>, <2 x i64>* %103, align 8, !alias.scope !24, !noalias !26
+  %104 = mul nsw <2 x i64> %wide.load291.1, %wide.load.1
+  %105 = mul nsw <2 x i64> %wide.load292.1, %wide.load290.1
+  %106 = add nsw <2 x i64> %104, %90
+  %107 = add nsw <2 x i64> %105, %91
+  %index.next.1 = add i64 %index, 8
+  %108 = icmp eq i64 %index.next.1, %n.vec
+  br i1 %108, label %middle.block.unr-lcssa, label %vector.body, !llvm.loop !27
+
+middle.block.unr-lcssa:                           ; preds = %vector.body
+  br label %middle.block
+
+middle.block:                                     ; preds = %vector.body.prol.loopexit, %middle.block.unr-lcssa
+  %.lcssa295 = phi <2 x i64> [ %.lcssa295.unr.ph, %vector.body.prol.loopexit ], [ %106, %middle.block.unr-lcssa ]
+  %.lcssa = phi <2 x i64> [ %.lcssa.unr.ph, %vector.body.prol.loopexit ], [ %107, %middle.block.unr-lcssa ]
+  %bin.rdx = add <2 x i64> %.lcssa, %.lcssa295
+  %rdx.shuf = shufflevector <2 x i64> %bin.rdx, <2 x i64> undef, <2 x i32> <i32 1, i32 undef>
+  %bin.rdx293 = add <2 x i64> %bin.rdx, %rdx.shuf
+  %109 = extractelement <2 x i64> %bin.rdx293, i32 0
+  br i1 %cmp.n, label %polly.loop_exit220.loopexit.us.us, label %polly.loop_header218.us.us.preheader
+
+polly.loop_exit220.loopexit.us.us.loopexit:       ; preds = %polly.loop_header218.us.us
+  br label %polly.loop_exit220.loopexit.us.us
+
+polly.loop_exit220.loopexit.us.us:                ; preds = %polly.loop_exit220.loopexit.us.us.loopexit, %middle.block
+  %p_add25.us.us.lcssa = phi i64 [ %109, %middle.block ], [ %p_add25.us.us, %polly.loop_exit220.loopexit.us.us.loopexit ]
+  store i64 %p_add25.us.us.lcssa, i64* %scevgep.us.us, align 8, !alias.scope !20, !noalias !22
+  %polly.indvar_next214.us.us = add nuw nsw i64 %polly.indvar213.us.us, 1
+  %polly.loop_cond216.us.us = icmp sgt i64 %polly.indvar213.us.us, %polly.adjust_ub215
+  br i1 %polly.loop_cond216.us.us, label %polly.loop_exit211.loopexit.us.loopexit, label %polly.loop_header209.us.us
+
+polly.loop_header218.us.us:                       ; preds = %polly.loop_header218.us.us.preheader, %polly.loop_header218.us.us
+  %p_add25231.us.us = phi i64 [ %p_add25.us.us, %polly.loop_header218.us.us ], [ %p_add25231.us.us.ph, %polly.loop_header218.us.us.preheader ]
+  %polly.indvar222.us.us = phi i64 [ %polly.indvar_next223.us.us, %polly.loop_header218.us.us ], [ %polly.indvar222.us.us.ph, %polly.loop_header218.us.us.preheader ]
+  %110 = add nsw i64 %polly.indvar222.us.us, %50
+  %111 = add i64 %110, %59
+  %scevgep226.us.us = getelementptr i64, i64* %2, i64 %111
+  %_p_scalar_227.us.us = load i64, i64* %scevgep226.us.us, align 8, !alias.scope !23, !noalias !25
+  %112 = mul i64 %110, %0
+  %113 = add i64 %112, %65
+  %scevgep228.us.us = getelementptr i64, i64* %3, i64 %113
+  %_p_scalar_229.us.us = load i64, i64* %scevgep228.us.us, align 8, !alias.scope !24, !noalias !26
+  %p_mul24.us.us = mul nsw i64 %_p_scalar_229.us.us, %_p_scalar_227.us.us
+  %p_add25.us.us = add nsw i64 %p_mul24.us.us, %p_add25231.us.us
+  %polly.indvar_next223.us.us = add nuw nsw i64 %polly.indvar222.us.us, 1
+  %polly.loop_cond225.us.us = icmp sgt i64 %polly.indvar222.us.us, %polly.adjust_ub224
+  br i1 %polly.loop_cond225.us.us, label %polly.loop_exit220.loopexit.us.us.loopexit, label %polly.loop_header218.us.us, !llvm.loop !28
+
+polly.loop_exit202.loopexit:                      ; preds = %polly.loop_exit211.loopexit.us
   br label %polly.loop_exit202
 
-polly.loop_exit202:                               ; preds = %polly.loop_exit202.loopexit, %polly.loop_header192
+polly.loop_exit202:                               ; preds = %polly.loop_exit202.loopexit, %polly.loop_header200.preheader, %polly.loop_header192
   %polly.indvar_next196 = add nuw nsw i64 %polly.indvar195, 1
-  %exitcond337 = icmp eq i64 %polly.indvar195, %pexp.p_div_q
-  br i1 %exitcond337, label %polly.loop_exit194, label %polly.loop_header192
-
-polly.loop_header200:                             ; preds = %polly.loop_header200.preheader, %polly.loop_exit211
-  %polly.indvar204 = phi i64 [ %polly.indvar_next205, %polly.loop_exit211 ], [ 0, %polly.loop_header200.preheader ]
-  br i1 %polly.loop_guard212, label %polly.loop_header209.preheader, label %polly.loop_exit211
-
-polly.loop_header209.preheader:                   ; preds = %polly.loop_header200
-  %51 = add nuw nsw i64 %polly.indvar204, %34
-  %52 = mul i64 %51, %0
-  br i1 %polly.loop_guard222, label %polly.loop_header209.us.preheader, label %polly.loop_header209.preheader.split
-
-polly.loop_header209.us.preheader:                ; preds = %polly.loop_header209.preheader
-  %53 = add i64 %28, %52
-  %scevgep250.us.prol = getelementptr i64, i64* %2, i64 %53
-  br label %polly.loop_header209.us
-
-polly.loop_header209.us:                          ; preds = %polly.loop_header209.us.preheader, %polly.merge.us
-  %polly.indvar213.us = phi i64 [ %polly.indvar_next214.us, %polly.merge.us ], [ 0, %polly.loop_header209.us.preheader ]
-  %54 = add nuw nsw i64 %polly.indvar213.us, %39
-  %55 = add i64 %54, %52
-  %scevgep.us = getelementptr i64, i64* %call, i64 %55
-  %scevgep.promoted258.us = load i64, i64* %scevgep.us, align 8, !alias.scope !24, !noalias !26
-  br label %polly.loop_header219.us
-
-polly.loop_header219.us:                          ; preds = %polly.loop_header209.us, %polly.loop_header219.us
-  %p_add25.lcssa259.us = phi i64 [ %p_add25.us.3, %polly.loop_header219.us ], [ %scevgep.promoted258.us, %polly.loop_header209.us ]
-  %polly.indvar223.us = phi i64 [ %polly.indvar_next224.us, %polly.loop_header219.us ], [ 0, %polly.loop_header209.us ]
-  %56 = shl i64 %polly.indvar223.us, 2
-  %57 = add nuw nsw i64 %56, %48
-  %58 = add i64 %57, %52
-  %scevgep233.us = getelementptr i64, i64* %2, i64 %58
-  %_p_scalar_234.us = load i64, i64* %scevgep233.us, align 8, !alias.scope !28, !noalias !29, !llvm.mem.parallel_loop_access !30
-  %59 = mul i64 %57, %0
-  %60 = add i64 %59, %54
-  %scevgep235.us = getelementptr i64, i64* %3, i64 %60
-  %_p_scalar_236.us = load i64, i64* %scevgep235.us, align 8, !alias.scope !27, !noalias !32, !llvm.mem.parallel_loop_access !30
-  %p_mul24.us = mul nsw i64 %_p_scalar_236.us, %_p_scalar_234.us
-  %p_add25.us = add nsw i64 %p_mul24.us, %p_add25.lcssa259.us
-  %61 = or i64 %57, 1
-  %62 = add i64 %61, %52
-  %scevgep233.us.1 = getelementptr i64, i64* %2, i64 %62
-  %_p_scalar_234.us.1 = load i64, i64* %scevgep233.us.1, align 8, !alias.scope !28, !noalias !29, !llvm.mem.parallel_loop_access !30
-  %63 = mul i64 %61, %0
-  %64 = add i64 %63, %54
-  %scevgep235.us.1 = getelementptr i64, i64* %3, i64 %64
-  %_p_scalar_236.us.1 = load i64, i64* %scevgep235.us.1, align 8, !alias.scope !27, !noalias !32, !llvm.mem.parallel_loop_access !30
-  %p_mul24.us.1 = mul nsw i64 %_p_scalar_236.us.1, %_p_scalar_234.us.1
-  %p_add25.us.1 = add nsw i64 %p_mul24.us.1, %p_add25.us
-  %65 = or i64 %57, 2
-  %66 = add i64 %65, %52
-  %scevgep233.us.2 = getelementptr i64, i64* %2, i64 %66
-  %_p_scalar_234.us.2 = load i64, i64* %scevgep233.us.2, align 8, !alias.scope !28, !noalias !29, !llvm.mem.parallel_loop_access !30
-  %67 = mul i64 %65, %0
-  %68 = add i64 %67, %54
-  %scevgep235.us.2 = getelementptr i64, i64* %3, i64 %68
-  %_p_scalar_236.us.2 = load i64, i64* %scevgep235.us.2, align 8, !alias.scope !27, !noalias !32, !llvm.mem.parallel_loop_access !30
-  %p_mul24.us.2 = mul nsw i64 %_p_scalar_236.us.2, %_p_scalar_234.us.2
-  %p_add25.us.2 = add nsw i64 %p_mul24.us.2, %p_add25.us.1
-  %69 = or i64 %57, 3
-  %70 = add i64 %69, %52
-  %scevgep233.us.3 = getelementptr i64, i64* %2, i64 %70
-  %_p_scalar_234.us.3 = load i64, i64* %scevgep233.us.3, align 8, !alias.scope !28, !noalias !29, !llvm.mem.parallel_loop_access !30
-  %71 = mul i64 %69, %0
-  %72 = add i64 %71, %54
-  %scevgep235.us.3 = getelementptr i64, i64* %3, i64 %72
-  %_p_scalar_236.us.3 = load i64, i64* %scevgep235.us.3, align 8, !alias.scope !27, !noalias !32, !llvm.mem.parallel_loop_access !30
-  %p_mul24.us.3 = mul nsw i64 %_p_scalar_236.us.3, %_p_scalar_234.us.3
-  %p_add25.us.3 = add nsw i64 %p_mul24.us.3, %p_add25.us.2
-  %polly.indvar_next224.us = add nuw nsw i64 %polly.indvar223.us, 1
-  %polly.loop_cond226.us = icmp sgt i64 %polly.indvar223.us, %polly.adjust_ub225
-  br i1 %polly.loop_cond226.us, label %polly.cond.loopexit.us, label %polly.loop_header219.us
-
-polly.loop_header238.us:                          ; preds = %polly.loop_header238.us, %polly.loop_header238.us.preheader.new
-  %p_add25255260.us = phi i64 [ %p_add25255260.us.unr.ph, %polly.loop_header238.us.preheader.new ], [ %p_add25255.us.1, %polly.loop_header238.us ]
-  %polly.indvar242.us = phi i64 [ %polly.indvar242.us.unr.ph, %polly.loop_header238.us.preheader.new ], [ %polly.indvar_next243.us.1, %polly.loop_header238.us ]
-  %73 = add nuw nsw i64 %polly.indvar242.us, %28
-  %74 = add i64 %73, %52
-  %scevgep250.us = getelementptr i64, i64* %2, i64 %74
-  %_p_scalar_251.us = load i64, i64* %scevgep250.us, align 8, !alias.scope !28, !noalias !29, !llvm.mem.parallel_loop_access !33
-  %75 = mul i64 %73, %0
-  %76 = add i64 %75, %54
-  %scevgep252.us = getelementptr i64, i64* %3, i64 %76
-  %_p_scalar_253.us = load i64, i64* %scevgep252.us, align 8, !alias.scope !27, !noalias !32, !llvm.mem.parallel_loop_access !33
-  %p_mul24254.us = mul nsw i64 %_p_scalar_253.us, %_p_scalar_251.us
-  %p_add25255.us = add nsw i64 %p_mul24254.us, %p_add25255260.us
-  %polly.indvar_next243.us = add nuw nsw i64 %polly.indvar242.us, 1
-  %77 = add nuw nsw i64 %polly.indvar_next243.us, %28
-  %78 = add i64 %77, %52
-  %scevgep250.us.1 = getelementptr i64, i64* %2, i64 %78
-  %_p_scalar_251.us.1 = load i64, i64* %scevgep250.us.1, align 8, !alias.scope !28, !noalias !29, !llvm.mem.parallel_loop_access !33
-  %79 = mul i64 %77, %0
-  %80 = add i64 %79, %54
-  %scevgep252.us.1 = getelementptr i64, i64* %3, i64 %80
-  %_p_scalar_253.us.1 = load i64, i64* %scevgep252.us.1, align 8, !alias.scope !27, !noalias !32, !llvm.mem.parallel_loop_access !33
-  %p_mul24254.us.1 = mul nsw i64 %_p_scalar_253.us.1, %_p_scalar_251.us.1
-  %p_add25255.us.1 = add nsw i64 %p_mul24254.us.1, %p_add25255.us
-  %polly.indvar_next243.us.1 = add nsw i64 %polly.indvar242.us, 2
-  %exitcond336.1 = icmp eq i64 %polly.indvar_next243.us.1, %pexp.pdiv_r
-  br i1 %exitcond336.1, label %polly.merge.loopexit.us.unr-lcssa, label %polly.loop_header238.us, !llvm.loop !35
-
-polly.merge.us:                                   ; preds = %polly.cond.loopexit.us, %polly.merge.loopexit.us
-  %polly.indvar_next214.us = add nuw nsw i64 %polly.indvar213.us, 1
-  %polly.loop_cond216.us = icmp sgt i64 %polly.indvar213.us, %polly.adjust_ub215
-  br i1 %polly.loop_cond216.us, label %polly.loop_exit211.loopexit, label %polly.loop_header209.us
-
-polly.merge.loopexit.us.unr-lcssa:                ; preds = %polly.loop_header238.us
-  br label %polly.merge.loopexit.us
-
-polly.merge.loopexit.us:                          ; preds = %polly.loop_header238.us.prol.loopexit, %polly.merge.loopexit.us.unr-lcssa
-  %p_add25255.us.lcssa = phi i64 [ %p_add25255.us.lcssa.unr.ph, %polly.loop_header238.us.prol.loopexit ], [ %p_add25255.us.1, %polly.merge.loopexit.us.unr-lcssa ]
-  store i64 %p_add25255.us.lcssa, i64* %scevgep.us, align 8, !alias.scope !24, !noalias !26
-  br label %polly.merge.us
-
-polly.cond.loopexit.us:                           ; preds = %polly.loop_header219.us
-  store i64 %p_add25.us.3, i64* %scevgep.us, align 8, !alias.scope !24, !noalias !26
-  br i1 %brmerge, label %polly.merge.us, label %polly.loop_header238.us.preheader
-
-polly.loop_header238.us.preheader:                ; preds = %polly.cond.loopexit.us
-  br i1 %lcmp.mod386, label %polly.loop_header238.us.prol.loopexit.unr-lcssa, label %polly.loop_header238.us.prol.preheader
-
-polly.loop_header238.us.prol.preheader:           ; preds = %polly.loop_header238.us.preheader
-  br label %polly.loop_header238.us.prol
-
-polly.loop_header238.us.prol:                     ; preds = %polly.loop_header238.us.prol.preheader
-  %_p_scalar_251.us.prol = load i64, i64* %scevgep250.us.prol, align 8, !alias.scope !28, !noalias !29, !llvm.mem.parallel_loop_access !33
-  %81 = add i64 %30, %54
-  %scevgep252.us.prol = getelementptr i64, i64* %3, i64 %81
-  %_p_scalar_253.us.prol = load i64, i64* %scevgep252.us.prol, align 8, !alias.scope !27, !noalias !32, !llvm.mem.parallel_loop_access !33
-  %p_mul24254.us.prol = mul nsw i64 %_p_scalar_253.us.prol, %_p_scalar_251.us.prol
-  %p_add25255.us.prol = add nsw i64 %p_mul24254.us.prol, %p_add25.us.3
-  br label %polly.loop_header238.us.prol.loopexit.unr-lcssa
-
-polly.loop_header238.us.prol.loopexit.unr-lcssa:  ; preds = %polly.loop_header238.us.preheader, %polly.loop_header238.us.prol
-  %p_add25255.us.lcssa.unr.ph = phi i64 [ %p_add25255.us.prol, %polly.loop_header238.us.prol ], [ undef, %polly.loop_header238.us.preheader ]
-  %p_add25255260.us.unr.ph = phi i64 [ %p_add25255.us.prol, %polly.loop_header238.us.prol ], [ %p_add25.us.3, %polly.loop_header238.us.preheader ]
-  %polly.indvar242.us.unr.ph = phi i64 [ 1, %polly.loop_header238.us.prol ], [ 0, %polly.loop_header238.us.preheader ]
-  br label %polly.loop_header238.us.prol.loopexit
-
-polly.loop_header238.us.prol.loopexit:            ; preds = %polly.loop_header238.us.prol.loopexit.unr-lcssa
-  br i1 %31, label %polly.merge.loopexit.us, label %polly.loop_header238.us.preheader.new
-
-polly.loop_header238.us.preheader.new:            ; preds = %polly.loop_header238.us.prol.loopexit
-  br label %polly.loop_header238.us
-
-polly.loop_header209.preheader.split:             ; preds = %polly.loop_header209.preheader
-  br i1 %50, label %polly.loop_exit211, label %polly.loop_header209.preheader382
-
-polly.loop_header209.preheader382:                ; preds = %polly.loop_header209.preheader.split
-  %82 = add i64 %28, %52
-  %scevgep250.prol = getelementptr i64, i64* %2, i64 %82
-  br label %polly.loop_header209
-
-polly.loop_exit211.loopexit:                      ; preds = %polly.merge.us
-  br label %polly.loop_exit211
-
-polly.loop_exit211.loopexit383:                   ; preds = %polly.merge
-  br label %polly.loop_exit211
-
-polly.loop_exit211:                               ; preds = %polly.loop_exit211.loopexit383, %polly.loop_exit211.loopexit, %polly.loop_header209.preheader.split, %polly.loop_header200
-  %polly.indvar_next205 = add nuw nsw i64 %polly.indvar204, 1
-  %polly.loop_cond207 = icmp sgt i64 %polly.indvar204, %polly.adjust_ub206
-  br i1 %polly.loop_cond207, label %polly.loop_exit202.loopexit, label %polly.loop_header200
-
-polly.loop_header209:                             ; preds = %polly.loop_header209.preheader382, %polly.merge
-  %polly.indvar213 = phi i64 [ %polly.indvar_next214, %polly.merge ], [ 0, %polly.loop_header209.preheader382 ]
-  br i1 %polly.loop_guard241, label %polly.merge, label %polly.loop_header238.preheader
-
-polly.merge.loopexit.unr-lcssa:                   ; preds = %polly.loop_header238
-  br label %polly.merge.loopexit
-
-polly.merge.loopexit:                             ; preds = %polly.loop_header238.prol.loopexit, %polly.merge.loopexit.unr-lcssa
-  %p_add25255.lcssa = phi i64 [ %p_add25255.lcssa.unr.ph, %polly.loop_header238.prol.loopexit ], [ %p_add25255.1, %polly.merge.loopexit.unr-lcssa ]
-  store i64 %p_add25255.lcssa, i64* %scevgep248, align 8, !alias.scope !24, !noalias !26
-  br label %polly.merge
-
-polly.merge:                                      ; preds = %polly.merge.loopexit, %polly.loop_header209
-  %polly.indvar_next214 = add nuw nsw i64 %polly.indvar213, 1
-  %polly.loop_cond216 = icmp sgt i64 %polly.indvar213, %polly.adjust_ub215
-  br i1 %polly.loop_cond216, label %polly.loop_exit211.loopexit383, label %polly.loop_header209
-
-polly.loop_header238.preheader:                   ; preds = %polly.loop_header209
-  %83 = add nuw nsw i64 %polly.indvar213, %39
-  %84 = add i64 %83, %52
-  %scevgep248 = getelementptr i64, i64* %call, i64 %84
-  %scevgep248.promoted = load i64, i64* %scevgep248, align 8, !alias.scope !24, !noalias !26
-  br i1 %lcmp.mod, label %polly.loop_header238.prol.loopexit.unr-lcssa, label %polly.loop_header238.prol.preheader
-
-polly.loop_header238.prol.preheader:              ; preds = %polly.loop_header238.preheader
-  br label %polly.loop_header238.prol
-
-polly.loop_header238.prol:                        ; preds = %polly.loop_header238.prol.preheader
-  %_p_scalar_251.prol = load i64, i64* %scevgep250.prol, align 8, !alias.scope !28, !noalias !29, !llvm.mem.parallel_loop_access !33
-  %85 = add i64 %32, %83
-  %scevgep252.prol = getelementptr i64, i64* %3, i64 %85
-  %_p_scalar_253.prol = load i64, i64* %scevgep252.prol, align 8, !alias.scope !27, !noalias !32, !llvm.mem.parallel_loop_access !33
-  %p_mul24254.prol = mul nsw i64 %_p_scalar_253.prol, %_p_scalar_251.prol
-  %p_add25255.prol = add nsw i64 %p_mul24254.prol, %scevgep248.promoted
-  br label %polly.loop_header238.prol.loopexit.unr-lcssa
-
-polly.loop_header238.prol.loopexit.unr-lcssa:     ; preds = %polly.loop_header238.preheader, %polly.loop_header238.prol
-  %p_add25255.lcssa.unr.ph = phi i64 [ %p_add25255.prol, %polly.loop_header238.prol ], [ undef, %polly.loop_header238.preheader ]
-  %p_add25255260.unr.ph = phi i64 [ %p_add25255.prol, %polly.loop_header238.prol ], [ %scevgep248.promoted, %polly.loop_header238.preheader ]
-  %polly.indvar242.unr.ph = phi i64 [ 1, %polly.loop_header238.prol ], [ 0, %polly.loop_header238.preheader ]
-  br label %polly.loop_header238.prol.loopexit
-
-polly.loop_header238.prol.loopexit:               ; preds = %polly.loop_header238.prol.loopexit.unr-lcssa
-  br i1 %33, label %polly.merge.loopexit, label %polly.loop_header238.preheader.new
-
-polly.loop_header238.preheader.new:               ; preds = %polly.loop_header238.prol.loopexit
-  br label %polly.loop_header238
-
-polly.loop_header238:                             ; preds = %polly.loop_header238, %polly.loop_header238.preheader.new
-  %p_add25255260 = phi i64 [ %p_add25255260.unr.ph, %polly.loop_header238.preheader.new ], [ %p_add25255.1, %polly.loop_header238 ]
-  %polly.indvar242 = phi i64 [ %polly.indvar242.unr.ph, %polly.loop_header238.preheader.new ], [ %polly.indvar_next243.1, %polly.loop_header238 ]
-  %86 = add nuw nsw i64 %polly.indvar242, %28
-  %87 = add i64 %86, %52
-  %scevgep250 = getelementptr i64, i64* %2, i64 %87
-  %_p_scalar_251 = load i64, i64* %scevgep250, align 8, !alias.scope !28, !noalias !29, !llvm.mem.parallel_loop_access !33
-  %88 = mul i64 %86, %0
-  %89 = add i64 %88, %83
-  %scevgep252 = getelementptr i64, i64* %3, i64 %89
-  %_p_scalar_253 = load i64, i64* %scevgep252, align 8, !alias.scope !27, !noalias !32, !llvm.mem.parallel_loop_access !33
-  %p_mul24254 = mul nsw i64 %_p_scalar_253, %_p_scalar_251
-  %p_add25255 = add nsw i64 %p_mul24254, %p_add25255260
-  %polly.indvar_next243 = add nuw nsw i64 %polly.indvar242, 1
-  %90 = add nuw nsw i64 %polly.indvar_next243, %28
-  %91 = add i64 %90, %52
-  %scevgep250.1 = getelementptr i64, i64* %2, i64 %91
-  %_p_scalar_251.1 = load i64, i64* %scevgep250.1, align 8, !alias.scope !28, !noalias !29, !llvm.mem.parallel_loop_access !33
-  %92 = mul i64 %90, %0
-  %93 = add i64 %92, %83
-  %scevgep252.1 = getelementptr i64, i64* %3, i64 %93
-  %_p_scalar_253.1 = load i64, i64* %scevgep252.1, align 8, !alias.scope !27, !noalias !32, !llvm.mem.parallel_loop_access !33
-  %p_mul24254.1 = mul nsw i64 %_p_scalar_253.1, %_p_scalar_251.1
-  %p_add25255.1 = add nsw i64 %p_mul24254.1, %p_add25255
-  %polly.indvar_next243.1 = add nsw i64 %polly.indvar242, 2
-  %exitcond.1 = icmp eq i64 %polly.indvar_next243.1, %pexp.pdiv_r
-  br i1 %exitcond.1, label %polly.merge.loopexit.unr-lcssa, label %polly.loop_header238, !llvm.loop !36
+  %exitcond = icmp eq i64 %polly.indvar195, %pexp.p_div_q
+  br i1 %exitcond, label %polly.loop_exit194, label %polly.loop_header192
 }
 
 ; Function Attrs: noreturn nounwind uwtable
@@ -1078,28 +1042,20 @@ attributes #9 = { noreturn nounwind }
 !9 = !{!3, !3, i64 0}
 !10 = !{!2, !6, i64 16}
 !11 = !{!2, !6, i64 24}
-!12 = distinct !{!12}
-!13 = distinct !{!13, !14, !"polly.alias.scope.call"}
-!14 = distinct !{!14, !"polly.alias.scope.domain"}
-!15 = !{}
-!16 = !{!12, !17}
-!17 = distinct !{!17}
-!18 = distinct !{!18, !19, !20, !21}
+!12 = distinct !{!12, !13, !"polly.alias.scope.call"}
+!13 = distinct !{!13, !"polly.alias.scope.domain"}
+!14 = !{}
+!15 = distinct !{!15, !16, !17}
+!16 = !{!"llvm.loop.vectorize.width", i32 1}
+!17 = !{!"llvm.loop.interleave.count", i32 1}
+!18 = distinct !{!18, !19, !16, !17}
 !19 = !{!"llvm.loop.unroll.runtime.disable"}
-!20 = !{!"llvm.loop.vectorize.width", i32 1}
-!21 = !{!"llvm.loop.interleave.count", i32 1}
-!22 = distinct !{!22, !19, !20, !21}
-!23 = distinct !{!23}
-!24 = distinct !{!24, !25, !"polly.alias.scope.call"}
-!25 = distinct !{!25, !"polly.alias.scope.domain"}
-!26 = !{!27, !28}
-!27 = distinct !{!27, !25, !"polly.alias.scope."}
-!28 = distinct !{!28, !25, !"polly.alias.scope."}
-!29 = !{!24, !27}
-!30 = !{!23, !31}
-!31 = distinct !{!31}
-!32 = !{!24, !28}
-!33 = !{!23, !34}
-!34 = distinct !{!34}
-!35 = distinct !{!35, !20, !21}
-!36 = distinct !{!36, !20, !21}
+!20 = distinct !{!20, !21, !"polly.alias.scope.call"}
+!21 = distinct !{!21, !"polly.alias.scope.domain"}
+!22 = !{!23, !24}
+!23 = distinct !{!23, !21, !"polly.alias.scope."}
+!24 = distinct !{!24, !21, !"polly.alias.scope."}
+!25 = !{!24, !20}
+!26 = !{!23, !20}
+!27 = distinct !{!27, !16, !17}
+!28 = distinct !{!28, !16, !17}

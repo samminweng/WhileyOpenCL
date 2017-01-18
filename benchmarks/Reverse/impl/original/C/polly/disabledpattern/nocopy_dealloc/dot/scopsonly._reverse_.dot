@@ -1,0 +1,56 @@
+digraph "Scop Graph for '_reverse_' function" {
+	label="Scop Graph for '_reverse_' function";
+
+	Node0xbe31db0 [shape=record,label="{entry}"];
+	Node0xbe31db0 -> Node0xbe31d50;
+	Node0xbe31d50 [shape=record,label="{entry.split}"];
+	Node0xbe31d50 -> Node0xbe301c0;
+	Node0xbe31d50 -> Node0xbe583b0;
+	Node0xbe301c0 [shape=record,label="{blklab0}"];
+	Node0xbe301c0 -> Node0xbe58410;
+	Node0xbe301c0 -> Node0xbe30ff0;
+	Node0xbe58410 [shape=record,label="{if.then14}"];
+	Node0xbe58410 -> Node0xbe30ff0;
+	Node0xbe30ff0 [shape=record,label="{if.end21}"];
+	Node0xbe583b0 [shape=record,label="{if.end10.lr.ph}"];
+	Node0xbe583b0 -> Node0xbe31050;
+	Node0xbe31050 [shape=record,label="{if.end10}"];
+	Node0xbe31050 -> Node0xbe318f0;
+	Node0xbe31050 -> Node0xbe31050[constraint=false];
+	Node0xbe318f0 [shape=record,label="{while.cond.blklab0_crit_edge}"];
+	Node0xbe318f0 -> Node0xbe301c0;
+	colorscheme = "paired12"
+        subgraph cluster_0xbe44ff0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xbe45bb0 {
+            label = "Call instruction:   %call = tail call i64* @create1DArray_int64_t(i64 0, i64 %arr_size) #5";
+            style = solid;
+            color = 6
+            subgraph cluster_0xbe459c0 {
+              label = "Region can not profitably be optimized!";
+              style = solid;
+              color = 5
+              subgraph cluster_0xbe55ea0 {
+                label = "";
+                style = solid;
+                color = 7
+                Node0xbe31050;
+              }
+              Node0xbe318f0;
+            }
+            Node0xbe31d50;
+            Node0xbe583b0;
+          }
+          subgraph cluster_0xbe47bc0 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xbe301c0;
+            Node0xbe58410;
+          }
+          Node0xbe31db0;
+          Node0xbe30ff0;
+        }
+}

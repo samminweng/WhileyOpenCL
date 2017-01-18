@@ -1,0 +1,15 @@
+digraph "Scop Graph for 'free_Matrix' function" {
+	label="Scop Graph for 'free_Matrix' function";
+
+	Node0xb53a4a0 [shape=record,label="{entry}"];
+	Node0xb53a4a0 -> Node0xb4ecaf0;
+	Node0xb4ecaf0 [shape=record,label="{entry.split}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xb4e2b20 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0xb53a4a0;
+          Node0xb4ecaf0;
+        }
+}

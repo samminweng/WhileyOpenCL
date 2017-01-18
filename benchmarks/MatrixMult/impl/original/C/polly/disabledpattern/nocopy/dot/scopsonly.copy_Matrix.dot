@@ -1,0 +1,15 @@
+digraph "Scop Graph for 'copy_Matrix' function" {
+	label="Scop Graph for 'copy_Matrix' function";
+
+	Node0xcd768a0 [shape=record,label="{entry}"];
+	Node0xcd768a0 -> Node0xcd75ef0;
+	Node0xcd75ef0 [shape=record,label="{entry.split}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xcd2a920 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0xcd768a0;
+          Node0xcd75ef0;
+        }
+}

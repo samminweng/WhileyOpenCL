@@ -1,0 +1,44 @@
+digraph "Scop Graph for 'main' function" {
+	label="Scop Graph for 'main' function";
+
+	Node0xd13ffb0 [shape=record,label="{entry}"];
+	Node0xd13ffb0 -> Node0xd140060;
+	Node0xd140060 [shape=record,label="{entry.split}"];
+	Node0xd140060 -> Node0xd12f820;
+	Node0xd140060 -> Node0xd12f840;
+	Node0xd12f820 [shape=record,label="{blklab6}"];
+	Node0xd12f840 [shape=record,label="{if.end7.lr.ph}"];
+	Node0xd12f840 -> Node0xd145950;
+	Node0xd145950 [shape=record,label="{if.end7}"];
+	Node0xd145950 -> Node0xd145950[constraint=false];
+	Node0xd145950 -> Node0xd12f860;
+	Node0xd12f860 [shape=record,label="{while.cond.blklab6_crit_edge}"];
+	Node0xd12f860 -> Node0xd12f820;
+	colorscheme = "paired12"
+        subgraph cluster_0xd133930 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xd145e90 {
+            label = "Non affine loop bound '%4' in loop: if.end7";
+            style = solid;
+            color = 6
+            subgraph cluster_0xd1ab180 {
+              label = "Region can not profitably be optimized!";
+              style = solid;
+              color = 5
+              subgraph cluster_0xd145e10 {
+                label = "";
+                style = solid;
+                color = 7
+                Node0xd145950;
+              }
+              Node0xd12f860;
+            }
+            Node0xd140060;
+            Node0xd12f840;
+          }
+          Node0xd13ffb0;
+          Node0xd12f820;
+        }
+}

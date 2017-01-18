@@ -1,0 +1,27 @@
+digraph "Scop Graph for '_EmptyBoard_' function" {
+	label="Scop Graph for '_EmptyBoard_' function";
+
+	Node0xced7490 [shape=record,label="{entry}"];
+	Node0xced7490 -> Node0xcecb9c0;
+	Node0xcecb9c0 [shape=record,label="{entry.split}"];
+	Node0xcecb9c0 -> Node0xce21550;
+	Node0xcecb9c0 -> Node0xcf1aa60;
+	Node0xce21550 [shape=record,label="{if.end25}"];
+	Node0xcf1aa60 [shape=record,label="{if.then24}"];
+	Node0xcf1aa60 -> Node0xce21550;
+	colorscheme = "paired12"
+        subgraph cluster_0xcf197c0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xcf17be0 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xcecb9c0;
+            Node0xcf1aa60;
+          }
+          Node0xced7490;
+          Node0xce21550;
+        }
+}

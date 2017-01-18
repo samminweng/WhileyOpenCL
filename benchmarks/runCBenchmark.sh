@@ -9,9 +9,9 @@ UTILDIR="$(dirname "$(pwd)")/tests/code"
 BENCHMARKDIR="$(pwd)"
 
 ## declare compiler used for compilation
-declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" \
-					   [MergeSort]="gcc" [MatrixMult]="gcc polly openmp" \
-					   [LZ77]="gcc" [SobelEdge]="gcc" [Cashtill]="gcc" \
+declare -A compilers=( [Reverse]="gcc polly openmp" [newTicTacToe]="gcc polly openmp" [BubbleSort]="gcc polly openmp" \
+					   [MergeSort]="gcc polly openmp" [MatrixMult]="gcc polly openmp" \
+					   [LZ77]="gcc" [SobelEdge]="gcc polly openmp" [Cashtill]="gcc" \
 					   [AppendArrayPattern]="gcc" )
 
 ## declare 4 kinds of code generation
@@ -121,8 +121,8 @@ compile(){
 	cd $codeDir
 	
 	####Create 'out', 'llvm' and 'assembly' folder
-	rm -rf "out" "llvm" "assembly"
-	mkdir -p "out" "llvm" "assembly"
+	rm -rf "out" "llvm" "assembly" "dot"
+	mkdir -p "out" "llvm" "assembly" "dot"
 	### The executable file name
 	executable="$testcase.$program.$compiler.$codegen.$pattern.out"
 	
@@ -135,15 +135,20 @@ compile(){
 			clang -O3 $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
 			;;
 		"polly")
+			## Generate dot files and move them to 'dot' folder
+			pollycc -S -emit-llvm -mllvm -polly-dot-only $testcase"_"$program.c -o "llvm/$executable.ll"
+			mv *.dot "dot/"
+			## Compile and optimize the code using Polly
+			pollycc $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
 			###'-polly-process-unprofitable' option forces Polly to generate sequential code
-			pollycc -mllvm -polly-vectorizer=stripmine \
-	        		-S -emit-llvm -mllvm -polly-process-unprofitable \
-					-mllvm -polly-opt-outer-coincidence=yes \
-	        		$testcase"_"$program.c -o "llvm/$executable.ll"
+			#pollycc -mllvm -polly-vectorizer=stripmine \
+	        #		-S -emit-llvm -mllvm -polly-process-unprofitable \
+			#		-mllvm -polly-opt-outer-coincidence=yes \
+	        #		$testcase"_"$program.c -o "llvm/$executable.ll"
 			### Use 'llc' to compile LLVM code into assembly code
-			llc "llvm/$executable.ll" -o "assembly/$executable.s"
+			#llc "llvm/$executable.ll" -o "assembly/$executable.s"
 			### Use 'clang' to compile .s file and link with 'libUtil.a'
-			clang "assembly/$executable.s" Util.c WyRT.c -o "out/$executable"
+			#pollycc "assembly/$executable.s" Util.c WyRT.c -o "out/$executable"
 			;;
 		"openmp")
 			echo "Optimize C code using OpenMP code ..."
@@ -155,7 +160,7 @@ compile(){
 			### Use 'llc' to compile LLVM code into assembly code
 			llc "llvm/$executable.ll" -o "assembly/$executable.s"
 			### Use 'clang' to compile .s file and link with 'Util.c'
-			clang "assembly/$executable.s" Util.c WyRT.c -lgomp -o "out/$executable"
+			pollycc "assembly/$executable.s" Util.c WyRT.c -lgomp -o "out/$executable"
 			;;
 	esac
 }
@@ -290,7 +295,7 @@ exec(){
 							### Run the executable with multiple threads (1, 2, 3, 4)
 							for thread in "${threads[@]}"
 							do
-								echo "thread " . $thread
+								echo "thread = "$thread
 								run $testcase $program $compiler $codegen "disabledpattern" $parameter $thread
 							done
 						else
@@ -304,6 +309,8 @@ exec(){
 							## Run the executable
 							run $testcase $program $compiler $codegen "enabledpattern" $parameter 1
 						fi
+						echo "Sleep 5 second before next experiment"
+						sleep 5s
 					done
 				done
 			done
@@ -321,24 +328,24 @@ exec(){
 # # ###
 # # ###########################################
 # # # ## # Reverse test case
-# init Reverse
-# exec Reverse original
+init Reverse
+exec Reverse original
 
-# # # # # # # # newTicTacToe test case
-# init newTicTacToe
-# exec newTicTacToe original
+# # # # # # # # # newTicTacToe test case
+init newTicTacToe
+exec newTicTacToe original
 
-# # # # # ## # BubbleSort test case
-# init BubbleSort
-# exec BubbleSort original
+# # # # # # ## # BubbleSort test case
+init BubbleSort
+exec BubbleSort original
 
-# # # # # ## # MergeSort test case
-# init MergeSort
-# exec MergeSort original
+# # # # # # ## # MergeSort test case
+init MergeSort
+exec MergeSort original
 
-# # # # # MatrixMult test case
-# init MatrixMult
-# exec MatrixMult original
+# # # # # # MatrixMult test case
+init MatrixMult
+exec MatrixMult original
 ####exec MatrixMult original 12000 # Naive code runs out of memory
 # # exec MatrixMult transpose 1000
 # # exec MatrixMult transpose 2000
@@ -360,8 +367,8 @@ exec(){
 #exec AppendArrayPattern original 
 
 #### LZ77 test case
-init LZ77
-exec LZ77 original
+#init LZ77
+#exec LZ77 original
 
 # # ## Fibonacci test case
 # # init Fibonacci
