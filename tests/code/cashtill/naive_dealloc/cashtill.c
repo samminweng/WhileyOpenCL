@@ -204,17 +204,17 @@ blklab9:;
 	//return
 }
 
-int64_t _contained_(_DECL_1DARRAY_PARAM(first), _DECL_DEALLOC_PARAM(first), _DECL_1DARRAY_PARAM(second), _DECL_DEALLOC_PARAM(second)){
-	int64_t _2;
+bool _contained_(_DECL_1DARRAY_PARAM(first), _DECL_DEALLOC_PARAM(first), _DECL_1DARRAY_PARAM(second), _DECL_DEALLOC_PARAM(second)){
+	bool _2;
 	int64_t i = 0;
 	int64_t _4 = 0;
 	int64_t _5 = 0;
 	int64_t _6 = 0;
 	int64_t _7 = 0;
-	int64_t _8;
+	bool _8;
 	int64_t _9 = 0;
 	int64_t _10 = 0;
-	int64_t _11;
+	bool _11;
 	//const %4 = 0 : int
 	_4 = 0;
 	//assign %3 = %4  : int
@@ -527,23 +527,23 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRA
 	_DECL_DEALLOC(_1);
 	_DECL_1DARRAY(r);
 	_DECL_DEALLOC(r);
-	int64_t firstTime;
+	bool firstTime;
 	int64_t i = 0;
 	int64_t amt = 0;
 	void* _6;
 	size_t _6_size = 0;
 	_DECL_DEALLOC(_6);
-	int64_t _7;
+	bool _7;
 	int64_t _8 = 0;
 	int64_t _9 = 0;
 	int64_t _10 = 0;
 	int64_t _11 = 0;
-	int64_t _12;
+	bool _12;
 	_DECL_1DARRAY(_13);
 	_DECL_DEALLOC(_13);
 	_DECL_1DARRAY(_14);
 	_DECL_DEALLOC(_14);
-	int64_t _15;
+	bool _15;
 	_DECL_1DARRAY(_16);
 	_DECL_DEALLOC(_16);
 	_DECL_1DARRAY(_17);

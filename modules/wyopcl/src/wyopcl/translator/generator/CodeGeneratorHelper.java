@@ -382,7 +382,7 @@ public final class CodeGeneratorHelper {
 			return translateType(nominal.type(), stores);
 		}
 
-		if (type instanceof Type.Int || type instanceof Type.Bool) {
+		if (type instanceof Type.Int) {
 			// Return 64-bit integers
 			return "int64_t";
 		}

@@ -23,20 +23,20 @@ void printf_POS(POS* pos){
 	printf("%"PRId64, pos->c);
 	printf("}");
 }
-int64_t _conflict_(POS* p, _DECL_DEALLOC_PARAM(p), int64_t row, int64_t col){
-	int64_t _3;
+bool _conflict_(POS* p, _DECL_DEALLOC_PARAM(p), int64_t row, int64_t col){
+	bool _3;
 	int64_t r = 0;
 	int64_t c = 0;
 	int64_t colDiff = 0;
 	int64_t rowDiff = 0;
 	int64_t _8 = 0;
 	int64_t _9 = 0;
-	int64_t _10;
+	bool _10;
 	int64_t _11 = 0;
 	int64_t _12 = 0;
 	int64_t _13 = 0;
 	int64_t _14 = 0;
-	int64_t _15;
+	bool _15;
 	//fieldload %8 = %0 r : {int c,int r}
 	_8 = p->r;
 	//assign %4 = %8  : int
@@ -96,7 +96,7 @@ int64_t _run_(POS** queens, size_t queens_size, _DECL_DEALLOC_PARAM(queens), int
 	int64_t _3 = 0;
 	int64_t num_solutions = 0;
 	int64_t col = 0;
-	int64_t isSolution;
+	bool isSolution;
 	int64_t i = 0;
 	POS* p;
 	_DECL_DEALLOC(p);
@@ -105,20 +105,20 @@ int64_t _run_(POS** queens, size_t queens_size, _DECL_DEALLOC_PARAM(queens), int
 	int64_t _11 = 0;
 	int64_t _12 = 0;
 	int64_t _13 = 0;
-	int64_t _14;
+	bool _14;
 	int64_t _15 = 0;
 	int64_t _16 = 0;
 	int64_t _17 = 0;
 	int64_t _18 = 0;
 	POS* _19;
 	_DECL_DEALLOC(_19);
-	int64_t _20;
-	int64_t _21;
-	int64_t _22;
-	int64_t _23;
+	bool _20;
+	bool _21;
+	bool _22;
+	bool _23;
 	int64_t _24 = 0;
 	int64_t _25 = 0;
-	int64_t _26;
+	bool _26;
 	POS* _27;
 	_DECL_DEALLOC(_27);
 	int64_t _28 = 0;

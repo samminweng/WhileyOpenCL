@@ -60,20 +60,20 @@ NQueen* _nqueen_(int64_t num_solutions, POS** queens, size_t queens_size){
 	//return
 }
 
-int64_t _conflict_(POS* p, int64_t row, int64_t col){
-	int64_t _3;
+bool _conflict_(POS* p, int64_t row, int64_t col){
+	bool _3;
 	int64_t r = 0;
 	int64_t c = 0;
 	int64_t colDiff = 0;
 	int64_t rowDiff = 0;
 	int64_t _8 = 0;
 	int64_t _9 = 0;
-	int64_t _10;
+	bool _10;
 	int64_t _11 = 0;
 	int64_t _12 = 0;
 	int64_t _13 = 0;
 	int64_t _14 = 0;
-	int64_t _15;
+	bool _15;
 	//fieldload %8 = %0 r : {int c,int r}
 	_8 = p->r;
 	//assign %4 = %8  : int
@@ -130,7 +130,7 @@ blklab3:;
 NQueen* _run_(NQueen* nq, int64_t n, int64_t dim){
 	NQueen* _3;
 	int64_t col = 0;
-	int64_t isSolution;
+	bool isSolution;
 	int64_t i = 0;
 	POS* p;
 	int64_t _8 = 0;
@@ -143,7 +143,7 @@ NQueen* _run_(NQueen* nq, int64_t n, int64_t dim){
 	POS** _14;
 	size_t _14_size = 0;
 	int64_t _15 = 0;
-	int64_t _16;
+	bool _16;
 	int64_t _17 = 0;
 	POS** _18;
 	size_t _18_size = 0;
@@ -155,13 +155,13 @@ NQueen* _run_(NQueen* nq, int64_t n, int64_t dim){
 	POS** _23;
 	size_t _23_size = 0;
 	POS* _24;
-	int64_t _25;
-	int64_t _26;
-	int64_t _27;
-	int64_t _28;
+	bool _25;
+	bool _26;
+	bool _27;
+	bool _28;
 	int64_t _29 = 0;
 	int64_t _30 = 0;
-	int64_t _31;
+	bool _31;
 	POS* _32;
 	NQueen* _33;
 	int64_t _34 = 0;
