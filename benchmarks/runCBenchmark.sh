@@ -247,6 +247,8 @@ run(){
 			break 1 ## Break the for loop
 		fi
 		echo "Finish $i iteration" >> $result
+		####### Wait until background process is completed
+		wait ${!}
 	done
 	### Output the hardware info.
 	cat /proc/cpuinfo >> $result

@@ -19,34 +19,24 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end){
 }
 
 // Merge sort
-int64_t* mergesort(int64_t* items, size_t item_size, int start, int end, size_t* _size){
+int64_t* mergesort(int64_t* items, size_t item_size, int start, int end){
 	int64_t* lhs = NULL;
 	int64_t* rhs = NULL;
-	int64_t* tmp = NULL;
-	int64_t* tmp_1 = NULL;
 	if(start+1 < end){
 		// Split Phase
 		int pivot = (start+end)/2;
 		// LHS array
-		if(lhs != NULL){free(lhs); lhs= NULL;}
+		//if(lhs != NULL){free(lhs); lhs= NULL;}
 		lhs = slice(items, item_size, start, pivot);
-		size_t lhs_size = pivot - start;
-		size_t tmp_size=0;
+
 		// Recursive function call
-		if(tmp != NULL){free(tmp); tmp= NULL;}
-		tmp = mergesort(lhs, lhs_size, 0, pivot, &tmp_size);
-		lhs = tmp;
-		lhs_size = tmp_size;
+		lhs = mergesort(lhs, pivot - start, 0, pivot);
+
 		// RHS array
-		if(rhs != NULL){free(rhs); rhs= NULL;}
+		//if(rhs != NULL){free(rhs); rhs= NULL;}
 		rhs = slice(items, item_size, pivot, end);
-		size_t rhs_size = end - pivot;
-		size_t tmp1_size=0;		
 		// Recursive function call
-		if(tmp_1 != NULL){free(tmp_1); tmp_1= NULL;}
-		tmp_1 = mergesort(rhs, rhs_size, 0, (end-pivot), &tmp_size);
-		rhs = tmp_1;
-		rhs_size = tmp1_size;
+		rhs = mergesort(rhs, end - pivot, 0, (end-pivot));
 
 		// Merge Phase
 		int l=0, r=0, i=0;
@@ -79,7 +69,6 @@ int64_t* mergesort(int64_t* items, size_t item_size, int start, int end, size_t*
 	if(lhs != NULL){free(lhs); lhs=NULL;}
 	if(rhs != NULL){free(rhs); rhs=NULL;}
 
-	*_size = item_size;
 	return items;
 
 }
@@ -105,8 +94,8 @@ int main(int argc, char *argv[])
 		//printf("arr[%d]=%d\n", i, arr[i]);
 		i++;
 	}
-	size_t output_size=0;
-	int64_t* output = mergesort(arr, arr_size, 0, max, &output_size);
+
+	int64_t* output = mergesort(arr, arr_size, 0, max);
 
 	// Print out output arr
 	/*i=0;
