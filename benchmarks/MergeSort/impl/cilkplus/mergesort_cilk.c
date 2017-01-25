@@ -5,7 +5,7 @@
 #include <string.h>
 #include <cilk/cilk.h>
 #include <cilk/cilk_api.h>
-
+#include <pthread.h> //pthread library	
 
 /**
  * Slice the array into two array from start to end (exclusively).
@@ -23,10 +23,15 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end){
 
 // Merge sort
 int64_t* mergesort(int64_t* items, size_t item_size, int start, int end, size_t* _size){
+	
+	//int w_number = __cilkrts_get_worker_number();
+	// Print out worker number
+	//printf("Worker Number %d\n", w_number);
 	int64_t* lhs = NULL;
 	int64_t* rhs = NULL;
 	int64_t* tmp = NULL;
 	int64_t* tmp_1 = NULL;
+	pthread_mutex_t m; //define the lock
 	if(start+1 < end){
 		// Split Phase
 		int pivot = (start+end)/2;
@@ -40,6 +45,8 @@ int64_t* mergesort(int64_t* items, size_t item_size, int start, int end, size_t*
 		tmp = cilk_spawn mergesort(lhs, lhs_size, 0, pivot, &tmp_size);
 		lhs = tmp;
 		lhs_size = tmp_size;
+		cilk_sync;
+
 		// RHS array
 		if(rhs != NULL){free(rhs); rhs= NULL;}
 		rhs = slice(items, item_size, pivot, end);
@@ -52,7 +59,9 @@ int64_t* mergesort(int64_t* items, size_t item_size, int start, int end, size_t*
 		rhs_size = tmp1_size;
 
 		cilk_sync;
+		
 		// Merge Phase
+		//pthread_mutex_lock(&m); //lock - prevents other threads from running this code
 		int l=0, r=0, i=0;
 		while(i< (end -start) && l < (pivot - start) && r < (end - pivot)){
 			if (lhs[l] <= rhs[r]){
@@ -76,7 +85,7 @@ int64_t* mergesort(int64_t* items, size_t item_size, int start, int end, size_t*
 			i = i +1;
 			r = r +1;
 		}
-
+		//pthread_mutex_unlock(&m); //unlock - allows other threads to access this code
 	}
 
 	// Free 'lhs' and 'rhs'
@@ -114,8 +123,8 @@ int main(int argc, char *argv[])
 		i++;
 	}
 	size_t output_size=0;
-	int64_t* output = mergesort(arr, arr_size, 0, max, &output_size);
-
+	int64_t* output = cilk_spawn mergesort(arr, arr_size, 0, max, &output_size);
+	cilk_sync;
 	// Print out output arr
 	/*i=0;
 	while(i<max){

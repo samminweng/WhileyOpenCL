@@ -327,25 +327,25 @@ exec(){
 # # ###  (naive + de-allocated, copy_reduced, copy_reduced + de-allocated)
 # # ###
 # # ###########################################
-# # # ## # Reverse test case
-init Reverse
-exec Reverse original
+# # # # ## # Reverse test case
+# init Reverse
+# exec Reverse original
 
-# # # # # # # # # newTicTacToe test case
-init newTicTacToe
-exec newTicTacToe original
+# # # # # # # # # # newTicTacToe test case
+# init newTicTacToe
+# exec newTicTacToe original
 
-# # # # # # ## # BubbleSort test case
-init BubbleSort
-exec BubbleSort original
+# # # # # # # ## # BubbleSort test case
+# init BubbleSort
+# exec BubbleSort original
 
-# # # # # # ## # MergeSort test case
-init MergeSort
-exec MergeSort original
+# # # # # # # ## # MergeSort test case
+# init MergeSort
+# exec MergeSort original
 
-# # # # # # MatrixMult test case
-init MatrixMult
-exec MatrixMult original
+# # # # # # # MatrixMult test case
+# init MatrixMult
+# exec MatrixMult original
 ####exec MatrixMult original 12000 # Naive code runs out of memory
 # # exec MatrixMult transpose 1000
 # # exec MatrixMult transpose 2000
@@ -355,8 +355,8 @@ exec MatrixMult original
 # # exec MatrixMult 2DArray 3000
 
 # # ###Sobel Edge test
-#init SobelEdge
-#exec SobelEdge original
+init SobelEdge
+exec SobelEdge original
 
 # ### Cashtill test case
 #init Cashtill

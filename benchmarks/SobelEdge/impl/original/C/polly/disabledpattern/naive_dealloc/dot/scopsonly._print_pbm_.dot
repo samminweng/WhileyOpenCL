@@ -1,0 +1,162 @@
+digraph "Scop Graph for '_print_pbm_' function" {
+	label="Scop Graph for '_print_pbm_' function";
+
+	Node0xb5f8a70 [shape=record,label="{entry}"];
+	Node0xb5f8a70 -> Node0xb54e0d0;
+	Node0xb54e0d0 [shape=record,label="{entry.split}"];
+	Node0xb54e0d0 -> Node0xb54e0f0;
+	Node0xb54e0d0 -> Node0xb670160;
+	Node0xb54e0f0 [shape=record,label="{while.cond18.preheader.lr.ph}"];
+	Node0xb54e0f0 -> Node0xb670180;
+	Node0xb670180 [shape=record,label="{while.cond18.preheader}"];
+	Node0xb670180 -> Node0xb620ea0;
+	Node0xb670180 -> Node0xb6201f0;
+	Node0xb620ea0 [shape=record,label="{if.end22.lr.ph}"];
+	Node0xb620ea0 -> Node0xb670320;
+	Node0xb670320 [shape=record,label="{if.end22}"];
+	Node0xb670320 -> Node0xb670370;
+	Node0xb670320 -> Node0xb62fa70;
+	Node0xb670370 [shape=record,label="{if.end28}"];
+	Node0xb670370 -> Node0xb62fad0;
+	Node0xb62fad0 [shape=record,label="{blklab18}"];
+	Node0xb62fad0 -> Node0xb62fb30;
+	Node0xb62fad0 -> Node0xb6823b0;
+	Node0xb62fb30 [shape=record,label="{if.end33}"];
+	Node0xb62fb30 -> Node0xb670320[constraint=false];
+	Node0xb62fb30 -> Node0xb620160;
+	Node0xb620160 [shape=record,label="{while.cond18.blklab15_crit_edge}"];
+	Node0xb620160 -> Node0xb6201f0;
+	Node0xb6201f0 [shape=record,label="{blklab15}"];
+	Node0xb6201f0 -> Node0xb66f690;
+	Node0xb6201f0 -> Node0xb680c00;
+	Node0xb66f690 [shape=record,label="{if.end44}"];
+	Node0xb66f690 -> Node0xb670180[constraint=false];
+	Node0xb66f690 -> Node0xb620180;
+	Node0xb620180 [shape=record,label="{while.cond.blklab13_crit_edge}"];
+	Node0xb620180 -> Node0xb670160;
+	Node0xb670160 [shape=record,label="{blklab13}"];
+	Node0xb670160 -> Node0xb63cf90;
+	Node0xb670160 -> Node0xb63cfb0;
+	Node0xb63cf90 [shape=record,label="{if.then53}"];
+	Node0xb63cf90 -> Node0xb63cfb0;
+	Node0xb63cfb0 [shape=record,label="{if.end54}"];
+	Node0xb63cfb0 -> Node0xb63ea80;
+	Node0xb63cfb0 -> Node0xb63eae0;
+	Node0xb63ea80 [shape=record,label="{if.end57}"];
+	Node0xb63ea80 -> Node0xb63eb40;
+	Node0xb63ea80 -> Node0xb63eb60;
+	Node0xb63eb40 [shape=record,label="{if.end60}"];
+	Node0xb63eb40 -> Node0xb684ce0;
+	Node0xb63eb40 -> Node0xb684d40;
+	Node0xb684ce0 [shape=record,label="{if.end63}"];
+	Node0xb684ce0 -> Node0xb684da0;
+	Node0xb684ce0 -> Node0xb684dc0;
+	Node0xb684da0 [shape=record,label="{if.end66}"];
+	Node0xb684dc0 [shape=record,label="{if.then65}"];
+	Node0xb684dc0 -> Node0xb684da0;
+	Node0xb684d40 [shape=record,label="{if.then62}"];
+	Node0xb684d40 -> Node0xb684ce0;
+	Node0xb63eb60 [shape=record,label="{if.then59}"];
+	Node0xb63eb60 -> Node0xb63eb40;
+	Node0xb63eae0 [shape=record,label="{if.then56}"];
+	Node0xb63eae0 -> Node0xb63ea80;
+	Node0xb680c00 [shape=record,label="{if.then43}"];
+	Node0xb680c00 -> Node0xb66f690;
+	Node0xb6823b0 [shape=record,label="{if.then32}"];
+	Node0xb6823b0 -> Node0xb62fb30;
+	Node0xb62fa70 [shape=record,label="{blklab17}"];
+	Node0xb62fa70 -> Node0xb62fad0;
+	colorscheme = "paired12"
+        subgraph cluster_0xb637c60 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xb54e020 {
+            label = "Call instruction:   %call = tail call i64* @create1DArray_int64_t(i64 0, i64 2) #6";
+            style = solid;
+            color = 6
+            subgraph cluster_0xb5504e0 {
+              label = "";
+              style = solid;
+              color = 5
+              subgraph cluster_0xb548020 {
+                label = "";
+                style = solid;
+                color = 7
+                subgraph cluster_0xb621ef0 {
+                  label = "Call instruction:   %call29 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str, i64 0, i64 0), i64 0)";
+                  style = solid;
+                  color = 9
+                  subgraph cluster_0xb635150 {
+                    label = "Region can not profitably be optimized!";
+                    style = solid;
+                    color = 11
+                    Node0xb670320;
+                    Node0xb670370;
+                    Node0xb62fa70;
+                  }
+                  subgraph cluster_0xb6700c0 {
+                    label = "Region can not profitably be optimized!";
+                    style = solid;
+                    color = 11
+                    Node0xb62fad0;
+                    Node0xb6823b0;
+                  }
+                  Node0xb62fb30;
+                }
+                Node0xb670180;
+                Node0xb620ea0;
+                Node0xb620160;
+              }
+              subgraph cluster_0xb66f5d0 {
+                label = "Region can not profitably be optimized!";
+                style = solid;
+                color = 7
+                Node0xb6201f0;
+                Node0xb680c00;
+              }
+              Node0xb66f690;
+            }
+            Node0xb54e0d0;
+            Node0xb54e0f0;
+            Node0xb620180;
+          }
+          subgraph cluster_0xb5508e0 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xb670160;
+            Node0xb63cf90;
+          }
+          subgraph cluster_0xb66e7d0 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xb63cfb0;
+            Node0xb63eae0;
+          }
+          subgraph cluster_0xb66e0a0 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xb63ea80;
+            Node0xb63eb60;
+          }
+          subgraph cluster_0xb6357f0 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xb63eb40;
+            Node0xb684d40;
+          }
+          subgraph cluster_0xb66de40 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xb684ce0;
+            Node0xb684dc0;
+          }
+          Node0xb5f8a70;
+          Node0xb684da0;
+        }
+}

@@ -137,7 +137,7 @@ entry:
   br i1 %pixels_dealloc, label %if.then20, label %if.end21
 
 if.then20:                                        ; preds = %entry
-  tail call void @free(i8* nonnull %pixels) #8
+  tail call void @free(i8* nonnull %pixels) #7
   br label %if.end21
 
 if.end21:                                         ; preds = %if.then20, %entry
@@ -145,7 +145,7 @@ if.end21:                                         ; preds = %if.then20, %entry
 
 if.then23:                                        ; preds = %if.end21
   %24 = bitcast i64* %filter to i8*
-  tail call void @free(i8* %24) #8
+  tail call void @free(i8* %24) #7
   br label %if.end24
 
 if.end24:                                         ; preds = %if.then23, %if.end21
@@ -159,8 +159,8 @@ declare void @free(i8* nocapture) local_unnamed_addr #3
 define i8* @_sobelEdgeDetection_(i8* nocapture %pixels, i64 %pixels_size, i1 zeroext %pixels_dealloc, i64 %width, i64 %height, i64* nocapture %_size_call_by_ref) local_unnamed_addr #2 {
 entry:
   %mul = mul nsw i64 %height, %width
-  %call = tail call i8* @create1DArray_BYTE(i8 zeroext 32, i64 %mul) #8
-  %call13 = tail call i64* @create1DArray_int64_t(i64 0, i64 9) #8
+  %call = tail call i8* @create1DArray_BYTE(i8 zeroext 32, i64 %mul) #7
+  %call13 = tail call i64* @create1DArray_int64_t(i64 0, i64 9) #7
   %0 = bitcast i64* %call13 to <2 x i64>*
   store <2 x i64> <i64 -1, i64 0>, <2 x i64>* %0, align 8, !tbaa !4
   %arrayidx15 = getelementptr inbounds i64, i64* %call13, i64 2
@@ -175,7 +175,7 @@ entry:
   %arrayidx21 = getelementptr inbounds i64, i64* %call13, i64 8
   store i64 1, i64* %arrayidx21, align 8, !tbaa !4
   %not.cmp22 = icmp eq i64* %call13, null
-  %call37 = tail call i64* @create1DArray_int64_t(i64 0, i64 9) #8
+  %call37 = tail call i64* @create1DArray_int64_t(i64 0, i64 9) #7
   %4 = bitcast i64* %call37 to <2 x i64>*
   store <2 x i64> <i64 1, i64 2>, <2 x i64>* %4, align 8, !tbaa !4
   %arrayidx40 = getelementptr inbounds i64, i64* %call37, i64 2
@@ -239,7 +239,7 @@ blklab8:                                          ; preds = %blklab8.loopexit, %
   br i1 %pixels_dealloc, label %if.then77, label %if.end81
 
 if.then77:                                        ; preds = %blklab8
-  tail call void @free(i8* %pixels) #8
+  tail call void @free(i8* %pixels) #7
   br label %if.end81
 
 if.end81:                                         ; preds = %blklab8, %if.then77
@@ -247,7 +247,7 @@ if.end81:                                         ; preds = %blklab8, %if.then77
 
 if.then83:                                        ; preds = %if.end81
   %9 = bitcast i64* %call13 to i8*
-  tail call void @free(i8* %9) #8
+  tail call void @free(i8* %9) #7
   br label %if.end84
 
 if.end84:                                         ; preds = %if.end81, %if.then83
@@ -255,7 +255,7 @@ if.end84:                                         ; preds = %if.end81, %if.then8
 
 if.then86:                                        ; preds = %if.end84
   %10 = bitcast i64* %call37 to i8*
-  tail call void @free(i8* %10) #8
+  tail call void @free(i8* %10) #7
   br label %if.end96
 
 if.end96:                                         ; preds = %if.end84, %if.then86
@@ -268,18 +268,18 @@ declare i8* @create1DArray_BYTE(i8 zeroext, i64) local_unnamed_addr #4
 declare i64* @create1DArray_int64_t(i64, i64) local_unnamed_addr #4
 
 ; Function Attrs: nounwind uwtable
-define void @_print_pbm_(%struct._IO_FILE* nocapture readnone %sys, i64 %width, i64 %height, i8* nocapture %pixels, i64 %pixels_size, i1 zeroext %pixels_dealloc) local_unnamed_addr #5 {
+define void @_print_pbm_(%struct._IO_FILE* nocapture readnone %sys, i64 %width, i64 %height, i8* nocapture %pixels, i64 %pixels_size, i1 zeroext %pixels_dealloc) local_unnamed_addr #2 {
 entry:
-  %call = tail call i64* @create1DArray_int64_t(i64 0, i64 2) #8
+  %call = tail call i64* @create1DArray_int64_t(i64 0, i64 2) #7
   %0 = bitcast i64* %call to <2 x i64>*
   store <2 x i64> <i64 80, i64 49>, <2 x i64>* %0, align 8, !tbaa !4
   %not.cmp = icmp eq i64* %call, null
-  tail call void @println_s(i64* %call, i64 2) #8
+  tail call void @println_s(i64* %call, i64 2) #7
   %call4 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str, i64 0, i64 0), i64 %width)
-  %call8 = tail call i64* @create1DArray_int64_t(i64 0, i64 1) #8
+  %call8 = tail call i64* @create1DArray_int64_t(i64 0, i64 1) #7
   store i64 32, i64* %call8, align 8, !tbaa !4
   %not.cmp10 = icmp eq i64* %call8, null
-  tail call void @printf_s(i64* %call8, i64 1) #8
+  tail call void @printf_s(i64* %call8, i64 1) #7
   %call14 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i64 0, i64 0), i64 %height)
   %cmp15134 = icmp sgt i64 %height, 0
   br i1 %cmp15134, label %while.cond18.preheader.preheader, label %blklab13
@@ -328,54 +328,54 @@ blklab18.us:                                      ; preds = %if.end28.us, %blkla
 
 if.then32.us:                                     ; preds = %blklab18.us
   %3 = bitcast i64* %_31.1131.us to i8*
-  tail call void @free(i8* %3) #8
+  tail call void @free(i8* %3) #7
   br label %if.end33.us
 
 if.end33.us:                                      ; preds = %if.then32.us, %blklab18.us
-  %call34.us = tail call i64* @create1DArray_int64_t(i64 0, i64 1) #8
+  %call34.us = tail call i64* @create1DArray_int64_t(i64 0, i64 1) #7
   store i64 32, i64* %call34.us, align 8, !tbaa !4
   %not.cmp36.us = icmp ne i64* %call34.us, null
   %..us = zext i1 %not.cmp36.us to i8
-  tail call void @printf_s(i64* %call34.us, i64 1) #8
+  tail call void @printf_s(i64* %call34.us, i64 1) #7
   %add41.us = add nuw nsw i64 %i.0130.us, 1
   %exitcond.us = icmp eq i64 %add41.us, %width
-  br i1 %exitcond.us, label %polly.split_new_and_old.loopexit.us, label %if.end22.us
+  br i1 %exitcond.us, label %blklab15.loopexit.us, label %if.end22.us
 
-if.then43.us:                                     ; preds = %polly.split_new_and_old.loopexit.us
-  tail call void @free(i8* %_36.0139.us) #8
+if.then43.us:                                     ; preds = %blklab15.loopexit.us
+  tail call void @free(i8* %_36.0139.us) #7
   br label %if.end44.us
 
-if.end44.us:                                      ; preds = %if.then43.us, %polly.split_new_and_old.loopexit.us
-  %call45.us = tail call i64* @create1DArray_int64_t(i64 0, i64 0) #8
+if.end44.us:                                      ; preds = %if.then43.us, %blklab15.loopexit.us
+  %call45.us = tail call i64* @create1DArray_int64_t(i64 0, i64 0) #7
   %4 = bitcast i64* %call45.us to i8*
   %not.cmp46.us = icmp ne i64* %call45.us, null
   %.128.us = zext i1 %not.cmp46.us to i8
-  tail call void @println_s(i64* %call45.us, i64 0) #8
+  tail call void @println_s(i64* %call45.us, i64 0) #7
   %add51.us = add nuw nsw i64 %j.0135.us, 1
   %exitcond145.us = icmp eq i64 %add51.us, %height
   br i1 %exitcond145.us, label %blklab13.loopexit, label %while.cond18.preheader.us
 
-polly.split_new_and_old.loopexit.us:              ; preds = %if.end33.us
-  %5 = icmp eq i8 %_36_dealloc.0140.us, 0
-  br i1 %5, label %if.end44.us, label %if.then43.us
+blklab15.loopexit.us:                             ; preds = %if.end33.us
+  %tobool42.us = icmp eq i8 %_36_dealloc.0140.us, 0
+  br i1 %tobool42.us, label %if.end44.us, label %if.then43.us
 
 while.cond18.preheader:                           ; preds = %while.cond18.preheader.preheader155, %if.end44
   %_36_dealloc.0140 = phi i8 [ %.128, %if.end44 ], [ 0, %while.cond18.preheader.preheader155 ]
-  %_36.0139 = phi i8* [ %7, %if.end44 ], [ undef, %while.cond18.preheader.preheader155 ]
+  %_36.0139 = phi i8* [ %5, %if.end44 ], [ undef, %while.cond18.preheader.preheader155 ]
   %j.0135 = phi i64 [ %add51, %if.end44 ], [ 0, %while.cond18.preheader.preheader155 ]
-  %6 = icmp eq i8 %_36_dealloc.0140, 0
-  br i1 %6, label %if.end44, label %if.then43
+  %tobool42 = icmp eq i8 %_36_dealloc.0140, 0
+  br i1 %tobool42, label %if.end44, label %if.then43
 
 if.then43:                                        ; preds = %while.cond18.preheader
-  tail call void @free(i8* %_36.0139) #8
+  tail call void @free(i8* %_36.0139) #7
   br label %if.end44
 
 if.end44:                                         ; preds = %while.cond18.preheader, %if.then43
-  %call45 = tail call i64* @create1DArray_int64_t(i64 0, i64 0) #8
-  %7 = bitcast i64* %call45 to i8*
+  %call45 = tail call i64* @create1DArray_int64_t(i64 0, i64 0) #7
+  %5 = bitcast i64* %call45 to i8*
   %not.cmp46 = icmp ne i64* %call45, null
   %.128 = zext i1 %not.cmp46 to i8
-  tail call void @println_s(i64* %call45, i64 0) #8
+  tail call void @println_s(i64* %call45, i64 0) #7
   %add51 = add nuw nsw i64 %j.0135, 1
   %exitcond145 = icmp eq i64 %add51, %height
   br i1 %exitcond145, label %blklab13.loopexit156, label %while.cond18.preheader
@@ -390,28 +390,28 @@ blklab13.loopexit156:                             ; preds = %if.end44
 blklab13:                                         ; preds = %blklab13.loopexit156, %blklab13.loopexit, %entry
   %_31.0.lcssa = phi i8* [ null, %entry ], [ %phitmp, %blklab13.loopexit ], [ null, %blklab13.loopexit156 ]
   %_31_dealloc.0.lcssa = phi i8 [ 0, %entry ], [ %..us, %blklab13.loopexit ], [ 0, %blklab13.loopexit156 ]
-  %_36.0.lcssa = phi i8* [ undef, %entry ], [ %4, %blklab13.loopexit ], [ %7, %blklab13.loopexit156 ]
+  %_36.0.lcssa = phi i8* [ undef, %entry ], [ %4, %blklab13.loopexit ], [ %5, %blklab13.loopexit156 ]
   %_36_dealloc.0.lcssa = phi i8 [ 0, %entry ], [ %.128.us, %blklab13.loopexit ], [ %.128, %blklab13.loopexit156 ]
   br i1 %pixels_dealloc, label %if.then53, label %if.end54
 
 if.then53:                                        ; preds = %blklab13
-  tail call void @free(i8* %pixels) #8
+  tail call void @free(i8* %pixels) #7
   br label %if.end54
 
 if.end54:                                         ; preds = %if.then53, %blklab13
   br i1 %not.cmp, label %if.end57, label %if.then56
 
 if.then56:                                        ; preds = %if.end54
-  %8 = bitcast i64* %call to i8*
-  tail call void @free(i8* %8) #8
+  %6 = bitcast i64* %call to i8*
+  tail call void @free(i8* %6) #7
   br label %if.end57
 
 if.end57:                                         ; preds = %if.end54, %if.then56
   br i1 %not.cmp10, label %if.end60, label %if.then59
 
 if.then59:                                        ; preds = %if.end57
-  %9 = bitcast i64* %call8 to i8*
-  tail call void @free(i8* %9) #8
+  %7 = bitcast i64* %call8 to i8*
+  tail call void @free(i8* %7) #7
   br label %if.end60
 
 if.end60:                                         ; preds = %if.end57, %if.then59
@@ -419,7 +419,7 @@ if.end60:                                         ; preds = %if.end57, %if.then5
   br i1 %tobool61, label %if.end63, label %if.then62
 
 if.then62:                                        ; preds = %if.end60
-  tail call void @free(i8* %_31.0.lcssa) #8
+  tail call void @free(i8* %_31.0.lcssa) #7
   br label %if.end63
 
 if.end63:                                         ; preds = %if.end60, %if.then62
@@ -427,7 +427,7 @@ if.end63:                                         ; preds = %if.end60, %if.then6
   br i1 %tobool64, label %if.end66, label %if.then65
 
 if.then65:                                        ; preds = %if.end63
-  tail call void @free(i8* %_36.0.lcssa) #8
+  tail call void @free(i8* %_36.0.lcssa) #7
   br label %if.end66
 
 if.end66:                                         ; preds = %if.end63, %if.then65
@@ -442,7 +442,7 @@ declare i32 @printf(i8* nocapture readonly, ...) local_unnamed_addr #3
 declare void @printf_s(i64*, i64) local_unnamed_addr #4
 
 ; Function Attrs: noreturn nounwind uwtable
-define i32 @main(i32 %argc, i8** %args) local_unnamed_addr #6 {
+define i32 @main(i32 %argc, i8** %args) local_unnamed_addr #5 {
 entry:
   %_9_size = alloca i64, align 8
   %_9_size_size = alloca i64, align 8
@@ -451,39 +451,39 @@ entry:
   %_16_size = alloca i64, align 8
   %_18_size = alloca i64, align 8
   %0 = bitcast i64* %_9_size to i8*
-  call void @llvm.lifetime.start(i64 8, i8* nonnull %0) #8
+  call void @llvm.lifetime.start(i64 8, i8* nonnull %0) #7
   store i64 0, i64* %_9_size, align 8, !tbaa !4
   %1 = bitcast i64* %_9_size_size to i8*
-  call void @llvm.lifetime.start(i64 8, i8* nonnull %1) #8
+  call void @llvm.lifetime.start(i64 8, i8* nonnull %1) #7
   store i64 0, i64* %_9_size_size, align 8, !tbaa !4
   %2 = bitcast i64* %_13_size to i8*
-  call void @llvm.lifetime.start(i64 8, i8* nonnull %2) #8
+  call void @llvm.lifetime.start(i64 8, i8* nonnull %2) #7
   store i64 0, i64* %_13_size, align 8, !tbaa !4
   %3 = bitcast i64* %_13_size_size to i8*
-  call void @llvm.lifetime.start(i64 8, i8* nonnull %3) #8
+  call void @llvm.lifetime.start(i64 8, i8* nonnull %3) #7
   store i64 0, i64* %_13_size_size, align 8, !tbaa !4
   %4 = bitcast i64* %_16_size to i8*
-  call void @llvm.lifetime.start(i64 8, i8* nonnull %4) #8
+  call void @llvm.lifetime.start(i64 8, i8* nonnull %4) #7
   store i64 0, i64* %_16_size, align 8, !tbaa !4
   %5 = bitcast i64* %_18_size to i8*
-  call void @llvm.lifetime.start(i64 8, i8* nonnull %5) #8
+  call void @llvm.lifetime.start(i64 8, i8* nonnull %5) #7
   store i64 0, i64* %_18_size, align 8, !tbaa !4
-  %call = call i64** @convertArgsToIntArray(i32 %argc, i8** %args, i64* nonnull %_9_size, i64* nonnull %_9_size_size) #8
+  %call = call i64** @convertArgsToIntArray(i32 %argc, i8** %args, i64* nonnull %_9_size, i64* nonnull %_9_size_size) #7
   %not.cmp = icmp eq i64** %call, null
   %6 = load i64*, i64** %call, align 8, !tbaa !6
   %7 = load i64, i64* %_9_size_size, align 8, !tbaa !4
-  %call3 = call %struct._IO_FILE* @Reader(i64* %6, i64 %7) #8
-  %call7 = call i64** @convertArgsToIntArray(i32 %argc, i8** %args, i64* nonnull %_13_size, i64* nonnull %_13_size_size) #8
+  %call3 = call %struct._IO_FILE* @Reader(i64* %6, i64 %7) #7
+  %call7 = call i64** @convertArgsToIntArray(i32 %argc, i8** %args, i64* nonnull %_13_size, i64* nonnull %_13_size_size) #7
   %not.cmp8 = icmp eq i64** %call7, null
   %arrayidx12 = getelementptr inbounds i64*, i64** %call7, i64 1
   %8 = load i64*, i64** %arrayidx12, align 8, !tbaa !6
-  %call13 = call i64* @parseStringToInt(i64* %8) #8
+  %call13 = call i64* @parseStringToInt(i64* %8) #7
   %not.cmp14 = icmp eq i64* %call13, null
   br i1 %not.cmp14, label %blklab19, label %if.end24
 
 if.end24:                                         ; preds = %entry
   %9 = load i64, i64* %call13, align 8, !tbaa !4
-  %call25 = call i8* @readAll(%struct._IO_FILE* %call3, i64* nonnull %_16_size) #8
+  %call25 = call i8* @readAll(%struct._IO_FILE* %call3, i64* nonnull %_16_size) #7
   %not.cmp26 = icmp ne i8* %call25, null
   %.120 = zext i1 %not.cmp26 to i8
   %call38 = call i8* @_sobelEdgeDetection_(i8* %call25, i64 undef, i1 zeroext false, i64 %9, i64 %9, i64* nonnull %_18_size)
@@ -509,7 +509,7 @@ if.end51:                                         ; preds = %blklab19, %if.then4
 
 if.then53:                                        ; preds = %if.end51
   %10 = bitcast i64* %call13 to i8*
-  call void @free(i8* %10) #8
+  call void @free(i8* %10) #7
   br label %if.end54
 
 if.end54:                                         ; preds = %if.end51, %if.then53
@@ -517,7 +517,7 @@ if.end54:                                         ; preds = %if.end51, %if.then5
   br i1 %tobool55, label %if.end57, label %if.then56
 
 if.then56:                                        ; preds = %if.end54
-  call void @free(i8* %pixels.0) #8
+  call void @free(i8* %pixels.0) #7
   br label %if.end57
 
 if.end57:                                         ; preds = %if.end54, %if.then56
@@ -525,7 +525,7 @@ if.end57:                                         ; preds = %if.end54, %if.then5
   br i1 %tobool58, label %if.end60, label %if.then59
 
 if.then59:                                        ; preds = %if.end57
-  call void @free(i8* %newPixels.0) #8
+  call void @free(i8* %newPixels.0) #7
   br label %if.end60
 
 if.end60:                                         ; preds = %if.end57, %if.then59
@@ -533,7 +533,7 @@ if.end60:                                         ; preds = %if.end57, %if.then5
 
 if.then62:                                        ; preds = %if.end60
   %11 = load i64, i64* %_9_size, align 8, !tbaa !4
-  call void @free2DArray_int64_t(i64** nonnull %call, i64 %11) #8
+  call void @free2DArray_int64_t(i64** nonnull %call, i64 %11) #7
   br label %if.end69
 
 if.end69:                                         ; preds = %if.end60, %if.then62
@@ -541,11 +541,11 @@ if.end69:                                         ; preds = %if.end60, %if.then6
 
 if.then71:                                        ; preds = %if.end69
   %12 = load i64, i64* %_13_size, align 8, !tbaa !4
-  call void @free2DArray_int64_t(i64** nonnull %call7, i64 %12) #8
+  call void @free2DArray_int64_t(i64** nonnull %call7, i64 %12) #7
   br label %if.end81
 
 if.end81:                                         ; preds = %if.end69, %if.then71
-  call void @exit(i32 0) #9
+  call void @exit(i32 0) #8
   unreachable
 }
 
@@ -563,7 +563,7 @@ declare i8* @readAll(%struct._IO_FILE*, i64*) local_unnamed_addr #4
 declare i32 @fclose(%struct._IO_FILE* nocapture) local_unnamed_addr #3
 
 ; Function Attrs: noreturn nounwind
-declare void @exit(i32) local_unnamed_addr #7
+declare void @exit(i32) local_unnamed_addr #6
 
 ; Function Attrs: argmemonly nounwind
 declare void @llvm.memset.p0i8.i64(i8* nocapture writeonly, i8, i64, i32, i1) #1
@@ -573,11 +573,10 @@ attributes #1 = { argmemonly nounwind }
 attributes #2 = { nounwind uwtable "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #3 = { nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #4 = { "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #5 = { nounwind uwtable "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "polly-optimized" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #6 = { noreturn nounwind uwtable "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #7 = { noreturn nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #8 = { nounwind }
-attributes #9 = { noreturn nounwind }
+attributes #5 = { noreturn nounwind uwtable "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #6 = { noreturn nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #7 = { nounwind }
+attributes #8 = { noreturn nounwind }
 
 !llvm.ident = !{!0}
 

@@ -1,0 +1,63 @@
+digraph "Scop Graph for '_convolution_' function" {
+	label="Scop Graph for '_convolution_' function";
+
+	Node0xb6002f0 [shape=record,label="{entry}"];
+	Node0xb6002f0 -> Node0xb5f3f40;
+	Node0xb5f3f40 [shape=record,label="{entry.split}"];
+	Node0xb5f3f40 -> Node0xb6005b0;
+	Node0xb6005b0 [shape=record,label="{if.end}"];
+	Node0xb6005b0 -> Node0xb6002a0;
+	Node0xb6002a0 [shape=record,label="{if.end6}"];
+	Node0xb6002a0 -> Node0xb5f3b90;
+	Node0xb6002a0 -> Node0xb6002a0[constraint=false];
+	Node0xb5f3b90 [shape=record,label="{blklab6}"];
+	Node0xb5f3b90 -> Node0xb634050;
+	Node0xb5f3b90 -> Node0xb6005b0[constraint=false];
+	Node0xb634050 [shape=record,label="{blklab4}"];
+	Node0xb634050 -> Node0xb6340b0;
+	Node0xb634050 -> Node0xb633aa0;
+	Node0xb6340b0 [shape=record,label="{if.then20}"];
+	Node0xb6340b0 -> Node0xb633aa0;
+	Node0xb633aa0 [shape=record,label="{if.end21}"];
+	Node0xb633aa0 -> Node0xb633b00;
+	Node0xb633aa0 -> Node0xb606dc0;
+	Node0xb633b00 [shape=record,label="{if.then23}"];
+	Node0xb633b00 -> Node0xb606dc0;
+	Node0xb606dc0 [shape=record,label="{if.end24}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xb41e980 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xb6709f0 {
+            label = "Non affine access function: ((%width * %0) + %1)";
+            style = solid;
+            color = 6
+            subgraph cluster_0xb62f5e0 {
+              label = "Non affine access function: ((%width * %0) + %1)";
+              style = solid;
+              color = 5
+              Node0xb6002a0;
+            }
+            Node0xb6005b0;
+            Node0xb5f3b90;
+          }
+          subgraph cluster_0xb66f5a0 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xb634050;
+            Node0xb6340b0;
+          }
+          subgraph cluster_0xb63b3f0 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xb633aa0;
+            Node0xb633b00;
+          }
+          Node0xb6002f0;
+          Node0xb5f3f40;
+          Node0xb606dc0;
+        }
+}

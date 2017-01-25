@@ -1,0 +1,21 @@
+digraph "Scop Graph for '_wrap_' function" {
+	label="Scop Graph for '_wrap_' function";
+
+	Node0xb5b6b30 [shape=record,label="{entry}"];
+	Node0xb5b6b30 -> Node0xb5b9700;
+	Node0xb5b9700 [shape=record,label="{entry.split}"];
+	Node0xb5b9700 -> Node0xb46ee60;
+	Node0xb5b9700 -> Node0xb5c5da0;
+	Node0xb46ee60 [shape=record,label="{blklab0}"];
+	Node0xb5c5da0 [shape=record,label="{if.end}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xb614e80 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0xb5b6b30;
+          Node0xb5b9700;
+          Node0xb46ee60;
+          Node0xb5c5da0;
+        }
+}

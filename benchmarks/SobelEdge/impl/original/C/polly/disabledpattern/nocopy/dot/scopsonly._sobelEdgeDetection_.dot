@@ -1,0 +1,75 @@
+digraph "Scop Graph for '_sobelEdgeDetection_' function" {
+	label="Scop Graph for '_sobelEdgeDetection_' function";
+
+	Node0xb571f20 [shape=record,label="{entry}"];
+	Node0xb571f20 -> Node0xb5b5a60;
+	Node0xb5b5a60 [shape=record,label="{entry.split}"];
+	Node0xb5b5a60 -> Node0xb5b5b20;
+	Node0xb5b5a60 -> Node0xb58cb80;
+	Node0xb5b5b20 [shape=record,label="{while.cond25.preheader.lr.ph}"];
+	Node0xb5b5b20 -> Node0xb58cbe0;
+	Node0xb58cbe0 [shape=record,label="{while.cond25.preheader}"];
+	Node0xb58cbe0 -> Node0xb57cea0;
+	Node0xb58cbe0 -> Node0xb57cec0;
+	Node0xb57cea0 [shape=record,label="{if.end29.lr.ph}"];
+	Node0xb57cea0 -> Node0xb59f0b0;
+	Node0xb59f0b0 [shape=record,label="{if.end29}"];
+	Node0xb59f0b0 -> Node0xb59f110;
+	Node0xb59f0b0 -> Node0xb57cf20;
+	Node0xb59f110 [shape=record,label="{blklab12}"];
+	Node0xb59f110 -> Node0xb59f0b0[constraint=false];
+	Node0xb59f110 -> Node0xb57cfc0;
+	Node0xb57cfc0 [shape=record,label="{while.cond25.blklab10_crit_edge}"];
+	Node0xb57cfc0 -> Node0xb57cec0;
+	Node0xb57cec0 [shape=record,label="{blklab10}"];
+	Node0xb57cec0 -> Node0xb58cbe0[constraint=false];
+	Node0xb57cec0 -> Node0xb570570;
+	Node0xb570570 [shape=record,label="{while.cond.blklab8_crit_edge}"];
+	Node0xb570570 -> Node0xb58cb80;
+	Node0xb58cb80 [shape=record,label="{blklab8}"];
+	Node0xb57cf20 [shape=record,label="{if.end38}"];
+	Node0xb57cf20 -> Node0xb59f110;
+	colorscheme = "paired12"
+        subgraph cluster_0xb566910 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xb57ccc0 {
+            label = "Call instruction:   %call = tail call i8* @create1DArray_BYTE(i8 zeroext 32, i64 %mul) #6";
+            style = solid;
+            color = 6
+            subgraph cluster_0xb5714b0 {
+              label = "Call instruction:   %call31 = tail call i64 @_convolution_(i8* %pixels, i64 %pixels_size, i64 %width, i64 %height, i64 %x.0146, i64 %y.0144, i64* %call3, i64 9)";
+              style = solid;
+              color = 5
+              subgraph cluster_0xb571430 {
+                label = "Call instruction:   %call31 = tail call i64 @_convolution_(i8* %pixels, i64 %pixels_size, i64 %width, i64 %height, i64 %x.0146, i64 %y.0144, i64* %call3, i64 9)";
+                style = solid;
+                color = 7
+                subgraph cluster_0xb59eae0 {
+                  label = "Call instruction:   %call31 = tail call i64 @_convolution_(i8* %pixels, i64 %pixels_size, i64 %width, i64 %height, i64 %x.0146, i64 %y.0144, i64* %call3, i64 9)";
+                  style = solid;
+                  color = 9
+                  subgraph cluster_0xb59ea60 {
+                    label = "Region can not profitably be optimized!";
+                    style = solid;
+                    color = 11
+                    Node0xb59f0b0;
+                    Node0xb57cf20;
+                  }
+                  Node0xb59f110;
+                }
+                Node0xb58cbe0;
+                Node0xb57cea0;
+                Node0xb57cfc0;
+              }
+              Node0xb57cec0;
+            }
+            Node0xb5b5a60;
+            Node0xb5b5b20;
+            Node0xb570570;
+          }
+          Node0xb571f20;
+          Node0xb58cb80;
+        }
+}
