@@ -5,7 +5,7 @@ export LANG=C.UTF-8
 
 ## declare the number of threads
 declare -a threads=( 1 2 3 4 5 6 7 8 )
-declare -a parameters=( 1000 10000 100000 )
+declare -a parameters=( 1000 10000 100000 1000000 10000000 )
 
 ## Compile C code into sequential or parallel Cilk executable 
 compile(){
