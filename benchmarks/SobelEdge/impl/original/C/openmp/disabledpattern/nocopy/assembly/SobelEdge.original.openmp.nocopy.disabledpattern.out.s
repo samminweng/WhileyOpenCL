@@ -169,9 +169,9 @@ _sobelEdgeDetection_:                   # @_sobelEdgeDetection_
 	pushq	%rbx
 .Lcfi13:
 	.cfi_def_cfa_offset 56
-	subq	$88, %rsp
+	subq	$104, %rsp
 .Lcfi14:
-	.cfi_def_cfa_offset 144
+	.cfi_def_cfa_offset 160
 .Lcfi15:
 	.cfi_offset %rbx, -56
 .Lcfi16:
@@ -184,16 +184,16 @@ _sobelEdgeDetection_:                   # @_sobelEdgeDetection_
 	.cfi_offset %r15, -24
 .Lcfi20:
 	.cfi_offset %rbp, -16
-	movq	%r8, 48(%rsp)           # 8-byte Spill
-	movq	%rcx, %r12
-	movq	%rdx, %r15
-	movq	%rdi, 80(%rsp)          # 8-byte Spill
-	movq	%r12, %rsi
-	imulq	%r15, %rsi
+	movq	%r8, 32(%rsp)           # 8-byte Spill
+	movq	%rcx, %r14
+	movq	%rdx, %rbx
+	movq	%rdi, 64(%rsp)          # 8-byte Spill
+	movq	%r14, %rsi
+	imulq	%rbx, %rsi
 	movl	$32, %edi
-	movq	%rsi, 40(%rsp)          # 8-byte Spill
+	movq	%rsi, 24(%rsp)          # 8-byte Spill
 	callq	create1DArray_BYTE
-	movq	%rax, 24(%rsp)          # 8-byte Spill
+	movq	%rax, (%rsp)            # 8-byte Spill
 	xorl	%edi, %edi
 	movl	$9, %esi
 	callq	create1DArray_int64_t
@@ -207,7 +207,7 @@ _sobelEdgeDetection_:                   # @_sobelEdgeDetection_
 	pslldq	$8, %xmm1               # xmm1 = zero,zero,zero,zero,zero,zero,zero,zero,xmm1[0,1,2,3,4,5,6,7]
 	movdqu	%xmm1, 32(%rax)
 	movdqu	%xmm0, 48(%rax)
-	movq	%rax, 72(%rsp)          # 8-byte Spill
+	movq	%rax, 56(%rsp)          # 8-byte Spill
 	movq	$1, 64(%rax)
 	xorl	%edi, %edi
 	movl	$9, %esi
@@ -220,84 +220,184 @@ _sobelEdgeDetection_:                   # @_sobelEdgeDetection_
 	movq	$0, 40(%rax)
 	movaps	.LCPI2_2(%rip), %xmm0   # xmm0 = [18446744073709551615,18446744073709551614]
 	movups	%xmm0, 48(%rax)
-	movq	%rax, 64(%rsp)          # 8-byte Spill
+	movq	%rax, 48(%rsp)          # 8-byte Spill
 	movq	$-1, 64(%rax)
-	testq	%r15, %r15
-	jle	.LBB2_8
-# BB#1:                                 # %entry
-	testq	%r12, %r12
-	jle	.LBB2_8
-# BB#2:                                 # %while.cond25.preheader.us.preheader
-	xorl	%eax, %eax
-	movq	%rax, 16(%rsp)          # 8-byte Spill
-	movq	24(%rsp), %rbp          # 8-byte Reload
-	movq	%r12, 32(%rsp)          # 8-byte Spill
+	testq	%rbx, %rbx
+	jle	.LBB2_10
+# BB#1:                                 # %while.cond25.preheader.preheader
+	xorl	%esi, %esi
 	.p2align	4, 0x90
-.LBB2_3:                                # %while.cond25.preheader.us
+.LBB2_2:                                # %while.cond25.preheader
                                         # =>This Loop Header: Depth=1
-                                        #     Child Loop BB2_4 Depth 2
-	movq	%rbp, 56(%rsp)          # 8-byte Spill
-	xorl	%r14d, %r14d
-	.p2align	4, 0x90
-.LBB2_4:                                # %if.end29.us
-                                        #   Parent Loop BB2_3 Depth=1
-                                        # =>  This Inner Loop Header: Depth=2
-	movq	72(%rsp), %rax          # 8-byte Reload
-	movq	%rax, (%rsp)
-	movq	%r15, %r12
-	movq	80(%rsp), %r15          # 8-byte Reload
-	movq	%r15, %rdi
-	movq	%r12, %rdx
-	movq	32(%rsp), %rcx          # 8-byte Reload
-	movq	16(%rsp), %rbx          # 8-byte Reload
-	movq	%rbx, %r8
-	movq	%r14, %r9
-	callq	_convolution_
-	movq	%rax, %r13
-	negq	%r13
-	cmovlq	%rax, %r13
-	movq	64(%rsp), %rax          # 8-byte Reload
-	movq	%rax, (%rsp)
-	movq	%r15, %rdi
-	movq	%r12, %r15
-	movq	32(%rsp), %r12          # 8-byte Reload
-	movq	%r15, %rdx
-	movq	%r12, %rcx
-	movq	%rbx, %r8
-	movq	%r14, %r9
-	callq	_convolution_
-	movq	%rax, %rcx
-	negq	%rcx
-	cmovlq	%rax, %rcx
-	addq	%r13, %rcx
-	cmpq	$64, %rcx
-	jg	.LBB2_6
-# BB#5:                                 # %if.end38.us
-                                        #   in Loop: Header=BB2_4 Depth=2
-	movb	$98, (%rbp)
-.LBB2_6:                                # %blklab12.us
-                                        #   in Loop: Header=BB2_4 Depth=2
-	incq	%r14
-	addq	%r15, %rbp
-	cmpq	%r14, %r12
-	jne	.LBB2_4
-# BB#7:                                 # %blklab10.loopexit.us
-                                        #   in Loop: Header=BB2_3 Depth=1
-	movq	16(%rsp), %rax          # 8-byte Reload
-	movq	%rax, %rcx
-	incq	%rcx
-	movq	56(%rsp), %rbp          # 8-byte Reload
-	incq	%rbp
-	movq	%rcx, %rax
+                                        #     Child Loop BB2_5 Depth 2
+	testq	%r14, %r14
+	jle	.LBB2_3
+# BB#4:                                 # %if.end29.preheader
+                                        #   in Loop: Header=BB2_2 Depth=1
+	leaq	-1(%rsi), %rax
+	cqto
+	idivq	%rbx
+	movq	%rdx, %rax
+	negq	%rax
+	cmovlq	%rdx, %rax
+	movq	%rax, 72(%rsp)          # 8-byte Spill
+	movq	%rsi, %rax
+	cqto
+	idivq	%rbx
+	movq	%rdx, %rax
+	negq	%rax
+	cmovlq	%rdx, %rax
 	movq	%rax, 16(%rsp)          # 8-byte Spill
-	cmpq	%r15, %rcx
-	jne	.LBB2_3
-.LBB2_8:                                # %blklab8
-	movq	48(%rsp), %rax          # 8-byte Reload
-	movq	40(%rsp), %rcx          # 8-byte Reload
+	leaq	1(%rsi), %rax
+	movq	%rax, 40(%rsp)          # 8-byte Spill
+	cqto
+	idivq	%rbx
+	movq	%rdx, %rax
+	negq	%rax
+	cmovlq	%rdx, %rax
+	movq	%rax, 8(%rsp)           # 8-byte Spill
+	addq	(%rsp), %rsi            # 8-byte Folded Reload
+	xorl	%ecx, %ecx
+	.p2align	4, 0x90
+.LBB2_5:                                # %if.end29
+                                        #   Parent Loop BB2_2 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	movq	%rsi, 96(%rsp)          # 8-byte Spill
+	leaq	-1(%rcx), %rax
+	cqto
+	idivq	%r14
+	movq	%rdx, %rax
+	negq	%rax
+	cmovlq	%rdx, %rax
+	imulq	%rbx, %rax
+	movq	72(%rsp), %rbp          # 8-byte Reload
+	leaq	(%rbp,%rax), %rdx
+	movq	64(%rsp), %r10          # 8-byte Reload
+	movzbl	(%r10,%rdx), %esi
+	movq	%rsi, 88(%rsp)          # 8-byte Spill
+	movq	56(%rsp), %r11          # 8-byte Reload
+	movq	(%r11), %rdx
+	imulq	%rsi, %rdx
+	movq	%rbx, %rdi
+	movq	16(%rsp), %rbx          # 8-byte Reload
+	leaq	(%rbx,%rax), %rsi
+	movq	%rbx, %r13
+	movzbl	(%r10,%rsi), %r12d
+	movq	8(%r11), %rsi
+	imulq	%r12, %rsi
+	addq	%rdx, %rsi
+	movq	8(%rsp), %rdx           # 8-byte Reload
+	addq	%rdx, %rax
+	movq	%rdx, %r9
+	movzbl	(%r10,%rax), %r8d
+	movq	16(%r11), %rbx
+	imulq	%r8, %rbx
+	addq	%rsi, %rbx
+	movq	%rcx, %rax
+	cqto
+	idivq	%r14
+	movq	%rdx, %rax
+	negq	%rax
+	cmovlq	%rdx, %rax
+	imulq	%rdi, %rax
+	leaq	(%rax,%rbp), %rdx
+	movzbl	(%r10,%rdx), %r15d
+	movq	24(%r11), %rdx
+	imulq	%r15, %rdx
+	addq	%rbx, %rdx
+	leaq	(%rax,%r13), %rsi
+	movzbl	(%r10,%rsi), %r13d
+	movq	32(%r11), %rsi
+	imulq	%r13, %rsi
+	addq	%rdx, %rsi
+	addq	%r9, %rax
+	movzbl	(%r10,%rax), %r9d
+	movq	40(%r11), %rbx
+	imulq	%r9, %rbx
+	addq	%rsi, %rbx
+	incq	%rcx
+	movq	%rcx, 80(%rsp)          # 8-byte Spill
+	movq	%rcx, %rax
+	cqto
+	idivq	%r14
+	movq	%rdx, %rsi
+	negq	%rsi
+	cmovlq	%rdx, %rsi
+	imulq	%rdi, %rsi
+	leaq	(%rsi,%rbp), %rax
+	movzbl	(%r10,%rax), %eax
+	movq	48(%r11), %rbp
+	imulq	%rax, %rbp
+	addq	%rbx, %rbp
+	movq	16(%rsp), %rcx          # 8-byte Reload
+	leaq	(%rsi,%rcx), %rdx
+	movzbl	(%r10,%rdx), %edx
+	movq	56(%r11), %rbx
+	imulq	%rdx, %rbx
+	addq	%rbp, %rbx
+	addq	8(%rsp), %rsi           # 8-byte Folded Reload
+	movq	%rdi, %rcx
+	movzbl	(%r10,%rsi), %r10d
+	movq	64(%r11), %rsi
+	imulq	%r10, %rsi
+	addq	%rbx, %rsi
+	movq	%rsi, %r11
+	negq	%r11
+	cmovlq	%rsi, %r11
+	movq	96(%rsp), %rsi          # 8-byte Reload
+	movq	48(%rsp), %rbx          # 8-byte Reload
+	movq	88(%rsp), %rbp          # 8-byte Reload
+	imulq	(%rbx), %rbp
+	imulq	8(%rbx), %r12
+	addq	%rbp, %r12
+	imulq	16(%rbx), %r8
+	addq	%r12, %r8
+	imulq	24(%rbx), %r15
+	addq	%r8, %r15
+	imulq	32(%rbx), %r13
+	addq	%r15, %r13
+	imulq	40(%rbx), %r9
+	addq	%r13, %r9
+	imulq	48(%rbx), %rax
+	addq	%r9, %rax
+	imulq	56(%rbx), %rdx
+	addq	%rax, %rdx
+	imulq	64(%rbx), %r10
+	addq	%rdx, %r10
+	movq	%r10, %rax
+	negq	%rax
+	cmovlq	%r10, %rax
+	addq	%r11, %rax
+	cmpq	$64, %rax
+	jg	.LBB2_7
+# BB#6:                                 # %if.end38
+                                        #   in Loop: Header=BB2_5 Depth=2
+	movb	$98, (%rsi)
+.LBB2_7:                                # %blklab12
+                                        #   in Loop: Header=BB2_5 Depth=2
+	addq	%rcx, %rsi
+	movq	80(%rsp), %rax          # 8-byte Reload
+	cmpq	%rax, %r14
+	movq	%rcx, %rbx
+	movq	%rax, %rcx
+	jne	.LBB2_5
+# BB#8:                                 #   in Loop: Header=BB2_2 Depth=1
+	movq	40(%rsp), %rsi          # 8-byte Reload
+	cmpq	%rbx, %rsi
+	jne	.LBB2_2
+	jmp	.LBB2_10
+	.p2align	4, 0x90
+.LBB2_3:                                # %while.cond25.preheader.blklab10_crit_edge
+                                        #   in Loop: Header=BB2_2 Depth=1
+	incq	%rsi
+	cmpq	%rbx, %rsi
+	jne	.LBB2_2
+.LBB2_10:                               # %blklab8
+	movq	32(%rsp), %rax          # 8-byte Reload
+	movq	24(%rsp), %rcx          # 8-byte Reload
 	movq	%rcx, (%rax)
-	movq	24(%rsp), %rax          # 8-byte Reload
-	addq	$88, %rsp
+	movq	(%rsp), %rax            # 8-byte Reload
+	addq	$104, %rsp
 	popq	%rbx
 	popq	%r12
 	popq	%r13
@@ -541,5 +641,5 @@ main:                                   # @main
 	.size	.L.str.1, 5
 
 
-	.ident	"clang version 4.0.0 (http://llvm.org/git/clang.git 9b9db7fa41a1905899dbcbcc6cbdd05d2511da8e) (http://llvm.org/git/llvm.git fd456e365e09d54850dabc6a2f840a0c2eae7c27)"
+	.ident	"clang version 5.0.0 (http://llvm.org/git/clang.git eeb00e3fd54addd6787926c7804bf7eadb3384d6) (http://llvm.org/git/llvm.git e8e3365d5266760f3d7ad247f21496bb69cfef39)"
 	.section	".note.GNU-stack","",@progbits

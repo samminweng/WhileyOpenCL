@@ -1,75 +1,75 @@
 digraph "Scop Graph for '_sobelEdgeDetection_' function" {
 	label="Scop Graph for '_sobelEdgeDetection_' function";
 
-	Node0xbfee910 [shape=record,label="{entry}"];
-	Node0xbfee910 -> Node0xbfee930;
-	Node0xbfee930 [shape=record,label="{entry.split}"];
-	Node0xbfee930 -> Node0xbfeea10;
-	Node0xbfee930 -> Node0xc0206b0;
-	Node0xbfeea10 [shape=record,label="{while.cond28.preheader.lr.ph}"];
-	Node0xbfeea10 -> Node0xc053b40;
-	Node0xc053b40 [shape=record,label="{while.cond28.preheader}"];
-	Node0xc053b40 -> Node0xc03ad10;
-	Node0xc053b40 -> Node0xbff2070;
-	Node0xc03ad10 [shape=record,label="{if.end32.lr.ph}"];
-	Node0xc03ad10 -> Node0xbff1f80;
-	Node0xbff1f80 [shape=record,label="{if.end32}"];
-	Node0xbff1f80 -> Node0xbff1fe0;
-	Node0xbff1f80 -> Node0xc040350;
-	Node0xbff1fe0 [shape=record,label="{blklab12}"];
-	Node0xbff1fe0 -> Node0xbff1f80[constraint=false];
-	Node0xbff1fe0 -> Node0xbff2000;
-	Node0xbff2000 [shape=record,label="{while.cond28.blklab10_crit_edge}"];
-	Node0xbff2000 -> Node0xbff2070;
-	Node0xbff2070 [shape=record,label="{blklab10}"];
-	Node0xbff2070 -> Node0xc053b40[constraint=false];
-	Node0xbff2070 -> Node0xc0077c0;
-	Node0xc0077c0 [shape=record,label="{while.cond.blklab8_crit_edge}"];
-	Node0xc0077c0 -> Node0xc0206b0;
-	Node0xc0206b0 [shape=record,label="{blklab8}"];
-	Node0xc040350 [shape=record,label="{if.end46}"];
-	Node0xc040350 -> Node0xbff1fe0;
+	Node0xc112a90 [shape=record,label="{entry}"];
+	Node0xc112a90 -> Node0xc112ab0;
+	Node0xc112ab0 [shape=record,label="{entry.split}"];
+	Node0xc112ab0 -> Node0xc132640;
+	Node0xc112ab0 -> Node0xc12cea0;
+	Node0xc132640 [shape=record,label="{while.cond28.preheader.lr.ph}"];
+	Node0xc132640 -> Node0xc12cf40;
+	Node0xc12cf40 [shape=record,label="{while.cond28.preheader}"];
+	Node0xc12cf40 -> Node0xc118ef0;
+	Node0xc12cf40 -> Node0xc118f10;
+	Node0xc118ef0 [shape=record,label="{if.end32.lr.ph}"];
+	Node0xc118ef0 -> Node0xc0df0a0;
+	Node0xc0df0a0 [shape=record,label="{if.end32}"];
+	Node0xc0df0a0 -> Node0xc118f70;
+	Node0xc0df0a0 -> Node0xc0defb0;
+	Node0xc118f70 [shape=record,label="{blklab12}"];
+	Node0xc118f70 -> Node0xc0df0a0[constraint=false];
+	Node0xc118f70 -> Node0xc134d60;
+	Node0xc134d60 [shape=record,label="{while.cond28.blklab10_crit_edge}"];
+	Node0xc134d60 -> Node0xc118f10;
+	Node0xc118f10 [shape=record,label="{blklab10}"];
+	Node0xc118f10 -> Node0xc12cf40[constraint=false];
+	Node0xc118f10 -> Node0xc112a20;
+	Node0xc112a20 [shape=record,label="{while.cond.blklab8_crit_edge}"];
+	Node0xc112a20 -> Node0xc12cea0;
+	Node0xc12cea0 [shape=record,label="{blklab8}"];
+	Node0xc0defb0 [shape=record,label="{if.end46}"];
+	Node0xc0defb0 -> Node0xc118f70;
 	colorscheme = "paired12"
-        subgraph cluster_0xc041600 {
+        subgraph cluster_0xc0d9020 {
           label = "";
           style = solid;
           color = 1
-          subgraph cluster_0xc056560 {
+          subgraph cluster_0xc1487c0 {
             label = "Call instruction:   %call = tail call i8* @create1DArray_BYTE(i8 zeroext 32, i64 %mul) #6";
             style = solid;
             color = 6
-            subgraph cluster_0xc054ff0 {
+            subgraph cluster_0xc147250 {
               label = "Call instruction:   %call34 = tail call i8* @copy1DArray_BYTE(i8* %pixels, i64 %pixels_size) #6";
               style = solid;
               color = 5
-              subgraph cluster_0xc054f70 {
+              subgraph cluster_0xc1471d0 {
                 label = "Call instruction:   %call34 = tail call i8* @copy1DArray_BYTE(i8* %pixels, i64 %pixels_size) #6";
                 style = solid;
                 color = 7
-                subgraph cluster_0xc055150 {
+                subgraph cluster_0xc1955d0 {
                   label = "Call instruction:   %call34 = tail call i8* @copy1DArray_BYTE(i8* %pixels, i64 %pixels_size) #6";
                   style = solid;
                   color = 9
-                  subgraph cluster_0xc007830 {
+                  subgraph cluster_0xc147b70 {
                     label = "Region can not profitably be optimized!";
                     style = solid;
                     color = 11
-                    Node0xbff1f80;
-                    Node0xc040350;
+                    Node0xc0df0a0;
+                    Node0xc0defb0;
                   }
-                  Node0xbff1fe0;
+                  Node0xc118f70;
                 }
-                Node0xc053b40;
-                Node0xc03ad10;
-                Node0xbff2000;
+                Node0xc12cf40;
+                Node0xc118ef0;
+                Node0xc134d60;
               }
-              Node0xbff2070;
+              Node0xc118f10;
             }
-            Node0xbfee930;
-            Node0xbfeea10;
-            Node0xc0077c0;
+            Node0xc112ab0;
+            Node0xc132640;
+            Node0xc112a20;
           }
-          Node0xbfee910;
-          Node0xc0206b0;
+          Node0xc112a90;
+          Node0xc12cea0;
         }
 }

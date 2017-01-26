@@ -1,27 +1,27 @@
 digraph "Scop Graph for 'main' function" {
 	label="Scop Graph for 'main' function";
 
-	Node0xb566a10 [shape=record,label="{entry}"];
-	Node0xb566a10 -> Node0xb564ac0;
-	Node0xb564ac0 [shape=record,label="{entry.split}"];
-	Node0xb564ac0 -> Node0xb56f920;
-	Node0xb564ac0 -> Node0xb5cb350;
-	Node0xb56f920 [shape=record,label="{blklab19}"];
-	Node0xb5cb350 [shape=record,label="{if.end}"];
-	Node0xb5cb350 -> Node0xb56f920;
+	Node0xb782180 [shape=record,label="{entry}"];
+	Node0xb782180 -> Node0xb76b2c0;
+	Node0xb76b2c0 [shape=record,label="{entry.split}"];
+	Node0xb76b2c0 -> Node0xb76a6b0;
+	Node0xb76b2c0 -> Node0xb762c90;
+	Node0xb76a6b0 [shape=record,label="{blklab19}"];
+	Node0xb762c90 [shape=record,label="{if.end}"];
+	Node0xb762c90 -> Node0xb76a6b0;
 	colorscheme = "paired12"
-        subgraph cluster_0xb59eae0 {
+        subgraph cluster_0xb782dd0 {
           label = "";
           style = solid;
           color = 1
-          subgraph cluster_0xb569ea0 {
+          subgraph cluster_0xb73cd40 {
             label = "";
             style = solid;
             color = 6
-            Node0xb564ac0;
-            Node0xb5cb350;
+            Node0xb76b2c0;
+            Node0xb762c90;
           }
-          Node0xb566a10;
-          Node0xb56f920;
+          Node0xb782180;
+          Node0xb76a6b0;
         }
 }

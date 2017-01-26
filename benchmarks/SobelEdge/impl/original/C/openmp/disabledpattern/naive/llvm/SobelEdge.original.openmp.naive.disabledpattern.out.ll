@@ -173,53 +173,221 @@ entry:
   store i64 -1, i64* %arrayidx26, align 8, !tbaa !4
   %call27 = tail call i64* @copy1DArray_int64_t(i64* %call17, i64 9) #8
   %cmp164 = icmp sgt i64 %width, 0
+  br i1 %cmp164, label %while.cond28.preheader.preheader, label %blklab8
+
+while.cond28.preheader.preheader:                 ; preds = %entry
   %cmp30162 = icmp sgt i64 %height, 0
-  %or.cond = and i1 %cmp164, %cmp30162
-  br i1 %or.cond, label %while.cond28.preheader.us.preheader, label %blklab8
+  br label %while.cond28.preheader
 
-while.cond28.preheader.us.preheader:              ; preds = %entry
-  br label %while.cond28.preheader.us
+while.cond28.preheader:                           ; preds = %while.cond28.preheader.preheader, %blklab10
+  %x.0165 = phi i64 [ %add49.pre-phi, %blklab10 ], [ 0, %while.cond28.preheader.preheader ]
+  br i1 %cmp30162, label %if.end32.preheader, label %while.cond28.preheader.blklab10_crit_edge
 
-while.cond28.preheader.us:                        ; preds = %while.cond28.preheader.us.preheader, %blklab10.loopexit.us
-  %x.0165.us = phi i64 [ %add49.us, %blklab10.loopexit.us ], [ 0, %while.cond28.preheader.us.preheader ]
-  br label %if.end32.us
+while.cond28.preheader.blklab10_crit_edge:        ; preds = %while.cond28.preheader
+  %.pre = add nuw nsw i64 %x.0165, 1
+  br label %blklab10
 
-if.end32.us:                                      ; preds = %while.cond28.preheader.us, %blklab12.us
-  %y.0163.us = phi i64 [ %add48.us, %blklab12.us ], [ 0, %while.cond28.preheader.us ]
-  %call34.us = tail call i8* @copy1DArray_BYTE(i8* %pixels, i64 %pixels_size) #8
-  %call35.us = tail call i64* @copy1DArray_int64_t(i64* %call13, i64 9) #8
-  %call36.us = tail call i64 @_convolution_(i8* %call34.us, i64 undef, i64 %width, i64 %height, i64 %x.0165.us, i64 %y.0163.us, i64* %call35.us, i64 undef)
-  %call38.us = tail call i8* @copy1DArray_BYTE(i8* %pixels, i64 %pixels_size) #8
-  %call39.us = tail call i64* @copy1DArray_int64_t(i64* %call27, i64 9) #8
-  %call40.us = tail call i64 @_convolution_(i8* %call38.us, i64 undef, i64 %width, i64 %height, i64 %x.0165.us, i64 %y.0163.us, i64* %call39.us, i64 undef)
-  %ispos.us = icmp sgt i64 %call36.us, -1
-  %neg.us = sub i64 0, %call36.us
-  %7 = select i1 %ispos.us, i64 %call36.us, i64 %neg.us
-  %ispos160.us = icmp sgt i64 %call40.us, -1
-  %neg161.us = sub i64 0, %call40.us
-  %8 = select i1 %ispos160.us, i64 %call40.us, i64 %neg161.us
-  %add43.us = add nsw i64 %8, %7
-  %cmp44.us = icmp sgt i64 %add43.us, 64
-  br i1 %cmp44.us, label %blklab12.us, label %if.end46.us
+if.end32.preheader:                               ; preds = %while.cond28.preheader
+  %add6.i = add nsw i64 %x.0165, -1
+  %sub7.2.i = add nuw i64 %x.0165, 1
+  br label %if.end32
 
-if.end46.us:                                      ; preds = %if.end32.us
-  %mul33.us = mul nsw i64 %y.0163.us, %width
-  %add.us = add nsw i64 %mul33.us, %x.0165.us
-  %arrayidx47.us = getelementptr inbounds i8, i8* %call1, i64 %add.us
-  store i8 98, i8* %arrayidx47.us, align 1, !tbaa !1
-  br label %blklab12.us
+if.end32:                                         ; preds = %if.end32.preheader, %blklab12
+  %y.0163 = phi i64 [ %sub.2.i, %blklab12 ], [ 0, %if.end32.preheader ]
+  %call34 = tail call i8* @copy1DArray_BYTE(i8* %pixels, i64 %pixels_size) #8
+  %call35 = tail call i64* @copy1DArray_int64_t(i64* %call13, i64 9) #8
+  %add.i = add i64 %y.0163, -1
+  %rem.i = srem i64 %add.i, %height
+  %ispos.i = icmp sgt i64 %rem.i, -1
+  %neg.i = sub i64 0, %rem.i
+  %7 = select i1 %ispos.i, i64 %rem.i, i64 %neg.i
+  %mul.i = mul nsw i64 %7, %width
+  %rem8.i = srem i64 %add6.i, %width
+  %ispos65.i = icmp sgt i64 %rem8.i, -1
+  %neg66.i = sub i64 0, %rem8.i
+  %8 = select i1 %ispos65.i, i64 %rem8.i, i64 %neg66.i
+  %add10.i = add nsw i64 %8, %mul.i
+  %arrayidx.i = getelementptr inbounds i8, i8* %call34, i64 %add10.i
+  %9 = load i8, i8* %arrayidx.i, align 1, !tbaa !1
+  %conv11.i = zext i8 %9 to i64
+  %10 = load i64, i64* %call35, align 8, !tbaa !4
+  %mul15.i = mul nsw i64 %conv11.i, %10
+  %rem8.1.i = srem i64 %x.0165, %width
+  %ispos65.1.i = icmp sgt i64 %rem8.1.i, -1
+  %neg66.1.i = sub i64 0, %rem8.1.i
+  %11 = select i1 %ispos65.1.i, i64 %rem8.1.i, i64 %neg66.1.i
+  %add10.1.i = add nsw i64 %11, %mul.i
+  %arrayidx.1.i = getelementptr inbounds i8, i8* %call34, i64 %add10.1.i
+  %12 = load i8, i8* %arrayidx.1.i, align 1, !tbaa !1
+  %conv11.1.i = zext i8 %12 to i64
+  %arrayidx14.1.i = getelementptr inbounds i64, i64* %call35, i64 1
+  %13 = load i64, i64* %arrayidx14.1.i, align 8, !tbaa !4
+  %mul15.1.i = mul nsw i64 %conv11.1.i, %13
+  %add16.1.i = add nsw i64 %mul15.1.i, %mul15.i
+  %rem8.2.i = srem i64 %sub7.2.i, %width
+  %ispos65.2.i = icmp sgt i64 %rem8.2.i, -1
+  %neg66.2.i = sub i64 0, %rem8.2.i
+  %14 = select i1 %ispos65.2.i, i64 %rem8.2.i, i64 %neg66.2.i
+  %add10.2.i = add nsw i64 %14, %mul.i
+  %arrayidx.2.i = getelementptr inbounds i8, i8* %call34, i64 %add10.2.i
+  %15 = load i8, i8* %arrayidx.2.i, align 1, !tbaa !1
+  %conv11.2.i = zext i8 %15 to i64
+  %arrayidx14.2.i = getelementptr inbounds i64, i64* %call35, i64 2
+  %16 = load i64, i64* %arrayidx14.2.i, align 8, !tbaa !4
+  %mul15.2.i = mul nsw i64 %conv11.2.i, %16
+  %add16.2.i = add nsw i64 %add16.1.i, %mul15.2.i
+  %rem.1.i = srem i64 %y.0163, %height
+  %ispos.1.i = icmp sgt i64 %rem.1.i, -1
+  %neg.1.i = sub i64 0, %rem.1.i
+  %17 = select i1 %ispos.1.i, i64 %rem.1.i, i64 %neg.1.i
+  %mul.1.i = mul nsw i64 %17, %width
+  %add10.175.i = add nsw i64 %mul.1.i, %8
+  %arrayidx.176.i = getelementptr inbounds i8, i8* %call34, i64 %add10.175.i
+  %18 = load i8, i8* %arrayidx.176.i, align 1, !tbaa !1
+  %conv11.177.i = zext i8 %18 to i64
+  %arrayidx14.178.i = getelementptr inbounds i64, i64* %call35, i64 3
+  %19 = load i64, i64* %arrayidx14.178.i, align 8, !tbaa !4
+  %mul15.179.i = mul nsw i64 %conv11.177.i, %19
+  %add16.180.i = add nsw i64 %add16.2.i, %mul15.179.i
+  %add10.1.1.i = add nsw i64 %mul.1.i, %11
+  %arrayidx.1.1.i = getelementptr inbounds i8, i8* %call34, i64 %add10.1.1.i
+  %20 = load i8, i8* %arrayidx.1.1.i, align 1, !tbaa !1
+  %conv11.1.1.i = zext i8 %20 to i64
+  %arrayidx14.1.1.i = getelementptr inbounds i64, i64* %call35, i64 4
+  %21 = load i64, i64* %arrayidx14.1.1.i, align 8, !tbaa !4
+  %mul15.1.1.i = mul nsw i64 %conv11.1.1.i, %21
+  %add16.1.1.i = add nsw i64 %add16.180.i, %mul15.1.1.i
+  %add10.2.1.i = add nsw i64 %mul.1.i, %14
+  %arrayidx.2.1.i = getelementptr inbounds i8, i8* %call34, i64 %add10.2.1.i
+  %22 = load i8, i8* %arrayidx.2.1.i, align 1, !tbaa !1
+  %conv11.2.1.i = zext i8 %22 to i64
+  %arrayidx14.2.1.i = getelementptr inbounds i64, i64* %call35, i64 5
+  %23 = load i64, i64* %arrayidx14.2.1.i, align 8, !tbaa !4
+  %mul15.2.1.i = mul nsw i64 %conv11.2.1.i, %23
+  %add16.2.1.i = add nsw i64 %add16.1.1.i, %mul15.2.1.i
+  %sub.2.i = add nuw i64 %y.0163, 1
+  %rem.2.i = srem i64 %sub.2.i, %height
+  %ispos.2.i = icmp sgt i64 %rem.2.i, -1
+  %neg.2.i = sub i64 0, %rem.2.i
+  %24 = select i1 %ispos.2.i, i64 %rem.2.i, i64 %neg.2.i
+  %mul.2.i = mul nsw i64 %24, %width
+  %add10.284.i = add nsw i64 %mul.2.i, %8
+  %arrayidx.285.i = getelementptr inbounds i8, i8* %call34, i64 %add10.284.i
+  %25 = load i8, i8* %arrayidx.285.i, align 1, !tbaa !1
+  %conv11.286.i = zext i8 %25 to i64
+  %arrayidx14.287.i = getelementptr inbounds i64, i64* %call35, i64 6
+  %26 = load i64, i64* %arrayidx14.287.i, align 8, !tbaa !4
+  %mul15.288.i = mul nsw i64 %conv11.286.i, %26
+  %add16.289.i = add nsw i64 %add16.2.1.i, %mul15.288.i
+  %add10.1.2.i = add nsw i64 %mul.2.i, %11
+  %arrayidx.1.2.i = getelementptr inbounds i8, i8* %call34, i64 %add10.1.2.i
+  %27 = load i8, i8* %arrayidx.1.2.i, align 1, !tbaa !1
+  %conv11.1.2.i = zext i8 %27 to i64
+  %arrayidx14.1.2.i = getelementptr inbounds i64, i64* %call35, i64 7
+  %28 = load i64, i64* %arrayidx14.1.2.i, align 8, !tbaa !4
+  %mul15.1.2.i = mul nsw i64 %conv11.1.2.i, %28
+  %add16.1.2.i = add nsw i64 %add16.289.i, %mul15.1.2.i
+  %add10.2.2.i = add nsw i64 %mul.2.i, %14
+  %arrayidx.2.2.i = getelementptr inbounds i8, i8* %call34, i64 %add10.2.2.i
+  %29 = load i8, i8* %arrayidx.2.2.i, align 1, !tbaa !1
+  %conv11.2.2.i = zext i8 %29 to i64
+  %arrayidx14.2.2.i = getelementptr inbounds i64, i64* %call35, i64 8
+  %30 = load i64, i64* %arrayidx14.2.2.i, align 8, !tbaa !4
+  %mul15.2.2.i = mul nsw i64 %conv11.2.2.i, %30
+  %add16.2.2.i = add nsw i64 %add16.1.2.i, %mul15.2.2.i
+  %call38 = tail call i8* @copy1DArray_BYTE(i8* %pixels, i64 %pixels_size) #8
+  %call39 = tail call i64* @copy1DArray_int64_t(i64* %call27, i64 9) #8
+  %arrayidx.i178 = getelementptr inbounds i8, i8* %call38, i64 %add10.i
+  %31 = load i8, i8* %arrayidx.i178, align 1, !tbaa !1
+  %conv11.i179 = zext i8 %31 to i64
+  %32 = load i64, i64* %call39, align 8, !tbaa !4
+  %mul15.i180 = mul nsw i64 %conv11.i179, %32
+  %arrayidx.1.i185 = getelementptr inbounds i8, i8* %call38, i64 %add10.1.i
+  %33 = load i8, i8* %arrayidx.1.i185, align 1, !tbaa !1
+  %conv11.1.i186 = zext i8 %33 to i64
+  %arrayidx14.1.i187 = getelementptr inbounds i64, i64* %call39, i64 1
+  %34 = load i64, i64* %arrayidx14.1.i187, align 8, !tbaa !4
+  %mul15.1.i188 = mul nsw i64 %conv11.1.i186, %34
+  %add16.1.i189 = add nsw i64 %mul15.1.i188, %mul15.i180
+  %arrayidx.2.i195 = getelementptr inbounds i8, i8* %call38, i64 %add10.2.i
+  %35 = load i8, i8* %arrayidx.2.i195, align 1, !tbaa !1
+  %conv11.2.i196 = zext i8 %35 to i64
+  %arrayidx14.2.i197 = getelementptr inbounds i64, i64* %call39, i64 2
+  %36 = load i64, i64* %arrayidx14.2.i197, align 8, !tbaa !4
+  %mul15.2.i198 = mul nsw i64 %conv11.2.i196, %36
+  %add16.2.i199 = add nsw i64 %add16.1.i189, %mul15.2.i198
+  %arrayidx.176.i205 = getelementptr inbounds i8, i8* %call38, i64 %add10.175.i
+  %37 = load i8, i8* %arrayidx.176.i205, align 1, !tbaa !1
+  %conv11.177.i206 = zext i8 %37 to i64
+  %arrayidx14.178.i207 = getelementptr inbounds i64, i64* %call39, i64 3
+  %38 = load i64, i64* %arrayidx14.178.i207, align 8, !tbaa !4
+  %mul15.179.i208 = mul nsw i64 %conv11.177.i206, %38
+  %add16.180.i209 = add nsw i64 %add16.2.i199, %mul15.179.i208
+  %arrayidx.1.1.i211 = getelementptr inbounds i8, i8* %call38, i64 %add10.1.1.i
+  %39 = load i8, i8* %arrayidx.1.1.i211, align 1, !tbaa !1
+  %conv11.1.1.i212 = zext i8 %39 to i64
+  %arrayidx14.1.1.i213 = getelementptr inbounds i64, i64* %call39, i64 4
+  %40 = load i64, i64* %arrayidx14.1.1.i213, align 8, !tbaa !4
+  %mul15.1.1.i214 = mul nsw i64 %conv11.1.1.i212, %40
+  %add16.1.1.i215 = add nsw i64 %add16.180.i209, %mul15.1.1.i214
+  %arrayidx.2.1.i217 = getelementptr inbounds i8, i8* %call38, i64 %add10.2.1.i
+  %41 = load i8, i8* %arrayidx.2.1.i217, align 1, !tbaa !1
+  %conv11.2.1.i218 = zext i8 %41 to i64
+  %arrayidx14.2.1.i219 = getelementptr inbounds i64, i64* %call39, i64 5
+  %42 = load i64, i64* %arrayidx14.2.1.i219, align 8, !tbaa !4
+  %mul15.2.1.i220 = mul nsw i64 %conv11.2.1.i218, %42
+  %add16.2.1.i221 = add nsw i64 %add16.1.1.i215, %mul15.2.1.i220
+  %arrayidx.285.i228 = getelementptr inbounds i8, i8* %call38, i64 %add10.284.i
+  %43 = load i8, i8* %arrayidx.285.i228, align 1, !tbaa !1
+  %conv11.286.i229 = zext i8 %43 to i64
+  %arrayidx14.287.i230 = getelementptr inbounds i64, i64* %call39, i64 6
+  %44 = load i64, i64* %arrayidx14.287.i230, align 8, !tbaa !4
+  %mul15.288.i231 = mul nsw i64 %conv11.286.i229, %44
+  %add16.289.i232 = add nsw i64 %add16.2.1.i221, %mul15.288.i231
+  %arrayidx.1.2.i234 = getelementptr inbounds i8, i8* %call38, i64 %add10.1.2.i
+  %45 = load i8, i8* %arrayidx.1.2.i234, align 1, !tbaa !1
+  %conv11.1.2.i235 = zext i8 %45 to i64
+  %arrayidx14.1.2.i236 = getelementptr inbounds i64, i64* %call39, i64 7
+  %46 = load i64, i64* %arrayidx14.1.2.i236, align 8, !tbaa !4
+  %mul15.1.2.i237 = mul nsw i64 %conv11.1.2.i235, %46
+  %add16.1.2.i238 = add nsw i64 %add16.289.i232, %mul15.1.2.i237
+  %arrayidx.2.2.i240 = getelementptr inbounds i8, i8* %call38, i64 %add10.2.2.i
+  %47 = load i8, i8* %arrayidx.2.2.i240, align 1, !tbaa !1
+  %conv11.2.2.i241 = zext i8 %47 to i64
+  %arrayidx14.2.2.i242 = getelementptr inbounds i64, i64* %call39, i64 8
+  %48 = load i64, i64* %arrayidx14.2.2.i242, align 8, !tbaa !4
+  %mul15.2.2.i243 = mul nsw i64 %conv11.2.2.i241, %48
+  %add16.2.2.i244 = add nsw i64 %add16.1.2.i238, %mul15.2.2.i243
+  %ispos = icmp sgt i64 %add16.2.2.i, -1
+  %neg = sub i64 0, %add16.2.2.i
+  %49 = select i1 %ispos, i64 %add16.2.2.i, i64 %neg
+  %ispos160 = icmp sgt i64 %add16.2.2.i244, -1
+  %neg161 = sub i64 0, %add16.2.2.i244
+  %50 = select i1 %ispos160, i64 %add16.2.2.i244, i64 %neg161
+  %add43 = add nsw i64 %50, %49
+  %cmp44 = icmp sgt i64 %add43, 64
+  br i1 %cmp44, label %blklab12, label %if.end46
 
-blklab12.us:                                      ; preds = %if.end46.us, %if.end32.us
-  %add48.us = add nuw nsw i64 %y.0163.us, 1
-  %exitcond.us = icmp eq i64 %add48.us, %height
-  br i1 %exitcond.us, label %blklab10.loopexit.us, label %if.end32.us
+if.end46:                                         ; preds = %if.end32
+  %mul33 = mul nsw i64 %y.0163, %width
+  %add = add nsw i64 %mul33, %x.0165
+  %arrayidx47 = getelementptr inbounds i8, i8* %call1, i64 %add
+  store i8 98, i8* %arrayidx47, align 1, !tbaa !1
+  br label %blklab12
 
-blklab10.loopexit.us:                             ; preds = %blklab12.us
-  %add49.us = add nuw nsw i64 %x.0165.us, 1
-  %exitcond167.us = icmp eq i64 %add49.us, %width
-  br i1 %exitcond167.us, label %blklab8.loopexit, label %while.cond28.preheader.us
+blklab12:                                         ; preds = %if.end32, %if.end46
+  %exitcond = icmp eq i64 %sub.2.i, %height
+  br i1 %exitcond, label %blklab10.loopexit, label %if.end32
 
-blklab8.loopexit:                                 ; preds = %blklab10.loopexit.us
+blklab10.loopexit:                                ; preds = %blklab12
+  br label %blklab10
+
+blklab10:                                         ; preds = %blklab10.loopexit, %while.cond28.preheader.blklab10_crit_edge
+  %add49.pre-phi = phi i64 [ %.pre, %while.cond28.preheader.blklab10_crit_edge ], [ %sub7.2.i, %blklab10.loopexit ]
+  %exitcond167 = icmp eq i64 %add49.pre-phi, %width
+  br i1 %exitcond167, label %blklab8.loopexit, label %while.cond28.preheader
+
+blklab8.loopexit:                                 ; preds = %blklab10
   br label %blklab8
 
 blklab8:                                          ; preds = %blklab8.loopexit, %entry
@@ -397,7 +565,7 @@ attributes #9 = { noreturn nounwind }
 
 !llvm.ident = !{!0}
 
-!0 = !{!"clang version 4.0.0 (http://llvm.org/git/clang.git 9b9db7fa41a1905899dbcbcc6cbdd05d2511da8e) (http://llvm.org/git/llvm.git fd456e365e09d54850dabc6a2f840a0c2eae7c27)"}
+!0 = !{!"clang version 5.0.0 (http://llvm.org/git/clang.git eeb00e3fd54addd6787926c7804bf7eadb3384d6) (http://llvm.org/git/llvm.git e8e3365d5266760f3d7ad247f21496bb69cfef39)"}
 !1 = !{!2, !2, i64 0}
 !2 = !{!"omnipotent char", !3, i64 0}
 !3 = !{!"Simple C/C++ TBAA"}
