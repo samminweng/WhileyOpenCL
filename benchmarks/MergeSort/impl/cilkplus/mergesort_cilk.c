@@ -29,19 +29,30 @@ int64_t* mergesort(int64_t* items, size_t item_size, int start, int end){
 		// Split Phase
 		int pivot = (start+end)/2;
 		// LHS array
-		//if(lhs != NULL){free(lhs); lhs= NULL;}
 		lhs = slice(items, item_size, start, pivot);
 
-		// Recursive function call
-		lhs = cilk_spawn mergesort(lhs, pivot - start, 0, pivot);
+		if(item_size>=1000){
+			// Recursive function call
+			lhs = cilk_spawn mergesort(lhs, pivot - start, 0, pivot);
+		}else{
+			// Recursive function call
+			lhs = mergesort(lhs, pivot - start, 0, pivot);
+		}
 
 		// RHS array
-		//if(rhs != NULL){free(rhs); rhs= NULL;}
 		rhs = slice(items, item_size, pivot, end);
-		// Recursive function call
-		rhs = cilk_spawn mergesort(rhs, end - pivot, 0, (end-pivot));
 
-		cilk_sync;
+		if(item_size>=1000){
+			// Recursive function call
+			rhs = cilk_spawn mergesort(rhs, end - pivot, 0, (end-pivot));
+		}else{
+			// Recursive function call
+			rhs = mergesort(rhs, end - pivot, 0, (end-pivot));			
+		}
+		
+		if(item_size>=1000){
+			cilk_sync;
+		}
 		// Merge Phase
 		int l=0, r=0, i=0;
 		while(i< (end -start) && l < (pivot - start) && r < (end - pivot)){
