@@ -7,9 +7,9 @@
 int64_t* bubbleSort(int64_t* items, size_t item_size){
 	int length = item_size;
 
-	int last_swapped = 0;
+	//int last_swapped = 0;
 	while(length >0){
-		last_swapped = 0;
+		//last_swapped = 0;
 		int index = 1;
 		while(index <length){
 			// Swap items
@@ -18,7 +18,7 @@ int64_t* bubbleSort(int64_t* items, size_t item_size){
 				items[index-1] = items[index];
 				items[index]= tmp;
 
-				last_swapped = index;
+				//last_swapped = index;
 			}
 			index = index + 1;
 		}
@@ -62,18 +62,20 @@ int main(int argc, char *argv[])
 		//printf("%d\n", i);
 	}
 
+	// print out the 'arr' array before the sort
+	printf("a[%d]=%d\n", 0, arr[0]);
+	printf("a[%d]=%d\n", max-1, arr[max-1]);
+	printf("=== Start sorting ===\n");
+
 	// Make a function call of bubble sort 
 	arr = bubbleSort(arr, arr_size);
 
 	// print out the result 'arr'
-	/*i=0;
-	while(i<max){
-		printf("%d\n", arr[i]);
-		i++;
-	}*/
-	printf("%d\n",arr[0]);
-	printf("%d\n",arr[max-1]);
-	printf("Pass BubbleSort test case\n");
+	printf("a[%d]=%d\n", 0, arr[0]);
+	printf("a[%d]=%d\n", max-1, arr[max-1]);
+	printf("=== Pass BubbleSort ===\n");
+
+	free(arr);
 
 
 	exit(0);

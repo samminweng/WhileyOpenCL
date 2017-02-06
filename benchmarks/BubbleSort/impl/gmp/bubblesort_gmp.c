@@ -8,28 +8,31 @@
 
 mpz_t* bubbleSort(mpz_t* items, size_t item_size){
 	int length = item_size;
+	mpz_t tmp;
+	mpz_init(tmp);
 
-	int last_swapped = 0;
+	//int last_swapped = 0;
 	while(length >0){
-		last_swapped = 0;
+		//last_swapped = 0;
 		int index = 1;
 		while(index <length){
 			// Swap items
 			if(mpz_cmp(items[index-1], items[index])>0){
-				mpz_t tmp;
-				mpz_init(tmp);
+				
 				mpz_set(tmp, items[index-1]);
 
 				mpz_set(items[index-1], items[index]);
 				mpz_set(items[index], tmp);
 
-				last_swapped = index;
+				// last_swapped = index;
 				//gmp_printf("%Zd\n",tmp);
 			}
 			index = index + 1;
 		}
 		length = length - 1;
 	}
+
+	if(tmp != NULL){ mpz_clear(tmp);}
 	return items;
 }
 
@@ -76,18 +79,25 @@ int main(int argc, char *argv[])
 		//printf("%d\n", i);
 	}
 
+	// print out the 'arr' array before the sort
+	gmp_printf("a[%d]=%Zd\n", 0, arr[0]);
+	gmp_printf("a[%d]=%Zd\n", max-1, arr[max-1]);
+	printf("=== Start sorting ===\n");
+
+
 	// Make a function call of bubble sort 
 	arr = bubbleSort(arr, arr_size);
 
 	// print out the result 'arr'
-	/*i=0;
-	while(i<max){
-		gmp_printf("%Zd\n", arr[i]);
-		i++;
-	}*/
-	gmp_printf("%Zd\n",arr[0]);
-	gmp_printf("%Zd\n",arr[max-1]);
-	printf("Pass BubbleSort test case\n");
+	gmp_printf("a[%d]=%Zd\n", 0, arr[0]);
+	gmp_printf("a[%d]=%Zd\n", max-1, arr[max-1]);
+	printf("=== Pass BubbleSort ===\n");
+
+	// Deep freeing each array item 
+	for(int i=0;i<max;i++){
+		mpz_clear(arr[i]);
+	}
+	free(arr);
 
 
 	exit(0);
