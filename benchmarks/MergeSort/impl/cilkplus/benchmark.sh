@@ -105,7 +105,7 @@ exec(){
 	done
 
 	## Rmove all *.out files
-	rm *.out
+	rm -f "out/"*.*
 }
 
 exec "mergesort"
