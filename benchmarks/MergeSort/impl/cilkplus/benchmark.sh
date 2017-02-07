@@ -4,7 +4,7 @@ TIMEOUT="3600s"
 export LANG=C.UTF-8
 
 ## declare the number of threads
-declare -a threads=( 1 2 3 4 5 6 7 8 )
+declare -a threads=( 1 2 4 8 )
 declare -a parameters=( 1000 10000 100000 1000000 10000000 100000000 )
 
 ## Compile C code into sequential or parallel Cilk executable 
@@ -12,16 +12,23 @@ compile(){
 	mkdir -p "out"
 	## Clean up exectime
 	rm -f "out/"*.*
-
-	gcc -g -fcilkplus mergesort_cilk.c -o "out/mergesort_cilk.out"
+	### Sequential code
 	gcc -g mergesort_seq.c -o "out/mergesort_seq.out"
+	### Pure cilk code
+	gcc -g -fcilkplus mergesort_cilk.c -o "out/mergesort_cilk.out"
+	### Cilk + pipeline slice function
+	gcc -g -fcilkplus mergesort_cilkpipeline.c -o "out/mergesort_cilkpipeline.out"
+	### Seq + cilk code
+	gcc -g -fcilkplus mergesort_seqcilk.c -o "out/mergesort_seqcilk.out"
+	### Seq + cilk + pipeline
+	gcc -g -fcilkplus mergesort_seqcilkpipeline.c -o "out/mergesort_seqcilkpipeline.out"
 }
 ## Run the seq/parallel cilk executable
 run(){
 	parameter=$1
 	programtype=$2
 	thread=$3
-	if [ "$programtype" == "cilk" ]
+	if [ "$programtype" != "seq" ]
 	then
 		## Run the executable
 		export CILK_NWORKERS=$thread
@@ -86,12 +93,19 @@ exec(){
 		for thread in "${threads[@]}"
 		do
 			echo "thread = "$thread
+			### Run cilk code
 			run $param "cilk" $thread
+			### Run cilk + pipeline code
+			run $param "cilkpipeline" $thread
+			### Run seq + cilk code
+			run $param "seqcilk" $thread
+			### Run seq + cilk + pipeline code
+			run $param "seqcilkpipeline" $thread 
 		done
-
 	done
 
-	
+	## Rmove all *.out files
+	rm *.out
 }
 
 exec "mergesort"

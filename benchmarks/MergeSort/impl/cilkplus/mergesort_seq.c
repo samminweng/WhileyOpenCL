@@ -103,13 +103,13 @@ int main(int argc, char *argv[])
 		printf("output[%d]=%d\n", i, output[i]);
 		i++;
 	}*/
-	printf("output[%d]=%d\n", 0, output[0]);
-	printf("output[%d]=%d\n", 1, output[1]);
-	printf("output[%d]=%d\n", 2, output[2]);
+	printf("output[%d]=%ld\n", 0, output[0]);
+	printf("output[%d]=%ld\n", 1, output[1]);
+	printf("output[%d]=%ld\n", 2, output[2]);
 
-	printf("output[%d]=%d\n", max-3, output[max-3]);
-	printf("output[%d]=%d\n", max-2, output[max-2]);
-	printf("output[%d]=%d\n", max-1, output[max-1]);
+	printf("output[%d]=%ld\n", max-3, output[max-3]);
+	printf("output[%d]=%ld\n", max-2, output[max-2]);
+	printf("output[%d]=%ld\n", max-1, output[max-1]);
 
 	free(output);
     exit(0);

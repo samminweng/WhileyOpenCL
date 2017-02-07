@@ -7,32 +7,43 @@
 
 
 mpz_t* bubbleSort(mpz_t* items, size_t item_size){
-	int length = item_size;
+	mpz_t length;
+	mpz_init(length);
+	mpz_set_si(length, item_size);
+
 	mpz_t tmp;
 	mpz_init(tmp);
 
+	mpz_t index;
+	mpz_init(index);
+
 	//int last_swapped = 0;
-	while(length >0){
-		//last_swapped = 0;
-		int index = 1;
-		while(index <length){
+	//while(length >0){
+	while(mpz_cmp_ui(length, 0)>0){
+		// int index = 1;
+		mpz_set_ui(index, 1);
+		//while(index <length){
+		while(mpz_cmp(index, length)<0){
 			// Swap items
-			if(mpz_cmp(items[index-1], items[index])>0){
-				
-				mpz_set(tmp, items[index-1]);
-
-				mpz_set(items[index-1], items[index]);
-				mpz_set(items[index], tmp);
-
-				// last_swapped = index;
-				//gmp_printf("%Zd\n",tmp);
+			if(mpz_cmp(items[mpz_get_si(index)-1], items[mpz_get_si(index)])>0){
+				//int64_t tmp = items[index-1];
+				mpz_set(tmp, items[mpz_get_si(index)-1]);
+				// items[index-1] = items[index];
+				mpz_set(items[mpz_get_si(index)-1], items[mpz_get_si(index)]);
+				// items[index]= tmp;
+				mpz_set(items[mpz_get_si(index)], tmp);
 			}
-			index = index + 1;
+			//index = index + 1;
+			mpz_add_ui(index, index, 1);
 		}
-		length = length - 1;
+		//length = length - 1;
+		mpz_sub_ui(length, length, 1);
 	}
 
 	if(tmp != NULL){ mpz_clear(tmp);}
+	if(length != NULL){ mpz_clear(length);}
+	if(index != NULL){ mpz_clear(index);}
+	
 	return items;
 }
 
@@ -71,8 +82,7 @@ int main(int argc, char *argv[])
 	while(i<max){ // i < max
 		//arr[i] = max - i;
 		{
-			int tmp = max - i;
-			mpz_set_ui(arr[i], tmp);
+			mpz_set_si(arr[i], max - i);
 			//gmp_printf("%Zd\n", arr[i]);
 		}
 		i++;

@@ -56,11 +56,12 @@ BEGIN {
 	parameters["mergesort"]="1000 10000 100000 1000000 10000000 100000000";
 
 	## Compiler
-	programtypes["mergesort"] = "seq cilk";
+	programtypes["mergesort"] = "seq oldcilk cilk";
 
 	# The number of threads
 	threads["seq"]="1";
-	threads["cilk"]="1 2 3 4 5 6 7 8";
+	threads["cilk"]="1 2 4 8";
+	threads["oldcilk"]="1 2 4 8";
 	# Results
 	cpu_utils[""] = "";
 	exec_times[""] = "";
