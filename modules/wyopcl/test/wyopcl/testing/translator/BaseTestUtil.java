@@ -112,7 +112,7 @@ public final class BaseTestUtil {
 			// Get the widen strategy
 			String strategy = options[1];	
 			
-			Path destDir = Paths.get(sourceDir + File.separator + testcase + File.separator);
+			//Path destDir = Paths.get(sourceDir + File.separator + testcase + File.separator);
 			Path sysout = Paths.get(sourceDir + File.separator + testcase + File.separator + strategy +"_bound.sysout");
 			// 
 			String cmd = "java -cp " + classpath + " wyopcl.WyopclMain -bp " + whiley_runtime_lib
@@ -122,6 +122,8 @@ public final class BaseTestUtil {
 			Runtime rt = Runtime.getRuntime();
 			// Change the folder Run the command
 			process = rt.exec(cmd, null, sourceDir.toFile());
+			
+			process.waitFor();
 			
 			// Start the process to analyse the bounds
 			InputStream input = process.getInputStream();
