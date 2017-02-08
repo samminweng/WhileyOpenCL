@@ -1,0 +1,26 @@
+Bound Analysis of main:
+	domain(input)	=[10..20]
+	domain(_3)	=[10..10]
+	domain(_4)	=[20..20]
+Consistency=true
+Bound Analysis of foo:
+	domain(INPUT)	=[10..20]
+	domain(_10)	=[1..32767]
+	domain(i)	=[0..32767]
+	domain(OUTPUT)	=[0..infinity]
+	domain(_4)	=[0..0]
+	domain(_5)	=[0..0]
+	domain(_7)	=[2..2]
+	domain(_8)	=[2..infinity]
+	domain(_9)	=[1..1]
+	domain(return)	=[0..infinity]
+Consistency=true
+Bound Analysis of main:
+	domain(input)	=[10..20]
+	domain(a)	=[0..infinity]
+	domain(_3)	=[10..10]
+	domain(_4)	=[20..20]
+	domain(_5)	=[0..infinity]
+Consistency=true
+
+Bound analysis completed. File: whileloop1

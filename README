@@ -27,9 +27,9 @@ The Whiley-to-OpenCL translator is written in Java and aims to generate C/OpenCL
 ----------------------------------------------------------------------
 1.1 Bound Analyzer
 Bound analyzer aims to infer the bounds and check the bounds consistent with all constraints.
-$ cd tests/bounds && ./../../bin/wyopcl -bound naive WhileLoop.whiley 
+$ cd tests/bounds && ./../../bin/wyopcl -bound naive whileloop.whiley 
 Or use the gradual widening strategy to get more precise bounds.
-$ ./../../bin/wyopcl -bound gradual WhileLoop.whiley
+$ ./../../bin/wyopcl -bound gradual whileloop.whiley
 
 1.2 Pattern Matching and Pattern Transformation
 Pattern matching aims to match patterns and transform the code of a specific function code. Currently, only 'AppendArray' pattern can be transformed to 'PopulateArray' pattern.

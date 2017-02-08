@@ -128,8 +128,12 @@ public final class BaseTestUtil {
 			// Start the process to analyse the bounds
 			InputStream input = process.getInputStream();
 			
+			// Check the bound results against pre-stored results
 			assertOutput(new BufferedReader(new InputStreamReader(input, Charset.forName("UTF-8"))),
 					Files.newBufferedReader(sysout, StandardCharsets.UTF_8));
+			
+			// Remove all generated WyIL files.
+			Files.deleteIfExists(Paths.get(sourceDir + testcase + ".wyil"));
 		} catch (Exception e) {
 			throw new RuntimeException("Test file: " + testcase + ".whiley", e);
 		}
@@ -506,7 +510,7 @@ public final class BaseTestUtil {
 			}
 
 			// Delete the Wyil files inside folder
-			Files.deleteIfExists(FileSystems.getDefault().getPath(sourceDir + testcase + ".wyil"));
+			Files.deleteIfExists(Paths.get(sourceDir + testcase + ".wyil"));
 
 		} catch (Exception e) {
 			throw new RuntimeException("Test file: " + testcase + ".whiley", e);

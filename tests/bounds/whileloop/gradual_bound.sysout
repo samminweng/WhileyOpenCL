@@ -1,0 +1,21 @@
+Bound Analysis of main:
+	domain(_3)	=[50000..50000]
+Consistency=true
+Bound Analysis of f:
+	domain(limit)	=[50000..50000]
+	domain(i)	=[0..2147483647]
+	domain(sum)	=[0..infinity]
+	domain(_4)	=[0..0]
+	domain(_5)	=[0..0]
+	domain(_7)	=[0..infinity]
+	domain(_8)	=[1..1]
+	domain(_9)	=[1..2147483647]
+	domain(return)	=[0..infinity]
+Consistency=true
+Bound Analysis of main:
+	domain(a)	=[0..infinity]
+	domain(_2)	=[0..infinity]
+	domain(_3)	=[50000..50000]
+Consistency=true
+
+Bound analysis completed. File: whileloop

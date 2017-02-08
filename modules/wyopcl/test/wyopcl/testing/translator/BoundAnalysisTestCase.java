@@ -43,10 +43,10 @@ public class BoundAnalysisTestCase {
 		
 		// Add a list of test cases
 		return Arrays.asList(new String[] { 
-				//"IfElse", 
-				//"WhileLoop",
-				//"WhileLoop1", 
-				"bubblesort"
+				"ifelse", 
+				"whileloop",
+				"whileloop1", 
+				//"bubblesort"
 			});
 	}
 	
@@ -59,7 +59,7 @@ public class BoundAnalysisTestCase {
 	@Test
 	public void testBoundGradualWiden() {
 		System.out.print("Bound Analysis: Gradual Widen Bound\n");
-		util.execBoundAnalysis(sourceDir, testcase, "bound", "widen");
+		util.execBoundAnalysis(sourceDir, testcase, "bound", "gradual");
 	}
 	
 	
