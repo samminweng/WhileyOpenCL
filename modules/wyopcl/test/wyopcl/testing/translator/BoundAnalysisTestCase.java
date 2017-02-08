@@ -15,7 +15,7 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class BoundAnalysisTestCase {
 	private BaseTestUtil util;
-	final Path codeDir = Paths.get(System.getProperty("user.dir")+ File.separator + "tests" + File.separator + "bounds");
+	final Path sourceDir = Paths.get(System.getProperty("user.dir")+ File.separator + "tests" + File.separator + "bounds");
 	private String testcase;// A list of test cases
 	
 	@Before
@@ -25,7 +25,6 @@ public class BoundAnalysisTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		util.terminate();
 		util = null;
 	}
 	
@@ -44,9 +43,9 @@ public class BoundAnalysisTestCase {
 		
 		// Add a list of test cases
 		return Arrays.asList(new String[] { 
-				"IfElse", 
-				"WhileLoop",
-				"WhileLoop1", 
+				//"IfElse", 
+				//"WhileLoop",
+				//"WhileLoop1", 
 				"bubblesort"
 			});
 	}
@@ -54,13 +53,13 @@ public class BoundAnalysisTestCase {
 	@Test
 	public void testBoundNaiveWiden() {
 		System.out.print("Bound Analysis: Naive Widen Bound\n");
-		util.execCodeGeneration(codeDir, testcase, "bound", "naive");
+		util.execBoundAnalysis(sourceDir, testcase, "bound", "naive");
 	}
 	
 	@Test
 	public void testBoundGradualWiden() {
 		System.out.print("Bound Analysis: Gradual Widen Bound\n");
-		util.execCodeGeneration(codeDir, testcase, "bound", "widen");
+		util.execBoundAnalysis(sourceDir, testcase, "bound", "widen");
 	}
 	
 	

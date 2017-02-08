@@ -15,6 +15,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -47,7 +48,7 @@ public final class BaseTestUtil {
 			+ lib_path + "wycs-" + version + ".jar" + File.pathSeparator + lib_path + "wybs-" + version + ".jar"
 			+ File.pathSeparator + lib_path + "wyil-" + version + ".jar" + File.pathSeparator + lib_path + "wyc-"
 			+ version + ".jar" + File.pathSeparator;
-	
+
 	final String whiley_runtime_lib = lib_path + "wyrt-" + version + ".jar";
 
 	// Log file
@@ -60,8 +61,8 @@ public final class BaseTestUtil {
 	final File utilhfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "Util.h");
 	// WyRT.h file 
 	final File wyrthfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "WyRT.h");
-	
-	Process p;
+
+	//Process p;
 
 	public BaseTestUtil() {
 
@@ -85,13 +86,13 @@ public final class BaseTestUtil {
 		// each line from the output.
 		while ((expected = expected_reader.readLine()) != null) {
 			String output = output_reader.readLine();
+			System.out.println(output);
 			assertEquals(expected, output);
 		}
 		// Nullify the file input/output objects.
 		expected_reader.close();
-		expected_reader = null;
 		output_reader.close();
-		output_reader = null;
+		
 	}
 
 	/**
@@ -100,38 +101,40 @@ public final class BaseTestUtil {
 	 * @param path_whiley
 	 * @param widen
 	 */
-	public void execBoundAnalysis(String path, String filename, String... options) {
-		ProcessBuilder pb = null;
-		File file = new File(path + filename + ".whiley");
-		try {
-			String sysout = path + filename + "." + options[0] + "." + options[1];
-			// Set the working directory.
-			switch (options.length) {
-			case 2:
-				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", whiley_runtime_lib,
-						"-" + options[0], options[1], file.getName());
-				break;
-			case 3:
-				sysout += "." + options[2];
-				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", whiley_runtime_lib,
-						"-" + options[0], options[1], options[2], file.getName());
-				break;
-			}
-			sysout += ".sysout";
-			pb.directory(file.getParentFile());
-			// start the process.
-			p = pb.start();
-			assertOutput(new BufferedReader(new InputStreamReader(p.getInputStream(), Charset.forName("UTF-8"))),
-					new BufferedReader(new FileReader(sysout)));
-		} catch (Exception e) {
-			terminate();
-			throw new RuntimeException("Test file: " + file.getName(), e);
+	public void execBoundAnalysis(Path sourceDir, String testcase, String... options) {
+		// Check the bound option 
+		if(options[0] != "bound"){
+			throw new RuntimeException("Not pass the 'bound' option in " + testcase + " test case");
 		}
-		file = null;
-		pb = null;
+		Process process;
+		//File file = new File(sourceDir + testcase + ".whiley");
+		try {
+			// Get the widen strategy
+			String strategy = options[1];	
+			
+			Path destDir = Paths.get(sourceDir + File.separator + testcase + File.separator);
+			Path sysout = Paths.get(sourceDir + File.separator + testcase + File.separator + strategy +"_bound.sysout");
+			// 
+			String cmd = "java -cp " + classpath + " wyopcl.WyopclMain -bp " + whiley_runtime_lib
+					     + " -bound " + strategy + " "  + testcase + ".whiley";
+			
+			// Get the runtime.
+			Runtime rt = Runtime.getRuntime();
+			// Change the folder Run the command
+			process = rt.exec(cmd, null, sourceDir.toFile());
+			
+			// Start the process to analyse the bounds
+			InputStream input = process.getInputStream();
+			
+			assertOutput(new BufferedReader(new InputStreamReader(input, Charset.forName("UTF-8"))),
+					Files.newBufferedReader(sysout, StandardCharsets.UTF_8));
+		} catch (Exception e) {
+			throw new RuntimeException("Test file: " + testcase + ".whiley", e);
+		}
+		
 	}
 
-	
+
 
 	/**
 	 * Use Java process to execute the command line .
@@ -173,7 +176,7 @@ public final class BaseTestUtil {
 				// Create a writer
 				pbmwriter = new FileWriter(pbmfile, true);
 			}
-			
+
 			while (in_sc.hasNextLine()) {
 				String line = in_sc.nextLine();
 				// De-bugging message can be ignored, to speed up ant task
@@ -224,7 +227,7 @@ public final class BaseTestUtil {
 					throw new RuntimeException("Error erors while writing "+logfile+ " file.");
 				}
 			});
-			
+
 			writer.close();
 
 		} catch (IOException | InterruptedException e) {
@@ -244,21 +247,25 @@ public final class BaseTestUtil {
 	}
 
 	/**
-	 * Check that 'path' exists and Create 'path' folder.
+	 * Create the 'destPath' folder 
 	 * 
-	 * @param path
+	 * And copy all the required C files or input files from 'sourcePath' to 'destPath'
+	 * 
+	 * @param testcase
+	 * @param sourcePath 
+	 * @param destPath
 	 */
-	private void createFolder(Path path) {
+	private void createFolderAndCopyFiles(String testcase, Path sourcePath, Path destPath) {
 		try {
 			// Check the parent folder exits.
-			if (!Files.exists(path.getParent())) {
-				Files.createDirectories(path.getParent());
+			if (!Files.exists(destPath.getParent())) {
+				Files.createDirectories(destPath.getParent());
 			}
 			// Create the destDir folder.
-			if (Files.exists(path)) {
+			if (Files.exists(destPath)) {
 				// If destDir exists, then delete it.
 				// Recursively Delete files in the destDir folder.
-				Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
+				Files.walkFileTree(destPath, new SimpleFileVisitor<Path>() {
 					@Override
 					public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 						Files.delete(file);
@@ -267,10 +274,44 @@ public final class BaseTestUtil {
 				});
 			} else {
 				// Create destDir subfolder
-				Files.createDirectories(path);
+				Files.createDirectories(destPath);
 			}
+
+
+			// 1. Copy source Whiley program to destDir directory.
+			Path whileyFile = Paths.get(sourcePath + File.separator + testcase + ".whiley");
+			// Copy source.whiley to destDir folder
+			Files.copy(whileyFile, Paths.get(destPath + File.separator + testcase + ".whiley"));
+
+			// 2. Copy Util.c/WyRT.c and Util.h/WyRT.h to destDir
+			Files.copy(utilcfile.toPath(),
+					Paths.get(destPath + File.separator + "Util.c"));
+			Files.copy(wyrtcfile.toPath(),
+					Paths.get(destPath + File.separator + "WyRT.c"));
+			Files.copy(utilhfile.toPath(),
+					Paths.get(destPath + File.separator + "Util.h"));
+			Files.copy(wyrthfile.toPath(),
+					Paths.get(destPath + File.separator + "WyRT.h"));
+
+			// (Optional) Copy 'medium.in' to destDir  
+			if(testcase.equals("lz77") || testcase.equals("lz77_2")){
+				// 'small.in
+				File small = new File(sourcePath + File.separator + "small.in");
+				Files.copy(small.toPath(), Paths.get(destPath + File.separator + "small.in"));
+
+			}else if (testcase.equals("fileread") || testcase.equals("fileread2")
+					|| testcase.equals("SobelEdge1") || testcase.equals("SobelEdge2")){
+				// A PBM image file
+				File in = new File(sourcePath + File.separator + "image32x32.pbm");
+				// Copy 'feep.pbm' to folder
+				Files.copy(in.toPath(), Paths.get(destPath + File.separator + "image32x32.pbm"));
+			}
+
+
+
+
 		} catch (Exception ex) {
-			throw new AssertionError("Fails to create the " + path + " folder");
+			throw new AssertionError("Fails to create the " + destPath + " folder");
 		}
 	}
 
@@ -332,14 +373,13 @@ public final class BaseTestUtil {
 			} catch (IOException e) {
 				throw new RuntimeException("Outputs are not the same");
 			}
-			
+
 		}
-		
+
 		return;
 	}
-	
-	
-	
+
+
 	/**
 	 * Translate a Whiley program into the C code.
 	 * 
@@ -405,7 +445,7 @@ public final class BaseTestUtil {
 				}
 				break;
 			case 4:
-				
+
 				// Generate the patten + no copy + deallocated c code
 				if(options[2].equals("pattern")){
 					String nocopy = options[0];
@@ -422,38 +462,9 @@ public final class BaseTestUtil {
 				throw new RuntimeException("Not implemented");
 			}
 
-			// Create destDir
-			createFolder(destDir);
+			// 2. Prepare folder and copy files
+			createFolderAndCopyFiles(testcase, sourceDir, destDir);
 
-			// 1. Copy source Whiley program to destDir directory.
-			Path whileyFile = Paths.get(sourceDir + File.separator + testcase + ".whiley");
-			// Copy source.whiley to destDir folder
-			Files.copy(whileyFile, Paths.get(destDir + File.separator + testcase + ".whiley"));
-
-			// 2. Copy Util.c/WyRT.c and Util.h/WyRT.h to destDir
-			Files.copy(utilcfile.toPath(),
-					Paths.get(destDir + File.separator + "Util.c"));
-			Files.copy(wyrtcfile.toPath(),
-					Paths.get(destDir + File.separator + "WyRT.c"));
-			Files.copy(utilhfile.toPath(),
-					Paths.get(destDir + File.separator + "Util.h"));
-			Files.copy(wyrthfile.toPath(),
-					Paths.get(destDir + File.separator + "WyRT.h"));
-			
-			// (Optional) Copy 'medium.in' to destDir  
-			if(testcase.equals("lz77") || testcase.equals("lz77_2")){
-				// 'small.in
-				File small = new File(sourceDir + File.separator + "small.in");
-				Files.copy(small.toPath(), Paths.get(destDir + File.separator + "small.in"));
-				
-			}else if (testcase.equals("fileread") || testcase.equals("fileread2")
-					|| testcase.equals("SobelEdge1") || testcase.equals("SobelEdge2")){
-				// A PBM image file
-				File in = new File(sourceDir + File.separator + "image32x32.pbm");
-				// Copy 'feep.pbm' to folder
-				Files.copy(in.toPath(), Paths.get(destDir + File.separator + "image32x32.pbm"));
-			}
-			
 			// 3. Generate the C code.
 			String cmd = "java -cp " + classpath + " wyopcl.WyopclMain -bp " + whiley_runtime_lib + " -code";
 			// Run the code generator with optimization.
@@ -476,7 +487,7 @@ public final class BaseTestUtil {
 			}
 			// Add test case name
 			cmd += " " + testcase + ".whiley";
-			
+
 			// Generate the C code
 			runCmd(cmd, destDir, false);
 
@@ -494,19 +505,11 @@ public final class BaseTestUtil {
 
 			// Delete the Wyil files inside folder
 			Files.deleteIfExists(FileSystems.getDefault().getPath(sourceDir + testcase + ".wyil"));
-		
+
 		} catch (Exception e) {
-			terminate();
 			throw new RuntimeException("Test file: " + testcase + ".whiley", e);
 		}
 	}
 
-	public void terminate() {
-		// Terminate the process.
-		while (p != null) {
-			p.destroy();
-			p = null;
-		}
-	}
-
+	
 }
