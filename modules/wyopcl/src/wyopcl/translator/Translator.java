@@ -192,7 +192,8 @@ public class Translator implements Builder {
 		}
 
 		long endTime = System.currentTimeMillis();
-		System.out.println(message + " Time: " + (endTime - start) + " ms Memory Usage: " + memory);
+		System.out.println(message);
+		//System.out.println(message + " Time: " + (endTime - start) + " ms Memory Usage: " + memory);
 		return generatedFiles;
 	}
 

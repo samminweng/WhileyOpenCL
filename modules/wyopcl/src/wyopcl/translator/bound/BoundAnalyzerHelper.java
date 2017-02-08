@@ -276,20 +276,19 @@ final class BoundAnalyzerHelper {
 				// Get the bounds of return variable
 				Domain ret_bound;
 				for(Entry<String, Domain> bound: bnd.getBounds().entrySet()){
-					if(bound.getKey().contains("return")){
+					if(bound.getKey().toString().equals("return")){
 						ret_bound = bound.getValue();
-						// propagate the bounds of return value.
+						// Propagate the bounds of return value.
 						graph.addConstraint(new Range(ret_reg, ret_bound.getLowerBound(), ret_bound.getUpperBound()));
-						break;
+					}else if(bound.getKey().toString().equals("return_size")){
+						// Pass the array size of return array to caller size.
+						ret_bound = bound.getValue();
+						// Propagate the bounds of return array size
+						graph.addConstraint(new Range(ret_reg+"_size", ret_bound.getLowerBound(), ret_bound.getUpperBound()));
 					}
+					
 				}
 			}
-//			// Pass the array size of return array to caller size.
-//			if(ret_type instanceof Type.Array){
-//				// propagate the bounds of return array size.
-//				graph.addConstraint(new Range(ret_reg+"_size", bnd.getLower("return_size"), bnd.getUpper("return_size")));
-//			}
-			
 		}
 		
 	}
