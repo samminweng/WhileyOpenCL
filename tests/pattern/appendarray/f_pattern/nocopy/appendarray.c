@@ -1,4 +1,4 @@
-#include "AppendArrayPattern.h"
+#include "appendarray.h"
 BYTE* _append_(BYTE* items, size_t items_size, BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(nitems);
 	int64_t i = 0;
@@ -23,7 +23,7 @@ BYTE* _append_(BYTE* items, size_t items_size, BYTE item, _DECL_1DARRAYSIZE_PARA
 	//arraygen %8 = [4; 7] : byte[]
 	_NEW_1DARRAY_BYTE(_8, _7, _4);
 	//assign %2 = %8  : byte[]
-	_COPY_1DARRAY_BYTE(nitems, _8);
+	_UPDATE_1DARRAY(nitems, _8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %3 = %9  : int
@@ -71,7 +71,7 @@ BYTE* _resize_(BYTE* items, size_t items_size, int64_t size, _DECL_1DARRAYSIZE_P
 	//arraygen %5 = [4; 1] : byte[]
 	_NEW_1DARRAY_BYTE(_5, size, _4);
 	//assign %2 = %5  : byte[]
-	_COPY_1DARRAY_BYTE(nitems, _5);
+	_UPDATE_1DARRAY(nitems, _5);
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %3 = %6  : int
@@ -101,7 +101,7 @@ blklab5:;
 	//return
 }
 
-BYTE* _comp_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* _f_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(output);
 	int64_t pos = 0;
 	BYTE item;
@@ -148,7 +148,7 @@ BYTE* _comp_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFEREN
 	//assign %20 = %19  : int
 	_20 = _19;
 	//assign %1 = %8  : byte[]
-	_COPY_1DARRAY_BYTE(output, _8);
+	_UPDATE_1DARRAY(output, _8);
 	//loop (%1, %2, %3, %4, %9, %10, %11, %12, %13, %14, %15, %20)
 	while(true){
 		//lengthof %9 = %0 : byte[]
@@ -203,13 +203,12 @@ blklab7:;
 blklab10:;
 	//assert
 	}
-	//invoke (%25) = (%1, %20) AppendArrayPattern:resize : function(byte[],int)->(byte[])
+	//invoke (%25) = (%1, %20) appendarray:resize : function(byte[],int)->(byte[])
 	{
-		void* output_tmp;
-		_25 = _resize_(_COPY_1DARRAY_PARAM_BYTE(output), _20, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
+		_25 = _resize_(_1DARRAY_PARAM(output), _20, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 	}
 	//assign %1 = %25  : byte[]
-	_COPY_1DARRAY_BYTE(output, _25);
+	_UPDATE_1DARRAY(output, _25);
 	//return %1
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(output);
 	return output;
@@ -243,14 +242,13 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_BYTE(_6, 3, 0b0);
 	_6[0] = _3; _6[1] = _4; _6[2] = _5; 
 	//assign %1 = %6  : byte[]
-	_COPY_1DARRAY_BYTE(data, _6);
-	//invoke (%7) = (%1) AppendArrayPattern:comp : function(byte[])->(byte[])
+	_UPDATE_1DARRAY(data, _6);
+	//invoke (%7) = (%1) appendarray:f : function(byte[])->(byte[])
 	{
-		void* data_tmp;
-		_7 = _comp_(_COPY_1DARRAY_PARAM_BYTE(data), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_7));
+		_7 = _f_(_1DARRAY_PARAM(data), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_7));
 	}
 	//assign %2 = %7  : byte[]
-	_COPY_1DARRAY_BYTE(arr, _7);
+	_UPDATE_1DARRAY(arr, _7);
 	//assert
 	{
 		//const %8 = 00000000b : byte

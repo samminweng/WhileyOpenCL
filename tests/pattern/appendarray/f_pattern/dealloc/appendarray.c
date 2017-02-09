@@ -1,4 +1,4 @@
-#include "AppendArrayPattern.h"
+#include "appendarray.h"
 BYTE* _append_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(nitems);
 	_DECL_DEALLOC(nitems);
@@ -117,7 +117,7 @@ blklab5:;
 	//return
 }
 
-BYTE* _comp_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* _f_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(output);
 	_DECL_DEALLOC(output);
 	int64_t pos = 0;
@@ -228,7 +228,7 @@ blklab7:;
 blklab10:;
 	//assert
 	}
-	//invoke (%25) = (%1, %20) AppendArrayPattern:resize : function(byte[],int)->(byte[])
+	//invoke (%25) = (%1, %20) appendarray:resize : function(byte[],int)->(byte[])
 	{
 		void* output_tmp;
 		_DEALLOC(_25);
@@ -288,12 +288,12 @@ int main(int argc, char** args){
 	_DEALLOC(data);
 	_COPY_1DARRAY_BYTE(data, _6);
 	_ADD_DEALLOC(data);
-	//invoke (%7) = (%1) AppendArrayPattern:comp : function(byte[])->(byte[])
+	//invoke (%7) = (%1) appendarray:f : function(byte[])->(byte[])
 	{
 		void* data_tmp;
 		_DEALLOC(_7);
-		_7 = _comp_(_COPY_1DARRAY_PARAM_BYTE(data), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_7));
-		_CALLEE_DEALLOC(data, "false-false-false" , "comp");
+		_7 = _f_(_COPY_1DARRAY_PARAM_BYTE(data), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_7));
+		_CALLEE_DEALLOC(data, "false-false-false" , "f");
 		_ADD_DEALLOC(_7);
 	}
 	//assign %2 = %7  : byte[]

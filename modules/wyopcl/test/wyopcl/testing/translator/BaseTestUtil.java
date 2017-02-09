@@ -81,7 +81,58 @@ public final class BaseTestUtil {
 		output_reader.close();
 		
 	}
-
+	
+	/**
+	 * Run pattern matching and pattern transformation.
+	 * The analysis results are compared with the pre-stored ones,
+	 * to check if the output are the same. 
+	 * 
+	 * @param sourceDir
+	 * @param testcase
+	 * @param options
+	 */
+	public void execPatternMatch(Path sourceDir, String testcase, String... options) {
+		// Check the bound option 
+		if(options[0] != "-pattern"){
+			throw new RuntimeException("Not passing the 'pattern' option in " + testcase + " test case");
+		}
+		// Get the function name
+		String func_name = options[1];
+		
+		Process process;
+		try {		
+			//Path destDir = Paths.get(sourceDir + File.separator + testcase + File.separator);
+			Path sysout = Paths.get(sourceDir + File.separator + testcase + File.separator + func_name +"_pattern.sysout");
+			// Make the command
+			String cmd = makeCmd(testcase, options);
+			
+			// Get the runtime.
+			Runtime rt = Runtime.getRuntime();
+			// Change the folder Run the command
+			process = rt.exec(cmd, null, sourceDir.toFile());
+			
+			process.waitFor();
+			
+			// Start the process to analyse the bounds
+			InputStream input = process.getInputStream();
+			
+			// Check the bound results against pre-stored results
+			assertOutput(new BufferedReader(new InputStreamReader(input, Charset.forName("UTF-8"))),
+					Files.newBufferedReader(sysout, StandardCharsets.UTF_8));
+			
+			// Remove all generated WyIL files.
+			Files.deleteIfExists(Paths.get(sourceDir + testcase + ".wyil"));
+		} catch (Exception e) {
+			throw new RuntimeException("Test file: " + testcase + ".whiley", e);
+		}
+		
+		process.destroy();
+		
+		
+	}
+	
+	
+	
 	/**
 	 * Analyze the bounds of a Whiley program using naive or gradual widening strategy,
 	 * and compare the bound analysis with the pre-stored results.
@@ -375,7 +426,7 @@ public final class BaseTestUtil {
 	 * @return the command line that runs on 
 	 */
 	private String makeCmd(String testcase, String... options){ 
-		String cmd = "java -cp " + classpath + " wyopcl.WyopclMain -bp " + whiley_runtime_lib + " -code";
+		String cmd = "java -cp " + classpath + " wyopcl.WyopclMain -bp " + whiley_runtime_lib;
 		// Run the code generator with optimization.
 		int index=0;;
 		while(index<options.length){
@@ -389,6 +440,15 @@ public final class BaseTestUtil {
 		return cmd;
 	}
 	
+	/**
+	 * Extract the option value for the name used to create the folder.
+	 * 
+	 * 
+	 * @param sourceDir
+	 * @param testcase
+	 * @param options
+	 * @return
+	 */
 	private Path processOptions(Path sourceDir, String testcase, String... options){
 		Path destDir;
 		String path = sourceDir + File.separator + testcase;
@@ -399,8 +459,10 @@ public final class BaseTestUtil {
 			if(option.equals("-bound")){
 				path += File.separator + options[index+1]+ "_bound";
 				index+=2;
-			}else{
-				if(option.equals("-code")){
+			}else if(option.equals("-pattern")){
+				path += File.separator + options[index+1]+ "_pattern";
+				index+=2;
+			}else if(option.equals("-code")){
 					// Finish all the remaining options
 					if(index+1 == options.length){
 						// Generate 'naive' C code
@@ -416,7 +478,8 @@ public final class BaseTestUtil {
 								 + "_" + options[index+2].replace("-", "");
 						index+=3;
 					}
-				}
+			}else{
+				throw new RuntimeException("Un-supported options:" + option);
 			}
 		}
 		

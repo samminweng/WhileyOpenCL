@@ -113,7 +113,7 @@ public class Translator implements Builder {
 			try{
 				pattern = matcher.analyzePattern(functionOrMethod);
 				// Print out the matched pattern
-				message += "\nPattern matching on "+ func_name+" function completed. \n" + pattern;
+				message += "Pattern matching on "+ func_name+" function completed. \n" + pattern;
 			}catch(Exception ex){
 				throw new RuntimeException("Errors on Pattern Matching"); 
 			}

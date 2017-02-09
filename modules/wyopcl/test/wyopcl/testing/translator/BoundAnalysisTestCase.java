@@ -15,7 +15,7 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class BoundAnalysisTestCase {
 	private BaseTestUtil util;
-	final Path sourceDir = Paths.get(System.getProperty("user.dir")+ File.separator + "tests" + File.separator + "bounds");
+	final Path sourceDir = Paths.get(System.getProperty("user.dir")+ File.separator + "tests" + File.separator + "bound");
 	private String testcase;// A list of test cases
 	
 	@Before

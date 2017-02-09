@@ -32,7 +32,7 @@ ensures |nitems| == size:
     return nitems
 
 // Append two integers to an array at each iteration 
-function comp(byte[] data) -> (byte[] output):
+function f(byte[] data) -> (byte[] output):
     int pos = 0
     // Initialize the output array
     output = [0b;0]
@@ -73,6 +73,6 @@ function comp(byte[] data) -> (byte[] output):
 method main(System.Console sys):
 	// The byte array of 'abc' 
 	byte[] data = [01100001b, 01100010b, 01100011b]
-	byte[] arr = comp(data)
+	byte[] arr = f(data)
 	assert arr == [0b, 01100001b, 1b, 01100010b, 10b, 01100011b]
 	sys.out.print(|arr|)
