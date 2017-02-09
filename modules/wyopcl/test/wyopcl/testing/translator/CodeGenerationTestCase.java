@@ -93,13 +93,13 @@ public class CodeGenerationTestCase {
 	@Test
 	public void testNaiveCCode() {
 		System.out.print("Naive C code \n");
-		util.execCodeGeneration(codeDir, testcase);
+		util.execCodeGeneration(codeDir, testcase, "-code");
 	}
 
 	@Test
 	public void testNaiveDeallocatedCCode() {
 		System.out.print("Naive + deallocated C code \n");
-		util.execCodeGeneration(codeDir, testcase, "dealloc");
+		util.execCodeGeneration(codeDir, testcase, "-code", "-dealloc");
 		// Check output 
 		util.verifyOutput(testcase, codeDir, "dealloc");
 	}
@@ -107,7 +107,7 @@ public class CodeGenerationTestCase {
 	@Test
 	public void testNoCopyCCode() {
 		System.out.print("Copy eliminated C code \n");
-		util.execCodeGeneration(codeDir, testcase, "nocopy");
+		util.execCodeGeneration(codeDir, testcase, "-code", "-nocopy");
 		// Verify output of sobel edges
 		util.verifyOutput(testcase, codeDir, "nocopy");
 	}
@@ -115,7 +115,7 @@ public class CodeGenerationTestCase {
 	@Test
 	public void testNoCopyDeallocatedCCode() {
 		System.out.print("Copy eliminated + deallocated C code \n");
-		util.execCodeGeneration(codeDir, testcase, "nocopy", "dealloc");
+		util.execCodeGeneration(codeDir, testcase, "-code", "-nocopy", "-dealloc");
 		// Check output 
 		util.verifyOutput(testcase, codeDir, "nocopy_dealloc");
 	}	
