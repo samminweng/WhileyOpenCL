@@ -2,40 +2,27 @@ package wyopcl.testing.translator;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
-import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import org.apache.maven.artifact.ant.shaded.FileUtils;
-
-import wyc.WycMain;
-import wyc.util.WycBuildTask;
-import wyopcl.WyopclMain;
 
 public final class BaseTestUtil {
 	private final String version = "v0.3.39";
@@ -49,20 +36,20 @@ public final class BaseTestUtil {
 			+ File.pathSeparator + lib_path + "wyil-" + version + ".jar" + File.pathSeparator + lib_path + "wyc-"
 			+ version + ".jar" + File.pathSeparator;
 
-	final String whiley_runtime_lib = lib_path + "wyrt-" + version + ".jar";
+	private final String whiley_runtime_lib = lib_path + "wyrt-" + version + ".jar";
 
+	private final String code_path = workspace_path + "tests" + File.separator + "code" + File.separator;
+	
 	// Log file
-	final File logfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "log.txt");
+	private final File logfile = new File(code_path + "log.txt");
 	// Util.c file
-	final File utilcfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "Util.c");
+	private final File utilcfile = new File(code_path + "Util.c");
 	// WyRT.c file stores built-in functions at WyRT runtime
-	final File wyrtcfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "WyRT.c");
+	private final File wyrtcfile = new File(code_path + "WyRT.c");
 	// Util.h file
-	final File utilhfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "Util.h");
+	private final File utilhfile = new File(code_path + "Util.h");
 	// WyRT.h file 
-	final File wyrthfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "WyRT.h");
-
-	//Process p;
+	private final File wyrthfile = new File(code_path + "WyRT.h");
 
 	public BaseTestUtil() {
 
@@ -96,27 +83,26 @@ public final class BaseTestUtil {
 	}
 
 	/**
-	 * Analyze the bounds of a Whiley program using naive or gradual widening strategy.
+	 * Analyze the bounds of a Whiley program using naive or gradual widening strategy,
+	 * and compare the bound analysis with the pre-stored results.
 	 * 
 	 * @param path_whiley
 	 * @param widen
 	 */
 	public void execBoundAnalysis(Path sourceDir, String testcase, String... options) {
 		// Check the bound option 
-		if(options[0] != "bound"){
-			throw new RuntimeException("Not pass the 'bound' option in " + testcase + " test case");
+		if(options[0] != "-bound"){
+			throw new RuntimeException("Not passing the 'bound' option in " + testcase + " test case");
 		}
+		// Get the widen strategy
+		String strategy = options[1];
+		
 		Process process;
-		//File file = new File(sourceDir + testcase + ".whiley");
-		try {
-			// Get the widen strategy
-			String strategy = options[1];	
-			
+		try {		
 			//Path destDir = Paths.get(sourceDir + File.separator + testcase + File.separator);
 			Path sysout = Paths.get(sourceDir + File.separator + testcase + File.separator + strategy +"_bound.sysout");
-			// 
-			String cmd = "java -cp " + classpath + " wyopcl.WyopclMain -bp " + whiley_runtime_lib
-					     + " -bound " + strategy + " "  + testcase + ".whiley";
+			// Make the command
+			String cmd = makeCmd(testcase, options);
 			
 			// Get the runtime.
 			Runtime rt = Runtime.getRuntime();
@@ -137,6 +123,8 @@ public final class BaseTestUtil {
 		} catch (Exception e) {
 			throw new RuntimeException("Test file: " + testcase + ".whiley", e);
 		}
+		
+		process.destroy();
 		
 	}
 
@@ -313,9 +301,6 @@ public final class BaseTestUtil {
 				Files.copy(in.toPath(), Paths.get(destPath + File.separator + "image32x32.pbm"));
 			}
 
-
-
-
 		} catch (Exception ex) {
 			throw new AssertionError("Fails to create the " + destPath + " folder");
 		}
@@ -379,12 +364,68 @@ public final class BaseTestUtil {
 			} catch (IOException e) {
 				throw new RuntimeException("Outputs are not the same");
 			}
-
 		}
-
 		return;
 	}
 
+	
+	/**
+	 * Make the command line with respect to the passing options.
+	 * 
+	 * @return the command line that runs on 
+	 */
+	private String makeCmd(String testcase, String... options){ 
+		String cmd = "java -cp " + classpath + " wyopcl.WyopclMain -bp " + whiley_runtime_lib + " -code";
+		// Run the code generator with optimization.
+		int index=0;;
+		while(index<options.length){
+			String option = options[index];
+			cmd += " " + option;
+			index++;
+		}
+		// Add test case name
+		cmd += " " + testcase + ".whiley";
+		
+		return cmd;
+	}
+	
+	private Path processOptions(Path sourceDir, String testcase, String... options){
+		Path destDir;
+		String path = sourceDir + File.separator + testcase;
+		// Iterate the options and find the type of generated code.
+		int index=0;
+		while(index<options.length){
+			String option = options[index];
+			if(option.equals("-bound")){
+				path += File.separator + options[index+1]+ "_bound";
+				index+=2;
+			}else{
+				if(option.equals("-code")){
+					// Finish all the remaining options
+					if(index+1 == options.length){
+						// Generate 'naive' C code
+						path += File.separator + "naive";
+						index++;
+					}else if(index+2 == options.length){
+						// Generate 'nocopy' 'dealloc' C code
+						path += File.separator + options[index+1].replace("-", "");
+						index+=2;
+					}else if(index+3 == options.length){
+						// Generate 'nocopy_dealloc' C code
+						path += File.separator + options[index+1].replace("-", "")
+								 + "_" + options[index+2].replace("-", "");
+						index+=3;
+					}
+				}
+			}
+		}
+		
+		destDir = Paths.get(path);
+		
+		return destDir;
+	}
+	
+	
 
 	/**
 	 * Translate a Whiley program into the C code.
@@ -403,97 +444,14 @@ public final class BaseTestUtil {
 	 */
 	public void execCodeGeneration(Path sourceDir, String testcase, String... options) {
 		try {
-			Path destDir;
-			// Widen strategy
-			String widen = null;
-			// The function name for pattern matching 
-			String func_name = null;
-			// Separate the generated C code.
-			switch (options.length) {
-			case 0:
-				// No extra options
-				// Set destDir directory to be 'code/TestCaseName/naive'
-				destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "naive" + File.separator);
-				break;
-			case 1:
-				if (options[0].equals("nocopy")) {
-					// Set working directory to be 'code/TestCaseName/copy'
-					destDir = Paths.get(
-							sourceDir + File.separator + testcase + File.separator + "nocopy" + File.separator);
-				} else if (options[0].equals("dealloc")) {
-					// Applies de-allocation analysis on naive C code
-					destDir = Paths.get(
-							sourceDir + File.separator + testcase + File.separator + "naive_dealloc" + File.separator);
-				} else {
-					throw new RuntimeException("Not Implemented");
-				}
-				break;
-			case 2:
-				if(options[0].equals("bound")){
-					widen = options[1];
-					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "bound_"+widen
-							+ File.separator+"naive");
-				} else{
-					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "nocopy_dealloc"
-							+ File.separator);
-				}				
-				break;
-			case 3:
-				if(options[1].equals("pattern")){
-					// Get code generation option
-					String codegen = options[0];
-					// Get function name
-					func_name = options[2];					
-					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "pattern_"+func_name
-							+ File.separator+codegen);
-				}else{
-					throw new RuntimeException("Not implemented");
-				}
-				break;
-			case 4:
-
-				// Generate the patten + no copy + deallocated c code
-				if(options[2].equals("pattern")){
-					String nocopy = options[0];
-					String dealloc = options[1];
-					// Get function name
-					func_name = options[3];
-					destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "pattern_"+func_name
-							+ File.separator+nocopy+"_"+dealloc);
-				}else{
-					throw new RuntimeException("Not implemented");
-				}
-				break;
-			default:
-				throw new RuntimeException("Not implemented");
-			}
-
+			Path destDir= processOptions(sourceDir, testcase, options);
+			
 			// 2. Prepare folder and copy files
 			createFolderAndCopyFiles(testcase, sourceDir, destDir);
 
-			// 3. Generate the C code.
-			String cmd = "java -cp " + classpath + " wyopcl.WyopclMain -bp " + whiley_runtime_lib + " -code";
-			// Run the code generator with optimization.
-			int index=0;;
-			while(index<options.length){
-				String option = options[index];
-				// Skip "naive" code generation option
-				if(!option.equals("naive")){
-					// Bound and pattern options  
-					if(option.equals("bound") || option.equals("pattern")){
-						// Append two options 
-						cmd += " -" + option + " " +options[index+1];
-						index++;
-					}else{
-						// Add extra option.
-						cmd += " -" + option;
-					}
-				}
-				index++;
-			}
-			// Add test case name
-			cmd += " " + testcase + ".whiley";
-
+			// 3. Make the command line arguments.
+			String cmd = makeCmd(testcase, options);
+	
 			// Generate the C code
 			runCmd(cmd, destDir, false);
 

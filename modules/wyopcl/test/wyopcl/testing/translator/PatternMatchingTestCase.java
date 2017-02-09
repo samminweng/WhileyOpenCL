@@ -55,7 +55,7 @@ public class PatternMatchingTestCase {
 	@Test
 	public void testPatternNaiveCCode(){
 		System.out.print("Pattern: "+func_name+" function on naive C code \n");
-		util.execCodeGeneration(codeDir, testcase, "naive", "pattern", func_name);	
+		util.execCodeGeneration(codeDir, testcase, "pattern", func_name);	
 	}
 
 	@Test

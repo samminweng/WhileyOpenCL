@@ -37,7 +37,7 @@ $ cd tests/bounds && ./../../bin/wyopcl -pattern compress lz77.whiley
 
 1.3 Copy Elimination Analysis
 Copy Elimination analysis aims to eliminate the un-necessary copies at the program. 
-$ cd tests/code && ./../../bin/wyopcl -nocopy swap.whiley
+$ cd tests/code && ./../../bin/wyopcl -code -nocopy swap.whiley
 
 1.4 Deallocation Analysis
 Deallocation analysis aims to add extra mallocs to release un-used memory at function exit.
