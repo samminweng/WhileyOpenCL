@@ -9,14 +9,19 @@ import java.util.Collection;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class BoundAnalysisTestCase {
 	private BaseTestUtil util;
 	final Path sourceDir = Paths.get(System.getProperty("user.dir")+ File.separator + "tests" + File.separator + "bound");
-	private String testcase;// A list of test cases
+	private static String testcase;// A list of test cases
+	
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(10); // 10 seconds per test
 	
 	@Before
 	public void initialize() throws Exception {
@@ -45,7 +50,8 @@ public class BoundAnalysisTestCase {
 		return Arrays.asList(new String[] { 
 				"ifelse", 
 				"whileloop",
-				"whileloop1", 
+				"whileloop1",
+				"nestedwhileloop",
 				//"bubblesort"
 			});
 	}

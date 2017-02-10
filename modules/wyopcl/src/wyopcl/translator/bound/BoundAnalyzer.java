@@ -265,12 +265,17 @@ public class BoundAnalyzer {
 	 */
 	public Bounds inferBounds(String name) {
 		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(name);
+		
+		if (config.isVerbose()) {
+			// Print out bounds along with size information.
+			BoundAnalyzerHelper.printCFG(config, name);
+		}
 
 		// Repeatedly iterates over all blocks, starting from the entry block to the
 		// exit block, and infer the bounds consistent with all the constraints in each block.
 		List<BoundBlock> list = graph.getBlockList();
 		boolean isFixedPoint = false;
-		int iteration = 0;
+		int iteration = 1;
 		// Stop the loop when the program reaches the fixed point or max-iterations
 		// by using AND operator to combine these two condition.
 		// If both of two conditions are evaluated to be true, then enter the
@@ -288,13 +293,15 @@ public class BoundAnalyzer {
 				// Iterate all the blocks, except Exit block.
 				if (!blk.getType().equals(BlockType.EXIT)) {
 					Bounds bnd_before = null, bnd_after = null;
-					// Before the bound inference, clone and assign the inferred
-					// bounds to the bnd_before.
+					// Clone the bounds before the bound inference
 					bnd_before = (Bounds) blk.getBounds().clone();
 					// Take the union of parents' bounds to produce the input
 					// bounds for bound inference.
 					for (BoundBlock parent : blk.getParentNodes()) {
-						blk.unionBounds(parent);
+						// Take the consistent bounds
+						if(parent.isConsistent() == true){
+							blk.unionBounds(parent);
+						}
 					}
 					
 					// Beginning of bound inference.
@@ -302,11 +309,13 @@ public class BoundAnalyzer {
 					// End of bound inference.
 
 					bnd_after = (Bounds) blk.getBounds();
+					// Check if upper/lower bound has any change
+					bnd_after.checkBoundChange(bnd_before);
+										
 					// Check bound change at each block.
-					bnd_after.checkBoundChange(bnd_before);						
-					
 					// Test the equality of existing and newly inferred bounds.
-					if (bnd_before != null && !bnd_before.equals(bnd_after)) {
+					if (bnd_before != null && bnd_after != null 
+							&& !bnd_before.equals(bnd_after)) {
 						// If bounds has changed, then isChanged = false.
 						isChanged = true;
 					}
@@ -328,7 +337,7 @@ public class BoundAnalyzer {
 			}
 
 			// Repeat the bound inference for (maximal) three iterations
-			if (iteration == 3) {
+			if ( iteration%3 == 0) {
 				// After three iterations, widen the bounds of variables whose upper bounds are increasing
 				// or whose lower bounds are decreasing.
 				for (BoundBlock blk : list) {
@@ -336,10 +345,10 @@ public class BoundAnalyzer {
 					blk.getBounds().widenBounds(config);					
 				}
 				// Reset the iteration
-				iteration = 0;
-			} else {
-				iteration++;
-			}
+				iteration = 1;
+			} 
+			iteration++;
+			
 		}
 
 		// Take the union of all blocks to produce the bounds of a function.
@@ -936,7 +945,6 @@ public class BoundAnalyzer {
 			// Infer the bounds of caller function.
 			Bounds input_bnds = inferBounds(caller_name);
 
-			//BoundAnalyzerHelper.propagateSizeInfoToFunctionCall(caller_name, callee_name, callee.type().params(), code.operands());
 			// Build CFGraph for callee.
 			buildCFG(config, callee_name);
 			// Propagate the bounds of input parameters to the function.

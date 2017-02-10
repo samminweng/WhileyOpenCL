@@ -1,14 +1,14 @@
 #include "whileloop.h"
 int64_t _f_(int64_t limit){
 	int64_t _1 = 0;
-	uint32_t i = 0;
+	uint16_t i = 0;
 	int64_t sum = 0;
 	uint16_t _4 = 0;
 	uint16_t _5 = 0;
 	int64_t _6 = 0;
 	int64_t _7 = 0;
 	uint16_t _8 = 0;
-	uint32_t _9 = 0;
+	uint16_t _9 = 0;
 	//const %4 = 0 : int
 	_4 = 0;
 	//assign %2 = %4  : int
@@ -47,9 +47,8 @@ int main(int argc, char** args){
 	int64_t _2 = 0;
 	uint16_t _3 = 0;
 	void* _4;
-	int64_t _6 = 0;
-	//const %3 = 50000 : int
-	_3 = 50000;
+	//const %3 = 5 : int
+	_3 = 5;
 	//invoke (%2) = (%3) whileloop:f : function(int)->(int)
 	{
 		_2 = _f_(_3);
@@ -61,19 +60,6 @@ int main(int argc, char** args){
 	//indirectinvoke () = %5 (%1) : method(any)->()
 	{
 		printf("%"PRId64"\n", a);
-	}
-	//assert
-	{
-		//const %6 = 1249975000 : int
-		_6 = 1249975000;
-		//ifeq %1, %6 goto blklab4 : int
-		if(a==_6){goto blklab4;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab4
-blklab4:;
-	//assert
 	}
 	//return
 	exit(0);

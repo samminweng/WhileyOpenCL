@@ -371,10 +371,12 @@ public class BoundBlock implements Comparable<BoundBlock> {
 			//Print out the constraints
 			//str += "\n---------------------------------------\n";
 			str += String.format("%n%s %s%n", "Constraints", this.constraints);
-			str += this.unionOfBounds + "\n";
-			str += "IsConsistent=" + isConsistent()+"\n";
-			str += "\n-------------------------------\n";
 		}
+		
+		str += this.unionOfBounds + "\n";
+		str += "IsConsistent=" + isConsistent()+"\n";
+		str += "\n-------------------------------\n";
+		
 		return str;
 	}
 

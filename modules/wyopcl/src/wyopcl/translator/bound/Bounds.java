@@ -332,20 +332,17 @@ public class Bounds implements Cloneable {
 			BigInteger threshold = Threshold._I16_MAX.getValue();
 			if (max.compareTo(threshold) < 0) {
 				return widenUpperBound(name, threshold);
-			} else {
-				threshold = Threshold._I32_MAX.getValue();
-				if (max.compareTo(threshold) < 0) {
-					return widenUpperBound(name, threshold);
-				} else {
-					threshold = Threshold._I64_MAX.getValue();
-					if (max.compareTo(threshold) < 0) {
-						return widenUpperBound(name, threshold);
-					} else {
-						// Widen the upper bound to inf
-						return widenUpperBound(name, null);
-					}
-				}
 			}
+			threshold = Threshold._I32_MAX.getValue();
+			if (max.compareTo(threshold) < 0) {
+				return widenUpperBound(name, threshold);
+			} 
+			threshold = Threshold._I64_MAX.getValue();
+			if (max.compareTo(threshold) < 0) {
+				return widenUpperBound(name, threshold);
+			}
+			// Widen the upper bound to inf
+			return widenUpperBound(name, null);
 		}
 
 		return false;
