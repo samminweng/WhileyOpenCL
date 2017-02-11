@@ -346,9 +346,9 @@ public class BoundAnalyzer {
 				}
 				// Reset the iteration
 				iteration = 1;
-			} 
-			iteration++;
-			
+			}else{
+				iteration++;
+			}
 		}
 
 		// Take the union of all blocks to produce the bounds of a function.
