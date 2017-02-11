@@ -16,14 +16,10 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	
 	public Domain(String name) {
 		this.name = name;
-		this.setLowerBoundDecreasing(false);
+		this.isLowerBoundDecreasing = false;
 		this.isUpperBoundIncreasing = false;
-	}
-
-	public Domain(String name, BigInteger lower_bound, BigInteger upper_bound) {
-		this(name);
-		this.lower_bound = lower_bound;
-		this.upper_bound = upper_bound;
+		this.lower_bound = null;
+		this.upper_bound = null;
 	}
 
 	public String getName() {

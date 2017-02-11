@@ -1,0 +1,26 @@
+Bound Analysis of main:
+	domain(_3)	=[5..5]
+Consistency=true
+Bound Analysis of f:
+	domain(limit)	=[5..5]
+	domain(_10)	=[1..1]
+	domain(_11)	=[1..5]
+	domain(_12)	=[1..1]
+	domain(_13)	=[1..infinity]
+	domain(i)	=[0..infinity]
+	domain(sum)	=[-infinity..infinity]
+	domain(j)	=[0..5]
+	domain(_5)	=[0..0]
+	domain(_6)	=[0..0]
+	domain(_7)	=[0..0]
+	domain(_8)	=[-infinity..infinity]
+	domain(_9)	=[-infinity..infinity]
+	domain(return)	=[-infinity..infinity]
+Consistency=true
+Bound Analysis of main:
+	domain(a)	=[-infinity..infinity]
+	domain(_2)	=[-infinity..infinity]
+	domain(_3)	=[5..5]
+Consistency=true
+
+Bound analysis completed. File: nestedwhileloop

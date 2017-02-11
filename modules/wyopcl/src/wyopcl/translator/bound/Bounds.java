@@ -109,20 +109,10 @@ public class Bounds implements Cloneable {
 	 */
 	public Domain getDomain(String name) {
 		if (!bounds.containsKey(name)) {
-			Domain d = new Domain(name, null, null);
+			Domain d = new Domain(name);
 			bounds.put(name, d);
 		}
 		return bounds.get(name);
-	}
-
-	/**
-	 * Check if variable has been existed in bounds HashMap.
-	 * 
-	 * @param name
-	 * @return
-	 */
-	public boolean isExisting(String name) {
-		return bounds.containsKey(name);
 	}
 
 	public BigInteger getLower(String name) {
@@ -518,7 +508,7 @@ public class Bounds implements Cloneable {
 					Domain d = this.getDomain(var);
 					boolean isDecreasing = d.isLowerBoundDecreasing();
 					isDecreasing |= true;
-					d.setUpperBoundIncreasing(isDecreasing);
+					d.setLowerBoundDecreasing(isDecreasing);
 				}
 			}
 		}
@@ -542,6 +532,7 @@ public class Bounds implements Cloneable {
 				} else {
 					widenUpperBoundsToInf(var);
 				}
+				d.setUpperBoundIncreasing(false);
 			}
 
 			// Widen the lower bound
@@ -551,11 +542,9 @@ public class Bounds implements Cloneable {
 				} else {
 					widenLowerBoundsToInf(var);
 				}
+				// Reset the increasing and decreasing flag
+				d.setLowerBoundDecreasing(false);
 			}
-
-			// Reset the increasing and decreasing flag
-			d.setLowerBoundDecreasing(false);
-			d.setUpperBoundIncreasing(false);
 		}
 	}
 
