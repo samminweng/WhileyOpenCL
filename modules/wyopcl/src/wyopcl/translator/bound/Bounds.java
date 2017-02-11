@@ -315,24 +315,24 @@ public class Bounds implements Cloneable {
 	 * @param name
 	 * @return
 	 */
-	public boolean widenUpperBoundsAgainstThresholds(String name) {
+	private boolean widenUpperBoundsAgainstThresholds(String name) {
 		BigInteger max = getUpper(name);
 		if (max != null) {
 			// Check the max values and widen the upper bound
 			BigInteger threshold = Threshold._I16_MAX.getValue();
 			if (max.compareTo(threshold) < 0) {
-				return widenUpperBound(name, threshold);
+				return setUpperBound(name, threshold);
 			}
 			threshold = Threshold._I32_MAX.getValue();
 			if (max.compareTo(threshold) < 0) {
-				return widenUpperBound(name, threshold);
+				return setUpperBound(name, threshold);
 			} 
 			threshold = Threshold._I64_MAX.getValue();
 			if (max.compareTo(threshold) < 0) {
-				return widenUpperBound(name, threshold);
+				return setUpperBound(name, threshold);
 			}
 			// Widen the upper bound to inf
-			return widenUpperBound(name, null);
+			return setUpperBound(name, null);
 		}
 
 		return false;
@@ -345,24 +345,24 @@ public class Bounds implements Cloneable {
 	 * @param name
 	 * @return
 	 */
-	public boolean widenLowerBoundsAgainstThresholds(String name) {
+	private boolean widenLowerBoundsAgainstThresholds(String name) {
 		BigInteger min = getLower(name);
 		if (min != null) {
 			// Check the max values and widen the upper bound
 			BigInteger threshold = Threshold._I16_MIN.getValue();
 			if (min.compareTo(threshold) < 0) {
-				return widenLowerBound(name, threshold);
+				return setLowerBound(name, threshold);
 			} 
 			threshold = Threshold._I32_MIN.getValue();
 			if (min.compareTo(threshold) < 0) {
-				return widenLowerBound(name, threshold);
+				return setLowerBound(name, threshold);
 			} 
 			threshold = Threshold._I64_MIN.getValue();
 			if (min.compareTo(threshold) < 0) {
-				return widenLowerBound(name, threshold);
+				return setLowerBound(name, threshold);
 			}
 			// Widen the upper bound to inf
-			return widenLowerBound(name, null);
+			return setLowerBound(name, null);
 		}
 
 		return false;
@@ -374,10 +374,11 @@ public class Bounds implements Cloneable {
 	 * @param name
 	 * @return
 	 */
-	public boolean widenUpperBoundsToInf(String name) {
+	private boolean widenUpperBoundsToInf(String name) {
 		BigInteger max = getUpper(name);
 		if (max != null) {
-			this.getDomain(name).setUpperBound(null);
+			setUpperBound(name, null);
+			//this.getDomain(name).setUpperBound(null);
 			return true;
 		}
 		return false;
@@ -389,10 +390,10 @@ public class Bounds implements Cloneable {
 	 * @param name
 	 * @return
 	 */
-	public boolean widenLowerBoundsToInf(String name) {
+	private boolean widenLowerBoundsToInf(String name) {
 		BigInteger min = getLower(name);
 		if (min != null) {
-			this.getDomain(name).setLowerBound(null);
+			setLowerBound(name, null);
 			return true;
 		}
 		return false;
