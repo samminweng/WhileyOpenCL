@@ -281,12 +281,10 @@ public class Bounds implements Cloneable {
 			// Lower bounds
 			BigInteger new_min = new_bnd.getLower(var);
 			BigInteger old_min = this.getLower(var);
-			if (new_min == null || (new_min != null && old_min != null && new_min.compareTo(old_min) < 0)) {
-				//this.widenLowerBound(var, new_min);
+			if (new_min == null || (old_min != null && new_min.compareTo(old_min) < 0)) {
 				this.setLowerBound(var, new_min);
 			} else {
 				if(new_min != null && old_min == null){
-					//this.addLowerBound(var, new_min);
 					this.setLowerBound(var, new_min);
 				}				
 			}
@@ -297,14 +295,12 @@ public class Bounds implements Cloneable {
 
 			// Check if the current upper is inf.
 			// If so, then do not update the upper bound
-			if (new_max == null || (new_max != null && old_max != null && new_max.compareTo(old_max) > 0)) {
+			if (new_max == null || (old_max != null && new_max.compareTo(old_max) > 0)) {
 				// Widen the upper bound
-				//this.widenUpperBound(var, new_max);
 				this.setUpperBound(var, new_max);
 			} else {
 				// Add upper bound when the old upper bound is inf 
-				if(new_max != null && old_max == null ){
-					//this.addUpperBound(var, new_max);
+				if(new_max != null && old_max == null){
 					this.setUpperBound(var, new_max);
 				}	
 			}
