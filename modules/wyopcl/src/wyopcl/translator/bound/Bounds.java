@@ -218,18 +218,12 @@ public class Bounds implements Cloneable {
 		try {
 			new_domain = (Domain) existing_domain.clone();
 			new_domain.setLowerBound(new_min);
-			if(existing_domain.getLowerBound() == null){
-				// Update the bound
+			
+			// Check new lower bound > existing lower bound (stronger) 
+			if (existing_domain.getLowerBound() == null || !existing_domain.equals(new_domain)
+				&& new_domain.getLowerBound().compareTo(existing_domain.getLowerBound()) > 0) {
 				bounds.put(name, new_domain);
 				return true;
-			}
-			
-			if (!existing_domain.equals(new_domain)) {
-				// Check new lower bound > existing lower bound (stronger) 
-				if (new_domain.getLowerBound().compareTo(existing_domain.getLowerBound()) > 0) {
-					bounds.put(name, new_domain);
-					return true;
-				}
 			}
 
 		} catch (Exception ex) {
@@ -251,18 +245,17 @@ public class Bounds implements Cloneable {
 		try {
 			new_domain = (Domain) existing_domain.clone();
 			new_domain.setUpperBound(new_max);
-			if(existing_domain.getUpperBound() == null){
+			/*if(existing_domain.getUpperBound() == null){
 				// Update the upper bound
 				bounds.put(name, new_domain);
 				return true;
-			}
-			
-			if (!existing_domain.equals(new_domain)) {
-				// Check new domain is smaller (stronger) than existing one.
-				if (new_domain.getUpperBound().compareTo(existing_domain.getUpperBound()) < 0) {
-					bounds.put(name, new_domain);
-					return true;
-				}
+			}*/
+			// Check new domain is smaller (stronger) than existing one.
+			if (existing_domain.getUpperBound() == null || (!existing_domain.equals(new_domain)
+					&& new_domain.getUpperBound().compareTo(existing_domain.getUpperBound()) < 0)) {
+				bounds.put(name, new_domain);
+				return true;
+				//}
 			}
 		} catch (Exception ex) {
 			throw new RuntimeException(ex.getMessage());
