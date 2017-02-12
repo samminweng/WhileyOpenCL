@@ -319,11 +319,11 @@ public class BoundAnalyzer {
 					}
 
 					// Debug
-					//if (config.isVerbose()) {
+					if (config.isVerbose()) {
 						// Print out the bounds.
-					//	System.out.println(blk);
-					//	System.out.println("isChanged=" + isChanged);
-					//}
+						System.out.println(blk);
+						System.out.println("isChanged=" + isChanged);
+					}
 
 					// Use bitwise 'AND' to combine the bound change of each block. 
 					isFixedPoint &= (!isChanged);
@@ -340,20 +340,20 @@ public class BoundAnalyzer {
 				// or whose lower bounds are decreasing.
 				for (BoundBlock blk : list) {
 					// Debug
-					if (config.isVerbose()) {
+					/*if (config.isVerbose()) {
 						// Print out the bounds.
 						System.out.println("=== Before the widening operator ===");
 						System.out.println(blk);
-					}
+					}*/
 					
 					//Widen the bounds
 					blk.getBounds().widenBounds(config);
-					// Debug
+					/*// Debug
 					if (config.isVerbose()) {
 						// Print out the bounds.
 						System.out.println("=== After the widening operator === ");
 						System.out.println(blk);
-					}
+					}*/
 					
 				}
 				// Reset the iteration
@@ -685,7 +685,9 @@ public class BoundAnalyzer {
 	private void analyze(Codes.Loop code, String name) {
 		// Set the loop flag to be true,
 		// in order to identify the bytecode is inside a loop
+		
 		isLoop = true;
+		
 		// Get the list of byte-code and iterate through the list.
 		iterateBytecode(name, code.bytecodes());
 		
