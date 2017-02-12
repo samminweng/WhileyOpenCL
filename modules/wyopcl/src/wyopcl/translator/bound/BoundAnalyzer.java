@@ -282,7 +282,7 @@ public class BoundAnalyzer {
 		// loop.
 		while (!isFixedPoint) {
 			if (config.isVerbose()) {
-				System.out.println("Iteration " + iteration + " => ");
+				System.out.println("=== Iteration " + iteration + " === ");
 			}
 			// Initialize the isFixedPointed
 			isFixedPoint = true;
@@ -321,11 +321,11 @@ public class BoundAnalyzer {
 					}
 
 					// Debug
-					if (config.isVerbose()) {
+					//if (config.isVerbose()) {
 						// Print out the bounds.
-						System.out.println(blk);
-						System.out.println("isChanged=" + isChanged);
-					}
+					//	System.out.println(blk);
+					//	System.out.println("isChanged=" + isChanged);
+					//}
 
 					// Use bitwise 'AND' to combine the bound change of each block. 
 					isFixedPoint &= (!isChanged);
@@ -341,8 +341,22 @@ public class BoundAnalyzer {
 				// After three iterations, widen the bounds of variables whose upper bounds are increasing
 				// or whose lower bounds are decreasing.
 				for (BoundBlock blk : list) {
+					// Debug
+					if (config.isVerbose()) {
+						// Print out the bounds.
+						System.out.println("=== Before the widening operator ===");
+						System.out.println(blk);
+					}
+					
 					//Widen the bounds
-					blk.getBounds().widenBounds(config);					
+					blk.getBounds().widenBounds(config);
+					// Debug
+					if (config.isVerbose()) {
+						// Print out the bounds.
+						System.out.println("=== After the widening operator === ");
+						System.out.println(blk);
+					}
+					
 				}
 				// Reset the iteration
 				iteration = 1;

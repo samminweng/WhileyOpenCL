@@ -8,11 +8,14 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	private final String prefix = "_";
 	private final String name;
 	
-	private BigInteger lower_bound = null;
-	private BigInteger upper_bound = null;
+	private BigInteger lower_bound;
+	private BigInteger upper_bound;
 	// Indicate the upper bound is increasing with iterations.
-	private boolean isUpperBoundIncreasing = false;
-	private boolean isLowerBoundDecreasing = false;
+	private boolean isUpperBoundIncreasing;
+	private boolean isLowerBoundDecreasing;
+	// Indicate the initial status of bounds
+	private boolean isLowerInit;
+	private boolean isUpperInit;
 	
 	public Domain(String name) {
 		this.name = name;
@@ -20,6 +23,8 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		this.isUpperBoundIncreasing = false;
 		this.lower_bound = null;
 		this.upper_bound = null;
+		this.isLowerInit = true;
+		this.isUpperInit = true;
 	}
 
 	public String getName() {
@@ -60,6 +65,7 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 
 	public void setLowerBound(BigInteger lower_bound) {
 		this.lower_bound = lower_bound;
+		this.isLowerInit = false;
 	}
 
 	public BigInteger getUpperBound() {
@@ -68,8 +74,17 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 
 	public void setUpperBound(BigInteger upper_bound) {
 		this.upper_bound = upper_bound;
+		this.isUpperInit = false;
 	}
 
+	public boolean isUpperInit(){
+		return this.isUpperInit;
+	}
+	
+	public boolean isLowerInit(){
+		return this.isLowerInit;
+	}
+	
 	/**
 	 * Compare the lower bound with the upper bound. 
 	 * @return true if lower <= upper. Otherwise, return false.
@@ -160,6 +175,8 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		Domain d = new Domain(this.name);
 		d.lower_bound = this.lower_bound;
 		d.upper_bound = this.upper_bound;
+		d.isLowerInit = false;
+		d.isUpperInit = false;
 		return d;
 	}
 

@@ -135,7 +135,23 @@ public class Bounds implements Cloneable {
 	public BigInteger getUpper(String name) {
 		return getDomain(name).getUpperBound();
 	}
-
+	/**
+	 * Indicate whether the upper bound is at 'initial' state
+	 * @param name
+	 * @return
+	 */
+	public boolean isUpperInit(String name){
+		return getDomain(name).isUpperInit();
+	}
+	/**
+	 * Indicates whether the lower bound is at 'initial' state
+	 * @param name
+	 * @return
+	 */
+	public boolean isLowerInit(String name){
+		return getDomain(name).isLowerInit();
+	}
+	
 	public boolean setUpperBound(String name, BigInteger upper_bound) {
 		BigInteger existing_bound = getUpper(name);
 		// Check if existing bound == upper_bound
