@@ -3,14 +3,14 @@ int64_t _f_(int64_t limit){
 	int64_t _1 = 0;
 	int64_t i = 0;
 	int64_t sum = 0;
-	uint16_t j = 0;
+	int64_t j = 0;
 	uint16_t _5 = 0;
 	uint16_t _6 = 0;
 	uint16_t _7 = 0;
 	int64_t _8 = 0;
 	int64_t _9 = 0;
 	uint16_t _10 = 0;
-	uint16_t _11 = 0;
+	int64_t _11 = 0;
 	uint16_t _12 = 0;
 	int64_t _13 = 0;
 	//const %5 = 0 : int
@@ -44,6 +44,7 @@ int64_t _f_(int64_t limit){
 			//const %10 = 1 : int
 			_10 = 1;
 			//add %11 = %4, %10 : int
+			_DETECT_INT_ADD_OVERFLOW(j,_10,_11);
 			_11=j+_10;
 			//assign %4 = %11  : int
 			j = _11;

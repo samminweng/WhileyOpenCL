@@ -10,7 +10,7 @@ int64_t _f_(int64_t limit){
 	int64_t _8 = 0;
 	int64_t _9 = 0;
 	uint16_t _10 = 0;
-	int64_t _11 = 0;
+	uint16_t _11 = 0;
 	uint16_t _12 = 0;
 	int64_t _13 = 0;
 	//const %5 = 0 : int
