@@ -1,6 +1,7 @@
 #include "bubblesort.h"
-int64_t* _bubbleSort_(_DECL_1DARRAY_PARAM(items), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _bubbleSort_(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
+	_DECL_DEALLOC(_1);
 	int64_t length = 0;
 	int64_t last_swapped = 0;
 	int64_t index = 0;
@@ -103,6 +104,7 @@ blklab1:;
 //.blklab0
 blklab0:;
 	//return %0
+	_DEALLOC(_1);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(items);
 	return items;
 	//return
@@ -110,19 +112,23 @@ blklab0:;
 
 int main(int argc, char** args){
 	_DECL_1DARRAY(ys);
+	_DECL_DEALLOC(ys);
 	uint16_t _2 = 0;
 	uint16_t _3 = 0;
 	uint16_t _4 = 0;
 	uint16_t _5 = 0;
 	uint16_t _6 = 0;
 	_DECL_1DARRAY(_7);
+	_DECL_DEALLOC(_7);
 	_DECL_1DARRAY(_8);
+	_DECL_DEALLOC(_8);
 	int64_t _9 = 0;
 	int64_t _10 = 0;
 	int64_t _11 = 0;
 	int64_t _12 = 0;
 	int64_t _13 = 0;
 	_DECL_1DARRAY(_14);
+	_DECL_DEALLOC(_14);
 	void* _15;
 	//const %2 = 3 : int
 	_2 = 3;
@@ -135,16 +141,26 @@ int main(int argc, char** args){
 	//const %6 = 2 : int
 	_6 = 2;
 	//newlist %7 = (%2, %3, %4, %5, %6) : int[]
+	_DEALLOC(_7);
 	_NEW_1DARRAY_int64_t(_7, 5, 0);
 	_7[0] = _2; _7[1] = _3; _7[2] = _4; _7[3] = _5; _7[4] = _6; 
+	_ADD_DEALLOC(_7);
 	//assign %1 = %7  : int[]
-	_UPDATE_1DARRAY(ys, _7);
+	_DEALLOC(ys);
+	_COPY_1DARRAY_int64_t(ys, _7);
+	_ADD_DEALLOC(ys);
 	//invoke (%8) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
-		_8 = _bubbleSort_(_1DARRAY_PARAM(ys), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
+		void* ys_tmp;
+		_DEALLOC(_8);
+		_8 = _bubbleSort_(_COPY_1DARRAY_PARAM_int64_t(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
+		_CALLER_DEALLOC(_8, ys, "true-true-false" , "bubbleSort");
+		_ADD_DEALLOC(_8);
 	}
 	//assign %1 = %8  : int[]
-	_UPDATE_1DARRAY(ys, _8);
+	_DEALLOC(ys);
+	_COPY_1DARRAY_int64_t(ys, _8);
+	_ADD_DEALLOC(ys);
 	//assert
 	{
 		//const %9 = 1 : int
@@ -158,8 +174,10 @@ int main(int argc, char** args){
 		//const %13 = 7 : int
 		_13 = 7;
 		//newlist %14 = (%9, %10, %11, %12, %13) : int[]
+		_DEALLOC(_14);
 		_NEW_1DARRAY_int64_t(_14, 5, 0);
 		_14[0] = _9; _14[1] = _10; _14[2] = _11; _14[3] = _12; _14[4] = _13; 
+		_ADD_DEALLOC(_14);
 		//ifeq %1, %14 goto blklab5 : int[]
 		_IFEQ_ARRAY_int64_t(ys, _14, blklab5);
 		//fail
@@ -176,6 +194,10 @@ blklab5:;
 		_PRINT_1DARRAY_int64_t(ys);
 	}
 	//return
+	_DEALLOC(ys);
+	_DEALLOC(_7);
+	_DEALLOC(_8);
+	_DEALLOC(_14);
 	exit(0);
 }
 
