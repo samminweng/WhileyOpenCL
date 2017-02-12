@@ -175,8 +175,8 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		Domain d = new Domain(this.name);
 		d.lower_bound = this.lower_bound;
 		d.upper_bound = this.upper_bound;
-		d.isLowerInit = false;
-		d.isUpperInit = false;
+		d.isLowerInit = this.isLowerInit;
+		d.isUpperInit = this.isUpperInit;
 		return d;
 	}
 

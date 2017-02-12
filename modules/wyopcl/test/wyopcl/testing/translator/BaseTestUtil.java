@@ -15,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -150,15 +151,20 @@ public final class BaseTestUtil {
 		
 		Process process;
 		try {		
-			//Path destDir = Paths.get(sourceDir + File.separator + testcase + File.separator);
-			Path sysout = Paths.get(sourceDir + File.separator + testcase + File.separator + strategy +"_bound.sysout");
+			Path destDir = Paths.get(sourceDir + File.separator + testcase);
+			// Copy source.whiley to destDir folder
+			Files.copy(Paths.get(sourceDir + File.separator + testcase + ".whiley"),
+					Paths.get(destDir + File.separator + testcase + ".whiley"),
+					StandardCopyOption.REPLACE_EXISTING);
+			
+			Path sysout = Paths.get(destDir + File.separator + strategy +"_bound.sysout");
 			// Make the command
 			String cmd = makeCmd(testcase, options);
 			
 			// Get the runtime.
 			Runtime rt = Runtime.getRuntime();
 			// Change the folder Run the command
-			process = rt.exec(cmd, null, sourceDir.toFile());
+			process = rt.exec(cmd, null, destDir.toFile());
 			
 			process.waitFor();
 			
