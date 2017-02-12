@@ -44,7 +44,7 @@ int main(int argc, char** args){
 	uint16_t d = 0;
 	uint16_t e = 0;
 	uint16_t x = 0;
-	int64_t y = 0;
+	uint16_t y = 0;
 	uint16_t _8 = 0;
 	uint16_t _9 = 0;
 	int64_t _10 = 0;
@@ -68,7 +68,7 @@ int main(int argc, char** args){
 	void* _32;
 	uint16_t _34 = 0;
 	uint16_t _35 = 0;
-	int64_t _36 = 0;
+	uint16_t _36 = 0;
 	void* _37;
 	//const %9 = 1 : int
 	_9 = 1;

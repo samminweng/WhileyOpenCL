@@ -298,10 +298,8 @@ public class BoundAnalyzer {
 					// Take the union of parents' bounds to produce the input
 					// bounds for bound inference.
 					for (BoundBlock parent : blk.getParentNodes()) {
-						// Take the consistent bounds
-						if(parent.isConsistent() == true){
-							blk.unionBounds(parent);
-						}
+						// Take the bounds of parent nodes
+						blk.unionBounds(parent);
 					}
 					
 					// Beginning of bound inference.
@@ -378,6 +376,7 @@ public class BoundAnalyzer {
 		
 		for (BoundBlock blk : list) {
 			// Consider the bounds of consistent block and discard the bounds of inconsistent block.
+			//if (blk.isConsistent() && blk.getType() != BlockType.EXIT) {
 			if (blk.isConsistent() && blk.getType() != BlockType.EXIT) {
 				exit_blk.unionBounds(blk);
 			}
