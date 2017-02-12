@@ -1,7 +1,7 @@
 #include "whileloop1.h"
 int64_t _foo_(int64_t INPUT){
 	int64_t _1 = 0;
-	uint16_t i = 0;
+	int64_t i = 0;
 	int64_t OUTPUT = 0;
 	uint16_t _4 = 0;
 	uint16_t _5 = 0;
@@ -9,7 +9,7 @@ int64_t _foo_(int64_t INPUT){
 	uint16_t _7 = 0;
 	int64_t _8 = 0;
 	uint16_t _9 = 0;
-	uint16_t _10 = 0;
+	int64_t _10 = 0;
 	//const %4 = 0 : int
 	_4 = 0;
 	//assign %2 = %4  : int
@@ -32,6 +32,7 @@ int64_t _foo_(int64_t INPUT){
 		//const %9 = 1 : int
 		_9 = 1;
 		//add %10 = %2, %9 : int
+		_DETECT_INT_ADD_OVERFLOW(i,_9,_10);
 		_10=i+_9;
 		//assign %2 = %10  : int
 		i = _10;

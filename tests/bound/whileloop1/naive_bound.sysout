@@ -5,8 +5,8 @@ Bound Analysis of main:
 Consistency=true
 Bound Analysis of foo:
 	domain(INPUT)	=[10..20]
-	domain(_10)	=[1..20]
-	domain(i)	=[0..20]
+	domain(_10)	=[1..infinity]
+	domain(i)	=[0..infinity]
 	domain(OUTPUT)	=[0..infinity]
 	domain(_4)	=[0..0]
 	domain(_5)	=[0..0]
