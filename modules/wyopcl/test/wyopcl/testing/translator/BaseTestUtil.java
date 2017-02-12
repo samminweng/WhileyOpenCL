@@ -176,7 +176,7 @@ public final class BaseTestUtil {
 					Files.newBufferedReader(sysout, StandardCharsets.UTF_8));
 			
 			// Remove all generated WyIL files.
-			Files.deleteIfExists(Paths.get(sourceDir + testcase + ".wyil"));
+			Files.deleteIfExists(Paths.get(destDir + testcase + ".wyil"));
 		} catch (Exception e) {
 			throw new RuntimeException("Test file: " + testcase + ".whiley", e);
 		}

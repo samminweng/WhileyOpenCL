@@ -25,6 +25,7 @@ import wyopcl.translator.bound.constraint.GreaterThanEquals;
 import wyopcl.translator.bound.constraint.LeftPlus;
 import wyopcl.translator.bound.constraint.LessThan;
 import wyopcl.translator.bound.constraint.LessThanEquals;
+import wyopcl.translator.bound.constraint.LeftMultiply;
 import wyopcl.translator.bound.constraint.Negate;
 
 /***
@@ -354,7 +355,6 @@ public class BoundAnalyzer {
 						System.out.println("=== After the widening operator === ");
 						System.out.println(blk);
 					}*/
-					
 				}
 				// Reset the iteration
 				iteration = 1;
@@ -721,6 +721,7 @@ public class BoundAnalyzer {
 				graph.addConstraint(new LeftPlus(prefix + code.operand(0), prefix + code.operand(1), target));
 				break;
 			case MUL:
+				graph.addConstraint(new LeftMultiply(prefix+ code.operand(0), prefix + code.operand(1), target));
 				break;
 			case DIV:
 				break;
