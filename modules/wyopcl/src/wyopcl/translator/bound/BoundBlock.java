@@ -201,6 +201,15 @@ public class BoundBlock implements Comparable<BoundBlock> {
 		// Take the union of bounds of parent node and current node.
 		this.unionOfBounds.union((Bounds) parent.getBounds().clone());
 	}
+	/**
+	 * Intersect the bounds of current and its parent nodes and then set the bounds directly.
+	 * 
+	 * 
+	 * @param parent
+	 */
+	public void intersecBounds(BoundBlock parent){
+		this.unionOfBounds.intersect((Bounds) parent.getBounds().clone());
+	}
 
 	/**
 	 * Check if the block is the leaf node.

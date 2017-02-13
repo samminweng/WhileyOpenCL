@@ -311,6 +311,33 @@ public class Bounds implements Cloneable {
 			}
 		}
 	}
+	
+	/**
+	 * Perform the intersection of new and old bounds
+	 * and return the resulting bounds.
+	 * 
+	 * @param new_bnd
+	 */
+	public void intersect(Bounds new_bnd) {
+		for (String var : new_bnd.bounds.keySet()) {
+			// Lower bounds
+			BigInteger new_min = new_bnd.getLower(var);
+			BigInteger old_min = this.getLower(var);
+			// The new bound is stronger than old one
+			if(new_min !=null && old_min != null && new_min.compareTo(old_min) > 0) {
+				this.setLowerBound(var, new_min);
+			}
+			
+			// Upper bounds
+			BigInteger new_max = new_bnd.getUpper(var);
+			BigInteger old_max = this.getUpper(var);
+			
+			// The new bound is stronger than old one.
+			if(new_max != null && old_max != null && new_max.compareTo(old_max) < 0) {
+				this.setUpperBound(var, new_max);
+			}
+		}
+	}
 
 	/**
 	 * Widens the upper bounds against a list of max values of integer types.

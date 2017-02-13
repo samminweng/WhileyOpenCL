@@ -341,20 +341,20 @@ public class BoundAnalyzer {
 				// or whose lower bounds are decreasing.
 				for (BoundBlock blk : list) {
 					// Debug
-					/*if (config.isVerbose()) {
+					if (config.isVerbose()) {
 						// Print out the bounds.
 						System.out.println("=== Before the widening operator ===");
 						System.out.println(blk);
-					}*/
+					}
 					
 					//Widen the bounds
 					blk.getBounds().widenBounds(config);
-					/*// Debug
+					// Debug
 					if (config.isVerbose()) {
 						// Print out the bounds.
 						System.out.println("=== After the widening operator === ");
 						System.out.println(blk);
-					}*/
+					}
 				}
 				// Reset the iteration
 				iteration = 1;
