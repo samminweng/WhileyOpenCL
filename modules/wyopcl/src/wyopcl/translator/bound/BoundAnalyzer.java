@@ -276,7 +276,7 @@ public class BoundAnalyzer {
 		// exit block, and infer the bounds consistent with all the constraints in each block.
 		List<BoundBlock> list = graph.getBlockList();
 		boolean isFixedPoint = false;
-		int iteration = 1;
+		int iteration = 0;
 		// Stop the loop when the program reaches the fixed point or max-iterations
 		// by using AND operator to combine these two condition.
 		// If both of two conditions are evaluated to be true, then enter the
@@ -296,9 +296,13 @@ public class BoundAnalyzer {
 					Bounds bnd_before = null, bnd_after = null;
 					// Clone the bounds before the bound inference
 					bnd_before = (Bounds) blk.getBounds().clone();
+					
+					// Reset the block bounds
+					blk.emptyBounds();
 					// Take the union of parents' bounds to produce the input
 					// bounds for bound inference.
 					for (BoundBlock parent : blk.getParentNodes()) {
+						
 						// Take the bounds of parent nodes
 						blk.unionBounds(parent);
 					}
@@ -309,8 +313,12 @@ public class BoundAnalyzer {
 
 					bnd_after = (Bounds) blk.getBounds();
 					// Check if upper/lower bound has any change
-					bnd_after.checkBoundChange(bnd_before);
-										
+					//bnd_after.checkBoundChange(bnd_before);
+					if(iteration %3 == 0){
+						bnd_after.widenBounds(config, bnd_before);
+					}
+					
+					
 					// Check bound change at each block.
 					// Test the equality of existing and newly inferred bounds.
 					if (bnd_before != null && bnd_after != null 
@@ -337,7 +345,7 @@ public class BoundAnalyzer {
 
 			// Repeat the bound inference for (maximal) three iterations
 			if ( iteration%3 == 0) {
-				// After three iterations, widen the bounds of variables whose upper bounds are increasing
+				/*// After three iterations, widen the bounds of variables whose upper bounds are increasing
 				// or whose lower bounds are decreasing.
 				for (BoundBlock blk : list) {
 					// Debug
@@ -355,9 +363,9 @@ public class BoundAnalyzer {
 						System.out.println("=== After the widening operator === ");
 						System.out.println(blk);
 					}
-				}
+				}*/
 				// Reset the iteration
-				iteration = 1;
+				//iteration = 1;
 			}else{
 				iteration++;
 			}

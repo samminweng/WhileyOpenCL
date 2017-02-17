@@ -137,7 +137,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	 * Empty the bounds.
 	 */
 	public void emptyBounds() {
-		this.unionOfBounds = null;
+		//this.unionOfBounds = null;
 		this.unionOfBounds = new Bounds();
 	}
 

@@ -6,6 +6,15 @@ import wyopcl.translator.bound.Bounds;
 
 /**
  * Propagates the bounds for the constraint 'x:=y'.
+ * 
+ * Copy the bounds of 'y' to 'x'
+ * 
+ * Rules are:
+ * 
+ * 
+ * 
+ * 
+ * 
  * @author Min-Hsien Weng
  *
  */
@@ -26,14 +35,8 @@ public class Assign extends Constraint{
 		max_y = bnd.getUpper(y);
 		min_y = bnd.getLower(y);
 		
-		//Assign the lower and upper bounds.	
-		if(bnd.isLowerInit(x) || (min_x != null && (min_y==null || min_y != null && min_x.compareTo(min_y)>0))){
-			bnd.isChanged |= bnd.setLowerBound(x, min_y);
-		}
+		bnd.getDomain(x).set(bnd.getDomain(y));
 		
-		if(bnd.isUpperInit(x) || (max_x != null && (max_y == null || max_y != null && max_x.compareTo(max_y)<0))){
-			bnd.isChanged |= bnd.setUpperBound(x, max_y);
-		}
 		
 		return bnd.isChanged;
 	}

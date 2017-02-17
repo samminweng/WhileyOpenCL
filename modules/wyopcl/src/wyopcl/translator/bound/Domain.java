@@ -3,28 +3,40 @@ package wyopcl.translator.bound;
 import java.math.BigInteger;
 import java.util.Comparator;
 
+import wyopcl.translator.bound.Bounds.Threshold;
+
 
 public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain> {
 	private final String prefix = "_";
 	private final String name;
-	
+
 	private BigInteger lower_bound;
 	private BigInteger upper_bound;
 	// Indicate the upper bound is increasing with iterations.
-	private boolean isUpperBoundIncreasing;
-	private boolean isLowerBoundDecreasing;
+	//private boolean isUpperBoundIncreasing;
+	//private boolean isLowerBoundDecreasing;
 	// Indicate the initial status of bounds
-	private boolean isLowerInit;
-	private boolean isUpperInit;
-	
+	private boolean isLowerUnknown;
+	private boolean isUpperUnknown;
+
+	public Domain(String name, BigInteger lower, BigInteger upper){
+		this.name= name;
+		this.lower_bound = lower;
+		this.upper_bound = upper;
+		this.isLowerUnknown = false;
+		this.isUpperUnknown = false;
+	}
+
+
 	public Domain(String name) {
 		this.name = name;
-		this.isLowerBoundDecreasing = false;
-		this.isUpperBoundIncreasing = false;
+		//this.isLowerBoundDecreasing = false;
+		//this.isUpperBoundIncreasing = false;
 		this.lower_bound = null;
 		this.upper_bound = null;
-		this.isLowerInit = true;
-		this.isUpperInit = true;
+		//this.isEmpty = true;
+		this.isLowerUnknown = true;
+		this.isUpperUnknown = true;
 	}
 
 	public String getName() {
@@ -43,12 +55,12 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 			}
 			return Integer.parseInt(name.split("^"+prefix)[1]);
 		}
-	
+
 		return -1;
 		//Return the maximal values for other cases.
 		//return Integer.MAX_VALUE;
 	}
-	
+
 	private int getLabel(){
 		if(name.contains("_")){
 			String[] name_str = name.split("_");
@@ -57,15 +69,23 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		}
 		return -1;
 	}
-	
+
 
 	public BigInteger getLowerBound() {
 		return lower_bound;
 	}
 
+	public void set(BigInteger lower, BigInteger upper) {
+		this.lower_bound = lower;
+		this.upper_bound = upper;
+		this.isLowerUnknown = false;
+		this.isUpperUnknown = false;
+		//this.isEmpty = false;
+	}
+
 	public void setLowerBound(BigInteger lower_bound) {
 		this.lower_bound = lower_bound;
-		this.isLowerInit = false;
+		//this.isLowerInit = false;
 	}
 
 	public BigInteger getUpperBound() {
@@ -74,22 +94,25 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 
 	public void setUpperBound(BigInteger upper_bound) {
 		this.upper_bound = upper_bound;
-		this.isUpperInit = false;
+		//this.isUpperInit = false;
 	}
 
-	public boolean isUpperInit(){
-		return this.isUpperInit;
-	}
-	
-	public boolean isLowerInit(){
-		return this.isLowerInit;
-	}
-	
+	//	public boolean isUpperInit(){
+	//		return this.isUpperInit;
+	//	}
+	//	
+	//	public boolean isLowerInit(){
+	//		return this.isLowerInit;
+	//	}
+
 	/**
 	 * Compare the lower bound with the upper bound. 
 	 * @return true if lower <= upper. Otherwise, return false.
 	 */
 	public boolean isConsistent(){
+		if (this.isLowerUnknown || this.isUpperUnknown) {
+			return false;
+		}
 		if(this.lower_bound!= null && this.upper_bound != null){
 			if(this.lower_bound.compareTo(this.upper_bound)>0){
 				return false;
@@ -97,7 +120,7 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		}		
 		return true;
 	}
-	
+
 
 	/***
 	 * Compare this domain with another domain (d). If both of them are equal,
@@ -110,6 +133,7 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		if (this.name.compareTo(d.getName()) != 0) {
 			return this.name.compareTo(d.getName());
 		}
+
 		// Compare the lower_bound field
 		if (this.lower_bound == null) {
 			// That means this domain < d domain.
@@ -154,9 +178,9 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	public String toString() {
 		//Change the string format
 		//return "Domain [name=" + name + ", lower_bound=" + this.lower_bound + ", upper_bound=" + this.upper_bound + "]";
-		return "domain("+this.name+")\t= "+getBounds() + "\t"
-				+ "UB=" + this.isUpperBoundIncreasing +"\t"
-				+ "LB=" + this.isLowerBoundDecreasing; 
+		return "domain("+this.name+")\t= "+getBounds() + "\t";
+		//+ "UB=" + this.isUpperBoundIncreasing +"\t"
+		//+ "LB=" + this.isLowerBoundDecreasing; 
 	}
 	/**
 	 * Gets the upper and lower bounds, and converts them to a string 
@@ -169,14 +193,15 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		//return "Domain [name=" + name + ", lower_bound=" + this.lower_bound + ", upper_bound=" + this.upper_bound + "]";
 		return "[" + lb + ".."  + ub + "]";
 	}
-	
+
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		Domain d = new Domain(this.name);
 		d.lower_bound = this.lower_bound;
 		d.upper_bound = this.upper_bound;
-		d.isLowerInit = this.isLowerInit;
-		d.isUpperInit = this.isUpperInit;
+		//d.isEmpty = this.isEmpty;
+		//d.isLowerInit = this.isLowerInit;
+		//d.isUpperInit = this.isUpperInit;
 		return d;
 	}
 
@@ -195,11 +220,12 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 
 	}
 
-	
+
 	/**
 	 * Implemented for sort the domains
 	 */
 	@Override
+	@Deprecated
 	public int compare(Domain d0, Domain d1) {		
 		int reg = d0.getReg() - d1.getReg();
 		if(reg == 0){
@@ -209,7 +235,232 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		}
 	}
 
-	public boolean isUpperBoundIncreasing() {
+	public void union(Domain domain) {
+		// Lower bounds
+		BigInteger new_min = domain.getLowerBound();
+		BigInteger old_min = this.getLowerBound();
+
+		// Upper bounds
+		BigInteger new_max = domain.getUpperBound();
+		BigInteger old_max = this.getUpperBound();
+
+		// Empty domain is initialized
+		if(domain.isEmpty()){
+			// Do nothing
+			return;
+		}
+
+
+		if (this.isEmpty()) {
+			this.set(new_min, new_max);
+			return;
+		}
+
+		// This and domain are not Empty
+		// New Lower bound is lower
+		if(new_min == null || (old_min != null && new_min.compareTo(old_min) < 0)) {
+			this.setLowerBound(new_min);
+		}
+
+		// New Upper bound is larger
+		if(new_max == null || (old_max != null && new_max.compareTo(old_max) > 0)) {
+			this.setUpperBound(new_max);
+		}
+
+		return;
+
+	}
+
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return this.isLowerUnknown || this.isUpperUnknown;
+	}
+
+
+	public void intersect(Domain domain) {
+		// Lower bounds
+		BigInteger new_min = domain.getLowerBound();
+		BigInteger old_min = this.getLowerBound();
+
+		// Upper bounds
+		BigInteger new_max = domain.getUpperBound();
+		BigInteger old_max = this.getUpperBound();
+
+		// Intersect empty 
+		// Empty domain is initialized
+		if(domain.isEmpty() || this.isEmpty()){
+			// Create an
+			this.setEmpty();
+			return;
+		}
+
+		// Both are not empt
+		// This and domain are not Empty
+		// New Lower bound is higher
+		if(new_min != null) {
+			if (old_min == null || old_min.compareTo(new_min) < 0){
+				this.setLowerBound(new_min);
+			}
+		}
+
+		// New Upper bound is larger
+		if(new_max != null) {
+			if (old_max == null || old_max.compareTo(new_max) > 0){
+				this.setUpperBound(new_max);
+			}
+		}
+
+
+		return;
+
+
+
+	}
+
+	/**
+	 * Reset the domain to be empty set
+	 * 
+	 */
+	public void setEmpty() {
+		this.lower_bound = null;
+		this.upper_bound = null;
+		this.isLowerUnknown = true;
+		this.isUpperUnknown = true;
+
+	}
+
+
+	public void set(Domain domain) {
+		this.lower_bound = domain.getLowerBound();
+		this.upper_bound = domain.getUpperBound();
+		this.isLowerUnknown = domain.isLowerUnknown;
+		this.isUpperUnknown = domain.isUpperUnknown;
+	}
+
+	
+	/**
+	 * Widens the lower bounds against a list of min values of integer types.
+	 * (i.e. int16_t, int32_t and int64_t).
+	 * 
+	 * @param name
+	 * @return
+	 */
+	private void widenLowerBoundsAgainstThresholds(BigInteger min) {		
+		if (min != null) {
+			// Check the max values and widen the upper bound
+			BigInteger threshold = Threshold._I16_MIN.getValue();
+			if (min.compareTo(threshold) < 0) {
+				this.setLowerBound(threshold);
+				return;
+			} 
+			threshold = Threshold._I32_MIN.getValue();
+			if (min.compareTo(threshold) < 0) {
+				this.setLowerBound(threshold);
+				return;
+			} 
+			threshold = Threshold._I64_MIN.getValue();
+			if (min.compareTo(threshold) < 0) {
+				this.setLowerBound(threshold);
+				return;
+			}
+			// Widen the upper bound to inf
+			this.setLowerBound(null);
+			return;
+		}
+	}
+	
+	/**
+	 * Widens the upper bounds against a list of max values of integer types.
+	 * (i.e. int16_t, int32_t and int64_t).
+	 * 
+	 * @param name
+	 * @return
+	 */
+	private void widenUpperBoundsAgainstThresholds(BigInteger max) {
+		if (max != null) {
+			// Check the max values and widen the upper bound
+			BigInteger threshold = Threshold._I16_MAX.getValue();
+			if (max.compareTo(threshold) < 0) {
+				this.setUpperBound(threshold);
+				return;
+			}
+			threshold = Threshold._I32_MAX.getValue();
+			if (max.compareTo(threshold) < 0) {
+				this.setUpperBound(threshold);
+				return;
+			} 
+			threshold = Threshold._I64_MAX.getValue();
+			if (max.compareTo(threshold) < 0) {
+				this.setUpperBound(threshold);
+				return;
+			}
+			// Widen the upper bound to inf
+			this.setUpperBound(null);
+			return;
+		}
+
+		return;
+	}
+	
+
+	public void widenBound(boolean isGradual, Domain d) {
+		
+		// Check the empty set
+		if(this.isEmpty()){
+			this.set(d);
+			return;
+		}
+			
+		if(d.isEmpty()){
+			// Do nothing
+			return;
+		}
+		
+		
+		// Both are not empty
+		// Check the lower bound is decreasing
+		BigInteger this_min = this.getLowerBound();
+		BigInteger d_min = d.getLowerBound();
+		if(this_min != null && d_min != null
+				&& this_min.compareTo(d_min)<0){
+			if (isGradual) {
+				widenLowerBoundsAgainstThresholds(this_min);
+			} else {
+				this.setLowerBound(null);
+			}
+		}
+		
+		// Check upper bound is increasing and Widen the upper bound
+		BigInteger this_max = this.getUpperBound();
+		BigInteger d_max = d.getUpperBound();
+		if(this_max != null && d_max != null
+				&& this_max.compareTo(d_max)>0){
+			if (isGradual) {
+				widenUpperBoundsAgainstThresholds(this_max);
+			} else {
+				this.setUpperBound(null);
+			}
+		}
+		
+
+	}
+
+
+	public static BigInteger plus(BigInteger x, BigInteger y) {
+		if (x == null || y == null) {
+			return null;
+		}
+		return x.add(y);
+	}
+
+
+	
+
+
+
+
+
+	/*public boolean isUpperBoundIncreasing() {
 		return isUpperBoundIncreasing;
 	}
 
@@ -223,5 +474,5 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 
 	public void setLowerBoundDecreasing(boolean isLowerBoundDecreasing) {
 		this.isLowerBoundDecreasing = isLowerBoundDecreasing;
-	}
+	}*/
 }
