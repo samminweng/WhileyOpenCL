@@ -20,28 +20,28 @@ public class Negate extends Constraint{
 
 
 	@Override
-	public boolean inferBound(Bounds bnd) {			
-			bnd.isChanged = false;
-			//Before propagation
-			min_x = bnd.getLower(x);
-			max_x = bnd.getUpper(x);
-			min_y = bnd.getLower(y);
-			max_y = bnd.getUpper(y);
+	public void inferBound(Bounds bnd) {			
+		//bnd.isChanged = false;
+		//Before propagation
+		min_x = bnd.getLower(x);
+		max_x = bnd.getUpper(x);
+		min_y = bnd.getLower(y);
+		max_y = bnd.getUpper(y);
 
 
-			// Y = !X
-			// Add the lower bound of y variable.
-			if (max_x != null) {
-				//max (min_y, !min_x)
-				bnd.isChanged |= bnd.setLowerBound(y, max_x.negate());
-			}
-			// Add the upper bound of y variable.
-			if (min_x != null) {
-				//min (max_y, !min_x)
-				bnd.isChanged |= bnd.setUpperBound(y, min_x.negate());
-			}
+		// Y = !X
+		// Add the lower bound of y variable.
+		if (max_x != null) {
+			//max (min_y, !min_x)
+			bnd.setLowerBound(y, max_x.negate());
+		}
+		// Add the upper bound of y variable.
+		if (min_x != null) {
+			//min (max_y, !min_x)
+			bnd.setUpperBound(y, min_x.negate());
+		}
 
-		return bnd.isChanged;
+		//return bnd.isChanged;
 	}
 
 

@@ -14,14 +14,11 @@ import wyopcl.translator.bound.Domain;
  * x <= y
  * </code> 
  * 
- * It adds the upper bound from 'y' to 'x' without making any change to 'y'.
- * For example, the following bounds and constraints:
- * <pre><code>
- * D(x) = [1..11], D(y)=[10..10], x < y
- * </code></p> 
- * can be inferred as below:
- * <pre><code>
- * D(x) = [1..10], D(y)=[10..10]
+ * Rules are:
+ * 1. x:=x intersect [-inf... y.max]
+ * 2. y:=y intersect [x.min ... +inf]
+ * 
+ * 
  * </code>
  * </p>
  * @author Min-Hsien Weng
@@ -36,25 +33,28 @@ public class LessThanEquals extends Constraint {
 		this.y = y;
 	}
 	@Override
-	public boolean inferBound(Bounds bnd) {
+	public void inferBound(Bounds bnd) {
 
-		bnd.isChanged = false;
 		//Propagate the lower bound from x to y.
 		min_x = bnd.getLower(x);
 		max_x = bnd.getUpper(x);
 		min_y = bnd.getLower(y);
 		max_y = bnd.getUpper(y);
-		//Propagate the upper bound from y to x.
+		
+		// Update x domain
 		if(max_y != null){
-			bnd.isChanged |= bnd.addUpperBound(x, max_y);
-		}	
-//		//Propagate the lower bound from x to y.
-//		if(min_y != null){
-//			bnd.isChanged |= bnd.addLowerBound(x, min_y);
-//		}		
+			Domain x_domain = new Domain(x, null, max_y);
+			bnd.getDomain(x).intersect(x_domain);
+		}
+
+		// Update y domain
+		if(min_x != null){
+			Domain y_domain = new Domain(y, min_x, null);
+			bnd.getDomain(y).intersect(y_domain);
+		}
 		
 
-		return bnd.isChanged;
+		//return true;
 	}
 	@Override
 	public String toString() {

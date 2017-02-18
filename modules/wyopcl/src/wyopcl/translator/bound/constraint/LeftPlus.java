@@ -28,7 +28,7 @@ public class LeftPlus extends Constraint {
 	}
 
 	@Override
-	public boolean inferBound(Bounds bnd) {
+	public void inferBound(Bounds bnd) {
 		//bnd.isChanged = false;
 		//Before propagation.
 		min_x = bnd.getLower(x);
@@ -51,7 +51,7 @@ public class LeftPlus extends Constraint {
 			bnd.getDomain(z).set(lower, upper);
 		}
 
-		return true;
+		//return true;
 	}
 
 	@Override

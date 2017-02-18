@@ -8,6 +8,7 @@ import wyopcl.translator.bound.Bounds;
  * @author Min-Hsien Weng
  *
  */
+@Deprecated
 public class Union extends Constraint {
 	private BigInteger min_x, max_x, min_y, max_y;
 	private String x, y;
@@ -18,8 +19,8 @@ public class Union extends Constraint {
 
 
 	@Override
-	public boolean inferBound(Bounds bnd) {
-		bnd.isChanged = false;
+	public void inferBound(Bounds bnd) {
+		/*//bnd.isChanged = false;
 		min_x = bnd.getLower(x);
 		max_x = bnd.getUpper(x);
 		min_y = bnd.getLower(y);
@@ -49,8 +50,8 @@ public class Union extends Constraint {
 			}			
 		}
 
-		return bnd.isChanged;
-	}
+		//return bnd.isChanged;
+*/	}
 
 
 	@Override

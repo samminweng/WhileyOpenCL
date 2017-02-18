@@ -19,13 +19,12 @@ public class Const extends Constraint{
 	}	
 
 	@Override
-	public boolean inferBound(Bounds bnd) {
+	public void inferBound(Bounds bnd) {
 		//Assign the lower and upper bounds with constant value
 		Domain new_domain = new Domain(x, constant, constant);
 		bnd.getDomain(x).set(new_domain);
-			
-		return true;
 	}
+	
 	@Override
 	public String toString() {
 		return x + ":=" + constant;

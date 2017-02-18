@@ -24,8 +24,8 @@ public class Plus extends Constraint{
 		this.z = z;
 	}
 	@Override
-	public boolean inferBound(Bounds bnd) {		
-		bnd.isChanged = false;
+	public void inferBound(Bounds bnd) {		
+		/*//bnd.isChanged = false;
 		//Before propagation
 		min_x = bnd.getLower(x);
 		max_x = bnd.getUpper(x);
@@ -95,8 +95,8 @@ public class Plus extends Constraint{
 				bnd.isChanged |= bnd.addUpperBound(z, max);
 			}			
 		}
-
-		return bnd.isChanged;
+*/
+		//return bnd.isChanged;
 	}
 	@Override
 	public String toString() {

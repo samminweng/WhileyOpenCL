@@ -26,8 +26,8 @@ public class GreaterThanEquals extends Constraint {
 	
 	
 	@Override
-	public boolean inferBound(Bounds bnd) {
-		bnd.isChanged = false;
+	public void inferBound(Bounds bnd) {
+		//bnd.isChanged = false;
 		
 		min_x = bnd.getLower(x);
 		max_x = bnd.getUpper(x);
@@ -47,7 +47,7 @@ public class GreaterThanEquals extends Constraint {
 		}
 		
 
-		return bnd.isChanged;
+		//return bnd.isChanged;
 	}
 
 

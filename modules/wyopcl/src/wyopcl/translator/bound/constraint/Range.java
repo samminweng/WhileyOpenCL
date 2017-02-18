@@ -25,9 +25,9 @@ public class Range extends Constraint {
 	
 
 	@Override
-	public boolean inferBound(Bounds bnd) {
+	public void inferBound(Bounds bnd) {
 		
-		bnd.isChanged = false;
+		//bnd.isChanged = false;
 		min_x = bnd.getLower(x);
 		max_x = bnd.getUpper(x);			
 		if(min_x != min_y){
@@ -39,7 +39,7 @@ public class Range extends Constraint {
 			bnd.isChanged |= true;
 		}
 		
-		return bnd.isChanged;
+		//return bnd.isChanged;
 	}
 
 	@Override

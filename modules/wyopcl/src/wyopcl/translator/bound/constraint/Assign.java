@@ -28,17 +28,15 @@ public class Assign extends Constraint{
 	
 
 	@Override
-	public boolean inferBound(Bounds bnd) {
-		bnd.isChanged = false;
+	public void inferBound(Bounds bnd) {
+		//bnd.isChanged = false;
 		max_x = bnd.getUpper(x);
 		min_x = bnd.getLower(x);
 		max_y = bnd.getUpper(y);
 		min_y = bnd.getLower(y);
 		
 		bnd.getDomain(x).set(bnd.getDomain(y));
-		
-		
-		return bnd.isChanged;
+		//return bnd.isChanged;
 	}
 	@Override
 	public String toString() {

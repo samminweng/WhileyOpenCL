@@ -23,8 +23,8 @@ public class LeftMultiply extends Constraint {
 	}
 	
 	@Override
-	public boolean inferBound(Bounds bnd) {
-		bnd.isChanged = false;
+	public void inferBound(Bounds bnd) {
+		//bnd.isChanged = false;
 		
 		//Before propagation.
 		min_x = bnd.getLower(x);
@@ -47,7 +47,7 @@ public class LeftMultiply extends Constraint {
 			bnd.isChanged |= bnd.setUpperBound(z, BigInteger.valueOf(0));
 		}*/
 		
-		return bnd.isChanged;
+		//return bnd.isChanged;
 	}
 
 	@Override

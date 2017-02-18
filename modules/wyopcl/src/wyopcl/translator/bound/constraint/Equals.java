@@ -27,9 +27,7 @@ public class Equals extends Constraint {
 	 * Infer the bounds from x to y and from y to x.
 	 */
 	@Override
-	public boolean inferBound(Bounds bnd) {
-
-		bnd.isChanged = false;
+	public void inferBound(Bounds bnd) {
 		x_min = bnd.getLower(x);
 		x_max = bnd.getUpper(x);
 		y_min = bnd.getLower(y);
@@ -53,8 +51,7 @@ public class Equals extends Constraint {
 			bnd.isChanged |= bnd.addUpperBound(x, y_max);
 		}
 
-		return bnd.isChanged;
-
+		//return bnd.isChanged;
 	}
 
 	@Override

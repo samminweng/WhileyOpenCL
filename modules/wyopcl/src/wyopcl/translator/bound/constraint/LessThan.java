@@ -33,8 +33,8 @@ public class LessThan extends Constraint {
 	/**
 	 * Propagate rule of inequality 'x < y'.
 	 */
-	public boolean inferBound(Bounds bnd) {
-		bnd.isChanged = false;
+	public void inferBound(Bounds bnd) {
+		//bnd.isChanged = false;
 		min_x = bnd.getLower(x);
 		max_x = bnd.getUpper(x);
 		min_y = bnd.getLower(y);
@@ -46,24 +46,13 @@ public class LessThan extends Constraint {
 			bnd.getDomain(x).intersect(x_domain);
 		}
 		
-		
 		// Update y domain
 		if(min_x != null){
 			Domain y_domain = new Domain(y, min_x.add(BigInteger.ONE), null);
 			bnd.getDomain(y).intersect(y_domain);
 		}
-		
-		
-		
 
-	/*	// Propagate 'upper bound of y - 1' to upper bound of x.
-		if (max_y != null) {
-			bnd.isChanged |= bnd.addUpperBound(x, max_y.subtract(BigInteger.ONE));
-		}
-		
-	*/
-
-		return bnd.isChanged;
+		//return bnd.isChanged;
 
 	}
 

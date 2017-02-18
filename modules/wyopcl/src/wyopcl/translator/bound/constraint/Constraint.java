@@ -18,9 +18,9 @@ public abstract class Constraint implements Cloneable{
 	/**
 	 * Infer bounds from the constraints and domains
 	 * @param bnd
-	 * @return true if the bounds are changed. Return false if the bounds remain the same.
+	 *
 	 */
-	public abstract boolean inferBound(Bounds bnd);
+	public abstract void inferBound(Bounds bnd);
 	
 	
 }

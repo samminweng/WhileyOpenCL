@@ -326,16 +326,12 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	 * @return true if the bounds are changed. Return false if bounds remain
 	 *         unchanged.
 	 */
-	public boolean inferBounds() {
-		isChanged = false;
+	public void inferBounds() {		
 		// Iterate through the constraints to infer the bounds.
 		for (Constraint c : this.constraints) {
-			// The inferBound method returns False if the bounds remain
-			// unchanged.
-			isChanged |= c.inferBound(this.unionOfBounds);
+			c.inferBound(this.unionOfBounds);
 		}
-
-		return isChanged;
+		
 	}
 
 	/**
@@ -347,8 +343,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	 *            iterations. If not specifies, the default value is 5.
 	 * @return true if bounds remain 'unchanged'. Otherwise, return false.
 	 */
-
-	public boolean inferFixedPoint(int... iterations) {
+	/*public boolean inferFixedPoint(int... iterations) {
 		int MaxIteration = iterations.length > 0 ? iterations[0] : 5;
 		boolean isFixedPoint = true;
 		for (int i = 0; i < MaxIteration; i++) {
@@ -358,7 +353,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 			isFixedPoint |= inferBounds();
 		}
 		return isFixedPoint;
-	}
+	}*/
 
 	@Override
 	public String toString() {

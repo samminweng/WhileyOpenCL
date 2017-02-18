@@ -114,7 +114,10 @@ public class ConstraintTestCase {
 	}
 
 	/***
-	 * Given D(x) = [-10..10] Test the constraints: x < y ^ y < z
+	 * Given D(x) = [-10..10]
+	 * 
+	 * Test the constraints: 'x < y' 'y < z'
+	 * 
 	 * @see <a
 	 *      href="http://sourceforge.net/p/czt/code/ci/master/tree/zlive/src/test
 	 *      /java/net/sourceforge/czt/animation/eval/flatpred/BoundsTest.java#l142">
@@ -122,26 +125,32 @@ public class ConstraintTestCase {
 	 */
 	@Test
 	public void testLessThanLeft() {
-		BoundBlock blk = new BoundBlock("code", BlockType.BLOCK);
+		Bounds bnd = new Bounds();
+		
 		// D(x) = [-10..10]
-		blk.addBounds("x", new BigInteger("-10"), new BigInteger("10"));
-		// x<=y
-		blk.addConstraint(new LessThan("x", "y"));
-		// y<=z
-		blk.addConstraint(new LessThan("y", "z"));
-		assertTrue(blk.inferFixedPoint());
+		bnd.addDomain(new Domain("x", new BigInteger("-10"), new BigInteger("10")));
+		// D(y) = [-inf ... inf]
+		bnd.addDomain(new Domain("y", null, null));
+		// D(z) = [-inf ... inf]
+		bnd.addDomain(new Domain("z", null, null));
+		
+		// x<y
+		LessThan constraint = new LessThan("x", "y");
+		constraint.inferBound(bnd);
+		
 		// Propagate the lower bound from x to y
-		assertEquals(new BigInteger("-9"), blk.getLower("y"));
-		// The upper bound remain the same.
-		assertNull(blk.getUpper("y"));
+		assertEquals(new BigInteger("-9"), bnd.getLower("y"));
+		
+		// y<z
+		LessThan constraint1 = new LessThan("y", "z");
+		constraint1.inferBound(bnd);
+		
 		// Then propagate the lower bound to z.
-		assertEquals(new BigInteger("-8"), blk.getLower("z"));
-		// The upper bound remain the same.
-		assertNull(blk.getUpper("y"));
+		assertEquals(new BigInteger("-8"), bnd.getLower("z"));
 
-		// Check if the bounds of x have not changed.
-		assertEquals(new BigInteger("-10"), blk.getLower("x"));
-		assertEquals(new BigInteger("10"), blk.getUpper("x"));
+		// x domain should remain the same
+		assertEquals(new BigInteger("-10"), bnd.getLower("x"));
+		assertEquals(new BigInteger("10"), bnd.getUpper("x"));
 
 		
 	}
@@ -155,27 +164,34 @@ public class ConstraintTestCase {
 	 */
 	@Test
 	public void testLessThanRight() {
-		BoundBlock blk = new BoundBlock("code", BlockType.BLOCK);
+		Bounds bnd = new Bounds();
+		
+		// D(x) = [-inf ... inf] 
+		bnd.addDomain(new Domain("x", null, null));
+		// D(y) = [-inf ... inf]
+		bnd.addDomain(new Domain("y", null, null));
+		
 		// D(z) = [-10..10]
-		blk.addBounds("z",  new BigInteger("-10"), new BigInteger("10"));
+		bnd.addDomain(new Domain("z",  new BigInteger("-10"), new BigInteger("10")));
 		
-		// x<=y
-		blk.addConstraint(new LessThan("x", "y"));
-		// y<=z
-		blk.addConstraint(new LessThan("y", "z"));
+		// y < z
+		LessThan constraint = new LessThan("y", "z");
+		constraint.inferBound(bnd);
 		
-		assertTrue(blk.inferFixedPoint());
-		// Propagate the upper bound from z to y
-		assertNull(blk.getLower("y"));
-		assertEquals(new BigInteger("9"), blk.getUpper("y"));
+		// x < y
+		LessThan constraint1 = new LessThan("x", "y");
+		constraint1.inferBound(bnd);
+		
+		
+		// Check max_y is 9
+		assertEquals(new BigInteger("9"), bnd.getUpper("y"));
 	
-		// Then propagate the lower bound to z to x
-		assertNull(blk.getLower("x"));
-		assertEquals(new BigInteger("8"), blk.getUpper("x"));
+		// Check max_x is 8
+		assertEquals(new BigInteger("8"), bnd.getUpper("x"));
 
 		// Check if the bounds of x have not changed.
-		assertEquals(new BigInteger("-10"), blk.getLower("z"));
-		assertEquals(new BigInteger("10"), blk.getUpper("z"));
+		assertEquals(new BigInteger("-10"), bnd.getLower("z"));
+		assertEquals(new BigInteger("10"), bnd.getUpper("z"));
 		
 	}
 
@@ -188,60 +204,70 @@ public class ConstraintTestCase {
 	 */
 	@Test
 	public void testLessThanEqualsLeft() {
-		BoundBlock blk = new BoundBlock("code", BlockType.BLOCK);
+		Bounds bnd = new Bounds();
 		// D(x) = [-10..10]
-		blk.addBounds("x", new BigInteger("-10"),  new BigInteger("10"));
+		bnd.addDomain(new Domain("x", new BigInteger("-10"),  new BigInteger("10")));
+		// D(y) = [-inf..inf]
+		bnd.addDomain(new Domain("y", null, null));
+		// D(z) = [-inf..inf]
+		bnd.addDomain(new Domain("z", null, null));
 		// x<=y
-		blk.addConstraint(new LessThanEquals("x", "y"));
+		LessThanEquals constraint = new LessThanEquals("x", "y");
+		constraint.inferBound(bnd);
 		// y<=z
-		blk.addConstraint(new LessThanEquals("y", "z"));
-		assertTrue(blk.inferFixedPoint());
+		LessThanEquals constraint1 = new LessThanEquals("y", "z");
+		constraint1.inferBound(bnd);
+		
 		// Propagate the lower bound from x to y
-		assertEquals(new BigInteger("-10"), blk.getLower("y"));
-		// The upper bound remain the same.
-		assertNull(blk.getUpper("y"));
-		// Then propagate the lower bound to z.
-		assertEquals(new BigInteger("-10"), blk.getLower("z"));
-		// The upper bound remain the same.
-		assertNull(blk.getUpper("y"));
+		assertEquals(new BigInteger("-10"), bnd.getLower("y"));
+		// The upper bound of 'y' is infinity
+		assertNull(bnd.getUpper("y"));
+		// Propagate the lower bound to z.
+		assertEquals(new BigInteger("-10"), bnd.getLower("z"));
+		// The upper bound 'z' is infinity
+		assertNull(bnd.getUpper("y"));
 
 		// Check if the bounds of x have not changed.
-		assertEquals(new BigInteger("-10"), blk.getLower("x"));
-		assertEquals(new BigInteger("10"), blk.getUpper("x"));
+		assertEquals(new BigInteger("-10"), bnd.getLower("x"));
+		assertEquals(new BigInteger("10"), bnd.getUpper("x"));
 	}
-
+	
 	/***
-	 * Given D(z) = [-10..10] and constraints x <= y ^ y <= z, propagate the upper bounds from z to y and x.
-	 * @see <a
-	 *      href="http://sourceforge.net/p/czt/code/ci/master/tree/zlive/src/test
-	 *      /java/net/sourceforge/czt/animation/eval/flatpred/BoundsTest.java#l205">
-	 *      net.sourceforge.czt.animation.eval.flatpred.BoundsTest#testLessThanEqualsRight()</a> 
+	 * Given D(x) = [-10..10] and constraints x <= y ^ y <= z
+	 * 
+	 * propagate the lower bounds from z to y and x.
+	 *  
 	 */
 	@Test
 	public void testLessThanEqualsRight() {
-		BoundBlock blk = new BoundBlock("code", BlockType.BLOCK);
+		Bounds bnd = new Bounds();
+		// D(x) = [-inf..inf]
+		bnd.addDomain(new Domain("x", null, null));
+		// D(y) = [-inf..inf]
+		bnd.addDomain(new Domain("y", null, null));
 		// D(z) = [-10..10]
-		blk.addBounds("z", new BigInteger("-10"), new BigInteger("10"));
-
-		// x<=y
-		blk.addConstraint(new LessThanEquals("x", "y"));
+		bnd.addDomain(new Domain("z", new BigInteger("-10"), new BigInteger("10")));
 		// y<=z
-		blk.addConstraint(new LessThanEquals("y", "z"));
-		assertTrue(blk.inferFixedPoint());
-		// Propagate the lower bound from x to y
-		assertEquals(new BigInteger("10"), blk.getUpper("y"));
-		// The upper bound remain the same.
-		assertNull(blk.getLower("y"));
-		// Then propagate the lower bound to z.
-		assertEquals(new BigInteger("10"), blk.getUpper("x"));
-		// The upper bound remain the same.
-		assertNull(blk.getLower("x"));
+		LessThanEquals constraint1 = new LessThanEquals("y", "z");
+		constraint1.inferBound(bnd);
+		// x<=y
+		LessThanEquals constraint = new LessThanEquals("x", "y");
+		constraint.inferBound(bnd);
+		
+		// 'x' is [-inf ... 10]
+		assertEquals(new BigInteger("10"), bnd.getUpper("x"));
+		assertNull(bnd.getLower("x"));
+		
+		// 'y' is [-inf ... 10] 
+		assertEquals(new BigInteger("10"), bnd.getUpper("y"));
+		assertNull(bnd.getLower("y"));
 
-		// Check if the bounds of z have not changed.
-		assertEquals(new BigInteger("-10"), blk.getLower("z"));
-		assertEquals(new BigInteger("10"), blk.getUpper("z"));
+		// 'z' is [-10..10]
+		assertEquals(new BigInteger("-10"), bnd.getLower("z"));
+		assertEquals(new BigInteger("10"), bnd.getUpper("z"));
 	}
-
+	
+	
 	/**
 	 * Given D(x) =[-10..10] Test the constraints ( x == y ^ y == z)
 	 * 
@@ -257,7 +283,7 @@ public class ConstraintTestCase {
 
 		blk.addConstraint(new Equals("x", "y"));
 		blk.addConstraint(new Equals("y", "z"));
-		assertTrue(blk.inferFixedPoint());
+		
 		assertEquals(new BigInteger("-10"), blk.getLower("y"));
 		assertEquals(new BigInteger("10"), blk.getUpper("y"));
 		assertEquals(new BigInteger("-10"), blk.getLower("z"));
@@ -291,7 +317,7 @@ public class ConstraintTestCase {
 		blk.addBounds("x", new BigInteger("1"), new BigInteger("5"));
 
 		blk.addConstraint(new Negate("x", "y"));
-		assertTrue(blk.inferFixedPoint());
+		//assertTrue(blk.inferFixedPoint());
 		assertEquals(new BigInteger("1"), blk.getLower("x"));
 		assertEquals(new BigInteger("5"), blk.getUpper("x"));
 		assertEquals(new BigInteger("-5"), blk.getLower("y"));

@@ -33,8 +33,8 @@ public class GreaterThan extends Constraint {
 	/**
 	 * Propagate rule of inequality 'x > y'.
 	 */
-	public boolean inferBound(Bounds bnd) {
-		bnd.isChanged = false;
+	public void inferBound(Bounds bnd) {
+		//bnd.isChanged = false;
 		max_x = bnd.getUpper(x);
 		min_x = bnd.getLower(x);
 		max_y = bnd.getUpper(y);
@@ -50,7 +50,7 @@ public class GreaterThan extends Constraint {
 //			bnd.isChanged |= bnd.addUpperBound(x, max_y.add(BigInteger.ONE));
 //		}
 
-		return bnd.isChanged;
+		//return bnd.isChanged;
 
 	}
 
