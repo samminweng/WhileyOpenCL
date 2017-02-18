@@ -47,25 +47,7 @@ public class Equals extends Constraint {
 		// Update y domain
 		Domain y_domain = new Domain(y, x_min, x_max);
 		bnd.getDomain(y).intersect(y_domain);
-		
-		/*
-		if (x_min != null) {
-			bnd.isChanged |= bnd.addLowerBound(y, x_min);
-		}
-
-		if (x_max != null) {
-			bnd.isChanged |= bnd.addUpperBound(y, x_max);
-		}
-
-		// Propagating the bounds from y to x.
-		if (y_min != null) {
-			bnd.isChanged |= bnd.addLowerBound(x, y_min);
-		}
-
-		if (y_max != null) {
-			bnd.isChanged |= bnd.addUpperBound(x, y_max);
-		}*/
-
+	
 		//return bnd.isChanged;
 	}
 

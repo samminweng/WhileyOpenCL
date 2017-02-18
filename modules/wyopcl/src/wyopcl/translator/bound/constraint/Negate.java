@@ -8,7 +8,7 @@ import wyopcl.translator.bound.Domain;
  * Implements the propagation rule for constraint 'Y := !X'
  * 
  * Rules are:
- * 
+ * y:= [!max_x ... !min_x]
  * 
  * @author Min-Hsien Weng
  *
@@ -31,10 +31,22 @@ public class Negate extends Constraint{
 		min_y = bnd.getLower(y);
 		max_y = bnd.getUpper(y);
 
-
 		// Y = !X
-		// Add the lower bound of y variable.
-		if (max_x != null) {
+		BigInteger min = null;
+		if(max_x != null){
+			min = max_x.negate();
+		}
+		
+		BigInteger max = null;
+		if(min_x != null){
+			max = min_x.negate();
+		}
+		
+		// [!max_x .. !min_x]
+		Domain y_domain = new Domain("y", min, max);
+		bnd.getDomain(y).set(y_domain);
+		
+		/*if (max_x != null) {
 			//max (min_y, !min_x)
 			bnd.setLowerBound(y, max_x.negate());
 		}
@@ -43,7 +55,7 @@ public class Negate extends Constraint{
 			//min (max_y, !min_x)
 			bnd.setUpperBound(y, min_x.negate());
 		}
-
+	*/
 		//return bnd.isChanged;
 	}
 

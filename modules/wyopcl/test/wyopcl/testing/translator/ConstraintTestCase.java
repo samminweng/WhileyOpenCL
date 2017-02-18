@@ -471,84 +471,11 @@ public class ConstraintTestCase {
 		assertEquals(new BigInteger("-5"), bnd.getLower("z"));
 		assertEquals(new BigInteger("5"), bnd.getUpper("z"));
 	}
-	
-	
+		
 	/**
-	 * Given D(x) =[1..5] Test the constraints '!x = y'
+	 * Given D(x) =[-5..-1] D(y)=[-10..10]
 	 * 
-	 * @see <a
-	 *      href="http://sourceforge.net/p/czt/code/ci/master/tree/zlive/src/test
-	 *      /java/net/sourceforge/czt/animation/eval/flatpred/BoundsTest.java#l258">
-	 *      net.sourceforge.czt.animation.eval.flatpred.BoundsTest#testNegateRightNone()</a>
-	 */
-	@Test
-	public void testNegateRightNone() {
-		
-		BoundBlock blk = new BoundBlock("code", BlockType.BLOCK);
-		// D(x) = [1..5]
-		blk.addBounds("x", new BigInteger("1"), new BigInteger("5"));
-
-		blk.addConstraint(new Negate("x", "y"));
-		//assertTrue(blk.inferFixedPoint());
-		assertEquals(new BigInteger("1"), blk.getLower("x"));
-		assertEquals(new BigInteger("5"), blk.getUpper("x"));
-		assertEquals(new BigInteger("-5"), blk.getLower("y"));
-		assertEquals(new BigInteger("-1"), blk.getUpper("y"));
-
-	}
-
-	/**
-	 * Given D(x) =[1..5] D(y)=[-10..10], propagate the bounds for the constraint '!x = y'
-	 * 
-	 * @see <a
-	 *      href="http://sourceforge.net/p/czt/code/ci/master/tree/zlive/src/test
-	 *      /java/net/sourceforge/czt/animation/eval/flatpred/BoundsTest.java#l276">
-	 *      net.sourceforge.czt.animation.eval.flatpred.BoundsTest#testNegateRightLoose()</a>
-	 */
-	@Test
-	public void testNegateRightLoose() {
-		BoundBlock blk = new BoundBlock("code", BlockType.BLOCK);		
-		// D(x) = [1..5]
-		blk.addBounds("x", new BigInteger("1"), new BigInteger("5"));
-		// D(y) = [-10..10]
-		blk.addBounds("y", new BigInteger("-10"), new BigInteger("10"));
-		
-		blk.addConstraint(new Negate("x", "y"));
-		assertTrue(blk.inferFixedPoint());
-		assertEquals(new BigInteger("1"), blk.getLower("x"));
-		assertEquals(new BigInteger("5"), blk.getUpper("x"));
-		assertEquals(new BigInteger("-5"), blk.getLower("y"));
-		assertEquals(new BigInteger("-1"), blk.getUpper("y"));
-
-	}
-	
-	/**
-	 * Given D(x) =[1..5] D(y)=[-4..-2], propagate the bounds for the constraint '!x = y'
-	 * 
-	 * @see <a
-	 *      href="http://sourceforge.net/p/czt/code/ci/master/tree/zlive/src/test
-	 *      /java/net/sourceforge/czt/animation/eval/flatpred/BoundsTest.java#l276">
-	 *      net.sourceforge.czt.animation.eval.flatpred.BoundsTest#testNegateRightTight()</a>
-	 */
-	@Test
-	public void testNegateRightTight() {
-		
-		BoundBlock blk = new BoundBlock("code", BlockType.BLOCK);
-		// D(x) = [1..5]
-		blk.addBounds("x", new BigInteger("1"), new BigInteger("5"));
-		// D(y) = [-4..-2]
-		blk.addBounds("y", new BigInteger("-4"),  new BigInteger("-2"));
-		
-		blk.addConstraint(new Negate("x", "y"));
-		assertTrue(blk.inferFixedPoint());
-		assertEquals(new BigInteger("2"), blk.getLower("x"));
-		assertEquals(new BigInteger("4"), blk.getUpper("x"));
-		assertEquals(new BigInteger("-4"), blk.getLower("y"));
-		assertEquals(new BigInteger("-2"), blk.getUpper("y"));
-	}
-	
-	/**
-	 * Given D(x) =[-5..-1] D(y)=[-10..10], propagate the bounds for the constraint '!x = y'
+	 *  the constraint 'y := !x'
 	 * 
 	 * @see <a
 	 *      href="http://sourceforge.net/p/czt/code/ci/master/tree/zlive/src/test
@@ -556,48 +483,30 @@ public class ConstraintTestCase {
 	 *      net.sourceforge.czt.animation.eval.flatpred.BoundsTest#testNegateLeftLoose()</a>
 	 */
 	@Test
-	public void testNegateLeftLoose() {
+	public void testNegate() {
 		
-		BoundBlock blk = new BoundBlock("code", BlockType.BLOCK);
-		// D(x) = [1..5]
-		blk.addBounds("x", new BigInteger("-5"), new BigInteger("-1"));
+		Bounds bnd = new Bounds();
+		// D(x) = [-5..-1]
+		bnd.addDomain(new Domain("x", new BigInteger("-5"), new BigInteger("-1")));
 		// D(y) = [-10..10]
-		blk.addBounds("y", new BigInteger("-10"), new BigInteger("10"));
+		bnd.addDomain(new Domain("y", new BigInteger("-10"), new BigInteger("10")));
 		
-		blk.addConstraint(new Negate("x", "y"));
-		assertTrue(blk.inferFixedPoint());
-		assertEquals(new BigInteger("-5"), blk.getLower("x"));
-		assertEquals(new BigInteger("-1"), blk.getUpper("x"));
-		assertEquals(new BigInteger("1"), blk.getLower("y"));
-		assertEquals(new BigInteger("5"), blk.getUpper("y"));
+		// y:= !x
+		Negate constraint = new Negate("x", "y");
+		constraint.inferBound(bnd);
+		
+		// D(y)' is [1 .. 5]
+		assertEquals(new BigInteger("1"), bnd.getLower("y"));
+		assertEquals(new BigInteger("5"), bnd.getUpper("y"));
+		
+		// D(x)' NOT change
+		assertEquals(new BigInteger("-5"), bnd.getLower("x"));
+		assertEquals(new BigInteger("-1"), bnd.getUpper("x"));
+		
 
 	}
 	
-	/**
-	 * Given D(x) =[-4..-2] D(y)=[1..5], propagate the bounds for the constraint '!x = y'
-	 * 
-	 * @see <a
-	 *      href="http://sourceforge.net/p/czt/code/ci/master/tree/zlive/src/test
-	 *      /java/net/sourceforge/czt/animation/eval/flatpred/BoundsTest.java#l334">
-	 *      net.sourceforge.czt.animation.eval.flatpred.BoundsTest#testNegateLeftLoose()</a>
-	 */
-	@Test
-	public void testNegateLeftTight() {
-		
-		BoundBlock blk = new BoundBlock("code", BlockType.BLOCK);
-		// D(x) = [1..5]
-		blk.addBounds("x", new BigInteger("-4"), new BigInteger("-2"));
-		// D(y) = [-10..10]
-		blk.addBounds("y", new BigInteger("1"), new BigInteger("5"));
-		
-		blk.addConstraint(new Negate("x", "y"));
-		assertTrue(blk.inferFixedPoint());
-		assertEquals(new BigInteger("-4"), blk.getLower("x"));
-		assertEquals(new BigInteger("-2"), blk.getUpper("x"));
-		assertEquals(new BigInteger("2"), blk.getLower("y"));
-		assertEquals(new BigInteger("4"), blk.getUpper("y"));
-
-	}
+	
 	
 	/***
 	 * Given D(x)=[0..5] D(y)=[3..4] D(z)=[-10..10] and the constraint X+Y=Z,
