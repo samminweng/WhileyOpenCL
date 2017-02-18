@@ -42,7 +42,7 @@ public class LessThan extends Constraint {
 		
 		// Update x domain
 		if(max_y != null){
-			Domain x_domain = new Domain(y, null, max_y.subtract(BigInteger.ONE));
+			Domain x_domain = new Domain(x, null, max_y.subtract(BigInteger.ONE));
 			bnd.getDomain(x).intersect(x_domain);
 		}
 		

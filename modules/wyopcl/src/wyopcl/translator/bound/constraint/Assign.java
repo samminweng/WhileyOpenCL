@@ -9,8 +9,8 @@ import wyopcl.translator.bound.Bounds;
  * 
  * Copy the bounds of 'y' to 'x'
  * 
- * Rules are:
- * 
+ * Rules are to copy the bounds of 'y' to 'x'
+ * x:=y
  * 
  * 
  * 

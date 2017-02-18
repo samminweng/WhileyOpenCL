@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import wyopcl.translator.bound.BoundBlock;
 import wyopcl.translator.bound.Bounds;
+import wyopcl.translator.bound.Domain;
 import wyopcl.translator.bound.BoundBlock.BlockType;
 import wyopcl.translator.bound.constraint.Const;
 import wyopcl.translator.bound.constraint.Equals;
@@ -406,24 +407,26 @@ public class ConstraintTestCase {
 	 */
 	@Test
 	public void testLeftPlus() {
-		BoundBlock blk = new BoundBlock("code", BlockType.BLOCK);		
+		Bounds bnd = new Bounds();
 		// D(x)=[0..5]
-		blk.addBounds("x", new BigInteger("0"), new BigInteger("5"));		
+		bnd.addDomain(new Domain("x", new BigInteger("0"), new BigInteger("5")));		
 		// D(y)=[3..4]
-		blk.addBounds("y", new BigInteger("3"), new BigInteger("4"));
+		bnd.addDomain(new Domain("y", new BigInteger("3"), new BigInteger("4")));
 		// D(z)=[-10..10]
-		blk.addBounds("z", new BigInteger("-10"), new BigInteger("10"));
-		// x+y = z
-		blk.addConstraint(new LeftPlus("x", "y", "z"));
-		assertTrue(blk.inferFixedPoint());
-		assertEquals(new BigInteger("0"), blk.getLower("x"));
-		assertEquals(new BigInteger("5"), blk.getUpper("x"));
+		bnd.addDomain(new Domain("z", new BigInteger("-10"), new BigInteger("10")));
+		// Add the constraint 'x+y = z'
+		LeftPlus constraint = new LeftPlus("x", "y", "z");
+		constraint.inferBound(bnd);
+		
+		//assertTrue(blk.inferFixedPoint());
+		assertEquals(new BigInteger("0"), bnd.getLower("x"));
+		assertEquals(new BigInteger("5"), bnd.getUpper("x"));
 
-		assertEquals(new BigInteger("3"), blk.getLower("y"));
-		assertEquals(new BigInteger("4"), blk.getUpper("y"));
+		assertEquals(new BigInteger("3"), bnd.getLower("y"));
+		assertEquals(new BigInteger("4"), bnd.getUpper("y"));
 
-		assertEquals(new BigInteger("3"), blk.getLower("z"));
-		assertEquals(new BigInteger("9"), blk.getUpper("z"));
+		assertEquals(new BigInteger("3"), bnd.getLower("z"));
+		assertEquals(new BigInteger("9"), bnd.getUpper("z"));
 
 	}
 

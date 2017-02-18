@@ -3,18 +3,14 @@ package wyopcl.translator.bound.constraint;
 import java.math.BigInteger;
 
 import wyopcl.translator.bound.Bounds;
+import wyopcl.translator.bound.Domain;
 /**
  * Implements the propagation rule for constraint 
  * <code>x >= y</code> 
  * 
- * It adds the lower bound from 'y' to 'x' without making any change to 'y'.
- * For example, the following bounds and constraints:
- * <p><code> 
- * D(x) = [1..11], D(y)=[10..10], x >= y
- * </code></p> 
- * can be inferred as below:
- * <p><code>
- * D(x) = [10..11], D(y)=[10..10]
+ * Rules are:
+ * 1. x:=x intersect [y.min... +inf]
+ * 2. y:=y intersect [-inf ... x.max]
  * </code></p>
  * @author Min-Hsien Weng
  *
@@ -38,14 +34,17 @@ public class GreaterThanEquals extends Constraint {
 		min_y = bnd.getLower(y);
 		max_y = bnd.getUpper(y);
 		
-		//Propagate the lower bound from y to x.
+		// Update 'x' domain
 		if(min_y != null){
-			bnd.isChanged |= bnd.addLowerBound(x, min_y);
+			Domain new_x = new Domain(x, min_y, null);
+			bnd.getDomain(x).intersect(new_x);
 		}
-//		//Propagate the upper bound from y to x.
-//		if(max_y != null){
-//			bnd.isChanged |= bnd.addUpperBound(x, max_y);
-//		}
+		
+		// Update 'y' domain
+		if(max_x != null){
+			Domain new_y = new Domain(y, null, max_x);
+			bnd.getDomain(x).intersect(new_y);
+		}
 		
 
 		return bnd.isChanged;

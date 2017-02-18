@@ -276,7 +276,20 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		return this.isLowerUnknown || this.isUpperUnknown;
 	}
 
-
+	
+	
+	
+	/**
+	 * Intersect current domain with passing domain. 
+	 * For example, 
+	 * Current Domain = [0 ... 10]
+	 * New Domain = [0 ... 5]
+	 * 
+	 * The intersect domain is [0 ... 5]
+	 * 
+	 * 
+	 * @param domain
+	 */
 	public void intersect(Domain domain) {
 		// Lower bounds
 		BigInteger new_min = domain.getLowerBound();
@@ -329,7 +342,12 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 
 	}
 
-
+	/**
+	 * Over-write the current domain with passing domain
+	 * 
+	 * 
+	 * @param domain
+	 */
 	public void set(Domain domain) {
 		this.lower_bound = domain.getLowerBound();
 		this.upper_bound = domain.getUpperBound();
@@ -445,34 +463,18 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 
 	}
 
-
+	/**
+	 * Return the sum of 'x' and 'y' 
+	 * 
+	 * 
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	public static BigInteger plus(BigInteger x, BigInteger y) {
 		if (x == null || y == null) {
 			return null;
 		}
 		return x.add(y);
 	}
-
-
-	
-
-
-
-
-
-	/*public boolean isUpperBoundIncreasing() {
-		return isUpperBoundIncreasing;
-	}
-
-	public void setUpperBoundIncreasing(boolean isUpperBoundIncreasing) {
-		this.isUpperBoundIncreasing = isUpperBoundIncreasing;
-	}
-
-	public boolean isLowerBoundDecreasing() {
-		return isLowerBoundDecreasing;
-	}
-
-	public void setLowerBoundDecreasing(boolean isLowerBoundDecreasing) {
-		this.isLowerBoundDecreasing = isLowerBoundDecreasing;
-	}*/
 }

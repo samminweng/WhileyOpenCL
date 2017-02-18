@@ -3,6 +3,7 @@ package wyopcl.translator.bound.constraint;
 import java.math.BigInteger;
 
 import wyopcl.translator.bound.Bounds;
+import wyopcl.translator.bound.Domain;
 
 /***
  * Implements the propagation rule for the constant value assignment (e.g. x = 20 )
@@ -11,25 +12,22 @@ import wyopcl.translator.bound.Bounds;
  */
 public class Const extends Constraint{
 	private final String x;
-	private final BigInteger constant_value;
-	public Const(String x, BigInteger constant_value){
+	private final BigInteger constant;
+	public Const(String x, BigInteger constant){
 		this.x = x;
-		this.constant_value = constant_value;
-	}
-	
+		this.constant = constant;
+	}	
 
 	@Override
 	public boolean inferBound(Bounds bnd) {
-		bnd.isChanged = false;	
-		//Assign the lower and upper bounds.
-		//Using the bitwise inclusive OR to disjunct the results of adding upper or lower bounds.
-		//If one operation has changed the bounds, then return true;
-		bnd.isChanged |= bnd.setLowerBound(x, constant_value);
-		bnd.isChanged |= bnd.setUpperBound(x, constant_value);
-		return bnd.isChanged;
+		//Assign the lower and upper bounds with constant value
+		Domain new_domain = new Domain(x, constant, constant);
+		bnd.getDomain(x).set(new_domain);
+			
+		return true;
 	}
 	@Override
 	public String toString() {
-		return x + ":=" + constant_value;
+		return x + ":=" + constant;
 	}
 }

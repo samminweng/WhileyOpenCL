@@ -102,14 +102,13 @@ public class Bounds implements Cloneable {
 	}
 
 	/**
-	 * Get the domain by name
+	 * Get the domain by name. If domain is not found, then add a new one.
 	 * 
 	 * @param name
 	 * @return
 	 */
 	public Domain getDomain(String name) {
 		if (!bounds.containsKey(name)) {
-			// 
 			Domain d = new Domain(name);
 			bounds.put(name, d);
 		}
@@ -280,8 +279,6 @@ public class Bounds implements Cloneable {
 	public void union(Bounds new_bnd) {
 		for (String var : new_bnd.bounds.keySet()) {
 			getDomain(var).union(new_bnd.getDomain(var));
-			
-			
 		}
 	}
 	
@@ -294,59 +291,10 @@ public class Bounds implements Cloneable {
 	@Deprecated
 	public void intersect(Bounds new_bnd) {
 		for (String var : new_bnd.bounds.keySet()) {
-			// Lower bounds
-			BigInteger new_min = new_bnd.getLower(var);
-			BigInteger old_min = this.getLower(var);
-			// The new bound is stronger than old one
-			if(new_min !=null && old_min != null && new_min.compareTo(old_min) > 0) {
-				this.setLowerBound(var, new_min);
-			}
-			
-			// Upper bounds
-			BigInteger new_max = new_bnd.getUpper(var);
-			BigInteger old_max = this.getUpper(var);
-			
-			// The new bound is stronger than old one.
-			if(new_max != null && old_max != null && new_max.compareTo(old_max) < 0) {
-				this.setUpperBound(var, new_max);
-			}
+			getDomain(var).intersect(new_bnd.getDomain(var));
 		}
 	}
 
-	
-
-	
-
-	/**
-	 * Widen the upper bounds to + infinity (null)
-	 * 
-	 * @param name
-	 * @return
-	 */
-	private boolean widenUpperBoundsToInf(String name) {
-		BigInteger max = getUpper(name);
-		if (max != null) {
-			setUpperBound(name, null);
-			//this.getDomain(name).setUpperBound(null);
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Widen the lower bounds to - infinity (null)
-	 * 
-	 * @param name
-	 * @return
-	 */
-	private boolean widenLowerBoundsToInf(String name) {
-		BigInteger min = getLower(name);
-		if (min != null) {
-			setLowerBound(name, null);
-			return true;
-		}
-		return false;
-	}
 
 	/**
 	 * Check if all the bounds are consistent (lower bound <= upper bound)
@@ -474,30 +422,19 @@ public class Bounds implements Cloneable {
 		for (String var : bounds.keySet()) {
 			Domain new_d = getDomain(var);
 			Domain old_d = before.getDomain(var);
-			new_d.widenBound(isGradual, old_d);
+			new_d.widenBound(isGradual, old_d);		
 			
-			
-			/*// Widen the upper bound
-			if (d.isUpperBoundIncreasing()) {
-				if (config.isGradualWiden()) {
-					widenUpperBoundsAgainstThresholds(var);
-				} else {
-					widenUpperBoundsToInf(var);
-				}
-				d.setUpperBoundIncreasing(false);
-			}
-
-			// Widen the lower bound
-			if (d.isLowerBoundDecreasing()) {
-				if (config.isGradualWiden()) {
-					widenLowerBoundsAgainstThresholds(var);
-				} else {
-					widenLowerBoundsToInf(var);
-				}
-				// Reset the increasing and decreasing flag
-				d.setLowerBoundDecreasing(false);
-			}*/
 		}
+	}
+	
+	/**
+	 * Add the Domain to the bound set
+	 * 
+	 * 
+	 * @param x
+	 */
+	public void addDomain(Domain d) {
+		this.bounds.put(d.getName(), d);
 	}
 
 }

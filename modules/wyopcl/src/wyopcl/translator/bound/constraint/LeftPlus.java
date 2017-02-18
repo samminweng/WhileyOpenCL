@@ -29,7 +29,7 @@ public class LeftPlus extends Constraint {
 
 	@Override
 	public boolean inferBound(Bounds bnd) {
-		bnd.isChanged = false;
+		//bnd.isChanged = false;
 		//Before propagation.
 		min_x = bnd.getLower(x);
 		max_x = bnd.getUpper(x);	
@@ -51,21 +51,7 @@ public class LeftPlus extends Constraint {
 			bnd.getDomain(z).set(lower, upper);
 		}
 
-		
-		/*// Z = X + Y
-		// Assign the lower bound of z variable with lower bound of x + y
-		if (init_lower_x == false && 
-				min_x != null && min_y != null) {
-			BigInteger add = min_x.add(min_y);			
-			bnd.isChanged |= bnd.setLowerBound(z, add);
-		}
-		// Assign the upper bound of z variable with upper bound of x + y 
-		if (max_x != null && max_y != null) {
-			BigInteger add = max_x.add(max_y);	
-			bnd.isChanged |= bnd.setUpperBound(z, add);
-		}*/
-
-		return bnd.isChanged;
+		return true;
 	}
 
 	@Override
