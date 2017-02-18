@@ -288,7 +288,6 @@ public class Bounds implements Cloneable {
 	 * 
 	 * @param new_bnd
 	 */
-	@Deprecated
 	public void intersect(Bounds new_bnd) {
 		for (String var : new_bnd.bounds.keySet()) {
 			getDomain(var).intersect(new_bnd.getDomain(var));
@@ -378,6 +377,7 @@ public class Bounds implements Cloneable {
 	 * @param previous_iter
 	 *            the domain of previous iteration
 	 */
+	@Deprecated
 	public void checkBoundChange(Bounds prev) {
 
 		for (String var : this.bounds.keySet()) {
@@ -422,8 +422,7 @@ public class Bounds implements Cloneable {
 		for (String var : bounds.keySet()) {
 			Domain new_d = getDomain(var);
 			Domain old_d = before.getDomain(var);
-			new_d.widenBound(isGradual, old_d);		
-			
+			new_d.widenBound(isGradual, old_d);	
 		}
 	}
 	
@@ -434,7 +433,13 @@ public class Bounds implements Cloneable {
 	 * @param x
 	 */
 	public void addDomain(Domain d) {
-		this.bounds.put(d.getName(), d);
+		String name = d.getName();
+		if(!this.bounds.containsKey(name)){
+			this.bounds.put(d.getName(), d);
+		}else{
+			addLowerBound(name, d.getLowerBound());
+			addUpperBound(name, d.getUpperBound());
+		}
 	}
 
 }

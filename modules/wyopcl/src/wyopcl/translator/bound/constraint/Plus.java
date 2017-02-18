@@ -14,6 +14,7 @@ import wyopcl.translator.bound.Domain;
  * @author Min-Hsien Weng
  *
  */
+@Deprecated
 public class Plus extends Constraint{
 	private BigInteger min_x, max_x, min_y, max_y, min_z, max_z;
 	private String x, y, z;
