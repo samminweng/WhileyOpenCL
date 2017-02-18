@@ -13,6 +13,8 @@ import wyopcl.translator.bound.Domain;
 import wyopcl.translator.bound.BoundBlock.BlockType;
 import wyopcl.translator.bound.constraint.Const;
 import wyopcl.translator.bound.constraint.Equals;
+import wyopcl.translator.bound.constraint.GreaterThan;
+import wyopcl.translator.bound.constraint.GreaterThanEquals;
 import wyopcl.translator.bound.constraint.LeftPlus;
 import wyopcl.translator.bound.constraint.LessThan;
 import wyopcl.translator.bound.constraint.LessThanEquals;
@@ -263,6 +265,145 @@ public class ConstraintTestCase {
 		assertNull(bnd.getLower("y"));
 
 		// 'z' is [-10..10]
+		assertEquals(new BigInteger("-10"), bnd.getLower("z"));
+		assertEquals(new BigInteger("10"), bnd.getUpper("z"));
+	}
+	
+	/***
+	 * 
+	 * Given D(x) = [-10..10] and constraints x > y AND y > z
+	 *  
+	 */
+	@Test
+	public void testGreatThanLeft() {
+		Bounds bnd = new Bounds();
+		// D(x) = [-10..10]
+		bnd.addDomain(new Domain("x", new BigInteger("-10"),  new BigInteger("10")));
+		// D(y) = [-inf..inf]
+		bnd.addDomain(new Domain("y", null, null));
+		// D(z) = [-inf..inf]
+		bnd.addDomain(new Domain("z", null, null));
+		// x > y
+		GreaterThan constraint = new GreaterThan("x", "y");
+		constraint.inferBound(bnd);
+		// y > z
+		GreaterThan constraint1 = new GreaterThan("y", "z");
+		constraint1.inferBound(bnd);
+		
+		// D(y)' is [-inf ... 9]
+		assertEquals(new BigInteger("9"), bnd.getUpper("y"));
+		assertNull(bnd.getLower("y"));
+		
+		// D(z)' is [-inf ... 8]
+		assertEquals(new BigInteger("8"), bnd.getUpper("z"));
+		assertNull(bnd.getLower("z"));
+
+		// Check if the bounds of x have not changed.
+		assertEquals(new BigInteger("-10"), bnd.getLower("x"));
+		assertEquals(new BigInteger("10"), bnd.getUpper("x"));
+	}
+	
+	/***
+	 * 
+	 * Given D(z) = [-10..10] and constraints y > z AND x > y
+	 * 
+	 */
+	@Test
+	public void testGreatThanRight() {
+		Bounds bnd = new Bounds();
+		// D(z) = [-10..10]
+		bnd.addDomain(new Domain("z", new BigInteger("-10"),  new BigInteger("10")));
+		// D(y) = [-inf..inf]
+		bnd.addDomain(new Domain("y", null, null));
+		// D(x) = [-inf..inf]
+		bnd.addDomain(new Domain("x", null, null));
+		// y > z
+		GreaterThan constraint = new GreaterThan("y", "z");
+		constraint.inferBound(bnd);
+		
+		// x > y
+		GreaterThan constraint1 = new GreaterThan("x", "y");
+		constraint1.inferBound(bnd);
+		
+		// D(y)' is [-9 ... inf]
+		assertEquals(new BigInteger("-9"), bnd.getLower("y"));
+		assertNull(bnd.getUpper("y"));
+		
+		// D(x)' is [-8 ... inf]
+		assertEquals(new BigInteger("-8"), bnd.getLower("x"));
+		assertNull(bnd.getUpper("y"));
+
+		// D(z)' NOT changed.
+		assertEquals(new BigInteger("-10"), bnd.getLower("z"));
+		assertEquals(new BigInteger("10"), bnd.getUpper("z"));
+	}
+	
+	/***
+	 * 
+	 * Given D(x) = [-10..10] and constraints x >= y AND y >= z
+	 *  
+	 */
+	@Test
+	public void testGreatThanEqualsLeft() {
+		Bounds bnd = new Bounds();
+		// D(x) = [-10..10]
+		bnd.addDomain(new Domain("x", new BigInteger("-10"),  new BigInteger("10")));
+		// D(y) = [-inf..inf]
+		bnd.addDomain(new Domain("y", null, null));
+		// D(z) = [-inf..inf]
+		bnd.addDomain(new Domain("z", null, null));
+		// x >= y
+		GreaterThanEquals constraint = new GreaterThanEquals("x", "y");
+		constraint.inferBound(bnd);
+		// y >= z
+		GreaterThanEquals constraint1 = new GreaterThanEquals("y", "z");
+		constraint1.inferBound(bnd);
+		
+		// D(y)' is [-inf ... 10]
+		assertEquals(new BigInteger("10"), bnd.getUpper("y"));
+		// The upper bound of 'y' is infinity
+		assertNull(bnd.getLower("y"));
+		// D(z)' is [-inf ... 10]
+		assertEquals(new BigInteger("10"), bnd.getUpper("z"));
+		assertNull(bnd.getLower("z"));
+
+		// Check if the bounds of x have not changed.
+		assertEquals(new BigInteger("-10"), bnd.getLower("x"));
+		assertEquals(new BigInteger("10"), bnd.getUpper("x"));
+	}
+	
+	/***
+	 * 
+	 * Given D(z) = [-10..10] and constraints y >= z AND x >= y 
+	 *  
+	 */
+	@Test
+	public void testGreatThanEqualsRight() {
+		Bounds bnd = new Bounds();
+		// D(z) = [-10..10]
+		bnd.addDomain(new Domain("z", new BigInteger("-10"),  new BigInteger("10")));
+		// D(y) = [-inf..inf]
+		bnd.addDomain(new Domain("y", null, null));
+		// D(x) = [-inf..inf]
+		bnd.addDomain(new Domain("x", null, null));
+	
+		// y >= z
+		GreaterThanEquals constraint = new GreaterThanEquals("y", "z");
+		constraint.inferBound(bnd);
+		
+		// x >= y
+		GreaterThanEquals constraint1 = new GreaterThanEquals("x", "y");
+		constraint1.inferBound(bnd);
+		
+		// D(y)' is [-10 ... inf]
+		assertEquals(new BigInteger("-10"), bnd.getLower("y"));
+		assertNull(bnd.getUpper("y"));
+		
+		// D(x)' is [-10 ... inf]
+		assertEquals(new BigInteger("-10"), bnd.getLower("x"));
+		assertNull(bnd.getUpper("x"));
+
+		// D(x)' NOT changed.
 		assertEquals(new BigInteger("-10"), bnd.getLower("z"));
 		assertEquals(new BigInteger("10"), bnd.getUpper("z"));
 	}

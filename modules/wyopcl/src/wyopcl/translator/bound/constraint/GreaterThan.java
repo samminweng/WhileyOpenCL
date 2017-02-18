@@ -3,21 +3,19 @@ package wyopcl.translator.bound.constraint;
 import java.math.BigInteger;
 
 import wyopcl.translator.bound.Bounds;
+import wyopcl.translator.bound.Domain;
 /**
- * Implements the propagation rule for constraint <code>x > y</code> 
+ * Implements the propagation rule for constraint  
+ * <code>
+ * x > y
+ * </code> 
  * 
- * It gets the lower bound from 'y' and increments the bound by '1'. 
- * And then it adds the new lower bound to 'x' without making any change to 'y'. 
  * 
- * For example, the following bounds and constraints:
- * <p><code> 
- * D(x) = [1..11], D(y)=[10..10], x > y
+ * Rules are:
+ * 1. x:=x intersect [y.min+1 ... inf]
+ * 2. y:=y intersect [-inf ... x.max-1]
  * 
- * </code></p> 
- * can be inferred as below:
- * <p><code>
- * D(x) = [11..11], D(y)=[10..10]
- * </code></p>
+ * 
  * @author Min-Hsien Weng
  *
  */
@@ -35,20 +33,22 @@ public class GreaterThan extends Constraint {
 	 */
 	public void inferBound(Bounds bnd) {
 		//bnd.isChanged = false;
-		max_x = bnd.getUpper(x);
 		min_x = bnd.getLower(x);
-		max_y = bnd.getUpper(y);
+		max_x = bnd.getUpper(x);
 		min_y = bnd.getLower(y);
-		
-		//Propagate 'min_y + 1' to lower bound of x 
+		max_y = bnd.getUpper(y);
+
+		// Update x domain
 		if(min_y != null){
-			bnd.isChanged |= bnd.addLowerBound(x, min_y.add(BigInteger.ONE));
+			Domain x_domain = new Domain(x, min_y.add(BigInteger.ONE), null);
+			bnd.getDomain(x).intersect(x_domain);
 		}
-		
-//		//Propagate the upper bound from y to x.
-//		if(max_y != null){
-//			bnd.isChanged |= bnd.addUpperBound(x, max_y.add(BigInteger.ONE));
-//		}
+
+		// Update y domain
+		if(max_x != null){
+			Domain y_domain = new Domain(y, null, max_x.subtract(BigInteger.ONE));
+			bnd.getDomain(y).intersect(y_domain);
+		}
 
 		//return bnd.isChanged;
 
