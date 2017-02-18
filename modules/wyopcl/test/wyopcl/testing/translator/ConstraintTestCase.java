@@ -11,6 +11,7 @@ import wyopcl.translator.bound.BoundBlock;
 import wyopcl.translator.bound.Bounds;
 import wyopcl.translator.bound.Domain;
 import wyopcl.translator.bound.BoundBlock.BlockType;
+import wyopcl.translator.bound.constraint.Assign;
 import wyopcl.translator.bound.constraint.Const;
 import wyopcl.translator.bound.constraint.Equals;
 import wyopcl.translator.bound.constraint.GreaterThan;
@@ -418,29 +419,59 @@ public class ConstraintTestCase {
 	 */
 	@Test
 	public void testEquals() {
-		BoundBlock blk = new BoundBlock("code", BlockType.BLOCK);
+		Bounds bnd = new Bounds();
 		// D(x) = [-10..10]
-		blk.addBounds("x", new BigInteger("-10"), new BigInteger("10"));
-
-		blk.addConstraint(new Equals("x", "y"));
-		blk.addConstraint(new Equals("y", "z"));
+		bnd.addDomain(new Domain("x", new BigInteger("-10"), new BigInteger("10")));
+		// D(y) = [-inf..inf]
+		bnd.addDomain(new Domain("y", null, null));
+		// D(z) = [-inf..inf]
+		bnd.addDomain(new Domain("z", null, null));
 		
-		assertEquals(new BigInteger("-10"), blk.getLower("y"));
-		assertEquals(new BigInteger("10"), blk.getUpper("y"));
-		assertEquals(new BigInteger("-10"), blk.getLower("z"));
-		assertEquals(new BigInteger("10"), blk.getUpper("z"));
-
-		// Add the stronger bounds on z [0..5]
-		blk.addBounds("z", new BigInteger("0"), new BigInteger("5"));
-
-		assertTrue(blk.inferFixedPoint());
-		assertEquals(new BigInteger("0"), blk.getLower("x"));
-		assertEquals(new BigInteger("5"), blk.getUpper("x"));
-		assertEquals(new BigInteger("0"), blk.getLower("y"));
-		assertEquals(new BigInteger("5"), blk.getUpper("y"));
-		assertEquals(new BigInteger("0"), blk.getLower("z"));
-		assertEquals(new BigInteger("5"), blk.getUpper("z"));
+		Equals constraint = new Equals("x", "y");
+		constraint.inferBound(bnd);
+		
+		Equals constraint1 = new Equals("y", "z");
+		constraint1.inferBound(bnd);
+		
+		// D(y)' is [-10..10]
+		assertEquals(new BigInteger("-10"), bnd.getLower("y"));
+		assertEquals(new BigInteger("10"), bnd.getUpper("y"));
+		
+		// D(z)' is [-10..10]
+		assertEquals(new BigInteger("-10"), bnd.getLower("z"));
+		assertEquals(new BigInteger("10"), bnd.getUpper("z"));
 	}
+	
+	/**
+	 * Given D(x) =[-10..10] Test the constraints ( y := x ^ z := y)
+	 * 
+	 */
+	@Test
+	public void testAssign() {
+		Bounds bnd = new Bounds();
+		// D(x) = [-5..5]
+		bnd.addDomain(new Domain("x", new BigInteger("-5"), new BigInteger("5")));
+		// D(y) = [-10..10]
+		bnd.addDomain(new Domain("y", new BigInteger("-10"), new BigInteger("10")));
+		// D(z) = [-10..10]
+		bnd.addDomain(new Domain("z", new BigInteger("-10"), new BigInteger("10")));
+		
+		// y:=x
+		Assign constraint = new Assign("y", "x");
+		constraint.inferBound(bnd);
+		// z:=y
+		Assign constraint1 = new Assign("z", "y");
+		constraint1.inferBound(bnd);
+		
+		// D(y)' is [-5..5]
+		assertEquals(new BigInteger("-5"), bnd.getLower("y"));
+		assertEquals(new BigInteger("5"), bnd.getUpper("y"));
+		
+		// D(z)' is [-5..5]
+		assertEquals(new BigInteger("-5"), bnd.getLower("z"));
+		assertEquals(new BigInteger("5"), bnd.getUpper("z"));
+	}
+	
 	
 	/**
 	 * Given D(x) =[1..5] Test the constraints '!x = y'

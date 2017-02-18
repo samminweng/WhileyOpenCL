@@ -3,6 +3,7 @@ package wyopcl.translator.bound.constraint;
 import java.math.BigInteger;
 
 import wyopcl.translator.bound.Bounds;
+import wyopcl.translator.bound.Domain;
 
 /**
  * Implementing the propagation rule for the equality ( x == y )
@@ -11,6 +12,12 @@ import wyopcl.translator.bound.Bounds;
  * 
  * For example, D(x)=[-10..10] D(y)=[0..5]. The resulting domains are
  * D(x)=[0..5] D(y)=[0..5] 
+ * 
+ * Rules are :
+ * x:= x intersect [y.min ... y.max]
+ * y:= y intersect [x.min ... x.max]
+ * 
+ * 
  * @author Min-Hsien Weng
  *
  */
@@ -33,7 +40,15 @@ public class Equals extends Constraint {
 		y_min = bnd.getLower(y);
 		y_max = bnd.getUpper(y);
 
-		// If not, then propagating the bounds from x to y
+		// Update x domain
+		Domain x_domain = new Domain(x, y_min, y_max);
+		bnd.getDomain(x).intersect(x_domain);
+				
+		// Update y domain
+		Domain y_domain = new Domain(y, x_min, x_max);
+		bnd.getDomain(y).intersect(y_domain);
+		
+		/*
 		if (x_min != null) {
 			bnd.isChanged |= bnd.addLowerBound(y, x_min);
 		}
@@ -49,7 +64,7 @@ public class Equals extends Constraint {
 
 		if (y_max != null) {
 			bnd.isChanged |= bnd.addUpperBound(x, y_max);
-		}
+		}*/
 
 		//return bnd.isChanged;
 	}
