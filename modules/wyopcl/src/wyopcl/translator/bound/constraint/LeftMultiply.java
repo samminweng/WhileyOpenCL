@@ -1,13 +1,26 @@
 package wyopcl.translator.bound.constraint;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 
 import wyopcl.translator.bound.Bounds;
+import wyopcl.translator.bound.Domain;
 
 /**
- * Propagate the bounds of multiply (x * y = z)
+ * Propagate the bounds of multiply (z := x * y)
  * 
- * If min(x) and min(y) is 0, min(z) is 0. 
+ * Rules are 
+ * p1 := x_min * y_min
+ * p2 := x_min * y_max
+ * p3 := x_max * y_min
+ * p4 := x_max * y_max
+ * 
+ * 
+ * 1. min_z := min(p1, p2, p3, p4) 
+ * 2. max_z := max(p1, p2, p3, p4)
+ * 
+ * Refer to Page.103, Marriott, Kim, and Peter J. Stuckey. 
+ * Programming with constraints: an introduction. MIT press, 1998.
  * 
  * 
  * @author Min-Hsien Weng
@@ -36,16 +49,81 @@ public class LeftMultiply extends Constraint {
 		
 		
 		// x * y = z
-	    // When x or y is 0, the minimum of z is also inferred as zero
-		if((min_x != null && min_x.equals(BigInteger.ZERO)) 
-				&& (min_y != null && min_y.equals(BigInteger.ZERO))){
-			bnd.isChanged |= bnd.setLowerBound(z, BigInteger.valueOf(0));
+		// Try all combination of x * y
+		ArrayList<BigInteger> p = new ArrayList<BigInteger>();
+		
+		boolean isUpperInf = false;
+		boolean isLowerInf = false; 
+		// Check 
+		if(min_x != null){
+			// p1 = min_x * min_y;
+			if(min_y != null){
+				p.add(min_x.multiply(min_y));
+			}else{
+				// Lower bound is -infy
+				isLowerInf = true;
+			}
+			// p2 = min_x * max_y
+			if(max_y != null){
+				p.add(min_x.multiply(max_y));
+			}else{
+				// Upper bound is inf
+				isUpperInf = true;
+			}
+		}else{
+			// Lower bound is -inf
+			isLowerInf = true;
 		}
 		
-		/*if((max_x != null && max_x.equals(BigInteger.ZERO))
-				|| (max_y != null && max_y.equals(BigInteger.ZERO))){
-			bnd.isChanged |= bnd.setUpperBound(z, BigInteger.valueOf(0));
-		}*/
+		if(max_x != null){
+			// p3 = min_x * min_y;
+			if(min_y != null){
+				p.add(max_x.multiply(min_y));
+			}else{
+				// lower bound is -inf
+				isLowerInf = true;
+			}
+			// p4 = min_x * max_y
+			if(max_y != null){
+				p.add(max_x.multiply(max_y));
+			}else{
+				// Upper bound is inf
+				isUpperInf = true;
+			}
+		}else{
+			// Upper bound is inf
+			isUpperInf = true;
+		}
+		
+		// The new D(z) domain
+		BigInteger min = null;
+		BigInteger max = null;
+		
+		// Upper bound is Not inf (max := max(p1,p2,p3,p4)) 
+		if(isUpperInf == false){
+			// Find the maximum of 'p' array
+			max = p.get(0);
+			for(int i=1;i<p.size();i++){
+				BigInteger product = p.get(i);
+				if(product.compareTo(max)>0 ){
+					max = product;
+				}
+			}			
+		}
+		// Lower bound is NOT -inf ( min := min(p1,p2,p3,p4)) 
+		if(isLowerInf == false){
+			// Find the maximum of 'p' array
+			min = p.get(0);
+			for(int i=1;i<p.size();i++){
+				BigInteger product = p.get(i);
+				if(product.compareTo(min)<0 ){
+					min = product;
+				}
+			}			
+		}
+		
+		// D(z)' = [min .. max]
+		bnd.getDomain(z).set(new Domain(z, min, max));
 		
 		//return bnd.isChanged;
 	}
