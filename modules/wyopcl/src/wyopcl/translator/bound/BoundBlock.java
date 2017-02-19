@@ -414,4 +414,14 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	public boolean isConsistent() {
 		return this.unionOfBounds.checkBoundConsistency();
 	}
+
+	/**
+	 * Add or update the existing domain
+	 * 
+	 * @param d
+	 */
+	public void addDomain(Domain d) {
+		// Set or update the domain
+		this.unionOfBounds.addDomain(d);
+	}
 }

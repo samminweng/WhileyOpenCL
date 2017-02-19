@@ -34,7 +34,6 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		//this.isUpperBoundIncreasing = false;
 		this.lower_bound = null;
 		this.upper_bound = null;
-		//this.isEmpty = true;
 		this.isLowerUnknown = true;
 		this.isUpperUnknown = true;
 	}
@@ -200,8 +199,8 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		d.lower_bound = this.lower_bound;
 		d.upper_bound = this.upper_bound;
 		//d.isEmpty = this.isEmpty;
-		//d.isLowerInit = this.isLowerInit;
-		//d.isUpperInit = this.isUpperInit;
+		d.isLowerUnknown = this.isLowerUnknown;
+		d.isUpperUnknown = this.isUpperUnknown;
 		return d;
 	}
 

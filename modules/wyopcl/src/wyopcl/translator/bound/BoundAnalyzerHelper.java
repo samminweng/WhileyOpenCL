@@ -187,24 +187,27 @@ final class BoundAnalyzerHelper {
 		for(BoundBlock blk: graph.getBlockList()){
 			blk.emptyBounds();
 		}
-		
+
 		BoundBlock entry = graph.getBasicBlock("entry", BlockType.ENTRY);
 		//Clear all the constraints/bounds in entry block.		
 		entry.emptyConstraints();
 		int index = 0;
 		for (Type paramType : params) {
-			String param = prefix + index;
-			String operand = prefix + operands[index];// The registers at caller side
-			// Check parameter type
+			String r_input = prefix + index; // The register at callee site
+			String r_param = prefix + operands[index];// The registers at caller site
+			// Check the type
 			if (isIntType(paramType)) {
-				entry.addBounds(param, bnd.getLower(operand),  bnd.getUpper(operand));
+				// Pass the return bounds
+				Domain input = new Domain(r_input, bnd.getLower(r_param), bnd.getUpper(r_param));
+				entry.addDomain(input);
 			}
 			// Pass the bounds of array size to calling function
 			if(paramType instanceof Type.Array){
-				String param_size = param + "_size";
-				String operand_size = operand + "_size";
-				// Pass the bounds size
-				entry.addBounds(param_size, bnd.getLower(operand_size),  bnd.getUpper(operand_size));
+				String param_size = r_input + "_size";
+				String operand_size = r_param + "_size";
+				// Pass the bounds of array size
+				Domain input_size = new Domain(param_size, bnd.getLower(operand_size), bnd.getUpper(operand_size));
+				entry.addDomain(input_size);
 			}
 			index++;
 		}
@@ -230,7 +233,7 @@ final class BoundAnalyzerHelper {
 					addSizeInfo(callee_name, param_reg, size);	
 				}
 			}
-			
+
 		}
 	}*/
 
@@ -243,7 +246,7 @@ final class BoundAnalyzerHelper {
 		SymbolFactory sym_factory = getSymbolFactory(name);
 		// Get the 'size' attribute from
 		sym_factory.putAttribute(reg, "size", size);	
-		
+
 	}*/
 	/**
 	 * Get the size info for 
@@ -256,10 +259,10 @@ final class BoundAnalyzerHelper {
 		if(size != null){
 			return (BigInteger)size;
 		}
-		
+
 		return null;
 	}
-	*/
+	 */
 
 	/**
 	 * Propagate the bounds of return value to the caller.
@@ -270,29 +273,27 @@ final class BoundAnalyzerHelper {
 	 * @param bnd
 	 */
 	public static void propagateBoundsFromFunctionCall(String caller_name, String callee_name, String ret_reg, Type ret_type, Bounds bnd) {
-		BoundGraph graph = getCFGraph(caller_name);
+		BoundBlock blk = getCFGraph(caller_name).getCurrentBlock();
 		if (ret_type != null){
 			if(isIntType(ret_type)) {
 				// Get the bounds of return variable
-				Domain ret_bound;
-				for(Entry<String, Domain> bound: bnd.getBounds().entrySet()){
-					if(bound.getKey().toString().equals("return")){
-						ret_bound = bound.getValue();
-						// Propagate the bounds of return value.
-						graph.addConstraint(new Range(ret_reg, ret_bound.getLowerBound(), ret_bound.getUpperBound()));
-					}else if(bound.getKey().toString().equals("return_size")){
-						// Pass the array size of return array to caller size.
-						ret_bound = bound.getValue();
-						// Propagate the bounds of return array size
-						graph.addConstraint(new Range(ret_reg+"_size", ret_bound.getLowerBound(), ret_bound.getUpperBound()));
-					}
-					
-				}
+				Domain ret = bnd.getDomain("return");
+				// Propagate the bounds of return value to caller site
+				Domain output = new Domain(ret_reg, ret.getLowerBound(), ret.getUpperBound());
+				blk.addDomain(output);
+			}
+
+			// Pass the bounds of array size to calling function
+			if(ret_type instanceof Type.Array){
+				Domain ret_size = bnd.getDomain("return_size");
+				// Propagate the bounds of return array size to caller site
+				Domain output_size = new Domain(ret_reg+"_size", ret_size.getLowerBound(), ret_size.getUpperBound());
+				blk.addDomain(output_size);
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * Get the size info of the return list from callee and propagate the size to caller. 
 	 * @param caller_name
@@ -309,7 +310,7 @@ final class BoundAnalyzerHelper {
 				// Add 'size' info to caller
 				addSizeInfo(caller_name, ret_reg, size);
 			}
-			
+
 		}
 	}*/
 
@@ -349,7 +350,7 @@ final class BoundAnalyzerHelper {
 			throw new RuntimeException("Error in printCFG function");
 		}
 	}
-	
+
 	/**
 	 * Check if the type is instance of Integer by inferring the type from
 	 * <code>wyil.Lang.Type</code> objects, including the effective collection
@@ -367,9 +368,9 @@ final class BoundAnalyzerHelper {
 			return isIntType(((Type.Array) type).element());
 		}
 
-		
+
 		return false;
 	}
-	
+
 
 }

@@ -549,7 +549,6 @@ public class ConstraintTestCase {
 	 * 
 	 * Test the constraint z := x * y
 	 * 
-	 * @see Figure3.11
 	 */
 	@Test
 	public void testLeftMultiply() {
@@ -582,7 +581,6 @@ public class ConstraintTestCase {
 	 * 
 	 * Test the constraint z := x * y
 	 * 
-	 * @see Figure3.11
 	 */
 	@Test
 	public void testLeftMultiply2() {

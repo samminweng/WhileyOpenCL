@@ -323,7 +323,7 @@ public class Bounds implements Cloneable {
 		for (Domain d : domains) {
 			str += "\n\t" + d.toString();
 		}
-		domains = null;
+		//domains = null;
 		return str;
 	}
 
@@ -435,10 +435,11 @@ public class Bounds implements Cloneable {
 	public void addDomain(Domain d) {
 		String name = d.getName();
 		if(!this.bounds.containsKey(name)){
+			// Add a new domain
 			this.bounds.put(d.getName(), d);
 		}else{
-			addLowerBound(name, d.getLowerBound());
-			addUpperBound(name, d.getUpperBound());
+			// Intersect the new domain with existing domain
+			this.getDomain(name).intersect(d);
 		}
 	}
 

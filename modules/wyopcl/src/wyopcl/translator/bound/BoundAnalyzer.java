@@ -298,11 +298,9 @@ public class BoundAnalyzer {
 					bnd_before = (Bounds) blk.getBounds().clone();
 					
 					// Reset the block bounds
-					blk.emptyBounds();
-					// Take the union of parents' bounds to produce the input
-					// bounds for bound inference.
+					// blk.emptyBounds();
+					// Take the union of parents' bounds to produce the input bound
 					for (BoundBlock parent : blk.getParentNodes()) {
-						
 						// Take the bounds of parent nodes
 						blk.unionBounds(parent);
 					}
@@ -312,21 +310,19 @@ public class BoundAnalyzer {
 					// End of bound inference.
 
 					bnd_after = (Bounds) blk.getBounds();
-					// Check if upper/lower bound has any change
-					//bnd_after.checkBoundChange(bnd_before);
-					if(iteration %3 == 0){
+					// Repeat the bound inference for (maximal) three iterations
+					if(iteration >0 && iteration %3 == 0){
 						bnd_after.widenBounds(config, bnd_before);
-					}
-					
-					
+					}					
+				
 					// Check bound change at each block.
 					// Test the equality of existing and newly inferred bounds.
 					if (bnd_before != null && bnd_after != null 
-							&& !bnd_before.equals(bnd_after)) {
+							&& !bnd_before.equals(bnd_after)) {	
 						// If bounds has changed, then isChanged = false.
 						isChanged = true;
 					}
-
+					
 					// Debug
 					if (config.isVerbose()) {
 						// Print out the bounds.
@@ -342,33 +338,8 @@ public class BoundAnalyzer {
 			if (config.isVerbose()) {
 				System.out.println("isFixedPoint=" + isFixedPoint);
 			}
-
-			// Repeat the bound inference for (maximal) three iterations
-			if ( iteration%3 == 0) {
-				/*// After three iterations, widen the bounds of variables whose upper bounds are increasing
-				// or whose lower bounds are decreasing.
-				for (BoundBlock blk : list) {
-					// Debug
-					if (config.isVerbose()) {
-						// Print out the bounds.
-						System.out.println("=== Before the widening operator ===");
-						System.out.println(blk);
-					}
-					
-					//Widen the bounds
-					blk.getBounds().widenBounds(config);
-					// Debug
-					if (config.isVerbose()) {
-						// Print out the bounds.
-						System.out.println("=== After the widening operator === ");
-						System.out.println(blk);
-					}
-				}*/
-				// Reset the iteration
-				//iteration = 1;
-			}else{
-				iteration++;
-			}
+			
+			iteration++;
 		}
 
 		// Take the union of all blocks to produce the bounds of a function.
@@ -622,7 +593,7 @@ public class BoundAnalyzer {
 				
 				// Check if the return type is integer.
 				if (isIntType(type)) {
-					// Add the 'Equals' constraint to the return (ret) variable.
+					// Add the 'Assign' constraint to the return (ret) variable.
 					return_block.addConstraint((new Assign("return", retOp)));
 				}
 				
