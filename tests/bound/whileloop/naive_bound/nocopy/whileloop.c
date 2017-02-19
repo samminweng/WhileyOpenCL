@@ -1,14 +1,14 @@
 #include "whileloop.h"
 int64_t _f_(int64_t limit){
 	int64_t _1 = 0;
-	int64_t i = 0;
+	uint16_t i = 0;
 	int64_t sum = 0;
 	uint16_t _4 = 0;
 	uint16_t _5 = 0;
 	int64_t _6 = 0;
 	int64_t _7 = 0;
 	uint16_t _8 = 0;
-	int64_t _9 = 0;
+	uint16_t _9 = 0;
 	//const %4 = 0 : int
 	_4 = 0;
 	//assign %2 = %4  : int
@@ -29,7 +29,6 @@ int64_t _f_(int64_t limit){
 		//const %8 = 1 : int
 		_8 = 1;
 		//add %9 = %2, %8 : int
-		_DETECT_INT_ADD_OVERFLOW(i,_8,_9);
 		_9=i+_8;
 		//assign %2 = %9  : int
 		i = _9;

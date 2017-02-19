@@ -1,12 +1,12 @@
 Bound Analysis of main:
-	domain(input)	=[10..20]
+	domain(input)	=[20..20]
 	domain(_3)	=[10..10]
 	domain(_4)	=[20..20]
 Consistency=true
 Bound Analysis of foo:
-	domain(INPUT)	=[10..20]
-	domain(_10)	=[1..infinity]
-	domain(i)	=[0..infinity]
+	domain(INPUT)	=[20..20]
+	domain(_10)	=[1..20]
+	domain(i)	=[0..20]
 	domain(OUTPUT)	=[0..infinity]
 	domain(_4)	=[0..0]
 	domain(_5)	=[0..0]
@@ -16,7 +16,7 @@ Bound Analysis of foo:
 	domain(return)	=[0..infinity]
 Consistency=true
 Bound Analysis of main:
-	domain(input)	=[10..20]
+	domain(input)	=[20..20]
 	domain(a)	=[0..infinity]
 	domain(_3)	=[10..10]
 	domain(_4)	=[20..20]

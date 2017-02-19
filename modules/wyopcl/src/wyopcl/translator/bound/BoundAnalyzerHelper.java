@@ -281,8 +281,6 @@ final class BoundAnalyzerHelper {
 				// Propagate the bounds of return value to caller site with a Range constraint
 				Range range = new Range(ret_reg, ret.getLowerBound(), ret.getUpperBound());
 				blk.addConstraint(range);
-				//Domain output = new Domain(ret_reg, ret.getLowerBound(), ret.getUpperBound());
-				//blk.addDomain(output);
 			}
 
 			// Pass the bounds of array size to calling function
@@ -291,8 +289,6 @@ final class BoundAnalyzerHelper {
 				// Propagate the bounds of return array size to caller site with a Range constraint
 				Range range = new Range(ret_reg+"_size", ret_size.getLowerBound(), ret_size.getUpperBound());
 				blk.addConstraint(range);
-				//Domain output_size = new Domain(ret_reg+"_size", ret_size.getLowerBound(), ret_size.getUpperBound());
-				//blk.addDomain(output_size);
 			}
 		}
 

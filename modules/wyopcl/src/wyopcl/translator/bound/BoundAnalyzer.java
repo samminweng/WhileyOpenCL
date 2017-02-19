@@ -318,8 +318,7 @@ public class BoundAnalyzer {
 						bnd_after.widenBounds(config, bnd_before);
 					}					
 				
-					// Check bound change at each block.
-					// Test the equality of existing and newly inferred bounds.
+					// Check the changes of before and after bounds
 					if (bnd_before != null && bnd_after != null 
 							&& !bnd_before.equals(bnd_after)) {	
 						// If bounds has changed, then isChanged = false.
@@ -378,31 +377,7 @@ public class BoundAnalyzer {
 		
 		// Return the inferred bounds
 		return bnds;
-	}
-
-	/**
-	 * Analyze the invariant byte-code. Currently skip the byte-code of
-	 * invariant.
-	 * 
-	 * @param code
-	 *            Invariant {@link wyil.lang.Codes.Invariant}
-	 */
-	/*private void analyze(Codes.Invariant code, String name) {
-		// Skip the byte-code inside an invariant
-		// graph.enabledInvariant();
-		// iterateBytecode(name, code.bytecodes());
-		// graph.disabledInvariant();
-	}
-	
-	private void analyze(Codes.Assert code, String name){
-		//iterateBytecode(name, code.bytecodes());
-	}
-	
-	
-	private void analyze(Codes.Assume code, String name){
-		//iterateBytecode(name, code.bytecodes());
-	}
-	*/
+	}	
 
 	private void analyze(Codes.Assign code, String name) {
 		String target_reg = prefix + code.target(0);
@@ -445,8 +420,6 @@ public class BoundAnalyzer {
 			BigInteger size = BigInteger.valueOf((((Constant.Array) constant).values).size());
 			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(name);
 			graph.addConstraint(new Const(target_reg+"_size", size));
-			
-			//BoundAnalyzerHelper.addSizeInfo(name, target_reg, size);
 		}
 
 	}
