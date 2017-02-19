@@ -278,17 +278,21 @@ final class BoundAnalyzerHelper {
 			if(isIntType(ret_type)) {
 				// Get the bounds of return variable
 				Domain ret = bnd.getDomain("return");
-				// Propagate the bounds of return value to caller site
-				Domain output = new Domain(ret_reg, ret.getLowerBound(), ret.getUpperBound());
-				blk.addDomain(output);
+				// Propagate the bounds of return value to caller site with a Range constraint
+				Range range = new Range(ret_reg, ret.getLowerBound(), ret.getUpperBound());
+				blk.addConstraint(range);
+				//Domain output = new Domain(ret_reg, ret.getLowerBound(), ret.getUpperBound());
+				//blk.addDomain(output);
 			}
 
 			// Pass the bounds of array size to calling function
 			if(ret_type instanceof Type.Array){
 				Domain ret_size = bnd.getDomain("return_size");
-				// Propagate the bounds of return array size to caller site
-				Domain output_size = new Domain(ret_reg+"_size", ret_size.getLowerBound(), ret_size.getUpperBound());
-				blk.addDomain(output_size);
+				// Propagate the bounds of return array size to caller site with a Range constraint
+				Range range = new Range(ret_reg+"_size", ret_size.getLowerBound(), ret_size.getUpperBound());
+				blk.addConstraint(range);
+				//Domain output_size = new Domain(ret_reg+"_size", ret_size.getLowerBound(), ret_size.getUpperBound());
+				//blk.addDomain(output_size);
 			}
 		}
 

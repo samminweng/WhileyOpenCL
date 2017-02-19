@@ -298,7 +298,10 @@ public class BoundAnalyzer {
 					bnd_before = (Bounds) blk.getBounds().clone();
 					
 					// Reset the block bounds
-					// blk.emptyBounds();
+					if(!blk.getType().equals(BlockType.ENTRY)){
+						blk.emptyBounds();
+					}
+					
 					// Take the union of parents' bounds to produce the input bound
 					for (BoundBlock parent : blk.getParentNodes()) {
 						// Take the bounds of parent nodes

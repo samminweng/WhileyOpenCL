@@ -3,53 +3,40 @@ package wyopcl.translator.bound.constraint;
 import java.math.BigInteger;
 
 import wyopcl.translator.bound.Bounds;
+import wyopcl.translator.bound.Domain;
 /**
- * Implements the propagation rule for the constraint 'x := y' which set both lower and upper bounds. 
+ * Implements the propagation rule for the constraint 'x := [min .. max]' 
+ * 
+ * Rule are:
+ * x:=
+ *  
  * @author Min-Hsien Weng
  *
  */
 public class Range extends Constraint {
-	private BigInteger min_x, max_x, min_y, max_y;
-	private String x, y;
+	private BigInteger min_x, max_x;
+	private String x;
 	
-	/*public Range(String x, String y){
-		this.x = x;
-		this.y = y;
-	}*/
+	
 	
 	public Range(String x, BigInteger min, BigInteger max){
 		this.x = x;
-		this.min_y = min;
-		this.max_y = max;
+		this.min_x = min;
+		this.max_x = max;
 	}
 	
 
 	@Override
 	public void inferBound(Bounds bnd) {
+		Domain x_domain = new Domain(x, min_x, max_x);
+		// Set D(x) with given domain
+		bnd.getDomain(x).set(x_domain);
 		
-		//bnd.isChanged = false;
-		min_x = bnd.getLower(x);
-		max_x = bnd.getUpper(x);			
-		if(min_x != min_y){
-			bnd.getDomain(x).setLowerBound(min_y);
-			bnd.isChanged |= true;
-		}
-		if(max_x != max_y){
-			bnd.getDomain(x).setUpperBound(max_y);
-			bnd.isChanged |= true;
-		}
-		
-		//return bnd.isChanged;
 	}
 
 	@Override
 	public String toString() {
-		if(y!=null){
-			return x + ":="+ y;
-		}else{
-			return x+":=["+min_y+".."+max_y+"]";
-		}
-		
+		return x+":=["+min_x+".."+max_x+"]";
 	}
 
 }
