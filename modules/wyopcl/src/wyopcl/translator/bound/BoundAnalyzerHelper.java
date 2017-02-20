@@ -291,28 +291,7 @@ final class BoundAnalyzerHelper {
 				blk.addConstraint(range);
 			}
 		}
-
 	}
-
-	/**
-	 * Get the size info of the return list from callee and propagate the size to caller. 
-	 * @param caller_name
-	 * @param callee_name
-	 * @param ret_reg
-	 * @param ret_type
-	 */
-	/*public static void propagateSizeFromFunctionCall(String caller_name, String callee_name, String ret_reg, Type ret_type) {
-		//Check if the return value is a list.
-		if (ret_type instanceof Type.Array) {
-			// Get 'size' attribute from callee
-			BigInteger size = (BigInteger) getSizeInfo(callee_name, "return");			
-			if(size != null){
-				// Add 'size' info to caller
-				addSizeInfo(caller_name, ret_reg, size);
-			}
-
-		}
-	}*/
 
 	/**
 	 * Outputs the control flow graphs (*.dot).

@@ -47,22 +47,7 @@ public class GreaterThanEquals extends Constraint {
 		}
 
 
-
-		/*	// Update 'x' domain
-		if(min_y != null){
-			Domain new_x = new Domain(x, min_y, null);
-			bnd.getDomain(x).intersect(new_x);
-		}
-
-		// Update 'y' domain
-		if(max_x != null){
-			Domain new_y = new Domain(y, null, max_x);
-			bnd.getDomain(x).intersect(new_y);
-		}
-
-
-		//return bnd.isChanged;
-		 */	}
+	}
 
 
 	@Override
