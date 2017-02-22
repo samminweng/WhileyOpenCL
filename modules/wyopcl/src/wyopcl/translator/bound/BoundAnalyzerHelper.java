@@ -212,58 +212,8 @@ final class BoundAnalyzerHelper {
 			index++;
 		}
 	}
-	/**
-	 * Get the size info of input parameters for a function call and pass the sizes to the invoked function.
-	 * @param caller_name
-	 * @param callee_name
-	 * @param params
-	 * @param operands
-	 */
-	/*public static void propagateSizeInfoToFunctionCall(String caller_name, String callee_name, List<Type> params, int[] operands) {
-		// Pass the bounds of input parameters.
-		for (int index=0;index < params.size();index++) {			
-			String op_reg = prefix + operands[index];
-			String param_reg = prefix + index;
-			//Check parameter type
-			if(params.get(index) instanceof Type.Array){
-				//Get size info from caller
-				BigInteger size = getSizeInfo(caller_name, op_reg);
-				if(size != null){
-					//Pass size to callee
-					addSizeInfo(callee_name, param_reg, size);	
-				}
-			}
-
-		}
-	}*/
-
-	/**
-	 * Add size info for the specific register.
-	 * @param name the function name
-	 * @param reg register
-	 */
-	/*public static void addSizeInfo(String name, String reg, BigInteger size){
-		SymbolFactory sym_factory = getSymbolFactory(name);
-		// Get the 'size' attribute from
-		sym_factory.putAttribute(reg, "size", size);	
-
-	}*/
-	/**
-	 * Get the size info for 
-	 * @param name the function name
-	 * @param reg register
-	 */
-	/*public static BigInteger getSizeInfo(String name, String reg){
-		SymbolFactory sym_factory = getSymbolFactory(name);
-		Object size = sym_factory.getAttribute(reg, "size");
-		if(size != null){
-			return (BigInteger)size;
-		}
-
-		return null;
-	}
-	 */
-
+	
+	
 	/**
 	 * Propagate the bounds of return value to the caller.
 	 * 

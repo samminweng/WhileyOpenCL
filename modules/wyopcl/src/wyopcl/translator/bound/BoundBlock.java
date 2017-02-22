@@ -26,7 +26,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	// The branch name
 	private String label;
 	private BlockType type;
-	private Bounds unionOfBounds;
+	private Bounds bounds;
 	// Indicate if the bounds remain unchanged. False: unchanged. True: changed.
 	private boolean isChanged;
 
@@ -104,7 +104,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	 * Private constructor
 	 */
 	private BoundBlock() {
-		this.unionOfBounds = new Bounds();
+		this.bounds = new Bounds();
 		this.constraints = new ArrayList<Constraint>();
 		this.codeBlock = new CodeBlock();
 	}
@@ -138,7 +138,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	 */
 	public void emptyBounds() {
 		//this.unionOfBounds = null;
-		this.unionOfBounds = new Bounds();
+		this.bounds = new Bounds();
 	}
 
 	/**
@@ -199,7 +199,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	 */
 	public void unionBounds(BoundBlock parent) {
 		// Take the union of bounds of parent node and current node.
-		this.unionOfBounds.union((Bounds) parent.getBounds().clone());
+		this.bounds.union((Bounds) parent.getBounds().clone());
 	}
 	/**
 	 * Intersect the bounds of current and its parent nodes and then set the bounds directly.
@@ -208,7 +208,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	 * @param parent
 	 */
 	public void intersecBounds(BoundBlock parent){
-		this.unionOfBounds.intersect((Bounds) parent.getBounds().clone());
+		this.bounds.intersect((Bounds) parent.getBounds().clone());
 	}
 
 	/**
@@ -297,29 +297,18 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	}
 
 	public Bounds getBounds() {
-		return unionOfBounds;
+		return bounds;
 	}
 
 	public BigInteger getLower(String name) {
-		return unionOfBounds.getLower(name);
+		return bounds.getLower(name);
 	}
 
 	public BigInteger getUpper(String name) {
-		return unionOfBounds.getUpper(name);
+		return bounds.getUpper(name);
 	}
 
-	/**
-	 * adds the bounds of a register with the given bounds.
-	 * 
-	 * @param name
-	 * @param new_min
-	 * @param new_max
-	 */
-	public void addBounds(String name, BigInteger new_min, BigInteger new_max) {
-		unionOfBounds.addLowerBound(name, new_min);
-		unionOfBounds.addUpperBound(name, new_max);
-	}
-
+	
 	/**
 	 * Iterate through the constraints to infer the bounds
 	 * 
@@ -329,7 +318,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	public void inferBounds() {		
 		// Iterate through the constraints to infer the bounds.
 		for (Constraint c : this.constraints) {
-			c.inferBound(this.unionOfBounds);
+			c.inferBound(this.bounds);
 		}
 		
 	}
@@ -377,7 +366,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 			str += String.format("%n%s %s%n", "Constraints", this.constraints);
 		}
 		
-		str += this.unionOfBounds + "\n";
+		str += this.bounds + "\n";
 		str += "IsConsistent=" + isConsistent()+"\n";
 		str += "\n-------------------------------\n";
 		
@@ -412,7 +401,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	 * @return true if all the bounds are consistent.
 	 */
 	public boolean isConsistent() {
-		return this.unionOfBounds.checkBoundConsistency();
+		return this.bounds.checkBoundConsistency();
 	}
 
 	/**
@@ -422,6 +411,6 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	 */
 	public void addDomain(Domain d) {
 		// Set or update the domain
-		this.unionOfBounds.addDomain(d);
+		this.bounds.addDomain(d);
 	}
 }

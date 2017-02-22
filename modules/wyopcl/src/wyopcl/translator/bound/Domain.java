@@ -397,17 +397,17 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		if (max != null) {
 			// Check the max values and widen the upper bound
 			BigInteger threshold = Threshold._I16_MAX.getValue();
-			if (max.compareTo(threshold) < 0) {
+			if (max.compareTo(threshold) <= 0) {
 				this.setUpperBound(threshold);
 				return;
 			}
 			threshold = Threshold._I32_MAX.getValue();
-			if (max.compareTo(threshold) < 0) {
+			if (max.compareTo(threshold) <= 0) {
 				this.setUpperBound(threshold);
 				return;
 			} 
 			threshold = Threshold._I64_MAX.getValue();
-			if (max.compareTo(threshold) < 0) {
+			if (max.compareTo(threshold) <= 0) {
 				this.setUpperBound(threshold);
 				return;
 			}

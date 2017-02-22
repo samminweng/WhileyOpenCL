@@ -264,7 +264,7 @@ public class BoundAnalyzer {
 	 *            the function name
 	 * @return the bounds
 	 */
-	public Bounds inferBounds(String name) {
+	public Bounds inferFunctionBounds(String name) {
 		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(name);
 		
 		if (config.isVerbose()) {
@@ -375,7 +375,7 @@ public class BoundAnalyzer {
 		// Put the bounds to HashMap
 		boundMap.put(name, bnds);		
 		
-		// Return the inferred bounds
+		// Return the inferred bounds of the function
 		return bnds;
 	}	
 
@@ -792,7 +792,7 @@ public class BoundAnalyzer {
 		Bounds bounds = this.boundMap.get(func_name);
 		// Check if the bound is inferred not. If not, then infer the bounds
 		if (bounds == null) {
-			bounds = this.inferBounds(func_name);
+			bounds = this.inferFunctionBounds(func_name);
 		}
 		return bounds;
 	}
@@ -914,7 +914,7 @@ public class BoundAnalyzer {
 			// Callee name
 			String callee_name = callee.name();
 			// Infer the bounds of caller function.
-			Bounds input_bnds = inferBounds(caller_name);
+			Bounds input_bnds = inferFunctionBounds(caller_name);
 
 			// Build CFGraph for callee.
 			buildCFG(config, callee_name);
@@ -922,7 +922,7 @@ public class BoundAnalyzer {
 			BoundAnalyzerHelper.propagateInputBoundsToFunctionCall(caller_name, callee_name, callee.type().params(), code.operands(), input_bnds);
 
 			// Infer the bounds of callee function.
-			Bounds ret_bnd = inferBounds(callee_name);
+			Bounds ret_bnd = inferFunctionBounds(callee_name);
 			
 			// check if there is any return
 			Type ret_type = null;

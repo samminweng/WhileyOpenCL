@@ -175,7 +175,7 @@ public class Translator implements Builder {
 				// Start with main function.
 				analyzer.buildCFG(config, "main");
 				// Infer the bounds at the end of main function.
-				analyzer.inferBounds("main");
+				analyzer.inferFunctionBounds("main");
 			} catch (Exception e) {
 				throw new RuntimeException("Errors on Bound Analysis");
 			}

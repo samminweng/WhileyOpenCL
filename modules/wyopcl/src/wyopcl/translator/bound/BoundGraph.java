@@ -165,36 +165,7 @@ public class BoundGraph {
 		current_blk = blk;
 	}
 
-	/**
-	 *  Propagate the input bounds to entry node
-	 * 
-	 * @param paramType
-	 * @param param
-	 * @param min
-	 * @param max
-	 */
-	public void addInputBounds(List<Type> params, int[] operands, Bounds bnd) {
-		//clear all the bounds in each block
-		for(BoundBlock blk: blocks){
-			blk.emptyBounds();
-		}
-		
-		BoundBlock entry = getBasicBlock("entry", BlockType.ENTRY);
-		//Clear all the constraints/bounds in entry block.		
-		entry.emptyConstraints();
-		int index = 0;
-		for (Type paramType : params) {
-			String param = prefix + index;
-			String operand = prefix + operands[index];
-			// Check parameter type
-			if (isIntType(paramType)) {
-				entry.addBounds(param, bnd.getLower(operand),  bnd.getUpper(operand));
-			}	
-			index++;
-		}
-		
-	}
-
+	
 	/**
 	 * Create if/else branch without adding any constraint.
 	 * @param new_label
