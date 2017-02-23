@@ -286,6 +286,12 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	 * 
 	 * The intersect domain is [0 ... 5]
 	 * 
+	 * More complicated example:
+	 * Current Domain = [-inf ... 0]
+	 * New Domain = [5 ... 5] 
+	 * 
+	 * The intersected domain is [5 ... 0]????
+	 * 
 	 * 
 	 * @param domain
 	 */
@@ -306,26 +312,58 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 			return;
 		}
 
-		// Both are not empt
-		// This and domain are not Empty
-		// New Lower bound is higher
-		if(new_min != null) {
+		// Both current and new domain are not Empty
+		if(new_min != null){
 			if (old_min == null || old_min.compareTo(new_min) < 0){
 				this.setLowerBound(new_min);
 			}
 		}
-
-		// New Upper bound is larger
+		
 		if(new_max != null) {
 			if (old_max == null || old_max.compareTo(new_max) > 0){
-				this.setUpperBound(new_max);
+				// Maybe we need to check if new max > old_min
+				// If Not, then this is an null intersection.
+				// For example, [5 ... 5] [-inf ...0] domains is an null intersection.
+				if(old_min != null && new_max.compareTo(old_min)>0){				
+					this.setUpperBound(new_max);
+				}
 			}
 		}
-
-
-		return;
-
-
+		
+		// Check if the intersection is NULL?
+		// New Lower bound is higher
+	/*	boolean isSetLower = false;
+		boolean isSetUpper = false;
+		if(new_min != null) {
+			if (old_min == null){
+				isSetLower = true;
+			}else if(old_min.compareTo(new_min) < 0){
+				isSetLower = true;
+			}
+		}
+		
+		
+		// New Upper bound is larger
+		if(new_max != null) {
+			if (old_max == null){
+				isSetUpper = true;
+			}else if(old_max.compareTo(new_max) > 0){
+				// Maybe we need to check if new max > old_min
+				// If Not, then this is an null intersection.
+				// For example, [5 ... 5] [-inf ...0] domains is an null intersection.
+				if(isSetLower && new_max.compareTo(old_max)>0){
+					isSetUpper = true;
+				}
+			
+			}
+		}
+		
+		// Set lower and upper bound
+		if(isSetLower && isSetUpper){
+			this.setLowerBound(new_min);
+			this.setUpperBound(new_max);
+		}*/
+		
 
 	}
 
