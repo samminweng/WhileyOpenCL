@@ -1,18 +1,18 @@
 #include "nestedwhileloop.h"
 int64_t _f_(int64_t limit){
 	int64_t _1 = 0;
-	int64_t i = 0;
+	uint16_t i = 0;
 	int64_t sum = 0;
 	uint16_t j = 0;
 	uint16_t _5 = 0;
 	uint16_t _6 = 0;
 	uint16_t _7 = 0;
-	int64_t _8 = 0;
+	uint32_t _8 = 0;
 	int64_t _9 = 0;
 	uint16_t _10 = 0;
-	int64_t _11 = 0;
+	uint16_t _11 = 0;
 	uint16_t _12 = 0;
-	int64_t _13 = 0;
+	uint32_t _13 = 0;
 	//const %5 = 0 : int
 	_5 = 0;
 	//assign %2 = %5  : int
@@ -34,7 +34,6 @@ int64_t _f_(int64_t limit){
 			//ifge %4, %0 goto blklab2 : int
 			if(j>=limit){goto blklab2;}
 			//mul %8 = %2, %4 : int
-			_DETECT_INT_MUL_OVERFLOW(i,j,_8);
 			_8=i*j;
 			//add %9 = %3, %8 : int
 			_DETECT_INT_ADD_OVERFLOW(sum,_8,_9);
@@ -44,7 +43,6 @@ int64_t _f_(int64_t limit){
 			//const %10 = 1 : int
 			_10 = 1;
 			//add %11 = %4, %10 : int
-			_DETECT_INT_ADD_OVERFLOW(j,_10,_11);
 			_11=j+_10;
 			//assign %4 = %11  : int
 			j = _11;
@@ -56,7 +54,6 @@ blklab2:;
 		//const %12 = 1 : int
 		_12 = 1;
 		//add %13 = %2, %12 : int
-		_DETECT_INT_ADD_OVERFLOW(i,_12,_13);
 		_13=i+_12;
 		//assign %2 = %13  : int
 		i = _13;
