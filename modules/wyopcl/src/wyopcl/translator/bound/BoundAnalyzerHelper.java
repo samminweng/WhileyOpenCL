@@ -125,7 +125,7 @@ final class BoundAnalyzerHelper {
 		FunctionOrMethod functionOrMethod = module.functionOrMethod(name).get(0);
 		VariableDeclarations variables = functionOrMethod.attribute(VariableDeclarations.class);
 
-		String str = "Bound Analysis of " + name + ":\n";
+		String str = "=================================\n\n" + "Bound Analysis of " + name + ":\n";
 		List<Domain> sortedDomains = bnds.sortedDomains();
 		// Print out the bounds
 		for (Domain d : sortedDomains) {			
@@ -143,7 +143,8 @@ final class BoundAnalyzerHelper {
 			}
 			str += "\tdomain(" + varName + ")\t=" + d.getBounds() + "\n";
 		}
-
+		
+		
 		/*SymbolFactory factory = getSymbolFactory(name);
 
 		List<Symbol> sortedSymbols = factory.sortedSymbols();
@@ -160,6 +161,8 @@ final class BoundAnalyzerHelper {
 		}*/
 
 		str += "Consistency=" + bnds.checkBoundConsistency();
+		str += "\n\n=================================";
+		
 		System.out.println(str);
 
 	}

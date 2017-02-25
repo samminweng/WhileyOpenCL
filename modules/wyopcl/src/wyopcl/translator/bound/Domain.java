@@ -186,8 +186,26 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	 * @return 
 	 */
 	public String getBounds(){
-		String lb = (this.lower_bound == null) ? "-infinity" : this.lower_bound.toString();
-		String ub = (this.upper_bound == null) ? "infinity" : this.upper_bound.toString();
+		String lb;
+		if(this.isLowerUnknown == true){
+			lb = "empty";
+			//lb = "\u2205";//Empty set
+		}else if (this.lower_bound == null) {
+			lb = "-infinity";
+		}else{
+			lb = this.lower_bound.toString();
+		}
+		//String ub = (this.upper_bound == null) ? "infinity" : this.upper_bound.toString();
+		String ub;
+		if(this.isUpperUnknown == true){
+			ub = "empty";
+			//ub = "\u2205";//Empty set 
+		}else if(this.upper_bound == null){
+			ub = "infinity";
+		}else{
+			ub = this.upper_bound.toString();
+		}
+		
 		//Change the string format
 		//return "Domain [name=" + name + ", lower_bound=" + this.lower_bound + ", upper_bound=" + this.upper_bound + "]";
 		return "[" + lb + ".."  + ub + "]";
@@ -266,6 +284,13 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 			this.setUpperBound(new_max);
 		}
 
+		// Check if the domain is consistent 
+		if(this.isConsistent() == false){
+			// Set the domain as an empty set
+			this.set(new Domain(this.getName()));
+		}
+		
+		
 		return;
 
 	}
@@ -313,57 +338,29 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		}
 
 		// Both current and new domain are not Empty
+		// Update the domain with weaker (larger) lower bound
 		if(new_min != null){
 			if (old_min == null || old_min.compareTo(new_min) < 0){
 				this.setLowerBound(new_min);
 			}
 		}
 		
+		// Update the domain with weaker (smaller) upper bound
 		if(new_max != null) {
 			if (old_max == null || old_max.compareTo(new_max) > 0){
-				// Maybe we need to check if new max > old_min
-				// If Not, then this is an null intersection.
-				// For example, [5 ... 5] [-inf ...0] domains is an null intersection.
-				if(old_min != null && new_max.compareTo(old_min)>0){				
-					this.setUpperBound(new_max);
-				}
+				this.setUpperBound(new_max);
 			}
 		}
 		
-		// Check if the intersection is NULL?
-		// New Lower bound is higher
-	/*	boolean isSetLower = false;
-		boolean isSetUpper = false;
-		if(new_min != null) {
-			if (old_min == null){
-				isSetLower = true;
-			}else if(old_min.compareTo(new_min) < 0){
-				isSetLower = true;
-			}
+		// Check if the resulting domain is an consistent domain. (lower bound > upper bound)
+		// If not, update the domain with an empty set. 
+		// For example, the intersection of [5 ... 5] [-inf ...0] domains is [5 .. 0]
+		// which is not consistent and caused by empty intersection
+		// To solve the issue, we check if the new domain is inconsistent 
+		if (this.isConsistent() == false){
+			// Set the domain to be an empty domain
+			this.set(new Domain(this.getName()));
 		}
-		
-		
-		// New Upper bound is larger
-		if(new_max != null) {
-			if (old_max == null){
-				isSetUpper = true;
-			}else if(old_max.compareTo(new_max) > 0){
-				// Maybe we need to check if new max > old_min
-				// If Not, then this is an null intersection.
-				// For example, [5 ... 5] [-inf ...0] domains is an null intersection.
-				if(isSetLower && new_max.compareTo(old_max)>0){
-					isSetUpper = true;
-				}
-			
-			}
-		}
-		
-		// Set lower and upper bound
-		if(isSetLower && isSetUpper){
-			this.setLowerBound(new_min);
-			this.setUpperBound(new_max);
-		}*/
-		
 
 	}
 

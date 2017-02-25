@@ -357,7 +357,6 @@ public class BoundAnalyzer {
 		
 		for (BoundBlock blk : list) {
 			// Consider the bounds of consistent block and discard the bounds of inconsistent block.
-			//if (blk.isConsistent() && blk.getType() != BlockType.EXIT) {
 			if (blk.isConsistent() && blk.getType() != BlockType.EXIT) {
 				exit_blk.unionBounds(blk);
 			}

@@ -99,10 +99,6 @@ public class ConstraintTestCase {
 	/**
 	 * Given D(x)=[20..20], propagate the bounds for the constraint X = 20
 	 * 
-	 * @see <a
-	 *      href="http://sourceforge.net/p/czt/code/ci/master/tree/zlive/src/test
-	 *      /java/net/sourceforge/czt/animation/eval/flatpred/BoundsTest.java#l113">
-	 *      net.sourceforge.czt.animation.eval.flatpred.BoundsTest#testConst()</a>
 	 */
 	@Test
 	public void testConst() {		
@@ -118,10 +114,9 @@ public class ConstraintTestCase {
 	}
 
 	/***
-	 * Given D(x) = [-10..10] D(y)  = [0 ... 5]
-	 * 
-	 * Test the constraints: 'x < y' 
-	 * 
+	 * Test the constraints: 'x < y' with 
+	 * Input: D(x) = [-10..10] D(y) = [0 ... 5]
+	 * Output: D1(x) = [-10..4] D1(y) = [0 ..5] 
 	 */
 	@Test
 	public void testLessThan() {
@@ -148,47 +143,40 @@ public class ConstraintTestCase {
 	}
 	
 	/***
-	 * Given D(z) = [-10..10] Test the constraints: x < y ^ y < z
-	 * @see <a
-	 *      href="http://sourceforge.net/p/czt/code/ci/master/tree/zlive/src/test
-	 *      /java/net/sourceforge/czt/animation/eval/flatpred/BoundsTest.java#l163">
-	 *      net.sourceforge.czt.animation.eval.flatpred.BoundsTest#testLessThanRight()</a>
+	 * Test the constraints: 'x < y' with 
+	 * Input: D(x) = [10..inf] D(y) = [5 ... 5]
+	 * Output: D1(x) = [empty..empty] D1(y) = [empty ..empty] 
 	 */
 	@Test
-	public void testLessThanRight() {
+	public void testLessThan_Empty() {
 		Bounds bnd = new Bounds();
 		
-		// D(x) = [-inf ... inf] 
-		bnd.addDomain(new Domain("x", null, null));
-		// D(y) = [-inf ... inf]
-		bnd.addDomain(new Domain("y", null, null));
-		
-		// D(z) = [-10..10]
-		bnd.addDomain(new Domain("z",  new BigInteger("-10"), new BigInteger("10")));
-		
-		// y < z
-		LessThan constraint = new LessThan("y", "z");
-		constraint.inferBound(bnd);
+		// D(x) = [10..inf]
+		bnd.addDomain(new Domain("x", new BigInteger("10"), null));
+		// D(y) = [5 ... 5]
+		bnd.addDomain(new Domain("y", new BigInteger("5"), new BigInteger("5")));
 		
 		// x < y
-		LessThan constraint1 = new LessThan("x", "y");
-		constraint1.inferBound(bnd);
+		LessThan constraint = new LessThan("x", "y");
+		constraint.inferBound(bnd);
 		
 		
-		// Check max_y is 9
-		assertEquals(new BigInteger("9"), bnd.getUpper("y"));
-	
-		// Check max_x is 8
-		assertEquals(new BigInteger("8"), bnd.getUpper("x"));
-
-		// Check if the bounds of x have not changed.
-		assertEquals(new BigInteger("-10"), bnd.getLower("z"));
-		assertEquals(new BigInteger("10"), bnd.getUpper("z"));
+		// D1(X) is [empty ... empty]
+		assertEquals(true, bnd.getDomain("x").isEmpty());
+		assertEquals(null, bnd.getLower("x"));
+		assertEquals(null, bnd.getUpper("x"));
+		
+		// D1(Y) is [empty..empty]
+		assertEquals(true, bnd.getDomain("y").isEmpty());
+		assertEquals(null, bnd.getLower("y"));
+		assertEquals(null, bnd.getUpper("y"));
 		
 	}
 
 	/***
-	 * Given D(x) = [-10..10] and constraints x <= y  
+	 * Test the constraints x <= y with
+	 * Input: D(x) = [-10..10] and D(y) = [0 .. 5]
+	 * Output: D1(x) = [-10 .. 5]  and D1(y) = [0 .. 5] 
 	 */
 	@Test
 	public void testLessThanEquals() {
@@ -203,7 +191,6 @@ public class ConstraintTestCase {
 		LessThanEquals constraint = new LessThanEquals("x", "y");
 		constraint.inferBound(bnd);
 		
-		
 		// D1(X) is [-10 ... 4]
 		assertEquals(new BigInteger("-10"), bnd.getLower("x"));
 		assertEquals(new BigInteger("5"), bnd.getUpper("x"));
@@ -213,106 +200,106 @@ public class ConstraintTestCase {
 		assertEquals(new BigInteger("5"), bnd.getUpper("y"));
 	}
 	
+
 	/***
-	 * Given D(x) = [-10..10] and constraints x <= y ^ y <= z
-	 * 
-	 * propagate the lower bounds from z to y and x.
-	 *  
+	 * Test the constraints x <= y with
+	 * Input: D(x) = [10..inf] and D(y) = [5 .. 5]
+	 * Output: D1(x) = [empty .. empty]  and D1(y) = [empty .. empty] 
 	 */
 	@Test
-	public void testLessThanEqualsRight() {
+	public void testLessThanEquals_Empty() {
 		Bounds bnd = new Bounds();
-		// D(x) = [-inf..inf]
-		bnd.addDomain(new Domain("x", null, null));
-		// D(y) = [-inf..inf]
-		bnd.addDomain(new Domain("y", null, null));
-		// D(z) = [-10..10]
-		bnd.addDomain(new Domain("z", new BigInteger("-10"), new BigInteger("10")));
-		// y<=z
-		LessThanEquals constraint1 = new LessThanEquals("y", "z");
-		constraint1.inferBound(bnd);
-		// x<=y
+		
+		// D(x) = [-10..10]
+		bnd.addDomain(new Domain("x", new BigInteger("10"), null));
+		// D(y) = [0 ... 5]
+		bnd.addDomain(new Domain("y", new BigInteger("5"), new BigInteger("5")));
+		
+		// x<y
 		LessThanEquals constraint = new LessThanEquals("x", "y");
 		constraint.inferBound(bnd);
 		
-		// 'x' is [-inf ... 10]
-		assertEquals(new BigInteger("10"), bnd.getUpper("x"));
-		assertNull(bnd.getLower("x"));
+		// D1(X) is [empty ... empty]
+		assertEquals(true, bnd.getDomain("x").isEmpty());
+		assertEquals(null, bnd.getLower("x"));
+		assertEquals(null, bnd.getUpper("x"));
 		
-		// 'y' is [-inf ... 10] 
-		assertEquals(new BigInteger("10"), bnd.getUpper("y"));
-		assertNull(bnd.getLower("y"));
-
-		// 'z' is [-10..10]
-		assertEquals(new BigInteger("-10"), bnd.getLower("z"));
-		assertEquals(new BigInteger("10"), bnd.getUpper("z"));
+		// D1(Y) is [empty .. empty]
+		assertEquals(true, bnd.getDomain("y").isEmpty());
+		assertEquals(null, bnd.getLower("y"));
+		assertEquals(null, bnd.getUpper("y"));
 	}
+	
 	
 	/***
 	 * 
-	 * Given D(x) = [-10..10] and constraints x > y AND y > z
-	 *  
+	 * Test the bound of constraints x > y with 
+	 * Input bound: D(x) = [-inf..0] and D(y) = [5 .. 5]   
+	 * Output bound: D1(x) =[empty .. empty] and D1(y) = [empty .. empty]
+	 * 
 	 */
 	@Test
 	public void testGreatThan() {
 		Bounds bnd = new Bounds();
 		// D(x) = [-10..10]
-		bnd.addDomain(new Domain("x", new BigInteger("-10"),  new BigInteger("10")));
+		bnd.addDomain(new Domain("x", null,  new BigInteger("0")));
 		// D(y) = [0..5]
-		bnd.addDomain(new Domain("y", new BigInteger("0"),  new BigInteger("5")));
+		bnd.addDomain(new Domain("y", new BigInteger("5"),  new BigInteger("5")));
 		// x > y
 		GreaterThan constraint = new GreaterThan("x", "y");
 		constraint.inferBound(bnd);
 		
-		// D1(x) is [1 ...10]
-		assertEquals(new BigInteger("1"), bnd.getLower("x"));
-		assertEquals(new BigInteger("10"), bnd.getUpper("x"));
+		// D1(x) is [empty ... empty]
+		assertEquals(true, bnd.getDomain("x").isEmpty());
+		assertEquals(null, bnd.getLower("x"));
+		assertEquals(null, bnd.getUpper("x"));
 		
 		// D1(y) is [0 ... 5]
-		assertEquals(new BigInteger("0"), bnd.getLower("y"));
-		assertEquals(new BigInteger("5"), bnd.getUpper("y"));
+		assertEquals(true, bnd.getDomain("y").isEmpty());
+		assertEquals(null, bnd.getLower("y"));
+		assertEquals(null, bnd.getUpper("y"));
 		
 	}
 	
+	
 	/***
 	 * 
-	 * Given D(z) = [-10..10] and constraints y > z AND x > y
+	 * Test the bound propagation of constraints x > y, with 
+	 * Input bound: D(x) = [-inf..0] and D(y) = [5 .. 5]   
+	 * Output bound: D1(x) =[empty .. empty] and D1(y) = [empty .. empty]
 	 * 
 	 */
 	@Test
-	public void testGreatThanRight() {
+	public void testGreatThan_Empty() {
 		Bounds bnd = new Bounds();
-		// D(z) = [-10..10]
-		bnd.addDomain(new Domain("z", new BigInteger("-10"),  new BigInteger("10")));
-		// D(y) = [-inf..inf]
-		bnd.addDomain(new Domain("y", null, null));
-		// D(x) = [-inf..inf]
-		bnd.addDomain(new Domain("x", null, null));
-		// y > z
-		GreaterThan constraint = new GreaterThan("y", "z");
+		// D(x) = [-10..10]
+		bnd.addDomain(new Domain("x", null,  new BigInteger("0")));
+		// D(y) = [0..5]
+		bnd.addDomain(new Domain("y", new BigInteger("5"),  new BigInteger("5")));
+		// x > y
+		GreaterThan constraint = new GreaterThan("x", "y");
 		constraint.inferBound(bnd);
 		
-		// x > y
-		GreaterThan constraint1 = new GreaterThan("x", "y");
-		constraint1.inferBound(bnd);
+		// D1(x) is [empty...empty]
+		assertEquals(true, bnd.getDomain("x").isEmpty());
+		assertEquals(null, bnd.getLower("x"));
+		assertEquals(null, bnd.getUpper("x"));
 		
-		// D(y)' is [-9 ... inf]
-		assertEquals(new BigInteger("-9"), bnd.getLower("y"));
-		assertNull(bnd.getUpper("y"));
+		// D1(y) is [empty ... empty]
+		assertEquals(true, bnd.getDomain("y").isEmpty());
+		assertEquals(null, bnd.getLower("y"));
+		assertEquals(null, bnd.getUpper("y"));
 		
-		// D(x)' is [-8 ... inf]
-		assertEquals(new BigInteger("-8"), bnd.getLower("x"));
-		assertNull(bnd.getUpper("y"));
-
-		// D(z)' NOT changed.
-		assertEquals(new BigInteger("-10"), bnd.getLower("z"));
-		assertEquals(new BigInteger("10"), bnd.getUpper("z"));
 	}
+	
+	
 	
 	/***
 	 * 
-	 * Given D(x) = [-10..10] and constraints x >= y AND y >= z
-	 *  
+	 * Test the bound propagation of constraints x >= y, with 
+	 * Input bound: D(x) = [-10..10] and D(y) = [0 .. 5]   
+	 * Output bound: D1(x) =[0.. 10] and D1(y) = [0 .. 5]
+	 * 
 	 */
 	@Test
 	public void testGreatThanEquals() {
@@ -339,38 +326,34 @@ public class ConstraintTestCase {
 	
 	/***
 	 * 
-	 * Given D(z) = [-10..10] and constraints y >= z AND x >= y 
-	 *  
+	 * Test the bound propagation of constraints x >= y, with 
+	 * Input bound: D(x) = [-inf..0] and D(y) = [5 .. 5]   
+	 * Output bound: D1(x) =[empty .. empty] and D1(y) = [empty .. empty]
+	 * 
 	 */
 	@Test
-	public void testGreatThanEqualsRight() {
+	public void testGreatThanEquals_Empty() {
 		Bounds bnd = new Bounds();
-		// D(z) = [-10..10]
-		bnd.addDomain(new Domain("z", new BigInteger("-10"),  new BigInteger("10")));
-		// D(y) = [-inf..inf]
-		bnd.addDomain(new Domain("y", null, null));
-		// D(x) = [-inf..inf]
-		bnd.addDomain(new Domain("x", null, null));
-	
-		// y >= z
-		GreaterThanEquals constraint = new GreaterThanEquals("y", "z");
-		constraint.inferBound(bnd);
-		
+		// D(x) = [-inf .. 0]
+		bnd.addDomain(new Domain("x", null,  new BigInteger("0")));
+		// D(y) = [5 .. 5]
+		bnd.addDomain(new Domain("y", new BigInteger("5"),  new BigInteger("5")));
 		// x >= y
-		GreaterThanEquals constraint1 = new GreaterThanEquals("x", "y");
-		constraint1.inferBound(bnd);
+		GreaterThanEquals constraint = new GreaterThanEquals("x", "y");
+		constraint.inferBound(bnd);		
 		
-		// D(y)' is [-10 ... inf]
-		assertEquals(new BigInteger("-10"), bnd.getLower("y"));
-		assertNull(bnd.getUpper("y"));
+		// D1(X) is [empty .. empty]
+		assertEquals(true, bnd.getDomain("x").isEmpty());
+		assertEquals(null, bnd.getLower("x"));
+		assertEquals(null, bnd.getUpper("x"));
 		
-		// D(x)' is [-10 ... inf]
-		assertEquals(new BigInteger("-10"), bnd.getLower("x"));
-		assertNull(bnd.getUpper("x"));
+		
+		// D1(y) is [5 ... 5]
+		assertEquals(true, bnd.getDomain("y").isEmpty());
+		assertEquals(null, bnd.getLower("y"));
+		assertEquals(null, bnd.getUpper("y"));
 
-		// D(x)' NOT changed.
-		assertEquals(new BigInteger("-10"), bnd.getLower("z"));
-		assertEquals(new BigInteger("10"), bnd.getUpper("z"));
+		
 	}
 	
 	
