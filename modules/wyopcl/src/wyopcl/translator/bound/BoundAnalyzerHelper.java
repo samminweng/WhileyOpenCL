@@ -125,7 +125,7 @@ final class BoundAnalyzerHelper {
 		FunctionOrMethod functionOrMethod = module.functionOrMethod(name).get(0);
 		VariableDeclarations variables = functionOrMethod.attribute(VariableDeclarations.class);
 
-		String str = "=================================\n\n" + "Bound Analysis of " + name + ":\n";
+		String str = "=================================\n\n" + "Bound Analysis of '" + name + "' function:\n";
 		List<Domain> sortedDomains = bnds.sortedDomains();
 		// Print out the bounds
 		for (Domain d : sortedDomains) {			

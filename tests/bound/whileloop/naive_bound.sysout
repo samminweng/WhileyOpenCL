@@ -1,7 +1,13 @@
-Bound Analysis of main:
+=================================
+
+Bound Analysis of 'main' function:
 	domain(_3)	=[5..5]
 Consistency=true
-Bound Analysis of f:
+
+=================================
+=================================
+
+Bound Analysis of 'f' function:
 	domain(limit)	=[5..5]
 	domain(i)	=[0..5]
 	domain(sum)	=[0..infinity]
@@ -12,10 +18,16 @@ Bound Analysis of f:
 	domain(_9)	=[1..5]
 	domain(return)	=[0..infinity]
 Consistency=true
-Bound Analysis of main:
+
+=================================
+=================================
+
+Bound Analysis of 'main' function:
 	domain(a)	=[0..infinity]
 	domain(_2)	=[0..infinity]
 	domain(_3)	=[5..5]
 Consistency=true
+
+=================================
 
 Bound analysis completed. File: whileloop

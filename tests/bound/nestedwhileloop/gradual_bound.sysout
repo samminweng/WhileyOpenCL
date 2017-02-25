@@ -1,7 +1,13 @@
-Bound Analysis of main:
+=================================
+
+Bound Analysis of 'main' function:
 	domain(_3)	=[5..5]
 Consistency=true
-Bound Analysis of f:
+
+=================================
+=================================
+
+Bound Analysis of 'f' function:
 	domain(limit)	=[5..5]
 	domain(_10)	=[1..1]
 	domain(_11)	=[1..32767]
@@ -17,10 +23,16 @@ Bound Analysis of f:
 	domain(_9)	=[0..infinity]
 	domain(return)	=[0..infinity]
 Consistency=true
-Bound Analysis of main:
+
+=================================
+=================================
+
+Bound Analysis of 'main' function:
 	domain(a)	=[0..infinity]
 	domain(_2)	=[0..infinity]
 	domain(_3)	=[5..5]
 Consistency=true
+
+=================================
 
 Bound analysis completed. File: nestedwhileloop
