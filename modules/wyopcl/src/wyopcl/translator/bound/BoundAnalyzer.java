@@ -2,6 +2,7 @@ package wyopcl.translator.bound;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -282,8 +283,10 @@ public class BoundAnalyzer {
 		for(BoundBlock blk: graph.getBlockList()){
 			blk.emptyBounds(null);
 		}
-		// Create a queue to track the blocks that have bound changes 
-		Queue<BoundBlock> changed = new LinkedList<BoundBlock>();
+		// Create a deque to track all the blocks that have bound changes
+		// Deque provides 'pollLast' to get and remove the last block
+		// So we can have Last In First Out or First In First Out behaviour.
+		Deque<BoundBlock> changed = new LinkedList<BoundBlock>();
 
 		// Get the entry block and add entry and its child nodes to 
 		BoundBlock entry = graph.getBasicBlock("entry", BlockType.ENTRY);
@@ -291,17 +294,28 @@ public class BoundAnalyzer {
 		// Add the first child block of entry node
 		changed.add(graph.getBasicBlock("code", BlockType.BLOCK));
 
-		// Repeatedly iterates over all blocks, starting from the entry block to the
-		// exit block, and infer the bounds consistent with all the constraints in each block.
+		// Repeatedly iterates over all blocks in deque 
+		// and infer the bounds consistent with all the constraints in each block.
 		int iteration = 0;
-		// Stop the loop when the program reaches the fixed point or max-iterations
+		// Stop the loop when the changed 
 		while (!changed.isEmpty()) {
+			// Debugging messages
 			if (config.isVerbose()) {
-				System.out.println("=== Iteration " + iteration + " === ");
+				System.out.println("### Iteration " + iteration + " ### ");
+				String str = "'" + changed.size() + "' blocks in queue : ";
+				Iterator<BoundBlock> iterator = changed.iterator();
+				while(iterator.hasNext()){
+					BoundBlock blk = iterator.next();
+					str += "[" + blk.getType()+ "]";
+				}
+				System.out.println(str);
 			}
-
-			// Iterate all blocks in 'changed' queue
-			BoundBlock blk = changed.poll();
+			
+			// Get the last block of the deque
+			//BoundBlock blk = changed.pollLast();
+			// Get the first block of the deque
+			BoundBlock blk = changed.pollFirst();
+			
 			boolean isChanged = false;
 			// Iterate all the blocks, except Exit block.
 			Bounds bnd_before = null, bnd_after = null;
@@ -322,14 +336,11 @@ public class BoundAnalyzer {
 			// End of bound inference.
 
 			bnd_after = (Bounds) blk.getBounds();
-			// Repeat the bound inference for (maximal) three iterations
-			if(iteration >0 && iteration %3 == 0){
-				bnd_after.widenBounds(config, bnd_before);
-			}					
-
 			// Check the changes of before and after bounds
 			if (bnd_before != null && bnd_after != null 
-					&& !bnd_before.equals(bnd_after)) {	
+					&& !bnd_before.equals(bnd_after)) {
+				// Widen the bounds for each block
+				bnd_after.widenBounds(config, bnd_before);
 				// Check if the blk has any child nodes
 				if(blk.getType() != BlockType.ENTRY && blk.hasChild() == true){
 					for(BoundBlock child : blk.getChildNodes()){
@@ -349,8 +360,6 @@ public class BoundAnalyzer {
 				System.out.println(blk);
 				System.out.println("isChanged=" + isChanged);
 			}
-
-
 
 			iteration++;
 		}

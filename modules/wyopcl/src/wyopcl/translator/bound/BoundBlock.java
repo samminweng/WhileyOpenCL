@@ -367,15 +367,12 @@ public class BoundBlock implements Comparable<BoundBlock> {
 			str += "\n-------------------------------";
 		}
 		//Display the bounds and constraints.
-		if(!constraints.isEmpty()){
-			//Print out the constraints
-			//str += "\n---------------------------------------\n";
-			str += String.format("%n%s %s%n", "Constraints", this.constraints);
-		}
-		
+		//Print out the constraints
+		str += String.format("%n%s %s%n", "Constraints", this.constraints);
+		//Print out the bounds
 		str += this.bounds + "\n";
-		str += "IsConsistent=" + isConsistent()+"\n";
-		str += "\n-------------------------------\n";
+		str += "IsConsistent=" + isConsistent();
+		//str += "\n-------------------------------\n";
 		
 		return str;
 	}
