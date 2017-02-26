@@ -217,27 +217,29 @@ final class BoundAnalyzerHelper {
 		for(BoundBlock blk: graph.getBlockList()){
 			blk.emptyBounds(null);
 		}
-
+		//Clear all the constraints/bounds in entry and exit blocks.
 		BoundBlock entry = graph.getBasicBlock("entry", BlockType.ENTRY);
-		//Clear all the constraints/bounds in entry block.		
 		entry.emptyConstraints();
+		
 		int index = 0;
 		// Go through each parameter of callee
 		int[] passing_params = code.operands();
 		for (Type paramType : callee.type().params()) {
 			String r_input = prefix + index; // The register at callee site
-			String passing_param = prefix + passing_params[index];// The registers at caller site
+			String param = prefix + passing_params[index];// The registers at caller site
 			// Check the type
 			if (isIntType(paramType)) {
-				// Pass the return bounds
-				entry.addDomain(new Domain(r_input, caller_bnds.getLower(passing_param), caller_bnds.getUpper(passing_param)));
+				// Pass the return bounds as a range constraint 
+				entry.addConstraint(new Range(r_input, caller_bnds.getLower(param), caller_bnds.getUpper(param)));
+				//entry.addDomain(new Domain(r_input, caller_bnds.getLower(passing_param), caller_bnds.getUpper(passing_param)));
 			}
 			// Pass the bounds of array size to calling function
 			if(paramType instanceof Type.Array){
-				String param_size = r_input + "_size";
-				String operand_size = passing_param + "_size";
-				// Pass the bounds of array size
-				entry.addDomain(new Domain(param_size, caller_bnds.getLower(operand_size), caller_bnds.getUpper(operand_size)));
+				String input_size = r_input + "_size";
+				String operand_size = param + "_size";
+				// Pass the bounds of array size as a range constraints
+				entry.addConstraint(new Range(input_size, caller_bnds.getLower(operand_size), caller_bnds.getUpper(operand_size)));
+				//entry.addDomain(new Domain(param_size, caller_bnds.getLower(operand_size), caller_bnds.getUpper(operand_size)));
 			}
 			index++;
 		}

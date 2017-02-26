@@ -18,7 +18,7 @@ import wyopcl.translator.bound.constraint.Constraint;
  *
  */
 public class BoundGraph {
-	private final String prefix = "%";	
+	//private final String prefix = "%";	
 	// The list of basic block;
 	private List<BoundBlock> blocks;
 	// The variables are used in the control flow graph (CFG).
@@ -35,7 +35,7 @@ public class BoundGraph {
 		this.blocks = new ArrayList<BoundBlock>();
 		// Entry and Exit block
 		//BasicBlock exit = createBasicBlock("exit", BlockType.EXIT);
-		BoundBlock entry = createBasicBlock("entry", BlockType.ENTRY);
+		BoundBlock entry = createBasicBlock("entry", BlockType.ENTRY);		
 		// First code block.
 		this.current_blk = createBasicBlock("code", BlockType.BLOCK, entry);
 		this.status = STATUS.INIT;
@@ -149,10 +149,10 @@ public class BoundGraph {
 	 */
 	public BoundBlock getCurrentBlock() {
 		// If the current block is null, throw out an Runtime exception
-		if (current_blk == null) {
-			// throw new RuntimeException("Current block is null.");
+		/*if (current_blk == null) {
+			throw new RuntimeException("Current block is null.");
 			// current_blk = entry;
-		}
+		}*/
 		return current_blk;
 	}
 

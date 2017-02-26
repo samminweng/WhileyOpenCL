@@ -420,4 +420,11 @@ public class BoundBlock implements Comparable<BoundBlock> {
 		// Set or update the domain
 		this.bounds.addDomain(d);
 	}
+
+	public boolean hasChild() {
+		if (childNodes == null) {
+			return false;
+		}
+		return true;
+	}
 }
