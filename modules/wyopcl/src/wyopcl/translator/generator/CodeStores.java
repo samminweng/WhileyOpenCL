@@ -168,9 +168,11 @@ public class CodeStores {
 	}
 	
 	/**
+	 * Get all variables (registers) used in a function.
 	 * 
-	 * @param function
-	 * @return
+	 * 
+	 * @param function function
+	 * @return a list of variables.
 	 */
 	public List<Integer> getAllVars(FunctionOrMethod function){
 		List<Integer> vars = new ArrayList<Integer>();

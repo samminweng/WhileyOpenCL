@@ -1,8 +1,11 @@
 package wyopcl.translator.bound;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import wyil.attributes.VariableDeclarations;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.ArrayGenerator;
@@ -58,7 +61,7 @@ public class BoundAnalyzer {
 		this.module = module;
 		this.boundMap = new HashMap<String, Bounds>();
 	}
-
+	
 	/**
 	 * Build up Control Flow Graph.
 	 * 
@@ -68,7 +71,7 @@ public class BoundAnalyzer {
 	 */
 	public void buildCFG(Configuration config, String name) {
 		this.config = config;
-		FunctionOrMethod functionOrMethod = this.module.functionOrMethod(name).get(0);
+		FunctionOrMethod functionOrMethod =this.module.functionOrMethod(name).get(0);
 		
 		if (!BoundAnalyzerHelper.isCached(name)) {
 			BoundAnalyzerHelper.promoteCFGStatus(name);
@@ -278,9 +281,6 @@ public class BoundAnalyzer {
 		boolean isFixedPoint = false;
 		int iteration = 0;
 		// Stop the loop when the program reaches the fixed point or max-iterations
-		// by using AND operator to combine these two condition.
-		// If both of two conditions are evaluated to be true, then enter the
-		// loop.
 		while (!isFixedPoint) {
 			if (config.isVerbose()) {
 				System.out.println("=== Iteration " + iteration + " === ");
@@ -299,7 +299,7 @@ public class BoundAnalyzer {
 					
 					// Reset the block bounds
 					if(!blk.getType().equals(BlockType.ENTRY)){
-						blk.emptyBounds();
+						blk.emptyBounds(null);
 					}
 					
 					// Take the union of parents' bounds to produce the input bound
@@ -388,7 +388,7 @@ public class BoundAnalyzer {
 		}
 
 		// Check if the assigned value is an integer
-		if (isIntType(code.type(0))) {
+		if (BoundAnalyzerHelper.isIntType(code.type(0))) {
 			// Add the constraint 'target = operand'
 			if (!BoundAnalyzerHelper.isCached(name)) {
 				BoundGraph graph = BoundAnalyzerHelper.getCFGraph(name);
@@ -431,7 +431,7 @@ public class BoundAnalyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.IndexOf code, String name) {
-		if (isIntType((Type) code.type(0)) && !BoundAnalyzerHelper.isCached(name)) {
+		if (BoundAnalyzerHelper.isIntType((Type) code.type(0)) && !BoundAnalyzerHelper.isCached(name)) {
 			String target = prefix + code.target(0);
 			String op = prefix + code.operand(0);
 			String index = prefix + code.operand(1);
@@ -456,7 +456,7 @@ public class BoundAnalyzer {
 			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(name);
 			Constraint c = null;
 			Constraint neg_c = null;
-			if (isIntType(code.type(0))) {
+			if (BoundAnalyzerHelper.isIntType(code.type(0))) {
 				switch (code.op) {
 				case EQ:
 					c = new Equals(left, right);
@@ -567,7 +567,7 @@ public class BoundAnalyzer {
 				BoundBlock return_block = graph.createBasicBlock("return"+retOp, BlockType.RETURN, c_blk);
 				
 				// Check if the return type is integer.
-				if (isIntType(type)) {
+				if (BoundAnalyzerHelper.isIntType(type)) {
 					// Add the 'Assign' constraint to the return (ret) variable.
 					return_block.addConstraint((new Assign("return", retOp)));
 				}
@@ -660,7 +660,7 @@ public class BoundAnalyzer {
 	private void analyze(Codes.BinaryOperator code, String name) {
 		String target = prefix + code.target(0);
 		// Add the type att
-		if (isIntType(code.type(0)) && !BoundAnalyzerHelper.isCached(name)) {
+		if (BoundAnalyzerHelper.isIntType(code.type(0)) && !BoundAnalyzerHelper.isCached(name)) {
 			// Get the values
 			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(name);
 			switch (code.kind) {
@@ -681,14 +681,6 @@ public class BoundAnalyzer {
 				break;
 			case REM:
 				break;
-			/*case RANGE:
-				// Take the union of operands
-				// graph.addConstraint(new Range(target, left,
-				// right.subtract(BigInteger.ONE)));
-				// Add the size att
-				// sym_ctrl.putAttribute(target, "size",
-				// right.subtract(left).subtract(BigInteger.ONE));
-				break;*/
 			case BITWISEAND:
 				break;
 			case BITWISEOR:
@@ -764,7 +756,7 @@ public class BoundAnalyzer {
 	 * @param type
 	 * @return true if the type is or contains an integer type.
 	 */
-	public boolean isIntType(Type type) {
+	/*public boolean isIntType(Type type) {
 		if (type instanceof Type.Int) {
 			return true;
 		}
@@ -774,7 +766,7 @@ public class BoundAnalyzer {
 		}
 		
 		return false;
-	}
+	}*/
 	
 	
 	/**
@@ -905,34 +897,28 @@ public class BoundAnalyzer {
 	 *            the name of caller function.
 	 * @param code
 	 */
-	private void analyze(Codes.Invoke code, String caller_name) {
-		//FunctionOrMethod callee = AnalyzerHelper.getFunctionOrMethod(this.config, code.name.name());
+	private void analyze(Codes.Invoke code, String name) {
 		FunctionOrMethod callee = this.module.functionOrMethod(code.name.name(), code.type(0));
+		FunctionOrMethod caller = this.module.functionOrMethod(name).get(0);
 		if (callee != null) {
-			int caller_line = line;
-			// Callee name
-			String callee_name = callee.name();
+			int caller_line = line;	
 			// Infer the bounds of caller function.
-			Bounds input_bnds = inferFunctionBounds(caller_name);
+			Bounds input_bnds = inferFunctionBounds(caller.name());
 
 			// Build CFGraph for callee.
-			buildCFG(config, callee_name);
+			buildCFG(config, callee.name());
 			// Propagate the bounds of input parameters to the function.
-			BoundAnalyzerHelper.propagateInputBoundsToFunctionCall(caller_name, callee_name, callee.type().params(), code.operands(), input_bnds);
+			BoundAnalyzerHelper.propagateInputBoundsToCallee(callee, code, input_bnds);
 
 			// Infer the bounds of callee function.
-			Bounds ret_bnd = inferFunctionBounds(callee_name);
+			Bounds ret_bnd = inferFunctionBounds(callee.name());
 			
 			// check if there is any return
-			Type ret_type = null;
-			if(code.targets().length>0){
-				// Get return type
-				ret_type = code.type(0).returns().get(0);
-			}
+			BoundAnalyzerHelper.propagateBoundsBackCaller(caller, code, ret_bnd);
 			
 			// Promote the status of callee's CF graph to be 'complete'
-			BoundAnalyzerHelper.promoteCFGStatus(callee_name);
-			BoundAnalyzerHelper.propagateBoundsFromFunctionCall(caller_name, callee_name, prefix + code.target(0), ret_type, ret_bnd);
+			BoundAnalyzerHelper.promoteCFGStatus(callee.name());
+			
 			//Reset the line number
 			this.line = caller_line;
 		}

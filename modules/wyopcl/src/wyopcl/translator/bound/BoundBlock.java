@@ -134,11 +134,18 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	}
 
 	/**
-	 * Empty the bounds.
+	 * Empty the bounds and initialize each variable with empty domain
+	 * @param list 
 	 */
-	public void emptyBounds() {
-		//this.unionOfBounds = null;
+	public void emptyBounds(List<String> vars) {
 		this.bounds = new Bounds();
+		if(vars != null){
+			// Go through each variable
+			for(String var: vars){
+				// Initialize each variable with empty domain
+				this.bounds.addDomain(new Domain(var));
+			}
+		}	
 	}
 
 	/**

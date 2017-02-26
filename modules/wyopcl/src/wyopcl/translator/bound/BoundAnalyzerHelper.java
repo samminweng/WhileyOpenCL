@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 
 import wyil.attributes.VariableDeclarations;
 import wyil.attributes.VariableDeclarations.Declaration;
+import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
@@ -37,7 +39,7 @@ final class BoundAnalyzerHelper {
 	 * @param name
 	 * @return
 	 */
-	public static boolean isCached(String name) {
+	protected static boolean isCached(String name) {
 		BoundGraph graph = getCFGraph(name);
 		if (graph != null) {
 			if (graph.getStatus() == STATUS.COMPLETE) {
@@ -57,7 +59,7 @@ final class BoundAnalyzerHelper {
 	 * 
 	 * @param name
 	 */
-	public static void promoteCFGStatus(String name) {
+	protected static void promoteCFGStatus(String name) {
 		BoundGraph graph = getCFGraph(name);
 		if (graph.getStatus() == STATUS.INIT) {
 			graph.setStatus(STATUS.PROCESSING);
@@ -73,7 +75,7 @@ final class BoundAnalyzerHelper {
 	 *            the function name
 	 * @return the cached CFGraph. If no cached graph is found, return null.
 	 */
-	public static BoundGraph getCFGraph(String name) {
+	protected static BoundGraph getCFGraph(String name) {
 		if (cfgraphs.containsKey(name))
 			return cfgraphs.get(name);
 		return null;
@@ -100,7 +102,7 @@ final class BoundAnalyzerHelper {
 	 *            the domain that contains the register and bounds.
 	 * @return the variable name (starting with "_")
 	 */
-	private static String getVarName(int reg, VariableDeclarations variables) {
+	protected static String getVarName(int reg, VariableDeclarations variables) {
 		// Check if the register has been kept in the functional variable
 		// declarations.
 		if (reg < variables.size()) {
@@ -121,7 +123,7 @@ final class BoundAnalyzerHelper {
 	 * @param bnd
 	 *            the bounds
 	 */
-	public static void printBoundsAndSize(WyilFile module, Bounds bnds, String name) {
+	protected static void printBoundsAndSize(WyilFile module, Bounds bnds, String name) {
 		FunctionOrMethod functionOrMethod = module.functionOrMethod(name).get(0);
 		VariableDeclarations variables = functionOrMethod.attribute(VariableDeclarations.class);
 
@@ -167,6 +169,30 @@ final class BoundAnalyzerHelper {
 
 	}
 
+	/**
+	 * Get all variables (registers) used in a function.
+	 * 
+	 * 
+	 * @param function function
+	 * @return a list of variables.
+	 */
+	protected static List<String> getFunctionVars(WyilFile module, String name){
+		// Check if the function exists
+		if(module.functionOrMethod(name).size() == 0){
+			return null;
+		}
+		// Get the function
+		FunctionOrMethod function = module.functionOrMethod(name).get(0);
+		// A list of variable (_register)
+		List<String> vars = new ArrayList<String>();
+		
+		VariableDeclarations declarations = function.attribute(VariableDeclarations.class);
+		for(int register=0;register<declarations.size();register++){
+			vars.add(prefix+register);
+		}
+		return vars;
+	}
+	
 
 	/**
 	 * Propagate the input bounds to the callee function.
@@ -179,38 +205,39 @@ final class BoundAnalyzerHelper {
 	 * 
 	 * @param invokeboundAnalyzer
 	 *            the analyzer of invoked function.
-	 * @param operands
+	 * @param passing_params
 	 *            the operands of calling function
-	 * @param bnd
+	 * @param caller_bnds
 	 *            the bounds of caller function
 	 */
-	public static void propagateInputBoundsToFunctionCall(String caller_name, String callee_name, List<Type> params, int[] operands, Bounds bnd) {
-		BoundGraph graph = getCFGraph(callee_name);
+	protected static void propagateInputBoundsToCallee(FunctionOrMethod callee, Codes.Invoke code, Bounds caller_bnds) {
+		// Callee function name
+		BoundGraph graph = getCFGraph(callee.name());
 		//clear all the bounds in each block
 		for(BoundBlock blk: graph.getBlockList()){
-			blk.emptyBounds();
+			blk.emptyBounds(null);
 		}
 
 		BoundBlock entry = graph.getBasicBlock("entry", BlockType.ENTRY);
 		//Clear all the constraints/bounds in entry block.		
 		entry.emptyConstraints();
 		int index = 0;
-		for (Type paramType : params) {
+		// Go through each parameter of callee
+		int[] passing_params = code.operands();
+		for (Type paramType : callee.type().params()) {
 			String r_input = prefix + index; // The register at callee site
-			String r_param = prefix + operands[index];// The registers at caller site
+			String passing_param = prefix + passing_params[index];// The registers at caller site
 			// Check the type
 			if (isIntType(paramType)) {
 				// Pass the return bounds
-				Domain input = new Domain(r_input, bnd.getLower(r_param), bnd.getUpper(r_param));
-				entry.addDomain(input);
+				entry.addDomain(new Domain(r_input, caller_bnds.getLower(passing_param), caller_bnds.getUpper(passing_param)));
 			}
 			// Pass the bounds of array size to calling function
 			if(paramType instanceof Type.Array){
 				String param_size = r_input + "_size";
-				String operand_size = r_param + "_size";
+				String operand_size = passing_param + "_size";
 				// Pass the bounds of array size
-				Domain input_size = new Domain(param_size, bnd.getLower(operand_size), bnd.getUpper(operand_size));
-				entry.addDomain(input_size);
+				entry.addDomain(new Domain(param_size, caller_bnds.getLower(operand_size), caller_bnds.getUpper(operand_size)));
 			}
 			index++;
 		}
@@ -223,25 +250,27 @@ final class BoundAnalyzerHelper {
 	 * @param invokeboundAnalyzer
 	 * @param ret_reg
 	 * @param ret_type
-	 * @param bnd
+	 * @param callee_bnd
 	 */
-	public static void propagateBoundsFromFunctionCall(String caller_name, String callee_name, String ret_reg, Type ret_type, Bounds bnd) {
-		BoundBlock blk = getCFGraph(caller_name).getCurrentBlock();
-		if (ret_type != null){
+	protected static void propagateBoundsBackCaller(FunctionOrMethod caller, Codes.Invoke code, Bounds callee_bnd) {
+		if(code.targets().length>0){
+			// Get the return variable
+			String ret_reg = prefix+code.target(0);
+			Type ret_type = code.type(0).returns().get(0);
+			
+			// Get the current block
+			BoundBlock blk = getCFGraph(caller.name()).getCurrentBlock();
+			
 			if(isIntType(ret_type)) {
-				// Get the bounds of return variable
-				Domain ret = bnd.getDomain("return");
-				// Propagate the bounds of return value to caller site with a Range constraint
-				Range range = new Range(ret_reg, ret.getLowerBound(), ret.getUpperBound());
-				blk.addConstraint(range);
+				// Get the bounds of return variable from callee
+				// Propagate the bounds as a constraint 
+				blk.addConstraint(new Range(ret_reg, callee_bnd.getLower("return"), callee_bnd.getUpper("return")));
 			}
 
-			// Pass the bounds of array size to calling function
 			if(ret_type instanceof Type.Array){
-				Domain ret_size = bnd.getDomain("return_size");
-				// Propagate the bounds of return array size to caller site with a Range constraint
-				Range range = new Range(ret_reg+"_size", ret_size.getLowerBound(), ret_size.getUpperBound());
-				blk.addConstraint(range);
+				// Pass the bounds of array size to calling functio
+				// And propagate the bounds of return array size to caller site with a Range constraint
+				blk.addConstraint(new Range(ret_reg+"_size", callee_bnd.getLower("return_size"), callee_bnd.getUpper("return_size")));
 			}
 		}
 	}
@@ -256,7 +285,7 @@ final class BoundAnalyzerHelper {
 	 * @param func_name
 	 *            the name of function.
 	 */
-	public static void printCFG(Configuration config, String name) {
+	protected static void printCFG(Configuration config, String name) {
 		//Check if the verbose is on.
 		if(!config.isVerbose()){
 			return;
@@ -291,7 +320,7 @@ final class BoundAnalyzerHelper {
 	 * @param type
 	 * @return true if the type is or contains an integer type.
 	 */
-	public static boolean isIntType(Type type) {
+	protected static boolean isIntType(Type type) {
 		if (type instanceof Type.Int) {
 			return true;
 		}
@@ -304,5 +333,6 @@ final class BoundAnalyzerHelper {
 		return false;
 	}
 
+	
 
 }
