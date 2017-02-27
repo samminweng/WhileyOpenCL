@@ -109,8 +109,7 @@ public class Bounds implements Cloneable {
 	 */
 	public Domain getDomain(String name) {
 		if (!bounds.containsKey(name)) {
-			Domain d = new Domain(name);
-			bounds.put(name, d);
+			throw new RuntimeException("Domain("+name+") NOT found.");
 		}
 		return bounds.get(name);
 	}

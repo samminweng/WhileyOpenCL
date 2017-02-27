@@ -175,13 +175,7 @@ final class BoundAnalyzerHelper {
 	 * @param function function
 	 * @return a list of variables.
 	 */
-	protected static List<String> getFunctionVars(WyilFile module, String name){
-		// Check if the function exists
-		if(module.functionOrMethod(name).size() == 0){
-			return null;
-		}
-		// Get the function
-		FunctionOrMethod function = module.functionOrMethod(name).get(0);
+	protected static List<String> getFunctionVars(FunctionOrMethod function){
 		// A list of variable (_register)
 		List<String> vars = new ArrayList<String>();
 		
@@ -214,8 +208,8 @@ final class BoundAnalyzerHelper {
 		BoundGraph graph = getCFGraph(callee);
 		//clear all the bounds in each block
 		for(BoundBlock blk: graph.getBlockList()){
-			//Clear all the bounds in each blocks.
-			blk.emptyBounds(null);
+			//Clear all the bounds in each blocks of callee
+			blk.emptyBounds(BoundAnalyzerHelper.getFunctionVars(callee));
 			//Clear all the Range constraints
 			blk.emptyRangeConstraints();			
 			
@@ -303,7 +297,7 @@ final class BoundAnalyzerHelper {
 		dot_string += "\n}";
 		// )Write out the CFG-function_name.dot
 		try {
-			PrintWriter cfg_writer = new PrintWriter(function + ".dot", "UTF-8");
+			PrintWriter cfg_writer = new PrintWriter(function.name() + ".dot", "UTF-8");
 			cfg_writer.println(dot_string);
 			cfg_writer.close();
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {

@@ -278,7 +278,7 @@ public class BoundAnalyzer {
 
 		// Initialize all block with empty domains
 		for(BoundBlock blk: graph.getBlockList()){
-			blk.emptyBounds(null);
+			blk.emptyBounds(BoundAnalyzerHelper.getFunctionVars(function));
 		}
 		// Create a deque to track all the blocks that have bound changes
 		// Deque provides 'pollLast' to get and remove the last block
@@ -318,7 +318,7 @@ public class BoundAnalyzer {
 			bnd_before = (Bounds) blk.getBounds().clone();
 
 			// Reset the block bounds
-			blk.emptyBounds(null);
+			blk.emptyBounds(BoundAnalyzerHelper.getFunctionVars(function));
 
 			// Take the union of parents' bounds to produce the input bound
 			for (BoundBlock parent : blk.getParentNodes()) {
@@ -337,7 +337,7 @@ public class BoundAnalyzer {
 				// Widen the bounds for each block
 				bnd_after.widenBounds(config, bnd_before);
 				// Check if the blk has any child nodes
-				if(blk.getType() != BlockType.ENTRY && blk.hasChild() == true){
+				if(blk.hasChild() == true){
 					for(BoundBlock child : blk.getChildNodes()){
 						if (!child.getType().equals(BlockType.EXIT)) {
 							// If bounds has changed, then add its child nodes to 'changed set'
@@ -368,10 +368,15 @@ public class BoundAnalyzer {
 			BoundBlock current_block = graph.getCurrentBlock();
 			exit_blk = graph.createBasicBlock("exit", BlockType.EXIT, current_block);
 		}
-
+		
+		// Initialize the bounds
+		exit_blk.emptyBounds(BoundAnalyzerHelper.getFunctionVars(function));
+	
+		// Go through all the blocks to produce final output bounds
 		for (BoundBlock blk : graph.getBlockList()) {
-			// Consider the bounds of consistent block and discard the bounds of inconsistent block.
+			// Check if the bounds are consistent (lower <= upper)
 			if (blk.isConsistent() && blk.getType() != BlockType.EXIT) {
+				// Take union of consistent block bounds
 				exit_blk.unionBounds(blk);
 			}
 		}

@@ -49,9 +49,9 @@ public class BoundAnalysisTestCase {
 		// Add a list of test cases
 		return Arrays.asList(new String[] { 
 				"ifelse", 
-				"whileloop",
-				"whileloop1",
-				"nestedwhileloop",
+				//"whileloop",
+				//"whileloop1",
+				//"nestedwhileloop",
 				//"bubblesort"
 			});
 	}
