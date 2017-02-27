@@ -27,7 +27,6 @@ method main(System.Console sys):
     sys.out.println(d)
     int x = 1
     x = 10
-    //// x = [1 ... 10]
     int y = f(x)
     sys.out.println(y)
 

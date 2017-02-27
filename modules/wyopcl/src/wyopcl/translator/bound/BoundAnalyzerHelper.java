@@ -31,23 +31,23 @@ import wyopcl.translator.bound.constraint.Range;
 final class BoundAnalyzerHelper {
 	private static final String prefix = "_";
 	// Maps of CFGs
-	private static HashMap<String, BoundGraph> cfgraphs = new HashMap<String, BoundGraph>();
+	private static HashMap<FunctionOrMethod, BoundGraph> cfgraphs = new HashMap<FunctionOrMethod, BoundGraph>();
 
 	/**
 	 * Checks if the CFGraph of the given function exist.
 	 * 
-	 * @param name
+	 * @param function
 	 * @return
 	 */
-	protected static boolean isCached(String name) {
-		BoundGraph graph = getCFGraph(name);
+	protected static boolean isCached(FunctionOrMethod function) {
+		BoundGraph graph = getCFGraph(function);
 		if (graph != null) {
 			if (graph.getStatus() == STATUS.COMPLETE) {
 				return true;
 			}
 		} else {
 			// Create an graph and symbol control
-			cfgraphs.put(name, new BoundGraph());
+			cfgraphs.put(function, new BoundGraph());
 		}
 
 		return false;
@@ -57,10 +57,10 @@ final class BoundAnalyzerHelper {
 	/**
 	 * Promote and update the status of CF graph.
 	 * 
-	 * @param name
+	 * @param function
 	 */
-	protected static void promoteCFGStatus(String name) {
-		BoundGraph graph = getCFGraph(name);
+	protected static void promoteCFGStatus(FunctionOrMethod function) {
+		BoundGraph graph = getCFGraph(function);
 		if (graph.getStatus() == STATUS.INIT) {
 			graph.setStatus(STATUS.PROCESSING);
 		} else if (graph.getStatus() == STATUS.PROCESSING) {
@@ -71,13 +71,13 @@ final class BoundAnalyzerHelper {
 	/**
 	 * Given a function name, get the CFGraph.
 	 * 
-	 * @param name
+	 * @param function
 	 *            the function name
 	 * @return the cached CFGraph. If no cached graph is found, return null.
 	 */
-	protected static BoundGraph getCFGraph(String name) {
-		if (cfgraphs.containsKey(name))
-			return cfgraphs.get(name);
+	protected static BoundGraph getCFGraph(FunctionOrMethod function) {
+		if (cfgraphs.containsKey(function))
+			return cfgraphs.get(function);
 		return null;
 	}
 
@@ -122,11 +122,11 @@ final class BoundAnalyzerHelper {
 	 * @param bnd
 	 *            the bounds
 	 */
-	protected static void printBoundsAndSize(WyilFile module, Bounds bnds, String name) {
-		FunctionOrMethod functionOrMethod = module.functionOrMethod(name).get(0);
-		VariableDeclarations variables = functionOrMethod.attribute(VariableDeclarations.class);
+	protected static void printBoundsAndSize(FunctionOrMethod function, Bounds bnds) {
+		//FunctionOrMethod functionOrMethod = module.functionOrMethod(name).get(0);
+		VariableDeclarations variables = function.attribute(VariableDeclarations.class);
 
-		String str = "=================================\n\n" + "Bound Analysis of '" + name + "' function:\n";
+		String str = "=================================\n\n" + "Bound Analysis of '" + function.name() + "' function:\n";
 		List<Domain> sortedDomains = bnds.sortedDomains();
 		// Print out the bounds
 		for (Domain d : sortedDomains) {			
@@ -211,7 +211,7 @@ final class BoundAnalyzerHelper {
 	 */
 	protected static void propagateInputBoundsToCallee(FunctionOrMethod callee, Codes.Invoke code, Bounds caller_bnds) {
 		// Callee function name
-		BoundGraph graph = getCFGraph(callee.name());
+		BoundGraph graph = getCFGraph(callee);
 		//clear all the bounds in each block
 		for(BoundBlock blk: graph.getBlockList()){
 			//Clear all the bounds in each blocks.
@@ -260,7 +260,7 @@ final class BoundAnalyzerHelper {
 			Type ret_type = code.type(0).returns().get(0);
 			
 			// Get the current block
-			BoundBlock blk = getCFGraph(caller.name()).getCurrentBlock();
+			BoundBlock blk = getCFGraph(caller).getCurrentBlock();
 			
 			if(isIntType(ret_type)) {
 				// Propagate the bounds as a constraint 
@@ -284,14 +284,14 @@ final class BoundAnalyzerHelper {
 	 * @param func_name
 	 *            the name of function.
 	 */
-	protected static void printCFG(Configuration config, String name) {
+	protected static void printCFG(Configuration config, FunctionOrMethod function) {
 		//Check if the verbose is on.
 		if(!config.isVerbose()){
 			return;
 		}
 
-		String dot_string = "digraph " + name + "{\n";
-		BoundGraph graph = getCFGraph(name);
+		String dot_string = "digraph " + function.name() + "{\n";
+		BoundGraph graph = getCFGraph(function);
 		List<BoundBlock> blks = graph.getBlockList();
 		for (BoundBlock blk : blks) {
 			if (!blk.isLeaf()) {
@@ -303,7 +303,7 @@ final class BoundAnalyzerHelper {
 		dot_string += "\n}";
 		// )Write out the CFG-function_name.dot
 		try {
-			PrintWriter cfg_writer = new PrintWriter(name + ".dot", "UTF-8");
+			PrintWriter cfg_writer = new PrintWriter(function + ".dot", "UTF-8");
 			cfg_writer.println(dot_string);
 			cfg_writer.close();
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {

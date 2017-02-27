@@ -172,10 +172,12 @@ public class Translator implements Builder {
 			 */
 			BoundAnalyzer analyzer = new BoundAnalyzer(module);
 			try {
+				// Get the function code block
+				FunctionOrMethod function = module.functionOrMethod("main").get(0);
 				// Start with main function.
-				analyzer.buildCFG(config, "main");
+				analyzer.buildCFG(config, function);
 				// Infer the bounds at the end of main function.
-				analyzer.inferFunctionBounds("main");
+				analyzer.inferFunctionBounds(function);
 			} catch (Exception e) {
 				throw new RuntimeException("Errors on Bound Analysis");
 			}
