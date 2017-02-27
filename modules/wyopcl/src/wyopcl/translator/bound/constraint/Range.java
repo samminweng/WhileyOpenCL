@@ -16,8 +16,7 @@ public class Range extends Constraint {
 	private BigInteger min_x, max_x;
 	private String x;
 	
-	
-	
+
 	public Range(String x, BigInteger min, BigInteger max){
 		this.x = x;
 		this.min_x = min;

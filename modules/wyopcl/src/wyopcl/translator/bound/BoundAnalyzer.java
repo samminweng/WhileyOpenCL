@@ -56,7 +56,7 @@ public class BoundAnalyzer {
 	private WyilFile module;
 
 	// Store the bounds for all functions
-	private HashMap<String, Bounds> boundMap;
+	private HashMap<FunctionOrMethod, Bounds> boundMap;
 
 
 	/**
@@ -64,7 +64,7 @@ public class BoundAnalyzer {
 	 */
 	public BoundAnalyzer(WyilFile module) {
 		this.module = module;
-		this.boundMap = new HashMap<String, Bounds>();
+		this.boundMap = new HashMap<FunctionOrMethod, Bounds>();
 	}
 
 	/**
@@ -76,8 +76,7 @@ public class BoundAnalyzer {
 	 */
 	public void buildCFG(Configuration config, FunctionOrMethod function) {
 		this.config = config;
-		// =this.module.functionOrMethod(name).get(0);
-
+		
 		if (!BoundAnalyzerHelper.isCached(function)) {
 			BoundAnalyzerHelper.promoteCFGStatus(function);
 		}else{
@@ -164,7 +163,7 @@ public class BoundAnalyzer {
 				} else if (code instanceof Codes.FieldLoad) {
 					analyze((Codes.FieldLoad) code, function);
 				} else if (code instanceof Codes.Fail) {
-					//analyze((Codes.Fail) code, function);
+					analyze((Codes.Fail) code, function);
 				} else if (code instanceof Codes.Goto) {
 					analyze((Codes.Goto) code, function);
 				} else if (code instanceof Codes.If) {
@@ -256,20 +255,9 @@ public class BoundAnalyzer {
 	 * @param sym_factory
 	 * @param code
 	 */
-	private void analyze(Fail code, String name) {
-		// Do nothing due to the fact that fail byte-code does not extract
-		// any bound or symbol.
-
+	private void analyze(Fail code, FunctionOrMethod function) {
+		// Due to the fact that fail byte-code does not extract any bound or symbol.
 	}
-
-	private FunctionOrMethod getFunction(String name){
-		if(this.module.functionOrMethod(name).size() == 0){
-			throw new RuntimeException("Can not find "+name+" function..");
-		}
-		
-		return this.module.functionOrMethod(name).get(0);
-	}
-	
 	
 	/**
 	 * Infer the bounds of a function by repeatedly iterating over all blocks in
@@ -398,7 +386,7 @@ public class BoundAnalyzer {
 		}
 
 		// Put the bounds to HashMap
-		boundMap.put(function.name(), bnds);		
+		boundMap.put(function, bnds);		
 
 		// Return the inferred bounds of the function
 		return bnds;
@@ -894,10 +882,8 @@ public class BoundAnalyzer {
 	 * @return
 	 */
 	private Bounds getBounds(FunctionOrMethod function) {
-		// Get the function name
-		String func_name = function.name().toString();
 		// Get the bounds
-		Bounds bounds = this.boundMap.get(func_name);
+		Bounds bounds = this.boundMap.get(function);
 		// Check if the bound is inferred not. If not, then infer the bounds
 		if (bounds == null) {
 			bounds = this.inferFunctionBounds(function);
