@@ -103,8 +103,7 @@ final class BoundAnalyzerHelper {
 	 * @return the variable name (starting with "_")
 	 */
 	protected static String getVarName(int reg, VariableDeclarations variables) {
-		// Check if the register has been kept in the functional variable
-		// declarations.
+		// Check if the register has been kept in the functional variable declarations.
 		if (reg < variables.size()) {
 			Declaration variable = variables.get(reg);
 			if (variable != null) {
@@ -215,33 +214,33 @@ final class BoundAnalyzerHelper {
 		BoundGraph graph = getCFGraph(callee.name());
 		//clear all the bounds in each block
 		for(BoundBlock blk: graph.getBlockList()){
+			//Clear all the bounds in each blocks.
 			blk.emptyBounds(null);
-		}
-		//Clear all the constraints/bounds in entry and exit blocks.
-		BoundBlock entry = graph.getBasicBlock("entry", BlockType.ENTRY);
-		entry.emptyConstraints();
-		
-		int index = 0;
-		// Go through each parameter of callee
-		int[] passing_params = code.operands();
-		for (Type paramType : callee.type().params()) {
-			String r_input = prefix + index; // The register at callee site
-			String param = prefix + passing_params[index];// The registers at caller site
-			// Check the type
-			if (isIntType(paramType)) {
-				// Pass the return bounds as a range constraint 
-				entry.addConstraint(new Range(r_input, caller_bnds.getLower(param), caller_bnds.getUpper(param)));
-				//entry.addDomain(new Domain(r_input, caller_bnds.getLower(passing_param), caller_bnds.getUpper(passing_param)));
+			//Clear all the Range constraints
+			blk.emptyRangeConstraints();			
+			
+			int index = 0;
+			// Go through each parameter of callee
+			int[] passing_params = code.operands();
+			for (Type paramType : callee.type().params()) {
+				String r_input = prefix + index; // The register at callee site
+				String param = prefix + passing_params[index];// The registers at caller site
+				// Check the type
+				if (isIntType(paramType)) {
+					// Pass the return bounds as a range constraint 
+					// Propagate the input bound to each block as a 'Range' constraint
+					blk.addConstraint(new Range(r_input, caller_bnds.getLower(param), caller_bnds.getUpper(param)));
+				}
+				// Pass the bounds of array size to calling function
+				if(paramType instanceof Type.Array){
+					String input_size = r_input + "_size";
+					String operand_size = param + "_size";
+					// Pass the bounds of array size as a range constraints
+					blk.addConstraint(new Range(input_size, caller_bnds.getLower(operand_size), caller_bnds.getUpper(operand_size)));
+				}
+				index++;
 			}
-			// Pass the bounds of array size to calling function
-			if(paramType instanceof Type.Array){
-				String input_size = r_input + "_size";
-				String operand_size = param + "_size";
-				// Pass the bounds of array size as a range constraints
-				entry.addConstraint(new Range(input_size, caller_bnds.getLower(operand_size), caller_bnds.getUpper(operand_size)));
-				//entry.addDomain(new Domain(param_size, caller_bnds.getLower(operand_size), caller_bnds.getUpper(operand_size)));
-			}
-			index++;
+			
 		}
 	}
 	
@@ -264,14 +263,12 @@ final class BoundAnalyzerHelper {
 			BoundBlock blk = getCFGraph(caller.name()).getCurrentBlock();
 			
 			if(isIntType(ret_type)) {
-				// Get the bounds of return variable from callee
 				// Propagate the bounds as a constraint 
 				blk.addConstraint(new Range(ret_reg, callee_bnd.getLower("return"), callee_bnd.getUpper("return")));
 			}
 
 			if(ret_type instanceof Type.Array){
-				// Pass the bounds of array size to calling functio
-				// And propagate the bounds of return array size to caller site with a Range constraint
+				// Propagate the bounds of return array size as a Range constraint
 				blk.addConstraint(new Range(ret_reg+"_size", callee_bnd.getLower("return_size"), callee_bnd.getUpper("return_size")));
 			}
 		}

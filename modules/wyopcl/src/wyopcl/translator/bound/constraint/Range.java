@@ -7,9 +7,8 @@ import wyopcl.translator.bound.Domain;
 /**
  * Implements the propagation rule for the constraint 'x := [min .. max]' 
  * 
- * Rule are:
- * x:=
- *  
+ * Rule are used to propagate the input bounds/output bounds to/from the calling function
+ * 
  * @author Min-Hsien Weng
  *
  */

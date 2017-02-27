@@ -7,12 +7,12 @@ int64_t _f_(int64_t limit){
 	uint16_t _5 = 0;
 	uint16_t _6 = 0;
 	uint16_t _7 = 0;
-	uint32_t _8 = 0;
+	uint16_t _8 = 0;
 	int64_t _9 = 0;
 	uint16_t _10 = 0;
 	uint16_t _11 = 0;
 	uint16_t _12 = 0;
-	uint32_t _13 = 0;
+	uint16_t _13 = 0;
 	//const %5 = 0 : int
 	_5 = 0;
 	//assign %2 = %5  : int

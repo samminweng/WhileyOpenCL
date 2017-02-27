@@ -3,11 +3,13 @@ package wyopcl.translator.bound;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.CodeBlock;
 import wyopcl.translator.bound.constraint.Constraint;
+import wyopcl.translator.bound.constraint.Range;
 
 /**
  * The bound block is used to build the bound graph (CFG) for bound analysis. 
@@ -126,11 +128,19 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	}
 
 	/**
-	 * clear all the constraints.
+	 * clear all the 'Range' constraints.
 	 */
-	public void emptyConstraints() {
-		this.constraints.clear();
-
+	public void emptyRangeConstraints() {
+		//this.constraints.clear();
+		// Remove the Range constraints 
+		Iterator<Constraint> iterator = this.constraints.iterator();
+		// Use the iterator to remove 
+		while(iterator.hasNext()){
+			Constraint c = iterator.next();
+			if(c instanceof Range){
+				iterator.remove();
+			}
+		}
 	}
 
 	/**

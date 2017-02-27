@@ -51,7 +51,7 @@ public class BoundAnalysisTestCase {
 				"ifelse", 
 				"whileloop",
 				"whileloop1",
-				//"nestedwhileloop",
+				"nestedwhileloop",
 				//"bubblesort"
 			});
 	}

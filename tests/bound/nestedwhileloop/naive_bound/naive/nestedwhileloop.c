@@ -1,7 +1,7 @@
 #include "nestedwhileloop.h"
 int64_t _f_(int64_t limit){
 	int64_t _1 = 0;
-	int64_t i = 0;
+	uint16_t i = 0;
 	int64_t sum = 0;
 	uint16_t j = 0;
 	uint16_t _5 = 0;
@@ -12,7 +12,7 @@ int64_t _f_(int64_t limit){
 	uint16_t _10 = 0;
 	int64_t _11 = 0;
 	uint16_t _12 = 0;
-	int64_t _13 = 0;
+	uint16_t _13 = 0;
 	//const %5 = 0 : int
 	_5 = 0;
 	//assign %2 = %5  : int
@@ -56,7 +56,6 @@ blklab2:;
 		//const %12 = 1 : int
 		_12 = 1;
 		//add %13 = %2, %12 : int
-		_DETECT_INT_ADD_OVERFLOW(i,_12,_13);
 		_13=i+_12;
 		//assign %2 = %13  : int
 		i = _13;
