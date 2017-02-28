@@ -8,6 +8,7 @@ import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.CodeBlock;
+import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.bound.constraint.Constraint;
 import wyopcl.translator.bound.constraint.Range;
 
@@ -128,10 +129,10 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	}
 
 	/**
-	 * clear all the 'Range' constraints.
+	 * clear all the 'Range' constraints, which are used to propagates input/output bounds 
+	 * between a function call
 	 */
 	public void emptyRangeConstraints() {
-		//this.constraints.clear();
 		// Remove the Range constraints 
 		Iterator<Constraint> iterator = this.constraints.iterator();
 		// Use the iterator to remove 
@@ -147,8 +148,9 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	 * Empty the bounds and initialize each variable with empty domain
 	 * @param list 
 	 */
-	public void emptyBounds(List<String> vars) {
+	public void emptyBounds(FunctionOrMethod function) {
 		this.bounds = new Bounds();
+		List<String> vars = BoundAnalyzerHelper.getFunctionVars(function);
 		if(vars != null){
 			// Go through each variable
 			for(String var: vars){

@@ -19,12 +19,6 @@ method main(System.Console sys):
     int c = f(11) 
     assert c == 2
     sys.out.println(c)
-    int d = f(1212)
-    assert d == 2
-    sys.out.println(d)
-    int e = f(-1212)
-    assert e == 1
-    sys.out.println(d)
     int x = 1
     x = 10
     int y = f(x)

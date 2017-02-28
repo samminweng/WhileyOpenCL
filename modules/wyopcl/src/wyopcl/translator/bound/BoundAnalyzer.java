@@ -76,7 +76,7 @@ public class BoundAnalyzer {
 	 */
 	public void buildCFG(Configuration config, FunctionOrMethod function) {
 		this.config = config;
-		
+
 		if (!BoundAnalyzerHelper.isCached(function)) {
 			BoundAnalyzerHelper.promoteCFGStatus(function);
 		}else{
@@ -258,7 +258,25 @@ public class BoundAnalyzer {
 	private void analyze(Fail code, FunctionOrMethod function) {
 		// Due to the fact that fail byte-code does not extract any bound or symbol.
 	}
-	
+
+	/***
+	 * Initialize each variable of a function with an empty domain.
+	 * 
+	 * 
+	 * @param function
+	 */
+	public void initializeBoundDomain(FunctionOrMethod function){
+		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
+
+		// Initialize all block with empty domains
+		for(BoundBlock blk: graph.getBlockList()){
+			blk.emptyBounds(function);
+		}
+
+	}
+
+
+
 	/**
 	 * Infer the bounds of a function by repeatedly iterating over all blocks in
 	 * CFGraph from the entry block to the exit block, and then inferring the
@@ -275,11 +293,9 @@ public class BoundAnalyzer {
 			// Print out bounds along with size information.
 			BoundAnalyzerHelper.printCFG(config, function);
 		}
-
-		// Initialize all block with empty domains
-		for(BoundBlock blk: graph.getBlockList()){
-			blk.emptyBounds(BoundAnalyzerHelper.getFunctionVars(function));
-		}
+		
+		initializeBoundDomain(function);
+		
 		// Create a deque to track all the blocks that have bound changes
 		// Deque provides 'pollLast' to get and remove the last block
 		// So we can have Last In First Out or First In First Out behaviour.
@@ -307,10 +323,13 @@ public class BoundAnalyzer {
 				}
 				System.out.println(str);
 			}
-			
+
 			// Get the last block of the deque in LIFO (last in first out) manner
-			BoundBlock blk = changed.pollLast();
-			
+			//BoundBlock blk = changed.pollLast();
+
+			// Get the first block of the deque in FIFO (first in first out) manner
+			BoundBlock blk = changed.pollFirst();
+
 			boolean isChanged = false;
 			// Iterate all the blocks, except Exit block.
 			Bounds bnd_before = null, bnd_after = null;
@@ -318,7 +337,7 @@ public class BoundAnalyzer {
 			bnd_before = (Bounds) blk.getBounds().clone();
 
 			// Reset the block bounds
-			blk.emptyBounds(BoundAnalyzerHelper.getFunctionVars(function));
+			blk.emptyBounds(function);
 
 			// Take the union of parents' bounds to produce the input bound
 			for (BoundBlock parent : blk.getParentNodes()) {
@@ -345,7 +364,7 @@ public class BoundAnalyzer {
 						}
 					}
 				}
-				
+
 				isChanged = true;
 			}
 
@@ -368,10 +387,10 @@ public class BoundAnalyzer {
 			BoundBlock current_block = graph.getCurrentBlock();
 			exit_blk = graph.createBasicBlock("exit", BlockType.EXIT, current_block);
 		}
-		
+
 		// Initialize the bounds
-		exit_blk.emptyBounds(BoundAnalyzerHelper.getFunctionVars(function));
-	
+		exit_blk.emptyBounds(function);
+
 		// Go through all the blocks to produce final output bounds
 		for (BoundBlock blk : graph.getBlockList()) {
 			// Check if the bounds are consistent (lower <= upper)
@@ -874,7 +893,7 @@ public class BoundAnalyzer {
 		// sym_ctrl.putAttribute(target, "type", code.result);
 
 		//if (code.result instanceof Type.Array) {
-			// Get the value
+		// Get the value
 		//}
 
 	}
@@ -1010,13 +1029,19 @@ public class BoundAnalyzer {
 		FunctionOrMethod caller = function;
 		if (callee != null) {
 			int caller_line = line;	
+
+
 			// Infer the bounds of caller function.
 			Bounds input_bnds = inferFunctionBounds(caller);
 
 			// Build CFGraph for callee.
 			buildCFG(config, callee);
+
+
 			// Propagate the bounds of input parameters to the function.
 			BoundAnalyzerHelper.propagateInputBoundsToCallee(callee, code, input_bnds);
+
+
 
 			// Infer the bounds of callee function.
 			Bounds ret_bnd = inferFunctionBounds(callee);

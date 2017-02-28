@@ -186,7 +186,6 @@ final class BoundAnalyzerHelper {
 		return vars;
 	}
 	
-
 	/**
 	 * Propagate the input bounds to the callee function.
 	 * 
@@ -209,32 +208,34 @@ final class BoundAnalyzerHelper {
 		//clear all the bounds in each block
 		for(BoundBlock blk: graph.getBlockList()){
 			//Clear all the bounds in each blocks of callee
-			blk.emptyBounds(BoundAnalyzerHelper.getFunctionVars(callee));
+			blk.emptyBounds(callee);
 			//Clear all the Range constraints
 			blk.emptyRangeConstraints();			
 			
-			int index = 0;
-			// Go through each parameter of callee
-			int[] passing_params = code.operands();
-			for (Type paramType : callee.type().params()) {
-				String r_input = prefix + index; // The register at callee site
-				String param = prefix + passing_params[index];// The registers at caller site
-				// Check the type
-				if (isIntType(paramType)) {
-					// Pass the return bounds as a range constraint 
-					// Propagate the input bound to each block as a 'Range' constraint
-					blk.addConstraint(new Range(r_input, caller_bnds.getLower(param), caller_bnds.getUpper(param)));
+			// Propagate the bound to callee as a Range constraint
+			if(blk.getType() == BlockType.ENTRY){
+				int index = 0;
+				// Go through each parameter of callee
+				int[] passing_params = code.operands();
+				for (Type paramType : callee.type().params()) {
+					String r_input = prefix + index; // The register at callee site
+					String param = prefix + passing_params[index];// The registers at caller site
+					// Check the type
+					if (isIntType(paramType)) {
+						// Pass the return bounds as a range constraint 
+						// Propagate the input bound to each block as a 'Range' constraint
+						blk.addConstraint(new Range(r_input, caller_bnds.getLower(param), caller_bnds.getUpper(param)));
+					}
+					// Pass the bounds of array size to calling function
+					if(paramType instanceof Type.Array){
+						String input_size = r_input + "_size";
+						String operand_size = param + "_size";
+						// Pass the bounds of array size as a range constraints
+						blk.addConstraint(new Range(input_size, caller_bnds.getLower(operand_size), caller_bnds.getUpper(operand_size)));
+					}
+					index++;
 				}
-				// Pass the bounds of array size to calling function
-				if(paramType instanceof Type.Array){
-					String input_size = r_input + "_size";
-					String operand_size = param + "_size";
-					// Pass the bounds of array size as a range constraints
-					blk.addConstraint(new Range(input_size, caller_bnds.getLower(operand_size), caller_bnds.getUpper(operand_size)));
-				}
-				index++;
 			}
-			
 		}
 	}
 	

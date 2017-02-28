@@ -49,7 +49,7 @@ public class BoundAnalysisTestCase {
 		// Add a list of test cases
 		return Arrays.asList(new String[] { 
 				"ifelse", 
-				//"whileloop",
+				"whileloop",
 				//"whileloop1",
 				//"nestedwhileloop",
 				//"bubblesort"

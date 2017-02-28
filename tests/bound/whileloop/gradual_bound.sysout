@@ -1,7 +1,14 @@
 =================================
 
 Bound Analysis of 'main' function:
+	domain(sys)	=[empty..empty]
+	domain(a)	=[empty..empty]
+	domain(_2)	=[empty..empty]
 	domain(_3)	=[5..5]
+	domain(_4)	=[empty..empty]
+	domain(_5)	=[empty..empty]
+	domain(return)	=[empty..empty]
+	domain(return_size)	=[empty..empty]
 Consistency=true
 
 =================================
@@ -9,23 +16,31 @@ Consistency=true
 
 Bound Analysis of 'f' function:
 	domain(limit)	=[5..5]
+	domain(_1)	=[empty..empty]
 	domain(i)	=[0..5]
 	domain(sum)	=[0..infinity]
 	domain(_4)	=[0..0]
 	domain(_5)	=[0..0]
+	domain(_6)	=[empty..empty]
 	domain(_7)	=[0..infinity]
 	domain(_8)	=[1..1]
 	domain(_9)	=[1..5]
 	domain(return)	=[0..infinity]
+	domain(return_size)	=[empty..empty]
 Consistency=true
 
 =================================
 =================================
 
 Bound Analysis of 'main' function:
+	domain(sys)	=[empty..empty]
 	domain(a)	=[0..infinity]
 	domain(_2)	=[0..infinity]
 	domain(_3)	=[5..5]
+	domain(_4)	=[empty..empty]
+	domain(_5)	=[empty..empty]
+	domain(return)	=[empty..empty]
+	domain(return_size)	=[empty..empty]
 Consistency=true
 
 =================================
