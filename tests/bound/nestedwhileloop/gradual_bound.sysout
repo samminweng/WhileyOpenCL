@@ -1,38 +1,16 @@
+WARNING: version numbering unavailable
 =================================
 
 Bound Analysis of 'main' function:
+	domain(sys)	=[empty..empty]
+	domain(a)	=[empty..empty]
+	domain(_2)	=[empty..empty]
 	domain(_3)	=[5..5]
+	domain(_4)	=[empty..empty]
+	domain(_5)	=[empty..empty]
+	domain(_6)	=[empty..empty]
+	domain(return)	=[empty..empty]
+	domain(return_size)	=[empty..empty]
 Consistency=true
 
 =================================
-=================================
-
-Bound Analysis of 'f' function:
-	domain(limit)	=[5..5]
-	domain(_10)	=[1..1]
-	domain(_11)	=[1..32767]
-	domain(_12)	=[1..1]
-	domain(_13)	=[1..5]
-	domain(i)	=[0..5]
-	domain(sum)	=[0..infinity]
-	domain(j)	=[0..5]
-	domain(_5)	=[0..0]
-	domain(_6)	=[0..0]
-	domain(_7)	=[0..0]
-	domain(_8)	=[0..32767]
-	domain(_9)	=[0..infinity]
-	domain(return)	=[0..infinity]
-Consistency=true
-
-=================================
-=================================
-
-Bound Analysis of 'main' function:
-	domain(a)	=[0..infinity]
-	domain(_2)	=[0..infinity]
-	domain(_3)	=[5..5]
-Consistency=true
-
-=================================
-
-Bound analysis completed. File: nestedwhileloop
