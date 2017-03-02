@@ -324,11 +324,11 @@ public class BoundAnalyzer {
 				System.out.println(str);
 			}
 
-			// Get the last block of the deque in LIFO (last in first out) manner
-			//BoundBlock blk = changed.pollLast();
+			// Get the last block of the deque in Depth-First (last in first out) manner
+			BoundBlock blk = changed.pollLast();
 
-			// Get the first block of the deque in FIFO (first in first out) manner
-			BoundBlock blk = changed.pollFirst();
+			// Get the first block of the deque in Breath-First (first in first out) manner
+			//BoundBlock blk = changed.pollFirst();
 
 			boolean isChanged = false;
 			// Iterate all the blocks, except Exit block.

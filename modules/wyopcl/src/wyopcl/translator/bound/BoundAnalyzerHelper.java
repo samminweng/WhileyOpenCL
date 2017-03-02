@@ -213,7 +213,7 @@ final class BoundAnalyzerHelper {
 			blk.emptyRangeConstraints();			
 			
 			// Propagate the bound to callee as a Range constraint
-			if(blk.getType() == BlockType.ENTRY){
+			if(blk.getType() == BlockType.ENTRY || blk.getLabel() == "code"){
 				int index = 0;
 				// Go through each parameter of callee
 				int[] passing_params = code.operands();

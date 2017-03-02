@@ -50,7 +50,7 @@ public class BoundAnalysisTestCase {
 		return Arrays.asList(new String[] { 
 				"ifelse", 
 				"whileloop",
-				"whileloop1",
+				//"whileloop1",
 				//"nestedwhileloop",
 				//"bubblesort"
 			});
@@ -59,7 +59,7 @@ public class BoundAnalysisTestCase {
 	@Test
 	public void testNaiveBound() {
 		// Run bound analysis and check analysis results 
-		util.execBoundAnalysis(sourceDir, testcase, "-bound", "naive");
+		util.execBoundAnalysis(sourceDir, testcase, "-bound", "naive", "-verbose");
 	}
 	
 	@Test
@@ -92,7 +92,7 @@ public class BoundAnalysisTestCase {
 	
 	@Test
 	public void testGradualBound() {
-		util.execBoundAnalysis(sourceDir, testcase, "-bound", "gradual");
+		util.execBoundAnalysis(sourceDir, testcase, "-bound", "gradual", "-verbose");
 	}
 	
 	@Test
