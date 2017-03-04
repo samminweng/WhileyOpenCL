@@ -2,84 +2,23 @@ main.0 [	const %5 = 1 : int]
 main.1 [	invoke (%4) = (%5) ifelse:f : function(int)->(int)]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
-code [BLOCK] 
-Constraints [_5:=1]
-
-	domain(_0)	= [empty..empty]	
-	domain(_1)	= [empty..empty]	
-	domain(_10)	= [empty..empty]	
-	domain(_11)	= [empty..empty]	
-	domain(_12)	= [empty..empty]	
-	domain(_13)	= [empty..empty]	
-	domain(_14)	= [empty..empty]	
-	domain(_15)	= [empty..empty]	
-	domain(_16)	= [empty..empty]	
-	domain(_17)	= [empty..empty]	
-	domain(_18)	= [empty..empty]	
-	domain(_2)	= [empty..empty]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [empty..empty]	
-	domain(_5)	= [1..1]	
-	domain(_6)	= [empty..empty]	
-	domain(_7)	= [empty..empty]	
-	domain(_8)	= [empty..empty]	
-	domain(_9)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
-isChanged=true
-### Iteration 1 ### 
-'1' blocks in queue : [ENTRY]
 entry [ENTRY] 
 Constraints []
 
-	domain(_0)	= [empty..empty]	
-	domain(_1)	= [empty..empty]	
-	domain(_10)	= [empty..empty]	
-	domain(_11)	= [empty..empty]	
-	domain(_12)	= [empty..empty]	
-	domain(_13)	= [empty..empty]	
-	domain(_14)	= [empty..empty]	
-	domain(_15)	= [empty..empty]	
-	domain(_16)	= [empty..empty]	
-	domain(_17)	= [empty..empty]	
-	domain(_18)	= [empty..empty]	
-	domain(_2)	= [empty..empty]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [empty..empty]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(_7)	= [empty..empty]	
-	domain(_8)	= [empty..empty]	
-	domain(_9)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
+IsReachable=true
 isChanged=false
+### Iteration 1 ### 
+'1' blocks in queue : [BLOCK]
+code [BLOCK] 
+Constraints [_5:=1]
+
+	domain(_5)	= [1..1]	
+IsReachable=true
+isChanged=true
 =================================
 
 Bound Analysis of 'main' function:
-	domain(sys)	=[empty..empty]
-	domain(a)	=[empty..empty]
-	domain(_10)	=[empty..empty]
-	domain(_11)	=[empty..empty]
-	domain(_12)	=[empty..empty]
-	domain(_13)	=[empty..empty]
-	domain(_14)	=[empty..empty]
-	domain(_15)	=[empty..empty]
-	domain(_16)	=[empty..empty]
-	domain(_17)	=[empty..empty]
-	domain(_18)	=[empty..empty]
-	domain(b)	=[empty..empty]
-	domain(c)	=[empty..empty]
-	domain(_4)	=[empty..empty]
 	domain(_5)	=[1..1]
-	domain(_6)	=[empty..empty]
-	domain(_7)	=[empty..empty]
-	domain(_8)	=[empty..empty]
-	domain(_9)	=[empty..empty]
-	domain(return)	=[empty..empty]
-	domain(return_size)	=[empty..empty]
 Consistency=true
 
 =================================
@@ -100,192 +39,68 @@ f.13 [	return %6]
 f.14 [	return]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
-code [BLOCK] 
-Constraints [_2:=10, _0:=[1..1]]
-
-	domain(_0)	= [1..1]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [empty..empty]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
-isChanged=true
-### Iteration 1 ### 
-'3' blocks in queue : [ENTRY][IF][ELSE]
-blklab1 [ELSE] 
-Constraints [_0>=_2, _4:=10]
-
-	domain(_0)	= [10..1]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..1]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [10..10]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=false
-isChanged=true
-### Iteration 2 ### 
-'4' blocks in queue : [ENTRY][IF][IF][ELSE]
-blklab3 [ELSE] 
-Constraints [_0<=_4]
-
-	domain(_0)	= [10..1]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..1]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [10..10]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=false
-isChanged=true
-### Iteration 3 ### 
-'4' blocks in queue : [ENTRY][IF][IF][BLOCK]
-blklab2 [BLOCK] 
-Constraints [_6:=0]
-
-	domain(_0)	= [10..1]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..1]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [10..10]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [0..0]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=false
-isChanged=true
-### Iteration 4 ### 
-'4' blocks in queue : [ENTRY][IF][IF][RETURN]
-return_6 [RETURN] 
-Constraints [return:=_6]
-
-	domain(_0)	= [10..1]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..1]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [10..10]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [0..0]	
-	domain(return)	= [0..0]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=false
-isChanged=true
-### Iteration 5 ### 
-'3' blocks in queue : [ENTRY][IF][IF]
-blklab3 [IF] 
-Constraints [_0>_4, _5:=2]
-
-	domain(_0)	= [11..1]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..1]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [10..0]	
-	domain(_5)	= [2..2]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=false
-isChanged=true
-### Iteration 6 ### 
-'3' blocks in queue : [ENTRY][IF][RETURN]
-return_5 [RETURN] 
-Constraints [return:=_5]
-
-	domain(_0)	= [11..1]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..1]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [10..0]	
-	domain(_5)	= [2..2]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [2..2]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=false
-isChanged=true
-### Iteration 7 ### 
-'2' blocks in queue : [ENTRY][IF]
-blklab1 [IF] 
-Constraints [_0<_2, _3:=1]
-
-	domain(_0)	= [1..1]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..10]	
-	domain(_3)	= [1..1]	
-	domain(_4)	= [empty..empty]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
-isChanged=true
-### Iteration 8 ### 
-'2' blocks in queue : [ENTRY][RETURN]
-return_3 [RETURN] 
-Constraints [return:=_3]
-
-	domain(_0)	= [1..1]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..10]	
-	domain(_3)	= [1..1]	
-	domain(_4)	= [empty..empty]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [1..1]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
-isChanged=true
-### Iteration 9 ### 
-'1' blocks in queue : [ENTRY]
 entry [ENTRY] 
 Constraints [_0:=[1..1]]
 
 	domain(_0)	= [1..1]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [empty..empty]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [empty..empty]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
+IsReachable=true
 isChanged=true
-### Iteration 10 ### 
-'1' blocks in queue : [BLOCK]
+### Iteration 1 ### 
+'2' blocks in queue : [BLOCK][BLOCK]
 code [BLOCK] 
 Constraints [_2:=10, _0:=[1..1]]
 
 	domain(_0)	= [1..1]	
-	domain(_1)	= [empty..empty]	
 	domain(_2)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [empty..empty]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
+IsReachable=true
+isChanged=true
+### Iteration 2 ### 
+'3' blocks in queue : [BLOCK][IF][ELSE]
+code [BLOCK] 
+Constraints [_2:=10, _0:=[1..1]]
+
+	domain(_0)	= [1..1]	
+	domain(_2)	= [10..10]	
+IsReachable=true
 isChanged=false
+### Iteration 3 ### 
+'2' blocks in queue : [IF][ELSE]
+blklab1 [IF] 
+Constraints [_0<_2, _3:=1]
+
+	domain(_0)	= [1..1]	
+	domain(_2)	= [10..10]	
+	domain(_3)	= [1..1]	
+IsReachable=true
+isChanged=true
+### Iteration 4 ### 
+'2' blocks in queue : [ELSE][RETURN]
+blklab1 [ELSE] 
+Constraints [_0>=_2, _4:=10]
+
+	domain(_0)	= [empty..empty]	
+	domain(_2)	= [empty..empty]	
+	domain(_4)	= [10..10]	
+IsReachable=false
+isChanged=false
+### Iteration 5 ### 
+'1' blocks in queue : [RETURN]
+return_3 [RETURN] 
+Constraints [return:=_3]
+
+	domain(_0)	= [1..1]	
+	domain(_2)	= [10..10]	
+	domain(_3)	= [1..1]	
+	domain(return)	= [1..1]	
+IsReachable=true
+isChanged=true
 =================================
 
 Bound Analysis of 'f' function:
 	domain(x)	=[1..1]
-	domain(r)	=[empty..empty]
 	domain(_2)	=[10..10]
 	domain(_3)	=[1..1]
-	domain(_4)	=[empty..empty]
-	domain(_5)	=[empty..empty]
-	domain(_6)	=[empty..empty]
 	domain(return)	=[1..1]
-	domain(return_size)	=[empty..empty]
 Consistency=true
 
 =================================
@@ -298,275 +113,130 @@ main.7 [	const %10 = 10 : int]
 main.8 [	invoke (%9) = (%10) ifelse:f : function(int)->(int)]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
-code [BLOCK] 
-Constraints [_5:=1, _4:=[1..1], _1:=_4, _10:=10]
-
-	domain(_0)	= [empty..empty]	
-	domain(_1)	= [1..1]	
-	domain(_10)	= [10..10]	
-	domain(_11)	= [empty..empty]	
-	domain(_12)	= [empty..empty]	
-	domain(_13)	= [empty..empty]	
-	domain(_14)	= [empty..empty]	
-	domain(_15)	= [empty..empty]	
-	domain(_16)	= [empty..empty]	
-	domain(_17)	= [empty..empty]	
-	domain(_18)	= [empty..empty]	
-	domain(_2)	= [empty..empty]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [1..1]	
-	domain(_5)	= [1..1]	
-	domain(_6)	= [empty..empty]	
-	domain(_7)	= [empty..empty]	
-	domain(_8)	= [empty..empty]	
-	domain(_9)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
-isChanged=true
-### Iteration 1 ### 
-'1' blocks in queue : [ENTRY]
 entry [ENTRY] 
 Constraints []
 
-	domain(_0)	= [empty..empty]	
-	domain(_1)	= [empty..empty]	
-	domain(_10)	= [empty..empty]	
-	domain(_11)	= [empty..empty]	
-	domain(_12)	= [empty..empty]	
-	domain(_13)	= [empty..empty]	
-	domain(_14)	= [empty..empty]	
-	domain(_15)	= [empty..empty]	
-	domain(_16)	= [empty..empty]	
-	domain(_17)	= [empty..empty]	
-	domain(_18)	= [empty..empty]	
-	domain(_2)	= [empty..empty]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [empty..empty]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(_7)	= [empty..empty]	
-	domain(_8)	= [empty..empty]	
-	domain(_9)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
+IsReachable=true
 isChanged=false
+### Iteration 1 ### 
+'1' blocks in queue : [BLOCK]
+code [BLOCK] 
+Constraints [_5:=1, _4:=[1..1], _1:=_4, _10:=10]
+
+	domain(_1)	= [1..1]	
+	domain(_10)	= [10..10]	
+	domain(_4)	= [1..1]	
+	domain(_5)	= [1..1]	
+IsReachable=true
+isChanged=true
 =================================
 
 Bound Analysis of 'main' function:
-	domain(sys)	=[empty..empty]
 	domain(a)	=[1..1]
 	domain(_10)	=[10..10]
-	domain(_11)	=[empty..empty]
-	domain(_12)	=[empty..empty]
-	domain(_13)	=[empty..empty]
-	domain(_14)	=[empty..empty]
-	domain(_15)	=[empty..empty]
-	domain(_16)	=[empty..empty]
-	domain(_17)	=[empty..empty]
-	domain(_18)	=[empty..empty]
-	domain(b)	=[empty..empty]
-	domain(c)	=[empty..empty]
 	domain(_4)	=[1..1]
 	domain(_5)	=[1..1]
-	domain(_6)	=[empty..empty]
-	domain(_7)	=[empty..empty]
-	domain(_8)	=[empty..empty]
-	domain(_9)	=[empty..empty]
-	domain(return)	=[empty..empty]
-	domain(return_size)	=[empty..empty]
 Consistency=true
 
 =================================
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
-code [BLOCK] 
-Constraints [_2:=10, _0:=[10..10]]
-
-	domain(_0)	= [10..10]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [empty..empty]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
-isChanged=true
-### Iteration 1 ### 
-'3' blocks in queue : [ENTRY][IF][ELSE]
-blklab1 [ELSE] 
-Constraints [_0>=_2, _4:=10]
-
-	domain(_0)	= [10..10]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [10..10]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
-isChanged=true
-### Iteration 2 ### 
-'4' blocks in queue : [ENTRY][IF][IF][ELSE]
-blklab3 [ELSE] 
-Constraints [_0<=_4]
-
-	domain(_0)	= [10..10]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [10..10]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
-isChanged=true
-### Iteration 3 ### 
-'4' blocks in queue : [ENTRY][IF][IF][BLOCK]
-blklab2 [BLOCK] 
-Constraints [_6:=0]
-
-	domain(_0)	= [10..10]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [10..10]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [0..0]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
-isChanged=true
-### Iteration 4 ### 
-'4' blocks in queue : [ENTRY][IF][IF][RETURN]
-return_6 [RETURN] 
-Constraints [return:=_6]
-
-	domain(_0)	= [10..10]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [10..10]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [0..0]	
-	domain(return)	= [0..0]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
-isChanged=true
-### Iteration 5 ### 
-'3' blocks in queue : [ENTRY][IF][IF]
-blklab3 [IF] 
-Constraints [_0>_4, _5:=2]
-
-	domain(_0)	= [11..10]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [10..9]	
-	domain(_5)	= [2..2]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=false
-isChanged=true
-### Iteration 6 ### 
-'3' blocks in queue : [ENTRY][IF][RETURN]
-return_5 [RETURN] 
-Constraints [return:=_5]
-
-	domain(_0)	= [11..10]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [10..9]	
-	domain(_5)	= [2..2]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [2..2]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=false
-isChanged=true
-### Iteration 7 ### 
-'2' blocks in queue : [ENTRY][IF]
-blklab1 [IF] 
-Constraints [_0<_2, _3:=1]
-
-	domain(_0)	= [10..9]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [11..10]	
-	domain(_3)	= [1..1]	
-	domain(_4)	= [empty..empty]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=false
-isChanged=true
-### Iteration 8 ### 
-'2' blocks in queue : [ENTRY][RETURN]
-return_3 [RETURN] 
-Constraints [return:=_3]
-
-	domain(_0)	= [10..9]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [11..10]	
-	domain(_3)	= [1..1]	
-	domain(_4)	= [empty..empty]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [1..1]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=false
-isChanged=true
-### Iteration 9 ### 
-'1' blocks in queue : [ENTRY]
 entry [ENTRY] 
 Constraints [_0:=[10..10]]
 
 	domain(_0)	= [10..10]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [empty..empty]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [empty..empty]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
+IsReachable=true
 isChanged=true
-### Iteration 10 ### 
-'1' blocks in queue : [BLOCK]
+### Iteration 1 ### 
+'2' blocks in queue : [BLOCK][BLOCK]
 code [BLOCK] 
 Constraints [_2:=10, _0:=[10..10]]
 
 	domain(_0)	= [10..10]	
-	domain(_1)	= [empty..empty]	
 	domain(_2)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [empty..empty]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
+IsReachable=true
+isChanged=true
+### Iteration 2 ### 
+'3' blocks in queue : [BLOCK][IF][ELSE]
+code [BLOCK] 
+Constraints [_2:=10, _0:=[10..10]]
+
+	domain(_0)	= [10..10]	
+	domain(_2)	= [10..10]	
+IsReachable=true
 isChanged=false
+### Iteration 3 ### 
+'2' blocks in queue : [IF][ELSE]
+blklab1 [IF] 
+Constraints [_0<_2, _3:=1]
+
+	domain(_0)	= [empty..empty]	
+	domain(_2)	= [empty..empty]	
+	domain(_3)	= [1..1]	
+IsReachable=false
+isChanged=false
+### Iteration 4 ### 
+'1' blocks in queue : [ELSE]
+blklab1 [ELSE] 
+Constraints [_0>=_2, _4:=10]
+
+	domain(_0)	= [10..10]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [10..10]	
+IsReachable=true
+isChanged=true
+### Iteration 5 ### 
+'2' blocks in queue : [IF][ELSE]
+blklab3 [IF] 
+Constraints [_0>_4, _5:=2]
+
+	domain(_0)	= [empty..empty]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [empty..empty]	
+	domain(_5)	= [2..2]	
+IsReachable=false
+isChanged=false
+### Iteration 6 ### 
+'1' blocks in queue : [ELSE]
+blklab3 [ELSE] 
+Constraints [_0<=_4]
+
+	domain(_0)	= [10..10]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [10..10]	
+IsReachable=true
+isChanged=true
+### Iteration 7 ### 
+'1' blocks in queue : [BLOCK]
+blklab2 [BLOCK] 
+Constraints [_6:=0]
+
+	domain(_0)	= [10..10]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [10..10]	
+	domain(_6)	= [0..0]	
+IsReachable=true
+isChanged=true
+### Iteration 8 ### 
+'1' blocks in queue : [RETURN]
+return_6 [RETURN] 
+Constraints [return:=_6]
+
+	domain(_0)	= [10..10]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [10..10]	
+	domain(_6)	= [0..0]	
+	domain(return)	= [0..0]	
+IsReachable=true
+isChanged=true
 =================================
 
 Bound Analysis of 'f' function:
 	domain(x)	=[10..10]
-	domain(r)	=[empty..empty]
 	domain(_2)	=[10..10]
-	domain(_3)	=[empty..empty]
 	domain(_4)	=[10..10]
-	domain(_5)	=[empty..empty]
 	domain(_6)	=[0..0]
 	domain(return)	=[0..0]
-	domain(return_size)	=[empty..empty]
 Consistency=true
 
 =================================
@@ -579,275 +249,125 @@ main.14 [	const %15 = 11 : int]
 main.15 [	invoke (%14) = (%15) ifelse:f : function(int)->(int)]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
-code [BLOCK] 
-Constraints [_5:=1, _4:=[1..1], _1:=_4, _10:=10, _9:=[0..0], _2:=_9, _15:=11]
-
-	domain(_0)	= [empty..empty]	
-	domain(_1)	= [1..1]	
-	domain(_10)	= [10..10]	
-	domain(_11)	= [empty..empty]	
-	domain(_12)	= [empty..empty]	
-	domain(_13)	= [empty..empty]	
-	domain(_14)	= [empty..empty]	
-	domain(_15)	= [11..11]	
-	domain(_16)	= [empty..empty]	
-	domain(_17)	= [empty..empty]	
-	domain(_18)	= [empty..empty]	
-	domain(_2)	= [0..0]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [1..1]	
-	domain(_5)	= [1..1]	
-	domain(_6)	= [empty..empty]	
-	domain(_7)	= [empty..empty]	
-	domain(_8)	= [empty..empty]	
-	domain(_9)	= [0..0]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
-isChanged=true
-### Iteration 1 ### 
-'1' blocks in queue : [ENTRY]
 entry [ENTRY] 
 Constraints []
 
-	domain(_0)	= [empty..empty]	
-	domain(_1)	= [empty..empty]	
-	domain(_10)	= [empty..empty]	
-	domain(_11)	= [empty..empty]	
-	domain(_12)	= [empty..empty]	
-	domain(_13)	= [empty..empty]	
-	domain(_14)	= [empty..empty]	
-	domain(_15)	= [empty..empty]	
-	domain(_16)	= [empty..empty]	
-	domain(_17)	= [empty..empty]	
-	domain(_18)	= [empty..empty]	
-	domain(_2)	= [empty..empty]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [empty..empty]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(_7)	= [empty..empty]	
-	domain(_8)	= [empty..empty]	
-	domain(_9)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
+IsReachable=true
 isChanged=false
+### Iteration 1 ### 
+'1' blocks in queue : [BLOCK]
+code [BLOCK] 
+Constraints [_5:=1, _4:=[1..1], _1:=_4, _10:=10, _9:=[0..0], _2:=_9, _15:=11]
+
+	domain(_1)	= [1..1]	
+	domain(_10)	= [10..10]	
+	domain(_15)	= [11..11]	
+	domain(_2)	= [0..0]	
+	domain(_4)	= [1..1]	
+	domain(_5)	= [1..1]	
+	domain(_9)	= [0..0]	
+IsReachable=true
+isChanged=true
 =================================
 
 Bound Analysis of 'main' function:
-	domain(sys)	=[empty..empty]
 	domain(a)	=[1..1]
 	domain(_10)	=[10..10]
-	domain(_11)	=[empty..empty]
-	domain(_12)	=[empty..empty]
-	domain(_13)	=[empty..empty]
-	domain(_14)	=[empty..empty]
 	domain(_15)	=[11..11]
-	domain(_16)	=[empty..empty]
-	domain(_17)	=[empty..empty]
-	domain(_18)	=[empty..empty]
 	domain(b)	=[0..0]
-	domain(c)	=[empty..empty]
 	domain(_4)	=[1..1]
 	domain(_5)	=[1..1]
-	domain(_6)	=[empty..empty]
-	domain(_7)	=[empty..empty]
-	domain(_8)	=[empty..empty]
 	domain(_9)	=[0..0]
-	domain(return)	=[empty..empty]
-	domain(return_size)	=[empty..empty]
 Consistency=true
 
 =================================
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
-code [BLOCK] 
-Constraints [_2:=10, _0:=[11..11]]
-
-	domain(_0)	= [11..11]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [empty..empty]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
-isChanged=true
-### Iteration 1 ### 
-'3' blocks in queue : [ENTRY][IF][ELSE]
-blklab1 [ELSE] 
-Constraints [_0>=_2, _4:=10]
-
-	domain(_0)	= [11..11]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [10..10]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
-isChanged=true
-### Iteration 2 ### 
-'4' blocks in queue : [ENTRY][IF][IF][ELSE]
-blklab3 [ELSE] 
-Constraints [_0<=_4]
-
-	domain(_0)	= [11..10]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [11..10]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=false
-isChanged=true
-### Iteration 3 ### 
-'4' blocks in queue : [ENTRY][IF][IF][BLOCK]
-blklab2 [BLOCK] 
-Constraints [_6:=0]
-
-	domain(_0)	= [11..10]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [11..10]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [0..0]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=false
-isChanged=true
-### Iteration 4 ### 
-'4' blocks in queue : [ENTRY][IF][IF][RETURN]
-return_6 [RETURN] 
-Constraints [return:=_6]
-
-	domain(_0)	= [11..10]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [11..10]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [0..0]	
-	domain(return)	= [0..0]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=false
-isChanged=true
-### Iteration 5 ### 
-'3' blocks in queue : [ENTRY][IF][IF]
-blklab3 [IF] 
-Constraints [_0>_4, _5:=2]
-
-	domain(_0)	= [11..11]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [10..10]	
-	domain(_5)	= [2..2]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
-isChanged=true
-### Iteration 6 ### 
-'3' blocks in queue : [ENTRY][IF][RETURN]
-return_5 [RETURN] 
-Constraints [return:=_5]
-
-	domain(_0)	= [11..11]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [10..10]	
-	domain(_5)	= [2..2]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [2..2]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
-isChanged=true
-### Iteration 7 ### 
-'2' blocks in queue : [ENTRY][IF]
-blklab1 [IF] 
-Constraints [_0<_2, _3:=1]
-
-	domain(_0)	= [11..9]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [12..10]	
-	domain(_3)	= [1..1]	
-	domain(_4)	= [empty..empty]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=false
-isChanged=true
-### Iteration 8 ### 
-'2' blocks in queue : [ENTRY][RETURN]
-return_3 [RETURN] 
-Constraints [return:=_3]
-
-	domain(_0)	= [11..9]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [12..10]	
-	domain(_3)	= [1..1]	
-	domain(_4)	= [empty..empty]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [1..1]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=false
-isChanged=true
-### Iteration 9 ### 
-'1' blocks in queue : [ENTRY]
 entry [ENTRY] 
 Constraints [_0:=[11..11]]
 
 	domain(_0)	= [11..11]	
-	domain(_1)	= [empty..empty]	
-	domain(_2)	= [empty..empty]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [empty..empty]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
+IsReachable=true
 isChanged=true
-### Iteration 10 ### 
-'1' blocks in queue : [BLOCK]
+### Iteration 1 ### 
+'2' blocks in queue : [BLOCK][BLOCK]
 code [BLOCK] 
 Constraints [_2:=10, _0:=[11..11]]
 
 	domain(_0)	= [11..11]	
-	domain(_1)	= [empty..empty]	
 	domain(_2)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [empty..empty]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
+IsReachable=true
+isChanged=true
+### Iteration 2 ### 
+'3' blocks in queue : [BLOCK][IF][ELSE]
+code [BLOCK] 
+Constraints [_2:=10, _0:=[11..11]]
+
+	domain(_0)	= [11..11]	
+	domain(_2)	= [10..10]	
+IsReachable=true
 isChanged=false
+### Iteration 3 ### 
+'2' blocks in queue : [IF][ELSE]
+blklab1 [IF] 
+Constraints [_0<_2, _3:=1]
+
+	domain(_0)	= [empty..empty]	
+	domain(_2)	= [empty..empty]	
+	domain(_3)	= [1..1]	
+IsReachable=false
+isChanged=false
+### Iteration 4 ### 
+'1' blocks in queue : [ELSE]
+blklab1 [ELSE] 
+Constraints [_0>=_2, _4:=10]
+
+	domain(_0)	= [11..11]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [10..10]	
+IsReachable=true
+isChanged=true
+### Iteration 5 ### 
+'2' blocks in queue : [IF][ELSE]
+blklab3 [IF] 
+Constraints [_0>_4, _5:=2]
+
+	domain(_0)	= [11..11]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [10..10]	
+	domain(_5)	= [2..2]	
+IsReachable=true
+isChanged=true
+### Iteration 6 ### 
+'2' blocks in queue : [ELSE][RETURN]
+blklab3 [ELSE] 
+Constraints [_0<=_4]
+
+	domain(_0)	= [empty..empty]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [empty..empty]	
+IsReachable=false
+isChanged=false
+### Iteration 7 ### 
+'1' blocks in queue : [RETURN]
+return_5 [RETURN] 
+Constraints [return:=_5]
+
+	domain(_0)	= [11..11]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [10..10]	
+	domain(_5)	= [2..2]	
+	domain(return)	= [2..2]	
+IsReachable=true
+isChanged=true
 =================================
 
 Bound Analysis of 'f' function:
 	domain(x)	=[11..11]
-	domain(r)	=[empty..empty]
 	domain(_2)	=[10..10]
-	domain(_3)	=[empty..empty]
 	domain(_4)	=[10..10]
 	domain(_5)	=[2..2]
-	domain(_6)	=[empty..empty]
 	domain(return)	=[2..2]
-	domain(return_size)	=[empty..empty]
 Consistency=true
 
 =================================
@@ -859,84 +379,39 @@ main.20 [	indirectinvoke () = %18 (%3) : method(any)->()]
 main.21 [	return]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
+entry [ENTRY] 
+Constraints []
+
+IsReachable=true
+isChanged=false
+### Iteration 1 ### 
+'1' blocks in queue : [BLOCK]
 code [BLOCK] 
 Constraints [_5:=1, _4:=[1..1], _1:=_4, _10:=10, _9:=[0..0], _2:=_9, _15:=11, _14:=[2..2], _3:=_14]
 
-	domain(_0)	= [empty..empty]	
 	domain(_1)	= [1..1]	
 	domain(_10)	= [10..10]	
-	domain(_11)	= [empty..empty]	
-	domain(_12)	= [empty..empty]	
-	domain(_13)	= [empty..empty]	
 	domain(_14)	= [2..2]	
 	domain(_15)	= [11..11]	
-	domain(_16)	= [empty..empty]	
-	domain(_17)	= [empty..empty]	
-	domain(_18)	= [empty..empty]	
 	domain(_2)	= [0..0]	
 	domain(_3)	= [2..2]	
 	domain(_4)	= [1..1]	
 	domain(_5)	= [1..1]	
-	domain(_6)	= [empty..empty]	
-	domain(_7)	= [empty..empty]	
-	domain(_8)	= [empty..empty]	
 	domain(_9)	= [0..0]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
+IsReachable=true
 isChanged=true
-### Iteration 1 ### 
-'1' blocks in queue : [ENTRY]
-entry [ENTRY] 
-Constraints []
-
-	domain(_0)	= [empty..empty]	
-	domain(_1)	= [empty..empty]	
-	domain(_10)	= [empty..empty]	
-	domain(_11)	= [empty..empty]	
-	domain(_12)	= [empty..empty]	
-	domain(_13)	= [empty..empty]	
-	domain(_14)	= [empty..empty]	
-	domain(_15)	= [empty..empty]	
-	domain(_16)	= [empty..empty]	
-	domain(_17)	= [empty..empty]	
-	domain(_18)	= [empty..empty]	
-	domain(_2)	= [empty..empty]	
-	domain(_3)	= [empty..empty]	
-	domain(_4)	= [empty..empty]	
-	domain(_5)	= [empty..empty]	
-	domain(_6)	= [empty..empty]	
-	domain(_7)	= [empty..empty]	
-	domain(_8)	= [empty..empty]	
-	domain(_9)	= [empty..empty]	
-	domain(return)	= [empty..empty]	
-	domain(return_size)	= [empty..empty]	
-IsConsistent=true
-isChanged=false
 =================================
 
 Bound Analysis of 'main' function:
-	domain(sys)	=[empty..empty]
 	domain(a)	=[1..1]
 	domain(_10)	=[10..10]
-	domain(_11)	=[empty..empty]
-	domain(_12)	=[empty..empty]
-	domain(_13)	=[empty..empty]
 	domain(_14)	=[2..2]
 	domain(_15)	=[11..11]
-	domain(_16)	=[empty..empty]
-	domain(_17)	=[empty..empty]
-	domain(_18)	=[empty..empty]
 	domain(b)	=[0..0]
 	domain(c)	=[2..2]
 	domain(_4)	=[1..1]
 	domain(_5)	=[1..1]
-	domain(_6)	=[empty..empty]
-	domain(_7)	=[empty..empty]
-	domain(_8)	=[empty..empty]
 	domain(_9)	=[0..0]
-	domain(return)	=[empty..empty]
-	domain(return_size)	=[empty..empty]
 Consistency=true
 
 =================================

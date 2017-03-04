@@ -109,11 +109,6 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	 * @return true if lower <= upper. Otherwise, return false.
 	 */
 	public boolean isConsistent(){
-		// Both of bounds are empty and not initialized, so it is consistent
-		if(this.isLowerUnknown && this.isUpperUnknown){
-			return true;
-		}
-		
 		if (this.isLowerUnknown || this.isUpperUnknown) {
 			return false;
 		}
@@ -359,10 +354,10 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		// For example, the intersection of [5 ... 5] [-inf ...0] domains is [5 .. 0]
 		// which is not consistent and caused by empty intersection
 		// To solve the issue, we check if the new domain is inconsistent 
-		/*if (this.isConsistent() == false){
+		if (this.isConsistent() == false){
 			// Set the domain to be an empty domain
 			this.set(new Domain(this.getName()));
-		}*/
+		}
 
 	}
 

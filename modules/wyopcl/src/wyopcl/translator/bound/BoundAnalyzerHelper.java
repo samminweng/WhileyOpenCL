@@ -161,7 +161,7 @@ final class BoundAnalyzerHelper {
 			str += "\tsize(" + varName + ")\t= " + size + "\n";
 		}*/
 
-		str += "Consistency=" + bnds.checkBoundConsistency();
+		str += "Consistency=" + bnds.checkBoundReachable();
 		str += "\n\n=================================";
 		
 		System.out.println(str);
@@ -208,7 +208,7 @@ final class BoundAnalyzerHelper {
 		//clear all the bounds in each block
 		for(BoundBlock blk: graph.getBlockList()){
 			//Clear all the bounds in each blocks of callee
-			blk.emptyBounds(callee);
+			blk.emptyBounds();
 			//Clear all the Range constraints
 			blk.emptyRangeConstraints();			
 			

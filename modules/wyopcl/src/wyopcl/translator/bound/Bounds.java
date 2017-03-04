@@ -109,7 +109,8 @@ public class Bounds implements Cloneable {
 	 */
 	public Domain getDomain(String name) {
 		if (!bounds.containsKey(name)) {
-			throw new RuntimeException("Domain("+name+") NOT found.");
+			bounds.put(name, new Domain(name));
+			//throw new RuntimeException("Domain("+name+") NOT found.");
 		}
 		return bounds.get(name);
 	}
@@ -295,20 +296,21 @@ public class Bounds implements Cloneable {
 
 
 	/**
-	 * Check if all the bounds are consistent (lower bound <= upper bound)
+	 * Check if all the bounds are NOT empty. If
 	 * 
-	 * @return true if bounds are consistent. Otherwise, return false.
+	 * @return true if the block is reach. Otherwise, return false.
 	 */
-	public boolean checkBoundConsistency() {
-		boolean isConsistent = true;
+	public boolean checkBoundReachable() {
 		Iterator<Entry<String, Domain>> iterator = bounds.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Entry<String, Domain> bnd = iterator.next();
 			Domain d = bnd.getValue();
-			// Check upper bound < lower bound. If so, return false;
-			isConsistent &= d.isConsistent();
+			// Check if domain is empty. If so, return false;
+			if(d.isEmpty()){
+				return false;
+			}
 		}
-		return isConsistent;
+		return true;
 	}
 
 	@Override

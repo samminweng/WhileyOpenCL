@@ -148,9 +148,9 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	 * Empty the bounds and initialize each variable with empty domain
 	 * @param list 
 	 */
-	public void emptyBounds(FunctionOrMethod function) {
+	public void emptyBounds() {
 		this.bounds = new Bounds();
-		List<String> vars = BoundAnalyzerHelper.getFunctionVars(function);
+		/*List<String> vars = BoundAnalyzerHelper.getFunctionVars(function);
 		if(vars != null){
 			// Go through each variable
 			for(String var: vars){
@@ -160,7 +160,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 			// Add 'return' and 'return_size' domains
 			this.bounds.addDomain(new Domain("return"));
 			this.bounds.addDomain(new Domain("return_size"));
-		}	
+		}*/	
 	}
 
 	/**
@@ -386,7 +386,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 		str += String.format("%n%s %s%n", "Constraints", this.constraints);
 		//Print out the bounds
 		str += this.bounds + "\n";
-		str += "IsConsistent=" + isConsistent();
+		str += "IsReachable=" + isReachable();
 		//str += "\n-------------------------------\n";
 		
 		return str;
@@ -419,8 +419,8 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	 * 
 	 * @return true if all the bounds are consistent.
 	 */
-	public boolean isConsistent() {
-		return this.bounds.checkBoundConsistency();
+	public boolean isReachable() {
+		return this.bounds.checkBoundReachable();
 	}
 
 	/**
