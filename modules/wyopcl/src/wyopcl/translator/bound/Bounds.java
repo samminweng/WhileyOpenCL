@@ -116,7 +116,7 @@ public class Bounds implements Cloneable {
 	}
 
 	public BigInteger getLower(String name) {
-		return getDomain(name).getLowerBound();
+		return getDomain(name).getLower();
 	}
 
 	public boolean setLowerBound(String name, BigInteger lower_bound) {
@@ -133,7 +133,7 @@ public class Bounds implements Cloneable {
 	}
 
 	public BigInteger getUpper(String name) {
-		return getDomain(name).getUpperBound();
+		return getDomain(name).getUpper();
 	}
 
 	
@@ -170,9 +170,9 @@ public class Bounds implements Cloneable {
 			// Check if the new domain is smaller than existing domain.
 			if (!existing_domain.equals(new_domain)) {
 				// Old lower bound is NOT -infity 
-				if (existing_domain.getLowerBound() != null ||
-						(existing_domain.getLowerBound() != null && new_min != null && 
-						existing_domain.getLowerBound().compareTo(new_min)>=0)){
+				if (existing_domain.getLower() != null ||
+						(existing_domain.getLower() != null && new_min != null && 
+						existing_domain.getLower().compareTo(new_min)>=0)){
 					//	|| existing_domain.compareTo(new_domain) > 0) {
 					bounds.put(name, new_domain);
 					return true;
@@ -227,8 +227,8 @@ public class Bounds implements Cloneable {
 			new_domain.setLowerBound(new_min);
 			
 			// Check new lower bound > existing lower bound (stronger) 
-			if (existing_domain.getLowerBound() == null || !existing_domain.equals(new_domain)
-				&& new_domain.getLowerBound().compareTo(existing_domain.getLowerBound()) > 0) {
+			if (existing_domain.getLower() == null || !existing_domain.equals(new_domain)
+				&& new_domain.getLower().compareTo(existing_domain.getLower()) > 0) {
 				bounds.put(name, new_domain);
 				return true;
 			}
@@ -258,8 +258,8 @@ public class Bounds implements Cloneable {
 				return true;
 			}*/
 			// Check new domain is smaller (stronger) than existing one.
-			if (existing_domain.getUpperBound() == null || (!existing_domain.equals(new_domain)
-					&& new_domain.getUpperBound().compareTo(existing_domain.getUpperBound()) < 0)) {
+			if (existing_domain.getUpper() == null || (!existing_domain.equals(new_domain)
+					&& new_domain.getUpper().compareTo(existing_domain.getUpper()) < 0)) {
 				bounds.put(name, new_domain);
 				return true;
 				//}

@@ -549,5 +549,70 @@ public class ConstraintTestCase {
 	}
 	
 	
+	/**
+	 * Given D(x)=[0..3] D(y)=[2..2] D(z)=[4..8] 
+	 * 
+	 * Test the constraint x + y = z
+	 * 
+	 */
+	@Test
+	public void testPlus() {
+		Bounds bnd = new Bounds();
+		// D(x) = [0..3]
+		bnd.addDomain(new Domain("x", new BigInteger("0"), new BigInteger("3")));
+		// D(y) = [2..2]
+		bnd.addDomain(new Domain("y", new BigInteger("2"), new BigInteger("2")));
+		// D(z) = [4..8]
+		bnd.addDomain(new Domain("z", new BigInteger("4"), new BigInteger("8")));
+		// x + y = z
+		Plus constraint = new Plus("x", "y", "z");
+		constraint.inferBound(bnd);
+		
+		// D1(z) = [4..5]
+		assertEquals(new BigInteger("4"), bnd.getLower("z"));
+		assertEquals(new BigInteger("5"), bnd.getUpper("z"));
+
+		// D(x)' = [2..3] NOT changed 
+		assertEquals(new BigInteger("2"), bnd.getLower("x"));
+		assertEquals(new BigInteger("3"), bnd.getUpper("x"));
+		
+		// D1(y) = [2..2] NOT changed
+		assertEquals(new BigInteger("2"), bnd.getLower("y"));
+		assertEquals(new BigInteger("2"), bnd.getUpper("y"));
+	}
+	
+	
+	/**
+	 * Given D(x)=[0..0] D(y)=[1..1] D(z)=[1..1] 
+	 * 
+	 * Test the constraint x + y = z
+	 * 
+	 */
+	@Test
+	public void testLeftPlus2() {
+		Bounds bnd = new Bounds();
+		// D(x) = [0..0]
+		bnd.addDomain(new Domain("x", new BigInteger("0"), new BigInteger("0")));
+		// D(y) = [1..1]
+		bnd.addDomain(new Domain("y", new BigInteger("1"), new BigInteger("1")));
+		// D(z) = [empty..empty]
+		bnd.addDomain(new Domain("z", new BigInteger("0"), new BigInteger("0")));
+		// x + y = z
+		LeftPlus constraint = new LeftPlus("x", "y", "z");
+		constraint.inferBound(bnd);
+		
+		// D1(z) = [1..1]
+		assertEquals(new BigInteger("1"), bnd.getLower("z"));
+		assertEquals(new BigInteger("1"), bnd.getUpper("z"));
+
+		// D(x)' = [0..0] NOT changed 
+		assertEquals(new BigInteger("0"), bnd.getLower("x"));
+		assertEquals(new BigInteger("0"), bnd.getUpper("x"));
+		
+		// D1(y) = [1..1] NOT changed
+		assertEquals(new BigInteger("1"), bnd.getLower("y"));
+		assertEquals(new BigInteger("1"), bnd.getUpper("y"));
+	}
+	
 
 }

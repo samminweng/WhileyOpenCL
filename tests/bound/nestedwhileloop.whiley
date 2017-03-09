@@ -5,7 +5,7 @@ function f(int limit) -> int:
 	while i < limit:
 		int j = 0
 		while j < limit:
-			sum = sum + i*j
+			sum = sum + 1
 			j = j + 1
 		i = i + 1
 	return sum

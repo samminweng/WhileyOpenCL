@@ -70,7 +70,7 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	}
 
 
-	public BigInteger getLowerBound() {
+	public BigInteger getLower() {
 		return lower_bound;
 	}
 
@@ -79,15 +79,13 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		this.upper_bound = upper;
 		this.isLowerUnknown = false;
 		this.isUpperUnknown = false;
-		//this.isEmpty = false;
 	}
 
 	public void setLowerBound(BigInteger lower_bound) {
 		this.lower_bound = lower_bound;
-		//this.isLowerInit = false;
 	}
 
-	public BigInteger getUpperBound() {
+	public BigInteger getUpper() {
 		return upper_bound;
 	}
 
@@ -255,12 +253,12 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 
 	public void union(Domain domain) {
 		// Lower bounds
-		BigInteger new_min = domain.getLowerBound();
-		BigInteger old_min = this.getLowerBound();
+		BigInteger new_min = domain.getLower();
+		BigInteger old_min = this.getLower();
 
 		// Upper bounds
-		BigInteger new_max = domain.getUpperBound();
-		BigInteger old_max = this.getUpperBound();
+		BigInteger new_max = domain.getUpper();
+		BigInteger old_max = this.getUpper();
 
 		// Empty domain is initialized
 		if(domain.isEmpty()){
@@ -319,12 +317,12 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	 */
 	public void intersect(Domain domain) {
 		// Lower bounds
-		BigInteger new_min = domain.getLowerBound();
-		BigInteger old_min = this.getLowerBound();
+		BigInteger new_min = domain.getLower();
+		BigInteger old_min = this.getLower();
 
 		// Upper bounds
-		BigInteger new_max = domain.getUpperBound();
-		BigInteger old_max = this.getUpperBound();
+		BigInteger new_max = domain.getUpper();
+		BigInteger old_max = this.getUpper();
 
 		// Intersect empty 
 		// Empty domain is initialized
@@ -380,8 +378,8 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	 * @param domain
 	 */
 	public void set(Domain domain) {
-		this.lower_bound = domain.getLowerBound();
-		this.upper_bound = domain.getUpperBound();
+		this.lower_bound = domain.getLower();
+		this.upper_bound = domain.getUpper();
 		this.isLowerUnknown = domain.isLowerUnknown;
 		this.isUpperUnknown = domain.isUpperUnknown;
 	}
@@ -468,8 +466,8 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		
 		// Both are not empty
 		// Check the lower bound is decreasing
-		BigInteger this_min = this.getLowerBound();
-		BigInteger d_min = d.getLowerBound();
+		BigInteger this_min = this.getLower();
+		BigInteger d_min = d.getLower();
 		if(this_min != null && d_min != null
 				&& this_min.compareTo(d_min)<0){
 			if (isGradual) {
@@ -480,8 +478,8 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		}
 		
 		// Check upper bound is increasing and Widen the upper bound
-		BigInteger this_max = this.getUpperBound();
-		BigInteger d_max = d.getUpperBound();
+		BigInteger this_max = this.getUpper();
+		BigInteger d_max = d.getUpper();
 		if(this_max != null && d_max != null
 				&& this_max.compareTo(d_max)>0){
 			if (isGradual) {
@@ -507,5 +505,21 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 			return null;
 		}
 		return x.add(y);
+	}
+
+	/**
+	 * Return the substract of 'x' and 'y' (x - y)
+	 * 
+	 * 
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public static BigInteger substract(BigInteger x, BigInteger y) {
+		if (x == null || y == null) {
+			return null;
+		}
+		
+		return x.subtract(y);
 	}
 }

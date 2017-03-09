@@ -8,8 +8,10 @@ import wyopcl.translator.bound.Bounds;
 import wyopcl.translator.bound.Domain;
 
 /**
- * Implements the propagation rule for the primitive constraint (e.g. x = y +
- * z).
+ * Implements the propagation rule for the primitive constraint (e.g. x + y = z).
+ * 
+ * The rules are based on Page 100, 'Programming with Constraints' Book
+ * 
  * 
  * @author Min-Hsien Weng
  *
@@ -24,83 +26,70 @@ public class Plus extends Constraint{
 		this.z = z;
 	}
 	@Override
-	public void inferBound(Bounds bnd) {		
-		/*//bnd.isChanged = false;
-		//Before propagation
-		min_x = bnd.getLower(x);
-		max_x = bnd.getUpper(x);
-		min_y = bnd.getLower(y);
-		max_y = bnd.getUpper(y);
-		min_z = bnd.getLower(z);
-		max_z = bnd.getUpper(z);
+	public void inferBound(Bounds bnd) {
 
-		// Apply the propagation rule on x variable.
-		// Add the lower bound of x variable.
-		if (min_y != null && min_z != null) {
-			//max (min_x, min_y + min_z)
-			BigInteger min = min_y.add(min_z);
-			if(min_x!= null && min.compareTo(min_x)<0){
-				bnd.isChanged |= bnd.widenLowerBound(x, min);
+		// X + Y = Z
+		Domain x_domain = bnd.getDomain(x);
+		Domain y_domain = bnd.getDomain(y);
+		Domain z_domain = bnd.getDomain(z);
+		//Before propagation.
+		min_x = x_domain.getLower();
+		max_x = x_domain.getUpper();	
+		min_y = y_domain.getLower();
+		max_y = y_domain.getUpper();
+		min_z = z_domain.getLower();
+		max_z = z_domain.getUpper();
+
+		if (x_domain.isEmpty() || y_domain.isEmpty()) {
+			bnd.getDomain(z).setEmpty();
+		} else {
+			if (z_domain.isEmpty()){
+				// Update the 'z' domain 
+				BigInteger lower = Domain.plus(min_x, min_y);
+				BigInteger upper = Domain.plus(max_x, max_y);
+			
+				bnd.getDomain(z).set(lower, upper);
+				
 			}else{
-				bnd.isChanged |= bnd.addLowerBound(x, min);
+				
+				// New z domain (z = x + y)
+				// z_lower = max(min_z, min_x + min_y)
+				// z_upper = min(max_z, max_x + max_y)
+				BigInteger z_lower = Domain.plus(min_x, min_y);
+				BigInteger z_upper = Domain.plus(max_x, max_y);
+				z_lower = z_lower.max(min_z);
+				z_upper = z_upper.min(max_z);
+				// Update 'z' domain
+				bnd.getDomain(z).set(z_lower, z_upper);
+
+				// New x domain (x = z - y)
+				// x_lower = max(min_x, min_z - max_y)
+				// x_upper = min(max_x, max_z - min_y)
+				BigInteger x_lower = Domain.substract(min_z, max_y);
+				BigInteger x_upper = Domain.substract(max_z, min_y);
+				x_lower = x_lower.max(min_x); // max(x_lower, min_x);
+				x_upper = x_upper.min(max_x); 
+				// Update x 'domain
+				bnd.getDomain(x).set(x_lower, x_upper);
+
+
+				// New y domain (y = z - x)
+				// y_lower = max(min_y, min_z - max_x)
+				// y_upper = min(max_y, max_z - min_x)
+				BigInteger y_lower = Domain.substract(min_z, max_x);
+				BigInteger y_upper = Domain.substract(max_z, min_x);
+				y_lower = y_lower.max(min_y);
+				y_upper = y_upper.min(max_y);
+				// Update 'y' domain
+				bnd.getDomain(y).set(y_lower, y_upper);
+
 			}
 		}
-		// Add the upper bound of x variable.
-		if (max_y != null && max_z != null) {
-			//min (max_x, max_y + max_z)
-			BigInteger max = max_y.add(max_z);
-			if(max_x!= null && max.compareTo(max_x)>0){
-				bnd.isChanged |= bnd.widenUpperBound(x, max);				
-			}else{
-				bnd.isChanged |= bnd.addUpperBound(x, max);
-			}			
-		}
 
-		// Apply the propagation rule on y variable.
-		// Add the lower bound of y variable.
-		if (min_x != null && max_z != null) {			
-			BigInteger min = min_x.subtract(max_z);
-			if(min_y!= null && min.compareTo(min_y)<0){
-				bnd.isChanged |= bnd.widenLowerBound(y, min);
-			}else{
-				bnd.isChanged |= bnd.addLowerBound(y, min);
-			}
-		}
-		// Add the upper bound of y variable.
-		if (max_x != null && min_z != null) {			
-			BigInteger max = max_x.subtract(min_z);
-			if(max_y!= null && max.compareTo(max_y)>0){
-				bnd.isChanged |= bnd.widenUpperBound(y, max);				
-			}else{
-				bnd.isChanged |= bnd.addUpperBound(y, max);
-			}			
-		}
-
-		// Apply the propagation rule on z variable.
-		// Add the lower bound of z variable.
-		if (min_x != null && max_y != null) {
-			BigInteger min = min_x.subtract(max_y);
-			if(min_z!= null && min.compareTo(min_z)<0){
-				bnd.isChanged |= bnd.widenLowerBound(z, min);
-			}else{
-				bnd.isChanged |= bnd.addLowerBound(z, min);
-			}
-		}
-		// Add the upper bound of z variable.
-		if (max_x != null && min_y != null) {			
-			BigInteger max = max_x.subtract(min_y);
-			if(max_z!= null && max.compareTo(max_z)>0){
-				bnd.isChanged |= bnd.widenUpperBound(z, max);				
-			}else{
-				bnd.isChanged |= bnd.addUpperBound(z, max);
-			}			
-		}
-*/
-		//return bnd.isChanged;
 	}
 	@Override
 	public String toString() {
-		return x + "=" + y + "+" + z;
+		return x + "+" + y + "=" + z;
 	}
 
 }

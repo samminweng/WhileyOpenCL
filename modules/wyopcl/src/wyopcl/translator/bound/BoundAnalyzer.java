@@ -35,6 +35,7 @@ import wyopcl.translator.bound.constraint.LessThan;
 import wyopcl.translator.bound.constraint.LessThanEquals;
 import wyopcl.translator.bound.constraint.LeftMultiply;
 import wyopcl.translator.bound.constraint.Negate;
+import wyopcl.translator.bound.constraint.Plus;
 
 /***
  * A class is to store all the constraints, produced from the wyil file, with
@@ -265,7 +266,7 @@ public class BoundAnalyzer {
 	 * 
 	 * @param function
 	 */
-	public void initializeBoundDomain(FunctionOrMethod function){
+	public void initialize(FunctionOrMethod function){
 		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
 
 		// Initialize all block with empty domains
@@ -286,7 +287,7 @@ public class BoundAnalyzer {
 	 *            the function
 	 * @return the bounds
 	 */
-	public Bounds inferFunctionBounds(FunctionOrMethod function) {
+	public Bounds inferBounds(FunctionOrMethod function) {
 		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
 
 		if (config.isVerbose()) {
@@ -294,7 +295,7 @@ public class BoundAnalyzer {
 			BoundAnalyzerHelper.printCFG(config, function);
 		}
 
-		initializeBoundDomain(function);
+		initialize(function);
 
 		// Create a deque to track all the blocks that have bound changes
 		// Deque provides 'pollLast' to get and remove the last block
@@ -325,10 +326,10 @@ public class BoundAnalyzer {
 			}
 
 			// Get the last block of the deque in Depth-First (last in first out) manner
-			//BoundBlock blk = changed.pollLast();
+			BoundBlock blk = changed.pollLast();
 
 			// Get the first block of the deque in Breath-First (first in first out) manner
-			BoundBlock blk = changed.pollFirst();
+			//BoundBlock blk = changed.pollFirst();
 
 			boolean isChanged = false;
 			// Iterate all the blocks, except Exit block.
@@ -351,73 +352,71 @@ public class BoundAnalyzer {
 
 			bnd_after = (Bounds) blk.getBounds();
 			// Check the changes of before and after bounds
-			if (bnd_before != null && bnd_after != null 
-					&& !bnd_before.equals(bnd_after)) {
+			if (bnd_before != null && bnd_after != null && blk.isReachable()
+					&& !bnd_before.equals(bnd_after)) {				
+				// Widen the bounds for each block
+				bnd_after.widenBounds(config, bnd_before);
 				// Check if the blk has any child nodes
-				if(blk.isReachable()){
-					// Widen the bounds for each block
-					bnd_after.widenBounds(config, bnd_before);
-					if(blk.hasChild() == true){
-						for(BoundBlock child : blk.getChildNodes()){
-							if (!child.getType().equals(BlockType.EXIT)) {
-								// If bounds has changed, then add its child nodes to 'changed set'
-								changed.add(child);
-							}
+				if(blk.hasChild() == true){
+					for(BoundBlock child : blk.getChildNodes()){
+						if (!child.getType().equals(BlockType.EXIT)) {
+							// If bounds has changed, then add its child nodes to 'changed set'
+							changed.add(child);
 						}
 					}
-					isChanged = true;
 				}
+				isChanged = true;
 			}
 
-				// Debug
-				if (config.isVerbose()) {
-					// Print out the bounds.
-					System.out.println(blk);
-					System.out.println("isChanged=" + isChanged);
-				}
-
-				iteration++;
-			}
-
-			// Take the union of all blocks to produce the bounds of a function.
-			BoundBlock exit_blk = graph.getBasicBlock("exit", BlockType.EXIT);
-			// Check if there is any exit block, e.g. main function does not always have exit block 
-			// because it may not have the return 
-			if(exit_blk == null){
-				// Get current block
-				BoundBlock current_block = graph.getCurrentBlock();
-				exit_blk = graph.createBasicBlock("exit", BlockType.EXIT, current_block);
-			}
-
-			// Initialize the bounds
-			exit_blk.emptyBounds();
-
-			// Go through all the blocks to produce final output bounds
-			for (BoundBlock blk : graph.getBlockList()) {
-				// Check if the bounds are consistent (lower <= upper)
-				if (blk.isReachable() && blk.getType() != BlockType.EXIT) {
-					// Take union of consistent block bounds
-					exit_blk.unionBounds(blk);
-				}
-			}
-			// Produce the aggregated bounds of a function.
-			Bounds bnds = exit_blk.getBounds();
-
-			BoundAnalyzerHelper.printBoundsAndSize(function, bnds);
-
+			// Debug
 			if (config.isVerbose()) {
-				// Print out bounds along with size information.
-				BoundAnalyzerHelper.printCFG(config, function);
+				// Print out the bounds.
+				System.out.println(blk);
+				System.out.println("isChanged=" + isChanged);
 			}
 
-			// Put the bounds to HashMap
-			boundMap.put(function, bnds);		
+			iteration++;
+		}
 
-			// Return the inferred bounds of the function
-			return bnds;
-		}	
+		// Take the union of all blocks to produce the bounds of a function.
+		BoundBlock exit_blk = graph.getBasicBlock("exit", BlockType.EXIT);
+		// Check if there is any exit block, e.g. main function does not always have exit block 
+		// because it may not have the return 
+		if(exit_blk == null){
+			// Get current block
+			BoundBlock current_block = graph.getCurrentBlock();
+			exit_blk = graph.createBasicBlock("exit", BlockType.EXIT, current_block);
+		}
 
-		/*
+		// Initialize the bounds
+		exit_blk.emptyBounds();
+
+		// Go through all the blocks to produce final output bounds
+		for (BoundBlock blk : graph.getBlockList()) {
+			// Check if the bounds are consistent (lower <= upper)
+			if (blk.isReachable() && blk.getType() != BlockType.EXIT) {
+				// Take union of consistent block bounds
+				exit_blk.unionBounds(blk);
+			}
+		}
+		// Produce the aggregated bounds of a function.
+		Bounds bnds = exit_blk.getBounds();
+
+		BoundAnalyzerHelper.printBoundsAndSize(function, bnds);
+
+		if (config.isVerbose()) {
+			// Print out bounds along with size information.
+			BoundAnalyzerHelper.printCFG(config, function);
+		}
+
+		// Put the bounds to HashMap
+		boundMap.put(function, bnds);		
+
+		// Return the inferred bounds of the function
+		return bnds;
+	}	
+
+	/*
 	public Bounds inferFunctionBounds(String name) {
 		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(name);
 
@@ -528,534 +527,535 @@ public class BoundAnalyzer {
 		// Return the inferred bounds of the function
 		return bnds;
 	}	
-		 */
+	 */
 
-		private void analyze(Codes.Assign code, FunctionOrMethod function) {
-			String target_reg = prefix + code.target(0);
-			String op_reg = prefix + code.operand(0);
-			if (code.type(0) instanceof Type.Array) {
-				// Add the constraint to the size variable of target array
-				BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-				graph.addConstraint(new Assign(target_reg+"_size", op_reg+"_size"));
-			}
-
-			// Check if the assigned value is an integer
-			if (BoundAnalyzerHelper.isIntType(code.type(0))) {
-				// Add the constraint 'target = operand'
-				if (!BoundAnalyzerHelper.isCached(function)) {
-					BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-					graph.addConstraint(new Assign(target_reg, op_reg));
-				}
-			}
-		}
-
-		/**
-		 * Parses 'Const' bytecode to add the 'Const' constraint to the list.
-		 * 
-		 * @param code
-		 */
-		private void analyze(Codes.Const code, FunctionOrMethod function) {
-			Constant constant = code.constant;
-			String target_reg = prefix + code.target();
-
-			// Check the value is an Constant.Integer
-			if (constant instanceof Constant.Integer && !BoundAnalyzerHelper.isCached(function)) {
-				// Add the 'Const' constraint.
-				BigInteger value = ((Constant.Integer) constant).value;
-				BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-				graph.addConstraint(new Const(target_reg, value));
-			}
-
-			if (constant instanceof Constant.Array) {
-				// Get the list and extract the size info.
-				BigInteger size = BigInteger.valueOf((((Constant.Array) constant).values).size());
-				BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-				graph.addConstraint(new Const(target_reg+"_size", size));
-			}
-
-		}
-
-		/**
-		 * Implements the propagation rule for <code>Codes.IndexOf</code> bytecode
-		 * to assign the bounds from the source operator register to the target
-		 * operator.
-		 * 
-		 * @param code
-		 */
-		private void analyze(Codes.IndexOf code, FunctionOrMethod function) {
-			if (BoundAnalyzerHelper.isIntType((Type) code.type(0))
-					&& !BoundAnalyzerHelper.isCached(function)) {
-				String target = prefix + code.target(0);
-				String op = prefix + code.operand(0);
-				String index = prefix + code.operand(1);
-				// Get the CFGraph
-				BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-				graph.addConstraint(new Equals(target, op));
-			}
-		}
-
-		/**
-		 * Parses the 'If' bytecode to add the constraints to the list.
-		 * 
-		 * @param code
-		 * @throws CloneNotSupportedException
-		 */
-		private void analyze(Codes.If code, FunctionOrMethod function) {
-			String left = prefix + code.operand(0);
-			String right = prefix + code.operand(1);
-			if (!BoundAnalyzerHelper.isCached(function)) {
-				// Get CF graph.
-				BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-				Constraint c = null;
-				Constraint neg_c = null;
-				if (BoundAnalyzerHelper.isIntType(code.type(0))) {
-					switch (code.op) {
-					case EQ:
-						c = new Equals(left, right);
-						neg_c = new Equals(left, right);
-						break;
-					case NEQ:
-
-						break;
-					case LT:
-						c = new LessThan(left, right);
-						neg_c = new GreaterThanEquals(left, right);
-						break;
-					case LTEQ:
-						// Add the 'left <= right' constraint to the branched list.
-						c = new LessThanEquals(left, right);
-						neg_c = new GreaterThan(left, right);
-						break;
-					case GT:
-						c = new GreaterThan(left, right);
-						neg_c = new LessThanEquals(left, right);
-						break;
-					case GTEQ:
-						// Branch and add the left >= right constraint to
-						c = new GreaterThanEquals(left, right);
-						neg_c = new LessThan(left, right);
-						// Add the constraint 'left< right' to current constraint
-						// list.
-						break;
-					default:
-						throw new RuntimeException("Unknow operator (" + code + ")");
-
-					}
-
-					// Check if the 'if' bytecode is the loop condition.
-					if (isLoop) {
-						// Create a loop body and loop exit.
-						graph.createLoopStructure(code.target, c, neg_c);
-					} else {
-						// Create if and else branches.
-						graph.createIfElseBranch(code.target, c, neg_c);
-					}
-				}
-			}
-		}
-
-		/**
-		 * Gets the block by the label byte-code and sets the current block to that
-		 * block.
-		 * 
-		 * If the current and target blocks are not the same and target block is not
-		 * a Loop Exit, then add the parent-child relation to these two blocks.
-		 * 
-		 * @param code
-		 *            {@link wyil.lang.Codes.Label} byte-code
-		 */
-		private void analyze(Codes.Label code, FunctionOrMethod function) {
-			String label = code.label;
-			if (!BoundAnalyzerHelper.isCached(function)) {
-				// Get the CFGraph
-				BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-				// Get the target blk. If it is null, then create a new block.
-				BoundBlock blk = graph.getBasicBlock(label);
-				// Get the current block
-				BoundBlock c_blk = graph.getCurrentBlock();
-				// Check if the target blk is a loop structure.
-				if (c_blk != null && !(c_blk.equals(blk))) {
-					if (blk.getType().equals(BlockType.LOOP_EXIT)) {
-						// current block -> loop header 
-						BoundBlock loop_header = graph.getBasicBlock(label, BlockType.LOOP_HEADER);
-						// current block -> loop header
-						c_blk.addChild(loop_header);
-					}else{
-						c_blk.addChild(blk);
-					}
-				}
-				// Switch the current block
-				graph.setCurrentBlock(blk);
-			}
-		}
-
-
-
-		/**
-		 * Parse the 'return' bytecode and add the constraint
-		 * 
-		 * @param code
-		 */
-		private void analyze(Codes.Return code, FunctionOrMethod function) {
-			// check if there is any return value
-			if(code.operands().length ==0){
-				return; // Do nothing
-			}
-
-			// Get the return operand
-			String retOp = prefix + code.operand(0);
-			Type type = code.type(0);
-
-			if (!BoundAnalyzerHelper.isCached(function)) {
-
-				// Get the CFGraph
-				BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-				BoundBlock c_blk = graph.getCurrentBlock();
-				// Check if the current blk exits. If so, then proceed the following
-				// procedure.
-				if (c_blk != null) {
-					// Create a return block 
-					BoundBlock return_block = graph.createBasicBlock("return"+retOp, BlockType.RETURN, c_blk);
-
-					// Check if the return type is integer.
-					if (BoundAnalyzerHelper.isIntType(type)) {
-						// Add the 'Assign' constraint to the return (ret) variable.
-						return_block.addConstraint((new Assign("return", retOp)));
-					}
-
-					// Add the bounds of size variable
-					if(type instanceof Type.Array){
-						return_block.addConstraint((new Assign("return_size", retOp+"_size")));
-					}
-
-					// Connect the current block with exit block.
-					BoundBlock exit_block = graph.getBasicBlock("exit", BlockType.EXIT);
-					if(exit_block == null){
-						exit_block = graph.createBasicBlock("exit", BlockType.EXIT, return_block);
-					}
-					return_block.addChild(exit_block);
-
-					graph.setCurrentBlock(null);
-				}
-			}
-		}
-
-
-		/**
-		 * Parse 'Unary Operator' bytecode and add the constraints in accordance
-		 * with operator kind. For example, add the 'Negate' constraint for the
-		 * negated operator.
-		 * 
-		 * @param code
-		 */
-		private void analyze(Codes.UnaryOperator code, FunctionOrMethod function) {
-			UnaryOperatorKind kind = code.kind;
-			String x = prefix + code.operand(0);
-			String y = prefix + code.target(0);
-			// Get a graph
+	private void analyze(Codes.Assign code, FunctionOrMethod function) {
+		String target_reg = prefix + code.target(0);
+		String op_reg = prefix + code.operand(0);
+		if (code.type(0) instanceof Type.Array) {
+			// Add the constraint to the size variable of target array
 			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-			switch (kind) {
-			case NEG:
-				graph.addConstraint(new Negate(x, y));
-				break;
-			default:
-				throw new RuntimeException("unknown unary operator encountered (" + code + ")");
+			graph.addConstraint(new Assign(target_reg+"_size", op_reg+"_size"));
+		}
+
+		// Check if the assigned value is an integer
+		if (BoundAnalyzerHelper.isIntType(code.type(0))) {
+			// Add the constraint 'target = operand'
+			if (!BoundAnalyzerHelper.isCached(function)) {
+				BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
+				graph.addConstraint(new Assign(target_reg, op_reg));
 			}
-
 		}
+	}
 
-		/**
-		 * Extract LengthOf byte-code.
-		 * 
-		 * 'lengthof %5 = %0'
-		 * 
-		 * 
-		 * @param code
-		 */
-		private void analyze(Codes.LengthOf code, FunctionOrMethod function) {
-			// Get the size att
-			String op_reg = prefix + code.operand(0);
-			String target_reg = prefix + code.target(0);
+	/**
+	 * Parses 'Const' bytecode to add the 'Const' constraint to the list.
+	 * 
+	 * @param code
+	 */
+	private void analyze(Codes.Const code, FunctionOrMethod function) {
+		Constant constant = code.constant;
+		String target_reg = prefix + code.target();
 
+		// Check the value is an Constant.Integer
+		if (constant instanceof Constant.Integer && !BoundAnalyzerHelper.isCached(function)) {
+			// Add the 'Const' constraint.
+			BigInteger value = ((Constant.Integer) constant).value;
 			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-			graph.addConstraint(new Assign(target_reg, op_reg+"_size"));
-
+			graph.addConstraint(new Const(target_reg, value));
 		}
 
-		/**
-		 * Creates a loop structure, including loop header, loop body and loop exit.
-		 * 
-		 * @param code
-		 */
-		private void analyze(Codes.Loop code,  FunctionOrMethod function) {
-			// Set the loop flag to be true,
-			// in order to identify the bytecode is inside a loop
-
-			isLoop = true;
-
-			// Get the list of byte-code and iterate through the list.
-			iterateBytecode(function, code.bytecodes());
-
-			// Set the flag to be false after finishing iterating all the byte-code.
-			isLoop = false;
+		if (constant instanceof Constant.Array) {
+			// Get the list and extract the size info.
+			BigInteger size = BigInteger.valueOf((((Constant.Array) constant).values).size());
+			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
+			graph.addConstraint(new Const(target_reg+"_size", size));
 		}
 
+	}
 
-
-		/**
-		 * Implemented the propagation rule for <code>Codes.BinaryOperator</code>
-		 * code to add the 'Plus' constraints of operands and target registers.
-		 * 
-		 * @param code
-		 */
-		private void analyze(Codes.BinaryOperator code, FunctionOrMethod function) {
+	/**
+	 * Implements the propagation rule for <code>Codes.IndexOf</code> bytecode
+	 * to assign the bounds from the source operator register to the target
+	 * operator.
+	 * 
+	 * @param code
+	 */
+	private void analyze(Codes.IndexOf code, FunctionOrMethod function) {
+		if (BoundAnalyzerHelper.isIntType((Type) code.type(0))
+				&& !BoundAnalyzerHelper.isCached(function)) {
 			String target = prefix + code.target(0);
-			// Add the type att
-			if (BoundAnalyzerHelper.isIntType(code.type(0)) && !BoundAnalyzerHelper.isCached(function)) {
-				// Get the values
-				BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-				switch (code.kind) {
-				case ADD:
-					// Use the left plus to represent the addition
-					graph.addConstraint(new LeftPlus(prefix + code.operand(0), prefix + code.operand(1), target));
+			String op = prefix + code.operand(0);
+			String index = prefix + code.operand(1);
+			// Get the CFGraph
+			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
+			graph.addConstraint(new Equals(target, op));
+		}
+	}
+
+	/**
+	 * Parses the 'If' bytecode to add the constraints to the list.
+	 * 
+	 * @param code
+	 * @throws CloneNotSupportedException
+	 */
+	private void analyze(Codes.If code, FunctionOrMethod function) {
+		String left = prefix + code.operand(0);
+		String right = prefix + code.operand(1);
+		if (!BoundAnalyzerHelper.isCached(function)) {
+			// Get CF graph.
+			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
+			Constraint c = null;
+			Constraint neg_c = null;
+			if (BoundAnalyzerHelper.isIntType(code.type(0))) {
+				switch (code.op) {
+				case EQ:
+					c = new Equals(left, right);
+					neg_c = new Equals(left, right);
 					break;
-				case SUB:
-					// Negated the operand
-					graph.addConstraint(new Negate(prefix + code.operand(1), prefix + code.operand(1)));
-					// Use the left plus to represent the subtraction.
-					graph.addConstraint(new LeftPlus(prefix + code.operand(0), prefix + code.operand(1), target));
+				case NEQ:
+
 					break;
-				case MUL:
-					graph.addConstraint(new LeftMultiply(prefix+ code.operand(0), prefix + code.operand(1), target));
+				case LT:
+					c = new LessThan(left, right);
+					neg_c = new GreaterThanEquals(left, right);
 					break;
-				case DIV:
+				case LTEQ:
+					// Add the 'left <= right' constraint to the branched list.
+					c = new LessThanEquals(left, right);
+					neg_c = new GreaterThan(left, right);
 					break;
-				case REM:
+				case GT:
+					c = new GreaterThan(left, right);
+					neg_c = new LessThanEquals(left, right);
 					break;
-				case BITWISEAND:
-					break;
-				case BITWISEOR:
-					break;
-				case BITWISEXOR:
-					break;
-				case LEFTSHIFT:
-					break;
-				case RIGHTSHIFT:
+				case GTEQ:
+					// Branch and add the left >= right constraint to
+					c = new GreaterThanEquals(left, right);
+					neg_c = new LessThan(left, right);
+					// Add the constraint 'left< right' to current constraint
+					// list.
 					break;
 				default:
-					throw new RuntimeException("unknown binary expression encountered (" + code + ")");
+					throw new RuntimeException("Unknow operator (" + code + ")");
+
+				}
+
+				// Check if the 'if' bytecode is the loop condition.
+				if (isLoop) {
+					// Create a loop body and loop exit.
+					graph.createLoopStructure(code.target, c, neg_c);
+				} else {
+					// Create if and else branches.
+					graph.createIfElseBranch(code.target, c, neg_c);
 				}
 			}
+		}
+	}
 
+	/**
+	 * Gets the block by the label byte-code and sets the current block to that
+	 * block.
+	 * 
+	 * If the current and target blocks are not the same and target block is not
+	 * a Loop Exit, then add the parent-child relation to these two blocks.
+	 * 
+	 * @param code
+	 *            {@link wyil.lang.Codes.Label} byte-code
+	 */
+	private void analyze(Codes.Label code, FunctionOrMethod function) {
+		String label = code.label;
+		if (!BoundAnalyzerHelper.isCached(function)) {
+			// Get the CFGraph
+			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
+			// Get the target blk. If it is null, then create a new block.
+			BoundBlock blk = graph.getBasicBlock(label);
+			// Get the current block
+			BoundBlock c_blk = graph.getCurrentBlock();
+			// Check if the target blk is a loop structure.
+			if (c_blk != null && !(c_blk.equals(blk))) {
+				if (blk.getType().equals(BlockType.LOOP_EXIT)) {
+					// current block -> loop header 
+					BoundBlock loop_header = graph.getBasicBlock(label, BlockType.LOOP_HEADER);
+					// current block -> loop header
+					c_blk.addChild(loop_header);
+				}else{
+					c_blk.addChild(blk);
+				}
+			}
+			// Switch the current block
+			graph.setCurrentBlock(blk);
+		}
+	}
+
+
+
+	/**
+	 * Parse the 'return' bytecode and add the constraint
+	 * 
+	 * @param code
+	 */
+	private void analyze(Codes.Return code, FunctionOrMethod function) {
+		// check if there is any return value
+		if(code.operands().length ==0){
+			return; // Do nothing
 		}
 
+		// Get the return operand
+		String retOp = prefix + code.operand(0);
+		Type type = code.type(0);
 
-		/**
-		 * Updates an element of a list. But how do we update the bounds???
-		 * 
-		 * @param code
-		 */
-		private void analyze(Codes.Update code, FunctionOrMethod function) {
+		if (!BoundAnalyzerHelper.isCached(function)) {
 
-		}
+			// Get the CFGraph
+			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
+			BoundBlock c_blk = graph.getCurrentBlock();
+			// Check if the current blk exits. If so, then proceed the following
+			// procedure.
+			if (c_blk != null) {
+				// Create a return block 
+				BoundBlock return_block = graph.createBasicBlock("return"+retOp, BlockType.RETURN, c_blk);
 
-		/**
-		 * Checks or creates the goto block and updates the current block to be
-		 * null.
-		 * 
-		 * @param code
-		 *            Goto ({@link wyil.lang.Codes.Goto } byte-code
-		 */
-		private void analyze(Codes.Goto code, FunctionOrMethod function) {
-			if (!BoundAnalyzerHelper.isCached(function)) {
-				// Get the label name
-				String label = code.target;
-				BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-				BoundBlock goto_blk = graph.getBasicBlock(label);
-				// Set the current blk to null blk
+				// Check if the return type is integer.
+				if (BoundAnalyzerHelper.isIntType(type)) {
+					// Add the 'Assign' constraint to the return (ret) variable.
+					return_block.addConstraint((new Assign("return", retOp)));
+				}
+
+				// Add the bounds of size variable
+				if(type instanceof Type.Array){
+					return_block.addConstraint((new Assign("return_size", retOp+"_size")));
+				}
+
+				// Connect the current block with exit block.
+				BoundBlock exit_block = graph.getBasicBlock("exit", BlockType.EXIT);
+				if(exit_block == null){
+					exit_block = graph.createBasicBlock("exit", BlockType.EXIT, return_block);
+				}
+				return_block.addChild(exit_block);
+
 				graph.setCurrentBlock(null);
 			}
 		}
+	}
 
-		/**
-		 * Analyze the FieldLoad byte-code. 
-		 * 
-		 * 
-		 * @param code
-		 * @param name
-		 */
-		private void analyze(Codes.FieldLoad code, FunctionOrMethod function) {
-			//String target = prefix + code.target(0);
-			//String record = prefix + code.operand(0);
+
+	/**
+	 * Parse 'Unary Operator' bytecode and add the constraints in accordance
+	 * with operator kind. For example, add the 'Negate' constraint for the
+	 * negated operator.
+	 * 
+	 * @param code
+	 */
+	private void analyze(Codes.UnaryOperator code, FunctionOrMethod function) {
+		UnaryOperatorKind kind = code.kind;
+		String x = prefix + code.operand(0);
+		String y = prefix + code.target(0);
+		// Get a graph
+		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
+		switch (kind) {
+		case NEG:
+			graph.addConstraint(new Negate(x, y));
+			break;
+		default:
+			throw new RuntimeException("unknown unary operator encountered (" + code + ")");
 		}
 
-		private void analyze(Codes.Convert code, FunctionOrMethod function) {
-			//String target = prefix + code.target(0);
-			// sym_ctrl.putAttribute(target, "type", code.result);
+	}
 
-			//if (code.result instanceof Type.Array) {
-			// Get the value
-			//}
+	/**
+	 * Extract LengthOf byte-code.
+	 * 
+	 * 'lengthof %5 = %0'
+	 * 
+	 * 
+	 * @param code
+	 */
+	private void analyze(Codes.LengthOf code, FunctionOrMethod function) {
+		// Get the size att
+		String op_reg = prefix + code.operand(0);
+		String target_reg = prefix + code.target(0);
 
-		}
+		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
+		graph.addConstraint(new Assign(target_reg, op_reg+"_size"));
 
+	}
 
-		/**
-		 * 
-		 * 
-		 * @param function
-		 * @return
-		 */
-		private Bounds getBounds(FunctionOrMethod function) {
-			// Get the bounds
-			Bounds bounds = this.boundMap.get(function);
-			// Check if the bound is inferred not. If not, then infer the bounds
-			if (bounds == null) {
-				bounds = this.inferFunctionBounds(function);
-			}
-			return bounds;
-		}
+	/**
+	 * Creates a loop structure, including loop header, loop body and loop exit.
+	 * 
+	 * @param code
+	 */
+	private void analyze(Codes.Loop code,  FunctionOrMethod function) {
+		// Set the loop flag to be true,
+		// in order to identify the bytecode is inside a loop
 
+		isLoop = true;
 
+		// Get the list of byte-code and iterate through the list.
+		iterateBytecode(function, code.bytecodes());
 
-		/**
-		 * Check the bounds of given register is +/- infinity 
-		 * 
-		 * 
-		 * @param register
-		 * @param function
-		 * @return true for unbounded register.
-		 */
-		public boolean isUnBounded(int register, FunctionOrMethod function) {
-			// Get the bounds
-			Bounds bounds = getBounds(function);
-
-			// Get the domain of register
-			BigInteger l_bnd = bounds.getLower(prefix + register);
-			BigInteger u_bnd = bounds.getUpper(prefix + register);
-
-			if(l_bnd == null || u_bnd == null){
-				return true;
-			}
-
-			return false;
-		}
+		// Set the flag to be false after finishing iterating all the byte-code.
+		isLoop = false;
+	}
 
 
 
-
-		/**
-		 * Use the bound results to suggest the proper integer type, i.e.
-		 * 
-		 * <ul>
-		 * 
-		 * <li>int16_t: 16-bit integer from −32,768 to 32,767
-		 * <li>uint16_t: unsigned 16-bit integers from 0 to 65,535 
-		 * 
-		 * <li>int32_t: 32-bit integer from −2,147,483,648 to 2,147,483,647
-		 * <li>uint32_t: unsigned 32-bit integers from 0 to 4,294,967,295 
-		 * 
-		 * <li>int64_t: 64-bit integer from −9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
-		 * <li>uint64_t: unsigned 64-bit integers from 0 to 18,446,744,073,709,551,615
-		 * 
-		 * </ul>
-		 * 
-		 * 
-		 * See https://en.wikipedia.org/wiki/Integer_(computer_science)
-		 * @param register
-		 * @param function
-		 * @return
-		 */
-		public String suggestIntegerType(int register, FunctionOrMethod function){
-
-			// Get the bounds
-			Bounds bounds = getBounds(function);
-
-			// Get the domain of register
-			BigInteger l_bnd = bounds.getLower(prefix+register);
-			BigInteger u_bnd = bounds.getUpper(prefix+register);
-			// Check the register is unbounded or not.
-			if(l_bnd != null && u_bnd != null){
-				// Check lower bound >= 0
-				if(l_bnd.compareTo(BigInteger.ZERO)>=0){
-					// Used unsigned integer types
-
-					// Unsigned 16-bit integer
-					if(u_bnd.compareTo(Threshold._UI16_MAX.getValue())<=0){
-						return "uint16_t";
-					}
-
-					// Unsigned 32-bit integer
-					if(u_bnd.compareTo(Threshold._UI32_MAX.getValue())<=0){
-						return "uint32_t";
-					}
-
-					// Unsigned 64-bit integers
-					return "uint64_t";
-
-				}else{
-					// 16-bit integers 
-					if(l_bnd.compareTo(Threshold._I16_MIN.getValue())>=0
-							&& u_bnd.compareTo(Threshold._I16_MAX.getValue())<=0){
-						return "int16_t";
-					}
-
-					// 32-bit integers
-					if(l_bnd.compareTo(Threshold._I32_MIN.getValue())>=0
-							&& u_bnd.compareTo(Threshold._I32_MAX.getValue())<=0){
-						return "int32_t";
-					}
-
-					// The default 64-bit integer 
-					return "int64_t"; 
-				}
-			}
-			// The default 64-bit integer 
-			return "int64_t"; 
-		}
-
-
-
-		/**
-		 * Get the list of bytecode of the invoked function and infer the bounds of
-		 * the function in the context of input bounds. And then propagate the
-		 * bounds of return value back to the caller.
-		 * 
-		 * @param caller_name
-		 *            the name of caller function.
-		 * @param code
-		 */
-		private void analyze(Codes.Invoke code, FunctionOrMethod function) {
-			FunctionOrMethod callee = this.module.functionOrMethod(code.name.name(), code.type(0));
-			FunctionOrMethod caller = function;
-			if (callee != null) {
-				int caller_line = line;	
-
-
-				// Infer the bounds of caller function.
-				Bounds input_bnds = inferFunctionBounds(caller);
-
-				// Build CFGraph for callee.
-				buildCFG(config, callee);
-
-
-				// Propagate the bounds of input parameters to the function.
-				BoundAnalyzerHelper.propagateInputBoundsToCallee(callee, code, input_bnds);
-
-
-
-				// Infer the bounds of callee function.
-				Bounds ret_bnd = inferFunctionBounds(callee);
-
-				// check if there is any return
-				BoundAnalyzerHelper.propagateBoundsBackCaller(caller, code, ret_bnd);
-
-				// Promote the status of callee's CF graph to be 'complete'
-				BoundAnalyzerHelper.promoteCFGStatus(callee);
-
-				//Reset the line number
-				this.line = caller_line;
+	/**
+	 * Implemented the propagation rule for <code>Codes.BinaryOperator</code>
+	 * code to add the 'Plus' constraints of operands and target registers.
+	 * 
+	 * @param code
+	 */
+	private void analyze(Codes.BinaryOperator code, FunctionOrMethod function) {
+		String target = prefix + code.target(0);
+		// Add the type att
+		if (BoundAnalyzerHelper.isIntType(code.type(0)) && !BoundAnalyzerHelper.isCached(function)) {
+			// Get the values
+			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
+			switch (code.kind) {
+			case ADD:
+				// Use the left plus to represent the addition
+				graph.addConstraint(new LeftPlus(prefix + code.operand(0), prefix + code.operand(1), target));
+				//graph.addConstraint(new Plus(prefix + code.operand(0), prefix + code.operand(1), target));
+				break;
+			case SUB:
+				// Negated the operand
+				graph.addConstraint(new Negate(prefix + code.operand(1), prefix + code.operand(1)));
+				// Use the left plus to represent the subtraction.
+				graph.addConstraint(new LeftPlus(prefix + code.operand(0), prefix + code.operand(1), target));
+				//graph.addConstraint(new Plus(prefix + code.operand(0), prefix + code.operand(1), target));
+				break;
+			case MUL:
+				graph.addConstraint(new LeftMultiply(prefix+ code.operand(0), prefix + code.operand(1), target));
+				break;
+			case DIV:
+				break;
+			case REM:
+				break;
+			case BITWISEAND:
+				break;
+			case BITWISEOR:
+				break;
+			case BITWISEXOR:
+				break;
+			case LEFTSHIFT:
+				break;
+			case RIGHTSHIFT:
+				break;
+			default:
+				throw new RuntimeException("unknown binary expression encountered (" + code + ")");
 			}
 		}
 
 	}
+
+
+	/**
+	 * Updates an element of a list. But how do we update the bounds???
+	 * 
+	 * @param code
+	 */
+	private void analyze(Codes.Update code, FunctionOrMethod function) {
+
+	}
+
+	/**
+	 * Checks or creates the goto block and updates the current block to be
+	 * null.
+	 * 
+	 * @param code
+	 *            Goto ({@link wyil.lang.Codes.Goto } byte-code
+	 */
+	private void analyze(Codes.Goto code, FunctionOrMethod function) {
+		if (!BoundAnalyzerHelper.isCached(function)) {
+			// Get the label name
+			String label = code.target;
+			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
+			BoundBlock goto_blk = graph.getBasicBlock(label);
+			// Set the current blk to null blk
+			graph.setCurrentBlock(null);
+		}
+	}
+
+	/**
+	 * Analyze the FieldLoad byte-code. 
+	 * 
+	 * 
+	 * @param code
+	 * @param name
+	 */
+	private void analyze(Codes.FieldLoad code, FunctionOrMethod function) {
+		//String target = prefix + code.target(0);
+		//String record = prefix + code.operand(0);
+	}
+
+	private void analyze(Codes.Convert code, FunctionOrMethod function) {
+		//String target = prefix + code.target(0);
+		// sym_ctrl.putAttribute(target, "type", code.result);
+
+		//if (code.result instanceof Type.Array) {
+		// Get the value
+		//}
+
+	}
+
+
+	/**
+	 * 
+	 * 
+	 * @param function
+	 * @return
+	 */
+	private Bounds getBounds(FunctionOrMethod function) {
+		// Get the bounds
+		Bounds bounds = this.boundMap.get(function);
+		// Check if the bound is inferred not. If not, then infer the bounds
+		if (bounds == null) {
+			bounds = this.inferBounds(function);
+		}
+		return bounds;
+	}
+
+
+
+	/**
+	 * Check the bounds of given register is +/- infinity 
+	 * 
+	 * 
+	 * @param register
+	 * @param function
+	 * @return true for unbounded register.
+	 */
+	public boolean isUnBounded(int register, FunctionOrMethod function) {
+		// Get the bounds
+		Bounds bounds = getBounds(function);
+
+		// Get the domain of register
+		BigInteger l_bnd = bounds.getLower(prefix + register);
+		BigInteger u_bnd = bounds.getUpper(prefix + register);
+
+		if(l_bnd == null || u_bnd == null){
+			return true;
+		}
+
+		return false;
+	}
+
+
+
+
+	/**
+	 * Use the bound results to suggest the proper integer type, i.e.
+	 * 
+	 * <ul>
+	 * 
+	 * <li>int16_t: 16-bit integer from −32,768 to 32,767
+	 * <li>uint16_t: unsigned 16-bit integers from 0 to 65,535 
+	 * 
+	 * <li>int32_t: 32-bit integer from −2,147,483,648 to 2,147,483,647
+	 * <li>uint32_t: unsigned 32-bit integers from 0 to 4,294,967,295 
+	 * 
+	 * <li>int64_t: 64-bit integer from −9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
+	 * <li>uint64_t: unsigned 64-bit integers from 0 to 18,446,744,073,709,551,615
+	 * 
+	 * </ul>
+	 * 
+	 * 
+	 * See https://en.wikipedia.org/wiki/Integer_(computer_science)
+	 * @param register
+	 * @param function
+	 * @return
+	 */
+	public String suggestIntegerType(int register, FunctionOrMethod function){
+
+		// Get the bounds
+		Bounds bounds = getBounds(function);
+
+		// Get the domain of register
+		BigInteger l_bnd = bounds.getLower(prefix+register);
+		BigInteger u_bnd = bounds.getUpper(prefix+register);
+		// Check the register is unbounded or not.
+		if(l_bnd != null && u_bnd != null){
+			// Check lower bound >= 0
+			if(l_bnd.compareTo(BigInteger.ZERO)>=0){
+				// Used unsigned integer types
+
+				// Unsigned 16-bit integer
+				if(u_bnd.compareTo(Threshold._UI16_MAX.getValue())<=0){
+					return "uint16_t";
+				}
+
+				// Unsigned 32-bit integer
+				if(u_bnd.compareTo(Threshold._UI32_MAX.getValue())<=0){
+					return "uint32_t";
+				}
+
+				// Unsigned 64-bit integers
+				return "uint64_t";
+
+			}else{
+				// 16-bit integers 
+				if(l_bnd.compareTo(Threshold._I16_MIN.getValue())>=0
+						&& u_bnd.compareTo(Threshold._I16_MAX.getValue())<=0){
+					return "int16_t";
+				}
+
+				// 32-bit integers
+				if(l_bnd.compareTo(Threshold._I32_MIN.getValue())>=0
+						&& u_bnd.compareTo(Threshold._I32_MAX.getValue())<=0){
+					return "int32_t";
+				}
+
+				// The default 64-bit integer 
+				return "int64_t"; 
+			}
+		}
+		// The default 64-bit integer 
+		return "int64_t"; 
+	}
+
+
+
+	/**
+	 * Get the list of bytecode of the invoked function and infer the bounds of
+	 * the function in the context of input bounds. And then propagate the
+	 * bounds of return value back to the caller.
+	 * 
+	 * @param caller_name
+	 *            the name of caller function.
+	 * @param code
+	 */
+	private void analyze(Codes.Invoke code, FunctionOrMethod function) {
+		FunctionOrMethod callee = this.module.functionOrMethod(code.name.name(), code.type(0));
+		FunctionOrMethod caller = function;
+		if (callee != null) {
+			int caller_line = line;	
+
+
+			// Infer the bounds of caller function.
+			Bounds input_bnds = inferBounds(caller);
+
+			// Build CFGraph for callee.
+			buildCFG(config, callee);
+
+
+			// Propagate the bounds of input parameters to the function.
+			BoundAnalyzerHelper.propagateInputBoundsToCallee(callee, code, input_bnds);
+
+
+			// Infer the bounds of callee function.
+			Bounds ret_bnd = inferBounds(callee);
+
+			// check if there is any return
+			BoundAnalyzerHelper.propagateBoundsBackCaller(caller, code, ret_bnd);
+
+			// Promote the status of callee's CF graph to be 'complete'
+			BoundAnalyzerHelper.promoteCFGStatus(callee);
+
+			//Reset the line number
+			this.line = caller_line;
+		}
+	}
+
+}
