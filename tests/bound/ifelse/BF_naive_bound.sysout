@@ -1,0 +1,428 @@
+WARNING: version numbering unavailable
+Parsed 1 source file(s). ...................................................... [111ms+1mb]
+Typed 1 source file(s). ....................................................... [156ms+1mb]
+Generated code for 1 source file(s). ........................................... [27ms+1mb]
+[./ifelse.whiley] applied definite assignment check ................................. [4ms]
+[./ifelse.whiley] applied module check .......................................... [3ms+1mb]
+[./ifelse.whiley] applied loop variants ......................................... [1ms+1mb]
+[./ifelse.whiley] applied coercion check ............................................ [1ms]
+Whiley => Wyil: compiled 1 file(s) ............................................ [331ms-1mb]
+main.0 [	const %5 = 1 : int]
+main.1 [	invoke (%4) = (%5) ifelse:f : function(int)->(int)]
+### Iteration 0 ### 
+'2' blocks in queue : [ENTRY][BLOCK]
+entry [ENTRY] 
+Constraints []
+
+IsReachable=true
+isChanged=false
+### Iteration 1 ### 
+'1' blocks in queue : [BLOCK]
+code [BLOCK] 
+Constraints [_5:=1]
+
+	domain(_5)	= [1..1]	
+IsReachable=true
+isChanged=true
+=================================
+
+Bound Analysis of 'main' function:
+	domain(_5)	=[1..1]
+Consistency=true
+
+=================================
+f.0 [	const %2 = 10 : int]
+f.1 [	ifge %0, %2 goto blklab1 : int]
+f.2 [	const %3 = 1 : int]
+f.3 [	return %3]
+f.4 [	goto blklab2]
+f.5 [.blklab1]
+f.6 [	const %4 = 10 : int]
+f.7 [	ifle %0, %4 goto blklab3 : int]
+f.8 [	const %5 = 2 : int]
+f.9 [	return %5]
+f.10 [.blklab3]
+f.11 [.blklab2]
+f.12 [	const %6 = 0 : int]
+f.13 [	return %6]
+f.14 [	return]
+### Iteration 0 ### 
+'2' blocks in queue : [ENTRY][BLOCK]
+entry [ENTRY] 
+Constraints [_0:=[1..1]]
+
+	domain(_0)	= [1..1]	
+IsReachable=true
+isChanged=true
+### Iteration 1 ### 
+'2' blocks in queue : [BLOCK][BLOCK]
+code [BLOCK] 
+Constraints [_2:=10, _0:=[1..1]]
+
+	domain(_0)	= [1..1]	
+	domain(_2)	= [10..10]	
+IsReachable=true
+isChanged=true
+### Iteration 2 ### 
+'3' blocks in queue : [BLOCK][IF][ELSE]
+code [BLOCK] 
+Constraints [_2:=10, _0:=[1..1]]
+
+	domain(_0)	= [1..1]	
+	domain(_2)	= [10..10]	
+IsReachable=true
+isChanged=false
+### Iteration 3 ### 
+'2' blocks in queue : [IF][ELSE]
+blklab1 [IF] 
+Constraints [_0<_2, _3:=1]
+
+	domain(_0)	= [1..1]	
+	domain(_2)	= [10..10]	
+	domain(_3)	= [1..1]	
+IsReachable=true
+isChanged=true
+### Iteration 4 ### 
+'2' blocks in queue : [ELSE][RETURN]
+blklab1 [ELSE] 
+Constraints [_0>=_2, _4:=10]
+
+	domain(_0)	= [empty..empty]	
+	domain(_2)	= [empty..empty]	
+	domain(_4)	= [10..10]	
+IsReachable=false
+isChanged=false
+### Iteration 5 ### 
+'1' blocks in queue : [RETURN]
+return_3 [RETURN] 
+Constraints [return:=_3]
+
+	domain(_0)	= [1..1]	
+	domain(_2)	= [10..10]	
+	domain(_3)	= [1..1]	
+	domain(return)	= [1..1]	
+IsReachable=true
+isChanged=true
+=================================
+
+Bound Analysis of 'f' function:
+	domain(x)	=[1..1]
+	domain(_2)	=[10..10]
+	domain(_3)	=[1..1]
+	domain(return)	=[1..1]
+Consistency=true
+
+=================================
+main.2 [	assign %1 = %4  : int]
+main.3 [	assert]
+main.4 [	fieldload %7 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.5 [	fieldload %8 = %7 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.6 [	indirectinvoke () = %8 (%1) : method(any)->()]
+main.7 [	const %10 = 10 : int]
+main.8 [	invoke (%9) = (%10) ifelse:f : function(int)->(int)]
+### Iteration 0 ### 
+'2' blocks in queue : [ENTRY][BLOCK]
+entry [ENTRY] 
+Constraints []
+
+IsReachable=true
+isChanged=false
+### Iteration 1 ### 
+'1' blocks in queue : [BLOCK]
+code [BLOCK] 
+Constraints [_5:=1, _4:=[1..1], _1:=_4, _10:=10]
+
+	domain(_1)	= [1..1]	
+	domain(_10)	= [10..10]	
+	domain(_4)	= [1..1]	
+	domain(_5)	= [1..1]	
+IsReachable=true
+isChanged=true
+=================================
+
+Bound Analysis of 'main' function:
+	domain(a)	=[1..1]
+	domain(_10)	=[10..10]
+	domain(_4)	=[1..1]
+	domain(_5)	=[1..1]
+Consistency=true
+
+=================================
+### Iteration 0 ### 
+'2' blocks in queue : [ENTRY][BLOCK]
+entry [ENTRY] 
+Constraints [_0:=[10..10]]
+
+	domain(_0)	= [10..10]	
+IsReachable=true
+isChanged=true
+### Iteration 1 ### 
+'2' blocks in queue : [BLOCK][BLOCK]
+code [BLOCK] 
+Constraints [_2:=10, _0:=[10..10]]
+
+	domain(_0)	= [10..10]	
+	domain(_2)	= [10..10]	
+IsReachable=true
+isChanged=true
+### Iteration 2 ### 
+'3' blocks in queue : [BLOCK][IF][ELSE]
+code [BLOCK] 
+Constraints [_2:=10, _0:=[10..10]]
+
+	domain(_0)	= [10..10]	
+	domain(_2)	= [10..10]	
+IsReachable=true
+isChanged=false
+### Iteration 3 ### 
+'2' blocks in queue : [IF][ELSE]
+blklab1 [IF] 
+Constraints [_0<_2, _3:=1]
+
+	domain(_0)	= [empty..empty]	
+	domain(_2)	= [empty..empty]	
+	domain(_3)	= [1..1]	
+IsReachable=false
+isChanged=false
+### Iteration 4 ### 
+'1' blocks in queue : [ELSE]
+blklab1 [ELSE] 
+Constraints [_0>=_2, _4:=10]
+
+	domain(_0)	= [10..10]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [10..10]	
+IsReachable=true
+isChanged=true
+### Iteration 5 ### 
+'2' blocks in queue : [IF][ELSE]
+blklab3 [IF] 
+Constraints [_0>_4, _5:=2]
+
+	domain(_0)	= [empty..empty]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [empty..empty]	
+	domain(_5)	= [2..2]	
+IsReachable=false
+isChanged=false
+### Iteration 6 ### 
+'1' blocks in queue : [ELSE]
+blklab3 [ELSE] 
+Constraints [_0<=_4]
+
+	domain(_0)	= [10..10]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [10..10]	
+IsReachable=true
+isChanged=true
+### Iteration 7 ### 
+'1' blocks in queue : [BLOCK]
+blklab2 [BLOCK] 
+Constraints [_6:=0]
+
+	domain(_0)	= [10..10]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [10..10]	
+	domain(_6)	= [0..0]	
+IsReachable=true
+isChanged=true
+### Iteration 8 ### 
+'1' blocks in queue : [RETURN]
+return_6 [RETURN] 
+Constraints [return:=_6]
+
+	domain(_0)	= [10..10]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [10..10]	
+	domain(_6)	= [0..0]	
+	domain(return)	= [0..0]	
+IsReachable=true
+isChanged=true
+=================================
+
+Bound Analysis of 'f' function:
+	domain(x)	=[10..10]
+	domain(_2)	=[10..10]
+	domain(_4)	=[10..10]
+	domain(_6)	=[0..0]
+	domain(return)	=[0..0]
+Consistency=true
+
+=================================
+main.9 [	assign %2 = %9  : int]
+main.10 [	assert]
+main.11 [	fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.12 [	fieldload %13 = %12 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.13 [	indirectinvoke () = %13 (%2) : method(any)->()]
+main.14 [	const %15 = 11 : int]
+main.15 [	invoke (%14) = (%15) ifelse:f : function(int)->(int)]
+### Iteration 0 ### 
+'2' blocks in queue : [ENTRY][BLOCK]
+entry [ENTRY] 
+Constraints []
+
+IsReachable=true
+isChanged=false
+### Iteration 1 ### 
+'1' blocks in queue : [BLOCK]
+code [BLOCK] 
+Constraints [_5:=1, _4:=[1..1], _1:=_4, _10:=10, _9:=[0..0], _2:=_9, _15:=11]
+
+	domain(_1)	= [1..1]	
+	domain(_10)	= [10..10]	
+	domain(_15)	= [11..11]	
+	domain(_2)	= [0..0]	
+	domain(_4)	= [1..1]	
+	domain(_5)	= [1..1]	
+	domain(_9)	= [0..0]	
+IsReachable=true
+isChanged=true
+=================================
+
+Bound Analysis of 'main' function:
+	domain(a)	=[1..1]
+	domain(_10)	=[10..10]
+	domain(_15)	=[11..11]
+	domain(b)	=[0..0]
+	domain(_4)	=[1..1]
+	domain(_5)	=[1..1]
+	domain(_9)	=[0..0]
+Consistency=true
+
+=================================
+### Iteration 0 ### 
+'2' blocks in queue : [ENTRY][BLOCK]
+entry [ENTRY] 
+Constraints [_0:=[11..11]]
+
+	domain(_0)	= [11..11]	
+IsReachable=true
+isChanged=true
+### Iteration 1 ### 
+'2' blocks in queue : [BLOCK][BLOCK]
+code [BLOCK] 
+Constraints [_2:=10, _0:=[11..11]]
+
+	domain(_0)	= [11..11]	
+	domain(_2)	= [10..10]	
+IsReachable=true
+isChanged=true
+### Iteration 2 ### 
+'3' blocks in queue : [BLOCK][IF][ELSE]
+code [BLOCK] 
+Constraints [_2:=10, _0:=[11..11]]
+
+	domain(_0)	= [11..11]	
+	domain(_2)	= [10..10]	
+IsReachable=true
+isChanged=false
+### Iteration 3 ### 
+'2' blocks in queue : [IF][ELSE]
+blklab1 [IF] 
+Constraints [_0<_2, _3:=1]
+
+	domain(_0)	= [empty..empty]	
+	domain(_2)	= [empty..empty]	
+	domain(_3)	= [1..1]	
+IsReachable=false
+isChanged=false
+### Iteration 4 ### 
+'1' blocks in queue : [ELSE]
+blklab1 [ELSE] 
+Constraints [_0>=_2, _4:=10]
+
+	domain(_0)	= [11..11]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [10..10]	
+IsReachable=true
+isChanged=true
+### Iteration 5 ### 
+'2' blocks in queue : [IF][ELSE]
+blklab3 [IF] 
+Constraints [_0>_4, _5:=2]
+
+	domain(_0)	= [11..11]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [10..10]	
+	domain(_5)	= [2..2]	
+IsReachable=true
+isChanged=true
+### Iteration 6 ### 
+'2' blocks in queue : [ELSE][RETURN]
+blklab3 [ELSE] 
+Constraints [_0<=_4]
+
+	domain(_0)	= [empty..empty]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [empty..empty]	
+IsReachable=false
+isChanged=false
+### Iteration 7 ### 
+'1' blocks in queue : [RETURN]
+return_5 [RETURN] 
+Constraints [return:=_5]
+
+	domain(_0)	= [11..11]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [10..10]	
+	domain(_5)	= [2..2]	
+	domain(return)	= [2..2]	
+IsReachable=true
+isChanged=true
+=================================
+
+Bound Analysis of 'f' function:
+	domain(x)	=[11..11]
+	domain(_2)	=[10..10]
+	domain(_4)	=[10..10]
+	domain(_5)	=[2..2]
+	domain(return)	=[2..2]
+Consistency=true
+
+=================================
+main.16 [	assign %3 = %14  : int]
+main.17 [	assert]
+main.18 [	fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.19 [	fieldload %18 = %17 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.20 [	indirectinvoke () = %18 (%3) : method(any)->()]
+main.21 [	return]
+### Iteration 0 ### 
+'2' blocks in queue : [ENTRY][BLOCK]
+entry [ENTRY] 
+Constraints []
+
+IsReachable=true
+isChanged=false
+### Iteration 1 ### 
+'1' blocks in queue : [BLOCK]
+code [BLOCK] 
+Constraints [_5:=1, _4:=[1..1], _1:=_4, _10:=10, _9:=[0..0], _2:=_9, _15:=11, _14:=[2..2], _3:=_14]
+
+	domain(_1)	= [1..1]	
+	domain(_10)	= [10..10]	
+	domain(_14)	= [2..2]	
+	domain(_15)	= [11..11]	
+	domain(_2)	= [0..0]	
+	domain(_3)	= [2..2]	
+	domain(_4)	= [1..1]	
+	domain(_5)	= [1..1]	
+	domain(_9)	= [0..0]	
+IsReachable=true
+isChanged=true
+=================================
+
+Bound Analysis of 'main' function:
+	domain(a)	=[1..1]
+	domain(_10)	=[10..10]
+	domain(_14)	=[2..2]
+	domain(_15)	=[11..11]
+	domain(b)	=[0..0]
+	domain(c)	=[2..2]
+	domain(_4)	=[1..1]
+	domain(_5)	=[1..1]
+	domain(_9)	=[0..0]
+Consistency=true
+
+=================================
+
+Bound analysis completed. File: ifelse
