@@ -86,7 +86,6 @@ public class CodeGenerationTestCase {
 				"fileread2",// Read 'feep.pbm' and output the array to console 
 				"SobelEdge1", // Read 'feep.pbm', detect the edges and output the resulting array
 				"SobelEdge2", // Similar to 'SobelEdge1' with additional 'image' structure
-				
 		});
 	}
 

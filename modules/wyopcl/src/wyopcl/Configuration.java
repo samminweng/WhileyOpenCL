@@ -17,17 +17,33 @@ public class Configuration {
 	private Path.ID pathid;
 	private String filename;// The processing file name
 	private Properties options;
+	public static final String DISABLED ="disabled";
+	public static final String ENABLED = "enabled";
+	public static final String MODULE = "module";
+	public static final String BOUND = "bound"; // bound analysis
+	public static final String TRAVERSAL = "traversal"; // Tree traversal order
+	public static final String PATTERN = "pattern"; // pattern analysis
+	public static final String VERBOSE = "verbose"; // verbose option
+	public static final String NOCOPY = "nocopy"; // copy analysis
+	public static final String DEALLOC = "dealloc"; // deallocation analysis
+	public static final String CODE = "code"; // code generator
 
 	public Configuration() {
 		// Initial properties based on default properties
 		this.options = new Properties();
-		this.options.put("nocopy", false);
-		this.options.put("bound", false);
-		this.options.put("dealloc", false);
-		this.options.put("code", false);
-		this.options.put("verbose", false);
+		// Analysis the bound 
+		this.options.put(BOUND, DISABLED);
+		// Breath-first or Depth-first tree traversal
+		this.options.put(TRAVERSAL, "DF"); 
 		// Pattern matching option
-		this.options.put("pattern", false);
+		this.options.put(PATTERN, DISABLED);
+		// Verbose option
+		this.options.put(VERBOSE, DISABLED);
+		
+		this.options.put(NOCOPY, DISABLED);
+		this.options.put(DEALLOC, DISABLED);
+		this.options.put(CODE, DISABLED);
+		
 	}
 
 	/**
@@ -36,7 +52,7 @@ public class Configuration {
 	 * @return
 	 */
 	public boolean isVerbose() {
-		return (boolean) this.options.get("verbose");
+		return (this.options.get(VERBOSE).equals(DISABLED))? false: true;
 	}
 
 	/**
@@ -64,32 +80,39 @@ public class Configuration {
 	 */
 	public void setOption(String option, Object value) {
 		if (option.equals("bootpath") || option.equals("whileypath") ||  option.equals("whileydir")) {
+			// Skip the options and do nothing
 			return;	
 		}
-		if(option.equals("module")){
-			WyilFile module = (WyilFile) value;
-			// Get file name
-			this.filename = module.filename().split(".whiley")[0];
-			// Remove the prefix of file name './' on Linux.
-			// e.g. the file name of './While_Valid_1.whiley' is 'While_Valid_1.whiley'
-			this.filename = filename.replace("./", "");
-			// Remove the prefix of file name '.\While_Valid_1.whiley' on Windows.
-			this.filename = filename.replace(".\\", "");
-			// Get path id
-			this.pathid = module.id();			
-		}else {
-			this.options.put(option, true);
-			if (option.equals("bound")){
-				// Get the widen strategy (naive or gradual)
-				if (value.toString().equals("gradual")) {
-					this.options.put("widen", "gradual");
-				} else {
-					this.options.put("widen", "naive");
-				}
-			}else if(option.equals("pattern")){
-				// Get the function name
-				this.options.put("function_name", value.toString());				
-			}
+		
+		switch(option){
+			case MODULE:
+				WyilFile module = (WyilFile) value;
+				// Get file name
+				this.filename = module.filename().split(".whiley")[0];
+				// Remove the prefix of file name './' on Linux.
+				// e.g. the file name of './While_Valid_1.whiley' is 'While_Valid_1.whiley'
+				this.filename = filename.replace("./", "");
+				// Remove the prefix of file name '.\While_Valid_1.whiley' on Windows.
+				this.filename = filename.replace(".\\", "");
+				// Get path id
+				this.pathid = module.id();			
+				break;
+			case BOUND:
+				// Enable the bound analysis and set the gradual widen strategy
+				this.options.put(option, value.toString());
+				break;
+			case PATTERN:
+				// Enable the pattern matcher
+				// Set the function name, that is applied with pattern analysis
+				this.options.put(option, value.toString()); 
+				break;
+			case TRAVERSAL:
+				this.options.put(option, value.toString());
+				break;
+			default:
+				// Enabled all the other options
+				this.options.put(option, ENABLED);
+				break;
 		}
 	}
 
@@ -99,7 +122,14 @@ public class Configuration {
 	 * @return the mode. If no mode is set, return null.
 	 */
 	public boolean isEnabled(String option) {
-		return (boolean)this.options.get(option);
+		Object object = this.options.get(option);
+		if(object instanceof String){
+			String op =(String)object;
+			if(op.equals(DISABLED)){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -108,9 +138,18 @@ public class Configuration {
 	 * @return
 	 */
 	public boolean isGradualWiden() {
-		return this.options.get("widen").equals("gradual");
+		return (this.options.get(BOUND).equals("gradual")) ? true:false;
 	}
-
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getTraversal(){
+		return (String)this.options.get(TRAVERSAL);		
+	}
+	
+	
 	/**
 	 * Get the function name that will be applied with 
 	 * pattern matching.
@@ -118,6 +157,6 @@ public class Configuration {
 	 * @return
 	 */
 	public String getFunctionName(){
-		return (String)this.options.get("function_name");
+		return (String)this.options.get(PATTERN);
 	}
 }

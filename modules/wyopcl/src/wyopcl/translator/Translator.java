@@ -90,12 +90,12 @@ public class Translator implements Builder {
 		}
 
 		// Put the in-memory WyIL file to config for later retrieval.
-		this.config.setOption("module", module);
+		this.config.setOption(Configuration.MODULE, module);
 		
 		// Store the byte-code of transformed function 
 		Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap = Optional.empty();
 		// Check if pattern matching is enabled. 
-		if(config.isEnabled("pattern")){
+		if(config.isEnabled(Configuration.PATTERN)){
 			// Create the hash map
 			HashMap<FunctionOrMethod, FunctionOrMethod> map = new HashMap<FunctionOrMethod, FunctionOrMethod>();
 			// Get the function name
@@ -138,7 +138,7 @@ public class Translator implements Builder {
 
 		// Check if the copy elimination analysis is enabled.
 		Optional<CopyEliminationAnalyzer> copyAnalyzer = Optional.empty();
-		if (config.isEnabled("nocopy")) {
+		if (config.isEnabled(Configuration.NOCOPY)) {
 			instantiate(module, transformFuncMap);
 			CopyEliminationAnalyzer analyzer = new CopyEliminationAnalyzer(config,
 					readwriteAnalyzer, returnAnalyzer, liveAnalyzer);
@@ -149,7 +149,7 @@ public class Translator implements Builder {
 
 		// Check if deallocation analysis is enabled or not
 		Optional<DeallocationAnalyzer> deallocAnalyzer = Optional.empty();
-		if (config.isEnabled("dealloc")) {
+		if (config.isEnabled(Configuration.DEALLOC)) {
 			instantiate(module, transformFuncMap);
 			// Create an instance of DealloctionAnalyzer
 			DeallocationAnalyzer analyzer = new DeallocationAnalyzer(config, readwriteAnalyzer, returnAnalyzer,
@@ -163,7 +163,7 @@ public class Translator implements Builder {
 
 		// Check if the bound analysis is enabled.
 		Optional<BoundAnalyzer> boundAnalyzer = Optional.empty();
-		if (config.isEnabled("bound")) {
+		if (config.isEnabled(Configuration.BOUND)) {
 			/**
 			 * Takes the in-memory wyil file and analyzes the bounds of integer variables in Main function. If any function call
 			 * is encountered, then propagate the input bounds to the callee and then analyze the bounds and produces the
@@ -186,7 +186,7 @@ public class Translator implements Builder {
 		}
 
 		// Reads the in-memory WyIL file and generates the code in C
-		if (config.isEnabled("code")) {
+		if (config.isEnabled(Configuration.CODE)) {
 			CodeGenerator generator = new CodeGenerator(config, copyAnalyzer, deallocAnalyzer, boundAnalyzer, transformFuncMap);
 			generator.apply(module);
 			message += "\nCode Generation completed. File: " + config.getFilename() + ".c, " + config.getFilename()

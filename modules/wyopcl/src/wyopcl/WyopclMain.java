@@ -25,26 +25,27 @@ public class WyopclMain extends WycMain {
 	public static final OptArg[] EXTRA_OPTIONS = {
 			
 			// Add the 'dealloc' to release the unused memory using macro system
-			new OptArg("dealloc", "Run the deallocation analysis to free un-used memory"),
+			new OptArg(Configuration.DEALLOC, "Run the deallocation analysis to free un-used memory"),
 
-			// Add the 'copy' option to eliminate un-needed copies
-			new OptArg("nocopy",
+			// Add the 'nocopy' option to eliminate un-needed copies
+			new OptArg(Configuration.NOCOPY,
 					"Run the copy elimination analysis to eliminate the un-necessary copies.\n"),
 
 			// Add the 'bound' option
-			new OptArg("bound", OptArg.STRING,
+			new OptArg(Configuration.BOUND, OptArg.STRING,
 					"Run bound analysis on whiley program with a specific widening strategy:\n"
 							+ "\t\t\t   [naive]\tWidening the bounds to infinity.\n"
 							+ "\t\t\t   [gradual]\tWidening the bounds to Int16, Int32, Int64 and infinity."),
 			
 			// Add the 'pattern' option
-			new OptArg("pattern", OptArg.STRING,
+			new OptArg(Configuration.PATTERN, OptArg.STRING,
 					"Run pattern macthing on a specific function:\n"
 					+"\t\t\t   [function_name]\tThe function name that will be applied with pattern matching.\n"
 					),
 
 			// Add the 'code' option
-			new OptArg("code", "Run the code generator to translate the compiled Whiley Program into C code.\n"),
+			new OptArg(Configuration.CODE, 
+					"Run the code generator to translate the compiled Whiley Program into C code.\n"),
 
 	};
 

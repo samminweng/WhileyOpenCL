@@ -324,13 +324,18 @@ public class BoundAnalyzer {
 				}
 				System.out.println(str);
 			}
-
-			// Get the last block of the deque in Depth-First (last in first out) manner
-			BoundBlock blk = changed.pollLast();
-
-			// Get the first block of the deque in Breath-First (first in first out) manner
-			//BoundBlock blk = changed.pollFirst();
-
+			
+			
+			BoundBlock blk;
+			
+			if(config.getTraversal().equals("DF")){
+				// Get the last block of the deque in Depth-First (last in first out) manner
+				blk = changed.pollLast();
+			}else{
+				// Get the first block of the deque in Breath-First (first in first out) manner
+				blk = changed.pollFirst();
+			}
+		
 			boolean isChanged = false;
 			// Iterate all the blocks, except Exit block.
 			Bounds bnd_before = null, bnd_after = null;
