@@ -150,17 +150,6 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	 */
 	public void emptyBounds() {
 		this.bounds = new Bounds();
-		/*List<String> vars = BoundAnalyzerHelper.getFunctionVars(function);
-		if(vars != null){
-			// Go through each variable
-			for(String var: vars){
-				// Initialize each variable with empty domain
-				this.bounds.addDomain(new Domain(var));
-			}
-			// Add 'return' and 'return_size' domains
-			this.bounds.addDomain(new Domain("return"));
-			this.bounds.addDomain(new Domain("return_size"));
-		}*/	
 	}
 
 	/**
