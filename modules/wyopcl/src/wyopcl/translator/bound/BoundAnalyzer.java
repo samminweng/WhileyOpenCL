@@ -276,6 +276,8 @@ public class BoundAnalyzer {
 
 	}
 
+	
+
 
 
 	/**
@@ -324,10 +326,9 @@ public class BoundAnalyzer {
 				}
 				System.out.println(str);
 			}
-			
-			
+
+
 			BoundBlock blk;
-			
 			if(config.getTraversal().equals("DF")){
 				// Get the last block of the deque in Depth-First (last in first out) manner
 				blk = changed.pollLast();
@@ -335,50 +336,16 @@ public class BoundAnalyzer {
 				// Get the first block of the deque in Breath-First (first in first out) manner
 				blk = changed.pollFirst();
 			}
-		
-			boolean isChanged = false;
-			// Iterate all the blocks, except Exit block.
-			Bounds bnd_before = null, bnd_after = null;
-			// Clone the bounds before the bound inference
-			bnd_before = (Bounds) blk.getBounds().clone();
 
-			// Reset the block bounds
-			blk.emptyBounds();
-
-			// Take the union of parents' bounds to produce the input bound
-			for (BoundBlock parent : blk.getParentNodes()) {
-				// Take the bounds of parent nodes
-				blk.unionBounds(parent);
-			}
+			// Produce the input bounds
+			blk.preprocessor();
 
 			// Beginning of bound inference.
 			blk.inferBounds();
 			// End of bound inference.
-
-			bnd_after = (Bounds) blk.getBounds();
-			// Check the changes of before and after bounds
-			if (bnd_before != null && bnd_after != null && blk.isReachable()
-					&& !bnd_before.equals(bnd_after)) {				
-				// Widen the bounds for each block
-				bnd_after.widenBounds(config, bnd_before);
-				// Check if the blk has any child nodes
-				if(blk.hasChild() == true){
-					for(BoundBlock child : blk.getChildNodes()){
-						if (!child.getType().equals(BlockType.EXIT)) {
-							// If bounds has changed, then add its child nodes to 'changed set'
-							changed.add(child);
-						}
-					}
-				}
-				isChanged = true;
-			}
-
-			// Debug
-			if (config.isVerbose()) {
-				// Print out the bounds.
-				System.out.println(blk);
-				System.out.println("isChanged=" + isChanged);
-			}
+			
+			// Check bound change and widen the bound
+			blk.postprocessor(config, changed);
 
 			iteration++;
 		}
@@ -420,119 +387,6 @@ public class BoundAnalyzer {
 		// Return the inferred bounds of the function
 		return bnds;
 	}	
-
-	/*
-	public Bounds inferFunctionBounds(String name) {
-		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(name);
-
-		if (config.isVerbose()) {
-			// Print out bounds along with size information.
-			BoundAnalyzerHelper.printCFG(config, name);
-		}
-
-		// Repeatedly iterates over all blocks, starting from the entry block to the
-		// exit block, and infer the bounds consistent with all the constraints in each block.
-		List<BoundBlock> list = graph.getBlockList();
-		boolean isFixedPoint = false;
-		int iteration = 0;
-		// Stop the loop when the program reaches the fixed point or max-iterations
-		while (!isFixedPoint) {
-			if (config.isVerbose()) {
-				System.out.println("=== Iteration " + iteration + " === ");
-			}
-			// Initialize the isFixedPointed
-			isFixedPoint = true;
-
-			// Iterate all blocks (Order does not matter).
-			for (BoundBlock blk : list) {
-				boolean isChanged = false;
-				// Iterate all the blocks, except Exit block.
-				if (!blk.getType().equals(BlockType.EXIT)) {
-					Bounds bnd_before = null, bnd_after = null;
-					// Clone the bounds before the bound inference
-					bnd_before = (Bounds) blk.getBounds().clone();
-
-					// Reset the block bounds
-					if(!blk.getType().equals(BlockType.ENTRY)){
-						blk.emptyBounds(null);
-					}
-
-					// Take the union of parents' bounds to produce the input bound
-					for (BoundBlock parent : blk.getParentNodes()) {
-						// Take the bounds of parent nodes
-						blk.unionBounds(parent);
-					}
-
-					// Beginning of bound inference.
-					blk.inferBounds();
-					// End of bound inference.
-
-					bnd_after = (Bounds) blk.getBounds();
-					// Repeat the bound inference for (maximal) three iterations
-					if(iteration >0 && iteration %3 == 0){
-						bnd_after.widenBounds(config, bnd_before);
-					}					
-
-					// Check the changes of before and after bounds
-					if (bnd_before != null && bnd_after != null 
-							&& !bnd_before.equals(bnd_after)) {	
-						// If bounds has changed, then isChanged = false.
-						isChanged = true;
-					}
-
-					// Debug
-					if (config.isVerbose()) {
-						// Print out the bounds.
-						System.out.println(blk);
-						System.out.println("isChanged=" + isChanged);
-					}
-
-					// Use bitwise 'AND' to combine the bound change of each block. 
-					isFixedPoint &= (!isChanged);
-				}
-			}
-
-			if (config.isVerbose()) {
-				System.out.println("isFixedPoint=" + isFixedPoint);
-			}
-
-			iteration++;
-		}
-
-		// Take the union of all blocks to produce the bounds of a function.
-		BoundBlock exit_blk = graph.getBasicBlock("exit", BlockType.EXIT);
-		// Check if there is any exit block, e.g. main function does not always have exit block 
-		// because it may not have the return 
-		if(exit_blk == null){
-			// Get current block
-			BoundBlock current_block = graph.getCurrentBlock();
-			exit_blk = graph.createBasicBlock("exit", BlockType.EXIT, current_block);
-		}
-
-
-		for (BoundBlock blk : list) {
-			// Consider the bounds of consistent block and discard the bounds of inconsistent block.
-			if (blk.isConsistent() && blk.getType() != BlockType.EXIT) {
-				exit_blk.unionBounds(blk);
-			}
-		}
-		// Produce the aggregated bounds of a function.
-		Bounds bnds = exit_blk.getBounds();
-
-		BoundAnalyzerHelper.printBoundsAndSize(this.module, bnds, name);
-
-		if (config.isVerbose()) {
-			// Print out bounds along with size information.
-			BoundAnalyzerHelper.printCFG(config, name);
-		}
-
-		// Put the bounds to HashMap
-		boundMap.put(name, bnds);		
-
-		// Return the inferred bounds of the function
-		return bnds;
-	}	
-	 */
 
 	private void analyze(Codes.Assign code, FunctionOrMethod function) {
 		String target_reg = prefix + code.target(0);

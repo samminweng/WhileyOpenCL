@@ -3,12 +3,15 @@ package wyopcl.translator.bound;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.CodeBlock;
 import wyil.lang.WyilFile.FunctionOrMethod;
+import wyopcl.Configuration;
+import wyopcl.translator.bound.BoundBlock.BlockType;
 import wyopcl.translator.bound.constraint.Constraint;
 import wyopcl.translator.bound.constraint.Range;
 
@@ -32,6 +35,8 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	private Bounds bounds;
 	// Indicate if the bounds remain unchanged. False: unchanged. True: changed.
 	private boolean isChanged;
+	private Bounds bnd_before; 
+	private Bounds bnd_after;
 
 	public enum BlockType {
 		ENTRY(0) {
@@ -167,7 +172,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	public CodeBlock getCodeBlock(){
 		return this.codeBlock;
 	}
-	
+
 	/**
 	 * Adds a child node to the current node and also add the current node to
 	 * the parent list of its child nodes.
@@ -261,7 +266,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	public void setLabel(String label){
 		this.label = label;
 	}
-	
+
 	/**
 	 * Return the block type.
 	 * 
@@ -319,20 +324,8 @@ public class BoundBlock implements Comparable<BoundBlock> {
 		return bounds.getUpper(name);
 	}
 
-	
-	/**
-	 * Iterate through the constraints to infer the bounds
-	 * 
-	 * @return true if the bounds are changed. Return false if bounds remain
-	 *         unchanged.
-	 */
-	public void inferBounds() {		
-		// Iterate through the constraints to infer the bounds.
-		for (Constraint c : this.constraints) {
-			c.inferBound(this.bounds);
-		}
-		
-	}
+
+
 
 	/**
 	 * 
@@ -377,7 +370,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 		str += this.bounds + "\n";
 		str += "IsReachable=" + isReachable();
 		//str += "\n-------------------------------\n";
-		
+
 		return str;
 	}
 
@@ -428,4 +421,70 @@ public class BoundBlock implements Comparable<BoundBlock> {
 		}
 		return true;
 	}
+
+	/**
+	 * Produce the input bound by taking union of bound in all parent blocks before bound inference 
+	 *  
+	 */
+	public void preprocessor() {
+		// Clone the bounds before the bound inference
+		this.bnd_before = (Bounds) this.getBounds().clone();
+
+		// Reset the block bounds
+		this.emptyBounds();
+
+		// Take the union of parents' bounds to produce the input bound
+		for (BoundBlock parent : this.getParentNodes()) {
+			// Take the bounds of parent nodes
+			this.unionBounds(parent);
+		}
+	}
+
+	/**
+	 * Iterate through the constraints to infer the bounds
+	 * 
+	 * @return true if the bounds are changed. Return false if bounds remain
+	 *         unchanged.
+	 */
+	public void inferBounds() {		
+		// Iterate through the constraints to infer the bounds.
+		for (Constraint c : this.constraints) {
+			c.inferBound(this.bounds);
+		}
+	}
+
+
+	/**
+	 * Check bound change and widen the bound after bound inference.
+	 * 
+	 * 
+	 */
+	public void postprocessor(Configuration config, Deque<BoundBlock> changed) {
+		// Initialize the flag
+		isChanged = false;
+		bnd_after = this.getBounds();
+		// Check the changes of before and after bounds	
+		if (this.isReachable() && !bnd_before.equals(bnd_after)) {
+			// Widen the bounds for each block
+			bnd_after.widenBounds(config, bnd_before);
+			// Check if the blk has any child nodes
+			if(this.hasChild() == true){
+				for(BoundBlock child : this.getChildNodes()){
+					if (!child.getType().equals(BlockType.EXIT)) {
+						// If bounds has changed, then add its child nodes to 'changed set'
+						changed.add(child);
+					}
+				}
+			}
+			isChanged = true;
+		}
+
+		// Debug
+		if (config.isVerbose()) {
+			// Print out the bounds.
+			System.out.println(this.toString());
+			System.out.println("isChanged=" + isChanged);
+		}
+	}
+
 }
