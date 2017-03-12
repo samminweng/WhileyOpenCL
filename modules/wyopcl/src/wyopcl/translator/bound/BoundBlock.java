@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import wyil.lang.Code;
 import wyil.lang.CodeBlock;
@@ -459,14 +460,16 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	 * 
 	 * 
 	 */
-	public void postprocessor(Configuration config, Deque<BoundBlock> changed) {
+	public void postprocessor(Configuration config, Deque<BoundBlock> changed, Set<BoundBlock> feedback_set) {
 		// Initialize the flag
 		isChanged = false;
 		bnd_after = this.getBounds();
 		// Check the changes of before and after bounds	
 		if (this.isReachable() && !bnd_before.equals(bnd_after)) {
-			// Widen the bounds for each block
-			bnd_after.widenBounds(config, bnd_before);
+			// Widen the bounds for each block iff block is the feedback set
+			if(feedback_set.contains(this)){
+				bnd_after.widenBounds(config, bnd_before);
+			}			
 			// Check if the blk has any child nodes
 			if(this.hasChild() == true){
 				for(BoundBlock child : this.getChildNodes()){
@@ -487,4 +490,5 @@ public class BoundBlock implements Comparable<BoundBlock> {
 		}
 	}
 
+	
 }

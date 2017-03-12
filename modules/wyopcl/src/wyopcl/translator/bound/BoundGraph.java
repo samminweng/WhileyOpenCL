@@ -5,9 +5,15 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import wyil.lang.Type;
+import wyopcl.Configuration;
 import wyopcl.translator.bound.BoundBlock.BlockType;
 import wyopcl.translator.bound.constraint.Constraint;
 
@@ -18,6 +24,8 @@ import wyopcl.translator.bound.constraint.Constraint;
  *
  */
 public class BoundGraph {
+	private Set<BoundBlock> feedback_set; // The set of blocks that widening operator is applied	
+	private Deque<BoundBlock> changed; // Store the blocks that need the bound inference
 	//private final String prefix = "%";	
 	// The list of basic block;
 	private List<BoundBlock> blocks;
@@ -29,7 +37,7 @@ public class BoundGraph {
 	}
 
 	private STATUS status;	
-	
+
 	public BoundGraph() {
 		// Initialize the variables
 		this.blocks = new ArrayList<BoundBlock>();
@@ -44,11 +52,11 @@ public class BoundGraph {
 	public STATUS getStatus(){
 		return status;
 	}
-	
+
 	public void setStatus(STATUS newStatus){
 		this.status = newStatus;
 	}	
-		
+
 	/**
 	 * Create a basic block with the specific label name
 	 * 
@@ -71,7 +79,7 @@ public class BoundGraph {
 			parent.addChild(blk);
 		}
 		return blk;
-		
+
 	}
 
 	/**
@@ -94,7 +102,7 @@ public class BoundGraph {
 		if (blk != null) {
 			return blk;
 		}
-		
+
 		// Get the block of Loop Exit type
 		blk = getBasicBlock(label, BlockType.LOOP_EXIT);
 		if(blk != null){
@@ -119,7 +127,7 @@ public class BoundGraph {
 				}
 			}
 		}
-		
+
 		return null;
 	}
 
@@ -165,7 +173,7 @@ public class BoundGraph {
 		current_blk = blk;
 	}
 
-	
+
 	/**
 	 * Create if/else branch without adding any constraint.
 	 * @param new_label
@@ -179,7 +187,7 @@ public class BoundGraph {
 		// Set the current block to the left
 		setCurrentBlock(leftBlock);
 	}
-	
+
 
 	/**
 	 * Branches out the current block to add if/else blocks and set the current block to 
@@ -200,12 +208,12 @@ public class BoundGraph {
 		// Add the constraint to the left block
 		leftBlock.addConstraint(neg_c);
 		rightBlock.addConstraint(c);
-		
+
 		// Set the current block to the left
 		setCurrentBlock(leftBlock);
 	}
-	
-	
+
+
 	/**
 	 * Creates the loop header, loop body and loop exit. And set the current block to the loop body.
 	 * 
@@ -213,7 +221,7 @@ public class BoundGraph {
 	 *            the name of new branch.
 	 */
 	public void createLoopStructure(String new_label) {
-		
+
 		BoundBlock loop_header = getCurrentBlock();
 		//update the label
 		loop_header.setLabel(new_label);
@@ -223,8 +231,8 @@ public class BoundGraph {
 		// Set the current block to be loop body.
 		setCurrentBlock(loop_body);
 	}
-	
-	
+
+
 
 	/**
 	 * Creates the loop header, loop body and loop exit and
@@ -262,10 +270,10 @@ public class BoundGraph {
 				blks.add(blk);
 			}
 		}
-		
+
 		return blks;
 	}
-	
+
 	/**
 	 * Adds the constraint to the current block.
 	 * 
@@ -304,7 +312,7 @@ public class BoundGraph {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Check if the type is instance of Integer by inferring the type from
 	 * <code>wyil.Lang.Type</code> objects, including the effective collection
@@ -322,8 +330,82 @@ public class BoundGraph {
 			return isIntType(((Type.Array) type).element());
 		}
 
-		
+
 		return false;
 	}
+
+	/**
+	 * Create a deque and put Entry and code blocks into the queue
+	 * 
+	 * @return a deque
+	 */
+	public Deque<BoundBlock> createDequeAddEntry() {
+		// Create a deque to track all the blocks that have bound changes
+		// Deque provides 'pollLast' to get and remove the last block
+		// So we can have Last In First Out or First In First Out behaviour.
+		changed = new LinkedList<BoundBlock>();
+
+		// Get the entry block and add entry and its child nodes to 
+		BoundBlock entry = this.getBasicBlock("entry", BlockType.ENTRY);
+		changed.add(entry);
+		// Add the first child block of entry node
+		changed.add(this.getBasicBlock("code", BlockType.BLOCK));
+
+		return changed;
+	}
+
+	/**
+	 * According to tree traversal (Depth-first/Breath-first), 
+	 * retrieve one block from 'changed' queue
+	 * 
+	 * 
+	 * @param config
+	 * @return
+	 */
+	public BoundBlock retrieveBlockFromDeque(Configuration config, int iteration) {
+
+		// Debugging messages
+		if (config.isVerbose()) {
+			System.out.println("### Iteration " + iteration + " ### ");
+			String str = "'" + changed.size() + "' blocks in queue : ";
+			Iterator<BoundBlock> iterator = changed.iterator();
+			while(iterator.hasNext()){
+				BoundBlock blk = iterator.next();
+				str += "[" + blk.getType()+ "]";
+			}
+			System.out.println(str);
+		}
+
+		BoundBlock blk;
+		if(config.getTraversal().equals("DF")){
+			// Get the last block of the deque in Depth-First (last in first out) manner
+			blk = changed.pollLast();
+		}else{
+			// Get the first block of the deque in Breath-First (first in first out) manner
+			blk = changed.pollFirst();
+		}
+		return blk;
+	}
 	
+	
+	
+	/**
+	 * Create a feedback set that contains one block of the graph 
+	 * so the widening operator can be applied to the block of this set.
+	 * 
+	 * @return
+	 */
+	public Set<BoundBlock> createFeedbackSet() {
+		// Create a hash set that has constant complexity
+		this.feedback_set = new HashSet<BoundBlock>();
+		
+		// Put all loop headers to the set
+		List<BoundBlock> blks = this.getBasicBlockByType(BlockType.LOOP_HEADER);
+		this.feedback_set.addAll(blks);
+		
+		return this.feedback_set;
+	}
+
+
+
 }

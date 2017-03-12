@@ -9,6 +9,7 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 import wyil.attributes.VariableDeclarations;
 import wyil.lang.Code;
@@ -298,45 +299,22 @@ public class BoundAnalyzer {
 		}
 
 		initialize(function);
-
-		// Create a deque to track all the blocks that have bound changes
-		// Deque provides 'pollLast' to get and remove the last block
-		// So we can have Last In First Out or First In First Out behaviour.
-		Deque<BoundBlock> changed = new LinkedList<BoundBlock>();
-
-		// Get the entry block and add entry and its child nodes to 
-		BoundBlock entry = graph.getBasicBlock("entry", BlockType.ENTRY);
-		changed.add(entry);
-		// Add the first child block of entry node
-		changed.add(graph.getBasicBlock("code", BlockType.BLOCK));
-
+		// Create a deque and put 'entry' and 'code' blocks
+		// into the queue as a starting point
+		Deque<BoundBlock> changed = graph.createDequeAddEntry();
+		
+		
+		// Create a feedback set 
+		Set<BoundBlock> feedback_set = graph.createFeedbackSet();
+		
 		// Repeatedly iterates over all blocks in deque 
 		// and infer the bounds consistent with all the constraints in each block.
 		int iteration = 0;
-		// Stop the loop when the changed 
+		// Stop the loop when the changed is empty
 		while (!changed.isEmpty()) {
-			// Debugging messages
-			if (config.isVerbose()) {
-				System.out.println("### Iteration " + iteration + " ### ");
-				String str = "'" + changed.size() + "' blocks in queue : ";
-				Iterator<BoundBlock> iterator = changed.iterator();
-				while(iterator.hasNext()){
-					BoundBlock blk = iterator.next();
-					str += "[" + blk.getType()+ "]";
-				}
-				System.out.println(str);
-			}
-
-
-			BoundBlock blk;
-			if(config.getTraversal().equals("DF")){
-				// Get the last block of the deque in Depth-First (last in first out) manner
-				blk = changed.pollLast();
-			}else{
-				// Get the first block of the deque in Breath-First (first in first out) manner
-				blk = changed.pollFirst();
-			}
-
+			// Retrieve a block from the 'changed' queue
+			BoundBlock blk = graph.retrieveBlockFromDeque(config, iteration);
+			
 			// Produce the input bounds
 			blk.preprocessor();
 
@@ -345,7 +323,7 @@ public class BoundAnalyzer {
 			// End of bound inference.
 			
 			// Check bound change and widen the bound
-			blk.postprocessor(config, changed);
+			blk.postprocessor(config, changed, feedback_set);
 
 			iteration++;
 		}
