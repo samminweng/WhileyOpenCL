@@ -56,11 +56,31 @@ public class BoundAnalysisTestCase {
 			});
 	}
 	
+	// Naive widen + Depth-first traversal
 	@Test
-	public void testNaiveBound() {
+	public void testDFNaiveBound() {
 		// Run bound analysis and check analysis results 
 		util.execBoundAnalysis(sourceDir, testcase, "-bound", "naive", "-verbose");
 	}
+	
+	// Gradual widen + Depth-first traversal
+	@Test
+	public void testDFGradualBound() {
+		util.execBoundAnalysis(sourceDir, testcase, "-bound", "gradual", "-verbose");
+	}
+	
+	// Naive widen + Breath-first traversal
+	@Test
+	public void testBFNaiveBound() {
+		// Run bound analysis and check analysis results 
+		util.execBoundAnalysis(sourceDir, testcase, "-bound", "naive", "-verbose", "-traversal", "BF");
+	}
+	// Gradual widen + Breath-first traversal
+	@Test
+	public void testBFGradualBound() {
+		util.execBoundAnalysis(sourceDir, testcase, "-bound", "gradual", "-verbose", "-traversal", "BF");
+	}
+	
 	
 	@Test
 	public void testNaiveBoundNaiveCCode(){
@@ -88,11 +108,6 @@ public class BoundAnalysisTestCase {
 		// Run bound analysis and Generate naive C code
 		System.out.print("Bound Analysis: Naive Widen Strategy + Deallocated C code\n");
 		util.execCodeGeneration(sourceDir, testcase, "-bound", "naive", "-code", "-nocopy", "-dealloc");
-	}
-	
-	@Test
-	public void testGradualBound() {
-		util.execBoundAnalysis(sourceDir, testcase, "-bound", "gradual", "-verbose");
 	}
 	
 	@Test

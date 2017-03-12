@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 import wyil.lang.Type;
+import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 import wyopcl.translator.bound.BoundBlock.BlockType;
 import wyopcl.translator.bound.constraint.Constraint;
@@ -406,6 +407,17 @@ public class BoundGraph {
 		return this.feedback_set;
 	}
 
-
+	/***
+	 * Initialize each variable of a function with an empty domain.
+	 * 
+	 * 
+	 * @param function
+	 */
+	public void initialize(FunctionOrMethod function) {
+		// Initialize all block with empty domains
+		for(BoundBlock blk: this.getBlockList()){
+			blk.emptyBounds();
+		}		
+	}
 
 }

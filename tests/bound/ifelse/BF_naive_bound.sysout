@@ -12,13 +12,13 @@ isChanged=false
 code [BLOCK] 
 Constraints [_5:=1]
 
-	domain(_5)	= [1..1]		 // lb_c=0 ub_c=0	
+	domain(_5)	= [1..1]	
 IsReachable=true
 isChanged=true
 =================================
 
 Bound Analysis of 'main' function:
-	domain(_5)	=[1..1]		 // lb_c=0 ub_c=0
+	domain(_5)	=[1..1]
 Consistency=true
 
 =================================
@@ -42,7 +42,7 @@ f.14 [	return]
 entry [ENTRY] 
 Constraints [_0:=[1..1]]
 
-	domain(_0)	= [1..1]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [1..1]	
 IsReachable=true
 isChanged=true
 ### Iteration 1 ### 
@@ -50,8 +50,8 @@ isChanged=true
 code [BLOCK] 
 Constraints [_2:=10, _0:=[1..1]]
 
-	domain(_0)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [10..10]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [1..1]	
+	domain(_2)	= [10..10]	
 IsReachable=true
 isChanged=true
 ### Iteration 2 ### 
@@ -59,8 +59,8 @@ isChanged=true
 code [BLOCK] 
 Constraints [_2:=10, _0:=[1..1]]
 
-	domain(_0)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [10..10]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [1..1]	
+	domain(_2)	= [10..10]	
 IsReachable=true
 isChanged=false
 ### Iteration 3 ### 
@@ -68,9 +68,9 @@ isChanged=false
 blklab1 [IF] 
 Constraints [_0<_2, _3:=1]
 
-	domain(_0)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [1..1]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [1..1]	
+	domain(_2)	= [10..10]	
+	domain(_3)	= [1..1]	
 IsReachable=true
 isChanged=true
 ### Iteration 4 ### 
@@ -78,9 +78,9 @@ isChanged=true
 blklab1 [ELSE] 
 Constraints [_0>=_2, _4:=10]
 
-	domain(_0)	= [empty..empty]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [empty..empty]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [10..10]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [empty..empty]	
+	domain(_2)	= [empty..empty]	
+	domain(_4)	= [10..10]	
 IsReachable=false
 isChanged=false
 ### Iteration 5 ### 
@@ -88,19 +88,19 @@ isChanged=false
 return_3 [RETURN] 
 Constraints [return:=_3]
 
-	domain(_0)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(return)	= [1..1]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [1..1]	
+	domain(_2)	= [10..10]	
+	domain(_3)	= [1..1]	
+	domain(return)	= [1..1]	
 IsReachable=true
 isChanged=true
 =================================
 
 Bound Analysis of 'f' function:
-	domain(x)	=[1..1]		 // lb_c=0 ub_c=0
-	domain(_2)	=[10..10]		 // lb_c=0 ub_c=0
-	domain(_3)	=[1..1]		 // lb_c=0 ub_c=0
-	domain(return)	=[1..1]		 // lb_c=0 ub_c=0
+	domain(x)	=[1..1]
+	domain(_2)	=[10..10]
+	domain(_3)	=[1..1]
+	domain(return)	=[1..1]
 Consistency=true
 
 =================================
@@ -123,19 +123,19 @@ isChanged=false
 code [BLOCK] 
 Constraints [_5:=1, _4:=[1..1], _1:=_4, _10:=10]
 
-	domain(_1)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_10)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [1..1]		 // lb_c=0 ub_c=0	
+	domain(_1)	= [1..1]	
+	domain(_10)	= [10..10]	
+	domain(_4)	= [1..1]	
+	domain(_5)	= [1..1]	
 IsReachable=true
 isChanged=true
 =================================
 
 Bound Analysis of 'main' function:
-	domain(a)	=[1..1]		 // lb_c=0 ub_c=0
-	domain(_10)	=[10..10]		 // lb_c=0 ub_c=0
-	domain(_4)	=[1..1]		 // lb_c=0 ub_c=0
-	domain(_5)	=[1..1]		 // lb_c=0 ub_c=0
+	domain(a)	=[1..1]
+	domain(_10)	=[10..10]
+	domain(_4)	=[1..1]
+	domain(_5)	=[1..1]
 Consistency=true
 
 =================================
@@ -144,7 +144,7 @@ Consistency=true
 entry [ENTRY] 
 Constraints [_0:=[10..10]]
 
-	domain(_0)	= [10..10]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [10..10]	
 IsReachable=true
 isChanged=true
 ### Iteration 1 ### 
@@ -152,8 +152,8 @@ isChanged=true
 code [BLOCK] 
 Constraints [_2:=10, _0:=[10..10]]
 
-	domain(_0)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [10..10]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [10..10]	
+	domain(_2)	= [10..10]	
 IsReachable=true
 isChanged=true
 ### Iteration 2 ### 
@@ -161,8 +161,8 @@ isChanged=true
 code [BLOCK] 
 Constraints [_2:=10, _0:=[10..10]]
 
-	domain(_0)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [10..10]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [10..10]	
+	domain(_2)	= [10..10]	
 IsReachable=true
 isChanged=false
 ### Iteration 3 ### 
@@ -170,9 +170,9 @@ isChanged=false
 blklab1 [IF] 
 Constraints [_0<_2, _3:=1]
 
-	domain(_0)	= [empty..empty]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [empty..empty]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [1..1]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [empty..empty]	
+	domain(_2)	= [empty..empty]	
+	domain(_3)	= [1..1]	
 IsReachable=false
 isChanged=false
 ### Iteration 4 ### 
@@ -180,9 +180,9 @@ isChanged=false
 blklab1 [ELSE] 
 Constraints [_0>=_2, _4:=10]
 
-	domain(_0)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [10..10]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [10..10]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [10..10]	
 IsReachable=true
 isChanged=true
 ### Iteration 5 ### 
@@ -190,10 +190,10 @@ isChanged=true
 blklab3 [IF] 
 Constraints [_0>_4, _5:=2]
 
-	domain(_0)	= [empty..empty]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [empty..empty]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [2..2]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [empty..empty]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [empty..empty]	
+	domain(_5)	= [2..2]	
 IsReachable=false
 isChanged=false
 ### Iteration 6 ### 
@@ -201,9 +201,9 @@ isChanged=false
 blklab3 [ELSE] 
 Constraints [_0<=_4]
 
-	domain(_0)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [10..10]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [10..10]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [10..10]	
 IsReachable=true
 isChanged=true
 ### Iteration 7 ### 
@@ -211,10 +211,10 @@ isChanged=true
 blklab2 [BLOCK] 
 Constraints [_6:=0]
 
-	domain(_0)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_6)	= [0..0]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [10..10]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [10..10]	
+	domain(_6)	= [0..0]	
 IsReachable=true
 isChanged=true
 ### Iteration 8 ### 
@@ -222,21 +222,21 @@ isChanged=true
 return_6 [RETURN] 
 Constraints [return:=_6]
 
-	domain(_0)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_6)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(return)	= [0..0]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [10..10]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [10..10]	
+	domain(_6)	= [0..0]	
+	domain(return)	= [0..0]	
 IsReachable=true
 isChanged=true
 =================================
 
 Bound Analysis of 'f' function:
-	domain(x)	=[10..10]		 // lb_c=0 ub_c=0
-	domain(_2)	=[10..10]		 // lb_c=0 ub_c=0
-	domain(_4)	=[10..10]		 // lb_c=0 ub_c=0
-	domain(_6)	=[0..0]		 // lb_c=0 ub_c=0
-	domain(return)	=[0..0]		 // lb_c=0 ub_c=0
+	domain(x)	=[10..10]
+	domain(_2)	=[10..10]
+	domain(_4)	=[10..10]
+	domain(_6)	=[0..0]
+	domain(return)	=[0..0]
 Consistency=true
 
 =================================
@@ -259,25 +259,25 @@ isChanged=false
 code [BLOCK] 
 Constraints [_5:=1, _4:=[1..1], _1:=_4, _10:=10, _9:=[0..0], _2:=_9, _15:=11]
 
-	domain(_1)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_10)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_15)	= [11..11]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_9)	= [0..0]		 // lb_c=0 ub_c=0	
+	domain(_1)	= [1..1]	
+	domain(_10)	= [10..10]	
+	domain(_15)	= [11..11]	
+	domain(_2)	= [0..0]	
+	domain(_4)	= [1..1]	
+	domain(_5)	= [1..1]	
+	domain(_9)	= [0..0]	
 IsReachable=true
 isChanged=true
 =================================
 
 Bound Analysis of 'main' function:
-	domain(a)	=[1..1]		 // lb_c=0 ub_c=0
-	domain(_10)	=[10..10]		 // lb_c=0 ub_c=0
-	domain(_15)	=[11..11]		 // lb_c=0 ub_c=0
-	domain(b)	=[0..0]		 // lb_c=0 ub_c=0
-	domain(_4)	=[1..1]		 // lb_c=0 ub_c=0
-	domain(_5)	=[1..1]		 // lb_c=0 ub_c=0
-	domain(_9)	=[0..0]		 // lb_c=0 ub_c=0
+	domain(a)	=[1..1]
+	domain(_10)	=[10..10]
+	domain(_15)	=[11..11]
+	domain(b)	=[0..0]
+	domain(_4)	=[1..1]
+	domain(_5)	=[1..1]
+	domain(_9)	=[0..0]
 Consistency=true
 
 =================================
@@ -286,7 +286,7 @@ Consistency=true
 entry [ENTRY] 
 Constraints [_0:=[11..11]]
 
-	domain(_0)	= [11..11]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [11..11]	
 IsReachable=true
 isChanged=true
 ### Iteration 1 ### 
@@ -294,8 +294,8 @@ isChanged=true
 code [BLOCK] 
 Constraints [_2:=10, _0:=[11..11]]
 
-	domain(_0)	= [11..11]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [10..10]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [11..11]	
+	domain(_2)	= [10..10]	
 IsReachable=true
 isChanged=true
 ### Iteration 2 ### 
@@ -303,8 +303,8 @@ isChanged=true
 code [BLOCK] 
 Constraints [_2:=10, _0:=[11..11]]
 
-	domain(_0)	= [11..11]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [10..10]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [11..11]	
+	domain(_2)	= [10..10]	
 IsReachable=true
 isChanged=false
 ### Iteration 3 ### 
@@ -312,9 +312,9 @@ isChanged=false
 blklab1 [IF] 
 Constraints [_0<_2, _3:=1]
 
-	domain(_0)	= [empty..empty]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [empty..empty]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [1..1]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [empty..empty]	
+	domain(_2)	= [empty..empty]	
+	domain(_3)	= [1..1]	
 IsReachable=false
 isChanged=false
 ### Iteration 4 ### 
@@ -322,9 +322,9 @@ isChanged=false
 blklab1 [ELSE] 
 Constraints [_0>=_2, _4:=10]
 
-	domain(_0)	= [11..11]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [10..10]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [11..11]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [10..10]	
 IsReachable=true
 isChanged=true
 ### Iteration 5 ### 
@@ -332,10 +332,10 @@ isChanged=true
 blklab3 [IF] 
 Constraints [_0>_4, _5:=2]
 
-	domain(_0)	= [11..11]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [2..2]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [11..11]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [10..10]	
+	domain(_5)	= [2..2]	
 IsReachable=true
 isChanged=true
 ### Iteration 6 ### 
@@ -343,9 +343,9 @@ isChanged=true
 blklab3 [ELSE] 
 Constraints [_0<=_4]
 
-	domain(_0)	= [empty..empty]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [empty..empty]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [empty..empty]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [empty..empty]	
 IsReachable=false
 isChanged=false
 ### Iteration 7 ### 
@@ -353,21 +353,21 @@ isChanged=false
 return_5 [RETURN] 
 Constraints [return:=_5]
 
-	domain(_0)	= [11..11]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [2..2]		 // lb_c=0 ub_c=0	
-	domain(return)	= [2..2]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [11..11]	
+	domain(_2)	= [10..10]	
+	domain(_4)	= [10..10]	
+	domain(_5)	= [2..2]	
+	domain(return)	= [2..2]	
 IsReachable=true
 isChanged=true
 =================================
 
 Bound Analysis of 'f' function:
-	domain(x)	=[11..11]		 // lb_c=0 ub_c=0
-	domain(_2)	=[10..10]		 // lb_c=0 ub_c=0
-	domain(_4)	=[10..10]		 // lb_c=0 ub_c=0
-	domain(_5)	=[2..2]		 // lb_c=0 ub_c=0
-	domain(return)	=[2..2]		 // lb_c=0 ub_c=0
+	domain(x)	=[11..11]
+	domain(_2)	=[10..10]
+	domain(_4)	=[10..10]
+	domain(_5)	=[2..2]
+	domain(return)	=[2..2]
 Consistency=true
 
 =================================
@@ -389,29 +389,29 @@ isChanged=false
 code [BLOCK] 
 Constraints [_5:=1, _4:=[1..1], _1:=_4, _10:=10, _9:=[0..0], _2:=_9, _15:=11, _14:=[2..2], _3:=_14]
 
-	domain(_1)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_10)	= [10..10]		 // lb_c=0 ub_c=0	
-	domain(_14)	= [2..2]		 // lb_c=0 ub_c=0	
-	domain(_15)	= [11..11]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [2..2]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_9)	= [0..0]		 // lb_c=0 ub_c=0	
+	domain(_1)	= [1..1]	
+	domain(_10)	= [10..10]	
+	domain(_14)	= [2..2]	
+	domain(_15)	= [11..11]	
+	domain(_2)	= [0..0]	
+	domain(_3)	= [2..2]	
+	domain(_4)	= [1..1]	
+	domain(_5)	= [1..1]	
+	domain(_9)	= [0..0]	
 IsReachable=true
 isChanged=true
 =================================
 
 Bound Analysis of 'main' function:
-	domain(a)	=[1..1]		 // lb_c=0 ub_c=0
-	domain(_10)	=[10..10]		 // lb_c=0 ub_c=0
-	domain(_14)	=[2..2]		 // lb_c=0 ub_c=0
-	domain(_15)	=[11..11]		 // lb_c=0 ub_c=0
-	domain(b)	=[0..0]		 // lb_c=0 ub_c=0
-	domain(c)	=[2..2]		 // lb_c=0 ub_c=0
-	domain(_4)	=[1..1]		 // lb_c=0 ub_c=0
-	domain(_5)	=[1..1]		 // lb_c=0 ub_c=0
-	domain(_9)	=[0..0]		 // lb_c=0 ub_c=0
+	domain(a)	=[1..1]
+	domain(_10)	=[10..10]
+	domain(_14)	=[2..2]
+	domain(_15)	=[11..11]
+	domain(b)	=[0..0]
+	domain(c)	=[2..2]
+	domain(_4)	=[1..1]
+	domain(_5)	=[1..1]
+	domain(_9)	=[0..0]
 Consistency=true
 
 =================================

@@ -142,12 +142,20 @@ public final class BaseTestUtil {
 	 * @param widen
 	 */
 	public void execBoundAnalysis(Path sourceDir, String testcase, String... options) {
-		// Check the bound option 
-		if(options[0] != "-bound"){
-			throw new RuntimeException("Not passing the 'bound' option in " + testcase + " test case");
-		}
+		
 		// Get the widen strategy
-		String strategy = options[1];
+		String strategy = "naive";
+		// Get 'Traversal' option
+		String traversal = "DF";
+		// Iterate all options to obtain all settings
+		for(int index=0; index<options.length;index++){
+			String option = options[index];
+			if(option == "-bound"){
+				strategy = options[index+1];
+			}else if(option == "-traversal"){
+				traversal = options[index+1];
+			}
+		}
 		
 		Process process;
 		try {		
@@ -157,7 +165,7 @@ public final class BaseTestUtil {
 					Paths.get(destDir + File.separator + testcase + ".whiley"),
 					StandardCopyOption.REPLACE_EXISTING);
 			
-			Path sysout = Paths.get(destDir + File.separator + strategy +"_bound.sysout");
+			Path sysout = Paths.get(destDir + File.separator + traversal+"_"+strategy +"_bound.sysout");
 			// Make the command
 			String cmd = makeCmd(testcase, options);
 			

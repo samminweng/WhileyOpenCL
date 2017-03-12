@@ -261,26 +261,6 @@ public class BoundAnalyzer {
 		// Due to the fact that fail byte-code does not extract any bound or symbol.
 	}
 
-	/***
-	 * Initialize each variable of a function with an empty domain.
-	 * 
-	 * 
-	 * @param function
-	 */
-	public void initialize(FunctionOrMethod function){
-		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-
-		// Initialize all block with empty domains
-		for(BoundBlock blk: graph.getBlockList()){
-			blk.emptyBounds();
-		}
-
-	}
-
-	
-
-
-
 	/**
 	 * Infer the bounds of a function by repeatedly iterating over all blocks in
 	 * CFGraph from the entry block to the exit block, and then inferring the
@@ -298,11 +278,10 @@ public class BoundAnalyzer {
 			BoundAnalyzerHelper.printCFG(config, function);
 		}
 
-		initialize(function);
+		graph.initialize(function);
 		// Create a deque and put 'entry' and 'code' blocks
 		// into the queue as a starting point
-		Deque<BoundBlock> changed = graph.createDequeAddEntry();
-		
+		Deque<BoundBlock> changed = graph.createDequeAddEntry();		
 		
 		// Create a feedback set 
 		Set<BoundBlock> feedback_set = graph.createFeedbackSet();
