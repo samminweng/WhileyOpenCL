@@ -1,12 +1,11 @@
-WARNING: version numbering unavailable
-Parsed 1 source file(s). ...................................................... [100ms+1mb]
-Typed 1 source file(s). ....................................................... [126ms+1mb]
-Generated code for 1 source file(s). ............................................... [39ms]
+Parsed 1 source file(s). ....................................................... [45ms+2mb]
+Typed 1 source file(s). ....................................................... [129ms+2mb]
+Generated code for 1 source file(s). ........................................... [25ms+1mb]
 [./whileloop.whiley] applied definite assignment check .............................. [2ms]
-[./whileloop.whiley] applied module check ....................................... [4ms+1mb]
+[./whileloop.whiley] applied module check ....................................... [2ms+1mb]
 [./whileloop.whiley] applied loop variants ...................................... [0ms+1mb]
-[./whileloop.whiley] applied coercion check ......................................... [1ms]
-Whiley => Wyil: compiled 1 file(s) ............................................ [302ms-1mb]
+[./whileloop.whiley] applied coercion check ..................................... [1ms+1mb]
+Whiley => Wyil: compiled 1 file(s) ............................................ [239ms-1mb]
 main.0 [	const %3 = 5 : int]
 main.1 [	invoke (%2) = (%3) whileloop:f : function(int)->(int)]
 ### Iteration 0 ### 
@@ -21,13 +20,13 @@ isChanged=false
 code [BLOCK] 
 Constraints [_3:=5]
 
-	domain(_3)	= [5..5]		 // lb_c=0 ub_c=0	
+	domain(_3)	= [5..5]	
 IsReachable=true
 isChanged=true
 =================================
 
 Bound Analysis of 'main' function:
-	domain(_3)	=[5..5]		 // lb_c=0 ub_c=0
+	domain(_3)	=[5..5]
 Consistency=true
 
 =================================
@@ -52,7 +51,7 @@ f.15 [	return]
 entry [ENTRY] 
 Constraints [_0:=[5..5]]
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
 IsReachable=true
 isChanged=true
 ### Iteration 1 ### 
@@ -60,11 +59,11 @@ isChanged=true
 code [BLOCK] 
 Constraints [_4:=0, _2:=_4, _5:=0, _3:=_5, _0:=[5..5]]
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
+	domain(_2)	= [0..0]	
+	domain(_3)	= [0..0]	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
 IsReachable=true
 isChanged=true
 ### Iteration 2 ### 
@@ -72,11 +71,11 @@ isChanged=true
 code [BLOCK] 
 Constraints [_4:=0, _2:=_4, _5:=0, _3:=_5, _0:=[5..5]]
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
+	domain(_2)	= [0..0]	
+	domain(_3)	= [0..0]	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
 IsReachable=true
 isChanged=false
 ### Iteration 3 ### 
@@ -84,11 +83,11 @@ isChanged=false
 blklab1 [LOOP_HEADER] 
 Constraints []
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
+	domain(_2)	= [0..0]	
+	domain(_3)	= [0..0]	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
 IsReachable=true
 isChanged=true
 ### Iteration 4 ### 
@@ -96,14 +95,14 @@ isChanged=true
 blklab1 [LOOP_BODY] 
 Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_7)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_9)	= [1..1]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
+	domain(_2)	= [1..1]	
+	domain(_3)	= [0..0]	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [1..1]	
+	domain(_9)	= [1..1]	
 IsReachable=true
 isChanged=true
 ### Iteration 5 ### 
@@ -111,11 +110,11 @@ isChanged=true
 blklab1 [LOOP_EXIT] 
 Constraints [_2>=_0]
 
-	domain(_0)	= [empty..empty]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [empty..empty]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [empty..empty]	
+	domain(_2)	= [empty..empty]	
+	domain(_3)	= [0..0]	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
 IsReachable=false
 isChanged=false
 ### Iteration 6 ### 
@@ -123,14 +122,14 @@ isChanged=false
 blklab2 [BLOCK] 
 Constraints []
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_7)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_9)	= [1..1]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
+	domain(_2)	= [1..1]	
+	domain(_3)	= [0..0]	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [1..1]	
+	domain(_9)	= [1..1]	
 IsReachable=true
 isChanged=true
 ### Iteration 7 ### 
@@ -138,14 +137,14 @@ isChanged=true
 blklab1 [LOOP_HEADER] 
 Constraints []
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
 	domain(_2)	= [0..1]		 // lb_c=0 ub_c=1	
-	domain(_3)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_7)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_9)	= [1..1]		 // lb_c=0 ub_c=0	
+	domain(_3)	= [0..0]	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [1..1]	
+	domain(_9)	= [1..1]	
 IsReachable=true
 isChanged=true
 ### Iteration 8 ### 
@@ -153,13 +152,13 @@ isChanged=true
 blklab1 [LOOP_BODY] 
 Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
 	domain(_2)	= [1..2]		 // lb_c=0 ub_c=1	
 	domain(_3)	= [0..1]		 // lb_c=0 ub_c=1	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
 	domain(_7)	= [0..1]		 // lb_c=0 ub_c=1	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
+	domain(_8)	= [1..1]	
 	domain(_9)	= [1..2]		 // lb_c=0 ub_c=1	
 IsReachable=true
 isChanged=true
@@ -168,14 +167,14 @@ isChanged=true
 blklab1 [LOOP_EXIT] 
 Constraints [_2>=_0]
 
-	domain(_0)	= [empty..empty]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [empty..empty]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_7)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_9)	= [1..1]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [empty..empty]	
+	domain(_2)	= [empty..empty]	
+	domain(_3)	= [0..0]	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [1..1]	
+	domain(_9)	= [1..1]	
 IsReachable=false
 isChanged=false
 ### Iteration 10 ### 
@@ -183,13 +182,13 @@ isChanged=false
 blklab2 [BLOCK] 
 Constraints []
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
 	domain(_2)	= [1..2]		 // lb_c=0 ub_c=1	
 	domain(_3)	= [0..1]		 // lb_c=0 ub_c=1	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
 	domain(_7)	= [0..1]		 // lb_c=0 ub_c=1	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
+	domain(_8)	= [1..1]	
 	domain(_9)	= [1..2]		 // lb_c=0 ub_c=1	
 IsReachable=true
 isChanged=true
@@ -198,13 +197,13 @@ isChanged=true
 blklab1 [LOOP_HEADER] 
 Constraints []
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
 	domain(_2)	= [0..2]		 // lb_c=0 ub_c=2	
 	domain(_3)	= [0..1]		 // lb_c=0 ub_c=1	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
 	domain(_7)	= [0..1]		 // lb_c=0 ub_c=1	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
+	domain(_8)	= [1..1]	
 	domain(_9)	= [1..2]		 // lb_c=0 ub_c=1	
 IsReachable=true
 isChanged=true
@@ -213,13 +212,13 @@ isChanged=true
 blklab1 [LOOP_BODY] 
 Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
 	domain(_2)	= [1..3]		 // lb_c=0 ub_c=2	
 	domain(_3)	= [0..3]		 // lb_c=0 ub_c=2	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
 	domain(_7)	= [0..3]		 // lb_c=0 ub_c=2	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
+	domain(_8)	= [1..1]	
 	domain(_9)	= [1..3]		 // lb_c=0 ub_c=2	
 IsReachable=true
 isChanged=true
@@ -228,14 +227,14 @@ isChanged=true
 blklab1 [LOOP_EXIT] 
 Constraints [_2>=_0]
 
-	domain(_0)	= [empty..empty]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [empty..empty]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [0..1]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_7)	= [0..1]		 // lb_c=0 ub_c=0	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_9)	= [1..2]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [empty..empty]	
+	domain(_2)	= [empty..empty]	
+	domain(_3)	= [0..1]	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_7)	= [0..1]	
+	domain(_8)	= [1..1]	
+	domain(_9)	= [1..2]	
 IsReachable=false
 isChanged=false
 ### Iteration 14 ### 
@@ -243,13 +242,13 @@ isChanged=false
 blklab2 [BLOCK] 
 Constraints []
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
 	domain(_2)	= [1..3]		 // lb_c=0 ub_c=2	
 	domain(_3)	= [0..3]		 // lb_c=0 ub_c=2	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
 	domain(_7)	= [0..3]		 // lb_c=0 ub_c=2	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
+	domain(_8)	= [1..1]	
 	domain(_9)	= [1..3]		 // lb_c=0 ub_c=2	
 IsReachable=true
 isChanged=true
@@ -258,13 +257,13 @@ isChanged=true
 blklab1 [LOOP_HEADER] 
 Constraints []
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [0..infinity]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
+	domain(_2)	= [0..infinity]	
 	domain(_3)	= [0..3]		 // lb_c=0 ub_c=2	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
 	domain(_7)	= [0..3]		 // lb_c=0 ub_c=2	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
+	domain(_8)	= [1..1]	
 	domain(_9)	= [1..3]		 // lb_c=0 ub_c=2	
 IsReachable=true
 isChanged=true
@@ -273,14 +272,14 @@ isChanged=true
 blklab1 [LOOP_BODY] 
 Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [1..infinity]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_7)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_9)	= [1..infinity]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
+	domain(_2)	= [1..infinity]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_7)	= [0..infinity]	
+	domain(_8)	= [1..1]	
+	domain(_9)	= [1..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 17 ### 
@@ -288,13 +287,13 @@ isChanged=true
 blklab1 [LOOP_EXIT] 
 Constraints [_2>=_0]
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [5..infinity]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
+	domain(_2)	= [5..infinity]	
 	domain(_3)	= [0..3]		 // lb_c=0 ub_c=1	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
 	domain(_7)	= [0..3]		 // lb_c=0 ub_c=1	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
+	domain(_8)	= [1..1]	
 	domain(_9)	= [1..3]		 // lb_c=0 ub_c=1	
 IsReachable=true
 isChanged=true
@@ -303,14 +302,14 @@ isChanged=true
 blklab2 [BLOCK] 
 Constraints []
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [1..infinity]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_7)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_9)	= [1..infinity]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
+	domain(_2)	= [1..infinity]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_7)	= [0..infinity]	
+	domain(_8)	= [1..1]	
+	domain(_9)	= [1..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 19 ### 
@@ -318,15 +317,15 @@ isChanged=true
 return_3 [RETURN] 
 Constraints [return:=_3]
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [5..infinity]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [0..3]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_7)	= [0..3]		 // lb_c=0 ub_c=0	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_9)	= [1..3]		 // lb_c=0 ub_c=0	
-	domain(return)	= [0..3]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
+	domain(_2)	= [5..infinity]	
+	domain(_3)	= [0..3]	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_7)	= [0..3]	
+	domain(_8)	= [1..1]	
+	domain(_9)	= [1..3]	
+	domain(return)	= [0..3]	
 IsReachable=true
 isChanged=true
 ### Iteration 20 ### 
@@ -334,14 +333,14 @@ isChanged=true
 blklab1 [LOOP_HEADER] 
 Constraints []
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_7)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_9)	= [1..infinity]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
+	domain(_2)	= [0..infinity]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_7)	= [0..infinity]	
+	domain(_8)	= [1..1]	
+	domain(_9)	= [1..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 21 ### 
@@ -349,14 +348,14 @@ isChanged=true
 blklab1 [LOOP_BODY] 
 Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [1..5]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_7)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_9)	= [1..5]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
+	domain(_2)	= [1..5]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_7)	= [0..infinity]	
+	domain(_8)	= [1..1]	
+	domain(_9)	= [1..5]	
 IsReachable=true
 isChanged=true
 ### Iteration 22 ### 
@@ -364,14 +363,14 @@ isChanged=true
 blklab1 [LOOP_EXIT] 
 Constraints [_2>=_0]
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [5..infinity]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_7)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_9)	= [1..infinity]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
+	domain(_2)	= [5..infinity]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_7)	= [0..infinity]	
+	domain(_8)	= [1..1]	
+	domain(_9)	= [1..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 23 ### 
@@ -379,14 +378,14 @@ isChanged=true
 blklab2 [BLOCK] 
 Constraints []
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [1..5]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_7)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_9)	= [1..5]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
+	domain(_2)	= [1..5]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_7)	= [0..infinity]	
+	domain(_8)	= [1..1]	
+	domain(_9)	= [1..5]	
 IsReachable=true
 isChanged=true
 ### Iteration 24 ### 
@@ -394,15 +393,15 @@ isChanged=true
 return_3 [RETURN] 
 Constraints [return:=_3]
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [5..infinity]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_7)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_9)	= [1..infinity]		 // lb_c=0 ub_c=0	
-	domain(return)	= [0..infinity]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
+	domain(_2)	= [5..infinity]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_7)	= [0..infinity]	
+	domain(_8)	= [1..1]	
+	domain(_9)	= [1..infinity]	
+	domain(return)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 25 ### 
@@ -410,14 +409,14 @@ isChanged=true
 blklab1 [LOOP_HEADER] 
 Constraints []
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [0..5]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_7)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_9)	= [1..5]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
+	domain(_2)	= [0..5]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_7)	= [0..infinity]	
+	domain(_8)	= [1..1]	
+	domain(_9)	= [1..5]	
 IsReachable=true
 isChanged=true
 ### Iteration 26 ### 
@@ -425,14 +424,14 @@ isChanged=true
 blklab1 [LOOP_BODY] 
 Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [1..5]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_7)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_9)	= [1..5]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
+	domain(_2)	= [1..5]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_7)	= [0..infinity]	
+	domain(_8)	= [1..1]	
+	domain(_9)	= [1..5]	
 IsReachable=true
 isChanged=false
 ### Iteration 27 ### 
@@ -440,14 +439,14 @@ isChanged=false
 blklab1 [LOOP_EXIT] 
 Constraints [_2>=_0]
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [5..5]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_7)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_9)	= [1..5]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
+	domain(_2)	= [5..5]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_7)	= [0..infinity]	
+	domain(_8)	= [1..1]	
+	domain(_9)	= [1..5]	
 IsReachable=true
 isChanged=true
 ### Iteration 28 ### 
@@ -455,29 +454,29 @@ isChanged=true
 return_3 [RETURN] 
 Constraints [return:=_3]
 
-	domain(_0)	= [5..5]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [5..5]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_4)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_5)	= [0..0]		 // lb_c=0 ub_c=0	
-	domain(_7)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_8)	= [1..1]		 // lb_c=0 ub_c=0	
-	domain(_9)	= [1..5]		 // lb_c=0 ub_c=0	
-	domain(return)	= [0..infinity]		 // lb_c=0 ub_c=0	
+	domain(_0)	= [5..5]	
+	domain(_2)	= [5..5]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_7)	= [0..infinity]	
+	domain(_8)	= [1..1]	
+	domain(_9)	= [1..5]	
+	domain(return)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 =================================
 
 Bound Analysis of 'f' function:
-	domain(limit)	=[5..5]		 // lb_c=0 ub_c=0
-	domain(i)	=[0..5]		 // lb_c=0 ub_c=0
-	domain(sum)	=[0..infinity]		 // lb_c=0 ub_c=0
-	domain(_4)	=[0..0]		 // lb_c=0 ub_c=0
-	domain(_5)	=[0..0]		 // lb_c=0 ub_c=0
-	domain(_7)	=[0..infinity]		 // lb_c=0 ub_c=0
-	domain(_8)	=[1..1]		 // lb_c=0 ub_c=0
-	domain(_9)	=[1..5]		 // lb_c=0 ub_c=0
-	domain(return)	=[0..infinity]		 // lb_c=0 ub_c=0
+	domain(limit)	=[5..5]
+	domain(i)	=[0..5]
+	domain(sum)	=[0..infinity]
+	domain(_4)	=[0..0]
+	domain(_5)	=[0..0]
+	domain(_7)	=[0..infinity]
+	domain(_8)	=[1..1]
+	domain(_9)	=[1..5]
+	domain(return)	=[0..infinity]
 Consistency=true
 
 =================================
@@ -498,17 +497,17 @@ isChanged=false
 code [BLOCK] 
 Constraints [_3:=5, _2:=[0..null], _1:=_2]
 
-	domain(_1)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_2)	= [0..infinity]		 // lb_c=0 ub_c=0	
-	domain(_3)	= [5..5]		 // lb_c=0 ub_c=0	
+	domain(_1)	= [0..infinity]	
+	domain(_2)	= [0..infinity]	
+	domain(_3)	= [5..5]	
 IsReachable=true
 isChanged=true
 =================================
 
 Bound Analysis of 'main' function:
-	domain(a)	=[0..infinity]		 // lb_c=0 ub_c=0
-	domain(_2)	=[0..infinity]		 // lb_c=0 ub_c=0
-	domain(_3)	=[5..5]		 // lb_c=0 ub_c=0
+	domain(a)	=[0..infinity]
+	domain(_2)	=[0..infinity]
+	domain(_3)	=[5..5]
 Consistency=true
 
 =================================

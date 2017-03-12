@@ -34,8 +34,14 @@ public class WyopclMain extends WycMain {
 			// Add the 'bound' option
 			new OptArg(Configuration.BOUND, OptArg.STRING,
 					"Run bound analysis on whiley program with a specific widening strategy:\n"
-							+ "\t\t\t   [naive]\tWidening the bounds to infinity.\n"
-							+ "\t\t\t   [gradual]\tWidening the bounds to Int16, Int32, Int64 and infinity."),
+							+ "\t\t\t[naive]\tWidening the bounds to infinity.\n"
+							+ "\t\t\t[gradual]\tWidening the bounds to Int16, Int32, Int64 and infinity."),
+			
+			// Add the 'traversal' option to specify the block order
+			new OptArg(Configuration.TRAVERSAL, OptArg.STRING,
+					   "Specify the block traversal order :\n"
+										+ "\t\t\t[DF]\tDepth-First Order.\n"
+										+ "\t\t\t[BF]\tBreath-First Order"),
 			
 			// Add the 'pattern' option
 			new OptArg(Configuration.PATTERN, OptArg.STRING,
