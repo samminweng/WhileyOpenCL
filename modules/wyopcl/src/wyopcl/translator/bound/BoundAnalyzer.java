@@ -291,18 +291,73 @@ public class BoundAnalyzer {
 		int iteration = 0;
 		// Stop the loop when the changed is empty
 		while (!changed.isEmpty()) {
-			// Retrieve a block from the 'changed' queue
-			BoundBlock blk = graph.retrieveBlockFromDeque(config, iteration);
+			// Initialize the flag
+			boolean isChanged = false;
+			// Debugging messages
+			if (config.isVerbose()) {
+				System.out.println("### Iteration " + iteration + " ### ");
+				String str = "'" + changed.size() + "' blocks in queue : ";
+				Iterator<BoundBlock> iterator = changed.iterator();
+				while(iterator.hasNext()){
+					BoundBlock blk1 = iterator.next();
+					str += "[" + blk1.getType()+ "]";
+				}
+				System.out.println(str);
+			}
 			
-			// Produce the input bounds
-			blk.preprocessor();
+			// Retrieve a block from the 'changed' queue
+			BoundBlock blk;	
+			if(config.getTraversal().equals("DF")){
+				// Get the last block of the deque in Depth-First (last in first out) manner
+				blk = changed.pollLast();
+			}else{
+				// Get the first block of the deque in Breath-First (first in first out) manner
+				blk = changed.pollFirst();
+			}		
+			
+			// Clone the bounds before the bound inference
+			Bounds bnd_before = (Bounds) blk.getBounds().clone();
+			
+			// Reset the block bounds
+			blk.emptyBounds();
+			
+			// Produce the input bound by taking union of bound
+			// in all parent blocks before bound inference 
+			for (BoundBlock parent : blk.getParentNodes()) {
+				// Take the bounds of parent nodes
+				blk.unionBounds(parent);
+			}
 
 			// Beginning of bound inference.
 			blk.inferBounds();
 			// End of bound inference.
 			
-			// Check bound change and widen the bound
-			blk.postprocessor(config, changed, feedback_set);
+			// Check bound change and widen the bound			
+			Bounds bnd_after = blk.getBounds();
+			// Check bound change and widen the bound after bound inference.	
+			if (blk.isReachable() && ! bnd_before.equals(bnd_after)) {
+				// Widen the bounds for each block iff block is the feedback set
+				if(feedback_set.contains(blk)){
+					bnd_after.widenBounds(config, bnd_before);
+				}			
+				// Check if the blk has any child nodes
+				if(blk.hasChild() == true){
+					for(BoundBlock child : blk.getChildNodes()){
+						if (!child.getType().equals(BlockType.EXIT)) {
+							// If bounds has changed, then add its child nodes to 'changed set'
+							changed.add(child);
+						}
+					}
+				}
+				isChanged = true;
+			}
+			
+			// Debug
+			if (config.isVerbose()) {
+				// Print out the bounds.
+				System.out.println(blk.toString());
+				System.out.println("isChanged=" + isChanged);
+			}
 
 			iteration++;
 		}
@@ -846,8 +901,7 @@ public class BoundAnalyzer {
 		FunctionOrMethod callee = this.module.functionOrMethod(code.name.name(), code.type(0));
 		FunctionOrMethod caller = function;
 		if (callee != null) {
-			int caller_line = line;	
-
+			int caller_line = line;
 
 			// Infer the bounds of caller function.
 			Bounds input_bnds = inferBounds(caller);

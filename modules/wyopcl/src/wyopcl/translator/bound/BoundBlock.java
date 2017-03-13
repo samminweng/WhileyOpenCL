@@ -423,23 +423,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 		return true;
 	}
 
-	/**
-	 * Produce the input bound by taking union of bound in all parent blocks before bound inference 
-	 *  
-	 */
-	public void preprocessor() {
-		// Clone the bounds before the bound inference
-		this.bnd_before = (Bounds) this.getBounds().clone();
-
-		// Reset the block bounds
-		this.emptyBounds();
-
-		// Take the union of parents' bounds to produce the input bound
-		for (BoundBlock parent : this.getParentNodes()) {
-			// Take the bounds of parent nodes
-			this.unionBounds(parent);
-		}
-	}
+	
 
 	/**
 	 * Iterate through the constraints to infer the bounds
@@ -453,42 +437,5 @@ public class BoundBlock implements Comparable<BoundBlock> {
 			c.inferBound(this.bounds);
 		}
 	}
-
-
-	/**
-	 * Check bound change and widen the bound after bound inference.
-	 * 
-	 * 
-	 */
-	public void postprocessor(Configuration config, Deque<BoundBlock> changed, Set<BoundBlock> feedback_set) {
-		// Initialize the flag
-		isChanged = false;
-		bnd_after = this.getBounds();
-		// Check the changes of before and after bounds	
-		if (this.isReachable() && !bnd_before.equals(bnd_after)) {
-			// Widen the bounds for each block iff block is the feedback set
-			if(feedback_set.contains(this)){
-				bnd_after.widenBounds(config, bnd_before);
-			}			
-			// Check if the blk has any child nodes
-			if(this.hasChild() == true){
-				for(BoundBlock child : this.getChildNodes()){
-					if (!child.getType().equals(BlockType.EXIT)) {
-						// If bounds has changed, then add its child nodes to 'changed set'
-						changed.add(child);
-					}
-				}
-			}
-			isChanged = true;
-		}
-
-		// Debug
-		if (config.isVerbose()) {
-			// Print out the bounds.
-			System.out.println(this.toString());
-			System.out.println("isChanged=" + isChanged);
-		}
-	}
-
 	
 }

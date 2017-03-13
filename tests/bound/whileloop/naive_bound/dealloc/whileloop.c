@@ -47,8 +47,9 @@ int main(int argc, char** args){
 	int64_t _2 = 0;
 	uint16_t _3 = 0;
 	void* _4;
-	//const %3 = 5 : int
-	_3 = 5;
+	int64_t _6 = 0;
+	//const %3 = 43 : int
+	_3 = 43;
 	//invoke (%2) = (%3) whileloop:f : function(int)->(int)
 	{
 		_2 = _f_(_3);
@@ -60,6 +61,19 @@ int main(int argc, char** args){
 	//indirectinvoke () = %5 (%1) : method(any)->()
 	{
 		printf("%"PRId64"\n", a);
+	}
+	//assert
+	{
+		//const %6 = 903 : int
+		_6 = 903;
+		//ifeq %1, %6 goto blklab4 : int
+		if(a==_6){goto blklab4;}
+		//fail
+		fprintf(stderr,"fail");
+		exit(-1);
+//.blklab4
+blklab4:;
+	//assert
 	}
 	//return
 	exit(0);
