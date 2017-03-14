@@ -11,7 +11,7 @@ function f(int limit) -> int:
 	return sum
 
 method main(System.Console sys):
-	int a = f(5)
+	int a = f(43)
 	sys.out.println(a)
 	assert a == 100
 

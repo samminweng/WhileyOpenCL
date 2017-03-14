@@ -35,9 +35,9 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	private BlockType type;
 	private Bounds bounds;
 	// Indicate if the bounds remain unchanged. False: unchanged. True: changed.
-	private boolean isChanged;
-	private Bounds bnd_before; 
-	private Bounds bnd_after;
+	//private boolean isChanged;
+	//private Bounds bnd_before; 
+	//private Bounds bnd_after;
 
 	public enum BlockType {
 		ENTRY(0) {
@@ -131,7 +131,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 		this();
 		this.label = label;
 		this.type = type;
-		this.isChanged = false;
+		//this.isChanged = false;
 	}
 
 	/**
