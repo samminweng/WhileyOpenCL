@@ -282,10 +282,10 @@ public class BoundAnalyzer {
 		// Create a deque and put 'entry' and 'code' blocks
 		// into the queue as a starting point
 		Deque<BoundBlock> changed = graph.createDequeAddEntry();		
-		
+
 		// Create a feedback set 
 		Set<BoundBlock> feedback_set = graph.createFeedbackSet();
-		
+
 		// Repeatedly iterates over all blocks in deque 
 		// and infer the bounds consistent with all the constraints in each block.
 		int iteration = 0;
@@ -293,7 +293,20 @@ public class BoundAnalyzer {
 		while (!changed.isEmpty()) {
 			// Initialize the flag
 			boolean isChanged = false;
+
+
+			// Retrieve a block from the 'changed' queue
+			BoundBlock blk;	
+			if(config.getTraversal().equals("DF")){
+				// Get the last block of the deque in Depth-First (last in first out) manner
+				blk = changed.pollLast();
+			}else{
+				// Get the first block of the deque in Breath-First (first in first out) manner
+				blk = changed.pollFirst();
+			}		
+
 			// Debugging messages
+			//if (config.isVerbose() && blk.getType() == BlockType.LOOP_HEADER) {
 			if (config.isVerbose()) {
 				System.out.println("### Iteration " + iteration + " ### ");
 				String str = "'" + changed.size() + "' blocks in queue : ";
@@ -304,23 +317,14 @@ public class BoundAnalyzer {
 				}
 				System.out.println(str);
 			}
-			
-			// Retrieve a block from the 'changed' queue
-			BoundBlock blk;	
-			if(config.getTraversal().equals("DF")){
-				// Get the last block of the deque in Depth-First (last in first out) manner
-				blk = changed.pollLast();
-			}else{
-				// Get the first block of the deque in Breath-First (first in first out) manner
-				blk = changed.pollFirst();
-			}		
-			
+
+
 			// Clone the bounds before the bound inference
 			Bounds bnd_before = (Bounds) blk.getBounds().clone();
-			
+
 			// Reset the block bounds
 			blk.emptyBounds();
-			
+
 			// Produce the input bound by taking union of bound
 			// in all parent blocks before bound inference 
 			for (BoundBlock parent : blk.getParentNodes()) {
@@ -331,7 +335,7 @@ public class BoundAnalyzer {
 			// Beginning of bound inference.
 			blk.inferBounds();
 			// End of bound inference.
-			
+
 			// Check bound change and widen the bound			
 			Bounds bnd_after = blk.getBounds();
 			// Check bound change and widen the bound after bound inference.	
@@ -351,8 +355,9 @@ public class BoundAnalyzer {
 				}
 				isChanged = true;
 			}
-			
+
 			// Debug
+			//if (config.isVerbose() && blk.getType() == BlockType.LOOP_HEADER) {
 			if (config.isVerbose()) {
 				// Print out the bounds.
 				System.out.println(blk.toString());

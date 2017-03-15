@@ -484,30 +484,36 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		// Both current and new domains are not empty
 		BigInteger this_min = this.getLower();
 		BigInteger old_min = old_domain.getLower();
+		// Set current counter for lower bound
+		this.lb_counter = old_domain.lb_counter;
 		// Check the lower bound is decreasing
 		if(this_min != null && old_min != null
-				&& this_min.compareTo(old_min)<0){
+				 && this_min.compareTo(old_min)<0){
 			// Increase the counter of lower bound
-			this.lb_counter = old_domain.lb_counter+1;
+			this.lb_counter = this.lb_counter+1;
 			if(this.lb_counter == this.MAX_Iterations){
 				if (isGradual) {
 					widenLowerBoundsAgainstThresholds(this_min);
 				} else {
 					this.setLowerBound(null);
 				}
-
 				// Reset the counter
 				this.lb_counter = 0;
 			}
+		}else{
+			// Reset the counter
+			this.lb_counter = 0;
 		}
 
 		BigInteger this_max = this.getUpper();
 		BigInteger old_max = old_domain.getUpper();
+		// Propagate the counter from old domain to new domain
+		this.ub_counter = old_domain.ub_counter;
 		// Check upper bound is increasing and Widen the upper bound
 		if(this_max != null && old_max != null
 				&& this_max.compareTo(old_max)>0){
-			// Increase 
-			this.ub_counter = old_domain.ub_counter+1;
+			// Increase the upper bound counter 
+			this.ub_counter = this.ub_counter+1;
 			if(this.ub_counter == this.MAX_Iterations){
 				if (isGradual) {
 					widenUpperBoundsAgainstThresholds(this_max);
@@ -518,6 +524,9 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 				// Reset the counter
 				this.ub_counter = 0;
 			}
+		}else{
+			// Reset the counter;
+			this.ub_counter = 0;
 		}
 	}
 

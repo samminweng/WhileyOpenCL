@@ -1,14 +1,14 @@
 main.0 [	const %3 = 43 : int]
 main.1 [	invoke (%2) = (%3) whileloop:f : function(int)->(int)]
 ### Iteration 0 ### 
-'2' blocks in queue : [ENTRY][BLOCK]
+'1' blocks in queue : [BLOCK]
 entry [ENTRY] 
 Constraints []
 
 IsReachable=true
 isChanged=false
 ### Iteration 1 ### 
-'1' blocks in queue : [BLOCK]
+'0' blocks in queue : 
 code [BLOCK] 
 Constraints [_3:=43]
 
@@ -39,7 +39,7 @@ f.13 [.blklab1]
 f.14 [	return %3]
 f.15 [	return]
 ### Iteration 0 ### 
-'2' blocks in queue : [ENTRY][BLOCK]
+'1' blocks in queue : [BLOCK]
 entry [ENTRY] 
 Constraints [_0:=[43..43]]
 
@@ -47,7 +47,7 @@ Constraints [_0:=[43..43]]
 IsReachable=true
 isChanged=true
 ### Iteration 1 ### 
-'2' blocks in queue : [BLOCK][BLOCK]
+'1' blocks in queue : [BLOCK]
 code [BLOCK] 
 Constraints [_4:=0, _2:=_4, _5:=0, _3:=_5, _0:=[43..43]]
 
@@ -59,7 +59,7 @@ Constraints [_4:=0, _2:=_4, _5:=0, _3:=_5, _0:=[43..43]]
 IsReachable=true
 isChanged=true
 ### Iteration 2 ### 
-'2' blocks in queue : [BLOCK][LOOP_HEADER]
+'1' blocks in queue : [LOOP_HEADER]
 code [BLOCK] 
 Constraints [_4:=0, _2:=_4, _5:=0, _3:=_5, _0:=[43..43]]
 
@@ -71,7 +71,7 @@ Constraints [_4:=0, _2:=_4, _5:=0, _3:=_5, _0:=[43..43]]
 IsReachable=true
 isChanged=false
 ### Iteration 3 ### 
-'1' blocks in queue : [LOOP_HEADER]
+'0' blocks in queue : 
 blklab1 [LOOP_HEADER] 
 Constraints []
 
@@ -83,7 +83,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 4 ### 
-'2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
+'1' blocks in queue : [LOOP_EXIT]
 blklab1 [LOOP_BODY] 
 Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 
@@ -98,7 +98,7 @@ Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 IsReachable=true
 isChanged=true
 ### Iteration 5 ### 
-'2' blocks in queue : [LOOP_EXIT][BLOCK]
+'1' blocks in queue : [BLOCK]
 blklab1 [LOOP_EXIT] 
 Constraints [_2>=_0]
 
@@ -110,7 +110,7 @@ Constraints [_2>=_0]
 IsReachable=false
 isChanged=false
 ### Iteration 6 ### 
-'1' blocks in queue : [BLOCK]
+'0' blocks in queue : 
 blklab2 [BLOCK] 
 Constraints []
 
@@ -125,7 +125,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 7 ### 
-'1' blocks in queue : [LOOP_HEADER]
+'0' blocks in queue : 
 blklab1 [LOOP_HEADER] 
 Constraints []
 
@@ -140,7 +140,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 8 ### 
-'2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
+'1' blocks in queue : [LOOP_EXIT]
 blklab1 [LOOP_BODY] 
 Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 
@@ -155,7 +155,7 @@ Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 IsReachable=true
 isChanged=true
 ### Iteration 9 ### 
-'2' blocks in queue : [LOOP_EXIT][BLOCK]
+'1' blocks in queue : [BLOCK]
 blklab1 [LOOP_EXIT] 
 Constraints [_2>=_0]
 
@@ -170,7 +170,7 @@ Constraints [_2>=_0]
 IsReachable=false
 isChanged=false
 ### Iteration 10 ### 
-'1' blocks in queue : [BLOCK]
+'0' blocks in queue : 
 blklab2 [BLOCK] 
 Constraints []
 
@@ -185,7 +185,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 11 ### 
-'1' blocks in queue : [LOOP_HEADER]
+'0' blocks in queue : 
 blklab1 [LOOP_HEADER] 
 Constraints []
 
@@ -200,7 +200,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 12 ### 
-'2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
+'1' blocks in queue : [LOOP_EXIT]
 blklab1 [LOOP_BODY] 
 Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 
@@ -215,7 +215,7 @@ Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 IsReachable=true
 isChanged=true
 ### Iteration 13 ### 
-'2' blocks in queue : [LOOP_EXIT][BLOCK]
+'1' blocks in queue : [BLOCK]
 blklab1 [LOOP_EXIT] 
 Constraints [_2>=_0]
 
@@ -230,7 +230,7 @@ Constraints [_2>=_0]
 IsReachable=false
 isChanged=false
 ### Iteration 14 ### 
-'1' blocks in queue : [BLOCK]
+'0' blocks in queue : 
 blklab2 [BLOCK] 
 Constraints []
 
@@ -245,7 +245,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 15 ### 
-'1' blocks in queue : [LOOP_HEADER]
+'0' blocks in queue : 
 blklab1 [LOOP_HEADER] 
 Constraints []
 
@@ -260,7 +260,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 16 ### 
-'2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
+'1' blocks in queue : [LOOP_EXIT]
 blklab1 [LOOP_BODY] 
 Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 
@@ -275,7 +275,7 @@ Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 IsReachable=true
 isChanged=true
 ### Iteration 17 ### 
-'2' blocks in queue : [LOOP_EXIT][BLOCK]
+'1' blocks in queue : [BLOCK]
 blklab1 [LOOP_EXIT] 
 Constraints [_2>=_0]
 
@@ -290,7 +290,7 @@ Constraints [_2>=_0]
 IsReachable=true
 isChanged=true
 ### Iteration 18 ### 
-'2' blocks in queue : [BLOCK][RETURN]
+'1' blocks in queue : [RETURN]
 blklab2 [BLOCK] 
 Constraints []
 
@@ -305,7 +305,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 19 ### 
-'2' blocks in queue : [RETURN][LOOP_HEADER]
+'1' blocks in queue : [LOOP_HEADER]
 return_3 [RETURN] 
 Constraints [return:=_3]
 
@@ -321,7 +321,7 @@ Constraints [return:=_3]
 IsReachable=true
 isChanged=true
 ### Iteration 20 ### 
-'1' blocks in queue : [LOOP_HEADER]
+'0' blocks in queue : 
 blklab1 [LOOP_HEADER] 
 Constraints []
 
@@ -336,7 +336,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 21 ### 
-'2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
+'1' blocks in queue : [LOOP_EXIT]
 blklab1 [LOOP_BODY] 
 Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 
@@ -351,7 +351,7 @@ Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 IsReachable=true
 isChanged=true
 ### Iteration 22 ### 
-'2' blocks in queue : [LOOP_EXIT][BLOCK]
+'1' blocks in queue : [BLOCK]
 blklab1 [LOOP_EXIT] 
 Constraints [_2>=_0]
 
@@ -366,7 +366,7 @@ Constraints [_2>=_0]
 IsReachable=true
 isChanged=true
 ### Iteration 23 ### 
-'2' blocks in queue : [BLOCK][RETURN]
+'1' blocks in queue : [RETURN]
 blklab2 [BLOCK] 
 Constraints []
 
@@ -381,7 +381,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 24 ### 
-'2' blocks in queue : [RETURN][LOOP_HEADER]
+'1' blocks in queue : [LOOP_HEADER]
 return_3 [RETURN] 
 Constraints [return:=_3]
 
@@ -397,7 +397,7 @@ Constraints [return:=_3]
 IsReachable=true
 isChanged=true
 ### Iteration 25 ### 
-'1' blocks in queue : [LOOP_HEADER]
+'0' blocks in queue : 
 blklab1 [LOOP_HEADER] 
 Constraints []
 
@@ -412,7 +412,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 26 ### 
-'2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
+'1' blocks in queue : [LOOP_EXIT]
 blklab1 [LOOP_BODY] 
 Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 
@@ -427,7 +427,7 @@ Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 IsReachable=true
 isChanged=true
 ### Iteration 27 ### 
-'2' blocks in queue : [LOOP_EXIT][BLOCK]
+'1' blocks in queue : [BLOCK]
 blklab1 [LOOP_EXIT] 
 Constraints [_2>=_0]
 
@@ -442,7 +442,7 @@ Constraints [_2>=_0]
 IsReachable=true
 isChanged=true
 ### Iteration 28 ### 
-'2' blocks in queue : [BLOCK][RETURN]
+'1' blocks in queue : [RETURN]
 blklab2 [BLOCK] 
 Constraints []
 
@@ -457,7 +457,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 29 ### 
-'2' blocks in queue : [RETURN][LOOP_HEADER]
+'1' blocks in queue : [LOOP_HEADER]
 return_3 [RETURN] 
 Constraints [return:=_3]
 
@@ -473,7 +473,7 @@ Constraints [return:=_3]
 IsReachable=true
 isChanged=true
 ### Iteration 30 ### 
-'1' blocks in queue : [LOOP_HEADER]
+'0' blocks in queue : 
 blklab1 [LOOP_HEADER] 
 Constraints []
 
@@ -488,7 +488,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 31 ### 
-'2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
+'1' blocks in queue : [LOOP_EXIT]
 blklab1 [LOOP_BODY] 
 Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 
@@ -503,7 +503,7 @@ Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 IsReachable=true
 isChanged=true
 ### Iteration 32 ### 
-'2' blocks in queue : [LOOP_EXIT][BLOCK]
+'1' blocks in queue : [BLOCK]
 blklab1 [LOOP_EXIT] 
 Constraints [_2>=_0]
 
@@ -518,7 +518,7 @@ Constraints [_2>=_0]
 IsReachable=true
 isChanged=true
 ### Iteration 33 ### 
-'2' blocks in queue : [BLOCK][RETURN]
+'1' blocks in queue : [RETURN]
 blklab2 [BLOCK] 
 Constraints []
 
@@ -533,7 +533,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 34 ### 
-'2' blocks in queue : [RETURN][LOOP_HEADER]
+'1' blocks in queue : [LOOP_HEADER]
 return_3 [RETURN] 
 Constraints [return:=_3]
 
@@ -549,7 +549,7 @@ Constraints [return:=_3]
 IsReachable=true
 isChanged=true
 ### Iteration 35 ### 
-'1' blocks in queue : [LOOP_HEADER]
+'0' blocks in queue : 
 blklab1 [LOOP_HEADER] 
 Constraints []
 
@@ -564,7 +564,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 36 ### 
-'2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
+'1' blocks in queue : [LOOP_EXIT]
 blklab1 [LOOP_BODY] 
 Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 
@@ -579,7 +579,7 @@ Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 IsReachable=true
 isChanged=true
 ### Iteration 37 ### 
-'2' blocks in queue : [LOOP_EXIT][BLOCK]
+'1' blocks in queue : [BLOCK]
 blklab1 [LOOP_EXIT] 
 Constraints [_2>=_0]
 
@@ -594,7 +594,7 @@ Constraints [_2>=_0]
 IsReachable=true
 isChanged=true
 ### Iteration 38 ### 
-'2' blocks in queue : [BLOCK][RETURN]
+'1' blocks in queue : [RETURN]
 blklab2 [BLOCK] 
 Constraints []
 
@@ -609,7 +609,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 39 ### 
-'2' blocks in queue : [RETURN][LOOP_HEADER]
+'1' blocks in queue : [LOOP_HEADER]
 return_3 [RETURN] 
 Constraints [return:=_3]
 
@@ -625,7 +625,7 @@ Constraints [return:=_3]
 IsReachable=true
 isChanged=true
 ### Iteration 40 ### 
-'1' blocks in queue : [LOOP_HEADER]
+'0' blocks in queue : 
 blklab1 [LOOP_HEADER] 
 Constraints []
 
@@ -640,7 +640,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 41 ### 
-'2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
+'1' blocks in queue : [LOOP_EXIT]
 blklab1 [LOOP_BODY] 
 Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 
@@ -655,7 +655,7 @@ Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 IsReachable=true
 isChanged=true
 ### Iteration 42 ### 
-'2' blocks in queue : [LOOP_EXIT][BLOCK]
+'1' blocks in queue : [BLOCK]
 blklab1 [LOOP_EXIT] 
 Constraints [_2>=_0]
 
@@ -670,7 +670,7 @@ Constraints [_2>=_0]
 IsReachable=true
 isChanged=true
 ### Iteration 43 ### 
-'2' blocks in queue : [BLOCK][RETURN]
+'1' blocks in queue : [RETURN]
 blklab2 [BLOCK] 
 Constraints []
 
@@ -685,7 +685,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 44 ### 
-'2' blocks in queue : [RETURN][LOOP_HEADER]
+'1' blocks in queue : [LOOP_HEADER]
 return_3 [RETURN] 
 Constraints [return:=_3]
 
@@ -701,7 +701,7 @@ Constraints [return:=_3]
 IsReachable=true
 isChanged=true
 ### Iteration 45 ### 
-'1' blocks in queue : [LOOP_HEADER]
+'0' blocks in queue : 
 blklab1 [LOOP_HEADER] 
 Constraints []
 
@@ -716,7 +716,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 46 ### 
-'2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
+'1' blocks in queue : [LOOP_EXIT]
 blklab1 [LOOP_BODY] 
 Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 
@@ -731,7 +731,7 @@ Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 IsReachable=true
 isChanged=true
 ### Iteration 47 ### 
-'2' blocks in queue : [LOOP_EXIT][BLOCK]
+'1' blocks in queue : [BLOCK]
 blklab1 [LOOP_EXIT] 
 Constraints [_2>=_0]
 
@@ -746,7 +746,7 @@ Constraints [_2>=_0]
 IsReachable=true
 isChanged=true
 ### Iteration 48 ### 
-'2' blocks in queue : [BLOCK][RETURN]
+'1' blocks in queue : [RETURN]
 blklab2 [BLOCK] 
 Constraints []
 
@@ -761,7 +761,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 49 ### 
-'2' blocks in queue : [RETURN][LOOP_HEADER]
+'1' blocks in queue : [LOOP_HEADER]
 return_3 [RETURN] 
 Constraints [return:=_3]
 
@@ -777,7 +777,7 @@ Constraints [return:=_3]
 IsReachable=true
 isChanged=true
 ### Iteration 50 ### 
-'1' blocks in queue : [LOOP_HEADER]
+'0' blocks in queue : 
 blklab1 [LOOP_HEADER] 
 Constraints []
 
@@ -792,7 +792,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 51 ### 
-'2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
+'1' blocks in queue : [LOOP_EXIT]
 blklab1 [LOOP_BODY] 
 Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 
@@ -807,7 +807,7 @@ Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 IsReachable=true
 isChanged=true
 ### Iteration 52 ### 
-'2' blocks in queue : [LOOP_EXIT][BLOCK]
+'1' blocks in queue : [BLOCK]
 blklab1 [LOOP_EXIT] 
 Constraints [_2>=_0]
 
@@ -822,7 +822,7 @@ Constraints [_2>=_0]
 IsReachable=true
 isChanged=true
 ### Iteration 53 ### 
-'2' blocks in queue : [BLOCK][RETURN]
+'1' blocks in queue : [RETURN]
 blklab2 [BLOCK] 
 Constraints []
 
@@ -837,7 +837,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 54 ### 
-'2' blocks in queue : [RETURN][LOOP_HEADER]
+'1' blocks in queue : [LOOP_HEADER]
 return_3 [RETURN] 
 Constraints [return:=_3]
 
@@ -853,7 +853,7 @@ Constraints [return:=_3]
 IsReachable=true
 isChanged=true
 ### Iteration 55 ### 
-'1' blocks in queue : [LOOP_HEADER]
+'0' blocks in queue : 
 blklab1 [LOOP_HEADER] 
 Constraints []
 
@@ -868,7 +868,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 56 ### 
-'2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
+'1' blocks in queue : [LOOP_EXIT]
 blklab1 [LOOP_BODY] 
 Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 
@@ -883,7 +883,7 @@ Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 IsReachable=true
 isChanged=true
 ### Iteration 57 ### 
-'2' blocks in queue : [LOOP_EXIT][BLOCK]
+'1' blocks in queue : [BLOCK]
 blklab1 [LOOP_EXIT] 
 Constraints [_2>=_0]
 
@@ -898,7 +898,7 @@ Constraints [_2>=_0]
 IsReachable=true
 isChanged=true
 ### Iteration 58 ### 
-'2' blocks in queue : [BLOCK][RETURN]
+'1' blocks in queue : [RETURN]
 blklab2 [BLOCK] 
 Constraints []
 
@@ -913,7 +913,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 59 ### 
-'2' blocks in queue : [RETURN][LOOP_HEADER]
+'1' blocks in queue : [LOOP_HEADER]
 return_3 [RETURN] 
 Constraints [return:=_3]
 
@@ -929,7 +929,7 @@ Constraints [return:=_3]
 IsReachable=true
 isChanged=true
 ### Iteration 60 ### 
-'1' blocks in queue : [LOOP_HEADER]
+'0' blocks in queue : 
 blklab1 [LOOP_HEADER] 
 Constraints []
 
@@ -944,7 +944,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 61 ### 
-'2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
+'1' blocks in queue : [LOOP_EXIT]
 blklab1 [LOOP_BODY] 
 Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 
@@ -959,7 +959,7 @@ Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 IsReachable=true
 isChanged=true
 ### Iteration 62 ### 
-'2' blocks in queue : [LOOP_EXIT][BLOCK]
+'1' blocks in queue : [BLOCK]
 blklab1 [LOOP_EXIT] 
 Constraints [_2>=_0]
 
@@ -974,7 +974,7 @@ Constraints [_2>=_0]
 IsReachable=true
 isChanged=true
 ### Iteration 63 ### 
-'2' blocks in queue : [BLOCK][RETURN]
+'1' blocks in queue : [RETURN]
 blklab2 [BLOCK] 
 Constraints []
 
@@ -989,7 +989,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 64 ### 
-'2' blocks in queue : [RETURN][LOOP_HEADER]
+'1' blocks in queue : [LOOP_HEADER]
 return_3 [RETURN] 
 Constraints [return:=_3]
 
@@ -1005,7 +1005,7 @@ Constraints [return:=_3]
 IsReachable=true
 isChanged=true
 ### Iteration 65 ### 
-'1' blocks in queue : [LOOP_HEADER]
+'0' blocks in queue : 
 blklab1 [LOOP_HEADER] 
 Constraints []
 
@@ -1020,7 +1020,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 66 ### 
-'2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
+'1' blocks in queue : [LOOP_EXIT]
 blklab1 [LOOP_BODY] 
 Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 
@@ -1035,7 +1035,7 @@ Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
 IsReachable=true
 isChanged=true
 ### Iteration 67 ### 
-'2' blocks in queue : [LOOP_EXIT][BLOCK]
+'1' blocks in queue : [BLOCK]
 blklab1 [LOOP_EXIT] 
 Constraints [_2>=_0]
 
@@ -1050,7 +1050,7 @@ Constraints [_2>=_0]
 IsReachable=true
 isChanged=true
 ### Iteration 68 ### 
-'2' blocks in queue : [BLOCK][RETURN]
+'1' blocks in queue : [RETURN]
 blklab2 [BLOCK] 
 Constraints []
 
@@ -1065,7 +1065,7 @@ Constraints []
 IsReachable=true
 isChanged=true
 ### Iteration 69 ### 
-'2' blocks in queue : [RETURN][LOOP_HEADER]
+'1' blocks in queue : [LOOP_HEADER]
 return_3 [RETURN] 
 Constraints [return:=_3]
 
@@ -1081,7 +1081,7 @@ Constraints [return:=_3]
 IsReachable=true
 isChanged=true
 ### Iteration 70 ### 
-'1' blocks in queue : [LOOP_HEADER]
+'0' blocks in queue : 
 blklab1 [LOOP_HEADER] 
 Constraints []
 
@@ -1117,14 +1117,14 @@ main.5 [	indirectinvoke () = %5 (%1) : method(any)->()]
 main.6 [	assert]
 main.7 [	return]
 ### Iteration 0 ### 
-'2' blocks in queue : [ENTRY][BLOCK]
+'1' blocks in queue : [BLOCK]
 entry [ENTRY] 
 Constraints []
 
 IsReachable=true
 isChanged=false
 ### Iteration 1 ### 
-'1' blocks in queue : [BLOCK]
+'0' blocks in queue : 
 code [BLOCK] 
 Constraints [_3:=43, _2:=[0..null], _1:=_2]
 

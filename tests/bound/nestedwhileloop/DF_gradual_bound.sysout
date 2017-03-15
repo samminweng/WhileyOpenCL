@@ -1,12 +1,3 @@
-WARNING: version numbering unavailable
-Parsed 1 source file(s). ....................................................... [80ms+1mb]
-Typed 1 source file(s). ....................................................... [188ms+1mb]
-Generated code for 1 source file(s). .............................................. [227ms]
-[./nestedwhileloop.whiley] applied definite assignment check .................... [2ms+1mb]
-[./nestedwhileloop.whiley] applied module check ..................................... [2ms]
-[./nestedwhileloop.whiley] applied loop variants ................................ [0ms+1mb]
-[./nestedwhileloop.whiley] applied coercion check ................................... [1ms]
-Whiley => Wyil: compiled 1 file(s) ............................................ [547ms-1mb]
 main.0 [	const %3 = 5 : int]
 main.1 [	invoke (%2) = (%3) nestedwhileloop:f : function(int)->(int)]
 ### Iteration 0 ### 
