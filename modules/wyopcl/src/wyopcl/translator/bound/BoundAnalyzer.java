@@ -292,18 +292,7 @@ public class BoundAnalyzer {
 		// Stop the loop when the changed is empty
 		while (!changed.isEmpty()) {
 			// Initialize the flag
-			boolean isChanged = false;
-
-
-			// Retrieve a block from the 'changed' queue
-			BoundBlock blk;	
-			if(config.getTraversal().equals("DF")){
-				// Get the last block of the deque in Depth-First (last in first out) manner
-				blk = changed.pollLast();
-			}else{
-				// Get the first block of the deque in Breath-First (first in first out) manner
-				blk = changed.pollFirst();
-			}		
+			boolean isChanged = false;		
 
 			// Debugging messages
 			//if (config.isVerbose() && blk.getType() == BlockType.LOOP_HEADER) {
@@ -318,6 +307,16 @@ public class BoundAnalyzer {
 				System.out.println(str);
 			}
 
+
+			// Retrieve a block from the 'changed' queue
+			BoundBlock blk;	
+			if(config.getTraversal().equals("DF")){
+				// Get the last block of the deque in Depth-First (last in first out) manner
+				blk = changed.pollLast();
+			}else{
+				// Get the first block of the deque in Breath-First (first in first out) manner
+				blk = changed.pollFirst();
+			}
 
 			// Clone the bounds before the bound inference
 			Bounds bnd_before = (Bounds) blk.getBounds().clone();
@@ -347,7 +346,7 @@ public class BoundAnalyzer {
 				// Check if the blk has any child nodes
 				if(blk.hasChild() == true){
 					for(BoundBlock child : blk.getChildNodes()){
-						if (!child.getType().equals(BlockType.EXIT)) {
+						if (!child.getType().equals(BlockType.EXIT) && changed.contains(child) == false) {
 							// If bounds has changed, then add its child nodes to 'changed set'
 							changed.add(child);
 						}
