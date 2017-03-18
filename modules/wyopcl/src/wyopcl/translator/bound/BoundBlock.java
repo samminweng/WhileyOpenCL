@@ -26,6 +26,11 @@ import wyopcl.translator.bound.constraint.Range;
  *
  */
 public class BoundBlock implements Comparable<BoundBlock> {
+	// Prefix of the variable
+	private final String prefix = "_";
+	// The set of variable in the block, that will be passed onto the parent block
+	private List<String> vars;
+	
 	private CodeBlock codeBlock;// Store all the byte-code for a block
 	private List<Constraint> constraints;
 	private List<BoundBlock> childNodes = null;
@@ -34,6 +39,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	private String label;
 	private BlockType type;
 	private Bounds bounds;
+	
 	// Indicate if the bounds remain unchanged. False: unchanged. True: changed.
 	//private boolean isChanged;
 	//private Bounds bnd_before; 
@@ -116,6 +122,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 		this.bounds = new Bounds();
 		this.constraints = new ArrayList<Constraint>();
 		this.codeBlock = new CodeBlock();
+		this.vars = new ArrayList<String>();
 	}
 
 	/**
@@ -308,9 +315,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	 *            the constraint
 	 */
 	public void addConstraint(Constraint c) {
-		if (c != null && !constraints.contains(c)) {
-			constraints.add(c);
-		}
+		constraints.add(c);
 	}
 
 	public Bounds getBounds() {
@@ -436,6 +441,10 @@ public class BoundBlock implements Comparable<BoundBlock> {
 		for (Constraint c : this.constraints) {
 			c.inferBound(this.bounds);
 		}
+	}
+
+	public void addVars(String op) {
+		this.vars.add(op);		
 	}
 	
 }

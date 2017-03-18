@@ -38,6 +38,15 @@ public class Assign extends Constraint{
 		bnd.getDomain(x).set(bnd.getDomain(y));
 		//return bnd.isChanged;
 	}
+	// Return the left op
+	public String getLeftOp(){
+		return this.x;
+	}
+	// Return the right op
+	public String getRightOp(){
+		return this.y;
+	}
+	
 	@Override
 	public String toString() {
 		return x + ":=" + y;

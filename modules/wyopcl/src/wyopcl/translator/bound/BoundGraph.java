@@ -16,7 +16,9 @@ import wyil.lang.Type;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 import wyopcl.translator.bound.BoundBlock.BlockType;
+import wyopcl.translator.bound.constraint.Assign;
 import wyopcl.translator.bound.constraint.Constraint;
+import wyrl.io.SpecLexer.RightAngle;
 
 /**
  * Creates, retrieves and stores basic blocks for a function (bound analysis only).
@@ -157,11 +159,6 @@ public class BoundGraph {
 	 * @return
 	 */
 	public BoundBlock getCurrentBlock() {
-		// If the current block is null, throw out an Runtime exception
-		/*if (current_blk == null) {
-			throw new RuntimeException("Current block is null.");
-			// current_blk = entry;
-		}*/
 		return current_blk;
 	}
 
@@ -281,7 +278,9 @@ public class BoundGraph {
 	 * @param c
 	 */
 	public void addConstraint(Constraint c) {
+		// Add the constraint to current block
 		getCurrentBlock().addConstraint(c);
+		
 	}
 
 	/**
@@ -355,39 +354,6 @@ public class BoundGraph {
 		return changed;
 	}
 
-	/**
-	 * According to tree traversal (Depth-first/Breath-first), 
-	 * retrieve one block from 'changed' queue
-	 * 
-	 * 
-	 * @param config
-	 * @return
-	 */
-	public BoundBlock retrieveBlockFromDeque(Configuration config, int iteration) {
-
-		// Debugging messages
-		if (config.isVerbose()) {
-			System.out.println("### Iteration " + iteration + " ### ");
-			String str = "'" + changed.size() + "' blocks in queue : ";
-			Iterator<BoundBlock> iterator = changed.iterator();
-			while(iterator.hasNext()){
-				BoundBlock blk = iterator.next();
-				str += "[" + blk.getType()+ "]";
-			}
-			System.out.println(str);
-		}
-
-		BoundBlock blk;
-		if(config.getTraversal().equals("DF")){
-			// Get the last block of the deque in Depth-First (last in first out) manner
-			blk = changed.pollLast();
-		}else{
-			// Get the first block of the deque in Breath-First (first in first out) manner
-			blk = changed.pollFirst();
-		}
-		return blk;
-	}
-	
 	
 	
 	/**
@@ -418,6 +384,19 @@ public class BoundGraph {
 		for(BoundBlock blk: this.getBlockList()){
 			blk.emptyBounds();
 		}		
+	}
+
+	/**
+	 * Put the variable to 'Vars' set of current block
+	 * So the bound of the variable in 'Vars' set will be propagated into child block
+	 * as initial bound of that child block
+	 * 
+	 * @param op
+	 */
+	public void addVars(String op) {
+		// Add the constraint to current block
+		getCurrentBlock().addVars(op);
+		
 	}
 
 }

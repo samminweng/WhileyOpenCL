@@ -405,12 +405,12 @@ public class BoundAnalyzer {
 	}	
 
 	private void analyze(Codes.Assign code, FunctionOrMethod function) {
-		String target_reg = prefix + code.target(0);
-		String op_reg = prefix + code.operand(0);
+		String left_op = prefix + code.target(0);
+		String right_op = prefix + code.operand(0);
 		if (code.type(0) instanceof Type.Array) {
 			// Add the constraint to the size variable of target array
 			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-			graph.addConstraint(new Assign(target_reg+"_size", op_reg+"_size"));
+			graph.addConstraint(new Assign(left_op+"_size", right_op+"_size"));
 		}
 
 		// Check if the assigned value is an integer
@@ -418,7 +418,12 @@ public class BoundAnalyzer {
 			// Add the constraint 'target = operand'
 			if (!BoundAnalyzerHelper.isCached(function)) {
 				BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-				graph.addConstraint(new Assign(target_reg, op_reg));
+				// Add 'Assign' constraint to current block 
+				graph.addConstraint(new Assign(left_op, right_op));
+				
+				// Put the left variable to 'vars' set
+				graph.addVars(left_op);
+				
 			}
 		}
 	}
