@@ -70,12 +70,21 @@ public final class BaseTestUtil {
 	 */
 	private void assertOutput(BufferedReader output_reader, BufferedReader expected_reader) throws IOException {
 		String expected = null;
+		boolean isSkip = true;
 		// Takes out each line from expected file and check if it matches with
-		// each line from the output.
-		while ((expected = expected_reader.readLine()) != null) {
-			String output = output_reader.readLine();
-			System.out.println(output);
-			assertEquals(expected, output);
+		// 1000 line from the output.
+		while (((expected = expected_reader.readLine()) != null)) {
+			if(isSkip == false){
+				// Check if the output is the same as expected.
+				String output = output_reader.readLine();
+				System.out.println(output);
+				assertEquals(expected, output);
+			}
+			
+			if(expected.startsWith("Whiley => Wyil: compiled 1 file(s)")){
+				isSkip = false;
+			}
+			
 		}
 		// Nullify the file input/output objects.
 		expected_reader.close();
@@ -174,14 +183,42 @@ public final class BaseTestUtil {
 			// Change the folder Run the command
 			process = rt.exec(cmd, null, destDir.toFile());
 			
-			process.waitFor();
+			//process.waitFor();
 			
 			// Start the process to analyse the bounds
 			InputStream input = process.getInputStream();
 			
+			Scanner in_sc = new Scanner(input);
+			//BufferedReader output_reader = new BufferedReader(new InputStreamReader(input, Charset.forName("UTF-8")));
+			BufferedReader expected_reader = Files.newBufferedReader(sysout, StandardCharsets.UTF_8);
+			
 			// Check the bound results against pre-stored results
-			assertOutput(new BufferedReader(new InputStreamReader(input, Charset.forName("UTF-8"))),
-					Files.newBufferedReader(sysout, StandardCharsets.UTF_8));
+			String expected = null;
+			boolean isSkip = true;
+			
+			// Takes out each line from expected file and check if it matches with
+			// 1000 line from the output.
+			while (((expected = expected_reader.readLine()) != null)) {
+				if(isSkip == false){
+					// Check if the output is the same as expected.
+					String output = in_sc.nextLine();
+					System.out.println(output);
+					assertEquals(expected, output);					
+				}
+				
+				if(expected.startsWith("Whiley => Wyil: compiled 1 file(s)")){
+					isSkip = false;
+				}
+				
+			}
+			// Nullify the file input/output objects.
+			expected_reader.close();
+			in_sc.close();
+			
+			process.waitFor();
+			if(process.exitValue() != 0){
+				throw new RuntimeException("Fail " + testcase + ".whiley\t Exit value:"+process.exitValue()); 
+			}
 			
 			// Remove all generated WyIL files.
 			Files.deleteIfExists(Paths.get(destDir + testcase + ".wyil"));

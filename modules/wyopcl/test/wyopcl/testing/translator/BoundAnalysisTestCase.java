@@ -21,7 +21,7 @@ public class BoundAnalysisTestCase {
 	private static String testcase;// A list of test cases
 	
     @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 seconds per test
+    public Timeout globalTimeout = Timeout.seconds(60); // 60 seconds per test
 	
 	@Before
 	public void initialize() throws Exception {
@@ -51,7 +51,7 @@ public class BoundAnalysisTestCase {
 				"ifelse", 
 				"whileloop",
 				//"whileloop1",
-				//"nestedwhileloop",
+				"nestedwhileloop",
 				//"bubblesort"
 			});
 	}
@@ -60,13 +60,16 @@ public class BoundAnalysisTestCase {
 	@Test
 	public void testDFNaiveBound() {
 		// Run bound analysis and check analysis results 
-		util.execBoundAnalysis(sourceDir, testcase, "-bound", "naive", "-verbose");
+		util.execBoundAnalysis(sourceDir, testcase, "-bound", "naive", "-verbose", "-traversal", "DF");
+		System.out.println("Pass "+testcase + " with naive widen + depth-first search");
+		
 	}
 	
 	// Gradual widen + Depth-first traversal
 	@Test
 	public void testDFGradualBound() {
-		util.execBoundAnalysis(sourceDir, testcase, "-bound", "gradual", "-verbose");
+		util.execBoundAnalysis(sourceDir, testcase, "-bound", "gradual", "-verbose", "-traversal", "DF");
+		System.out.println("Pass "+testcase + " with gradual widen + depth-first search");
 	}
 	
 	// Naive widen + Breath-first traversal
@@ -74,15 +77,17 @@ public class BoundAnalysisTestCase {
 	public void testBFNaiveBound() {
 		// Run bound analysis and check analysis results 
 		util.execBoundAnalysis(sourceDir, testcase, "-bound", "naive", "-verbose", "-traversal", "BF");
+		System.out.println("Pass "+testcase + " with naive widen + breath-first search");
 	}
 	// Gradual widen + Breath-first traversal
 	@Test
 	public void testBFGradualBound() {
 		util.execBoundAnalysis(sourceDir, testcase, "-bound", "gradual", "-verbose", "-traversal", "BF");
+		System.out.println("Pass "+testcase + " with gradual widen + breath-first search");
 	}
 	
 	
-	@Test
+	/*@Test
 	public void testNaiveBoundNaiveCCode(){
 		// Run bound analysis and Generate naive C code
 		System.out.print("Bound Analysis: Naive Widen Strategy + Naive C code\n");
@@ -138,6 +143,6 @@ public class BoundAnalysisTestCase {
 		// Run bound analysis and Generate naive C code
 		System.out.print("Bound Analysis: Gradual Widen Strategy + No Copy C code\n");
 		util.execCodeGeneration(sourceDir, testcase, "-bound", "gradual", "-code", "-nocopy", "-dealloc");
-	}
+	}*/
 	
 }

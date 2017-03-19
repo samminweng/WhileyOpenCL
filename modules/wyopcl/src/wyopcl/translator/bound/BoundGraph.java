@@ -387,16 +387,20 @@ public class BoundGraph {
 	}
 
 	/**
-	 * Put the variable to 'Vars' set of current block
-	 * So the bound of the variable in 'Vars' set will be propagated into child block
-	 * as initial bound of that child block
+	 * Put the variable to dead 'Vars' set in current block
+	 * So the bound of the variable in 'Vars' set will NOT pass to child blocks
 	 * 
 	 * @param op
 	 */
-	public void addVars(String op) {
-		// Add the constraint to current block
-		getCurrentBlock().addVars(op);
+	public void addDeadVar(String var) {
+		// Add the variable to current block
+		getCurrentBlock().addVar(var);
 		
+	}
+
+	public void removeDeadVar(String var) {
+		// Remove variable from dead set
+		getCurrentBlock().removeVar(var);
 	}
 
 }

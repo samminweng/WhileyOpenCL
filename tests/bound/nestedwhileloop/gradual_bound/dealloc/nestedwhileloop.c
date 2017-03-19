@@ -73,8 +73,8 @@ int main(int argc, char** args){
 	uint16_t _3 = 0;
 	void* _4;
 	int64_t _6 = 0;
-	//const %3 = 5 : int
-	_3 = 5;
+	//const %3 = 43 : int
+	_3 = 43;
 	//invoke (%2) = (%3) nestedwhileloop:f : function(int)->(int)
 	{
 		_2 = _f_(_3);

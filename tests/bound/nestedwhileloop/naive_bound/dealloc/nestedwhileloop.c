@@ -10,7 +10,7 @@ int64_t _f_(int64_t limit){
 	int64_t _8 = 0;
 	int64_t _9 = 0;
 	uint16_t _10 = 0;
-	int64_t _11 = 0;
+	uint16_t _11 = 0;
 	uint16_t _12 = 0;
 	uint16_t _13 = 0;
 	//const %5 = 0 : int
@@ -44,7 +44,6 @@ int64_t _f_(int64_t limit){
 			//const %10 = 1 : int
 			_10 = 1;
 			//add %11 = %4, %10 : int
-			_DETECT_INT_ADD_OVERFLOW(j,_10,_11);
 			_11=j+_10;
 			//assign %4 = %11  : int
 			j = _11;
@@ -75,8 +74,8 @@ int main(int argc, char** args){
 	uint16_t _3 = 0;
 	void* _4;
 	int64_t _6 = 0;
-	//const %3 = 5 : int
-	_3 = 5;
+	//const %3 = 43 : int
+	_3 = 43;
 	//invoke (%2) = (%3) nestedwhileloop:f : function(int)->(int)
 	{
 		_2 = _f_(_3);

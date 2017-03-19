@@ -4,8 +4,11 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import wyil.lang.Code;
@@ -28,9 +31,9 @@ import wyopcl.translator.bound.constraint.Range;
 public class BoundBlock implements Comparable<BoundBlock> {
 	// Prefix of the variable
 	private final String prefix = "_";
-	// The set of variable in the block, that will be passed onto the parent block
-	private List<String> vars;
-	
+	// The set of dead variable in the block, that will be passed onto the parent block
+	private Set<String> dead_vars;
+
 	private CodeBlock codeBlock;// Store all the byte-code for a block
 	private List<Constraint> constraints;
 	private List<BoundBlock> childNodes = null;
@@ -39,11 +42,6 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	private String label;
 	private BlockType type;
 	private Bounds bounds;
-	
-	// Indicate if the bounds remain unchanged. False: unchanged. True: changed.
-	//private boolean isChanged;
-	//private Bounds bnd_before; 
-	//private Bounds bnd_after;
 
 	public enum BlockType {
 		ENTRY(0) {
@@ -122,7 +120,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 		this.bounds = new Bounds();
 		this.constraints = new ArrayList<Constraint>();
 		this.codeBlock = new CodeBlock();
-		this.vars = new ArrayList<String>();
+		this.dead_vars = new HashSet<String>();
 	}
 
 	/**
@@ -369,7 +367,8 @@ public class BoundBlock implements Comparable<BoundBlock> {
 			}
 			str += "\n-------------------------------";
 		}
-		//Display the bounds and constraints.
+		//Display the vars set,  bounds and constraints.
+		str += String.format("%n%s %s", "Dead Vars", this.dead_vars);
 		//Print out the constraints
 		str += String.format("%n%s %s%n", "Constraints", this.constraints);
 		//Print out the bounds
@@ -428,7 +427,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 		return true;
 	}
 
-	
+
 
 	/**
 	 * Iterate through the constraints to infer the bounds
@@ -443,8 +442,53 @@ public class BoundBlock implements Comparable<BoundBlock> {
 		}
 	}
 
-	public void addVars(String op) {
-		this.vars.add(op);		
+	/**
+	 * add the variable 'var' to 'Vars' set.
+	 * 
+	 * @param var
+	 */
+	public void addVar(String var) {
+		this.dead_vars.add(var);		
 	}
-	
+
+	/**
+	 * Check 'var' is in the 'Vars' set
+	 * @param var
+	 * @return
+	 */
+	public boolean isDeadVars(String var){
+		return this.dead_vars.contains(var);
+	}
+
+
+
+	public void produceInputBound() {
+		// Reset the block bounds
+		this.emptyBounds();
+
+		// Produce the input bound by taking union of bound in all parent blocks before bound inference 
+		for (BoundBlock parent : this.getParentNodes()) {
+			// Get all the domains in parent blocks
+			HashMap<String, Domain> parent_domains = parent.bounds.getBounds();
+			Iterator<Entry<String, Domain>> iterator = parent_domains.entrySet().iterator();
+			while(iterator.hasNext()){
+				Entry<String, Domain> entry = iterator.next();
+				// Get variable
+				String var = entry.getKey();
+				// Get new domain
+				Domain new_domain = entry.getValue();
+				// Check if the variable is in 'Vars'
+				if(!parent.isDeadVars(var)){
+					this.bounds.union(var, new_domain);
+				}
+			}
+
+		}
+
+	}
+
+	public void removeVar(String var) {
+		this.dead_vars.remove(var);
+	}
+
 }

@@ -283,6 +283,15 @@ public class Bounds implements Cloneable {
 	}
 	
 	/**
+	 * Take the union of current and new domains
+	 * 
+	 * @param new_domain
+	 */
+	public void union(String var, Domain new_domain){
+		getDomain(var).union(new_domain);
+	}
+	
+	/**
 	 * Perform the intersection of new and old bounds
 	 * and return the resulting bounds.
 	 * 

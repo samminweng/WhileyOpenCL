@@ -321,15 +321,11 @@ public class BoundAnalyzer {
 			// Clone the bounds before the bound inference
 			Bounds bnd_before = (Bounds) blk.getBounds().clone();
 
-			// Reset the block bounds
-			blk.emptyBounds();
+			
 
-			// Produce the input bound by taking union of bound
-			// in all parent blocks before bound inference 
-			for (BoundBlock parent : blk.getParentNodes()) {
-				// Take the bounds of parent nodes
-				blk.unionBounds(parent);
-			}
+			blk.produceInputBound();
+			
+			
 
 			// Beginning of bound inference.
 			blk.inferBounds();
@@ -405,12 +401,12 @@ public class BoundAnalyzer {
 	}	
 
 	private void analyze(Codes.Assign code, FunctionOrMethod function) {
-		String left_op = prefix + code.target(0);
-		String right_op = prefix + code.operand(0);
+		String left = prefix + code.target(0);
+		String right = prefix + code.operand(0);
 		if (code.type(0) instanceof Type.Array) {
 			// Add the constraint to the size variable of target array
 			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-			graph.addConstraint(new Assign(left_op+"_size", right_op+"_size"));
+			graph.addConstraint(new Assign(left+"_size", right+"_size"));
 		}
 
 		// Check if the assigned value is an integer
@@ -419,10 +415,12 @@ public class BoundAnalyzer {
 			if (!BoundAnalyzerHelper.isCached(function)) {
 				BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
 				// Add 'Assign' constraint to current block 
-				graph.addConstraint(new Assign(left_op, right_op));
+				graph.addConstraint(new Assign(left, right));
 				
-				// Put the left variable to 'vars' set
-				graph.addVars(left_op);
+				// Put the right variable to dead 'vars' set
+				graph.addDeadVar(right);
+				// Take out left variable from dead vars set as it becom alive again
+				graph.removeDeadVar(left);
 				
 			}
 		}
@@ -529,6 +527,9 @@ public class BoundAnalyzer {
 					// Create if and else branches.
 					graph.createIfElseBranch(code.target, c, neg_c);
 				}
+				
+				
+				
 			}
 		}
 	}
@@ -688,26 +689,28 @@ public class BoundAnalyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.BinaryOperator code, FunctionOrMethod function) {
-		String target = prefix + code.target(0);
+		String left = prefix + code.target(0);
 		// Add the type att
 		if (BoundAnalyzerHelper.isIntType(code.type(0)) && !BoundAnalyzerHelper.isCached(function)) {
 			// Get the values
 			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
+			// Get the two right ops
+			String right0 = prefix + code.operand(0);
+			String right1 = prefix + code.operand(1);
 			switch (code.kind) {
 			case ADD:
 				// Use the left plus to represent the addition
-				graph.addConstraint(new LeftPlus(prefix + code.operand(0), prefix + code.operand(1), target));
-				//graph.addConstraint(new Plus(prefix + code.operand(0), prefix + code.operand(1), target));
+				graph.addConstraint(new LeftPlus(right0, right1, left));
 				break;
 			case SUB:
 				// Negated the operand
 				graph.addConstraint(new Negate(prefix + code.operand(1), prefix + code.operand(1)));
 				// Use the left plus to represent the subtraction.
-				graph.addConstraint(new LeftPlus(prefix + code.operand(0), prefix + code.operand(1), target));
+				graph.addConstraint(new LeftPlus(prefix + code.operand(0), prefix + code.operand(1), left));
 				//graph.addConstraint(new Plus(prefix + code.operand(0), prefix + code.operand(1), target));
 				break;
 			case MUL:
-				graph.addConstraint(new LeftMultiply(prefix+ code.operand(0), prefix + code.operand(1), target));
+				graph.addConstraint(new LeftMultiply(right0, right1, left));
 				break;
 			case DIV:
 				break;
