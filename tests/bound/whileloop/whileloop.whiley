@@ -21,5 +21,3 @@ requires limit <= 1000000:
 method main(System.Console sys):
     int a = f(43)
     sys.out.println(a)
-    assert a == 903
-

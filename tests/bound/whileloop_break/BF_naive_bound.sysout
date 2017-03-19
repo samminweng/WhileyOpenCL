@@ -1,0 +1,119 @@
+WARNING: version numbering unavailable
+Parsed 1 source file(s). ....................................................... [51ms+1mb]
+Typed 1 source file(s). ........................................................ [72ms+1mb]
+Generated code for 1 source file(s). ............................................... [18ms]
+[./whileloop_break.whiley] applied definite assignment check ........................ [2ms]
+[./whileloop_break.whiley] applied module check ................................. [1ms+1mb]
+[./whileloop_break.whiley] applied loop variants ................................ [1ms+1mb]
+[./whileloop_break.whiley] applied coercion check ................................... [1ms]
+Whiley => Wyil: compiled 1 file(s) ............................................ [170ms-1mb]
+main.0 [	const %3 = 43 : int]
+main.1 [	const %4 = 10 : int]
+main.2 [	invoke (%2) = (%3, %4) whileloop_break:find : function(int,int)->(int)]
+### Iteration 0 ### 
+'2' blocks in queue : [ENTRY][BLOCK]
+entry [ENTRY] 
+Dead Vars []
+Constraints []
+
+IsReachable=true
+isChanged=false
+### Iteration 1 ### 
+'1' blocks in queue : [BLOCK]
+code [BLOCK] 
+Dead Vars []
+Constraints [_3:=43, _4:=10]
+
+	domain(_3)	= [43..43]	
+	domain(_4)	= [10..10]	
+IsReachable=true
+isChanged=true
+=================================
+
+Bound Analysis of 'main' function:
+	domain(_3)	=[43..43]
+	domain(_4)	=[10..10]
+Consistency=true
+
+=================================
+find.0 [	const %4 = 0 : int]
+find.1 [	assign %3 = %4  : int]
+find.2 [	loop (%3, %5, %6, %7)]
+find.3 [	invariant]
+find.4 [	ifge %3, %0 goto blklab0 : int]
+find.5 [	ifne %3, %1 goto blklab3 : int]
+find.6 [	goto blklab0]
+find.7 [.blklab3]
+find.8 [	const %6 = 1 : int]
+find.9 [	add %7 = %3, %6 : int]
+find.10 [	assign %3 = %7  : int]
+find.11 [.blklab1]
+find.12 [.blklab0]
+find.13 [	return %3]
+find.14 [	return]
+### Iteration 0 ### 
+'2' blocks in queue : [ENTRY][BLOCK]
+entry [ENTRY] 
+Dead Vars []
+Constraints [_0:=[43..43], _1:=[10..10]]
+
+	domain(_0)	= [43..43]	
+	domain(_1)	= [10..10]	
+IsReachable=true
+isChanged=true
+### Iteration 1 ### 
+'1' blocks in queue : [BLOCK]
+code [BLOCK] 
+Dead Vars [_4]
+Constraints [_4:=0, _3:=_4, _0:=[43..43], _1:=[10..10]]
+
+	domain(_0)	= [43..43]	
+	domain(_1)	= [10..10]	
+	domain(_3)	= [0..0]	
+	domain(_4)	= [0..0]	
+IsReachable=true
+isChanged=true
+### Iteration 2 ### 
+'1' blocks in queue : [LOOP_HEADER]
+blklab0 [LOOP_HEADER] 
+Dead Vars []
+Constraints []
+
+	domain(_0)	= [43..43]	
+	domain(_1)	= [10..10]	
+	domain(_3)	= [0..0]	
+IsReachable=true
+isChanged=true
+### Iteration 3 ### 
+'2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
+blklab0 [LOOP_BODY] 
+Dead Vars []
+Constraints [_3<_0]
+
+	domain(_0)	= [43..43]	
+	domain(_1)	= [10..10]	
+	domain(_3)	= [0..0]	
+IsReachable=true
+Errors on Bound Analysis
+isChanged=true
+### Iteration 4 ### 
+'3' blocks in queue : [LOOP_EXIT][IF][ELSE]
+blklab0 [LOOP_EXIT] 
+Dead Vars []
+Constraints [_3>=_0]
+
+	domain(_0)	= [empty..empty]	
+	domain(_1)	= [10..10]	
+	domain(_3)	= [empty..empty]	
+IsReachable=false
+isChanged=false
+### Iteration 5 ### 
+'2' blocks in queue : [IF][ELSE]
+java.lang.RuntimeException: Errors on Bound Analysis
+	at wyopcl.translator.Translator.build(Translator.java:182)
+	at wybs.util.StdBuildRule.apply(StdBuildRule.java:109)
+	at wybs.util.StdProject.build(StdProject.java:256)
+	at wyc.util.WycBuildTask.buildEntries(WycBuildTask.java:531)
+	at wyc.util.WycBuildTask.build(WycBuildTask.java:499)
+	at wyopcl.WyopclMain.run(WyopclMain.java:141)
+	at wyopcl.WyopclMain.main(WyopclMain.java:170)

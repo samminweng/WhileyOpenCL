@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -51,8 +52,7 @@ import wyopcl.translator.bound.constraint.Plus;
 public class BoundAnalyzer {
 	private final String prefix = "_";
 	private Configuration config;
-	// The boolean flag indicates the byte-code is inside loop structure.
-	private boolean isLoop;
+	private Set<String> loop_labels; // Store the loop labels in a function
 	// The line number
 	private int line;
 	private WyilFile module;
@@ -67,6 +67,8 @@ public class BoundAnalyzer {
 	public BoundAnalyzer(WyilFile module) {
 		this.module = module;
 		this.boundMap = new HashMap<FunctionOrMethod, Bounds>();
+		//this.isLoop = false;
+		this.loop_labels = new HashSet<String>();
 	}
 
 	/**
@@ -485,6 +487,9 @@ public class BoundAnalyzer {
 			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
 			Constraint c = null;
 			Constraint neg_c = null;
+			// Get the label 
+			String label = code.target;
+			
 			if (BoundAnalyzerHelper.isIntType(code.type(0))) {
 				switch (code.op) {
 				case EQ:
@@ -518,18 +523,15 @@ public class BoundAnalyzer {
 					throw new RuntimeException("Unknow operator (" + code + ")");
 
 				}
-
+				
 				// Check if the 'if' bytecode is the loop condition.
-				if (isLoop) {
+				if (this.loop_labels.contains(label)) {
 					// Create a loop body and loop exit.
-					graph.createLoopStructure(code.target, c, neg_c);
+					graph.createLoopStructure(label, c, neg_c);
 				} else {
 					// Create if and else branches.
-					graph.createIfElseBranch(code.target, c, neg_c);
+					graph.createIfElseBranch(label, c, neg_c);
 				}
-				
-				
-				
 			}
 		}
 	}
@@ -661,23 +663,38 @@ public class BoundAnalyzer {
 		graph.addConstraint(new Assign(target_reg, op_reg+"_size"));
 
 	}
-
+	/**
+	 * Get the first ifelse 
+	 * 
+	 * 
+	 * @param code
+	 * @param function
+	 * @return
+	 */
+	private String getFindLoopLabel(List<Code> bytecodes){
+		for(Code code : bytecodes){
+			if(code instanceof Codes.If){
+				return ((Codes.If)code).target;
+			}
+		}
+		return null;
+	}
+	
+	
 	/**
 	 * Creates a loop structure, including loop header, loop body and loop exit.
 	 * 
 	 * @param code
 	 */
 	private void analyze(Codes.Loop code,  FunctionOrMethod function) {
-		// Set the loop flag to be true,
+		
+		// Get the label byte code at the exit of loop codes
+		String loop_label = getFindLoopLabel(code.bytecodes());
+		loop_labels.add(loop_label);
 		// in order to identify the bytecode is inside a loop
-
-		isLoop = true;
-
 		// Get the list of byte-code and iterate through the list.
 		iterateBytecode(function, code.bytecodes());
-
-		// Set the flag to be false after finishing iterating all the byte-code.
-		isLoop = false;
+		
 	}
 
 
