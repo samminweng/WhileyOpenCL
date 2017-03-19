@@ -46,17 +46,6 @@ public class Negate extends Constraint{
 		Domain y_domain = new Domain("y", min, max);
 		bnd.getDomain(y).set(y_domain);
 		
-		/*if (max_x != null) {
-			//max (min_y, !min_x)
-			bnd.setLowerBound(y, max_x.negate());
-		}
-		// Add the upper bound of y variable.
-		if (min_x != null) {
-			//min (max_y, !min_x)
-			bnd.setUpperBound(y, min_x.negate());
-		}
-	*/
-		//return bnd.isChanged;
 	}
 
 

@@ -313,7 +313,11 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	 *            the constraint
 	 */
 	public void addConstraint(Constraint c) {
-		constraints.add(c);
+		// Constraint can be null, e.g. the negated equality is null
+		if(c != null){
+			constraints.add(c);
+		}
+		
 	}
 
 	public Bounds getBounds() {

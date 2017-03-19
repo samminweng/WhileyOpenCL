@@ -1,16 +1,25 @@
-Parsed 1 source file(s). ....................................................... [28ms+1mb]
-Typed 1 source file(s). ........................................................ [55ms+2mb]
-Generated code for 1 source file(s). ........................................... [11ms+1mb]
-[./whileloop_break.whiley] applied definite assignment check ........................ [1ms]
-[./whileloop_break.whiley] applied module check ..................................... [2ms]
-[./whileloop_break.whiley] applied loop variants .................................... [0ms]
-[./whileloop_break.whiley] applied coercion check ................................... [1ms]
-Whiley => Wyil: compiled 1 file(s) 
+WARNING: version numbering unavailable
+Parsed 1 source file(s). ...................................................... [165ms+1mb]
+Typed 1 source file(s). ....................................................... [297ms+1mb]
+Generated code for 1 source file(s). ............................................... [95ms]
+[./whileloop_break.whiley] applied definite assignment check ........................ [3ms]
+[./whileloop_break.whiley] applied module check ................................ [15ms+1mb]
+[./whileloop_break.whiley] applied loop variants ................................ [1ms+1mb]
+[./whileloop_break.whiley] applied coercion check .................................. [15ms]
+Whiley => Wyil: compiled 1 file(s) ............................................ [619ms-1mb]
 main.0 [	const %3 = 43 : int]
 main.1 [	const %4 = 10 : int]
 main.2 [	invoke (%2) = (%3, %4) whileloop_break:find : function(int,int)->(int)]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
+entry [ENTRY] 
+Dead Vars []
+Constraints []
+
+IsReachable=true
+isChanged=false
+### Iteration 1 ### 
+'1' blocks in queue : [BLOCK]
 code [BLOCK] 
 Dead Vars []
 Constraints [_3:=43, _4:=10]
@@ -19,14 +28,6 @@ Constraints [_3:=43, _4:=10]
 	domain(_4)	= [10..10]	
 IsReachable=true
 isChanged=true
-### Iteration 1 ### 
-'1' blocks in queue : [ENTRY]
-entry [ENTRY] 
-Dead Vars []
-Constraints []
-
-IsReachable=true
-isChanged=false
 =================================
 
 Bound Analysis of 'main' function:
@@ -52,6 +53,16 @@ find.13 [	return %3]
 find.14 [	return]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
+entry [ENTRY] 
+Dead Vars []
+Constraints [_0:=[43..43], _1:=[10..10]]
+
+	domain(_0)	= [43..43]	
+	domain(_1)	= [10..10]	
+IsReachable=true
+isChanged=true
+### Iteration 1 ### 
+'1' blocks in queue : [BLOCK]
 code [BLOCK] 
 Dead Vars [_4]
 Constraints [_4:=0, _3:=_4, _0:=[43..43], _1:=[10..10]]
@@ -62,8 +73,8 @@ Constraints [_4:=0, _3:=_4, _0:=[43..43], _1:=[10..10]]
 	domain(_4)	= [0..0]	
 IsReachable=true
 isChanged=true
-### Iteration 1 ### 
-'2' blocks in queue : [ENTRY][LOOP_HEADER]
+### Iteration 2 ### 
+'1' blocks in queue : [LOOP_HEADER]
 blklab0 [LOOP_HEADER] 
 Dead Vars []
 Constraints []
@@ -73,19 +84,8 @@ Constraints []
 	domain(_3)	= [0..0]	
 IsReachable=true
 isChanged=true
-### Iteration 2 ### 
-'3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
-blklab0 [LOOP_EXIT] 
-Dead Vars []
-Constraints [_3>=_0]
-
-	domain(_0)	= [empty..empty]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-IsReachable=false
-isChanged=false
 ### Iteration 3 ### 
-'2' blocks in queue : [ENTRY][LOOP_BODY]
+'2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_BODY] 
 Dead Vars []
 Constraints [_3<_0]
@@ -96,7 +96,29 @@ Constraints [_3<_0]
 IsReachable=true
 isChanged=true
 ### Iteration 4 ### 
-'3' blocks in queue : [ENTRY][IF][ELSE]
+'3' blocks in queue : [LOOP_EXIT][IF][ELSE]
+blklab0 [LOOP_EXIT] 
+Dead Vars []
+Constraints [_3>=_0]
+
+	domain(_0)	= [empty..empty]	
+	domain(_1)	= [10..10]	
+	domain(_3)	= [empty..empty]	
+IsReachable=false
+isChanged=false
+### Iteration 5 ### 
+'2' blocks in queue : [IF][ELSE]
+blklab3 [IF] 
+Dead Vars []
+Constraints [_3==_1]
+
+	domain(_0)	= [43..43]	
+	domain(_1)	= [empty..empty]	
+	domain(_3)	= [empty..empty]	
+IsReachable=false
+isChanged=false
+### Iteration 6 ### 
+'1' blocks in queue : [ELSE]
 blklab3 [ELSE] 
 Dead Vars [_7]
 Constraints [_3!=_1, _6:=1, _3+_6=_7, _3:=_7]
@@ -108,8 +130,8 @@ Constraints [_3!=_1, _6:=1, _3+_6=_7, _3:=_7]
 	domain(_7)	= [1..1]	
 IsReachable=true
 isChanged=true
-### Iteration 5 ### 
-'3' blocks in queue : [ENTRY][IF][BLOCK]
+### Iteration 7 ### 
+'1' blocks in queue : [BLOCK]
 blklab1 [BLOCK] 
 Dead Vars []
 Constraints []
@@ -120,8 +142,8 @@ Constraints []
 	domain(_6)	= [1..1]	
 IsReachable=true
 isChanged=true
-### Iteration 6 ### 
-'3' blocks in queue : [ENTRY][IF][LOOP_HEADER]
+### Iteration 8 ### 
+'1' blocks in queue : [LOOP_HEADER]
 blklab0 [LOOP_HEADER] 
 Dead Vars []
 Constraints []
@@ -132,20 +154,8 @@ Constraints []
 	domain(_6)	= [1..1]	
 IsReachable=true
 isChanged=true
-### Iteration 7 ### 
-'4' blocks in queue : [ENTRY][IF][LOOP_BODY][LOOP_EXIT]
-blklab0 [LOOP_EXIT] 
-Dead Vars []
-Constraints [_3>=_0]
-
-	domain(_0)	= [empty..empty]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-	domain(_6)	= [1..1]	
-IsReachable=false
-isChanged=false
-### Iteration 8 ### 
-'3' blocks in queue : [ENTRY][IF][LOOP_BODY]
+### Iteration 9 ### 
+'2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_BODY] 
 Dead Vars []
 Constraints [_3<_0]
@@ -156,8 +166,32 @@ Constraints [_3<_0]
 	domain(_6)	= [1..1]	
 IsReachable=true
 isChanged=true
-### Iteration 9 ### 
-'3' blocks in queue : [ENTRY][IF][ELSE]
+### Iteration 10 ### 
+'3' blocks in queue : [LOOP_EXIT][IF][ELSE]
+blklab0 [LOOP_EXIT] 
+Dead Vars []
+Constraints [_3>=_0]
+
+	domain(_0)	= [empty..empty]	
+	domain(_1)	= [10..10]	
+	domain(_3)	= [empty..empty]	
+	domain(_6)	= [1..1]	
+IsReachable=false
+isChanged=false
+### Iteration 11 ### 
+'2' blocks in queue : [IF][ELSE]
+blklab3 [IF] 
+Dead Vars []
+Constraints [_3==_1]
+
+	domain(_0)	= [43..43]	
+	domain(_1)	= [empty..empty]	
+	domain(_3)	= [empty..empty]	
+	domain(_6)	= [1..1]	
+IsReachable=false
+isChanged=false
+### Iteration 12 ### 
+'1' blocks in queue : [ELSE]
 blklab3 [ELSE] 
 Dead Vars [_7]
 Constraints [_3!=_1, _6:=1, _3+_6=_7, _3:=_7]
@@ -169,8 +203,8 @@ Constraints [_3!=_1, _6:=1, _3+_6=_7, _3:=_7]
 	domain(_7)	= [1..2]	
 IsReachable=true
 isChanged=true
-### Iteration 10 ### 
-'3' blocks in queue : [ENTRY][IF][BLOCK]
+### Iteration 13 ### 
+'1' blocks in queue : [BLOCK]
 blklab1 [BLOCK] 
 Dead Vars []
 Constraints []
@@ -181,8 +215,8 @@ Constraints []
 	domain(_6)	= [1..1]	
 IsReachable=true
 isChanged=true
-### Iteration 11 ### 
-'3' blocks in queue : [ENTRY][IF][LOOP_HEADER]
+### Iteration 14 ### 
+'1' blocks in queue : [LOOP_HEADER]
 blklab0 [LOOP_HEADER] 
 Dead Vars []
 Constraints []
@@ -193,20 +227,8 @@ Constraints []
 	domain(_6)	= [1..1]	
 IsReachable=true
 isChanged=true
-### Iteration 12 ### 
-'4' blocks in queue : [ENTRY][IF][LOOP_BODY][LOOP_EXIT]
-blklab0 [LOOP_EXIT] 
-Dead Vars []
-Constraints [_3>=_0]
-
-	domain(_0)	= [empty..empty]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-	domain(_6)	= [1..1]	
-IsReachable=false
-isChanged=false
-### Iteration 13 ### 
-'3' blocks in queue : [ENTRY][IF][LOOP_BODY]
+### Iteration 15 ### 
+'2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_BODY] 
 Dead Vars []
 Constraints [_3<_0]
@@ -217,8 +239,32 @@ Constraints [_3<_0]
 	domain(_6)	= [1..1]	
 IsReachable=true
 isChanged=true
-### Iteration 14 ### 
-'3' blocks in queue : [ENTRY][IF][ELSE]
+### Iteration 16 ### 
+'3' blocks in queue : [LOOP_EXIT][IF][ELSE]
+blklab0 [LOOP_EXIT] 
+Dead Vars []
+Constraints [_3>=_0]
+
+	domain(_0)	= [empty..empty]	
+	domain(_1)	= [10..10]	
+	domain(_3)	= [empty..empty]	
+	domain(_6)	= [1..1]	
+IsReachable=false
+isChanged=false
+### Iteration 17 ### 
+'2' blocks in queue : [IF][ELSE]
+blklab3 [IF] 
+Dead Vars []
+Constraints [_3==_1]
+
+	domain(_0)	= [43..43]	
+	domain(_1)	= [empty..empty]	
+	domain(_3)	= [empty..empty]	
+	domain(_6)	= [1..1]	
+IsReachable=false
+isChanged=false
+### Iteration 18 ### 
+'1' blocks in queue : [ELSE]
 blklab3 [ELSE] 
 Dead Vars [_7]
 Constraints [_3!=_1, _6:=1, _3+_6=_7, _3:=_7]
@@ -230,8 +276,8 @@ Constraints [_3!=_1, _6:=1, _3+_6=_7, _3:=_7]
 	domain(_7)	= [1..3]	
 IsReachable=true
 isChanged=true
-### Iteration 15 ### 
-'3' blocks in queue : [ENTRY][IF][BLOCK]
+### Iteration 19 ### 
+'1' blocks in queue : [BLOCK]
 blklab1 [BLOCK] 
 Dead Vars []
 Constraints []
@@ -242,45 +288,20 @@ Constraints []
 	domain(_6)	= [1..1]	
 IsReachable=true
 isChanged=true
-### Iteration 16 ### 
-'3' blocks in queue : [ENTRY][IF][LOOP_HEADER]
+### Iteration 20 ### 
+'1' blocks in queue : [LOOP_HEADER]
 blklab0 [LOOP_HEADER] 
 Dead Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
-	domain(_3)	= [0..infinity]	
+	domain(_3)	= [0..32767]	
 	domain(_6)	= [1..1]	
 IsReachable=true
 isChanged=true
-### Iteration 17 ### 
-'4' blocks in queue : [ENTRY][IF][LOOP_BODY][LOOP_EXIT]
-blklab0 [LOOP_EXIT] 
-Dead Vars []
-Constraints [_3>=_0]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [43..infinity]	
-	domain(_6)	= [1..1]	
-IsReachable=true
-isChanged=true
-### Iteration 18 ### 
-'4' blocks in queue : [ENTRY][IF][LOOP_BODY][RETURN]
-return_3 [RETURN] 
-Dead Vars []
-Constraints [return:=_3]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [43..infinity]	
-	domain(_6)	= [1..1]	
-	domain(return)	= [43..infinity]	
-IsReachable=true
-isChanged=true
-### Iteration 19 ### 
-'3' blocks in queue : [ENTRY][IF][LOOP_BODY]
+### Iteration 21 ### 
+'2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_BODY] 
 Dead Vars []
 Constraints [_3<_0]
@@ -291,8 +312,32 @@ Constraints [_3<_0]
 	domain(_6)	= [1..1]	
 IsReachable=true
 isChanged=true
-### Iteration 20 ### 
-'3' blocks in queue : [ENTRY][IF][ELSE]
+### Iteration 22 ### 
+'3' blocks in queue : [LOOP_EXIT][IF][ELSE]
+blklab0 [LOOP_EXIT] 
+Dead Vars []
+Constraints [_3>=_0]
+
+	domain(_0)	= [43..43]	
+	domain(_1)	= [10..10]	
+	domain(_3)	= [43..32767]	
+	domain(_6)	= [1..1]	
+IsReachable=true
+isChanged=true
+### Iteration 23 ### 
+'3' blocks in queue : [IF][ELSE][RETURN]
+blklab3 [IF] 
+Dead Vars []
+Constraints [_3==_1]
+
+	domain(_0)	= [43..43]	
+	domain(_1)	= [10..10]	
+	domain(_3)	= [10..10]	
+	domain(_6)	= [1..1]	
+IsReachable=true
+isChanged=true
+### Iteration 24 ### 
+'3' blocks in queue : [ELSE][RETURN][LOOP_EXIT]
 blklab3 [ELSE] 
 Dead Vars [_7]
 Constraints [_3!=_1, _6:=1, _3+_6=_7, _3:=_7]
@@ -304,8 +349,33 @@ Constraints [_3!=_1, _6:=1, _3+_6=_7, _3:=_7]
 	domain(_7)	= [1..43]	
 IsReachable=true
 isChanged=true
-### Iteration 21 ### 
-'3' blocks in queue : [ENTRY][IF][BLOCK]
+### Iteration 25 ### 
+'3' blocks in queue : [RETURN][LOOP_EXIT][BLOCK]
+return_3 [RETURN] 
+Dead Vars []
+Constraints [return:=_3]
+
+	domain(_0)	= [43..43]	
+	domain(_1)	= [10..10]	
+	domain(_3)	= [43..32767]	
+	domain(_6)	= [1..1]	
+	domain(return)	= [43..32767]	
+IsReachable=true
+isChanged=true
+### Iteration 26 ### 
+'2' blocks in queue : [LOOP_EXIT][BLOCK]
+blklab0 [LOOP_EXIT] 
+Dead Vars []
+Constraints [_3>=_0]
+
+	domain(_0)	= [43..43]	
+	domain(_1)	= [10..10]	
+	domain(_3)	= [43..32767]	
+	domain(_6)	= [1..1]	
+IsReachable=true
+isChanged=false
+### Iteration 27 ### 
+'1' blocks in queue : [BLOCK]
 blklab1 [BLOCK] 
 Dead Vars []
 Constraints []
@@ -316,8 +386,8 @@ Constraints []
 	domain(_6)	= [1..1]	
 IsReachable=true
 isChanged=true
-### Iteration 22 ### 
-'3' blocks in queue : [ENTRY][IF][LOOP_HEADER]
+### Iteration 28 ### 
+'1' blocks in queue : [LOOP_HEADER]
 blklab0 [LOOP_HEADER] 
 Dead Vars []
 Constraints []
@@ -328,8 +398,20 @@ Constraints []
 	domain(_6)	= [1..1]	
 IsReachable=true
 isChanged=true
-### Iteration 23 ### 
-'4' blocks in queue : [ENTRY][IF][LOOP_BODY][LOOP_EXIT]
+### Iteration 29 ### 
+'2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
+blklab0 [LOOP_BODY] 
+Dead Vars []
+Constraints [_3<_0]
+
+	domain(_0)	= [43..43]	
+	domain(_1)	= [10..10]	
+	domain(_3)	= [0..42]	
+	domain(_6)	= [1..1]	
+IsReachable=true
+isChanged=false
+### Iteration 30 ### 
+'1' blocks in queue : [LOOP_EXIT]
 blklab0 [LOOP_EXIT] 
 Dead Vars []
 Constraints [_3>=_0]
@@ -340,8 +422,8 @@ Constraints [_3>=_0]
 	domain(_6)	= [1..1]	
 IsReachable=true
 isChanged=true
-### Iteration 24 ### 
-'4' blocks in queue : [ENTRY][IF][LOOP_BODY][RETURN]
+### Iteration 31 ### 
+'1' blocks in queue : [RETURN]
 return_3 [RETURN] 
 Dead Vars []
 Constraints [return:=_3]
@@ -353,64 +435,6 @@ Constraints [return:=_3]
 	domain(return)	= [43..43]	
 IsReachable=true
 isChanged=true
-### Iteration 25 ### 
-'3' blocks in queue : [ENTRY][IF][LOOP_BODY]
-blklab0 [LOOP_BODY] 
-Dead Vars []
-Constraints [_3<_0]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [0..42]	
-	domain(_6)	= [1..1]	
-IsReachable=true
-isChanged=false
-### Iteration 26 ### 
-'2' blocks in queue : [ENTRY][IF]
-blklab3 [IF] 
-Dead Vars []
-Constraints [_3==_1]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [10..10]	
-	domain(_6)	= [1..1]	
-IsReachable=true
-isChanged=true
-### Iteration 27 ### 
-'2' blocks in queue : [ENTRY][LOOP_EXIT]
-blklab0 [LOOP_EXIT] 
-Dead Vars []
-Constraints [_3>=_0]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [43..43]	
-	domain(_6)	= [1..1]	
-IsReachable=true
-isChanged=false
-### Iteration 28 ### 
-'1' blocks in queue : [ENTRY]
-entry [ENTRY] 
-Dead Vars []
-Constraints [_0:=[43..43], _1:=[10..10]]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-IsReachable=true
-isChanged=true
-### Iteration 29 ### 
-'1' blocks in queue : [BLOCK]
-code [BLOCK] 
-Dead Vars [_4]
-Constraints [_4:=0, _3:=_4, _0:=[43..43], _1:=[10..10]]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [0..0]	
-	domain(_4)	= [0..0]	
-IsReachable=true
-isChanged=false
 =================================
 
 Bound Analysis of 'find' function:
@@ -431,6 +455,14 @@ main.6 [	indirectinvoke () = %6 (%1) : method(any)->()]
 main.7 [	return]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
+entry [ENTRY] 
+Dead Vars []
+Constraints []
+
+IsReachable=true
+isChanged=false
+### Iteration 1 ### 
+'1' blocks in queue : [BLOCK]
 code [BLOCK] 
 Dead Vars [_2]
 Constraints [_3:=43, _4:=10, _2:=[43..43], _1:=_2]
@@ -441,14 +473,6 @@ Constraints [_3:=43, _4:=10, _2:=[43..43], _1:=_2]
 	domain(_4)	= [10..10]	
 IsReachable=true
 isChanged=true
-### Iteration 1 ### 
-'1' blocks in queue : [ENTRY]
-entry [ENTRY] 
-Dead Vars []
-Constraints []
-
-IsReachable=true
-isChanged=false
 =================================
 
 Bound Analysis of 'main' function:

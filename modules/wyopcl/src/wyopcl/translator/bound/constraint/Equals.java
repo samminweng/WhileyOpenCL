@@ -48,7 +48,6 @@ public class Equals extends Constraint {
 		Domain y_domain = new Domain(y, x_min, x_max);
 		bnd.getDomain(y).intersect(y_domain);
 	
-		//return bnd.isChanged;
 	}
 
 	@Override

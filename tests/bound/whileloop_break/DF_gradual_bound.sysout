@@ -1,11 +1,12 @@
-Parsed 1 source file(s). ....................................................... [28ms+1mb]
-Typed 1 source file(s). ........................................................ [55ms+2mb]
-Generated code for 1 source file(s). ........................................... [11ms+1mb]
-[./whileloop_break.whiley] applied definite assignment check ........................ [1ms]
-[./whileloop_break.whiley] applied module check ..................................... [2ms]
-[./whileloop_break.whiley] applied loop variants .................................... [0ms]
+WARNING: version numbering unavailable
+Parsed 1 source file(s). ....................................................... [96ms+1mb]
+Typed 1 source file(s). ....................................................... [108ms+1mb]
+Generated code for 1 source file(s). ............................................... [24ms]
+[./whileloop_break.whiley] applied definite assignment check ........................ [2ms]
+[./whileloop_break.whiley] applied module check ................................. [2ms+1mb]
+[./whileloop_break.whiley] applied loop variants ................................ [0ms+1mb]
 [./whileloop_break.whiley] applied coercion check ................................... [1ms]
-Whiley => Wyil: compiled 1 file(s) 
+Whiley => Wyil: compiled 1 file(s) ............................................ [260ms-1mb]
 main.0 [	const %3 = 43 : int]
 main.1 [	const %4 = 10 : int]
 main.2 [	invoke (%2) = (%3, %4) whileloop_break:find : function(int,int)->(int)]
@@ -250,7 +251,7 @@ Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
-	domain(_3)	= [0..infinity]	
+	domain(_3)	= [0..32767]	
 	domain(_6)	= [1..1]	
 IsReachable=true
 isChanged=true
@@ -262,7 +263,7 @@ Constraints [_3>=_0]
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
-	domain(_3)	= [43..infinity]	
+	domain(_3)	= [43..32767]	
 	domain(_6)	= [1..1]	
 IsReachable=true
 isChanged=true
@@ -274,9 +275,9 @@ Constraints [return:=_3]
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
-	domain(_3)	= [43..infinity]	
+	domain(_3)	= [43..32767]	
 	domain(_6)	= [1..1]	
-	domain(return)	= [43..infinity]	
+	domain(return)	= [43..32767]	
 IsReachable=true
 isChanged=true
 ### Iteration 19 ### 

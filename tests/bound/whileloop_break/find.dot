@@ -6,6 +6,7 @@ digraph find{
 "blklab0 [LOOP_BODY]"->"blklab3 [IF]";
 "blklab0 [LOOP_BODY]"->"blklab3 [ELSE]";
 "blklab0 [LOOP_EXIT]"->"return_3 [RETURN]";
+"blklab3 [IF]"->"blklab0 [LOOP_EXIT]";
 "blklab3 [ELSE]"->"blklab1 [BLOCK]";
 "blklab1 [BLOCK]"->"blklab0 [LOOP_HEADER]";
 "return_3 [RETURN]"->"exit [EXIT]";

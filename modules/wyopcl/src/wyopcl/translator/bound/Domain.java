@@ -319,7 +319,7 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	 * Current Domain = [-inf ... 0]
 	 * New Domain = [5 ... 5] 
 	 * 
-	 * The intersected domain is [5 ... 0]????
+	 * The intersected domain is [5 ... 0] so it is set to be [empty ... empty]
 	 * 
 	 * 
 	 * @param domain

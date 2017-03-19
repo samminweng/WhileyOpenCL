@@ -37,6 +37,7 @@ import wyopcl.translator.bound.constraint.LessThan;
 import wyopcl.translator.bound.constraint.LessThanEquals;
 import wyopcl.translator.bound.constraint.LeftMultiply;
 import wyopcl.translator.bound.constraint.Negate;
+import wyopcl.translator.bound.constraint.NotEquals;
 import wyopcl.translator.bound.constraint.Plus;
 
 /***
@@ -322,12 +323,9 @@ public class BoundAnalyzer {
 
 			// Clone the bounds before the bound inference
 			Bounds bnd_before = (Bounds) blk.getBounds().clone();
-
 			
-
-			blk.produceInputBound();
-			
-			
+			// Produce the initial bound of 'blk' before bound inference.
+			blk.produceInputBound();			
 
 			// Beginning of bound inference.
 			blk.inferBounds();
@@ -494,10 +492,11 @@ public class BoundAnalyzer {
 				switch (code.op) {
 				case EQ:
 					c = new Equals(left, right);
-					neg_c = new Equals(left, right);
+					neg_c = new NotEquals(left, right);
 					break;
 				case NEQ:
-
+					c = new NotEquals(left, right);
+					neg_c = new Equals(left, right);
 					break;
 				case LT:
 					c = new LessThan(left, right);
@@ -773,7 +772,13 @@ public class BoundAnalyzer {
 			String label = code.target;
 			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
 			BoundBlock goto_blk = graph.getBasicBlock(label);
-			// Set the current blk to null blk
+			// Add the current blk to goto blk
+			BoundBlock c_blk = graph.getCurrentBlock();
+			if(c_blk != null){
+				// Link current blk with 'goto' blk
+				c_blk.addChild(goto_blk);
+			}
+			
 			graph.setCurrentBlock(null);
 		}
 	}
