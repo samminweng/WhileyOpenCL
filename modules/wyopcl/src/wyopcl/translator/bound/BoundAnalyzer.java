@@ -334,7 +334,7 @@ public class BoundAnalyzer {
 			// Check bound change and widen the bound			
 			Bounds bnd_after = blk.getBounds();
 			// Check bound change and widen the bound after bound inference.	
-			if (blk.isReachable() && ! bnd_before.equals(bnd_after)) {
+			if (blk.isReachable() && !bnd_before.equals(bnd_after)) {
 				// Widen the bounds for each block iff block is the feedback set
 				if(feedback_set.contains(blk)){
 					bnd_after.widenBounds(config, bnd_before);
@@ -717,6 +717,8 @@ public class BoundAnalyzer {
 			case ADD:
 				// Use the left plus to represent the addition
 				graph.addConstraint(new LeftPlus(right0, right1, left));
+				// left operand is an intermediate variable
+				graph.addDeadVar(left);
 				break;
 			case SUB:
 				// Negated the operand
@@ -727,6 +729,8 @@ public class BoundAnalyzer {
 				break;
 			case MUL:
 				graph.addConstraint(new LeftMultiply(right0, right1, left));
+				// left operand is an intermediate variable and becomes dead always
+				graph.addDeadVar(left);				
 				break;
 			case DIV:
 				break;

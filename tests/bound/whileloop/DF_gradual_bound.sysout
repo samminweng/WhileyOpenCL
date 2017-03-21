@@ -1,12 +1,12 @@
 WARNING: version numbering unavailable
-Parsed 1 source file(s). ....................................................... [78ms+1mb]
-Typed 1 source file(s). ........................................................ [98ms+1mb]
-Generated code for 1 source file(s). ............................................... [27ms]
+Parsed 1 source file(s). ....................................................... [54ms+1mb]
+Typed 1 source file(s). ........................................................ [78ms+1mb]
+Generated code for 1 source file(s). ............................................... [19ms]
 [./whileloop.whiley] applied definite assignment check .............................. [2ms]
 [./whileloop.whiley] applied module check ....................................... [1ms+1mb]
 [./whileloop.whiley] applied loop variants ...................................... [0ms+1mb]
 [./whileloop.whiley] applied coercion check ......................................... [1ms]
-Whiley => Wyil: compiled 1 file(s) ............................................ [236ms-1mb]
+Whiley => Wyil: compiled 1 file(s) ............................................ [177ms-1mb]
 main.0 [	const %3 = 43 : int]
 main.1 [	invoke (%2) = (%3) whileloop:f : function(int)->(int)]
 ### Iteration 0 ### 
@@ -88,7 +88,7 @@ isChanged=false
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab1 [LOOP_BODY] 
 Dead Vars [_7, _9]
-Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
+Constraints [_2<_0, _7 = _3+_2, _3:=_7, _8:=1, _9 = _2+_8, _2:=_9]
 
 	domain(_0)	= [43..43]	
 	domain(_2)	= [1..1]	
@@ -138,7 +138,7 @@ isChanged=false
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab1 [LOOP_BODY] 
 Dead Vars [_7, _9]
-Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
+Constraints [_2<_0, _7 = _3+_2, _3:=_7, _8:=1, _9 = _2+_8, _2:=_9]
 
 	domain(_0)	= [43..43]	
 	domain(_2)	= [1..2]	
@@ -188,7 +188,7 @@ isChanged=false
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab1 [LOOP_BODY] 
 Dead Vars [_7, _9]
-Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
+Constraints [_2<_0, _7 = _3+_2, _3:=_7, _8:=1, _9 = _2+_8, _2:=_9]
 
 	domain(_0)	= [43..43]	
 	domain(_2)	= [1..3]	
@@ -251,7 +251,7 @@ isChanged=true
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab1 [LOOP_BODY] 
 Dead Vars [_7, _9]
-Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
+Constraints [_2<_0, _7 = _3+_2, _3:=_7, _8:=1, _9 = _2+_8, _2:=_9]
 
 	domain(_0)	= [43..43]	
 	domain(_2)	= [1..43]	
@@ -314,7 +314,7 @@ isChanged=true
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab1 [LOOP_BODY] 
 Dead Vars [_7, _9]
-Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
+Constraints [_2<_0, _7 = _3+_2, _3:=_7, _8:=1, _9 = _2+_8, _2:=_9]
 
 	domain(_0)	= [43..43]	
 	domain(_2)	= [1..43]	
@@ -377,7 +377,7 @@ isChanged=true
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab1 [LOOP_BODY] 
 Dead Vars [_7, _9]
-Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
+Constraints [_2<_0, _7 = _3+_2, _3:=_7, _8:=1, _9 = _2+_8, _2:=_9]
 
 	domain(_0)	= [43..43]	
 	domain(_2)	= [1..43]	
@@ -440,7 +440,7 @@ isChanged=true
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab1 [LOOP_BODY] 
 Dead Vars [_7, _9]
-Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
+Constraints [_2<_0, _7 = _3+_2, _3:=_7, _8:=1, _9 = _2+_8, _2:=_9]
 
 	domain(_0)	= [43..43]	
 	domain(_2)	= [1..43]	
@@ -503,7 +503,7 @@ isChanged=true
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab1 [LOOP_BODY] 
 Dead Vars [_7, _9]
-Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
+Constraints [_2<_0, _7 = _3+_2, _3:=_7, _8:=1, _9 = _2+_8, _2:=_9]
 
 	domain(_0)	= [43..43]	
 	domain(_2)	= [1..43]	
@@ -566,7 +566,7 @@ isChanged=true
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab1 [LOOP_BODY] 
 Dead Vars [_7, _9]
-Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
+Constraints [_2<_0, _7 = _3+_2, _3:=_7, _8:=1, _9 = _2+_8, _2:=_9]
 
 	domain(_0)	= [43..43]	
 	domain(_2)	= [1..43]	
@@ -629,7 +629,7 @@ isChanged=true
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab1 [LOOP_BODY] 
 Dead Vars [_7, _9]
-Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
+Constraints [_2<_0, _7 = _3+_2, _3:=_7, _8:=1, _9 = _2+_8, _2:=_9]
 
 	domain(_0)	= [43..43]	
 	domain(_2)	= [1..43]	
@@ -692,7 +692,7 @@ isChanged=true
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab1 [LOOP_BODY] 
 Dead Vars [_7, _9]
-Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
+Constraints [_2<_0, _7 = _3+_2, _3:=_7, _8:=1, _9 = _2+_8, _2:=_9]
 
 	domain(_0)	= [43..43]	
 	domain(_2)	= [1..43]	
@@ -755,7 +755,7 @@ isChanged=true
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab1 [LOOP_BODY] 
 Dead Vars [_7, _9]
-Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
+Constraints [_2<_0, _7 = _3+_2, _3:=_7, _8:=1, _9 = _2+_8, _2:=_9]
 
 	domain(_0)	= [43..43]	
 	domain(_2)	= [1..43]	
@@ -818,7 +818,7 @@ isChanged=true
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab1 [LOOP_BODY] 
 Dead Vars [_7, _9]
-Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
+Constraints [_2<_0, _7 = _3+_2, _3:=_7, _8:=1, _9 = _2+_8, _2:=_9]
 
 	domain(_0)	= [43..43]	
 	domain(_2)	= [1..43]	
@@ -881,7 +881,7 @@ isChanged=true
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab1 [LOOP_BODY] 
 Dead Vars [_7, _9]
-Constraints [_2<_0, _3+_2=_7, _3:=_7, _8:=1, _2+_8=_9, _2:=_9]
+Constraints [_2<_0, _7 = _3+_2, _3:=_7, _8:=1, _9 = _2+_8, _2:=_9]
 
 	domain(_0)	= [43..43]	
 	domain(_2)	= [1..43]	

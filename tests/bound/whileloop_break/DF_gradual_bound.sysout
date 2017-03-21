@@ -1,12 +1,12 @@
 WARNING: version numbering unavailable
-Parsed 1 source file(s). ....................................................... [96ms+1mb]
-Typed 1 source file(s). ....................................................... [108ms+1mb]
-Generated code for 1 source file(s). ............................................... [24ms]
-[./whileloop_break.whiley] applied definite assignment check ........................ [2ms]
-[./whileloop_break.whiley] applied module check ................................. [2ms+1mb]
+Parsed 1 source file(s). ...................................................... [255ms+1mb]
+Typed 1 source file(s). ....................................................... [184ms+1mb]
+Generated code for 1 source file(s). .............................................. [140ms]
+[./whileloop_break.whiley] applied definite assignment check ........................ [3ms]
+[./whileloop_break.whiley] applied module check ................................. [3ms+1mb]
 [./whileloop_break.whiley] applied loop variants ................................ [0ms+1mb]
 [./whileloop_break.whiley] applied coercion check ................................... [1ms]
-Whiley => Wyil: compiled 1 file(s) ............................................ [260ms-1mb]
+Whiley => Wyil: compiled 1 file(s) ............................................ [612ms-1mb]
 main.0 [	const %3 = 43 : int]
 main.1 [	const %4 = 10 : int]
 main.2 [	invoke (%2) = (%3, %4) whileloop_break:find : function(int,int)->(int)]
@@ -100,7 +100,7 @@ isChanged=true
 '3' blocks in queue : [ENTRY][IF][ELSE]
 blklab3 [ELSE] 
 Dead Vars [_7]
-Constraints [_3!=_1, _6:=1, _3+_6=_7, _3:=_7]
+Constraints [_3!=_1, _6:=1, _7 = _3+_6, _3:=_7]
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
@@ -161,7 +161,7 @@ isChanged=true
 '3' blocks in queue : [ENTRY][IF][ELSE]
 blklab3 [ELSE] 
 Dead Vars [_7]
-Constraints [_3!=_1, _6:=1, _3+_6=_7, _3:=_7]
+Constraints [_3!=_1, _6:=1, _7 = _3+_6, _3:=_7]
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
@@ -222,7 +222,7 @@ isChanged=true
 '3' blocks in queue : [ENTRY][IF][ELSE]
 blklab3 [ELSE] 
 Dead Vars [_7]
-Constraints [_3!=_1, _6:=1, _3+_6=_7, _3:=_7]
+Constraints [_3!=_1, _6:=1, _7 = _3+_6, _3:=_7]
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
@@ -296,7 +296,7 @@ isChanged=true
 '3' blocks in queue : [ENTRY][IF][ELSE]
 blklab3 [ELSE] 
 Dead Vars [_7]
-Constraints [_3!=_1, _6:=1, _3+_6=_7, _3:=_7]
+Constraints [_3!=_1, _6:=1, _7 = _3+_6, _3:=_7]
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
@@ -417,7 +417,7 @@ isChanged=false
 Bound Analysis of 'find' function:
 	domain(limit)	=[43..43]
 	domain(item)	=[10..10]
-	domain(i)	=[0..43]
+	domain(r)	=[0..43]
 	domain(_4)	=[0..0]
 	domain(_6)	=[1..1]
 	domain(_7)	=[1..43]
@@ -453,7 +453,7 @@ isChanged=false
 =================================
 
 Bound Analysis of 'main' function:
-	domain(i)	=[43..43]
+	domain(r)	=[43..43]
 	domain(_2)	=[43..43]
 	domain(_3)	=[43..43]
 	domain(_4)	=[10..10]

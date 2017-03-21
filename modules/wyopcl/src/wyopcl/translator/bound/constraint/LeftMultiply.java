@@ -130,7 +130,8 @@ public class LeftMultiply extends Constraint {
 
 	@Override
 	public String toString() {
-		return  x + " * " + y + "=" + z;
+		return z + " = " + x + " * " + y;
+		//return  x + " * " + y + "=" + z;
 	}
 	
 	

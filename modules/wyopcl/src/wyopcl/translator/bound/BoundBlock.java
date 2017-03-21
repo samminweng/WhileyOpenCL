@@ -389,11 +389,12 @@ public class BoundBlock implements Comparable<BoundBlock> {
 			return false;
 		}
 		BoundBlock blk = (BoundBlock) obj;
-		if (this.getLabel().equals(blk.getLabel())) {
-			if (this.getType().equals(blk.getType())) {
+		if (this.getType().equals(blk.getType())) {
+			if (this.getLabel().equals(blk.getLabel())) {
 				return true;
 			}
 		}
+		
 		return false;
 	}
 
