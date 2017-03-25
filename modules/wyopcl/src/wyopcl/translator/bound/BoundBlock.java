@@ -31,8 +31,10 @@ import wyopcl.translator.bound.constraint.Range;
 public class BoundBlock implements Comparable<BoundBlock> {
 	// Prefix of the variable
 	private final String prefix = "_";
-	// The set of dead variable in the block, that will be passed onto the parent block
+	// The set of dead variable, that will be passed onto the parent block
 	private Set<String> dead_vars;
+	// The set of variables, which will be used in the block
+	private Set<String> Vars; 
 
 	private CodeBlock codeBlock;// Store all the byte-code for a block
 	private List<Constraint> constraints;
@@ -121,6 +123,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 		this.constraints = new ArrayList<Constraint>();
 		this.codeBlock = new CodeBlock();
 		this.dead_vars = new HashSet<String>();
+		this.Vars = new HashSet<String>();
 	}
 
 	/**
@@ -372,7 +375,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 			str += "\n-------------------------------";
 		}
 		//Display the vars set,  bounds and constraints.
-		str += String.format("%n%s %s", "Dead Vars", this.dead_vars);
+		str += String.format("%n%s %s", "Vars", this.Vars);
 		//Print out the constraints
 		str += String.format("%n%s %s%n", "Constraints", this.constraints);
 		//Print out the bounds
@@ -453,7 +456,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	 * @param var
 	 */
 	public void addVar(String var) {
-		this.dead_vars.add(var);		
+		this.Vars.add(var);		
 	}
 
 	/**
@@ -489,11 +492,6 @@ public class BoundBlock implements Comparable<BoundBlock> {
 			}
 
 		}
-
-	}
-
-	public void removeVar(String var) {
-		this.dead_vars.remove(var);
 	}
 
 }

@@ -1,18 +1,18 @@
 WARNING: version numbering unavailable
-Parsed 1 source file(s). ....................................................... [51ms+1mb]
-Typed 1 source file(s). ........................................................ [70ms+1mb]
-Generated code for 1 source file(s). ............................................... [19ms]
+Parsed 1 source file(s). ....................................................... [54ms+1mb]
+Typed 1 source file(s). ........................................................ [73ms+1mb]
+Generated code for 1 source file(s). ............................................... [16ms]
 [./nestedwhileloop.whiley] applied definite assignment check .................... [2ms+1mb]
-[./nestedwhileloop.whiley] applied module check ................................. [1ms+1mb]
+[./nestedwhileloop.whiley] applied module check ................................. [2ms+1mb]
 [./nestedwhileloop.whiley] applied loop variants ................................ [0ms+1mb]
-[./nestedwhileloop.whiley] applied coercion check ................................... [1ms]
-Whiley => Wyil: compiled 1 file(s) ............................................ [177ms-1mb]
-main.0 [	const %3 = 43 : int]
+[./nestedwhileloop.whiley] applied coercion check ..........................main.0 [	const %3 = 43 : int]
+......... [0ms]
+Whiley => Wyil: compiled 1 file(s) ............................................ [174ms-1mb]
 main.1 [	invoke (%2) = (%3) nestedwhileloop:f : function(int)->(int)]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
-Dead Vars []
+Vars [_3]
 Constraints [_3:=43]
 
 	domain(_3)	= [43..43]	
@@ -21,7 +21,7 @@ isChanged=true
 ### Iteration 1 ### 
 '1' blocks in queue : [ENTRY]
 entry [ENTRY] 
-Dead Vars []
+Vars []
 Constraints []
 
 IsReachable=true
@@ -61,7 +61,7 @@ f.24 [	return]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
-Dead Vars [_5, _6]
+Vars [_0, _2, _3, _5, _6]
 Constraints [_5:=0, _2:=_5, _6:=0, _3:=_6, _0:=[43..43]]
 
 	domain(_0)	= [43..43]	
@@ -74,54 +74,63 @@ isChanged=true
 ### Iteration 1 ### 
 '2' blocks in queue : [ENTRY][LOOP_HEADER]
 blklab0 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_2)	= [0..0]	
 	domain(_3)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
 IsReachable=true
 isChanged=true
 ### Iteration 2 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_EXIT] 
-Dead Vars []
+Vars [_3]
 Constraints [_2>=_0]
 
 	domain(_0)	= [empty..empty]	
 	domain(_2)	= [empty..empty]	
 	domain(_3)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
 IsReachable=false
 isChanged=false
 ### Iteration 3 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab0 [LOOP_BODY] 
-Dead Vars [_7]
+Vars [_4, _7]
 Constraints [_2<_0, _7:=0, _4:=_7]
 
 	domain(_0)	= [43..43]	
 	domain(_2)	= [0..0]	
 	domain(_3)	= [0..0]	
 	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
 	domain(_7)	= [0..0]	
 IsReachable=true
 isChanged=true
 ### Iteration 4 ### 
 '2' blocks in queue : [ENTRY][LOOP_HEADER]
 blklab2 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_2)	= [0..0]	
 	domain(_3)	= [0..0]	
 	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
 IsReachable=true
 isChanged=true
 ### Iteration 5 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab2 [LOOP_EXIT] 
-Dead Vars [_13]
+Vars [_13, _12, _2]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
@@ -130,12 +139,15 @@ Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 	domain(_2)	= [1..1]	
 	domain(_3)	= [0..0]	
 	domain(_4)	= [empty..empty]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
 IsReachable=false
 isChanged=false
 ### Iteration 6 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab2 [LOOP_BODY] 
-Dead Vars [_8, _9, _11]
+Vars [_2, _3, _4, _8, _9, _11, _10]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
 	domain(_0)	= [43..43]	
@@ -144,6 +156,9 @@ Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=
 	domain(_2)	= [0..0]	
 	domain(_3)	= [0..0]	
 	domain(_4)	= [1..1]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
 	domain(_8)	= [0..0]	
 	domain(_9)	= [0..0]	
 IsReachable=true
@@ -151,48 +166,66 @@ isChanged=true
 ### Iteration 7 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 blklab3 [BLOCK] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..1]	
 	domain(_2)	= [0..0]	
 	domain(_3)	= [0..0]	
 	domain(_4)	= [1..1]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..0]	
+	domain(_9)	= [0..0]	
 IsReachable=true
 isChanged=true
 ### Iteration 8 ### 
 '2' blocks in queue : [ENTRY][LOOP_HEADER]
 blklab2 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..1]	
 	domain(_2)	= [0..0]	
 	domain(_3)	= [0..0]	
 	domain(_4)	= [0..1]		 // lb_c=0 ub_c=1	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..0]	
+	domain(_9)	= [0..0]	
 IsReachable=true
 isChanged=true
 ### Iteration 9 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab2 [LOOP_EXIT] 
-Dead Vars [_13]
+Vars [_13, _12, _2]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..1]	
 	domain(_12)	= [1..1]	
 	domain(_13)	= [1..1]	
 	domain(_2)	= [1..1]	
 	domain(_3)	= [0..0]	
 	domain(_4)	= [empty..empty]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..0]	
+	domain(_9)	= [0..0]	
 IsReachable=false
 isChanged=false
 ### Iteration 10 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab2 [LOOP_BODY] 
-Dead Vars [_8, _9, _11]
+Vars [_2, _3, _4, _8, _9, _11, _10]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
 	domain(_0)	= [43..43]	
@@ -201,6 +234,9 @@ Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=
 	domain(_2)	= [0..0]	
 	domain(_3)	= [0..0]	
 	domain(_4)	= [1..2]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
 	domain(_8)	= [0..0]	
 	domain(_9)	= [0..0]	
 IsReachable=true
@@ -208,48 +244,66 @@ isChanged=true
 ### Iteration 11 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 blklab3 [BLOCK] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..2]	
 	domain(_2)	= [0..0]	
 	domain(_3)	= [0..0]	
 	domain(_4)	= [1..2]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..0]	
+	domain(_9)	= [0..0]	
 IsReachable=true
 isChanged=true
 ### Iteration 12 ### 
 '2' blocks in queue : [ENTRY][LOOP_HEADER]
 blklab2 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..2]		 // lb_c=0 ub_c=1	
 	domain(_2)	= [0..0]	
 	domain(_3)	= [0..0]	
 	domain(_4)	= [0..2]		 // lb_c=0 ub_c=2	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..0]	
+	domain(_9)	= [0..0]	
 IsReachable=true
 isChanged=true
 ### Iteration 13 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab2 [LOOP_EXIT] 
-Dead Vars [_13]
+Vars [_13, _12, _2]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..2]	
 	domain(_12)	= [1..1]	
 	domain(_13)	= [1..1]	
 	domain(_2)	= [1..1]	
 	domain(_3)	= [0..0]	
 	domain(_4)	= [empty..empty]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..0]	
+	domain(_9)	= [0..0]	
 IsReachable=false
 isChanged=false
 ### Iteration 14 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab2 [LOOP_BODY] 
-Dead Vars [_8, _9, _11]
+Vars [_2, _3, _4, _8, _9, _11, _10]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
 	domain(_0)	= [43..43]	
@@ -258,6 +312,9 @@ Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=
 	domain(_2)	= [0..0]	
 	domain(_3)	= [0..0]	
 	domain(_4)	= [1..3]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
 	domain(_8)	= [0..0]	
 	domain(_9)	= [0..0]	
 IsReachable=true
@@ -265,143 +322,205 @@ isChanged=true
 ### Iteration 15 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 blklab3 [BLOCK] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..3]	
 	domain(_2)	= [0..0]	
 	domain(_3)	= [0..0]	
 	domain(_4)	= [1..3]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..0]	
+	domain(_9)	= [0..0]	
 IsReachable=true
 isChanged=true
 ### Iteration 16 ### 
 '2' blocks in queue : [ENTRY][LOOP_HEADER]
 blklab2 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..3]		 // lb_c=0 ub_c=2	
 	domain(_2)	= [0..0]	
 	domain(_3)	= [0..0]	
 	domain(_4)	= [0..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..0]	
+	domain(_9)	= [0..0]	
 IsReachable=true
 isChanged=true
 ### Iteration 17 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab2 [LOOP_EXIT] 
-Dead Vars [_13]
+Vars [_13, _12, _2]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..3]	
 	domain(_12)	= [1..1]	
 	domain(_13)	= [1..1]	
 	domain(_2)	= [1..1]	
 	domain(_3)	= [0..0]	
 	domain(_4)	= [43..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..0]	
+	domain(_9)	= [0..0]	
 IsReachable=true
 isChanged=true
 ### Iteration 18 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][BLOCK]
 blklab1 [BLOCK] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..3]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..1]	
 	domain(_2)	= [1..1]	
 	domain(_3)	= [0..0]	
 	domain(_4)	= [43..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..0]	
+	domain(_9)	= [0..0]	
 IsReachable=true
 isChanged=true
 ### Iteration 19 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_HEADER]
 blklab0 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..3]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..1]	
 	domain(_2)	= [0..1]		 // lb_c=0 ub_c=1	
 	domain(_3)	= [0..0]	
 	domain(_4)	= [43..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..0]	
+	domain(_9)	= [0..0]	
 IsReachable=true
 isChanged=true
 ### Iteration 20 ### 
 '4' blocks in queue : [ENTRY][LOOP_BODY][LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_EXIT] 
-Dead Vars []
+Vars [_3]
 Constraints [_2>=_0]
 
 	domain(_0)	= [empty..empty]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..3]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..1]	
 	domain(_2)	= [empty..empty]	
 	domain(_3)	= [0..0]	
 	domain(_4)	= [43..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..0]	
+	domain(_9)	= [0..0]	
 IsReachable=false
 isChanged=false
 ### Iteration 21 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_BODY]
 blklab0 [LOOP_BODY] 
-Dead Vars [_7]
+Vars [_4, _7]
 Constraints [_2<_0, _7:=0, _4:=_7]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..3]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..1]	
 	domain(_2)	= [0..1]	
 	domain(_3)	= [0..0]	
 	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
 	domain(_7)	= [0..0]	
+	domain(_8)	= [0..0]	
+	domain(_9)	= [0..0]	
 IsReachable=true
 isChanged=true
 ### Iteration 22 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_HEADER]
 blklab2 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..3]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..1]	
 	domain(_2)	= [0..1]		 // lb_c=0 ub_c=1	
 	domain(_3)	= [0..0]	
 	domain(_4)	= [0..3]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..0]	
+	domain(_9)	= [0..0]	
 IsReachable=true
 isChanged=true
 ### Iteration 23 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab2 [LOOP_EXIT] 
-Dead Vars [_13]
+Vars [_13, _12, _2]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..3]	
 	domain(_12)	= [1..1]	
 	domain(_13)	= [1..2]	
 	domain(_2)	= [1..2]	
 	domain(_3)	= [0..0]	
 	domain(_4)	= [empty..empty]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..0]	
+	domain(_9)	= [0..0]	
 IsReachable=false
 isChanged=false
 ### Iteration 24 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab2 [LOOP_BODY] 
-Dead Vars [_8, _9, _11]
+Vars [_2, _3, _4, _8, _9, _11, _10]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
 	domain(_11)	= [1..4]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..1]	
 	domain(_2)	= [0..1]	
 	domain(_3)	= [0..3]	
 	domain(_4)	= [1..4]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
 	domain(_8)	= [0..3]	
 	domain(_9)	= [0..3]	
 IsReachable=true
@@ -409,59 +528,83 @@ isChanged=true
 ### Iteration 25 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 blklab3 [BLOCK] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..4]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..1]	
 	domain(_2)	= [0..1]	
 	domain(_3)	= [0..3]	
 	domain(_4)	= [1..4]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..3]	
+	domain(_9)	= [0..3]	
 IsReachable=true
 isChanged=true
 ### Iteration 26 ### 
 '2' blocks in queue : [ENTRY][LOOP_HEADER]
 blklab2 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..4]		 // lb_c=0 ub_c=1	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..1]	
 	domain(_2)	= [0..1]	
 	domain(_3)	= [0..3]		 // lb_c=0 ub_c=1	
 	domain(_4)	= [0..4]		 // lb_c=0 ub_c=1	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..3]		 // lb_c=0 ub_c=1	
+	domain(_9)	= [0..3]		 // lb_c=0 ub_c=1	
 IsReachable=true
 isChanged=true
 ### Iteration 27 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab2 [LOOP_EXIT] 
-Dead Vars [_13]
+Vars [_13, _12, _2]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..4]	
 	domain(_12)	= [1..1]	
 	domain(_13)	= [1..2]	
 	domain(_2)	= [1..2]	
 	domain(_3)	= [0..3]	
 	domain(_4)	= [empty..empty]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..3]	
+	domain(_9)	= [0..3]	
 IsReachable=false
 isChanged=false
 ### Iteration 28 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab2 [LOOP_BODY] 
-Dead Vars [_8, _9, _11]
+Vars [_2, _3, _4, _8, _9, _11, _10]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
 	domain(_11)	= [1..5]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..1]	
 	domain(_2)	= [0..1]	
 	domain(_3)	= [0..7]	
 	domain(_4)	= [1..5]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
 	domain(_8)	= [0..4]	
 	domain(_9)	= [0..7]	
 IsReachable=true
@@ -469,59 +612,83 @@ isChanged=true
 ### Iteration 29 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 blklab3 [BLOCK] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..5]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..1]	
 	domain(_2)	= [0..1]	
 	domain(_3)	= [0..7]	
 	domain(_4)	= [1..5]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..4]	
+	domain(_9)	= [0..7]	
 IsReachable=true
 isChanged=true
 ### Iteration 30 ### 
 '2' blocks in queue : [ENTRY][LOOP_HEADER]
 blklab2 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..5]		 // lb_c=0 ub_c=2	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..1]	
 	domain(_2)	= [0..1]	
 	domain(_3)	= [0..7]		 // lb_c=0 ub_c=2	
 	domain(_4)	= [0..5]		 // lb_c=0 ub_c=2	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..4]		 // lb_c=0 ub_c=2	
+	domain(_9)	= [0..7]		 // lb_c=0 ub_c=2	
 IsReachable=true
 isChanged=true
 ### Iteration 31 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab2 [LOOP_EXIT] 
-Dead Vars [_13]
+Vars [_13, _12, _2]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..5]	
 	domain(_12)	= [1..1]	
 	domain(_13)	= [1..2]	
 	domain(_2)	= [1..2]	
 	domain(_3)	= [0..7]	
 	domain(_4)	= [empty..empty]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..4]	
+	domain(_9)	= [0..7]	
 IsReachable=false
 isChanged=false
 ### Iteration 32 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab2 [LOOP_BODY] 
-Dead Vars [_8, _9, _11]
+Vars [_2, _3, _4, _8, _9, _11, _10]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
 	domain(_11)	= [1..6]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..1]	
 	domain(_2)	= [0..1]	
 	domain(_3)	= [0..12]	
 	domain(_4)	= [1..6]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
 	domain(_8)	= [0..5]	
 	domain(_9)	= [0..12]	
 IsReachable=true
@@ -529,145 +696,209 @@ isChanged=true
 ### Iteration 33 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 blklab3 [BLOCK] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..6]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..1]	
 	domain(_2)	= [0..1]	
 	domain(_3)	= [0..12]	
 	domain(_4)	= [1..6]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..5]	
+	domain(_9)	= [0..12]	
 IsReachable=true
 isChanged=true
 ### Iteration 34 ### 
 '2' blocks in queue : [ENTRY][LOOP_HEADER]
 blklab2 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..1]	
 	domain(_2)	= [0..1]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [0..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 35 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab2 [LOOP_EXIT] 
-Dead Vars [_13]
+Vars [_13, _12, _2]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
 	domain(_13)	= [1..2]	
 	domain(_2)	= [1..2]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [43..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 36 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][BLOCK]
 blklab1 [BLOCK] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..2]	
 	domain(_2)	= [1..2]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [43..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 37 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_HEADER]
 blklab0 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..2]		 // lb_c=0 ub_c=1	
 	domain(_2)	= [0..2]		 // lb_c=0 ub_c=2	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [43..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 38 ### 
 '4' blocks in queue : [ENTRY][LOOP_BODY][LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_EXIT] 
-Dead Vars []
+Vars [_3]
 Constraints [_2>=_0]
 
 	domain(_0)	= [empty..empty]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..2]	
 	domain(_2)	= [empty..empty]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [43..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=false
 isChanged=false
 ### Iteration 39 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_BODY]
 blklab0 [LOOP_BODY] 
-Dead Vars [_7]
+Vars [_4, _7]
 Constraints [_2<_0, _7:=0, _4:=_7]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..2]	
 	domain(_2)	= [0..2]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
 	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 40 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_HEADER]
 blklab2 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..2]		 // lb_c=0 ub_c=1	
 	domain(_2)	= [0..2]		 // lb_c=0 ub_c=1	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [0..6]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 41 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab2 [LOOP_EXIT] 
-Dead Vars [_13]
+Vars [_13, _12, _2]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
 	domain(_13)	= [1..3]	
 	domain(_2)	= [1..3]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [empty..empty]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=false
 isChanged=false
 ### Iteration 42 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab2 [LOOP_BODY] 
-Dead Vars [_8, _9, _11]
+Vars [_2, _3, _4, _8, _9, _11, _10]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
 	domain(_11)	= [1..7]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..2]	
 	domain(_2)	= [0..2]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [1..7]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
 	domain(_8)	= [0..12]	
 	domain(_9)	= [0..infinity]	
 IsReachable=true
@@ -675,59 +906,83 @@ isChanged=true
 ### Iteration 43 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 blklab3 [BLOCK] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..7]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..2]	
 	domain(_2)	= [0..2]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [1..7]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..12]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 44 ### 
 '2' blocks in queue : [ENTRY][LOOP_HEADER]
 blklab2 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..2]	
 	domain(_2)	= [0..2]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [0..7]		 // lb_c=0 ub_c=1	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 45 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab2 [LOOP_EXIT] 
-Dead Vars [_13]
+Vars [_13, _12, _2]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
 	domain(_13)	= [1..3]	
 	domain(_2)	= [1..3]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [empty..empty]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=false
 isChanged=false
 ### Iteration 46 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab2 [LOOP_BODY] 
-Dead Vars [_8, _9, _11]
+Vars [_2, _3, _4, _8, _9, _11, _10]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
 	domain(_11)	= [1..8]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..2]	
 	domain(_2)	= [0..2]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [1..8]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
 	domain(_8)	= [0..14]	
 	domain(_9)	= [0..infinity]	
 IsReachable=true
@@ -735,59 +990,83 @@ isChanged=true
 ### Iteration 47 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 blklab3 [BLOCK] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..8]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..2]	
 	domain(_2)	= [0..2]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [1..8]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..14]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 48 ### 
 '2' blocks in queue : [ENTRY][LOOP_HEADER]
 blklab2 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..2]	
 	domain(_2)	= [0..2]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [0..8]		 // lb_c=0 ub_c=2	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 49 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab2 [LOOP_EXIT] 
-Dead Vars [_13]
+Vars [_13, _12, _2]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
 	domain(_13)	= [1..3]	
 	domain(_2)	= [1..3]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [empty..empty]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=false
 isChanged=false
 ### Iteration 50 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab2 [LOOP_BODY] 
-Dead Vars [_8, _9, _11]
+Vars [_2, _3, _4, _8, _9, _11, _10]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
 	domain(_11)	= [1..9]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..2]	
 	domain(_2)	= [0..2]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [1..9]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
 	domain(_8)	= [0..16]	
 	domain(_9)	= [0..infinity]	
 IsReachable=true
@@ -795,160 +1074,231 @@ isChanged=true
 ### Iteration 51 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 blklab3 [BLOCK] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..9]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..2]	
 	domain(_2)	= [0..2]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [1..9]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..16]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 52 ### 
 '2' blocks in queue : [ENTRY][LOOP_HEADER]
 blklab2 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..2]	
 	domain(_2)	= [0..2]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [0..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 53 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab2 [LOOP_EXIT] 
-Dead Vars [_13]
+Vars [_13, _12, _2]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
 	domain(_13)	= [1..3]	
 	domain(_2)	= [1..3]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [43..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 54 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][BLOCK]
 blklab1 [BLOCK] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..3]	
 	domain(_2)	= [1..3]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [43..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 55 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_HEADER]
 blklab0 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..3]		 // lb_c=0 ub_c=2	
 	domain(_2)	= [0..infinity]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [43..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 56 ### 
 '4' blocks in queue : [ENTRY][LOOP_BODY][LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_EXIT] 
-Dead Vars []
+Vars [_3]
 Constraints [_2>=_0]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..3]	
 	domain(_2)	= [43..infinity]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [43..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 57 ### 
 '4' blocks in queue : [ENTRY][LOOP_BODY][LOOP_BODY][RETURN]
 return_3 [RETURN] 
-Dead Vars []
+Vars []
 Constraints [return:=_3]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..3]	
 	domain(_2)	= [43..infinity]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [43..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 	domain(return)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 58 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_BODY]
 blklab0 [LOOP_BODY] 
-Dead Vars [_7]
+Vars [_4, _7]
 Constraints [_2<_0, _7:=0, _4:=_7]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..3]	
 	domain(_2)	= [0..42]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
 	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 59 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_HEADER]
 blklab2 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..3]		 // lb_c=0 ub_c=1	
 	domain(_2)	= [0..42]		 // lb_c=0 ub_c=1	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [0..9]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 60 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab2 [LOOP_EXIT] 
-Dead Vars [_13]
+Vars [_13, _12, _2]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
 	domain(_13)	= [1..43]	
 	domain(_2)	= [1..43]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [empty..empty]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=false
 isChanged=false
 ### Iteration 61 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab2 [LOOP_BODY] 
-Dead Vars [_8, _9, _11]
+Vars [_2, _3, _4, _8, _9, _11, _10]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
 	domain(_11)	= [1..10]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..3]	
 	domain(_2)	= [0..42]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [1..10]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
 	domain(_8)	= [0..378]	
 	domain(_9)	= [0..infinity]	
 IsReachable=true
@@ -956,59 +1306,83 @@ isChanged=true
 ### Iteration 62 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 blklab3 [BLOCK] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..10]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..3]	
 	domain(_2)	= [0..42]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [1..10]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..378]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 63 ### 
 '2' blocks in queue : [ENTRY][LOOP_HEADER]
 blklab2 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..3]	
 	domain(_2)	= [0..42]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [0..10]		 // lb_c=0 ub_c=1	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 64 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab2 [LOOP_EXIT] 
-Dead Vars [_13]
+Vars [_13, _12, _2]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
 	domain(_13)	= [1..43]	
 	domain(_2)	= [1..43]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [empty..empty]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=false
 isChanged=false
 ### Iteration 65 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab2 [LOOP_BODY] 
-Dead Vars [_8, _9, _11]
+Vars [_2, _3, _4, _8, _9, _11, _10]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
 	domain(_11)	= [1..11]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..3]	
 	domain(_2)	= [0..42]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [1..11]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
 	domain(_8)	= [0..420]	
 	domain(_9)	= [0..infinity]	
 IsReachable=true
@@ -1016,59 +1390,83 @@ isChanged=true
 ### Iteration 66 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 blklab3 [BLOCK] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..11]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..3]	
 	domain(_2)	= [0..42]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [1..11]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..420]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 67 ### 
 '2' blocks in queue : [ENTRY][LOOP_HEADER]
 blklab2 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..3]	
 	domain(_2)	= [0..42]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [0..11]		 // lb_c=0 ub_c=2	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 68 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab2 [LOOP_EXIT] 
-Dead Vars [_13]
+Vars [_13, _12, _2]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
 	domain(_13)	= [1..43]	
 	domain(_2)	= [1..43]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [empty..empty]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=false
 isChanged=false
 ### Iteration 69 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab2 [LOOP_BODY] 
-Dead Vars [_8, _9, _11]
+Vars [_2, _3, _4, _8, _9, _11, _10]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
 	domain(_11)	= [1..12]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..3]	
 	domain(_2)	= [0..42]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [1..12]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
 	domain(_8)	= [0..462]	
 	domain(_9)	= [0..infinity]	
 IsReachable=true
@@ -1076,280 +1474,732 @@ isChanged=true
 ### Iteration 70 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 blklab3 [BLOCK] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..12]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..3]	
 	domain(_2)	= [0..42]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [1..12]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..462]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 71 ### 
 '2' blocks in queue : [ENTRY][LOOP_HEADER]
 blklab2 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..3]	
 	domain(_2)	= [0..42]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [0..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 72 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab2 [LOOP_EXIT] 
-Dead Vars [_13]
+Vars [_13, _12, _2]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
 	domain(_13)	= [1..43]	
 	domain(_2)	= [1..43]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [43..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 73 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][BLOCK]
 blklab1 [BLOCK] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..43]	
 	domain(_2)	= [1..43]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [43..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 74 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_HEADER]
 blklab0 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..infinity]	
 	domain(_2)	= [0..43]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [43..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 75 ### 
 '4' blocks in queue : [ENTRY][LOOP_BODY][LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_EXIT] 
-Dead Vars []
+Vars [_3]
 Constraints [_2>=_0]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..infinity]	
 	domain(_2)	= [43..43]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [43..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 76 ### 
 '4' blocks in queue : [ENTRY][LOOP_BODY][LOOP_BODY][RETURN]
 return_3 [RETURN] 
-Dead Vars []
+Vars []
 Constraints [return:=_3]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..infinity]	
 	domain(_2)	= [43..43]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [43..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 	domain(return)	= [0..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 77 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_BODY]
 blklab0 [LOOP_BODY] 
-Dead Vars [_7]
+Vars [_4, _7]
 Constraints [_2<_0, _7:=0, _4:=_7]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..infinity]	
 	domain(_2)	= [0..42]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
 	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
-isChanged=false
+isChanged=true
 ### Iteration 78 ### 
+'3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_HEADER]
+blklab2 [LOOP_HEADER] 
+Vars []
+Constraints []
+
+	domain(_0)	= [43..43]	
+	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
+	domain(_12)	= [1..1]	
+	domain(_13)	= [1..infinity]	
+	domain(_2)	= [0..42]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [0..12]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
+IsReachable=true
+isChanged=true
+### Iteration 79 ### 
+'3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
+blklab2 [LOOP_EXIT] 
+Vars [_13, _12, _2]
+Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
+
+	domain(_0)	= [empty..empty]	
+	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
+	domain(_12)	= [1..1]	
+	domain(_13)	= [1..43]	
+	domain(_2)	= [1..43]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [empty..empty]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
+IsReachable=false
+isChanged=false
+### Iteration 80 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab2 [LOOP_BODY] 
-Dead Vars [_8, _9, _11]
+Vars [_2, _3, _4, _8, _9, _11, _10]
+Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
+
+	domain(_0)	= [43..43]	
+	domain(_10)	= [1..1]	
+	domain(_11)	= [1..13]	
+	domain(_12)	= [1..1]	
+	domain(_13)	= [1..infinity]	
+	domain(_2)	= [0..42]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [1..13]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..504]	
+	domain(_9)	= [0..infinity]	
+IsReachable=true
+isChanged=true
+### Iteration 81 ### 
+'2' blocks in queue : [ENTRY][BLOCK]
+blklab3 [BLOCK] 
+Vars []
+Constraints []
+
+	domain(_0)	= [43..43]	
+	domain(_10)	= [1..1]	
+	domain(_11)	= [1..13]	
+	domain(_12)	= [1..1]	
+	domain(_13)	= [1..infinity]	
+	domain(_2)	= [0..42]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [1..13]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..504]	
+	domain(_9)	= [0..infinity]	
+IsReachable=true
+isChanged=true
+### Iteration 82 ### 
+'2' blocks in queue : [ENTRY][LOOP_HEADER]
+blklab2 [LOOP_HEADER] 
+Vars []
+Constraints []
+
+	domain(_0)	= [43..43]	
+	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
+	domain(_12)	= [1..1]	
+	domain(_13)	= [1..infinity]	
+	domain(_2)	= [0..42]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [0..13]		 // lb_c=0 ub_c=1	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
+IsReachable=true
+isChanged=true
+### Iteration 83 ### 
+'3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
+blklab2 [LOOP_EXIT] 
+Vars [_13, _12, _2]
+Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
+
+	domain(_0)	= [empty..empty]	
+	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
+	domain(_12)	= [1..1]	
+	domain(_13)	= [1..43]	
+	domain(_2)	= [1..43]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [empty..empty]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
+IsReachable=false
+isChanged=false
+### Iteration 84 ### 
+'2' blocks in queue : [ENTRY][LOOP_BODY]
+blklab2 [LOOP_BODY] 
+Vars [_2, _3, _4, _8, _9, _11, _10]
+Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
+
+	domain(_0)	= [43..43]	
+	domain(_10)	= [1..1]	
+	domain(_11)	= [1..14]	
+	domain(_12)	= [1..1]	
+	domain(_13)	= [1..infinity]	
+	domain(_2)	= [0..42]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [1..14]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..546]	
+	domain(_9)	= [0..infinity]	
+IsReachable=true
+isChanged=true
+### Iteration 85 ### 
+'2' blocks in queue : [ENTRY][BLOCK]
+blklab3 [BLOCK] 
+Vars []
+Constraints []
+
+	domain(_0)	= [43..43]	
+	domain(_10)	= [1..1]	
+	domain(_11)	= [1..14]	
+	domain(_12)	= [1..1]	
+	domain(_13)	= [1..infinity]	
+	domain(_2)	= [0..42]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [1..14]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..546]	
+	domain(_9)	= [0..infinity]	
+IsReachable=true
+isChanged=true
+### Iteration 86 ### 
+'2' blocks in queue : [ENTRY][LOOP_HEADER]
+blklab2 [LOOP_HEADER] 
+Vars []
+Constraints []
+
+	domain(_0)	= [43..43]	
+	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
+	domain(_12)	= [1..1]	
+	domain(_13)	= [1..infinity]	
+	domain(_2)	= [0..42]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [0..14]		 // lb_c=0 ub_c=2	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
+IsReachable=true
+isChanged=true
+### Iteration 87 ### 
+'3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
+blklab2 [LOOP_EXIT] 
+Vars [_13, _12, _2]
+Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
+
+	domain(_0)	= [empty..empty]	
+	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
+	domain(_12)	= [1..1]	
+	domain(_13)	= [1..43]	
+	domain(_2)	= [1..43]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [empty..empty]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
+IsReachable=false
+isChanged=false
+### Iteration 88 ### 
+'2' blocks in queue : [ENTRY][LOOP_BODY]
+blklab2 [LOOP_BODY] 
+Vars [_2, _3, _4, _8, _9, _11, _10]
+Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
+
+	domain(_0)	= [43..43]	
+	domain(_10)	= [1..1]	
+	domain(_11)	= [1..15]	
+	domain(_12)	= [1..1]	
+	domain(_13)	= [1..infinity]	
+	domain(_2)	= [0..42]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [1..15]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..588]	
+	domain(_9)	= [0..infinity]	
+IsReachable=true
+isChanged=true
+### Iteration 89 ### 
+'2' blocks in queue : [ENTRY][BLOCK]
+blklab3 [BLOCK] 
+Vars []
+Constraints []
+
+	domain(_0)	= [43..43]	
+	domain(_10)	= [1..1]	
+	domain(_11)	= [1..15]	
+	domain(_12)	= [1..1]	
+	domain(_13)	= [1..infinity]	
+	domain(_2)	= [0..42]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [1..15]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..588]	
+	domain(_9)	= [0..infinity]	
+IsReachable=true
+isChanged=true
+### Iteration 90 ### 
+'2' blocks in queue : [ENTRY][LOOP_HEADER]
+blklab2 [LOOP_HEADER] 
+Vars []
+Constraints []
+
+	domain(_0)	= [43..43]	
+	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
+	domain(_12)	= [1..1]	
+	domain(_13)	= [1..infinity]	
+	domain(_2)	= [0..42]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [0..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
+IsReachable=true
+isChanged=true
+### Iteration 91 ### 
+'3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
+blklab2 [LOOP_EXIT] 
+Vars [_13, _12, _2]
+Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
+
+	domain(_0)	= [43..43]	
+	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
+	domain(_12)	= [1..1]	
+	domain(_13)	= [1..43]	
+	domain(_2)	= [1..43]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [43..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
+IsReachable=true
+isChanged=true
+### Iteration 92 ### 
+'3' blocks in queue : [ENTRY][LOOP_BODY][BLOCK]
+blklab1 [BLOCK] 
+Vars []
+Constraints []
+
+	domain(_0)	= [43..43]	
+	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
+	domain(_12)	= [1..1]	
+	domain(_13)	= [1..43]	
+	domain(_2)	= [1..43]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [43..infinity]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
+IsReachable=true
+isChanged=false
+### Iteration 93 ### 
+'2' blocks in queue : [ENTRY][LOOP_BODY]
+blklab2 [LOOP_BODY] 
+Vars [_2, _3, _4, _8, _9, _11, _10]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
 	domain(_11)	= [1..43]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..infinity]	
 	domain(_2)	= [0..42]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [1..43]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
 	domain(_8)	= [0..1764]	
 	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
-### Iteration 79 ### 
+### Iteration 94 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 blklab3 [BLOCK] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..43]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..infinity]	
 	domain(_2)	= [0..42]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [1..43]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..1764]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
-### Iteration 80 ### 
+### Iteration 95 ### 
 '2' blocks in queue : [ENTRY][LOOP_HEADER]
 blklab2 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..infinity]	
 	domain(_2)	= [0..42]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [0..43]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
-### Iteration 81 ### 
+### Iteration 96 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab2 [LOOP_EXIT] 
-Dead Vars [_13]
+Vars [_13, _12, _2]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
 	domain(_13)	= [1..43]	
 	domain(_2)	= [1..43]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [43..43]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
-### Iteration 82 ### 
+### Iteration 97 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][BLOCK]
 blklab1 [BLOCK] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..43]	
 	domain(_2)	= [1..43]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [43..43]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
-### Iteration 83 ### 
+### Iteration 98 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_HEADER]
 blklab0 [LOOP_HEADER] 
-Dead Vars []
+Vars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..43]	
 	domain(_2)	= [0..43]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [43..43]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
-### Iteration 84 ### 
+### Iteration 99 ### 
 '4' blocks in queue : [ENTRY][LOOP_BODY][LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_EXIT] 
-Dead Vars []
+Vars [_3]
 Constraints [_2>=_0]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..43]	
 	domain(_2)	= [43..43]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [43..43]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=true
-### Iteration 85 ### 
+### Iteration 100 ### 
 '4' blocks in queue : [ENTRY][LOOP_BODY][LOOP_BODY][RETURN]
 return_3 [RETURN] 
-Dead Vars []
+Vars []
 Constraints [return:=_3]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..43]	
 	domain(_2)	= [43..43]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [43..43]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 	domain(return)	= [0..infinity]	
 IsReachable=true
 isChanged=true
-### Iteration 86 ### 
+### Iteration 101 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_BODY]
 blklab0 [LOOP_BODY] 
-Dead Vars [_7]
+Vars [_4, _7]
 Constraints [_2<_0, _7:=0, _4:=_7]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..43]	
 	domain(_2)	= [0..42]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [0..0]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
 	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
+IsReachable=true
+isChanged=true
+### Iteration 102 ### 
+'3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_HEADER]
+blklab2 [LOOP_HEADER] 
+Vars []
+Constraints []
+
+	domain(_0)	= [43..43]	
+	domain(_10)	= [1..1]	
+	domain(_11)	= [1..infinity]	
+	domain(_12)	= [1..1]	
+	domain(_13)	= [1..infinity]	
+	domain(_2)	= [0..42]	
+	domain(_3)	= [0..infinity]	
+	domain(_4)	= [0..43]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
+	domain(_8)	= [0..infinity]	
+	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=false
-### Iteration 87 ### 
+### Iteration 103 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab2 [LOOP_BODY] 
-Dead Vars [_8, _9, _11]
+Vars [_2, _3, _4, _8, _9, _11, _10]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
 	domain(_0)	= [43..43]	
 	domain(_10)	= [1..1]	
 	domain(_11)	= [1..43]	
 	domain(_12)	= [1..1]	
+	domain(_13)	= [1..infinity]	
 	domain(_2)	= [0..42]	
 	domain(_3)	= [0..infinity]	
 	domain(_4)	= [1..43]	
+	domain(_5)	= [0..0]	
+	domain(_6)	= [0..0]	
+	domain(_7)	= [0..0]	
 	domain(_8)	= [0..1764]	
 	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=false
-### Iteration 88 ### 
+### Iteration 104 ### 
 '1' blocks in queue : [ENTRY]
 entry [ENTRY] 
-Dead Vars []
+Vars [_0]
 Constraints [_0:=[43..43]]
 
 	domain(_0)	= [43..43]	
 IsReachable=true
 isChanged=true
-### Iteration 89 ### 
+### Iteration 105 ### 
 '1' blocks in queue : [BLOCK]
 code [BLOCK] 
-Dead Vars [_5, _6]
+Vars [_0, _2, _3, _5, _6]
 Constraints [_5:=0, _2:=_5, _6:=0, _3:=_6, _0:=[43..43]]
 
 	domain(_0)	= [43..43]	
@@ -1364,16 +2214,16 @@ isChanged=false
 Bound Analysis of 'f' function:
 	domain(limit)	=[43..43]
 	domain(_10)	=[1..1]
-	domain(_11)	=[1..43]
+	domain(_11)	=[1..infinity]
 	domain(_12)	=[1..1]
-	domain(_13)	=[1..43]
+	domain(_13)	=[1..infinity]
 	domain(i)	=[0..43]
 	domain(sum)	=[0..infinity]
 	domain(j)	=[0..43]
 	domain(_5)	=[0..0]
 	domain(_6)	=[0..0]
 	domain(_7)	=[0..0]
-	domain(_8)	=[0..1764]
+	domain(_8)	=[0..infinity]
 	domain(_9)	=[0..infinity]
 	domain(return)	=[0..infinity]
 Consistency=true
@@ -1388,7 +2238,7 @@ main.7 [	return]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
-Dead Vars [_2]
+Vars [_1, _2, _3]
 Constraints [_3:=43, _2:=[0..null], _1:=_2]
 
 	domain(_1)	= [0..infinity]	
@@ -1399,7 +2249,7 @@ isChanged=true
 ### Iteration 1 ### 
 '1' blocks in queue : [ENTRY]
 entry [ENTRY] 
-Dead Vars []
+Vars []
 Constraints []
 
 IsReachable=true

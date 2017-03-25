@@ -171,22 +171,6 @@ public class BoundGraph {
 		current_blk = blk;
 	}
 
-
-	/**
-	 * Create if/else branch without adding any constraint.
-	 * @param new_label
-	 */
-	public void createIfElseBranch(String new_label) {
-		BoundBlock c_blk = getCurrentBlock();
-		// Branch out the block
-		// The left block does not have the name
-		BoundBlock leftBlock = createBasicBlock(new_label, BlockType.IF_BRANCH, c_blk);
-		BoundBlock rightBlock = createBasicBlock(new_label, BlockType.ELSE_BRANCH, c_blk);
-		// Set the current block to the left
-		setCurrentBlock(leftBlock);
-	}
-
-
 	/**
 	 * Branches out the current block to add if/else blocks and set the current block to 
 	 * the if branch (left one).
@@ -210,27 +194,6 @@ public class BoundGraph {
 		// Set the current block to the left
 		setCurrentBlock(leftBlock);
 	}
-
-
-	/**
-	 * Creates the loop header, loop body and loop exit. And set the current block to the loop body.
-	 * 
-	 * @param new_label
-	 *            the name of new branch.
-	 */
-	public void createLoopStructure(String new_label) {
-
-		BoundBlock loop_header = getCurrentBlock();
-		//update the label
-		loop_header.setLabel(new_label);
-		// Check whether to add if-else blocks or loop-condition blocks.
-		BoundBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, loop_header);
-		BoundBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, loop_header);
-		// Set the current block to be loop body.
-		setCurrentBlock(loop_body);
-	}
-
-
 
 	/**
 	 * Creates the loop header, loop body and loop exit and
@@ -392,7 +355,7 @@ public class BoundGraph {
 	 * 
 	 * @param op
 	 */
-	public void addDeadVar(String var) {
+	/*public void addDeadVar(String var) {
 		// Add the variable to current block
 		getCurrentBlock().addVar(var);
 		
@@ -402,5 +365,5 @@ public class BoundGraph {
 		// Remove variable from dead set
 		getCurrentBlock().removeVar(var);
 	}
-
+	*/
 }

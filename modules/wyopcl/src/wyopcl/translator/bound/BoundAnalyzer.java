@@ -39,6 +39,7 @@ import wyopcl.translator.bound.constraint.LeftMultiply;
 import wyopcl.translator.bound.constraint.Negate;
 import wyopcl.translator.bound.constraint.NotEquals;
 import wyopcl.translator.bound.constraint.Plus;
+import wyopcl.translator.copy.LiveVariablesAnalysis;
 
 /***
  * A class is to store all the constraints, produced from the wyil file, with
@@ -61,15 +62,17 @@ public class BoundAnalyzer {
 	// Store the bounds for all functions
 	private HashMap<FunctionOrMethod, Bounds> boundMap;
 
+	private LiveVariablesAnalysis liveAnalyzer; // Live variable analysis
 
 	/**
 	 * Constructor
+	 * @param liveAnalyzer 
 	 */
-	public BoundAnalyzer(WyilFile module) {
+	public BoundAnalyzer(WyilFile module, LiveVariablesAnalysis liveAnalyzer) {
 		this.module = module;
 		this.boundMap = new HashMap<FunctionOrMethod, Bounds>();
-		//this.isLoop = false;
 		this.loop_labels = new HashSet<String>();
+		this.liveAnalyzer = liveAnalyzer;
 	}
 
 	/**
@@ -401,28 +404,23 @@ public class BoundAnalyzer {
 	}	
 
 	private void analyze(Codes.Assign code, FunctionOrMethod function) {
+		// Get the current blok
+		BoundBlock cur_blk = BoundAnalyzerHelper.getCurrentBlock(function);
 		String left = prefix + code.target(0);
 		String right = prefix + code.operand(0);
 		if (code.type(0) instanceof Type.Array) {
 			// Add the constraint to the size variable of target array
-			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-			graph.addConstraint(new Assign(left+"_size", right+"_size"));
+			cur_blk.addConstraint(new Assign(left+"_size", right+"_size"));
 		}
 
 		// Check if the assigned value is an integer
-		if (BoundAnalyzerHelper.isIntType(code.type(0))) {
+		if (!BoundAnalyzerHelper.isCached(function) 
+				&& BoundAnalyzerHelper.isIntType(code.type(0))) {
 			// Add the constraint 'target = operand'
-			if (!BoundAnalyzerHelper.isCached(function)) {
-				BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-				// Add 'Assign' constraint to current block 
-				graph.addConstraint(new Assign(left, right));
-				
-				// Put the right variable to dead 'vars' set
-				graph.addDeadVar(right);
-				// Take out left variable from dead vars set as it becom alive again
-				graph.removeDeadVar(left);
-				
-			}
+			cur_blk.addConstraint(new Assign(left, right));
+			// Put both left and right variables to Vars
+			cur_blk.addVar(left);
+			cur_blk.addVar(right);
 		}
 	}
 
@@ -433,22 +431,27 @@ public class BoundAnalyzer {
 	 */
 	private void analyze(Codes.Const code, FunctionOrMethod function) {
 		Constant constant = code.constant;
-		String target_reg = prefix + code.target();
+		String left = prefix + code.target();
+		if(!BoundAnalyzerHelper.isCached(function)){
+			// Get the current blok
+			BoundBlock cur_blk = BoundAnalyzerHelper.getCurrentBlock(function);
+			// Check the value is an Constant.Integer
+			if (constant instanceof Constant.Integer) {
+				// Add the 'Const' constraint.
+				BigInteger value = ((Constant.Integer) constant).value;
+				cur_blk.addConstraint(new Const(left, value));
+				// Put 'left' variable to 'Vars' set
+				cur_blk.addVar(left);
+			}
 
-		// Check the value is an Constant.Integer
-		if (constant instanceof Constant.Integer && !BoundAnalyzerHelper.isCached(function)) {
-			// Add the 'Const' constraint.
-			BigInteger value = ((Constant.Integer) constant).value;
-			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-			graph.addConstraint(new Const(target_reg, value));
+			if (constant instanceof Constant.Array) {
+				// Get the list and extract the size info.
+				BigInteger size = BigInteger.valueOf((((Constant.Array) constant).values).size());
+				cur_blk.addConstraint(new Const(left+"_size", size));
+			}
 		}
-
-		if (constant instanceof Constant.Array) {
-			// Get the list and extract the size info.
-			BigInteger size = BigInteger.valueOf((((Constant.Array) constant).values).size());
-			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-			graph.addConstraint(new Const(target_reg+"_size", size));
-		}
+		
+		
 
 	}
 
@@ -478,6 +481,7 @@ public class BoundAnalyzer {
 	 * @throws CloneNotSupportedException
 	 */
 	private void analyze(Codes.If code, FunctionOrMethod function) {
+		
 		String left = prefix + code.operand(0);
 		String right = prefix + code.operand(1);
 		if (!BoundAnalyzerHelper.isCached(function)) {
@@ -597,7 +601,9 @@ public class BoundAnalyzer {
 			if (c_blk != null) {
 				// Create a return block 
 				BoundBlock return_block = graph.createBasicBlock("return"+retOp, BlockType.RETURN, c_blk);
-
+				// Put return op to 'Vars' set
+				c_blk.addVar(retOp);
+				
 				// Check if the return type is integer.
 				if (BoundAnalyzerHelper.isIntType(type)) {
 					// Add the 'Assign' constraint to the return (ret) variable.
@@ -707,30 +713,27 @@ public class BoundAnalyzer {
 	private void analyze(Codes.BinaryOperator code, FunctionOrMethod function) {
 		String left = prefix + code.target(0);
 		// Add the type att
-		if (BoundAnalyzerHelper.isIntType(code.type(0)) && !BoundAnalyzerHelper.isCached(function)) {
-			// Get the values
-			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
+		if (BoundAnalyzerHelper.isIntType(code.type(0)) 
+				&& !BoundAnalyzerHelper.isCached(function)) {
+			// Get the current blok
+			BoundBlock cur_blk = BoundAnalyzerHelper.getCurrentBlock(function);
 			// Get the two right ops
 			String right0 = prefix + code.operand(0);
 			String right1 = prefix + code.operand(1);
 			switch (code.kind) {
 			case ADD:
 				// Use the left plus to represent the addition
-				graph.addConstraint(new LeftPlus(right0, right1, left));
-				// left operand is an intermediate variable
-				graph.addDeadVar(left);
+				cur_blk.addConstraint(new LeftPlus(right0, right1, left));
 				break;
 			case SUB:
 				// Negated the operand
-				graph.addConstraint(new Negate(prefix + code.operand(1), prefix + code.operand(1)));
+				cur_blk.addConstraint(new Negate(right1, right1));
 				// Use the left plus to represent the subtraction.
-				graph.addConstraint(new LeftPlus(prefix + code.operand(0), prefix + code.operand(1), left));
+				cur_blk.addConstraint(new LeftPlus(right0, right1, left));
 				//graph.addConstraint(new Plus(prefix + code.operand(0), prefix + code.operand(1), target));
 				break;
 			case MUL:
-				graph.addConstraint(new LeftMultiply(right0, right1, left));
-				// left operand is an intermediate variable and becomes dead always
-				graph.addDeadVar(left);				
+				cur_blk.addConstraint(new LeftMultiply(right0, right1, left));	
 				break;
 			case DIV:
 				break;
@@ -749,6 +752,10 @@ public class BoundAnalyzer {
 			default:
 				throw new RuntimeException("unknown binary expression encountered (" + code + ")");
 			}
+			// left, right0, and right1 are use variable
+			cur_blk.addVar(left);
+			cur_blk.addVar(right0);
+			cur_blk.addVar(right1);
 		}
 
 	}
@@ -949,7 +956,7 @@ public class BoundAnalyzer {
 
 
 			// Propagate the bounds of input parameters to the function.
-			BoundAnalyzerHelper.propagateInputBoundsToCallee(callee, code, input_bnds);
+			BoundAnalyzerHelper.propagateBoundsToCallee(callee, code, input_bnds);
 
 
 			// Infer the bounds of callee function.
