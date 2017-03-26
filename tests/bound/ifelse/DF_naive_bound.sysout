@@ -1,17 +1,20 @@
 WARNING: version numbering unavailable
-Parsed 1 source file(s). ....................................................... [78ms+1mb]
-Typed 1 source file(s). ....................................................... [125ms+1mb]
-Generated code for 1 source file(s). ........................................... [25ms+1mb]
-[./ifelse.whiley] applied definite assignment check ................................. [4ms]
-[./ifelse.whiley] applied module check .......................................... [2ms+1mb]
-[./ifelse.whiley] applied loop variants ............................................. [0ms]
-[./ifelse.whiley] applied coercion check ............................................ [2ms]
-Whiley => Wyil: compiled 1 file(s) ............................................ [261ms-1mb]
+Parsed 1 source file(s). ...................................................... [111ms+1mb]
+Typed 1 source file(s). ....................................................... [135ms+1mb]
+Generated code for 1 source file(s). ........................................... [28ms+1mb]
+[./ifelse.whiley] applied definite assignment check ................................. [2ms]
+[./ifelse.whiley] applied module check .............................................. [3ms]
+[./ifelse.whiley] applied loop variants ......................................... [0ms+1mb]
+[./ifelse.whiley] applied coercion check ............................................ [1ms]
+Whiley => Wyil: compiled 1 file(s) ............................................ [316ms-1mb]
 main.0 [	const %5 = 1 : int]
 main.1 [	invoke (%4) = (%5) ifelse:f : function(int)->(int)]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
+-------------------------------
+0:const %5 = 1 : int
+-------------------------------
 Vars [_5]
 Constraints [_5:=1]
 
@@ -51,7 +54,10 @@ f.14 [	return]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
-Vars [_0, _2]
+-------------------------------
+0:const %2 = 10 : int
+-------------------------------
+Vars [_2, _0]
 Constraints [_2:=10, _0:=[1..1]]
 
 	domain(_0)	= [1..1]	
@@ -61,6 +67,9 @@ isChanged=true
 ### Iteration 1 ### 
 '3' blocks in queue : [ENTRY][IF][ELSE]
 blklab1 [ELSE] 
+-------------------------------
+0:const %4 = 10 : int
+-------------------------------
 Vars [_4]
 Constraints [_0>=_2, _4:=10]
 
@@ -72,6 +81,9 @@ isChanged=false
 ### Iteration 2 ### 
 '2' blocks in queue : [ENTRY][IF]
 blklab1 [IF] 
+-------------------------------
+0:const %3 = 1 : int
+-------------------------------
 Vars [_3]
 Constraints [_0<_2, _3:=1]
 
@@ -83,7 +95,10 @@ isChanged=true
 ### Iteration 3 ### 
 '2' blocks in queue : [ENTRY][RETURN]
 return_3 [RETURN] 
-Vars []
+-------------------------------
+0:return %3
+-------------------------------
+Vars [_3]
 Constraints [return:=_3]
 
 	domain(_0)	= [1..1]	
@@ -104,7 +119,10 @@ isChanged=true
 ### Iteration 5 ### 
 '1' blocks in queue : [BLOCK]
 code [BLOCK] 
-Vars [_0, _2]
+-------------------------------
+0:const %2 = 10 : int
+-------------------------------
+Vars [_2, _0]
 Constraints [_2:=10, _0:=[1..1]]
 
 	domain(_0)	= [1..1]	
@@ -131,7 +149,12 @@ main.8 [	invoke (%9) = (%10) ifelse:f : function(int)->(int)]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
-Vars [_1, _4, _5, _10]
+-------------------------------
+0:const %5 = 1 : int
+1:assign %1 = %4  : int
+2:const %10 = 10 : int
+-------------------------------
+Vars [_5, _4, _1, _10]
 Constraints [_5:=1, _4:=[1..1], _1:=_4, _10:=10]
 
 	domain(_1)	= [1..1]	
@@ -161,7 +184,10 @@ Consistency=true
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
-Vars [_0, _2]
+-------------------------------
+0:const %2 = 10 : int
+-------------------------------
+Vars [_2, _0]
 Constraints [_2:=10, _0:=[10..10]]
 
 	domain(_0)	= [10..10]	
@@ -171,6 +197,9 @@ isChanged=true
 ### Iteration 1 ### 
 '3' blocks in queue : [ENTRY][IF][ELSE]
 blklab1 [ELSE] 
+-------------------------------
+0:const %4 = 10 : int
+-------------------------------
 Vars [_4]
 Constraints [_0>=_2, _4:=10]
 
@@ -193,6 +222,9 @@ isChanged=true
 ### Iteration 3 ### 
 '4' blocks in queue : [ENTRY][IF][IF][BLOCK]
 blklab2 [BLOCK] 
+-------------------------------
+0:const %6 = 0 : int
+-------------------------------
 Vars [_6]
 Constraints [_6:=0]
 
@@ -205,7 +237,10 @@ isChanged=true
 ### Iteration 4 ### 
 '4' blocks in queue : [ENTRY][IF][IF][RETURN]
 return_6 [RETURN] 
-Vars []
+-------------------------------
+0:return %6
+-------------------------------
+Vars [_6]
 Constraints [return:=_6]
 
 	domain(_0)	= [10..10]	
@@ -218,6 +253,9 @@ isChanged=true
 ### Iteration 5 ### 
 '3' blocks in queue : [ENTRY][IF][IF]
 blklab3 [IF] 
+-------------------------------
+0:const %5 = 2 : int
+-------------------------------
 Vars [_5]
 Constraints [_0>_4, _5:=2]
 
@@ -230,6 +268,9 @@ isChanged=false
 ### Iteration 6 ### 
 '2' blocks in queue : [ENTRY][IF]
 blklab1 [IF] 
+-------------------------------
+0:const %3 = 1 : int
+-------------------------------
 Vars [_3]
 Constraints [_0<_2, _3:=1]
 
@@ -250,7 +291,10 @@ isChanged=true
 ### Iteration 8 ### 
 '1' blocks in queue : [BLOCK]
 code [BLOCK] 
-Vars [_0, _2]
+-------------------------------
+0:const %2 = 10 : int
+-------------------------------
+Vars [_2, _0]
 Constraints [_2:=10, _0:=[10..10]]
 
 	domain(_0)	= [10..10]	
@@ -278,7 +322,14 @@ main.15 [	invoke (%14) = (%15) ifelse:f : function(int)->(int)]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
-Vars [_1, _15, _2, _4, _5, _9, _10]
+-------------------------------
+0:const %5 = 1 : int
+1:assign %1 = %4  : int
+2:const %10 = 10 : int
+3:assign %2 = %9  : int
+4:const %15 = 11 : int
+-------------------------------
+Vars [_5, _4, _1, _10, _9, _2, _15]
 Constraints [_5:=1, _4:=[1..1], _1:=_4, _10:=10, _9:=[0..0], _2:=_9, _15:=11]
 
 	domain(_1)	= [1..1]	
@@ -314,7 +365,10 @@ Consistency=true
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
-Vars [_0, _2]
+-------------------------------
+0:const %2 = 10 : int
+-------------------------------
+Vars [_2, _0]
 Constraints [_2:=10, _0:=[11..11]]
 
 	domain(_0)	= [11..11]	
@@ -324,6 +378,9 @@ isChanged=true
 ### Iteration 1 ### 
 '3' blocks in queue : [ENTRY][IF][ELSE]
 blklab1 [ELSE] 
+-------------------------------
+0:const %4 = 10 : int
+-------------------------------
 Vars [_4]
 Constraints [_0>=_2, _4:=10]
 
@@ -346,6 +403,9 @@ isChanged=false
 ### Iteration 3 ### 
 '3' blocks in queue : [ENTRY][IF][IF]
 blklab3 [IF] 
+-------------------------------
+0:const %5 = 2 : int
+-------------------------------
 Vars [_5]
 Constraints [_0>_4, _5:=2]
 
@@ -358,7 +418,10 @@ isChanged=true
 ### Iteration 4 ### 
 '3' blocks in queue : [ENTRY][IF][RETURN]
 return_5 [RETURN] 
-Vars []
+-------------------------------
+0:return %5
+-------------------------------
+Vars [_5]
 Constraints [return:=_5]
 
 	domain(_0)	= [11..11]	
@@ -371,6 +434,9 @@ isChanged=true
 ### Iteration 5 ### 
 '2' blocks in queue : [ENTRY][IF]
 blklab1 [IF] 
+-------------------------------
+0:const %3 = 1 : int
+-------------------------------
 Vars [_3]
 Constraints [_0<_2, _3:=1]
 
@@ -391,7 +457,10 @@ isChanged=true
 ### Iteration 7 ### 
 '1' blocks in queue : [BLOCK]
 code [BLOCK] 
-Vars [_0, _2]
+-------------------------------
+0:const %2 = 10 : int
+-------------------------------
+Vars [_2, _0]
 Constraints [_2:=10, _0:=[11..11]]
 
 	domain(_0)	= [11..11]	
@@ -418,7 +487,15 @@ main.21 [	return]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
-Vars [_1, _15, _2, _14, _3, _4, _5, _9, _10]
+-------------------------------
+0:const %5 = 1 : int
+1:assign %1 = %4  : int
+2:const %10 = 10 : int
+3:assign %2 = %9  : int
+4:const %15 = 11 : int
+5:assign %3 = %14  : int
+-------------------------------
+Vars [_5, _4, _1, _10, _9, _2, _15, _14, _3]
 Constraints [_5:=1, _4:=[1..1], _1:=_4, _10:=10, _9:=[0..0], _2:=_9, _15:=11, _14:=[2..2], _3:=_14]
 
 	domain(_1)	= [1..1]	

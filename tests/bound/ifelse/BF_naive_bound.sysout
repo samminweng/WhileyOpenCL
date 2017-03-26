@@ -1,18 +1,18 @@
 WARNING: version numbering unavailable
-Parsed 1 source file(s). ...................................................... [105ms+1mb]
-Typed 1 source file(s). ....................................................... [129ms+1mb]
-Generated code for 1 source file(s). ........................................... [26ms+1mb]
-[./ifelse.whiley] applied definite assignment check ................................. [2ms]
-[./ifelse.whiley] applied module check .......................................... [2ms+1mb]
-[./ifelse.whiley] applied loop variants ......................................... [1ms+1mb]
-[./ifelse.whiley] applied coercion check ............................................ [2ms]
-Whiley => Wyil: compiled 1 file(s) ............................................ [306ms-3mb]
+Parsed 1 source file(s). ..................................................... [5610ms+1mb]
+Typed 1 source file(s). ...................................................... [1873ms+1mb]
+Generated code for 1 source file(s). .......................................... [157ms+1mb]
+[./ifelse.whiley] applied definite assignment check ................................. [9ms]
+[./ifelse.whiley] applied module check ......................................... [11ms+1mb]
+[./ifelse.whiley] applied loop variants ......................................... [0ms+1mb]
+[./ifelse.whiley] applied coercion check ............................................ [7ms]
+Whiley => Wyil: compiled 1 file(s) ........................................... [7696ms-1mb]
 main.0 [	const %5 = 1 : int]
 main.1 [	invoke (%4) = (%5) ifelse:f : function(int)->(int)]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 entry [ENTRY] 
-Dead Vars []
+Vars []
 Constraints []
 
 IsReachable=true
@@ -20,7 +20,10 @@ isChanged=false
 ### Iteration 1 ### 
 '1' blocks in queue : [BLOCK]
 code [BLOCK] 
-Dead Vars []
+-------------------------------
+0:const %5 = 1 : int
+-------------------------------
+Vars [_5]
 Constraints [_5:=1]
 
 	domain(_5)	= [1..1]	
@@ -51,7 +54,7 @@ f.14 [	return]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 entry [ENTRY] 
-Dead Vars []
+Vars [_0]
 Constraints [_0:=[1..1]]
 
 	domain(_0)	= [1..1]	
@@ -60,7 +63,10 @@ isChanged=true
 ### Iteration 1 ### 
 '1' blocks in queue : [BLOCK]
 code [BLOCK] 
-Dead Vars []
+-------------------------------
+0:const %2 = 10 : int
+-------------------------------
+Vars [_2, _0]
 Constraints [_2:=10, _0:=[1..1]]
 
 	domain(_0)	= [1..1]	
@@ -70,7 +76,10 @@ isChanged=true
 ### Iteration 2 ### 
 '2' blocks in queue : [IF][ELSE]
 blklab1 [IF] 
-Dead Vars []
+-------------------------------
+0:const %3 = 1 : int
+-------------------------------
+Vars [_3]
 Constraints [_0<_2, _3:=1]
 
 	domain(_0)	= [1..1]	
@@ -81,7 +90,11 @@ isChanged=true
 ### Iteration 3 ### 
 '2' blocks in queue : [ELSE][RETURN]
 blklab1 [ELSE] 
-Dead Vars []
+-------------------------------
+0:ifge %0, %2 goto blklab1 : int
+1:const %4 = 10 : int
+-------------------------------
+Vars [_4]
 Constraints [_0>=_2, _4:=10]
 
 	domain(_0)	= [empty..empty]	
@@ -92,7 +105,10 @@ isChanged=false
 ### Iteration 4 ### 
 '1' blocks in queue : [RETURN]
 return_3 [RETURN] 
-Dead Vars []
+-------------------------------
+0:return %3
+-------------------------------
+Vars [_3]
 Constraints [return:=_3]
 
 	domain(_0)	= [1..1]	
@@ -121,7 +137,7 @@ main.8 [	invoke (%9) = (%10) ifelse:f : function(int)->(int)]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 entry [ENTRY] 
-Dead Vars []
+Vars []
 Constraints []
 
 IsReachable=true
@@ -129,7 +145,12 @@ isChanged=false
 ### Iteration 1 ### 
 '1' blocks in queue : [BLOCK]
 code [BLOCK] 
-Dead Vars [_4]
+-------------------------------
+0:const %5 = 1 : int
+1:assign %1 = %4  : int
+2:const %10 = 10 : int
+-------------------------------
+Vars [_5, _4, _1, _10]
 Constraints [_5:=1, _4:=[1..1], _1:=_4, _10:=10]
 
 	domain(_1)	= [1..1]	
@@ -151,7 +172,7 @@ Consistency=true
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 entry [ENTRY] 
-Dead Vars []
+Vars [_0]
 Constraints [_0:=[10..10]]
 
 	domain(_0)	= [10..10]	
@@ -160,7 +181,10 @@ isChanged=true
 ### Iteration 1 ### 
 '1' blocks in queue : [BLOCK]
 code [BLOCK] 
-Dead Vars []
+-------------------------------
+0:const %2 = 10 : int
+-------------------------------
+Vars [_2, _0]
 Constraints [_2:=10, _0:=[10..10]]
 
 	domain(_0)	= [10..10]	
@@ -170,7 +194,10 @@ isChanged=true
 ### Iteration 2 ### 
 '2' blocks in queue : [IF][ELSE]
 blklab1 [IF] 
-Dead Vars []
+-------------------------------
+0:const %3 = 1 : int
+-------------------------------
+Vars [_3]
 Constraints [_0<_2, _3:=1]
 
 	domain(_0)	= [empty..empty]	
@@ -181,7 +208,11 @@ isChanged=false
 ### Iteration 3 ### 
 '1' blocks in queue : [ELSE]
 blklab1 [ELSE] 
-Dead Vars []
+-------------------------------
+0:ifge %0, %2 goto blklab1 : int
+1:const %4 = 10 : int
+-------------------------------
+Vars [_4]
 Constraints [_0>=_2, _4:=10]
 
 	domain(_0)	= [10..10]	
@@ -192,7 +223,10 @@ isChanged=true
 ### Iteration 4 ### 
 '2' blocks in queue : [IF][ELSE]
 blklab3 [IF] 
-Dead Vars []
+-------------------------------
+0:const %5 = 2 : int
+-------------------------------
+Vars [_5]
 Constraints [_0>_4, _5:=2]
 
 	domain(_0)	= [empty..empty]	
@@ -204,7 +238,10 @@ isChanged=false
 ### Iteration 5 ### 
 '1' blocks in queue : [ELSE]
 blklab3 [ELSE] 
-Dead Vars []
+-------------------------------
+0:ifle %0, %4 goto blklab3 : int
+-------------------------------
+Vars []
 Constraints [_0<=_4]
 
 	domain(_0)	= [10..10]	
@@ -215,7 +252,10 @@ isChanged=true
 ### Iteration 6 ### 
 '1' blocks in queue : [BLOCK]
 blklab2 [BLOCK] 
-Dead Vars []
+-------------------------------
+0:const %6 = 0 : int
+-------------------------------
+Vars [_6]
 Constraints [_6:=0]
 
 	domain(_0)	= [10..10]	
@@ -227,7 +267,10 @@ isChanged=true
 ### Iteration 7 ### 
 '1' blocks in queue : [RETURN]
 return_6 [RETURN] 
-Dead Vars []
+-------------------------------
+0:return %6
+-------------------------------
+Vars [_6]
 Constraints [return:=_6]
 
 	domain(_0)	= [10..10]	
@@ -258,7 +301,7 @@ main.15 [	invoke (%14) = (%15) ifelse:f : function(int)->(int)]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 entry [ENTRY] 
-Dead Vars []
+Vars []
 Constraints []
 
 IsReachable=true
@@ -266,7 +309,14 @@ isChanged=false
 ### Iteration 1 ### 
 '1' blocks in queue : [BLOCK]
 code [BLOCK] 
-Dead Vars [_4, _9]
+-------------------------------
+0:const %5 = 1 : int
+1:assign %1 = %4  : int
+2:const %10 = 10 : int
+3:assign %2 = %9  : int
+4:const %15 = 11 : int
+-------------------------------
+Vars [_5, _4, _1, _10, _9, _2, _15]
 Constraints [_5:=1, _4:=[1..1], _1:=_4, _10:=10, _9:=[0..0], _2:=_9, _15:=11]
 
 	domain(_1)	= [1..1]	
@@ -294,7 +344,7 @@ Consistency=true
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 entry [ENTRY] 
-Dead Vars []
+Vars [_0]
 Constraints [_0:=[11..11]]
 
 	domain(_0)	= [11..11]	
@@ -303,7 +353,10 @@ isChanged=true
 ### Iteration 1 ### 
 '1' blocks in queue : [BLOCK]
 code [BLOCK] 
-Dead Vars []
+-------------------------------
+0:const %2 = 10 : int
+-------------------------------
+Vars [_2, _0]
 Constraints [_2:=10, _0:=[11..11]]
 
 	domain(_0)	= [11..11]	
@@ -313,7 +366,10 @@ isChanged=true
 ### Iteration 2 ### 
 '2' blocks in queue : [IF][ELSE]
 blklab1 [IF] 
-Dead Vars []
+-------------------------------
+0:const %3 = 1 : int
+-------------------------------
+Vars [_3]
 Constraints [_0<_2, _3:=1]
 
 	domain(_0)	= [empty..empty]	
@@ -324,7 +380,11 @@ isChanged=false
 ### Iteration 3 ### 
 '1' blocks in queue : [ELSE]
 blklab1 [ELSE] 
-Dead Vars []
+-------------------------------
+0:ifge %0, %2 goto blklab1 : int
+1:const %4 = 10 : int
+-------------------------------
+Vars [_4]
 Constraints [_0>=_2, _4:=10]
 
 	domain(_0)	= [11..11]	
@@ -335,7 +395,10 @@ isChanged=true
 ### Iteration 4 ### 
 '2' blocks in queue : [IF][ELSE]
 blklab3 [IF] 
-Dead Vars []
+-------------------------------
+0:const %5 = 2 : int
+-------------------------------
+Vars [_5]
 Constraints [_0>_4, _5:=2]
 
 	domain(_0)	= [11..11]	
@@ -347,7 +410,10 @@ isChanged=true
 ### Iteration 5 ### 
 '2' blocks in queue : [ELSE][RETURN]
 blklab3 [ELSE] 
-Dead Vars []
+-------------------------------
+0:ifle %0, %4 goto blklab3 : int
+-------------------------------
+Vars []
 Constraints [_0<=_4]
 
 	domain(_0)	= [empty..empty]	
@@ -358,7 +424,10 @@ isChanged=false
 ### Iteration 6 ### 
 '1' blocks in queue : [RETURN]
 return_5 [RETURN] 
-Dead Vars []
+-------------------------------
+0:return %5
+-------------------------------
+Vars [_5]
 Constraints [return:=_5]
 
 	domain(_0)	= [11..11]	
@@ -388,7 +457,7 @@ main.21 [	return]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 entry [ENTRY] 
-Dead Vars []
+Vars []
 Constraints []
 
 IsReachable=true
@@ -396,7 +465,15 @@ isChanged=false
 ### Iteration 1 ### 
 '1' blocks in queue : [BLOCK]
 code [BLOCK] 
-Dead Vars [_14, _4, _9]
+-------------------------------
+0:const %5 = 1 : int
+1:assign %1 = %4  : int
+2:const %10 = 10 : int
+3:assign %2 = %9  : int
+4:const %15 = 11 : int
+5:assign %3 = %14  : int
+-------------------------------
+Vars [_5, _4, _1, _10, _9, _2, _15, _14, _3]
 Constraints [_5:=1, _4:=[1..1], _1:=_4, _10:=10, _9:=[0..0], _2:=_9, _15:=11, _14:=[2..2], _3:=_14]
 
 	domain(_1)	= [1..1]	

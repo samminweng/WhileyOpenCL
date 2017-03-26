@@ -7,6 +7,7 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -32,11 +33,11 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	// Prefix of the variable
 	private final String prefix = "_";
 	// The set of dead variable, that will be passed onto the parent block
-	private Set<String> dead_vars;
+	private LinkedHashSet<String> dead_vars;
 	// The set of variables, which will be used in the block
-	private Set<String> Vars; 
+	private LinkedHashSet<String> Vars; 
 
-	private CodeBlock codeBlock;// Store all the byte-code for a block
+	private LinkedHashSet<Code> codes;// Store all the byte-code for a block, preserving insertion order
 	private List<Constraint> constraints;
 	private List<BoundBlock> childNodes = null;
 	private List<BoundBlock> parentNodes = null;
@@ -121,9 +122,9 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	private BoundBlock() {
 		this.bounds = new Bounds();
 		this.constraints = new ArrayList<Constraint>();
-		this.codeBlock = new CodeBlock();
-		this.dead_vars = new HashSet<String>();
-		this.Vars = new HashSet<String>();
+		this.codes = new LinkedHashSet<Code>();
+		this.dead_vars = new LinkedHashSet<String>();
+		this.Vars = new LinkedHashSet<String>();
 	}
 
 	/**
@@ -172,16 +173,9 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	 * @param code
 	 */
 	public void addCode(Code code) {
-		this.codeBlock.add(code);
+		this.codes.add(code);		
 	}
-	/**
-	 * Get the list of codes.
-	 * @return
-	 */
-	public CodeBlock getCodeBlock(){
-		return this.codeBlock;
-	}
-
+	
 	/**
 	 * Adds a child node to the current node and also add the current node to
 	 * the parent list of its child nodes.
@@ -365,11 +359,11 @@ public class BoundBlock implements Comparable<BoundBlock> {
 		String str = "";
 		str += String.format("%s [%s] ", this.label, this.type);
 		//Display the list of byte-code
-		if(this.codeBlock.size()>0){
+		if(this.codes.size()>0){
 			str += "\n-------------------------------";
 			int index=0;
-			for(Code code: this.codeBlock){
-				str += "\nl."+index+":"+code;
+			for(Code code: this.codes){
+				str += "\n"+index+":"+code;
 				index++;
 			}
 			str += "\n-------------------------------";

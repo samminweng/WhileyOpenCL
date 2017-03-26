@@ -1,17 +1,21 @@
 WARNING: version numbering unavailable
-Parsed 1 source file(s). ....................................................... [53ms+1mb]
-Typed 1 source file(s). ........................................................ [73ms+1mb]
-Generated code for 1 source file(s). ............................................... [18ms]
-[./whileloop.whiley] applied definite assignment check .............................. [1ms]
-[./whileloop.whiley] applied module check ....................................... [2ms+1mb]
-[./whileloop.whiley] applied loop variants ...................................... [0ms+1mb]
+Parsed 1 source file(s). ...................................................... [103ms+1mb]
+Typed 1 source file(s). ....................................................... [136ms+1mb]
+Generated code for 1 source file(s). ............................................... [33ms]
+[./whileloop.whiley] applied definite assignment check .............................. [2ms]
+[./whileloop.whiley] applied module check ....................................... [3ms+1mb]
+[./whileloop.whiley] applied loop variants ...................................... [1ms+1mb]
 [./whileloop.whiley] applied coercion check ......................................... [1ms]
-Whiley => Wyil: compiled 1 file(s) ............................................ [183ms-1mb]
+Whiley => Wyil: compiled 1 file(s) ............................................ [307ms-1mb]
 main.0 [	const %3 = 43 : int]
 main.1 [	invoke (%2) = (%3) whileloop:f : function(int)->(int)]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
+-------------------------------
+l.0:const %3 = 43 : int
+l.1:invoke (%2) = (%3) whileloop:f : function(int)->(int)
+-------------------------------
 Vars [_3]
 Constraints [_3:=43]
 
@@ -52,6 +56,15 @@ f.15 [	return]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
+-------------------------------
+l.0:const %4 = 0 : int
+l.1:assign %2 = %4  : int
+l.2:const %5 = 0 : int
+l.3:assign %3 = %5  : int
+l.4:loop (%2, %3, %6, %7, %8, %9)
+l.5:invariant
+l.6:ifge %2, %0 goto blklab1 : int
+-------------------------------
 Vars [_0, _2, _3, _4, _5]
 Constraints [_4:=0, _2:=_4, _5:=0, _3:=_5, _0:=[43..43]]
 
@@ -78,6 +91,9 @@ isChanged=true
 ### Iteration 2 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab1 [LOOP_EXIT] 
+-------------------------------
+l.0:return %3
+-------------------------------
 Vars [_3]
 Constraints [_2>=_0]
 
@@ -91,6 +107,14 @@ isChanged=false
 ### Iteration 3 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab1 [LOOP_BODY] 
+-------------------------------
+l.0:add %7 = %3, %2 : int
+l.1:assign %3 = %7  : int
+l.2:const %8 = 1 : int
+l.3:add %9 = %2, %8 : int
+l.4:assign %2 = %9  : int
+l.5:.blklab2
+-------------------------------
 Vars [_2, _3, _7, _8, _9]
 Constraints [_2<_0, _7 = _3+_2, _3:=_7, _8:=1, _9 = _2+_8, _2:=_9]
 
@@ -107,6 +131,9 @@ isChanged=true
 ### Iteration 4 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 blklab2 [BLOCK] 
+-------------------------------
+l.0:.blklab1
+-------------------------------
 Vars []
 Constraints []
 
@@ -139,6 +166,9 @@ isChanged=true
 ### Iteration 6 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab1 [LOOP_EXIT] 
+-------------------------------
+l.0:return %3
+-------------------------------
 Vars [_3]
 Constraints [_2>=_0]
 
@@ -155,6 +185,14 @@ isChanged=false
 ### Iteration 7 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab1 [LOOP_BODY] 
+-------------------------------
+l.0:add %7 = %3, %2 : int
+l.1:assign %3 = %7  : int
+l.2:const %8 = 1 : int
+l.3:add %9 = %2, %8 : int
+l.4:assign %2 = %9  : int
+l.5:.blklab2
+-------------------------------
 Vars [_2, _3, _7, _8, _9]
 Constraints [_2<_0, _7 = _3+_2, _3:=_7, _8:=1, _9 = _2+_8, _2:=_9]
 
@@ -171,6 +209,9 @@ isChanged=true
 ### Iteration 8 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 blklab2 [BLOCK] 
+-------------------------------
+l.0:.blklab1
+-------------------------------
 Vars []
 Constraints []
 
@@ -203,6 +244,9 @@ isChanged=true
 ### Iteration 10 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab1 [LOOP_EXIT] 
+-------------------------------
+l.0:return %3
+-------------------------------
 Vars [_3]
 Constraints [_2>=_0]
 
@@ -219,6 +263,14 @@ isChanged=false
 ### Iteration 11 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab1 [LOOP_BODY] 
+-------------------------------
+l.0:add %7 = %3, %2 : int
+l.1:assign %3 = %7  : int
+l.2:const %8 = 1 : int
+l.3:add %9 = %2, %8 : int
+l.4:assign %2 = %9  : int
+l.5:.blklab2
+-------------------------------
 Vars [_2, _3, _7, _8, _9]
 Constraints [_2<_0, _7 = _3+_2, _3:=_7, _8:=1, _9 = _2+_8, _2:=_9]
 
@@ -235,6 +287,9 @@ isChanged=true
 ### Iteration 12 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 blklab2 [BLOCK] 
+-------------------------------
+l.0:.blklab1
+-------------------------------
 Vars []
 Constraints []
 
@@ -267,6 +322,9 @@ isChanged=true
 ### Iteration 14 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab1 [LOOP_EXIT] 
+-------------------------------
+l.0:return %3
+-------------------------------
 Vars [_3]
 Constraints [_2>=_0]
 
@@ -300,6 +358,14 @@ isChanged=true
 ### Iteration 16 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab1 [LOOP_BODY] 
+-------------------------------
+l.0:add %7 = %3, %2 : int
+l.1:assign %3 = %7  : int
+l.2:const %8 = 1 : int
+l.3:add %9 = %2, %8 : int
+l.4:assign %2 = %9  : int
+l.5:.blklab2
+-------------------------------
 Vars [_2, _3, _7, _8, _9]
 Constraints [_2<_0, _7 = _3+_2, _3:=_7, _8:=1, _9 = _2+_8, _2:=_9]
 
@@ -316,6 +382,9 @@ isChanged=true
 ### Iteration 17 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 blklab2 [BLOCK] 
+-------------------------------
+l.0:.blklab1
+-------------------------------
 Vars []
 Constraints []
 
@@ -348,6 +417,9 @@ isChanged=true
 ### Iteration 19 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab1 [LOOP_EXIT] 
+-------------------------------
+l.0:return %3
+-------------------------------
 Vars [_3]
 Constraints [_2>=_0]
 
@@ -381,6 +453,14 @@ isChanged=true
 ### Iteration 21 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab1 [LOOP_BODY] 
+-------------------------------
+l.0:add %7 = %3, %2 : int
+l.1:assign %3 = %7  : int
+l.2:const %8 = 1 : int
+l.3:add %9 = %2, %8 : int
+l.4:assign %2 = %9  : int
+l.5:.blklab2
+-------------------------------
 Vars [_2, _3, _7, _8, _9]
 Constraints [_2<_0, _7 = _3+_2, _3:=_7, _8:=1, _9 = _2+_8, _2:=_9]
 
@@ -397,6 +477,9 @@ isChanged=true
 ### Iteration 22 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 blklab2 [BLOCK] 
+-------------------------------
+l.0:.blklab1
+-------------------------------
 Vars []
 Constraints []
 
@@ -429,6 +512,9 @@ isChanged=true
 ### Iteration 24 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab1 [LOOP_EXIT] 
+-------------------------------
+l.0:return %3
+-------------------------------
 Vars [_3]
 Constraints [_2>=_0]
 
@@ -462,6 +548,14 @@ isChanged=true
 ### Iteration 26 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab1 [LOOP_BODY] 
+-------------------------------
+l.0:add %7 = %3, %2 : int
+l.1:assign %3 = %7  : int
+l.2:const %8 = 1 : int
+l.3:add %9 = %2, %8 : int
+l.4:assign %2 = %9  : int
+l.5:.blklab2
+-------------------------------
 Vars [_2, _3, _7, _8, _9]
 Constraints [_2<_0, _7 = _3+_2, _3:=_7, _8:=1, _9 = _2+_8, _2:=_9]
 
@@ -487,6 +581,15 @@ isChanged=true
 ### Iteration 28 ### 
 '1' blocks in queue : [BLOCK]
 code [BLOCK] 
+-------------------------------
+l.0:const %4 = 0 : int
+l.1:assign %2 = %4  : int
+l.2:const %5 = 0 : int
+l.3:assign %3 = %5  : int
+l.4:loop (%2, %3, %6, %7, %8, %9)
+l.5:invariant
+l.6:ifge %2, %0 goto blklab1 : int
+-------------------------------
 Vars [_0, _2, _3, _4, _5]
 Constraints [_4:=0, _2:=_4, _5:=0, _3:=_5, _0:=[43..43]]
 
@@ -520,6 +623,15 @@ main.6 [	return]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
+-------------------------------
+l.0:const %3 = 43 : int
+l.1:invoke (%2) = (%3) whileloop:f : function(int)->(int)
+l.2:assign %1 = %2  : int
+l.3:fieldload %4 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.4:fieldload %5 = %4 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.5:indirectinvoke () = %5 (%1) : method(any)->()
+l.6:return
+-------------------------------
 Vars [_1, _2, _3]
 Constraints [_3:=43, _2:=[0..null], _1:=_2]
 

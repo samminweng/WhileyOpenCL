@@ -141,7 +141,7 @@ public class BoundAnalyzer {
 	private void iterateBytecode(FunctionOrMethod function, List<Code> code_blk) {
 		// Parse each byte-code and add the constraints accordingly.
 		for (Code code : code_blk) {
-			if (this.config.isVerbose() && !BoundAnalyzerHelper.isCached(function)) {
+			if(!BoundAnalyzerHelper.isCached(function) && this.config.isVerbose()) {
 				// Get the Block.Entry and print out each byte-code
 				line = printWyILCode(code, function, line);
 			}
@@ -408,20 +408,23 @@ public class BoundAnalyzer {
 		BoundBlock cur_blk = BoundAnalyzerHelper.getCurrentBlock(function);
 		String left = prefix + code.target(0);
 		String right = prefix + code.operand(0);
-		if (code.type(0) instanceof Type.Array) {
-			// Add the constraint to the size variable of target array
-			cur_blk.addConstraint(new Assign(left+"_size", right+"_size"));
-		}
-
 		// Check if the assigned value is an integer
-		if (!BoundAnalyzerHelper.isCached(function) 
-				&& BoundAnalyzerHelper.isIntType(code.type(0))) {
-			// Add the constraint 'target = operand'
-			cur_blk.addConstraint(new Assign(left, right));
-			// Put both left and right variables to Vars
-			cur_blk.addVar(left);
-			cur_blk.addVar(right);
+		if (!BoundAnalyzerHelper.isCached(function)){ 
+			if(BoundAnalyzerHelper.isIntType(code.type(0))) {
+				// Add the constraint 'target = operand'
+				cur_blk.addConstraint(new Assign(left, right));
+			}
+			if (code.type(0) instanceof Type.Array) {
+				// Add the constraint to the size variable of target array
+				cur_blk.addConstraint(new Assign(left+"_size", right+"_size"));
+			}
+			
 		}
+		
+		// Put both left and right variables to Vars
+		cur_blk.addCode(code);
+		cur_blk.addVar(left);
+		cur_blk.addVar(right);
 	}
 
 	/**
@@ -440,8 +443,6 @@ public class BoundAnalyzer {
 				// Add the 'Const' constraint.
 				BigInteger value = ((Constant.Integer) constant).value;
 				cur_blk.addConstraint(new Const(left, value));
-				// Put 'left' variable to 'Vars' set
-				cur_blk.addVar(left);
 			}
 
 			if (constant instanceof Constant.Array) {
@@ -449,6 +450,11 @@ public class BoundAnalyzer {
 				BigInteger size = BigInteger.valueOf((((Constant.Array) constant).values).size());
 				cur_blk.addConstraint(new Const(left+"_size", size));
 			}
+			
+			// Put 'left' variable to 'Vars' set
+			cur_blk.addVar(left);
+			cur_blk.addCode(code);
+			
 		}
 		
 		
@@ -530,10 +536,10 @@ public class BoundAnalyzer {
 				// Check if the 'if' bytecode is the loop condition.
 				if (this.loop_labels.contains(label)) {
 					// Create a loop body and loop exit.
-					graph.createLoopStructure(label, c, neg_c);
+					graph.createLoopStructure(code, c, neg_c);
 				} else {
 					// Create if and else branches.
-					graph.createIfElseBranch(label, c, neg_c);
+					graph.createIfElseBranch(code, c, neg_c);
 				}
 			}
 		}
@@ -601,18 +607,22 @@ public class BoundAnalyzer {
 			if (c_blk != null) {
 				// Create a return block 
 				BoundBlock return_block = graph.createBasicBlock("return"+retOp, BlockType.RETURN, c_blk);
-				// Put return op to 'Vars' set
-				c_blk.addVar(retOp);
+				
+				
 				
 				// Check if the return type is integer.
 				if (BoundAnalyzerHelper.isIntType(type)) {
 					// Add the 'Assign' constraint to the return (ret) variable.
 					return_block.addConstraint((new Assign("return", retOp)));
-				}
-
-				// Add the bounds of size variable
-				if(type instanceof Type.Array){
-					return_block.addConstraint((new Assign("return_size", retOp+"_size")));
+					// Add the bounds of size variable
+					if(type instanceof Type.Array){
+						return_block.addConstraint((new Assign("return_size", retOp+"_size")));
+					}
+					
+					// Put return op to 'Vars' set
+					return_block.addVar(retOp);
+					// Put the code to return blk
+					return_block.addCode(code);
 				}
 
 				// Connect the current block with exit block.
@@ -621,6 +631,8 @@ public class BoundAnalyzer {
 					exit_block = graph.createBasicBlock("exit", BlockType.EXIT, return_block);
 				}
 				return_block.addChild(exit_block);
+				
+				
 
 				graph.setCurrentBlock(null);
 			}
@@ -756,6 +768,8 @@ public class BoundAnalyzer {
 			cur_blk.addVar(left);
 			cur_blk.addVar(right0);
 			cur_blk.addVar(right1);
+			// Add code
+			cur_blk.addCode(code);
 		}
 
 	}

@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import wyil.lang.Codes.If;
 import wyil.lang.Type;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
@@ -174,22 +175,27 @@ public class BoundGraph {
 	/**
 	 * Branches out the current block to add if/else blocks and set the current block to 
 	 * the if branch (left one).
+	 * @param code 
 	 * 
 	 * @param new_label
 	 *            the name of new branch.
 	 * @param c
 	 *            constraint
 	 */
-	public void createIfElseBranch(String new_label, Constraint c, Constraint neg_c) {
-		BoundBlock c_blk = getCurrentBlock();
+	public void createIfElseBranch(If code, Constraint c, Constraint neg_c) {
+		BoundBlock c_blk = getCurrentBlock();		
+		String new_label = code.target;
+		
 		// Branch out the block
 		// The left block does not have the name
 		BoundBlock leftBlock = createBasicBlock(new_label, BlockType.IF_BRANCH, c_blk);
 		BoundBlock rightBlock = createBasicBlock(new_label, BlockType.ELSE_BRANCH, c_blk);
-
+		
 		// Add the constraint to the left block
 		leftBlock.addConstraint(neg_c);
 		rightBlock.addConstraint(c);
+		// Put the code to c_blk
+		rightBlock.addCode(code);
 
 		// Set the current block to the left
 		setCurrentBlock(leftBlock);
@@ -198,15 +204,18 @@ public class BoundGraph {
 	/**
 	 * Creates the loop header, loop body and loop exit and
 	 * set the current block to the loop body.
+	 * @param code 
 	 * 
 	 * @param new_label
 	 *            the name of new branch.
 	 * @param c
 	 *            constraint
 	 */
-	public void createLoopStructure(String new_label, Constraint c, Constraint neg_c) {
+	public void createLoopStructure(If code, Constraint c, Constraint neg_c) {
+		BoundBlock c_blk = getCurrentBlock();		
+		String new_label = code.target;
 		//Create the loop header
-		BoundBlock loop_header = createBasicBlock(new_label, BlockType.LOOP_HEADER, getCurrentBlock());
+		BoundBlock loop_header = createBasicBlock(new_label, BlockType.LOOP_HEADER, c_blk);
 		// Set the loop flag to be true.
 		// Check whether to add if-else blocks or loop-condition blocks.
 		BoundBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, loop_header);
@@ -215,6 +224,8 @@ public class BoundGraph {
 		loop_body.addConstraint(neg_c);
 		// put the original constraint to the loop_exit
 		loop_exit.addConstraint(c);
+		// Put the code to loop exit
+		loop_exit.addCode(code);
 		// Set the current block to be loop body.
 		setCurrentBlock(loop_body);
 	}
