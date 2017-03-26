@@ -282,12 +282,7 @@ final class BoundAnalyzerHelper {
 	 * @param func_name
 	 *            the name of function.
 	 */
-	protected static void printCFG(Configuration config, FunctionOrMethod function) {
-		//Check if the verbose is on.
-		if(!config.isVerbose()){
-			return;
-		}
-
+	protected static void printCFG(FunctionOrMethod function) {
 		String dot_string = "digraph " + function.name() + "{\n";
 		BoundGraph graph = getCFGraph(function);
 		List<BoundBlock> blks = graph.getBlockList();

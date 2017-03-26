@@ -465,10 +465,10 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	 *  If the counter counts to 3, then apply the widen operator.
 	 * 
 	 * 
-	 * @param isGradual
+	 * @param isNaive (true: naive, false:gradual)
 	 * @param old_domain
 	 */
-	public void widenBound(boolean isGradual, Domain old_domain) {
+	public void widenBound(boolean isNaive, Domain old_domain) {
 
 		// Check if current domain is an empty set
 		if(this.isEmpty()){
@@ -492,7 +492,7 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 			// Increase the counter of lower bound
 			this.lb_counter = this.lb_counter+1;
 			if(this.lb_counter == this.MAX_Iterations){
-				if (isGradual) {
+				if (!isNaive) {
 					widenLowerBoundsAgainstThresholds(this_min);
 				} else {
 					this.setLowerBound(null);
@@ -515,7 +515,7 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 			// Increase the upper bound counter 
 			this.ub_counter = this.ub_counter+1;
 			if(this.ub_counter == this.MAX_Iterations){
-				if (isGradual) {
+				if (!isNaive) {
 					widenUpperBoundsAgainstThresholds(this_max);
 				} else {
 					// Widen the upper bound to infinity

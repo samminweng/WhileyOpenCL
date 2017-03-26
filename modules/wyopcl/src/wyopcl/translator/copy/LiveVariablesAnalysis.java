@@ -42,12 +42,15 @@ public class LiveVariablesAnalysis extends Analyzer {
 	private HashMap<FunctionOrMethod, LiveVariables> livenessStore;
 	
 	
-	
+	/**
+	 * Constructor
+	 * 
+	 * @param config
+	 */
 	public LiveVariablesAnalysis(Configuration config) {
 		super(config);
 		// Initialize the liveness stores.
 		this.livenessStore = new HashMap<FunctionOrMethod, LiveVariables>();
-		this.isVerbose = config.isVerbose();
 	}
 	/**
 	 * A constructor with over-writing 'isVerbose' flag

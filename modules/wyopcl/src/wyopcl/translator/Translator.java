@@ -178,13 +178,13 @@ public class Translator implements Builder {
 			 * context-sensitive bounds for the invoked function. The bounds of return value is propagated to the caller
 			 * function.
 			 */
-			BoundAnalyzer analyzer = new BoundAnalyzer(module, liveAnalyzer);
+			BoundAnalyzer analyzer = new BoundAnalyzer(module, liveAnalyzer, config);
 			try {
 				System.out.println("=== Bound Analysis on main function ===");
 				// Get the function code block
 				FunctionOrMethod function = module.functionOrMethod("main").get(0);
 				// Start with main function.
-				analyzer.buildCFG(config, function);
+				analyzer.buildCFG(function);
 				// Infer the bounds at the end of main function.
 				analyzer.inferBounds(function);
 			} catch (Exception e) {

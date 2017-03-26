@@ -133,12 +133,12 @@ public class Configuration {
 	}
 
 	/**
-	 * Check if setting the gradual widen strategy.
+	 * Check if the setting is naive widen strategy
 	 * 
-	 * @return
+	 * @return true if it is naive operator.
 	 */
-	public boolean isGradualWiden() {
-		return (this.options.get(BOUND).equals("gradual")) ? true:false;
+	public boolean isNaiveWiden() {
+		return (this.options.get(BOUND).equals("naive")) ? true:false;
 	}
 	
 	/**

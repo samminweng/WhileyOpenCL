@@ -43,7 +43,7 @@ public abstract class Analyzer {
 	// private static final String prefix = "%";
 	protected Configuration config;
 	// Boolean flag indicates whether to print out debugging messages
-	protected boolean isVerbose;
+	public boolean isVerbose;
 	// Maps of CFGs
 	protected HashMap<FunctionOrMethod, CFGraph> cfgraphs;
 	// The line number
@@ -61,6 +61,7 @@ public abstract class Analyzer {
 	public Analyzer(Configuration config) {
 		this.cfgraphs = new HashMap<FunctionOrMethod, CFGraph>();
 		this.config = config;
+		this.isVerbose = config.isVerbose();
 	}
 
 	/**

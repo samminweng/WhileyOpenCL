@@ -421,18 +421,17 @@ public class Bounds implements Cloneable {
 	 * Widens the upper/lower bounds against thresholds, according to the bound
 	 * changes and widen strategy
 	 * 
-	 * @param config
+	 * @param isNaive specifies the use of widen operator
 	 * @param blk
 	 *            the block
 	 */
-	public void widenBounds(Configuration config, Bounds before) {
+	public void widenBounds(boolean isNaive, Bounds before) {
 		// Get the strategy
-		boolean isGradual = config.isGradualWiden();
 		
 		for (String var : bounds.keySet()) {
 			Domain new_d = getDomain(var);
 			Domain old_d = before.getDomain(var);
-			new_d.widenBound(isGradual, old_d);	
+			new_d.widenBound(isNaive, old_d);	
 		}
 	}
 	

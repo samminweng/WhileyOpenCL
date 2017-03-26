@@ -52,8 +52,11 @@ import wyopcl.translator.copy.LiveVariablesAnalysis;
  *
  */
 public class BoundAnalyzer {
+	private boolean isVerbose; // Print out detailed messages
+	private boolean isDFTraversal; // Specify tree order (depth-first by default)
+	private boolean isNaiveWiden; // Specify widen operator (naive widen by default)
 	private final String prefix = "_";
-	private Configuration config;
+	//private Configuration config;
 	private Set<String> loop_labels; // Store the loop labels in a function
 	// The line number
 	private int line;
@@ -68,11 +71,14 @@ public class BoundAnalyzer {
 	 * Constructor
 	 * @param liveAnalyzer 
 	 */
-	public BoundAnalyzer(WyilFile module, LiveVariablesAnalysis liveAnalyzer) {
+	public BoundAnalyzer(WyilFile module, LiveVariablesAnalysis liveAnalyzer, Configuration config) {
 		this.module = module;
 		this.boundMap = new HashMap<FunctionOrMethod, Bounds>();
 		this.loop_labels = new HashSet<String>();
 		this.liveAnalyzer = liveAnalyzer;
+		this.isVerbose = config.isVerbose();
+		this.isDFTraversal = config.getTraversal().equals("DF")? true : false;
+		this.isNaiveWiden = config.isNaiveWiden();
 	}
 
 	/**
@@ -82,9 +88,7 @@ public class BoundAnalyzer {
 	 * @param variableDeclarations
 	 * @param code_blk
 	 */
-	public void buildCFG(Configuration config, FunctionOrMethod function) {
-		this.config = config;
-
+	public void buildCFG(FunctionOrMethod function) {
 		if (!BoundAnalyzerHelper.isCached(function)) {
 			BoundAnalyzerHelper.promoteCFGStatus(function);
 		}else{
@@ -141,7 +145,7 @@ public class BoundAnalyzer {
 	private void iterateBytecode(FunctionOrMethod function, List<Code> code_blk) {
 		// Parse each byte-code and add the constraints accordingly.
 		for (Code code : code_blk) {
-			if(!BoundAnalyzerHelper.isCached(function) && this.config.isVerbose()) {
+			if(!BoundAnalyzerHelper.isCached(function) && isVerbose) {
 				// Get the Block.Entry and print out each byte-code
 				line = printWyILCode(code, function, line);
 			}
@@ -296,16 +300,15 @@ public class BoundAnalyzer {
 	public Bounds inferBounds(FunctionOrMethod function) {
 		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
 
-		if (config.isVerbose()) {
+		if (isVerbose) {
 			// Print out bounds along with size information.
-			BoundAnalyzerHelper.printCFG(config, function);
+			BoundAnalyzerHelper.printCFG(function);
 		}
 
 		// Compute the dead variables
 		computeDeadVars(function);
 		
-		
-		//
+		// Initialize the bound set in all blocks.
 		graph.initialize(function);
 		// Create a deque and put 'entry' and 'code' blocks
 		// into the queue as a starting point
@@ -324,7 +327,7 @@ public class BoundAnalyzer {
 
 			// Debugging messages
 			//if (config.isVerbose() && blk.getType() == BlockType.LOOP_HEADER) {
-			if (config.isVerbose()) {
+			if (isVerbose) {
 				System.out.println("### Iteration " + iteration + " ### ");
 				String str = "'" + changed.size() + "' blocks in queue : ";
 				Iterator<BoundBlock> iterator = changed.iterator();
@@ -338,7 +341,7 @@ public class BoundAnalyzer {
 
 			// Retrieve a block from the 'changed' queue
 			BoundBlock blk;	
-			if(config.getTraversal().equals("DF")){
+			if(isDFTraversal){
 				// Get the last block of the deque in Depth-First (last in first out) manner
 				blk = changed.pollLast();
 			}else{
@@ -362,7 +365,7 @@ public class BoundAnalyzer {
 			if (blk.isReachable() && !bnd_before.equals(bnd_after)) {
 				// Widen the bounds for each block iff block is the feedback set
 				if(feedback_set.contains(blk)){
-					bnd_after.widenBounds(config, bnd_before);
+					bnd_after.widenBounds(isNaiveWiden, bnd_before);
 				}			
 				// Check if the blk has any child nodes
 				if(blk.hasChild() == true){
@@ -378,7 +381,7 @@ public class BoundAnalyzer {
 
 			// Debug
 			//if (config.isVerbose() && blk.getType() == BlockType.LOOP_HEADER) {
-			if (config.isVerbose()) {
+			if (isVerbose) {
 				// Print out the bounds.
 				System.out.println(blk.toString());
 				System.out.println("isChanged=" + isChanged);
@@ -413,9 +416,9 @@ public class BoundAnalyzer {
 
 		BoundAnalyzerHelper.printBoundsAndSize(function, bnds);
 
-		if (config.isVerbose()) {
+		if (isVerbose) {
 			// Print out bounds along with size information.
-			BoundAnalyzerHelper.printCFG(config, function);
+			BoundAnalyzerHelper.printCFG(function);
 		}
 
 		// Put the bounds to HashMap
@@ -988,7 +991,7 @@ public class BoundAnalyzer {
 			Bounds input_bnds = inferBounds(caller);
 
 			// Build CFGraph for callee.
-			buildCFG(config, callee);
+			buildCFG(callee);
 
 
 			// Propagate the bounds of input parameters to the function.
