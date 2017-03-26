@@ -1,18 +1,604 @@
 WARNING: version numbering unavailable
-Parsed 1 source file(s). ...................................................... [105ms+1mb]
-Typed 1 source file(s). ....................................................... [146ms+1mb]
-Generated code for 1 source file(s). ........................................... [27ms+1mb]
-[./ifelse.whiley] applied definite assignment check ................................. [3ms]
-[./ifelse.whiley] applied module check .......................................... [2ms+1mb]
+Parsed 1 source file(s). ....................................................... [94ms+1mb]
+Typed 1 source file(s). ....................................................... [101ms+1mb]
+Generated code for 1 source file(s). ........................................... [18ms+1mb]
+[./ifelse.whiley] applied definite assignment check ................................. [1ms]
+[./ifelse.whiley] applied module check .......................................... [3ms+1mb]
 [./ifelse.whiley] applied loop variants ......................................... [0ms+1mb]
-[./ifelse.whiley] applied coercion check ............................................ [2ms]
-Whiley => Wyil: compiled 1 file(s) ............................................ [323ms-1mb]
+[./ifelse.whiley] applied coercion check ............................................ [0ms]
+Whiley => Wyil: compiled 1 file(s) ............................................ [247ms-1mb]
+f.0 [	const %2 = 10 : int]
+f.1 [	ifge %0, %2 goto blklab1 : int]
+f.2 [	const %3 = 1 : int]
+f.3 [	return %3]
+f.4 [	goto blklab2]
+f.5 [.blklab1]
+f.6 [	const %4 = 10 : int]
+f.7 [	ifle %0, %4 goto blklab3 : int]
+f.8 [	const %5 = 2 : int]
+f.9 [	return %5]
+f.10 [.blklab3]
+f.11 [.blklab2]
+f.12 [	const %6 = 0 : int]
+f.13 [	return %6]
+f.14 [	return]
+main.0 [	const %5 = 1 : int]
+main.1 [	invoke (%4) = (%5) ifelse:f : function(int)->(int)]
+main.2 [	assign %1 = %4  : int]
+main.3 [	assert]
+main.4 [	fieldload %7 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.5 [	fieldload %8 = %7 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.6 [	indirectinvoke () = %8 (%1) : method(any)->()]
+main.7 [	const %10 = 10 : int]
+main.8 [	invoke (%9) = (%10) ifelse:f : function(int)->(int)]
+main.9 [	assign %2 = %9  : int]
+main.10 [	assert]
+main.11 [	fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.12 [	fieldload %13 = %12 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.13 [	indirectinvoke () = %13 (%2) : method(any)->()]
+main.14 [	const %15 = 11 : int]
+main.15 [	invoke (%14) = (%15) ifelse:f : function(int)->(int)]
+main.16 [	assign %3 = %14  : int]
+main.17 [	assert]
+main.18 [	fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.19 [	fieldload %18 = %17 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.20 [	indirectinvoke () = %18 (%3) : method(any)->()]
+main.21 [	return]
+###### Live analysis for f function. ######
+Iteration 1
+In:{[]}
+exit [EXIT] 
+Out:{[]}
+
+In:{[6]}
+%6 [RETURN] 
+-------------------------------
+l.0:return %6
+-------------------------------
+Out:{[6]}
+
+In:{[5]}
+%5 [RETURN] 
+-------------------------------
+l.0:return %5
+-------------------------------
+Out:{[5]}
+
+In:{[0, 4]}
+blklab3 [ELSE] 
+-------------------------------
+l.0:ifle %0, %4 goto blklab3 : int
+-------------------------------
+Out:{[]}
+
+In:{[0, 4]}
+blklab3 [IF] 
+-------------------------------
+l.0:ifgt %0, %4 goto blklab3 : int
+l.1:const %5 = 2 : int
+-------------------------------
+Out:{[5]}
+
+In:{[0, 4]}
+blklab3 [CONDITION] 
+Out:{[0, 4]}
+
+In:{[]}
+blklab2 [BLOCK] 
+-------------------------------
+l.0:const %6 = 0 : int
+-------------------------------
+Out:{[6]}
+
+In:{[3]}
+%3 [RETURN] 
+-------------------------------
+l.0:return %3
+-------------------------------
+Out:{[3]}
+
+In:{[0, 2]}
+blklab1 [ELSE] 
+-------------------------------
+l.0:ifge %0, %2 goto blklab1 : int
+l.1:const %4 = 10 : int
+-------------------------------
+Out:{[0, 4]}
+
+In:{[0, 2]}
+blklab1 [IF] 
+-------------------------------
+l.0:iflt %0, %2 goto blklab1 : int
+l.1:const %3 = 1 : int
+-------------------------------
+Out:{[3]}
+
+In:{[0, 2]}
+blklab1 [CONDITION] 
+Out:{[0, 2]}
+
+In:{[0]}
+code [BLOCK] 
+-------------------------------
+l.0:const %2 = 10 : int
+-------------------------------
+Out:{[0, 2]}
+
+In:{[0]}
+entry [ENTRY] 
+Out:{[0]}
+
+###### Live analysis for f function. ######
+Iteration 2
+In:{[]}
+exit [EXIT] 
+Out:{[]}
+
+In:{[6]}
+%6 [RETURN] 
+-------------------------------
+l.0:return %6
+-------------------------------
+Out:{[6]}
+
+In:{[0, 4, 5]}
+%5 [RETURN] 
+-------------------------------
+l.0:return %5
+-------------------------------
+Out:{[0, 4, 5]}
+
+In:{[0, 4]}
+blklab3 [ELSE] 
+-------------------------------
+l.0:ifle %0, %4 goto blklab3 : int
+-------------------------------
+Out:{[]}
+
+In:{[0, 4]}
+blklab3 [IF] 
+-------------------------------
+l.0:ifgt %0, %4 goto blklab3 : int
+l.1:const %5 = 2 : int
+-------------------------------
+Out:{[0, 4, 5]}
+
+In:{[0, 4]}
+blklab3 [CONDITION] 
+Out:{[0, 4]}
+
+In:{[]}
+blklab2 [BLOCK] 
+-------------------------------
+l.0:const %6 = 0 : int
+-------------------------------
+Out:{[6]}
+
+In:{[3]}
+%3 [RETURN] 
+-------------------------------
+l.0:return %3
+-------------------------------
+Out:{[3]}
+
+In:{[0, 2]}
+blklab1 [ELSE] 
+-------------------------------
+l.0:ifge %0, %2 goto blklab1 : int
+l.1:const %4 = 10 : int
+-------------------------------
+Out:{[0, 4]}
+
+In:{[0, 2]}
+blklab1 [IF] 
+-------------------------------
+l.0:iflt %0, %2 goto blklab1 : int
+l.1:const %3 = 1 : int
+-------------------------------
+Out:{[3]}
+
+In:{[0, 2]}
+blklab1 [CONDITION] 
+Out:{[0, 2]}
+
+In:{[0]}
+code [BLOCK] 
+-------------------------------
+l.0:const %2 = 10 : int
+-------------------------------
+Out:{[0, 2]}
+
+In:{[0]}
+entry [ENTRY] 
+Out:{[0]}
+
+###### Live analysis for f function. ######
+Iteration 3
+In:{[]}
+exit [EXIT] 
+Out:{[]}
+
+In:{[6]}
+%6 [RETURN] 
+-------------------------------
+l.0:return %6
+-------------------------------
+Out:{[6]}
+
+In:{[0, 4, 5]}
+%5 [RETURN] 
+-------------------------------
+l.0:return %5
+-------------------------------
+Out:{[0, 4, 5]}
+
+In:{[0, 4]}
+blklab3 [ELSE] 
+-------------------------------
+l.0:ifle %0, %4 goto blklab3 : int
+-------------------------------
+Out:{[]}
+
+In:{[0, 4]}
+blklab3 [IF] 
+-------------------------------
+l.0:ifgt %0, %4 goto blklab3 : int
+l.1:const %5 = 2 : int
+-------------------------------
+Out:{[0, 4, 5]}
+
+In:{[0, 4]}
+blklab3 [CONDITION] 
+Out:{[0, 4]}
+
+In:{[]}
+blklab2 [BLOCK] 
+-------------------------------
+l.0:const %6 = 0 : int
+-------------------------------
+Out:{[6]}
+
+In:{[3]}
+%3 [RETURN] 
+-------------------------------
+l.0:return %3
+-------------------------------
+Out:{[3]}
+
+In:{[0, 2]}
+blklab1 [ELSE] 
+-------------------------------
+l.0:ifge %0, %2 goto blklab1 : int
+l.1:const %4 = 10 : int
+-------------------------------
+Out:{[0, 4]}
+
+In:{[0, 2]}
+blklab1 [IF] 
+-------------------------------
+l.0:iflt %0, %2 goto blklab1 : int
+l.1:const %3 = 1 : int
+-------------------------------
+Out:{[3]}
+
+In:{[0, 2]}
+blklab1 [CONDITION] 
+Out:{[0, 2]}
+
+In:{[0]}
+code [BLOCK] 
+-------------------------------
+l.0:const %2 = 10 : int
+-------------------------------
+Out:{[0, 2]}
+
+In:{[0]}
+entry [ENTRY] 
+Out:{[0]}
+
+###### Live variables for f function. ######
+In:{x}
+entry [ENTRY] 
+Out:{x}
+
+In:{x}
+code [BLOCK] 
+-------------------------------
+l.0:const %2 = 10 : int
+-------------------------------
+Out:{x, %2}
+
+In:{x, %2}
+blklab1 [CONDITION] 
+Out:{x, %2}
+
+In:{x, %2}
+blklab1 [IF] 
+-------------------------------
+l.0:iflt %0, %2 goto blklab1 : int
+l.1:const %3 = 1 : int
+-------------------------------
+Out:{%3}
+
+In:{x, %2}
+blklab1 [ELSE] 
+-------------------------------
+l.0:ifge %0, %2 goto blklab1 : int
+l.1:const %4 = 10 : int
+-------------------------------
+Out:{x, %4}
+
+In:{%3}
+%3 [RETURN] 
+-------------------------------
+l.0:return %3
+-------------------------------
+Out:{%3}
+
+In:{}
+blklab2 [BLOCK] 
+-------------------------------
+l.0:const %6 = 0 : int
+-------------------------------
+Out:{%6}
+
+In:{x, %4}
+blklab3 [CONDITION] 
+Out:{x, %4}
+
+In:{x, %4}
+blklab3 [IF] 
+-------------------------------
+l.0:ifgt %0, %4 goto blklab3 : int
+l.1:const %5 = 2 : int
+-------------------------------
+Out:{x, %4, %5}
+
+In:{x, %4}
+blklab3 [ELSE] 
+-------------------------------
+l.0:ifle %0, %4 goto blklab3 : int
+-------------------------------
+Out:{}
+
+In:{x, %4, %5}
+%5 [RETURN] 
+-------------------------------
+l.0:return %5
+-------------------------------
+Out:{x, %4, %5}
+
+In:{%6}
+%6 [RETURN] 
+-------------------------------
+l.0:return %6
+-------------------------------
+Out:{%6}
+
+In:{}
+exit [EXIT] 
+Out:{}
+
+###### Live analysis for main function. ######
+Iteration 1
+In:{[]}
+exit [EXIT] 
+Out:{[]}
+
+In:{[0, 14]}
+f16 [BLOCK] 
+-------------------------------
+l.0:assign %3 = %14  : int
+l.1:fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.2:fieldload %18 = %17 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.3:indirectinvoke () = %18 (%3) : method(any)->()
+-------------------------------
+Out:{[]}
+
+In:{[0, 15]}
+f16 [INVOKE] 
+-------------------------------
+l.0:invoke (%14) = (%15) ifelse:f : function(int)->(int)
+-------------------------------
+Out:{[0, 14]}
+
+In:{[0, 9]}
+f9 [BLOCK] 
+-------------------------------
+l.0:assign %2 = %9  : int
+l.1:fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.2:fieldload %13 = %12 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.3:indirectinvoke () = %13 (%2) : method(any)->()
+l.4:const %15 = 11 : int
+-------------------------------
+Out:{[0, 15]}
+
+In:{[0, 10]}
+f9 [INVOKE] 
+-------------------------------
+l.0:invoke (%9) = (%10) ifelse:f : function(int)->(int)
+-------------------------------
+Out:{[0, 9]}
+
+In:{[0, 4]}
+f2 [BLOCK] 
+-------------------------------
+l.0:assign %1 = %4  : int
+l.1:fieldload %7 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.2:fieldload %8 = %7 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.3:indirectinvoke () = %8 (%1) : method(any)->()
+l.4:const %10 = 10 : int
+-------------------------------
+Out:{[0, 10]}
+
+In:{[0, 5]}
+f2 [INVOKE] 
+-------------------------------
+l.0:invoke (%4) = (%5) ifelse:f : function(int)->(int)
+-------------------------------
+Out:{[0, 4]}
+
+In:{[0]}
+code [BLOCK] 
+-------------------------------
+l.0:const %5 = 1 : int
+-------------------------------
+Out:{[0, 5]}
+
+In:{[0]}
+entry [ENTRY] 
+Out:{[0]}
+
+###### Live analysis for main function. ######
+Iteration 2
+In:{[]}
+exit [EXIT] 
+Out:{[]}
+
+In:{[0, 14]}
+f16 [BLOCK] 
+-------------------------------
+l.0:assign %3 = %14  : int
+l.1:fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.2:fieldload %18 = %17 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.3:indirectinvoke () = %18 (%3) : method(any)->()
+-------------------------------
+Out:{[]}
+
+In:{[0, 15]}
+f16 [INVOKE] 
+-------------------------------
+l.0:invoke (%14) = (%15) ifelse:f : function(int)->(int)
+-------------------------------
+Out:{[0, 14]}
+
+In:{[0, 9]}
+f9 [BLOCK] 
+-------------------------------
+l.0:assign %2 = %9  : int
+l.1:fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.2:fieldload %13 = %12 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.3:indirectinvoke () = %13 (%2) : method(any)->()
+l.4:const %15 = 11 : int
+-------------------------------
+Out:{[0, 15]}
+
+In:{[0, 10]}
+f9 [INVOKE] 
+-------------------------------
+l.0:invoke (%9) = (%10) ifelse:f : function(int)->(int)
+-------------------------------
+Out:{[0, 9]}
+
+In:{[0, 4]}
+f2 [BLOCK] 
+-------------------------------
+l.0:assign %1 = %4  : int
+l.1:fieldload %7 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.2:fieldload %8 = %7 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.3:indirectinvoke () = %8 (%1) : method(any)->()
+l.4:const %10 = 10 : int
+-------------------------------
+Out:{[0, 10]}
+
+In:{[0, 5]}
+f2 [INVOKE] 
+-------------------------------
+l.0:invoke (%4) = (%5) ifelse:f : function(int)->(int)
+-------------------------------
+Out:{[0, 4]}
+
+In:{[0]}
+code [BLOCK] 
+-------------------------------
+l.0:const %5 = 1 : int
+-------------------------------
+Out:{[0, 5]}
+
+In:{[0]}
+entry [ENTRY] 
+Out:{[0]}
+
+###### Live variables for main function. ######
+In:{sys}
+entry [ENTRY] 
+Out:{sys}
+
+In:{sys}
+code [BLOCK] 
+-------------------------------
+l.0:const %5 = 1 : int
+-------------------------------
+Out:{sys, %5}
+
+In:{sys, %5}
+f2 [INVOKE] 
+-------------------------------
+l.0:invoke (%4) = (%5) ifelse:f : function(int)->(int)
+-------------------------------
+Out:{sys, %4}
+
+In:{sys, %4}
+f2 [BLOCK] 
+-------------------------------
+l.0:assign %1 = %4  : int
+l.1:fieldload %7 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.2:fieldload %8 = %7 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.3:indirectinvoke () = %8 (%1) : method(any)->()
+l.4:const %10 = 10 : int
+-------------------------------
+Out:{sys, %10}
+
+In:{sys, %10}
+f9 [INVOKE] 
+-------------------------------
+l.0:invoke (%9) = (%10) ifelse:f : function(int)->(int)
+-------------------------------
+Out:{sys, %9}
+
+In:{sys, %9}
+f9 [BLOCK] 
+-------------------------------
+l.0:assign %2 = %9  : int
+l.1:fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.2:fieldload %13 = %12 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.3:indirectinvoke () = %13 (%2) : method(any)->()
+l.4:const %15 = 11 : int
+-------------------------------
+Out:{sys, %15}
+
+In:{sys, %15}
+f16 [INVOKE] 
+-------------------------------
+l.0:invoke (%14) = (%15) ifelse:f : function(int)->(int)
+-------------------------------
+Out:{sys, %14}
+
+In:{sys, %14}
+f16 [BLOCK] 
+-------------------------------
+l.0:assign %3 = %14  : int
+l.1:fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.2:fieldload %18 = %17 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.3:indirectinvoke () = %18 (%3) : method(any)->()
+-------------------------------
+Out:{}
+
+In:{}
+exit [EXIT] 
+Out:{}
+
+=== Bound Analysis on main function ===
 main.0 [	const %5 = 1 : int]
 main.1 [	invoke (%4) = (%5) ifelse:f : function(int)->(int)]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
-Dead Vars []
+-------------------------------
+0:const %5 = 1 : int
+-------------------------------
+Vars [_5]
+DeadVars []
 Constraints [_5:=1]
 
 	domain(_5)	= [1..1]	
@@ -21,7 +607,8 @@ isChanged=true
 ### Iteration 1 ### 
 '1' blocks in queue : [ENTRY]
 entry [ENTRY] 
-Dead Vars []
+Vars []
+DeadVars []
 Constraints []
 
 IsReachable=true
@@ -51,7 +638,11 @@ f.14 [	return]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
-Dead Vars []
+-------------------------------
+0:const %2 = 10 : int
+-------------------------------
+Vars [_2, _0]
+DeadVars []
 Constraints [_2:=10, _0:=[1..1]]
 
 	domain(_0)	= [1..1]	
@@ -61,7 +652,12 @@ isChanged=true
 ### Iteration 1 ### 
 '3' blocks in queue : [ENTRY][IF][ELSE]
 blklab1 [ELSE] 
-Dead Vars []
+-------------------------------
+0:ifge %0, %2 goto blklab1 : int
+1:const %4 = 10 : int
+-------------------------------
+Vars [_4]
+DeadVars []
 Constraints [_0>=_2, _4:=10]
 
 	domain(_0)	= [empty..empty]	
@@ -72,7 +668,11 @@ isChanged=false
 ### Iteration 2 ### 
 '2' blocks in queue : [ENTRY][IF]
 blklab1 [IF] 
-Dead Vars []
+-------------------------------
+0:const %3 = 1 : int
+-------------------------------
+Vars [_3]
+DeadVars []
 Constraints [_0<_2, _3:=1]
 
 	domain(_0)	= [1..1]	
@@ -83,7 +683,11 @@ isChanged=true
 ### Iteration 3 ### 
 '2' blocks in queue : [ENTRY][RETURN]
 return_3 [RETURN] 
-Dead Vars []
+-------------------------------
+0:return %3
+-------------------------------
+Vars [_3]
+DeadVars []
 Constraints [return:=_3]
 
 	domain(_0)	= [1..1]	
@@ -95,7 +699,8 @@ isChanged=true
 ### Iteration 4 ### 
 '1' blocks in queue : [ENTRY]
 entry [ENTRY] 
-Dead Vars []
+Vars [_0]
+DeadVars []
 Constraints [_0:=[1..1]]
 
 	domain(_0)	= [1..1]	
@@ -104,7 +709,11 @@ isChanged=true
 ### Iteration 5 ### 
 '1' blocks in queue : [BLOCK]
 code [BLOCK] 
-Dead Vars []
+-------------------------------
+0:const %2 = 10 : int
+-------------------------------
+Vars [_2, _0]
+DeadVars []
 Constraints [_2:=10, _0:=[1..1]]
 
 	domain(_0)	= [1..1]	
@@ -131,7 +740,13 @@ main.8 [	invoke (%9) = (%10) ifelse:f : function(int)->(int)]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
-Dead Vars [_4]
+-------------------------------
+0:const %5 = 1 : int
+1:assign %1 = %4  : int
+2:const %10 = 10 : int
+-------------------------------
+Vars [_5, _4, _1, _10]
+DeadVars [_5, _4, _1]
 Constraints [_5:=1, _4:=[1..1], _1:=_4, _10:=10]
 
 	domain(_1)	= [1..1]	
@@ -143,7 +758,8 @@ isChanged=true
 ### Iteration 1 ### 
 '1' blocks in queue : [ENTRY]
 entry [ENTRY] 
-Dead Vars []
+Vars []
+DeadVars []
 Constraints []
 
 IsReachable=true
@@ -161,7 +777,11 @@ Consistency=true
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
-Dead Vars []
+-------------------------------
+0:const %2 = 10 : int
+-------------------------------
+Vars [_2, _0]
+DeadVars []
 Constraints [_2:=10, _0:=[10..10]]
 
 	domain(_0)	= [10..10]	
@@ -171,7 +791,12 @@ isChanged=true
 ### Iteration 1 ### 
 '3' blocks in queue : [ENTRY][IF][ELSE]
 blklab1 [ELSE] 
-Dead Vars []
+-------------------------------
+0:ifge %0, %2 goto blklab1 : int
+1:const %4 = 10 : int
+-------------------------------
+Vars [_4]
+DeadVars []
 Constraints [_0>=_2, _4:=10]
 
 	domain(_0)	= [10..10]	
@@ -182,7 +807,11 @@ isChanged=true
 ### Iteration 2 ### 
 '4' blocks in queue : [ENTRY][IF][IF][ELSE]
 blklab3 [ELSE] 
-Dead Vars []
+-------------------------------
+0:ifle %0, %4 goto blklab3 : int
+-------------------------------
+Vars []
+DeadVars []
 Constraints [_0<=_4]
 
 	domain(_0)	= [10..10]	
@@ -193,7 +822,11 @@ isChanged=true
 ### Iteration 3 ### 
 '4' blocks in queue : [ENTRY][IF][IF][BLOCK]
 blklab2 [BLOCK] 
-Dead Vars []
+-------------------------------
+0:const %6 = 0 : int
+-------------------------------
+Vars [_6]
+DeadVars []
 Constraints [_6:=0]
 
 	domain(_0)	= [10..10]	
@@ -205,7 +838,11 @@ isChanged=true
 ### Iteration 4 ### 
 '4' blocks in queue : [ENTRY][IF][IF][RETURN]
 return_6 [RETURN] 
-Dead Vars []
+-------------------------------
+0:return %6
+-------------------------------
+Vars [_6]
+DeadVars []
 Constraints [return:=_6]
 
 	domain(_0)	= [10..10]	
@@ -218,7 +855,11 @@ isChanged=true
 ### Iteration 5 ### 
 '3' blocks in queue : [ENTRY][IF][IF]
 blklab3 [IF] 
-Dead Vars []
+-------------------------------
+0:const %5 = 2 : int
+-------------------------------
+Vars [_5]
+DeadVars []
 Constraints [_0>_4, _5:=2]
 
 	domain(_0)	= [empty..empty]	
@@ -230,7 +871,11 @@ isChanged=false
 ### Iteration 6 ### 
 '2' blocks in queue : [ENTRY][IF]
 blklab1 [IF] 
-Dead Vars []
+-------------------------------
+0:const %3 = 1 : int
+-------------------------------
+Vars [_3]
+DeadVars []
 Constraints [_0<_2, _3:=1]
 
 	domain(_0)	= [empty..empty]	
@@ -241,7 +886,8 @@ isChanged=false
 ### Iteration 7 ### 
 '1' blocks in queue : [ENTRY]
 entry [ENTRY] 
-Dead Vars []
+Vars [_0]
+DeadVars []
 Constraints [_0:=[10..10]]
 
 	domain(_0)	= [10..10]	
@@ -250,7 +896,11 @@ isChanged=true
 ### Iteration 8 ### 
 '1' blocks in queue : [BLOCK]
 code [BLOCK] 
-Dead Vars []
+-------------------------------
+0:const %2 = 10 : int
+-------------------------------
+Vars [_2, _0]
+DeadVars []
 Constraints [_2:=10, _0:=[10..10]]
 
 	domain(_0)	= [10..10]	
@@ -278,7 +928,15 @@ main.15 [	invoke (%14) = (%15) ifelse:f : function(int)->(int)]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
-Dead Vars [_4, _9]
+-------------------------------
+0:const %5 = 1 : int
+1:assign %1 = %4  : int
+2:const %10 = 10 : int
+3:assign %2 = %9  : int
+4:const %15 = 11 : int
+-------------------------------
+Vars [_5, _4, _1, _10, _9, _2, _15]
+DeadVars [_5, _4, _1, _10, _9, _2]
 Constraints [_5:=1, _4:=[1..1], _1:=_4, _10:=10, _9:=[0..0], _2:=_9, _15:=11]
 
 	domain(_1)	= [1..1]	
@@ -293,7 +951,8 @@ isChanged=true
 ### Iteration 1 ### 
 '1' blocks in queue : [ENTRY]
 entry [ENTRY] 
-Dead Vars []
+Vars []
+DeadVars []
 Constraints []
 
 IsReachable=true
@@ -314,7 +973,11 @@ Consistency=true
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
-Dead Vars []
+-------------------------------
+0:const %2 = 10 : int
+-------------------------------
+Vars [_2, _0]
+DeadVars []
 Constraints [_2:=10, _0:=[11..11]]
 
 	domain(_0)	= [11..11]	
@@ -324,7 +987,12 @@ isChanged=true
 ### Iteration 1 ### 
 '3' blocks in queue : [ENTRY][IF][ELSE]
 blklab1 [ELSE] 
-Dead Vars []
+-------------------------------
+0:ifge %0, %2 goto blklab1 : int
+1:const %4 = 10 : int
+-------------------------------
+Vars [_4]
+DeadVars []
 Constraints [_0>=_2, _4:=10]
 
 	domain(_0)	= [11..11]	
@@ -335,7 +1003,11 @@ isChanged=true
 ### Iteration 2 ### 
 '4' blocks in queue : [ENTRY][IF][IF][ELSE]
 blklab3 [ELSE] 
-Dead Vars []
+-------------------------------
+0:ifle %0, %4 goto blklab3 : int
+-------------------------------
+Vars []
+DeadVars []
 Constraints [_0<=_4]
 
 	domain(_0)	= [empty..empty]	
@@ -346,7 +1018,11 @@ isChanged=false
 ### Iteration 3 ### 
 '3' blocks in queue : [ENTRY][IF][IF]
 blklab3 [IF] 
-Dead Vars []
+-------------------------------
+0:const %5 = 2 : int
+-------------------------------
+Vars [_5]
+DeadVars []
 Constraints [_0>_4, _5:=2]
 
 	domain(_0)	= [11..11]	
@@ -358,7 +1034,11 @@ isChanged=true
 ### Iteration 4 ### 
 '3' blocks in queue : [ENTRY][IF][RETURN]
 return_5 [RETURN] 
-Dead Vars []
+-------------------------------
+0:return %5
+-------------------------------
+Vars [_5]
+DeadVars []
 Constraints [return:=_5]
 
 	domain(_0)	= [11..11]	
@@ -371,7 +1051,11 @@ isChanged=true
 ### Iteration 5 ### 
 '2' blocks in queue : [ENTRY][IF]
 blklab1 [IF] 
-Dead Vars []
+-------------------------------
+0:const %3 = 1 : int
+-------------------------------
+Vars [_3]
+DeadVars []
 Constraints [_0<_2, _3:=1]
 
 	domain(_0)	= [empty..empty]	
@@ -382,7 +1066,8 @@ isChanged=false
 ### Iteration 6 ### 
 '1' blocks in queue : [ENTRY]
 entry [ENTRY] 
-Dead Vars []
+Vars [_0]
+DeadVars []
 Constraints [_0:=[11..11]]
 
 	domain(_0)	= [11..11]	
@@ -391,7 +1076,11 @@ isChanged=true
 ### Iteration 7 ### 
 '1' blocks in queue : [BLOCK]
 code [BLOCK] 
-Dead Vars []
+-------------------------------
+0:const %2 = 10 : int
+-------------------------------
+Vars [_2, _0]
+DeadVars []
 Constraints [_2:=10, _0:=[11..11]]
 
 	domain(_0)	= [11..11]	
@@ -418,7 +1107,16 @@ main.21 [	return]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
-Dead Vars [_14, _4, _9]
+-------------------------------
+0:const %5 = 1 : int
+1:assign %1 = %4  : int
+2:const %10 = 10 : int
+3:assign %2 = %9  : int
+4:const %15 = 11 : int
+5:assign %3 = %14  : int
+-------------------------------
+Vars [_5, _4, _1, _10, _9, _2, _15, _14, _3]
+DeadVars [_5, _4, _1, _10, _9, _2, _15, _14, _3]
 Constraints [_5:=1, _4:=[1..1], _1:=_4, _10:=10, _9:=[0..0], _2:=_9, _15:=11, _14:=[2..2], _3:=_14]
 
 	domain(_1)	= [1..1]	
@@ -435,7 +1133,8 @@ isChanged=true
 ### Iteration 1 ### 
 '1' blocks in queue : [ENTRY]
 entry [ENTRY] 
-Dead Vars []
+Vars []
+DeadVars []
 Constraints []
 
 IsReachable=true

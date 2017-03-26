@@ -1,19 +1,411 @@
 WARNING: version numbering unavailable
-Parsed 1 source file(s). ....................................................... [55ms+1mb]
-Typed 1 source file(s). ........................................................ [83ms+1mb]
-Generated code for 1 source file(s). ............................................... [17ms]
+Parsed 1 source file(s). ....................................................... [77ms+1mb]
+Typed 1 source file(s). ....................................................... [100ms+1mb]
+Generated code for 1 source file(s). ............................................... [38ms]
 [./whileloop_break.whiley] applied definite assignment check ........................ [2ms]
 [./whileloop_break.whiley] applied module check ................................. [1ms+1mb]
 [./whileloop_break.whiley] applied loop variants ................................ [0ms+1mb]
-[./whileloop_break.whiley] applied coercion check ................................... [0ms]
-Whiley => Wyil: compiled 1 file(s) ............................................ [185ms-1mb]
+[./whileloop_break.whiley] applied coercion check ................................... [1ms]
+Whiley => Wyil: compiled 1 file(s) ............................................ [252ms-1mb]
+find.0 [	const %4 = 0 : int]
+find.1 [	assign %3 = %4  : int]
+find.2 [	loop (%3, %5, %6, %7)]
+find.3 [	invariant]
+find.4 [	ifge %3, %0 goto blklab0 : int]
+find.5 [	ifne %3, %1 goto blklab3 : int]
+find.6 [	goto blklab0]
+find.7 [.blklab3]
+find.8 [	const %6 = 1 : int]
+find.9 [	add %7 = %3, %6 : int]
+find.10 [	assign %3 = %7  : int]
+find.11 [.blklab1]
+find.12 [.blklab0]
+find.13 [	return %3]
+find.14 [	return]
+main.0 [	const %3 = 43 : int]
+main.1 [	const %4 = 10 : int]
+main.2 [	invoke (%2) = (%3, %4) whileloop_break:find : function(int,int)->(int)]
+main.3 [	assign %1 = %2  : int]
+main.4 [	fieldload %5 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.5 [	fieldload %6 = %5 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.6 [	indirectinvoke () = %6 (%1) : method(any)->()]
+main.7 [	return]
+###### Live analysis for find function. ######
+Iteration 1
+In:{[]}
+exit [EXIT] 
+Out:{[]}
+
+In:{[3]}
+r [RETURN] 
+-------------------------------
+l.0:return %3
+-------------------------------
+Out:{[3]}
+
+In:{[]}
+blklab1 [BLOCK] 
+Out:{[]}
+
+In:{[1, 3]}
+blklab3 [ELSE] 
+-------------------------------
+l.0:ifne %3, %1 goto blklab3 : int
+l.1:const %6 = 1 : int
+l.2:add %7 = %3, %6 : int
+l.3:assign %3 = %7  : int
+-------------------------------
+Out:{[]}
+
+In:{[1, 3]}
+blklab3 [IF] 
+-------------------------------
+l.0:ifeq %3, %1 goto blklab3 : int
+-------------------------------
+Out:{[]}
+
+In:{[1, 3]}
+blklab3 [CONDITION] 
+Out:{[1, 3]}
+
+In:{[3]}
+blklab0 [LOOP_EXIT] 
+Out:{[3]}
+
+In:{[0, 1, 3]}
+blklab0 [LOOP_BODY] 
+-------------------------------
+l.0:ifge %3, %0 goto blklab0 : int
+-------------------------------
+Out:{[1, 3]}
+
+In:{[0, 1, 3]}
+blklab0 [LOOP_HEADER] 
+Out:{[0, 1, 3]}
+
+In:{[0, 1]}
+code [BLOCK] 
+-------------------------------
+l.0:const %4 = 0 : int
+l.1:assign %3 = %4  : int
+-------------------------------
+Out:{[0, 1, 3]}
+
+In:{[0, 1]}
+entry [ENTRY] 
+Out:{[0, 1]}
+
+###### Live analysis for find function. ######
+Iteration 2
+In:{[]}
+exit [EXIT] 
+Out:{[]}
+
+In:{[3]}
+r [RETURN] 
+-------------------------------
+l.0:return %3
+-------------------------------
+Out:{[3]}
+
+In:{[0, 1, 3]}
+blklab1 [BLOCK] 
+Out:{[0, 1, 3]}
+
+In:{[0, 1, 3]}
+blklab3 [ELSE] 
+-------------------------------
+l.0:ifne %3, %1 goto blklab3 : int
+l.1:const %6 = 1 : int
+l.2:add %7 = %3, %6 : int
+l.3:assign %3 = %7  : int
+-------------------------------
+Out:{[0, 1, 3]}
+
+In:{[1, 3]}
+blklab3 [IF] 
+-------------------------------
+l.0:ifeq %3, %1 goto blklab3 : int
+-------------------------------
+Out:{[3]}
+
+In:{[0, 1, 3]}
+blklab3 [CONDITION] 
+Out:{[0, 1, 3]}
+
+In:{[3]}
+blklab0 [LOOP_EXIT] 
+Out:{[3]}
+
+In:{[0, 1, 3]}
+blklab0 [LOOP_BODY] 
+-------------------------------
+l.0:ifge %3, %0 goto blklab0 : int
+-------------------------------
+Out:{[0, 1, 3]}
+
+In:{[0, 1, 3]}
+blklab0 [LOOP_HEADER] 
+Out:{[0, 1, 3]}
+
+In:{[0, 1]}
+code [BLOCK] 
+-------------------------------
+l.0:const %4 = 0 : int
+l.1:assign %3 = %4  : int
+-------------------------------
+Out:{[0, 1, 3]}
+
+In:{[0, 1]}
+entry [ENTRY] 
+Out:{[0, 1]}
+
+###### Live analysis for find function. ######
+Iteration 3
+In:{[]}
+exit [EXIT] 
+Out:{[]}
+
+In:{[3]}
+r [RETURN] 
+-------------------------------
+l.0:return %3
+-------------------------------
+Out:{[3]}
+
+In:{[0, 1, 3]}
+blklab1 [BLOCK] 
+Out:{[0, 1, 3]}
+
+In:{[0, 1, 3]}
+blklab3 [ELSE] 
+-------------------------------
+l.0:ifne %3, %1 goto blklab3 : int
+l.1:const %6 = 1 : int
+l.2:add %7 = %3, %6 : int
+l.3:assign %3 = %7  : int
+-------------------------------
+Out:{[0, 1, 3]}
+
+In:{[1, 3]}
+blklab3 [IF] 
+-------------------------------
+l.0:ifeq %3, %1 goto blklab3 : int
+-------------------------------
+Out:{[3]}
+
+In:{[0, 1, 3]}
+blklab3 [CONDITION] 
+Out:{[0, 1, 3]}
+
+In:{[3]}
+blklab0 [LOOP_EXIT] 
+Out:{[3]}
+
+In:{[0, 1, 3]}
+blklab0 [LOOP_BODY] 
+-------------------------------
+l.0:ifge %3, %0 goto blklab0 : int
+-------------------------------
+Out:{[0, 1, 3]}
+
+In:{[0, 1, 3]}
+blklab0 [LOOP_HEADER] 
+Out:{[0, 1, 3]}
+
+In:{[0, 1]}
+code [BLOCK] 
+-------------------------------
+l.0:const %4 = 0 : int
+l.1:assign %3 = %4  : int
+-------------------------------
+Out:{[0, 1, 3]}
+
+In:{[0, 1]}
+entry [ENTRY] 
+Out:{[0, 1]}
+
+###### Live variables for find function. ######
+In:{limit, item}
+entry [ENTRY] 
+Out:{limit, item}
+
+In:{limit, item}
+code [BLOCK] 
+-------------------------------
+l.0:const %4 = 0 : int
+l.1:assign %3 = %4  : int
+-------------------------------
+Out:{limit, item, r}
+
+In:{limit, item, r}
+blklab0 [LOOP_HEADER] 
+Out:{limit, item, r}
+
+In:{limit, item, r}
+blklab0 [LOOP_BODY] 
+-------------------------------
+l.0:ifge %3, %0 goto blklab0 : int
+-------------------------------
+Out:{limit, item, r}
+
+In:{r}
+blklab0 [LOOP_EXIT] 
+Out:{r}
+
+In:{limit, item, r}
+blklab3 [CONDITION] 
+Out:{limit, item, r}
+
+In:{item, r}
+blklab3 [IF] 
+-------------------------------
+l.0:ifeq %3, %1 goto blklab3 : int
+-------------------------------
+Out:{r}
+
+In:{limit, item, r}
+blklab3 [ELSE] 
+-------------------------------
+l.0:ifne %3, %1 goto blklab3 : int
+l.1:const %6 = 1 : int
+l.2:add %7 = %3, %6 : int
+l.3:assign %3 = %7  : int
+-------------------------------
+Out:{limit, item, r}
+
+In:{limit, item, r}
+blklab1 [BLOCK] 
+Out:{limit, item, r}
+
+In:{r}
+r [RETURN] 
+-------------------------------
+l.0:return %3
+-------------------------------
+Out:{r}
+
+In:{}
+exit [EXIT] 
+Out:{}
+
+###### Live analysis for main function. ######
+Iteration 1
+In:{[]}
+exit [EXIT] 
+Out:{[]}
+
+In:{[0, 2]}
+find3 [BLOCK] 
+-------------------------------
+l.0:assign %1 = %2  : int
+l.1:fieldload %5 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.2:fieldload %6 = %5 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.3:indirectinvoke () = %6 (%1) : method(any)->()
+-------------------------------
+Out:{[]}
+
+In:{[0, 4, 3]}
+find3 [INVOKE] 
+-------------------------------
+l.0:invoke (%2) = (%3, %4) whileloop_break:find : function(int,int)->(int)
+-------------------------------
+Out:{[0, 2]}
+
+In:{[0]}
+code [BLOCK] 
+-------------------------------
+l.0:const %3 = 43 : int
+l.1:const %4 = 10 : int
+-------------------------------
+Out:{[0, 3, 4]}
+
+In:{[0]}
+entry [ENTRY] 
+Out:{[0]}
+
+###### Live analysis for main function. ######
+Iteration 2
+In:{[]}
+exit [EXIT] 
+Out:{[]}
+
+In:{[0, 2]}
+find3 [BLOCK] 
+-------------------------------
+l.0:assign %1 = %2  : int
+l.1:fieldload %5 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.2:fieldload %6 = %5 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.3:indirectinvoke () = %6 (%1) : method(any)->()
+-------------------------------
+Out:{[]}
+
+In:{[0, 4, 3]}
+find3 [INVOKE] 
+-------------------------------
+l.0:invoke (%2) = (%3, %4) whileloop_break:find : function(int,int)->(int)
+-------------------------------
+Out:{[0, 2]}
+
+In:{[0]}
+code [BLOCK] 
+-------------------------------
+l.0:const %3 = 43 : int
+l.1:const %4 = 10 : int
+-------------------------------
+Out:{[0, 3, 4]}
+
+In:{[0]}
+entry [ENTRY] 
+Out:{[0]}
+
+###### Live variables for main function. ######
+In:{sys}
+entry [ENTRY] 
+Out:{sys}
+
+In:{sys}
+code [BLOCK] 
+-------------------------------
+l.0:const %3 = 43 : int
+l.1:const %4 = 10 : int
+-------------------------------
+Out:{sys, %3, %4}
+
+In:{sys, %4, %3}
+find3 [INVOKE] 
+-------------------------------
+l.0:invoke (%2) = (%3, %4) whileloop_break:find : function(int,int)->(int)
+-------------------------------
+Out:{sys, %2}
+
+In:{sys, %2}
+find3 [BLOCK] 
+-------------------------------
+l.0:assign %1 = %2  : int
+l.1:fieldload %5 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.2:fieldload %6 = %5 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.3:indirectinvoke () = %6 (%1) : method(any)->()
+-------------------------------
+Out:{}
+
+In:{}
+exit [EXIT] 
+Out:{}
+
+=== Bound Analysis on main function ===
 main.0 [	const %3 = 43 : int]
 main.1 [	const %4 = 10 : int]
 main.2 [	invoke (%2) = (%3, %4) whileloop_break:find : function(int,int)->(int)]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
+-------------------------------
+0:const %3 = 43 : int
+1:const %4 = 10 : int
+-------------------------------
 Vars [_3, _4]
+DeadVars []
 Constraints [_3:=43, _4:=10]
 
 	domain(_3)	= [43..43]	
@@ -24,6 +416,7 @@ isChanged=true
 '1' blocks in queue : [ENTRY]
 entry [ENTRY] 
 Vars []
+DeadVars []
 Constraints []
 
 IsReachable=true
@@ -54,7 +447,12 @@ find.14 [	return]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
-Vars [_0, _1, _3, _4]
+-------------------------------
+0:const %4 = 0 : int
+1:assign %3 = %4  : int
+-------------------------------
+Vars [_4, _3, _0, _1]
+DeadVars [_4]
 Constraints [_4:=0, _3:=_4, _0:=[43..43], _1:=[10..10]]
 
 	domain(_0)	= [43..43]	
@@ -67,48 +465,57 @@ isChanged=true
 '2' blocks in queue : [ENTRY][LOOP_HEADER]
 blklab0 [LOOP_HEADER] 
 Vars []
+DeadVars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [0..0]	
-	domain(_4)	= [0..0]	
 IsReachable=true
 isChanged=true
 ### Iteration 2 ### 
 '3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_EXIT] 
-Vars [_3]
+-------------------------------
+0:ifge %3, %0 goto blklab0 : int
+-------------------------------
+Vars []
+DeadVars []
 Constraints [_3>=_0]
 
 	domain(_0)	= [empty..empty]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [empty..empty]	
-	domain(_4)	= [0..0]	
 IsReachable=false
 isChanged=false
 ### Iteration 3 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab0 [LOOP_BODY] 
 Vars []
+DeadVars []
 Constraints [_3<_0]
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [0..0]	
-	domain(_4)	= [0..0]	
 IsReachable=true
 isChanged=true
 ### Iteration 4 ### 
 '3' blocks in queue : [ENTRY][IF][ELSE]
 blklab3 [ELSE] 
-Vars [_3, _6, _7]
+-------------------------------
+0:ifne %3, %1 goto blklab3 : int
+1:const %6 = 1 : int
+2:add %7 = %3, %6 : int
+3:assign %3 = %7  : int
+-------------------------------
+Vars [_6, _7, _3]
+DeadVars [_6, _7]
 Constraints [_3!=_1, _6:=1, _7 = _3+_6, _3:=_7]
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [1..1]	
-	domain(_4)	= [0..0]	
 	domain(_6)	= [1..1]	
 	domain(_7)	= [1..1]	
 IsReachable=true
@@ -117,68 +524,69 @@ isChanged=true
 '3' blocks in queue : [ENTRY][IF][BLOCK]
 blklab1 [BLOCK] 
 Vars []
+DeadVars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [1..1]	
-	domain(_4)	= [0..0]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..1]	
 IsReachable=true
 isChanged=true
 ### Iteration 6 ### 
 '3' blocks in queue : [ENTRY][IF][LOOP_HEADER]
 blklab0 [LOOP_HEADER] 
 Vars []
+DeadVars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [0..1]		 // lb_c=0 ub_c=1	
-	domain(_4)	= [0..0]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..1]	
 IsReachable=true
 isChanged=true
 ### Iteration 7 ### 
 '4' blocks in queue : [ENTRY][IF][LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_EXIT] 
-Vars [_3]
+-------------------------------
+0:ifge %3, %0 goto blklab0 : int
+-------------------------------
+Vars []
+DeadVars []
 Constraints [_3>=_0]
 
 	domain(_0)	= [empty..empty]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [empty..empty]	
-	domain(_4)	= [0..0]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..1]	
 IsReachable=false
 isChanged=false
 ### Iteration 8 ### 
 '3' blocks in queue : [ENTRY][IF][LOOP_BODY]
 blklab0 [LOOP_BODY] 
 Vars []
+DeadVars []
 Constraints [_3<_0]
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [0..1]	
-	domain(_4)	= [0..0]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..1]	
 IsReachable=true
 isChanged=true
 ### Iteration 9 ### 
 '3' blocks in queue : [ENTRY][IF][ELSE]
 blklab3 [ELSE] 
-Vars [_3, _6, _7]
+-------------------------------
+0:ifne %3, %1 goto blklab3 : int
+1:const %6 = 1 : int
+2:add %7 = %3, %6 : int
+3:assign %3 = %7  : int
+-------------------------------
+Vars [_6, _7, _3]
+DeadVars [_6, _7]
 Constraints [_3!=_1, _6:=1, _7 = _3+_6, _3:=_7]
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [1..2]	
-	domain(_4)	= [0..0]	
 	domain(_6)	= [1..1]	
 	domain(_7)	= [1..2]	
 IsReachable=true
@@ -187,68 +595,69 @@ isChanged=true
 '3' blocks in queue : [ENTRY][IF][BLOCK]
 blklab1 [BLOCK] 
 Vars []
+DeadVars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [1..2]	
-	domain(_4)	= [0..0]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..2]	
 IsReachable=true
 isChanged=true
 ### Iteration 11 ### 
 '3' blocks in queue : [ENTRY][IF][LOOP_HEADER]
 blklab0 [LOOP_HEADER] 
 Vars []
+DeadVars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [0..2]		 // lb_c=0 ub_c=2	
-	domain(_4)	= [0..0]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..2]		 // lb_c=0 ub_c=1	
 IsReachable=true
 isChanged=true
 ### Iteration 12 ### 
 '4' blocks in queue : [ENTRY][IF][LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_EXIT] 
-Vars [_3]
+-------------------------------
+0:ifge %3, %0 goto blklab0 : int
+-------------------------------
+Vars []
+DeadVars []
 Constraints [_3>=_0]
 
 	domain(_0)	= [empty..empty]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [empty..empty]	
-	domain(_4)	= [0..0]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..2]	
 IsReachable=false
 isChanged=false
 ### Iteration 13 ### 
 '3' blocks in queue : [ENTRY][IF][LOOP_BODY]
 blklab0 [LOOP_BODY] 
 Vars []
+DeadVars []
 Constraints [_3<_0]
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [0..2]	
-	domain(_4)	= [0..0]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..2]	
 IsReachable=true
 isChanged=true
 ### Iteration 14 ### 
 '3' blocks in queue : [ENTRY][IF][ELSE]
 blklab3 [ELSE] 
-Vars [_3, _6, _7]
+-------------------------------
+0:ifne %3, %1 goto blklab3 : int
+1:const %6 = 1 : int
+2:add %7 = %3, %6 : int
+3:assign %3 = %7  : int
+-------------------------------
+Vars [_6, _7, _3]
+DeadVars [_6, _7]
 Constraints [_3!=_1, _6:=1, _7 = _3+_6, _3:=_7]
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [1..3]	
-	domain(_4)	= [0..0]	
 	domain(_6)	= [1..1]	
 	domain(_7)	= [1..3]	
 IsReachable=true
@@ -257,56 +666,54 @@ isChanged=true
 '3' blocks in queue : [ENTRY][IF][BLOCK]
 blklab1 [BLOCK] 
 Vars []
+DeadVars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [1..3]	
-	domain(_4)	= [0..0]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..3]	
 IsReachable=true
 isChanged=true
 ### Iteration 16 ### 
 '3' blocks in queue : [ENTRY][IF][LOOP_HEADER]
 blklab0 [LOOP_HEADER] 
 Vars []
+DeadVars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [0..infinity]	
-	domain(_4)	= [0..0]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..3]		 // lb_c=0 ub_c=2	
 IsReachable=true
 isChanged=true
 ### Iteration 17 ### 
 '4' blocks in queue : [ENTRY][IF][LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_EXIT] 
-Vars [_3]
+-------------------------------
+0:ifge %3, %0 goto blklab0 : int
+-------------------------------
+Vars []
+DeadVars []
 Constraints [_3>=_0]
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [43..infinity]	
-	domain(_4)	= [0..0]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..3]	
 IsReachable=true
 isChanged=true
 ### Iteration 18 ### 
 '4' blocks in queue : [ENTRY][IF][LOOP_BODY][RETURN]
 return_3 [RETURN] 
-Vars []
+-------------------------------
+0:return %3
+-------------------------------
+Vars [_3]
+DeadVars []
 Constraints [return:=_3]
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [43..infinity]	
-	domain(_4)	= [0..0]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..3]	
 	domain(return)	= [43..infinity]	
 IsReachable=true
 isChanged=true
@@ -314,26 +721,30 @@ isChanged=true
 '3' blocks in queue : [ENTRY][IF][LOOP_BODY]
 blklab0 [LOOP_BODY] 
 Vars []
+DeadVars []
 Constraints [_3<_0]
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [0..42]	
-	domain(_4)	= [0..0]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..3]	
 IsReachable=true
 isChanged=true
 ### Iteration 20 ### 
 '3' blocks in queue : [ENTRY][IF][ELSE]
 blklab3 [ELSE] 
-Vars [_3, _6, _7]
+-------------------------------
+0:ifne %3, %1 goto blklab3 : int
+1:const %6 = 1 : int
+2:add %7 = %3, %6 : int
+3:assign %3 = %7  : int
+-------------------------------
+Vars [_6, _7, _3]
+DeadVars [_6, _7]
 Constraints [_3!=_1, _6:=1, _7 = _3+_6, _3:=_7]
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [1..43]	
-	domain(_4)	= [0..0]	
 	domain(_6)	= [1..1]	
 	domain(_7)	= [1..43]	
 IsReachable=true
@@ -342,56 +753,54 @@ isChanged=true
 '3' blocks in queue : [ENTRY][IF][BLOCK]
 blklab1 [BLOCK] 
 Vars []
+DeadVars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [1..43]	
-	domain(_4)	= [0..0]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..43]	
 IsReachable=true
 isChanged=true
 ### Iteration 22 ### 
 '3' blocks in queue : [ENTRY][IF][LOOP_HEADER]
 blklab0 [LOOP_HEADER] 
 Vars []
+DeadVars []
 Constraints []
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [0..43]	
-	domain(_4)	= [0..0]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 23 ### 
 '4' blocks in queue : [ENTRY][IF][LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_EXIT] 
-Vars [_3]
+-------------------------------
+0:ifge %3, %0 goto blklab0 : int
+-------------------------------
+Vars []
+DeadVars []
 Constraints [_3>=_0]
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [43..43]	
-	domain(_4)	= [0..0]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 24 ### 
 '4' blocks in queue : [ENTRY][IF][LOOP_BODY][RETURN]
 return_3 [RETURN] 
-Vars []
+-------------------------------
+0:return %3
+-------------------------------
+Vars [_3]
+DeadVars []
 Constraints [return:=_3]
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [43..43]	
-	domain(_4)	= [0..0]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..infinity]	
 	domain(return)	= [43..43]	
 IsReachable=true
 isChanged=true
@@ -399,72 +808,61 @@ isChanged=true
 '3' blocks in queue : [ENTRY][IF][LOOP_BODY]
 blklab0 [LOOP_BODY] 
 Vars []
+DeadVars []
 Constraints [_3<_0]
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [0..42]	
-	domain(_4)	= [0..0]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..infinity]	
-IsReachable=true
-isChanged=true
-### Iteration 26 ### 
-'3' blocks in queue : [ENTRY][IF][ELSE]
-blklab3 [ELSE] 
-Vars [_3, _6, _7]
-Constraints [_3!=_1, _6:=1, _7 = _3+_6, _3:=_7]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [1..43]	
-	domain(_4)	= [0..0]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..43]	
 IsReachable=true
 isChanged=false
-### Iteration 27 ### 
+### Iteration 26 ### 
 '2' blocks in queue : [ENTRY][IF]
 blklab3 [IF] 
 Vars []
+DeadVars []
 Constraints [_3==_1]
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [10..10]	
-	domain(_4)	= [0..0]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..infinity]	
 IsReachable=true
 isChanged=true
-### Iteration 28 ### 
+### Iteration 27 ### 
 '2' blocks in queue : [ENTRY][LOOP_EXIT]
 blklab0 [LOOP_EXIT] 
-Vars [_3]
+-------------------------------
+0:ifge %3, %0 goto blklab0 : int
+-------------------------------
+Vars []
+DeadVars []
 Constraints [_3>=_0]
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [43..43]	
-	domain(_4)	= [0..0]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..infinity]	
 IsReachable=true
 isChanged=false
-### Iteration 29 ### 
+### Iteration 28 ### 
 '1' blocks in queue : [ENTRY]
 entry [ENTRY] 
 Vars [_0, _1]
+DeadVars []
 Constraints [_0:=[43..43], _1:=[10..10]]
 
 	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 IsReachable=true
 isChanged=true
-### Iteration 30 ### 
+### Iteration 29 ### 
 '1' blocks in queue : [BLOCK]
 code [BLOCK] 
-Vars [_0, _1, _3, _4]
+-------------------------------
+0:const %4 = 0 : int
+1:assign %3 = %4  : int
+-------------------------------
+Vars [_4, _3, _0, _1]
+DeadVars [_4]
 Constraints [_4:=0, _3:=_4, _0:=[43..43], _1:=[10..10]]
 
 	domain(_0)	= [43..43]	
@@ -481,7 +879,7 @@ Bound Analysis of 'find' function:
 	domain(r)	=[0..43]
 	domain(_4)	=[0..0]
 	domain(_6)	=[1..1]
-	domain(_7)	=[1..infinity]
+	domain(_7)	=[1..43]
 	domain(return)	=[43..43]
 Consistency=true
 
@@ -494,7 +892,13 @@ main.7 [	return]
 ### Iteration 0 ### 
 '2' blocks in queue : [ENTRY][BLOCK]
 code [BLOCK] 
-Vars [_1, _2, _3, _4]
+-------------------------------
+0:const %3 = 43 : int
+1:const %4 = 10 : int
+2:assign %1 = %2  : int
+-------------------------------
+Vars [_3, _4, _2, _1]
+DeadVars [_3, _4, _2, _1]
 Constraints [_3:=43, _4:=10, _2:=[43..43], _1:=_2]
 
 	domain(_1)	= [43..43]	
@@ -507,6 +911,7 @@ isChanged=true
 '1' blocks in queue : [ENTRY]
 entry [ENTRY] 
 Vars []
+DeadVars []
 Constraints []
 
 IsReachable=true

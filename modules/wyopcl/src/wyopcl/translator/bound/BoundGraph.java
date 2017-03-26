@@ -19,6 +19,7 @@ import wyopcl.Configuration;
 import wyopcl.translator.bound.BoundBlock.BlockType;
 import wyopcl.translator.bound.constraint.Assign;
 import wyopcl.translator.bound.constraint.Constraint;
+import wyopcl.translator.copy.LiveVariablesAnalysis;
 import wyrl.io.SpecLexer.RightAngle;
 
 /**

@@ -135,7 +135,9 @@ public class Translator implements Builder {
 			message += " File: " + config.getFilename()+".wyil";
 		}
 		
-
+	
+		
+		
 		// Check if the copy elimination analysis is enabled.
 		Optional<CopyEliminationAnalyzer> copyAnalyzer = Optional.empty();
 		if (config.isEnabled(Configuration.NOCOPY)) {
@@ -160,10 +162,16 @@ public class Translator implements Builder {
 			message += "\nDeallocation analysis completed.\nFile: " + config.getFilename()+".wyil";
 		}
 
-
 		// Check if the bound analysis is enabled.
 		Optional<BoundAnalyzer> boundAnalyzer = Optional.empty();
 		if (config.isEnabled(Configuration.BOUND)) {
+			if(liveAnalyzer == null){
+				// Create live variable analyzer
+				liveAnalyzer = new LiveVariablesAnalysis(config);
+				// Builds up a calling graph and perform live variable checks.
+				liveAnalyzer.apply(module, transformFuncMap);
+			}
+			
 			/**
 			 * Takes the in-memory wyil file and analyzes the bounds of integer variables in Main function. If any function call
 			 * is encountered, then propagate the input bounds to the callee and then analyze the bounds and produces the
@@ -172,6 +180,7 @@ public class Translator implements Builder {
 			 */
 			BoundAnalyzer analyzer = new BoundAnalyzer(module, liveAnalyzer);
 			try {
+				System.out.println("=== Bound Analysis on main function ===");
 				// Get the function code block
 				FunctionOrMethod function = module.functionOrMethod("main").get(0);
 				// Start with main function.

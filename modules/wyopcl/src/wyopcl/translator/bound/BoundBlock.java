@@ -19,6 +19,7 @@ import wyopcl.Configuration;
 import wyopcl.translator.bound.BoundBlock.BlockType;
 import wyopcl.translator.bound.constraint.Constraint;
 import wyopcl.translator.bound.constraint.Range;
+import wyopcl.translator.copy.LiveVariablesAnalysis;
 
 /**
  * The bound block is used to build the bound graph (CFG) for bound analysis. 
@@ -33,9 +34,9 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	// Prefix of the variable
 	private final String prefix = "_";
 	// The set of dead variable, that will be passed onto the parent block
-	private LinkedHashSet<String> dead_vars;
+	private LinkedHashSet<String> deadVars;
 	// The set of variables, which will be used in the block
-	private LinkedHashSet<String> Vars; 
+	private LinkedHashSet<String> vars; 
 
 	private LinkedHashSet<Code> codes;// Store all the byte-code for a block, preserving insertion order
 	private List<Constraint> constraints;
@@ -123,8 +124,8 @@ public class BoundBlock implements Comparable<BoundBlock> {
 		this.bounds = new Bounds();
 		this.constraints = new ArrayList<Constraint>();
 		this.codes = new LinkedHashSet<Code>();
-		this.dead_vars = new LinkedHashSet<String>();
-		this.Vars = new LinkedHashSet<String>();
+		this.deadVars = new LinkedHashSet<String>();
+		this.vars = new LinkedHashSet<String>();
 	}
 
 	/**
@@ -173,7 +174,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	 * @param code
 	 */
 	public void addCode(Code code) {
-		this.codes.add(code);		
+		this.codes.add(code);
 	}
 	
 	/**
@@ -355,10 +356,10 @@ public class BoundBlock implements Comparable<BoundBlock> {
 
 	@Override
 	public String toString() {
-		//String str = "-------------------------------\n";
+		// String str = "-------------------------------\n";
 		String str = "";
 		str += String.format("%s [%s] ", this.label, this.type);
-		//Display the list of byte-code
+		// Display the list of byte-code
 		if(this.codes.size()>0){
 			str += "\n-------------------------------";
 			int index=0;
@@ -368,11 +369,13 @@ public class BoundBlock implements Comparable<BoundBlock> {
 			}
 			str += "\n-------------------------------";
 		}
-		//Display the vars set,  bounds and constraints.
-		str += String.format("%n%s %s", "Vars", this.Vars);
-		//Print out the constraints
+		// Display the vars set,  bounds and constraints.
+		str += String.format("%n%s %s", "Vars", this.vars);
+		// Display the dead vars set 
+		str += String.format("%n%s %s", "DeadVars", this.deadVars);
+		// Print out the constraints
 		str += String.format("%n%s %s%n", "Constraints", this.constraints);
-		//Print out the bounds
+		// Print out the bounds
 		str += this.bounds + "\n";
 		str += "IsReachable=" + isReachable();
 		//str += "\n-------------------------------\n";
@@ -450,7 +453,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	 * @param var
 	 */
 	public void addVar(String var) {
-		this.Vars.add(var);		
+		this.vars.add(var);		
 	}
 
 	/**
@@ -459,7 +462,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	 * @return
 	 */
 	public boolean isDeadVars(String var){
-		return this.dead_vars.contains(var);
+		return this.deadVars.contains(var);
 	}
 
 
@@ -485,6 +488,32 @@ public class BoundBlock implements Comparable<BoundBlock> {
 				}
 			}
 
+		}
+	}
+	/**
+	 * Go through each variable in Vars. If the variable is dead at the last code of the block
+	 * then it is put to dead variables
+	 * 
+	 * @param liveAnalyzer
+	 * @param function
+	 */
+	public void computeDeadVars(LiveVariablesAnalysis liveAnalyzer, FunctionOrMethod function) {
+		// For an empty block, no dead variables
+		if(this.codes.isEmpty()){
+			return;
+		}
+		// Get the last code
+		Code last_code = (Code)this.codes.toArray()[this.codes.size()-1];
+		
+		for(String var: this.vars){
+			// Extract register from variable
+			int register = Integer.parseInt(var.split("_")[1]);
+			// Check if the register is live after last code 
+			boolean islive = liveAnalyzer.isLive(register, last_code, function);
+			if(islive == false){
+				// Put the dead variable to 'DeadVars' set.
+				this.deadVars.add(var);
+			}
 		}
 	}
 

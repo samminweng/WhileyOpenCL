@@ -99,8 +99,8 @@ public class BoundAnalyzer {
 		// If not, run the CFG building procedure.
 		if (BoundAnalyzerHelper.isCached(function)) {
 			BoundAnalyzerHelper.promoteCFGStatus(function);
-		}	
-
+		}
+		
 	}
 
 	/**
@@ -268,6 +268,23 @@ public class BoundAnalyzer {
 	}
 
 	/**
+	 * Go through each block and compute the dead variables in each block
+	 * 
+	 * 
+	 * @param function
+	 */
+	private void computeDeadVars(FunctionOrMethod function) {
+		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
+		
+		for(BoundBlock blk : graph.getBlockList()){
+			blk.computeDeadVars(liveAnalyzer, function);
+		}
+		
+		
+	}
+	
+	
+	/**
 	 * Infer the bounds of a function by repeatedly iterating over all blocks in
 	 * CFGraph from the entry block to the exit block, and then inferring the
 	 * bounds consistent with all the constraints in each block.
@@ -284,6 +301,11 @@ public class BoundAnalyzer {
 			BoundAnalyzerHelper.printCFG(config, function);
 		}
 
+		// Compute the dead variables
+		computeDeadVars(function);
+		
+		
+		//
 		graph.initialize(function);
 		// Create a deque and put 'entry' and 'code' blocks
 		// into the queue as a starting point
