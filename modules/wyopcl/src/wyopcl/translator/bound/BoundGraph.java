@@ -29,6 +29,7 @@ import wyrl.io.SpecLexer.RightAngle;
  *
  */
 public class BoundGraph {
+	private final String prefix = "_";
 	private Set<BoundBlock> feedback_set; // The set of blocks that widening operator is applied	
 	private Deque<BoundBlock> changed; // Store the blocks that need the bound inference
 	//private final String prefix = "%";	
@@ -185,6 +186,9 @@ public class BoundGraph {
 	 */
 	public void createIfElseBranch(If code, Constraint c, Constraint neg_c) {
 		BoundBlock c_blk = getCurrentBlock();		
+		// Get the left and right variable
+		String left = prefix + code.operand(0);
+		String right = prefix + code.operand(1);
 		String new_label = code.target;
 		
 		// Branch out the block
@@ -194,9 +198,17 @@ public class BoundGraph {
 		
 		// Add the constraint to the left block
 		leftBlock.addConstraint(neg_c);
+		// Put left and right variable to leftblock
+		leftBlock.addVar(left);
+		leftBlock.addVar(right);
+		
+		// Add the constraint to rightblock
 		rightBlock.addConstraint(c);
 		// Put the code to c_blk
 		rightBlock.addCode(code);
+		rightBlock.addVar(left);
+		rightBlock.addVar(right);
+		
 
 		// Set the current block to the left
 		setCurrentBlock(leftBlock);
@@ -213,7 +225,10 @@ public class BoundGraph {
 	 *            constraint
 	 */
 	public void createLoopStructure(If code, Constraint c, Constraint neg_c) {
-		BoundBlock c_blk = getCurrentBlock();		
+		BoundBlock c_blk = getCurrentBlock();
+		// Get the left and right variable
+		String left = prefix + code.operand(0);
+		String right = prefix + code.operand(1);
 		String new_label = code.target;
 		//Create the loop header
 		BoundBlock loop_header = createBasicBlock(new_label, BlockType.LOOP_HEADER, c_blk);
@@ -223,10 +238,21 @@ public class BoundGraph {
 		BoundBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, loop_header);
 		// put the opposite constraint to the loop body
 		loop_body.addConstraint(neg_c);
+		// Put left and right to 'Vars' set
+		loop_body.addVar(left);
+		loop_body.addVar(right);
+		
+		
+		
 		// put the original constraint to the loop_exit
 		loop_exit.addConstraint(c);
 		// Put the code to loop exit
 		loop_exit.addCode(code);
+		
+		// Put left and right variable to Vars
+		loop_exit.addVar(left);
+		loop_exit.addVar(right);
+		
 		// Set the current block to be loop body.
 		setCurrentBlock(loop_body);
 	}

@@ -42,6 +42,8 @@ import wyopcl.translator.cfg.CFGraph.STATUS;
 public abstract class Analyzer {
 	// private static final String prefix = "%";
 	protected Configuration config;
+	// Boolean flag indicates whether to print out debugging messages
+	protected boolean isVerbose;
 	// Maps of CFGs
 	protected HashMap<FunctionOrMethod, CFGraph> cfgraphs;
 	// The line number
@@ -269,7 +271,7 @@ public abstract class Analyzer {
 			iterateWyilCode(function, function.body().bytecodes());
 		}
 
-		if (config.isVerbose()) {
+		if (isVerbose) {
 			// Print out CFGraph.
 			this.printCFG(function);
 		}
@@ -282,7 +284,7 @@ public abstract class Analyzer {
 	 * @param line
 	 */
 	private int printWyILCode(FunctionOrMethod function, Code code, int line) {
-		if (config.isVerbose()) {
+		if (isVerbose) {
 			String name = function.name();
 			// Print out the bytecode
 			if (code instanceof Codes.Label) {

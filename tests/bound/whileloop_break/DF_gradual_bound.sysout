@@ -1,398 +1,12 @@
 WARNING: version numbering unavailable
-Parsed 1 source file(s). ...................................................... [127ms+1mb]
-Typed 1 source file(s). ....................................................... [138ms+1mb]
-Generated code for 1 source file(s). ............................................... [26ms]
-[./whileloop_break.whiley] applied definite assignment check ........................ [2ms]
-[./whileloop_break.whiley] applied module check ................................. [4ms+1mb]
+Parsed 1 source file(s). ...................................................... [105ms+1mb]
+Typed 1 source file(s). ....................................................... [132ms+1mb]
+Generated code for 1 source file(s). ............................................... [33ms]
+[./whileloop_break.whiley] applied definite assignment check ........................ [3ms]
+[./whileloop_break.whiley] applied module check ................................. [2ms+1mb]
 [./whileloop_break.whiley] applied loop variants ................................ [0ms+1mb]
 [./whileloop_break.whiley] applied coercion check ................................... [1ms]
-Whiley => Wyil: compiled 1 file(s) ............................................ [328ms-1mb]
-find.0 [	const %4 = 0 : int]
-find.1 [	assign %3 = %4  : int]
-find.2 [	loop (%3, %5, %6, %7)]
-find.3 [	invariant]
-find.4 [	ifge %3, %0 goto blklab0 : int]
-find.5 [	ifne %3, %1 goto blklab3 : int]
-find.6 [	goto blklab0]
-find.7 [.blklab3]
-find.8 [	const %6 = 1 : int]
-find.9 [	add %7 = %3, %6 : int]
-find.10 [	assign %3 = %7  : int]
-find.11 [.blklab1]
-find.12 [.blklab0]
-find.13 [	return %3]
-find.14 [	return]
-main.0 [	const %3 = 43 : int]
-main.1 [	const %4 = 10 : int]
-main.2 [	invoke (%2) = (%3, %4) whileloop_break:find : function(int,int)->(int)]
-main.3 [	assign %1 = %2  : int]
-main.4 [	fieldload %5 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
-main.5 [	fieldload %6 = %5 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
-main.6 [	indirectinvoke () = %6 (%1) : method(any)->()]
-main.7 [	return]
-###### Live analysis for find function. ######
-Iteration 1
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[3]}
-r [RETURN] 
--------------------------------
-l.0:return %3
--------------------------------
-Out:{[3]}
-
-In:{[]}
-blklab1 [BLOCK] 
-Out:{[]}
-
-In:{[1, 3]}
-blklab3 [ELSE] 
--------------------------------
-l.0:ifne %3, %1 goto blklab3 : int
-l.1:const %6 = 1 : int
-l.2:add %7 = %3, %6 : int
-l.3:assign %3 = %7  : int
--------------------------------
-Out:{[]}
-
-In:{[1, 3]}
-blklab3 [IF] 
--------------------------------
-l.0:ifeq %3, %1 goto blklab3 : int
--------------------------------
-Out:{[]}
-
-In:{[1, 3]}
-blklab3 [CONDITION] 
-Out:{[1, 3]}
-
-In:{[3]}
-blklab0 [LOOP_EXIT] 
-Out:{[3]}
-
-In:{[0, 1, 3]}
-blklab0 [LOOP_BODY] 
--------------------------------
-l.0:ifge %3, %0 goto blklab0 : int
--------------------------------
-Out:{[1, 3]}
-
-In:{[0, 1, 3]}
-blklab0 [LOOP_HEADER] 
-Out:{[0, 1, 3]}
-
-In:{[0, 1]}
-code [BLOCK] 
--------------------------------
-l.0:const %4 = 0 : int
-l.1:assign %3 = %4  : int
--------------------------------
-Out:{[0, 1, 3]}
-
-In:{[0, 1]}
-entry [ENTRY] 
-Out:{[0, 1]}
-
-###### Live analysis for find function. ######
-Iteration 2
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[3]}
-r [RETURN] 
--------------------------------
-l.0:return %3
--------------------------------
-Out:{[3]}
-
-In:{[0, 1, 3]}
-blklab1 [BLOCK] 
-Out:{[0, 1, 3]}
-
-In:{[0, 1, 3]}
-blklab3 [ELSE] 
--------------------------------
-l.0:ifne %3, %1 goto blklab3 : int
-l.1:const %6 = 1 : int
-l.2:add %7 = %3, %6 : int
-l.3:assign %3 = %7  : int
--------------------------------
-Out:{[0, 1, 3]}
-
-In:{[1, 3]}
-blklab3 [IF] 
--------------------------------
-l.0:ifeq %3, %1 goto blklab3 : int
--------------------------------
-Out:{[3]}
-
-In:{[0, 1, 3]}
-blklab3 [CONDITION] 
-Out:{[0, 1, 3]}
-
-In:{[3]}
-blklab0 [LOOP_EXIT] 
-Out:{[3]}
-
-In:{[0, 1, 3]}
-blklab0 [LOOP_BODY] 
--------------------------------
-l.0:ifge %3, %0 goto blklab0 : int
--------------------------------
-Out:{[0, 1, 3]}
-
-In:{[0, 1, 3]}
-blklab0 [LOOP_HEADER] 
-Out:{[0, 1, 3]}
-
-In:{[0, 1]}
-code [BLOCK] 
--------------------------------
-l.0:const %4 = 0 : int
-l.1:assign %3 = %4  : int
--------------------------------
-Out:{[0, 1, 3]}
-
-In:{[0, 1]}
-entry [ENTRY] 
-Out:{[0, 1]}
-
-###### Live analysis for find function. ######
-Iteration 3
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[3]}
-r [RETURN] 
--------------------------------
-l.0:return %3
--------------------------------
-Out:{[3]}
-
-In:{[0, 1, 3]}
-blklab1 [BLOCK] 
-Out:{[0, 1, 3]}
-
-In:{[0, 1, 3]}
-blklab3 [ELSE] 
--------------------------------
-l.0:ifne %3, %1 goto blklab3 : int
-l.1:const %6 = 1 : int
-l.2:add %7 = %3, %6 : int
-l.3:assign %3 = %7  : int
--------------------------------
-Out:{[0, 1, 3]}
-
-In:{[1, 3]}
-blklab3 [IF] 
--------------------------------
-l.0:ifeq %3, %1 goto blklab3 : int
--------------------------------
-Out:{[3]}
-
-In:{[0, 1, 3]}
-blklab3 [CONDITION] 
-Out:{[0, 1, 3]}
-
-In:{[3]}
-blklab0 [LOOP_EXIT] 
-Out:{[3]}
-
-In:{[0, 1, 3]}
-blklab0 [LOOP_BODY] 
--------------------------------
-l.0:ifge %3, %0 goto blklab0 : int
--------------------------------
-Out:{[0, 1, 3]}
-
-In:{[0, 1, 3]}
-blklab0 [LOOP_HEADER] 
-Out:{[0, 1, 3]}
-
-In:{[0, 1]}
-code [BLOCK] 
--------------------------------
-l.0:const %4 = 0 : int
-l.1:assign %3 = %4  : int
--------------------------------
-Out:{[0, 1, 3]}
-
-In:{[0, 1]}
-entry [ENTRY] 
-Out:{[0, 1]}
-
-###### Live variables for find function. ######
-In:{limit, item}
-entry [ENTRY] 
-Out:{limit, item}
-
-In:{limit, item}
-code [BLOCK] 
--------------------------------
-l.0:const %4 = 0 : int
-l.1:assign %3 = %4  : int
--------------------------------
-Out:{limit, item, r}
-
-In:{limit, item, r}
-blklab0 [LOOP_HEADER] 
-Out:{limit, item, r}
-
-In:{limit, item, r}
-blklab0 [LOOP_BODY] 
--------------------------------
-l.0:ifge %3, %0 goto blklab0 : int
--------------------------------
-Out:{limit, item, r}
-
-In:{r}
-blklab0 [LOOP_EXIT] 
-Out:{r}
-
-In:{limit, item, r}
-blklab3 [CONDITION] 
-Out:{limit, item, r}
-
-In:{item, r}
-blklab3 [IF] 
--------------------------------
-l.0:ifeq %3, %1 goto blklab3 : int
--------------------------------
-Out:{r}
-
-In:{limit, item, r}
-blklab3 [ELSE] 
--------------------------------
-l.0:ifne %3, %1 goto blklab3 : int
-l.1:const %6 = 1 : int
-l.2:add %7 = %3, %6 : int
-l.3:assign %3 = %7  : int
--------------------------------
-Out:{limit, item, r}
-
-In:{limit, item, r}
-blklab1 [BLOCK] 
-Out:{limit, item, r}
-
-In:{r}
-r [RETURN] 
--------------------------------
-l.0:return %3
--------------------------------
-Out:{r}
-
-In:{}
-exit [EXIT] 
-Out:{}
-
-###### Live analysis for main function. ######
-Iteration 1
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[0, 2]}
-find3 [BLOCK] 
--------------------------------
-l.0:assign %1 = %2  : int
-l.1:fieldload %5 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-l.2:fieldload %6 = %5 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-l.3:indirectinvoke () = %6 (%1) : method(any)->()
--------------------------------
-Out:{[]}
-
-In:{[0, 4, 3]}
-find3 [INVOKE] 
--------------------------------
-l.0:invoke (%2) = (%3, %4) whileloop_break:find : function(int,int)->(int)
--------------------------------
-Out:{[0, 2]}
-
-In:{[0]}
-code [BLOCK] 
--------------------------------
-l.0:const %3 = 43 : int
-l.1:const %4 = 10 : int
--------------------------------
-Out:{[0, 3, 4]}
-
-In:{[0]}
-entry [ENTRY] 
-Out:{[0]}
-
-###### Live analysis for main function. ######
-Iteration 2
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[0, 2]}
-find3 [BLOCK] 
--------------------------------
-l.0:assign %1 = %2  : int
-l.1:fieldload %5 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-l.2:fieldload %6 = %5 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-l.3:indirectinvoke () = %6 (%1) : method(any)->()
--------------------------------
-Out:{[]}
-
-In:{[0, 4, 3]}
-find3 [INVOKE] 
--------------------------------
-l.0:invoke (%2) = (%3, %4) whileloop_break:find : function(int,int)->(int)
--------------------------------
-Out:{[0, 2]}
-
-In:{[0]}
-code [BLOCK] 
--------------------------------
-l.0:const %3 = 43 : int
-l.1:const %4 = 10 : int
--------------------------------
-Out:{[0, 3, 4]}
-
-In:{[0]}
-entry [ENTRY] 
-Out:{[0]}
-
-###### Live variables for main function. ######
-In:{sys}
-entry [ENTRY] 
-Out:{sys}
-
-In:{sys}
-code [BLOCK] 
--------------------------------
-l.0:const %3 = 43 : int
-l.1:const %4 = 10 : int
--------------------------------
-Out:{sys, %3, %4}
-
-In:{sys, %4, %3}
-find3 [INVOKE] 
--------------------------------
-l.0:invoke (%2) = (%3, %4) whileloop_break:find : function(int,int)->(int)
--------------------------------
-Out:{sys, %2}
-
-In:{sys, %2}
-find3 [BLOCK] 
--------------------------------
-l.0:assign %1 = %2  : int
-l.1:fieldload %5 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-l.2:fieldload %6 = %5 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-l.3:indirectinvoke () = %6 (%1) : method(any)->()
--------------------------------
-Out:{}
-
-In:{}
-exit [EXIT] 
-Out:{}
-
+Whiley => Wyil: compiled 1 file(s) ............................................ [316ms-1mb]
 === Bound Analysis on main function ===
 main.0 [	const %3 = 43 : int]
 main.1 [	const %4 = 10 : int]
@@ -479,7 +93,7 @@ blklab0 [LOOP_EXIT]
 -------------------------------
 0:ifge %3, %0 goto blklab0 : int
 -------------------------------
-Vars []
+Vars [_3, _0]
 DeadVars []
 Constraints [_3>=_0]
 
@@ -491,7 +105,7 @@ isChanged=false
 ### Iteration 3 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab0 [LOOP_BODY] 
-Vars []
+Vars [_3, _0]
 DeadVars []
 Constraints [_3<_0]
 
@@ -509,7 +123,7 @@ blklab3 [ELSE]
 2:add %7 = %3, %6 : int
 3:assign %3 = %7  : int
 -------------------------------
-Vars [_6, _7, _3]
+Vars [_3, _1, _6, _7]
 DeadVars [_6, _7]
 Constraints [_3!=_1, _6:=1, _7 = _3+_6, _3:=_7]
 
@@ -550,7 +164,7 @@ blklab0 [LOOP_EXIT]
 -------------------------------
 0:ifge %3, %0 goto blklab0 : int
 -------------------------------
-Vars []
+Vars [_3, _0]
 DeadVars []
 Constraints [_3>=_0]
 
@@ -562,7 +176,7 @@ isChanged=false
 ### Iteration 8 ### 
 '3' blocks in queue : [ENTRY][IF][LOOP_BODY]
 blklab0 [LOOP_BODY] 
-Vars []
+Vars [_3, _0]
 DeadVars []
 Constraints [_3<_0]
 
@@ -580,7 +194,7 @@ blklab3 [ELSE]
 2:add %7 = %3, %6 : int
 3:assign %3 = %7  : int
 -------------------------------
-Vars [_6, _7, _3]
+Vars [_3, _1, _6, _7]
 DeadVars [_6, _7]
 Constraints [_3!=_1, _6:=1, _7 = _3+_6, _3:=_7]
 
@@ -621,7 +235,7 @@ blklab0 [LOOP_EXIT]
 -------------------------------
 0:ifge %3, %0 goto blklab0 : int
 -------------------------------
-Vars []
+Vars [_3, _0]
 DeadVars []
 Constraints [_3>=_0]
 
@@ -633,7 +247,7 @@ isChanged=false
 ### Iteration 13 ### 
 '3' blocks in queue : [ENTRY][IF][LOOP_BODY]
 blklab0 [LOOP_BODY] 
-Vars []
+Vars [_3, _0]
 DeadVars []
 Constraints [_3<_0]
 
@@ -651,7 +265,7 @@ blklab3 [ELSE]
 2:add %7 = %3, %6 : int
 3:assign %3 = %7  : int
 -------------------------------
-Vars [_6, _7, _3]
+Vars [_3, _1, _6, _7]
 DeadVars [_6, _7]
 Constraints [_3!=_1, _6:=1, _7 = _3+_6, _3:=_7]
 
@@ -692,7 +306,7 @@ blklab0 [LOOP_EXIT]
 -------------------------------
 0:ifge %3, %0 goto blklab0 : int
 -------------------------------
-Vars []
+Vars [_3, _0]
 DeadVars []
 Constraints [_3>=_0]
 
@@ -720,7 +334,7 @@ isChanged=true
 ### Iteration 19 ### 
 '3' blocks in queue : [ENTRY][IF][LOOP_BODY]
 blklab0 [LOOP_BODY] 
-Vars []
+Vars [_3, _0]
 DeadVars []
 Constraints [_3<_0]
 
@@ -738,7 +352,7 @@ blklab3 [ELSE]
 2:add %7 = %3, %6 : int
 3:assign %3 = %7  : int
 -------------------------------
-Vars [_6, _7, _3]
+Vars [_3, _1, _6, _7]
 DeadVars [_6, _7]
 Constraints [_3!=_1, _6:=1, _7 = _3+_6, _3:=_7]
 
@@ -779,7 +393,7 @@ blklab0 [LOOP_EXIT]
 -------------------------------
 0:ifge %3, %0 goto blklab0 : int
 -------------------------------
-Vars []
+Vars [_3, _0]
 DeadVars []
 Constraints [_3>=_0]
 
@@ -807,7 +421,7 @@ isChanged=true
 ### Iteration 25 ### 
 '3' blocks in queue : [ENTRY][IF][LOOP_BODY]
 blklab0 [LOOP_BODY] 
-Vars []
+Vars [_3, _0]
 DeadVars []
 Constraints [_3<_0]
 
@@ -819,7 +433,7 @@ isChanged=false
 ### Iteration 26 ### 
 '2' blocks in queue : [ENTRY][IF]
 blklab3 [IF] 
-Vars []
+Vars [_3, _1]
 DeadVars []
 Constraints [_3==_1]
 
@@ -834,7 +448,7 @@ blklab0 [LOOP_EXIT]
 -------------------------------
 0:ifge %3, %0 goto blklab0 : int
 -------------------------------
-Vars []
+Vars [_3, _0]
 DeadVars []
 Constraints [_3>=_0]
 

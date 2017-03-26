@@ -40,11 +40,26 @@ public class LiveVariablesAnalysis extends Analyzer {
 	// Store the liveness analysis for each function
 	// (Key: function, Value:Liveness information).
 	private HashMap<FunctionOrMethod, LiveVariables> livenessStore;
-
+	
+	
+	
 	public LiveVariablesAnalysis(Configuration config) {
 		super(config);
 		// Initialize the liveness stores.
 		this.livenessStore = new HashMap<FunctionOrMethod, LiveVariables>();
+		this.isVerbose = config.isVerbose();
+	}
+	/**
+	 * A constructor with over-writing 'isVerbose' flag
+	 * 
+	 * @param cofig
+	 * @param isVerbose
+	 */
+	public LiveVariablesAnalysis(Configuration config, boolean isVerbose){
+		super(config);
+		// Initialize the liveness stores.
+		this.livenessStore = new HashMap<FunctionOrMethod, LiveVariables>();
+		this.isVerbose = isVerbose;		
 	}
 
 	/**
@@ -153,11 +168,11 @@ public class LiveVariablesAnalysis extends Analyzer {
 		LiveVariables liveness = new LiveVariables();
 		CFGraph cfGraph = this.getCFGraph(function);
 		if(cfGraph != null){
-			liveness.computeLiveness(function.name(), config.isVerbose(), cfGraph);
+			liveness.computeLiveness(function.name(), isVerbose, cfGraph);
 			// Store the liveness analysis for the function.
 			livenessStore.put(function, liveness);
 			// Print out analysis result
-			if (config.isVerbose()) {
+			if (isVerbose) {
 				printLivenss(function);
 			}
 		}else{

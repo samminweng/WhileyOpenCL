@@ -167,7 +167,7 @@ public class Translator implements Builder {
 		if (config.isEnabled(Configuration.BOUND)) {
 			if(liveAnalyzer == null){
 				// Create live variable analyzer
-				liveAnalyzer = new LiveVariablesAnalysis(config);
+				liveAnalyzer = new LiveVariablesAnalysis(config, false);
 				// Builds up a calling graph and perform live variable checks.
 				liveAnalyzer.apply(module, transformFuncMap);
 			}

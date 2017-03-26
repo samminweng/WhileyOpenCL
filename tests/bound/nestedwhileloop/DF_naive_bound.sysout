@@ -1,535 +1,12 @@
 WARNING: version numbering unavailable
-Parsed 1 source file(s). ...................................................... [149ms+1mb]
-Typed 1 source file(s). ....................................................... [177ms+1mb]
-Generated code for 1 source file(s). ............................................... [46ms]
+Parsed 1 source file(s). ...................................................... [106ms+1mb]
+Typed 1 source file(s). ....................................................... [125ms+1mb]
+Generated code for 1 source file(s). ............................................... [26ms]
 [./nestedwhileloop.whiley] applied definite assignment check .................... [2ms+1mb]
-[./nestedwhileloop.whiley] applied module check ................................. [3ms+1mb]
+[./nestedwhileloop.whiley] applied module check ................................. [2ms+1mb]
 [./nestedwhileloop.whiley] applied loop variants ................................ [0ms+1mb]
-[./nestedwhileloop.whiley] applied coercion check ................................... [3ms]
-Whiley => Wyil: compiled 1 file(s) ............................................ [410ms-1mb]
-f.0 [	const %5 = 0 : int]
-f.1 [	assign %2 = %5  : int]
-f.2 [	const %6 = 0 : int]
-f.3 [	assign %3 = %6  : int]
-f.4 [	loop (%2, %3, %4, %7, %8, %9, %10, %11, %12, %13)]
-f.5 [	ifge %2, %0 goto blklab0 : int]
-f.6 [	const %7 = 0 : int]
-f.7 [	assign %4 = %7  : int]
-f.8 [	loop (%3, %4, %8, %9, %10, %11)]
-f.9 [	ifge %4, %0 goto blklab2 : int]
-f.10 [	mul %8 = %2, %4 : int]
-f.11 [	add %9 = %3, %8 : int]
-f.12 [	assign %3 = %9  : int]
-f.13 [	const %10 = 1 : int]
-f.14 [	add %11 = %4, %10 : int]
-f.15 [	assign %4 = %11  : int]
-f.16 [.blklab3]
-f.17 [.blklab2]
-f.18 [	const %12 = 1 : int]
-f.19 [	add %13 = %2, %12 : int]
-f.20 [	assign %2 = %13  : int]
-f.21 [.blklab1]
-f.22 [.blklab0]
-f.23 [	return %3]
-f.24 [	return]
-main.0 [	const %3 = 43 : int]
-main.1 [	invoke (%2) = (%3) nestedwhileloop:f : function(int)->(int)]
-main.2 [	assign %1 = %2  : int]
-main.3 [	fieldload %4 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
-main.4 [	fieldload %5 = %4 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
-main.5 [	indirectinvoke () = %5 (%1) : method(any)->()]
-main.6 [	assert]
-main.7 [	return]
-###### Live analysis for f function. ######
-Iteration 1
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[3]}
-sum [RETURN] 
--------------------------------
-l.0:return %3
--------------------------------
-Out:{[3]}
-
-In:{[]}
-blklab1 [BLOCK] 
-Out:{[]}
-
-In:{[]}
-blklab3 [BLOCK] 
-Out:{[]}
-
-In:{[]}
-blklab2 [LOOP_EXIT] 
--------------------------------
-l.0:const %12 = 1 : int
-l.1:add %13 = %2, %12 : int
-l.2:assign %2 = %13  : int
--------------------------------
-Out:{[]}
-
-In:{[0, 4]}
-blklab2 [LOOP_BODY] 
--------------------------------
-l.0:ifge %4, %0 goto blklab2 : int
-l.1:mul %8 = %2, %4 : int
-l.2:add %9 = %3, %8 : int
-l.3:assign %3 = %9  : int
-l.4:const %10 = 1 : int
-l.5:add %11 = %4, %10 : int
-l.6:assign %4 = %11  : int
--------------------------------
-Out:{[]}
-
-In:{[0, 4]}
-blklab2 [LOOP_HEADER] 
-Out:{[0, 4]}
-
-In:{[3]}
-blklab0 [LOOP_EXIT] 
-Out:{[3]}
-
-In:{[0, 2]}
-blklab0 [LOOP_BODY] 
--------------------------------
-l.0:ifge %2, %0 goto blklab0 : int
-l.1:const %7 = 0 : int
-l.2:assign %4 = %7  : int
--------------------------------
-Out:{[0, 4]}
-
-In:{[0, 2, 3]}
-blklab0 [LOOP_HEADER] 
-Out:{[0, 2, 3]}
-
-In:{[0]}
-code [BLOCK] 
--------------------------------
-l.0:const %5 = 0 : int
-l.1:assign %2 = %5  : int
-l.2:const %6 = 0 : int
-l.3:assign %3 = %6  : int
--------------------------------
-Out:{[0, 2, 3]}
-
-In:{[0]}
-entry [ENTRY] 
-Out:{[0]}
-
-###### Live analysis for f function. ######
-Iteration 2
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[3]}
-sum [RETURN] 
--------------------------------
-l.0:return %3
--------------------------------
-Out:{[3]}
-
-In:{[0, 2, 3]}
-blklab1 [BLOCK] 
-Out:{[0, 2, 3]}
-
-In:{[0, 4]}
-blklab3 [BLOCK] 
-Out:{[0, 4]}
-
-In:{[0, 2, 3]}
-blklab2 [LOOP_EXIT] 
--------------------------------
-l.0:const %12 = 1 : int
-l.1:add %13 = %2, %12 : int
-l.2:assign %2 = %13  : int
--------------------------------
-Out:{[0, 2, 3]}
-
-In:{[0, 4]}
-blklab2 [LOOP_BODY] 
--------------------------------
-l.0:ifge %4, %0 goto blklab2 : int
-l.1:mul %8 = %2, %4 : int
-l.2:add %9 = %3, %8 : int
-l.3:assign %3 = %9  : int
-l.4:const %10 = 1 : int
-l.5:add %11 = %4, %10 : int
-l.6:assign %4 = %11  : int
--------------------------------
-Out:{[0, 4]}
-
-In:{[0, 2, 3, 4]}
-blklab2 [LOOP_HEADER] 
-Out:{[0, 2, 3, 4]}
-
-In:{[3]}
-blklab0 [LOOP_EXIT] 
-Out:{[3]}
-
-In:{[0, 2, 3]}
-blklab0 [LOOP_BODY] 
--------------------------------
-l.0:ifge %2, %0 goto blklab0 : int
-l.1:const %7 = 0 : int
-l.2:assign %4 = %7  : int
--------------------------------
-Out:{[0, 2, 3, 4]}
-
-In:{[0, 2, 3]}
-blklab0 [LOOP_HEADER] 
-Out:{[0, 2, 3]}
-
-In:{[0]}
-code [BLOCK] 
--------------------------------
-l.0:const %5 = 0 : int
-l.1:assign %2 = %5  : int
-l.2:const %6 = 0 : int
-l.3:assign %3 = %6  : int
--------------------------------
-Out:{[0, 2, 3]}
-
-In:{[0]}
-entry [ENTRY] 
-Out:{[0]}
-
-###### Live analysis for f function. ######
-Iteration 3
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[3]}
-sum [RETURN] 
--------------------------------
-l.0:return %3
--------------------------------
-Out:{[3]}
-
-In:{[0, 2, 3]}
-blklab1 [BLOCK] 
-Out:{[0, 2, 3]}
-
-In:{[0, 2, 3, 4]}
-blklab3 [BLOCK] 
-Out:{[0, 2, 3, 4]}
-
-In:{[0, 2, 3]}
-blklab2 [LOOP_EXIT] 
--------------------------------
-l.0:const %12 = 1 : int
-l.1:add %13 = %2, %12 : int
-l.2:assign %2 = %13  : int
--------------------------------
-Out:{[0, 2, 3]}
-
-In:{[0, 2, 3, 4]}
-blklab2 [LOOP_BODY] 
--------------------------------
-l.0:ifge %4, %0 goto blklab2 : int
-l.1:mul %8 = %2, %4 : int
-l.2:add %9 = %3, %8 : int
-l.3:assign %3 = %9  : int
-l.4:const %10 = 1 : int
-l.5:add %11 = %4, %10 : int
-l.6:assign %4 = %11  : int
--------------------------------
-Out:{[0, 2, 3, 4]}
-
-In:{[0, 2, 3, 4]}
-blklab2 [LOOP_HEADER] 
-Out:{[0, 2, 3, 4]}
-
-In:{[3]}
-blklab0 [LOOP_EXIT] 
-Out:{[3]}
-
-In:{[0, 2, 3]}
-blklab0 [LOOP_BODY] 
--------------------------------
-l.0:ifge %2, %0 goto blklab0 : int
-l.1:const %7 = 0 : int
-l.2:assign %4 = %7  : int
--------------------------------
-Out:{[0, 2, 3, 4]}
-
-In:{[0, 2, 3]}
-blklab0 [LOOP_HEADER] 
-Out:{[0, 2, 3]}
-
-In:{[0]}
-code [BLOCK] 
--------------------------------
-l.0:const %5 = 0 : int
-l.1:assign %2 = %5  : int
-l.2:const %6 = 0 : int
-l.3:assign %3 = %6  : int
--------------------------------
-Out:{[0, 2, 3]}
-
-In:{[0]}
-entry [ENTRY] 
-Out:{[0]}
-
-###### Live analysis for f function. ######
-Iteration 4
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[3]}
-sum [RETURN] 
--------------------------------
-l.0:return %3
--------------------------------
-Out:{[3]}
-
-In:{[0, 2, 3]}
-blklab1 [BLOCK] 
-Out:{[0, 2, 3]}
-
-In:{[0, 2, 3, 4]}
-blklab3 [BLOCK] 
-Out:{[0, 2, 3, 4]}
-
-In:{[0, 2, 3]}
-blklab2 [LOOP_EXIT] 
--------------------------------
-l.0:const %12 = 1 : int
-l.1:add %13 = %2, %12 : int
-l.2:assign %2 = %13  : int
--------------------------------
-Out:{[0, 2, 3]}
-
-In:{[0, 2, 3, 4]}
-blklab2 [LOOP_BODY] 
--------------------------------
-l.0:ifge %4, %0 goto blklab2 : int
-l.1:mul %8 = %2, %4 : int
-l.2:add %9 = %3, %8 : int
-l.3:assign %3 = %9  : int
-l.4:const %10 = 1 : int
-l.5:add %11 = %4, %10 : int
-l.6:assign %4 = %11  : int
--------------------------------
-Out:{[0, 2, 3, 4]}
-
-In:{[0, 2, 3, 4]}
-blklab2 [LOOP_HEADER] 
-Out:{[0, 2, 3, 4]}
-
-In:{[3]}
-blklab0 [LOOP_EXIT] 
-Out:{[3]}
-
-In:{[0, 2, 3]}
-blklab0 [LOOP_BODY] 
--------------------------------
-l.0:ifge %2, %0 goto blklab0 : int
-l.1:const %7 = 0 : int
-l.2:assign %4 = %7  : int
--------------------------------
-Out:{[0, 2, 3, 4]}
-
-In:{[0, 2, 3]}
-blklab0 [LOOP_HEADER] 
-Out:{[0, 2, 3]}
-
-In:{[0]}
-code [BLOCK] 
--------------------------------
-l.0:const %5 = 0 : int
-l.1:assign %2 = %5  : int
-l.2:const %6 = 0 : int
-l.3:assign %3 = %6  : int
--------------------------------
-Out:{[0, 2, 3]}
-
-In:{[0]}
-entry [ENTRY] 
-Out:{[0]}
-
-###### Live variables for f function. ######
-In:{limit}
-entry [ENTRY] 
-Out:{limit}
-
-In:{limit}
-code [BLOCK] 
--------------------------------
-l.0:const %5 = 0 : int
-l.1:assign %2 = %5  : int
-l.2:const %6 = 0 : int
-l.3:assign %3 = %6  : int
--------------------------------
-Out:{limit, i, sum}
-
-In:{limit, i, sum}
-blklab0 [LOOP_HEADER] 
-Out:{limit, i, sum}
-
-In:{limit, i, sum}
-blklab0 [LOOP_BODY] 
--------------------------------
-l.0:ifge %2, %0 goto blklab0 : int
-l.1:const %7 = 0 : int
-l.2:assign %4 = %7  : int
--------------------------------
-Out:{limit, i, sum, j}
-
-In:{sum}
-blklab0 [LOOP_EXIT] 
-Out:{sum}
-
-In:{limit, i, sum, j}
-blklab2 [LOOP_HEADER] 
-Out:{limit, i, sum, j}
-
-In:{limit, i, sum, j}
-blklab2 [LOOP_BODY] 
--------------------------------
-l.0:ifge %4, %0 goto blklab2 : int
-l.1:mul %8 = %2, %4 : int
-l.2:add %9 = %3, %8 : int
-l.3:assign %3 = %9  : int
-l.4:const %10 = 1 : int
-l.5:add %11 = %4, %10 : int
-l.6:assign %4 = %11  : int
--------------------------------
-Out:{limit, i, sum, j}
-
-In:{limit, i, sum}
-blklab2 [LOOP_EXIT] 
--------------------------------
-l.0:const %12 = 1 : int
-l.1:add %13 = %2, %12 : int
-l.2:assign %2 = %13  : int
--------------------------------
-Out:{limit, i, sum}
-
-In:{limit, i, sum, j}
-blklab3 [BLOCK] 
-Out:{limit, i, sum, j}
-
-In:{limit, i, sum}
-blklab1 [BLOCK] 
-Out:{limit, i, sum}
-
-In:{sum}
-sum [RETURN] 
--------------------------------
-l.0:return %3
--------------------------------
-Out:{sum}
-
-In:{}
-exit [EXIT] 
-Out:{}
-
-###### Live analysis for main function. ######
-Iteration 1
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[0, 2]}
-f2 [BLOCK] 
--------------------------------
-l.0:assign %1 = %2  : int
-l.1:fieldload %4 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-l.2:fieldload %5 = %4 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-l.3:indirectinvoke () = %5 (%1) : method(any)->()
--------------------------------
-Out:{[]}
-
-In:{[0, 3]}
-f2 [INVOKE] 
--------------------------------
-l.0:invoke (%2) = (%3) nestedwhileloop:f : function(int)->(int)
--------------------------------
-Out:{[0, 2]}
-
-In:{[0]}
-code [BLOCK] 
--------------------------------
-l.0:const %3 = 43 : int
--------------------------------
-Out:{[0, 3]}
-
-In:{[0]}
-entry [ENTRY] 
-Out:{[0]}
-
-###### Live analysis for main function. ######
-Iteration 2
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[0, 2]}
-f2 [BLOCK] 
--------------------------------
-l.0:assign %1 = %2  : int
-l.1:fieldload %4 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-l.2:fieldload %5 = %4 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-l.3:indirectinvoke () = %5 (%1) : method(any)->()
--------------------------------
-Out:{[]}
-
-In:{[0, 3]}
-f2 [INVOKE] 
--------------------------------
-l.0:invoke (%2) = (%3) nestedwhileloop:f : function(int)->(int)
--------------------------------
-Out:{[0, 2]}
-
-In:{[0]}
-code [BLOCK] 
--------------------------------
-l.0:const %3 = 43 : int
--------------------------------
-Out:{[0, 3]}
-
-In:{[0]}
-entry [ENTRY] 
-Out:{[0]}
-
-###### Live variables for main function. ######
-In:{sys}
-entry [ENTRY] 
-Out:{sys}
-
-In:{sys}
-code [BLOCK] 
--------------------------------
-l.0:const %3 = 43 : int
--------------------------------
-Out:{sys, %3}
-
-In:{sys, %3}
-f2 [INVOKE] 
--------------------------------
-l.0:invoke (%2) = (%3) nestedwhileloop:f : function(int)->(int)
--------------------------------
-Out:{sys, %2}
-
-In:{sys, %2}
-f2 [BLOCK] 
--------------------------------
-l.0:assign %1 = %2  : int
-l.1:fieldload %4 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-l.2:fieldload %5 = %4 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-l.3:indirectinvoke () = %5 (%1) : method(any)->()
--------------------------------
-Out:{}
-
-In:{}
-exit [EXIT] 
-Out:{}
-
+[./nestedwhileloop.whiley] applied coercion check ................................... [1ms]
+Whiley => Wyil: compiled 1 file(s) ............................................ [288ms-1mb]
 === Bound Analysis on main function ===
 main.0 [	const %3 = 43 : int]
 main.1 [	invoke (%2) = (%3) nestedwhileloop:f : function(int)->(int)]
@@ -625,7 +102,7 @@ blklab0 [LOOP_EXIT]
 -------------------------------
 0:ifge %2, %0 goto blklab0 : int
 -------------------------------
-Vars []
+Vars [_2, _0]
 DeadVars []
 Constraints [_2>=_0]
 
@@ -641,7 +118,7 @@ blklab0 [LOOP_BODY]
 0:const %7 = 0 : int
 1:assign %4 = %7  : int
 -------------------------------
-Vars [_7, _4]
+Vars [_2, _0, _7, _4]
 DeadVars [_7]
 Constraints [_2<_0, _7:=0, _4:=_7]
 
@@ -674,8 +151,8 @@ blklab2 [LOOP_EXIT]
 2:add %13 = %2, %12 : int
 3:assign %2 = %13  : int
 -------------------------------
-Vars [_12, _13, _2]
-DeadVars [_12, _13]
+Vars [_4, _0, _12, _13, _2]
+DeadVars [_4, _12, _13]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
@@ -697,7 +174,7 @@ blklab2 [LOOP_BODY]
 4:add %11 = %4, %10 : int
 5:assign %4 = %11  : int
 -------------------------------
-Vars [_8, _2, _4, _9, _3, _10, _11]
+Vars [_4, _0, _8, _2, _9, _3, _10, _11]
 DeadVars [_8, _9, _10, _11]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
@@ -746,8 +223,8 @@ blklab2 [LOOP_EXIT]
 2:add %13 = %2, %12 : int
 3:assign %2 = %13  : int
 -------------------------------
-Vars [_12, _13, _2]
-DeadVars [_12, _13]
+Vars [_4, _0, _12, _13, _2]
+DeadVars [_4, _12, _13]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
@@ -769,7 +246,7 @@ blklab2 [LOOP_BODY]
 4:add %11 = %4, %10 : int
 5:assign %4 = %11  : int
 -------------------------------
-Vars [_8, _2, _4, _9, _3, _10, _11]
+Vars [_4, _0, _8, _2, _9, _3, _10, _11]
 DeadVars [_8, _9, _10, _11]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
@@ -818,8 +295,8 @@ blklab2 [LOOP_EXIT]
 2:add %13 = %2, %12 : int
 3:assign %2 = %13  : int
 -------------------------------
-Vars [_12, _13, _2]
-DeadVars [_12, _13]
+Vars [_4, _0, _12, _13, _2]
+DeadVars [_4, _12, _13]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
@@ -841,7 +318,7 @@ blklab2 [LOOP_BODY]
 4:add %11 = %4, %10 : int
 5:assign %4 = %11  : int
 -------------------------------
-Vars [_8, _2, _4, _9, _3, _10, _11]
+Vars [_4, _0, _8, _2, _9, _3, _10, _11]
 DeadVars [_8, _9, _10, _11]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
@@ -890,8 +367,8 @@ blklab2 [LOOP_EXIT]
 2:add %13 = %2, %12 : int
 3:assign %2 = %13  : int
 -------------------------------
-Vars [_12, _13, _2]
-DeadVars [_12, _13]
+Vars [_4, _0, _12, _13, _2]
+DeadVars [_4, _12, _13]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [43..43]	
@@ -912,7 +389,6 @@ Constraints []
 	domain(_0)	= [43..43]	
 	domain(_2)	= [1..1]	
 	domain(_3)	= [0..0]	
-	domain(_4)	= [43..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 19 ### 
@@ -925,7 +401,6 @@ Constraints []
 	domain(_0)	= [43..43]	
 	domain(_2)	= [0..1]		 // lb_c=0 ub_c=1	
 	domain(_3)	= [0..0]	
-	domain(_4)	= [43..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 20 ### 
@@ -934,14 +409,13 @@ blklab0 [LOOP_EXIT]
 -------------------------------
 0:ifge %2, %0 goto blklab0 : int
 -------------------------------
-Vars []
+Vars [_2, _0]
 DeadVars []
 Constraints [_2>=_0]
 
 	domain(_0)	= [empty..empty]	
 	domain(_2)	= [empty..empty]	
 	domain(_3)	= [0..0]	
-	domain(_4)	= [43..infinity]	
 IsReachable=false
 isChanged=false
 ### Iteration 21 ### 
@@ -951,7 +425,7 @@ blklab0 [LOOP_BODY]
 0:const %7 = 0 : int
 1:assign %4 = %7  : int
 -------------------------------
-Vars [_7, _4]
+Vars [_2, _0, _7, _4]
 DeadVars [_7]
 Constraints [_2<_0, _7:=0, _4:=_7]
 
@@ -984,8 +458,8 @@ blklab2 [LOOP_EXIT]
 2:add %13 = %2, %12 : int
 3:assign %2 = %13  : int
 -------------------------------
-Vars [_12, _13, _2]
-DeadVars [_12, _13]
+Vars [_4, _0, _12, _13, _2]
+DeadVars [_4, _12, _13]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
@@ -1007,7 +481,7 @@ blklab2 [LOOP_BODY]
 4:add %11 = %4, %10 : int
 5:assign %4 = %11  : int
 -------------------------------
-Vars [_8, _2, _4, _9, _3, _10, _11]
+Vars [_4, _0, _8, _2, _9, _3, _10, _11]
 DeadVars [_8, _9, _10, _11]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
@@ -1056,8 +530,8 @@ blklab2 [LOOP_EXIT]
 2:add %13 = %2, %12 : int
 3:assign %2 = %13  : int
 -------------------------------
-Vars [_12, _13, _2]
-DeadVars [_12, _13]
+Vars [_4, _0, _12, _13, _2]
+DeadVars [_4, _12, _13]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
@@ -1079,7 +553,7 @@ blklab2 [LOOP_BODY]
 4:add %11 = %4, %10 : int
 5:assign %4 = %11  : int
 -------------------------------
-Vars [_8, _2, _4, _9, _3, _10, _11]
+Vars [_4, _0, _8, _2, _9, _3, _10, _11]
 DeadVars [_8, _9, _10, _11]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
@@ -1128,8 +602,8 @@ blklab2 [LOOP_EXIT]
 2:add %13 = %2, %12 : int
 3:assign %2 = %13  : int
 -------------------------------
-Vars [_12, _13, _2]
-DeadVars [_12, _13]
+Vars [_4, _0, _12, _13, _2]
+DeadVars [_4, _12, _13]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
@@ -1151,7 +625,7 @@ blklab2 [LOOP_BODY]
 4:add %11 = %4, %10 : int
 5:assign %4 = %11  : int
 -------------------------------
-Vars [_8, _2, _4, _9, _3, _10, _11]
+Vars [_4, _0, _8, _2, _9, _3, _10, _11]
 DeadVars [_8, _9, _10, _11]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
@@ -1200,8 +674,8 @@ blklab2 [LOOP_EXIT]
 2:add %13 = %2, %12 : int
 3:assign %2 = %13  : int
 -------------------------------
-Vars [_12, _13, _2]
-DeadVars [_12, _13]
+Vars [_4, _0, _12, _13, _2]
+DeadVars [_4, _12, _13]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [43..43]	
@@ -1222,7 +696,6 @@ Constraints []
 	domain(_0)	= [43..43]	
 	domain(_2)	= [1..2]	
 	domain(_3)	= [0..infinity]	
-	domain(_4)	= [43..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 37 ### 
@@ -1235,7 +708,6 @@ Constraints []
 	domain(_0)	= [43..43]	
 	domain(_2)	= [0..2]		 // lb_c=0 ub_c=2	
 	domain(_3)	= [0..infinity]	
-	domain(_4)	= [43..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 38 ### 
@@ -1244,14 +716,13 @@ blklab0 [LOOP_EXIT]
 -------------------------------
 0:ifge %2, %0 goto blklab0 : int
 -------------------------------
-Vars []
+Vars [_2, _0]
 DeadVars []
 Constraints [_2>=_0]
 
 	domain(_0)	= [empty..empty]	
 	domain(_2)	= [empty..empty]	
 	domain(_3)	= [0..infinity]	
-	domain(_4)	= [43..infinity]	
 IsReachable=false
 isChanged=false
 ### Iteration 39 ### 
@@ -1261,7 +732,7 @@ blklab0 [LOOP_BODY]
 0:const %7 = 0 : int
 1:assign %4 = %7  : int
 -------------------------------
-Vars [_7, _4]
+Vars [_2, _0, _7, _4]
 DeadVars [_7]
 Constraints [_2<_0, _7:=0, _4:=_7]
 
@@ -1294,8 +765,8 @@ blklab2 [LOOP_EXIT]
 2:add %13 = %2, %12 : int
 3:assign %2 = %13  : int
 -------------------------------
-Vars [_12, _13, _2]
-DeadVars [_12, _13]
+Vars [_4, _0, _12, _13, _2]
+DeadVars [_4, _12, _13]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
@@ -1317,7 +788,7 @@ blklab2 [LOOP_BODY]
 4:add %11 = %4, %10 : int
 5:assign %4 = %11  : int
 -------------------------------
-Vars [_8, _2, _4, _9, _3, _10, _11]
+Vars [_4, _0, _8, _2, _9, _3, _10, _11]
 DeadVars [_8, _9, _10, _11]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
@@ -1366,8 +837,8 @@ blklab2 [LOOP_EXIT]
 2:add %13 = %2, %12 : int
 3:assign %2 = %13  : int
 -------------------------------
-Vars [_12, _13, _2]
-DeadVars [_12, _13]
+Vars [_4, _0, _12, _13, _2]
+DeadVars [_4, _12, _13]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
@@ -1389,7 +860,7 @@ blklab2 [LOOP_BODY]
 4:add %11 = %4, %10 : int
 5:assign %4 = %11  : int
 -------------------------------
-Vars [_8, _2, _4, _9, _3, _10, _11]
+Vars [_4, _0, _8, _2, _9, _3, _10, _11]
 DeadVars [_8, _9, _10, _11]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
@@ -1438,8 +909,8 @@ blklab2 [LOOP_EXIT]
 2:add %13 = %2, %12 : int
 3:assign %2 = %13  : int
 -------------------------------
-Vars [_12, _13, _2]
-DeadVars [_12, _13]
+Vars [_4, _0, _12, _13, _2]
+DeadVars [_4, _12, _13]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
@@ -1461,7 +932,7 @@ blklab2 [LOOP_BODY]
 4:add %11 = %4, %10 : int
 5:assign %4 = %11  : int
 -------------------------------
-Vars [_8, _2, _4, _9, _3, _10, _11]
+Vars [_4, _0, _8, _2, _9, _3, _10, _11]
 DeadVars [_8, _9, _10, _11]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
@@ -1510,8 +981,8 @@ blklab2 [LOOP_EXIT]
 2:add %13 = %2, %12 : int
 3:assign %2 = %13  : int
 -------------------------------
-Vars [_12, _13, _2]
-DeadVars [_12, _13]
+Vars [_4, _0, _12, _13, _2]
+DeadVars [_4, _12, _13]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [43..43]	
@@ -1532,7 +1003,6 @@ Constraints []
 	domain(_0)	= [43..43]	
 	domain(_2)	= [1..3]	
 	domain(_3)	= [0..infinity]	
-	domain(_4)	= [43..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 55 ### 
@@ -1545,7 +1015,6 @@ Constraints []
 	domain(_0)	= [43..43]	
 	domain(_2)	= [0..infinity]	
 	domain(_3)	= [0..infinity]	
-	domain(_4)	= [43..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 56 ### 
@@ -1554,14 +1023,13 @@ blklab0 [LOOP_EXIT]
 -------------------------------
 0:ifge %2, %0 goto blklab0 : int
 -------------------------------
-Vars []
+Vars [_2, _0]
 DeadVars []
 Constraints [_2>=_0]
 
 	domain(_0)	= [43..43]	
 	domain(_2)	= [43..infinity]	
 	domain(_3)	= [0..infinity]	
-	domain(_4)	= [43..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 57 ### 
@@ -1577,7 +1045,6 @@ Constraints [return:=_3]
 	domain(_0)	= [43..43]	
 	domain(_2)	= [43..infinity]	
 	domain(_3)	= [0..infinity]	
-	domain(_4)	= [43..infinity]	
 	domain(return)	= [0..infinity]	
 IsReachable=true
 isChanged=true
@@ -1588,7 +1055,7 @@ blklab0 [LOOP_BODY]
 0:const %7 = 0 : int
 1:assign %4 = %7  : int
 -------------------------------
-Vars [_7, _4]
+Vars [_2, _0, _7, _4]
 DeadVars [_7]
 Constraints [_2<_0, _7:=0, _4:=_7]
 
@@ -1621,8 +1088,8 @@ blklab2 [LOOP_EXIT]
 2:add %13 = %2, %12 : int
 3:assign %2 = %13  : int
 -------------------------------
-Vars [_12, _13, _2]
-DeadVars [_12, _13]
+Vars [_4, _0, _12, _13, _2]
+DeadVars [_4, _12, _13]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
@@ -1644,7 +1111,7 @@ blklab2 [LOOP_BODY]
 4:add %11 = %4, %10 : int
 5:assign %4 = %11  : int
 -------------------------------
-Vars [_8, _2, _4, _9, _3, _10, _11]
+Vars [_4, _0, _8, _2, _9, _3, _10, _11]
 DeadVars [_8, _9, _10, _11]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
@@ -1693,8 +1160,8 @@ blklab2 [LOOP_EXIT]
 2:add %13 = %2, %12 : int
 3:assign %2 = %13  : int
 -------------------------------
-Vars [_12, _13, _2]
-DeadVars [_12, _13]
+Vars [_4, _0, _12, _13, _2]
+DeadVars [_4, _12, _13]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
@@ -1716,7 +1183,7 @@ blklab2 [LOOP_BODY]
 4:add %11 = %4, %10 : int
 5:assign %4 = %11  : int
 -------------------------------
-Vars [_8, _2, _4, _9, _3, _10, _11]
+Vars [_4, _0, _8, _2, _9, _3, _10, _11]
 DeadVars [_8, _9, _10, _11]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
@@ -1765,8 +1232,8 @@ blklab2 [LOOP_EXIT]
 2:add %13 = %2, %12 : int
 3:assign %2 = %13  : int
 -------------------------------
-Vars [_12, _13, _2]
-DeadVars [_12, _13]
+Vars [_4, _0, _12, _13, _2]
+DeadVars [_4, _12, _13]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [empty..empty]	
@@ -1788,7 +1255,7 @@ blklab2 [LOOP_BODY]
 4:add %11 = %4, %10 : int
 5:assign %4 = %11  : int
 -------------------------------
-Vars [_8, _2, _4, _9, _3, _10, _11]
+Vars [_4, _0, _8, _2, _9, _3, _10, _11]
 DeadVars [_8, _9, _10, _11]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
@@ -1837,8 +1304,8 @@ blklab2 [LOOP_EXIT]
 2:add %13 = %2, %12 : int
 3:assign %2 = %13  : int
 -------------------------------
-Vars [_12, _13, _2]
-DeadVars [_12, _13]
+Vars [_4, _0, _12, _13, _2]
+DeadVars [_4, _12, _13]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [43..43]	
@@ -1859,7 +1326,6 @@ Constraints []
 	domain(_0)	= [43..43]	
 	domain(_2)	= [1..43]	
 	domain(_3)	= [0..infinity]	
-	domain(_4)	= [43..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 74 ### 
@@ -1872,7 +1338,6 @@ Constraints []
 	domain(_0)	= [43..43]	
 	domain(_2)	= [0..43]	
 	domain(_3)	= [0..infinity]	
-	domain(_4)	= [43..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 75 ### 
@@ -1881,14 +1346,13 @@ blklab0 [LOOP_EXIT]
 -------------------------------
 0:ifge %2, %0 goto blklab0 : int
 -------------------------------
-Vars []
+Vars [_2, _0]
 DeadVars []
 Constraints [_2>=_0]
 
 	domain(_0)	= [43..43]	
 	domain(_2)	= [43..43]	
 	domain(_3)	= [0..infinity]	
-	domain(_4)	= [43..infinity]	
 IsReachable=true
 isChanged=true
 ### Iteration 76 ### 
@@ -1904,7 +1368,6 @@ Constraints [return:=_3]
 	domain(_0)	= [43..43]	
 	domain(_2)	= [43..43]	
 	domain(_3)	= [0..infinity]	
-	domain(_4)	= [43..infinity]	
 	domain(return)	= [0..infinity]	
 IsReachable=true
 isChanged=true
@@ -1915,7 +1378,7 @@ blklab0 [LOOP_BODY]
 0:const %7 = 0 : int
 1:assign %4 = %7  : int
 -------------------------------
-Vars [_7, _4]
+Vars [_2, _0, _7, _4]
 DeadVars [_7]
 Constraints [_2<_0, _7:=0, _4:=_7]
 
@@ -1937,7 +1400,7 @@ blklab2 [LOOP_BODY]
 4:add %11 = %4, %10 : int
 5:assign %4 = %11  : int
 -------------------------------
-Vars [_8, _2, _4, _9, _3, _10, _11]
+Vars [_4, _0, _8, _2, _9, _3, _10, _11]
 DeadVars [_8, _9, _10, _11]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
@@ -1986,8 +1449,8 @@ blklab2 [LOOP_EXIT]
 2:add %13 = %2, %12 : int
 3:assign %2 = %13  : int
 -------------------------------
-Vars [_12, _13, _2]
-DeadVars [_12, _13]
+Vars [_4, _0, _12, _13, _2]
+DeadVars [_4, _12, _13]
 Constraints [_4>=_0, _12:=1, _13 = _2+_12, _2:=_13]
 
 	domain(_0)	= [43..43]	
@@ -2008,74 +1471,9 @@ Constraints []
 	domain(_0)	= [43..43]	
 	domain(_2)	= [1..43]	
 	domain(_3)	= [0..infinity]	
-	domain(_4)	= [43..43]	
-IsReachable=true
-isChanged=true
-### Iteration 83 ### 
-'3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_HEADER]
-blklab0 [LOOP_HEADER] 
-Vars []
-DeadVars []
-Constraints []
-
-	domain(_0)	= [43..43]	
-	domain(_2)	= [0..43]	
-	domain(_3)	= [0..infinity]	
-	domain(_4)	= [43..43]	
-IsReachable=true
-isChanged=true
-### Iteration 84 ### 
-'4' blocks in queue : [ENTRY][LOOP_BODY][LOOP_BODY][LOOP_EXIT]
-blklab0 [LOOP_EXIT] 
--------------------------------
-0:ifge %2, %0 goto blklab0 : int
--------------------------------
-Vars []
-DeadVars []
-Constraints [_2>=_0]
-
-	domain(_0)	= [43..43]	
-	domain(_2)	= [43..43]	
-	domain(_3)	= [0..infinity]	
-	domain(_4)	= [43..43]	
-IsReachable=true
-isChanged=true
-### Iteration 85 ### 
-'4' blocks in queue : [ENTRY][LOOP_BODY][LOOP_BODY][RETURN]
-return_3 [RETURN] 
--------------------------------
-0:return %3
--------------------------------
-Vars [_3]
-DeadVars []
-Constraints [return:=_3]
-
-	domain(_0)	= [43..43]	
-	domain(_2)	= [43..43]	
-	domain(_3)	= [0..infinity]	
-	domain(_4)	= [43..43]	
-	domain(return)	= [0..infinity]	
-IsReachable=true
-isChanged=true
-### Iteration 86 ### 
-'3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_BODY]
-blklab0 [LOOP_BODY] 
--------------------------------
-0:const %7 = 0 : int
-1:assign %4 = %7  : int
--------------------------------
-Vars [_7, _4]
-DeadVars [_7]
-Constraints [_2<_0, _7:=0, _4:=_7]
-
-	domain(_0)	= [43..43]	
-	domain(_2)	= [0..42]	
-	domain(_3)	= [0..infinity]	
-	domain(_4)	= [0..0]	
-	domain(_7)	= [0..0]	
 IsReachable=true
 isChanged=false
-### Iteration 87 ### 
+### Iteration 83 ### 
 '2' blocks in queue : [ENTRY][LOOP_BODY]
 blklab2 [LOOP_BODY] 
 -------------------------------
@@ -2086,7 +1484,7 @@ blklab2 [LOOP_BODY]
 4:add %11 = %4, %10 : int
 5:assign %4 = %11  : int
 -------------------------------
-Vars [_8, _2, _4, _9, _3, _10, _11]
+Vars [_4, _0, _8, _2, _9, _3, _10, _11]
 DeadVars [_8, _9, _10, _11]
 Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=_11]
 
@@ -2100,7 +1498,7 @@ Constraints [_4<_0, _8 = _2 * _4, _9 = _3+_8, _3:=_9, _10:=1, _11 = _4+_10, _4:=
 	domain(_9)	= [0..infinity]	
 IsReachable=true
 isChanged=false
-### Iteration 88 ### 
+### Iteration 84 ### 
 '1' blocks in queue : [ENTRY]
 entry [ENTRY] 
 Vars [_0]
@@ -2110,7 +1508,7 @@ Constraints [_0:=[43..43]]
 	domain(_0)	= [43..43]	
 IsReachable=true
 isChanged=true
-### Iteration 89 ### 
+### Iteration 85 ### 
 '1' blocks in queue : [BLOCK]
 code [BLOCK] 
 -------------------------------
