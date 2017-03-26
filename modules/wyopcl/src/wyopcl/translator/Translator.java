@@ -34,6 +34,8 @@ import wyopcl.translator.symbolic.pattern.Pattern;
  *
  */
 public class Translator implements Builder {
+	// File name of Whiley source program
+	private String filename;
 	private Configuration config;
 	// Function analysis
 	private ReadWriteAnalyzer readwriteAnalyzer;
@@ -42,6 +44,7 @@ public class Translator implements Builder {
 
 	public Translator(Configuration config) {
 		this.config = config;
+		this.filename = config.getFilename();
 	}
 
 	/**

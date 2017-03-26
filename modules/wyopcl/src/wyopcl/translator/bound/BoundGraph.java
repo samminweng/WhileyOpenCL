@@ -30,9 +30,6 @@ import wyrl.io.SpecLexer.RightAngle;
  */
 public class BoundGraph {
 	private final String prefix = "_";
-	private Set<BoundBlock> feedback_set; // The set of blocks that widening operator is applied	
-	private Deque<BoundBlock> changed; // Store the blocks that need the bound inference
-	//private final String prefix = "%";	
 	// The list of basic block;
 	private List<BoundBlock> blocks;
 	// The variables are used in the control flow graph (CFG).
@@ -335,73 +332,6 @@ public class BoundGraph {
 		return false;
 	}
 
-	/**
-	 * Create a deque and put Entry and code blocks into the queue
-	 * 
-	 * @return a deque
-	 */
-	public Deque<BoundBlock> createDequeAddEntry() {
-		// Create a deque to track all the blocks that have bound changes
-		// Deque provides 'pollLast' to get and remove the last block
-		// So we can have Last In First Out or First In First Out behaviour.
-		changed = new LinkedList<BoundBlock>();
-
-		// Get the entry block and add entry and its child nodes to 
-		BoundBlock entry = this.getBasicBlock("entry", BlockType.ENTRY);
-		changed.add(entry);
-		// Add the first child block of entry node
-		changed.add(this.getBasicBlock("code", BlockType.BLOCK));
-
-		return changed;
-	}
-
 	
-	
-	/**
-	 * Create a feedback set that contains one block of the graph 
-	 * so the widening operator can be applied to the block of this set.
-	 * 
-	 * @return
-	 */
-	public Set<BoundBlock> createFeedbackSet() {
-		// Create a hash set that has constant complexity
-		this.feedback_set = new HashSet<BoundBlock>();
-		
-		// Put all loop headers to the set
-		List<BoundBlock> blks = this.getBasicBlockByType(BlockType.LOOP_HEADER);
-		this.feedback_set.addAll(blks);
-		
-		return this.feedback_set;
-	}
 
-	/***
-	 * Initialize each variable of a function with an empty domain.
-	 * 
-	 * 
-	 * @param function
-	 */
-	public void initialize(FunctionOrMethod function) {
-		// Initialize all block with empty domains
-		for(BoundBlock blk: this.getBlockList()){
-			blk.emptyBounds();
-		}		
-	}
-
-	/**
-	 * Put the variable to dead 'Vars' set in current block
-	 * So the bound of the variable in 'Vars' set will NOT pass to child blocks
-	 * 
-	 * @param op
-	 */
-	/*public void addDeadVar(String var) {
-		// Add the variable to current block
-		getCurrentBlock().addVar(var);
-		
-	}
-
-	public void removeDeadVar(String var) {
-		// Remove variable from dead set
-		getCurrentBlock().removeVar(var);
-	}
-	*/
 }

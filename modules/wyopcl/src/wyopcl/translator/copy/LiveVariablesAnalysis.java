@@ -94,8 +94,7 @@ public class LiveVariablesAnalysis extends Analyzer {
 		}
 		
 		// Check the array is live.
-		BasicBlock blk = getBlockbyCode(f, code);// Get basic block that
-													// contains the given code.
+		BasicBlock blk = getBlockbyCode(f, code);// Get basic block that contains the given code.
 		if (blk != null) {
 			HashSet<Integer> outSet = getLiveness(f).getOUT(blk);
 			isLive = outSet.contains(reg);

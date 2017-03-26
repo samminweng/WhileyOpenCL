@@ -56,7 +56,6 @@ public class BoundAnalyzer {
 	private boolean isDFTraversal; // Specify tree order (depth-first by default)
 	private boolean isNaiveWiden; // Specify widen operator (naive widen by default)
 	private final String prefix = "_";
-	//private Configuration config;
 	private Set<String> loop_labels; // Store the loop labels in a function
 	// The line number
 	private int line;
@@ -77,8 +76,8 @@ public class BoundAnalyzer {
 		this.loop_labels = new HashSet<String>();
 		this.liveAnalyzer = liveAnalyzer;
 		this.isVerbose = config.isVerbose();
-		this.isDFTraversal = config.getTraversal().equals("DF")? true : false;
-		this.isNaiveWiden = config.isNaiveWiden();
+		this.isDFTraversal = config.getOption(Configuration.TRAVERSAL).equals("DF")? true : false;
+		this.isNaiveWiden = config.getOption(Configuration.BOUND).equals("naive") ? true:false;
 	}
 
 	/**
@@ -287,6 +286,59 @@ public class BoundAnalyzer {
 		
 	}
 	
+	/***
+	 * Initialize each variable of a function with an empty domain.
+	 * 
+	 * 
+	 * @param function
+	 */
+	public void initialize(FunctionOrMethod function) {
+		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
+		// Initialize all block with empty domains
+		for(BoundBlock blk: graph.getBlockList()){
+			blk.emptyBounds();
+		}		
+	}
+	/**
+	 * Create a deque and put Entry and code blocks into the queue
+	 * 
+	 * @return a deque
+	 */
+	public Deque<BoundBlock> createDequeAddEntry(FunctionOrMethod function) {
+		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
+		// Create a deque to track all the blocks that have bound changes
+		// Deque provides 'pollLast' to get and remove the last block
+		// So we can have Last In First Out or First In First Out behaviour.
+		Deque<BoundBlock> changed = new LinkedList<BoundBlock>();
+
+		// Get the entry block and add entry and its child nodes to 
+		BoundBlock entry = graph.getBasicBlock("entry", BlockType.ENTRY);
+		changed.add(entry);
+		// Add the first child block of entry node
+		changed.add(graph.getBasicBlock("code", BlockType.BLOCK));
+
+		return changed;
+	}
+
+	
+	
+	/**
+	 * Create a feedback set that contains one block of the graph 
+	 * so the widening operator can be applied to the block of this set.
+	 * 
+	 * @return
+	 */
+	public LinkedHashSet<BoundBlock> createFeedbackSet(FunctionOrMethod function) {
+		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
+		// Create a hash set that has constant complexity
+		LinkedHashSet<BoundBlock> feedback_set = new LinkedHashSet<BoundBlock>();
+		
+		// Put all loop headers to the set
+		List<BoundBlock> blks = graph.getBasicBlockByType(BlockType.LOOP_HEADER);
+		feedback_set.addAll(blks);
+		
+		return feedback_set;
+	}
 	
 	/**
 	 * Infer the bounds of a function by repeatedly iterating over all blocks in
@@ -309,13 +361,13 @@ public class BoundAnalyzer {
 		computeDeadVars(function);
 		
 		// Initialize the bound set in all blocks.
-		graph.initialize(function);
+		initialize(function);
 		// Create a deque and put 'entry' and 'code' blocks
 		// into the queue as a starting point
-		Deque<BoundBlock> changed = graph.createDequeAddEntry();		
+		Deque<BoundBlock> changed = createDequeAddEntry(function);		
 
 		// Create a feedback set 
-		Set<BoundBlock> feedback_set = graph.createFeedbackSet();
+		LinkedHashSet<BoundBlock> feedback_set = createFeedbackSet(function);
 
 		// Repeatedly iterates over all blocks in deque 
 		// and infer the bounds consistent with all the constraints in each block.

@@ -39,7 +39,7 @@ public class Configuration {
 		this.options.put(PATTERN, DISABLED);
 		// Verbose option
 		this.options.put(VERBOSE, DISABLED);
-		
+		// Code generator options
 		this.options.put(NOCOPY, DISABLED);
 		this.options.put(DEALLOC, DISABLED);
 		this.options.put(CODE, DISABLED);
@@ -132,22 +132,18 @@ public class Configuration {
 		return true;
 	}
 
-	/**
-	 * Check if the setting is naive widen strategy
-	 * 
-	 * @return true if it is naive operator.
-	 */
-	public boolean isNaiveWiden() {
-		return (this.options.get(BOUND).equals("naive")) ? true:false;
-	}
 	
 	/**
+	 * Return the value of an option 
 	 * 
+	 * 
+	 * @param name
 	 * @return
 	 */
-	public String getTraversal(){
-		return (String)this.options.get(TRAVERSAL);		
+	public String getOption(String name){
+		return (String)this.options.get(name);
 	}
+	
 	
 	
 	/**
