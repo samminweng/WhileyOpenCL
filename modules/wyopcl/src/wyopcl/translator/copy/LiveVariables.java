@@ -197,36 +197,27 @@ public class LiveVariables {
 	/**
 	 * Compute the liveness information for a list of code.
 	 * 
-	 * @param block
+	 * @param b
 	 *            the basic block that contains a list of byte-code.
 	 * @param in
 	 *            the initial 'in' set
 	 * @return
 	 */
-	public HashSet<Integer> computeIN(BasicBlock block, HashSet<Integer> in) {
-		List<Code> codes = block.getCodeBlock();
+	@SuppressWarnings("unchecked")
+	public HashSet<Integer> computeIN(BasicBlock b, HashSet<Integer> in) {
+		// Get the exiting 'in' set
+		HashSet<Integer> old_in = (HashSet<Integer>) getIN(b).clone();
+		
+		List<Code> codes = b.getCodeBlock();
 		in = compute(codes, in);
-		// Update 'in' set of the block.
-		setIN(block, in);
-		return in;
-	}
-
-	/**
-	 * Set 'in' set for a block and check if 'new_in' is different from existing 'in'. If so, then update
-	 * 'isChanged' flag to indicate there is a change.
-	 * 
-	 * @param block
-	 * @return
-	 */
-	protected void setIN(BasicBlock blk, HashSet<Integer> new_in) {
 		// Check if new 'in' set is different from existing 'in' set.
-		HashSet<Integer> in = getIN(blk);
-		if (!in.equals(new_in)) {
+		if (!old_in.equals(in)) {
 			// Use logic OR operator to combine the result of 'isChanged' flag.
 			this.isChanged |= true;
 			// Update 'in' set
-			inSet.put(blk, new_in);
+			inSet.put(b, in);
 		}
+		return getIN(b);
 	}
 
 	/**
@@ -235,11 +226,11 @@ public class LiveVariables {
 	 * @param block
 	 * @param new_out
 	 */
-	protected void setOUT(BasicBlock blk, HashSet<Integer> new_out) {
-		HashSet<Integer> out = getOUT(blk);
-		if (!out.equals(new_out)) {
+	protected void setOUT(BasicBlock blk, HashSet<Integer> out) {
+		HashSet<Integer> old_out = getOUT(blk);
+		if (!old_out.equals(out)) {
 			this.isChanged |= true;
-			outSet.put(blk, new_out);
+			outSet.put(blk, out);
 		}
 	}
 
@@ -268,18 +259,19 @@ public class LiveVariables {
 	 * 
 	 * @param set
 	 */
-	public HashSet<Integer> computeOut(BasicBlock block) {
+	public HashSet<Integer> computeOut(BasicBlock b) {
 		// Check if the block is not exit block.
-		HashSet<Integer> out = getOUT(block);
+		HashSet<Integer> out = getOUT(b);
 		// Check if block has the children.
-		if(!block.isLeaf()){
+		if(!b.isLeaf()){
 			// Take the union of child blocks' in set.
-			for (BasicBlock child : block.getChildNodes()) {
+			for (BasicBlock child : b.getChildNodes()) {
 				HashSet<Integer> in = getIN(child);
 				out.addAll(in);
 			}
-			setOUT(block, out);
+			// Update 'out' set of the block
+			outSet.put(b, out);
 		}
-		return getOUT(block);
+		return getOUT(b);
 	}
 }
