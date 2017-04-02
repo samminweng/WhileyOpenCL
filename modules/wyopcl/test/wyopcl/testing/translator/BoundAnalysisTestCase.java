@@ -50,8 +50,8 @@ public class BoundAnalysisTestCase {
 		return Arrays.asList(new String[] { 
 				"ifelse", 
 				"whileloop",
-				"whileloop_break",
-				"nestedwhileloop",
+				//"whileloop_break",
+				//"nestedwhileloop",
 				//"bubblesort"
 			});
 	}
@@ -86,13 +86,15 @@ public class BoundAnalysisTestCase {
 		System.out.println("Pass "+testcase + " with gradual widen + breath-first search");
 	}
 	
-	
-	/*@Test
-	public void testNaiveBoundNaiveCCode(){
+	@Test
+	public void testCodeGeneratorAndNaiveBound(){
 		// Run bound analysis and Generate naive C code
 		System.out.print("Bound Analysis: Naive Widen Strategy + Naive C code\n");
 		util.execCodeGeneration(sourceDir, testcase, "-bound", "naive", "-code");
 	}
+	
+	
+	/*
 	
 	@Test
 	public void testNaiveBoundNoCopyCCode(){

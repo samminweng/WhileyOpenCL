@@ -19,8 +19,4 @@ method main(System.Console sys):
     int c = f(11) 
     assert c == 2
     sys.out.println(c)
-    /*int x = 1
-    x = 10
-    int y = f(x)
-    sys.out.println(y)
-    */
+    // x variable should be 'uint16_t'

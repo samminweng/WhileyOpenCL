@@ -19,7 +19,9 @@ requires limit <= 1000000:
 //     return sum
     
 method main(System.Console sys):
-    int a = f(43)
-    sys.out.println(a)
+    int a = f(43) // 'limit' variable is uint16_t
+    sys.out.println(a) 
     assert a == 903
-
+    int b = f(65536) // 'limit' variable is uint32_t because 65536 > uint16_t 
+    sys.out.println(b)
+    assert b == 2147450880

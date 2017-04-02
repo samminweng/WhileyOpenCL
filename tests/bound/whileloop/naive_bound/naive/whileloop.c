@@ -1,14 +1,14 @@
 #include "whileloop.h"
-int64_t _f_(int64_t limit){
+int64_t _f_(uint32_t limit){
 	int64_t _1 = 0;
-	uint16_t i = 0;
+	uint32_t i = 0;
 	int64_t sum = 0;
 	uint16_t _4 = 0;
 	uint16_t _5 = 0;
 	int64_t _6 = 0;
 	int64_t _7 = 0;
 	uint16_t _8 = 0;
-	uint16_t _9 = 0;
+	uint32_t _9 = 0;
 	//const %4 = 0 : int
 	_4 = 0;
 	//assign %2 = %4  : int
@@ -44,35 +44,67 @@ blklab1:;
 
 int main(int argc, char** args){
 	int64_t a = 0;
-	int64_t _2 = 0;
-	uint16_t _3 = 0;
-	void* _4;
-	int64_t _6 = 0;
-	//const %3 = 43 : int
-	_3 = 43;
-	//invoke (%2) = (%3) whileloop:f : function(int)->(int)
+	int64_t b = 0;
+	int64_t _3 = 0;
+	uint16_t _4 = 0;
+	void* _5;
+	int64_t _7 = 0;
+	int64_t _8 = 0;
+	uint32_t _9 = 0;
+	void* _10;
+	int64_t _12 = 0;
+	//const %4 = 43 : int
+	_4 = 43;
+	//invoke (%3) = (%4) whileloop:f : function(int)->(int)
 	{
-		_2 = _f_(_3);
+		_3 = _f_(_4);
 	}
-	//assign %1 = %2  : int
-	a = _2;
-	//fieldload %4 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %5 = %4 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//indirectinvoke () = %5 (%1) : method(any)->()
+	//assign %1 = %3  : int
+	a = _3;
+	//fieldload %5 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %6 = %5 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %6 (%1) : method(any)->()
 	{
 		printf("%"PRId64"\n", a);
 	}
 	//assert
 	{
-		//const %6 = 903 : int
-		_6 = 903;
-		//ifeq %1, %6 goto blklab4 : int
-		if(a==_6){goto blklab4;}
+		//const %7 = 903 : int
+		_7 = 903;
+		//ifeq %1, %7 goto blklab4 : int
+		if(a==_7){goto blklab4;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
 //.blklab4
 blklab4:;
+	//assert
+	}
+	//const %9 = 65536 : int
+	_9 = 65536;
+	//invoke (%8) = (%9) whileloop:f : function(int)->(int)
+	{
+		_8 = _f_(_9);
+	}
+	//assign %2 = %8  : int
+	b = _8;
+	//fieldload %10 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %11 = %10 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %11 (%2) : method(any)->()
+	{
+		printf("%"PRId64"\n", b);
+	}
+	//assert
+	{
+		//const %12 = 2147450880 : int
+		_12 = 2147450880;
+		//ifeq %2, %12 goto blklab5 : int
+		if(b==_12){goto blklab5;}
+		//fail
+		fprintf(stderr,"fail");
+		exit(-1);
+//.blklab5
+blklab5:;
 	//assert
 	}
 	//return

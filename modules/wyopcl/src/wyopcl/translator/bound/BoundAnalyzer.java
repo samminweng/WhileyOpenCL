@@ -63,6 +63,7 @@ public class BoundAnalyzer {
 
 	// Keep track of bounds for each function call
 	private HashMap<FunctionOrMethod, Set<Bounds>> boundMap;
+	private HashMap<FunctionOrMethod, Bounds> unionBound;
 
 	private LiveVariablesAnalysis liveAnalyzer; // Live variable analysis
 
@@ -73,6 +74,7 @@ public class BoundAnalyzer {
 	public BoundAnalyzer(WyilFile module, LiveVariablesAnalysis liveAnalyzer, Configuration config) {
 		this.module = module;
 		this.boundMap = new HashMap<FunctionOrMethod, Set<Bounds>>();
+		this.unionBound = new HashMap<FunctionOrMethod, Bounds>();
 		this.loop_labels = new HashSet<String>();
 		this.liveAnalyzer = liveAnalyzer;
 		this.isVerbose = config.isVerbose();
@@ -902,22 +904,32 @@ public class BoundAnalyzer {
 	 * @param function
 	 * @return
 	 */
-	private Bounds getBounds(FunctionOrMethod function) {
-		// Get the bounds
-		if(!this.boundMap.containsKey(function)){
-			this.inferBounds(function);
+	private Bounds computeUnionBounds(FunctionOrMethod function) {
+		// Get union bounds from 
+		if(!this.unionBound.containsKey(function)){
+			// Get the bounds
+			if(!this.boundMap.containsKey(function)){
+				this.inferBounds(function);
+			}
+			
+			Set<Bounds> bnd_set = this.boundMap.get(function);
+			// Produce final bound as an union of all bounds
+			Bounds union_bnd = new Bounds();
+			Iterator<Bounds> iterator = bnd_set.iterator();
+			while(iterator.hasNext()){
+				Bounds bnd = iterator.next();
+				union_bnd.union(bnd);
+			}
+			
+			System.out.println("Final bounds of "+function.name() + " :");
+			BoundAnalyzerHelper.printBoundsAndSize(function, union_bnd);
+			
+			// Put union bound to map
+			this.unionBound.put(function, union_bnd);
+			
 		}
-		
-		Set<Bounds> bnd_set = this.boundMap.get(function);
-		// Produce final bound as an union of all bounds
-		Bounds union_bnd = new Bounds();
-		Iterator<Bounds> iterator = bnd_set.iterator();
-		while(iterator.hasNext()){
-			Bounds bnd = iterator.next();
-			union_bnd.union(bnd);
-		}
-		
-		return union_bnd;
+		// Return union bound
+		return this.unionBound.get(function);
 	}
 
 
@@ -932,7 +944,7 @@ public class BoundAnalyzer {
 	 */
 	public boolean isUnBounded(int register, FunctionOrMethod function) {
 		// Get the bounds
-		Bounds bounds = getBounds(function);
+		Bounds bounds = computeUnionBounds(function);
 
 		// Get the domain of register
 		BigInteger l_bnd = bounds.getLower(prefix + register);
@@ -973,7 +985,7 @@ public class BoundAnalyzer {
 	public String suggestIntegerType(int register, FunctionOrMethod function){
 
 		// Get the bounds
-		Bounds bounds = getBounds(function);
+		Bounds bounds = computeUnionBounds(function);
 
 		// Get the domain of register
 		BigInteger l_bnd = bounds.getLower(prefix+register);

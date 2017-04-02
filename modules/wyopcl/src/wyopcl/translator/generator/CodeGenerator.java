@@ -286,7 +286,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						// Add lambda function pointer
 						parameters.add(declareLambda(var, (Type.Function) parameter_type));
 					} else {
-						parameters.add(CodeGeneratorHelper.translateType(parameter_type, stores) + " " + var);
+						if(parameter_type instanceof Type.Int && boundAnalyzer.isPresent()){
+							parameters.add(boundAnalyzer.get().suggestIntegerType(op, function) + " " +var);
+						}else{
+							parameters.add(CodeGeneratorHelper.translateType(parameter_type, stores) + " " + var);
+						}
+						
 					}
 				}
 				// Add deallocation flag ('_dealloc') to input parameter
