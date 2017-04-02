@@ -85,6 +85,52 @@ public class BoundGraph {
 
 	}
 
+
+	/**
+	 * Create or get the exit block
+	 * 
+	 * 
+	 * @return
+	 */
+	public BoundBlock createOrGetExitBlock(){
+
+		// Take the union of all blocks to produce the bounds of a function.
+		BoundBlock exit_blk = this.getBasicBlock("exit", BlockType.EXIT);
+		// Check if there is any exit block, e.g. main function does not always have exit block 
+		// because it may not have the return 
+		if(exit_blk == null){
+			// Get current block
+			BoundBlock current_block = this.getCurrentBlock();
+			exit_blk = this.createBasicBlock("exit", BlockType.EXIT, current_block);
+		}
+
+		return exit_blk;
+
+	}
+
+	/**
+	 * Produce final/output bound of a function
+	 * 
+	 * 
+	 * @return
+	 */
+	public Bounds produceFinalBound(){
+		Bounds bounds = new Bounds();
+
+		// Go through all the blocks to produce final output bounds
+		for (BoundBlock blk : this.getBlockList()) {
+			// Check if the bounds are consistent (lower <= upper)
+			if (blk.isReachable() && blk.getType() != BlockType.EXIT) {
+				// Take union of consistent block bounds
+				bounds.union(blk.getBounds());
+			}
+		}
+		// Produce the aggregated bounds of a function.
+
+		return bounds;
+	}
+
+
 	/**
 	 * Get the block by comparing block name with blocks of several types, including 'Block', 'ELSE' 
 	 * and 'LOOP_EXIT'. 
@@ -187,25 +233,25 @@ public class BoundGraph {
 		String left = prefix + code.operand(0);
 		String right = prefix + code.operand(1);
 		String new_label = code.target;
-		
+
 		// Branch out the block
 		// The left block does not have the name
 		BoundBlock leftBlock = createBasicBlock(new_label, BlockType.IF_BRANCH, c_blk);
 		BoundBlock rightBlock = createBasicBlock(new_label, BlockType.ELSE_BRANCH, c_blk);
-		
+
 		// Add the constraint to the left block
 		leftBlock.addConstraint(neg_c);
 		// Put left and right variable to leftblock
 		leftBlock.addVar(left);
 		leftBlock.addVar(right);
-		
+
 		// Add the constraint to rightblock
 		rightBlock.addConstraint(c);
 		// Put the code to c_blk
 		rightBlock.addCode(code);
 		rightBlock.addVar(left);
 		rightBlock.addVar(right);
-		
+
 
 		// Set the current block to the left
 		setCurrentBlock(leftBlock);
@@ -238,18 +284,18 @@ public class BoundGraph {
 		// Put left and right to 'Vars' set
 		loop_body.addVar(left);
 		loop_body.addVar(right);
-		
-		
-		
+
+
+
 		// put the original constraint to the loop_exit
 		loop_exit.addConstraint(c);
 		// Put the code to loop exit
 		loop_exit.addCode(code);
-		
+
 		// Put left and right variable to Vars
 		loop_exit.addVar(left);
 		loop_exit.addVar(right);
-		
+
 		// Set the current block to be loop body.
 		setCurrentBlock(loop_body);
 	}
@@ -278,7 +324,7 @@ public class BoundGraph {
 	public void addConstraint(Constraint c) {
 		// Add the constraint to current block
 		getCurrentBlock().addConstraint(c);
-		
+
 	}
 
 	/**
@@ -332,6 +378,6 @@ public class BoundGraph {
 		return false;
 	}
 
-	
+
 
 }

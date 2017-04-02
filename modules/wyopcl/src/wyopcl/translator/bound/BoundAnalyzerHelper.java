@@ -32,7 +32,11 @@ final class BoundAnalyzerHelper {
 	private static final String prefix = "_";
 	// Maps of CFGs
 	private static HashMap<FunctionOrMethod, BoundGraph> cfgraphs = new HashMap<FunctionOrMethod, BoundGraph>();
-
+	// Store bound results of each function call
+	//private static HashMap<FunctionOrMethod, >
+	
+	
+	
 	/**
 	 * Checks if the CFGraph of the given function exist.
 	 * 

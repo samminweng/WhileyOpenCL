@@ -61,8 +61,8 @@ public class BoundAnalyzer {
 	private int line;
 	private WyilFile module;
 
-	// Store the bounds for all functions
-	private HashMap<FunctionOrMethod, Bounds> boundMap;
+	// Keep track of bounds for each function call
+	private HashMap<FunctionOrMethod, Set<Bounds>> boundMap;
 
 	private LiveVariablesAnalysis liveAnalyzer; // Live variable analysis
 
@@ -72,7 +72,7 @@ public class BoundAnalyzer {
 	 */
 	public BoundAnalyzer(WyilFile module, LiveVariablesAnalysis liveAnalyzer, Configuration config) {
 		this.module = module;
-		this.boundMap = new HashMap<FunctionOrMethod, Bounds>();
+		this.boundMap = new HashMap<FunctionOrMethod, Set<Bounds>>();
 		this.loop_labels = new HashSet<String>();
 		this.liveAnalyzer = liveAnalyzer;
 		this.isVerbose = config.isVerbose();
@@ -442,29 +442,10 @@ public class BoundAnalyzer {
 			iteration++;
 		}
 
-		// Take the union of all blocks to produce the bounds of a function.
-		BoundBlock exit_blk = graph.getBasicBlock("exit", BlockType.EXIT);
-		// Check if there is any exit block, e.g. main function does not always have exit block 
-		// because it may not have the return 
-		if(exit_blk == null){
-			// Get current block
-			BoundBlock current_block = graph.getCurrentBlock();
-			exit_blk = graph.createBasicBlock("exit", BlockType.EXIT, current_block);
-		}
-
-		// Initialize the bounds
+		BoundBlock exit_blk = graph.createOrGetExitBlock();// Create the EXIT block
 		exit_blk.emptyBounds();
 
-		// Go through all the blocks to produce final output bounds
-		for (BoundBlock blk : graph.getBlockList()) {
-			// Check if the bounds are consistent (lower <= upper)
-			if (blk.isReachable() && blk.getType() != BlockType.EXIT) {
-				// Take union of consistent block bounds
-				exit_blk.unionBounds(blk);
-			}
-		}
-		// Produce the aggregated bounds of a function.
-		Bounds bnds = exit_blk.getBounds();
+		Bounds bnds = graph.produceFinalBound();
 
 		BoundAnalyzerHelper.printBoundsAndSize(function, bnds);
 
@@ -473,8 +454,15 @@ public class BoundAnalyzer {
 			BoundAnalyzerHelper.printCFG(function);
 		}
 
-		// Put the bounds to HashMap
-		boundMap.put(function, bnds);		
+		
+		// Get old bounds
+		if(!boundMap.containsKey(function)){
+			boundMap.put(function, new LinkedHashSet<Bounds>());
+		}
+		Set<Bounds> bnd_set = boundMap.get(function);
+		
+		// Add the bounds to HashMap
+		bnd_set.add(bnds);		
 
 		// Return the inferred bounds of the function
 		return bnds;
@@ -916,12 +904,20 @@ public class BoundAnalyzer {
 	 */
 	private Bounds getBounds(FunctionOrMethod function) {
 		// Get the bounds
-		Bounds bounds = this.boundMap.get(function);
-		// Check if the bound is inferred not. If not, then infer the bounds
-		if (bounds == null) {
-			bounds = this.inferBounds(function);
+		if(!this.boundMap.containsKey(function)){
+			this.inferBounds(function);
 		}
-		return bounds;
+		
+		Set<Bounds> bnd_set = this.boundMap.get(function);
+		// Produce final bound as an union of all bounds
+		Bounds union_bnd = new Bounds();
+		Iterator<Bounds> iterator = bnd_set.iterator();
+		while(iterator.hasNext()){
+			Bounds bnd = iterator.next();
+			union_bnd.union(bnd);
+		}
+		
+		return union_bnd;
 	}
 
 
