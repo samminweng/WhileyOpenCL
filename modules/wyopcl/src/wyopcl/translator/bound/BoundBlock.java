@@ -16,9 +16,9 @@ import wyil.lang.Code;
 import wyil.lang.CodeBlock;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
-import wyopcl.translator.bound.BoundBlock.BlockType;
 import wyopcl.translator.bound.constraint.Constraint;
 import wyopcl.translator.bound.constraint.Range;
+import wyopcl.translator.cfg.BasicBlock.BlockType;
 import wyopcl.translator.copy.LiveVariablesAnalysis;
 
 /**
@@ -47,76 +47,7 @@ public class BoundBlock implements Comparable<BoundBlock> {
 	private BlockType type;
 	private Bounds bounds;
 
-	public enum BlockType {
-		ENTRY(0) {
-			public String toString() {
-				return "ENTRY";
-			}
-		},
-		ASSERT(1) {
-			public String toString() {
-				return "ASSERT";
-			}
-		},
-		ASSUME(2) {
-			public String toString() {
-				return "ASSUME";
-			}
-		},
-		BLOCK(3) {
-			public String toString() {
-				return "BLOCK";
-			}
-		},
-		LOOP_HEADER(4) {
-			public String toString() {
-				return "LOOP_HEADER";
-			}
-		},
-		LOOP_BODY(5) {
-			public String toString() {
-				return "LOOP_BODY";
-			}
-		},
-		LOOP_EXIT(6) {
-			public String toString() {
-				return "LOOP_EXIT";
-			}
-		},
-		IF_BRANCH(7) {
-			public String toString() {
-				return "IF";
-			}
-		},
-		ELSE_BRANCH(8) {
-			public String toString() {
-				return "ELSE";
-			}
-		},
-		// Store function call code only.
-		INVOKE(9){
-			public String toString(){
-				return "INVOKE";
-			}
-		},
-		// Store return code only.
-		RETURN(10){
-			public String toString(){
-				return "RETURN";
-			}
-		},		
-		EXIT(11) {
-			public String toString() {
-				return "EXIT";
-			}
-		};
-		public int order;
-
-		private BlockType(int order) {
-			this.order = order;
-		}
-	}
-
+	
 	/**
 	 * Private constructor
 	 */

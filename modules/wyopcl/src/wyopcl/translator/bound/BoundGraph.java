@@ -16,9 +16,9 @@ import wyil.lang.Codes.If;
 import wyil.lang.Type;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
-import wyopcl.translator.bound.BoundBlock.BlockType;
 import wyopcl.translator.bound.constraint.Assign;
 import wyopcl.translator.bound.constraint.Constraint;
+import wyopcl.translator.cfg.BasicBlock.BlockType;
 import wyopcl.translator.copy.LiveVariablesAnalysis;
 import wyrl.io.SpecLexer.RightAngle;
 

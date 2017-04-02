@@ -17,10 +17,10 @@ import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
-import wyopcl.translator.bound.BoundBlock.BlockType;
 import wyopcl.translator.bound.BoundGraph.STATUS;
 import wyopcl.translator.bound.constraint.Assign;
 import wyopcl.translator.bound.constraint.Range;
+import wyopcl.translator.cfg.BasicBlock.BlockType;
 /**
  * Aims to assist the analyzer to build up CFGraph, propagate bounds
  * between caller and callee, and store and retrieve symbols.  

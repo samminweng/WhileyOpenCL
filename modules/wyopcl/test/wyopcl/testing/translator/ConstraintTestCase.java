@@ -10,7 +10,6 @@ import org.junit.Test;
 import wyopcl.translator.bound.BoundBlock;
 import wyopcl.translator.bound.Bounds;
 import wyopcl.translator.bound.Domain;
-import wyopcl.translator.bound.BoundBlock.BlockType;
 import wyopcl.translator.bound.constraint.Assign;
 import wyopcl.translator.bound.constraint.Const;
 import wyopcl.translator.bound.constraint.Equals;

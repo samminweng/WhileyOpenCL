@@ -24,7 +24,6 @@ import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
-import wyopcl.translator.bound.BoundBlock.BlockType;
 import wyopcl.translator.bound.Bounds.Threshold;
 import wyopcl.translator.bound.constraint.Assign;
 import wyopcl.translator.bound.constraint.Const;
@@ -39,6 +38,7 @@ import wyopcl.translator.bound.constraint.LeftMultiply;
 import wyopcl.translator.bound.constraint.Negate;
 import wyopcl.translator.bound.constraint.NotEquals;
 import wyopcl.translator.bound.constraint.Plus;
+import wyopcl.translator.cfg.BasicBlock.BlockType;
 import wyopcl.translator.copy.LiveVariablesAnalysis;
 
 /***
@@ -944,7 +944,7 @@ public class BoundAnalyzer {
 
 		return false;
 	}
-
+	
 
 
 
