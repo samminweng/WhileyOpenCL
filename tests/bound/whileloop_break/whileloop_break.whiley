@@ -10,6 +10,9 @@ function find(int limit, int item) -> int:
     return r
     
 method main(System.Console sys):
-    int r = find(43, 10)
-    sys.out.println(r)
-
+    int a = find(43, 10) // 'item' variable is uint16_t
+    sys.out.println(a)
+    assert a == 10
+    int b = find(65536, 10) // 'limit' variable is uint32_t because 65536 > uint16_t 
+    sys.out.println(b)
+    assert b == 10

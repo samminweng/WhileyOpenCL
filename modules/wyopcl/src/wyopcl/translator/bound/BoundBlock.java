@@ -356,14 +356,6 @@ public class BoundBlock implements Comparable<BoundBlock> {
 		this.bounds.addDomain(d);
 	}
 
-	public boolean hasChild() {
-		if (childNodes == null) {
-			return false;
-		}
-		return true;
-	}
-
-
 
 	/**
 	 * Iterate through the constraints to infer the bounds

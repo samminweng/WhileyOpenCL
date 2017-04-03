@@ -422,7 +422,7 @@ public class BoundAnalyzer {
 					bnd_after.widenBounds(isNaiveWiden, bnd_before);
 				}			
 				// Check if the blk has any child nodes
-				if(blk.hasChild() == true){
+				if(!blk.isLeaf()){
 					for(BoundBlock child : blk.getChildNodes()){
 						if (!child.getType().equals(BlockType.EXIT) && changed.contains(child) == false) {
 							// If bounds has changed, then add its child nodes to 'changed set'

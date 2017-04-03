@@ -1,18 +1,18 @@
 #include "nestedwhileloop.h"
-int64_t _f_(int64_t limit){
+int64_t _f_(uint32_t limit){
 	int64_t _1 = 0;
-	uint16_t i = 0;
+	uint32_t i = 0;
 	int64_t sum = 0;
-	uint16_t j = 0;
+	uint32_t j = 0;
 	uint16_t _5 = 0;
 	uint16_t _6 = 0;
 	uint16_t _7 = 0;
-	int64_t _8 = 0;
+	uint32_t _8 = 0;
 	int64_t _9 = 0;
 	uint16_t _10 = 0;
-	uint16_t _11 = 0;
+	uint32_t _11 = 0;
 	uint16_t _12 = 0;
-	uint16_t _13 = 0;
+	uint32_t _13 = 0;
 	//const %5 = 0 : int
 	_5 = 0;
 	//assign %2 = %5  : int
@@ -34,7 +34,6 @@ int64_t _f_(int64_t limit){
 			//ifge %4, %0 goto blklab2 : int
 			if(j>=limit){goto blklab2;}
 			//mul %8 = %2, %4 : int
-			_DETECT_INT_MUL_OVERFLOW(i,j,_8);
 			_8=i*j;
 			//add %9 = %3, %8 : int
 			_DETECT_INT_ADD_OVERFLOW(sum,_8,_9);
@@ -70,35 +69,67 @@ blklab0:;
 
 int main(int argc, char** args){
 	int64_t a = 0;
-	int64_t _2 = 0;
-	uint16_t _3 = 0;
-	void* _4;
-	int64_t _6 = 0;
-	//const %3 = 43 : int
-	_3 = 43;
-	//invoke (%2) = (%3) nestedwhileloop:f : function(int)->(int)
+	int64_t b = 0;
+	int64_t _3 = 0;
+	uint16_t _4 = 0;
+	void* _5;
+	int64_t _7 = 0;
+	int64_t _8 = 0;
+	uint32_t _9 = 0;
+	void* _10;
+	int64_t _12 = 0;
+	//const %4 = 43 : int
+	_4 = 43;
+	//invoke (%3) = (%4) nestedwhileloop:f : function(int)->(int)
 	{
-		_2 = _f_(_3);
+		_3 = _f_(_4);
 	}
-	//assign %1 = %2  : int
-	a = _2;
-	//fieldload %4 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %5 = %4 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//indirectinvoke () = %5 (%1) : method(any)->()
+	//assign %1 = %3  : int
+	a = _3;
+	//fieldload %5 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %6 = %5 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %6 (%1) : method(any)->()
 	{
 		printf("%"PRId64"\n", a);
 	}
 	//assert
 	{
-		//const %6 = 100 : int
-		_6 = 100;
-		//ifeq %1, %6 goto blklab4 : int
-		if(a==_6){goto blklab4;}
+		//const %7 = 815409 : int
+		_7 = 815409;
+		//ifeq %1, %7 goto blklab4 : int
+		if(a==_7){goto blklab4;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
 //.blklab4
 blklab4:;
+	//assert
+	}
+	//const %9 = 65536 : int
+	_9 = 65536;
+	//invoke (%8) = (%9) nestedwhileloop:f : function(int)->(int)
+	{
+		_8 = _f_(_9);
+	}
+	//assign %2 = %8  : int
+	b = _8;
+	//fieldload %10 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %11 = %10 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %11 (%2) : method(any)->()
+	{
+		printf("%"PRId64"\n", b);
+	}
+	//assert
+	{
+		//const %12 = 4611545282012774400 : int
+		_12 = 4611545282012774400;
+		//ifeq %2, %12 goto blklab5 : int
+		if(b==_12){goto blklab5;}
+		//fail
+		fprintf(stderr,"fail");
+		exit(-1);
+//.blklab5
+blklab5:;
 	//assert
 	}
 	//return

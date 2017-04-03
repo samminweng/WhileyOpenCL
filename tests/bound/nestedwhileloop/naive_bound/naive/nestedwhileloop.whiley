@@ -13,5 +13,7 @@ function f(int limit) -> int:
 method main(System.Console sys):
 	int a = f(43)
 	sys.out.println(a)
-	assert a == 100
-
+	assert a == 815409
+	int b = f(65536)
+	sys.out.println(b)
+	assert b == 4611545282012774400

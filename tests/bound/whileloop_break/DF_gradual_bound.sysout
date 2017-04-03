@@ -1,490 +1,13 @@
 WARNING: version numbering unavailable
-Parsed 1 source file(s). ...................................................... [105ms+1mb]
-Typed 1 source file(s). ....................................................... [132ms+1mb]
-Generated code for 1 source file(s). ............................................... [33ms]
-[./whileloop_break.whiley] applied definite assignment check ........................ [3ms]
-[./whileloop_break.whiley] applied module check ................................. [2ms+1mb]
-[./whileloop_break.whiley] applied loop variants ................................ [0ms+1mb]
-[./whileloop_break.whiley] applied coercion check ................................... [1ms]
-Whiley => Wyil: compiled 1 file(s) ............................................ [316ms-1mb]
 === Bound Analysis on main function ===
-main.0 [	const %3 = 43 : int]
-main.1 [	const %4 = 10 : int]
-main.2 [	invoke (%2) = (%3, %4) whileloop_break:find : function(int,int)->(int)]
-### Iteration 0 ### 
-'2' blocks in queue : [ENTRY][BLOCK]
-code [BLOCK] 
--------------------------------
-0:const %3 = 43 : int
-1:const %4 = 10 : int
--------------------------------
-Vars [_3, _4]
-DeadVars []
-Constraints [_3:=43, _4:=10]
-
-	domain(_3)	= [43..43]	
-	domain(_4)	= [10..10]	
-IsReachable=true
-isChanged=true
-### Iteration 1 ### 
-'1' blocks in queue : [ENTRY]
-entry [ENTRY] 
-Vars []
-DeadVars []
-Constraints []
-
-IsReachable=true
-isChanged=false
 =================================
 
 Bound Analysis of 'main' function:
-	domain(_3)	=[43..43]
-	domain(_4)	=[10..10]
+	domain(_4)	=[43..43]
+	domain(_5)	=[10..10]
 Consistency=true
 
 =================================
-find.0 [	const %4 = 0 : int]
-find.1 [	assign %3 = %4  : int]
-find.2 [	loop (%3, %5, %6, %7)]
-find.3 [	invariant]
-find.4 [	ifge %3, %0 goto blklab0 : int]
-find.5 [	ifne %3, %1 goto blklab3 : int]
-find.6 [	goto blklab0]
-find.7 [.blklab3]
-find.8 [	const %6 = 1 : int]
-find.9 [	add %7 = %3, %6 : int]
-find.10 [	assign %3 = %7  : int]
-find.11 [.blklab1]
-find.12 [.blklab0]
-find.13 [	return %3]
-find.14 [	return]
-### Iteration 0 ### 
-'2' blocks in queue : [ENTRY][BLOCK]
-code [BLOCK] 
--------------------------------
-0:const %4 = 0 : int
-1:assign %3 = %4  : int
--------------------------------
-Vars [_4, _3, _0, _1]
-DeadVars [_4]
-Constraints [_4:=0, _3:=_4, _0:=[43..43], _1:=[10..10]]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [0..0]	
-	domain(_4)	= [0..0]	
-IsReachable=true
-isChanged=true
-### Iteration 1 ### 
-'2' blocks in queue : [ENTRY][LOOP_HEADER]
-blklab0 [LOOP_HEADER] 
-Vars []
-DeadVars []
-Constraints []
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [0..0]	
-IsReachable=true
-isChanged=true
-### Iteration 2 ### 
-'3' blocks in queue : [ENTRY][LOOP_BODY][LOOP_EXIT]
-blklab0 [LOOP_EXIT] 
--------------------------------
-0:ifge %3, %0 goto blklab0 : int
--------------------------------
-Vars [_3, _0]
-DeadVars []
-Constraints [_3>=_0]
-
-	domain(_0)	= [empty..empty]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-IsReachable=false
-isChanged=false
-### Iteration 3 ### 
-'2' blocks in queue : [ENTRY][LOOP_BODY]
-blklab0 [LOOP_BODY] 
-Vars [_3, _0]
-DeadVars []
-Constraints [_3<_0]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [0..0]	
-IsReachable=true
-isChanged=true
-### Iteration 4 ### 
-'3' blocks in queue : [ENTRY][IF][ELSE]
-blklab3 [ELSE] 
--------------------------------
-0:ifne %3, %1 goto blklab3 : int
-1:const %6 = 1 : int
-2:add %7 = %3, %6 : int
-3:assign %3 = %7  : int
--------------------------------
-Vars [_3, _1, _6, _7]
-DeadVars [_6, _7]
-Constraints [_3!=_1, _6:=1, _7 = _3+_6, _3:=_7]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [1..1]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..1]	
-IsReachable=true
-isChanged=true
-### Iteration 5 ### 
-'3' blocks in queue : [ENTRY][IF][BLOCK]
-blklab1 [BLOCK] 
-Vars []
-DeadVars []
-Constraints []
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [1..1]	
-IsReachable=true
-isChanged=true
-### Iteration 6 ### 
-'3' blocks in queue : [ENTRY][IF][LOOP_HEADER]
-blklab0 [LOOP_HEADER] 
-Vars []
-DeadVars []
-Constraints []
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [0..1]		 // lb_c=0 ub_c=1	
-IsReachable=true
-isChanged=true
-### Iteration 7 ### 
-'4' blocks in queue : [ENTRY][IF][LOOP_BODY][LOOP_EXIT]
-blklab0 [LOOP_EXIT] 
--------------------------------
-0:ifge %3, %0 goto blklab0 : int
--------------------------------
-Vars [_3, _0]
-DeadVars []
-Constraints [_3>=_0]
-
-	domain(_0)	= [empty..empty]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-IsReachable=false
-isChanged=false
-### Iteration 8 ### 
-'3' blocks in queue : [ENTRY][IF][LOOP_BODY]
-blklab0 [LOOP_BODY] 
-Vars [_3, _0]
-DeadVars []
-Constraints [_3<_0]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [0..1]	
-IsReachable=true
-isChanged=true
-### Iteration 9 ### 
-'3' blocks in queue : [ENTRY][IF][ELSE]
-blklab3 [ELSE] 
--------------------------------
-0:ifne %3, %1 goto blklab3 : int
-1:const %6 = 1 : int
-2:add %7 = %3, %6 : int
-3:assign %3 = %7  : int
--------------------------------
-Vars [_3, _1, _6, _7]
-DeadVars [_6, _7]
-Constraints [_3!=_1, _6:=1, _7 = _3+_6, _3:=_7]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [1..2]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..2]	
-IsReachable=true
-isChanged=true
-### Iteration 10 ### 
-'3' blocks in queue : [ENTRY][IF][BLOCK]
-blklab1 [BLOCK] 
-Vars []
-DeadVars []
-Constraints []
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [1..2]	
-IsReachable=true
-isChanged=true
-### Iteration 11 ### 
-'3' blocks in queue : [ENTRY][IF][LOOP_HEADER]
-blklab0 [LOOP_HEADER] 
-Vars []
-DeadVars []
-Constraints []
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [0..2]		 // lb_c=0 ub_c=2	
-IsReachable=true
-isChanged=true
-### Iteration 12 ### 
-'4' blocks in queue : [ENTRY][IF][LOOP_BODY][LOOP_EXIT]
-blklab0 [LOOP_EXIT] 
--------------------------------
-0:ifge %3, %0 goto blklab0 : int
--------------------------------
-Vars [_3, _0]
-DeadVars []
-Constraints [_3>=_0]
-
-	domain(_0)	= [empty..empty]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [empty..empty]	
-IsReachable=false
-isChanged=false
-### Iteration 13 ### 
-'3' blocks in queue : [ENTRY][IF][LOOP_BODY]
-blklab0 [LOOP_BODY] 
-Vars [_3, _0]
-DeadVars []
-Constraints [_3<_0]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [0..2]	
-IsReachable=true
-isChanged=true
-### Iteration 14 ### 
-'3' blocks in queue : [ENTRY][IF][ELSE]
-blklab3 [ELSE] 
--------------------------------
-0:ifne %3, %1 goto blklab3 : int
-1:const %6 = 1 : int
-2:add %7 = %3, %6 : int
-3:assign %3 = %7  : int
--------------------------------
-Vars [_3, _1, _6, _7]
-DeadVars [_6, _7]
-Constraints [_3!=_1, _6:=1, _7 = _3+_6, _3:=_7]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [1..3]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..3]	
-IsReachable=true
-isChanged=true
-### Iteration 15 ### 
-'3' blocks in queue : [ENTRY][IF][BLOCK]
-blklab1 [BLOCK] 
-Vars []
-DeadVars []
-Constraints []
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [1..3]	
-IsReachable=true
-isChanged=true
-### Iteration 16 ### 
-'3' blocks in queue : [ENTRY][IF][LOOP_HEADER]
-blklab0 [LOOP_HEADER] 
-Vars []
-DeadVars []
-Constraints []
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [0..32767]	
-IsReachable=true
-isChanged=true
-### Iteration 17 ### 
-'4' blocks in queue : [ENTRY][IF][LOOP_BODY][LOOP_EXIT]
-blklab0 [LOOP_EXIT] 
--------------------------------
-0:ifge %3, %0 goto blklab0 : int
--------------------------------
-Vars [_3, _0]
-DeadVars []
-Constraints [_3>=_0]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [43..32767]	
-IsReachable=true
-isChanged=true
-### Iteration 18 ### 
-'4' blocks in queue : [ENTRY][IF][LOOP_BODY][RETURN]
-return_3 [RETURN] 
--------------------------------
-0:return %3
--------------------------------
-Vars [_3]
-DeadVars []
-Constraints [return:=_3]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [43..32767]	
-	domain(return)	= [43..32767]	
-IsReachable=true
-isChanged=true
-### Iteration 19 ### 
-'3' blocks in queue : [ENTRY][IF][LOOP_BODY]
-blklab0 [LOOP_BODY] 
-Vars [_3, _0]
-DeadVars []
-Constraints [_3<_0]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [0..42]	
-IsReachable=true
-isChanged=true
-### Iteration 20 ### 
-'3' blocks in queue : [ENTRY][IF][ELSE]
-blklab3 [ELSE] 
--------------------------------
-0:ifne %3, %1 goto blklab3 : int
-1:const %6 = 1 : int
-2:add %7 = %3, %6 : int
-3:assign %3 = %7  : int
--------------------------------
-Vars [_3, _1, _6, _7]
-DeadVars [_6, _7]
-Constraints [_3!=_1, _6:=1, _7 = _3+_6, _3:=_7]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [1..43]	
-	domain(_6)	= [1..1]	
-	domain(_7)	= [1..43]	
-IsReachable=true
-isChanged=true
-### Iteration 21 ### 
-'3' blocks in queue : [ENTRY][IF][BLOCK]
-blklab1 [BLOCK] 
-Vars []
-DeadVars []
-Constraints []
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [1..43]	
-IsReachable=true
-isChanged=true
-### Iteration 22 ### 
-'3' blocks in queue : [ENTRY][IF][LOOP_HEADER]
-blklab0 [LOOP_HEADER] 
-Vars []
-DeadVars []
-Constraints []
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [0..43]	
-IsReachable=true
-isChanged=true
-### Iteration 23 ### 
-'4' blocks in queue : [ENTRY][IF][LOOP_BODY][LOOP_EXIT]
-blklab0 [LOOP_EXIT] 
--------------------------------
-0:ifge %3, %0 goto blklab0 : int
--------------------------------
-Vars [_3, _0]
-DeadVars []
-Constraints [_3>=_0]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [43..43]	
-IsReachable=true
-isChanged=true
-### Iteration 24 ### 
-'4' blocks in queue : [ENTRY][IF][LOOP_BODY][RETURN]
-return_3 [RETURN] 
--------------------------------
-0:return %3
--------------------------------
-Vars [_3]
-DeadVars []
-Constraints [return:=_3]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [43..43]	
-	domain(return)	= [43..43]	
-IsReachable=true
-isChanged=true
-### Iteration 25 ### 
-'3' blocks in queue : [ENTRY][IF][LOOP_BODY]
-blklab0 [LOOP_BODY] 
-Vars [_3, _0]
-DeadVars []
-Constraints [_3<_0]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [0..42]	
-IsReachable=true
-isChanged=false
-### Iteration 26 ### 
-'2' blocks in queue : [ENTRY][IF]
-blklab3 [IF] 
-Vars [_3, _1]
-DeadVars []
-Constraints [_3==_1]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [10..10]	
-IsReachable=true
-isChanged=true
-### Iteration 27 ### 
-'2' blocks in queue : [ENTRY][LOOP_EXIT]
-blklab0 [LOOP_EXIT] 
--------------------------------
-0:ifge %3, %0 goto blklab0 : int
--------------------------------
-Vars [_3, _0]
-DeadVars []
-Constraints [_3>=_0]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [43..43]	
-IsReachable=true
-isChanged=false
-### Iteration 28 ### 
-'1' blocks in queue : [ENTRY]
-entry [ENTRY] 
-Vars [_0, _1]
-DeadVars []
-Constraints [_0:=[43..43], _1:=[10..10]]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-IsReachable=true
-isChanged=true
-### Iteration 29 ### 
-'1' blocks in queue : [BLOCK]
-code [BLOCK] 
--------------------------------
-0:const %4 = 0 : int
-1:assign %3 = %4  : int
--------------------------------
-Vars [_4, _3, _0, _1]
-DeadVars [_4]
-Constraints [_4:=0, _3:=_4, _0:=[43..43], _1:=[10..10]]
-
-	domain(_0)	= [43..43]	
-	domain(_1)	= [10..10]	
-	domain(_3)	= [0..0]	
-	domain(_4)	= [0..0]	
-IsReachable=true
-isChanged=false
 =================================
 
 Bound Analysis of 'find' function:
@@ -498,47 +21,74 @@ Bound Analysis of 'find' function:
 Consistency=true
 
 =================================
-main.3 [	assign %1 = %2  : int]
-main.4 [	fieldload %5 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
-main.5 [	fieldload %6 = %5 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
-main.6 [	indirectinvoke () = %6 (%1) : method(any)->()]
-main.7 [	return]
-### Iteration 0 ### 
-'2' blocks in queue : [ENTRY][BLOCK]
-code [BLOCK] 
--------------------------------
-0:const %3 = 43 : int
-1:const %4 = 10 : int
-2:assign %1 = %2  : int
--------------------------------
-Vars [_3, _4, _2, _1]
-DeadVars [_3, _4, _2, _1]
-Constraints [_3:=43, _4:=10, _2:=[43..43], _1:=_2]
-
-	domain(_1)	= [43..43]	
-	domain(_2)	= [43..43]	
-	domain(_3)	= [43..43]	
-	domain(_4)	= [10..10]	
-IsReachable=true
-isChanged=true
-### Iteration 1 ### 
-'1' blocks in queue : [ENTRY]
-entry [ENTRY] 
-Vars []
-DeadVars []
-Constraints []
-
-IsReachable=true
-isChanged=false
 =================================
 
 Bound Analysis of 'main' function:
-	domain(r)	=[43..43]
-	domain(_2)	=[43..43]
+	domain(a)	=[43..43]
+	domain(_10)	=[65536..65536]
+	domain(_11)	=[10..10]
 	domain(_3)	=[43..43]
-	domain(_4)	=[10..10]
+	domain(_4)	=[43..43]
+	domain(_5)	=[10..10]
+Consistency=true
+
+=================================
+=================================
+
+Bound Analysis of 'find' function:
+	domain(limit)	=[65536..65536]
+	domain(item)	=[10..10]
+	domain(r)	=[0..65536]
+	domain(_4)	=[0..0]
+	domain(_6)	=[1..1]
+	domain(_7)	=[1..65536]
+	domain(return)	=[65536..65536]
+Consistency=true
+
+=================================
+=================================
+
+Bound Analysis of 'main' function:
+	domain(a)	=[43..43]
+	domain(_10)	=[65536..65536]
+	domain(_11)	=[10..10]
+	domain(b)	=[65536..65536]
+	domain(_3)	=[43..43]
+	domain(_4)	=[43..43]
+	domain(_5)	=[10..10]
+	domain(_9)	=[65536..65536]
+Consistency=true
+
+=================================
+Final bounds of find :
+=================================
+
+Bound Analysis of 'find' function:
+	domain(limit)	=[43..65536]
+	domain(item)	=[10..10]
+	domain(r)	=[0..65536]
+	domain(_4)	=[0..0]
+	domain(_6)	=[1..1]
+	domain(_7)	=[1..65536]
+	domain(return)	=[43..65536]
+Consistency=true
+
+=================================
+Final bounds of main :
+=================================
+
+Bound Analysis of 'main' function:
+	domain(a)	=[43..43]
+	domain(_10)	=[65536..65536]
+	domain(_11)	=[10..10]
+	domain(b)	=[65536..65536]
+	domain(_3)	=[43..43]
+	domain(_4)	=[43..43]
+	domain(_5)	=[10..10]
+	domain(_9)	=[65536..65536]
 Consistency=true
 
 =================================
 
 Bound analysis completed. File: whileloop_break
+Code Generation completed. File: whileloop_break.c, whileloop_break.h
