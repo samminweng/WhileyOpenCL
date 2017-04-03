@@ -227,7 +227,7 @@ public class BasicBlock implements Comparable<BasicBlock> {
 	 * 
 	 * @return
 	 */
-	public List<BasicBlock> getChildNodes() {
+	public List<? extends BasicBlock> getChildNodes() {
 		return childNodes;
 	}
 

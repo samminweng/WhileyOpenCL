@@ -3,23 +3,18 @@ package wyopcl.translator.bound;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 import wyil.attributes.VariableDeclarations;
 import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Codes;
 import wyil.lang.Type;
-import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
-import wyopcl.Configuration;
 import wyopcl.translator.bound.BoundGraph.STATUS;
-import wyopcl.translator.bound.constraint.Assign;
 import wyopcl.translator.bound.constraint.Range;
+import wyopcl.translator.cfg.BasicBlock;
 import wyopcl.translator.cfg.BasicBlock.BlockType;
 /**
  * Aims to assist the analyzer to build up CFGraph, propagate bounds
@@ -292,7 +287,7 @@ final class BoundAnalyzerHelper {
 		List<BoundBlock> blks = graph.getBlockList();
 		for (BoundBlock blk : blks) {
 			if (!blk.isLeaf()) {
-				for (BoundBlock child : blk.getChildNodes()) {
+				for (BasicBlock child : blk.getChildNodes()) {
 					dot_string += "\"" + blk.getLabel() + " [" + blk.getType() + "]\"->\"" + child.getLabel() + " [" + child.getType() + "]\";\n";
 				}
 			}

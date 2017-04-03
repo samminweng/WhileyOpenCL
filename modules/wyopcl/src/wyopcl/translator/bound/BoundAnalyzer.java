@@ -11,8 +11,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
-
-import wyil.attributes.VariableDeclarations;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.ArrayGenerator;
@@ -37,7 +35,6 @@ import wyopcl.translator.bound.constraint.LessThanEquals;
 import wyopcl.translator.bound.constraint.LeftMultiply;
 import wyopcl.translator.bound.constraint.Negate;
 import wyopcl.translator.bound.constraint.NotEquals;
-import wyopcl.translator.bound.constraint.Plus;
 import wyopcl.translator.cfg.BasicBlock.BlockType;
 import wyopcl.translator.copy.LiveVariablesAnalysis;
 
@@ -423,7 +420,7 @@ public class BoundAnalyzer {
 				}			
 				// Check if the blk has any child nodes
 				if(!blk.isLeaf()){
-					for(BoundBlock child : blk.getChildNodes()){
+					for(BoundBlock child : (List<BoundBlock>)blk.getChildNodes()){
 						if (!child.getType().equals(BlockType.EXIT) && changed.contains(child) == false) {
 							// If bounds has changed, then add its child nodes to 'changed set'
 							changed.add(child);

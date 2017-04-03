@@ -5,22 +5,13 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Deque;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import wyil.lang.Codes.If;
 import wyil.lang.Type;
-import wyil.lang.WyilFile.FunctionOrMethod;
-import wyopcl.Configuration;
-import wyopcl.translator.bound.constraint.Assign;
 import wyopcl.translator.bound.constraint.Constraint;
+import wyopcl.translator.cfg.BasicBlock;
 import wyopcl.translator.cfg.BasicBlock.BlockType;
-import wyopcl.translator.copy.LiveVariablesAnalysis;
-import wyrl.io.SpecLexer.RightAngle;
 
 /**
  * Creates, retrieves and stores basic blocks for a function (bound analysis only).
@@ -340,7 +331,7 @@ public class BoundGraph {
 
 		for(BoundBlock blk: blks){
 			if(!blk.isLeaf()){
-				for(BoundBlock child: blk.getChildNodes()){
+				for(BasicBlock child: blk.getChildNodes()){
 					dot_string += "\""+blk.getLabel()+" [" +blk.getType()+"]\"->\""+ child.getLabel() +" ["+child.getType() + "]\";\n";
 				}
 			}
