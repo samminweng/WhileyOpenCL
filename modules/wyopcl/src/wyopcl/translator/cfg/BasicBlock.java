@@ -19,6 +19,8 @@ import wyil.lang.CodeBlock;
  *
  */
 public class BasicBlock implements Comparable<BasicBlock> {
+	// Prefix of the variable
+	protected final String prefix = "_";
 	private List<Code> codeBlock;// A list of byte-code for a block
 	
 	private List<BasicBlock> childNodes = null;// A list of child nodes
@@ -280,13 +282,23 @@ public class BasicBlock implements Comparable<BasicBlock> {
 		return false;
 	}
 
-	@Override
+	
 	/**
 	 * Implements for sorting the elements in the list.
 	 */
+	@Override
 	public int compareTo(BasicBlock blk) {
 		return this.type.order - blk.type.order;
 	}
 
+	/**
+	 * Extract the register from the variable name 
+	 * 
+	 * @param var
+	 * @return
+	 */
+	public int toRegister(String var){
+		return Integer.parseInt(var.split(prefix)[1]);
+	}
 	
 }

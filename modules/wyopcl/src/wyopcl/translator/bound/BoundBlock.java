@@ -3,16 +3,19 @@ package wyopcl.translator.bound;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import wyil.lang.Code;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.bound.constraint.Constraint;
 import wyopcl.translator.bound.constraint.Range;
 import wyopcl.translator.cfg.BasicBlock;
+import wyopcl.translator.copy.LiveVariables;
 import wyopcl.translator.copy.LiveVariablesAnalysis;
 
 /**
@@ -25,12 +28,11 @@ import wyopcl.translator.copy.LiveVariablesAnalysis;
  *
  */
 public class BoundBlock extends BasicBlock {
-	// Prefix of the variable
-	private final String prefix = "_";
+
 	// The set of dead variable, that will be passed onto the parent block
-	private LinkedHashSet<String> deadVars;
+	private LinkedHashSet<Integer> deadVars;
 	// The set of variables, which will be used in the block
-	private LinkedHashSet<String> vars; 
+	private LinkedHashSet<Integer> vars; 
 
 	private LinkedHashSet<Code> codes;// Store all the byte-code for a block, preserving insertion order
 	private List<Constraint> constraints;
@@ -50,8 +52,8 @@ public class BoundBlock extends BasicBlock {
 		this.bounds = new Bounds();
 		this.constraints = new ArrayList<Constraint>();
 		this.codes = new LinkedHashSet<Code>();
-		this.deadVars = new LinkedHashSet<String>();
-		this.vars = new LinkedHashSet<String>();
+		this.deadVars = new LinkedHashSet<Integer>();
+		this.vars = new LinkedHashSet<Integer>();
 	}
 
 	/**
@@ -176,10 +178,10 @@ public class BoundBlock extends BasicBlock {
 			}
 			str += "\n-------------------------------";
 		}
-		// Display the vars set,  bounds and constraints.
-		str += String.format("%n%s %s", "Vars", this.vars);
+		// Display the vars set,  bounds and constraints.	
+		str += String.format("%n%s %s", "Vars", this.vars.stream().map(var ->  prefix + var).collect(Collectors.toList()));
 		// Display the dead vars set 
-		str += String.format("%n%s %s", "DeadVars", this.deadVars);
+		str += String.format("%n%s %s", "DeadVars", this.deadVars.stream().map(var ->  prefix + var).collect(Collectors.toList()));
 		// Print out the constraints
 		str += String.format("%n%s %s%n", "Constraints", this.constraints);
 		// Print out the bounds
@@ -244,7 +246,7 @@ public class BoundBlock extends BasicBlock {
 	 * @param var
 	 */
 	public void addVar(String var) {
-		this.vars.add(var);		
+		this.vars.add(this.toRegister(var));		
 	}
 
 	/**
@@ -253,7 +255,7 @@ public class BoundBlock extends BasicBlock {
 	 * @return
 	 */
 	public boolean isDeadVars(String var){
-		return this.deadVars.contains(var);
+		return this.deadVars.contains(this.toRegister(var));
 	}
 
 
@@ -286,28 +288,44 @@ public class BoundBlock extends BasicBlock {
 		}
 	}
 	/**
-	 * Go through each variable in Vars. If the variable is dead at the last code of the block
-	 * then it is put to dead variables
+	 * Compute dead variables of given block.
+	 * 
+	 * <pre>DeadVars = Vars - LiveVars</pre>
+	 * 
 	 * 
 	 * @param liveAnalyzer
 	 * @param function
+	 * 
+	 * TODO: use the above equation to compute dead variables, and replace the exiting ones
+	 * 
 	 */
 	public void computeDeadVars(LiveVariablesAnalysis liveAnalyzer, FunctionOrMethod function) {
 		// For an empty block, no dead variables
+		/*if(this.vars.isEmpty()){
+			return;
+		}
+		
+		// Get live variables of the current block in a function
+		HashSet<Integer> liveVars = liveAnalyzer.getLiveVars(function, this);
+		
+		this.deadVars.clear();
+		this.deadVars.addAll(this.vars); // deadVars = Vars
+		this.deadVars.removeAll(liveVars); // deadVars - liveVars
+		*/
+		
 		if(this.codes.isEmpty()){
 			return;
 		}
+		
 		// Get the last code
 		Code last_code = (Code)this.codes.toArray()[this.codes.size()-1];
-		
-		for(String var: this.vars){
-			// Extract register from variable
-			int register = Integer.parseInt(var.split(prefix)[1]);
+		// Go through each variable
+		for(int r: this.vars){
 			// Check if the register is live after last code 
-			boolean islive = liveAnalyzer.isLive(register, last_code, function);
+			boolean islive = liveAnalyzer.isLive(r, last_code, function);
 			if(islive == false){
 				// Put the dead variable to 'DeadVars' set.
-				this.deadVars.add(var);
+				this.deadVars.add(r);
 			}
 		}
 	}

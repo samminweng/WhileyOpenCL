@@ -27,6 +27,7 @@ import wyil.lang.Codes.Return;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
+import wyopcl.translator.bound.BoundBlock;
 import wyopcl.translator.cfg.BasicBlock;
 import wyopcl.translator.cfg.BasicBlock.BlockType;
 import wyopcl.translator.cfg.CFGraph;
@@ -40,7 +41,7 @@ import wyopcl.translator.cfg.CFGraph.STATUS;
  *
  */
 public abstract class Analyzer {
-	// private static final String prefix = "%";
+	private static final String prefix = "_";
 	protected Configuration config;
 	// Boolean flag indicates whether to print out debugging messages
 	public boolean isVerbose;
@@ -168,9 +169,11 @@ public abstract class Analyzer {
 			}
 			
 		}
-
 		return null;
 	}
+	
+	
+	
 
 	/**
 	 * Gets the list of basic blocks for a function.
@@ -568,8 +571,9 @@ public abstract class Analyzer {
 		BasicBlock blk = graph.getCurrentBlock();
 		// Check if there is any return value. If no, no needs of making a "Return" block.
 		if (code.operands().length > 0) {
+			String label = "return"+prefix+code.operand(0);
 			// Create the return block, using target as the label.
-			blk = graph.createBasicBlock(this.getActualVarName(code.operand(0), function), BlockType.RETURN, blk);
+			blk = graph.createBasicBlock(label, BlockType.RETURN, blk);
 			// Add the code to current block.
 			blk.addCode(code);
 			// Set current block.
@@ -602,7 +606,7 @@ public abstract class Analyzer {
 		if (var_name == null) {
 			// If it is a temporary variable at byte-code, then print out
 			// the register
-			var_name = "%" + register;
+			var_name = prefix + register;
 		}
 		return var_name;
 	}
