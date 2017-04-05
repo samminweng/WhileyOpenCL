@@ -1,4 +1,6 @@
 #include "Util.h"
 #include "WyRT.h"
-int64_t _f_(uint32_t limit);
+//	domain(_0)	= [43..257]	
+int64_t _f_(uint16_t limit);
+//
 int main(int argc, char** args);

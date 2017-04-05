@@ -1,4 +1,4 @@
-package wyopcl.translator.copy;
+package wyopcl.translator;
 
 import java.util.HashMap;
 import java.util.HashSet;

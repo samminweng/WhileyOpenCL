@@ -1,4 +1,4 @@
-package wyopcl.translator.copy;
+package wyopcl.translator;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,7 +23,6 @@ import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.util.dfa.BackwardFlowAnalysis;
 import wyopcl.Configuration;
-import wyopcl.translator.Analyzer;
 import wyopcl.translator.bound.BoundBlock;
 import wyopcl.translator.cfg.BasicBlock;
 import wyopcl.translator.cfg.CFGraph;

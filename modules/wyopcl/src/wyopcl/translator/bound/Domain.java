@@ -308,6 +308,20 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	}
 
 	/**
+	 * Check if lower or upper bound is infinity
+	 * 
+	 * @return 
+	 */
+	public boolean isUnbound(){
+		if(isEmpty()){
+			return true;
+		}
+		
+		return (this.lower_bound == null | this.upper_bound == null);
+	}
+	
+	
+	/**
 	 * Intersect current domain with passing domain. 
 	 * For example, 
 	 * Current Domain = [0 ... 10]

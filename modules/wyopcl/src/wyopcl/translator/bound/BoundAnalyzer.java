@@ -22,6 +22,7 @@ import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
+import wyopcl.translator.LiveVariablesAnalysis;
 import wyopcl.translator.bound.Bounds.Threshold;
 import wyopcl.translator.bound.constraint.Assign;
 import wyopcl.translator.bound.constraint.Const;
@@ -36,7 +37,6 @@ import wyopcl.translator.bound.constraint.LeftMultiply;
 import wyopcl.translator.bound.constraint.Negate;
 import wyopcl.translator.bound.constraint.NotEquals;
 import wyopcl.translator.cfg.BasicBlock.BlockType;
-import wyopcl.translator.copy.LiveVariablesAnalysis;
 
 /***
  * A class is to store all the constraints, produced from the wyil file, with
@@ -896,12 +896,12 @@ public class BoundAnalyzer {
 
 
 	/**
-	 * 
+	 * Take union of bound of all function calls
 	 * 
 	 * @param function
 	 * @return
 	 */
-	private Bounds computeUnionBounds(FunctionOrMethod function) {
+	public Bounds computeUnionBounds(FunctionOrMethod function) {
 		// Get union bounds from 
 		if(!this.unionBound.containsKey(function)){
 			// Get the bounds
@@ -931,30 +931,19 @@ public class BoundAnalyzer {
 
 
 
+	
 	/**
-	 * Check the bounds of given register is +/- infinity 
-	 * 
+	 * Obtain the inferred domain of given register in the function
 	 * 
 	 * @param register
 	 * @param function
-	 * @return true for unbounded register.
+	 * @return
 	 */
-	public boolean isUnBounded(int register, FunctionOrMethod function) {
+	public Domain getInferredDomain(int register, FunctionOrMethod function) {
 		// Get the bounds
 		Bounds bounds = computeUnionBounds(function);
-
-		// Get the domain of register
-		BigInteger l_bnd = bounds.getLower(prefix + register);
-		BigInteger u_bnd = bounds.getUpper(prefix + register);
-
-		if(l_bnd == null || u_bnd == null){
-			return true;
-		}
-
-		return false;
+		return bounds.getDomain(prefix+register);	
 	}
-	
-
 
 
 	/**
@@ -980,26 +969,21 @@ public class BoundAnalyzer {
 	 * @return
 	 */
 	public String suggestIntegerType(int register, FunctionOrMethod function){
-
-		// Get the bounds
-		Bounds bounds = computeUnionBounds(function);
-
 		// Get the domain of register
-		BigInteger l_bnd = bounds.getLower(prefix+register);
-		BigInteger u_bnd = bounds.getUpper(prefix+register);
+		Domain d = getInferredDomain(register, function);
 		// Check the register is unbounded or not.
-		if(l_bnd != null && u_bnd != null){
-			// Check lower bound >= 0
-			if(l_bnd.compareTo(BigInteger.ZERO)>=0){
-				// Used unsigned integer types
+		if(!d.isUnbound()){
+			// Use unsigned type if lower bound >= 0
+			if(d.getLower().compareTo(BigInteger.ZERO)>=0){
+				// Check upper bound 
 
 				// Unsigned 16-bit integer
-				if(u_bnd.compareTo(Threshold._UI16_MAX.getValue())<=0){
+				if(d.getUpper().compareTo(Threshold._UI16_MAX.getValue())<=0){
 					return "uint16_t";
 				}
 
 				// Unsigned 32-bit integer
-				if(u_bnd.compareTo(Threshold._UI32_MAX.getValue())<=0){
+				if(d.getUpper().compareTo(Threshold._UI32_MAX.getValue())<=0){
 					return "uint32_t";
 				}
 
@@ -1007,15 +991,16 @@ public class BoundAnalyzer {
 				return "uint64_t";
 
 			}else{
-				// 16-bit integers 
-				if(l_bnd.compareTo(Threshold._I16_MIN.getValue())>=0
-						&& u_bnd.compareTo(Threshold._I16_MAX.getValue())<=0){
+				// In the case of signed integers
+				// Limit to 16-bit integers (16_min < domain < 16_max)  
+				if(d.getLower().compareTo(Threshold._I16_MIN.getValue())>=0
+						&& d.getUpper().compareTo(Threshold._I16_MAX.getValue())<=0){
 					return "int16_t";
 				}
 
-				// 32-bit integers
-				if(l_bnd.compareTo(Threshold._I32_MIN.getValue())>=0
-						&& u_bnd.compareTo(Threshold._I32_MAX.getValue())<=0){
+				// Limit to 32-bit integers (32_min < domain < 32_max)
+				if(d.getLower().compareTo(Threshold._I32_MIN.getValue())>=0
+						&& d.getUpper().compareTo(Threshold._I32_MAX.getValue())<=0){
 					return "int32_t";
 				}
 

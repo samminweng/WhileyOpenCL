@@ -19,7 +19,6 @@ import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 import wyopcl.translator.bound.BoundAnalyzer;
 import wyopcl.translator.copy.CopyEliminationAnalyzer;
-import wyopcl.translator.copy.LiveVariablesAnalysis;
 import wyopcl.translator.deallocate.DeallocationAnalyzer;
 import wyopcl.translator.generator.CodeGenerator;
 import wyopcl.translator.symbolic.PatternMatcher;

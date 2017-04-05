@@ -14,10 +14,10 @@ import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 import wyopcl.translator.Analyzer;
+import wyopcl.translator.LiveVariablesAnalysis;
 import wyopcl.translator.ReadWriteAnalyzer;
 import wyopcl.translator.ReturnAnalyzer;
 import wyopcl.translator.copy.CopyEliminationAnalyzer;
-import wyopcl.translator.copy.LiveVariablesAnalysis;
 import wyopcl.translator.generator.CodeGeneratorHelper;
 import wyopcl.translator.generator.CodeStores;
 

@@ -31,6 +31,7 @@ import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 import wyopcl.translator.bound.BoundAnalyzer;
+import wyopcl.translator.bound.Domain;
 import wyopcl.translator.copy.CopyEliminationAnalyzer;
 import wyopcl.translator.deallocate.DeallocationAnalyzer;
 
@@ -144,7 +145,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						// Use the int64_t integer
 						translateType = CodeGeneratorHelper.translateType(type, stores);
 					}
-					declarations.add(indent + translateType + " " + var + " = 0;");
+					String def = indent + translateType + " " + var + " = 0;";// Initialize an integer variable to 0
+					
+					if(boundAnalyzer.isPresent()){
+						def = def + " //" + boundAnalyzer.get().getInferredDomain(reg, function);
+					}
+					
+					declarations.add(def);
 				} else if (type instanceof Type.Array) {
 					// Get the array dimension
 					int dimension = stores.getArrayDimension(type);
@@ -241,87 +248,105 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected String declareFunction(FunctionOrMethod function) {
 		// Function declaration.
 		String declaration = "";
+		final List<Type> params = function.type().params();
+		// Compute the bound if bound analyser is present
+		if(boundAnalyzer.isPresent()){
+			int r=0;
+			declaration += "//";
+			// Go through all parameters
+			for(Type param : params){
+				if (stores.isIntType(param)) {
+					Domain d = boundAnalyzer.get().getInferredDomain(r, function);
+					// Print out the domains of parameters
+					declaration += "\t"+d;
+				}
+			}
+			declaration += "\n";
+		}
+		
 		// Get the name
 		if (function.name().equals("main")) {
-			declaration = "int main(int argc, char** args)";
+			declaration += "int main(int argc, char** args)";
 		} else {
 			// Translate function declaration in C
-			// Get the return type
 			Type ret_type = null;
-			if (function.type().returns().size() > 0) {
-				ret_type = function.type().returns().get(0);
-				// Translate return type
-				declaration += CodeGeneratorHelper.translateType(ret_type, stores);
-			} else {
-				// no return values
-				declaration += "void";
-			}
-			// Function name, e.g. _Cash_
-			declaration += " " + stores.getFunctionName(function) + "(";
-
-			List<Type> params = function.type().params();
-			// Generate input parameters separated by comma
-			List<String> parameters = new ArrayList<String>();
-			// Parameters are defined in the order as the source Whiley program
-			for (int op = 0; op < params.size(); op++) {
-				Type parameter_type = params.get(op);
-				String var = stores.getVar(op, function);
-				if (parameter_type instanceof Type.Array) {
-					Type elm_type = stores.getArrayElementType((Type.Array) parameter_type);
-					if (stores.isIntType(elm_type)) {
-						// Add extra 'size' variable for array variable
-						int dimension = stores.getArrayDimension(parameter_type);
-						parameters.add("_DECL_" + dimension + "DARRAY_PARAM(" + var + ")");
-					} else {
-						// E.g. POS* var, size_t var_size
-						String elem_type = CodeGeneratorHelper.translateType(parameter_type, stores);
-						// Declare a 'size_t' size variable
-						parameters.add(elem_type + " " + var + ", size_t " + var + "_size");
-					}
-				} else if (stores.isIntArrayOrAliasedType(parameter_type)){
-					// Pass the parameter along with size variable
-					parameters.add("_DECL_1DARRAY_PARAM(" + var + ")");
+			{
+				// Translate the return type
+				if (function.type().returns().size() > 0) {
+					ret_type = function.type().returns().get(0);
+					// Translate return type
+					declaration += CodeGeneratorHelper.translateType(ret_type, stores);
 				} else {
-					if (parameter_type instanceof Type.Function) {
-						// Add lambda function pointer
-						parameters.add(declareLambda(var, (Type.Function) parameter_type));
-					} else {
-						if(parameter_type instanceof Type.Int && boundAnalyzer.isPresent()){
-							parameters.add(boundAnalyzer.get().suggestIntegerType(op, function) + " " +var);
-						}else{
-							parameters.add(CodeGeneratorHelper.translateType(parameter_type, stores) + " " + var);
+					// no return values
+					declaration += "void";
+				}
+				// Function name, e.g. _Cash_
+				declaration += " " + stores.getFunctionName(function) + "(";
+			}
+			
+			{
+				// Translate input parameters, separated by comma
+				List<String> parameters = new ArrayList<String>();
+				// Parameters are defined in the order as the source Whiley program
+				for (int op = 0; op < params.size(); op++) {
+					Type parameter_type = params.get(op);
+					String var = stores.getVar(op, function);
+					if (parameter_type instanceof Type.Array) {
+						Type elm_type = stores.getArrayElementType((Type.Array) parameter_type);
+						if (stores.isIntType(elm_type)) {
+							// Add extra 'size' variable for array variable
+							int dimension = stores.getArrayDimension(parameter_type);
+							parameters.add("_DECL_" + dimension + "DARRAY_PARAM(" + var + ")");
+						} else {
+							// E.g. POS* var, size_t var_size
+							String elem_type = CodeGeneratorHelper.translateType(parameter_type, stores);
+							// Declare a 'size_t' size variable
+							parameters.add(elem_type + " " + var + ", size_t " + var + "_size");
 						}
-						
+					} else if (stores.isIntArrayOrAliasedType(parameter_type)){
+						// Pass the parameter along with size variable
+						parameters.add("_DECL_1DARRAY_PARAM(" + var + ")");
+					} else {
+						if (parameter_type instanceof Type.Function) {
+							// Add lambda function pointer
+							parameters.add(declareLambda(var, (Type.Function) parameter_type));
+						} else {
+							if(parameter_type instanceof Type.Int && boundAnalyzer.isPresent()){
+								parameters.add(boundAnalyzer.get().suggestIntegerType(op, function) + " " +var);
+							}else{
+								parameters.add(CodeGeneratorHelper.translateType(parameter_type, stores) + " " + var);
+							}
+							
+						}
+					}
+					// Add deallocation flag ('_dealloc') to input parameter
+					this.deallocatedAnalyzer.ifPresent(a -> {
+						if (stores.isCompoundType(parameter_type)) {
+							parameters.add("_DECL_DEALLOC_PARAM(" + var + ")");
+						}
+					});
+				}
+				// Pass the extra size variable of return array
+				if(ret_type != null){
+					if(ret_type instanceof Type.Array){
+						Type.Array arr_type = (Type.Array)ret_type;
+						// Get array dimension
+						int dimension = stores.getArrayDimension(arr_type);
+						// Declare the call-by-reference size variable for output array, e.g. 'size_t* a_size' 
+						parameters.add("_DECL_"+dimension+"DARRAYSIZE_PARAM_CALLBYREFERENCE");
+					}else if(stores.isIntArrayOrAliasedType(ret_type)){
+						// The return type is aliased to array type, e.g. string 
+						// Pass the size variable as a reference
+						parameters.add("_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE");
+					}else{
+						// For other types, no extra parameter is required.
 					}
 				}
-				// Add deallocation flag ('_dealloc') to input parameter
-				this.deallocatedAnalyzer.ifPresent(a -> {
-					if (stores.isCompoundType(parameter_type)) {
-						parameters.add("_DECL_DEALLOC_PARAM(" + var + ")");
-					}
-				});
+					
+				// Separate each parameter with ',' sign
+				declaration += parameters.stream().map(i -> i.toString()).collect(Collectors.joining(", "));
 			}
-
-			// Pass the extra size variable of return array
-			if(ret_type != null){
-				if(ret_type instanceof Type.Array){
-					Type.Array arr_type = (Type.Array)ret_type;
-					// Get array dimension
-					int dimension = stores.getArrayDimension(arr_type);
-					// Declare the call-by-reference size variable for output array, e.g. 'size_t* a_size' 
-					parameters.add("_DECL_"+dimension+"DARRAYSIZE_PARAM_CALLBYREFERENCE");
-				}else if(stores.isIntArrayOrAliasedType(ret_type)){
-					// The return type is aliased to array type, e.g. string 
-					// Pass the size variable as a reference
-					parameters.add("_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE");
-				}else{
-					// For other types, no extra parameter is required.
-				}
-			}
-				
-			// Separate each parameter with ',' sign
-			declaration += parameters.stream().map(i -> i.toString()).collect(Collectors.joining(", "));
-
+			
 			declaration += ")";
 		}
 
@@ -708,15 +733,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		
 		// Add extra overflow check
 		this.boundAnalyzer.ifPresent(analyser->{
-			// Get the bounds of result and two operand
-			boolean isUnbounded = false;
-			// Check the left-handed side operand
-			isUnbounded |= analyser.isUnBounded(code.target(0), function);			
-			// Check two right-handed side operand
-			isUnbounded |= analyser.isUnBounded(code.operand(0), function);
-			isUnbounded |= analyser.isUnBounded(code.operand(0), function);
+			// Get Domain of left and two right operands
+			Domain left = analyser.getInferredDomain(code.target(0), function);
+			Domain right1 = analyser.getInferredDomain(code.operand(0) , function);
+			Domain right2 = analyser.getInferredDomain(code.operand(1) , function);
 			// If any operand is un-bounded, then add overflow checking
-			if(isUnbounded){
+			if(left.isUnbound() || right1.isUnbound() || right2.isUnbound()){
 				switch (code.kind) {
 				case ADD:
 					statement.add(indent+"_DETECT_INT_ADD_OVERFLOW("+op1+","+op2+","+res+");");

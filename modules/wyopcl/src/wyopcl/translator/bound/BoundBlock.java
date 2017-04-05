@@ -12,11 +12,11 @@ import java.util.stream.Collectors;
 
 import wyil.lang.Code;
 import wyil.lang.WyilFile.FunctionOrMethod;
+import wyopcl.translator.LiveVariables;
+import wyopcl.translator.LiveVariablesAnalysis;
 import wyopcl.translator.bound.constraint.Constraint;
 import wyopcl.translator.bound.constraint.Range;
 import wyopcl.translator.cfg.BasicBlock;
-import wyopcl.translator.copy.LiveVariables;
-import wyopcl.translator.copy.LiveVariablesAnalysis;
 
 /**
  * The bound block is used to build the bound graph (CFG) for bound analysis. 
