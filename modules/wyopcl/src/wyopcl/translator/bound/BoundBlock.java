@@ -301,7 +301,7 @@ public class BoundBlock extends BasicBlock {
 	 */
 	public void computeDeadVars(LiveVariablesAnalysis liveAnalyzer, FunctionOrMethod function) {
 		// For an empty block, no dead variables
-		/*if(this.vars.isEmpty()){
+		if(this.vars.isEmpty()){
 			return;
 		}
 		
@@ -311,9 +311,9 @@ public class BoundBlock extends BasicBlock {
 		this.deadVars.clear();
 		this.deadVars.addAll(this.vars); // deadVars = Vars
 		this.deadVars.removeAll(liveVars); // deadVars - liveVars
-		*/
 		
-		if(this.codes.isEmpty()){
+		
+		/*if(this.codes.isEmpty()){
 			return;
 		}
 		
@@ -328,6 +328,7 @@ public class BoundBlock extends BasicBlock {
 				this.deadVars.add(r);
 			}
 		}
+		*/
 	}
 
 }

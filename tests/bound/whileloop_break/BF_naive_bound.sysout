@@ -1,12 +1,464 @@
 WARNING: version numbering unavailable
-Parsed 1 source file(s). ....................................................... [89ms+1mb]
-Typed 1 source file(s). ....................................................... [117ms+1mb]
-Generated code for 1 source file(s). ........................................... [25ms+1mb]
+Parsed 1 source file(s). ...................................................... [101ms+1mb]
+Typed 1 source file(s). ....................................................... [137ms+1mb]
+Generated code for 1 source file(s). ........................................... [21ms+1mb]
 [./whileloop_break.whiley] applied definite assignment check ........................ [2ms]
 [./whileloop_break.whiley] applied module check ................................. [1ms+1mb]
-[./whileloop_break.whiley] applied loop variants ................................ [1ms+1mb]
+[./whileloop_break.whiley] applied loop variants ................................ [0ms+1mb]
 [./whileloop_break.whiley] applied coercion check ............................... [1ms+1mb]
-Whiley => Wyil: compiled 1 file(s) ............................................ [269ms-1mb]
+Whiley => Wyil: compiled 1 file(s) ............................................ [405ms-1mb]
+find.0 [	const %4 = 0 : int]
+find.1 [	assign %3 = %4  : int]
+find.2 [	loop (%3, %5, %6, %7)]
+find.3 [	invariant]
+find.4 [	ifge %3, %0 goto blklab0 : int]
+find.5 [	ifne %3, %1 goto blklab3 : int]
+find.6 [	goto blklab0]
+find.7 [.blklab3]
+find.8 [	const %6 = 1 : int]
+find.9 [	add %7 = %3, %6 : int]
+find.10 [	assign %3 = %7  : int]
+find.11 [.blklab1]
+find.12 [.blklab0]
+find.13 [	return %3]
+find.14 [	return]
+main.0 [	const %4 = 43 : int]
+main.1 [	const %5 = 10 : int]
+main.2 [	invoke (%3) = (%4, %5) whileloop_break:find : function(int,int)->(int)]
+main.3 [	assign %1 = %3  : int]
+main.4 [	fieldload %6 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.5 [	fieldload %7 = %6 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.6 [	indirectinvoke () = %7 (%1) : method(any)->()]
+main.7 [	assert]
+main.8 [	const %10 = 65536 : int]
+main.9 [	const %11 = 10 : int]
+main.10 [	invoke (%9) = (%10, %11) whileloop_break:find : function(int,int)->(int)]
+main.11 [	assign %2 = %9  : int]
+main.12 [	fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.13 [	fieldload %13 = %12 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.14 [	indirectinvoke () = %13 (%2) : method(any)->()]
+main.15 [	assert]
+main.16 [	return]
+###### Live analysis for find function. ######
+Iteration 1
+In:{[]}
+exit [EXIT] 
+Out:{[]}
+
+In:{[3]}
+return_3 [RETURN] 
+-------------------------------
+l.0:return %3
+-------------------------------
+Out:{[3]}
+
+In:{[]}
+blklab1 [BLOCK] 
+Out:{[]}
+
+In:{[1, 3]}
+blklab3 [ELSE] 
+-------------------------------
+l.0:ifne %3, %1 goto blklab3 : int
+l.1:const %6 = 1 : int
+l.2:add %7 = %3, %6 : int
+l.3:assign %3 = %7  : int
+-------------------------------
+Out:{[]}
+
+In:{[1, 3]}
+blklab3 [IF] 
+-------------------------------
+l.0:ifeq %3, %1 goto blklab3 : int
+-------------------------------
+Out:{[]}
+
+In:{[1, 3]}
+blklab3 [CONDITION] 
+Out:{[1, 3]}
+
+In:{[3]}
+blklab0 [LOOP_EXIT] 
+Out:{[3]}
+
+In:{[0, 1, 3]}
+blklab0 [LOOP_BODY] 
+-------------------------------
+l.0:ifge %3, %0 goto blklab0 : int
+-------------------------------
+Out:{[1, 3]}
+
+In:{[0, 1, 3]}
+blklab0 [LOOP_HEADER] 
+Out:{[0, 1, 3]}
+
+In:{[0, 1]}
+code [BLOCK] 
+-------------------------------
+l.0:const %4 = 0 : int
+l.1:assign %3 = %4  : int
+-------------------------------
+Out:{[0, 1, 3]}
+
+In:{[0, 1]}
+entry [ENTRY] 
+Out:{[0, 1]}
+
+###### Live analysis for find function. ######
+Iteration 2
+In:{[]}
+exit [EXIT] 
+Out:{[]}
+
+In:{[3]}
+return_3 [RETURN] 
+-------------------------------
+l.0:return %3
+-------------------------------
+Out:{[3]}
+
+In:{[0, 1, 3]}
+blklab1 [BLOCK] 
+Out:{[0, 1, 3]}
+
+In:{[0, 1, 3]}
+blklab3 [ELSE] 
+-------------------------------
+l.0:ifne %3, %1 goto blklab3 : int
+l.1:const %6 = 1 : int
+l.2:add %7 = %3, %6 : int
+l.3:assign %3 = %7  : int
+-------------------------------
+Out:{[0, 1, 3]}
+
+In:{[1, 3]}
+blklab3 [IF] 
+-------------------------------
+l.0:ifeq %3, %1 goto blklab3 : int
+-------------------------------
+Out:{[3]}
+
+In:{[0, 1, 3]}
+blklab3 [CONDITION] 
+Out:{[0, 1, 3]}
+
+In:{[3]}
+blklab0 [LOOP_EXIT] 
+Out:{[3]}
+
+In:{[0, 1, 3]}
+blklab0 [LOOP_BODY] 
+-------------------------------
+l.0:ifge %3, %0 goto blklab0 : int
+-------------------------------
+Out:{[0, 1, 3]}
+
+In:{[0, 1, 3]}
+blklab0 [LOOP_HEADER] 
+Out:{[0, 1, 3]}
+
+In:{[0, 1]}
+code [BLOCK] 
+-------------------------------
+l.0:const %4 = 0 : int
+l.1:assign %3 = %4  : int
+-------------------------------
+Out:{[0, 1, 3]}
+
+In:{[0, 1]}
+entry [ENTRY] 
+Out:{[0, 1]}
+
+###### Live analysis for find function. ######
+Iteration 3
+In:{[]}
+exit [EXIT] 
+Out:{[]}
+
+In:{[3]}
+return_3 [RETURN] 
+-------------------------------
+l.0:return %3
+-------------------------------
+Out:{[3]}
+
+In:{[0, 1, 3]}
+blklab1 [BLOCK] 
+Out:{[0, 1, 3]}
+
+In:{[0, 1, 3]}
+blklab3 [ELSE] 
+-------------------------------
+l.0:ifne %3, %1 goto blklab3 : int
+l.1:const %6 = 1 : int
+l.2:add %7 = %3, %6 : int
+l.3:assign %3 = %7  : int
+-------------------------------
+Out:{[0, 1, 3]}
+
+In:{[1, 3]}
+blklab3 [IF] 
+-------------------------------
+l.0:ifeq %3, %1 goto blklab3 : int
+-------------------------------
+Out:{[3]}
+
+In:{[0, 1, 3]}
+blklab3 [CONDITION] 
+Out:{[0, 1, 3]}
+
+In:{[3]}
+blklab0 [LOOP_EXIT] 
+Out:{[3]}
+
+In:{[0, 1, 3]}
+blklab0 [LOOP_BODY] 
+-------------------------------
+l.0:ifge %3, %0 goto blklab0 : int
+-------------------------------
+Out:{[0, 1, 3]}
+
+In:{[0, 1, 3]}
+blklab0 [LOOP_HEADER] 
+Out:{[0, 1, 3]}
+
+In:{[0, 1]}
+code [BLOCK] 
+-------------------------------
+l.0:const %4 = 0 : int
+l.1:assign %3 = %4  : int
+-------------------------------
+Out:{[0, 1, 3]}
+
+In:{[0, 1]}
+entry [ENTRY] 
+Out:{[0, 1]}
+
+###### Live variables for find function. ######
+In:{limit, item}
+entry [ENTRY] 
+Out:{limit, item}
+
+In:{limit, item}
+code [BLOCK] 
+-------------------------------
+l.0:const %4 = 0 : int
+l.1:assign %3 = %4  : int
+-------------------------------
+Out:{limit, item, r}
+
+In:{limit, item, r}
+blklab0 [LOOP_HEADER] 
+Out:{limit, item, r}
+
+In:{limit, item, r}
+blklab0 [LOOP_BODY] 
+-------------------------------
+l.0:ifge %3, %0 goto blklab0 : int
+-------------------------------
+Out:{limit, item, r}
+
+In:{r}
+blklab0 [LOOP_EXIT] 
+Out:{r}
+
+In:{limit, item, r}
+blklab3 [CONDITION] 
+Out:{limit, item, r}
+
+In:{item, r}
+blklab3 [IF] 
+-------------------------------
+l.0:ifeq %3, %1 goto blklab3 : int
+-------------------------------
+Out:{r}
+
+In:{limit, item, r}
+blklab3 [ELSE] 
+-------------------------------
+l.0:ifne %3, %1 goto blklab3 : int
+l.1:const %6 = 1 : int
+l.2:add %7 = %3, %6 : int
+l.3:assign %3 = %7  : int
+-------------------------------
+Out:{limit, item, r}
+
+In:{limit, item, r}
+blklab1 [BLOCK] 
+Out:{limit, item, r}
+
+In:{r}
+return_3 [RETURN] 
+-------------------------------
+l.0:return %3
+-------------------------------
+Out:{r}
+
+In:{}
+exit [EXIT] 
+Out:{}
+
+###### Live analysis for main function. ######
+Iteration 1
+In:{[]}
+exit [EXIT] 
+Out:{[]}
+
+In:{[0, 9]}
+find11 [BLOCK] 
+-------------------------------
+l.0:assign %2 = %9  : int
+l.1:fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.2:fieldload %13 = %12 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.3:indirectinvoke () = %13 (%2) : method(any)->()
+-------------------------------
+Out:{[]}
+
+In:{[0, 10, 11]}
+find11 [INVOKE] 
+-------------------------------
+l.0:invoke (%9) = (%10, %11) whileloop_break:find : function(int,int)->(int)
+-------------------------------
+Out:{[0, 9]}
+
+In:{[0, 3]}
+find3 [BLOCK] 
+-------------------------------
+l.0:assign %1 = %3  : int
+l.1:fieldload %6 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.2:fieldload %7 = %6 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.3:indirectinvoke () = %7 (%1) : method(any)->()
+l.4:const %10 = 65536 : int
+l.5:const %11 = 10 : int
+-------------------------------
+Out:{[0, 10, 11]}
+
+In:{[0, 4, 5]}
+find3 [INVOKE] 
+-------------------------------
+l.0:invoke (%3) = (%4, %5) whileloop_break:find : function(int,int)->(int)
+-------------------------------
+Out:{[0, 3]}
+
+In:{[0]}
+code [BLOCK] 
+-------------------------------
+l.0:const %4 = 43 : int
+l.1:const %5 = 10 : int
+-------------------------------
+Out:{[0, 4, 5]}
+
+In:{[0]}
+entry [ENTRY] 
+Out:{[0]}
+
+###### Live analysis for main function. ######
+Iteration 2
+In:{[]}
+exit [EXIT] 
+Out:{[]}
+
+In:{[0, 9]}
+find11 [BLOCK] 
+-------------------------------
+l.0:assign %2 = %9  : int
+l.1:fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.2:fieldload %13 = %12 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.3:indirectinvoke () = %13 (%2) : method(any)->()
+-------------------------------
+Out:{[]}
+
+In:{[0, 10, 11]}
+find11 [INVOKE] 
+-------------------------------
+l.0:invoke (%9) = (%10, %11) whileloop_break:find : function(int,int)->(int)
+-------------------------------
+Out:{[0, 9]}
+
+In:{[0, 3]}
+find3 [BLOCK] 
+-------------------------------
+l.0:assign %1 = %3  : int
+l.1:fieldload %6 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.2:fieldload %7 = %6 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.3:indirectinvoke () = %7 (%1) : method(any)->()
+l.4:const %10 = 65536 : int
+l.5:const %11 = 10 : int
+-------------------------------
+Out:{[0, 10, 11]}
+
+In:{[0, 4, 5]}
+find3 [INVOKE] 
+-------------------------------
+l.0:invoke (%3) = (%4, %5) whileloop_break:find : function(int,int)->(int)
+-------------------------------
+Out:{[0, 3]}
+
+In:{[0]}
+code [BLOCK] 
+-------------------------------
+l.0:const %4 = 43 : int
+l.1:const %5 = 10 : int
+-------------------------------
+Out:{[0, 4, 5]}
+
+In:{[0]}
+entry [ENTRY] 
+Out:{[0]}
+
+###### Live variables for main function. ######
+In:{sys}
+entry [ENTRY] 
+Out:{sys}
+
+In:{sys}
+code [BLOCK] 
+-------------------------------
+l.0:const %4 = 43 : int
+l.1:const %5 = 10 : int
+-------------------------------
+Out:{sys, _4, _5}
+
+In:{sys, _4, _5}
+find3 [INVOKE] 
+-------------------------------
+l.0:invoke (%3) = (%4, %5) whileloop_break:find : function(int,int)->(int)
+-------------------------------
+Out:{sys, _3}
+
+In:{sys, _3}
+find3 [BLOCK] 
+-------------------------------
+l.0:assign %1 = %3  : int
+l.1:fieldload %6 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.2:fieldload %7 = %6 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.3:indirectinvoke () = %7 (%1) : method(any)->()
+l.4:const %10 = 65536 : int
+l.5:const %11 = 10 : int
+-------------------------------
+Out:{sys, _10, _11}
+
+In:{sys, _10, _11}
+find11 [INVOKE] 
+-------------------------------
+l.0:invoke (%9) = (%10, %11) whileloop_break:find : function(int,int)->(int)
+-------------------------------
+Out:{sys, _9}
+
+In:{sys, _9}
+find11 [BLOCK] 
+-------------------------------
+l.0:assign %2 = %9  : int
+l.1:fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.2:fieldload %13 = %12 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.3:indirectinvoke () = %13 (%2) : method(any)->()
+-------------------------------
+Out:{}
+
+In:{}
+exit [EXIT] 
+Out:{}
+
 === Bound Analysis on main function ===
 main.0 [	const %4 = 43 : int]
 main.1 [	const %5 = 10 : int]
@@ -101,6 +553,9 @@ isChanged=true
 ### Iteration 3 ### 
 '2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_BODY] 
+-------------------------------
+0:ifge %3, %0 goto blklab0 : int
+-------------------------------
 Vars [_3, _0]
 DeadVars []
 Constraints [_3<_0]
@@ -113,11 +568,8 @@ isChanged=true
 ### Iteration 4 ### 
 '3' blocks in queue : [LOOP_EXIT][IF][ELSE]
 blklab0 [LOOP_EXIT] 
--------------------------------
-0:ifge %3, %0 goto blklab0 : int
--------------------------------
 Vars [_3, _0]
-DeadVars []
+DeadVars [_0]
 Constraints [_3>=_0]
 
 	domain(_0)	= [empty..empty]	
@@ -129,7 +581,7 @@ isChanged=false
 '2' blocks in queue : [IF][ELSE]
 blklab3 [IF] 
 Vars [_3, _1]
-DeadVars []
+DeadVars [_1]
 Constraints [_3==_1]
 
 	domain(_0)	= [43..43]	
@@ -184,6 +636,9 @@ isChanged=true
 ### Iteration 9 ### 
 '2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_BODY] 
+-------------------------------
+0:ifge %3, %0 goto blklab0 : int
+-------------------------------
 Vars [_3, _0]
 DeadVars []
 Constraints [_3<_0]
@@ -196,11 +651,8 @@ isChanged=true
 ### Iteration 10 ### 
 '3' blocks in queue : [LOOP_EXIT][IF][ELSE]
 blklab0 [LOOP_EXIT] 
--------------------------------
-0:ifge %3, %0 goto blklab0 : int
--------------------------------
 Vars [_3, _0]
-DeadVars []
+DeadVars [_0]
 Constraints [_3>=_0]
 
 	domain(_0)	= [empty..empty]	
@@ -212,7 +664,7 @@ isChanged=false
 '2' blocks in queue : [IF][ELSE]
 blklab3 [IF] 
 Vars [_3, _1]
-DeadVars []
+DeadVars [_1]
 Constraints [_3==_1]
 
 	domain(_0)	= [43..43]	
@@ -267,6 +719,9 @@ isChanged=true
 ### Iteration 15 ### 
 '2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_BODY] 
+-------------------------------
+0:ifge %3, %0 goto blklab0 : int
+-------------------------------
 Vars [_3, _0]
 DeadVars []
 Constraints [_3<_0]
@@ -279,11 +734,8 @@ isChanged=true
 ### Iteration 16 ### 
 '3' blocks in queue : [LOOP_EXIT][IF][ELSE]
 blklab0 [LOOP_EXIT] 
--------------------------------
-0:ifge %3, %0 goto blklab0 : int
--------------------------------
 Vars [_3, _0]
-DeadVars []
+DeadVars [_0]
 Constraints [_3>=_0]
 
 	domain(_0)	= [empty..empty]	
@@ -295,7 +747,7 @@ isChanged=false
 '2' blocks in queue : [IF][ELSE]
 blklab3 [IF] 
 Vars [_3, _1]
-DeadVars []
+DeadVars [_1]
 Constraints [_3==_1]
 
 	domain(_0)	= [43..43]	
@@ -350,6 +802,9 @@ isChanged=true
 ### Iteration 21 ### 
 '2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_BODY] 
+-------------------------------
+0:ifge %3, %0 goto blklab0 : int
+-------------------------------
 Vars [_3, _0]
 DeadVars []
 Constraints [_3<_0]
@@ -362,11 +817,8 @@ isChanged=true
 ### Iteration 22 ### 
 '3' blocks in queue : [LOOP_EXIT][IF][ELSE]
 blklab0 [LOOP_EXIT] 
--------------------------------
-0:ifge %3, %0 goto blklab0 : int
--------------------------------
 Vars [_3, _0]
-DeadVars []
+DeadVars [_0]
 Constraints [_3>=_0]
 
 	domain(_0)	= [43..43]	
@@ -378,7 +830,7 @@ isChanged=true
 '3' blocks in queue : [IF][ELSE][RETURN]
 blklab3 [IF] 
 Vars [_3, _1]
-DeadVars []
+DeadVars [_1]
 Constraints [_3==_1]
 
 	domain(_0)	= [43..43]	
@@ -416,7 +868,6 @@ Vars [_3]
 DeadVars []
 Constraints [return:=_3]
 
-	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [43..infinity]	
 	domain(return)	= [43..infinity]	
@@ -425,11 +876,8 @@ isChanged=true
 ### Iteration 26 ### 
 '2' blocks in queue : [LOOP_EXIT][BLOCK]
 blklab0 [LOOP_EXIT] 
--------------------------------
-0:ifge %3, %0 goto blklab0 : int
--------------------------------
 Vars [_3, _0]
-DeadVars []
+DeadVars [_0]
 Constraints [_3>=_0]
 
 	domain(_0)	= [43..43]	
@@ -464,6 +912,9 @@ isChanged=true
 ### Iteration 29 ### 
 '2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_BODY] 
+-------------------------------
+0:ifge %3, %0 goto blklab0 : int
+-------------------------------
 Vars [_3, _0]
 DeadVars []
 Constraints [_3<_0]
@@ -476,11 +927,8 @@ isChanged=false
 ### Iteration 30 ### 
 '1' blocks in queue : [LOOP_EXIT]
 blklab0 [LOOP_EXIT] 
--------------------------------
-0:ifge %3, %0 goto blklab0 : int
--------------------------------
 Vars [_3, _0]
-DeadVars []
+DeadVars [_0]
 Constraints [_3>=_0]
 
 	domain(_0)	= [43..43]	
@@ -498,7 +946,6 @@ Vars [_3]
 DeadVars []
 Constraints [return:=_3]
 
-	domain(_0)	= [43..43]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [43..43]	
 	domain(return)	= [43..43]	
@@ -545,7 +992,7 @@ code [BLOCK]
 4:const %11 = 10 : int
 -------------------------------
 Vars [_4, _5, _3, _1, _10, _11]
-DeadVars [_4, _5, _3, _1]
+DeadVars [_3, _1, _10, _11]
 Constraints [_4:=43, _5:=10, _3:=[43..43], _1:=_3, _10:=65536, _11:=10]
 
 	domain(_1)	= [43..43]	
@@ -576,7 +1023,7 @@ entry [ENTRY]
 1:assign %3 = %7  : int
 -------------------------------
 Vars [_0, _1, _3, _4, _7]
-DeadVars [_4, _7]
+DeadVars [_3, _4, _7]
 Constraints [_0:=[65536..65536], _1:=[10..10]]
 
 	domain(_0)	= [65536..65536]	
@@ -615,6 +1062,9 @@ isChanged=true
 ### Iteration 3 ### 
 '2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_BODY] 
+-------------------------------
+0:ifge %3, %0 goto blklab0 : int
+-------------------------------
 Vars [_3, _0]
 DeadVars []
 Constraints [_3<_0]
@@ -627,11 +1077,8 @@ isChanged=true
 ### Iteration 4 ### 
 '3' blocks in queue : [LOOP_EXIT][IF][ELSE]
 blklab0 [LOOP_EXIT] 
--------------------------------
-0:ifge %3, %0 goto blklab0 : int
--------------------------------
 Vars [_3, _0]
-DeadVars []
+DeadVars [_0]
 Constraints [_3>=_0]
 
 	domain(_0)	= [empty..empty]	
@@ -643,7 +1090,7 @@ isChanged=false
 '2' blocks in queue : [IF][ELSE]
 blklab3 [IF] 
 Vars [_3, _1]
-DeadVars []
+DeadVars [_1]
 Constraints [_3==_1]
 
 	domain(_0)	= [65536..65536]	
@@ -698,6 +1145,9 @@ isChanged=true
 ### Iteration 9 ### 
 '2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_BODY] 
+-------------------------------
+0:ifge %3, %0 goto blklab0 : int
+-------------------------------
 Vars [_3, _0]
 DeadVars []
 Constraints [_3<_0]
@@ -710,11 +1160,8 @@ isChanged=true
 ### Iteration 10 ### 
 '3' blocks in queue : [LOOP_EXIT][IF][ELSE]
 blklab0 [LOOP_EXIT] 
--------------------------------
-0:ifge %3, %0 goto blklab0 : int
--------------------------------
 Vars [_3, _0]
-DeadVars []
+DeadVars [_0]
 Constraints [_3>=_0]
 
 	domain(_0)	= [empty..empty]	
@@ -726,7 +1173,7 @@ isChanged=false
 '2' blocks in queue : [IF][ELSE]
 blklab3 [IF] 
 Vars [_3, _1]
-DeadVars []
+DeadVars [_1]
 Constraints [_3==_1]
 
 	domain(_0)	= [65536..65536]	
@@ -781,6 +1228,9 @@ isChanged=true
 ### Iteration 15 ### 
 '2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_BODY] 
+-------------------------------
+0:ifge %3, %0 goto blklab0 : int
+-------------------------------
 Vars [_3, _0]
 DeadVars []
 Constraints [_3<_0]
@@ -793,11 +1243,8 @@ isChanged=true
 ### Iteration 16 ### 
 '3' blocks in queue : [LOOP_EXIT][IF][ELSE]
 blklab0 [LOOP_EXIT] 
--------------------------------
-0:ifge %3, %0 goto blklab0 : int
--------------------------------
 Vars [_3, _0]
-DeadVars []
+DeadVars [_0]
 Constraints [_3>=_0]
 
 	domain(_0)	= [empty..empty]	
@@ -809,7 +1256,7 @@ isChanged=false
 '2' blocks in queue : [IF][ELSE]
 blklab3 [IF] 
 Vars [_3, _1]
-DeadVars []
+DeadVars [_1]
 Constraints [_3==_1]
 
 	domain(_0)	= [65536..65536]	
@@ -864,6 +1311,9 @@ isChanged=true
 ### Iteration 21 ### 
 '2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_BODY] 
+-------------------------------
+0:ifge %3, %0 goto blklab0 : int
+-------------------------------
 Vars [_3, _0]
 DeadVars []
 Constraints [_3<_0]
@@ -876,11 +1326,8 @@ isChanged=true
 ### Iteration 22 ### 
 '3' blocks in queue : [LOOP_EXIT][IF][ELSE]
 blklab0 [LOOP_EXIT] 
--------------------------------
-0:ifge %3, %0 goto blklab0 : int
--------------------------------
 Vars [_3, _0]
-DeadVars []
+DeadVars [_0]
 Constraints [_3>=_0]
 
 	domain(_0)	= [65536..65536]	
@@ -892,7 +1339,7 @@ isChanged=true
 '3' blocks in queue : [IF][ELSE][RETURN]
 blklab3 [IF] 
 Vars [_3, _1]
-DeadVars []
+DeadVars [_1]
 Constraints [_3==_1]
 
 	domain(_0)	= [65536..65536]	
@@ -930,7 +1377,6 @@ Vars [_3]
 DeadVars []
 Constraints [return:=_3]
 
-	domain(_0)	= [65536..65536]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [65536..infinity]	
 	domain(return)	= [65536..infinity]	
@@ -939,11 +1385,8 @@ isChanged=true
 ### Iteration 26 ### 
 '2' blocks in queue : [LOOP_EXIT][BLOCK]
 blklab0 [LOOP_EXIT] 
--------------------------------
-0:ifge %3, %0 goto blklab0 : int
--------------------------------
 Vars [_3, _0]
-DeadVars []
+DeadVars [_0]
 Constraints [_3>=_0]
 
 	domain(_0)	= [65536..65536]	
@@ -978,6 +1421,9 @@ isChanged=true
 ### Iteration 29 ### 
 '2' blocks in queue : [LOOP_BODY][LOOP_EXIT]
 blklab0 [LOOP_BODY] 
+-------------------------------
+0:ifge %3, %0 goto blklab0 : int
+-------------------------------
 Vars [_3, _0]
 DeadVars []
 Constraints [_3<_0]
@@ -990,11 +1436,8 @@ isChanged=false
 ### Iteration 30 ### 
 '1' blocks in queue : [LOOP_EXIT]
 blklab0 [LOOP_EXIT] 
--------------------------------
-0:ifge %3, %0 goto blklab0 : int
--------------------------------
 Vars [_3, _0]
-DeadVars []
+DeadVars [_0]
 Constraints [_3>=_0]
 
 	domain(_0)	= [65536..65536]	
@@ -1012,7 +1455,6 @@ Vars [_3]
 DeadVars []
 Constraints [return:=_3]
 
-	domain(_0)	= [65536..65536]	
 	domain(_1)	= [10..10]	
 	domain(_3)	= [65536..65536]	
 	domain(return)	= [65536..65536]	
@@ -1058,7 +1500,7 @@ code [BLOCK]
 5:assign %2 = %9  : int
 -------------------------------
 Vars [_4, _5, _3, _1, _10, _11, _9, _2]
-DeadVars [_4, _5, _3, _1, _10, _11, _9, _2]
+DeadVars [_3, _1, _10, _11, _9, _2]
 Constraints [_4:=43, _5:=10, _3:=[43..43], _1:=_3, _10:=65536, _11:=10, _9:=[65536..65536], _2:=_9]
 
 	domain(_1)	= [43..43]	

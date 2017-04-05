@@ -182,7 +182,7 @@ public class LiveVariablesAnalysis extends Analyzer {
 	/**
 	 * Return the live variable set of given bound block. 
 	 * 
-	 * 
+	 * <pre>DeadVars = Vars - LiveVars</pre>
 	 * @param function
 	 * @param bnd_blk
 	 * @return
@@ -192,7 +192,10 @@ public class LiveVariablesAnalysis extends Analyzer {
 		BasicBlock blk = mapBoundBlockToBlock(function, bnd_blk);
 		
 		// Return the live variables in the block
-		return livenessStore.get(function).getOUT(blk);
+		HashSet<Integer> out = livenessStore.get(function).getOUT(blk);
+		
+		return out;
+		
 	}
 	
 	

@@ -275,14 +275,12 @@ public class BoundGraph {
 		// Put left and right to 'Vars' set
 		loop_body.addVar(left);
 		loop_body.addVar(right);
-
-
+		// Put the code to loop body
+		loop_body.addCode(code);
 
 		// put the original constraint to the loop_exit
 		loop_exit.addConstraint(c);
-		// Put the code to loop exit
-		loop_exit.addCode(code);
-
+		
 		// Put left and right variable to Vars
 		loop_exit.addVar(left);
 		loop_exit.addVar(right);

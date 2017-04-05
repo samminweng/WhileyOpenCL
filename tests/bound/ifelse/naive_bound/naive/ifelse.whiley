@@ -1,5 +1,5 @@
 import whiley.lang.*
-
+// x variable should be 'uint16_t'
 function f(int x) -> (int r)
 ensures r > 0:
     if x < 10:
@@ -19,4 +19,3 @@ method main(System.Console sys):
     int c = f(11) 
     assert c == 2
     sys.out.println(c)
-    // x variable should be 'uint16_t'
