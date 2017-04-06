@@ -3,11 +3,11 @@
 int64_t _f_(uint32_t limit){
 	int64_t _1 = 0; //domain(_1)	= [empty..empty]	
 	uint32_t i = 0; //domain(_2)	= [0..65536]	
-	int64_t sum = 0; //domain(_3)	= [0..infinity]	
+	uint64_t sum = 0; //domain(_3)	= [0..infinity]	
 	uint16_t _4 = 0; //domain(_4)	= [0..0]	
 	uint16_t _5 = 0; //domain(_5)	= [0..0]	
 	int64_t _6 = 0; //domain(_6)	= [empty..empty]	
-	int64_t _7 = 0; //domain(_7)	= [0..infinity]	
+	uint64_t _7 = 0; //domain(_7)	= [0..infinity]	
 	uint16_t _8 = 0; //domain(_8)	= [1..1]	
 	uint32_t _9 = 0; //domain(_9)	= [1..65536]	
 	//const %4 = 0 : int
@@ -45,13 +45,13 @@ blklab1:;
 
 //
 int main(int argc, char** args){
-	int64_t a = 0; //domain(_1)	= [0..infinity]	
-	int64_t b = 0; //domain(_2)	= [0..infinity]	
-	int64_t _3 = 0; //domain(_3)	= [0..infinity]	
+	uint64_t a = 0; //domain(_1)	= [0..infinity]	
+	uint64_t b = 0; //domain(_2)	= [0..infinity]	
+	uint64_t _3 = 0; //domain(_3)	= [0..infinity]	
 	uint16_t _4 = 0; //domain(_4)	= [43..43]	
 	void* _5;
 	int64_t _7 = 0; //domain(_7)	= [empty..empty]	
-	int64_t _8 = 0; //domain(_8)	= [0..infinity]	
+	uint64_t _8 = 0; //domain(_8)	= [0..infinity]	
 	uint32_t _9 = 0; //domain(_9)	= [65536..65536]	
 	void* _10;
 	int64_t _12 = 0; //domain(_12)	= [empty..empty]	

@@ -971,41 +971,42 @@ public class BoundAnalyzer {
 	public String suggestIntegerType(int register, FunctionOrMethod function){
 		// Get the domain of register
 		Domain d = getInferredDomain(register, function);
-		// Check the register is unbounded or not.
-		if(!d.isUnbound()){
+		// Check the register is empty or not.
+		if(!d.isEmpty()){
 			// Use unsigned type if lower bound >= 0
-			if(d.getLower().compareTo(BigInteger.ZERO)>=0){
+			if(d.getLower() != null && d.getLower().compareTo(BigInteger.ZERO)>=0){
 				// Check upper bound 
+				if(d.getUpper() != null){
+					// Unsigned 16-bit integer
+					if(d.getUpper().compareTo(Threshold._UI16_MAX.getValue())<=0){
+						return "uint16_t";
+					}
 
-				// Unsigned 16-bit integer
-				if(d.getUpper().compareTo(Threshold._UI16_MAX.getValue())<=0){
-					return "uint16_t";
+					// Unsigned 32-bit integer
+					if(d.getUpper().compareTo(Threshold._UI32_MAX.getValue())<=0){
+						return "uint32_t";
+					}
 				}
-
-				// Unsigned 32-bit integer
-				if(d.getUpper().compareTo(Threshold._UI32_MAX.getValue())<=0){
-					return "uint32_t";
-				}
-
+				
 				// Unsigned 64-bit integers
 				return "uint64_t";
 
 			}else{
 				// In the case of signed integers
-				// Limit to 16-bit integers (16_min < domain < 16_max)  
-				if(d.getLower().compareTo(Threshold._I16_MIN.getValue())>=0
-						&& d.getUpper().compareTo(Threshold._I16_MAX.getValue())<=0){
-					return "int16_t";
-				}
+				// Upper/Lower is NOT +- infty
+				if(!d.isUnbound()){
+					// Limit to 16-bit integers (16_min < domain < 16_max)  
+					if(d.getLower().compareTo(Threshold._I16_MIN.getValue())>=0
+							&& d.getUpper().compareTo(Threshold._I16_MAX.getValue())<=0){
+						return "int16_t";
+					}
 
-				// Limit to 32-bit integers (32_min < domain < 32_max)
-				if(d.getLower().compareTo(Threshold._I32_MIN.getValue())>=0
-						&& d.getUpper().compareTo(Threshold._I32_MAX.getValue())<=0){
-					return "int32_t";
-				}
-
-				// The default 64-bit integer 
-				return "int64_t"; 
+					// Limit to 32-bit integers (32_min < domain < 32_max)
+					if(d.getLower().compareTo(Threshold._I32_MIN.getValue())>=0
+							&& d.getUpper().compareTo(Threshold._I32_MAX.getValue())<=0){
+						return "int32_t";
+					}
+				}	
 			}
 		}
 		// The default 64-bit integer 
