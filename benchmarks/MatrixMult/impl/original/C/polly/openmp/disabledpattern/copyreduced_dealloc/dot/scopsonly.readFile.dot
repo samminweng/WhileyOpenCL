@@ -1,0 +1,51 @@
+digraph "Scop Graph for 'readFile' function" {
+	label="Scop Graph for 'readFile' function";
+
+	Node0xc4f2bc0 [shape=record,label="{entry}"];
+	Node0xc4f2bc0 -> Node0xc4e5fa0;
+	Node0xc4e5fa0 [shape=record,label="{entry.split}"];
+	Node0xc4e5fa0 -> Node0xc4e42f0;
+	Node0xc4e5fa0 -> Node0xc514270;
+	Node0xc4e42f0 [shape=record,label="{while.end}"];
+	Node0xc4e42f0 -> Node0xc545700;
+	Node0xc4e42f0 -> Node0xc53fc00;
+	Node0xc545700 [shape=record,label="{if.then}"];
+	Node0xc53fc00 [shape=record,label="{if.end}"];
+	Node0xc53fc00 -> Node0xc534b90;
+	Node0xc53fc00 -> Node0xc540b80;
+	Node0xc534b90 [shape=record,label="{if.end11}"];
+	Node0xc540b80 [shape=record,label="{if.then9}"];
+	Node0xc514270 [shape=record,label="{while.body.lr.ph}"];
+	Node0xc514270 -> Node0xc551d70;
+	Node0xc551d70 [shape=record,label="{while.body}"];
+	Node0xc551d70 -> Node0xc53cfe0;
+	Node0xc551d70 -> Node0xc551d70[constraint=false];
+	Node0xc53cfe0 [shape=record,label="{while.cond.while.end_crit_edge}"];
+	Node0xc53cfe0 -> Node0xc4e42f0;
+	colorscheme = "paired12"
+        subgraph cluster_0xc503c50 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc503cd0 {
+            label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: while.body";
+            style = solid;
+            color = 6
+            subgraph cluster_0xc519210 {
+              label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: while.body";
+              style = solid;
+              color = 5
+              Node0xc551d70;
+            }
+            Node0xc4e5fa0;
+            Node0xc514270;
+            Node0xc53cfe0;
+          }
+          Node0xc4f2bc0;
+          Node0xc4e42f0;
+          Node0xc545700;
+          Node0xc53fc00;
+          Node0xc534b90;
+          Node0xc540b80;
+        }
+}

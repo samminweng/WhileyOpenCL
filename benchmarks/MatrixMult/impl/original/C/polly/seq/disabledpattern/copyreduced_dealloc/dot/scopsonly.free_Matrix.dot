@@ -1,15 +1,15 @@
 digraph "Scop Graph for 'free_Matrix' function" {
 	label="Scop Graph for 'free_Matrix' function";
 
-	Node0xc8b1af0 [shape=record,label="{entry}"];
-	Node0xc8b1af0 -> Node0xc8b1c40;
-	Node0xc8b1c40 [shape=record,label="{entry.split}"];
+	Node0xc846750 [shape=record,label="{entry}"];
+	Node0xc846750 -> Node0xc8220e0;
+	Node0xc8220e0 [shape=record,label="{entry.split}"];
 	colorscheme = "paired12"
-        subgraph cluster_0xc899c90 {
+        subgraph cluster_0xc7d41d0 {
           label = "";
           style = solid;
           color = 1
-          Node0xc8b1af0;
-          Node0xc8b1c40;
+          Node0xc846750;
+          Node0xc8220e0;
         }
 }

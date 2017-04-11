@@ -1,0 +1,45 @@
+digraph "Scop Graph for 'create1DArray_BYTE' function" {
+	label="Scop Graph for 'create1DArray_BYTE' function";
+
+	Node0xc51e980 [shape=record,label="{entry}"];
+	Node0xc51e980 -> Node0xc4f6ab0;
+	Node0xc4f6ab0 [shape=record,label="{entry.split}"];
+	Node0xc4f6ab0 -> Node0xc4d8d20;
+	Node0xc4f6ab0 -> Node0xc50c400;
+	Node0xc4d8d20 [shape=record,label="{if.then}"];
+	Node0xc50c400 [shape=record,label="{for.cond.preheader}"];
+	Node0xc50c400 -> Node0xc4e4270;
+	Node0xc50c400 -> Node0xc4f4730;
+	Node0xc4e4270 [shape=record,label="{for.cond.cleanup}"];
+	Node0xc4f4730 [shape=record,label="{for.body.lr.ph}"];
+	Node0xc4f4730 -> Node0xc4fedb0;
+	Node0xc4fedb0 [shape=record,label="{for.body}"];
+	Node0xc4fedb0 -> Node0xc4fedb0[constraint=false];
+	Node0xc4fedb0 -> Node0xc4fcb00;
+	Node0xc4fcb00 [shape=record,label="{for.cond.for.cond.cleanup_crit_edge}"];
+	Node0xc4fcb00 -> Node0xc4e4270;
+	colorscheme = "paired12"
+        subgraph cluster_0xc4fc110 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc4efc90 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            subgraph cluster_0xc4d4be0 {
+              label = "";
+              style = solid;
+              color = 5
+              Node0xc4fedb0;
+            }
+            Node0xc50c400;
+            Node0xc4f4730;
+            Node0xc4fcb00;
+          }
+          Node0xc51e980;
+          Node0xc4f6ab0;
+          Node0xc4d8d20;
+          Node0xc4e4270;
+        }
+}

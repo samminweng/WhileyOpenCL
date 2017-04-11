@@ -143,6 +143,17 @@ runPolly(){
 	pollycc -mllvm -polly-opt-outer-coincidence=yes -mllvm -debug-only=polly-ast\
 			-mllvm -polly-process-unprofitable $testcase"_"$program.c Util.c WyRT.c
 
+	echo -e "-----------------Press [Enter] to continue--------------------"&& read
+	
+}
+
+
+runBenchmark(){
+	testcase=$1
+	program=$2
+	pollycode=$3
+	parameter=$4
+
 	### Generate sequential executables using GCC
 	read -p "[1] Run  GCC -O3  executables"
 	start=`date +%s%N` 
@@ -164,7 +175,7 @@ runPolly(){
 	## Run sequential code, produced by Polly
 	if [ $pollycode = "seq" ]
 	then
-		read -p "[3] Run  Polly-Optimized  executables"
+		read -p "[3] Run Polly-Optimized Sequential executables"
 		## Generate LLVM-IR code from C code
 		pollycc -S -emit-llvm -mllvm -polly-vectorizer=stripmine\
 				-mllvm -polly-process-unprofitable -mllvm -polly-opt-outer-coincidence=yes\
@@ -184,25 +195,28 @@ runPolly(){
 	## Run parallel OpenMP code, produced by Polly
 	if [ $pollycode = "openmp" ]
 	then
-		echo -e -n "[4] Run  Polly-Optimized OpenMP executables with 2 threads" && read
+		echo -e -n "[4] Run Polly-Optimized OpenMP executables with 4 threads" && read
 		### Run the program using two threads.
-		export OMP_NUM_THREADS=2
+		export OMP_NUM_THREADS=4
 		## Generate OpenMP code
-		pollycc -g -mllvm -polly-vectorizer=stripmine -S -emit-llvm\
+		pollycc -S -emit-llvm -mllvm -polly-vectorizer=stripmine\
 				-mllvm -polly-parallel -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
 				-mllvm -polly-opt-outer-coincidence=yes\
 				$testcase"_"$program.c -o "llvm"/$testcase"_"$program.openmp.ll
 		llc "llvm"/$testcase"_"$program.openmp.ll -o "assembly"/$testcase"_"$program.openmp.s
 		### Use 'gcc' to compile .s file and link with 'libUtil.a'
-		pollycc "assembly"/$testcase"_"$program.openmp.s Util.c -lgomp -o "out"/$testcase"_"$program.openmp.out 
+		pollycc "assembly"/$testcase"_"$program.openmp.s Util.c WyRT.c -lgomp -o "out"/$testcase"_"$program.openmp.out 
 		
 		### Run the generated executables.
-		time ./out/$testcase"_"$program.openmp.out $parameter
+		start=`date +%s%N`
+		./out/$testcase"_"$program.openmp.out $parameter
+		end=`date +%s%N`
+		exectime=$(((end-start)/1000000))
+		printf '\nExecutionTime:%s\tmilliseconds\n' $exectime
 	fi
-
-	echo -e "-----------------Press [Enter] to continue--------------------"&& read
-	
 }
+
+
 
 #### Execute the polly to optimize the generated C code
 exec(){
@@ -223,7 +237,8 @@ exec(){
 			#echo $testcase $program $compiler $codegen $pollycode $parameter
 			## Generate C code
 			generateCode $testcase $program $compiler $codegen $pollycode
-			runPolly $testcase $program $compiler $codegen $pollycode $parameter
+			#runPolly $testcase $program $compiler $codegen $parameter
+			runBenchmark $testcase $program $pollycode $parameter
 		done
 	done
 	# Return to the working directory
@@ -231,7 +246,7 @@ exec(){
 }
 ### Determine problem size from cmd line argument
 ### MatrixMult test case
-exec MatrixMult original 100
+exec MatrixMult original 2000
 #exec MatrixMult transpose 2000 
 
 ### GCD test case

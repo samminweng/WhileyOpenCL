@@ -1,54 +1,54 @@
 digraph "Scop Graph for 'isPBMFile' function" {
 	label="Scop Graph for 'isPBMFile' function";
 
-	Node0xc5dd4a0 [shape=record,label="{entry}"];
-	Node0xc5dd4a0 -> Node0xc5c7650;
-	Node0xc5c7650 [shape=record,label="{entry.split}"];
-	Node0xc5c7650 -> Node0xc5cccb0;
-	Node0xc5c7650 -> Node0xc6279c0;
-	Node0xc5cccb0 [shape=record,label="{if.end18}"];
-	Node0xc6279c0 [shape=record,label="{if.then}"];
-	Node0xc6279c0 -> Node0xc5f8d80;
-	Node0xc6279c0 -> Node0xc5cccb0;
-	Node0xc5f8d80 [shape=record,label="{if.then4}"];
-	Node0xc5f8d80 -> Node0xc5c88a0;
-	Node0xc5f8d80 -> Node0xc5cccb0;
-	Node0xc5c88a0 [shape=record,label="{land.lhs.true}"];
-	Node0xc5c88a0 -> Node0xc5f7360;
-	Node0xc5c88a0 -> Node0xc5cccb0;
-	Node0xc5f7360 [shape=record,label="{land.lhs.true11}"];
-	Node0xc5f7360 -> Node0xc5cccb0;
+	Node0xc0cdbf0 [shape=record,label="{entry}"];
+	Node0xc0cdbf0 -> Node0xc0d9a30;
+	Node0xc0d9a30 [shape=record,label="{entry.split}"];
+	Node0xc0d9a30 -> Node0xc11e210;
+	Node0xc0d9a30 -> Node0xc0ea6e0;
+	Node0xc11e210 [shape=record,label="{if.end18}"];
+	Node0xc0ea6e0 [shape=record,label="{if.then}"];
+	Node0xc0ea6e0 -> Node0xc123780;
+	Node0xc0ea6e0 -> Node0xc11e210;
+	Node0xc123780 [shape=record,label="{if.then4}"];
+	Node0xc123780 -> Node0xc130500;
+	Node0xc123780 -> Node0xc11e210;
+	Node0xc130500 [shape=record,label="{land.lhs.true}"];
+	Node0xc130500 -> Node0xc130f50;
+	Node0xc130500 -> Node0xc11e210;
+	Node0xc130f50 [shape=record,label="{land.lhs.true11}"];
+	Node0xc130f50 -> Node0xc11e210;
 	colorscheme = "paired12"
-        subgraph cluster_0xc6355b0 {
+        subgraph cluster_0xc1319d0 {
           label = "";
           style = solid;
           color = 1
-          subgraph cluster_0xc645610 {
+          subgraph cluster_0xc0f8140 {
             label = "";
             style = solid;
             color = 6
-            subgraph cluster_0xc645590 {
+            subgraph cluster_0xc0f80c0 {
               label = "";
               style = solid;
               color = 5
-              subgraph cluster_0xc646680 {
+              subgraph cluster_0xbfbf340 {
                 label = "";
                 style = solid;
                 color = 7
-                subgraph cluster_0xc646600 {
+                subgraph cluster_0xbfbf2c0 {
                   label = "";
                   style = solid;
                   color = 9
-                  Node0xc5c88a0;
-                  Node0xc5f7360;
+                  Node0xc130500;
+                  Node0xc130f50;
                 }
-                Node0xc5f8d80;
+                Node0xc123780;
               }
-              Node0xc6279c0;
+              Node0xc0ea6e0;
             }
-            Node0xc5c7650;
+            Node0xc0d9a30;
           }
-          Node0xc5dd4a0;
-          Node0xc5cccb0;
+          Node0xc0cdbf0;
+          Node0xc11e210;
         }
 }

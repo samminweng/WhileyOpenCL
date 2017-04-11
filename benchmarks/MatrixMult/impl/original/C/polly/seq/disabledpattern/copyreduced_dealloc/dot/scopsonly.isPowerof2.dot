@@ -1,27 +1,27 @@
 digraph "Scop Graph for 'isPowerof2' function" {
 	label="Scop Graph for 'isPowerof2' function";
 
-	Node0xc5ea230 [shape=record,label="{entry}"];
-	Node0xc5ea230 -> Node0xc5fc380;
-	Node0xc5fc380 [shape=record,label="{entry.split}"];
-	Node0xc5fc380 -> Node0xc5d3f10;
-	Node0xc5fc380 -> Node0xc60d910;
-	Node0xc5d3f10 [shape=record,label="{return}"];
-	Node0xc60d910 [shape=record,label="{land.rhs}"];
-	Node0xc60d910 -> Node0xc5d3f10;
+	Node0xc120730 [shape=record,label="{entry}"];
+	Node0xc120730 -> Node0xc0fc520;
+	Node0xc0fc520 [shape=record,label="{entry.split}"];
+	Node0xc0fc520 -> Node0xc103470;
+	Node0xc0fc520 -> Node0xc0fdf90;
+	Node0xc103470 [shape=record,label="{return}"];
+	Node0xc0fdf90 [shape=record,label="{land.rhs}"];
+	Node0xc0fdf90 -> Node0xc103470;
 	colorscheme = "paired12"
-        subgraph cluster_0xc60e530 {
+        subgraph cluster_0xc10d1b0 {
           label = "";
           style = solid;
           color = 1
-          subgraph cluster_0xc5e2680 {
+          subgraph cluster_0xc0d96e0 {
             label = "";
             style = solid;
             color = 6
-            Node0xc5fc380;
-            Node0xc60d910;
+            Node0xc0fc520;
+            Node0xc0fdf90;
           }
-          Node0xc5ea230;
-          Node0xc5d3f10;
+          Node0xc120730;
+          Node0xc103470;
         }
 }

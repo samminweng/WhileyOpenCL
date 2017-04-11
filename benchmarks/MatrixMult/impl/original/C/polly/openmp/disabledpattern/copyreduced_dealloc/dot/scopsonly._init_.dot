@@ -1,0 +1,67 @@
+digraph "Scop Graph for '_init_' function" {
+	label="Scop Graph for '_init_' function";
+
+	Node0xc5ec1d0 [shape=record,label="{entry}"];
+	Node0xc5ec1d0 -> Node0xc6494a0;
+	Node0xc6494a0 [shape=record,label="{entry.split}"];
+	Node0xc6494a0 -> Node0xc64c480;
+	Node0xc6494a0 -> Node0xc618600;
+	Node0xc64c480 [shape=record,label="{while.cond10.preheader.lr.ph}"];
+	Node0xc64c480 -> Node0xc679530;
+	Node0xc679530 [shape=record,label="{while.cond10.preheader}"];
+	Node0xc679530 -> Node0xc67d350;
+	Node0xc679530 -> Node0xc6499d0;
+	Node0xc67d350 [shape=record,label="{if.end14.lr.ph}"];
+	Node0xc67d350 -> Node0xc64ffb0;
+	Node0xc64ffb0 [shape=record,label="{if.end14}"];
+	Node0xc64ffb0 -> Node0xc64ffb0[constraint=false];
+	Node0xc64ffb0 -> Node0xc681740;
+	Node0xc681740 [shape=record,label="{while.cond10.blklab4_crit_edge}"];
+	Node0xc681740 -> Node0xc6499d0;
+	Node0xc6499d0 [shape=record,label="{blklab4}"];
+	Node0xc6499d0 -> Node0xc679530[constraint=false];
+	Node0xc6499d0 -> Node0xc67fcc0;
+	Node0xc67fcc0 [shape=record,label="{while.cond.if.end24_crit_edge}"];
+	Node0xc67fcc0 -> Node0xc618600;
+	Node0xc618600 [shape=record,label="{if.end24}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xc649c80 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc6217a0 {
+            label = "Call instruction:   %call = tail call i64* @create1DArray_int64_t(i64 0, i64 %mul) #5";
+            style = solid;
+            color = 6
+            subgraph cluster_0xc5ea6f0 {
+              label = "";
+              style = filled;
+              color = 3              subgraph cluster_0xc5c96c0 {
+                label = "";
+                style = solid;
+                color = 7
+                subgraph cluster_0xc607710 {
+                  label = "";
+                  style = solid;
+                  color = 9
+                  subgraph cluster_0xc61ffe0 {
+                    label = "";
+                    style = solid;
+                    color = 11
+                    Node0xc64ffb0;
+                  }
+                  Node0xc679530;
+                  Node0xc67d350;
+                  Node0xc681740;
+                }
+                Node0xc6499d0;
+              }
+              Node0xc67fcc0;
+            }
+            Node0xc6494a0;
+            Node0xc64c480;
+          }
+          Node0xc5ec1d0;
+          Node0xc618600;
+        }
+}

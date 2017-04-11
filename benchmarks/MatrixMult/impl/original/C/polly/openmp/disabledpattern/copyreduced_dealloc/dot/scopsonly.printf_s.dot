@@ -1,0 +1,63 @@
+digraph "Scop Graph for 'printf_s' function" {
+	label="Scop Graph for 'printf_s' function";
+
+	Node0xc4ee840 [shape=record,label="{entry}"];
+	Node0xc4ee840 -> Node0xc5188e0;
+	Node0xc5188e0 [shape=record,label="{entry.split}"];
+	Node0xc5188e0 -> Node0xc4d9250;
+	Node0xc5188e0 -> Node0xc4e55d0;
+	Node0xc4d9250 [shape=record,label="{while.end}"];
+	Node0xc4d9250 -> Node0xc4f45a0;
+	Node0xc4d9250 -> Node0xc4d1a30;
+	Node0xc4f45a0 [shape=record,label="{if.then8}"];
+	Node0xc4f45a0 -> Node0xc4d1a30;
+	Node0xc4d1a30 [shape=record,label="{if.end10}"];
+	Node0xc4e55d0 [shape=record,label="{while.body.lr.ph}"];
+	Node0xc4e55d0 -> Node0xc510450;
+	Node0xc510450 [shape=record,label="{while.body}"];
+	Node0xc510450 -> Node0xc4f69b0;
+	Node0xc510450 -> Node0xc532990;
+	Node0xc4f69b0 [shape=record,label="{if.then}"];
+	Node0xc4f69b0 -> Node0xc532990;
+	Node0xc532990 [shape=record,label="{if.end}"];
+	Node0xc532990 -> Node0xc510450[constraint=false];
+	Node0xc532990 -> Node0xc3a19f0;
+	Node0xc3a19f0 [shape=record,label="{while.cond.while.end_crit_edge}"];
+	Node0xc3a19f0 -> Node0xc4d9250;
+	colorscheme = "paired12"
+        subgraph cluster_0xc51d2d0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc4feeb0 {
+            label = "Call instruction:   %putchar = tail call i32 @putchar(i32 %conv2)";
+            style = solid;
+            color = 6
+            subgraph cluster_0xc4fee30 {
+              label = "Call instruction:   %putchar = tail call i32 @putchar(i32 %conv2)";
+              style = solid;
+              color = 5
+              subgraph cluster_0xc4d20d0 {
+                label = "Region can not profitably be optimized!";
+                style = solid;
+                color = 7
+                Node0xc510450;
+                Node0xc4f69b0;
+              }
+              Node0xc532990;
+            }
+            Node0xc5188e0;
+            Node0xc4e55d0;
+            Node0xc3a19f0;
+          }
+          subgraph cluster_0xc4d2050 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xc4d9250;
+            Node0xc4f45a0;
+          }
+          Node0xc4ee840;
+          Node0xc4d1a30;
+        }
+}
