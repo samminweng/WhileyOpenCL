@@ -1,0 +1,15 @@
+digraph "Scop Graph for 'printf_Matrix' function" {
+	label="Scop Graph for 'printf_Matrix' function";
+
+	Node0xc908920 [shape=record,label="{entry}"];
+	Node0xc908920 -> Node0xc8d7960;
+	Node0xc8d7960 [shape=record,label="{entry.split}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xc89a8d0 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0xc908920;
+          Node0xc8d7960;
+        }
+}

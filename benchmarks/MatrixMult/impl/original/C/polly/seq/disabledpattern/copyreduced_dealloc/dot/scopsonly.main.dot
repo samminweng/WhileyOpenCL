@@ -1,0 +1,123 @@
+digraph "Scop Graph for 'main' function" {
+	label="Scop Graph for 'main' function";
+
+	Node0xca24c40 [shape=record,label="{entry}"];
+	Node0xca24c40 -> Node0xca49050;
+	Node0xca49050 [shape=record,label="{entry.split}"];
+	Node0xca49050 -> Node0xca73450;
+	Node0xca49050 -> Node0xca0e7a0;
+	Node0xca73450 [shape=record,label="{blklab19}"];
+	Node0xca73450 -> Node0xca175a0;
+	Node0xca73450 -> Node0xca0ee10;
+	Node0xca175a0 [shape=record,label="{if.end146}"];
+	Node0xca175a0 -> Node0xca1a0f0;
+	Node0xca175a0 -> Node0xca060a0;
+	Node0xca1a0f0 [shape=record,label="{if.then148}"];
+	Node0xca1a0f0 -> Node0xca060a0;
+	Node0xca060a0 [shape=record,label="{if.end149}"];
+	Node0xca060a0 -> Node0xca086f0;
+	Node0xca060a0 -> Node0xca236f0;
+	Node0xca086f0 [shape=record,label="{if.then151}"];
+	Node0xca086f0 -> Node0xca236f0;
+	Node0xca236f0 [shape=record,label="{if.end152}"];
+	Node0xca236f0 -> Node0xca0df20;
+	Node0xca236f0 -> Node0xca0c390;
+	Node0xca0df20 [shape=record,label="{if.then154}"];
+	Node0xca0df20 -> Node0xca0c390;
+	Node0xca0c390 [shape=record,label="{if.end158}"];
+	Node0xca0c390 -> Node0xc9f8b20;
+	Node0xca0c390 -> Node0xc9f8b80;
+	Node0xc9f8b20 [shape=record,label="{if.end164}"];
+	Node0xc9f8b20 -> Node0xca08bd0;
+	Node0xc9f8b20 -> Node0xca04330;
+	Node0xca08bd0 [shape=record,label="{if.then166}"];
+	Node0xca08bd0 -> Node0xca04330;
+	Node0xca04330 [shape=record,label="{if.end176}"];
+	Node0xca04330 -> Node0xc87c940;
+	Node0xca04330 -> Node0xcaacf60;
+	Node0xc87c940 [shape=record,label="{if.then178}"];
+	Node0xc87c940 -> Node0xcaacf60;
+	Node0xcaacf60 [shape=record,label="{if.end182}"];
+	Node0xcaacf60 -> Node0xc87aee0;
+	Node0xcaacf60 -> Node0xc8a7f90;
+	Node0xc87aee0 [shape=record,label="{if.then184}"];
+	Node0xc87aee0 -> Node0xc8a7f90;
+	Node0xc8a7f90 [shape=record,label="{if.end185}"];
+	Node0xc9f8b80 [shape=record,label="{if.then160}"];
+	Node0xc9f8b80 -> Node0xc9f8b20;
+	Node0xca0ee10 [shape=record,label="{if.then145}"];
+	Node0xca0ee10 -> Node0xca175a0;
+	Node0xca0e7a0 [shape=record,label="{if.end14}"];
+	Node0xca0e7a0 -> Node0xca73450;
+	colorscheme = "paired12"
+        subgraph cluster_0xca41b80 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc8e62b0 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xca49050;
+            Node0xca0e7a0;
+          }
+          subgraph cluster_0xc892c90 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xca73450;
+            Node0xca0ee10;
+          }
+          subgraph cluster_0xcac6660 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xca175a0;
+            Node0xca1a0f0;
+          }
+          subgraph cluster_0xc9fad60 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xca060a0;
+            Node0xca086f0;
+          }
+          subgraph cluster_0xca73570 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xca236f0;
+            Node0xca0df20;
+          }
+          subgraph cluster_0xca2f6d0 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xca0c390;
+            Node0xc9f8b80;
+          }
+          subgraph cluster_0xca4d8c0 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xc9f8b20;
+            Node0xca08bd0;
+          }
+          subgraph cluster_0xca93030 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xca04330;
+            Node0xc87c940;
+          }
+          subgraph cluster_0xcae29a0 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xcaacf60;
+            Node0xc87aee0;
+          }
+          Node0xca24c40;
+          Node0xc8a7f90;
+        }
+}

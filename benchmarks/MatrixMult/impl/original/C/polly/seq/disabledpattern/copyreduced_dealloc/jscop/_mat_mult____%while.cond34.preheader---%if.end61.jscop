@@ -1,0 +1,86 @@
+{
+   "arrays" : [
+      {
+         "name" : "MemRef_call",
+         "sizes" : [ "*", "%0" ],
+         "type" : "i64"
+      },
+      {
+         "name" : "MemRef_2",
+         "sizes" : [ "*", "%0" ],
+         "type" : "i64"
+      },
+      {
+         "name" : "MemRef_3",
+         "sizes" : [ "*", "%0" ],
+         "type" : "i64"
+      },
+      {
+         "name" : "Packed_B",
+         "sizes" : [ "256", "384", "4" ],
+         "type" : "i64"
+      },
+      {
+         "name" : "Packed_A",
+         "sizes" : [ "16", "384", "4" ],
+         "type" : "i64"
+      }
+   ],
+   "context" : "[p_0_loaded_from_b, p_1_loaded_from_a] -> {  : -9223372036854775808 <= p_0_loaded_from_b <= 9223372036854775807 and -9223372036854775808 <= p_1_loaded_from_a <= 9223372036854775807 }",
+   "name" : "%while.cond34.preheader---%if.end61",
+   "statements" : [
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "[p_0_loaded_from_b, p_1_loaded_from_a] -> { Stmt_if_end43[i0, i1, i2] -> MemRef_call[i0, i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[p_0_loaded_from_b, p_1_loaded_from_a] -> { Stmt_if_end43[i0, i1, i2] -> MemRef_2[i0, i2] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[p_0_loaded_from_b, p_1_loaded_from_a] -> { Stmt_if_end43[i0, i1, i2] -> MemRef_3[i2, i1] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[p_0_loaded_from_b, p_1_loaded_from_a] -> { Stmt_if_end43[i0, i1, i2] -> MemRef_call[i0, i1] }"
+            }
+         ],
+         "domain" : "[p_0_loaded_from_b, p_1_loaded_from_a] -> { Stmt_if_end43[i0, i1, i2] : 0 <= i0 < p_1_loaded_from_a and 0 <= i1 < p_0_loaded_from_b and 0 <= i2 < p_0_loaded_from_b }",
+         "name" : "Stmt_if_end43",
+         "schedule" : ""
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "write",
+               "relation" : "null"
+            },
+            {
+               "kind" : "read",
+               "relation" : "null"
+            }
+         ],
+         "domain" : "[p_0_loaded_from_b, p_1_loaded_from_a] -> { CopyStmt_0[i0, i1, i2] : 0 <= i0 < p_1_loaded_from_a and 0 <= i1 < p_0_loaded_from_b and 0 <= i2 < p_0_loaded_from_b }",
+         "name" : "CopyStmt_0",
+         "schedule" : ""
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "write",
+               "relation" : "null"
+            },
+            {
+               "kind" : "read",
+               "relation" : "null"
+            }
+         ],
+         "domain" : "[p_0_loaded_from_b, p_1_loaded_from_a] -> { CopyStmt_1[i0, i1, i2] : 0 <= i0 < p_1_loaded_from_a and 0 <= i1 < p_0_loaded_from_b and 0 <= i2 < p_0_loaded_from_b }",
+         "name" : "CopyStmt_1",
+         "schedule" : ""
+      }
+   ]
+}

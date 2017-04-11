@@ -9,51 +9,56 @@ alias opt="opt -O3 -polly"
 alias pollycc="clang -O3 -mllvm -polly"
 alias cls='printf "\033c"' ## Clear the screen
 ### Get the root working directory
-basedir="$(dirname "$(pwd)")"
-utildir="$basedir/tests/code"
+BASEDIR="$(dirname "$(pwd)")"
+BENCHMARKDIR="$BASEDIR/benchmarks"
+UTILDIR="$BASEDIR/tests/code"
 
 ### Generate C code
 generateCode(){
 	testcase=$1
 	program=$2
-	codegen=$3
-	## change to 'testcase' folder
-	cd "$basedir/polly/$testcase/" 
-	# clean and create the folder
-	rm -f "impl/$program/$codegen/*.*"
-	mkdir -p "impl/$program/$codegen"
+	compiler=$3
+	codegen=$4
+	pollycode=$5
+	# The folder of generated Polly code
+	folder="$BENCHMARKDIR/$testcase/impl/$program/C/$compiler/$pollycode/disabledpattern/$codegen"
+	# clean and create the folder	
+	rm -f "$folder/*.*"
+	mkdir -p "$folder"
+	#read -p "Press [Enter] to continue..."
+	## Clean up previously generated C code and Whiley programs
+	rm -f "$folder/*.*"
 	# copy the source whiley file to the folder
-	cp $testcase"_"$program.whiley "impl/$program/$codegen/."
-	
-	#### Change folder to the corresponding implementation folder
-	cd "impl/$program/$codegen"
-	## Clean up previously generated C code
-	rm -f *.c *.h
+	cp $BENCHMARKDIR/$testcase/$testcase"_"$program.whiley "$folder/."	
 	### Copy Util.c Util.h to 
-	cp $utildir/Util.c $utildir/Util.h .
+	cp $UTILDIR/Util.c $UTILDIR/Util.h $UTILDIR/WyRT.c $UTILDIR/WyRT.h "$folder/."
+	#### Change folder to the corresponding implementation folder
+	cd "$folder"	
+	#read -p "Press [Enter] to continue..."
 	## Translate Whiley programs into naive C code
 	case "$codegen" in
 		"naive")
 			echo "#############Generate naive $testcase#################"
 			### Translate Whiley program into naive C code 
-	    	./../../../../..//bin/wyopcl -code $testcase"_"$program.whiley
+	    	./../../../../../../../../../bin/wyopcl -code $testcase"_"$program.whiley
 	    	;;
 	    "naive_dealloc")
 			echo "#############Generate naive_dealloc $testcase#################"
 			### Translate Whiley program into naive + dealloc C code 
-	    	./../../../../../bin/wyopcl -code -dealloc $testcase"_"$program.whiley
+	    	./../../../../../../../../../bin/wyopcl -code -dealloc $testcase"_"$program.whiley
 	    	;;
 	    "copyreduced")
 			echo "#############Generate copyreduced $testcase#################"
 			## Translate Whiley programs into copy_reduced C code
-			./../../../../../bin/wyopcl -code -copy $testcase"_"$program.whiley
+			./../../../../../../../../../bin/wyopcl -code -nocopy $testcase"_"$program.whiley
 			;;
 		"copyreduced_dealloc")
 			echo "#############Generate copyreduced_dealloc $testcase#################"
 			### Translate Whiley program into copy-eliminated + memory deallocated C code 
-	    	./../../../../../bin/wyopcl -code -copy -dealloc $testcase"_"$program.whiley	
+	    	./../../../../../../../../../bin/wyopcl -code -nocopy -dealloc $testcase"_"$program.whiley	
 			;;
 	esac
+	#read -p "Press [Enter] to continue..."
 }
 
 ### Create or clean up folder, and move files to that folder
@@ -75,15 +80,8 @@ generate_png(){
 	done
 	cd ../
 }
-###
-### Run Polly to optimize the C code and generate efficient executables
-###
-runPolly(){
-	testcase=$1
-	program=$2
-	codegen=$3
-	parameter=$4
-
+## Clean out folder
+cleanPollyFolder(){
 	# Clean the folder of executable files
 	rm -rf "out"/*
 	mkdir -p "out" 
@@ -93,83 +91,114 @@ runPolly(){
 	mkdir -p "assembly"
 	## clean the llvm code (*.ll)
 	rm -rf "llvm"/*
-	mkdir -p "llvm"  
+	mkdir -p "llvm"
+}
+
+###
+### Run Polly to optimize the C code and generate efficient executables
+###
+runPolly(){
+	testcase=$1
+	program=$2
+	compiler=$3
+	codegen=$4
+	pollycode=$5
+	parameter=$6
+
+	## Clean folder
+	cleanPollyFolder
 	
-	echo -e -n "[*] Export SCoP in DOTs" && read
-	pollycc -g -o "out"/$testcase"_"$program.polly.out\
-	        -mllvm -polly-dot -mllvm -polly-show $testcase"_"$program.c Util.c
+	## Analyze C code and export SCoP
+	read -p "[*] Export SCoP in DOTs"
+	pollycc -mllvm -polly-dot-only $testcase"_"$program.c Util.c WyRT.c
 	folder_proc "dot" "dot"
 	generate_png "dot"
-
-	echo -e -n "[*]Export JSCoP" && read	
-	pollycc -S -emit-llvm $testcase"_"$program.c -o "llvm/$testcase_$program.preopt.ll.tmp" && 
-	## compile C to llvm
-	opt -S -polly-canonicalize -polly-report "llvm/$testcase_$program.preopt.ll.tmp" > "llvm/$testcase_$program.preopt.ll" &&
-	opt -basicaa -polly-export-jscop "llvm/$testcase_$program.preopt.ll" &&
-	rm "llvm/$testcase_$program.preopt.ll.tmp"
+	
+	## Export JSCoP file
+	read -p "[*]Export JSCoP"
+	pollycc -mllvm -polly-export $testcase"_"$program.c Util.c WyRT.c
 	folder_proc "jscop" "jscop"
 
+	## Point out the un-optimizable region
+	read -p "[*]Show the region Polly can NOT analyze and reasons"
+	pollycc -Rpass-missed=polly-detect $testcase"_"$program.c Util.c WyRT.c
+	
+	## Point out the optimizable region
+	read -p "[*]Show the regions Polly can analyze and assumption/restrictions" 
+	pollycc -fcolor-diagnostics -mllvm -polly-opt-outer-coincidence=yes\
+			-Rpass-analysis=polly $testcase"_"$program.c Util.c WyRT.c
+	
+	## Show SCoP for debugging
+	read -p "[*]Show the information of valid SCoP" 
+	pollycc -mllvm -polly-opt-outer-coincidence=yes -mllvm -debug-only=polly-detect\
+			$testcase"_"$program.c Util.c WyRT.c
+	
+	## Show SCop for debuggin
+	read -p "[*]Show the representation of valid SCoP" 
+	pollycc -mllvm -polly-opt-outer-coincidence=yes -mllvm -debug-only=polly-scops\
+			$testcase"_"$program.c Util.c WyRT.c
+	
+	## Show AST
+	read -p "[*]Show the optimized AST"
+	pollycc -mllvm -polly-opt-outer-coincidence=yes -mllvm -debug-only=polly-ast\
+			-mllvm -polly-process-unprofitable $testcase"_"$program.c Util.c WyRT.c
 
-	echo -e -n "[*]Show the region Polly can NOT analyze and reasons" && read
-	#pollycc -g -mllvm -polly-opt-outer-coincidence=yes -o "out"/$testcase"_"$program.polly.out\
-	pollycc -g -o "out"/$testcase"_"$program.polly.out\
-	        -Rpass-missed=polly-detect $testcase"_"$program.c Util.c
+	### Generate sequential executables using GCC
+	read -p "[1] Run  GCC -O3  executables"
+	start=`date +%s%N` 
+	gcc -std=c11 -O3 $testcase"_"$program.c Util.c WyRT.c -o out/$testcase"_"$program.gcc.out
+	./out/$testcase"_"$program.gcc.out $parameter
+	end=`date +%s%N`
+	exectime=$(((end-start)/1000000))
+	printf '\nExecutionTime:%s\tmilliseconds\n' $exectime
 
-	echo -e -n "[*]Show the regions Polly can analyze and assumption/restrictions" && read
-	pollycc -fcolor-diagnostics -g\
-			-mllvm -polly-opt-outer-coincidence=yes -o "out"/$testcase"_"$program.polly.out\
-	        -Rpass-analysis=polly $testcase"_"$program.c Util.c
+	### Generate sequential executable using Clang
+	read -p "[2] Run  Clang -O3  executables"
+	clang -O3 $testcase"_"$program.c Util.c WyRT.c -o out/$testcase"_"$program.clang.out
+	start=`date +%s%N`
+	./out/$testcase"_"$program.clang.out $parameter
+	end=`date +%s%N`
+	exectime=$(((end-start)/1000000))
+	printf '\nExecutionTime:%s\tmilliseconds\n' $exectime
 
-	echo -e -n "[*]Show the information of valid SCoP" && read 
-	pollycc -g -mllvm -polly-opt-outer-coincidence=yes\
-			-o "out"/$testcase"_"$program.polly.out -mllvm -debug-only=polly-detect\
-			$testcase"_"$program.c Util.c
+	## Run sequential code, produced by Polly
+	if [ $pollycode = "seq" ]
+	then
+		read -p "[3] Run  Polly-Optimized  executables"
+		## Generate LLVM-IR code from C code
+		pollycc -S -emit-llvm -mllvm -polly-vectorizer=stripmine\
+				-mllvm -polly-process-unprofitable -mllvm -polly-opt-outer-coincidence=yes\
+				$testcase"_"$program.c -o "llvm"/$testcase"_"$program.polly.ll
+		### Use 'llc' to compile LLVM code into assembly code
+		llc "llvm"/$testcase"_"$program.polly.ll -o "assembly"/$testcase"_"$program.polly.s
+		### Use 'clang' to compile .s file and link with 'Util.c'
+		pollycc "assembly"/$testcase"_"$program.polly.s Util.c WyRT.c -o "out"/$testcase"_"$program.polly.out
+		### Run the generated executables.
+		start=`date +%s%N`
+		./out/$testcase"_"$program.polly.out $parameter
+		end=`date +%s%N`
+		exectime=$(((end-start)/1000000))
+		printf '\nExecutionTime:%s\tmilliseconds\n' $exectime
+	fi
 
-	echo -e -n "[*]Show the representation of valid SCoP" && read 
-	pollycc -g -mllvm -polly-opt-outer-coincidence=yes\
-			-o "out"/$testcase"_"$program.polly.out -mllvm -debug-only=polly-scops\
-			$testcase"_"$program.c Util.c
-
-	echo -e -n "[*]Show the optimized AST" && read
-	pollycc -g -mllvm -polly-opt-outer-coincidence=yes\
-			-o "out"/$testcase"_"$program.polly.out -mllvm -debug-only=polly-ast\
-			-mllvm -polly-process-unprofitable\
-	        $testcase"_"$program.c Util.c
-
-	### Generate executables with enabled vectorizer
-	echo -e -n "[1] Run  GCC -O3  executables" && read
-	gcc -std=c99 -O3 $testcase"_"$program.c Util.c -o "out/$testcase"_"$program.gcc.out"
-	time ./out/$testcase"_"$program.gcc.out $parameter
-
-	echo -e -n "[2] Run  Clang -O3  executables" && read
-	clang -g -O3 $testcase"_"$program.c Util.c -o "out"/$testcase"_"$program.clang.out
-	time ./out/$testcase"_"$program.clang.out $parameter
-
-	##-fno-vectorize
-	echo -e -n "[3] Run  Polly-Optimized  executables" && read
-	pollycc -g -mllvm -polly-vectorizer=stripmine\
-	        -S -emit-llvm -mllvm -polly-process-unprofitable -mllvm -polly-opt-outer-coincidence=yes\
-	        $testcase"_"$program.c -o "llvm"/$testcase"_"$program.polly.ll
-	### Use 'llc' to compile LLVM code into assembly code
-    llc "llvm"/$testcase"_"$program.polly.ll -o "assembly"/$testcase"_"$program.polly.s
-    ### Use 'clang' to compile .s file and link with 'Util.c'
-    pollycc "assembly"/$testcase"_"$program.polly.s Util.c -o "out"/$testcase"_"$program.polly.out
-	### Run the generated executables.
-	time ./out/$testcase"_"$program.polly.out $parameter
-
-
-	echo -e -n "[4] Run  Polly-Optimized OpenMP  executables with 2 threads" && read
-	pollycc -g -mllvm -polly-vectorizer=stripmine -S -emit-llvm\
-	        -mllvm -polly-parallel -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
-	        -mllvm -polly-opt-outer-coincidence=yes\
-	        $testcase"_"$program.c -o "llvm"/$testcase"_"$program.openmp.ll
-	llc "llvm"/$testcase"_"$program.openmp.ll -o "assembly"/$testcase"_"$program.openmp.s
-    ### Use 'gcc' to compile .s file and link with 'libUtil.a'
-    pollycc "assembly"/$testcase"_"$program.openmp.s Util.c -lgomp -o "out"/$testcase"_"$program.openmp.out 
-	### Run the program using two threads.
-	export OMP_NUM_THREADS=2
-	### Run the generated executables.
-	time ./out/$testcase"_"$program.openmp.out $parameter
+	## Run parallel OpenMP code, produced by Polly
+	if [ $pollycode = "openmp" ]
+	then
+		echo -e -n "[4] Run  Polly-Optimized OpenMP executables with 2 threads" && read
+		### Run the program using two threads.
+		export OMP_NUM_THREADS=2
+		## Generate OpenMP code
+		pollycc -g -mllvm -polly-vectorizer=stripmine -S -emit-llvm\
+				-mllvm -polly-parallel -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
+				-mllvm -polly-opt-outer-coincidence=yes\
+				$testcase"_"$program.c -o "llvm"/$testcase"_"$program.openmp.ll
+		llc "llvm"/$testcase"_"$program.openmp.ll -o "assembly"/$testcase"_"$program.openmp.s
+		### Use 'gcc' to compile .s file and link with 'libUtil.a'
+		pollycc "assembly"/$testcase"_"$program.openmp.s Util.c -lgomp -o "out"/$testcase"_"$program.openmp.out 
+		
+		### Run the generated executables.
+		time ./out/$testcase"_"$program.openmp.out $parameter
+	fi
 
 	echo -e "-----------------Press [Enter] to continue--------------------"&& read
 	
@@ -180,23 +209,29 @@ exec(){
 	testcase=$1
 	program=$2
 	parameter=$3
-
+	compiler="polly"
 	## declare 4 kinds of code generation
 	#declare -a codegens=("naive" "naive_dealloc" "copyreduced" "copyreduced_dealloc")
 	declare -a codegens=("copyreduced_dealloc")
+	## declare 2 kinds of Polly code
+	declare -a pollycodes=("seq" "openmp")
 	## Iterate each codegen
 	for codegen in "${codegens[@]}"
 	do
-		## Generate C code
-		generateCode $testcase $program $codegen
-		runPolly $testcase $program $codegen $parameter
+		for pollycode in "${pollycodes[@]}"
+		do
+			#echo $testcase $program $compiler $codegen $pollycode $parameter
+			## Generate C code
+			generateCode $testcase $program $compiler $codegen $pollycode
+			runPolly $testcase $program $compiler $codegen $pollycode $parameter
+		done
 	done
 	# Return to the working directory
-    cd $basedir/polly
+    cd $BENCHMARKDIR
 }
 ### Determine problem size from cmd line argument
 ### MatrixMult test case
-#exec MatrixMult original 2000
+exec MatrixMult original 100
 #exec MatrixMult transpose 2000 
 
 ### GCD test case
@@ -213,7 +248,7 @@ exec(){
 ##exec NQueens original 13
 
 ### SobelEdge Test Case
-exec SobelEdge original 8
+#exec SobelEdge original 8
 
 
 
