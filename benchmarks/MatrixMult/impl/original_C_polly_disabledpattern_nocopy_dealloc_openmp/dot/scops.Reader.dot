@@ -1,0 +1,40 @@
+digraph "Scop Graph for 'Reader' function" {
+	label="Scop Graph for 'Reader' function";
+
+	Node0xbfcd8d0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xbfcd8d0 -> Node0xbfd2d00;
+	Node0xbfd2d00 [shape=record,label="{entry.split:                                      \l  %call = tail call noalias i8* @malloc(i64 16384) #6\l  br label %while.cond\l}"];
+	Node0xbfd2d00 -> Node0xbfafa50;
+	Node0xbfafa50 [shape=record,label="{while.cond:                                       \l  %i.0 = phi i64 [ 0, %entry.split ], [ %add, %while.body ]\l  %cmp = icmp ult i64 %i.0, %arr_size\l  br i1 %cmp, label %while.body, label %lor.rhs\l}"];
+	Node0xbfafa50 -> Node0xbfe8910;
+	Node0xbfafa50 -> Node0xbfda260;
+	Node0xbfe8910 [shape=record,label="{while.body:                                       \l  %arrayidx4 = getelementptr inbounds i64, i64* %arr, i64 %i.0\l  %1 = load i64, i64* %arrayidx4, align 8, !tbaa !1\l  %conv = trunc i64 %1 to i8\l  %arrayidx5 = getelementptr inbounds i8, i8* %call, i64 %i.0\l  store i8 %conv, i8* %arrayidx5, align 1, !tbaa !5\l  %add = add i64 %i.0, 1\l  br label %while.cond\l}"];
+	Node0xbfe8910 -> Node0xbfafa50[constraint=false];
+	Node0xbfda260 [shape=record,label="{lor.rhs:                                          \l  %arrayidx = getelementptr inbounds i64, i64* %arr, i64 %i.0\l  %0 = load i64, i64* %arrayidx, align 8, !tbaa !1\l  %cmp2 = icmp eq i64 %0, 0\l  br i1 %cmp2, label %while.end, label %while.body\l}"];
+	Node0xbfda260 -> Node0xbfbbf90;
+	Node0xbfda260 -> Node0xbfe8910;
+	Node0xbfbbf90 [shape=record,label="{while.end:                                        \l  %i.0.lcssa = phi i64 [ %i.0, %lor.rhs ]\l  %cmp6 = icmp ugt i64 %i.0.lcssa, %arr_size\l  %i.0.arr_size = select i1 %cmp6, i64 %i.0.lcssa, i64 %arr_size\l  %call9 = tail call noalias i8* @malloc(i64 %i.0.arr_size) #6\l  %call10 = tail call i8* @strncpy(i8* %call9, i8* %call, i64 %i.0.arr_size) #6\l  %call12 = tail call %struct._IO_FILE* @fopen(i8* %call9, i8* getelementptr\l... inbounds ([2 x i8], [2 x i8]* @.str.22, i64 0, i64 0))\l  %cmp13 = icmp eq %struct._IO_FILE* %call12, null\l  br i1 %cmp13, label %if.then15, label %if.end17\l}"];
+	Node0xbfbbf90 -> Node0xbfbbcd0;
+	Node0xbfbbf90 -> Node0xbfc24c0;
+	Node0xbfbbcd0 [shape=record,label="{if.then15:                                        \l  %2 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !tbaa !6\l  %3 = tail call i64 @fwrite(i8* getelementptr inbounds ([59 x i8], [59 x i8]*\l... @.str.23, i64 0, i64 0), i64 58, i64 1, %struct._IO_FILE* %2) #7\l  tail call void @exit(i32 -2) #8\l  unreachable\l}"];
+	Node0xbfc24c0 [shape=record,label="{if.end17:                                         \l  tail call void @free(i8* %call9) #6\l  tail call void @free(i8* %call) #6\l  ret %struct._IO_FILE* %call12\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xbfb73e0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xbfb7460 {
+            label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: while.cond";
+            style = solid;
+            color = 6
+            Node0xbfafa50;
+            Node0xbfe8910;
+            Node0xbfda260;
+          }
+          Node0xbfcd8d0;
+          Node0xbfd2d00;
+          Node0xbfbbf90;
+          Node0xbfbbcd0;
+          Node0xbfc24c0;
+        }
+}

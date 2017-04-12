@@ -1,0 +1,46 @@
+digraph "Scop Graph for 'writeAll' function" {
+	label="Scop Graph for 'writeAll' function";
+
+	Node0xbffa970 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xbffa970 -> Node0xbfc24c0;
+	Node0xbfc24c0 [shape=record,label="{entry.split:                                      \l  %cmp8 = icmp eq i64 %arr_size, 0\l  br i1 %cmp8, label %while.end, label %while.body.lr.ph\l}"];
+	Node0xbfc24c0 -> Node0xbfdaa70;
+	Node0xbfc24c0 -> Node0xbfc12a0;
+	Node0xbfdaa70 [shape=record,label="{while.end:                                        \l  %count.0.lcssa = phi i64 [ %count.09.lcssa, %while.body.while.end_crit_edge\l... ], [ %inc.lcssa, %while.cond.while.end_crit_edge ], [ 0, %entry.split ]\l  %call = tail call i64 @fwrite(i8* %arr, i64 1, i64 %count.0.lcssa,\l... %struct._IO_FILE* %file)\l  ret void\l}"];
+	Node0xbfc12a0 [shape=record,label="{while.body.lr.ph:                                 \l  br label %while.body\l}"];
+	Node0xbfc12a0 -> Node0xbfe1130;
+	Node0xbfe1130 [shape=record,label="{while.body:                                       \l  %count.09 = phi i64 [ 0, %while.body.lr.ph ], [ %inc, %if.end ]\l  %arrayidx = getelementptr inbounds i8, i8* %arr, i64 %count.09\l  %0 = load i8, i8* %arrayidx, align 1, !tbaa !1\l  %cmp1 = icmp eq i8 %0, 0\l  br i1 %cmp1, label %while.body.while.end_crit_edge, label %if.end\l}"];
+	Node0xbfe1130 -> Node0xbff5910;
+	Node0xbfe1130 -> Node0xbfcd8d0;
+	Node0xbff5910 [shape=record,label="{while.body.while.end_crit_edge:                   \l  %count.09.lcssa = phi i64 [ %count.09, %while.body ]\l  br label %while.end\l}"];
+	Node0xbff5910 -> Node0xbfdaa70;
+	Node0xbfcd8d0 [shape=record,label="{if.end:                                           \l  %inc = add nuw i64 %count.09, 1\l  %cmp = icmp ult i64 %inc, %arr_size\l  br i1 %cmp, label %while.body, label %while.cond.while.end_crit_edge\l}"];
+	Node0xbfcd8d0 -> Node0xbfe1130[constraint=false];
+	Node0xbfcd8d0 -> Node0xc02eda0;
+	Node0xc02eda0 [shape=record,label="{while.cond.while.end_crit_edge:                   \l  %inc.lcssa = phi i64 [ %inc, %if.end ]\l  br label %while.end\l}"];
+	Node0xc02eda0 -> Node0xbfdaa70;
+	colorscheme = "paired12"
+        subgraph cluster_0xbfc4980 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc020fa0 {
+            label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: while.body";
+            style = solid;
+            color = 6
+            subgraph cluster_0xc020f20 {
+              label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: while.body";
+              style = solid;
+              color = 5
+              Node0xbfe1130;
+              Node0xbff5910;
+              Node0xbfcd8d0;
+              Node0xc02eda0;
+            }
+            Node0xbfc24c0;
+            Node0xbfc12a0;
+          }
+          Node0xbffa970;
+          Node0xbfdaa70;
+        }
+}

@@ -1,0 +1,123 @@
+digraph "Scop Graph for '_print_mat_' function" {
+	label="Scop Graph for '_print_mat_' function";
+
+	Node0xc854b60 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xc854b60 -> Node0xc8e4590;
+	Node0xc8e4590 [shape=record,label="{entry.split:                                      \l  %width1 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0,\l... i32 2\l  %0 = load i64, i64* %width1, align 8, !tbaa !1\l  %height2 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0,\l... i32 3\l  %1 = load i64, i64* %height2, align 8, !tbaa !7\l  %cmp93 = icmp sgt i64 %1, 0\l  br i1 %cmp93, label %while.cond3.preheader.lr.ph, label %blklab6\l}"];
+	Node0xc8e4590 -> Node0xc8b5600;
+	Node0xc8e4590 -> Node0xc8bac90;
+	Node0xc8b5600 [shape=record,label="{while.cond3.preheader.lr.ph:                      \l  br label %while.cond3.preheader\l}"];
+	Node0xc8b5600 -> Node0xc8c61a0;
+	Node0xc8c61a0 [shape=record,label="{while.cond3.preheader:                            \l  %_25_dealloc.099 = phi i8 [ 0, %while.cond3.preheader.lr.ph ], [ %.87,\l... %if.end22 ]\l  %_25.098 = phi i8* [ undef, %while.cond3.preheader.lr.ph ], [ %6, %if.end22 ]\l  %_18_dealloc.097 = phi i8 [ 0, %while.cond3.preheader.lr.ph ], [\l... %_18_dealloc.1.lcssa, %if.end22 ]\l  %_18.096 = phi i64* [ null, %while.cond3.preheader.lr.ph ], [ %_18.1.lcssa,\l... %if.end22 ]\l  %i.094 = phi i64 [ 0, %while.cond3.preheader.lr.ph ], [ %add19, %if.end22 ]\l  %cmp588 = icmp sgt i64 %0, 0\l  br i1 %cmp588, label %if.end9.lr.ph, label %blklab8\l}"];
+	Node0xc8c61a0 -> Node0xc88c750;
+	Node0xc8c61a0 -> Node0xc8bb940;
+	Node0xc88c750 [shape=record,label="{if.end9.lr.ph:                                    \l  br label %if.end9\l}"];
+	Node0xc88c750 -> Node0xc8e9b90;
+	Node0xc8e9b90 [shape=record,label="{if.end9:                                          \l  %_18_dealloc.191 = phi i8 [ %_18_dealloc.097, %if.end9.lr.ph ], [ %.,\l... %if.end12 ]\l  %_18.190 = phi i64* [ %_18.096, %if.end9.lr.ph ], [ %call13, %if.end12 ]\l  %j.089 = phi i64 [ 0, %if.end9.lr.ph ], [ %add18, %if.end12 ]\l  %data = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0,\l... i32 0\l  %2 = load i64*, i64** %data, align 8, !tbaa !8\l  %mul = mul nsw i64 %i.094, %0\l  %add = add nsw i64 %j.089, %mul\l  %arrayidx = getelementptr inbounds i64, i64* %2, i64 %add\l  %3 = load i64, i64* %arrayidx, align 8, !tbaa !9\l  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x\l... i8], [4 x i8]* @.str.3, i64 0, i64 0), i64 %3)\l  %4 = and i8 %_18_dealloc.191, 1\l  %tobool10 = icmp eq i8 %4, 0\l  br i1 %tobool10, label %if.end12, label %if.then11\l}"];
+	Node0xc8e9b90 -> Node0xc854c20;
+	Node0xc8e9b90 -> Node0xc88dad0;
+	Node0xc854c20 [shape=record,label="{if.end12:                                         \l  %call13 = tail call i64* @create1DArray_int64_t(i64 0, i64 1) #6\l  store i64 32, i64* %call13, align 8, !tbaa !9\l  %not.cmp15 = icmp ne i64* %call13, null\l  %. = zext i1 %not.cmp15 to i8\l  tail call void @printf_s(i64* %call13, i64 1) #6\l  %add18 = add nuw nsw i64 %j.089, 1\l  %exitcond = icmp ne i64 %add18, %0\l  br i1 %exitcond, label %if.end9, label %while.cond3.blklab8_crit_edge\l}"];
+	Node0xc854c20 -> Node0xc8e9b90[constraint=false];
+	Node0xc854c20 -> Node0xc8b0560;
+	Node0xc8b0560 [shape=record,label="{while.cond3.blklab8_crit_edge:                    \l  %call13.lcssa = phi i64* [ %call13, %if.end12 ]\l  %..lcssa = phi i8 [ %., %if.end12 ]\l  br label %blklab8\l}"];
+	Node0xc8b0560 -> Node0xc8bb940;
+	Node0xc8bb940 [shape=record,label="{blklab8:                                          \l  %_18.1.lcssa = phi i64* [ %call13.lcssa, %while.cond3.blklab8_crit_edge ], [\l... %_18.096, %while.cond3.preheader ]\l  %_18_dealloc.1.lcssa = phi i8 [ %..lcssa, %while.cond3.blklab8_crit_edge ],\l... [ %_18_dealloc.097, %while.cond3.preheader ]\l  %add19 = add nuw nsw i64 %i.094, 1\l  %tobool20 = icmp eq i8 %_25_dealloc.099, 0\l  br i1 %tobool20, label %if.end22, label %if.then21\l}"];
+	Node0xc8bb940 -> Node0xc857ee0;
+	Node0xc8bb940 -> Node0xc88e200;
+	Node0xc857ee0 [shape=record,label="{if.end22:                                         \l  %call23 = tail call i64* @create1DArray_int64_t(i64 0, i64 0) #6\l  %6 = bitcast i64* %call23 to i8*\l  %not.cmp24 = icmp ne i64* %call23, null\l  %.87 = zext i1 %not.cmp24 to i8\l  tail call void @println_s(i64* %call23, i64 0) #6\l  %exitcond104 = icmp ne i64 %add19, %1\l  br i1 %exitcond104, label %while.cond3.preheader, label\l... %while.cond.blklab6_crit_edge\l}"];
+	Node0xc857ee0 -> Node0xc8c61a0[constraint=false];
+	Node0xc857ee0 -> Node0xc8b0a10;
+	Node0xc8b0a10 [shape=record,label="{while.cond.blklab6_crit_edge:                     \l  %_18.1.lcssa.lcssa = phi i64* [ %_18.1.lcssa, %if.end22 ]\l  %_18_dealloc.1.lcssa.lcssa = phi i8 [ %_18_dealloc.1.lcssa, %if.end22 ]\l  %.lcssa = phi i8* [ %6, %if.end22 ]\l  %.87.lcssa = phi i8 [ %.87, %if.end22 ]\l  br label %blklab6\l}"];
+	Node0xc8b0a10 -> Node0xc8bac90;
+	Node0xc8bac90 [shape=record,label="{blklab6:                                          \l  %_18.0.lcssa = phi i64* [ %_18.1.lcssa.lcssa, %while.cond.blklab6_crit_edge\l... ], [ null, %entry.split ]\l  %_18_dealloc.0.lcssa = phi i8 [ %_18_dealloc.1.lcssa.lcssa,\l... %while.cond.blklab6_crit_edge ], [ 0, %entry.split ]\l  %_25.0.lcssa = phi i8* [ %.lcssa, %while.cond.blklab6_crit_edge ], [ undef,\l... %entry.split ]\l  %_25_dealloc.0.lcssa = phi i8 [ %.87.lcssa, %while.cond.blklab6_crit_edge ],\l... [ 0, %entry.split ]\l  br i1 %a_dealloc, label %if.then29, label %if.end33\l}"];
+	Node0xc8bac90 -> Node0xc8c4a80;
+	Node0xc8bac90 -> Node0xc8c43a0;
+	Node0xc8c4a80 [shape=record,label="{if.then29:                                        \l  tail call void @free_Matrix(%struct.Matrix* %a)\l  br label %if.end33\l}"];
+	Node0xc8c4a80 -> Node0xc8c43a0;
+	Node0xc8c43a0 [shape=record,label="{if.end33:                                         \l  %7 = and i8 %_18_dealloc.0.lcssa, 1\l  %tobool34 = icmp eq i8 %7, 0\l  br i1 %tobool34, label %if.end36, label %if.then35\l}"];
+	Node0xc8c43a0 -> Node0xc88bae0;
+	Node0xc8c43a0 -> Node0xc872810;
+	Node0xc88bae0 [shape=record,label="{if.end36:                                         \l  %tobool37 = icmp eq i8 %_25_dealloc.0.lcssa, 0\l  br i1 %tobool37, label %if.end39, label %if.then38\l}"];
+	Node0xc88bae0 -> Node0xc88eb50;
+	Node0xc88bae0 -> Node0xc709d80;
+	Node0xc88eb50 [shape=record,label="{if.end39:                                         \l  ret void\l}"];
+	Node0xc709d80 [shape=record,label="{if.then38:                                        \l  tail call void @free(i8* %_25.0.lcssa) #6\l  br label %if.end39\l}"];
+	Node0xc709d80 -> Node0xc88eb50;
+	Node0xc872810 [shape=record,label="{if.then35:                                        \l  %8 = bitcast i64* %_18.0.lcssa to i8*\l  tail call void @free(i8* %8) #6\l  br label %if.end36\l}"];
+	Node0xc872810 -> Node0xc88bae0;
+	Node0xc88e200 [shape=record,label="{if.then21:                                        \l  tail call void @free(i8* %_25.098) #6\l  br label %if.end22\l}"];
+	Node0xc88e200 -> Node0xc857ee0;
+	Node0xc88dad0 [shape=record,label="{if.then11:                                        \l  %5 = bitcast i64* %_18.190 to i8*\l  tail call void @free(i8* %5) #6\l  br label %if.end12\l}"];
+	Node0xc88dad0 -> Node0xc854c20;
+	colorscheme = "paired12"
+        subgraph cluster_0xc8b5580 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc8b04e0 {
+            label = "Non affine loop bound '(-1 + %1)' in loop: while.cond3.preheader";
+            style = solid;
+            color = 6
+            subgraph cluster_0xc88bbf0 {
+              label = "Call instruction:   %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.3, i64 0, i64 0), i64 %3)";
+              style = solid;
+              color = 5
+              subgraph cluster_0xc878640 {
+                label = "";
+                style = solid;
+                color = 7
+                subgraph cluster_0xc88ba60 {
+                  label = "Call instruction:   %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.3, i64 0, i64 0), i64 %3)";
+                  style = solid;
+                  color = 9
+                  subgraph cluster_0xc8556b0 {
+                    label = "Region can not profitably be optimized!";
+                    style = solid;
+                    color = 11
+                    Node0xc8e9b90;
+                    Node0xc88dad0;
+                  }
+                  Node0xc854c20;
+                }
+                Node0xc8c61a0;
+                Node0xc88c750;
+                Node0xc8b0560;
+              }
+              subgraph cluster_0xc857da0 {
+                label = "Region can not profitably be optimized!";
+                style = solid;
+                color = 7
+                Node0xc8bb940;
+                Node0xc88e200;
+              }
+              Node0xc857ee0;
+            }
+            Node0xc8e4590;
+            Node0xc8b5600;
+            Node0xc8b0a10;
+          }
+          subgraph cluster_0xc8c6120 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xc8bac90;
+            Node0xc8c4a80;
+          }
+          subgraph cluster_0xc872790 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xc8c43a0;
+            Node0xc872810;
+          }
+          subgraph cluster_0xc8e4510 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xc88bae0;
+            Node0xc709d80;
+          }
+          Node0xc854b60;
+          Node0xc88eb50;
+        }
+}

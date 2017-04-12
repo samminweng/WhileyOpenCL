@@ -1,0 +1,39 @@
+digraph "Scop Graph for 'parseStringToInt' function" {
+	label="Scop Graph for 'parseStringToInt' function";
+
+	Node0xbffa690 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xbffa690 -> Node0xbfb1e30;
+	Node0xbfb1e30 [shape=record,label="{entry.split:                                      \l  %0 = load i64, i64* %arr, align 8, !tbaa !1\l  %1 = icmp ult i64 %0, 10\l  br i1 %1, label %while.body.lr.ph, label %while.end\l}"];
+	Node0xbfb1e30 -> Node0xc014db0;
+	Node0xbfb1e30 -> Node0xbfca980;
+	Node0xc014db0 [shape=record,label="{while.body.lr.ph:                                 \l  br label %while.body\l}"];
+	Node0xc014db0 -> Node0xbfb1c90;
+	Node0xbfb1c90 [shape=record,label="{while.body:                                       \l  %2 = phi i64 [ %0, %while.body.lr.ph ], [ %3, %while.body ]\l  %i.018 = phi i64 [ 0, %while.body.lr.ph ], [ %inc, %while.body ]\l  %value.017 = phi i64 [ 0, %while.body.lr.ph ], [ %add, %while.body ]\l  %mul = mul nsw i64 %value.017, 10\l  %add = add nsw i64 %2, %mul\l  %inc = add i64 %i.018, 1\l  %arrayidx = getelementptr inbounds i64, i64* %arr, i64 %inc\l  %3 = load i64, i64* %arrayidx, align 8, !tbaa !1\l  %4 = icmp ult i64 %3, 10\l  br i1 %4, label %while.body, label %while.cond.while.end_crit_edge\l}"];
+	Node0xbfb1c90 -> Node0xbfb1c90[constraint=false];
+	Node0xbfb1c90 -> Node0xbfc32d0;
+	Node0xbfc32d0 [shape=record,label="{while.cond.while.end_crit_edge:                   \l  %add.lcssa = phi i64 [ %add, %while.body ]\l  br label %while.end\l}"];
+	Node0xbfc32d0 -> Node0xbfca980;
+	Node0xbfca980 [shape=record,label="{while.end:                                        \l  %value.0.lcssa = phi i64 [ %add.lcssa, %while.cond.while.end_crit_edge ], [\l... 0, %entry.split ]\l  %call = tail call noalias i8* @malloc(i64 8) #6\l  %5 = bitcast i8* %call to i64*\l  store i64 %value.0.lcssa, i64* %5, align 8, !tbaa !1\l  ret i64* %5\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xbff5730 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc02db40 {
+            label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: while.body";
+            style = solid;
+            color = 6
+            subgraph cluster_0xbfddcd0 {
+              label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: while.body";
+              style = solid;
+              color = 5
+              Node0xbfb1c90;
+            }
+            Node0xbfb1e30;
+            Node0xc014db0;
+            Node0xbfc32d0;
+          }
+          Node0xbffa690;
+          Node0xbfca980;
+        }
+}

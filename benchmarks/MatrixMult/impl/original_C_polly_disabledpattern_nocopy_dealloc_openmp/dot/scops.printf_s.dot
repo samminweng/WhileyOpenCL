@@ -1,0 +1,63 @@
+digraph "Scop Graph for 'printf_s' function" {
+	label="Scop Graph for 'printf_s' function";
+
+	Node0xbfbac20 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xbfbac20 -> Node0xc0b72d0;
+	Node0xc0b72d0 [shape=record,label="{entry.split:                                      \l  %cmp17 = icmp eq i64 %input_size, 0\l  br i1 %cmp17, label %while.end, label %while.body.lr.ph\l}"];
+	Node0xc0b72d0 -> Node0xbfe4380;
+	Node0xc0b72d0 -> Node0xbfc2580;
+	Node0xbfe4380 [shape=record,label="{while.end:                                        \l  %cmp6 = icmp ugt i64 %input_size, 100\l  br i1 %cmp6, label %if.then8, label %if.end10\l}"];
+	Node0xbfe4380 -> Node0xc021170;
+	Node0xbfe4380 -> Node0xbfd2130;
+	Node0xc021170 [shape=record,label="{if.then8:                                         \l  %call9 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x\l... i8], [6 x i8]* @.str.19, i64 0, i64 0))\l  br label %if.end10\l}"];
+	Node0xc021170 -> Node0xbfd2130;
+	Node0xbfd2130 [shape=record,label="{if.end10:                                         \l  ret void\l}"];
+	Node0xbfc2580 [shape=record,label="{while.body.lr.ph:                                 \l  br label %while.body\l}"];
+	Node0xbfc2580 -> Node0xbfe0d80;
+	Node0xbfe0d80 [shape=record,label="{while.body:                                       \l  %i.018 = phi i64 [ 0, %while.body.lr.ph ], [ %inc, %if.end ]\l  %arrayidx = getelementptr inbounds i64, i64* %input, i64 %i.018\l  %0 = load i64, i64* %arrayidx, align 8, !tbaa !1\l  %conv = trunc i64 %0 to i32\l  %sext = shl i32 %conv, 24\l  %cmp3 = icmp sgt i32 %sext, 0\l  br i1 %cmp3, label %if.then, label %if.end\l}"];
+	Node0xbfe0d80 -> Node0xbfc3250;
+	Node0xbfe0d80 -> Node0xbfba740;
+	Node0xbfc3250 [shape=record,label="{if.then:                                          \l  %conv2 = ashr exact i32 %sext, 24\l  %putchar = tail call i32 @putchar(i32 %conv2)\l  br label %if.end\l}"];
+	Node0xbfc3250 -> Node0xbfba740;
+	Node0xbfba740 [shape=record,label="{if.end:                                           \l  %inc = add nuw nsw i64 %i.018, 1\l  %cmp = icmp ult i64 %inc, %input_size\l  %cmp1 = icmp ult i64 %inc, 100\l  %1 = and i1 %cmp, %cmp1\l  br i1 %1, label %while.body, label %while.cond.while.end_crit_edge\l}"];
+	Node0xbfba740 -> Node0xbfe0d80[constraint=false];
+	Node0xbfba740 -> Node0xc02dba0;
+	Node0xc02dba0 [shape=record,label="{while.cond.while.end_crit_edge:                   \l  br label %while.end\l}"];
+	Node0xc02dba0 -> Node0xbfe4380;
+	colorscheme = "paired12"
+        subgraph cluster_0xbfda200 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc018840 {
+            label = "Call instruction:   %putchar = tail call i32 @putchar(i32 %conv2)";
+            style = solid;
+            color = 6
+            subgraph cluster_0xc0187c0 {
+              label = "Call instruction:   %putchar = tail call i32 @putchar(i32 %conv2)";
+              style = solid;
+              color = 5
+              subgraph cluster_0xc022a00 {
+                label = "Region can not profitably be optimized!";
+                style = solid;
+                color = 7
+                Node0xbfe0d80;
+                Node0xbfc3250;
+              }
+              Node0xbfba740;
+            }
+            Node0xc0b72d0;
+            Node0xbfc2580;
+            Node0xc02dba0;
+          }
+          subgraph cluster_0xbfaf9f0 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xbfe4380;
+            Node0xc021170;
+          }
+          Node0xbfbac20;
+          Node0xbfd2130;
+        }
+}

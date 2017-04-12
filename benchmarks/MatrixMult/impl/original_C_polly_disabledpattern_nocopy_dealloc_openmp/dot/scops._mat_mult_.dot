@@ -1,0 +1,115 @@
+digraph "Scop Graph for '_mat_mult_' function" {
+	label="Scop Graph for '_mat_mult_' function";
+
+	Node0xc890f60 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xc890f60 -> Node0xc86c420;
+	Node0xc86c420 [shape=record,label="{entry.split:                                      \l  %width2 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %b, i64 0,\l... i32 2\l  %0 = load i64, i64* %width2, align 8, !tbaa !1\l  %height3 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0,\l... i32 3\l  %1 = load i64, i64* %height3, align 8, !tbaa !7\l  %mul = mul nsw i64 %1, %0\l  %call = tail call i64* @create1DArray_int64_t(i64 0, i64 %mul) #6\l  %data15 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0,\l... i32 0\l  %2 = load i64*, i64** %data15, align 8, !tbaa !8\l  %data25 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %b, i64 0,\l... i32 0\l  %3 = load i64*, i64** %data25, align 8, !tbaa !8\l  %cmp31198 = icmp sgt i64 %1, 0\l  br i1 %cmp31198, label %while.cond34.preheader.lr.ph, label %if.end61\l}"];
+	Node0xc86c420 -> Node0xc8be070;
+	Node0xc86c420 -> Node0xc8be090;
+	Node0xc8be070 [shape=record,label="{while.cond34.preheader.lr.ph:                     \l  br label %while.cond34.preheader\l}"];
+	Node0xc8be070 -> Node0xc874ed0;
+	Node0xc874ed0 [shape=record,label="{while.cond34.preheader:                           \l  %i.0199 = phi i64 [ 0, %while.cond34.preheader.lr.ph ], [ %add58, %blklab15 ]\l  %cmp36195 = icmp sgt i64 %0, 0\l  br i1 %cmp36195, label %while.cond39.preheader.lr.ph, label %blklab15\l}"];
+	Node0xc874ed0 -> Node0xc88bed0;
+	Node0xc874ed0 -> Node0xc8bfa50;
+	Node0xc88bed0 [shape=record,label="{while.cond39.preheader.lr.ph:                     \l  br label %while.cond39.preheader\l}"];
+	Node0xc88bed0 -> Node0xc8b69b0;
+	Node0xc8b69b0 [shape=record,label="{while.cond39.preheader:                           \l  %j.0196 = phi i64 [ 0, %while.cond39.preheader.lr.ph ], [ %add57, %blklab17 ]\l  %cmp41193 = icmp sgt i64 %0, 0\l  br i1 %cmp41193, label %if.end43.lr.ph, label %blklab17\l}"];
+	Node0xc8b69b0 -> Node0xc8b6930;
+	Node0xc8b69b0 -> Node0xc8b6990;
+	Node0xc8b6930 [shape=record,label="{if.end43.lr.ph:                                   \l  br label %if.end43\l}"];
+	Node0xc8b6930 -> Node0xc872fe0;
+	Node0xc872fe0 [shape=record,label="{if.end43:                                         \l  %k.0194 = phi i64 [ 0, %if.end43.lr.ph ], [ %add56, %if.end43 ]\l  %mul44 = mul nsw i64 %i.0199, %0\l  %add = add nsw i64 %j.0196, %mul44\l  %arrayidx = getelementptr inbounds i64, i64* %call, i64 %add\l  %4 = load i64, i64* %arrayidx, align 8, !tbaa !9\l  %add46 = add nsw i64 %k.0194, %mul44\l  %arrayidx47 = getelementptr inbounds i64, i64* %2, i64 %add46\l  %5 = load i64, i64* %arrayidx47, align 8, !tbaa !9\l  %mul48 = mul nsw i64 %k.0194, %0\l  %add49 = add nsw i64 %mul48, %j.0196\l  %arrayidx50 = getelementptr inbounds i64, i64* %3, i64 %add49\l  %6 = load i64, i64* %arrayidx50, align 8, !tbaa !9\l  %mul51 = mul nsw i64 %6, %5\l  %add52 = add nsw i64 %mul51, %4\l  store i64 %add52, i64* %arrayidx, align 8, !tbaa !9\l  %add56 = add nuw nsw i64 %k.0194, 1\l  %exitcond = icmp ne i64 %add56, %0\l  br i1 %exitcond, label %if.end43, label %while.cond39.blklab17_crit_edge\l}"];
+	Node0xc872fe0 -> Node0xc872fe0[constraint=false];
+	Node0xc872fe0 -> Node0xc8bfa20;
+	Node0xc8bfa20 [shape=record,label="{while.cond39.blklab17_crit_edge:                  \l  br label %blklab17\l}"];
+	Node0xc8bfa20 -> Node0xc8b6990;
+	Node0xc8b6990 [shape=record,label="{blklab17:                                         \l  %add57 = add nuw nsw i64 %j.0196, 1\l  %exitcond201 = icmp ne i64 %add57, %0\l  br i1 %exitcond201, label %while.cond39.preheader, label\l... %while.cond34.blklab15_crit_edge\l}"];
+	Node0xc8b6990 -> Node0xc8b69b0[constraint=false];
+	Node0xc8b6990 -> Node0xc873080;
+	Node0xc873080 [shape=record,label="{while.cond34.blklab15_crit_edge:                  \l  br label %blklab15\l}"];
+	Node0xc873080 -> Node0xc8bfa50;
+	Node0xc8bfa50 [shape=record,label="{blklab15:                                         \l  %add58 = add nuw nsw i64 %i.0199, 1\l  %exitcond202 = icmp ne i64 %add58, %1\l  br i1 %exitcond202, label %while.cond34.preheader, label\l... %while.cond.if.end61_crit_edge\l}"];
+	Node0xc8bfa50 -> Node0xc874ed0[constraint=false];
+	Node0xc8bfa50 -> Node0xc8730a0;
+	Node0xc8730a0 [shape=record,label="{while.cond.if.end61_crit_edge:                    \l  br label %if.end61\l}"];
+	Node0xc8730a0 -> Node0xc8be090;
+	Node0xc8be090 [shape=record,label="{if.end61:                                         \l  %call62 = tail call %struct.Matrix* @_matrix_(i64 %0, i64 %1, i64* %call,\l... i64 %mul, i1 zeroext false)\l  br i1 %a_dealloc, label %if.then69, label %if.end70\l}"];
+	Node0xc8be090 -> Node0xc866270;
+	Node0xc8be090 -> Node0xc8662d0;
+	Node0xc866270 [shape=record,label="{if.then69:                                        \l  tail call void @free_Matrix(%struct.Matrix* %a)\l  br label %if.end70\l}"];
+	Node0xc866270 -> Node0xc8662d0;
+	Node0xc8662d0 [shape=record,label="{if.end70:                                         \l  br i1 %b_dealloc, label %if.then72, label %if.end94\l}"];
+	Node0xc8662d0 -> Node0xc8662f0;
+	Node0xc8662d0 -> Node0xc864900;
+	Node0xc8662f0 [shape=record,label="{if.then72:                                        \l  tail call void @free_Matrix(%struct.Matrix* %b)\l  br label %if.end94\l}"];
+	Node0xc8662f0 -> Node0xc864900;
+	Node0xc864900 [shape=record,label="{if.end94:                                         \l  ret %struct.Matrix* %call62\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xc8556b0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc8eb540 {
+            label = "Non affine loop bound '(-1 + %1)' in loop: while.cond34.preheader";
+            style = solid;
+            color = 6
+            subgraph cluster_0xc859bc0 {
+              label = "";
+              style = filled;
+              color = 3              subgraph cluster_0xc8ebcf0 {
+                label = "";
+                style = solid;
+                color = 7
+                subgraph cluster_0xc8558c0 {
+                  label = "";
+                  style = solid;
+                  color = 9
+                  subgraph cluster_0xc883490 {
+                    label = "";
+                    style = solid;
+                    color = 11
+                    subgraph cluster_0xc8e4750 {
+                      label = "";
+                      style = solid;
+                      color = 1
+                      subgraph cluster_0xc87e460 {
+                        label = "";
+                        style = solid;
+                        color = 6
+                        Node0xc872fe0;
+                      }
+                      Node0xc8b69b0;
+                      Node0xc8b6930;
+                      Node0xc8bfa20;
+                    }
+                    Node0xc8b6990;
+                  }
+                  Node0xc874ed0;
+                  Node0xc88bed0;
+                  Node0xc873080;
+                }
+                Node0xc8bfa50;
+              }
+              Node0xc8730a0;
+            }
+            Node0xc86c420;
+            Node0xc8be070;
+          }
+          subgraph cluster_0xc85c390 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xc8be090;
+            Node0xc866270;
+          }
+          subgraph cluster_0xc863d60 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xc8662d0;
+            Node0xc8662f0;
+          }
+          Node0xc890f60;
+          Node0xc864900;
+        }
+}

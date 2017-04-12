@@ -1,0 +1,39 @@
+digraph "Scop Graph for 'copy_array_Matrix' function" {
+	label="Scop Graph for 'copy_array_Matrix' function";
+
+	Node0xc8e7db0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xc8e7db0 -> Node0xc88eaf0;
+	Node0xc88eaf0 [shape=record,label="{entry.split:                                      \l  %mul = shl i64 %_Matrix_size, 3\l  %call = tail call noalias i8* @malloc(i64 %mul) #5\l  %0 = bitcast i8* %call to %struct.Matrix**\l  %cmp12 = icmp eq i64 %_Matrix_size, 0\l  br i1 %cmp12, label %for.cond.cleanup, label %for.body.lr.ph\l}"];
+	Node0xc88eaf0 -> Node0xc889bf0;
+	Node0xc88eaf0 -> Node0xc85cd40;
+	Node0xc889bf0 [shape=record,label="{for.cond.cleanup:                                 \l  ret %struct.Matrix** %0\l}"];
+	Node0xc85cd40 [shape=record,label="{for.body.lr.ph:                                   \l  br label %for.body\l}"];
+	Node0xc85cd40 -> Node0xc88d890;
+	Node0xc88d890 [shape=record,label="{for.body:                                         \l  %indvars.iv = phi i64 [ 0, %for.body.lr.ph ], [ %indvars.iv.next, %for.body ]\l  %arrayidx = getelementptr inbounds %struct.Matrix*, %struct.Matrix**\l... %_Matrix, i64 %indvars.iv\l  %1 = load %struct.Matrix*, %struct.Matrix** %arrayidx, align 8, !tbaa !1\l  %call2 = tail call %struct.Matrix* @copy_Matrix(%struct.Matrix* %1)\l  %arrayidx4 = getelementptr inbounds %struct.Matrix*, %struct.Matrix** %0,\l... i64 %indvars.iv\l  store %struct.Matrix* %call2, %struct.Matrix** %arrayidx4, align 8, !tbaa !1\l  %indvars.iv.next = add nuw i64 %indvars.iv, 1\l  %cmp = icmp ult i64 %indvars.iv.next, %_Matrix_size\l  br i1 %cmp, label %for.body, label %for.cond.for.cond.cleanup_crit_edge\l}"];
+	Node0xc88d890 -> Node0xc88d890[constraint=false];
+	Node0xc88d890 -> Node0xc88e1a0;
+	Node0xc88e1a0 [shape=record,label="{for.cond.for.cond.cleanup_crit_edge:              \l  br label %for.cond.cleanup\l}"];
+	Node0xc88e1a0 -> Node0xc889bf0;
+	colorscheme = "paired12"
+        subgraph cluster_0xc8eaaa0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc8771d0 {
+            label = "Call instruction:   %call = tail call noalias i8* @malloc(i64 %mul) #5";
+            style = solid;
+            color = 6
+            subgraph cluster_0xc8b0810 {
+              label = "Call instruction:   %call2 = tail call %struct.Matrix* @copy_Matrix(%struct.Matrix* %1)";
+              style = solid;
+              color = 5
+              Node0xc88d890;
+            }
+            Node0xc88eaf0;
+            Node0xc85cd40;
+            Node0xc88e1a0;
+          }
+          Node0xc8e7db0;
+          Node0xc889bf0;
+        }
+}

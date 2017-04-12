@@ -21,7 +21,7 @@ generateCode(){
 	codegen=$4
 	pollycode=$5
 	# The folder of generated Polly code
-	folder="$BENCHMARKDIR/$testcase/impl/$program/C/$compiler/$pollycode/disabledpattern/$codegen"
+	folder=$BENCHMARKDIR/$testcase/impl/$program"_"C"_"$compiler"_"disabledpattern"_"$codegen"_"$pollycode
 	# clean and create the folder	
 	rm -f "$folder/*.*"
 	mkdir -p "$folder"
@@ -40,22 +40,22 @@ generateCode(){
 		"naive")
 			echo "#############Generate naive $testcase#################"
 			### Translate Whiley program into naive C code 
-	    	./../../../../../../../../../bin/wyopcl -code $testcase"_"$program.whiley
+	    	./../../../../bin/wyopcl -code $testcase"_"$program.whiley
 	    	;;
 	    "naive_dealloc")
 			echo "#############Generate naive_dealloc $testcase#################"
 			### Translate Whiley program into naive + dealloc C code 
-	    	./../../../../../../../../../bin/wyopcl -code -dealloc $testcase"_"$program.whiley
+	    	./../../../../bin/wyopcl -code -dealloc $testcase"_"$program.whiley
 	    	;;
 	    "copyreduced")
 			echo "#############Generate copyreduced $testcase#################"
 			## Translate Whiley programs into copy_reduced C code
-			./../../../../../../../../../bin/wyopcl -code -nocopy $testcase"_"$program.whiley
+			./../../../../bin/wyopcl -code -nocopy $testcase"_"$program.whiley
 			;;
 		"copyreduced_dealloc")
 			echo "#############Generate copyreduced_dealloc $testcase#################"
 			### Translate Whiley program into copy-eliminated + memory deallocated C code 
-	    	./../../../../../../../../../bin/wyopcl -code -nocopy -dealloc $testcase"_"$program.whiley	
+	    	./../../../../bin/wyopcl -code -nocopy -dealloc $testcase"_"$program.whiley	
 			;;
 	esac
 	#read -p "Press [Enter] to continue..."
@@ -100,46 +100,42 @@ cleanPollyFolder(){
 runPolly(){
 	testcase=$1
 	program=$2
-	compiler=$3
-	codegen=$4
-	pollycode=$5
-	parameter=$6
 
 	## Clean folder
 	cleanPollyFolder
 	
 	## Analyze C code and export SCoP
-	read -p "[*] Export SCoP in DOTs"
-	pollycc -mllvm -polly-dot-only $testcase"_"$program.c Util.c WyRT.c
+	echo "[*] Export SCoP in DOTs"
+	pollycc -mllvm -polly-dot $testcase"_"$program.c Util.c WyRT.c
 	folder_proc "dot" "dot"
 	generate_png "dot"
 	
 	## Export JSCoP file
-	read -p "[*]Export JSCoP"
+	echo "[*]Export JSCoP"
 	pollycc -mllvm -polly-export $testcase"_"$program.c Util.c WyRT.c
 	folder_proc "jscop" "jscop"
 
 	## Point out the un-optimizable region
-	read -p "[*]Show the region Polly can NOT analyze and reasons"
+	echo "[*]Show the region Polly can NOT analyze and reasons"
 	pollycc -Rpass-missed=polly-detect $testcase"_"$program.c Util.c WyRT.c
 	
 	## Point out the optimizable region
-	read -p "[*]Show the regions Polly can analyze and assumption/restrictions" 
+	echo "[*]Show the regions Polly can analyze and assumption/restrictions" 
 	pollycc -fcolor-diagnostics -mllvm -polly-opt-outer-coincidence=yes\
 			-Rpass-analysis=polly $testcase"_"$program.c Util.c WyRT.c
 	
 	## Show SCoP for debugging
-	read -p "[*]Show the information of valid SCoP" 
+	echo "[*]Show the information of valid SCoP" 
 	pollycc -mllvm -polly-opt-outer-coincidence=yes -mllvm -debug-only=polly-detect\
 			$testcase"_"$program.c Util.c WyRT.c
 	
 	## Show SCop for debuggin
-	read -p "[*]Show the representation of valid SCoP" 
+	echo "[*]Show the representation of valid SCoP" 
 	pollycc -mllvm -polly-opt-outer-coincidence=yes -mllvm -debug-only=polly-scops\
 			$testcase"_"$program.c Util.c WyRT.c
 	
 	## Show AST
-	read -p "[*]Show the optimized AST"
+	echo "[*]Show the optimized AST"
 	pollycc -mllvm -polly-opt-outer-coincidence=yes -mllvm -debug-only=polly-ast\
 			-mllvm -polly-process-unprofitable $testcase"_"$program.c Util.c WyRT.c
 
@@ -147,73 +143,75 @@ runPolly(){
 	
 }
 
-
 runBenchmark(){
 	testcase=$1
 	program=$2
-	pollycode=$3
-	parameter=$4
+	parameter=$3
 
+	## Clean folder
+	cleanPollyFolder
 	### Generate sequential executables using GCC
-	read -p "[1] Run  GCC -O3  executables"
-	start=`date +%s%N` 
-	gcc -std=c11 -O3 $testcase"_"$program.c Util.c WyRT.c -o out/$testcase"_"$program.gcc.out
-	./out/$testcase"_"$program.gcc.out $parameter
-	end=`date +%s%N`
-	exectime=$(((end-start)/1000000))
-	printf '\nExecutionTime:%s\tmilliseconds\n' $exectime
+	#read -p "[1] Run  GCC -O3  executables"
+	#start=`date +%s%N` 
+	#gcc -std=c11 -O3 $testcase"_"$program.c Util.c WyRT.c -o out/$testcase"_"$program.gcc.out
+	#./out/$testcase"_"$program.gcc.out $parameter
+	#end=`date +%s%N`
+	#exectime=$(((end-start)/1000000))
+	#printf '\nExecutionTime:%s\tmilliseconds\n' $exectime
 
 	### Generate sequential executable using Clang
-	read -p "[2] Run  Clang -O3  executables"
-	clang -O3 $testcase"_"$program.c Util.c WyRT.c -o out/$testcase"_"$program.clang.out
+	#read -p "[2] Run  Clang -O3  executables"
+	#clang -O3 $testcase"_"$program.c Util.c WyRT.c -o out/$testcase"_"$program.clang.out
+	#start=`date +%s%N`
+	#./out/$testcase"_"$program.clang.out $parameter
+	#end=`date +%s%N`
+	#exectime=$(((end-start)/1000000))
+	#printf '\nExecutionTime:%s\tmilliseconds\n' $exectime
+
+	## Run sequential code, produced by Polly
+	echo "[3] Run Polly-Optimized Sequential executables"
+	cd $BENCHMARKDIR/$testcase/impl/$program"_"C"_"$compiler"_"disabledpattern"_"$codegen"_seq"
+	## Generate LLVM-IR code from C code
+	pollycc -S -emit-llvm -mllvm -polly-vectorizer=stripmine\
+			-mllvm -polly-process-unprofitable -mllvm -polly-opt-outer-coincidence=yes\
+			$testcase"_"$program.c -o "llvm"/$testcase"_"$program.polly.ll
+	### Use 'llc' to compile LLVM code into assembly code
+	llc "llvm"/$testcase"_"$program.polly.ll -o "assembly"/$testcase"_"$program.polly.s
+	### Use 'clang' to compile .s file and link with 'Util.c'
+	pollycc "assembly"/$testcase"_"$program.polly.s Util.c WyRT.c -o "out"/$testcase"_"$program.polly.out
+	### Run the generated executables.
 	start=`date +%s%N`
-	./out/$testcase"_"$program.clang.out $parameter
+	./out/$testcase"_"$program.polly.out $parameter
 	end=`date +%s%N`
 	exectime=$(((end-start)/1000000))
 	printf '\nExecutionTime:%s\tmilliseconds\n' $exectime
-
-	## Run sequential code, produced by Polly
-	if [ $pollycode = "seq" ]
-	then
-		read -p "[3] Run Polly-Optimized Sequential executables"
-		## Generate LLVM-IR code from C code
-		pollycc -S -emit-llvm -mllvm -polly-vectorizer=stripmine\
-				-mllvm -polly-process-unprofitable -mllvm -polly-opt-outer-coincidence=yes\
-				$testcase"_"$program.c -o "llvm"/$testcase"_"$program.polly.ll
-		### Use 'llc' to compile LLVM code into assembly code
-		llc "llvm"/$testcase"_"$program.polly.ll -o "assembly"/$testcase"_"$program.polly.s
-		### Use 'clang' to compile .s file and link with 'Util.c'
-		pollycc "assembly"/$testcase"_"$program.polly.s Util.c WyRT.c -o "out"/$testcase"_"$program.polly.out
-		### Run the generated executables.
-		start=`date +%s%N`
-		./out/$testcase"_"$program.polly.out $parameter
-		end=`date +%s%N`
-		exectime=$(((end-start)/1000000))
-		printf '\nExecutionTime:%s\tmilliseconds\n' $exectime
-	fi
-
+	
 	## Run parallel OpenMP code, produced by Polly
-	if [ $pollycode = "openmp" ]
-	then
-		echo -e -n "[4] Run Polly-Optimized OpenMP executables with 4 threads" && read
-		### Run the program using two threads.
-		export OMP_NUM_THREADS=4
-		## Generate OpenMP code
-		pollycc -S -emit-llvm -mllvm -polly-vectorizer=stripmine\
-				-mllvm -polly-parallel -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
-				-mllvm -polly-opt-outer-coincidence=yes\
-				$testcase"_"$program.c -o "llvm"/$testcase"_"$program.openmp.ll
-		llc "llvm"/$testcase"_"$program.openmp.ll -o "assembly"/$testcase"_"$program.openmp.s
-		### Use 'gcc' to compile .s file and link with 'libUtil.a'
-		pollycc "assembly"/$testcase"_"$program.openmp.s Util.c WyRT.c -lgomp -o "out"/$testcase"_"$program.openmp.out 
-		
+	cd $BENCHMARKDIR/$testcase/impl/$program"_"C"_"$compiler"_"disabledpattern"_"$codegen"_openmp"
+	thread=4
+	echo "[4] Run Polly-Optimized OpenMP executables with $thread threads"	
+	## Generate OpenMP code
+	pollycc -mllvm -polly-parallel -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out"/$testcase"_"$program.openmp.out 
+	#pollycc -S -emit-llvm -mllvm -polly-vectorizer=stripmine\
+	#pollycc -S -emit-llvm\
+			#-mllvm -polly-parallel -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
+			#-mllvm -polly-opt-outer-coincidence=yes\
+	#		$testcase"_"$program.c -o "llvm"/$testcase"_"$program.openmp.ll
+	#llc "llvm"/$testcase"_"$program.openmp.ll -o "assembly"/$testcase"_"$program.openmp.s
+	### Use 'gcc' to compile .s file and link with 'libUtil.a'
+	#pollycc -lgomp "assembly"/$testcase"_"$program.openmp.s Util.c WyRT.c  -o "out"/$testcase"_"$program.openmp.out 
+	
+	for ((i=1; i <= 10 ; i++))
+	do
 		### Run the generated executables.
 		start=`date +%s%N`
+		### Run the program using two threads.
+		export OMP_NUM_THREADS=$thread
 		./out/$testcase"_"$program.openmp.out $parameter
 		end=`date +%s%N`
 		exectime=$(((end-start)/1000000))
 		printf '\nExecutionTime:%s\tmilliseconds\n' $exectime
-	fi
+	done
 }
 
 
@@ -226,20 +224,19 @@ exec(){
 	compiler="polly"
 	## declare 4 kinds of code generation
 	#declare -a codegens=("naive" "naive_dealloc" "copyreduced" "copyreduced_dealloc")
-	declare -a codegens=("copyreduced_dealloc")
+	declare -a codegens=("nocopy_dealloc")
 	## declare 2 kinds of Polly code
 	declare -a pollycodes=("seq" "openmp")
 	## Iterate each codegen
 	for codegen in "${codegens[@]}"
 	do
-		for pollycode in "${pollycodes[@]}"
-		do
-			#echo $testcase $program $compiler $codegen $pollycode $parameter
-			## Generate C code
-			generateCode $testcase $program $compiler $codegen $pollycode
-			#runPolly $testcase $program $compiler $codegen $parameter
-			runBenchmark $testcase $program $pollycode $parameter
-		done
+		#echo $testcase $program $compiler $codegen $pollycode $parameter
+		## Generate sequential C code
+		generateCode $testcase $program $compiler $codegen "seq"
+		generateCode $testcase $program $compiler $codegen "openmp"
+		runPolly $testcase $program
+		runBenchmark $testcase $program $parameter
+		
 	done
 	# Return to the working directory
     cd $BENCHMARKDIR

@@ -1,0 +1,39 @@
+digraph "Scop Graph for 'create2DArray_int64_t' function" {
+	label="Scop Graph for 'create2DArray_int64_t' function";
+
+	Node0xbfb4cb0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xbfb4cb0 -> Node0xbffe580;
+	Node0xbffe580 [shape=record,label="{entry.split:                                      \l  %call = tail call i64** @create2DArray_int64_t_empty(i64 %n, i64 %m)\l  %mul = shl i64 %m, 3\l  %cmp9 = icmp eq i64 %n, 0\l  br i1 %cmp9, label %for.cond.cleanup, label %for.body.lr.ph\l}"];
+	Node0xbffe580 -> Node0xbfb6280;
+	Node0xbffe580 -> Node0xc02cec0;
+	Node0xbfb6280 [shape=record,label="{for.cond.cleanup:                                 \l  ret i64** %call\l}"];
+	Node0xc02cec0 [shape=record,label="{for.body.lr.ph:                                   \l  br label %for.body\l}"];
+	Node0xc02cec0 -> Node0xbfaa180;
+	Node0xbfaa180 [shape=record,label="{for.body:                                         \l  %i.010 = phi i64 [ 0, %for.body.lr.ph ], [ %inc, %for.body ]\l  %arrayidx = getelementptr inbounds i64*, i64** %call, i64 %i.010\l  %0 = bitcast i64** %arrayidx to i8**\l  %1 = load i8*, i8** %0, align 8, !tbaa !1\l  %2 = bitcast i64* %arr to i8*\l  tail call void @llvm.memcpy.p0i8.p0i8.i64(i8* %1, i8* %2, i64 %mul, i32 8,\l... i1 false)\l  %inc = add nuw i64 %i.010, 1\l  %exitcond = icmp ne i64 %inc, %n\l  br i1 %exitcond, label %for.body, label %for.cond.for.cond.cleanup_crit_edge\l}"];
+	Node0xbfaa180 -> Node0xbfaa180[constraint=false];
+	Node0xbfaa180 -> Node0xc021170;
+	Node0xc021170 [shape=record,label="{for.cond.for.cond.cleanup_crit_edge:              \l  br label %for.cond.cleanup\l}"];
+	Node0xc021170 -> Node0xbfb6280;
+	colorscheme = "paired12"
+        subgraph cluster_0xc012d00 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xbfea5a0 {
+            label = "Call instruction:   %call = tail call i64** @create2DArray_int64_t_empty(i64 %n, i64 %m)";
+            style = solid;
+            color = 6
+            subgraph cluster_0xbfcff00 {
+              label = "Possible aliasing: \"call\", \"arr\", \" <unknown> \"";
+              style = solid;
+              color = 5
+              Node0xbfaa180;
+            }
+            Node0xbffe580;
+            Node0xc02cec0;
+            Node0xc021170;
+          }
+          Node0xbfb4cb0;
+          Node0xbfb6280;
+        }
+}
