@@ -1,0 +1,15 @@
+digraph "Scop Graph for 'println_s' function" {
+	label="Scop Graph for 'println_s' function";
+
+	Node0xbe9d210 [shape=record,label="{entry}"];
+	Node0xbe9d210 -> Node0xbe93fb0;
+	Node0xbe93fb0 [shape=record,label="{entry.split}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xbeba540 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0xbe9d210;
+          Node0xbe93fb0;
+        }
+}

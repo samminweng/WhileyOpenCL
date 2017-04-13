@@ -1,0 +1,46 @@
+digraph "Scop Graph for 'writeAll' function" {
+	label="Scop Graph for 'writeAll' function";
+
+	Node0xbedc0e0 [shape=record,label="{entry}"];
+	Node0xbedc0e0 -> Node0xbf81940;
+	Node0xbf81940 [shape=record,label="{entry.split}"];
+	Node0xbf81940 -> Node0xbeaa210;
+	Node0xbf81940 -> Node0xbedeeb0;
+	Node0xbeaa210 [shape=record,label="{while.end}"];
+	Node0xbedeeb0 [shape=record,label="{while.body.lr.ph}"];
+	Node0xbedeeb0 -> Node0xbe8b800;
+	Node0xbe8b800 [shape=record,label="{while.body}"];
+	Node0xbe8b800 -> Node0xbee44e0;
+	Node0xbe8b800 -> Node0xbee8090;
+	Node0xbee44e0 [shape=record,label="{while.body.while.end_crit_edge}"];
+	Node0xbee44e0 -> Node0xbeaa210;
+	Node0xbee8090 [shape=record,label="{if.end}"];
+	Node0xbee8090 -> Node0xbe8b800[constraint=false];
+	Node0xbee8090 -> Node0xbe9b0e0;
+	Node0xbe9b0e0 [shape=record,label="{while.cond.while.end_crit_edge}"];
+	Node0xbe9b0e0 -> Node0xbeaa210;
+	colorscheme = "paired12"
+        subgraph cluster_0xbe8ee10 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xbedb750 {
+            label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: while.body";
+            style = solid;
+            color = 6
+            subgraph cluster_0xbedb6d0 {
+              label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: while.body";
+              style = solid;
+              color = 5
+              Node0xbe8b800;
+              Node0xbee44e0;
+              Node0xbee8090;
+              Node0xbe9b0e0;
+            }
+            Node0xbf81940;
+            Node0xbedeeb0;
+          }
+          Node0xbedc0e0;
+          Node0xbeaa210;
+        }
+}

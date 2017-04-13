@@ -1,0 +1,63 @@
+digraph "Scop Graph for '_init_' function" {
+	label="Scop Graph for '_init_' function";
+
+	Node0xbe1bcc0 [shape=record,label="{entry}"];
+	Node0xbe1bcc0 -> Node0xbe225f0;
+	Node0xbe225f0 [shape=record,label="{entry.split}"];
+	Node0xbe225f0 -> Node0xbdf98e0;
+	Node0xbe225f0 -> Node0xbe1eb10;
+	Node0xbdf98e0 [shape=record,label="{while.cond1.preheader.lr.ph}"];
+	Node0xbdf98e0 -> Node0xbe1bee0;
+	Node0xbe1bee0 [shape=record,label="{while.cond1.preheader}"];
+	Node0xbe1bee0 -> Node0xbdfe350;
+	Node0xbe1bee0 -> Node0xbe21b30;
+	Node0xbdfe350 [shape=record,label="{if.end5.lr.ph}"];
+	Node0xbdfe350 -> Node0xbc18750;
+	Node0xbc18750 [shape=record,label="{if.end5}"];
+	Node0xbc18750 -> Node0xbc18750[constraint=false];
+	Node0xbc18750 -> Node0xbe38080;
+	Node0xbe38080 [shape=record,label="{while.cond1.blklab3_crit_edge}"];
+	Node0xbe38080 -> Node0xbe21b30;
+	Node0xbe21b30 [shape=record,label="{blklab3}"];
+	Node0xbe21b30 -> Node0xbe1bee0[constraint=false];
+	Node0xbe21b30 -> Node0xbe38540;
+	Node0xbe38540 [shape=record,label="{while.cond.blklab1_crit_edge}"];
+	Node0xbe38540 -> Node0xbe1eb10;
+	Node0xbe1eb10 [shape=record,label="{blklab1}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xbe06980 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xbe0dec0 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            subgraph cluster_0xbe19ed0 {
+              label = "";
+              style = solid;
+              color = 5
+              subgraph cluster_0xbdf9860 {
+                label = "";
+                style = solid;
+                color = 7
+                subgraph cluster_0xbe368b0 {
+                  label = "";
+                  style = solid;
+                  color = 9
+                  Node0xbc18750;
+                }
+                Node0xbe1bee0;
+                Node0xbdfe350;
+                Node0xbe38080;
+              }
+              Node0xbe21b30;
+            }
+            Node0xbe225f0;
+            Node0xbdf98e0;
+            Node0xbe38540;
+          }
+          Node0xbe1bcc0;
+          Node0xbe1eb10;
+        }
+}
