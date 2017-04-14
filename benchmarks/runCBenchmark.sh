@@ -10,13 +10,13 @@ BENCHMARKDIR="$(pwd)"
 
 ## declare compiler used for compilation
 declare -A compilers=( [Reverse]="gcc polly" [newTicTacToe]="gcc polly" [BubbleSort]="gcc polly" \
-					   [MergeSort]="gcc polly" [MatrixMult]="polly" \
+					   [MergeSort]="gcc polly" [MatrixMult]="polly gcc" \
 					   [LZ77]="gcc" [SobelEdge]="gcc polly" [Cashtill]="gcc" \
 					   [AppendArrayPattern]="gcc" )
 
 ## declare 4 kinds of code generation
 #declare -a codegens=( "naive" "naive_dealloc" "nocopy" "nocopy_dealloc" )
-declare -a codegens=( "nocopy_dealloc" )
+declare -a codegens=( "nocopy" )
 
 declare -A patternmatches=( [Reverse]="disabledpattern" [newTicTacToe]="disabledpattern" [BubbleSort]="disabledpattern" \
 					   		[MergeSort]="disabledpattern" [MatrixMult]="disabledpattern" \
@@ -27,12 +27,12 @@ declare -A patternmatches=( [Reverse]="disabledpattern" [newTicTacToe]="disabled
 declare -A patterns=( [LZ77]=compress [AppendArrayPattern]=comp )
 
 ## declare the number of threads
-declare -a threads=( 1 2 3 4 )
+declare -a threads=( 1 2 3 4 5 6 7 8 )
 
 ### declare parameters
 declare -A parameters=( [Reverse]="100000 1000000 10000000" [newTicTacToe]="1000 10000 100000" \
 						[BubbleSort]="1000 10000 100000" [MergeSort]="1000 10000 100000" \
-						[MatrixMult]="1000" \
+						[MatrixMult]="1000 2000 4000 6000 8000 10000" \
 						[LZ77]="input1x.in input2x.in input4x.in input8x.in input16x.in input32x.in input64x.in input128x.in input256x.in input512x.in input1024x.in" \
 						#[LZ77]="input8x.in" \
 						[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm image256x256.pbm image512x512.pbm image1024x1024.pbm" \
@@ -53,7 +53,7 @@ init(){
 	mkdir -p "$dir"
 	### remove all files inside the folder
 	rm -f "$dir/"*.*
-	## Remove all folder and file inside 'impl'' 
+	## Remove all folder and file inside 'impl''
 	rm -rf $BENCHMARKDIR/$testcase/impl
 	mkdir -p $BENCHMARKDIR/$testcase/impl
 }
@@ -71,12 +71,12 @@ generateCode(){
 	codeDir=$BENCHMARKDIR/$testcase/impl/$program"_"C"_"$compiler"_"$pattern"_"$codegen"_"$code
 	### Shell script that generates C code
 	wyopcl=./../../../../bin/wyopcl
-	## Enable the pattern matching on the specified function 
-	if [ $pattern = "enabledpattern" ] 
+	## Enable the pattern matching on the specified function
+	if [ $pattern = "enabledpattern" ]
 	then
 		func=${patterns[$testcase]}
 		### Enable pattern transformation
-		wyopcl=$wyopcl" -pattern $func"	
+		wyopcl=$wyopcl" -pattern $func"
 	fi
 	###echo $codeDir
 	## Clean the folder
@@ -97,7 +97,7 @@ generateCode(){
 			$wyopcl -code $testcase"_"$program.whiley
 			;;
 		"naive_dealloc")
-			### Translate Whiley program into naive + dealloc C code 
+			### Translate Whiley program into naive + dealloc C code
 			$wyopcl -code -dealloc $testcase"_"$program.whiley
 			;;
 		"nocopy")
@@ -114,7 +114,7 @@ generateCode(){
 
 
 ##
-## Compile the program and 
+## Compile the program and
 ##
 compile(){
 	testcase=$1
@@ -131,9 +131,9 @@ compile(){
 	## Change directory to codeDir
 	cd $codeDir
 	####Create 'out' folder
-	rm -rf "out" 
+	rm -rf "out"
 	mkdir -p "out"
-	
+
 	### Compile C code into executables
 	case "$compiler" in
 		"gcc")
@@ -150,10 +150,7 @@ compile(){
 			else
 				echo "Generate OpenMP code ..."
 				### Compile and generate parallel OpenMP code using Polly
-				pollycc -mllvm -polly-parallel -mllvm -polly-vectorizer=stripmine\
-						-mllvm -polly-parallel -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
-						-mllvm -polly-opt-outer-coincidence=yes\
-						-lgomp $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
+				pollycc -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
 			fi
 			;;
 	esac
@@ -168,7 +165,7 @@ run(){
 	pattern=$5
 	parameter=$6
 	thread=$7
-	## Executable type (seq, openmp) 
+	## Executable type (seq, openmp)
 	code=$8
 	### The file of executable
 	executable="$testcase.$program.$compiler.$pattern.$codegen.$code.out"
@@ -180,11 +177,9 @@ run(){
 	## Change folder
 	cd $codeDir
 
-	## Output the file of execution time 
+	## Output the file of execution time
 	mkdir -p "$BENCHMARKDIR/$testcase/exectime/C"
-	
-	
-	
+
 	echo "Run the $program $testcase on $parameter using $compiler and $thread threads..." > $result
 	echo "Run the $program $testcase on $parameter using $thread threads..."
 	for i in {1..10}
@@ -218,7 +213,7 @@ run(){
 				if [ $code = "openmp" ]
 				then
 					export OMP_NUM_THREADS=$thread
-					echo "OMP_NUM_THREADS="$OMP_NUM_THREADS 
+					echo "OMP_NUM_THREADS="$OMP_NUM_THREADS
 				fi
 				## Other cases
 				timeout $TIMEOUT "out/$executable" $parameter >> $result
@@ -226,7 +221,7 @@ run(){
 		esac
 		## Get exit code
 		exitcode="$?"
-		## Exit code of time out 
+		## Exit code of time out
 		if [ "$exitcode" == "124" ]
 		then
 			printf "\nOOT: Run out of time $TIMEOUT\n" >> $result
@@ -238,7 +233,7 @@ run(){
 		then
 			end=`date +%s%N`
 			exectime=$((end-start))
-			printf '\nParameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter $exectime >> $result			
+			printf '\nParameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter $exectime >> $result
 		else
 			printf "\nOOM:Run out of memory\n" >> $result
 			break 1 ## Break the for loop
@@ -271,7 +266,7 @@ exec(){
 				for patternmatch in "${patternmatches[$testcase]}"
 				do
 					echo $patternmatch
-					# Generate sequential C code 
+					# Generate sequential C code
 					generateCode $testcase $program $compiler $codegen $patternmatch "seq"
 					# Compile C code
 					compile $testcase $program $compiler $codegen $patternmatch	"seq"
@@ -281,18 +276,18 @@ exec(){
 						#read -p "Press [Enter] to continue..."
 						echo $code
 						#read -p "Press [Enter] to continue..."
-						# Generate C code 
+						# Generate C code
 						generateCode $testcase $program $compiler $codegen $patternmatch "openmp"
 						# Compile C code using different compiler
 						compile $testcase $program $compiler $codegen $patternmatch "openmp"
 					fi
-					## Run the benchmarks with a variety of parameters				
+					## Run the benchmarks with a variety of parameters
 					for param_arr in "${parameters[$testcase]}"
 					do
 						for parameter in $param_arr
 						do
 							echo "parameter "$parameter
-							## Run sequential executable 
+							## Run sequential executable
 							run $testcase $program $compiler $codegen $pattern $parameter 1 "seq"
 							if [ $compiler = "polly" ]
 							then
@@ -301,12 +296,8 @@ exec(){
 								do
 									echo "thread = "$thread
 									run $testcase $program $compiler $codegen $pattern $parameter $thread "openmp"
-									echo "Sleep 5 second before next experiment"
-									sleep 5s
 								done
 							fi
-							echo "Sleep 5 second before next experiment"
-							sleep 5s
 						done
 					done
 				done
@@ -361,7 +352,7 @@ exec MatrixMult original
 
 # #### AppendArrayPattern test case
 #init AppendArrayPattern
-#exec AppendArrayPattern original 
+#exec AppendArrayPattern original
 
 #### LZ77 test case
 #init LZ77
@@ -405,4 +396,3 @@ exec MatrixMult original
 # exec NQueens integer 10
 # exec NQueens integer 12
 # exec NQueens integer 14
-

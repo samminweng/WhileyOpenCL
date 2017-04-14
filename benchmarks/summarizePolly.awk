@@ -18,12 +18,12 @@ function generateReport(results){
 			## Get Compiler
 			compilers_total=split(compilers[testcase], compiler_array, " ");
 			for(cr=1;cr<=compilers_total;cr++){
-				compiler=compiler_array[cr];					 			
-				## Get pattern 
+				compiler=compiler_array[cr];
+				## Get pattern
 				patterns_total=split(patterns[testcase], pattern_array, " ");
 				for(pt=1; pt<=patterns_total;pt++){
 					pattern=pattern_array[pt];
-					# Get CodeGen 
+					# Get CodeGen
 					codegen_total=split(codegens[testcase], codegen_array, " ");
 					for(c=1;c<=codegen_total;c++){
 						codegen=codegen_array[c];
@@ -37,7 +37,7 @@ function generateReport(results){
 								parameter=par_array[p];
 								if(executable == "seq"){
 									key=testcase","program","compiler","pattern","codegen","executable","parameter","1;
-									
+
 									if(counts[key]>0){
 										str=testcase"\t"program"\t"compiler"\t"pattern"\t"codegen"\t"executable"\t"parameter"\t"1;
 										## Print out result, e.g. CPU utilization
@@ -46,7 +46,7 @@ function generateReport(results){
 										}
 										print str;
 									}
-									
+
 								}else{
 									th_total=split(threads[executable], th_array, " ");
 									for(th=1;th<=th_total;th++){
@@ -62,13 +62,13 @@ function generateReport(results){
 												str = str"\t"results[key","iteration];
 											}
 											print str;
-										}										
+										}
 									}
 								}
 							}
 						}
 					}
-				}							
+				}
 			}
 		}
 	}
@@ -81,29 +81,29 @@ BEGIN {
 	## Test case name
 	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge";
 	testcases="MatrixMult";
-	
-	## Program Type
-	programs["MatrixMult"]="original";	
 
-	# Pattern matching 	
+	## Program Type
+	programs["MatrixMult"]="original";
+
+	# Pattern matching
 	patterns["MatrixMult"] = "disabled";
 
-	# Code Generation	
-	codegens["MatrixMult"] = "nocopy_dealloc";	
-	
-	# Compiler	
+	# Code Generation
+	codegens["MatrixMult"] = "nocopy";
+
+	# Compiler
 	compilers["MatrixMult"] = "gcc polly";
-		
-	# Parameter	
-	parameters["MatrixMult"]="1000 2000 3000";
-	
+
+	# Parameter
+	parameters["MatrixMult"]="1000 2000 4000 6000 8000 10000";
+
 	# Executable
 	executables["MatrixMult"]="seq openmp";
 
 	# The number of threads
 	threads["seq"]="1";
-	threads["openmp"]="1 2 3 4";
-	
+	threads["openmp"]="1 2 3 4 5 6 7 8";
+
 	# Results
 	cpu_utils[""] = "";
 	exec_times[""] = "";
@@ -118,7 +118,7 @@ BEGIN {
 	testcase=t_array[1];
 	# Program type
 	program=t_array[2];
-	# Compiler 
+	# Compiler
 	compiler=t_array[3];
 	# Pattern
 	pattern=t_array[4];
@@ -129,21 +129,21 @@ BEGIN {
 	}
 	# Codegen
 	codegen=t_array[5];
-	
+
 	# Get executable
 	executable = t_array[6];
 
 	# Get parameter
-	parameter = t_array[7];	
+	parameter = t_array[7];
 
 	# Get the number of threads
-	thread = t_array[8];	
-	
+	thread = t_array[8];
+
 
 	key=testcase","program","compiler","pattern","codegen","executable","parameter","thread;
 	##print "key="key;
 	##pause();
-	
+
 	# Get the execution time
 	if($1 ~ /ExecutionTime:/){
 		##print $1;
@@ -166,11 +166,11 @@ BEGIN {
 		### Debug code
 		#print "exec_times["time_key"]="exec_times[time_key];
 		##pause();
-		
+
 	}
 }
 END {
-	
+
 	print "Execution Time (nano second)";
 	generateReport(exec_times);
 
