@@ -247,7 +247,7 @@ exec(){
 }
 ### Determine problem size from cmd line argument
 ### MatrixMult test case
-exec MatrixMult original 3000
+#exec MatrixMult original 3000
 #exec MatrixMult transpose 2000
 
 ### GCD test case
@@ -264,4 +264,4 @@ exec MatrixMult original 3000
 ##exec NQueens original 13
 
 ### SobelEdge Test Case
-#exec SobelEdge original 8
+exec SobelEdge original 32
