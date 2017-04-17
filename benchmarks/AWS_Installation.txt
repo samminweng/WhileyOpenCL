@@ -1,0 +1,51 @@
+### Mount additional EBS volume to AWS instance
+### See http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html
+lsblk
+sudo file -s /dev/xvdb
+sudo mount /dev/xvdb /data
+
+### Install GCC
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install build-essential
+gcc -v
+make -v
+
+### Install python2
+sudo apt-get install python2.7
+
+###Install CMake
+sudo apt-get update
+sudo apt-get install cmake
+
+### Install Polly
+mkdir polly
+cd polly
+git clone http://llvm.org/git/llvm.git llvm_git
+git clone http://llvm.org/git/polly.git llvm_git/tools/polly
+### Also build the matching clang-version (optional)
+git clone http://llvm.org/git/clang.git llvm_git/tools/clang
+
+mkdir llvm_build && cd llvm_build
+cmake ../llvm_git && make
+make check-polly
+
+### Install Java
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+
+### Install ANT
+sudo apt install ant
+
+### Install our project
+git clone https://github.com/samminweng/WhileyOpenCL.git
+cd WhileyOpenCL
+ant
+
+## Edit .profile
+nano ~.profile
+## Add below two lines
+export POLLY_BUILD_DIR="/data/polly/llvm_build"
+# Set PATH to include llvm_build bin
+PATH="$POLLY_BUILD_DIR/bin:$PATH"
