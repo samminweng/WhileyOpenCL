@@ -32,7 +32,7 @@ declare -a threads=( 1 2 3 4 5 6 7 8 )
 ### declare parameters
 declare -A parameters=( [Reverse]="100000 1000000 10000000" [newTicTacToe]="1000 10000 100000" \
 						[BubbleSort]="1000 10000 100000" [MergeSort]="1000 10000 100000" \
-						[MatrixMult]="1000 2000 4000" \
+						[MatrixMult]="4000 6000 8000 10000" \
 						[LZ77]="input1x.in input2x.in input4x.in input8x.in input16x.in input32x.in input64x.in input128x.in input256x.in input512x.in input1024x.in" \
 						#[LZ77]="input8x.in" \
 						[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm image256x256.pbm image512x512.pbm image1024x1024.pbm" \
@@ -182,7 +182,7 @@ run(){
 
 	echo "Run the $program $testcase on $parameter using $compiler and $thread threads..." > $result
 	echo "Run the $program $testcase on $parameter using $thread threads..."
-	for i in {1..10}
+	for i in {1..1}
 	do
 		echo "Run the $program $testcase on $parameter using $compiler" >> $result
 		echo "Begin $i iteration" >> $result
