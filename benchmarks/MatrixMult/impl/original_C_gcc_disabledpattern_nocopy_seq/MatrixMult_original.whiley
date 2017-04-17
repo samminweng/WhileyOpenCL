@@ -7,7 +7,7 @@ import whiley.io.File
 // This matrix multiplication maps 2D array into 1D array,
 // and then multiplies two matrices to produce final matrix
 // using 1D array
-// 
+//
 //constant N is 2000
 type nat is (int x) where x >= 0
 //type Matrix is ({
@@ -27,8 +27,8 @@ type nat is (int x) where x >= 0
 //        data: data
 //    }
 // ========================================================
-// Initialize a Matrix and assign each element with its row 
-// ========================================================   
+// Initialize a Matrix and assign each element with its row
+// ========================================================
 function init(int[] data, int width, int height) -> (int[] r):
     // Fill in Matrix
     int i = 0
@@ -41,8 +41,8 @@ function init(int[] data, int width, int height) -> (int[] r):
     return data
 
 //========================================================
-// Print out a Matrix 
-// ========================================================   
+// Print out a Matrix
+// ========================================================
 method print_mat(System.Console sys, int[] a, int width, int height):
     int i = 0
     while i < height:
@@ -55,8 +55,8 @@ method print_mat(System.Console sys, int[] a, int width, int height):
         sys.out.println_s("")
 
 // ========================================================
-// Initialize a Matrix and assign each element with its row 
-// ========================================================   
+// Initialize a Matrix and assign each element with its row
+// ========================================================
 function mat_mult(int[] a, int[] b, int[] data, int width, int height) -> (int[] c):
     int i = 0
     while i < height:
