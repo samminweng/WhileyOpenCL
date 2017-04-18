@@ -10,7 +10,7 @@ BENCHMARKDIR="$(pwd)"
 
 ## declare compiler used for compilation
 declare -A compilers=( [Reverse]="gcc polly" [newTicTacToe]="gcc polly" [BubbleSort]="gcc polly" \
-					   [MergeSort]="gcc polly" [MatrixMult]="polly gcc" \
+					   [MergeSort]="gcc polly" [MatrixMult]="polly" \
 					   [LZ77]="gcc" [SobelEdge]="gcc polly" [Cashtill]="gcc" \
 					   [AppendArrayPattern]="gcc" )
 
@@ -182,7 +182,7 @@ run(){
 
 	echo "Run the $program $testcase on $parameter using $compiler and $thread threads..." > $result
 	echo "Run the $program $testcase on $parameter using $thread threads..."
-	for i in {1..1}
+	for i in {1..10}
 	do
 		echo "Run the $program $testcase on $parameter using $compiler" >> $result
 		echo "Begin $i iteration" >> $result
