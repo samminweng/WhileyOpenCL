@@ -119,6 +119,7 @@ runPolly(){
 	## Point out the un-optimizable region
 	echo "[*]Show the region Polly can NOT analyze and reasons"
 	pollycc -Rpass-missed=polly-detect -mllvm -polly-only-func=_mat_mult_ $testcase"_"$program.c Util.c WyRT.c
+	##pollycc -Rpass-missed=polly-detect mllvm -polly-only-func=_mat_mult_ $testcase"_"$program.c Util.c WyRT.c
 
 	## Point out the optimizable region
 	echo "[*]Show the regions Polly can analyze and assumption/restrictions"
@@ -140,7 +141,7 @@ runPolly(){
 	pollycc -mllvm -polly-opt-outer-coincidence=yes -mllvm -debug-only=polly-ast\
 			-mllvm -polly-process-unprofitable $testcase"_"$program.c Util.c WyRT.c
 
-	#echo -e "-----------------Press [Enter] to continue--------------------"&& read
+	echo -e "-----------------Press [Enter] to continue--------------------"&& read
 
 }
 
@@ -237,8 +238,8 @@ exec(){
 	do
 		#echo $testcase $program $compiler $codegen $pollycode $parameter
 		## Generate sequential C code
-		generateCode $testcase $program $compiler $codegen "seq"
-		generateCode $testcase $program $compiler $codegen "openmp"
+		#generateCode $testcase $program $compiler $codegen "seq"
+		#generateCode $testcase $program $compiler $codegen "openmp"
 		runPolly $testcase $program $compiler $codegen "seq"
 		runBenchmark $testcase $program $parameter
 	done
@@ -247,7 +248,7 @@ exec(){
 }
 ### Determine problem size from cmd line argument
 ### MatrixMult test case
-#exec MatrixMult original 3000
+exec MatrixMult original 2000
 #exec MatrixMult transpose 2000
 
 ### GCD test case
@@ -264,4 +265,4 @@ exec(){
 ##exec NQueens original 13
 
 ### SobelEdge Test Case
-exec SobelEdge original 32
+##exec SobelEdge original 32

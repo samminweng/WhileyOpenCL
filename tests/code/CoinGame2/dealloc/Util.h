@@ -1,7 +1,7 @@
-#include <stdio.h>  
-#include <stdlib.h>  
-#include <string.h>  
-#include <errno.h>  
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
 #include <time.h>
 #include <ctype.h>
 #include <stdbool.h>
@@ -12,7 +12,7 @@
 // Remove the security check about unsafe 'scanf' or 'sprintf' in VS tool
 // This definition allows the portability of C code across the platforms.
 #define _CRT_SECURE_NO_WARNINGS
-// Specify the maximal amounts of chars that are printed out using 'printf' function 
+// Specify the maximal amounts of chars that are printed out using 'printf' function
 #define MAX_LENGTH 100
 // Specify the maximal number of chars that a line in PBM should be read
 // i.e. 16384 bytes, to avoid using too many memory space and stop the sobel edge
@@ -26,7 +26,7 @@ typedef uint8_t BYTE;
 *Built-in operation for 1D array of byte and integers
 *
 ***/
-//Create an array of int64_t integers 
+//Create an array of int64_t integers
 int64_t* create1DArray_int64_t(int64_t value, size_t arr_size);
 BYTE* create1DArray_BYTE(BYTE value, size_t arr_size);
 // Copy an array to another array
@@ -122,14 +122,14 @@ void writeAll(FILE *file, BYTE* arr, size_t arr_size);
 #define _DECL_DEALLOC(a) bool a##_dealloc = false;
 #define _DECL_DEALLOC_PARAM(a) bool a##_dealloc
 // Declare the passing parameter
-#define _DECL_1DARRAY_PARAM(a) int64_t* a, size_t a##_size
+#define _DECL_1DARRAY_PARAM(a) int64_t *restrict a, size_t a##_size
 #define _DECL_2DARRAY_PARAM(a) int64_t** a, size_t a##_size, size_t a##_size_size
 // Declare a call-by-reference parameter for output array size
 #define _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE size_t* _size_call_by_ref
 #define _DECL_2DARRAYSIZE_PARAM_CALLBYREFERENCE size_t* _size_call_by_ref, size_t* _size_size_call_by_ref
 // Declare a structure member
 #define _DECL_1DARRAY_MEMBER(a) int64_t* a; size_t a##_size;
-#define _DECL_1DARRAY_MEMBER_BYTE(a) BYTE* a; size_t a##_size; 
+#define _DECL_1DARRAY_MEMBER_BYTE(a) BYTE* a; size_t a##_size;
 #define _DECL_2DARRAY_MEMBER(a) int64_t** a; size_t a##_size; size_t a##_size_size;
 /*
 * Passing parameter Macros
@@ -180,10 +180,10 @@ void writeAll(FILE *file, BYTE* arr, size_t arr_size);
 #define _COPY_STRUCT_PARAM(a, name) a##_tmp = copy_##name(a)
 // Pass the copied array as a function parameter
 #define _COPY_1DARRAY_PARAM_int64_t(a) a##_tmp = copy1DArray_int64_t(a, a##_size), a##_size
-#define _COPY_1DARRAY_PARAM_BYTE(a) a##_tmp = copy1DArray_BYTE(a, a##_size), a##_size 
+#define _COPY_1DARRAY_PARAM_BYTE(a) a##_tmp = copy1DArray_BYTE(a, a##_size), a##_size
 #define _COPY_2DARRAY_PARAM_int64_t(a) a##_tmp = copy2DArray_int64_t(a, a##_size, a##_size_size), a##_size, a##_size_size
 // Pass the copied array of structures as a function parameter
-#define _COPY_1DARRAY_PARAM_STRUCT(a, name) a##_tmp = copy_array_##name(a, a##_size), a##_size 
+#define _COPY_1DARRAY_PARAM_STRUCT(a, name) a##_tmp = copy_array_##name(a, a##_size), a##_size
 // Assign the copied array to a variable
 #define _COPY_STRUCT(a, b, name) a = copy_##name(b);
 #define _COPY_1DARRAY_int64_t(a, b) a##_size = b##_size; a = copy1DArray_int64_t(b, b##_size);
@@ -210,7 +210,7 @@ void writeAll(FILE *file, BYTE* arr, size_t arr_size);
 #define _UPDATE_2DARRAYSZIE_PARAM_CALLBYREFERENCE(a) *_size_call_by_ref = a##_size; *_size_size_call_by_ref = a##_size_size;
 /***
 *  Print Macros
-* 
+*
 */
 // Print an array of integers or bytes
 #define _PRINT_1DARRAY_int64_t(a) printf1DArray_int64_t(a, a##_size);
@@ -240,7 +240,7 @@ void writeAll(FILE *file, BYTE* arr, size_t arr_size);
 			a = NULL;\
 		})
 
-// Deallocate any previously allocated heap variable 
+// Deallocate any previously allocated heap variable
 #define _DEALLOC(a) \
 		({\
 			if(a##_dealloc){\
@@ -296,7 +296,7 @@ void writeAll(FILE *file, BYTE* arr, size_t arr_size);
 			}\
 		})
 /**
-* Deallocation Macros for assignment 
+* Deallocation Macros for assignment
 *
 */
 // Add deallocation flag for a given variable
@@ -313,10 +313,10 @@ void writeAll(FILE *file, BYTE* arr, size_t arr_size);
 */
 // '_CALLER_DEALLOC' macro makes a copy of actual argument and delegates caller
 //  to free passing parameter 'a = func(copy(b), false)'
-// This macro also print out debugging message on memory leaks, due to 
+// This macro also print out debugging message on memory leaks, due to
 // the fact a and b_tmp (extra copy) are not aliased and the copy is not freed
-// either at caller nor callee. 
-// 'checks' contains the analysis results of parameter 'b', e.g. 'true-true-false' 
+// either at caller nor callee.
+// 'checks' contains the analysis results of parameter 'b', e.g. 'true-true-false'
 // Mutable check = true, return check = true, live variable check = false
 #define _CALLER_DEALLOC(a, b, checks, func_name) \
 		({\
@@ -382,7 +382,7 @@ void writeAll(FILE *file, BYTE* arr, size_t arr_size);
 		}\
 	})
 /*
-* Other Macros 
+* Other Macros
 *
 */
 //Nullify the array variable
@@ -391,7 +391,7 @@ void writeAll(FILE *file, BYTE* arr, size_t arr_size);
 #define _CONV_ARGS(a) a = convertArgsToIntArray(argc, args, &a##_size, &a##_size_size);
 // Parse a string into an integer
 #define _STR_TO_INT(a, b) a = parseStringToInt(b);
-// Slice an array 'b' into a new array 'a' 
+// Slice an array 'b' into a new array 'a'
 #define _SLICE_ARRAY(a, b, start, end) a = slice(b, b##_size, start, end); a##_size = end - start;
 // Compare two arrays of integers
 #define _IFEQ_ARRAY_int64_t(a, b, blklab) if(isArrayEqual_int64_t(a, a##_size, b, b##_size)){goto blklab;}

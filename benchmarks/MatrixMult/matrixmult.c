@@ -1,4 +1,4 @@
-#include <stdio.h> 
+#include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -9,16 +9,17 @@ int64_t* mat_mult(int64_t* a, int64_t* b, int64_t* c, int width, int height){
          int j = 0;
          while(j < width){
             int k = 0;
+            int64_t sum =0;
             while(k < width){
-                c[i*width+j] = a[i*width+k] * b[k*width+j];
+                c[i*width+j] = c[i*width+j] + a[i*width+k] * b[k*width+j];
                 k = k + 1;
             }
             j = j +1;
          }
          i = i +1;
     }
-    return c;   
-    
+    return c;
+
 }
 
 

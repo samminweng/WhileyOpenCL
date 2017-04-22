@@ -1,0 +1,86 @@
+digraph "Scop Graph for '_mat_mult_' function" {
+	label="Scop Graph for '_mat_mult_' function";
+
+	Node0xc6459d0 [shape=record,label="{entry}"];
+	Node0xc6459d0 -> Node0xc621ff0;
+	Node0xc621ff0 [shape=record,label="{entry.split}"];
+	Node0xc621ff0 -> Node0xc6220a0;
+	Node0xc621ff0 -> Node0xc6220c0;
+	Node0xc6220a0 [shape=record,label="{while.cond1.preheader.lr.ph}"];
+	Node0xc6220a0 -> Node0xc6402c0;
+	Node0xc6402c0 [shape=record,label="{while.cond1.preheader}"];
+	Node0xc6402c0 -> Node0xc640360;
+	Node0xc6402c0 -> Node0xc640380;
+	Node0xc640360 [shape=record,label="{while.cond6.preheader.lr.ph}"];
+	Node0xc640360 -> Node0xc6403e0;
+	Node0xc6403e0 [shape=record,label="{while.cond6.preheader}"];
+	Node0xc6403e0 -> Node0xc62e210;
+	Node0xc6403e0 -> Node0xc6305a0;
+	Node0xc62e210 [shape=record,label="{if.end10.lr.ph}"];
+	Node0xc62e210 -> Node0xc6305c0;
+	Node0xc6305c0 [shape=record,label="{if.end10}"];
+	Node0xc6305c0 -> Node0xc6305c0[constraint=false];
+	Node0xc6305c0 -> Node0xc630660;
+	Node0xc630660 [shape=record,label="{while.cond6.blklab13_crit_edge}"];
+	Node0xc630660 -> Node0xc6305a0;
+	Node0xc6305a0 [shape=record,label="{blklab13}"];
+	Node0xc6305a0 -> Node0xc6403e0[constraint=false];
+	Node0xc6305a0 -> Node0xc622050;
+	Node0xc622050 [shape=record,label="{while.cond1.blklab11_crit_edge}"];
+	Node0xc622050 -> Node0xc640380;
+	Node0xc640380 [shape=record,label="{blklab11}"];
+	Node0xc640380 -> Node0xc6402c0[constraint=false];
+	Node0xc640380 -> Node0xc620f20;
+	Node0xc620f20 [shape=record,label="{while.cond.blklab9_crit_edge}"];
+	Node0xc620f20 -> Node0xc6220c0;
+	Node0xc6220c0 [shape=record,label="{blklab9}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xc65c450 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc63fb80 {
+            label = "";
+            style = filled;
+            color = 3            subgraph cluster_0xc63fb00 {
+              label = "";
+              style = solid;
+              color = 5
+              subgraph cluster_0xc630a60 {
+                label = "";
+                style = solid;
+                color = 7
+                subgraph cluster_0xc6309e0 {
+                  label = "";
+                  style = solid;
+                  color = 9
+                  subgraph cluster_0xc645b10 {
+                    label = "";
+                    style = solid;
+                    color = 11
+                    subgraph cluster_0xc645a90 {
+                      label = "";
+                      style = solid;
+                      color = 1
+                      Node0xc6305c0;
+                    }
+                    Node0xc6403e0;
+                    Node0xc62e210;
+                    Node0xc630660;
+                  }
+                  Node0xc6305a0;
+                }
+                Node0xc6402c0;
+                Node0xc640360;
+                Node0xc622050;
+              }
+              Node0xc640380;
+            }
+            Node0xc621ff0;
+            Node0xc6220a0;
+            Node0xc620f20;
+          }
+          Node0xc6459d0;
+          Node0xc6220c0;
+        }
+}
