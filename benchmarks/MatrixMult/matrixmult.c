@@ -9,9 +9,10 @@ int64_t* mat_mult(int64_t* a, int64_t* b, int64_t* c, int width, int height){
          int j = 0;
          while(j < width){
             int k = 0;
-            int64_t sum =0;
+            c[i*width+j] = 0;
             while(k < width){
                 c[i*width+j] = c[i*width+j] + a[i*width+k] * b[k*width+j];
+                //c[i*width+j] = a[i*width+k] * b[k*width+j];
                 k = k + 1;
             }
             j = j +1;
@@ -26,6 +27,7 @@ int64_t* mat_mult(int64_t* a, int64_t* b, int64_t* c, int width, int height){
 int main(int argc, char ** args){
 
     int size = atoi(args[1]);
+    //int size = 6000;
     int width = size;
     int height = size;
     // Initializ matrix A, B, C

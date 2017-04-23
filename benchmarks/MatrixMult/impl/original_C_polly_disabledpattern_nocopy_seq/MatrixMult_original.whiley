@@ -63,12 +63,10 @@ function mat_mult(int[] a, int[] b, int[] data, int width, int height) -> (int[]
         int j = 0
         while j < width:
             int k = 0
-            int[] sum = [0;width]
             while k < width:
                 // c[i][j] = c[i][j] + a[i][k] * b[k][j]
-                sum[k] = sum[k] + a[i*width+k] * b[k*width+j]
+                data[i*width+j] = data[i*width+j] + a[i*width+k] * b[k*width+j]
                 k = k + 1
-            data[i*width+j] = sum
             j = j + 1
         i = i + 1
     return data

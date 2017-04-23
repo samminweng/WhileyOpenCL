@@ -10,7 +10,7 @@ BENCHMARKDIR="$(pwd)"
 
 ## declare compiler used for compilation
 declare -A compilers=( [Reverse]="gcc polly" [newTicTacToe]="gcc polly" [BubbleSort]="gcc polly" \
-					   [MergeSort]="gcc polly" [MatrixMult]="polly gcc" \
+					   [MergeSort]="gcc polly" [MatrixMult]="polly" \
 					   [LZ77]="gcc" [SobelEdge]="gcc polly" [Cashtill]="gcc" \
 					   [AppendArrayPattern]="gcc" )
 
@@ -146,11 +146,11 @@ compile(){
 			if [ $code = "seq" ]
 			then
 				## Compile and optimize sequential code using Polly
-				pollycc $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
+				pollycc -mllvm -polly-pattern-matching-based-opts=false $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
 			else
 				echo "Generate OpenMP code ..."
 				### Compile and generate parallel OpenMP code using Polly
-				pollycc -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
+				pollycc -mllvm -polly-pattern-matching-based-opts=false -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
 			fi
 			;;
 	esac

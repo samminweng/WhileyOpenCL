@@ -173,7 +173,7 @@ runBenchmark(){
 
 	## Run sequential code, produced by Polly
 	echo "[3] Run Polly-Optimized Sequential executables"
-	pollycc $testcase"_"$program.c Util.c WyRT.c -o "out"/$testcase"_"$program.polly.out
+	pollycc -mllvm -polly-pattern-matching-based-opts=false $testcase"_"$program.c Util.c WyRT.c -o "out"/$testcase"_"$program.polly.out
 	## Clean folder
 	#cleanPollyFolder
 	## Generate LLVM-IR code from C code
@@ -196,11 +196,11 @@ runBenchmark(){
 	cd $BENCHMARKDIR/$testcase/impl/$program"_"C"_"$compiler"_"disabledpattern"_"$codegen"_openmp"
 	mkdir -p out
 	## Generate OpenMP code
-	pollycc -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out"/$testcase"_"$program.openmp.out
+	pollycc -mllvm -polly-pattern-matching-based-opts=false -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out"/$testcase"_"$program.openmp.out
 	## Clean folder
 	#cleanPollyFolder
-	#pollycc -S -emit-llvm -mllvm -polly-vectorizer=stripmine \
-	#		-mllvm -polly-parallel -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force \
+	#pollycc -S -emit-llvm -mllvm -polly-vectorizer=stripmine\
+	#		-mllvm -polly-parallel -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
 	#		-mllvm -polly-opt-outer-coincidence=yes $testcase"_"$program.c -o "llvm"/$testcase"_"$program.openmp.ll
 	#llc "llvm"/$testcase"_"$program.openmp.ll -o "assembly"/$testcase"_"$program.openmp.s
 	### Use 'gcc' to compile .s file and link with 'libUtil.a'
