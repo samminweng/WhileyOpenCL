@@ -10,7 +10,7 @@ BENCHMARKDIR="$(pwd)"
 
 ## declare compiler used for compilation
 declare -A compilers=( [Reverse]="gcc polly" [newTicTacToe]="gcc polly" [BubbleSort]="gcc polly" \
-					   [MergeSort]="gcc polly" [MatrixMult]="polly" \
+					   [MergeSort]="gcc polly" [MatrixMult]="gcc" \
 					   [LZ77]="gcc" [SobelEdge]="gcc polly" [Cashtill]="gcc" \
 					   [AppendArrayPattern]="gcc" )
 
