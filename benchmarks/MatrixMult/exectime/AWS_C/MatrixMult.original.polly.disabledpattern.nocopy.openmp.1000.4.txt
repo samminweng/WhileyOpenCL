@@ -2,82 +2,82 @@ Run the original MatrixMult on 1000 using polly and 4 threads...
 Run the original MatrixMult on 1000 using polly
 Begin 1 iteration
 size = 1000
-Matrix C[size-1][size-1] = 998001
+Matrix C[size-1][size-1] = 499000500
 Pass MatrixMult test case
 
-Parameter:1000	ExecutionTime:17281677	nanoseconds.
+Parameter:1000	ExecutionTime:193831064	nanoseconds.
 Finish 1 iteration
 Run the original MatrixMult on 1000 using polly
 Begin 2 iteration
 size = 1000
-Matrix C[size-1][size-1] = 998001
+Matrix C[size-1][size-1] = 499000500
 Pass MatrixMult test case
 
-Parameter:1000	ExecutionTime:20668147	nanoseconds.
+Parameter:1000	ExecutionTime:253613759	nanoseconds.
 Finish 2 iteration
 Run the original MatrixMult on 1000 using polly
 Begin 3 iteration
 size = 1000
-Matrix C[size-1][size-1] = 998001
+Matrix C[size-1][size-1] = 499000500
 Pass MatrixMult test case
 
-Parameter:1000	ExecutionTime:17169808	nanoseconds.
+Parameter:1000	ExecutionTime:192188475	nanoseconds.
 Finish 3 iteration
 Run the original MatrixMult on 1000 using polly
 Begin 4 iteration
 size = 1000
-Matrix C[size-1][size-1] = 998001
+Matrix C[size-1][size-1] = 499000500
 Pass MatrixMult test case
 
-Parameter:1000	ExecutionTime:17030743	nanoseconds.
+Parameter:1000	ExecutionTime:191963702	nanoseconds.
 Finish 4 iteration
 Run the original MatrixMult on 1000 using polly
 Begin 5 iteration
 size = 1000
-Matrix C[size-1][size-1] = 998001
+Matrix C[size-1][size-1] = 499000500
 Pass MatrixMult test case
 
-Parameter:1000	ExecutionTime:17626238	nanoseconds.
+Parameter:1000	ExecutionTime:191882863	nanoseconds.
 Finish 5 iteration
 Run the original MatrixMult on 1000 using polly
 Begin 6 iteration
 size = 1000
-Matrix C[size-1][size-1] = 998001
+Matrix C[size-1][size-1] = 499000500
 Pass MatrixMult test case
 
-Parameter:1000	ExecutionTime:17378647	nanoseconds.
+Parameter:1000	ExecutionTime:261004294	nanoseconds.
 Finish 6 iteration
 Run the original MatrixMult on 1000 using polly
 Begin 7 iteration
 size = 1000
-Matrix C[size-1][size-1] = 998001
+Matrix C[size-1][size-1] = 499000500
 Pass MatrixMult test case
 
-Parameter:1000	ExecutionTime:16975539	nanoseconds.
+Parameter:1000	ExecutionTime:191299404	nanoseconds.
 Finish 7 iteration
 Run the original MatrixMult on 1000 using polly
 Begin 8 iteration
 size = 1000
-Matrix C[size-1][size-1] = 998001
+Matrix C[size-1][size-1] = 499000500
 Pass MatrixMult test case
 
-Parameter:1000	ExecutionTime:17186831	nanoseconds.
+Parameter:1000	ExecutionTime:191927659	nanoseconds.
 Finish 8 iteration
 Run the original MatrixMult on 1000 using polly
 Begin 9 iteration
 size = 1000
-Matrix C[size-1][size-1] = 998001
+Matrix C[size-1][size-1] = 499000500
 Pass MatrixMult test case
 
-Parameter:1000	ExecutionTime:17293911	nanoseconds.
+Parameter:1000	ExecutionTime:193227966	nanoseconds.
 Finish 9 iteration
 Run the original MatrixMult on 1000 using polly
 Begin 10 iteration
 size = 1000
-Matrix C[size-1][size-1] = 998001
+Matrix C[size-1][size-1] = 499000500
 Pass MatrixMult test case
 
-Parameter:1000	ExecutionTime:17382602	nanoseconds.
+Parameter:1000	ExecutionTime:254896329	nanoseconds.
 Finish 10 iteration
 processor	: 0
 vendor_id	: GenuineIntel
@@ -85,8 +85,8 @@ cpu family	: 6
 model		: 63
 model name	: Intel(R) Xeon(R) CPU E5-2666 v3 @ 2.90GHz
 stepping	: 2
-microcode	: 0x36
-cpu MHz		: 2900.116
+microcode	: 0x2b
+cpu MHz		: 2900.066
 cache size	: 25600 KB
 physical id	: 0
 siblings	: 8
@@ -100,7 +100,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology eagerfpu pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm fsgsbase bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 5800.23
+bogomips	: 5800.13
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 46 bits physical, 48 bits virtual
@@ -112,8 +112,8 @@ cpu family	: 6
 model		: 63
 model name	: Intel(R) Xeon(R) CPU E5-2666 v3 @ 2.90GHz
 stepping	: 2
-microcode	: 0x36
-cpu MHz		: 2900.116
+microcode	: 0x2b
+cpu MHz		: 2900.066
 cache size	: 25600 KB
 physical id	: 0
 siblings	: 8
@@ -127,7 +127,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology eagerfpu pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm fsgsbase bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 5800.23
+bogomips	: 5800.13
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 46 bits physical, 48 bits virtual
@@ -139,8 +139,8 @@ cpu family	: 6
 model		: 63
 model name	: Intel(R) Xeon(R) CPU E5-2666 v3 @ 2.90GHz
 stepping	: 2
-microcode	: 0x36
-cpu MHz		: 2900.116
+microcode	: 0x2b
+cpu MHz		: 2900.066
 cache size	: 25600 KB
 physical id	: 0
 siblings	: 8
@@ -154,7 +154,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology eagerfpu pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm fsgsbase bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 5800.23
+bogomips	: 5800.13
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 46 bits physical, 48 bits virtual
@@ -166,8 +166,8 @@ cpu family	: 6
 model		: 63
 model name	: Intel(R) Xeon(R) CPU E5-2666 v3 @ 2.90GHz
 stepping	: 2
-microcode	: 0x36
-cpu MHz		: 2900.116
+microcode	: 0x2b
+cpu MHz		: 2900.066
 cache size	: 25600 KB
 physical id	: 0
 siblings	: 8
@@ -181,7 +181,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology eagerfpu pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm fsgsbase bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 5800.23
+bogomips	: 5800.13
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 46 bits physical, 48 bits virtual
@@ -193,8 +193,8 @@ cpu family	: 6
 model		: 63
 model name	: Intel(R) Xeon(R) CPU E5-2666 v3 @ 2.90GHz
 stepping	: 2
-microcode	: 0x36
-cpu MHz		: 2900.116
+microcode	: 0x2b
+cpu MHz		: 2900.066
 cache size	: 25600 KB
 physical id	: 0
 siblings	: 8
@@ -208,7 +208,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology eagerfpu pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm fsgsbase bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 5800.23
+bogomips	: 5800.13
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 46 bits physical, 48 bits virtual
@@ -220,8 +220,8 @@ cpu family	: 6
 model		: 63
 model name	: Intel(R) Xeon(R) CPU E5-2666 v3 @ 2.90GHz
 stepping	: 2
-microcode	: 0x36
-cpu MHz		: 2900.116
+microcode	: 0x2b
+cpu MHz		: 2900.066
 cache size	: 25600 KB
 physical id	: 0
 siblings	: 8
@@ -235,7 +235,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology eagerfpu pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm fsgsbase bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 5800.23
+bogomips	: 5800.13
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 46 bits physical, 48 bits virtual
@@ -247,8 +247,8 @@ cpu family	: 6
 model		: 63
 model name	: Intel(R) Xeon(R) CPU E5-2666 v3 @ 2.90GHz
 stepping	: 2
-microcode	: 0x36
-cpu MHz		: 2900.116
+microcode	: 0x2b
+cpu MHz		: 2900.066
 cache size	: 25600 KB
 physical id	: 0
 siblings	: 8
@@ -262,7 +262,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology eagerfpu pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm fsgsbase bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 5800.23
+bogomips	: 5800.13
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 46 bits physical, 48 bits virtual
@@ -274,8 +274,8 @@ cpu family	: 6
 model		: 63
 model name	: Intel(R) Xeon(R) CPU E5-2666 v3 @ 2.90GHz
 stepping	: 2
-microcode	: 0x36
-cpu MHz		: 2900.116
+microcode	: 0x2b
+cpu MHz		: 2900.066
 cache size	: 25600 KB
 physical id	: 0
 siblings	: 8
@@ -289,7 +289,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology eagerfpu pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm fsgsbase bmi1 avx2 smep bmi2 erms invpcid xsaveopt
 bugs		:
-bogomips	: 5800.23
+bogomips	: 5800.13
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 46 bits physical, 48 bits virtual
