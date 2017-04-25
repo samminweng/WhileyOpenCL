@@ -2,10 +2,10 @@ Run the original MatrixMult on 8000 using gcc and 1 threads...
 Run the original MatrixMult on 8000 using gcc
 Begin 1 iteration
 size = 8000
-Matrix C[size-1][size-1] = 63984001
+Matrix C[size-1][size-1] = 255936004000
 Pass MatrixMult test case
 
-Parameter:8000	ExecutionTime:1851531806420	nanoseconds.
+Parameter:8000	ExecutionTime:1868110073971	nanoseconds.
 Finish 1 iteration
 processor	: 0
 vendor_id	: GenuineIntel
@@ -14,7 +14,7 @@ model		: 63
 model name	: Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
 stepping	: 2
 microcode	: 0xffffffff
-cpu MHz		: 2397.186
+cpu MHz		: 2394.384
 cache size	: 30720 KB
 physical id	: 0
 siblings	: 8
@@ -28,7 +28,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx lm constant_tsc rep_good nopl eagerfpu pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm fsgsbase bmi1 avx2 smep bmi2 erms xsaveopt
 bugs		:
-bogomips	: 4794.37
+bogomips	: 4788.76
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 42 bits physical, 48 bits virtual
@@ -41,7 +41,7 @@ model		: 63
 model name	: Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
 stepping	: 2
 microcode	: 0xffffffff
-cpu MHz		: 2397.186
+cpu MHz		: 2394.384
 cache size	: 30720 KB
 physical id	: 0
 siblings	: 8
@@ -55,7 +55,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx lm constant_tsc rep_good nopl eagerfpu pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm fsgsbase bmi1 avx2 smep bmi2 erms xsaveopt
 bugs		:
-bogomips	: 4794.37
+bogomips	: 4788.76
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 42 bits physical, 48 bits virtual
@@ -68,7 +68,7 @@ model		: 63
 model name	: Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
 stepping	: 2
 microcode	: 0xffffffff
-cpu MHz		: 2397.186
+cpu MHz		: 2394.384
 cache size	: 30720 KB
 physical id	: 0
 siblings	: 8
@@ -82,7 +82,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx lm constant_tsc rep_good nopl eagerfpu pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm fsgsbase bmi1 avx2 smep bmi2 erms xsaveopt
 bugs		:
-bogomips	: 4794.37
+bogomips	: 4788.76
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 42 bits physical, 48 bits virtual
@@ -95,7 +95,7 @@ model		: 63
 model name	: Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
 stepping	: 2
 microcode	: 0xffffffff
-cpu MHz		: 2397.186
+cpu MHz		: 2394.384
 cache size	: 30720 KB
 physical id	: 0
 siblings	: 8
@@ -109,7 +109,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx lm constant_tsc rep_good nopl eagerfpu pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm fsgsbase bmi1 avx2 smep bmi2 erms xsaveopt
 bugs		:
-bogomips	: 4794.37
+bogomips	: 4788.76
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 42 bits physical, 48 bits virtual
@@ -122,7 +122,7 @@ model		: 63
 model name	: Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
 stepping	: 2
 microcode	: 0xffffffff
-cpu MHz		: 2397.186
+cpu MHz		: 2394.384
 cache size	: 30720 KB
 physical id	: 0
 siblings	: 8
@@ -136,7 +136,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx lm constant_tsc rep_good nopl eagerfpu pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm fsgsbase bmi1 avx2 smep bmi2 erms xsaveopt
 bugs		:
-bogomips	: 4794.37
+bogomips	: 4788.76
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 42 bits physical, 48 bits virtual
@@ -149,7 +149,7 @@ model		: 63
 model name	: Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
 stepping	: 2
 microcode	: 0xffffffff
-cpu MHz		: 2397.186
+cpu MHz		: 2394.384
 cache size	: 30720 KB
 physical id	: 0
 siblings	: 8
@@ -163,7 +163,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx lm constant_tsc rep_good nopl eagerfpu pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm fsgsbase bmi1 avx2 smep bmi2 erms xsaveopt
 bugs		:
-bogomips	: 4794.37
+bogomips	: 4788.76
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 42 bits physical, 48 bits virtual
@@ -176,7 +176,7 @@ model		: 63
 model name	: Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
 stepping	: 2
 microcode	: 0xffffffff
-cpu MHz		: 2397.186
+cpu MHz		: 2394.384
 cache size	: 30720 KB
 physical id	: 0
 siblings	: 8
@@ -190,7 +190,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx lm constant_tsc rep_good nopl eagerfpu pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm fsgsbase bmi1 avx2 smep bmi2 erms xsaveopt
 bugs		:
-bogomips	: 4794.37
+bogomips	: 4788.76
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 42 bits physical, 48 bits virtual
@@ -203,7 +203,7 @@ model		: 63
 model name	: Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
 stepping	: 2
 microcode	: 0xffffffff
-cpu MHz		: 2397.186
+cpu MHz		: 2394.384
 cache size	: 30720 KB
 physical id	: 0
 siblings	: 8
@@ -217,7 +217,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx lm constant_tsc rep_good nopl eagerfpu pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm fsgsbase bmi1 avx2 smep bmi2 erms xsaveopt
 bugs		:
-bogomips	: 4794.37
+bogomips	: 4788.76
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 42 bits physical, 48 bits virtual
