@@ -7,7 +7,13 @@ alias cls='printf "\033c"' ## Clear the screen
 BASEDIR="$(dirname "$(pwd)")"
 BENCHMARKDIR="$BASEDIR/benchmarks"
 UTILDIR="$BASEDIR/tests/code"
-
+## declare 4 kinds of code generation
+#declare -a codegens=("naive" "naive_dealloc" "nocopy" "nocopy_dealloc")
+declare -A codegens=( [MatrixMult]="nocopy" [LZ77]="nocopy" [CoinGame]="nocopy_dealloc" )
+## declare pattern matches
+declare -A patternmatches=( [LZ77]="disabledpattern enabledpattern" [CoinGame]="disabledpattern" )
+## declare 2 kinds of Polly code
+declare -a pollycodes=("seq" "openmp")
 ### Generate C code
 generateCode(){
 	testcase=$1
@@ -15,8 +21,15 @@ generateCode(){
 	compiler=$3
 	codegen=$4
 	pollycode=$5
+	patternmatch=$6
+	wyopcl=./../../../../bin/wyopcl
+	if [ $patternmatch = "enabledpattern"  ]
+	then
+		wyopcl=$wyopcl" -pattern compress"
+	fi
+
 	# The folder of generated Polly code
-	folder=$BENCHMARKDIR/$testcase/impl/$program"_"C"_"$compiler"_"disabledpattern"_"$codegen"_"$pollycode
+	folder=$BENCHMARKDIR/$testcase/impl/$program"_"C"_"$compiler"_"$patternmatch"_"$codegen"_"$pollycode
 	# clean and create the folder
 	rm -f "$folder/*.*"
 	mkdir -p "$folder"
@@ -35,25 +48,25 @@ generateCode(){
 		"naive")
 			echo "#############Generate naive $testcase#################"
 			### Translate Whiley program into naive C code
-			./../../../../bin/wyopcl -code $testcase"_"$program.whiley
+			$wyopcl -code $testcase"_"$program.whiley
 	    ;;
 	  "naive_dealloc")
 			echo "#############Generate naive_dealloc $testcase#################"
 			### Translate Whiley program into naive + dealloc C code
-	    ./../../../../bin/wyopcl -code -dealloc $testcase"_"$program.whiley
+	    	$wyopcl -code -dealloc $testcase"_"$program.whiley
 	    ;;
 	  "nocopy")
 			echo "#############Generate nocopy $testcase#################"
 			## Translate Whiley programs into copy_reduced C code
-			./../../../../bin/wyopcl -code -nocopy $testcase"_"$program.whiley
+			$wyopcl -code -nocopy $testcase"_"$program.whiley
 			;;
 	  "nocopy_dealloc")
 			echo "#############Generate nocopy_dealloc $testcase#################"
 			### Translate Whiley program into copy-eliminated + memory deallocated C code
-	    ./../../../../bin/wyopcl -code -nocopy -dealloc $testcase"_"$program.whiley
+	    	$wyopcl -code -nocopy -dealloc $testcase"_"$program.whiley
 			;;
 	esac
-	#read -p "Press [Enter] to continue..."
+	read -p "Press [Enter] to continue..."
 }
 
 ### Create or clean up folder, and move files to that folder
@@ -98,11 +111,13 @@ runPolly(){
 	compiler=$3
 	codegen=$4
 	pollycode=$5
+	patternmatch=$6
+
 	## Clean folder
 	cleanPollyFolder
 
 	# The folder of generated Polly code
-	cd $BENCHMARKDIR/$testcase/impl/$program"_"C"_"$compiler"_"disabledpattern"_"$codegen"_"$pollycode
+	cd $BENCHMARKDIR/$testcase/impl/$program"_"C"_"$compiler"_"$patternmatch"_"$codegen"_"$pollycode
 
 	## Analyze C code and export SCoP
 	echo "[*] Export SCoP in DOTs"
@@ -149,8 +164,9 @@ runBenchmark(){
 	testcase=$1
 	program=$2
 	parameter=$3
+	patternmatch=$4
 	# Change folder
-	cd $BENCHMARKDIR/$testcase/impl/$program"_"C"_"$compiler"_"disabledpattern"_"$codegen"_seq"
+	cd $BENCHMARKDIR/$testcase/impl/$program"_"C"_"$compiler"_"$patternmatch"_"$codegen"_seq"
 	mkdir -p out
 
 	### Generate sequential executables using GCC
@@ -193,7 +209,7 @@ runBenchmark(){
 
 	## Run parallel OpenMP code, produced by Polly
 
-	cd $BENCHMARKDIR/$testcase/impl/$program"_"C"_"$compiler"_"disabledpattern"_"$codegen"_openmp"
+	cd $BENCHMARKDIR/$testcase/impl/$program"_"C"_"$compiler"_"$patternmatch"_"$codegen"_openmp"
 	mkdir -p out
 	## Generate OpenMP code
 	pollycc -mllvm -polly-pattern-matching-based-opts=false -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out"/$testcase"_"$program.openmp.out
@@ -228,20 +244,21 @@ exec(){
 	program=$2
 	parameter=$3
 	compiler="polly"
-	## declare 4 kinds of code generation
-	#declare -a codegens=("naive" "naive_dealloc" "nocopy" "nocopy_dealloc")
-	declare -a codegens=("nocopy")
-	## declare 2 kinds of Polly code
-	declare -a pollycodes=("seq" "openmp")
+	IFS=' '
 	## Iterate each codegen
-	for codegen in "${codegens[@]}"
+	for codegen in "${codegens[$testcase]}"
 	do
-		#echo $testcase $program $compiler $codegen $pollycode $parameter
-		## Generate sequential C code
-		generateCode $testcase $program $compiler $codegen "seq"
-		generateCode $testcase $program $compiler $codegen "openmp"
-		runPolly $testcase $program $compiler $codegen "seq"
-		#runBenchmark $testcase $program $parameter
+		for patternmatch in ${patternmatches[$testcase]}
+		do
+			#echo "pattern:$patternmatch"
+			#echo $testcase $program $compiler $codegen $pollycode $parameter
+			## Generate sequential C code
+			generateCode $testcase $program $compiler $codegen "seq" $patternmatch
+			generateCode $testcase $program $compiler $codegen "openmp" $patternmatch
+			runPolly $testcase $program $compiler $codegen "seq" $patternmatch
+			runBenchmark $testcase $program $parameter $patternmatch
+		done
+
 	done
 	# Return to the working directory
     cd $BENCHMARKDIR
@@ -257,12 +274,12 @@ exec(){
 #exec GCD cached 10000
 
 ### CoinGame Test Case
-#exec CoinGame original 30000
+exec CoinGame original 30000
 #exec CoinGame single 30000
 #exec CoinGame array 30000
 
 ##LZ77 Test Case
-exec LZ77 original input64x.in
+#exec LZ77 original input64x.in
 
 
 ### NQueens Test Case

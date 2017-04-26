@@ -28,19 +28,21 @@ function generateReport(results){
 					for(c=1;c<=codegen_total;c++){
 						codegen=codegen_array[c];
 						# Get Executable
-						exec_total=split(executables[testcase], exec_array, " ");
+						exec_total=split(execs, exec_array, " ");
 						for(ex=1;ex<=exec_total;ex++){
 							executable=exec_array[ex];
+							##print executable;
 							# Get parameter
+							#print parameters[testcase];
 							par_total=split(parameters[testcase], par_array, " ");
 							for(p=1;p<=par_total;p++){
 								parameter=par_array[p];
+								#print parameter;
 								if(executable == "seq"){
 									key=testcase","program","compiler","pattern","codegen","executable","parameter","1;
-
 									if(counts[key]>0){
 										str=testcase"\t"program"\t"compiler"\t"pattern"\t"codegen"\t"executable"\t"parameter"\t"1;
-										## Print out result, e.g. CPU utilization
+										## Print out result, execution time
 										for(iteration=1;iteration<=10;iteration++){
 											str = str"\t"results[key","iteration];
 										}
@@ -80,25 +82,28 @@ BEGIN {
 	FS = "\n";
 	## Test case name
 	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge";
-	testcases="MatrixMult";
+	testcases="CoinGame";
 
 	## Program Type
 	programs["MatrixMult"]="original";
+	programs["CoinGame"]="original";
 
 	# Pattern matching
 	patterns["MatrixMult"] = "disabled";
+	patterns["CoinGame"] = "disabled";
 
 	# Code Generation
 	codegens["MatrixMult"] = "nocopy";
-
+	codegens["CoinGame"] = "nocopydealloc";
 	# Compiler
 	compilers["MatrixMult"] = "gcc polly";
+	compilers["CoinGame"] = "gcc polly";
 
 	# Parameter
 	parameters["MatrixMult"]="1000 2000 4000 6000 8000 10000";
-
+	parameters["CoinGame"]="10000 20000 30000 40000";
 	# Executable
-	executables["MatrixMult"]="seq openmp";
+	execs="seq openmp";
 
 	# The number of threads
 	threads["seq"]="1";

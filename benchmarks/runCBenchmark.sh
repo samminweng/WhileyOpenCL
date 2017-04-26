@@ -10,18 +10,17 @@ BENCHMARKDIR="$(pwd)"
 
 ## declare compiler used for compilation
 declare -A compilers=( [Reverse]="gcc polly" [newTicTacToe]="gcc polly" [BubbleSort]="gcc polly" \
-					   [MergeSort]="gcc polly" [MatrixMult]="gcc" \
+					   [MergeSort]="gcc polly" [MatrixMult]="polly gcc" \
 					   [LZ77]="gcc" [SobelEdge]="gcc polly" [Cashtill]="gcc" \
-					   [AppendArrayPattern]="gcc" )
-
+					   [AppendArrayPattern]="gcc" [CoinGame]="polly gcc" )
 ## declare 4 kinds of code generation
 #declare -a codegens=( "naive" "naive_dealloc" "nocopy" "nocopy_dealloc" )
-declare -a codegens=( "nocopy" )
+declare -a codegens=("nocopydealloc")
 
 declare -A patternmatches=( [Reverse]="disabledpattern" [newTicTacToe]="disabledpattern" [BubbleSort]="disabledpattern" \
 					   		[MergeSort]="disabledpattern" [MatrixMult]="disabledpattern" \
 					   		[LZ77]="disabledpattern enabledpattern" [SobelEdge]="disabledpattern" [Cashtill]="disabledpattern" \
-					   		[AppendArrayPattern]="disabledpattern enabledpattern" )
+					   		[AppendArrayPattern]="disabledpattern enabledpattern" [CoinGame]="disabledpattern" )
 
 ## Declare an associative array for pattern matching
 declare -A patterns=( [LZ77]=compress [AppendArrayPattern]=comp )
@@ -40,7 +39,7 @@ declare -A parameters=( [Reverse]="100000 1000000 10000000" [newTicTacToe]="1000
 						[Cashtill]="1000 1200 1400 1600 1800 2000" \
 						#[Cashtill]="100 200 300"
 						[AppendArrayPattern]="10000 20000 40000 60000 80000 100000" \
-						#[AppendArrayPattern]="100 200 300" \
+						[CoinGame]="10000 20000 30000 40000" \
 					   )
 ## Declare an associative array for image size in sobeledge test case
 declare -A widths=( [image32x32.pbm]=32 [image64x64.pbm]=64 [image128x128.pbm]=128 \
@@ -96,7 +95,7 @@ generateCode(){
 			### Translate Whiley program into naive C code
 			$wyopcl -code $testcase"_"$program.whiley
 			;;
-		"naive_dealloc")
+		"naivedealloc")
 			### Translate Whiley program into naive + dealloc C code
 			$wyopcl -code -dealloc $testcase"_"$program.whiley
 			;;
@@ -104,7 +103,7 @@ generateCode(){
 			## Translate Whiley programs into copy_reduced C code
 			$wyopcl -code -nocopy $testcase"_"$program.whiley
 			;;
-		"nocopy_dealloc")
+		"nocopydealloc")
 			### Translate Whiley program into copy-eliminated + memory deallocated C code
 			$wyopcl -code -nocopy -dealloc $testcase"_"$program.whiley
 			;;
@@ -146,11 +145,13 @@ compile(){
 			if [ $code = "seq" ]
 			then
 				## Compile and optimize sequential code using Polly
-				pollycc -mllvm -polly-pattern-matching-based-opts=false $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
+				#pollycc -mllvm -polly-pattern-matching-based-opts=false -mllvm -polly-opt-outer-coincidence=yes $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
+				pollycc $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
 			else
 				echo "Generate OpenMP code ..."
 				### Compile and generate parallel OpenMP code using Polly
-				pollycc -mllvm -polly-pattern-matching-based-opts=false -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
+				#pollycc -mllvm -polly-pattern-matching-based-opts=false -mllvm -polly-opt-outer-coincidence=yes -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
+				pollycc -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
 			fi
 			;;
 	esac
@@ -253,6 +254,9 @@ run(){
 exec(){
 	testcase=$1
 	program=$2
+
+
+
 	for compiler_arr in "${compilers[$testcase]}"
 	do
 		for compiler in $compiler_arr
@@ -332,15 +336,12 @@ exec(){
 # exec MergeSort original
 
 # # # # # # # MatrixMult test case
-init MatrixMult
-exec MatrixMult original
+#init MatrixMult
+#exec MatrixMult original
 ####exec MatrixMult original 12000 # Naive code runs out of memory
-# # exec MatrixMult transpose 1000
-# # exec MatrixMult transpose 2000
-# # exec MatrixMult transpose 3000
-# # exec MatrixMult 2DArray 1000
-# # exec MatrixMult 2DArray 2000
-# # exec MatrixMult 2DArray 3000
+# # ### CoinGame test case ###
+init CoinGame
+exec CoinGame original
 
 # # ###Sobel Edge test
 #init SobelEdge
@@ -349,10 +350,6 @@ exec MatrixMult original
 # ### Cashtill test case
 #init Cashtill
 #exec Cashtill original
-
-# #### AppendArrayPattern test case
-#init AppendArrayPattern
-#exec AppendArrayPattern original
 
 #### LZ77 test case
 #init LZ77
@@ -373,17 +370,6 @@ exec MatrixMult original
 # # exec GCD cached 150
 # # exec GCD cached 200
 
-# # ### CoinGame test case ###
-# # init CoinGame
-# # exec CoinGame original 1000
-# # exec CoinGame original 2000
-# # exec CoinGame original 3000
-# # exec CoinGame single 1000
-# # exec CoinGame single 2000
-# # exec CoinGame single 3000
-# # exec CoinGame array 1000
-# # exec CoinGame array 2000
-# # exec CoinGame array 3000
 
 # ## NQueen test case
 # init NQueens
