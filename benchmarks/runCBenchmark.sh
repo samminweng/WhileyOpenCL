@@ -11,7 +11,7 @@ BENCHMARKDIR="$(pwd)"
 ## declare compiler used for compilation
 declare -A compilers=( [Reverse]="gcc polly" [newTicTacToe]="gcc polly" [BubbleSort]="gcc polly" \
 					   [MergeSort]="gcc polly" [MatrixMult]="polly gcc" \
-					   [LZ77]="gcc" [SobelEdge]="gcc polly" [Cashtill]="gcc" \
+					   [LZ77]="gcc polly" [SobelEdge]="gcc polly" [Cashtill]="gcc" \
 					   [AppendArrayPattern]="gcc" [CoinGame]="polly gcc" )
 ## declare 4 kinds of code generation
 #declare -a codegens=( "naive" "naive_dealloc" "nocopy" "nocopy_dealloc" )
@@ -155,7 +155,7 @@ compile(){
 			fi
 			;;
 	esac
-	#read -p "Complete 'compile' function Press [Enter] to continue..."
+	##read -p "Complete 'compile' function Press [Enter] to continue..."
 }
 ## Run the executable with given parameters
 run(){
@@ -192,6 +192,7 @@ run(){
 		case "$testcase" in
 		## LZ test case
 			"LZ77")
+				##read -p "Press [Enter] to continue..."
 				timeout $TIMEOUT "out/$executable" "$BENCHMARKDIR/$testcase/$parameter" >> $result
 				;;
 			"SobelEdge")
@@ -203,7 +204,7 @@ run(){
 				mkdir -p "$BENCHMARKDIR/$testcase/image/output/$codegen"
 				##read -p "Press [Enter] to continue..."
 				timeout $TIMEOUT "out/$executable" $parameter $width > "$BENCHMARKDIR/$testcase/image/output/$codegen/output$widthx$width.pbm"
-				##read -p "Press [Enter] to continue..."
+				##
 				;;
 			"Cashtill")
 				### Output the result to console without writing it to the file
@@ -254,9 +255,6 @@ run(){
 exec(){
 	testcase=$1
 	program=$2
-
-
-
 	for compiler_arr in "${compilers[$testcase]}"
 	do
 		for compiler in $compiler_arr
@@ -267,7 +265,7 @@ exec(){
 			do
 				echo $codegen
 				## Go through patternmatch setting
-				for patternmatch in "${patternmatches[$testcase]}"
+				for patternmatch in ${patternmatches[$testcase]}
 				do
 					echo $patternmatch
 					# Generate sequential C code
@@ -340,8 +338,12 @@ exec(){
 #exec MatrixMult original
 ####exec MatrixMult original 12000 # Naive code runs out of memory
 # # ### CoinGame test case ###
-init CoinGame
-exec CoinGame original
+#init CoinGame
+#exec CoinGame original
+
+#### LZ77 test case
+init LZ77
+exec LZ77 original
 
 # # ###Sobel Edge test
 #init SobelEdge
@@ -351,9 +353,7 @@ exec CoinGame original
 #init Cashtill
 #exec Cashtill original
 
-#### LZ77 test case
-#init LZ77
-#exec LZ77 original
+
 
 # # ## Fibonacci test case
 # # init Fibonacci

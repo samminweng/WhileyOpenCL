@@ -11,7 +11,7 @@ UTILDIR="$BASEDIR/tests/code"
 #declare -a codegens=("naive" "naive_dealloc" "nocopy" "nocopy_dealloc")
 declare -A codegens=( [MatrixMult]="nocopy" [LZ77]="nocopy" [CoinGame]="nocopy_dealloc" )
 ## declare pattern matches
-declare -A patternmatches=( [LZ77]="disabledpattern enabledpattern" [CoinGame]="disabledpattern" )
+declare -A patternmatches=( [MatrixMult]="disabledpattern" [LZ77]="disabledpattern enabledpattern" [CoinGame]="disabledpattern" )
 ## declare 2 kinds of Polly code
 declare -a pollycodes=("seq" "openmp")
 ### Generate C code
@@ -265,7 +265,7 @@ exec(){
 }
 ### Determine problem size from cmd line argument
 ### MatrixMult test case
-#exec MatrixMult original 2000
+exec MatrixMult original 2000
 #exec MatrixMult transpose 2000
 
 ### GCD test case
@@ -274,7 +274,7 @@ exec(){
 #exec GCD cached 10000
 
 ### CoinGame Test Case
-exec CoinGame original 30000
+#exec CoinGame original 30000
 #exec CoinGame single 30000
 #exec CoinGame array 30000
 
