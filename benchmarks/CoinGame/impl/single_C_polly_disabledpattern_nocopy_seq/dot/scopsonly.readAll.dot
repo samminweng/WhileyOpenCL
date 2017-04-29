@@ -1,0 +1,30 @@
+digraph "Scop Graph for 'readAll' function" {
+	label="Scop Graph for 'readAll' function";
+
+	Node0xc288130 [shape=record,label="{entry}"];
+	Node0xc288130 -> Node0xc2b4220;
+	Node0xc2b4220 [shape=record,label="{entry.split}"];
+	Node0xc2b4220 -> Node0xc2823f0;
+	Node0xc2b4220 -> Node0xc2927a0;
+	Node0xc2823f0 [shape=record,label="{if.then}"];
+	Node0xc2823f0 -> Node0xc2768d0;
+	Node0xc2768d0 [shape=record,label="{cleanup}"];
+	Node0xc2927a0 [shape=record,label="{if.else}"];
+	Node0xc2927a0 -> Node0xc2768d0;
+	colorscheme = "paired12"
+        subgraph cluster_0xc2eb710 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc2a11c0 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xc2b4220;
+            Node0xc2823f0;
+            Node0xc2927a0;
+          }
+          Node0xc288130;
+          Node0xc2768d0;
+        }
+}

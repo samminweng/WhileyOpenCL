@@ -1,0 +1,129 @@
+{
+   "arrays" : [
+      {
+         "name" : "MemRef_y",
+         "sizes" : [ "*", "%n" ],
+         "type" : "i64"
+      },
+      {
+         "name" : "MemRef_moves",
+         "sizes" : [ "*", "%n" ],
+         "type" : "i64"
+      },
+      {
+         "name" : "MemRef_x",
+         "sizes" : [ "*", "%n" ],
+         "type" : "i64"
+      },
+      {
+         "name" : "MemRef_z",
+         "sizes" : [ "*", "%n" ],
+         "type" : "i64"
+      }
+   ],
+   "context" : "[n] -> {  : -9223372036854775808 <= n <= 9223372036854775807 }",
+   "name" : "%entry.split---%blklab0",
+   "statements" : [
+      {
+         "accesses" : [
+            {
+               "kind" : "write",
+               "relation" : "[n] -> { Stmt_if_end5[i0, i1] -> MemRef_y[i1, i0 + i1] }"
+            }
+         ],
+         "domain" : "[n] -> { Stmt_if_end5[i0, i1] : i0 >= 0 and 0 <= i1 < n - i0 }",
+         "name" : "Stmt_if_end5",
+         "schedule" : "[n] -> { Stmt_if_end5[i0, i1] -> [1, o1, o2, i0 - 32o1, i1 - 32o2, 0] : -31 + i0 <= 32o1 <= i0 and -31 + i1 <= 32o2 <= i1 }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "[n] -> { Stmt_if_end12[i0, i1] -> MemRef_moves[1 + i1, -1 + i0 + i1] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[n] -> { Stmt_if_end12[i0, i1] -> MemRef_y[i1, i0 + i1] }"
+            }
+         ],
+         "domain" : "[n] -> { Stmt_if_end12[i0, i1] : i0 >= 0 and i1 >= 0 and -i0 < i1 < n - i0 and i1 <= -2 + n }",
+         "name" : "Stmt_if_end12",
+         "schedule" : "[n] -> { Stmt_if_end12[i0, i1] -> [3, o1, o2, i0 - 32o1, i0 + i1 - 32o2, 1] : -31 + i0 <= 32o1 <= i0 and -31 + i0 + i1 <= 32o2 <= i0 + i1 }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "write",
+               "relation" : "[n] -> { Stmt_blklab4[i0, i1] -> MemRef_x[i1, i0 + i1] }"
+            }
+         ],
+         "domain" : "[n] -> { Stmt_blklab4[i0, i1] : i0 >= 0 and 0 <= i1 < n - i0 }",
+         "name" : "Stmt_blklab4",
+         "schedule" : "[n] -> { Stmt_blklab4[i0, i1] -> [0, o1, o2, i0 - 32o1, i1 - 32o2, 0] : -31 + i0 <= 32o1 <= i0 and -31 + i1 <= 32o2 <= i1 }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "[n] -> { Stmt_if_end27[i0, i1] -> MemRef_moves[2 + i1, i0 + i1] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[n] -> { Stmt_if_end27[i0, i1] -> MemRef_x[i1, i0 + i1] }"
+            }
+         ],
+         "domain" : "[n] -> { Stmt_if_end27[i0, i1] : i0 >= 0 and 0 <= i1 < n - i0 and i1 <= -3 + n }",
+         "name" : "Stmt_if_end27",
+         "schedule" : "[n] -> { Stmt_if_end27[i0, i1] -> [3, o1, o2, i0 - 32o1, 1 + i0 + i1 - 32o2, 3] : -31 + i0 <= 32o1 <= i0 and -30 + i0 + i1 <= 32o2 <= 1 + i0 + i1 }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "write",
+               "relation" : "[n] -> { Stmt_blklab5[i0, i1] -> MemRef_z[i1, i0 + i1] }"
+            }
+         ],
+         "domain" : "[n] -> { Stmt_blklab5[i0, i1] : i0 >= 0 and 0 <= i1 < n - i0 }",
+         "name" : "Stmt_blklab5",
+         "schedule" : "[n] -> { Stmt_blklab5[i0, i1] -> [2, o1, o2, i0 - 32o1, i1 - 32o2, 0] : -31 + i0 <= 32o1 <= i0 and -31 + i1 <= 32o2 <= i1 }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "[n] -> { Stmt_if_end41[i0, i1] -> MemRef_moves[i1, -2 + i0 + i1] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[n] -> { Stmt_if_end41[i0, i1] -> MemRef_z[i1, i0 + i1] }"
+            }
+         ],
+         "domain" : "[n] -> { Stmt_if_end41[i0, i1] : i0 >= 0 and i1 >= 0 and 2 - i0 <= i1 < n - i0 }",
+         "name" : "Stmt_if_end41",
+         "schedule" : "[n] -> { Stmt_if_end41[i0, i1] -> [3, o1, o2, i0 - 32o1, i0 + i1 - 32o2, 2] : -31 + i0 <= 32o1 <= i0 and -31 + i0 + i1 <= 32o2 <= i0 + i1 }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "[n] -> { Stmt_blklab6[i0, i1] -> MemRef_x[i1, i0 + i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[n] -> { Stmt_blklab6[i0, i1] -> MemRef_y[i1, i0 + i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[n] -> { Stmt_blklab6[i0, i1] -> MemRef_z[i1, i0 + i1] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[n] -> { Stmt_blklab6[i0, i1] -> MemRef_moves[i1, i0 + i1] }"
+            }
+         ],
+         "domain" : "[n] -> { Stmt_blklab6[i0, i1] : i0 >= 0 and 0 <= i1 < n - i0 }",
+         "name" : "Stmt_blklab6",
+         "schedule" : "[n] -> { Stmt_blklab6[i0, i1] -> [3, o1, o2, 1 + i0 - 32o1, 1 + i0 + i1 - 32o2, 0] : -30 + i0 <= 32o1 <= 1 + i0 and -30 + i0 + i1 <= 32o2 <= 1 + i0 + i1 }"
+      }
+   ]
+}

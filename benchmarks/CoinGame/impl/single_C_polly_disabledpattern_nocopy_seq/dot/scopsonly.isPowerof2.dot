@@ -1,0 +1,27 @@
+digraph "Scop Graph for 'isPowerof2' function" {
+	label="Scop Graph for 'isPowerof2' function";
+
+	Node0xc26d3b0 [shape=record,label="{entry}"];
+	Node0xc26d3b0 -> Node0xc2a1390;
+	Node0xc2a1390 [shape=record,label="{entry.split}"];
+	Node0xc2a1390 -> Node0xc2ea450;
+	Node0xc2a1390 -> Node0xc2a5200;
+	Node0xc2ea450 [shape=record,label="{return}"];
+	Node0xc2a5200 [shape=record,label="{land.rhs}"];
+	Node0xc2a5200 -> Node0xc2ea450;
+	colorscheme = "paired12"
+        subgraph cluster_0xc2e59e0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc2b4a00 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xc2a1390;
+            Node0xc2a5200;
+          }
+          Node0xc26d3b0;
+          Node0xc2ea450;
+        }
+}

@@ -1,0 +1,28 @@
+digraph "Scop Graph for 'copy1DArray_BYTE' function" {
+	label="Scop Graph for 'copy1DArray_BYTE' function";
+
+	Node0xd3c0ae0 [shape=record,label="{entry}"];
+	Node0xd3c0ae0 -> Node0xd3a0ff0;
+	Node0xd3a0ff0 [shape=record,label="{entry.split}"];
+	Node0xd3a0ff0 -> Node0xd3e1980;
+	Node0xd3a0ff0 -> Node0xd3a4400;
+	Node0xd3e1980 [shape=record,label="{return}"];
+	Node0xd3a4400 [shape=record,label="{if.end}"];
+	Node0xd3a4400 -> Node0xd399420;
+	Node0xd3a4400 -> Node0xd3d39a0;
+	Node0xd399420 [shape=record,label="{if.then2}"];
+	Node0xd3d39a0 [shape=record,label="{if.end4}"];
+	Node0xd3d39a0 -> Node0xd3e1980;
+	colorscheme = "paired12"
+        subgraph cluster_0xd3d3b30 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0xd3c0ae0;
+          Node0xd3a0ff0;
+          Node0xd3e1980;
+          Node0xd3a4400;
+          Node0xd399420;
+          Node0xd3d39a0;
+        }
+}

@@ -1,0 +1,39 @@
+digraph "Scop Graph for 'create2DArray_int64_t' function" {
+	label="Scop Graph for 'create2DArray_int64_t' function";
+
+	Node0xc28b4f0 [shape=record,label="{entry}"];
+	Node0xc28b4f0 -> Node0xc288f50;
+	Node0xc288f50 [shape=record,label="{entry.split}"];
+	Node0xc288f50 -> Node0xc2cafe0;
+	Node0xc288f50 -> Node0xc271400;
+	Node0xc2cafe0 [shape=record,label="{for.cond.cleanup}"];
+	Node0xc271400 [shape=record,label="{for.body.lr.ph}"];
+	Node0xc271400 -> Node0xc282b90;
+	Node0xc282b90 [shape=record,label="{for.body}"];
+	Node0xc282b90 -> Node0xc282b90[constraint=false];
+	Node0xc282b90 -> Node0xc265750;
+	Node0xc265750 [shape=record,label="{for.cond.for.cond.cleanup_crit_edge}"];
+	Node0xc265750 -> Node0xc2cafe0;
+	colorscheme = "paired12"
+        subgraph cluster_0xc294b70 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc2db830 {
+            label = "Call instruction:   %call = tail call i64** @create2DArray_int64_t_empty(i64 %n, i64 %m)";
+            style = solid;
+            color = 6
+            subgraph cluster_0xc2da260 {
+              label = "Possible aliasing: \"call\", \"arr\", \" <unknown> \"";
+              style = solid;
+              color = 5
+              Node0xc282b90;
+            }
+            Node0xc288f50;
+            Node0xc271400;
+            Node0xc265750;
+          }
+          Node0xc28b4f0;
+          Node0xc2cafe0;
+        }
+}

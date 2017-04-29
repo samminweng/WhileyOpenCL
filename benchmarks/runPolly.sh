@@ -9,7 +9,7 @@ BENCHMARKDIR="$BASEDIR/benchmarks"
 UTILDIR="$BASEDIR/tests/code"
 ## declare 4 kinds of code generation
 #declare -a codegens=("naive" "naive_dealloc" "nocopy" "nocopy_dealloc")
-declare -A codegens=( [MatrixMult]="nocopy" [LZ77]="nocopy" [CoinGame]="nocopy_dealloc" )
+declare -A codegens=( [MatrixMult]="nocopy" [LZ77]="nocopy" [CoinGame]="nocopy" )
 ## declare pattern matches
 declare -A patternmatches=( [MatrixMult]="disabledpattern" [LZ77]="disabledpattern enabledpattern" [CoinGame]="disabledpattern" )
 ## declare 2 kinds of Polly code
@@ -66,7 +66,7 @@ generateCode(){
 	    	$wyopcl -code -nocopy -dealloc $testcase"_"$program.whiley
 			;;
 	esac
-	read -p "Press [Enter] to continue..."
+	##read -p "Press [Enter] to continue..."
 }
 
 ### Create or clean up folder, and move files to that folder
@@ -211,8 +211,18 @@ runBenchmark(){
 
 	cd $BENCHMARKDIR/$testcase/impl/$program"_"C"_"$compiler"_"$patternmatch"_"$codegen"_openmp"
 	mkdir -p out
-	## Generate OpenMP code
-	pollycc -mllvm -polly-pattern-matching-based-opts=false -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out"/$testcase"_"$program.openmp.out
+	## Generate OpenMP code with different Polly passes
+	case "$testcase" in
+		"MatrixMult")
+			pollycc -mllvm -polly-pattern-matching-based-opts=false -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out"/$testcase"_"$program.openmp.out
+			;;
+		"CoinGame")
+			pollycc -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out"/$testcase"_"$program.openmp.out
+			;;
+		*)
+			pollycc -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out"/$testcase"_"$program.openmp.out
+			;;
+	esac
 	## Clean folder
 	#cleanPollyFolder
 	#pollycc -S -emit-llvm -mllvm -polly-vectorizer=stripmine\
@@ -265,7 +275,7 @@ exec(){
 }
 ### Determine problem size from cmd line argument
 ### MatrixMult test case
-exec MatrixMult original 2000
+#exec MatrixMult original 2000
 #exec MatrixMult transpose 2000
 
 ### GCD test case
@@ -274,9 +284,9 @@ exec MatrixMult original 2000
 #exec GCD cached 10000
 
 ### CoinGame Test Case
-#exec CoinGame original 30000
-#exec CoinGame single 30000
-#exec CoinGame array 30000
+#exec CoinGame original 100
+#exec CoinGame single 100
+exec CoinGame array 10000
 
 ##LZ77 Test Case
 #exec LZ77 original input64x.in

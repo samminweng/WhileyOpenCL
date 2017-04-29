@@ -1,0 +1,98 @@
+digraph "Scop Graph for '_findMoves_' function" {
+	label="Scop Graph for '_findMoves_' function";
+
+	Node0xc704e80 [shape=record,label="{entry}"];
+	Node0xc704e80 -> Node0xc712d80;
+	Node0xc712d80 [shape=record,label="{entry.split}"];
+	Node0xc712d80 -> Node0xc711f60;
+	Node0xc712d80 -> Node0xc711f80;
+	Node0xc711f60 [shape=record,label="{while.cond1.preheader.lr.ph}"];
+	Node0xc711f60 -> Node0xc734af0;
+	Node0xc734af0 [shape=record,label="{while.cond1.preheader}"];
+	Node0xc734af0 -> Node0xc734b50;
+	Node0xc734af0 -> Node0xc734b70;
+	Node0xc734b50 [shape=record,label="{if.end5.lr.ph}"];
+	Node0xc734b50 -> Node0xc717250;
+	Node0xc717250 [shape=record,label="{if.end5}"];
+	Node0xc717250 -> Node0xc705f00;
+	Node0xc717250 -> Node0xc705e10;
+	Node0xc705f00 [shape=record,label="{blklab4}"];
+	Node0xc705f00 -> Node0xc705e70;
+	Node0xc705f00 -> Node0xc6fd100;
+	Node0xc705e70 [shape=record,label="{if.end27}"];
+	Node0xc705e70 -> Node0xc6fd100;
+	Node0xc6fd100 [shape=record,label="{blklab5}"];
+	Node0xc6fd100 -> Node0xc6f70b0;
+	Node0xc6fd100 -> Node0xc711f40;
+	Node0xc6f70b0 [shape=record,label="{blklab6}"];
+	Node0xc6f70b0 -> Node0xc717250[constraint=false];
+	Node0xc6f70b0 -> Node0xc6fd160;
+	Node0xc6fd160 [shape=record,label="{while.cond1.blklab2_crit_edge}"];
+	Node0xc6fd160 -> Node0xc734b70;
+	Node0xc734b70 [shape=record,label="{blklab2}"];
+	Node0xc734b70 -> Node0xc734af0[constraint=false];
+	Node0xc734b70 -> Node0xc6fd200;
+	Node0xc6fd200 [shape=record,label="{while.cond.blklab0_crit_edge}"];
+	Node0xc6fd200 -> Node0xc711f80;
+	Node0xc711f80 [shape=record,label="{blklab0}"];
+	Node0xc711f40 [shape=record,label="{if.end41}"];
+	Node0xc711f40 -> Node0xc6f70b0;
+	Node0xc705e10 [shape=record,label="{if.end12}"];
+	Node0xc705e10 -> Node0xc705f00;
+	colorscheme = "paired12"
+        subgraph cluster_0xc70f2d0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc705420 {
+            label = "";
+            style = filled;
+            color = 3            subgraph cluster_0xc712bd0 {
+              label = "";
+              style = solid;
+              color = 5
+              subgraph cluster_0xc712b50 {
+                label = "";
+                style = solid;
+                color = 7
+                subgraph cluster_0xc71ba40 {
+                  label = "";
+                  style = solid;
+                  color = 9
+                  subgraph cluster_0xc71b9c0 {
+                    label = "";
+                    style = solid;
+                    color = 11
+                    Node0xc717250;
+                    Node0xc705e10;
+                  }
+                  subgraph cluster_0xc70b3e0 {
+                    label = "";
+                    style = solid;
+                    color = 11
+                    Node0xc705f00;
+                    Node0xc705e70;
+                  }
+                  subgraph cluster_0xc70b360 {
+                    label = "";
+                    style = solid;
+                    color = 11
+                    Node0xc6fd100;
+                    Node0xc711f40;
+                  }
+                  Node0xc6f70b0;
+                }
+                Node0xc734af0;
+                Node0xc734b50;
+                Node0xc6fd160;
+              }
+              Node0xc734b70;
+            }
+            Node0xc712d80;
+            Node0xc711f60;
+            Node0xc6fd200;
+          }
+          Node0xc704e80;
+          Node0xc711f80;
+        }
+}

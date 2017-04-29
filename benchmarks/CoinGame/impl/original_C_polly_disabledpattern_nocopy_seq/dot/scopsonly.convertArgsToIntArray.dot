@@ -1,0 +1,141 @@
+digraph "Scop Graph for 'convertArgsToIntArray' function" {
+	label="Scop Graph for 'convertArgsToIntArray' function";
+
+	Node0xbe6fef0 [shape=record,label="{entry}"];
+	Node0xbe6fef0 -> Node0xbe581c0;
+	Node0xbe581c0 [shape=record,label="{entry.split}"];
+	Node0xbe581c0 -> Node0xbe977f0;
+	Node0xbe581c0 -> Node0xbe9b060;
+	Node0xbe977f0 [shape=record,label="{if.then}"];
+	Node0xbe9b060 [shape=record,label="{if.end}"];
+	Node0xbe9b060 -> Node0xbea6a90;
+	Node0xbe9b060 -> Node0xbe9b100;
+	Node0xbea6a90 [shape=record,label="{if.then4}"];
+	Node0xbe9b100 [shape=record,label="{if.end6}"];
+	Node0xbe9b100 -> Node0xbea6ab0;
+	Node0xbe9b100 -> Node0xbeac940;
+	Node0xbea6ab0 [shape=record,label="{for.body.lr.ph}"];
+	Node0xbea6ab0 -> Node0xbeac9a0;
+	Node0xbeac9a0 [shape=record,label="{for.body}"];
+	Node0xbeac9a0 -> Node0xbea69e0;
+	Node0xbeac9a0 -> Node0xbea6a40;
+	Node0xbea69e0 [shape=record,label="{while.cond53.preheader}"];
+	Node0xbea69e0 -> Node0xbe977d0;
+	Node0xbe977d0 [shape=record,label="{while.cond53}"];
+	Node0xbe977d0 -> Node0xbe97720;
+	Node0xbe977d0 -> Node0xbe977d0[constraint=false];
+	Node0xbe97720 [shape=record,label="{while.end61}"];
+	Node0xbe97720 -> Node0xbe2fb90;
+	Node0xbe97720 -> Node0xbe2fbb0;
+	Node0xbe2fb90 [shape=record,label="{if.end82.loopexit}"];
+	Node0xbe2fb90 -> Node0xbe330d0;
+	Node0xbe330d0 [shape=record,label="{if.end82}"];
+	Node0xbe330d0 -> Node0xbeac9a0;
+	Node0xbe330d0 -> Node0xbe330f0;
+	Node0xbe330f0 [shape=record,label="{for.cond.for.cond.cleanup_crit_edge}"];
+	Node0xbe330f0 -> Node0xbeac940;
+	Node0xbeac940 [shape=record,label="{for.cond.cleanup}"];
+	Node0xbe2fbb0 [shape=record,label="{for.body70.lr.ph}"];
+	Node0xbe2fbb0 -> Node0xbe48ea0;
+	Node0xbe48ea0 [shape=record,label="{for.body70}"];
+	Node0xbe48ea0 -> Node0xbe48ea0[constraint=false];
+	Node0xbe48ea0 -> Node0xbe66e10;
+	Node0xbe66e10 [shape=record,label="{for.cond67.if.end82.loopexit_crit_edge}"];
+	Node0xbe66e10 -> Node0xbe2fb90;
+	Node0xbea6a40 [shape=record,label="{while.cond.preheader}"];
+	Node0xbea6a40 -> Node0xbe66eb0;
+	Node0xbea6a40 -> Node0xbe66ed0;
+	Node0xbe66eb0 [shape=record,label="{while.end}"];
+	Node0xbe66eb0 -> Node0xbe66ef0;
+	Node0xbe66eb0 -> Node0xbe69760;
+	Node0xbe66ef0 [shape=record,label="{if.end82.loopexit141}"];
+	Node0xbe66ef0 -> Node0xbe330d0;
+	Node0xbe69760 [shape=record,label="{for.body41.lr.ph}"];
+	Node0xbe69760 -> Node0xbe69800;
+	Node0xbe69800 [shape=record,label="{for.body41}"];
+	Node0xbe69800 -> Node0xbe69800[constraint=false];
+	Node0xbe69800 -> Node0xbe6d510;
+	Node0xbe6d510 [shape=record,label="{for.cond38.if.end82.loopexit141_crit_edge}"];
+	Node0xbe6d510 -> Node0xbe66ef0;
+	Node0xbe66ed0 [shape=record,label="{while.body.lr.ph}"];
+	Node0xbe66ed0 -> Node0xbe6d5b0;
+	Node0xbe6d5b0 [shape=record,label="{while.body}"];
+	Node0xbe6d5b0 -> Node0xbe55690;
+	Node0xbe6d5b0 -> Node0xbe556b0;
+	Node0xbe55690 [shape=record,label="{if.then32}"];
+	Node0xbe556b0 [shape=record,label="{if.end34}"];
+	Node0xbe556b0 -> Node0xbe55710;
+	Node0xbe556b0 -> Node0xbe6d5b0;
+	Node0xbe55710 [shape=record,label="{while.cond.while.end_crit_edge}"];
+	Node0xbe55710 -> Node0xbe66eb0;
+	colorscheme = "paired12"
+        subgraph cluster_0xbe6ca50 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xbe8ac40 {
+            label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: while.cond53";
+            style = solid;
+            color = 6
+            Node0xbe977d0;
+          }
+          subgraph cluster_0xbe55990 {
+            label = "Non affine loop bound '(-1 + %length.1.lcssa)' in loop: for.body70";
+            style = solid;
+            color = 6
+            subgraph cluster_0xbe92e10 {
+              label = "Region can not profitably be optimized!";
+              style = solid;
+              color = 5
+              subgraph cluster_0xbe87ff0 {
+                label = "";
+                style = solid;
+                color = 7
+                Node0xbe48ea0;
+              }
+              Node0xbe66e10;
+            }
+            Node0xbe97720;
+            Node0xbe2fbb0;
+          }
+          subgraph cluster_0xbe90930 {
+            label = "Non affine loop bound '(-1 + %length.0.lcssa)' in loop: for.body41";
+            style = solid;
+            color = 6
+            subgraph cluster_0xbeaacd0 {
+              label = "Region can not profitably be optimized!";
+              style = solid;
+              color = 5
+              subgraph cluster_0xbe8d9d0 {
+                label = "";
+                style = solid;
+                color = 7
+                Node0xbe69800;
+              }
+              Node0xbe6d510;
+            }
+            Node0xbe66eb0;
+            Node0xbe69760;
+          }
+          Node0xbe6fef0;
+          Node0xbe581c0;
+          Node0xbe977f0;
+          Node0xbe9b060;
+          Node0xbea6a90;
+          Node0xbe9b100;
+          Node0xbea6ab0;
+          Node0xbeac9a0;
+          Node0xbea69e0;
+          Node0xbe2fb90;
+          Node0xbe330d0;
+          Node0xbe330f0;
+          Node0xbeac940;
+          Node0xbea6a40;
+          Node0xbe66ef0;
+          Node0xbe66ed0;
+          Node0xbe6d5b0;
+          Node0xbe55690;
+          Node0xbe556b0;
+          Node0xbe55710;
+        }
+}
