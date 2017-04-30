@@ -1,5 +1,6 @@
 import whiley.lang.*
 import whiley.io.File
+import whiley.lang.Math
 
 // The 'coins' array can be skipped 
 // because the coin value is the same as the index
@@ -53,6 +54,7 @@ import whiley.io.File
 	sys.out.print_s("The total amount of money (maximum) Bob gets is ")
 	sys.out.println(sum_bob)
 */
+
 // Use dynamic programming to find moves for Alice
 // The coins are an array, starting from 0 upto n
 function findMoves(int[] moves, int n) -> int[]:
@@ -73,19 +75,7 @@ function findMoves(int[] moves, int n) -> int[]:
 			if (j - 1 > 0):
 				z = moves[i*n+j - 2]
 			
-			// Max(x, y)
-			if(x > y):
-				x = y
-		
-			// Max(y, z)
-			if(z > y):
-				z = y
-			
-			// Pick the coins.
-			if (i + x > j + z):
-				moves[i*n+j] = i + x// Pick coins[i] = i
-			else:
-				moves[i*n+j] = j + z// Pick coins[j] = j
+			moves[i*n+j] = Math.max(i + Math.min(x, y), j + Math.min(y, z))
 			
 			j = j + 1
 			i = i + 1
@@ -97,11 +87,11 @@ function findMoves(int[] moves, int n) -> int[]:
 method main(System.Console sys):
 	int|null max = Int.parse(sys.args[0])
 	if max != null:
-    	int n = max
-    	int[] moves = [0;n*n]
-    	moves = findMoves(moves, n) // Pass 'moves' array to the function 
-    	//play(sys, moves, n) 
-    	int sum_alice = moves[n-1]
-    	sys.out.print_s("The total amount of money (maximum) Alice gets is ")
-    	sys.out.println(sum_alice)
-    	sys.out.println_s("Pass CoinGame test case")
+    		int n = max
+    		int[] moves = [0;n*n]
+    		moves = findMoves(moves, n) // Pass 'moves' array to the function 
+    		//play(sys, moves, n) 
+    		int sum_alice = moves[n-1]
+    		sys.out.print_s("The total amount of money (maximum) Alice gets is ")
+    		sys.out.println(sum_alice)
+    		sys.out.println_s("Pass CoinGame test case")

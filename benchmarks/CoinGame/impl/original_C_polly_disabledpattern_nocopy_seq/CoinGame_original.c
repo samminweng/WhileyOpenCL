@@ -52,12 +52,11 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), int64_t n, _DECL_1DARRAYSIZE_PA
 	int64_t _51 = 0;
 	int64_t _52 = 0;
 	int64_t _53 = 0;
-	int64_t _54 = 0;
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %3 = %9  : int
 	s = _9;
-	//loop (%0, %3, %4, %5, %6, %7, %8, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54)
+	//loop (%0, %3, %4, %5, %6, %7, %8, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53)
 	while(true){
 		//ifge %3, %1 goto blklab0 : int
 		if(s>=n){goto blklab0;}
@@ -67,7 +66,7 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), int64_t n, _DECL_1DARRAYSIZE_PA
 		_10 = 0;
 		//assign %5 = %10  : int
 		i = _10;
-		//loop (%0, %4, %5, %6, %7, %8, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52)
+		//loop (%0, %4, %5, %6, %7, %8, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51)
 		while(true){
 			//ifge %4, %1 goto blklab2 : int
 			if(j>=n){goto blklab2;}
@@ -157,69 +156,51 @@ blklab5:;
 			z = _40;
 //.blklab6
 blklab6:;
-			//ifle %7, %6 goto blklab7 : int
-			if(x<=y){goto blklab7;}
-			//assign %7 = %6  : int
-			x = y;
-//.blklab7
-blklab7:;
-			//ifle %8, %6 goto blklab8 : int
-			if(z<=y){goto blklab8;}
-			//assign %8 = %6  : int
-			z = y;
-//.blklab8
-blklab8:;
-			//add %41 = %5, %7 : int
-			_41=i+x;
-			//add %42 = %4, %8 : int
-			_42=j+z;
-			//ifle %41, %42 goto blklab9 : int
-			if(_41<=_42){goto blklab9;}
-			//add %43 = %5, %7 : int
-			_43=i+x;
-			//mul %44 = %5, %1 : int
-			_44=i*n;
-			//add %45 = %44, %4 : int
-			_45=_44+j;
-			//update %0[%45] = %43 : int[] -> int[]
-			moves[_45] = _43;
-			//goto blklab10
-			goto blklab10;
-//.blklab9
-blklab9:;
-			//add %46 = %4, %8 : int
-			_46=j+z;
-			//mul %47 = %5, %1 : int
-			_47=i*n;
-			//add %48 = %47, %4 : int
-			_48=_47+j;
-			//update %0[%48] = %46 : int[] -> int[]
-			moves[_48] = _46;
-//.blklab10
-blklab10:;
-			//const %49 = 1 : int
-			_49 = 1;
-			//add %50 = %4, %49 : int
-			_50=j+_49;
-			//assign %4 = %50  : int
-			j = _50;
-			//const %51 = 1 : int
-			_51 = 1;
-			//add %52 = %5, %51 : int
-			_52=i+_51;
-			//assign %5 = %52  : int
-			i = _52;
+			//invoke (%42) = (%7, %6) whiley/lang/Math:min : function(int,int)->(int)
+			{
+				_42 = min(x, y);
+			}
+			//add %43 = %5, %42 : int
+			_43=i+_42;
+			//invoke (%44) = (%6, %8) whiley/lang/Math:min : function(int,int)->(int)
+			{
+				_44 = min(y, z);
+			}
+			//add %45 = %4, %44 : int
+			_45=j+_44;
+			//invoke (%41) = (%43, %45) whiley/lang/Math:max : function(int,int)->(int)
+			{
+				_41 = max(_43, _45);
+			}
+			//mul %46 = %5, %1 : int
+			_46=i*n;
+			//add %47 = %46, %4 : int
+			_47=_46+j;
+			//update %0[%47] = %41 : int[] -> int[]
+			moves[_47] = _41;
+			//const %48 = 1 : int
+			_48 = 1;
+			//add %49 = %4, %48 : int
+			_49=j+_48;
+			//assign %4 = %49  : int
+			j = _49;
+			//const %50 = 1 : int
+			_50 = 1;
+			//add %51 = %5, %50 : int
+			_51=i+_50;
+			//assign %5 = %51  : int
+			i = _51;
 //.blklab3
 blklab3:;
 		}
 //.blklab2
 blklab2:;
-		//const %53 = 1 : int
-		_53 = 1;
-		//add %54 = %3, %53 : int
-		_54=s+_53;
-		//assign %3 = %54  : int
-		s = _54;
+		//const %52 = 1 : int
+		_52 = 1;
+		//add %53 = %3, %52 : int
+		_53=s+_52;
+		//assign %3 = %53  : int
+		s = _53;
 //.blklab1
 blklab1:;
 	}
@@ -265,8 +246,8 @@ int main(int argc, char** args){
 	}
 	//assign %1 = %5  : null|int
 	max = _5;
-	//ifis %1, null goto blklab11 : null|int
-	if(max == NULL) { goto blklab11;}
+	//ifis %1, null goto blklab7 : null|int
+	if(max == NULL) { goto blklab7;}
 	//assign %2 = %1  : int
 	n = *max;
 	//const %9 = 0 : int
@@ -315,8 +296,8 @@ int main(int argc, char** args){
 	{
 		println_s(_23, _23_size);
 	}
-//.blklab11
-blklab11:;
+//.blklab7
+blklab7:;
 	//return
 	exit(0);
 }

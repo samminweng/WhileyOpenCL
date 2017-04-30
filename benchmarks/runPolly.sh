@@ -286,7 +286,7 @@ exec(){
 ### CoinGame Test Case
 #exec CoinGame original 100
 #exec CoinGame single 100
-exec CoinGame array 10000
+exec CoinGame array 22000
 
 ##LZ77 Test Case
 #exec LZ77 original input64x.in

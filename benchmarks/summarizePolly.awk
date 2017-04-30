@@ -1,23 +1,16 @@
 #!/usr/bin/awk -f
-function pause(){
-	print > fn
-  	print "Continue: (y/n)..."
-  	getline varexit < "-"
-  	if (varexit ~ /^[nN]/) exit
-}
-
 function generateReport(results){
 	print "TestCase\tProgram\tPattern\tCompiler\tGenCode\tExecutable\tParameter\tThread\t1st\t2nd\t3rd\t4th\t5th\t6th\t7th\t8th\t9th\t10th\tAverage";
  	t_total=split(testcases, t_array, " ");
  	for(t=1;t<=t_total;t++){
  		testcase=t_array[t];
  		# Get Program
-		program_total=split(programs[testcase], program_array, " ");
-		for(pt=1;pt<=program_total;pt++){
-			program = program_array[pt];
+		program_total=split(programtypes[testcase], p_array, " ");
+		for(p=1;p<=program_total;p++){
+			programtype=p_array[p];
 			## Get pattern
 			patterns_total=split(patterns[testcase], pattern_array, " ");
-			for(pt=1; pt<=patterns_total;pt++){
+			for(pt=1;pt<=patterns_total;pt++){
 				pattern=pattern_array[pt];
 				## Get Compiler
 				compilers_total=split(compilers[testcase], compiler_array, " ");
@@ -31,42 +24,25 @@ function generateReport(results){
 						exec_total=split(execs, exec_array, " ");
 						for(ex=1;ex<=exec_total;ex++){
 							executable=exec_array[ex];
-							##print executable;
-							# Get parameter
-							#print parameters[testcase];
 							par_total=split(parameters[testcase], par_array, " ");
 							for(p=1;p<=par_total;p++){
 								parameter=par_array[p];
-								#print parameter;
-								#if(executable == "seq"){
-								#	key=testcase","program","compiler","pattern","codegen","executable","parameter","1;
-								#	if(counts[key]>0){
-								#		str=testcase"\t"program"\t"compiler"\t"pattern"\t"codegen"\t"executable"\t"parameter"\t"1;
-								#		## Print out result, execution time
-								#		for(iteration=1;iteration<=10;iteration++){
-								#			str = str"\t"results[key","iteration];
-								#		}
-								#		print str;
-								#	}
-
-								#}else{
-									th_total=split(threads[executable], th_array, " ");
-									for(th=1;th<=th_total;th++){
-										thread=th_array[th];
-										key=testcase","program","pattern","compiler","codegen","executable","parameter","thread;
-										#print "key="key;
-										#pause();
-										# Check if there is any result.
-										if(counts[key]>0){
-											str=testcase"\t"program"\t"compiler"\t"pattern"\t"codegen"\t"executable"\t"parameter"\t"thread;
-											## Print out result, e.g. CPU utilization
-											for(iteration=1;iteration<=10;iteration++){
-												str = str"\t"results[key","iteration];
-											}
-											print str;
+								th_total=split(threads[executable], th_array, " ");
+								for(th=1;th<=th_total;th++){
+									thread=th_array[th];
+									key=testcase","programtype","pattern","compiler","codegen","executable","parameter","thread;
+									#print "key="key;
+									#pause();
+									# Check if there is any result.
+									if(counts[key]>0){
+										str=testcase"\t"programtype"\t"compiler"\t"pattern"\t"codegen"\t"executable"\t"parameter"\t"thread;
+										## Print out result, e.g. CPU utilization
+										for(iteration=1;iteration<=10;iteration++){
+											str = str"\t"results[key","iteration];
 										}
+										print str;
 									}
-								#}
+								}
 							}
 						}
 					}
@@ -82,12 +58,12 @@ BEGIN {
 	FS = "\n";
 	## Test case name
 	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge";
-	testcases="LZ77";
+	testcases="CoinGame";
 
 	## Program Type
-	programs["MatrixMult"]="original";
-	programs["CoinGame"]="original";
-	programs["LZ77"]="original";
+	programtypes["MatrixMult"]="original";
+	programtypes["CoinGame"]="array original";
+	programtypes["LZ77"]="original";
 
 	# Pattern matching
 	patterns["MatrixMult"] = "disabled";
@@ -96,7 +72,7 @@ BEGIN {
 
 	# Code Generation
 	codegens["MatrixMult"] = "nocopy";
-	codegens["CoinGame"] = "nocopydealloc";
+	codegens["CoinGame"] = "nocopy";
 	codegens["LZ77"] = "nocopydealloc";
 	# Compiler
 	compilers["MatrixMult"] = "gcc polly";
@@ -105,7 +81,7 @@ BEGIN {
 
 	# Parameter
 	parameters["MatrixMult"]="1000 2000 4000 6000 8000 10000";
-	parameters["CoinGame"]="10000 20000 30000 40000";
+	parameters["CoinGame"]="10000 12000 14000 16000 18000 20000 22000";
 	parameters["LZ77"]="input1x input2x input4x input8x input16x input32x input64x input128x input256x input512x input1024x";
 	# Executable
 	execs="seq openmp";
@@ -127,7 +103,7 @@ BEGIN {
 	# Test case
 	testcase=t_array[1];
 	# Program type
-	program=t_array[2];
+	programtype=t_array[2];
 	# Compiler
 	compiler=t_array[3];
 	# Pattern
@@ -153,7 +129,7 @@ BEGIN {
 		thread = t_array[8];
 	}
 
-	key=testcase","program","pattern","compiler","codegen","executable","parameter","thread;
+	key=testcase","programtype","pattern","compiler","codegen","executable","parameter","thread;
 	##print "key="key;
 	##pause();
 

@@ -15,7 +15,7 @@ declare -A compilers=( [Reverse]="gcc polly" [newTicTacToe]="gcc polly" [BubbleS
 					   [AppendArrayPattern]="gcc" [CoinGame]="polly gcc" )
 ## declare 4 kinds of code generation
 #declare -a codegens=( "naive" "naive_dealloc" "nocopy" "nocopy_dealloc" )
-declare -a codegens=("nocopydealloc")
+declare -a codegens=("nocopy")
 
 declare -A patternmatches=( [Reverse]="disabledpattern" [newTicTacToe]="disabledpattern" [BubbleSort]="disabledpattern" \
 					   		[MergeSort]="disabledpattern" [MatrixMult]="disabledpattern" \
@@ -39,7 +39,7 @@ declare -A parameters=( [Reverse]="100000 1000000 10000000" [newTicTacToe]="1000
 						[Cashtill]="1000 1200 1400 1600 1800 2000" \
 						#[Cashtill]="100 200 300"
 						[AppendArrayPattern]="10000 20000 40000 60000 80000 100000" \
-						[CoinGame]="10000 20000 30000 40000" \
+						[CoinGame]="10000 12000 14000 16000 18000 20000 22000" \
 					   )
 ## Declare an associative array for image size in sobeledge test case
 declare -A widths=( [image32x32.pbm]=32 [image64x64.pbm]=64 [image128x128.pbm]=128 \
@@ -338,12 +338,13 @@ exec(){
 #exec MatrixMult original
 ####exec MatrixMult original 12000 # Naive code runs out of memory
 # # ### CoinGame test case ###
-#init CoinGame
-#exec CoinGame original
+init CoinGame
+exec CoinGame original
+exec CoinGame array
 
 #### LZ77 test case
-init LZ77
-exec LZ77 original
+#init LZ77
+#exec LZ77 original
 
 # # ###Sobel Edge test
 #init SobelEdge
