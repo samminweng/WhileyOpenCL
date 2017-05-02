@@ -122,6 +122,7 @@ void writeAll(FILE *file, BYTE* arr, size_t arr_size);
 #define _DECL_DEALLOC(a) bool a##_dealloc = false;
 #define _DECL_DEALLOC_PARAM(a) bool a##_dealloc
 // Declare the passing parameter
+// 'restrict' limits pointer aliasing (https://en.wikipedia.org/wiki/Restrict)
 #define _DECL_1DARRAY_PARAM(a) int64_t *restrict a, size_t a##_size
 #define _DECL_2DARRAY_PARAM(a) int64_t** a, size_t a##_size, size_t a##_size_size
 // Declare a call-by-reference parameter for output array size

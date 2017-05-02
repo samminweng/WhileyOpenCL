@@ -217,7 +217,7 @@ runBenchmark(){
 			pollycc -mllvm -polly-pattern-matching-based-opts=false -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out"/$testcase"_"$program.openmp.out
 			;;
 		"CoinGame")
-			pollycc -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out"/$testcase"_"$program.openmp.out
+			pollycc -mllvm -polly-pattern-matching-based-opts=false -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out"/$testcase"_"$program.openmp.out
 			;;
 		*)
 			pollycc -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out"/$testcase"_"$program.openmp.out
@@ -284,9 +284,8 @@ exec(){
 #exec GCD cached 10000
 
 ### CoinGame Test Case
-#exec CoinGame original 100
-#exec CoinGame single 100
-exec CoinGame array 22000
+exec CoinGame original 10000
+exec CoinGame array 10000
 
 ##LZ77 Test Case
 #exec LZ77 original input64x.in

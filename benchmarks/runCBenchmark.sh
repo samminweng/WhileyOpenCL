@@ -14,8 +14,8 @@ declare -A compilers=( [Reverse]="gcc polly" [newTicTacToe]="gcc polly" [BubbleS
 					   [LZ77]="gcc polly" [SobelEdge]="gcc polly" [Cashtill]="gcc" \
 					   [AppendArrayPattern]="gcc" [CoinGame]="polly gcc" )
 ## declare 4 kinds of code generation
-#declare -a codegens=( "naive" "naive_dealloc" "nocopy" "nocopy_dealloc" )
-declare -a codegens=("nocopy")
+#declare -a codegens=( "naive" "naive_dealloc" "nocopy" "nocopydealloc" )
+declare -a codegens=("nocopydealloc")
 
 declare -A patternmatches=( [Reverse]="disabledpattern" [newTicTacToe]="disabledpattern" [BubbleSort]="disabledpattern" \
 					   		[MergeSort]="disabledpattern" [MatrixMult]="disabledpattern" \

@@ -72,7 +72,7 @@ BEGIN {
 
 	# Code Generation
 	codegens["MatrixMult"] = "nocopy";
-	codegens["CoinGame"] = "nocopy";
+	codegens["CoinGame"] = "nocopydealloc";
 	codegens["LZ77"] = "nocopydealloc";
 	# Compiler
 	compilers["MatrixMult"] = "gcc polly";
