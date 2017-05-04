@@ -1,0 +1,61 @@
+digraph "Scop Graph for 'optimized_append' function" {
+	label="Scop Graph for 'optimized_append' function";
+
+	Node0xdc09510 [shape=record,label="{entry}"];
+	Node0xdc09510 -> Node0xdbf1340;
+	Node0xdbf1340 [shape=record,label="{entry.split}"];
+	Node0xdbf1340 -> Node0xdc56ff0;
+	Node0xdbf1340 -> Node0xdcbed00;
+	Node0xdc56ff0 [shape=record,label="{if.end6}"];
+	Node0xdc56ff0 -> Node0xdc3e290;
+	Node0xdc56ff0 -> Node0xdc03810;
+	Node0xdc3e290 [shape=record,label="{for.cond.cleanup}"];
+	Node0xdc03810 [shape=record,label="{for.body.lr.ph}"];
+	Node0xdc03810 -> Node0xdbded10;
+	Node0xdbded10 [shape=record,label="{for.body}"];
+	Node0xdbded10 -> Node0xdbded10[constraint=false];
+	Node0xdbded10 -> Node0xdc18c10;
+	Node0xdc18c10 [shape=record,label="{for.cond.for.cond.cleanup_crit_edge}"];
+	Node0xdc18c10 -> Node0xdc3e290;
+	Node0xdcbed00 [shape=record,label="{while.cond.preheader}"];
+	Node0xdcbed00 -> Node0xdbdde50;
+	Node0xdbdde50 [shape=record,label="{while.cond}"];
+	Node0xdbdde50 -> Node0xdbdde50[constraint=false];
+	Node0xdbdde50 -> Node0xdc57140;
+	Node0xdc57140 [shape=record,label="{while.end}"];
+	Node0xdc57140 -> Node0xdc13250;
+	Node0xdc57140 -> Node0xdc56ff0;
+	Node0xdc13250 [shape=record,label="{if.then4}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xdbd3090 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xdbff390 {
+            label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: for.body";
+            style = solid;
+            color = 6
+            subgraph cluster_0xdbd3110 {
+              label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: for.body";
+              style = solid;
+              color = 5
+              Node0xdbded10;
+            }
+            Node0xdc56ff0;
+            Node0xdc03810;
+            Node0xdc18c10;
+          }
+          subgraph cluster_0xdbff410 {
+            label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: while.cond";
+            style = solid;
+            color = 6
+            Node0xdbdde50;
+          }
+          Node0xdc09510;
+          Node0xdbf1340;
+          Node0xdc3e290;
+          Node0xdcbed00;
+          Node0xdc57140;
+          Node0xdc13250;
+        }
+}

@@ -1,0 +1,39 @@
+digraph "Scop Graph for 'parseStringToInt' function" {
+	label="Scop Graph for 'parseStringToInt' function";
+
+	Node0xdbeef90 [shape=record,label="{entry}"];
+	Node0xdbeef90 -> Node0xdc1f660;
+	Node0xdc1f660 [shape=record,label="{entry.split}"];
+	Node0xdc1f660 -> Node0xdc0cc70;
+	Node0xdc1f660 -> Node0xdc0d560;
+	Node0xdc0cc70 [shape=record,label="{while.body.lr.ph}"];
+	Node0xdc0cc70 -> Node0xdc0d440;
+	Node0xdc0d440 [shape=record,label="{while.body}"];
+	Node0xdc0d440 -> Node0xdc0d440[constraint=false];
+	Node0xdc0d440 -> Node0xdc3e380;
+	Node0xdc3e380 [shape=record,label="{while.cond.while.end_crit_edge}"];
+	Node0xdc3e380 -> Node0xdc0d560;
+	Node0xdc0d560 [shape=record,label="{while.end}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xdbf7db0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xdbf0d20 {
+            label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: while.body";
+            style = solid;
+            color = 6
+            subgraph cluster_0xdbd38c0 {
+              label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: while.body";
+              style = solid;
+              color = 5
+              Node0xdc0d440;
+            }
+            Node0xdc1f660;
+            Node0xdc0cc70;
+            Node0xdc3e380;
+          }
+          Node0xdbeef90;
+          Node0xdc0d560;
+        }
+}

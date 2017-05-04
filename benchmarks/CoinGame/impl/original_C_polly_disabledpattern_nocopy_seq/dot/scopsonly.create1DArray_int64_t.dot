@@ -1,0 +1,21 @@
+digraph "Scop Graph for 'create1DArray_int64_t' function" {
+	label="Scop Graph for 'create1DArray_int64_t' function";
+
+	Node0xdc3e290 [shape=record,label="{entry}"];
+	Node0xdc3e290 -> Node0xdc51d70;
+	Node0xdc51d70 [shape=record,label="{entry.split}"];
+	Node0xdc51d70 -> Node0xdaeacb0;
+	Node0xdc51d70 -> Node0xdc087c0;
+	Node0xdaeacb0 [shape=record,label="{if.then}"];
+	Node0xdc087c0 [shape=record,label="{if.end}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xdc117d0 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0xdc3e290;
+          Node0xdc51d70;
+          Node0xdaeacb0;
+          Node0xdc087c0;
+        }
+}

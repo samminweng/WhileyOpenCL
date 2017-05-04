@@ -6,8 +6,8 @@ function generateReport(results){
  		testcase=t_array[t];
  		# Get Program
 		program_total=split(programtypes[testcase], p_array, " ");
-		for(p=1;p<=program_total;p++){
-			programtype=p_array[p];
+		for(p_index=1;p_index<=program_total;p_index++){
+			programtype=p_array[p_index];
 			## Get pattern
 			patterns_total=split(patterns[testcase], pattern_array, " ");
 			for(pt=1;pt<=patterns_total;pt++){
@@ -62,7 +62,7 @@ BEGIN {
 
 	## Program Type
 	programtypes["MatrixMult"]="original";
-	programtypes["CoinGame"]="array original";
+	programtypes["CoinGame"]="original array ";
 	programtypes["LZ77"]="original";
 
 	# Pattern matching
@@ -72,7 +72,7 @@ BEGIN {
 
 	# Code Generation
 	codegens["MatrixMult"] = "nocopy";
-	codegens["CoinGame"] = "nocopydealloc";
+	codegens["CoinGame"] = "nocopy";
 	codegens["LZ77"] = "nocopydealloc";
 	# Compiler
 	compilers["MatrixMult"] = "gcc polly";

@@ -284,8 +284,9 @@ exec(){
 #exec GCD cached 10000
 
 ### CoinGame Test Case
-exec CoinGame original 10000
-exec CoinGame array 10000
+#exec CoinGame original 10000
+#exec CoinGame array 10000
+exec CoinGame array1 10000
 
 ##LZ77 Test Case
 #exec LZ77 original input64x.in

@@ -1,0 +1,45 @@
+digraph "Scop Graph for 'fromBytes' function" {
+	label="Scop Graph for 'fromBytes' function";
+
+	Node0xd2d8b90 [shape=record,label="{entry}"];
+	Node0xd2d8b90 -> Node0xd2e2680;
+	Node0xd2e2680 [shape=record,label="{entry.split}"];
+	Node0xd2e2680 -> Node0xd30a860;
+	Node0xd2e2680 -> Node0xd331220;
+	Node0xd30a860 [shape=record,label="{if.then}"];
+	Node0xd331220 [shape=record,label="{for.cond.preheader}"];
+	Node0xd331220 -> Node0xd2e5dc0;
+	Node0xd331220 -> Node0xd2ee680;
+	Node0xd2e5dc0 [shape=record,label="{for.cond.cleanup}"];
+	Node0xd2ee680 [shape=record,label="{for.body.lr.ph}"];
+	Node0xd2ee680 -> Node0xd2cfc10;
+	Node0xd2cfc10 [shape=record,label="{for.body}"];
+	Node0xd2cfc10 -> Node0xd2cfc10[constraint=false];
+	Node0xd2cfc10 -> Node0xd30cf70;
+	Node0xd30cf70 [shape=record,label="{for.cond.for.cond.cleanup_crit_edge}"];
+	Node0xd30cf70 -> Node0xd2e5dc0;
+	colorscheme = "paired12"
+        subgraph cluster_0xd2f6100 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xd2f81a0 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            subgraph cluster_0xd2f6180 {
+              label = "";
+              style = solid;
+              color = 5
+              Node0xd2cfc10;
+            }
+            Node0xd331220;
+            Node0xd2ee680;
+            Node0xd30cf70;
+          }
+          Node0xd2d8b90;
+          Node0xd2e2680;
+          Node0xd30a860;
+          Node0xd2e5dc0;
+        }
+}
