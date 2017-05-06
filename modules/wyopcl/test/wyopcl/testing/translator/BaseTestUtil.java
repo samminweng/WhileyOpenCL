@@ -40,7 +40,7 @@ public final class BaseTestUtil {
 	private final String whiley_runtime_lib = lib_path + "wyrt-" + version + ".jar";
 
 	private final String code_path = workspace_path + "tests" + File.separator + "code" + File.separator;
-	
+
 	// Log file
 	private final File logfile = new File(code_path + "log.txt");
 	// Util.c file
@@ -80,18 +80,73 @@ public final class BaseTestUtil {
 				System.out.println(output);
 				assertEquals(expected, output);
 			}
-			
+
 			if(expected.startsWith("Whiley => Wyil: compiled 1 file(s)")){
 				isSkip = false;
 			}
-			
+
 		}
 		// Nullify the file input/output objects.
 		expected_reader.close();
 		output_reader.close();
-		
+
 	}
-	
+
+	/***
+	 * Execute the copy analysis and compare the system output with output file.
+	 * 
+	 * 
+	 * 
+	 * @param sourceDir
+	 * @param testcase
+	 * @param options
+	 */
+	public void execCopyAnalysis(Path sourceDir, String testcase, String... options) {
+		// Check the bound option 
+		if(options[0] != "-nocopy"){
+			throw new RuntimeException("Not passing the 'copy' option in " + testcase + " test case");
+		}
+		// Get the assertion option (-ea runtime option enables assertion)
+		String ea = "disable_assertion";
+		if(options.length == 2){
+			ea = "enable_assertion";
+		}
+
+		Process process;
+		try {		
+			//Path destDir = Paths.get(sourceDir + File.separator + testcase + File.separator);
+			Path sysout = Paths.get(sourceDir + File.separator + testcase + File.separator + ea
+					+ File.separator + testcase+"_nocopy_"+ea+".sysout");
+			// Make the command
+			String cmd = makeCmd(testcase, options);
+
+			// Get the runtime.
+			Runtime rt = Runtime.getRuntime();
+			// Change the folder Run the command
+			process = rt.exec(cmd, null, sourceDir.toFile());
+
+			process.waitFor();
+
+			// Start the process to analyse the bounds
+			InputStream input = process.getInputStream();
+
+			// Check the bound results against pre-stored results
+			assertOutput(new BufferedReader(new InputStreamReader(input, Charset.forName("UTF-8"))),
+					Files.newBufferedReader(sysout, StandardCharsets.UTF_8));
+
+			// Remove all generated WyIL files.
+			Files.deleteIfExists(Paths.get(sourceDir + testcase + ".wyil"));
+		} catch (Exception e) {
+			throw new RuntimeException("Test file: " + testcase + ".whiley", e);
+		}
+
+		process.destroy();
+
+
+	}
+
+
+
 	/**
 	 * Run pattern matching and pattern transformation.
 	 * The analysis results are compared with the pre-stored ones,
@@ -108,41 +163,41 @@ public final class BaseTestUtil {
 		}
 		// Get the function name
 		String func_name = options[1];
-		
+
 		Process process;
 		try {		
 			//Path destDir = Paths.get(sourceDir + File.separator + testcase + File.separator);
 			Path sysout = Paths.get(sourceDir + File.separator + testcase + File.separator + func_name +"_pattern.sysout");
 			// Make the command
 			String cmd = makeCmd(testcase, options);
-			
+
 			// Get the runtime.
 			Runtime rt = Runtime.getRuntime();
 			// Change the folder Run the command
 			process = rt.exec(cmd, null, sourceDir.toFile());
-			
+
 			process.waitFor();
-			
+
 			// Start the process to analyse the bounds
 			InputStream input = process.getInputStream();
-			
+
 			// Check the bound results against pre-stored results
 			assertOutput(new BufferedReader(new InputStreamReader(input, Charset.forName("UTF-8"))),
 					Files.newBufferedReader(sysout, StandardCharsets.UTF_8));
-			
+
 			// Remove all generated WyIL files.
 			Files.deleteIfExists(Paths.get(sourceDir + testcase + ".wyil"));
 		} catch (Exception e) {
 			throw new RuntimeException("Test file: " + testcase + ".whiley", e);
 		}
-		
+
 		process.destroy();
-		
-		
+
+
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Analyze the bounds of a Whiley program using naive or gradual widening strategy,
 	 * and compare the bound analysis with the pre-stored results.
@@ -151,7 +206,7 @@ public final class BaseTestUtil {
 	 * @param widen
 	 */
 	public void execBoundAnalysis(Path sourceDir, String testcase, String... options) {
-		
+
 		// Get the widen strategy
 		String strategy = "naive";
 		// Get 'Traversal' option
@@ -165,7 +220,7 @@ public final class BaseTestUtil {
 				traversal = options[index+1];
 			}
 		}
-		
+
 		Process process;
 		try {		
 			Path destDir = Paths.get(sourceDir + File.separator + testcase);
@@ -173,29 +228,29 @@ public final class BaseTestUtil {
 			Files.copy(Paths.get(sourceDir + File.separator + testcase + ".whiley"),
 					Paths.get(destDir + File.separator + testcase + ".whiley"),
 					StandardCopyOption.REPLACE_EXISTING);
-			
+
 			Path sysout = Paths.get(destDir + File.separator + traversal+"_"+strategy +"_bound.sysout");
 			// Make the command
 			String cmd = makeCmd(testcase, options);
-			
+
 			// Get the runtime.
 			Runtime rt = Runtime.getRuntime();
 			// Change the folder Run the command
 			process = rt.exec(cmd, null, destDir.toFile());
-			
+
 			//process.waitFor();
-			
+
 			// Start the process to analyse the bounds
 			InputStream input = process.getInputStream();
-			
+
 			Scanner in_sc = new Scanner(input);
 			//BufferedReader output_reader = new BufferedReader(new InputStreamReader(input, Charset.forName("UTF-8")));
 			BufferedReader expected_reader = Files.newBufferedReader(sysout, StandardCharsets.UTF_8);
-			
+
 			// Check the bound results against pre-stored results
 			String expected = null;
 			boolean isSkip = true;
-			
+
 			// Takes out each line from expected file and check if it matches with
 			// 1000 line from the output.
 			while (((expected = expected_reader.readLine()) != null)) {
@@ -205,29 +260,29 @@ public final class BaseTestUtil {
 					System.out.println(output);
 					assertEquals(expected, output);					
 				}
-				
+
 				if(expected.startsWith("Whiley => Wyil: compiled 1 file(s)")){
 					isSkip = false;
 				}
-				
+
 			}
 			// Nullify the file input/output objects.
 			expected_reader.close();
 			in_sc.close();
-			
+
 			process.waitFor();
 			if(process.exitValue() != 0){
 				throw new RuntimeException("Fail " + testcase + ".whiley\t Exit value:"+process.exitValue()); 
 			}
-			
+
 			// Remove all generated WyIL files.
 			Files.deleteIfExists(Paths.get(destDir + testcase + ".wyil"));
 		} catch (Exception e) {
 			throw new RuntimeException("Test file: " + testcase + ".whiley", e);
 		}
-		
+
 		process.destroy();
-		
+
 	}
 
 
@@ -470,7 +525,7 @@ public final class BaseTestUtil {
 		return;
 	}
 
-	
+
 	/**
 	 * Make the command line with respect to the passing options.
 	 * 
@@ -479,7 +534,7 @@ public final class BaseTestUtil {
 	private String makeCmd(String testcase, String... options){ 
 		String cmd = "java -cp " + classpath + " wyopcl.WyopclMain -bp " + whiley_runtime_lib;
 		// Run the code generator with optimization.
-		int index=0;;
+		int index=0;
 		while(index<options.length){
 			String option = options[index];
 			cmd += " " + option;
@@ -487,10 +542,10 @@ public final class BaseTestUtil {
 		}
 		// Add test case name
 		cmd += " " + testcase + ".whiley";
-		
+
 		return cmd;
 	}
-	
+
 	/**
 	 * Extract the option value for the name used to create the folder.
 	 * 
@@ -504,42 +559,42 @@ public final class BaseTestUtil {
 		Path destDir;
 		String path = sourceDir + File.separator + testcase;
 		// Iterate the options and find the type of generated code.
-		int index=0;
-		while(index<options.length){
-			String option = options[index];
-			if(option.equals("-bound")){
-				path += File.separator + options[index+1]+ "_bound";
-				index+=2;
-			}else if(option.equals("-pattern")){
-				path += File.separator + options[index+1]+ "_pattern";
-				index+=2;
-			}else if(option.equals("-code")){
-					// Finish all the remaining options
-					if(index+1 == options.length){
-						// Generate 'naive' C code
-						path += File.separator + "naive";
-						index++;
-					}else if(index+2 == options.length){
-						// Generate 'nocopy' 'dealloc' C code
-						path += File.separator + options[index+1].replace("-", "");
-						index+=2;
-					}else if(index+3 == options.length){
-						// Generate 'nocopy_dealloc' C code
-						path += File.separator + options[index+1].replace("-", "")
-								 + "_" + options[index+2].replace("-", "");
-						index+=3;
-					}
-			}else{
-				throw new RuntimeException("Un-supported options:" + option);
-			}
+		int index = 0;
+		switch(options[0]){
+		case "-bound":
+			path += File.separator + options[1]+ "_bound";
+			index = index +2;
+			break;
+		case "-pattern":
+			path += File.separator + options[1]+ "_pattern";
+			index = index +2;
+			break;
+		case "-nocopy":
+			break;
+		case "-code":
+			index++;
+			break;
 		}
-		
+
+
+		if(options.length == index){
+			// Generate 'naive' C code
+			path += File.separator + "naive";
+		}else if(options.length == index + 2){
+			// Generate 'nocopy' 'dealloc' C code
+			path += File.separator + options[1].replace("-", "");
+		}else if(options.length == index + 3){
+			// Generate 'nocopy_dealloc' C code
+			path += File.separator + options[1].replace("-", "")
+					+ "_" + options[2].replace("-", "");
+		}
+
 		destDir = Paths.get(path);
-		
+
 		return destDir;
 	}
-	
-	
+
+
 
 	/**
 	 * Translate a Whiley program into the C code.
@@ -559,13 +614,13 @@ public final class BaseTestUtil {
 	public void execCodeGeneration(Path sourceDir, String testcase, String... options) {
 		try {
 			Path destDir= processOptions(sourceDir, testcase, options);
-			
+
 			// 2. Prepare folder and copy files
 			createFolderAndCopyFiles(testcase, sourceDir, destDir);
 
 			// 3. Make the command line arguments.
 			String cmd = makeCmd(testcase, options);
-	
+
 			// Generate the C code
 			runCmd(cmd, destDir, false);
 
@@ -589,5 +644,5 @@ public final class BaseTestUtil {
 		}
 	}
 
-	
+
 }

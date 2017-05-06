@@ -23,7 +23,7 @@ void printf_POS(POS* pos){
 	printf("%"PRId64, pos->c);
 	printf("}");
 }
-bool _conflict_(POS* p, int64_t row, int64_t col){
+bool _conflict_(POS* p, _DECL_DEALLOC_PARAM(p), int64_t row, int64_t col){
 	bool _3;
 	int64_t r = 0;
 	int64_t c = 0;
@@ -54,6 +54,7 @@ blklab1:;
 	//const %10 = true : bool
 	_10 = true;
 	//return %10
+	_DEALLOC_STRUCT(p, POS);
 	return _10;
 //.blklab0
 blklab0:;
@@ -86,17 +87,19 @@ blklab2:;
 //.blklab3
 blklab3:;
 	//return %15
+	_DEALLOC_STRUCT(p, POS);
 	return _15;
 	//return
 }
 
-int64_t _run_(POS** queens, size_t queens_size, int64_t n, int64_t dim){
+int64_t _run_(POS** queens, size_t queens_size, _DECL_DEALLOC_PARAM(queens), int64_t n, int64_t dim){
 	int64_t _3 = 0;
 	int64_t num_solutions = 0;
 	int64_t col = 0;
 	bool isSolution;
 	int64_t i = 0;
 	POS* p;
+	_DECL_DEALLOC(p);
 	int64_t _9 = 0;
 	int64_t _10 = 0;
 	int64_t _11 = 0;
@@ -108,6 +111,7 @@ int64_t _run_(POS** queens, size_t queens_size, int64_t n, int64_t dim){
 	int64_t _17 = 0;
 	int64_t _18 = 0;
 	POS* _19;
+	_DECL_DEALLOC(_19);
 	bool _20;
 	bool _21;
 	bool _22;
@@ -116,6 +120,7 @@ int64_t _run_(POS** queens, size_t queens_size, int64_t n, int64_t dim){
 	int64_t _25 = 0;
 	bool _26;
 	POS* _27;
+	_DECL_DEALLOC(_27);
 	int64_t _28 = 0;
 	int64_t _29 = 0;
 	int64_t _30 = 0;
@@ -127,6 +132,10 @@ int64_t _run_(POS** queens, size_t queens_size, int64_t n, int64_t dim){
 	//const %9 = 1 : int
 	_9 = 1;
 	//return %9
+	_DEALLOC_1DARRAY_STRUCT(queens, POS);
+	_DEALLOC_STRUCT(p, POS);
+	_DEALLOC_STRUCT(_19, POS);
+	_DEALLOC_STRUCT(_27, POS);
 	return _9;
 	//goto blklab7
 	goto blklab7;
@@ -158,8 +167,11 @@ blklab6:;
 			if(i>=n){goto blklab12;}
 			//indexof %19 = %0, %7 : {int c,int r}[]
 			_19=queens[i];
+			_REMOVE_DEALLOC(_19);
 			//assign %8 = %19  : {int c,int r}
+			_DEALLOC_STRUCT(p, POS);
 			p = _19;
+			_TRANSFER_DEALLOC(p, _19);
 			//const %20 = true : bool
 			_20 = true;
 			//ifeq %6, %20 goto blklab20 : bool
@@ -170,7 +182,8 @@ blklab6:;
 blklab20:;
 			//invoke (%21) = (%8, %1, %5) nqueens2:conflict : function(nqueens2:POS,int,int)->(bool)
 			{
-				_21 = _conflict_(_STRUCT_PARAM(p), n, col);
+				_21 = _conflict_(_STRUCT_PARAM(p), false, n, col);
+				_SUBSTRUCTURE_DEALLOC(p, "false-false-false" , "conflict");
 			}
 			//const %22 = true : bool
 			_22 = true;
@@ -210,11 +223,15 @@ blklab12:;
 		//ifne %6, %26 goto blklab22 : bool
 		if(isSolution!=_26){goto blklab22;}
 		//newrecord %27 = (%5, %1) : {int c,int r}
+		_DEALLOC_STRUCT(_27, POS);
 		_27 = malloc(sizeof(POS));
 		_27->c = col;
 		_27->r = n;
+		_ADD_DEALLOC(_27);
 		//update %0[%1] = %27 : {int c,int r}[] -> {int c,int r}[]
+		_DEALLOC_MEMBER_STRUCT_UPDATECODE(queens, queens[n], POS);
 		queens[n] = _27;
+		_REMOVE_DEALLOC(_27);
 		//const %29 = 1 : int
 		_29 = 1;
 		//add %30 = %1, %29 : int
@@ -222,7 +239,8 @@ blklab12:;
 		//invoke (%28) = (%0, %30, %2) nqueens2:run : function(nqueens2:POS[],int,int)->(int)
 		{
 			void* queens_tmp;
-			_28 = _run_(_COPY_1DARRAY_PARAM_STRUCT(queens, POS), _30, dim);
+			_28 = _run_(_COPY_1DARRAY_PARAM_STRUCT(queens, POS), true, _30, dim);
+			_CALLEE_DEALLOC(queens, "true-false-true" , "run");
 		}
 		//add %31 = %4, %28 : int
 		_31=num_solutions+_28;
@@ -242,6 +260,10 @@ blklab9:;
 //.blklab8
 blklab8:;
 	//return %4
+	_DEALLOC_1DARRAY_STRUCT(queens, POS);
+	_DEALLOC_STRUCT(p, POS);
+	_DEALLOC_STRUCT(_19, POS);
+	_DEALLOC_STRUCT(_27, POS);
 	return num_solutions;
 //.blklab7
 blklab7:;
@@ -252,27 +274,34 @@ int main(int argc, char** args){
 	int64_t n = 0;
 	POS** queens;
 	size_t queens_size = 0;
+	_DECL_DEALLOC(queens);
 	int64_t num_solutions = 0;
 	int64_t _4 = 0;
 	int64_t _5 = 0;
 	int64_t _6 = 0;
 	POS* _7;
+	_DECL_DEALLOC(_7);
 	POS** _8;
 	size_t _8_size = 0;
+	_DECL_DEALLOC(_8);
 	int64_t _9 = 0;
 	int64_t _10 = 0;
 	int64_t _11 = 0;
 	void* _12;
 	_DECL_1DARRAY(_14);
+	_DECL_DEALLOC(_14);
 	void* _15;
 	_DECL_1DARRAY(_17);
+	_DECL_DEALLOC(_17);
 	void* _18;
 	int64_t _20 = 0;
 	void* _21;
 	_DECL_1DARRAY(_23);
+	_DECL_DEALLOC(_23);
 	void* _24;
 	void* _26;
 	_DECL_1DARRAY(_28);
+	_DECL_DEALLOC(_28);
 	//const %4 = 8 : int
 	_4 = 8;
 	//assign %1 = %4  : int
@@ -282,19 +311,26 @@ int main(int argc, char** args){
 	//const %6 = 0 : int
 	_6 = 0;
 	//newrecord %7 = (%5, %6) : {int c,int r}
+	_DEALLOC_STRUCT(_7, POS);
 	_7 = malloc(sizeof(POS));
 	_7->c = _5;
 	_7->r = _6;
+	_ADD_DEALLOC(_7);
 	//arraygen %8 = [7; 1] : {int c,int r}[]
+	_DEALLOC_1DARRAY_STRUCT(_8, POS);
 	_NEW_1DARRAY_STRUCT(_8, n, _7, POS);
+	_ADD_DEALLOC(_8);
 	//assign %2 = %8  : {int c,int r}[]
+	_DEALLOC_1DARRAY_STRUCT(queens, POS);
 	_UPDATE_1DARRAY(queens, _8);
+	_TRANSFER_DEALLOC(queens, _8);
 	//const %10 = 0 : int
 	_10 = 0;
 	//invoke (%9) = (%2, %10, %1) nqueens2:run : function(nqueens2:POS[],int,int)->(int)
 	{
 		void* queens_tmp;
-		_9 = _run_(_COPY_1DARRAY_PARAM_STRUCT(queens, POS), _10, n);
+		_9 = _run_(_COPY_1DARRAY_PARAM_STRUCT(queens, POS), true, _10, n);
+		_CALLEE_DEALLOC(queens, "true-false-true" , "run");
 	}
 	//assign %3 = %9  : int
 	num_solutions = _9;
@@ -314,8 +350,10 @@ blklab23:;
 	//fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %13 = %12 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %14 = [78,45,81,117,101,101,110,32,80,114,111,98,108,101,109,32,111,110,32,97,32,78,32,88,32,78,32,66,111,97,114,100,46] : int[]
+	_DEALLOC(_14);
 	_NEW_1DARRAY_int64_t(_14, 33, 0);
 	_14[0] = 78; _14[1] = 45; _14[2] = 81; _14[3] = 117; _14[4] = 101; _14[5] = 101; _14[6] = 110; _14[7] = 32; _14[8] = 80; _14[9] = 114; _14[10] = 111; _14[11] = 98; _14[12] = 108; _14[13] = 101; _14[14] = 109; _14[15] = 32; _14[16] = 111; _14[17] = 110; _14[18] = 32; _14[19] = 97; _14[20] = 32; _14[21] = 78; _14[22] = 32; _14[23] = 88; _14[24] = 32; _14[25] = 78; _14[26] = 32; _14[27] = 66; _14[28] = 111; _14[29] = 97; _14[30] = 114; _14[31] = 100; _14[32] = 46; 
+	_ADD_DEALLOC(_14);
 	//indirectinvoke () = %13 (%14) : method(int[])->()
 	{
 		println_s(_14, _14_size);
@@ -323,8 +361,10 @@ blklab23:;
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %16 = %15 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %17 = [78,32,61,32] : int[]
+	_DEALLOC(_17);
 	_NEW_1DARRAY_int64_t(_17, 4, 0);
 	_17[0] = 78; _17[1] = 32; _17[2] = 61; _17[3] = 32; 
+	_ADD_DEALLOC(_17);
 	//indirectinvoke () = %16 (%17) : method(int[])->()
 	{
 		printf_s(_1DARRAY_PARAM(_17));
@@ -340,8 +380,10 @@ blklab23:;
 	//fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %22 = %21 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %23 = [70,111,117,110,100,32] : int[]
+	_DEALLOC(_23);
 	_NEW_1DARRAY_int64_t(_23, 6, 0);
 	_23[0] = 70; _23[1] = 111; _23[2] = 117; _23[3] = 110; _23[4] = 100; _23[5] = 32; 
+	_ADD_DEALLOC(_23);
 	//indirectinvoke () = %22 (%23) : method(int[])->()
 	{
 		printf_s(_1DARRAY_PARAM(_23));
@@ -355,13 +397,22 @@ blklab23:;
 	//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %27 = %26 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %28 = [32,115,111,108,117,116,105,111,110,115,46] : int[]
+	_DEALLOC(_28);
 	_NEW_1DARRAY_int64_t(_28, 11, 0);
 	_28[0] = 32; _28[1] = 115; _28[2] = 111; _28[3] = 108; _28[4] = 117; _28[5] = 116; _28[6] = 105; _28[7] = 111; _28[8] = 110; _28[9] = 115; _28[10] = 46; 
+	_ADD_DEALLOC(_28);
 	//indirectinvoke () = %27 (%28) : method(int[])->()
 	{
 		println_s(_28, _28_size);
 	}
 	//return
+	_DEALLOC_1DARRAY_STRUCT(queens, POS);
+	_DEALLOC_STRUCT(_7, POS);
+	_DEALLOC_1DARRAY_STRUCT(_8, POS);
+	_DEALLOC(_14);
+	_DEALLOC(_17);
+	_DEALLOC(_23);
+	_DEALLOC(_28);
 	exit(0);
 }
 

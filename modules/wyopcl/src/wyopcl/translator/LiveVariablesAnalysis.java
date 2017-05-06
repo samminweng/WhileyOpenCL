@@ -198,8 +198,6 @@ public class LiveVariablesAnalysis extends Analyzer {
 		
 	}
 	
-	
-	
 	/**
 	 * Applies live variable analysis on the function, in order to get in/out set of each block.
 	 * 

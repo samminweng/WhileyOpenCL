@@ -46,7 +46,7 @@ blklab2:;
 	//return
 }
 
-int64_t _gcd_cached_(int64_t a, int64_t b, int64_t n, _DECL_1DARRAY_PARAM(gcds)){
+int64_t _gcd_cached_(int64_t a, int64_t b, int64_t n, _DECL_1DARRAY_PARAM(gcds), _DECL_DEALLOC_PARAM(gcds)){
 	int64_t _4 = 0;
 	int64_t _5 = 0;
 	int64_t _6 = 0;
@@ -60,6 +60,7 @@ int64_t _gcd_cached_(int64_t a, int64_t b, int64_t n, _DECL_1DARRAY_PARAM(gcds))
 	//ifne %0, %5 goto blklab7 : int
 	if(a!=_5){goto blklab7;}
 	//return %1
+	_DEALLOC(gcds);
 	return b;
 	//goto blklab8
 	goto blklab8;
@@ -70,6 +71,7 @@ blklab7:;
 	//ifne %1, %6 goto blklab9 : int
 	if(b!=_6){goto blklab9;}
 	//return %0
+	_DEALLOC(gcds);
 	return a;
 	//goto blklab10
 	goto blklab10;
@@ -98,6 +100,7 @@ blklab12:;
 	//indexof %11 = %3, %10 : int[]
 	_11=gcds[_10];
 	//return %11
+	_DEALLOC(gcds);
 	return _11;
 //.blklab10
 blklab10:;
@@ -109,15 +112,18 @@ blklab8:;
 int main(int argc, char** args){
 	int64_t n = 0;
 	_DECL_1DARRAY(gcds);
+	_DECL_DEALLOC(gcds);
 	int64_t i = 0;
 	int64_t j = 0;
 	int64_t _5 = 0;
 	void* _6;
 	_DECL_1DARRAY(_8);
+	_DECL_DEALLOC(_8);
 	void* _9;
 	int64_t _11 = 0;
 	int64_t _12 = 0;
 	_DECL_1DARRAY(_13);
+	_DECL_DEALLOC(_13);
 	int64_t _14 = 0;
 	int64_t _15 = 0;
 	int64_t _16 = 0;
@@ -129,12 +135,15 @@ int main(int argc, char** args){
 	int64_t _22 = 0;
 	void* _23;
 	_DECL_1DARRAY(_25);
+	_DECL_DEALLOC(_25);
 	void* _26;
 	void* _28;
 	_DECL_1DARRAY(_30);
+	_DECL_DEALLOC(_30);
 	void* _31;
 	void* _33;
 	_DECL_1DARRAY(_35);
+	_DECL_DEALLOC(_35);
 	void* _36;
 	int64_t _38 = 0;
 	int64_t _39 = 0;
@@ -150,8 +159,10 @@ int main(int argc, char** args){
 	//fieldload %6 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %7 = %6 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %8 = [78,32,61,32] : int[]
+	_DEALLOC(_8);
 	_NEW_1DARRAY_int64_t(_8, 4, 0);
 	_8[0] = 78; _8[1] = 32; _8[2] = 61; _8[3] = 32; 
+	_ADD_DEALLOC(_8);
 	//indirectinvoke () = %7 (%8) : method(int[])->()
 	{
 		printf_s(_1DARRAY_PARAM(_8));
@@ -167,9 +178,13 @@ int main(int argc, char** args){
 	//mul %12 = %1, %1 : int
 	_12=n*n;
 	//arraygen %13 = [11; 12] : int[]
+	_DEALLOC(_13);
 	_NEW_1DARRAY_int64_t(_13, _12, _11);
+	_ADD_DEALLOC(_13);
 	//assign %2 = %13  : int[]
+	_DEALLOC(gcds);
 	_UPDATE_1DARRAY(gcds, _13);
+	_TRANSFER_DEALLOC(gcds, _13);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %3 = %14  : int
@@ -188,7 +203,8 @@ int main(int argc, char** args){
 			if(j>=n){goto blklab15;}
 			//invoke (%16) = (%3, %4, %1, %2) gcd:gcd_cached : function(int,int,int,int[])->(int)
 			{
-				_16 = _gcd_cached_(i, j, n, _1DARRAY_PARAM(gcds));
+				_16 = _gcd_cached_(i, j, n, _1DARRAY_PARAM(gcds), false);
+				_RETAIN_DEALLOC(gcds, "false-false-true" , "gcd_cached");
 			}
 			//mul %17 = %3, %1 : int
 			_17=i*n;
@@ -220,8 +236,10 @@ blklab17:;
 			//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %24 = %23 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %25 = [78,117,109,98,101,114,58,32] : int[]
+			_DEALLOC(_25);
 			_NEW_1DARRAY_int64_t(_25, 8, 0);
 			_25[0] = 78; _25[1] = 117; _25[2] = 109; _25[3] = 98; _25[4] = 101; _25[5] = 114; _25[6] = 58; _25[7] = 32; 
+			_ADD_DEALLOC(_25);
 			//indirectinvoke () = %24 (%25) : method(int[])->()
 			{
 				printf_s(_1DARRAY_PARAM(_25));
@@ -235,8 +253,10 @@ blklab17:;
 			//fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %29 = %28 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %30 = [32,78,117,109,98,101,114,58,32] : int[]
+			_DEALLOC(_30);
 			_NEW_1DARRAY_int64_t(_30, 9, 0);
 			_30[0] = 32; _30[1] = 78; _30[2] = 117; _30[3] = 109; _30[4] = 98; _30[5] = 101; _30[6] = 114; _30[7] = 58; _30[8] = 32; 
+			_ADD_DEALLOC(_30);
 			//indirectinvoke () = %29 (%30) : method(int[])->()
 			{
 				printf_s(_1DARRAY_PARAM(_30));
@@ -250,8 +270,10 @@ blklab17:;
 			//fieldload %33 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %34 = %33 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %35 = [32,71,67,68,58] : int[]
+			_DEALLOC(_35);
 			_NEW_1DARRAY_int64_t(_35, 5, 0);
 			_35[0] = 32; _35[1] = 71; _35[2] = 67; _35[3] = 68; _35[4] = 58; 
+			_ADD_DEALLOC(_35);
 			//indirectinvoke () = %34 (%35) : method(int[])->()
 			{
 				printf_s(_1DARRAY_PARAM(_35));
@@ -291,6 +313,12 @@ blklab14:;
 //.blklab13
 blklab13:;
 	//return
+	_DEALLOC(gcds);
+	_DEALLOC(_8);
+	_DEALLOC(_13);
+	_DEALLOC(_25);
+	_DEALLOC(_30);
+	_DEALLOC(_35);
 	exit(0);
 }
 

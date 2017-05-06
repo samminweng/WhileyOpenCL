@@ -20,10 +20,13 @@ public class Configuration {
 	public static final String DISABLED ="disabled";
 	public static final String ENABLED = "enabled";
 	public static final String MODULE = "module";
+	
+	// Runtime Options
 	public static final String BOUND = "bound"; // bound analysis
 	public static final String TRAVERSAL = "traversal"; // Tree traversal order
 	public static final String PATTERN = "pattern"; // pattern analysis
 	public static final String VERBOSE = "verbose"; // verbose option
+	public static final String ENABLEASSERTION = "ea"; // Enable assertion check
 	public static final String NOCOPY = "nocopy"; // copy analysis
 	public static final String DEALLOC = "dealloc"; // deallocation analysis
 	public static final String CODE = "code"; // code generator
@@ -40,6 +43,7 @@ public class Configuration {
 		// Verbose option
 		this.options.put(VERBOSE, DISABLED);
 		// Code generator options
+		this.options.put(ENABLEASSERTION, DISABLED); // Disable assertion by default
 		this.options.put(NOCOPY, DISABLED);
 		this.options.put(DEALLOC, DISABLED);
 		this.options.put(CODE, DISABLED);
@@ -132,7 +136,6 @@ public class Configuration {
 		return true;
 	}
 
-	
 	/**
 	 * Return the value of an option 
 	 * 
@@ -143,8 +146,6 @@ public class Configuration {
 	public String getOption(String name){
 		return (String)this.options.get(name);
 	}
-	
-	
 	
 	/**
 	 * Get the function name that will be applied with 

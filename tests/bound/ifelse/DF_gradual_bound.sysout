@@ -1,12 +1,12 @@
 WARNING: version numbering unavailable
-Parsed 1 source file(s). ...................................................... [129ms+1mb]
-Typed 1 source file(s). ....................................................... [147ms+1mb]
-Generated code for 1 source file(s). ........................................... [32ms+1mb]
-[./ifelse.whiley] applied definite assignment check ................................. [4ms]
-[./ifelse.whiley] applied module check .............................................. [3ms]
-[./ifelse.whiley] applied loop variants ............................................. [1ms]
+Parsed 1 source file(s). ....................................................... [81ms+1mb]
+Typed 1 source file(s). ....................................................... [104ms+1mb]
+Generated code for 1 source file(s). ........................................... [36ms+1mb]
+[./ifelse.whiley] applied definite assignment check ................................. [3ms]
+[./ifelse.whiley] applied module check .......................................... [2ms+1mb]
+[./ifelse.whiley] applied loop variants ......................................... [0ms+1mb]
 [./ifelse.whiley] applied coercion check ............................................ [1ms]
-Whiley => Wyil: compiled 1 file(s) ............................................ [454ms-1mb]
+Whiley => Wyil: compiled 1 file(s) ............................................ [259ms-1mb]
 f.0 [	const %2 = 10 : int]
 f.1 [	ifge %0, %2 goto blklab1 : int]
 f.2 [	const %3 = 1 : int]
@@ -46,24 +46,6 @@ main.20 [	indirectinvoke () = %18 (%3) : method(any)->()]
 main.21 [	return]
 ###### Live analysis for f function. ######
 Iteration 1
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[6]}
-return_6 [RETURN] 
--------------------------------
-l.0:return %6
--------------------------------
-Out:{[6]}
-
-In:{[5]}
-return_5 [RETURN] 
--------------------------------
-l.0:return %5
--------------------------------
-Out:{[5]}
-
 In:{[0, 4]}
 blklab3 [ELSE] 
 -------------------------------
@@ -89,13 +71,6 @@ blklab2 [BLOCK]
 l.0:const %6 = 0 : int
 -------------------------------
 Out:{[6]}
-
-In:{[3]}
-return_3 [RETURN] 
--------------------------------
-l.0:return %3
--------------------------------
-Out:{[3]}
 
 In:{[0, 2]}
 blklab1 [ELSE] 
@@ -130,24 +105,6 @@ Out:{[0]}
 
 ###### Live analysis for f function. ######
 Iteration 2
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[6]}
-return_6 [RETURN] 
--------------------------------
-l.0:return %6
--------------------------------
-Out:{[6]}
-
-In:{[0, 4, 5]}
-return_5 [RETURN] 
--------------------------------
-l.0:return %5
--------------------------------
-Out:{[0, 4, 5]}
-
 In:{[0, 4]}
 blklab3 [ELSE] 
 -------------------------------
@@ -161,7 +118,7 @@ blklab3 [IF]
 l.0:ifgt %0, %4 goto blklab3 : int
 l.1:const %5 = 2 : int
 -------------------------------
-Out:{[0, 4, 5]}
+Out:{[5]}
 
 In:{[0, 4]}
 blklab3 [CONDITION] 
@@ -173,97 +130,6 @@ blklab2 [BLOCK]
 l.0:const %6 = 0 : int
 -------------------------------
 Out:{[6]}
-
-In:{[3]}
-return_3 [RETURN] 
--------------------------------
-l.0:return %3
--------------------------------
-Out:{[3]}
-
-In:{[0, 2]}
-blklab1 [ELSE] 
--------------------------------
-l.0:ifge %0, %2 goto blklab1 : int
-l.1:const %4 = 10 : int
--------------------------------
-Out:{[0, 4]}
-
-In:{[0, 2]}
-blklab1 [IF] 
--------------------------------
-l.0:iflt %0, %2 goto blklab1 : int
-l.1:const %3 = 1 : int
--------------------------------
-Out:{[3]}
-
-In:{[0, 2]}
-blklab1 [CONDITION] 
-Out:{[0, 2]}
-
-In:{[0]}
-code [BLOCK] 
--------------------------------
-l.0:const %2 = 10 : int
--------------------------------
-Out:{[0, 2]}
-
-In:{[0]}
-entry [ENTRY] 
-Out:{[0]}
-
-###### Live analysis for f function. ######
-Iteration 3
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[6]}
-return_6 [RETURN] 
--------------------------------
-l.0:return %6
--------------------------------
-Out:{[6]}
-
-In:{[0, 4, 5]}
-return_5 [RETURN] 
--------------------------------
-l.0:return %5
--------------------------------
-Out:{[0, 4, 5]}
-
-In:{[0, 4]}
-blklab3 [ELSE] 
--------------------------------
-l.0:ifle %0, %4 goto blklab3 : int
--------------------------------
-Out:{[]}
-
-In:{[0, 4]}
-blklab3 [IF] 
--------------------------------
-l.0:ifgt %0, %4 goto blklab3 : int
-l.1:const %5 = 2 : int
--------------------------------
-Out:{[0, 4, 5]}
-
-In:{[0, 4]}
-blklab3 [CONDITION] 
-Out:{[0, 4]}
-
-In:{[]}
-blklab2 [BLOCK] 
--------------------------------
-l.0:const %6 = 0 : int
--------------------------------
-Out:{[6]}
-
-In:{[3]}
-return_3 [RETURN] 
--------------------------------
-l.0:return %3
--------------------------------
-Out:{[3]}
 
 In:{[0, 2]}
 blklab1 [ELSE] 
@@ -352,7 +218,7 @@ blklab3 [IF]
 l.0:ifgt %0, %4 goto blklab3 : int
 l.1:const %5 = 2 : int
 -------------------------------
-Out:{x, _4, _5}
+Out:{_5}
 
 In:{x, _4}
 blklab3 [ELSE] 
@@ -361,12 +227,12 @@ l.0:ifle %0, %4 goto blklab3 : int
 -------------------------------
 Out:{}
 
-In:{x, _4, _5}
+In:{_5}
 return_5 [RETURN] 
 -------------------------------
 l.0:return %5
 -------------------------------
-Out:{x, _4, _5}
+Out:{_5}
 
 In:{_6}
 return_6 [RETURN] 
@@ -381,10 +247,6 @@ Out:{}
 
 ###### Live analysis for main function. ######
 Iteration 1
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
 In:{[0, 14]}
 f16 [BLOCK] 
 -------------------------------
@@ -451,10 +313,6 @@ Out:{[0]}
 
 ###### Live analysis for main function. ######
 Iteration 2
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
 In:{[0, 14]}
 f16 [BLOCK] 
 -------------------------------
@@ -850,7 +708,7 @@ blklab3 [IF]
 0:const %5 = 2 : int
 -------------------------------
 Vars [_0, _4, _5]
-DeadVars []
+DeadVars [_0, _4]
 Constraints [_0>_4, _5:=2]
 
 	domain(_0)	= [empty..empty]	
@@ -1011,7 +869,7 @@ blklab3 [IF]
 0:const %5 = 2 : int
 -------------------------------
 Vars [_0, _4, _5]
-DeadVars []
+DeadVars [_0, _4]
 Constraints [_0>_4, _5:=2]
 
 	domain(_0)	= [11..11]	
@@ -1029,8 +887,6 @@ Vars [_5]
 DeadVars []
 Constraints [return:=_5]
 
-	domain(_0)	= [11..11]	
-	domain(_4)	= [10..10]	
 	domain(_5)	= [2..2]	
 	domain(return)	= [2..2]	
 IsReachable=true

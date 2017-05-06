@@ -25,11 +25,15 @@ public class WyopclMain extends WycMain {
 	public static final OptArg[] EXTRA_OPTIONS = {
 			
 			// Add the 'dealloc' to release the unused memory using macro system
-			new OptArg(Configuration.DEALLOC, "Run the deallocation analysis to free un-used memory"),
+			new OptArg(Configuration.DEALLOC,
+					"Run the deallocation analysis to free un-used memory"),
 
+			// Add the 'ea' option to enable assertion 
+			new OptArg(Configuration.ENABLEASSERTION, 
+					"Enable the runtime assertion check\n"),
 			// Add the 'nocopy' option to eliminate un-needed copies
 			new OptArg(Configuration.NOCOPY,
-					"Run the copy elimination analysis to eliminate the un-necessary copies.\n"),
+					"Enable the copy elimination analysis to eliminate the un-necessary copies.\n"),
 
 			// Add the 'bound' option
 			new OptArg(Configuration.BOUND, OptArg.STRING,

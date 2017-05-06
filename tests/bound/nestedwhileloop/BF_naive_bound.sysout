@@ -1,12 +1,12 @@
 WARNING: version numbering unavailable
-Parsed 1 source file(s). ...................................................... [156ms+1mb]
-Typed 1 source file(s). ....................................................... [186ms+1mb]
-Generated code for 1 source file(s). ........................................... [33ms+1mb]
-[./nestedwhileloop.whiley] applied definite assignment check ........................ [8ms]
-[./nestedwhileloop.whiley] applied module check ................................. [8ms+1mb]
-[./nestedwhileloop.whiley] applied loop variants .................................... [0ms]
-[./nestedwhileloop.whiley] applied coercion check ............................... [7ms+1mb]
-Whiley => Wyil: compiled 1 file(s) ............................................ [509ms-1mb]
+Parsed 1 source file(s). ....................................................... [62ms+1mb]
+Typed 1 source file(s). ........................................................ [88ms+1mb]
+Generated code for 1 source file(s). ........................................... [19ms+1mb]
+[./nestedwhileloop.whiley] applied definite assignment check ........................ [2ms]
+[./nestedwhileloop.whiley] applied module check ................................. [2ms+1mb]
+[./nestedwhileloop.whiley] applied loop variants ................................ [0ms+1mb]
+[./nestedwhileloop.whiley] applied coercion check ................................... [1ms]
+Whiley => Wyil: compiled 1 file(s) ............................................ [203ms-1mb]
 f.0 [	const %5 = 0 : int]
 f.1 [	assign %2 = %5  : int]
 f.2 [	const %6 = 0 : int]
@@ -50,17 +50,6 @@ main.14 [	return]
 ###### Live analysis for f function. ######
 Iteration 1
 In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[3]}
-return_3 [RETURN] 
--------------------------------
-l.0:return %3
--------------------------------
-Out:{[3]}
-
-In:{[]}
 blklab1 [BLOCK] 
 Out:{[]}
 
@@ -68,7 +57,7 @@ In:{[]}
 blklab3 [BLOCK] 
 Out:{[]}
 
-In:{[]}
+In:{[2]}
 blklab2 [LOOP_EXIT] 
 -------------------------------
 l.0:const %12 = 1 : int
@@ -77,7 +66,7 @@ l.2:assign %2 = %13  : int
 -------------------------------
 Out:{[]}
 
-In:{[0, 4]}
+In:{[0, 2, 3, 4]}
 blklab2 [LOOP_BODY] 
 -------------------------------
 l.0:ifge %4, %0 goto blklab2 : int
@@ -90,22 +79,22 @@ l.6:assign %4 = %11  : int
 -------------------------------
 Out:{[]}
 
-In:{[0, 4]}
+In:{[0, 2, 3, 4]}
 blklab2 [LOOP_HEADER] 
-Out:{[0, 4]}
+Out:{[0, 2, 3, 4]}
 
 In:{[3]}
 blklab0 [LOOP_EXIT] 
 Out:{[3]}
 
-In:{[0, 2]}
+In:{[0, 2, 3]}
 blklab0 [LOOP_BODY] 
 -------------------------------
 l.0:ifge %2, %0 goto blklab0 : int
 l.1:const %7 = 0 : int
 l.2:assign %4 = %7  : int
 -------------------------------
-Out:{[0, 4]}
+Out:{[0, 2, 3, 4]}
 
 In:{[0, 2, 3]}
 blklab0 [LOOP_HEADER] 
@@ -127,24 +116,13 @@ Out:{[0]}
 
 ###### Live analysis for f function. ######
 Iteration 2
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[3]}
-return_3 [RETURN] 
--------------------------------
-l.0:return %3
--------------------------------
-Out:{[3]}
-
 In:{[0, 2, 3]}
 blklab1 [BLOCK] 
 Out:{[0, 2, 3]}
 
-In:{[0, 4]}
+In:{[0, 2, 3, 4]}
 blklab3 [BLOCK] 
-Out:{[0, 4]}
+Out:{[0, 2, 3, 4]}
 
 In:{[0, 2, 3]}
 blklab2 [LOOP_EXIT] 
@@ -155,7 +133,7 @@ l.2:assign %2 = %13  : int
 -------------------------------
 Out:{[0, 2, 3]}
 
-In:{[0, 4]}
+In:{[0, 2, 3, 4]}
 blklab2 [LOOP_BODY] 
 -------------------------------
 l.0:ifge %4, %0 goto blklab2 : int
@@ -166,7 +144,7 @@ l.4:const %10 = 1 : int
 l.5:add %11 = %4, %10 : int
 l.6:assign %4 = %11  : int
 -------------------------------
-Out:{[0, 4]}
+Out:{[0, 2, 3, 4]}
 
 In:{[0, 2, 3, 4]}
 blklab2 [LOOP_HEADER] 
@@ -205,95 +183,6 @@ Out:{[0]}
 
 ###### Live analysis for f function. ######
 Iteration 3
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[3]}
-return_3 [RETURN] 
--------------------------------
-l.0:return %3
--------------------------------
-Out:{[3]}
-
-In:{[0, 2, 3]}
-blklab1 [BLOCK] 
-Out:{[0, 2, 3]}
-
-In:{[0, 2, 3, 4]}
-blklab3 [BLOCK] 
-Out:{[0, 2, 3, 4]}
-
-In:{[0, 2, 3]}
-blklab2 [LOOP_EXIT] 
--------------------------------
-l.0:const %12 = 1 : int
-l.1:add %13 = %2, %12 : int
-l.2:assign %2 = %13  : int
--------------------------------
-Out:{[0, 2, 3]}
-
-In:{[0, 2, 3, 4]}
-blklab2 [LOOP_BODY] 
--------------------------------
-l.0:ifge %4, %0 goto blklab2 : int
-l.1:mul %8 = %2, %4 : int
-l.2:add %9 = %3, %8 : int
-l.3:assign %3 = %9  : int
-l.4:const %10 = 1 : int
-l.5:add %11 = %4, %10 : int
-l.6:assign %4 = %11  : int
--------------------------------
-Out:{[0, 2, 3, 4]}
-
-In:{[0, 2, 3, 4]}
-blklab2 [LOOP_HEADER] 
-Out:{[0, 2, 3, 4]}
-
-In:{[3]}
-blklab0 [LOOP_EXIT] 
-Out:{[3]}
-
-In:{[0, 2, 3]}
-blklab0 [LOOP_BODY] 
--------------------------------
-l.0:ifge %2, %0 goto blklab0 : int
-l.1:const %7 = 0 : int
-l.2:assign %4 = %7  : int
--------------------------------
-Out:{[0, 2, 3, 4]}
-
-In:{[0, 2, 3]}
-blklab0 [LOOP_HEADER] 
-Out:{[0, 2, 3]}
-
-In:{[0]}
-code [BLOCK] 
--------------------------------
-l.0:const %5 = 0 : int
-l.1:assign %2 = %5  : int
-l.2:const %6 = 0 : int
-l.3:assign %3 = %6  : int
--------------------------------
-Out:{[0, 2, 3]}
-
-In:{[0]}
-entry [ENTRY] 
-Out:{[0]}
-
-###### Live analysis for f function. ######
-Iteration 4
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[3]}
-return_3 [RETURN] 
--------------------------------
-l.0:return %3
--------------------------------
-Out:{[3]}
-
 In:{[0, 2, 3]}
 blklab1 [BLOCK] 
 Out:{[0, 2, 3]}
@@ -438,10 +327,6 @@ Out:{}
 
 ###### Live analysis for main function. ######
 Iteration 1
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
 In:{[0, 8]}
 f9 [BLOCK] 
 -------------------------------
@@ -490,10 +375,6 @@ Out:{[0]}
 
 ###### Live analysis for main function. ######
 Iteration 2
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
 In:{[0, 8]}
 f9 [BLOCK] 
 -------------------------------

@@ -1,12 +1,12 @@
 WARNING: version numbering unavailable
-Parsed 1 source file(s). ....................................................... [81ms+1mb]
-Typed 1 source file(s). ....................................................... [154ms+1mb]
-Generated code for 1 source file(s). ........................................... [20ms+1mb]
-[./whileloop_break.whiley] applied definite assignment check ........................ [2ms]
-[./whileloop_break.whiley] applied module check ................................. [8ms+1mb]
-[./whileloop_break.whiley] applied loop variants .................................... [0ms]
-[./whileloop_break.whiley] applied coercion check ............................... [5ms+2mb]
-Whiley => Wyil: compiled 1 file(s) ............................................ [457ms-1mb]
+Parsed 1 source file(s). ....................................................... [91ms+1mb]
+Typed 1 source file(s). ....................................................... [118ms+1mb]
+Generated code for 1 source file(s). ........................................... [27ms+1mb]
+[./whileloop_break.whiley] applied definite assignment check ........................ [3ms]
+[./whileloop_break.whiley] applied module check ................................. [2ms+1mb]
+[./whileloop_break.whiley] applied loop variants ................................ [0ms+1mb]
+[./whileloop_break.whiley] applied coercion check ............................... [1ms+1mb]
+Whiley => Wyil: compiled 1 file(s) ............................................ [269ms-1mb]
 find.0 [	const %4 = 0 : int]
 find.1 [	assign %3 = %4  : int]
 find.2 [	loop (%3, %5, %6, %7)]
@@ -41,17 +41,6 @@ main.15 [	assert]
 main.16 [	return]
 ###### Live analysis for find function. ######
 Iteration 1
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[3]}
-return_3 [RETURN] 
--------------------------------
-l.0:return %3
--------------------------------
-Out:{[3]}
-
 In:{[]}
 blklab1 [BLOCK] 
 Out:{[]}
@@ -106,17 +95,6 @@ Out:{[0, 1]}
 
 ###### Live analysis for find function. ######
 Iteration 2
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[3]}
-return_3 [RETURN] 
--------------------------------
-l.0:return %3
--------------------------------
-Out:{[3]}
-
 In:{[0, 1, 3]}
 blklab1 [BLOCK] 
 Out:{[0, 1, 3]}
@@ -171,17 +149,6 @@ Out:{[0, 1]}
 
 ###### Live analysis for find function. ######
 Iteration 3
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[3]}
-return_3 [RETURN] 
--------------------------------
-l.0:return %3
--------------------------------
-Out:{[3]}
-
 In:{[0, 1, 3]}
 blklab1 [BLOCK] 
 Out:{[0, 1, 3]}
@@ -300,10 +267,6 @@ Out:{}
 
 ###### Live analysis for main function. ######
 Iteration 1
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
 In:{[0, 9]}
 find11 [BLOCK] 
 -------------------------------
@@ -354,10 +317,6 @@ Out:{[0]}
 
 ###### Live analysis for main function. ######
 Iteration 2
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
 In:{[0, 9]}
 find11 [BLOCK] 
 -------------------------------

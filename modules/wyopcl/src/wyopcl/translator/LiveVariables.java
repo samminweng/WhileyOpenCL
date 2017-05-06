@@ -50,8 +50,8 @@ public class LiveVariables {
 		}
 		this.isChanged = true;
 	}
-	
-	
+
+
 	/**
 	 * Given a control flow graph, compute 'IN' and 'OUT' set for each code block using live variable analysis
 	 * (Whiley compiler) and stores each in/out set with HashMap separately.
@@ -74,22 +74,24 @@ public class LiveVariables {
 			// Traverse the blocks in the reverse order other than exit block
 			for (int index = blocks.size() - 1; index >= 0; index--) {
 				BasicBlock block = blocks.get(index);
-				// Compute in/out blocks, except for exit or return block.
-				if (!block.getType().equals(BlockType.EXIT) || !block.getType().equals(BlockType.RETURN)) {
-					// Get in/out set of the block.
-					HashSet<Integer> out = (HashSet<Integer>) computeOut(block);
-					// Compute the store in set of the block.
-					HashSet<Integer> in = computeIN(block, (HashSet<Integer>) out.clone());
-					if (isVerbose) {
-						System.out.println("In" + ":{" + in + "}\n" + block 
-								+ "\nOut" + ":{" + out + "}\n");
-					}
+				// Skip exit or return block.
+				if (block.getType().equals(BlockType.EXIT) || block.getType().equals(BlockType.RETURN)) {
+					continue;
 				}
+				// Compute in/out for a block
+				HashSet<Integer> out = (HashSet<Integer>) computeOut(block);
+				// Compute the store in set of the block.
+				HashSet<Integer> in = computeIN(block, (HashSet<Integer>) out.clone());
+				if (isVerbose) {
+					System.out.println("In" + ":{" + in + "}\n" + block 
+							+ "\nOut" + ":{" + out + "}\n");
+				}
+
 			}
 			// Increment the iteration.
 			iteration++;
 		} while (this.isChanged);
-		
+
 	}
 
 
@@ -131,9 +133,11 @@ public class LiveVariables {
 		// rewrites.put(index,null);
 		boolean isLive = true;
 		environment = (HashSet<Integer>) environment.clone();
-
+		
+		// Compute (out - def)
 		if (code instanceof Code.AbstractBytecode) {
 			Code.AbstractBytecode aa = (Code.AbstractBytecode) code;
+			// Special case for update code (left operand is always alive)
 			if (code instanceof Codes.Update) {
 				Codes.Update cu = (Codes.Update) aa;
 				// In the normal case, this bytecode is considered live if the
@@ -143,6 +147,8 @@ public class LiveVariables {
 					// No, this is not an indirect assignment through a
 					// reference
 					isLive = environment.contains(cu.target(0));
+					// Put target to environment (modified by Sam)
+					environment.add(cu.target(0));
 				}
 			} else {
 				for (int target : aa.targets()) {
@@ -150,8 +156,15 @@ public class LiveVariables {
 				}
 			}
 		}
-
-		if ((isLive && code instanceof Code.AbstractBytecode)
+		
+		
+		// Special case for assignment (modified by Sam)
+		if(code instanceof Codes.Assign){
+			Codes.Assign assign = (Codes.Assign)code;
+			// Get left operand from the assignment and put it to environment set
+			// because it is a used variable 
+			environment.add(assign.operand(0));			
+		}else if ((isLive && code instanceof Code.AbstractBytecode)
 				|| (code instanceof Codes.Invoke && ((Codes.Invoke) code).type(0) instanceof Type.Method)
 				|| (code instanceof Codes.IndirectInvoke
 						&& ((Codes.IndirectInvoke) code).type(0) instanceof Type.Method)) {
@@ -168,7 +181,7 @@ public class LiveVariables {
 
 		return environment;
 	}
-	
+
 	/**
 	 * Compute 'in' set for a list of code.
 	 * 
@@ -207,7 +220,7 @@ public class LiveVariables {
 	public HashSet<Integer> computeIN(BasicBlock b, HashSet<Integer> in) {
 		// Get the exiting 'in' set
 		HashSet<Integer> old_in = (HashSet<Integer>) getIN(b).clone();
-		
+
 		List<Code> codes = b.getCodeBlock();
 		in = compute(codes, in);
 		// Check if new 'in' set is different from existing 'in' set.

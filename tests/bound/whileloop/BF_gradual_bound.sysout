@@ -1,12 +1,12 @@
 WARNING: version numbering unavailable
-Parsed 1 source file(s). ...................................................... [117ms+1mb]
-Typed 1 source file(s). ....................................................... [140ms+1mb]
-Generated code for 1 source file(s). ........................................... [37ms+1mb]
+Parsed 1 source file(s). ...................................................... [170ms+1mb]
+Typed 1 source file(s). ....................................................... [133ms+1mb]
+Generated code for 1 source file(s). ........................................... [30ms+1mb]
 [./whileloop.whiley] applied definite assignment check .............................. [2ms]
-[./whileloop.whiley] applied module check ....................................... [4ms+1mb]
-[./whileloop.whiley] applied loop variants ...................................... [1ms+1mb]
-[./whileloop.whiley] applied coercion check .................................... [11ms+1mb]
-Whiley => Wyil: compiled 1 file(s) ............................................ [461ms-1mb]
+[./whileloop.whiley] applied module check ....................................... [3ms+1mb]
+[./whileloop.whiley] applied loop variants ...................................... [0ms+1mb]
+[./whileloop.whiley] applied coercion check ......................................... [2ms]
+Whiley => Wyil: compiled 1 file(s) ............................................ [367ms-1mb]
 f.0 [	const %4 = 0 : int]
 f.1 [	assign %2 = %4  : int]
 f.2 [	const %5 = 0 : int]
@@ -41,17 +41,6 @@ main.14 [	return]
 ###### Live analysis for f function. ######
 Iteration 1
 In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[3]}
-return_3 [RETURN] 
--------------------------------
-l.0:return %3
--------------------------------
-Out:{[3]}
-
-In:{[]}
 blklab2 [BLOCK] 
 Out:{[]}
 
@@ -59,7 +48,7 @@ In:{[3]}
 blklab1 [LOOP_EXIT] 
 Out:{[3]}
 
-In:{[0, 2]}
+In:{[0, 2, 3]}
 blklab1 [LOOP_BODY] 
 -------------------------------
 l.0:ifge %2, %0 goto blklab1 : int
@@ -91,17 +80,6 @@ Out:{[0]}
 
 ###### Live analysis for f function. ######
 Iteration 2
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[3]}
-return_3 [RETURN] 
--------------------------------
-l.0:return %3
--------------------------------
-Out:{[3]}
-
 In:{[0, 2, 3]}
 blklab2 [BLOCK] 
 Out:{[0, 2, 3]}
@@ -142,17 +120,6 @@ Out:{[0]}
 
 ###### Live analysis for f function. ######
 Iteration 3
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
-In:{[3]}
-return_3 [RETURN] 
--------------------------------
-l.0:return %3
--------------------------------
-Out:{[3]}
-
 In:{[0, 2, 3]}
 blklab2 [BLOCK] 
 Out:{[0, 2, 3]}
@@ -243,10 +210,6 @@ Out:{}
 
 ###### Live analysis for main function. ######
 Iteration 1
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
 In:{[0, 8]}
 f9 [BLOCK] 
 -------------------------------
@@ -295,10 +258,6 @@ Out:{[0]}
 
 ###### Live analysis for main function. ######
 Iteration 2
-In:{[]}
-exit [EXIT] 
-Out:{[]}
-
 In:{[0, 8]}
 f9 [BLOCK] 
 -------------------------------
