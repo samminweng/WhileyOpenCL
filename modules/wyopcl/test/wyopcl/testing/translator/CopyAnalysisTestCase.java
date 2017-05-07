@@ -50,7 +50,7 @@ public class CopyAnalysisTestCase {
 	@Test
 	public void testCopyAndDisableAssertion(){
 		// Perform copy analysis with assertion disabled 
-		util.execCopyAnalysis(sourceDir, testcase, "-nocopy");
+		util.execCopyAnalysis(sourceDir, testcase, "-nocopy", "-verbose");
 	}
 	
 	@Test

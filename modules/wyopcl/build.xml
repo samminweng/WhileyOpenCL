@@ -112,8 +112,8 @@
 	<target name="test-code" depends="build" >
 		<!-- Empty the output file of standard error -->
 		<delete file="../../tests/code/log.txt"/>
-		<!-- ================================= 
-			'showoutput' option enable junit to sends any output instantly 
+		<!-- =================================
+			'showoutput' option enable junit to sends any output instantly
 			reference: https://ant.apache.org/manual/Tasks/junit.html
 	    	===================================
 	    -->
@@ -130,8 +130,8 @@
 	</target>
 	<!-- Test the bound analyzer with test cases.-->
 	<target name="test-bound" depends="build" >
-		<!-- ================================= 
-			'showoutput' option enable junit to sends any output instantly 
+		<!-- =================================
+			'showoutput' option enable junit to sends any output instantly
 			reference: https://ant.apache.org/manual/Tasks/junit.html
 	    	===================================
 	    -->
@@ -146,10 +146,28 @@
 		</junit>
 		<fail message="Test failure detected, stopping build." if="tests.failed"/>
 	</target>
+	<!-- Test the copy analysis with test cases.-->
+	<target name="test-copy" depends="build" >
+		<!-- =================================
+			'showoutput' option enable junit to sends any output instantly
+			reference: https://ant.apache.org/manual/Tasks/junit.html
+			===================================
+		-->
+		<junit fork="true" showoutput="yes" dir="${basedir}/../../" failureProperty="tests.failed" printsummary="yes" outputtoformatters="true">
+			<formatter type="brief" usefile="false" />
+			<classpath refid="junit-classpath"/>
+			<batchtest>
+				<fileset dir="${basedir}/test">
+					<include name="**/CopyAnalysisTestCase*" />
+				</fileset>
+			</batchtest>
+		</junit>
+		<fail message="Test failure detected, stopping build." if="tests.failed"/>
+	</target>
 	<!-- Test the pattern matching with test cases.-->
 	<target name="test-pattern" depends="build" >
-		<!-- ================================= 
-			'showoutput' option enable junit to sends any output instantly 
+		<!-- =================================
+			'showoutput' option enable junit to sends any output instantly
 			reference: https://ant.apache.org/manual/Tasks/junit.html
 	    	===================================
 	    -->

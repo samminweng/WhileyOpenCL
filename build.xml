@@ -175,7 +175,7 @@
   <!-- ============================================== -->
   <!-- Special Commands for Whiley2OpenCL project     -->
   <!-- ============================================== -->
-  <!--Test the code generator with test cases -->
+  <!--Test code generator with test cases -->
   <target name="test-code" depends="clean, build-all">
     <subant failonerror="true" target="test-code">
         <filelist>
@@ -184,7 +184,7 @@
       </filelist>
     </subant>
   </target>
-  <!--Test the code generator with test cases -->
+  <!--Test bound analysis with test cases -->
   <target name="test-bound" depends="clean, build-all">
 	<subant failonerror="true" target="test-bound">
 		<filelist>
@@ -193,7 +193,16 @@
 	    </filelist>
 	</subant>
   </target>
-  <!--Test the pattern matching with test cases -->
+  <!--Test copy analysis with test cases -->
+  <target name="test-copy" depends="clean, build-all">
+  <subant failonerror="true" target="test-pattern">
+    <filelist>
+        <!--wyopcl-->
+          <file name="modules/wyopcl/build.xml"/>
+      </filelist>
+  </subant>
+  </target>
+  <!--Test pattern matching with test cases -->
   <target name="test-pattern" depends="clean, build-all">
   <subant failonerror="true" target="test-pattern">
     <filelist>

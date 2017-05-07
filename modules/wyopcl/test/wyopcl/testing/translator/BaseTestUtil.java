@@ -108,14 +108,14 @@ public final class BaseTestUtil {
 		}
 		// Get the assertion option (-ea runtime option enables assertion)
 		String ea = "disable_assertion";
-		if(options.length == 2){
+		if(options.length == 3){
 			ea = "enable_assertion";
 		}
 
 		Process process;
-		try {		
-			//Path destDir = Paths.get(sourceDir + File.separator + testcase + File.separator);
-			Path sysout = Paths.get(sourceDir + File.separator + testcase + File.separator + ea
+		try {
+			Path destDir = Paths.get(sourceDir + File.separator + testcase + File.separator);
+			Path sysout = Paths.get(sourceDir + File.separator + testcase 
 					+ File.separator + testcase+"_nocopy_"+ea+".sysout");
 			// Make the command
 			String cmd = makeCmd(testcase, options);
@@ -123,7 +123,7 @@ public final class BaseTestUtil {
 			// Get the runtime.
 			Runtime rt = Runtime.getRuntime();
 			// Change the folder Run the command
-			process = rt.exec(cmd, null, sourceDir.toFile());
+			process = rt.exec(cmd, null, destDir.toFile());
 
 			process.waitFor();
 
@@ -135,7 +135,7 @@ public final class BaseTestUtil {
 					Files.newBufferedReader(sysout, StandardCharsets.UTF_8));
 
 			// Remove all generated WyIL files.
-			Files.deleteIfExists(Paths.get(sourceDir + testcase + ".wyil"));
+			Files.deleteIfExists(Paths.get(destDir + testcase + ".wyil"));
 		} catch (Exception e) {
 			throw new RuntimeException("Test file: " + testcase + ".whiley", e);
 		}
@@ -570,6 +570,13 @@ public final class BaseTestUtil {
 			index = index +2;
 			break;
 		case "-nocopy":
+			if(options[1] == "-ea"){
+				path += File.separator + "enable_assertion";
+				index = index +2;
+			}else{
+				path += File.separator + "disable_assertion";
+				index = index +1;
+			}
 			break;
 		case "-code":
 			index++;
