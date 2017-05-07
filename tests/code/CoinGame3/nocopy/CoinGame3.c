@@ -1,25 +1,18 @@
 #include "CoinGame3.h"
-int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
-	_DECL_DEALLOC(_2);
 	_DECL_1DARRAY(x);
-	_DECL_DEALLOC(x);
 	_DECL_1DARRAY(y);
-	_DECL_DEALLOC(y);
 	_DECL_1DARRAY(z);
-	_DECL_DEALLOC(z);
 	int64_t s = 0;
 	int64_t j = 0;
 	int64_t i = 0;
 	int64_t _9 = 0;
 	_DECL_1DARRAY(_10);
-	_DECL_DEALLOC(_10);
 	int64_t _11 = 0;
 	_DECL_1DARRAY(_12);
-	_DECL_DEALLOC(_12);
 	int64_t _13 = 0;
 	_DECL_1DARRAY(_14);
-	_DECL_DEALLOC(_14);
 	int64_t _15 = 0;
 	int64_t _16 = 0;
 	int64_t _17 = 0;
@@ -78,33 +71,21 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 	//const %9 = 0 : int
 	_9 = 0;
 	//arraygen %10 = [9; 1] : int[]
-	_DEALLOC(_10);
 	_NEW_1DARRAY_int64_t(_10, n, _9);
-	_ADD_DEALLOC(_10);
 	//assign %3 = %10  : int[]
-	_DEALLOC(x);
 	_UPDATE_1DARRAY(x, _10);
-	_TRANSFER_DEALLOC(x, _10);
 	//const %11 = 0 : int
 	_11 = 0;
 	//arraygen %12 = [11; 1] : int[]
-	_DEALLOC(_12);
 	_NEW_1DARRAY_int64_t(_12, n, _11);
-	_ADD_DEALLOC(_12);
 	//assign %4 = %12  : int[]
-	_DEALLOC(y);
 	_UPDATE_1DARRAY(y, _12);
-	_TRANSFER_DEALLOC(y, _12);
 	//const %13 = 0 : int
 	_13 = 0;
 	//arraygen %14 = [13; 1] : int[]
-	_DEALLOC(_14);
 	_NEW_1DARRAY_int64_t(_14, n, _13);
-	_ADD_DEALLOC(_14);
 	//assign %5 = %14  : int[]
-	_DEALLOC(z);
 	_UPDATE_1DARRAY(z, _14);
-	_TRANSFER_DEALLOC(z, _14);
 	//const %15 = 0 : int
 	_15 = 0;
 	//assign %6 = %15  : int
@@ -280,13 +261,6 @@ blklab1:;
 //.blklab0
 blklab0:;
 	//return %0
-	_DEALLOC(_2);
-	_DEALLOC(x);
-	_DEALLOC(y);
-	_DEALLOC(z);
-	_DEALLOC(_10);
-	_DEALLOC(_12);
-	_DEALLOC(_14);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(moves);
 	return moves;
 	//return
@@ -295,26 +269,21 @@ blklab0:;
 int main(int argc, char** args){
 	int64_t n = 0;
 	_DECL_1DARRAY(moves);
-	_DECL_DEALLOC(moves);
 	int64_t sum_alice = 0;
 	int64_t _4 = 0;
 	int64_t _5 = 0;
 	int64_t _6 = 0;
 	_DECL_1DARRAY(_7);
-	_DECL_DEALLOC(_7);
 	_DECL_1DARRAY(_8);
-	_DECL_DEALLOC(_8);
 	int64_t _9 = 0;
 	int64_t _10 = 0;
 	int64_t _11 = 0;
 	int64_t _12 = 0;
 	void* _13;
 	_DECL_1DARRAY(_15);
-	_DECL_DEALLOC(_15);
 	void* _16;
 	void* _18;
 	_DECL_1DARRAY(_20);
-	_DECL_DEALLOC(_20);
 	//const %4 = 10 : int
 	_4 = 10;
 	//assign %1 = %4  : int
@@ -324,24 +293,15 @@ int main(int argc, char** args){
 	//mul %6 = %1, %1 : int
 	_6=n*n;
 	//arraygen %7 = [5; 6] : int[]
-	_DEALLOC(_7);
 	_NEW_1DARRAY_int64_t(_7, _6, _5);
-	_ADD_DEALLOC(_7);
 	//assign %2 = %7  : int[]
-	_DEALLOC(moves);
 	_UPDATE_1DARRAY(moves, _7);
-	_TRANSFER_DEALLOC(moves, _7);
 	//invoke (%8) = (%2, %1) CoinGame3:findMoves : function(int[],int)->(int[])
 	{
-		_DEALLOC(_8);
-		_8 = _findMoves_(_1DARRAY_PARAM(moves), false, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
-		_RESET_DEALLOC(moves, "true-true-false" , "findMoves");
-		_ADD_DEALLOC(_8);
+		_8 = _findMoves_(_1DARRAY_PARAM(moves), n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 	}
 	//assign %2 = %8  : int[]
-	_DEALLOC(moves);
 	_UPDATE_1DARRAY(moves, _8);
-	_TRANSFER_DEALLOC(moves, _8);
 	//const %9 = 1 : int
 	_9 = 1;
 	//sub %10 = %1, %9 : int
@@ -366,10 +326,8 @@ blklab7:;
 	//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %14 = %13 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %15 = [84,104,101,32,116,111,116,97,108,32,97,109,111,117,110,116,32,111,102,32,109,111,110,101,121,32,40,109,97,120,105,109,117,109,41,32,65,108,105,99,101,32,103,101,116,115,32,105,115,32] : int[]
-	_DEALLOC(_15);
 	_NEW_1DARRAY_int64_t(_15, 50, 0);
 	_15[0] = 84; _15[1] = 104; _15[2] = 101; _15[3] = 32; _15[4] = 116; _15[5] = 111; _15[6] = 116; _15[7] = 97; _15[8] = 108; _15[9] = 32; _15[10] = 97; _15[11] = 109; _15[12] = 111; _15[13] = 117; _15[14] = 110; _15[15] = 116; _15[16] = 32; _15[17] = 111; _15[18] = 102; _15[19] = 32; _15[20] = 109; _15[21] = 111; _15[22] = 110; _15[23] = 101; _15[24] = 121; _15[25] = 32; _15[26] = 40; _15[27] = 109; _15[28] = 97; _15[29] = 120; _15[30] = 105; _15[31] = 109; _15[32] = 117; _15[33] = 109; _15[34] = 41; _15[35] = 32; _15[36] = 65; _15[37] = 108; _15[38] = 105; _15[39] = 99; _15[40] = 101; _15[41] = 32; _15[42] = 103; _15[43] = 101; _15[44] = 116; _15[45] = 115; _15[46] = 32; _15[47] = 105; _15[48] = 115; _15[49] = 32; 
-	_ADD_DEALLOC(_15);
 	//indirectinvoke () = %14 (%15) : method(int[])->()
 	{
 		printf_s(_1DARRAY_PARAM(_15));
@@ -383,20 +341,13 @@ blklab7:;
 	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %19 = %18 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %20 = [80,97,115,115,32,67,111,105,110,71,97,109,101,32,116,101,115,116,32,99,97,115,101] : int[]
-	_DEALLOC(_20);
 	_NEW_1DARRAY_int64_t(_20, 23, 0);
 	_20[0] = 80; _20[1] = 97; _20[2] = 115; _20[3] = 115; _20[4] = 32; _20[5] = 67; _20[6] = 111; _20[7] = 105; _20[8] = 110; _20[9] = 71; _20[10] = 97; _20[11] = 109; _20[12] = 101; _20[13] = 32; _20[14] = 116; _20[15] = 101; _20[16] = 115; _20[17] = 116; _20[18] = 32; _20[19] = 99; _20[20] = 97; _20[21] = 115; _20[22] = 101; 
-	_ADD_DEALLOC(_20);
 	//indirectinvoke () = %19 (%20) : method(int[])->()
 	{
 		println_s(_20, _20_size);
 	}
 	//return
-	_DEALLOC(moves);
-	_DEALLOC(_7);
-	_DEALLOC(_8);
-	_DEALLOC(_15);
-	_DEALLOC(_20);
 	exit(0);
 }
 

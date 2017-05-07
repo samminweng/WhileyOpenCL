@@ -1,15 +1,11 @@
 #include "FunctionCall1.h"
-int64_t* _func_(_DECL_1DARRAY_PARAM(s), _DECL_DEALLOC_PARAM(s), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _func_(_DECL_1DARRAY_PARAM(s), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
-	_DECL_DEALLOC(_1);
 	_DECL_1DARRAY(t);
-	_DECL_DEALLOC(t);
 	int64_t _3 = 0;
 	int64_t _4 = 0;
 	//assign %2 = %0  : int[]
-	_DEALLOC(t);
 	_UPDATE_1DARRAY(t, s);
-	_TRANSFER_DEALLOC(t, s);
 	//const %3 = 3 : int
 	_3 = 3;
 	//const %4 = 2 : int
@@ -17,8 +13,6 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(s), _DECL_DEALLOC_PARAM(s), _DECL_1DARRAYSIZ
 	//update %2[%4] = %3 : int[] -> int[]
 	t[_4] = _3;
 	//return %2
-	_DEALLOC(s);
-	_DEALLOC(_1);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(t);
 	return t;
 	//return
@@ -26,26 +20,20 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(s), _DECL_DEALLOC_PARAM(s), _DECL_1DARRAYSIZ
 
 int main(int argc, char** args){
 	_DECL_1DARRAY(a);
-	_DECL_DEALLOC(a);
 	_DECL_1DARRAY(b);
-	_DECL_DEALLOC(b);
 	_DECL_1DARRAY(c);
-	_DECL_DEALLOC(c);
 	int64_t _4 = 0;
 	int64_t _5 = 0;
 	int64_t _6 = 0;
 	int64_t _7 = 0;
 	int64_t _8 = 0;
 	_DECL_1DARRAY(_9);
-	_DECL_DEALLOC(_9);
 	_DECL_1DARRAY(_10);
-	_DECL_DEALLOC(_10);
 	int64_t _11 = 0;
 	int64_t _12 = 0;
 	int64_t _13 = 0;
 	void* _14;
 	_DECL_1DARRAY(_16);
-	_DECL_DEALLOC(_16);
 	void* _17;
 	int64_t _19 = 0;
 	int64_t _20 = 0;
@@ -55,9 +43,7 @@ int main(int argc, char** args){
 	int64_t _24 = 0;
 	int64_t _25 = 0;
 	_DECL_1DARRAY(_26);
-	_DECL_DEALLOC(_26);
 	_DECL_1DARRAY(_27);
-	_DECL_DEALLOC(_27);
 	int64_t _28 = 0;
 	int64_t _29 = 0;
 	int64_t _30 = 0;
@@ -66,13 +52,11 @@ int main(int argc, char** args){
 	int64_t _33 = 0;
 	void* _34;
 	_DECL_1DARRAY(_36);
-	_DECL_DEALLOC(_36);
 	void* _37;
 	int64_t _39 = 0;
 	int64_t _40 = 0;
 	void* _41;
 	_DECL_1DARRAY(_43);
-	_DECL_DEALLOC(_43);
 	void* _44;
 	int64_t _46 = 0;
 	int64_t _47 = 0;
@@ -87,25 +71,16 @@ int main(int argc, char** args){
 	//const %8 = 0 : int
 	_8 = 0;
 	//newlist %9 = (%4, %5, %6, %7, %8) : int[]
-	_DEALLOC(_9);
 	_NEW_1DARRAY_int64_t(_9, 5, 0);
 	_9[0] = _4; _9[1] = _5; _9[2] = _6; _9[3] = _7; _9[4] = _8; 
-	_ADD_DEALLOC(_9);
 	//assign %1 = %9  : int[]
-	_DEALLOC(a);
 	_UPDATE_1DARRAY(a, _9);
-	_TRANSFER_DEALLOC(a, _9);
 	//invoke (%10) = (%1) FunctionCall1:func : function(int[])->(int[])
 	{
-		_DEALLOC(_10);
-		_10 = _func_(_1DARRAY_PARAM(a), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
-		_RESET_DEALLOC(a, "true-true-false" , "func");
-		_ADD_DEALLOC(_10);
+		_10 = _func_(_1DARRAY_PARAM(a), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 	}
 	//assign %1 = %10  : int[]
-	_DEALLOC(a);
 	_UPDATE_1DARRAY(a, _10);
-	_TRANSFER_DEALLOC(a, _10);
 	//assert
 	{
 		//const %11 = 2 : int
@@ -126,10 +101,8 @@ blklab0:;
 	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %15 = %14 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %16 = [97,91,50,93,61] : int[]
-	_DEALLOC(_16);
 	_NEW_1DARRAY_int64_t(_16, 5, 0);
 	_16[0] = 97; _16[1] = 91; _16[2] = 50; _16[3] = 93; _16[4] = 61; 
-	_ADD_DEALLOC(_16);
 	//indirectinvoke () = %15 (%16) : method(int[])->()
 	{
 		printf_s(_1DARRAY_PARAM(_16));
@@ -155,26 +128,17 @@ blklab0:;
 	//const %25 = 0 : int
 	_25 = 0;
 	//newlist %26 = (%21, %22, %23, %24, %25) : int[]
-	_DEALLOC(_26);
 	_NEW_1DARRAY_int64_t(_26, 5, 0);
 	_26[0] = _21; _26[1] = _22; _26[2] = _23; _26[3] = _24; _26[4] = _25; 
-	_ADD_DEALLOC(_26);
 	//assign %2 = %26  : int[]
-	_DEALLOC(b);
 	_UPDATE_1DARRAY(b, _26);
-	_TRANSFER_DEALLOC(b, _26);
 	//invoke (%27) = (%2) FunctionCall1:func : function(int[])->(int[])
 	{
 		void* b_tmp;
-		_DEALLOC(_27);
-		_27 = _func_(_COPY_1DARRAY_PARAM_int64_t(b), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
-		_CALLER_DEALLOC(_27, b, "true-true-true" , "func");
-		_ADD_DEALLOC(_27);
+		_27 = _func_(_COPY_1DARRAY_PARAM_int64_t(b), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 	}
 	//assign %3 = %27  : int[]
-	_DEALLOC(c);
 	_UPDATE_1DARRAY(c, _27);
-	_TRANSFER_DEALLOC(c, _27);
 	//assert
 	{
 		//const %28 = 2 : int
@@ -212,10 +176,8 @@ blklab2:;
 	//fieldload %34 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %35 = %34 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %36 = [98,91,50,93,61] : int[]
-	_DEALLOC(_36);
 	_NEW_1DARRAY_int64_t(_36, 5, 0);
 	_36[0] = 98; _36[1] = 91; _36[2] = 50; _36[3] = 93; _36[4] = 61; 
-	_ADD_DEALLOC(_36);
 	//indirectinvoke () = %35 (%36) : method(int[])->()
 	{
 		printf_s(_1DARRAY_PARAM(_36));
@@ -233,10 +195,8 @@ blklab2:;
 	//fieldload %41 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %42 = %41 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %43 = [99,91,50,93,61] : int[]
-	_DEALLOC(_43);
 	_NEW_1DARRAY_int64_t(_43, 5, 0);
 	_43[0] = 99; _43[1] = 91; _43[2] = 50; _43[3] = 93; _43[4] = 61; 
-	_ADD_DEALLOC(_43);
 	//indirectinvoke () = %42 (%43) : method(int[])->()
 	{
 		printf_s(_1DARRAY_PARAM(_43));
@@ -252,16 +212,6 @@ blklab2:;
 		printf("%"PRId64"\n", _47);
 	}
 	//return
-	_DEALLOC(a);
-	_DEALLOC(b);
-	_DEALLOC(c);
-	_DEALLOC(_9);
-	_DEALLOC(_10);
-	_DEALLOC(_16);
-	_DEALLOC(_26);
-	_DEALLOC(_27);
-	_DEALLOC(_36);
-	_DEALLOC(_43);
 	exit(0);
 }
 

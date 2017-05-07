@@ -45,6 +45,8 @@ public abstract class Analyzer {
 	protected Configuration config;
 	// Boolean flag indicates whether to print out debugging messages
 	public boolean isVerbose;
+	// Boolean flag indicates 
+	public boolean isAssertEnable;
 	// Maps of CFGs
 	protected HashMap<FunctionOrMethod, CFGraph> cfgraphs;
 	// The line number
@@ -63,6 +65,7 @@ public abstract class Analyzer {
 		this.cfgraphs = new HashMap<FunctionOrMethod, CFGraph>();
 		this.config = config;
 		this.isVerbose = config.isVerbose();
+		this.isAssertEnable = config.isEnabled(Configuration.ENABLEASSERTION);
 	}
 
 	/**
@@ -317,7 +320,9 @@ public abstract class Analyzer {
 			// Parse each byte-code and add the constraints accordingly.
 			try {
 				if (code instanceof Codes.Assert) {
-					//buildCFG((Codes.Assert)code, function);
+					if(this.isAssertEnable){
+						buildCFG((Codes.Assert)code, function);
+					}
 				} else if (code instanceof Codes.Invariant) {
 					buildCFG((Codes.Invariant) code, function);
 				} else if (code instanceof Codes.If) {

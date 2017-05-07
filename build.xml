@@ -195,7 +195,7 @@
   </target>
   <!--Test copy analysis with test cases -->
   <target name="test-copy" depends="clean, build-all">
-  <subant failonerror="true" target="test-pattern">
+  <subant failonerror="true" target="test-copy">
     <filelist>
         <!--wyopcl-->
           <file name="modules/wyopcl/build.xml"/>

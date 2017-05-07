@@ -43,15 +43,7 @@ public final class BaseTestUtil {
 
 	// Log file
 	private final File logfile = new File(code_path + "log.txt");
-	// Util.c file
-	private final File utilcfile = new File(code_path + "Util.c");
-	// WyRT.c file stores built-in functions at WyRT runtime
-	private final File wyrtcfile = new File(code_path + "WyRT.c");
-	// Util.h file
-	private final File utilhfile = new File(code_path + "Util.h");
-	// WyRT.h file 
-	private final File wyrthfile = new File(code_path + "WyRT.h");
-
+	
 	public BaseTestUtil() {
 
 	}
@@ -414,15 +406,16 @@ public final class BaseTestUtil {
 			}
 			// Create the destDir folder.
 			if (Files.exists(destPath)) {
-				// If destDir exists, then delete it.
-				// Recursively Delete files in the destDir folder.
-				Files.walkFileTree(destPath, new SimpleFileVisitor<Path>() {
+				// If destDir exists, then Recursively Delete files in the destDir folder.
+				FileUtils.cleanDirectory(destPath.toFile());
+				
+				/*Files.walkFileTree(destPath, new SimpleFileVisitor<Path>() {
 					@Override
 					public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 						Files.delete(file);
 						return FileVisitResult.CONTINUE;
 					}
-				});
+				});*/
 			} else {
 				// Create destDir subfolder
 				Files.createDirectories(destPath);
@@ -435,13 +428,13 @@ public final class BaseTestUtil {
 			Files.copy(whileyFile, Paths.get(destPath + File.separator + testcase + ".whiley"));
 
 			// 2. Copy Util.c/WyRT.c and Util.h/WyRT.h to destDir
-			Files.copy(utilcfile.toPath(),
+			Files.copy(Paths.get(code_path + "Util.c"),
 					Paths.get(destPath + File.separator + "Util.c"));
-			Files.copy(wyrtcfile.toPath(),
+			Files.copy(Paths.get(code_path + "WyRT.c"),
 					Paths.get(destPath + File.separator + "WyRT.c"));
-			Files.copy(utilhfile.toPath(),
+			Files.copy(Paths.get(code_path + "Util.h"),
 					Paths.get(destPath + File.separator + "Util.h"));
-			Files.copy(wyrthfile.toPath(),
+			Files.copy(Paths.get(code_path + "WyRT.h"),
 					Paths.get(destPath + File.separator + "WyRT.h"));
 
 			// (Optional) Copy 'medium.in' to destDir  
@@ -587,13 +580,13 @@ public final class BaseTestUtil {
 		if(options.length == index){
 			// Generate 'naive' C code
 			path += File.separator + "naive";
-		}else if(options.length == index + 2){
+		}else if(options.length == index + 1){
 			// Generate 'nocopy' 'dealloc' C code
-			path += File.separator + options[1].replace("-", "");
-		}else if(options.length == index + 3){
+			path += File.separator + options[index].replace("-", "");
+		}else if(options.length == index + 2){
 			// Generate 'nocopy_dealloc' C code
-			path += File.separator + options[1].replace("-", "")
-					+ "_" + options[2].replace("-", "");
+			path += File.separator + options[index].replace("-", "")
+					+ "_" + options[index+1].replace("-", "");
 		}
 
 		destDir = Paths.get(path);
@@ -620,6 +613,7 @@ public final class BaseTestUtil {
 	 */
 	public void execCodeGeneration(Path sourceDir, String testcase, String... options) {
 		try {
+		
 			Path destDir= processOptions(sourceDir, testcase, options);
 
 			// 2. Prepare folder and copy files

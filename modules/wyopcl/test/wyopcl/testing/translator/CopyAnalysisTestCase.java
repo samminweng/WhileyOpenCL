@@ -54,10 +54,21 @@ public class CopyAnalysisTestCase {
 	}
 	
 	@Test
+	public void testCopyAndEnableAssertion(){
+		// Perform copy analysis with assertion disabled 
+		util.execCopyAnalysis(sourceDir, testcase, "-nocopy", "-verbose", "-ea");
+	}
+	
+	@Test
 	public void testCopyAndDisableAssertionAndGenerateCode(){
 		// Generate C code with copy analysis enabled and assertion disabled 
 		util.execCodeGeneration(sourceDir, testcase, "-nocopy", "-code");
 	}
 	
+	@Test
+	public void testCopyAndEnableAssertionAndGenerateCode(){
+		// Generate C code with copy analysis enabled and assertion disabled 
+		util.execCodeGeneration(sourceDir, testcase, "-nocopy", "-ea", "-code");
+	}
 	
 }

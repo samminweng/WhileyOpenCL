@@ -4,6 +4,7 @@ digraph reverse{
 "blklab0 [LOOP_HEADER]"[shape=box,style=filled,color=".7 .3 1.0"];
 "blklab0 [LOOP_BODY]"[shape=box,style=filled,color=".7 .3 1.0"];
 "blklab0 [LOOP_EXIT]"[shape=box,style=filled,color=".7 .3 1.0"];
+"blklab3, blklab2 [ASSERT]"[shape=box];
 "blklab1 [BLOCK]"[shape=box];
 "return_3 [RETURN]"[shape=box];
 "exit [EXIT]"[shape=box];
@@ -11,8 +12,9 @@ digraph reverse{
 "code [BLOCK]"->"blklab0 [LOOP_HEADER]";
 "blklab0 [LOOP_HEADER]"->"blklab0 [LOOP_BODY]";
 "blklab0 [LOOP_HEADER]"->"blklab0 [LOOP_EXIT]";
-"blklab0 [LOOP_BODY]"->"blklab1 [BLOCK]";
+"blklab0 [LOOP_BODY]"->"blklab3, blklab2 [ASSERT]";
 "blklab0 [LOOP_EXIT]"->"return_3 [RETURN]";
+"blklab3, blklab2 [ASSERT]"->"blklab1 [BLOCK]";
 "blklab1 [BLOCK]"->"blklab0 [LOOP_HEADER]";
 "return_3 [RETURN]"->"exit [EXIT]";
 
