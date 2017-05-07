@@ -20,6 +20,7 @@ int64_t* _reverse_(_DECL_1DARRAY_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERE
 	//lengthof %5 = %0 : int[]
 	_5 = ls_size;
 	//assign %2 = %5  : int
+	// isCopyEliminated = true
 	i = _5;
 	//const %6 = 0 : int
 	_6 = 0;
@@ -28,6 +29,7 @@ int64_t* _reverse_(_DECL_1DARRAY_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERE
 	//arraygen %8 = [6; 7] : int[]
 	_NEW_1DARRAY_int64_t(_8, _7, _6);
 	//assign %3 = %8  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(r, _8);
 	//loop (%2, %3, %4, %9, %10, %11, %12, %13, %14, %15, %16, %17)
 	while(true){
@@ -42,14 +44,17 @@ int64_t* _reverse_(_DECL_1DARRAY_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERE
 		//indexof %15 = %0, %14 : int[]
 		_15=ls[_14];
 		//assign %4 = %15  : int
+		// isCopyEliminated = true
 		item = _15;
 		//const %16 = 1 : int
 		_16 = 1;
 		//sub %17 = %2, %16 : int
 		_17=i-_16;
 		//assign %2 = %17  : int
+		// isCopyEliminated = true
 		i = _17;
 		//update %3[%2] = %4 : int[] -> int[]
+		// isCopyEliminated = false
 		r[i] = item;
 //.blklab1
 blklab1:;
@@ -86,6 +91,7 @@ int main(int argc, char** args){
 	//const %5 = 0 : int
 	_5 = 0;
 	//assign %1 = %5  : int
+	// isCopyEliminated = true
 	index = _5;
 	//const %6 = 0 : int
 	_6 = 0;
@@ -94,6 +100,7 @@ int main(int argc, char** args){
 	//arraygen %8 = [6; 7] : int[]
 	_NEW_1DARRAY_int64_t(_8, _7, _6);
 	//assign %2 = %8  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(input, _8);
 	//loop (%1, %2, %9, %10, %11, %12, %13)
 	while(true){
@@ -106,12 +113,14 @@ int main(int argc, char** args){
 		//sub %11 = %10, %1 : int
 		_11=_10-index;
 		//update %2[%1] = %11 : int[] -> int[]
+		// isCopyEliminated = false
 		input[index] = _11;
 		//const %12 = 1 : int
 		_12 = 1;
 		//add %13 = %1, %12 : int
 		_13=index+_12;
 		//assign %1 = %13  : int
+		// isCopyEliminated = true
 		index = _13;
 //.blklab5
 blklab5:;
@@ -120,9 +129,11 @@ blklab5:;
 blklab4:;
 	//invoke (%14) = (%2) reverse:reverse : function(int[])->(int[])
 	{
+		// isCopyEliminated of '_2' = true
 		_14 = _reverse_(_1DARRAY_PARAM(input), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_14));
 	}
 	//assign %3 = %14  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(tmp, _14);
 	//assert
 	{
@@ -142,6 +153,7 @@ blklab6:;
 	//assert
 	}
 	//assign %4 = %3  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(output, tmp);
 	//assert
 	{

@@ -60,26 +60,31 @@ int64_t* _sortV1_(_DECL_1DARRAY_PARAM(items), int64_t start, int64_t end, _DECL_
 	//div %14 = %12, %13 : int
 	_14=_12/_13;
 	//assign %4 = %14  : int
+	// isCopyEliminated = true
 	pivot = _14;
 	//invoke (%15) = (%0, %1, %4) whiley/lang/Array:slice : function(int[],int,int)->(int[])
 	{
 _SLICE_ARRAY(_15, items, start, pivot);
 	}
 	//assign %5 = %15  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(lhs, _15);
 	//const %17 = 0 : int
 	_17 = 0;
 	//invoke (%16) = (%5, %17, %4) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
+		// isCopyEliminated of '_5' = true
 		_16 = _sortV1_(_1DARRAY_PARAM(lhs), _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 	}
 	//assign %5 = %16  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(lhs, _16);
 	//invoke (%18) = (%0, %4, %2) whiley/lang/Array:slice : function(int[],int,int)->(int[])
 	{
 _SLICE_ARRAY(_18, items, pivot, end);
 	}
 	//assign %6 = %18  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(rhs, _18);
 	//const %20 = 0 : int
 	_20 = 0;
@@ -87,21 +92,26 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	_21=end-pivot;
 	//invoke (%19) = (%6, %20, %21) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
+		// isCopyEliminated of '_6' = true
 		_19 = _sortV1_(_1DARRAY_PARAM(rhs), _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
 	}
 	//assign %6 = %19  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(rhs, _19);
 	//const %22 = 0 : int
 	_22 = 0;
 	//assign %7 = %22  : int
+	// isCopyEliminated = true
 	l = _22;
 	//const %23 = 0 : int
 	_23 = 0;
 	//assign %8 = %23  : int
+	// isCopyEliminated = true
 	r = _23;
 	//const %24 = 0 : int
 	_24 = 0;
 	//assign %9 = %24  : int
+	// isCopyEliminated = true
 	i = _24;
 	//loop (%0, %7, %8, %9, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37)
 	while(true){
@@ -126,12 +136,14 @@ _SLICE_ARRAY(_18, items, pivot, end);
 		//indexof %30 = %5, %7 : int[]
 		_30=lhs[l];
 		//update %0[%9] = %30 : int[] -> int[]
+		// isCopyEliminated = false
 		items[i] = _30;
 		//const %31 = 1 : int
 		_31 = 1;
 		//add %32 = %7, %31 : int
 		_32=l+_31;
 		//assign %7 = %32  : int
+		// isCopyEliminated = true
 		l = _32;
 		//goto blklab4
 		goto blklab4;
@@ -140,12 +152,14 @@ blklab3:;
 		//indexof %33 = %6, %8 : int[]
 		_33=rhs[r];
 		//update %0[%9] = %33 : int[] -> int[]
+		// isCopyEliminated = false
 		items[i] = _33;
 		//const %34 = 1 : int
 		_34 = 1;
 		//add %35 = %8, %34 : int
 		_35=r+_34;
 		//assign %8 = %35  : int
+		// isCopyEliminated = true
 		r = _35;
 //.blklab4
 blklab4:;
@@ -154,6 +168,7 @@ blklab4:;
 		//add %37 = %9, %36 : int
 		_37=i+_36;
 		//assign %9 = %37  : int
+		// isCopyEliminated = true
 		i = _37;
 //.blklab2
 blklab2:;
@@ -169,18 +184,21 @@ blklab1:;
 		//indexof %39 = %5, %7 : int[]
 		_39=lhs[l];
 		//update %0[%9] = %39 : int[] -> int[]
+		// isCopyEliminated = false
 		items[i] = _39;
 		//const %40 = 1 : int
 		_40 = 1;
 		//add %41 = %9, %40 : int
 		_41=i+_40;
 		//assign %9 = %41  : int
+		// isCopyEliminated = true
 		i = _41;
 		//const %42 = 1 : int
 		_42 = 1;
 		//add %43 = %7, %42 : int
 		_43=l+_42;
 		//assign %7 = %43  : int
+		// isCopyEliminated = true
 		l = _43;
 //.blklab6
 blklab6:;
@@ -196,18 +214,21 @@ blklab5:;
 		//indexof %45 = %6, %8 : int[]
 		_45=rhs[r];
 		//update %0[%9] = %45 : int[] -> int[]
+		// isCopyEliminated = false
 		items[i] = _45;
 		//const %46 = 1 : int
 		_46 = 1;
 		//add %47 = %9, %46 : int
 		_47=i+_46;
 		//assign %9 = %47  : int
+		// isCopyEliminated = true
 		i = _47;
 		//const %48 = 1 : int
 		_48 = 1;
 		//add %49 = %8, %48 : int
 		_49=r+_48;
 		//assign %8 = %49  : int
+		// isCopyEliminated = true
 		r = _49;
 //.blklab8
 blklab8:;
@@ -324,6 +345,7 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_10, 5, 0);
 	_10[0] = _5; _10[1] = _6; _10[2] = _7; _10[3] = _8; _10[4] = _9; 
 	//assign %1 = %10  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(ys, _10);
 	//const %12 = 0 : int
 	_12 = 0;
@@ -331,9 +353,11 @@ int main(int argc, char** args){
 	_13 = 5;
 	//invoke (%11) = (%1, %12, %13) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
+		// isCopyEliminated of '_1' = true
 		_11 = _sortV1_(_1DARRAY_PARAM(ys), _12, _13, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 	}
 	//assign %1 = %11  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(ys, _11);
 	//assert
 	{
@@ -371,6 +395,7 @@ blklab9:;
 	_NEW_1DARRAY_int64_t(_24, 4, 0);
 	_24[0] = _20; _24[1] = _21; _24[2] = _22; _24[3] = _23; 
 	//assign %1 = %24  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(ys, _24);
 	//const %26 = 0 : int
 	_26 = 0;
@@ -378,9 +403,11 @@ blklab9:;
 	_27 = 4;
 	//invoke (%25) = (%1, %26, %27) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
+		// isCopyEliminated of '_1' = true
 		_25 = _sortV1_(_1DARRAY_PARAM(ys), _26, _27, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 	}
 	//assign %1 = %25  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(ys, _25);
 	//assert
 	{
@@ -416,6 +443,7 @@ blklab10:;
 	_NEW_1DARRAY_int64_t(_37, 4, 0);
 	_37[0] = _33; _37[1] = _34; _37[2] = _35; _37[3] = _36; 
 	//assign %1 = %37  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(ys, _37);
 	//const %39 = 0 : int
 	_39 = 0;
@@ -423,9 +451,11 @@ blklab10:;
 	_40 = 4;
 	//invoke (%38) = (%1, %39, %40) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
+		// isCopyEliminated of '_1' = true
 		_38 = _sortV1_(_1DARRAY_PARAM(ys), _39, _40, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 	}
 	//assign %1 = %38  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(ys, _38);
 	//assert
 	{
@@ -463,6 +493,7 @@ blklab11:;
 	_NEW_1DARRAY_int64_t(_51, 5, 0);
 	_51[0] = _46; _51[1] = _47; _51[2] = _48; _51[3] = _49; _51[4] = _50; 
 	//assign %1 = %51  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(ys, _51);
 	//const %53 = 0 : int
 	_53 = 0;
@@ -470,9 +501,11 @@ blklab11:;
 	_54 = 5;
 	//invoke (%52) = (%1, %53, %54) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
+		// isCopyEliminated of '_1' = true
 		_52 = _sortV1_(_1DARRAY_PARAM(ys), _53, _54, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 	}
 	//assign %1 = %52  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(ys, _52);
 	//assert
 	{
@@ -501,10 +534,12 @@ blklab12:;
 	//const %61 = 10 : int
 	_61 = 10;
 	//assign %2 = %61  : int
+	// isCopyEliminated = true
 	max = _61;
 	//const %62 = 0 : int
 	_62 = 0;
 	//assign %3 = %62  : int
+	// isCopyEliminated = true
 	index = _62;
 	//const %63 = 0 : int
 	_63 = 0;
@@ -515,6 +550,7 @@ blklab12:;
 	//arraygen %66 = [63; 65] : int[]
 	_NEW_1DARRAY_int64_t(_66, _65, _63);
 	//assign %4 = %66  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(arr, _66);
 	//loop (%3, %4, %67, %68, %69)
 	while(true){
@@ -523,12 +559,14 @@ blklab12:;
 		//sub %67 = %2, %3 : int
 		_67=max-index;
 		//update %4[%3] = %67 : int[] -> int[]
+		// isCopyEliminated = false
 		arr[index] = _67;
 		//const %68 = 1 : int
 		_68 = 1;
 		//add %69 = %3, %68 : int
 		_69=index+_68;
 		//assign %3 = %69  : int
+		// isCopyEliminated = true
 		index = _69;
 //.blklab14
 blklab14:;
@@ -543,9 +581,11 @@ blklab13:;
 	_73=max+_72;
 	//invoke (%70) = (%4, %71, %73) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
+		// isCopyEliminated of '_4' = true
 		_70 = _sortV1_(_1DARRAY_PARAM(arr), _71, _73, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_70));
 	}
 	//assign %4 = %70  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(arr, _70);
 	//assert
 	{

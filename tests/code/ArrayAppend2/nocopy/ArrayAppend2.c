@@ -9,6 +9,7 @@ int main(int argc, char** args){
 	//const %2 = [] : void[]
 	_NEW_1DARRAY_int64_t(_2, 0, 0);
 	//assign %1 = %2  : void[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(r, _2);
 	//const %4 = [32,84,104,105,115,32,105,115,32,97,32,116,101,115,116,32] : int[]
 	_NEW_1DARRAY_int64_t(_4, 16, 0);
@@ -18,6 +19,7 @@ int main(int argc, char** args){
 		_3 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_4), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
 	}
 	//assign %1 = %3  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(r, _3);
 	//fieldload %5 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %6 = %5 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

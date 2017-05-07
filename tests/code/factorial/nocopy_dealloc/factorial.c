@@ -51,6 +51,7 @@ int main(int argc, char** args){
 		_2 = _factorial_(_3);
 	}
 	//assign %1 = %2  : int
+	// isCopyEliminated = true
 	f = _2;
 	//assert
 	{

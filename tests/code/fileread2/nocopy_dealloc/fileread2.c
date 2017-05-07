@@ -69,6 +69,7 @@ void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t 
 	//const %17 = 0 : int
 	_17 = 0;
 	//assign %4 = %17  : int
+	// isCopyEliminated = true
 	j = _17;
 	//loop (%4, %5, %6, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38)
 	while(true){
@@ -77,6 +78,7 @@ void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t 
 		//const %18 = 0 : int
 		_18 = 0;
 		//assign %5 = %18  : int
+		// isCopyEliminated = true
 		i = _18;
 		//loop (%5, %6, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33)
 		while(true){
@@ -87,6 +89,7 @@ void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t 
 			//add %20 = %19, %5 : int
 			_20=_19+i;
 			//assign %6 = %20  : int
+			// isCopyEliminated = true
 			pos = _20;
 			//indexof %21 = %3, %6 : byte[]
 			_21=pixels[pos];
@@ -132,6 +135,7 @@ blklab5:;
 			//add %33 = %5, %32 : int
 			_33=i+_32;
 			//assign %5 = %33  : int
+			// isCopyEliminated = true
 			i = _33;
 //.blklab3
 blklab3:;
@@ -153,6 +157,7 @@ blklab2:;
 		//add %38 = %4, %37 : int
 		_38=j+_37;
 		//assign %4 = %38  : int
+		// isCopyEliminated = true
 		j = _38;
 //.blklab1
 blklab1:;
@@ -192,14 +197,17 @@ int main(int argc, char** args){
 		_5 = Reader(_6, _6_size);
 	}
 	//assign %1 = %5  : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
+	// isCopyEliminated = true
 	r = _5;
 	//const %7 = 32 : int
 	_7 = 32;
 	//assign %2 = %7  : int
+	// isCopyEliminated = true
 	width = _7;
 	//const %8 = 32 : int
 	_8 = 32;
 	//assign %3 = %8  : int
+	// isCopyEliminated = true
 	height = _8;
 	//fieldload %10 = %1 readAll : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
 	//indirectinvoke (%9) = %10 () : method()->(byte[])
@@ -209,10 +217,12 @@ int main(int argc, char** args){
 	}
 	//assign %4 = %9  : byte[]
 	_DEALLOC(pixels);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(pixels, _9);
 	_TRANSFER_DEALLOC(pixels, _9);
 	//invoke () = (%0, %2, %3, %4) fileread2:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
+		// isCopyEliminated of '_4' = true
 		_print_pbm_(stdout, width, height, _1DARRAY_PARAM(pixels), false);
 		_RETAIN_DEALLOC(pixels, "false-false-false" , "print_pbm");
 	}

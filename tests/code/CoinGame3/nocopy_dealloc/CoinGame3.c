@@ -83,6 +83,7 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 	_ADD_DEALLOC(_10);
 	//assign %3 = %10  : int[]
 	_DEALLOC(x);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(x, _10);
 	_TRANSFER_DEALLOC(x, _10);
 	//const %11 = 0 : int
@@ -93,6 +94,7 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 	_ADD_DEALLOC(_12);
 	//assign %4 = %12  : int[]
 	_DEALLOC(y);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(y, _12);
 	_TRANSFER_DEALLOC(y, _12);
 	//const %13 = 0 : int
@@ -103,21 +105,25 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 	_ADD_DEALLOC(_14);
 	//assign %5 = %14  : int[]
 	_DEALLOC(z);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(z, _14);
 	_TRANSFER_DEALLOC(z, _14);
 	//const %15 = 0 : int
 	_15 = 0;
 	//assign %6 = %15  : int
+	// isCopyEliminated = true
 	s = _15;
 	//loop (%0, %3, %4, %5, %6, %7, %8, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57, %58, %59, %60, %61, %62, %63, %64, %65, %66, %67, %68, %69)
 	while(true){
 		//ifge %6, %1 goto blklab0 : int
 		if(s>=n){goto blklab0;}
 		//assign %7 = %6  : int
+		// isCopyEliminated = false
 		j = s;
 		//const %16 = 0 : int
 		_16 = 0;
 		//assign %8 = %16  : int
+		// isCopyEliminated = true
 		i = _16;
 		//loop (%0, %3, %4, %5, %7, %8, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57, %58, %59, %60, %61, %62, %63, %64, %65, %66, %67)
 		while(true){
@@ -126,6 +132,7 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 			//const %17 = 0 : int
 			_17 = 0;
 			//update %4[%8] = %17 : int[] -> int[]
+			// isCopyEliminated = false
 			y[i] = _17;
 			//const %18 = 1 : int
 			_18 = 1;
@@ -160,12 +167,14 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 			//add %31 = %23, %30 : int
 			_31=_23+_30;
 			//update %4[%8] = %31 : int[] -> int[]
+			// isCopyEliminated = false
 			y[i] = _31;
 //.blklab4
 blklab4:;
 			//const %32 = 0 : int
 			_32 = 0;
 			//update %3[%8] = %32 : int[] -> int[]
+			// isCopyEliminated = false
 			x[i] = _32;
 			//const %33 = 2 : int
 			_33 = 2;
@@ -188,12 +197,14 @@ blklab4:;
 			//add %41 = %35, %40 : int
 			_41=_35+_40;
 			//update %3[%8] = %41 : int[] -> int[]
+			// isCopyEliminated = false
 			x[i] = _41;
 //.blklab5
 blklab5:;
 			//const %42 = 0 : int
 			_42 = 0;
 			//update %5[%8] = %42 : int[] -> int[]
+			// isCopyEliminated = false
 			z[i] = _42;
 			//const %43 = 1 : int
 			_43 = 1;
@@ -218,6 +229,7 @@ blklab5:;
 			//add %52 = %46, %51 : int
 			_52=_46+_51;
 			//update %5[%8] = %52 : int[] -> int[]
+			// isCopyEliminated = false
 			z[i] = _52;
 //.blklab6
 blklab6:;
@@ -250,18 +262,21 @@ blklab6:;
 			//add %63 = %62, %7 : int
 			_63=_62+j;
 			//update %0[%63] = %53 : int[] -> int[]
+			// isCopyEliminated = true
 			moves[_63] = _53;
 			//const %64 = 1 : int
 			_64 = 1;
 			//add %65 = %7, %64 : int
 			_65=j+_64;
 			//assign %7 = %65  : int
+			// isCopyEliminated = true
 			j = _65;
 			//const %66 = 1 : int
 			_66 = 1;
 			//add %67 = %8, %66 : int
 			_67=i+_66;
 			//assign %8 = %67  : int
+			// isCopyEliminated = true
 			i = _67;
 //.blklab3
 blklab3:;
@@ -273,6 +288,7 @@ blklab2:;
 		//add %69 = %6, %68 : int
 		_69=s+_68;
 		//assign %6 = %69  : int
+		// isCopyEliminated = true
 		s = _69;
 //.blklab1
 blklab1:;
@@ -318,6 +334,7 @@ int main(int argc, char** args){
 	//const %4 = 10 : int
 	_4 = 10;
 	//assign %1 = %4  : int
+	// isCopyEliminated = true
 	n = _4;
 	//const %5 = 0 : int
 	_5 = 0;
@@ -329,17 +346,20 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_7);
 	//assign %2 = %7  : int[]
 	_DEALLOC(moves);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(moves, _7);
 	_TRANSFER_DEALLOC(moves, _7);
 	//invoke (%8) = (%2, %1) CoinGame3:findMoves : function(int[],int)->(int[])
 	{
 		_DEALLOC(_8);
+		// isCopyEliminated of '_2' = true
 		_8 = _findMoves_(_1DARRAY_PARAM(moves), false, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_RESET_DEALLOC(moves, "true-true-false" , "findMoves");
 		_ADD_DEALLOC(_8);
 	}
 	//assign %2 = %8  : int[]
 	_DEALLOC(moves);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(moves, _8);
 	_TRANSFER_DEALLOC(moves, _8);
 	//const %9 = 1 : int
@@ -349,6 +369,7 @@ int main(int argc, char** args){
 	//indexof %11 = %2, %10 : int[]
 	_11=moves[_10];
 	//assign %3 = %11  : int
+	// isCopyEliminated = true
 	sum_alice = _11;
 	//assert
 	{

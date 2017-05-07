@@ -31,14 +31,17 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERE
 	//const %6 = [] : void[]
 	_NEW_1DARRAY_int64_t(_6, 0, 0);
 	//assign %2 = %6  : void[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(r, _6);
 	//const %7 = true : bool
 	_7 = true;
 	//assign %3 = %7  : bool
+	// isCopyEliminated = true
 	firstTime = _7;
 	//const %8 = 0 : int
 	_8 = 0;
 	//assign %4 = %8  : int
+	// isCopyEliminated = true
 	i = _8;
 	//loop (%2, %3, %4, %5, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24)
 	while(true){
@@ -49,6 +52,7 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERE
 		//indexof %10 = %0, %4 : int[]
 		_10=c[i];
 		//assign %5 = %10  : int
+		// isCopyEliminated = true
 		amt = _10;
 		//const %11 = 0 : int
 		_11 = 0;
@@ -66,12 +70,14 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERE
 			_13 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_14), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_13));
 		}
 		//assign %2 = %13  : int[]
+		// isCopyEliminated = true
 		_UPDATE_1DARRAY(r, _13);
 //.blklab5
 blklab5:;
 		//const %15 = false : bool
 		_15 = false;
 		//assign %3 = %15  : bool
+		// isCopyEliminated = true
 		firstTime = _15;
 		//invoke (%17) = (%5) whiley/lang/Int:toString : function(int)->(whiley/lang/ASCII:string)
 		{
@@ -82,6 +88,7 @@ blklab5:;
 			_16 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_17), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		}
 		//assign %2 = %16  : int[]
+		// isCopyEliminated = true
 		_UPDATE_1DARRAY(r, _16);
 		//const %19 = [32,120,32] : int[]
 		_NEW_1DARRAY_int64_t(_19, 3, 0);
@@ -91,6 +98,7 @@ blklab5:;
 			_18 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_19), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
 		}
 		//assign %2 = %18  : int[]
+		// isCopyEliminated = true
 		_UPDATE_1DARRAY(r, _18);
 		//const %21 = [[49,99],[53,99],[49,48,99],[50,48,99],[53,48,99],[36,49],[36,53],[36,49,48]] : int[][]
 		_NEW_2DARRAY_int64_t_EMPTY(_21, 8, 3);
@@ -135,6 +143,7 @@ blklab5:;
 			_20 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_22), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
 		}
 		//assign %2 = %20  : int[]
+		// isCopyEliminated = true
 		_UPDATE_1DARRAY(r, _20);
 //.blklab4
 blklab4:;
@@ -143,6 +152,7 @@ blklab4:;
 		//add %24 = %4, %23 : int
 		_24=i+_23;
 		//assign %4 = %24  : int
+		// isCopyEliminated = true
 		i = _24;
 //.blklab3
 blklab3:;
@@ -157,6 +167,7 @@ blklab2:;
 	_NEW_1DARRAY_int64_t(_26, 9, 0);
 	_26[0] = 40; _26[1] = 110; _26[2] = 111; _26[3] = 116; _26[4] = 104; _26[5] = 105; _26[6] = 110; _26[7] = 103; _26[8] = 41; 
 	//assign %2 = %26  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(r, _26);
 //.blklab6
 blklab6:;
@@ -201,6 +212,7 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_10, 8, 0);
 	_10[0] = _2; _10[1] = _3; _10[2] = _4; _10[3] = _5; _10[4] = _6; _10[5] = _7; _10[6] = _8; _10[7] = _9; 
 	//assign %1 = %10  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(till, _10);
 	//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %12 = %11 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -215,6 +227,7 @@ int main(int argc, char** args){
 	//fieldload %15 = %14 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%16) = (%1) ArrayAppend3:toString : function(ArrayAppend3:Cash)->(whiley/lang/ASCII:string)
 	{
+		// isCopyEliminated of '_1' = true
 		_16 = _toString_(_1DARRAY_PARAM(till), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 	}
 	//indirectinvoke () = %15 (%16) : method(int[])->()

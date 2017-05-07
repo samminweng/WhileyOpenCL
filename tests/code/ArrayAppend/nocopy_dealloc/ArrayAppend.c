@@ -36,11 +36,13 @@ int64_t* _test_append_(_DECL_1DARRAY_PARAM(lhs), _DECL_DEALLOC_PARAM(lhs), _DECL
 	_ADD_DEALLOC(_9);
 	//assign %3 = %9  : int[]
 	_DEALLOC(rs);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(rs, _9);
 	_TRANSFER_DEALLOC(rs, _9);
 	//lengthof %10 = %0 : int[]
 	_10 = lhs_size;
 	//assign %4 = %10  : int
+	// isCopyEliminated = true
 	i = _10;
 	//loop (%3, %4, %11, %12, %13, %14)
 	while(true){
@@ -53,10 +55,12 @@ int64_t* _test_append_(_DECL_1DARRAY_PARAM(lhs), _DECL_DEALLOC_PARAM(lhs), _DECL
 		//sub %13 = %4, %12 : int
 		_13=i-_12;
 		//assign %4 = %13  : int
+		// isCopyEliminated = true
 		i = _13;
 		//indexof %14 = %0, %4 : int[]
 		_14=lhs[i];
 		//update %3[%4] = %14 : int[] -> int[]
+		// isCopyEliminated = false
 		rs[i] = _14;
 //.blklab1
 blklab1:;
@@ -76,12 +80,14 @@ blklab0:;
 		//add %18 = %4, %17 : int
 		_18=i+_17;
 		//update %3[%18] = %16 : int[] -> int[]
+		// isCopyEliminated = true
 		rs[_18] = _16;
 		//const %19 = 1 : int
 		_19 = 1;
 		//add %20 = %4, %19 : int
 		_20=i+_19;
 		//assign %4 = %20  : int
+		// isCopyEliminated = true
 		i = _20;
 //.blklab3
 blklab3:;
@@ -115,6 +121,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_2);
 	//assign %1 = %2  : void[]
 	_DEALLOC(r);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(r, _2);
 	_TRANSFER_DEALLOC(r, _2);
 	//const %4 = [32,84,104,105,115,32,105,115,32,97,32,116,101,115,116,32] : int[]
@@ -125,6 +132,8 @@ int main(int argc, char** args){
 	//invoke (%3) = (%1, %4) ArrayAppend:test_append : function(int[],int[])->(int[])
 	{
 		_DEALLOC(_3);
+		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of '_4' = true
 		_3 = _test_append_(_1DARRAY_PARAM(r), false, _1DARRAY_PARAM(_4), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
 		_RETAIN_DEALLOC(r, "false-false-false" , "test_append");
 		_RETAIN_DEALLOC(_4, "false-false-false" , "test_append");
@@ -132,6 +141,7 @@ int main(int argc, char** args){
 	}
 	//assign %1 = %3  : int[]
 	_DEALLOC(r);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(r, _3);
 	_TRANSFER_DEALLOC(r, _3);
 	//fieldload %5 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}

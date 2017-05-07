@@ -36,8 +36,11 @@ Image* _image_(int64_t width, int64_t height, BYTE* pixels, size_t pixels_size, 
 	//newrecord %4 = (%1, %2, %0) : {int height,byte[] pixels,int width}
 	_DEALLOC_STRUCT(_4, Image);
 	_4 = malloc(sizeof(Image));
+	// isCopyEliminated = true
 	_4->height = height;
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(_4->pixels, pixels);
+	// isCopyEliminated = true
 	_4->width = width;
 	_REMOVE_DEALLOC(pixels);
 	_ADD_DEALLOC(_4);
@@ -148,31 +151,38 @@ int64_t _convolution_(Image* A, _DECL_DEALLOC_PARAM(A), int64_t xCenter, int64_t
 	_REMOVE_DEALLOC(_17);
 	//assign %5 = %17  : byte[]
 	_DEALLOC(pixels);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(pixels, _17);
 	_TRANSFER_DEALLOC(pixels, _17);
 	//fieldload %18 = %0 width : {int height,byte[] pixels,int width}
 	_18 = A->width;
 	//assign %6 = %18  : int
+	// isCopyEliminated = true
 	width = _18;
 	//fieldload %19 = %0 height : {int height,byte[] pixels,int width}
 	_19 = A->height;
 	//assign %7 = %19  : int
+	// isCopyEliminated = true
 	height = _19;
 	//const %20 = 0 : int
 	_20 = 0;
 	//assign %8 = %20  : int
+	// isCopyEliminated = true
 	sum = _20;
 	//const %21 = 3 : int
 	_21 = 3;
 	//assign %9 = %21  : int
+	// isCopyEliminated = true
 	filterSize = _21;
 	//const %22 = 1 : int
 	_22 = 1;
 	//assign %10 = %22  : int
+	// isCopyEliminated = true
 	filterHalf = _22;
 	//const %23 = 0 : int
 	_23 = 0;
 	//assign %11 = %23  : int
+	// isCopyEliminated = true
 	filterY = _23;
 	//loop (%8, %11, %12, %13, %14, %15, %16, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43)
 	while(true){
@@ -187,10 +197,12 @@ int64_t _convolution_(Image* A, _DECL_DEALLOC_PARAM(A), int64_t xCenter, int64_t
 			_24 = _wrap_(_26, height);
 		}
 		//assign %12 = %24  : int
+		// isCopyEliminated = true
 		y = _24;
 		//const %27 = 0 : int
 		_27 = 0;
 		//assign %13 = %27  : int
+		// isCopyEliminated = true
 		filterX = _27;
 		//loop (%8, %13, %14, %15, %16, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41)
 		while(true){
@@ -205,6 +217,7 @@ int64_t _convolution_(Image* A, _DECL_DEALLOC_PARAM(A), int64_t xCenter, int64_t
 				_28 = _wrap_(_30, width);
 			}
 			//assign %14 = %28  : int
+			// isCopyEliminated = true
 			x = _28;
 			//mul %32 = %12, %6 : int
 			_32=y*width;
@@ -217,6 +230,7 @@ int64_t _convolution_(Image* A, _DECL_DEALLOC_PARAM(A), int64_t xCenter, int64_t
 				_31 = (unsigned int)_34;
 			}
 			//assign %15 = %31  : int
+			// isCopyEliminated = true
 			pixel = _31;
 			//mul %35 = %11, %9 : int
 			_35=filterY*filterSize;
@@ -225,18 +239,21 @@ int64_t _convolution_(Image* A, _DECL_DEALLOC_PARAM(A), int64_t xCenter, int64_t
 			//indexof %37 = %3, %36 : int[]
 			_37=filter[_36];
 			//assign %16 = %37  : int
+			// isCopyEliminated = true
 			filterVal = _37;
 			//mul %38 = %15, %16 : int
 			_38=pixel*filterVal;
 			//add %39 = %8, %38 : int
 			_39=sum+_38;
 			//assign %8 = %39  : int
+			// isCopyEliminated = true
 			sum = _39;
 			//const %40 = 1 : int
 			_40 = 1;
 			//add %41 = %13, %40 : int
 			_41=filterX+_40;
 			//assign %13 = %41  : int
+			// isCopyEliminated = true
 			filterX = _41;
 //.blklab7
 blklab7:;
@@ -248,6 +265,7 @@ blklab6:;
 		//add %43 = %11, %42 : int
 		_43=filterY+_42;
 		//assign %11 = %43  : int
+		// isCopyEliminated = true
 		filterY = _43;
 //.blklab5
 blklab5:;
@@ -341,15 +359,18 @@ Image* _sobelEdgeDetection_(Image* input, _DECL_DEALLOC_PARAM(input)){
 	_REMOVE_DEALLOC(_14);
 	//assign %2 = %14  : byte[]
 	_DEALLOC(pixels);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(pixels, _14);
 	_TRANSFER_DEALLOC(pixels, _14);
 	//fieldload %15 = %0 width : {int height,byte[] pixels,int width}
 	_15 = input->width;
 	//assign %3 = %15  : int
+	// isCopyEliminated = true
 	width = _15;
 	//fieldload %16 = %0 height : {int height,byte[] pixels,int width}
 	_16 = input->height;
 	//assign %4 = %16  : int
+	// isCopyEliminated = true
 	height = _16;
 	//const %17 = 00100000b : byte
 	_17 = 0b00100000;
@@ -361,6 +382,7 @@ Image* _sobelEdgeDetection_(Image* input, _DECL_DEALLOC_PARAM(input)){
 	_ADD_DEALLOC(_19);
 	//assign %5 = %19  : byte[]
 	_DEALLOC(newPixels);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(newPixels, _19);
 	_TRANSFER_DEALLOC(newPixels, _19);
 	//const %20 = 1 : int
@@ -394,6 +416,7 @@ Image* _sobelEdgeDetection_(Image* input, _DECL_DEALLOC_PARAM(input)){
 	_ADD_DEALLOC(_32);
 	//assign %6 = %32  : int[]
 	_DEALLOC(v_sobel);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(v_sobel, _32);
 	_TRANSFER_DEALLOC(v_sobel, _32);
 	//const %33 = 1 : int
@@ -427,11 +450,13 @@ Image* _sobelEdgeDetection_(Image* input, _DECL_DEALLOC_PARAM(input)){
 	_ADD_DEALLOC(_45);
 	//assign %7 = %45  : int[]
 	_DEALLOC(h_sobel);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(h_sobel, _45);
 	_TRANSFER_DEALLOC(h_sobel, _45);
 	//const %46 = 0 : int
 	_46 = 0;
 	//assign %8 = %46  : int
+	// isCopyEliminated = true
 	x = _46;
 	//loop (%5, %8, %9, %10, %11, %12, %13, %47, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57, %58, %59, %60)
 	while(true){
@@ -440,6 +465,7 @@ Image* _sobelEdgeDetection_(Image* input, _DECL_DEALLOC_PARAM(input)){
 		//const %47 = 0 : int
 		_47 = 0;
 		//assign %9 = %47  : int
+		// isCopyEliminated = true
 		y = _47;
 		//loop (%5, %9, %10, %11, %12, %13, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57, %58)
 		while(true){
@@ -450,22 +476,29 @@ Image* _sobelEdgeDetection_(Image* input, _DECL_DEALLOC_PARAM(input)){
 			//add %49 = %48, %8 : int
 			_49=_48+x;
 			//assign %10 = %49  : int
+			// isCopyEliminated = true
 			pos = _49;
 			//invoke (%50) = (%0, %8, %9, %6) SobelEdge2:convolution : function(SobelEdge2:Image,int,int,int[])->(int)
 			{
+				// isCopyEliminated of '_0' = true
+				// isCopyEliminated of '_6' = true
 				_50 = _convolution_(_STRUCT_PARAM(input), false, x, y, _1DARRAY_PARAM(v_sobel), false);
 				_RETAIN_DEALLOC(input, "false-false-true" , "convolution");
 				_RETAIN_DEALLOC(v_sobel, "false-false-true" , "convolution");
 			}
 			//assign %11 = %50  : int
+			// isCopyEliminated = true
 			v_g = _50;
 			//invoke (%51) = (%0, %8, %9, %7) SobelEdge2:convolution : function(SobelEdge2:Image,int,int,int[])->(int)
 			{
+				// isCopyEliminated of '_0' = true
+				// isCopyEliminated of '_7' = true
 				_51 = _convolution_(_STRUCT_PARAM(input), false, x, y, _1DARRAY_PARAM(h_sobel), false);
 				_RETAIN_DEALLOC(input, "false-false-true" , "convolution");
 				_RETAIN_DEALLOC(h_sobel, "false-false-true" , "convolution");
 			}
 			//assign %12 = %51  : int
+			// isCopyEliminated = true
 			h_g = _51;
 			//invoke (%52) = (%11) whiley/lang/Math:abs : function(int)->(int)
 			{
@@ -478,6 +511,7 @@ Image* _sobelEdgeDetection_(Image* input, _DECL_DEALLOC_PARAM(input)){
 			//add %54 = %52, %53 : int
 			_54=_52+_53;
 			//assign %13 = %54  : int
+			// isCopyEliminated = true
 			t_g = _54;
 			//const %55 = 64 : int
 			_55 = 64;
@@ -486,6 +520,7 @@ Image* _sobelEdgeDetection_(Image* input, _DECL_DEALLOC_PARAM(input)){
 			//const %56 = 01100010b : byte
 			_56 = 0b01100010;
 			//update %5[%10] = %56 : byte[] -> byte[]
+			// isCopyEliminated = true
 			newPixels[pos] = _56;
 //.blklab12
 blklab12:;
@@ -494,6 +529,7 @@ blklab12:;
 			//add %58 = %9, %57 : int
 			_58=y+_57;
 			//assign %9 = %58  : int
+			// isCopyEliminated = true
 			y = _58;
 //.blklab11
 blklab11:;
@@ -505,6 +541,7 @@ blklab10:;
 		//add %60 = %8, %59 : int
 		_60=x+_59;
 		//assign %8 = %60  : int
+		// isCopyEliminated = true
 		x = _60;
 //.blklab9
 blklab9:;
@@ -514,6 +551,7 @@ blklab8:;
 	//invoke (%61) = (%3, %4, %5) SobelEdge2:image : function(int,int,byte[])->(SobelEdge2:Image)
 	{
 		_DEALLOC_STRUCT(_61, Image);
+		// isCopyEliminated of '_5' = true
 		_61 = _image_(width, height, _1DARRAY_PARAM(newPixels), false);
 		_RESET_DEALLOC(newPixels, "false-true-false" , "image");
 		_ADD_DEALLOC(_61);
@@ -603,6 +641,7 @@ void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t 
 	//const %17 = 0 : int
 	_17 = 0;
 	//assign %4 = %17  : int
+	// isCopyEliminated = true
 	j = _17;
 	//loop (%4, %5, %6, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38)
 	while(true){
@@ -611,6 +650,7 @@ void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t 
 		//const %18 = 0 : int
 		_18 = 0;
 		//assign %5 = %18  : int
+		// isCopyEliminated = true
 		i = _18;
 		//loop (%5, %6, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33)
 		while(true){
@@ -621,6 +661,7 @@ void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t 
 			//add %20 = %19, %5 : int
 			_20=_19+i;
 			//assign %6 = %20  : int
+			// isCopyEliminated = true
 			pos = _20;
 			//indexof %21 = %3, %6 : byte[]
 			_21=pixels[pos];
@@ -666,6 +707,7 @@ blklab18:;
 			//add %33 = %5, %32 : int
 			_33=i+_32;
 			//assign %5 = %33  : int
+			// isCopyEliminated = true
 			i = _33;
 //.blklab16
 blklab16:;
@@ -687,6 +729,7 @@ blklab15:;
 		//add %38 = %4, %37 : int
 		_38=j+_37;
 		//assign %4 = %38  : int
+		// isCopyEliminated = true
 		j = _38;
 //.blklab14
 blklab14:;
@@ -740,18 +783,22 @@ int main(int argc, char** args){
 		_8 = Reader(_9, _9_size);
 	}
 	//assign %1 = %8  : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
+	// isCopyEliminated = true
 	r = _8;
 	//const %10 = 32 : int
 	_10 = 32;
 	//assign %2 = %10  : int
+	// isCopyEliminated = true
 	width = _10;
 	//const %11 = 32 : int
 	_11 = 32;
 	//assign %3 = %11  : int
+	// isCopyEliminated = true
 	height = _11;
 	//mul %12 = %2, %3 : int
 	_12=width*height;
 	//assign %4 = %12  : int
+	// isCopyEliminated = true
 	size = _12;
 	//fieldload %14 = %1 readAll : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
 	//indirectinvoke (%13) = %14 () : method()->(byte[])
@@ -761,28 +808,33 @@ int main(int argc, char** args){
 	}
 	//assign %5 = %13  : byte[]
 	_DEALLOC(pixels);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(pixels, _13);
 	_TRANSFER_DEALLOC(pixels, _13);
 	//invoke (%15) = (%2, %3, %5) SobelEdge2:image : function(int,int,byte[])->(SobelEdge2:Image)
 	{
 		_DEALLOC_STRUCT(_15, Image);
+		// isCopyEliminated of '_5' = true
 		_15 = _image_(width, height, _1DARRAY_PARAM(pixels), false);
 		_RESET_DEALLOC(pixels, "false-true-false" , "image");
 		_ADD_DEALLOC(_15);
 	}
 	//assign %6 = %15  : {int height,byte[] pixels,int width}
 	_DEALLOC_STRUCT(input, Image);
+	// isCopyEliminated = true
 	input = _15;
 	_TRANSFER_DEALLOC(input, _15);
 	//invoke (%16) = (%6) SobelEdge2:sobelEdgeDetection : function(SobelEdge2:Image)->(SobelEdge2:Image)
 	{
 		_DEALLOC_STRUCT(_16, Image);
+		// isCopyEliminated of '_6' = true
 		_16 = _sobelEdgeDetection_(_STRUCT_PARAM(input), false);
 		_RETAIN_DEALLOC(input, "false-false-false" , "sobelEdgeDetection");
 		_ADD_DEALLOC(_16);
 	}
 	//assign %7 = %16  : {int height,byte[] pixels,int width}
 	_DEALLOC_STRUCT(output, Image);
+	// isCopyEliminated = true
 	output = _16;
 	_TRANSFER_DEALLOC(output, _16);
 	//fieldload %17 = %7 width : {int height,byte[] pixels,int width}
@@ -795,6 +847,7 @@ int main(int argc, char** args){
 	_REMOVE_DEALLOC(_19);
 	//invoke () = (%0, %17, %18, %19) SobelEdge2:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
+		// isCopyEliminated of '_19' = true
 		_print_pbm_(stdout, _17, _18, _1DARRAY_PARAM(_19), false);
 		_RETAIN_DEALLOC(_19, "false-false-false" , "print_pbm");
 	}

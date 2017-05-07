@@ -25,6 +25,7 @@ blklab1:;
 		//sub %6 = %0, %1 : int
 		_6=a-b;
 		//assign %0 = %6  : int
+		// isCopyEliminated = true
 		a = _6;
 		//goto blklab6
 		goto blklab6;
@@ -33,6 +34,7 @@ blklab5:;
 		//sub %7 = %1, %0 : int
 		_7=b-a;
 		//assign %1 = %7  : int
+		// isCopyEliminated = true
 		b = _7;
 //.blklab6
 blklab6:;
@@ -80,6 +82,7 @@ blklab9:;
 	//sub %7 = %0, %1 : int
 	_7=a-b;
 	//assign %0 = %7  : int
+	// isCopyEliminated = true
 	a = _7;
 	//goto blklab12
 	goto blklab12;
@@ -88,6 +91,7 @@ blklab11:;
 	//sub %8 = %1, %0 : int
 	_8=b-a;
 	//assign %1 = %8  : int
+	// isCopyEliminated = true
 	b = _8;
 //.blklab12
 blklab12:;
@@ -146,6 +150,7 @@ int main(int argc, char** args){
 	//const %5 = 10 : int
 	_5 = 10;
 	//assign %1 = %5  : int
+	// isCopyEliminated = true
 	n = _5;
 	//fieldload %6 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %7 = %6 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -169,10 +174,12 @@ int main(int argc, char** args){
 	//arraygen %13 = [11; 12] : int[]
 	_NEW_1DARRAY_int64_t(_13, _12, _11);
 	//assign %2 = %13  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(gcds, _13);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %3 = %14  : int
+	// isCopyEliminated = true
 	i = _14;
 	//loop (%2, %3, %4, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44)
 	while(true){
@@ -181,6 +188,7 @@ int main(int argc, char** args){
 		//const %15 = 0 : int
 		_15 = 0;
 		//assign %4 = %15  : int
+		// isCopyEliminated = true
 		j = _15;
 		//loop (%2, %4, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42)
 		while(true){
@@ -188,6 +196,7 @@ int main(int argc, char** args){
 			if(j>=n){goto blklab15;}
 			//invoke (%16) = (%3, %4, %1, %2) gcd:gcd_cached : function(int,int,int,int[])->(int)
 			{
+				// isCopyEliminated of '_2' = true
 				_16 = _gcd_cached_(i, j, n, _1DARRAY_PARAM(gcds));
 			}
 			//mul %17 = %3, %1 : int
@@ -195,6 +204,7 @@ int main(int argc, char** args){
 			//add %18 = %17, %4 : int
 			_18=_17+j;
 			//update %2[%18] = %16 : int[] -> int[]
+			// isCopyEliminated = true
 			gcds[_18] = _16;
 			//assert
 			{
@@ -273,6 +283,7 @@ blklab17:;
 			//add %42 = %4, %41 : int
 			_42=j+_41;
 			//assign %4 = %42  : int
+			// isCopyEliminated = true
 			j = _42;
 //.blklab16
 blklab16:;
@@ -284,6 +295,7 @@ blklab15:;
 		//add %44 = %3, %43 : int
 		_44=i+_43;
 		//assign %3 = %44  : int
+		// isCopyEliminated = true
 		i = _44;
 //.blklab14
 blklab14:;

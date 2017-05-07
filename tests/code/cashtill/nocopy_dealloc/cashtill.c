@@ -97,11 +97,13 @@ int64_t* _Cash_1_(_DECL_1DARRAY_PARAM(coins), _DECL_DEALLOC_PARAM(coins), _DECL_
 	_ADD_DEALLOC(_13);
 	//assign %2 = %13  : int[]
 	_DEALLOC(cash);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(cash, _13);
 	_TRANSFER_DEALLOC(cash, _13);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %3 = %14  : int
+	// isCopyEliminated = true
 	i = _14;
 	//loop (%2, %3, %4, %15, %16, %17, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29)
 	while(true){
@@ -112,6 +114,7 @@ int64_t* _Cash_1_(_DECL_1DARRAY_PARAM(coins), _DECL_DEALLOC_PARAM(coins), _DECL_
 		//indexof %24 = %0, %3 : int[]
 		_24=coins[i];
 		//assign %4 = %24  : int
+		// isCopyEliminated = true
 		coin = _24;
 		//indexof %25 = %2, %4 : int[]
 		_25=cash[coin];
@@ -120,12 +123,14 @@ int64_t* _Cash_1_(_DECL_1DARRAY_PARAM(coins), _DECL_DEALLOC_PARAM(coins), _DECL_
 		//add %27 = %25, %26 : int
 		_27=_25+_26;
 		//update %2[%4] = %27 : int[] -> int[]
+		// isCopyEliminated = true
 		cash[coin] = _27;
 		//const %28 = 1 : int
 		_28 = 1;
 		//add %29 = %3, %28 : int
 		_29=i+_28;
 		//assign %3 = %29  : int
+		// isCopyEliminated = true
 		i = _29;
 //.blklab5
 blklab5:;
@@ -160,10 +165,12 @@ int64_t _total_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c)){
 	//const %4 = 0 : int
 	_4 = 0;
 	//assign %2 = %4  : int
+	// isCopyEliminated = true
 	r = _4;
 	//const %5 = 0 : int
 	_5 = 0;
 	//assign %3 = %5  : int
+	// isCopyEliminated = true
 	i = _5;
 	//loop (%2, %3, %6, %7, %8, %9, %10, %11, %12, %13)
 	while(true){
@@ -185,12 +192,14 @@ int64_t _total_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c)){
 		//add %11 = %2, %10 : int
 		_11=r+_10;
 		//assign %2 = %11  : int
+		// isCopyEliminated = true
 		r = _11;
 		//const %12 = 1 : int
 		_12 = 1;
 		//add %13 = %3, %12 : int
 		_13=i+_12;
 		//assign %3 = %13  : int
+		// isCopyEliminated = true
 		i = _13;
 //.blklab10
 blklab10:;
@@ -218,6 +227,7 @@ bool _contained_(_DECL_1DARRAY_PARAM(first), _DECL_DEALLOC_PARAM(first), _DECL_1
 	//const %4 = 0 : int
 	_4 = 0;
 	//assign %3 = %4  : int
+	// isCopyEliminated = true
 	i = _4;
 	//loop (%3, %5, %6, %7, %8, %9, %10)
 	while(true){
@@ -244,6 +254,7 @@ blklab13:;
 		//add %10 = %3, %9 : int
 		_10=i+_9;
 		//assign %3 = %10  : int
+		// isCopyEliminated = true
 		i = _10;
 //.blklab12
 blklab12:;
@@ -273,6 +284,7 @@ int64_t* _add_(_DECL_1DARRAY_PARAM(first), _DECL_DEALLOC_PARAM(first), _DECL_1DA
 	//const %4 = 0 : int
 	_4 = 0;
 	//assign %3 = %4  : int
+	// isCopyEliminated = true
 	i = _4;
 	//loop (%0, %3, %5, %6, %7, %8, %9, %10)
 	while(true){
@@ -287,12 +299,14 @@ int64_t* _add_(_DECL_1DARRAY_PARAM(first), _DECL_DEALLOC_PARAM(first), _DECL_1DA
 		//add %8 = %6, %7 : int
 		_8=_6+_7;
 		//update %0[%3] = %8 : int[] -> int[]
+		// isCopyEliminated = false
 		first[i] = _8;
 		//const %9 = 1 : int
 		_9 = 1;
 		//add %10 = %3, %9 : int
 		_10=i+_9;
 		//assign %3 = %10  : int
+		// isCopyEliminated = true
 		i = _10;
 //.blklab16
 blklab16:;
@@ -321,6 +335,7 @@ int64_t* _subtract_(_DECL_1DARRAY_PARAM(first), _DECL_DEALLOC_PARAM(first), _DEC
 	//const %4 = 0 : int
 	_4 = 0;
 	//assign %3 = %4  : int
+	// isCopyEliminated = true
 	i = _4;
 	//loop (%0, %3, %5, %6, %7, %8, %9, %10)
 	while(true){
@@ -335,12 +350,14 @@ int64_t* _subtract_(_DECL_1DARRAY_PARAM(first), _DECL_DEALLOC_PARAM(first), _DEC
 		//sub %8 = %6, %7 : int
 		_8=_6-_7;
 		//update %0[%3] = %8 : int[] -> int[]
+		// isCopyEliminated = false
 		first[i] = _8;
 		//const %9 = 1 : int
 		_9 = 1;
 		//add %10 = %3, %9 : int
 		_10=i+_9;
 		//assign %3 = %10  : int
+		// isCopyEliminated = true
 		i = _10;
 //.blklab20
 blklab20:;
@@ -415,6 +432,7 @@ blklab25:;
 	//const %8 = 0 : int
 	_8 = 0;
 	//assign %3 = %8  : int
+	// isCopyEliminated = true
 	i = _8;
 	//loop (%3, %4, %5, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25)
 	while(true){
@@ -439,6 +457,7 @@ blklab25:;
 		if(_13>change){goto blklab29;}
 		//assign %4 = %0  : int[]
 		_DEALLOC(tmp);
+		// isCopyEliminated = false
 		_COPY_1DARRAY_int64_t(tmp, till);
 		_ADD_DEALLOC(tmp);
 		//indexof %14 = %4, %3 : int[]
@@ -448,6 +467,7 @@ blklab25:;
 		//sub %16 = %14, %15 : int
 		_16=_14-_15;
 		//update %4[%3] = %16 : int[] -> int[]
+		// isCopyEliminated = false
 		tmp[i] = _16;
 		//const %18 = [1,5,10,20,50,100,500,1000] : int[]
 		_DEALLOC(_18);
@@ -461,12 +481,14 @@ blklab25:;
 		//invoke (%17) = (%4, %20) cashtill:calculateChange : function(cashtill:Cash,cashtill:nat)->(cashtill:Cash|null)
 		{
 			_DEALLOC(_17);
+			// isCopyEliminated of '_4' = true
 			_17 = _calculateChange_(_1DARRAY_PARAM(tmp), false, _20, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_17));
 			_RETAIN_DEALLOC(tmp, "false-false-false" , "calculateChange");
 			_ADD_DEALLOC(_17);
 		}
 		//assign %5 = %17  : null|int[]
 		_DEALLOC(chg);
+		// isCopyEliminated = true
 		_UPDATE_1DARRAY(chg, _17);
 		_TRANSFER_DEALLOC(chg, _17);
 		//ifis %5, null goto blklab30 : null|int[]
@@ -478,6 +500,7 @@ blklab25:;
 		//add %23 = %21, %22 : int
 		_23=_21+_22;
 		//update %5[%3] = %23 : int[] -> int[]
+		// isCopyEliminated = true
 		chg[i] = _23;
 		//return %5
 		_DEALLOC(till);
@@ -498,6 +521,7 @@ blklab29:;
 		//add %25 = %3, %24 : int
 		_25=i+_24;
 		//assign %3 = %25  : int
+		// isCopyEliminated = true
 		i = _25;
 //.blklab28
 blklab28:;
@@ -570,15 +594,18 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRA
 	_ADD_DEALLOC(_6);
 	//assign %2 = %6  : void[]
 	_DEALLOC(r);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(r, _6);
 	_TRANSFER_DEALLOC(r, _6);
 	//const %7 = true : bool
 	_7 = true;
 	//assign %3 = %7  : bool
+	// isCopyEliminated = true
 	firstTime = _7;
 	//const %8 = 0 : int
 	_8 = 0;
 	//assign %4 = %8  : int
+	// isCopyEliminated = true
 	i = _8;
 	//loop (%2, %3, %4, %5, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24)
 	while(true){
@@ -589,6 +616,7 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRA
 		//indexof %10 = %0, %4 : int[]
 		_10=c[i];
 		//assign %5 = %10  : int
+		// isCopyEliminated = true
 		amt = _10;
 		//const %11 = 0 : int
 		_11 = 0;
@@ -611,6 +639,7 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRA
 		}
 		//assign %2 = %13  : int[]
 		_DEALLOC(r);
+		// isCopyEliminated = true
 		_UPDATE_1DARRAY(r, _13);
 		_TRANSFER_DEALLOC(r, _13);
 //.blklab34
@@ -618,6 +647,7 @@ blklab34:;
 		//const %15 = false : bool
 		_15 = false;
 		//assign %3 = %15  : bool
+		// isCopyEliminated = true
 		firstTime = _15;
 		//invoke (%17) = (%5) whiley/lang/Int:toString : function(int)->(whiley/lang/ASCII:string)
 		{
@@ -633,6 +663,7 @@ blklab34:;
 		}
 		//assign %2 = %16  : int[]
 		_DEALLOC(r);
+		// isCopyEliminated = true
 		_UPDATE_1DARRAY(r, _16);
 		_TRANSFER_DEALLOC(r, _16);
 		//const %19 = [32,120,32] : int[]
@@ -648,6 +679,7 @@ blklab34:;
 		}
 		//assign %2 = %18  : int[]
 		_DEALLOC(r);
+		// isCopyEliminated = true
 		_UPDATE_1DARRAY(r, _18);
 		_TRANSFER_DEALLOC(r, _18);
 		//const %21 = [[49,99],[53,99],[49,48,99],[50,48,99],[53,48,99],[36,49],[36,53],[36,49,48]] : int[][]
@@ -699,6 +731,7 @@ blklab34:;
 		}
 		//assign %2 = %20  : int[]
 		_DEALLOC(r);
+		// isCopyEliminated = true
 		_UPDATE_1DARRAY(r, _20);
 		_TRANSFER_DEALLOC(r, _20);
 //.blklab33
@@ -708,6 +741,7 @@ blklab33:;
 		//add %24 = %4, %23 : int
 		_24=i+_23;
 		//assign %4 = %24  : int
+		// isCopyEliminated = true
 		i = _24;
 //.blklab32
 blklab32:;
@@ -727,6 +761,7 @@ blklab31:;
 	_ADD_DEALLOC(_26);
 	//assign %2 = %26  : int[]
 	_DEALLOC(r);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(r, _26);
 	_TRANSFER_DEALLOC(r, _26);
 //.blklab35
@@ -862,6 +897,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_DEALLOC_PARAM(til
 	//invoke (%23) = (%2) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
 		_DEALLOC(_23);
+		// isCopyEliminated of '_2' = true
 		_23 = _toString_(_1DARRAY_PARAM(given), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 		_RETAIN_DEALLOC(given, "false-false-true" , "toString");
 		_ADD_DEALLOC(_23);
@@ -872,6 +908,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_DEALLOC_PARAM(til
 	}
 	//invoke (%24) = (%2) cashtill:total : function(cashtill:Cash)->(int)
 	{
+		// isCopyEliminated of '_2' = true
 		_24 = _total_(_1DARRAY_PARAM(given), false);
 		_RETAIN_DEALLOC(given, "false-false-true" , "total");
 	}
@@ -894,6 +931,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_DEALLOC_PARAM(til
 blklab36:;
 	//invoke (%29) = (%2) cashtill:total : function(cashtill:Cash)->(int)
 	{
+		// isCopyEliminated of '_2' = true
 		_29 = _total_(_1DARRAY_PARAM(given), false);
 		_RETAIN_DEALLOC(given, "false-false-true" , "total");
 	}
@@ -902,12 +940,14 @@ blklab36:;
 	//invoke (%28) = (%1, %30) cashtill:calculateChange : function(cashtill:Cash,cashtill:nat)->(cashtill:Cash|null)
 	{
 		_DEALLOC(_28);
+		// isCopyEliminated of '_1' = true
 		_28 = _calculateChange_(_1DARRAY_PARAM(till), false, _30, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 		_RETAIN_DEALLOC(till, "false-false-true" , "calculateChange");
 		_ADD_DEALLOC(_28);
 	}
 	//assign %5 = %28  : null|int[]
 	_DEALLOC(change);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(change, _28);
 	_TRANSFER_DEALLOC(change, _28);
 	//ifis %5, null goto blklab40 : null|int[]
@@ -947,6 +987,7 @@ blklab38:;
 	//invoke (%39) = (%5) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
 		_DEALLOC(_39);
+		// isCopyEliminated of '_5' = true
 		_39 = _toString_(_1DARRAY_PARAM(change), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_39));
 		_RETAIN_DEALLOC(change, "false-false-true" , "toString");
 		_ADD_DEALLOC(_39);
@@ -958,6 +999,8 @@ blklab38:;
 	//invoke (%40) = (%1, %2) cashtill:add : function(cashtill:Cash,cashtill:Cash)->(cashtill:Cash)
 	{
 		_DEALLOC(_40);
+		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of '_2' = true
 		_40 = _add_(_1DARRAY_PARAM(till), false, _1DARRAY_PARAM(given), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_40));
 		_RESET_DEALLOC(till, "true-true-false" , "add");
 		_RETAIN_DEALLOC(given, "false-false-false" , "add");
@@ -965,11 +1008,14 @@ blklab38:;
 	}
 	//assign %1 = %40  : int[]
 	_DEALLOC(till);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(till, _40);
 	_TRANSFER_DEALLOC(till, _40);
 	//invoke (%41) = (%1, %5) cashtill:subtract : function(cashtill:Cash,cashtill:Cash)->(cashtill:Cash)
 	{
 		_DEALLOC(_41);
+		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of '_5' = true
 		_41 = _subtract_(_1DARRAY_PARAM(till), false, _1DARRAY_PARAM(change), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_41));
 		_RESET_DEALLOC(till, "true-true-false" , "subtract");
 		_RETAIN_DEALLOC(change, "false-false-false" , "subtract");
@@ -977,6 +1023,7 @@ blklab38:;
 	}
 	//assign %1 = %41  : int[]
 	_DEALLOC(till);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(till, _41);
 	_TRANSFER_DEALLOC(till, _41);
 	//fieldload %42 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
@@ -995,6 +1042,7 @@ blklab38:;
 	//invoke (%47) = (%1) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
 		_DEALLOC(_47);
+		// isCopyEliminated of '_1' = true
 		_47 = _toString_(_1DARRAY_PARAM(till), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_47));
 		_RETAIN_DEALLOC(till, "false-false-true" , "toString");
 		_ADD_DEALLOC(_47);
@@ -1105,6 +1153,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_10);
 	//assign %1 = %10  : int[]
 	_DEALLOC(till);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(till, _10);
 	_TRANSFER_DEALLOC(till, _10);
 	//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
@@ -1123,6 +1172,7 @@ int main(int argc, char** args){
 	//invoke (%16) = (%1) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
 		_DEALLOC(_16);
+		// isCopyEliminated of '_1' = true
 		_16 = _toString_(_1DARRAY_PARAM(till), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		_RETAIN_DEALLOC(till, "false-false-true" , "toString");
 		_ADD_DEALLOC(_16);
@@ -1141,6 +1191,7 @@ int main(int argc, char** args){
 	//invoke (%18) = (%20) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
 		_DEALLOC(_18);
+		// isCopyEliminated of '_20' = true
 		_18 = _Cash_1_(_1DARRAY_PARAM(_20), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
 		_RETAIN_DEALLOC(_20, "false-false-false" , "Cash");
 		_ADD_DEALLOC(_18);
@@ -1150,6 +1201,8 @@ int main(int argc, char** args){
 	//invoke (%17) = (%0, %1, %18, %21) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
 		_DEALLOC(_17);
+		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of '_18' = true
 		_17 = _buy_(stdout, _1DARRAY_PARAM(till), false, _1DARRAY_PARAM(_18), false, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_17));
 		_RESET_DEALLOC(till, "true-true-false" , "buy");
 		_RETAIN_DEALLOC(_18, "false-false-false" , "buy");
@@ -1157,6 +1210,7 @@ int main(int argc, char** args){
 	}
 	//assign %1 = %17  : int[]
 	_DEALLOC(till);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(till, _17);
 	_TRANSFER_DEALLOC(till, _17);
 	//const %24 = 5 : int
@@ -1169,6 +1223,7 @@ int main(int argc, char** args){
 	//invoke (%23) = (%25) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
 		_DEALLOC(_23);
+		// isCopyEliminated of '_25' = true
 		_23 = _Cash_1_(_1DARRAY_PARAM(_25), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 		_RETAIN_DEALLOC(_25, "false-false-false" , "Cash");
 		_ADD_DEALLOC(_23);
@@ -1178,6 +1233,8 @@ int main(int argc, char** args){
 	//invoke (%22) = (%0, %1, %23, %26) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
 		_DEALLOC(_22);
+		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of '_23' = true
 		_22 = _buy_(stdout, _1DARRAY_PARAM(till), false, _1DARRAY_PARAM(_23), false, _26, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
 		_RESET_DEALLOC(till, "true-true-false" , "buy");
 		_RETAIN_DEALLOC(_23, "false-false-false" , "buy");
@@ -1185,6 +1242,7 @@ int main(int argc, char** args){
 	}
 	//assign %1 = %22  : int[]
 	_DEALLOC(till);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(till, _22);
 	_TRANSFER_DEALLOC(till, _22);
 	//const %29 = 7 : int
@@ -1197,6 +1255,7 @@ int main(int argc, char** args){
 	//invoke (%28) = (%30) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
 		_DEALLOC(_28);
+		// isCopyEliminated of '_30' = true
 		_28 = _Cash_1_(_1DARRAY_PARAM(_30), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 		_RETAIN_DEALLOC(_30, "false-false-false" , "Cash");
 		_ADD_DEALLOC(_28);
@@ -1206,6 +1265,8 @@ int main(int argc, char** args){
 	//invoke (%27) = (%0, %1, %28, %31) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
 		_DEALLOC(_27);
+		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of '_28' = true
 		_27 = _buy_(stdout, _1DARRAY_PARAM(till), false, _1DARRAY_PARAM(_28), false, _31, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 		_RESET_DEALLOC(till, "true-true-false" , "buy");
 		_RETAIN_DEALLOC(_28, "false-false-false" , "buy");
@@ -1213,6 +1274,7 @@ int main(int argc, char** args){
 	}
 	//assign %1 = %27  : int[]
 	_DEALLOC(till);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(till, _27);
 	_TRANSFER_DEALLOC(till, _27);
 	//const %34 = 6 : int
@@ -1225,6 +1287,7 @@ int main(int argc, char** args){
 	//invoke (%33) = (%35) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
 		_DEALLOC(_33);
+		// isCopyEliminated of '_35' = true
 		_33 = _Cash_1_(_1DARRAY_PARAM(_35), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
 		_RETAIN_DEALLOC(_35, "false-false-false" , "Cash");
 		_ADD_DEALLOC(_33);
@@ -1234,6 +1297,8 @@ int main(int argc, char** args){
 	//invoke (%32) = (%0, %1, %33, %36) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
 		_DEALLOC(_32);
+		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of '_33' = true
 		_32 = _buy_(stdout, _1DARRAY_PARAM(till), false, _1DARRAY_PARAM(_33), false, _36, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_32));
 		_RESET_DEALLOC(till, "true-true-false" , "buy");
 		_RETAIN_DEALLOC(_33, "false-false-false" , "buy");
@@ -1241,6 +1306,7 @@ int main(int argc, char** args){
 	}
 	//assign %1 = %32  : int[]
 	_DEALLOC(till);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(till, _32);
 	_TRANSFER_DEALLOC(till, _32);
 	//return

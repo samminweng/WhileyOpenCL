@@ -53,6 +53,7 @@ int main(int argc, char** args){
 	}
 	//assign %1 = %2  : int[]
 	_DEALLOC(empty);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(empty, _2);
 	_TRANSFER_DEALLOC(empty, _2);
 	//return

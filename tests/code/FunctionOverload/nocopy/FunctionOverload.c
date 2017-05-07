@@ -43,6 +43,7 @@ int main(int argc, char** args){
 		_2 = _Cash_(_1DARRAYSIZE_PARAM_CALLBYREFERENCE(_2));
 	}
 	//assign %1 = %2  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(empty, _2);
 	//return
 	exit(0);

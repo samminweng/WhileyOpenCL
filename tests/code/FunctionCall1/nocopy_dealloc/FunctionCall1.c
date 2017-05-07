@@ -8,6 +8,7 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(s), _DECL_DEALLOC_PARAM(s), _DECL_1DARRAYSIZ
 	int64_t _4 = 0;
 	//assign %2 = %0  : int[]
 	_DEALLOC(t);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(t, s);
 	_TRANSFER_DEALLOC(t, s);
 	//const %3 = 3 : int
@@ -15,6 +16,7 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(s), _DECL_DEALLOC_PARAM(s), _DECL_1DARRAYSIZ
 	//const %4 = 2 : int
 	_4 = 2;
 	//update %2[%4] = %3 : int[] -> int[]
+	// isCopyEliminated = true
 	t[_4] = _3;
 	//return %2
 	_DEALLOC(s);
@@ -93,17 +95,20 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_9);
 	//assign %1 = %9  : int[]
 	_DEALLOC(a);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(a, _9);
 	_TRANSFER_DEALLOC(a, _9);
 	//invoke (%10) = (%1) FunctionCall1:func : function(int[])->(int[])
 	{
 		_DEALLOC(_10);
+		// isCopyEliminated of '_1' = true
 		_10 = _func_(_1DARRAY_PARAM(a), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 		_RESET_DEALLOC(a, "true-true-false" , "func");
 		_ADD_DEALLOC(_10);
 	}
 	//assign %1 = %10  : int[]
 	_DEALLOC(a);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(a, _10);
 	_TRANSFER_DEALLOC(a, _10);
 	//assert
@@ -161,18 +166,21 @@ blklab0:;
 	_ADD_DEALLOC(_26);
 	//assign %2 = %26  : int[]
 	_DEALLOC(b);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(b, _26);
 	_TRANSFER_DEALLOC(b, _26);
 	//invoke (%27) = (%2) FunctionCall1:func : function(int[])->(int[])
 	{
 		void* b_tmp;
 		_DEALLOC(_27);
+		// isCopyEliminated of '_2' = false
 		_27 = _func_(_COPY_1DARRAY_PARAM_int64_t(b), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 		_CALLER_DEALLOC(_27, b, "true-true-true" , "func");
 		_ADD_DEALLOC(_27);
 	}
 	//assign %3 = %27  : int[]
 	_DEALLOC(c);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(c, _27);
 	_TRANSFER_DEALLOC(c, _27);
 	//assert

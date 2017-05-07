@@ -53,7 +53,9 @@ NQueen* _nqueen_(int64_t num_solutions, POS** queens, size_t queens_size){
 	NQueen* _3;
 	//newrecord %3 = (%0, %1) : {int num_solutions,{int c,int r}[] queens}
 	_3 = malloc(sizeof(NQueen));
+	// isCopyEliminated = true
 	_3->num_solutions = num_solutions;
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(_3->queens, queens);
 	//return %3
 	return _3;
@@ -77,10 +79,12 @@ bool _conflict_(POS* p, int64_t row, int64_t col){
 	//fieldload %8 = %0 r : {int c,int r}
 	_8 = p->r;
 	//assign %4 = %8  : int
+	// isCopyEliminated = true
 	r = _8;
 	//fieldload %9 = %0 c : {int c,int r}
 	_9 = p->c;
 	//assign %5 = %9  : int
+	// isCopyEliminated = true
 	c = _9;
 	//ifeq %4, %1 goto blklab1 : int
 	if(r==row){goto blklab1;}
@@ -101,6 +105,7 @@ blklab0:;
 		_11 = llabs(_12);
 	}
 	//assign %6 = %11  : int
+	// isCopyEliminated = true
 	colDiff = _11;
 	//sub %14 = %4, %1 : int
 	_14=r-row;
@@ -109,6 +114,7 @@ blklab0:;
 		_13 = llabs(_14);
 	}
 	//assign %7 = %13  : int
+	// isCopyEliminated = true
 	rowDiff = _13;
 	//ifeq %6, %7 goto blklab2 : int
 	if(colDiff==rowDiff){goto blklab2;}
@@ -177,6 +183,7 @@ NQueen* _run_(NQueen* nq, int64_t n, int64_t dim){
 	//add %10 = %8, %9 : int
 	_10=_8+_9;
 	//update %0.num_solutions = %10 : {int num_solutions,{int c,int r}[] queens} -> {int num_solutions,{int c,int r}[] queens}
+	// isCopyEliminated = true
 	nq->num_solutions = _10;
 	//return %0
 	return nq;
@@ -187,6 +194,7 @@ blklab6:;
 	//const %11 = 0 : int
 	_11 = 0;
 	//assign %4 = %11  : int
+	// isCopyEliminated = true
 	col = _11;
 	//loop (%0, %4, %5, %6, %7, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37)
 	while(true){
@@ -195,10 +203,12 @@ blklab6:;
 		//const %16 = true : bool
 		_16 = true;
 		//assign %5 = %16  : bool
+		// isCopyEliminated = true
 		isSolution = _16;
 		//const %17 = 0 : int
 		_17 = 0;
 		//assign %6 = %17  : int
+		// isCopyEliminated = true
 		i = _17;
 		//loop (%5, %6, %7, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30)
 		while(true){
@@ -209,6 +219,7 @@ blklab6:;
 			//indexof %24 = %23, %6 : {int c,int r}[]
 			_24=_23[i];
 			//assign %7 = %24  : {int c,int r}
+			// isCopyEliminated = true
 			p = _24;
 			//const %25 = true : bool
 			_25 = true;
@@ -220,6 +231,7 @@ blklab6:;
 blklab20:;
 			//invoke (%26) = (%7, %1, %4) nqueens:conflict : function(nqueens:POS,int,int)->(bool)
 			{
+				// isCopyEliminated of '_7' = true
 				_26 = _conflict_(_STRUCT_PARAM(p), n, col);
 			}
 			//const %27 = true : bool
@@ -243,12 +255,14 @@ blklab17:;
 //.blklab18
 blklab18:;
 			//assign %5 = %28  : bool
+			// isCopyEliminated = true
 			isSolution = _28;
 			//const %29 = 1 : int
 			_29 = 1;
 			//add %30 = %6, %29 : int
 			_30=i+_29;
 			//assign %6 = %30  : int
+			// isCopyEliminated = true
 			i = _30;
 //.blklab13
 blklab13:;
@@ -261,9 +275,12 @@ blklab12:;
 		if(isSolution!=_31){goto blklab22;}
 		//newrecord %32 = (%4, %1) : {int c,int r}
 		_32 = malloc(sizeof(POS));
+		// isCopyEliminated = false
 		_32->c = col;
+		// isCopyEliminated = false
 		_32->r = n;
 		//update %0.queens[%1] = %32 : {int num_solutions,{int c,int r}[] queens} -> {int num_solutions,{int c,int r}[] queens}
+		// isCopyEliminated = false
 		nq->queens[n] = _32;
 		//const %34 = 1 : int
 		_34 = 1;
@@ -271,9 +288,11 @@ blklab12:;
 		_35=n+_34;
 		//invoke (%33) = (%0, %35, %2) nqueens:run : function(nqueens:NQueen,int,int)->(nqueens:NQueen)
 		{
+			// isCopyEliminated of '_0' = true
 			_33 = _run_(_STRUCT_PARAM(nq), _35, dim);
 		}
 		//assign %0 = %33  : {int num_solutions,{int c,int r}[] queens}
+		// isCopyEliminated = true
 		nq = _33;
 //.blklab22
 blklab22:;
@@ -282,6 +301,7 @@ blklab22:;
 		//add %37 = %4, %36 : int
 		_37=col+_36;
 		//assign %4 = %37  : int
+		// isCopyEliminated = true
 		col = _37;
 //.blklab9
 blklab9:;
@@ -327,6 +347,7 @@ int main(int argc, char** args){
 	//const %5 = 8 : int
 	_5 = 8;
 	//assign %1 = %5  : int
+	// isCopyEliminated = true
 	n = _5;
 	//const %6 = 0 : int
 	_6 = 0;
@@ -334,29 +355,37 @@ int main(int argc, char** args){
 	_7 = 0;
 	//newrecord %8 = (%6, %7) : {int c,int r}
 	_8 = malloc(sizeof(POS));
+	// isCopyEliminated = true
 	_8->c = _6;
+	// isCopyEliminated = true
 	_8->r = _7;
 	//arraygen %9 = [8; 1] : {int c,int r}[]
 	_NEW_1DARRAY_STRUCT(_9, n, _8, POS);
 	//assign %2 = %9  : {int c,int r}[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(queens, _9);
 	//const %10 = 0 : int
 	_10 = 0;
 	//assign %3 = %10  : int
+	// isCopyEliminated = true
 	num_solutions = _10;
 	//invoke (%11) = (%3, %2) nqueens:nqueen : function(int,nqueens:POS[])->(nqueens:NQueen)
 	{
+		// isCopyEliminated of '_2' = true
 		_11 = _nqueen_(num_solutions, _1DARRAY_PARAM(queens));
 	}
 	//assign %4 = %11  : {int num_solutions,{int c,int r}[] queens}
+	// isCopyEliminated = true
 	nq = _11;
 	//const %13 = 0 : int
 	_13 = 0;
 	//invoke (%12) = (%4, %13, %1) nqueens:run : function(nqueens:NQueen,int,int)->(nqueens:NQueen)
 	{
+		// isCopyEliminated of '_4' = true
 		_12 = _run_(_STRUCT_PARAM(nq), _13, n);
 	}
 	//assign %4 = %12  : {int num_solutions,{int c,int r}[] queens}
+	// isCopyEliminated = true
 	nq = _12;
 	//assert
 	{

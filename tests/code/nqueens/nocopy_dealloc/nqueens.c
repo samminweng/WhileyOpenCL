@@ -56,7 +56,9 @@ NQueen* _nqueen_(int64_t num_solutions, POS** queens, size_t queens_size, _DECL_
 	//newrecord %3 = (%0, %1) : {int num_solutions,{int c,int r}[] queens}
 	_DEALLOC_STRUCT(_3, NQueen);
 	_3 = malloc(sizeof(NQueen));
+	// isCopyEliminated = true
 	_3->num_solutions = num_solutions;
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(_3->queens, queens);
 	_REMOVE_DEALLOC(queens);
 	_ADD_DEALLOC(_3);
@@ -84,10 +86,12 @@ bool _conflict_(POS* p, _DECL_DEALLOC_PARAM(p), int64_t row, int64_t col){
 	//fieldload %8 = %0 r : {int c,int r}
 	_8 = p->r;
 	//assign %4 = %8  : int
+	// isCopyEliminated = true
 	r = _8;
 	//fieldload %9 = %0 c : {int c,int r}
 	_9 = p->c;
 	//assign %5 = %9  : int
+	// isCopyEliminated = true
 	c = _9;
 	//ifeq %4, %1 goto blklab1 : int
 	if(r==row){goto blklab1;}
@@ -109,6 +113,7 @@ blklab0:;
 		_11 = llabs(_12);
 	}
 	//assign %6 = %11  : int
+	// isCopyEliminated = true
 	colDiff = _11;
 	//sub %14 = %4, %1 : int
 	_14=r-row;
@@ -117,6 +122,7 @@ blklab0:;
 		_13 = llabs(_14);
 	}
 	//assign %7 = %13  : int
+	// isCopyEliminated = true
 	rowDiff = _13;
 	//ifeq %6, %7 goto blklab2 : int
 	if(colDiff==rowDiff){goto blklab2;}
@@ -196,6 +202,7 @@ NQueen* _run_(NQueen* nq, _DECL_DEALLOC_PARAM(nq), int64_t n, int64_t dim){
 	//add %10 = %8, %9 : int
 	_10=_8+_9;
 	//update %0.num_solutions = %10 : {int num_solutions,{int c,int r}[] queens} -> {int num_solutions,{int c,int r}[] queens}
+	// isCopyEliminated = true
 	nq->num_solutions = _10;
 	//return %0
 	_DEALLOC_STRUCT(_3, NQueen);
@@ -216,6 +223,7 @@ blklab6:;
 	//const %11 = 0 : int
 	_11 = 0;
 	//assign %4 = %11  : int
+	// isCopyEliminated = true
 	col = _11;
 	//loop (%0, %4, %5, %6, %7, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37)
 	while(true){
@@ -224,10 +232,12 @@ blklab6:;
 		//const %16 = true : bool
 		_16 = true;
 		//assign %5 = %16  : bool
+		// isCopyEliminated = true
 		isSolution = _16;
 		//const %17 = 0 : int
 		_17 = 0;
 		//assign %6 = %17  : int
+		// isCopyEliminated = true
 		i = _17;
 		//loop (%5, %6, %7, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30)
 		while(true){
@@ -242,6 +252,7 @@ blklab6:;
 			_REMOVE_DEALLOC(_24);
 			//assign %7 = %24  : {int c,int r}
 			_DEALLOC_STRUCT(p, POS);
+			// isCopyEliminated = true
 			p = _24;
 			_TRANSFER_DEALLOC(p, _24);
 			//const %25 = true : bool
@@ -254,6 +265,7 @@ blklab6:;
 blklab20:;
 			//invoke (%26) = (%7, %1, %4) nqueens:conflict : function(nqueens:POS,int,int)->(bool)
 			{
+				// isCopyEliminated of '_7' = true
 				_26 = _conflict_(_STRUCT_PARAM(p), false, n, col);
 				_SUBSTRUCTURE_DEALLOC(p, "false-false-false" , "conflict");
 			}
@@ -278,12 +290,14 @@ blklab17:;
 //.blklab18
 blklab18:;
 			//assign %5 = %28  : bool
+			// isCopyEliminated = true
 			isSolution = _28;
 			//const %29 = 1 : int
 			_29 = 1;
 			//add %30 = %6, %29 : int
 			_30=i+_29;
 			//assign %6 = %30  : int
+			// isCopyEliminated = true
 			i = _30;
 //.blklab13
 blklab13:;
@@ -297,11 +311,14 @@ blklab12:;
 		//newrecord %32 = (%4, %1) : {int c,int r}
 		_DEALLOC_STRUCT(_32, POS);
 		_32 = malloc(sizeof(POS));
+		// isCopyEliminated = false
 		_32->c = col;
+		// isCopyEliminated = false
 		_32->r = n;
 		_ADD_DEALLOC(_32);
 		//update %0.queens[%1] = %32 : {int num_solutions,{int c,int r}[] queens} -> {int num_solutions,{int c,int r}[] queens}
 		_DEALLOC_MEMBER_STRUCT_UPDATECODE(nq, nq->queens[n], POS);
+		// isCopyEliminated = false
 		nq->queens[n] = _32;
 		_REMOVE_DEALLOC(_32);
 		//const %34 = 1 : int
@@ -311,12 +328,14 @@ blklab12:;
 		//invoke (%33) = (%0, %35, %2) nqueens:run : function(nqueens:NQueen,int,int)->(nqueens:NQueen)
 		{
 			_DEALLOC_STRUCT(_33, NQueen);
+			// isCopyEliminated of '_0' = true
 			_33 = _run_(_STRUCT_PARAM(nq), false, _35, dim);
 			_RESET_DEALLOC(nq, "true-true-false" , "run");
 			_ADD_DEALLOC(_33);
 		}
 		//assign %0 = %33  : {int num_solutions,{int c,int r}[] queens}
 		_DEALLOC_STRUCT(nq, NQueen);
+		// isCopyEliminated = true
 		nq = _33;
 		_TRANSFER_DEALLOC(nq, _33);
 //.blklab22
@@ -326,6 +345,7 @@ blklab22:;
 		//add %37 = %4, %36 : int
 		_37=col+_36;
 		//assign %4 = %37  : int
+		// isCopyEliminated = true
 		col = _37;
 //.blklab9
 blklab9:;
@@ -391,6 +411,7 @@ int main(int argc, char** args){
 	//const %5 = 8 : int
 	_5 = 8;
 	//assign %1 = %5  : int
+	// isCopyEliminated = true
 	n = _5;
 	//const %6 = 0 : int
 	_6 = 0;
@@ -399,7 +420,9 @@ int main(int argc, char** args){
 	//newrecord %8 = (%6, %7) : {int c,int r}
 	_DEALLOC_STRUCT(_8, POS);
 	_8 = malloc(sizeof(POS));
+	// isCopyEliminated = true
 	_8->c = _6;
+	// isCopyEliminated = true
 	_8->r = _7;
 	_ADD_DEALLOC(_8);
 	//arraygen %9 = [8; 1] : {int c,int r}[]
@@ -408,21 +431,25 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_9);
 	//assign %2 = %9  : {int c,int r}[]
 	_DEALLOC_1DARRAY_STRUCT(queens, POS);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(queens, _9);
 	_TRANSFER_DEALLOC(queens, _9);
 	//const %10 = 0 : int
 	_10 = 0;
 	//assign %3 = %10  : int
+	// isCopyEliminated = true
 	num_solutions = _10;
 	//invoke (%11) = (%3, %2) nqueens:nqueen : function(int,nqueens:POS[])->(nqueens:NQueen)
 	{
 		_DEALLOC_STRUCT(_11, NQueen);
+		// isCopyEliminated of '_2' = true
 		_11 = _nqueen_(num_solutions, _1DARRAY_PARAM(queens), false);
 		_RESET_DEALLOC(queens, "false-true-false" , "nqueen");
 		_ADD_DEALLOC(_11);
 	}
 	//assign %4 = %11  : {int num_solutions,{int c,int r}[] queens}
 	_DEALLOC_STRUCT(nq, NQueen);
+	// isCopyEliminated = true
 	nq = _11;
 	_TRANSFER_DEALLOC(nq, _11);
 	//const %13 = 0 : int
@@ -430,12 +457,14 @@ int main(int argc, char** args){
 	//invoke (%12) = (%4, %13, %1) nqueens:run : function(nqueens:NQueen,int,int)->(nqueens:NQueen)
 	{
 		_DEALLOC_STRUCT(_12, NQueen);
+		// isCopyEliminated of '_4' = true
 		_12 = _run_(_STRUCT_PARAM(nq), false, _13, n);
 		_RESET_DEALLOC(nq, "true-true-false" , "run");
 		_ADD_DEALLOC(_12);
 	}
 	//assign %4 = %12  : {int num_solutions,{int c,int r}[] queens}
 	_DEALLOC_STRUCT(nq, NQueen);
+	// isCopyEliminated = true
 	nq = _12;
 	_TRANSFER_DEALLOC(nq, _12);
 	//assert

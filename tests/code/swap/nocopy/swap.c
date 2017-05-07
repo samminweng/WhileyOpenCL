@@ -43,6 +43,7 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_9, 5, 0);
 	_9[0] = _4; _9[1] = _5; _9[2] = _6; _9[3] = _7; _9[4] = _8; 
 	//assign %1 = %9  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(a, _9);
 	//const %10 = 1 : int
 	_10 = 1;
@@ -58,12 +59,16 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_15, 5, 0);
 	_15[0] = _10; _15[1] = _11; _15[2] = _12; _15[3] = _13; _15[4] = _14; 
 	//assign %2 = %15  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(b, _15);
 	//assign %3 = %1  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(tmp, a);
 	//assign %1 = %2  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(a, b);
 	//assign %2 = %3  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(b, tmp);
 	//assert
 	{

@@ -56,6 +56,7 @@ Rectangle* _updateRec_(Rectangle* rec, _DECL_DEALLOC_PARAM(rec), Point* p, _DECL
 	_DECL_DEALLOC(r);
 	//update %0.p2 = %1 : {{int x,int y} p1,{int x,int y} p2} -> {{int x,int y} p1,{int x,int y} p2}
 	_DEALLOC_MEMBER_STRUCT_UPDATECODE(rec, rec->p2, Point);
+	// isCopyEliminated = true
 	rec->p2 = p;
 	_REMOVE_DEALLOC(p);
 	//return %0
@@ -125,11 +126,14 @@ int main(int argc, char** args){
 	//newrecord %7 = (%5, %6) : {int x,int y}
 	_DEALLOC_STRUCT(_7, Point);
 	_7 = malloc(sizeof(Point));
+	// isCopyEliminated = true
 	_7->x = _5;
+	// isCopyEliminated = true
 	_7->y = _6;
 	_ADD_DEALLOC(_7);
 	//assign %1 = %7  : {int x,int y}
 	_DEALLOC_STRUCT(p1, Point);
+	// isCopyEliminated = true
 	p1 = _7;
 	_TRANSFER_DEALLOC(p1, _7);
 	//const %8 = 3 : int
@@ -139,23 +143,29 @@ int main(int argc, char** args){
 	//newrecord %10 = (%8, %9) : {int x,int y}
 	_DEALLOC_STRUCT(_10, Point);
 	_10 = malloc(sizeof(Point));
+	// isCopyEliminated = true
 	_10->x = _8;
+	// isCopyEliminated = true
 	_10->y = _9;
 	_ADD_DEALLOC(_10);
 	//assign %2 = %10  : {int x,int y}
 	_DEALLOC_STRUCT(p2, Point);
+	// isCopyEliminated = true
 	p2 = _10;
 	_TRANSFER_DEALLOC(p2, _10);
 	//newrecord %11 = (%1, %2) : {{int x,int y} p1,{int x,int y} p2}
 	_DEALLOC_STRUCT(_11, Rectangle);
 	_11 = malloc(sizeof(Rectangle));
+	// isCopyEliminated = true
 	_11->p1 = p1;
+	// isCopyEliminated = true
 	_11->p2 = p2;
 	_REMOVE_DEALLOC(p1);
 	_REMOVE_DEALLOC(p2);
 	_ADD_DEALLOC(_11);
 	//assign %3 = %11  : {{int x,int y} p1,{int x,int y} p2}
 	_DEALLOC_STRUCT(rec, Rectangle);
+	// isCopyEliminated = true
 	rec = _11;
 	_TRANSFER_DEALLOC(rec, _11);
 	//const %12 = 6 : int
@@ -165,16 +175,21 @@ int main(int argc, char** args){
 	//newrecord %14 = (%12, %13) : {int x,int y}
 	_DEALLOC_STRUCT(_14, Point);
 	_14 = malloc(sizeof(Point));
+	// isCopyEliminated = true
 	_14->x = _12;
+	// isCopyEliminated = true
 	_14->y = _13;
 	_ADD_DEALLOC(_14);
 	//assign %4 = %14  : {int x,int y}
 	_DEALLOC_STRUCT(p3, Point);
+	// isCopyEliminated = true
 	p3 = _14;
 	_TRANSFER_DEALLOC(p3, _14);
 	//invoke (%15) = (%3, %4) rectangle:updateRec : function(rectangle:Rectangle,rectangle:Point)->(rectangle:Rectangle)
 	{
 		_DEALLOC_STRUCT(_15, Rectangle);
+		// isCopyEliminated of '_3' = true
+		// isCopyEliminated of '_4' = true
 		_15 = _updateRec_(_STRUCT_PARAM(rec), false, _STRUCT_PARAM(p3), false);
 		_RESET_DEALLOC(rec, "true-true-false" , "updateRec");
 		_RESET_DEALLOC(p3, "false-true-false" , "updateRec");
@@ -182,6 +197,7 @@ int main(int argc, char** args){
 	}
 	//assign %3 = %15  : {{int x,int y} p1,{int x,int y} p2}
 	_DEALLOC_STRUCT(rec, Rectangle);
+	// isCopyEliminated = true
 	rec = _15;
 	_TRANSFER_DEALLOC(rec, _15);
 	//assert

@@ -16,6 +16,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_2);
 	//assign %1 = %2  : void[]
 	_DEALLOC(r);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(r, _2);
 	_TRANSFER_DEALLOC(r, _2);
 	//const %4 = [32,84,104,105,115,32,105,115,32,97,32,116,101,115,116,32] : int[]
@@ -31,6 +32,7 @@ int main(int argc, char** args){
 	}
 	//assign %1 = %3  : int[]
 	_DEALLOC(r);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(r, _3);
 	_TRANSFER_DEALLOC(r, _3);
 	//fieldload %5 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}

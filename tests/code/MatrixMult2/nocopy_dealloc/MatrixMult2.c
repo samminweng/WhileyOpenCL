@@ -36,8 +36,11 @@ Matrix* _matrix_(int64_t width, int64_t height, _DECL_1DARRAY_PARAM(data), _DECL
 	//newrecord %4 = (%2, %1, %0) : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(_4, Matrix);
 	_4 = malloc(sizeof(Matrix));
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(_4->data, data);
+	// isCopyEliminated = true
 	_4->height = height;
+	// isCopyEliminated = true
 	_4->width = width;
 	_REMOVE_DEALLOC(data);
 	_ADD_DEALLOC(_4);
@@ -83,11 +86,13 @@ Matrix* _init_(int64_t width, int64_t height){
 	_ADD_DEALLOC(_8);
 	//assign %3 = %8  : int[]
 	_DEALLOC(data);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(data, _8);
 	_TRANSFER_DEALLOC(data, _8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %4 = %9  : int
+	// isCopyEliminated = true
 	i = _9;
 	//loop (%3, %4, %5, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20)
 	while(true){
@@ -96,6 +101,7 @@ Matrix* _init_(int64_t width, int64_t height){
 		//const %10 = 0 : int
 		_10 = 0;
 		//assign %5 = %10  : int
+		// isCopyEliminated = true
 		j = _10;
 		//loop (%3, %5, %11, %12, %13, %14, %15, %16, %17, %18)
 		while(true){
@@ -114,12 +120,14 @@ Matrix* _init_(int64_t width, int64_t height){
 			//add %16 = %15, %5 : int
 			_16=_15+j;
 			//update %3[%16] = %14 : int[] -> int[]
+			// isCopyEliminated = true
 			data[_16] = _14;
 			//const %17 = 1 : int
 			_17 = 1;
 			//add %18 = %5, %17 : int
 			_18=j+_17;
 			//assign %5 = %18  : int
+			// isCopyEliminated = true
 			j = _18;
 //.blklab5
 blklab5:;
@@ -131,6 +139,7 @@ blklab4:;
 		//add %20 = %4, %19 : int
 		_20=i+_19;
 		//assign %4 = %20  : int
+		// isCopyEliminated = true
 		i = _20;
 //.blklab3
 blklab3:;
@@ -140,6 +149,7 @@ blklab2:;
 	//invoke (%21) = (%0, %1, %3) MatrixMult2:matrix : function(MatrixMult2:nat,MatrixMult2:nat,int[])->(MatrixMult2:Matrix)
 	{
 		_DEALLOC_STRUCT(_21, Matrix);
+		// isCopyEliminated of '_3' = true
 		_21 = _matrix_(width, height, _1DARRAY_PARAM(data), false);
 		_RESET_DEALLOC(data, "false-true-false" , "matrix");
 		_ADD_DEALLOC(_21);
@@ -181,14 +191,17 @@ void _print_mat_(FILE* sys, Matrix* a, _DECL_DEALLOC_PARAM(a)){
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %2 = %6  : int
+	// isCopyEliminated = true
 	i = _6;
 	//fieldload %7 = %1 width : {int[] data,int height,int width}
 	_7 = a->width;
 	//assign %3 = %7  : int
+	// isCopyEliminated = true
 	width = _7;
 	//fieldload %8 = %1 height : {int[] data,int height,int width}
 	_8 = a->height;
 	//assign %4 = %8  : int
+	// isCopyEliminated = true
 	height = _8;
 	//loop (%2, %5, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25)
 	while(true){
@@ -197,6 +210,7 @@ void _print_mat_(FILE* sys, Matrix* a, _DECL_DEALLOC_PARAM(a)){
 		//const %9 = 0 : int
 		_9 = 0;
 		//assign %5 = %9  : int
+		// isCopyEliminated = true
 		j = _9;
 		//loop (%5, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20)
 		while(true){
@@ -234,6 +248,7 @@ void _print_mat_(FILE* sys, Matrix* a, _DECL_DEALLOC_PARAM(a)){
 			//add %20 = %5, %19 : int
 			_20=j+_19;
 			//assign %5 = %20  : int
+			// isCopyEliminated = true
 			j = _20;
 //.blklab9
 blklab9:;
@@ -245,6 +260,7 @@ blklab8:;
 		//add %22 = %2, %21 : int
 		_22=i+_21;
 		//assign %2 = %22  : int
+		// isCopyEliminated = true
 		i = _22;
 		//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %24 = %23 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -320,10 +336,12 @@ Matrix* _mat_mult_(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_P
 	//fieldload %11 = %1 width : {int[] data,int height,int width}
 	_11 = b->width;
 	//assign %3 = %11  : int
+	// isCopyEliminated = true
 	width = _11;
 	//fieldload %12 = %0 height : {int[] data,int height,int width}
 	_12 = a->height;
 	//assign %4 = %12  : int
+	// isCopyEliminated = true
 	height = _12;
 	//const %13 = 0 : int
 	_13 = 0;
@@ -335,6 +353,7 @@ Matrix* _mat_mult_(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_P
 	_ADD_DEALLOC(_15);
 	//assign %5 = %15  : int[]
 	_DEALLOC(data);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(data, _15);
 	_TRANSFER_DEALLOC(data, _15);
 	//fieldload %16 = %0 data : {int[] data,int height,int width}
@@ -343,6 +362,7 @@ Matrix* _mat_mult_(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_P
 	_REMOVE_DEALLOC(_16);
 	//assign %6 = %16  : int[]
 	_DEALLOC(a_data);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(a_data, _16);
 	_TRANSFER_DEALLOC(a_data, _16);
 	//fieldload %17 = %1 data : {int[] data,int height,int width}
@@ -351,11 +371,13 @@ Matrix* _mat_mult_(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_P
 	_REMOVE_DEALLOC(_17);
 	//assign %7 = %17  : int[]
 	_DEALLOC(b_data);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(b_data, _17);
 	_TRANSFER_DEALLOC(b_data, _17);
 	//const %18 = 0 : int
 	_18 = 0;
 	//assign %8 = %18  : int
+	// isCopyEliminated = true
 	i = _18;
 	//loop (%5, %8, %9, %10, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39)
 	while(true){
@@ -364,6 +386,7 @@ Matrix* _mat_mult_(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_P
 		//const %19 = 0 : int
 		_19 = 0;
 		//assign %9 = %19  : int
+		// isCopyEliminated = true
 		j = _19;
 		//loop (%5, %9, %10, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37)
 		while(true){
@@ -372,6 +395,7 @@ Matrix* _mat_mult_(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_P
 			//const %20 = 0 : int
 			_20 = 0;
 			//assign %10 = %20  : int
+			// isCopyEliminated = true
 			k = _20;
 			//loop (%5, %10, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35)
 			while(true){
@@ -404,12 +428,14 @@ Matrix* _mat_mult_(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_P
 				//add %33 = %32, %9 : int
 				_33=_32+j;
 				//update %5[%33] = %31 : int[] -> int[]
+				// isCopyEliminated = true
 				data[_33] = _31;
 				//const %34 = 1 : int
 				_34 = 1;
 				//add %35 = %10, %34 : int
 				_35=k+_34;
 				//assign %10 = %35  : int
+				// isCopyEliminated = true
 				k = _35;
 //.blklab18
 blklab18:;
@@ -421,6 +447,7 @@ blklab17:;
 			//add %37 = %9, %36 : int
 			_37=j+_36;
 			//assign %9 = %37  : int
+			// isCopyEliminated = true
 			j = _37;
 //.blklab16
 blklab16:;
@@ -432,6 +459,7 @@ blklab15:;
 		//add %39 = %8, %38 : int
 		_39=i+_38;
 		//assign %8 = %39  : int
+		// isCopyEliminated = true
 		i = _39;
 //.blklab14
 blklab14:;
@@ -441,6 +469,7 @@ blklab13:;
 	//invoke (%40) = (%3, %4, %5) MatrixMult2:matrix : function(MatrixMult2:nat,MatrixMult2:nat,int[])->(MatrixMult2:Matrix)
 	{
 		_DEALLOC_STRUCT(_40, Matrix);
+		// isCopyEliminated of '_5' = true
 		_40 = _matrix_(width, height, _1DARRAY_PARAM(data), false);
 		_RESET_DEALLOC(data, "false-true-false" , "matrix");
 		_ADD_DEALLOC(_40);
@@ -574,6 +603,7 @@ int main(int argc, char** args){
 	}
 	//assign %1 = %10  : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(A, Matrix);
+	// isCopyEliminated = true
 	A = _10;
 	_TRANSFER_DEALLOC(A, _10);
 	//assert
@@ -629,6 +659,7 @@ blklab19:;
 	}
 	//assign %2 = %27  : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(B, Matrix);
+	// isCopyEliminated = true
 	B = _27;
 	_TRANSFER_DEALLOC(B, _27);
 	//assert
@@ -675,6 +706,8 @@ blklab20:;
 	//invoke (%44) = (%1, %2) MatrixMult2:mat_mult : function(MatrixMult2:Matrix,MatrixMult2:Matrix)->(MatrixMult2:Matrix)
 	{
 		_DEALLOC_STRUCT(_44, Matrix);
+		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of '_2' = true
 		_44 = _mat_mult_(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
 		_RETAIN_DEALLOC(A, "false-false-false" , "mat_mult");
 		_RETAIN_DEALLOC(B, "false-false-false" , "mat_mult");
@@ -682,6 +715,7 @@ blklab20:;
 	}
 	//assign %3 = %44  : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(C, Matrix);
+	// isCopyEliminated = true
 	C = _44;
 	_TRANSFER_DEALLOC(C, _44);
 	//assert
@@ -723,6 +757,7 @@ blklab21:;
 	}
 	//invoke () = (%0, %3) MatrixMult2:print_mat : method(whiley/lang/System:Console,MatrixMult2:Matrix)->()
 	{
+		// isCopyEliminated of '_3' = true
 		_print_mat_(stdout, _STRUCT_PARAM(C), false);
 		_RETAIN_DEALLOC(C, "false-false-true" , "print_mat");
 	}

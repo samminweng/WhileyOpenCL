@@ -33,8 +33,11 @@ Matrix* _matrix_(int64_t width, int64_t height, _DECL_1DARRAY_PARAM(data)){
 	Matrix* _4;
 	//newrecord %4 = (%2, %1, %0) : {int[] data,int height,int width}
 	_4 = malloc(sizeof(Matrix));
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(_4->data, data);
+	// isCopyEliminated = true
 	_4->height = height;
+	// isCopyEliminated = true
 	_4->width = width;
 	//return %4
 	return _4;
@@ -69,10 +72,12 @@ Matrix* _init_(int64_t width, int64_t height){
 	//arraygen %8 = [6; 7] : int[]
 	_NEW_1DARRAY_int64_t(_8, _7, _6);
 	//assign %3 = %8  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(data, _8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %4 = %9  : int
+	// isCopyEliminated = true
 	i = _9;
 	//loop (%3, %4, %5, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20)
 	while(true){
@@ -81,6 +86,7 @@ Matrix* _init_(int64_t width, int64_t height){
 		//const %10 = 0 : int
 		_10 = 0;
 		//assign %5 = %10  : int
+		// isCopyEliminated = true
 		j = _10;
 		//loop (%3, %5, %11, %12, %13, %14, %15, %16, %17, %18)
 		while(true){
@@ -99,12 +105,14 @@ Matrix* _init_(int64_t width, int64_t height){
 			//add %16 = %15, %5 : int
 			_16=_15+j;
 			//update %3[%16] = %14 : int[] -> int[]
+			// isCopyEliminated = true
 			data[_16] = _14;
 			//const %17 = 1 : int
 			_17 = 1;
 			//add %18 = %5, %17 : int
 			_18=j+_17;
 			//assign %5 = %18  : int
+			// isCopyEliminated = true
 			j = _18;
 //.blklab5
 blklab5:;
@@ -116,6 +124,7 @@ blklab4:;
 		//add %20 = %4, %19 : int
 		_20=i+_19;
 		//assign %4 = %20  : int
+		// isCopyEliminated = true
 		i = _20;
 //.blklab3
 blklab3:;
@@ -124,6 +133,7 @@ blklab3:;
 blklab2:;
 	//invoke (%21) = (%0, %1, %3) MatrixMult3:matrix : function(MatrixMult3:nat,MatrixMult3:nat,int[])->(MatrixMult3:Matrix)
 	{
+		// isCopyEliminated of '_3' = true
 		_21 = _matrix_(width, height, _1DARRAY_PARAM(data));
 	}
 	//return %21
@@ -157,14 +167,17 @@ void _print_mat_(FILE* sys, Matrix* a){
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %2 = %6  : int
+	// isCopyEliminated = true
 	i = _6;
 	//fieldload %7 = %1 width : {int[] data,int height,int width}
 	_7 = a->width;
 	//assign %3 = %7  : int
+	// isCopyEliminated = true
 	width = _7;
 	//fieldload %8 = %1 height : {int[] data,int height,int width}
 	_8 = a->height;
 	//assign %4 = %8  : int
+	// isCopyEliminated = true
 	height = _8;
 	//loop (%2, %5, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25)
 	while(true){
@@ -173,6 +186,7 @@ void _print_mat_(FILE* sys, Matrix* a){
 		//const %9 = 0 : int
 		_9 = 0;
 		//assign %5 = %9  : int
+		// isCopyEliminated = true
 		j = _9;
 		//loop (%5, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20)
 		while(true){
@@ -206,6 +220,7 @@ void _print_mat_(FILE* sys, Matrix* a){
 			//add %20 = %5, %19 : int
 			_20=j+_19;
 			//assign %5 = %20  : int
+			// isCopyEliminated = true
 			j = _20;
 //.blklab9
 blklab9:;
@@ -217,6 +232,7 @@ blklab8:;
 		//add %22 = %2, %21 : int
 		_22=i+_21;
 		//assign %2 = %22  : int
+		// isCopyEliminated = true
 		i = _22;
 		//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %24 = %23 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -296,10 +312,12 @@ Matrix* _mat_mult_(Matrix* a, Matrix* b){
 	//fieldload %12 = %1 width : {int[] data,int height,int width}
 	_12 = b->width;
 	//assign %3 = %12  : int
+	// isCopyEliminated = true
 	width = _12;
 	//fieldload %13 = %0 height : {int[] data,int height,int width}
 	_13 = a->height;
 	//assign %4 = %13  : int
+	// isCopyEliminated = true
 	height = _13;
 	//const %14 = 0 : int
 	_14 = 0;
@@ -308,14 +326,17 @@ Matrix* _mat_mult_(Matrix* a, Matrix* b){
 	//arraygen %16 = [14; 15] : int[]
 	_NEW_1DARRAY_int64_t(_16, _15, _14);
 	//assign %5 = %16  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(data, _16);
 	//fieldload %17 = %0 data : {int[] data,int height,int width}
 	_UPDATE_1DARRAY(_17, a->data);
 	//assign %6 = %17  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(a_data, _17);
 	//fieldload %18 = %1 data : {int[] data,int height,int width}
 	_UPDATE_1DARRAY(_18, b->data);
 	//assign %7 = %18  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(b_data, _18);
 	//const %19 = 0 : int
 	_19 = 0;
@@ -324,22 +345,27 @@ Matrix* _mat_mult_(Matrix* a, Matrix* b){
 	//arraygen %21 = [19; 20] : int[]
 	_NEW_1DARRAY_int64_t(_21, _20, _19);
 	//assign %8 = %21  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(b_t, _21);
 	//const %22 = 0 : int
 	_22 = 0;
 	//assign %9 = %22  : int
+	// isCopyEliminated = true
 	i = _22;
 	//const %23 = 0 : int
 	_23 = 0;
 	//assign %10 = %23  : int
+	// isCopyEliminated = true
 	j = _23;
 	//const %24 = 0 : int
 	_24 = 0;
 	//assign %11 = %24  : int
+	// isCopyEliminated = true
 	k = _24;
 	//const %25 = 0 : int
 	_25 = 0;
 	//assign %9 = %25  : int
+	// isCopyEliminated = true
 	i = _25;
 	//loop (%8, %9, %10, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35)
 	while(true){
@@ -348,6 +374,7 @@ Matrix* _mat_mult_(Matrix* a, Matrix* b){
 		//const %26 = 0 : int
 		_26 = 0;
 		//assign %10 = %26  : int
+		// isCopyEliminated = true
 		j = _26;
 		//loop (%8, %10, %27, %28, %29, %30, %31, %32, %33)
 		while(true){
@@ -364,12 +391,14 @@ Matrix* _mat_mult_(Matrix* a, Matrix* b){
 			//add %31 = %30, %9 : int
 			_31=_30+i;
 			//update %8[%31] = %29 : int[] -> int[]
+			// isCopyEliminated = true
 			b_t[_31] = _29;
 			//const %32 = 1 : int
 			_32 = 1;
 			//add %33 = %10, %32 : int
 			_33=j+_32;
 			//assign %10 = %33  : int
+			// isCopyEliminated = true
 			j = _33;
 //.blklab16
 blklab16:;
@@ -381,6 +410,7 @@ blklab15:;
 		//add %35 = %9, %34 : int
 		_35=i+_34;
 		//assign %9 = %35  : int
+		// isCopyEliminated = true
 		i = _35;
 //.blklab14
 blklab14:;
@@ -390,6 +420,7 @@ blklab13:;
 	//const %36 = 0 : int
 	_36 = 0;
 	//assign %9 = %36  : int
+	// isCopyEliminated = true
 	i = _36;
 	//loop (%5, %9, %10, %11, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57)
 	while(true){
@@ -398,6 +429,7 @@ blklab13:;
 		//const %37 = 0 : int
 		_37 = 0;
 		//assign %10 = %37  : int
+		// isCopyEliminated = true
 		j = _37;
 		//loop (%5, %10, %11, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54, %55)
 		while(true){
@@ -406,6 +438,7 @@ blklab13:;
 			//const %38 = 0 : int
 			_38 = 0;
 			//assign %11 = %38  : int
+			// isCopyEliminated = true
 			k = _38;
 			//loop (%5, %11, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53)
 			while(true){
@@ -438,12 +471,14 @@ blklab13:;
 				//add %51 = %50, %10 : int
 				_51=_50+j;
 				//update %5[%51] = %49 : int[] -> int[]
+				// isCopyEliminated = true
 				data[_51] = _49;
 				//const %52 = 1 : int
 				_52 = 1;
 				//add %53 = %11, %52 : int
 				_53=k+_52;
 				//assign %11 = %53  : int
+				// isCopyEliminated = true
 				k = _53;
 //.blklab22
 blklab22:;
@@ -455,6 +490,7 @@ blklab21:;
 			//add %55 = %10, %54 : int
 			_55=j+_54;
 			//assign %10 = %55  : int
+			// isCopyEliminated = true
 			j = _55;
 //.blklab20
 blklab20:;
@@ -466,6 +502,7 @@ blklab19:;
 		//add %57 = %9, %56 : int
 		_57=i+_56;
 		//assign %9 = %57  : int
+		// isCopyEliminated = true
 		i = _57;
 //.blklab18
 blklab18:;
@@ -474,6 +511,7 @@ blklab18:;
 blklab17:;
 	//invoke (%58) = (%3, %4, %5) MatrixMult3:matrix : function(MatrixMult3:nat,MatrixMult3:nat,int[])->(MatrixMult3:Matrix)
 	{
+		// isCopyEliminated of '_5' = true
 		_58 = _matrix_(width, height, _1DARRAY_PARAM(data));
 	}
 	//return %58
@@ -578,6 +616,7 @@ int main(int argc, char** args){
 		_10 = _init_(_11, _12);
 	}
 	//assign %1 = %10  : {int[] data,int height,int width}
+	// isCopyEliminated = true
 	A = _10;
 	//assert
 	{
@@ -627,6 +666,7 @@ blklab23:;
 		_27 = _init_(_28, _29);
 	}
 	//assign %2 = %27  : {int[] data,int height,int width}
+	// isCopyEliminated = true
 	B = _27;
 	//assert
 	{
@@ -669,9 +709,12 @@ blklab24:;
 	}
 	//invoke (%44) = (%1, %2) MatrixMult3:mat_mult : function(MatrixMult3:Matrix,MatrixMult3:Matrix)->(MatrixMult3:Matrix)
 	{
+		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of '_2' = true
 		_44 = _mat_mult_(_STRUCT_PARAM(A), _STRUCT_PARAM(B));
 	}
 	//assign %3 = %44  : {int[] data,int height,int width}
+	// isCopyEliminated = true
 	C = _44;
 	//assert
 	{
@@ -710,6 +753,7 @@ blklab25:;
 	}
 	//invoke () = (%0, %3) MatrixMult3:print_mat : method(whiley/lang/System:Console,MatrixMult3:Matrix)->()
 	{
+		// isCopyEliminated of '_3' = true
 		_print_mat_(stdout, _STRUCT_PARAM(C));
 	}
 	//fieldload %57 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}

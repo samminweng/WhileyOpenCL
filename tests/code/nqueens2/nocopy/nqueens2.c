@@ -40,10 +40,12 @@ bool _conflict_(POS* p, int64_t row, int64_t col){
 	//fieldload %8 = %0 r : {int c,int r}
 	_8 = p->r;
 	//assign %4 = %8  : int
+	// isCopyEliminated = true
 	r = _8;
 	//fieldload %9 = %0 c : {int c,int r}
 	_9 = p->c;
 	//assign %5 = %9  : int
+	// isCopyEliminated = true
 	c = _9;
 	//ifeq %4, %1 goto blklab1 : int
 	if(r==row){goto blklab1;}
@@ -64,6 +66,7 @@ blklab0:;
 		_11 = llabs(_12);
 	}
 	//assign %6 = %11  : int
+	// isCopyEliminated = true
 	colDiff = _11;
 	//sub %14 = %4, %1 : int
 	_14=r-row;
@@ -72,6 +75,7 @@ blklab0:;
 		_13 = llabs(_14);
 	}
 	//assign %7 = %13  : int
+	// isCopyEliminated = true
 	rowDiff = _13;
 	//ifeq %6, %7 goto blklab2 : int
 	if(colDiff==rowDiff){goto blklab2;}
@@ -135,10 +139,12 @@ blklab6:;
 	//const %10 = 0 : int
 	_10 = 0;
 	//assign %4 = %10  : int
+	// isCopyEliminated = true
 	num_solutions = _10;
 	//const %11 = 0 : int
 	_11 = 0;
 	//assign %5 = %11  : int
+	// isCopyEliminated = true
 	col = _11;
 	//loop (%0, %4, %5, %6, %7, %8, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33)
 	while(true){
@@ -147,10 +153,12 @@ blklab6:;
 		//const %14 = true : bool
 		_14 = true;
 		//assign %6 = %14  : bool
+		// isCopyEliminated = true
 		isSolution = _14;
 		//const %15 = 0 : int
 		_15 = 0;
 		//assign %7 = %15  : int
+		// isCopyEliminated = true
 		i = _15;
 		//loop (%6, %7, %8, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25)
 		while(true){
@@ -159,6 +167,7 @@ blklab6:;
 			//indexof %19 = %0, %7 : {int c,int r}[]
 			_19=queens[i];
 			//assign %8 = %19  : {int c,int r}
+			// isCopyEliminated = true
 			p = _19;
 			//const %20 = true : bool
 			_20 = true;
@@ -170,6 +179,7 @@ blklab6:;
 blklab20:;
 			//invoke (%21) = (%8, %1, %5) nqueens2:conflict : function(nqueens2:POS,int,int)->(bool)
 			{
+				// isCopyEliminated of '_8' = true
 				_21 = _conflict_(_STRUCT_PARAM(p), n, col);
 			}
 			//const %22 = true : bool
@@ -193,12 +203,14 @@ blklab17:;
 //.blklab18
 blklab18:;
 			//assign %6 = %23  : bool
+			// isCopyEliminated = true
 			isSolution = _23;
 			//const %24 = 1 : int
 			_24 = 1;
 			//add %25 = %7, %24 : int
 			_25=i+_24;
 			//assign %7 = %25  : int
+			// isCopyEliminated = true
 			i = _25;
 //.blklab13
 blklab13:;
@@ -211,9 +223,12 @@ blklab12:;
 		if(isSolution!=_26){goto blklab22;}
 		//newrecord %27 = (%5, %1) : {int c,int r}
 		_27 = malloc(sizeof(POS));
+		// isCopyEliminated = false
 		_27->c = col;
+		// isCopyEliminated = false
 		_27->r = n;
 		//update %0[%1] = %27 : {int c,int r}[] -> {int c,int r}[]
+		// isCopyEliminated = false
 		queens[n] = _27;
 		//const %29 = 1 : int
 		_29 = 1;
@@ -222,11 +237,13 @@ blklab12:;
 		//invoke (%28) = (%0, %30, %2) nqueens2:run : function(nqueens2:POS[],int,int)->(int)
 		{
 			void* queens_tmp;
+			// isCopyEliminated of '_0' = false
 			_28 = _run_(_COPY_1DARRAY_PARAM_STRUCT(queens, POS), _30, dim);
 		}
 		//add %31 = %4, %28 : int
 		_31=num_solutions+_28;
 		//assign %4 = %31  : int
+		// isCopyEliminated = true
 		num_solutions = _31;
 //.blklab22
 blklab22:;
@@ -235,6 +252,7 @@ blklab22:;
 		//add %33 = %5, %32 : int
 		_33=col+_32;
 		//assign %5 = %33  : int
+		// isCopyEliminated = true
 		col = _33;
 //.blklab9
 blklab9:;
@@ -276,6 +294,7 @@ int main(int argc, char** args){
 	//const %4 = 8 : int
 	_4 = 8;
 	//assign %1 = %4  : int
+	// isCopyEliminated = true
 	n = _4;
 	//const %5 = 0 : int
 	_5 = 0;
@@ -283,20 +302,25 @@ int main(int argc, char** args){
 	_6 = 0;
 	//newrecord %7 = (%5, %6) : {int c,int r}
 	_7 = malloc(sizeof(POS));
+	// isCopyEliminated = true
 	_7->c = _5;
+	// isCopyEliminated = true
 	_7->r = _6;
 	//arraygen %8 = [7; 1] : {int c,int r}[]
 	_NEW_1DARRAY_STRUCT(_8, n, _7, POS);
 	//assign %2 = %8  : {int c,int r}[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(queens, _8);
 	//const %10 = 0 : int
 	_10 = 0;
 	//invoke (%9) = (%2, %10, %1) nqueens2:run : function(nqueens2:POS[],int,int)->(int)
 	{
 		void* queens_tmp;
+		// isCopyEliminated of '_2' = false
 		_9 = _run_(_COPY_1DARRAY_PARAM_STRUCT(queens, POS), _10, n);
 	}
 	//assign %3 = %9  : int
+	// isCopyEliminated = true
 	num_solutions = _9;
 	//assert
 	{

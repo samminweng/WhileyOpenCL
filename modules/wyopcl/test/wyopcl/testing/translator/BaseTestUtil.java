@@ -406,21 +406,12 @@ public final class BaseTestUtil {
 			}
 			// Create the destDir folder.
 			if (Files.exists(destPath)) {
-				// If destDir exists, then Recursively Delete files in the destDir folder.
+				// If destDir exists, then recursively Delete files in the destDir folder.
 				FileUtils.cleanDirectory(destPath.toFile());
-				
-				/*Files.walkFileTree(destPath, new SimpleFileVisitor<Path>() {
-					@Override
-					public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-						Files.delete(file);
-						return FileVisitResult.CONTINUE;
-					}
-				});*/
 			} else {
 				// Create destDir subfolder
 				Files.createDirectories(destPath);
 			}
-
 
 			// 1. Copy source Whiley program to destDir directory.
 			Path whileyFile = Paths.get(sourcePath + File.separator + testcase + ".whiley");

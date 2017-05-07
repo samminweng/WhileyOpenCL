@@ -20,6 +20,7 @@ int64_t* _reverse_(_DECL_1DARRAY_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERE
 	//lengthof %5 = %0 : int[]
 	_5 = ls_size;
 	//assign %2 = %5  : int
+	// isCopyEliminated = true
 	i = _5;
 	//const %6 = 0 : int
 	_6 = 0;
@@ -28,6 +29,7 @@ int64_t* _reverse_(_DECL_1DARRAY_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERE
 	//arraygen %8 = [6; 7] : int[]
 	_NEW_1DARRAY_int64_t(_8, _7, _6);
 	//assign %3 = %8  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(r, _8);
 	//loop (%2, %3, %4, %9, %10, %11, %12, %13, %14, %15, %16, %17)
 	while(true){
@@ -42,14 +44,17 @@ int64_t* _reverse_(_DECL_1DARRAY_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERE
 		//indexof %15 = %0, %14 : int[]
 		_15=ls[_14];
 		//assign %4 = %15  : int
+		// isCopyEliminated = true
 		item = _15;
 		//const %16 = 1 : int
 		_16 = 1;
 		//sub %17 = %2, %16 : int
 		_17=i-_16;
 		//assign %2 = %17  : int
+		// isCopyEliminated = true
 		i = _17;
 		//update %3[%2] = %4 : int[] -> int[]
+		// isCopyEliminated = false
 		r[i] = item;
 //.blklab1
 blklab1:;
@@ -111,9 +116,11 @@ int main(int argc, char** args){
 	_11[0] = _6; _11[1] = _7; _11[2] = _8; _11[3] = _9; _11[4] = _10; 
 	//invoke (%5) = (%11) reverse:reverse : function(int[])->(int[])
 	{
+		// isCopyEliminated of '_11' = true
 		_5 = _reverse_(_1DARRAY_PARAM(_11), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
 	}
 	//assign %1 = %5  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(rs, _5);
 	//assert
 	{
@@ -142,10 +149,12 @@ blklab4:;
 	//const %18 = 10 : int
 	_18 = 10;
 	//assign %2 = %18  : int
+	// isCopyEliminated = true
 	max = _18;
 	//const %19 = 0 : int
 	_19 = 0;
 	//assign %3 = %19  : int
+	// isCopyEliminated = true
 	index = _19;
 	//const %20 = 0 : int
 	_20 = 0;
@@ -156,6 +165,7 @@ blklab4:;
 	//arraygen %23 = [20; 22] : int[]
 	_NEW_1DARRAY_int64_t(_23, _22, _20);
 	//assign %4 = %23  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(arr, _23);
 	//loop (%3, %4, %24, %25, %26)
 	while(true){
@@ -164,12 +174,14 @@ blklab4:;
 		//sub %24 = %2, %3 : int
 		_24=max-index;
 		//update %4[%3] = %24 : int[] -> int[]
+		// isCopyEliminated = false
 		arr[index] = _24;
 		//const %25 = 1 : int
 		_25 = 1;
 		//add %26 = %3, %25 : int
 		_26=index+_25;
 		//assign %3 = %26  : int
+		// isCopyEliminated = true
 		index = _26;
 //.blklab6
 blklab6:;
@@ -178,9 +190,11 @@ blklab6:;
 blklab5:;
 	//invoke (%27) = (%4) reverse:reverse : function(int[])->(int[])
 	{
+		// isCopyEliminated of '_4' = true
 		_27 = _reverse_(_1DARRAY_PARAM(arr), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 	}
 	//assign %4 = %27  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(arr, _27);
 	//assert
 	{

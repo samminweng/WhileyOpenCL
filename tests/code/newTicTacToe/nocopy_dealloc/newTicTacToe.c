@@ -70,7 +70,9 @@ Board* _EmptyBoard_(){
 	//newrecord %12 = (%1, %11) : {int move,int[] pieces}
 	_DEALLOC_STRUCT(_12, Board);
 	_12 = malloc(sizeof(Board));
+	// isCopyEliminated = true
 	_12->move = _1;
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(_12->pieces, _11);
 	_REMOVE_DEALLOC(_11);
 	_ADD_DEALLOC(_12);
@@ -96,10 +98,12 @@ int64_t _countOf_(_DECL_1DARRAY_PARAM(pieces), _DECL_DEALLOC_PARAM(pieces), int6
 	//const %5 = 0 : int
 	_5 = 0;
 	//assign %3 = %5  : int
+	// isCopyEliminated = true
 	count = _5;
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %4 = %6  : int
+	// isCopyEliminated = true
 	i = _6;
 	//loop (%3, %4, %7, %8, %9, %10, %11, %12)
 	while(true){
@@ -116,6 +120,7 @@ int64_t _countOf_(_DECL_1DARRAY_PARAM(pieces), _DECL_DEALLOC_PARAM(pieces), int6
 		//add %10 = %3, %9 : int
 		_10=count+_9;
 		//assign %3 = %10  : int
+		// isCopyEliminated = true
 		count = _10;
 //.blklab13
 blklab13:;
@@ -124,6 +129,7 @@ blklab13:;
 		//add %12 = %4, %11 : int
 		_12=i+_11;
 		//assign %4 = %12  : int
+		// isCopyEliminated = true
 		i = _12;
 //.blklab12
 blklab12:;
@@ -197,6 +203,7 @@ int main(int argc, char** args){
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %1 = %6  : int
+	// isCopyEliminated = true
 	repeat = _6;
 	//invoke (%7) = () newTicTacToe:EmptyBoard : function()->(newTicTacToe:Board)
 	{
@@ -206,6 +213,7 @@ int main(int argc, char** args){
 	}
 	//assign %2 = %7  : null|{int move,int[] pieces}
 	_DEALLOC_STRUCT(b1, Board);
+	// isCopyEliminated = true
 	b1 = _7;
 	_TRANSFER_DEALLOC(b1, _7);
 	//invoke (%8) = () newTicTacToe:EmptyBoard : function()->(newTicTacToe:Board)
@@ -216,11 +224,13 @@ int main(int argc, char** args){
 	}
 	//assign %3 = %8  : null|{int move,int[] pieces}
 	_DEALLOC_STRUCT(b2, Board);
+	// isCopyEliminated = true
 	b2 = _8;
 	_TRANSFER_DEALLOC(b2, _8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %4 = %9  : int
+	// isCopyEliminated = true
 	i = _9;
 	//loop (%2, %3, %4, %5, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33)
 	while(true){
@@ -241,6 +251,7 @@ int main(int argc, char** args){
 		//indexof %13 = %12, %4 : int[]
 		_13=_12[i];
 		//assign %5 = %13  : int
+		// isCopyEliminated = true
 		p = _13;
 		//const %14 = 0 : int
 		_14 = 0;
@@ -274,6 +285,7 @@ blklab16:;
 		//const %19 = 1 : int
 		_19 = 1;
 		//update %2.pieces[%5] = %19 : {int move,int[] pieces} -> {int move,int[] pieces}
+		// isCopyEliminated = true
 		b1->pieces[p] = _19;
 		//fieldload %20 = %2 move : {int move,int[] pieces}
 		_20 = b1->move;
@@ -282,15 +294,18 @@ blklab16:;
 		//add %22 = %20, %21 : int
 		_22=_20+_21;
 		//update %2.move = %22 : {int move,int[] pieces} -> {int move,int[] pieces}
+		// isCopyEliminated = true
 		b1->move = _22;
 		//assign %3 = %2  : {int move,int[] pieces}
 		_DEALLOC_STRUCT(b2, Board);
+		// isCopyEliminated = false
 		b2 = copy_Board(b1);
 		_ADD_DEALLOC(b2);
 		//const %23 = null : null
 		_23 = NULL;
 		//assign %2 = %23  : null
 		_DEALLOC_STRUCT(b1, Board);
+		// isCopyEliminated = true
 		b1 = NULL;
 		_REMOVE_DEALLOC(b1);
 		//goto blklab20
@@ -313,6 +328,7 @@ blklab19:;
 		//const %27 = 2 : int
 		_27 = 2;
 		//update %3.pieces[%5] = %27 : {int move,int[] pieces} -> {int move,int[] pieces}
+		// isCopyEliminated = true
 		b2->pieces[p] = _27;
 		//fieldload %28 = %3 move : {int move,int[] pieces}
 		_28 = b2->move;
@@ -321,15 +337,18 @@ blklab19:;
 		//add %30 = %28, %29 : int
 		_30=_28+_29;
 		//update %3.move = %30 : {int move,int[] pieces} -> {int move,int[] pieces}
+		// isCopyEliminated = true
 		b2->move = _30;
 		//assign %2 = %3  : {int move,int[] pieces}
 		_DEALLOC_STRUCT(b1, Board);
+		// isCopyEliminated = true
 		b1 = b2;
 		_TRANSFER_DEALLOC(b1, b2);
 		//const %31 = null : null
 		_31 = NULL;
 		//assign %3 = %31  : null
 		_DEALLOC_STRUCT(b2, Board);
+		// isCopyEliminated = true
 		b2 = NULL;
 		_REMOVE_DEALLOC(b2);
 //.blklab21
@@ -343,6 +362,7 @@ blklab17:;
 		//add %33 = %4, %32 : int
 		_33=i+_32;
 		//assign %4 = %33  : int
+		// isCopyEliminated = true
 		i = _33;
 //.blklab15
 blklab15:;

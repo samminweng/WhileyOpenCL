@@ -25,14 +25,17 @@ int main(int argc, char** args){
 		_5 = Reader(_6, _6_size);
 	}
 	//assign %1 = %5  : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
+	// isCopyEliminated = true
 	file = _5;
 	//const %7 = 32 : int
 	_7 = 32;
 	//assign %2 = %7  : int
+	// isCopyEliminated = true
 	width = _7;
 	//const %8 = 32 : int
 	_8 = 32;
 	//assign %3 = %8  : int
+	// isCopyEliminated = true
 	height = _8;
 	//fieldload %10 = %1 readAll : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
 	//indirectinvoke (%9) = %10 () : method()->(byte[])
@@ -40,6 +43,7 @@ int main(int argc, char** args){
 		_9 = readAll(file, &_9_size);
 	}
 	//assign %4 = %9  : byte[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(data, _9);
 	//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %12 = %11 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

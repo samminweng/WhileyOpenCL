@@ -27,12 +27,14 @@ int64_t* _fibonacci_(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls), int64_t n
 	//const %5 = 0 : int
 	_5 = 0;
 	//update %0[%5] = %4 : int[] -> int[]
+	// isCopyEliminated = true
 	ls[_5] = _4;
 	//const %6 = 1 : int
 	_6 = 1;
 	//const %7 = 1 : int
 	_7 = 1;
 	//update %0[%7] = %6 : int[] -> int[]
+	// isCopyEliminated = true
 	ls[_7] = _6;
 	//goto blklab1
 	goto blklab1;
@@ -45,12 +47,14 @@ blklab0:;
 	//invoke (%8) = (%0, %10) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
 		_DEALLOC(_8);
+		// isCopyEliminated of '_0' = true
 		_8 = _fibonacci_(_1DARRAY_PARAM(ls), false, _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_RESET_DEALLOC(ls, "true-true-false" , "fibonacci");
 		_ADD_DEALLOC(_8);
 	}
 	//assign %0 = %8  : int[]
 	_DEALLOC(ls);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(ls, _8);
 	_TRANSFER_DEALLOC(ls, _8);
 	//const %11 = 1 : int
@@ -68,6 +72,7 @@ blklab0:;
 	//add %17 = %13, %16 : int
 	_17=_13+_16;
 	//update %0[%1] = %17 : int[] -> int[]
+	// isCopyEliminated = true
 	ls[n] = _17;
 //.blklab1
 blklab1:;
@@ -110,6 +115,7 @@ int main(int argc, char** args){
 	//const %3 = 10 : int
 	_3 = 10;
 	//assign %1 = %3  : int
+	// isCopyEliminated = true
 	max = _3;
 	//const %4 = 0 : int
 	_4 = 0;
@@ -119,6 +125,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_5);
 	//assign %2 = %5  : int[]
 	_DEALLOC(arr);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(arr, _5);
 	_TRANSFER_DEALLOC(arr, _5);
 	//const %7 = 1 : int
@@ -128,12 +135,14 @@ int main(int argc, char** args){
 	//invoke (%6) = (%2, %8) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
 		_DEALLOC(_6);
+		// isCopyEliminated of '_2' = true
 		_6 = _fibonacci_(_1DARRAY_PARAM(arr), false, _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		_RESET_DEALLOC(arr, "true-true-false" , "fibonacci");
 		_ADD_DEALLOC(_6);
 	}
 	//assign %2 = %6  : int[]
 	_DEALLOC(arr);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(arr, _6);
 	_TRANSFER_DEALLOC(arr, _6);
 	//assert

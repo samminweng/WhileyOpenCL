@@ -54,6 +54,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_9);
 	//assign %1 = %9  : int[]
 	_DEALLOC(a);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(a, _9);
 	_TRANSFER_DEALLOC(a, _9);
 	//const %10 = 1 : int
@@ -73,18 +74,22 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_15);
 	//assign %2 = %15  : int[]
 	_DEALLOC(b);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(b, _15);
 	_TRANSFER_DEALLOC(b, _15);
 	//assign %3 = %1  : int[]
 	_DEALLOC(tmp);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(tmp, a);
 	_TRANSFER_DEALLOC(tmp, a);
 	//assign %1 = %2  : int[]
 	_DEALLOC(a);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(a, b);
 	_TRANSFER_DEALLOC(a, b);
 	//assign %2 = %3  : int[]
 	_DEALLOC(b);
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(b, tmp);
 	_TRANSFER_DEALLOC(b, tmp);
 	//assert

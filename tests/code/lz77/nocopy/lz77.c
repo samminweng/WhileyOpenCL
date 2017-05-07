@@ -39,10 +39,12 @@ int64_t _match_(BYTE* data, size_t data_size, int64_t offset, int64_t end){
 	int64_t _15 = 0;
 	int64_t _16 = 0;
 	//assign %4 = %2  : int
+	// isCopyEliminated = true
 	pos = end;
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %5 = %6  : int
+	// isCopyEliminated = true
 	len = _6;
 	//loop (%1, %4, %5, %7, %8, %9, %10, %11, %12, %13, %14, %15, %16)
 	while(true){
@@ -67,18 +69,21 @@ int64_t _match_(BYTE* data, size_t data_size, int64_t offset, int64_t end){
 		//add %12 = %1, %11 : int
 		_12=offset+_11;
 		//assign %1 = %12  : int
+		// isCopyEliminated = true
 		offset = _12;
 		//const %13 = 1 : int
 		_13 = 1;
 		//add %14 = %4, %13 : int
 		_14=pos+_13;
 		//assign %4 = %14  : int
+		// isCopyEliminated = true
 		pos = _14;
 		//const %15 = 1 : int
 		_15 = 1;
 		//add %16 = %5, %15 : int
 		_16=len+_15;
 		//assign %5 = %16  : int
+		// isCopyEliminated = true
 		len = _16;
 //.blklab2
 blklab2:;
@@ -111,10 +116,12 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, int64_t pos){
 	//const %8 = 0 : int
 	_8 = 0;
 	//assign %3 = %8  : int
+	// isCopyEliminated = true
 	bestOffset = _8;
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %4 = %9  : int
+	// isCopyEliminated = true
 	bestLen = _9;
 	//const %11 = 255 : int
 	_11 = 255;
@@ -127,8 +134,10 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, int64_t pos){
 		_10 = max(_12, _13);
 	}
 	//assign %5 = %10  : int
+	// isCopyEliminated = true
 	start = _10;
 	//assign %6 = %5  : int
+	// isCopyEliminated = true
 	offset = start;
 	//loop (%3, %4, %6, %7, %14, %15, %16, %17)
 	while(true){
@@ -136,17 +145,21 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, int64_t pos){
 		if(offset>=pos){goto blklab3;}
 		//invoke (%14) = (%0, %6, %1) lz77:match : function(byte[],lz77:nat,lz77:nat)->(int)
 		{
+			// isCopyEliminated of '_0' = true
 			_14 = _match_(_1DARRAY_PARAM(data), offset, pos);
 		}
 		//assign %7 = %14  : int
+		// isCopyEliminated = true
 		len = _14;
 		//ifle %7, %4 goto blklab5 : int
 		if(len<=bestLen){goto blklab5;}
 		//sub %15 = %1, %6 : int
 		_15=pos-offset;
 		//assign %3 = %15  : int
+		// isCopyEliminated = true
 		bestOffset = _15;
 		//assign %4 = %7  : int
+		// isCopyEliminated = false
 		bestLen = len;
 //.blklab5
 blklab5:;
@@ -155,6 +168,7 @@ blklab5:;
 		//add %17 = %6, %16 : int
 		_17=offset+_16;
 		//assign %6 = %17  : int
+		// isCopyEliminated = true
 		offset = _17;
 //.blklab4
 blklab4:;
@@ -163,7 +177,9 @@ blklab4:;
 blklab3:;
 	//newrecord %18 = (%4, %3) : {int len,int offset}
 	_18 = malloc(sizeof(Match));
+	// isCopyEliminated = true
 	_18->len = bestLen;
+	// isCopyEliminated = true
 	_18->offset = bestOffset;
 	//return %18
 	return _18;
@@ -194,10 +210,12 @@ BYTE* _append_(BYTE* items, size_t items_size, BYTE item, _DECL_1DARRAYSIZE_PARA
 	//arraygen %8 = [4; 7] : byte[]
 	_NEW_1DARRAY_BYTE(_8, _7, _4);
 	//assign %2 = %8  : byte[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(nitems, _8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %3 = %9  : int
+	// isCopyEliminated = true
 	i = _9;
 	//loop (%2, %3, %10, %11, %12, %13)
 	while(true){
@@ -208,12 +226,14 @@ BYTE* _append_(BYTE* items, size_t items_size, BYTE item, _DECL_1DARRAYSIZE_PARA
 		//indexof %11 = %0, %3 : byte[]
 		_11=items[i];
 		//update %2[%3] = %11 : byte[] -> byte[]
+		// isCopyEliminated = false
 		nitems[i] = _11;
 		//const %12 = 1 : int
 		_12 = 1;
 		//add %13 = %3, %12 : int
 		_13=i+_12;
 		//assign %3 = %13  : int
+		// isCopyEliminated = true
 		i = _13;
 //.blklab7
 blklab7:;
@@ -221,6 +241,7 @@ blklab7:;
 //.blklab6
 blklab6:;
 	//update %2[%3] = %1 : byte[] -> byte[]
+	// isCopyEliminated = true
 	nitems[i] = item;
 	//return %2
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(nitems);
@@ -242,10 +263,12 @@ BYTE* _resize_(BYTE* items, size_t items_size, int64_t size, _DECL_1DARRAYSIZE_P
 	//arraygen %5 = [4; 1] : byte[]
 	_NEW_1DARRAY_BYTE(_5, size, _4);
 	//assign %2 = %5  : byte[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(nitems, _5);
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %3 = %6  : int
+	// isCopyEliminated = true
 	i = _6;
 	//loop (%2, %3, %7, %8, %9)
 	while(true){
@@ -254,12 +277,14 @@ BYTE* _resize_(BYTE* items, size_t items_size, int64_t size, _DECL_1DARRAYSIZE_P
 		//indexof %7 = %0, %3 : byte[]
 		_7=items[i];
 		//update %2[%3] = %7 : byte[] -> byte[]
+		// isCopyEliminated = false
 		nitems[i] = _7;
 		//const %8 = 1 : int
 		_8 = 1;
 		//add %9 = %3, %8 : int
 		_9=i+_8;
 		//assign %3 = %9  : int
+		// isCopyEliminated = true
 		i = _9;
 //.blklab11
 blklab11:;
@@ -299,6 +324,7 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREF
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %2 = %6  : int
+	// isCopyEliminated = true
 	pos = _6;
 	//const %7 = 00000000b : byte
 	_7 = 0b00000000;
@@ -307,6 +333,7 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREF
 	//arraygen %9 = [7; 8] : byte[]
 	_NEW_1DARRAY_BYTE(_9, _8, _7);
 	//assign %1 = %9  : byte[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(output, _9);
 	//loop (%1, %2, %3, %4, %5, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23)
 	while(true){
@@ -316,9 +343,11 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREF
 		if(pos>=_10){goto blklab12;}
 		//invoke (%11) = (%0, %2) lz77:findLongestMatch : function(byte[],lz77:nat)->(lz77:Match)
 		{
+			// isCopyEliminated of '_0' = true
 			_11 = _findLongestMatch_(_1DARRAY_PARAM(data), pos);
 		}
 		//assign %3 = %11  : {int len,int offset}
+		// isCopyEliminated = true
 		m = _11;
 		//fieldload %13 = %3 offset : {int len,int offset}
 		_13 = m->offset;
@@ -327,6 +356,7 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREF
 			_12 = (BYTE)_13;
 		}
 		//assign %4 = %12  : byte
+		// isCopyEliminated = true
 		offset = _12;
 		//fieldload %15 = %3 len : {int len,int offset}
 		_15 = m->len;
@@ -335,6 +365,7 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREF
 			_14 = (BYTE)_15;
 		}
 		//assign %5 = %14  : byte
+		// isCopyEliminated = true
 		length = _14;
 		//const %16 = 00000000b : byte
 		_16 = 0b00000000;
@@ -343,12 +374,14 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREF
 		//indexof %17 = %0, %2 : byte[]
 		_17=data[pos];
 		//assign %5 = %17  : byte
+		// isCopyEliminated = true
 		length = _17;
 		//const %18 = 1 : int
 		_18 = 1;
 		//add %19 = %2, %18 : int
 		_19=pos+_18;
 		//assign %2 = %19  : int
+		// isCopyEliminated = true
 		pos = _19;
 		//goto blklab15
 		goto blklab15;
@@ -359,20 +392,25 @@ blklab14:;
 		//add %21 = %2, %20 : int
 		_21=pos+_20;
 		//assign %2 = %21  : int
+		// isCopyEliminated = true
 		pos = _21;
 //.blklab15
 blklab15:;
 		//invoke (%22) = (%1, %4) lz77:append : function(byte[],byte)->(byte[])
 		{
+			// isCopyEliminated of '_1' = true
 			_22 = _append_(_1DARRAY_PARAM(output), offset, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
 		}
 		//assign %1 = %22  : byte[]
+		// isCopyEliminated = true
 		_UPDATE_1DARRAY(output, _22);
 		//invoke (%23) = (%1, %5) lz77:append : function(byte[],byte)->(byte[])
 		{
+			// isCopyEliminated of '_1' = true
 			_23 = _append_(_1DARRAY_PARAM(output), length, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 		}
 		//assign %1 = %23  : byte[]
+		// isCopyEliminated = true
 		_UPDATE_1DARRAY(output, _23);
 //.blklab13
 blklab13:;
@@ -425,10 +463,12 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYR
 	//arraygen %11 = [9; 10] : byte[]
 	_NEW_1DARRAY_BYTE(_11, _10, _9);
 	//assign %1 = %11  : byte[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(output, _11);
 	//const %12 = 0 : int
 	_12 = 0;
 	//assign %2 = %12  : int
+	// isCopyEliminated = true
 	pos = _12;
 	//loop (%1, %2, %3, %4, %5, %6, %7, %8, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32)
 	while(true){
@@ -443,6 +483,7 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYR
 		//indexof %16 = %0, %2 : byte[]
 		_16=data[pos];
 		//assign %3 = %16  : byte
+		// isCopyEliminated = true
 		header = _16;
 		//const %17 = 1 : int
 		_17 = 1;
@@ -451,12 +492,14 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYR
 		//indexof %19 = %0, %18 : byte[]
 		_19=data[_18];
 		//assign %4 = %19  : byte
+		// isCopyEliminated = true
 		item = _19;
 		//const %20 = 2 : int
 		_20 = 2;
 		//add %21 = %2, %20 : int
 		_21=pos+_20;
 		//assign %2 = %21  : int
+		// isCopyEliminated = true
 		pos = _21;
 		//const %22 = 00000000b : byte
 		_22 = 0b00000000;
@@ -464,9 +507,11 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYR
 		if(header!=_22){goto blklab18;}
 		//invoke (%23) = (%1, %4) lz77:append : function(byte[],byte)->(byte[])
 		{
+			// isCopyEliminated of '_1' = true
 			_23 = _append_(_1DARRAY_PARAM(output), item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 		}
 		//assign %1 = %23  : byte[]
+		// isCopyEliminated = true
 		_UPDATE_1DARRAY(output, _23);
 		//goto blklab19
 		goto blklab19;
@@ -477,20 +522,24 @@ blklab18:;
 			_24 = (unsigned int)header;
 		}
 		//assign %5 = %24  : int
+		// isCopyEliminated = true
 		offset = _24;
 		//invoke (%25) = (%4) whiley/lang/Byte:toUnsignedInt : function(byte)->(whiley/lang/Int:uint)
 		{
 			_25 = (unsigned int)item;
 		}
 		//assign %6 = %25  : int
+		// isCopyEliminated = true
 		len = _25;
 		//lengthof %26 = %1 : byte[]
 		_26 = output_size;
 		//sub %27 = %26, %5 : int
 		_27=_26-offset;
 		//assign %7 = %27  : int
+		// isCopyEliminated = true
 		start = _27;
 		//assign %8 = %7  : int
+		// isCopyEliminated = false
 		i = start;
 		//loop (%1, %4, %8, %28, %29, %30, %31, %32)
 		while(true){
@@ -501,18 +550,22 @@ blklab18:;
 			//indexof %29 = %1, %8 : byte[]
 			_29=output[i];
 			//assign %4 = %29  : byte
+			// isCopyEliminated = true
 			item = _29;
 			//invoke (%30) = (%1, %4) lz77:append : function(byte[],byte)->(byte[])
 			{
+				// isCopyEliminated of '_1' = true
 				_30 = _append_(_1DARRAY_PARAM(output), item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
 			}
 			//assign %1 = %30  : byte[]
+			// isCopyEliminated = true
 			_UPDATE_1DARRAY(output, _30);
 			//const %31 = 1 : int
 			_31 = 1;
 			//add %32 = %8, %31 : int
 			_32=i+_31;
 			//assign %8 = %32  : int
+			// isCopyEliminated = true
 			i = _32;
 //.blklab21
 blklab21:;
@@ -575,6 +628,7 @@ int main(int argc, char** args){
 		_5 = Reader(_6, _6_size);
 	}
 	//assign %1 = %5  : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
+	// isCopyEliminated = true
 	file = _5;
 	//fieldload %8 = %1 readAll : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
 	//indirectinvoke (%7) = %8 () : method()->(byte[])
@@ -582,6 +636,7 @@ int main(int argc, char** args){
 		_7 = readAll(file, &_7_size);
 	}
 	//assign %2 = %7  : byte[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(data, _7);
 	//fieldload %9 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %10 = %9 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -622,9 +677,11 @@ int main(int argc, char** args){
 	}
 	//invoke (%21) = (%2) lz77:compress : function(byte[])->(byte[])
 	{
+		// isCopyEliminated of '_2' = true
 		_21 = _compress_(_1DARRAY_PARAM(data), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_21));
 	}
 	//assign %3 = %21  : byte[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(compress_data, _21);
 	//fieldload %22 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %23 = %22 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -660,9 +717,11 @@ int main(int argc, char** args){
 	}
 	//invoke (%33) = (%3) lz77:decompress : function(byte[])->(byte[])
 	{
+		// isCopyEliminated of '_3' = true
 		_33 = _decompress_(_1DARRAY_PARAM(compress_data), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
 	}
 	//assign %4 = %33  : byte[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(decompress_data, _33);
 	//fieldload %34 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %35 = %34 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

@@ -10,12 +10,14 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(s), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLB
 	//ifle %1, %4 goto blklab0 : int
 	if(n<=_4){goto blklab0;}
 	//assign %3 = %0  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(t, s);
 	//const %5 = 3 : int
 	_5 = 3;
 	//const %6 = 2 : int
 	_6 = 2;
 	//update %3[%6] = %5 : int[] -> int[]
+	// isCopyEliminated = true
 	t[_6] = _5;
 	//return %3
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(t);
@@ -90,14 +92,17 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_9, 5, 0);
 	_9[0] = _4; _9[1] = _5; _9[2] = _6; _9[3] = _7; _9[4] = _8; 
 	//assign %1 = %9  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(a, _9);
 	//const %11 = 6 : int
 	_11 = 6;
 	//invoke (%10) = (%1, %11) FunctionCall2:func : function(int[],int)->(int[])
 	{
+		// isCopyEliminated of '_1' = true
 		_10 = _func_(_1DARRAY_PARAM(a), _11, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 	}
 	//assign %1 = %10  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(a, _10);
 	//assert
 	{
@@ -149,15 +154,18 @@ blklab2:;
 	_NEW_1DARRAY_int64_t(_27, 5, 0);
 	_27[0] = _22; _27[1] = _23; _27[2] = _24; _27[3] = _25; _27[4] = _26; 
 	//assign %2 = %27  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(b, _27);
 	//const %29 = 1 : int
 	_29 = 1;
 	//invoke (%28) = (%2, %29) FunctionCall2:func : function(int[],int)->(int[])
 	{
 		void* b_tmp;
+		// isCopyEliminated of '_2' = false
 		_28 = _func_(_COPY_1DARRAY_PARAM_int64_t(b), _29, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 	}
 	//assign %3 = %28  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(c, _28);
 	//assert
 	{

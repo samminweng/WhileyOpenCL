@@ -85,10 +85,12 @@ int64_t* _Cash_1_(_DECL_1DARRAY_PARAM(coins), _DECL_1DARRAYSIZE_PARAM_CALLBYREFE
 	_NEW_1DARRAY_int64_t(_13, 8, 0);
 	_13[0] = _5; _13[1] = _6; _13[2] = _7; _13[3] = _8; _13[4] = _9; _13[5] = _10; _13[6] = _11; _13[7] = _12; 
 	//assign %2 = %13  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(cash, _13);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %3 = %14  : int
+	// isCopyEliminated = true
 	i = _14;
 	//loop (%2, %3, %4, %15, %16, %17, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29)
 	while(true){
@@ -99,6 +101,7 @@ int64_t* _Cash_1_(_DECL_1DARRAY_PARAM(coins), _DECL_1DARRAYSIZE_PARAM_CALLBYREFE
 		//indexof %24 = %0, %3 : int[]
 		_24=coins[i];
 		//assign %4 = %24  : int
+		// isCopyEliminated = true
 		coin = _24;
 		//indexof %25 = %2, %4 : int[]
 		_25=cash[coin];
@@ -107,12 +110,14 @@ int64_t* _Cash_1_(_DECL_1DARRAY_PARAM(coins), _DECL_1DARRAYSIZE_PARAM_CALLBYREFE
 		//add %27 = %25, %26 : int
 		_27=_25+_26;
 		//update %2[%4] = %27 : int[] -> int[]
+		// isCopyEliminated = true
 		cash[coin] = _27;
 		//const %28 = 1 : int
 		_28 = 1;
 		//add %29 = %3, %28 : int
 		_29=i+_28;
 		//assign %3 = %29  : int
+		// isCopyEliminated = true
 		i = _29;
 //.blklab5
 blklab5:;
@@ -144,6 +149,7 @@ int main(int argc, char** args){
 		_3 = _Cash_(_1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
 	}
 	//assign %1 = %3  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(empty, _3);
 	//const %5 = 5 : int
 	_5 = 5;
@@ -166,9 +172,11 @@ int main(int argc, char** args){
 	_13[0] = _5; _13[1] = _6; _13[2] = _7; _13[3] = _8; _13[4] = _9; _13[5] = _10; _13[6] = _11; _13[7] = _12; 
 	//invoke (%4) = (%13) FunctionOverload2:Cash : function(FunctionOverload2:nat[])->(FunctionOverload2:Cash)
 	{
+		// isCopyEliminated of '_13' = true
 		_4 = _Cash_1_(_1DARRAY_PARAM(_13), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_4));
 	}
 	//assign %2 = %4  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(till, _4);
 	//return
 	exit(0);
