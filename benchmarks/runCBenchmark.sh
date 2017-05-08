@@ -13,8 +13,8 @@ declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" [
 					   [LZ77]="gcc polly" [SobelEdge]="gcc polly" [Cashtill]="gcc" \
 					   [CoinGame]="polly gcc" )
 ## declare 4 kinds of code generation
-declare -a codegens=( "naive" "naivedealloc" "nocopy" "nocopydealloc" )
-##declare -a codegens=("nocopydealloc")
+#declare -a codegens=( "naive" "naivedealloc" "nocopy" "nocopydealloc" )
+declare -a codegens=( "naivedealloc" "nocopydealloc" )
 
 declare -A patternmatches=( [Reverse]="disabledpattern" [newTicTacToe]="disabledpattern" [BubbleSort]="disabledpattern" \
 					   		[MergeSort]="disabledpattern" [MatrixMult]="disabledpattern" \
@@ -28,8 +28,9 @@ declare -A patterns=( [LZ77]=compress )
 declare -a threads=( 1 2 3 4 5 6 7 8 )
 
 ### declare parameters
-declare -A parameters=( [Reverse]="100000 1000000 10000000" [newTicTacToe]="1000 10000 100000" \
-						[BubbleSort]="1000 10000 100000" [MergeSort]="1000 10000 100000" \
+declare -A parameters=( [Reverse]="200000000 400000000 600000000 800000000 1000000000" \
+						#[Reverse]="1000 10000 100000 1000000 10000000 100000000" \
+						[newTicTacToe]="1000 10000 100000" [BubbleSort]="1000 10000 100000" [MergeSort]="1000 10000 100000" \
 						[MatrixMult]="1000 2000 4000" \
 						[LZ77]="input1x.in input2x.in input4x.in input8x.in input16x.in input32x.in input64x.in input128x.in input256x.in input512x.in input1024x.in" \
 						#[LZ77]="input8x.in" \
@@ -323,20 +324,20 @@ init Reverse
 exec Reverse original
 
 # # # # # # # # # # newTicTacToe test case
-init newTicTacToe
-exec newTicTacToe original
+#init newTicTacToe
+#exec newTicTacToe original
 
 # # # # # # # ## # BubbleSort test case
-init BubbleSort
-exec BubbleSort original
+#init BubbleSort
+#exec BubbleSort original
 
 # # # # # # # ## # MergeSort test case
-init MergeSort
-exec MergeSort original
+#init MergeSort
+#exec MergeSort original
 
 # # # # # # # MatrixMult test case
-init MatrixMult
-exec MatrixMult original
+#init MatrixMult
+#exec MatrixMult original
 ####exec MatrixMult original 12000 # Naive code runs out of memory
 # # ### CoinGame test case ###
 #init CoinGame

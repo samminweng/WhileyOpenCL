@@ -121,7 +121,7 @@ BEGIN {
 	exectypes = "seq openmp";
 	### Parameter
 	# Parameter
-	parameters["Reverse"]="100000 1000000 10000000";
+	parameters["Reverse"]="1000 10000 100000 1000000 10000000 100000000 200000000 400000000 600000000 800000000 1000000000";
 	parameters["newTicTacToe"]="1000 10000 100000";
 	parameters["MergeSort"]="1000 10000 100000";
 	parameters["BubbleSort"]="1000 10000 100000";

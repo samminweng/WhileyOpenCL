@@ -8,29 +8,30 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end){
 	if(sub_arr == NULL){
 		fputs("fail to allocate the memory at slice function in Util.c\n", stderr);
 		exit(-2);
-	}	
+	}
 	memcpy(sub_arr, &arr[start], (end - start)*sizeof(int64_t));
 	return sub_arr;
 }
 
 /**
- * Given array size and initial value, create an array of int64_t integers. 
+ * Given array size and initial value, create an array of int64_t integers.
  */
 int64_t* create1DArray_int64_t(int64_t value, size_t arr_size){
-	
-	int64_t* arr = NULL;
-	// Allocate the array
-	arr = (int64_t*)malloc(arr_size*sizeof(int64_t));
-	if(arr == NULL){
-		fputs("fail to allocate the memory at create1DArray function in Util.c\n", stderr);
-		exit(-2);
-	}
-	// Initialize each element with the given value.
-	for(size_t i=0;i<arr_size;i++){
-		arr[i] = value;
-	}
-	return arr;
-}
+
+ 	int64_t* arr = NULL;
+ 	// Allocate the array
+ 	arr = (int64_t*)malloc(arr_size*sizeof(int64_t));
+ 	if(arr == NULL){
+ 		fputs("fail to allocate the memory at create1DArray function in Util.c\n", stderr);
+ 		exit(-2);
+ 	}
+ 	// Initialize each element with the given value by using memset function
+ 	memset(arr, value, arr_size*sizeof(int64_t));
+ 	//for(size_t i=0;i<arr_size;i++){
+ 	//	arr[i] = value;
+ 	//}
+ 	return arr;
+ }
 /*
  * Given array size and initial value, create an array of BYTE
  */
@@ -91,7 +92,7 @@ int64_t* copy1DArray_int64_t(int64_t *arr, size_t size){
  *  Combine an array of integers into an integer,
  *  e.g. arr = {1, 0} is converted into 10
  *	And return a integer pointer
- * 
+ *
  */
 int64_t* parseStringToInt(int64_t* arr){
 	size_t i=0;
@@ -188,7 +189,7 @@ int64_t** convertArgsToIntArray(int argc, char** args, size_t *arr_size, size_t 
 	return arr;
 }
 
-//Check if two arrays of integers are the same 
+//Check if two arrays of integers are the same
 bool isArrayEqual_int64_t(int64_t* arr1, size_t arr1_size, int64_t* arr2, size_t arr2_size) {
 	//Check if array size is the same.
 	if (arr1_size != arr2_size) {
@@ -222,7 +223,7 @@ bool isArrayEqual_BYTE(BYTE* arr1, size_t arr1_size, BYTE* arr2, size_t arr2_siz
 
 // Free a flat 2D array
 void free2DArray_int64_t(int64_t** ptr, size_t size){
-	// Free the first pointer as it is actually allocated 
+	// Free the first pointer as it is actually allocated
 	free(ptr[0]);
 	// Free upper-level pointer.
 	free(ptr);
@@ -265,7 +266,7 @@ int64_t** create2DArray_int64_t(int64_t* arr, size_t n, size_t m){
 	size_t r_size = m*sizeof(int64_t);
 	// Flatten the allocated memory to a list of pointers
 	for(size_t i=0;i<n;i++){
-		// Compute the address and assign the address to each pointer 
+		// Compute the address and assign the address to each pointer
 		//_2DArray[i] = (*_2DArray+ i* m);
 		// Copy the input array 'arr' to each sub-array
 		memcpy(_2DArray[i], arr, r_size);
@@ -279,12 +280,12 @@ int64_t** copy2DArray_int64_t(int64_t **arr, size_t n, size_t m){
 	if(arr == NULL){
 		return NULL;
 	}
-	
+
 	int64_t** _2DArray = create2DArray_int64_t_empty(n, m);
-	
+
 	size_t r_size = m*sizeof(int64_t);
 	for(size_t i=0;i<n;i++){
-		// Compute the address and assign the address to each pointer 
+		// Compute the address and assign the address to each pointer
 		//_2DArray[i] = (*_2DArray+ i* m);
 		memcpy(_2DArray[i], arr[i], r_size);
 	}
@@ -297,7 +298,7 @@ void indirect_printf(int64_t input) {
 }
 
 /*
-* Print out an array of int64_t integers. If the array size > 10, then 
+* Print out an array of int64_t integers. If the array size > 10, then
 * print the first 10 items and the last item.
 */
 void printf1DArray_int64_t(int64_t* input, size_t input_size) {
@@ -335,14 +336,14 @@ void printf1DArray_BYTE(BYTE* input, size_t input_size) {
 }
 // Print out the first 10 array in an 2D array
 void printf2DArray_int64_t(int64_t** input, size_t input_size, size_t input_size_size){
-	printf("[");	
+	printf("[");
 	size_t i = 0;
 	while (i < input_size && i < MAX_LENGTH) {
 		printf1DArray_int64_t(input[i], input_size_size);
 		i++;
 	}
 	if (input_size > MAX_LENGTH) {
-		printf(" ...\n"); 
+		printf(" ...\n");
 		printf1DArray_int64_t(input[input_size - 1], input_size_size);
 	}
 	printf("]\n");
@@ -357,7 +358,7 @@ void printf_s(int64_t* input, size_t input_size) {
 	while (i < input_size && i < MAX_LENGTH) {
 		// Make int to char
 		char c = input[i];
-		// Check if c is NOT EOF and skip 'EOF' char 
+		// Check if c is NOT EOF and skip 'EOF' char
 		// Note 0 (ASCII NUL) indicates the EOF
 		if(c>0){
 			printf("%c", c);
@@ -534,7 +535,7 @@ bool isPBMFile(FILE *file){
 		if(len==3){
 			// Check if line is P1
 			if(line[0]=='P' && line[1]=='1' && line[2]=='\n'){
-				isPBMFormat=true; // The file is a PBM 
+				isPBMFormat=true; // The file is a PBM
 			}
 		}
 	}
