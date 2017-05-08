@@ -400,17 +400,14 @@ public final class BaseTestUtil {
 	 */
 	private void createFolderAndCopyFiles(String testcase, Path sourcePath, Path destPath) {
 		try {
-			// Check the parent folder exits.
-			if (!Files.exists(destPath.getParent())) {
-				Files.createDirectories(destPath.getParent());
-			}
+			
 			// Create the destDir folder.
 			if (Files.exists(destPath)) {
 				// If destDir exists, then recursively Delete files in the destDir folder.
 				FileUtils.cleanDirectory(destPath.toFile());
 			} else {
 				// Create destDir subfolder
-				Files.createDirectories(destPath);
+				FileUtils.mkdir(destPath.toString());
 			}
 
 			// 1. Copy source Whiley program to destDir directory.

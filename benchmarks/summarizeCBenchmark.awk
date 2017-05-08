@@ -7,19 +7,19 @@ function pause(){
 }
 
 function generateReport(results){
-	print "TestCase\tProgramType\tCompiler\tPattern\tParameter\tCodeGen\tThread\t1st\t2nd\t3rd\t4th\t5th\t6th\t7th\t8th\t9th\t10th\tAverage";
+	print "TestCase\tProgramType\tCompiler\tPattern\tParameter\tCodeGen\tExecutable\tThread\t1st\t2nd\t3rd\t4th\t5th\t6th\t7th\t8th\t9th\t10th\tAverage";
  	t_total=split(testcases, t_array, " ");
  	for(t=1;t<=t_total;t++){
  		testcase=t_array[t];
  		# Get Program Type
 		program_total=split(programs[testcase], program_array, " ");
-		for(pt=1;pt<=program_total;pt++){
-			program = program_array[pt];
+		for(pa=1;pa<=program_total;pa++){
+			program = program_array[pa];
 			## Compiler
 			compilers_total=split(compilers[testcase], compiler_array, " ");
 			for(cr=1;cr<=compilers_total;cr++){
 				compiler=compiler_array[cr];
-				## Get pattern 
+				## Get pattern
 				patterns_total=split(patterns[testcase], pattern_array, " ");
 				for(pt=1; pt<=patterns_total;pt++){
 					pattern=pattern_array[pt];
@@ -27,38 +27,43 @@ function generateReport(results){
 					par_total=split(parameters[testcase], par_array, " ");
 					for(p=1;p<=par_total;p++){
 						parameter=par_array[p];
-						# Get CodeGen 
+						# Get CodeGen
 						codegen_total=split(codegens, codegen_array, " ");
 						for(c=1;c<=codegen_total;c++){
-							codegen=codegen_array[c];					 							
-							th_total=split(threads, th_array, " ");
-							for(th=1;th<=th_total;th++){
-								thread=th_array[th];
-								key=testcase","program","codegen","pattern","compiler","parameter","thread;
-								#print "key="key;
-								#pause();
-								str=testcase"\t"program"\t"compiler"\t"pattern"\t"parameter"\t"codegen"\t"thread;
-								# Check if there is any result.
-								if(counts[key]>0){
-									## Print out result, e.g. CPU utilization
-				 					for(iteration=1;iteration<=10;iteration++){
-				 						str = str"\t"results[key","iteration];
-				 					}				 					
-				 				}else{
-				 					## Out of memory 
-			 						if(counts[key] == -1){
-			 							str = str"\tOOM";
-			 						}
-			 						## Out of time
-			 						if(counts[key] == -2){
-			 							str = str"\tOOT";
-			 						}
-				 				}
-				 				print str;
+							codegen=codegen_array[c];
+							## Get executable type
+							exectype_total=split(exectypes, exectype_array, " ");
+							for(ec=1;ec<exectype_total;ec++){
+								exectype=exectype_array[ec];
+								th_total=split(threads, th_array, " ");
+								for(th=1;th<=th_total;th++){
+									thread=th_array[th];
+									key=testcase","program","codegen","pattern","compiler","exectype","parameter","thread;
+									#print "key="key;
+									#pause();
+									str=testcase"\t"program"\t"compiler"\t"pattern"\t"parameter"\t"codegen"\t"exectype"\t"thread;
+									# Check if there is any result.
+									if(counts[key]>0){
+										## Print out result, e.g. CPU utilization
+					 					for(iteration=1;iteration<=10;iteration++){
+					 						str = str"\t"results[key","iteration];
+					 					}
+					 				}else{
+					 					## Out of memory
+				 						if(counts[key] == -1){
+				 							str = str"\tOOM";
+				 						}
+				 						## Out of time
+				 						if(counts[key] == -2){
+				 							str = str"\tOOT";
+				 						}
+					 				}
+					 				print str;
+								}
 							}
 						}
 					}
-				}							
+				}
 			}
 		}
 	}
@@ -69,8 +74,9 @@ BEGIN {
 	filename = "";
 	FS = "\n";
 	## Test case name
-	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge Cashtill AppendArrayPattern LZ77";
-	
+	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge Cashtill AppendArrayPattern LZ77";
+	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
+
 	## Program Type
 	programs["Reverse"]="original";
 	programs["newTicTacToe"]="original";
@@ -80,7 +86,7 @@ BEGIN {
 	# programs["MatrixMult"]="original transpose 2DArray";
 	# programs["Fibonacci"]="original";
 	# programs["GCD"]="original cached";
-	# programs["CoinGame"]="original single array";	
+	# programs["CoinGame"]="original single array";
 	programs["SobelEdge"]="original";
 	# ## Recursive function call
 	# programs["NQueens"]="original integer";
@@ -90,8 +96,8 @@ BEGIN {
 	programs["AppendArrayPattern"]="original";
 
 	# Code Generation
-	codegens = "naive naive_dealloc nocopy nocopy_dealloc";
-	# Pattern matching 
+	codegens = "naive naivedealloc nocopy nocopydealloc";
+	# Pattern matching
 	patterns["Reverse"] = "disabled";
 	patterns["newTicTacToe"] = "disabled";
 	patterns["BubbleSort"] = "disabled";
@@ -106,28 +112,30 @@ BEGIN {
 	compilers["newTicTacToe"] = "gcc";
 	compilers["BubbleSort"] = "gcc";
 	compilers["MergeSort"] = "gcc";
-	compilers["MatrixMult"] = "gcc";	
+	compilers["MatrixMult"] = "gcc";
 	compilers["LZ77"] = "gcc";
 	compilers["SobelEdge"] = "gcc";
 	compilers["Cashtill"] = "gcc";
 	compilers["AppendArrayPattern"] = "gcc";
+	### Executive type
+	exectypes = "seq openmp";
 	### Parameter
 	# Parameter
 	parameters["Reverse"]="100000 1000000 10000000";
 	parameters["newTicTacToe"]="1000 10000 100000";
 	parameters["MergeSort"]="1000 10000 100000";
 	parameters["BubbleSort"]="1000 10000 100000";
-	parameters["MatrixMult"]="1000 2000 3000";
+	parameters["MatrixMult"]="1000 2000 4000";
 	# parameters["Fibonacci"]="10 50 90";
 	# parameters["GCD"]="100 150 200";
 	# parameters["CoinGame"]="1000 2000 3000";
-	parameters["SobelEdge"]="image32x32 image64x64 image128x128 image256x256 image512x512 image1024x1024";	
+	parameters["SobelEdge"]="image32x32 image64x64 image128x128 image256x256 image512x512 image1024x1024";
 	## Recursive function call
 	# parameters["NQueens"]="8 10 12 14";
 	# ### pattern transformation
 	parameters["LZ77"]="input1x input2x input4x input8x input16x input32x input64x input128x input256x input512x input1024x";
 	parameters["Cashtill"]="1000 1200 1400 1600 1800 2000";
-	parameters["AppendArrayPattern"]="10000 20000 40000 60000 80000 100000";
+	#parameters["AppendArrayPattern"]="10000 20000 40000 60000 80000 100000";
 
 	# The number of threads
 	threads="1";
@@ -145,32 +153,33 @@ BEGIN {
 	testcase=t_array[1];
 	# Program type
 	program=t_array[2];
-	# Compiler 
+	# Compiler
 	compiler=t_array[3];
-	# Codegen
-	codegen=t_array[4];
 	# Pattern
-	pattern=t_array[5];
+	pattern=t_array[4];
 	if(pattern == "disabledpattern"){
 		pattern="disabled";
 	}else{
 		pattern="enabled";
 	}
-	
+	# Codegen
+	codegen=t_array[5];
+	## exectype
+	exectype=t_array[6];
 	# Get parameter
-	parameter = t_array[6];
+	parameter = t_array[7];
 
 	# Get the number of threads
 	if(testcase == "LZ77" || testcase == "SobelEdge"){
-		thread = t_array[8];
+		thread = t_array[9];
 	}else{
-		thread = t_array[7];
+		thread = t_array[8];
 	}
-	
-	key=testcase","program","codegen","pattern","compiler","parameter","thread;
+
+	key=testcase","program","codegen","pattern","compiler","exectype","parameter","thread;
 	##print "key="key;
 	##pause();
-	
+
 	# Get the execution time
 	if($1 ~ /ExecutionTime:/){
 		##print $1;
@@ -196,7 +205,7 @@ BEGIN {
 		##pause();
 	}
 
-	# Get out-of-memory error 
+	# Get out-of-memory error
 	if($1 == "OOM:Run out of memory"){
 		#print "key="key;
 		counts[key] = -1;
@@ -214,7 +223,7 @@ BEGIN {
 
 }
 END {
-	
+
 	print "Execution Time (nano second)";
 	generateReport(exec_times);
 

@@ -14,6 +14,7 @@ int64_t* _init_(_DECL_1DARRAY_PARAM(data), int64_t width, int64_t height, _DECL_
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %4 = %6  : int
+	// isCopyEliminated = true
 	i = _6;
 	//loop (%0, %4, %5, %7, %8, %9, %10, %11, %12, %13)
 	while(true){
@@ -22,6 +23,7 @@ int64_t* _init_(_DECL_1DARRAY_PARAM(data), int64_t width, int64_t height, _DECL_
 		//const %7 = 0 : int
 		_7 = 0;
 		//assign %5 = %7  : int
+		// isCopyEliminated = true
 		j = _7;
 		//loop (%0, %5, %8, %9, %10, %11)
 		while(true){
@@ -32,12 +34,14 @@ int64_t* _init_(_DECL_1DARRAY_PARAM(data), int64_t width, int64_t height, _DECL_
 			//add %9 = %8, %5 : int
 			_9=_8+j;
 			//update %0[%9] = %4 : int[] -> int[]
+			// isCopyEliminated = true
 			data[_9] = i;
 			//const %10 = 1 : int
 			_10 = 1;
 			//add %11 = %5, %10 : int
 			_11=j+_10;
 			//assign %5 = %11  : int
+			// isCopyEliminated = true
 			j = _11;
 //.blklab4
 blklab4:;
@@ -49,6 +53,7 @@ blklab3:;
 		//add %13 = %4, %12 : int
 		_13=i+_12;
 		//assign %4 = %13  : int
+		// isCopyEliminated = true
 		i = _13;
 //.blklab2
 blklab2:;
@@ -82,6 +87,7 @@ void _print_mat_(FILE* sys, _DECL_1DARRAY_PARAM(a), int64_t width, int64_t heigh
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %4 = %6  : int
+	// isCopyEliminated = true
 	i = _6;
 	//loop (%4, %5, %7, %8, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22)
 	while(true){
@@ -90,6 +96,7 @@ void _print_mat_(FILE* sys, _DECL_1DARRAY_PARAM(a), int64_t width, int64_t heigh
 		//const %7 = 0 : int
 		_7 = 0;
 		//assign %5 = %7  : int
+		// isCopyEliminated = true
 		j = _7;
 		//loop (%5, %8, %9, %10, %11, %12, %13, %14, %15, %16, %17)
 		while(true){
@@ -121,6 +128,7 @@ void _print_mat_(FILE* sys, _DECL_1DARRAY_PARAM(a), int64_t width, int64_t heigh
 			//add %17 = %5, %16 : int
 			_17=j+_16;
 			//assign %5 = %17  : int
+			// isCopyEliminated = true
 			j = _17;
 //.blklab8
 blklab8:;
@@ -132,6 +140,7 @@ blklab7:;
 		//add %19 = %4, %18 : int
 		_19=i+_18;
 		//assign %4 = %19  : int
+		// isCopyEliminated = true
 		i = _19;
 		//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %21 = %20 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -180,6 +189,7 @@ int64_t* _mat_mult_(_DECL_1DARRAY_PARAM(a), _DECL_1DARRAY_PARAM(b), _DECL_1DARRA
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %6 = %9  : int
+	// isCopyEliminated = true
 	i = _9;
 	//loop (%2, %6, %7, %8, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30)
 	while(true){
@@ -188,6 +198,7 @@ int64_t* _mat_mult_(_DECL_1DARRAY_PARAM(a), _DECL_1DARRAY_PARAM(b), _DECL_1DARRA
 		//const %10 = 0 : int
 		_10 = 0;
 		//assign %7 = %10  : int
+		// isCopyEliminated = true
 		j = _10;
 		//loop (%2, %7, %8, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28)
 		while(true){
@@ -196,6 +207,7 @@ int64_t* _mat_mult_(_DECL_1DARRAY_PARAM(a), _DECL_1DARRAY_PARAM(b), _DECL_1DARRA
 			//const %11 = 0 : int
 			_11 = 0;
 			//assign %8 = %11  : int
+			// isCopyEliminated = true
 			k = _11;
 			//loop (%2, %8, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26)
 			while(true){
@@ -228,12 +240,14 @@ int64_t* _mat_mult_(_DECL_1DARRAY_PARAM(a), _DECL_1DARRAY_PARAM(b), _DECL_1DARRA
 				//add %24 = %23, %7 : int
 				_24=_23+j;
 				//update %2[%24] = %22 : int[] -> int[]
+				// isCopyEliminated = true
 				data[_24] = _22;
 				//const %25 = 1 : int
 				_25 = 1;
 				//add %26 = %8, %25 : int
 				_26=k+_25;
 				//assign %8 = %26  : int
+				// isCopyEliminated = true
 				k = _26;
 //.blklab14
 blklab14:;
@@ -245,6 +259,7 @@ blklab13:;
 			//add %28 = %7, %27 : int
 			_28=j+_27;
 			//assign %7 = %28  : int
+			// isCopyEliminated = true
 			j = _28;
 //.blklab12
 blklab12:;
@@ -256,6 +271,7 @@ blklab11:;
 		//add %30 = %6, %29 : int
 		_30=i+_29;
 		//assign %6 = %30  : int
+		// isCopyEliminated = true
 		i = _30;
 //.blklab10
 blklab10:;
@@ -319,14 +335,18 @@ int main(int argc, char** args){
 		_STR_TO_INT(_8, _11);
 	}
 	//assign %1 = %8  : null|int
+	// isCopyEliminated = true
 	max = _8;
 	//ifis %1, null goto blklab15 : null|int
 	if(max == NULL) { goto blklab15;}
 	//assign %2 = %1  : int
+	// isCopyEliminated = true
 	size = *max;
 	//assign %3 = %2  : int
+	// isCopyEliminated = false
 	width = size;
 	//assign %4 = %2  : int
+	// isCopyEliminated = false
 	height = size;
 	//fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %13 = %12 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -350,12 +370,15 @@ int main(int argc, char** args){
 	//arraygen %19 = [17; 18] : int[]
 	_NEW_1DARRAY_int64_t(_19, _18, _17);
 	//assign %5 = %19  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(A, _19);
 	//invoke (%20) = (%5, %3, %4) MatrixMult_original:init : function(int[],int,int)->(int[])
 	{
+		// isCopyEliminated of '_5' = true
 		_20 = _init_(_1DARRAY_PARAM(A), width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
 	}
 	//assign %5 = %20  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(A, _20);
 	//const %21 = 0 : int
 	_21 = 0;
@@ -364,12 +387,15 @@ int main(int argc, char** args){
 	//arraygen %23 = [21; 22] : int[]
 	_NEW_1DARRAY_int64_t(_23, _22, _21);
 	//assign %6 = %23  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(B, _23);
 	//invoke (%24) = (%6, %3, %4) MatrixMult_original:init : function(int[],int,int)->(int[])
 	{
+		// isCopyEliminated of '_6' = true
 		_24 = _init_(_1DARRAY_PARAM(B), width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
 	}
 	//assign %6 = %24  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(B, _24);
 	//const %25 = 0 : int
 	_25 = 0;
@@ -378,12 +404,17 @@ int main(int argc, char** args){
 	//arraygen %27 = [25; 26] : int[]
 	_NEW_1DARRAY_int64_t(_27, _26, _25);
 	//assign %7 = %27  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(C, _27);
 	//invoke (%28) = (%5, %6, %7, %3, %4) MatrixMult_original:mat_mult : function(int[],int[],int[],int,int)->(int[])
 	{
+		// isCopyEliminated of '_5' = true
+		// isCopyEliminated of '_6' = true
+		// isCopyEliminated of '_7' = true
 		_28 = _mat_mult_(_1DARRAY_PARAM(A), _1DARRAY_PARAM(B), _1DARRAY_PARAM(C), width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 	}
 	//assign %7 = %28  : int[]
+	// isCopyEliminated = true
 	_UPDATE_1DARRAY(C, _28);
 	//fieldload %29 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %30 = %29 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
