@@ -68,14 +68,14 @@ blklab0:;
 }
 
 int main(int argc, char** args){
-	int64_t index = 0;
 	_DECL_1DARRAY(input);
+	int64_t index = 0;
 	_DECL_1DARRAY(tmp);
 	_DECL_1DARRAY(output);
 	int64_t _5 = 0;
 	int64_t _6 = 0;
-	int64_t _7 = 0;
-	_DECL_1DARRAY(_8);
+	_DECL_1DARRAY(_7);
+	int64_t _8 = 0;
 	int64_t _9 = 0;
 	int64_t _10 = 0;
 	int64_t _11 = 0;
@@ -90,36 +90,36 @@ int main(int argc, char** args){
 	int64_t _20 = 0;
 	//const %5 = 0 : int
 	_5 = 0;
-	//assign %1 = %5  : int
+	//const %6 = 10 : int
+	_6 = 10;
+	//arraygen %7 = [5; 6] : int[]
+	_NEW_1DARRAY_int64_t(_7, _6, _5);
+	//assign %1 = %7  : int[]
 	// isCopyEliminated = true
-	index = _5;
-	//const %6 = 0 : int
-	_6 = 0;
-	//const %7 = 10 : int
-	_7 = 10;
-	//arraygen %8 = [6; 7] : int[]
-	_NEW_1DARRAY_int64_t(_8, _7, _6);
-	//assign %2 = %8  : int[]
+	_UPDATE_1DARRAY(input, _7);
+	//const %8 = 0 : int
+	_8 = 0;
+	//assign %2 = %8  : int
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(input, _8);
+	index = _8;
 	//loop (%1, %2, %9, %10, %11, %12, %13)
 	while(true){
 		//const %9 = 10 : int
 		_9 = 10;
-		//ifge %1, %9 goto blklab4 : int
+		//ifge %2, %9 goto blklab4 : int
 		if(index>=_9){goto blklab4;}
 		//const %10 = 10 : int
 		_10 = 10;
-		//sub %11 = %10, %1 : int
+		//sub %11 = %10, %2 : int
 		_11=_10-index;
-		//update %2[%1] = %11 : int[] -> int[]
+		//update %1[%2] = %11 : int[] -> int[]
 		// isCopyEliminated = false
 		input[index] = _11;
 		//const %12 = 1 : int
 		_12 = 1;
-		//add %13 = %1, %12 : int
+		//add %13 = %2, %12 : int
 		_13=index+_12;
-		//assign %1 = %13  : int
+		//assign %2 = %13  : int
 		// isCopyEliminated = true
 		index = _13;
 //.blklab5
@@ -127,9 +127,9 @@ blklab5:;
 	}
 //.blklab4
 blklab4:;
-	//invoke (%14) = (%2) reverse:reverse : function(int[])->(int[])
+	//invoke (%14) = (%1) reverse:reverse : function(int[])->(int[])
 	{
-		// isCopyEliminated of '_2' = true
+		// isCopyEliminated of '_1' = true
 		_14 = _reverse_(_1DARRAY_PARAM(input), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_14));
 	}
 	//assign %3 = %14  : int[]
@@ -139,7 +139,7 @@ blklab4:;
 	{
 		//const %15 = 0 : int
 		_15 = 0;
-		//indexof %16 = %2, %15 : int[]
+		//indexof %16 = %1, %15 : int[]
 		_16=input[_15];
 		//const %17 = 10 : int
 		_17 = 10;

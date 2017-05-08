@@ -364,12 +364,15 @@ public abstract class Analyzer {
 		CFGraph graph = this.getCFGraph(function);
 		BasicBlock parent = graph.getCurrentBlock();
 		// Create an assert block
-		BasicBlock blk = graph.createBasicBlock(label, BlockType.ASSERT, parent);
+		BasicBlock assert_blk = graph.createBasicBlock(label, BlockType.ASSERT, parent);
 		// Add the code to blk
-		code.bytecodes().stream().forEach(c -> blk.addCode(c));
+		code.bytecodes().forEach(c -> assert_blk.addCode(c));
 
-		// Set current blk to the original blk
-		graph.setCurrentBlock(blk);
+		// Create a child block after assertion  
+		BasicBlock child = graph.createBasicBlock(label, BlockType.BLOCK, assert_blk);
+		 
+		// Set child block as current one 
+		graph.setCurrentBlock(child);
 
 	}
 

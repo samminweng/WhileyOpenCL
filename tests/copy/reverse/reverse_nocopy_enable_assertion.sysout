@@ -1,12 +1,12 @@
 WARNING: version numbering unavailable
-Parsed 1 source file(s). ...................................................... [127ms+1mb]
-Typed 1 source file(s). ....................................................... [161ms+1mb]
-Generated code for 1 source file(s). ............................................... [36ms]
+Parsed 1 source file(s). ....................................................... [59ms+1mb]
+Typed 1 source file(s). ........................................................ [84ms+1mb]
+Generated code for 1 source file(s). ............................................... [14ms]
 [./reverse.whiley] applied definite assignment check ............................ [3ms+1mb]
-[./reverse.whiley] applied module check ......................................... [4ms+1mb]
+[./reverse.whiley] applied module check ......................................... [1ms+1mb]
 [./reverse.whiley] applied loop variants ........................................ [1ms+1mb]
-[./reverse.whiley] applied coercion check ........................................... [1ms]
-Whiley => Wyil: compiled 1 file(s) ............................................ [365ms-3mb]
+[./reverse.whiley] applied coercion check ........................................... [0ms]
+Whiley => Wyil: compiled 1 file(s) ............................................ [193ms-1mb]
 reverse.0 [	lengthof %5 = %0 : int[]]
 reverse.1 [	assign %2 = %5  : int]
 reverse.2 [	const %6 = 0 : int]
@@ -30,23 +30,23 @@ reverse.19 [.blklab0]
 reverse.20 [	return %3]
 reverse.21 [	return]
 main.0 [	const %5 = 0 : int]
-main.1 [	assign %1 = %5  : int]
-main.2 [	const %6 = 0 : int]
-main.3 [	const %7 = 10 : int]
-main.4 [	arraygen %8 = [6; 7] : int[]]
-main.5 [	assign %2 = %8  : int[]]
+main.1 [	const %6 = 10 : int]
+main.2 [	arraygen %7 = [5; 6] : int[]]
+main.3 [	assign %1 = %7  : int[]]
+main.4 [	const %8 = 0 : int]
+main.5 [	assign %2 = %8  : int]
 main.6 [	loop (%1, %2, %9, %10, %11, %12, %13)]
 main.7 [	const %9 = 10 : int]
-main.8 [	ifge %1, %9 goto blklab4 : int]
+main.8 [	ifge %2, %9 goto blklab4 : int]
 main.9 [	const %10 = 10 : int]
-main.10 [	sub %11 = %10, %1 : int]
-main.11 [	update %2[%1] = %11 : int[] -> int[]]
+main.10 [	sub %11 = %10, %2 : int]
+main.11 [	update %1[%2] = %11 : int[] -> int[]]
 main.12 [	const %12 = 1 : int]
-main.13 [	add %13 = %1, %12 : int]
-main.14 [	assign %1 = %13  : int]
+main.13 [	add %13 = %2, %12 : int]
+main.14 [	assign %2 = %13  : int]
 main.15 [.blklab5]
 main.16 [.blklab4]
-main.17 [	invoke (%14) = (%2) reverse:reverse : function(int[])->(int[])]
+main.17 [	invoke (%14) = (%1) reverse:reverse : function(int[])->(int[])]
 main.18 [	assign %3 = %14  : int[]]
 main.19 [	assert]
 main.20 [	assign %4 = %3  : int[]]
@@ -77,23 +77,23 @@ reverse.19 [.blklab0]
 reverse.20 [	return %3]
 reverse.21 [	return]
 main.0 [	const %5 = 0 : int]
-main.1 [	assign %1 = %5  : int]
-main.2 [	const %6 = 0 : int]
-main.3 [	const %7 = 10 : int]
-main.4 [	arraygen %8 = [6; 7] : int[]]
-main.5 [	assign %2 = %8  : int[]]
+main.1 [	const %6 = 10 : int]
+main.2 [	arraygen %7 = [5; 6] : int[]]
+main.3 [	assign %1 = %7  : int[]]
+main.4 [	const %8 = 0 : int]
+main.5 [	assign %2 = %8  : int]
 main.6 [	loop (%1, %2, %9, %10, %11, %12, %13)]
 main.7 [	const %9 = 10 : int]
-main.8 [	ifge %1, %9 goto blklab4 : int]
+main.8 [	ifge %2, %9 goto blklab4 : int]
 main.9 [	const %10 = 10 : int]
-main.10 [	sub %11 = %10, %1 : int]
-main.11 [	update %2[%1] = %11 : int[] -> int[]]
+main.10 [	sub %11 = %10, %2 : int]
+main.11 [	update %1[%2] = %11 : int[] -> int[]]
 main.12 [	const %12 = 1 : int]
-main.13 [	add %13 = %1, %12 : int]
-main.14 [	assign %1 = %13  : int]
+main.13 [	add %13 = %2, %12 : int]
+main.14 [	assign %2 = %13  : int]
 main.15 [.blklab5]
 main.16 [.blklab4]
-main.17 [	invoke (%14) = (%2) reverse:reverse : function(int[])->(int[])]
+main.17 [	invoke (%14) = (%1) reverse:reverse : function(int[])->(int[])]
 main.18 [	assign %3 = %14  : int[]]
 main.19 [	assert]
 main.20 [	assign %4 = %3  : int[]]
@@ -122,23 +122,23 @@ reverse.19 [.blklab0]
 reverse.20 [	return %3]
 reverse.21 [	return]
 main.0 [	const %5 = 0 : int]
-main.1 [	assign %1 = %5  : int]
-main.2 [	const %6 = 0 : int]
-main.3 [	const %7 = 10 : int]
-main.4 [	arraygen %8 = [6; 7] : int[]]
-main.5 [	assign %2 = %8  : int[]]
+main.1 [	const %6 = 10 : int]
+main.2 [	arraygen %7 = [5; 6] : int[]]
+main.3 [	assign %1 = %7  : int[]]
+main.4 [	const %8 = 0 : int]
+main.5 [	assign %2 = %8  : int]
 main.6 [	loop (%1, %2, %9, %10, %11, %12, %13)]
 main.7 [	const %9 = 10 : int]
-main.8 [	ifge %1, %9 goto blklab4 : int]
+main.8 [	ifge %2, %9 goto blklab4 : int]
 main.9 [	const %10 = 10 : int]
-main.10 [	sub %11 = %10, %1 : int]
-main.11 [	update %2[%1] = %11 : int[] -> int[]]
+main.10 [	sub %11 = %10, %2 : int]
+main.11 [	update %1[%2] = %11 : int[] -> int[]]
 main.12 [	const %12 = 1 : int]
-main.13 [	add %13 = %1, %12 : int]
-main.14 [	assign %1 = %13  : int]
+main.13 [	add %13 = %2, %12 : int]
+main.14 [	assign %2 = %13  : int]
 main.15 [.blklab5]
 main.16 [.blklab4]
-main.17 [	invoke (%14) = (%2) reverse:reverse : function(int[])->(int[])]
+main.17 [	invoke (%14) = (%1) reverse:reverse : function(int[])->(int[])]
 main.18 [	assign %3 = %14  : int[]]
 main.19 [	assert]
 main.20 [	assign %4 = %3  : int[]]
@@ -148,6 +148,21 @@ main.22 [	return]
 Iteration 1
 In:{[]}
 blklab1 [BLOCK] 
+Out:{[]}
+
+In:{[0, 2, 3]}
+blklab3, blklab2 [BLOCK] 
+-------------------------------
+l.0:const %12 = 0 : int
+l.1:lengthof %13 = %0 : int[]
+l.2:sub %14 = %13, %2 : int
+l.3:indexof %15 = %0, %14 : int[]
+l.4:assign %4 = %15  : int
+l.5:const %16 = 1 : int
+l.6:sub %17 = %2, %16 : int
+l.7:assign %2 = %17  : int
+l.8:update %3[%2] = %4 : int[] -> int[]
+-------------------------------
 Out:{[]}
 
 In:{[0, 2, 3]}
@@ -162,17 +177,8 @@ l.5:.blklab3
 l.6:fail
 l.7:.blklab2
 l.8:return
-l.9:const %12 = 0 : int
-l.10:lengthof %13 = %0 : int[]
-l.11:sub %14 = %13, %2 : int
-l.12:indexof %15 = %0, %14 : int[]
-l.13:assign %4 = %15  : int
-l.14:const %16 = 1 : int
-l.15:sub %17 = %2, %16 : int
-l.16:assign %2 = %17  : int
-l.17:update %3[%2] = %4 : int[] -> int[]
 -------------------------------
-Out:{[]}
+Out:{[0, 2, 3]}
 
 In:{[3]}
 blklab0 [LOOP_EXIT] 
@@ -212,6 +218,21 @@ blklab1 [BLOCK]
 Out:{[0, 2, 3, 12]}
 
 In:{[0, 2, 3]}
+blklab3, blklab2 [BLOCK] 
+-------------------------------
+l.0:const %12 = 0 : int
+l.1:lengthof %13 = %0 : int[]
+l.2:sub %14 = %13, %2 : int
+l.3:indexof %15 = %0, %14 : int[]
+l.4:assign %4 = %15  : int
+l.5:const %16 = 1 : int
+l.6:sub %17 = %2, %16 : int
+l.7:assign %2 = %17  : int
+l.8:update %3[%2] = %4 : int[] -> int[]
+-------------------------------
+Out:{[0, 2, 3, 12]}
+
+In:{[0, 2, 3]}
 blklab3, blklab2 [ASSERT] 
 -------------------------------
 l.0:lengthof %9 = %0 : int[]
@@ -223,17 +244,8 @@ l.5:.blklab3
 l.6:fail
 l.7:.blklab2
 l.8:return
-l.9:const %12 = 0 : int
-l.10:lengthof %13 = %0 : int[]
-l.11:sub %14 = %13, %2 : int
-l.12:indexof %15 = %0, %14 : int[]
-l.13:assign %4 = %15  : int
-l.14:const %16 = 1 : int
-l.15:sub %17 = %2, %16 : int
-l.16:assign %2 = %17  : int
-l.17:update %3[%2] = %4 : int[] -> int[]
 -------------------------------
-Out:{[0, 2, 3, 12]}
+Out:{[0, 2, 3]}
 
 In:{[3]}
 blklab0 [LOOP_EXIT] 
@@ -273,6 +285,21 @@ blklab1 [BLOCK]
 Out:{[0, 2, 3, 12]}
 
 In:{[0, 2, 3]}
+blklab3, blklab2 [BLOCK] 
+-------------------------------
+l.0:const %12 = 0 : int
+l.1:lengthof %13 = %0 : int[]
+l.2:sub %14 = %13, %2 : int
+l.3:indexof %15 = %0, %14 : int[]
+l.4:assign %4 = %15  : int
+l.5:const %16 = 1 : int
+l.6:sub %17 = %2, %16 : int
+l.7:assign %2 = %17  : int
+l.8:update %3[%2] = %4 : int[] -> int[]
+-------------------------------
+Out:{[0, 2, 3, 12]}
+
+In:{[0, 2, 3]}
 blklab3, blklab2 [ASSERT] 
 -------------------------------
 l.0:lengthof %9 = %0 : int[]
@@ -284,17 +311,8 @@ l.5:.blklab3
 l.6:fail
 l.7:.blklab2
 l.8:return
-l.9:const %12 = 0 : int
-l.10:lengthof %13 = %0 : int[]
-l.11:sub %14 = %13, %2 : int
-l.12:indexof %15 = %0, %14 : int[]
-l.13:assign %4 = %15  : int
-l.14:const %16 = 1 : int
-l.15:sub %17 = %2, %16 : int
-l.16:assign %2 = %17  : int
-l.17:update %3[%2] = %4 : int[] -> int[]
 -------------------------------
-Out:{[0, 2, 3, 12]}
+Out:{[0, 2, 3]}
 
 In:{[3]}
 blklab0 [LOOP_EXIT] 
@@ -371,15 +389,21 @@ l.5:.blklab3
 l.6:fail
 l.7:.blklab2
 l.8:return
-l.9:const %12 = 0 : int
-l.10:lengthof %13 = %0 : int[]
-l.11:sub %14 = %13, %2 : int
-l.12:indexof %15 = %0, %14 : int[]
-l.13:assign %4 = %15  : int
-l.14:const %16 = 1 : int
-l.15:sub %17 = %2, %16 : int
-l.16:assign %2 = %17  : int
-l.17:update %3[%2] = %4 : int[] -> int[]
+-------------------------------
+Out:{ls, i, r}
+
+In:{ls, i, r}
+blklab3, blklab2 [BLOCK] 
+-------------------------------
+l.0:const %12 = 0 : int
+l.1:lengthof %13 = %0 : int[]
+l.2:sub %14 = %13, %2 : int
+l.3:indexof %15 = %0, %14 : int[]
+l.4:assign %4 = %15  : int
+l.5:const %16 = 1 : int
+l.6:sub %17 = %2, %16 : int
+l.7:assign %2 = %17  : int
+l.8:update %3[%2] = %4 : int[] -> int[]
 -------------------------------
 Out:{ls, i, r, _12}
 
@@ -400,6 +424,10 @@ Out:{}
 
 ###### Live analysis for main function. ######
 Iteration 1
+In:{[]}
+blklab7 [BLOCK] 
+Out:{[]}
+
 In:{[4]}
 blklab7 [ASSERT] 
 -------------------------------
@@ -412,52 +440,58 @@ l.5:.blklab7
 -------------------------------
 Out:{[]}
 
-In:{[2, 3]}
+In:{[3]}
+blklab6 [BLOCK] 
+-------------------------------
+l.0:assign %4 = %3  : int[]
+-------------------------------
+Out:{[4]}
+
+In:{[1, 3]}
 blklab6 [ASSERT] 
 -------------------------------
 l.0:const %15 = 0 : int
-l.1:indexof %16 = %2, %15 : int[]
+l.1:indexof %16 = %1, %15 : int[]
 l.2:const %17 = 10 : int
 l.3:ifeq %16, %17 goto blklab6 : int
 l.4:fail
 l.5:.blklab6
-l.6:assign %4 = %3  : int[]
 -------------------------------
-Out:{[4]}
+Out:{[3]}
 
-In:{[2, 14]}
+In:{[1, 14]}
 reverse18 [BLOCK] 
 -------------------------------
 l.0:assign %3 = %14  : int[]
 -------------------------------
-Out:{[2, 3]}
+Out:{[1, 3]}
 
-In:{[2]}
+In:{[1]}
 reverse18 [INVOKE] 
 -------------------------------
-l.0:invoke (%14) = (%2) reverse:reverse : function(int[])->(int[])
+l.0:invoke (%14) = (%1) reverse:reverse : function(int[])->(int[])
 -------------------------------
-Out:{[2, 14]}
+Out:{[1, 14]}
 
 In:{[]}
 blklab5 [BLOCK] 
 Out:{[]}
 
-In:{[2]}
+In:{[1]}
 blklab4 [LOOP_EXIT] 
-Out:{[2]}
+Out:{[1]}
 
 In:{[1, 2]}
 blklab4 [LOOP_BODY] 
 -------------------------------
 l.0:const %9 = 10 : int
-l.1:ifge %1, %9 goto blklab4 : int
+l.1:ifge %2, %9 goto blklab4 : int
 l.2:const %10 = 10 : int
-l.3:sub %11 = %10, %1 : int
-l.4:update %2[%1] = %11 : int[] -> int[]
+l.3:sub %11 = %10, %2 : int
+l.4:update %1[%2] = %11 : int[] -> int[]
 l.5:const %12 = 1 : int
-l.6:add %13 = %1, %12 : int
-l.7:assign %1 = %13  : int
+l.6:add %13 = %2, %12 : int
+l.7:assign %2 = %13  : int
 -------------------------------
 Out:{[]}
 
@@ -469,11 +503,11 @@ In:{[]}
 code [BLOCK] 
 -------------------------------
 l.0:const %5 = 0 : int
-l.1:assign %1 = %5  : int
-l.2:const %6 = 0 : int
-l.3:const %7 = 10 : int
-l.4:arraygen %8 = [6; 7] : int[]
-l.5:assign %2 = %8  : int[]
+l.1:const %6 = 10 : int
+l.2:arraygen %7 = [5; 6] : int[]
+l.3:assign %1 = %7  : int[]
+l.4:const %8 = 0 : int
+l.5:assign %2 = %8  : int
 -------------------------------
 Out:{[1, 2]}
 
@@ -483,6 +517,10 @@ Out:{[]}
 
 ###### Live analysis for main function. ######
 Iteration 2
+In:{[]}
+blklab7 [BLOCK] 
+Out:{[]}
+
 In:{[4]}
 blklab7 [ASSERT] 
 -------------------------------
@@ -495,52 +533,58 @@ l.5:.blklab7
 -------------------------------
 Out:{[]}
 
-In:{[2, 3]}
+In:{[3]}
+blklab6 [BLOCK] 
+-------------------------------
+l.0:assign %4 = %3  : int[]
+-------------------------------
+Out:{[4]}
+
+In:{[1, 3]}
 blklab6 [ASSERT] 
 -------------------------------
 l.0:const %15 = 0 : int
-l.1:indexof %16 = %2, %15 : int[]
+l.1:indexof %16 = %1, %15 : int[]
 l.2:const %17 = 10 : int
 l.3:ifeq %16, %17 goto blklab6 : int
 l.4:fail
 l.5:.blklab6
-l.6:assign %4 = %3  : int[]
 -------------------------------
-Out:{[4]}
+Out:{[3]}
 
-In:{[2, 14]}
+In:{[1, 14]}
 reverse18 [BLOCK] 
 -------------------------------
 l.0:assign %3 = %14  : int[]
 -------------------------------
-Out:{[2, 3]}
+Out:{[1, 3]}
 
-In:{[2]}
+In:{[1]}
 reverse18 [INVOKE] 
 -------------------------------
-l.0:invoke (%14) = (%2) reverse:reverse : function(int[])->(int[])
+l.0:invoke (%14) = (%1) reverse:reverse : function(int[])->(int[])
 -------------------------------
-Out:{[2, 14]}
+Out:{[1, 14]}
 
 In:{[1, 2]}
 blklab5 [BLOCK] 
 Out:{[1, 2]}
 
-In:{[2]}
+In:{[1]}
 blklab4 [LOOP_EXIT] 
-Out:{[2]}
+Out:{[1]}
 
 In:{[1, 2]}
 blklab4 [LOOP_BODY] 
 -------------------------------
 l.0:const %9 = 10 : int
-l.1:ifge %1, %9 goto blklab4 : int
+l.1:ifge %2, %9 goto blklab4 : int
 l.2:const %10 = 10 : int
-l.3:sub %11 = %10, %1 : int
-l.4:update %2[%1] = %11 : int[] -> int[]
+l.3:sub %11 = %10, %2 : int
+l.4:update %1[%2] = %11 : int[] -> int[]
 l.5:const %12 = 1 : int
-l.6:add %13 = %1, %12 : int
-l.7:assign %1 = %13  : int
+l.6:add %13 = %2, %12 : int
+l.7:assign %2 = %13  : int
 -------------------------------
 Out:{[1, 2]}
 
@@ -552,11 +596,11 @@ In:{[]}
 code [BLOCK] 
 -------------------------------
 l.0:const %5 = 0 : int
-l.1:assign %1 = %5  : int
-l.2:const %6 = 0 : int
-l.3:const %7 = 10 : int
-l.4:arraygen %8 = [6; 7] : int[]
-l.5:assign %2 = %8  : int[]
+l.1:const %6 = 10 : int
+l.2:arraygen %7 = [5; 6] : int[]
+l.3:assign %1 = %7  : int[]
+l.4:const %8 = 0 : int
+l.5:assign %2 = %8  : int
 -------------------------------
 Out:{[1, 2]}
 
@@ -566,6 +610,10 @@ Out:{[]}
 
 ###### Live analysis for main function. ######
 Iteration 3
+In:{[]}
+blklab7 [BLOCK] 
+Out:{[]}
+
 In:{[4]}
 blklab7 [ASSERT] 
 -------------------------------
@@ -578,52 +626,58 @@ l.5:.blklab7
 -------------------------------
 Out:{[]}
 
-In:{[2, 3]}
+In:{[3]}
+blklab6 [BLOCK] 
+-------------------------------
+l.0:assign %4 = %3  : int[]
+-------------------------------
+Out:{[4]}
+
+In:{[1, 3]}
 blklab6 [ASSERT] 
 -------------------------------
 l.0:const %15 = 0 : int
-l.1:indexof %16 = %2, %15 : int[]
+l.1:indexof %16 = %1, %15 : int[]
 l.2:const %17 = 10 : int
 l.3:ifeq %16, %17 goto blklab6 : int
 l.4:fail
 l.5:.blklab6
-l.6:assign %4 = %3  : int[]
 -------------------------------
-Out:{[4]}
+Out:{[3]}
 
-In:{[2, 14]}
+In:{[1, 14]}
 reverse18 [BLOCK] 
 -------------------------------
 l.0:assign %3 = %14  : int[]
 -------------------------------
-Out:{[2, 3]}
+Out:{[1, 3]}
 
-In:{[2]}
+In:{[1]}
 reverse18 [INVOKE] 
 -------------------------------
-l.0:invoke (%14) = (%2) reverse:reverse : function(int[])->(int[])
+l.0:invoke (%14) = (%1) reverse:reverse : function(int[])->(int[])
 -------------------------------
-Out:{[2, 14]}
+Out:{[1, 14]}
 
 In:{[1, 2]}
 blklab5 [BLOCK] 
 Out:{[1, 2]}
 
-In:{[2]}
+In:{[1]}
 blklab4 [LOOP_EXIT] 
-Out:{[2]}
+Out:{[1]}
 
 In:{[1, 2]}
 blklab4 [LOOP_BODY] 
 -------------------------------
 l.0:const %9 = 10 : int
-l.1:ifge %1, %9 goto blklab4 : int
+l.1:ifge %2, %9 goto blklab4 : int
 l.2:const %10 = 10 : int
-l.3:sub %11 = %10, %1 : int
-l.4:update %2[%1] = %11 : int[] -> int[]
+l.3:sub %11 = %10, %2 : int
+l.4:update %1[%2] = %11 : int[] -> int[]
 l.5:const %12 = 1 : int
-l.6:add %13 = %1, %12 : int
-l.7:assign %1 = %13  : int
+l.6:add %13 = %2, %12 : int
+l.7:assign %2 = %13  : int
 -------------------------------
 Out:{[1, 2]}
 
@@ -635,11 +689,11 @@ In:{[]}
 code [BLOCK] 
 -------------------------------
 l.0:const %5 = 0 : int
-l.1:assign %1 = %5  : int
-l.2:const %6 = 0 : int
-l.3:const %7 = 10 : int
-l.4:arraygen %8 = [6; 7] : int[]
-l.5:assign %2 = %8  : int[]
+l.1:const %6 = 10 : int
+l.2:arraygen %7 = [5; 6] : int[]
+l.3:assign %1 = %7  : int[]
+l.4:const %8 = 0 : int
+l.5:assign %2 = %8  : int
 -------------------------------
 Out:{[1, 2]}
 
@@ -656,44 +710,44 @@ In:{}
 code [BLOCK] 
 -------------------------------
 l.0:const %5 = 0 : int
-l.1:assign %1 = %5  : int
-l.2:const %6 = 0 : int
-l.3:const %7 = 10 : int
-l.4:arraygen %8 = [6; 7] : int[]
-l.5:assign %2 = %8  : int[]
+l.1:const %6 = 10 : int
+l.2:arraygen %7 = [5; 6] : int[]
+l.3:assign %1 = %7  : int[]
+l.4:const %8 = 0 : int
+l.5:assign %2 = %8  : int
 -------------------------------
-Out:{index, input}
+Out:{input, index}
 
-In:{index, input}
+In:{input, index}
 blklab4 [LOOP_HEADER] 
-Out:{index, input}
+Out:{input, index}
 
-In:{index, input}
+In:{input, index}
 blklab4 [LOOP_BODY] 
 -------------------------------
 l.0:const %9 = 10 : int
-l.1:ifge %1, %9 goto blklab4 : int
+l.1:ifge %2, %9 goto blklab4 : int
 l.2:const %10 = 10 : int
-l.3:sub %11 = %10, %1 : int
-l.4:update %2[%1] = %11 : int[] -> int[]
+l.3:sub %11 = %10, %2 : int
+l.4:update %1[%2] = %11 : int[] -> int[]
 l.5:const %12 = 1 : int
-l.6:add %13 = %1, %12 : int
-l.7:assign %1 = %13  : int
+l.6:add %13 = %2, %12 : int
+l.7:assign %2 = %13  : int
 -------------------------------
-Out:{index, input}
+Out:{input, index}
 
 In:{input}
 blklab4 [LOOP_EXIT] 
 Out:{input}
 
-In:{index, input}
+In:{input, index}
 blklab5 [BLOCK] 
-Out:{index, input}
+Out:{input, index}
 
 In:{input}
 reverse18 [INVOKE] 
 -------------------------------
-l.0:invoke (%14) = (%2) reverse:reverse : function(int[])->(int[])
+l.0:invoke (%14) = (%1) reverse:reverse : function(int[])->(int[])
 -------------------------------
 Out:{input, _14}
 
@@ -708,12 +762,18 @@ In:{input, tmp}
 blklab6 [ASSERT] 
 -------------------------------
 l.0:const %15 = 0 : int
-l.1:indexof %16 = %2, %15 : int[]
+l.1:indexof %16 = %1, %15 : int[]
 l.2:const %17 = 10 : int
 l.3:ifeq %16, %17 goto blklab6 : int
 l.4:fail
 l.5:.blklab6
-l.6:assign %4 = %3  : int[]
+-------------------------------
+Out:{tmp}
+
+In:{tmp}
+blklab6 [BLOCK] 
+-------------------------------
+l.0:assign %4 = %3  : int[]
 -------------------------------
 Out:{output}
 
@@ -727,6 +787,10 @@ l.3:ifeq %19, %20 goto blklab7 : int
 l.4:fail
 l.5:.blklab7
 -------------------------------
+Out:{}
+
+In:{}
+blklab7 [BLOCK] 
 Out:{}
 
 In:{}
@@ -756,23 +820,23 @@ reverse.19 [.blklab0]
 reverse.20 [	return %3]
 reverse.21 [	return]
 main.0 [	const %5 = 0 : int]
-main.1 [	assign %1 = %5  : int]
-main.2 [	const %6 = 0 : int]
-main.3 [	const %7 = 10 : int]
-main.4 [	arraygen %8 = [6; 7] : int[]]
-main.5 [	assign %2 = %8  : int[]]
+main.1 [	const %6 = 10 : int]
+main.2 [	arraygen %7 = [5; 6] : int[]]
+main.3 [	assign %1 = %7  : int[]]
+main.4 [	const %8 = 0 : int]
+main.5 [	assign %2 = %8  : int]
 main.6 [	loop (%1, %2, %9, %10, %11, %12, %13)]
 main.7 [	const %9 = 10 : int]
-main.8 [	ifge %1, %9 goto blklab4 : int]
+main.8 [	ifge %2, %9 goto blklab4 : int]
 main.9 [	const %10 = 10 : int]
-main.10 [	sub %11 = %10, %1 : int]
-main.11 [	update %2[%1] = %11 : int[] -> int[]]
+main.10 [	sub %11 = %10, %2 : int]
+main.11 [	update %1[%2] = %11 : int[] -> int[]]
 main.12 [	const %12 = 1 : int]
-main.13 [	add %13 = %1, %12 : int]
-main.14 [	assign %1 = %13  : int]
+main.13 [	add %13 = %2, %12 : int]
+main.14 [	assign %2 = %13  : int]
 main.15 [.blklab5]
 main.16 [.blklab4]
-main.17 [	invoke (%14) = (%2) reverse:reverse : function(int[])->(int[])]
+main.17 [	invoke (%14) = (%1) reverse:reverse : function(int[])->(int[])]
 main.18 [	assign %3 = %14  : int[]]
 main.19 [	assert]
 main.20 [	assign %4 = %3  : int[]]

@@ -8,7 +8,9 @@ digraph main{
 "reverse18 [INVOKE]"[shape=box];
 "reverse18 [BLOCK]"[shape=box];
 "blklab6 [ASSERT]"[shape=box];
+"blklab6 [BLOCK]"[shape=box];
 "blklab7 [ASSERT]"[shape=box];
+"blklab7 [BLOCK]"[shape=box];
 "exit [EXIT]"[shape=box];
 "entry [ENTRY]"->"code [BLOCK]";
 "code [BLOCK]"->"blklab4 [LOOP_HEADER]";
@@ -19,7 +21,9 @@ digraph main{
 "blklab5 [BLOCK]"->"blklab4 [LOOP_HEADER]";
 "reverse18 [INVOKE]"->"reverse18 [BLOCK]";
 "reverse18 [BLOCK]"->"blklab6 [ASSERT]";
-"blklab6 [ASSERT]"->"blklab7 [ASSERT]";
-"blklab7 [ASSERT]"->"exit [EXIT]";
+"blklab6 [ASSERT]"->"blklab6 [BLOCK]";
+"blklab6 [BLOCK]"->"blklab7 [ASSERT]";
+"blklab7 [ASSERT]"->"blklab7 [BLOCK]";
+"blklab7 [BLOCK]"->"exit [EXIT]";
 
 }

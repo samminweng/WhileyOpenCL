@@ -11,8 +11,8 @@ function reverse(int[] ls) -> int[]:
 
 method main(System.Console sys):
     // Generated a reversed array 'arr'
-    int index = 0
     int[] input = [0;10]
+    int index = 0
     // Fill in the array (10, 9, 8, 7, ..., 2, 1)
     while index < 10:
         input[index] = 10 - index
