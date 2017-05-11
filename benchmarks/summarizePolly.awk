@@ -58,7 +58,7 @@ BEGIN {
 	FS = "\n";
 	## Test case name
 	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge";
-	testcases="CoinGame";
+	testcases="LZ77";
 
 	## Program Type
 	programtypes["MatrixMult"]="original";

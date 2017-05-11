@@ -275,7 +275,7 @@ exec(){
 }
 ### Determine problem size from cmd line argument
 ### MatrixMult test case
-#exec MatrixMult original 2000
+#exec MatrixMult original 1000
 #exec MatrixMult transpose 2000
 
 ### GCD test case
@@ -286,10 +286,10 @@ exec(){
 ### CoinGame Test Case
 #exec CoinGame original 10000
 #exec CoinGame array 10000
-exec CoinGame array1 10000
+#exec CoinGame array1 10000
 
 ##LZ77 Test Case
-#exec LZ77 original input64x.in
+exec LZ77 original input64x.in
 
 
 ### NQueens Test Case

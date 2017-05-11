@@ -10,11 +10,11 @@ BENCHMARKDIR="$(pwd)"
 
 ## declare compiler used for compilation
 declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" [MergeSort]="gcc" [MatrixMult]="gcc" \
-					   [LZ77]="gcc polly" [SobelEdge]="gcc polly" [Cashtill]="gcc" \
+					   [LZ77]="polly" [SobelEdge]="gcc polly" [Cashtill]="gcc" \
 					   [CoinGame]="polly gcc" )
 ## declare 4 kinds of code generation
 #declare -a codegens=( "naive" "naivedealloc" "nocopy" "nocopydealloc" )
-declare -a codegens=( "naivedealloc" "nocopydealloc" )
+declare -a codegens=( "nocopy" )
 
 declare -A patternmatches=( [Reverse]="disabledpattern" [newTicTacToe]="disabledpattern" [BubbleSort]="disabledpattern" \
 					   		[MergeSort]="disabledpattern" [MatrixMult]="disabledpattern" \
@@ -320,8 +320,8 @@ exec(){
 # # ###
 # # ###########################################
 # # # # ## # Reverse test case
-init Reverse
-exec Reverse original
+#init Reverse
+#exec Reverse original
 
 # # # # # # # # # # newTicTacToe test case
 #init newTicTacToe
@@ -345,8 +345,8 @@ exec Reverse original
 #exec CoinGame array
 
 #### LZ77 test case
-#init LZ77
-#exec LZ77 original
+init LZ77
+exec LZ77 original
 
 # # ###Sobel Edge test
 #init SobelEdge

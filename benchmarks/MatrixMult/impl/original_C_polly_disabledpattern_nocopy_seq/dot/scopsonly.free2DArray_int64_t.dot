@@ -1,0 +1,15 @@
+digraph "Scop Graph for 'free2DArray_int64_t' function" {
+	label="Scop Graph for 'free2DArray_int64_t' function";
+
+	Node0xc4d6bb0 [shape=record,label="{entry}"];
+	Node0xc4d6bb0 -> Node0xc4d4c20;
+	Node0xc4d4c20 [shape=record,label="{entry.split}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xc4cd6d0 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0xc4d6bb0;
+          Node0xc4d4c20;
+        }
+}

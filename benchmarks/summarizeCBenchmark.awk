@@ -33,9 +33,10 @@ function generateReport(results){
 							codegen=codegen_array[c];
 							## Get executable type
 							exectype_total=split(exectypes, exectype_array, " ");
-							for(ec=1;ec<exectype_total;ec++){
+							#print "exectype_total="exectype_total;
+							for(ec=1;ec<=exectype_total;ec++){
 								exectype=exectype_array[ec];
-								th_total=split(threads, th_array, " ");
+								th_total=split(threads[exectype], th_array, " ");
 								for(th=1;th<=th_total;th++){
 									thread=th_array[th];
 									key=testcase","program","codegen","pattern","compiler","exectype","parameter","thread;
@@ -75,7 +76,7 @@ BEGIN {
 	FS = "\n";
 	## Test case name
 	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge Cashtill AppendArrayPattern LZ77";
-	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
+	testcases="LZ77";
 
 	## Program Type
 	programs["Reverse"]="original";
@@ -96,14 +97,14 @@ BEGIN {
 	programs["AppendArrayPattern"]="original";
 
 	# Code Generation
-	codegens = "naive naivedealloc nocopy nocopydealloc";
+	codegens = "nocopydealloc";
 	# Pattern matching
 	patterns["Reverse"] = "disabled";
 	patterns["newTicTacToe"] = "disabled";
 	patterns["BubbleSort"] = "disabled";
 	patterns["MergeSort"] = "disabled";
 	patterns["MatrixMult"] = "disabled";
-	patterns["LZ77"] = "disabled enabled";
+	patterns["LZ77"] = "enabled";
 	patterns["SobelEdge"] = "disabled";
 	patterns["Cashtill"] = "disabled";
 	patterns["AppendArrayPattern"] = "disabled enabled";
@@ -113,7 +114,7 @@ BEGIN {
 	compilers["BubbleSort"] = "gcc";
 	compilers["MergeSort"] = "gcc";
 	compilers["MatrixMult"] = "gcc";
-	compilers["LZ77"] = "gcc";
+	compilers["LZ77"] = "polly";
 	compilers["SobelEdge"] = "gcc";
 	compilers["Cashtill"] = "gcc";
 	compilers["AppendArrayPattern"] = "gcc";
@@ -138,7 +139,8 @@ BEGIN {
 	#parameters["AppendArrayPattern"]="10000 20000 40000 60000 80000 100000";
 
 	# The number of threads
-	threads="1";
+	threads["seq"]="1";
+	threads["openmp"]="1 2 4 6 8";
 	# Results
 	cpu_utils[""] = "";
 	exec_times[""] = "";
@@ -201,7 +203,7 @@ BEGIN {
 		time_key = key","iteration;
 		exec_times[time_key]=exec_time;
 		### Debug code
-		##print "exec_times["time_key"]="exec_times[time_key];
+		#print "exec_times["time_key"]="exec_times[time_key];
 		##pause();
 	}
 
