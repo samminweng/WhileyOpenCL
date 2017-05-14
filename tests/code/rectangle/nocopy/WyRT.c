@@ -293,9 +293,7 @@ BYTE* readFile(FILE *file, size_t* _size){
 
 	// Calculate the output size
 	size_t size = 0;
-
-	while(feof(file) != true){
-		BYTE c = fgetc(file);
+	while(fgetc(file) != EOF){
 		//printf("%c", c);
 		size = size + 1;
 	}
@@ -309,10 +307,11 @@ BYTE* readFile(FILE *file, size_t* _size){
 		exit(-2);
 	}
 
-	// Read the file to 'arr' array. The return of 'fread' function is 0 when the file is successfully loaded to array
-	size_t result = fread(arr, size, 1, file);
-	if(result != 0){
-		fputs("fail to read file to the array at 'readAll' function in Util.c\n", stderr);
+	// Read the file to 'arr' array.
+	//'fread' return the number of items read, i.e. size * sizeof(char)
+	size_t result = fread(arr, sizeof(char), size, file);
+	if(result != size*sizeof(char)){
+		fputs("fail to read a file at 'readAll' function in Util.c\n", stderr);
 		exit(-2);
 	}
 
