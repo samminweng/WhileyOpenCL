@@ -85,11 +85,11 @@ int64_t* Array_Append(_DECL_1DARRAY_PARAM(lhs), _DECL_1DARRAY_PARAM(rhs), _DECL_
 		_14=lhs[i];
 		//update %3[%4] = %14 : int[] -> int[]
 		rs[i] = _14;
-//.blklab1
-blklab1:;
+		//.blklab1
+		blklab1:;
 	}
-//.blklab0
-blklab0:;
+	//.blklab0
+	blklab0:;
 	//loop (%3, %4, %15, %16, %17, %18, %19, %20)
 	while(true){
 		//lengthof %15 = %1 : int[]
@@ -110,11 +110,11 @@ blklab0:;
 		_20=i+_19;
 		//assign %4 = %20  : int
 		i = _20;
-//.blklab3
-blklab3:;
+		//.blklab3
+		blklab3:;
 	}
-//.blklab2
-blklab2:;
+	//.blklab2
+	blklab2:;
 	//return %3
 	_DEALLOC(_2);
 	_DEALLOC(_9);
@@ -125,17 +125,212 @@ blklab2:;
 
 // Write an BYTE array to a file
 void writeAll(FILE *file, BYTE* arr, size_t arr_size){
-	// Count the number of byte (except for EOF)
-	//size_t count=0;
-	//while(count<arr_size){
-		// Check if the byte is not EOF
-		//if(arr[count]==0){
-		//	break;
-		//}
-		//count++;
-	//}
 	// Write out the file
 	fwrite(arr, sizeof(BYTE), arr_size, file);
 }
 
+// Read the file name (ASCII code) and output a file pointer
+FILE* Writer(int64_t* arr, size_t arr_size){
+	// Chars array
+	char* tmp = malloc(MAX_LINE_LENGTH*sizeof(char));
+	// Convert an array of ASCII code to an string
+	size_t i=0;
+	// Iterate through all the chars
+	while(i < arr_size){
+		tmp[i] = (char) arr[i];
+		i = i + 1;
+	}
+
+	tmp[i] = '\0';
+
+	// Declare the filename with given array size
+	char* filename = malloc(arr_size+1*sizeof(char));
+	// Copy 'tmp' string to filename;
+	strncpy(filename, tmp, arr_size+1);
+
+	// 'w': Create a file pointer
+	FILE *fp = fopen(filename, "w");
+	if(fp == NULL){
+		fputs("fail to open the file name at 'Writer' function in Util.c\n", stderr);
+		exit(-2);
+	}
+
+	// Free the file name and tmp arrays
+	free(filename);
+	free(tmp);
+	return fp;
+}
+
+// Read the file name (ASCII code) and output a file pointer
+FILE* Reader(int64_t* arr, size_t arr_size){
+	// Chars array
+	char* tmp = malloc(MAX_LINE_LENGTH*sizeof(char));
+	// Convert an array of ASCII code to an string
+	size_t i=0;
+	// Iterate through all the chars
+	while(i < arr_size){
+		tmp[i] = (char) arr[i];
+		i = i + 1;
+	}
+
+	tmp[i] = '\0';
+
+	// Declare the filename with given array size
+	char* filename = malloc(arr_size+1*sizeof(char));
+	// Copy 'tmp' string to filename;
+	strncpy(filename, tmp, arr_size+1);
+
+	// Open a file pointer
+	FILE *fp = fopen(filename, "r");
+	if(fp == NULL){
+		fputs("fail to open the file name at 'Reader' function in Util.c\n", stderr);
+		exit(-2);
+	}
+
+	// Free the file name and tmp arrays
+	free(filename);
+	free(tmp);
+	return fp;
+}
+
+/*
+ * Convert an array of BYTE to an integer array
+ */
+int64_t* fromBytes(BYTE* input, size_t size){
+	// Create an array of integer
+	int64_t* arr = (int64_t*)malloc(size*sizeof(int64_t));
+	if(arr == NULL){
+		fputs("fail to allocate the memory at fromBytes function in Util.c\n", stderr);
+		exit(-2);
+	}
+	for(size_t i=0;i<size;i++){
+		BYTE b = input[i];
+		// Convert 'char' to ASCII code (integer)
+		arr[i] = b;
+	}
+	return arr;
+}
+// Check if file is a pbm
+bool isPBMFile(FILE *file){
+	char* line = malloc(MAX_LINE_LENGTH*sizeof(char));
+	bool isPBMFormat = false;
+	// Get the first line, which should be 'P1\n'
+	if(fgets(line, MAX_LINE_LENGTH, file)!= NULL){
+		// Get line length
+		size_t len=strlen(line);
+		if(len==3){
+			// Check if line is P1
+			if(line[0]=='P' && line[1]=='1' && line[2]=='\n'){
+				isPBMFormat=true; // The file is a PBM
+			}
+		}
+	}
+	// Free the line
+	free(line);
+	// The file is not a PBM
+	return isPBMFormat;
+}
+// Read an image as an array of bytes
+BYTE* readPBM(FILE *file, size_t* _size){
+	char* line = malloc(MAX_LINE_LENGTH*sizeof(char));
+	size_t length = MAX_LINE_LENGTH;
+	int width = 0;
+	int height = 0;
+	// Read 'width' and 'height' from a file
+	//while(getline(&line, &length, file) != -1){
+	while(fgets(line, length, file) != NULL){
+		// Check if the line is a comment
+		if(line[0]!='#'){
+			// Read the height and width
+			sscanf(line, "%d %d\n", &width, &height);
+			break;
+		}
+	}
+	// Free 'line' as it is not used anymore
+	free(line);
+
+	size_t size = width * height;
+
+	// Allocated byte array. Note the last char (EOF)
+	BYTE* arr = (BYTE*)malloc(size*sizeof(BYTE));
+	if(arr == NULL){
+		fputs("fail to allocate the array at 'readPBM' function in Util.c\n", stderr);
+		exit(-2);
+	}
+
+	// Read a file line-by-line and pyt each byte to the array
+	size_t arr_ind = 0;
+
+	char c;
+	// Read one byte
+	while((c = getc(file)) != EOF){
+		BYTE b;
+		if(c != ' ' && c != '\n'){
+			b = (BYTE)c;
+			if(b == '1'){
+				// b is an edge, represent by 'b'
+				arr[arr_ind] = (BYTE)98;
+			}else if(b == '0'){
+				// b is an space
+				arr[arr_ind] = (BYTE)32;
+			}else{
+				arr[arr_ind] = (BYTE)b;
+			}
+			arr_ind++;
+		}
+	}
+
+	*_size = size;
+
+	return arr;
+}
+
+
+// Read a file from the beginning to end
+BYTE* readFile(FILE *file, size_t* _size){
+	// Set the file position to the beginning of the file
+	rewind(file);
+
+	// Calculate the output size
+	size_t size = 0;
+
+	while(feof(file) != true){
+		BYTE c = fgetc(file);
+		//printf("%c", c);
+		size = size + 1;
+	}
+	// Set the file position to the beginning of the file
+	rewind(file);
+
+	// Allocated byte array. Note the last char (EOF)
+	BYTE* arr = (BYTE*)malloc(size*sizeof(BYTE));
+	if(arr == NULL){
+		fputs("fail to allocate the array at 'readAll' function in Util.c\n", stderr);
+		exit(-2);
+	}
+
+	// Read the file to 'arr' array. The return of 'fread' function is 0 when the file is successfully loaded to array
+	size_t result = fread(arr, size, 1, file);
+	if(result != 0){
+		fputs("fail to read file to the array at 'readAll' function in Util.c\n", stderr);
+		exit(-2);
+	}
+
+	// Update the size of 'arr' array
+	*_size = size;
+	return arr;
+}
+
+// Read all lines of a file and output a BYTE array
+BYTE* readAll(FILE *file, size_t* _size){
+	// Check if file is a pbm
+	bool ispbm=isPBMFile(file);
+
+	if(ispbm){
+		return readPBM(file, _size);
+	}else{
+		// Do the normal reading
+		return readFile(file, _size);
+	}
+}
 

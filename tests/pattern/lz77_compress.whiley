@@ -145,13 +145,13 @@ method main(System.Console sys):
     File.Writer writer = File.Writer("small.dat")
     writer.write(compress_data)
     writer.close()
+    // Read the compress_data from a file
+    //File.Reader file2 = File.Reader("small.dat")
+    //byte[] input_data = file2.readAll()
     // Decompress the data to a string
-    byte[] decompress_data = decompress(compress_data)
-    sys.out.println_s("DECOMPRESSED:   ")
-    sys.out.println_s(ASCII.fromBytes(decompress_data))
-    sys.out.print(|decompress_data|)
-    sys.out.println_s(" bytes")
-    // Array size of 'data' array == Array size of 'decompress_data'
-    assert |data| == |decompress_data|
-    // Verify the 'data' array
-    assert data == decompress_data
+    //byte[] decompress_data = decompress(input_data)
+    //byte[] decompress_data = decompress(compress_data)
+    //sys.out.println_s("DECOMPRESSED:   ")
+    //sys.out.println_s(ASCII.fromBytes(decompress_data))
+    //sys.out.print(|decompress_data|)
+    //sys.out.println_s(" bytes")

@@ -62,13 +62,6 @@ int64_t* parseStringToInt(int64_t* arr);
 int64_t** convertArgsToIntArray(int argc, char** args, size_t *arr_size, size_t *arr_size_size);
 // ArrayList Operators
 int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
-// Convert an array of bytes to an array of int64_t
-int64_t* fromBytes(BYTE* arr, size_t arr_size);
-// Create file pointer to read a file
-FILE* Reader(int64_t* arr, size_t arr_size);
-FILE* Writer(int64_t* arr, size_t arr_size);
-BYTE* readAll(FILE *file, size_t* _size);
-void writeAll(FILE *file, BYTE* arr, size_t arr_size);
 /**
  * Macro Section
 **/
