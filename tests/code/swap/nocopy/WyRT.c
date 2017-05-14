@@ -122,3 +122,20 @@ blklab2:;
 	return rs;
 	//return
 }
+
+// Write an BYTE array to a file
+void writeAll(FILE *file, BYTE* arr, size_t arr_size){
+	// Count the number of byte (except for EOF)
+	//size_t count=0;
+	//while(count<arr_size){
+		// Check if the byte is not EOF
+		//if(arr[count]==0){
+		//	break;
+		//}
+		//count++;
+	//}
+	// Write out the file
+	fwrite(arr, sizeof(BYTE), arr_size, file);
+}
+
+

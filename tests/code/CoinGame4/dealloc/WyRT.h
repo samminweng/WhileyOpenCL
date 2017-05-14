@@ -6,3 +6,5 @@
 int64_t* Array_Append(_DECL_1DARRAY_PARAM(lhs), _DECL_1DARRAY_PARAM(rhs), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE);
 // Convert an integer to a string (an array of integers)
 int64_t* Int_toString(int64_t item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE);
+// Write byte array to a file
+void writeAll(FILE *file, BYTE* arr, size_t arr_size);

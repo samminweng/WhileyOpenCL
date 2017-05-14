@@ -650,7 +650,7 @@ BYTE* readAll(FILE *file, size_t* _size){
 }
 
 // Write an BYTE array to a file
-void writeAll(FILE *file, BYTE* arr, size_t arr_size){
+/*void writeAll(FILE *file, BYTE* arr, size_t arr_size){
 	// Count the number of byte (except for EOF)
 	size_t count=0;
 	while(count<arr_size){
@@ -662,4 +662,4 @@ void writeAll(FILE *file, BYTE* arr, size_t arr_size){
 	}
 	// Write out the file
 	fwrite(arr, sizeof(BYTE), count, file);
-}
+}*/

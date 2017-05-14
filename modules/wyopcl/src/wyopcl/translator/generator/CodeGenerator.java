@@ -1754,7 +1754,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Get file pointer 
 			String fileptr = stores.getVar(code.operand(0), function);
 			// Load the field and file pointer to the target register.
-			stores.loadField(code.target(0), field+"\t"+fileptr, function);
+			stores.loadField(code.target(0), field+":"+fileptr, function);
 		} else {
 			// Free lhs variable
 			extractLHSVar(statement, code, function);
@@ -1885,9 +1885,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				default:
 					throw new RuntimeException("Not implemented." + code);
 				}
-			}else if (func_name.contains("readAll")){
+			}else if (func_name.matches("readAll:\\w*")){
 				// Get file pointer
-				String ptr = func_name.split("\t")[1];
+				String ptr = func_name.split(":")[1];
 				// Get output variable
 				String output = stores.getVar(code.target(0), function);
 				// Read a file as an array of Bytes
@@ -1896,16 +1896,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				this.deallocatedAnalyzer.ifPresent(a ->{
 					statement.add(indent+ "_ADD_DEALLOC("+output+");");
 				});
-			}else if(func_name.contains("write")){
+			}else if(func_name.matches("write:\\w*")){
 				// Get file pointer
-				String ptr = func_name.split("\t")[1];
+				String ptr = func_name.split(":")[1];
 				// Get byte array at index '1'
 				String arr = stores.getVar(code.operand(1), function);
 				// Read a file as an array of Bytes
 				statement.add(indent+"writeAll("+ptr+", "+arr+", "+arr+"_size);");
-			}else if(func_name.contains("close")){
+			}else if(func_name.matches("close:\\w*")){
 				// Close the file pointer
-				String ptr = func_name.split("\t")[1];
+				String ptr = func_name.split(":")[1];
 				// Close and nullify the file 
 				statement.add(indent+"fclose("+ptr+");");
 				statement.add(indent+""+ptr+" = NULL;");

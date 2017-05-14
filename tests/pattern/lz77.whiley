@@ -10,7 +10,7 @@ import whiley.lang.*
 
 // Positive integer type
 type nat is (int x) where x >= 0
-// Match type 
+// Match type
 type Match is ({nat offset, nat len} this)
 
 // Find the matched entry
@@ -97,7 +97,7 @@ function compress(byte[] data) -> (byte[] output):
         else:
             // Skip the matched bytes
             pos = pos + m.len
-        // Write 'offset-length' pair to the output array 
+        // Write 'offset-length' pair to the output array
         output = append(output, offset)
         output = append(output, length)
     return output
@@ -141,6 +141,10 @@ method main(System.Console sys):
     //sys.out.println_s(ASCII.fromBytes(compress_data))
     sys.out.print(|compress_data|)
     sys.out.println_s(" bytes")
+    // Write out compressed data to 'small.dat' file
+    File.Writer writer = File.Writer("small.dat")
+    writer.write(compress_data)
+    writer.close()
     // Decompress the data to a string
     byte[] decompress_data = decompress(compress_data)
     sys.out.println_s("DECOMPRESSED:   ")
@@ -149,5 +153,5 @@ method main(System.Console sys):
     sys.out.println_s(" bytes")
     // Array size of 'data' array == Array size of 'decompress_data'
     assert |data| == |decompress_data|
-    // Verify the 'data' array 
+    // Verify the 'data' array
     assert data == decompress_data
