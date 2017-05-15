@@ -39,11 +39,11 @@ public final class BaseTestUtil {
 
 	private final String whiley_runtime_lib = lib_path + "wyrt-" + version + ".jar";
 
-	private final String code_path = workspace_path + "tests" + File.separator + "code" + File.separator;
+	//private final String code_path = workspace_path + "tests" + File.separator + "code" + File.separator;
 
 	// Log file
-	private final File logfile = new File(code_path + "log.txt");
-	
+	private final File logfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "log.txt");
+
 	public BaseTestUtil() {
 
 	}
@@ -388,6 +388,36 @@ public final class BaseTestUtil {
 		}
 		return exitValue;
 	}
+	/**
+	 * Copy input files to generated C code for some test cases, e.g. LZ77 or SobelEdge
+	 * 
+	 * 
+	 * @param testcase
+	 * @param basePath
+	 * @param destPath
+	 */
+	private void copyInputFiles(String testcase, Path basePath, Path destPath){
+		try {
+			if(testcase.equals("lz77") || testcase.equals("lz77_2")){
+				// Copy 'small.in' to the generated fold
+				FileUtils.copyFileToDirectory(
+						new File(basePath + File.separator +"Inputfiles"+ File.separator + "small.in"),
+						destPath.toFile());
+			}else if(testcase.equals("lz77_3")){
+				// Copy PBM image files to the folder
+				FileUtils.copyFileToDirectory( new File(basePath + File.separator +"Inputfiles"+ File.separator + "small.dat"), 
+						destPath.toFile());
+			}else if (testcase.equals("fileread") || testcase.equals("fileread2")
+					|| testcase.equals("SobelEdge1") || testcase.equals("SobelEdge2")){
+				// Copy PBM image files to the folder
+				FileUtils.copyFileToDirectory( new File(basePath + File.separator +"Inputfiles"+ File.separator + "image32x32.pbm"), 
+						destPath.toFile());
+			}
+		} catch (IOException e) {
+			throw new RuntimeException("Unable to copy files from 'Inputfiles' folder");
+		}
+	}
+
 
 	/**
 	 * Create the 'destPath' folder 
@@ -398,9 +428,9 @@ public final class BaseTestUtil {
 	 * @param sourcePath 
 	 * @param destPath
 	 */
-	private void createFolderAndCopyFiles(String testcase, Path sourcePath, Path destPath) {
+	private void createFolderAndCopyFiles(String testcase, Path basePath, Path destPath) {
 		try {
-			
+
 			// Create the destDir folder.
 			if (Files.exists(destPath)) {
 				// If destDir exists, then recursively Delete files in the destDir folder.
@@ -411,34 +441,13 @@ public final class BaseTestUtil {
 			}
 
 			// 1. Copy source Whiley program to destDir directory.
-			Path whileyFile = Paths.get(sourcePath + File.separator + testcase + ".whiley");
-			// Copy source.whiley to destDir folder
-			Files.copy(whileyFile, Paths.get(destPath + File.separator + testcase + ".whiley"));
-
+			FileUtils.copyFileToDirectory(new File(basePath + File.separator +"Whileyfiles"+ File.separator + testcase + ".whiley"),
+					destPath.toFile());
 			// 2. Copy Util.c/WyRT.c and Util.h/WyRT.h to destDir
-			Files.copy(Paths.get(code_path + "Util.c"),
-					Paths.get(destPath + File.separator + "Util.c"));
-			Files.copy(Paths.get(code_path + "WyRT.c"),
-					Paths.get(destPath + File.separator + "WyRT.c"));
-			Files.copy(Paths.get(code_path + "Util.h"),
-					Paths.get(destPath + File.separator + "Util.h"));
-			Files.copy(Paths.get(code_path + "WyRT.h"),
-					Paths.get(destPath + File.separator + "WyRT.h"));
-
-			// (Optional) Copy 'medium.in' to destDir  
-			if(testcase.equals("lz77") || testcase.equals("lz77_2")){
-				// 'small.in
-				File small = new File(sourcePath + File.separator + "small.in");
-				Files.copy(small.toPath(), Paths.get(destPath + File.separator + "small.in"));
-
-			}else if (testcase.equals("fileread") || testcase.equals("fileread2")
-					|| testcase.equals("SobelEdge1") || testcase.equals("SobelEdge2")){
-				// A PBM image file
-				File in = new File(sourcePath + File.separator + "image32x32.pbm");
-				// Copy 'feep.pbm' to folder
-				Files.copy(in.toPath(), Paths.get(destPath + File.separator + "image32x32.pbm"));
-			}
-
+			FileUtils.copyFileToDirectory(new File(basePath + File.separator+ "Util.c"), destPath.toFile());
+			FileUtils.copyFileToDirectory(new File(basePath + File.separator+ "WyRT.c"), destPath.toFile());
+			FileUtils.copyFileToDirectory(new File(basePath + File.separator+ "Util.h"), destPath.toFile());
+			FileUtils.copyFileToDirectory(new File(basePath + File.separator+ "WyRT.h"), destPath.toFile());
 		} catch (Exception ex) {
 			throw new AssertionError("Fails to create the " + destPath + " folder");
 		}
@@ -528,17 +537,17 @@ public final class BaseTestUtil {
 	}
 
 	/**
-	 * Extract the option value for the name used to create the folder.
+	 * Extract the option value to create the destination folder, which stores all generated 
+	 * C code.
 	 * 
-	 * 
-	 * @param sourceDir
+	 * @param baseDir
 	 * @param testcase
 	 * @param options
 	 * @return
 	 */
-	private Path processOptions(Path sourceDir, String testcase, String... options){
+	private Path processOptions(Path baseDir, String testcase, String... options){
 		Path destDir;
-		String path = sourceDir + File.separator + testcase;
+		String path = baseDir + File.separator + "impl"+ File.separator+ testcase;
 		// Iterate the options and find the type of generated code.
 		int index = 0;
 		switch(options[0]){
@@ -590,7 +599,7 @@ public final class BaseTestUtil {
 	 * The validation is to compile and run the generated C code and check if the exit value is 0.
 	 * 
 	 *
-	 * @param sourceDir
+	 * @param baseDir
 	 *            the directory of source Whiley program.
 	 * @param destDir
 	 *            the directory of generated code.
@@ -599,19 +608,22 @@ public final class BaseTestUtil {
 	 * @param options
 	 *            the extra options, e.g. 'copy'
 	 */
-	public void execCodeGeneration(Path sourceDir, String testcase, String... options) {
+	public void execCodeGeneration(Path baseDir, String testcase, String... options) {
 		try {
-		
-			Path destDir= processOptions(sourceDir, testcase, options);
+			// 1. Find the destination folder
+			Path destDir= processOptions(baseDir, testcase, options);
 
 			// 2. Prepare folder and copy files
-			createFolderAndCopyFiles(testcase, sourceDir, destDir);
+			createFolderAndCopyFiles(testcase, baseDir, destDir);
 
 			// 3. Make the command line arguments.
 			String cmd = makeCmd(testcase, options);
 
-			// Generate the C code
+			// 4. Generate the C code
 			runCmd(cmd, destDir, false);
+
+			// (Optional) Copy input files to folder
+			copyInputFiles(testcase, baseDir, destDir);
 
 			// Check if *.c and *.h files are generated or not.
 			assertEquals(Files.exists(Paths.get(destDir + File.separator + testcase + ".c")), true);
@@ -626,7 +638,7 @@ public final class BaseTestUtil {
 			}
 
 			// Delete the Wyil files inside folder
-			Files.deleteIfExists(Paths.get(sourceDir + testcase + ".wyil"));
+			Files.deleteIfExists(Paths.get(baseDir + testcase + ".wyil"));
 
 		} catch (Exception e) {
 			throw new RuntimeException("Test file: " + testcase + ".whiley", e);

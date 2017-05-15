@@ -10,6 +10,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.apache.maven.artifact.ant.shaded.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,6 +47,7 @@ public class CodeGenerationTestCase {
 	public CodeGenerationTestCase(String testcase) {
 		this.testcase = testcase;		
 		System.out.print("=== "+testcase+" ===\n");
+		
 	}
 
 	@Parameterized.Parameters(name = "{index}:{0}")
@@ -82,6 +84,7 @@ public class CodeGenerationTestCase {
 				"cashtill",
 				"lz77",
 				"lz77_2",
+				//"lz77_3", // Uncompress the lz77 file. 
 				"fileread", //Read 'feep.pbm' as a byte array
 				"fileread2",// Read 'feep.pbm' and output the array to console 
 				"SobelEdge1", // Read 'feep.pbm', detect the edges and output the resulting array
@@ -90,30 +93,30 @@ public class CodeGenerationTestCase {
 	}
 
 	@Test
-	public void testNaiveCCode() {
-		System.out.print("Naive C code \n");
+	public void testNaiveCCode() throws IOException  {
+		System.out.print("Naive C code \n");		
 		util.execCodeGeneration(codeDir, testcase, "-code");
 	}
 
 	@Test
-	public void testNaiveDeallocatedCCode() {
-		System.out.print("Naive + deallocated C code \n");
+	public void testNaiveDeallocatedCCode() throws IOException  {
+		System.out.print("Naive + deallocated C code \n");		
 		util.execCodeGeneration(codeDir, testcase, "-code", "-dealloc");
 		// Check output 
 		util.verifyOutput(testcase, codeDir, "dealloc");
 	}
 
 	@Test
-	public void testNoCopyCCode() {
-		System.out.print("Copy eliminated C code \n");
+	public void testNoCopyCCode() throws IOException {
+		System.out.print("Copy eliminated C code \n");		
 		util.execCodeGeneration(codeDir, testcase, "-code", "-nocopy");
 		// Verify output of sobel edges
 		util.verifyOutput(testcase, codeDir, "nocopy");
 	}
 
 	@Test
-	public void testNoCopyDeallocatedCCode() {
-		System.out.print("Copy eliminated + deallocated C code \n");
+	public void testNoCopyDeallocatedCCode() throws IOException {
+		System.out.print("Copy eliminated + deallocated C code \n");		
 		util.execCodeGeneration(codeDir, testcase, "-code", "-nocopy", "-dealloc");
 		// Check output 
 		util.verifyOutput(testcase, codeDir, "nocopy_dealloc");
