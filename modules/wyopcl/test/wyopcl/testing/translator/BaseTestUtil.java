@@ -39,8 +39,6 @@ public final class BaseTestUtil {
 
 	private final String whiley_runtime_lib = lib_path + "wyrt-" + version + ".jar";
 
-	//private final String code_path = workspace_path + "tests" + File.separator + "code" + File.separator;
-
 	// Log file
 	private final File logfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "log.txt");
 
@@ -144,29 +142,27 @@ public final class BaseTestUtil {
 	 * The analysis results are compared with the pre-stored ones,
 	 * to check if the output are the same. 
 	 * 
-	 * @param sourceDir
+	 * @param baseDir
 	 * @param testcase
 	 * @param options
 	 */
-	public void execPatternMatch(Path sourceDir, String testcase, String... options) {
+	public void execPatternMatch(Path baseDir, String testcase, String... options) {
 		// Check the bound option 
 		if(options[0] != "-pattern"){
 			throw new RuntimeException("Not passing the 'pattern' option in " + testcase + " test case");
 		}
-		// Get the function name
-		String func_name = options[1];
-
+		
 		Process process;
 		try {		
 			//Path destDir = Paths.get(sourceDir + File.separator + testcase + File.separator);
-			Path sysout = Paths.get(sourceDir + File.separator + testcase + File.separator + func_name +"_pattern.sysout");
+			Path sysout = Paths.get(baseDir + File.separator + "Sysout" + File.separator + testcase + ".sysout");
 			// Make the command
 			String cmd = makeCmd(testcase, options);
 
 			// Get the runtime.
 			Runtime rt = Runtime.getRuntime();
 			// Change the folder Run the command
-			process = rt.exec(cmd, null, sourceDir.toFile());
+			process = rt.exec(cmd, null, baseDir.toFile());
 
 			process.waitFor();
 
@@ -178,7 +174,7 @@ public final class BaseTestUtil {
 					Files.newBufferedReader(sysout, StandardCharsets.UTF_8));
 
 			// Remove all generated WyIL files.
-			Files.deleteIfExists(Paths.get(sourceDir + testcase + ".wyil"));
+			Files.deleteIfExists(Paths.get(baseDir + testcase + ".wyil"));
 		} catch (Exception e) {
 			throw new RuntimeException("Test file: " + testcase + ".whiley", e);
 		}
@@ -404,8 +400,12 @@ public final class BaseTestUtil {
 						new File(basePath + File.separator +"Inputfiles"+ File.separator + "small.in"),
 						destPath.toFile());
 			}else if(testcase.equals("lz77_3")){
-				// Copy PBM image files to the folder
+				// Copy 'small.dat' files to the folder
 				FileUtils.copyFileToDirectory( new File(basePath + File.separator +"Inputfiles"+ File.separator + "small.dat"), 
+						destPath.toFile());
+			}else if(testcase.equals("lz77_compress")){
+				// Copy 'small.dat' files to the folder
+				FileUtils.copyFileToDirectory( new File(basePath + File.separator +"Inputfiles"+ File.separator + "input2x.in"), 
 						destPath.toFile());
 			}else if (testcase.equals("fileread") || testcase.equals("fileread2")
 					|| testcase.equals("SobelEdge1") || testcase.equals("SobelEdge2")){
@@ -444,10 +444,14 @@ public final class BaseTestUtil {
 			FileUtils.copyFileToDirectory(new File(basePath + File.separator +"Whileyfiles"+ File.separator + testcase + ".whiley"),
 					destPath.toFile());
 			// 2. Copy Util.c/WyRT.c and Util.h/WyRT.h to destDir
-			FileUtils.copyFileToDirectory(new File(basePath + File.separator+ "Util.c"), destPath.toFile());
-			FileUtils.copyFileToDirectory(new File(basePath + File.separator+ "WyRT.c"), destPath.toFile());
-			FileUtils.copyFileToDirectory(new File(basePath + File.separator+ "Util.h"), destPath.toFile());
-			FileUtils.copyFileToDirectory(new File(basePath + File.separator+ "WyRT.h"), destPath.toFile());
+			FileUtils.copyFileToDirectory(new File(workspace_path + "tests" + File.separator + "code" + File.separator + File.separator+ "Util.c"),
+					destPath.toFile());
+			FileUtils.copyFileToDirectory(new File(workspace_path + "tests" + File.separator + "code" + File.separator + File.separator+ "WyRT.c"),
+					destPath.toFile());
+			FileUtils.copyFileToDirectory(new File(workspace_path + "tests" + File.separator + "code" + File.separator + File.separator+ "Util.h"),
+					destPath.toFile());
+			FileUtils.copyFileToDirectory(new File(workspace_path + "tests" + File.separator + "code" + File.separator + File.separator+ "WyRT.h"),
+					destPath.toFile());
 		} catch (Exception ex) {
 			throw new AssertionError("Fails to create the " + destPath + " folder");
 		}
@@ -556,7 +560,7 @@ public final class BaseTestUtil {
 			index = index +2;
 			break;
 		case "-pattern":
-			path += File.separator + options[1]+ "_pattern";
+			path += File.separator + "enable_pattern";
 			index = index +2;
 			break;
 		case "-nocopy":

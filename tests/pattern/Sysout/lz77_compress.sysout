@@ -1,3 +1,4 @@
+WARNING: version numbering unavailable
 Pattern matching on compress function completed. 
 {
 init_before:
@@ -13,7 +14,7 @@ loop_header:
 	lengthof %10 = %0 : byte[]
 	ifge %2, %10 goto blklab12 : int
 loopbody_before:
-	invoke (%11) = (%0, %2) lz77:findLongestMatch : function(byte[],lz77:nat)->(lz77:Match)
+	invoke (%11) = (%0, %2) lz77_compress:findLongestMatch : function(byte[],lz77_compress:nat)->(lz77_compress:Match)
 	assign %3 = %11  : {int len,int offset}
 	fieldload %13 = %3 offset : {int len,int offset}
 	invoke (%12) = (%13) whiley/lang/Int:toUnsignedByte : function(whiley/lang/Int:u8)->(byte)
@@ -36,9 +37,9 @@ loopbody_after:
 	add %21 = %2, %20 : int
 	assign %2 = %21  : int
 	.blklab15
-	invoke (%22) = (%1, %4) lz77:append : function(byte[],byte)->(byte[])
+	invoke (%22) = (%1, %4) lz77_compress:append : function(byte[],byte)->(byte[])
 	assign %1 = %22  : byte[]
-	invoke (%23) = (%1, %5) lz77:append : function(byte[],byte)->(byte[])
+	invoke (%23) = (%1, %5) lz77_compress:append : function(byte[],byte)->(byte[])
 	assign %1 = %23  : byte[]
 	.blklab13
 loop_exit:
@@ -51,8 +52,8 @@ AppendArray:
 	&& array_var(_1)
 	&& array_init(arraygen %9 = [7; 8] : byte[])
 	&& array_append (
-		invoke (%22) = (%1, %4) lz77:append : function(byte[],byte)->(byte[])
-		invoke (%23) = (%1, %5) lz77:append : function(byte[],byte)->(byte[]) )
+		invoke (%22) = (%1, %4) lz77_compress:append : function(byte[],byte)->(byte[])
+		invoke (%23) = (%1, %5) lz77_compress:append : function(byte[],byte)->(byte[]) )
 	&& while_cond(_2, <, 0 + |_0|)
 	=> loop_iters(_2, 0 + |_0|)
-Pattern transformation on compress function completed.  File: lz77.wyil
+Pattern transformation on compress function completed.  File: lz77_compress.wyil
