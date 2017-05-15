@@ -368,6 +368,15 @@ void printf_s(int64_t* input, size_t input_size) {
 	// Print the last char
 	if (input_size > MAX_LENGTH) {
 		printf(" ... ");
+		// Print the last 10 chars
+		size_t i = input_size-10;
+		while(i < input_size){
+			char c = input[i];
+			if(c>0){
+				printf("%c", c);
+			}
+			i++;
+		}
 	}
 }
 /**

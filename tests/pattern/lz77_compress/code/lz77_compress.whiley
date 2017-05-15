@@ -14,17 +14,23 @@ type nat is (int x) where x >= 0
 type Match is ({nat offset, nat len} this)
 
 // Find the matched entry
-function match(byte[] data, nat offset, nat end) -> int:
-    //
+/*function match(byte[] data, nat offset, nat end) -> int:
     nat pos = end
     nat len = 0
-    //
     while offset < pos && pos < |data| && data[offset] == data[pos] && len < 255:
-        //
         offset = offset + 1
         pos = pos + 1
         len = len + 1
-    //
+    return len
+*/
+// Find the matched entry with affine loop bound
+function match(byte[] data, nat offset, nat end) -> int:
+    nat pos = end
+    nat len = 0
+    nat maxIter = Math.min(pos - offset, |data| - pos)
+    maxIter = Math.min(255, maxIter)
+    while len < maxIter && data[offset+len] == data[pos+len]:
+        len = len + 1
     return len
 
 // pos is current position in input value
@@ -129,7 +135,7 @@ function decompress(byte[] data) -> (byte[] output):
 
 method main(System.Console sys):
     // Create a byte array with repeated text
-    File.Reader file = File.Reader("small.in")
+    File.Reader file = File.Reader("input2x.in")
     byte[] data = file.readAll()
     sys.out.println_s("Data:         ")
     sys.out.println_s(ASCII.fromBytes(data))
@@ -142,7 +148,7 @@ method main(System.Console sys):
     sys.out.print(|compress_data|)
     sys.out.println_s(" bytes")
     // Write out compressed data to 'small.dat' file
-    File.Writer writer = File.Writer("small.dat")
+    File.Writer writer = File.Writer("input2x.dat")
     writer.write(compress_data)
     writer.close()
     // Read the compress_data from a file

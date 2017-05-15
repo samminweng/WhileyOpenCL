@@ -13,7 +13,7 @@
 // This definition allows the portability of C code across the platforms.
 #define _CRT_SECURE_NO_WARNINGS
 // Specify the maximal amounts of chars that are printed out using 'printf' function
-#define MAX_LENGTH 100
+#define MAX_LENGTH 1024
 // Specify the maximal number of chars that a line in PBM should be read
 // i.e. 16384 bytes, to avoid using too many memory space and stop the sobel edge
 #define MAX_LINE_LENGTH 1024*16

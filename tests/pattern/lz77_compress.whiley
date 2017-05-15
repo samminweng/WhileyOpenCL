@@ -14,17 +14,23 @@ type nat is (int x) where x >= 0
 type Match is ({nat offset, nat len} this)
 
 // Find the matched entry
-function match(byte[] data, nat offset, nat end) -> int:
-    //
+/*function match(byte[] data, nat offset, nat end) -> int:
     nat pos = end
     nat len = 0
-    //
     while offset < pos && pos < |data| && data[offset] == data[pos] && len < 255:
-        //
         offset = offset + 1
         pos = pos + 1
         len = len + 1
-    //
+    return len
+*/
+// Find the matched entry with affine loop bound
+function match(byte[] data, nat offset, nat end) -> int:
+    nat pos = end
+    nat len = 0
+    nat maxIter = Math.min(pos - offset, |data| - pos)
+    maxIter = Math.min(255, maxIter)
+    while len < maxIter && data[offset+len] == data[pos+len]:
+        len = len + 1
     return len
 
 // pos is current position in input value
@@ -44,8 +50,7 @@ function findLongestMatch(byte[] data, nat pos) -> (Match m):
     // Return a 'Match' object
     return {offset:bestOffset, len:bestLen}
 
-// Append a byte to the byte array inside 'Data' structure
-// This is temporary and should be removed
+// Append a byte to the byte array
 function append(byte[] items, byte item) -> (byte[] nitems):
     //ensures |nitems| == |items| + 1:
     //
@@ -101,6 +106,16 @@ function compress(byte[] data) -> (byte[] output):
         output = append(output, offset)
         output = append(output, length)
     return output
+// Resize the input array to the array of given array size
+function resize(byte[] items, int size) -> (byte[] nitems)
+requires |items| >= size
+ensures |nitems| == size:
+    nitems = [0b; size]
+    int i = 0
+    while i < size:
+        nitems[i] = items[i]
+        i = i + 1
+    return nitems
 
 // Decompress 'input' array to a string
 function decompress(byte[] data) -> (byte[] output):
@@ -129,7 +144,7 @@ function decompress(byte[] data) -> (byte[] output):
 
 method main(System.Console sys):
     // Create a byte array with repeated text
-    File.Reader file = File.Reader("small.in")
+    File.Reader file = File.Reader("input2x.in")
     byte[] data = file.readAll()
     sys.out.println_s("Data:         ")
     sys.out.println_s(ASCII.fromBytes(data))
@@ -142,7 +157,7 @@ method main(System.Console sys):
     sys.out.print(|compress_data|)
     sys.out.println_s(" bytes")
     // Write out compressed data to 'small.dat' file
-    File.Writer writer = File.Writer("small.dat")
+    File.Writer writer = File.Writer("input2x.dat")
     writer.write(compress_data)
     writer.close()
     // Read the compress_data from a file
