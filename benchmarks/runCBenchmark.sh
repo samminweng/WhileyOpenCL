@@ -10,19 +10,14 @@ BENCHMARKDIR="$(pwd)"
 
 ## declare compiler used for compilation
 declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" [MergeSort]="gcc" [MatrixMult]="gcc" \
-					   [LZ77]="polly" [SobelEdge]="gcc polly" [Cashtill]="gcc" \
+					   [LZ77]="gcc" [SobelEdge]="gcc polly" [Cashtill]="gcc" \
 					   [CoinGame]="polly gcc" )
 ## declare 4 kinds of code generation
-#declare -a codegens=( "naive" "naivedealloc" "nocopy" "nocopydealloc" )
-declare -a codegens=( "nocopy" )
-
-declare -A patternmatches=( [Reverse]="disabledpattern" [newTicTacToe]="disabledpattern" [BubbleSort]="disabledpattern" \
-					   		[MergeSort]="disabledpattern" [MatrixMult]="disabledpattern" \
-					   		[LZ77]="disabledpattern enabledpattern" [SobelEdge]="disabledpattern" [Cashtill]="disabledpattern" \
-					   		[CoinGame]="disabledpattern" )
+declare -a codegens=( "naive" "naivedealloc" "nocopy" "nocopydealloc" )
+#declare -a codegens=( "nocopydealloc" )
 
 ## Declare an associative array for pattern matching
-declare -A patterns=( [LZ77]=compress )
+declare -A patterns=( [LZ77_compress]=compress )
 
 ## declare the number of threads
 declare -a threads=( 1 2 3 4 5 6 7 8 )
@@ -32,8 +27,8 @@ declare -A parameters=( [Reverse]="200000000 400000000 600000000 800000000 10000
 						#[Reverse]="1000 10000 100000 1000000 10000000 100000000" \
 						[newTicTacToe]="1000 10000 100000" [BubbleSort]="1000 10000 100000" [MergeSort]="1000 10000 100000" \
 						[MatrixMult]="1000 2000 4000" \
-						[LZ77]="input1x.in input2x.in input4x.in input8x.in input16x.in input32x.in input64x.in input128x.in input256x.in input512x.in input1024x.in" \
-						#[LZ77]="input8x.in" \
+						[LZ77]="input1x input2x input4x input8x input16x input32x input64x input128x input256x input512x input1024x" \
+						#[LZ77]="input8x" \
 						[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm image256x256.pbm image512x512.pbm image1024x1024.pbm" \
 						#[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm" \
 						[Cashtill]="1000 1200 1400 1600 1800 2000" \
@@ -73,11 +68,13 @@ generateCode(){
 	## Enable the pattern matching on the specified function
 	if [ $pattern = "enabledpattern" ]
 	then
-		func=${patterns[$testcase]}
-		### Enable pattern transformation
-		wyopcl=$wyopcl" -pattern $func"
+		func=${patterns[$testcase"_"$program]}
+		if [ -n "$func" ]
+		then
+			### Enable pattern transformation
+			wyopcl=$wyopcl" -pattern $func"
+		fi
 	fi
-	###echo $codeDir
 	## Clean the folder
 	rm -rf "$codeDir"
 	mkdir -p "$codeDir"
@@ -187,13 +184,19 @@ run(){
 	do
 		echo "Run the $program $testcase on $parameter using $compiler" >> $result
 		echo "Begin $i iteration" >> $result
+		#read -p "Press [Enter] to continue..."
 		#timeout $TIMEOUT perf stat out/"$executable.out" $parameter >>$result 2>> $result
 		start=`date +%s%N`
 		case "$testcase" in
-		## LZ test case
 			"LZ77")
-				##read -p "Press [Enter] to continue..."
-				timeout $TIMEOUT "out/$executable" "$BENCHMARKDIR/$testcase/$parameter" >> $result
+				#read -p "Press [Enter] to continue..."
+				if [ $program = "compress" ]
+				then
+					timeout $TIMEOUT "out/$executable" "$BENCHMARKDIR/$testcase/Inputfiles/$parameter.in" \
+									 "$BENCHMARKDIR/$testcase/Inputfiles/$parameter.dat" >> $result
+				else
+					timeout $TIMEOUT "out/$executable" "$BENCHMARKDIR/$testcase/Inputfiles/$parameter.dat"  >> $result
+				fi
 				;;
 			"SobelEdge")
 				#echo $parameter
@@ -264,11 +267,21 @@ exec(){
 			for codegen in "${codegens[@]}"
 			do
 				echo $codegen
+				str=${patterns[$testcase"_"$program]}
+				echo $str
+				# Test pattern is missing or not (non-empty string (-n))
+				if [ -n "$str" ]
+				then
+					patternmatches="disabledpattern enabledpattern"
+					#read -p "Found Pattern..."${patternmatches}
+				else
+					patternmatches="disabledpattern"
+				fi
+				#read -p "Press [Enter] to continue..."$patternmatches
 				## Go through patternmatch setting
-				for patternmatch in ${patternmatches[$testcase]}
+				for patternmatch in ${patternmatches}
 				do
 					echo $patternmatch
-					#read -p "Press [Enter] to continue..."
 					# Generate sequential C code
 					generateCode $testcase $program $compiler $codegen $patternmatch "seq"
 					# Compile C code
@@ -277,9 +290,7 @@ exec(){
 					if [ $compiler = "polly" ]
 					then
 						## Generate parallel code using Polly compiler
-						#read -p "Press [Enter] to continue..."
 						echo $code
-						#read -p "Press [Enter] to continue..."
 						# Generate C code
 						generateCode $testcase $program $compiler $codegen $patternmatch "openmp"
 						# Compile C code using different compiler
@@ -346,7 +357,8 @@ exec(){
 
 #### LZ77 test case
 init LZ77
-exec LZ77 original
+exec LZ77 compress
+exec LZ77 decompress
 
 # # ###Sobel Edge test
 #init SobelEdge

@@ -63,7 +63,7 @@ BEGIN {
 	## Program Type
 	programtypes["MatrixMult"]="original";
 	programtypes["CoinGame"]="original array ";
-	programtypes["LZ77"]="original";
+	programtypes["LZ77"]="compress decompress";
 
 	# Pattern matching
 	patterns["MatrixMult"] = "disabled";

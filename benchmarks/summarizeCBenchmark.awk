@@ -92,19 +92,19 @@ BEGIN {
 	# ## Recursive function call
 	# programs["NQueens"]="original integer";
 	# ### Pattern transformation
-	programs["LZ77"]="original";
+	programs["LZ77"]="compress decompress";
 	programs["Cashtill"]="original";
-	programs["AppendArrayPattern"]="original";
+	#programs["AppendArrayPattern"]="original";
 
 	# Code Generation
-	codegens = "nocopydealloc";
+	codegens = "naive naivedealloc nocopy nocopydealloc";
 	# Pattern matching
 	patterns["Reverse"] = "disabled";
 	patterns["newTicTacToe"] = "disabled";
 	patterns["BubbleSort"] = "disabled";
 	patterns["MergeSort"] = "disabled";
 	patterns["MatrixMult"] = "disabled";
-	patterns["LZ77"] = "enabled";
+	patterns["LZ77"] = "disabled enabled";
 	patterns["SobelEdge"] = "disabled";
 	patterns["Cashtill"] = "disabled";
 	patterns["AppendArrayPattern"] = "disabled enabled";
@@ -114,12 +114,12 @@ BEGIN {
 	compilers["BubbleSort"] = "gcc";
 	compilers["MergeSort"] = "gcc";
 	compilers["MatrixMult"] = "gcc";
-	compilers["LZ77"] = "polly";
+	compilers["LZ77"] = "gcc";
 	compilers["SobelEdge"] = "gcc";
 	compilers["Cashtill"] = "gcc";
 	compilers["AppendArrayPattern"] = "gcc";
 	### Executive type
-	exectypes = "seq openmp";
+	exectypes = "seq";
 	### Parameter
 	# Parameter
 	parameters["Reverse"]="1000 10000 100000 1000000 10000000 100000000 200000000 400000000 600000000 800000000 1000000000";
@@ -172,8 +172,8 @@ BEGIN {
 	parameter = t_array[7];
 
 	# Get the number of threads
-	if(testcase == "LZ77" || testcase == "SobelEdge"){
-		thread = t_array[9];
+	if(testcase == "SobelEdge"){
+		thread = t_array[8];
 	}else{
 		thread = t_array[8];
 	}
