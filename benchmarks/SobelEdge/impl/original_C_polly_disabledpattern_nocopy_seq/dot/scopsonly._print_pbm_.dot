@@ -1,0 +1,78 @@
+digraph "Scop Graph for '_print_pbm_' function" {
+	label="Scop Graph for '_print_pbm_' function";
+
+	Node0xbea0690 [shape=record,label="{entry}"];
+	Node0xbea0690 -> Node0xbe85a20;
+	Node0xbe85a20 [shape=record,label="{entry.split}"];
+	Node0xbe85a20 -> Node0xbe85a80;
+	Node0xbe85a20 -> Node0xbe85ae0;
+	Node0xbe85a80 [shape=record,label="{while.cond6.preheader.lr.ph}"];
+	Node0xbe85a80 -> Node0xbe83180;
+	Node0xbe83180 [shape=record,label="{while.cond6.preheader}"];
+	Node0xbe83180 -> Node0xbecd760;
+	Node0xbe83180 -> Node0xbecd780;
+	Node0xbecd760 [shape=record,label="{if.end10.lr.ph}"];
+	Node0xbecd760 -> Node0xbe85b00;
+	Node0xbe85b00 [shape=record,label="{if.end10}"];
+	Node0xbe85b00 -> Node0xbecd7e0;
+	Node0xbe85b00 -> Node0xbe830d0;
+	Node0xbecd7e0 [shape=record,label="{if.end16}"];
+	Node0xbecd7e0 -> Node0xbecd800;
+	Node0xbecd800 [shape=record,label="{blklab18}"];
+	Node0xbecd800 -> Node0xbe85b00[constraint=false];
+	Node0xbecd800 -> Node0xbeac310;
+	Node0xbeac310 [shape=record,label="{while.cond6.blklab15_crit_edge}"];
+	Node0xbeac310 -> Node0xbecd780;
+	Node0xbecd780 [shape=record,label="{blklab15}"];
+	Node0xbecd780 -> Node0xbe83180[constraint=false];
+	Node0xbecd780 -> Node0xbe841b0;
+	Node0xbe841b0 [shape=record,label="{while.cond.blklab13_crit_edge}"];
+	Node0xbe841b0 -> Node0xbe85ae0;
+	Node0xbe85ae0 [shape=record,label="{blklab13}"];
+	Node0xbe830d0 [shape=record,label="{blklab17}"];
+	Node0xbe830d0 -> Node0xbecd800;
+	colorscheme = "paired12"
+        subgraph cluster_0xbece610 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xbe8ff10 {
+            label = "Call instruction:   %call = tail call i64* @create1DArray_int64_t(i64 0, i64 2) #6";
+            style = solid;
+            color = 6
+            subgraph cluster_0xbe8fe90 {
+              label = "Call instruction:   %call17 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str, i64 0, i64 0), i64 0)";
+              style = solid;
+              color = 5
+              subgraph cluster_0xbe90e70 {
+                label = "Call instruction:   %call17 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str, i64 0, i64 0), i64 0)";
+                style = solid;
+                color = 7
+                subgraph cluster_0xbe90df0 {
+                  label = "Call instruction:   %call17 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str, i64 0, i64 0), i64 0)";
+                  style = solid;
+                  color = 9
+                  subgraph cluster_0xbece690 {
+                    label = "Region can not profitably be optimized!";
+                    style = solid;
+                    color = 11
+                    Node0xbe85b00;
+                    Node0xbecd7e0;
+                    Node0xbe830d0;
+                  }
+                  Node0xbecd800;
+                }
+                Node0xbe83180;
+                Node0xbecd760;
+                Node0xbeac310;
+              }
+              Node0xbecd780;
+            }
+            Node0xbe85a20;
+            Node0xbe85a80;
+            Node0xbe841b0;
+          }
+          Node0xbea0690;
+          Node0xbe85ae0;
+        }
+}

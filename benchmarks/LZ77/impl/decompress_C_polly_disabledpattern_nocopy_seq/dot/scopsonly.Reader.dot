@@ -1,0 +1,50 @@
+digraph "Scop Graph for 'Reader' function" {
+	label="Scop Graph for 'Reader' function";
+
+	Node0xd408f80 [shape=record,label="{entry}"];
+	Node0xd408f80 -> Node0xd3cef60;
+	Node0xd3cef60 [shape=record,label="{entry.split}"];
+	Node0xd3cef60 -> Node0xd2e3910;
+	Node0xd3cef60 -> Node0xd3e1a00;
+	Node0xd2e3910 [shape=record,label="{while.end}"];
+	Node0xd2e3910 -> Node0xd3cf410;
+	Node0xd2e3910 -> Node0xd3d7890;
+	Node0xd3cf410 [shape=record,label="{if.then}"];
+	Node0xd3d7890 [shape=record,label="{if.end}"];
+	Node0xd3e1a00 [shape=record,label="{while.body.lr.ph}"];
+	Node0xd3e1a00 -> Node0xd3ef900;
+	Node0xd3ef900 [shape=record,label="{while.body}"];
+	Node0xd3ef900 -> Node0xd3ef900[constraint=false];
+	Node0xd3ef900 -> Node0xd3ef920;
+	Node0xd3ef920 [shape=record,label="{while.cond.while.end_crit_edge}"];
+	Node0xd3ef920 -> Node0xd2e3910;
+	colorscheme = "paired12"
+        subgraph cluster_0xd3ec120 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xd404290 {
+            label = "Call instruction:   %call = tail call noalias i8* @malloc(i64 16384) #6";
+            style = solid;
+            color = 6
+            subgraph cluster_0xd408eb0 {
+              label = "Region can not profitably be optimized!";
+              style = solid;
+              color = 5
+              subgraph cluster_0xd3dece0 {
+                label = "";
+                style = solid;
+                color = 7
+                Node0xd3ef900;
+              }
+              Node0xd3ef920;
+            }
+            Node0xd3cef60;
+            Node0xd3e1a00;
+          }
+          Node0xd408f80;
+          Node0xd2e3910;
+          Node0xd3cf410;
+          Node0xd3d7890;
+        }
+}

@@ -1,0 +1,51 @@
+digraph "Scop Graph for 'create2DArray_int64_t_empty' function" {
+	label="Scop Graph for 'create2DArray_int64_t_empty' function";
+
+	Node0xcf36790 [shape=record,label="{entry}"];
+	Node0xcf36790 -> Node0xcf9e160;
+	Node0xcf9e160 [shape=record,label="{entry.split}"];
+	Node0xcf9e160 -> Node0xcf7e6f0;
+	Node0xcf9e160 -> Node0xcf7a4e0;
+	Node0xcf7e6f0 [shape=record,label="{if.then}"];
+	Node0xcf7a4e0 [shape=record,label="{if.end}"];
+	Node0xcf7a4e0 -> Node0xcf8f0a0;
+	Node0xcf7a4e0 -> Node0xcfb4680;
+	Node0xcf8f0a0 [shape=record,label="{if.then7}"];
+	Node0xcfb4680 [shape=record,label="{for.cond.preheader}"];
+	Node0xcfb4680 -> Node0xcdc9450;
+	Node0xcfb4680 -> Node0xcf86480;
+	Node0xcdc9450 [shape=record,label="{for.cond.cleanup}"];
+	Node0xcf86480 [shape=record,label="{for.body.lr.ph}"];
+	Node0xcf86480 -> Node0xcf92120;
+	Node0xcf92120 [shape=record,label="{for.body}"];
+	Node0xcf92120 -> Node0xcf92120[constraint=false];
+	Node0xcf92120 -> Node0xcf93600;
+	Node0xcf93600 [shape=record,label="{for.cond.for.cond.cleanup_crit_edge}"];
+	Node0xcf93600 -> Node0xcdc9450;
+	colorscheme = "paired12"
+        subgraph cluster_0xcfb1120 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xcfad290 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            subgraph cluster_0xcf92180 {
+              label = "";
+              style = solid;
+              color = 5
+              Node0xcf92120;
+            }
+            Node0xcfb4680;
+            Node0xcf86480;
+            Node0xcf93600;
+          }
+          Node0xcf36790;
+          Node0xcf9e160;
+          Node0xcf7e6f0;
+          Node0xcf7a4e0;
+          Node0xcf8f0a0;
+          Node0xcdc9450;
+        }
+}

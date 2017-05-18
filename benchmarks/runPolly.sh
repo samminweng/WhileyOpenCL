@@ -9,9 +9,9 @@ BENCHMARKDIR="$BASEDIR/benchmarks"
 UTILDIR="$BASEDIR/tests/code"
 ## declare 4 kinds of code generation
 #declare -a codegens=("naive" "naive_dealloc" "nocopy" "nocopy_dealloc")
-declare -A codegens=( [MatrixMult]="nocopy" [LZ77]="nocopy" [CoinGame]="nocopy" )
-## declare pattern matches
-declare -A patternmatches=( [MatrixMult]="disabledpattern" [LZ77]="disabledpattern enabledpattern" [CoinGame]="disabledpattern" )
+declare -A codegens=( [MatrixMult]="nocopy" [LZ77]="nocopy_dealloc" [CoinGame]="nocopy" [SobelEdge]="nocopy_dealloc" )
+## Declare an associative array for pattern matching
+declare -A patterns=( [LZ77_compress]=compress )
 ## declare 2 kinds of Polly code
 declare -a pollycodes=("seq" "openmp")
 ### Generate C code
@@ -23,6 +23,7 @@ generateCode(){
 	pollycode=$5
 	patternmatch=$6
 	wyopcl=./../../../../bin/wyopcl
+
 	if [ $patternmatch = "enabledpattern"  ]
 	then
 		wyopcl=$wyopcl" -pattern compress"
@@ -31,7 +32,7 @@ generateCode(){
 	# The folder of generated Polly code
 	folder=$BENCHMARKDIR/$testcase/impl/$program"_"C"_"$compiler"_"$patternmatch"_"$codegen"_"$pollycode
 	# clean and create the folder
-	rm -f "$folder/*.*"
+	rm -rf "$folder"
 	mkdir -p "$folder"
 	#read -p "Press [Enter] to continue..."
 	## Clean up previously generated C code and Whiley programs
@@ -66,7 +67,7 @@ generateCode(){
 	    	$wyopcl -code -nocopy -dealloc $testcase"_"$program.whiley
 			;;
 	esac
-	##read -p "Press [Enter] to continue..."
+	#read -p "Press [Enter] to continue..."
 }
 
 ### Create or clean up folder, and move files to that folder
@@ -156,15 +157,16 @@ runPolly(){
 	pollycc -mllvm -polly-opt-outer-coincidence=yes -mllvm -debug-only=polly-ast\
 			-mllvm -polly-process-unprofitable $testcase"_"$program.c Util.c WyRT.c
 
-	echo -e "-----------------Press [Enter] to continue--------------------"&& read
-
+	read -p "-----------------Press [Enter] to continue--------------------"
 }
 
 runBenchmark(){
 	testcase=$1
 	program=$2
-	parameter=$3
-	patternmatch=$4
+	patternmatch=$3
+	parameter=$4
+	parameter1=$5
+
 	# Change folder
 	cd $BENCHMARKDIR/$testcase/impl/$program"_"C"_"$compiler"_"$patternmatch"_"$codegen"_seq"
 	mkdir -p out
@@ -173,7 +175,13 @@ runBenchmark(){
 	echo "[1] Run  GCC -O3  executables"
 	gcc -std=c11 -O3 $testcase"_"$program.c Util.c WyRT.c -o out/$testcase"_"$program.gcc.out
 	start=`date +%s%N`
-	./out/$testcase"_"$program.gcc.out $parameter
+	if [ $testcase = "SobelEdge" ]
+	then
+		./out/$testcase"_"$program.gcc.out $parameter $parameter1
+		##read -p "Finish SobelEdge test case"
+	else
+		./out/$testcase"_"$program.gcc.out $parameter
+	fi
 	end=`date +%s%N`
 	exectime=$(((end-start)/1000000))
 	printf '\nExecutionTime:%s\tmilliseconds\n' $exectime
@@ -182,7 +190,13 @@ runBenchmark(){
 	echo "[2] Run  Clang -O3  executables"
 	clang -O3 $testcase"_"$program.c Util.c WyRT.c -o out/$testcase"_"$program.clang.out
 	start=`date +%s%N`
-	./out/$testcase"_"$program.clang.out $parameter
+	if [ $testcase = "SobelEdge" ]
+	then
+		./out/$testcase"_"$program.clang.out $parameter $parameter1
+		##read -p "Finish SobelEdge test case"
+	else
+		./out/$testcase"_"$program.clang.out $parameter
+	fi
 	end=`date +%s%N`
 	exectime=$(((end-start)/1000000))
 	printf '\nExecutionTime:%s\tmilliseconds\n' $exectime
@@ -202,7 +216,13 @@ runBenchmark(){
 	#pollycc "assembly"/$testcase"_"$program.polly.s Util.c WyRT.c -o "out"/$testcase"_"$program.polly.out
 	### Run the generated executables.
 	start=`date +%s%N`
-	./out/$testcase"_"$program.polly.out $parameter
+	if [ $testcase = "SobelEdge" ]
+	then
+		./out/$testcase"_"$program.polly.out $parameter $parameter1
+		##read -p "Finish SobelEdge test case"
+	else
+		./out/$testcase"_"$program.polly.out $parameter
+	fi
 	end=`date +%s%N`
 	exectime=$(((end-start)/1000000))
 	printf '\nExecutionTime:%s\tmilliseconds\n' $exectime
@@ -214,13 +234,16 @@ runBenchmark(){
 	## Generate OpenMP code with different Polly passes
 	case "$testcase" in
 		"MatrixMult")
-			pollycc -mllvm -polly-pattern-matching-based-opts=false -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out"/$testcase"_"$program.openmp.out
+			pollycc -mllvm -polly-pattern-matching-based-opts=false -mllvm -polly-parallel \
+			 		-lgomp $testcase"_"$program.c Util.c WyRT.c -o "out"/$testcase"_"$program.openmp.out
 			;;
 		"CoinGame")
-			pollycc -mllvm -polly-pattern-matching-based-opts=false -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out"/$testcase"_"$program.openmp.out
+			pollycc -mllvm -polly-pattern-matching-based-opts=false -mllvm -polly-parallel \
+					-lgomp $testcase"_"$program.c Util.c WyRT.c -o "out"/$testcase"_"$program.openmp.out
 			;;
 		*)
-			pollycc -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out"/$testcase"_"$program.openmp.out
+			pollycc -mllvm -polly-parallel \
+					-lgomp $testcase"_"$program.c Util.c WyRT.c -o "out"/$testcase"_"$program.openmp.out
 			;;
 	esac
 	## Clean folder
@@ -239,7 +262,13 @@ runBenchmark(){
 		start=`date +%s%N`
 		### Run the program using two threads.
 		export OMP_NUM_THREADS=$thread
-		./out/$testcase"_"$program.openmp.out $parameter
+		if [ $testcase = "SobelEdge" ]
+		then
+			./out/$testcase"_"$program.openmp.out $parameter $parameter1
+			##read -p "Finish SobelEdge test case"
+		else
+			./out/$testcase"_"$program.openmp.out $parameter
+		fi
 		end=`date +%s%N`
 		exectime=$(((end-start)/1000000))
 		printf '\nExecutionTime:%s\tmilliseconds\n' $exectime
@@ -253,20 +282,33 @@ exec(){
 	testcase=$1
 	program=$2
 	parameter=$3
+	parameter1=$4
 	compiler="polly"
 	IFS=' '
 	## Iterate each codegen
 	for codegen in "${codegens[$testcase]}"
 	do
-		for patternmatch in ${patternmatches[$testcase]}
+		str=${patterns[$testcase"_"$program]}
+		echo $str
+		# Test pattern is missing or not (non-empty string (-n))
+		if [ -n "$str" ]
+		then
+			patternmatches="enabledpattern"
+			#patternmatches="disabledpattern enabledpattern"
+			#read -p "Found Pattern..."
+		else
+			patternmatches="disabledpattern"
+		fi
+
+		for patternmatch in ${patternmatches}
 		do
-			#echo "pattern:$patternmatch"
+			#read -p "pattern:$patternmatch"
 			#echo $testcase $program $compiler $codegen $pollycode $parameter
 			## Generate sequential C code
 			generateCode $testcase $program $compiler $codegen "seq" $patternmatch
 			generateCode $testcase $program $compiler $codegen "openmp" $patternmatch
 			runPolly $testcase $program $compiler $codegen "seq" $patternmatch
-			runBenchmark $testcase $program $parameter $patternmatch
+			runBenchmark $testcase $program $patternmatch $parameter $parameter1
 		done
 
 	done
@@ -289,11 +331,11 @@ exec(){
 #exec CoinGame array1 10000
 
 ##LZ77 Test Case
-exec LZ77 original input64x.in
-
-
+#exec LZ77 compress "$BENCHMARKDIR/LZ77/Inputfiles/input64x.in" "$BENCHMARKDIR/LZ77/Inputfiles/input64x.dat"
+exec LZ77 decompress "$BENCHMARKDIR/LZ77/Inputfiles/input64x.dat"
+exec LZ77 optimised_decompress "$BENCHMARKDIR/LZ77/Inputfiles/input64x.dat"
 ### NQueens Test Case
 ##exec NQueens original 13
 
 ### SobelEdge Test Case
-##exec SobelEdge original 32
+#exec SobelEdge original 32 "$BENCHMARKDIR/SobelEdge/images/input/image32x32.pbm"

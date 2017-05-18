@@ -1,0 +1,21 @@
+digraph "Scop Graph for 'slice' function" {
+	label="Scop Graph for 'slice' function";
+
+	Node0xcfbdaf0 [shape=record,label="{entry}"];
+	Node0xcfbdaf0 -> Node0xcfccba0;
+	Node0xcfccba0 [shape=record,label="{entry.split}"];
+	Node0xcfccba0 -> Node0xcfc76e0;
+	Node0xcfccba0 -> Node0xcfbf980;
+	Node0xcfc76e0 [shape=record,label="{if.then}"];
+	Node0xcfbf980 [shape=record,label="{if.end}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xcf7ef80 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0xcfbdaf0;
+          Node0xcfccba0;
+          Node0xcfc76e0;
+          Node0xcfbf980;
+        }
+}

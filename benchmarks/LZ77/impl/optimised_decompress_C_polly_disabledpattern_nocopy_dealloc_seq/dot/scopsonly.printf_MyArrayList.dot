@@ -1,0 +1,15 @@
+digraph "Scop Graph for 'printf_MyArrayList' function" {
+	label="Scop Graph for 'printf_MyArrayList' function";
+
+	Node0xd0ffa60 [shape=record,label="{entry}"];
+	Node0xd0ffa60 -> Node0xd1232f0;
+	Node0xd1232f0 [shape=record,label="{entry.split}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xd0cb4e0 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0xd0ffa60;
+          Node0xd1232f0;
+        }
+}

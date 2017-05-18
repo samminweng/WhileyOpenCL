@@ -1,0 +1,51 @@
+digraph "Scop Graph for 'printf2DArray_int64_t' function" {
+	label="Scop Graph for 'printf2DArray_int64_t' function";
+
+	Node0xc698f20 [shape=record,label="{entry}"];
+	Node0xc698f20 -> Node0xc6e3d60;
+	Node0xc6e3d60 [shape=record,label="{entry.split}"];
+	Node0xc6e3d60 -> Node0xc6b69a0;
+	Node0xc6e3d60 -> Node0xc6a00e0;
+	Node0xc6b69a0 [shape=record,label="{while.end}"];
+	Node0xc6b69a0 -> Node0xc696f70;
+	Node0xc6b69a0 -> Node0xc6d57e0;
+	Node0xc696f70 [shape=record,label="{if.then}"];
+	Node0xc696f70 -> Node0xc6d57e0;
+	Node0xc6d57e0 [shape=record,label="{if.end}"];
+	Node0xc6a00e0 [shape=record,label="{while.body.lr.ph}"];
+	Node0xc6a00e0 -> Node0xc6ab190;
+	Node0xc6ab190 [shape=record,label="{while.body}"];
+	Node0xc6ab190 -> Node0xc6ab190[constraint=false];
+	Node0xc6ab190 -> Node0xc69d0f0;
+	Node0xc69d0f0 [shape=record,label="{while.cond.while.end_crit_edge}"];
+	Node0xc69d0f0 -> Node0xc6b69a0;
+	colorscheme = "paired12"
+        subgraph cluster_0xc6dcac0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc6ad210 {
+            label = "Call instruction:   %putchar = tail call i32 @putchar(i32 91)";
+            style = solid;
+            color = 6
+            subgraph cluster_0xc6ad190 {
+              label = "Call instruction:   tail call void @printf1DArray_int64_t(i64* %0, i64 %input_size_size)";
+              style = solid;
+              color = 5
+              Node0xc6ab190;
+            }
+            Node0xc6e3d60;
+            Node0xc6a00e0;
+            Node0xc69d0f0;
+          }
+          subgraph cluster_0xc697430 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xc6b69a0;
+            Node0xc696f70;
+          }
+          Node0xc698f20;
+          Node0xc6d57e0;
+        }
+}

@@ -1,0 +1,15 @@
+digraph "Scop Graph for 'printf_Match' function" {
+	label="Scop Graph for 'printf_Match' function";
+
+	Node0xbeeb380 [shape=record,label="{entry}"];
+	Node0xbeeb380 -> Node0xbf85510;
+	Node0xbf85510 [shape=record,label="{entry.split}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xbeff8a0 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0xbeeb380;
+          Node0xbf85510;
+        }
+}

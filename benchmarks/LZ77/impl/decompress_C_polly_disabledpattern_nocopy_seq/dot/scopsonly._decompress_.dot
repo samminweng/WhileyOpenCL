@@ -1,0 +1,78 @@
+digraph "Scop Graph for '_decompress_' function" {
+	label="Scop Graph for '_decompress_' function";
+
+	Node0xc4c9e20 [shape=record,label="{entry}"];
+	Node0xc4c9e20 -> Node0xc4c9e40;
+	Node0xc4c9e40 [shape=record,label="{entry.split}"];
+	Node0xc4c9e40 -> Node0xc4ddee0;
+	Node0xc4c9e40 -> Node0xc4c9f50;
+	Node0xc4ddee0 [shape=record,label="{if.end.lr.ph}"];
+	Node0xc4ddee0 -> Node0xc4d7bc0;
+	Node0xc4d7bc0 [shape=record,label="{if.end}"];
+	Node0xc4d7bc0 -> Node0xc4d7c20;
+	Node0xc4d7bc0 -> Node0xc4d7c80;
+	Node0xc4d7c20 [shape=record,label="{if.end8}"];
+	Node0xc4d7c20 -> Node0xc4c9f70;
+	Node0xc4c9f70 [shape=record,label="{while.cond.backedge}"];
+	Node0xc4c9f70 -> Node0xc4d7bc0[constraint=false];
+	Node0xc4c9f70 -> Node0xc4d7b90;
+	Node0xc4d7b90 [shape=record,label="{while.cond.blklab3_crit_edge}"];
+	Node0xc4d7b90 -> Node0xc4c9f50;
+	Node0xc4c9f50 [shape=record,label="{blklab3}"];
+	Node0xc4d7c80 [shape=record,label="{blklab5}"];
+	Node0xc4d7c80 -> Node0xc4ddda0;
+	Node0xc4d7c80 -> Node0xc4dddc0;
+	Node0xc4ddda0 [shape=record,label="{while.cond.loopexit}"];
+	Node0xc4ddda0 -> Node0xc4c9f70;
+	Node0xc4dddc0 [shape=record,label="{if.end20.lr.ph}"];
+	Node0xc4dddc0 -> Node0xc4ddde0;
+	Node0xc4ddde0 [shape=record,label="{if.end20}"];
+	Node0xc4ddde0 -> Node0xc4ddde0[constraint=false];
+	Node0xc4ddde0 -> Node0xc4dab70;
+	Node0xc4dab70 [shape=record,label="{while.cond14.while.cond.loopexit_crit_edge}"];
+	Node0xc4dab70 -> Node0xc4ddda0;
+	colorscheme = "paired12"
+        subgraph cluster_0xc4c97d0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc4b5e20 {
+            label = "Non affine loop bound '(-1 + (zext i8 %2 to i64) + (-1 * %output_size.075) + ((1 + (-1 * (zext i8 %2 to i64))<nsw> + %output_size.075) smax ((zext i8 %3 to i64) + (-1 * (zext i8 %2 to i64))<nsw> + %output_size.075)))' in loop: if.end20";
+            style = solid;
+            color = 6
+            subgraph cluster_0xc4cac60 {
+              label = "Non affine loop bound '(-1 + (zext i8 %2 to i64) + (-1 * %output_size.075) + ((1 + (-1 * (zext i8 %2 to i64))<nsw> + %output_size.075) smax ((zext i8 %3 to i64) + (-1 * (zext i8 %2 to i64))<nsw> + %output_size.075)))' in loop: if.end20";
+              style = solid;
+              color = 5
+              subgraph cluster_0xc4cabe0 {
+                label = "Non affine loop bound '(-1 + (zext i8 %2 to i64) + (-1 * %output_size.075) + ((1 + (-1 * (zext i8 %2 to i64))<nsw> + %output_size.075) smax ((zext i8 %3 to i64) + (-1 * (zext i8 %2 to i64))<nsw> + %output_size.075)))' in loop: if.end20";
+                style = solid;
+                color = 7
+                subgraph cluster_0xc4cab60 {
+                  label = "Base address not invariant in current region:  %output.171 = phi i8* [ %output.076, %if.end20.lr.ph ], [ %call22, %if.end20 ]";
+                  style = solid;
+                  color = 9
+                  subgraph cluster_0xc4b9970 {
+                    label = "Base address not invariant in current region:  %output.171 = phi i8* [ %output.076, %if.end20.lr.ph ], [ %call22, %if.end20 ]";
+                    style = solid;
+                    color = 11
+                    Node0xc4ddde0;
+                  }
+                  Node0xc4d7c80;
+                  Node0xc4dddc0;
+                  Node0xc4dab70;
+                }
+                Node0xc4d7bc0;
+                Node0xc4d7c20;
+                Node0xc4ddda0;
+              }
+              Node0xc4c9f70;
+            }
+            Node0xc4c9e40;
+            Node0xc4ddee0;
+            Node0xc4d7b90;
+          }
+          Node0xc4c9e20;
+          Node0xc4c9f50;
+        }
+}

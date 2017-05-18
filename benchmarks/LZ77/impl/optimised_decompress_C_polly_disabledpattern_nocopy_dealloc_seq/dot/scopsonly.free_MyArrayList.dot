@@ -1,0 +1,15 @@
+digraph "Scop Graph for 'free_MyArrayList' function" {
+	label="Scop Graph for 'free_MyArrayList' function";
+
+	Node0xd0cbda0 [shape=record,label="{entry}"];
+	Node0xd0cbda0 -> Node0xd1ac7a0;
+	Node0xd1ac7a0 [shape=record,label="{entry.split}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xd0abc10 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0xd0cbda0;
+          Node0xd1ac7a0;
+        }
+}

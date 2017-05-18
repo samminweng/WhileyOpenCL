@@ -1,0 +1,39 @@
+digraph "Scop Graph for 'readFile' function" {
+	label="Scop Graph for 'readFile' function";
+
+	Node0xc301bd0 [shape=record,label="{entry}"];
+	Node0xc301bd0 -> Node0xc2f6a10;
+	Node0xc2f6a10 [shape=record,label="{entry.split}"];
+	Node0xc2f6a10 -> Node0xc1ca410;
+	Node0xc1ca410 [shape=record,label="{while.cond}"];
+	Node0xc1ca410 -> Node0xc30aa00;
+	Node0xc1ca410 -> Node0xc1ca410[constraint=false];
+	Node0xc30aa00 [shape=record,label="{while.end}"];
+	Node0xc30aa00 -> Node0xc2dba80;
+	Node0xc30aa00 -> Node0xc2cc6a0;
+	Node0xc2dba80 [shape=record,label="{if.then}"];
+	Node0xc2cc6a0 [shape=record,label="{if.end}"];
+	Node0xc2cc6a0 -> Node0xc307260;
+	Node0xc2cc6a0 -> Node0xc2e5ac0;
+	Node0xc307260 [shape=record,label="{if.end9}"];
+	Node0xc2e5ac0 [shape=record,label="{if.then7}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xc300040 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc30a8c0 {
+            label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: while.cond";
+            style = solid;
+            color = 6
+            Node0xc1ca410;
+          }
+          Node0xc301bd0;
+          Node0xc2f6a10;
+          Node0xc30aa00;
+          Node0xc2dba80;
+          Node0xc2cc6a0;
+          Node0xc307260;
+          Node0xc2e5ac0;
+        }
+}

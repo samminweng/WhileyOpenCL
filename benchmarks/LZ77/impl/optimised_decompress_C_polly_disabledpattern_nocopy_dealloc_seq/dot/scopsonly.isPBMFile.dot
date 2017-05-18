@@ -1,0 +1,54 @@
+digraph "Scop Graph for 'isPBMFile' function" {
+	label="Scop Graph for 'isPBMFile' function";
+
+	Node0xbe65a20 [shape=record,label="{entry}"];
+	Node0xbe65a20 -> Node0xbe4a300;
+	Node0xbe4a300 [shape=record,label="{entry.split}"];
+	Node0xbe4a300 -> Node0xbeade20;
+	Node0xbe4a300 -> Node0xbe59e10;
+	Node0xbeade20 [shape=record,label="{if.end18}"];
+	Node0xbe59e10 [shape=record,label="{if.then}"];
+	Node0xbe59e10 -> Node0xbe4bc70;
+	Node0xbe59e10 -> Node0xbeade20;
+	Node0xbe4bc70 [shape=record,label="{if.then4}"];
+	Node0xbe4bc70 -> Node0xbe4dc00;
+	Node0xbe4bc70 -> Node0xbeade20;
+	Node0xbe4dc00 [shape=record,label="{land.lhs.true}"];
+	Node0xbe4dc00 -> Node0xbe6e0e0;
+	Node0xbe4dc00 -> Node0xbeade20;
+	Node0xbe6e0e0 [shape=record,label="{land.lhs.true11}"];
+	Node0xbe6e0e0 -> Node0xbeade20;
+	colorscheme = "paired12"
+        subgraph cluster_0xbe6a920 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xbe54a00 {
+            label = "";
+            style = solid;
+            color = 6
+            subgraph cluster_0xbe3b3f0 {
+              label = "";
+              style = solid;
+              color = 5
+              subgraph cluster_0xbe69d10 {
+                label = "";
+                style = solid;
+                color = 7
+                subgraph cluster_0xbe6dc00 {
+                  label = "";
+                  style = solid;
+                  color = 9
+                  Node0xbe4dc00;
+                  Node0xbe6e0e0;
+                }
+                Node0xbe4bc70;
+              }
+              Node0xbe59e10;
+            }
+            Node0xbe4a300;
+          }
+          Node0xbe65a20;
+          Node0xbeade20;
+        }
+}

@@ -1,0 +1,135 @@
+digraph "Scop Graph for 'main' function" {
+	label="Scop Graph for 'main' function";
+
+	Node0xbeea370 [shape=record,label="{entry}"];
+	Node0xbeea370 -> Node0xbf073d0;
+	Node0xbf073d0 [shape=record,label="{entry.split}"];
+	Node0xbf073d0 -> Node0xbf452b0;
+	Node0xbf073d0 -> Node0xbf85510;
+	Node0xbf452b0 [shape=record,label="{if.end127}"];
+	Node0xbf452b0 -> Node0xbf5a2e0;
+	Node0xbf452b0 -> Node0xbf86970;
+	Node0xbf5a2e0 [shape=record,label="{if.end130}"];
+	Node0xbf5a2e0 -> Node0xbf59f80;
+	Node0xbf5a2e0 -> Node0xbedc1e0;
+	Node0xbf59f80 [shape=record,label="{if.end137}"];
+	Node0xbf59f80 -> Node0xbf43b30;
+	Node0xbf59f80 -> Node0xbf832e0;
+	Node0xbf43b30 [shape=record,label="{if.end146}"];
+	Node0xbf43b30 -> Node0xbed91d0;
+	Node0xbf43b30 -> Node0xbee4ba0;
+	Node0xbed91d0 [shape=record,label="{if.end149}"];
+	Node0xbed91d0 -> Node0xbe75530;
+	Node0xbed91d0 -> Node0xbee5060;
+	Node0xbe75530 [shape=record,label="{if.end152}"];
+	Node0xbe75530 -> Node0xbf6f900;
+	Node0xbe75530 -> Node0xbf45630;
+	Node0xbf6f900 [shape=record,label="{if.end158}"];
+	Node0xbf6f900 -> Node0xbf77130;
+	Node0xbf6f900 -> Node0xbed2760;
+	Node0xbf77130 [shape=record,label="{if.end161}"];
+	Node0xbf77130 -> Node0xbee54e0;
+	Node0xbf77130 -> Node0xbef8530;
+	Node0xbee54e0 [shape=record,label="{if.end164}"];
+	Node0xbee54e0 -> Node0xbf839e0;
+	Node0xbee54e0 -> Node0xbf6d250;
+	Node0xbf839e0 [shape=record,label="{if.end170}"];
+	Node0xbf6d250 [shape=record,label="{if.then166}"];
+	Node0xbf6d250 -> Node0xbf839e0;
+	Node0xbef8530 [shape=record,label="{if.then163}"];
+	Node0xbef8530 -> Node0xbee54e0;
+	Node0xbed2760 [shape=record,label="{if.then160}"];
+	Node0xbed2760 -> Node0xbf77130;
+	Node0xbf45630 [shape=record,label="{if.then154}"];
+	Node0xbf45630 -> Node0xbf6f900;
+	Node0xbee5060 [shape=record,label="{if.then151}"];
+	Node0xbee5060 -> Node0xbe75530;
+	Node0xbee4ba0 [shape=record,label="{if.then148}"];
+	Node0xbee4ba0 -> Node0xbed91d0;
+	Node0xbf832e0 [shape=record,label="{if.then139}"];
+	Node0xbf832e0 -> Node0xbf43b30;
+	Node0xbedc1e0 [shape=record,label="{if.then132}"];
+	Node0xbedc1e0 -> Node0xbf59f80;
+	Node0xbf86970 [shape=record,label="{if.then129}"];
+	Node0xbf86970 -> Node0xbf5a2e0;
+	Node0xbf85510 [shape=record,label="{if.then125}"];
+	Node0xbf85510 -> Node0xbf452b0;
+	colorscheme = "paired12"
+        subgraph cluster_0xbf84010 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xbf85d60 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xbf073d0;
+            Node0xbf85510;
+          }
+          subgraph cluster_0xbf5d480 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xbf452b0;
+            Node0xbf86970;
+          }
+          subgraph cluster_0xbf83eb0 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xbf5a2e0;
+            Node0xbedc1e0;
+          }
+          subgraph cluster_0xbf756c0 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xbf59f80;
+            Node0xbf832e0;
+          }
+          subgraph cluster_0xbf741c0 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xbf43b30;
+            Node0xbee4ba0;
+          }
+          subgraph cluster_0xbf12500 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xbed91d0;
+            Node0xbee5060;
+          }
+          subgraph cluster_0xbf85a60 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xbe75530;
+            Node0xbf45630;
+          }
+          subgraph cluster_0xbf862b0 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xbf6f900;
+            Node0xbed2760;
+          }
+          subgraph cluster_0xbf85380 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xbf77130;
+            Node0xbef8530;
+          }
+          subgraph cluster_0xbf6d0c0 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xbee54e0;
+            Node0xbf6d250;
+          }
+          Node0xbeea370;
+          Node0xbf839e0;
+        }
+}

@@ -1,0 +1,51 @@
+digraph "Scop Graph for 'copy2DArray_int64_t' function" {
+	label="Scop Graph for 'copy2DArray_int64_t' function";
+
+	Node0xc6c3200 [shape=record,label="{entry}"];
+	Node0xc6c3200 -> Node0xc697c30;
+	Node0xc697c30 [shape=record,label="{entry.split}"];
+	Node0xc697c30 -> Node0xc6a5ec0;
+	Node0xc697c30 -> Node0xc6ba570;
+	Node0xc6a5ec0 [shape=record,label="{return}"];
+	Node0xc6ba570 [shape=record,label="{if.end}"];
+	Node0xc6ba570 -> Node0xc598f70;
+	Node0xc6ba570 -> Node0xc6c43f0;
+	Node0xc598f70 [shape=record,label="{return.loopexit}"];
+	Node0xc598f70 -> Node0xc6a5ec0;
+	Node0xc6c43f0 [shape=record,label="{for.body.lr.ph}"];
+	Node0xc6c43f0 -> Node0xc6a4c40;
+	Node0xc6a4c40 [shape=record,label="{for.body}"];
+	Node0xc6a4c40 -> Node0xc6a4c40[constraint=false];
+	Node0xc6a4c40 -> Node0xc6a81d0;
+	Node0xc6a81d0 [shape=record,label="{for.cond.return.loopexit_crit_edge}"];
+	Node0xc6a81d0 -> Node0xc598f70;
+	colorscheme = "paired12"
+        subgraph cluster_0xc6dc410 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc6bde40 {
+            label = "";
+            style = solid;
+            color = 6
+            subgraph cluster_0xc6ab640 {
+              label = "Call instruction:   %call = tail call i64** @create2DArray_int64_t_empty(i64 %n, i64 %m)";
+              style = solid;
+              color = 5
+              subgraph cluster_0xc6ab5c0 {
+                label = "Possible aliasing: \"call\", \"arr\", \" <unknown> \"";
+                style = solid;
+                color = 7
+                Node0xc6a4c40;
+              }
+              Node0xc6ba570;
+              Node0xc6c43f0;
+              Node0xc6a81d0;
+            }
+            Node0xc697c30;
+            Node0xc598f70;
+          }
+          Node0xc6c3200;
+          Node0xc6a5ec0;
+        }
+}

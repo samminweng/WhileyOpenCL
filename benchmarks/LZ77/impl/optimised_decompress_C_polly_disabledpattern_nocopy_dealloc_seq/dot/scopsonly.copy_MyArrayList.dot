@@ -1,0 +1,15 @@
+digraph "Scop Graph for 'copy_MyArrayList' function" {
+	label="Scop Graph for 'copy_MyArrayList' function";
+
+	Node0xd12af90 [shape=record,label="{entry}"];
+	Node0xd12af90 -> Node0xd1232f0;
+	Node0xd1232f0 [shape=record,label="{entry.split}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xd0baf40 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0xd12af90;
+          Node0xd1232f0;
+        }
+}

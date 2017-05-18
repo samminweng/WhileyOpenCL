@@ -1,0 +1,99 @@
+digraph "Scop Graph for 'main' function" {
+	label="Scop Graph for 'main' function";
+
+	Node0xd12ca70 [shape=record,label="{entry}"];
+	Node0xd12ca70 -> Node0xd0d6030;
+	Node0xd0d6030 [shape=record,label="{entry.split}"];
+	Node0xd0d6030 -> Node0xd0fc550;
+	Node0xd0d6030 -> Node0xd0fe570;
+	Node0xd0fc550 [shape=record,label="{if.end76}"];
+	Node0xd0fc550 -> Node0xd0c6040;
+	Node0xd0fc550 -> Node0xd0c0a80;
+	Node0xd0c6040 [shape=record,label="{if.end79}"];
+	Node0xd0c6040 -> Node0xd12d9a0;
+	Node0xd0c6040 -> Node0xd0fcbd0;
+	Node0xd12d9a0 [shape=record,label="{if.end82}"];
+	Node0xd12d9a0 -> Node0xd0c0ae0;
+	Node0xd12d9a0 -> Node0xd0bb8f0;
+	Node0xd0c0ae0 [shape=record,label="{if.end94}"];
+	Node0xd0c0ae0 -> Node0xd0c77d0;
+	Node0xd0c0ae0 -> Node0xd0fe8c0;
+	Node0xd0c77d0 [shape=record,label="{if.end97}"];
+	Node0xd0c77d0 -> Node0xd0fdeb0;
+	Node0xd0c77d0 -> Node0xd0d0b30;
+	Node0xd0fdeb0 [shape=record,label="{if.end100}"];
+	Node0xd0fdeb0 -> Node0xcec9f20;
+	Node0xd0fdeb0 -> Node0xd0b7f20;
+	Node0xcec9f20 [shape=record,label="{if.end103}"];
+	Node0xd0b7f20 [shape=record,label="{if.then102}"];
+	Node0xd0b7f20 -> Node0xcec9f20;
+	Node0xd0d0b30 [shape=record,label="{if.then99}"];
+	Node0xd0d0b30 -> Node0xd0fdeb0;
+	Node0xd0fe8c0 [shape=record,label="{if.then96}"];
+	Node0xd0fe8c0 -> Node0xd0c77d0;
+	Node0xd0bb8f0 [shape=record,label="{if.then84}"];
+	Node0xd0bb8f0 -> Node0xd0c0ae0;
+	Node0xd0fcbd0 [shape=record,label="{if.then81}"];
+	Node0xd0fcbd0 -> Node0xd12d9a0;
+	Node0xd0c0a80 [shape=record,label="{if.then78}"];
+	Node0xd0c0a80 -> Node0xd0c6040;
+	Node0xd0fe570 [shape=record,label="{if.then74}"];
+	Node0xd0fe570 -> Node0xd0fc550;
+	colorscheme = "paired12"
+        subgraph cluster_0xd0b3aa0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xd0fed90 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xd0d6030;
+            Node0xd0fe570;
+          }
+          subgraph cluster_0xd12fa80 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xd0fc550;
+            Node0xd0c0a80;
+          }
+          subgraph cluster_0xcf89670 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xd0c6040;
+            Node0xd0fcbd0;
+          }
+          subgraph cluster_0xd0a97b0 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xd12d9a0;
+            Node0xd0bb8f0;
+          }
+          subgraph cluster_0xd0c49b0 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xd0c0ae0;
+            Node0xd0fe8c0;
+          }
+          subgraph cluster_0xd0abc10 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xd0c77d0;
+            Node0xd0d0b30;
+          }
+          subgraph cluster_0xd0f9700 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xd0fdeb0;
+            Node0xd0b7f20;
+          }
+          Node0xd12ca70;
+          Node0xcec9f20;
+        }
+}

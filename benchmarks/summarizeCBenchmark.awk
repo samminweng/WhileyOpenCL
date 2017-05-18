@@ -92,7 +92,7 @@ BEGIN {
 	# ## Recursive function call
 	# programs["NQueens"]="original integer";
 	# ### Pattern transformation
-	programs["LZ77"]="compress decompress";
+	programs["LZ77"]="compress decompress optimised_decompress";
 	programs["Cashtill"]="original";
 	#programs["AppendArrayPattern"]="original";
 
@@ -173,7 +173,7 @@ BEGIN {
 
 	# Get the number of threads
 	if(testcase == "SobelEdge"){
-		thread = t_array[8];
+		thread = t_array[9];
 	}else{
 		thread = t_array[8];
 	}

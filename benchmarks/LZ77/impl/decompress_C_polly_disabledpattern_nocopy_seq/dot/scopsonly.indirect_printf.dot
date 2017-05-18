@@ -1,0 +1,15 @@
+digraph "Scop Graph for 'indirect_printf' function" {
+	label="Scop Graph for 'indirect_printf' function";
+
+	Node0xbf0fe80 [shape=record,label="{entry}"];
+	Node0xbf0fe80 -> Node0xbf2c2e0;
+	Node0xbf2c2e0 [shape=record,label="{entry.split}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xbf3cb70 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0xbf0fe80;
+          Node0xbf2c2e0;
+        }
+}
