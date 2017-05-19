@@ -1,59 +1,10 @@
 WARNING: version numbering unavailable
-Pattern matching on compress function completed. 
-{
-init_before:
-	const %6 = 0 : int
-init:
-	assign %2 = %6  : int
-init_after:
-	const %7 = 00000000b : byte
-	const %8 = 0 : int
-	arraygen %9 = [7; 8] : byte[]
-	assign %1 = %9  : byte[]
-loop_header:
-	lengthof %10 = %0 : byte[]
-	ifge %2, %10 goto blklab12 : int
-loopbody_before:
-	invoke (%11) = (%0, %2) lz77_compress:findLongestMatch : function(byte[],lz77_compress:nat)->(lz77_compress:Match)
-	assign %3 = %11  : {int len,int offset}
-	fieldload %13 = %3 offset : {int len,int offset}
-	invoke (%12) = (%13) whiley/lang/Int:toUnsignedByte : function(whiley/lang/Int:u8)->(byte)
-	assign %4 = %12  : byte
-	fieldload %15 = %3 len : {int len,int offset}
-	invoke (%14) = (%15) whiley/lang/Int:toUnsignedByte : function(whiley/lang/Int:u8)->(byte)
-	assign %5 = %14  : byte
-	const %16 = 00000000b : byte
-	ifne %4, %16 goto blklab14 : byte
-	indexof %17 = %0, %2 : byte[]
-	assign %5 = %17  : byte
-	const %18 = 1 : int
-loopbody_update:
-	add %19 = %2, %18 : int
-	assign %2 = %19  : int
-loopbody_after:
-	goto blklab15
-	.blklab14
-	fieldload %20 = %3 len : {int len,int offset}
-	add %21 = %2, %20 : int
-	assign %2 = %21  : int
-	.blklab15
-	invoke (%22) = (%1, %4) lz77_compress:append : function(byte[],byte)->(byte[])
-	assign %1 = %22  : byte[]
-	invoke (%23) = (%1, %5) lz77_compress:append : function(byte[],byte)->(byte[])
-	assign %1 = %23  : byte[]
-	.blklab13
-loop_exit:
-	.blklab12
-	return %1
-	return
-}
-AppendArray:
-	loop_var(_2) && incr(_2, 1)&& init(_2, 0) 
-	&& array_var(_1)
-	&& array_init(arraygen %9 = [7; 8] : byte[])
-	&& array_append (
-		invoke (%22) = (%1, %4) lz77_compress:append : function(byte[],byte)->(byte[])
-		invoke (%23) = (%1, %5) lz77_compress:append : function(byte[],byte)->(byte[]) )
-	&& while_cond(_2, <, 0 + |_0|)
-	=> loop_iters(_2, 0 + |_0|)
-Pattern transformation on compress function completed.  File: lz77_compress.wyil
+root->opt_append
+root->resize
+root->decompress
+root->main
+
+Copy elimination analysis completed. File: lz77_optimised_decompress.wyil
+Deallocation analysis completed.
+File: lz77_optimised_decompress.wyil
+Code Generation completed. File: lz77_optimised_decompress.c, lz77_optimised_decompress.h

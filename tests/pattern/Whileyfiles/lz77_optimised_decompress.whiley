@@ -11,7 +11,7 @@ import whiley.lang.*
 // Positive integer type
 type nat is (int x) where x >= 0
 // ArrayList type stores a byte array and its len, and it is dynamically growing
-type MyArrayList is ({byte[] items, nat len} this)
+type MyArrayList is ({byte[] items, nat items_length} this)
 // Append one byte to the array
 /*
 function append(byte[] items, byte item) -> (byte[] nitems):
@@ -53,9 +53,7 @@ function decompress(byte[] data) -> (byte[] output):
 */
 // Append one byte to the array list
 // If full, then double array size and store the data
-function append(MyArrayList list, byte item) -> (MyArrayList nlist):
-    byte[] items = list.items
-    nat items_length = list.len
+function opt_append(byte[] items, nat items_length, byte item) -> (MyArrayList nlist):
     if items_length < |items|:
         // Update the array without an array
         items[items_length] = item
@@ -69,7 +67,7 @@ function append(MyArrayList list, byte item) -> (MyArrayList nlist):
         nitems[i] = item
         items = nitems
     items_length = items_length +1
-    nlist = {items:items, len:items_length}
+    nlist = {items:items, items_length:items_length}
     return nlist
 
 // Resize the input array to the array of given array size
@@ -85,36 +83,41 @@ ensures |nitems| == size:
 
 // Decompress 'data' array to a byte array by using array list
 function decompress(byte[] data) -> (byte[] output):
-    MyArrayList list = {items:[0b;0], len:0}
+    byte[] items = [0b;0]
+    nat items_length = 0
+    MyArrayList list = {items:items, items_length:items_length}
     nat pos = 0
     while (pos+1) < |data|:
         byte header = data[pos]
         byte item = data[pos+1]
         pos = pos + 2
         if header == 00000000b:
-            list = append(list, item)
+            list = opt_append(items, items_length, item)
+            items = list.items
+            items_length = list.items_length
         else:
             // Look up sliding window
             int offset = Byte.toUnsignedInt(header)
             int len = Byte.toUnsignedInt(item)
             // Specify the starting position of the offset
-            int start = list.len - offset
+            int start = items_length - offset
             int i = start
             // Copy the array of offset items to the list
             while i < (start+len):
-                byte[] items = list.items
                 // Get byte from output array
                 item = items[i]
-                list = append(list, item)
+                list = opt_append(items, items_length, item)
+                items = list.items
+                items_length = list.items_length
                 i = i + 1
     // all done!
     //Resize list array into the array of accurate length
-    output = resize(list.items, list.len)
+    output = resize(items, items_length)
     return output
 
 method main(System.Console sys):
     // Read the compress_data from a file
-    File.Reader file = File.Reader("input2x.dat")
+    File.Reader file = File.Reader("small.dat")
     byte[] input_data = file.readAll()
     // Decompress the data to a string
     byte[] decompress_data = decompress(input_data)

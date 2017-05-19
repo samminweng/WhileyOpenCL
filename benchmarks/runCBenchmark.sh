@@ -10,11 +10,11 @@ BENCHMARKDIR="$(pwd)"
 
 ## declare compiler used for compilation
 declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" [MergeSort]="gcc" [MatrixMult]="gcc" \
-					   [LZ77]="gcc polly" [SobelEdge]="gcc polly" [Cashtill]="gcc" \
+					   [LZ77]="gcc" [SobelEdge]="gcc polly" [Cashtill]="gcc" \
 					   [CoinGame]="polly gcc" )
 ## declare 4 kinds of code generation
 #declare -a codegens=( "naive" "naivedealloc" "nocopy" "nocopydealloc" )
-declare -a codegens=( "naive" "naivedealloc" "nocopy" )
+declare -a codegens=( "nocopy" )
 
 ## Declare an associative array for pattern matching
 declare -A patterns=( [LZ77_compress]=compress )
