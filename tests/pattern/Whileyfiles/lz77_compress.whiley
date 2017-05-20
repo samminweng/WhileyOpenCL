@@ -134,7 +134,7 @@ function decompress(byte[] data) -> (byte[] output):
 
 method main(System.Console sys):
     // Create a byte array with repeated text
-    File.Reader file = File.Reader("input2x.in")
+    File.Reader file = File.Reader("small.in")
     byte[] data = file.readAll()
     sys.out.println_s("Data:         ")
     sys.out.println_s(ASCII.fromBytes(data))
@@ -147,7 +147,7 @@ method main(System.Console sys):
     sys.out.print(|compress_data|)
     sys.out.println_s(" bytes")
     // Write out compressed data to 'small.dat' file
-    File.Writer writer = File.Writer("input2x.dat")
+    File.Writer writer = File.Writer("small.dat")
     writer.write(compress_data)
     writer.close()
     // Read the compress_data from a file
@@ -155,8 +155,8 @@ method main(System.Console sys):
     //byte[] input_data = file2.readAll()
     // Decompress the data to a string
     //byte[] decompress_data = decompress(input_data)
-    //byte[] decompress_data = decompress(compress_data)
-    //sys.out.println_s("DECOMPRESSED:   ")
-    //sys.out.println_s(ASCII.fromBytes(decompress_data))
-    //sys.out.print(|decompress_data|)
-    //sys.out.println_s(" bytes")
+    byte[] decompress_data = decompress(compress_data)
+    sys.out.println_s("DECOMPRESSED:   ")
+    sys.out.println_s(ASCII.fromBytes(decompress_data))
+    sys.out.print(|decompress_data|)
+    sys.out.println_s(" bytes")

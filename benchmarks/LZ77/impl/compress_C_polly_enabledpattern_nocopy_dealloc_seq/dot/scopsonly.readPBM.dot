@@ -1,0 +1,82 @@
+digraph "Scop Graph for 'readPBM' function" {
+	label="Scop Graph for 'readPBM' function";
+
+	Node0xc917d90 [shape=record,label="{entry}"];
+	Node0xc917d90 -> Node0xc8e74e0;
+	Node0xc8e74e0 [shape=record,label="{entry.split}"];
+	Node0xc8e74e0 -> Node0xc8f9900;
+	Node0xc8f9900 [shape=record,label="{while.cond}"];
+	Node0xc8f9900 -> Node0xc8eb5d0;
+	Node0xc8f9900 -> Node0xc8f6b30;
+	Node0xc8eb5d0 [shape=record,label="{while.end.loopexit}"];
+	Node0xc8eb5d0 -> Node0xc913ff0;
+	Node0xc913ff0 [shape=record,label="{while.end}"];
+	Node0xc913ff0 -> Node0xc91edc0;
+	Node0xc913ff0 -> Node0xc9140a0;
+	Node0xc91edc0 [shape=record,label="{if.then12}"];
+	Node0xc9140a0 [shape=record,label="{while.cond15.preheader}"];
+	Node0xc9140a0 -> Node0xc7babf0;
+	Node0xc7babf0 [shape=record,label="{while.cond15.outer}"];
+	Node0xc7babf0 -> Node0xc908870;
+	Node0xc908870 [shape=record,label="{while.cond15}"];
+	Node0xc908870 -> Node0xc8fde20;
+	Node0xc908870 -> Node0xc8f70b0;
+	Node0xc908870 -> Node0xc8f7110;
+	Node0xc908870 -> Node0xc8f7110;
+	Node0xc8fde20 [shape=record,label="{if.then28}"];
+	Node0xc8fde20 -> Node0xc8f7130;
+	Node0xc8fde20 -> Node0xc8e91d0;
+	Node0xc8fde20 -> Node0xc8e9230;
+	Node0xc8f7130 [shape=record,label="{if.else39}"];
+	Node0xc8f7130 -> Node0xc8e9230;
+	Node0xc8e9230 [shape=record,label="{if.end42}"];
+	Node0xc8e9230 -> Node0xc7babf0[constraint=false];
+	Node0xc8e91d0 [shape=record,label="{if.then32}"];
+	Node0xc8e91d0 -> Node0xc8e9230;
+	Node0xc8f70b0 [shape=record,label="{while.end44}"];
+	Node0xc8f7110 [shape=record,label="{while.cond15.backedge}"];
+	Node0xc8f7110 -> Node0xc908870;
+	Node0xc8f6b30 [shape=record,label="{while.body}"];
+	Node0xc8f6b30 -> Node0xc8f9900[constraint=false];
+	Node0xc8f6b30 -> Node0xc920c90;
+	Node0xc920c90 [shape=record,label="{if.then}"];
+	Node0xc920c90 -> Node0xc913ff0;
+	colorscheme = "paired12"
+        subgraph cluster_0xc924250 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc8f9880 {
+            label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: while.cond";
+            style = solid;
+            color = 6
+            Node0xc8f9900;
+            Node0xc8eb5d0;
+            Node0xc8f6b30;
+            Node0xc920c90;
+          }
+          subgraph cluster_0xc8f9800 {
+            label = "Non affine branch in BB 'while.cond15' with LHS: (sext i8 (trunc i32 %call16 to i8) to i32) and RHS: (sext i8 (trunc i32 %call16 to i8) to i32)";
+            style = solid;
+            color = 6
+            subgraph cluster_0xc8f5820 {
+              label = "Region can not profitably be optimized!";
+              style = solid;
+              color = 5
+              Node0xc8fde20;
+              Node0xc8f7130;
+              Node0xc8e91d0;
+            }
+            Node0xc7babf0;
+            Node0xc908870;
+            Node0xc8e9230;
+            Node0xc8f7110;
+          }
+          Node0xc917d90;
+          Node0xc8e74e0;
+          Node0xc913ff0;
+          Node0xc91edc0;
+          Node0xc9140a0;
+          Node0xc8f70b0;
+        }
+}

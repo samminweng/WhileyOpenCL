@@ -1,10 +1,13 @@
 WARNING: version numbering unavailable
-root->opt_append
+root->match
+root->findLongestMatch
+root->append
 root->resize
+root->compress
 root->decompress
 root->main
 
-Copy elimination analysis completed. File: lz77_optimised_decompress.wyil
+Copy elimination analysis completed. File: lz77_compress.wyil
 Deallocation analysis completed.
-File: lz77_optimised_decompress.wyil
-Code Generation completed. File: lz77_optimised_decompress.c, lz77_optimised_decompress.h
+File: lz77_compress.wyil
+Code Generation completed. File: lz77_compress.c, lz77_compress.h

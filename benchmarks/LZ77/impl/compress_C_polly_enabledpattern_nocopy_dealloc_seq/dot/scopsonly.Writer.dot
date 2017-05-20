@@ -1,0 +1,50 @@
+digraph "Scop Graph for 'Writer' function" {
+	label="Scop Graph for 'Writer' function";
+
+	Node0xc8f7d40 [shape=record,label="{entry}"];
+	Node0xc8f7d40 -> Node0xc913d00;
+	Node0xc913d00 [shape=record,label="{entry.split}"];
+	Node0xc913d00 -> Node0xc913d20;
+	Node0xc913d00 -> Node0xc8ea8e0;
+	Node0xc913d20 [shape=record,label="{while.end}"];
+	Node0xc913d20 -> Node0xc8fe170;
+	Node0xc913d20 -> Node0xc8fe1d0;
+	Node0xc8fe170 [shape=record,label="{if.then}"];
+	Node0xc8fe1d0 [shape=record,label="{if.end}"];
+	Node0xc8ea8e0 [shape=record,label="{while.body.lr.ph}"];
+	Node0xc8ea8e0 -> Node0xc903120;
+	Node0xc903120 [shape=record,label="{while.body}"];
+	Node0xc903120 -> Node0xc903120[constraint=false];
+	Node0xc903120 -> Node0xc903140;
+	Node0xc903140 [shape=record,label="{while.cond.while.end_crit_edge}"];
+	Node0xc903140 -> Node0xc913d20;
+	colorscheme = "paired12"
+        subgraph cluster_0xc91cf60 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc9070f0 {
+            label = "Call instruction:   %call = tail call noalias i8* @malloc(i64 16384) #6";
+            style = solid;
+            color = 6
+            subgraph cluster_0xc926b30 {
+              label = "Region can not profitably be optimized!";
+              style = solid;
+              color = 5
+              subgraph cluster_0xc913dc0 {
+                label = "";
+                style = solid;
+                color = 7
+                Node0xc903120;
+              }
+              Node0xc903140;
+            }
+            Node0xc913d00;
+            Node0xc8ea8e0;
+          }
+          Node0xc8f7d40;
+          Node0xc913d20;
+          Node0xc8fe170;
+          Node0xc8fe1d0;
+        }
+}

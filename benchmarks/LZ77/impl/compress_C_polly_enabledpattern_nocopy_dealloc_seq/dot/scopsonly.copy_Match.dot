@@ -1,0 +1,15 @@
+digraph "Scop Graph for 'copy_Match' function" {
+	label="Scop Graph for 'copy_Match' function";
+
+	Node0xdd3c6b0 [shape=record,label="{entry}"];
+	Node0xdd3c6b0 -> Node0xdcfca50;
+	Node0xdcfca50 [shape=record,label="{entry.split}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xdd15190 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0xdd3c6b0;
+          Node0xdcfca50;
+        }
+}

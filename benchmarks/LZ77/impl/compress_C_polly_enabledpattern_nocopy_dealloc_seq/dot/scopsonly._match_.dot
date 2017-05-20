@@ -1,0 +1,58 @@
+digraph "Scop Graph for '_match_' function" {
+	label="Scop Graph for '_match_' function";
+
+	Node0xdd85050 [shape=record,label="{entry}"];
+	Node0xdd85050 -> Node0xdda4520;
+	Node0xdda4520 [shape=record,label="{entry.split}"];
+	Node0xdda4520 -> Node0xdd15820;
+	Node0xdda4520 -> Node0xdd0f070;
+	Node0xdd15820 [shape=record,label="{if.end.lr.ph}"];
+	Node0xdd15820 -> Node0xdcfca50;
+	Node0xdcfca50 [shape=record,label="{if.end}"];
+	Node0xdcfca50 -> Node0xdc59c60;
+	Node0xdcfca50 -> Node0xdd0f410;
+	Node0xdc59c60 [shape=record,label="{if.end21}"];
+	Node0xdc59c60 -> Node0xdcfca50[constraint=false];
+	Node0xdc59c60 -> Node0xddb8b50;
+	Node0xddb8b50 [shape=record,label="{while.cond.blklab1_crit_edge}"];
+	Node0xddb8b50 -> Node0xdd0f070;
+	Node0xdd0f070 [shape=record,label="{blklab1}"];
+	Node0xdd0f070 -> Node0xdd248e0;
+	Node0xdd0f070 -> Node0xddc2300;
+	Node0xdd248e0 [shape=record,label="{if.then23}"];
+	Node0xdd248e0 -> Node0xddc2300;
+	Node0xddc2300 [shape=record,label="{if.end24}"];
+	Node0xdd0f410 [shape=record,label="{if.end.blklab1_crit_edge}"];
+	Node0xdd0f410 -> Node0xdd0f070;
+	colorscheme = "paired12"
+        subgraph cluster_0xdcfd850 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xddaa370 {
+            label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: if.end";
+            style = solid;
+            color = 6
+            subgraph cluster_0xddaa720 {
+              label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: if.end";
+              style = solid;
+              color = 5
+              Node0xdcfca50;
+              Node0xdc59c60;
+              Node0xddb8b50;
+              Node0xdd0f410;
+            }
+            Node0xdda4520;
+            Node0xdd15820;
+          }
+          subgraph cluster_0xddaa7d0 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xdd0f070;
+            Node0xdd248e0;
+          }
+          Node0xdd85050;
+          Node0xddc2300;
+        }
+}

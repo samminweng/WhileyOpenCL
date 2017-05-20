@@ -1,0 +1,73 @@
+digraph "Scop Graph for 'Array_Append' function" {
+	label="Scop Graph for 'Array_Append' function";
+
+	Node0xc912430 [shape=record,label="{entry}"];
+	Node0xc912430 -> Node0xc916d60;
+	Node0xc916d60 [shape=record,label="{entry.split}"];
+	Node0xc916d60 -> Node0xc916d80;
+	Node0xc916d60 -> Node0xc926ae0;
+	Node0xc916d80 [shape=record,label="{while.cond11.preheader}"];
+	Node0xc916d80 -> Node0xc926b80;
+	Node0xc916d80 -> Node0xc926ba0;
+	Node0xc926b80 [shape=record,label="{if.end15.lr.ph}"];
+	Node0xc926b80 -> Node0xc8fe170;
+	Node0xc8fe170 [shape=record,label="{if.end15}"];
+	Node0xc8fe170 -> Node0xc8fe170[constraint=false];
+	Node0xc8fe170 -> Node0xc8fe210;
+	Node0xc8fe210 [shape=record,label="{while.cond11.if.end25_crit_edge}"];
+	Node0xc8fe210 -> Node0xc926ba0;
+	Node0xc926ba0 [shape=record,label="{if.end25}"];
+	Node0xc926ae0 [shape=record,label="{if.end9.lr.ph}"];
+	Node0xc926ae0 -> Node0xc8fe230;
+	Node0xc8fe230 [shape=record,label="{if.end9}"];
+	Node0xc8fe230 -> Node0xc924f70;
+	Node0xc8fe230 -> Node0xc8fe230[constraint=false];
+	Node0xc924f70 [shape=record,label="{while.cond.while.cond11.preheader_crit_edge}"];
+	Node0xc924f70 -> Node0xc916d80;
+	colorscheme = "paired12"
+        subgraph cluster_0xc9c0910 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xc91ba50 {
+            label = "Call instruction:   %call = tail call i64* @create1DArray_int64_t(i64 0, i64 %add) #6";
+            style = solid;
+            color = 6
+            subgraph cluster_0xc8f8bc0 {
+              label = "Region can not profitably be optimized!";
+              style = solid;
+              color = 5
+              subgraph cluster_0xc904130 {
+                label = "";
+                style = solid;
+                color = 7
+                Node0xc8fe230;
+              }
+              Node0xc924f70;
+            }
+            Node0xc916d60;
+            Node0xc926ae0;
+          }
+          subgraph cluster_0xc920090 {
+            label = "Non affine loop bound '(-1 + (-1 * %i.0.lcssa) + %rhs_size)' in loop: if.end15";
+            style = solid;
+            color = 6
+            subgraph cluster_0xc923170 {
+              label = "Region can not profitably be optimized!";
+              style = solid;
+              color = 5
+              subgraph cluster_0xc9ce540 {
+                label = "";
+                style = solid;
+                color = 7
+                Node0xc8fe170;
+              }
+              Node0xc8fe210;
+            }
+            Node0xc916d80;
+            Node0xc926b80;
+          }
+          Node0xc912430;
+          Node0xc926ba0;
+        }
+}

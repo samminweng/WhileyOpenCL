@@ -175,10 +175,10 @@ runBenchmark(){
 	echo "[1] Run  GCC -O3  executables"
 	gcc -std=c11 -O3 $testcase"_"$program.c Util.c WyRT.c -o out/$testcase"_"$program.gcc.out
 	start=`date +%s%N`
-	if [ $testcase = "SobelEdge" ]
+	if [[ ( $testcase = "LZ77" && $program == "compress" ) || ( $testcase = "SobelEdge" ) ]]
 	then
 		./out/$testcase"_"$program.gcc.out $parameter $parameter1
-		##read -p "Finish SobelEdge test case"
+		#read -p "Finish $testcase $program test case"
 	else
 		./out/$testcase"_"$program.gcc.out $parameter
 	fi
@@ -190,7 +190,7 @@ runBenchmark(){
 	echo "[2] Run  Clang -O3  executables"
 	clang -O3 $testcase"_"$program.c Util.c WyRT.c -o out/$testcase"_"$program.clang.out
 	start=`date +%s%N`
-	if [ $testcase = "SobelEdge" ]
+	if [[ ( $testcase = "LZ77" && $program == "compress" ) || ( $testcase = "SobelEdge" ) ]]
 	then
 		./out/$testcase"_"$program.clang.out $parameter $parameter1
 		##read -p "Finish SobelEdge test case"
@@ -216,7 +216,7 @@ runBenchmark(){
 	#pollycc "assembly"/$testcase"_"$program.polly.s Util.c WyRT.c -o "out"/$testcase"_"$program.polly.out
 	### Run the generated executables.
 	start=`date +%s%N`
-	if [ $testcase = "SobelEdge" ]
+	if [[ ( $testcase = "LZ77" && $program == "compress" ) || ( $testcase = "SobelEdge" ) ]]
 	then
 		./out/$testcase"_"$program.polly.out $parameter $parameter1
 		##read -p "Finish SobelEdge test case"
@@ -262,7 +262,7 @@ runBenchmark(){
 		start=`date +%s%N`
 		### Run the program using two threads.
 		export OMP_NUM_THREADS=$thread
-		if [ $testcase = "SobelEdge" ]
+		if [[ ( $testcase = "LZ77" && $program == "compress" ) || ( $testcase = "SobelEdge" ) ]]
 		then
 			./out/$testcase"_"$program.openmp.out $parameter $parameter1
 			##read -p "Finish SobelEdge test case"
@@ -331,9 +331,9 @@ exec(){
 #exec CoinGame array1 10000
 
 ##LZ77 Test Case
-#exec LZ77 compress "$BENCHMARKDIR/LZ77/Inputfiles/input64x.in" "$BENCHMARKDIR/LZ77/Inputfiles/input64x.dat"
-exec LZ77 decompress "$BENCHMARKDIR/LZ77/Inputfiles/input64x.dat"
-exec LZ77 optimised_decompress "$BENCHMARKDIR/LZ77/Inputfiles/input64x.dat"
+exec LZ77 compress "$BENCHMARKDIR/LZ77/Inputfiles/input64x.in" "$BENCHMARKDIR/LZ77/Inputfiles/input64x.dat"
+#exec LZ77 decompress "$BENCHMARKDIR/LZ77/Inputfiles/input64x.dat"
+#exec LZ77 optimised_decompress "$BENCHMARKDIR/LZ77/Inputfiles/input64x.dat"
 ### NQueens Test Case
 ##exec NQueens original 13
 
