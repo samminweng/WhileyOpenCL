@@ -105,8 +105,8 @@ int64_t _match_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), int64_t
 	//return
 }
 
-//struct Compare { int64_t offset; int64_t len; };
-//#pragma omp declare reduction(maximum : struct Compare : omp_out = omp_in.len > omp_out.len ? omp_in : omp_out)
+struct Compare { int64_t offset; int64_t len; };
+#pragma omp declare reduction(maximum : struct Compare : omp_out = omp_in.len > omp_out.len ? omp_in : omp_out)
 Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), int64_t pos){
 	Match* m;
 	_DECL_DEALLOC(m);
@@ -153,15 +153,13 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 	//assign %6 = %5  : int
 	// isCopyEliminated = true
 	offset = start;
-	int64_t len_p = 0;
-	int64_t offset_p = 0;
-	#pragma omp parallel shared(data, data_size, offset, pos, start, len) \
-				private(len_p, offset_p)
+	#pragma omp parallel
 	{
-		len_p = 0;
-		offset_p = 0;
-		#pragma omp for private (offset)
-		for(offset=start;offset<pos;offset++){
+		struct Compare _max;
+		_max.len = 0;
+		_max.offset = 0;
+		#pragma omp parallel for reduction(maximum:_max)
+		for(offset = start;offset<pos;offset++){
 			//ifge %6, %1 goto blklab3 : int
 			// if(offset>=pos){goto blklab3;}
 			//invoke (%14) = (%0, %6, %1) LZ77_compress:match : function(byte[],LZ77_compress:nat,LZ77_compress:nat)->(int)
@@ -173,16 +171,18 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 			//assign %7 = %14  : int
 			// isCopyEliminated = true
 			len = _14;
-			len_p = len;
-			offset_p = offset;
+			if(len > _max.len){
+				_max.len = len;
+				_max.offset = offset;
+			}
 			//.blklab5
 		}
 
 		#pragma omp critical
 		{
-			if(len_p > bestLen){
-				bestLen = len_p;
-				bestOffset = pos - offset_p;
+			if(_max.len > bestLen){
+				bestLen = _max.len;
+				bestOffset = pos - _max.offset;
 			}
 		}
 	}
@@ -302,7 +302,6 @@ blklab3:;
 	//return
 }
 */
-
 BYTE* _append_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(nitems);
 	_DECL_DEALLOC(nitems);
