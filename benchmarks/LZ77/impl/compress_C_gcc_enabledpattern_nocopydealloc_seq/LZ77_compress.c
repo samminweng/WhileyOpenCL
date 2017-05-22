@@ -1,5 +1,4 @@
 #include "LZ77_compress.h"
-#include "omp.h"
 Match* copy_Match(Match* _Match){
 	Match* new_Match = malloc(sizeof(Match));
 	new_Match->len = _Match->len;
@@ -151,144 +150,6 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 	// isCopyEliminated = true
 	offset = start;
 	//loop (%3, %4, %6, %7, %14, %15, %16, %17)
-	/*while(true){
-		//ifge %6, %1 goto blklab3 : int
-		if(offset>=pos){goto blklab3;}
-		//invoke (%14) = (%0, %6, %1) LZ77_compress:match : function(byte[],LZ77_compress:nat,LZ77_compress:nat)->(int)
-		{
-			// isCopyEliminated of '_0' = true
-			_14 = _match_(_1DARRAY_PARAM(data), false, offset, pos);
-			_RETAIN_DEALLOC(data, "false-false-true" , "match");
-		}
-		//assign %7 = %14  : int
-		// isCopyEliminated = true
-		len = _14;
-		//ifle %7, %4 goto blklab5 : int
-		if(len<=bestLen){goto blklab5;}
-		//sub %15 = %1, %6 : int
-		_15=pos-offset;
-		//assign %3 = %15  : int
-		// isCopyEliminated = true
-		bestOffset = _15;
-		//assign %4 = %7  : int
-		// isCopyEliminated = false
-		bestLen = len;
-//.blklab5
-blklab5:;
-		//const %16 = 1 : int
-		_16 = 1;
-		//add %17 = %6, %16 : int
-		_17=offset+_16;
-		//assign %6 = %17  : int
-		// isCopyEliminated = true
-		offset = _17;
-//.blklab4
-blklab4:;
-	}*/
-	#pragma omp parallel
-	{
-		int64_t _local_len = 0;
-		int64_t _local_offset = 0;
-		// Convert while-loop into for-loop
-		#pragma omp parallel for reduction(max:_local_len)
-		for(offset = start;offset<pos;offset++){
-			//ifge %6, %1 goto blklab3 : int
-			// if(offset>=pos){goto blklab3;}
-			//invoke (%14) = (%0, %6, %1) LZ77_compress:match : function(byte[],LZ77_compress:nat,LZ77_compress:nat)->(int)
-			{
-				// isCopyEliminated of '_0' = true
-				_14 = _match_(_1DARRAY_PARAM(data), false, offset, pos);
-				_RETAIN_DEALLOC(data, "false-false-true" , "match");
-			}
-			//assign %7 = %14  : int
-			len = _14;
-			// Additional code to store local optimal length and offset
-			if(len > _local_len){
-				_local_len = len;
-				_local_offset = offset;
-			}
-			//.blklab5
-		}
-		// Find the global optimal length and offset
-		#pragma omp critical
-		{
-			//ifle %7, %4 goto blklab5 : int
-			if(_local_len<=bestLen){goto blklab5;}
-			//sub %15 = %1, %6 : int
-			_15=pos-_local_offset;
-			//assign %3 = %15  : int
-			// isCopyEliminated = true
-			bestOffset = _15;
-			//assign %4 = %7  : int
-			// isCopyEliminated = false
-			bestLen = _local_len;
-			blklab5:;
-		}
-	}
-//.blklab3
-blklab3:;
-	//newrecord %18 = (%4, %3) : {int len,int offset}
-	_DEALLOC_STRUCT(_18, Match);
-	_18 = malloc(sizeof(Match));
-	// isCopyEliminated = true
-	_18->len = bestLen;
-	// isCopyEliminated = true
-	_18->offset = bestOffset;
-	_ADD_DEALLOC(_18);
-	//return %18
-	_DEALLOC(data);
-	_DEALLOC_STRUCT(m, Match);
-	return _18;
-	//return
-}
-/*
-Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), int64_t pos){
-	Match* m;
-	_DECL_DEALLOC(m);
-	int64_t bestOffset = 0;
-	int64_t bestLen = 0;
-	int64_t start = 0;
-	int64_t offset = 0;
-	int64_t len = 0;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
-	int64_t _13 = 0;
-	int64_t _14 = 0;
-	int64_t _15 = 0;
-	int64_t _16 = 0;
-	int64_t _17 = 0;
-	Match* _18;
-	_DECL_DEALLOC(_18);
-	//const %8 = 0 : int
-	_8 = 0;
-	//assign %3 = %8  : int
-	// isCopyEliminated = true
-	bestOffset = _8;
-	//const %9 = 0 : int
-	_9 = 0;
-	//assign %4 = %9  : int
-	// isCopyEliminated = true
-	bestLen = _9;
-	//const %11 = 255 : int
-	_11 = 255;
-	//sub %12 = %1, %11 : int
-	_12=pos-_11;
-	//const %13 = 0 : int
-	_13 = 0;
-	//invoke (%10) = (%12, %13) whiley/lang/Math:max : function(int,int)->(int)
-	{
-		_10 = max(_12, _13);
-	}
-	//assign %5 = %10  : int
-	// isCopyEliminated = true
-	start = _10;
-	//assign %6 = %5  : int
-	// isCopyEliminated = true
-	offset = start;
-	//loop (%3, %4, %6, %7, %14, %15, %16, %17)
 	while(true){
 		//ifge %6, %1 goto blklab3 : int
 		if(offset>=pos){goto blklab3;}
@@ -339,7 +200,7 @@ blklab3:;
 	return _18;
 	//return
 }
-*/
+
 BYTE* _append_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(nitems);
 	_DECL_DEALLOC(nitems);
@@ -918,7 +779,7 @@ int main(int argc, char** args){
 	//const %12 = [68,97,116,97,58,32,32,32,32,32,32,32,32,32] : int[]
 	_DEALLOC(_12);
 	_NEW_1DARRAY_int64_t(_12, 14, 0);
-	_12[0] = 68; _12[1] = 97; _12[2] = 116; _12[3] = 97; _12[4] = 58; _12[5] = 32; _12[6] = 32; _12[7] = 32; _12[8] = 32; _12[9] = 32; _12[10] = 32; _12[11] = 32; _12[12] = 32; _12[13] = 32;
+	_12[0] = 68; _12[1] = 97; _12[2] = 116; _12[3] = 97; _12[4] = 58; _12[5] = 32; _12[6] = 32; _12[7] = 32; _12[8] = 32; _12[9] = 32; _12[10] = 32; _12[11] = 32; _12[12] = 32; _12[13] = 32; 
 	_ADD_DEALLOC(_12);
 	//indirectinvoke () = %11 (%12) : method(int[])->()
 	{
@@ -950,7 +811,7 @@ int main(int argc, char** args){
 	//const %21 = [32,98,121,116,101,115] : int[]
 	_DEALLOC(_21);
 	_NEW_1DARRAY_int64_t(_21, 6, 0);
-	_21[0] = 32; _21[1] = 98; _21[2] = 121; _21[3] = 116; _21[4] = 101; _21[5] = 115;
+	_21[0] = 32; _21[1] = 98; _21[2] = 121; _21[3] = 116; _21[4] = 101; _21[5] = 115; 
 	_ADD_DEALLOC(_21);
 	//indirectinvoke () = %20 (%21) : method(int[])->()
 	{
@@ -974,7 +835,7 @@ int main(int argc, char** args){
 	//const %25 = [67,79,77,80,82,69,83,83,69,68,32,68,97,116,97,58,32,32,32] : int[]
 	_DEALLOC(_25);
 	_NEW_1DARRAY_int64_t(_25, 19, 0);
-	_25[0] = 67; _25[1] = 79; _25[2] = 77; _25[3] = 80; _25[4] = 82; _25[5] = 69; _25[6] = 83; _25[7] = 83; _25[8] = 69; _25[9] = 68; _25[10] = 32; _25[11] = 68; _25[12] = 97; _25[13] = 116; _25[14] = 97; _25[15] = 58; _25[16] = 32; _25[17] = 32; _25[18] = 32;
+	_25[0] = 67; _25[1] = 79; _25[2] = 77; _25[3] = 80; _25[4] = 82; _25[5] = 69; _25[6] = 83; _25[7] = 83; _25[8] = 69; _25[9] = 68; _25[10] = 32; _25[11] = 68; _25[12] = 97; _25[13] = 116; _25[14] = 97; _25[15] = 58; _25[16] = 32; _25[17] = 32; _25[18] = 32; 
 	_ADD_DEALLOC(_25);
 	//indirectinvoke () = %24 (%25) : method(int[])->()
 	{
@@ -993,7 +854,7 @@ int main(int argc, char** args){
 	//const %31 = [32,98,121,116,101,115] : int[]
 	_DEALLOC(_31);
 	_NEW_1DARRAY_int64_t(_31, 6, 0);
-	_31[0] = 32; _31[1] = 98; _31[2] = 121; _31[3] = 116; _31[4] = 101; _31[5] = 115;
+	_31[0] = 32; _31[1] = 98; _31[2] = 121; _31[3] = 116; _31[4] = 101; _31[5] = 115; 
 	_ADD_DEALLOC(_31);
 	//indirectinvoke () = %30 (%31) : method(int[])->()
 	{
@@ -1014,3 +875,4 @@ int main(int argc, char** args){
 	_DEALLOC(_31);
 	exit(0);
 }
+

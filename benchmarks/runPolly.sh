@@ -11,7 +11,8 @@ UTILDIR="$BASEDIR/tests/code"
 #declare -a codegens=("naive" "naive_dealloc" "nocopy" "nocopy_dealloc")
 declare -A codegens=( [MatrixMult]="nocopy" [LZ77]="nocopy_dealloc" [CoinGame]="nocopy" [SobelEdge]="nocopy_dealloc" )
 ## Declare an associative array for pattern matching
-declare -A patterns=( [LZ77_compress]=compress )
+#declare -A patterns=( [LZ77_compress]=compress )
+declare -A patterns=( )
 ## declare 2 kinds of Polly code
 declare -a pollycodes=("seq" "openmp")
 ### Generate C code

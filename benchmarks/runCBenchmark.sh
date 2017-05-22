@@ -14,7 +14,7 @@ declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" [
 					   [CoinGame]="polly gcc" )
 ## declare 4 kinds of code generation
 #declare -a codegens=( "naive" "naivedealloc" "nocopy" "nocopydealloc" )
-declare -a codegens=( "nocopy" )
+declare -a codegens=( "nocopydealloc" )
 
 ## Declare an associative array for pattern matching
 declare -A patterns=( [LZ77_compress]=compress )
@@ -27,8 +27,8 @@ declare -A parameters=( [Reverse]="200000000 400000000 600000000 800000000 10000
 						#[Reverse]="1000 10000 100000 1000000 10000000 100000000" \
 						[newTicTacToe]="1000 10000 100000" [BubbleSort]="1000 10000 100000" [MergeSort]="1000 10000 100000" \
 						[MatrixMult]="1000 2000 4000" \
-						[LZ77]="input1x input2x input4x input8x input16x input32x input64x input128x input256x input512x input1024x" \
-						#[LZ77]="input1024x" \
+						#[LZ77]="input1x input2x input4x input8x input16x input32x input64x input128x input256x input512x input1024x" \
+						[LZ77]="largest" \
 						[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm image256x256.pbm image512x512.pbm image1024x1024.pbm" \
 						#[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm" \
 						[Cashtill]="1000 1200 1400 1600 1800 2000" \
@@ -271,12 +271,12 @@ exec(){
 				# Test pattern is missing or not (non-empty string (-n))
 				if [ -n "$str" ]
 				then
-					patternmatches="disabledpattern enabledpattern"
+					patternmatches="enabledpattern"
+					#patternmatches="disabledpattern enabledpattern"
 					#read -p "Found Pattern..."${patternmatches}
 				else
 					patternmatches="disabledpattern"
 				fi
-				#patternmatches="enabledpattern"
 				#read -p "Press [Enter] to continue..."$patternmatches
 				## Go through patternmatch setting
 				for patternmatch in ${patternmatches}
@@ -357,9 +357,9 @@ exec(){
 
 #### LZ77 test case
 init LZ77
-#exec LZ77 compress
+exec LZ77 compress
 #exec LZ77 decompress
-exec LZ77 optimised_decompress
+#exec LZ77 optimised_decompress
 
 # # ###Sobel Edge test
 #init SobelEdge
