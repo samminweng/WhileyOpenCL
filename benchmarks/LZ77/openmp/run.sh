@@ -6,62 +6,68 @@ export LANG=C.UTF-8
 declare -a threads=( 1 2 4 6 8 )
 
 ### declare parameters
-##declare -A parameters=( [LZ77]="input1x input2x input4x input8x input16x input32x input64x input128x input256x input512x input1024x" )
-declare -A parameters=( [LZ77]="largest" )
+declare -a parameters=( "input1024x" "input2048x" "input4096x" "input8192x" )
+#declare -A parameters=( [LZ77]="largest" )
+testcase="LZ77"
 program="compress"
 compiler="gcc"
 pattern="enabledpattern"
 codegen="nocopydealloc"
-code="openmp"
-## Compile all C files into executable
-mkdir -p out
-gcc -O3 -fopenmp LZ77_compress.c Util.c WyRT.c -o out/LZ77_compress.openmp.out
+declare -a codes=( "critical" "reduction" "simd" )
+
+### remove all files inside the folder
+rm -rf "../exectime/C"
+mkdir -p "../exectime/C"
 # Go through each parameter
 read -p "Press [Enter] to continue..."
-### remove all files inside the folder
-rm -f "../exectime/C/"*.*
-param_arr=${parameters[$testcase]}
-for parameter in $param_arr
+for parameter in "${parameters[@]}"
 do
-    echo "parameter "$parameter
     ### Run OpenMP executable with multiple threads (1, 2, 4, 6, 8)
     for thread in "${threads[@]}"
     do
         export OMP_NUM_THREADS=$thread
-        echo "OMP_NUM_THREADS="$OMP_NUM_THREADS
-        result="../exectime/C/$testcase.$program.$compiler.$pattern.$codegen.$code.$parameter.$thread.txt"
-        for i in {1..10}
+        for code in "${codes[@]}"
         do
-            echo "Run the $program $testcase on $parameter using $compiler" >> $result
-            echo "Begin $i iteration" >> $result
-            ## Run the openmp code
-            timeout $TIMEOUT "out/LZ77_compress.openmp.out" "../Inputfiles/$parameter.in" \
-                             "../Inputfiles/$parameter.dat" >> $result
+            echo $code
+            ## Compile all C files into executable
+            mkdir -p "$code/out"
+            gcc -O3 -fopenmp "$code/LZ77_compress.c" "$code/Util.c" "$code/WyRT.c" -o "$code/out/LZ77_compress.$code.out"
+            result="../exectime/C/$testcase.$program.$compiler.$pattern.$codegen.$code.$parameter.$thread.txt"
+            echo "OMP_NUM_THREADS="$OMP_NUM_THREADS >> $result
+            #read -p "Press [Enter] to continue..."$result
+            for i in {1..10}
+            do
+                echo "Run the $program $testcase on $parameter using $compiler" >> $result
+                echo "Begin $i iteration" >> $result
+                start=`date +%s%N`
+                ## Run the openmp code
+                "$code/out/LZ77_compress.$code.out" "../Inputfiles/$parameter.in" \
+                     "../Outputfiles/$parameter.$code.dat" >> $result
 
-            ## Get exit code
-    		exitcode="$?"
-    		## Exit code of time out
-    		if [ "$exitcode" == "124" ]
-    		then
-    			printf "\nOOT: Run out of time $TIMEOUT\n" >> $result
-    			break 1 ## Break the for loop
-    		fi
-    		##
-    		## Check exit status
-    		if [ "$exitcode" = "0" ]
-    		then
-    			end=`date +%s%N`
-    			exectime=$((end-start))
-    			printf '\nParameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter $exectime >> $result
-    		else
-    			printf "\nOOM:Run out of memory\n" >> $result
-    			break 1 ## Break the for loop
-    		fi
-    		echo "Finish $i iteration" >> $result
-    		####### Wait until background process is completed
-    		wait ${!}
+                ## Get exit code
+        		exitcode="$?"
+        		## Exit code of time out
+        		if [ "$exitcode" == "124" ]
+        		then
+        			printf "\nOOT: Run out of time $TIMEOUT\n" >> $result
+        			break 1 ## Break the for loop
+        		fi
+        		##
+        		## Check exit status
+        		if [ "$exitcode" = "0" ]
+        		then
+        			end=`date +%s%N`
+        			exectime=$((end-start))
+        			printf '\nParameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter $exectime >> $result
+        		else
+        			printf "\nOOM:Run out of memory\n" >> $result
+        			break 1 ## Break the for loop
+        		fi
+        		echo "Finish $i iteration" >> $result
+        		####### Wait until background process is completed
+        		wait ${!}
 
+            done
         done
-
     done
 done

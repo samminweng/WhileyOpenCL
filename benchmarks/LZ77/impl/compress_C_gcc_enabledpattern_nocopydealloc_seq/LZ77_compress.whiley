@@ -147,10 +147,10 @@ method main(System.Console sys):
     sys.out.print(|compress_data|)
     sys.out.println_s(" bytes")
     // Write out compressed data to 'small.dat' file
-    /*File.Writer writer = File.Writer(sys.args[1])
+    File.Writer writer = File.Writer(sys.args[1])
     writer.write(compress_data)
     writer.close()
-    byte[] decompress_data = decompress(compress_data)
+    /*byte[] decompress_data = decompress(compress_data)
     sys.out.println_s("DECOMPRESSED:   ")
     sys.out.println_s(ASCII.fromBytes(decompress_data))
     sys.out.print(|decompress_data|)

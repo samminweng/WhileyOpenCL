@@ -28,7 +28,7 @@ declare -A parameters=( [Reverse]="200000000 400000000 600000000 800000000 10000
 						[newTicTacToe]="1000 10000 100000" [BubbleSort]="1000 10000 100000" [MergeSort]="1000 10000 100000" \
 						[MatrixMult]="1000 2000 4000" \
 						#[LZ77]="input1x input2x input4x input8x input16x input32x input64x input128x input256x input512x input1024x" \
-						[LZ77]="largest" \
+						[LZ77]="input512x input1024x input2048x input4096x input8192x" \
 						[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm image256x256.pbm image512x512.pbm image1024x1024.pbm" \
 						#[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm" \
 						[Cashtill]="1000 1200 1400 1600 1800 2000" \
