@@ -24,7 +24,6 @@ void printf_Match(Match* match){
 	printf("%"PRId64, match->offset);
 	printf("}");
 }
-
 int64_t _match_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), int64_t offset, int64_t end){
 	int64_t _3 = 0;
 	int64_t pos = 0;
@@ -94,11 +93,11 @@ int64_t _match_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), int64_t
 		//assign %5 = %19  : int
 		// isCopyEliminated = true
 		len = _19;
-		//.blklab2
-		blklab2:;
+//.blklab2
+blklab2:;
 	}
-	//.blklab1
-	blklab1:;
+//.blklab1
+blklab1:;
 	//return %5
 	_DEALLOC(data);
 	return len;
@@ -152,7 +151,7 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 	// isCopyEliminated = true
 	offset = start;
 	//loop (%3, %4, %6, %7, %14, %15, %16, %17)
-	/*while(true){
+		/*while(true){
 			//ifge %6, %1 goto blklab3 : int
 			if(offset>=pos){goto blklab3;}
 			//invoke (%14) = (%0, %6, %1) LZ77_compress:match : function(byte[],LZ77_compress:nat,LZ77_compress:nat)->(int)
@@ -186,59 +185,95 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 	//.blklab4
 	blklab4:;
 		}*/
-	//int nthreads, tid;
-	//int64_t _local_len = 0;
-	//int64_t _local_offset = 0;
-	#pragma omp
-	{
-		//tid = omp_get_thread_num();
-		//if (tid == 0){
-		//nthreads = omp_get_num_threads();
-		//printf("Number of threads = %d\n", nthreads);
-		//}
-		int64_t _local_len = 0;
-		int64_t _local_offset = 0;
-		// Convert while-loop into for-loop
-		//#pragma omp parallel for
-		#pragma omp simd
-		for(offset = start;offset<pos;offset++){
-			//ifge %6, %1 goto blklab3 : int
-			// if(offset>=pos){goto blklab3;}
-			//invoke (%14) = (%0, %6, %1) LZ77_compress:match : function(byte[],LZ77_compress:nat,LZ77_compress:nat)->(int)
+		//int nthreads, tid;
+
+
+		//#pragma omp
+		//{
+			//tid = omp_get_thread_num();
+			 //if (tid == 0){
+			  //nthreads = omp_get_num_threads();
+			  //printf("Number of threads = %d\n", nthreads);
+			 //}
+			// Convert while-loop into for-loop
+			//#pragma omp threadprivate(local_len, local_offset)
+			int64_t* local_len;
+			int64_t* local_offset;
+			int numofthreads;
+			#pragma omp parallel
 			{
-				// isCopyEliminated of '_0' = true
 
-				_14 = _match_(_1DARRAY_PARAM(data), false, offset, pos);
-				_RETAIN_DEALLOC(data, "false-false-true" , "match");
-			}
-			//assign %7 = %14  : int
-			len = _14;
-			// Additional code to store local optimal length and offset
-			if(len > _local_len){
-				_local_len = len;
-				_local_offset = offset;
-			}
+				#pragma omp single
+				{
+					numofthreads= omp_get_num_threads();
+					local_len = malloc(numofthreads*sizeof(int64_t));
+					local_offset = malloc(numofthreads*sizeof(int64_t));
+					// Initialize local_len
+					for(int i =0; i <numofthreads;i++){
+						local_len[i] = 0;
+						local_offset[i] = 0;
+					}
 
-		}
-		// Find the global optimal length and offset
-		//.blklab5
-		//#pragma omp critical
-		{
-			//ifle %7, %4 goto blklab5 : int
-			if(_local_len<=bestLen){goto blklab5;}
-			//sub %15 = %1, %6 : int
-			_15=pos-_local_offset;
-			//assign %3 = %15  : int
-			// isCopyEliminated = true
-			bestOffset = _15;
-			//assign %4 = %7  : int
-			// isCopyEliminated = false
-			bestLen = _local_len;
-			blklab5:;
-		}
-	}
-	//.blklab3
-	blklab3:;
+				}
+				// Map phase
+
+				#pragma omp for
+				for(offset = start;offset<pos;offset++){
+					int id = omp_get_thread_num();
+					//ifge %6, %1 goto blklab3 : int
+					// if(offset>=pos){goto blklab3;}
+					//invoke (%14) = (%0, %6, %1) LZ77_compress:match : function(byte[],LZ77_compress:nat,LZ77_compress:nat)->(int)
+					{
+						// isCopyEliminated of '_0' = true
+						_14 = _match_(_1DARRAY_PARAM(data), false, offset, pos);
+						_RETAIN_DEALLOC(data, "false-false-true" , "match");
+					}
+					//assign %7 = %14  : int
+					len = _14;
+					// Additional code to store local optimal length and offset
+					//#pragma omp critical
+					if(len > local_len[id] || ((len == local_len[id]) && (offset<=local_offset[id]))){
+						local_len[id] = len;
+						local_offset[id] = pos - offset;
+					}
+					//.blklab5
+					// Debug messages
+
+					printf("ID:%d\tPos:%d\tStart:%d\tOffset:%d\tLocal_Len:%d\tLocal_Offset:%d\n",id, pos,start, offset,  local_len[id], local_offset[id]);
+				}
+
+				#pragma omp single
+				{
+					// Find the global optimal length and offset
+					for(int i =0; i <numofthreads;i++){
+						if(local_len[i]>bestLen){
+							bestLen = local_len[i];
+							bestOffset = local_offset[i];
+						}
+					}
+
+					/*
+					//ifle %7, %4 goto blklab5 : int
+					if(local_len<=bestLen){goto blklab5;}
+					//sub %15 = %1, %6 : int
+					_15=pos-local_offset;
+					//assign %3 = %15  : int
+					// isCopyEliminated = true
+					bestOffset = _15;
+					//assign %4 = %7  : int
+					// isCopyEliminated = false
+					bestLen = local_len;
+					blklab5:;
+					*/
+				}
+
+			}
+			free(local_len);
+			free(local_offset);
+		//}
+//.blklab3
+blklab3:;
+	printf("POS:%d\tbestLen:%d\tbestOffset:%d\n", pos, bestLen, bestOffset);
 	//newrecord %18 = (%4, %3) : {int len,int offset}
 	_DEALLOC_STRUCT(_18, Match);
 	_18 = malloc(sizeof(Match));
@@ -309,11 +344,11 @@ BYTE* _append_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), BYTE 
 		//assign %3 = %13  : int
 		// isCopyEliminated = true
 		i = _13;
-		//.blklab7
-		blklab7:;
+//.blklab7
+blklab7:;
 	}
-	//.blklab6
-	blklab6:;
+//.blklab6
+blklab6:;
 	//update %2[%3] = %1 : byte[] -> byte[]
 	// isCopyEliminated = true
 	nitems[i] = item;
@@ -368,11 +403,11 @@ BYTE* _resize_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64
 		//assign %3 = %9  : int
 		// isCopyEliminated = true
 		i = _9;
-		//.blklab11
-		blklab11:;
+//.blklab11
+blklab11:;
 	}
-	//.blklab10
-	blklab10:;
+//.blklab10
+blklab10:;
 	//return %2
 	_DEALLOC(items);
 	_DEALLOC(_5);
@@ -506,8 +541,8 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 		pos = _19;
 		//goto blklab15
 		goto blklab15;
-		//.blklab14
-		blklab14:;
+//.blklab14
+blklab14:;
 		//fieldload %20 = %3 len : {int len,int offset}
 		_20 = m->len;
 		//add %21 = %2, %20 : int
@@ -515,8 +550,8 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 		//assign %2 = %21  : int
 		// isCopyEliminated = true
 		pos = _21;
-		//.blklab15
-		blklab15:;
+//.blklab15
+blklab15:;
 		//update %1[%28] = %4 : byte[] -> byte[]
 		// isCopyEliminated = false
 		output[_28] = offset;
@@ -537,11 +572,11 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 		//assign %28 = %32  : int
 		// isCopyEliminated = true
 		_28 = _32;
-		//.blklab13
-		blklab13:;
+//.blklab13
+blklab13:;
 	}
-	//.blklab12
-	blklab12:;
+//.blklab12
+blklab12:;
 	//assert
 	{
 		//ifle %28, %26 goto blklab22 : int
@@ -549,9 +584,9 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-		//.blklab22
-		blklab22:;
-		//assert
+//.blklab22
+blklab22:;
+	//assert
 	}
 	//invoke (%33) = (%1, %28) LZ77_compress:resize : function(byte[],int)->(byte[])
 	{
@@ -684,8 +719,8 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 		_TRANSFER_DEALLOC(output, _23);
 		//goto blklab19
 		goto blklab19;
-		//.blklab18
-		blklab18:;
+//.blklab18
+blklab18:;
 		//invoke (%24) = (%3) whiley/lang/Byte:toUnsignedInt : function(byte)->(whiley/lang/Int:uint)
 		{
 			_24 = (unsigned int)header;
@@ -741,18 +776,18 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 			//assign %8 = %32  : int
 			// isCopyEliminated = true
 			i = _32;
-			//.blklab21
-			blklab21:;
+//.blklab21
+blklab21:;
 		}
-		//.blklab20
-		blklab20:;
-		//.blklab19
-		blklab19:;
-		//.blklab17
-		blklab17:;
+//.blklab20
+blklab20:;
+//.blklab19
+blklab19:;
+//.blklab17
+blklab17:;
 	}
-	//.blklab16
-	blklab16:;
+//.blklab16
+blklab16:;
 	//return %1
 	_DEALLOC(data);
 	_DEALLOC(_11);

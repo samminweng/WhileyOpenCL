@@ -13,7 +13,7 @@ program="compress"
 compiler="gcc"
 pattern="enabledpattern"
 codegen="nocopydealloc"
-declare -a codes=( "critical" "reduction" "simd" )
+declare -a codes=( "mapreduce" "reduction" )
 
 ### remove all files inside the folder
 rm -rf "../exectime/C"
