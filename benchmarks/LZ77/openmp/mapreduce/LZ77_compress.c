@@ -197,29 +197,28 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 			 //}
 			// Convert while-loop into for-loop
 			//#pragma omp threadprivate(local_len, local_offset)
-			int64_t* local_len;
-			int64_t* local_offset;
+			int64_t* localLen;
+			int64_t* localOffset;
 			int numofthreads;
-			#pragma omp parallel
+			#pragma omp parallel num_threads(8) shared(localLen, localOffset)
 			{
 
-				#pragma omp single
+				#pragma omp master
 				{
 					numofthreads= omp_get_num_threads();
-					local_len = malloc(numofthreads*sizeof(int64_t));
-					local_offset = malloc(numofthreads*sizeof(int64_t));
+					localLen = malloc(numofthreads*sizeof(int64_t));
+					localOffset = malloc(numofthreads*sizeof(int64_t));
 					// Initialize local_len
 					for(int i =0; i <numofthreads;i++){
-						local_len[i] = 0;
-						local_offset[i] = 0;
+						localLen[i] = 0;
+						localOffset[i] = 0;
 					}
 
 				}
 				// Map phase
-
-				#pragma omp for
+				int id = omp_get_thread_num();
+				#pragma omp for ordered
 				for(offset = start;offset<pos;offset++){
-					int id = omp_get_thread_num();
 					//ifge %6, %1 goto blklab3 : int
 					// if(offset>=pos){goto blklab3;}
 					//invoke (%14) = (%0, %6, %1) LZ77_compress:match : function(byte[],LZ77_compress:nat,LZ77_compress:nat)->(int)
@@ -231,27 +230,28 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 					//assign %7 = %14  : int
 					len = _14;
 					// Additional code to store local optimal length and offset
-					//#pragma omp critical
-					if(len > local_len[id] || ((len == local_len[id]) && (offset<=local_offset[id]))){
-						local_len[id] = len;
-						local_offset[id] = pos - offset;
+					#pragma omp critical
+					if(len > localLen[id] || ((len == localLen[id]) && (localOffset[id] < offset))){
+						localLen[id] = len;
+						localOffset[id] = pos - offset;
 					}
 					//.blklab5
 					// Debug messages
-
-					printf("ID:%d\tPos:%d\tStart:%d\tOffset:%d\tLocal_Len:%d\tLocal_Offset:%d\n",id, pos,start, offset,  local_len[id], local_offset[id]);
+					printf("ID:%d\tLen:%d\tOffset:%d\tLocalLen[%d]:%d\tLocalOffset[%d]:%d\n",id, len, offset, id, localLen[id], id, localOffset[id]);
+					//printf("ID:%d\tPos:%d\tStart:%d\tLen:%d\tOffset:%d\tLocalLen[%d]:%d\tLocalOffset[%d]:%d\n",id, pos,start, len, offset, id, localLen[id], id, localOffset[id]);
 				}
 
-				#pragma omp single
+				#pragma omp master
 				{
 					// Find the global optimal length and offset
+					//#pragma omp for ordered
 					for(int i =0; i <numofthreads;i++){
-						if(local_len[i]>bestLen){
-							bestLen = local_len[i];
-							bestOffset = local_offset[i];
+						if(localLen[i]>bestLen){
+							bestLen = localLen[i];
+							bestOffset = localOffset[i];
 						}
 					}
-
+				}
 					/*
 					//ifle %7, %4 goto blklab5 : int
 					if(local_len<=bestLen){goto blklab5;}
@@ -265,11 +265,10 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 					bestLen = local_len;
 					blklab5:;
 					*/
-				}
 
 			}
-			free(local_len);
-			free(local_offset);
+			free(localLen);
+			free(localOffset);
 		//}
 //.blklab3
 blklab3:;
