@@ -1,0 +1,52 @@
+digraph "Scop Graph for 'isArrayEqual_BYTE' function" {
+	label="Scop Graph for 'isArrayEqual_BYTE' function";
+
+	Node0xd2a1500 [shape=record,label="{entry}"];
+	Node0xd2a1500 -> Node0xd29d840;
+	Node0xd29d840 [shape=record,label="{entry.split}"];
+	Node0xd29d840 -> Node0xd2dd9a0;
+	Node0xd29d840 -> Node0xd2ea870;
+	Node0xd2dd9a0 [shape=record,label="{for.cond.preheader}"];
+	Node0xd2dd9a0 -> Node0xd2e16e0;
+	Node0xd2dd9a0 -> Node0xd375450;
+	Node0xd2e16e0 [shape=record,label="{cleanup}"];
+	Node0xd375450 [shape=record,label="{for.body.lr.ph}"];
+	Node0xd375450 -> Node0xd2fae70;
+	Node0xd2fae70 [shape=record,label="{for.body}"];
+	Node0xd2fae70 -> Node0xd0e7320;
+	Node0xd2fae70 -> Node0xd254b10;
+	Node0xd0e7320 [shape=record,label="{for.cond}"];
+	Node0xd0e7320 -> Node0xd2fae70[constraint=false];
+	Node0xd0e7320 -> Node0xd2a8030;
+	Node0xd2a8030 [shape=record,label="{for.cond.cleanup_crit_edge}"];
+	Node0xd2a8030 -> Node0xd2e16e0;
+	Node0xd254b10 [shape=record,label="{for.body.cleanup_crit_edge}"];
+	Node0xd254b10 -> Node0xd2e16e0;
+	Node0xd2ea870 [shape=record,label="{return}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xd2bc5c0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xd2cd3a0 {
+            label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: for.body";
+            style = solid;
+            color = 6
+            subgraph cluster_0xd2ddaa0 {
+              label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: for.body";
+              style = solid;
+              color = 5
+              Node0xd2fae70;
+              Node0xd0e7320;
+              Node0xd2a8030;
+              Node0xd254b10;
+            }
+            Node0xd2dd9a0;
+            Node0xd375450;
+          }
+          Node0xd2a1500;
+          Node0xd29d840;
+          Node0xd2e16e0;
+          Node0xd2ea870;
+        }
+}

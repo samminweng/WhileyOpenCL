@@ -1,0 +1,56 @@
+digraph "Scop Graph for '_append_' function" {
+	label="Scop Graph for '_append_' function";
+
+	Node0xd3c0e20 [shape=record,label="{entry}"];
+	Node0xd3c0e20 -> Node0xd3daa20;
+	Node0xd3daa20 [shape=record,label="{entry.split}"];
+	Node0xd3daa20 -> Node0xd3d0350;
+	Node0xd3daa20 -> Node0xd3bd380;
+	Node0xd3d0350 [shape=record,label="{if.end10.lr.ph}"];
+	Node0xd3d0350 -> Node0xd3beb00;
+	Node0xd3beb00 [shape=record,label="{if.end10}"];
+	Node0xd3beb00 -> Node0xd3beb00[constraint=false];
+	Node0xd3beb00 -> Node0xd35c5f0;
+	Node0xd35c5f0 [shape=record,label="{while.cond.blklab6_crit_edge}"];
+	Node0xd35c5f0 -> Node0xd3bd380;
+	Node0xd3bd380 [shape=record,label="{blklab6}"];
+	Node0xd3bd380 -> Node0xd3cf6e0;
+	Node0xd3bd380 -> Node0xd3e5440;
+	Node0xd3cf6e0 [shape=record,label="{if.then15}"];
+	Node0xd3cf6e0 -> Node0xd3e5440;
+	Node0xd3e5440 [shape=record,label="{if.end19}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xd3c17a0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xd3d7f70 {
+            label = "Call instruction:   %call = tail call i8* @create1DArray_BYTE(i8 zeroext 0, i64 %add) #5";
+            style = solid;
+            color = 6
+            subgraph cluster_0xd36acd0 {
+              label = "Region can not profitably be optimized!";
+              style = solid;
+              color = 5
+              subgraph cluster_0xd3d90c0 {
+                label = "";
+                style = solid;
+                color = 7
+                Node0xd3beb00;
+              }
+              Node0xd35c5f0;
+            }
+            Node0xd3daa20;
+            Node0xd3d0350;
+          }
+          subgraph cluster_0xd3bcf40 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xd3bd380;
+            Node0xd3cf6e0;
+          }
+          Node0xd3c0e20;
+          Node0xd3e5440;
+        }
+}
