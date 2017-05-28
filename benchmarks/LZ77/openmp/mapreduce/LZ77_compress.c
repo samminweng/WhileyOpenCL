@@ -200,7 +200,11 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 			int64_t* localLen;
 			int64_t* localOffset;
 			int numofthreads;
-			#pragma omp parallel num_threads(4) shared(localLen, localOffset)
+			//#pragma omp parallel num_threads(8) shared(localLen, localOffset)
+			// The 'default(none)' clause requires to specify all variable scopes
+			//#pragma omp parallel default(none) \
+					shared(localLen, localOffset, numofthreads, start, pos, data, data_size, bestLen, bestOffset)
+			#pragma omp parallel default(shared)
 			{
 
 				#pragma omp single
@@ -222,7 +226,7 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 					//ifge %6, %1 goto blklab3 : int
 					// if(offset>=pos){goto blklab3;}
 					//invoke (%14) = (%0, %6, %1) LZ77_compress:match : function(byte[],LZ77_compress:nat,LZ77_compress:nat)->(int)
-					int64_t _len;
+					int64_t _len = 0;
 					{
 						// isCopyEliminated of '_0' = true
 						 _len = _match_(_1DARRAY_PARAM(data), false, offset, pos);

@@ -1,0 +1,277 @@
+OMP_NUM_THREADS=4
+Run the compress LZ77 on large1x using gcc
+Begin  iteration
+Data:         
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class=" is-copy-enabled is-u2f-enabled">
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#">
+    <meta charset='utf-8'>
+    
+
+    <link crossorigin="anonymous" href="https://assets-cdn.github.com/assets/frameworks-2bdc213eab044d6ffed07b82d4bbc13165d911fb38f4aa0d76593c6876697e7b.css" integrity="sha256-K9whPqsETW/+0HuC1LvBMWXZEfs49KoNdlk8aHZpfns=" media="all" rel="stylesheet" />
+    <link crossorigin="anonymous" href="https://assets-cdn.github.com/assets/github-ae45a596bb7edc19d6a1c1987740dc53602546aae3aecb3bd068dc73f0a6f362.css" integrity="sha256-rkWllrt+3BnWocGYd0DcU2AlRqrjrss70Gjcc/Cm82I=" media="all" rel="stylesheet" />
+    
+    
+    <link crossorigin="anonymous" href="https://assets-cdn.github.com/assets/site-f6ce114ac3bc145f575863b4a6dbdf65e924bccb184fc4d4a4f5a09819b4173d.css" integrity="sha256-9s4RSsO8FF9XWGO0ptvfZekkvMsYT8TUpPWgmBm0Fz0=" media="all" rel= ... 
+</html>
+
+
+574969 bytes
+COMPRESSED Data:   
+153672 bytes
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  Ts/call  Ts/call  name    
+  9.53      0.02     0.02                             _findLongestMatch_._omp_fn.0 (LZ77_compress.c:232 @ 4033b5)
+  9.53      0.04     0.02                             _findLongestMatch_._omp_fn.0 (LZ77_compress.c:240 @ 4033dc)
+  9.53      0.06     0.02                             _match_ (LZ77_compress.c:52 @ 401337)
+  9.53      0.08     0.02                             _match_ (LZ77_compress.c:70 @ 40139d)
+  7.15      0.10     0.02                             _match_ (LZ77_compress.c:30 @ 4012bc)
+  7.15      0.11     0.02                             _match_ (LZ77_compress.c:31 @ 4012c4)
+  4.76      0.12     0.01                             _match_ (LZ77_compress.c:34 @ 4012dc)
+  4.76      0.13     0.01                             _match_ (LZ77_compress.c:35 @ 4012e4)
+  4.76      0.14     0.01                             _match_ (LZ77_compress.c:54 @ 40133f)
+  4.76      0.15     0.01                             _match_ (LZ77_compress.c:58 @ 401359)
+  4.76      0.16     0.01                             _match_ (LZ77_compress.c:61 @ 401365)
+  4.76      0.17     0.01                             _match_ (LZ77_compress.c:65 @ 40138d)
+  2.38      0.18     0.01                             _match_ (LZ77_compress.c:44 @ 40131c)
+  2.38      0.18     0.01                             _match_ (LZ77_compress.c:47 @ 401324)
+  2.38      0.19     0.01                             _match_ (LZ77_compress.c:67 @ 401395)
+  2.38      0.19     0.01                             _match_ (LZ77_compress.c:74 @ 4013c5)
+  2.38      0.20     0.01                             _match_ (LZ77_compress.c:78 @ 401448)
+  2.38      0.20     0.01                             _match_ (LZ77_compress.c:88 @ 40144d)
+  2.38      0.21     0.01                             _match_ (LZ77_compress.c:102 @ 40144e)
+  2.38      0.21     0.01                             _match_ (LZ77_compress.c:103 @ 401478)
+  0.00      0.21     0.00  3793187     0.00     0.00  _match_ (LZ77_compress.c:27 @ 401278)
+  0.00      0.21     0.00    76836     0.00     0.00  _findLongestMatch_ (LZ77_compress.c:107 @ 40147e)
+  0.00      0.21     0.00    76836     0.00     0.00  free_Match (LZ77_compress.c:16 @ 4011df)
+  0.00      0.21     0.00        5     0.00     0.00  printf_s (Util.c:355 @ 404235)
+  0.00      0.21     0.00        5     0.00     0.00  println_s (Util.c:385 @ 4042fa)
+  0.00      0.21     0.00        4     0.00     0.00  create1DArray_int64_t (Util.c:19 @ 403657)
+  0.00      0.21     0.00        2     0.00     0.00  convertArgsToIntArray (Util.c:116 @ 403933)
+  0.00      0.21     0.00        2     0.00     0.00  create1DArray_BYTE (Util.c:38 @ 4036dd)
+  0.00      0.21     0.00        2     0.00     0.00  free2DArray_int64_t (Util.c:225 @ 403da8)
+  0.00      0.21     0.00        1     0.00     0.00  Reader (WyRT.c:165 @ 404a35)
+  0.00      0.21     0.00        1     0.00     0.00  Writer (WyRT.c:133 @ 404937)
+  0.00      0.21     0.00        1     0.00     0.00  _compress_ (LZ77_compress.c:424 @ 401b26)
+  0.00      0.21     0.00        1     0.00     0.00  _resize_ (LZ77_compress.c:368 @ 40197e)
+  0.00      0.21     0.00        1     0.00     0.00  fromBytes (WyRT.c:199 @ 404b33)
+  0.00      0.21     0.00        1     0.00     0.00  isPBMFile (WyRT.c:214 @ 404bd5)
+  0.00      0.21     0.00        1     0.00     0.00  readAll (WyRT.c:324 @ 404eb6)
+  0.00      0.21     0.00        1     0.00     0.00  readFile (WyRT.c:290 @ 404dca)
+  0.00      0.21     0.00        1     0.00     0.00  writeAll (WyRT.c:127 @ 404902)
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2015 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 4.76% of 0.21 seconds
+
+index % time    self  children    called     name
+                0.00    0.00       1/76836       _compress_ (LZ77_compress.c:611 @ 402085) [731]
+                0.00    0.00   76835/76836       _compress_ (LZ77_compress.c:509 @ 401df4) [689]
+[21]     0.0    0.00    0.00   76836         free_Match (LZ77_compress.c:16 @ 4011df) [21]
+-----------------------------------------------
+                0.00    0.00       5/5           println_s (Util.c:386 @ 40430f) [521]
+[22]     0.0    0.00    0.00       5         printf_s (Util.c:355 @ 404235) [22]
+-----------------------------------------------
+                0.00    0.00       1/5           main (LZ77_compress.c:888 @ 402af1) [374]
+                0.00    0.00       1/5           main (LZ77_compress.c:901 @ 402b61) [379]
+                0.00    0.00       1/5           main (LZ77_compress.c:920 @ 402c64) [386]
+                0.00    0.00       1/5           main (LZ77_compress.c:944 @ 402ece) [397]
+                0.00    0.00       1/5           main (LZ77_compress.c:963 @ 402fd1) [404]
+[23]     0.0    0.00    0.00       5         println_s (Util.c:385 @ 4042fa) [23]
+-----------------------------------------------
+                0.00    0.00       1/4           main (LZ77_compress.c:883 @ 4029f5) [371]
+                0.00    0.00       1/4           main (LZ77_compress.c:915 @ 402bc2) [383]
+                0.00    0.00       1/4           main (LZ77_compress.c:939 @ 402d3e) [394]
+                0.00    0.00       1/4           main (LZ77_compress.c:958 @ 402f2f) [401]
+[24]     0.0    0.00    0.00       4         create1DArray_int64_t (Util.c:19 @ 403657) [24]
+-----------------------------------------------
+                0.00    0.00       1/2           main (LZ77_compress.c:853 @ 4028dd) [357]
+                0.00    0.00       1/2           main (LZ77_compress.c:967 @ 403018) [406]
+[25]     0.0    0.00    0.00       2         convertArgsToIntArray (Util.c:116 @ 403933) [25]
+-----------------------------------------------
+                0.00    0.00       1/2           _resize_ (LZ77_compress.c:383 @ 401a10) [927]
+                0.00    0.00       1/2           _compress_ (LZ77_compress.c:482 @ 401d02) [677]
+[26]     0.0    0.00    0.00       2         create1DArray_BYTE (Util.c:38 @ 4036dd) [26]
+-----------------------------------------------
+                0.00    0.00       1/2           main (LZ77_compress.c:998 @ 40317e) [421]
+                0.00    0.00       1/2           main (LZ77_compress.c:1007 @ 4032b4) [430]
+[27]     0.0    0.00    0.00       2         free2DArray_int64_t (Util.c:225 @ 403da8) [27]
+-----------------------------------------------
+                0.00    0.00       1/1           main (LZ77_compress.c:863 @ 402945) [363]
+[28]     0.0    0.00    0.00       1         Reader (WyRT.c:165 @ 404a35) [28]
+-----------------------------------------------
+                0.00    0.00       1/1           main (LZ77_compress.c:977 @ 403098) [412]
+[29]     0.0    0.00    0.00       1         Writer (WyRT.c:133 @ 404937) [29]
+-----------------------------------------------
+                0.00    0.00       1/1           main (LZ77_compress.c:895 @ 402b28) [376]
+[30]     0.0    0.00    0.00       1         fromBytes (WyRT.c:199 @ 404b33) [30]
+-----------------------------------------------
+                0.00    0.00       1/1           readAll (WyRT.c:326 @ 404ecb) [524]
+[31]     0.0    0.00    0.00       1         isPBMFile (WyRT.c:214 @ 404bd5) [31]
+-----------------------------------------------
+                0.00    0.00       1/1           main (LZ77_compress.c:871 @ 40296d) [365]
+[32]     0.0    0.00    0.00       1         readAll (WyRT.c:324 @ 404eb6) [32]
+-----------------------------------------------
+                0.00    0.00       1/1           readAll (WyRT.c:332 @ 404ef5) [527]
+[33]     0.0    0.00    0.00       1         readFile (WyRT.c:290 @ 404dca) [33]
+-----------------------------------------------
+                0.00    0.00       1/1           main (LZ77_compress.c:990 @ 4030e0) [415]
+[34]     0.0    0.00    0.00       1         writeAll (WyRT.c:127 @ 404902) [34]
+-----------------------------------------------
+                0.00    0.00 3793187/3793187     _findLongestMatch_._omp_fn.0 (LZ77_compress.c:232 @ 4033b5) [1]
+[588]    0.0    0.00    0.00 3793187         _match_ (LZ77_compress.c:27 @ 401278) [588]
+-----------------------------------------------
+                0.00    0.00   76836/76836       _compress_ (LZ77_compress.c:504 @ 401dbd) [687]
+[589]    0.0    0.00    0.00   76836         _findLongestMatch_ (LZ77_compress.c:107 @ 40147e) [589]
+-----------------------------------------------
+                0.00    0.00       1/1           main (LZ77_compress.c:926 @ 402ca1) [388]
+[590]    0.0    0.00    0.00       1         _compress_ (LZ77_compress.c:424 @ 401b26) [590]
+-----------------------------------------------
+                0.00    0.00       1/1           _compress_ (LZ77_compress.c:600 @ 401fdb) [725]
+[591]    0.0    0.00    0.00       1         _resize_ (LZ77_compress.c:368 @ 40197e) [591]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2015 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [28] Reader (WyRT.c:165 @ 404a35) [3] _match_ (LZ77_compress.c:52 @ 401337) [25] convertArgsToIntArray (Util.c:116 @ 403933)
+  [29] Writer (WyRT.c:133 @ 404937) [9] _match_ (LZ77_compress.c:54 @ 40133f) [26] create1DArray_BYTE (Util.c:38 @ 4036dd)
+ [590] _compress_ (LZ77_compress.c:424 @ 401b26) [10] _match_ (LZ77_compress.c:58 @ 401359) [24] create1DArray_int64_t (Util.c:19 @ 403657)
+ [589] _findLongestMatch_ (LZ77_compress.c:107 @ 40147e) [11] _match_ (LZ77_compress.c:61 @ 401365) [27] free2DArray_int64_t (Util.c:225 @ 403da8)
+   [1] _findLongestMatch_._omp_fn.0 (LZ77_compress.c:232 @ 4033b5) [12] _match_ (LZ77_compress.c:65 @ 40138d) [21] free_Match (LZ77_compress.c:16 @ 4011df)
+   [2] _findLongestMatch_._omp_fn.0 (LZ77_compress.c:240 @ 4033dc) [15] _match_ (LZ77_compress.c:67 @ 401395) [30] fromBytes (WyRT.c:199 @ 404b33)
+ [588] _match_ (LZ77_compress.c:27 @ 401278) [4] _match_ (LZ77_compress.c:70 @ 40139d) [31] isPBMFile (WyRT.c:214 @ 404bd5)
+   [5] _match_ (LZ77_compress.c:30 @ 4012bc) [16] _match_ (LZ77_compress.c:74 @ 4013c5) [22] printf_s (Util.c:355 @ 404235)
+   [6] _match_ (LZ77_compress.c:31 @ 4012c4) [17] _match_ (LZ77_compress.c:78 @ 401448) [23] println_s (Util.c:385 @ 4042fa)
+   [7] _match_ (LZ77_compress.c:34 @ 4012dc) [18] _match_ (LZ77_compress.c:88 @ 40144d) [32] readAll (WyRT.c:324 @ 404eb6)
+   [8] _match_ (LZ77_compress.c:35 @ 4012e4) [19] _match_ (LZ77_compress.c:102 @ 40144e) [33] readFile (WyRT.c:290 @ 404dca)
+  [13] _match_ (LZ77_compress.c:44 @ 40131c) [20] _match_ (LZ77_compress.c:103 @ 401478) [34] writeAll (WyRT.c:127 @ 404902)
+  [14] _match_ (LZ77_compress.c:47 @ 401324) [591] _resize_ (LZ77_compress.c:368 @ 40197e)

@@ -27,8 +27,8 @@ declare -A parameters=( [Reverse]="200000000 400000000 600000000 800000000 10000
 						#[Reverse]="1000 10000 100000 1000000 10000000 100000000" \
 						[newTicTacToe]="1000 10000 100000" [BubbleSort]="1000 10000 100000" [MergeSort]="1000 10000 100000" \
 						[MatrixMult]="1000 2000 4000" \
-						#[LZ77]="input1x input2x input4x input8x input16x input32x input64x input128x input256x input512x input1024x" \
-						[LZ77]="input512x input1024x input2048x input4096x input8192x" \
+						#[LZ77]="medium1x medium2x medium4x medium8x medium16x medium32x medium64x medium128x medium256x medium512x medium1024x" \
+						[LZ77]="large1x large2x large4x large8x large16x large32x large64x large128x large256x" \
 						[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm image256x256.pbm image512x512.pbm image1024x1024.pbm" \
 						#[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm" \
 						[Cashtill]="1000 1200 1400 1600 1800 2000" \
@@ -193,9 +193,9 @@ run(){
 				if [ $program = "compress" ]
 				then
 					timeout $TIMEOUT "out/$executable" "$BENCHMARKDIR/$testcase/Inputfiles/$parameter.in" \
-									 "$BENCHMARKDIR/$testcase/Inputfiles/$parameter.dat" >> $result
+									 "$BENCHMARKDIR/$testcase/Outputfiles/$parameter.dat" >> $result
 				else
-					timeout $TIMEOUT "out/$executable" "$BENCHMARKDIR/$testcase/Inputfiles/$parameter.dat"  >> $result
+					timeout $TIMEOUT "out/$executable" "$BENCHMARKDIR/$testcase/Outputfiles/$parameter.dat"  >> $result
 				fi
 				;;
 			"SobelEdge")
