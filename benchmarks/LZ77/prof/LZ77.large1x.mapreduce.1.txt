@@ -1,6 +1,6 @@
 OMP_NUM_THREADS=1
 Run the compress LZ77 on large1x using gcc
-Begin  iteration
+Begin 1 iteration
 Data:         
 
 
@@ -27,44 +27,42 @@ Flat profile:
 
 Each sample counts as 0.01 seconds.
   %   cumulative   self              self     total           
- time   seconds   seconds    calls  ps/call  ps/call  name    
- 17.87      0.05     0.05                             _match_ (LZ77_compress.c:70 @ 40139d)
- 17.87      0.10     0.05                             _match_ (LZ77_compress.c:78 @ 4013cd)
-  7.15      0.12     0.02                             _findLongestMatch_._omp_fn.0 (LZ77_compress.c:232 @ 4033b5)
-  7.15      0.14     0.02                             _match_ (LZ77_compress.c:74 @ 4013c5)
-  5.36      0.16     0.02 19572623   766.75   766.75  _match_ (LZ77_compress.c:27 @ 401278)
-  5.36      0.17     0.02                             _match_ (LZ77_compress.c:61 @ 401365)
-  3.57      0.18     0.01                             _findLongestMatch_ (LZ77_compress.c:207 @ 4015a5)
-  3.57      0.19     0.01                             _findLongestMatch_._omp_fn.0 (LZ77_compress.c:213 @ 403512)
-  3.57      0.20     0.01                             _match_ (LZ77_compress.c:47 @ 401324)
-  3.57      0.21     0.01                             _match_ (LZ77_compress.c:80 @ 4013d7)
-  3.57      0.22     0.01                             _match_ (LZ77_compress.c:82 @ 4013e9)
-  3.57      0.23     0.01                             _match_ (LZ77_compress.c:84 @ 4013fd)
-  3.57      0.24     0.01                             _match_ (LZ77_compress.c:92 @ 401431)
-  3.57      0.25     0.01                             printf_Match (LZ77_compress.c:26 @ 401275)
-  1.79      0.26     0.01                             _match_ (LZ77_compress.c:28 @ 4012ac)
-  1.79      0.26     0.01                             _match_ (LZ77_compress.c:31 @ 4012c4)
-  1.79      0.27     0.01                             _match_ (LZ77_compress.c:32 @ 4012cc)
-  1.79      0.27     0.01                             _match_ (LZ77_compress.c:58 @ 401359)
-  1.79      0.28     0.01                             _match_ (LZ77_compress.c:103 @ 401478)
-  1.79      0.28     0.01                             _match_ (LZ77_compress.c:105 @ 40147c)
-  0.00      0.28     0.00    76836     0.00     0.00  _findLongestMatch_ (LZ77_compress.c:107 @ 40147e)
-  0.00      0.28     0.00    76836     0.00     0.00  free_Match (LZ77_compress.c:16 @ 4011df)
-  0.00      0.28     0.00        5     0.00     0.00  printf_s (Util.c:355 @ 404235)
-  0.00      0.28     0.00        5     0.00     0.00  println_s (Util.c:385 @ 4042fa)
-  0.00      0.28     0.00        4     0.00     0.00  create1DArray_int64_t (Util.c:19 @ 403657)
-  0.00      0.28     0.00        2     0.00     0.00  convertArgsToIntArray (Util.c:116 @ 403933)
-  0.00      0.28     0.00        2     0.00     0.00  create1DArray_BYTE (Util.c:38 @ 4036dd)
-  0.00      0.28     0.00        2     0.00     0.00  free2DArray_int64_t (Util.c:225 @ 403da8)
-  0.00      0.28     0.00        1     0.00     0.00  Reader (WyRT.c:165 @ 404a35)
-  0.00      0.28     0.00        1     0.00     0.00  Writer (WyRT.c:133 @ 404937)
-  0.00      0.28     0.00        1     0.00     0.00  _compress_ (LZ77_compress.c:424 @ 401b26)
-  0.00      0.28     0.00        1     0.00     0.00  _resize_ (LZ77_compress.c:368 @ 40197e)
-  0.00      0.28     0.00        1     0.00     0.00  fromBytes (WyRT.c:199 @ 404b33)
-  0.00      0.28     0.00        1     0.00     0.00  isPBMFile (WyRT.c:214 @ 404bd5)
-  0.00      0.28     0.00        1     0.00     0.00  readAll (WyRT.c:324 @ 404eb6)
-  0.00      0.28     0.00        1     0.00     0.00  readFile (WyRT.c:290 @ 404dca)
-  0.00      0.28     0.00        1     0.00     0.00  writeAll (WyRT.c:127 @ 404902)
+ time   seconds   seconds    calls  ns/call  ns/call  name    
+ 21.89      0.07     0.07                             _match_ (LZ77_compress.c:78 @ 40125d)
+ 14.07      0.12     0.05                             _match_ (LZ77_compress.c:70 @ 40122d)
+ 10.94      0.15     0.04                             _match_ (LZ77_compress.c:74 @ 401255)
+  9.38      0.18     0.03                             _findLongestMatch_._omp_fn.0 (LZ77_compress.c:240 @ 403292)
+  7.82      0.21     0.03 19572623     1.28     1.28  _match_ (LZ77_compress.c:27 @ 401108)
+  4.69      0.22     0.02                             _match_ (LZ77_compress.c:103 @ 401308)
+  4.69      0.24     0.02                             _match_ (LZ77_compress.c:105 @ 40130c)
+  3.13      0.25     0.01                             _match_ (LZ77_compress.c:31 @ 401154)
+  3.13      0.26     0.01                             _match_ (LZ77_compress.c:32 @ 40115c)
+  3.13      0.27     0.01                             _match_ (LZ77_compress.c:47 @ 4011b4)
+  3.13      0.28     0.01                             _match_ (LZ77_compress.c:61 @ 4011f5)
+  3.13      0.29     0.01                             _match_ (LZ77_compress.c:78 @ 4012d8)
+  3.13      0.30     0.01                             _match_ (LZ77_compress.c:88 @ 4012dd)
+  1.56      0.30     0.01                             _match_ (LZ77_compress.c:39 @ 401194)
+  1.56      0.31     0.01                             _match_ (LZ77_compress.c:41 @ 40119c)
+  1.56      0.31     0.01                             _match_ (LZ77_compress.c:58 @ 4011e9)
+  1.56      0.32     0.01                             _match_ (LZ77_compress.c:65 @ 40121d)
+  1.56      0.32     0.01                             printf_Match (LZ77_compress.c:26 @ 401105)
+  0.00      0.32     0.00    76836     0.00     0.00  _findLongestMatch_ (LZ77_compress.c:107 @ 40130e)
+  0.00      0.32     0.00    76836     0.00     0.00  free_Match (LZ77_compress.c:16 @ 40106f)
+  0.00      0.32     0.00        5     0.00     0.00  printf_s (Util.c:355 @ 4040e6)
+  0.00      0.32     0.00        5     0.00     0.00  println_s (Util.c:385 @ 4041ab)
+  0.00      0.32     0.00        4     0.00     0.00  create1DArray_int64_t (Util.c:19 @ 403508)
+  0.00      0.32     0.00        2     0.00     0.00  convertArgsToIntArray (Util.c:116 @ 4037e4)
+  0.00      0.32     0.00        2     0.00     0.00  create1DArray_BYTE (Util.c:38 @ 40358e)
+  0.00      0.32     0.00        2     0.00     0.00  free2DArray_int64_t (Util.c:225 @ 403c59)
+  0.00      0.32     0.00        1     0.00     0.00  Reader (WyRT.c:165 @ 4048e6)
+  0.00      0.32     0.00        1     0.00     0.00  Writer (WyRT.c:133 @ 4047e8)
+  0.00      0.32     0.00        1     0.00     0.00  _compress_ (LZ77_compress.c:424 @ 4019b6)
+  0.00      0.32     0.00        1     0.00     0.00  _resize_ (LZ77_compress.c:368 @ 40180e)
+  0.00      0.32     0.00        1     0.00     0.00  fromBytes (WyRT.c:199 @ 4049e4)
+  0.00      0.32     0.00        1     0.00     0.00  isPBMFile (WyRT.c:214 @ 404a86)
+  0.00      0.32     0.00        1     0.00     0.00  readAll (WyRT.c:324 @ 404d67)
+  0.00      0.32     0.00        1     0.00     0.00  readFile (WyRT.c:290 @ 404c7b)
+  0.00      0.32     0.00        1     0.00     0.00  writeAll (WyRT.c:127 @ 4047b3)
 
  %         the percentage of the total running time of the
 time       program used by this function.
@@ -102,73 +100,73 @@ notice and this notice are preserved.
 		     Call graph (explanation follows)
 
 
-granularity: each sample hit covers 2 byte(s) for 3.57% of 0.28 seconds
+granularity: each sample hit covers 2 byte(s) for 3.12% of 0.32 seconds
 
 index % time    self  children    called     name
-                0.02    0.00 19572623/19572623     _findLongestMatch_._omp_fn.0 (LZ77_compress.c:232 @ 4033b5) [3]
-[5]      5.4    0.02    0.00 19572623         _match_ (LZ77_compress.c:27 @ 401278) [5]
+                0.03    0.00 19572623/19572623     _findLongestMatch_._omp_fn.0 (LZ77_compress.c:232 @ 40326b) [6]
+[5]      7.8    0.03    0.00 19572623         _match_ (LZ77_compress.c:27 @ 401108) [5]
 -----------------------------------------------
-                0.00    0.00       1/76836       _compress_ (LZ77_compress.c:611 @ 402085) [729]
-                0.00    0.00   76835/76836       _compress_ (LZ77_compress.c:509 @ 401df4) [687]
-[21]     0.0    0.00    0.00   76836         free_Match (LZ77_compress.c:16 @ 4011df) [21]
+                0.00    0.00       1/76836       _compress_ (LZ77_compress.c:611 @ 401f15) [728]
+                0.00    0.00   76835/76836       _compress_ (LZ77_compress.c:509 @ 401c84) [686]
+[20]     0.0    0.00    0.00   76836         free_Match (LZ77_compress.c:16 @ 40106f) [20]
 -----------------------------------------------
-                0.00    0.00       5/5           println_s (Util.c:386 @ 40430f) [520]
-[22]     0.0    0.00    0.00       5         printf_s (Util.c:355 @ 404235) [22]
+                0.00    0.00       5/5           println_s (Util.c:386 @ 4041c0) [519]
+[21]     0.0    0.00    0.00       5         printf_s (Util.c:355 @ 4040e6) [21]
 -----------------------------------------------
-                0.00    0.00       1/5           main (LZ77_compress.c:888 @ 402af1) [374]
-                0.00    0.00       1/5           main (LZ77_compress.c:901 @ 402b61) [379]
-                0.00    0.00       1/5           main (LZ77_compress.c:920 @ 402c64) [386]
-                0.00    0.00       1/5           main (LZ77_compress.c:944 @ 402ece) [397]
-                0.00    0.00       1/5           main (LZ77_compress.c:963 @ 402fd1) [404]
-[23]     0.0    0.00    0.00       5         println_s (Util.c:385 @ 4042fa) [23]
+                0.00    0.00       1/5           main (LZ77_compress.c:888 @ 402981) [373]
+                0.00    0.00       1/5           main (LZ77_compress.c:901 @ 4029f1) [378]
+                0.00    0.00       1/5           main (LZ77_compress.c:920 @ 402af4) [385]
+                0.00    0.00       1/5           main (LZ77_compress.c:944 @ 402d5e) [396]
+                0.00    0.00       1/5           main (LZ77_compress.c:963 @ 402e61) [403]
+[22]     0.0    0.00    0.00       5         println_s (Util.c:385 @ 4041ab) [22]
 -----------------------------------------------
-                0.00    0.00       1/4           main (LZ77_compress.c:883 @ 4029f5) [371]
-                0.00    0.00       1/4           main (LZ77_compress.c:915 @ 402bc2) [383]
-                0.00    0.00       1/4           main (LZ77_compress.c:939 @ 402d3e) [394]
-                0.00    0.00       1/4           main (LZ77_compress.c:958 @ 402f2f) [401]
-[24]     0.0    0.00    0.00       4         create1DArray_int64_t (Util.c:19 @ 403657) [24]
+                0.00    0.00       1/4           main (LZ77_compress.c:883 @ 402885) [370]
+                0.00    0.00       1/4           main (LZ77_compress.c:915 @ 402a52) [382]
+                0.00    0.00       1/4           main (LZ77_compress.c:939 @ 402bce) [393]
+                0.00    0.00       1/4           main (LZ77_compress.c:958 @ 402dbf) [400]
+[23]     0.0    0.00    0.00       4         create1DArray_int64_t (Util.c:19 @ 403508) [23]
 -----------------------------------------------
-                0.00    0.00       1/2           main (LZ77_compress.c:853 @ 4028dd) [357]
-                0.00    0.00       1/2           main (LZ77_compress.c:967 @ 403018) [406]
-[25]     0.0    0.00    0.00       2         convertArgsToIntArray (Util.c:116 @ 403933) [25]
+                0.00    0.00       1/2           main (LZ77_compress.c:853 @ 40276d) [356]
+                0.00    0.00       1/2           main (LZ77_compress.c:967 @ 402ea8) [405]
+[24]     0.0    0.00    0.00       2         convertArgsToIntArray (Util.c:116 @ 4037e4) [24]
 -----------------------------------------------
-                0.00    0.00       1/2           _resize_ (LZ77_compress.c:383 @ 401a10) [927]
-                0.00    0.00       1/2           _compress_ (LZ77_compress.c:482 @ 401d02) [675]
-[26]     0.0    0.00    0.00       2         create1DArray_BYTE (Util.c:38 @ 4036dd) [26]
+                0.00    0.00       1/2           _resize_ (LZ77_compress.c:383 @ 4018a0) [927]
+                0.00    0.00       1/2           _compress_ (LZ77_compress.c:482 @ 401b92) [674]
+[25]     0.0    0.00    0.00       2         create1DArray_BYTE (Util.c:38 @ 40358e) [25]
 -----------------------------------------------
-                0.00    0.00       1/2           main (LZ77_compress.c:998 @ 40317e) [421]
-                0.00    0.00       1/2           main (LZ77_compress.c:1007 @ 4032b4) [430]
-[27]     0.0    0.00    0.00       2         free2DArray_int64_t (Util.c:225 @ 403da8) [27]
+                0.00    0.00       1/2           main (LZ77_compress.c:998 @ 40300e) [420]
+                0.00    0.00       1/2           main (LZ77_compress.c:1007 @ 403144) [429]
+[26]     0.0    0.00    0.00       2         free2DArray_int64_t (Util.c:225 @ 403c59) [26]
 -----------------------------------------------
-                0.00    0.00       1/1           main (LZ77_compress.c:863 @ 402945) [363]
-[28]     0.0    0.00    0.00       1         Reader (WyRT.c:165 @ 404a35) [28]
+                0.00    0.00       1/1           main (LZ77_compress.c:863 @ 4027d5) [362]
+[27]     0.0    0.00    0.00       1         Reader (WyRT.c:165 @ 4048e6) [27]
 -----------------------------------------------
-                0.00    0.00       1/1           main (LZ77_compress.c:977 @ 403098) [412]
-[29]     0.0    0.00    0.00       1         Writer (WyRT.c:133 @ 404937) [29]
+                0.00    0.00       1/1           main (LZ77_compress.c:977 @ 402f28) [411]
+[28]     0.0    0.00    0.00       1         Writer (WyRT.c:133 @ 4047e8) [28]
 -----------------------------------------------
-                0.00    0.00       1/1           main (LZ77_compress.c:895 @ 402b28) [376]
-[30]     0.0    0.00    0.00       1         fromBytes (WyRT.c:199 @ 404b33) [30]
+                0.00    0.00       1/1           main (LZ77_compress.c:895 @ 4029b8) [375]
+[29]     0.0    0.00    0.00       1         fromBytes (WyRT.c:199 @ 4049e4) [29]
 -----------------------------------------------
-                0.00    0.00       1/1           readAll (WyRT.c:326 @ 404ecb) [523]
-[31]     0.0    0.00    0.00       1         isPBMFile (WyRT.c:214 @ 404bd5) [31]
+                0.00    0.00       1/1           readAll (WyRT.c:326 @ 404d7c) [522]
+[30]     0.0    0.00    0.00       1         isPBMFile (WyRT.c:214 @ 404a86) [30]
 -----------------------------------------------
-                0.00    0.00       1/1           main (LZ77_compress.c:871 @ 40296d) [365]
-[32]     0.0    0.00    0.00       1         readAll (WyRT.c:324 @ 404eb6) [32]
+                0.00    0.00       1/1           main (LZ77_compress.c:871 @ 4027fd) [364]
+[31]     0.0    0.00    0.00       1         readAll (WyRT.c:324 @ 404d67) [31]
 -----------------------------------------------
-                0.00    0.00       1/1           readAll (WyRT.c:332 @ 404ef5) [526]
-[33]     0.0    0.00    0.00       1         readFile (WyRT.c:290 @ 404dca) [33]
+                0.00    0.00       1/1           readAll (WyRT.c:332 @ 404da6) [525]
+[32]     0.0    0.00    0.00       1         readFile (WyRT.c:290 @ 404c7b) [32]
 -----------------------------------------------
-                0.00    0.00       1/1           main (LZ77_compress.c:990 @ 4030e0) [415]
-[34]     0.0    0.00    0.00       1         writeAll (WyRT.c:127 @ 404902) [34]
+                0.00    0.00       1/1           main (LZ77_compress.c:990 @ 402f70) [414]
+[33]     0.0    0.00    0.00       1         writeAll (WyRT.c:127 @ 4047b3) [33]
 -----------------------------------------------
-                0.00    0.00   76836/76836       _compress_ (LZ77_compress.c:504 @ 401dbd) [685]
-[587]    0.0    0.00    0.00   76836         _findLongestMatch_ (LZ77_compress.c:107 @ 40147e) [587]
+                0.00    0.00   76836/76836       _compress_ (LZ77_compress.c:504 @ 401c4d) [684]
+[586]    0.0    0.00    0.00   76836         _findLongestMatch_ (LZ77_compress.c:107 @ 40130e) [586]
 -----------------------------------------------
-                0.00    0.00       1/1           main (LZ77_compress.c:926 @ 402ca1) [388]
-[588]    0.0    0.00    0.00       1         _compress_ (LZ77_compress.c:424 @ 401b26) [588]
+                0.00    0.00       1/1           main (LZ77_compress.c:926 @ 402b31) [387]
+[587]    0.0    0.00    0.00       1         _compress_ (LZ77_compress.c:424 @ 4019b6) [587]
 -----------------------------------------------
-                0.00    0.00       1/1           _compress_ (LZ77_compress.c:600 @ 401fdb) [723]
-[589]    0.0    0.00    0.00       1         _resize_ (LZ77_compress.c:368 @ 40197e) [589]
+                0.00    0.00       1/1           _compress_ (LZ77_compress.c:600 @ 401e6b) [722]
+[588]    0.0    0.00    0.00       1         _resize_ (LZ77_compress.c:368 @ 40180e) [588]
 -----------------------------------------------
 
  This table describes the call tree of the program, and was sorted by
@@ -261,16 +259,15 @@ notice and this notice are preserved.
 
 Index by function name
 
-  [28] Reader (WyRT.c:165 @ 404a35) [6] _match_ (LZ77_compress.c:61 @ 401365) [24] create1DArray_int64_t (Util.c:19 @ 403657)
-  [29] Writer (WyRT.c:133 @ 404937) [1] _match_ (LZ77_compress.c:70 @ 40139d) [27] free2DArray_int64_t (Util.c:225 @ 403da8)
- [588] _compress_ (LZ77_compress.c:424 @ 401b26) [4] _match_ (LZ77_compress.c:74 @ 4013c5) [21] free_Match (LZ77_compress.c:16 @ 4011df)
- [587] _findLongestMatch_ (LZ77_compress.c:107 @ 40147e) [2] _match_ (LZ77_compress.c:78 @ 4013cd) [30] fromBytes (WyRT.c:199 @ 404b33)
-   [8] _findLongestMatch_ (LZ77_compress.c:207 @ 4015a5) [11] _match_ (LZ77_compress.c:80 @ 4013d7) [31] isPBMFile (WyRT.c:214 @ 404bd5)
-   [3] _findLongestMatch_._omp_fn.0 (LZ77_compress.c:232 @ 4033b5) [12] _match_ (LZ77_compress.c:82 @ 4013e9) [7] printf_Match (LZ77_compress.c:26 @ 401275)
-   [9] _findLongestMatch_._omp_fn.0 (LZ77_compress.c:213 @ 403512) [13] _match_ (LZ77_compress.c:84 @ 4013fd) [22] printf_s (Util.c:355 @ 404235)
-   [5] _match_ (LZ77_compress.c:27 @ 401278) [14] _match_ (LZ77_compress.c:92 @ 401431) [23] println_s (Util.c:385 @ 4042fa)
-  [15] _match_ (LZ77_compress.c:28 @ 4012ac) [19] _match_ (LZ77_compress.c:103 @ 401478) [32] readAll (WyRT.c:324 @ 404eb6)
-  [16] _match_ (LZ77_compress.c:31 @ 4012c4) [20] _match_ (LZ77_compress.c:105 @ 40147c) [33] readFile (WyRT.c:290 @ 404dca)
-  [17] _match_ (LZ77_compress.c:32 @ 4012cc) [589] _resize_ (LZ77_compress.c:368 @ 40197e) [34] writeAll (WyRT.c:127 @ 404902)
-  [10] _match_ (LZ77_compress.c:47 @ 401324) [25] convertArgsToIntArray (Util.c:116 @ 403933)
-  [18] _match_ (LZ77_compress.c:58 @ 401359) [26] create1DArray_BYTE (Util.c:38 @ 4036dd)
+  [27] Reader (WyRT.c:165 @ 4048e6) [12] _match_ (LZ77_compress.c:61 @ 4011f5) [23] create1DArray_int64_t (Util.c:19 @ 403508)
+  [28] Writer (WyRT.c:133 @ 4047e8) [19] _match_ (LZ77_compress.c:65 @ 40121d) [26] free2DArray_int64_t (Util.c:225 @ 403c59)
+ [587] _compress_ (LZ77_compress.c:424 @ 4019b6) [2] _match_ (LZ77_compress.c:70 @ 40122d) [20] free_Match (LZ77_compress.c:16 @ 40106f)
+ [586] _findLongestMatch_ (LZ77_compress.c:107 @ 40130e) [3] _match_ (LZ77_compress.c:74 @ 401255) [29] fromBytes (WyRT.c:199 @ 4049e4)
+   [4] _findLongestMatch_._omp_fn.0 (LZ77_compress.c:240 @ 403292) [1] _match_ (LZ77_compress.c:78 @ 40125d) [30] isPBMFile (WyRT.c:214 @ 404a86)
+   [5] _match_ (LZ77_compress.c:27 @ 401108) [13] _match_ (LZ77_compress.c:78 @ 4012d8) [15] printf_Match (LZ77_compress.c:26 @ 401105)
+   [9] _match_ (LZ77_compress.c:31 @ 401154) [14] _match_ (LZ77_compress.c:88 @ 4012dd) [21] printf_s (Util.c:355 @ 4040e6)
+  [10] _match_ (LZ77_compress.c:32 @ 40115c) [7] _match_ (LZ77_compress.c:103 @ 401308) [22] println_s (Util.c:385 @ 4041ab)
+  [16] _match_ (LZ77_compress.c:39 @ 401194) [8] _match_ (LZ77_compress.c:105 @ 40130c) [31] readAll (WyRT.c:324 @ 404d67)
+  [17] _match_ (LZ77_compress.c:41 @ 40119c) [588] _resize_ (LZ77_compress.c:368 @ 40180e) [32] readFile (WyRT.c:290 @ 404c7b)
+  [11] _match_ (LZ77_compress.c:47 @ 4011b4) [24] convertArgsToIntArray (Util.c:116 @ 4037e4) [33] writeAll (WyRT.c:127 @ 4047b3)
+  [18] _match_ (LZ77_compress.c:58 @ 4011e9) [25] create1DArray_BYTE (Util.c:38 @ 40358e)

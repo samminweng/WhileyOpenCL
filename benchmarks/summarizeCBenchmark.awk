@@ -92,19 +92,22 @@ BEGIN {
 	# ## Recursive function call
 	# programs["NQueens"]="original integer";
 	# ### Pattern transformation
-	programs["LZ77"]="compress decompress optimised_decompress";
+	##programs["LZ77"]="compress decompress optimised_decompress";
+	programs["LZ77"]="compress";
 	programs["Cashtill"]="original";
 	#programs["AppendArrayPattern"]="original";
 
 	# Code Generation
-	codegens = "naive naivedealloc nocopy nocopydealloc";
+	##codegens = "naive naivedealloc nocopy nocopydealloc";
+	codegens = "nocopydealloc";
 	# Pattern matching
 	patterns["Reverse"] = "disabled";
 	patterns["newTicTacToe"] = "disabled";
 	patterns["BubbleSort"] = "disabled";
 	patterns["MergeSort"] = "disabled";
 	patterns["MatrixMult"] = "disabled";
-	patterns["LZ77"] = "disabled enabled";
+	#patterns["LZ77"] = "disabled enabled";
+	patterns["LZ77"] = "enabled";
 	patterns["SobelEdge"] = "disabled";
 	patterns["Cashtill"] = "disabled";
 	patterns["AppendArrayPattern"] = "disabled enabled";
@@ -119,7 +122,7 @@ BEGIN {
 	compilers["Cashtill"] = "gcc";
 	compilers["AppendArrayPattern"] = "gcc";
 	### Executive type
-	exectypes = "seq";
+	exectypes = "seq mapreduce";
 	### Parameter
 	# Parameter
 	parameters["Reverse"]="1000 10000 100000 1000000 10000000 100000000 200000000 400000000 600000000 800000000 1000000000";
@@ -134,13 +137,15 @@ BEGIN {
 	## Recursive function call
 	# parameters["NQueens"]="8 10 12 14";
 	# ### pattern transformation
-	parameters["LZ77"]="input1x input2x input4x input8x input16x input32x input64x input128x input256x input512x input1024x";
+	##parameters["LZ77"]="input1x input2x input4x input8x input16x input32x input64x input128x input256x input512x input1024x";
+	parameters["LZ77"]="large1x large2x large4x large8x large16x large32x large64x large128x large256x";
 	parameters["Cashtill"]="1000 1200 1400 1600 1800 2000";
 	#parameters["AppendArrayPattern"]="10000 20000 40000 60000 80000 100000";
 
 	# The number of threads
 	threads["seq"]="1";
 	threads["openmp"]="1 2 4 6 8";
+	threads["mapreduce"]="1 2 4 6 8";
 	# Results
 	cpu_utils[""] = "";
 	exec_times[""] = "";

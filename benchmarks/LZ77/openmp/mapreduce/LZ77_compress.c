@@ -221,7 +221,7 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 				//#pragma omp barrier
 				// Map phase
 				int id = omp_get_thread_num();
-				#pragma omp for ordered
+				#pragma omp for
 				for(offset = start;offset<pos;offset++){
 					//ifge %6, %1 goto blklab3 : int
 					// if(offset>=pos){goto blklab3;}
@@ -246,7 +246,7 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 					//printf("ID:%d\t_Len:%d\tOffset:%d\tLocalLen[%d]:%d\tLocalOffset[%d]:%d\n",id, _len, offset, id, localLen[id], id, localOffset[id]);
 					//printf("ID:%d\tPos:%d\tStart:%d\tLen:%d\tOffset:%d\tLocalLen[%d]:%d\tLocalOffset[%d]:%d\n",id, pos,start, len, offset, id, localLen[id], id, localOffset[id]);
 				}
-				//#pragma omp barrier
+				// Reduce phase
 				#pragma omp single
 				{
 					// Find the global optimal length and offset

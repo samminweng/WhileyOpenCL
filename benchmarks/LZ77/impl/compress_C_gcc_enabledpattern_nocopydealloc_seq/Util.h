@@ -72,7 +72,6 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 		({ __typeof__ (a) _a = (a); \
 		   __typeof__ (b) _b = (b); \
 		   _a > _b ? _a : _b; })
-
 #define max(a, b) a ^ ((a ^ b) & -(a < b))
 #endif
 #ifndef min
