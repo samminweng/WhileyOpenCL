@@ -64,6 +64,8 @@ do
         			break 1 ## Break the for loop
         		fi
         		echo "Finish $i iteration" >> $result
+                ### Output the hardware info.
+                cat /proc/cpuinfo >> $result
         		####### Wait until background process is completed
         		wait ${!}
 
