@@ -30,7 +30,7 @@ do
             echo $code
             ## Compile all C files into executable
             mkdir -p "$code/out"
-            gcc -fopenmp -O3 "$code/LZ77_compress.c" "$code/Util.c" "$code/WyRT.c" -o "$code/out/LZ77_compress.$code.out"
+            gcc -fopenmp "$code/LZ77_compress.c" "$code/Util.c" "$code/WyRT.c" -o "$code/out/LZ77_compress.$code.out"
             result="../exectime/C/$testcase.$program.$compiler.$pattern.$codegen.$code.$parameter.$thread.txt"
             export OMP_NUM_THREADS=$thread
             echo "OMP_NUM_THREADS="$OMP_NUM_THREADS >> $result
@@ -64,12 +64,11 @@ do
         			break 1 ## Break the for loop
         		fi
         		echo "Finish $i iteration" >> $result
-                ### Output the hardware info.
-                cat /proc/cpuinfo >> $result
         		####### Wait until background process is completed
         		wait ${!}
-
             done
+            ### Output the hardware info.
+            cat /proc/cpuinfo >> $result
         done
     done
 done
