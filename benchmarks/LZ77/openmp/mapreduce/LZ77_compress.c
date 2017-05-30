@@ -244,7 +244,6 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 					//.blklab5
 					// Debug messages
 					//printf("ID:%d\t_Len:%d\tOffset:%d\tLocalLen[%d]:%d\tLocalOffset[%d]:%d\n",id, _len, offset, id, localLen[id], id, localOffset[id]);
-					//printf("ID:%d\tPos:%d\tStart:%d\tLen:%d\tOffset:%d\tLocalLen[%d]:%d\tLocalOffset[%d]:%d\n",id, pos,start, len, offset, id, localLen[id], id, localOffset[id]);
 				}
 				// Reduce phase
 				#pragma omp single

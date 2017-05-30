@@ -1,0 +1,43 @@
+##Formatting and mounting a persistent disk
+sudo lsblk
+sudo mkfs.ext4 -m 0 -F -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdb
+sudo mkdir -p /mnt/disks/data
+sudo mount -o discard,defaults /dev/sdb /mnt/disks/data
+sudo chmod a+w /mnt/disks/data
+
+## Write the configuration
+echo UUID=`sudo blkid -s UUID -o value /dev/sdb` /mnt/disks/data ext4 discard,defaults,nofail 0
+ 2 | sudo tee -a /etc/fstab
+cat /etc/fstab
+
+### Install GCC
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install build-essential
+gcc -v
+make -v
+
+### Install Java
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+
+### Install ANT
+sudo apt install ant
+
+###Install CMake
+sudo apt-get update
+sudo apt-get install cmake
+
+### Install Polly
+cd /mnt/disks/data
+mkdir polly
+cd polly
+git clone http://llvm.org/git/llvm.git llvm_git
+git clone http://llvm.org/git/polly.git llvm_git/tools/polly
+### Also build the matching clang-version (optional)
+git clone http://llvm.org/git/clang.git llvm_git/tools/clang
+
+mkdir llvm_build && cd llvm_build
+cmake ../llvm_git && make
+make check-polly
