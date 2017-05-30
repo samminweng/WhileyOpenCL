@@ -41,3 +41,15 @@ git clone http://llvm.org/git/clang.git llvm_git/tools/clang
 mkdir llvm_build && cd llvm_build
 cmake ../llvm_git && make
 make check-polly
+
+## Edit .profile
+nano ~.profile
+## Add below two lines
+export POLLY_BUILD_DIR="/mnt/disks/data/polly/llvm_build"
+# Set PATH to include llvm_build bin
+PATH="$POLLY_BUILD_DIR/bin:$PATH"
+
+### Install our project
+git clone https://github.com/samminweng/WhileyOpenCL.git
+cd WhileyOpenCL
+ant
