@@ -24,7 +24,7 @@ Data:
 COMPRESSED Data:   
 1229250 bytes
 
-Parameter:large8x	ExecutionTime:570211664	nanoseconds.
+Parameter:large8x	ExecutionTime:590074493	nanoseconds.
 Finish 1 iteration
 Run the compress LZ77 on large8x using gcc
 Begin 2 iteration
@@ -51,7 +51,7 @@ Data:
 COMPRESSED Data:   
 1229250 bytes
 
-Parameter:large8x	ExecutionTime:575099274	nanoseconds.
+Parameter:large8x	ExecutionTime:696482278	nanoseconds.
 Finish 2 iteration
 Run the compress LZ77 on large8x using gcc
 Begin 3 iteration
@@ -78,7 +78,7 @@ Data:
 COMPRESSED Data:   
 1229250 bytes
 
-Parameter:large8x	ExecutionTime:572712720	nanoseconds.
+Parameter:large8x	ExecutionTime:586352910	nanoseconds.
 Finish 3 iteration
 Run the compress LZ77 on large8x using gcc
 Begin 4 iteration
@@ -105,7 +105,7 @@ Data:
 COMPRESSED Data:   
 1229250 bytes
 
-Parameter:large8x	ExecutionTime:573550253	nanoseconds.
+Parameter:large8x	ExecutionTime:550635515	nanoseconds.
 Finish 4 iteration
 Run the compress LZ77 on large8x using gcc
 Begin 5 iteration
@@ -132,7 +132,7 @@ Data:
 COMPRESSED Data:   
 1229250 bytes
 
-Parameter:large8x	ExecutionTime:571375869	nanoseconds.
+Parameter:large8x	ExecutionTime:558204812	nanoseconds.
 Finish 5 iteration
 Run the compress LZ77 on large8x using gcc
 Begin 6 iteration
@@ -159,7 +159,7 @@ Data:
 COMPRESSED Data:   
 1229250 bytes
 
-Parameter:large8x	ExecutionTime:576087437	nanoseconds.
+Parameter:large8x	ExecutionTime:554296995	nanoseconds.
 Finish 6 iteration
 Run the compress LZ77 on large8x using gcc
 Begin 7 iteration
@@ -186,7 +186,7 @@ Data:
 COMPRESSED Data:   
 1229250 bytes
 
-Parameter:large8x	ExecutionTime:571182192	nanoseconds.
+Parameter:large8x	ExecutionTime:558181843	nanoseconds.
 Finish 7 iteration
 Run the compress LZ77 on large8x using gcc
 Begin 8 iteration
@@ -213,7 +213,7 @@ Data:
 COMPRESSED Data:   
 1229250 bytes
 
-Parameter:large8x	ExecutionTime:565091726	nanoseconds.
+Parameter:large8x	ExecutionTime:552849548	nanoseconds.
 Finish 8 iteration
 Run the compress LZ77 on large8x using gcc
 Begin 9 iteration
@@ -240,7 +240,7 @@ Data:
 COMPRESSED Data:   
 1229250 bytes
 
-Parameter:large8x	ExecutionTime:568331843	nanoseconds.
+Parameter:large8x	ExecutionTime:553201509	nanoseconds.
 Finish 9 iteration
 Run the compress LZ77 on large8x using gcc
 Begin 10 iteration
@@ -267,17 +267,17 @@ Data:
 COMPRESSED Data:   
 1229250 bytes
 
-Parameter:large8x	ExecutionTime:580720086	nanoseconds.
+Parameter:large8x	ExecutionTime:545417364	nanoseconds.
 Finish 10 iteration
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
-model		: 79
-model name	: Intel(R) Xeon(R) CPU @ 2.20GHz
-stepping	: 0
-microcode	: 0x1
-cpu MHz		: 2200.000
-cache size	: 56320 KB
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3488.851
+cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
 core id		: 0
@@ -288,23 +288,23 @@ fpu		: yes
 fpu_exception	: yes
 cpuid level	: 13
 wp		: yes
-flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc eagerfpu pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms rtm rdseed adx xsaveopt
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm epb tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt dtherm ida arat pln pts
 bugs		:
-bogomips	: 4400.00
+bogomips	: 6784.20
 clflush size	: 64
 cache_alignment	: 64
-address sizes	: 46 bits physical, 48 bits virtual
+address sizes	: 39 bits physical, 48 bits virtual
 power management:
 
 processor	: 1
 vendor_id	: GenuineIntel
 cpu family	: 6
-model		: 79
-model name	: Intel(R) Xeon(R) CPU @ 2.20GHz
-stepping	: 0
-microcode	: 0x1
-cpu MHz		: 2200.000
-cache size	: 56320 KB
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3546.093
+cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
 core id		: 1
@@ -315,23 +315,23 @@ fpu		: yes
 fpu_exception	: yes
 cpuid level	: 13
 wp		: yes
-flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc eagerfpu pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms rtm rdseed adx xsaveopt
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm epb tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt dtherm ida arat pln pts
 bugs		:
-bogomips	: 4400.00
+bogomips	: 6784.20
 clflush size	: 64
 cache_alignment	: 64
-address sizes	: 46 bits physical, 48 bits virtual
+address sizes	: 39 bits physical, 48 bits virtual
 power management:
 
 processor	: 2
 vendor_id	: GenuineIntel
 cpu family	: 6
-model		: 79
-model name	: Intel(R) Xeon(R) CPU @ 2.20GHz
-stepping	: 0
-microcode	: 0x1
-cpu MHz		: 2200.000
-cache size	: 56320 KB
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3655.000
+cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
 core id		: 2
@@ -342,23 +342,23 @@ fpu		: yes
 fpu_exception	: yes
 cpuid level	: 13
 wp		: yes
-flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc eagerfpu pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms rtm rdseed adx xsaveopt
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm epb tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt dtherm ida arat pln pts
 bugs		:
-bogomips	: 4400.00
+bogomips	: 6784.20
 clflush size	: 64
 cache_alignment	: 64
-address sizes	: 46 bits physical, 48 bits virtual
+address sizes	: 39 bits physical, 48 bits virtual
 power management:
 
 processor	: 3
 vendor_id	: GenuineIntel
 cpu family	: 6
-model		: 79
-model name	: Intel(R) Xeon(R) CPU @ 2.20GHz
-stepping	: 0
-microcode	: 0x1
-cpu MHz		: 2200.000
-cache size	: 56320 KB
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3399.867
+cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
 core id		: 3
@@ -369,23 +369,23 @@ fpu		: yes
 fpu_exception	: yes
 cpuid level	: 13
 wp		: yes
-flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc eagerfpu pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms rtm rdseed adx xsaveopt
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm epb tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt dtherm ida arat pln pts
 bugs		:
-bogomips	: 4400.00
+bogomips	: 6784.20
 clflush size	: 64
 cache_alignment	: 64
-address sizes	: 46 bits physical, 48 bits virtual
+address sizes	: 39 bits physical, 48 bits virtual
 power management:
 
 processor	: 4
 vendor_id	: GenuineIntel
 cpu family	: 6
-model		: 79
-model name	: Intel(R) Xeon(R) CPU @ 2.20GHz
-stepping	: 0
-microcode	: 0x1
-cpu MHz		: 2200.000
-cache size	: 56320 KB
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3401.062
+cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
 core id		: 0
@@ -396,23 +396,23 @@ fpu		: yes
 fpu_exception	: yes
 cpuid level	: 13
 wp		: yes
-flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc eagerfpu pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms rtm rdseed adx xsaveopt
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm epb tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt dtherm ida arat pln pts
 bugs		:
-bogomips	: 4400.00
+bogomips	: 6784.20
 clflush size	: 64
 cache_alignment	: 64
-address sizes	: 46 bits physical, 48 bits virtual
+address sizes	: 39 bits physical, 48 bits virtual
 power management:
 
 processor	: 5
 vendor_id	: GenuineIntel
 cpu family	: 6
-model		: 79
-model name	: Intel(R) Xeon(R) CPU @ 2.20GHz
-stepping	: 0
-microcode	: 0x1
-cpu MHz		: 2200.000
-cache size	: 56320 KB
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3401.726
+cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
 core id		: 1
@@ -423,23 +423,23 @@ fpu		: yes
 fpu_exception	: yes
 cpuid level	: 13
 wp		: yes
-flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc eagerfpu pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms rtm rdseed adx xsaveopt
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm epb tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt dtherm ida arat pln pts
 bugs		:
-bogomips	: 4400.00
+bogomips	: 6784.20
 clflush size	: 64
 cache_alignment	: 64
-address sizes	: 46 bits physical, 48 bits virtual
+address sizes	: 39 bits physical, 48 bits virtual
 power management:
 
 processor	: 6
 vendor_id	: GenuineIntel
 cpu family	: 6
-model		: 79
-model name	: Intel(R) Xeon(R) CPU @ 2.20GHz
-stepping	: 0
-microcode	: 0x1
-cpu MHz		: 2200.000
-cache size	: 56320 KB
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3400.000
+cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
 core id		: 2
@@ -450,23 +450,23 @@ fpu		: yes
 fpu_exception	: yes
 cpuid level	: 13
 wp		: yes
-flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc eagerfpu pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms rtm rdseed adx xsaveopt
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm epb tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt dtherm ida arat pln pts
 bugs		:
-bogomips	: 4400.00
+bogomips	: 6784.20
 clflush size	: 64
 cache_alignment	: 64
-address sizes	: 46 bits physical, 48 bits virtual
+address sizes	: 39 bits physical, 48 bits virtual
 power management:
 
 processor	: 7
 vendor_id	: GenuineIntel
 cpu family	: 6
-model		: 79
-model name	: Intel(R) Xeon(R) CPU @ 2.20GHz
-stepping	: 0
-microcode	: 0x1
-cpu MHz		: 2200.000
-cache size	: 56320 KB
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x1c
+cpu MHz		: 3400.132
+cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
 core id		: 3
@@ -477,11 +477,11 @@ fpu		: yes
 fpu_exception	: yes
 cpuid level	: 13
 wp		: yes
-flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc eagerfpu pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms rtm rdseed adx xsaveopt
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm epb tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt dtherm ida arat pln pts
 bugs		:
-bogomips	: 4400.00
+bogomips	: 6784.20
 clflush size	: 64
 cache_alignment	: 64
-address sizes	: 46 bits physical, 48 bits virtual
+address sizes	: 39 bits physical, 48 bits virtual
 power management:
 
