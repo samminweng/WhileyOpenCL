@@ -13,7 +13,7 @@
 // This definition allows the portability of C code across the platforms.
 #define _CRT_SECURE_NO_WARNINGS
 // Specify the maximal amounts of chars that are printed out using 'printf' function
-#define MAX_LENGTH 100
+#define MAX_LENGTH 1024
 // Specify the maximal number of chars that a line in PBM should be read
 // i.e. 16384 bytes, to avoid using too many memory space and stop the sobel edge
 #define MAX_LINE_LENGTH 1024*16
@@ -62,35 +62,24 @@ int64_t* parseStringToInt(int64_t* arr);
 int64_t** convertArgsToIntArray(int argc, char** args, size_t *arr_size, size_t *arr_size_size);
 // ArrayList Operators
 int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
-// Convert an array of bytes to an array of int64_t
-int64_t* fromBytes(BYTE* arr, size_t arr_size);
-// Create file pointer to read a file
-FILE* Reader(int64_t* arr, size_t arr_size);
-FILE* Writer(int64_t* arr, size_t arr_size);
-BYTE* readAll(FILE *file, size_t* _size);
-void writeAll(FILE *file, BYTE* arr, size_t arr_size);
 /**
  * Macro Section
 **/
 // Define 'max' and 'min' macro
 // Compute max and min without branches (http://graphics.stanford.edu/~seander/bithacks.html#IntegerMinOrMax)
 #ifndef max
-/*
-#define max(a,b) \
+//#define max(a,b) \
 		({ __typeof__ (a) _a = (a); \
 		   __typeof__ (b) _b = (b); \
 		   _a > _b ? _a : _b; })
-*/
 #define max(a, b) a ^ ((a ^ b) & -(a < b))
 #endif
 #ifndef min
-#define min(a, b) b ^ ((a ^ b) & -(a < b));
-/*
-#define min(a,b) \
+#define min(a, b) b ^ ((a ^ b) & -(a < b))
+//#define min(a,b) \
 		({ __typeof__ (a) _a = (a); \
 		   __typeof__ (b) _b = (b); \
 		   _a < _b ? _a : _b; })
-*/
 #endif
 /***
 **  Debug macro prints out message when debug is enabled

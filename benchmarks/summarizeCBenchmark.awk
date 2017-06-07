@@ -32,7 +32,7 @@ function generateReport(results){
 						for(c=1;c<=codegen_total;c++){
 							codegen=codegen_array[c];
 							## Get executable type
-							exectype_total=split(exectypes, exectype_array, " ");
+							exectype_total=split(exectypes[testcase], exectype_array, " ");
 							#print "exectype_total="exectype_total;
 							for(ec=1;ec<=exectype_total;ec++){
 								exectype=exectype_array[ec];
@@ -75,8 +75,8 @@ BEGIN {
 	filename = "";
 	FS = "\n";
 	## Test case name
-	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge Cashtill AppendArrayPattern LZ77";
-	testcases="LZ77";
+	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge Cashtill LZ77";
+	testcases="MergeSort";
 
 	## Program Type
 	programs["Reverse"]="original";
@@ -95,7 +95,6 @@ BEGIN {
 	##programs["LZ77"]="compress decompress optimised_decompress";
 	programs["LZ77"]="compress";
 	programs["Cashtill"]="original";
-	#programs["AppendArrayPattern"]="original";
 
 	# Code Generation
 	##codegens = "naive naivedealloc nocopy nocopydealloc";
@@ -106,11 +105,11 @@ BEGIN {
 	patterns["BubbleSort"] = "disabled";
 	patterns["MergeSort"] = "disabled";
 	patterns["MatrixMult"] = "disabled";
-	#patterns["LZ77"] = "disabled enabled";
-	patterns["LZ77"] = "enabled";
+	patterns["LZ77"] = "disabled enabled";
+	#patterns["LZ77"] = "enabled";
 	patterns["SobelEdge"] = "disabled";
 	patterns["Cashtill"] = "disabled";
-	patterns["AppendArrayPattern"] = "disabled enabled";
+
 	# Compiler
 	compilers["Reverse"] = "gcc";
 	compilers["newTicTacToe"] = "gcc";
@@ -120,16 +119,17 @@ BEGIN {
 	compilers["LZ77"] = "gcc";
 	compilers["SobelEdge"] = "gcc";
 	compilers["Cashtill"] = "gcc";
-	compilers["AppendArrayPattern"] = "gcc";
 	### Executive type
-	exectypes = "seq mapreduce";
+	exectypes["MergeSort"] = "seq cilkspawn cilkspawn_seq";
+	#exectypes = "seq mapreduce";
 	### Parameter
 	# Parameter
-	parameters["Reverse"]="1000 10000 100000 1000000 10000000 100000000 200000000 400000000 600000000 800000000 1000000000";
+	parameters["Reverse"]="100000 1000000 10000000";
 	parameters["newTicTacToe"]="1000 10000 100000";
-	parameters["MergeSort"]="1000 10000 100000";
+	#parameters["MergeSort"]="1000 10000 100000";
+	parameters["MergeSort"]="10000000 100000000 1000000000";
 	parameters["BubbleSort"]="1000 10000 100000";
-	parameters["MatrixMult"]="1000 2000 4000";
+	parameters["MatrixMult"]="1000 2000 3000";
 	# parameters["Fibonacci"]="10 50 90";
 	# parameters["GCD"]="100 150 200";
 	# parameters["CoinGame"]="1000 2000 3000";
@@ -137,15 +137,16 @@ BEGIN {
 	## Recursive function call
 	# parameters["NQueens"]="8 10 12 14";
 	# ### pattern transformation
-	##parameters["LZ77"]="input1x input2x input4x input8x input16x input32x input64x input128x input256x input512x input1024x";
+	##parameters["LZ77"]="medium1x medium2x medium4x medium8x medium16x medium32x medium64x medium128x medium256x medium512x medium1024x";
 	parameters["LZ77"]="large1x large2x large4x large8x large16x large32x large64x large128x large256x";
 	parameters["Cashtill"]="1000 1200 1400 1600 1800 2000";
-	#parameters["AppendArrayPattern"]="10000 20000 40000 60000 80000 100000";
 
 	# The number of threads
 	threads["seq"]="1";
-	threads["openmp"]="1 2 4 6 8";
-	threads["mapreduce"]="1 2 4 6 8";
+	threads["openmp"]="1 2 4 8";
+	threads["mapreduce"]="1 2 4 8";
+	threads["cilkspawn"]="1 2 4 8";
+	threads["cilkspawn_seq"]="1 2 4 8";
 	# Results
 	cpu_utils[""] = "";
 	exec_times[""] = "";
@@ -155,7 +156,7 @@ BEGIN {
 {
 	filename=FILENAME;
 	split(filename, arr, "/");
-	split(arr[4], t_array, ".");
+	split(arr[5], t_array, ".");
 	# Test case
 	testcase=t_array[1];
 	# Program type
@@ -227,11 +228,8 @@ BEGIN {
 		#print $1;
 		#pause();
 	}
-
 }
 END {
-
 	print "Execution Time (nano second)";
 	generateReport(exec_times);
-
 }

@@ -15,23 +15,22 @@ declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" \
 					   [AppendArrayPattern]="gcc" )
 
 ## declare 4 kinds of code generation
-declare -a codegens=("naive" "naive_dealloc" "nocopy" "nocopy_dealloc")
+declare -a codegens=("naive" "naivedealloc" "nocopy" "nocopydealloc")
 ##declare -a codegens=("naive")
 
 ## Declare an associative array for pattern matching
-declare -A patterns=( [LZ77]=compress [AppendArrayPattern]=comp )
+declare -A patterns=( [LZ77]=compress )
 
 ## declare the number of threads
-declare -a threads=( 1 2 3 4 )
+declare -a threads=( 1 )
 
 ### declare parameters
 declare -A parameters=( [Reverse]="100000 1000000 10000000" [newTicTacToe]="1000 10000 100000" \
 						[BubbleSort]="1000 10000 100000" [MergeSort]="1000 10000 100000" \
 						[MatrixMult]="1000 2000 3000" \
-						[LZ77]="input1x.in input2x.in input3x.in" \
+						[LZ77]="medium1x medium2x medium4x" \
 						[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm" \
-						[Cashtill]="100 200 300" \
-						[AppendArrayPattern]="10 100 1000" \
+						[Cashtill]="100 200 300"
 					   )
 ## Declare an associative array for image size in sobeledge test case
 declare -A widths=( [image32x32.pbm]=32 [image64x64.pbm]=64 [image128x128.pbm]=128 \
@@ -54,11 +53,22 @@ generateCode(){
 	compiler=$3
 	codegen=$4
 	pattern=$5
-	
+	code=$6
 	### the folder of generated code
-	codeDir="$BENCHMARKDIR/$testcase/impl/$program/C/$compiler/$pattern/$codegen"
-
-	###echo $codeDir
+	### specify the executable type
+	codeDir=$BENCHMARKDIR/$testcase/impl/$program"_"C"_"$compiler"_"$pattern"_"$codegen"_"$code
+	### Shell script that generates C code
+	wyopcl=./../../../../bin/wyopcl
+	## Enable the pattern matching on the specified function
+	if [ $pattern = "enabledpattern" ]
+	then
+		func=${patterns[$testcase"_"$program]}
+		if [ -n "$func" ]
+		then
+			### Enable pattern transformation
+			wyopcl=$wyopcl" -pattern $func"
+		fi
+	fi
 	## Clean the folder
 	rm -rf "$codeDir"
 	mkdir -p "$codeDir"
@@ -70,41 +80,29 @@ generateCode(){
 	## Change to 'codeDIR'
 	cd $codeDir
 
-	### Disable pattern transformation
-	wyopcl=./../../../../../../../../bin/wyopcl
-	if [ $pattern = "enabledpattern" ] 
-	then
-		func=${patterns[$testcase]}
-		### Enable pattern transformation
-		wyopcl=$wyopcl" -pattern $func"	
-	fi
-	
-	echo $codegen
 	## Translate Whiley programs into naive C code
 	case "$codegen" in
 		"naive")
 			### Translate Whiley program into naive C code
 			$wyopcl -code $testcase"_"$program.whiley
 			;;
-		"naive_dealloc")
-			### Translate Whiley program into naive + dealloc C code 
+		"naivedealloc")
+			### Translate Whiley program into naive + dealloc C code
 			$wyopcl -code -dealloc $testcase"_"$program.whiley
 			;;
 		"nocopy")
 			## Translate Whiley programs into copy_reduced C code
 			$wyopcl -code -nocopy $testcase"_"$program.whiley
 			;;
-		"nocopy_dealloc")
+		"nocopydealloc")
 			### Translate Whiley program into copy-eliminated + memory deallocated C code
 			$wyopcl -code -nocopy -dealloc $testcase"_"$program.whiley
 			;;
 	esac
-
+	##read -p "Complete 'generateCode' function Press [Enter] to continue..."
 }
-
-
 ##
-## Compile the program and 
+## Compile the program and
 ##
 compile(){
 	testcase=$1
@@ -112,51 +110,43 @@ compile(){
 	compiler=$3
 	codegen=$4
 	pattern=$5
-
+	code=$6
 	### the folder of generated code
-	codeDir="$BENCHMARKDIR/$testcase/impl/$program/C/$compiler/$pattern/$codegen"
-	cd $codeDir
-	
-	####Create 'out', 'llvm' and 'assembly' folder
-	rm -rf "out" "llvm" "assembly"
-	mkdir -p "out" "llvm" "assembly"
+	codeDir=$BENCHMARKDIR/$testcase/impl/$program"_"C"_"$compiler"_"$pattern"_"$codegen"_"$code
 	### The executable file name
-	executable="$testcase.$program.$compiler.$codegen.$pattern.out"
-	
+	executable="$testcase.$program.$compiler.$pattern.$codegen.$code.out"
+
+	## Change directory to codeDir
+	cd $codeDir
+	####Create 'out' folder
+	rm -rf "out"
+	mkdir -p "out"
+
 	### Compile C code into executables
 	case "$compiler" in
 		"gcc")
-			gcc -std=c11 -O3 $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
+			## Include debug messages
+			gcc -g -std=c11 -O0 $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
 			;;
 		"clang")
-			clang -O3 $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
+			clang -O0 $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
 			;;
 		"polly")
-			###'-polly-process-unprofitable' option forces Polly to generate sequential code
-			pollycc -mllvm -polly-vectorizer=stripmine \
-	        		-S -emit-llvm -mllvm -polly-process-unprofitable \
-					-mllvm -polly-opt-outer-coincidence=yes \
-	        		$testcase"_"$program.c -o "llvm/$executable.ll"
-			### Use 'llc' to compile LLVM code into assembly code
-			llc "llvm/$executable.ll" -o "assembly/$executable.s"
-			### Use 'clang' to compile .s file and link with 'libUtil.a'
-			clang "assembly/$executable.s" Util.c WyRT.c -o "out/$executable"
-			;;
-		"openmp")
-			echo "Optimize C code using OpenMP code ..."
-			### '-polly-parallel-force' forces Polly to generate OpenMP code
-			pollycc -mllvm -polly-vectorizer=stripmine -S -emit-llvm \
-	        		-mllvm -polly-parallel -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force \
-					-mllvm -polly-opt-outer-coincidence=yes \
-	        		$testcase"_"$program.c -o "llvm/$executable.ll"
-			### Use 'llc' to compile LLVM code into assembly code
-			llc "llvm/$executable.ll" -o "assembly/$executable.s"
-			### Use 'clang' to compile .s file and link with 'Util.c'
-			clang "assembly/$executable.s" Util.c WyRT.c -lgomp -o "out/$executable"
+			if [ $code = "seq" ]
+			then
+				## Compile and optimize sequential code using Polly
+				#pollycc -mllvm -polly-pattern-matching-based-opts=false -mllvm -polly-opt-outer-coincidence=yes $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
+				pollycc $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
+			else
+				echo "Generate OpenMP code ..."
+				### Compile and generate parallel OpenMP code using Polly
+				#pollycc -mllvm -polly-pattern-matching-based-opts=false -mllvm -polly-opt-outer-coincidence=yes -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
+				pollycc -mllvm -polly-parallel -lgomp $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
+			fi
 			;;
 	esac
+	##read -p "Complete 'compile' function Press [Enter] to continue..."
 }
-
 
 ##
 ## Run Polly on the C code and collects the memory usage of the generated C code
@@ -167,21 +157,20 @@ detectleaks(){
 	compiler=$3
 	codegen=$4
 	pattern=$5
-	parameter=$6
+	code=$6
 	thread=$7
-
+	parameter=$8
 	### the folder of generated code
-	codeDir="$BENCHMARKDIR/$testcase/impl/$program/C/$compiler/$pattern/$codegen"
+	codeDir=$BENCHMARKDIR/$testcase/impl/$program"_"C"_"$compiler"_"$pattern"_"$codegen"_"$code
 	cd $codeDir
 
 	mkdir -p out
-	prefix="$testcase.$program.$compiler.$codegen.$pattern"
 	### The file of executable
-	executable="$prefix.out"
+	executable="$testcase.$program.$compiler.$pattern.$codegen.$code.out"
 
 	# Ref: http://valgrind.org/docs/manual/manual.html
 	# Run Valgrind memcheck tool to detect memory leaks, and write out results to output file.
-	result="$BENCHMARKDIR/$testcase/leaks/$prefix.$parameter.$thread.txt"
+	result="$BENCHMARKDIR/$testcase/leaks/$testcase.$program.$compiler.$pattern.$codegen.$code.$parameter.$thread.txt"
 	## read -p "Press [Enter] to continue...$parameter"
 
 	## LZ test case
@@ -195,7 +184,7 @@ detectleaks(){
 			width=${widths[$parameter]}
 			echo "width = "$width
 			## Copy PBM image to folder
-			cp "$BENCHMARKDIR/$testcase/image/$parameter" .				
+			cp "$BENCHMARKDIR/$testcase/image/$parameter" .
 			mkdir -p "$BENCHMARKDIR/$testcase/image/output/$codegen"
 			### Detect the memory leaks
 			valgrind --tool=memcheck "--log-file=$result" "./out/$executable" $parameter $width > "$BENCHMARKDIR/$testcase/image/output/$codegen/output$widthx$width.pbm"
@@ -204,12 +193,12 @@ detectleaks(){
 			valgrind --tool=memcheck "--log-file=$result" "./out/$executable" $parameter
 		fi
 	fi
-	
+
 	#valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all "--log-file=$result" ./out/"$program.$compiler.enableVC.out" $parameter
 	# Added the CPU info
 	cat /proc/cpuinfo >> $result
 }
-# 
+#
 # Run Valgrind to detect memory leaks
 #
 exec(){
@@ -224,21 +213,22 @@ exec(){
 			# ## Iterate each codegen
 			for codegen in "${codegens[@]}"
 			do
-				echo $codegen		
-				# Generate C code with disabled pattern 
-				generateCode $testcase $program $compiler $codegen "disabledpattern" 
-				# Detect the leaks of generated C code using different compiler
-				compile $testcase $program $compiler $codegen "disabledpattern"
+				echo $codegen
 
-				# ## Get the pattern option 
+				# Generate C code with disabled pattern
+				generateCode $testcase $program $compiler $codegen "disabledpattern" "seq"
+				# Detect the leaks of generated C code using different compiler
+				compile $testcase $program $compiler $codegen "disabledpattern" "seq"
+
+				# ## Get the pattern option
 				func=${patterns[$testcase]}
 				if [ $func ]
 				then
 					echo $func
-					# Generate C code with enabled pattern matching and transform 
-					generateCode $testcase $program $compiler $codegen "enabledpattern"
+					# Generate C code with enabled pattern matching and transform
+					generateCode $testcase $program $compiler $codegen "enabledpattern" "seq"
 					# Detect the leaks of generated C code using different compiler
-					compile $testcase $program $compiler $codegen "enabledpattern"
+					compile $testcase $program $compiler $codegen "enabledpattern" "seq"
 				fi
 
 				for param_arr in "${parameters[$testcase]}"
@@ -246,24 +236,13 @@ exec(){
 					for parameter in $param_arr
 					do
 						echo "parameter "$parameter
-						if [ $compiler = "openmp" ]
-						then
-							### Run the executable with multiple threads (1, 2, 3, 4)
-							for thread in "${threads[@]}"
-							do
-								echo "thread " . $thread
-								detectleaks $testcase $program $compiler $codegen "disabledpattern" $parameter $thread
-							done
-						else
-						 	detectleaks $testcase $program $compiler $codegen "disabledpattern" $parameter 1
-						fi
-
-						# ## Get the pattern option 
+						detectleaks $testcase $program $compiler $codegen "disabledpattern" "seq" 1 $parameter
+						# ## Get the pattern option
 						func=${patterns[$testcase]}
 						if [ $func ]
-						then							
+						then
 							## Run the executable
-							detectleaks $testcase $program $compiler $codegen "enabledpattern" $parameter 1
+							detectleaks $testcase $program $compiler $codegen "enabledpattern" "seq" 1 $parameter
 						fi
 					done
 				done
@@ -289,18 +268,11 @@ exec(){
 
 # # # ## # MergeSort test case##
 #init MergeSort
-#exec MergeSort original 
+#exec MergeSort original
 
 # # # # MatrixMult test case##
 #init MatrixMult
 #exec MatrixMult original
-#exec MatrixMult original 8000
-# exec MatrixMult transpose 100
-# exec MatrixMult transpose 200
-# exec MatrixMult transpose 300
-# exec MatrixMult 2DArray 100
-# exec MatrixMult 2DArray 200
-# exec MatrixMult 2DArray 300
 
 # #### Cashtill test case
 #init Cashtill
@@ -310,13 +282,9 @@ exec(){
 #init SobelEdge
 #exec SobelEdge original
 
-# #### AppendArrayPattern test case
-#init AppendArrayPattern
-#exec AppendArrayPattern original
-
 # # # ####LZ77 test case
-#init LZ77
-#exec LZ77 original
+init LZ77
+exec LZ77 original
 
 # ### Fibonacci test case###
 # init Fibonacci
@@ -353,4 +321,3 @@ exec(){
 # exec NQueens integer 8
 # exec NQueens integer 9
 # exec NQueens integer 10
-

@@ -164,7 +164,7 @@ int64_t* _mat_mult_(_DECL_1DARRAY_PARAM(a), _DECL_1DARRAY_PARAM(b), _DECL_1DARRA
 	int64_t i = 0;
 	int64_t j = 0;
 	int64_t k = 0;
-	int64_t _9 = 0;
+	int64_t sub_total = 0;
 	int64_t _10 = 0;
 	int64_t _11 = 0;
 	int64_t _12 = 0;
@@ -185,94 +185,95 @@ int64_t* _mat_mult_(_DECL_1DARRAY_PARAM(a), _DECL_1DARRAY_PARAM(b), _DECL_1DARRA
 	int64_t _27 = 0;
 	int64_t _28 = 0;
 	int64_t _29 = 0;
-	int64_t _30 = 0;
-	//const %9 = 0 : int
-	_9 = 0;
-	//assign %6 = %9  : int
+	//const %10 = 0 : int
+	_10 = 0;
+	//assign %6 = %10  : int
 	// isCopyEliminated = true
-	i = _9;
-	//loop (%2, %6, %7, %8, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30)
+	i = _10;
+	//loop (%2, %6, %7, %8, %9, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29)
 	while(true){
 		//ifge %6, %4 goto blklab9 : int
 		if(i>=height){goto blklab9;}
-		//const %10 = 0 : int
-		_10 = 0;
-		//assign %7 = %10  : int
+		//const %11 = 0 : int
+		_11 = 0;
+		//assign %7 = %11  : int
 		// isCopyEliminated = true
-		j = _10;
-		//loop (%2, %7, %8, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28)
+		j = _11;
+		//loop (%2, %7, %8, %9, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27)
 		while(true){
 			//ifge %7, %3 goto blklab11 : int
 			if(j>=width){goto blklab11;}
-			//const %11 = 0 : int
-			_11 = 0;
-			//assign %8 = %11  : int
+			//const %12 = 0 : int
+			_12 = 0;
+			//assign %8 = %12  : int
 			// isCopyEliminated = true
-			k = _11;
-			//loop (%2, %8, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26)
+			k = _12;
+			//const %13 = 0 : int
+			_13 = 0;
+			//assign %9 = %13  : int
+			// isCopyEliminated = true
+			sub_total = _13;
+			//loop (%8, %9, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23)
 			while(true){
 				//ifge %8, %3 goto blklab13 : int
 				if(k>=width){goto blklab13;}
-				//mul %12 = %6, %3 : int
-				_12=i*width;
-				//add %13 = %12, %7 : int
-				_13=_12+j;
-				//indexof %14 = %2, %13 : int[]
-				_14=data[_13];
-				//mul %15 = %6, %3 : int
-				_15=i*width;
-				//add %16 = %15, %8 : int
-				_16=_15+k;
-				//indexof %17 = %0, %16 : int[]
-				_17=a[_16];
-				//mul %18 = %8, %3 : int
-				_18=k*width;
-				//add %19 = %18, %7 : int
-				_19=_18+j;
-				//indexof %20 = %1, %19 : int[]
-				_20=b[_19];
-				//mul %21 = %17, %20 : int
-				_21=_17*_20;
-				//add %22 = %14, %21 : int
-				_22=_14+_21;
-				//mul %23 = %6, %3 : int
-				_23=i*width;
-				//add %24 = %23, %7 : int
-				_24=_23+j;
-				//update %2[%24] = %22 : int[] -> int[]
+				//mul %14 = %6, %3 : int
+				_14=i*width;
+				//add %15 = %14, %8 : int
+				_15=_14+k;
+				//indexof %16 = %0, %15 : int[]
+				_16=a[_15];
+				//mul %17 = %8, %3 : int
+				_17=k*width;
+				//add %18 = %17, %7 : int
+				_18=_17+j;
+				//indexof %19 = %1, %18 : int[]
+				_19=b[_18];
+				//mul %20 = %16, %19 : int
+				_20=_16*_19;
+				//add %21 = %9, %20 : int
+				_21=sub_total+_20;
+				//assign %9 = %21  : int
 				// isCopyEliminated = true
-				data[_24] = _22;
-				//const %25 = 1 : int
-				_25 = 1;
-				//add %26 = %8, %25 : int
-				_26=k+_25;
-				//assign %8 = %26  : int
+				sub_total = _21;
+				//const %22 = 1 : int
+				_22 = 1;
+				//add %23 = %8, %22 : int
+				_23=k+_22;
+				//assign %8 = %23  : int
 				// isCopyEliminated = true
-				k = _26;
+				k = _23;
 //.blklab14
 blklab14:;
 			}
 //.blklab13
 blklab13:;
-			//const %27 = 1 : int
-			_27 = 1;
-			//add %28 = %7, %27 : int
-			_28=j+_27;
-			//assign %7 = %28  : int
+			//mul %24 = %6, %3 : int
+			_24=i*width;
+			//add %25 = %24, %7 : int
+			_25=_24+j;
+			//update %2[%25] = %9 : int[] -> int[]
 			// isCopyEliminated = true
-			j = _28;
+			data[_25] = sub_total;
+			//const %26 = 1 : int
+			_26 = 1;
+			//add %27 = %7, %26 : int
+			_27=j+_26;
+			//assign %7 = %27  : int
+			// isCopyEliminated = true
+			j = _27;
 //.blklab12
 blklab12:;
 		}
 //.blklab11
 blklab11:;
-		//const %29 = 1 : int
-		_29 = 1;
-		//add %30 = %6, %29 : int
-		_30=i+_29;
-		//assign %6 = %30  : int
+		//const %28 = 1 : int
+		_28 = 1;
+		//add %29 = %6, %28 : int
+		_29=i+_28;
+		//assign %6 = %29  : int
 		// isCopyEliminated = true
-		i = _30;
+		i = _29;
 //.blklab10
 blklab10:;
 	}

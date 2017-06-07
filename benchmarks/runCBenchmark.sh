@@ -9,12 +9,12 @@ UTILDIR="$(dirname "$(pwd)")/tests/code"
 BENCHMARKDIR="$(pwd)"
 
 ## declare compiler used for compilation
-declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" [MergeSort]="gcc" [MatrixMult]="gcc" \
+declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" [MergeSort]="gcc" [MatrixMult]="gcc polly" \
 					   [LZ77]="gcc" [SobelEdge]="gcc polly" [Cashtill]="gcc" \
 					   [CoinGame]="polly gcc" )
 ## declare 4 kinds of code generation
-#declare -a codegens=( "naive" "naivedealloc" "nocopy" "nocopydealloc" )
-declare -a codegens=( "nocopydealloc" )
+declare -a codegens=( "naive" "naivedealloc" "nocopy" "nocopydealloc" )
+#declare -a codegens=( "nocopydealloc" )
 
 ## Declare an associative array for pattern matching
 declare -A patterns=( [LZ77_compress]=compress )
@@ -23,17 +23,17 @@ declare -A patterns=( [LZ77_compress]=compress )
 declare -a threads=( 1 2 4 6 8 )
 
 ### declare parameters
-declare -A parameters=( [Reverse]="200000000 400000000 600000000 800000000 1000000000" \
-						#[Reverse]="1000 10000 100000 1000000 10000000 100000000" \
-						[newTicTacToe]="1000 10000 100000" [BubbleSort]="1000 10000 100000" [MergeSort]="1000 10000 100000" \
-						[MatrixMult]="1000 2000 4000" \
-						#[LZ77]="medium1x medium2x medium4x medium8x medium16x medium32x medium64x medium128x medium256x medium512x medium1024x" \
-						[LZ77]="large1x large2x large4x large8x large16x large32x large64x large128x large256x" \
+declare -A parameters=( [Reverse]="100000 1000000 10000000" \
+						[newTicTacToe]="1000 10000 100000" \
+						[BubbleSort]="1000 10000 100000" \
+						[MergeSort]="1000 10000 100000" \
+						[MatrixMult]="1000 2000 3000" \
+						[LZ77]="medium1x medium2x medium4x medium8x medium16x medium32x medium64x medium128x medium256x medium512x medium1024x" \
+						#[LZ77]="large1x large2x large4x large8x large16x large32x large64x large128x large256x" \
 						[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm image256x256.pbm image512x512.pbm image1024x1024.pbm" \
 						#[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm" \
 						[Cashtill]="1000 1200 1400 1600 1800 2000" \
 						#[Cashtill]="100 200 300"
-						#[AppendArrayPattern]="10000 20000 40000 60000 80000 100000" \
 						[CoinGame]="10000 12000 14000 16000 18000 20000 22000" \
 					   )
 ## Declare an associative array for image size in sobeledge test case
@@ -133,10 +133,10 @@ compile(){
 	### Compile C code into executables
 	case "$compiler" in
 		"gcc")
-			gcc -std=c11 -O3 $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
+			gcc -std=c11 -O0 $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
 			;;
 		"clang")
-			clang -O3 $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
+			clang -O0 $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
 			;;
 		"polly")
 			if [ $code = "seq" ]
@@ -271,8 +271,8 @@ exec(){
 				# Test pattern is missing or not (non-empty string (-n))
 				if [ -n "$str" ]
 				then
-					patternmatches="enabledpattern"
-					#patternmatches="disabledpattern enabledpattern"
+					##patternmatches="enabledpattern"
+					patternmatches="disabledpattern enabledpattern"
 					#read -p "Found Pattern..."${patternmatches}
 				else
 					patternmatches="disabledpattern"
@@ -347,8 +347,8 @@ exec(){
 #exec MergeSort original
 
 # # # # # # # MatrixMult test case
-#init MatrixMult
-#exec MatrixMult original
+init MatrixMult
+exec MatrixMult original
 ####exec MatrixMult original 12000 # Naive code runs out of memory
 # # ### CoinGame test case ###
 #init CoinGame
