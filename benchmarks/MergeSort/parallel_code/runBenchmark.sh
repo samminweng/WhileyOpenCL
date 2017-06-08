@@ -12,7 +12,7 @@ pattern="disabledpattern"
 codegen="nocopydealloc"
 declare -a codes=( "cilkspawn" "seq" "cilkspawn_seq" )
 ## declare the number of threads
-declare -A threads=( [seq]="1" [cilkspawn]="1 2 4 6 8" [cilkspawn_seq]="1 2 4 6 8" )
+declare -A threads=( [seq]="1" [cilkspawn]="1 2 4 8" [cilkspawn_seq]="1 2 4 8" )
 ### remove all files inside the folder
 rm -rf "../exectime/C"
 mkdir -p "../exectime/C"

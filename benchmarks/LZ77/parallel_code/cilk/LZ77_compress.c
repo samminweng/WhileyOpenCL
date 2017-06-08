@@ -1,4 +1,8 @@
 #include "LZ77_compress.h"
+#include <cilk/cilk.h>
+#include <pthread.h>
+
+
 Match* copy_Match(Match* _Match){
 	Match* new_Match = malloc(sizeof(Match));
 	new_Match->len = _Match->len;
@@ -185,58 +189,29 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 	blklab4:;
 		}*/
 	//int nthreads, tid;
-
-
-	int64_t* localLen;
-	int64_t* localOffset;
-	int numOfChunks;
+	// Parallel loop region
 	{
-		//Initialize Phase
-		{
-			numOfChunks=4;//  4 chunks
-			localLen = malloc(numOfChunks*sizeof(int64_t));
-			localOffset = malloc(numOfChunks*sizeof(int64_t));
-			// Initialize local_len
-			for(int i =0; i <numOfChunks;i++){
-				localLen[i] = 0;
-				localOffset[i] = 0;
+		// Initialize the mutex
+		pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+		cilk_for (int _offset = start;_offset<pos;_offset++){
+			//invoke (%14) = (%0, %6, %1) LZ77_compress:match : function(byte[],LZ77_compress:nat,LZ77_compress:nat)->(int)
+			int64_t _len = 0;
+			{
+				// isCopyEliminated of '_0' = true
+				_len = _match_(_1DARRAY_PARAM(data), false, _offset, pos);
+				_RETAIN_DEALLOC(data, "false-false-true" , "match");
 			}
-		}
-		// Map phase
-		// Adding 1 to chunk size to avoid zero chunk
-		int chunk = (pos - start)/numOfChunks + 1;
-		for(int i =0;i<numOfChunks; i++){
-			int start_chunk = start + i*chunk;
-			int end_chunk = min(start +(i+1)*chunk, pos);
-			for(int _offset = start_chunk;_offset<end_chunk;_offset++){
-				int64_t _len = 0;
-				{
-					// Call 'match' function
-					_len = _match_(_1DARRAY_PARAM(data), false, _offset, pos);
-					_RETAIN_DEALLOC(data, "false-false-true" , "match");
-				}
-				// Additional code to store local optimal length and offset
-				if(_len > localLen[i]){
-					localLen[i] = _len;
-					localOffset[i] = pos - _offset;
-				}
-				// Debug messages
-				//printf("ID:%d\t_Len:%d\tOffset:%d\tLocalLen[%d]:%d\tLocalOffset[%d]:%d\n",i, _len, offset, i, localLen[i], i, localOffset[i]);
+			// Lock the resource to update the best length and offset
+			pthread_mutex_lock(&mutex);
+			if(_len > bestLen){
+				bestLen = _len;
+				bestOffset = pos - _offset;
 			}
-		}
-		// Reduce phase
-		{
-			// Find the global optimal length and offset
-			for(int i=0; i <numOfChunks;i++){
-				if(localLen[i]>bestLen){
-					bestLen = localLen[i];
-					bestOffset = localOffset[i];
-				}
-			}
+			pthread_mutex_unlock(&mutex);
+			// Debug messages
+			//printf("ID:%d\t_Len:%d\tOffset:%d\tLocalLen[%d]:%d\tLocalOffset[%d]:%d\n",id, _len, offset, id, localLen[id], id, localOffset[id]);
 		}
 	}
-	free(localLen);
-	free(localOffset);
 	//.blklab3
 	blklab3:;
 	//printf("POS:%d\tbestLen:%d\tbestOffset:%d\n", pos, bestLen, bestOffset);
