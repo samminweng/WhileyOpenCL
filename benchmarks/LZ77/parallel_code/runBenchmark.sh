@@ -10,9 +10,9 @@ program="compress"
 compiler="gcc"
 pattern="enabledpattern"
 codegen="nocopydealloc"
-declare -a codes=( "mapreduce_seq" "mapreduce_openmp" )
+declare -a codes=( "mapreduce_seq" "mapreduce_openmp" "cilk_reducer" )
 ## declare the number of threads
-declare -A threads=( [mapreduce_seq]="1" [mapreduce_openmp]="1 2 4 6 8" )
+declare -A threads=( [mapreduce_seq]="1" [mapreduce_openmp]="1 2 4 8" )
 ### remove all files inside the folder
 rm -rf "../exectime/C"
 mkdir -p "../exectime/C"

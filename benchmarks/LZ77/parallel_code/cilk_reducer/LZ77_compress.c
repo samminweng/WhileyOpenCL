@@ -1,7 +1,7 @@
 #include "LZ77_compress.h"
 #include <cilk/cilk.h>
 #include <pthread.h>
-
+#include <cilk/reducer.h>
 
 Match* copy_Match(Match* _Match){
 	Match* new_Match = malloc(sizeof(Match));
@@ -107,6 +107,33 @@ int64_t _match_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), int64_t
 	//return
 }
 
+
+// Initialize a match to be empty
+void Match_init(Match* m) {
+	m->len=0;
+	m->offset=0;
+}
+void identity_Match(void* reducer, void* m)
+{
+	Match_init((Match*)m);
+}
+void destroy_Match(void* reducer, void* p)
+{
+	free(p);
+}
+void reduce_Match(void* reducer, void* left, void* right)
+{
+	Match* l_m = (Match*)left;
+	Match* r_m = (Match*)right;
+
+	if(l_m-> len < r_m-> len){
+		l_m->len = r_m->len;
+		l_m->offset = r_m->offset;
+	}
+	// Empty right
+	Match_init(r_m);
+}
+
 Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), int64_t pos){
 	Match* m;
 	_DECL_DEALLOC(m);
@@ -154,43 +181,9 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 	// isCopyEliminated = true
 	offset = start;
 	//loop (%3, %4, %6, %7, %14, %15, %16, %17)
-	/*while(true){
-			//ifge %6, %1 goto blklab3 : int
-			if(offset>=pos){goto blklab3;}
-			//invoke (%14) = (%0, %6, %1) LZ77_compress:match : function(byte[],LZ77_compress:nat,LZ77_compress:nat)->(int)
-			{
-				// isCopyEliminated of '_0' = true
-				_14 = _match_(_1DARRAY_PARAM(data), false, offset, pos);
-				_RETAIN_DEALLOC(data, "false-false-true" , "match");
-			}
-			//assign %7 = %14  : int
-			// isCopyEliminated = true
-			len = _14;
-			//ifle %7, %4 goto blklab5 : int
-			if(len<=bestLen){goto blklab5;}
-			//sub %15 = %1, %6 : int
-			_15=pos-offset;
-			//assign %3 = %15  : int
-			// isCopyEliminated = true
-			bestOffset = _15;
-			//assign %4 = %7  : int
-			// isCopyEliminated = false
-			bestLen = len;
-	//.blklab5
-	blklab5:;
-			//const %16 = 1 : int
-			_16 = 1;
-			//add %17 = %6, %16 : int
-			_17=offset+_16;
-			//assign %6 = %17  : int
-			// isCopyEliminated = true
-			offset = _17;
-	//.blklab4
-	blklab4:;
-		}*/
 	//int nthreads, tid;
-	// Parallel loop region
-	{
+	// Parallel loop region using cilk_for
+	/*{
 		// Initialize the mutex
 		pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 		cilk_for (int _offset = start;_offset<pos;_offset++){
@@ -211,6 +204,43 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 			// Debug messages
 			//printf("ID:%d\t_Len:%d\tOffset:%d\tLocalLen[%d]:%d\tLocalOffset[%d]:%d\n",id, _len, offset, id, localLen[id], id, localOffset[id]);
 		}
+	}*/
+	// Refer to https://www.cilkplus.org/docs/doxygen/include-dir/page_reducers_in_c.html
+	// User cilk_for and customised cilk reducer to improve the parallelism
+	{
+		// Define a customised reducer of 'Match' type
+		CILK_C_DECLARE_REDUCER(Match) my_match_reducer =
+				CILK_C_INIT_REDUCER(Match,
+						reduce_Match,
+						identity_Match,
+						__cilkrts_hyperobject_noop_destroy);
+		// Initialize the reducer
+		Match_init(&REDUCER_VIEW(my_match_reducer));
+		// Register the reducer with Intel Cilk runtime
+		CILK_C_REGISTER_REDUCER(my_match_reducer);
+		// Execute the offset loop in parallel
+		cilk_for (int64_t _offset = start;_offset<pos;_offset++){
+			//invoke (%14) = (%0, %6, %1) LZ77_compress:match : function(byte[],LZ77_compress:nat,LZ77_compress:nat)->(int)
+			int64_t _len = 0;
+			{
+				// isCopyEliminated of '_0' = true
+				_len = _match_(_1DARRAY_PARAM(data), false, _offset, pos);
+				_RETAIN_DEALLOC(data, "false-false-true" , "match");
+			}
+			// Get the current view of the reducer
+			Match* m= &REDUCER_VIEW(my_match_reducer);
+			// Update reducer with a better length (and its offset)
+			if(_len > m->len){
+				m->len = _len;
+				m->offset = pos - _offset;
+			}
+		}
+		// Unregister the reducer with Intel Cilk runtime
+		CILK_C_UNREGISTER_REDUCER(my_match_reducer);
+		// Obtain the best length and its offset
+		Match* m = &REDUCER_VIEW(my_match_reducer);
+		bestLen = m->len;
+		bestOffset = m->offset;
 	}
 	//.blklab3
 	blklab3:;
