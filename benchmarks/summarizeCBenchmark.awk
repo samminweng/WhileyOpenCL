@@ -76,7 +76,7 @@ BEGIN {
 	FS = "\n";
 	## Test case name
 	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge Cashtill LZ77";
-	testcases="MergeSort";
+	testcases="LZ77";
 
 	## Program Type
 	programs["Reverse"]="original";
@@ -105,8 +105,8 @@ BEGIN {
 	patterns["BubbleSort"] = "disabled";
 	patterns["MergeSort"] = "disabled";
 	patterns["MatrixMult"] = "disabled";
-	patterns["LZ77"] = "disabled enabled";
-	#patterns["LZ77"] = "enabled";
+	#patterns["LZ77"] = "disabled enabled";
+	patterns["LZ77"] = "enabled";
 	patterns["SobelEdge"] = "disabled";
 	patterns["Cashtill"] = "disabled";
 
@@ -121,7 +121,7 @@ BEGIN {
 	compilers["Cashtill"] = "gcc";
 	### Executive type
 	exectypes["MergeSort"] = "seq cilkspawn cilkspawn_seq";
-	#exectypes = "seq mapreduce";
+	exectypes["LZ77"] = "mapreduce_seq mapreduce_openmp cilk_reducer_seq cilk_reducer";
 	### Parameter
 	# Parameter
 	parameters["Reverse"]="100000 1000000 10000000";
@@ -144,9 +144,10 @@ BEGIN {
 	# The number of threads
 	threads["seq"]="1";
 	threads["openmp"]="1 2 4 8";
-	threads["mapreduce"]="1 2 4 8";
-	threads["cilkspawn"]="1 2 4 8";
-	threads["cilkspawn_seq"]="1 2 4 8";
+	threads["mapreduce_seq"]="1";
+	threads["mapreduce_openmp"]="1 2 4 8";
+	threads["cilk_reducer_seq"]="1";
+	threads["cilk_reducer"]="1 2 4 8";
 	# Results
 	cpu_utils[""] = "";
 	exec_times[""] = "";

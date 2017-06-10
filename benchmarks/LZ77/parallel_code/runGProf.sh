@@ -3,7 +3,7 @@ TIMEOUT="3600s"
 ## Set shell script to UTF-8
 export LANG=C.UTF-8
 ## declare the number of threads
-declare -a threads=( 1 2 4 6 8 )
+declare -a threads=( 1 2 4 8 )
 
 ### declare parameters
 #declare -a parameters=( "large1x" "large2x" "large4x" "large8x" "large16x" "large32x" "large64x" "large128x" "large256x" )

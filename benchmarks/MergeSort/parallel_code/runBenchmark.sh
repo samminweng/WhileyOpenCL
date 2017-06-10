@@ -4,7 +4,7 @@ TIMEOUT="3600s"
 export LANG=C.UTF-8
 ### declare parameters
 ##declare -a parameters=( 1000 10000 100000 )
-declare -a parameters=( 10000000 100000000 1000000000 )
+declare -a parameters=( 100000000 200000000 300000000 )
 testcase="MergeSort"
 program="original"
 compiler="gcc"

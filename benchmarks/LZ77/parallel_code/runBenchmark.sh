@@ -4,15 +4,16 @@ TIMEOUT="3600s"
 export LANG=C.UTF-8
 ### declare parameters
 declare -a parameters=( "large1x" "large2x" "large4x" "large8x" "large16x" "large32x" "large64x" "large128x" "large256x" )
-#declare -a parameters=( "large2x" "large4x" "large8x" "large16x" )
+##declare -a parameters=( "large2x" "large4x" "large8x" )
 testcase="LZ77"
 program="compress"
-compiler="gcc"
+compiler="clang"
 pattern="enabledpattern"
 codegen="nocopydealloc"
-declare -a codes=( "mapreduce_seq" "mapreduce_openmp" "cilk_reducer" )
+declare -a codes=( "cilk_reducer" )
+#declare -a codes=( "mapreduce_seq" "mapreduce_openmp" "cilk_reducer" )
 ## declare the number of threads
-declare -A threads=( [mapreduce_seq]="1" [mapreduce_openmp]="1 2 4 8" )
+declare -A threads=( [mapreduce_seq]="1" [mapreduce_openmp]="1 2 4 8" [cilk_reducer]="1 2 4 8" [cilk_reducer_seq]="1" )
 ### remove all files inside the folder
 rm -rf "../exectime/C"
 mkdir -p "../exectime/C"
@@ -29,18 +30,31 @@ do
             do
                 echo $code
                 echo "Thread = "$thread
-
+                result="../exectime/C/$testcase.$program.$compiler.$pattern.$codegen.$code.$parameter.$thread.txt"
                 ## Compile all C files into executable
                 mkdir -p "$code/out"
-                if [ $code == 'mapreduce_openmp' ]
-                then
-                    $compiler -fopenmp -O0 "$code/LZ77_compress.c" "$code/Util.c" "$code/WyRT.c" -o "$code/out/LZ77_compress.$code.out"
-                else
-                    $compiler -O0 "$code/LZ77_compress.c" "$code/Util.c" "$code/WyRT.c" -o "$code/out/LZ77_compress.$code.out"
-                fi
-                result="../exectime/C/$testcase.$program.$compiler.$pattern.$codegen.$code.$parameter.$thread.txt"
-                export OMP_NUM_THREADS=$thread
-                echo "OMP_NUM_THREADS="$OMP_NUM_THREADS >> $result
+                case "$code" in
+                    "mapreduce_openmp")
+                        export OMP_NUM_THREADS=$thread
+                        echo "OMP_NUM_THREADS="$OMP_NUM_THREADS >> $result
+                        $compiler -fopenmp -O0 "$code/LZ77_compress.c" "$code/Util.c" "$code/WyRT.c" \
+                                  -o "$code/out/LZ77_compress.$code.out"
+                        ;;
+                    "mapreduce_seq")
+                        $compiler -O0 "$code/LZ77_compress.c" "$code/Util.c" "$code/WyRT.c" \
+                                  -o "$code/out/LZ77_compress.$code.out"
+                        ;;
+                    "cilk_reducer")
+                        export CILK_NWORKERS=$thread
+                        echo "CILK_NWORKERS="$CILK_NWORKERS >> $result
+                        ## -lcilkrts links cilk plus runtime
+                        $compiler -fcilkplus -O0 "$code/LZ77_compress.c" "$code/Util.c" "$code/WyRT.c" \
+                                  -lcilkrts -o "$code/out/LZ77_compress.$code.out"
+                        ;;
+                    "cilk_reducer_seq")
+                        $compiler -O0 "$code/LZ77_compress.c" "$code/Util.c" "$code/WyRT.c" \
+                                  -o "$code/out/LZ77_compress.$code.out"
+                esac
                 #read -p "Press [Enter] to continue..."$result
                 for i in {1..10}
                 do
@@ -50,7 +64,6 @@ do
                     ## Run the openmp code
                     "$code/out/LZ77_compress.$code.out" "../Inputfiles/$parameter.in" \
                          "../Outputfiles/$parameter.$code.dat" >> $result
-
                     ## Get exit code
             		exitcode="$?"
             		## Exit code of time out

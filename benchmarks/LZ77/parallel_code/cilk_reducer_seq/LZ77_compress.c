@@ -182,49 +182,14 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 	//assign %6 = %5  : int
 	// isCopyEliminated = true
 	offset = start;
-	//loop (%3, %4, %6, %7, %14, %15, %16, %17)
-	//int nthreads, tid;
-	// Parallel loop region using cilk_for
-	/*{
-		// Initialize the mutex
-		pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-		cilk_for (int _offset = start;_offset<pos;_offset++){
-			//invoke (%14) = (%0, %6, %1) LZ77_compress:match : function(byte[],LZ77_compress:nat,LZ77_compress:nat)->(int)
-			int64_t _len = 0;
-			{
-				// isCopyEliminated of '_0' = true
-				_len = _match_(_1DARRAY_PARAM(data), false, _offset, pos);
-				_RETAIN_DEALLOC(data, "false-false-true" , "match");
-			}
-			// Lock the resource to update the best length and offset
-			pthread_mutex_lock(&mutex);
-			if(_len > bestLen){
-				bestLen = _len;
-				bestOffset = pos - _offset;
-			}
-			pthread_mutex_unlock(&mutex);
-			// Debug messages
-			//printf("ID:%d\t_Len:%d\tOffset:%d\tLocalLen[%d]:%d\tLocalOffset[%d]:%d\n",id, _len, offset, id, localLen[id], id, localOffset[id]);
-		}
-	}*/
-	// Refer to https://www.cilkplus.org/docs/doxygen/include-dir/page_reducers_in_c.html
-	// User cilk_for and customised cilk reducer to improve the parallelism
+	// Run the reducer in serial
 	{
 		// Define a customised reducer of 'Match' type
-		CILK_C_DECLARE_REDUCER(Match) my_match_reducer =
-				CILK_C_INIT_REDUCER(Match,
-									reduce_Match,
-									identity_Match,
-									//destroy_Match);
-									__cilkrts_hyperobject_noop_destroy);
-		// Register the reducer with Intel Cilk runtime
-		CILK_C_REGISTER_REDUCER(my_match_reducer);
+		Match* my_match_reducer = malloc(sizeof(Match));
 		// Initialize the reducer
-		Match_init(&REDUCER_VIEW(my_match_reducer));
-		// Execute the offset loop in parallel
-		// Define the grain size (https://software.intel.com/en-us/articles/why-is-cilk-plus-not-speeding-up-my-program-part-1)
-		//#pragma cilk grainsize = (pos - start)/__cilkrts_get_nworkers()
-		cilk_for (int _offset = start;_offset<pos;_offset++){
+		Match_init(my_match_reducer);
+		// Execute the offset loop
+		for (int _offset = start;_offset<pos;_offset++){
 			//invoke (%14) = (%0, %6, %1) LZ77_compress:match : function(byte[],LZ77_compress:nat,LZ77_compress:nat)->(int)
 			int64_t _len = 0;
 			{
@@ -232,20 +197,17 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 				_len = _match_(_1DARRAY_PARAM(data), false, _offset, pos);
 				_RETAIN_DEALLOC(data, "false-false-true" , "match");
 			}
-			// Get the current view of the reducer
-			Match* m= &REDUCER_VIEW(my_match_reducer);
 			// Update reducer with a better length (and its offset)
-			if(_len > m->len){
-				m->len = _len;
-				m->offset = pos - _offset;
+			if(_len > my_match_reducer->len){
+				my_match_reducer->len = _len;
+				my_match_reducer->offset = pos - _offset;
 			}
 		}
-		// Unregister the reducer with Intel Cilk runtime
-		CILK_C_UNREGISTER_REDUCER(my_match_reducer);
-		// Obtain the best length and its offset
-		Match* m = &REDUCER_VIEW(my_match_reducer);
-		bestLen = m->len;
-		bestOffset = m->offset;
+		// Obtain the best length and its offset from reducer
+		bestLen = my_match_reducer->len;
+		bestOffset = my_match_reducer->offset;
+		// Free the reducer
+		free(my_match_reducer);
 	}
 	//.blklab3
 	blklab3:;
