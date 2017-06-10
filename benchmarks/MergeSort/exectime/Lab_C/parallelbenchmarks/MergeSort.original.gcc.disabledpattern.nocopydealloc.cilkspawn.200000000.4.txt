@@ -1,83 +1,83 @@
-CILK_NWORKERS=2
-Run the original MergeSort on 100000000 using gcc
+CILK_NWORKERS=4
+Run the original MergeSort on 200000000 using gcc
 Begin 1 iteration
 1
-100000000
+200000000
 Pass Mergesort test case
 
-Parameter:100000000	ExecutionTime:19685748671	nanoseconds.
+Parameter:200000000	ExecutionTime:24779358818	nanoseconds.
 Finish 1 iteration
-Run the original MergeSort on 100000000 using gcc
+Run the original MergeSort on 200000000 using gcc
 Begin 2 iteration
 1
-100000000
+200000000
 Pass Mergesort test case
 
-Parameter:100000000	ExecutionTime:19835101415	nanoseconds.
+Parameter:200000000	ExecutionTime:23854864597	nanoseconds.
 Finish 2 iteration
-Run the original MergeSort on 100000000 using gcc
+Run the original MergeSort on 200000000 using gcc
 Begin 3 iteration
 1
-100000000
+200000000
 Pass Mergesort test case
 
-Parameter:100000000	ExecutionTime:19954492069	nanoseconds.
+Parameter:200000000	ExecutionTime:23736913248	nanoseconds.
 Finish 3 iteration
-Run the original MergeSort on 100000000 using gcc
+Run the original MergeSort on 200000000 using gcc
 Begin 4 iteration
 1
-100000000
+200000000
 Pass Mergesort test case
 
-Parameter:100000000	ExecutionTime:20204378173	nanoseconds.
+Parameter:200000000	ExecutionTime:23909943990	nanoseconds.
 Finish 4 iteration
-Run the original MergeSort on 100000000 using gcc
+Run the original MergeSort on 200000000 using gcc
 Begin 5 iteration
 1
-100000000
+200000000
 Pass Mergesort test case
 
-Parameter:100000000	ExecutionTime:19717937635	nanoseconds.
+Parameter:200000000	ExecutionTime:23886450794	nanoseconds.
 Finish 5 iteration
-Run the original MergeSort on 100000000 using gcc
+Run the original MergeSort on 200000000 using gcc
 Begin 6 iteration
 1
-100000000
+200000000
 Pass Mergesort test case
 
-Parameter:100000000	ExecutionTime:19881560165	nanoseconds.
+Parameter:200000000	ExecutionTime:23847296809	nanoseconds.
 Finish 6 iteration
-Run the original MergeSort on 100000000 using gcc
+Run the original MergeSort on 200000000 using gcc
 Begin 7 iteration
 1
-100000000
+200000000
 Pass Mergesort test case
 
-Parameter:100000000	ExecutionTime:19926114453	nanoseconds.
+Parameter:200000000	ExecutionTime:23876387972	nanoseconds.
 Finish 7 iteration
-Run the original MergeSort on 100000000 using gcc
+Run the original MergeSort on 200000000 using gcc
 Begin 8 iteration
 1
-100000000
+200000000
 Pass Mergesort test case
 
-Parameter:100000000	ExecutionTime:20094046278	nanoseconds.
+Parameter:200000000	ExecutionTime:23749414958	nanoseconds.
 Finish 8 iteration
-Run the original MergeSort on 100000000 using gcc
+Run the original MergeSort on 200000000 using gcc
 Begin 9 iteration
 1
-100000000
+200000000
 Pass Mergesort test case
 
-Parameter:100000000	ExecutionTime:19904620305	nanoseconds.
+Parameter:200000000	ExecutionTime:23843657938	nanoseconds.
 Finish 9 iteration
-Run the original MergeSort on 100000000 using gcc
+Run the original MergeSort on 200000000 using gcc
 Begin 10 iteration
 1
-100000000
+200000000
 Pass Mergesort test case
 
-Parameter:100000000	ExecutionTime:19807602835	nanoseconds.
+Parameter:200000000	ExecutionTime:23844921171	nanoseconds.
 Finish 10 iteration
 processor	: 0
 vendor_id	: GenuineIntel
@@ -86,7 +86,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3399.867
+cpu MHz		: 3592.976
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -113,7 +113,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3871.617
+cpu MHz		: 3670.140
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -140,7 +140,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3678.906
+cpu MHz		: 3847.710
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -167,7 +167,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3464.414
+cpu MHz		: 3422.578
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -194,7 +194,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3815.304
+cpu MHz		: 3414.078
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -221,7 +221,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3878.921
+cpu MHz		: 3675.851
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -248,7 +248,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3638.398
+cpu MHz		: 3700.156
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -275,7 +275,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3412.218
+cpu MHz		: 3679.835
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
