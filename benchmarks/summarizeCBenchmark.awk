@@ -76,7 +76,7 @@ BEGIN {
 	FS = "\n";
 	## Test case name
 	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge Cashtill LZ77";
-	testcases="LZ77";
+	testcases="MergeSort";
 
 	## Program Type
 	programs["Reverse"]="original";
@@ -127,7 +127,7 @@ BEGIN {
 	parameters["Reverse"]="100000 1000000 10000000";
 	parameters["newTicTacToe"]="1000 10000 100000";
 	#parameters["MergeSort"]="1000 10000 100000";
-	parameters["MergeSort"]="10000000 100000000 1000000000";
+	parameters["MergeSort"]="100000000 200000000 300000000";
 	parameters["BubbleSort"]="1000 10000 100000";
 	parameters["MatrixMult"]="1000 2000 3000";
 	# parameters["Fibonacci"]="10 50 90";
@@ -148,6 +148,8 @@ BEGIN {
 	threads["mapreduce_openmp"]="1 2 4 8";
 	threads["cilk_reducer_seq"]="1";
 	threads["cilk_reducer"]="1 2 4 8";
+	threads["cilkspawn"]="1 2 4 8 12 16";
+	threads["cilkspawn_seq"]="1 2 4 8 12 16";
 	# Results
 	cpu_utils[""] = "";
 	exec_times[""] = "";
