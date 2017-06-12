@@ -3,17 +3,18 @@ TIMEOUT="3600s"
 ## Set shell script to UTF-8
 export LANG=C.UTF-8
 ### declare parameters
-declare -a parameters=( "large1x" "large2x" "large4x" "large8x" "large16x" "large32x" "large64x" "large128x" "large256x" )
-##declare -a parameters=( "large256x" )
+#declare -a parameters=( "large1x" "large2x" "large4x" "large8x" "large16x" "large32x" "large64x" "large128x" "large256x" )
+declare -a parameters=( "large256x" )
 testcase="LZ77"
 program="compress"
 compiler="gcc"
 pattern="enabledpattern"
 codegen="nocopydealloc"
-#declare -a codes=( "cilk_reducer" )
-declare -a codes=( "mapreduce_seq" "mapreduce_openmp" "cilk_reducer" "cilk_reducer_seq" )
+#declare -a codes=( "mapreduce_seq" "mapreduce_openmp" "cilk_reducer" "cilk_reducer_seq" )
+declare -a codes=( "mapreduce_openmp" "cilk_reducer" )
 ## declare the number of threads
-declare -A threads=( [mapreduce_seq]="1" [mapreduce_openmp]="1 2 4 8" [cilk_reducer]="1 2 4 8" [cilk_reducer_seq]="1" )
+#declare -A threads=( [mapreduce_seq]="1" [mapreduce_openmp]="1 2 4 8" [cilk_reducer]="1 2 4 8" [cilk_reducer_seq]="1" )
+declare -A threads=( [mapreduce_seq]="1" [mapreduce_openmp]="12 16" [cilk_reducer]="12 16" [cilk_reducer_seq]="1" )
 ### remove all files inside the folder
 rm -rf "../exectime/C"
 mkdir -p "../exectime/C"
