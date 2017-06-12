@@ -3,8 +3,8 @@ TIMEOUT="3600s"
 ## Set shell script to UTF-8
 export LANG=C.UTF-8
 ### declare parameters
-#declare -a parameters=( "large1x" "large2x" "large4x" "large8x" "large16x" "large32x" "large64x" "large128x" "large256x" )
-declare -a parameters=( "large256x" )
+declare -a parameters=( "large1x" "large2x" "large4x" "large8x" "large16x" "large32x" "large64x" "large128x" "large256x" )
+##declare -a parameters=( "large256x" )
 testcase="LZ77"
 program="compress"
 compiler="gcc"
