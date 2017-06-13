@@ -11,10 +11,10 @@ compiler="gcc"
 pattern="enabledpattern"
 codegen="nocopydealloc"
 #declare -a codes=( "mapreduce_seq" "mapreduce_openmp" "cilk_reducer" "cilk_reducer_seq" )
-declare -a codes=( "mapreduce_openmp" "cilk_reducer" )
+declare -a codes=( "cilk_reducer" )
 ## declare the number of threads
 #declare -A threads=( [mapreduce_seq]="1" [mapreduce_openmp]="1 2 4 8" [cilk_reducer]="1 2 4 8" [cilk_reducer_seq]="1" )
-declare -A threads=( [mapreduce_seq]="1" [mapreduce_openmp]="12 16" [cilk_reducer]="12 16" [cilk_reducer_seq]="1" )
+declare -A threads=( [mapreduce_seq]="1" [mapreduce_openmp]="2 4 8" [cilk_reducer]="1 2 4 8" [cilk_reducer_seq]="1" )
 ### remove all files inside the folder
 rm -rf "../exectime/C"
 mkdir -p "../exectime/C"
