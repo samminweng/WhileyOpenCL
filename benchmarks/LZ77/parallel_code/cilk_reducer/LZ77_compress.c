@@ -127,11 +127,14 @@ void reduce_Match(void* reducer, void* left, void* right)
 {
 	Match* l_m = (Match*)left;
 	Match* r_m = (Match*)right;
+	// Debug messages
+	// printf("l_m->len:%d\tl_m->offset:%d\tr_m->len:%d\tr_m->offset:%d\n", l_m->len, l_m->offset, r_m->len, r_m->offset);
 
 	if(l_m-> len < r_m-> len){
 		l_m->len = r_m->len;
 		l_m->offset = r_m->offset;
 	}
+
 	// Empty right
 	Match_init(r_m);
 }
@@ -224,6 +227,7 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 		// Execute the offset loop in parallel
 		// Define the grain size (https://software.intel.com/en-us/articles/why-is-cilk-plus-not-speeding-up-my-program-part-1)
 		//#pragma cilk grainsize = (pos - start)/__cilkrts_get_nworkers()
+		//#pragma cilk grainsize = 1
 		cilk_for (int _offset = start;_offset<pos;_offset++){
 			//invoke (%14) = (%0, %6, %1) LZ77_compress:match : function(byte[],LZ77_compress:nat,LZ77_compress:nat)->(int)
 			int64_t _len = 0;
@@ -239,6 +243,8 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 				m->len = _len;
 				m->offset = pos - _offset;
 			}
+			// Debug messages
+			// printf("POS:%d\toffset:%d\t_Len:%d\tm->len:%d\tm->offset:%d\n", pos, _offset, _len, m->len, m->offset);
 		}
 		// Unregister the reducer with Intel Cilk runtime
 		CILK_C_UNREGISTER_REDUCER(my_match_reducer);
@@ -246,10 +252,12 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 		Match* m = &REDUCER_VIEW(my_match_reducer);
 		bestLen = m->len;
 		bestOffset = m->offset;
+		// Debug messages
+		// printf("POS:%d\tbestLen:%d\tbestOffset:%d\n", pos, bestLen, bestOffset);
 	}
 	//.blklab3
 	blklab3:;
-	//printf("POS:%d\tbestLen:%d\tbestOffset:%d\n", pos, bestLen, bestOffset);
+	//
 	//newrecord %18 = (%4, %3) : {int len,int offset}
 	_DEALLOC_STRUCT(_18, Match);
 	_18 = malloc(sizeof(Match));

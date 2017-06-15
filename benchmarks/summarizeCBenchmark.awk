@@ -145,9 +145,9 @@ BEGIN {
 	threads["seq"]="1";
 	threads["openmp"]="1 2 4 8";
 	threads["mapreduce_seq"]="1";
-	threads["mapreduce_openmp"]="1 2 4 8";
+	threads["mapreduce_openmp"]="1 2 4 8 12 16";
 	threads["cilk_reducer_seq"]="1";
-	threads["cilk_reducer"]="1 2 4 8";
+	threads["cilk_reducer"]="1 2 4 8 12 16";
 	threads["cilkspawn"]="1 2 4 8 12 16";
 	threads["cilkspawn_seq"]="1 2 4 8 12 16";
 	# Results
