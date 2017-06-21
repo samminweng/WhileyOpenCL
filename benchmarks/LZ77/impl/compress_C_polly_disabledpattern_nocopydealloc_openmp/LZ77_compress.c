@@ -1,9 +1,4 @@
 #include "LZ77_compress.h"
-#include <cilk/cilk.h>
-#include <pthread.h>
-#include <cilk/reducer.h>
-int GRAINSIZE = 0; // Grainsize of 0 will use default grainsize by compiler
-
 Match* copy_Match(Match* _Match){
 	Match* new_Match = malloc(sizeof(Match));
 	new_Match->len = _Match->len;
@@ -97,47 +92,16 @@ int64_t _match_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), int64_t
 		//assign %5 = %19  : int
 		// isCopyEliminated = true
 		len = _19;
-		//.blklab2
-		blklab2:;
+//.blklab2
+blklab2:;
 	}
-	//.blklab1
-	blklab1:;
+//.blklab1
+blklab1:;
 	//return %5
 	_DEALLOC(data);
 	return len;
 	//return
 }
-
-
-// Initialize a match to be empty
-void Match_init(Match* m) {
-	m->len=0;
-	m->offset=0;
-}
-void identity_Match(void* reducer, void* m)
-{
-	Match_init((Match*)m);
-}
-void reduce_Match(void* reducer, void* left, void* right)
-{
-	Match* l_m = (Match*)left;
-	Match* r_m = (Match*)right;
-	// Debug messages
-	// printf("l_m->len:%d\tl_m->offset:%d\tr_m->len:%d\tr_m->offset:%d\n", l_m->len, l_m->offset, r_m->len, r_m->offset);
-	if(l_m-> len < r_m-> len){
-		// Update 'left' reducer with larger 'right' reducer
-		l_m->len = r_m->len;
-		l_m->offset = r_m->offset;
-	}
-	// Empty right
-	//Match_init(r_m);
-}
-// Define a customised reducer of 'Match' type
-CILK_C_DECLARE_REDUCER(Match) my_match_reducer =
-		CILK_C_INIT_REDUCER(Match,
-							reduce_Match,
-							identity_Match,
-							__cilkrts_hyperobject_noop_destroy);
 
 Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), int64_t pos){
 	Match* m;
@@ -186,73 +150,42 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 	// isCopyEliminated = true
 	offset = start;
 	//loop (%3, %4, %6, %7, %14, %15, %16, %17)
-	//int nthreads, tid;
-	// Parallel loop region using cilk_for
-	/*{
-		// Initialize the mutex
-		pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-		cilk_for (int _offset = start;_offset<pos;_offset++){
-			//invoke (%14) = (%0, %6, %1) LZ77_compress:match : function(byte[],LZ77_compress:nat,LZ77_compress:nat)->(int)
-			int64_t _len = 0;
-			{
-				// isCopyEliminated of '_0' = true
-				_len = _match_(_1DARRAY_PARAM(data), false, _offset, pos);
-				_RETAIN_DEALLOC(data, "false-false-true" , "match");
-			}
-			// Lock the resource to update the best length and offset
-			pthread_mutex_lock(&mutex);
-			if(_len > bestLen){
-				bestLen = _len;
-				bestOffset = pos - _offset;
-			}
-			pthread_mutex_unlock(&mutex);
-			// Debug messages
-			//printf("ID:%d\t_Len:%d\tOffset:%d\tLocalLen[%d]:%d\tLocalOffset[%d]:%d\n",id, _len, offset, id, localLen[id], id, localOffset[id]);
+	while(true){
+		//ifge %6, %1 goto blklab3 : int
+		if(offset>=pos){goto blklab3;}
+		//invoke (%14) = (%0, %6, %1) LZ77_compress:match : function(byte[],LZ77_compress:nat,LZ77_compress:nat)->(int)
+		{
+			// isCopyEliminated of '_0' = true
+			_14 = _match_(_1DARRAY_PARAM(data), false, offset, pos);
+			_RETAIN_DEALLOC(data, "false-false-true" , "match");
 		}
-	}*/
-	// Refer to https://www.cilkplus.org/docs/doxygen/include-dir/page_reducers_in_c.html
-	// User cilk_for and customised cilk reducer to improve the parallelism
-	{
-
-		// // Register the reducer with Intel Cilk runtime
-		// CILK_C_REGISTER_REDUCER(my_match_reducer);
-		// Initialize the reducer
-		Match_init(&REDUCER_VIEW(my_match_reducer));
-		// Execute the offset loop in parallel
-		// Define the grain size (https://software.intel.com/en-us/articles/why-is-cilk-plus-not-speeding-up-my-program-part-1)
-		// #pragma cilk grainsize = ((pos - start)/__cilkrts_get_nworkers())
-		// #pragma cilk grainsize = min(2048, (pos - start) / (8*__cilkrts_get_nworkers()))
-		#pragma cilk grainsize = GRAINSIZE
-		cilk_for (int _offset = start;_offset<pos;_offset++){
-			//invoke (%14) = (%0, %6, %1) LZ77_compress:match : function(byte[],LZ77_compress:nat,LZ77_compress:nat)->(int)
-			int64_t _len = 0;
-			{
-				// isCopyEliminated of '_0' = true
-				_len = _match_(_1DARRAY_PARAM(data), false, _offset, pos);
-				_RETAIN_DEALLOC(data, "false-false-true" , "match");
-			}
-			// Get the current view of the reducer
-			Match* m= &REDUCER_VIEW(my_match_reducer);
-			// Update reducer with a better length (and its offset)
-			if(_len > m->len){
-				m->len = _len;
-				m->offset = pos - _offset;
-			}
-			// Debug messages
-			// printf("POS:%d\toffset:%d\t_Len:%d\tm->len:%d\tm->offset:%d\n", pos, _offset, _len, m->len, m->offset);
-		}
-		// // Unregister the reducer with Intel Cilk runtime
-		// CILK_C_UNREGISTER_REDUCER(my_match_reducer);
-		// Obtain the best length and its offset
-		Match* m = &REDUCER_VIEW(my_match_reducer);
-		bestLen = m->len;
-		bestOffset = m->offset;
-		// Debug messages
-		// printf("POS:%d\tbestLen:%d\tbestOffset:%d\n", pos, bestLen, bestOffset);
+		//assign %7 = %14  : int
+		// isCopyEliminated = true
+		len = _14;
+		//ifle %7, %4 goto blklab5 : int
+		if(len<=bestLen){goto blklab5;}
+		//sub %15 = %1, %6 : int
+		_15=pos-offset;
+		//assign %3 = %15  : int
+		// isCopyEliminated = true
+		bestOffset = _15;
+		//assign %4 = %7  : int
+		// isCopyEliminated = false
+		bestLen = len;
+//.blklab5
+blklab5:;
+		//const %16 = 1 : int
+		_16 = 1;
+		//add %17 = %6, %16 : int
+		_17=offset+_16;
+		//assign %6 = %17  : int
+		// isCopyEliminated = true
+		offset = _17;
+//.blklab4
+blklab4:;
 	}
-	//.blklab3
-	blklab3:;
-	//
+//.blklab3
+blklab3:;
 	//newrecord %18 = (%4, %3) : {int len,int offset}
 	_DEALLOC_STRUCT(_18, Match);
 	_18 = malloc(sizeof(Match));
@@ -323,11 +256,11 @@ BYTE* _append_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), BYTE 
 		//assign %3 = %13  : int
 		// isCopyEliminated = true
 		i = _13;
-		//.blklab7
-		blklab7:;
+//.blklab7
+blklab7:;
 	}
-	//.blklab6
-	blklab6:;
+//.blklab6
+blklab6:;
 	//update %2[%3] = %1 : byte[] -> byte[]
 	// isCopyEliminated = true
 	nitems[i] = item;
@@ -382,11 +315,11 @@ BYTE* _resize_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64
 		//assign %3 = %9  : int
 		// isCopyEliminated = true
 		i = _9;
-		//.blklab11
-		blklab11:;
+//.blklab11
+blklab11:;
 	}
-	//.blklab10
-	blklab10:;
+//.blklab10
+blklab10:;
 	//return %2
 	_DEALLOC(items);
 	_DEALLOC(_5);
@@ -425,17 +358,6 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 	_DECL_DEALLOC(_22);
 	_DECL_1DARRAY_BYTE(_23);
 	_DECL_DEALLOC(_23);
-	int64_t _24 = 0;
-	int64_t _25 = 0;
-	int64_t _26 = 0;
-	int64_t _27 = 0;
-	int64_t _28 = 0;
-	int64_t _29 = 0;
-	int64_t _30 = 0;
-	int64_t _31 = 0;
-	int64_t _32 = 0;
-	_DECL_1DARRAY_BYTE(_33);
-	_DECL_DEALLOC(_33);
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %2 = %6  : int
@@ -445,29 +367,16 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 	_7 = 0b00000000;
 	//const %8 = 0 : int
 	_8 = 0;
-	//const %24 = 2 : int
-	_24 = 2;
-	//lengthof %25 = %0 : byte[]
-	_25 = data_size;
-	//mul %26 = %24, %25 : int
-	_26=_24*_25;
-	//arraygen %9 = [7; 26] : byte[]
+	//arraygen %9 = [7; 8] : byte[]
 	_DEALLOC(_9);
-	_NEW_1DARRAY_BYTE(_9, _26, _7);
+	_NEW_1DARRAY_BYTE(_9, _8, _7);
 	_ADD_DEALLOC(_9);
-	//const %27 = 0 : int
-	_27 = 0;
-	//assign %28 = %27  : int
-	// isCopyEliminated = true
-	_28 = _27;
 	//assign %1 = %9  : byte[]
 	_DEALLOC(output);
 	// isCopyEliminated = true
 	_UPDATE_1DARRAY(output, _9);
 	_TRANSFER_DEALLOC(output, _9);
-	// Register the reducer with Intel Cilk runtime
-	CILK_C_REGISTER_REDUCER(my_match_reducer);
-	//loop (%1, %2, %3, %4, %5, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %28)
+	//loop (%1, %2, %3, %4, %5, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23)
 	while(true){
 		//lengthof %10 = %0 : byte[]
 		_10 = data_size;
@@ -522,8 +431,8 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 		pos = _19;
 		//goto blklab15
 		goto blklab15;
-		//.blklab14
-		blklab14:;
+//.blklab14
+blklab14:;
 		//fieldload %20 = %3 len : {int len,int offset}
 		_20 = m->len;
 		//add %21 = %2, %20 : int
@@ -531,60 +440,39 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 		//assign %2 = %21  : int
 		// isCopyEliminated = true
 		pos = _21;
-		//.blklab15
-		blklab15:;
-		//update %1[%28] = %4 : byte[] -> byte[]
-		// isCopyEliminated = false
-		output[_28] = offset;
-		//const %29 = 1 : int
-		_29 = 1;
-		//add %30 = %28, %29 : int
-		_30=_28+_29;
-		//assign %28 = %30  : int
+//.blklab15
+blklab15:;
+		//invoke (%22) = (%1, %4) LZ77_compress:append : function(byte[],byte)->(byte[])
+		{
+			_DEALLOC(_22);
+			// isCopyEliminated of '_1' = true
+			_22 = _append_(_1DARRAY_PARAM(output), false, offset, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
+			_RETAIN_DEALLOC(output, "false-false-false" , "append");
+			_ADD_DEALLOC(_22);
+		}
+		//assign %1 = %22  : byte[]
+		_DEALLOC(output);
 		// isCopyEliminated = true
-		_28 = _30;
-		//update %1[%28] = %5 : byte[] -> byte[]
-		// isCopyEliminated = false
-		output[_28] = length;
-		//const %31 = 1 : int
-		_31 = 1;
-		//add %32 = %28, %31 : int
-		_32=_28+_31;
-		//assign %28 = %32  : int
+		_UPDATE_1DARRAY(output, _22);
+		_TRANSFER_DEALLOC(output, _22);
+		//invoke (%23) = (%1, %5) LZ77_compress:append : function(byte[],byte)->(byte[])
+		{
+			_DEALLOC(_23);
+			// isCopyEliminated of '_1' = true
+			_23 = _append_(_1DARRAY_PARAM(output), false, length, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
+			_RETAIN_DEALLOC(output, "false-false-false" , "append");
+			_ADD_DEALLOC(_23);
+		}
+		//assign %1 = %23  : byte[]
+		_DEALLOC(output);
 		// isCopyEliminated = true
-		_28 = _32;
-		//.blklab13
-		blklab13:;
+		_UPDATE_1DARRAY(output, _23);
+		_TRANSFER_DEALLOC(output, _23);
+//.blklab13
+blklab13:;
 	}
-
-	//.blklab12
-	blklab12:;
-	//assert
-	{
-		//ifle %28, %26 goto blklab22 : int
-		if(_28<=_26){goto blklab22;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-		//.blklab22
-		blklab22:;
-		//assert
-	}
-	//invoke (%33) = (%1, %28) LZ77_compress:resize : function(byte[],int)->(byte[])
-	{
-		_DEALLOC(_33);
-		// isCopyEliminated of '_1' = true
-		_33 = _resize_(_1DARRAY_PARAM(output), false, _28, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
-		_RETAIN_DEALLOC(output, "false-false-false" , "resize");
-		_ADD_DEALLOC(_33);
-	}
-	// Unregister the reducer with Intel Cilk runtime
-	CILK_C_UNREGISTER_REDUCER(my_match_reducer);
-	//assign %1 = %33  : byte[]
-	_DEALLOC(output);
-	// isCopyEliminated = true
-	_UPDATE_1DARRAY(output, _33);
-	_TRANSFER_DEALLOC(output, _33);
+//.blklab12
+blklab12:;
 	//return %1
 	_DEALLOC(data);
 	_DEALLOC_STRUCT(m, Match);
@@ -592,7 +480,6 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 	_DEALLOC_STRUCT(_11, Match);
 	_DEALLOC(_22);
 	_DEALLOC(_23);
-	_DEALLOC(_33);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(output);
 	return output;
 	//return
@@ -703,8 +590,8 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 		_TRANSFER_DEALLOC(output, _23);
 		//goto blklab19
 		goto blklab19;
-		//.blklab18
-		blklab18:;
+//.blklab18
+blklab18:;
 		//invoke (%24) = (%3) whiley/lang/Byte:toUnsignedInt : function(byte)->(whiley/lang/Int:uint)
 		{
 			_24 = (unsigned int)header;
@@ -760,18 +647,18 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 			//assign %8 = %32  : int
 			// isCopyEliminated = true
 			i = _32;
-			//.blklab21
-			blklab21:;
+//.blklab21
+blklab21:;
 		}
-		//.blklab20
-		blklab20:;
-		//.blklab19
-		blklab19:;
-		//.blklab17
-		blklab17:;
+//.blklab20
+blklab20:;
+//.blklab19
+blklab19:;
+//.blklab17
+blklab17:;
 	}
-	//.blklab16
-	blklab16:;
+//.blklab16
+blklab16:;
 	//return %1
 	_DEALLOC(data);
 	_DEALLOC(_11);
@@ -827,7 +714,6 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_36);
 	_DECL_DEALLOC(_36);
 	int64_t _37 = 0;
-	GRAINSIZE = atoi(args[3]);
 	//fieldload %6 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	_DEALLOC_2DARRAY_int64_t(_6);
 	_CONV_ARGS(_6);
@@ -861,7 +747,7 @@ int main(int argc, char** args){
 	//const %13 = [68,97,116,97,58,32,32,32,32,32,32,32,32,32] : int[]
 	_DEALLOC(_13);
 	_NEW_1DARRAY_int64_t(_13, 14, 0);
-	_13[0] = 68; _13[1] = 97; _13[2] = 116; _13[3] = 97; _13[4] = 58; _13[5] = 32; _13[6] = 32; _13[7] = 32; _13[8] = 32; _13[9] = 32; _13[10] = 32; _13[11] = 32; _13[12] = 32; _13[13] = 32;
+	_13[0] = 68; _13[1] = 97; _13[2] = 116; _13[3] = 97; _13[4] = 58; _13[5] = 32; _13[6] = 32; _13[7] = 32; _13[8] = 32; _13[9] = 32; _13[10] = 32; _13[11] = 32; _13[12] = 32; _13[13] = 32; 
 	_ADD_DEALLOC(_13);
 	//indirectinvoke () = %12 (%13) : method(int[])->()
 	{
@@ -893,7 +779,7 @@ int main(int argc, char** args){
 	//const %22 = [32,98,121,116,101,115] : int[]
 	_DEALLOC(_22);
 	_NEW_1DARRAY_int64_t(_22, 6, 0);
-	_22[0] = 32; _22[1] = 98; _22[2] = 121; _22[3] = 116; _22[4] = 101; _22[5] = 115;
+	_22[0] = 32; _22[1] = 98; _22[2] = 121; _22[3] = 116; _22[4] = 101; _22[5] = 115; 
 	_ADD_DEALLOC(_22);
 	//indirectinvoke () = %21 (%22) : method(int[])->()
 	{
@@ -917,7 +803,7 @@ int main(int argc, char** args){
 	//const %26 = [67,79,77,80,82,69,83,83,69,68,32,68,97,116,97,58,32,32,32] : int[]
 	_DEALLOC(_26);
 	_NEW_1DARRAY_int64_t(_26, 19, 0);
-	_26[0] = 67; _26[1] = 79; _26[2] = 77; _26[3] = 80; _26[4] = 82; _26[5] = 69; _26[6] = 83; _26[7] = 83; _26[8] = 69; _26[9] = 68; _26[10] = 32; _26[11] = 68; _26[12] = 97; _26[13] = 116; _26[14] = 97; _26[15] = 58; _26[16] = 32; _26[17] = 32; _26[18] = 32;
+	_26[0] = 67; _26[1] = 79; _26[2] = 77; _26[3] = 80; _26[4] = 82; _26[5] = 69; _26[6] = 83; _26[7] = 83; _26[8] = 69; _26[9] = 68; _26[10] = 32; _26[11] = 68; _26[12] = 97; _26[13] = 116; _26[14] = 97; _26[15] = 58; _26[16] = 32; _26[17] = 32; _26[18] = 32; 
 	_ADD_DEALLOC(_26);
 	//indirectinvoke () = %25 (%26) : method(int[])->()
 	{
@@ -936,7 +822,7 @@ int main(int argc, char** args){
 	//const %32 = [32,98,121,116,101,115] : int[]
 	_DEALLOC(_32);
 	_NEW_1DARRAY_int64_t(_32, 6, 0);
-	_32[0] = 32; _32[1] = 98; _32[2] = 121; _32[3] = 116; _32[4] = 101; _32[5] = 115;
+	_32[0] = 32; _32[1] = 98; _32[2] = 121; _32[3] = 116; _32[4] = 101; _32[5] = 115; 
 	_ADD_DEALLOC(_32);
 	//indirectinvoke () = %31 (%32) : method(int[])->()
 	{
@@ -988,3 +874,4 @@ int main(int argc, char** args){
 	_DEALLOC(_36);
 	exit(0);
 }
+

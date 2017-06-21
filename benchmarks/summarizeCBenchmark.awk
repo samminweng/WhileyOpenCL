@@ -7,7 +7,7 @@ function pause(){
 }
 
 function generateReport(results){
-	print "TestCase\tProgramType\tCompiler\tPattern\tParameter\tCodeGen\tExecutable\tThread\t1st\t2nd\t3rd\t4th\t5th\t6th\t7th\t8th\t9th\t10th\tAverage";
+	print "TestCase\tProgramType\tCompiler\tPattern\tParameter\tCodeGen\tExecutable\tGrainSize\tThread\t1st\t2nd\t3rd\t4th\t5th\t6th\t7th\t8th\t9th\t10th\tAverage";
  	t_total=split(testcases, t_array, " ");
  	for(t=1;t<=t_total;t++){
  		testcase=t_array[t];
@@ -36,30 +36,34 @@ function generateReport(results){
 							#print "exectype_total="exectype_total;
 							for(ec=1;ec<=exectype_total;ec++){
 								exectype=exectype_array[ec];
-								th_total=split(threads[exectype], th_array, " ");
-								for(th=1;th<=th_total;th++){
-									thread=th_array[th];
-									key=testcase","program","codegen","pattern","compiler","exectype","parameter","thread;
-									#print "key="key;
-									#pause();
-									str=testcase"\t"program"\t"compiler"\t"pattern"\t"parameter"\t"codegen"\t"exectype"\t"thread;
-									# Check if there is any result.
-									if(counts[key]>0){
-										## Print out result, e.g. CPU utilization
-					 					for(iteration=1;iteration<=10;iteration++){
-					 						str = str"\t"results[key","iteration];
-					 					}
-					 				}else{
-					 					## Out of memory
-				 						if(counts[key] == -1){
-				 							str = str"\tOOM";
-				 						}
-				 						## Out of time
-				 						if(counts[key] == -2){
-				 							str = str"\tOOT";
-				 						}
-					 				}
-					 				print str;
+								gs_total=split(grains[exectype], gs_array, " ");
+								for(g=1;g<=gs_total;g++){
+									grainsize=gs_array[g];
+									th_total=split(threads[exectype], th_array, " ");
+									for(th=1;th<=th_total;th++){
+										thread=th_array[th];
+										key=testcase","program","codegen","pattern","compiler","exectype","parameter","thread","grainsize;
+										#print "key="key;
+										#pause();
+										str=testcase"\t"program"\t"compiler"\t"pattern"\t"parameter"\t"codegen"\t"exectype"\t"grainsize"\t"thread;
+										# Check if there is any result.
+										if(counts[key]>0){
+											## Print out result, e.g. CPU utilization
+						 					for(iteration=1;iteration<=10;iteration++){
+						 						str = str"\t"results[key","iteration];
+						 					}
+						 				}else{
+						 					## Out of memory
+					 						if(counts[key] == -1){
+					 							str = str"\tOOM";
+					 						}
+					 						## Out of time
+					 						if(counts[key] == -2){
+					 							str = str"\tOOT";
+					 						}
+						 				}
+						 				print str;
+									}
 								}
 							}
 						}
@@ -121,7 +125,8 @@ BEGIN {
 	compilers["Cashtill"] = "gcc";
 	### Executive type
 	exectypes["MergeSort"] = "seq cilkspawn cilkspawn_seq";
-	exectypes["LZ77"] = "mapreduce_seq mapreduce_openmp cilk_reducer_seq cilk_reducer";
+	#exectypes["LZ77"] = "mapreduce_seq mapreduce_openmp cilk_reducer_seq cilk_reducer";
+	exectypes["LZ77"] = "cilk_reducer";
 	### Parameter
 	# Parameter
 	parameters["Reverse"]="100000 1000000 10000000";
@@ -138,7 +143,8 @@ BEGIN {
 	# parameters["NQueens"]="8 10 12 14";
 	# ### pattern transformation
 	##parameters["LZ77"]="medium1x medium2x medium4x medium8x medium16x medium32x medium64x medium128x medium256x medium512x medium1024x";
-	parameters["LZ77"]="large1x large2x large4x large8x large16x large32x large64x large128x large256x";
+	#parameters["LZ77"]="large1x large2x large4x large8x large16x large32x large64x large128x large256x";
+	parameters["LZ77"]="large256x";
 	parameters["Cashtill"]="1000 1200 1400 1600 1800 2000";
 
 	# The number of threads
@@ -147,9 +153,12 @@ BEGIN {
 	threads["mapreduce_seq"]="1";
 	threads["mapreduce_openmp"]="1 2 4 8 12 16";
 	threads["cilk_reducer_seq"]="1";
-	threads["cilk_reducer"]="1 2 4 8 12 16";
+	threads["cilk_reducer"]="1 2 4 8";
 	threads["cilkspawn"]="1 2 4 8 12 16";
 	threads["cilkspawn_seq"]="1 2 4 8 12 16";
+
+	# The number of grain size
+	grains["cilk_reducer"]="0 1 2 4 8 16 32 64 128 256";
 	# Results
 	cpu_utils[""] = "";
 	exec_times[""] = "";
@@ -187,7 +196,9 @@ BEGIN {
 		thread = t_array[8];
 	}
 
-	key=testcase","program","codegen","pattern","compiler","exectype","parameter","thread;
+	grainsize=t_array[9];
+
+	key=testcase","program","codegen","pattern","compiler","exectype","parameter","thread","grainsize;
 	##print "key="key;
 	##pause();
 

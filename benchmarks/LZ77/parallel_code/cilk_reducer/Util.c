@@ -159,7 +159,7 @@ int64_t** convertArgsToIntArray(int argc, char** args, size_t *arr_size, size_t 
 			arr[index][j] = -1;
 
 			// Update the array size with length
-			*arr_size_size = length + 1;
+			//*arr_size_size = length + 1;
 
 		}else{
 			// Convert a string to an array of ASCII code (integer)
