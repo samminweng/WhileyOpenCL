@@ -1,0 +1,62 @@
+digraph "Scop Graph for '_findMoves_' function" {
+	label="Scop Graph for '_findMoves_' function";
+
+	Node0xcabc6c0 [shape=record,label="{entry}"];
+	Node0xcabc6c0 -> Node0xcabced0;
+	Node0xcabced0 [shape=record,label="{entry.split}"];
+	Node0xcabced0 -> Node0xca9cce0;
+	Node0xcabced0 -> Node0xca9cd00;
+	Node0xca9cce0 [shape=record,label="{while.cond1.preheader.lr.ph}"];
+	Node0xca9cce0 -> Node0xca9b210;
+	Node0xca9b210 [shape=record,label="{while.cond1.preheader}"];
+	Node0xca9b210 -> Node0xca9b270;
+	Node0xca9b210 -> Node0xca9ca00;
+	Node0xca9b270 [shape=record,label="{if.end5.lr.ph}"];
+	Node0xca9b270 -> Node0xca69ec0;
+	Node0xca69ec0 [shape=record,label="{if.end5}"];
+	Node0xca69ec0 -> Node0xca69ec0[constraint=false];
+	Node0xca69ec0 -> Node0xca9ca20;
+	Node0xca9ca20 [shape=record,label="{while.cond1.blklab2_crit_edge}"];
+	Node0xca9ca20 -> Node0xca9ca00;
+	Node0xca9ca00 [shape=record,label="{blklab2}"];
+	Node0xca9ca00 -> Node0xca9b210[constraint=false];
+	Node0xca9ca00 -> Node0xca9c1a0;
+	Node0xca9c1a0 [shape=record,label="{while.cond.if.end43_crit_edge}"];
+	Node0xca9c1a0 -> Node0xca9cd00;
+	Node0xca9cd00 [shape=record,label="{if.end43}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xcaa3310 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xcaa1360 {
+            label = "";
+            style = filled;
+            color = 3            subgraph cluster_0xca73650 {
+              label = "";
+              style = solid;
+              color = 5
+              subgraph cluster_0xca93f00 {
+                label = "";
+                style = solid;
+                color = 7
+                subgraph cluster_0xca85370 {
+                  label = "";
+                  style = solid;
+                  color = 9
+                  Node0xca69ec0;
+                }
+                Node0xca9b210;
+                Node0xca9b270;
+                Node0xca9ca20;
+              }
+              Node0xca9ca00;
+            }
+            Node0xcabced0;
+            Node0xca9cce0;
+            Node0xca9c1a0;
+          }
+          Node0xcabc6c0;
+          Node0xca9cd00;
+        }
+}

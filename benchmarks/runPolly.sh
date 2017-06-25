@@ -9,7 +9,7 @@ BENCHMARKDIR="$BASEDIR/benchmarks"
 UTILDIR="$BASEDIR/tests/code"
 ## declare 4 kinds of code generation
 #declare -a codegens=("naive" "naive_dealloc" "nocopy" "nocopy_dealloc")
-declare -A codegens=( [MatrixMult]="nocopy" [LZ77]="nocopy_dealloc" [CoinGame]="nocopy" [SobelEdge]="nocopy_dealloc" )
+declare -A codegens=( [MatrixMult]="nocopy" [LZ77]="nocopydealloc" [CoinGame]="nocopydealloc" [SobelEdge]="nocopydealloc" )
 ## Declare an associative array for pattern matching
 #declare -A patterns=( [LZ77_compress]=compress )
 declare -A patterns=( )
@@ -29,6 +29,9 @@ generateCode(){
 	then
 		wyopcl=$wyopcl" -pattern compress"
 	fi
+
+	## Clean the sub-folders inside 'impl'
+	rm -rf  $BENCHMARKDIR/$testcase/impl/*
 
 	# The folder of generated Polly code
 	folder=$BENCHMARKDIR/$testcase/impl/$program"_"C"_"$compiler"_"$patternmatch"_"$codegen"_"$pollycode
@@ -52,7 +55,7 @@ generateCode(){
 			### Translate Whiley program into naive C code
 			$wyopcl -code $testcase"_"$program.whiley
 	    ;;
-	  "naive_dealloc")
+	  "naivedealloc")
 			echo "#############Generate naive_dealloc $testcase#################"
 			### Translate Whiley program into naive + dealloc C code
 	    	$wyopcl -code -dealloc $testcase"_"$program.whiley
@@ -62,7 +65,7 @@ generateCode(){
 			## Translate Whiley programs into copy_reduced C code
 			$wyopcl -code -nocopy $testcase"_"$program.whiley
 			;;
-	  "nocopy_dealloc")
+	  "nocopydealloc")
 			echo "#############Generate nocopy_dealloc $testcase#################"
 			### Translate Whiley program into copy-eliminated + memory deallocated C code
 	    	$wyopcl -code -nocopy -dealloc $testcase"_"$program.whiley
@@ -327,12 +330,12 @@ exec(){
 #exec GCD cached 10000
 
 ### CoinGame Test Case
-#exec CoinGame original 10000
+exec CoinGame original 10000
 #exec CoinGame array 10000
 #exec CoinGame array1 10000
 
 ##LZ77 Test Case
-exec LZ77 compress "$BENCHMARKDIR/LZ77/Inputfiles/input64x.in" "$BENCHMARKDIR/LZ77/Inputfiles/input64x.dat"
+#exec LZ77 compress "$BENCHMARKDIR/LZ77/Inputfiles/input64x.in" "$BENCHMARKDIR/LZ77/Inputfiles/input64x.dat"
 #exec LZ77 decompress "$BENCHMARKDIR/LZ77/Inputfiles/input64x.dat"
 #exec LZ77 optimised_decompress "$BENCHMARKDIR/LZ77/Inputfiles/input64x.dat"
 ### NQueens Test Case

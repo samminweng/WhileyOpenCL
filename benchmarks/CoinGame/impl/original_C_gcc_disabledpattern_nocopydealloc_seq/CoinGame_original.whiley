@@ -2,13 +2,13 @@ import whiley.lang.*
 import whiley.io.File
 import whiley.lang.Math
 
-// The 'coins' array can be skipped 
+// The 'coins' array can be skipped
 // because the coin value is the same as the index
 // Initialize the line of coins
 /*function init(int n) -> int[]:
     int[] coins = [0;n]
     // Fill in Matrix
-    int i = 0    
+    int i = 0
     while i < n:
         coins[i] = coins[i] + i
         i = i + 1
@@ -60,24 +60,24 @@ import whiley.lang.Math
 function findMoves(int[] moves, int n) -> int[]:
 	int s = 0
 	while s < n: // i0: s => 0<=s < n
-		int j = s
-		int i = 0 // i1: i => 0 <=i < n -s 
-		while j < n:  // j = i + s 
-			int y = 0
-			if (i + 1 < n && j - 1 >= 0):
-				y = moves[(i + 1)*n+j - 1]
-			
-			int x = 0
-			if (i + 2 < n):
-				x = moves[(i + 2)*n+j]
-			
-			int z = 0
-			if (j - 1 > 0):
-				z = moves[i*n+j - 2]
-			
+		int i = 0 // i1: i => 0 <=i < n -s
+		while i < n -s:  // j = i + s
+			int j = i + s
+			//int y = 0
+			//if (i + 1 < n && j - 1 >= 0):
+			int y = moves[(i + 1)*n+j - 1]
+
+			//int x = 0
+			//if (i + 2 < n):
+			int x = moves[(i + 2)*n+j]
+
+			//int z = 0
+			//if (j - 1 > 0):
+			int z = moves[i*n+j - 2]
+
 			moves[i*n+j] = Math.max(i + Math.min(x, y), j + Math.min(y, z))
-			
-			j = j + 1
+
+			//j = j + 1
 			i = i + 1
 			// End of i,j loop
 		s = s + 1
@@ -88,9 +88,11 @@ method main(System.Console sys):
 	int|null max = Int.parse(sys.args[0])
 	if max != null:
     		int n = max
-    		int[] moves = [0;n*n]
-    		moves = findMoves(moves, n) // Pass 'moves' array to the function 
-    		//play(sys, moves, n) 
+			// Increase the move array size to (n+2) * (n+2)
+			// to avoid if/else check inside the loop
+    		int[] moves = [0;(n+2)*(n+2)]
+    		moves = findMoves(moves, n) // Pass 'moves' array to the function
+    		//play(sys, moves, n)
     		int sum_alice = moves[n-1]
     		sys.out.print_s("The total amount of money (maximum) Alice gets is ")
     		sys.out.println(sum_alice)
