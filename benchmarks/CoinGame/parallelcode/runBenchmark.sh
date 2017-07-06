@@ -4,15 +4,18 @@ TIMEOUT="3600s"
 export LANG=C.UTF-8
 alias pollycc="clang -O3 -mllvm -polly"
 ### declare parameters
-declare -a parameters=( "10000" "20000" "30000" )
-declare -a codes=( "polly_seq" "polly_openmp" "worksharing_openmp" )
-declare -A compilers=( [polly_seq]="pollycc" [polly_openmp]="pollycc" [worksharing_openmp]="gcc" )
+declare -a parameters=( "10000" "20000" "30000" "40000")
+##declare -a codes=( "polly_seq" "polly_openmp" "gcc_seq" "worksharing_openmp" "cilk_for" )
+declare -a codes=( "polly_seq" )
+declare -A compilers=( [polly_seq]="pollycc" [polly_openmp]="pollycc" \
+                       [gcc_seq]="gcc" [worksharing_openmp]="gcc" [cilk_for]="gcc" )
 testcase="CoinGame"
 program="original"
 pattern="disabledpattern"
 codegen="nocopydealloc"
 ## declare the number of threads
-declare -A threads=( [polly_seq]="1" [polly_openmp]="1 2 4 8" [worksharing_openmp]="1 2 4 8" )
+declare -A threads=( [polly_seq]="1" [polly_openmp]="1 2 4 8" \
+                     [gcc_seq]="1" [worksharing_openmp]="1 2 4 8" [cilk_for]="1 2 4 8" )
 ### remove all files inside the folder
 rm -rf "../exectime/C"
 mkdir -p "../exectime/C"
@@ -41,9 +44,17 @@ do
                         pollycc -mllvm -polly-parallel -lgomp "$code/CoinGame_original.c" "$code/Util.c" "$code/WyRT.c" \
                                 -o "$code/out/CoinGame_original.$code.out"
                     ;;
+                    "gcc_seq")
+                        gcc -O0 "$code/CoinGame_original.c" "$code/Util.c" "$code/WyRT.c" \
+                                  -o "$code/out/CoinGame_original.$code.out"
+                    ;;
                     "worksharing_openmp")
                         gcc -fopenmp -O0 "$code/CoinGame_original.c" "$code/Util.c" "$code/WyRT.c" \
                                   -o "$code/out/CoinGame_original.$code.out"
+                    ;;
+                    "cilk_for")
+                        gcc -fcilkplus -O0 "$code/CoinGame_original.c" "$code/Util.c" "$code/WyRT.c" \
+                              -lcilkrts -o "$code/out/CoinGame_original.$code.out"
                     ;;
                 esac
                 result="../exectime/C/$testcase.$program.$compiler.$pattern.$codegen.$code.$parameter.$thread.txt"
@@ -53,7 +64,7 @@ do
                     echo "Begin $i iteration" >> $result
                     start=`date +%s%N`
                     case "$code" in
-                        "polly_seqp")
+                        "polly_seq")
                             ## Run the sequential code
                             "$code/out/CoinGame_original.$code.out" $parameter >> $result
                             ;;
@@ -63,9 +74,18 @@ do
                             ## Run the parallel code
                             "$code/out/CoinGame_original.$code.out" $parameter >> $result
                             ;;
+                        "gcc_seq")
+                            "$code/out/CoinGame_original.$code.out" $parameter >> $result
+                            ;;
                         "worksharing_openmp")
                             export OMP_NUM_THREADS=$thread
                             echo "OMP_NUM_THREADS="$OMP_NUM_THREADS >> $result
+                            ## Run the parallel code
+                            "$code/out/CoinGame_original.$code.out" $parameter >> $result
+                            ;;
+                        "cilk_for")
+                            export CILK_NWORKERS=$thread
+                            echo "CILK_NWORKERS="$CILK_NWORKERS >> $result
                             ## Run the parallel code
                             "$code/out/CoinGame_original.$code.out" $parameter >> $result
                             ;;

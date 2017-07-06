@@ -9,7 +9,7 @@ function func(int[] s, int n) -> int[]:
 	else:
 		// Return a new array
 		int[] new_t = [1,1,1,1,1]
-		// Cause a memory leak on 's' array 
+		// Cause a memory leak on 's' array
 		return new_t
 // Main function
 method main(System.Console sys):

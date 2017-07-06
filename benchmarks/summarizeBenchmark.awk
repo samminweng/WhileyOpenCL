@@ -132,7 +132,7 @@ BEGIN {
 	exectypes["MergeSort"] = "seq cilkspawn cilkspawn_seq";
 	#exectypes["LZ77"] = "mapreduce_seq mapreduce_openmp cilk_reducer_seq cilk_reducer";
 	exectypes["LZ77"] = "seq openmp";
-	exectypes["CoinGame"] = "seq worksharing_openmp polly_seq polly_openmp";
+	exectypes["CoinGame"] = "seq worksharing_openmp cilk_for polly_seq polly_openmp";
 	### Parameter
 	# Parameter
 	parameters["Reverse"]="100000 1000000 10000000";
@@ -167,6 +167,7 @@ BEGIN {
 	threads["cilkspawn_seq"]="1 2 4 8 12 16";
 	## Parallel CoinGame
 	threads["worksharing_openmp"]="1 2 4 8";
+	threads["cilk_for"]="1 2 4 8";
 
 	# The number of grain size
 	#grains["cilk_reducer"]="0 1 2 4 8 16 32 64 128 256";
