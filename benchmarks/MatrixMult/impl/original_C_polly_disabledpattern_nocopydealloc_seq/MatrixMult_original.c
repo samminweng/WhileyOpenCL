@@ -19,8 +19,8 @@ int64_t* _init_(_DECL_1DARRAY_PARAM(data), _DECL_DEALLOC_PARAM(data), int64_t wi
 	i = _6;
 	//loop (%0, %4, %5, %7, %8, %9, %10, %11, %12, %13)
 	while(true){
-		//ifge %4, %2 goto blklab1 : int
-		if(i>=height){goto blklab1;}
+		//ifge %4, %2 goto blklab0 : int
+		if(i>=height){goto blklab0;}
 		//const %7 = 0 : int
 		_7 = 0;
 		//assign %5 = %7  : int
@@ -28,8 +28,8 @@ int64_t* _init_(_DECL_1DARRAY_PARAM(data), _DECL_DEALLOC_PARAM(data), int64_t wi
 		j = _7;
 		//loop (%0, %5, %8, %9, %10, %11)
 		while(true){
-			//ifge %5, %1 goto blklab3 : int
-			if(j>=width){goto blklab3;}
+			//ifge %5, %1 goto blklab2 : int
+			if(j>=width){goto blklab2;}
 			//mul %8 = %4, %1 : int
 			_8=i*width;
 			//add %9 = %8, %5 : int
@@ -44,11 +44,11 @@ int64_t* _init_(_DECL_1DARRAY_PARAM(data), _DECL_DEALLOC_PARAM(data), int64_t wi
 			//assign %5 = %11  : int
 			// isCopyEliminated = true
 			j = _11;
-//.blklab4
-blklab4:;
-		}
 //.blklab3
 blklab3:;
+		}
+//.blklab2
+blklab2:;
 		//const %12 = 1 : int
 		_12 = 1;
 		//add %13 = %4, %12 : int
@@ -56,118 +56,16 @@ blklab3:;
 		//assign %4 = %13  : int
 		// isCopyEliminated = true
 		i = _13;
-//.blklab2
-blklab2:;
-	}
 //.blklab1
 blklab1:;
+	}
+//.blklab0
+blklab0:;
 	//return %0
 	_DEALLOC(r);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(data);
 	return data;
 	//return
-}
-
-void _print_mat_(FILE* sys, _DECL_1DARRAY_PARAM(a), _DECL_DEALLOC_PARAM(a), int64_t width, int64_t height){
-	int64_t i = 0;
-	int64_t j = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
-	void* _8;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
-	void* _13;
-	_DECL_1DARRAY(_15);
-	_DECL_DEALLOC(_15);
-	int64_t _16 = 0;
-	int64_t _17 = 0;
-	int64_t _18 = 0;
-	int64_t _19 = 0;
-	void* _20;
-	void* _22;
-	size_t _22_size = 0;
-	_DECL_DEALLOC(_22);
-	//const %6 = 0 : int
-	_6 = 0;
-	//assign %4 = %6  : int
-	// isCopyEliminated = true
-	i = _6;
-	//loop (%4, %5, %7, %8, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22)
-	while(true){
-		//ifge %4, %3 goto blklab5 : int
-		if(i>=height){goto blklab5;}
-		//const %7 = 0 : int
-		_7 = 0;
-		//assign %5 = %7  : int
-		// isCopyEliminated = true
-		j = _7;
-		//loop (%5, %8, %9, %10, %11, %12, %13, %14, %15, %16, %17)
-		while(true){
-			//ifge %5, %2 goto blklab7 : int
-			if(j>=width){goto blklab7;}
-			//fieldload %8 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %9 = %8 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//mul %10 = %4, %2 : int
-			_10=i*width;
-			//add %11 = %10, %5 : int
-			_11=_10+j;
-			//indexof %12 = %1, %11 : int[]
-			_12=a[_11];
-			//indirectinvoke () = %9 (%12) : method(any)->()
-			{
-				printf("%"PRId64, _12);
-			}
-			//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %14 = %13 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//const %15 = [32] : int[]
-			_DEALLOC(_15);
-			_NEW_1DARRAY_int64_t(_15, 1, 0);
-			_15[0] = 32; 
-			_ADD_DEALLOC(_15);
-			//indirectinvoke () = %14 (%15) : method(int[])->()
-			{
-				printf_s(_1DARRAY_PARAM(_15));
-			}
-			//const %16 = 1 : int
-			_16 = 1;
-			//add %17 = %5, %16 : int
-			_17=j+_16;
-			//assign %5 = %17  : int
-			// isCopyEliminated = true
-			j = _17;
-//.blklab8
-blklab8:;
-		}
-//.blklab7
-blklab7:;
-		//const %18 = 1 : int
-		_18 = 1;
-		//add %19 = %4, %18 : int
-		_19=i+_18;
-		//assign %4 = %19  : int
-		// isCopyEliminated = true
-		i = _19;
-		//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-		//fieldload %21 = %20 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-		//const %22 = [] : void[]
-		_DEALLOC(_22);
-		_NEW_1DARRAY_int64_t(_22, 0, 0);
-		_ADD_DEALLOC(_22);
-		//indirectinvoke () = %21 (%22) : method(int[])->()
-		{
-			println_s(_22, _22_size);
-		}
-//.blklab6
-blklab6:;
-	}
-//.blklab5
-blklab5:;
-	//return
-	_DEALLOC(a);
-	_DEALLOC(_15);
-	_DEALLOC(_22);
-	return;
 }
 
 int64_t* _mat_mult_(_DECL_1DARRAY_PARAM(a), _DECL_DEALLOC_PARAM(a), _DECL_1DARRAY_PARAM(b), _DECL_DEALLOC_PARAM(b), _DECL_1DARRAY_PARAM(data), _DECL_DEALLOC_PARAM(data), int64_t width, int64_t height, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
@@ -204,8 +102,8 @@ int64_t* _mat_mult_(_DECL_1DARRAY_PARAM(a), _DECL_DEALLOC_PARAM(a), _DECL_1DARRA
 	i = _10;
 	//loop (%2, %6, %7, %8, %9, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29)
 	while(true){
-		//ifge %6, %4 goto blklab9 : int
-		if(i>=height){goto blklab9;}
+		//ifge %6, %4 goto blklab4 : int
+		if(i>=height){goto blklab4;}
 		//const %11 = 0 : int
 		_11 = 0;
 		//assign %7 = %11  : int
@@ -213,8 +111,8 @@ int64_t* _mat_mult_(_DECL_1DARRAY_PARAM(a), _DECL_DEALLOC_PARAM(a), _DECL_1DARRA
 		j = _11;
 		//loop (%2, %7, %8, %9, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27)
 		while(true){
-			//ifge %7, %3 goto blklab11 : int
-			if(j>=width){goto blklab11;}
+			//ifge %7, %3 goto blklab6 : int
+			if(j>=width){goto blklab6;}
 			//const %12 = 0 : int
 			_12 = 0;
 			//assign %8 = %12  : int
@@ -227,8 +125,8 @@ int64_t* _mat_mult_(_DECL_1DARRAY_PARAM(a), _DECL_DEALLOC_PARAM(a), _DECL_1DARRA
 			sub_total = _13;
 			//loop (%8, %9, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23)
 			while(true){
-				//ifge %8, %3 goto blklab13 : int
-				if(k>=width){goto blklab13;}
+				//ifge %8, %3 goto blklab8 : int
+				if(k>=width){goto blklab8;}
 				//mul %14 = %6, %3 : int
 				_14=i*width;
 				//add %15 = %14, %8 : int
@@ -255,11 +153,11 @@ int64_t* _mat_mult_(_DECL_1DARRAY_PARAM(a), _DECL_DEALLOC_PARAM(a), _DECL_1DARRA
 				//assign %8 = %23  : int
 				// isCopyEliminated = true
 				k = _23;
-//.blklab14
-blklab14:;
+//.blklab9
+blklab9:;
 			}
-//.blklab13
-blklab13:;
+//.blklab8
+blklab8:;
 			//mul %24 = %6, %3 : int
 			_24=i*width;
 			//add %25 = %24, %7 : int
@@ -274,11 +172,11 @@ blklab13:;
 			//assign %7 = %27  : int
 			// isCopyEliminated = true
 			j = _27;
-//.blklab12
-blklab12:;
+//.blklab7
+blklab7:;
 		}
-//.blklab11
-blklab11:;
+//.blklab6
+blklab6:;
 		//const %28 = 1 : int
 		_28 = 1;
 		//add %29 = %6, %28 : int
@@ -286,11 +184,11 @@ blklab11:;
 		//assign %6 = %29  : int
 		// isCopyEliminated = true
 		i = _29;
-//.blklab10
-blklab10:;
+//.blklab5
+blklab5:;
 	}
-//.blklab9
-blklab9:;
+//.blklab4
+blklab4:;
 	//return %2
 	_DEALLOC(a);
 	_DEALLOC(b);
@@ -376,8 +274,8 @@ int main(int argc, char** args){
 	// isCopyEliminated = true
 	max = _8;
 	_TRANSFER_DEALLOC(max, _8);
-	//ifis %1, null goto blklab15 : null|int
-	if(max == NULL) { goto blklab15;}
+	//ifis %1, null goto blklab10 : null|int
+	if(max == NULL) { goto blklab10;}
 	//assign %2 = %1  : int
 	// isCopyEliminated = true
 	size = *max;
@@ -528,8 +426,8 @@ int main(int argc, char** args){
 	{
 		println_s(_43, _43_size);
 	}
-//.blklab15
-blklab15:;
+//.blklab10
+blklab10:;
 	//return
 	_DEALLOC(max);
 	_DEALLOC(A);

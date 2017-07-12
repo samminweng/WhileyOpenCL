@@ -9,7 +9,7 @@ UTILDIR="$(dirname "$(pwd)")/tests/code"
 BENCHMARKDIR="$(pwd)"
 
 ## declare compiler used for compilation
-declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" [MergeSort]="gcc" [MatrixMult]="gcc polly" \
+declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" [MergeSort]="gcc" [MatrixMult]="polly" \
 					   [LZ77]="polly" [SobelEdge]="gcc polly" [Cashtill]="gcc" \
 					   [CoinGame]="gcc" )
 ## declare 4 kinds of code generation
@@ -347,12 +347,12 @@ exec(){
 #exec MergeSort original
 
 # # # # # # # MatrixMult test case
-#init MatrixMult
-#exec MatrixMult original
+init MatrixMult
+exec MatrixMult original
 ####exec MatrixMult original 12000 # Naive code runs out of memory
 # # ### CoinGame test case ###
-init CoinGame
-exec CoinGame original
+#init CoinGame
+#exec CoinGame original
 #exec CoinGame array
 
 #### LZ77 test case

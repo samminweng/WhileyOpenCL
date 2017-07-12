@@ -1,0 +1,15 @@
+digraph "Scop Graph for 'writeAll' function" {
+	label="Scop Graph for 'writeAll' function";
+
+	Node0xdb44330 [shape=record,label="{entry}"];
+	Node0xdb44330 -> Node0xdb65b10;
+	Node0xdb65b10 [shape=record,label="{entry.split}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xd9bab90 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0xdb44330;
+          Node0xdb65b10;
+        }
+}

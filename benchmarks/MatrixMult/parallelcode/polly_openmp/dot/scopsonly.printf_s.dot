@@ -1,0 +1,99 @@
+digraph "Scop Graph for 'printf_s' function" {
+	label="Scop Graph for 'printf_s' function";
+
+	Node0xd09b690 [shape=record,label="{entry}"];
+	Node0xd09b690 -> Node0xd0b3a50;
+	Node0xd0b3a50 [shape=record,label="{entry.split}"];
+	Node0xd0b3a50 -> Node0xd08ad30;
+	Node0xd0b3a50 -> Node0xd0b39e0;
+	Node0xd08ad30 [shape=record,label="{while.end}"];
+	Node0xd08ad30 -> Node0xd09bab0;
+	Node0xd08ad30 -> Node0xd09bb10;
+	Node0xd09bab0 [shape=record,label="{if.then8}"];
+	Node0xd09bab0 -> Node0xd0c95d0;
+	Node0xd09bab0 -> Node0xd0c9630;
+	Node0xd0c95d0 [shape=record,label="{while.body14.lr.ph}"];
+	Node0xd0c95d0 -> Node0xd09ba00;
+	Node0xd09ba00 [shape=record,label="{while.body14}"];
+	Node0xd09ba00 -> Node0xd09ba60;
+	Node0xd09ba00 -> Node0xd07f3d0;
+	Node0xd09ba60 [shape=record,label="{if.then21}"];
+	Node0xd09ba60 -> Node0xd07f3d0;
+	Node0xd07f3d0 [shape=record,label="{if.end24}"];
+	Node0xd07f3d0 -> Node0xd09ba00[constraint=false];
+	Node0xd07f3d0 -> Node0xd07f430;
+	Node0xd07f430 [shape=record,label="{while.cond11.if.end27.loopexit_crit_edge}"];
+	Node0xd07f430 -> Node0xd0c9630;
+	Node0xd0c9630 [shape=record,label="{if.end27.loopexit}"];
+	Node0xd0c9630 -> Node0xd09bb10;
+	Node0xd09bb10 [shape=record,label="{if.end27}"];
+	Node0xd0b39e0 [shape=record,label="{while.body.lr.ph}"];
+	Node0xd0b39e0 -> Node0xd0c9530;
+	Node0xd0c9530 [shape=record,label="{while.body}"];
+	Node0xd0c9530 -> Node0xd092390;
+	Node0xd0c9530 -> Node0xd0923b0;
+	Node0xd092390 [shape=record,label="{if.then}"];
+	Node0xd092390 -> Node0xd0923b0;
+	Node0xd0923b0 [shape=record,label="{if.end}"];
+	Node0xd0923b0 -> Node0xd0c9530[constraint=false];
+	Node0xd0923b0 -> Node0xd092410;
+	Node0xd092410 [shape=record,label="{while.cond.while.end_crit_edge}"];
+	Node0xd092410 -> Node0xd08ad30;
+	colorscheme = "paired12"
+        subgraph cluster_0xd0a21e0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xd0a24a0 {
+            label = "Call instruction:   %putchar42 = tail call i32 @putchar(i32 %conv2)";
+            style = solid;
+            color = 6
+            subgraph cluster_0xd0ad550 {
+              label = "Call instruction:   %putchar42 = tail call i32 @putchar(i32 %conv2)";
+              style = solid;
+              color = 5
+              subgraph cluster_0xd0ad4d0 {
+                label = "Region can not profitably be optimized!";
+                style = solid;
+                color = 7
+                Node0xd0c9530;
+                Node0xd092390;
+              }
+              Node0xd0923b0;
+            }
+            Node0xd0b3a50;
+            Node0xd0b39e0;
+            Node0xd092410;
+          }
+          subgraph cluster_0xd0b5140 {
+            label = "Call instruction:   %putchar = tail call i32 @putchar(i32 %conv18)";
+            style = solid;
+            color = 6
+            subgraph cluster_0xd0b50c0 {
+              label = "Call instruction:   %call9 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.19, i64 0, i64 0))";
+              style = solid;
+              color = 5
+              subgraph cluster_0xd09b310 {
+                label = "Call instruction:   %putchar = tail call i32 @putchar(i32 %conv18)";
+                style = solid;
+                color = 7
+                subgraph cluster_0xd09b290 {
+                  label = "Region can not profitably be optimized!";
+                  style = solid;
+                  color = 9
+                  Node0xd09ba00;
+                  Node0xd09ba60;
+                }
+                Node0xd07f3d0;
+              }
+              Node0xd09bab0;
+              Node0xd0c95d0;
+              Node0xd07f430;
+            }
+            Node0xd08ad30;
+            Node0xd0c9630;
+          }
+          Node0xd09b690;
+          Node0xd09bb10;
+        }
+}

@@ -1,9 +1,3 @@
-/**
- * A simplistic implementation of the Lempel-Ziv 77 compressions/decompression.
- *
- * See: http://en.wikipedia.org/wiki/LZ77_and_LZ78
- *      https://github.com/Whiley/WyBench/blob/master/src/009_lz77/Main.whiley
- */
 import * from whiley.io.File
 import * from whiley.lang.System
 import whiley.lang.*
@@ -13,16 +7,6 @@ type nat is (int x) where x >= 0
 // Match type
 type Match is ({nat offset, nat len} this)
 
-// Find the matched entry
-/*function match(byte[] data, nat offset, nat end) -> int:
-    nat pos = end
-    nat len = 0
-    while offset < pos && pos < |data| && data[offset] == data[pos] && len < 255:
-        offset = offset + 1
-        pos = pos + 1
-        len = len + 1
-    return len
-*/
 // Find the matched entry with affine loop bound
 function match(byte[] data, nat offset, nat end) -> int:
     nat pos = end
@@ -74,13 +58,6 @@ ensures |nitems| == size:
         nitems[i] = items[i]
         i = i + 1
     return nitems
-
-// Append 'u1' to the byte array
-/*function write_u1(byte[] bytes, int u1) -> (byte[] output):
-    //requires u1 >= 0 && u1 <= 255:
-    output = append_byte(bytes, Int.toUnsignedByte(u1))
-    return output
-*/
 
 // Compress 'input' array into 'output' array
 function compress(byte[] data) -> (byte[] output):
@@ -143,16 +120,9 @@ method main(System.Console sys):
     // Compress the data with LZ algorithm
     byte[] compress_data = compress(data)
     sys.out.println_s("COMPRESSED Data:   ")
-    //sys.out.println_s(ASCII.fromBytes(compress_data))
     sys.out.print(|compress_data|)
     sys.out.println_s(" bytes")
     // Write out compressed data to 'small.dat' file
     File.Writer writer = File.Writer(sys.args[1])
     writer.write(compress_data)
     writer.close()
-    /*byte[] decompress_data = decompress(compress_data)
-    sys.out.println_s("DECOMPRESSED:   ")
-    sys.out.println_s(ASCII.fromBytes(decompress_data))
-    sys.out.print(|decompress_data|)
-    sys.out.println_s(" bytes")
-    */
