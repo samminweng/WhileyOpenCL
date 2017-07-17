@@ -17,7 +17,8 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class BoundAnalysisTestCase {
 	private BaseTestUtil util;
-	final Path sourceDir = Paths.get(System.getProperty("user.dir")+ File.separator + "tests" + File.separator + "bound");
+	final Path baseDir = Paths.get(System.getProperty("user.dir")+ File.separator + "tests" 
+									 + File.separator + "bound");
 	private static String testcase;// A list of test cases
 	
     @Rule
@@ -60,7 +61,7 @@ public class BoundAnalysisTestCase {
 	@Test
 	public void testDFNaiveBound() {
 		// Run bound analysis and check analysis results 
-		util.execBoundAnalysis(sourceDir, testcase, "-bound", "naive", "-verbose", "-traversal", "DF");
+		util.execBoundAnalysis(baseDir, testcase, "-bound", "naive", "-verbose", "-traversal", "DF");
 		System.out.println("Pass "+testcase + " with naive widen + depth-first search");
 		
 	}
@@ -68,7 +69,7 @@ public class BoundAnalysisTestCase {
 	// Gradual widen + Depth-first traversal
 	@Test
 	public void testDFGradualBound() {
-		util.execBoundAnalysis(sourceDir, testcase, "-bound", "gradual", "-verbose", "-traversal", "DF");
+		util.execBoundAnalysis(baseDir, testcase, "-bound", "gradual", "-verbose", "-traversal", "DF");
 		System.out.println("Pass "+testcase + " with gradual widen + depth-first search");
 	}
 	
@@ -76,13 +77,13 @@ public class BoundAnalysisTestCase {
 	@Test
 	public void testBFNaiveBound() {
 		// Run bound analysis and check analysis results 
-		util.execBoundAnalysis(sourceDir, testcase, "-bound", "naive", "-verbose", "-traversal", "BF");
+		util.execBoundAnalysis(baseDir, testcase, "-bound", "naive", "-verbose", "-traversal", "BF");
 		System.out.println("Pass "+testcase + " with naive widen + breath-first search");
 	}
 	// Gradual widen + Breath-first traversal
 	@Test
 	public void testBFGradualBound() {
-		util.execBoundAnalysis(sourceDir, testcase, "-bound", "gradual", "-verbose", "-traversal", "BF");
+		util.execBoundAnalysis(baseDir, testcase, "-bound", "gradual", "-verbose", "-traversal", "BF");
 		System.out.println("Pass "+testcase + " with gradual widen + breath-first search");
 	}
 	
@@ -90,61 +91,14 @@ public class BoundAnalysisTestCase {
 	public void testCodeGeneratorAndNaiveBound(){
 		// Run bound analysis and Generate naive C code
 		System.out.print("Bound Analysis: Naive Widen Strategy + Naive C code\n");
-		util.execCodeGeneration(sourceDir, testcase, "-bound", "naive", "-code");
-	}
-	
-	
-	/*
-	
-	@Test
-	public void testNaiveBoundNoCopyCCode(){
-		// Run bound analysis and Generate naive C code
-		System.out.print("Bound Analysis: Naive Widen Strategy + No Copy C code\n");
-		util.execCodeGeneration(sourceDir, testcase, "-bound", "naive", "-code", "-nocopy");
+		util.execCodeGeneration(baseDir, testcase, "-bound", "naive", "-code");
 	}
 	
 	@Test
-	public void testNaiveBoundDeallocCCode(){
+	public void testCodeGeneratorAndGradualBound(){
 		// Run bound analysis and Generate naive C code
-		System.out.print("Bound Analysis: Naive Widen Strategy + Deallocated C code\n");
-		util.execCodeGeneration(sourceDir, testcase, "-bound", "naive", "-code", "-dealloc");
+		System.out.print("Bound Analysis: Naive Widen Strategy + Naive C code\n");
+		util.execCodeGeneration(baseDir, testcase, "-bound", "gradual", "-code");
 	}
-	
-	@Test
-	public void testNaiveBoundNoCopyDeallocCCode(){
-		// Run bound analysis and Generate naive C code
-		System.out.print("Bound Analysis: Naive Widen Strategy + Deallocated C code\n");
-		util.execCodeGeneration(sourceDir, testcase, "-bound", "naive", "-code", "-nocopy", "-dealloc");
-	}
-	
-	@Test
-	public void testGradualBoundNaiveCCode() {
-		// Run bound analysis and Generate naive C code
-		System.out.print("Bound Analysis: Gradual Widen Strategy + Naive C code\n");
-		util.execCodeGeneration(sourceDir, testcase, "-bound", "gradual", "-code");
-	}
-	
-	@Test
-	public void testGradualBoundDeallocatedCCode() {
-		// Run bound analysis and Generate naive C code
-		System.out.print("Bound Analysis: Gradual Widen Strategy + Deallocated C code\n");
-		util.execCodeGeneration(sourceDir, testcase, "-bound", "gradual", "-code", "-dealloc");
-	}
-	
-	
-	@Test
-	public void testGradualBoundNoCopyCCode() {
-		// Run bound analysis and Generate naive C code
-		System.out.print("Bound Analysis: Gradual Widen Strategy + No Copy C code\n");
-		util.execCodeGeneration(sourceDir, testcase, "-bound", "gradual", "-code", "-nocopy");
-	}
-	
-	
-	@Test
-	public void testGradualBoundNoCopyDeallocatedCCode() {
-		// Run bound analysis and Generate naive C code
-		System.out.print("Bound Analysis: Gradual Widen Strategy + No Copy C code\n");
-		util.execCodeGeneration(sourceDir, testcase, "-bound", "gradual", "-code", "-nocopy", "-dealloc");
-	}*/
 	
 }

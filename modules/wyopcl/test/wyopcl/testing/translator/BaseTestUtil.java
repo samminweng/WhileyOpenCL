@@ -193,11 +193,11 @@ public final class BaseTestUtil {
 	 * @param path_whiley
 	 * @param widen
 	 */
-	public void execBoundAnalysis(Path sourceDir, String testcase, String... options) {
+	public void execBoundAnalysis(Path baseDir, String testcase, String... options) {
 
-		// Get the widen strategy
+		// Get the widen strategy (default = naive)
 		String strategy = "naive";
-		// Get 'Traversal' option
+		// Get 'Traversal' option (traversal = depth-first search)
 		String traversal = "DF";
 		// Iterate all options to obtain all settings
 		for(int index=0; index<options.length;index++){
@@ -211,9 +211,9 @@ public final class BaseTestUtil {
 
 		Process process;
 		try {		
-			Path destDir = Paths.get(sourceDir + File.separator + testcase);
+			Path destDir = Paths.get(baseDir + File.separator + "sysout" + File.separator + testcase);
 			// Copy source.whiley to destDir folder
-			Files.copy(Paths.get(sourceDir + File.separator + testcase + ".whiley"),
+			Files.copy(Paths.get(baseDir + File.separator + "Whileyfiles" + File.separator + testcase + ".whiley"),
 					Paths.get(destDir + File.separator + testcase + ".whiley"),
 					StandardCopyOption.REPLACE_EXISTING);
 
