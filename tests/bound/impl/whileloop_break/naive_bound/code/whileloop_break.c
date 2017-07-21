@@ -24,7 +24,7 @@ blklab3:;
 		//const %6 = 1 : int
 		_6 = 1;
 		//add %7 = %3, %6 : int
-		_7=r+_6;
+		_7 = r + _6;
 		//assign %3 = %7  : int
 		r = _7;
 //.blklab1

@@ -35,16 +35,15 @@ int64_t _f_(uint16_t limit){
 			//ifge %4, %0 goto blklab2 : int
 			if(j>=limit){goto blklab2;}
 			//mul %8 = %2, %4 : int
-			_8=i*j;
+			_8 = i * j;
 			//add %9 = %3, %8 : int
 			_DETECT_INT_ADD_OVERFLOW(sum,_8,_9);
-			_9=sum+_8;
 			//assign %3 = %9  : int
 			sum = _9;
 			//const %10 = 1 : int
 			_10 = 1;
 			//add %11 = %4, %10 : int
-			_11=j+_10;
+			_11 = j + _10;
 			//assign %4 = %11  : int
 			j = _11;
 //.blklab3
@@ -55,7 +54,7 @@ blklab2:;
 		//const %12 = 1 : int
 		_12 = 1;
 		//add %13 = %2, %12 : int
-		_13=i+_12;
+		_13 = i + _12;
 		//assign %2 = %13  : int
 		i = _13;
 //.blklab1

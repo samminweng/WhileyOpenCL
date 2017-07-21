@@ -737,62 +737,84 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String op2 = stores.getVar(code.operand(1), function);
 
 		// Add extra overflow check
-		this.boundAnalyzer.ifPresent(analyser->{
-			// Get Domain of left and two right operands
-			Domain left = analyser.getInferredDomain(code.target(0), function);
-			Domain right1 = analyser.getInferredDomain(code.operand(0) , function);
-			Domain right2 = analyser.getInferredDomain(code.operand(1) , function);
-			// If any operand is un-bounded, then add overflow checking
-			if(left.isUnbound() || right1.isUnbound() || right2.isUnbound()){
-				switch (code.kind) {
-				case ADD:
-					statement.add(indent+"_DETECT_INT_ADD_OVERFLOW("+op1+","+op2+","+res+");");
-					break;
-				case SUB:
-					statement.add(indent+"_DETECT_INT_SUB_OVERFLOW("+op1+","+op2+","+res+");");
-					break;
-				case MUL:
-					statement.add(indent+"_DETECT_INT_MUL_OVERFLOW("+op1+","+op2+","+res+");");
-					break;
-				default:
-					// Do nothing
-					break;
+		if(this.boundAnalyzer.isPresent()){
+			this.boundAnalyzer.ifPresent(analyser->{
+				// Get Domain of left and two right operands
+				Domain left = analyser.getInferredDomain(code.target(0), function);
+				Domain right1 = analyser.getInferredDomain(code.operand(0) , function);
+				Domain right2 = analyser.getInferredDomain(code.operand(1) , function);
+				// If any operand is un-bounded, then add overflow checking
+				if(left.isUnbound() || right1.isUnbound() || right2.isUnbound()){
+					switch (code.kind) {
+					case ADD:
+						statement.add(indent+"_DETECT_INT_ADD_OVERFLOW("+op1+","+op2+","+res+");");
+						break;
+					case SUB:
+						statement.add(indent+"_DETECT_INT_SUB_OVERFLOW("+op1+","+op2+","+res+");");
+						break;
+					case MUL:
+						statement.add(indent+"_DETECT_INT_MUL_OVERFLOW("+op1+","+op2+","+res+");");
+						break;
+					default:
+						// Do nothing
+						break;
+					}
+				}else{
+					switch (code.kind) {
+					case ADD:
+						statement.add(indent+res +" = " +op1 + " + " + op2+";");
+						break;
+					case SUB:
+						statement.add(indent+res +" = " +op1 + " - " + op2+";");
+						break;
+					case MUL:
+						statement.add(indent+res +" = " +op1 + " * " + op2+";");
+						break;
+					case DIV:
+						statement.add(indent+res +" = " +op1 + " / " + op2+";");
+						break;
+					case REM:
+						statement.add(indent+res +" = " +op1 + " % " + op2+";");
+						break;
+					default:
+						// Do nothing
+						break;
+					}
 				}
+			});
+		}else{
+			// Translate the arithmetic operation
+			String stat = indent + res + "=" + op1;
+			switch (code.kind) {
+			case ADD:
+				stat += "+" + op2 + ";";
+				break;
+			case SUB:
+				stat += "-" + op2 + ";";
+				break;
+			case MUL:
+				stat += "*" + op2 + ";";
+				break;
+			case DIV:
+				stat += "/" + op2 + ";";
+				break;
+			case REM:
+				stat += "%" + op2 + ";";
+				break;
+			case BITWISEOR:
+				break;
+			case BITWISEXOR:
+				break;
+			case BITWISEAND:
+				break;
+			case LEFTSHIFT:
+				break;
+			case RIGHTSHIFT:
+				break;
 			}
-		});
-
-
-		// Translate the arithmetic operation
-		String stat = indent + res + "=" + op1;
-		switch (code.kind) {
-		case ADD:
-			stat += "+" + op2 + ";";
-			break;
-		case SUB:
-			stat += "-" + op2 + ";";
-			break;
-		case MUL:
-			stat += "*" + op2 + ";";
-			break;
-		case DIV:
-			stat += "/" + op2 + ";";
-			break;
-		case REM:
-			stat += "%" + op2 + ";";
-			break;
-		case BITWISEOR:
-			break;
-		case BITWISEXOR:
-			break;
-		case BITWISEAND:
-			break;
-		case LEFTSHIFT:
-			break;
-		case RIGHTSHIFT:
-			break;
+			statement.add(stat);
 		}
-		statement.add(stat);
-
+		
 		// Add the generated code
 		stores.addAllStatements(code, statement, function);
 	}

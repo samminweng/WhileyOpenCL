@@ -24,13 +24,12 @@ int64_t _f_(uint32_t limit){
 		if(i>=limit){goto blklab1;}
 		//add %7 = %3, %2 : int
 		_DETECT_INT_ADD_OVERFLOW(sum,i,_7);
-		_7=sum+i;
 		//assign %3 = %7  : int
 		sum = _7;
 		//const %8 = 1 : int
 		_8 = 1;
 		//add %9 = %2, %8 : int
-		_9=i+_8;
+		_9 = i + _8;
 		//assign %2 = %9  : int
 		i = _9;
 //.blklab2
