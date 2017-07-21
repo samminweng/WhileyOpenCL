@@ -6,7 +6,7 @@ export LANG=C.UTF-8
 alias pollycc="clang -O3 -mllvm -polly"
 ### Get the root working directory
 UTILDIR="$(dirname "$(pwd)")/tests/code"
-BENCHMARKDIR="$(pwd)"
+BASEDIR="$(dirname "$(pwd)")"
 
 ## declare compiler used for compilation
 declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" [MergeSort]="gcc" [MatrixMult]="polly" \
@@ -14,7 +14,7 @@ declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" [
 					   [CoinGame]="gcc" )
 ## declare 4 kinds of code generation
 #declare -a codegens=( "naive" "naivedealloc" "nocopy" "nocopydealloc" )
-declare -a codegens=( "nocopydealloc" )
+declare -a codegens=( "nocopy" )
 
 ## Declare an associative array for pattern matching
 declare -A patterns=( [LZ77_compress]=compress )

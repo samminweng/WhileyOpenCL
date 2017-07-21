@@ -1,0 +1,39 @@
+digraph "Scop Graph for '_convolution_' function" {
+	label="Scop Graph for '_convolution_' function";
+
+	Node0xbece1a0 [shape=record,label="{entry}"];
+	Node0xbece1a0 -> Node0xbecdd90;
+	Node0xbecdd90 [shape=record,label="{entry.split}"];
+	Node0xbecdd90 -> Node0xbecd9c0;
+	Node0xbecd9c0 [shape=record,label="{if.end}"];
+	Node0xbecd9c0 -> Node0xbf45700;
+	Node0xbf45700 [shape=record,label="{if.end5}"];
+	Node0xbf45700 -> Node0xbecda20;
+	Node0xbf45700 -> Node0xbf45700[constraint=false];
+	Node0xbecda20 [shape=record,label="{blklab6}"];
+	Node0xbecda20 -> Node0xbce6060;
+	Node0xbecda20 -> Node0xbecd9c0[constraint=false];
+	Node0xbce6060 [shape=record,label="{blklab4}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xbeb3130 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xbeacf30 {
+            label = "Non affine access function: ((%width * %0) + %1)";
+            style = solid;
+            color = 6
+            subgraph cluster_0xbe8ed90 {
+              label = "Non affine access function: ((%width * %0) + %1)";
+              style = solid;
+              color = 5
+              Node0xbf45700;
+            }
+            Node0xbecd9c0;
+            Node0xbecda20;
+          }
+          Node0xbece1a0;
+          Node0xbecdd90;
+          Node0xbce6060;
+        }
+}
