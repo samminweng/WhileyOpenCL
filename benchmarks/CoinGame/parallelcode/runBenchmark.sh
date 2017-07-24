@@ -5,7 +5,7 @@ export LANG=C.UTF-8
 alias pollycc="clang -O3 -mllvm -polly"
 ### declare parameters
 declare -a parameters=( "10000" "20000" "30000" "40000")
-declare -a codes=( "polly_seq" "polly_openmp" "gcc_seq" "openmp_for" "cilk_for" )
+declare -a codes=( "gcc_seq" "openmp_for" "cilk_for" )
 declare -A compilers=( [polly_seq]="pollycc" [polly_openmp]="pollycc" \
                        [gcc_seq]="gcc" [openmp_for]="gcc" [cilk_for]="gcc" )
 testcase="CoinGame"
@@ -13,8 +13,8 @@ program="original"
 pattern="disabledpattern"
 codegen="nocopydealloc"
 ## declare the number of threads
-declare -A threads=( [polly_seq]="1" [polly_openmp]="1 2 4 8" \
-                     [gcc_seq]="1" [openmp_for]="1 2 4 8" [cilk_for]="1 2 4 8" )
+declare -A threads=( [polly_seq]="1" [polly_openmp]="1 2 4 8 16" \
+                     [gcc_seq]="1" [openmp_for]="1 2 4 8 16" [cilk_for]="1 2 4 8 16" )
 ### remove all files inside the folder
 rm -rf "../exectime/C"
 mkdir -p "../exectime/C"
