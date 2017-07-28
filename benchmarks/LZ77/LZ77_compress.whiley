@@ -110,7 +110,7 @@ function decompress(byte[] data) -> (byte[] output):
     return output
 
 method main(System.Console sys):
-    // Create a byte array with repeated text
+    // Read a text file of repeated contents as a byte array 
     File.Reader file = File.Reader(sys.args[0])
     byte[] data = file.readAll()
     sys.out.println_s("Data:         ")
