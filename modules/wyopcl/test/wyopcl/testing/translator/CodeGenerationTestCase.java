@@ -90,6 +90,7 @@ public class CodeGenerationTestCase {
 				"SobelEdge1", // Read 'feep.pbm', detect the edges and output the resulting array
 				"SobelEdge2", // Similar to 'SobelEdge1' with additional 'image' structure
 				"ResetMacro1", // Test case for 'RESET' macro
+				"ResetMacro2", // Test case for 'RESET' macro
 		});
 	}
 

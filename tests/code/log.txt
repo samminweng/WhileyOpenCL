@@ -235,6 +235,14 @@ DEBUG: Potential memory leaks at ( "false-true-true" "x"_tmp "func" ) (LINE:219 
 DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_30" "x" "func" ) (LINE:277 FILE: ResetMacro1.c) in nocopy_dealloc folder	Frequency: 1
 DEBUG: _RESET_DEALLOC macro on  ( "false-true-true" "_6" "x" "func" ) (LINE:173 FILE: ResetMacro1.c) in nocopy_dealloc folder	Frequency: 1
 DEBUG: _RESET_DEALLOC macro on  ( "false-true-true" "_18" "x" "func" ) (LINE:225 FILE: ResetMacro1.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "x" "func" ) (LINE:172 FILE: ResetMacro2.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "x" "func" ) (LINE:223 FILE: ResetMacro2.c) in dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "false-true-false" "x"_tmp "func" ) (LINE:274 FILE: ResetMacro2.c) in dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "false-true-true" "x"_tmp "func" ) (LINE:223 FILE: ResetMacro2.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-false" "x" "func" ) (LINE:274 FILE: ResetMacro2.c) in dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_30" "x" "func" ) (LINE:282 FILE: ResetMacro2.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-true" "_18" "x" "func" ) (LINE:230 FILE: ResetMacro2.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-true" "_6" "x" "func" ) (LINE:178 FILE: ResetMacro2.c) in nocopy_dealloc folder	Frequency: 1
 DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "rec" "updateRec" ) (LINE:179 FILE: rectangle.c) in dealloc folder	Frequency: 1
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "p3" "updateRec" ) (LINE:180 FILE: rectangle.c) in dealloc folder	Frequency: 1
 DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_15" "rec" "updateRec" ) (LINE:194 FILE: rectangle.c) in nocopy_dealloc folder	Frequency: 1
@@ -472,3 +480,11 @@ DEBUG: Potential memory leaks at ( "false-true-true" "x"_tmp "func" ) (LINE:219 
 DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_30" "x" "func" ) (LINE:277 FILE: ResetMacro1.c) in nocopy_dealloc folder	Frequency: 1
 DEBUG: _RESET_DEALLOC macro on  ( "false-true-true" "_6" "x" "func" ) (LINE:173 FILE: ResetMacro1.c) in nocopy_dealloc folder	Frequency: 1
 DEBUG: _RESET_DEALLOC macro on  ( "false-true-true" "_18" "x" "func" ) (LINE:225 FILE: ResetMacro1.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "x" "func" ) (LINE:172 FILE: ResetMacro2.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "x" "func" ) (LINE:223 FILE: ResetMacro2.c) in dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "false-true-false" "x"_tmp "func" ) (LINE:274 FILE: ResetMacro2.c) in dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "false-true-true" "x"_tmp "func" ) (LINE:223 FILE: ResetMacro2.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-false" "x" "func" ) (LINE:274 FILE: ResetMacro2.c) in dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_30" "x" "func" ) (LINE:282 FILE: ResetMacro2.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-true" "_18" "x" "func" ) (LINE:230 FILE: ResetMacro2.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-true" "_6" "x" "func" ) (LINE:178 FILE: ResetMacro2.c) in nocopy_dealloc folder	Frequency: 1
