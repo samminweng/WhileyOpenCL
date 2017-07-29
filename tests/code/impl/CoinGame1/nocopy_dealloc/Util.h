@@ -343,11 +343,6 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
         })
 // '_RESET_DEALLOC' macro does NOT make the copy of argument and delegates caller
 // to reset the flag of actual argument 'a = func(b, false)'
-// #define _RESET_DEALLOC(b, checks, func_name) \
-// 		({\
-// 			DEBUG_PRINT("_RESET_DEALLOC macro on  ( "str(checks)" "str(#b) " "str(func_name)" )");\
-// 			b##_dealloc = false;\
-// 		})
 #define _RESET_DEALLOC(a, b, checks, func_name) \
 		({\
 			DEBUG_PRINT("_RESET_DEALLOC macro on  ( "str(checks)" "str(#a)" "str(#b)" "str(func_name)" )");\

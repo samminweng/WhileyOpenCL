@@ -26,10 +26,10 @@ int64_t* create1DArray_int64_t(int64_t value, size_t arr_size){
  		exit(-2);
  	}
  	// Initialize each element with the given value by using memset function
- 	memset(arr, value, arr_size*sizeof(int64_t));
- 	//for(size_t i=0;i<arr_size;i++){
- 	//	arr[i] = value;
- 	//}
+ 	//memset(arr, value, arr_size*sizeof(int64_t));
+ 	for(size_t i=0;i<arr_size;i++){
+ 		arr[i] = value;
+ 	}
  	return arr;
  }
 /*

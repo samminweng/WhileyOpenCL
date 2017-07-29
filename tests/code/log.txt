@@ -227,6 +227,14 @@ DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "input" "sobelEdgeDetecti
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "v_sobel" "convolution" ) (LINE:487 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1024
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_19" "print_pbm" ) (LINE:850 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "h_sobel" "convolution" ) (LINE:498 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1024
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "x" "func" ) (LINE:219 FILE: ResetMacro1.c) in dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "false-true-false" "x"_tmp "func" ) (LINE:270 FILE: ResetMacro1.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-false" "x" "func" ) (LINE:270 FILE: ResetMacro1.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "x" "func" ) (LINE:168 FILE: ResetMacro1.c) in dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "false-true-true" "x"_tmp "func" ) (LINE:219 FILE: ResetMacro1.c) in dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_30" "x" "func" ) (LINE:277 FILE: ResetMacro1.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-true" "_6" "x" "func" ) (LINE:173 FILE: ResetMacro1.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-true" "_18" "x" "func" ) (LINE:225 FILE: ResetMacro1.c) in nocopy_dealloc folder	Frequency: 1
 DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "rec" "updateRec" ) (LINE:179 FILE: rectangle.c) in dealloc folder	Frequency: 1
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "p3" "updateRec" ) (LINE:180 FILE: rectangle.c) in dealloc folder	Frequency: 1
 DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_15" "rec" "updateRec" ) (LINE:194 FILE: rectangle.c) in nocopy_dealloc folder	Frequency: 1
@@ -456,3 +464,11 @@ DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "input" "sobelEdgeDetecti
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "v_sobel" "convolution" ) (LINE:487 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1024
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_19" "print_pbm" ) (LINE:850 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "h_sobel" "convolution" ) (LINE:498 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1024
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "x" "func" ) (LINE:219 FILE: ResetMacro1.c) in dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "false-true-false" "x"_tmp "func" ) (LINE:270 FILE: ResetMacro1.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-false" "x" "func" ) (LINE:270 FILE: ResetMacro1.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "x" "func" ) (LINE:168 FILE: ResetMacro1.c) in dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "false-true-true" "x"_tmp "func" ) (LINE:219 FILE: ResetMacro1.c) in dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_30" "x" "func" ) (LINE:277 FILE: ResetMacro1.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-true" "_6" "x" "func" ) (LINE:173 FILE: ResetMacro1.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-true" "_18" "x" "func" ) (LINE:225 FILE: ResetMacro1.c) in nocopy_dealloc folder	Frequency: 1
