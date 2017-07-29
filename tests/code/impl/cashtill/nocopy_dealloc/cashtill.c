@@ -1002,8 +1002,7 @@ blklab38:;
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_2' = true
 		_40 = _add_(_1DARRAY_PARAM(till), false, _1DARRAY_PARAM(given), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_40));
-		_RESET_DEALLOC(till, "true-true-false" , "add");
-		_40_dealloc = true;
+		_RESET_DEALLOC(_40, till, "true-true-false" , "add");
 		_RETAIN_DEALLOC(given, "false-false-false" , "add");
 		_40_dealloc = true;
 	}
@@ -1018,8 +1017,7 @@ blklab38:;
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_5' = true
 		_41 = _subtract_(_1DARRAY_PARAM(till), false, _1DARRAY_PARAM(change), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_41));
-		_RESET_DEALLOC(till, "true-true-false" , "subtract");
-		_41_dealloc = true;
+		_RESET_DEALLOC(_41, till, "true-true-false" , "subtract");
 		_RETAIN_DEALLOC(change, "false-false-false" , "subtract");
 		_41_dealloc = true;
 	}
@@ -1206,8 +1204,7 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_18' = true
 		_17 = _buy_(stdout, _1DARRAY_PARAM(till), false, _1DARRAY_PARAM(_18), false, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_17));
-		_RESET_DEALLOC(till, "true-true-false" , "buy");
-		_17_dealloc = true;
+		_RESET_DEALLOC(_17, till, "true-true-false" , "buy");
 		_RETAIN_DEALLOC(_18, "false-false-false" , "buy");
 		_17_dealloc = true;
 	}
@@ -1239,8 +1236,7 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_23' = true
 		_22 = _buy_(stdout, _1DARRAY_PARAM(till), false, _1DARRAY_PARAM(_23), false, _26, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
-		_RESET_DEALLOC(till, "true-true-false" , "buy");
-		_22_dealloc = true;
+		_RESET_DEALLOC(_22, till, "true-true-false" , "buy");
 		_RETAIN_DEALLOC(_23, "false-false-false" , "buy");
 		_22_dealloc = true;
 	}
@@ -1272,8 +1268,7 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_28' = true
 		_27 = _buy_(stdout, _1DARRAY_PARAM(till), false, _1DARRAY_PARAM(_28), false, _31, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
-		_RESET_DEALLOC(till, "true-true-false" , "buy");
-		_27_dealloc = true;
+		_RESET_DEALLOC(_27, till, "true-true-false" , "buy");
 		_RETAIN_DEALLOC(_28, "false-false-false" , "buy");
 		_27_dealloc = true;
 	}
@@ -1305,8 +1300,7 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_33' = true
 		_32 = _buy_(stdout, _1DARRAY_PARAM(till), false, _1DARRAY_PARAM(_33), false, _36, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_32));
-		_RESET_DEALLOC(till, "true-true-false" , "buy");
-		_32_dealloc = true;
+		_RESET_DEALLOC(_32, till, "true-true-false" , "buy");
 		_RETAIN_DEALLOC(_33, "false-false-false" , "buy");
 		_32_dealloc = true;
 	}

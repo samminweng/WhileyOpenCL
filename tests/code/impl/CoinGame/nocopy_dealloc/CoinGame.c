@@ -606,8 +606,7 @@ int main(int argc, char** args){
 		_DEALLOC(_8);
 		// isCopyEliminated of '_2' = true
 		_8 = _findMoves_(_1DARRAY_PARAM(moves), false, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
-		_RESET_DEALLOC(moves, "true-true-false" , "findMoves");
-		_8_dealloc = true;
+		_RESET_DEALLOC(_8, moves, "true-true-false" , "findMoves");
 	}
 	//assign %2 = %8  : int[]
 	_DEALLOC(moves);

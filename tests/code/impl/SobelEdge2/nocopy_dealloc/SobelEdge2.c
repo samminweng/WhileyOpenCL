@@ -553,8 +553,7 @@ blklab8:;
 		_DEALLOC_STRUCT(_61, Image);
 		// isCopyEliminated of '_5' = true
 		_61 = _image_(width, height, _1DARRAY_PARAM(newPixels), false);
-		_RESET_DEALLOC(newPixels, "false-true-false" , "image");
-		_61_dealloc = true;
+		_RESET_DEALLOC(_61, newPixels, "false-true-false" , "image");
 	}
 	//return %61
 	_DEALLOC_STRUCT(input, Image);
@@ -816,8 +815,7 @@ int main(int argc, char** args){
 		_DEALLOC_STRUCT(_15, Image);
 		// isCopyEliminated of '_5' = true
 		_15 = _image_(width, height, _1DARRAY_PARAM(pixels), false);
-		_RESET_DEALLOC(pixels, "false-true-false" , "image");
-		_15_dealloc = true;
+		_RESET_DEALLOC(_15, pixels, "false-true-false" , "image");
 	}
 	//assign %6 = %15  : {int height,byte[] pixels,int width}
 	_DEALLOC_STRUCT(input, Image);

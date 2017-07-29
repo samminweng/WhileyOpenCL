@@ -443,6 +443,13 @@ public class DeallocationAnalyzer extends Analyzer {
 									+ "\" , \"" + func_name + "\");");
 						}
 						break;
+					case "_RESET_DEALLOC":
+						// Get function return
+						ret = stores.getVar(code.target(0), function);
+						// Added the macros
+						statements.add(indent + "_RESET_DEALLOC(" + ret +", " + parameter + ", \"" + checks 
+								+ "\" , \"" + func_name + "\");");
+						break;
 					default:
 						// Added the macros
 						statements.add(indent + macro_name + "(" + parameter + ", \"" + checks + "\" , \"" + func_name
