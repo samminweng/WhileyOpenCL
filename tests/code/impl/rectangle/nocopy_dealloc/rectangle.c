@@ -192,8 +192,9 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_4' = true
 		_15 = _updateRec_(_STRUCT_PARAM(rec), false, _STRUCT_PARAM(p3), false);
 		_RESET_DEALLOC(rec, "true-true-false" , "updateRec");
+		_15_dealloc = true;
 		_RESET_DEALLOC(p3, "false-true-false" , "updateRec");
-		_ADD_DEALLOC(_15);
+		_15_dealloc = true;
 	}
 	//assign %3 = %15  : {{int x,int y} p1,{int x,int y} p2}
 	_DEALLOC_STRUCT(rec, Rectangle);

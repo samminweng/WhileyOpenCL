@@ -152,7 +152,7 @@ blklab2:;
 		// isCopyEliminated of '_3' = true
 		_21 = _matrix_(width, height, _1DARRAY_PARAM(data), false);
 		_RESET_DEALLOC(data, "false-true-false" , "matrix");
-		_ADD_DEALLOC(_21);
+		_21_dealloc = true;
 	}
 	//return %21
 	_DEALLOC_STRUCT(r, Matrix);
@@ -472,7 +472,7 @@ blklab13:;
 		// isCopyEliminated of '_5' = true
 		_40 = _matrix_(width, height, _1DARRAY_PARAM(data), false);
 		_RESET_DEALLOC(data, "false-true-false" , "matrix");
-		_ADD_DEALLOC(_40);
+		_40_dealloc = true;
 	}
 	//return %40
 	_DEALLOC_STRUCT(a, Matrix);
@@ -599,7 +599,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC_STRUCT(_10, Matrix);
 		_10 = _init_(_11, _12);
-		_ADD_DEALLOC(_10);
+		_10_dealloc = true;
 	}
 	//assign %1 = %10  : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(A, Matrix);
@@ -655,7 +655,7 @@ blklab19:;
 	{
 		_DEALLOC_STRUCT(_27, Matrix);
 		_27 = _init_(_28, _29);
-		_ADD_DEALLOC(_27);
+		_27_dealloc = true;
 	}
 	//assign %2 = %27  : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(B, Matrix);
@@ -710,8 +710,9 @@ blklab20:;
 		// isCopyEliminated of '_2' = true
 		_44 = _mat_mult_(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
 		_RETAIN_DEALLOC(A, "false-false-false" , "mat_mult");
+		_44_dealloc = true;
 		_RETAIN_DEALLOC(B, "false-false-false" , "mat_mult");
-		_ADD_DEALLOC(_44);
+		_44_dealloc = true;
 	}
 	//assign %3 = %44  : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(C, Matrix);

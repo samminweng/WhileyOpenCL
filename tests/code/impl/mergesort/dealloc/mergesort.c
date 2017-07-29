@@ -86,7 +86,6 @@ _SLICE_ARRAY(_15, items, start, pivot);
 		_DEALLOC(_16);
 		_16 = _sortV1_(_COPY_1DARRAY_PARAM_int64_t(lhs), false, _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		_CALLER_DEALLOC(_16, lhs, "true-true-false" , "sortV1");
-		_ADD_DEALLOC(_16);
 	}
 	//assign %5 = %16  : int[]
 	_DEALLOC(lhs);
@@ -112,7 +111,6 @@ _SLICE_ARRAY(_18, items, pivot, end);
 		_DEALLOC(_19);
 		_19 = _sortV1_(_COPY_1DARRAY_PARAM_int64_t(rhs), false, _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
 		_CALLER_DEALLOC(_19, rhs, "true-true-false" , "sortV1");
-		_ADD_DEALLOC(_19);
 	}
 	//assign %6 = %19  : int[]
 	_DEALLOC(rhs);
@@ -391,7 +389,6 @@ int main(int argc, char** args){
 		_DEALLOC(_11);
 		_11 = _sortV1_(_COPY_1DARRAY_PARAM_int64_t(ys), false, _12, _13, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		_CALLER_DEALLOC(_11, ys, "true-true-false" , "sortV1");
-		_ADD_DEALLOC(_11);
 	}
 	//assign %1 = %11  : int[]
 	_DEALLOC(ys);
@@ -450,7 +447,6 @@ blklab9:;
 		_DEALLOC(_25);
 		_25 = _sortV1_(_COPY_1DARRAY_PARAM_int64_t(ys), false, _26, _27, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 		_CALLER_DEALLOC(_25, ys, "true-true-false" , "sortV1");
-		_ADD_DEALLOC(_25);
 	}
 	//assign %1 = %25  : int[]
 	_DEALLOC(ys);
@@ -507,7 +503,6 @@ blklab10:;
 		_DEALLOC(_38);
 		_38 = _sortV1_(_COPY_1DARRAY_PARAM_int64_t(ys), false, _39, _40, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 		_CALLER_DEALLOC(_38, ys, "true-true-false" , "sortV1");
-		_ADD_DEALLOC(_38);
 	}
 	//assign %1 = %38  : int[]
 	_DEALLOC(ys);
@@ -566,7 +561,6 @@ blklab11:;
 		_DEALLOC(_52);
 		_52 = _sortV1_(_COPY_1DARRAY_PARAM_int64_t(ys), false, _53, _54, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 		_CALLER_DEALLOC(_52, ys, "true-true-false" , "sortV1");
-		_ADD_DEALLOC(_52);
 	}
 	//assign %1 = %52  : int[]
 	_DEALLOC(ys);
@@ -651,7 +645,6 @@ blklab13:;
 		_DEALLOC(_70);
 		_70 = _sortV1_(_COPY_1DARRAY_PARAM_int64_t(arr), false, _71, _73, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_70));
 		_CALLER_DEALLOC(_70, arr, "true-true-false" , "sortV1");
-		_ADD_DEALLOC(_70);
 	}
 	//assign %4 = %70  : int[]
 	_DEALLOC(arr);

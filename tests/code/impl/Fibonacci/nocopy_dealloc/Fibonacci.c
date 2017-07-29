@@ -50,7 +50,7 @@ blklab0:;
 		// isCopyEliminated of '_0' = true
 		_8 = _fibonacci_(_1DARRAY_PARAM(ls), false, _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_RESET_DEALLOC(ls, "true-true-false" , "fibonacci");
-		_ADD_DEALLOC(_8);
+		_8_dealloc = true;
 	}
 	//assign %0 = %8  : int[]
 	_DEALLOC(ls);
@@ -138,7 +138,7 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_2' = true
 		_6 = _fibonacci_(_1DARRAY_PARAM(arr), false, _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		_RESET_DEALLOC(arr, "true-true-false" , "fibonacci");
-		_ADD_DEALLOC(_6);
+		_6_dealloc = true;
 	}
 	//assign %2 = %6  : int[]
 	_DEALLOC(arr);

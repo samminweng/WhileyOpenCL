@@ -124,7 +124,7 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_1' = true
 		_10 = _func_(_1DARRAY_PARAM(a), false, _11, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 		_RESET_DEALLOC(a, "true-true-false" , "func");
-		_ADD_DEALLOC(_10);
+		_10_dealloc = true;
 	}
 	//assign %1 = %10  : int[]
 	_DEALLOC(a);
@@ -198,7 +198,6 @@ blklab2:;
 		// isCopyEliminated of '_2' = false
 		_28 = _func_(_COPY_1DARRAY_PARAM_int64_t(b), false, _29, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 		_CALLER_DEALLOC(_28, b, "true-true-true" , "func");
-		_ADD_DEALLOC(_28);
 	}
 	//assign %3 = %28  : int[]
 	_DEALLOC(c);

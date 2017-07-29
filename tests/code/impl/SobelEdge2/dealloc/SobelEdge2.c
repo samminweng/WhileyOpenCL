@@ -520,7 +520,7 @@ blklab8:;
 		_DEALLOC_STRUCT(_61, Image);
 		_61 = _image_(width, height, _COPY_1DARRAY_PARAM_BYTE(newPixels), true);
 		_CALLEE_DEALLOC(newPixels, "false-false-false" , "image");
-		_ADD_DEALLOC(_61);
+		_61_dealloc = true;
 	}
 	//return %61
 	_DEALLOC_STRUCT(input, Image);
@@ -773,7 +773,7 @@ int main(int argc, char** args){
 		_DEALLOC_STRUCT(_15, Image);
 		_15 = _image_(width, height, _COPY_1DARRAY_PARAM_BYTE(pixels), true);
 		_CALLEE_DEALLOC(pixels, "false-false-false" , "image");
-		_ADD_DEALLOC(_15);
+		_15_dealloc = true;
 	}
 	//assign %6 = %15  : {int height,byte[] pixels,int width}
 	_DEALLOC_STRUCT(input, Image);
@@ -785,7 +785,7 @@ int main(int argc, char** args){
 		_DEALLOC_STRUCT(_16, Image);
 		_16 = _sobelEdgeDetection_(_COPY_STRUCT_PARAM(input, Image), true);
 		_CALLEE_DEALLOC(input, "false-false-false" , "sobelEdgeDetection");
-		_ADD_DEALLOC(_16);
+		_16_dealloc = true;
 	}
 	//assign %7 = %16  : {int height,byte[] pixels,int width}
 	_DEALLOC_STRUCT(output, Image);

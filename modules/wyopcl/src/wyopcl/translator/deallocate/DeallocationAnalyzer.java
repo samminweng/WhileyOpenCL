@@ -92,37 +92,38 @@ public class DeallocationAnalyzer extends Analyzer {
 			// Skip the deallocation of return variable.
 			if (r != ret) {
 				Type var_type = stores.getRawType(r, function);
-				
-				if (var_type != null){
-					if(var_type instanceof Type.Null){
+
+				if (var_type != null) {
+					if (var_type instanceof Type.Null) {
 						continue;// Jump to next iteration
 					}
 					String var = stores.getVar(r, function);
 					// Check if var is Console
-					if(var_type instanceof Type.Nominal){
-						Type.Nominal nominal = ((Type.Nominal)var_type);
-						if(nominal.toString().equals("whiley/lang/ASCII:string")){
+					if (var_type instanceof Type.Nominal) {
+						Type.Nominal nominal = ((Type.Nominal) var_type);
+						if (nominal.toString().equals("whiley/lang/ASCII:string")) {
 							// Release the string (an integer array)
 							statements.add(indent + preDealloc(var, var_type, stores));
 							continue;
-						}else if(nominal.name().name().equals("Console")){
+						} else if (nominal.name().name().equals("Console")) {
 							// Skip deallocation as they are allocated by system
 							continue;
-						}else{
+						} else {
 							// Close the file pointer
-							statements.add(indent+"if("+var+" != NULL){fclose("+var+"); "+var+" = NULL;}");
+							statements
+									.add(indent + "if(" + var + " != NULL){fclose(" + var + "); " + var + " = NULL;}");
 							continue;
 						}
 					}
 					// Check if type is a record
-					if(var_type instanceof Type.Record){
-						Type.Record record = (Type.Record)var_type;
-						if(record.fields().containsKey("readAll")||record.fields().containsKey("write")){
+					if (var_type instanceof Type.Record) {
+						Type.Record record = (Type.Record) var_type;
+						if (record.fields().containsKey("readAll") || record.fields().containsKey("write")) {
 							// Skip the de-allocation
 							continue;
 						}
 					}
-					
+
 					// Apply deallocation marco on other cases.
 					statements.add(indent + preDealloc(var, var_type, stores));
 				}
@@ -408,7 +409,8 @@ public class DeallocationAnalyzer extends Analyzer {
 					Type parameter_type = stores.getRawType(register, function);
 					// Write the checks results as a parameter to macro
 					// statements.add(indent+"//"+parameter+":"+checks);
-					if (macro_name.equals("_CALLER_DEALLOC")) {
+					switch(macro_name){
+					case "_CALLER_DEALLOC":
 						// Get function return
 						String ret = stores.getVar(code.target(0), function);
 						if (stores.isCompoundType(parameter_type)) {
@@ -416,7 +418,7 @@ public class DeallocationAnalyzer extends Analyzer {
 								Type elm_type = stores.getArrayElementType((Type.Array) parameter_type);
 								if (elm_type instanceof Type.Byte || stores.isIntType(elm_type)) {
 									// Applied caller macro and used standard 'free' function to release extra copy
-									statements.add(indent + macro_name + "(" + ret + ", " + parameter + ", \"" + checks
+									statements.add(indent + "_CALLER_DEALLOC(" + ret + ", " + parameter + ", \"" + checks
 											+ "\" , \"" + func_name + "\");");
 								} else {
 									// An array of structures
@@ -424,7 +426,7 @@ public class DeallocationAnalyzer extends Analyzer {
 									String type_name = CodeGeneratorHelper.translateType(parameter_type, stores)
 											.replace("*", "");
 									// Applied caller_struct macro and used structure free function to release extra copy
-									statements.add(indent + macro_name + "_STRUCT(" + ret + ", " + parameter + ", \""
+									statements.add(indent + "_CALLER_DEALLOC_STRUCT(" + ret + ", " + parameter + ", \""
 											+ checks + "\" , \"" + func_name + "\", " + type_name + ");");
 								}
 							} else {
@@ -432,28 +434,40 @@ public class DeallocationAnalyzer extends Analyzer {
 								String type_name = CodeGeneratorHelper.translateType(parameter_type, stores)
 										.replace("*", "");
 								// Applied caller_struct macro and used structure free function to release extra copy
-								statements.add(indent + macro_name + "_STRUCT(" + ret + ", " + parameter + ", \""
+								statements.add(indent + "_CALLER_DEALLOC_STRUCT(" + ret + ", " + parameter + ", \""
 										+ checks + "\" , \"" + func_name + "\", " + type_name + ");");
 							}
 						} else {
 							// Applied caller macro and used standard 'free' function to release extra copy
-							statements.add(indent + macro_name + "(" + ret + ", " + parameter + ", \"" + checks
+							statements.add(indent + "_CALLER_DEALLOC(" + ret + ", " + parameter + ", \"" + checks
 									+ "\" , \"" + func_name + "\");");
 						}
-					} else {
+						break;
+					default:
 						// Added the macros
 						statements.add(indent + macro_name + "(" + parameter + ", \"" + checks + "\" , \"" + func_name
 								+ "\");");
+						// Add deallocation flag to lhs variable.
+						if (code.targets().length > 0) {
+							// Add the deallocation flag of lhs variable
+							statements.add(indent + assignDealloc(code.target(0), function, stores));
+						}
+						break;
 					}
 				}
 			}
-
-			// Add deallocation flag to lhs variable.
+		}
+		
+		if(statements.size()==0){
+			// For a = init(b, c) where a is int[], b is int and c is int
+			// Add deallocation flag to lhs variable by default.
 			if (code.targets().length > 0) {
 				// Add the deallocation flag of lhs variable
-				statements.add(indent + addDealloc(code.target(0), function, stores));
+				statements.add(indent + assignDealloc(code.target(0), function, stores));
 			}
+			
 		}
+		
 
 		return statements;
 	}
@@ -478,6 +492,24 @@ public class DeallocationAnalyzer extends Analyzer {
 		}
 		return "";
 	}
+	/**
+	 * Generate 'a_dealloc:=true' rather than using _ADD_DEALLOC
+	 * 
+	 * 
+	 * @param register
+	 * @param function
+	 * @param stores
+	 * @return
+	 */
+	private String assignDealloc(int register, FunctionOrMethod function, CodeStores stores) {
+		Type type = stores.getRawType(register, function);
+		if (stores.isCompoundType(type) || type instanceof Type.Union) {
+			String var = stores.getVar(register, function);
+			return var + "_dealloc = true;";
+		}
+		return "";
+	}
+	
 
 	/**
 	 * Set de-allocation flag of given register to be 'false'
@@ -772,7 +804,7 @@ public class DeallocationAnalyzer extends Analyzer {
 					throw new RuntimeException("Not implemented");
 				}
 			}
-		}else if (stores.isIntArrayOrAliasedType(type)){
+		} else if (stores.isIntArrayOrAliasedType(type)) {
 			// Release an aliased array type, e.g. a string
 			return "_DEALLOC(" + var + ");";
 		} else if (type instanceof Type.Record) {

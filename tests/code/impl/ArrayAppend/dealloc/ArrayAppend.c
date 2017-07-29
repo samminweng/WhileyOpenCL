@@ -129,8 +129,9 @@ int main(int argc, char** args){
 		_DEALLOC(_3);
 		_3 = _test_append_(_COPY_1DARRAY_PARAM_int64_t(r), true, _COPY_1DARRAY_PARAM_int64_t(_4), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
 		_CALLEE_DEALLOC(r, "false-false-false" , "test_append");
+		_3_dealloc = true;
 		_CALLEE_DEALLOC(_4, "false-false-false" , "test_append");
-		_ADD_DEALLOC(_3);
+		_3_dealloc = true;
 	}
 	//assign %1 = %3  : int[]
 	_DEALLOC(r);

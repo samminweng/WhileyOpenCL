@@ -658,7 +658,7 @@ int main(int argc, char** args){
 		_DEALLOC(_14);
 		_14 = _sobelEdgeDetection_(_COPY_1DARRAY_PARAM_BYTE(pixels), true, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_14));
 		_CALLEE_DEALLOC(pixels, "false-false-false" , "sobelEdgeDetection");
-		_ADD_DEALLOC(_14);
+		_14_dealloc = true;
 	}
 	//assign %6 = %14  : byte[]
 	_DEALLOC(newPixels);

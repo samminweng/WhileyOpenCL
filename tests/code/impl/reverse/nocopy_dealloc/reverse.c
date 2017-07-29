@@ -140,7 +140,7 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_11' = true
 		_5 = _reverse_(_1DARRAY_PARAM(_11), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
 		_RETAIN_DEALLOC(_11, "false-false-false" , "reverse");
-		_ADD_DEALLOC(_5);
+		_5_dealloc = true;
 	}
 	//assign %1 = %5  : int[]
 	_DEALLOC(rs);
@@ -225,7 +225,7 @@ blklab5:;
 		// isCopyEliminated of '_4' = true
 		_27 = _reverse_(_1DARRAY_PARAM(arr), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 		_RETAIN_DEALLOC(arr, "false-false-false" , "reverse");
-		_ADD_DEALLOC(_27);
+		_27_dealloc = true;
 	}
 	//assign %4 = %27  : int[]
 	_DEALLOC(arr);

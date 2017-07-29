@@ -153,7 +153,7 @@ int main(int argc, char** args){
 		_DEALLOC(_10);
 		_10 = _func_(_COPY_1DARRAY_PARAM_int64_t(a), true, _11, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 		_CALLEE_DEALLOC(a, "false-false-false" , "func");
-		_ADD_DEALLOC(_10);
+		_10_dealloc = true;
 	}
 	//assign %1 = %10  : int[]
 	_DEALLOC(a);
@@ -224,7 +224,7 @@ blklab2:;
 		_DEALLOC(_28);
 		_28 = _func_(_COPY_1DARRAY_PARAM_int64_t(b), true, _29, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 		_CALLEE_DEALLOC(b, "false-false-true" , "func");
-		_ADD_DEALLOC(_28);
+		_28_dealloc = true;
 	}
 	//assign %3 = %28  : int[]
 	_DEALLOC(c);

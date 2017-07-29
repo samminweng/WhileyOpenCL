@@ -170,7 +170,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC(_3);
 		_3 = _Cash_(_1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
-		_ADD_DEALLOC(_3);
+		_3_dealloc = true;
 	}
 	//assign %1 = %3  : int[]
 	_DEALLOC(empty);
@@ -204,7 +204,7 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_13' = true
 		_4 = _Cash_1_(_1DARRAY_PARAM(_13), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_4));
 		_RETAIN_DEALLOC(_13, "false-false-false" , "Cash");
-		_ADD_DEALLOC(_4);
+		_4_dealloc = true;
 	}
 	//assign %2 = %4  : int[]
 	_DEALLOC(till);

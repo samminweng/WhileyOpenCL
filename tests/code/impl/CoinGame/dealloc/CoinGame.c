@@ -576,7 +576,6 @@ int main(int argc, char** args){
 		_DEALLOC(_8);
 		_8 = _findMoves_(_COPY_1DARRAY_PARAM_int64_t(moves), false, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_CALLER_DEALLOC(_8, moves, "true-true-false" , "findMoves");
-		_ADD_DEALLOC(_8);
 	}
 	//assign %2 = %8  : int[]
 	_DEALLOC(moves);

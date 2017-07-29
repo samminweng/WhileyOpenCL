@@ -693,7 +693,7 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_5' = true
 		_14 = _sobelEdgeDetection_(_1DARRAY_PARAM(pixels), false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_14));
 		_RETAIN_DEALLOC(pixels, "false-false-false" , "sobelEdgeDetection");
-		_ADD_DEALLOC(_14);
+		_14_dealloc = true;
 	}
 	//assign %6 = %14  : byte[]
 	_DEALLOC(newPixels);

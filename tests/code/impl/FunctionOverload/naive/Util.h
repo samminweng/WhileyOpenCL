@@ -316,6 +316,7 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 				free(b##_tmp);\
 				b##_tmp = NULL;\
 			}\
+            a##_dealloc = true;\
 		})
 // Free the extra copy of the structure using built-in structure free function
 #define _CALLER_DEALLOC_STRUCT(a, b, checks, func_name, name) \
@@ -326,13 +327,20 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 				free_##name(b##_tmp);\
 				b##_tmp = NULL;\
 			}\
+            a##_dealloc = true;\
 		})
 // '_CALLEE_DEALLOC' macro makes a copy of actual argument and delegates callee
 // to free the passing parameter 'a = func(copy(b), true)'
-#define _CALLEE_DEALLOC(b, checks, func_name) DEBUG_PRINT("_CALLEE_DEALLOC macro on ( "str(checks)" "str(#b) " "str(func_name)" )");
+#define _CALLEE_DEALLOC(b, checks, func_name)  \
+		({\
+            DEBUG_PRINT("_CALLEE_DEALLOC macro on ( "str(checks)" "str(#b) " "str(func_name)" )");\
+        })
 // '_RETAIN_DEALLOC' macro does NOT make the copy of argument and delegates caller
 // to free the passing parameter 'a = func(b, false)'
-#define _RETAIN_DEALLOC(b, checks, func_name) DEBUG_PRINT("_RETAIN_DEALLOC macro on  ( "str(checks)" "str(#b) " "str(func_name)" )");
+#define _RETAIN_DEALLOC(b, checks, func_name)  \
+		({\
+            DEBUG_PRINT("_RETAIN_DEALLOC macro on  ( "str(checks)" "str(#b) " "str(func_name)" )");\
+        })
 // '_RESET_DEALLOC' macro does NOT make the copy of argument and delegates caller
 // to reset the flag of actual argument 'a = func(b, false)'
 #define _RESET_DEALLOC(b, checks, func_name) \

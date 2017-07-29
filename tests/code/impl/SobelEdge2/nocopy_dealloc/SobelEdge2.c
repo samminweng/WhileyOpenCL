@@ -554,7 +554,7 @@ blklab8:;
 		// isCopyEliminated of '_5' = true
 		_61 = _image_(width, height, _1DARRAY_PARAM(newPixels), false);
 		_RESET_DEALLOC(newPixels, "false-true-false" , "image");
-		_ADD_DEALLOC(_61);
+		_61_dealloc = true;
 	}
 	//return %61
 	_DEALLOC_STRUCT(input, Image);
@@ -817,7 +817,7 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_5' = true
 		_15 = _image_(width, height, _1DARRAY_PARAM(pixels), false);
 		_RESET_DEALLOC(pixels, "false-true-false" , "image");
-		_ADD_DEALLOC(_15);
+		_15_dealloc = true;
 	}
 	//assign %6 = %15  : {int height,byte[] pixels,int width}
 	_DEALLOC_STRUCT(input, Image);
@@ -830,7 +830,7 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_6' = true
 		_16 = _sobelEdgeDetection_(_STRUCT_PARAM(input), false);
 		_RETAIN_DEALLOC(input, "false-false-false" , "sobelEdgeDetection");
-		_ADD_DEALLOC(_16);
+		_16_dealloc = true;
 	}
 	//assign %7 = %16  : {int height,byte[] pixels,int width}
 	_DEALLOC_STRUCT(output, Image);

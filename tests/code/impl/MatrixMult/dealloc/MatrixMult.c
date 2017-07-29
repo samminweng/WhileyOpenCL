@@ -215,7 +215,7 @@ blklab13:;
 		_DEALLOC_STRUCT(_34, Matrix);
 		_34 = _matrix_(_35, _36, _COPY_2DARRAY_PARAM_int64_t(C_data), true);
 		_CALLEE_DEALLOC(C_data, "false-false-false" , "matrix");
-		_ADD_DEALLOC(_34);
+		_34_dealloc = true;
 	}
 	//return %34
 	_DEALLOC_STRUCT(A, Matrix);
@@ -424,7 +424,7 @@ blklab23:;
 		_DEALLOC_STRUCT(_15, Matrix);
 		_15 = _matrix_(width, height, _COPY_2DARRAY_PARAM_int64_t(rows), true);
 		_CALLEE_DEALLOC(rows, "false-false-false" , "matrix");
-		_ADD_DEALLOC(_15);
+		_15_dealloc = true;
 	}
 	//return %15
 	_DEALLOC_STRUCT(r, Matrix);
@@ -493,7 +493,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC_STRUCT(_6, Matrix);
 		_6 = _init_(max, max);
-		_ADD_DEALLOC(_6);
+		_6_dealloc = true;
 	}
 	//assign %2 = %6  : {int[][] data,int height,int width}
 	_DEALLOC_STRUCT(A, Matrix);
@@ -536,7 +536,7 @@ blklab27:;
 	{
 		_DEALLOC_STRUCT(_16, Matrix);
 		_16 = _init_(max, max);
-		_ADD_DEALLOC(_16);
+		_16_dealloc = true;
 	}
 	//assign %3 = %16  : {int[][] data,int height,int width}
 	_DEALLOC_STRUCT(B, Matrix);
@@ -582,8 +582,9 @@ blklab28:;
 		_DEALLOC_STRUCT(_26, Matrix);
 		_26 = _multiply_(_COPY_STRUCT_PARAM(A, Matrix), true, _COPY_STRUCT_PARAM(B, Matrix), true);
 		_CALLEE_DEALLOC(A, "false-false-false" , "multiply");
+		_26_dealloc = true;
 		_CALLEE_DEALLOC(B, "false-false-false" , "multiply");
-		_ADD_DEALLOC(_26);
+		_26_dealloc = true;
 	}
 	//assign %4 = %26  : {int[][] data,int height,int width}
 	_DEALLOC_STRUCT(C, Matrix);

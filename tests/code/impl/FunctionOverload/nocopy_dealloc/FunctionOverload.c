@@ -49,7 +49,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC(_2);
 		_2 = _Cash_(_1DARRAYSIZE_PARAM_CALLBYREFERENCE(_2));
-		_ADD_DEALLOC(_2);
+		_2_dealloc = true;
 	}
 	//assign %1 = %2  : int[]
 	_DEALLOC(empty);

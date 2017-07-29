@@ -201,7 +201,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC_STRUCT(_7, Board);
 		_7 = _EmptyBoard_();
-		_ADD_DEALLOC(_7);
+		_7_dealloc = true;
 	}
 	//assign %2 = %7  : null|{int move,int[] pieces}
 	_DEALLOC_STRUCT(b1, Board);
@@ -211,7 +211,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC_STRUCT(_8, Board);
 		_8 = _EmptyBoard_();
-		_ADD_DEALLOC(_8);
+		_8_dealloc = true;
 	}
 	//assign %3 = %8  : null|{int move,int[] pieces}
 	_DEALLOC_STRUCT(b2, Board);
