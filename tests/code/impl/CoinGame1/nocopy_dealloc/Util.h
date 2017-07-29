@@ -343,12 +343,22 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
         })
 // '_RESET_DEALLOC' macro does NOT make the copy of argument and delegates caller
 // to reset the flag of actual argument 'a = func(b, false)'
+// #define _RESET_DEALLOC(a, b, checks, func_name) \
+// 		({\
+// 			DEBUG_PRINT("_RESET_DEALLOC macro on  ( "str(checks)" "str(#a)" "str(#b)" "str(func_name)" )");\
+//             b##_dealloc = false;\
+//             a##_dealloc = true;\
+// 		})
 #define _RESET_DEALLOC(a, b, checks, func_name) \
 		({\
-			DEBUG_PRINT("_RESET_DEALLOC macro on  ( "str(checks)" "str(#a)" "str(#b)" "str(func_name)" )");\
-            b##_dealloc = false;\
-            a##_dealloc = true;\
-		})
+		    DEBUG_PRINT("_RESET_DEALLOC macro on  ( "str(checks)" "str(#a)" "str(#b)" "str(func_name)" )");\
+            if (a != b) {\
+                a##_dealloc = true;\
+            }else{\
+                a##_dealloc = b##_dealloc;\
+                b##_dealloc = false;\
+            }\
+        })
 // '_SUBSTRUCTURE_DEALLOC' macro applies the subtructure parameter
 #define _SUBSTRUCTURE_DEALLOC(b, checks, func_name) DEBUG_PRINT("_SUBSTRUCTURE_DEALLOC macro on  ( "str(checks)" "str(#b) " "str(func_name)" )");
 /***

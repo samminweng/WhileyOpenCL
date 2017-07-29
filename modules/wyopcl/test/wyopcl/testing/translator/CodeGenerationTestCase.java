@@ -91,6 +91,7 @@ public class CodeGenerationTestCase {
 				"SobelEdge2", // Similar to 'SobelEdge1' with additional 'image' structure
 				"ResetMacro1", // Test case for 'RESET' macro
 				"ResetMacro2", // Test case for 'RESET' macro
+				"ResetMacro3", // Test case for 'RESET' macro
 		});
 	}
 

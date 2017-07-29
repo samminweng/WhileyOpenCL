@@ -449,6 +449,14 @@ public class DeallocationAnalyzer extends Analyzer {
 						// Added the macros
 						statements.add(indent + "_RESET_DEALLOC(" + ret +", " + parameter + ", \"" + checks 
 								+ "\" , \"" + func_name + "\");");
+						// Get the return type
+						Type ret_type = stores.getRawType(code.target(0), function);
+						if (stores.isCompoundType(ret_type) &&
+								!(ret_type instanceof Type.Array)) {
+							// For Structure typed return only
+							statements.add(indent + parameter + "_dealloc = false;");
+						}
+						
 						break;
 					default:
 						// Added the macros

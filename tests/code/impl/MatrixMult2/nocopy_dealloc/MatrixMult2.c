@@ -152,6 +152,7 @@ blklab2:;
 		// isCopyEliminated of '_3' = true
 		_21 = _matrix_(width, height, _1DARRAY_PARAM(data), false);
 		_RESET_DEALLOC(_21, data, "false-true-false" , "matrix");
+		data_dealloc = false;
 	}
 	//return %21
 	_DEALLOC_STRUCT(r, Matrix);
@@ -471,6 +472,7 @@ blklab13:;
 		// isCopyEliminated of '_5' = true
 		_40 = _matrix_(width, height, _1DARRAY_PARAM(data), false);
 		_RESET_DEALLOC(_40, data, "false-true-false" , "matrix");
+		data_dealloc = false;
 	}
 	//return %40
 	_DEALLOC_STRUCT(a, Matrix);

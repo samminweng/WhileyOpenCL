@@ -331,6 +331,7 @@ blklab12:;
 			// isCopyEliminated of '_0' = true
 			_33 = _run_(_STRUCT_PARAM(nq), false, _35, dim);
 			_RESET_DEALLOC(_33, nq, "true-true-false" , "run");
+			nq_dealloc = false;
 		}
 		//assign %0 = %33  : {int num_solutions,{int c,int r}[] queens}
 		_DEALLOC_STRUCT(nq, NQueen);
@@ -444,6 +445,7 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_2' = true
 		_11 = _nqueen_(num_solutions, _1DARRAY_PARAM(queens), false);
 		_RESET_DEALLOC(_11, queens, "false-true-false" , "nqueen");
+		queens_dealloc = false;
 	}
 	//assign %4 = %11  : {int num_solutions,{int c,int r}[] queens}
 	_DEALLOC_STRUCT(nq, NQueen);
@@ -458,6 +460,7 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_4' = true
 		_12 = _run_(_STRUCT_PARAM(nq), false, _13, n);
 		_RESET_DEALLOC(_12, nq, "true-true-false" , "run");
+		nq_dealloc = false;
 	}
 	//assign %4 = %12  : {int num_solutions,{int c,int r}[] queens}
 	_DEALLOC_STRUCT(nq, NQueen);
