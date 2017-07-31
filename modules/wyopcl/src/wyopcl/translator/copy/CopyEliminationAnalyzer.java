@@ -97,6 +97,12 @@ public class CopyEliminationAnalyzer extends Analyzer {
 					boolean isMutated = readwriteAnalyzer.isMutated(callee_register, callee);
 					// 'r' is NOT mutated inside invoked function
 					if (!isMutated) {
+						// Get the return 
+						boolean isReturn = returnAnalyzer.isReturned(callee_register, callee);
+						if(isReturn){
+							// We use caller macro
+							return false; // We need the copy
+						}
 						return true;
 					}
 				}

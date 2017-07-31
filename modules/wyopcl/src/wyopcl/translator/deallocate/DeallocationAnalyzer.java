@@ -599,8 +599,8 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * b is alive?  F	|No Copy			|No Copy	       |No Copy	        |No Copy
 	 * 					|'retain_dealloc'   |'reset_dealloc'   |'reset_dealloc' |'retain_dealloc'
 	 * ------------------------------------------------------------------------------------------
-	 * 				T	|No Copy			|No Copy	       |Copy		    |Copy
-	 * 					|'retain_dealloc'	|'reset_dealloc'   |'caller_dealloc'|'callee_dealloc'
+	 * 				T	|No Copy			|Copy      	        |Copy		    |Copy
+	 * 					|'retain_dealloc'	|'caller_dealloc'   |'caller_dealloc'|'callee_dealloc'
 	 * 
 	 * 
 	 * </pre>
@@ -687,8 +687,9 @@ public class DeallocationAnalyzer extends Analyzer {
 						// If 'b' is NOT alive at caller site
 						return "_RESET_DEALLOC" + "\t" + checks;
 					} else {
-						// If 'b' is alive at caller site
-						return "_RESET_DEALLOC" + "\t" + checks;
+						// If 'b' is alive at caller site, then we use caller macro
+						return "_CALLER_DEALLOC" + "\t" + checks;
+						//return "_RESET_DEALLOC" + "\t" + checks;
 					}
 				}
 			} else {

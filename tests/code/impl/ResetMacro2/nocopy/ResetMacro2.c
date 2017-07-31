@@ -1,255 +1,105 @@
 #include "ResetMacro2.h"
 int64_t* _func_(_DECL_1DARRAY_PARAM(x), int64_t num, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
-	_DECL_1DARRAY(a);
-	_DECL_1DARRAY(b);
-	_DECL_1DARRAY(c);
-	_DECL_1DARRAY(d);
-	int64_t _7 = 0;
-	int64_t _8 = 0;
-	_DECL_1DARRAY(_9);
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	_DECL_1DARRAY(_12);
-	int64_t _13 = 0;
-	int64_t _14 = 0;
-	//const %7 = 0 : int
-	_7 = 0;
-	//const %8 = 3 : int
-	_8 = 3;
-	//arraygen %9 = [7; 8] : int[]
-	_NEW_1DARRAY_int64_t(_9, _8, _7);
-	//assign %3 = %9  : int[]
+	int64_t _3 = 0;
+	//const %3 = 0 : int
+	_3 = 0;
+	//update %0[%3] = %1 : int[] -> int[]
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(a, _9);
-	//const %10 = 1 : int
-	_10 = 1;
-	//const %11 = 3 : int
-	_11 = 3;
-	//arraygen %12 = [10; 11] : int[]
-	_NEW_1DARRAY_int64_t(_12, _11, _10);
-	//assign %4 = %12  : int[]
-	// isCopyEliminated = true
-	_UPDATE_1DARRAY(b, _12);
-	//assign %4 = %3  : int[]
-	// isCopyEliminated = true
-	_UPDATE_1DARRAY(b, a);
-	//assign %5 = %4  : int[]
-	// isCopyEliminated = true
-	_UPDATE_1DARRAY(c, b);
-	//assign %6 = %5  : int[]
-	// isCopyEliminated = false
-	_COPY_1DARRAY_int64_t(d, c);
-	//const %13 = 10 : int
-	_13 = 10;
-	//ifle %1, %13 goto blklab0 : int
-	if(num<=_13){goto blklab0;}
+	x[_3] = num;
 	//return %0
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(x);
 	return x;
-	//goto blklab1
-	goto blklab1;
-//.blklab0
-blklab0:;
-	//const %14 = 9 : int
-	_14 = 9;
-	//ifle %1, %14 goto blklab2 : int
-	if(num<=_14){goto blklab2;}
-	//return %5
-	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(c);
-	return c;
-//.blklab2
-blklab2:;
-//.blklab1
-blklab1:;
-	//return %6
-	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(d);
-	return d;
 	//return
 }
 
-int main(int argc, char** args){
-	_DECL_1DARRAY(x);
-	_DECL_1DARRAY(y);
+int64_t* _g2_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_1DARRAY(_0);
+	_DECL_1DARRAY(a);
+	_DECL_1DARRAY(b);
 	int64_t _3 = 0;
 	int64_t _4 = 0;
 	_DECL_1DARRAY(_5);
 	_DECL_1DARRAY(_6);
 	int64_t _7 = 0;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	void* _11;
-	_DECL_1DARRAY(_13);
-	void* _14;
-	int64_t _16 = 0;
-	int64_t _17 = 0;
-	_DECL_1DARRAY(_18);
-	int64_t _19 = 0;
-	int64_t _20 = 0;
-	int64_t _21 = 0;
-	int64_t _22 = 0;
-	void* _23;
-	_DECL_1DARRAY(_25);
-	void* _26;
-	int64_t _28 = 0;
-	int64_t _29 = 0;
-	_DECL_1DARRAY(_30);
-	int64_t _31 = 0;
-	int64_t _32 = 0;
-	int64_t _33 = 0;
-	int64_t _34 = 0;
-	void* _35;
-	_DECL_1DARRAY(_37);
-	void* _38;
-	int64_t _40 = 0;
-	int64_t _41 = 0;
-	//const %3 = 2 : int
-	_3 = 2;
+	//const %3 = 0 : int
+	_3 = 0;
 	//const %4 = 3 : int
 	_4 = 3;
 	//arraygen %5 = [3; 4] : int[]
 	_NEW_1DARRAY_int64_t(_5, _4, _3);
 	//assign %1 = %5  : int[]
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(x, _5);
+	_UPDATE_1DARRAY(a, _5);
 	//const %7 = 11 : int
 	_7 = 11;
 	//invoke (%6) = (%1, %7) ResetMacro2:func : function(int[],int)->(int[])
 	{
 		// isCopyEliminated of '_1' = true
-		_6 = _func_(_1DARRAY_PARAM(x), _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
+		_6 = _func_(_1DARRAY_PARAM(a), _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 	}
 	//assign %2 = %6  : int[]
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(y, _6);
-	//assert
+	_UPDATE_1DARRAY(b, _6);
+	//return %2
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(b);
+	return b;
+	//return
+}
+
+int main(int argc, char** args){
+	_DECL_1DARRAY(a);
+	_DECL_1DARRAY(_2);
+	int64_t _3 = 0;
+	int64_t _4 = 0;
+	int64_t _5 = 0;
+	void* _6;
+	_DECL_1DARRAY(_8);
+	void* _9;
+	int64_t _11 = 0;
+	int64_t _12 = 0;
+	//invoke (%2) = () ResetMacro2:g2 : function()->(int[])
 	{
-		//const %8 = 0 : int
-		_8 = 0;
-		//indexof %9 = %2, %8 : int[]
-		_9=y[_8];
-		//const %10 = 2 : int
-		_10 = 2;
-		//ifeq %9, %10 goto blklab3 : int
-		if(_9==_10){goto blklab3;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab3
-blklab3:;
-	//assert
+		_2 = _g2_(_1DARRAYSIZE_PARAM_CALLBYREFERENCE(_2));
 	}
-	//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %12 = %11 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %13 = [121,91,48,93,32,61,32] : int[]
-	_NEW_1DARRAY_int64_t(_13, 7, 0);
-	_13[0] = 121; _13[1] = 91; _13[2] = 48; _13[3] = 93; _13[4] = 32; _13[5] = 61; _13[6] = 32; 
-	//indirectinvoke () = %12 (%13) : method(int[])->()
-	{
-		printf_s(_1DARRAY_PARAM(_13));
-	}
-	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %15 = %14 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %16 = 0 : int
-	_16 = 0;
-	//indexof %17 = %2, %16 : int[]
-	_17=y[_16];
-	//indirectinvoke () = %15 (%17) : method(any)->()
-	{
-		printf("%"PRId64"\n", _17);
-	}
-	//const %19 = 10 : int
-	_19 = 10;
-	//invoke (%18) = (%1, %19) ResetMacro2:func : function(int[],int)->(int[])
-	{
-		// isCopyEliminated of '_1' = true
-		_18 = _func_(_1DARRAY_PARAM(x), _19, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
-	}
-	//assign %2 = %18  : int[]
+	//assign %1 = %2  : int[]
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(y, _18);
+	_UPDATE_1DARRAY(a, _2);
 	//assert
 	{
-		//const %20 = 0 : int
-		_20 = 0;
-		//indexof %21 = %2, %20 : int[]
-		_21=y[_20];
-		//const %22 = 0 : int
-		_22 = 0;
-		//ifeq %21, %22 goto blklab4 : int
-		if(_21==_22){goto blklab4;}
+		//const %3 = 0 : int
+		_3 = 0;
+		//indexof %4 = %1, %3 : int[]
+		_4=a[_3];
+		//const %5 = 11 : int
+		_5 = 11;
+		//ifeq %4, %5 goto blklab0 : int
+		if(_4==_5){goto blklab0;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-//.blklab4
-blklab4:;
+//.blklab0
+blklab0:;
 	//assert
 	}
-	//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %24 = %23 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %25 = [121,91,48,93,32,61,32] : int[]
-	_NEW_1DARRAY_int64_t(_25, 7, 0);
-	_25[0] = 121; _25[1] = 91; _25[2] = 48; _25[3] = 93; _25[4] = 32; _25[5] = 61; _25[6] = 32; 
-	//indirectinvoke () = %24 (%25) : method(int[])->()
+	//fieldload %6 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %7 = %6 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %8 = [97,91,48,93,32,61,32] : int[]
+	_NEW_1DARRAY_int64_t(_8, 7, 0);
+	_8[0] = 97; _8[1] = 91; _8[2] = 48; _8[3] = 93; _8[4] = 32; _8[5] = 61; _8[6] = 32; 
+	//indirectinvoke () = %7 (%8) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_25));
+		printf_s(_1DARRAY_PARAM(_8));
 	}
-	//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %27 = %26 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %28 = 0 : int
-	_28 = 0;
-	//indexof %29 = %2, %28 : int[]
-	_29=y[_28];
-	//indirectinvoke () = %27 (%29) : method(any)->()
+	//fieldload %9 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %10 = %9 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %11 = 0 : int
+	_11 = 0;
+	//indexof %12 = %1, %11 : int[]
+	_12=a[_11];
+	//indirectinvoke () = %10 (%12) : method(any)->()
 	{
-		printf("%"PRId64"\n", _29);
-	}
-	//const %31 = 9 : int
-	_31 = 9;
-	//invoke (%30) = (%1, %31) ResetMacro2:func : function(int[],int)->(int[])
-	{
-		// isCopyEliminated of '_1' = true
-		_30 = _func_(_1DARRAY_PARAM(x), _31, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
-	}
-	//assign %2 = %30  : int[]
-	// isCopyEliminated = true
-	_UPDATE_1DARRAY(y, _30);
-	//assert
-	{
-		//const %32 = 0 : int
-		_32 = 0;
-		//indexof %33 = %2, %32 : int[]
-		_33=y[_32];
-		//const %34 = 0 : int
-		_34 = 0;
-		//ifeq %33, %34 goto blklab5 : int
-		if(_33==_34){goto blklab5;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab5
-blklab5:;
-	//assert
-	}
-	//fieldload %35 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %36 = %35 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %37 = [121,91,48,93,32,61,32] : int[]
-	_NEW_1DARRAY_int64_t(_37, 7, 0);
-	_37[0] = 121; _37[1] = 91; _37[2] = 48; _37[3] = 93; _37[4] = 32; _37[5] = 61; _37[6] = 32; 
-	//indirectinvoke () = %36 (%37) : method(int[])->()
-	{
-		printf_s(_1DARRAY_PARAM(_37));
-	}
-	//fieldload %38 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %39 = %38 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %40 = 0 : int
-	_40 = 0;
-	//indexof %41 = %2, %40 : int[]
-	_41=y[_40];
-	//indirectinvoke () = %39 (%41) : method(any)->()
-	{
-		printf("%"PRId64"\n", _41);
+		printf("%"PRId64"\n", _12);
 	}
 	//return
 	exit(0);
