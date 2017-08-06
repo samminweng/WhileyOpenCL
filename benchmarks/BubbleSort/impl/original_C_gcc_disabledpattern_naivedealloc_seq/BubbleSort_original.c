@@ -202,7 +202,6 @@ blklab6:;
 		_DEALLOC(_15);
 		_15 = _bubbleSort_(_COPY_1DARRAY_PARAM_int64_t(arr), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
 		_CALLER_DEALLOC(_15, arr, "true-true-false" , "bubbleSort");
-		_ADD_DEALLOC(_15);
 	}
 	//assign %4 = %15  : int[]
 	_DEALLOC(arr);

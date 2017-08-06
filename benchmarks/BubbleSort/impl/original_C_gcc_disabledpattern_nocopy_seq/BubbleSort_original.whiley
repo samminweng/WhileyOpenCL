@@ -9,16 +9,17 @@ function bubbleSort(int[] items) -> int[]:
 		last_swapped = 0
 		int index = 1
 		while index < length:
-		//Check previous item > current item
+			//Check previous item > current item
 			if items[index-1] > items[index]:
 				// Swap them
 				int tmp = items[index-1]
 				items[index-1] = items[index]
 				items[index] = tmp
-				last_swapped = index 
+				last_swapped = index
 			//End if
 			index = index + 1
-		// Skip the remaing items as they are orderred. This saves lots of time.
+		// Skip the remaing items as they are orderred.
+		// This saves lots of time.
 		length = last_swapped
 	return items
 
@@ -32,7 +33,7 @@ method main(System.Console sys):
 		//sys.out.println(arr)
 		//Fill in the array in the reverse order (max..0)
 		while index <= max:
-			arr[index] = max - index 
+			arr[index] = max - index
 			index = index + 1
 		//Sort the array
 		arr = bubbleSort(arr)

@@ -1,19 +1,9 @@
 import whiley.lang.*
-
-/**
- * Perform a merge sort of integer items using call-by-value function
- * This function requires the return value to give back the change to
- * the caller.
- *
- * param items the input array
- * param start the starting index
- * param end the ending index
- * return the sorted array
- */
-function sortV1(int[] items, int start, int end) -> int[]:
+// Perform a merge sort on integer array
+function sortV1(int[] items, int start, int end)->int[]:
      // Check the length is > 1.
     if (start+1) < end:
-        // First, split unsorted items into left and right sub-lists 
+        // First, split unsorted items into left and right sub-lists
         int pivot = (start+end) / 2
         //sys.out.println(pivot)
         // Get the sublist
@@ -60,13 +50,11 @@ method main(System.Console sys):
         int[] arr = [0;max]
         //Fill in the array in the reverse order (max..0)
         while index < max:
-            arr[index] = max - index 
+            arr[index] = max - index
             index = index + 1
         //Use merge sort to order reversed array 'arr' ([10 ... 0])
         arr = sortV1(arr, 0, max)
         // Should be in the ascending order [0..10]
-        /**Print the last element of sorted array */
         sys.out.println(arr[0])
         sys.out.println(arr[max-1])
         sys.out.println_s("Pass Mergesort test case")
-    

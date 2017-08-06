@@ -217,8 +217,7 @@ blklab6:;
 		_DEALLOC(_15);
 		// isCopyEliminated of '_4' = true
 		_15 = _bubbleSort_(_1DARRAY_PARAM(arr), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
-		_RESET_DEALLOC(arr, "true-true-false" , "bubbleSort");
-		_ADD_DEALLOC(_15);
+		_RESET_DEALLOC(_15, arr, "true-true-false" , "bubbleSort");
 	}
 	//assign %4 = %15  : int[]
 	_DEALLOC(arr);

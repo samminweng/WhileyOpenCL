@@ -82,8 +82,8 @@ BEGIN {
 	filename = "";
 	FS = "\n";
 	## Test case name
-	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult SobelEdge Cashtill LZ77";
-	testcases="CoinGame";
+	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
+	#testcases="CoinGame";
 
 	## Program Type
 	programs["Reverse"]="original";
@@ -104,8 +104,8 @@ BEGIN {
 	programs["Cashtill"]="original";
 
 	# Code Generation
-	#codegens = "naive naivedealloc nocopy nocopydealloc";
-	codegens = "nocopydealloc";
+	codegens = "naive naivedealloc nocopy nocopydealloc";
+	#codegens = "nocopydealloc";
 	# Pattern matching
 	patterns["Reverse"] = "disabled";
 	patterns["newTicTacToe"] = "disabled";
@@ -129,7 +129,12 @@ BEGIN {
 	compilers["Cashtill"] = "gcc";
 	compilers["CoinGame"] = "gcc";
 	### Executive type
-	exectypes["MergeSort"] = "seq cilkspawn cilkspawn_seq";
+	exectypes["Reverse"] = "seq";
+	exectypes["newTicTacToe"] = "seq";
+	exectypes["BubbleSort"] = "seq";
+	exectypes["MergeSort"] = "seq";
+	exectypes["MatrixMult"] = "seq";
+	#exectypes["MergeSort"] = "seq cilkspawn cilkspawn_seq";
 	#exectypes["LZ77"] = "mapreduce_seq mapreduce_openmp cilk_reducer_seq cilk_reducer";
 	exectypes["LZ77"] = "seq openmp";
 	exectypes["CoinGame"] = "gcc_seq openmp_for cilk_for";
@@ -137,8 +142,8 @@ BEGIN {
 	# Parameter
 	parameters["Reverse"]="100000 1000000 10000000";
 	parameters["newTicTacToe"]="1000 10000 100000";
-	#parameters["MergeSort"]="1000 10000 100000";
-	parameters["MergeSort"]="100000000 200000000 300000000";
+	parameters["MergeSort"]="1000 10000 100000";
+	#parameters["MergeSort"]="100000000 200000000 300000000";
 	parameters["BubbleSort"]="1000 10000 100000";
 	parameters["MatrixMult"]="1000 2000 3000";
 	# parameters["Fibonacci"]="10 50 90";

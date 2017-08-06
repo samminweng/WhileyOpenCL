@@ -87,8 +87,7 @@ _SLICE_ARRAY(_15, items, start, pivot);
 		_DEALLOC(_16);
 		// isCopyEliminated of '_5' = true
 		_16 = _sortV1_(_1DARRAY_PARAM(lhs), false, _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
-		_RESET_DEALLOC(lhs, "true-true-false" , "sortV1");
-		_ADD_DEALLOC(_16);
+		_RESET_DEALLOC(_16, lhs, "true-true-false" , "sortV1");
 	}
 	//assign %5 = %16  : int[]
 	_DEALLOC(lhs);
@@ -115,8 +114,7 @@ _SLICE_ARRAY(_18, items, pivot, end);
 		_DEALLOC(_19);
 		// isCopyEliminated of '_6' = true
 		_19 = _sortV1_(_1DARRAY_PARAM(rhs), false, _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
-		_RESET_DEALLOC(rhs, "true-true-false" , "sortV1");
-		_ADD_DEALLOC(_19);
+		_RESET_DEALLOC(_19, rhs, "true-true-false" , "sortV1");
 	}
 	//assign %6 = %19  : int[]
 	_DEALLOC(rhs);
@@ -379,8 +377,7 @@ blklab10:;
 		_DEALLOC(_15);
 		// isCopyEliminated of '_4' = true
 		_15 = _sortV1_(_1DARRAY_PARAM(arr), false, _16, max, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
-		_RESET_DEALLOC(arr, "true-true-false" , "sortV1");
-		_ADD_DEALLOC(_15);
+		_RESET_DEALLOC(_15, arr, "true-true-false" , "sortV1");
 	}
 	//assign %4 = %15  : int[]
 	_DEALLOC(arr);

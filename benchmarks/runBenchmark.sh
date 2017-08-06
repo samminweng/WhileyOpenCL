@@ -6,15 +6,15 @@ export LANG=C.UTF-8
 alias pollycc="clang -O3 -mllvm -polly"
 ### Get the root working directory
 UTILDIR="$(dirname "$(pwd)")/tests/code"
-BASEDIR="$(dirname "$(pwd)")"
+BENCHMARKDIR="$(pwd)"
 
 ## declare compiler used for compilation
-declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" [MergeSort]="gcc" [MatrixMult]="polly" \
+declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" [MergeSort]="gcc" [MatrixMult]="gcc" \
 					   [LZ77]="polly" [SobelEdge]="gcc polly" [Cashtill]="gcc" \
 					   [CoinGame]="gcc" )
 ## declare 4 kinds of code generation
-#declare -a codegens=( "naive" "naivedealloc" "nocopy" "nocopydealloc" )
-declare -a codegens=( "nocopy" )
+declare -a codegens=( "naive" "naivedealloc" "nocopy" "nocopydealloc" )
+#declare -a codegens=( "nocopy" )
 
 ## Declare an associative array for pattern matching
 declare -A patterns=( [LZ77_compress]=compress )
@@ -133,7 +133,7 @@ compile(){
 	### Compile C code into executables
 	case "$compiler" in
 		"gcc")
-			gcc -std=c11 -O0 $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
+			gcc -std=c11 -O3 $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
 			;;
 		"clang")
 			clang -O0 $testcase"_"$program.c Util.c WyRT.c -o "out/$executable"
@@ -331,20 +331,20 @@ exec(){
 # # ###
 # # ###########################################
 # # # # ## # Reverse test case
-#init Reverse
-#exec Reverse original
+init Reverse
+exec Reverse original
 
 # # # # # # # # # # newTicTacToe test case
-#init newTicTacToe
-#exec newTicTacToe original
+init newTicTacToe
+exec newTicTacToe original
 
 # # # # # # # ## # BubbleSort test case
-#init BubbleSort
-#exec BubbleSort original
+init BubbleSort
+exec BubbleSort original
 
 # # # # # # # ## # MergeSort test case
-#init MergeSort
-#exec MergeSort original
+init MergeSort
+exec MergeSort original
 
 # # # # # # # MatrixMult test case
 init MatrixMult
