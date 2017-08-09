@@ -599,8 +599,8 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * b is alive?  F	|No Copy			|No Copy	       |No Copy	        |No Copy
 	 * 					|'retain_dealloc'   |'reset_dealloc'   |'reset_dealloc' |'retain_dealloc'
 	 * ------------------------------------------------------------------------------------------
-	 * 				T	|No Copy			|Copy      	        |Copy		    |Copy
-	 * 					|'retain_dealloc'	|'caller_dealloc'   |'caller_dealloc'|'callee_dealloc'
+	 * 				T	|No Copy			|Copy      	       |Copy		    |Copy
+	 * 					|'retain_dealloc'	|'caller_dealloc'  |'caller_dealloc'|'callee_dealloc'
 	 * 
 	 * 
 	 * </pre>
@@ -671,7 +671,7 @@ public class DeallocationAnalyzer extends Analyzer {
 				// The substructure is passed to function call with 'false' flag
 				return "_SUBSTRUCTURE_DEALLOC" + "\t" + checks;
 			}
-
+			
 			if (!isMutated) {
 				// NOT mutated
 				if (!isReturned) {
