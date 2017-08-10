@@ -330,26 +330,30 @@ exec(){
 # # ###  (naive + de-allocated, copy_reduced, copy_reduced + de-allocated)
 # # ###
 # # ###########################################
-# # # # ## # Reverse test case
-init Reverse
-exec Reverse original
-
-# # # # # # # # # # newTicTacToe test case
-init newTicTacToe
-exec newTicTacToe original
-
-# # # # # # # ## # BubbleSort test case
-init BubbleSort
-exec BubbleSort original
-
-# # # # # # # ## # MergeSort test case
-init MergeSort
-exec MergeSort original
-
-# # # # # # # MatrixMult test case
-init MatrixMult
-exec MatrixMult original
+# # # # # ## # Reverse test case
+# init Reverse
+# exec Reverse original
+#
+# # # # # # # # # # # newTicTacToe test case
+# init newTicTacToe
+# exec newTicTacToe original
+#
+# # # # # # # # ## # BubbleSort test case
+# init BubbleSort
+# exec BubbleSort original
+#
+# # # # # # # # ## # MergeSort test case
+# init MergeSort
+# exec MergeSort original
+#
+# # # # # # # # MatrixMult test case
+# init MatrixMult
+# exec MatrixMult original
 ####exec MatrixMult original 12000 # Naive code runs out of memory
+# ### Cashtill test case
+init Cashtill
+exec Cashtill original
+
 # # ### CoinGame test case ###
 #init CoinGame
 #exec CoinGame original
@@ -364,12 +368,6 @@ exec MatrixMult original
 # # ###Sobel Edge test
 #init SobelEdge
 #exec SobelEdge original
-
-# ### Cashtill test case
-#init Cashtill
-#exec Cashtill original
-
-
 
 # # ## Fibonacci test case
 # # init Fibonacci

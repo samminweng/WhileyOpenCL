@@ -254,29 +254,29 @@ exec(){
 	###read -p "Press [Enter] to continue..."
 }
 
-# # # # ### Reverse test case##
-init Reverse
-exec Reverse original
-
-# # # ### newTicTacToe test case ###
-init newTicTacToe
-exec newTicTacToe original
-
-# # # ## # BubbleSort test case##
-init BubbleSort
-exec BubbleSort original
-
-# # # ## # MergeSort test case##
-init MergeSort
-exec MergeSort original
-
-# # # # MatrixMult test case##
-init MatrixMult
-exec MatrixMult original
+# # # # # ### Reverse test case##
+# init Reverse
+# exec Reverse original
+#
+# # # # ### newTicTacToe test case ###
+# init newTicTacToe
+# exec newTicTacToe original
+#
+# # # # ## # BubbleSort test case##
+# init BubbleSort
+# exec BubbleSort original
+#
+# # # # ## # MergeSort test case##
+# init MergeSort
+# exec MergeSort original
+#
+# # # # # MatrixMult test case##
+# init MatrixMult
+# exec MatrixMult original
 
 # #### Cashtill test case
-#init Cashtill
-#exec Cashtill original
+init Cashtill
+exec Cashtill original
 
 # # # ###Sobel Edge test
 #init SobelEdge

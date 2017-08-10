@@ -82,8 +82,8 @@ BEGIN {
 	filename = "";
 	FS = "\n";
 	## Test case name
-	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
-	#testcases="CoinGame";
+	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
+	testcases="Cashtill";
 
 	## Program Type
 	programs["Reverse"]="original";
@@ -134,6 +134,7 @@ BEGIN {
 	exectypes["BubbleSort"] = "seq";
 	exectypes["MergeSort"] = "seq";
 	exectypes["MatrixMult"] = "seq";
+	exectypes["Cashtill"] = "seq";
 	#exectypes["MergeSort"] = "seq cilkspawn cilkspawn_seq";
 	#exectypes["LZ77"] = "mapreduce_seq mapreduce_openmp cilk_reducer_seq cilk_reducer";
 	exectypes["LZ77"] = "seq openmp";
