@@ -11,12 +11,11 @@ BENCHMARKDIR="$(pwd)"
 ## declare compiler used for compilation
 declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" \
 					   [MergeSort]="gcc" [MatrixMult]="gcc" \
-					   [LZ77]="gcc" [SobelEdge]="gcc" [Cashtill]="gcc" \
-					   [AppendArrayPattern]="gcc" )
+					   [Cashtill]="gcc" [CoinGame]="gcc"\
+					   [LZ77]="gcc" [SobelEdge]="gcc" )
 
 ## declare 4 kinds of code generation
 declare -a codegens=("naive" "naivedealloc" "nocopy" "nocopydealloc")
-##declare -a codegens=("naive")
 
 ## Declare an associative array for pattern matching
 declare -A patterns=( [LZ77]=compress )
@@ -30,7 +29,8 @@ declare -A parameters=( [Reverse]="100000 1000000 10000000" [newTicTacToe]="1000
 						[MatrixMult]="1000 2000 3000" \
 						[LZ77]="medium1x medium2x medium4x" \
 						[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm" \
-						[Cashtill]="100 200 300"
+						[Cashtill]="100 200 300" \
+						[CoinGame]="100 1000 10000"
 					   )
 ## Declare an associative array for image size in sobeledge test case
 declare -A widths=( [image32x32.pbm]=32 [image64x64.pbm]=64 [image128x128.pbm]=128 \
@@ -275,8 +275,12 @@ exec(){
 # exec MatrixMult original
 
 # #### Cashtill test case
-init Cashtill
-exec Cashtill original
+#init Cashtill
+#exec Cashtill original
+
+# ### CoinGame test case ###
+init CoinGame
+exec CoinGame original
 
 # # # ###Sobel Edge test
 #init SobelEdge
@@ -300,18 +304,6 @@ exec Cashtill original
 # exec GCD cached 10
 # exec GCD cached 20
 # exec GCD cached 30
-
-# ### CoinGame test case ###
-# init CoinGame
-# exec CoinGame original 100
-# exec CoinGame original 200
-# exec CoinGame original 300
-# exec CoinGame single 100
-# exec CoinGame single 200
-# exec CoinGame single 300
-# exec CoinGame array 100
-# exec CoinGame array 200
-# exec CoinGame array 300
 
 # # ### NQueen test case
 # init NQueens

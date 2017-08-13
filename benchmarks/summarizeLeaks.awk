@@ -5,26 +5,19 @@ BEGIN {
 	FS = "\t";
 	# Test case name
 	##testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
-	testcases="Cashtill";
+	testcases="CoinGame";
 	## Program Type
 	programs["Reverse"]="original";
 	programs["newTicTacToe"]="original";
 	programs["BubbleSort"]="original";
 	programs["MergeSort"]="original";
 	programs["MatrixMult"]="original";
-	# programs["MatrixMult"]="original transpose 2DArray";
-	# programs["Fibonacci"]="original";
-	# programs["GCD"]="original cached";
-	# programs["CoinGame"]="original single array";
 	programs["SobelEdge"]="original";
-	# ## Recursive function call
-	# programs["NQueens"]="original integer";
-	# ### Pattern transformation
 	programs["LZ77"]="original";
 	programs["Cashtill"]="original";
+	programs["CoinGame"]="original";
 	# Compiler
 	compilers = "gcc";
-	#compilers = "gcc clang polly openmp";
 	# Pattern matching
 	patterns["Reverse"] = "disabled";
 	patterns["newTicTacToe"] = "disabled";
@@ -34,6 +27,7 @@ BEGIN {
 	patterns["LZ77"] = "disabled enabled";
 	patterns["SobelEdge"] = "disabled";
 	patterns["Cashtill"] = "disabled";
+	patterns["CoinGame"] = "disabled";
 	# Code Generation
 	codegens="naive naivedealloc nocopy nocopydealloc";
 	## Code type
@@ -44,18 +38,12 @@ BEGIN {
 	parameters["MergeSort"]="1000 10000 100000";
 	parameters["BubbleSort"]="1000 10000 100000";
 	parameters["MatrixMult"]="1000 2000 3000";
-	# parameters["Fibonacci"]="10 20 30";
-	# parameters["GCD"]="10 20 30";
-	# parameters["CoinGame"]="100 200 300";
+	parameters["CoinGame"]="100 1000 10000";
 	parameters["SobelEdge"]="image32x32 image64x64 image128x128";
-	# ## Recursive function call
-	#
-	# parameters["NQueens"]="8 9 10";
 	parameters["Cashtill"]="100 200 300";
 	# ### pattern transformation
 	parameters["LZ77"]="medium1x medium2x medium4x";
 	# The number of threads
-	#threads="1 2 4";
 	threads="1";
 	count[""]=0;
 	# Leak

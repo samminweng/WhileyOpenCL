@@ -43,7 +43,6 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %3 = %9  : int
-	// isCopyEliminated = true
 	s = _9;
 	//loop (%0, %3, %4, %5, %6, %7, %8, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40)
 	while(true){
@@ -52,7 +51,6 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 		//const %10 = 0 : int
 		_10 = 0;
 		//assign %4 = %10  : int
-		// isCopyEliminated = true
 		i = _10;
 		//loop (%0, %4, %5, %6, %7, %8, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38)
 		while(true){
@@ -63,7 +61,6 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 			//add %12 = %4, %3 : int
 			_12=i+s;
 			//assign %5 = %12  : int
-			// isCopyEliminated = true
 			j = _12;
 			//const %13 = 1 : int
 			_13 = 1;
@@ -80,7 +77,6 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 			//indexof %19 = %0, %18 : int[]
 			_19=moves[_18];
 			//assign %6 = %19  : int
-			// isCopyEliminated = true
 			y = _19;
 			//const %20 = 2 : int
 			_20 = 2;
@@ -93,7 +89,6 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 			//indexof %24 = %0, %23 : int[]
 			_24=moves[_23];
 			//assign %7 = %24  : int
-			// isCopyEliminated = true
 			x = _24;
 			//mul %25 = %4, %1 : int
 			_25=i*n;
@@ -106,7 +101,6 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 			//indexof %29 = %0, %28 : int[]
 			_29=moves[_28];
 			//assign %8 = %29  : int
-			// isCopyEliminated = true
 			z = _29;
 			//invoke (%31) = (%7, %6) whiley/lang/Math:min : function(int,int)->(int)
 			{
@@ -129,14 +123,12 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 			//add %36 = %35, %5 : int
 			_36=_35+j;
 			//update %0[%36] = %30 : int[] -> int[]
-			// isCopyEliminated = true
 			moves[_36] = _30;
 			//const %37 = 1 : int
 			_37 = 1;
 			//add %38 = %4, %37 : int
 			_38=i+_37;
 			//assign %4 = %38  : int
-			// isCopyEliminated = true
 			i = _38;
 //.blklab3
 blklab3:;
@@ -148,7 +140,6 @@ blklab2:;
 		//add %40 = %3, %39 : int
 		_40=s+_39;
 		//assign %3 = %40  : int
-		// isCopyEliminated = true
 		s = _40;
 //.blklab1
 blklab1:;
@@ -214,13 +205,11 @@ int main(int argc, char** args){
 	}
 	//assign %1 = %5  : null|int
 	_DEALLOC(max);
-	// isCopyEliminated = true
-	max = _5;
-	_TRANSFER_DEALLOC(max, _5);
+	_NEW_INTEGER_POINTER(max, _5);
+	_ADD_DEALLOC(max);
 	//ifis %1, null goto blklab4 : null|int
 	if(max == NULL) { goto blklab4;}
 	//assign %2 = %1  : int
-	// isCopyEliminated = true
 	n = *max;
 	//const %9 = 0 : int
 	_9 = 0;
@@ -240,21 +229,19 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_15);
 	//assign %3 = %15  : int[]
 	_DEALLOC(moves);
-	// isCopyEliminated = true
-	_UPDATE_1DARRAY(moves, _15);
-	_TRANSFER_DEALLOC(moves, _15);
+	_COPY_1DARRAY_int64_t(moves, _15);
+	_ADD_DEALLOC(moves);
 	//invoke (%16) = (%3, %2) CoinGame_original:findMoves : function(int[],int)->(int[])
 	{
+		void* moves_tmp;
 		_DEALLOC(_16);
-		// isCopyEliminated of '_3' = true
-		_16 = _findMoves_(_1DARRAY_PARAM(moves), false, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
-		_RESET_DEALLOC(_16, moves, "true-true-false" , "findMoves");
+		_16 = _findMoves_(_COPY_1DARRAY_PARAM_int64_t(moves), false, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
+		_CALLER_DEALLOC(_16, moves, "true-true-false" , "findMoves");
 	}
 	//assign %3 = %16  : int[]
 	_DEALLOC(moves);
-	// isCopyEliminated = true
-	_UPDATE_1DARRAY(moves, _16);
-	_TRANSFER_DEALLOC(moves, _16);
+	_COPY_1DARRAY_int64_t(moves, _16);
+	_ADD_DEALLOC(moves);
 	//const %17 = 1 : int
 	_17 = 1;
 	//sub %18 = %2, %17 : int
@@ -262,7 +249,6 @@ int main(int argc, char** args){
 	//indexof %19 = %3, %18 : int[]
 	_19=moves[_18];
 	//assign %4 = %19  : int
-	// isCopyEliminated = true
 	sum_alice = _19;
 	//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %21 = %20 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

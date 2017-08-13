@@ -1,0 +1,14 @@
+Memory Leak (bytes)
+TestCase	ProgramType	Compiler	Pattern	Parameter	CodeGen	Code	Thread	definite loss	indirect loss	possible loss	reachable loss
+CoinGame	original	gcc	disabled	100	naive	seq	1	83232	0	0	250336
+CoinGame	original	gcc	disabled	100	naivedealloc	seq	1	0	0	0	0
+CoinGame	original	gcc	disabled	100	nocopy	seq	1	0	0	0	83864
+CoinGame	original	gcc	disabled	100	nocopydealloc	seq	1	0	0	0	0
+CoinGame	original	gcc	disabled	1000	naive	seq	1	8032032	0	0	24096744
+CoinGame	original	gcc	disabled	1000	naivedealloc	seq	1	0	0	0	0
+CoinGame	original	gcc	disabled	1000	nocopy	seq	1	0	0	0	8032672
+CoinGame	original	gcc	disabled	1000	nocopydealloc	seq	1	0	0	0	0
+CoinGame	original	gcc	disabled	10000	naive	seq	1	0	0	800320032	2400960752
+CoinGame	original	gcc	disabled	10000	naivedealloc	seq	1	0	0	0	0
+CoinGame	original	gcc	disabled	10000	nocopy	seq	1	0	0	0	800320680
+CoinGame	original	gcc	disabled	10000	nocopydealloc	seq	1	0	0	0	0
