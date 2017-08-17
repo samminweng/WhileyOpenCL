@@ -112,7 +112,7 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 #define _DECL_DEALLOC_PARAM(a) bool a##_dealloc
 // Declare the passing parameter
 // 'restrict' limits pointer aliasing (https://en.wikipedia.org/wiki/Restrict)
-#define _DECL_1DARRAY_PARAM(a) int64_t *restrict a, size_t a##_size
+#define _DECL_1DARRAY_PARAM(a) int64_t* a, size_t a##_size
 #define _DECL_2DARRAY_PARAM(a) int64_t** a, size_t a##_size, size_t a##_size_size
 // Declare a call-by-reference parameter for output array size
 #define _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE size_t* _size_call_by_ref

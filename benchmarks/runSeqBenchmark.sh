@@ -14,7 +14,7 @@ declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" [
 					   [CoinGame]="gcc" )
 ## declare 4 kinds of code generation
 declare -a codegens=( "naive" "naivedealloc" "nocopy" "nocopydealloc" )
-#declare -a codegens=( "nocopy" )
+#declare -a codegens=( "nocopydealloc" )
 
 ## Declare an associative array for pattern matching
 declare -A patterns=( [LZ77_compress]=compress )
@@ -33,8 +33,8 @@ declare -A parameters=( [Reverse]="100000 1000000 10000000" \
 						#[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm" \
 						[Cashtill]="1000 1200 1400 1600 1800 2000" \
 						#[Cashtill]="100 200 300"
-						[CoinGame]="100 1000 10000" \
-						#[CoinGame]="10000 20000 30000 40000" \
+						[CoinGame]="26000" \
+						#[CoinGame]="10000 20000 25000 30000 40000" \
 					   )
 ## Declare an associative array for image size in sobeledge test case
 declare -A widths=( [image32x32.pbm]=32 [image64x64.pbm]=64 [image128x128.pbm]=128 \

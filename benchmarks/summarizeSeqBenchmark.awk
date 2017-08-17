@@ -134,7 +134,7 @@ BEGIN {
 	parameters["MergeSort"]="1000 10000 100000";
 	parameters["BubbleSort"]="1000 10000 100000";
 	parameters["MatrixMult"]="1000 2000 3000";
-	parameters["CoinGame"]="100 1000 10000";
+	parameters["CoinGame"]="10000 20000 25000 30000 40000";
 	parameters["SobelEdge"]="image32x32 image64x64 image128x128 image256x256 image512x512 image1024x1024";
 	parameters["LZ77"]="large1x large2x large4x large8x large16x large32x large64x large128x large256x";
 	parameters["Cashtill"]="1000 1200 1400 1600 1800 2000";

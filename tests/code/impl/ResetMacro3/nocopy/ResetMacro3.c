@@ -1,0 +1,120 @@
+#include "ResetMacro3.h"
+int64_t* _func_(_DECL_1DARRAY_PARAM(x), int64_t num, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_1DARRAY(_2);
+	_DECL_1DARRAY(a);
+	int64_t _4 = 0;
+	int64_t _5 = 0;
+	_DECL_1DARRAY(_6);
+	int64_t _7 = 0;
+	int64_t _8 = 0;
+	//const %4 = 0 : int
+	_4 = 0;
+	//const %5 = 3 : int
+	_5 = 3;
+	//arraygen %6 = [4; 5] : int[]
+	_NEW_1DARRAY_int64_t(_6, _5, _4);
+	//assign %3 = %6  : int[]
+	// isCopyEliminated = true
+	_UPDATE_1DARRAY(a, _6);
+	//const %7 = 10 : int
+	_7 = 10;
+	//ifle %1, %7 goto blklab0 : int
+	if(num<=_7){goto blklab0;}
+	//const %8 = 0 : int
+	_8 = 0;
+	//update %0[%8] = %1 : int[] -> int[]
+	// isCopyEliminated = true
+	x[_8] = num;
+	//return %0
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(x);
+	return x;
+	//goto blklab1
+	goto blklab1;
+//.blklab0
+blklab0:;
+	//return %3
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(a);
+	return a;
+//.blklab1
+blklab1:;
+	//return
+}
+
+int main(int argc, char** args){
+	_DECL_1DARRAY(x);
+	_DECL_1DARRAY(tmp);
+	int64_t _3 = 0;
+	int64_t _4 = 0;
+	_DECL_1DARRAY(_5);
+	_DECL_1DARRAY(_6);
+	int64_t _7 = 0;
+	int64_t _8 = 0;
+	int64_t _9 = 0;
+	int64_t _10 = 0;
+	void* _11;
+	_DECL_1DARRAY(_13);
+	void* _14;
+	int64_t _16 = 0;
+	int64_t _17 = 0;
+	//const %3 = 2 : int
+	_3 = 2;
+	//const %4 = 3 : int
+	_4 = 3;
+	//arraygen %5 = [3; 4] : int[]
+	_NEW_1DARRAY_int64_t(_5, _4, _3);
+	//assign %1 = %5  : int[]
+	// isCopyEliminated = true
+	_UPDATE_1DARRAY(x, _5);
+	//const %7 = 11 : int
+	_7 = 11;
+	//invoke (%6) = (%1, %7) ResetMacro3:func : function(int[],int)->(int[])
+	{
+		// isCopyEliminated of '_1' = true
+		_6 = _func_(_1DARRAY_PARAM(x), _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
+	}
+	//assign %2 = %6  : int[]
+	// isCopyEliminated = true
+	_UPDATE_1DARRAY(tmp, _6);
+	//assign %1 = %2  : int[]
+	// isCopyEliminated = true
+	_UPDATE_1DARRAY(x, tmp);
+	//assert
+	{
+		//const %8 = 0 : int
+		_8 = 0;
+		//indexof %9 = %1, %8 : int[]
+		_9=x[_8];
+		//const %10 = 11 : int
+		_10 = 11;
+		//ifeq %9, %10 goto blklab2 : int
+		if(_9==_10){goto blklab2;}
+		//fail
+		fprintf(stderr,"fail");
+		exit(-1);
+//.blklab2
+blklab2:;
+	//assert
+	}
+	//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %12 = %11 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %13 = [120,91,48,93,32,61,32] : int[]
+	_NEW_1DARRAY_int64_t(_13, 7, 0);
+	_13[0] = 120; _13[1] = 91; _13[2] = 48; _13[3] = 93; _13[4] = 32; _13[5] = 61; _13[6] = 32; 
+	//indirectinvoke () = %12 (%13) : method(int[])->()
+	{
+		printf_s(_1DARRAY_PARAM(_13));
+	}
+	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %15 = %14 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %16 = 0 : int
+	_16 = 0;
+	//indexof %17 = %1, %16 : int[]
+	_17=x[_16];
+	//indirectinvoke () = %15 (%17) : method(any)->()
+	{
+		printf("%"PRId64"\n", _17);
+	}
+	//return
+	exit(0);
+}
+

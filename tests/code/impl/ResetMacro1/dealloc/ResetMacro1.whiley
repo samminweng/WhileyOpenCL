@@ -1,6 +1,5 @@
 import whiley.lang.*
-
-// The 'func' function change 'x' array and return 'x' array
+// The 'func' function changes and return 'x' array
 function func(int[] x, int num) -> int[]:
     x[0] = num
     return x
