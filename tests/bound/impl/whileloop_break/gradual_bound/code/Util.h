@@ -112,7 +112,7 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 #define _DECL_DEALLOC_PARAM(a) bool a##_dealloc
 // Declare the passing parameter
 // 'restrict' limits pointer aliasing (https://en.wikipedia.org/wiki/Restrict)
-#define _DECL_1DARRAY_PARAM(a) int64_t *restrict a, size_t a##_size
+#define _DECL_1DARRAY_PARAM(a) int64_t* a, size_t a##_size
 #define _DECL_2DARRAY_PARAM(a) int64_t** a, size_t a##_size, size_t a##_size_size
 // Declare a call-by-reference parameter for output array size
 #define _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE size_t* _size_call_by_ref
@@ -146,6 +146,18 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 		})
 // Create an array of integers or integer arrays
 #define _NEW_1DARRAY_int64_t(a, size, value) a##_size = size; a = create1DArray_int64_t(value, a##_size);
+// #define _NEW_1DARRAY_int64_t(a, size, value)\
+//         ({\
+//             a##_size = size;\
+//             a = (int64_t*)malloc(a##_size*sizeof(int64_t));\
+//          	if(a == NULL){\
+//          		fputs("fail to allocate the memory at create1DArray function in Util.c\n", stderr);\
+//          		exit(-2);\
+//          	}\
+//          	for(size_t i=0;i<a##_size;i++){\
+//          		((int64_t*)a)[i] = value;\
+//          	}\
+//         })
 #define _NEW_1DARRAY_BYTE(a, size, value) a##_size = size; a = create1DArray_BYTE(value, a##_size);
 // Create an array of structure pointers
 #define _NEW_1DARRAY_STRUCT(a, size, b, name) \
@@ -316,6 +328,7 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 				free(b##_tmp);\
 				b##_tmp = NULL;\
 			}\
+            a##_dealloc = true;\
 		})
 // Free the extra copy of the structure using built-in structure free function
 #define _CALLER_DEALLOC_STRUCT(a, b, checks, func_name, name) \
@@ -326,20 +339,30 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 				free_##name(b##_tmp);\
 				b##_tmp = NULL;\
 			}\
+            a##_dealloc = true;\
 		})
 // '_CALLEE_DEALLOC' macro makes a copy of actual argument and delegates callee
 // to free the passing parameter 'a = func(copy(b), true)'
-#define _CALLEE_DEALLOC(b, checks, func_name) DEBUG_PRINT("_CALLEE_DEALLOC macro on ( "str(checks)" "str(#b) " "str(func_name)" )");
+#define _CALLEE_DEALLOC(b, checks, func_name)  \
+		({\
+            DEBUG_PRINT("_CALLEE_DEALLOC macro on ( "str(checks)" "str(#b) " "str(func_name)" )");\
+        })
 // '_RETAIN_DEALLOC' macro does NOT make the copy of argument and delegates caller
 // to free the passing parameter 'a = func(b, false)'
-#define _RETAIN_DEALLOC(b, checks, func_name) DEBUG_PRINT("_RETAIN_DEALLOC macro on  ( "str(checks)" "str(#b) " "str(func_name)" )");
-// '_RESET_DEALLOC' macro does NOT make the copy of argument and delegates caller
-// to reset the flag of actual argument 'a = func(b, false)'
-#define _RESET_DEALLOC(b, checks, func_name) \
+#define _RETAIN_DEALLOC(b, checks, func_name)  \
 		({\
-			DEBUG_PRINT("_RESET_DEALLOC macro on  ( "str(checks)" "str(#b) " "str(func_name)" )");\
-			b##_dealloc = false;\
-		})
+            DEBUG_PRINT("_RETAIN_DEALLOC macro on  ( "str(checks)" "str(#b) " "str(func_name)" )");\
+        })
+#define _RESET_DEALLOC(a, b, checks, func_name) \
+		({\
+		    DEBUG_PRINT("_RESET_DEALLOC macro on  ( "str(checks)" "str(#a)" "str(#b)" "str(func_name)" )");\
+            if (a != b) {\
+                a##_dealloc = true;\
+            }else{\
+                a##_dealloc = b##_dealloc;\
+                b##_dealloc = false;\
+            }\
+        })
 // '_SUBSTRUCTURE_DEALLOC' macro applies the subtructure parameter
 #define _SUBSTRUCTURE_DEALLOC(b, checks, func_name) DEBUG_PRINT("_SUBSTRUCTURE_DEALLOC macro on  ( "str(checks)" "str(#b) " "str(func_name)" )");
 /***

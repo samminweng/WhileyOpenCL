@@ -146,6 +146,18 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 		})
 // Create an array of integers or integer arrays
 #define _NEW_1DARRAY_int64_t(a, size, value) a##_size = size; a = create1DArray_int64_t(value, a##_size);
+// #define _NEW_1DARRAY_int64_t(a, size, value)\
+//         ({\
+//             a##_size = size;\
+//             a = (int64_t*)malloc(a##_size*sizeof(int64_t));\
+//          	if(a == NULL){\
+//          		fputs("fail to allocate the memory at create1DArray function in Util.c\n", stderr);\
+//          		exit(-2);\
+//          	}\
+//          	for(size_t i=0;i<a##_size;i++){\
+//          		((int64_t*)a)[i] = value;\
+//          	}\
+//         })
 #define _NEW_1DARRAY_BYTE(a, size, value) a##_size = size; a = create1DArray_BYTE(value, a##_size);
 // Create an array of structure pointers
 #define _NEW_1DARRAY_STRUCT(a, size, b, name) \

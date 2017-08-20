@@ -177,7 +177,8 @@ detectleaks(){
 	## LZ test case
 	if [ $testcase = "LZ77" ]
 	then
-		valgrind --tool=memcheck "--log-file=$result" "./out/$executable" "$BENCHMARKDIR/$testcase/$parameter"
+		valgrind --tool=memcheck "--log-file=$result" "./out/$executable" "$BENCHMARKDIR/$testcase/Inputfiles/$parameter.in" \
+						 "$BENCHMARKDIR/$testcase/Outputfiles/$parameter.dat"
 	else
 		if [ $testcase = "SobelEdge" ]
 		then
@@ -280,16 +281,16 @@ exec(){
 #exec Cashtill original
 
 # ### CoinGame test case ###
-init CoinGame
-exec CoinGame original
+#init CoinGame
+#exec CoinGame original
 
 # # # ###Sobel Edge test
 #init SobelEdge
 #exec SobelEdge original
 
 # # # ####LZ77 test case
-#init LZ77
-#exec LZ77 original
+init LZ77
+exec LZ77 compress
 
 # ### Fibonacci test case###
 # init Fibonacci

@@ -24,6 +24,7 @@ import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 import wyopcl.translator.LiveVariablesAnalysis;
 import wyopcl.translator.bound.Bounds.Threshold;
+import wyopcl.translator.bound.constraint.ArrayUpdate;
 import wyopcl.translator.bound.constraint.Assign;
 import wyopcl.translator.bound.constraint.Const;
 import wyopcl.translator.bound.constraint.Constraint;
@@ -102,7 +103,7 @@ public class BoundAnalyzer {
 		if (BoundAnalyzerHelper.isCached(function)) {
 			BoundAnalyzerHelper.promoteCFGStatus(function);
 		}
-		
+
 	}
 
 	/**
@@ -232,12 +233,26 @@ public class BoundAnalyzer {
 	 */
 	private void analyze(ArrayGenerator code, FunctionOrMethod function) {
 		String target_reg = prefix + code.target(0);
-		String input_reg = prefix + code.operand(1);
+		String value_reg = prefix + code.operand(0);
+		String size_reg = prefix + code.operand(1);
 
 		// Add 'size' attribute to target array
-		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-		graph.addConstraint(new Assign(target_reg+"_size", input_reg));
+		//BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
 
+		if(!BoundAnalyzerHelper.isCached(function)){
+			// Get the current blok
+			BoundBlock cur_blk = BoundAnalyzerHelper.getCurrentBlock(function);
+			// Pass value info
+			cur_blk.addConstraint(new Assign(target_reg, value_reg));
+			// Pass size info
+			cur_blk.addConstraint(new Assign(target_reg+"_size", size_reg));
+
+			// Put 'left' variable to 'Vars' set
+			cur_blk.addVar(target_reg);
+			cur_blk.addVar(target_reg+"_size");
+			cur_blk.addCode(code);
+
+		}
 	}
 
 	/**
@@ -277,14 +292,14 @@ public class BoundAnalyzer {
 	 */
 	private void computeDeadVars(FunctionOrMethod function) {
 		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-		
+
 		for(BoundBlock blk : graph.getBlockList()){
 			blk.computeDeadVars(liveAnalyzer, function);
 		}
-		
-		
+
+
 	}
-	
+
 	/***
 	 * Initialize each variable of a function with an empty domain.
 	 * 
@@ -319,8 +334,8 @@ public class BoundAnalyzer {
 		return changed;
 	}
 
-	
-	
+
+
 	/**
 	 * Create a feedback set that contains one block of the graph 
 	 * so the widening operator can be applied to the block of this set.
@@ -331,14 +346,14 @@ public class BoundAnalyzer {
 		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
 		// Create a hash set that has constant complexity
 		LinkedHashSet<BoundBlock> feedback_set = new LinkedHashSet<BoundBlock>();
-		
+
 		// Put all loop headers to the set
 		List<BoundBlock> blks = graph.getBasicBlockByType(BlockType.LOOP_HEADER);
 		feedback_set.addAll(blks);
-		
+
 		return feedback_set;
 	}
-	
+
 	/**
 	 * Infer the bounds of a function by repeatedly iterating over all blocks in
 	 * CFGraph from the entry block to the exit block, and then inferring the
@@ -358,7 +373,7 @@ public class BoundAnalyzer {
 
 		// Compute the dead variables
 		computeDeadVars(function);
-		
+
 		// Initialize the bound set in all blocks.
 		initialize(function);
 		// Create a deque and put 'entry' and 'code' blocks
@@ -402,7 +417,7 @@ public class BoundAnalyzer {
 
 			// Clone the bounds before the bound inference
 			Bounds bnd_before = (Bounds) blk.getBounds().clone();
-			
+
 			// Produce the initial bound of 'blk' before bound inference.
 			blk.produceInputBound();			
 
@@ -453,13 +468,13 @@ public class BoundAnalyzer {
 			BoundAnalyzerHelper.printCFG(function);
 		}
 
-		
+
 		// Get old bounds
 		if(!boundMap.containsKey(function)){
 			boundMap.put(function, new LinkedHashSet<Bounds>());
 		}
 		Set<Bounds> bnd_set = boundMap.get(function);
-		
+
 		// Add the bounds to HashMap
 		bnd_set.add(bnds);		
 
@@ -482,9 +497,9 @@ public class BoundAnalyzer {
 				// Add the constraint to the size variable of target array
 				cur_blk.addConstraint(new Assign(left+"_size", right+"_size"));
 			}
-			
+
 		}
-		
+
 		// Put both left and right variables to Vars
 		cur_blk.addCode(code);
 		cur_blk.addVar(left);
@@ -514,14 +529,14 @@ public class BoundAnalyzer {
 				BigInteger size = BigInteger.valueOf((((Constant.Array) constant).values).size());
 				cur_blk.addConstraint(new Const(left+"_size", size));
 			}
-			
+
 			// Put 'left' variable to 'Vars' set
 			cur_blk.addVar(left);
 			cur_blk.addCode(code);
-			
+
 		}
-		
-		
+
+
 
 	}
 
@@ -551,7 +566,7 @@ public class BoundAnalyzer {
 	 * @throws CloneNotSupportedException
 	 */
 	private void analyze(Codes.If code, FunctionOrMethod function) {
-		
+
 		String left = prefix + code.operand(0);
 		String right = prefix + code.operand(1);
 		if (!BoundAnalyzerHelper.isCached(function)) {
@@ -561,7 +576,7 @@ public class BoundAnalyzer {
 			Constraint neg_c = null;
 			// Get the label 
 			String label = code.target;
-			
+
 			if (BoundAnalyzerHelper.isIntType(code.type(0))) {
 				switch (code.op) {
 				case EQ:
@@ -596,7 +611,7 @@ public class BoundAnalyzer {
 					throw new RuntimeException("Unknow operator (" + code + ")");
 
 				}
-				
+
 				// Check if the 'if' bytecode is the loop condition.
 				if (this.loop_labels.contains(label)) {
 					// Create a loop body and loop exit.
@@ -671,9 +686,7 @@ public class BoundAnalyzer {
 			if (c_blk != null) {
 				// Create a return block 
 				BoundBlock return_block = graph.createBasicBlock("return"+retOp, BlockType.RETURN, c_blk);
-				
-				
-				
+
 				// Check if the return type is integer.
 				if (BoundAnalyzerHelper.isIntType(type)) {
 					// Add the 'Assign' constraint to the return (ret) variable.
@@ -682,7 +695,7 @@ public class BoundAnalyzer {
 					if(type instanceof Type.Array){
 						return_block.addConstraint((new Assign("return_size", retOp+"_size")));
 					}
-					
+
 					// Put return op to 'Vars' set
 					return_block.addVar(retOp);
 					// Put the code to return blk
@@ -695,8 +708,8 @@ public class BoundAnalyzer {
 					exit_block = graph.createBasicBlock("exit", BlockType.EXIT, return_block);
 				}
 				return_block.addChild(exit_block);
-				
-				
+
+
 
 				graph.setCurrentBlock(null);
 			}
@@ -760,22 +773,22 @@ public class BoundAnalyzer {
 		}
 		return null;
 	}
-	
-	
+
+
 	/**
 	 * Creates a loop structure, including loop header, loop body and loop exit.
 	 * 
 	 * @param code
 	 */
 	private void analyze(Codes.Loop code,  FunctionOrMethod function) {
-		
+
 		// Get the label byte code at the exit of loop codes
 		String loop_label = getFindLoopLabel(code.bytecodes());
 		loop_labels.add(loop_label);
 		// in order to identify the bytecode is inside a loop
 		// Get the list of byte-code and iterate through the list.
 		iterateBytecode(function, code.bytecodes());
-		
+
 	}
 
 
@@ -840,11 +853,27 @@ public class BoundAnalyzer {
 
 
 	/**
-	 * Updates an element of a list. But how do we update the bounds???
+	 * Updates an element of an array. 
 	 * 
 	 * @param code
 	 */
 	private void analyze(Codes.Update code, FunctionOrMethod function) {
+
+		// Get the current blok
+		BoundBlock cur_blk = BoundAnalyzerHelper.getCurrentBlock(function);
+		String left = prefix + code.target(0);
+		String value = prefix + code.operand(1);
+		// Check if the assigned value is an integer
+		if (!BoundAnalyzerHelper.isCached(function)){ 
+			// Use 'equal' constraint to pass bound to left array
+			cur_blk.addConstraint(new ArrayUpdate(left, value));
+		}
+
+		// Put 'left' variable to 'Vars' set
+		cur_blk.addVar(left);
+		cur_blk.addVar(left+"_size");
+		cur_blk.addVar(value);
+		cur_blk.addCode(code);
 
 	}
 
@@ -867,7 +896,7 @@ public class BoundAnalyzer {
 				// Link current blk with 'goto' blk
 				c_blk.addChild(goto_blk);
 			}
-			
+
 			graph.setCurrentBlock(null);
 		}
 	}
@@ -908,7 +937,7 @@ public class BoundAnalyzer {
 			if(!this.boundMap.containsKey(function)){
 				this.inferBounds(function);
 			}
-			
+
 			Set<Bounds> bnd_set = this.boundMap.get(function);
 			// Produce final bound as an union of all bounds
 			Bounds union_bnd = new Bounds();
@@ -917,13 +946,13 @@ public class BoundAnalyzer {
 				Bounds bnd = iterator.next();
 				union_bnd.union(bnd);
 			}
-			
+
 			System.out.println("Final bounds of "+function.name() + " :");
 			BoundAnalyzerHelper.printBoundsAndSize(function, union_bnd);
-			
+
 			// Put union bound to map
 			this.unionBound.put(function, union_bnd);
-			
+
 		}
 		// Return union bound
 		return this.unionBound.get(function);
@@ -931,7 +960,7 @@ public class BoundAnalyzer {
 
 
 
-	
+
 	/**
 	 * Obtain the inferred domain of given register in the function
 	 * 
@@ -987,7 +1016,7 @@ public class BoundAnalyzer {
 						return "uint32_t";
 					}
 				}
-				
+
 				// Unsigned 64-bit integers
 				return "uint64_t";
 

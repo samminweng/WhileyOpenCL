@@ -53,6 +53,7 @@ public class BoundAnalysisTestCase {
 				"whileloop",
 				"whileloop_break",
 				"nestedwhileloop",
+				"ResetMacro3"
 				//"bubblesort"
 			});
 	}

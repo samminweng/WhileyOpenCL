@@ -10,7 +10,7 @@ BENCHMARKDIR="$(pwd)"
 
 ## declare compiler used for compilation
 declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" [MergeSort]="gcc" [MatrixMult]="gcc" \
-					   [LZ77]="polly" [SobelEdge]="gcc polly" [Cashtill]="gcc" \
+					   [LZ77]="gcc" [SobelEdge]="gcc polly" [Cashtill]="gcc" \
 					   [CoinGame]="gcc" )
 ## declare 4 kinds of code generation
 declare -a codegens=( "naive" "naivedealloc" "nocopy" "nocopydealloc" )
@@ -28,7 +28,8 @@ declare -A parameters=( [Reverse]="100000 1000000 10000000" \
 						[BubbleSort]="1000 10000 100000" \
 						[MergeSort]="1000 10000 100000" \
 						[MatrixMult]="1000 2000 3000" \
-						[LZ77]="large1x large2x large4x large8x large16x large32x large64x large128x large256x" \
+						#[LZ77]="large1x large2x large4x large8x large16x large32x large64x large128x large256x" \
+						[LZ77]="large1x large2x large4x" \
 						[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm image256x256.pbm image512x512.pbm image1024x1024.pbm" \
 						#[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm" \
 						[Cashtill]="1000 1200 1400 1600 1800 2000" \
@@ -271,8 +272,8 @@ exec(){
 				# Test pattern is missing or not (non-empty string (-n))
 				if [ -n "$str" ]
 				then
-					patternmatches="enabledpattern"
-					##patternmatches="disabledpattern enabledpattern"
+					#patternmatches="enabledpattern"
+					patternmatches="disabledpattern enabledpattern"
 					#read -p "Found Pattern..."${patternmatches}
 				else
 					patternmatches="disabledpattern"
@@ -355,13 +356,13 @@ exec(){
 #exec Cashtill original
 
 # # ### CoinGame test case ###
-init CoinGame
-exec CoinGame original
-#exec CoinGame array
+##init CoinGame
+##exec CoinGame original
+
 
 #### LZ77 test case
-#init LZ77
-#exec LZ77 compress
+init LZ77
+exec LZ77 compress
 #exec LZ77 decompress
 #exec LZ77 optimised_decompress
 
