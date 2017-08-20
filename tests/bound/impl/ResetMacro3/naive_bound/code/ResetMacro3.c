@@ -1,11 +1,14 @@
 #include "ResetMacro3.h"
 //	domain(_0)	= [2..11]	
-int64_t* _func_(_DECL_1DARRAY_PARAM(x), uint16_t num, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
-	_DECL_1DARRAY(_2);
-	_DECL_1DARRAY(a);
+uint16_t* _func_(uint16_t* x, size_t x_size, uint16_t num, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	int64_t* _2 = 0; //domain(_2)	= [empty..empty]	
+	size_t _2_size = 0;
+	uint16_t* a = 0; //domain(_3)	= [0..0]	
+	size_t a_size = 0;
 	uint16_t _4 = 0; //domain(_4)	= [0..0]	
 	uint16_t _5 = 0; //domain(_5)	= [3..3]	
-	_DECL_1DARRAY(_6);
+	uint16_t* _6 = 0; //domain(_6)	= [0..0]	
+	size_t _6_size = 0;
 	uint16_t _7 = 0; //domain(_7)	= [10..10]	
 	uint16_t _8 = 0; //domain(_8)	= [0..0]	
 	//const %4 = 0 : int
@@ -13,9 +16,9 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(x), uint16_t num, _DECL_1DARRAYSIZE_PARAM_CA
 	//const %5 = 3 : int
 	_5 = 3;
 	//arraygen %6 = [4; 5] : int[]
-	_NEW_1DARRAY_int64_t(_6, _5, _4);
+	_NEW_1DARRAY(_6, _5, _4, uint16_t);
 	//assign %3 = %6  : int[]
-	_COPY_1DARRAY_int64_t(a, _6);
+	_COPY_1DARRAY(a, _6, uint16_t);
 	//const %7 = 10 : int
 	_7 = 10;
 	//ifle %1, %7 goto blklab0 : int
@@ -41,18 +44,23 @@ blklab1:;
 
 //
 int main(int argc, char** args){
-	_DECL_1DARRAY(x);
-	_DECL_1DARRAY(tmp);
+	uint16_t* x = 0; //domain(_1)	= [2..2]	
+	size_t x_size = 0;
+	int64_t* tmp = 0; //domain(_2)	= [empty..empty]	
+	size_t tmp_size = 0;
 	uint16_t _3 = 0; //domain(_3)	= [2..2]	
 	uint16_t _4 = 0; //domain(_4)	= [3..3]	
-	_DECL_1DARRAY(_5);
-	_DECL_1DARRAY(_6);
+	uint16_t* _5 = 0; //domain(_5)	= [2..2]	
+	size_t _5_size = 0;
+	int64_t* _6 = 0; //domain(_6)	= [empty..empty]	
+	size_t _6_size = 0;
 	uint16_t _7 = 0; //domain(_7)	= [11..11]	
 	int64_t _8 = 0; //domain(_8)	= [empty..empty]	
 	int64_t _9 = 0; //domain(_9)	= [empty..empty]	
 	int64_t _10 = 0; //domain(_10)	= [empty..empty]	
 	void* _11;
-	_DECL_1DARRAY(_13);
+	int64_t* _13 = 0; //domain(_13)	= [empty..empty]	
+	size_t _13_size = 0;
 	void* _14;
 	int64_t _16 = 0; //domain(_16)	= [empty..empty]	
 	int64_t _17 = 0; //domain(_17)	= [empty..empty]	
@@ -61,20 +69,21 @@ int main(int argc, char** args){
 	//const %4 = 3 : int
 	_4 = 3;
 	//arraygen %5 = [3; 4] : int[]
-	_NEW_1DARRAY_int64_t(_5, _4, _3);
+	_NEW_1DARRAY(_5, _4, _3, uint16_t);
 	//assign %1 = %5  : int[]
-	_COPY_1DARRAY_int64_t(x, _5);
+	_COPY_1DARRAY(x, _5, uint16_t);
 	//const %7 = 11 : int
 	_7 = 11;
 	//invoke (%6) = (%1, %7) ResetMacro3:func : function(int[],int)->(int[])
 	{
 		void* x_tmp;
-		_6 = _func_(_COPY_1DARRAY_PARAM_int64_t(x), _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
+		_COPY_1DARRAY_PARAM(x, int64_t);
+		_6 = _func_(x_tmp, x_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 	}
 	//assign %2 = %6  : int[]
-	_COPY_1DARRAY_int64_t(tmp, _6);
+	_COPY_1DARRAY(tmp, _6, int64_t);
 	//assign %1 = %2  : int[]
-	_COPY_1DARRAY_int64_t(x, tmp);
+	_COPY_1DARRAY(x, tmp, uint16_t);
 	//assert
 	{
 		//const %8 = 0 : int

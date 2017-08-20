@@ -265,8 +265,12 @@ final class BoundAnalyzerHelper {
 			}
 
 			if(ret_type instanceof Type.Array){
+				// Propagate the bounds of return array as a range
+				blk.addConstraint(new Range(ret_var, callee_bnd.getLower("return"), callee_bnd.getUpper("return")));
 				// Propagate the bounds of return array size as a Range constraint
 				blk.addConstraint(new Range(ret_var+"_size", callee_bnd.getLower("return_size"), callee_bnd.getUpper("return_size")));
+				// Add function 'return' to Var set
+				blk.addVar(ret_var);
 			}
 		}
 	}

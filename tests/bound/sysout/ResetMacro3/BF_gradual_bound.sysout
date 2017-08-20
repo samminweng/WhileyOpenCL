@@ -1,12 +1,4 @@
 WARNING: version numbering unavailable
-Parsed 1 source file(s). ...................................................... [116ms+1mb]
-Typed 1 source file(s). ....................................................... [174ms+1mb]
-Generated code for 1 source file(s). ........................................... [30ms+1mb]
-[./ResetMacro3.whiley] applied definite assignment check ............................ [3ms]
-[./ResetMacro3.whiley] applied module check ..................................... [3ms+1mb]
-[./ResetMacro3.whiley] applied loop variants .................................... [0ms+1mb]
-[./ResetMacro3.whiley] applied coercion check ................................... [1ms+1mb]
-Whiley => Wyil: compiled 1 file(s) ............................................ [358ms-1mb]
 func.0 [	const %4 = 0 : int]
 func.1 [	const %5 = 3 : int]
 func.2 [	arraygen %6 = [4; 5] : int[]]
@@ -307,44 +299,6 @@ exit [EXIT]
 Out:{}
 
 === Bound Analysis on main function ===
-main.0 [	const %3 = 2 : int]
-main.1 [	const %4 = 3 : int]
-main.2 [	arraygen %5 = [3; 4] : int[]]
-main.3 [	assign %1 = %5  : int[]]
-main.4 [	const %7 = 11 : int]
-main.5 [	invoke (%6) = (%1, %7) ResetMacro3:func : function(int[],int)->(int[])]
-### Iteration 0 ### 
-'2' blocks in queue : [ENTRY][BLOCK]
-entry [ENTRY] 
-Vars []
-DeadVars []
-Constraints []
-
-IsReachable=true
-isChanged=false
-### Iteration 1 ### 
-'1' blocks in queue : [BLOCK]
-code [BLOCK] 
--------------------------------
-0:const %3 = 2 : int
-1:const %4 = 3 : int
-2:arraygen %5 = [3; 4] : int[]
-3:assign %1 = %5  : int[]
-4:const %7 = 11 : int
--------------------------------
-Vars [_3, _4, _5, _1, _7]
-DeadVars [_3, _4, _5]
-Constraints [_3:=2, _4:=3, _5:=_3, _5_size:=_4, _1:=_5, _1_size:=_5_size, _7:=11]
-
-	domain(_1)	= [2..2]	
-	domain(_1_size)	= [3..3]	
-	domain(_3)	= [2..2]	
-	domain(_4)	= [3..3]	
-	domain(_5)	= [2..2]	
-	domain(_5_size)	= [3..3]	
-	domain(_7)	= [11..11]	
-IsReachable=true
-isChanged=true
 =================================
 
 Bound Analysis of 'main' function:
@@ -358,114 +312,6 @@ Bound Analysis of 'main' function:
 Consistency=true
 
 =================================
-func.0 [	const %4 = 0 : int]
-func.1 [	const %5 = 3 : int]
-func.2 [	arraygen %6 = [4; 5] : int[]]
-func.3 [	assign %3 = %6  : int[]]
-func.4 [	const %7 = 10 : int]
-func.5 [	ifle %1, %7 goto blklab0 : int]
-func.6 [	const %8 = 0 : int]
-func.7 [	update %0[%8] = %1 : int[] -> int[]]
-func.8 [	return %0]
-func.9 [	goto blklab1]
-func.10 [.blklab0]
-func.11 [	return %3]
-func.12 [.blklab1]
-func.13 [	return]
-### Iteration 0 ### 
-'2' blocks in queue : [ENTRY][BLOCK]
-entry [ENTRY] 
-Vars [_0, _1]
-DeadVars []
-Constraints [_0:=[2..2], _0_size:=[3..3], _1:=[11..11]]
-
-	domain(_0)	= [2..2]	
-	domain(_0_size)	= [3..3]	
-	domain(_1)	= [11..11]	
-IsReachable=true
-isChanged=true
-### Iteration 1 ### 
-'1' blocks in queue : [BLOCK]
-code [BLOCK] 
--------------------------------
-0:const %4 = 0 : int
-1:const %5 = 3 : int
-2:arraygen %6 = [4; 5] : int[]
-3:assign %3 = %6  : int[]
-4:const %7 = 10 : int
--------------------------------
-Vars [_4, _5, _6, _3, _7, _0, _1]
-DeadVars [_4, _5, _6]
-Constraints [_4:=0, _5:=3, _6:=_4, _6_size:=_5, _3:=_6, _3_size:=_6_size, _7:=10, _0:=[2..2], _0_size:=[3..3], _1:=[11..11]]
-
-	domain(_0)	= [2..2]	
-	domain(_0_size)	= [3..3]	
-	domain(_1)	= [11..11]	
-	domain(_3)	= [0..0]	
-	domain(_3_size)	= [3..3]	
-	domain(_4)	= [0..0]	
-	domain(_5)	= [3..3]	
-	domain(_6)	= [0..0]	
-	domain(_6_size)	= [3..3]	
-	domain(_7)	= [10..10]	
-IsReachable=true
-isChanged=true
-### Iteration 2 ### 
-'2' blocks in queue : [IF][ELSE]
-blklab0 [IF] 
--------------------------------
-0:const %8 = 0 : int
-1:update %0[%8] = %1 : int[] -> int[]
--------------------------------
-Vars [_1, _7, _8, _0]
-DeadVars [_1, _7, _8]
-Constraints [_1>_7, _8:=0, _0=_0cup_1]
-
-	domain(_0)	= [2..11]	
-	domain(_0_size)	= [3..3]	
-	domain(_1)	= [11..11]	
-	domain(_3)	= [0..0]	
-	domain(_3_size)	= [3..3]	
-	domain(_7)	= [10..10]	
-	domain(_8)	= [0..0]	
-IsReachable=true
-isChanged=true
-### Iteration 3 ### 
-'2' blocks in queue : [ELSE][RETURN]
-blklab0 [ELSE] 
--------------------------------
-0:ifle %1, %7 goto blklab0 : int
--------------------------------
-Vars [_1, _7]
-DeadVars [_1, _7]
-Constraints [_1<=_7]
-
-	domain(_0)	= [2..2]	
-	domain(_0_size)	= [3..3]	
-	domain(_1)	= [empty..empty]	
-	domain(_3)	= [0..0]	
-	domain(_3_size)	= [3..3]	
-	domain(_7)	= [empty..empty]	
-IsReachable=false
-isChanged=false
-### Iteration 4 ### 
-'1' blocks in queue : [RETURN]
-return_0 [RETURN] 
--------------------------------
-0:return %0
--------------------------------
-Vars [_0]
-DeadVars []
-Constraints [return:=_0, return_size:=_0_size]
-
-	domain(_0)	= [2..11]	
-	domain(_0_size)	= [3..3]	
-	domain(_3)	= [0..0]	
-	domain(_3_size)	= [3..3]	
-	domain(return)	= [2..11]	
-	domain(return_size)	= [3..3]	
-IsReachable=true
-isChanged=true
 =================================
 
 Bound Analysis of 'func' function:
@@ -485,62 +331,6 @@ Bound Analysis of 'func' function:
 Consistency=true
 
 =================================
-main.6 [	assign %2 = %6  : int[]]
-main.7 [	assign %1 = %2  : int[]]
-main.8 [	assert]
-main.9 [	fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
-main.10 [	fieldload %12 = %11 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
-main.11 [	const %13 = [120,91,48,93,32,61,32] : int[]]
-main.12 [	indirectinvoke () = %12 (%13) : method(int[])->()]
-main.13 [	fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
-main.14 [	fieldload %15 = %14 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
-main.15 [	const %16 = 0 : int]
-main.16 [	indexof %17 = %1, %16 : int[]]
-main.17 [	indirectinvoke () = %15 (%17) : method(any)->()]
-main.18 [	return]
-### Iteration 0 ### 
-'2' blocks in queue : [ENTRY][BLOCK]
-entry [ENTRY] 
-Vars []
-DeadVars []
-Constraints []
-
-IsReachable=true
-isChanged=false
-### Iteration 1 ### 
-'1' blocks in queue : [BLOCK]
-code [BLOCK] 
--------------------------------
-0:const %3 = 2 : int
-1:const %4 = 3 : int
-2:arraygen %5 = [3; 4] : int[]
-3:assign %1 = %5  : int[]
-4:const %7 = 11 : int
-5:assign %2 = %6  : int[]
-6:assign %1 = %2  : int[]
-7:const %13 = [120,91,48,93,32,61,32] : int[]
-8:const %16 = 0 : int
--------------------------------
-Vars [_3, _4, _5, _1, _7, _6, _2, _13, _16]
-DeadVars [_3, _4, _5, _6, _2, _13, _16]
-Constraints [_3:=2, _4:=3, _5:=_3, _5_size:=_4, _1:=_5, _1_size:=_5_size, _7:=11, _6:=[2..11], _6_size:=[3..3], _2:=_6, _2_size:=_6_size, _1:=_2, _1_size:=_2_size, _13_size:=7, _16:=0, _17==_1]
-
-	domain(_1)	= [2..11]	
-	domain(_13_size)	= [7..7]	
-	domain(_16)	= [0..0]	
-	domain(_17)	= [empty..empty]	
-	domain(_1_size)	= [3..3]	
-	domain(_2)	= [2..11]	
-	domain(_2_size)	= [3..3]	
-	domain(_3)	= [2..2]	
-	domain(_4)	= [3..3]	
-	domain(_5)	= [2..2]	
-	domain(_5_size)	= [3..3]	
-	domain(_6)	= [2..11]	
-	domain(_6_size)	= [3..3]	
-	domain(_7)	= [11..11]	
-IsReachable=false
-isChanged=false
 =================================
 
 Bound Analysis of 'main' function:

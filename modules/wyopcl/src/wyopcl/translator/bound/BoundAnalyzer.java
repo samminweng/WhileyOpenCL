@@ -964,6 +964,8 @@ public class BoundAnalyzer {
 	/**
 	 * Obtain the inferred domain of given register in the function
 	 * 
+	 * If passed register == -1, then return the type of return value
+	 * 
 	 * @param register
 	 * @param function
 	 * @return
@@ -971,9 +973,16 @@ public class BoundAnalyzer {
 	public Domain getInferredDomain(int register, FunctionOrMethod function) {
 		// Get the bounds
 		Bounds bounds = computeUnionBounds(function);
+		
+		if(register == -1){
+			return bounds.getDomain("return");		
+		}
+		
+		
 		return bounds.getDomain(prefix+register);	
 	}
 
+	
 
 	/**
 	 * Use the bound results to suggest the proper integer type, i.e.

@@ -162,8 +162,22 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						// Declare a BYTE array 
 						declarations.add(indent + "_DECL_" + dimension + "DARRAY_BYTE(" + var + ");");
 					}else if (stores.isIntType(elm_type)) {
-						// Declare an integer array 
-						declarations.add(indent + "_DECL_" + dimension + "DARRAY(" + var + ");");
+						// Choose integer type for a single dimensional array
+						if(boundAnalyzer.isPresent() && dimension == 1){
+							String translateType = boundAnalyzer.get().suggestIntegerType(reg, function);
+							String def = indent + translateType + "* " + var + " = 0;";// Initialize an integer variable to 0
+
+							if(boundAnalyzer.isPresent()){
+								def = def + " //" + boundAnalyzer.get().getInferredDomain(reg, function);
+							}
+
+							declarations.add(def);
+							// Declare array size variable as 'size_t' type
+							declarations.add(indent + "size_t " + var + "_size = 0;");
+						}else{
+							// Declare an integer array using int64_t
+							declarations.add(indent + "_DECL_" + dimension + "DARRAY(" + var + ");");
+						}
 					} else {
 						String translateType = CodeGeneratorHelper.translateType(elm_type, stores);
 						declarations.add(indent + translateType + "* " + var + ";");
@@ -269,13 +283,20 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			declaration += "int main(int argc, char** args)";
 		} else {
 			// Translate function declaration in C
+			
+			// Translate the return type
 			Type ret_type = null;
 			{
-				// Translate the return type
 				if (function.type().returns().size() > 0) {
 					ret_type = function.type().returns().get(0);
-					// Translate return type
-					declaration += CodeGeneratorHelper.translateType(ret_type, stores);
+					// Translate array typed return value
+					if(boundAnalyzer.isPresent() && ret_type instanceof Type.Array){
+						// Register of return value is -1					 
+						declaration += boundAnalyzer.get().suggestIntegerType(-1, function) +"*";
+					}else{
+						// Translate return type
+						declaration += CodeGeneratorHelper.translateType(ret_type, stores);
+					}
 				} else {
 					// no return values
 					declaration += "void";
@@ -283,7 +304,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Function name, e.g. _Cash_
 				declaration += " " + stores.getFunctionName(function) + "(";
 			}
-
+			// Translate parameter types
 			{
 				// Translate input parameters, separated by comma
 				List<String> parameters = new ArrayList<String>();
@@ -292,11 +313,21 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					Type parameter_type = params.get(op);
 					String var = stores.getVar(op, function);
 					if (parameter_type instanceof Type.Array) {
+						// Array type
+						
 						Type elm_type = stores.getArrayElementType((Type.Array) parameter_type);
 						if (stores.isIntType(elm_type)) {
-							// Add extra 'size' variable for array variable
 							int dimension = stores.getArrayDimension(parameter_type);
-							parameters.add("_DECL_" + dimension + "DARRAY_PARAM(" + var + ")");
+							if(boundAnalyzer.isPresent() && dimension == 1){
+								String translateType = boundAnalyzer.get().suggestIntegerType(op, function);
+								// Pass array parameter along with array size
+								String def = translateType + "* " + var + ", size_t "+ var + "_size";
+								parameters.add(def);
+								
+							}else{
+								// Generate the parameter types using default macro
+								parameters.add("_DECL_" + dimension + "DARRAY_PARAM(" + var + ")");
+							}							
 						} else {
 							// E.g. POS* var, size_t var_size
 							String elem_type = CodeGeneratorHelper.translateType(parameter_type, stores);
@@ -522,7 +553,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					// Have in-place update 
 					return indent + "_UPDATE_1DARRAY(" + lhs + ", " + rhs + ");";
 				} else {
-					// 
 					return indent + "_COPY_1DARRAY_int64_t(" + lhs + ", " + rhs + ");";
 				}
 			}
@@ -570,7 +600,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				if (isCopyEliminated) {
 					return indent + "_UPDATE_" + dimension + "DARRAY(" + lhs + ", " + rhs + ");";
 				} else {
-					return indent + "_COPY_" + dimension + "DARRAY_int64_t(" + lhs + ", " + rhs + ");";
+					if(boundAnalyzer.isPresent()&& dimension == 1){
+						String translateType = boundAnalyzer.get().suggestIntegerType(code.target(0), function);
+						return indent + "_COPY_1DARRAY(" + lhs + ", " + rhs + ", "+translateType+");";
+					}else{
+						return indent + "_COPY_" + dimension + "DARRAY_int64_t(" + lhs + ", " + rhs + ");";
+					}
 				}
 			}else {
 				String struct = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");
@@ -930,7 +965,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					if(elm instanceof Type.Byte){
 						parameters.add("_COPY_" + dimension + "DARRAY_PARAM_BYTE(" + parameter + ")");
 					}else if (stores.isIntType(elm)) {
-						parameters.add("_COPY_" + dimension + "DARRAY_PARAM_int64_t(" + parameter + ")");
+						
+						if(boundAnalyzer.isPresent()&& dimension == 1){
+							String translateType = boundAnalyzer.get().suggestIntegerType(code.target(0), function);
+							// Make a copy before the function call
+							statements.add(indent + "_COPY_1DARRAY_PARAM(" + parameter + ", "+translateType+");");
+							// Pass the copied parameter to function call
+							parameters.add(parameter+"_tmp, "+parameter+"_size");
+						}else{
+							parameters.add("_COPY_" + dimension + "DARRAY_PARAM_int64_t(" + parameter + ")");
+						}
+						
 					} else {
 						String elm_type = CodeGeneratorHelper.translateType(elm, stores).replace("*", "");
 						// Copy the array of structures and pass it as a function parameter
@@ -2207,9 +2252,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement.add(indent + "_NEW_"+dimension+ "DARRAY_BYTE(" + lhs + ", " + size + ", "
 					+ rhs + ");");
 		} else if (stores.isIntType(elm_type)) {
-			// Generate an array with given size and values.
-			statement.add(indent + "_NEW_" + dimension + "DARRAY_int64_t(" + lhs + ", " + size + ", "
-					+ rhs + ");");
+			if(boundAnalyzer.isPresent()){
+				String translateType = boundAnalyzer.get().suggestIntegerType(code.operand(0), function);
+				// Generate a new array using _NEW_1DARRAY macro using
+				statement.add(indent + "_NEW_" + dimension + "DARRAY(" + lhs + ", " + size + ", "
+						+ rhs + ", "+ translateType +");");
+			}else{
+				// Generate an array with given size and values.
+				statement.add(indent + "_NEW_" + dimension + "DARRAY_int64_t(" + lhs + ", " + size + ", "
+						+ rhs + ");");
+			}
 		} else {
 			// Generate an array of structures
 			String struct = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");

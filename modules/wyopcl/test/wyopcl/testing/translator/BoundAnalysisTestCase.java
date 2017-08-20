@@ -21,8 +21,8 @@ public class BoundAnalysisTestCase {
 									 + File.separator + "bound");
 	private static String testcase;// A list of test cases
 	
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(60); // 60 seconds per test
+    //@Rule
+    //public Timeout globalTimeout = Timeout.seconds(60); // 60 seconds per test
 	
 	@Before
 	public void initialize() throws Exception {
