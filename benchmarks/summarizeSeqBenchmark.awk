@@ -36,38 +36,33 @@ function generateReport(results){
 							#print "exectype_total="exectype_total;
 							for(ec=1;ec<=exectype_total;ec++){
 								exectype=exectype_array[ec];
-								#gs_total=split(grains[exectype], gs_array, " ");
-								#for(g=1;g<=gs_total;g++){
-									#grainsize=gs_array[g];
-									th_total=split(threads[exectype], th_array, " ");
-									for(th=1;th<=th_total;th++){
-										thread=th_array[th];
-										key=testcase","program","codegen","pattern","compiler","exectype","parameter","thread;
-										##key=testcase","program","codegen","pattern","compiler","exectype","parameter","thread","grainsize;
-										#print "key="key;
-										#pause();
-										str=testcase"\t"program"\t"compiler"\t"pattern"\t"parameter"\t"codegen"\t"exectype"\t"thread;
-										# Check if there is any result.
-										if(counts[key]>0){
-											## Print out result, e.g. CPU utilization
-						 					for(iteration=1;iteration<=10;iteration++){
-						 						str = str"\t"results[key","iteration];
-						 					}
-											print str;
-						 				}else{
-						 					## Out of memory
-					 						if(counts[key] == -1){
-					 							str = str"\tOOM";
-												print str;
-					 						}
-					 						## Out of time
-					 						if(counts[key] == -2){
-					 							str = str"\tOOT";
-												print str;
-					 						}
+								th_total=split(threads[exectype], th_array, " ");
+								for(th=1;th<=th_total;th++){
+									thread=th_array[th];
+									key=testcase","program","codegen","pattern","compiler","exectype","parameter","thread;
+									#print "key="key;
+									#pause();
+									str=testcase"\t"program"\t"compiler"\t"pattern"\t"parameter"\t"codegen"\t"exectype"\t"thread;
+									# Check if there is any result.
+									if(counts[key]>0){
+										## Print out result, e.g. CPU utilization
+						 				for(iteration=1;iteration<=10;iteration++){
+						 					str = str"\t"results[key","iteration];
 						 				}
-									}
-								#}
+										print str;
+						 			}else{
+						 				## Out of memory
+					 					if(counts[key] == -1){
+					 						str = str"\tOOM";
+											print str;
+					 					}
+					 					## Out of time
+					 					if(counts[key] == -2){
+					 						str = str"\tOOT";
+											print str;
+					 					}
+						 			}
+								}
 							}
 						}
 					}
@@ -83,7 +78,7 @@ BEGIN {
 	FS = "\n";
 	## Test case name
 	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
-	testcases="CoinGame";
+	testcases="LZ77";
 
 	## Program Type
 	programs["Reverse"]="original";
@@ -115,7 +110,7 @@ BEGIN {
 	compilers["BubbleSort"] = "gcc";
 	compilers["MergeSort"] = "gcc";
 	compilers["MatrixMult"] = "gcc";
-	compilers["LZ77"] = "polly";
+	compilers["LZ77"] = "gcc";
 	compilers["SobelEdge"] = "gcc";
 	compilers["Cashtill"] = "gcc";
 	compilers["CoinGame"] = "gcc";
@@ -136,7 +131,7 @@ BEGIN {
 	parameters["MatrixMult"]="1000 2000 3000";
 	parameters["CoinGame"]="10000 20000 25000 30000 40000";
 	parameters["SobelEdge"]="image32x32 image64x64 image128x128 image256x256 image512x512 image1024x1024";
-	parameters["LZ77"]="large1x large2x large4x large8x large16x large32x large64x large128x large256x";
+	parameters["LZ77"]="large1x large2x large4x";
 	parameters["Cashtill"]="1000 1200 1400 1600 1800 2000";
 
 	# The number of threads
@@ -179,11 +174,7 @@ BEGIN {
 		thread = t_array[8];
 	}
 
-	#grainsize=t_array[9];
-
 	key=testcase","program","codegen","pattern","compiler","exectype","parameter","thread;
-	##print "key="key;
-	##pause();
 
 	# Get the execution time
 	if($1 ~ /ExecutionTime:/){
@@ -206,7 +197,7 @@ BEGIN {
 		time_key = key","iteration;
 		exec_times[time_key]=exec_time;
 		### Debug code
-		#print "exec_times["time_key"]="exec_times[time_key];
+		##print "exec_times["time_key"]="exec_times[time_key];
 		##pause();
 	}
 

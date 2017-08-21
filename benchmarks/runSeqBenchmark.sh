@@ -28,12 +28,10 @@ declare -A parameters=( [Reverse]="100000 1000000 10000000" \
 						[BubbleSort]="1000 10000 100000" \
 						[MergeSort]="1000 10000 100000" \
 						[MatrixMult]="1000 2000 3000" \
-						#[LZ77]="large1x large2x large4x large8x large16x large32x large64x large128x large256x" \
-						[LZ77]="large1x large2x large4x" \
+						[LZ77]="medium1x medium2x medium4x medium8x medium16x medium32x medium64x medium128x medium256x medium512x medium1024x" \
 						[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm image256x256.pbm image512x512.pbm image1024x1024.pbm" \
 						#[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm" \
 						[Cashtill]="1000 1200 1400 1600 1800 2000" \
-						#[Cashtill]="100 200 300"
 						[CoinGame]="26000" \
 						#[CoinGame]="10000 20000 25000 30000 40000" \
 					   )

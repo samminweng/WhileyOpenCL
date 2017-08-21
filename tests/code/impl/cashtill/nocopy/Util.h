@@ -245,6 +245,35 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 				printf_##name(a[i]);\
 			}\
 		})
+// Print the first MAX_LENGTH chars and last 10 chars
+#define _PRINT_STR(a) \
+    ({\
+        for(size_t i=0; i < a##_size; i++){\
+           if(i >= 1024){break;}\
+           printf("%c", a[i]);\
+        }\
+        if (a##_size >= 1024) {\
+            printf(" ... ");\
+            for(size_t i=a##_size-10; i<a##_size; i++){\
+                printf("%c", a[i]);\
+            }\
+        }\
+    })
+// Print the first MAX_LENGTH chars and last 10 chars
+#define _PRINTLN_STR(a) \
+    ({\
+        for(size_t i=0; i < a##_size; i++){\
+           if(i >= 1024){break;}\
+           printf("%c", a[i]);\
+        }\
+        if (a##_size >= 1024) {\
+            printf(" ... ");\
+            for(size_t i=a##_size-10; i<a##_size; i++){\
+                printf("%c", a[i]);\
+            }\
+        }\
+        printf("\n");\
+    })
 /***
 * Deallocation Macros
 *

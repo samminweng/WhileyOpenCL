@@ -37,6 +37,7 @@ import wyopcl.translator.bound.constraint.LessThanEquals;
 import wyopcl.translator.bound.constraint.LeftMultiply;
 import wyopcl.translator.bound.constraint.Negate;
 import wyopcl.translator.bound.constraint.NotEquals;
+import wyopcl.translator.bound.constraint.Range;
 import wyopcl.translator.cfg.BasicBlock.BlockType;
 
 /***
@@ -164,7 +165,7 @@ public class BoundAnalyzer {
 				} else if (code instanceof Codes.BinaryOperator) {
 					analyze((Codes.BinaryOperator) code, function);
 				} else if (code instanceof Codes.Convert) {
-					analyze((Codes.Convert) code, function);
+					//analyze((Codes.Convert) code, function);
 				} else if (code instanceof Codes.Const) {
 					analyze((Codes.Const) code, function);
 				} else if (code instanceof Codes.Debug) {
@@ -172,7 +173,7 @@ public class BoundAnalyzer {
 				} else if (code instanceof Codes.Dereference) {
 					// Do nothing
 				} else if (code instanceof Codes.FieldLoad) {
-					analyze((Codes.FieldLoad) code, function);
+					//analyze((Codes.FieldLoad) code, function);
 				} else if (code instanceof Codes.Fail) {
 					analyze((Codes.Fail) code, function);
 				} else if (code instanceof Codes.Goto) {
@@ -182,7 +183,7 @@ public class BoundAnalyzer {
 				} else if (code instanceof Codes.IfIs) {
 					// Do nothing
 				} else if (code instanceof Codes.IndexOf) {
-					analyze((Codes.IndexOf) code, function);
+					//Do nothing
 				} else if (code instanceof Codes.IndirectInvoke) {
 					// Do nothing
 				} else if (code instanceof Codes.Invert) {
@@ -525,6 +526,23 @@ public class BoundAnalyzer {
 			}
 
 			if (constant instanceof Constant.Array) {
+				Constant.Array arr = (Constant.Array) constant;
+				
+				BigInteger max = ((Constant.Integer)arr.values.get(0)).value;
+				BigInteger min = ((Constant.Integer)arr.values.get(0)).value;
+				// Get max and min
+				for(Constant value: arr.values){
+					BigInteger val = ((Constant.Integer)value).value;
+					if(max.compareTo(val)<0){
+						max = val;
+					}
+					if(min.compareTo(val)>0){
+						min = val;
+					}
+					
+				}
+				
+				cur_blk.addConstraint(new Range(left, min, max));
 				// Get the list and extract the size info.
 				BigInteger size = BigInteger.valueOf((((Constant.Array) constant).values).size());
 				cur_blk.addConstraint(new Const(left+"_size", size));
@@ -540,24 +558,24 @@ public class BoundAnalyzer {
 
 	}
 
-	/**
-	 * Implements the propagation rule for <code>Codes.IndexOf</code> bytecode
-	 * to assign the bounds from the source operator register to the target
-	 * operator.
-	 * 
-	 * @param code
-	 */
-	private void analyze(Codes.IndexOf code, FunctionOrMethod function) {
-		if (BoundAnalyzerHelper.isIntType((Type) code.type(0))
-				&& !BoundAnalyzerHelper.isCached(function)) {
-			String target = prefix + code.target(0);
-			String op = prefix + code.operand(0);
-			String index = prefix + code.operand(1);
-			// Get the CFGraph
-			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
-			graph.addConstraint(new Equals(target, op));
-		}
-	}
+//	/**
+//	 * Implements the propagation rule for <code>Codes.IndexOf</code> bytecode
+//	 * to assign the bounds from the source operator register to the target
+//	 * operator.
+//	 * 
+//	 * @param code
+//	 */
+//	private void analyze(Codes.IndexOf code, FunctionOrMethod function) {
+////		if (BoundAnalyzerHelper.isIntType((Type) code.type(0))
+////				&& !BoundAnalyzerHelper.isCached(function)) {
+////			String target = prefix + code.target(0);
+////			String op = prefix + code.operand(0);
+////			String index = prefix + code.operand(1);
+////			// Get the CFGraph
+////			BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
+////			graph.addConstraint(new Equals(target, op));
+////		}
+//	}
 
 	/**
 	 * Parses the 'If' bytecode to add the constraints to the list.
@@ -901,27 +919,7 @@ public class BoundAnalyzer {
 		}
 	}
 
-	/**
-	 * Analyze the FieldLoad byte-code. 
-	 * 
-	 * 
-	 * @param code
-	 * @param name
-	 */
-	private void analyze(Codes.FieldLoad code, FunctionOrMethod function) {
-		//String target = prefix + code.target(0);
-		//String record = prefix + code.operand(0);
-	}
-
-	private void analyze(Codes.Convert code, FunctionOrMethod function) {
-		//String target = prefix + code.target(0);
-		// sym_ctrl.putAttribute(target, "type", code.result);
-
-		//if (code.result instanceof Type.Array) {
-		// Get the value
-		//}
-
-	}
+	
 
 
 	/**

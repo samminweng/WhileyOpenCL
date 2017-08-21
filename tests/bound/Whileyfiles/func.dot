@@ -1,0 +1,10 @@
+digraph func{
+"entry [ENTRY]"->"code [BLOCK]";
+"code [BLOCK]"->"blklab0 [IF]";
+"code [BLOCK]"->"blklab0 [ELSE]";
+"blklab0 [IF]"->"return_0 [RETURN]";
+"blklab0 [ELSE]"->"return_3 [RETURN]";
+"return_0 [RETURN]"->"exit [EXIT]";
+"return_3 [RETURN]"->"exit [EXIT]";
+
+}

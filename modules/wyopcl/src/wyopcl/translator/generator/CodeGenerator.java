@@ -450,7 +450,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					// Get array dimension
 					int dimension = stores.getArrayDimension(constant.type());
 					if(dimension == 1){
-						statement.add(indent + "_NEW_1DARRAY_int64_t(" + lhs + ", " + list.values.size() + ", 0);");
+						if(boundAnalyzer.isPresent()){
+							String translateType = boundAnalyzer.get().suggestIntegerType(code.target(), function);
+							// Generate a new array using _NEW_1DARRAY macro using
+							statement.add(indent + "_NEW_1DARRAY(" + lhs + ", " + list.values.size() + ", 0" + ", "+ translateType +");");
+						}else{
+							statement.add(indent + "_NEW_1DARRAY_int64_t(" + lhs + ", " + list.values.size() + ", 0);");
+						}
+						
 						if (!list.values.isEmpty()) {
 							// Assign values to each element
 							String s = indent;
@@ -1920,12 +1927,18 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					statement.add(indent + "printf(\"" + "%\"PRId64, " + input + ");");
 					break;
 				case "print_s":
-					int dimension = stores.getArrayDimension(input_type);
-					statement.add(indent + "printf_s(_" + dimension + "DARRAY_PARAM(" + input + "));");
+					if(boundAnalyzer.isPresent()){
+						statement.add(indent + "_PRINT_STR(" + input + ");");
+					}else{
+						statement.add(indent + "printf_s(_1DARRAY_PARAM(" + input + "));");
+					}
 					break;
 				case "println_s":
-					// dimension = stores.getArrayDimension(input_type);
-					statement.add(indent + "println_s(" + input + ", " + input + "_size);");
+					if(boundAnalyzer.isPresent()){
+						statement.add(indent + "_PRINTLN_STR(" + input + ");");
+					}else{
+						statement.add(indent + "println_s(" + input + ", " + input + "_size);");
+					}
 					break;
 				case "println":
 					// Check input's type to call different println function.

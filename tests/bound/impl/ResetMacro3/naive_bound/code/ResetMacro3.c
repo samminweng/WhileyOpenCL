@@ -44,25 +44,25 @@ blklab1:;
 
 //
 int main(int argc, char** args){
-	uint16_t* x = 0; //domain(_1)	= [2..2]	
+	uint16_t* x = 0; //domain(_1)	= [2..11]	
 	size_t x_size = 0;
-	int64_t* tmp = 0; //domain(_2)	= [empty..empty]	
+	uint16_t* tmp = 0; //domain(_2)	= [2..11]	
 	size_t tmp_size = 0;
 	uint16_t _3 = 0; //domain(_3)	= [2..2]	
 	uint16_t _4 = 0; //domain(_4)	= [3..3]	
 	uint16_t* _5 = 0; //domain(_5)	= [2..2]	
 	size_t _5_size = 0;
-	int64_t* _6 = 0; //domain(_6)	= [empty..empty]	
+	uint16_t* _6 = 0; //domain(_6)	= [2..11]	
 	size_t _6_size = 0;
 	uint16_t _7 = 0; //domain(_7)	= [11..11]	
 	int64_t _8 = 0; //domain(_8)	= [empty..empty]	
 	int64_t _9 = 0; //domain(_9)	= [empty..empty]	
 	int64_t _10 = 0; //domain(_10)	= [empty..empty]	
 	void* _11;
-	int64_t* _13 = 0; //domain(_13)	= [empty..empty]	
+	uint16_t* _13 = 0; //domain(_13)	= [32..120]	
 	size_t _13_size = 0;
 	void* _14;
-	int64_t _16 = 0; //domain(_16)	= [empty..empty]	
+	uint16_t _16 = 0; //domain(_16)	= [0..0]	
 	int64_t _17 = 0; //domain(_17)	= [empty..empty]	
 	//const %3 = 2 : int
 	_3 = 2;
@@ -77,11 +77,11 @@ int main(int argc, char** args){
 	//invoke (%6) = (%1, %7) ResetMacro3:func : function(int[],int)->(int[])
 	{
 		void* x_tmp;
-		_COPY_1DARRAY_PARAM(x, int64_t);
+		_COPY_1DARRAY_PARAM(x, uint16_t);
 		_6 = _func_(x_tmp, x_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 	}
 	//assign %2 = %6  : int[]
-	_COPY_1DARRAY(tmp, _6, int64_t);
+	_COPY_1DARRAY(tmp, _6, uint16_t);
 	//assign %1 = %2  : int[]
 	_COPY_1DARRAY(x, tmp, uint16_t);
 	//assert
@@ -104,11 +104,11 @@ blklab2:;
 	//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %12 = %11 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %13 = [120,91,48,93,32,61,32] : int[]
-	_NEW_1DARRAY_int64_t(_13, 7, 0);
+	_NEW_1DARRAY(_13, 7, 0, uint16_t);
 	_13[0] = 120; _13[1] = 91; _13[2] = 48; _13[3] = 93; _13[4] = 32; _13[5] = 61; _13[6] = 32; 
 	//indirectinvoke () = %12 (%13) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_13));
+		_PRINT_STR(_13);
 	}
 	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %15 = %14 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
