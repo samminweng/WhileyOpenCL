@@ -10,7 +10,8 @@ function func(int[] x, int num) -> int[]:
 
 method main(System.Console sys):
     int[] x = [2;3] // x[0] = 2
-    int[] tmp = func(x, 11)
+    int num = 11
+    int[] tmp = func(x, num)
     // x is not live after function call
     // So we use reset macro
     x = tmp

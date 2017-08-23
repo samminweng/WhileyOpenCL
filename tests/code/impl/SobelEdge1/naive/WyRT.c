@@ -164,7 +164,8 @@ FILE* Writer(int64_t* arr, size_t arr_size){
 // Read the file name (ASCII code) and output a file pointer
 FILE* Reader(int64_t* arr, size_t arr_size){
 	// Chars array
-	char* tmp = malloc(MAX_LINE_LENGTH*sizeof(char));
+	char tmp[1024];
+	//char* tmp = malloc(MAX_LINE_LENGTH*sizeof(char));
 	// Convert an array of ASCII code to an string
 	size_t i=0;
 	// Iterate through all the chars
@@ -189,7 +190,7 @@ FILE* Reader(int64_t* arr, size_t arr_size){
 
 	// Free the file name and tmp arrays
 	free(filename);
-	free(tmp);
+	//free(tmp);
 	return fp;
 }
 
@@ -332,4 +333,3 @@ BYTE* readAll(FILE *file, size_t* _size){
 		return readFile(file, _size);
 	}
 }
-

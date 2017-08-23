@@ -86,6 +86,12 @@ int main(int argc, char** args){
 blklab0:;
 	//assert
 	}
+	//fieldload %22 = %1 close : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
+	//indirectinvoke () = %22 () : method()->()
+	{
+		fclose(file);
+		file = NULL;
+	}
 	//return
 	exit(0);
 }

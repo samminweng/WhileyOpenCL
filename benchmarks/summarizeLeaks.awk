@@ -5,7 +5,7 @@ BEGIN {
 	FS = "\t";
 	# Test case name
 	##testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
-	testcases="CoinGame";
+	testcases="LZ77";
 	## Program Type
 	programs["Reverse"]="original";
 	programs["newTicTacToe"]="original";
@@ -13,7 +13,7 @@ BEGIN {
 	programs["MergeSort"]="original";
 	programs["MatrixMult"]="original";
 	programs["SobelEdge"]="original";
-	programs["LZ77"]="original";
+	programs["LZ77"]="compress";
 	programs["Cashtill"]="original";
 	programs["CoinGame"]="original";
 	# Compiler

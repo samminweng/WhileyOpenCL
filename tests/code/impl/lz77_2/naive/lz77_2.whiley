@@ -159,3 +159,4 @@ method main(System.Console sys):
     sys.out.println_s(" bytes")
     assert |data| == |decompress_data|
     assert data == decompress_data
+    file.close()

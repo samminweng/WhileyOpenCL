@@ -140,3 +140,4 @@ method main(System.Console sys):
     assert |data| == |decompress_data|
     // Verify the 'data' array
     assert data == decompress_data
+    file.close()

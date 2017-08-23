@@ -953,6 +953,12 @@ blklab23:;
 blklab24:;
 	//assert
 	}
+	//fieldload %48 = %1 close : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
+	//indirectinvoke () = %48 () : method()->()
+	{
+		fclose(file);
+		file = NULL;
+	}
 	//return
 	if(file != NULL){fclose(file); file = NULL;}
 	_DEALLOC(data);

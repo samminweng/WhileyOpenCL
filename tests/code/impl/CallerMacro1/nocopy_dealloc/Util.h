@@ -450,6 +450,16 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 #define _NULLIFY(a) a = NULL;
 // Converts command line arguments into integer arrays
 #define _CONV_ARGS(a) a = convertArgsToIntArray(argc, args, &a##_size, &a##_size_size);
+// Free ARGS
+#define _FREE_ARGS(a) \
+    ({\
+        for(size_t i=0;i<=argc;i++){\
+            free(a[i]);\
+            a[i] = NULL;\
+        }\
+        free(a);\
+        a = NULL;\
+    })
 // Parse a string into an integer
 #define _STR_TO_INT(a, b) a = parseStringToInt(b);
 // Slice an array 'b' into a new array 'a'

@@ -1943,7 +1943,43 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				case "println":
 					// Check input's type to call different println function.
 					if (input_type instanceof Type.Int) {
-						statement.add(indent + "printf(\"" + "%\"PRId64"+"\"\\n\", " + input + ");");
+						if(boundAnalyzer.isPresent()){
+							// Reference :http://en.cppreference.com/w/c/types/integer
+							String translateType = boundAnalyzer.get().suggestIntegerType(code.operand(1), function);
+							if(translateType.startsWith("u")){
+								// Unsigned integer
+								switch(translateType){
+								case "uint16_t":
+									statement.add(indent + "printf(\"" + "%\"PRIu16"+"\"\\n\", " + input + ");");
+									break;
+								case "uint32_t":
+									statement.add(indent + "printf(\"" + "%\"PRIu32"+"\"\\n\", " + input + ");");
+									break;
+								case "uint64_t":
+									statement.add(indent + "printf(\"" + "%\"PRIu64"+"\"\\n\", " + input + ");");
+									break;
+								}
+							}else{
+								// Signed integer
+								switch(translateType){
+								case "int16_t":
+									statement.add(indent + "printf(\"" + "%\"PRId16"+"\"\\n\", " + input + ");");
+									break;
+								case "int32_t":
+									statement.add(indent + "printf(\"" + "%\"PRId32"+"\"\\n\", " + input + ");");
+									break;
+								case "int64_t":
+									statement.add(indent + "printf(\"" + "%\"PRId64"+"\"\\n\", " + input + ");");
+									break;
+								}
+							}
+							
+							
+						}else{
+							statement.add(indent + "printf(\"" + "%\"PRId64"+"\"\\n\", " + input + ");");
+						}
+						
+						
 					} else if (input_type instanceof Type.Array) {
 						Type elm_type = stores.getArrayElementType((Type.Array)input_type);
 						// Print out arrays w.r.t. array element type

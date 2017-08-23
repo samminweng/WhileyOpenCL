@@ -1,0 +1,45 @@
+WARNING: version numbering unavailable
+Pattern matching on f_append function completed.
+{
+init_before:
+	const %5 = 0 : int
+init:
+	assign %2 = %5  : int
+init_after:
+	const %6 = 00000000b : byte
+	const %7 = 0 : int
+	arraygen %8 = [6; 7] : byte[]
+	assign %1 = %8  : byte[]
+loop_header:
+	lengthof %9 = %0 : byte[]
+	ifge %2, %9 goto blklab7 : int
+loopbody_before:
+	invoke (%10) = (%2) whiley/lang/Int:toUnsignedByte : function(whiley/lang/Int:u8)->(byte)
+	assign %3 = %10  : byte
+	indexof %11 = %0, %2 : byte[]
+	assign %4 = %11  : byte
+	const %12 = 1 : int
+loopbody_update:
+	add %13 = %2, %12 : int
+	assign %2 = %13  : int
+loopbody_after:
+	invoke (%14) = (%1, %3) appendarray1:append : function(byte[],byte)->(byte[])
+	assign %1 = %14  : byte[]
+	invoke (%15) = (%1, %4) appendarray1:append : function(byte[],byte)->(byte[])
+	assign %1 = %15  : byte[]
+	.blklab8
+loop_exit:
+	.blklab7
+	return %1
+	return
+}
+AppendArray:
+	loop_var(_2) && incr(_2, 1)&& init(_2, 0)
+	&& array_var(_1)
+	&& array_init(arraygen %8 = [6; 7] : byte[])
+	&& array_append (
+		invoke (%14) = (%1, %3) appendarray1:append : function(byte[],byte)->(byte[])
+		invoke (%15) = (%1, %4) appendarray1:append : function(byte[],byte)->(byte[]) )
+	&& while_cond(_2, <, 0 + |_0|)
+	=> loop_iters(_2, 0 + |_0|)
+Pattern transformation on f_append function completed.  File: appendarray1.wyil

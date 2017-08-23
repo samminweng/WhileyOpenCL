@@ -1,0 +1,26 @@
+Memory Leak (bytes)
+TestCase	ProgramType	Compiler	Pattern	Parameter	CodeGen	Code	Thread	definite loss	indirect loss	possible loss	reachable loss
+LZ77	compress	gcc	disabled	medium1x	naive	seq	1	278693574	0	11067	23839
+LZ77	compress	gcc	disabled	medium1x	naivedealloc	seq	1	608	0	0	608
+LZ77	compress	gcc	disabled	medium1x	nocopy	seq	1	1215992	0	0	19125
+LZ77	compress	gcc	disabled	medium1x	nocopydealloc	seq	1	608	0	0	608
+LZ77	compress	gcc	disabled	medium2x	naive	seq	1	1187642639	0	40193	47460
+LZ77	compress	gcc	disabled	medium2x	naivedealloc	seq	1	608	0	0	608
+LZ77	compress	gcc	disabled	medium2x	nocopy	seq	1	4784843	0	0	34888
+LZ77	compress	gcc	disabled	medium2x	nocopydealloc	seq	1	608	0	0	608
+LZ77	compress	gcc	disabled	medium4x	naive	seq	1	4896304572	0	177072	85216
+LZ77	compress	gcc	disabled	medium4x	naivedealloc	seq	1	608	0	0	608
+LZ77	compress	gcc	disabled	medium4x	nocopy	seq	1	18982013	0	0	66414
+LZ77	compress	gcc	disabled	medium4x	nocopydealloc	seq	1	608	0	0	608
+LZ77	compress	gcc	enabled	medium1x	naive	seq	1	278693574	0	11067	23839
+LZ77	compress	gcc	enabled	medium1x	naivedealloc	seq	1	608	0	0	608
+LZ77	compress	gcc	enabled	medium1x	nocopy	seq	1	1215992	0	0	19125
+LZ77	compress	gcc	enabled	medium1x	nocopydealloc	seq	1	608	0	0	608
+LZ77	compress	gcc	enabled	medium2x	naive	seq	1	1187642639	0	40193	47460
+LZ77	compress	gcc	enabled	medium2x	naivedealloc	seq	1	608	0	0	608
+LZ77	compress	gcc	enabled	medium2x	nocopy	seq	1	4784843	0	0	34888
+LZ77	compress	gcc	enabled	medium2x	nocopydealloc	seq	1	608	0	0	608
+LZ77	compress	gcc	enabled	medium4x	naive	seq	1	4896304572	0	177072	85216
+LZ77	compress	gcc	enabled	medium4x	naivedealloc	seq	1	608	0	0	608
+LZ77	compress	gcc	enabled	medium4x	nocopy	seq	1	18982013	0	0	66414
+LZ77	compress	gcc	enabled	medium4x	nocopydealloc	seq	1	608	0	0	608

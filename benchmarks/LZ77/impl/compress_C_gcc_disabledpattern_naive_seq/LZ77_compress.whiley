@@ -110,7 +110,7 @@ function decompress(byte[] data) -> (byte[] output):
     return output
 
 method main(System.Console sys):
-    // Read a text file of repeated contents as a byte array 
+    // Read a text file of repeated contents as a byte array
     File.Reader file = File.Reader(sys.args[0])
     byte[] data = file.readAll()
     sys.out.println_s("Data:         ")
@@ -126,3 +126,4 @@ method main(System.Console sys):
     File.Writer writer = File.Writer(sys.args[1])
     writer.write(compress_data)
     writer.close()
+    file.close()

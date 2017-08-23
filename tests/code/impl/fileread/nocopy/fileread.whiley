@@ -30,3 +30,4 @@ method main(System.Console sys):
     sys.out.print(|data|)
     sys.out.println_s(" bytes")
     assert |data| == width*height
+    file.close()

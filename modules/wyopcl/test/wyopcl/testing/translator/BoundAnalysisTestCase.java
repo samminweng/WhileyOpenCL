@@ -21,9 +21,6 @@ public class BoundAnalysisTestCase {
 									 + File.separator + "bound");
 	private static String testcase;// A list of test cases
 	
-    //@Rule
-    //public Timeout globalTimeout = Timeout.seconds(60); // 60 seconds per test
-	
 	@Before
 	public void initialize() throws Exception {
 		util = new BaseTestUtil();
@@ -89,17 +86,46 @@ public class BoundAnalysisTestCase {
 	}
 	
 	@Test
-	public void testCodeGeneratorAndNaiveBound(){
+	public void testNaiveBoundOnNaiveCode(){
 		// Run bound analysis and Generate naive C code
 		System.out.print("Bound Analysis: Naive Widen Strategy + Naive C code\n");
 		util.execCodeGeneration(baseDir, testcase, "-bound", "naive", "-code");
 	}
 	
 	@Test
-	public void testCodeGeneratorAndGradualBound(){
+	public void testNaiveBoundOnNoCopyCode(){
+		// Run bound analysis and Generate naive C code
+		System.out.print("Bound Analysis: Naive Widen Strategy + Naive C code\n");
+		util.execCodeGeneration(baseDir, testcase, "-bound", "naive", "-code", "-nocopy");
+	}
+	
+	@Test
+	public void testNaiveBoundOnNoCopyDeallocCode(){
+		// Run bound analysis and Generate naive C code
+		System.out.print("Bound Analysis: Naive Widen Strategy + Naive C code\n");
+		util.execCodeGeneration(baseDir, testcase, "-bound", "naive", "-code", "-nocopy", "-dealloc");
+	}
+	
+	
+	@Test
+	public void testGradualBoundOnNaiveCode(){
 		// Run bound analysis and Generate naive C code
 		System.out.print("Bound Analysis: Naive Widen Strategy + Naive C code\n");
 		util.execCodeGeneration(baseDir, testcase, "-bound", "gradual", "-code");
+	}
+	
+	@Test
+	public void testGradualBoundOnNoCopyCode(){
+		// Run bound analysis and Generate naive C code
+		System.out.print("Bound Analysis: Naive Widen Strategy + Naive C code\n");
+		util.execCodeGeneration(baseDir, testcase, "-bound", "gradual", "-code", "-nocopy");
+	}
+	
+	@Test
+	public void testGradualBoundOnNoCopyDeallocCode(){
+		// Run bound analysis and Generate naive C code
+		System.out.print("Bound Analysis: Naive Widen Strategy + Naive C code\n");
+		util.execCodeGeneration(baseDir, testcase, "-bound", "gradual", "-code", "-nocopy", "-dealloc");
 	}
 	
 }

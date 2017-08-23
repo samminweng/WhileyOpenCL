@@ -224,7 +224,7 @@ bool isArrayEqual_BYTE(BYTE* arr1, size_t arr1_size, BYTE* arr2, size_t arr2_siz
 // Free a flat 2D array
 void free2DArray_int64_t(int64_t** ptr, size_t size){
 	// Free the first pointer as it is actually allocated
-	free(ptr[0]);
+	free(ptr[0]); ptr[0] = NULL;
 	// Free upper-level pointer.
 	free(ptr);
 	ptr = NULL;

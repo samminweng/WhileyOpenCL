@@ -558,10 +558,14 @@ public final class BaseTestUtil {
 		case "-bound":
 			path += File.separator + options[1]+ "_bound";
 			index = index +2;
+			// Skip the next option, i.e. 'code'
+			index = index + 1;
 			break;
 		case "-pattern":
 			path += File.separator + "enable_pattern";
 			index = index +2;
+			// Skip the next option, i.e. 'code'
+			index = index +1;
 			break;
 		case "-nocopy":
 			if(options[1] == "-ea"){

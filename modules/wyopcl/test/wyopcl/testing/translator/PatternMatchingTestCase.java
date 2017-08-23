@@ -49,6 +49,7 @@ public class PatternMatchingTestCase {
 		return Arrays.asList(new String[][] {
 				{"appendarray", "f"},
 				{"lz77_compress", "compress"},
+				{"appendarray1", "f_append"},
 		});
 	}
 	

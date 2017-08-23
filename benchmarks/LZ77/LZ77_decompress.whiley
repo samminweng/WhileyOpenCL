@@ -58,3 +58,4 @@ method main(System.Console sys):
     sys.out.println_s(ASCII.fromBytes(decompress_data))
     sys.out.print(|decompress_data|)
     sys.out.println_s(" bytes")
+    file.close()
