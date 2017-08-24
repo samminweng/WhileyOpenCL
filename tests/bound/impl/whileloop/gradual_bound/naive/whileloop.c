@@ -1,15 +1,15 @@
 #include "whileloop.h"
 //	domain(_0)	= [43..65536]	
 int64_t _f_(uint32_t limit){
-	int64_t _1 = 0; //domain(_1)	= [empty..empty]	
-	uint32_t i = 0; //domain(_2)	= [0..65536]	
-	uint64_t sum = 0; //domain(_3)	= [0..infinity]	
-	uint16_t _4 = 0; //domain(_4)	= [0..0]	
-	uint16_t _5 = 0; //domain(_5)	= [0..0]	
-	int64_t _6 = 0; //domain(_6)	= [empty..empty]	
-	uint64_t _7 = 0; //domain(_7)	= [0..infinity]	
-	uint16_t _8 = 0; //domain(_8)	= [1..1]	
-	uint32_t _9 = 0; //domain(_9)	= [1..65536]	
+	int64_t _1; //domain(_1)	= [empty..empty]	
+	uint32_t i; //domain(_2)	= [0..65536]	
+	uint64_t sum; //domain(_3)	= [0..infinity]	
+	uint16_t _4; //domain(_4)	= [0..0]	
+	uint16_t _5; //domain(_5)	= [0..0]	
+	int64_t _6; //domain(_6)	= [empty..empty]	
+	uint64_t _7; //domain(_7)	= [0..infinity]	
+	uint16_t _8; //domain(_8)	= [1..1]	
+	uint32_t _9; //domain(_9)	= [1..65536]	
 	//const %4 = 0 : int
 	_4 = 0;
 	//assign %2 = %4  : int
@@ -44,16 +44,16 @@ blklab1:;
 
 //
 int main(int argc, char** args){
-	uint64_t a = 0; //domain(_1)	= [0..infinity]	
-	uint64_t b = 0; //domain(_2)	= [0..infinity]	
-	uint64_t _3 = 0; //domain(_3)	= [0..infinity]	
-	uint16_t _4 = 0; //domain(_4)	= [43..43]	
+	uint64_t a; //domain(_1)	= [0..infinity]	
+	uint64_t b; //domain(_2)	= [0..infinity]	
+	uint64_t _3; //domain(_3)	= [0..infinity]	
+	uint16_t _4; //domain(_4)	= [43..43]	
 	void* _5;
-	int64_t _7 = 0; //domain(_7)	= [empty..empty]	
-	uint64_t _8 = 0; //domain(_8)	= [0..infinity]	
-	uint32_t _9 = 0; //domain(_9)	= [65536..65536]	
+	int64_t _7; //domain(_7)	= [empty..empty]	
+	uint64_t _8; //domain(_8)	= [0..infinity]	
+	uint32_t _9; //domain(_9)	= [65536..65536]	
 	void* _10;
-	int64_t _12 = 0; //domain(_12)	= [empty..empty]	
+	int64_t _12; //domain(_12)	= [empty..empty]	
 	//const %4 = 43 : int
 	_4 = 43;
 	//invoke (%3) = (%4) whileloop:f : function(int)->(int)

@@ -1,32 +1,54 @@
-==32145== Memcheck, a memory error detector
-==32145== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==32145== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==32145== Command: ./out/LZ77.compress.gcc.enabledpattern.nocopydealloc.seq.out /home/mw169/workspace/WhileyOpenCL/benchmarks/LZ77/Inputfiles/medium2x.in /home/mw169/workspace/WhileyOpenCL/benchmarks/LZ77/Outputfiles/medium2x.dat
-==32145== Parent PID: 3072
-==32145== 
-==32145== Invalid read of size 8
-==32145==    at 0x404295: Reader (WyRT.c:173)
-==32145==    by 0x4023E4: main (LZ77_compress.c:729)
-==32145==  Address 0x52032e0 is 0 bytes after a block of size 592 alloc'd
-==32145==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==32145==    by 0x40342A: convertArgsToIntArray (Util.c:171)
-==32145==    by 0x402367: main (LZ77_compress.c:719)
-==32145== 
-==32145== 
-==32145== HEAP SUMMARY:
-==32145==     in use at exit: 1,216 bytes in 2 blocks
-==32145==   total heap usage: 4,651 allocs, 4,649 frees, 4,870,613 bytes allocated
-==32145== 
-==32145== LEAK SUMMARY:
-==32145==    definitely lost: 608 bytes in 1 blocks
-==32145==    indirectly lost: 0 bytes in 0 blocks
-==32145==      possibly lost: 0 bytes in 0 blocks
-==32145==    still reachable: 608 bytes in 1 blocks
-==32145==         suppressed: 0 bytes in 0 blocks
-==32145== Rerun with --leak-check=full to see details of leaked memory
-==32145== 
-==32145== For counts of detected and suppressed errors, rerun with: -v
-==32145== ERROR SUMMARY: 2 errors from 1 contexts (suppressed: 0 from 0)
+==25779== Memcheck, a memory error detector
+==25779== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==25779== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==25779== Command: ./out/LZ77.compress.gcc.enabledpattern.nocopydealloc.seq.out /home/mw169/workspace/WhileyOpenCL/benchmarks/LZ77/Inputfiles/medium2x.in /home/mw169/workspace/WhileyOpenCL/benchmarks/LZ77/Outputfiles/medium2x.dat
+==25779== Parent PID: 28504
+==25779== 
+==25779== Invalid read of size 8
+==25779==    at 0x4040B2: Reader (WyRT.c:173)
+==25779==    by 0x402150: main (LZ77_compress.c:729)
+==25779==  Address 0x52032e0 is 0 bytes after a block of size 592 alloc'd
+==25779==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==25779==    by 0x40323C: convertArgsToIntArray (Util.c:171)
+==25779==    by 0x4020D9: main (LZ77_compress.c:719)
+==25779== 
+==25779== Invalid read of size 8
+==25779==    at 0x4029D4: main (LZ77_compress.c:870)
+==25779==  Address 0x5203050 is 0 bytes after a block of size 16 alloc'd
+==25779==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==25779==    by 0x402FE9: convertArgsToIntArray (Util.c:124)
+==25779==    by 0x4020D9: main (LZ77_compress.c:719)
+==25779== 
+==25779== Invalid write of size 8
+==25779==    at 0x4029F8: main (LZ77_compress.c:870)
+==25779==  Address 0x5203050 is 0 bytes after a block of size 16 alloc'd
+==25779==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==25779==    by 0x402FE9: convertArgsToIntArray (Util.c:124)
+==25779==    by 0x4020D9: main (LZ77_compress.c:719)
+==25779== 
+==25779== Invalid read of size 8
+==25779==    at 0x402B99: main (LZ77_compress.c:879)
+==25779==  Address 0x56efeb0 is 0 bytes after a block of size 16 alloc'd
+==25779==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==25779==    by 0x402FE9: convertArgsToIntArray (Util.c:124)
+==25779==    by 0x402870: main (LZ77_compress.c:833)
+==25779== 
+==25779== Invalid write of size 8
+==25779==    at 0x402BBA: main (LZ77_compress.c:879)
+==25779==  Address 0x56efeb0 is 0 bytes after a block of size 16 alloc'd
+==25779==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==25779==    by 0x402FE9: convertArgsToIntArray (Util.c:124)
+==25779==    by 0x402870: main (LZ77_compress.c:833)
+==25779== 
+==25779== 
+==25779== HEAP SUMMARY:
+==25779==     in use at exit: 0 bytes in 0 blocks
+==25779==   total heap usage: 4,651 allocs, 4,651 frees, 4,870,613 bytes allocated
+==25779== 
+==25779== All heap blocks were freed -- no leaks are possible
+==25779== 
+==25779== For counts of detected and suppressed errors, rerun with: -v
+==25779== ERROR SUMMARY: 10 errors from 5 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -34,7 +56,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3804.812
+cpu MHz		: 3840.539
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -61,7 +83,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3743.320
+cpu MHz		: 3899.507
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -88,7 +110,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3735.750
+cpu MHz		: 3895.257
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -115,7 +137,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3887.421
+cpu MHz		: 3645.570
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -142,7 +164,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3802.953
+cpu MHz		: 3861.125
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -169,7 +191,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3890.609
+cpu MHz		: 3897.382
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -196,7 +218,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3764.968
+cpu MHz		: 3836.554
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -223,7 +245,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3698.562
+cpu MHz		: 3856.078
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

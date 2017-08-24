@@ -2,23 +2,23 @@
 int64_t* _test_append_(_DECL_1DARRAY_PARAM(lhs), _DECL_1DARRAY_PARAM(rhs), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
 	_DECL_1DARRAY(rs);
-	int64_t i = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
-	int64_t _8 = 0;
+	int64_t i;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
+	int64_t _8;
 	_DECL_1DARRAY(_9);
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
-	int64_t _13 = 0;
-	int64_t _14 = 0;
-	int64_t _15 = 0;
-	int64_t _16 = 0;
-	int64_t _17 = 0;
-	int64_t _18 = 0;
-	int64_t _19 = 0;
-	int64_t _20 = 0;
+	int64_t _10;
+	int64_t _11;
+	int64_t _12;
+	int64_t _13;
+	int64_t _14;
+	int64_t _15;
+	int64_t _16;
+	int64_t _17;
+	int64_t _18;
+	int64_t _19;
+	int64_t _20;
 	//const %5 = 0 : int
 	_5 = 0;
 	//lengthof %6 = %0 : int[]

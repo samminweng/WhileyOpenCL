@@ -1,7 +1,7 @@
 #include "ResetMacro2.h"
 int64_t* _func_(_DECL_1DARRAY_PARAM(x), int64_t num, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
-	int64_t _3 = 0;
+	int64_t _3;
 	//const %3 = 0 : int
 	_3 = 0;
 	//update %0[%3] = %1 : int[] -> int[]
@@ -17,11 +17,11 @@ int64_t* _g2_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_0);
 	_DECL_1DARRAY(a);
 	_DECL_1DARRAY(b);
-	int64_t _3 = 0;
-	int64_t _4 = 0;
+	int64_t _3;
+	int64_t _4;
 	_DECL_1DARRAY(_5);
 	_DECL_1DARRAY(_6);
-	int64_t _7 = 0;
+	int64_t _7;
 	//const %3 = 0 : int
 	_3 = 0;
 	//const %4 = 3 : int
@@ -50,14 +50,14 @@ int64_t* _g2_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 int main(int argc, char** args){
 	_DECL_1DARRAY(a);
 	_DECL_1DARRAY(_2);
-	int64_t _3 = 0;
-	int64_t _4 = 0;
-	int64_t _5 = 0;
+	int64_t _3;
+	int64_t _4;
+	int64_t _5;
 	void* _6;
 	_DECL_1DARRAY(_8);
 	void* _9;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
+	int64_t _11;
+	int64_t _12;
 	//invoke (%2) = () ResetMacro2:g2 : function()->(int[])
 	{
 		_2 = _g2_(_1DARRAYSIZE_PARAM_CALLBYREFERENCE(_2));

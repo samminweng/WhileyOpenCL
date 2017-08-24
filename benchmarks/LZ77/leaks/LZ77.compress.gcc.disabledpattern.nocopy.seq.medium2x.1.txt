@@ -1,32 +1,32 @@
-==32025== Memcheck, a memory error detector
-==32025== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==32025== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==32025== Command: ./out/LZ77.compress.gcc.disabledpattern.nocopy.seq.out /home/mw169/workspace/WhileyOpenCL/benchmarks/LZ77/Inputfiles/medium2x.in /home/mw169/workspace/WhileyOpenCL/benchmarks/LZ77/Outputfiles/medium2x.dat
-==32025== Parent PID: 3072
-==32025== 
-==32025== Invalid read of size 8
-==32025==    at 0x4035E2: Reader (WyRT.c:173)
-==32025==    by 0x401BD3: main (LZ77_compress.c:634)
-==32025==  Address 0x52032e0 is 0 bytes after a block of size 592 alloc'd
-==32025==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==32025==    by 0x402777: convertArgsToIntArray (Util.c:171)
-==32025==    by 0x401B77: main (LZ77_compress.c:626)
-==32025== 
-==32025== 
-==32025== HEAP SUMMARY:
-==32025==     in use at exit: 4,819,179 bytes in 4,642 blocks
-==32025==   total heap usage: 4,651 allocs, 9 frees, 4,870,613 bytes allocated
-==32025== 
-==32025== LEAK SUMMARY:
-==32025==    definitely lost: 4,784,843 bytes in 4,629 blocks
-==32025==    indirectly lost: 0 bytes in 0 blocks
-==32025==      possibly lost: 0 bytes in 0 blocks
-==32025==    still reachable: 34,336 bytes in 13 blocks
-==32025==         suppressed: 0 bytes in 0 blocks
-==32025== Rerun with --leak-check=full to see details of leaked memory
-==32025== 
-==32025== For counts of detected and suppressed errors, rerun with: -v
-==32025== ERROR SUMMARY: 2 errors from 1 contexts (suppressed: 0 from 0)
+==25662== Memcheck, a memory error detector
+==25662== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==25662== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==25662== Command: ./out/LZ77.compress.gcc.disabledpattern.nocopy.seq.out /home/mw169/workspace/WhileyOpenCL/benchmarks/LZ77/Inputfiles/medium2x.in /home/mw169/workspace/WhileyOpenCL/benchmarks/LZ77/Outputfiles/medium2x.dat
+==25662== Parent PID: 28504
+==25662== 
+==25662== Invalid read of size 8
+==25662==    at 0x40335C: Reader (WyRT.c:173)
+==25662==    by 0x401942: main (LZ77_compress.c:634)
+==25662==  Address 0x52032e0 is 0 bytes after a block of size 592 alloc'd
+==25662==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==25662==    by 0x4024E6: convertArgsToIntArray (Util.c:171)
+==25662==    by 0x4018EC: main (LZ77_compress.c:626)
+==25662== 
+==25662== 
+==25662== HEAP SUMMARY:
+==25662==     in use at exit: 4,819,179 bytes in 4,642 blocks
+==25662==   total heap usage: 4,651 allocs, 9 frees, 4,870,613 bytes allocated
+==25662== 
+==25662== LEAK SUMMARY:
+==25662==    definitely lost: 4,784,843 bytes in 4,629 blocks
+==25662==    indirectly lost: 0 bytes in 0 blocks
+==25662==      possibly lost: 0 bytes in 0 blocks
+==25662==    still reachable: 34,336 bytes in 13 blocks
+==25662==         suppressed: 0 bytes in 0 blocks
+==25662== Rerun with --leak-check=full to see details of leaked memory
+==25662== 
+==25662== For counts of detected and suppressed errors, rerun with: -v
+==25662== ERROR SUMMARY: 2 errors from 1 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -34,7 +34,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3874.140
+cpu MHz		: 3872.812
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -61,7 +61,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3765.101
+cpu MHz		: 3783.031
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -88,7 +88,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3885.828
+cpu MHz		: 3895.125
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -115,7 +115,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3863.382
+cpu MHz		: 3729.242
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -142,7 +142,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3820.085
+cpu MHz		: 3873.875
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -169,7 +169,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3798.437
+cpu MHz		: 3894.062
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -196,7 +196,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3822.742
+cpu MHz		: 3900.304
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -223,7 +223,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3882.375
+cpu MHz		: 3878.390
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

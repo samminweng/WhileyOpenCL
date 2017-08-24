@@ -1,35 +1,35 @@
 #include "CoinGame4.h"
 void _play_(FILE* sys, _DECL_1DARRAY_PARAM(moves), int64_t n){
-	int64_t left = 0;
-	int64_t right = 0;
-	int64_t i = 0;
-	int64_t sum_alice = 0;
-	int64_t sum_bob = 0;
-	int64_t coin = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
-	int64_t _13 = 0;
-	int64_t _14 = 0;
-	int64_t _15 = 0;
-	int64_t _16 = 0;
-	int64_t _17 = 0;
-	int64_t _18 = 0;
-	int64_t _19 = 0;
-	int64_t _20 = 0;
-	int64_t _21 = 0;
-	int64_t _22 = 0;
-	int64_t _23 = 0;
-	int64_t _24 = 0;
-	int64_t _25 = 0;
-	int64_t _26 = 0;
-	int64_t _27 = 0;
-	int64_t _28 = 0;
-	int64_t _29 = 0;
-	int64_t _30 = 0;
-	int64_t _31 = 0;
-	int64_t _32 = 0;
+	int64_t left;
+	int64_t right;
+	int64_t i;
+	int64_t sum_alice;
+	int64_t sum_bob;
+	int64_t coin;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
+	int64_t _12;
+	int64_t _13;
+	int64_t _14;
+	int64_t _15;
+	int64_t _16;
+	int64_t _17;
+	int64_t _18;
+	int64_t _19;
+	int64_t _20;
+	int64_t _21;
+	int64_t _22;
+	int64_t _23;
+	int64_t _24;
+	int64_t _25;
+	int64_t _26;
+	int64_t _27;
+	int64_t _28;
+	int64_t _29;
+	int64_t _30;
+	int64_t _31;
+	int64_t _32;
 	void* _33;
 	_DECL_1DARRAY(_35);
 	void* _36;
@@ -40,17 +40,17 @@ void _play_(FILE* sys, _DECL_1DARRAY_PARAM(moves), int64_t n){
 	void* _44;
 	void* _46;
 	_DECL_1DARRAY(_48);
-	int64_t _49 = 0;
-	int64_t _50 = 0;
-	int64_t _51 = 0;
-	int64_t _52 = 0;
+	int64_t _49;
+	int64_t _50;
+	int64_t _51;
+	int64_t _52;
 	void* _53;
 	_DECL_1DARRAY(_55);
-	int64_t _56 = 0;
+	int64_t _56;
 	void* _57;
 	_DECL_1DARRAY(_59);
-	int64_t _60 = 0;
-	int64_t _61 = 0;
+	int64_t _60;
+	int64_t _61;
 	void* _62;
 	_DECL_1DARRAY(_64);
 	void* _65;
@@ -272,7 +272,7 @@ blklab8:;
 }
 
 int64_t _findMin_(int64_t a, int64_t b){
-	int64_t _2 = 0;
+	int64_t _2;
 	//ifge %0, %1 goto blklab9 : int
 	if(a>=b){goto blklab9;}
 	//return %0
@@ -285,7 +285,7 @@ blklab9:;
 }
 
 int64_t _findMax_(int64_t a, int64_t b){
-	int64_t _2 = 0;
+	int64_t _2;
 	//ifle %0, %1 goto blklab10 : int
 	if(a<=b){goto blklab10;}
 	//return %0
@@ -299,13 +299,13 @@ blklab10:;
 
 int64_t* _pickCoin_(_DECL_1DARRAY_PARAM(moves), int64_t i, int64_t j, int64_t n, int64_t x, int64_t y, int64_t z, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_7);
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
-	int64_t _13 = 0;
-	int64_t _14 = 0;
+	int64_t _8;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
+	int64_t _12;
+	int64_t _13;
+	int64_t _14;
 	//invoke (%9) = (%4, %5) CoinGame4:findMin : function(int,int)->(int)
 	{
 		_9 = _findMin_(x, y);
@@ -336,51 +336,51 @@ int64_t* _pickCoin_(_DECL_1DARRAY_PARAM(moves), int64_t i, int64_t j, int64_t n,
 
 int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
-	int64_t s = 0;
-	int64_t j = 0;
-	int64_t i = 0;
-	int64_t y = 0;
-	int64_t x = 0;
-	int64_t z = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
-	int64_t _13 = 0;
-	int64_t _14 = 0;
-	int64_t _15 = 0;
-	int64_t _16 = 0;
-	int64_t _17 = 0;
-	int64_t _18 = 0;
-	int64_t _19 = 0;
-	int64_t _20 = 0;
-	int64_t _21 = 0;
-	int64_t _22 = 0;
-	int64_t _23 = 0;
-	int64_t _24 = 0;
-	int64_t _25 = 0;
-	int64_t _26 = 0;
-	int64_t _27 = 0;
-	int64_t _28 = 0;
-	int64_t _29 = 0;
-	int64_t _30 = 0;
-	int64_t _31 = 0;
-	int64_t _32 = 0;
-	int64_t _33 = 0;
-	int64_t _34 = 0;
-	int64_t _35 = 0;
-	int64_t _36 = 0;
-	int64_t _37 = 0;
-	int64_t _38 = 0;
-	int64_t _39 = 0;
-	int64_t _40 = 0;
+	int64_t s;
+	int64_t j;
+	int64_t i;
+	int64_t y;
+	int64_t x;
+	int64_t z;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
+	int64_t _12;
+	int64_t _13;
+	int64_t _14;
+	int64_t _15;
+	int64_t _16;
+	int64_t _17;
+	int64_t _18;
+	int64_t _19;
+	int64_t _20;
+	int64_t _21;
+	int64_t _22;
+	int64_t _23;
+	int64_t _24;
+	int64_t _25;
+	int64_t _26;
+	int64_t _27;
+	int64_t _28;
+	int64_t _29;
+	int64_t _30;
+	int64_t _31;
+	int64_t _32;
+	int64_t _33;
+	int64_t _34;
+	int64_t _35;
+	int64_t _36;
+	int64_t _37;
+	int64_t _38;
+	int64_t _39;
+	int64_t _40;
 	_DECL_1DARRAY(_41);
-	int64_t _42 = 0;
-	int64_t _43 = 0;
-	int64_t _44 = 0;
-	int64_t _45 = 0;
-	int64_t _46 = 0;
-	int64_t _47 = 0;
+	int64_t _42;
+	int64_t _43;
+	int64_t _44;
+	int64_t _45;
+	int64_t _46;
+	int64_t _47;
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %3 = %9  : int
@@ -527,21 +527,21 @@ blklab11:;
 }
 
 int main(int argc, char** args){
-	int64_t n = 0;
+	int64_t n;
 	_DECL_1DARRAY(moves);
-	int64_t sum_alice = 0;
-	int64_t _4 = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
+	int64_t sum_alice;
+	int64_t _4;
+	int64_t _5;
+	int64_t _6;
 	_DECL_1DARRAY(_7);
 	_DECL_1DARRAY(_8);
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
 	void* _12;
 	_DECL_1DARRAY(_14);
 	void* _15;
-	int64_t _17 = 0;
+	int64_t _17;
 	//const %4 = 10 : int
 	_4 = 10;
 	//assign %1 = %4  : int

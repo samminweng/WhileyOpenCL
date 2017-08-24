@@ -2,7 +2,7 @@
 int64_t* _func_(_DECL_1DARRAY_PARAM(x), _DECL_DEALLOC_PARAM(x), int64_t num, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
 	_DECL_DEALLOC(_2);
-	int64_t _3 = 0;
+	int64_t _3;
 	//const %3 = 0 : int
 	_3 = 0;
 	//update %0[%3] = %1 : int[] -> int[]
@@ -20,22 +20,22 @@ int main(int argc, char** args){
 	_DECL_DEALLOC(x);
 	_DECL_1DARRAY(tmp);
 	_DECL_DEALLOC(tmp);
-	int64_t _3 = 0;
-	int64_t _4 = 0;
+	int64_t _3;
+	int64_t _4;
 	_DECL_1DARRAY(_5);
 	_DECL_DEALLOC(_5);
 	_DECL_1DARRAY(_6);
 	_DECL_DEALLOC(_6);
-	int64_t _7 = 0;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
+	int64_t _7;
+	int64_t _8;
+	int64_t _9;
+	int64_t _10;
 	void* _11;
 	_DECL_1DARRAY(_13);
 	_DECL_DEALLOC(_13);
 	void* _14;
-	int64_t _16 = 0;
-	int64_t _17 = 0;
+	int64_t _16;
+	int64_t _17;
 	//const %3 = 2 : int
 	_3 = 2;
 	//const %4 = 3 : int

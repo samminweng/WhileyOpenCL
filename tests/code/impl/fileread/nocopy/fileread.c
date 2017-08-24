@@ -1,22 +1,22 @@
 #include "fileread.h"
 int main(int argc, char** args){
 	FILE* file;
-	int64_t width = 0;
-	int64_t height = 0;
+	int64_t width;
+	int64_t height;
 	_DECL_1DARRAY_BYTE(data);
 	void* _5;
 	_DECL_1DARRAY(_6);
-	int64_t _7 = 0;
-	int64_t _8 = 0;
+	int64_t _7;
+	int64_t _8;
 	_DECL_1DARRAY_BYTE(_9);
 	void* _11;
 	_DECL_1DARRAY(_13);
 	void* _14;
-	int64_t _16 = 0;
+	int64_t _16;
 	void* _17;
 	_DECL_1DARRAY(_19);
-	int64_t _20 = 0;
-	int64_t _21 = 0;
+	int64_t _20;
+	int64_t _21;
 	//const %6 = [105,109,97,103,101,51,50,120,51,50,46,112,98,109] : int[]
 	_NEW_1DARRAY_int64_t(_6, 14, 0);
 	_6[0] = 105; _6[1] = 109; _6[2] = 97; _6[3] = 103; _6[4] = 101; _6[5] = 51; _6[6] = 50; _6[7] = 120; _6[8] = 51; _6[9] = 50; _6[10] = 46; _6[11] = 112; _6[12] = 98; _6[13] = 109; 

@@ -97,13 +97,20 @@ public class DeallocationAnalyzer extends Analyzer {
 					if (var_type instanceof Type.Null) {
 						continue;// Jump to next iteration
 					}
-					String var = stores.getVar(r, function);
+					String var_name = stores.getVar(r, function);
+					// Check if var is aliased with command line argument
+					if(function.name().toString().equals("main") && stores.isAliasedCmdArg(var_name)){
+						// Use '_FREE_ARGS' to free it
+						statements.add(indent + "_FREE_ARGS("+var_name+");");
+						continue;
+					}					
+					
 					// Check if var is Console
 					if (var_type instanceof Type.Nominal) {
 						Type.Nominal nominal = ((Type.Nominal) var_type);
 						if (nominal.toString().equals("whiley/lang/ASCII:string")) {
 							// Release the string (an integer array)
-							statements.add(indent + preDealloc(var, var_type, stores));
+							statements.add(indent + preDealloc(var_name, var_type, stores));
 							continue;
 						} else if (nominal.name().name().equals("Console")) {
 							// Skip deallocation as they are allocated by system
@@ -111,7 +118,7 @@ public class DeallocationAnalyzer extends Analyzer {
 						} else {
 							// Close the file pointer
 							statements
-									.add(indent + "if(" + var + " != NULL){fclose(" + var + "); " + var + " = NULL;}");
+									.add(indent + "if(" + var_name + " != NULL){fclose(" + var_name + "); " + var_name + " = NULL;}");
 							continue;
 						}
 					}
@@ -125,7 +132,7 @@ public class DeallocationAnalyzer extends Analyzer {
 					}
 
 					// Apply deallocation marco on other cases.
-					statements.add(indent + preDealloc(var, var_type, stores));
+					statements.add(indent + preDealloc(var_name, var_type, stores));
 				}
 			}
 		}
@@ -795,6 +802,10 @@ public class DeallocationAnalyzer extends Analyzer {
 		if (var == null || type == null || !stores.isCompoundType(type) && !(type instanceof Type.Union)) {
 			return "";
 		}
+		
+		
+		
+		
 		// Get function name
 		String name = "";
 		// Check if var_type is a structure

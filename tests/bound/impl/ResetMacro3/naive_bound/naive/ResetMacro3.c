@@ -1,32 +1,35 @@
 #include "ResetMacro3.h"
 //	domain(_0)	= [2..11]	
 uint16_t* _func_(uint16_t* x, size_t x_size, uint16_t num, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
-	int64_t* _2 = 0; //domain(_2)	= [empty..empty]	
+	int64_t* _2 = NULL; //domain(_2)	= [empty..empty]	
 	size_t _2_size = 0;
-	uint16_t* a = 0; //domain(_3)	= [0..0]	
+	uint16_t* a = NULL; //domain(_3)	= [0..0]	
 	size_t a_size = 0;
-	uint16_t _4 = 0; //domain(_4)	= [0..0]	
-	uint16_t _5 = 0; //domain(_5)	= [3..3]	
-	uint16_t* _6 = 0; //domain(_6)	= [0..0]	
-	size_t _6_size = 0;
-	uint16_t _7 = 0; //domain(_7)	= [10..10]	
-	uint16_t _8 = 0; //domain(_8)	= [0..0]	
-	//const %4 = 0 : int
-	_4 = 0;
-	//const %5 = 3 : int
-	_5 = 3;
-	//arraygen %6 = [4; 5] : int[]
-	_NEW_1DARRAY(_6, _5, _4, uint16_t);
-	//assign %3 = %6  : int[]
-	_COPY_1DARRAY(a, _6, uint16_t);
-	//const %7 = 10 : int
-	_7 = 10;
-	//ifle %1, %7 goto blklab0 : int
-	if(num<=_7){goto blklab0;}
-	//const %8 = 0 : int
-	_8 = 0;
-	//update %0[%8] = %1 : int[] -> int[]
-	x[_8] = num;
+	uint16_t b; //domain(_4)	= [10..10]	
+	uint16_t _5; //domain(_5)	= [0..0]	
+	uint16_t _6; //domain(_6)	= [3..3]	
+	uint16_t* _7 = NULL; //domain(_7)	= [0..0]	
+	size_t _7_size = 0;
+	uint16_t _8; //domain(_8)	= [10..10]	
+	uint16_t _9; //domain(_9)	= [0..0]	
+	//const %5 = 0 : int
+	_5 = 0;
+	//const %6 = 3 : int
+	_6 = 3;
+	//arraygen %7 = [5; 6] : int[]
+	_NEW_1DARRAY(_7, _6, _5, uint16_t);
+	//assign %3 = %7  : int[]
+	_COPY_1DARRAY(a, _7, uint16_t);
+	//const %8 = 10 : int
+	_8 = 10;
+	//assign %4 = %8  : int
+	b = _8;
+	//ifle %1, %4 goto blklab0 : int
+	if(num<=b){goto blklab0;}
+	//const %9 = 0 : int
+	_9 = 0;
+	//update %0[%9] = %1 : int[] -> int[]
+	x[_9] = num;
 	//return %0
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(x);
 	return x;
@@ -44,27 +47,27 @@ blklab1:;
 
 //
 int main(int argc, char** args){
-	uint16_t* x = 0; //domain(_1)	= [2..11]	
+	uint16_t* x = NULL; //domain(_1)	= [2..11]	
 	size_t x_size = 0;
-	uint16_t num = 0; //domain(_2)	= [11..11]	
-	uint16_t* tmp = 0; //domain(_3)	= [2..11]	
+	uint16_t num; //domain(_2)	= [11..11]	
+	uint16_t* tmp = NULL; //domain(_3)	= [2..11]	
 	size_t tmp_size = 0;
-	uint16_t _4 = 0; //domain(_4)	= [2..2]	
-	uint16_t _5 = 0; //domain(_5)	= [3..3]	
-	uint16_t* _6 = 0; //domain(_6)	= [2..2]	
+	uint16_t _4; //domain(_4)	= [2..2]	
+	uint16_t _5; //domain(_5)	= [3..3]	
+	uint16_t* _6 = NULL; //domain(_6)	= [2..2]	
 	size_t _6_size = 0;
-	uint16_t _7 = 0; //domain(_7)	= [11..11]	
-	uint16_t* _8 = 0; //domain(_8)	= [2..11]	
+	uint16_t _7; //domain(_7)	= [11..11]	
+	uint16_t* _8 = NULL; //domain(_8)	= [2..11]	
 	size_t _8_size = 0;
-	int64_t _9 = 0; //domain(_9)	= [empty..empty]	
-	int64_t _10 = 0; //domain(_10)	= [empty..empty]	
-	int64_t _11 = 0; //domain(_11)	= [empty..empty]	
+	int64_t _9; //domain(_9)	= [empty..empty]	
+	int64_t _10; //domain(_10)	= [empty..empty]	
+	int64_t _11; //domain(_11)	= [empty..empty]	
 	void* _12;
-	uint16_t* _14 = 0; //domain(_14)	= [32..120]	
+	uint16_t* _14 = NULL; //domain(_14)	= [32..120]	
 	size_t _14_size = 0;
 	void* _15;
-	uint16_t _17 = 0; //domain(_17)	= [0..0]	
-	int64_t _18 = 0; //domain(_18)	= [empty..empty]	
+	uint16_t _17; //domain(_17)	= [0..0]	
+	int64_t _18; //domain(_18)	= [empty..empty]	
 	//const %4 = 2 : int
 	_4 = 2;
 	//const %5 = 3 : int

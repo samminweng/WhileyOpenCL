@@ -27,16 +27,16 @@ void printf_Board(Board* board){
 }
 Board* _EmptyBoard_(){
 	Board* r;
-	int64_t _1 = 0;
-	int64_t _2 = 0;
-	int64_t _3 = 0;
-	int64_t _4 = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
+	int64_t _1;
+	int64_t _2;
+	int64_t _3;
+	int64_t _4;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
+	int64_t _8;
+	int64_t _9;
+	int64_t _10;
 	_DECL_1DARRAY(_11);
 	Board* _12;
 	//const %1 = 0 : int
@@ -72,17 +72,17 @@ Board* _EmptyBoard_(){
 }
 
 int64_t _countOf_(_DECL_1DARRAY_PARAM(pieces), int64_t s){
-	int64_t r = 0;
-	int64_t count = 0;
-	int64_t i = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
+	int64_t r;
+	int64_t count;
+	int64_t i;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
+	int64_t _8;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
+	int64_t _12;
 	//const %5 = 0 : int
 	_5 = 0;
 	//assign %3 = %5  : int
@@ -126,49 +126,49 @@ blklab11:;
 }
 
 int main(int argc, char** args){
-	int64_t repeat = 0;
+	int64_t repeat;
 	Board* b1;
 	Board* b2;
-	int64_t i = 0;
-	int64_t p = 0;
-	int64_t _6 = 0;
+	int64_t i;
+	int64_t p;
+	int64_t _6;
 	Board* _7;
 	Board* _8;
-	int64_t _9 = 0;
+	int64_t _9;
 	_DECL_1DARRAY(_10);
-	int64_t _11 = 0;
+	int64_t _11;
 	_DECL_1DARRAY(_12);
-	int64_t _13 = 0;
-	int64_t _14 = 0;
-	int64_t _15 = 0;
+	int64_t _13;
+	int64_t _14;
+	int64_t _15;
 	void* _16;
 	_DECL_1DARRAY(_18);
-	int64_t _19 = 0;
-	int64_t _20 = 0;
-	int64_t _21 = 0;
-	int64_t _22 = 0;
+	int64_t _19;
+	int64_t _20;
+	int64_t _21;
+	int64_t _22;
 	void* _23;
 	void* _24;
 	_DECL_1DARRAY(_26);
-	int64_t _27 = 0;
-	int64_t _28 = 0;
-	int64_t _29 = 0;
-	int64_t _30 = 0;
+	int64_t _27;
+	int64_t _28;
+	int64_t _29;
+	int64_t _30;
 	void* _31;
-	int64_t _32 = 0;
-	int64_t _33 = 0;
-	int64_t _34 = 0;
-	int64_t _35 = 0;
+	int64_t _32;
+	int64_t _33;
+	int64_t _34;
+	int64_t _35;
 	_DECL_1DARRAY(_36);
-	int64_t _37 = 0;
-	int64_t _38 = 0;
-	int64_t _39 = 0;
-	int64_t _40 = 0;
-	int64_t _41 = 0;
-	int64_t _42 = 0;
-	int64_t _43 = 0;
-	int64_t _44 = 0;
-	int64_t _45 = 0;
+	int64_t _37;
+	int64_t _38;
+	int64_t _39;
+	int64_t _40;
+	int64_t _41;
+	int64_t _42;
+	int64_t _43;
+	int64_t _44;
+	int64_t _45;
 	_DECL_1DARRAY(_46);
 	void* _47;
 	_DECL_1DARRAY(_49);

@@ -39,6 +39,8 @@ public class CodeStores {
 	protected HashMap<FunctionOrMethod, CodeStore> stores; // Store generated code for each function
 	// Store the function names, e.g. _Cash_
 	private HashMap<FunctionOrMethod, String> functionNames;
+	// Store aliased variable (register number) of command line arguments
+	private List<String> aliasedCmdArguments; 
 	
 	public CodeStores(boolean isVerbose, WyilFile module){
 		this.isVerbose = isVerbose;
@@ -46,7 +48,25 @@ public class CodeStores {
 		this.functions = new ArrayList<FunctionOrMethod>(module.functionOrMethods());
 		this.stores = new HashMap<FunctionOrMethod, CodeStore>();
 		this.functionNames = new HashMap<FunctionOrMethod, String>();
+		this.aliasedCmdArguments = new ArrayList<String>();
 		initFunctionNames(module);
+	}
+	
+	/**
+	 * Alias register and command line argument
+	 * @param register
+	 */
+	public void aliasCmdArgument(String var_name){
+		aliasedCmdArguments.add(var_name);
+	}
+	
+	/**
+	 * Check if register is an aliased to command line arguments
+	 * @param register
+	 * @return
+	 */
+	public boolean isAliasedCmdArg(String var_name){
+		return aliasedCmdArguments.contains(var_name);
 	}
 	
 	/**

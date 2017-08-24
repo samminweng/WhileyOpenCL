@@ -1,14 +1,14 @@
 #include "FunctionOverload2.h"
 int64_t* _Cash_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_0);
-	int64_t _1 = 0;
-	int64_t _2 = 0;
-	int64_t _3 = 0;
-	int64_t _4 = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
-	int64_t _8 = 0;
+	int64_t _1;
+	int64_t _2;
+	int64_t _3;
+	int64_t _4;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
+	int64_t _8;
 	_DECL_1DARRAY(_9);
 	//const %1 = 0 : int
 	_1 = 0;
@@ -38,33 +38,33 @@ int64_t* _Cash_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 int64_t* _Cash_1_(_DECL_1DARRAY_PARAM(coins), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
 	_DECL_1DARRAY(cash);
-	int64_t i = 0;
-	int64_t coin = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
+	int64_t i;
+	int64_t coin;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
+	int64_t _8;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
+	int64_t _12;
 	_DECL_1DARRAY(_13);
-	int64_t _14 = 0;
-	int64_t _15 = 0;
+	int64_t _14;
+	int64_t _15;
 	_DECL_1DARRAY(_16);
-	int64_t _17 = 0;
-	int64_t _18 = 0;
-	int64_t _19 = 0;
-	int64_t _20 = 0;
-	int64_t _21 = 0;
-	int64_t _22 = 0;
-	int64_t _23 = 0;
-	int64_t _24 = 0;
-	int64_t _25 = 0;
-	int64_t _26 = 0;
-	int64_t _27 = 0;
-	int64_t _28 = 0;
-	int64_t _29 = 0;
+	int64_t _17;
+	int64_t _18;
+	int64_t _19;
+	int64_t _20;
+	int64_t _21;
+	int64_t _22;
+	int64_t _23;
+	int64_t _24;
+	int64_t _25;
+	int64_t _26;
+	int64_t _27;
+	int64_t _28;
+	int64_t _29;
 	//const %5 = 0 : int
 	_5 = 0;
 	//const %6 = 0 : int
@@ -130,14 +130,14 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(till);
 	_DECL_1DARRAY(_3);
 	_DECL_1DARRAY(_4);
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
+	int64_t _8;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
+	int64_t _12;
 	_DECL_1DARRAY(_13);
 	//invoke (%3) = () FunctionOverload2:Cash : function()->(FunctionOverload2:Cash)
 	{

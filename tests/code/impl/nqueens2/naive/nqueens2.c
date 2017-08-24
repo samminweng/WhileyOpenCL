@@ -25,17 +25,17 @@ void printf_POS(POS* pos){
 }
 bool _conflict_(POS* p, int64_t row, int64_t col){
 	bool _3;
-	int64_t r = 0;
-	int64_t c = 0;
-	int64_t colDiff = 0;
-	int64_t rowDiff = 0;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
+	int64_t r;
+	int64_t c;
+	int64_t colDiff;
+	int64_t rowDiff;
+	int64_t _8;
+	int64_t _9;
 	bool _10;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
-	int64_t _13 = 0;
-	int64_t _14 = 0;
+	int64_t _11;
+	int64_t _12;
+	int64_t _13;
+	int64_t _14;
 	bool _15;
 	//fieldload %8 = %0 r : {int c,int r}
 	_8 = p->r;
@@ -91,37 +91,37 @@ blklab3:;
 }
 
 int64_t _run_(POS** queens, size_t queens_size, int64_t n, int64_t dim){
-	int64_t _3 = 0;
-	int64_t num_solutions = 0;
-	int64_t col = 0;
+	int64_t _3;
+	int64_t num_solutions;
+	int64_t col;
 	bool isSolution;
-	int64_t i = 0;
+	int64_t i;
 	POS* p;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
-	int64_t _13 = 0;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
+	int64_t _12;
+	int64_t _13;
 	bool _14;
-	int64_t _15 = 0;
-	int64_t _16 = 0;
-	int64_t _17 = 0;
-	int64_t _18 = 0;
+	int64_t _15;
+	int64_t _16;
+	int64_t _17;
+	int64_t _18;
 	POS* _19;
 	bool _20;
 	bool _21;
 	bool _22;
 	bool _23;
-	int64_t _24 = 0;
-	int64_t _25 = 0;
+	int64_t _24;
+	int64_t _25;
 	bool _26;
 	POS* _27;
-	int64_t _28 = 0;
-	int64_t _29 = 0;
-	int64_t _30 = 0;
-	int64_t _31 = 0;
-	int64_t _32 = 0;
-	int64_t _33 = 0;
+	int64_t _28;
+	int64_t _29;
+	int64_t _30;
+	int64_t _31;
+	int64_t _32;
+	int64_t _33;
 	//ifne %2, %1 goto blklab6 : int
 	if(dim!=n){goto blklab6;}
 	//const %9 = 1 : int
@@ -250,25 +250,25 @@ blklab7:;
 }
 
 int main(int argc, char** args){
-	int64_t n = 0;
+	int64_t n;
 	POS** queens;
 	size_t queens_size = 0;
-	int64_t num_solutions = 0;
-	int64_t _4 = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
+	int64_t num_solutions;
+	int64_t _4;
+	int64_t _5;
+	int64_t _6;
 	POS* _7;
 	POS** _8;
 	size_t _8_size = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
 	void* _12;
 	_DECL_1DARRAY(_14);
 	void* _15;
 	_DECL_1DARRAY(_17);
 	void* _18;
-	int64_t _20 = 0;
+	int64_t _20;
 	void* _21;
 	_DECL_1DARRAY(_23);
 	void* _24;

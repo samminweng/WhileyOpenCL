@@ -1,12 +1,12 @@
 #include "factorial.h"
 int64_t _factorial_(int64_t n){
-	int64_t _1 = 0;
-	int64_t _2 = 0;
-	int64_t _3 = 0;
-	int64_t _4 = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
+	int64_t _1;
+	int64_t _2;
+	int64_t _3;
+	int64_t _4;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
 	//const %2 = 1 : int
 	_2 = 1;
 	//ifne %0, %2 goto blklab0 : int
@@ -37,10 +37,10 @@ blklab1:;
 }
 
 int main(int argc, char** args){
-	int64_t f = 0;
-	int64_t _2 = 0;
-	int64_t _3 = 0;
-	int64_t _4 = 0;
+	int64_t f;
+	int64_t _2;
+	int64_t _3;
+	int64_t _4;
 	void* _5;
 	_DECL_1DARRAY(_7);
 	//const %3 = 5 : int

@@ -62,17 +62,17 @@ NQueen* _nqueen_(int64_t num_solutions, POS** queens, size_t queens_size){
 
 bool _conflict_(POS* p, int64_t row, int64_t col){
 	bool _3;
-	int64_t r = 0;
-	int64_t c = 0;
-	int64_t colDiff = 0;
-	int64_t rowDiff = 0;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
+	int64_t r;
+	int64_t c;
+	int64_t colDiff;
+	int64_t rowDiff;
+	int64_t _8;
+	int64_t _9;
 	bool _10;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
-	int64_t _13 = 0;
-	int64_t _14 = 0;
+	int64_t _11;
+	int64_t _12;
+	int64_t _13;
+	int64_t _14;
 	bool _15;
 	//fieldload %8 = %0 r : {int c,int r}
 	_8 = p->r;
@@ -129,29 +129,29 @@ blklab3:;
 
 NQueen* _run_(NQueen* nq, int64_t n, int64_t dim){
 	NQueen* _3;
-	int64_t col = 0;
+	int64_t col;
 	bool isSolution;
-	int64_t i = 0;
+	int64_t i;
 	POS* p;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
+	int64_t _8;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
 	POS** _12;
 	size_t _12_size = 0;
-	int64_t _13 = 0;
+	int64_t _13;
 	POS** _14;
 	size_t _14_size = 0;
-	int64_t _15 = 0;
+	int64_t _15;
 	bool _16;
-	int64_t _17 = 0;
+	int64_t _17;
 	POS** _18;
 	size_t _18_size = 0;
-	int64_t _19 = 0;
-	int64_t _20 = 0;
+	int64_t _19;
+	int64_t _20;
 	POS** _21;
 	size_t _21_size = 0;
-	int64_t _22 = 0;
+	int64_t _22;
 	POS** _23;
 	size_t _23_size = 0;
 	POS* _24;
@@ -159,15 +159,15 @@ NQueen* _run_(NQueen* nq, int64_t n, int64_t dim){
 	bool _26;
 	bool _27;
 	bool _28;
-	int64_t _29 = 0;
-	int64_t _30 = 0;
+	int64_t _29;
+	int64_t _30;
 	bool _31;
 	POS* _32;
 	NQueen* _33;
-	int64_t _34 = 0;
-	int64_t _35 = 0;
-	int64_t _36 = 0;
-	int64_t _37 = 0;
+	int64_t _34;
+	int64_t _35;
+	int64_t _36;
+	int64_t _37;
 	//ifne %2, %1 goto blklab6 : int
 	if(dim!=n){goto blklab6;}
 	//fieldload %8 = %0 num_solutions : {int num_solutions,{int c,int r}[] queens}
@@ -298,23 +298,23 @@ blklab7:;
 }
 
 int main(int argc, char** args){
-	int64_t n = 0;
+	int64_t n;
 	POS** queens;
 	size_t queens_size = 0;
-	int64_t num_solutions = 0;
+	int64_t num_solutions;
 	NQueen* nq;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
 	POS* _8;
 	POS** _9;
 	size_t _9_size = 0;
-	int64_t _10 = 0;
+	int64_t _10;
 	NQueen* _11;
 	NQueen* _12;
-	int64_t _13 = 0;
-	int64_t _14 = 0;
-	int64_t _15 = 0;
+	int64_t _13;
+	int64_t _14;
+	int64_t _15;
 	void* _16;
 	_DECL_1DARRAY(_18);
 	void* _19;
@@ -323,7 +323,7 @@ int main(int argc, char** args){
 	void* _24;
 	_DECL_1DARRAY(_26);
 	void* _27;
-	int64_t _29 = 0;
+	int64_t _29;
 	void* _30;
 	_DECL_1DARRAY(_32);
 	//const %5 = 8 : int

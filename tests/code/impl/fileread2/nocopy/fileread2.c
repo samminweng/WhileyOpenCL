@@ -1,33 +1,33 @@
 #include "fileread2.h"
 void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t pixels_size){
-	int64_t j = 0;
-	int64_t i = 0;
-	int64_t pos = 0;
+	int64_t j;
+	int64_t i;
+	int64_t pos;
 	void* _7;
 	_DECL_1DARRAY(_9);
 	void* _10;
 	void* _12;
 	_DECL_1DARRAY(_14);
 	void* _15;
-	int64_t _17 = 0;
-	int64_t _18 = 0;
-	int64_t _19 = 0;
-	int64_t _20 = 0;
+	int64_t _17;
+	int64_t _18;
+	int64_t _19;
+	int64_t _20;
 	BYTE _21;
 	BYTE _22;
 	void* _23;
-	int64_t _25 = 0;
+	int64_t _25;
 	void* _26;
-	int64_t _28 = 0;
+	int64_t _28;
 	void* _29;
 	_DECL_1DARRAY(_31);
-	int64_t _32 = 0;
-	int64_t _33 = 0;
+	int64_t _32;
+	int64_t _33;
 	void* _34;
 	void* _36;
 	size_t _36_size = 0;
-	int64_t _37 = 0;
-	int64_t _38 = 0;
+	int64_t _37;
+	int64_t _38;
 	//fieldload %7 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %8 = %7 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %9 = [80,49] : int[]
@@ -158,13 +158,13 @@ blklab0:;
 
 int main(int argc, char** args){
 	FILE* r;
-	int64_t width = 0;
-	int64_t height = 0;
+	int64_t width;
+	int64_t height;
 	_DECL_1DARRAY_BYTE(pixels);
 	void* _5;
 	_DECL_1DARRAY(_6);
-	int64_t _7 = 0;
-	int64_t _8 = 0;
+	int64_t _7;
+	int64_t _8;
 	_DECL_1DARRAY_BYTE(_9);
 	//const %6 = [105,109,97,103,101,51,50,120,51,50,46,112,98,109] : int[]
 	_NEW_1DARRAY_int64_t(_6, 14, 0);

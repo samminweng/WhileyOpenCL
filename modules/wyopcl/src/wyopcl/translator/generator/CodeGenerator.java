@@ -145,7 +145,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						// Use the int64_t integer
 						translateType = CodeGeneratorHelper.translateType(type, stores);
 					}
-					String def = indent + translateType + " " + var + " = 0;";// Initialize an integer variable to 0
+					String def = indent + translateType + " " + var + ";";// Initialize an integer variable to 0
 
 					if(boundAnalyzer.isPresent()){
 						def = def + " //" + boundAnalyzer.get().getInferredDomain(reg, function);
@@ -165,7 +165,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						// Choose integer type for a single dimensional array
 						if(boundAnalyzer.isPresent() && dimension == 1){
 							String translateType = boundAnalyzer.get().suggestIntegerType(reg, function);
-							String def = indent + translateType + "* " + var + " = 0;";// Initialize an integer variable to 0
+							String def = indent + translateType + "* " + var + " = NULL;";// Initialize an integer variable to 0
 
 							if(boundAnalyzer.isPresent()){
 								def = def + " //" + boundAnalyzer.get().getInferredDomain(reg, function);
@@ -1834,9 +1834,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			extractLHSVar(statement, code, function);
 			boolean isCopyEliminated;// The copy is NOT needed by default.
 			if (field.equals("args")) {
+				String var_name = stores.getVar(code.target(0), function);
+				stores.aliasCmdArgument(var_name);				
 				// Convert the arguments into an array of integer array (int64_t**).
-				statement.add(
-						stores.getIndent(function) + "_CONV_ARGS(" + stores.getVar(code.target(0), function) + ");");
+				statement.add( stores.getIndent(function)
+						+ "_CONV_ARGS(" + var_name + ");");
 				isCopyEliminated = false;
 			} else {
 				Type lhs_type = stores.getRawType(code.target(0), function);

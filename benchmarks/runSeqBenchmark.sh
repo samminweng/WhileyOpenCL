@@ -330,24 +330,24 @@ exec(){
 # # ###
 # # ###########################################
 # # # # # ## # Reverse test case
-# init Reverse
-# exec Reverse original
+init Reverse
+exec Reverse original
 #
 # # # # # # # # # # # newTicTacToe test case
-# init newTicTacToe
-# exec newTicTacToe original
+init newTicTacToe
+exec newTicTacToe original
 #
 # # # # # # # # ## # BubbleSort test case
-# init BubbleSort
-# exec BubbleSort original
+init BubbleSort
+exec BubbleSort original
 #
 # # # # # # # # ## # MergeSort test case
-# init MergeSort
-# exec MergeSort original
+init MergeSort
+exec MergeSort original
 #
 # # # # # # # # MatrixMult test case
-# init MatrixMult
-# exec MatrixMult original
+init MatrixMult
+exec MatrixMult original
 ####exec MatrixMult original 12000 # Naive code runs out of memory
 # ### Cashtill test case
 #init Cashtill
@@ -359,8 +359,8 @@ exec(){
 
 
 #### LZ77 test case
-init LZ77
-exec LZ77 compress
+#init LZ77
+#exec LZ77 compress
 #exec LZ77 decompress
 #exec LZ77 optimised_decompress
 

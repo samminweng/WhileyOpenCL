@@ -2,12 +2,12 @@
 int64_t* _func_(_DECL_1DARRAY_PARAM(x), int64_t num, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
 	_DECL_1DARRAY(a);
-	int64_t b = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
+	int64_t b;
+	int64_t _5;
+	int64_t _6;
 	_DECL_1DARRAY(_7);
-	int64_t _8 = 0;
-	int64_t _9 = 0;
+	int64_t _8;
+	int64_t _9;
 	//const %5 = 0 : int
 	_5 = 0;
 	//const %6 = 3 : int
@@ -43,21 +43,21 @@ blklab1:;
 
 int main(int argc, char** args){
 	_DECL_1DARRAY(x);
-	int64_t num = 0;
+	int64_t num;
 	_DECL_1DARRAY(tmp);
-	int64_t _4 = 0;
-	int64_t _5 = 0;
+	int64_t _4;
+	int64_t _5;
 	_DECL_1DARRAY(_6);
-	int64_t _7 = 0;
+	int64_t _7;
 	_DECL_1DARRAY(_8);
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
 	void* _12;
 	_DECL_1DARRAY(_14);
 	void* _15;
-	int64_t _17 = 0;
-	int64_t _18 = 0;
+	int64_t _17;
+	int64_t _18;
 	//const %4 = 2 : int
 	_4 = 2;
 	//const %5 = 3 : int

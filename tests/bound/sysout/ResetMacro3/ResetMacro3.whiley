@@ -2,7 +2,8 @@ import whiley.lang.*
 // The 'func' function may change 'x' array and may return 'x' array
 function func(int[] x, int num) -> int[]:
     int[] a = [0;3] // a[0] = 0
-    if num > 10:
+    int b = 10
+    if num > b:
         x[0] = num
         return x
     else:

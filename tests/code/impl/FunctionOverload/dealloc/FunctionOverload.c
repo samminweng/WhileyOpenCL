@@ -2,14 +2,14 @@
 int64_t* _Cash_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_0);
 	_DECL_DEALLOC(_0);
-	int64_t _1 = 0;
-	int64_t _2 = 0;
-	int64_t _3 = 0;
-	int64_t _4 = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
-	int64_t _8 = 0;
+	int64_t _1;
+	int64_t _2;
+	int64_t _3;
+	int64_t _4;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
+	int64_t _8;
 	_DECL_1DARRAY(_9);
 	_DECL_DEALLOC(_9);
 	//const %1 = 0 : int

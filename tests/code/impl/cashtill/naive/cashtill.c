@@ -1,14 +1,14 @@
 #include "cashtill.h"
 int64_t* _Cash_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_0);
-	int64_t _1 = 0;
-	int64_t _2 = 0;
-	int64_t _3 = 0;
-	int64_t _4 = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
-	int64_t _8 = 0;
+	int64_t _1;
+	int64_t _2;
+	int64_t _3;
+	int64_t _4;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
+	int64_t _8;
 	_DECL_1DARRAY(_9);
 	//const %1 = 0 : int
 	_1 = 0;
@@ -38,33 +38,33 @@ int64_t* _Cash_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 int64_t* _Cash_1_(_DECL_1DARRAY_PARAM(coins), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
 	_DECL_1DARRAY(cash);
-	int64_t i = 0;
-	int64_t coin = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
+	int64_t i;
+	int64_t coin;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
+	int64_t _8;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
+	int64_t _12;
 	_DECL_1DARRAY(_13);
-	int64_t _14 = 0;
-	int64_t _15 = 0;
+	int64_t _14;
+	int64_t _15;
 	_DECL_1DARRAY(_16);
-	int64_t _17 = 0;
-	int64_t _18 = 0;
-	int64_t _19 = 0;
-	int64_t _20 = 0;
-	int64_t _21 = 0;
-	int64_t _22 = 0;
-	int64_t _23 = 0;
-	int64_t _24 = 0;
-	int64_t _25 = 0;
-	int64_t _26 = 0;
-	int64_t _27 = 0;
-	int64_t _28 = 0;
-	int64_t _29 = 0;
+	int64_t _17;
+	int64_t _18;
+	int64_t _19;
+	int64_t _20;
+	int64_t _21;
+	int64_t _22;
+	int64_t _23;
+	int64_t _24;
+	int64_t _25;
+	int64_t _26;
+	int64_t _27;
+	int64_t _28;
+	int64_t _29;
 	//const %5 = 0 : int
 	_5 = 0;
 	//const %6 = 0 : int
@@ -126,19 +126,19 @@ blklab4:;
 }
 
 int64_t _total_(_DECL_1DARRAY_PARAM(c)){
-	int64_t _1 = 0;
-	int64_t r = 0;
-	int64_t i = 0;
-	int64_t _4 = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
+	int64_t _1;
+	int64_t r;
+	int64_t i;
+	int64_t _4;
+	int64_t _5;
+	int64_t _6;
 	_DECL_1DARRAY(_7);
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
-	int64_t _13 = 0;
+	int64_t _8;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
+	int64_t _12;
+	int64_t _13;
 	//const %4 = 0 : int
 	_4 = 0;
 	//assign %2 = %4  : int
@@ -184,14 +184,14 @@ blklab9:;
 
 bool _contained_(_DECL_1DARRAY_PARAM(first), _DECL_1DARRAY_PARAM(second)){
 	bool _2;
-	int64_t i = 0;
-	int64_t _4 = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
+	int64_t i;
+	int64_t _4;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
 	bool _8;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
+	int64_t _9;
+	int64_t _10;
 	bool _11;
 	//const %4 = 0 : int
 	_4 = 0;
@@ -235,14 +235,14 @@ blklab11:;
 
 int64_t* _add_(_DECL_1DARRAY_PARAM(first), _DECL_1DARRAY_PARAM(second), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(r);
-	int64_t i = 0;
-	int64_t _4 = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
+	int64_t i;
+	int64_t _4;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
+	int64_t _8;
+	int64_t _9;
+	int64_t _10;
 	//const %4 = 0 : int
 	_4 = 0;
 	//assign %3 = %4  : int
@@ -280,14 +280,14 @@ blklab15:;
 
 int64_t* _subtract_(_DECL_1DARRAY_PARAM(first), _DECL_1DARRAY_PARAM(second), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(r);
-	int64_t i = 0;
-	int64_t _4 = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
+	int64_t i;
+	int64_t _4;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
+	int64_t _8;
+	int64_t _9;
+	int64_t _10;
 	//const %4 = 0 : int
 	_4 = 0;
 	//assign %3 = %4  : int
@@ -325,29 +325,29 @@ blklab19:;
 
 int64_t* _calculateChange_(_DECL_1DARRAY_PARAM(till), int64_t change, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(r);
-	int64_t i = 0;
+	int64_t i;
 	_DECL_1DARRAY(tmp);
 	_DECL_1DARRAY(chg);
-	int64_t _6 = 0;
+	int64_t _6;
 	_DECL_1DARRAY(_7);
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
+	int64_t _8;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
 	_DECL_1DARRAY(_12);
-	int64_t _13 = 0;
-	int64_t _14 = 0;
-	int64_t _15 = 0;
-	int64_t _16 = 0;
+	int64_t _13;
+	int64_t _14;
+	int64_t _15;
+	int64_t _16;
 	_DECL_1DARRAY(_17);
 	_DECL_1DARRAY(_18);
-	int64_t _19 = 0;
-	int64_t _20 = 0;
-	int64_t _21 = 0;
-	int64_t _22 = 0;
-	int64_t _23 = 0;
-	int64_t _24 = 0;
-	int64_t _25 = 0;
+	int64_t _19;
+	int64_t _20;
+	int64_t _21;
+	int64_t _22;
+	int64_t _23;
+	int64_t _24;
+	int64_t _25;
 	void* _26;
 	//const %6 = 0 : int
 	_6 = 0;
@@ -452,15 +452,15 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERE
 	_DECL_1DARRAY(_1);
 	_DECL_1DARRAY(r);
 	bool firstTime;
-	int64_t i = 0;
-	int64_t amt = 0;
+	int64_t i;
+	int64_t amt;
 	void* _6;
 	size_t _6_size = 0;
 	bool _7;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
+	int64_t _8;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
 	bool _12;
 	_DECL_1DARRAY(_13);
 	_DECL_1DARRAY(_14);
@@ -472,8 +472,8 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERE
 	_DECL_1DARRAY(_20);
 	_DECL_2DARRAY(_21);
 	_DECL_1DARRAY(_22);
-	int64_t _23 = 0;
-	int64_t _24 = 0;
+	int64_t _23;
+	int64_t _24;
 	void* _25;
 	size_t _25_size = 0;
 	_DECL_1DARRAY(_26);
@@ -630,12 +630,12 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_1DARRAY_PARAM(giv
 	_DECL_1DARRAY(_20);
 	void* _21;
 	_DECL_1DARRAY(_23);
-	int64_t _24 = 0;
+	int64_t _24;
 	void* _25;
 	_DECL_1DARRAY(_27);
 	_DECL_1DARRAY(_28);
-	int64_t _29 = 0;
-	int64_t _30 = 0;
+	int64_t _29;
+	int64_t _30;
 	void* _31;
 	_DECL_1DARRAY(_33);
 	void* _34;
@@ -826,14 +826,14 @@ blklab37:;
 
 int main(int argc, char** args){
 	_DECL_1DARRAY(till);
-	int64_t _2 = 0;
-	int64_t _3 = 0;
-	int64_t _4 = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
+	int64_t _2;
+	int64_t _3;
+	int64_t _4;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
+	int64_t _8;
+	int64_t _9;
 	_DECL_1DARRAY(_10);
 	void* _11;
 	_DECL_1DARRAY(_13);
@@ -841,24 +841,24 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_16);
 	_DECL_1DARRAY(_17);
 	_DECL_1DARRAY(_18);
-	int64_t _19 = 0;
+	int64_t _19;
 	_DECL_1DARRAY(_20);
-	int64_t _21 = 0;
+	int64_t _21;
 	_DECL_1DARRAY(_22);
 	_DECL_1DARRAY(_23);
-	int64_t _24 = 0;
+	int64_t _24;
 	_DECL_1DARRAY(_25);
-	int64_t _26 = 0;
+	int64_t _26;
 	_DECL_1DARRAY(_27);
 	_DECL_1DARRAY(_28);
-	int64_t _29 = 0;
+	int64_t _29;
 	_DECL_1DARRAY(_30);
-	int64_t _31 = 0;
+	int64_t _31;
 	_DECL_1DARRAY(_32);
 	_DECL_1DARRAY(_33);
-	int64_t _34 = 0;
+	int64_t _34;
 	_DECL_1DARRAY(_35);
-	int64_t _36 = 0;
+	int64_t _36;
 	//const %2 = 5 : int
 	_2 = 5;
 	//const %3 = 3 : int

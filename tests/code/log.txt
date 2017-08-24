@@ -516,3 +516,63 @@ DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_30" "x" "func" ) (LINE:28
 DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "x" "func" ) (LINE:179 FILE: CallerMacro5.c) in nocopy_dealloc folder	Frequency: 1
 DEBUG: Potential memory leaks at ( "false-true-true" "x"_tmp "func" ) (LINE:232 FILE: CallerMacro5.c) in nocopy_dealloc folder	Frequency: 1
 DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "x" "func" ) (LINE:232 FILE: CallerMacro5.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "x" "func" ) (LINE:115 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "x" "func" ) (LINE:115 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "x" "func" ) (LINE:115 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "x" "func" ) (LINE:115 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "x" "func" ) (LINE:115 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "x" "func" ) (LINE:115 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "x" "func" ) (LINE:115 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "x" "func" ) (LINE:115 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "resize" ) (LINE:255 FILE: appendarray.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "data" "f" ) (LINE:317 FILE: appendarray.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "f" ) (LINE:296 FILE: appendarray.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "resize" ) (LINE:236 FILE: appendarray.c) in dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:676 FILE: lz77_compress.c) in nocopy_dealloc folder	Frequency: 3010
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "resize" ) (LINE:508 FILE: lz77_compress.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "compress_data" "decompress" ) (LINE:904 FILE: lz77_compress.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:624 FILE: lz77_compress.c) in nocopy_dealloc folder	Frequency: 152
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "match" ) (LINE:160 FILE: lz77_compress.c) in nocopy_dealloc folder	Frequency: 368030
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "findLongestMatch" ) (LINE:412 FILE: lz77_compress.c) in nocopy_dealloc folder	Frequency: 1543
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "data" "compress" ) (LINE:838 FILE: lz77_compress.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "resize" ) (LINE:471 FILE: lz77_compress.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "findLongestMatch" ) (LINE:385 FILE: lz77_compress.c) in dealloc folder	Frequency: 1543
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:627 FILE: lz77_compress.c) in dealloc folder	Frequency: 3010
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "match" ) (LINE:151 FILE: lz77_compress.c) in dealloc folder	Frequency: 368030
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "compress" ) (LINE:785 FILE: lz77_compress.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "compress_data" "decompress" ) (LINE:849 FILE: lz77_compress.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:581 FILE: lz77_compress.c) in dealloc folder	Frequency: 152
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "resize" ) (LINE:255 FILE: appendarray1.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "resize" ) (LINE:402 FILE: appendarray1.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "input" "f_resize" ) (LINE:471 FILE: appendarray1.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "input" "f_append" ) (LINE:458 FILE: appendarray1.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "input" "f_resize" ) (LINE:438 FILE: appendarray1.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "resize" ) (LINE:372 FILE: appendarray1.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "resize" ) (LINE:236 FILE: appendarray1.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "input" "f_append" ) (LINE:426 FILE: appendarray1.c) in dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "resize" ) (LINE:255 FILE: appendarray.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "data" "f" ) (LINE:317 FILE: appendarray.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "f" ) (LINE:296 FILE: appendarray.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "resize" ) (LINE:236 FILE: appendarray.c) in dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:676 FILE: lz77_compress.c) in nocopy_dealloc folder	Frequency: 3010
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "resize" ) (LINE:508 FILE: lz77_compress.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "compress_data" "decompress" ) (LINE:904 FILE: lz77_compress.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:624 FILE: lz77_compress.c) in nocopy_dealloc folder	Frequency: 152
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "match" ) (LINE:160 FILE: lz77_compress.c) in nocopy_dealloc folder	Frequency: 368030
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "findLongestMatch" ) (LINE:412 FILE: lz77_compress.c) in nocopy_dealloc folder	Frequency: 1543
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "data" "compress" ) (LINE:838 FILE: lz77_compress.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "resize" ) (LINE:471 FILE: lz77_compress.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "findLongestMatch" ) (LINE:385 FILE: lz77_compress.c) in dealloc folder	Frequency: 1543
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:627 FILE: lz77_compress.c) in dealloc folder	Frequency: 3010
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "match" ) (LINE:151 FILE: lz77_compress.c) in dealloc folder	Frequency: 368030
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "compress" ) (LINE:785 FILE: lz77_compress.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "compress_data" "decompress" ) (LINE:849 FILE: lz77_compress.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:581 FILE: lz77_compress.c) in dealloc folder	Frequency: 152
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "resize" ) (LINE:255 FILE: appendarray1.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "resize" ) (LINE:402 FILE: appendarray1.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "input" "f_resize" ) (LINE:471 FILE: appendarray1.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "input" "f_append" ) (LINE:458 FILE: appendarray1.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "input" "f_resize" ) (LINE:438 FILE: appendarray1.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "resize" ) (LINE:372 FILE: appendarray1.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "resize" ) (LINE:236 FILE: appendarray1.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "input" "f_append" ) (LINE:426 FILE: appendarray1.c) in dealloc folder	Frequency: 1

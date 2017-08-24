@@ -1,12 +1,12 @@
 #include "ifelse.h"
 //	domain(_0)	= [1..11]	
 int64_t _f_(uint16_t x){
-	int64_t r = 0; //domain(_1)	= [empty..empty]	
-	uint16_t _2 = 0; //domain(_2)	= [10..10]	
-	uint16_t _3 = 0; //domain(_3)	= [1..1]	
-	uint16_t _4 = 0; //domain(_4)	= [10..10]	
-	uint16_t _5 = 0; //domain(_5)	= [2..2]	
-	uint16_t _6 = 0; //domain(_6)	= [0..0]	
+	int64_t r; //domain(_1)	= [empty..empty]	
+	uint16_t _2; //domain(_2)	= [10..10]	
+	uint16_t _3; //domain(_3)	= [1..1]	
+	uint16_t _4; //domain(_4)	= [10..10]	
+	uint16_t _5; //domain(_5)	= [2..2]	
+	uint16_t _6; //domain(_6)	= [0..0]	
 	//const %2 = 10 : int
 	_2 = 10;
 	//ifge %0, %2 goto blklab1 : int
@@ -40,20 +40,20 @@ blklab2:;
 
 //
 int main(int argc, char** args){
-	uint16_t a = 0; //domain(_1)	= [1..1]	
-	uint16_t b = 0; //domain(_2)	= [0..0]	
-	uint16_t c = 0; //domain(_3)	= [2..2]	
-	uint16_t _4 = 0; //domain(_4)	= [1..1]	
-	uint16_t _5 = 0; //domain(_5)	= [1..1]	
-	int64_t _6 = 0; //domain(_6)	= [empty..empty]	
+	uint16_t a; //domain(_1)	= [1..1]	
+	uint16_t b; //domain(_2)	= [0..0]	
+	uint16_t c; //domain(_3)	= [2..2]	
+	uint16_t _4; //domain(_4)	= [1..1]	
+	uint16_t _5; //domain(_5)	= [1..1]	
+	int64_t _6; //domain(_6)	= [empty..empty]	
 	void* _7;
-	uint16_t _9 = 0; //domain(_9)	= [0..0]	
-	uint16_t _10 = 0; //domain(_10)	= [10..10]	
-	int64_t _11 = 0; //domain(_11)	= [empty..empty]	
+	uint16_t _9; //domain(_9)	= [0..0]	
+	uint16_t _10; //domain(_10)	= [10..10]	
+	int64_t _11; //domain(_11)	= [empty..empty]	
 	void* _12;
-	uint16_t _14 = 0; //domain(_14)	= [2..2]	
-	uint16_t _15 = 0; //domain(_15)	= [11..11]	
-	int64_t _16 = 0; //domain(_16)	= [empty..empty]	
+	uint16_t _14; //domain(_14)	= [2..2]	
+	uint16_t _15; //domain(_15)	= [11..11]	
+	int64_t _16; //domain(_16)	= [empty..empty]	
 	void* _17;
 	//const %5 = 1 : int
 	_5 = 1;

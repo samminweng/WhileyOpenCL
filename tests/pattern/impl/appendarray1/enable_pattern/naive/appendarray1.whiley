@@ -58,7 +58,7 @@ function f_resize(byte[] input) -> (byte[] output):
         output[size] = item
         size = size + 1
         pos = pos + 1
-    assert size <= 2*|input|
+    assert size <= 2*|input| // Actual array size <= estimated size
     // Resize the output array with actual array size
     output = resize(output, size)
     return output

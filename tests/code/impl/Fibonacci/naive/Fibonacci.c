@@ -1,21 +1,21 @@
 #include "Fibonacci.h"
 int64_t* _fibonacci_(_DECL_1DARRAY_PARAM(ls), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
-	int64_t _3 = 0;
-	int64_t _4 = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
+	int64_t _3;
+	int64_t _4;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
 	_DECL_1DARRAY(_8);
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
-	int64_t _13 = 0;
-	int64_t _14 = 0;
-	int64_t _15 = 0;
-	int64_t _16 = 0;
-	int64_t _17 = 0;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
+	int64_t _12;
+	int64_t _13;
+	int64_t _14;
+	int64_t _15;
+	int64_t _16;
+	int64_t _17;
 	//const %3 = 1 : int
 	_3 = 1;
 	//ifgt %1, %3 goto blklab0 : int
@@ -72,24 +72,24 @@ blklab1:;
 }
 
 int main(int argc, char** args){
-	int64_t max = 0;
+	int64_t max;
 	_DECL_1DARRAY(arr);
-	int64_t _3 = 0;
-	int64_t _4 = 0;
+	int64_t _3;
+	int64_t _4;
 	_DECL_1DARRAY(_5);
 	_DECL_1DARRAY(_6);
-	int64_t _7 = 0;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
-	int64_t _13 = 0;
-	int64_t _14 = 0;
-	int64_t _15 = 0;
-	int64_t _16 = 0;
-	int64_t _17 = 0;
-	int64_t _18 = 0;
+	int64_t _7;
+	int64_t _8;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
+	int64_t _12;
+	int64_t _13;
+	int64_t _14;
+	int64_t _15;
+	int64_t _16;
+	int64_t _17;
+	int64_t _18;
 	_DECL_1DARRAY(_19);
 	void* _20;
 	void* _22;

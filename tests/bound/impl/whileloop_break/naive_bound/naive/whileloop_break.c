@@ -1,12 +1,12 @@
 #include "whileloop_break.h"
 //	domain(_0)	= [43..65536]		domain(_0)	= [43..65536]	
 int64_t _find_(uint32_t limit, uint16_t item){
-	int64_t _2 = 0; //domain(_2)	= [empty..empty]	
-	uint32_t r = 0; //domain(_3)	= [0..65536]	
-	uint16_t _4 = 0; //domain(_4)	= [0..0]	
-	int64_t _5 = 0; //domain(_5)	= [empty..empty]	
-	uint16_t _6 = 0; //domain(_6)	= [1..1]	
-	uint32_t _7 = 0; //domain(_7)	= [1..65536]	
+	int64_t _2; //domain(_2)	= [empty..empty]	
+	uint32_t r; //domain(_3)	= [0..65536]	
+	uint16_t _4; //domain(_4)	= [0..0]	
+	int64_t _5; //domain(_5)	= [empty..empty]	
+	uint16_t _6; //domain(_6)	= [1..1]	
+	uint32_t _7; //domain(_7)	= [1..65536]	
 	//const %4 = 0 : int
 	_4 = 0;
 	//assign %3 = %4  : int
@@ -39,18 +39,18 @@ blklab0:;
 
 //
 int main(int argc, char** args){
-	uint16_t a = 0; //domain(_1)	= [43..43]	
-	uint32_t b = 0; //domain(_2)	= [65536..65536]	
-	uint16_t _3 = 0; //domain(_3)	= [43..43]	
-	uint16_t _4 = 0; //domain(_4)	= [43..43]	
-	uint16_t _5 = 0; //domain(_5)	= [10..10]	
+	uint16_t a; //domain(_1)	= [43..43]	
+	uint32_t b; //domain(_2)	= [65536..65536]	
+	uint16_t _3; //domain(_3)	= [43..43]	
+	uint16_t _4; //domain(_4)	= [43..43]	
+	uint16_t _5; //domain(_5)	= [10..10]	
 	void* _6;
-	int64_t _8 = 0; //domain(_8)	= [empty..empty]	
-	uint32_t _9 = 0; //domain(_9)	= [65536..65536]	
-	uint32_t _10 = 0; //domain(_10)	= [65536..65536]	
-	uint16_t _11 = 0; //domain(_11)	= [10..10]	
+	int64_t _8; //domain(_8)	= [empty..empty]	
+	uint32_t _9; //domain(_9)	= [65536..65536]	
+	uint32_t _10; //domain(_10)	= [65536..65536]	
+	uint16_t _11; //domain(_11)	= [10..10]	
 	void* _12;
-	int64_t _14 = 0; //domain(_14)	= [empty..empty]	
+	int64_t _14; //domain(_14)	= [empty..empty]	
 	//const %4 = 43 : int
 	_4 = 43;
 	//const %5 = 10 : int

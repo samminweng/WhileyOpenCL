@@ -24,23 +24,23 @@ void printf_Match(Match* match){
 	printf("}");
 }
 int64_t _match_(BYTE* data, size_t data_size, int64_t offset, int64_t end){
-	int64_t _3 = 0;
-	int64_t pos = 0;
-	int64_t len = 0;
-	int64_t maxIter = 0;
-	int64_t _7 = 0;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
-	int64_t _13 = 0;
-	int64_t _14 = 0;
+	int64_t _3;
+	int64_t pos;
+	int64_t len;
+	int64_t maxIter;
+	int64_t _7;
+	int64_t _8;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
+	int64_t _12;
+	int64_t _13;
+	int64_t _14;
 	BYTE _15;
-	int64_t _16 = 0;
+	int64_t _16;
 	BYTE _17;
-	int64_t _18 = 0;
-	int64_t _19 = 0;
+	int64_t _18;
+	int64_t _19;
 	//assign %4 = %2  : int
 	// isCopyEliminated = true
 	pos = end;
@@ -104,21 +104,21 @@ blklab1:;
 
 Match* _findLongestMatch_(BYTE* data, size_t data_size, int64_t pos){
 	Match* m;
-	int64_t bestOffset = 0;
-	int64_t bestLen = 0;
-	int64_t start = 0;
-	int64_t offset = 0;
-	int64_t len = 0;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
-	int64_t _13 = 0;
-	int64_t _14 = 0;
-	int64_t _15 = 0;
-	int64_t _16 = 0;
-	int64_t _17 = 0;
+	int64_t bestOffset;
+	int64_t bestLen;
+	int64_t start;
+	int64_t offset;
+	int64_t len;
+	int64_t _8;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
+	int64_t _12;
+	int64_t _13;
+	int64_t _14;
+	int64_t _15;
+	int64_t _16;
+	int64_t _17;
 	Match* _18;
 	//const %8 = 0 : int
 	_8 = 0;
@@ -195,17 +195,17 @@ blklab3:;
 
 BYTE* _append_(BYTE* items, size_t items_size, BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(nitems);
-	int64_t i = 0;
+	int64_t i;
 	BYTE _4;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
 	_DECL_1DARRAY_BYTE(_8);
-	int64_t _9 = 0;
-	int64_t _10 = 0;
+	int64_t _9;
+	int64_t _10;
 	BYTE _11;
-	int64_t _12 = 0;
-	int64_t _13 = 0;
+	int64_t _12;
+	int64_t _13;
 	//const %4 = 00000000b : byte
 	_4 = 0b00000000;
 	//lengthof %5 = %0 : byte[]
@@ -258,13 +258,13 @@ blklab6:;
 
 BYTE* _resize_(BYTE* items, size_t items_size, int64_t size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(nitems);
-	int64_t i = 0;
+	int64_t i;
 	BYTE _4;
 	_DECL_1DARRAY_BYTE(_5);
-	int64_t _6 = 0;
+	int64_t _6;
 	BYTE _7;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
+	int64_t _8;
+	int64_t _9;
 	//const %4 = 00000000b : byte
 	_4 = 0b00000000;
 	//arraygen %5 = [4; 1] : byte[]
@@ -306,26 +306,26 @@ blklab10:;
 
 BYTE* _compress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(output);
-	int64_t pos = 0;
+	int64_t pos;
 	Match* m;
 	BYTE offset;
 	BYTE length;
-	int64_t _6 = 0;
+	int64_t _6;
 	BYTE _7;
-	int64_t _8 = 0;
+	int64_t _8;
 	_DECL_1DARRAY_BYTE(_9);
-	int64_t _10 = 0;
+	int64_t _10;
 	Match* _11;
 	BYTE _12;
-	int64_t _13 = 0;
+	int64_t _13;
 	BYTE _14;
-	int64_t _15 = 0;
+	int64_t _15;
 	BYTE _16;
 	BYTE _17;
-	int64_t _18 = 0;
-	int64_t _19 = 0;
-	int64_t _20 = 0;
-	int64_t _21 = 0;
+	int64_t _18;
+	int64_t _19;
+	int64_t _20;
+	int64_t _21;
 	_DECL_1DARRAY_BYTE(_22);
 	_DECL_1DARRAY_BYTE(_23);
 	//const %6 = 0 : int
@@ -432,37 +432,37 @@ blklab12:;
 
 BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(output);
-	int64_t pos = 0;
+	int64_t pos;
 	BYTE header;
 	BYTE item;
-	int64_t offset = 0;
-	int64_t len = 0;
-	int64_t start = 0;
-	int64_t i = 0;
+	int64_t offset;
+	int64_t len;
+	int64_t start;
+	int64_t i;
 	BYTE _9;
-	int64_t _10 = 0;
+	int64_t _10;
 	_DECL_1DARRAY_BYTE(_11);
-	int64_t _12 = 0;
-	int64_t _13 = 0;
-	int64_t _14 = 0;
-	int64_t _15 = 0;
+	int64_t _12;
+	int64_t _13;
+	int64_t _14;
+	int64_t _15;
 	BYTE _16;
-	int64_t _17 = 0;
-	int64_t _18 = 0;
+	int64_t _17;
+	int64_t _18;
 	BYTE _19;
-	int64_t _20 = 0;
-	int64_t _21 = 0;
+	int64_t _20;
+	int64_t _21;
 	BYTE _22;
 	_DECL_1DARRAY_BYTE(_23);
-	int64_t _24 = 0;
-	int64_t _25 = 0;
-	int64_t _26 = 0;
-	int64_t _27 = 0;
-	int64_t _28 = 0;
+	int64_t _24;
+	int64_t _25;
+	int64_t _26;
+	int64_t _27;
+	int64_t _28;
 	BYTE _29;
 	_DECL_1DARRAY_BYTE(_30);
-	int64_t _31 = 0;
-	int64_t _32 = 0;
+	int64_t _31;
+	int64_t _32;
 	//const %9 = 00000000b : byte
 	_9 = 0b00000000;
 	//const %10 = 0 : int
@@ -605,7 +605,7 @@ int main(int argc, char** args){
 	void* _12;
 	_DECL_1DARRAY(_14);
 	void* _15;
-	int64_t _17 = 0;
+	int64_t _17;
 	void* _18;
 	_DECL_1DARRAY(_20);
 	_DECL_1DARRAY_BYTE(_21);
@@ -613,7 +613,7 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_24);
 	void* _25;
 	void* _27;
-	int64_t _29 = 0;
+	int64_t _29;
 	void* _30;
 	_DECL_1DARRAY(_32);
 	_DECL_1DARRAY_BYTE(_33);
@@ -622,11 +622,11 @@ int main(int argc, char** args){
 	void* _37;
 	_DECL_1DARRAY(_39);
 	void* _40;
-	int64_t _42 = 0;
+	int64_t _42;
 	void* _43;
 	_DECL_1DARRAY(_45);
-	int64_t _46 = 0;
-	int64_t _47 = 0;
+	int64_t _46;
+	int64_t _47;
 	//const %6 = [115,109,97,108,108,46,105,110] : int[]
 	_NEW_1DARRAY_int64_t(_6, 8, 0);
 	_6[0] = 115; _6[1] = 109; _6[2] = 97; _6[3] = 108; _6[4] = 108; _6[5] = 46; _6[6] = 105; _6[7] = 110; 

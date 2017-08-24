@@ -1,19 +1,19 @@
 #include "nestedwhileloop.h"
 //	domain(_0)	= [43..257]	
 int64_t _f_(uint16_t limit){
-	int64_t _1 = 0; //domain(_1)	= [empty..empty]	
-	uint16_t i = 0; //domain(_2)	= [0..257]	
-	uint64_t sum = 0; //domain(_3)	= [0..infinity]	
-	uint16_t j = 0; //domain(_4)	= [0..257]	
-	uint16_t _5 = 0; //domain(_5)	= [0..0]	
-	uint16_t _6 = 0; //domain(_6)	= [0..0]	
-	uint16_t _7 = 0; //domain(_7)	= [0..0]	
-	uint32_t _8 = 0; //domain(_8)	= [0..65536]	
-	uint64_t _9 = 0; //domain(_9)	= [0..infinity]	
-	uint16_t _10 = 0; //domain(_10)	= [1..1]	
-	uint16_t _11 = 0; //domain(_11)	= [1..257]	
-	uint16_t _12 = 0; //domain(_12)	= [1..1]	
-	uint16_t _13 = 0; //domain(_13)	= [1..257]	
+	int64_t _1; //domain(_1)	= [empty..empty]	
+	uint16_t i; //domain(_2)	= [0..257]	
+	uint64_t sum; //domain(_3)	= [0..infinity]	
+	uint16_t j; //domain(_4)	= [0..257]	
+	uint16_t _5; //domain(_5)	= [0..0]	
+	uint16_t _6; //domain(_6)	= [0..0]	
+	uint16_t _7; //domain(_7)	= [0..0]	
+	uint32_t _8; //domain(_8)	= [0..65536]	
+	uint64_t _9; //domain(_9)	= [0..infinity]	
+	uint16_t _10; //domain(_10)	= [1..1]	
+	uint16_t _11; //domain(_11)	= [1..257]	
+	uint16_t _12; //domain(_12)	= [1..1]	
+	uint16_t _13; //domain(_13)	= [1..257]	
 	//const %5 = 0 : int
 	_5 = 0;
 	//assign %2 = %5  : int
@@ -69,16 +69,16 @@ blklab0:;
 
 //
 int main(int argc, char** args){
-	uint64_t a = 0; //domain(_1)	= [0..infinity]	
-	uint64_t b = 0; //domain(_2)	= [0..infinity]	
-	uint64_t _3 = 0; //domain(_3)	= [0..infinity]	
-	uint16_t _4 = 0; //domain(_4)	= [43..43]	
+	uint64_t a; //domain(_1)	= [0..infinity]	
+	uint64_t b; //domain(_2)	= [0..infinity]	
+	uint64_t _3; //domain(_3)	= [0..infinity]	
+	uint16_t _4; //domain(_4)	= [43..43]	
 	void* _5;
-	int64_t _7 = 0; //domain(_7)	= [empty..empty]	
-	uint64_t _8 = 0; //domain(_8)	= [0..infinity]	
-	uint16_t _9 = 0; //domain(_9)	= [257..257]	
+	int64_t _7; //domain(_7)	= [empty..empty]	
+	uint64_t _8; //domain(_8)	= [0..infinity]	
+	uint16_t _9; //domain(_9)	= [257..257]	
 	void* _10;
-	int64_t _12 = 0; //domain(_12)	= [empty..empty]	
+	int64_t _12; //domain(_12)	= [empty..empty]	
 	//const %4 = 43 : int
 	_4 = 43;
 	//invoke (%3) = (%4) nestedwhileloop:f : function(int)->(int)

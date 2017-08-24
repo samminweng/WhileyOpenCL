@@ -1,11 +1,11 @@
 #include "gcd.h"
 int64_t _gcd_(int64_t a, int64_t b){
-	int64_t _2 = 0;
-	int64_t _3 = 0;
-	int64_t _4 = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
+	int64_t _2;
+	int64_t _3;
+	int64_t _4;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
 	//const %3 = 0 : int
 	_3 = 0;
 	//ifne %0, %3 goto blklab1 : int
@@ -49,14 +49,14 @@ blklab2:;
 }
 
 int64_t _gcd_cached_(int64_t a, int64_t b, int64_t n, _DECL_1DARRAY_PARAM(gcds), _DECL_DEALLOC_PARAM(gcds)){
-	int64_t _4 = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
+	int64_t _4;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
+	int64_t _8;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
 	//const %5 = 0 : int
 	_5 = 0;
 	//ifne %0, %5 goto blklab7 : int
@@ -114,29 +114,29 @@ blklab8:;
 }
 
 int main(int argc, char** args){
-	int64_t n = 0;
+	int64_t n;
 	_DECL_1DARRAY(gcds);
 	_DECL_DEALLOC(gcds);
-	int64_t i = 0;
-	int64_t j = 0;
-	int64_t _5 = 0;
+	int64_t i;
+	int64_t j;
+	int64_t _5;
 	void* _6;
 	_DECL_1DARRAY(_8);
 	_DECL_DEALLOC(_8);
 	void* _9;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
+	int64_t _11;
+	int64_t _12;
 	_DECL_1DARRAY(_13);
 	_DECL_DEALLOC(_13);
-	int64_t _14 = 0;
-	int64_t _15 = 0;
-	int64_t _16 = 0;
-	int64_t _17 = 0;
-	int64_t _18 = 0;
-	int64_t _19 = 0;
-	int64_t _20 = 0;
-	int64_t _21 = 0;
-	int64_t _22 = 0;
+	int64_t _14;
+	int64_t _15;
+	int64_t _16;
+	int64_t _17;
+	int64_t _18;
+	int64_t _19;
+	int64_t _20;
+	int64_t _21;
+	int64_t _22;
 	void* _23;
 	_DECL_1DARRAY(_25);
 	_DECL_DEALLOC(_25);
@@ -149,13 +149,13 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_35);
 	_DECL_DEALLOC(_35);
 	void* _36;
-	int64_t _38 = 0;
-	int64_t _39 = 0;
-	int64_t _40 = 0;
-	int64_t _41 = 0;
-	int64_t _42 = 0;
-	int64_t _43 = 0;
-	int64_t _44 = 0;
+	int64_t _38;
+	int64_t _39;
+	int64_t _40;
+	int64_t _41;
+	int64_t _42;
+	int64_t _43;
+	int64_t _44;
 	//const %5 = 10 : int
 	_5 = 10;
 	//assign %1 = %5  : int

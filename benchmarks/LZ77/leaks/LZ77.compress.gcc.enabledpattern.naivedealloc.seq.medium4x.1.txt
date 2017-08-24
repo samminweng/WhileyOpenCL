@@ -1,32 +1,59 @@
-==31915== Memcheck, a memory error detector
-==31915== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==31915== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==31915== Command: ./out/LZ77.compress.gcc.enabledpattern.naivedealloc.seq.out /home/mw169/workspace/WhileyOpenCL/benchmarks/LZ77/Inputfiles/medium4x.in /home/mw169/workspace/WhileyOpenCL/benchmarks/LZ77/Outputfiles/medium4x.dat
-==31915== Parent PID: 3072
-==31915== 
-==31915== Invalid read of size 8
-==31915==    at 0x4044FD: Reader (WyRT.c:173)
-==31915==    by 0x4025F0: main (LZ77_compress.c:682)
-==31915==  Address 0x52032e0 is 0 bytes after a block of size 592 alloc'd
-==31915==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31915==    by 0x403692: convertArgsToIntArray (Util.c:171)
-==31915==    by 0x402573: main (LZ77_compress.c:672)
-==31915== 
-==31915== 
-==31915== HEAP SUMMARY:
-==31915==     in use at exit: 1,216 bytes in 2 blocks
-==31915==   total heap usage: 793,073 allocs, 793,071 frees, 4,896,617,742 bytes allocated
-==31915== 
-==31915== LEAK SUMMARY:
-==31915==    definitely lost: 608 bytes in 1 blocks
-==31915==    indirectly lost: 0 bytes in 0 blocks
-==31915==      possibly lost: 0 bytes in 0 blocks
-==31915==    still reachable: 608 bytes in 1 blocks
-==31915==         suppressed: 0 bytes in 0 blocks
-==31915== Rerun with --leak-check=full to see details of leaked memory
-==31915== 
-==31915== For counts of detected and suppressed errors, rerun with: -v
-==31915== ERROR SUMMARY: 2 errors from 1 contexts (suppressed: 0 from 0)
+==25556== Memcheck, a memory error detector
+==25556== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==25556== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==25556== Command: ./out/LZ77.compress.gcc.enabledpattern.naivedealloc.seq.out /home/mw169/workspace/WhileyOpenCL/benchmarks/LZ77/Inputfiles/medium4x.in /home/mw169/workspace/WhileyOpenCL/benchmarks/LZ77/Outputfiles/medium4x.dat
+==25556== Parent PID: 28504
+==25556== 
+==25556== Invalid read of size 8
+==25556==    at 0x404356: Reader (WyRT.c:173)
+==25556==    by 0x40235C: main (LZ77_compress.c:682)
+==25556==  Address 0x52032e0 is 0 bytes after a block of size 592 alloc'd
+==25556==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==25556==    by 0x4034E0: convertArgsToIntArray (Util.c:171)
+==25556==    by 0x4022E5: main (LZ77_compress.c:672)
+==25556== 
+==25556== Invalid read of size 8
+==25556==    at 0x402C72: main (LZ77_compress.c:819)
+==25556==  Address 0x5203050 is 0 bytes after a block of size 16 alloc'd
+==25556==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==25556==    by 0x40328D: convertArgsToIntArray (Util.c:124)
+==25556==    by 0x4022E5: main (LZ77_compress.c:672)
+==25556== 
+==25556== Invalid write of size 8
+==25556==    at 0x402C96: main (LZ77_compress.c:819)
+==25556==  Address 0x5203050 is 0 bytes after a block of size 16 alloc'd
+==25556==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==25556==    by 0x40328D: convertArgsToIntArray (Util.c:124)
+==25556==    by 0x4022E5: main (LZ77_compress.c:672)
+==25556== 
+==25556== Invalid read of size 8
+==25556==    at 0x402E3D: main (LZ77_compress.c:828)
+==25556==  Address 0x6689590 is 0 bytes after a block of size 16 alloc'd
+==25556==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==25556==    by 0x40328D: convertArgsToIntArray (Util.c:124)
+==25556==    by 0x402B0E: main (LZ77_compress.c:783)
+==25556== 
+==25556== Invalid free() / delete / delete[] / realloc()
+==25556==    at 0x4C2ECB0: free (vg_replace_malloc.c:530)
+==25556==    by 0x402E47: main (LZ77_compress.c:828)
+==25556==  Address 0x594e41204e492047 is not stack'd, malloc'd or (recently) free'd
+==25556== 
+==25556== Invalid write of size 8
+==25556==    at 0x402E5E: main (LZ77_compress.c:828)
+==25556==  Address 0x6689590 is 0 bytes after a block of size 16 alloc'd
+==25556==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==25556==    by 0x40328D: convertArgsToIntArray (Util.c:124)
+==25556==    by 0x402B0E: main (LZ77_compress.c:783)
+==25556== 
+==25556== 
+==25556== HEAP SUMMARY:
+==25556==     in use at exit: 0 bytes in 0 blocks
+==25556==   total heap usage: 793,073 allocs, 793,075 frees, 4,896,617,742 bytes allocated
+==25556== 
+==25556== All heap blocks were freed -- no leaks are possible
+==25556== 
+==25556== For counts of detected and suppressed errors, rerun with: -v
+==25556== ERROR SUMMARY: 12 errors from 6 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -34,7 +61,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3503.328
+cpu MHz		: 3891.539
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -61,7 +88,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3896.054
+cpu MHz		: 3664.828
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -88,7 +115,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3785.820
+cpu MHz		: 3882.507
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -115,7 +142,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3653.804
+cpu MHz		: 3882.906
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -142,7 +169,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3710.648
+cpu MHz		: 3893.398
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -169,7 +196,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3841.867
+cpu MHz		: 3866.171
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -196,7 +223,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3774.796
+cpu MHz		: 3876.132
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -223,7 +250,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3752.750
+cpu MHz		: 3853.554
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

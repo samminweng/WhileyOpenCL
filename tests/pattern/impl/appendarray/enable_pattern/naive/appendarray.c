@@ -1,17 +1,17 @@
 #include "appendarray.h"
 BYTE* _append_(BYTE* items, size_t items_size, BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(nitems);
-	int64_t i = 0;
+	int64_t i;
 	BYTE _4;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
 	_DECL_1DARRAY_BYTE(_8);
-	int64_t _9 = 0;
-	int64_t _10 = 0;
+	int64_t _9;
+	int64_t _10;
 	BYTE _11;
-	int64_t _12 = 0;
-	int64_t _13 = 0;
+	int64_t _12;
+	int64_t _13;
 	//const %4 = 00000000b : byte
 	_4 = 0b00000000;
 	//lengthof %5 = %0 : byte[]
@@ -59,13 +59,13 @@ blklab1:;
 
 BYTE* _resize_(BYTE* items, size_t items_size, int64_t size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(nitems);
-	int64_t i = 0;
+	int64_t i;
 	BYTE _4;
 	_DECL_1DARRAY_BYTE(_5);
-	int64_t _6 = 0;
+	int64_t _6;
 	BYTE _7;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
+	int64_t _8;
+	int64_t _9;
 	//const %4 = 00000000b : byte
 	_4 = 0b00000000;
 	//arraygen %5 = [4; 1] : byte[]
@@ -103,29 +103,29 @@ blklab5:;
 
 BYTE* _f_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(output);
-	int64_t pos = 0;
+	int64_t pos;
 	BYTE item;
 	BYTE length;
-	int64_t _5 = 0;
+	int64_t _5;
 	BYTE _6;
-	int64_t _7 = 0;
+	int64_t _7;
 	_DECL_1DARRAY_BYTE(_8);
-	int64_t _9 = 0;
+	int64_t _9;
 	BYTE _10;
 	BYTE _11;
-	int64_t _12 = 0;
-	int64_t _13 = 0;
+	int64_t _12;
+	int64_t _13;
 	_DECL_1DARRAY_BYTE(_14);
 	_DECL_1DARRAY_BYTE(_15);
-	int64_t _16 = 0;
-	int64_t _17 = 0;
-	int64_t _18 = 0;
-	int64_t _19 = 0;
-	int64_t _20 = 0;
-	int64_t _21 = 0;
-	int64_t _22 = 0;
-	int64_t _23 = 0;
-	int64_t _24 = 0;
+	int64_t _16;
+	int64_t _17;
+	int64_t _18;
+	int64_t _19;
+	int64_t _20;
+	int64_t _21;
+	int64_t _22;
+	int64_t _23;
+	int64_t _24;
 	_DECL_1DARRAY_BYTE(_25);
 	//const %5 = 0 : int
 	_5 = 0;
@@ -232,7 +232,7 @@ int main(int argc, char** args){
 	BYTE _13;
 	_DECL_1DARRAY_BYTE(_14);
 	void* _15;
-	int64_t _17 = 0;
+	int64_t _17;
 	//const %3 = 01100001b : byte
 	_3 = 0b01100001;
 	//const %4 = 01100010b : byte
