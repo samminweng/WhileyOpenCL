@@ -1,22 +1,22 @@
 #include "Reverse_original.h"
 int64_t* _reverse_(_DECL_1DARRAY_PARAM(arr), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
-	int64_t i = 0;
+	int64_t i;
 	_DECL_1DARRAY(r);
-	int64_t item = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
+	int64_t item;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
 	_DECL_1DARRAY(_8);
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
-	int64_t _13 = 0;
-	int64_t _14 = 0;
-	int64_t _15 = 0;
-	int64_t _16 = 0;
-	int64_t _17 = 0;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
+	int64_t _12;
+	int64_t _13;
+	int64_t _14;
+	int64_t _15;
+	int64_t _16;
+	int64_t _17;
 	//lengthof %5 = %0 : int[]
 	_5 = arr_size;
 	//assign %2 = %5  : int
@@ -69,27 +69,27 @@ blklab0:;
 
 int main(int argc, char** args){
 	int64_t* n;
-	int64_t max = 0;
-	int64_t index = 0;
+	int64_t max;
+	int64_t index;
 	_DECL_1DARRAY(arr);
 	int64_t* _5;
 	_DECL_2DARRAY(_6);
-	int64_t _7 = 0;
+	int64_t _7;
 	_DECL_1DARRAY(_8);
-	int64_t _9 = 0;
-	int64_t _10 = 0;
+	int64_t _9;
+	int64_t _10;
 	_DECL_1DARRAY(_11);
-	int64_t _12 = 0;
-	int64_t _13 = 0;
-	int64_t _14 = 0;
+	int64_t _12;
+	int64_t _13;
+	int64_t _14;
 	_DECL_1DARRAY(_15);
 	void* _16;
-	int64_t _18 = 0;
-	int64_t _19 = 0;
+	int64_t _18;
+	int64_t _19;
 	void* _20;
-	int64_t _22 = 0;
-	int64_t _23 = 0;
-	int64_t _24 = 0;
+	int64_t _22;
+	int64_t _23;
+	int64_t _24;
 	void* _25;
 	_DECL_1DARRAY(_27);
 	//fieldload %6 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}

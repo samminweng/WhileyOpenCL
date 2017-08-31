@@ -27,16 +27,16 @@ void printf_Board(Board* board){
 }
 Board* _EmptyBoard_(){
 	Board* r;
-	int64_t _1 = 0;
-	int64_t _2 = 0;
-	int64_t _3 = 0;
-	int64_t _4 = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
+	int64_t _1;
+	int64_t _2;
+	int64_t _3;
+	int64_t _4;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
+	int64_t _8;
+	int64_t _9;
+	int64_t _10;
 	_DECL_1DARRAY(_11);
 	Board* _12;
 	//const %1 = 0 : int
@@ -72,17 +72,17 @@ Board* _EmptyBoard_(){
 }
 
 int64_t _countOf_(_DECL_1DARRAY_PARAM(pieces), int64_t s){
-	int64_t r = 0;
-	int64_t count = 0;
-	int64_t i = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
+	int64_t r;
+	int64_t count;
+	int64_t i;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
+	int64_t _8;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
+	int64_t _12;
 	//const %5 = 0 : int
 	_5 = 0;
 	//assign %3 = %5  : int
@@ -127,40 +127,40 @@ blklab11:;
 
 int main(int argc, char** args){
 	int64_t* n;
-	int64_t max = 0;
-	int64_t repeat = 0;
+	int64_t max;
+	int64_t repeat;
 	Board* b1;
 	Board* b2;
-	int64_t i = 0;
-	int64_t p = 0;
+	int64_t i;
+	int64_t p;
 	int64_t* _8;
 	_DECL_2DARRAY(_9);
-	int64_t _10 = 0;
+	int64_t _10;
 	_DECL_1DARRAY(_11);
-	int64_t _12 = 0;
+	int64_t _12;
 	Board* _13;
 	Board* _14;
-	int64_t _15 = 0;
+	int64_t _15;
 	_DECL_1DARRAY(_16);
-	int64_t _17 = 0;
+	int64_t _17;
 	_DECL_1DARRAY(_18);
-	int64_t _19 = 0;
-	int64_t _20 = 0;
-	int64_t _21 = 0;
-	int64_t _22 = 0;
-	int64_t _23 = 0;
-	int64_t _24 = 0;
-	int64_t _25 = 0;
+	int64_t _19;
+	int64_t _20;
+	int64_t _21;
+	int64_t _22;
+	int64_t _23;
+	int64_t _24;
+	int64_t _25;
 	void* _26;
-	int64_t _27 = 0;
-	int64_t _28 = 0;
-	int64_t _29 = 0;
-	int64_t _30 = 0;
+	int64_t _27;
+	int64_t _28;
+	int64_t _29;
+	int64_t _30;
 	void* _31;
-	int64_t _32 = 0;
-	int64_t _33 = 0;
-	int64_t _34 = 0;
-	int64_t _35 = 0;
+	int64_t _32;
+	int64_t _33;
+	int64_t _34;
+	int64_t _35;
 	void* _36;
 	_DECL_1DARRAY(_38);
 	//fieldload %9 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}

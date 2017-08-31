@@ -17,7 +17,7 @@ declare -a codegens=( "naive" "naivedealloc" "nocopy" "nocopydealloc" )
 #declare -a codegens=( "nocopydealloc" )
 
 ## Declare an associative array for pattern matching
-declare -A patterns=( [LZ77_compress]=compress )
+declare -A patterns=( [LZ77_original]=compress )
 
 ## declare the number of threads
 declare -a threads=( 1 2 4 8 )
@@ -188,14 +188,15 @@ run(){
 		start=`date +%s%N`
 		case "$testcase" in
 			"LZ77")
+				timeout $TIMEOUT "out/$executable" "$BENCHMARKDIR/$testcase/Inputfiles/$parameter.in" >> $result
 				#read -p "Press [Enter] to continue..."
-				if [ $program = "compress" ]
-				then
-					timeout $TIMEOUT "out/$executable" "$BENCHMARKDIR/$testcase/Inputfiles/$parameter.in" \
-									 "$BENCHMARKDIR/$testcase/Outputfiles/$parameter.dat" >> $result
-				else
-					timeout $TIMEOUT "out/$executable" "$BENCHMARKDIR/$testcase/Outputfiles/$parameter.dat"  >> $result
-				fi
+				#if [ $program = "compress" ]
+				#then
+				#	timeout $TIMEOUT "out/$executable" "$BENCHMARKDIR/$testcase/Inputfiles/$parameter.in" \
+				#					 "$BENCHMARKDIR/$testcase/Outputfiles/$parameter.dat" >> $result
+				#else
+				#	timeout $TIMEOUT "out/$executable" "$BENCHMARKDIR/$testcase/Outputfiles/$parameter.dat"  >> $result
+				#fi
 				;;
 			"SobelEdge")
 				#echo $parameter
@@ -329,37 +330,37 @@ exec(){
 # # ###  (naive + de-allocated, copy_reduced, copy_reduced + de-allocated)
 # # ###
 # # ###########################################
-# # # # # ## # Reverse test case
-init Reverse
-exec Reverse original
-#
-# # # # # # # # # # # newTicTacToe test case
-init newTicTacToe
-exec newTicTacToe original
-#
-# # # # # # # # ## # BubbleSort test case
-init BubbleSort
-exec BubbleSort original
-#
-# # # # # # # # ## # MergeSort test case
-init MergeSort
-exec MergeSort original
-#
-# # # # # # # # MatrixMult test case
-init MatrixMult
-exec MatrixMult original
-####exec MatrixMult original 12000 # Naive code runs out of memory
-# ### Cashtill test case
-#init Cashtill
-#exec Cashtill original
+# # # # # # ## # Reverse test case
+# init Reverse
+# exec Reverse original
+# #
+# # # # # # # # # # # # newTicTacToe test case
+# init newTicTacToe
+# exec newTicTacToe original
+# #
+# # # # # # # # # ## # BubbleSort test case
+# init BubbleSort
+# exec BubbleSort original
+# #
+# # # # # # # # # ## # MergeSort test case
+# init MergeSort
+# exec MergeSort original
+# #
+# # # # # # # # # MatrixMult test case
+# init MatrixMult
+# exec MatrixMult original
+# ####exec MatrixMult original 12000 # Naive code runs out of memory
+# # ### Cashtill test case
+# #init Cashtill
+# #exec Cashtill original
 
 # # ### CoinGame test case ###
 ##init CoinGame
 ##exec CoinGame original
 
-
 #### LZ77 test case
-#init LZ77
+init LZ77
+exec LZ77 original
 #exec LZ77 compress
 #exec LZ77 decompress
 #exec LZ77 optimised_decompress

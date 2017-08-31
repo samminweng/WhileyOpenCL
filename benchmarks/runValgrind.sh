@@ -63,7 +63,7 @@ generateCode(){
 	## Enable the pattern matching on the specified function
 	if [ $pattern = "enabledpattern" ]
 	then
-		func=${patterns[$testcase"_"$program]}
+		func=${patterns[$testcase]}
 		if [ -n "$func" ]
 		then
 			### Enable pattern transformation
@@ -177,8 +177,7 @@ detectleaks(){
 	## LZ test case
 	if [ $testcase = "LZ77" ]
 	then
-		valgrind --tool=memcheck "--log-file=$result" "./out/$executable" "$BENCHMARKDIR/$testcase/Inputfiles/$parameter.in" \
-						 "$BENCHMARKDIR/$testcase/Outputfiles/$parameter.dat"
+		valgrind --tool=memcheck "--log-file=$result" "./out/$executable" "$BENCHMARKDIR/$testcase/Inputfiles/$parameter.in"
 	else
 		if [ $testcase = "SobelEdge" ]
 		then
@@ -256,23 +255,23 @@ exec(){
 	###read -p "Press [Enter] to continue..."
 }
 
-# # # # # ### Reverse test case##
+# # # # # # ### Reverse test case##
 # init Reverse
 # exec Reverse original
-#
-# # # # ### newTicTacToe test case ###
+# #
+# # # # # ### newTicTacToe test case ###
 # init newTicTacToe
 # exec newTicTacToe original
-#
-# # # # ## # BubbleSort test case##
+# #
+# # # # # ## # BubbleSort test case##
 # init BubbleSort
 # exec BubbleSort original
-#
-# # # # ## # MergeSort test case##
+# #
+# # # # # ## # MergeSort test case##
 # init MergeSort
 # exec MergeSort original
-#
-# # # # # MatrixMult test case##
+# #
+# # # # # # MatrixMult test case##
 # init MatrixMult
 # exec MatrixMult original
 
@@ -290,7 +289,7 @@ exec(){
 
 # # # ####LZ77 test case
 init LZ77
-exec LZ77 compress
+exec LZ77 original
 
 # ### Fibonacci test case###
 # init Fibonacci

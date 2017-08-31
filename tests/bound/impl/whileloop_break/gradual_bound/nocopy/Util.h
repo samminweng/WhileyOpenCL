@@ -19,8 +19,8 @@
 #define MAX_LINE_LENGTH 1024*16
 
 // Define BYTE type due to missing byte primitive type in C languate
-typedef uint8_t BYTE;
-
+//typedef uint8_t BYTE;
+typedef uint_fast8_t BYTE;
 
 /**
 *Built-in operation for 1D array of byte and integers

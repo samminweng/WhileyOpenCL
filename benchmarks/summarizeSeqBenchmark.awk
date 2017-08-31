@@ -88,7 +88,7 @@ BEGIN {
 	programs["MatrixMult"]="original";
 	programs["CoinGame"]="original";
 	programs["SobelEdge"]="original";
-	programs["LZ77"]="compress";
+	programs["LZ77"]="original";
 	programs["Cashtill"]="original";
 
 	# Code Generation

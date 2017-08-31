@@ -393,7 +393,6 @@ public class BoundAnalyzer {
 			boolean isChanged = false;		
 
 			// Debugging messages
-			//if (config.isVerbose() && blk.getType() == BlockType.LOOP_HEADER) {
 			if (isVerbose) {
 				System.out.println("### Iteration " + iteration + " ### ");
 				String str = "'" + changed.size() + "' blocks in queue : ";
@@ -447,7 +446,6 @@ public class BoundAnalyzer {
 			}
 
 			// Debug
-			//if (config.isVerbose() && blk.getType() == BlockType.LOOP_HEADER) {
 			if (isVerbose) {
 				// Print out the bounds.
 				System.out.println(blk.toString());
@@ -1013,6 +1011,8 @@ public class BoundAnalyzer {
 			if(d.getLower() != null && d.getLower().compareTo(BigInteger.ZERO)>=0){
 				// Check upper bound 
 				if(d.getUpper() != null){
+					// Unsigned 8-bit integer
+					
 					// Unsigned 16-bit integer
 					if(d.getUpper().compareTo(Threshold._UI16_MAX.getValue())<=0){
 						return "uint16_t";

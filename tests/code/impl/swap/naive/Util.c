@@ -357,7 +357,7 @@ void printf_s(int64_t* input, size_t input_size) {
 	size_t i =0;
 	while (i < input_size && i < MAX_LENGTH) {
 		// Make int to char
-		char c = input[i];
+		char c = (char)input[i];
 		// Check if c is NOT EOF and skip 'EOF' char
 		// Note 0 (ASCII NUL) indicates the EOF
 		if(c>0){
@@ -371,7 +371,7 @@ void printf_s(int64_t* input, size_t input_size) {
 		// Print the last 10 chars
 		size_t i = input_size-10;
 		while(i < input_size){
-			char c = input[i];
+			char c = (char)input[i];
 			if(c>0){
 				printf("%c", c);
 			}

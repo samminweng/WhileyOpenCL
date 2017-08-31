@@ -112,7 +112,7 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 #define _DECL_DEALLOC_PARAM(a) bool a##_dealloc
 // Declare the passing parameter
 // 'restrict' limits pointer aliasing (https://en.wikipedia.org/wiki/Restrict)
-#define _DECL_1DARRAY_PARAM(a) int64_t *restrict a, size_t a##_size
+#define _DECL_1DARRAY_PARAM(a) int64_t* a, size_t a##_size
 #define _DECL_2DARRAY_PARAM(a) int64_t** a, size_t a##_size, size_t a##_size_size
 // Declare a call-by-reference parameter for output array size
 #define _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE size_t* _size_call_by_ref
@@ -146,6 +146,18 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 		})
 // Create an array of integers or integer arrays
 #define _NEW_1DARRAY_int64_t(a, size, value) a##_size = size; a = create1DArray_int64_t(value, a##_size);
+#define _NEW_1DARRAY(a, size, value, type)\
+         ({\
+            a##_size = size;\
+            a = (type*)malloc(a##_size*sizeof(type));\
+         	if(a == NULL){\
+         		fputs("fail to allocate the memory at _NEW_1DARRAY function in Util.h\n", stderr);\
+         		exit(-2);\
+         	}\
+         	for(size_t i=0;i<a##_size;i++){\
+         		a[i] = value;\
+         	}\
+        })
 #define _NEW_1DARRAY_BYTE(a, size, value) a##_size = size; a = create1DArray_BYTE(value, a##_size);
 // Create an array of structure pointers
 #define _NEW_1DARRAY_STRUCT(a, size, b, name) \
@@ -170,6 +182,15 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 #define _COPY_STRUCT_PARAM(a, name) a##_tmp = copy_##name(a)
 // Pass the copied array as a function parameter
 #define _COPY_1DARRAY_PARAM_int64_t(a) a##_tmp = copy1DArray_int64_t(a, a##_size), a##_size
+#define _COPY_1DARRAY_PARAM(a, type)\
+        ({\
+            a##_tmp = (type*) malloc(a##_size * sizeof(type));\
+        	if (a == NULL) {\
+        		fputs("fail to malloc at COPY_1DARRAY_PARAM macro in Util.h\n", stderr);\
+        		exit(-2);\
+        	}\
+        	memcpy(a##_tmp, a, a##_size * sizeof(type));\
+        })
 #define _COPY_1DARRAY_PARAM_BYTE(a) a##_tmp = copy1DArray_BYTE(a, a##_size), a##_size
 #define _COPY_2DARRAY_PARAM_int64_t(a) a##_tmp = copy2DArray_int64_t(a, a##_size, a##_size_size), a##_size, a##_size_size
 // Pass the copied array of structures as a function parameter
@@ -177,6 +198,16 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 // Assign the copied array to a variable
 #define _COPY_STRUCT(a, b, name) a = copy_##name(b);
 #define _COPY_1DARRAY_int64_t(a, b) a##_size = b##_size; a = copy1DArray_int64_t(b, b##_size);
+#define _COPY_1DARRAY(a, b, type) \
+        ({\
+            a##_size = b##_size;\
+            a = (type*) malloc(a##_size * sizeof(type));\
+        	if (a == NULL) {\
+        		fputs("fail to malloc at copy1DArray macro in Util.h\n", stderr);\
+        		exit(-2);\
+        	}\
+        	memcpy(a, b, a##_size * sizeof(type));\
+        })
 #define _COPY_1DARRAY_BYTE(a, b) a##_size = b##_size; a = copy1DArray_BYTE(b, b##_size);
 #define _COPY_2DARRAY_int64_t(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = copy2DArray_int64_t(b, b##_size, b##_size_size);
 #define _COPY_1DARRAY_STRUCT(a, b, name) \
@@ -214,6 +245,35 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 				printf_##name(a[i]);\
 			}\
 		})
+// Print the first MAX_LENGTH chars and last 10 chars
+#define _PRINT_STR(a) \
+    ({\
+        for(size_t i=0; i < a##_size; i++){\
+           if(i >= 1024){break;}\
+           printf("%c", a[i]);\
+        }\
+        if (a##_size >= 1024) {\
+            printf(" ... ");\
+            for(size_t i=a##_size-10; i<a##_size; i++){\
+                printf("%c", a[i]);\
+            }\
+        }\
+    })
+// Print the first MAX_LENGTH chars and last 10 chars
+#define _PRINTLN_STR(a) \
+    ({\
+        for(size_t i=0; i < a##_size; i++){\
+           if(i >= 1024){break;}\
+           printf("%c", a[i]);\
+        }\
+        if (a##_size >= 1024) {\
+            printf(" ... ");\
+            for(size_t i=a##_size-10; i<a##_size; i++){\
+                printf("%c", a[i]);\
+            }\
+        }\
+        printf("\n");\
+    })
 /***
 * Deallocation Macros
 *
@@ -390,6 +450,16 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 #define _NULLIFY(a) a = NULL;
 // Converts command line arguments into integer arrays
 #define _CONV_ARGS(a) a = convertArgsToIntArray(argc, args, &a##_size, &a##_size_size);
+// Free ARGS
+#define _FREE_ARGS(a) \
+    ({\
+        for(size_t i=0;i<=argc;i++){\
+            free(a[i]);\
+            a[i] = NULL;\
+        }\
+        free(a);\
+        a = NULL;\
+    })
 // Parse a string into an integer
 #define _STR_TO_INT(a, b) a = parseStringToInt(b);
 // Slice an array 'b' into a new array 'a'
