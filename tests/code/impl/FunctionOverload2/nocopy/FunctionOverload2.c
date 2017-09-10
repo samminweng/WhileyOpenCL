@@ -110,7 +110,6 @@ int64_t* _Cash_1_(_DECL_1DARRAY_PARAM(coins), _DECL_1DARRAYSIZE_PARAM_CALLBYREFE
 		//add %27 = %25, %26 : int
 		_27=_25+_26;
 		//update %2[%4] = %27 : int[] -> int[]
-		// isCopyEliminated = true
 		cash[coin] = _27;
 		//const %28 = 1 : int
 		_28 = 1;

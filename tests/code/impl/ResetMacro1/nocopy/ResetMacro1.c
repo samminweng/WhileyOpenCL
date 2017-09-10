@@ -5,7 +5,6 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(x), int64_t num, _DECL_1DARRAYSIZE_PARAM_CAL
 	//const %3 = 0 : int
 	_3 = 0;
 	//update %0[%3] = %1 : int[] -> int[]
-	// isCopyEliminated = true
 	x[_3] = num;
 	//return %0
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(x);

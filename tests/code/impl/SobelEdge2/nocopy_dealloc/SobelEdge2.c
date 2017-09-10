@@ -36,11 +36,8 @@ Image* _image_(int64_t width, int64_t height, BYTE* pixels, size_t pixels_size, 
 	//newrecord %4 = (%1, %2, %0) : {int height,byte[] pixels,int width}
 	_DEALLOC_STRUCT(_4, Image);
 	_4 = malloc(sizeof(Image));
-	// isCopyEliminated = true
 	_4->height = height;
-	// isCopyEliminated = true
 	_UPDATE_1DARRAY(_4->pixels, pixels);
-	// isCopyEliminated = true
 	_4->width = width;
 	_REMOVE_DEALLOC(pixels);
 	_ADD_DEALLOC(_4);
@@ -520,7 +517,6 @@ Image* _sobelEdgeDetection_(Image* input, _DECL_DEALLOC_PARAM(input)){
 			//const %56 = 01100010b : byte
 			_56 = 0b01100010;
 			//update %5[%10] = %56 : byte[] -> byte[]
-			// isCopyEliminated = true
 			newPixels[pos] = _56;
 //.blklab12
 blklab12:;
@@ -773,10 +769,10 @@ int main(int argc, char** args){
 	int64_t _18;
 	_DECL_1DARRAY_BYTE(_19);
 	_DECL_DEALLOC(_19);
-	//const %9 = [105,109,97,103,101,51,50,120,51,50,46,112,98,109] : int[]
+	//const %9 = [46,46,47,46,46,47,46,46,47,73,110,112,117,116,102,105,108,101,115,47,105,109,97,103,101,51,50,120,51,50,46,112,98,109] : int[]
 	_DEALLOC(_9);
-	_NEW_1DARRAY_int64_t(_9, 14, 0);
-	_9[0] = 105; _9[1] = 109; _9[2] = 97; _9[3] = 103; _9[4] = 101; _9[5] = 51; _9[6] = 50; _9[7] = 120; _9[8] = 51; _9[9] = 50; _9[10] = 46; _9[11] = 112; _9[12] = 98; _9[13] = 109; 
+	_NEW_1DARRAY_int64_t(_9, 34, 0);
+	_9[0] = 46; _9[1] = 46; _9[2] = 47; _9[3] = 46; _9[4] = 46; _9[5] = 47; _9[6] = 46; _9[7] = 46; _9[8] = 47; _9[9] = 73; _9[10] = 110; _9[11] = 112; _9[12] = 117; _9[13] = 116; _9[14] = 102; _9[15] = 105; _9[16] = 108; _9[17] = 101; _9[18] = 115; _9[19] = 47; _9[20] = 105; _9[21] = 109; _9[22] = 97; _9[23] = 103; _9[24] = 101; _9[25] = 51; _9[26] = 50; _9[27] = 120; _9[28] = 51; _9[29] = 50; _9[30] = 46; _9[31] = 112; _9[32] = 98; _9[33] = 109; 
 	_ADD_DEALLOC(_9);
 	//invoke (%8) = (%9) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
 	{

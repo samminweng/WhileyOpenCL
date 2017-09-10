@@ -30,7 +30,6 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(x), _DECL_DEALLOC_PARAM(x), int64_t num, _DE
 	//const %8 = 0 : int
 	_8 = 0;
 	//update %0[%8] = %1 : int[] -> int[]
-	// isCopyEliminated = true
 	x[_8] = num;
 	//return %0
 	_DEALLOC(_2);

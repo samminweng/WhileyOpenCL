@@ -1,13 +1,13 @@
 /*
 * Print out a PBM file to a console
-* 
+*
 *
 */
 import * from whiley.io.File
 import * from whiley.lang.System
 import whiley.lang.*
 
-constant SPACE is 00100000b // ASCII code of space (' ') 
+constant SPACE is 00100000b // ASCII code of space (' ')
 constant BLACK is 01100010b // ASCII code of 'b'
 
 // ========================================================
@@ -35,10 +35,10 @@ method print_pbm(System.Console sys, int width, int height, byte[] pixels):
             i = i + 1
         // Add a newline
         sys.out.println_s("")
-        j = j + 1 
+        j = j + 1
 
 method main(System.Console sys):
-    File.Reader r = File.Reader("image32x32.pbm")
+    File.Reader r = File.Reader("../../../Inputfiles/image32x32.pbm")
     int width=32
     int height=32
     byte[] pixels = r.readAll()

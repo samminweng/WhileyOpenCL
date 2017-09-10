@@ -33,11 +33,8 @@ Matrix* _matrix_(int64_t width, int64_t height, _DECL_2DARRAY_PARAM(data)){
 	Matrix* _4;
 	//newrecord %4 = (%2, %1, %0) : {int[][] data,int height,int width}
 	_4 = malloc(sizeof(Matrix));
-	// isCopyEliminated = true
 	_UPDATE_2DARRAY(_4->data, data);
-	// isCopyEliminated = true
 	_4->height = height;
-	// isCopyEliminated = true
 	_4->width = width;
 	//return %4
 	return _4;
@@ -165,7 +162,6 @@ blklab18:;
 //.blklab17
 blklab17:;
 			//update %3[%4][%5] = %6 : int[][] -> int[][]
-			// isCopyEliminated = false
 			C_data[i][j] = r;
 			//const %30 = 1 : int
 			_30 = 1;
@@ -348,7 +344,6 @@ Matrix* _init_(int64_t height, int64_t width){
 			//ifge %5, %1 goto blklab25 : int
 			if(j>=width){goto blklab25;}
 			//update %3[%4][%5] = %4 : int[][] -> int[][]
-			// isCopyEliminated = false
 			rows[i][j] = i;
 			//const %11 = 1 : int
 			_11 = 1;

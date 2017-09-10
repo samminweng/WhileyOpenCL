@@ -36,11 +36,8 @@ Matrix* _matrix_(int64_t width, int64_t height, _DECL_1DARRAY_PARAM(data), _DECL
 	//newrecord %4 = (%2, %1, %0) : {int[] data,int height,int width}
 	_DEALLOC_STRUCT(_4, Matrix);
 	_4 = malloc(sizeof(Matrix));
-	// isCopyEliminated = true
 	_UPDATE_1DARRAY(_4->data, data);
-	// isCopyEliminated = true
 	_4->height = height;
-	// isCopyEliminated = true
 	_4->width = width;
 	_REMOVE_DEALLOC(data);
 	_ADD_DEALLOC(_4);
@@ -120,7 +117,6 @@ Matrix* _init_(int64_t width, int64_t height){
 			//add %16 = %15, %5 : int
 			_16=_15+j;
 			//update %3[%16] = %14 : int[] -> int[]
-			// isCopyEliminated = true
 			data[_16] = _14;
 			//const %17 = 1 : int
 			_17 = 1;
@@ -451,7 +447,6 @@ Matrix* _mat_mult_(Matrix* a, _DECL_DEALLOC_PARAM(a), Matrix* b, _DECL_DEALLOC_P
 			//add %31 = %30, %9 : int
 			_31=_30+i;
 			//update %8[%31] = %29 : int[] -> int[]
-			// isCopyEliminated = true
 			b_t[_31] = _29;
 			//const %32 = 1 : int
 			_32 = 1;
@@ -531,7 +526,6 @@ blklab13:;
 				//add %51 = %50, %10 : int
 				_51=_50+j;
 				//update %5[%51] = %49 : int[] -> int[]
-				// isCopyEliminated = true
 				data[_51] = _49;
 				//const %52 = 1 : int
 				_52 = 1;

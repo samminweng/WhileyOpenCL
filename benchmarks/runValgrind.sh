@@ -18,7 +18,7 @@ declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" \
 declare -a codegens=("naive" "naivedealloc" "nocopy" "nocopydealloc")
 
 ## Declare an associative array for pattern matching
-declare -A patterns=( [LZ77]=compress )
+declare -A patterns=( [LZ77_compress]=compress [LZ77_original_opt]=compress )
 
 ## declare the number of threads
 declare -a threads=( 1 )
@@ -63,7 +63,7 @@ generateCode(){
 	## Enable the pattern matching on the specified function
 	if [ $pattern = "enabledpattern" ]
 	then
-		func=${patterns[$testcase]}
+		func=${patterns[$testcase"_"$program]}
 		if [ -n "$func" ]
 		then
 			### Enable pattern transformation
@@ -174,13 +174,28 @@ detectleaks(){
 	result="$BENCHMARKDIR/$testcase/leaks/$testcase.$program.$compiler.$pattern.$codegen.$code.$parameter.$thread.txt"
 	## read -p "Press [Enter] to continue...$parameter"
 
-	## LZ test case
-	if [ $testcase = "LZ77" ]
-	then
-		valgrind --tool=memcheck "--log-file=$result" "./out/$executable" "$BENCHMARKDIR/$testcase/Inputfiles/$parameter.in"
-	else
-		if [ $testcase = "SobelEdge" ]
-		then
+	## Test case
+	case "$testcase" in
+		"LZ77")
+			case "$program" in
+				"original")
+					valgrind --tool=memcheck "--log-file=$result" "./out/$executable" "$BENCHMARKDIR/$testcase/Inputfiles/$parameter.in"
+					;;
+				"original_opt")
+					valgrind --tool=memcheck "--log-file=$result" "./out/$executable" "$BENCHMARKDIR/$testcase/Inputfiles/$parameter.in"
+					;;
+				"compress")
+					valgrind --tool=memcheck "--log-file=$result" "./out/$executable" "$BENCHMARKDIR/$testcase/Inputfiles/$parameter.in"
+					;;
+				"decompress")
+					valgrind --tool=memcheck "--log-file=$result" "./out/$executable" "$BENCHMARKDIR/$testcase/Outputfiles/$parameter.dat"
+					;;
+				"opt_decompress")
+					valgrind --tool=memcheck "--log-file=$result" "./out/$executable" "$BENCHMARKDIR/$testcase/Outputfiles/$parameter.dat"
+					;;
+			esac
+			;;
+		"SobelEdge")
 			#echo $parameter
 			width=${widths[$parameter]}
 			echo "width = "$width
@@ -189,11 +204,12 @@ detectleaks(){
 			mkdir -p "$BENCHMARKDIR/$testcase/image/output/$codegen"
 			### Detect the memory leaks
 			valgrind --tool=memcheck "--log-file=$result" "./out/$executable" $parameter $width > "$BENCHMARKDIR/$testcase/image/output/$codegen/output$widthx$width.pbm"
-		else
+			;;
+		*)
 			## Other cases
 			valgrind --tool=memcheck "--log-file=$result" "./out/$executable" $parameter
-		fi
-	fi
+			;;
+	esac
 
 	#valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all "--log-file=$result" ./out/"$program.$compiler.enableVC.out" $parameter
 	# Added the CPU info
@@ -222,7 +238,7 @@ exec(){
 				compile $testcase $program $compiler $codegen "disabledpattern" "seq"
 
 				# ## Get the pattern option
-				func=${patterns[$testcase]}
+				func=${patterns[$testcase"_"$program]}
 				if [ $func ]
 				then
 					echo $func
@@ -239,7 +255,7 @@ exec(){
 						echo "parameter "$parameter
 						detectleaks $testcase $program $compiler $codegen "disabledpattern" "seq" 1 $parameter
 						# ## Get the pattern option
-						func=${patterns[$testcase]}
+						func=${patterns[$testcase"_"$program]}
 						if [ $func ]
 						then
 							## Run the executable
@@ -288,9 +304,12 @@ exec(){
 #exec SobelEdge original
 
 # # # ####LZ77 test case
-init LZ77
+#init LZ77
 exec LZ77 original
-
+exec LZ77 original_opt
+#exec LZ77 compress
+#exec LZ77 decompress
+#exec LZ77 opt_decompress
 # ### Fibonacci test case###
 # init Fibonacci
 # exec Fibonacci original 10

@@ -370,7 +370,6 @@ int64_t* _pickCoin_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int6
 	//add %14 = %13, %2 : int
 	_14=_13+j;
 	//update %0[%14] = %8 : int[] -> int[]
-	// isCopyEliminated = true
 	moves[_14] = _8;
 	//return %0
 	_DEALLOC(_7);

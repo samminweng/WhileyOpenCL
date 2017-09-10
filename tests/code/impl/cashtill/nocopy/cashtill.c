@@ -110,7 +110,6 @@ int64_t* _Cash_1_(_DECL_1DARRAY_PARAM(coins), _DECL_1DARRAYSIZE_PARAM_CALLBYREFE
 		//add %27 = %25, %26 : int
 		_27=_25+_26;
 		//update %2[%4] = %27 : int[] -> int[]
-		// isCopyEliminated = true
 		cash[coin] = _27;
 		//const %28 = 1 : int
 		_28 = 1;
@@ -272,7 +271,6 @@ int64_t* _add_(_DECL_1DARRAY_PARAM(first), _DECL_1DARRAY_PARAM(second), _DECL_1D
 		//add %8 = %6, %7 : int
 		_8=_6+_7;
 		//update %0[%3] = %8 : int[] -> int[]
-		// isCopyEliminated = false
 		first[i] = _8;
 		//const %9 = 1 : int
 		_9 = 1;
@@ -320,7 +318,6 @@ int64_t* _subtract_(_DECL_1DARRAY_PARAM(first), _DECL_1DARRAY_PARAM(second), _DE
 		//sub %8 = %6, %7 : int
 		_8=_6-_7;
 		//update %0[%3] = %8 : int[] -> int[]
-		// isCopyEliminated = false
 		first[i] = _8;
 		//const %9 = 1 : int
 		_9 = 1;
@@ -415,7 +412,6 @@ blklab25:;
 		//sub %16 = %14, %15 : int
 		_16=_14-_15;
 		//update %4[%3] = %16 : int[] -> int[]
-		// isCopyEliminated = false
 		tmp[i] = _16;
 		//const %18 = [1,5,10,20,50,100,500,1000] : int[]
 		_NEW_1DARRAY_int64_t(_18, 8, 0);
@@ -441,7 +437,6 @@ blklab25:;
 		//add %23 = %21, %22 : int
 		_23=_21+_22;
 		//update %5[%3] = %23 : int[] -> int[]
-		// isCopyEliminated = true
 		chg[i] = _23;
 		//return %5
 		_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(chg);

@@ -13,7 +13,7 @@ BEGIN {
 	programs["MergeSort"]="original";
 	programs["MatrixMult"]="original";
 	programs["SobelEdge"]="original";
-	programs["LZ77"]="original";
+	programs["LZ77"]="compress decompress opt_decompress original original_opt";
 	programs["Cashtill"]="original";
 	programs["CoinGame"]="original";
 	# Compiler

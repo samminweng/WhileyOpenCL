@@ -340,7 +340,6 @@ int64_t* _pickCoin_(_DECL_1DARRAY_PARAM(moves), int64_t i, int64_t j, int64_t n,
 	//add %14 = %13, %2 : int
 	_14=_13+j;
 	//update %0[%14] = %8 : int[] -> int[]
-	// isCopyEliminated = true
 	moves[_14] = _8;
 	//return %0
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(moves);

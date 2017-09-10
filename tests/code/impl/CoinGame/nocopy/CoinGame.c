@@ -478,7 +478,6 @@ blklab17:;
 			//add %45 = %44, %4 : int
 			_45=_44+j;
 			//update %0[%45] = %43 : int[] -> int[]
-			// isCopyEliminated = true
 			moves[_45] = _43;
 			//goto blklab19
 			goto blklab19;
@@ -491,7 +490,6 @@ blklab18:;
 			//add %48 = %47, %4 : int
 			_48=_47+j;
 			//update %0[%48] = %46 : int[] -> int[]
-			// isCopyEliminated = true
 			moves[_48] = _46;
 //.blklab19
 blklab19:;

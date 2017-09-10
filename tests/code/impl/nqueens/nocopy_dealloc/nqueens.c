@@ -56,9 +56,7 @@ NQueen* _nqueen_(int64_t num_solutions, POS** queens, size_t queens_size, _DECL_
 	//newrecord %3 = (%0, %1) : {int num_solutions,{int c,int r}[] queens}
 	_DEALLOC_STRUCT(_3, NQueen);
 	_3 = malloc(sizeof(NQueen));
-	// isCopyEliminated = true
 	_3->num_solutions = num_solutions;
-	// isCopyEliminated = true
 	_UPDATE_1DARRAY(_3->queens, queens);
 	_REMOVE_DEALLOC(queens);
 	_ADD_DEALLOC(_3);
@@ -202,7 +200,6 @@ NQueen* _run_(NQueen* nq, _DECL_DEALLOC_PARAM(nq), int64_t n, int64_t dim){
 	//add %10 = %8, %9 : int
 	_10=_8+_9;
 	//update %0.num_solutions = %10 : {int num_solutions,{int c,int r}[] queens} -> {int num_solutions,{int c,int r}[] queens}
-	// isCopyEliminated = true
 	nq->num_solutions = _10;
 	//return %0
 	_DEALLOC_STRUCT(_3, NQueen);
@@ -311,14 +308,11 @@ blklab12:;
 		//newrecord %32 = (%4, %1) : {int c,int r}
 		_DEALLOC_STRUCT(_32, POS);
 		_32 = malloc(sizeof(POS));
-		// isCopyEliminated = false
 		_32->c = col;
-		// isCopyEliminated = false
 		_32->r = n;
 		_ADD_DEALLOC(_32);
 		//update %0.queens[%1] = %32 : {int num_solutions,{int c,int r}[] queens} -> {int num_solutions,{int c,int r}[] queens}
 		_DEALLOC_MEMBER_STRUCT_UPDATECODE(nq, nq->queens[n], POS);
-		// isCopyEliminated = false
 		nq->queens[n] = _32;
 		_REMOVE_DEALLOC(_32);
 		//const %34 = 1 : int
@@ -420,9 +414,7 @@ int main(int argc, char** args){
 	//newrecord %8 = (%6, %7) : {int c,int r}
 	_DEALLOC_STRUCT(_8, POS);
 	_8 = malloc(sizeof(POS));
-	// isCopyEliminated = true
 	_8->c = _6;
-	// isCopyEliminated = true
 	_8->r = _7;
 	_ADD_DEALLOC(_8);
 	//arraygen %9 = [8; 1] : {int c,int r}[]

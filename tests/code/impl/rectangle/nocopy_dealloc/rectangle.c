@@ -56,7 +56,6 @@ Rectangle* _updateRec_(Rectangle* rec, _DECL_DEALLOC_PARAM(rec), Point* p, _DECL
 	_DECL_DEALLOC(r);
 	//update %0.p2 = %1 : {{int x,int y} p1,{int x,int y} p2} -> {{int x,int y} p1,{int x,int y} p2}
 	_DEALLOC_MEMBER_STRUCT_UPDATECODE(rec, rec->p2, Point);
-	// isCopyEliminated = true
 	rec->p2 = p;
 	_REMOVE_DEALLOC(p);
 	//return %0
@@ -126,9 +125,7 @@ int main(int argc, char** args){
 	//newrecord %7 = (%5, %6) : {int x,int y}
 	_DEALLOC_STRUCT(_7, Point);
 	_7 = malloc(sizeof(Point));
-	// isCopyEliminated = true
 	_7->x = _5;
-	// isCopyEliminated = true
 	_7->y = _6;
 	_ADD_DEALLOC(_7);
 	//assign %1 = %7  : {int x,int y}
@@ -143,9 +140,7 @@ int main(int argc, char** args){
 	//newrecord %10 = (%8, %9) : {int x,int y}
 	_DEALLOC_STRUCT(_10, Point);
 	_10 = malloc(sizeof(Point));
-	// isCopyEliminated = true
 	_10->x = _8;
-	// isCopyEliminated = true
 	_10->y = _9;
 	_ADD_DEALLOC(_10);
 	//assign %2 = %10  : {int x,int y}
@@ -156,9 +151,7 @@ int main(int argc, char** args){
 	//newrecord %11 = (%1, %2) : {{int x,int y} p1,{int x,int y} p2}
 	_DEALLOC_STRUCT(_11, Rectangle);
 	_11 = malloc(sizeof(Rectangle));
-	// isCopyEliminated = true
 	_11->p1 = p1;
-	// isCopyEliminated = true
 	_11->p2 = p2;
 	_REMOVE_DEALLOC(p1);
 	_REMOVE_DEALLOC(p2);
@@ -175,9 +168,7 @@ int main(int argc, char** args){
 	//newrecord %14 = (%12, %13) : {int x,int y}
 	_DEALLOC_STRUCT(_14, Point);
 	_14 = malloc(sizeof(Point));
-	// isCopyEliminated = true
 	_14->x = _12;
-	// isCopyEliminated = true
 	_14->y = _13;
 	_ADD_DEALLOC(_14);
 	//assign %4 = %14  : {int x,int y}

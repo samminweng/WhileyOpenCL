@@ -114,7 +114,6 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), int64_t n, _DECL_1DARRAYSIZE_PA
 			//const %17 = 0 : int
 			_17 = 0;
 			//update %5[%8] = %17 : int[] -> int[]
-			// isCopyEliminated = false
 			y[i] = _17;
 			//const %18 = 1 : int
 			_18 = 1;
@@ -145,14 +144,12 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), int64_t n, _DECL_1DARRAYSIZE_PA
 			//indexof %29 = %0, %28 : int[]
 			_29=moves[_28];
 			//update %5[%8] = %29 : int[] -> int[]
-			// isCopyEliminated = false
 			y[i] = _29;
 //.blklab4
 blklab4:;
 			//const %30 = 0 : int
 			_30 = 0;
 			//update %4[%8] = %30 : int[] -> int[]
-			// isCopyEliminated = false
 			x[i] = _30;
 			//const %31 = 2 : int
 			_31 = 2;
@@ -171,14 +168,12 @@ blklab4:;
 			//indexof %37 = %0, %36 : int[]
 			_37=moves[_36];
 			//update %4[%8] = %37 : int[] -> int[]
-			// isCopyEliminated = false
 			x[i] = _37;
 //.blklab5
 blklab5:;
 			//const %38 = 0 : int
 			_38 = 0;
 			//update %6[%8] = %38 : int[] -> int[]
-			// isCopyEliminated = false
 			z[i] = _38;
 			//const %39 = 1 : int
 			_39 = 1;
@@ -199,7 +194,6 @@ blklab5:;
 			//indexof %46 = %0, %45 : int[]
 			_46=moves[_45];
 			//update %6[%8] = %46 : int[] -> int[]
-			// isCopyEliminated = false
 			z[i] = _46;
 //.blklab6
 blklab6:;
@@ -212,7 +206,6 @@ blklab6:;
 			//indexof %49 = %5, %8 : int[]
 			_49=y[i];
 			//update %4[%8] = %49 : int[] -> int[]
-			// isCopyEliminated = false
 			x[i] = _49;
 //.blklab7
 blklab7:;
@@ -225,7 +218,6 @@ blklab7:;
 			//indexof %52 = %5, %8 : int[]
 			_52=y[i];
 			//update %6[%8] = %52 : int[] -> int[]
-			// isCopyEliminated = false
 			z[i] = _52;
 //.blklab8
 blklab8:;
@@ -248,7 +240,6 @@ blklab8:;
 			//add %60 = %59, %7 : int
 			_60=_59+j;
 			//update %0[%60] = %58 : int[] -> int[]
-			// isCopyEliminated = true
 			moves[_60] = _58;
 			//goto blklab10
 			goto blklab10;
@@ -263,7 +254,6 @@ blklab9:;
 			//add %64 = %63, %7 : int
 			_64=_63+j;
 			//update %0[%64] = %62 : int[] -> int[]
-			// isCopyEliminated = true
 			moves[_64] = _62;
 //.blklab10
 blklab10:;

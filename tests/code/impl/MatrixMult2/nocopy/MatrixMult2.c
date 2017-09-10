@@ -33,11 +33,8 @@ Matrix* _matrix_(int64_t width, int64_t height, _DECL_1DARRAY_PARAM(data)){
 	Matrix* _4;
 	//newrecord %4 = (%2, %1, %0) : {int[] data,int height,int width}
 	_4 = malloc(sizeof(Matrix));
-	// isCopyEliminated = true
 	_UPDATE_1DARRAY(_4->data, data);
-	// isCopyEliminated = true
 	_4->height = height;
-	// isCopyEliminated = true
 	_4->width = width;
 	//return %4
 	return _4;
@@ -105,7 +102,6 @@ Matrix* _init_(int64_t width, int64_t height){
 			//add %16 = %15, %5 : int
 			_16=_15+j;
 			//update %3[%16] = %14 : int[] -> int[]
-			// isCopyEliminated = true
 			data[_16] = _14;
 			//const %17 = 1 : int
 			_17 = 1;
@@ -374,7 +370,6 @@ Matrix* _mat_mult_(Matrix* a, Matrix* b){
 				//add %33 = %32, %9 : int
 				_33=_32+j;
 				//update %5[%33] = %31 : int[] -> int[]
-				// isCopyEliminated = true
 				data[_33] = _31;
 				//const %34 = 1 : int
 				_34 = 1;

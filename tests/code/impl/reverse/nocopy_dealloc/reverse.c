@@ -61,7 +61,6 @@ int64_t* _reverse_(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls), _DECL_1DARR
 		// isCopyEliminated = true
 		i = _17;
 		//update %3[%2] = %4 : int[] -> int[]
-		// isCopyEliminated = false
 		r[i] = item;
 //.blklab1
 blklab1:;
@@ -205,7 +204,6 @@ blklab4:;
 		//sub %24 = %2, %3 : int
 		_24=max-index;
 		//update %4[%3] = %24 : int[] -> int[]
-		// isCopyEliminated = false
 		arr[index] = _24;
 		//const %25 = 1 : int
 		_25 = 1;

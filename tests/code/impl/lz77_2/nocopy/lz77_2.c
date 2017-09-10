@@ -177,9 +177,7 @@ blklab6:;
 blklab5:;
 	//newrecord %18 = (%4, %3) : {int len,int offset}
 	_18 = malloc(sizeof(Match));
-	// isCopyEliminated = true
 	_18->len = bestLen;
-	// isCopyEliminated = true
 	_18->offset = bestOffset;
 	//return %18
 	return _18;
@@ -226,7 +224,6 @@ BYTE* _append_(BYTE* items, size_t items_size, BYTE item, _DECL_1DARRAYSIZE_PARA
 		//indexof %11 = %0, %3 : byte[]
 		_11=items[i];
 		//update %2[%3] = %11 : byte[] -> byte[]
-		// isCopyEliminated = false
 		nitems[i] = _11;
 		//const %12 = 1 : int
 		_12 = 1;
@@ -241,7 +238,6 @@ blklab9:;
 //.blklab8
 blklab8:;
 	//update %2[%3] = %1 : byte[] -> byte[]
-	// isCopyEliminated = true
 	nitems[i] = item;
 	//return %2
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(nitems);
@@ -277,7 +273,6 @@ BYTE* _resize_(BYTE* items, size_t items_size, int64_t size, _DECL_1DARRAYSIZE_P
 		//indexof %7 = %0, %3 : byte[]
 		_7=items[i];
 		//update %2[%3] = %7 : byte[] -> byte[]
-		// isCopyEliminated = false
 		nitems[i] = _7;
 		//const %8 = 1 : int
 		_8 = 1;
@@ -417,7 +412,6 @@ blklab16:;
 //.blklab17
 blklab17:;
 		//update %1[%4] = %6 : byte[] -> byte[]
-		// isCopyEliminated = false
 		output[arr_size] = offset;
 		//const %27 = 1 : int
 		_27 = 1;
@@ -427,7 +421,6 @@ blklab17:;
 		// isCopyEliminated = true
 		arr_size = _28;
 		//update %1[%4] = %7 : byte[] -> byte[]
-		// isCopyEliminated = false
 		output[arr_size] = length;
 		//const %29 = 1 : int
 		_29 = 1;
@@ -663,9 +656,9 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_45);
 	int64_t _46;
 	int64_t _47;
-	//const %6 = [115,109,97,108,108,46,105,110] : int[]
-	_NEW_1DARRAY_int64_t(_6, 8, 0);
-	_6[0] = 115; _6[1] = 109; _6[2] = 97; _6[3] = 108; _6[4] = 108; _6[5] = 46; _6[6] = 105; _6[7] = 110; 
+	//const %6 = [46,46,47,46,46,47,46,46,47,73,110,112,117,116,102,105,108,101,115,47,115,109,97,108,108,46,105,110] : int[]
+	_NEW_1DARRAY_int64_t(_6, 28, 0);
+	_6[0] = 46; _6[1] = 46; _6[2] = 47; _6[3] = 46; _6[4] = 46; _6[5] = 47; _6[6] = 46; _6[7] = 46; _6[8] = 47; _6[9] = 73; _6[10] = 110; _6[11] = 112; _6[12] = 117; _6[13] = 116; _6[14] = 102; _6[15] = 105; _6[16] = 108; _6[17] = 101; _6[18] = 115; _6[19] = 47; _6[20] = 115; _6[21] = 109; _6[22] = 97; _6[23] = 108; _6[24] = 108; _6[25] = 46; _6[26] = 105; _6[27] = 110; 
 	//invoke (%5) = (%6) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
 	{
 		_5 = Reader(_6, _6_size);

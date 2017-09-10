@@ -159,7 +159,6 @@ _SLICE_ARRAY(_18, items, pivot, end);
 		//indexof %30 = %5, %7 : int[]
 		_30=lhs[l];
 		//update %0[%9] = %30 : int[] -> int[]
-		// isCopyEliminated = false
 		items[i] = _30;
 		//const %31 = 1 : int
 		_31 = 1;
@@ -175,7 +174,6 @@ blklab3:;
 		//indexof %33 = %6, %8 : int[]
 		_33=rhs[r];
 		//update %0[%9] = %33 : int[] -> int[]
-		// isCopyEliminated = false
 		items[i] = _33;
 		//const %34 = 1 : int
 		_34 = 1;
@@ -207,7 +205,6 @@ blklab1:;
 		//indexof %39 = %5, %7 : int[]
 		_39=lhs[l];
 		//update %0[%9] = %39 : int[] -> int[]
-		// isCopyEliminated = false
 		items[i] = _39;
 		//const %40 = 1 : int
 		_40 = 1;
@@ -237,7 +234,6 @@ blklab5:;
 		//indexof %45 = %6, %8 : int[]
 		_45=rhs[r];
 		//update %0[%9] = %45 : int[] -> int[]
-		// isCopyEliminated = false
 		items[i] = _45;
 		//const %46 = 1 : int
 		_46 = 1;
@@ -651,7 +647,6 @@ blklab12:;
 		//sub %67 = %2, %3 : int
 		_67=max-index;
 		//update %4[%3] = %67 : int[] -> int[]
-		// isCopyEliminated = false
 		arr[index] = _67;
 		//const %68 = 1 : int
 		_68 = 1;

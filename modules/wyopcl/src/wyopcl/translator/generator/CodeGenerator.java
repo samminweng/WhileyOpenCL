@@ -1558,12 +1558,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		// Generate update statement, e.g. a[i] = b
 		boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
-		// Add copy analysis result as a comment.
-		if(this.copyAnalyzer.isPresent()){
-			statement.add(indent+ "// isCopyEliminated = " + isCopyEliminated);
-		}
 		statement.add(indent + lhs + " = " + stores.getVar(code.result(), function) + ";");
-
 
 		// Update the set with rhs variable
 		copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, code.operand(0), code, function));
@@ -2124,10 +2119,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			Type member_type = stores.getRawType(register, function);
 			// Type type = code.type(0).field(member);
 			boolean isCopyEliminated = isCopyEliminated(register, code, function);
-			// Add copy analysis result as a comment.
-			if(this.copyAnalyzer.isPresent()){
-				statement.add(indent+ "// isCopyEliminated = " + isCopyEliminated);
-			}
 			copyEliminatedMap.put(register, isCopyEliminated);
 
 			statement.addAll(CodeGeneratorHelper.generateAssignmentCode(member_type, indent, lhs_member, rhs,

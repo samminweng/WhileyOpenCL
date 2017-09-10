@@ -84,7 +84,8 @@ public class CodeGenerationTestCase {
 				"cashtill",
 				"lz77",
 				"lz77_2",
-				//"lz77_3", // Uncompress the lz77 file. 
+				"lz77_decompress", // Uncompress the lz77 file.
+				"lz77_opt_decompress", // Optimised lz77 decompression
 				"fileread", //Read 'feep.pbm' as a byte array
 				"fileread2",// Read 'feep.pbm' and output the array to console 
 				"SobelEdge1", // Read 'feep.pbm', detect the edges and output the resulting array

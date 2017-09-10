@@ -25,14 +25,12 @@ int64_t* _fibonacci_(_DECL_1DARRAY_PARAM(ls), int64_t n, _DECL_1DARRAYSIZE_PARAM
 	//const %5 = 0 : int
 	_5 = 0;
 	//update %0[%5] = %4 : int[] -> int[]
-	// isCopyEliminated = true
 	ls[_5] = _4;
 	//const %6 = 1 : int
 	_6 = 1;
 	//const %7 = 1 : int
 	_7 = 1;
 	//update %0[%7] = %6 : int[] -> int[]
-	// isCopyEliminated = true
 	ls[_7] = _6;
 	//goto blklab1
 	goto blklab1;
@@ -65,7 +63,6 @@ blklab0:;
 	//add %17 = %13, %16 : int
 	_17=_13+_16;
 	//update %0[%1] = %17 : int[] -> int[]
-	// isCopyEliminated = true
 	ls[n] = _17;
 //.blklab1
 blklab1:;

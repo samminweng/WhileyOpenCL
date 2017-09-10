@@ -44,16 +44,14 @@ function findLongestMatch(byte[] data, nat pos) -> (Match m):
     return {offset:bestOffset, len:bestLen}
 
 // Append a byte to the byte array
-function append(byte[] items, byte item) -> (byte[] nitems):
-    //ensures |nitems| == |items| + 1:
+function append(byte[] items, byte item) -> (byte[] nitems)
+    ensures |nitems| == |items| + 1:
     //
     nitems = [0b; |items| + 1]
     int i = 0
-    //
     while i < |items|:
         nitems[i] = items[i]
         i = i + 1
-    //
     nitems[i] = item
     return nitems
 

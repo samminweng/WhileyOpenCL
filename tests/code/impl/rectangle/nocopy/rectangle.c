@@ -54,7 +54,6 @@ void printf_Rectangle(Rectangle* rectangle){
 Rectangle* _updateRec_(Rectangle* rec, Point* p){
 	Rectangle* r;
 	//update %0.p2 = %1 : {{int x,int y} p1,{int x,int y} p2} -> {{int x,int y} p1,{int x,int y} p2}
-	// isCopyEliminated = true
 	rec->p2 = p;
 	//return %0
 	return rec;
@@ -103,9 +102,7 @@ int main(int argc, char** args){
 	_6 = 0;
 	//newrecord %7 = (%5, %6) : {int x,int y}
 	_7 = malloc(sizeof(Point));
-	// isCopyEliminated = true
 	_7->x = _5;
-	// isCopyEliminated = true
 	_7->y = _6;
 	//assign %1 = %7  : {int x,int y}
 	// isCopyEliminated = true
@@ -116,18 +113,14 @@ int main(int argc, char** args){
 	_9 = 4;
 	//newrecord %10 = (%8, %9) : {int x,int y}
 	_10 = malloc(sizeof(Point));
-	// isCopyEliminated = true
 	_10->x = _8;
-	// isCopyEliminated = true
 	_10->y = _9;
 	//assign %2 = %10  : {int x,int y}
 	// isCopyEliminated = true
 	p2 = _10;
 	//newrecord %11 = (%1, %2) : {{int x,int y} p1,{int x,int y} p2}
 	_11 = malloc(sizeof(Rectangle));
-	// isCopyEliminated = true
 	_11->p1 = p1;
-	// isCopyEliminated = true
 	_11->p2 = p2;
 	//assign %3 = %11  : {{int x,int y} p1,{int x,int y} p2}
 	// isCopyEliminated = true
@@ -138,9 +131,7 @@ int main(int argc, char** args){
 	_13 = 8;
 	//newrecord %14 = (%12, %13) : {int x,int y}
 	_14 = malloc(sizeof(Point));
-	// isCopyEliminated = true
 	_14->x = _12;
-	// isCopyEliminated = true
 	_14->y = _13;
 	//assign %4 = %14  : {int x,int y}
 	// isCopyEliminated = true

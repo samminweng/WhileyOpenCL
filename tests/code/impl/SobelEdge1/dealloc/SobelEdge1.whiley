@@ -5,8 +5,8 @@ import whiley.lang.Math
 // This example code illustrates 'cross-edge' sobel edge detection
 // reference: https://en.wikipedia.org/wiki/Sobel_operator
 // Define Colour value
-constant SPACE is 00100000b // ASCII code of space (' ') 
-constant BLACK is 01100010b // ASCII code of 'b' 
+constant SPACE is 00100000b // ASCII code of space (' ')
+constant BLACK is 01100010b // ASCII code of 'b'
 constant TH is 64 // Large thresholds generate few edges
 // Wrap the pixels to the size
 function wrap(int pos, int size) -> int:
@@ -37,7 +37,7 @@ function convolution(byte[] pixels, int width, int height, int xCenter, int yCen
 			int pixel = Byte.toUnsignedInt(pixels[y*width+x])
 			// Get filter value
 			int filterVal = filter[filterY*filterSize+filterX]
-			// pixel * filter value 
+			// pixel * filter value
 			sum = sum + pixel * filterVal
 			filterX = filterX + 1
 		filterY = filterY + 1
@@ -65,7 +65,7 @@ function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
 			int h_g = convolution(pixels, width, height, x, y, h_sobel)
 			// Estimate total gradient using 'abs' function
 			int t_g = Math.abs(v_g) + Math.abs(h_g)
-			// Edge threshold 
+			// Edge threshold
 			if t_g <= TH:
 				// Color other pixels as black
 				newPixels[pos] = BLACK
@@ -104,11 +104,11 @@ method print_pbm(System.Console sys, int width, int height, byte[] pixels):
 // Main function
 method main(System.Console sys):
 	// Read feep.bpm
-	File.Reader r = File.Reader("image32x32.pbm")
+	File.Reader r = File.Reader("../../../Inputfiles/image32x32.pbm")
 	int width =32
 	int height = 32
 	int size = width * height
 	byte[] pixels = r.readAll()
-	// Place a black pixel 
+	// Place a black pixel
 	byte[] newPixels = sobelEdgeDetection(pixels, width, height)
 	print_pbm(sys, width, height, newPixels)

@@ -23,7 +23,7 @@ generateCode(){
 	codegen=$3
 	enabledpattern=$4
 
-	if [ $enabledpattern == 1 ] 
+	if [ $enabledpattern == 1 ]
 	then
 		### Enable pattern transformation
 		codeDir="$BENCHMARKDIR/$testcase/impl/$program/patern/$codegen"
@@ -47,10 +47,10 @@ generateCode(){
 
 	### Disable pattern transformation
 	wyopcl=./../../../../../../bin/wyopcl
-	if [ $enabledpattern == 1 ] 
+	if [ $enabledpattern == 1 ]
 	then
 		### Enable pattern transformation
-		wyopcl=$wyopcl" -pattern $pattern"	
+		wyopcl=$wyopcl" -pattern $pattern"
 	fi
 	#echo $codegen
 	## Translate Whiley programs into naive C code
@@ -60,7 +60,7 @@ generateCode(){
 			$wyopcl -code $testcase"_"$program.whiley
 			;;
 		"naive_dealloc")
-			### Translate Whiley program into naive + dealloc C code 
+			### Translate Whiley program into naive + dealloc C code
 			$wyopcl -code -dealloc $testcase"_"$program.whiley
 			;;
 		"copyreduced")
@@ -98,8 +98,8 @@ runcallgrind(){
 	callgrind_report="callgrind.$executable.txt"
 
 	## Compile C code with -pg option to write profile information for gprof
-	echo -e -n "[*]Compile $program using GCC" 
-	## O3 optimizes and inlines the function, but loses the track of function call 
+	echo -e -n "[*]Compile $program using GCC"
+	## O3 optimizes and inlines the function, but loses the track of function call
 	gcc -O0 -std=c11 -Wall -pg -fno-inline-functions-called-once $testcase"_"$program.c Util.c -o "out/$executable"
 
 	## Execute the program
@@ -116,11 +116,11 @@ runcallgrind(){
 	## The ouput file 'callgrind.out.<pid> ' is generated
 	echo -e -n "[*]Generate summary "
 	callgrind_annotate callgrind.out.* > $callgrind_report
-	
+
 	#echo -e -n "[*]Show Profiled $program compiled by GCC"
 	#cat $callgrind_report | less
 
-	echo -e -n "[*]Complete GProf Analysis ($gprof_report)" 
+	echo -e -n "[*]Complete GProf Analysis ($gprof_report)"
 	mv $callgrind_report "$BENCHMARKDIR/$testcase/prof"
 	## Delete callgrind output file
 	rm -f callgrind.out.*
@@ -151,9 +151,9 @@ rungprof(){
 	gprof_report="gprof.$executable.txt"
 
 	## Compile C code with -pg option to write profile information for gprof
-	echo -e -n "[*]Compile $program using GCC" 
-	## O3 optimizes and inlines the function, but loses the track of function call 
-	gcc -O0 -std=c99 -Wall -pg -fno-inline-functions-called-once $testcase"_"$program.c Util.c -o "out/$executable"
+	echo -e -n "[*]Compile $program using GCC"
+	## O3 optimizes and inlines the function, but loses the track of function call
+	gcc -O0 -std=c11 -Wall -pg -fno-inline-functions-called-once $testcase"_"$program.c Util.c -o "out/$executable"
 
 	## Execute the program
 	echo -e -n "[*]Run $program executable to produce profile files"
@@ -170,11 +170,11 @@ rungprof(){
 	echo -e -n "[*]Run GProf"
 	##gprof "./out/$program.$compiler.enablevc.out" gmon.out
 	gprof "./out/$executable" gmon.out > $gprof_report
-	
-	#echo -e -n "[*]Show Profiled Analysis of $program compiled by GCC" 
+
+	#echo -e -n "[*]Show Profiled Analysis of $program compiled by GCC"
 	#cat $gprof_report | less
 
-	echo -e -n "[*]Complete GProf Analysis ($gprof_report)" 
+	echo -e -n "[*]Complete GProf Analysis ($gprof_report)"
 	mv $gprof_report "$BENCHMARKDIR/$testcase/prof"
 	## Delete gmon.out
 	rm -f gmon.out
@@ -202,11 +202,11 @@ rungprof(){
 # 	fi
 # 	perf_report="perf.$executable.txt"
 # 	#gcov_out="$executable.gcov"
-	
-# 	echo -e -n "[*]Build the code with enabled profiler" 
+
+# 	echo -e -n "[*]Build the code with enabled profiler"
 # 	gcc -O0 -std=c99 -Wall -pg -fno-inline-functions-called-once $testcase"_"$program.c Util.c -o "out/$executable" -fprofile-generate
 
-# 	echo -e -n "[*]Run the executable to generate perf.data" 
+# 	echo -e -n "[*]Run the executable to generate perf.data"
 # 	## LZ test case
 # 	if [ $testcase = "LZ77" ]
 # 	then
@@ -245,7 +245,7 @@ rungprof(){
 # 	threads=$6
 # 	### executable file
 # 	executables="$testcase.$program.$codegen.$compiler.$parameter.$threads.out"
-# 	### Sampler 
+# 	### Sampler
 # 	sampler="$testcase.$program.$codegen.$compiler.$parameter.$threads.sampler"
 # 	### Analysis results
 # 	analysis="$testcase.$program.$codegen.$compiler.$parameter.$threads.txt"
@@ -257,23 +257,23 @@ rungprof(){
 
 # 	echo -e -n "[*]Convert perf.data to LLVM's sampling profiler format using AutoFDO" && read
 # 	create_llvm_prof --use_lbr=false --binary="./out/$executables" --out=$sampler
-	
+
 # 	echo -e -n "[*]Show Profiled Analysis of $program compiled by Clang" && read
 # 	llvm-profdata show -sample $sampler -output=$analysis
 # 	llvm-profdata show -sample $sampler
-	
+
 # 	echo -e -n "[*]Complete Clang Sample Profiling Analysis ($analysis)" && read
-	
+
 # 	## Move sample profiled data
 # 	mv $analysis "$basedir/polly/$testcase/prof"
-# 	## delete sampler 
+# 	## delete sampler
 # 	rm $sampler
 # 	## delete perf.data
 # 	rm -f perf.data
 
 # }
 
-# 
+#
 # Profile the c program
 #
 exec(){
@@ -292,21 +292,21 @@ exec(){
 	do
 		## disabled the pattern
 		enabledpattern=0
-		# Generate C code with disabled pattern 
+		# Generate C code with disabled pattern
 		generateCode $testcase $program $codegen $enabledpattern
-		# Profile the generated C code 
-		rungprof $testcase $program $codegen $enabledpattern $parameter "gcc" 1		
+		# Profile the generated C code
+		rungprof $testcase $program $codegen $enabledpattern $parameter "gcc" 1
 		##runcallgrind $testcase $program $codegen $enabledpattern $parameter "gcc" 1
-		# Get the pattern option 
+		# Get the pattern option
 		pattern=${patterns[$testcase]}
 		if [ $pattern ]
 		then
-			
+
 			# Enable the pattern matching
 			enabledpattern=1
-			# Generate C code with enabled pattern 
+			# Generate C code with enabled pattern
 			generateCode $testcase $program $codegen $enabledpattern $pattern
-			# Profile the generated C code 
+			# Profile the generated C code
 			rungprof $testcase $program $codegen $enabledpattern $parameter "gcc" 1
 			###runcallgrind $testcase $program $codegen $enabledpattern $parameter "gcc" 1
 		fi

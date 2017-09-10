@@ -53,9 +53,7 @@ NQueen* _nqueen_(int64_t num_solutions, POS** queens, size_t queens_size){
 	NQueen* _3;
 	//newrecord %3 = (%0, %1) : {int num_solutions,{int c,int r}[] queens}
 	_3 = malloc(sizeof(NQueen));
-	// isCopyEliminated = true
 	_3->num_solutions = num_solutions;
-	// isCopyEliminated = true
 	_UPDATE_1DARRAY(_3->queens, queens);
 	//return %3
 	return _3;
@@ -183,7 +181,6 @@ NQueen* _run_(NQueen* nq, int64_t n, int64_t dim){
 	//add %10 = %8, %9 : int
 	_10=_8+_9;
 	//update %0.num_solutions = %10 : {int num_solutions,{int c,int r}[] queens} -> {int num_solutions,{int c,int r}[] queens}
-	// isCopyEliminated = true
 	nq->num_solutions = _10;
 	//return %0
 	return nq;
@@ -275,12 +272,9 @@ blklab12:;
 		if(isSolution!=_31){goto blklab22;}
 		//newrecord %32 = (%4, %1) : {int c,int r}
 		_32 = malloc(sizeof(POS));
-		// isCopyEliminated = false
 		_32->c = col;
-		// isCopyEliminated = false
 		_32->r = n;
 		//update %0.queens[%1] = %32 : {int num_solutions,{int c,int r}[] queens} -> {int num_solutions,{int c,int r}[] queens}
-		// isCopyEliminated = false
 		nq->queens[n] = _32;
 		//const %34 = 1 : int
 		_34 = 1;
@@ -355,9 +349,7 @@ int main(int argc, char** args){
 	_7 = 0;
 	//newrecord %8 = (%6, %7) : {int c,int r}
 	_8 = malloc(sizeof(POS));
-	// isCopyEliminated = true
 	_8->c = _6;
-	// isCopyEliminated = true
 	_8->r = _7;
 	//arraygen %9 = [8; 1] : {int c,int r}[]
 	_NEW_1DARRAY_STRUCT(_9, n, _8, POS);

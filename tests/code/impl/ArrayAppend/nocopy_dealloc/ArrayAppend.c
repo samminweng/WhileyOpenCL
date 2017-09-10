@@ -60,7 +60,6 @@ int64_t* _test_append_(_DECL_1DARRAY_PARAM(lhs), _DECL_DEALLOC_PARAM(lhs), _DECL
 		//indexof %14 = %0, %4 : int[]
 		_14=lhs[i];
 		//update %3[%4] = %14 : int[] -> int[]
-		// isCopyEliminated = false
 		rs[i] = _14;
 //.blklab1
 blklab1:;
@@ -80,7 +79,6 @@ blklab0:;
 		//add %18 = %4, %17 : int
 		_18=i+_17;
 		//update %3[%18] = %16 : int[] -> int[]
-		// isCopyEliminated = true
 		rs[_18] = _16;
 		//const %19 = 1 : int
 		_19 = 1;

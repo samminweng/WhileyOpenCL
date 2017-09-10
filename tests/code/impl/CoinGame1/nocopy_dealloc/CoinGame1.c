@@ -187,7 +187,6 @@ blklab6:;
 			//add %47 = %46, %4 : int
 			_47=_46+j;
 			//update %0[%47] = %41 : int[] -> int[]
-			// isCopyEliminated = true
 			moves[_47] = _41;
 			//const %48 = 1 : int
 			_48 = 1;

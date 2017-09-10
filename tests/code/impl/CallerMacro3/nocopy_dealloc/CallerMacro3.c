@@ -60,7 +60,6 @@ int main(int argc, char** args){
 	//const %7 = 1 : int
 	_7 = 1;
 	//update %1[%7] = %6 : int[] -> int[]
-	// isCopyEliminated = true
 	b[_7] = _6;
 	//invoke (%8) = (%1) CallerMacro3:f : function(int[])->(int[])
 	{
@@ -80,7 +79,6 @@ int main(int argc, char** args){
 	//const %10 = 1 : int
 	_10 = 1;
 	//update %1[%10] = %9 : int[] -> int[]
-	// isCopyEliminated = true
 	b[_10] = _9;
 	//assert
 	{

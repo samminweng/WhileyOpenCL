@@ -384,39 +384,7 @@ public final class BaseTestUtil {
 		}
 		return exitValue;
 	}
-	/**
-	 * Copy input files to generated C code for some test cases, e.g. LZ77 or SobelEdge
-	 * 
-	 * 
-	 * @param testcase
-	 * @param basePath
-	 * @param destPath
-	 */
-	private void copyInputFiles(String testcase, Path basePath, Path destPath){
-		try {
-			if(testcase.equals("lz77") || testcase.equals("lz77_2")){
-				// Copy 'small.in' to the generated fold
-				FileUtils.copyFileToDirectory(
-						new File(basePath + File.separator +"Inputfiles"+ File.separator + "small.in"),
-						destPath.toFile());
-			}else if(testcase.equals("lz77_3")){
-				// Copy 'small.dat' files to the folder
-				FileUtils.copyFileToDirectory( new File(basePath + File.separator +"Inputfiles"+ File.separator + "small.dat"), 
-						destPath.toFile());
-			}else if(testcase.equals("lz77_compress")){
-				// Copy 'small.dat' files to the folder
-				FileUtils.copyFileToDirectory( new File(basePath + File.separator +"Inputfiles"+ File.separator + "input2x.in"), 
-						destPath.toFile());
-			}else if (testcase.equals("fileread") || testcase.equals("fileread2")
-					|| testcase.equals("SobelEdge1") || testcase.equals("SobelEdge2")){
-				// Copy PBM image files to the folder
-				FileUtils.copyFileToDirectory( new File(basePath + File.separator +"Inputfiles"+ File.separator + "image32x32.pbm"), 
-						destPath.toFile());
-			}
-		} catch (IOException e) {
-			throw new RuntimeException("Unable to copy files from 'Inputfiles' folder");
-		}
-	}
+	
 
 
 	/**
@@ -629,9 +597,6 @@ public final class BaseTestUtil {
 
 			// 4. Generate the C code
 			runCmd(cmd, destDir, false);
-
-			// (Optional) Copy input files to folder
-			copyInputFiles(testcase, baseDir, destDir);
 
 			// Check if *.c and *.h files are generated or not.
 			assertEquals(Files.exists(Paths.get(destDir + File.separator + testcase + ".c")), true);

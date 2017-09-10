@@ -204,8 +204,8 @@ BYTE* _append_(BYTE* items, size_t items_size, BYTE item, _DECL_1DARRAYSIZE_PARA
 	while(true){
 		//lengthof %10 = %0 : byte[]
 		_10 = items_size;
-		//ifge %3, %10 goto blklab8 : int
-		if(i>=_10){goto blklab8;}
+		//ifge %3, %10 goto blklab9 : int
+		if(i>=_10){goto blklab9;}
 		//indexof %11 = %0, %3 : byte[]
 		_11=items[i];
 		//update %2[%3] = %11 : byte[] -> byte[]
@@ -216,11 +216,11 @@ BYTE* _append_(BYTE* items, size_t items_size, BYTE item, _DECL_1DARRAYSIZE_PARA
 		_13=i+_12;
 		//assign %3 = %13  : int
 		i = _13;
+//.blklab10
+blklab10:;
+	}
 //.blklab9
 blklab9:;
-	}
-//.blklab8
-blklab8:;
 	//update %2[%3] = %1 : byte[] -> byte[]
 	nitems[i] = item;
 	//return %2
@@ -250,8 +250,8 @@ BYTE* _resize_(BYTE* items, size_t items_size, int64_t size, _DECL_1DARRAYSIZE_P
 	i = _6;
 	//loop (%2, %3, %7, %8, %9)
 	while(true){
-		//ifge %3, %1 goto blklab12 : int
-		if(i>=size){goto blklab12;}
+		//ifge %3, %1 goto blklab13 : int
+		if(i>=size){goto blklab13;}
 		//indexof %7 = %0, %3 : byte[]
 		_7=items[i];
 		//update %2[%3] = %7 : byte[] -> byte[]
@@ -262,11 +262,11 @@ BYTE* _resize_(BYTE* items, size_t items_size, int64_t size, _DECL_1DARRAYSIZE_P
 		_9=i+_8;
 		//assign %3 = %9  : int
 		i = _9;
+//.blklab14
+blklab14:;
+	}
 //.blklab13
 blklab13:;
-	}
-//.blklab12
-blklab12:;
 	//return %2
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(nitems);
 	return nitems;
@@ -313,8 +313,8 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREF
 	while(true){
 		//lengthof %10 = %0 : byte[]
 		_10 = data_size;
-		//ifge %2, %10 goto blklab14 : int
-		if(pos>=_10){goto blklab14;}
+		//ifge %2, %10 goto blklab15 : int
+		if(pos>=_10){goto blklab15;}
 		//invoke (%11) = (%0, %2) LZ77_original:findLongestMatch : function(byte[],LZ77_original:nat)->(LZ77_original:Match)
 		{
 			void* data_tmp;
@@ -340,8 +340,8 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREF
 		length = _14;
 		//const %16 = 00000000b : byte
 		_16 = 0b00000000;
-		//ifne %4, %16 goto blklab16 : byte
-		if(offset!=_16){goto blklab16;}
+		//ifne %4, %16 goto blklab17 : byte
+		if(offset!=_16){goto blklab17;}
 		//indexof %17 = %0, %2 : byte[]
 		_17=data[pos];
 		//assign %5 = %17  : byte
@@ -352,18 +352,18 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREF
 		_19=pos+_18;
 		//assign %2 = %19  : int
 		pos = _19;
-		//goto blklab17
-		goto blklab17;
-//.blklab16
-blklab16:;
+		//goto blklab18
+		goto blklab18;
+//.blklab17
+blklab17:;
 		//fieldload %20 = %3 len : {int len,int offset}
 		_20 = m->len;
 		//add %21 = %2, %20 : int
 		_21=pos+_20;
 		//assign %2 = %21  : int
 		pos = _21;
-//.blklab17
-blklab17:;
+//.blklab18
+blklab18:;
 		//invoke (%22) = (%1, %4) LZ77_original:append : function(byte[],byte)->(byte[])
 		{
 			void* output_tmp;
@@ -378,11 +378,11 @@ blklab17:;
 		}
 		//assign %1 = %23  : byte[]
 		_COPY_1DARRAY_BYTE(output, _23);
+//.blklab16
+blklab16:;
+	}
 //.blklab15
 blklab15:;
-	}
-//.blklab14
-blklab14:;
 	//return %1
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(output);
 	return output;
@@ -442,8 +442,8 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYR
 		_14=pos+_13;
 		//lengthof %15 = %0 : byte[]
 		_15 = data_size;
-		//ifge %14, %15 goto blklab18 : int
-		if(_14>=_15){goto blklab18;}
+		//ifge %14, %15 goto blklab19 : int
+		if(_14>=_15){goto blklab19;}
 		//indexof %16 = %0, %2 : byte[]
 		_16=data[pos];
 		//assign %3 = %16  : byte
@@ -464,8 +464,8 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYR
 		pos = _21;
 		//const %22 = 00000000b : byte
 		_22 = 0b00000000;
-		//ifne %3, %22 goto blklab20 : byte
-		if(header!=_22){goto blklab20;}
+		//ifne %3, %22 goto blklab21 : byte
+		if(header!=_22){goto blklab21;}
 		//invoke (%23) = (%1, %4) LZ77_original:append : function(byte[],byte)->(byte[])
 		{
 			void* output_tmp;
@@ -473,10 +473,10 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYR
 		}
 		//assign %1 = %23  : byte[]
 		_COPY_1DARRAY_BYTE(output, _23);
-		//goto blklab21
-		goto blklab21;
-//.blklab20
-blklab20:;
+		//goto blklab22
+		goto blklab22;
+//.blklab21
+blklab21:;
 		//invoke (%24) = (%3) whiley/lang/Byte:toUnsignedInt : function(byte)->(whiley/lang/Int:uint)
 		{
 			_24 = (unsigned int)header;
@@ -501,8 +501,8 @@ blklab20:;
 		while(true){
 			//add %28 = %7, %6 : int
 			_28=start+len;
-			//ifge %8, %28 goto blklab22 : int
-			if(i>=_28){goto blklab22;}
+			//ifge %8, %28 goto blklab23 : int
+			if(i>=_28){goto blklab23;}
 			//indexof %29 = %1, %8 : byte[]
 			_29=output[i];
 			//assign %4 = %29  : byte
@@ -520,18 +520,18 @@ blklab20:;
 			_32=i+_31;
 			//assign %8 = %32  : int
 			i = _32;
+//.blklab24
+blklab24:;
+		}
 //.blklab23
 blklab23:;
-		}
 //.blklab22
 blklab22:;
-//.blklab21
-blklab21:;
+//.blklab20
+blklab20:;
+	}
 //.blklab19
 blklab19:;
-	}
-//.blklab18
-blklab18:;
 	//return %1
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(output);
 	return output;

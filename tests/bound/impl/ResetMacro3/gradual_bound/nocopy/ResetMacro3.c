@@ -27,7 +27,6 @@ uint32_t* _func_(uint32_t* x, size_t x_size, uint32_t num, _DECL_1DARRAYSIZE_PAR
 	//const %8 = 0 : int
 	_8 = 0;
 	//update %0[%8] = %1 : int[] -> int[]
-	// isCopyEliminated = true
 	x[_8] = num;
 	//return %0
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(x);

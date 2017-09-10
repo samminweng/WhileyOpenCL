@@ -237,14 +237,11 @@ blklab12:;
 		//newrecord %27 = (%5, %1) : {int c,int r}
 		_DEALLOC_STRUCT(_27, POS);
 		_27 = malloc(sizeof(POS));
-		// isCopyEliminated = false
 		_27->c = col;
-		// isCopyEliminated = false
 		_27->r = n;
 		_ADD_DEALLOC(_27);
 		//update %0[%1] = %27 : {int c,int r}[] -> {int c,int r}[]
 		_DEALLOC_MEMBER_STRUCT_UPDATECODE(queens, queens[n], POS);
-		// isCopyEliminated = false
 		queens[n] = _27;
 		_REMOVE_DEALLOC(_27);
 		//const %29 = 1 : int
@@ -332,9 +329,7 @@ int main(int argc, char** args){
 	//newrecord %7 = (%5, %6) : {int c,int r}
 	_DEALLOC_STRUCT(_7, POS);
 	_7 = malloc(sizeof(POS));
-	// isCopyEliminated = true
 	_7->c = _5;
-	// isCopyEliminated = true
 	_7->r = _6;
 	_ADD_DEALLOC(_7);
 	//arraygen %8 = [7; 1] : {int c,int r}[]

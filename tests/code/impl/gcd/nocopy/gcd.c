@@ -204,7 +204,6 @@ int main(int argc, char** args){
 			//add %18 = %17, %4 : int
 			_18=_17+j;
 			//update %2[%18] = %16 : int[] -> int[]
-			// isCopyEliminated = true
 			gcds[_18] = _16;
 			//assert
 			{

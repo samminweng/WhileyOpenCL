@@ -1,24 +1,24 @@
-==23115== Memcheck, a memory error detector
-==23115== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==23115== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==23115== Command: ./out/LZ77.original.gcc.disabledpattern.naive.seq.out /home/mw169/workspace/WhileyOpenCL/benchmarks/LZ77/Inputfiles/medium1x.in
-==23115== Parent PID: 23008
-==23115== 
-==23115== 
-==23115== HEAP SUMMARY:
-==23115==     in use at exit: 283,350,870 bytes in 187,075 blocks
-==23115==   total heap usage: 187,080 allocs, 5 frees, 283,377,097 bytes allocated
-==23115== 
-==23115== LEAK SUMMARY:
-==23115==    definitely lost: 283,300,816 bytes in 187,050 blocks
-==23115==    indirectly lost: 0 bytes in 0 blocks
-==23115==      possibly lost: 11,067 bytes in 7 blocks
-==23115==    still reachable: 38,987 bytes in 18 blocks
-==23115==         suppressed: 0 bytes in 0 blocks
-==23115== Rerun with --leak-check=full to see details of leaked memory
-==23115== 
-==23115== For counts of detected and suppressed errors, rerun with: -v
-==23115== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==15079== Memcheck, a memory error detector
+==15079== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==15079== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==15079== Command: ./out/LZ77.original.gcc.disabledpattern.naive.seq.out /home/mw169/workspace/WhileyOpenCL/benchmarks/LZ77/Inputfiles/medium1x.in
+==15079== Parent PID: 15019
+==15079== 
+==15079== 
+==15079== HEAP SUMMARY:
+==15079==     in use at exit: 283,350,870 bytes in 187,075 blocks
+==15079==   total heap usage: 187,080 allocs, 5 frees, 283,377,097 bytes allocated
+==15079== 
+==15079== LEAK SUMMARY:
+==15079==    definitely lost: 283,300,816 bytes in 187,050 blocks
+==15079==    indirectly lost: 0 bytes in 0 blocks
+==15079==      possibly lost: 11,067 bytes in 7 blocks
+==15079==    still reachable: 38,987 bytes in 18 blocks
+==15079==         suppressed: 0 bytes in 0 blocks
+==15079== Rerun with --leak-check=full to see details of leaked memory
+==15079== 
+==15079== For counts of detected and suppressed errors, rerun with: -v
+==15079== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -26,7 +26,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3890.476
+cpu MHz		: 3867.765
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -53,7 +53,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3879.585
+cpu MHz		: 3899.507
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -80,7 +80,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3889.679
+cpu MHz		: 3876.265
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -107,7 +107,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3729.507
+cpu MHz		: 3858.601
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -134,7 +134,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3800.960
+cpu MHz		: 3830.312
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -161,7 +161,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3692.851
+cpu MHz		: 3878.789
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -188,7 +188,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3855.281
+cpu MHz		: 3812.117
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -215,7 +215,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3440.773
+cpu MHz		: 3810.789
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

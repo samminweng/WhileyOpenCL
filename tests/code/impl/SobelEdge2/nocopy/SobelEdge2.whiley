@@ -3,11 +3,11 @@ import * from whiley.lang.System
 import whiley.lang.*
 import whiley.lang.Math
 // This example code illustrates sobel edge detction on black/white pictures
-// and write the output as a file 
+// and write the output as a file
 // reference: https://en.wikipedia.org/wiki/Sobel_operator
 // Define Colour value
-constant SPACE is 00100000b // ASCII code of space (' ') 
-constant BLACK is 01100010b // ASCII code of 'b' 
+constant SPACE is 00100000b // ASCII code of space (' ')
+constant BLACK is 01100010b // ASCII code of 'b'
 constant TH is 64 // Large thresholds generate few edges
 
 // Define 'Image' class
@@ -64,7 +64,7 @@ function convolution(Image A, int xCenter, int yCenter, int[] filter) ->int:
 			int pixel = Byte.toUnsignedInt(pixels[y*width+x])
 			// Get filter value
 			int filterVal = filter[filterY*filterSize+filterX]
-			// Compute the gradient (pixel * filter value) and add upto 'sum' 
+			// Compute the gradient (pixel * filter value) and add upto 'sum'
 			sum = sum + pixel * filterVal
 			filterX = filterX + 1
 		filterY = filterY + 1
@@ -95,7 +95,7 @@ function sobelEdgeDetection(Image input) -> Image:
 			int h_g = convolution(input, x, y, h_sobel)
 			// Get total gradient
 			int t_g = Math.abs(v_g) + Math.abs(h_g)
-			// Edge threshold 
+			// Edge threshold
 			if t_g <= TH:
 				// Color other pixels as black
 				newPixels[pos] = BLACK
@@ -135,13 +135,13 @@ method print_pbm(System.Console sys, int width, int height, byte[] pixels):
 // Main function
 method main(System.Console sys):
 	// Read feep.bpm
-	File.Reader r = File.Reader("image32x32.pbm")
+	File.Reader r = File.Reader("../../../Inputfiles/image32x32.pbm")
 	int width =32
 	int height = 32
 	int size = width * height
 	byte[] pixels = r.readAll()
 	// Create an Image structure to store input image
 	Image input = image(width, height, pixels)
-	// Output the result image that is filtered with sobel edge 
+	// Output the result image that is filtered with sobel edge
 	Image output = sobelEdgeDetection(input)
 	print_pbm(sys, output.width, output.height, output.pixels)

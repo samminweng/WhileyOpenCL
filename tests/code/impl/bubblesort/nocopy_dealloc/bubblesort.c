@@ -79,10 +79,8 @@ int64_t* _bubbleSort_(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), _D
 			//sub %20 = %4, %19 : int
 			_20=index-_19;
 			//update %0[%20] = %18 : int[] -> int[]
-			// isCopyEliminated = true
 			items[_20] = _18;
 			//update %0[%4] = %5 : int[] -> int[]
-			// isCopyEliminated = false
 			items[index] = tmp;
 			//assign %3 = %4  : int
 			// isCopyEliminated = false
@@ -489,7 +487,6 @@ blklab8:;
 		//sub %65 = %2, %3 : int
 		_65=max-index;
 		//update %4[%3] = %65 : int[] -> int[]
-		// isCopyEliminated = false
 		arr[index] = _65;
 		//const %66 = 1 : int
 		_66 = 1;

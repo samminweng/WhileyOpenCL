@@ -223,12 +223,9 @@ blklab12:;
 		if(isSolution!=_26){goto blklab22;}
 		//newrecord %27 = (%5, %1) : {int c,int r}
 		_27 = malloc(sizeof(POS));
-		// isCopyEliminated = false
 		_27->c = col;
-		// isCopyEliminated = false
 		_27->r = n;
 		//update %0[%1] = %27 : {int c,int r}[] -> {int c,int r}[]
-		// isCopyEliminated = false
 		queens[n] = _27;
 		//const %29 = 1 : int
 		_29 = 1;
@@ -302,9 +299,7 @@ int main(int argc, char** args){
 	_6 = 0;
 	//newrecord %7 = (%5, %6) : {int c,int r}
 	_7 = malloc(sizeof(POS));
-	// isCopyEliminated = true
 	_7->c = _5;
-	// isCopyEliminated = true
 	_7->r = _6;
 	//arraygen %8 = [7; 1] : {int c,int r}[]
 	_NEW_1DARRAY_STRUCT(_8, n, _7, POS);
