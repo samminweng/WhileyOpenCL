@@ -169,7 +169,7 @@ public class Translator implements Builder {
 		if (config.isEnabled(Configuration.BOUND)) {
 			if(liveAnalyzer == null){
 				// Create live variable analyzer
-				liveAnalyzer = new LiveVariablesAnalysis(config, true);
+				liveAnalyzer = new LiveVariablesAnalysis(config);
 				// Builds up a calling graph and perform live variable checks.
 				liveAnalyzer.apply(module, transformFuncMap);
 			}
@@ -180,15 +180,16 @@ public class Translator implements Builder {
 			 * context-sensitive bounds for the invoked function. The bounds of return value is propagated to the caller
 			 * function.
 			 */
-			BoundAnalyzer analyzer = new BoundAnalyzer(module, liveAnalyzer, config);
+			BoundAnalyzer analyzer = new BoundAnalyzer(module, liveAnalyzer, copyAnalyzer, config);
 			try {
-				System.out.println("=== Bound Analysis on main function ===");
 				// Get the function code block
 				FunctionOrMethod function = module.functionOrMethod("main").get(0);
 				// Start with main function.
 				analyzer.buildCFG(function);
 				// Infer the bounds at the end of main function.
 				analyzer.inferBounds(function);
+				// Print out the bounds in all functions
+				analyzer.printAllFunctionBounds();
 			} catch (Exception e) {
 				throw new RuntimeException("Errors on Bound Analysis");
 			}

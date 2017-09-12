@@ -124,9 +124,9 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	@Override
 	public int compareTo(Domain d) {
 		// Compare the name field.
-		if (this.name.compareTo(d.getName()) != 0) {
-			return this.name.compareTo(d.getName());
-		}
+		//if (this.name.compareTo(d.getName()) != 0) {
+		//	return this.name.compareTo(d.getName());
+		//}
 
 		// Compare the lower_bound field
 		if (this.lower_bound == null) {

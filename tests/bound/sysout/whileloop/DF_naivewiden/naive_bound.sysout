@@ -1,0 +1,21 @@
+Bound Analysis of 'f' function:
+	domain(_4)	=[0..0]
+	domain(_5)	=[0..0]
+	domain(i)	=[0..65536]
+	domain(sum)	=[0..infinity]
+	domain(_7)	=[0..infinity]
+	domain(return)	=[0..infinity]
+	domain(_8)	=[1..1]
+	domain(_9)	=[1..65536]
+	domain(limit)	=[43..65536]
+Consistency=true
+Bound Analysis of 'main' function:
+	domain(a)	=[0..infinity]
+	domain(b)	=[0..infinity]
+	domain(_3)	=[0..infinity]
+	domain(_8)	=[0..infinity]
+	domain(_4)	=[43..43]
+	domain(_9)	=[65536..65536]
+Consistency=true
+
+Bound analysis completed. File: whileloop

@@ -1,0 +1,26 @@
+root->f
+root->main
+Bound Analysis of 'f' function:
+	domain(sum)	=[0..infinity]
+	domain(_5)	=[0..infinity]
+	domain(_7)	=[0..infinity]
+	domain(return)	=[0..infinity]
+	domain(_8)	=[1..1]
+	domain(i)	=[1..65536]
+	domain(_4)	=[1..65536]
+	domain(_9)	=[1..65536]
+	domain(limit)	=[43..65536]
+Consistency=true
+Bound Analysis of 'main' function:
+	domain(a)	=[0..infinity]
+	domain(b)	=[0..infinity]
+	domain(_3)	=[0..infinity]
+	domain(_8)	=[0..infinity]
+	domain(_4)	=[43..43]
+	domain(_9)	=[65536..65536]
+Consistency=true
+
+Copy elimination analysis completed. File: whileloop.wyil
+Deallocation analysis completed.
+File: whileloop.wyil
+Bound analysis completed. File: whileloop

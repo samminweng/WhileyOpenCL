@@ -122,10 +122,8 @@ final class BoundAnalyzerHelper {
 	 *            the bounds
 	 */
 	protected static void printBoundsAndSize(FunctionOrMethod function, Bounds bnds) {
-		//FunctionOrMethod functionOrMethod = module.functionOrMethod(name).get(0);
 		VariableDeclarations variables = function.attribute(VariableDeclarations.class);
-
-		String str = "=================================\n\n" + "Bound Analysis of '" + function.name() + "' function:\n";
+		String str = "Bound Analysis of '" + function.name() + "' function:\n";
 		List<Domain> sortedDomains = bnds.sortedDomains();
 		// Print out the bounds
 		for (Domain d : sortedDomains) {			
@@ -161,7 +159,6 @@ final class BoundAnalyzerHelper {
 		}*/
 
 		str += "Consistency=" + bnds.checkBoundReachable();
-		str += "\n\n=================================";
 		
 		System.out.println(str);
 

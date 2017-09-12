@@ -20,6 +20,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -196,16 +197,27 @@ public final class BaseTestUtil {
 	public void execBoundAnalysis(Path baseDir, String testcase, String... options) {
 
 		// Get the widen strategy (default = naive)
-		String strategy = "naive";
+		String strategy = "naivewiden";
 		// Get 'Traversal' option (traversal = depth-first search)
 		String traversal = "DF";
+		// Get code optimisation (default = naive)
+		String codeOpt = "naive";
 		// Iterate all options to obtain all settings
 		for(int index=0; index<options.length;index++){
 			String option = options[index];
-			if(option == "-bound"){
-				strategy = options[index+1];
-			}else if(option == "-traversal"){
+			switch(option){
+			case "-bound":
+				strategy = options[index+1]+"widen";
+				break;
+			case "-traversal":
 				traversal = options[index+1];
+				break;
+			case "-nocopy":
+				codeOpt = "nocopy";
+				break;
+			case "-dealloc":
+				codeOpt = codeOpt+"_dealloc";
+				break;
 			}
 		}
 
@@ -217,7 +229,8 @@ public final class BaseTestUtil {
 					Paths.get(destDir + File.separator + testcase + ".whiley"),
 					StandardCopyOption.REPLACE_EXISTING);
 
-			Path sysout = Paths.get(destDir + File.separator + traversal+"_"+strategy +"_bound.sysout");
+			//Path sysout = Paths.get(destDir + File.separator + traversal+"_"+strategy +"_bound.sysout");
+			Path sysout = Paths.get(destDir + File.separator + traversal+"_"+strategy + File.separator + codeOpt+"_bound.sysout");
 			// Make the command
 			String cmd = makeCmd(testcase, options);
 
@@ -239,19 +252,16 @@ public final class BaseTestUtil {
 			String expected = null;
 			boolean isSkip = true;
 
-			// Takes out each line from expected file and check if it matches with
-			// 1000 line from the output.
+			// Takes out each line from expected file and check if it matches 
 			while (((expected = expected_reader.readLine()) != null)) {
-				if(isSkip == false){
-					// Check if the output is the same as expected.
-					String output = in_sc.nextLine();
-					System.out.println(output);
-					assertEquals(expected, output);					
+				if(expected.startsWith("WARNING: version numbering unavailable")){
+					continue; // Skip such warning messages
 				}
-
-				if(expected.startsWith("Whiley => Wyil: compiled 1 file(s)")){
-					isSkip = false;
-				}
+				
+				// Check if the output is the same as expected.
+				String output = in_sc.nextLine();
+				System.out.println(output);
+				assertEquals(expected, output);
 
 			}
 			// Nullify the file input/output objects.
@@ -521,7 +531,55 @@ public final class BaseTestUtil {
 		Path destDir;
 		String path = baseDir + File.separator + "impl"+ File.separator+ testcase;
 		// Iterate the options and find the type of generated code.
-		int index = 0;
+		Optional<String> widen = Optional.empty(); // Widen Strategy (Naive/Gradual)
+		Optional<String> traversal = Optional.empty(); // Traversal (DF/BF) 
+		Optional<String> codeOpt = Optional.empty(); //
+		// Iterate all options to obtain all settings
+		for (int index = 0; index < options.length; index++) {
+			String option = options[index];
+			switch (option) {
+			case "-code":
+				//codeOpt = Optional.of(new String());	
+				break;
+			case "-bound":
+				widen = Optional.of(new String(options[index + 1]));
+				break;
+			case "-traversal":
+				traversal = Optional.of(new String(options[index + 1]));
+				break;			
+			case "-nocopy":
+				// No copy optimisation
+				codeOpt = Optional.of(new String("nocopy"));
+				break;
+			case "-dealloc":
+				// Deallocation optimisation
+				if(!codeOpt.isPresent()){
+					// Dealloction only
+					codeOpt = Optional.of(new String("dealloc"));
+				}else{
+					// Combined copy and deallocation optimisations
+					codeOpt = Optional.of(new String(codeOpt.get() + "_dealloc"));
+				}
+				break;
+			}
+		}
+		
+		// Generate the path of generated code according to passed options
+		if(widen.isPresent() && traversal.isPresent()){
+			// For example, BF_naivewiden
+			path = path+File.separator+traversal.get() + "_"+widen.get()+"widen";
+		}
+		
+		if(!codeOpt.isPresent()){
+			// Naive code
+			path = path+ File.separator + "naive";
+		}else{
+			// Optimised code, e.g. nocopy or nocopy_dealloc
+			path = path+File.separator + codeOpt.get();
+		}
+		
+		
+		/*int index = 0;
 		switch(options[0]){
 		case "-bound":
 			path += File.separator + options[1]+ "_bound";
@@ -561,6 +619,8 @@ public final class BaseTestUtil {
 			path += File.separator + options[index].replace("-", "")
 					+ "_" + options[index+1].replace("-", "");
 		}
+		
+		*/
 
 		destDir = Paths.get(path);
 

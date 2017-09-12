@@ -1,0 +1,24 @@
+root->find
+root->main
+Bound Analysis of 'find' function:
+	domain(_6)	=[1..1]
+	domain(r)	=[1..65536]
+	domain(_4)	=[1..65536]
+	domain(_7)	=[1..65536]
+	domain(item)	=[10..10]
+	domain(limit)	=[43..65536]
+	domain(return)	=[43..65536]
+Consistency=true
+Bound Analysis of 'main' function:
+	domain(_5)	=[10..10]
+	domain(_11)	=[10..10]
+	domain(a)	=[43..43]
+	domain(_3)	=[43..43]
+	domain(_4)	=[43..43]
+	domain(b)	=[65536..65536]
+	domain(_9)	=[65536..65536]
+	domain(_10)	=[65536..65536]
+Consistency=true
+
+Copy elimination analysis completed. File: whileloop_break.wyil
+Bound analysis completed. File: whileloop_break

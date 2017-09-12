@@ -1,0 +1,26 @@
+Bound Analysis of 'f' function:
+	domain(_5)	=[0..0]
+	domain(_6)	=[0..0]
+	domain(_7)	=[0..0]
+	domain(i)	=[0..257]
+	domain(j)	=[0..257]
+	domain(_8)	=[0..65536]
+	domain(sum)	=[0..infinity]
+	domain(_9)	=[0..infinity]
+	domain(return)	=[0..infinity]
+	domain(_12)	=[1..1]
+	domain(_10)	=[1..1]
+	domain(_13)	=[1..257]
+	domain(_11)	=[1..257]
+	domain(limit)	=[43..257]
+Consistency=true
+Bound Analysis of 'main' function:
+	domain(a)	=[0..infinity]
+	domain(b)	=[0..infinity]
+	domain(_3)	=[0..infinity]
+	domain(_8)	=[0..infinity]
+	domain(_4)	=[43..43]
+	domain(_9)	=[257..257]
+Consistency=true
+
+Bound analysis completed. File: nestedwhileloop
