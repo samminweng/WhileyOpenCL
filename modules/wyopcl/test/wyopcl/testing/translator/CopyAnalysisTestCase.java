@@ -43,20 +43,21 @@ public class CopyAnalysisTestCase {
 		
 		// Add a list of test cases
 		return Arrays.asList(new String[] { 
-				"reverse", 
+				"reverse",
+				"ResetMacro3"
 			});
 	}
 	
 	@Test
 	public void testCopyAndDisableAssertion(){
 		// Perform copy analysis with assertion disabled 
-		util.execCopyAnalysis(sourceDir, testcase, "-nocopy", "-verbose");
+		util.execCopyAnalysis(sourceDir, testcase, "-verbose", "-nocopy");
 	}
 	
 	@Test
 	public void testCopyAndEnableAssertion(){
-		// Perform copy analysis with assertion disabled 
-		util.execCopyAnalysis(sourceDir, testcase, "-nocopy", "-verbose", "-ea");
+		// Perform copy analysis with assertion enabled 
+		util.execCopyAnalysis(sourceDir, testcase, "-verbose", "-nocopy", "-ea");
 	}
 	
 	@Test
@@ -67,7 +68,7 @@ public class CopyAnalysisTestCase {
 	
 	@Test
 	public void testCopyAndEnableAssertionAndGenerateCode(){
-		// Generate C code with copy analysis enabled and assertion disabled 
+		// Generate C code with copy analysis enabled and assertion enabled 
 		util.execCodeGeneration(sourceDir, testcase, "-nocopy", "-ea", "-code");
 	}
 	

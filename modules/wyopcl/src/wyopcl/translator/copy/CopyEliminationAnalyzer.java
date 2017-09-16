@@ -53,10 +53,10 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	public void apply(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
 		// Builds up a CFG of the function.
 		super.apply(module, transformFuncMap);
-		if (this.config.isVerbose()) {
+		//if (this.config.isVerbose()) {
 			// Iterate each function to determine if copies are needed.
 			postorderTraversalCallGraph(tree);
-		}
+		//}
 	}
 
 	/**

@@ -1,22 +1,22 @@
 #include "reverse.h"
 int64_t* _reverse_(_DECL_1DARRAY_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_1);
-	int64_t i = 0;
+	int64_t i;
 	_DECL_1DARRAY(r);
-	int64_t item = 0;
-	int64_t _5 = 0;
-	int64_t _6 = 0;
-	int64_t _7 = 0;
+	int64_t item;
+	int64_t _5;
+	int64_t _6;
+	int64_t _7;
 	_DECL_1DARRAY(_8);
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
-	int64_t _13 = 0;
-	int64_t _14 = 0;
-	int64_t _15 = 0;
-	int64_t _16 = 0;
-	int64_t _17 = 0;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
+	int64_t _12;
+	int64_t _13;
+	int64_t _14;
+	int64_t _15;
+	int64_t _16;
+	int64_t _17;
 	//lengthof %5 = %0 : int[]
 	_5 = ls_size;
 	//assign %2 = %5  : int
@@ -54,7 +54,6 @@ int64_t* _reverse_(_DECL_1DARRAY_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERE
 		// isCopyEliminated = true
 		i = _17;
 		//update %3[%2] = %4 : int[] -> int[]
-		// isCopyEliminated = false
 		r[i] = item;
 //.blklab1
 blklab1:;
@@ -69,25 +68,25 @@ blklab0:;
 
 int main(int argc, char** args){
 	_DECL_1DARRAY(input);
-	int64_t index = 0;
+	int64_t index;
 	_DECL_1DARRAY(tmp);
 	_DECL_1DARRAY(output);
-	int64_t _5 = 0;
-	int64_t _6 = 0;
+	int64_t _5;
+	int64_t _6;
 	_DECL_1DARRAY(_7);
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
-	int64_t _13 = 0;
+	int64_t _8;
+	int64_t _9;
+	int64_t _10;
+	int64_t _11;
+	int64_t _12;
+	int64_t _13;
 	_DECL_1DARRAY(_14);
-	int64_t _15 = 0;
-	int64_t _16 = 0;
-	int64_t _17 = 0;
-	int64_t _18 = 0;
-	int64_t _19 = 0;
-	int64_t _20 = 0;
+	int64_t _15;
+	int64_t _16;
+	int64_t _17;
+	int64_t _18;
+	int64_t _19;
+	int64_t _20;
 	//const %5 = 0 : int
 	_5 = 0;
 	//const %6 = 10 : int
@@ -113,7 +112,6 @@ int main(int argc, char** args){
 		//sub %11 = %10, %2 : int
 		_11=_10-index;
 		//update %1[%2] = %11 : int[] -> int[]
-		// isCopyEliminated = false
 		input[index] = _11;
 		//const %12 = 1 : int
 		_12 = 1;

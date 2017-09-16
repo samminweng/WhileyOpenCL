@@ -88,26 +88,30 @@ public final class BaseTestUtil {
 	 * 
 	 * 
 	 * 
-	 * @param sourceDir
+	 * @param baseDir
 	 * @param testcase
 	 * @param options
 	 */
-	public void execCopyAnalysis(Path sourceDir, String testcase, String... options) {
-		// Check the bound option 
-		if(options[0] != "-nocopy"){
-			throw new RuntimeException("Not passing the 'copy' option in " + testcase + " test case");
-		}
+	public void execCopyAnalysis(Path baseDir, String testcase, String... options) {
 		// Get the assertion option (-ea runtime option enables assertion)
 		String ea = "disable_assertion";
-		if(options.length == 3){
-			ea = "enable_assertion";
+		for(int index=0; index<options.length;index++){
+			// Check if '-ea' option is passed to enable assertion
+			if(options[index].equals("-ea")){
+				ea = "enable_assertion";
+			}
 		}
 
 		Process process;
 		try {
-			Path destDir = Paths.get(sourceDir + File.separator + testcase + File.separator);
-			Path sysout = Paths.get(sourceDir + File.separator + testcase 
-					+ File.separator + testcase+"_nocopy_"+ea+".sysout");
+			Path destDir = Paths.get(baseDir + File.separator +"sysout"+ File.separator+ testcase);
+			
+			// Copy source.whiley to destDir folder
+			Files.copy(Paths.get(baseDir + File.separator + "Whileyfiles" + File.separator + testcase + ".whiley"),
+					Paths.get(destDir + File.separator + testcase + ".whiley"),
+					StandardCopyOption.REPLACE_EXISTING);
+			
+			Path sysout = Paths.get(destDir + File.separator +ea+ File.separator+"nocopy.sysout");
 			// Make the command
 			String cmd = makeCmd(testcase, options);
 

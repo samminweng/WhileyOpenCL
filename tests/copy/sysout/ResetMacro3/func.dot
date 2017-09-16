@@ -1,0 +1,21 @@
+digraph func{
+"entry [ENTRY]"[shape=box];
+"code [BLOCK]"[shape=box];
+"blklab0 [CONDITION]"[shape=diamond];
+"blklab0 [IF]"[shape=box];
+"blklab0 [ELSE]"[shape=box];
+"return_0 [RETURN]"[shape=box];
+"blklab1 [BLOCK]"[shape=box];
+"return_3 [RETURN]"[shape=box];
+"exit [EXIT]"[shape=box];
+"entry [ENTRY]"->"code [BLOCK]";
+"code [BLOCK]"->"blklab0 [CONDITION]";
+"blklab0 [CONDITION]"->"blklab0 [IF]";
+"blklab0 [CONDITION]"->"blklab0 [ELSE]";
+"blklab0 [IF]"->"return_0 [RETURN]";
+"blklab0 [ELSE]"->"return_3 [RETURN]";
+"return_0 [RETURN]"->"blklab1 [BLOCK]";
+"blklab1 [BLOCK]"->"exit [EXIT]";
+"return_3 [RETURN]"->"blklab1 [BLOCK]";
+
+}
