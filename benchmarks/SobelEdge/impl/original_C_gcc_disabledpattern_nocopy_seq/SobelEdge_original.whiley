@@ -2,22 +2,10 @@ import * from whiley.io.File
 import * from whiley.lang.System
 import whiley.lang.*
 import whiley.lang.Math
-/*
-The source image is created by 'pbmtext', which converts 'FEEP' text into plain pbm file
-$ pbmtext -plain -width 32 FEEPFEEP > image32x32.pbm
-$ pbmtext -plain -width 64 -space 4 -lspace 2 FEEPFEEPFEEPFEE > image64x64.pbm
-$ pbmtext -plain -width 128 -space 8 -lspace 4 FEEPFEEPFEEPFEEPFEEPFEEPFEEPFEEPFEEPFEEPFEEPFEEP > image128x128.pbm
-$ pbmtext -plain -width 256 -space 16 -lspace 8 FEEP..FEEPF > image256x256.pbm
-$ pbmtext -plain -width 512 -space 32 -lspace 16 ... > image512x512.pbm
-$ pbmtext -plain -width 1024 -space 64 -lspace 32 ... > image1024x1024.pbm
 
-http://netpbm.sourceforge.net/doc/pbmtext.html
-
-Note NETPBM library is required to do the conversion (http://netpbm.sourceforge.net/)
-*/
 constant SPACE is 00100000b // ASCII code of space (' ')
 constant BLACK is 01100010b // ASCII code of 'b'
-constant TH is 64 // Control the number of edges
+constant TH is 128 // Control the number of edges
 
 function wrap(int pos, int size) -> int:
 	if pos>=size:
@@ -28,34 +16,28 @@ function wrap(int pos, int size) -> int:
 		else:
 			return pos
 
-// ========================================================
-// Perform image convolution
-// ========================================================
-function convolution(byte[] pixels, int width, int height, int xCenter, int yCenter, int[] filter) ->int:
+// Perform convolution convolution on pixel at 'xCenter' and 'yCenter'
+function convolution(byte[] pixels, int width, int height, int xCenter, int yCenter, int[] kernel) ->int:
 	int sum = 0
-	int filterSize = 3
-	int filterHalf = 1
-	int filterY = 0
-	while filterY < filterSize:
-		//int y = wrap(yCenter+filterY - filterHalf, height)
-		int y = Math.abs((yCenter+filterY-filterHalf)%height)
-		int filterX = 0
-		while filterX < filterSize:
-			//int x = wrap(xCenter + filterX - filterHalf, width)
-			int x = Math.abs((xCenter + filterX - filterHalf)%width)
+	int kernelSize = 3
+	int kernelHalf = 1
+	int kernelY = 0
+	while kernelY < kernelSize:
+		int y=Math.abs((yCenter+kernelY-kernelHalf)%height)
+		int kernelX = 0
+		while kernelX < kernelSize:
+			int x=Math.abs((xCenter + kernelX - kernelHalf)%width)
 			// Get pixel
 			int pixel = Byte.toUnsignedInt(pixels[y*width+x])
-			// Get filter value
-			int filterVal = filter[filterY*filterSize+filterX]
-			// pixel * filter value
-			sum = sum + pixel * filterVal
-			filterX = filterX + 1
-		filterY = filterY + 1
+			// Get kernel value
+			int kernelVal = kernel[kernelY*kernelSize+kernelX]
+			// pixel * kernel value
+			sum = sum + pixel * kernelVal
+			kernelX = kernelX + 1
+		kernelY = kernelY + 1
 	return sum
 
-// ========================================================
 // Perform Sobel edge detection
-// ========================================================
 function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
 	int size = width * height
 	// The output image of sobel edge detection
@@ -75,7 +57,7 @@ function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
 			int h_g = convolution(pixels, width, height, x, y, h_sobel)
 			// Get total gradient
 			int t_g = Math.abs(v_g) + Math.abs(h_g)
-			// Edge threshold (128) Note that large thresholds generate few edges
+			// Edge threshold (64) Note that large thresholds generate few edges
 			if t_g <= TH:
 				// Color other pixels as black
 				newPixels[pos] = BLACK
@@ -83,9 +65,7 @@ function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
 		x = x + 1
 	return newPixels
 
-// ========================================================
 // Print a pbm image
-// ========================================================
 method print_pbm(System.Console sys, int width, int height, byte[] pixels):
     // File type
     sys.out.println_s("P1")

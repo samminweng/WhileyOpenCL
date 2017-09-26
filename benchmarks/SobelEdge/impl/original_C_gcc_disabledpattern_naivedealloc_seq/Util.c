@@ -26,10 +26,10 @@ int64_t* create1DArray_int64_t(int64_t value, size_t arr_size){
  		exit(-2);
  	}
  	// Initialize each element with the given value by using memset function
- 	memset(arr, value, arr_size*sizeof(int64_t));
- 	//for(size_t i=0;i<arr_size;i++){
- 	//	arr[i] = value;
- 	//}
+ 	//memset(arr, value, arr_size*sizeof(int64_t));
+ 	for(size_t i=0;i<arr_size;i++){
+ 		arr[i] = value;
+ 	}
  	return arr;
  }
 /*
@@ -224,7 +224,7 @@ bool isArrayEqual_BYTE(BYTE* arr1, size_t arr1_size, BYTE* arr2, size_t arr2_siz
 // Free a flat 2D array
 void free2DArray_int64_t(int64_t** ptr, size_t size){
 	// Free the first pointer as it is actually allocated
-	free(ptr[0]);
+	free(ptr[0]); ptr[0] = NULL;
 	// Free upper-level pointer.
 	free(ptr);
 	ptr = NULL;
@@ -357,7 +357,7 @@ void printf_s(int64_t* input, size_t input_size) {
 	size_t i =0;
 	while (i < input_size && i < MAX_LENGTH) {
 		// Make int to char
-		char c = input[i];
+		char c = (char)input[i];
 		// Check if c is NOT EOF and skip 'EOF' char
 		// Note 0 (ASCII NUL) indicates the EOF
 		if(c>0){
@@ -371,7 +371,7 @@ void printf_s(int64_t* input, size_t input_size) {
 		// Print the last 10 chars
 		size_t i = input_size-10;
 		while(i < input_size){
-			char c = input[i];
+			char c = (char)input[i];
 			if(c>0){
 				printf("%c", c);
 			}

@@ -1,0 +1,123 @@
+digraph "Scop Graph for 'main' function" {
+	label="Scop Graph for 'main' function";
+
+	Node0xd818510 [shape=record,label="{entry:\l  %_9_size = alloca i64, align 8\l  %_9_size_size = alloca i64, align 8\l  br label %entry.split\l}"];
+	Node0xd818510 -> Node0xd932d90;
+	Node0xd932d90 [shape=record,label="{entry.split:                                      \l  %0 = bitcast i64* %_9_size to i8*\l  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %0) #7\l  store i64 0, i64* %_9_size, align 8, !tbaa !2\l  %1 = bitcast i64* %_9_size_size to i8*\l  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %1) #7\l  store i64 0, i64* %_9_size_size, align 8, !tbaa !2\l  %call = call i64** @convertArgsToIntArray(i32 %argc, i8** %args, i64*\l... nonnull %_9_size, i64* nonnull %_9_size_size) #7\l  %2 = load i64*, i64** %call, align 8, !tbaa !6\l  %call1 = call i64* @parseStringToInt(i64* %2) #7\l  %cmp = icmp eq i64* %call1, null\l  br i1 %cmp, label %blklab10, label %if.end\l}"];
+	Node0xd932d90 -> Node0xd7cf9f0;
+	Node0xd932d90 -> Node0xd819cc0;
+	Node0xd7cf9f0 [shape=record,label="{blklab10:                                         \l  call void @exit(i32 0) #8\l  unreachable\l}"];
+	Node0xd819cc0 [shape=record,label="{if.end:                                           \l  %3 = load i64, i64* %call1, align 8, !tbaa !2\l  %call2 = call i64* @create1DArray_int64_t(i64 0, i64 7) #7\l  store i64 115, i64* %call2, align 8, !tbaa !2\l  %arrayidx4 = getelementptr inbounds i64, i64* %call2, i64 1\l  store i64 105, i64* %arrayidx4, align 8, !tbaa !2\l  %arrayidx5 = getelementptr inbounds i64, i64* %call2, i64 2\l  store i64 122, i64* %arrayidx5, align 8, !tbaa !2\l  %arrayidx6 = getelementptr inbounds i64, i64* %call2, i64 3\l  store i64 101, i64* %arrayidx6, align 8, !tbaa !2\l  %arrayidx7 = getelementptr inbounds i64, i64* %call2, i64 4\l  store i64 32, i64* %arrayidx7, align 8, !tbaa !2\l  %arrayidx8 = getelementptr inbounds i64, i64* %call2, i64 5\l  store i64 61, i64* %arrayidx8, align 8, !tbaa !2\l  %arrayidx9 = getelementptr inbounds i64, i64* %call2, i64 6\l  store i64 32, i64* %arrayidx9, align 8, !tbaa !2\l  call void @printf_s(i64* %call2, i64 7) #7\l  %call10 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8],\l... [5 x i8]* @.str, i64 0, i64 0), i64 %3)\l  %mul = mul i64 %3, %3\l  %call11 = call i64* @create1DArray_int64_t(i64 0, i64 %mul) #7\l  %cmp29.i = icmp sgt i64 %3, 0\l  br i1 %cmp29.i, label %if.end.lr.ph.split.us.i, label %_init_.exit180.thread\l}"];
+	Node0xd819cc0 -> Node0xd817920;
+	Node0xd819cc0 -> Node0xd81b1f0;
+	Node0xd817920 [shape=record,label="{if.end.lr.ph.split.us.i:                          \l  br label %if.end.us.i\l}"];
+	Node0xd817920 -> Node0xd8fc5b0;
+	Node0xd8fc5b0 [shape=record,label="{if.end.us.i:                                      \l  %i.030.us.i = phi i64 [ 0, %if.end.lr.ph.split.us.i ], [ %add7.us.i,\l... %while.cond1.blklab2_crit_edge.us.i ]\l  %mul.us.i = mul nsw i64 %i.030.us.i, %3\l  br label %if.end5.us.i\l}"];
+	Node0xd8fc5b0 -> Node0xd818240;
+	Node0xd818240 [shape=record,label="{if.end5.us.i:                                     \l  %j.028.us.i = phi i64 [ 0, %if.end.us.i ], [ %add6.us.i, %if.end5.us.i ]\l  %add.us.i = add nsw i64 %j.028.us.i, %mul.us.i\l  %arrayidx.us.i = getelementptr inbounds i64, i64* %call11, i64 %add.us.i\l  store i64 %i.030.us.i, i64* %arrayidx.us.i, align 8, !tbaa !2, !alias.scope\l... !8\l  %add6.us.i = add nuw nsw i64 %j.028.us.i, 1\l  %exitcond.i = icmp eq i64 %add6.us.i, %3\l  br i1 %exitcond.i, label %while.cond1.blklab2_crit_edge.us.i, label\l... %if.end5.us.i\l}"];
+	Node0xd818240 -> Node0xd810bf0;
+	Node0xd818240 -> Node0xd818240[constraint=false];
+	Node0xd810bf0 [shape=record,label="{while.cond1.blklab2_crit_edge.us.i:               \l  %add7.us.i = add nuw nsw i64 %i.030.us.i, 1\l  %exitcond33.i = icmp eq i64 %add7.us.i, %3\l  br i1 %exitcond33.i, label %if.end.lr.ph.split.us.i167, label %if.end.us.i\l}"];
+	Node0xd810bf0 -> Node0xd83d690;
+	Node0xd810bf0 -> Node0xd8fc5b0[constraint=false];
+	Node0xd83d690 [shape=record,label="{if.end.lr.ph.split.us.i167:                       \l  %call14 = call i64* @create1DArray_int64_t(i64 0, i64 %mul) #7\l  br label %if.end.us.i170\l}"];
+	Node0xd83d690 -> Node0xdc13f40;
+	Node0xdc13f40 [shape=record,label="{if.end.us.i170:                                   \l  %i.030.us.i168 = phi i64 [ 0, %if.end.lr.ph.split.us.i167 ], [\l... %add7.us.i177, %while.cond1.blklab2_crit_edge.us.i179 ]\l  %mul.us.i169 = mul nsw i64 %i.030.us.i168, %3\l  br label %if.end5.us.i176\l}"];
+	Node0xdc13f40 -> Node0xdb76af0;
+	Node0xdb76af0 [shape=record,label="{if.end5.us.i176:                                  \l  %j.028.us.i171 = phi i64 [ 0, %if.end.us.i170 ], [ %add6.us.i174,\l... %if.end5.us.i176 ]\l  %add.us.i172 = add nsw i64 %j.028.us.i171, %mul.us.i169\l  %arrayidx.us.i173 = getelementptr inbounds i64, i64* %call14, i64\l... %add.us.i172\l  store i64 %i.030.us.i168, i64* %arrayidx.us.i173, align 8, !tbaa !2,\l... !alias.scope !11\l  %add6.us.i174 = add nuw nsw i64 %j.028.us.i171, 1\l  %exitcond.i175 = icmp eq i64 %add6.us.i174, %3\l  br i1 %exitcond.i175, label %while.cond1.blklab2_crit_edge.us.i179, label\l... %if.end5.us.i176\l}"];
+	Node0xdb76af0 -> Node0xdc062a0;
+	Node0xdb76af0 -> Node0xdb76af0[constraint=false];
+	Node0xdc062a0 [shape=record,label="{while.cond1.blklab2_crit_edge.us.i179:            \l  %add7.us.i177 = add nuw nsw i64 %i.030.us.i168, 1\l  %exitcond33.i178 = icmp eq i64 %add7.us.i177, %3\l  br i1 %exitcond33.i178, label %if.end.lr.ph.split.us.i163, label\l... %if.end.us.i170\l}"];
+	Node0xdc062a0 -> Node0xdb9c4b0;
+	Node0xdc062a0 -> Node0xdc13f40[constraint=false];
+	Node0xdb9c4b0 [shape=record,label="{if.end.lr.ph.split.us.i163:                       \l  %call17 = call i64* @create1DArray_int64_t(i64 0, i64 %mul) #7\l  br label %if.end5.lr.ph.split.us.us.i\l}"];
+	Node0xdb9c4b0 -> Node0xdc3ea30;
+	Node0xdc3ea30 [shape=record,label="{if.end5.lr.ph.split.us.us.i:                      \l  %i.069.us.i = phi i64 [ 0, %if.end.lr.ph.split.us.i163 ], [ %add21.us.i,\l... %while.cond1.blklab6_crit_edge.us.i ]\l  %6 = mul i64 %i.069.us.i, %3\l  br label %if.end5.us.us.i\l}"];
+	Node0xdc3ea30 -> Node0xd8ff060;
+	Node0xd8ff060 [shape=record,label="{if.end5.us.us.i:                                  \l  %j.066.us.us.i = phi i64 [ 0, %if.end5.lr.ph.split.us.us.i ], [\l... %add20.us.us.i, %while.cond6.blklab8_crit_edge.us.us.i ]\l  br label %if.end10.us.us.i\l}"];
+	Node0xd8ff060 -> Node0xd926b20;
+	Node0xd926b20 [shape=record,label="{if.end10.us.us.i:                                 \l  %sub_total.063.us.us.i = phi i64 [ 0, %if.end5.us.us.i ], [ %add15.us.us.i,\l... %if.end10.us.us.i ]\l  %k.062.us.us.i = phi i64 [ 0, %if.end5.us.us.i ], [ %add16.us.us.i,\l... %if.end10.us.us.i ]\l  %add.us.us.i = add nsw i64 %k.062.us.us.i, %6\l  %arrayidx.us.us.i = getelementptr inbounds i64, i64* %call11, i64\l... %add.us.us.i\l  %4 = load i64, i64* %arrayidx.us.us.i, align 8, !tbaa !2, !alias.scope !20,\l... !noalias !21\l  %mul11.us.us.i = mul nsw i64 %k.062.us.us.i, %3\l  %add12.us.us.i = add nsw i64 %mul11.us.us.i, %j.066.us.us.i\l  %arrayidx13.us.us.i = getelementptr inbounds i64, i64* %call14, i64\l... %add12.us.us.i\l  %5 = load i64, i64* %arrayidx13.us.us.i, align 8, !tbaa !2, !alias.scope\l... !22, !noalias !23\l  %mul14.us.us.i = mul nsw i64 %5, %4\l  %add15.us.us.i = add nsw i64 %mul14.us.us.i, %sub_total.063.us.us.i\l  %add16.us.us.i = add nuw nsw i64 %k.062.us.us.i, 1\l  %exitcond.i164 = icmp eq i64 %add16.us.us.i, %3\l  br i1 %exitcond.i164, label %while.cond6.blklab8_crit_edge.us.us.i, label\l... %if.end10.us.us.i\l}"];
+	Node0xd926b20 -> Node0xdc07c70;
+	Node0xd926b20 -> Node0xd926b20[constraint=false];
+	Node0xdc07c70 [shape=record,label="{while.cond6.blklab8_crit_edge.us.us.i:            \l  %add18.us.us.i = add nsw i64 %j.066.us.us.i, %6\l  %arrayidx19.us.us.i = getelementptr inbounds i64, i64* %call17, i64\l... %add18.us.us.i\l  store i64 %add15.us.us.i, i64* %arrayidx19.us.us.i, align 8, !tbaa !2,\l... !alias.scope !14, !noalias !17\l  %add20.us.us.i = add nuw nsw i64 %j.066.us.us.i, 1\l  %exitcond101.i = icmp eq i64 %add20.us.us.i, %3\l  br i1 %exitcond101.i, label %while.cond1.blklab6_crit_edge.us.i, label\l... %if.end5.us.us.i\l}"];
+	Node0xdc07c70 -> Node0xd932190;
+	Node0xdc07c70 -> Node0xd8ff060[constraint=false];
+	Node0xd932190 [shape=record,label="{while.cond1.blklab6_crit_edge.us.i:               \l  %add21.us.i = add nuw nsw i64 %i.069.us.i, 1\l  %exitcond102.i = icmp eq i64 %add21.us.i, %3\l  br i1 %exitcond102.i, label %_mat_mult_.exit, label\l... %if.end5.lr.ph.split.us.us.i\l}"];
+	Node0xd932190 -> Node0xd83caa0;
+	Node0xd932190 -> Node0xdc3ea30[constraint=false];
+	Node0xd83caa0 [shape=record,label="{_mat_mult_.exit:                                  \l  %call17184 = phi i64* [ %call17183, %_init_.exit180.thread ], [ %call17,\l... %while.cond1.blklab6_crit_edge.us.i ]\l  %call19 = call i64* @create1DArray_int64_t(i64 0, i64 27) #7\l  store i64 77, i64* %call19, align 8, !tbaa !2\l  %arrayidx21 = getelementptr inbounds i64, i64* %call19, i64 1\l  store i64 97, i64* %arrayidx21, align 8, !tbaa !2\l  %arrayidx22 = getelementptr inbounds i64, i64* %call19, i64 2\l  store i64 116, i64* %arrayidx22, align 8, !tbaa !2\l  %arrayidx23 = getelementptr inbounds i64, i64* %call19, i64 3\l  store i64 114, i64* %arrayidx23, align 8, !tbaa !2\l  %arrayidx24 = getelementptr inbounds i64, i64* %call19, i64 4\l  store i64 105, i64* %arrayidx24, align 8, !tbaa !2\l  %arrayidx25 = getelementptr inbounds i64, i64* %call19, i64 5\l  store i64 120, i64* %arrayidx25, align 8, !tbaa !2\l  %arrayidx26 = getelementptr inbounds i64, i64* %call19, i64 6\l  store i64 32, i64* %arrayidx26, align 8, !tbaa !2\l  %arrayidx27 = getelementptr inbounds i64, i64* %call19, i64 7\l  store i64 67, i64* %arrayidx27, align 8, !tbaa !2\l  %arrayidx28 = getelementptr inbounds i64, i64* %call19, i64 8\l  store i64 91, i64* %arrayidx28, align 8, !tbaa !2\l  %arrayidx29 = getelementptr inbounds i64, i64* %call19, i64 9\l  store i64 115, i64* %arrayidx29, align 8, !tbaa !2\l  %arrayidx30 = getelementptr inbounds i64, i64* %call19, i64 10\l  store i64 105, i64* %arrayidx30, align 8, !tbaa !2\l  %arrayidx31 = getelementptr inbounds i64, i64* %call19, i64 11\l  store i64 122, i64* %arrayidx31, align 8, !tbaa !2\l  %arrayidx32 = getelementptr inbounds i64, i64* %call19, i64 12\l  store i64 101, i64* %arrayidx32, align 8, !tbaa !2\l  %arrayidx33 = getelementptr inbounds i64, i64* %call19, i64 13\l  store i64 45, i64* %arrayidx33, align 8, !tbaa !2\l  %arrayidx34 = getelementptr inbounds i64, i64* %call19, i64 14\l  store i64 49, i64* %arrayidx34, align 8, !tbaa !2\l  %arrayidx35 = getelementptr inbounds i64, i64* %call19, i64 15\l  store i64 93, i64* %arrayidx35, align 8, !tbaa !2\l  %arrayidx36 = getelementptr inbounds i64, i64* %call19, i64 16\l  store i64 91, i64* %arrayidx36, align 8, !tbaa !2\l  %arrayidx37 = getelementptr inbounds i64, i64* %call19, i64 17\l  store i64 115, i64* %arrayidx37, align 8, !tbaa !2\l  %arrayidx38 = getelementptr inbounds i64, i64* %call19, i64 18\l  store i64 105, i64* %arrayidx38, align 8, !tbaa !2\l  %arrayidx39 = getelementptr inbounds i64, i64* %call19, i64 19\l  store i64 122, i64* %arrayidx39, align 8, !tbaa !2\l  %arrayidx40 = getelementptr inbounds i64, i64* %call19, i64 20\l  store i64 101, i64* %arrayidx40, align 8, !tbaa !2\l  %arrayidx41 = getelementptr inbounds i64, i64* %call19, i64 21\l  store i64 45, i64* %arrayidx41, align 8, !tbaa !2\l  %arrayidx42 = getelementptr inbounds i64, i64* %call19, i64 22\l  store i64 49, i64* %arrayidx42, align 8, !tbaa !2\l  %arrayidx43 = getelementptr inbounds i64, i64* %call19, i64 23\l  store i64 93, i64* %arrayidx43, align 8, !tbaa !2\l  %arrayidx44 = getelementptr inbounds i64, i64* %call19, i64 24\l  store i64 32, i64* %arrayidx44, align 8, !tbaa !2\l  %arrayidx45 = getelementptr inbounds i64, i64* %call19, i64 25\l  store i64 61, i64* %arrayidx45, align 8, !tbaa !2\l  %arrayidx46 = getelementptr inbounds i64, i64* %call19, i64 26\l  store i64 32, i64* %arrayidx46, align 8, !tbaa !2\l  call void @printf_s(i64* %call19, i64 27) #7\l  %sub48 = add nsw i64 %mul, -1\l  %arrayidx49 = getelementptr inbounds i64, i64* %call17184, i64 %sub48\l  %7 = load i64, i64* %arrayidx49, align 8, !tbaa !2\l  %call50 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8],\l... [5 x i8]* @.str, i64 0, i64 0), i64 %7)\l  %call51 = call i64* @create1DArray_int64_t(i64 0, i64 25) #7\l  store i64 80, i64* %call51, align 8, !tbaa !2\l  %arrayidx53 = getelementptr inbounds i64, i64* %call51, i64 1\l  store i64 97, i64* %arrayidx53, align 8, !tbaa !2\l  %arrayidx54 = getelementptr inbounds i64, i64* %call51, i64 2\l  store i64 115, i64* %arrayidx54, align 8, !tbaa !2\l  %arrayidx55 = getelementptr inbounds i64, i64* %call51, i64 3\l  store i64 115, i64* %arrayidx55, align 8, !tbaa !2\l  %arrayidx56 = getelementptr inbounds i64, i64* %call51, i64 4\l  store i64 32, i64* %arrayidx56, align 8, !tbaa !2\l  %arrayidx57 = getelementptr inbounds i64, i64* %call51, i64 5\l  store i64 77, i64* %arrayidx57, align 8, !tbaa !2\l  %arrayidx58 = getelementptr inbounds i64, i64* %call51, i64 6\l  store i64 97, i64* %arrayidx58, align 8, !tbaa !2\l  %arrayidx59 = getelementptr inbounds i64, i64* %call51, i64 7\l  store i64 116, i64* %arrayidx59, align 8, !tbaa !2\l  %arrayidx60 = getelementptr inbounds i64, i64* %call51, i64 8\l  store i64 114, i64* %arrayidx60, align 8, !tbaa !2\l  %arrayidx61 = getelementptr inbounds i64, i64* %call51, i64 9\l  store i64 105, i64* %arrayidx61, align 8, !tbaa !2\l  %arrayidx62 = getelementptr inbounds i64, i64* %call51, i64 10\l  store i64 120, i64* %arrayidx62, align 8, !tbaa !2\l  %arrayidx63 = getelementptr inbounds i64, i64* %call51, i64 11\l  store i64 77, i64* %arrayidx63, align 8, !tbaa !2\l  %arrayidx64 = getelementptr inbounds i64, i64* %call51, i64 12\l  store i64 117, i64* %arrayidx64, align 8, !tbaa !2\l  %arrayidx65 = getelementptr inbounds i64, i64* %call51, i64 13\l  store i64 108, i64* %arrayidx65, align 8, !tbaa !2\l  %arrayidx66 = getelementptr inbounds i64, i64* %call51, i64 14\l  store i64 116, i64* %arrayidx66, align 8, !tbaa !2\l  %arrayidx67 = getelementptr inbounds i64, i64* %call51, i64 15\l  store i64 32, i64* %arrayidx67, align 8, !tbaa !2\l  %arrayidx68 = getelementptr inbounds i64, i64* %call51, i64 16\l  store i64 116, i64* %arrayidx68, align 8, !tbaa !2\l  %arrayidx69 = getelementptr inbounds i64, i64* %call51, i64 17\l  store i64 101, i64* %arrayidx69, align 8, !tbaa !2\l  %arrayidx70 = getelementptr inbounds i64, i64* %call51, i64 18\l  store i64 115, i64* %arrayidx70, align 8, !tbaa !2\l  %arrayidx71 = getelementptr inbounds i64, i64* %call51, i64 19\l  store i64 116, i64* %arrayidx71, align 8, !tbaa !2\l  %arrayidx72 = getelementptr inbounds i64, i64* %call51, i64 20\l  store i64 32, i64* %arrayidx72, align 8, !tbaa !2\l  %arrayidx73 = getelementptr inbounds i64, i64* %call51, i64 21\l  store i64 99, i64* %arrayidx73, align 8, !tbaa !2\l  %arrayidx74 = getelementptr inbounds i64, i64* %call51, i64 22\l  store i64 97, i64* %arrayidx74, align 8, !tbaa !2\l  %arrayidx75 = getelementptr inbounds i64, i64* %call51, i64 23\l  store i64 115, i64* %arrayidx75, align 8, !tbaa !2\l  %arrayidx76 = getelementptr inbounds i64, i64* %call51, i64 24\l  store i64 101, i64* %arrayidx76, align 8, !tbaa !2\l  call void @println_s(i64* %call51, i64 25) #7\l  br label %blklab10\l}"];
+	Node0xd83caa0 -> Node0xd7cf9f0;
+	Node0xd81b1f0 [shape=record,label="{_init_.exit180.thread:                            \l  %call14181 = call i64* @create1DArray_int64_t(i64 0, i64 %mul) #7\l  %call17183 = call i64* @create1DArray_int64_t(i64 0, i64 %mul) #7\l  br label %_mat_mult_.exit\l}"];
+	Node0xd81b1f0 -> Node0xd83caa0;
+	colorscheme = "paired12"
+        subgraph cluster_0xdc0e2f0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xda0e770 {
+            label = "";
+            style = solid;
+            color = 6
+            subgraph cluster_0xd8fe800 {
+              label = "";
+              style = solid;
+              color = 5
+              subgraph cluster_0xda47790 {
+                label = "";
+                style = solid;
+                color = 7
+                subgraph cluster_0xd9d36c0 {
+                  label = "";
+                  style = solid;
+                  color = 9
+                  Node0xd818240;
+                }
+                Node0xd8fc5b0;
+                Node0xd810bf0;
+              }
+              subgraph cluster_0xdbd3250 {
+                label = "";
+                style = solid;
+                color = 7
+                subgraph cluster_0xdb1c560 {
+                  label = "";
+                  style = solid;
+                  color = 9
+                  Node0xdb76af0;
+                }
+                Node0xdc13f40;
+                Node0xdc062a0;
+              }
+              subgraph cluster_0xdb0a6e0 {
+                label = "";
+                style = solid;
+                color = 7
+                subgraph cluster_0xd81b7f0 {
+                  label = "";
+                  style = solid;
+                  color = 9
+                  subgraph cluster_0xd98b960 {
+                    label = "";
+                    style = solid;
+                    color = 11
+                    Node0xd926b20;
+                  }
+                  Node0xd8ff060;
+                  Node0xdc07c70;
+                }
+                Node0xdc3ea30;
+                Node0xd932190;
+              }
+              Node0xd819cc0;
+              Node0xd817920;
+              Node0xd83d690;
+              Node0xdb9c4b0;
+              Node0xd81b1f0;
+            }
+            Node0xd932d90;
+            Node0xd83caa0;
+          }
+          Node0xd818510;
+          Node0xd7cf9f0;
+        }
+}

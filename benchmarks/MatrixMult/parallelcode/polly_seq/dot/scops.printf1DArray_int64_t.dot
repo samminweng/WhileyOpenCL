@@ -1,0 +1,57 @@
+digraph "Scop Graph for 'printf1DArray_int64_t' function" {
+	label="Scop Graph for 'printf1DArray_int64_t' function";
+
+	Node0xd1767a0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xd1767a0 -> Node0xd045800;
+	Node0xd045800 [shape=record,label="{entry.split:                                      \l  %putchar = tail call i32 @putchar(i32 91)\l  %cmp19 = icmp eq i64 %input_size, 0\l  br i1 %cmp19, label %if.end9, label %if.end.peel\l}"];
+	Node0xd045800 -> Node0xd1757a0;
+	Node0xd045800 -> Node0xd1756f0;
+	Node0xd1757a0 [shape=record,label="{if.end9:                                          \l  %puts = tail call i32 @puts(i8* getelementptr inbounds ([2 x i8], [2 x i8]*\l... @str, i64 0, i64 0))\l  ret void\l}"];
+	Node0xd1756f0 [shape=record,label="{if.end.peel:                                      \l  %0 = load i64, i64* %input, align 8, !tbaa !2\l  %call2.peel = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds\l... ([4 x i8], [4 x i8]* @.str.11, i64 0, i64 0), i64 %0)\l  %cmp.peel = icmp eq i64 %input_size, 1\l  br i1 %cmp.peel, label %if.end9, label %while.body.peel.next\l}"];
+	Node0xd1756f0 -> Node0xd1757a0;
+	Node0xd1756f0 -> Node0xd1757d0;
+	Node0xd1757d0 [shape=record,label="{while.body.peel.next:                             \l  br label %if.end\l}"];
+	Node0xd1757d0 -> Node0xd153880;
+	Node0xd153880 [shape=record,label="{if.end:                                           \l  %i.021 = phi i64 [ 1, %while.body.peel.next ], [ %inc, %if.end ]\l  %arrayidx = getelementptr inbounds i64, i64* %input, i64 %i.021\l  %1 = load i64, i64* %arrayidx, align 8, !tbaa !2\l  %call4 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x\l... i8], [5 x i8]* @.str.12, i64 0, i64 0), i64 %1)\l  %inc = add nuw nsw i64 %i.021, 1\l  %cmp = icmp ult i64 %inc, %input_size\l  %cmp1 = icmp ult i64 %inc, 1024\l  %2 = and i1 %cmp, %cmp1\l  br i1 %2, label %if.end, label %while.end, !llvm.loop !6\l}"];
+	Node0xd153880 -> Node0xd153880[constraint=false];
+	Node0xd153880 -> Node0xd1537b0;
+	Node0xd1537b0 [shape=record,label="{while.end:                                        \l  %cmp5 = icmp ugt i64 %input_size, 1024\l  br i1 %cmp5, label %if.then6, label %if.end9\l}"];
+	Node0xd1537b0 -> Node0xd153810;
+	Node0xd1537b0 -> Node0xd1757a0;
+	Node0xd153810 [shape=record,label="{if.then6:                                         \l  %sub = add i64 %input_size, -1\l  %arrayidx7 = getelementptr inbounds i64, i64* %input, i64 %sub\l  %3 = load i64, i64* %arrayidx7, align 8, !tbaa !2\l  %call8 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([9 x\l... i8], [9 x i8]* @.str.13, i64 0, i64 0), i64 %3)\l  br label %if.end9\l}"];
+	Node0xd153810 -> Node0xd1757a0;
+	colorscheme = "paired12"
+        subgraph cluster_0xd157cb0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xd175630 {
+            label = "";
+            style = solid;
+            color = 6
+            subgraph cluster_0xd03cad0 {
+              label = "";
+              style = solid;
+              color = 5
+              subgraph cluster_0xd03ca50 {
+                label = "";
+                style = solid;
+                color = 7
+                Node0xd153880;
+              }
+              subgraph cluster_0xd17aa40 {
+                label = "";
+                style = solid;
+                color = 7
+                Node0xd1537b0;
+                Node0xd153810;
+              }
+              Node0xd1756f0;
+              Node0xd1757d0;
+            }
+            Node0xd045800;
+          }
+          Node0xd1767a0;
+          Node0xd1757a0;
+        }
+}

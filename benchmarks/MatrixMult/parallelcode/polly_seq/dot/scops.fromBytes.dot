@@ -1,0 +1,42 @@
+digraph "Scop Graph for 'fromBytes' function" {
+	label="Scop Graph for 'fromBytes' function";
+
+	Node0xe87c620 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xe87c620 -> Node0xe77e990;
+	Node0xe77e990 [shape=record,label="{entry.split:                                      \l  %mul = shl i64 %size, 3\l  %call = tail call noalias i8* @malloc(i64 %mul) #6\l  %0 = bitcast i8* %call to i64*\l  %cmp = icmp eq i8* %call, null\l  br i1 %cmp, label %if.then, label %if.end\l}"];
+	Node0xe77e990 -> Node0xe767250;
+	Node0xe77e990 -> Node0xe780b00;
+	Node0xe767250 [shape=record,label="{if.then:                                          \l  %1 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !tbaa !2\l  %2 = tail call i64 @fwrite(i8* getelementptr inbounds ([61 x i8], [61 x i8]*\l... @.str.4, i64 0, i64 0), i64 60, i64 1, %struct._IO_FILE* %1) #7\l  tail call void @exit(i32 -2) #8\l  unreachable\l}"];
+	Node0xe780b00 [shape=record,label="{if.end:                                           \l  %cmp212 = icmp eq i64 %size, 0\l  br i1 %cmp212, label %for.cond.cleanup, label %for.body.lr.ph\l}"];
+	Node0xe780b00 -> Node0xe781410;
+	Node0xe780b00 -> Node0xe780b90;
+	Node0xe781410 [shape=record,label="{for.cond.cleanup:                                 \l  ret i64* %0\l}"];
+	Node0xe780b90 [shape=record,label="{for.body.lr.ph:                                   \l  br label %for.body\l}"];
+	Node0xe780b90 -> Node0xe77f030;
+	Node0xe77f030 [shape=record,label="{for.body:                                         \l  %i.013 = phi i64 [ 0, %for.body.lr.ph ], [ %inc, %for.body ]\l  %arrayidx = getelementptr inbounds i8, i8* %input, i64 %i.013\l  %3 = load i8, i8* %arrayidx, align 1, !tbaa !6\l  %conv = zext i8 %3 to i64\l  %arrayidx3 = getelementptr inbounds i64, i64* %0, i64 %i.013\l  store i64 %conv, i64* %arrayidx3, align 8, !tbaa !7\l  %inc = add nuw i64 %i.013, 1\l  %exitcond = icmp eq i64 %inc, %size\l  br i1 %exitcond, label %for.cond.cleanup, label %for.body\l}"];
+	Node0xe77f030 -> Node0xe781410;
+	Node0xe77f030 -> Node0xe77f030[constraint=false];
+	colorscheme = "paired12"
+        subgraph cluster_0xe782170 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xe876620 {
+            label = "";
+            style = solid;
+            color = 6
+            subgraph cluster_0xe781bc0 {
+              label = "";
+              style = solid;
+              color = 5
+              Node0xe77f030;
+            }
+            Node0xe780b00;
+            Node0xe780b90;
+          }
+          Node0xe87c620;
+          Node0xe77e990;
+          Node0xe767250;
+          Node0xe781410;
+        }
+}

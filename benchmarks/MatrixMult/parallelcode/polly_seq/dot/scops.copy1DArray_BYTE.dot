@@ -1,0 +1,28 @@
+digraph "Scop Graph for 'copy1DArray_BYTE' function" {
+	label="Scop Graph for 'copy1DArray_BYTE' function";
+
+	Node0xd049e00 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xd049e00 -> Node0xd035d10;
+	Node0xd035d10 [shape=record,label="{entry.split:                                      \l  %cmp = icmp eq i8* %arr, null\l  br i1 %cmp, label %return, label %if.end\l}"];
+	Node0xd035d10 -> Node0xd175530;
+	Node0xd035d10 -> Node0xd02e400;
+	Node0xd175530 [shape=record,label="{return:                                           \l  %retval.0 = phi i8* [ %call, %if.end4 ], [ null, %entry.split ]\l  ret i8* %retval.0\l}"];
+	Node0xd02e400 [shape=record,label="{if.end:                                           \l  %call = tail call noalias i8* @malloc(i64 %size) #7\l  %cmp1 = icmp eq i8* %call, null\l  br i1 %cmp1, label %if.then2, label %if.end4\l}"];
+	Node0xd02e400 -> Node0xd070af0;
+	Node0xd02e400 -> Node0xd070b10;
+	Node0xd070af0 [shape=record,label="{if.then2:                                         \l  %0 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !tbaa !2\l  %1 = tail call i64 @fwrite(i8* getelementptr inbounds ([57 x i8], [57 x i8]*\l... @.str.3, i64 0, i64 0), i64 56, i64 1, %struct._IO_FILE* %0) #8\l  tail call void @exit(i32 -2) #9\l  unreachable\l}"];
+	Node0xd070b10 [shape=record,label="{if.end4:                                          \l  tail call void @llvm.memcpy.p0i8.p0i8.i64(i8* nonnull %call, i8* nonnull\l... %arr, i64 %size, i32 1, i1 false)\l  br label %return\l}"];
+	Node0xd070b10 -> Node0xd175530;
+	colorscheme = "paired12"
+        subgraph cluster_0xd03f650 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0xd049e00;
+          Node0xd035d10;
+          Node0xd175530;
+          Node0xd02e400;
+          Node0xd070af0;
+          Node0xd070b10;
+        }
+}

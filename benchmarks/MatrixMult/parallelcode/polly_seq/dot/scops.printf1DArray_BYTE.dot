@@ -1,0 +1,36 @@
+digraph "Scop Graph for 'printf1DArray_BYTE' function" {
+	label="Scop Graph for 'printf1DArray_BYTE' function";
+
+	Node0xd048400 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xd048400 -> Node0xd03cb40;
+	Node0xd03cb40 [shape=record,label="{entry.split:                                      \l  %cmp5 = icmp eq i64 %input_size, 0\l  br i1 %cmp5, label %while.end, label %while.body.lr.ph\l}"];
+	Node0xd03cb40 -> Node0xd169fe0;
+	Node0xd03cb40 -> Node0xd041700;
+	Node0xd169fe0 [shape=record,label="{while.end:                                        \l  %putchar = tail call i32 @putchar(i32 10)\l  ret void\l}"];
+	Node0xd041700 [shape=record,label="{while.body.lr.ph:                                 \l  br label %while.body\l}"];
+	Node0xd041700 -> Node0xd041720;
+	Node0xd041720 [shape=record,label="{while.body:                                       \l  %i.06 = phi i64 [ 0, %while.body.lr.ph ], [ %inc, %while.body ]\l  %arrayidx = getelementptr inbounds i8, i8* %input, i64 %i.06\l  %0 = load i8, i8* %arrayidx, align 1, !tbaa !2\l  %conv = zext i8 %0 to i32\l  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([7 x\l... i8], [7 x i8]* @.str.15, i64 0, i64 0), i32 %conv)\l  %inc = add nuw i64 %i.06, 1\l  %exitcond = icmp eq i64 %inc, %input_size\l  br i1 %exitcond, label %while.end, label %while.body\l}"];
+	Node0xd041720 -> Node0xd169fe0;
+	Node0xd041720 -> Node0xd041720[constraint=false];
+	colorscheme = "paired12"
+        subgraph cluster_0xd157cb0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xd045710 {
+            label = "";
+            style = solid;
+            color = 6
+            subgraph cluster_0xd03cac0 {
+              label = "";
+              style = solid;
+              color = 5
+              Node0xd041720;
+            }
+            Node0xd03cb40;
+            Node0xd041700;
+          }
+          Node0xd048400;
+          Node0xd169fe0;
+        }
+}

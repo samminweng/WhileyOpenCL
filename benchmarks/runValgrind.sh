@@ -200,10 +200,10 @@ detectleaks(){
 			width=${widths[$parameter]}
 			echo "width = "$width
 			## Copy PBM image to folder
-			cp "$BENCHMARKDIR/$testcase/image/$parameter" .
-			mkdir -p "$BENCHMARKDIR/$testcase/image/output/$codegen"
-			### Detect the memory leaks
-			valgrind --tool=memcheck "--log-file=$result" "./out/$executable" $parameter $width > "$BENCHMARKDIR/$testcase/image/output/$codegen/output$widthx$width.pbm"
+			inputfile=$BENCHMARKDIR/$testcase/images/input/$parameter
+			outputfile=$BENCHMARKDIR/$testcase/images/output/$program"_"C"_"$compiler"_"$pattern"_"$codegen"_"$code"_"$parameter
+			##read -p "Press [Enter] to continue..."$outputfile":"$inputfile
+			valgrind --tool=memcheck "--log-file=$result" "out/$executable" $width $inputfile > $outputfile
 			;;
 		*)
 			## Other cases
@@ -300,13 +300,13 @@ exec(){
 #exec CoinGame original
 
 # # # ###Sobel Edge test
-#init SobelEdge
-#exec SobelEdge original
+init SobelEdge
+exec SobelEdge original
 
 # # # ####LZ77 test case
 #init LZ77
-exec LZ77 original
-exec LZ77 original_opt
+#exec LZ77 original
+#exec LZ77 original_opt
 #exec LZ77 compress
 #exec LZ77 decompress
 #exec LZ77 opt_decompress

@@ -1,0 +1,21 @@
+digraph "Scop Graph for 'slice' function" {
+	label="Scop Graph for 'slice' function";
+
+	Node0xd063130 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xd063130 -> Node0xd03f8e0;
+	Node0xd03f8e0 [shape=record,label="{entry.split:                                      \l  %sub = sub nsw i32 %end, %start\l  %conv = sext i32 %sub to i64\l  %mul = shl nsw i64 %conv, 3\l  %call = tail call noalias i8* @malloc(i64 %mul) #7\l  %cmp = icmp eq i8* %call, null\l  br i1 %cmp, label %if.then, label %if.end\l}"];
+	Node0xd03f8e0 -> Node0xd04a8a0;
+	Node0xd03f8e0 -> Node0xd1767a0;
+	Node0xd04a8a0 [shape=record,label="{if.then:                                          \l  %0 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !tbaa !2\l  %1 = tail call i64 @fwrite(i8* getelementptr inbounds ([57 x i8], [57 x i8]*\l... @.str, i64 0, i64 0), i64 56, i64 1, %struct._IO_FILE* %0) #8\l  tail call void @exit(i32 -2) #9\l  unreachable\l}"];
+	Node0xd1767a0 [shape=record,label="{if.end:                                           \l  %2 = bitcast i8* %call to i64*\l  %idxprom = sext i32 %start to i64\l  %arrayidx = getelementptr inbounds i64, i64* %arr, i64 %idxprom\l  %3 = bitcast i64* %arrayidx to i8*\l  tail call void @llvm.memcpy.p0i8.p0i8.i64(i8* nonnull %call, i8* %3, i64\l... %mul, i32 8, i1 false)\l  ret i64* %2\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xd049c80 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0xd063130;
+          Node0xd03f8e0;
+          Node0xd04a8a0;
+          Node0xd1767a0;
+        }
+}

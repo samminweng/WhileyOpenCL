@@ -10,7 +10,7 @@ BENCHMARKDIR="$(pwd)"
 
 ## declare compiler used for compilation
 declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" [MergeSort]="gcc" [MatrixMult]="gcc" \
-					   [LZ77]="gcc" [SobelEdge]="gcc polly" [Cashtill]="gcc" \
+					   [LZ77]="gcc" [SobelEdge]="gcc" [Cashtill]="gcc" \
 					   [CoinGame]="gcc" )
 ## declare 4 kinds of code generation
 declare -a codegens=( "naive" "naivedealloc" "nocopy" "nocopydealloc" )
@@ -31,7 +31,7 @@ declare -A parameters=( [Reverse]="100000 1000000 10000000" \
 						[LZ77]="medium1x medium2x medium4x medium8x medium16x medium32x medium64x medium128x medium256x" \
 						#[LZ77]="medium1x medium2x" \
 						[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm image256x256.pbm image512x512.pbm image1024x1024.pbm" \
-						#[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm" \
+						#[SobelEdge]="image2048x2048.pbm" \
 						[Cashtill]="1000 1200 1400 1600 1800 2000" \
 						[CoinGame]="26000" \
 						#[CoinGame]="10000 20000 25000 30000 40000" \
@@ -213,7 +213,7 @@ run(){
 				echo "width = "$width
 				## Copy PBM image to folder
 				inputfile=$BENCHMARKDIR/$testcase/images/input/$parameter
-				outputfile=$BENCHMARKDIR/$testcase/images/output/$program"_"C"_"$compiler"_"$pattern"_"$codegen"_"$code"_"$parameter
+				outputfile=$BENCHMARKDIR/$testcase/images/output/$compiler/$program"_"C"_"$compiler"_"$pattern"_"$codegen"_"$code"_"$parameter
 				##read -p "Press [Enter] to continue..."$outputfile":"$inputfile
 				timeout $TIMEOUT "out/$executable" $width $inputfile > $outputfile
 				;;
@@ -369,15 +369,15 @@ exec(){
 
 #### LZ77 test case
 #init LZ77
-exec LZ77 original
-exec LZ77 original_opt
+#exec LZ77 original
+#exec LZ77 original_opt
 #exec LZ77 compress
 #exec LZ77 decompress
 #exec LZ77 opt_decompress
 
 # # ###Sobel Edge test
-#init SobelEdge
-#exec SobelEdge original
+init SobelEdge
+exec SobelEdge original
 
 # # ## Fibonacci test case
 # # init Fibonacci

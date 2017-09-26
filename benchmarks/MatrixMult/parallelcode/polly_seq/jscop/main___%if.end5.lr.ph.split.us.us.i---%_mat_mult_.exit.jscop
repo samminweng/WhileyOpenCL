@@ -1,0 +1,97 @@
+{
+   "arrays" : [
+      {
+         "name" : "MemRef1",
+         "sizes" : [ "*", "%3" ],
+         "type" : "i64"
+      },
+      {
+         "name" : "MemRef2",
+         "sizes" : [ "*", "%3" ],
+         "type" : "i64"
+      },
+      {
+         "name" : "MemRef4",
+         "sizes" : [ "*", "%3" ],
+         "type" : "i64"
+      },
+      {
+         "name" : "Packed_B",
+         "sizes" : [ "256", "384", "4" ],
+         "type" : "i64"
+      },
+      {
+         "name" : "Packed_A",
+         "sizes" : [ "16", "384", "4" ],
+         "type" : "i64"
+      }
+   ],
+   "context" : "[p_0] -> {  : -9223372036854775808 <= p_0 <= 9223372036854775807 }",
+   "name" : "%if.end5.lr.ph.split.us.us.i---%_mat_mult_.exit",
+   "statements" : [
+      {
+         "accesses" : [
+            {
+               "kind" : "write",
+               "relation" : "[p_0] -> { Stmt1[i0, i1] -> MemRef4[i0, i1] }"
+            }
+         ],
+         "domain" : "[p_0] -> { Stmt1[i0, i1] : 0 <= i0 < p_0 and 0 <= i1 < p_0 }",
+         "name" : "Stmt1",
+         "schedule" : ""
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "[p_0] -> { Stmt2[i0, i1, i2] -> MemRef4[i0, i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[p_0] -> { Stmt2[i0, i1, i2] -> Packed_A[o0, o1, o2] : 384*floor((-i2 + o1)/384) = -i2 + o1 and 64*floor((-i0 + 4o0 + o2)/64) = -i0 + 4o0 + o2 and 0 <= o1 <= 383 and o2 >= 0 and -4o0 <= o2 <= 63 - 4o0 and o2 <= 3 }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[p_0] -> { Stmt2[i0, i1, i2] -> Packed_B[o0, o1, o2] : 384*floor((-i2 + o1)/384) = -i2 + o1 and 1024*floor((-i1 + 4o0 + o2)/1024) = -i1 + 4o0 + o2 and 0 <= o1 <= 383 and o2 >= 0 and -4o0 <= o2 <= 1023 - 4o0 and o2 <= 3 }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[p_0] -> { Stmt2[i0, i1, i2] -> MemRef4[i0, i1] }"
+            }
+         ],
+         "domain" : "[p_0] -> { Stmt2[i0, i1, i2] : 0 <= i0 < p_0 and 0 <= i1 < p_0 and 0 <= i2 < p_0 }",
+         "name" : "Stmt2",
+         "schedule" : ""
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "write",
+               "relation" : "[p_0] -> { CopyStmt_0[i0, i1, i2] -> Packed_B[o0, o1, o2] : 384*floor((-i2 + o1)/384) = -i2 + o1 and 1024*floor((-i1 + 4o0 + o2)/1024) = -i1 + 4o0 + o2 and 0 <= o1 <= 383 and o2 >= 0 and -4o0 <= o2 <= 1023 - 4o0 and o2 <= 3 }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[p_0] -> { CopyStmt_0[i0, i1, i2] -> MemRef2[i2, i1] }"
+            }
+         ],
+         "domain" : "[p_0] -> { CopyStmt_0[i0, i1, i2] : 0 <= i0 < p_0 and 0 <= i1 < p_0 and 0 <= i2 < p_0 }",
+         "name" : "CopyStmt_0",
+         "schedule" : ""
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "write",
+               "relation" : "[p_0] -> { CopyStmt_1[i0, i1, i2] -> Packed_A[o0, o1, o2] : 384*floor((-i2 + o1)/384) = -i2 + o1 and 64*floor((-i0 + 4o0 + o2)/64) = -i0 + 4o0 + o2 and 0 <= o1 <= 383 and o2 >= 0 and -4o0 <= o2 <= 63 - 4o0 and o2 <= 3 }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[p_0] -> { CopyStmt_1[i0, i1, i2] -> MemRef1[i0, i2] }"
+            }
+         ],
+         "domain" : "[p_0] -> { CopyStmt_1[i0, i1, i2] : 0 <= i0 < p_0 and 0 <= i1 < p_0 and 0 <= i2 < p_0 }",
+         "name" : "CopyStmt_1",
+         "schedule" : ""
+      }
+   ]
+}

@@ -1,0 +1,48 @@
+digraph "Scop Graph for 'Array_Append' function" {
+	label="Scop Graph for 'Array_Append' function";
+
+	Node0xe7791a0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xe7791a0 -> Node0xe75cf00;
+	Node0xe75cf00 [shape=record,label="{entry.split:                                      \l  %add = add nsw i64 %rhs_size, %lhs_size\l  %call = tail call i64* @create1DArray_int64_t(i64 0, i64 %add) #6\l  %cmp769 = icmp slt i64 %lhs_size, 1\l  br i1 %cmp769, label %blklab0, label %if.end9.lr.ph\l}"];
+	Node0xe75cf00 -> Node0xe781ee0;
+	Node0xe75cf00 -> Node0xe85a110;
+	Node0xe781ee0 [shape=record,label="{blklab0:                                          \l  %i.0.lcssa = phi i64 [ %lhs_size, %entry.split ], [ %sub, %if.end9 ]\l  %cmp1367 = icmp slt i64 %i.0.lcssa, %rhs_size\l  br i1 %cmp1367, label %if.end15.lr.ph, label %if.end25\l}"];
+	Node0xe781ee0 -> Node0xe77f260;
+	Node0xe781ee0 -> Node0xe782240;
+	Node0xe77f260 [shape=record,label="{if.end15.lr.ph:                                   \l  %6 = add i64 %i.0.lcssa, %lhs_size\l  %scevgep = getelementptr i64, i64* %call, i64 %6\l  %scevgep71 = bitcast i64* %scevgep to i8*\l  %scevgep72 = getelementptr i64, i64* %rhs, i64 %i.0.lcssa\l  %scevgep7273 = bitcast i64* %scevgep72 to i8*\l  %7 = sub i64 %rhs_size, %i.0.lcssa\l  %8 = shl i64 %7, 3\l  call void @llvm.memcpy.p0i8.p0i8.i64(i8* %scevgep71, i8* %scevgep7273, i64\l... %8, i32 8, i1 false)\l  br label %if.end25\l}"];
+	Node0xe77f260 -> Node0xe782240;
+	Node0xe782240 [shape=record,label="{if.end25:                                         \l  store i64 %add, i64* %_size_call_by_ref, align 8, !tbaa !2\l  ret i64* %call\l}"];
+	Node0xe85a110 [shape=record,label="{if.end9.lr.ph:                                    \l  %0 = xor i64 %lhs_size, -1\l  %1 = icmp sgt i64 %0, -2\l  %smax = select i1 %1, i64 %0, i64 -2\l  %2 = sub i64 -2, %smax\l  %scevgep74 = getelementptr i64, i64* %call, i64 %2\l  %scevgep7475 = bitcast i64* %scevgep74 to i8*\l  %scevgep76 = getelementptr i64, i64* %lhs, i64 %2\l  %scevgep7677 = bitcast i64* %scevgep76 to i8*\l  %3 = add i64 %smax, %lhs_size\l  %4 = shl i64 %3, 3\l  %5 = add i64 %4, 16\l  call void @llvm.memcpy.p0i8.p0i8.i64(i8* %scevgep7475, i8* %scevgep7677, i64\l... %5, i32 8, i1 false)\l  br label %if.end9\l}"];
+	Node0xe85a110 -> Node0xe7813e0;
+	Node0xe7813e0 [shape=record,label="{if.end9:                                          \l  %i.070 = phi i64 [ %lhs_size, %if.end9.lr.ph ], [ %sub, %if.end9 ]\l  %sub = add nsw i64 %i.070, -1\l  %cmp7 = icmp slt i64 %i.070, 2\l  br i1 %cmp7, label %blklab0, label %if.end9\l}"];
+	Node0xe7813e0 -> Node0xe781ee0;
+	Node0xe7813e0 -> Node0xe7813e0[constraint=false];
+	colorscheme = "paired12"
+        subgraph cluster_0xe77ee40 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xe781e60 {
+            label = "";
+            style = solid;
+            color = 6
+            subgraph cluster_0xe782420 {
+              label = "";
+              style = solid;
+              color = 5
+              Node0xe7813e0;
+            }
+            Node0xe75cf00;
+            Node0xe85a110;
+          }
+          subgraph cluster_0xe759140 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xe781ee0;
+            Node0xe77f260;
+          }
+          Node0xe7791a0;
+          Node0xe782240;
+        }
+}

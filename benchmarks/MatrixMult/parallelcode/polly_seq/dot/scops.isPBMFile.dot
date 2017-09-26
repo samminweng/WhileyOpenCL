@@ -1,0 +1,54 @@
+digraph "Scop Graph for 'isPBMFile' function" {
+	label="Scop Graph for 'isPBMFile' function";
+
+	Node0xe77f0c0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xe77f0c0 -> Node0xe782490;
+	Node0xe782490 [shape=record,label="{entry.split:                                      \l  %call = tail call noalias i8* @malloc(i64 16384) #6\l  %call1 = tail call i8* @fgets(i8* %call, i32 16384, %struct._IO_FILE* %file)\l  %cmp = icmp eq i8* %call1, null\l  br i1 %cmp, label %if.end18, label %if.then\l}"];
+	Node0xe782490 -> Node0xe87c620;
+	Node0xe782490 -> Node0xe781c50;
+	Node0xe87c620 [shape=record,label="{if.end18:                                         \l  %isPBMFormat.1 = phi i1 [ false, %entry.split ], [ false, %land.lhs.true ],\l... [ false, %if.then4 ], [ false, %if.then ], [ %cmp14, %land.lhs.true11 ]\l  tail call void @free(i8* %call) #6\l  ret i1 %isPBMFormat.1\l}"];
+	Node0xe781c50 [shape=record,label="{if.then:                                          \l  %call2 = tail call i64 @strlen(i8* %call) #7\l  %cmp3 = icmp eq i64 %call2, 3\l  br i1 %cmp3, label %if.then4, label %if.end18\l}"];
+	Node0xe781c50 -> Node0xe75a990;
+	Node0xe781c50 -> Node0xe87c620;
+	Node0xe75a990 [shape=record,label="{if.then4:                                         \l  %0 = load i8, i8* %call, align 1, !tbaa !2\l  %cmp5 = icmp eq i8 %0, 80\l  br i1 %cmp5, label %land.lhs.true, label %if.end18\l}"];
+	Node0xe75a990 -> Node0xe77f030;
+	Node0xe75a990 -> Node0xe87c620;
+	Node0xe77f030 [shape=record,label="{land.lhs.true:                                    \l  %arrayidx7 = getelementptr inbounds i8, i8* %call, i64 1\l  %1 = load i8, i8* %arrayidx7, align 1, !tbaa !2\l  %cmp9 = icmp eq i8 %1, 49\l  br i1 %cmp9, label %land.lhs.true11, label %if.end18\l}"];
+	Node0xe77f030 -> Node0xe7745e0;
+	Node0xe77f030 -> Node0xe87c620;
+	Node0xe7745e0 [shape=record,label="{land.lhs.true11:                                  \l  %arrayidx12 = getelementptr inbounds i8, i8* %call, i64 2\l  %2 = load i8, i8* %arrayidx12, align 1, !tbaa !2\l  %cmp14 = icmp eq i8 %2, 10\l  br label %if.end18\l}"];
+	Node0xe7745e0 -> Node0xe87c620;
+	colorscheme = "paired12"
+        subgraph cluster_0xe781b50 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xe7831d0 {
+            label = "";
+            style = solid;
+            color = 6
+            subgraph cluster_0xe783150 {
+              label = "";
+              style = solid;
+              color = 5
+              subgraph cluster_0xe7573d0 {
+                label = "";
+                style = solid;
+                color = 7
+                subgraph cluster_0xe781bd0 {
+                  label = "";
+                  style = solid;
+                  color = 9
+                  Node0xe77f030;
+                  Node0xe7745e0;
+                }
+                Node0xe75a990;
+              }
+              Node0xe781c50;
+            }
+            Node0xe782490;
+          }
+          Node0xe77f0c0;
+          Node0xe87c620;
+        }
+}

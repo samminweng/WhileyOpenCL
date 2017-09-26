@@ -1,0 +1,115 @@
+digraph "Scop Graph for 'convertArgsToIntArray' function" {
+	label="Scop Graph for 'convertArgsToIntArray' function";
+
+	Node0xd164da0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xd164da0 -> Node0xd164af0;
+	Node0xd164af0 [shape=record,label="{entry.split:                                      \l  %cmp = icmp slt i32 %argc, 2\l  br i1 %cmp, label %if.then, label %if.end\l}"];
+	Node0xd164af0 -> Node0xd164a70;
+	Node0xd164af0 -> Node0xd164ad0;
+	Node0xd164a70 [shape=record,label="{if.then:                                          \l  %0 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !tbaa !2\l  %1 = tail call i64 @fwrite(i8* getelementptr inbounds ([36 x i8], [36 x i8]*\l... @.str.5, i64 0, i64 0), i64 35, i64 1, %struct._IO_FILE* %0) #8\l  tail call void @exit(i32 -2) #9\l  unreachable\l}"];
+	Node0xd164ad0 [shape=record,label="{if.end:                                           \l  %sub = add nsw i32 %argc, -1\l  %conv = sext i32 %sub to i64\l  %mul = shl nsw i64 %conv, 3\l  %call1 = tail call noalias i8* @malloc(i64 %mul) #7\l  %2 = bitcast i8* %call1 to i64**\l  %cmp2 = icmp eq i8* %call1, null\l  br i1 %cmp2, label %if.then4, label %for.body.lr.ph\l}"];
+	Node0xd164ad0 -> Node0xd164b10;
+	Node0xd164ad0 -> Node0xd164c60;
+	Node0xd164b10 [shape=record,label="{if.then4:                                         \l  %3 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !tbaa !2\l  %4 = tail call i64 @fwrite(i8* getelementptr inbounds ([68 x i8], [68 x i8]*\l... @.str.6, i64 0, i64 0), i64 67, i64 1, %struct._IO_FILE* %3) #8\l  tail call void @exit(i32 -2) #9\l  unreachable\l}"];
+	Node0xd164c60 [shape=record,label="{for.body.lr.ph:                                   \l  store i64 %conv, i64* %arr_size, align 8, !tbaa !6\l  %conv9 = sext i32 %argc to i64\l  %call12 = tail call i16** @__ctype_b_loc() #10\l  br label %for.body\l}"];
+	Node0xd164c60 -> Node0xd164480;
+	Node0xd164480 [shape=record,label="{for.body:                                         \l  %index.0154 = phi i64 [ 0, %for.body.lr.ph ], [ %inc83, %if.end82 ]\l  %i.0153 = phi i64 [ 1, %for.body.lr.ph ], [ %inc85, %if.end82 ]\l  %5 = load i16*, i16** %call12, align 8, !tbaa !2\l  %arrayidx = getelementptr inbounds i8*, i8** %args, i64 %i.0153\l  %6 = load i8*, i8** %arrayidx, align 8, !tbaa !2\l  %7 = load i8, i8* %6, align 1, !tbaa !8\l  %idxprom = sext i8 %7 to i64\l  %arrayidx15 = getelementptr inbounds i16, i16* %5, i64 %idxprom\l  %8 = load i16, i16* %arrayidx15, align 2, !tbaa !9\l  %9 = and i16 %8, 2048\l  %tobool = icmp eq i16 %9, 0\l  br i1 %tobool, label %if.else, label %if.then17\l}"];
+	Node0xd164480 -> Node0xd164bb0;
+	Node0xd164480 -> Node0xd164c10;
+	Node0xd164bb0 [shape=record,label="{if.else:                                          \l  br label %while.cond53\l}"];
+	Node0xd164bb0 -> Node0xd164740;
+	Node0xd164740 [shape=record,label="{while.cond53:                                     \l  %18 = phi i8 [ %7, %if.else ], [ %.pre158,\l... %while.cond53.while.cond53_crit_edge ]\l  %length.1 = phi i64 [ 0, %if.else ], [ %inc60,\l... %while.cond53.while.cond53_crit_edge ]\l  %cmp57 = icmp eq i8 %18, 0\l  %inc60 = add i64 %length.1, 1\l  br i1 %cmp57, label %while.end61, label %while.cond53.while.cond53_crit_edge\l}"];
+	Node0xd164740 -> Node0xd164c30;
+	Node0xd164740 -> Node0xd1646b0;
+	Node0xd164c30 [shape=record,label="{while.end61:                                      \l  %mul63 = shl i64 %inc60, 3\l  %call64 = tail call noalias i8* @malloc(i64 %mul63) #7\l  %arrayidx65 = getelementptr inbounds i64*, i64** %2, i64 %index.0154\l  %19 = bitcast i64** %arrayidx65 to i8**\l  store i8* %call64, i8** %19, align 8, !tbaa !2\l  %cmp68149 = icmp eq i64 %length.1, 0\l  %20 = bitcast i8* %call64 to i64*\l  br i1 %cmp68149, label %if.end82, label %for.body70.lr.ph\l}"];
+	Node0xd164c30 -> Node0xd164710;
+	Node0xd164c30 -> Node0xd1647e0;
+	Node0xd164710 [shape=record,label="{if.end82:                                         \l  %22 = phi i64* [ %20, %while.end61 ], [ %16, %while.end ], [ %20,\l... %for.body70 ], [ %16, %for.body41 ]\l  %j66.0.sink = phi i64 [ 0, %while.end61 ], [ 0, %while.end ], [ %length.1,\l... %for.body70 ], [ %length.0.lcssa, %for.body41 ]\l  %.sink = phi i64 [ 0, %while.end61 ], [ -1, %while.end ], [ 0, %for.body70\l... ], [ -1, %for.body41 ]\l  %storemerge = phi i64 [ 1, %while.end61 ], [ 1, %while.end ], [ %inc60,\l... %for.body70 ], [ %add, %for.body41 ]\l  %arrayidx80 = getelementptr inbounds i64, i64* %22, i64 %j66.0.sink\l  store i64 %.sink, i64* %arrayidx80, align 8, !tbaa !6\l  store i64 %storemerge, i64* %arr_size_size, align 8, !tbaa !6\l  %inc83 = add nuw i64 %index.0154, 1\l  %inc85 = add nuw i64 %i.0153, 1\l  %cmp10 = icmp ult i64 %inc85, %conv9\l  br i1 %cmp10, label %for.body, label %for.cond.cleanup\l}"];
+	Node0xd164710 -> Node0xd164480;
+	Node0xd164710 -> Node0xd164840;
+	Node0xd164840 [shape=record,label="{for.cond.cleanup:                                 \l  ret i64** %2\l}"];
+	Node0xd1647e0 [shape=record,label="{for.body70.lr.ph:                                 \l  br label %for.body70\l}"];
+	Node0xd1647e0 -> Node0xd1645b0;
+	Node0xd1645b0 [shape=record,label="{for.body70:                                       \l  %j66.0150 = phi i64 [ 0, %for.body70.lr.ph ], [ %inc77, %for.body70 ]\l  %arrayidx72 = getelementptr inbounds i8, i8* %6, i64 %j66.0150\l  %21 = load i8, i8* %arrayidx72, align 1, !tbaa !8\l  %conv73 = sext i8 %21 to i64\l  %arrayidx75 = getelementptr inbounds i64, i64* %20, i64 %j66.0150\l  store i64 %conv73, i64* %arrayidx75, align 8, !tbaa !6\l  %inc77 = add nuw i64 %j66.0150, 1\l  %exitcond157 = icmp eq i64 %inc77, %length.1\l  br i1 %exitcond157, label %if.end82, label %for.body70\l}"];
+	Node0xd1645b0 -> Node0xd164710;
+	Node0xd1645b0 -> Node0xd1645b0[constraint=false];
+	Node0xd1646b0 [shape=record,label="{while.cond53.while.cond53_crit_edge:              \l  %arrayidx55.phi.trans.insert = getelementptr inbounds i8, i8* %6, i64 %inc60\l  %.pre158 = load i8, i8* %arrayidx55.phi.trans.insert, align 1, !tbaa !8\l  br label %while.cond53\l}"];
+	Node0xd1646b0 -> Node0xd164740[constraint=false];
+	Node0xd164c10 [shape=record,label="{if.then17:                                        \l  %cmp21144 = icmp eq i8 %7, 0\l  br i1 %cmp21144, label %while.end, label %while.body.lr.ph\l}"];
+	Node0xd164c10 -> Node0xd1645d0;
+	Node0xd164c10 -> Node0xd1648a0;
+	Node0xd1645d0 [shape=record,label="{while.end:                                        \l  %length.0.lcssa = phi i64 [ 0, %if.then17 ], [ %inc, %if.end34 ]\l  %add = add i64 %length.0.lcssa, 1\l  %mul35 = shl i64 %add, 3\l  %call36 = tail call noalias i8* @malloc(i64 %mul35) #7\l  %arrayidx37 = getelementptr inbounds i64*, i64** %2, i64 %index.0154\l  %15 = bitcast i64** %arrayidx37 to i8**\l  store i8* %call36, i8** %15, align 8, !tbaa !2\l  %cmp39146 = icmp eq i64 %length.0.lcssa, 0\l  %16 = bitcast i8* %call36 to i64*\l  br i1 %cmp39146, label %if.end82, label %for.body41.lr.ph\l}"];
+	Node0xd1645d0 -> Node0xd164710;
+	Node0xd1645d0 -> Node0xd1644e0;
+	Node0xd1644e0 [shape=record,label="{for.body41.lr.ph:                                 \l  br label %for.body41\l}"];
+	Node0xd1644e0 -> Node0xd1675f0;
+	Node0xd1675f0 [shape=record,label="{for.body41:                                       \l  %j.0147 = phi i64 [ 0, %for.body41.lr.ph ], [ %inc49, %for.body41 ]\l  %arrayidx43 = getelementptr inbounds i8, i8* %6, i64 %j.0147\l  %17 = load i8, i8* %arrayidx43, align 1, !tbaa !8\l  %conv44 = sext i8 %17 to i64\l  %sub45 = add nsw i64 %conv44, -48\l  %arrayidx48 = getelementptr inbounds i64, i64* %16, i64 %j.0147\l  store i64 %sub45, i64* %arrayidx48, align 8, !tbaa !6\l  %inc49 = add nuw i64 %j.0147, 1\l  %exitcond = icmp eq i64 %inc49, %length.0.lcssa\l  br i1 %exitcond, label %if.end82, label %for.body41\l}"];
+	Node0xd1675f0 -> Node0xd164710;
+	Node0xd1675f0 -> Node0xd1675f0[constraint=false];
+	Node0xd1648a0 [shape=record,label="{while.body.lr.ph:                                 \l  br label %while.body\l}"];
+	Node0xd1648a0 -> Node0xd167650;
+	Node0xd167650 [shape=record,label="{while.body:                                       \l  %10 = phi i16 [ %8, %while.body.lr.ph ], [ %.pre,\l... %if.end34.while.body_crit_edge ]\l  %length.0145 = phi i64 [ 0, %while.body.lr.ph ], [ %inc,\l... %if.end34.while.body_crit_edge ]\l  %11 = and i16 %10, 2048\l  %tobool31 = icmp eq i16 %11, 0\l  br i1 %tobool31, label %if.then32, label %if.end34\l}"];
+	Node0xd167650 -> Node0xd164540;
+	Node0xd167650 -> Node0xd167520;
+	Node0xd164540 [shape=record,label="{if.then32:                                        \l  %12 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !tbaa !2\l  %13 = tail call i64 @fwrite(i8* getelementptr inbounds ([51 x i8], [51 x\l... i8]* @.str.7, i64 0, i64 0), i64 50, i64 1, %struct._IO_FILE* %12) #8\l  tail call void @exit(i32 -2) #9\l  unreachable\l}"];
+	Node0xd167520 [shape=record,label="{if.end34:                                         \l  %inc = add i64 %length.0145, 1\l  %arrayidx19 = getelementptr inbounds i8, i8* %6, i64 %inc\l  %14 = load i8, i8* %arrayidx19, align 1, !tbaa !8\l  %cmp21 = icmp eq i8 %14, 0\l  br i1 %cmp21, label %while.end, label %if.end34.while.body_crit_edge\l}"];
+	Node0xd167520 -> Node0xd1645d0;
+	Node0xd167520 -> Node0xd167580;
+	Node0xd167580 [shape=record,label="{if.end34.while.body_crit_edge:                    \l  %idxprom27.phi.trans.insert = sext i8 %14 to i64\l  %arrayidx28.phi.trans.insert = getelementptr inbounds i16, i16* %5, i64\l... %idxprom27.phi.trans.insert\l  %.pre = load i16, i16* %arrayidx28.phi.trans.insert, align 2, !tbaa !9\l  br label %while.body\l}"];
+	Node0xd167580 -> Node0xd167650;
+	colorscheme = "paired12"
+        subgraph cluster_0xd175690 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xd175790 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xd164740;
+            Node0xd1646b0;
+          }
+          subgraph cluster_0xd175710 {
+            label = "";
+            style = solid;
+            color = 6
+            subgraph cluster_0xd164960 {
+              label = "";
+              style = solid;
+              color = 5
+              Node0xd1645b0;
+            }
+            Node0xd164c30;
+            Node0xd1647e0;
+          }
+          subgraph cluster_0xd164df0 {
+            label = "";
+            style = solid;
+            color = 6
+            subgraph cluster_0xd175810 {
+              label = "";
+              style = solid;
+              color = 5
+              Node0xd1675f0;
+            }
+            Node0xd1645d0;
+            Node0xd1644e0;
+          }
+          Node0xd164da0;
+          Node0xd164af0;
+          Node0xd164a70;
+          Node0xd164ad0;
+          Node0xd164b10;
+          Node0xd164c60;
+          Node0xd164480;
+          Node0xd164bb0;
+          Node0xd164710;
+          Node0xd164840;
+          Node0xd164c10;
+          Node0xd1648a0;
+          Node0xd167650;
+          Node0xd164540;
+          Node0xd167520;
+          Node0xd167580;
+        }
+}

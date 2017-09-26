@@ -1,0 +1,42 @@
+digraph "Scop Graph for 'Reader' function" {
+	label="Scop Graph for 'Reader' function";
+
+	Node0xe77f0c0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xe77f0c0 -> Node0xe77f260;
+	Node0xe77f260 [shape=record,label="{entry.split:                                      \l  %call = tail call noalias i8* @malloc(i64 16384) #6\l  %cmp27 = icmp eq i64 %arr_size, 0\l  br i1 %cmp27, label %while.end, label %while.body.lr.ph\l}"];
+	Node0xe77f260 -> Node0xe861290;
+	Node0xe77f260 -> Node0xe780b90;
+	Node0xe861290 [shape=record,label="{while.end:                                        \l  %i.0.lcssa = phi i64 [ 0, %entry.split ], [ %arr_size, %while.body ]\l  %arrayidx2 = getelementptr inbounds i8, i8* %call, i64 %i.0.lcssa\l  store i8 0, i8* %arrayidx2, align 1, !tbaa !6\l  %add3 = add i64 %arr_size, 1\l  %call4 = tail call noalias i8* @malloc(i64 %add3) #6\l  %call6 = tail call i8* @strncpy(i8* %call4, i8* %call, i64 %add3) #6\l  %call7 = tail call %struct._IO_FILE* @fopen(i8* %call4, i8* getelementptr\l... inbounds ([2 x i8], [2 x i8]* @.str.2, i64 0, i64 0))\l  %cmp8 = icmp eq %struct._IO_FILE* %call7, null\l  br i1 %cmp8, label %if.then, label %if.end\l}"];
+	Node0xe861290 -> Node0xe7821f0;
+	Node0xe861290 -> Node0xe783200;
+	Node0xe7821f0 [shape=record,label="{if.then:                                          \l  %1 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !tbaa !7\l  %2 = tail call i64 @fwrite(i8* getelementptr inbounds ([59 x i8], [59 x i8]*\l... @.str.3, i64 0, i64 0), i64 58, i64 1, %struct._IO_FILE* %1) #7\l  tail call void @exit(i32 -2) #8\l  unreachable\l}"];
+	Node0xe783200 [shape=record,label="{if.end:                                           \l  tail call void @free(i8* %call4) #6\l  tail call void @free(i8* nonnull %call) #6\l  ret %struct._IO_FILE* %call7\l}"];
+	Node0xe780b90 [shape=record,label="{while.body.lr.ph:                                 \l  br label %while.body\l}"];
+	Node0xe780b90 -> Node0xe783260;
+	Node0xe783260 [shape=record,label="{while.body:                                       \l  %i.028 = phi i64 [ 0, %while.body.lr.ph ], [ %add, %while.body ]\l  %arrayidx = getelementptr inbounds i64, i64* %arr, i64 %i.028\l  %0 = load i64, i64* %arrayidx, align 8, !tbaa !2\l  %conv = trunc i64 %0 to i8\l  %arrayidx1 = getelementptr inbounds i8, i8* %call, i64 %i.028\l  store i8 %conv, i8* %arrayidx1, align 1, !tbaa !6\l  %add = add nuw i64 %i.028, 1\l  %exitcond = icmp eq i64 %add, %arr_size\l  br i1 %exitcond, label %while.end, label %while.body\l}"];
+	Node0xe783260 -> Node0xe861290;
+	Node0xe783260 -> Node0xe783260[constraint=false];
+	colorscheme = "paired12"
+        subgraph cluster_0xe85a070 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xe781b50 {
+            label = "";
+            style = solid;
+            color = 6
+            subgraph cluster_0xe782170 {
+              label = "";
+              style = solid;
+              color = 5
+              Node0xe783260;
+            }
+            Node0xe77f260;
+            Node0xe780b90;
+          }
+          Node0xe77f0c0;
+          Node0xe861290;
+          Node0xe7821f0;
+          Node0xe783200;
+        }
+}

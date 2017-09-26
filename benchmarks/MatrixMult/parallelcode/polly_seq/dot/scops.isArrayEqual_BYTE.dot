@@ -1,0 +1,49 @@
+digraph "Scop Graph for 'isArrayEqual_BYTE' function" {
+	label="Scop Graph for 'isArrayEqual_BYTE' function";
+
+	Node0xd031e70 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xd031e70 -> Node0xd045710;
+	Node0xd045710 [shape=record,label="{entry.split:                                      \l  %cmp = icmp eq i64 %arr1_size, %arr2_size\l  br i1 %cmp, label %if.end, label %cleanup\l}"];
+	Node0xd045710 -> Node0xd177190;
+	Node0xd045710 -> Node0xd1771b0;
+	Node0xd177190 [shape=record,label="{if.end:                                           \l  %cmp113 = icmp eq i64 %arr1_size, 0\l  br i1 %cmp113, label %cleanup, label %for.body.lr.ph\l}"];
+	Node0xd177190 -> Node0xd1771b0;
+	Node0xd177190 -> Node0xd03cb00;
+	Node0xd1771b0 [shape=record,label="{cleanup:                                          \l  %2 = phi i1 [ false, %entry.split ], [ true, %if.end ], [ false, %for.body\l... ], [ true, %for.cond ]\l  ret i1 %2\l}"];
+	Node0xd03cb00 [shape=record,label="{for.body.lr.ph:                                   \l  br label %for.body\l}"];
+	Node0xd03cb00 -> Node0xd045790;
+	Node0xd045790 [shape=record,label="{for.body:                                         \l  %i.014 = phi i64 [ 0, %for.body.lr.ph ], [ %inc, %for.cond ]\l  %arrayidx = getelementptr inbounds i8, i8* %arr1, i64 %i.014\l  %0 = load i8, i8* %arrayidx, align 1, !tbaa !2\l  %arrayidx2 = getelementptr inbounds i8, i8* %arr2, i64 %i.014\l  %1 = load i8, i8* %arrayidx2, align 1, !tbaa !2\l  %cmp4 = icmp eq i8 %0, %1\l  %inc = add nuw i64 %i.014, 1\l  br i1 %cmp4, label %for.cond, label %cleanup\l}"];
+	Node0xd045790 -> Node0xd0457f0;
+	Node0xd045790 -> Node0xd1771b0;
+	Node0xd0457f0 [shape=record,label="{for.cond:                                         \l  %cmp1 = icmp ult i64 %inc, %arr1_size\l  br i1 %cmp1, label %for.body, label %cleanup\l}"];
+	Node0xd0457f0 -> Node0xd045790[constraint=false];
+	Node0xd0457f0 -> Node0xd1771b0;
+	colorscheme = "paired12"
+        subgraph cluster_0xd02c6f0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xd157cd0 {
+            label = "";
+            style = solid;
+            color = 6
+            subgraph cluster_0xd02c770 {
+              label = "";
+              style = solid;
+              color = 5
+              subgraph cluster_0xd157c50 {
+                label = "";
+                style = solid;
+                color = 7
+                Node0xd045790;
+                Node0xd0457f0;
+              }
+              Node0xd177190;
+              Node0xd03cb00;
+            }
+            Node0xd045710;
+          }
+          Node0xd031e70;
+          Node0xd1771b0;
+        }
+}

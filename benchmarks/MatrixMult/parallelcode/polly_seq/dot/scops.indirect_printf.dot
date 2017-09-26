@@ -1,0 +1,15 @@
+digraph "Scop Graph for 'indirect_printf' function" {
+	label="Scop Graph for 'indirect_printf' function";
+
+	Node0xd02e400 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xd02e400 -> Node0xd1771b0;
+	Node0xd1771b0 [shape=record,label="{entry.split:                                      \l  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x\l... i8], [5 x i8]* @.str.9, i64 0, i64 0), i64 %input)\l  ret void\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xd02c6f0 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0xd02e400;
+          Node0xd1771b0;
+        }
+}

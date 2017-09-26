@@ -5,17 +5,17 @@ BEGIN {
 	FS = "\t";
 	# Test case name
 	##testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
-	testcases="LZ77";
+	testcases="SobelEdge";
 	## Program Type
 	programs["Reverse"]="original";
 	programs["newTicTacToe"]="original";
 	programs["BubbleSort"]="original";
 	programs["MergeSort"]="original";
 	programs["MatrixMult"]="original";
-	programs["SobelEdge"]="original";
 	programs["LZ77"]="compress decompress opt_decompress original original_opt";
 	programs["Cashtill"]="original";
 	programs["CoinGame"]="original";
+	programs["SobelEdge"]="original";
 	# Compiler
 	compilers = "gcc";
 	# Pattern matching
@@ -25,9 +25,9 @@ BEGIN {
 	patterns["MergeSort"] = "disabled";
 	patterns["MatrixMult"] = "disabled";
 	patterns["LZ77"] = "disabled enabled";
-	patterns["SobelEdge"] = "disabled";
 	patterns["Cashtill"] = "disabled";
 	patterns["CoinGame"] = "disabled";
+	patterns["SobelEdge"] = "disabled";
 	# Code Generation
 	codegens="naive naivedealloc nocopy nocopydealloc";
 	## Code type
@@ -74,7 +74,11 @@ BEGIN {
 	parameter=t_array[7];
 
 	# Get the number of threads
-	thread=t_array[8];
+	if(testcase == "SobelEdge"){
+		thread = t_array[9];
+	}else{
+		thread=t_array[8];
+	}	
 	# Generate key
 	key=testcase","program","compiler","pattern","parameter","codegen","code","thread;
 	count[key]++;

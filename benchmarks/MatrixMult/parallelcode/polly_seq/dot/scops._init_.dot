@@ -1,0 +1,48 @@
+digraph "Scop Graph for '_init_' function" {
+	label="Scop Graph for '_init_' function";
+
+	Node0xd7cf9f0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xd7cf9f0 -> Node0xd819cc0;
+	Node0xd819cc0 [shape=record,label="{entry.split:                                      \l  %cmp29 = icmp sgt i64 %height, 0\l  %cmp327 = icmp sgt i64 %width, 0\l  %or.cond = and i1 %cmp29, %cmp327\l  br i1 %or.cond, label %if.end.lr.ph.split.us, label %blklab0\l}"];
+	Node0xd819cc0 -> Node0xd81b1f0;
+	Node0xd819cc0 -> Node0xd8f9570;
+	Node0xd81b1f0 [shape=record,label="{if.end.lr.ph.split.us:                            \l  br label %if.end.us\l}"];
+	Node0xd81b1f0 -> Node0xd8fc5b0;
+	Node0xd8fc5b0 [shape=record,label="{if.end.us:                                        \l  %i.030.us = phi i64 [ 0, %if.end.lr.ph.split.us ], [ %add7.us,\l... %while.cond1.blklab2_crit_edge.us ]\l  %mul.us = mul nsw i64 %i.030.us, %width\l  br label %if.end5.us\l}"];
+	Node0xd8fc5b0 -> Node0xd815e20;
+	Node0xd815e20 [shape=record,label="{if.end5.us:                                       \l  %j.028.us = phi i64 [ 0, %if.end.us ], [ %add6.us, %if.end5.us ]\l  %add.us = add nsw i64 %j.028.us, %mul.us\l  %arrayidx.us = getelementptr inbounds i64, i64* %data, i64 %add.us\l  store i64 %i.030.us, i64* %arrayidx.us, align 8, !tbaa !2\l  %add6.us = add nuw nsw i64 %j.028.us, 1\l  %exitcond = icmp eq i64 %add6.us, %width\l  br i1 %exitcond, label %while.cond1.blklab2_crit_edge.us, label %if.end5.us\l}"];
+	Node0xd815e20 -> Node0xd829990;
+	Node0xd815e20 -> Node0xd815e20[constraint=false];
+	Node0xd829990 [shape=record,label="{while.cond1.blklab2_crit_edge.us:                 \l  %add7.us = add nuw nsw i64 %i.030.us, 1\l  %exitcond33 = icmp eq i64 %add7.us, %height\l  br i1 %exitcond33, label %blklab0, label %if.end.us\l}"];
+	Node0xd829990 -> Node0xd8f9570;
+	Node0xd829990 -> Node0xd8fc5b0[constraint=false];
+	Node0xd8f9570 [shape=record,label="{blklab0:                                          \l  store i64 %data_size, i64* %_size_call_by_ref, align 8, !tbaa !2\l  ret i64* %data\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xd93f6d0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xd81b7f0 {
+            label = "";
+            style = solid;
+            color = 6
+            subgraph cluster_0xd9330f0 {
+              label = "";
+              style = solid;
+              color = 5
+              subgraph cluster_0xd829a60 {
+                label = "";
+                style = solid;
+                color = 7
+                Node0xd815e20;
+              }
+              Node0xd8fc5b0;
+              Node0xd829990;
+            }
+            Node0xd819cc0;
+            Node0xd81b1f0;
+          }
+          Node0xd7cf9f0;
+          Node0xd8f9570;
+        }
+}

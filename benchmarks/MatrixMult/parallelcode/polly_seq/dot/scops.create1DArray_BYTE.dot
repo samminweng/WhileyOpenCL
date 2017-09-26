@@ -1,0 +1,33 @@
+digraph "Scop Graph for 'create1DArray_BYTE' function" {
+	label="Scop Graph for 'create1DArray_BYTE' function";
+
+	Node0xd070dc0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xd070dc0 -> Node0xd035d10;
+	Node0xd035d10 [shape=record,label="{entry.split:                                      \l  %call = tail call noalias i8* @malloc(i64 %arr_size) #7\l  %cmp = icmp eq i8* %call, null\l  br i1 %cmp, label %if.then, label %if.end\l}"];
+	Node0xd035d10 -> Node0xd176600;
+	Node0xd035d10 -> Node0xd0431e0;
+	Node0xd176600 [shape=record,label="{if.then:                                          \l  %0 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !tbaa !2\l  %1 = tail call i64 @fwrite(i8* getelementptr inbounds ([70 x i8], [70 x i8]*\l... @.str.2, i64 0, i64 0), i64 69, i64 1, %struct._IO_FILE* %0) #8\l  tail call void @exit(i32 -2) #9\l  unreachable\l}"];
+	Node0xd0431e0 [shape=record,label="{if.end:                                           \l  %cmp210 = icmp eq i64 %arr_size, 0\l  br i1 %cmp210, label %for.cond.cleanup, label %for.body.lr.ph\l}"];
+	Node0xd0431e0 -> Node0xd043200;
+	Node0xd0431e0 -> Node0xd04e7d0;
+	Node0xd043200 [shape=record,label="{for.cond.cleanup:                                 \l  ret i8* %call\l}"];
+	Node0xd04e7d0 [shape=record,label="{for.body.lr.ph:                                   \l  call void @llvm.memset.p0i8.i64(i8* nonnull %call, i8 %value, i64 %arr_size,\l... i32 1, i1 false)\l  br label %for.cond.cleanup\l}"];
+	Node0xd04e7d0 -> Node0xd043200;
+	colorscheme = "paired12"
+        subgraph cluster_0xd070d40 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xd177000 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xd0431e0;
+            Node0xd04e7d0;
+          }
+          Node0xd070dc0;
+          Node0xd035d10;
+          Node0xd176600;
+          Node0xd043200;
+        }
+}

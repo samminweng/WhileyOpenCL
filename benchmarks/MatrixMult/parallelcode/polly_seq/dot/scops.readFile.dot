@@ -1,0 +1,39 @@
+digraph "Scop Graph for 'readFile' function" {
+	label="Scop Graph for 'readFile' function";
+
+	Node0xe75a990 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xe75a990 -> Node0xe745910;
+	Node0xe745910 [shape=record,label="{entry.split:                                      \l  tail call void @rewind(%struct._IO_FILE* %file)\l  br label %while.cond\l}"];
+	Node0xe745910 -> Node0xe7745e0;
+	Node0xe7745e0 [shape=record,label="{while.cond:                                       \l  %size.0 = phi i64 [ 0, %entry.split ], [ %add, %while.cond ]\l  %call = tail call i32 @fgetc(%struct._IO_FILE* %file)\l  %cmp = icmp eq i32 %call, -1\l  %add = add i64 %size.0, 1\l  br i1 %cmp, label %while.end, label %while.cond\l}"];
+	Node0xe7745e0 -> Node0xe783270;
+	Node0xe7745e0 -> Node0xe7745e0[constraint=false];
+	Node0xe783270 [shape=record,label="{while.end:                                        \l  tail call void @rewind(%struct._IO_FILE* %file)\l  %call1 = tail call noalias i8* @malloc(i64 %size.0) #6\l  %cmp2 = icmp eq i8* %call1, null\l  br i1 %cmp2, label %if.then, label %if.end\l}"];
+	Node0xe783270 -> Node0xe77f260;
+	Node0xe783270 -> Node0xe77f0c0;
+	Node0xe77f260 [shape=record,label="{if.then:                                          \l  %0 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !tbaa !2\l  %1 = tail call i64 @fwrite(i8* getelementptr inbounds ([60 x i8], [60 x i8]*\l... @.str.7, i64 0, i64 0), i64 59, i64 1, %struct._IO_FILE* %0) #7\l  tail call void @exit(i32 -2) #8\l  unreachable\l}"];
+	Node0xe77f0c0 [shape=record,label="{if.end:                                           \l  %call4 = tail call i64 @fread(i8* nonnull %call1, i64 1, i64 %size.0,\l... %struct._IO_FILE* %file)\l  %cmp6 = icmp eq i64 %call4, %size.0\l  br i1 %cmp6, label %if.end9, label %if.then7\l}"];
+	Node0xe77f0c0 -> Node0xe876740;
+	Node0xe77f0c0 -> Node0xe757480;
+	Node0xe876740 [shape=record,label="{if.end9:                                          \l  store i64 %size.0, i64* %_size, align 8, !tbaa !6\l  ret i8* %call1\l}"];
+	Node0xe757480 [shape=record,label="{if.then7:                                         \l  %2 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !tbaa !2\l  %3 = tail call i64 @fwrite(i8* getelementptr inbounds ([53 x i8], [53 x i8]*\l... @.str.8, i64 0, i64 0), i64 52, i64 1, %struct._IO_FILE* %2) #7\l  tail call void @exit(i32 -2) #8\l  unreachable\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xe7573c0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xe87c290 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xe7745e0;
+          }
+          Node0xe75a990;
+          Node0xe745910;
+          Node0xe783270;
+          Node0xe77f260;
+          Node0xe77f0c0;
+          Node0xe876740;
+          Node0xe757480;
+        }
+}

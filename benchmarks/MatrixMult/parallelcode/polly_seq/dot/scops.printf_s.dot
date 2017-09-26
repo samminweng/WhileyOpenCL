@@ -1,0 +1,81 @@
+digraph "Scop Graph for 'printf_s' function" {
+	label="Scop Graph for 'printf_s' function";
+
+	Node0xd17a920 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xd17a920 -> Node0xd15c7e0;
+	Node0xd15c7e0 [shape=record,label="{entry.split:                                      \l  %cmp47 = icmp eq i64 %input_size, 0\l  br i1 %cmp47, label %if.end27, label %while.body.lr.ph\l}"];
+	Node0xd15c7e0 -> Node0xd1538a0;
+	Node0xd15c7e0 -> Node0xd15c860;
+	Node0xd1538a0 [shape=record,label="{if.end27:                                         \l  ret void\l}"];
+	Node0xd15c860 [shape=record,label="{while.body.lr.ph:                                 \l  br label %while.body\l}"];
+	Node0xd15c860 -> Node0xd15c8c0;
+	Node0xd15c8c0 [shape=record,label="{while.body:                                       \l  %i.048 = phi i64 [ 0, %while.body.lr.ph ], [ %inc, %if.end ]\l  %arrayidx = getelementptr inbounds i64, i64* %input, i64 %i.048\l  %0 = load i64, i64* %arrayidx, align 8, !tbaa !2\l  %1 = trunc i64 %0 to i8\l  %cmp3 = icmp sgt i8 %1, 0\l  br i1 %cmp3, label %if.then, label %if.end\l}"];
+	Node0xd15c8c0 -> Node0xd15c800;
+	Node0xd15c8c0 -> Node0xd17a3c0;
+	Node0xd15c800 [shape=record,label="{if.then:                                          \l  %conv = trunc i64 %0 to i32\l  %conv243 = and i32 %conv, 255\l  %putchar42 = tail call i32 @putchar(i32 %conv243)\l  br label %if.end\l}"];
+	Node0xd15c800 -> Node0xd17a3c0;
+	Node0xd17a3c0 [shape=record,label="{if.end:                                           \l  %inc = add nuw nsw i64 %i.048, 1\l  %cmp = icmp ult i64 %inc, %input_size\l  %cmp1 = icmp ult i64 %inc, 1024\l  %2 = and i1 %cmp, %cmp1\l  br i1 %2, label %while.body, label %while.end\l}"];
+	Node0xd17a3c0 -> Node0xd15c8c0[constraint=false];
+	Node0xd17a3c0 -> Node0xd17a310;
+	Node0xd17a310 [shape=record,label="{while.end:                                        \l  %cmp6 = icmp ugt i64 %input_size, 1024\l  br i1 %cmp6, label %while.body14.lr.ph, label %if.end27\l}"];
+	Node0xd17a310 -> Node0xd17a370;
+	Node0xd17a310 -> Node0xd1538a0;
+	Node0xd17a370 [shape=record,label="{while.body14.lr.ph:                               \l  %call9 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x\l... i8], [6 x i8]* @.str.19, i64 0, i64 0))\l  %sub = add i64 %input_size, -10\l  br label %while.body14\l}"];
+	Node0xd17a370 -> Node0xd17a390;
+	Node0xd17a390 [shape=record,label="{while.body14:                                     \l  %i10.046 = phi i64 [ %sub, %while.body14.lr.ph ], [ %inc25, %if.end24 ]\l  %arrayidx16 = getelementptr inbounds i64, i64* %input, i64 %i10.046\l  %3 = load i64, i64* %arrayidx16, align 8, !tbaa !2\l  %4 = trunc i64 %3 to i8\l  %cmp19 = icmp sgt i8 %4, 0\l  br i1 %cmp19, label %if.then21, label %if.end24\l}"];
+	Node0xd17a390 -> Node0xd17a470;
+	Node0xd17a390 -> Node0xd17a4d0;
+	Node0xd17a470 [shape=record,label="{if.then21:                                        \l  %conv17 = trunc i64 %3 to i32\l  %conv1844 = and i32 %conv17, 255\l  %putchar = tail call i32 @putchar(i32 %conv1844)\l  br label %if.end24\l}"];
+	Node0xd17a470 -> Node0xd17a4d0;
+	Node0xd17a4d0 [shape=record,label="{if.end24:                                         \l  %inc25 = add i64 %i10.046, 1\l  %cmp12 = icmp ult i64 %inc25, %input_size\l  br i1 %cmp12, label %while.body14, label %if.end27\l}"];
+	Node0xd17a4d0 -> Node0xd17a390[constraint=false];
+	Node0xd17a4d0 -> Node0xd1538a0;
+	colorscheme = "paired12"
+        subgraph cluster_0xd1537b0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xd15c650 {
+            label = "";
+            style = solid;
+            color = 6
+            subgraph cluster_0xd15c5b0 {
+              label = "";
+              style = solid;
+              color = 5
+              subgraph cluster_0xd15c530 {
+                label = "";
+                style = solid;
+                color = 7
+                Node0xd15c8c0;
+                Node0xd15c800;
+              }
+              Node0xd17a3c0;
+            }
+            subgraph cluster_0xd153910 {
+              label = "";
+              style = solid;
+              color = 5
+              subgraph cluster_0xd17a870 {
+                label = "";
+                style = solid;
+                color = 7
+                subgraph cluster_0xd17a7f0 {
+                  label = "";
+                  style = solid;
+                  color = 9
+                  Node0xd17a390;
+                  Node0xd17a470;
+                }
+                Node0xd17a4d0;
+              }
+              Node0xd17a310;
+              Node0xd17a370;
+            }
+            Node0xd15c7e0;
+            Node0xd15c860;
+          }
+          Node0xd17a920;
+          Node0xd1538a0;
+        }
+}

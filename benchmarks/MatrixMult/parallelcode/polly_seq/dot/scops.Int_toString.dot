@@ -1,0 +1,39 @@
+digraph "Scop Graph for 'Int_toString' function" {
+	label="Scop Graph for 'Int_toString' function";
+
+	Node0xe780a60 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xe780a60 -> Node0xe77f260;
+	Node0xe77f260 [shape=record,label="{entry.split:                                      \l  br label %do.body\l}"];
+	Node0xe77f260 -> Node0xe77e940;
+	Node0xe77e940 [shape=record,label="{do.body:                                          \l  %r_size.0 = phi i64 [ 0, %entry.split ], [ %inc, %do.body ]\l  %value.0 = phi i64 [ %item, %entry.split ], [ %div, %do.body ]\l  %inc = add i64 %r_size.0, 1\l  %div = sdiv i64 %value.0, 10\l  %cmp = icmp sgt i64 %value.0, 9\l  br i1 %cmp, label %do.body, label %do.end\l}"];
+	Node0xe77e940 -> Node0xe77e940[constraint=false];
+	Node0xe77e940 -> Node0xe77f2e0;
+	Node0xe77f2e0 [shape=record,label="{do.end:                                           \l  %mul = shl i64 %inc, 3\l  %call = tail call noalias i8* @malloc(i64 %mul) #6\l  %0 = bitcast i8* %call to i64*\l  br label %do.body1\l}"];
+	Node0xe77f2e0 -> Node0xe780ab0;
+	Node0xe780ab0 [shape=record,label="{do.body1:                                         \l  %item.addr.0 = phi i64 [ %item, %do.end ], [ %div3, %do.body1 ]\l  %i.0 = phi i64 [ %inc, %do.end ], [ %dec, %do.body1 ]\l  %dec = add i64 %i.0, -1\l  %rem = srem i64 %item.addr.0, 10\l  %add = add nsw i64 %rem, 48\l  %arrayidx = getelementptr inbounds i64, i64* %0, i64 %dec\l  store i64 %add, i64* %arrayidx, align 8, !tbaa !2\l  %div3 = sdiv i64 %item.addr.0, 10\l  %cmp4 = icmp sgt i64 %item.addr.0, 9\l  br i1 %cmp4, label %do.body1, label %do.end5\l}"];
+	Node0xe780ab0 -> Node0xe780ab0[constraint=false];
+	Node0xe780ab0 -> Node0xe827140;
+	Node0xe827140 [shape=record,label="{do.end5:                                          \l  store i64 %inc, i64* %_size_call_by_ref, align 8, !tbaa !2\l  ret i64* %0\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xe779140 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xe759140 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xe77e940;
+          }
+          subgraph cluster_0xe782420 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xe780ab0;
+          }
+          Node0xe780a60;
+          Node0xe77f260;
+          Node0xe77f2e0;
+          Node0xe827140;
+        }
+}

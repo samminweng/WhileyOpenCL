@@ -1,0 +1,62 @@
+digraph "Scop Graph for 'optimized_append' function" {
+	label="Scop Graph for 'optimized_append' function";
+
+	Node0xd153b90 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xd153b90 -> Node0xd175700;
+	Node0xd175700 [shape=record,label="{entry.split:                                      \l  %0 = load i64, i64* %op_1_size, align 8, !tbaa !2\l  %cmp.i = icmp eq i64 %0, 0\l  br i1 %cmp.i, label %if.then, label %isPowerof2.exit\l}"];
+	Node0xd175700 -> Node0xd179f90;
+	Node0xd175700 -> Node0xd17a1c0;
+	Node0xd179f90 [shape=record,label="{if.then:                                          \l  %1 = load i64, i64* %op_2_size, align 8, !tbaa !2\l  %add = add i64 %1, %0\l  br label %while.cond\l}"];
+	Node0xd179f90 -> Node0xd17a1e0;
+	Node0xd17a1e0 [shape=record,label="{while.cond:                                       \l  %allocated_size.0 = phi i64 [ 2, %if.then ], [ %mul, %while.cond ]\l  %cmp = icmp ult i64 %allocated_size.0, %add\l  %mul = shl i64 %allocated_size.0, 1\l  br i1 %cmp, label %while.cond, label %while.end\l}"];
+	Node0xd17a1e0 -> Node0xd17a1e0[constraint=false];
+	Node0xd17a1e0 -> Node0xd17a240;
+	Node0xd17a240 [shape=record,label="{while.end:                                        \l  %2 = bitcast i64* %op_1 to i8*\l  %mul1 = shl i64 %allocated_size.0, 3\l  %call2 = tail call i8* @realloc(i8* %2, i64 %mul1) #7\l  %3 = bitcast i8* %call2 to i64*\l  %cmp3 = icmp eq i8* %call2, null\l  br i1 %cmp3, label %if.then4, label %if.end6\l}"];
+	Node0xd17a240 -> Node0xd17a2a0;
+	Node0xd17a240 -> Node0xd17a300;
+	Node0xd17a2a0 [shape=record,label="{if.then4:                                         \l  %4 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !tbaa !6\l  %5 = tail call i64 @fwrite(i8* getelementptr inbounds ([55 x i8], [55 x i8]*\l... @.str.20, i64 0, i64 0), i64 54, i64 1, %struct._IO_FILE* %4) #8\l  tail call void @exit(i32 -2) #9\l  unreachable\l}"];
+	Node0xd17a300 [shape=record,label="{if.end6:                                          \l  %ret.0 = phi i64* [ %3, %while.end ], [ %op_1, %isPowerof2.exit ]\l  %6 = load i64, i64* %op_2_size, align 8, !tbaa !2\l  %cmp728 = icmp eq i64 %6, 0\l  br i1 %cmp728, label %for.cond.cleanup, label %for.body.lr.ph\l}"];
+	Node0xd17a300 -> Node0xd17a320;
+	Node0xd17a300 -> Node0xd17a560;
+	Node0xd17a320 [shape=record,label="{for.cond.cleanup:                                 \l  %.lcssa = phi i64 [ 0, %if.end6 ], [ %10, %for.body ]\l  %7 = load i64, i64* %op_1_size, align 8, !tbaa !2\l  %add10 = add i64 %7, %.lcssa\l  store i64 %add10, i64* %ret_size, align 8, !tbaa !2\l  ret i64* %ret.0\l}"];
+	Node0xd17a560 [shape=record,label="{for.body.lr.ph:                                   \l  br label %for.body\l}"];
+	Node0xd17a560 -> Node0xd17a750;
+	Node0xd17a750 [shape=record,label="{for.body:                                         \l  %i.029 = phi i64 [ 0, %for.body.lr.ph ], [ %inc, %for.body ]\l  %arrayidx = getelementptr inbounds i64, i64* %op_2, i64 %i.029\l  %8 = load i64, i64* %arrayidx, align 8, !tbaa !2\l  %9 = load i64, i64* %op_1_size, align 8, !tbaa !2\l  %add8 = add i64 %9, %i.029\l  %arrayidx9 = getelementptr inbounds i64, i64* %ret.0, i64 %add8\l  store i64 %8, i64* %arrayidx9, align 8, !tbaa !2\l  %inc = add i64 %i.029, 1\l  %10 = load i64, i64* %op_2_size, align 8, !tbaa !2\l  %cmp7 = icmp ult i64 %inc, %10\l  br i1 %cmp7, label %for.body, label %for.cond.cleanup\l}"];
+	Node0xd17a750 -> Node0xd17a750[constraint=false];
+	Node0xd17a750 -> Node0xd17a320;
+	Node0xd17a1c0 [shape=record,label="{isPowerof2.exit:                                  \l  %sub.i = add nsw i64 %0, -1\l  %and.i = and i64 %sub.i, %0\l  %tobool.i = icmp eq i64 %and.i, 0\l  br i1 %tobool.i, label %if.then, label %if.end6\l}"];
+	Node0xd17a1c0 -> Node0xd179f90;
+	Node0xd17a1c0 -> Node0xd17a300;
+	colorscheme = "paired12"
+        subgraph cluster_0xd175810 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xd17a000 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xd17a1e0;
+          }
+          subgraph cluster_0xd17a8a0 {
+            label = "";
+            style = solid;
+            color = 6
+            subgraph cluster_0xd175890 {
+              label = "";
+              style = solid;
+              color = 5
+              Node0xd17a750;
+            }
+            Node0xd17a300;
+            Node0xd17a560;
+          }
+          Node0xd153b90;
+          Node0xd175700;
+          Node0xd179f90;
+          Node0xd17a240;
+          Node0xd17a2a0;
+          Node0xd17a320;
+          Node0xd17a1c0;
+        }
+}

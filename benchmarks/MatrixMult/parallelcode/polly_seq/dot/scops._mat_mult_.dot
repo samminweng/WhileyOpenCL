@@ -1,0 +1,59 @@
+digraph "Scop Graph for '_mat_mult_' function" {
+	label="Scop Graph for '_mat_mult_' function";
+
+	Node0xd938fb0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xd938fb0 -> Node0xd92e920;
+	Node0xd92e920 [shape=record,label="{entry.split:                                      \l  %cmp68 = icmp sgt i64 %height, 0\l  %cmp365 = icmp sgt i64 %width, 0\l  %or.cond = and i1 %cmp68, %cmp365\l  br i1 %or.cond, label %if.end.lr.ph.split.us, label %blklab4\l}"];
+	Node0xd92e920 -> Node0xd9378c0;
+	Node0xd92e920 -> Node0xd92e8a0;
+	Node0xd9378c0 [shape=record,label="{if.end.lr.ph.split.us:                            \l  br label %if.end5.lr.ph.split.us.us\l}"];
+	Node0xd9378c0 -> Node0xd92e900;
+	Node0xd92e900 [shape=record,label="{if.end5.lr.ph.split.us.us:                        \l  %i.069.us = phi i64 [ 0, %if.end.lr.ph.split.us ], [ %add21.us,\l... %while.cond1.blklab6_crit_edge.us ]\l  %2 = mul i64 %i.069.us, %width\l  br label %if.end5.us.us\l}"];
+	Node0xd92e900 -> Node0xd92ab10;
+	Node0xd92ab10 [shape=record,label="{if.end5.us.us:                                    \l  %j.066.us.us = phi i64 [ 0, %if.end5.lr.ph.split.us.us ], [ %add20.us.us,\l... %while.cond6.blklab8_crit_edge.us.us ]\l  br label %if.end10.us.us\l}"];
+	Node0xd92ab10 -> Node0xd92ae30;
+	Node0xd92ae30 [shape=record,label="{if.end10.us.us:                                   \l  %sub_total.063.us.us = phi i64 [ 0, %if.end5.us.us ], [ %add15.us.us,\l... %if.end10.us.us ]\l  %k.062.us.us = phi i64 [ 0, %if.end5.us.us ], [ %add16.us.us,\l... %if.end10.us.us ]\l  %add.us.us = add nsw i64 %k.062.us.us, %2\l  %arrayidx.us.us = getelementptr inbounds i64, i64* %a, i64 %add.us.us\l  %0 = load i64, i64* %arrayidx.us.us, align 8, !tbaa !2\l  %mul11.us.us = mul nsw i64 %k.062.us.us, %width\l  %add12.us.us = add nsw i64 %mul11.us.us, %j.066.us.us\l  %arrayidx13.us.us = getelementptr inbounds i64, i64* %b, i64 %add12.us.us\l  %1 = load i64, i64* %arrayidx13.us.us, align 8, !tbaa !2\l  %mul14.us.us = mul nsw i64 %1, %0\l  %add15.us.us = add nsw i64 %mul14.us.us, %sub_total.063.us.us\l  %add16.us.us = add nuw nsw i64 %k.062.us.us, 1\l  %exitcond = icmp eq i64 %add16.us.us, %width\l  br i1 %exitcond, label %while.cond6.blklab8_crit_edge.us.us, label\l... %if.end10.us.us\l}"];
+	Node0xd92ae30 -> Node0xd92ae90;
+	Node0xd92ae30 -> Node0xd92ae30[constraint=false];
+	Node0xd92ae90 [shape=record,label="{while.cond6.blklab8_crit_edge.us.us:              \l  %add18.us.us = add nsw i64 %j.066.us.us, %2\l  %arrayidx19.us.us = getelementptr inbounds i64, i64* %data, i64 %add18.us.us\l  store i64 %add15.us.us, i64* %arrayidx19.us.us, align 8, !tbaa !2\l  %add20.us.us = add nuw nsw i64 %j.066.us.us, 1\l  %exitcond101 = icmp eq i64 %add20.us.us, %width\l  br i1 %exitcond101, label %while.cond1.blklab6_crit_edge.us, label\l... %if.end5.us.us\l}"];
+	Node0xd92ae90 -> Node0xd92abb0;
+	Node0xd92ae90 -> Node0xd92ab10[constraint=false];
+	Node0xd92abb0 [shape=record,label="{while.cond1.blklab6_crit_edge.us:                 \l  %add21.us = add nuw nsw i64 %i.069.us, 1\l  %exitcond102 = icmp eq i64 %add21.us, %height\l  br i1 %exitcond102, label %blklab4, label %if.end5.lr.ph.split.us.us\l}"];
+	Node0xd92abb0 -> Node0xd92e8a0;
+	Node0xd92abb0 -> Node0xd92e900[constraint=false];
+	Node0xd92e8a0 [shape=record,label="{blklab4:                                          \l  store i64 %data_size, i64* %_size_call_by_ref, align 8, !tbaa !2\l  ret i64* %data\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xd927540 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xd9333a0 {
+            label = "";
+            style = filled;
+            color = 3            subgraph cluster_0xd9275c0 {
+              label = "";
+              style = solid;
+              color = 5
+              subgraph cluster_0xd94a990 {
+                label = "";
+                style = solid;
+                color = 7
+                subgraph cluster_0xd94a910 {
+                  label = "";
+                  style = solid;
+                  color = 9
+                  Node0xd92ae30;
+                }
+                Node0xd92ab10;
+                Node0xd92ae90;
+              }
+              Node0xd92e900;
+              Node0xd92abb0;
+            }
+            Node0xd92e920;
+            Node0xd9378c0;
+          }
+          Node0xd938fb0;
+          Node0xd92e8a0;
+        }
+}

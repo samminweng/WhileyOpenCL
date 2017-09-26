@@ -1,0 +1,49 @@
+digraph "Scop Graph for 'readAll' function" {
+	label="Scop Graph for 'readAll' function";
+
+	Node0xe77e990 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xe77e990 -> Node0xe861290;
+	Node0xe861290 [shape=record,label="{entry.split:                                      \l  %call.i = tail call noalias i8* @malloc(i64 16384) #6\l  %call1.i = tail call i8* @fgets(i8* %call.i, i32 16384, %struct._IO_FILE*\l... %file) #6\l  %cmp.i = icmp eq i8* %call1.i, null\l  br i1 %cmp.i, label %isPBMFile.exit.thread, label %if.then.i\l}"];
+	Node0xe861290 -> Node0xe757480;
+	Node0xe861290 -> Node0xe876740;
+	Node0xe757480 [shape=record,label="{isPBMFile.exit.thread:                            \l  tail call void @free(i8* %call.i) #6\l  br label %if.else\l}"];
+	Node0xe757480 -> Node0xe87c070;
+	Node0xe87c070 [shape=record,label="{if.else:                                          \l  %call2 = tail call i8* @readFile(%struct._IO_FILE* %file, i64* %_size)\l  br label %cleanup\l}"];
+	Node0xe87c070 -> Node0xe87bfc0;
+	Node0xe87bfc0 [shape=record,label="{cleanup:                                          \l  %retval.0 = phi i8* [ %call1, %if.then ], [ %call2, %if.else ]\l  ret i8* %retval.0\l}"];
+	Node0xe876740 [shape=record,label="{if.then.i:                                        \l  %call2.i = tail call i64 @strlen(i8* %call.i) #7\l  %cmp3.i = icmp eq i64 %call2.i, 3\l  br i1 %cmp3.i, label %if.then4.i, label %isPBMFile.exit.thread\l}"];
+	Node0xe876740 -> Node0xe87c430;
+	Node0xe876740 -> Node0xe757480;
+	Node0xe87c430 [shape=record,label="{if.then4.i:                                       \l  %0 = load i8, i8* %call.i, align 1, !tbaa !2\l  %cmp5.i = icmp eq i8 %0, 80\l  br i1 %cmp5.i, label %land.lhs.true.i, label %isPBMFile.exit.thread\l}"];
+	Node0xe87c430 -> Node0xe77f0c0;
+	Node0xe87c430 -> Node0xe757480;
+	Node0xe77f0c0 [shape=record,label="{land.lhs.true.i:                                  \l  %arrayidx7.i = getelementptr inbounds i8, i8* %call.i, i64 1\l  %1 = load i8, i8* %arrayidx7.i, align 1, !tbaa !2\l  %cmp9.i = icmp eq i8 %1, 49\l  br i1 %cmp9.i, label %isPBMFile.exit, label %isPBMFile.exit.thread\l}"];
+	Node0xe77f0c0 -> Node0xe780b90;
+	Node0xe77f0c0 -> Node0xe757480;
+	Node0xe780b90 [shape=record,label="{isPBMFile.exit:                                   \l  %arrayidx12.i = getelementptr inbounds i8, i8* %call.i, i64 2\l  %2 = load i8, i8* %arrayidx12.i, align 1, !tbaa !2\l  %cmp14.i = icmp eq i8 %2, 10\l  tail call void @free(i8* nonnull %call.i) #6\l  br i1 %cmp14.i, label %if.then, label %if.else\l}"];
+	Node0xe780b90 -> Node0xe77f260;
+	Node0xe780b90 -> Node0xe87c070;
+	Node0xe77f260 [shape=record,label="{if.then:                                          \l  %call1 = tail call i8* @readPBM(%struct._IO_FILE* %file, i64* %_size)\l  br label %cleanup\l}"];
+	Node0xe77f260 -> Node0xe87bfc0;
+	colorscheme = "paired12"
+        subgraph cluster_0xe87be80 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xe87c370 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xe861290;
+            Node0xe757480;
+            Node0xe87c070;
+            Node0xe876740;
+            Node0xe87c430;
+            Node0xe77f0c0;
+            Node0xe780b90;
+            Node0xe77f260;
+          }
+          Node0xe77e990;
+          Node0xe87bfc0;
+        }
+}

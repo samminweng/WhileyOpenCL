@@ -165,6 +165,7 @@ runBenchmark(){
 	llc "llvm"/$testcase"_"$program.openmp.ll -o "assembly"/$testcase"_"$program.openmp.s
 	### Use 'gcc' to compile .s file and link with 'libUtil.a'
 	pollycc -lgomp "assembly"/$testcase"_"$program.openmp.s Util.c WyRT.c  -o "out"/$testcase"_"$program.openmp.out
+	#pollycc -mllvm -polly-parallel -lgomp *.c -o "out"/$testcase"_"$program.openmp.out
 	read -p "-----------------Press [Enter] to continue--------------------"
 
 	for ((thread=1; thread <= 5 ; thread++))
@@ -191,8 +192,8 @@ exec(){
 	## Iterate each codegen
 	for codegen in "${codegens[$testcase]}"
 	do
-		runPolly $testcase $program
-		#runBenchmark $testcase $program $parameter
+		#runPolly $testcase $program
+		runBenchmark $testcase $program $parameter
 	done
 	# Return to the working directory
     cd $BASEDIR

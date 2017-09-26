@@ -1,0 +1,36 @@
+digraph "Scop Graph for 'parseStringToInt' function" {
+	label="Scop Graph for 'parseStringToInt' function";
+
+	Node0xd031da0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xd031da0 -> Node0xd031dc0;
+	Node0xd031dc0 [shape=record,label="{entry.split:                                      \l  %0 = load i64, i64* %arr, align 8, !tbaa !2\l  %1 = icmp ult i64 %0, 10\l  br i1 %1, label %while.body.lr.ph, label %while.end\l}"];
+	Node0xd031dc0 -> Node0xd070da0;
+	Node0xd031dc0 -> Node0xd070dc0;
+	Node0xd070da0 [shape=record,label="{while.body.lr.ph:                                 \l  br label %while.body\l}"];
+	Node0xd070da0 -> Node0xd02c750;
+	Node0xd02c750 [shape=record,label="{while.body:                                       \l  %2 = phi i64 [ %0, %while.body.lr.ph ], [ %3, %while.body ]\l  %i.015 = phi i64 [ 0, %while.body.lr.ph ], [ %inc, %while.body ]\l  %value.014 = phi i64 [ 0, %while.body.lr.ph ], [ %add, %while.body ]\l  %mul = mul nsw i64 %value.014, 10\l  %add = add nsw i64 %2, %mul\l  %inc = add i64 %i.015, 1\l  %arrayidx = getelementptr inbounds i64, i64* %arr, i64 %inc\l  %3 = load i64, i64* %arrayidx, align 8, !tbaa !2\l  %4 = icmp ult i64 %3, 10\l  br i1 %4, label %while.body, label %while.end\l}"];
+	Node0xd02c750 -> Node0xd02c750[constraint=false];
+	Node0xd02c750 -> Node0xd070dc0;
+	Node0xd070dc0 [shape=record,label="{while.end:                                        \l  %value.0.lcssa = phi i64 [ 0, %entry.split ], [ %add, %while.body ]\l  %call = tail call noalias i8* @malloc(i64 8) #7\l  %5 = bitcast i8* %call to i64*\l  store i64 %value.0.lcssa, i64* %5, align 8, !tbaa !2\l  ret i64* %5\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xd03f650 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xd177100 {
+            label = "";
+            style = solid;
+            color = 6
+            subgraph cluster_0xd177000 {
+              label = "";
+              style = solid;
+              color = 5
+              Node0xd02c750;
+            }
+            Node0xd031dc0;
+            Node0xd070da0;
+          }
+          Node0xd031da0;
+          Node0xd070dc0;
+        }
+}

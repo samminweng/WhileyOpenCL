@@ -78,7 +78,7 @@ BEGIN {
 	FS = "\n";
 	## Test case name
 	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
-	testcases="LZ77";
+	testcases="SobelEdge";
 
 	## Program Type
 	programs["Reverse"]="original";
@@ -123,6 +123,7 @@ BEGIN {
 	exectypes["Cashtill"] = "seq";
 	exectypes["LZ77"] = "seq";
 	exectypes["CoinGame"] = "seq";
+	exectypes["SobelEdge"] = "seq";
 	### Parameter
 	parameters["Reverse"]="100000 1000000 10000000";
 	parameters["newTicTacToe"]="1000 10000 100000";

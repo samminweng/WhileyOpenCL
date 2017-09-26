@@ -1,0 +1,85 @@
+digraph "Scop Graph for 'readPBM' function" {
+	label="Scop Graph for 'readPBM' function";
+
+	Node0xe77f260 [shape=record,label="{entry:\l  %width = alloca i32, align 4\l  %height = alloca i32, align 4\l  br label %entry.split\l}"];
+	Node0xe77f260 -> Node0xe780b90;
+	Node0xe780b90 [shape=record,label="{entry.split:                                      \l  %call = tail call noalias i8* @malloc(i64 16384) #6\l  %0 = bitcast i32* %width to i8*\l  call void @llvm.lifetime.start.p0i8(i64 4, i8* nonnull %0) #6\l  store i32 0, i32* %width, align 4, !tbaa !2\l  %1 = bitcast i32* %height to i8*\l  call void @llvm.lifetime.start.p0i8(i64 4, i8* nonnull %1) #6\l  store i32 0, i32* %height, align 4, !tbaa !2\l  %call166 = tail call i8* @fgets(i8* %call, i32 16384, %struct._IO_FILE*\l... %file)\l  %cmp67 = icmp eq i8* %call166, null\l  br i1 %cmp67, label %while.end, label %while.body.lr.ph\l}"];
+	Node0xe780b90 -> Node0xe745910;
+	Node0xe780b90 -> Node0xe87c070;
+	Node0xe745910 [shape=record,label="{while.end:                                        \l  call void @free(i8* %call) #6\l  %3 = load i32, i32* %width, align 4, !tbaa !2\l  %4 = load i32, i32* %height, align 4, !tbaa !2\l  %mul = mul nsw i32 %4, %3\l  %conv7 = sext i32 %mul to i64\l  %call9 = call noalias i8* @malloc(i64 %conv7) #6\l  %cmp10 = icmp eq i8* %call9, null\l  br i1 %cmp10, label %if.then12, label %if.end14\l}"];
+	Node0xe745910 -> Node0xe77f0c0;
+	Node0xe745910 -> Node0xe86cf30;
+	Node0xe77f0c0 [shape=record,label="{if.then12:                                        \l  %5 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !tbaa !7\l  %6 = call i64 @fwrite(i8* getelementptr inbounds ([60 x i8], [60 x i8]*\l... @.str.6, i64 0, i64 0), i64 59, i64 1, %struct._IO_FILE* %5) #7\l  call void @exit(i32 -2) #8\l  unreachable\l}"];
+	Node0xe86cf30 [shape=record,label="{if.end14:                                         \l  br label %while.cond15\l}"];
+	Node0xe86cf30 -> Node0xe86c740;
+	Node0xe86c740 [shape=record,label="{while.cond15:                                     \l  %arr_ind.0 = phi i64 [ 0, %if.end14 ], [ %arr_ind.1, %if.end43 ]\l  %call16 = call i32 @_IO_getc(%struct._IO_FILE* %file)\l  %conv17 = trunc i32 %call16 to i8\l  %sext = shl i32 %call16, 24\l  %conv18 = ashr exact i32 %sext, 24\l  switch i32 %conv18, label %if.then28 [\l    i32 -1, label %while.end44\l    i32 32, label %if.end43\l    i32 10, label %if.end43\l  ]\l}"];
+	Node0xe86c740 -> Node0xe86cc50;
+	Node0xe86c740 -> Node0xe86ccb0;
+	Node0xe86c740 -> Node0xe86cd10;
+	Node0xe86c740 -> Node0xe86cd10;
+	Node0xe86cc50 [shape=record,label="{if.then28:                                        \l  switch i8 %conv17, label %if.else39 [\l    i8 49, label %if.then32\l    i8 48, label %if.end42\l  ]\l}"];
+	Node0xe86cc50 -> Node0xe86cd70;
+	Node0xe86cc50 -> Node0xe86cdd0;
+	Node0xe86cc50 -> Node0xe86ce30;
+	Node0xe86cd70 [shape=record,label="{if.else39:                                        \l  br label %if.end42\l}"];
+	Node0xe86cd70 -> Node0xe86ce30;
+	Node0xe86ce30 [shape=record,label="{if.end42:                                         \l  %.sink.sink = phi i8 [ 98, %if.then32 ], [ %conv17, %if.else39 ], [ 32,\l... %if.then28 ]\l  %arrayidx40.sink = getelementptr inbounds i8, i8* %call9, i64 %arr_ind.0\l  store i8 %.sink.sink, i8* %arrayidx40.sink, align 1, !tbaa !6\l  %inc = add i64 %arr_ind.0, 1\l  br label %if.end43\l}"];
+	Node0xe86ce30 -> Node0xe86cd10;
+	Node0xe86cd10 [shape=record,label="{if.end43:                                         \l  %arr_ind.1 = phi i64 [ %inc, %if.end42 ], [ %arr_ind.0, %while.cond15 ], [\l... %arr_ind.0, %while.cond15 ]\l  br label %while.cond15\l}"];
+	Node0xe86cd10 -> Node0xe86c740[constraint=false];
+	Node0xe86cdd0 [shape=record,label="{if.then32:                                        \l  br label %if.end42\l}"];
+	Node0xe86cdd0 -> Node0xe86ce30;
+	Node0xe86ccb0 [shape=record,label="{while.end44:                                      \l  store i64 %conv7, i64* %_size, align 8, !tbaa !9\l  call void @llvm.lifetime.end.p0i8(i64 4, i8* nonnull %1) #6\l  call void @llvm.lifetime.end.p0i8(i64 4, i8* nonnull %0) #6\l  ret i8* %call9\l}"];
+	Node0xe87c070 [shape=record,label="{while.body.lr.ph:                                 \l  br label %while.body\l}"];
+	Node0xe87c070 -> Node0xe86cc30;
+	Node0xe86cc30 [shape=record,label="{while.body:                                       \l  %2 = load i8, i8* %call, align 1, !tbaa !6\l  %cmp4 = icmp eq i8 %2, 35\l  br i1 %cmp4, label %while.cond, label %if.then\l}"];
+	Node0xe86cc30 -> Node0xe86ce50;
+	Node0xe86cc30 -> Node0xe86c8b0;
+	Node0xe86ce50 [shape=record,label="{while.cond:                                       \l  %call1 = tail call i8* @fgets(i8* nonnull %call, i32 16384,\l... %struct._IO_FILE* %file)\l  %cmp = icmp eq i8* %call1, null\l  br i1 %cmp, label %while.end, label %while.body\l}"];
+	Node0xe86ce50 -> Node0xe745910;
+	Node0xe86ce50 -> Node0xe86cc30[constraint=false];
+	Node0xe86c8b0 [shape=record,label="{if.then:                                          \l  %call6 = call i32 (i8*, i8*, ...) @__isoc99_sscanf(i8* nonnull %call, i8*\l... getelementptr inbounds ([7 x i8], [7 x i8]* @.str.5, i64 0, i64 0), i32*\l... nonnull %width, i32* nonnull %height) #6\l  br label %while.end\l}"];
+	Node0xe86c8b0 -> Node0xe745910;
+	colorscheme = "paired12"
+        subgraph cluster_0xe86c360 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xe86d360 {
+            label = "";
+            style = solid;
+            color = 6
+            subgraph cluster_0xe86ce80 {
+              label = "";
+              style = solid;
+              color = 5
+              Node0xe86cc30;
+              Node0xe86ce50;
+              Node0xe86c8b0;
+            }
+            Node0xe780b90;
+            Node0xe87c070;
+          }
+          subgraph cluster_0xe86c3e0 {
+            label = "";
+            style = solid;
+            color = 6
+            subgraph cluster_0xe86c4f0 {
+              label = "";
+              style = solid;
+              color = 5
+              Node0xe86cc50;
+              Node0xe86cd70;
+              Node0xe86cdd0;
+            }
+            Node0xe86c740;
+            Node0xe86ce30;
+            Node0xe86cd10;
+          }
+          Node0xe77f260;
+          Node0xe745910;
+          Node0xe77f0c0;
+          Node0xe86cf30;
+          Node0xe86ccb0;
+        }
+}
