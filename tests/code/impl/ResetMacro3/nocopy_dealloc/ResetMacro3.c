@@ -1,9 +1,9 @@
 #include "ResetMacro3.h"
-int64_t* _func_(_DECL_1DARRAY_PARAM(x), _DECL_DEALLOC_PARAM(x), int64_t num, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _func_(_DECL_1DARRAY_PARAM(b), _DECL_DEALLOC_PARAM(b), int64_t num, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY(_2);
 	_DECL_DEALLOC(_2);
-	_DECL_1DARRAY(a);
-	_DECL_DEALLOC(a);
+	_DECL_1DARRAY(c);
+	_DECL_DEALLOC(c);
 	int64_t _4;
 	int64_t _5;
 	_DECL_1DARRAY(_6);
@@ -19,10 +19,10 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(x), _DECL_DEALLOC_PARAM(x), int64_t num, _DE
 	_NEW_1DARRAY_int64_t(_6, _5, _4);
 	_ADD_DEALLOC(_6);
 	//assign %3 = %6  : int[]
-	_DEALLOC(a);
+	_DEALLOC(c);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(a, _6);
-	_TRANSFER_DEALLOC(a, _6);
+	_UPDATE_1DARRAY(c, _6);
+	_TRANSFER_DEALLOC(c, _6);
 	//const %7 = 10 : int
 	_7 = 10;
 	//ifle %1, %7 goto blklab0 : int
@@ -30,31 +30,31 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(x), _DECL_DEALLOC_PARAM(x), int64_t num, _DE
 	//const %8 = 0 : int
 	_8 = 0;
 	//update %0[%8] = %1 : int[] -> int[]
-	x[_8] = num;
+	b[_8] = num;
 	//return %0
 	_DEALLOC(_2);
-	_DEALLOC(a);
+	_DEALLOC(c);
 	_DEALLOC(_6);
-	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(x);
-	return x;
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(b);
+	return b;
 	//goto blklab1
 	goto blklab1;
 //.blklab0
 blklab0:;
 	//return %3
-	_DEALLOC(x);
+	_DEALLOC(b);
 	_DEALLOC(_2);
 	_DEALLOC(_6);
-	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(a);
-	return a;
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(c);
+	return c;
 //.blklab1
 blklab1:;
 	//return
 }
 
 int main(int argc, char** args){
-	_DECL_1DARRAY(x);
-	_DECL_DEALLOC(x);
+	_DECL_1DARRAY(b);
+	_DECL_DEALLOC(b);
 	_DECL_1DARRAY(tmp);
 	_DECL_DEALLOC(tmp);
 	int64_t _3;
@@ -68,26 +68,17 @@ int main(int argc, char** args){
 	int64_t _9;
 	int64_t _10;
 	void* _11;
-	_DECL_1DARRAY(_13);
-	_DECL_DEALLOC(_13);
-	void* _14;
+	int64_t _13;
+	int64_t _14;
+	_DECL_1DARRAY(_15);
+	_DECL_DEALLOC(_15);
 	int64_t _16;
-	int64_t _17;
-	_DECL_1DARRAY(_18);
-	_DECL_DEALLOC(_18);
+	void* _17;
 	int64_t _19;
 	int64_t _20;
 	int64_t _21;
 	int64_t _22;
-	void* _23;
-	_DECL_1DARRAY(_25);
-	_DECL_DEALLOC(_25);
-	void* _26;
-	int64_t _28;
-	int64_t _29;
-	int64_t _30;
-	int64_t _31;
-	int64_t _32;
+	int64_t _23;
 	//const %3 = 2 : int
 	_3 = 2;
 	//const %4 = 3 : int
@@ -97,18 +88,18 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_5, _4, _3);
 	_ADD_DEALLOC(_5);
 	//assign %1 = %5  : int[]
-	_DEALLOC(x);
+	_DEALLOC(b);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(x, _5);
-	_TRANSFER_DEALLOC(x, _5);
+	_UPDATE_1DARRAY(b, _5);
+	_TRANSFER_DEALLOC(b, _5);
 	//const %7 = 11 : int
 	_7 = 11;
 	//invoke (%6) = (%1, %7) ResetMacro3:func : function(int[],int)->(int[])
 	{
 		_DEALLOC(_6);
 		// isCopyEliminated of '_1' = true
-		_6 = _func_(_1DARRAY_PARAM(x), false, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
-		_RESET_DEALLOC(_6, x, "true-true-false" , "func");
+		_6 = _func_(_1DARRAY_PARAM(b), false, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
+		_RESET_DEALLOC(_6, b, "true-true-false" , "func");
 	}
 	//assign %2 = %6  : int[]
 	_DEALLOC(tmp);
@@ -116,16 +107,16 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY(tmp, _6);
 	_TRANSFER_DEALLOC(tmp, _6);
 	//assign %1 = %2  : int[]
-	_DEALLOC(x);
+	_DEALLOC(b);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(x, tmp);
-	_TRANSFER_DEALLOC(x, tmp);
+	_UPDATE_1DARRAY(b, tmp);
+	_TRANSFER_DEALLOC(b, tmp);
 	//assert
 	{
 		//const %8 = 0 : int
 		_8 = 0;
 		//indexof %9 = %1, %8 : int[]
-		_9=x[_8];
+		_9=b[_8];
 		//const %10 = 11 : int
 		_10 = 11;
 		//ifeq %9, %10 goto blklab2 : int
@@ -138,50 +129,49 @@ blklab2:;
 	//assert
 	}
 	//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %12 = %11 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %13 = [120,91,48,93,32,61,32] : int[]
-	_DEALLOC(_13);
-	_NEW_1DARRAY_int64_t(_13, 7, 0);
-	_13[0] = 120; _13[1] = 91; _13[2] = 48; _13[3] = 93; _13[4] = 32; _13[5] = 61; _13[6] = 32; 
-	_ADD_DEALLOC(_13);
-	//indirectinvoke () = %12 (%13) : method(int[])->()
+	//fieldload %12 = %11 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %13 = 0 : int
+	_13 = 0;
+	//indexof %14 = %1, %13 : int[]
+	_14=b[_13];
+	//indirectinvoke () = %12 (%14) : method(any)->()
 	{
-		printf_s(_1DARRAY_PARAM(_13));
+		printf("%"PRId64"\n", _14);
 	}
-	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %15 = %14 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %16 = 0 : int
-	_16 = 0;
-	//indexof %17 = %1, %16 : int[]
-	_17=x[_16];
-	//indirectinvoke () = %15 (%17) : method(any)->()
+	//const %16 = 65536 : int
+	_16 = 65536;
+	//invoke (%15) = (%1, %16) ResetMacro3:func : function(int[],int)->(int[])
 	{
-		printf("%"PRId64"\n", _17);
-	}
-	//const %19 = 65536 : int
-	_19 = 65536;
-	//invoke (%18) = (%1, %19) ResetMacro3:func : function(int[],int)->(int[])
-	{
-		_DEALLOC(_18);
+		_DEALLOC(_15);
 		// isCopyEliminated of '_1' = true
-		_18 = _func_(_1DARRAY_PARAM(x), false, _19, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
-		_RESET_DEALLOC(_18, x, "true-true-false" , "func");
+		_15 = _func_(_1DARRAY_PARAM(b), false, _16, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
+		_RESET_DEALLOC(_15, b, "true-true-false" , "func");
 	}
-	//assign %1 = %18  : int[]
-	_DEALLOC(x);
+	//assign %1 = %15  : int[]
+	_DEALLOC(b);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(x, _18);
-	_TRANSFER_DEALLOC(x, _18);
+	_UPDATE_1DARRAY(b, _15);
+	_TRANSFER_DEALLOC(b, _15);
+	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %18 = %17 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %19 = 0 : int
+	_19 = 0;
+	//indexof %20 = %1, %19 : int[]
+	_20=b[_19];
+	//indirectinvoke () = %18 (%20) : method(any)->()
+	{
+		printf("%"PRId64"\n", _20);
+	}
 	//assert
 	{
-		//const %20 = 0 : int
-		_20 = 0;
-		//indexof %21 = %1, %20 : int[]
-		_21=x[_20];
-		//const %22 = 65536 : int
-		_22 = 65536;
-		//ifeq %21, %22 goto blklab3 : int
-		if(_21==_22){goto blklab3;}
+		//const %21 = 0 : int
+		_21 = 0;
+		//indexof %22 = %1, %21 : int[]
+		_22=b[_21];
+		//const %23 = 65536 : int
+		_23 = 65536;
+		//ifeq %22, %23 goto blklab3 : int
+		if(_22==_23){goto blklab3;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -189,52 +179,12 @@ blklab2:;
 blklab3:;
 	//assert
 	}
-	//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %24 = %23 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %25 = [120,91,48,93,32,61,32] : int[]
-	_DEALLOC(_25);
-	_NEW_1DARRAY_int64_t(_25, 7, 0);
-	_25[0] = 120; _25[1] = 91; _25[2] = 48; _25[3] = 93; _25[4] = 32; _25[5] = 61; _25[6] = 32; 
-	_ADD_DEALLOC(_25);
-	//indirectinvoke () = %24 (%25) : method(int[])->()
-	{
-		printf_s(_1DARRAY_PARAM(_25));
-	}
-	//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %27 = %26 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %28 = 0 : int
-	_28 = 0;
-	//indexof %29 = %1, %28 : int[]
-	_29=x[_28];
-	//indirectinvoke () = %27 (%29) : method(any)->()
-	{
-		printf("%"PRId64"\n", _29);
-	}
-	//assert
-	{
-		//const %30 = 0 : int
-		_30 = 0;
-		//indexof %31 = %1, %30 : int[]
-		_31=x[_30];
-		//const %32 = 65536 : int
-		_32 = 65536;
-		//ifeq %31, %32 goto blklab4 : int
-		if(_31==_32){goto blklab4;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab4
-blklab4:;
-	//assert
-	}
 	//return
-	_DEALLOC(x);
+	_DEALLOC(b);
 	_DEALLOC(tmp);
 	_DEALLOC(_5);
 	_DEALLOC(_6);
-	_DEALLOC(_13);
-	_DEALLOC(_18);
-	_DEALLOC(_25);
+	_DEALLOC(_15);
 	exit(0);
 }
 

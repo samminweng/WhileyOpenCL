@@ -453,7 +453,7 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 // Free ARGS
 #define _FREE_ARGS(a) \
     ({\
-        for(size_t i=0;i<=argc;i++){\
+        for(size_t i=0;i<a##_size;i++){\
             free(a[i]);\
             a[i] = NULL;\
         }\
