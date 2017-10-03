@@ -1,6 +1,6 @@
 import whiley.lang.*
 /*
-* The source code is from cashtill of Whiley benchmark suite 
+* The source code is from cashtill of Whiley benchmark suite
 * https://github.com/Whiley/WyBench/blob/master/src/015_cashtill/Main.whiley
 */
 type nat is (int n) where n >= 0
@@ -41,7 +41,7 @@ function Cash(nat[] coins) -> Cash
 requires all { i in 0..|coins| | coins[i] < |Value| }:
     Cash cash = [0,0,0,0,0,0,0,0]
     int i = 0
-    while i < |coins| 
+    while i < |coins|
         where |cash| == |Value| && all {k in 0..|cash| | cash[k] >= 0}:
         nat coin = coins[i]
         cash[coin] = cash[coin] + 1
@@ -50,7 +50,7 @@ requires all { i in 0..|coins| | coins[i] < |Value| }:
 
 /**
  * Given some cash, compute its total
- */ 
+ */
 function total(Cash c) -> int:
     int r = 0
     int i = 0
@@ -114,12 +114,12 @@ ensures total(r) == total(first) - total(second):
 /**
  * Determine the change to be returned to a customer from a given cash
  * till, assuming a certain cost for the item and the cash that was
- * actually given.  Observe that the specification for this method does 
- * not dictate how the change is to be computed --- only that it must 
- * have certain properties.  Finally, if exact change cannot be given 
+ * actually given.  Observe that the specification for this method does
+ * not dictate how the change is to be computed --- only that it must
+ * have certain properties.  Finally, if exact change cannot be given
  * from the till then null is returned.
  *
- * ENSURES:  if change returned, then it must be contained in till, and 
+ * ENSURES:  if change returned, then it must be contained in till, and
  *           the amount returned must equal the amount requested.
  */
 function calculateChange(Cash till, nat change) -> (null|Cash r)
@@ -136,14 +136,14 @@ ensures r is Cash ==> (contained(till,r) && total(r) == change):
             if till[i] > 0 && Value[i] <= change:
                 Cash tmp = till
                 // temporarily take coin out of till
-                tmp[i] = tmp[i] - 1 
+                tmp[i] = tmp[i] - 1
                 null|Cash chg = calculateChange(tmp,change - Value[i])
                 if chg != null:
                     // we have enough change
                     chg[i] = chg[i] + 1
                     return chg
             i = i + 1
-        // cannot give exact change :( 
+        // cannot give exact change :(
         return null
 /**
  * Print out cash in a friendly format
@@ -165,7 +165,7 @@ function toString(Cash c) -> ASCII.string:
     if r == "":
         r = "(nothing)"
     return r
-    
+
 constant Descriptions is [
     " 1c",
     " 5c",
@@ -181,27 +181,13 @@ constant Descriptions is [
  * Run through the sequence of a customer attempting to purchase an item
  * of a specified cost using a given amount of cash and a current till.
  */
-public method buy(System.Console console, Cash till, Cash given, int cost) -> Cash:
-    console.out.println_s("--")
-    console.out.print_s("Customer wants to purchase item for ")
-    console.out.print_s(Int.toString(cost))
-    console.out.println_s("c.")
-    console.out.print_s("Customer gives: ")
-    console.out.println_s(toString(given))
-    if total(given) < cost:
-        console.out.println_s("Customer has not given enough cash!")
-    else:
+ public method buy(System.Console console, Cash till, Cash given, int cost) -> Cash:
+     if total(given) >= cost:
         Cash|null change = calculateChange(till,total(given) - cost)
-        if change == null:
-            console.out.println_s("Cash till cannot give exact change!")
-        else:
-            console.out.print_s("Change given: ")
-            console.out.println_s(toString(change))
-            till = add(till,given)
-            till = subtract(till,change)
-            console.out.print_s("Till: ")
-            console.out.println_s(toString(till))
-    return till
+        if change != null:
+             till = add(till,given)
+             till = subtract(till,change)
+     return till
 
 /**
  * Test Harness
@@ -218,11 +204,13 @@ public method main(System.Console console):
             if repeat%2==1:
                 // Initialize till with an empty array
                 till = [5,3,3,1,1,3,0,0]
-            console.out.print_s("Till: ")
-            console.out.println_s(toString(till))
+            // console.out.print_s("Till: ")
+            // console.out.println_s(toString(till))
             // now, run through some sequences...
             till = buy(console,till,Cash([ONE_DOLLAR]),85)
             till = buy(console,till,Cash([ONE_DOLLAR]),105)
             till = buy(console,till,Cash([TEN_DOLLARS]),5)
             till = buy(console,till,Cash([FIVE_DOLLARS]),305)
+            // console.out.print_s("Till: ")
+            // console.out.println_s(toString(till))
             repeat = repeat + 1

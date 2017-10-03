@@ -4,7 +4,7 @@ uint32_t* _func_(uint32_t* x, size_t x_size, _DECL_DEALLOC_PARAM(x), uint32_t nu
 	int64_t* _2 = NULL; //domain(_2)	= [empty..empty]	
 	size_t _2_size = 0;
 	_DECL_DEALLOC(_2);
-	uint16_t* a = NULL; //domain(_3)	= [0..0]	
+	uint32_t* a = NULL; //domain(_3)	= [2..65536]	
 	size_t a_size = 0;
 	_DECL_DEALLOC(a);
 	uint16_t _4; //domain(_4)	= [0..0]	

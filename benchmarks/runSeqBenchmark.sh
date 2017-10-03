@@ -360,8 +360,8 @@ exec(){
 # exec MatrixMult original
 # ####exec MatrixMult original 12000 # Naive code runs out of memory
 # # ### Cashtill test case
-# #init Cashtill
-# #exec Cashtill original
+init Cashtill
+exec Cashtill original
 
 # # ### CoinGame test case ###
 ##init CoinGame
@@ -376,8 +376,8 @@ exec(){
 #exec LZ77 opt_decompress
 
 # # ###Sobel Edge test
-init SobelEdge
-exec SobelEdge original
+#init SobelEdge
+#exec SobelEdge original
 
 # # ## Fibonacci test case
 # # init Fibonacci

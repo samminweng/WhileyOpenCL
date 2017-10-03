@@ -552,3 +552,86 @@ DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_30" "x" "func" ) (LINE:28
 DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "x" "func" ) (LINE:179 FILE: CallerMacro5.c) in nocopy_dealloc folder	Frequency: 1
 DEBUG: Potential memory leaks at ( "false-true-true" "x"_tmp "func" ) (LINE:232 FILE: CallerMacro5.c) in nocopy_dealloc folder	Frequency: 1
 DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "x" "func" ) (LINE:232 FILE: CallerMacro5.c) in nocopy_dealloc folder	Frequency: 1
+fail	Frequency: 1
+   void* a_tmp;	Frequency: 2
+ResetMacro4.c: In function ‘main’:	Frequency: 1
+ResetMacro4.c:144:9: error: redeclaration of ‘a_tmp’ with no linkage	Frequency: 1
+         ^	Frequency: 2
+ResetMacro4.c:143:9: note: previous declaration of ‘a_tmp’ was here	Frequency: 1
+ResetMacro4.c:125:9: error: redeclaration of ‘a_tmp’ with no linkage	Frequency: 1
+   void* a_tmp;	Frequency: 2
+ResetMacro4.c: In function ‘main’:	Frequency: 1
+         ^	Frequency: 2
+ResetMacro4.c:124:9: note: previous declaration of ‘a_tmp’ was here	Frequency: 1
+fail	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_11" "a" "add" ) (LINE:157 FILE: ResetMacro4.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_11" "a" "add" ) (LINE:156 FILE: ResetMacro4.c) in nocopy_dealloc folder	Frequency: 1
+ResetMacro4.c:125:9: error: redeclaration of ‘a_tmp’ with no linkage	Frequency: 1
+   void* a_tmp;	Frequency: 2
+ResetMacro4.c: In function ‘main’:	Frequency: 1
+         ^	Frequency: 2
+ResetMacro4.c:124:9: note: previous declaration of ‘a_tmp’ was here	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_18" "x" "func" ) (LINE:180 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:123 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1

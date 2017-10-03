@@ -5,7 +5,7 @@ BEGIN {
 	FS = "\t";
 	# Test case name
 	##testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
-	testcases="SobelEdge";
+	testcases="Cashtill";
 	## Program Type
 	programs["Reverse"]="original";
 	programs["newTicTacToe"]="original";
@@ -78,7 +78,7 @@ BEGIN {
 		thread = t_array[9];
 	}else{
 		thread=t_array[8];
-	}	
+	}
 	# Generate key
 	key=testcase","program","compiler","pattern","parameter","codegen","code","thread;
 	count[key]++;

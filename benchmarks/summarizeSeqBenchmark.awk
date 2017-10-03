@@ -78,7 +78,7 @@ BEGIN {
 	FS = "\n";
 	## Test case name
 	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
-	testcases="SobelEdge";
+	testcases="Cashtill";
 
 	## Program Type
 	programs["Reverse"]="original";

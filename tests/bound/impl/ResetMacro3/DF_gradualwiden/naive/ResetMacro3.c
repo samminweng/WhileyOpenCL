@@ -3,7 +3,7 @@
 uint32_t* _func_(uint32_t* x, size_t x_size, uint32_t num, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	int64_t* _2 = NULL; //domain(_2)	= [empty..empty]	
 	size_t _2_size = 0;
-	uint16_t* a = NULL; //domain(_3)	= [0..0]	
+	uint32_t* a = NULL; //domain(_3)	= [2..65536]	
 	size_t a_size = 0;
 	uint16_t _4; //domain(_4)	= [0..0]	
 	uint16_t _5; //domain(_5)	= [3..3]	
@@ -18,7 +18,7 @@ uint32_t* _func_(uint32_t* x, size_t x_size, uint32_t num, _DECL_1DARRAYSIZE_PAR
 	//arraygen %6 = [4; 5] : int[]
 	_NEW_1DARRAY(_6, _5, _4, uint16_t);
 	//assign %3 = %6  : int[]
-	_COPY_1DARRAY(a, _6, uint16_t);
+	_COPY_1DARRAY(a, _6, uint32_t);
 	//const %7 = 10 : int
 	_7 = 10;
 	//ifle %1, %7 goto blklab0 : int

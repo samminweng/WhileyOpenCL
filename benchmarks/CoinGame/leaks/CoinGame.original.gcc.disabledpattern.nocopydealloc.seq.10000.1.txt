@@ -1,28 +1,28 @@
-==29354== Memcheck, a memory error detector
-==29354== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==29354== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==29354== Command: ./out/CoinGame.original.gcc.disabledpattern.nocopydealloc.seq.out 10000
-==29354== Parent PID: 29108
-==29354== 
-==29354== Warning: set address range perms: large range [0x5603040, 0x35141a60) (undefined)
-==29354== Invalid read of size 8
-==29354==    at 0x400DCA: _findMoves_ (CoinGame_original.c:109)
-==29354==    by 0x40153E: main (CoinGame_original.c:306)
-==29354==  Address 0x5603030 is 16 bytes before a block of size 800,320,032 alloc'd
-==29354==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==29354==    by 0x401F91: create1DArray_int64_t (Util.c:23)
-==29354==    by 0x401456: main (CoinGame_original.c:294)
-==29354== 
-==29354== Warning: set address range perms: large range [0x5603028, 0x35141a78) (noaccess)
-==29354== 
-==29354== HEAP SUMMARY:
-==29354==     in use at exit: 0 bytes in 0 blocks
-==29354==   total heap usage: 8 allocs, 8 frees, 800,401,704 bytes allocated
-==29354== 
-==29354== All heap blocks were freed -- no leaks are possible
-==29354== 
-==29354== For counts of detected and suppressed errors, rerun with: -v
-==29354== ERROR SUMMARY: 2 errors from 1 contexts (suppressed: 0 from 0)
+==30371== Memcheck, a memory error detector
+==30371== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==30371== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==30371== Command: ./out/CoinGame.original.gcc.disabledpattern.nocopydealloc.seq.out 10000
+==30371== Parent PID: 30043
+==30371== 
+==30371== Warning: set address range perms: large range [0x5603040, 0x35141a60) (undefined)
+==30371== Invalid read of size 8
+==30371==    at 0x400DCA: _findMoves_ (CoinGame_original.c:109)
+==30371==    by 0x40153E: main (CoinGame_original.c:306)
+==30371==  Address 0x5603030 is 16 bytes before a block of size 800,320,032 alloc'd
+==30371==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30371==    by 0x401F91: create1DArray_int64_t (Util.c:23)
+==30371==    by 0x401456: main (CoinGame_original.c:294)
+==30371== 
+==30371== Warning: set address range perms: large range [0x5603028, 0x35141a78) (noaccess)
+==30371== 
+==30371== HEAP SUMMARY:
+==30371==     in use at exit: 0 bytes in 0 blocks
+==30371==   total heap usage: 8 allocs, 8 frees, 800,401,704 bytes allocated
+==30371== 
+==30371== All heap blocks were freed -- no leaks are possible
+==30371== 
+==30371== For counts of detected and suppressed errors, rerun with: -v
+==30371== ERROR SUMMARY: 2 errors from 1 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -30,7 +30,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3893.132
+cpu MHz		: 3806.406
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -57,7 +57,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3893.929
+cpu MHz		: 3899.242
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -84,7 +84,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3883.304
+cpu MHz		: 3880.117
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -111,7 +111,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3900.171
+cpu MHz		: 3846.648
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -138,7 +138,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3892.601
+cpu MHz		: 3849.835
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -165,7 +165,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3881.976
+cpu MHz		: 3696.171
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -192,7 +192,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3893.398
+cpu MHz		: 3783.296
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -219,7 +219,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3770.679
+cpu MHz		: 3853.421
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

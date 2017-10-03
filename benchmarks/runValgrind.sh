@@ -292,12 +292,12 @@ exec(){
 # exec MatrixMult original
 
 # #### Cashtill test case
-#init Cashtill
-#exec Cashtill original
+init Cashtill
+exec Cashtill original
 
 # ### CoinGame test case ###
-init CoinGame
-exec CoinGame original
+#init CoinGame
+#exec CoinGame original
 
 # # # ###Sobel Edge test
 #init SobelEdge

@@ -53,7 +53,7 @@ public class CodeGenerationTestCase {
 	@Parameterized.Parameters(name = "{index}:{0}")
 	public static Collection<String> testCases() {
 		return Arrays.asList(new String[] { 
-				"rectangle",
+				/*"rectangle",
 				"swap",
 				"reverse",
 				"mergesort",
@@ -98,6 +98,8 @@ public class CodeGenerationTestCase {
 				"CallerMacro3", // Test case for 'Caller' macro
 				"CallerMacro4", // Test case for 'Caller' macro
 				"CallerMacro5", // Test case for 'Caller' macro
+				*/
+				"ResetMacro4", // Test case for 'RESET' macro
 		});
 	}
 

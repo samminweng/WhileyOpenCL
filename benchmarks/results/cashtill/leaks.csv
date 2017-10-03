@@ -1,14 +1,14 @@
 Memory Leak (bytes)
 TestCase	ProgramType	Compiler	Pattern	Parameter	CodeGen	Code	Thread	definite loss	indirect loss	possible loss	reachable loss
-Cashtill	original	gcc	disabled	100	naive	seq	1	985618672	278400	448	1736
+Cashtill	original	gcc	disabled	100	naive	seq	1	983729664	0	384	1208
 Cashtill	original	gcc	disabled	100	naivedealloc	seq	1	0	0	0	0
-Cashtill	original	gcc	disabled	100	nocopy	seq	1	738854736	278400	384	928
+Cashtill	original	gcc	disabled	100	nocopy	seq	1	737711264	0	320	464
 Cashtill	original	gcc	disabled	100	nocopydealloc	seq	1	0	0	0	0
-Cashtill	original	gcc	disabled	200	naive	seq	1	1971239408	556800	512	1736
+Cashtill	original	gcc	disabled	200	naive	seq	1	1967460800	0	448	1208
 Cashtill	original	gcc	disabled	200	naivedealloc	seq	1	0	0	0	0
-Cashtill	original	gcc	disabled	200	nocopy	seq	1	1477710608	556800	512	928
+Cashtill	original	gcc	disabled	200	nocopy	seq	1	1475423200	0	384	464
 Cashtill	original	gcc	disabled	200	nocopydealloc	seq	1	0	0	0	0
-Cashtill	original	gcc	disabled	300	naive	seq	1	2956860144	835200	576	1736
+Cashtill	original	gcc	disabled	300	naive	seq	1	2951191936	0	512	1208
 Cashtill	original	gcc	disabled	300	naivedealloc	seq	1	0	0	0	0
-Cashtill	original	gcc	disabled	300	nocopy	seq	1	2216566480	835200	640	928
+Cashtill	original	gcc	disabled	300	nocopy	seq	1	2213135072	0	512	464
 Cashtill	original	gcc	disabled	300	nocopydealloc	seq	1	0	0	0	0

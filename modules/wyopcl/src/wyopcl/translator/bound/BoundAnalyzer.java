@@ -477,35 +477,44 @@ public class BoundAnalyzer {
 		Bounds bnds = graph.produceFinalBound();
 
 		// Update the final bounds if copy analysis enabled because some variables are aliased
-		if (copyAnalyzer.isPresent()) {
-			if (this.aliasedMap.containsKey(function)) {
-				// Go through each aliased register in aliasedMap
-				ArrayList<Set<Integer>> list = this.aliasedMap.get(function);
-				for (Set<Integer> aliasedSet : list) {
-					// Find the larger domain among all aliased variables
-					Domain largerDomain = null;
+		//if (copyAnalyzer.isPresent()) {
+		if (this.aliasedMap.containsKey(function)) {
+			// Go through each aliased register in aliasedMap
+			ArrayList<Set<Integer>> list = this.aliasedMap.get(function);
+			for (Set<Integer> aliasedSet : list) {
+				// Find the larger domain among all aliased variables
+				Domain largerDomain = null;
 
-					// Go through each domain and produce the larger domain.
-					for (Integer reg : aliasedSet) {
-						// Get the domain
-						Domain d = bnds.getDomain(prefix + reg);
-						if (largerDomain == null) {
-							largerDomain = d;
-						} else if (largerDomain.compareTo(d) < 0) {
-							largerDomain = d;
-						}
+				// Go through each domain and produce the larger domain.
+				for (Integer reg : aliasedSet) {
+					// Get the domain
+					Domain d;
+					if(reg == -1){// Return variable
+						d = bnds.getDomain("return");
+					}else{
+						d = bnds.getDomain(prefix + reg);
 					}
+					
+					// Find the larger domains
+					if (largerDomain == null) {
+						largerDomain = d;
+					} else if (largerDomain.compareTo(d) < 0) {
+						largerDomain = d;
+					}
+				}
 
-					// Update domains of all aliased variables with larger Domain.
-					BigInteger lower_bound = largerDomain.getLower();
-					BigInteger upper_bound = largerDomain.getUpper();
-					for (Integer reg : aliasedSet) {
+				// Update domains of all aliased variables with larger Domain.
+				BigInteger lower_bound = largerDomain.getLower();
+				BigInteger upper_bound = largerDomain.getUpper();
+				for (Integer reg : aliasedSet) {
+					if(reg >0){// Update the bounds of alised variables
 						bnds.setLowerBound(prefix + reg, lower_bound);
 						bnds.setUpperBound(prefix + reg, upper_bound);
 					}
 				}
 			}
 		}
+		//}
 
 		if (isVerbose) {
 			BoundAnalyzerHelper.printBoundsAndSize(function, bnds);
@@ -797,6 +806,41 @@ public class BoundAnalyzer {
 					return_block.addVar(retOp);
 					// Put the code to return blk
 					return_block.addCode(code);
+					
+					// Alias return variable with retOp
+					// Alias lhs and rhs registers
+					if (!this.aliasedMap.containsKey(function)) {
+						this.aliasedMap.put(function, new ArrayList<Set<Integer>>());
+					}
+					
+					ArrayList<Set<Integer>> list = this.aliasedMap.get(function);
+					
+					// The register of return variable is -1
+					int r = -1; 
+
+					// Find the aliased set in the list
+					boolean isFound = false;
+					for (Set<Integer> set : list) {
+						if (set.contains(r)) {
+							// Alias l_reg and r_reg
+							set.add(r);
+							set.add(code.operand(0));
+							isFound = true;
+						}
+					}
+
+					// If not found, create a new one.
+					if (!isFound) {
+						Set<Integer> set = new HashSet<Integer>();
+						// Alias l_reg and r_reg
+						set.add(r);
+						set.add(code.operand(0));
+						// Add to arraylist
+						list.add(set);
+					}
+
+					// Update the aliased Map
+					this.aliasedMap.put(function, list);
 				}
 
 				// Connect the current block with exit block.
