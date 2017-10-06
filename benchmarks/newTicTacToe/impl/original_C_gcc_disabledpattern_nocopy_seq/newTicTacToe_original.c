@@ -64,9 +64,7 @@ Board* _EmptyBoard_(){
 	_11[0] = _2; _11[1] = _3; _11[2] = _4; _11[3] = _5; _11[4] = _6; _11[5] = _7; _11[6] = _8; _11[7] = _9; _11[8] = _10; 
 	//newrecord %12 = (%1, %11) : {int move,int[] pieces}
 	_12 = malloc(sizeof(Board));
-	// isCopyEliminated = true
 	_12->move = _1;
-	// isCopyEliminated = true
 	_UPDATE_1DARRAY(_12->pieces, _11);
 	//return %12
 	return _12;
@@ -254,7 +252,6 @@ blklab19:;
 			//const %22 = 1 : int
 			_22 = 1;
 			//update %4.pieces[%7] = %22 : {int move,int[] pieces} -> {int move,int[] pieces}
-			// isCopyEliminated = true
 			b1->pieces[p] = _22;
 			//fieldload %23 = %4 move : {int move,int[] pieces}
 			_23 = b1->move;
@@ -263,7 +260,6 @@ blklab19:;
 			//add %25 = %23, %24 : int
 			_25=_23+_24;
 			//update %4.move = %25 : {int move,int[] pieces} -> {int move,int[] pieces}
-			// isCopyEliminated = true
 			b1->move = _25;
 			//assign %5 = %4  : {int move,int[] pieces}
 			// isCopyEliminated = false
@@ -282,7 +278,6 @@ blklab22:;
 			//const %27 = 2 : int
 			_27 = 2;
 			//update %5.pieces[%7] = %27 : {int move,int[] pieces} -> {int move,int[] pieces}
-			// isCopyEliminated = true
 			b2->pieces[p] = _27;
 			//fieldload %28 = %5 move : {int move,int[] pieces}
 			_28 = b2->move;
@@ -291,7 +286,6 @@ blklab22:;
 			//add %30 = %28, %29 : int
 			_30=_28+_29;
 			//update %5.move = %30 : {int move,int[] pieces} -> {int move,int[] pieces}
-			// isCopyEliminated = true
 			b2->move = _30;
 			//assign %4 = %5  : {int move,int[] pieces}
 			// isCopyEliminated = true

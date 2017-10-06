@@ -423,7 +423,7 @@ blklab25:;
 		//invoke (%17) = (%4, %20) cashtill:calculateChange : function(cashtill:Cash,cashtill:nat)->(cashtill:Cash|null)
 		{
 			// isCopyEliminated of '_4' = true
-			_17 = _calculateChange_(_1DARRAY_PARAM(tmp), _20, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_17));
+			_17 = _calculateChange_(tmp, tmp_size, _20, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_17));
 		}
 		//assign %5 = %17  : null|int[]
 		// isCopyEliminated = true
@@ -534,7 +534,7 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERE
 		_14[0] = 44; _14[1] = 32; 
 		//invoke (%13) = (%2, %14) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
-			_13 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_14), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_13));
+			_13 = Array_Append(r, r_size , _14, _14_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_13));
 		}
 		//assign %2 = %13  : int[]
 		// isCopyEliminated = true
@@ -552,7 +552,7 @@ blklab34:;
 		}
 		//invoke (%16) = (%2, %17) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
-			_16 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_17), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
+			_16 = Array_Append(r, r_size , _17, _17_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		}
 		//assign %2 = %16  : int[]
 		// isCopyEliminated = true
@@ -562,7 +562,7 @@ blklab34:;
 		_19[0] = 32; _19[1] = 120; _19[2] = 32; 
 		//invoke (%18) = (%2, %19) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
-			_18 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_19), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
+			_18 = Array_Append(r, r_size , _19, _19_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
 		}
 		//assign %2 = %18  : int[]
 		// isCopyEliminated = true
@@ -607,7 +607,7 @@ blklab34:;
 		_22_size = _21_size_size;
 		//invoke (%20) = (%2, %22) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
-			_20 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_22), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
+			_20 = Array_Append(r, r_size , _22, _22_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
 		}
 		//assign %2 = %20  : int[]
 		// isCopyEliminated = true
@@ -693,7 +693,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_1DARRAY_PARAM(giv
 	_11[0] = 67; _11[1] = 117; _11[2] = 115; _11[3] = 116; _11[4] = 111; _11[5] = 109; _11[6] = 101; _11[7] = 114; _11[8] = 32; _11[9] = 119; _11[10] = 97; _11[11] = 110; _11[12] = 116; _11[13] = 115; _11[14] = 32; _11[15] = 116; _11[16] = 111; _11[17] = 32; _11[18] = 112; _11[19] = 117; _11[20] = 114; _11[21] = 99; _11[22] = 104; _11[23] = 97; _11[24] = 115; _11[25] = 101; _11[26] = 32; _11[27] = 105; _11[28] = 116; _11[29] = 101; _11[30] = 109; _11[31] = 32; _11[32] = 102; _11[33] = 111; _11[34] = 114; _11[35] = 32; 
 	//indirectinvoke () = %10 (%11) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_11));
+		printf_s(_11, _11_size);
 	}
 	//fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %13 = %12 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -703,7 +703,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_1DARRAY_PARAM(giv
 	}
 	//indirectinvoke () = %13 (%14) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_14));
+		printf_s(_14, _14_size);
 	}
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %16 = %15 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -721,14 +721,14 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_1DARRAY_PARAM(giv
 	_20[0] = 67; _20[1] = 117; _20[2] = 115; _20[3] = 116; _20[4] = 111; _20[5] = 109; _20[6] = 101; _20[7] = 114; _20[8] = 32; _20[9] = 103; _20[10] = 105; _20[11] = 118; _20[12] = 101; _20[13] = 115; _20[14] = 58; _20[15] = 32; 
 	//indirectinvoke () = %19 (%20) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_20));
+		printf_s(_20, _20_size);
 	}
 	//fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %22 = %21 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%23) = (%2) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
 		// isCopyEliminated of '_2' = true
-		_23 = _toString_(_1DARRAY_PARAM(given), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
+		_23 = _toString_(given, given_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 	}
 	//indirectinvoke () = %22 (%23) : method(int[])->()
 	{
@@ -737,7 +737,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_1DARRAY_PARAM(giv
 	//invoke (%24) = (%2) cashtill:total : function(cashtill:Cash)->(int)
 	{
 		// isCopyEliminated of '_2' = true
-		_24 = _total_(_1DARRAY_PARAM(given));
+		_24 = _total_(given, given_size);
 	}
 	//ifge %24, %3 goto blklab36 : int
 	if(_24>=cost){goto blklab36;}
@@ -757,14 +757,14 @@ blklab36:;
 	//invoke (%29) = (%2) cashtill:total : function(cashtill:Cash)->(int)
 	{
 		// isCopyEliminated of '_2' = true
-		_29 = _total_(_1DARRAY_PARAM(given));
+		_29 = _total_(given, given_size);
 	}
 	//sub %30 = %29, %3 : int
 	_30=_29-cost;
 	//invoke (%28) = (%1, %30) cashtill:calculateChange : function(cashtill:Cash,cashtill:nat)->(cashtill:Cash|null)
 	{
 		// isCopyEliminated of '_1' = true
-		_28 = _calculateChange_(_1DARRAY_PARAM(till), _30, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
+		_28 = _calculateChange_(till, till_size, _30, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 	}
 	//assign %5 = %28  : null|int[]
 	// isCopyEliminated = true
@@ -795,14 +795,14 @@ blklab38:;
 	_36[0] = 67; _36[1] = 104; _36[2] = 97; _36[3] = 110; _36[4] = 103; _36[5] = 101; _36[6] = 32; _36[7] = 103; _36[8] = 105; _36[9] = 118; _36[10] = 101; _36[11] = 110; _36[12] = 58; _36[13] = 32; 
 	//indirectinvoke () = %35 (%36) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_36));
+		printf_s(_36, _36_size);
 	}
 	//fieldload %37 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %38 = %37 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%39) = (%5) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
 		// isCopyEliminated of '_5' = true
-		_39 = _toString_(_1DARRAY_PARAM(change), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_39));
+		_39 = _toString_(change, change_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_39));
 	}
 	//indirectinvoke () = %38 (%39) : method(int[])->()
 	{
@@ -812,7 +812,7 @@ blklab38:;
 	{
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_2' = true
-		_40 = _add_(_1DARRAY_PARAM(till), _1DARRAY_PARAM(given), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_40));
+		_40 = _add_(till, till_size, given, given_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_40));
 	}
 	//assign %1 = %40  : int[]
 	// isCopyEliminated = true
@@ -821,7 +821,7 @@ blklab38:;
 	{
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_5' = true
-		_41 = _subtract_(_1DARRAY_PARAM(till), _1DARRAY_PARAM(change), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_41));
+		_41 = _subtract_(till, till_size, change, change_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_41));
 	}
 	//assign %1 = %41  : int[]
 	// isCopyEliminated = true
@@ -833,14 +833,14 @@ blklab38:;
 	_44[0] = 84; _44[1] = 105; _44[2] = 108; _44[3] = 108; _44[4] = 58; _44[5] = 32; 
 	//indirectinvoke () = %43 (%44) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_44));
+		printf_s(_44, _44_size);
 	}
 	//fieldload %45 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %46 = %45 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%47) = (%1) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
 		// isCopyEliminated of '_1' = true
-		_47 = _toString_(_1DARRAY_PARAM(till), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_47));
+		_47 = _toString_(till, till_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_47));
 	}
 	//indirectinvoke () = %46 (%47) : method(int[])->()
 	{
@@ -920,14 +920,14 @@ int main(int argc, char** args){
 	_13[0] = 84; _13[1] = 105; _13[2] = 108; _13[3] = 108; _13[4] = 58; _13[5] = 32; 
 	//indirectinvoke () = %12 (%13) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_13));
+		printf_s(_13, _13_size);
 	}
 	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %15 = %14 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%16) = (%1) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
 		// isCopyEliminated of '_1' = true
-		_16 = _toString_(_1DARRAY_PARAM(till), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
+		_16 = _toString_(till, till_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 	}
 	//indirectinvoke () = %15 (%16) : method(int[])->()
 	{
@@ -941,7 +941,7 @@ int main(int argc, char** args){
 	//invoke (%18) = (%20) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
 		// isCopyEliminated of '_20' = true
-		_18 = _Cash_1_(_1DARRAY_PARAM(_20), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
+		_18 = _Cash_1_(_20, _20_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
 	}
 	//const %21 = 85 : int
 	_21 = 85;
@@ -949,7 +949,7 @@ int main(int argc, char** args){
 	{
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_18' = true
-		_17 = _buy_(stdout, _1DARRAY_PARAM(till), _1DARRAY_PARAM(_18), _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_17));
+		_17 = _buy_(stdout, till, till_size, _18, _18_size, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_17));
 	}
 	//assign %1 = %17  : int[]
 	// isCopyEliminated = true
@@ -962,7 +962,7 @@ int main(int argc, char** args){
 	//invoke (%23) = (%25) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
 		// isCopyEliminated of '_25' = true
-		_23 = _Cash_1_(_1DARRAY_PARAM(_25), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
+		_23 = _Cash_1_(_25, _25_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 	}
 	//const %26 = 105 : int
 	_26 = 105;
@@ -970,7 +970,7 @@ int main(int argc, char** args){
 	{
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_23' = true
-		_22 = _buy_(stdout, _1DARRAY_PARAM(till), _1DARRAY_PARAM(_23), _26, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
+		_22 = _buy_(stdout, till, till_size, _23, _23_size, _26, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
 	}
 	//assign %1 = %22  : int[]
 	// isCopyEliminated = true
@@ -983,7 +983,7 @@ int main(int argc, char** args){
 	//invoke (%28) = (%30) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
 		// isCopyEliminated of '_30' = true
-		_28 = _Cash_1_(_1DARRAY_PARAM(_30), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
+		_28 = _Cash_1_(_30, _30_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 	}
 	//const %31 = 5 : int
 	_31 = 5;
@@ -991,7 +991,7 @@ int main(int argc, char** args){
 	{
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_28' = true
-		_27 = _buy_(stdout, _1DARRAY_PARAM(till), _1DARRAY_PARAM(_28), _31, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
+		_27 = _buy_(stdout, till, till_size, _28, _28_size, _31, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 	}
 	//assign %1 = %27  : int[]
 	// isCopyEliminated = true
@@ -1004,7 +1004,7 @@ int main(int argc, char** args){
 	//invoke (%33) = (%35) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
 		// isCopyEliminated of '_35' = true
-		_33 = _Cash_1_(_1DARRAY_PARAM(_35), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
+		_33 = _Cash_1_(_35, _35_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
 	}
 	//const %36 = 305 : int
 	_36 = 305;
@@ -1012,7 +1012,7 @@ int main(int argc, char** args){
 	{
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_33' = true
-		_32 = _buy_(stdout, _1DARRAY_PARAM(till), _1DARRAY_PARAM(_33), _36, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_32));
+		_32 = _buy_(stdout, till, till_size, _33, _33_size, _36, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_32));
 	}
 	//assign %1 = %32  : int[]
 	// isCopyEliminated = true

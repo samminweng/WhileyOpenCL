@@ -114,7 +114,7 @@ blklab2:;
 	_10[0] = 97; _10[1] = 91; _10[2] = 48; _10[3] = 93; _10[4] = 32; _10[5] = 61; _10[6] = 32; 
 	//indirectinvoke () = %9 (%10) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_10));
+		printf_s(_10, _10_size);
 	}
 	//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %12 = %11 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -158,7 +158,7 @@ blklab3:;
 	_22[0] = 98; _22[1] = 91; _22[2] = 48; _22[3] = 93; _22[4] = 32; _22[5] = 61; _22[6] = 32; 
 	//indirectinvoke () = %21 (%22) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_22));
+		printf_s(_22, _22_size);
 	}
 	//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %24 = %23 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

@@ -253,7 +253,7 @@ void _printMat_(FILE* sys, Matrix* A){
 			_15[0] = 32; 
 			//indirectinvoke () = %14 (%15) : method(int[])->()
 			{
-				printf_s(_1DARRAY_PARAM(_15));
+				printf_s(_15, _15_size);
 			}
 			//const %16 = 1 : int
 			_16 = 1;

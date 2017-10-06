@@ -194,7 +194,7 @@ blklab13:;
 	//invoke (%34) = (%35, %36, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
 	{
 		// isCopyEliminated of '_3' = true
-		_34 = _matrix_(_35, _36, _2DARRAY_PARAM(C_data));
+		_34 = _matrix_(_35, _36, C_data, C_data_size, C_data_size_size);
 	}
 	//return %34
 	return _34;
@@ -263,7 +263,7 @@ void _printMat_(FILE* sys, Matrix* A){
 			_15[0] = 32; 
 			//indirectinvoke () = %14 (%15) : method(int[])->()
 			{
-				printf_s(_1DARRAY_PARAM(_15));
+				printf_s(_15, _15_size);
 			}
 			//const %16 = 1 : int
 			_16 = 1;
@@ -372,7 +372,7 @@ blklab23:;
 	//invoke (%15) = (%1, %0, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
 	{
 		// isCopyEliminated of '_3' = true
-		_15 = _matrix_(width, height, _2DARRAY_PARAM(rows));
+		_15 = _matrix_(width, height, rows, rows_size, rows_size_size);
 	}
 	//return %15
 	return _15;

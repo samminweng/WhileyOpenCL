@@ -43,7 +43,7 @@ blklab0:;
 	//invoke (%8) = (%0, %10) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
 		// isCopyEliminated of '_0' = true
-		_8 = _fibonacci_(_1DARRAY_PARAM(ls), _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
+		_8 = _fibonacci_(ls, ls_size, _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 	}
 	//assign %0 = %8  : int[]
 	// isCopyEliminated = true
@@ -114,7 +114,7 @@ int main(int argc, char** args){
 	//invoke (%6) = (%2, %8) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
 		// isCopyEliminated of '_2' = true
-		_6 = _fibonacci_(_1DARRAY_PARAM(arr), _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
+		_6 = _fibonacci_(arr, arr_size, _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 	}
 	//assign %2 = %6  : int[]
 	// isCopyEliminated = true
@@ -166,7 +166,7 @@ blklab2:;
 	_24[0] = 80; _24[1] = 97; _24[2] = 115; _24[3] = 115; _24[4] = 32; _24[5] = 70; _24[6] = 105; _24[7] = 98; _24[8] = 111; _24[9] = 110; _24[10] = 97; _24[11] = 99; _24[12] = 99; _24[13] = 105; _24[14] = 32; _24[15] = 116; _24[16] = 101; _24[17] = 115; _24[18] = 116; _24[19] = 32; _24[20] = 99; _24[21] = 97; _24[22] = 115; _24[23] = 101; 
 	//indirectinvoke () = %23 (%24) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_24));
+		printf_s(_24, _24_size);
 	}
 	//return
 	exit(0);

@@ -152,7 +152,7 @@ blklab2:;
 		_DEALLOC(_11);
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_1' = true
-		_11 = _add_(_1DARRAY_PARAM(a), false, _1DARRAY_PARAM(a), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
+		_11 = _add_(a, a_size, false, a, a_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		_RESET_DEALLOC(_11, a, "true-true-false" , "add");
 		_RESET_DEALLOC(_11, a, "true-true-false" , "add");
 	}

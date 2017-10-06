@@ -376,7 +376,7 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM
 			{
 				// isCopyEliminated of '_0' = true
 				// isCopyEliminated of '_6' = true
-				_47 = _convolution_(_1DARRAY_PARAM(pixels), false, width, height, x, y, _1DARRAY_PARAM(v_sobel), false);
+				_47 = _convolution_(pixels, pixels_size, false, width, height, x, y, v_sobel, v_sobel_size, false);
 				_RETAIN_DEALLOC(pixels, "false-false-true" , "convolution");
 				_RETAIN_DEALLOC(v_sobel, "false-false-true" , "convolution");
 			}
@@ -387,7 +387,7 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM
 			{
 				// isCopyEliminated of '_0' = true
 				// isCopyEliminated of '_7' = true
-				_48 = _convolution_(_1DARRAY_PARAM(pixels), false, width, height, x, y, _1DARRAY_PARAM(h_sobel), false);
+				_48 = _convolution_(pixels, pixels_size, false, width, height, x, y, h_sobel, h_sobel_size, false);
 				_RETAIN_DEALLOC(pixels, "false-false-true" , "convolution");
 				_RETAIN_DEALLOC(h_sobel, "false-false-true" , "convolution");
 			}
@@ -513,7 +513,7 @@ void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t 
 	_ADD_DEALLOC(_14);
 	//indirectinvoke () = %13 (%14) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_14));
+		printf_s(_14, _14_size);
 	}
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %16 = %15 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -583,7 +583,7 @@ blklab18:;
 			_ADD_DEALLOC(_31);
 			//indirectinvoke () = %30 (%31) : method(int[])->()
 			{
-				printf_s(_1DARRAY_PARAM(_31));
+				printf_s(_31, _31_size);
 			}
 			//const %32 = 1 : int
 			_32 = 1;
@@ -690,7 +690,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC(_14);
 		// isCopyEliminated of '_5' = true
-		_14 = _sobelEdgeDetection_(_1DARRAY_PARAM(pixels), false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_14));
+		_14 = _sobelEdgeDetection_(pixels, pixels_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_14));
 		_RETAIN_DEALLOC(pixels, "false-false-false" , "sobelEdgeDetection");
 		_14_dealloc = true;
 	}
@@ -702,7 +702,7 @@ int main(int argc, char** args){
 	//invoke () = (%0, %2, %3, %6) SobelEdge1:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
 		// isCopyEliminated of '_6' = true
-		_print_pbm_(stdout, width, height, _1DARRAY_PARAM(newPixels), false);
+		_print_pbm_(stdout, width, height, newPixels, newPixels_size, false);
 		_RETAIN_DEALLOC(newPixels, "false-false-false" , "print_pbm");
 	}
 	//return

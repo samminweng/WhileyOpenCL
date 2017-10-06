@@ -392,7 +392,7 @@ blklab11:;
 	_ADD_DEALLOC(_15);
 	//indirectinvoke () = %14 (%15) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_15));
+		printf_s(_15, _15_size);
 	}
 	//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %17 = %16 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

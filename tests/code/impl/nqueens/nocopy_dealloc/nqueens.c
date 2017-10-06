@@ -435,7 +435,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC_STRUCT(_11, NQueen);
 		// isCopyEliminated of '_2' = true
-		_11 = _nqueen_(num_solutions, _1DARRAY_PARAM(queens), false);
+		_11 = _nqueen_(num_solutions, queens, queens_size, false);
 		_RESET_DEALLOC(_11, queens, "false-true-false" , "nqueen");
 		queens_dealloc = false;
 	}
@@ -494,7 +494,7 @@ blklab23:;
 	_ADD_DEALLOC(_21);
 	//indirectinvoke () = %20 (%21) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_21));
+		printf_s(_21, _21_size);
 	}
 	//fieldload %22 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %23 = %22 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -511,7 +511,7 @@ blklab23:;
 	_ADD_DEALLOC(_26);
 	//indirectinvoke () = %25 (%26) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_26));
+		printf_s(_26, _26_size);
 	}
 	//fieldload %27 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %28 = %27 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

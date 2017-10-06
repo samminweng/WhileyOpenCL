@@ -788,7 +788,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_24);
 	//indirectinvoke () = %23 (%24) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_24));
+		printf_s(_24, _24_size);
 	}
 	//fieldload %25 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %26 = %25 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

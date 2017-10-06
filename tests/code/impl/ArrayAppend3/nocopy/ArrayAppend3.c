@@ -67,7 +67,7 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERE
 		_14[0] = 44; _14[1] = 32; 
 		//invoke (%13) = (%2, %14) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
-			_13 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_14), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_13));
+			_13 = Array_Append(r, r_size , _14, _14_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_13));
 		}
 		//assign %2 = %13  : int[]
 		// isCopyEliminated = true
@@ -85,7 +85,7 @@ blklab5:;
 		}
 		//invoke (%16) = (%2, %17) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
-			_16 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_17), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
+			_16 = Array_Append(r, r_size , _17, _17_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		}
 		//assign %2 = %16  : int[]
 		// isCopyEliminated = true
@@ -95,7 +95,7 @@ blklab5:;
 		_19[0] = 32; _19[1] = 120; _19[2] = 32; 
 		//invoke (%18) = (%2, %19) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
-			_18 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_19), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
+			_18 = Array_Append(r, r_size , _19, _19_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
 		}
 		//assign %2 = %18  : int[]
 		// isCopyEliminated = true
@@ -140,7 +140,7 @@ blklab5:;
 		_22_size = _21_size_size;
 		//invoke (%20) = (%2, %22) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
-			_20 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_22), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
+			_20 = Array_Append(r, r_size , _22, _22_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
 		}
 		//assign %2 = %20  : int[]
 		// isCopyEliminated = true
@@ -221,14 +221,14 @@ int main(int argc, char** args){
 	_13[0] = 84; _13[1] = 105; _13[2] = 108; _13[3] = 108; _13[4] = 58; _13[5] = 32; 
 	//indirectinvoke () = %12 (%13) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_13));
+		printf_s(_13, _13_size);
 	}
 	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %15 = %14 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%16) = (%1) ArrayAppend3:toString : function(ArrayAppend3:Cash)->(whiley/lang/ASCII:string)
 	{
 		// isCopyEliminated of '_1' = true
-		_16 = _toString_(_1DARRAY_PARAM(till), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
+		_16 = _toString_(till, till_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 	}
 	//indirectinvoke () = %15 (%16) : method(int[])->()
 	{

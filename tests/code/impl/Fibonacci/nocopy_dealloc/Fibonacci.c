@@ -46,7 +46,7 @@ blklab0:;
 	{
 		_DEALLOC(_8);
 		// isCopyEliminated of '_0' = true
-		_8 = _fibonacci_(_1DARRAY_PARAM(ls), false, _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
+		_8 = _fibonacci_(ls, ls_size, false, _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_RESET_DEALLOC(_8, ls, "true-true-false" , "fibonacci");
 	}
 	//assign %0 = %8  : int[]
@@ -132,7 +132,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC(_6);
 		// isCopyEliminated of '_2' = true
-		_6 = _fibonacci_(_1DARRAY_PARAM(arr), false, _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
+		_6 = _fibonacci_(arr, arr_size, false, _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		_RESET_DEALLOC(_6, arr, "true-true-false" , "fibonacci");
 	}
 	//assign %2 = %6  : int[]
@@ -191,7 +191,7 @@ blklab2:;
 	_ADD_DEALLOC(_24);
 	//indirectinvoke () = %23 (%24) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_24));
+		printf_s(_24, _24_size);
 	}
 	//return
 	_DEALLOC(arr);

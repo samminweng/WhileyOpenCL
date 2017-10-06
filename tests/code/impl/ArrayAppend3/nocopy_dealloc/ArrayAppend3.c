@@ -88,7 +88,7 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRA
 		//invoke (%13) = (%2, %14) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
 			_DEALLOC(_13);
-			_13 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_14), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_13));
+			_13 = Array_Append(r, r_size , _14, _14_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_13));
 			_ADD_DEALLOC(_13);
 		}
 		//assign %2 = %13  : int[]
@@ -112,7 +112,7 @@ blklab5:;
 		//invoke (%16) = (%2, %17) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
 			_DEALLOC(_16);
-			_16 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_17), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
+			_16 = Array_Append(r, r_size , _17, _17_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 			_ADD_DEALLOC(_16);
 		}
 		//assign %2 = %16  : int[]
@@ -128,7 +128,7 @@ blklab5:;
 		//invoke (%18) = (%2, %19) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
 			_DEALLOC(_18);
-			_18 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_19), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
+			_18 = Array_Append(r, r_size , _19, _19_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
 			_ADD_DEALLOC(_18);
 		}
 		//assign %2 = %18  : int[]
@@ -180,7 +180,7 @@ blklab5:;
 		//invoke (%20) = (%2, %22) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
 			_DEALLOC(_20);
-			_20 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_22), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
+			_20 = Array_Append(r, r_size , _22, _22_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
 			_ADD_DEALLOC(_20);
 		}
 		//assign %2 = %20  : int[]
@@ -294,7 +294,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_13);
 	//indirectinvoke () = %12 (%13) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_13));
+		printf_s(_13, _13_size);
 	}
 	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %15 = %14 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -302,7 +302,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC(_16);
 		// isCopyEliminated of '_1' = true
-		_16 = _toString_(_1DARRAY_PARAM(till), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
+		_16 = _toString_(till, till_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		_RETAIN_DEALLOC(till, "false-false-false" , "toString");
 		_16_dealloc = true;
 	}

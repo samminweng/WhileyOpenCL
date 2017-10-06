@@ -235,7 +235,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC(_11);
 		// isCopyEliminated of '_1' = true
-		_11 = _bubbleSort_(_1DARRAY_PARAM(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
+		_11 = _bubbleSort_(ys, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		_RESET_DEALLOC(_11, ys, "true-true-false" , "bubbleSort");
 	}
 	//assign %1 = %11  : int[]
@@ -297,7 +297,7 @@ blklab5:;
 	{
 		_DEALLOC(_25);
 		// isCopyEliminated of '_1' = true
-		_25 = _bubbleSort_(_1DARRAY_PARAM(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
+		_25 = _bubbleSort_(ys, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 		_RESET_DEALLOC(_25, ys, "true-true-false" , "bubbleSort");
 	}
 	//assign %1 = %25  : int[]
@@ -357,7 +357,7 @@ blklab6:;
 	{
 		_DEALLOC(_38);
 		// isCopyEliminated of '_1' = true
-		_38 = _bubbleSort_(_1DARRAY_PARAM(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
+		_38 = _bubbleSort_(ys, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 		_RESET_DEALLOC(_38, ys, "true-true-false" , "bubbleSort");
 	}
 	//assign %1 = %38  : int[]
@@ -419,7 +419,7 @@ blklab7:;
 	{
 		_DEALLOC(_52);
 		// isCopyEliminated of '_1' = true
-		_52 = _bubbleSort_(_1DARRAY_PARAM(ys), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
+		_52 = _bubbleSort_(ys, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 		_RESET_DEALLOC(_52, ys, "true-true-false" , "bubbleSort");
 	}
 	//assign %1 = %52  : int[]
@@ -504,7 +504,7 @@ blklab9:;
 	{
 		_DEALLOC(_68);
 		// isCopyEliminated of '_4' = true
-		_68 = _bubbleSort_(_1DARRAY_PARAM(arr), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
+		_68 = _bubbleSort_(arr, arr_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
 		_RESET_DEALLOC(_68, arr, "true-true-false" , "bubbleSort");
 	}
 	//assign %4 = %68  : int[]

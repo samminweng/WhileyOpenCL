@@ -929,7 +929,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 								// Copy 1D array of 64-bit integers
 								statements.add(indent + "_COPY_1DARRAY_PARAM(" + param + ", "+tmp_name +", BYTE);");
 							}
-							//statements.add(indent + "_COPY_" + dimension + "DARRAY_PARAM_BYTE(" + param + ", "+tmp_name+")");
 						}else if (stores.isIntType(elm)) {							
 							if(boundAnalyzer.isPresent()&& dimension == 1){
 								String translateType = boundAnalyzer.get().suggestIntegerType(code.target(0), function);
@@ -964,8 +963,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 							// Temporary variable is used to reference the extra copy of parameter
 							String type_name = CodeGeneratorHelper.translateType(param_type, stores).replace("*", "");
 							statements.add(indent + tmp_name +" = copy_"+type_name+"("+ param + ");");
-							
-							//statements.add("_COPY_STRUCT_PARAM(" + param + ", " + type_name + ")");
 						}
 					}
 					
@@ -1023,12 +1020,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					statements.add(indent+ "// isCopyEliminated of '"+prefix+operand+"' = " + isCopyEliminated);
 				}
 				if (isCopyEliminated) {
-					parameters.add("_" + dimension + "DARRAY_PARAM(" + parameter + ")");
+					parameters.add(parameter+ ", "+ parameter+"_size");
+					// Extra size variable for 2D array
+					if(dimension == 2){
+						parameters.add(parameter+"_size_size");
+					}
 				} else {
+					// Get temporary variable
+					String copied_param_name = stores.getTmpParamName(parameter, index, code, function);
 					// Copy is made
-					if (stores.isIntType(elm) || elm instanceof Type.Byte) {
-						// Get temporary variable
-						String copied_param_name = stores.getTmpParamName(parameter, index, code, function);
+					if (stores.isIntType(elm) || elm instanceof Type.Byte) {						
 						// Pass the name of temporary parameter to a function call with
 						parameters.add(copied_param_name + ", "+parameter+"_size");
 						// Extra size variable for 2D array
@@ -1036,14 +1037,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 							parameters.add(parameter+"_size_size");
 						}						
 					} else {
-						// Copy an array of structures
-						// String elm_type = CodeGeneratorHelper.translateType(elm, stores).replace("*", "");
-						// Passed copied parameter to called function
-						// Get temporary variable
-						String copied_param_name = stores.getTmpParamName(parameter, index, code, function);
+						// Copy an array of structures and Passed copied parameter to called function
 						parameters.add(copied_param_name + ", "+parameter+"_size");
-						// Copy the array of structures and pass it as a function parameter
-						//parameters.add("_COPY_1DARRAY_PARAM_STRUCT" + "(" + parameter + ", " + elm_type + ")");
 					}
 				}
 			} else if (parameter_type instanceof Type.Record || parameter_type instanceof Type.Nominal
@@ -1057,7 +1052,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					parameters.add(parameter);
 				} else {
 					// Temporary variable is used to reference the extra copy of parameter
-					//String type_name = CodeGeneratorHelper.translateType(parameter_type, stores).replace("*", "");
 					String copied_param_name = stores.getTmpParamName(parameter, index, code, function);
 					// Pass the tmp variable to function call
 					parameters.add(copied_param_name);
@@ -1351,7 +1345,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				String rhs_arr  = stores.getVar(code.operand(0), function);
 				String rhs1_arr = stores.getVar(code.operand(1), function);
 				// Call built-in ArrayAppend function in WyRT.c
-				statements.add(indent+ lhs + " = Array_Append(_1DARRAY_PARAM("+rhs_arr+"), _1DARRAY_PARAM("+rhs1_arr+"), "
+				statements.add(indent+ lhs + " = Array_Append("+rhs_arr+", "+rhs_arr+ "_size , "+rhs1_arr+", "+rhs1_arr+"_size, "
 						+ "_1DARRAYSIZE_PARAM_CALLBYREFERENCE("+lhs+"));");
 				break;
 			default:
@@ -1987,7 +1981,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					if(boundAnalyzer.isPresent()){
 						statement.add(indent + "_PRINT_STR(" + input + ");");
 					}else{
-						statement.add(indent + "printf_s(_1DARRAY_PARAM(" + input + "));");
+						statement.add(indent + "printf_s(" + input + ", "+input+"_size);");
 					}
 					break;
 				case "println_s":

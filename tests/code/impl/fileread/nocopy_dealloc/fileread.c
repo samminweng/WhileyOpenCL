@@ -65,7 +65,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_13);
 	//indirectinvoke () = %12 (%13) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_13));
+		printf_s(_13, _13_size);
 	}
 	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %15 = %14 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

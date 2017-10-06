@@ -436,7 +436,7 @@ Image* _sobelEdgeDetection_(Image* input){
 			{
 				// isCopyEliminated of '_0' = true
 				// isCopyEliminated of '_6' = true
-				_50 = _convolution_(input, x, y, _1DARRAY_PARAM(v_sobel));
+				_50 = _convolution_(input, x, y, v_sobel, v_sobel_size);
 			}
 			//assign %11 = %50  : int
 			// isCopyEliminated = true
@@ -445,7 +445,7 @@ Image* _sobelEdgeDetection_(Image* input){
 			{
 				// isCopyEliminated of '_0' = true
 				// isCopyEliminated of '_7' = true
-				_51 = _convolution_(input, x, y, _1DARRAY_PARAM(h_sobel));
+				_51 = _convolution_(input, x, y, h_sobel, h_sobel_size);
 			}
 			//assign %12 = %51  : int
 			// isCopyEliminated = true
@@ -500,7 +500,7 @@ blklab8:;
 	//invoke (%61) = (%3, %4, %5) SobelEdge2:image : function(int,int,byte[])->(SobelEdge2:Image)
 	{
 		// isCopyEliminated of '_5' = true
-		_61 = _image_(width, height, _1DARRAY_PARAM(newPixels));
+		_61 = _image_(width, height, newPixels, newPixels_size);
 	}
 	//return %61
 	return _61;
@@ -558,7 +558,7 @@ void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t 
 	_14[0] = 32; 
 	//indirectinvoke () = %13 (%14) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_14));
+		printf_s(_14, _14_size);
 	}
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %16 = %15 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -626,7 +626,7 @@ blklab18:;
 			_31[0] = 32; 
 			//indirectinvoke () = %30 (%31) : method(int[])->()
 			{
-				printf_s(_1DARRAY_PARAM(_31));
+				printf_s(_31, _31_size);
 			}
 			//const %32 = 1 : int
 			_32 = 1;
@@ -719,7 +719,7 @@ int main(int argc, char** args){
 	//invoke (%15) = (%2, %3, %5) SobelEdge2:image : function(int,int,byte[])->(SobelEdge2:Image)
 	{
 		// isCopyEliminated of '_5' = true
-		_15 = _image_(width, height, _1DARRAY_PARAM(pixels));
+		_15 = _image_(width, height, pixels, pixels_size);
 	}
 	//assign %6 = %15  : {int height,byte[] pixels,int width}
 	// isCopyEliminated = true
@@ -741,7 +741,7 @@ int main(int argc, char** args){
 	//invoke () = (%0, %17, %18, %19) SobelEdge2:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
 		// isCopyEliminated of '_19' = true
-		_print_pbm_(stdout, _17, _18, _1DARRAY_PARAM(_19));
+		_print_pbm_(stdout, _17, _18, _19, _19_size);
 	}
 	//return
 	exit(0);

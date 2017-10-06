@@ -608,7 +608,7 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRA
 		//invoke (%13) = (%2, %14) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
 			_DEALLOC(_13);
-			_13 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_14), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_13));
+			_13 = Array_Append(r, r_size , _14, _14_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_13));
 			_ADD_DEALLOC(_13);
 		}
 		//assign %2 = %13  : int[]
@@ -630,7 +630,7 @@ blklab34:;
 		//invoke (%16) = (%2, %17) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
 			_DEALLOC(_16);
-			_16 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_17), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
+			_16 = Array_Append(r, r_size , _17, _17_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 			_ADD_DEALLOC(_16);
 		}
 		//assign %2 = %16  : int[]
@@ -645,7 +645,7 @@ blklab34:;
 		//invoke (%18) = (%2, %19) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
 			_DEALLOC(_18);
-			_18 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_19), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
+			_18 = Array_Append(r, r_size , _19, _19_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
 			_ADD_DEALLOC(_18);
 		}
 		//assign %2 = %18  : int[]
@@ -696,7 +696,7 @@ blklab34:;
 		//invoke (%20) = (%2, %22) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
 			_DEALLOC(_20);
-			_20 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_22), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
+			_20 = Array_Append(r, r_size , _22, _22_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
 			_ADD_DEALLOC(_20);
 		}
 		//assign %2 = %20  : int[]
@@ -823,7 +823,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_DEALLOC_PARAM(til
 	_ADD_DEALLOC(_11);
 	//indirectinvoke () = %10 (%11) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_11));
+		printf_s(_11, _11_size);
 	}
 	//fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %13 = %12 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -835,7 +835,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_DEALLOC_PARAM(til
 	}
 	//indirectinvoke () = %13 (%14) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_14));
+		printf_s(_14, _14_size);
 	}
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %16 = %15 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -857,7 +857,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_DEALLOC_PARAM(til
 	_ADD_DEALLOC(_20);
 	//indirectinvoke () = %19 (%20) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_20));
+		printf_s(_20, _20_size);
 	}
 	//fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %22 = %21 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -950,7 +950,7 @@ blklab38:;
 	_ADD_DEALLOC(_36);
 	//indirectinvoke () = %35 (%36) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_36));
+		printf_s(_36, _36_size);
 	}
 	//fieldload %37 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %38 = %37 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -1008,7 +1008,7 @@ blklab38:;
 	_ADD_DEALLOC(_44);
 	//indirectinvoke () = %43 (%44) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_44));
+		printf_s(_44, _44_size);
 	}
 	//fieldload %45 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %46 = %45 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -1138,7 +1138,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_13);
 	//indirectinvoke () = %12 (%13) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_13));
+		printf_s(_13, _13_size);
 	}
 	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %15 = %14 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

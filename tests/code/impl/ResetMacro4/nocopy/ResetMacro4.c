@@ -132,7 +132,7 @@ blklab2:;
 	{
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_1' = true
-		_11 = _add_(_1DARRAY_PARAM(a), _1DARRAY_PARAM(a), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
+		_11 = _add_(a, a_size, a, a_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 	}
 	//assign %3 = %11  : int[]
 	// isCopyEliminated = true

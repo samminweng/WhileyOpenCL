@@ -201,7 +201,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC(_4);
 		// isCopyEliminated of '_13' = true
-		_4 = _Cash_1_(_1DARRAY_PARAM(_13), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_4));
+		_4 = _Cash_1_(_13, _13_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_4));
 		_RETAIN_DEALLOC(_13, "false-false-false" , "Cash");
 		_4_dealloc = true;
 	}

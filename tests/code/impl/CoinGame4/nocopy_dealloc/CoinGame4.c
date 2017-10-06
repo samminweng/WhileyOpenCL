@@ -162,7 +162,7 @@ blklab3:;
 		_ADD_DEALLOC(_35);
 		//indirectinvoke () = %34 (%35) : method(int[])->()
 		{
-			printf_s(_1DARRAY_PARAM(_35));
+			printf_s(_35, _35_size);
 		}
 		//goto blklab5
 		goto blklab5;
@@ -177,7 +177,7 @@ blklab4:;
 		_ADD_DEALLOC(_38);
 		//indirectinvoke () = %37 (%38) : method(int[])->()
 		{
-			printf_s(_1DARRAY_PARAM(_38));
+			printf_s(_38, _38_size);
 		}
 //.blklab5
 blklab5:;
@@ -196,7 +196,7 @@ blklab5:;
 		_ADD_DEALLOC(_43);
 		//indirectinvoke () = %42 (%43) : method(int[])->()
 		{
-			printf_s(_1DARRAY_PARAM(_43));
+			printf_s(_43, _43_size);
 		}
 		//fieldload %44 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %45 = %44 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -213,7 +213,7 @@ blklab5:;
 		_ADD_DEALLOC(_48);
 		//indirectinvoke () = %47 (%48) : method(int[])->()
 		{
-			printf_s(_1DARRAY_PARAM(_48));
+			printf_s(_48, _48_size);
 		}
 		//const %49 = 2 : int
 		_49 = 2;
@@ -237,7 +237,7 @@ blklab5:;
 		_ADD_DEALLOC(_55);
 		//indirectinvoke () = %54 (%55) : method(int[])->()
 		{
-			printf_s(_1DARRAY_PARAM(_55));
+			printf_s(_55, _55_size);
 		}
 		//goto blklab7
 		goto blklab7;
@@ -293,7 +293,7 @@ blklab8:;
 	_ADD_DEALLOC(_64);
 	//indirectinvoke () = %63 (%64) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_64));
+		printf_s(_64, _64_size);
 	}
 	//fieldload %65 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %66 = %65 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -544,7 +544,7 @@ blklab17:;
 			{
 				_DEALLOC(_41);
 				// isCopyEliminated of '_0' = true
-				_41 = _pickCoin_(_1DARRAY_PARAM(moves), false, i, j, n, x, y, z, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_41));
+				_41 = _pickCoin_(moves, moves_size, false, i, j, n, x, y, z, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_41));
 				_RESET_DEALLOC(_41, moves, "true-true-false" , "pickCoin");
 			}
 			//assign %0 = %41  : int[]
@@ -633,7 +633,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC(_8);
 		// isCopyEliminated of '_2' = true
-		_8 = _findMoves_(_1DARRAY_PARAM(moves), false, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
+		_8 = _findMoves_(moves, moves_size, false, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_RESET_DEALLOC(_8, moves, "true-true-false" , "findMoves");
 	}
 	//assign %2 = %8  : int[]
@@ -644,7 +644,7 @@ int main(int argc, char** args){
 	//invoke () = (%0, %2, %1) CoinGame4:play : method(whiley/lang/System:Console,int[],int)->()
 	{
 		// isCopyEliminated of '_2' = true
-		_play_(stdout, _1DARRAY_PARAM(moves), false, n);
+		_play_(stdout, moves, moves_size, false, n);
 		_RETAIN_DEALLOC(moves, "false-false-true" , "play");
 	}
 	//const %9 = 1 : int
@@ -665,7 +665,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_14);
 	//indirectinvoke () = %13 (%14) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_14));
+		printf_s(_14, _14_size);
 	}
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %16 = %15 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

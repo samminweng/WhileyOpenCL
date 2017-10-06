@@ -153,7 +153,7 @@ blklab1:;
 	_ADD_DEALLOC(_30);
 	//indirectinvoke () = %29 (%30) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_30));
+		printf_s(_30, _30_size);
 	}
 	//return
 	_DEALLOC(a);

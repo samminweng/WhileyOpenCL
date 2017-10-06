@@ -444,7 +444,7 @@ blklab25:;
 	_ADD_DEALLOC(_49);
 	//indirectinvoke () = %48 (%49) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_49));
+		printf_s(_49, _49_size);
 	}
 	//return
 	_DEALLOC_STRUCT(b1, Board);

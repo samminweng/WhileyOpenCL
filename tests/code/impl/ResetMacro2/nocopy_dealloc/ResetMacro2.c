@@ -47,7 +47,7 @@ int64_t* _g2_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	{
 		_DEALLOC(_6);
 		// isCopyEliminated of '_1' = true
-		_6 = _func_(_1DARRAY_PARAM(a), false, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
+		_6 = _func_(a, a_size, false, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		_RESET_DEALLOC(_6, a, "true-true-false" , "func");
 	}
 	//assign %2 = %6  : int[]
@@ -116,7 +116,7 @@ blklab0:;
 	_ADD_DEALLOC(_8);
 	//indirectinvoke () = %7 (%8) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_8));
+		printf_s(_8, _8_size);
 	}
 	//fieldload %9 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %10 = %9 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

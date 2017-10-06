@@ -54,7 +54,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC(_6);
 		// isCopyEliminated of '_1' = true
-		_6 = _func_(_1DARRAY_PARAM(x), false, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
+		_6 = _func_(x, x_size, false, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		_RESET_DEALLOC(_6, x, "true-true-false" , "func");
 	}
 	//assign %2 = %6  : int[]
@@ -93,7 +93,7 @@ blklab0:;
 	_ADD_DEALLOC(_13);
 	//indirectinvoke () = %12 (%13) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_13));
+		printf_s(_13, _13_size);
 	}
 	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %15 = %14 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

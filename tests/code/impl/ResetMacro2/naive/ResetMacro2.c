@@ -86,7 +86,7 @@ blklab0:;
 	_8[0] = 97; _8[1] = 91; _8[2] = 48; _8[3] = 93; _8[4] = 32; _8[5] = 61; _8[6] = 32; 
 	//indirectinvoke () = %7 (%8) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_8));
+		printf_s(_8, _8_size);
 	}
 	//fieldload %9 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %10 = %9 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

@@ -210,7 +210,7 @@ int main(int argc, char** args){
 	//invoke (%11) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		// isCopyEliminated of '_1' = true
-		_11 = _bubbleSort_(_1DARRAY_PARAM(ys), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
+		_11 = _bubbleSort_(ys, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 	}
 	//assign %1 = %11  : int[]
 	// isCopyEliminated = true
@@ -262,7 +262,7 @@ blklab5:;
 	//invoke (%25) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		// isCopyEliminated of '_1' = true
-		_25 = _bubbleSort_(_1DARRAY_PARAM(ys), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
+		_25 = _bubbleSort_(ys, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 	}
 	//assign %1 = %25  : int[]
 	// isCopyEliminated = true
@@ -312,7 +312,7 @@ blklab6:;
 	//invoke (%38) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		// isCopyEliminated of '_1' = true
-		_38 = _bubbleSort_(_1DARRAY_PARAM(ys), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
+		_38 = _bubbleSort_(ys, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 	}
 	//assign %1 = %38  : int[]
 	// isCopyEliminated = true
@@ -364,7 +364,7 @@ blklab7:;
 	//invoke (%52) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		// isCopyEliminated of '_1' = true
-		_52 = _bubbleSort_(_1DARRAY_PARAM(ys), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
+		_52 = _bubbleSort_(ys, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 	}
 	//assign %1 = %52  : int[]
 	// isCopyEliminated = true
@@ -439,7 +439,7 @@ blklab9:;
 	//invoke (%68) = (%4) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		// isCopyEliminated of '_4' = true
-		_68 = _bubbleSort_(_1DARRAY_PARAM(arr), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
+		_68 = _bubbleSort_(arr, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
 	}
 	//assign %4 = %68  : int[]
 	// isCopyEliminated = true

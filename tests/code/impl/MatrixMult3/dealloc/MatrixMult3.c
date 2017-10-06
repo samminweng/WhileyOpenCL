@@ -228,7 +228,7 @@ void _print_mat_(FILE* sys, Matrix* a, _DECL_DEALLOC_PARAM(a)){
 			_ADD_DEALLOC(_18);
 			//indirectinvoke () = %17 (%18) : method(int[])->()
 			{
-				printf_s(_1DARRAY_PARAM(_18));
+				printf_s(_18, _18_size);
 			}
 			//const %19 = 1 : int
 			_19 = 1;
@@ -651,7 +651,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_6);
 	//indirectinvoke () = %5 (%6) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_6));
+		printf_s(_6, _6_size);
 	}
 	//fieldload %7 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %8 = %7 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -841,7 +841,7 @@ blklab25:;
 	_ADD_DEALLOC(_59);
 	//indirectinvoke () = %58 (%59) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_59));
+		printf_s(_59, _59_size);
 	}
 	//fieldload %60 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %61 = %60 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

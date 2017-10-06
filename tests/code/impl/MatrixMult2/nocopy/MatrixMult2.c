@@ -130,7 +130,7 @@ blklab2:;
 	//invoke (%21) = (%0, %1, %3) MatrixMult2:matrix : function(MatrixMult2:nat,MatrixMult2:nat,int[])->(MatrixMult2:Matrix)
 	{
 		// isCopyEliminated of '_3' = true
-		_21 = _matrix_(width, height, _1DARRAY_PARAM(data));
+		_21 = _matrix_(width, height, data, data_size);
 	}
 	//return %21
 	return _21;
@@ -209,7 +209,7 @@ void _print_mat_(FILE* sys, Matrix* a){
 			_18[0] = 32; 
 			//indirectinvoke () = %17 (%18) : method(int[])->()
 			{
-				printf_s(_1DARRAY_PARAM(_18));
+				printf_s(_18, _18_size);
 			}
 			//const %19 = 1 : int
 			_19 = 1;
@@ -410,7 +410,7 @@ blklab13:;
 	//invoke (%40) = (%3, %4, %5) MatrixMult2:matrix : function(MatrixMult2:nat,MatrixMult2:nat,int[])->(MatrixMult2:Matrix)
 	{
 		// isCopyEliminated of '_5' = true
-		_40 = _matrix_(width, height, _1DARRAY_PARAM(data));
+		_40 = _matrix_(width, height, data, data_size);
 	}
 	//return %40
 	return _40;
@@ -495,7 +495,7 @@ int main(int argc, char** args){
 	_6[0] = 78; _6[1] = 32; _6[2] = 61; _6[3] = 32; 
 	//indirectinvoke () = %5 (%6) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_6));
+		printf_s(_6, _6_size);
 	}
 	//fieldload %7 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %8 = %7 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -661,7 +661,7 @@ blklab21:;
 	_59[0] = 77; _59[1] = 97; _59[2] = 116; _59[3] = 114; _59[4] = 105; _59[5] = 120; _59[6] = 32; _59[7] = 67; _59[8] = 91; _59[9] = 78; _59[10] = 45; _59[11] = 49; _59[12] = 93; _59[13] = 91; _59[14] = 78; _59[15] = 45; _59[16] = 49; _59[17] = 93; _59[18] = 32; _59[19] = 61; _59[20] = 32; 
 	//indirectinvoke () = %58 (%59) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_59));
+		printf_s(_59, _59_size);
 	}
 	//fieldload %60 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %61 = %60 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

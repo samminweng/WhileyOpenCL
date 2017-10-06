@@ -74,7 +74,7 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	//invoke (%16) = (%5, %17, %4) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
 		// isCopyEliminated of '_5' = true
-		_16 = _sortV1_(_1DARRAY_PARAM(lhs), _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
+		_16 = _sortV1_(lhs, lhs_size, _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 	}
 	//assign %5 = %16  : int[]
 	// isCopyEliminated = true
@@ -93,7 +93,7 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	//invoke (%19) = (%6, %20, %21) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
 		// isCopyEliminated of '_6' = true
-		_19 = _sortV1_(_1DARRAY_PARAM(rhs), _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
+		_19 = _sortV1_(rhs, rhs_size, _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
 	}
 	//assign %6 = %19  : int[]
 	// isCopyEliminated = true
@@ -350,7 +350,7 @@ int main(int argc, char** args){
 	//invoke (%11) = (%1, %12, %13) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
 		// isCopyEliminated of '_1' = true
-		_11 = _sortV1_(_1DARRAY_PARAM(ys), _12, _13, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
+		_11 = _sortV1_(ys, ys_size, _12, _13, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 	}
 	//assign %1 = %11  : int[]
 	// isCopyEliminated = true
@@ -400,7 +400,7 @@ blklab9:;
 	//invoke (%25) = (%1, %26, %27) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
 		// isCopyEliminated of '_1' = true
-		_25 = _sortV1_(_1DARRAY_PARAM(ys), _26, _27, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
+		_25 = _sortV1_(ys, ys_size, _26, _27, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 	}
 	//assign %1 = %25  : int[]
 	// isCopyEliminated = true
@@ -448,7 +448,7 @@ blklab10:;
 	//invoke (%38) = (%1, %39, %40) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
 		// isCopyEliminated of '_1' = true
-		_38 = _sortV1_(_1DARRAY_PARAM(ys), _39, _40, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
+		_38 = _sortV1_(ys, ys_size, _39, _40, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 	}
 	//assign %1 = %38  : int[]
 	// isCopyEliminated = true
@@ -498,7 +498,7 @@ blklab11:;
 	//invoke (%52) = (%1, %53, %54) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
 		// isCopyEliminated of '_1' = true
-		_52 = _sortV1_(_1DARRAY_PARAM(ys), _53, _54, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
+		_52 = _sortV1_(ys, ys_size, _53, _54, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 	}
 	//assign %1 = %52  : int[]
 	// isCopyEliminated = true
@@ -577,7 +577,7 @@ blklab13:;
 	//invoke (%70) = (%4, %71, %73) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
 		// isCopyEliminated of '_4' = true
-		_70 = _sortV1_(_1DARRAY_PARAM(arr), _71, _73, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_70));
+		_70 = _sortV1_(arr, arr_size, _71, _73, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_70));
 	}
 	//assign %4 = %70  : int[]
 	// isCopyEliminated = true
@@ -625,7 +625,7 @@ blklab15:;
 	_88[0] = 80; _88[1] = 97; _88[2] = 115; _88[3] = 115; _88[4] = 32; _88[5] = 109; _88[6] = 101; _88[7] = 114; _88[8] = 103; _88[9] = 101; _88[10] = 115; _88[11] = 111; _88[12] = 114; _88[13] = 116; _88[14] = 32; _88[15] = 116; _88[16] = 101; _88[17] = 115; _88[18] = 116; _88[19] = 32; _88[20] = 99; _88[21] = 97; _88[22] = 115; _88[23] = 101; 
 	//indirectinvoke () = %87 (%88) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_88));
+		printf_s(_88, _88_size);
 	}
 	//return
 	exit(0);

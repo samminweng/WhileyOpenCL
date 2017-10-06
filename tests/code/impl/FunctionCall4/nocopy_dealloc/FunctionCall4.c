@@ -154,7 +154,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC(_10);
 		// isCopyEliminated of '_1' = true
-		_10 = _func_(_1DARRAY_PARAM(a), false, _11, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
+		_10 = _func_(a, a_size, false, _11, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 		_RESET_DEALLOC(_10, a, "true-true-false" , "func");
 	}
 	//assign %1 = %10  : int[]
@@ -188,7 +188,7 @@ blklab2:;
 	_ADD_DEALLOC(_17);
 	//indirectinvoke () = %16 (%17) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_17));
+		printf_s(_17, _17_size);
 	}
 	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %19 = %18 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -279,7 +279,7 @@ blklab4:;
 	_ADD_DEALLOC(_38);
 	//indirectinvoke () = %37 (%38) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_38));
+		printf_s(_38, _38_size);
 	}
 	//fieldload %39 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %40 = %39 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -300,7 +300,7 @@ blklab4:;
 	_ADD_DEALLOC(_45);
 	//indirectinvoke () = %44 (%45) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_45));
+		printf_s(_45, _45_size);
 	}
 	//fieldload %46 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %47 = %46 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

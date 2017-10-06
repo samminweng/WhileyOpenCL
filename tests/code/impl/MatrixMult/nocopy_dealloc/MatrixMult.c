@@ -223,7 +223,7 @@ blklab13:;
 	{
 		_DEALLOC_STRUCT(_34, Matrix);
 		// isCopyEliminated of '_3' = true
-		_34 = _matrix_(_35, _36, _2DARRAY_PARAM(C_data), false);
+		_34 = _matrix_(_35, _36, C_data, C_data_size, C_data_size_size, false);
 		_RESET_DEALLOC(_34, C_data, "false-true-false" , "matrix");
 		C_data_dealloc = false;
 	}
@@ -313,7 +313,7 @@ void _printMat_(FILE* sys, Matrix* A, _DECL_DEALLOC_PARAM(A)){
 			_ADD_DEALLOC(_15);
 			//indirectinvoke () = %14 (%15) : method(int[])->()
 			{
-				printf_s(_1DARRAY_PARAM(_15));
+				printf_s(_15, _15_size);
 			}
 			//const %16 = 1 : int
 			_16 = 1;
@@ -441,7 +441,7 @@ blklab23:;
 	{
 		_DEALLOC_STRUCT(_15, Matrix);
 		// isCopyEliminated of '_3' = true
-		_15 = _matrix_(width, height, _2DARRAY_PARAM(rows), false);
+		_15 = _matrix_(width, height, rows, rows_size, rows_size_size, false);
 		_RESET_DEALLOC(_15, rows, "false-true-false" , "matrix");
 		rows_dealloc = false;
 	}

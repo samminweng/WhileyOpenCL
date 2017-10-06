@@ -170,7 +170,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_8);
 	//indirectinvoke () = %7 (%8) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_8));
+		printf_s(_8, _8_size);
 	}
 	//fieldload %9 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %10 = %9 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -212,7 +212,7 @@ int main(int argc, char** args){
 			//invoke (%16) = (%3, %4, %1, %2) gcd:gcd_cached : function(int,int,int,int[])->(int)
 			{
 				// isCopyEliminated of '_2' = true
-				_16 = _gcd_cached_(i, j, n, _1DARRAY_PARAM(gcds), false);
+				_16 = _gcd_cached_(i, j, n, gcds, gcds_size, false);
 				_RETAIN_DEALLOC(gcds, "false-false-true" , "gcd_cached");
 			}
 			//mul %17 = %3, %1 : int
@@ -251,7 +251,7 @@ blklab17:;
 			_ADD_DEALLOC(_25);
 			//indirectinvoke () = %24 (%25) : method(int[])->()
 			{
-				printf_s(_1DARRAY_PARAM(_25));
+				printf_s(_25, _25_size);
 			}
 			//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %27 = %26 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -268,7 +268,7 @@ blklab17:;
 			_ADD_DEALLOC(_30);
 			//indirectinvoke () = %29 (%30) : method(int[])->()
 			{
-				printf_s(_1DARRAY_PARAM(_30));
+				printf_s(_30, _30_size);
 			}
 			//fieldload %31 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %32 = %31 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -285,7 +285,7 @@ blklab17:;
 			_ADD_DEALLOC(_35);
 			//indirectinvoke () = %34 (%35) : method(int[])->()
 			{
-				printf_s(_1DARRAY_PARAM(_35));
+				printf_s(_35, _35_size);
 			}
 			//fieldload %36 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %37 = %36 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

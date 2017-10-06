@@ -75,7 +75,7 @@ int main(int argc, char** args){
 	//invoke (%6) = (%1, %7) ResetMacro3:func : function(int[],int)->(int[])
 	{
 		// isCopyEliminated of '_1' = true
-		_6 = _func_(_1DARRAY_PARAM(b), _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
+		_6 = _func_(b, b_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 	}
 	//assign %2 = %6  : int[]
 	// isCopyEliminated = true
@@ -115,7 +115,7 @@ blklab2:;
 	//invoke (%15) = (%1, %16) ResetMacro3:func : function(int[],int)->(int[])
 	{
 		// isCopyEliminated of '_1' = true
-		_15 = _func_(_1DARRAY_PARAM(b), _16, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
+		_15 = _func_(b, b_size, _16, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
 	}
 	//assign %1 = %15  : int[]
 	// isCopyEliminated = true

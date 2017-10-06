@@ -146,7 +146,7 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, int64_t pos){
 		//invoke (%14) = (%0, %6, %1) lz77_2:match : function(byte[],lz77_2:nat,lz77_2:nat)->(int)
 		{
 			// isCopyEliminated of '_0' = true
-			_14 = _match_(_1DARRAY_PARAM(data), offset, pos);
+			_14 = _match_(data, data_size, offset, pos);
 		}
 		//assign %7 = %14  : int
 		// isCopyEliminated = true
@@ -359,7 +359,7 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREF
 		//invoke (%16) = (%0, %2) lz77_2:findLongestMatch : function(byte[],lz77_2:nat)->(lz77_2:Match)
 		{
 			// isCopyEliminated of '_0' = true
-			_16 = _findLongestMatch_(_1DARRAY_PARAM(data), pos);
+			_16 = _findLongestMatch_(data, data_size, pos);
 		}
 		//assign %5 = %16  : {int len,int offset}
 		// isCopyEliminated = true
@@ -448,7 +448,7 @@ blklab18:;
 	//invoke (%31) = (%1, %4) lz77_2:resize : function(byte[],int)->(byte[])
 	{
 		// isCopyEliminated of '_1' = true
-		_31 = _resize_(_1DARRAY_PARAM(output), arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_31));
+		_31 = _resize_(output, output_size, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_31));
 	}
 	//assign %1 = %31  : byte[]
 	// isCopyEliminated = true
@@ -544,7 +544,7 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYR
 		//invoke (%23) = (%1, %4) lz77_2:append : function(byte[],byte)->(byte[])
 		{
 			// isCopyEliminated of '_1' = true
-			_23 = _append_(_1DARRAY_PARAM(output), item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
+			_23 = _append_(output, output_size, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 		}
 		//assign %1 = %23  : byte[]
 		// isCopyEliminated = true
@@ -591,7 +591,7 @@ blklab21:;
 			//invoke (%30) = (%1, %4) lz77_2:append : function(byte[],byte)->(byte[])
 			{
 				// isCopyEliminated of '_1' = true
-				_30 = _append_(_1DARRAY_PARAM(output), item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
+				_30 = _append_(output, output_size, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
 			}
 			//assign %1 = %30  : byte[]
 			// isCopyEliminated = true
@@ -714,7 +714,7 @@ int main(int argc, char** args){
 	//invoke (%21) = (%2) lz77_2:compress : function(byte[])->(byte[])
 	{
 		// isCopyEliminated of '_2' = true
-		_21 = _compress_(_1DARRAY_PARAM(data), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_21));
+		_21 = _compress_(data, data_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_21));
 	}
 	//assign %3 = %21  : byte[]
 	// isCopyEliminated = true
@@ -726,7 +726,7 @@ int main(int argc, char** args){
 	_24[0] = 67; _24[1] = 79; _24[2] = 77; _24[3] = 80; _24[4] = 82; _24[5] = 69; _24[6] = 83; _24[7] = 83; _24[8] = 69; _24[9] = 68; _24[10] = 32; _24[11] = 68; _24[12] = 97; _24[13] = 116; _24[14] = 97; _24[15] = 58; _24[16] = 32; _24[17] = 32; _24[18] = 32; 
 	//indirectinvoke () = %23 (%24) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_24));
+		printf_s(_24, _24_size);
 	}
 	//fieldload %25 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %26 = %25 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -754,7 +754,7 @@ int main(int argc, char** args){
 	//invoke (%33) = (%3) lz77_2:decompress : function(byte[])->(byte[])
 	{
 		// isCopyEliminated of '_3' = true
-		_33 = _decompress_(_1DARRAY_PARAM(compress_data), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
+		_33 = _decompress_(compress_data, compress_data_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
 	}
 	//assign %4 = %33  : byte[]
 	// isCopyEliminated = true

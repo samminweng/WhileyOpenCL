@@ -601,7 +601,7 @@ void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t 
 	_ADD_DEALLOC(_14);
 	//indirectinvoke () = %13 (%14) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_14));
+		printf_s(_14, _14_size);
 	}
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %16 = %15 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -668,7 +668,7 @@ blklab18:;
 			_ADD_DEALLOC(_31);
 			//indirectinvoke () = %30 (%31) : method(int[])->()
 			{
-				printf_s(_1DARRAY_PARAM(_31));
+				printf_s(_31, _31_size);
 			}
 			//const %32 = 1 : int
 			_32 = 1;

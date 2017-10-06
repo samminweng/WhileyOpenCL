@@ -146,7 +146,7 @@ blklab2:;
 	{
 		_DEALLOC_STRUCT(_21, Matrix);
 		// isCopyEliminated of '_3' = true
-		_21 = _matrix_(width, height, _1DARRAY_PARAM(data), false);
+		_21 = _matrix_(width, height, data, data_size, false);
 		_RESET_DEALLOC(_21, data, "false-true-false" , "matrix");
 		data_dealloc = false;
 	}
@@ -237,7 +237,7 @@ void _print_mat_(FILE* sys, Matrix* a, _DECL_DEALLOC_PARAM(a)){
 			_ADD_DEALLOC(_18);
 			//indirectinvoke () = %17 (%18) : method(int[])->()
 			{
-				printf_s(_1DARRAY_PARAM(_18));
+				printf_s(_18, _18_size);
 			}
 			//const %19 = 1 : int
 			_19 = 1;
@@ -465,7 +465,7 @@ blklab13:;
 	{
 		_DEALLOC_STRUCT(_40, Matrix);
 		// isCopyEliminated of '_5' = true
-		_40 = _matrix_(width, height, _1DARRAY_PARAM(data), false);
+		_40 = _matrix_(width, height, data, data_size, false);
 		_RESET_DEALLOC(_40, data, "false-true-false" , "matrix");
 		data_dealloc = false;
 	}
@@ -576,7 +576,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_6);
 	//indirectinvoke () = %5 (%6) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_6));
+		printf_s(_6, _6_size);
 	}
 	//fieldload %7 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %8 = %7 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -766,7 +766,7 @@ blklab21:;
 	_ADD_DEALLOC(_59);
 	//indirectinvoke () = %58 (%59) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_59));
+		printf_s(_59, _59_size);
 	}
 	//fieldload %60 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %61 = %60 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

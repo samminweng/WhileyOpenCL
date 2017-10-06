@@ -154,7 +154,7 @@ int main(int argc, char** args){
 	_8[0] = 78; _8[1] = 32; _8[2] = 61; _8[3] = 32; 
 	//indirectinvoke () = %7 (%8) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_8));
+		printf_s(_8, _8_size);
 	}
 	//fieldload %9 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %10 = %9 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -226,7 +226,7 @@ blklab17:;
 			_25[0] = 78; _25[1] = 117; _25[2] = 109; _25[3] = 98; _25[4] = 101; _25[5] = 114; _25[6] = 58; _25[7] = 32; 
 			//indirectinvoke () = %24 (%25) : method(int[])->()
 			{
-				printf_s(_1DARRAY_PARAM(_25));
+				printf_s(_25, _25_size);
 			}
 			//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %27 = %26 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -241,7 +241,7 @@ blklab17:;
 			_30[0] = 32; _30[1] = 78; _30[2] = 117; _30[3] = 109; _30[4] = 98; _30[5] = 101; _30[6] = 114; _30[7] = 58; _30[8] = 32; 
 			//indirectinvoke () = %29 (%30) : method(int[])->()
 			{
-				printf_s(_1DARRAY_PARAM(_30));
+				printf_s(_30, _30_size);
 			}
 			//fieldload %31 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %32 = %31 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -256,7 +256,7 @@ blklab17:;
 			_35[0] = 32; _35[1] = 71; _35[2] = 67; _35[3] = 68; _35[4] = 58; 
 			//indirectinvoke () = %34 (%35) : method(int[])->()
 			{
-				printf_s(_1DARRAY_PARAM(_35));
+				printf_s(_35, _35_size);
 			}
 			//fieldload %36 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %37 = %36 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

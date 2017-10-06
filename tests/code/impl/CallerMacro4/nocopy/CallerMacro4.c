@@ -146,7 +146,7 @@ blklab3:;
 	_13[0] = 121; _13[1] = 91; _13[2] = 48; _13[3] = 93; _13[4] = 32; _13[5] = 61; _13[6] = 32; 
 	//indirectinvoke () = %12 (%13) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_13));
+		printf_s(_13, _13_size);
 	}
 	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %15 = %14 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -194,7 +194,7 @@ blklab4:;
 	_25[0] = 121; _25[1] = 91; _25[2] = 48; _25[3] = 93; _25[4] = 32; _25[5] = 61; _25[6] = 32; 
 	//indirectinvoke () = %24 (%25) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_25));
+		printf_s(_25, _25_size);
 	}
 	//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %27 = %26 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -211,7 +211,7 @@ blklab4:;
 	//invoke (%30) = (%1, %31) CallerMacro4:func : function(int[],int)->(int[])
 	{
 		// isCopyEliminated of '_1' = true
-		_30 = _func_(_1DARRAY_PARAM(x), _31, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
+		_30 = _func_(x, x_size, _31, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
 	}
 	//assign %2 = %30  : int[]
 	// isCopyEliminated = true
@@ -240,7 +240,7 @@ blklab5:;
 	_37[0] = 121; _37[1] = 91; _37[2] = 48; _37[3] = 93; _37[4] = 32; _37[5] = 61; _37[6] = 32; 
 	//indirectinvoke () = %36 (%37) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_37));
+		printf_s(_37, _37_size);
 	}
 	//fieldload %38 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %39 = %38 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

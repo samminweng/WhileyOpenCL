@@ -346,7 +346,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC(_8);
 		// isCopyEliminated of '_2' = true
-		_8 = _findMoves_(_1DARRAY_PARAM(moves), false, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
+		_8 = _findMoves_(moves, moves_size, false, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_RESET_DEALLOC(_8, moves, "true-true-false" , "findMoves");
 	}
 	//assign %2 = %8  : int[]
@@ -385,7 +385,7 @@ blklab7:;
 	_ADD_DEALLOC(_15);
 	//indirectinvoke () = %14 (%15) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_15));
+		printf_s(_15, _15_size);
 	}
 	//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %17 = %16 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

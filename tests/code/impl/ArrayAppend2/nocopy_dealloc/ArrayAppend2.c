@@ -27,7 +27,7 @@ int main(int argc, char** args){
 	//invoke (%3) = (%1, %4) whiley/lang/Array:append : function(int[],int[])->(int[])
 	{
 		_DEALLOC(_3);
-		_3 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_4), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
+		_3 = Array_Append(r, r_size , _4, _4_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
 		_ADD_DEALLOC(_3);
 	}
 	//assign %1 = %3  : int[]

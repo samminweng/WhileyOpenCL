@@ -116,7 +116,7 @@ int main(int argc, char** args){
 	//invoke (%5) = (%11) reverse:reverse : function(int[])->(int[])
 	{
 		// isCopyEliminated of '_11' = true
-		_5 = _reverse_(_1DARRAY_PARAM(_11), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
+		_5 = _reverse_(_11, _11_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
 	}
 	//assign %1 = %5  : int[]
 	// isCopyEliminated = true
@@ -189,7 +189,7 @@ blklab5:;
 	//invoke (%27) = (%4) reverse:reverse : function(int[])->(int[])
 	{
 		// isCopyEliminated of '_4' = true
-		_27 = _reverse_(_1DARRAY_PARAM(arr), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
+		_27 = _reverse_(arr, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 	}
 	//assign %4 = %27  : int[]
 	// isCopyEliminated = true
@@ -231,7 +231,7 @@ blklab8:;
 	_34[0] = 80; _34[1] = 97; _34[2] = 115; _34[3] = 115; _34[4] = 32; _34[5] = 114; _34[6] = 101; _34[7] = 118; _34[8] = 101; _34[9] = 114; _34[10] = 115; _34[11] = 101; _34[12] = 32; _34[13] = 116; _34[14] = 101; _34[15] = 115; _34[16] = 116; _34[17] = 32; _34[18] = 99; _34[19] = 97; _34[20] = 115; _34[21] = 101; 
 	//indirectinvoke () = %33 (%34) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_34));
+		printf_s(_34, _34_size);
 	}
 	//return
 	exit(0);

@@ -137,7 +137,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC(_5);
 		// isCopyEliminated of '_11' = true
-		_5 = _reverse_(_1DARRAY_PARAM(_11), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
+		_5 = _reverse_(_11, _11_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
 		_RETAIN_DEALLOC(_11, "false-false-false" , "reverse");
 		_5_dealloc = true;
 	}
@@ -221,7 +221,7 @@ blklab5:;
 	{
 		_DEALLOC(_27);
 		// isCopyEliminated of '_4' = true
-		_27 = _reverse_(_1DARRAY_PARAM(arr), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
+		_27 = _reverse_(arr, arr_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 		_RETAIN_DEALLOC(arr, "false-false-false" , "reverse");
 		_27_dealloc = true;
 	}
@@ -269,7 +269,7 @@ blklab8:;
 	_ADD_DEALLOC(_34);
 	//indirectinvoke () = %33 (%34) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_34));
+		printf_s(_34, _34_size);
 	}
 	//return
 	_DEALLOC(rs);
