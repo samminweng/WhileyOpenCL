@@ -61,7 +61,7 @@ public class CodeGenerationTestCase {
 				"ResetMacro1", // Test case for 'RESET' macro
 				"ResetMacro2", // Test case for 'RESET' macro
 				"ResetMacro3", // Test case for 'RESET' macro
-				//"ResetMacro4", // Test case for 'RESET' macro
+				"ResetMacro4", // Test case for 'RESET' macro
 				"FunctionCall1",
 				"FunctionCall2",
 				"FunctionCall3",
