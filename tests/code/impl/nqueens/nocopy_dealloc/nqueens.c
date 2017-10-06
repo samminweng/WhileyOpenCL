@@ -263,7 +263,7 @@ blklab20:;
 			//invoke (%26) = (%7, %1, %4) nqueens:conflict : function(nqueens:POS,int,int)->(bool)
 			{
 				// isCopyEliminated of '_7' = true
-				_26 = _conflict_(_STRUCT_PARAM(p), false, n, col);
+				_26 = _conflict_(p, false, n, col);
 				_SUBSTRUCTURE_DEALLOC(p, "false-false-false" , "conflict");
 			}
 			//const %27 = true : bool
@@ -323,7 +323,7 @@ blklab12:;
 		{
 			_DEALLOC_STRUCT(_33, NQueen);
 			// isCopyEliminated of '_0' = true
-			_33 = _run_(_STRUCT_PARAM(nq), false, _35, dim);
+			_33 = _run_(nq, false, _35, dim);
 			_RESET_DEALLOC(_33, nq, "true-true-false" , "run");
 			nq_dealloc = false;
 		}
@@ -450,7 +450,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC_STRUCT(_12, NQueen);
 		// isCopyEliminated of '_4' = true
-		_12 = _run_(_STRUCT_PARAM(nq), false, _13, n);
+		_12 = _run_(nq, false, _13, n);
 		_RESET_DEALLOC(_12, nq, "true-true-false" , "run");
 		nq_dealloc = false;
 	}

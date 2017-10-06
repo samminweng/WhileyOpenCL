@@ -166,8 +166,9 @@ int main(int argc, char** args){
 	_13[0] = _5; _13[1] = _6; _13[2] = _7; _13[3] = _8; _13[4] = _9; _13[5] = _10; _13[6] = _11; _13[7] = _12; 
 	//invoke (%4) = (%13) FunctionOverload2:Cash : function(FunctionOverload2:nat[])->(FunctionOverload2:Cash)
 	{
-		void* _13_tmp;
-		_4 = _Cash_1_(_COPY_1DARRAY_PARAM_int64_t(_13), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_4));
+		void* tmp__13_0;
+		_COPY_1DARRAY_PARAM(_13, tmp__13_0, int64_t);
+		_4 = _Cash_1_(tmp__13_0, _13_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_4));
 	}
 	//assign %2 = %4  : int[]
 	_COPY_1DARRAY_int64_t(till, _4);

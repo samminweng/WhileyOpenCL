@@ -172,11 +172,13 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(p3);
 	//invoke (%15) = (%3, %4) rectangle:updateRec : function(rectangle:Rectangle,rectangle:Point)->(rectangle:Rectangle)
 	{
-		void* rec_tmp;
-		void* p3_tmp;
+		void* tmp_rec_0;
+		tmp_rec_0 = copy_Rectangle(rec);
+		void* tmp_p3_1;
+		tmp_p3_1 = copy_Point(p3);
 		_DEALLOC_STRUCT(_15, Rectangle);
-		_15 = _updateRec_(_COPY_STRUCT_PARAM(rec, Rectangle), false, _COPY_STRUCT_PARAM(p3, Point), true);
-		_CALLER_DEALLOC_STRUCT(_15, rec, "true-true-false" , "updateRec", Rectangle);
+		_15 = _updateRec_(tmp_rec_0, false, tmp_p3_1, true);
+		_CALLER_DEALLOC_STRUCT(_15, tmp_rec_0, "true-true-false" , "updateRec", Rectangle);
 		_CALLEE_DEALLOC(p3, "false-false-false" , "updateRec");
 		_15_dealloc = true;
 	}

@@ -51,6 +51,24 @@ public class CodeStores {
 		this.aliasedCmdArguments = new ArrayList<String>();
 		initFunctionNames(module);
 	}
+	/**
+	 * Return temporary parameter name to store extra copies
+	 * By default, 
+	 * 
+	 * 
+	 * @param param
+	 * @param num
+	 * @param code
+	 * @param function
+	 * @return
+	 */
+	public String getTmpParamName(String param, int num,
+				Codes.Invoke code, FunctionOrMethod function){
+		CodeStore store = stores.get(function);
+		return store.getTmpParamName(param, num, code);
+	}
+	
+	
 	
 	/**
 	 * Alias register and command line argument
@@ -718,6 +736,9 @@ public class CodeStores {
 		private List<String> statements;// List of translated C code.
 		private HashMap<Integer, String> fields;// Store fields that registers are loaded with
 		private HashSet<Integer> substructures; // Store the registers that point to a structure 
+		// Store tmp variables of copied parameters, used to check duplicated names
+		private HashMap<Codes.Invoke, HashMap<String, String>> param_names;
+		
 		
 		public CodeStore(FunctionOrMethod function) {
 			this.indent = "\t";
@@ -725,7 +746,45 @@ public class CodeStores {
 			this.statements = new ArrayList<String>();
 			this.fields = new HashMap<Integer, String>();
 			this.substructures = new HashSet<Integer>();
+			this.param_names = new HashMap<Codes.Invoke, HashMap<String, String>>();
 		}		
+		
+		/**
+		 * Returns the name of temporary parameter 'param'. 
+		 * By default, the name is 'tmp_param_num'. 
+		 * If the name is duplicated, we create another name with extra subfix '_' + num
+		 * e.g. 'tmp_param_1'
+		 * 
+		 * @param param the parameter
+		 * @param num the index at parameter list
+		 * @param code
+		 * @return
+		 */
+		protected String getTmpParamName(String param, int num, Codes.Invoke code){
+			if(!param_names.containsKey(code)){
+				// Create a new set
+				param_names.put(code, new HashMap<String, String>());
+			}
+			HashMap<String, String> names = param_names.get(code);
+			String key = param+"_"+num;
+			if(names.containsKey(key)){
+				return names.get(key);
+			}
+			
+			// Create a temporary name 
+			String param_name = "tmp_" + param + "_" + num;
+			
+			// Put param_name to 'param_names'
+			names.put(param+"_"+num, param_name);
+			
+			return param_name;
+		}
+		
+		
+		
+		
+		
+		
 		
 		/**
 		 * Load the field to the given register.

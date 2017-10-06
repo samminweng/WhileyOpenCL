@@ -452,9 +452,11 @@ Image* _sobelEdgeDetection_(Image* input, _DECL_DEALLOC_PARAM(input)){
 			pos = _49;
 			//invoke (%50) = (%0, %8, %9, %6) SobelEdge2:convolution : function(SobelEdge2:Image,int,int,int[])->(int)
 			{
-				void* input_tmp;
-				void* v_sobel_tmp;
-				_50 = _convolution_(_COPY_STRUCT_PARAM(input, Image), true, x, y, _COPY_1DARRAY_PARAM_int64_t(v_sobel), true);
+				void* tmp_input_0;
+				tmp_input_0 = copy_Image(input);
+				void* tmp_v_sobel_3;
+				_COPY_1DARRAY_PARAM(v_sobel, tmp_v_sobel_3, int64_t);
+				_50 = _convolution_(tmp_input_0, true, x, y, tmp_v_sobel_3, v_sobel_size, true);
 				_CALLEE_DEALLOC(input, "false-false-true" , "convolution");
 				_CALLEE_DEALLOC(v_sobel, "false-false-true" , "convolution");
 			}
@@ -462,9 +464,11 @@ Image* _sobelEdgeDetection_(Image* input, _DECL_DEALLOC_PARAM(input)){
 			v_g = _50;
 			//invoke (%51) = (%0, %8, %9, %7) SobelEdge2:convolution : function(SobelEdge2:Image,int,int,int[])->(int)
 			{
-				void* input_tmp;
-				void* h_sobel_tmp;
-				_51 = _convolution_(_COPY_STRUCT_PARAM(input, Image), true, x, y, _COPY_1DARRAY_PARAM_int64_t(h_sobel), true);
+				void* tmp_input_0;
+				tmp_input_0 = copy_Image(input);
+				void* tmp_h_sobel_3;
+				_COPY_1DARRAY_PARAM(h_sobel, tmp_h_sobel_3, int64_t);
+				_51 = _convolution_(tmp_input_0, true, x, y, tmp_h_sobel_3, h_sobel_size, true);
 				_CALLEE_DEALLOC(input, "false-false-true" , "convolution");
 				_CALLEE_DEALLOC(h_sobel, "false-false-true" , "convolution");
 			}
@@ -516,9 +520,10 @@ blklab9:;
 blklab8:;
 	//invoke (%61) = (%3, %4, %5) SobelEdge2:image : function(int,int,byte[])->(SobelEdge2:Image)
 	{
-		void* newPixels_tmp;
+		void* tmp_newPixels_2;
+		_COPY_1DARRAY_PARAM(newPixels, tmp_newPixels_2, BYTE);
 		_DEALLOC_STRUCT(_61, Image);
-		_61 = _image_(width, height, _COPY_1DARRAY_PARAM_BYTE(newPixels), true);
+		_61 = _image_(width, height, tmp_newPixels_2, newPixels_size, true);
 		_CALLEE_DEALLOC(newPixels, "false-false-false" , "image");
 		_61_dealloc = true;
 	}
@@ -769,9 +774,10 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(pixels);
 	//invoke (%15) = (%2, %3, %5) SobelEdge2:image : function(int,int,byte[])->(SobelEdge2:Image)
 	{
-		void* pixels_tmp;
+		void* tmp_pixels_2;
+		_COPY_1DARRAY_PARAM(pixels, tmp_pixels_2, BYTE);
 		_DEALLOC_STRUCT(_15, Image);
-		_15 = _image_(width, height, _COPY_1DARRAY_PARAM_BYTE(pixels), true);
+		_15 = _image_(width, height, tmp_pixels_2, pixels_size, true);
 		_CALLEE_DEALLOC(pixels, "false-false-false" , "image");
 		_15_dealloc = true;
 	}
@@ -781,9 +787,10 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(input);
 	//invoke (%16) = (%6) SobelEdge2:sobelEdgeDetection : function(SobelEdge2:Image)->(SobelEdge2:Image)
 	{
-		void* input_tmp;
+		void* tmp_input_0;
+		tmp_input_0 = copy_Image(input);
 		_DEALLOC_STRUCT(_16, Image);
-		_16 = _sobelEdgeDetection_(_COPY_STRUCT_PARAM(input, Image), true);
+		_16 = _sobelEdgeDetection_(tmp_input_0, true);
 		_CALLEE_DEALLOC(input, "false-false-false" , "sobelEdgeDetection");
 		_16_dealloc = true;
 	}
@@ -801,8 +808,9 @@ int main(int argc, char** args){
 	_REMOVE_DEALLOC(_19);
 	//invoke () = (%0, %17, %18, %19) SobelEdge2:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
-		void* _19_tmp;
-		_print_pbm_(stdout, _17, _18, _COPY_1DARRAY_PARAM_BYTE(_19), true);
+		void* tmp__19_3;
+		_COPY_1DARRAY_PARAM(_19, tmp__19_3, BYTE);
+		_print_pbm_(stdout, _17, _18, tmp__19_3, _19_size, true);
 		_CALLEE_DEALLOC(_19, "false-false-false" , "print_pbm");
 	}
 	//return

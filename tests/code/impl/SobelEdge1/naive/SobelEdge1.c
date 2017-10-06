@@ -334,17 +334,21 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, int64_t width, int6
 			pos = _46;
 			//invoke (%47) = (%0, %1, %2, %8, %9, %6) SobelEdge1:convolution : function(byte[],int,int,int,int,int[])->(int)
 			{
-				void* pixels_tmp;
-				void* v_sobel_tmp;
-				_47 = _convolution_(_COPY_1DARRAY_PARAM_BYTE(pixels), width, height, x, y, _COPY_1DARRAY_PARAM_int64_t(v_sobel));
+				void* tmp_pixels_0;
+				_COPY_1DARRAY_PARAM(pixels, tmp_pixels_0, BYTE);
+				void* tmp_v_sobel_5;
+				_COPY_1DARRAY_PARAM(v_sobel, tmp_v_sobel_5, int64_t);
+				_47 = _convolution_(tmp_pixels_0, pixels_size, width, height, x, y, tmp_v_sobel_5, v_sobel_size);
 			}
 			//assign %11 = %47  : int
 			v_g = _47;
 			//invoke (%48) = (%0, %1, %2, %8, %9, %7) SobelEdge1:convolution : function(byte[],int,int,int,int,int[])->(int)
 			{
-				void* pixels_tmp;
-				void* h_sobel_tmp;
-				_48 = _convolution_(_COPY_1DARRAY_PARAM_BYTE(pixels), width, height, x, y, _COPY_1DARRAY_PARAM_int64_t(h_sobel));
+				void* tmp_pixels_0;
+				_COPY_1DARRAY_PARAM(pixels, tmp_pixels_0, BYTE);
+				void* tmp_h_sobel_5;
+				_COPY_1DARRAY_PARAM(h_sobel, tmp_h_sobel_5, int64_t);
+				_48 = _convolution_(tmp_pixels_0, pixels_size, width, height, x, y, tmp_h_sobel_5, h_sobel_size);
 			}
 			//assign %12 = %48  : int
 			h_g = _48;
@@ -594,15 +598,17 @@ int main(int argc, char** args){
 	_COPY_1DARRAY_BYTE(pixels, _12);
 	//invoke (%14) = (%5, %2, %3) SobelEdge1:sobelEdgeDetection : function(byte[],int,int)->(byte[])
 	{
-		void* pixels_tmp;
-		_14 = _sobelEdgeDetection_(_COPY_1DARRAY_PARAM_BYTE(pixels), width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_14));
+		void* tmp_pixels_0;
+		_COPY_1DARRAY_PARAM(pixels, tmp_pixels_0, BYTE);
+		_14 = _sobelEdgeDetection_(tmp_pixels_0, pixels_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_14));
 	}
 	//assign %6 = %14  : byte[]
 	_COPY_1DARRAY_BYTE(newPixels, _14);
 	//invoke () = (%0, %2, %3, %6) SobelEdge1:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
-		void* newPixels_tmp;
-		_print_pbm_(stdout, width, height, _COPY_1DARRAY_PARAM_BYTE(newPixels));
+		void* tmp_newPixels_3;
+		_COPY_1DARRAY_PARAM(newPixels, tmp_newPixels_3, BYTE);
+		_print_pbm_(stdout, width, height, tmp_newPixels_3, newPixels_size);
 	}
 	//return
 	exit(0);

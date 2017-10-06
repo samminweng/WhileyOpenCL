@@ -229,7 +229,7 @@ blklab20:;
 			//invoke (%26) = (%7, %1, %4) nqueens:conflict : function(nqueens:POS,int,int)->(bool)
 			{
 				// isCopyEliminated of '_7' = true
-				_26 = _conflict_(_STRUCT_PARAM(p), n, col);
+				_26 = _conflict_(p, n, col);
 			}
 			//const %27 = true : bool
 			_27 = true;
@@ -283,7 +283,7 @@ blklab12:;
 		//invoke (%33) = (%0, %35, %2) nqueens:run : function(nqueens:NQueen,int,int)->(nqueens:NQueen)
 		{
 			// isCopyEliminated of '_0' = true
-			_33 = _run_(_STRUCT_PARAM(nq), _35, dim);
+			_33 = _run_(nq, _35, dim);
 		}
 		//assign %0 = %33  : {int num_solutions,{int c,int r}[] queens}
 		// isCopyEliminated = true
@@ -374,7 +374,7 @@ int main(int argc, char** args){
 	//invoke (%12) = (%4, %13, %1) nqueens:run : function(nqueens:NQueen,int,int)->(nqueens:NQueen)
 	{
 		// isCopyEliminated of '_4' = true
-		_12 = _run_(_STRUCT_PARAM(nq), _13, n);
+		_12 = _run_(nq, _13, n);
 	}
 	//assign %4 = %12  : {int num_solutions,{int c,int r}[] queens}
 	// isCopyEliminated = true

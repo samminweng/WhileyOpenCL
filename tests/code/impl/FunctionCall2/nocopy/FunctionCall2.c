@@ -159,9 +159,10 @@ blklab2:;
 	_29 = 1;
 	//invoke (%28) = (%2, %29) FunctionCall2:func : function(int[],int)->(int[])
 	{
-		void* b_tmp;
+		void* tmp_b_0;
+		_COPY_1DARRAY_PARAM(b, tmp_b_0, int64_t);
 		// isCopyEliminated of '_2' = false
-		_28 = _func_(_COPY_1DARRAY_PARAM_int64_t(b), _29, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
+		_28 = _func_(tmp_b_0, b_size, _29, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 	}
 	//assign %3 = %28  : int[]
 	// isCopyEliminated = true

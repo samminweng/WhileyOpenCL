@@ -499,7 +499,7 @@ blklab28:;
 	{
 		// isCopyEliminated of '_2' = true
 		// isCopyEliminated of '_3' = true
-		_26 = _multiply_(_STRUCT_PARAM(A), _STRUCT_PARAM(B));
+		_26 = _multiply_(A, B);
 	}
 	//assign %4 = %26  : {int[][] data,int height,int width}
 	// isCopyEliminated = true
@@ -535,7 +535,7 @@ blklab29:;
 	//invoke () = (%0, %4) MatrixMult:printMat : method(whiley/lang/System:Console,MatrixMult:Matrix)->()
 	{
 		// isCopyEliminated of '_4' = true
-		_printMat_(stdout, _STRUCT_PARAM(C));
+		_printMat_(stdout, C);
 	}
 	//fieldload %35 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %36 = %35 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

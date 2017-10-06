@@ -213,8 +213,9 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(pixels);
 	//invoke () = (%0, %2, %3, %4) fileread2:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
-		void* pixels_tmp;
-		_print_pbm_(stdout, width, height, _COPY_1DARRAY_PARAM_BYTE(pixels), true);
+		void* tmp_pixels_3;
+		_COPY_1DARRAY_PARAM(pixels, tmp_pixels_3, BYTE);
+		_print_pbm_(stdout, width, height, tmp_pixels_3, pixels_size, true);
 		_CALLEE_DEALLOC(pixels, "false-false-false" , "print_pbm");
 	}
 	//return

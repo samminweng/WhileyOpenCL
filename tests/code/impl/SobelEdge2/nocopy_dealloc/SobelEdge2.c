@@ -479,7 +479,7 @@ Image* _sobelEdgeDetection_(Image* input, _DECL_DEALLOC_PARAM(input)){
 			{
 				// isCopyEliminated of '_0' = true
 				// isCopyEliminated of '_6' = true
-				_50 = _convolution_(_STRUCT_PARAM(input), false, x, y, _1DARRAY_PARAM(v_sobel), false);
+				_50 = _convolution_(input, false, x, y, _1DARRAY_PARAM(v_sobel), false);
 				_RETAIN_DEALLOC(input, "false-false-true" , "convolution");
 				_RETAIN_DEALLOC(v_sobel, "false-false-true" , "convolution");
 			}
@@ -490,7 +490,7 @@ Image* _sobelEdgeDetection_(Image* input, _DECL_DEALLOC_PARAM(input)){
 			{
 				// isCopyEliminated of '_0' = true
 				// isCopyEliminated of '_7' = true
-				_51 = _convolution_(_STRUCT_PARAM(input), false, x, y, _1DARRAY_PARAM(h_sobel), false);
+				_51 = _convolution_(input, false, x, y, _1DARRAY_PARAM(h_sobel), false);
 				_RETAIN_DEALLOC(input, "false-false-true" , "convolution");
 				_RETAIN_DEALLOC(h_sobel, "false-false-true" , "convolution");
 			}
@@ -824,7 +824,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC_STRUCT(_16, Image);
 		// isCopyEliminated of '_6' = true
-		_16 = _sobelEdgeDetection_(_STRUCT_PARAM(input), false);
+		_16 = _sobelEdgeDetection_(input, false);
 		_RETAIN_DEALLOC(input, "false-false-false" , "sobelEdgeDetection");
 		_16_dealloc = true;
 	}

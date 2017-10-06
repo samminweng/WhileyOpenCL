@@ -436,7 +436,7 @@ Image* _sobelEdgeDetection_(Image* input){
 			{
 				// isCopyEliminated of '_0' = true
 				// isCopyEliminated of '_6' = true
-				_50 = _convolution_(_STRUCT_PARAM(input), x, y, _1DARRAY_PARAM(v_sobel));
+				_50 = _convolution_(input, x, y, _1DARRAY_PARAM(v_sobel));
 			}
 			//assign %11 = %50  : int
 			// isCopyEliminated = true
@@ -445,7 +445,7 @@ Image* _sobelEdgeDetection_(Image* input){
 			{
 				// isCopyEliminated of '_0' = true
 				// isCopyEliminated of '_7' = true
-				_51 = _convolution_(_STRUCT_PARAM(input), x, y, _1DARRAY_PARAM(h_sobel));
+				_51 = _convolution_(input, x, y, _1DARRAY_PARAM(h_sobel));
 			}
 			//assign %12 = %51  : int
 			// isCopyEliminated = true
@@ -727,7 +727,7 @@ int main(int argc, char** args){
 	//invoke (%16) = (%6) SobelEdge2:sobelEdgeDetection : function(SobelEdge2:Image)->(SobelEdge2:Image)
 	{
 		// isCopyEliminated of '_6' = true
-		_16 = _sobelEdgeDetection_(_STRUCT_PARAM(input));
+		_16 = _sobelEdgeDetection_(input);
 	}
 	//assign %7 = %16  : {int height,byte[] pixels,int width}
 	// isCopyEliminated = true

@@ -140,7 +140,7 @@ int main(int argc, char** args){
 	{
 		// isCopyEliminated of '_3' = true
 		// isCopyEliminated of '_4' = true
-		_15 = _updateRec_(_STRUCT_PARAM(rec), _STRUCT_PARAM(p3));
+		_15 = _updateRec_(rec, p3);
 	}
 	//assign %3 = %15  : {{int x,int y} p1,{int x,int y} p2}
 	// isCopyEliminated = true

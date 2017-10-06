@@ -399,6 +399,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			}
 		} else {
 			// Apply the macros for each parameter
+			int index = 0;
 			for (int register : code.operands()) {
 				String macro = computeDealloc(register, code, function, stores, copyAnalyzer);
 				if (!macro.equals("")) {
@@ -421,11 +422,13 @@ public class DeallocationAnalyzer extends Analyzer {
 						// Get function return
 						String ret = stores.getVar(code.target(0), function);
 						if (stores.isCompoundType(parameter_type)) {
-							if (parameter_type instanceof Type.Array) {
+							// Get tmp param name
+							String tmp_name =stores.getTmpParamName(parameter, index, code, function);
+							if (parameter_type instanceof Type.Array) {								
 								Type elm_type = stores.getArrayElementType((Type.Array) parameter_type);
-								if (elm_type instanceof Type.Byte || stores.isIntType(elm_type)) {
+								if (elm_type instanceof Type.Byte || stores.isIntType(elm_type)) {				
 									// Applied caller macro and used standard 'free' function to release extra copy
-									statements.add(indent + "_CALLER_DEALLOC(" + ret + ", " + parameter + ", \"" + checks
+									statements.add(indent + "_CALLER_DEALLOC(" + ret + ", " + tmp_name + ", \"" + checks
 											+ "\" , \"" + func_name + "\");");
 								} else {
 									// An array of structures
@@ -433,7 +436,7 @@ public class DeallocationAnalyzer extends Analyzer {
 									String type_name = CodeGeneratorHelper.translateType(parameter_type, stores)
 											.replace("*", "");
 									// Applied caller_struct macro and used structure free function to release extra copy
-									statements.add(indent + "_CALLER_DEALLOC_STRUCT(" + ret + ", " + parameter + ", \""
+									statements.add(indent + "_CALLER_DEALLOC_STRUCT(" + ret + ", " + tmp_name + ", \""
 											+ checks + "\" , \"" + func_name + "\", " + type_name + ");");
 								}
 							} else {
@@ -441,7 +444,7 @@ public class DeallocationAnalyzer extends Analyzer {
 								String type_name = CodeGeneratorHelper.translateType(parameter_type, stores)
 										.replace("*", "");
 								// Applied caller_struct macro and used structure free function to release extra copy
-								statements.add(indent + "_CALLER_DEALLOC_STRUCT(" + ret + ", " + parameter + ", \""
+								statements.add(indent + "_CALLER_DEALLOC_STRUCT(" + ret + ", " + tmp_name + ", \""
 										+ checks + "\" , \"" + func_name + "\", " + type_name + ");");
 							}
 						} else {
@@ -477,6 +480,7 @@ public class DeallocationAnalyzer extends Analyzer {
 						break;
 					}
 				}
+				index++;
 			}
 		}
 		

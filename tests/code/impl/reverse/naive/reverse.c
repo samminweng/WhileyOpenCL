@@ -111,8 +111,9 @@ int main(int argc, char** args){
 	_11[0] = _6; _11[1] = _7; _11[2] = _8; _11[3] = _9; _11[4] = _10; 
 	//invoke (%5) = (%11) reverse:reverse : function(int[])->(int[])
 	{
-		void* _11_tmp;
-		_5 = _reverse_(_COPY_1DARRAY_PARAM_int64_t(_11), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
+		void* tmp__11_0;
+		_COPY_1DARRAY_PARAM(_11, tmp__11_0, int64_t);
+		_5 = _reverse_(tmp__11_0, _11_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
 	}
 	//assign %1 = %5  : int[]
 	_COPY_1DARRAY_int64_t(rs, _5);
@@ -179,8 +180,9 @@ blklab6:;
 blklab5:;
 	//invoke (%27) = (%4) reverse:reverse : function(int[])->(int[])
 	{
-		void* arr_tmp;
-		_27 = _reverse_(_COPY_1DARRAY_PARAM_int64_t(arr), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
+		void* tmp_arr_0;
+		_COPY_1DARRAY_PARAM(arr, tmp_arr_0, int64_t);
+		_27 = _reverse_(tmp_arr_0, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 	}
 	//assign %4 = %27  : int[]
 	_COPY_1DARRAY_int64_t(arr, _27);

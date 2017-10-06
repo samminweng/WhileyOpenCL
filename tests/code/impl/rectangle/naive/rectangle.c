@@ -134,9 +134,11 @@ int main(int argc, char** args){
 	p3 = copy_Point(_14);
 	//invoke (%15) = (%3, %4) rectangle:updateRec : function(rectangle:Rectangle,rectangle:Point)->(rectangle:Rectangle)
 	{
-		void* rec_tmp;
-		void* p3_tmp;
-		_15 = _updateRec_(_COPY_STRUCT_PARAM(rec, Rectangle), _COPY_STRUCT_PARAM(p3, Point));
+		void* tmp_rec_0;
+		tmp_rec_0 = copy_Rectangle(rec);
+		void* tmp_p3_1;
+		tmp_p3_1 = copy_Point(p3);
+		_15 = _updateRec_(tmp_rec_0, tmp_p3_1);
 	}
 	//assign %3 = %15  : {{int x,int y} p1,{int x,int y} p2}
 	rec = copy_Rectangle(_15);

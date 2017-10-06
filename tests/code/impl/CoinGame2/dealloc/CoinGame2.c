@@ -352,10 +352,11 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(moves);
 	//invoke (%8) = (%2, %1) CoinGame2:findMoves : function(int[],int)->(int[])
 	{
-		void* moves_tmp;
+		void* tmp_moves_0;
+		_COPY_1DARRAY_PARAM(moves, tmp_moves_0, int64_t);
 		_DEALLOC(_8);
-		_8 = _findMoves_(_COPY_1DARRAY_PARAM_int64_t(moves), false, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
-		_CALLER_DEALLOC(_8, moves, "true-true-false" , "findMoves");
+		_8 = _findMoves_(tmp_moves_0, moves_size, false, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
+		_CALLER_DEALLOC(_8, tmp_moves_0, "true-true-false" , "findMoves");
 	}
 	//assign %2 = %8  : int[]
 	_DEALLOC(moves);

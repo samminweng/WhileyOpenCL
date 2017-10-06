@@ -243,10 +243,11 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 		if(header!=_25){goto blklab11;}
 		//invoke (%26) = (%2, %3, %6) lz77_opt_decompress:opt_append : function(byte[],lz77_opt_decompress:nat,byte)->(byte[])
 		{
-			void* items_tmp;
+			void* tmp_items_0;
+			_COPY_1DARRAY_PARAM(items, tmp_items_0, BYTE);
 			_DEALLOC(_26);
-			_26 = _opt_append_(_COPY_1DARRAY_PARAM_BYTE(items), false, items_length, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_26));
-			_CALLER_DEALLOC(_26, items, "true-true-false" , "opt_append");
+			_26 = _opt_append_(tmp_items_0, items_size, false, items_length, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_26));
+			_CALLER_DEALLOC(_26, tmp_items_0, "true-true-false" , "opt_append");
 		}
 		//assign %2 = %26  : byte[]
 		_DEALLOC(items);
@@ -292,10 +293,11 @@ blklab11:;
 			item = _33;
 			//invoke (%34) = (%2, %3, %6) lz77_opt_decompress:opt_append : function(byte[],lz77_opt_decompress:nat,byte)->(byte[])
 			{
-				void* items_tmp;
+				void* tmp_items_0;
+				_COPY_1DARRAY_PARAM(items, tmp_items_0, BYTE);
 				_DEALLOC(_34);
-				_34 = _opt_append_(_COPY_1DARRAY_PARAM_BYTE(items), false, items_length, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_34));
-				_CALLER_DEALLOC(_34, items, "true-true-false" , "opt_append");
+				_34 = _opt_append_(tmp_items_0, items_size, false, items_length, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_34));
+				_CALLER_DEALLOC(_34, tmp_items_0, "true-true-false" , "opt_append");
 			}
 			//assign %2 = %34  : byte[]
 			_DEALLOC(items);
@@ -327,9 +329,10 @@ blklab10:;
 blklab9:;
 	//invoke (%39) = (%2, %3) lz77_opt_decompress:resize : function(byte[],int)->(byte[])
 	{
-		void* items_tmp;
+		void* tmp_items_0;
+		_COPY_1DARRAY_PARAM(items, tmp_items_0, BYTE);
 		_DEALLOC(_39);
-		_39 = _resize_(_COPY_1DARRAY_PARAM_BYTE(items), true, items_length, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_39));
+		_39 = _resize_(tmp_items_0, items_size, true, items_length, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_39));
 		_CALLEE_DEALLOC(items, "false-false-false" , "resize");
 		_39_dealloc = true;
 	}
@@ -397,9 +400,10 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(input_data);
 	//invoke (%8) = (%2) lz77_opt_decompress:decompress : function(byte[])->(byte[])
 	{
-		void* input_data_tmp;
+		void* tmp_input_data_0;
+		_COPY_1DARRAY_PARAM(input_data, tmp_input_data_0, BYTE);
 		_DEALLOC(_8);
-		_8 = _decompress_(_COPY_1DARRAY_PARAM_BYTE(input_data), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
+		_8 = _decompress_(tmp_input_data_0, input_data_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_CALLEE_DEALLOC(input_data, "false-false-false" , "decompress");
 		_8_dealloc = true;
 	}

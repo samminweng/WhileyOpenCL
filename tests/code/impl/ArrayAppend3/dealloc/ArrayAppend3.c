@@ -288,9 +288,10 @@ int main(int argc, char** args){
 	//fieldload %15 = %14 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%16) = (%1) ArrayAppend3:toString : function(ArrayAppend3:Cash)->(whiley/lang/ASCII:string)
 	{
-		void* till_tmp;
+		void* tmp_till_0;
+		_COPY_1DARRAY_PARAM(till, tmp_till_0, int64_t);
 		_DEALLOC(_16);
-		_16 = _toString_(_COPY_1DARRAY_PARAM_int64_t(till), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
+		_16 = _toString_(tmp_till_0, till_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		_CALLEE_DEALLOC(till, "false-false-false" , "toString");
 		_16_dealloc = true;
 	}

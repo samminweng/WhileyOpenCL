@@ -181,7 +181,7 @@ int main(int argc, char** args){
 		_DEALLOC_STRUCT(_15, Rectangle);
 		// isCopyEliminated of '_3' = true
 		// isCopyEliminated of '_4' = true
-		_15 = _updateRec_(_STRUCT_PARAM(rec), false, _STRUCT_PARAM(p3), false);
+		_15 = _updateRec_(rec, false, p3, false);
 		_RESET_DEALLOC(_15, rec, "true-true-false" , "updateRec");
 		rec_dealloc = false;
 		_RESET_DEALLOC(_15, p3, "false-true-false" , "updateRec");

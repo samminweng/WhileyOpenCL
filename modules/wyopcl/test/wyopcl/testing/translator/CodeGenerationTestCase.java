@@ -53,53 +53,55 @@ public class CodeGenerationTestCase {
 	@Parameterized.Parameters(name = "{index}:{0}")
 	public static Collection<String> testCases() {
 		return Arrays.asList(new String[] { 
-				/*"rectangle",
-				"swap",
-				"reverse",
-				"mergesort",
-				"bubblesort",
-				"newTicTacToe",
-				"MatrixMult",
-				"factorial",
-				"Fibonacci",
-				"MatrixMult2",
-				"MatrixMult3",
-				"gcd",
-				"CoinGame",
-				"CoinGame1",
-				"CoinGame2",
-				"CoinGame3",
-				"CoinGame4",
-				"nqueens",
-				"nqueens2",
-				"FunctionCall1",
-				"FunctionCall2",
-				"FunctionCall3",
-				"FunctionCall4",
-				"FunctionOverload", // Define types and functions with the same name 
-				"FunctionOverload2", // Define two functions with the same name
-				"ArrayAppend", // Test 'append' function
-				"ArrayAppend2", // Test 'append' function at WyRT runtime library
-				"ArrayAppend3", // Test 'toString' function in cashtill test case
-				"cashtill",
-				"lz77",
-				"lz77_2",
-				"lz77_decompress", // Uncompress the lz77 file.
-				"lz77_opt_decompress", // Optimised lz77 decompression
-				"fileread", //Read 'feep.pbm' as a byte array
-				"fileread2",// Read 'feep.pbm' and output the array to console 
-				"SobelEdge1", // Read 'feep.pbm', detect the edges and output the resulting array
-				"SobelEdge2", // Similar to 'SobelEdge1' with additional 'image' structure
-				"ResetMacro1", // Test case for 'RESET' macro
-				"ResetMacro2", // Test case for 'RESET' macro
-				"ResetMacro3", // Test case for 'RESET' macro
 				"CallerMacro1", // Test case for 'CALLER' macro
 				"CallerMacro2", // Test case for 'Caller' macro
 				"CallerMacro3", // Test case for 'Caller' macro
 				"CallerMacro4", // Test case for 'Caller' macro
 				"CallerMacro5", // Test case for 'Caller' macro
-				*/
-				"ResetMacro4", // Test case for 'RESET' macro
+				"ResetMacro1", // Test case for 'RESET' macro
+				"ResetMacro2", // Test case for 'RESET' macro
+				"ResetMacro3", // Test case for 'RESET' macro
+				//"ResetMacro4", // Test case for 'RESET' macro
+				"FunctionCall1",
+				"FunctionCall2",
+				"FunctionCall3",
+				"FunctionCall4",
+				"ArrayAppend", // Test 'append' function
+				"ArrayAppend2", // Test 'append' function at WyRT runtime library
+				"ArrayAppend3", // Test 'toString' function in cashtill test case
+				// Not used in benchmarks
+				"rectangle",
+				"swap",				
+				"factorial",
+				"Fibonacci",
+				"gcd",
+				"FunctionOverload", // Define types and functions with the same name 
+				"FunctionOverload2", // Define two functions with the same name	
+				"fileread", //Read 'feep.pbm' as a byte array
+				"fileread2",// Read 'feep.pbm' and output the array to console
+				"nqueens",
+				"nqueens2",
+				// Micro-benchmarks
+				"reverse",
+				"mergesort",
+				"bubblesort",
+				"newTicTacToe",
+				"MatrixMult",
+				"MatrixMult2",
+				"MatrixMult3",
+				// Benchmarks
+				"CoinGame",
+				"CoinGame1",
+				"CoinGame2",
+				"CoinGame3",
+				"CoinGame4",
+				"cashtill",
+				"lz77",
+				"lz77_2",
+				"lz77_decompress", // Uncompress the lz77 file.
+				"lz77_opt_decompress", // Optimised lz77 decompression
+				"SobelEdge1", // Read 'feep.pbm', detect the edges and output the resulting array
+				"SobelEdge2", // Similar to 'SobelEdge1' with additional 'image' structure
 		});
 	}
 

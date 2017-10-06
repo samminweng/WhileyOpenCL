@@ -51,9 +51,10 @@ int main(int argc, char** args){
 	b[_7] = _6;
 	//invoke (%8) = (%1) CallerMacro3:f : function(int[])->(int[])
 	{
-		void* b_tmp;
+		void* tmp_b_0;
+		_COPY_1DARRAY_PARAM(b, tmp_b_0, int64_t);
 		// isCopyEliminated of '_1' = false
-		_8 = _f_(_COPY_1DARRAY_PARAM_int64_t(b), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
+		_8 = _f_(tmp_b_0, b_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 	}
 	//assign %2 = %8  : int[]
 	// isCopyEliminated = true

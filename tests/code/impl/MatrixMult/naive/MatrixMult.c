@@ -184,8 +184,9 @@ blklab13:;
 	_36 = A->height;
 	//invoke (%34) = (%35, %36, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
 	{
-		void* C_data_tmp;
-		_34 = _matrix_(_35, _36, _COPY_2DARRAY_PARAM_int64_t(C_data));
+		void* tmp_C_data_2;
+		_COPY_2DARRAY_PARAM_int64_t(C_data, tmp_C_data_2);
+		_34 = _matrix_(_35, _36, tmp_C_data_2, C_data_size, C_data_size_size);
 	}
 	//return %34
 	return _34;
@@ -353,8 +354,9 @@ blklab24:;
 blklab23:;
 	//invoke (%15) = (%1, %0, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
 	{
-		void* rows_tmp;
-		_15 = _matrix_(width, height, _COPY_2DARRAY_PARAM_int64_t(rows));
+		void* tmp_rows_2;
+		_COPY_2DARRAY_PARAM_int64_t(rows, tmp_rows_2);
+		_15 = _matrix_(width, height, tmp_rows_2, rows_size, rows_size_size);
 	}
 	//return %15
 	return _15;
@@ -476,9 +478,11 @@ blklab28:;
 	}
 	//invoke (%26) = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
 	{
-		void* A_tmp;
-		void* B_tmp;
-		_26 = _multiply_(_COPY_STRUCT_PARAM(A, Matrix), _COPY_STRUCT_PARAM(B, Matrix));
+		void* tmp_A_0;
+		tmp_A_0 = copy_Matrix(A);
+		void* tmp_B_1;
+		tmp_B_1 = copy_Matrix(B);
+		_26 = _multiply_(tmp_A_0, tmp_B_1);
 	}
 	//assign %4 = %26  : {int[][] data,int height,int width}
 	C = copy_Matrix(_26);
@@ -512,8 +516,9 @@ blklab29:;
 	}
 	//invoke () = (%0, %4) MatrixMult:printMat : method(whiley/lang/System:Console,MatrixMult:Matrix)->()
 	{
-		void* C_tmp;
-		_printMat_(stdout, _COPY_STRUCT_PARAM(C, Matrix));
+		void* tmp_C_1;
+		tmp_C_1 = copy_Matrix(C);
+		_printMat_(stdout, tmp_C_1);
 	}
 	//fieldload %35 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %36 = %35 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

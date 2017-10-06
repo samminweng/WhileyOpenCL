@@ -211,9 +211,10 @@ blklab13:;
 	_36 = A->height;
 	//invoke (%34) = (%35, %36, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
 	{
-		void* C_data_tmp;
+		void* tmp_C_data_2;
+		_COPY_2DARRAY_PARAM_int64_t(C_data, tmp_C_data_2);
 		_DEALLOC_STRUCT(_34, Matrix);
-		_34 = _matrix_(_35, _36, _COPY_2DARRAY_PARAM_int64_t(C_data), true);
+		_34 = _matrix_(_35, _36, tmp_C_data_2, C_data_size, C_data_size_size, true);
 		_CALLEE_DEALLOC(C_data, "false-false-false" , "matrix");
 		_34_dealloc = true;
 	}
@@ -420,9 +421,10 @@ blklab24:;
 blklab23:;
 	//invoke (%15) = (%1, %0, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
 	{
-		void* rows_tmp;
+		void* tmp_rows_2;
+		_COPY_2DARRAY_PARAM_int64_t(rows, tmp_rows_2);
 		_DEALLOC_STRUCT(_15, Matrix);
-		_15 = _matrix_(width, height, _COPY_2DARRAY_PARAM_int64_t(rows), true);
+		_15 = _matrix_(width, height, tmp_rows_2, rows_size, rows_size_size, true);
 		_CALLEE_DEALLOC(rows, "false-false-false" , "matrix");
 		_15_dealloc = true;
 	}
@@ -577,10 +579,12 @@ blklab28:;
 	}
 	//invoke (%26) = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
 	{
-		void* A_tmp;
-		void* B_tmp;
+		void* tmp_A_0;
+		tmp_A_0 = copy_Matrix(A);
+		void* tmp_B_1;
+		tmp_B_1 = copy_Matrix(B);
 		_DEALLOC_STRUCT(_26, Matrix);
-		_26 = _multiply_(_COPY_STRUCT_PARAM(A, Matrix), true, _COPY_STRUCT_PARAM(B, Matrix), true);
+		_26 = _multiply_(tmp_A_0, true, tmp_B_1, true);
 		_CALLEE_DEALLOC(A, "false-false-false" , "multiply");
 		_26_dealloc = true;
 		_CALLEE_DEALLOC(B, "false-false-false" , "multiply");
@@ -623,8 +627,9 @@ blklab29:;
 	}
 	//invoke () = (%0, %4) MatrixMult:printMat : method(whiley/lang/System:Console,MatrixMult:Matrix)->()
 	{
-		void* C_tmp;
-		_printMat_(stdout, _COPY_STRUCT_PARAM(C, Matrix), true);
+		void* tmp_C_1;
+		tmp_C_1 = copy_Matrix(C);
+		_printMat_(stdout, tmp_C_1, true);
 		_CALLEE_DEALLOC(C, "false-false-false" , "printMat");
 	}
 	//fieldload %35 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}

@@ -220,8 +220,9 @@ blklab6:;
 blklab20:;
 			//invoke (%26) = (%7, %1, %4) nqueens:conflict : function(nqueens:POS,int,int)->(bool)
 			{
-				void* p_tmp;
-				_26 = _conflict_(_COPY_STRUCT_PARAM(p, POS), n, col);
+				void* tmp_p_0;
+				tmp_p_0 = copy_POS(p);
+				_26 = _conflict_(tmp_p_0, n, col);
 			}
 			//const %27 = true : bool
 			_27 = true;
@@ -272,8 +273,9 @@ blklab12:;
 		_35=n+_34;
 		//invoke (%33) = (%0, %35, %2) nqueens:run : function(nqueens:NQueen,int,int)->(nqueens:NQueen)
 		{
-			void* nq_tmp;
-			_33 = _run_(_COPY_STRUCT_PARAM(nq, NQueen), _35, dim);
+			void* tmp_nq_0;
+			tmp_nq_0 = copy_NQueen(nq);
+			_33 = _run_(tmp_nq_0, _35, dim);
 		}
 		//assign %0 = %33  : {int num_solutions,{int c,int r}[] queens}
 		nq = copy_NQueen(_33);
@@ -348,8 +350,9 @@ int main(int argc, char** args){
 	num_solutions = _10;
 	//invoke (%11) = (%3, %2) nqueens:nqueen : function(int,nqueens:POS[])->(nqueens:NQueen)
 	{
-		void* queens_tmp;
-		_11 = _nqueen_(num_solutions, _COPY_1DARRAY_PARAM_STRUCT(queens, POS));
+		void* tmp_queens_1;
+		_COPY_1DARRAY_PARAM_STRUCT(queens, tmp_queens_1, POS)
+		_11 = _nqueen_(num_solutions, tmp_queens_1, queens_size);
 	}
 	//assign %4 = %11  : {int num_solutions,{int c,int r}[] queens}
 	nq = copy_NQueen(_11);
@@ -357,8 +360,9 @@ int main(int argc, char** args){
 	_13 = 0;
 	//invoke (%12) = (%4, %13, %1) nqueens:run : function(nqueens:NQueen,int,int)->(nqueens:NQueen)
 	{
-		void* nq_tmp;
-		_12 = _run_(_COPY_STRUCT_PARAM(nq, NQueen), _13, n);
+		void* tmp_nq_0;
+		tmp_nq_0 = copy_NQueen(nq);
+		_12 = _run_(tmp_nq_0, _13, n);
 	}
 	//assign %4 = %12  : {int num_solutions,{int c,int r}[] queens}
 	nq = copy_NQueen(_12);

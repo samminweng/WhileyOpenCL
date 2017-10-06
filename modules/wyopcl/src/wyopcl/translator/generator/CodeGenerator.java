@@ -416,7 +416,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.Const code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
-		String lhs = extractLHSVar(statement, code, function);
+		String lhs = translateLHSVarFunctionCall(statement, code, function);
 
 		String indent = stores.getIndent(function);
 		Constant constant = code.constant;
@@ -680,7 +680,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.Assign code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
-		String lhs = extractLHSVar(statement, code, function);
+		String lhs = translateLHSVarFunctionCall(statement, code, function);
 		// Get the actual type for lhs variable.
 		String indent = stores.getIndent(function);
 		Type lhs_type = stores.getRawType(code.target(0), function);
@@ -896,12 +896,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param function
 	 * @return a list of parameter whose copy can be safely reduced.
 	 */
-	private List<Integer> checkParameterCopy(List<String> statements, Codes.Invoke code, FunctionOrMethod function) {
+	private List<Integer> translateParameterCopy(List<String> statements, Codes.Invoke code, FunctionOrMethod function) {
 		String indent = stores.getIndent(function);
 		// Create a array to store the parameter whose parameter can be reduced.
 		List<Integer> copyReducedList = new ArrayList<Integer>();
+		int index = 0;
 		for (int operand : code.operands()) {
-			String parameter = stores.getVar(operand, function);
+			String param = stores.getVar(operand, function);
 			Type param_type = stores.getRawType(operand, function);
 			// Check if the parameter is an array or structure
 			if (stores.isCompoundType(param_type)) {
@@ -911,11 +912,67 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					// Put the operand to the copy-reduced list
 					copyReducedList.add(operand);
 				} else {
+					
 					// Generate the temporary block variable to store the copied
 					// parameter
-					statements.add(indent + "void* " + parameter + "_tmp;");
+					String tmp_name = stores.getTmpParamName(param, index, code, function);
+					
+					// Declare the temporary variable
+					statements.add(indent + "void* " +tmp_name + ";");
+					
+					if(stores.isIntArrayOrAliasedType(param_type)){
+						Type elm = stores.getArrayElementType(param_type);
+						int dimension = stores.getArrayDimension(param_type);
+						// Make the copy
+						if(elm instanceof Type.Byte){
+							if(dimension == 1){
+								// Copy 1D array of 64-bit integers
+								statements.add(indent + "_COPY_1DARRAY_PARAM(" + param + ", "+tmp_name +", BYTE);");
+							}
+							//statements.add(indent + "_COPY_" + dimension + "DARRAY_PARAM_BYTE(" + param + ", "+tmp_name+")");
+						}else if (stores.isIntType(elm)) {							
+							if(boundAnalyzer.isPresent()&& dimension == 1){
+								String translateType = boundAnalyzer.get().suggestIntegerType(code.target(0), function);
+								// Make a copy before the function call
+								statements.add(indent + "_COPY_1DARRAY_PARAM(" + param + ", "+tmp_name +", "+translateType+");");
+							}else{
+								if(dimension == 1){
+									// Copy 1D array of 64-bit integers
+									statements.add(indent + "_COPY_1DARRAY_PARAM(" + param + ", "+tmp_name +", int64_t);");
+								}else if(dimension == 2){
+									// Copy 2D array of 64-bit integers
+									statements.add(indent + "_COPY_2DARRAY_PARAM_int64_t(" + param + ", "+tmp_name +");");
+								}else{
+									throw new RuntimeException("Not implemented");
+								}
+								
+							}
+							
+						} else {
+							String elm_type = CodeGeneratorHelper.translateType(elm, stores).replace("*", "");
+							// Copy the array of structures and pass it as a function parameter
+							statements.add(indent +"_COPY_1DARRAY_PARAM_STRUCT" + "(" + param+ ", "+tmp_name + ", " + elm_type + ")");
+						}
+					}else if (param_type instanceof Type.Record || param_type instanceof Type.Nominal
+							|| param_type instanceof Type.Union) {	
+						// Add copy analysis result as a comment.
+						if(this.copyAnalyzer.isPresent()){
+							statements.add(indent+ "// isCopyEliminated of '"+prefix+operand+"' = " + isCopyEliminated);
+						}
+						
+						if (!isCopyEliminated) {
+							// Temporary variable is used to reference the extra copy of parameter
+							String type_name = CodeGeneratorHelper.translateType(param_type, stores).replace("*", "");
+							statements.add(indent + tmp_name +" = copy_"+type_name+"("+ param + ");");
+							
+							//statements.add("_COPY_STRUCT_PARAM(" + param + ", " + type_name + ")");
+						}
+					}
+					
+					
 				}
 			}
+			index++;
 		}
 
 		return copyReducedList;
@@ -942,14 +999,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		// Go through each parameter
 		List<String> parameters = new ArrayList<String>();
+		int index = 0;
 		for (int operand : code.operands()) {
 			// Get parameter name
 			String parameter = stores.getVar(operand, function);
 			Type parameter_type = stores.getRawType(operand, function);
 			// Check if the copy of parameter can be eliminated by copy analysis
 			boolean isCopyEliminated = copyReducedList.contains(operand);
-			
-
 			// Check if the copy of function argument is needed or not
 			// And then generate the corresponding code
 			if (parameter_type instanceof Type.Nominal
@@ -969,24 +1025,25 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				if (isCopyEliminated) {
 					parameters.add("_" + dimension + "DARRAY_PARAM(" + parameter + ")");
 				} else {
-					if(elm instanceof Type.Byte){
-						parameters.add("_COPY_" + dimension + "DARRAY_PARAM_BYTE(" + parameter + ")");
-					}else if (stores.isIntType(elm)) {
-						
-						if(boundAnalyzer.isPresent()&& dimension == 1){
-							String translateType = boundAnalyzer.get().suggestIntegerType(code.target(0), function);
-							// Make a copy before the function call
-							statements.add(indent + "_COPY_1DARRAY_PARAM(" + parameter + ", "+translateType+");");
-							// Pass the copied parameter to function call
-							parameters.add(parameter+"_tmp, "+parameter+"_size");
-						}else{
-							parameters.add("_COPY_" + dimension + "DARRAY_PARAM_int64_t(" + parameter + ")");
-						}
-						
+					// Copy is made
+					if (stores.isIntType(elm) || elm instanceof Type.Byte) {
+						// Get temporary variable
+						String copied_param_name = stores.getTmpParamName(parameter, index, code, function);
+						// Pass the name of temporary parameter to a function call with
+						parameters.add(copied_param_name + ", "+parameter+"_size");
+						// Extra size variable for 2D array
+						if(dimension == 2){
+							parameters.add(parameter+"_size_size");
+						}						
 					} else {
-						String elm_type = CodeGeneratorHelper.translateType(elm, stores).replace("*", "");
+						// Copy an array of structures
+						// String elm_type = CodeGeneratorHelper.translateType(elm, stores).replace("*", "");
+						// Passed copied parameter to called function
+						// Get temporary variable
+						String copied_param_name = stores.getTmpParamName(parameter, index, code, function);
+						parameters.add(copied_param_name + ", "+parameter+"_size");
 						// Copy the array of structures and pass it as a function parameter
-						parameters.add("_COPY_1DARRAY_PARAM_STRUCT" + "(" + parameter + ", " + elm_type + ")");
+						//parameters.add("_COPY_1DARRAY_PARAM_STRUCT" + "(" + parameter + ", " + elm_type + ")");
 					}
 				}
 			} else if (parameter_type instanceof Type.Record || parameter_type instanceof Type.Nominal
@@ -997,12 +1054,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				}
 				
 				if (isCopyEliminated) {
-					parameters.add("_STRUCT_PARAM(" + parameter + ")");
+					parameters.add(parameter);
 				} else {
 					// Temporary variable is used to reference the extra copy of parameter
-					String type_name = CodeGeneratorHelper.translateType(parameter_type, stores).replace("*", "");
-					//String tmp_var = parameter + "_tmp";
-					parameters.add("_COPY_STRUCT_PARAM(" + parameter + ", " + type_name + ")");
+					//String type_name = CodeGeneratorHelper.translateType(parameter_type, stores).replace("*", "");
+					String copied_param_name = stores.getTmpParamName(parameter, index, code, function);
+					// Pass the tmp variable to function call
+					parameters.add(copied_param_name);
 				}
 			} else {
 				throw new RuntimeException("Not Implemented");
@@ -1039,6 +1097,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				}
 
 			});
+			
+			index++;
 		}
 
 		// Add extra call-by-ref size parameter for output array
@@ -1077,7 +1137,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param function
 	 * @return lhs variable
 	 */
-	private String extractLHSVar(List<String> statement, Code code, FunctionOrMethod function) {
+	private String translateLHSVarFunctionCall(List<String> statement, Code code, FunctionOrMethod function) {
 
 		String indent = stores.getIndent(function);
 		if (code instanceof Codes.Update) {
@@ -1254,7 +1314,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statements.add(indent + lhs + " = (BYTE)" + rhs + ";");
 				break;
 			case "fromBytes":
-				extractLHSVar(statements, code, function);// Extra and free lhs variable before function call.
+				translateLHSVarFunctionCall(statements, code, function);// Extra and free lhs variable before function call.
 				// Call built-in 'fromBytes' function to convert 'byte[]' to a string
 				statements.add(indent + lhs + " = fromBytes(" + rhs + ", " + rhs + "_size);");
 				// Propagate the size variable 
@@ -1269,7 +1329,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statements.add(indent+ lhs + " = (BYTE)"+rhs+";");
 				break;
 			case "toString":
-				lhs = extractLHSVar(statements, code, function);
+				lhs = translateLHSVarFunctionCall(statements, code, function);
 				// Convert an integer to a string (an integer array of ASCII code)
 				// Call WyRT built-in 'InttoString' function
 				statements.add(indent + lhs + " = Int_toString(" + rhs + ", _1DARRAYSIZE_PARAM_CALLBYREFERENCE("+lhs+"));");
@@ -1277,7 +1337,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Slice an array into a new sub-array at given starting and ending index.
 			case "slice":
 				// Extract lhs variable and free the variable (if de-allocation analysis enabled)
-				lhs = extractLHSVar(statements, code, function);
+				lhs = translateLHSVarFunctionCall(statements, code, function);
 				// Call the 'slice' function.
 				String array = stores.getVar(code.operand(0), function);
 				String start = stores.getVar(code.operand(1), function);
@@ -1286,7 +1346,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				break;
 			case "append":
 				// Free the left-handed side variable 
-				lhs = extractLHSVar(statements, code, function);;				
+				lhs = translateLHSVarFunctionCall(statements, code, function);;				
 				// Append an array to another array, e.g. 'invoke (%13) = (%2, %14) whiley/lang/Array:append'
 				String rhs_arr  = stores.getVar(code.operand(0), function);
 				String rhs1_arr = stores.getVar(code.operand(1), function);
@@ -1319,10 +1379,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		} else {		
 
 			// Check the copy of parameter
-			List<Integer> copyReducedList = checkParameterCopy(statements, code, function);
+			List<Integer> copyReducedList = translateParameterCopy(statements, code, function);
 
 			// De-allocate lhs register
-			extractLHSVar(statements, code, function);
+			translateLHSVarFunctionCall(statements, code, function);
 			// call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
 			translateFunctionCall(copyReducedList, statements, code, function);
 
@@ -1554,7 +1614,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.Update code, FunctionOrMethod function) {
 		String indent = stores.getIndent(function);
 		List<String> statement = new ArrayList<String>();
-		String lhs = extractLHSVar(statement, code, function);
+		String lhs = translateLHSVarFunctionCall(statement, code, function);
 
 		// Generate update statement, e.g. a[i] = b
 		boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
@@ -1752,7 +1812,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.NewArray code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
 		// Free lhs variable
-		extractLHSVar(statement, code, function);
+		translateLHSVarFunctionCall(statement, code, function);
 		String indent = stores.getIndent(function);
 		// Get array names
 		String lhs = stores.getVar(code.target(0), function);
@@ -1826,7 +1886,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			stores.loadField(code.target(0), field+":"+fileptr, function);
 		} else {
 			// Free lhs variable
-			extractLHSVar(statement, code, function);
+			translateLHSVarFunctionCall(statement, code, function);
 			boolean isCopyEliminated;// The copy is NOT needed by default.
 			if (field.equals("args")) {
 				String var_name = stores.getVar(code.target(0), function);
@@ -2096,7 +2156,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(NewRecord code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
 		// Add deallocation code to lhs structure
-		extractLHSVar(statement, code, function);
+		translateLHSVarFunctionCall(statement, code, function);
 
 		String indent = stores.getIndent(function);
 		String lhs = stores.getVar(code.target(0), function);
@@ -2280,7 +2340,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	@Override
 	protected void translate(ArrayGenerator code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
-		String lhs = extractLHSVar(statement, code, function);
+		String lhs = translateLHSVarFunctionCall(statement, code, function);
 
 		String indent = stores.getIndent(function);
 		Type.Array lhs_type = (Type.Array) stores.getRawType(code.target(0), function);

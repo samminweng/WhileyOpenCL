@@ -138,9 +138,10 @@ blklab3:;
 blklab2:;
 	//invoke (%21) = (%0, %1, %3) MatrixMult3:matrix : function(MatrixMult3:nat,MatrixMult3:nat,int[])->(MatrixMult3:Matrix)
 	{
-		void* data_tmp;
+		void* tmp_data_2;
+		_COPY_1DARRAY_PARAM(data, tmp_data_2, int64_t);
 		_DEALLOC_STRUCT(_21, Matrix);
-		_21 = _matrix_(width, height, _COPY_1DARRAY_PARAM_int64_t(data), true);
+		_21 = _matrix_(width, height, tmp_data_2, data_size, true);
 		_CALLEE_DEALLOC(data, "false-false-false" , "matrix");
 		_21_dealloc = true;
 	}
@@ -534,9 +535,10 @@ blklab18:;
 blklab17:;
 	//invoke (%58) = (%3, %4, %5) MatrixMult3:matrix : function(MatrixMult3:nat,MatrixMult3:nat,int[])->(MatrixMult3:Matrix)
 	{
-		void* data_tmp;
+		void* tmp_data_2;
+		_COPY_1DARRAY_PARAM(data, tmp_data_2, int64_t);
 		_DEALLOC_STRUCT(_58, Matrix);
-		_58 = _matrix_(width, height, _COPY_1DARRAY_PARAM_int64_t(data), true);
+		_58 = _matrix_(width, height, tmp_data_2, data_size, true);
 		_CALLEE_DEALLOC(data, "false-false-false" , "matrix");
 		_58_dealloc = true;
 	}
@@ -771,10 +773,12 @@ blklab24:;
 	}
 	//invoke (%44) = (%1, %2) MatrixMult3:mat_mult : function(MatrixMult3:Matrix,MatrixMult3:Matrix)->(MatrixMult3:Matrix)
 	{
-		void* A_tmp;
-		void* B_tmp;
+		void* tmp_A_0;
+		tmp_A_0 = copy_Matrix(A);
+		void* tmp_B_1;
+		tmp_B_1 = copy_Matrix(B);
 		_DEALLOC_STRUCT(_44, Matrix);
-		_44 = _mat_mult_(_COPY_STRUCT_PARAM(A, Matrix), true, _COPY_STRUCT_PARAM(B, Matrix), true);
+		_44 = _mat_mult_(tmp_A_0, true, tmp_B_1, true);
 		_CALLEE_DEALLOC(A, "false-false-false" , "mat_mult");
 		_44_dealloc = true;
 		_CALLEE_DEALLOC(B, "false-false-false" , "mat_mult");
@@ -823,8 +827,9 @@ blklab25:;
 	}
 	//invoke () = (%0, %3) MatrixMult3:print_mat : method(whiley/lang/System:Console,MatrixMult3:Matrix)->()
 	{
-		void* C_tmp;
-		_print_mat_(stdout, _COPY_STRUCT_PARAM(C, Matrix), true);
+		void* tmp_C_1;
+		tmp_C_1 = copy_Matrix(C);
+		_print_mat_(stdout, tmp_C_1, true);
 		_CALLEE_DEALLOC(C, "false-false-true" , "print_mat");
 	}
 	//fieldload %57 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}

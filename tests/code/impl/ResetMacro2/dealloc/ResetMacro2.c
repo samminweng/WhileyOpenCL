@@ -44,10 +44,11 @@ int64_t* _g2_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_7 = 11;
 	//invoke (%6) = (%1, %7) ResetMacro2:func : function(int[],int)->(int[])
 	{
-		void* a_tmp;
+		void* tmp_a_0;
+		_COPY_1DARRAY_PARAM(a, tmp_a_0, int64_t);
 		_DEALLOC(_6);
-		_6 = _func_(_COPY_1DARRAY_PARAM_int64_t(a), false, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
-		_CALLER_DEALLOC(_6, a, "true-true-false" , "func");
+		_6 = _func_(tmp_a_0, a_size, false, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
+		_CALLER_DEALLOC(_6, tmp_a_0, "true-true-false" , "func");
 	}
 	//assign %2 = %6  : int[]
 	_DEALLOC(b);

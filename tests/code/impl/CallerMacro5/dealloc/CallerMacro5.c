@@ -166,10 +166,11 @@ int main(int argc, char** args){
 	_7 = 11;
 	//invoke (%6) = (%1, %7) CallerMacro5:func : function(int[],int)->(int[])
 	{
-		void* x_tmp;
+		void* tmp_x_0;
+		_COPY_1DARRAY_PARAM(x, tmp_x_0, int64_t);
 		_DEALLOC(_6);
-		_6 = _func_(_COPY_1DARRAY_PARAM_int64_t(x), false, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
-		_CALLER_DEALLOC(_6, x, "false-true-true" , "func");
+		_6 = _func_(tmp_x_0, x_size, false, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
+		_CALLER_DEALLOC(_6, tmp_x_0, "false-true-true" , "func");
 	}
 	//assign %2 = %6  : int[]
 	_DEALLOC(y);
@@ -217,10 +218,11 @@ blklab3:;
 	_19 = 10;
 	//invoke (%18) = (%1, %19) CallerMacro5:func : function(int[],int)->(int[])
 	{
-		void* x_tmp;
+		void* tmp_x_0;
+		_COPY_1DARRAY_PARAM(x, tmp_x_0, int64_t);
 		_DEALLOC(_18);
-		_18 = _func_(_COPY_1DARRAY_PARAM_int64_t(x), false, _19, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
-		_CALLER_DEALLOC(_18, x, "false-true-true" , "func");
+		_18 = _func_(tmp_x_0, x_size, false, _19, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
+		_CALLER_DEALLOC(_18, tmp_x_0, "false-true-true" , "func");
 	}
 	//assign %2 = %18  : int[]
 	_DEALLOC(y);
@@ -268,10 +270,11 @@ blklab4:;
 	_31 = 9;
 	//invoke (%30) = (%1, %31) CallerMacro5:func : function(int[],int)->(int[])
 	{
-		void* x_tmp;
+		void* tmp_x_0;
+		_COPY_1DARRAY_PARAM(x, tmp_x_0, int64_t);
 		_DEALLOC(_30);
-		_30 = _func_(_COPY_1DARRAY_PARAM_int64_t(x), false, _31, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
-		_CALLER_DEALLOC(_30, x, "false-true-false" , "func");
+		_30 = _func_(tmp_x_0, x_size, false, _31, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
+		_CALLER_DEALLOC(_30, tmp_x_0, "false-true-false" , "func");
 	}
 	//assign %2 = %30  : int[]
 	_DEALLOC(y);

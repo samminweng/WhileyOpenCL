@@ -602,7 +602,7 @@ blklab28:;
 		_DEALLOC_STRUCT(_26, Matrix);
 		// isCopyEliminated of '_2' = true
 		// isCopyEliminated of '_3' = true
-		_26 = _multiply_(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
+		_26 = _multiply_(A, false, B, false);
 		_RETAIN_DEALLOC(A, "false-false-false" , "multiply");
 		_26_dealloc = true;
 		_RETAIN_DEALLOC(B, "false-false-false" , "multiply");
@@ -647,7 +647,7 @@ blklab29:;
 	//invoke () = (%0, %4) MatrixMult:printMat : method(whiley/lang/System:Console,MatrixMult:Matrix)->()
 	{
 		// isCopyEliminated of '_4' = true
-		_printMat_(stdout, _STRUCT_PARAM(C), false);
+		_printMat_(stdout, C, false);
 		_RETAIN_DEALLOC(C, "false-false-false" , "printMat");
 	}
 	//fieldload %35 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}

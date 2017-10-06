@@ -194,9 +194,10 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_13);
 	//invoke (%4) = (%13) FunctionOverload2:Cash : function(FunctionOverload2:nat[])->(FunctionOverload2:Cash)
 	{
-		void* _13_tmp;
+		void* tmp__13_0;
+		_COPY_1DARRAY_PARAM(_13, tmp__13_0, int64_t);
 		_DEALLOC(_4);
-		_4 = _Cash_1_(_COPY_1DARRAY_PARAM_int64_t(_13), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_4));
+		_4 = _Cash_1_(tmp__13_0, _13_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_4));
 		_CALLEE_DEALLOC(_13, "false-false-false" , "Cash");
 		_4_dealloc = true;
 	}

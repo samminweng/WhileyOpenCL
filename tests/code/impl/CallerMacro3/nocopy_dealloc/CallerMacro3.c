@@ -63,11 +63,12 @@ int main(int argc, char** args){
 	b[_7] = _6;
 	//invoke (%8) = (%1) CallerMacro3:f : function(int[])->(int[])
 	{
-		void* b_tmp;
+		void* tmp_b_0;
+		_COPY_1DARRAY_PARAM(b, tmp_b_0, int64_t);
 		_DEALLOC(_8);
 		// isCopyEliminated of '_1' = false
-		_8 = _f_(_COPY_1DARRAY_PARAM_int64_t(b), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
-		_CALLER_DEALLOC(_8, b, "false-true-true" , "f");
+		_8 = _f_(tmp_b_0, b_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
+		_CALLER_DEALLOC(_8, tmp_b_0, "false-true-true" , "f");
 	}
 	//assign %2 = %8  : int[]
 	_DEALLOC(a);

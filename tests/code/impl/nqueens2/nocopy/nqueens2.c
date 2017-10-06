@@ -180,7 +180,7 @@ blklab20:;
 			//invoke (%21) = (%8, %1, %5) nqueens2:conflict : function(nqueens2:POS,int,int)->(bool)
 			{
 				// isCopyEliminated of '_8' = true
-				_21 = _conflict_(_STRUCT_PARAM(p), n, col);
+				_21 = _conflict_(p, n, col);
 			}
 			//const %22 = true : bool
 			_22 = true;
@@ -233,9 +233,10 @@ blklab12:;
 		_30=n+_29;
 		//invoke (%28) = (%0, %30, %2) nqueens2:run : function(nqueens2:POS[],int,int)->(int)
 		{
-			void* queens_tmp;
+			void* tmp_queens_0;
+			_COPY_1DARRAY_PARAM_STRUCT(queens, tmp_queens_0, POS)
 			// isCopyEliminated of '_0' = false
-			_28 = _run_(_COPY_1DARRAY_PARAM_STRUCT(queens, POS), _30, dim);
+			_28 = _run_(tmp_queens_0, queens_size, _30, dim);
 		}
 		//add %31 = %4, %28 : int
 		_31=num_solutions+_28;
@@ -310,9 +311,10 @@ int main(int argc, char** args){
 	_10 = 0;
 	//invoke (%9) = (%2, %10, %1) nqueens2:run : function(nqueens2:POS[],int,int)->(int)
 	{
-		void* queens_tmp;
+		void* tmp_queens_0;
+		_COPY_1DARRAY_PARAM_STRUCT(queens, tmp_queens_0, POS)
 		// isCopyEliminated of '_2' = false
-		_9 = _run_(_COPY_1DARRAY_PARAM_STRUCT(queens, POS), _10, n);
+		_9 = _run_(tmp_queens_0, queens_size, _10, n);
 	}
 	//assign %3 = %9  : int
 	// isCopyEliminated = true

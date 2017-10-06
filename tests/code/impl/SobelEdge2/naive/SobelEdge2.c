@@ -410,17 +410,21 @@ Image* _sobelEdgeDetection_(Image* input){
 			pos = _49;
 			//invoke (%50) = (%0, %8, %9, %6) SobelEdge2:convolution : function(SobelEdge2:Image,int,int,int[])->(int)
 			{
-				void* input_tmp;
-				void* v_sobel_tmp;
-				_50 = _convolution_(_COPY_STRUCT_PARAM(input, Image), x, y, _COPY_1DARRAY_PARAM_int64_t(v_sobel));
+				void* tmp_input_0;
+				tmp_input_0 = copy_Image(input);
+				void* tmp_v_sobel_3;
+				_COPY_1DARRAY_PARAM(v_sobel, tmp_v_sobel_3, int64_t);
+				_50 = _convolution_(tmp_input_0, x, y, tmp_v_sobel_3, v_sobel_size);
 			}
 			//assign %11 = %50  : int
 			v_g = _50;
 			//invoke (%51) = (%0, %8, %9, %7) SobelEdge2:convolution : function(SobelEdge2:Image,int,int,int[])->(int)
 			{
-				void* input_tmp;
-				void* h_sobel_tmp;
-				_51 = _convolution_(_COPY_STRUCT_PARAM(input, Image), x, y, _COPY_1DARRAY_PARAM_int64_t(h_sobel));
+				void* tmp_input_0;
+				tmp_input_0 = copy_Image(input);
+				void* tmp_h_sobel_3;
+				_COPY_1DARRAY_PARAM(h_sobel, tmp_h_sobel_3, int64_t);
+				_51 = _convolution_(tmp_input_0, x, y, tmp_h_sobel_3, h_sobel_size);
 			}
 			//assign %12 = %51  : int
 			h_g = _51;
@@ -470,8 +474,9 @@ blklab9:;
 blklab8:;
 	//invoke (%61) = (%3, %4, %5) SobelEdge2:image : function(int,int,byte[])->(SobelEdge2:Image)
 	{
-		void* newPixels_tmp;
-		_61 = _image_(width, height, _COPY_1DARRAY_PARAM_BYTE(newPixels));
+		void* tmp_newPixels_2;
+		_COPY_1DARRAY_PARAM(newPixels, tmp_newPixels_2, BYTE);
+		_61 = _image_(width, height, tmp_newPixels_2, newPixels_size);
 	}
 	//return %61
 	return _61;
@@ -679,15 +684,17 @@ int main(int argc, char** args){
 	_COPY_1DARRAY_BYTE(pixels, _13);
 	//invoke (%15) = (%2, %3, %5) SobelEdge2:image : function(int,int,byte[])->(SobelEdge2:Image)
 	{
-		void* pixels_tmp;
-		_15 = _image_(width, height, _COPY_1DARRAY_PARAM_BYTE(pixels));
+		void* tmp_pixels_2;
+		_COPY_1DARRAY_PARAM(pixels, tmp_pixels_2, BYTE);
+		_15 = _image_(width, height, tmp_pixels_2, pixels_size);
 	}
 	//assign %6 = %15  : {int height,byte[] pixels,int width}
 	input = copy_Image(_15);
 	//invoke (%16) = (%6) SobelEdge2:sobelEdgeDetection : function(SobelEdge2:Image)->(SobelEdge2:Image)
 	{
-		void* input_tmp;
-		_16 = _sobelEdgeDetection_(_COPY_STRUCT_PARAM(input, Image));
+		void* tmp_input_0;
+		tmp_input_0 = copy_Image(input);
+		_16 = _sobelEdgeDetection_(tmp_input_0);
 	}
 	//assign %7 = %16  : {int height,byte[] pixels,int width}
 	output = copy_Image(_16);
@@ -699,8 +706,9 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY(_19, output->pixels);
 	//invoke () = (%0, %17, %18, %19) SobelEdge2:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
-		void* _19_tmp;
-		_print_pbm_(stdout, _17, _18, _COPY_1DARRAY_PARAM_BYTE(_19));
+		void* tmp__19_3;
+		_COPY_1DARRAY_PARAM(_19, tmp__19_3, BYTE);
+		_print_pbm_(stdout, _17, _18, tmp__19_3, _19_size);
 	}
 	//return
 	exit(0);
