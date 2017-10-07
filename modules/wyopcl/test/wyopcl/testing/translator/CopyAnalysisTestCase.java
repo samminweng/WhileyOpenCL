@@ -45,7 +45,8 @@ public class CopyAnalysisTestCase {
 		return Arrays.asList(new String[] { 
 				"reverse",
 				"ResetMacro3", 
-				"livecheck"
+				"livecheck",
+				"ResetMacro4",
 			});
 	}
 	

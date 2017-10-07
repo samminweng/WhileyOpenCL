@@ -128,7 +128,7 @@ blklab4:;
 	//invoke (%14) = (%1) reverse:reverse : function(int[])->(int[])
 	{
 		// isCopyEliminated of '_1' = true
-		_14 = _reverse_(_1DARRAY_PARAM(input), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_14));
+		_14 = _reverse_(input, input_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_14));
 	}
 	//assign %3 = %14  : int[]
 	// isCopyEliminated = true

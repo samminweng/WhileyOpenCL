@@ -40,8 +40,7 @@ public class LiveVariablesAnalysis extends Analyzer {
 	// Store the liveness analysis for each function
 	// (Key: function, Value:Liveness information).
 	private HashMap<FunctionOrMethod, LiveVariables> livenessStore;
-	
-	
+
 	/**
 	 * Constructor
 	 * 
@@ -52,17 +51,18 @@ public class LiveVariablesAnalysis extends Analyzer {
 		// Initialize the liveness stores.
 		this.livenessStore = new HashMap<FunctionOrMethod, LiveVariables>();
 	}
+
 	/**
 	 * A constructor with over-writing 'isVerbose' flag
 	 * 
 	 * @param cofig
 	 * @param isVerbose
 	 */
-	public LiveVariablesAnalysis(Configuration config, boolean isVerbose){
+	public LiveVariablesAnalysis(Configuration config, boolean isVerbose) {
 		super(config);
 		// Initialize the liveness stores.
 		this.livenessStore = new HashMap<FunctionOrMethod, LiveVariables>();
-		this.isVerbose = isVerbose;		
+		this.isVerbose = isVerbose;
 	}
 
 	/**
@@ -87,18 +87,34 @@ public class LiveVariablesAnalysis extends Analyzer {
 	public boolean isLive(int reg, Code code, FunctionOrMethod f) {
 		boolean isLive = true; // Assume the reg is alive conservatively
 		// Special case
-		if(code instanceof Codes.FieldLoad){
+		if (code instanceof Codes.FieldLoad) {
 			// The register at fieldload byte-code is used to load a specific field from a record data structure
 			// It is assumed to be NOT alive.
 			return false;
 		}
-		
+
 		// Check the array is live.
 		BasicBlock blk = getBlockbyCode(f, code);// Get basic block that contains the given code.
 		if (blk != null) {
 			HashSet<Integer> outSet = getLiveness(f).getOUT(blk);
 			isLive = outSet.contains(reg);
-		}else{
+
+			// For function call
+			if (code instanceof Codes.Invoke) {
+				// Check if the 'reg' is used into 'code' more than once.
+				Codes.Invoke invoke = (Codes.Invoke)code;
+				int counts=0;
+				for(int op:invoke.operands()){
+					if(op == reg){
+						counts++;
+					}
+				}
+				if(counts >=2){
+					return true;// That means, 'reg' is used twice.
+				}
+			}
+
+		} else {
 			throw new RuntimeException("Block not found.");
 		}
 		return isLive;
@@ -159,7 +175,7 @@ public class LiveVariablesAnalysis extends Analyzer {
 		// Get function name
 		return livenessStore.get(function);
 	}
-	
+
 	/**
 	 * Map bound block to Basic Block used in live variable analysis
 	 * 
@@ -167,22 +183,24 @@ public class LiveVariablesAnalysis extends Analyzer {
 	 * @param code
 	 * @return
 	 */
-	private BasicBlock mapBoundBlockToBlock(FunctionOrMethod function, BoundBlock bnd_blk){
+	private BasicBlock mapBoundBlockToBlock(FunctionOrMethod function, BoundBlock bnd_blk) {
 		CFGraph graph = getCFGraph(function);
 		// Get the list of block for the function.
 		for (BasicBlock blk : graph.getBlockList()) {
-			if (blk.equals(bnd_blk)){
+			if (blk.equals(bnd_blk)) {
 				return blk;
 			}
 		}
 		throw new RuntimeException("Can not find the basic block in live variable analysis");
 	}
 
-	
 	/**
-	 * Return the live variable set of given bound block. 
+	 * Return the live variable set of given bound block.
 	 * 
-	 * <pre>DeadVars = Vars - LiveVars</pre>
+	 * <pre>
+	 * DeadVars = Vars - LiveVars
+	 * </pre>
+	 * 
 	 * @param function
 	 * @param bnd_blk
 	 * @return
@@ -190,14 +208,14 @@ public class LiveVariablesAnalysis extends Analyzer {
 	public HashSet<Integer> getLiveVars(FunctionOrMethod function, BoundBlock bnd_blk) {
 		// Map 'BoundBlock' to basic block, used in analyser
 		BasicBlock blk = mapBoundBlockToBlock(function, bnd_blk);
-		
+
 		// Return the live variables in the block
 		HashSet<Integer> out = livenessStore.get(function).getOUT(blk);
-		
+
 		return out;
-		
+
 	}
-	
+
 	/**
 	 * Applies live variable analysis on the function, in order to get in/out set of each block.
 	 * 
@@ -207,7 +225,7 @@ public class LiveVariablesAnalysis extends Analyzer {
 	private void computeLiveness(FunctionOrMethod function) {
 		LiveVariables liveness = new LiveVariables();
 		CFGraph cfGraph = this.getCFGraph(function);
-		if(cfGraph != null){
+		if (cfGraph != null) {
 			liveness.computeLiveness(function.name(), isVerbose, cfGraph);
 			// Store the liveness analysis for the function.
 			livenessStore.put(function, liveness);
@@ -215,8 +233,8 @@ public class LiveVariablesAnalysis extends Analyzer {
 			if (isVerbose) {
 				printLivenss(function);
 			}
-		}else{
-			throw new RuntimeException("Not building CFG for "+function);
+		} else {
+			throw new RuntimeException("Not building CFG for " + function);
 		}
 	}
 
@@ -224,8 +242,8 @@ public class LiveVariablesAnalysis extends Analyzer {
 	protected void visit(DefaultMutableTreeNode node) {
 		// Apply live analysis on each calling function
 		FunctionOrMethod function = (FunctionOrMethod) node.getUserObject();
-		if(function != null){
-			// Check if the function has been transformed. If so, use the transformed one.		
+		if (function != null) {
+			// Check if the function has been transformed. If so, use the transformed one.
 			function = this.getFunction(function);
 			computeLiveness(function);
 		}

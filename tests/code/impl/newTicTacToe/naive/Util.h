@@ -125,12 +125,6 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 * Passing parameter Macros
 *
 */
-// Pass a structure parameter
-//#define _STRUCT_PARAM(a) a
-// Pass a 1D array and array size
-//#define _1DARRAY_PARAM(a) a, a##_size
-// Pass 2D array variable along with two array size variable
-//#define _2DARRAY_PARAM(a) a, a##_size, a##_size_size
 // Pass call-by-reference array size
 #define _1DARRAYSIZE_PARAM_CALLBYREFERENCE(a) &a##_size
 #define _2DARRAYSIZE_PARAM_CALLBYREFERENCE(a) &a##_size, &a##_size_size
