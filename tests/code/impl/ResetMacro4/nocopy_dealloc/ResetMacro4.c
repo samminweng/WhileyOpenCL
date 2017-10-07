@@ -149,12 +149,16 @@ blklab3:;
 blklab2:;
 	//invoke (%11) = (%1, %1) ResetMacro4:add : function(int[],int[])->(int[])
 	{
+		void* tmp_a_0;
+		_COPY_1DARRAY_PARAM(a, tmp_a_0, int64_t);
+		void* tmp_a_1;
+		_COPY_1DARRAY_PARAM(a, tmp_a_1, int64_t);
 		_DEALLOC(_11);
-		// isCopyEliminated of '_1' = true
-		// isCopyEliminated of '_1' = true
-		_11 = _add_(a, a_size, false, a, a_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
-		_RESET_DEALLOC(_11, a, "true-true-false" , "add");
-		_RESET_DEALLOC(_11, a, "true-true-false" , "add");
+		// isCopyEliminated of '_1' = false
+		// isCopyEliminated of '_1' = false
+		_11 = _add_(tmp_a_0, a_size, false, tmp_a_1, a_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
+		_CALLER_DEALLOC(_11, tmp_a_0, "true-true-true" , "add");
+		_CALLER_DEALLOC(_11, tmp_a_1, "true-true-true" , "add");
 	}
 	//assign %3 = %11  : int[]
 	_DEALLOC(sum);

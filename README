@@ -9,13 +9,13 @@ Installation
 ============================================================================================
 
 Please Open Cygwin/terminal and follow the below instructions.
-$ git clone https://github.com/samminweng/WhileyOpenCL && cd WhileyOpenCL/ && ant  
+$ git clone https://github.com/samminweng/WhileyOpenCL && cd WhileyOpenCL/ && ant
 
 To update the code from GitHub, use the below commands:
 $ git reset --hard HEAD && git clean -dfx && git pull
 
 'git reset' resets the code base to the most recent commit.
-'git clean -dfx' removes all the untracked files. 
+'git clean -dfx' removes all the untracked files.
 'git checkout -- <file>' undoes the changes of a file.
 
 ============================================================================================
@@ -23,20 +23,20 @@ Usage
 ============================================================================================
 
 1. Whiley-to-OpenCL translator
-The Whiley-to-OpenCL translator is written in Java and aims to generate C/OpenCL code and proof obligation. At this stage, we will use the prime example as the main test case (perhaps we need more) to manually generate its OpenCL code and produce the proof obligations in SMT syntax, which allows us to make use of different SMT solvers (e.g. Z3). 
+The Whiley-to-OpenCL translator is written in Java and aims to generate C/OpenCL code and proof obligation. At this stage, we will use the prime example as the main test case (perhaps we need more) to manually generate its OpenCL code and produce the proof obligations in SMT syntax, which allows us to make use of different SMT solvers (e.g. Z3).
 ----------------------------------------------------------------------
 1.1 Bound Analyzer
 Bound analyzer aims to infer the bounds and check the bounds consistent with all constraints.
-$ cd tests/bound && ./../../bin/wyopcl -bound naive whileloop.whiley 
+$ cd tests/bound && ./../../bin/wyopcl -bound naive whileloop.whiley
 Or use the gradual widening strategy to get more precise bounds.
 $ ./../../bin/wyopcl -bound gradual whileloop.whiley
 
 1.2 Pattern Matching and Pattern Transformation
 Pattern matching aims to match patterns and transform the code of a specific function code. Currently, 'AppendArray' pattern can be transformed to 'ResizeArray' pattern.
-$ cd tests/pattern && ./../../bin/wyopcl -pattern compress lz77.whiley 
+$ cd tests/pattern && ./../../bin/wyopcl -pattern compress lz77.whiley
 
 1.3 Copy Elimination Analysis
-Copy Elimination analysis aims to eliminate the un-necessary copies at the program. 
+Copy Elimination analysis aims to eliminate the un-necessary copies at the program.
 $ cd tests/code && ./../../bin/wyopcl -code -nocopy swap.whiley
 
 1.4 Deallocation Analysis
@@ -45,7 +45,7 @@ $ cd tests/code && ./../../bin/wyopcl -code -dealloc swap.whiley
 
 1.5 Code Generator
 Code Generator aims to translate the Whiley program into C code.
-$ cd tests/code && ./../../bin/wyopcl -code swap.whiley 
+$ cd tests/code && ./../../bin/wyopcl -code swap.whiley
 $ gcc swap.c Util.c -o swap.out && ./swap.out
 
 
@@ -61,7 +61,10 @@ $ ant test-bound
 The pattern matching is tested with 2 Whiley programs. Use the below commands:
 $ ant test-pattern
 
-1.3 Code Generator
-The code generator is tested with 29 Whiley programs. Use the below commands:
-$ ant test-code
+1.3 Copy Elimination
+The copy elimination is tested with 4 Whiley programs. Use the below commands:
+$ ant test-copy
 
+1.3 Code Generator/Copy Elimination/Memory Deallocation
+The code generator (with copy/deallocation analysers) is tested with 46 Whiley programs.
+$ ant test-code

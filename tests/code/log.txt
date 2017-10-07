@@ -30,13 +30,12 @@ DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_b_0" "func" ) (LINE:101
 DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_b_0" "func" ) (LINE:146 FILE: ResetMacro3.c) in dealloc folder	Frequency: 1
 DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "b" "func" ) (LINE:102 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
 DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_15" "b" "func" ) (LINE:148 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
-fail	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_a_1" "add" ) (LINE:150 FILE: ResetMacro4.c) in dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "true-true-false" "tmp_a_1" "add" ) (LINE:150 FILE: ResetMacro4.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_a_0" "add" ) (LINE:149 FILE: ResetMacro4.c) in dealloc folder	Frequency: 1
-fail	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_11" "a" "add" ) (LINE:157 FILE: ResetMacro4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_11" "a" "add" ) (LINE:156 FILE: ResetMacro4.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-true" "tmp_a_1" "add" ) (LINE:150 FILE: ResetMacro4.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_1" "add" ) (LINE:150 FILE: ResetMacro4.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "add" ) (LINE:149 FILE: ResetMacro4.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "add" ) (LINE:160 FILE: ResetMacro4.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-true" "tmp_a_1" "add" ) (LINE:161 FILE: ResetMacro4.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_1" "add" ) (LINE:161 FILE: ResetMacro4.c) in nocopy_dealloc folder	Frequency: 1
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "b" "func" ) (LINE:174 FILE: FunctionCall1.c) in dealloc folder	Frequency: 1
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "a" "func" ) (LINE:104 FILE: FunctionCall1.c) in dealloc folder	Frequency: 1
 DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_b_0" "func" ) (LINE:177 FILE: FunctionCall1.c) in nocopy_dealloc folder	Frequency: 1
@@ -314,13 +313,12 @@ DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_b_0" "func" ) (LINE:101
 DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_b_0" "func" ) (LINE:146 FILE: ResetMacro3.c) in dealloc folder	Frequency: 1
 DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "b" "func" ) (LINE:102 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
 DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_15" "b" "func" ) (LINE:148 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
-fail	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_a_1" "add" ) (LINE:150 FILE: ResetMacro4.c) in dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "true-true-false" "tmp_a_1" "add" ) (LINE:150 FILE: ResetMacro4.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_a_0" "add" ) (LINE:149 FILE: ResetMacro4.c) in dealloc folder	Frequency: 1
-fail	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_11" "a" "add" ) (LINE:157 FILE: ResetMacro4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_11" "a" "add" ) (LINE:156 FILE: ResetMacro4.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-true" "tmp_a_1" "add" ) (LINE:150 FILE: ResetMacro4.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_1" "add" ) (LINE:150 FILE: ResetMacro4.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "add" ) (LINE:149 FILE: ResetMacro4.c) in dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "add" ) (LINE:160 FILE: ResetMacro4.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-true" "tmp_a_1" "add" ) (LINE:161 FILE: ResetMacro4.c) in nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_1" "add" ) (LINE:161 FILE: ResetMacro4.c) in nocopy_dealloc folder	Frequency: 1
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "b" "func" ) (LINE:174 FILE: FunctionCall1.c) in dealloc folder	Frequency: 1
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "a" "func" ) (LINE:104 FILE: FunctionCall1.c) in dealloc folder	Frequency: 1
 DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_b_0" "func" ) (LINE:177 FILE: FunctionCall1.c) in nocopy_dealloc folder	Frequency: 1
@@ -566,5 +564,3 @@ DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_61" "newPixels" "image" )
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "h_sobel" "convolution" ) (LINE:495 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1024
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "input" "convolution" ) (LINE:483 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1024
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "input" "convolution" ) (LINE:494 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1024
-fail	Frequency: 1
-fail	Frequency: 1
