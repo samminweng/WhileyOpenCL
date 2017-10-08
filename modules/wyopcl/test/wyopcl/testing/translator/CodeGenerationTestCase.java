@@ -81,6 +81,7 @@ public class CodeGenerationTestCase {
 				"fileread2",// Read 'feep.pbm' and output the array to console
 				"nqueens",
 				"nqueens2",
+				"livecheck",
 				// Micro-benchmarks
 				"reverse",
 				"mergesort",
