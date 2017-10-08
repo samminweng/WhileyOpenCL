@@ -1,14 +1,14 @@
 root->f
 root->main
 Bound Analysis of 'f' function:
+	domain(i)	=[0..65536]
+	domain(_4)	=[0..65536]
+	domain(_9)	=[0..65536]
 	domain(sum)	=[0..infinity]
 	domain(_5)	=[0..infinity]
 	domain(_7)	=[0..infinity]
 	domain(return)	=[0..infinity]
 	domain(_8)	=[1..1]
-	domain(i)	=[1..65536]
-	domain(_4)	=[1..65536]
-	domain(_9)	=[1..65536]
 	domain(limit)	=[43..65536]
 Consistency=true
 Bound Analysis of 'main' function:

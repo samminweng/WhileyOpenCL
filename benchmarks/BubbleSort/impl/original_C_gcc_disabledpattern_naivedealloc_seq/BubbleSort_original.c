@@ -198,10 +198,11 @@ blklab7:;
 blklab6:;
 	//invoke (%15) = (%4) BubbleSort_original:bubbleSort : function(int[])->(int[])
 	{
-		void* arr_tmp;
+		void* tmp_arr_0;
+		_COPY_1DARRAY_PARAM(arr, tmp_arr_0, int64_t);
 		_DEALLOC(_15);
-		_15 = _bubbleSort_(_COPY_1DARRAY_PARAM_int64_t(arr), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
-		_CALLER_DEALLOC(_15, arr, "true-true-false" , "bubbleSort");
+		_15 = _bubbleSort_(tmp_arr_0, arr_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
+		_CALLER_DEALLOC(_15, tmp_arr_0, "true-true-false" , "bubbleSort");
 	}
 	//assign %4 = %15  : int[]
 	_DEALLOC(arr);

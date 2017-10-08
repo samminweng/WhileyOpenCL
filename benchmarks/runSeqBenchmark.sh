@@ -24,7 +24,7 @@ declare -a threads=( 1 2 4 8 )
 
 ### declare parameters
 declare -A parameters=( [Reverse]="100000 1000000 10000000" \
-			[newTicTacToe]="1000 10000 100000" \
+			[newTicTacToe]="100000 200000 300000" \
 			[BubbleSort]="1000 10000 100000" \
 			[MergeSort]="1000 10000 100000" \
 			[MatrixMult]="1000 2000 3000" \
@@ -348,8 +348,8 @@ init newTicTacToe
 exec newTicTacToe original
 # #
 # # # # # # # # # ## # BubbleSort test case
-# init BubbleSort
-# exec BubbleSort original
+#init BubbleSort
+#exec BubbleSort original
 # #
 # # # # # # # # # ## # MergeSort test case
 # init MergeSort

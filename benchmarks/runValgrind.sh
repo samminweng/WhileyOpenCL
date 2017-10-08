@@ -24,15 +24,15 @@ declare -A patterns=( [LZ77_compress]=compress [LZ77_original_opt]=compress )
 declare -a threads=( 1 )
 
 ### declare parameters
-declare -A parameters=( [Reverse]="100000 1000000 10000000" [newTicTacToe]="1000 10000 100000" \
-						[BubbleSort]="1000 10000 100000" [MergeSort]="1000 10000 100000" \
-						[MatrixMult]="1000 2000 3000" \
-						[LZ77]="medium1x medium2x medium4x" \
-						[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm" \
-						[Cashtill]="100 200 300" \
-						##[CoinGame]="25000"
-						[CoinGame]="100 1000 10000"
-					   )
+declare -A parameters=( [Reverse]="100000 1000000 10000000" [newTicTacToe]="100000 200000 300000" \
+			[BubbleSort]="1000 10000 100000" [MergeSort]="1000 10000 100000" \
+			[MatrixMult]="1000 2000 3000" \
+			[LZ77]="medium1x medium2x medium4x" \
+			[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm" \
+			[Cashtill]="100 200 300" \
+			##[CoinGame]="25000"
+			[CoinGame]="100 1000 10000"
+		       )
 ## Declare an associative array for image size in sobeledge test case
 declare -A widths=( [image32x32.pbm]=32 [image64x64.pbm]=64 [image128x128.pbm]=128 \
                     [image256x256.pbm]=256 [image512x512.pbm]=512 [image1024x1024.pbm]=1024 )
@@ -276,8 +276,8 @@ exec(){
 # exec Reverse original
 # #
 # # # # # ### newTicTacToe test case ###
-# init newTicTacToe
-# exec newTicTacToe original
+init newTicTacToe
+exec newTicTacToe original
 # #
 # # # # # ## # BubbleSort test case##
 # init BubbleSort
@@ -292,8 +292,8 @@ exec(){
 # exec MatrixMult original
 
 # #### Cashtill test case
-init Cashtill
-exec Cashtill original
+#init Cashtill
+#exec Cashtill original
 
 # ### CoinGame test case ###
 #init CoinGame

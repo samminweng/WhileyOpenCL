@@ -498,8 +498,8 @@ public class BoundAnalyzer {
 					// Find the larger domains
 					if (largerDomain == null) {
 						largerDomain = d;
-					} else if (largerDomain.compareTo(d) < 0) {
-						largerDomain = d;
+					} else {
+						largerDomain.union(d);
 					}
 				}
 

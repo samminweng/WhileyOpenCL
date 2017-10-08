@@ -2,18 +2,18 @@
 //	domain(_0)	= [43..257]	
 int64_t _f_(uint16_t limit){
 	int64_t _1; //domain(_1)	= [empty..empty]	
-	uint16_t i; //domain(_2)	= [1..257]	
+	uint16_t i; //domain(_2)	= [0..257]	
 	uint64_t sum; //domain(_3)	= [0..infinity]	
-	uint16_t j; //domain(_4)	= [1..257]	
-	uint16_t _5; //domain(_5)	= [1..257]	
+	uint16_t j; //domain(_4)	= [0..257]	
+	uint16_t _5; //domain(_5)	= [0..257]	
 	uint64_t _6; //domain(_6)	= [0..infinity]	
-	uint16_t _7; //domain(_7)	= [1..257]	
+	uint16_t _7; //domain(_7)	= [0..257]	
 	uint32_t _8; //domain(_8)	= [0..65536]	
 	uint64_t _9; //domain(_9)	= [0..infinity]	
 	uint16_t _10; //domain(_10)	= [1..1]	
-	uint16_t _11; //domain(_11)	= [1..257]	
+	uint16_t _11; //domain(_11)	= [0..257]	
 	uint16_t _12; //domain(_12)	= [1..1]	
-	uint16_t _13; //domain(_13)	= [1..257]	
+	uint16_t _13; //domain(_13)	= [0..257]	
 	//const %5 = 0 : int
 	_5 = 0;
 	//assign %2 = %5  : int

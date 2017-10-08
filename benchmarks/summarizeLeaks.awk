@@ -4,8 +4,8 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	##testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
-	testcases="Cashtill";
+	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
+	#testcases="Cashtill";
 	## Program Type
 	programs["Reverse"]="original";
 	programs["newTicTacToe"]="original";
@@ -34,7 +34,7 @@ BEGIN {
 	codes="seq";
 	# Parameter
 	parameters["Reverse"]="100000 1000000 10000000";
-	parameters["newTicTacToe"]="1000 10000 100000";
+	parameters["newTicTacToe"]="100000 200000 300000";
 	parameters["MergeSort"]="1000 10000 100000";
 	parameters["BubbleSort"]="1000 10000 100000";
 	parameters["MatrixMult"]="1000 2000 3000";

@@ -2,11 +2,11 @@
 //	domain(_0)	= [43..65536]		domain(_0)	= [43..65536]	
 int64_t _find_(uint32_t limit, uint16_t item){
 	int64_t _2; //domain(_2)	= [empty..empty]	
-	uint32_t r; //domain(_3)	= [43..65536]	
-	uint32_t _4; //domain(_4)	= [1..65536]	
+	uint32_t r; //domain(_3)	= [0..65536]	
+	uint32_t _4; //domain(_4)	= [0..65536]	
 	int64_t _5; //domain(_5)	= [empty..empty]	
 	uint16_t _6; //domain(_6)	= [1..1]	
-	uint32_t _7; //domain(_7)	= [1..65536]	
+	uint32_t _7; //domain(_7)	= [0..65536]	
 	//const %4 = 0 : int
 	_4 = 0;
 	//assign %3 = %4  : int
@@ -41,14 +41,14 @@ blklab0:;
 
 //
 int main(int argc, char** args){
-	uint16_t a; //domain(_1)	= [43..43]	
-	uint32_t b; //domain(_2)	= [65536..65536]	
-	uint16_t _3; //domain(_3)	= [43..43]	
+	uint16_t a; //domain(_1)	= [0..43]	
+	uint32_t b; //domain(_2)	= [0..65536]	
+	uint16_t _3; //domain(_3)	= [0..43]	
 	uint16_t _4; //domain(_4)	= [43..43]	
 	uint16_t _5; //domain(_5)	= [10..10]	
 	void* _6;
 	int64_t _8; //domain(_8)	= [empty..empty]	
-	uint32_t _9; //domain(_9)	= [65536..65536]	
+	uint32_t _9; //domain(_9)	= [0..65536]	
 	uint32_t _10; //domain(_10)	= [65536..65536]	
 	uint16_t _11; //domain(_11)	= [10..10]	
 	void* _12;

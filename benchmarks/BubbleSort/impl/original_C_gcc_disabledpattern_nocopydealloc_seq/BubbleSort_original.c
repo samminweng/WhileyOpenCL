@@ -79,10 +79,8 @@ int64_t* _bubbleSort_(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), _D
 			//sub %20 = %4, %19 : int
 			_20=index-_19;
 			//update %0[%20] = %18 : int[] -> int[]
-			// isCopyEliminated = true
 			items[_20] = _18;
 			//update %0[%4] = %5 : int[] -> int[]
-			// isCopyEliminated = false
 			items[index] = tmp;
 			//assign %3 = %4  : int
 			// isCopyEliminated = false
@@ -198,7 +196,6 @@ int main(int argc, char** args){
 		//sub %12 = %2, %3 : int
 		_12=max-index;
 		//update %4[%3] = %12 : int[] -> int[]
-		// isCopyEliminated = false
 		arr[index] = _12;
 		//const %13 = 1 : int
 		_13 = 1;
@@ -216,7 +213,7 @@ blklab6:;
 	{
 		_DEALLOC(_15);
 		// isCopyEliminated of '_4' = true
-		_15 = _bubbleSort_(_1DARRAY_PARAM(arr), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
+		_15 = _bubbleSort_(arr, arr_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
 		_RESET_DEALLOC(_15, arr, "true-true-false" , "bubbleSort");
 	}
 	//assign %4 = %15  : int[]

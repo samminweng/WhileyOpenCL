@@ -2,14 +2,14 @@
 //	domain(_0)	= [43..65536]	
 int64_t _f_(uint32_t limit){
 	int64_t _1; //domain(_1)	= [empty..empty]	
-	uint32_t i; //domain(_2)	= [1..65536]	
+	uint32_t i; //domain(_2)	= [0..65536]	
 	uint64_t sum; //domain(_3)	= [0..infinity]	
-	uint32_t _4; //domain(_4)	= [1..65536]	
+	uint32_t _4; //domain(_4)	= [0..65536]	
 	uint64_t _5; //domain(_5)	= [0..infinity]	
 	int64_t _6; //domain(_6)	= [empty..empty]	
 	uint64_t _7; //domain(_7)	= [0..infinity]	
 	uint16_t _8; //domain(_8)	= [1..1]	
-	uint32_t _9; //domain(_9)	= [1..65536]	
+	uint32_t _9; //domain(_9)	= [0..65536]	
 	//const %4 = 0 : int
 	_4 = 0;
 	//assign %2 = %4  : int

@@ -1,20 +1,20 @@
 Bound Analysis of 'find' function:
 	domain(_4)	=[0..0]
+	domain(r)	=[0..65536]
+	domain(return)	=[0..65536]
 	domain(_6)	=[1..1]
 	domain(_7)	=[1..65536]
 	domain(item)	=[10..10]
 	domain(limit)	=[43..65536]
-	domain(r)	=[43..65536]
-	domain(return)	=[43..65536]
 Consistency=true
 Bound Analysis of 'main' function:
+	domain(a)	=[0..43]
+	domain(_3)	=[0..43]
+	domain(b)	=[0..65536]
+	domain(_9)	=[0..65536]
 	domain(_5)	=[10..10]
 	domain(_11)	=[10..10]
-	domain(a)	=[43..43]
-	domain(_3)	=[43..43]
 	domain(_4)	=[43..43]
-	domain(b)	=[65536..65536]
-	domain(_9)	=[65536..65536]
 	domain(_10)	=[65536..65536]
 Consistency=true
 
