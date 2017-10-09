@@ -24,6 +24,7 @@ import wyil.lang.Codes.Invariant;
 import wyil.lang.Codes.Invoke;
 import wyil.lang.Codes.Loop;
 import wyil.lang.Codes.Return;
+import wyil.lang.Codes.Update;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
@@ -337,6 +338,8 @@ public abstract class Analyzer {
 					buildCFG((Codes.Loop) code, function);
 				} else if (code instanceof Codes.Invoke) {
 					buildCFG((Codes.Invoke) code, function);
+				} else if (code instanceof Codes.Update) {
+					buildCFG((Codes.Update) code, function);
 				} else {
 					// Add the byte-code to the current block in a CFGraph.
 					CFGraph graph = getCFGraph(function);
@@ -346,6 +349,29 @@ public abstract class Analyzer {
 				throw new RuntimeException(ex.getMessage());
 			}
 		}
+	}
+
+	/**
+	 * Builds an 'Update' block to store the code representing the assertion.
+	 * 
+	 * 
+	 * @param code
+	 * @param function
+	 */
+	private void buildCFG(Update code, FunctionOrMethod function) {
+		// Get the graph
+		CFGraph graph = getCFGraph(function);
+		BasicBlock c_blk = graph.getCurrentBlock();
+		// Get the label name (e.g. swap12).
+		String label = "Update" + line;
+		// Create a new single block for invoke wyil code.
+		BasicBlock update_blk = graph.createBasicBlock(label, BlockType.UPDATE, c_blk);
+		update_blk.addCode(code);
+		// Create another block
+		BasicBlock blk = graph.createBasicBlock(label, BlockType.BLOCK, update_blk);
+		// Set next_blk to be the current block.
+		graph.setCurrentBlock(blk);
+		
 	}
 
 	/**

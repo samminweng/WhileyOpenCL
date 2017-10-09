@@ -1,566 +1,566 @@
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "func" ) (LINE:51 FILE: CallerMacro1.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "func" ) (LINE:53 FILE: CallerMacro1.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "func" ) (LINE:52 FILE: CallerMacro2.c) in dealloc folder	Frequency: 2
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "func" ) (LINE:54 FILE: CallerMacro2.c) in nocopy_dealloc folder	Frequency: 2
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_b_0" "f" ) (LINE:69 FILE: CallerMacro3.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_b_0" "f" ) (LINE:71 FILE: CallerMacro3.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "false-true-false" "tmp_x_0" "func" ) (LINE:273 FILE: CallerMacro4.c) in dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "false-true-true" "tmp_x_0" "func" ) (LINE:221 FILE: CallerMacro4.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:169 FILE: CallerMacro4.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-false" "tmp_x_0" "func" ) (LINE:273 FILE: CallerMacro4.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:221 FILE: CallerMacro4.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_30" "x" "func" ) (LINE:281 FILE: CallerMacro4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:175 FILE: CallerMacro4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:229 FILE: CallerMacro4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "false-true-true" "tmp_x_0" "func" ) (LINE:229 FILE: CallerMacro4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-false" "tmp_x_0" "func" ) (LINE:277 FILE: CallerMacro5.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:225 FILE: CallerMacro5.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:173 FILE: CallerMacro5.c) in dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "false-true-false" "tmp_x_0" "func" ) (LINE:277 FILE: CallerMacro5.c) in dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "false-true-true" "tmp_x_0" "func" ) (LINE:225 FILE: CallerMacro5.c) in dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "false-true-true" "tmp_x_0" "func" ) (LINE:234 FILE: CallerMacro5.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:234 FILE: CallerMacro5.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_30" "x" "func" ) (LINE:286 FILE: CallerMacro5.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:180 FILE: CallerMacro5.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_x_0" "func" ) (LINE:58 FILE: ResetMacro1.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:58 FILE: ResetMacro1.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_a_0" "func" ) (LINE:51 FILE: ResetMacro2.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "a" "func" ) (LINE:51 FILE: ResetMacro2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_b_0" "func" ) (LINE:101 FILE: ResetMacro3.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_b_0" "func" ) (LINE:146 FILE: ResetMacro3.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "b" "func" ) (LINE:102 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_15" "b" "func" ) (LINE:148 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "true-true-true" "tmp_a_1" "add" ) (LINE:150 FILE: ResetMacro4.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_1" "add" ) (LINE:150 FILE: ResetMacro4.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "add" ) (LINE:149 FILE: ResetMacro4.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "add" ) (LINE:160 FILE: ResetMacro4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "true-true-true" "tmp_a_1" "add" ) (LINE:161 FILE: ResetMacro4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_1" "add" ) (LINE:161 FILE: ResetMacro4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "b" "func" ) (LINE:174 FILE: FunctionCall1.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "a" "func" ) (LINE:104 FILE: FunctionCall1.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_b_0" "func" ) (LINE:177 FILE: FunctionCall1.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_10" "a" "func" ) (LINE:105 FILE: FunctionCall1.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_b_0" "func" ) (LINE:195 FILE: FunctionCall2.c) in dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "false-true-false" "tmp_a_0" "func" ) (LINE:124 FILE: FunctionCall2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-false" "tmp_a_0" "func" ) (LINE:124 FILE: FunctionCall2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_b_0" "func" ) (LINE:199 FILE: FunctionCall2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_10" "a" "func" ) (LINE:125 FILE: FunctionCall2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "b" "func" ) (LINE:166 FILE: FunctionCall3.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "a" "func" ) (LINE:96 FILE: FunctionCall3.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_b_0" "func" ) (LINE:169 FILE: FunctionCall3.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_10" "a" "func" ) (LINE:97 FILE: FunctionCall3.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "b" "func" ) (LINE:228 FILE: FunctionCall4.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "a" "func" ) (LINE:156 FILE: FunctionCall4.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_10" "a" "func" ) (LINE:158 FILE: FunctionCall4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "true-true-true" "tmp_b_0" "func" ) (LINE:232 FILE: FunctionCall4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_b_0" "func" ) (LINE:232 FILE: FunctionCall4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_4" "test_append" ) (LINE:135 FILE: ArrayAppend.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "r" "test_append" ) (LINE:133 FILE: ArrayAppend.c) in dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "r" "test_append" ) (LINE:136 FILE: ArrayAppend.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_4" "test_append" ) (LINE:138 FILE: ArrayAppend.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "p3" "updateRec" ) (LINE:182 FILE: rectangle.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_rec_0" "updateRec" ) (LINE:181 FILE: rectangle.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_15" "p3" "updateRec" ) (LINE:187 FILE: rectangle.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_15" "rec" "updateRec" ) (LINE:185 FILE: rectangle.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_arr_0" "fibonacci" ) (LINE:135 FILE: Fibonacci.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ls_0" "fibonacci" ) (LINE:51 FILE: Fibonacci.c) in dealloc folder	Frequency: 8
-DEBUG: Potential memory leaks at ( "true-true-false" "tmp_arr_0" "fibonacci" ) (LINE:135 FILE: Fibonacci.c) in dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "true-true-false" "tmp_ls_0" "fibonacci" ) (LINE:51 FILE: Fibonacci.c) in dealloc folder	Frequency: 7
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "ls" "fibonacci" ) (LINE:50 FILE: Fibonacci.c) in nocopy_dealloc folder	Frequency: 8
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "arr" "fibonacci" ) (LINE:136 FILE: Fibonacci.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "gcds" "gcd_cached" ) (LINE:209 FILE: gcd.c) in dealloc folder	Frequency: 100
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "gcds" "gcd_cached" ) (LINE:216 FILE: gcd.c) in nocopy_dealloc folder	Frequency: 100
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_13" "Cash" ) (LINE:201 FILE: FunctionOverload2.c) in dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_13" "Cash" ) (LINE:205 FILE: FunctionOverload2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "pixels" "print_pbm" ) (LINE:219 FILE: fileread2.c) in dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "pixels" "print_pbm" ) (LINE:227 FILE: fileread2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "true-true-false" "tmp_nq_0"_tmp "run" ) (LINE:318 FILE: nqueens.c) in dealloc folder	Frequency: 1320
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "p" "conflict" ) (LINE:259 FILE: nqueens.c) in dealloc folder	Frequency: 46752
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_nq_0" "run" ) (LINE:440 FILE: nqueens.c) in dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "true-true-false" "tmp_nq_0"_tmp "run" ) (LINE:440 FILE: nqueens.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_nq_0" "run" ) (LINE:318 FILE: nqueens.c) in dealloc folder	Frequency: 2056
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "queens" "nqueen" ) (LINE:425 FILE: nqueens.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_33" "nq" "run" ) (LINE:327 FILE: nqueens.c) in nocopy_dealloc folder	Frequency: 2056
-DEBUG: _SUBSTRUCTURE_DEALLOC macro on  ( "false-false-false" "p" "conflict" ) (LINE:267 FILE: nqueens.c) in nocopy_dealloc folder	Frequency: 46752
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_12" "nq" "run" ) (LINE:454 FILE: nqueens.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_11" "queens" "nqueen" ) (LINE:439 FILE: nqueens.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "true-false-true" "queens" "run" ) (LINE:337 FILE: nqueens2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "p" "conflict" ) (LINE:188 FILE: nqueens2.c) in dealloc folder	Frequency: 46752
-DEBUG: _CALLEE_DEALLOC macro on ( "true-false-true" "queens" "run" ) (LINE:246 FILE: nqueens2.c) in dealloc folder	Frequency: 2056
-DEBUG: _CALLEE_DEALLOC macro on ( "true-false-true" "queens" "run" ) (LINE:257 FILE: nqueens2.c) in nocopy_dealloc folder	Frequency: 2056
-DEBUG: _SUBSTRUCTURE_DEALLOC macro on  ( "false-false-false" "p" "conflict" ) (LINE:196 FILE: nqueens2.c) in nocopy_dealloc folder	Frequency: 46752
-DEBUG: _CALLEE_DEALLOC macro on ( "true-false-true" "queens" "run" ) (LINE:353 FILE: nqueens2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "arr" "reverse" ) (LINE:218 FILE: reverse.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_11" "reverse" ) (LINE:138 FILE: reverse.c) in dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "arr" "reverse" ) (LINE:225 FILE: reverse.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_11" "reverse" ) (LINE:141 FILE: reverse.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_rhs_0" "sortV1" ) (LINE:115 FILE: mergesort.c) in dealloc folder	Frequency: 24
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_lhs_0" "sortV1" ) (LINE:89 FILE: mergesort.c) in dealloc folder	Frequency: 24
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "sortV1" ) (LINE:453 FILE: mergesort.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_arr_0" "sortV1" ) (LINE:654 FILE: mergesort.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "sortV1" ) (LINE:569 FILE: mergesort.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "sortV1" ) (LINE:510 FILE: mergesort.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "sortV1" ) (LINE:394 FILE: mergesort.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_19" "rhs" "sortV1" ) (LINE:117 FILE: mergesort.c) in nocopy_dealloc folder	Frequency: 24
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_16" "lhs" "sortV1" ) (LINE:90 FILE: mergesort.c) in nocopy_dealloc folder	Frequency: 24
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_52" "ys" "sortV1" ) (LINE:585 FILE: mergesort.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_25" "ys" "sortV1" ) (LINE:467 FILE: mergesort.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_70" "arr" "sortV1" ) (LINE:674 FILE: mergesort.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_11" "ys" "sortV1" ) (LINE:407 FILE: mergesort.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_38" "ys" "sortV1" ) (LINE:525 FILE: mergesort.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_arr_0" "bubbleSort" ) (LINE:493 FILE: bubblesort.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "bubbleSort" ) (LINE:412 FILE: bubblesort.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "bubbleSort" ) (LINE:351 FILE: bubblesort.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "bubbleSort" ) (LINE:292 FILE: bubblesort.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "bubbleSort" ) (LINE:231 FILE: bubblesort.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_25" "ys" "bubbleSort" ) (LINE:301 FILE: bubblesort.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_52" "ys" "bubbleSort" ) (LINE:423 FILE: bubblesort.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_38" "ys" "bubbleSort" ) (LINE:361 FILE: bubblesort.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_11" "ys" "bubbleSort" ) (LINE:239 FILE: bubblesort.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_68" "arr" "bubbleSort" ) (LINE:508 FILE: bubblesort.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "C" "printMat" ) (LINE:633 FILE: MatrixMult.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "rows" "matrix" ) (LINE:428 FILE: MatrixMult.c) in dealloc folder	Frequency: 2
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "C_data" "matrix" ) (LINE:218 FILE: MatrixMult.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "B" "multiply" ) (LINE:590 FILE: MatrixMult.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "A" "multiply" ) (LINE:588 FILE: MatrixMult.c) in dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "A" "multiply" ) (LINE:606 FILE: MatrixMult.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_34" "C_data" "matrix" ) (LINE:227 FILE: MatrixMult.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_15" "rows" "matrix" ) (LINE:445 FILE: MatrixMult.c) in nocopy_dealloc folder	Frequency: 2
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "C" "printMat" ) (LINE:651 FILE: MatrixMult.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "B" "multiply" ) (LINE:608 FILE: MatrixMult.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "B" "mat_mult" ) (LINE:688 FILE: MatrixMult2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "A" "mat_mult" ) (LINE:686 FILE: MatrixMult2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "matrix" ) (LINE:145 FILE: MatrixMult2.c) in dealloc folder	Frequency: 2
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "C" "print_mat" ) (LINE:737 FILE: MatrixMult2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "matrix" ) (LINE:448 FILE: MatrixMult2.c) in dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "A" "mat_mult" ) (LINE:707 FILE: MatrixMult2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "B" "mat_mult" ) (LINE:709 FILE: MatrixMult2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "C" "print_mat" ) (LINE:758 FILE: MatrixMult2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_40" "data" "matrix" ) (LINE:469 FILE: MatrixMult2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_21" "data" "matrix" ) (LINE:150 FILE: MatrixMult2.c) in nocopy_dealloc folder	Frequency: 2
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "B" "mat_mult" ) (LINE:784 FILE: MatrixMult3.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "matrix" ) (LINE:145 FILE: MatrixMult3.c) in dealloc folder	Frequency: 2
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "C" "print_mat" ) (LINE:833 FILE: MatrixMult3.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "matrix" ) (LINE:542 FILE: MatrixMult3.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "A" "mat_mult" ) (LINE:782 FILE: MatrixMult3.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_58" "data" "matrix" ) (LINE:571 FILE: MatrixMult3.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "A" "mat_mult" ) (LINE:811 FILE: MatrixMult3.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "C" "print_mat" ) (LINE:862 FILE: MatrixMult3.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "B" "mat_mult" ) (LINE:813 FILE: MatrixMult3.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_21" "data" "matrix" ) (LINE:150 FILE: MatrixMult3.c) in nocopy_dealloc folder	Frequency: 2
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:579 FILE: CoinGame.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "moves" "play" ) (LINE:590 FILE: CoinGame.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "moves" "findMoves" ) (LINE:607 FILE: CoinGame.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "moves" "play" ) (LINE:618 FILE: CoinGame.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:262 FILE: CoinGame1.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "moves" "findMoves" ) (LINE:275 FILE: CoinGame1.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:359 FILE: CoinGame2.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "moves" "findMoves" ) (LINE:369 FILE: CoinGame2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:340 FILE: CoinGame3.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "moves" "findMoves" ) (LINE:350 FILE: CoinGame3.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:611 FILE: CoinGame4.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "moves" "play" ) (LINE:622 FILE: CoinGame4.c) in dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:611 FILE: CoinGame4.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "pickCoin" ) (LINE:527 FILE: CoinGame4.c) in dealloc folder	Frequency: 55
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_41" "moves" "pickCoin" ) (LINE:548 FILE: CoinGame4.c) in nocopy_dealloc folder	Frequency: 55
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "moves" "findMoves" ) (LINE:637 FILE: CoinGame4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "moves" "play" ) (LINE:648 FILE: CoinGame4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "till" "calculateChange" ) (LINE:916 FILE: cashtill.c) in dealloc folder	Frequency: 3
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1252 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1218 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_25" "Cash" ) (LINE:1205 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "tmp" "calculateChange" ) (LINE:467 FILE: cashtill.c) in dealloc folder	Frequency: 76798
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_0" "add" ) (LINE:978 FILE: cashtill.c) in dealloc folder	Frequency: 2
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1286 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_28" "buy" ) (LINE:1253 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_0" "subtract" ) (LINE:994 FILE: cashtill.c) in dealloc folder	Frequency: 2
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "change" "subtract" ) (LINE:995 FILE: cashtill.c) in dealloc folder	Frequency: 2
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_33" "buy" ) (LINE:1287 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1184 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_18" "buy" ) (LINE:1185 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_35" "Cash" ) (LINE:1273 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_23" "buy" ) (LINE:1219 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1184 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "given" "total" ) (LINE:882 FILE: cashtill.c) in dealloc folder	Frequency: 4
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "given" "add" ) (LINE:979 FILE: cashtill.c) in dealloc folder	Frequency: 2
-DEBUG: Potential memory leaks at ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1286 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "given" "total" ) (LINE:906 FILE: cashtill.c) in dealloc folder	Frequency: 3
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_20" "Cash" ) (LINE:1171 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_30" "Cash" ) (LINE:1239 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "given" "add" ) (LINE:1001 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 2
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_33" "buy" ) (LINE:1299 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_40" "till" "add" ) (LINE:1000 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 2
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "given" "total" ) (LINE:908 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 4
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_20" "Cash" ) (LINE:1191 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "tmp" "calculateChange" ) (LINE:482 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 76798
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_18" "buy" ) (LINE:1203 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_23" "buy" ) (LINE:1235 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_28" "buy" ) (LINE:1267 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_32" "till" "buy" ) (LINE:1298 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_41" "till" "subtract" ) (LINE:1015 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 2
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "change" "subtract" ) (LINE:1016 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 2
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_25" "Cash" ) (LINE:1223 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_22" "till" "buy" ) (LINE:1234 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_30" "Cash" ) (LINE:1255 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "till" "calculateChange" ) (LINE:940 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 3
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_35" "Cash" ) (LINE:1287 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_27" "till" "buy" ) (LINE:1266 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_17" "till" "buy" ) (LINE:1202 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "given" "total" ) (LINE:931 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 3
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "compress" ) (LINE:745 FILE: lz77.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "findLongestMatch" ) (LINE:359 FILE: lz77.c) in dealloc folder	Frequency: 9
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:589 FILE: lz77.c) in dealloc folder	Frequency: 12
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:542 FILE: lz77.c) in dealloc folder	Frequency: 4
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:414 FILE: lz77.c) in dealloc folder	Frequency: 9
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "compress_data" "decompress" ) (LINE:794 FILE: lz77.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "match" ) (LINE:145 FILE: lz77.c) in dealloc folder	Frequency: 60
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:427 FILE: lz77.c) in dealloc folder	Frequency: 9
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "data" "compress" ) (LINE:782 FILE: lz77.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "findLongestMatch" ) (LINE:378 FILE: lz77.c) in nocopy_dealloc folder	Frequency: 9
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "match" ) (LINE:153 FILE: lz77.c) in nocopy_dealloc folder	Frequency: 60
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:623 FILE: lz77.c) in nocopy_dealloc folder	Frequency: 12
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "compress_data" "decompress" ) (LINE:831 FILE: lz77.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:451 FILE: lz77.c) in nocopy_dealloc folder	Frequency: 9
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:438 FILE: lz77.c) in nocopy_dealloc folder	Frequency: 9
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:571 FILE: lz77.c) in nocopy_dealloc folder	Frequency: 4
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:619 FILE: lz77_2.c) in dealloc folder	Frequency: 12
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "match" ) (LINE:145 FILE: lz77_2.c) in dealloc folder	Frequency: 60
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "findLongestMatch" ) (LINE:376 FILE: lz77_2.c) in dealloc folder	Frequency: 9
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "compress_data" "decompress" ) (LINE:824 FILE: lz77_2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "compress" ) (LINE:775 FILE: lz77_2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "resize" ) (LINE:463 FILE: lz77_2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:572 FILE: lz77_2.c) in dealloc folder	Frequency: 4
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:657 FILE: lz77_2.c) in nocopy_dealloc folder	Frequency: 12
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "resize" ) (LINE:491 FILE: lz77_2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:605 FILE: lz77_2.c) in nocopy_dealloc folder	Frequency: 4
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "data" "compress" ) (LINE:816 FILE: lz77_2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "match" ) (LINE:153 FILE: lz77_2.c) in nocopy_dealloc folder	Frequency: 60
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "compress_data" "decompress" ) (LINE:865 FILE: lz77_2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "findLongestMatch" ) (LINE:397 FILE: lz77_2.c) in nocopy_dealloc folder	Frequency: 9
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:206 FILE: lz77_decompress.c) in dealloc folder	Frequency: 12
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:159 FILE: lz77_decompress.c) in dealloc folder	Frequency: 3
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "input_data" "decompress" ) (LINE:293 FILE: lz77_decompress.c) in dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:166 FILE: lz77_decompress.c) in nocopy_dealloc folder	Frequency: 3
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "input_data" "decompress" ) (LINE:308 FILE: lz77_decompress.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:218 FILE: lz77_decompress.c) in nocopy_dealloc folder	Frequency: 12
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "input_data" "decompress" ) (LINE:407 FILE: lz77_opt_decompress.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "items" "resize" ) (LINE:336 FILE: lz77_opt_decompress.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_items_0" "opt_append" ) (LINE:250 FILE: lz77_opt_decompress.c) in dealloc folder	Frequency: 3
-DEBUG: Potential memory leaks at ( "true-true-false" "tmp_items_0" "opt_append" ) (LINE:300 FILE: lz77_opt_decompress.c) in dealloc folder	Frequency: 2
-DEBUG: Potential memory leaks at ( "true-true-false" "tmp_items_0" "opt_append" ) (LINE:250 FILE: lz77_opt_decompress.c) in dealloc folder	Frequency: 2
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_items_0" "opt_append" ) (LINE:300 FILE: lz77_opt_decompress.c) in dealloc folder	Frequency: 12
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_26" "items" "opt_append" ) (LINE:262 FILE: lz77_opt_decompress.c) in nocopy_dealloc folder	Frequency: 3
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_34" "items" "opt_append" ) (LINE:318 FILE: lz77_opt_decompress.c) in nocopy_dealloc folder	Frequency: 12
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "input_data" "decompress" ) (LINE:429 FILE: lz77_opt_decompress.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "items" "resize" ) (LINE:356 FILE: lz77_opt_decompress.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "pixels" "sobelEdgeDetection" ) (LINE:665 FILE: SobelEdge1.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "h_sobel" "convolution" ) (LINE:376 FILE: SobelEdge1.c) in dealloc folder	Frequency: 1024
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "v_sobel" "convolution" ) (LINE:364 FILE: SobelEdge1.c) in dealloc folder	Frequency: 1024
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "newPixels" "print_pbm" ) (LINE:677 FILE: SobelEdge1.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "pixels" "convolution" ) (LINE:375 FILE: SobelEdge1.c) in dealloc folder	Frequency: 1024
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "pixels" "convolution" ) (LINE:363 FILE: SobelEdge1.c) in dealloc folder	Frequency: 1024
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "pixels" "convolution" ) (LINE:380 FILE: SobelEdge1.c) in nocopy_dealloc folder	Frequency: 1024
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "v_sobel" "convolution" ) (LINE:381 FILE: SobelEdge1.c) in nocopy_dealloc folder	Frequency: 1024
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "pixels" "convolution" ) (LINE:391 FILE: SobelEdge1.c) in nocopy_dealloc folder	Frequency: 1024
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "h_sobel" "convolution" ) (LINE:392 FILE: SobelEdge1.c) in nocopy_dealloc folder	Frequency: 1024
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "newPixels" "print_pbm" ) (LINE:706 FILE: SobelEdge1.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "pixels" "sobelEdgeDetection" ) (LINE:694 FILE: SobelEdge1.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "h_sobel" "convolution" ) (LINE:473 FILE: SobelEdge2.c) in dealloc folder	Frequency: 1024
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "input" "convolution" ) (LINE:460 FILE: SobelEdge2.c) in dealloc folder	Frequency: 1024
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "input" "convolution" ) (LINE:472 FILE: SobelEdge2.c) in dealloc folder	Frequency: 1024
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "newPixels" "image" ) (LINE:527 FILE: SobelEdge2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "input" "sobelEdgeDetection" ) (LINE:794 FILE: SobelEdge2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_19" "print_pbm" ) (LINE:814 FILE: SobelEdge2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "pixels" "image" ) (LINE:781 FILE: SobelEdge2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "v_sobel" "convolution" ) (LINE:461 FILE: SobelEdge2.c) in dealloc folder	Frequency: 1024
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_19" "print_pbm" ) (LINE:848 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "v_sobel" "convolution" ) (LINE:484 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1024
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "input" "sobelEdgeDetection" ) (LINE:828 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_15" "pixels" "image" ) (LINE:815 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_61" "newPixels" "image" ) (LINE:552 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "h_sobel" "convolution" ) (LINE:495 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1024
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "input" "convolution" ) (LINE:483 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1024
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "input" "convolution" ) (LINE:494 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1024
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "func" ) (LINE:51 FILE: CallerMacro1.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "func" ) (LINE:53 FILE: CallerMacro1.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "func" ) (LINE:52 FILE: CallerMacro2.c) in dealloc folder	Frequency: 2
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "func" ) (LINE:54 FILE: CallerMacro2.c) in nocopy_dealloc folder	Frequency: 2
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_b_0" "f" ) (LINE:69 FILE: CallerMacro3.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_b_0" "f" ) (LINE:71 FILE: CallerMacro3.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "false-true-false" "tmp_x_0" "func" ) (LINE:273 FILE: CallerMacro4.c) in dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "false-true-true" "tmp_x_0" "func" ) (LINE:221 FILE: CallerMacro4.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:169 FILE: CallerMacro4.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-false" "tmp_x_0" "func" ) (LINE:273 FILE: CallerMacro4.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:221 FILE: CallerMacro4.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_30" "x" "func" ) (LINE:281 FILE: CallerMacro4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:175 FILE: CallerMacro4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:229 FILE: CallerMacro4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "false-true-true" "tmp_x_0" "func" ) (LINE:229 FILE: CallerMacro4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-false" "tmp_x_0" "func" ) (LINE:277 FILE: CallerMacro5.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:225 FILE: CallerMacro5.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:173 FILE: CallerMacro5.c) in dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "false-true-false" "tmp_x_0" "func" ) (LINE:277 FILE: CallerMacro5.c) in dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "false-true-true" "tmp_x_0" "func" ) (LINE:225 FILE: CallerMacro5.c) in dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "false-true-true" "tmp_x_0" "func" ) (LINE:234 FILE: CallerMacro5.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:234 FILE: CallerMacro5.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_30" "x" "func" ) (LINE:286 FILE: CallerMacro5.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:180 FILE: CallerMacro5.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_x_0" "func" ) (LINE:58 FILE: ResetMacro1.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:58 FILE: ResetMacro1.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_a_0" "func" ) (LINE:51 FILE: ResetMacro2.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "a" "func" ) (LINE:51 FILE: ResetMacro2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_b_0" "func" ) (LINE:101 FILE: ResetMacro3.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_b_0" "func" ) (LINE:146 FILE: ResetMacro3.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "b" "func" ) (LINE:102 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_15" "b" "func" ) (LINE:148 FILE: ResetMacro3.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "true-true-true" "tmp_a_1" "add" ) (LINE:150 FILE: ResetMacro4.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_1" "add" ) (LINE:150 FILE: ResetMacro4.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "add" ) (LINE:149 FILE: ResetMacro4.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "add" ) (LINE:160 FILE: ResetMacro4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "true-true-true" "tmp_a_1" "add" ) (LINE:161 FILE: ResetMacro4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_1" "add" ) (LINE:161 FILE: ResetMacro4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "b" "func" ) (LINE:174 FILE: FunctionCall1.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "a" "func" ) (LINE:104 FILE: FunctionCall1.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_b_0" "func" ) (LINE:177 FILE: FunctionCall1.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_10" "a" "func" ) (LINE:105 FILE: FunctionCall1.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_b_0" "func" ) (LINE:195 FILE: FunctionCall2.c) in dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "false-true-false" "tmp_a_0" "func" ) (LINE:124 FILE: FunctionCall2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "false-true-false" "tmp_a_0" "func" ) (LINE:124 FILE: FunctionCall2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_b_0" "func" ) (LINE:199 FILE: FunctionCall2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_10" "a" "func" ) (LINE:125 FILE: FunctionCall2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "b" "func" ) (LINE:166 FILE: FunctionCall3.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "a" "func" ) (LINE:96 FILE: FunctionCall3.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_b_0" "func" ) (LINE:169 FILE: FunctionCall3.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_10" "a" "func" ) (LINE:97 FILE: FunctionCall3.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "b" "func" ) (LINE:228 FILE: FunctionCall4.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "a" "func" ) (LINE:156 FILE: FunctionCall4.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_10" "a" "func" ) (LINE:158 FILE: FunctionCall4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "true-true-true" "tmp_b_0" "func" ) (LINE:232 FILE: FunctionCall4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_b_0" "func" ) (LINE:232 FILE: FunctionCall4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_4" "test_append" ) (LINE:135 FILE: ArrayAppend.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "r" "test_append" ) (LINE:133 FILE: ArrayAppend.c) in dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "r" "test_append" ) (LINE:136 FILE: ArrayAppend.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_4" "test_append" ) (LINE:138 FILE: ArrayAppend.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "p3" "updateRec" ) (LINE:182 FILE: rectangle.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_rec_0" "updateRec" ) (LINE:181 FILE: rectangle.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_15" "p3" "updateRec" ) (LINE:187 FILE: rectangle.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_15" "rec" "updateRec" ) (LINE:185 FILE: rectangle.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_arr_0" "fibonacci" ) (LINE:135 FILE: Fibonacci.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ls_0" "fibonacci" ) (LINE:51 FILE: Fibonacci.c) in dealloc folder	Frequency: 8
-DEBUG: Potential memory leaks at ( "true-true-false" "tmp_arr_0" "fibonacci" ) (LINE:135 FILE: Fibonacci.c) in dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "true-true-false" "tmp_ls_0" "fibonacci" ) (LINE:51 FILE: Fibonacci.c) in dealloc folder	Frequency: 7
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "ls" "fibonacci" ) (LINE:50 FILE: Fibonacci.c) in nocopy_dealloc folder	Frequency: 8
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "arr" "fibonacci" ) (LINE:136 FILE: Fibonacci.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "gcds" "gcd_cached" ) (LINE:209 FILE: gcd.c) in dealloc folder	Frequency: 100
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "gcds" "gcd_cached" ) (LINE:216 FILE: gcd.c) in nocopy_dealloc folder	Frequency: 100
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_13" "Cash" ) (LINE:201 FILE: FunctionOverload2.c) in dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_13" "Cash" ) (LINE:205 FILE: FunctionOverload2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "pixels" "print_pbm" ) (LINE:219 FILE: fileread2.c) in dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "pixels" "print_pbm" ) (LINE:227 FILE: fileread2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "true-true-false" "tmp_nq_0"_tmp "run" ) (LINE:318 FILE: nqueens.c) in dealloc folder	Frequency: 1320
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "p" "conflict" ) (LINE:259 FILE: nqueens.c) in dealloc folder	Frequency: 46752
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_nq_0" "run" ) (LINE:440 FILE: nqueens.c) in dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "true-true-false" "tmp_nq_0"_tmp "run" ) (LINE:440 FILE: nqueens.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_nq_0" "run" ) (LINE:318 FILE: nqueens.c) in dealloc folder	Frequency: 2056
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "queens" "nqueen" ) (LINE:425 FILE: nqueens.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_33" "nq" "run" ) (LINE:327 FILE: nqueens.c) in nocopy_dealloc folder	Frequency: 2056
-DEBUG: _SUBSTRUCTURE_DEALLOC macro on  ( "false-false-false" "p" "conflict" ) (LINE:267 FILE: nqueens.c) in nocopy_dealloc folder	Frequency: 46752
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_12" "nq" "run" ) (LINE:454 FILE: nqueens.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_11" "queens" "nqueen" ) (LINE:439 FILE: nqueens.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "true-false-true" "queens" "run" ) (LINE:337 FILE: nqueens2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "p" "conflict" ) (LINE:188 FILE: nqueens2.c) in dealloc folder	Frequency: 46752
-DEBUG: _CALLEE_DEALLOC macro on ( "true-false-true" "queens" "run" ) (LINE:246 FILE: nqueens2.c) in dealloc folder	Frequency: 2056
-DEBUG: _CALLEE_DEALLOC macro on ( "true-false-true" "queens" "run" ) (LINE:257 FILE: nqueens2.c) in nocopy_dealloc folder	Frequency: 2056
-DEBUG: _SUBSTRUCTURE_DEALLOC macro on  ( "false-false-false" "p" "conflict" ) (LINE:196 FILE: nqueens2.c) in nocopy_dealloc folder	Frequency: 46752
-DEBUG: _CALLEE_DEALLOC macro on ( "true-false-true" "queens" "run" ) (LINE:353 FILE: nqueens2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "arr" "reverse" ) (LINE:218 FILE: reverse.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_11" "reverse" ) (LINE:138 FILE: reverse.c) in dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "arr" "reverse" ) (LINE:225 FILE: reverse.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_11" "reverse" ) (LINE:141 FILE: reverse.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_rhs_0" "sortV1" ) (LINE:115 FILE: mergesort.c) in dealloc folder	Frequency: 24
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_lhs_0" "sortV1" ) (LINE:89 FILE: mergesort.c) in dealloc folder	Frequency: 24
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "sortV1" ) (LINE:453 FILE: mergesort.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_arr_0" "sortV1" ) (LINE:654 FILE: mergesort.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "sortV1" ) (LINE:569 FILE: mergesort.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "sortV1" ) (LINE:510 FILE: mergesort.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "sortV1" ) (LINE:394 FILE: mergesort.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_19" "rhs" "sortV1" ) (LINE:117 FILE: mergesort.c) in nocopy_dealloc folder	Frequency: 24
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_16" "lhs" "sortV1" ) (LINE:90 FILE: mergesort.c) in nocopy_dealloc folder	Frequency: 24
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_52" "ys" "sortV1" ) (LINE:585 FILE: mergesort.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_25" "ys" "sortV1" ) (LINE:467 FILE: mergesort.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_70" "arr" "sortV1" ) (LINE:674 FILE: mergesort.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_11" "ys" "sortV1" ) (LINE:407 FILE: mergesort.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_38" "ys" "sortV1" ) (LINE:525 FILE: mergesort.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_arr_0" "bubbleSort" ) (LINE:493 FILE: bubblesort.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "bubbleSort" ) (LINE:412 FILE: bubblesort.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "bubbleSort" ) (LINE:351 FILE: bubblesort.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "bubbleSort" ) (LINE:292 FILE: bubblesort.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "bubbleSort" ) (LINE:231 FILE: bubblesort.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_25" "ys" "bubbleSort" ) (LINE:301 FILE: bubblesort.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_52" "ys" "bubbleSort" ) (LINE:423 FILE: bubblesort.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_38" "ys" "bubbleSort" ) (LINE:361 FILE: bubblesort.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_11" "ys" "bubbleSort" ) (LINE:239 FILE: bubblesort.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_68" "arr" "bubbleSort" ) (LINE:508 FILE: bubblesort.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "C" "printMat" ) (LINE:633 FILE: MatrixMult.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "rows" "matrix" ) (LINE:428 FILE: MatrixMult.c) in dealloc folder	Frequency: 2
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "C_data" "matrix" ) (LINE:218 FILE: MatrixMult.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "B" "multiply" ) (LINE:590 FILE: MatrixMult.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "A" "multiply" ) (LINE:588 FILE: MatrixMult.c) in dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "A" "multiply" ) (LINE:606 FILE: MatrixMult.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_34" "C_data" "matrix" ) (LINE:227 FILE: MatrixMult.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_15" "rows" "matrix" ) (LINE:445 FILE: MatrixMult.c) in nocopy_dealloc folder	Frequency: 2
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "C" "printMat" ) (LINE:651 FILE: MatrixMult.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "B" "multiply" ) (LINE:608 FILE: MatrixMult.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "B" "mat_mult" ) (LINE:688 FILE: MatrixMult2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "A" "mat_mult" ) (LINE:686 FILE: MatrixMult2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "matrix" ) (LINE:145 FILE: MatrixMult2.c) in dealloc folder	Frequency: 2
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "C" "print_mat" ) (LINE:737 FILE: MatrixMult2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "matrix" ) (LINE:448 FILE: MatrixMult2.c) in dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "A" "mat_mult" ) (LINE:707 FILE: MatrixMult2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "B" "mat_mult" ) (LINE:709 FILE: MatrixMult2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "C" "print_mat" ) (LINE:758 FILE: MatrixMult2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_40" "data" "matrix" ) (LINE:469 FILE: MatrixMult2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_21" "data" "matrix" ) (LINE:150 FILE: MatrixMult2.c) in nocopy_dealloc folder	Frequency: 2
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "B" "mat_mult" ) (LINE:784 FILE: MatrixMult3.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "matrix" ) (LINE:145 FILE: MatrixMult3.c) in dealloc folder	Frequency: 2
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "C" "print_mat" ) (LINE:833 FILE: MatrixMult3.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "matrix" ) (LINE:542 FILE: MatrixMult3.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "A" "mat_mult" ) (LINE:782 FILE: MatrixMult3.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_58" "data" "matrix" ) (LINE:571 FILE: MatrixMult3.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "A" "mat_mult" ) (LINE:811 FILE: MatrixMult3.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "C" "print_mat" ) (LINE:862 FILE: MatrixMult3.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "B" "mat_mult" ) (LINE:813 FILE: MatrixMult3.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_21" "data" "matrix" ) (LINE:150 FILE: MatrixMult3.c) in nocopy_dealloc folder	Frequency: 2
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:579 FILE: CoinGame.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "moves" "play" ) (LINE:590 FILE: CoinGame.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "moves" "findMoves" ) (LINE:607 FILE: CoinGame.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "moves" "play" ) (LINE:618 FILE: CoinGame.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:262 FILE: CoinGame1.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "moves" "findMoves" ) (LINE:275 FILE: CoinGame1.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:359 FILE: CoinGame2.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "moves" "findMoves" ) (LINE:369 FILE: CoinGame2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:340 FILE: CoinGame3.c) in dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "moves" "findMoves" ) (LINE:350 FILE: CoinGame3.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:611 FILE: CoinGame4.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "moves" "play" ) (LINE:622 FILE: CoinGame4.c) in dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:611 FILE: CoinGame4.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "pickCoin" ) (LINE:527 FILE: CoinGame4.c) in dealloc folder	Frequency: 55
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_41" "moves" "pickCoin" ) (LINE:548 FILE: CoinGame4.c) in nocopy_dealloc folder	Frequency: 55
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "moves" "findMoves" ) (LINE:637 FILE: CoinGame4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "moves" "play" ) (LINE:648 FILE: CoinGame4.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "till" "calculateChange" ) (LINE:916 FILE: cashtill.c) in dealloc folder	Frequency: 3
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1252 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1218 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_25" "Cash" ) (LINE:1205 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "tmp" "calculateChange" ) (LINE:467 FILE: cashtill.c) in dealloc folder	Frequency: 76798
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_0" "add" ) (LINE:978 FILE: cashtill.c) in dealloc folder	Frequency: 2
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1286 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_28" "buy" ) (LINE:1253 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_0" "subtract" ) (LINE:994 FILE: cashtill.c) in dealloc folder	Frequency: 2
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "change" "subtract" ) (LINE:995 FILE: cashtill.c) in dealloc folder	Frequency: 2
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_33" "buy" ) (LINE:1287 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1184 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_18" "buy" ) (LINE:1185 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_35" "Cash" ) (LINE:1273 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_23" "buy" ) (LINE:1219 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1184 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "given" "total" ) (LINE:882 FILE: cashtill.c) in dealloc folder	Frequency: 4
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "given" "add" ) (LINE:979 FILE: cashtill.c) in dealloc folder	Frequency: 2
-DEBUG: Potential memory leaks at ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1286 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "given" "total" ) (LINE:906 FILE: cashtill.c) in dealloc folder	Frequency: 3
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_20" "Cash" ) (LINE:1171 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_30" "Cash" ) (LINE:1239 FILE: cashtill.c) in dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "given" "add" ) (LINE:1001 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 2
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_33" "buy" ) (LINE:1299 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_40" "till" "add" ) (LINE:1000 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 2
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "given" "total" ) (LINE:908 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 4
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_20" "Cash" ) (LINE:1191 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "tmp" "calculateChange" ) (LINE:482 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 76798
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_18" "buy" ) (LINE:1203 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_23" "buy" ) (LINE:1235 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_28" "buy" ) (LINE:1267 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_32" "till" "buy" ) (LINE:1298 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_41" "till" "subtract" ) (LINE:1015 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 2
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "change" "subtract" ) (LINE:1016 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 2
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_25" "Cash" ) (LINE:1223 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_22" "till" "buy" ) (LINE:1234 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_30" "Cash" ) (LINE:1255 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "till" "calculateChange" ) (LINE:940 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 3
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_35" "Cash" ) (LINE:1287 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_27" "till" "buy" ) (LINE:1266 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_17" "till" "buy" ) (LINE:1202 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "given" "total" ) (LINE:931 FILE: cashtill.c) in nocopy_dealloc folder	Frequency: 3
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "compress" ) (LINE:745 FILE: lz77.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "findLongestMatch" ) (LINE:359 FILE: lz77.c) in dealloc folder	Frequency: 9
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:589 FILE: lz77.c) in dealloc folder	Frequency: 12
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:542 FILE: lz77.c) in dealloc folder	Frequency: 4
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:414 FILE: lz77.c) in dealloc folder	Frequency: 9
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "compress_data" "decompress" ) (LINE:794 FILE: lz77.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "match" ) (LINE:145 FILE: lz77.c) in dealloc folder	Frequency: 60
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:427 FILE: lz77.c) in dealloc folder	Frequency: 9
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "data" "compress" ) (LINE:782 FILE: lz77.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "findLongestMatch" ) (LINE:378 FILE: lz77.c) in nocopy_dealloc folder	Frequency: 9
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "match" ) (LINE:153 FILE: lz77.c) in nocopy_dealloc folder	Frequency: 60
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:623 FILE: lz77.c) in nocopy_dealloc folder	Frequency: 12
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "compress_data" "decompress" ) (LINE:831 FILE: lz77.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:451 FILE: lz77.c) in nocopy_dealloc folder	Frequency: 9
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:438 FILE: lz77.c) in nocopy_dealloc folder	Frequency: 9
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:571 FILE: lz77.c) in nocopy_dealloc folder	Frequency: 4
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:619 FILE: lz77_2.c) in dealloc folder	Frequency: 12
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "match" ) (LINE:145 FILE: lz77_2.c) in dealloc folder	Frequency: 60
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "findLongestMatch" ) (LINE:376 FILE: lz77_2.c) in dealloc folder	Frequency: 9
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "compress_data" "decompress" ) (LINE:824 FILE: lz77_2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "compress" ) (LINE:775 FILE: lz77_2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "resize" ) (LINE:463 FILE: lz77_2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:572 FILE: lz77_2.c) in dealloc folder	Frequency: 4
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:657 FILE: lz77_2.c) in nocopy_dealloc folder	Frequency: 12
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "resize" ) (LINE:491 FILE: lz77_2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:605 FILE: lz77_2.c) in nocopy_dealloc folder	Frequency: 4
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "data" "compress" ) (LINE:816 FILE: lz77_2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "match" ) (LINE:153 FILE: lz77_2.c) in nocopy_dealloc folder	Frequency: 60
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "compress_data" "decompress" ) (LINE:865 FILE: lz77_2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "findLongestMatch" ) (LINE:397 FILE: lz77_2.c) in nocopy_dealloc folder	Frequency: 9
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:206 FILE: lz77_decompress.c) in dealloc folder	Frequency: 12
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:159 FILE: lz77_decompress.c) in dealloc folder	Frequency: 3
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "input_data" "decompress" ) (LINE:293 FILE: lz77_decompress.c) in dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:166 FILE: lz77_decompress.c) in nocopy_dealloc folder	Frequency: 3
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "input_data" "decompress" ) (LINE:308 FILE: lz77_decompress.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:218 FILE: lz77_decompress.c) in nocopy_dealloc folder	Frequency: 12
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "input_data" "decompress" ) (LINE:407 FILE: lz77_opt_decompress.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "items" "resize" ) (LINE:336 FILE: lz77_opt_decompress.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_items_0" "opt_append" ) (LINE:250 FILE: lz77_opt_decompress.c) in dealloc folder	Frequency: 3
-DEBUG: Potential memory leaks at ( "true-true-false" "tmp_items_0" "opt_append" ) (LINE:300 FILE: lz77_opt_decompress.c) in dealloc folder	Frequency: 2
-DEBUG: Potential memory leaks at ( "true-true-false" "tmp_items_0" "opt_append" ) (LINE:250 FILE: lz77_opt_decompress.c) in dealloc folder	Frequency: 2
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_items_0" "opt_append" ) (LINE:300 FILE: lz77_opt_decompress.c) in dealloc folder	Frequency: 12
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_26" "items" "opt_append" ) (LINE:262 FILE: lz77_opt_decompress.c) in nocopy_dealloc folder	Frequency: 3
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_34" "items" "opt_append" ) (LINE:318 FILE: lz77_opt_decompress.c) in nocopy_dealloc folder	Frequency: 12
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "input_data" "decompress" ) (LINE:429 FILE: lz77_opt_decompress.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "items" "resize" ) (LINE:356 FILE: lz77_opt_decompress.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "pixels" "sobelEdgeDetection" ) (LINE:665 FILE: SobelEdge1.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "h_sobel" "convolution" ) (LINE:376 FILE: SobelEdge1.c) in dealloc folder	Frequency: 1024
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "v_sobel" "convolution" ) (LINE:364 FILE: SobelEdge1.c) in dealloc folder	Frequency: 1024
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "newPixels" "print_pbm" ) (LINE:677 FILE: SobelEdge1.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "pixels" "convolution" ) (LINE:375 FILE: SobelEdge1.c) in dealloc folder	Frequency: 1024
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "pixels" "convolution" ) (LINE:363 FILE: SobelEdge1.c) in dealloc folder	Frequency: 1024
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "pixels" "convolution" ) (LINE:380 FILE: SobelEdge1.c) in nocopy_dealloc folder	Frequency: 1024
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "v_sobel" "convolution" ) (LINE:381 FILE: SobelEdge1.c) in nocopy_dealloc folder	Frequency: 1024
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "pixels" "convolution" ) (LINE:391 FILE: SobelEdge1.c) in nocopy_dealloc folder	Frequency: 1024
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "h_sobel" "convolution" ) (LINE:392 FILE: SobelEdge1.c) in nocopy_dealloc folder	Frequency: 1024
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "newPixels" "print_pbm" ) (LINE:706 FILE: SobelEdge1.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "pixels" "sobelEdgeDetection" ) (LINE:694 FILE: SobelEdge1.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "h_sobel" "convolution" ) (LINE:473 FILE: SobelEdge2.c) in dealloc folder	Frequency: 1024
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "input" "convolution" ) (LINE:460 FILE: SobelEdge2.c) in dealloc folder	Frequency: 1024
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "input" "convolution" ) (LINE:472 FILE: SobelEdge2.c) in dealloc folder	Frequency: 1024
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "newPixels" "image" ) (LINE:527 FILE: SobelEdge2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "input" "sobelEdgeDetection" ) (LINE:794 FILE: SobelEdge2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_19" "print_pbm" ) (LINE:814 FILE: SobelEdge2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "pixels" "image" ) (LINE:781 FILE: SobelEdge2.c) in dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "v_sobel" "convolution" ) (LINE:461 FILE: SobelEdge2.c) in dealloc folder	Frequency: 1024
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_19" "print_pbm" ) (LINE:848 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "v_sobel" "convolution" ) (LINE:484 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1024
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "input" "sobelEdgeDetection" ) (LINE:828 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_15" "pixels" "image" ) (LINE:815 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_61" "newPixels" "image" ) (LINE:552 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "h_sobel" "convolution" ) (LINE:495 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1024
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "input" "convolution" ) (LINE:483 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1024
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "input" "convolution" ) (LINE:494 FILE: SobelEdge2.c) in nocopy_dealloc folder	Frequency: 1024
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "func" ) (LINE:53 FILE: CallerMacro1.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "func" ) (LINE:51 FILE: CallerMacro1.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "func" ) (LINE:54 FILE: CallerMacro2.c) in ea_nocopy_dealloc folder	Frequency: 2
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "func" ) (LINE:52 FILE: CallerMacro2.c) in ea_dealloc folder	Frequency: 2
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_b_0" "f" ) (LINE:71 FILE: CallerMacro3.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_b_0" "f" ) (LINE:69 FILE: CallerMacro3.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_30" "x" "func" ) (LINE:281 FILE: CallerMacro4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "false-true-true" "tmp_x_0" "func" ) (LINE:229 FILE: CallerMacro4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:229 FILE: CallerMacro4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:175 FILE: CallerMacro4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "false-true-false" "tmp_x_0" "func" ) (LINE:273 FILE: CallerMacro4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "false-true-true" "tmp_x_0" "func" ) (LINE:221 FILE: CallerMacro4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-false" "tmp_x_0" "func" ) (LINE:273 FILE: CallerMacro4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:169 FILE: CallerMacro4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:221 FILE: CallerMacro4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "false-true-true" "tmp_x_0" "func" ) (LINE:234 FILE: CallerMacro5.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:180 FILE: CallerMacro5.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:234 FILE: CallerMacro5.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_30" "x" "func" ) (LINE:286 FILE: CallerMacro5.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "false-true-true" "tmp_x_0" "func" ) (LINE:225 FILE: CallerMacro5.c) in ea_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "false-true-false" "tmp_x_0" "func" ) (LINE:277 FILE: CallerMacro5.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:173 FILE: CallerMacro5.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:225 FILE: CallerMacro5.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-false" "tmp_x_0" "func" ) (LINE:277 FILE: CallerMacro5.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:58 FILE: ResetMacro1.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_x_0" "func" ) (LINE:58 FILE: ResetMacro1.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "a" "func" ) (LINE:51 FILE: ResetMacro2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_a_0" "func" ) (LINE:51 FILE: ResetMacro2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "b" "func" ) (LINE:102 FILE: ResetMacro3.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_15" "b" "func" ) (LINE:148 FILE: ResetMacro3.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_b_0" "func" ) (LINE:101 FILE: ResetMacro3.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_b_0" "func" ) (LINE:146 FILE: ResetMacro3.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "add" ) (LINE:160 FILE: ResetMacro4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_1" "add" ) (LINE:161 FILE: ResetMacro4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-true" "tmp_a_1" "add" ) (LINE:161 FILE: ResetMacro4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-true" "tmp_a_1" "add" ) (LINE:150 FILE: ResetMacro4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_1" "add" ) (LINE:150 FILE: ResetMacro4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "add" ) (LINE:149 FILE: ResetMacro4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_10" "a" "func" ) (LINE:105 FILE: FunctionCall1.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_b_0" "func" ) (LINE:177 FILE: FunctionCall1.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "a" "func" ) (LINE:104 FILE: FunctionCall1.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "b" "func" ) (LINE:174 FILE: FunctionCall1.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_b_0" "func" ) (LINE:199 FILE: FunctionCall2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_10" "a" "func" ) (LINE:125 FILE: FunctionCall2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_b_0" "func" ) (LINE:195 FILE: FunctionCall2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "false-true-false" "tmp_a_0" "func" ) (LINE:124 FILE: FunctionCall2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-false" "tmp_a_0" "func" ) (LINE:124 FILE: FunctionCall2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_10" "a" "func" ) (LINE:97 FILE: FunctionCall3.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_b_0" "func" ) (LINE:169 FILE: FunctionCall3.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "b" "func" ) (LINE:166 FILE: FunctionCall3.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "a" "func" ) (LINE:96 FILE: FunctionCall3.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_10" "a" "func" ) (LINE:158 FILE: FunctionCall4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-true" "tmp_b_0" "func" ) (LINE:232 FILE: FunctionCall4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_b_0" "func" ) (LINE:232 FILE: FunctionCall4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "b" "func" ) (LINE:228 FILE: FunctionCall4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "a" "func" ) (LINE:156 FILE: FunctionCall4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "r" "test_append" ) (LINE:136 FILE: ArrayAppend.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_4" "test_append" ) (LINE:138 FILE: ArrayAppend.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_4" "test_append" ) (LINE:135 FILE: ArrayAppend.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "r" "test_append" ) (LINE:133 FILE: ArrayAppend.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_15" "p3" "updateRec" ) (LINE:187 FILE: rectangle.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_15" "rec" "updateRec" ) (LINE:185 FILE: rectangle.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "p3" "updateRec" ) (LINE:182 FILE: rectangle.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_rec_0" "updateRec" ) (LINE:181 FILE: rectangle.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "arr" "fibonacci" ) (LINE:136 FILE: Fibonacci.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "ls" "fibonacci" ) (LINE:50 FILE: Fibonacci.c) in ea_nocopy_dealloc folder	Frequency: 8
+DEBUG: Potential memory leaks at ( "true-true-false" "tmp_arr_0" "fibonacci" ) (LINE:135 FILE: Fibonacci.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ls_0" "fibonacci" ) (LINE:51 FILE: Fibonacci.c) in ea_dealloc folder	Frequency: 8
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_arr_0" "fibonacci" ) (LINE:135 FILE: Fibonacci.c) in ea_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-false" "tmp_ls_0" "fibonacci" ) (LINE:51 FILE: Fibonacci.c) in ea_dealloc folder	Frequency: 7
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "gcds" "gcd_cached" ) (LINE:216 FILE: gcd.c) in ea_nocopy_dealloc folder	Frequency: 100
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "gcds" "gcd_cached" ) (LINE:209 FILE: gcd.c) in ea_dealloc folder	Frequency: 100
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_13" "Cash" ) (LINE:205 FILE: FunctionOverload2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_13" "Cash" ) (LINE:201 FILE: FunctionOverload2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "pixels" "print_pbm" ) (LINE:227 FILE: fileread2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "pixels" "print_pbm" ) (LINE:219 FILE: fileread2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_33" "nq" "run" ) (LINE:327 FILE: nqueens.c) in ea_nocopy_dealloc folder	Frequency: 2056
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_11" "queens" "nqueen" ) (LINE:439 FILE: nqueens.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_12" "nq" "run" ) (LINE:454 FILE: nqueens.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _SUBSTRUCTURE_DEALLOC macro on  ( "false-false-false" "p" "conflict" ) (LINE:267 FILE: nqueens.c) in ea_nocopy_dealloc folder	Frequency: 46752
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_nq_0" "run" ) (LINE:440 FILE: nqueens.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "p" "conflict" ) (LINE:259 FILE: nqueens.c) in ea_dealloc folder	Frequency: 46752
+DEBUG: Potential memory leaks at ( "true-true-false" "tmp_nq_0"_tmp "run" ) (LINE:440 FILE: nqueens.c) in ea_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-false" "tmp_nq_0"_tmp "run" ) (LINE:318 FILE: nqueens.c) in ea_dealloc folder	Frequency: 1320
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_nq_0" "run" ) (LINE:318 FILE: nqueens.c) in ea_dealloc folder	Frequency: 2056
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "queens" "nqueen" ) (LINE:425 FILE: nqueens.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "true-false-true" "queens" "run" ) (LINE:257 FILE: nqueens2.c) in ea_nocopy_dealloc folder	Frequency: 2056
+DEBUG: _CALLEE_DEALLOC macro on ( "true-false-true" "queens" "run" ) (LINE:353 FILE: nqueens2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _SUBSTRUCTURE_DEALLOC macro on  ( "false-false-false" "p" "conflict" ) (LINE:196 FILE: nqueens2.c) in ea_nocopy_dealloc folder	Frequency: 46752
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "p" "conflict" ) (LINE:188 FILE: nqueens2.c) in ea_dealloc folder	Frequency: 46752
+DEBUG: _CALLEE_DEALLOC macro on ( "true-false-true" "queens" "run" ) (LINE:337 FILE: nqueens2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "true-false-true" "queens" "run" ) (LINE:246 FILE: nqueens2.c) in ea_dealloc folder	Frequency: 2056
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "arr" "reverse" ) (LINE:225 FILE: reverse.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_11" "reverse" ) (LINE:141 FILE: reverse.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "arr" "reverse" ) (LINE:218 FILE: reverse.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_11" "reverse" ) (LINE:138 FILE: reverse.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_70" "arr" "sortV1" ) (LINE:674 FILE: mergesort.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_52" "ys" "sortV1" ) (LINE:585 FILE: mergesort.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_19" "rhs" "sortV1" ) (LINE:117 FILE: mergesort.c) in ea_nocopy_dealloc folder	Frequency: 24
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_25" "ys" "sortV1" ) (LINE:467 FILE: mergesort.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_38" "ys" "sortV1" ) (LINE:525 FILE: mergesort.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_11" "ys" "sortV1" ) (LINE:407 FILE: mergesort.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_16" "lhs" "sortV1" ) (LINE:90 FILE: mergesort.c) in ea_nocopy_dealloc folder	Frequency: 24
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "sortV1" ) (LINE:569 FILE: mergesort.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "sortV1" ) (LINE:453 FILE: mergesort.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_rhs_0" "sortV1" ) (LINE:115 FILE: mergesort.c) in ea_dealloc folder	Frequency: 24
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_arr_0" "sortV1" ) (LINE:654 FILE: mergesort.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "sortV1" ) (LINE:510 FILE: mergesort.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "sortV1" ) (LINE:394 FILE: mergesort.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_lhs_0" "sortV1" ) (LINE:89 FILE: mergesort.c) in ea_dealloc folder	Frequency: 24
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_25" "ys" "bubbleSort" ) (LINE:301 FILE: bubblesort.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_11" "ys" "bubbleSort" ) (LINE:239 FILE: bubblesort.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_52" "ys" "bubbleSort" ) (LINE:423 FILE: bubblesort.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_38" "ys" "bubbleSort" ) (LINE:361 FILE: bubblesort.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_68" "arr" "bubbleSort" ) (LINE:508 FILE: bubblesort.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "bubbleSort" ) (LINE:351 FILE: bubblesort.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_arr_0" "bubbleSort" ) (LINE:493 FILE: bubblesort.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "bubbleSort" ) (LINE:231 FILE: bubblesort.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "bubbleSort" ) (LINE:412 FILE: bubblesort.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "bubbleSort" ) (LINE:292 FILE: bubblesort.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_34" "C_data" "matrix" ) (LINE:227 FILE: MatrixMult.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "C" "printMat" ) (LINE:651 FILE: MatrixMult.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_15" "rows" "matrix" ) (LINE:445 FILE: MatrixMult.c) in ea_nocopy_dealloc folder	Frequency: 2
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "A" "multiply" ) (LINE:606 FILE: MatrixMult.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "B" "multiply" ) (LINE:608 FILE: MatrixMult.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "B" "multiply" ) (LINE:590 FILE: MatrixMult.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "A" "multiply" ) (LINE:588 FILE: MatrixMult.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "C" "printMat" ) (LINE:633 FILE: MatrixMult.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "C_data" "matrix" ) (LINE:218 FILE: MatrixMult.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "rows" "matrix" ) (LINE:428 FILE: MatrixMult.c) in ea_dealloc folder	Frequency: 2
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_21" "data" "matrix" ) (LINE:150 FILE: MatrixMult2.c) in ea_nocopy_dealloc folder	Frequency: 2
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "A" "mat_mult" ) (LINE:707 FILE: MatrixMult2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_40" "data" "matrix" ) (LINE:469 FILE: MatrixMult2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "C" "print_mat" ) (LINE:758 FILE: MatrixMult2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "B" "mat_mult" ) (LINE:709 FILE: MatrixMult2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "A" "mat_mult" ) (LINE:686 FILE: MatrixMult2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "B" "mat_mult" ) (LINE:688 FILE: MatrixMult2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "matrix" ) (LINE:448 FILE: MatrixMult2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "matrix" ) (LINE:145 FILE: MatrixMult2.c) in ea_dealloc folder	Frequency: 2
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "C" "print_mat" ) (LINE:737 FILE: MatrixMult2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "C" "print_mat" ) (LINE:862 FILE: MatrixMult3.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_21" "data" "matrix" ) (LINE:150 FILE: MatrixMult3.c) in ea_nocopy_dealloc folder	Frequency: 2
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "B" "mat_mult" ) (LINE:813 FILE: MatrixMult3.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "A" "mat_mult" ) (LINE:811 FILE: MatrixMult3.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_58" "data" "matrix" ) (LINE:571 FILE: MatrixMult3.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "B" "mat_mult" ) (LINE:784 FILE: MatrixMult3.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "matrix" ) (LINE:542 FILE: MatrixMult3.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "matrix" ) (LINE:145 FILE: MatrixMult3.c) in ea_dealloc folder	Frequency: 2
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "C" "print_mat" ) (LINE:833 FILE: MatrixMult3.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "A" "mat_mult" ) (LINE:782 FILE: MatrixMult3.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "moves" "play" ) (LINE:618 FILE: CoinGame.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "moves" "findMoves" ) (LINE:607 FILE: CoinGame.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:579 FILE: CoinGame.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "moves" "play" ) (LINE:590 FILE: CoinGame.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "moves" "findMoves" ) (LINE:275 FILE: CoinGame1.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:262 FILE: CoinGame1.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "moves" "findMoves" ) (LINE:369 FILE: CoinGame2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:359 FILE: CoinGame2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "moves" "findMoves" ) (LINE:350 FILE: CoinGame3.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:340 FILE: CoinGame3.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "moves" "findMoves" ) (LINE:637 FILE: CoinGame4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_41" "moves" "pickCoin" ) (LINE:548 FILE: CoinGame4.c) in ea_nocopy_dealloc folder	Frequency: 55
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "moves" "play" ) (LINE:648 FILE: CoinGame4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "pickCoin" ) (LINE:527 FILE: CoinGame4.c) in ea_dealloc folder	Frequency: 55
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:611 FILE: CoinGame4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:611 FILE: CoinGame4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "moves" "play" ) (LINE:622 FILE: CoinGame4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "given" "add" ) (LINE:1001 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 2
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_32" "till" "buy" ) (LINE:1298 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_27" "till" "buy" ) (LINE:1266 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "given" "total" ) (LINE:908 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 4
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_25" "Cash" ) (LINE:1223 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "tmp" "calculateChange" ) (LINE:482 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 76798
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_28" "buy" ) (LINE:1267 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_23" "buy" ) (LINE:1235 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_17" "till" "buy" ) (LINE:1202 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "till" "calculateChange" ) (LINE:940 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 3
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_20" "Cash" ) (LINE:1191 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_41" "till" "subtract" ) (LINE:1015 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 2
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_30" "Cash" ) (LINE:1255 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_40" "till" "add" ) (LINE:1000 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 2
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_35" "Cash" ) (LINE:1287 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "given" "total" ) (LINE:931 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 3
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_33" "buy" ) (LINE:1299 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_22" "till" "buy" ) (LINE:1234 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_18" "buy" ) (LINE:1203 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "change" "subtract" ) (LINE:1016 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 2
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1286 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "till" "calculateChange" ) (LINE:916 FILE: cashtill.c) in ea_dealloc folder	Frequency: 3
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_33" "buy" ) (LINE:1287 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "given" "total" ) (LINE:906 FILE: cashtill.c) in ea_dealloc folder	Frequency: 3
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_28" "buy" ) (LINE:1253 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "given" "total" ) (LINE:882 FILE: cashtill.c) in ea_dealloc folder	Frequency: 4
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_23" "buy" ) (LINE:1219 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1218 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_0" "subtract" ) (LINE:994 FILE: cashtill.c) in ea_dealloc folder	Frequency: 2
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "tmp" "calculateChange" ) (LINE:467 FILE: cashtill.c) in ea_dealloc folder	Frequency: 76798
+DEBUG: Potential memory leaks at ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1184 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "change" "subtract" ) (LINE:995 FILE: cashtill.c) in ea_dealloc folder	Frequency: 2
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_35" "Cash" ) (LINE:1273 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "given" "add" ) (LINE:979 FILE: cashtill.c) in ea_dealloc folder	Frequency: 2
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_25" "Cash" ) (LINE:1205 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1252 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_30" "Cash" ) (LINE:1239 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_18" "buy" ) (LINE:1185 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_20" "Cash" ) (LINE:1171 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_0" "add" ) (LINE:978 FILE: cashtill.c) in ea_dealloc folder	Frequency: 2
+DEBUG: Potential memory leaks at ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1286 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1184 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:451 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 9
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:623 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 12
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "compress_data" "decompress" ) (LINE:831 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "compress" ) (LINE:782 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:571 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 4
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:438 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 9
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "match" ) (LINE:153 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 60
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "findLongestMatch" ) (LINE:378 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 9
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "compress_data" "decompress" ) (LINE:794 FILE: lz77.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:414 FILE: lz77.c) in ea_dealloc folder	Frequency: 9
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "match" ) (LINE:145 FILE: lz77.c) in ea_dealloc folder	Frequency: 60
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "compress" ) (LINE:745 FILE: lz77.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:542 FILE: lz77.c) in ea_dealloc folder	Frequency: 4
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:589 FILE: lz77.c) in ea_dealloc folder	Frequency: 12
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "findLongestMatch" ) (LINE:359 FILE: lz77.c) in ea_dealloc folder	Frequency: 9
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:427 FILE: lz77.c) in ea_dealloc folder	Frequency: 9
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:657 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 12
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "match" ) (LINE:153 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 60
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:605 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 4
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "compress" ) (LINE:816 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "resize" ) (LINE:491 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "compress_data" "decompress" ) (LINE:865 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "findLongestMatch" ) (LINE:397 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 9
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "findLongestMatch" ) (LINE:376 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 9
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:572 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 4
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "compress" ) (LINE:775 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "compress_data" "decompress" ) (LINE:824 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:619 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 12
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "resize" ) (LINE:463 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "match" ) (LINE:145 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 60
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:218 FILE: lz77_decompress.c) in ea_nocopy_dealloc folder	Frequency: 12
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:166 FILE: lz77_decompress.c) in ea_nocopy_dealloc folder	Frequency: 3
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "input_data" "decompress" ) (LINE:308 FILE: lz77_decompress.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:159 FILE: lz77_decompress.c) in ea_dealloc folder	Frequency: 3
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:206 FILE: lz77_decompress.c) in ea_dealloc folder	Frequency: 12
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "input_data" "decompress" ) (LINE:293 FILE: lz77_decompress.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "items" "resize" ) (LINE:356 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_34" "items" "opt_append" ) (LINE:318 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 12
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "input_data" "decompress" ) (LINE:429 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_26" "items" "opt_append" ) (LINE:262 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 3
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "items" "resize" ) (LINE:336 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_items_0" "opt_append" ) (LINE:300 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 12
+DEBUG: Potential memory leaks at ( "true-true-false" "tmp_items_0" "opt_append" ) (LINE:300 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 2
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "input_data" "decompress" ) (LINE:407 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-false" "tmp_items_0" "opt_append" ) (LINE:250 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 2
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_items_0" "opt_append" ) (LINE:250 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 3
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "h_sobel" "convolution" ) (LINE:392 FILE: SobelEdge1.c) in ea_nocopy_dealloc folder	Frequency: 1024
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "newPixels" "print_pbm" ) (LINE:706 FILE: SobelEdge1.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "v_sobel" "convolution" ) (LINE:381 FILE: SobelEdge1.c) in ea_nocopy_dealloc folder	Frequency: 1024
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "pixels" "convolution" ) (LINE:380 FILE: SobelEdge1.c) in ea_nocopy_dealloc folder	Frequency: 1024
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "pixels" "sobelEdgeDetection" ) (LINE:694 FILE: SobelEdge1.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "pixels" "convolution" ) (LINE:391 FILE: SobelEdge1.c) in ea_nocopy_dealloc folder	Frequency: 1024
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "h_sobel" "convolution" ) (LINE:376 FILE: SobelEdge1.c) in ea_dealloc folder	Frequency: 1024
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "pixels" "sobelEdgeDetection" ) (LINE:665 FILE: SobelEdge1.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "pixels" "convolution" ) (LINE:375 FILE: SobelEdge1.c) in ea_dealloc folder	Frequency: 1024
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "newPixels" "print_pbm" ) (LINE:677 FILE: SobelEdge1.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "v_sobel" "convolution" ) (LINE:364 FILE: SobelEdge1.c) in ea_dealloc folder	Frequency: 1024
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "pixels" "convolution" ) (LINE:363 FILE: SobelEdge1.c) in ea_dealloc folder	Frequency: 1024
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "input" "convolution" ) (LINE:494 FILE: SobelEdge2.c) in ea_nocopy_dealloc folder	Frequency: 1024
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "input" "convolution" ) (LINE:483 FILE: SobelEdge2.c) in ea_nocopy_dealloc folder	Frequency: 1024
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_61" "newPixels" "image" ) (LINE:552 FILE: SobelEdge2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "h_sobel" "convolution" ) (LINE:495 FILE: SobelEdge2.c) in ea_nocopy_dealloc folder	Frequency: 1024
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "input" "sobelEdgeDetection" ) (LINE:828 FILE: SobelEdge2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "v_sobel" "convolution" ) (LINE:484 FILE: SobelEdge2.c) in ea_nocopy_dealloc folder	Frequency: 1024
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_15" "pixels" "image" ) (LINE:815 FILE: SobelEdge2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_19" "print_pbm" ) (LINE:848 FILE: SobelEdge2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "h_sobel" "convolution" ) (LINE:473 FILE: SobelEdge2.c) in ea_dealloc folder	Frequency: 1024
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "input" "convolution" ) (LINE:472 FILE: SobelEdge2.c) in ea_dealloc folder	Frequency: 1024
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_19" "print_pbm" ) (LINE:814 FILE: SobelEdge2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "newPixels" "image" ) (LINE:527 FILE: SobelEdge2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "v_sobel" "convolution" ) (LINE:461 FILE: SobelEdge2.c) in ea_dealloc folder	Frequency: 1024
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "input" "convolution" ) (LINE:460 FILE: SobelEdge2.c) in ea_dealloc folder	Frequency: 1024
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "input" "sobelEdgeDetection" ) (LINE:794 FILE: SobelEdge2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "pixels" "image" ) (LINE:781 FILE: SobelEdge2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "func" ) (LINE:53 FILE: CallerMacro1.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "func" ) (LINE:51 FILE: CallerMacro1.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "func" ) (LINE:54 FILE: CallerMacro2.c) in ea_nocopy_dealloc folder	Frequency: 2
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "func" ) (LINE:52 FILE: CallerMacro2.c) in ea_dealloc folder	Frequency: 2
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_b_0" "f" ) (LINE:71 FILE: CallerMacro3.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_b_0" "f" ) (LINE:69 FILE: CallerMacro3.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_30" "x" "func" ) (LINE:281 FILE: CallerMacro4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "false-true-true" "tmp_x_0" "func" ) (LINE:229 FILE: CallerMacro4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:229 FILE: CallerMacro4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:175 FILE: CallerMacro4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "false-true-false" "tmp_x_0" "func" ) (LINE:273 FILE: CallerMacro4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "false-true-true" "tmp_x_0" "func" ) (LINE:221 FILE: CallerMacro4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-false" "tmp_x_0" "func" ) (LINE:273 FILE: CallerMacro4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:169 FILE: CallerMacro4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:221 FILE: CallerMacro4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "false-true-true" "tmp_x_0" "func" ) (LINE:234 FILE: CallerMacro5.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:180 FILE: CallerMacro5.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:234 FILE: CallerMacro5.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_30" "x" "func" ) (LINE:286 FILE: CallerMacro5.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "false-true-true" "tmp_x_0" "func" ) (LINE:225 FILE: CallerMacro5.c) in ea_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "false-true-false" "tmp_x_0" "func" ) (LINE:277 FILE: CallerMacro5.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:173 FILE: CallerMacro5.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_x_0" "func" ) (LINE:225 FILE: CallerMacro5.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-false" "tmp_x_0" "func" ) (LINE:277 FILE: CallerMacro5.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "x" "func" ) (LINE:58 FILE: ResetMacro1.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_x_0" "func" ) (LINE:58 FILE: ResetMacro1.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "a" "func" ) (LINE:51 FILE: ResetMacro2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_a_0" "func" ) (LINE:51 FILE: ResetMacro2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "b" "func" ) (LINE:102 FILE: ResetMacro3.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_15" "b" "func" ) (LINE:148 FILE: ResetMacro3.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_b_0" "func" ) (LINE:101 FILE: ResetMacro3.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_b_0" "func" ) (LINE:146 FILE: ResetMacro3.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "add" ) (LINE:160 FILE: ResetMacro4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_1" "add" ) (LINE:161 FILE: ResetMacro4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-true" "tmp_a_1" "add" ) (LINE:161 FILE: ResetMacro4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-true" "tmp_a_1" "add" ) (LINE:150 FILE: ResetMacro4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_1" "add" ) (LINE:150 FILE: ResetMacro4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_a_0" "add" ) (LINE:149 FILE: ResetMacro4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_10" "a" "func" ) (LINE:105 FILE: FunctionCall1.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_b_0" "func" ) (LINE:177 FILE: FunctionCall1.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "a" "func" ) (LINE:104 FILE: FunctionCall1.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "b" "func" ) (LINE:174 FILE: FunctionCall1.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_b_0" "func" ) (LINE:199 FILE: FunctionCall2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_10" "a" "func" ) (LINE:125 FILE: FunctionCall2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "tmp_b_0" "func" ) (LINE:195 FILE: FunctionCall2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "false-true-false" "tmp_a_0" "func" ) (LINE:124 FILE: FunctionCall2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "false-true-false" "tmp_a_0" "func" ) (LINE:124 FILE: FunctionCall2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_10" "a" "func" ) (LINE:97 FILE: FunctionCall3.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_b_0" "func" ) (LINE:169 FILE: FunctionCall3.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "b" "func" ) (LINE:166 FILE: FunctionCall3.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "a" "func" ) (LINE:96 FILE: FunctionCall3.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_10" "a" "func" ) (LINE:158 FILE: FunctionCall4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-true" "tmp_b_0" "func" ) (LINE:232 FILE: FunctionCall4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "tmp_b_0" "func" ) (LINE:232 FILE: FunctionCall4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "b" "func" ) (LINE:228 FILE: FunctionCall4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "a" "func" ) (LINE:156 FILE: FunctionCall4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "r" "test_append" ) (LINE:136 FILE: ArrayAppend.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_4" "test_append" ) (LINE:138 FILE: ArrayAppend.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_4" "test_append" ) (LINE:135 FILE: ArrayAppend.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "r" "test_append" ) (LINE:133 FILE: ArrayAppend.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_15" "p3" "updateRec" ) (LINE:187 FILE: rectangle.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_15" "rec" "updateRec" ) (LINE:185 FILE: rectangle.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "p3" "updateRec" ) (LINE:182 FILE: rectangle.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_rec_0" "updateRec" ) (LINE:181 FILE: rectangle.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_6" "arr" "fibonacci" ) (LINE:136 FILE: Fibonacci.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "ls" "fibonacci" ) (LINE:50 FILE: Fibonacci.c) in ea_nocopy_dealloc folder	Frequency: 8
+DEBUG: Potential memory leaks at ( "true-true-false" "tmp_arr_0" "fibonacci" ) (LINE:135 FILE: Fibonacci.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ls_0" "fibonacci" ) (LINE:51 FILE: Fibonacci.c) in ea_dealloc folder	Frequency: 8
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_arr_0" "fibonacci" ) (LINE:135 FILE: Fibonacci.c) in ea_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-false" "tmp_ls_0" "fibonacci" ) (LINE:51 FILE: Fibonacci.c) in ea_dealloc folder	Frequency: 7
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "gcds" "gcd_cached" ) (LINE:216 FILE: gcd.c) in ea_nocopy_dealloc folder	Frequency: 100
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "gcds" "gcd_cached" ) (LINE:209 FILE: gcd.c) in ea_dealloc folder	Frequency: 100
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_13" "Cash" ) (LINE:205 FILE: FunctionOverload2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_13" "Cash" ) (LINE:201 FILE: FunctionOverload2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "pixels" "print_pbm" ) (LINE:227 FILE: fileread2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "pixels" "print_pbm" ) (LINE:219 FILE: fileread2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_33" "nq" "run" ) (LINE:327 FILE: nqueens.c) in ea_nocopy_dealloc folder	Frequency: 2056
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_11" "queens" "nqueen" ) (LINE:439 FILE: nqueens.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_12" "nq" "run" ) (LINE:454 FILE: nqueens.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _SUBSTRUCTURE_DEALLOC macro on  ( "false-false-false" "p" "conflict" ) (LINE:267 FILE: nqueens.c) in ea_nocopy_dealloc folder	Frequency: 46752
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_nq_0" "run" ) (LINE:440 FILE: nqueens.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "p" "conflict" ) (LINE:259 FILE: nqueens.c) in ea_dealloc folder	Frequency: 46752
+DEBUG: Potential memory leaks at ( "true-true-false" "tmp_nq_0"_tmp "run" ) (LINE:440 FILE: nqueens.c) in ea_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-false" "tmp_nq_0"_tmp "run" ) (LINE:318 FILE: nqueens.c) in ea_dealloc folder	Frequency: 1320
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_nq_0" "run" ) (LINE:318 FILE: nqueens.c) in ea_dealloc folder	Frequency: 2056
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "queens" "nqueen" ) (LINE:425 FILE: nqueens.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "true-false-true" "queens" "run" ) (LINE:257 FILE: nqueens2.c) in ea_nocopy_dealloc folder	Frequency: 2056
+DEBUG: _CALLEE_DEALLOC macro on ( "true-false-true" "queens" "run" ) (LINE:353 FILE: nqueens2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _SUBSTRUCTURE_DEALLOC macro on  ( "false-false-false" "p" "conflict" ) (LINE:196 FILE: nqueens2.c) in ea_nocopy_dealloc folder	Frequency: 46752
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "p" "conflict" ) (LINE:188 FILE: nqueens2.c) in ea_dealloc folder	Frequency: 46752
+DEBUG: _CALLEE_DEALLOC macro on ( "true-false-true" "queens" "run" ) (LINE:337 FILE: nqueens2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "true-false-true" "queens" "run" ) (LINE:246 FILE: nqueens2.c) in ea_dealloc folder	Frequency: 2056
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "arr" "reverse" ) (LINE:225 FILE: reverse.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_11" "reverse" ) (LINE:141 FILE: reverse.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "arr" "reverse" ) (LINE:218 FILE: reverse.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_11" "reverse" ) (LINE:138 FILE: reverse.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_70" "arr" "sortV1" ) (LINE:674 FILE: mergesort.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_52" "ys" "sortV1" ) (LINE:585 FILE: mergesort.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_19" "rhs" "sortV1" ) (LINE:117 FILE: mergesort.c) in ea_nocopy_dealloc folder	Frequency: 24
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_25" "ys" "sortV1" ) (LINE:467 FILE: mergesort.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_38" "ys" "sortV1" ) (LINE:525 FILE: mergesort.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_11" "ys" "sortV1" ) (LINE:407 FILE: mergesort.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_16" "lhs" "sortV1" ) (LINE:90 FILE: mergesort.c) in ea_nocopy_dealloc folder	Frequency: 24
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "sortV1" ) (LINE:569 FILE: mergesort.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "sortV1" ) (LINE:453 FILE: mergesort.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_rhs_0" "sortV1" ) (LINE:115 FILE: mergesort.c) in ea_dealloc folder	Frequency: 24
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_arr_0" "sortV1" ) (LINE:654 FILE: mergesort.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "sortV1" ) (LINE:510 FILE: mergesort.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "sortV1" ) (LINE:394 FILE: mergesort.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_lhs_0" "sortV1" ) (LINE:89 FILE: mergesort.c) in ea_dealloc folder	Frequency: 24
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_25" "ys" "bubbleSort" ) (LINE:301 FILE: bubblesort.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_11" "ys" "bubbleSort" ) (LINE:239 FILE: bubblesort.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_52" "ys" "bubbleSort" ) (LINE:423 FILE: bubblesort.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_38" "ys" "bubbleSort" ) (LINE:361 FILE: bubblesort.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_68" "arr" "bubbleSort" ) (LINE:508 FILE: bubblesort.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "bubbleSort" ) (LINE:351 FILE: bubblesort.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_arr_0" "bubbleSort" ) (LINE:493 FILE: bubblesort.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "bubbleSort" ) (LINE:231 FILE: bubblesort.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "bubbleSort" ) (LINE:412 FILE: bubblesort.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_ys_0" "bubbleSort" ) (LINE:292 FILE: bubblesort.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_34" "C_data" "matrix" ) (LINE:227 FILE: MatrixMult.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "C" "printMat" ) (LINE:651 FILE: MatrixMult.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_15" "rows" "matrix" ) (LINE:445 FILE: MatrixMult.c) in ea_nocopy_dealloc folder	Frequency: 2
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "A" "multiply" ) (LINE:606 FILE: MatrixMult.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "B" "multiply" ) (LINE:608 FILE: MatrixMult.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "B" "multiply" ) (LINE:590 FILE: MatrixMult.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "A" "multiply" ) (LINE:588 FILE: MatrixMult.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "C" "printMat" ) (LINE:633 FILE: MatrixMult.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "C_data" "matrix" ) (LINE:218 FILE: MatrixMult.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "rows" "matrix" ) (LINE:428 FILE: MatrixMult.c) in ea_dealloc folder	Frequency: 2
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_21" "data" "matrix" ) (LINE:150 FILE: MatrixMult2.c) in ea_nocopy_dealloc folder	Frequency: 2
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "A" "mat_mult" ) (LINE:707 FILE: MatrixMult2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_40" "data" "matrix" ) (LINE:469 FILE: MatrixMult2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "C" "print_mat" ) (LINE:758 FILE: MatrixMult2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "B" "mat_mult" ) (LINE:709 FILE: MatrixMult2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "A" "mat_mult" ) (LINE:686 FILE: MatrixMult2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "B" "mat_mult" ) (LINE:688 FILE: MatrixMult2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "matrix" ) (LINE:448 FILE: MatrixMult2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "matrix" ) (LINE:145 FILE: MatrixMult2.c) in ea_dealloc folder	Frequency: 2
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "C" "print_mat" ) (LINE:737 FILE: MatrixMult2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "C" "print_mat" ) (LINE:862 FILE: MatrixMult3.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_21" "data" "matrix" ) (LINE:150 FILE: MatrixMult3.c) in ea_nocopy_dealloc folder	Frequency: 2
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "B" "mat_mult" ) (LINE:813 FILE: MatrixMult3.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "A" "mat_mult" ) (LINE:811 FILE: MatrixMult3.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_58" "data" "matrix" ) (LINE:571 FILE: MatrixMult3.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "B" "mat_mult" ) (LINE:784 FILE: MatrixMult3.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "matrix" ) (LINE:542 FILE: MatrixMult3.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "matrix" ) (LINE:145 FILE: MatrixMult3.c) in ea_dealloc folder	Frequency: 2
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "C" "print_mat" ) (LINE:833 FILE: MatrixMult3.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "A" "mat_mult" ) (LINE:782 FILE: MatrixMult3.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "moves" "play" ) (LINE:618 FILE: CoinGame.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "moves" "findMoves" ) (LINE:607 FILE: CoinGame.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:579 FILE: CoinGame.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "moves" "play" ) (LINE:590 FILE: CoinGame.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "moves" "findMoves" ) (LINE:275 FILE: CoinGame1.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:262 FILE: CoinGame1.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "moves" "findMoves" ) (LINE:369 FILE: CoinGame2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:359 FILE: CoinGame2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "moves" "findMoves" ) (LINE:350 FILE: CoinGame3.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:340 FILE: CoinGame3.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_8" "moves" "findMoves" ) (LINE:637 FILE: CoinGame4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_41" "moves" "pickCoin" ) (LINE:548 FILE: CoinGame4.c) in ea_nocopy_dealloc folder	Frequency: 55
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "moves" "play" ) (LINE:648 FILE: CoinGame4.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "pickCoin" ) (LINE:527 FILE: CoinGame4.c) in ea_dealloc folder	Frequency: 55
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:611 FILE: CoinGame4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-false" "tmp_moves_0" "findMoves" ) (LINE:611 FILE: CoinGame4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "moves" "play" ) (LINE:622 FILE: CoinGame4.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "given" "add" ) (LINE:1001 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 2
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_32" "till" "buy" ) (LINE:1298 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_27" "till" "buy" ) (LINE:1266 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "given" "total" ) (LINE:908 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 4
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_25" "Cash" ) (LINE:1223 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "tmp" "calculateChange" ) (LINE:482 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 76798
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_28" "buy" ) (LINE:1267 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_23" "buy" ) (LINE:1235 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_17" "till" "buy" ) (LINE:1202 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "till" "calculateChange" ) (LINE:940 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 3
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_20" "Cash" ) (LINE:1191 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_41" "till" "subtract" ) (LINE:1015 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 2
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_30" "Cash" ) (LINE:1255 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_40" "till" "add" ) (LINE:1000 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 2
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_35" "Cash" ) (LINE:1287 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "given" "total" ) (LINE:931 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 3
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_33" "buy" ) (LINE:1299 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_22" "till" "buy" ) (LINE:1234 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_18" "buy" ) (LINE:1203 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "change" "subtract" ) (LINE:1016 FILE: cashtill.c) in ea_nocopy_dealloc folder	Frequency: 2
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1286 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "till" "calculateChange" ) (LINE:916 FILE: cashtill.c) in ea_dealloc folder	Frequency: 3
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_33" "buy" ) (LINE:1287 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "given" "total" ) (LINE:906 FILE: cashtill.c) in ea_dealloc folder	Frequency: 3
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_28" "buy" ) (LINE:1253 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "given" "total" ) (LINE:882 FILE: cashtill.c) in ea_dealloc folder	Frequency: 4
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_23" "buy" ) (LINE:1219 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1218 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_0" "subtract" ) (LINE:994 FILE: cashtill.c) in ea_dealloc folder	Frequency: 2
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "tmp" "calculateChange" ) (LINE:467 FILE: cashtill.c) in ea_dealloc folder	Frequency: 76798
+DEBUG: Potential memory leaks at ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1184 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "change" "subtract" ) (LINE:995 FILE: cashtill.c) in ea_dealloc folder	Frequency: 2
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_35" "Cash" ) (LINE:1273 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "given" "add" ) (LINE:979 FILE: cashtill.c) in ea_dealloc folder	Frequency: 2
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_25" "Cash" ) (LINE:1205 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1252 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_30" "Cash" ) (LINE:1239 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_18" "buy" ) (LINE:1185 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_20" "Cash" ) (LINE:1171 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_0" "add" ) (LINE:978 FILE: cashtill.c) in ea_dealloc folder	Frequency: 2
+DEBUG: Potential memory leaks at ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1286 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_till_1" "buy" ) (LINE:1184 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:451 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 9
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:623 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 12
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "compress_data" "decompress" ) (LINE:831 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "compress" ) (LINE:782 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:571 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 4
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:438 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 9
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "match" ) (LINE:153 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 60
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "findLongestMatch" ) (LINE:378 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 9
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "compress_data" "decompress" ) (LINE:794 FILE: lz77.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:414 FILE: lz77.c) in ea_dealloc folder	Frequency: 9
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "match" ) (LINE:145 FILE: lz77.c) in ea_dealloc folder	Frequency: 60
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "compress" ) (LINE:745 FILE: lz77.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:542 FILE: lz77.c) in ea_dealloc folder	Frequency: 4
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:589 FILE: lz77.c) in ea_dealloc folder	Frequency: 12
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "findLongestMatch" ) (LINE:359 FILE: lz77.c) in ea_dealloc folder	Frequency: 9
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:427 FILE: lz77.c) in ea_dealloc folder	Frequency: 9
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:657 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 12
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "match" ) (LINE:153 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 60
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:605 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 4
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "compress" ) (LINE:816 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "resize" ) (LINE:491 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "compress_data" "decompress" ) (LINE:865 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "findLongestMatch" ) (LINE:397 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 9
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "findLongestMatch" ) (LINE:376 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 9
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:572 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 4
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "compress" ) (LINE:775 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "compress_data" "decompress" ) (LINE:824 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:619 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 12
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "resize" ) (LINE:463 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "match" ) (LINE:145 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 60
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:218 FILE: lz77_decompress.c) in ea_nocopy_dealloc folder	Frequency: 12
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:166 FILE: lz77_decompress.c) in ea_nocopy_dealloc folder	Frequency: 3
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "input_data" "decompress" ) (LINE:308 FILE: lz77_decompress.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:159 FILE: lz77_decompress.c) in ea_dealloc folder	Frequency: 3
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:206 FILE: lz77_decompress.c) in ea_dealloc folder	Frequency: 12
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "input_data" "decompress" ) (LINE:293 FILE: lz77_decompress.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "items" "resize" ) (LINE:356 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_34" "items" "opt_append" ) (LINE:318 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 12
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "input_data" "decompress" ) (LINE:429 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "_26" "items" "opt_append" ) (LINE:262 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 3
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "items" "resize" ) (LINE:336 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_items_0" "opt_append" ) (LINE:300 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 12
+DEBUG: Potential memory leaks at ( "true-true-false" "tmp_items_0" "opt_append" ) (LINE:300 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 2
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "input_data" "decompress" ) (LINE:407 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-false" "tmp_items_0" "opt_append" ) (LINE:250 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 2
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "tmp_items_0" "opt_append" ) (LINE:250 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 3
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "h_sobel" "convolution" ) (LINE:392 FILE: SobelEdge1.c) in ea_nocopy_dealloc folder	Frequency: 1024
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "newPixels" "print_pbm" ) (LINE:706 FILE: SobelEdge1.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "v_sobel" "convolution" ) (LINE:381 FILE: SobelEdge1.c) in ea_nocopy_dealloc folder	Frequency: 1024
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "pixels" "convolution" ) (LINE:380 FILE: SobelEdge1.c) in ea_nocopy_dealloc folder	Frequency: 1024
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "pixels" "sobelEdgeDetection" ) (LINE:694 FILE: SobelEdge1.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "pixels" "convolution" ) (LINE:391 FILE: SobelEdge1.c) in ea_nocopy_dealloc folder	Frequency: 1024
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "h_sobel" "convolution" ) (LINE:376 FILE: SobelEdge1.c) in ea_dealloc folder	Frequency: 1024
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "pixels" "sobelEdgeDetection" ) (LINE:665 FILE: SobelEdge1.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "pixels" "convolution" ) (LINE:375 FILE: SobelEdge1.c) in ea_dealloc folder	Frequency: 1024
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "newPixels" "print_pbm" ) (LINE:677 FILE: SobelEdge1.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "v_sobel" "convolution" ) (LINE:364 FILE: SobelEdge1.c) in ea_dealloc folder	Frequency: 1024
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "pixels" "convolution" ) (LINE:363 FILE: SobelEdge1.c) in ea_dealloc folder	Frequency: 1024
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "input" "convolution" ) (LINE:494 FILE: SobelEdge2.c) in ea_nocopy_dealloc folder	Frequency: 1024
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "input" "convolution" ) (LINE:483 FILE: SobelEdge2.c) in ea_nocopy_dealloc folder	Frequency: 1024
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_61" "newPixels" "image" ) (LINE:552 FILE: SobelEdge2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "h_sobel" "convolution" ) (LINE:495 FILE: SobelEdge2.c) in ea_nocopy_dealloc folder	Frequency: 1024
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "input" "sobelEdgeDetection" ) (LINE:828 FILE: SobelEdge2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "v_sobel" "convolution" ) (LINE:484 FILE: SobelEdge2.c) in ea_nocopy_dealloc folder	Frequency: 1024
+DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "_15" "pixels" "image" ) (LINE:815 FILE: SobelEdge2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_19" "print_pbm" ) (LINE:848 FILE: SobelEdge2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "h_sobel" "convolution" ) (LINE:473 FILE: SobelEdge2.c) in ea_dealloc folder	Frequency: 1024
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "input" "convolution" ) (LINE:472 FILE: SobelEdge2.c) in ea_dealloc folder	Frequency: 1024
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_19" "print_pbm" ) (LINE:814 FILE: SobelEdge2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "newPixels" "image" ) (LINE:527 FILE: SobelEdge2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "v_sobel" "convolution" ) (LINE:461 FILE: SobelEdge2.c) in ea_dealloc folder	Frequency: 1024
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "input" "convolution" ) (LINE:460 FILE: SobelEdge2.c) in ea_dealloc folder	Frequency: 1024
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "input" "sobelEdgeDetection" ) (LINE:794 FILE: SobelEdge2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "pixels" "image" ) (LINE:781 FILE: SobelEdge2.c) in ea_dealloc folder	Frequency: 1

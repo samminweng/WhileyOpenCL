@@ -1,4 +1,4 @@
-#include "lz77_2.h"
+#include "lz77.h"
 Match* copy_Match(Match* _Match){
 	Match* new_Match = malloc(sizeof(Match));
 	new_Match->len = _Match->len;
@@ -146,7 +146,7 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 	while(true){
 		//ifge %6, %1 goto blklab5 : int
 		if(offset>=pos){goto blklab5;}
-		//invoke (%14) = (%0, %6, %1) lz77_2:match : function(byte[],lz77_2:nat,lz77_2:nat)->(int)
+		//invoke (%14) = (%0, %6, %1) lz77:match : function(byte[],lz77:nat,lz77:nat)->(int)
 		{
 			// isCopyEliminated of '_0' = true
 			_14 = _match_(data, data_size, false, offset, pos);
@@ -320,188 +320,154 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 	_DECL_1DARRAY_BYTE(output);
 	_DECL_DEALLOC(output);
 	int64_t pos;
-	int64_t arr_capacity;
-	int64_t arr_size;
 	Match* m;
 	_DECL_DEALLOC(m);
 	BYTE offset;
 	BYTE length;
+	int64_t _6;
+	BYTE _7;
 	int64_t _8;
-	int64_t _9;
+	_DECL_1DARRAY_BYTE(_9);
+	_DECL_DEALLOC(_9);
 	int64_t _10;
-	int64_t _11;
+	Match* _11;
+	_DECL_DEALLOC(_11);
 	BYTE _12;
-	_DECL_1DARRAY_BYTE(_13);
-	_DECL_DEALLOC(_13);
-	int64_t _14;
+	int64_t _13;
+	BYTE _14;
 	int64_t _15;
-	Match* _16;
-	_DECL_DEALLOC(_16);
+	BYTE _16;
 	BYTE _17;
 	int64_t _18;
-	BYTE _19;
+	int64_t _19;
 	int64_t _20;
-	BYTE _21;
-	BYTE _22;
-	int64_t _23;
-	int64_t _24;
-	int64_t _25;
-	int64_t _26;
-	int64_t _27;
-	int64_t _28;
-	int64_t _29;
-	int64_t _30;
-	_DECL_1DARRAY_BYTE(_31);
-	_DECL_DEALLOC(_31);
+	int64_t _21;
+	_DECL_1DARRAY_BYTE(_22);
+	_DECL_DEALLOC(_22);
+	_DECL_1DARRAY_BYTE(_23);
+	_DECL_DEALLOC(_23);
+	//const %6 = 0 : int
+	_6 = 0;
+	//assign %2 = %6  : int
+	// isCopyEliminated = true
+	pos = _6;
+	//const %7 = 00000000b : byte
+	_7 = 0b00000000;
 	//const %8 = 0 : int
 	_8 = 0;
-	//assign %2 = %8  : int
-	// isCopyEliminated = true
-	pos = _8;
-	//const %9 = 2 : int
-	_9 = 2;
-	//lengthof %10 = %0 : byte[]
-	_10 = data_size;
-	//mul %11 = %9, %10 : int
-	_11=_9*_10;
-	//assign %3 = %11  : int
-	// isCopyEliminated = true
-	arr_capacity = _11;
-	//const %12 = 00000000b : byte
-	_12 = 0b00000000;
-	//arraygen %13 = [12; 3] : byte[]
-	_DEALLOC(_13);
-	_NEW_1DARRAY_BYTE(_13, arr_capacity, _12);
-	_ADD_DEALLOC(_13);
-	//assign %1 = %13  : byte[]
+	//arraygen %9 = [7; 8] : byte[]
+	_DEALLOC(_9);
+	_NEW_1DARRAY_BYTE(_9, _8, _7);
+	_ADD_DEALLOC(_9);
+	//assign %1 = %9  : byte[]
 	_DEALLOC(output);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(output, _13);
-	_TRANSFER_DEALLOC(output, _13);
-	//const %14 = 0 : int
-	_14 = 0;
-	//assign %4 = %14  : int
-	// isCopyEliminated = true
-	arr_size = _14;
-	//loop (%1, %2, %4, %5, %6, %7, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30)
+	_UPDATE_1DARRAY(output, _9);
+	_TRANSFER_DEALLOC(output, _9);
+	//loop (%1, %2, %3, %4, %5, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23)
 	while(true){
-		//lengthof %15 = %0 : byte[]
-		_15 = data_size;
-		//ifge %2, %15 goto blklab14 : int
-		if(pos>=_15){goto blklab14;}
-		//invoke (%16) = (%0, %2) lz77_2:findLongestMatch : function(byte[],lz77_2:nat)->(lz77_2:Match)
+		//lengthof %10 = %0 : byte[]
+		_10 = data_size;
+		//ifge %2, %10 goto blklab14 : int
+		if(pos>=_10){goto blklab14;}
+		//invoke (%11) = (%0, %2) lz77:findLongestMatch : function(byte[],lz77:nat)->(lz77:Match)
 		{
-			_DEALLOC_STRUCT(_16, Match);
+			_DEALLOC_STRUCT(_11, Match);
 			// isCopyEliminated of '_0' = true
-			_16 = _findLongestMatch_(data, data_size, false, pos);
+			_11 = _findLongestMatch_(data, data_size, false, pos);
 			_RETAIN_DEALLOC(data, "false-false-true" , "findLongestMatch");
-			_16_dealloc = true;
+			_11_dealloc = true;
 		}
-		//assign %5 = %16  : {int len,int offset}
+		//assign %3 = %11  : {int len,int offset}
 		_DEALLOC_STRUCT(m, Match);
 		// isCopyEliminated = true
-		m = _16;
-		_TRANSFER_DEALLOC(m, _16);
-		//fieldload %18 = %5 offset : {int len,int offset}
-		_18 = m->offset;
-		//invoke (%17) = (%18) whiley/lang/Int:toUnsignedByte : function(whiley/lang/Int:u8)->(byte)
+		m = _11;
+		_TRANSFER_DEALLOC(m, _11);
+		//fieldload %13 = %3 offset : {int len,int offset}
+		_13 = m->offset;
+		//invoke (%12) = (%13) whiley/lang/Int:toUnsignedByte : function(whiley/lang/Int:u8)->(byte)
 		{
-			_17 = (BYTE)_18;
+			_12 = (BYTE)_13;
 		}
-		//assign %6 = %17  : byte
+		//assign %4 = %12  : byte
 		// isCopyEliminated = true
-		offset = _17;
-		//fieldload %20 = %5 len : {int len,int offset}
-		_20 = m->len;
-		//invoke (%19) = (%20) whiley/lang/Int:toUnsignedByte : function(whiley/lang/Int:u8)->(byte)
+		offset = _12;
+		//fieldload %15 = %3 len : {int len,int offset}
+		_15 = m->len;
+		//invoke (%14) = (%15) whiley/lang/Int:toUnsignedByte : function(whiley/lang/Int:u8)->(byte)
 		{
-			_19 = (BYTE)_20;
+			_14 = (BYTE)_15;
 		}
-		//assign %7 = %19  : byte
+		//assign %5 = %14  : byte
 		// isCopyEliminated = true
-		length = _19;
-		//const %21 = 00000000b : byte
-		_21 = 0b00000000;
-		//ifne %6, %21 goto blklab16 : byte
-		if(offset!=_21){goto blklab16;}
-		//indexof %22 = %0, %2 : byte[]
-		_22=data[pos];
-		//assign %7 = %22  : byte
+		length = _14;
+		//const %16 = 00000000b : byte
+		_16 = 0b00000000;
+		//ifne %4, %16 goto blklab16 : byte
+		if(offset!=_16){goto blklab16;}
+		//indexof %17 = %0, %2 : byte[]
+		_17=data[pos];
+		//assign %5 = %17  : byte
 		// isCopyEliminated = true
-		length = _22;
-		//const %23 = 1 : int
-		_23 = 1;
-		//add %24 = %2, %23 : int
-		_24=pos+_23;
-		//assign %2 = %24  : int
+		length = _17;
+		//const %18 = 1 : int
+		_18 = 1;
+		//add %19 = %2, %18 : int
+		_19=pos+_18;
+		//assign %2 = %19  : int
 		// isCopyEliminated = true
-		pos = _24;
+		pos = _19;
 		//goto blklab17
 		goto blklab17;
 //.blklab16
 blklab16:;
-		//fieldload %25 = %5 len : {int len,int offset}
-		_25 = m->len;
-		//add %26 = %2, %25 : int
-		_26=pos+_25;
-		//assign %2 = %26  : int
+		//fieldload %20 = %3 len : {int len,int offset}
+		_20 = m->len;
+		//add %21 = %2, %20 : int
+		_21=pos+_20;
+		//assign %2 = %21  : int
 		// isCopyEliminated = true
-		pos = _26;
+		pos = _21;
 //.blklab17
 blklab17:;
-		//update %1[%4] = %6 : byte[] -> byte[]
-		output[arr_size] = offset;
-		//const %27 = 1 : int
-		_27 = 1;
-		//add %28 = %4, %27 : int
-		_28=arr_size+_27;
-		//assign %4 = %28  : int
+		//invoke (%22) = (%1, %4) lz77:append : function(byte[],byte)->(byte[])
+		{
+			_DEALLOC(_22);
+			// isCopyEliminated of '_1' = true
+			_22 = _append_(output, output_size, false, offset, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
+			_RETAIN_DEALLOC(output, "false-false-false" , "append");
+			_22_dealloc = true;
+		}
+		//assign %1 = %22  : byte[]
+		_DEALLOC(output);
 		// isCopyEliminated = true
-		arr_size = _28;
-		//update %1[%4] = %7 : byte[] -> byte[]
-		output[arr_size] = length;
-		//const %29 = 1 : int
-		_29 = 1;
-		//add %30 = %4, %29 : int
-		_30=arr_size+_29;
-		//assign %4 = %30  : int
+		_UPDATE_1DARRAY(output, _22);
+		_TRANSFER_DEALLOC(output, _22);
+		//invoke (%23) = (%1, %5) lz77:append : function(byte[],byte)->(byte[])
+		{
+			_DEALLOC(_23);
+			// isCopyEliminated of '_1' = true
+			_23 = _append_(output, output_size, false, length, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
+			_RETAIN_DEALLOC(output, "false-false-false" , "append");
+			_23_dealloc = true;
+		}
+		//assign %1 = %23  : byte[]
+		_DEALLOC(output);
 		// isCopyEliminated = true
-		arr_size = _30;
+		_UPDATE_1DARRAY(output, _23);
+		_TRANSFER_DEALLOC(output, _23);
 //.blklab15
 blklab15:;
 	}
 //.blklab14
 blklab14:;
-	//assert
-	{
-		//ifge %3, %4 goto blklab18 : int
-		if(arr_capacity>=arr_size){goto blklab18;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab18
-blklab18:;
-	//assert
-	}
-	//invoke (%31) = (%1, %4) lz77_2:resize : function(byte[],int)->(byte[])
-	{
-		_DEALLOC(_31);
-		// isCopyEliminated of '_1' = true
-		_31 = _resize_(output, output_size, false, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_31));
-		_RETAIN_DEALLOC(output, "false-false-false" , "resize");
-		_31_dealloc = true;
-	}
-	//assign %1 = %31  : byte[]
-	_DEALLOC(output);
-	// isCopyEliminated = true
-	_UPDATE_1DARRAY(output, _31);
-	_TRANSFER_DEALLOC(output, _31);
 	//return %1
 	_DEALLOC(data);
 	_DEALLOC_STRUCT(m, Match);
-	_DEALLOC(_13);
-	_DEALLOC_STRUCT(_16, Match);
-	_DEALLOC(_31);
+	_DEALLOC(_9);
+	_DEALLOC_STRUCT(_11, Match);
+	_DEALLOC(_22);
+	_DEALLOC(_23);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(output);
 	return output;
 	//return
@@ -570,8 +536,8 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 		_14=pos+_13;
 		//lengthof %15 = %0 : byte[]
 		_15 = data_size;
-		//ifge %14, %15 goto blklab19 : int
-		if(_14>=_15){goto blklab19;}
+		//ifge %14, %15 goto blklab18 : int
+		if(_14>=_15){goto blklab18;}
 		//indexof %16 = %0, %2 : byte[]
 		_16=data[pos];
 		//assign %3 = %16  : byte
@@ -595,9 +561,9 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 		pos = _21;
 		//const %22 = 00000000b : byte
 		_22 = 0b00000000;
-		//ifne %3, %22 goto blklab21 : byte
-		if(header!=_22){goto blklab21;}
-		//invoke (%23) = (%1, %4) lz77_2:append : function(byte[],byte)->(byte[])
+		//ifne %3, %22 goto blklab20 : byte
+		if(header!=_22){goto blklab20;}
+		//invoke (%23) = (%1, %4) lz77:append : function(byte[],byte)->(byte[])
 		{
 			_DEALLOC(_23);
 			// isCopyEliminated of '_1' = true
@@ -610,10 +576,10 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 		// isCopyEliminated = true
 		_UPDATE_1DARRAY(output, _23);
 		_TRANSFER_DEALLOC(output, _23);
-		//goto blklab22
-		goto blklab22;
-//.blklab21
-blklab21:;
+		//goto blklab21
+		goto blklab21;
+//.blklab20
+blklab20:;
 		//invoke (%24) = (%3) whiley/lang/Byte:toUnsignedInt : function(byte)->(whiley/lang/Int:uint)
 		{
 			_24 = (unsigned int)header;
@@ -642,14 +608,14 @@ blklab21:;
 		while(true){
 			//add %28 = %7, %6 : int
 			_28=start+len;
-			//ifge %8, %28 goto blklab23 : int
-			if(i>=_28){goto blklab23;}
+			//ifge %8, %28 goto blklab22 : int
+			if(i>=_28){goto blklab22;}
 			//indexof %29 = %1, %8 : byte[]
 			_29=output[i];
 			//assign %4 = %29  : byte
 			// isCopyEliminated = true
 			item = _29;
-			//invoke (%30) = (%1, %4) lz77_2:append : function(byte[],byte)->(byte[])
+			//invoke (%30) = (%1, %4) lz77:append : function(byte[],byte)->(byte[])
 			{
 				_DEALLOC(_30);
 				// isCopyEliminated of '_1' = true
@@ -669,18 +635,18 @@ blklab21:;
 			//assign %8 = %32  : int
 			// isCopyEliminated = true
 			i = _32;
-//.blklab24
-blklab24:;
-		}
 //.blklab23
 blklab23:;
+		}
 //.blklab22
 blklab22:;
-//.blklab20
-blklab20:;
-	}
+//.blklab21
+blklab21:;
 //.blklab19
 blklab19:;
+	}
+//.blklab18
+blklab18:;
 	//return %1
 	_DEALLOC(data);
 	_DEALLOC(_11);
@@ -808,12 +774,12 @@ int main(int argc, char** args){
 	{
 		println_s(_20, _20_size);
 	}
-	//invoke (%21) = (%2) lz77_2:compress : function(byte[])->(byte[])
+	//invoke (%21) = (%2) lz77:compress : function(byte[])->(byte[])
 	{
 		_DEALLOC(_21);
 		// isCopyEliminated of '_2' = true
 		_21 = _compress_(data, data_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_21));
-		_RETAIN_DEALLOC(data, "false-false-false" , "compress");
+		_RETAIN_DEALLOC(data, "false-false-true" , "compress");
 		_21_dealloc = true;
 	}
 	//assign %3 = %21  : byte[]
@@ -822,7 +788,7 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY(compress_data, _21);
 	_TRANSFER_DEALLOC(compress_data, _21);
 	//fieldload %22 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %23 = %22 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//fieldload %23 = %22 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %24 = [67,79,77,80,82,69,83,83,69,68,32,68,97,116,97,58,32,32,32] : int[]
 	_DEALLOC(_24);
 	_NEW_1DARRAY_int64_t(_24, 19, 0);
@@ -830,7 +796,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_24);
 	//indirectinvoke () = %23 (%24) : method(int[])->()
 	{
-		printf_s(_24, _24_size);
+		println_s(_24, _24_size);
 	}
 	//fieldload %25 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %26 = %25 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -857,7 +823,7 @@ int main(int argc, char** args){
 	{
 		println_s(_32, _32_size);
 	}
-	//invoke (%33) = (%3) lz77_2:decompress : function(byte[])->(byte[])
+	//invoke (%33) = (%3) lz77:decompress : function(byte[])->(byte[])
 	{
 		_DEALLOC(_33);
 		// isCopyEliminated of '_3' = true
@@ -919,24 +885,24 @@ int main(int argc, char** args){
 		_46 = data_size;
 		//lengthof %47 = %4 : byte[]
 		_47 = decompress_data_size;
-		//ifeq %46, %47 goto blklab25 : int
-		if(_46==_47){goto blklab25;}
+		//ifeq %46, %47 goto blklab24 : int
+		if(_46==_47){goto blklab24;}
+		//fail
+		fprintf(stderr,"fail");
+		exit(-1);
+//.blklab24
+blklab24:;
+	//assert
+	}
+	//assert
+	{
+		//ifeq %2, %4 goto blklab25 : byte[]
+		_IFEQ_ARRAY_BYTE(data, decompress_data, blklab25);
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
 //.blklab25
 blklab25:;
-	//assert
-	}
-	//assert
-	{
-		//ifeq %2, %4 goto blklab26 : byte[]
-		_IFEQ_ARRAY_BYTE(data, decompress_data, blklab26);
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab26
-blklab26:;
 	//assert
 	}
 	//fieldload %48 = %1 close : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}

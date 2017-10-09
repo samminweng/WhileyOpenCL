@@ -64,11 +64,14 @@ import wyopcl.Configuration;
 public abstract class AbstractCodeGenerator {
 	protected final String prefix = "_";
 	protected final Configuration config;
+	protected final boolean isAssertEnable; // True: assertion enabled
+	// By default, assertions are disabled. 
 	// Store generated code
 	protected CodeStores stores;
 
 	public AbstractCodeGenerator(Configuration config) {
 		this.config = config;
+		isAssertEnable = this.config.isEnabled("ea");
 	}
 
 	protected abstract void apply(WyilFile module);
@@ -145,8 +148,10 @@ public abstract class AbstractCodeGenerator {
 			if(code instanceof Codes.Invariant){
 				return; // Skip the translations of loop invariant
 			}else if (code instanceof Codes.AssertOrAssume) {
-				// enable the assertion
-				translate((Codes.AssertOrAssume) code, function);
+				if(this.isAssertEnable){
+					// enable the assertion
+					translate((Codes.AssertOrAssume) code, function);
+				}				
 			} else if (code instanceof Codes.Assign) {
 				translate((Codes.Assign) code, function);
 			} else if (code instanceof Codes.BinaryOperator) {

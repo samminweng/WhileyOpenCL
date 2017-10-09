@@ -87,13 +87,19 @@ public class BasicBlock implements Comparable<BasicBlock> {
 				return "INVOKE";
 			}
 		},
+		// Store update code only.
+		UPDATE(11){
+			public String toString(){
+				return "UPDATE";
+			}
+		},		
 		// Store return code only.
-		RETURN(11){
+		RETURN(12){
 			public String toString(){
 				return "RETURN";
 			}
 		},		
-		EXIT(12) {
+		EXIT(13) {
 			public String toString() {
 				return "EXIT";
 			}

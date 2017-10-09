@@ -772,7 +772,7 @@ int main(int argc, char** args){
 		_COPY_1DARRAY_PARAM(data, tmp_data_0, BYTE);
 		_DEALLOC(_21);
 		_21 = _compress_(tmp_data_0, data_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_21));
-		_CALLEE_DEALLOC(data, "false-false-false" , "compress");
+		_CALLEE_DEALLOC(data, "false-false-true" , "compress");
 		_21_dealloc = true;
 	}
 	//assign %3 = %21  : byte[]

@@ -272,24 +272,24 @@ exec(){
 }
 
 # # # # # # ### Reverse test case##
-# init Reverse
-# exec Reverse original
+init Reverse
+exec Reverse original
 # #
 # # # # # ### newTicTacToe test case ###
 init newTicTacToe
 exec newTicTacToe original
 # #
 # # # # # ## # BubbleSort test case##
-# init BubbleSort
-# exec BubbleSort original
+init BubbleSort
+exec BubbleSort original
 # #
 # # # # # ## # MergeSort test case##
-# init MergeSort
-# exec MergeSort original
+init MergeSort
+exec MergeSort original
 # #
 # # # # # # MatrixMult test case##
-# init MatrixMult
-# exec MatrixMult original
+init MatrixMult
+exec MatrixMult original
 
 # #### Cashtill test case
 #init Cashtill

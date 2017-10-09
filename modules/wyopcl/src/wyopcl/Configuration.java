@@ -27,6 +27,7 @@ public class Configuration {
 	public static final String PATTERN = "pattern"; // pattern analysis
 	public static final String VERBOSE = "verbose"; // verbose option
 	public static final String ENABLEASSERTION = "ea"; // Enable assertion check
+	public static final String DISABLEASSERTION = "da"; // Disable assertion check
 	public static final String NOCOPY = "nocopy"; // copy analysis
 	public static final String DEALLOC = "dealloc"; // deallocation analysis
 	public static final String CODE = "code"; // code generator
@@ -113,7 +114,14 @@ public class Configuration {
 			case TRAVERSAL:
 				this.options.put(option, value.toString());
 				break;
+			case ENABLEASSERTION:
+				this.options.put(ENABLEASSERTION, ENABLED);
+				break;
+			case DISABLEASSERTION:
+				this.options.put(ENABLEASSERTION, DISABLED);
+				break;
 			default:
+				//throw new RuntimeException("Not implemented");
 				// Enabled all the other options
 				this.options.put(option, ENABLED);
 				break;

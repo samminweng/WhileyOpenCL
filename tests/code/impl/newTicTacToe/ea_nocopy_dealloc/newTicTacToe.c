@@ -335,9 +335,9 @@ blklab19:;
 		b2->move = _30;
 		//assign %2 = %3  : {int move,int[] pieces}
 		_DEALLOC_STRUCT(b1, Board);
-		// isCopyEliminated = true
-		b1 = b2;
-		_TRANSFER_DEALLOC(b1, b2);
+		// isCopyEliminated = false
+		b1 = copy_Board(b2);
+		_ADD_DEALLOC(b1);
 		//const %31 = null : null
 		_31 = NULL;
 		//assign %3 = %31  : null

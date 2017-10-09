@@ -105,35 +105,37 @@ public class CodeGenerationTestCase {
 				"SobelEdge2", // Similar to 'SobelEdge1' with additional 'image' structure
 		});
 	}
-
+	
+	// Generate and optimize code with assertion enabled
 	@Test
-	public void testNaiveCCode() throws IOException  {
+	public void testEANaiveCCode() throws IOException  {
 		System.out.print("Naive C code \n");		
-		util.execCodeGeneration(codeDir, testcase, "-code");
+		util.execCodeGeneration(codeDir, testcase, "-code", "-ea");
 	}
 
 	@Test
-	public void testNaiveDeallocatedCCode() throws IOException  {
+	public void testEANaiveDeallocatedCCode() throws IOException  {
 		System.out.print("Naive + deallocated C code \n");		
-		util.execCodeGeneration(codeDir, testcase, "-code", "-dealloc");
+		util.execCodeGeneration(codeDir, testcase, "-code", "-dealloc", "-ea");
 		// Check output 
 		util.verifyOutput(testcase, codeDir, "dealloc");
 	}
 
 	@Test
-	public void testNoCopyCCode() throws IOException {
+	public void testEANoCopyCCode() throws IOException {
 		System.out.print("Copy eliminated C code \n");		
-		util.execCodeGeneration(codeDir, testcase, "-code", "-nocopy");
+		util.execCodeGeneration(codeDir, testcase, "-code", "-nocopy", "-ea");
 		// Verify output of sobel edges
 		util.verifyOutput(testcase, codeDir, "nocopy");
 	}
 
 	@Test
-	public void testNoCopyDeallocatedCCode() throws IOException {
+	public void testEANoCopyDeallocatedCCode() throws IOException {
 		System.out.print("Copy eliminated + deallocated C code \n");		
-		util.execCodeGeneration(codeDir, testcase, "-code", "-nocopy", "-dealloc");
+		util.execCodeGeneration(codeDir, testcase, "-code", "-nocopy", "-dealloc", "-ea");
 		// Check output 
 		util.verifyOutput(testcase, codeDir, "nocopy_dealloc");
-	}	
+	}
+	
 	
 }

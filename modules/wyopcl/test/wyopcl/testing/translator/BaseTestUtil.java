@@ -537,7 +537,9 @@ public final class BaseTestUtil {
 		// Iterate the options and find the type of generated code.
 		Optional<String> widen = Optional.empty(); // Widen Strategy (Naive/Gradual)
 		Optional<String> traversal = Optional.empty(); // Traversal (DF/BF) 
-		Optional<String> codeOpt = Optional.empty(); //
+		Optional<String> nocopy = Optional.empty(); // No copy optimization
+		Optional<String> dealloc = Optional.empty(); // Deallocation optimization
+		Optional<String> ea = Optional.empty();
 		// Iterate all options to obtain all settings
 		for (int index = 0; index < options.length; index++) {
 			String option = options[index];
@@ -553,17 +555,15 @@ public final class BaseTestUtil {
 				break;			
 			case "-nocopy":
 				// No copy optimisation
-				codeOpt = Optional.of(new String("nocopy"));
+				nocopy = Optional.of(new String("nocopy"));
 				break;
 			case "-dealloc":
 				// Deallocation optimisation
-				if(!codeOpt.isPresent()){
-					// Dealloction only
-					codeOpt = Optional.of(new String("dealloc"));
-				}else{
-					// Combined copy and deallocation optimisations
-					codeOpt = Optional.of(new String(codeOpt.get() + "_dealloc"));
-				}
+				dealloc = Optional.of(new String("dealloc"));
+				
+				break;
+			case "-ea":
+				ea = Optional.of(new String("ea"));
 				break;
 			}
 		}
@@ -574,58 +574,31 @@ public final class BaseTestUtil {
 			path = path+File.separator+traversal.get() + "_"+widen.get()+"widen";
 		}
 		
-		if(!codeOpt.isPresent()){
-			// Naive code
-			path = path+ File.separator + "naive";
+		
+		if(ea.isPresent()){
+			path = path+ File.separator + "ea"; // Enable assertion
 		}else{
-			// Optimised code, e.g. nocopy or nocopy_dealloc
-			path = path+File.separator + codeOpt.get();
+			path = path + File.separator + "da"; // disable assertion
+		}
+	
+		
+		if(!nocopy.isPresent()&& !dealloc.isPresent()){
+			// Naive code
+			path = path+ "_" + "naive";
+		}else if(nocopy.isPresent() && dealloc.isPresent()){
+			// Combined and optimized code 'nocopy_dealloc'
+			path = path + "_" + nocopy.get() +"_"+dealloc.get();
+		}else if(nocopy.isPresent()){
+			// Copy only
+			path = path + "_" + nocopy.get();
+			
+		}else if(dealloc.isPresent()){
+			// Deallocation only
+			path = path+ "_" + dealloc.get();
 		}
 		
+				
 		
-		/*int index = 0;
-		switch(options[0]){
-		case "-bound":
-			path += File.separator + options[1]+ "_bound";
-			index = index +2;
-			// Skip the next option, i.e. 'code'
-			index = index + 1;
-			break;
-		case "-pattern":
-			path += File.separator + "enable_pattern";
-			index = index +2;
-			// Skip the next option, i.e. 'code'
-			index = index +1;
-			break;
-		case "-nocopy":
-			if(options[1] == "-ea"){
-				path += File.separator + "enable_assertion";
-				index = index +2;
-			}else{
-				path += File.separator + "disable_assertion";
-				index = index +1;
-			}
-			break;
-		case "-code":
-			index++;
-			break;
-		}
-
-
-		if(options.length == index){
-			// Generate 'naive' C code
-			path += File.separator + "naive";
-		}else if(options.length == index + 1){
-			// Generate 'nocopy' 'dealloc' C code
-			path += File.separator + options[index].replace("-", "");
-		}else if(options.length == index + 2){
-			// Generate 'nocopy_dealloc' C code
-			path += File.separator + options[index].replace("-", "")
-					+ "_" + options[index+1].replace("-", "");
-		}
-		
-		*/
-
 		destDir = Paths.get(path);
 
 		return destDir;
