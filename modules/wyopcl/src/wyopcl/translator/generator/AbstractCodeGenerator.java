@@ -71,7 +71,7 @@ public abstract class AbstractCodeGenerator {
 
 	public AbstractCodeGenerator(Configuration config) {
 		this.config = config;
-		isAssertEnable = this.config.isEnabled("ea");
+		isAssertEnable = config.isEnabled(Configuration.ENABLEASSERTION);
 	}
 
 	protected abstract void apply(WyilFile module);
@@ -162,8 +162,6 @@ public abstract class AbstractCodeGenerator {
 				translate((Codes.Const) code, function);
 			} else if (code instanceof Codes.Debug) {
 				translate((Codes.Debug) code, function);
-				// throw new RuntimeException("Not implemented! "+
-				// code.toString(), null);
 			} else if (code instanceof Codes.Dereference) {
 				translate((Codes.Dereference) code, function);
 			} else if (code instanceof Codes.Fail) {

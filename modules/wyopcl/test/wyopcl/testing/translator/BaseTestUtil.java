@@ -104,14 +104,14 @@ public final class BaseTestUtil {
 
 		Process process;
 		try {
-			Path destDir = Paths.get(baseDir + File.separator +"sysout"+ File.separator+ testcase);
+			Path destDir = Paths.get(baseDir + File.separator +"sysout"+ File.separator+ testcase + File.separator +ea);
 			
 			// Copy source.whiley to destDir folder
 			Files.copy(Paths.get(baseDir + File.separator + "Whileyfiles" + File.separator + testcase + ".whiley"),
 					Paths.get(destDir + File.separator + testcase + ".whiley"),
 					StandardCopyOption.REPLACE_EXISTING);
 			
-			Path sysout = Paths.get(destDir + File.separator +ea+ File.separator+"nocopy.sysout");
+			Path sysout = Paths.get(destDir + File.separator+"nocopy.sysout");
 			// Make the command
 			String cmd = makeCmd(testcase, options);
 

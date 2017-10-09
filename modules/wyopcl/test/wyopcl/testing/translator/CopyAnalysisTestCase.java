@@ -51,23 +51,23 @@ public class CopyAnalysisTestCase {
 			});
 	}
 	
-//	@Test
-//	public void testCopyAndDisableAssertion(){
-//		// Perform copy analysis with assertion disabled 
-//		util.execCopyAnalysis(sourceDir, testcase, "-verbose", "-nocopy");
-//	}
-//	
-//	@Test
-//	public void testCopyAndEnableAssertion(){
-//		// Perform copy analysis with assertion enabled 
-//		util.execCopyAnalysis(sourceDir, testcase, "-verbose", "-nocopy", "-ea");
-//	}
-//	
-//	@Test
-//	public void testCopyAndDisableAssertionAndGenerateCode(){
-//		// Generate C code with copy analysis enabled and assertion disabled 
-//		util.execCodeGeneration(sourceDir, testcase, "-nocopy", "-code");
-//	}
+	@Test
+	public void testCopyAndDisableAssertion(){
+		// Perform copy analysis with assertion disabled 
+		util.execCopyAnalysis(sourceDir, testcase, "-verbose", "-nocopy");
+	}
+	
+	@Test
+	public void testCopyAndEnableAssertion(){
+		// Perform copy analysis with assertion enabled 
+		util.execCopyAnalysis(sourceDir, testcase, "-verbose", "-nocopy", "-ea");
+	}
+	
+	@Test
+	public void testCopyAndDisableAssertionAndGenerateCode(){
+		// Generate C code with copy analysis enabled and assertion disabled 
+		util.execCodeGeneration(sourceDir, testcase, "-nocopy", "-da", "-code");
+	}
 	
 	@Test
 	public void testCopyAndEnableAssertionAndGenerateCode(){

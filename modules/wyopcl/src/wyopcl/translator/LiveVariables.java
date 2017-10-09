@@ -137,6 +137,7 @@ public class LiveVariables {
 		// Compute (out - def)
 		if (code instanceof Code.AbstractBytecode) {
 			Code.AbstractBytecode aa = (Code.AbstractBytecode) code;
+			
 			// Special case for update code (left operand is always alive)
 			if (code instanceof Codes.Update) {
 				Codes.Update cu = (Codes.Update) aa;
@@ -146,25 +147,35 @@ public class LiveVariables {
 				if (!(cu.type(0) instanceof Type.Reference)) {
 					// No, this is not an indirect assignment through a
 					// reference
-					isLive = environment.contains(cu.target(0));
+					environment.contains(cu.target(0));
 					// Put target to environment (modified by Sam)
-					environment.add(cu.target(0));
+					isLive = environment.add(cu.target(0));
 				}
-			} else {
+			}else if(code instanceof Codes.Assign){
+				// Special case for assignment (modified by Sam)
+				Codes.Assign assign = (Codes.Assign)code;
+				// Get right operand from the assignment and put it to environment set
+				// because it is a used variable 
+				environment.add(assign.operand(0));
+				// Get left operand, and remove it from env
+				// because it is a dead variable
+				isLive = environment.remove(assign.target(0));
+			}else if (code instanceof Codes.ArrayGenerator){
+				// Special case for arraygen (modified by Sam)
+				// Left operand is dead 
+				Codes.ArrayGenerator arrgen = (Codes.ArrayGenerator)code;
+				// Get left operand from array generator, and remove it from environment set
+				// because it is a defined variable
+				isLive = environment.remove(arrgen.target(0));	
+			} else {				
 				for (int target : aa.targets()) {
 					isLive = environment.remove(target);
 				}
 			}
 		}
 		
-		
-		// Special case for assignment (modified by Sam)
-		if(code instanceof Codes.Assign){
-			Codes.Assign assign = (Codes.Assign)code;
-			// Get left operand from the assignment and put it to environment set
-			// because it is a used variable 
-			environment.add(assign.operand(0));			
-		}else if ((isLive && code instanceof Code.AbstractBytecode)
+		// For function parameters
+		if ((isLive && code instanceof Code.AbstractBytecode)
 				|| (code instanceof Codes.Invoke && ((Codes.Invoke) code).type(0) instanceof Type.Method)
 				|| (code instanceof Codes.IndirectInvoke
 						&& ((Codes.IndirectInvoke) code).type(0) instanceof Type.Method)) {

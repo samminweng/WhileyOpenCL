@@ -325,7 +325,9 @@ public abstract class Analyzer {
 						buildCFG((Codes.Assert)code, function);
 					}
 				} else if (code instanceof Codes.Invariant) {
-					buildCFG((Codes.Invariant) code, function);
+					if(this.isAssertEnable){
+						buildCFG((Codes.Invariant) code, function);
+					}
 				} else if (code instanceof Codes.If) {
 					buildCFG((Codes.If) code, function);
 				} else if (code instanceof Codes.Return) {

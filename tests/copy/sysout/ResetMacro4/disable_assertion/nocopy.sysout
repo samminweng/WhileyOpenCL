@@ -177,6 +177,36 @@ In:{[]}
 blklab1 [BLOCK] 
 Out:{[]}
 
+In:{[5]}
+Update17 [BLOCK] 
+-------------------------------
+l.0:const %16 = 1 : int
+l.1:add %17 = %5, %16 : int
+l.2:assign %5 = %17  : int
+-------------------------------
+Out:{[]}
+
+In:{[5, 1]}
+Update17 [UPDATE] 
+-------------------------------
+l.0:update %1[%5] = %15 : int[] -> int[]
+-------------------------------
+Out:{[5]}
+
+In:{[1, 5]}
+Update15 [BLOCK] 
+-------------------------------
+l.0:const %15 = 0 : int
+-------------------------------
+Out:{[1, 5]}
+
+In:{[0, 1, 5]}
+Update15 [UPDATE] 
+-------------------------------
+l.0:update %0[%5] = %14 : int[] -> int[]
+-------------------------------
+Out:{[1, 5]}
+
 In:{[0]}
 blklab0 [LOOP_EXIT] 
 Out:{[0]}
@@ -190,14 +220,8 @@ l.2:assign %6 = %12  : int
 l.3:indexof %13 = %1, %5 : int[]
 l.4:assign %7 = %13  : int
 l.5:add %14 = %6, %7 : int
-l.6:update %0[%5] = %14 : int[] -> int[]
-l.7:const %15 = 0 : int
-l.8:update %1[%5] = %15 : int[] -> int[]
-l.9:const %16 = 1 : int
-l.10:add %17 = %5, %16 : int
-l.11:assign %5 = %17  : int
 -------------------------------
-Out:{[]}
+Out:{[0, 1, 5]}
 
 In:{[0, 1, 3, 5]}
 blklab0 [LOOP_HEADER] 
@@ -226,6 +250,36 @@ In:{[0, 1, 3, 5]}
 blklab1 [BLOCK] 
 Out:{[0, 1, 3, 5]}
 
+In:{[0, 1, 3, 5]}
+Update17 [BLOCK] 
+-------------------------------
+l.0:const %16 = 1 : int
+l.1:add %17 = %5, %16 : int
+l.2:assign %5 = %17  : int
+-------------------------------
+Out:{[0, 1, 3, 5]}
+
+In:{[0, 1, 3, 5, 15]}
+Update17 [UPDATE] 
+-------------------------------
+l.0:update %1[%5] = %15 : int[] -> int[]
+-------------------------------
+Out:{[0, 1, 3, 5]}
+
+In:{[0, 1, 3, 5]}
+Update15 [BLOCK] 
+-------------------------------
+l.0:const %15 = 0 : int
+-------------------------------
+Out:{[0, 1, 3, 5, 15]}
+
+In:{[0, 1, 3, 5, 14]}
+Update15 [UPDATE] 
+-------------------------------
+l.0:update %0[%5] = %14 : int[] -> int[]
+-------------------------------
+Out:{[0, 1, 3, 5]}
+
 In:{[0]}
 blklab0 [LOOP_EXIT] 
 Out:{[0]}
@@ -239,14 +293,8 @@ l.2:assign %6 = %12  : int
 l.3:indexof %13 = %1, %5 : int[]
 l.4:assign %7 = %13  : int
 l.5:add %14 = %6, %7 : int
-l.6:update %0[%5] = %14 : int[] -> int[]
-l.7:const %15 = 0 : int
-l.8:update %1[%5] = %15 : int[] -> int[]
-l.9:const %16 = 1 : int
-l.10:add %17 = %5, %16 : int
-l.11:assign %5 = %17  : int
 -------------------------------
-Out:{[0, 1, 3, 5]}
+Out:{[0, 1, 3, 5, 14]}
 
 In:{[0, 1, 3, 5]}
 blklab0 [LOOP_HEADER] 
@@ -275,6 +323,36 @@ In:{[0, 1, 3, 5]}
 blklab1 [BLOCK] 
 Out:{[0, 1, 3, 5]}
 
+In:{[0, 1, 3, 5]}
+Update17 [BLOCK] 
+-------------------------------
+l.0:const %16 = 1 : int
+l.1:add %17 = %5, %16 : int
+l.2:assign %5 = %17  : int
+-------------------------------
+Out:{[0, 1, 3, 5]}
+
+In:{[0, 1, 3, 5, 15]}
+Update17 [UPDATE] 
+-------------------------------
+l.0:update %1[%5] = %15 : int[] -> int[]
+-------------------------------
+Out:{[0, 1, 3, 5]}
+
+In:{[0, 1, 3, 5]}
+Update15 [BLOCK] 
+-------------------------------
+l.0:const %15 = 0 : int
+-------------------------------
+Out:{[0, 1, 3, 5, 15]}
+
+In:{[0, 1, 3, 5, 14]}
+Update15 [UPDATE] 
+-------------------------------
+l.0:update %0[%5] = %14 : int[] -> int[]
+-------------------------------
+Out:{[0, 1, 3, 5]}
+
 In:{[0]}
 blklab0 [LOOP_EXIT] 
 Out:{[0]}
@@ -288,14 +366,8 @@ l.2:assign %6 = %12  : int
 l.3:indexof %13 = %1, %5 : int[]
 l.4:assign %7 = %13  : int
 l.5:add %14 = %6, %7 : int
-l.6:update %0[%5] = %14 : int[] -> int[]
-l.7:const %15 = 0 : int
-l.8:update %1[%5] = %15 : int[] -> int[]
-l.9:const %16 = 1 : int
-l.10:add %17 = %5, %16 : int
-l.11:assign %5 = %17  : int
 -------------------------------
-Out:{[0, 1, 3, 5]}
+Out:{[0, 1, 3, 5, 14]}
 
 In:{[0, 1, 3, 5]}
 blklab0 [LOOP_HEADER] 
@@ -349,18 +421,42 @@ l.2:assign %6 = %12  : int
 l.3:indexof %13 = %1, %5 : int[]
 l.4:assign %7 = %13  : int
 l.5:add %14 = %6, %7 : int
-l.6:update %0[%5] = %14 : int[] -> int[]
-l.7:const %15 = 0 : int
-l.8:update %1[%5] = %15 : int[] -> int[]
-l.9:const %16 = 1 : int
-l.10:add %17 = %5, %16 : int
-l.11:assign %5 = %17  : int
 -------------------------------
-Out:{a, b, length, i}
+Out:{a, b, length, i, _14}
 
 In:{a}
 blklab0 [LOOP_EXIT] 
 Out:{a}
+
+In:{a, b, length, i, _14}
+Update15 [UPDATE] 
+-------------------------------
+l.0:update %0[%5] = %14 : int[] -> int[]
+-------------------------------
+Out:{a, b, length, i}
+
+In:{a, b, length, i}
+Update15 [BLOCK] 
+-------------------------------
+l.0:const %15 = 0 : int
+-------------------------------
+Out:{a, b, length, i, _15}
+
+In:{a, b, length, i, _15}
+Update17 [UPDATE] 
+-------------------------------
+l.0:update %1[%5] = %15 : int[] -> int[]
+-------------------------------
+Out:{a, b, length, i}
+
+In:{a, b, length, i}
+Update17 [BLOCK] 
+-------------------------------
+l.0:const %16 = 1 : int
+l.1:add %17 = %5, %16 : int
+l.2:assign %5 = %17  : int
+-------------------------------
+Out:{a, b, length, i}
 
 In:{a, b, length, i}
 blklab1 [BLOCK] 
@@ -426,6 +522,22 @@ In:{[]}
 blklab3 [BLOCK] 
 Out:{[]}
 
+In:{[2]}
+Update10 [BLOCK] 
+-------------------------------
+l.0:const %9 = 1 : int
+l.1:add %10 = %2, %9 : int
+l.2:assign %2 = %10  : int
+-------------------------------
+Out:{[]}
+
+In:{[1, 2]}
+Update10 [UPDATE] 
+-------------------------------
+l.0:update %1[%2] = %2 : int[] -> int[]
+-------------------------------
+Out:{[2]}
+
 In:{[0, 1]}
 blklab2 [LOOP_EXIT] 
 Out:{[0, 1]}
@@ -435,12 +547,8 @@ blklab2 [LOOP_BODY]
 -------------------------------
 l.0:const %8 = 10 : int
 l.1:ifge %2, %8 goto blklab2 : int
-l.2:update %1[%2] = %2 : int[] -> int[]
-l.3:const %9 = 1 : int
-l.4:add %10 = %2, %9 : int
-l.5:assign %2 = %10  : int
 -------------------------------
-Out:{[]}
+Out:{[1, 2]}
 
 In:{[0, 1, 2]}
 blklab2 [LOOP_HEADER] 
@@ -511,6 +619,22 @@ In:{[0, 1, 2]}
 blklab3 [BLOCK] 
 Out:{[0, 1, 2]}
 
+In:{[0, 1, 2]}
+Update10 [BLOCK] 
+-------------------------------
+l.0:const %9 = 1 : int
+l.1:add %10 = %2, %9 : int
+l.2:assign %2 = %10  : int
+-------------------------------
+Out:{[0, 1, 2]}
+
+In:{[0, 1, 2]}
+Update10 [UPDATE] 
+-------------------------------
+l.0:update %1[%2] = %2 : int[] -> int[]
+-------------------------------
+Out:{[0, 1, 2]}
+
 In:{[0, 1]}
 blklab2 [LOOP_EXIT] 
 Out:{[0, 1]}
@@ -520,10 +644,6 @@ blklab2 [LOOP_BODY]
 -------------------------------
 l.0:const %8 = 10 : int
 l.1:ifge %2, %8 goto blklab2 : int
-l.2:update %1[%2] = %2 : int[] -> int[]
-l.3:const %9 = 1 : int
-l.4:add %10 = %2, %9 : int
-l.5:assign %2 = %10  : int
 -------------------------------
 Out:{[0, 1, 2]}
 
@@ -596,6 +716,22 @@ In:{[0, 1, 2]}
 blklab3 [BLOCK] 
 Out:{[0, 1, 2]}
 
+In:{[0, 1, 2]}
+Update10 [BLOCK] 
+-------------------------------
+l.0:const %9 = 1 : int
+l.1:add %10 = %2, %9 : int
+l.2:assign %2 = %10  : int
+-------------------------------
+Out:{[0, 1, 2]}
+
+In:{[0, 1, 2]}
+Update10 [UPDATE] 
+-------------------------------
+l.0:update %1[%2] = %2 : int[] -> int[]
+-------------------------------
+Out:{[0, 1, 2]}
+
 In:{[0, 1]}
 blklab2 [LOOP_EXIT] 
 Out:{[0, 1]}
@@ -605,10 +741,6 @@ blklab2 [LOOP_BODY]
 -------------------------------
 l.0:const %8 = 10 : int
 l.1:ifge %2, %8 goto blklab2 : int
-l.2:update %1[%2] = %2 : int[] -> int[]
-l.3:const %9 = 1 : int
-l.4:add %10 = %2, %9 : int
-l.5:assign %2 = %10  : int
 -------------------------------
 Out:{[0, 1, 2]}
 
@@ -658,16 +790,28 @@ blklab2 [LOOP_BODY]
 -------------------------------
 l.0:const %8 = 10 : int
 l.1:ifge %2, %8 goto blklab2 : int
-l.2:update %1[%2] = %2 : int[] -> int[]
-l.3:const %9 = 1 : int
-l.4:add %10 = %2, %9 : int
-l.5:assign %2 = %10  : int
 -------------------------------
 Out:{sys, a, i}
 
 In:{sys, a}
 blklab2 [LOOP_EXIT] 
 Out:{sys, a}
+
+In:{sys, a, i}
+Update10 [UPDATE] 
+-------------------------------
+l.0:update %1[%2] = %2 : int[] -> int[]
+-------------------------------
+Out:{sys, a, i}
+
+In:{sys, a, i}
+Update10 [BLOCK] 
+-------------------------------
+l.0:const %9 = 1 : int
+l.1:add %10 = %2, %9 : int
+l.2:assign %2 = %10  : int
+-------------------------------
+Out:{sys, a, i}
 
 In:{sys, a, i}
 blklab3 [BLOCK] 

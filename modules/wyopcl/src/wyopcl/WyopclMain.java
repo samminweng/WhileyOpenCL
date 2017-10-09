@@ -31,6 +31,10 @@ public class WyopclMain extends WycMain {
 			// Add the 'ea' option to enable assertion 
 			new OptArg(Configuration.ENABLEASSERTION, 
 					"Enable the runtime assertion check\n"),
+			// Add the 'da' option to disable assertion 
+			new OptArg(Configuration.DISABLEASSERTION, 
+						"Disable the runtime assertion check\n"),
+			
 			// Add the 'nocopy' option to eliminate un-needed copies
 			new OptArg(Configuration.NOCOPY,
 					"Enable the copy elimination analysis to eliminate the un-necessary copies.\n"),

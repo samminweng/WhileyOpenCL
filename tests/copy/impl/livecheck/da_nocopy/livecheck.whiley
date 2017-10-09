@@ -1,12 +1,12 @@
 import whiley.lang.*
 method main(System.Console sys):
-    int[] a = [0;5] // a[0] = 0
-    int[] b = [1;5] // b[0] = 1
-    a = b // a[0] = 1
-    int[] c = b // c[0] = 1
-    int[] d = b // d[0] = 1
-    b = [2;5] // b[0] = 2
-    assert a[0] == 1
+    int[] a = [0;5] // {}
+    int[] b = [1;5] // {}
+    a = b       // {b}
+    int[] c = b // {a, b}
+    int[] d = b // {a, b, c}
+    b = [2;5]   // {a, c, d}
+    assert a[0] == 1 // {a, b, c, d}
     assert b[0] == 2
     assert c[0] == 1
     assert d[0] == 1

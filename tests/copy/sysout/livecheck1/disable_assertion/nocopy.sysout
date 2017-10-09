@@ -1,0 +1,300 @@
+main.0 [	const %3 = 0 : int]
+main.1 [	const %4 = 5 : int]
+main.2 [	arraygen %5 = [3; 4] : int[]]
+main.3 [	assign %1 = %5  : int[]]
+main.4 [	assign %2 = %1  : int[]]
+main.5 [	const %6 = 1 : int]
+main.6 [	const %7 = 0 : int]
+main.7 [	update %2[%7] = %6 : int[] -> int[]]
+main.8 [	assert]
+main.9 [	assert]
+main.10 [	fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.11 [	fieldload %15 = %14 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.12 [	const %16 = [97,91,48,93,32,61,32] : int[]]
+main.13 [	indirectinvoke () = %15 (%16) : method(int[])->()]
+main.14 [	fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.15 [	fieldload %18 = %17 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.16 [	const %19 = 0 : int]
+main.17 [	indexof %20 = %1, %19 : int[]]
+main.18 [	indirectinvoke () = %18 (%20) : method(any)->()]
+main.19 [	fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.20 [	fieldload %22 = %21 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.21 [	const %23 = [98,91,48,93,32,61,32] : int[]]
+main.22 [	indirectinvoke () = %22 (%23) : method(int[])->()]
+main.23 [	fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.24 [	fieldload %25 = %24 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.25 [	const %26 = 0 : int]
+main.26 [	indexof %27 = %2, %26 : int[]]
+main.27 [	indirectinvoke () = %25 (%27) : method(any)->()]
+main.28 [	fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.29 [	fieldload %29 = %28 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.30 [	const %30 = [80,97,115,115,32,108,105,118,101,99,104,101,99,107,49,32,116,101,115,116,32,99,97,115,101] : int[]]
+main.31 [	indirectinvoke () = %29 (%30) : method(int[])->()]
+main.32 [	return]
+root->main
+main.0 [	const %3 = 0 : int]
+main.1 [	const %4 = 5 : int]
+main.2 [	arraygen %5 = [3; 4] : int[]]
+main.3 [	assign %1 = %5  : int[]]
+main.4 [	assign %2 = %1  : int[]]
+main.5 [	const %6 = 1 : int]
+main.6 [	const %7 = 0 : int]
+main.7 [	update %2[%7] = %6 : int[] -> int[]]
+main.8 [	assert]
+main.9 [	assert]
+main.10 [	fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.11 [	fieldload %15 = %14 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.12 [	const %16 = [97,91,48,93,32,61,32] : int[]]
+main.13 [	indirectinvoke () = %15 (%16) : method(int[])->()]
+main.14 [	fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.15 [	fieldload %18 = %17 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.16 [	const %19 = 0 : int]
+main.17 [	indexof %20 = %1, %19 : int[]]
+main.18 [	indirectinvoke () = %18 (%20) : method(any)->()]
+main.19 [	fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.20 [	fieldload %22 = %21 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.21 [	const %23 = [98,91,48,93,32,61,32] : int[]]
+main.22 [	indirectinvoke () = %22 (%23) : method(int[])->()]
+main.23 [	fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.24 [	fieldload %25 = %24 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.25 [	const %26 = 0 : int]
+main.26 [	indexof %27 = %2, %26 : int[]]
+main.27 [	indirectinvoke () = %25 (%27) : method(any)->()]
+main.28 [	fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.29 [	fieldload %29 = %28 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.30 [	const %30 = [80,97,115,115,32,108,105,118,101,99,104,101,99,107,49,32,116,101,115,116,32,99,97,115,101] : int[]]
+main.31 [	indirectinvoke () = %29 (%30) : method(int[])->()]
+main.32 [	return]
+main.0 [	const %3 = 0 : int]
+main.1 [	const %4 = 5 : int]
+main.2 [	arraygen %5 = [3; 4] : int[]]
+main.3 [	assign %1 = %5  : int[]]
+main.4 [	assign %2 = %1  : int[]]
+main.5 [	const %6 = 1 : int]
+main.6 [	const %7 = 0 : int]
+main.7 [	update %2[%7] = %6 : int[] -> int[]]
+main.8 [	assert]
+main.9 [	assert]
+main.10 [	fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.11 [	fieldload %15 = %14 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.12 [	const %16 = [97,91,48,93,32,61,32] : int[]]
+main.13 [	indirectinvoke () = %15 (%16) : method(int[])->()]
+main.14 [	fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.15 [	fieldload %18 = %17 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.16 [	const %19 = 0 : int]
+main.17 [	indexof %20 = %1, %19 : int[]]
+main.18 [	indirectinvoke () = %18 (%20) : method(any)->()]
+main.19 [	fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.20 [	fieldload %22 = %21 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.21 [	const %23 = [98,91,48,93,32,61,32] : int[]]
+main.22 [	indirectinvoke () = %22 (%23) : method(int[])->()]
+main.23 [	fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.24 [	fieldload %25 = %24 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.25 [	const %26 = 0 : int]
+main.26 [	indexof %27 = %2, %26 : int[]]
+main.27 [	indirectinvoke () = %25 (%27) : method(any)->()]
+main.28 [	fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.29 [	fieldload %29 = %28 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.30 [	const %30 = [80,97,115,115,32,108,105,118,101,99,104,101,99,107,49,32,116,101,115,116,32,99,97,115,101] : int[]]
+main.31 [	indirectinvoke () = %29 (%30) : method(int[])->()]
+main.32 [	return]
+###### Live analysis for main function. ######
+Iteration 1
+In:{[0, 1, 2]}
+Update8 [BLOCK] 
+-------------------------------
+l.0:fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.1:fieldload %15 = %14 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.2:const %16 = [97,91,48,93,32,61,32] : int[]
+l.3:indirectinvoke () = %15 (%16) : method(int[])->()
+l.4:fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.5:fieldload %18 = %17 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.6:const %19 = 0 : int
+l.7:indexof %20 = %1, %19 : int[]
+l.8:indirectinvoke () = %18 (%20) : method(any)->()
+l.9:fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.10:fieldload %22 = %21 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.11:const %23 = [98,91,48,93,32,61,32] : int[]
+l.12:indirectinvoke () = %22 (%23) : method(int[])->()
+l.13:fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.14:fieldload %25 = %24 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.15:const %26 = 0 : int
+l.16:indexof %27 = %2, %26 : int[]
+l.17:indirectinvoke () = %25 (%27) : method(any)->()
+l.18:fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.19:fieldload %29 = %28 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.20:const %30 = [80,97,115,115,32,108,105,118,101,99,104,101,99,107,49,32,116,101,115,116,32,99,97,115,101] : int[]
+l.21:indirectinvoke () = %29 (%30) : method(int[])->()
+-------------------------------
+Out:{[]}
+
+In:{[0, 1, 2, 6, 7]}
+Update8 [UPDATE] 
+-------------------------------
+l.0:update %2[%7] = %6 : int[] -> int[]
+-------------------------------
+Out:{[0, 1, 2]}
+
+In:{[0]}
+code [BLOCK] 
+-------------------------------
+l.0:const %3 = 0 : int
+l.1:const %4 = 5 : int
+l.2:arraygen %5 = [3; 4] : int[]
+l.3:assign %1 = %5  : int[]
+l.4:assign %2 = %1  : int[]
+l.5:const %6 = 1 : int
+l.6:const %7 = 0 : int
+-------------------------------
+Out:{[0, 1, 2, 6, 7]}
+
+In:{[0]}
+entry [ENTRY] 
+Out:{[0]}
+
+###### Live analysis for main function. ######
+Iteration 2
+In:{[0, 1, 2]}
+Update8 [BLOCK] 
+-------------------------------
+l.0:fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.1:fieldload %15 = %14 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.2:const %16 = [97,91,48,93,32,61,32] : int[]
+l.3:indirectinvoke () = %15 (%16) : method(int[])->()
+l.4:fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.5:fieldload %18 = %17 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.6:const %19 = 0 : int
+l.7:indexof %20 = %1, %19 : int[]
+l.8:indirectinvoke () = %18 (%20) : method(any)->()
+l.9:fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.10:fieldload %22 = %21 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.11:const %23 = [98,91,48,93,32,61,32] : int[]
+l.12:indirectinvoke () = %22 (%23) : method(int[])->()
+l.13:fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.14:fieldload %25 = %24 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.15:const %26 = 0 : int
+l.16:indexof %27 = %2, %26 : int[]
+l.17:indirectinvoke () = %25 (%27) : method(any)->()
+l.18:fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.19:fieldload %29 = %28 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.20:const %30 = [80,97,115,115,32,108,105,118,101,99,104,101,99,107,49,32,116,101,115,116,32,99,97,115,101] : int[]
+l.21:indirectinvoke () = %29 (%30) : method(int[])->()
+-------------------------------
+Out:{[]}
+
+In:{[0, 1, 2, 6, 7]}
+Update8 [UPDATE] 
+-------------------------------
+l.0:update %2[%7] = %6 : int[] -> int[]
+-------------------------------
+Out:{[0, 1, 2]}
+
+In:{[0]}
+code [BLOCK] 
+-------------------------------
+l.0:const %3 = 0 : int
+l.1:const %4 = 5 : int
+l.2:arraygen %5 = [3; 4] : int[]
+l.3:assign %1 = %5  : int[]
+l.4:assign %2 = %1  : int[]
+l.5:const %6 = 1 : int
+l.6:const %7 = 0 : int
+-------------------------------
+Out:{[0, 1, 2, 6, 7]}
+
+In:{[0]}
+entry [ENTRY] 
+Out:{[0]}
+
+###### Live variables for main function. ######
+In:{sys}
+entry [ENTRY] 
+Out:{sys}
+
+In:{sys}
+code [BLOCK] 
+-------------------------------
+l.0:const %3 = 0 : int
+l.1:const %4 = 5 : int
+l.2:arraygen %5 = [3; 4] : int[]
+l.3:assign %1 = %5  : int[]
+l.4:assign %2 = %1  : int[]
+l.5:const %6 = 1 : int
+l.6:const %7 = 0 : int
+-------------------------------
+Out:{sys, a, b, _6, _7}
+
+In:{sys, a, b, _6, _7}
+Update8 [UPDATE] 
+-------------------------------
+l.0:update %2[%7] = %6 : int[] -> int[]
+-------------------------------
+Out:{sys, a, b}
+
+In:{sys, a, b}
+Update8 [BLOCK] 
+-------------------------------
+l.0:fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.1:fieldload %15 = %14 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.2:const %16 = [97,91,48,93,32,61,32] : int[]
+l.3:indirectinvoke () = %15 (%16) : method(int[])->()
+l.4:fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.5:fieldload %18 = %17 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.6:const %19 = 0 : int
+l.7:indexof %20 = %1, %19 : int[]
+l.8:indirectinvoke () = %18 (%20) : method(any)->()
+l.9:fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.10:fieldload %22 = %21 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.11:const %23 = [98,91,48,93,32,61,32] : int[]
+l.12:indirectinvoke () = %22 (%23) : method(int[])->()
+l.13:fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.14:fieldload %25 = %24 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.15:const %26 = 0 : int
+l.16:indexof %27 = %2, %26 : int[]
+l.17:indirectinvoke () = %25 (%27) : method(any)->()
+l.18:fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.19:fieldload %29 = %28 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.20:const %30 = [80,97,115,115,32,108,105,118,101,99,104,101,99,107,49,32,116,101,115,116,32,99,97,115,101] : int[]
+l.21:indirectinvoke () = %29 (%30) : method(int[])->()
+-------------------------------
+Out:{}
+
+In:{}
+exit [EXIT] 
+Out:{}
+
+main.0 [	const %3 = 0 : int]
+main.1 [	const %4 = 5 : int]
+main.2 [	arraygen %5 = [3; 4] : int[]]
+main.3 [	assign %1 = %5  : int[]]
+main.4 [	assign %2 = %1  : int[]]
+main.5 [	const %6 = 1 : int]
+main.6 [	const %7 = 0 : int]
+main.7 [	update %2[%7] = %6 : int[] -> int[]]
+main.8 [	assert]
+main.9 [	assert]
+main.10 [	fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.11 [	fieldload %15 = %14 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.12 [	const %16 = [97,91,48,93,32,61,32] : int[]]
+main.13 [	indirectinvoke () = %15 (%16) : method(int[])->()]
+main.14 [	fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.15 [	fieldload %18 = %17 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.16 [	const %19 = 0 : int]
+main.17 [	indexof %20 = %1, %19 : int[]]
+main.18 [	indirectinvoke () = %18 (%20) : method(any)->()]
+main.19 [	fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.20 [	fieldload %22 = %21 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.21 [	const %23 = [98,91,48,93,32,61,32] : int[]]
+main.22 [	indirectinvoke () = %22 (%23) : method(int[])->()]
+main.23 [	fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.24 [	fieldload %25 = %24 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.25 [	const %26 = 0 : int]
+main.26 [	indexof %27 = %2, %26 : int[]]
+main.27 [	indirectinvoke () = %25 (%27) : method(any)->()]
+main.28 [	fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.29 [	fieldload %29 = %28 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.30 [	const %30 = [80,97,115,115,32,108,105,118,101,99,104,101,99,107,49,32,116,101,115,116,32,99,97,115,101] : int[]]
+main.31 [	indirectinvoke () = %29 (%30) : method(int[])->()]
+main.32 [	return]
+
+Copy elimination analysis completed. File: livecheck1.wyil
