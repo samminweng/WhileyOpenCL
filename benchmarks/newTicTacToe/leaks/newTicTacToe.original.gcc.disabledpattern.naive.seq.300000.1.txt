@@ -1,24 +1,24 @@
-==2827== Memcheck, a memory error detector
-==2827== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==2827== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==2827== Command: ./out/newTicTacToe.original.gcc.disabledpattern.naive.seq.out 300000
-==2827== Parent PID: 2754
-==2827== 
-==2827== 
-==2827== HEAP SUMMARY:
-==2827==     in use at exit: 828,000,296 bytes in 14,100,005 blocks
-==2827==   total heap usage: 14,100,006 allocs, 1 frees, 828,001,320 bytes allocated
-==2827== 
-==2827== LEAK SUMMARY:
-==2827==    definitely lost: 547,199,496 bytes in 10,199,989 blocks
-==2827==    indirectly lost: 280,799,280 bytes in 3,899,990 blocks
-==2827==      possibly lost: 600 bytes in 9 blocks
-==2827==    still reachable: 920 bytes in 17 blocks
-==2827==         suppressed: 0 bytes in 0 blocks
-==2827== Rerun with --leak-check=full to see details of leaked memory
-==2827== 
-==2827== For counts of detected and suppressed errors, rerun with: -v
-==2827== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==3377== Memcheck, a memory error detector
+==3377== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==3377== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==3377== Command: ./out/newTicTacToe.original.gcc.disabledpattern.naive.seq.out 300000
+==3377== Parent PID: 3077
+==3377== 
+==3377== 
+==3377== HEAP SUMMARY:
+==3377==     in use at exit: 828,000,296 bytes in 14,100,005 blocks
+==3377==   total heap usage: 14,100,006 allocs, 1 frees, 828,001,320 bytes allocated
+==3377== 
+==3377== LEAK SUMMARY:
+==3377==    definitely lost: 547,199,496 bytes in 10,199,989 blocks
+==3377==    indirectly lost: 280,799,280 bytes in 3,899,990 blocks
+==3377==      possibly lost: 600 bytes in 9 blocks
+==3377==    still reachable: 920 bytes in 17 blocks
+==3377==         suppressed: 0 bytes in 0 blocks
+==3377== Rerun with --leak-check=full to see details of leaked memory
+==3377== 
+==3377== For counts of detected and suppressed errors, rerun with: -v
+==3377== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -26,7 +26,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3702.945
+cpu MHz		: 3801.492
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -53,7 +53,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3900.570
+cpu MHz		: 3759.125
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -80,7 +80,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3399.867
+cpu MHz		: 3786.617
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -107,7 +107,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3859.531
+cpu MHz		: 3779.445
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -134,7 +134,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3776.523
+cpu MHz		: 3710.781
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -161,7 +161,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3733.226
+cpu MHz		: 3867.500
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -188,7 +188,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.640
+cpu MHz		: 3895.390
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -215,7 +215,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3817.695
+cpu MHz		: 3400.265
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

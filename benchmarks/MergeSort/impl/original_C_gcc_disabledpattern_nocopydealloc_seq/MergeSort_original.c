@@ -86,7 +86,7 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	{
 		_DEALLOC(_16);
 		// isCopyEliminated of '_5' = true
-		_16 = _sortV1_(_1DARRAY_PARAM(lhs), false, _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
+		_16 = _sortV1_(lhs, lhs_size, false, _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		_RESET_DEALLOC(_16, lhs, "true-true-false" , "sortV1");
 	}
 	//assign %5 = %16  : int[]
@@ -113,7 +113,7 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	{
 		_DEALLOC(_19);
 		// isCopyEliminated of '_6' = true
-		_19 = _sortV1_(_1DARRAY_PARAM(rhs), false, _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
+		_19 = _sortV1_(rhs, rhs_size, false, _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
 		_RESET_DEALLOC(_19, rhs, "true-true-false" , "sortV1");
 	}
 	//assign %6 = %19  : int[]
@@ -159,7 +159,6 @@ _SLICE_ARRAY(_18, items, pivot, end);
 		//indexof %30 = %5, %7 : int[]
 		_30=lhs[l];
 		//update %0[%9] = %30 : int[] -> int[]
-		// isCopyEliminated = false
 		items[i] = _30;
 		//const %31 = 1 : int
 		_31 = 1;
@@ -175,7 +174,6 @@ blklab3:;
 		//indexof %33 = %6, %8 : int[]
 		_33=rhs[r];
 		//update %0[%9] = %33 : int[] -> int[]
-		// isCopyEliminated = false
 		items[i] = _33;
 		//const %34 = 1 : int
 		_34 = 1;
@@ -207,7 +205,6 @@ blklab1:;
 		//indexof %39 = %5, %7 : int[]
 		_39=lhs[l];
 		//update %0[%9] = %39 : int[] -> int[]
-		// isCopyEliminated = false
 		items[i] = _39;
 		//const %40 = 1 : int
 		_40 = 1;
@@ -237,7 +234,6 @@ blklab5:;
 		//indexof %45 = %6, %8 : int[]
 		_45=rhs[r];
 		//update %0[%9] = %45 : int[] -> int[]
-		// isCopyEliminated = false
 		items[i] = _45;
 		//const %46 = 1 : int
 		_46 = 1;
@@ -356,7 +352,6 @@ int main(int argc, char** args){
 		//sub %12 = %2, %3 : int
 		_12=max-index;
 		//update %4[%3] = %12 : int[] -> int[]
-		// isCopyEliminated = false
 		arr[index] = _12;
 		//const %13 = 1 : int
 		_13 = 1;
@@ -376,7 +371,7 @@ blklab10:;
 	{
 		_DEALLOC(_15);
 		// isCopyEliminated of '_4' = true
-		_15 = _sortV1_(_1DARRAY_PARAM(arr), false, _16, max, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
+		_15 = _sortV1_(arr, arr_size, false, _16, max, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
 		_RESET_DEALLOC(_15, arr, "true-true-false" , "sortV1");
 	}
 	//assign %4 = %15  : int[]

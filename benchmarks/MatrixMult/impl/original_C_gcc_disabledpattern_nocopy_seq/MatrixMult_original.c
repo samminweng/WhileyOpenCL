@@ -34,7 +34,6 @@ int64_t* _init_(_DECL_1DARRAY_PARAM(data), int64_t width, int64_t height, _DECL_
 			//add %9 = %8, %5 : int
 			_9=_8+j;
 			//update %0[%9] = %4 : int[] -> int[]
-			// isCopyEliminated = true
 			data[_9] = i;
 			//const %10 = 1 : int
 			_10 = 1;
@@ -160,7 +159,6 @@ blklab8:;
 			//add %25 = %24, %7 : int
 			_25=_24+j;
 			//update %2[%25] = %9 : int[] -> int[]
-			// isCopyEliminated = true
 			data[_25] = sub_total;
 			//const %26 = 1 : int
 			_26 = 1;
@@ -263,7 +261,7 @@ int main(int argc, char** args){
 	_14[0] = 115; _14[1] = 105; _14[2] = 122; _14[3] = 101; _14[4] = 32; _14[5] = 61; _14[6] = 32; 
 	//indirectinvoke () = %13 (%14) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_14));
+		printf_s(_14, _14_size);
 	}
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %16 = %15 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -283,7 +281,7 @@ int main(int argc, char** args){
 	//invoke (%20) = (%5, %3, %4) MatrixMult_original:init : function(int[],int,int)->(int[])
 	{
 		// isCopyEliminated of '_5' = true
-		_20 = _init_(_1DARRAY_PARAM(A), width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
+		_20 = _init_(A, A_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
 	}
 	//assign %5 = %20  : int[]
 	// isCopyEliminated = true
@@ -300,7 +298,7 @@ int main(int argc, char** args){
 	//invoke (%24) = (%6, %3, %4) MatrixMult_original:init : function(int[],int,int)->(int[])
 	{
 		// isCopyEliminated of '_6' = true
-		_24 = _init_(_1DARRAY_PARAM(B), width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
+		_24 = _init_(B, B_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
 	}
 	//assign %6 = %24  : int[]
 	// isCopyEliminated = true
@@ -319,7 +317,7 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_5' = true
 		// isCopyEliminated of '_6' = true
 		// isCopyEliminated of '_7' = true
-		_28 = _mat_mult_(_1DARRAY_PARAM(A), _1DARRAY_PARAM(B), _1DARRAY_PARAM(C), width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
+		_28 = _mat_mult_(A, A_size, B, B_size, C, C_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 	}
 	//assign %7 = %28  : int[]
 	// isCopyEliminated = true
@@ -331,7 +329,7 @@ int main(int argc, char** args){
 	_31[0] = 77; _31[1] = 97; _31[2] = 116; _31[3] = 114; _31[4] = 105; _31[5] = 120; _31[6] = 32; _31[7] = 67; _31[8] = 91; _31[9] = 115; _31[10] = 105; _31[11] = 122; _31[12] = 101; _31[13] = 45; _31[14] = 49; _31[15] = 93; _31[16] = 91; _31[17] = 115; _31[18] = 105; _31[19] = 122; _31[20] = 101; _31[21] = 45; _31[22] = 49; _31[23] = 93; _31[24] = 32; _31[25] = 61; _31[26] = 32; 
 	//indirectinvoke () = %30 (%31) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_31));
+		printf_s(_31, _31_size);
 	}
 	//fieldload %32 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %33 = %32 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

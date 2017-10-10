@@ -276,7 +276,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_14);
 	//indirectinvoke () = %13 (%14) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_14));
+		printf_s(_14, _14_size);
 	}
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %16 = %15 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -298,10 +298,11 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(A);
 	//invoke (%20) = (%5, %3, %4) MatrixMult_original:init : function(int[],int,int)->(int[])
 	{
-		void* A_tmp;
+		void* tmp_A_0;
+		_COPY_1DARRAY_PARAM(A, tmp_A_0, int64_t);
 		_DEALLOC(_20);
-		_20 = _init_(_COPY_1DARRAY_PARAM_int64_t(A), false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
-		_CALLER_DEALLOC(_20, A, "true-true-false" , "init");
+		_20 = _init_(tmp_A_0, A_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
+		_CALLER_DEALLOC(_20, tmp_A_0, "true-true-false" , "init");
 	}
 	//assign %5 = %20  : int[]
 	_DEALLOC(A);
@@ -321,10 +322,11 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(B);
 	//invoke (%24) = (%6, %3, %4) MatrixMult_original:init : function(int[],int,int)->(int[])
 	{
-		void* B_tmp;
+		void* tmp_B_0;
+		_COPY_1DARRAY_PARAM(B, tmp_B_0, int64_t);
 		_DEALLOC(_24);
-		_24 = _init_(_COPY_1DARRAY_PARAM_int64_t(B), false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
-		_CALLER_DEALLOC(_24, B, "true-true-false" , "init");
+		_24 = _init_(tmp_B_0, B_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
+		_CALLER_DEALLOC(_24, tmp_B_0, "true-true-false" , "init");
 	}
 	//assign %6 = %24  : int[]
 	_DEALLOC(B);
@@ -344,16 +346,19 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(C);
 	//invoke (%28) = (%5, %6, %7, %3, %4) MatrixMult_original:mat_mult : function(int[],int[],int[],int,int)->(int[])
 	{
-		void* A_tmp;
-		void* B_tmp;
-		void* C_tmp;
+		void* tmp_A_0;
+		_COPY_1DARRAY_PARAM(A, tmp_A_0, int64_t);
+		void* tmp_B_1;
+		_COPY_1DARRAY_PARAM(B, tmp_B_1, int64_t);
+		void* tmp_C_2;
+		_COPY_1DARRAY_PARAM(C, tmp_C_2, int64_t);
 		_DEALLOC(_28);
-		_28 = _mat_mult_(_COPY_1DARRAY_PARAM_int64_t(A), true, _COPY_1DARRAY_PARAM_int64_t(B), true, _COPY_1DARRAY_PARAM_int64_t(C), false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
+		_28 = _mat_mult_(tmp_A_0, A_size, true, tmp_B_1, B_size, true, tmp_C_2, C_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 		_CALLEE_DEALLOC(A, "false-false-false" , "mat_mult");
 		_28_dealloc = true;
 		_CALLEE_DEALLOC(B, "false-false-false" , "mat_mult");
 		_28_dealloc = true;
-		_CALLER_DEALLOC(_28, C, "true-true-false" , "mat_mult");
+		_CALLER_DEALLOC(_28, tmp_C_2, "true-true-false" , "mat_mult");
 	}
 	//assign %7 = %28  : int[]
 	_DEALLOC(C);
@@ -368,7 +373,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_31);
 	//indirectinvoke () = %30 (%31) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_31));
+		printf_s(_31, _31_size);
 	}
 	//fieldload %32 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %33 = %32 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

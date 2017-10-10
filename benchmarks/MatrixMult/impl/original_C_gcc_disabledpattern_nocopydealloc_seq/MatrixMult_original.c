@@ -35,7 +35,6 @@ int64_t* _init_(_DECL_1DARRAY_PARAM(data), _DECL_DEALLOC_PARAM(data), int64_t wi
 			//add %9 = %8, %5 : int
 			_9=_8+j;
 			//update %0[%9] = %4 : int[] -> int[]
-			// isCopyEliminated = true
 			data[_9] = i;
 			//const %10 = 1 : int
 			_10 = 1;
@@ -163,7 +162,6 @@ blklab8:;
 			//add %25 = %24, %7 : int
 			_25=_24+j;
 			//update %2[%25] = %9 : int[] -> int[]
-			// isCopyEliminated = true
 			data[_25] = sub_total;
 			//const %26 = 1 : int
 			_26 = 1;
@@ -294,7 +292,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_14);
 	//indirectinvoke () = %13 (%14) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_14));
+		printf_s(_14, _14_size);
 	}
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %16 = %15 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -319,7 +317,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC(_20);
 		// isCopyEliminated of '_5' = true
-		_20 = _init_(_1DARRAY_PARAM(A), false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
+		_20 = _init_(A, A_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
 		_RESET_DEALLOC(_20, A, "true-true-false" , "init");
 	}
 	//assign %5 = %20  : int[]
@@ -344,7 +342,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC(_24);
 		// isCopyEliminated of '_6' = true
-		_24 = _init_(_1DARRAY_PARAM(B), false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
+		_24 = _init_(B, B_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
 		_RESET_DEALLOC(_24, B, "true-true-false" , "init");
 	}
 	//assign %6 = %24  : int[]
@@ -371,7 +369,7 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_5' = true
 		// isCopyEliminated of '_6' = true
 		// isCopyEliminated of '_7' = true
-		_28 = _mat_mult_(_1DARRAY_PARAM(A), false, _1DARRAY_PARAM(B), false, _1DARRAY_PARAM(C), false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
+		_28 = _mat_mult_(A, A_size, false, B, B_size, false, C, C_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 		_RETAIN_DEALLOC(A, "false-false-false" , "mat_mult");
 		_28_dealloc = true;
 		_RETAIN_DEALLOC(B, "false-false-false" , "mat_mult");
@@ -392,7 +390,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_31);
 	//indirectinvoke () = %30 (%31) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_31));
+		printf_s(_31, _31_size);
 	}
 	//fieldload %32 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %33 = %32 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

@@ -20,9 +20,10 @@ import wyopcl.translator.cfg.CFGraph;
  *
  */
 public class LiveVariables {
-	private boolean isChanged;// Indicate if there is any change of in/out  set.
+	private boolean isChanged;// Indicate if there is any change of in/out set.
 	private HashMap<BasicBlock, HashSet<Integer>> inSet;// Each env stores the register numbers.
 	private HashMap<BasicBlock, HashSet<Integer>> outSet;
+
 	/**
 	 * Constructor with a list of blocks.
 	 * 
@@ -33,7 +34,7 @@ public class LiveVariables {
 		outSet = new HashMap<BasicBlock, HashSet<Integer>>();
 	}
 
-	private void initialize(List<BasicBlock> blocks){
+	private void initialize(List<BasicBlock> blocks) {
 		// Initialize in/out set for each block.
 		for (BasicBlock block : blocks) {
 			HashSet<Integer> in = new HashSet<Integer>();
@@ -51,16 +52,16 @@ public class LiveVariables {
 		this.isChanged = true;
 	}
 
-
 	/**
-	 * Given a control flow graph, compute 'IN' and 'OUT' set for each code block using live variable analysis
-	 * (Whiley compiler) and stores each in/out set with HashMap separately.
+	 * Given a control flow graph, compute 'IN' and 'OUT' set for each code block using live variable analysis (Whiley
+	 * compiler) and stores each in/out set with HashMap separately.
+	 * 
 	 * @param name
 	 * @param isVerbose
 	 * @param graph
 	 * @param liveAnalyzer
 	 */
-	public void computeLiveness(String name, boolean isVerbose, CFGraph graph){
+	public void computeLiveness(String name, boolean isVerbose, CFGraph graph) {
 		List<BasicBlock> blocks = graph.getBlockList();
 		initialize(blocks);
 		int iteration = 1;// Start with 1st iteration.
@@ -83,8 +84,7 @@ public class LiveVariables {
 				// Compute the store in set of the block.
 				HashSet<Integer> in = computeIN(block, (HashSet<Integer>) out.clone());
 				if (isVerbose) {
-					System.out.println("In" + ":{" + in + "}\n" + block 
-							+ "\nOut" + ":{" + out + "}\n");
+					System.out.println("In" + ":{" + in + "}\n" + block + "\nOut" + ":{" + out + "}\n");
 				}
 
 			}
@@ -93,8 +93,6 @@ public class LiveVariables {
 		} while (this.isChanged);
 
 	}
-
-
 
 	/**
 	 * Set the isChanged flag.
@@ -133,62 +131,62 @@ public class LiveVariables {
 		// rewrites.put(index,null);
 		boolean isLive = true;
 		environment = (HashSet<Integer>) environment.clone();
-		
-		// Compute (out - def)
+
+		// Compute 'env = (env - def)' where 'def' set is dead variables at code 
 		if (code instanceof Code.AbstractBytecode) {
 			Code.AbstractBytecode aa = (Code.AbstractBytecode) code;
-			
-			// Special case for update code (left operand is always alive)
-			if (code instanceof Codes.Update) {
-				Codes.Update cu = (Codes.Update) aa;
-				// In the normal case, this bytecode is considered live if the
-				// assigned register is live. However, in the case of an
-				// indirect assignment, then it is always considered live.
-				if (!(cu.type(0) instanceof Type.Reference)) {
-					// No, this is not an indirect assignment through a
-					// reference
-					environment.contains(cu.target(0));
-					// Put target to environment (modified by Sam)
-					isLive = environment.add(cu.target(0));
-				}
-			}else if(code instanceof Codes.Assign){
-				// Special case for assignment (modified by Sam)
-				Codes.Assign assign = (Codes.Assign)code;
-				// Get right operand from the assignment and put it to environment set
-				// because it is a used variable 
-				environment.add(assign.operand(0));
-				// Get left operand, and remove it from env
-				// because it is a dead variable
-				isLive = environment.remove(assign.target(0));
-			}else if (code instanceof Codes.ArrayGenerator){
+
+			if (code instanceof Codes.ArrayGenerator) {
 				// Special case for arraygen (modified by Sam)
-				// Left operand is dead 
-				Codes.ArrayGenerator arrgen = (Codes.ArrayGenerator)code;
-				// Get left operand from array generator, and remove it from environment set
-				// because it is a defined variable
-				isLive = environment.remove(arrgen.target(0));	
-			} else {				
+				Codes.ArrayGenerator arrgen = (Codes.ArrayGenerator) code;
+				// Because left operand is dead and remove it from environment set
+				isLive = environment.remove(arrgen.target(0));
+			} else {
 				for (int target : aa.targets()) {
 					isLive = environment.remove(target);
 				}
 			}
 		}
-		
-		// For function parameters
-		if ((isLive && code instanceof Code.AbstractBytecode)
-				|| (code instanceof Codes.Invoke && ((Codes.Invoke) code).type(0) instanceof Type.Method)
-				|| (code instanceof Codes.IndirectInvoke
-						&& ((Codes.IndirectInvoke) code).type(0) instanceof Type.Method)) {
+
+		// Compute 'env = env + used' where 'used' set is used/live at code
+		if (code instanceof Codes.Assign) {
+			Codes.Assign assign = (Codes.Assign) code;
+			// Put right operand to environment set because it is a used variable
+			environment.add(assign.operand(0));
+		} else if (code instanceof Codes.Update) {
+			// Special case for update code (left operand is always alive)
+			Codes.Update cu = (Codes.Update) code;
+			if (!(cu.type(0) instanceof Type.Reference)) {
+				// Put target to environment (modified by Sam)
+				isLive = environment.add(cu.target(0));
+			}
+//		} else if (code instanceof Codes.Invoke) {
+//			Codes.Invoke invoke = (Codes.Invoke)code;
+//			for (int operand : invoke.operands()) {
+//				environment.add(operand);
+//			}
+//		} else if(code instanceof Codes.IndirectInvoke){
+//				//&& ((Codes.IndirectInvoke) code).type(0) instanceof Type.Method){
+//			Codes.IndirectInvoke indirectInvoke = (Codes.IndirectInvoke)code;
+//			for (int operand : indirectInvoke.operands()) {
+//				environment.add(operand);
+//			}
+		} else if(code instanceof Code.AbstractBytecode) {
 			// FIXME: this seems to be a problem if there are no assigned variables!
 			Code.AbstractBytecode c = (Code.AbstractBytecode) code;
 			for (int operand : c.operands()) {
 				environment.add(operand);
 			}
-		} else if (!isLive) {
-			// rewrites.put(index, Codes.Nop);
-		} else {
-			// const
+		}else if(code instanceof Codes.Const || code instanceof Codes.Label 
+				|| code instanceof Codes.Quantify){
+			// Do nothing because const any used variable
+			// We skip Quantify code
+		} else{
+			throw new RuntimeException("Not implemented");
 		}
+//		}else if (!isLive) {
+//			// rewrites.put(index, Codes.Nop);
+//		} 
 
 		return environment;
 	}
@@ -276,7 +274,7 @@ public class LiveVariables {
 	 */
 	public HashSet<Integer> getOUT(BasicBlock block) {
 		return outSet.get(block);
-	}		
+	}
 
 	/**
 	 * Compute 'out' set for a block. Take the union of in sets of child blocks to produce the out set.
@@ -287,7 +285,7 @@ public class LiveVariables {
 		// Check if the block is not exit block.
 		HashSet<Integer> out = getOUT(b);
 		// Check if block has the children.
-		if(!b.isLeaf()){
+		if (!b.isLeaf()) {
 			// Take the union of child blocks' in set.
 			for (BasicBlock child : b.getChildNodes()) {
 				HashSet<Integer> in = getIN(child);

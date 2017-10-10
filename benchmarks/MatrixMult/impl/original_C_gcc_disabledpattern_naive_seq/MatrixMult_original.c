@@ -245,7 +245,7 @@ int main(int argc, char** args){
 	_14[0] = 115; _14[1] = 105; _14[2] = 122; _14[3] = 101; _14[4] = 32; _14[5] = 61; _14[6] = 32; 
 	//indirectinvoke () = %13 (%14) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_14));
+		printf_s(_14, _14_size);
 	}
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %16 = %15 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -263,8 +263,9 @@ int main(int argc, char** args){
 	_COPY_1DARRAY_int64_t(A, _19);
 	//invoke (%20) = (%5, %3, %4) MatrixMult_original:init : function(int[],int,int)->(int[])
 	{
-		void* A_tmp;
-		_20 = _init_(_COPY_1DARRAY_PARAM_int64_t(A), width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
+		void* tmp_A_0;
+		_COPY_1DARRAY_PARAM(A, tmp_A_0, int64_t);
+		_20 = _init_(tmp_A_0, A_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
 	}
 	//assign %5 = %20  : int[]
 	_COPY_1DARRAY_int64_t(A, _20);
@@ -278,8 +279,9 @@ int main(int argc, char** args){
 	_COPY_1DARRAY_int64_t(B, _23);
 	//invoke (%24) = (%6, %3, %4) MatrixMult_original:init : function(int[],int,int)->(int[])
 	{
-		void* B_tmp;
-		_24 = _init_(_COPY_1DARRAY_PARAM_int64_t(B), width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
+		void* tmp_B_0;
+		_COPY_1DARRAY_PARAM(B, tmp_B_0, int64_t);
+		_24 = _init_(tmp_B_0, B_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
 	}
 	//assign %6 = %24  : int[]
 	_COPY_1DARRAY_int64_t(B, _24);
@@ -293,10 +295,13 @@ int main(int argc, char** args){
 	_COPY_1DARRAY_int64_t(C, _27);
 	//invoke (%28) = (%5, %6, %7, %3, %4) MatrixMult_original:mat_mult : function(int[],int[],int[],int,int)->(int[])
 	{
-		void* A_tmp;
-		void* B_tmp;
-		void* C_tmp;
-		_28 = _mat_mult_(_COPY_1DARRAY_PARAM_int64_t(A), _COPY_1DARRAY_PARAM_int64_t(B), _COPY_1DARRAY_PARAM_int64_t(C), width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
+		void* tmp_A_0;
+		_COPY_1DARRAY_PARAM(A, tmp_A_0, int64_t);
+		void* tmp_B_1;
+		_COPY_1DARRAY_PARAM(B, tmp_B_1, int64_t);
+		void* tmp_C_2;
+		_COPY_1DARRAY_PARAM(C, tmp_C_2, int64_t);
+		_28 = _mat_mult_(tmp_A_0, A_size, tmp_B_1, B_size, tmp_C_2, C_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 	}
 	//assign %7 = %28  : int[]
 	_COPY_1DARRAY_int64_t(C, _28);
@@ -307,7 +312,7 @@ int main(int argc, char** args){
 	_31[0] = 77; _31[1] = 97; _31[2] = 116; _31[3] = 114; _31[4] = 105; _31[5] = 120; _31[6] = 32; _31[7] = 67; _31[8] = 91; _31[9] = 115; _31[10] = 105; _31[11] = 122; _31[12] = 101; _31[13] = 45; _31[14] = 49; _31[15] = 93; _31[16] = 91; _31[17] = 115; _31[18] = 105; _31[19] = 122; _31[20] = 101; _31[21] = 45; _31[22] = 49; _31[23] = 93; _31[24] = 32; _31[25] = 61; _31[26] = 32; 
 	//indirectinvoke () = %30 (%31) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_31));
+		printf_s(_31, _31_size);
 	}
 	//fieldload %32 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %33 = %32 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

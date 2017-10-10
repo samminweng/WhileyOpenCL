@@ -164,9 +164,10 @@ blklab6:;
 blklab5:;
 	//invoke (%15) = (%4) Reverse_original:reverse : function(int[])->(int[])
 	{
-		void* arr_tmp;
+		void* tmp_arr_0;
+		_COPY_1DARRAY_PARAM(arr, tmp_arr_0, int64_t);
 		_DEALLOC(_15);
-		_15 = _reverse_(_COPY_1DARRAY_PARAM_int64_t(arr), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
+		_15 = _reverse_(tmp_arr_0, arr_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
 		_CALLEE_DEALLOC(arr, "false-false-false" , "reverse");
 		_15_dealloc = true;
 	}

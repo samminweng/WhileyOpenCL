@@ -54,7 +54,6 @@ int64_t* _reverse_(_DECL_1DARRAY_PARAM(arr), _DECL_1DARRAYSIZE_PARAM_CALLBYREFER
 		// isCopyEliminated = true
 		i = _17;
 		//update %3[%2] = %4 : int[] -> int[]
-		// isCopyEliminated = false
 		r[i] = item;
 //.blklab1
 blklab1:;
@@ -130,7 +129,6 @@ int main(int argc, char** args){
 		//sub %12 = %2, %3 : int
 		_12=max-index;
 		//update %4[%3] = %12 : int[] -> int[]
-		// isCopyEliminated = false
 		arr[index] = _12;
 		//const %13 = 1 : int
 		_13 = 1;
@@ -147,7 +145,7 @@ blklab5:;
 	//invoke (%15) = (%4) Reverse_original:reverse : function(int[])->(int[])
 	{
 		// isCopyEliminated of '_4' = true
-		_15 = _reverse_(_1DARRAY_PARAM(arr), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
+		_15 = _reverse_(arr, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
 	}
 	//assign %4 = %15  : int[]
 	// isCopyEliminated = true
