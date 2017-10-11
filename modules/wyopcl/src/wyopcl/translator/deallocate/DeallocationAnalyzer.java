@@ -666,7 +666,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			return "";
 		}
 
-		FunctionOrMethod callingfunction = this.getCallingFunction(code);
+		FunctionOrMethod callingfunction = this.getCalledFunction(code);
 		int arguement = mapFunctionArgumentToCalleeRegister(register, code);
 		boolean isMutated = readwriteAnalyzer.isMutated(arguement, callingfunction);
 		boolean isReturned = returnAnalyzer.isReturned(arguement, callingfunction);

@@ -12,8 +12,6 @@ digraph main{
 "blklab4 [LOOP_HEADER]"[shape=box,style=filled,color=".7 .3 1.0"];
 "blklab4 [LOOP_BODY]"[shape=box,style=filled,color=".7 .3 1.0"];
 "blklab4 [LOOP_EXIT]"[shape=box,style=filled,color=".7 .3 1.0"];
-"blklab6 [ASSERT]"[shape=box];
-"blklab6 [BLOCK]"[shape=box];
 "blklab5 [BLOCK]"[shape=box];
 "exit [EXIT]"[shape=box];
 "entry [ENTRY]"->"code [BLOCK]";
@@ -29,10 +27,8 @@ digraph main{
 "add16 [BLOCK]"->"blklab4 [LOOP_HEADER]";
 "blklab4 [LOOP_HEADER]"->"blklab4 [LOOP_BODY]";
 "blklab4 [LOOP_HEADER]"->"blklab4 [LOOP_EXIT]";
-"blklab4 [LOOP_BODY]"->"blklab6 [ASSERT]";
+"blklab4 [LOOP_BODY]"->"blklab5 [BLOCK]";
 "blklab4 [LOOP_EXIT]"->"exit [EXIT]";
-"blklab6 [ASSERT]"->"blklab6 [BLOCK]";
-"blklab6 [BLOCK]"->"blklab5 [BLOCK]";
 "blklab5 [BLOCK]"->"blklab4 [LOOP_HEADER]";
 
 }

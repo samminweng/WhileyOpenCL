@@ -89,7 +89,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			if (code instanceof Codes.Invoke) {
 				// Special case for a function call
 				Codes.Invoke functioncall = (Codes.Invoke) code;
-				FunctionOrMethod callee = this.getCallingFunction(functioncall);
+				FunctionOrMethod callee = this.getCalledFunction(functioncall);
 				if (callee != null) {
 					// Map the register to function argument.
 					int callee_register = this.mapFunctionArgumentToCalleeRegister(register, functioncall);

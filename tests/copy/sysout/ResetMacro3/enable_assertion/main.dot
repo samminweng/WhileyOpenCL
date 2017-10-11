@@ -3,26 +3,14 @@ digraph main{
 "code [BLOCK]"[shape=box];
 "func6 [INVOKE]"[shape=box];
 "func6 [BLOCK]"[shape=box];
-"blklab2 [ASSERT]"[shape=box];
-"blklab2 [BLOCK]"[shape=box];
 "func20 [INVOKE]"[shape=box];
 "func20 [BLOCK]"[shape=box];
-"blklab3 [ASSERT]"[shape=box];
-"blklab3 [BLOCK]"[shape=box];
-"blklab4 [ASSERT]"[shape=box];
-"blklab4 [BLOCK]"[shape=box];
 "exit [EXIT]"[shape=box];
 "entry [ENTRY]"->"code [BLOCK]";
 "code [BLOCK]"->"func6 [INVOKE]";
 "func6 [INVOKE]"->"func6 [BLOCK]";
-"func6 [BLOCK]"->"blklab2 [ASSERT]";
-"blklab2 [ASSERT]"->"blklab2 [BLOCK]";
-"blklab2 [BLOCK]"->"func20 [INVOKE]";
+"func6 [BLOCK]"->"func20 [INVOKE]";
 "func20 [INVOKE]"->"func20 [BLOCK]";
-"func20 [BLOCK]"->"blklab3 [ASSERT]";
-"blklab3 [ASSERT]"->"blklab3 [BLOCK]";
-"blklab3 [BLOCK]"->"blklab4 [ASSERT]";
-"blklab4 [ASSERT]"->"blklab4 [BLOCK]";
-"blklab4 [BLOCK]"->"exit [EXIT]";
+"func20 [BLOCK]"->"exit [EXIT]";
 
 }

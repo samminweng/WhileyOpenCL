@@ -160,7 +160,7 @@ In:{[0, 1, 2]}
 Update8 [BLOCK] 
 Out:{[0, 1, 2]}
 
-In:{[0, 1, 2, 6, 7]}
+In:{[0, 1, 2]}
 Update8 [UPDATE] 
 -------------------------------
 l.0:update %2[%7] = %6 : int[] -> int[]
@@ -178,7 +178,7 @@ l.4:assign %2 = %1  : int[]
 l.5:const %6 = 1 : int
 l.6:const %7 = 0 : int
 -------------------------------
-Out:{[0, 1, 2, 6, 7]}
+Out:{[0, 1, 2]}
 
 In:{[0]}
 entry [ENTRY] 
@@ -246,7 +246,7 @@ In:{[0, 1, 2]}
 Update8 [BLOCK] 
 Out:{[0, 1, 2]}
 
-In:{[0, 1, 2, 6, 7]}
+In:{[0, 1, 2]}
 Update8 [UPDATE] 
 -------------------------------
 l.0:update %2[%7] = %6 : int[] -> int[]
@@ -264,7 +264,7 @@ l.4:assign %2 = %1  : int[]
 l.5:const %6 = 1 : int
 l.6:const %7 = 0 : int
 -------------------------------
-Out:{[0, 1, 2, 6, 7]}
+Out:{[0, 1, 2]}
 
 In:{[0]}
 entry [ENTRY] 
@@ -286,9 +286,9 @@ l.4:assign %2 = %1  : int[]
 l.5:const %6 = 1 : int
 l.6:const %7 = 0 : int
 -------------------------------
-Out:{sys, a, b, _6, _7}
+Out:{sys, a, b}
 
-In:{sys, a, b, _6, _7}
+In:{sys, a, b}
 Update8 [UPDATE] 
 -------------------------------
 l.0:update %2[%7] = %6 : int[] -> int[]

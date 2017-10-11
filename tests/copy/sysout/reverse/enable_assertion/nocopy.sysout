@@ -222,7 +222,7 @@ In:{[0, 2, 3, 12]}
 Update18 [BLOCK] 
 Out:{[0, 2, 3, 12]}
 
-In:{[0, 2, 3, 12, 4]}
+In:{[0, 2, 3, 12]}
 Update18 [UPDATE] 
 -------------------------------
 l.0:update %3[%2] = %4 : int[] -> int[]
@@ -241,7 +241,7 @@ l.5:const %16 = 1 : int
 l.6:sub %17 = %2, %16 : int
 l.7:assign %2 = %17  : int
 -------------------------------
-Out:{[0, 2, 3, 4, 12]}
+Out:{[0, 2, 3, 12]}
 
 In:{[0, 2, 3]}
 blklab3, blklab2 [ASSERT] 
@@ -299,7 +299,7 @@ In:{[0, 2, 3, 12]}
 Update18 [BLOCK] 
 Out:{[0, 2, 3, 12]}
 
-In:{[0, 2, 3, 12, 4]}
+In:{[0, 2, 3, 12]}
 Update18 [UPDATE] 
 -------------------------------
 l.0:update %3[%2] = %4 : int[] -> int[]
@@ -318,7 +318,7 @@ l.5:const %16 = 1 : int
 l.6:sub %17 = %2, %16 : int
 l.7:assign %2 = %17  : int
 -------------------------------
-Out:{[0, 2, 3, 4, 12]}
+Out:{[0, 2, 3, 12]}
 
 In:{[0, 2, 3]}
 blklab3, blklab2 [ASSERT] 
@@ -425,9 +425,9 @@ l.5:const %16 = 1 : int
 l.6:sub %17 = %2, %16 : int
 l.7:assign %2 = %17  : int
 -------------------------------
-Out:{ls, i, r, item, _12}
+Out:{ls, i, r, _12}
 
-In:{ls, i, r, _12, item}
+In:{ls, i, r, _12}
 Update18 [UPDATE] 
 -------------------------------
 l.0:update %3[%2] = %4 : int[] -> int[]
@@ -622,7 +622,7 @@ l.2:assign %2 = %13  : int
 -------------------------------
 Out:{[1, 2]}
 
-In:{[1, 2, 11]}
+In:{[1, 2]}
 Update12 [UPDATE] 
 -------------------------------
 l.0:update %1[%2] = %11 : int[] -> int[]
@@ -641,7 +641,7 @@ l.1:ifge %2, %9 goto blklab4 : int
 l.2:const %10 = 10 : int
 l.3:sub %11 = %10, %2 : int
 -------------------------------
-Out:{[1, 2, 11]}
+Out:{[1, 2]}
 
 In:{[1, 2]}
 blklab4 [LOOP_HEADER] 
@@ -727,7 +727,7 @@ l.2:assign %2 = %13  : int
 -------------------------------
 Out:{[1, 2]}
 
-In:{[1, 2, 11]}
+In:{[1, 2]}
 Update12 [UPDATE] 
 -------------------------------
 l.0:update %1[%2] = %11 : int[] -> int[]
@@ -746,7 +746,7 @@ l.1:ifge %2, %9 goto blklab4 : int
 l.2:const %10 = 10 : int
 l.3:sub %11 = %10, %2 : int
 -------------------------------
-Out:{[1, 2, 11]}
+Out:{[1, 2]}
 
 In:{[1, 2]}
 blklab4 [LOOP_HEADER] 
@@ -797,13 +797,13 @@ l.1:ifge %2, %9 goto blklab4 : int
 l.2:const %10 = 10 : int
 l.3:sub %11 = %10, %2 : int
 -------------------------------
-Out:{input, index, _11}
+Out:{input, index}
 
 In:{input}
 blklab4 [LOOP_EXIT] 
 Out:{input}
 
-In:{input, index, _11}
+In:{input, index}
 Update12 [UPDATE] 
 -------------------------------
 l.0:update %1[%2] = %11 : int[] -> int[]

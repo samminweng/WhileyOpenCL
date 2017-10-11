@@ -87,19 +87,19 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(b, _10);
 	//assign %1 = %2  : int[]
 	_DEALLOC(a);
-	// isCopyEliminated = false
-	_COPY_1DARRAY_int64_t(a, b);
-	_ADD_DEALLOC(a);
+	// isCopyEliminated = true
+	_UPDATE_1DARRAY(a, b);
+	_TRANSFER_DEALLOC(a, b);
 	//assign %3 = %2  : int[]
 	_DEALLOC(c);
-	// isCopyEliminated = false
-	_COPY_1DARRAY_int64_t(c, b);
-	_ADD_DEALLOC(c);
+	// isCopyEliminated = true
+	_UPDATE_1DARRAY(c, b);
+	_TRANSFER_DEALLOC(c, b);
 	//assign %4 = %2  : int[]
 	_DEALLOC(d);
-	// isCopyEliminated = false
-	_COPY_1DARRAY_int64_t(d, b);
-	_ADD_DEALLOC(d);
+	// isCopyEliminated = true
+	_UPDATE_1DARRAY(d, b);
+	_TRANSFER_DEALLOC(d, b);
 	//const %11 = 2 : int
 	_11 = 2;
 	//const %12 = 5 : int

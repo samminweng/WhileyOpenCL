@@ -1,3 +1,4 @@
+#!/bin/bash
 ## Reverse
 cd reverse/disable_assertion/ &&
 ./../../../../../bin/wyopcl -verbose -nocopy -da reverse.whiley > nocopy.sysout &&

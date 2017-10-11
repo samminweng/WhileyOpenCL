@@ -151,7 +151,7 @@ In:{[0]}
 Update8 [BLOCK] 
 Out:{[0]}
 
-In:{[0, 8, 1]}
+In:{[0]}
 Update8 [UPDATE] 
 -------------------------------
 l.0:update %0[%8] = %1 : int[] -> int[]
@@ -171,7 +171,7 @@ blklab0 [IF]
 l.0:ifgt %1, %7 goto blklab0 : int
 l.1:const %8 = 0 : int
 -------------------------------
-Out:{[0, 1, 8]}
+Out:{[0]}
 
 In:{[0, 1, 3, 7]}
 blklab0 [CONDITION] 
@@ -202,7 +202,7 @@ In:{[0]}
 Update8 [BLOCK] 
 Out:{[0]}
 
-In:{[0, 8, 1]}
+In:{[0]}
 Update8 [UPDATE] 
 -------------------------------
 l.0:update %0[%8] = %1 : int[] -> int[]
@@ -222,7 +222,7 @@ blklab0 [IF]
 l.0:ifgt %1, %7 goto blklab0 : int
 l.1:const %8 = 0 : int
 -------------------------------
-Out:{[0, 1, 8]}
+Out:{[0]}
 
 In:{[0, 1, 3, 7]}
 blklab0 [CONDITION] 
@@ -269,7 +269,7 @@ blklab0 [IF]
 l.0:ifgt %1, %7 goto blklab0 : int
 l.1:const %8 = 0 : int
 -------------------------------
-Out:{x, num, _8}
+Out:{x}
 
 In:{num, a, _7}
 blklab0 [ELSE] 
@@ -278,7 +278,7 @@ l.0:ifle %1, %7 goto blklab0 : int
 -------------------------------
 Out:{a}
 
-In:{x, _8, num}
+In:{x}
 Update8 [UPDATE] 
 -------------------------------
 l.0:update %0[%8] = %1 : int[] -> int[]

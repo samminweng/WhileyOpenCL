@@ -119,11 +119,12 @@ public abstract class Analyzer {
 	}
 	
 	/**
+	 * Get the called function
 	 * 
 	 * @param code
 	 * @return
 	 */
-	protected FunctionOrMethod getCallingFunction(Codes.Invoke code) {
+	protected FunctionOrMethod getCalledFunction(Codes.Invoke code) {
 		String name = code.name.name();
 		wyil.lang.Type.FunctionOrMethod type = code.type(0);
 		if (!this.module.functionOrMethod(name).isEmpty()){
@@ -320,15 +321,7 @@ public abstract class Analyzer {
 			line = printWyILCode(function, code, line);
 			// Parse each byte-code and add the constraints accordingly.
 			try {
-				if (code instanceof Codes.Assert) {
-					if(this.isAssertEnable){
-						buildCFG((Codes.Assert)code, function);
-					}
-				} else if (code instanceof Codes.Invariant) {
-					if(this.isAssertEnable){
-						buildCFG((Codes.Invariant) code, function);
-					}
-				} else if (code instanceof Codes.If) {
+				if (code instanceof Codes.If) {
 					buildCFG((Codes.If) code, function);
 				} else if (code instanceof Codes.Return) {
 					buildCFG((Codes.Return) code, function);
@@ -383,6 +376,7 @@ public abstract class Analyzer {
 	 * @param code
 	 * @param function
 	 */
+	@Deprecated
 	private void buildCFG(Assert code, FunctionOrMethod function) {
 		// Get label code from the list of assertion code
 		String label = code.bytecodes().stream().filter(c -> c instanceof Codes.Label).map(c -> ((Codes.Label) c).label)
@@ -431,6 +425,7 @@ public abstract class Analyzer {
 	 * @param code
 	 * @param function
 	 */
+	@Deprecated
 	private void buildCFG(Invariant code, FunctionOrMethod function) {
 		// Add the invariant to the current block.
 		CFGraph graph = getCFGraph(function);
@@ -712,7 +707,7 @@ public abstract class Analyzer {
 		if (code instanceof Codes.Invoke) {
 			Codes.Invoke invoke = (Codes.Invoke) code;
 			// Get the calling function.
-			FunctionOrMethod callingfunction = getCallingFunction(invoke);
+			FunctionOrMethod callingfunction = getCalledFunction(invoke);
 			// Check if function are defined in the program.
 			// Check if calling function is not recursive function.
 			// TreeNode can not be recursively added to the function.
@@ -732,12 +727,6 @@ public abstract class Analyzer {
 			Codes.Loop loop = (Codes.Loop) code;
 			// Iterate the byte-code inside loop body
 			for (Code c : loop.bytecodes()) {
-				buildCallGraph(c, function, parentNode);
-			}
-		} else if (code instanceof Codes.Assert){
-			Codes.Assert as = (Codes.Assert)code;
-			// Iterate each byte-code inside an assertion
-			for(Code c :as.bytecodes()){
 				buildCallGraph(c, function, parentNode);
 			}
 		}
