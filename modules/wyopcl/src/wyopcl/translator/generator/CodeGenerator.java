@@ -381,9 +381,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			declaration += ")";
 		}
 
-		if (config.isVerbose()) {
-			System.out.println(declaration);
-		}
+//		if (config.isVerbose()) {
+//			System.out.println(declaration);
+//		}
 		return declaration;
 	}
 

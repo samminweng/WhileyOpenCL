@@ -48,6 +48,8 @@ public class CopyAnalysisTestCase {
 				"livecheck",
 				"livecheck1",
 				"ResetMacro4",
+				"ifelse", 
+				"cashtill"
 			});
 	}
 	

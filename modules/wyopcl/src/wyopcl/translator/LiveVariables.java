@@ -9,6 +9,7 @@ import wyil.lang.CodeBlock;
 import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.Codes.Return;
+import wyopcl.Configuration;
 import wyopcl.translator.cfg.BasicBlock;
 import wyopcl.translator.cfg.BasicBlock.BlockType;
 import wyopcl.translator.cfg.CFGraph;
@@ -23,13 +24,17 @@ public class LiveVariables {
 	private boolean isChanged;// Indicate if there is any change of in/out set.
 	private HashMap<BasicBlock, HashSet<Integer>> inSet;// Each env stores the register numbers.
 	private HashMap<BasicBlock, HashSet<Integer>> outSet;
+	//private Configuration config;
+	private boolean isAssertEnable;
 
 	/**
 	 * Constructor with a list of blocks.
 	 * 
 	 * @param blocks
 	 */
-	public LiveVariables() {
+	public LiveVariables(Configuration config) {
+		//this.config = config;
+		this.isAssertEnable = config.isEnabled(Configuration.ENABLEASSERTION);
 		inSet = new HashMap<BasicBlock, HashSet<Integer>>();
 		outSet = new HashMap<BasicBlock, HashSet<Integer>>();
 	}
@@ -66,10 +71,10 @@ public class LiveVariables {
 		initialize(blocks);
 		int iteration = 1;// Start with 1st iteration.
 		do {
-			if (isVerbose) {
-				System.out.println("###### Live analysis for " + name + " function. ######");
-				System.out.println("Iteration " + iteration);
-			}
+//			if (isVerbose) {
+//				System.out.println("###### Live analysis for " + name + " function. ######");
+//				System.out.println("Iteration " + iteration);
+//			}
 			// Set the initial value of isChanged.
 			this.isChanged = false;
 			// Traverse the blocks in the reverse order other than exit block
@@ -83,9 +88,9 @@ public class LiveVariables {
 				HashSet<Integer> out = (HashSet<Integer>) computeOut(block);
 				// Compute the store in set of the block.
 				HashSet<Integer> in = computeIN(block, (HashSet<Integer>) out.clone());
-				if (isVerbose) {
-					System.out.println("In" + ":{" + in + "}\n" + block + "\nOut" + ":{" + out + "}\n");
-				}
+//				if (isVerbose) {
+//					System.out.println("In" + ":{" + in + "}\n" + block + "\nOut" + ":{" + out + "}\n");
+//				}
 
 			}
 			// Increment the iteration.
@@ -132,7 +137,7 @@ public class LiveVariables {
 		boolean isLive = true;
 		environment = (HashSet<Integer>) environment.clone();
 
-		// Compute 'env = (env - def)' where 'def' set is dead variables at code 
+		// Compute 'env = (env - def)' where 'def' set is dead variables at code
 		if (code instanceof Code.AbstractBytecode) {
 			Code.AbstractBytecode aa = (Code.AbstractBytecode) code;
 
@@ -160,33 +165,21 @@ public class LiveVariables {
 				// Put target to environment (modified by Sam)
 				isLive = environment.add(cu.target(0));
 			}
-//		} else if (code instanceof Codes.Invoke) {
-//			Codes.Invoke invoke = (Codes.Invoke)code;
-//			for (int operand : invoke.operands()) {
-//				environment.add(operand);
-//			}
-//		} else if(code instanceof Codes.IndirectInvoke){
-//				//&& ((Codes.IndirectInvoke) code).type(0) instanceof Type.Method){
-//			Codes.IndirectInvoke indirectInvoke = (Codes.IndirectInvoke)code;
-//			for (int operand : indirectInvoke.operands()) {
-//				environment.add(operand);
-//			}
-		} else if(code instanceof Code.AbstractBytecode) {
+		} else if (code instanceof Code.AbstractBytecode) {
 			// FIXME: this seems to be a problem if there are no assigned variables!
 			Code.AbstractBytecode c = (Code.AbstractBytecode) code;
 			for (int operand : c.operands()) {
 				environment.add(operand);
 			}
-		}else if(code instanceof Codes.Const || code instanceof Codes.Label 
-				|| code instanceof Codes.Quantify){
+		} else if (code instanceof Codes.Const || code instanceof Codes.Label || code instanceof Codes.Quantify) {
 			// Do nothing because const any used variable
 			// We skip Quantify code
-		} else{
+		} else {
 			throw new RuntimeException("Not implemented");
 		}
-//		}else if (!isLive) {
-//			// rewrites.put(index, Codes.Nop);
-//		} 
+		// }else if (!isLive) {
+		// // rewrites.put(index, Codes.Nop);
+		// }
 
 		return environment;
 	}
@@ -205,10 +198,20 @@ public class LiveVariables {
 		for (int i = codes.size() - 1; i >= 0; i--) {
 			// Compute the live variables, and store the results in in/out set.
 			Code code = codes.get(i);
+
 			if (code instanceof Codes.Assert) {
-				in = compute(((Codes.Assert) code).bytecodes(), in);
+				if (this.isAssertEnable) {
+					// Process the byte-code inside assertion only if assertion flag is enabled.
+					in = compute(((Codes.Assert) code).bytecodes(), in);
+				}else{
+					continue; // Skip the assertion
+				}
 			} else if (code instanceof Codes.Invariant) {
-				in = compute(((Codes.Invariant) code).bytecodes(), in);
+				if (this.isAssertEnable) {
+					in = compute(((Codes.Invariant) code).bytecodes(), in);
+				}else{
+					continue;// Skip the invariant
+				}
 			} else {
 				in = propagate(null, code, in);
 			}

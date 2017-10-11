@@ -1,0 +1,123 @@
+root->f
+root->main
+###### Live variables for f function. ######
+In:{x}
+entry [ENTRY] 
+Out:{x}
+
+In:{x}
+code [BLOCK] 
+-------------------------------
+l.0:const %2 = 10 : int
+-------------------------------
+Out:{x, _2}
+
+In:{x, _2}
+blklab1 [CONDITION] 
+Out:{x, _2}
+
+In:{x, _2}
+blklab1 [IF] 
+-------------------------------
+l.0:iflt %0, %2 goto blklab1 : int
+l.1:const %3 = 1 : int
+-------------------------------
+Out:{_3}
+
+In:{x, _2}
+blklab1 [ELSE] 
+-------------------------------
+l.0:ifge %0, %2 goto blklab1 : int
+l.1:const %4 = 10 : int
+-------------------------------
+Out:{x, _4}
+
+In:{_3}
+return_3 [RETURN] 
+-------------------------------
+l.0:return %3
+-------------------------------
+Out:{_3}
+
+In:{}
+blklab2 [BLOCK] 
+-------------------------------
+l.0:const %6 = 0 : int
+-------------------------------
+Out:{_6}
+
+In:{x, _4}
+blklab3 [CONDITION] 
+Out:{x, _4}
+
+In:{x, _4}
+blklab3 [IF] 
+-------------------------------
+l.0:ifgt %0, %4 goto blklab3 : int
+l.1:const %5 = 2 : int
+-------------------------------
+Out:{_5}
+
+In:{x, _4}
+blklab3 [ELSE] 
+-------------------------------
+l.0:ifle %0, %4 goto blklab3 : int
+-------------------------------
+Out:{}
+
+In:{_5}
+return_5 [RETURN] 
+-------------------------------
+l.0:return %5
+-------------------------------
+Out:{_5}
+
+In:{_6}
+return_6 [RETURN] 
+-------------------------------
+l.0:return %6
+-------------------------------
+Out:{_6}
+
+In:{}
+exit [EXIT] 
+Out:{}
+
+###### Live variables for main function. ######
+In:{sys}
+entry [ENTRY] 
+Out:{sys}
+
+In:{sys}
+code [BLOCK] 
+-------------------------------
+l.0:const %5 = 1 : int
+l.1:invoke (%4) = (%5) ifelse:f : function(int)->(int)
+l.2:assign %1 = %4  : int
+l.3:assert
+l.4:fieldload %7 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.5:fieldload %8 = %7 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.6:indirectinvoke () = %8 (%1) : method(any)->()
+l.7:const %10 = 10 : int
+l.8:invoke (%9) = (%10) ifelse:f : function(int)->(int)
+l.9:assign %2 = %9  : int
+l.10:assert
+l.11:fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.12:fieldload %13 = %12 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.13:indirectinvoke () = %13 (%2) : method(any)->()
+l.14:const %15 = 11 : int
+l.15:invoke (%14) = (%15) ifelse:f : function(int)->(int)
+l.16:assign %3 = %14  : int
+l.17:assert
+l.18:fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.19:fieldload %18 = %17 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.20:indirectinvoke () = %18 (%3) : method(any)->()
+-------------------------------
+Out:{}
+
+In:{}
+exit [EXIT] 
+Out:{}
+
+
+Copy elimination analysis completed. File: ifelse.wyil

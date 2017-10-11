@@ -223,16 +223,16 @@ public class LiveVariablesAnalysis extends Analyzer {
 	 *            code block of function
 	 */
 	private void computeLiveness(FunctionOrMethod function) {
-		LiveVariables liveness = new LiveVariables();
+		LiveVariables liveness = new LiveVariables(this.config);
 		CFGraph cfGraph = this.getCFGraph(function);
 		if (cfGraph != null) {
 			liveness.computeLiveness(function.name(), isVerbose, cfGraph);
 			// Store the liveness analysis for the function.
 			livenessStore.put(function, liveness);
-			// Print out analysis result
-			if (isVerbose) {
-				printLivenss(function);
-			}
+//			// Print out analysis result
+//			if (isVerbose) {
+//				printLivenss(function);
+//			}
 		} else {
 			throw new RuntimeException("Not building CFG for " + function);
 		}
@@ -246,6 +246,10 @@ public class LiveVariablesAnalysis extends Analyzer {
 			// Check if the function has been transformed. If so, use the transformed one.
 			function = this.getFunction(function);
 			computeLiveness(function);
+			// Print out analysis result
+			if (isVerbose) {
+				printLivenss(function);
+			}
 		}
 	}
 }

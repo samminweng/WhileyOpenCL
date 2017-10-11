@@ -46,8 +46,6 @@ public abstract class Analyzer {
 	protected Configuration config;
 	// Boolean flag indicates whether to print out debugging messages
 	public boolean isVerbose;
-	// Boolean flag indicates 
-	public boolean isAssertEnable;
 	// Maps of CFGs
 	protected HashMap<FunctionOrMethod, CFGraph> cfgraphs;
 	// The line number
@@ -66,7 +64,6 @@ public abstract class Analyzer {
 		this.cfgraphs = new HashMap<FunctionOrMethod, CFGraph>();
 		this.config = config;
 		this.isVerbose = config.isVerbose();
-		this.isAssertEnable = config.isEnabled(Configuration.ENABLEASSERTION);
 	}
 
 	/**
@@ -293,15 +290,15 @@ public abstract class Analyzer {
 	 * @param line
 	 */
 	private int printWyILCode(FunctionOrMethod function, Code code, int line) {
-		if (isVerbose) {
-			String name = function.name();
-			// Print out the bytecode
-			if (code instanceof Codes.Label) {
-				System.out.println(name + "." + line + " [" + code + "]");
-			} else {
-				System.out.println(name + "." + line + " [\t" + code + "]");
-			}
-		}
+//		if (isVerbose) {
+//			String name = function.name();
+//			// Print out the bytecode
+//			if (code instanceof Codes.Label) {
+//				System.out.println(name + "." + line + " [" + code + "]");
+//			} else {
+//				System.out.println(name + "." + line + " [\t" + code + "]");
+//			}
+//		}
 		return ++line;
 	}
 
@@ -409,15 +406,33 @@ public abstract class Analyzer {
 		// Get the graph
 		CFGraph graph = getCFGraph(function);
 		BasicBlock c_blk = graph.getCurrentBlock();
-		// Get the label name (e.g. swap12).
-		String label = code.name.name() + line;
-		// Create a new single block for invoke wyil code.
-		BasicBlock invoke_blk = graph.createBasicBlock(label, BlockType.INVOKE, c_blk);
-		invoke_blk.addCode(code);
-		// Create another block
-		BasicBlock blk = graph.createBasicBlock(label, BlockType.BLOCK, invoke_blk);
-		// Set next_blk to be the current block.
-		graph.setCurrentBlock(blk);
+		
+		// Check if any array typed parameter is used in 'invoke' code
+		boolean isArrayParam = false;		
+		for(Type paramtype: code.type(0).params()){
+			if(paramtype instanceof Type.Array 
+				|| paramtype instanceof Type.Nominal // Structure
+				){
+				isArrayParam = true;
+				break;
+			}
+		}
+		
+		if(isArrayParam){
+			// Create a 'function call' block
+			// Get the label name (e.g. swap12).
+			String label = code.name.name() + line;
+			// Create a new single block for invoke wyil code.
+			BasicBlock invoke_blk = graph.createBasicBlock(label, BlockType.INVOKE, c_blk);
+			invoke_blk.addCode(code);
+			// Create another block
+			BasicBlock blk = graph.createBasicBlock(label, BlockType.BLOCK, invoke_blk);
+			// Set next_blk to be the current block.
+			graph.setCurrentBlock(blk);
+		}else{
+			// Add 'invoke' code to current block
+			c_blk.addCode(code);
+		}
 	}
 	
 	/**
