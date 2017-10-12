@@ -49,7 +49,8 @@ public class CopyAnalysisTestCase {
 				"livecheck1",
 				"ResetMacro4",
 				"ifelse", 
-				"cashtill"
+				"cashtill", 
+				"nestedwhileloop"
 			});
 	}
 	

@@ -1,0 +1,110 @@
+root->f
+root->main
+###### Live variables for f function. ######
+In:{limit}
+entry [ENTRY] 
+Out:{limit}
+
+In:{limit}
+code [BLOCK] 
+-------------------------------
+l.0:const %5 = 0 : int
+l.1:assign %2 = %5  : int
+l.2:const %6 = 0 : int
+l.3:assign %3 = %6  : int
+-------------------------------
+Out:{limit, i, sum}
+
+In:{limit, i, sum}
+blklab0 [LOOP_HEADER] 
+Out:{limit, i, sum}
+
+In:{limit, i, sum}
+blklab0 [LOOP_BODY] 
+-------------------------------
+l.0:ifge %2, %0 goto blklab0 : int
+l.1:const %7 = 0 : int
+l.2:assign %4 = %7  : int
+-------------------------------
+Out:{limit, i, sum, j}
+
+In:{sum}
+blklab0 [LOOP_EXIT] 
+Out:{sum}
+
+In:{limit, i, sum, j}
+blklab2 [LOOP_HEADER] 
+Out:{limit, i, sum, j}
+
+In:{limit, i, sum, j}
+blklab2 [LOOP_BODY] 
+-------------------------------
+l.0:ifge %4, %0 goto blklab2 : int
+l.1:mul %8 = %2, %4 : int
+l.2:add %9 = %3, %8 : int
+l.3:assign %3 = %9  : int
+l.4:const %10 = 1 : int
+l.5:add %11 = %4, %10 : int
+l.6:assign %4 = %11  : int
+-------------------------------
+Out:{limit, i, sum, j}
+
+In:{limit, i, sum}
+blklab2 [LOOP_EXIT] 
+-------------------------------
+l.0:const %12 = 1 : int
+l.1:add %13 = %2, %12 : int
+l.2:assign %2 = %13  : int
+-------------------------------
+Out:{limit, i, sum}
+
+In:{limit, i, sum, j}
+blklab3 [BLOCK] 
+Out:{limit, i, sum, j}
+
+In:{limit, i, sum}
+blklab1 [BLOCK] 
+Out:{limit, i, sum}
+
+In:{sum}
+return_3 [RETURN] 
+-------------------------------
+l.0:return %3
+-------------------------------
+Out:{sum}
+
+In:{}
+exit [EXIT] 
+Out:{}
+
+###### Live variables for main function. ######
+In:{sys}
+entry [ENTRY] 
+Out:{sys}
+
+In:{sys}
+code [BLOCK] 
+-------------------------------
+l.0:const %4 = 43 : int
+l.1:invoke (%3) = (%4) nestedwhileloop:f : function(int)->(int)
+l.2:assign %1 = %3  : int
+l.3:fieldload %5 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.4:fieldload %6 = %5 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.5:indirectinvoke () = %6 (%1) : method(any)->()
+l.6:assert
+l.7:const %9 = 257 : int
+l.8:invoke (%8) = (%9) nestedwhileloop:f : function(int)->(int)
+l.9:assign %2 = %8  : int
+l.10:fieldload %10 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+l.11:fieldload %11 = %10 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+l.12:indirectinvoke () = %11 (%2) : method(any)->()
+l.13:assert
+-------------------------------
+Out:{}
+
+In:{}
+exit [EXIT] 
+Out:{}
+
+
+Copy elimination analysis completed. File: nestedwhileloop.wyil
