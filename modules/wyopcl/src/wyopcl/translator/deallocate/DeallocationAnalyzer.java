@@ -398,32 +398,47 @@ public class DeallocationAnalyzer extends Analyzer {
 				break;
 			}
 		} else {
+			// Get return variable and type
+			// Get function return variable
+			String ret = "";
+			Type ret_type = null;
+			if (code.targets().length > 0) {
+				ret = stores.getVar(code.target(0), function);
+				// Get the return type
+				ret_type = stores.getRawType(code.target(0), function);
+			}
+			
+			
 			// Apply the macros for each parameter
 			int index = 0;
 			for (int register : code.operands()) {
 				String macro = computeDealloc(register, code, function, stores, copyAnalyzer);
-				if (!macro.equals("")) {
-					// Get parameter name
-					String parameter = stores.getVar(register, function);
-					// Split the macro into an array of two string
-					String[] parts = macro.split("\t");
-					// Get macro name
-					String macro_name = parts[0];
-					// Get check results (mutable, return and live checks on parameter)
-					String checks = parts[1];
-					// Get function name
-					String func_name = code.name.name();
-					// Get parameter type
-					Type parameter_type = stores.getRawType(register, function);
+				if(macro.equals("")){
+					index++;
+					// We do not need post code
+					continue;
+				}
+				// Split the macro into an array of two string
+				String[] parts = macro.split("\t");
+				// Get macro name
+				String macro_name = parts[0];
+				// Get check results (mutable, return and live checks on parameter)
+				String checks = parts[1];
+				// Get function name
+				String func_name = code.name.name();
+				// Get parameter name
+				String parameter = stores.getVar(register, function);
+				// Get parameter type
+				Type parameter_type = stores.getRawType(register, function);
+				
+				if (ret_type != null && stores.isCompoundType(ret_type)) {
 					// Write the checks results as a parameter to macro
 					// statements.add(indent+"//"+parameter+":"+checks);
 					switch(macro_name){
 					case "_CALLER_DEALLOC":
-						// Get function return
-						String ret = stores.getVar(code.target(0), function);
+						// Get tmp param name
+						String tmp_name =stores.getTmpParamName(parameter, index, code, function);
 						if (stores.isCompoundType(parameter_type)) {
-							// Get tmp param name
-							String tmp_name =stores.getTmpParamName(parameter, index, code, function);
 							if (parameter_type instanceof Type.Array) {								
 								Type elm_type = stores.getArrayElementType((Type.Array) parameter_type);
 								if (elm_type instanceof Type.Byte || stores.isIntType(elm_type)) {				
@@ -454,31 +469,39 @@ public class DeallocationAnalyzer extends Analyzer {
 						}
 						break;
 					case "_RESET_DEALLOC":
-						// Get function return
-						ret = stores.getVar(code.target(0), function);
 						// Added the macros
 						statements.add(indent + "_RESET_DEALLOC(" + ret +", " + parameter + ", \"" + checks 
-								+ "\" , \"" + func_name + "\");");
-						// Get the return type
-						Type ret_type = stores.getRawType(code.target(0), function);
-						if (stores.isCompoundType(ret_type) &&
-								!(ret_type instanceof Type.Array)) {
-							// For Structure typed return only
-							statements.add(indent + parameter + "_dealloc = false;");
-						}
+								+ "\" , \"" + func_name + "\");");			
+						break;
+					case "_RETAIN_DEALLOC":	
+						// Added the macros
+						statements.add(indent + "_RETAIN_DEALLOC(" + parameter + ", \"" + checks + "\" , \"" + func_name
+								+ "\");");
+						statements.add(indent + assignDealloc(code.target(0), function, stores));
+						break;
+					case "_CALLEE_DEALLOC":	
+						// Added the macros
+						statements.add(indent + "_CALLEE_DEALLOC(" + parameter + ", \"" + checks + "\" , \"" + func_name
+								+ "\");");
+						statements.add(indent + assignDealloc(code.target(0), function, stores));
+						break;
 						
+					case "_SUBSTRUCTURE_DEALLOC":
+						statements.add(indent + "_SUBSTRUCTURE_DEALLOC(" + parameter + ", \"" + checks + "\" , \"" + func_name
+								+ "\");");
+						statements.add(indent + assignDealloc(code.target(0), function, stores));
 						break;
 					default:
-						// Added the macros
-						statements.add(indent + macro_name + "(" + parameter + ", \"" + checks + "\" , \"" + func_name
-								+ "\");");
-						// Add deallocation flag to lhs variable.
-						if (code.targets().length > 0) {
-							// Add the deallocation flag of lhs variable
-							statements.add(indent + assignDealloc(code.target(0), function, stores));
-						}
-						break;
+						throw new RuntimeException("Not implemented");
 					}
+				}else if(macro_name.equals("_CALLER_DEALLOC")){
+					// Get tmp param name
+					String tmp_name =stores.getTmpParamName(parameter, index, code, function);
+					statements.add(indent + "free("+tmp_name+");");
+				}else{
+					statements.add(indent + macro_name +"(" + parameter + ", \"" + checks + "\" , \"" + func_name
+							+ "\");");
+					//throw new RuntimeException("Not implemented");
 				}
 				index++;
 			}

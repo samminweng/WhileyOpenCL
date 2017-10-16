@@ -70,7 +70,7 @@ public class CodeGenerationTestCase {
 				"ArrayAppend2", // Test 'append' function at WyRT runtime library
 				"ArrayAppend3", // Test 'toString' function in cashtill test case
 				// Not used in benchmarks
-				"rectangle",
+				// "rectangle", // Use 'rectangle' structure
 				"swap",				
 				"factorial",
 				"Fibonacci",
@@ -80,7 +80,6 @@ public class CodeGenerationTestCase {
 				"fileread", //Read 'feep.pbm' as a byte array
 				"fileread2",// Read 'feep.pbm' and output the array to console
 				"nqueens",
-				"nqueens2",
 				"livecheck",
 				// Micro-benchmarks
 				"reverse",
@@ -88,8 +87,6 @@ public class CodeGenerationTestCase {
 				"bubblesort",
 				"newTicTacToe",
 				"MatrixMult",
-				"MatrixMult2",
-				"MatrixMult3",
 				// Benchmarks
 				"CoinGame",
 				"CoinGame1",
@@ -101,8 +98,7 @@ public class CodeGenerationTestCase {
 				"lz77_2",
 				"lz77_decompress", // Uncompress the lz77 file.
 				"lz77_opt_decompress", // Optimised lz77 decompression
-				"SobelEdge1", // Read 'feep.pbm', detect the edges and output the resulting array
-				"SobelEdge2", // Similar to 'SobelEdge1' with additional 'image' structure
+				"SobelEdge", // Read 'feep.pbm', detect the edges and output the resulting array
 		});
 	}
 	

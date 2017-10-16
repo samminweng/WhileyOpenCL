@@ -896,7 +896,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param function
 	 * @return a list of parameter whose copy can be safely reduced.
 	 */
-	private List<Integer> translateParameterCopy(List<String> statements, Codes.Invoke code, FunctionOrMethod function) {
+	private List<Integer> translatePreFunctionCall(List<String> statements, Codes.Invoke code, FunctionOrMethod function) {
 		String indent = stores.getIndent(function);
 		// Create a array to store the parameter whose parameter can be reduced.
 		List<Integer> copyReducedList = new ArrayList<Integer>();
@@ -972,6 +972,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			index++;
 		}
 
+		
+		// De-allocate lhs register
+		translateLHSVarFunctionCall(statements, code, function);
+		
 		return copyReducedList;
 	}
 
@@ -982,7 +986,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param f
 	 * @return
 	 */
-	private void translateFunctionCall(List<Integer> copyReducedList, List<String> statements, Codes.Invoke code,
+	private void translateActualFunctionCall(List<Integer> copyReducedList, List<String> statements, Codes.Invoke code,
 			FunctionOrMethod function) {
 		String indent = stores.getIndent(function);
 		String function_return = indent + "";
@@ -1373,12 +1377,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		} else {		
 
 			// Check the copy of parameter
-			List<Integer> copyReducedList = translateParameterCopy(statements, code, function);
+			List<Integer> copyReducedList = translatePreFunctionCall(statements, code, function);
 
 			// De-allocate lhs register
-			translateLHSVarFunctionCall(statements, code, function);
+			// translateLHSVarFunctionCall(statements, code, function);
 			// call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
-			translateFunctionCall(copyReducedList, statements, code, function);
+			translateActualFunctionCall(copyReducedList, statements, code, function);
 
 			// Generate the post-deallocation code
 			this.deallocatedAnalyzer.ifPresent(a -> {
