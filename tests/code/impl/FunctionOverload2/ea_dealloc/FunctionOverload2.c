@@ -199,7 +199,7 @@ int main(int argc, char** args){
 		_DEALLOC(_4);
 		_4 = _Cash_1_(tmp__13_0, _13_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_4));
 		_CALLEE_DEALLOC(_13, "false-false-false" , "Cash");
-		_4_dealloc = true;
+		_CALLEE_DEALLOC_POST(_4, _13);
 	}
 	//assign %2 = %4  : int[]
 	_DEALLOC(till);

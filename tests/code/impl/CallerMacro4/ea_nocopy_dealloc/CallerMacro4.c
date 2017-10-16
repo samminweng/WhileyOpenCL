@@ -172,7 +172,8 @@ int main(int argc, char** args){
 		_DEALLOC(_6);
 		// isCopyEliminated of '_1' = false
 		_6 = _func_(tmp_x_0, x_size, false, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
-		_CALLER_DEALLOC(_6, tmp_x_0, "false-true-true" , "func");
+		_CALLER_DEALLOC(x, "false-true-true" , "func");
+		_CALLER_DEALLOC_POST(_6, tmp_x_0);
 	}
 	//assign %2 = %6  : int[]
 	_DEALLOC(y);
@@ -226,7 +227,8 @@ blklab3:;
 		_DEALLOC(_18);
 		// isCopyEliminated of '_1' = false
 		_18 = _func_(tmp_x_0, x_size, false, _19, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
-		_CALLER_DEALLOC(_18, tmp_x_0, "false-true-true" , "func");
+		_CALLER_DEALLOC(x, "false-true-true" , "func");
+		_CALLER_DEALLOC_POST(_18, tmp_x_0);
 	}
 	//assign %2 = %18  : int[]
 	_DEALLOC(y);
@@ -278,7 +280,8 @@ blklab4:;
 		_DEALLOC(_30);
 		// isCopyEliminated of '_1' = true
 		_30 = _func_(x, x_size, false, _31, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
-		_RESET_DEALLOC(_30, x, "false-true-false" , "func");
+		_RESET_DEALLOC(x, "false-true-false" , "func");
+		_RESET_DEALLOC_POST(_30, x);
 	}
 	//assign %2 = %30  : int[]
 	_DEALLOC(y);

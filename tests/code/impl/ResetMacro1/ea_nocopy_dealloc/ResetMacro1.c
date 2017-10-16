@@ -55,7 +55,8 @@ int main(int argc, char** args){
 		_DEALLOC(_6);
 		// isCopyEliminated of '_1' = true
 		_6 = _func_(x, x_size, false, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
-		_RESET_DEALLOC(_6, x, "true-true-false" , "func");
+		_RESET_DEALLOC(x, "true-true-false" , "func");
+		_RESET_DEALLOC_POST(_6, x);
 	}
 	//assign %2 = %6  : int[]
 	_DEALLOC(tmp);

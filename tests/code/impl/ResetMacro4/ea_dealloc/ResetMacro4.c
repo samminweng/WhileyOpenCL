@@ -146,8 +146,10 @@ blklab2:;
 		_COPY_1DARRAY_PARAM(a, tmp_a_1, int64_t);
 		_DEALLOC(_11);
 		_11 = _add_(tmp_a_0, a_size, false, tmp_a_1, a_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
-		_CALLER_DEALLOC(_11, tmp_a_0, "true-true-true" , "add");
-		_CALLER_DEALLOC(_11, tmp_a_1, "true-true-true" , "add");
+		_CALLER_DEALLOC(a, "true-true-true" , "add");
+		_CALLER_DEALLOC_POST(_11, tmp_a_0);
+		_CALLER_DEALLOC(a, "true-true-true" , "add");
+		_CALLER_DEALLOC_POST(_11, tmp_a_1);
 	}
 	//assign %3 = %11  : int[]
 	_DEALLOC(sum);

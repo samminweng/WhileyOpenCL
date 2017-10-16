@@ -48,7 +48,8 @@ int64_t* _g2_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 		_DEALLOC(_6);
 		// isCopyEliminated of '_1' = true
 		_6 = _func_(a, a_size, false, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
-		_RESET_DEALLOC(_6, a, "true-true-false" , "func");
+		_RESET_DEALLOC(a, "true-true-false" , "func");
+		_RESET_DEALLOC_POST(_6, a);
 	}
 	//assign %2 = %6  : int[]
 	_DEALLOC(b);

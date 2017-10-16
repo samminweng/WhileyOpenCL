@@ -376,7 +376,7 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 			// isCopyEliminated of '_0' = true
 			_11 = _findLongestMatch_(data, data_size, false, pos);
 			_RETAIN_DEALLOC(data, "false-false-true" , "findLongestMatch");
-			_11_dealloc = true;
+			_RETAIN_DEALLOC_POST(_11, data);
 		}
 		//assign %3 = %11  : {int len,int offset}
 		_DEALLOC_STRUCT(m, Match);
@@ -436,7 +436,7 @@ blklab17:;
 			// isCopyEliminated of '_1' = true
 			_22 = _append_(output, output_size, false, offset, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
 			_RETAIN_DEALLOC(output, "false-false-false" , "append");
-			_22_dealloc = true;
+			_RETAIN_DEALLOC_POST(_22, output);
 		}
 		//assign %1 = %22  : byte[]
 		_DEALLOC(output);
@@ -449,7 +449,7 @@ blklab17:;
 			// isCopyEliminated of '_1' = true
 			_23 = _append_(output, output_size, false, length, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 			_RETAIN_DEALLOC(output, "false-false-false" , "append");
-			_23_dealloc = true;
+			_RETAIN_DEALLOC_POST(_23, output);
 		}
 		//assign %1 = %23  : byte[]
 		_DEALLOC(output);
@@ -569,7 +569,7 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 			// isCopyEliminated of '_1' = true
 			_23 = _append_(output, output_size, false, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 			_RETAIN_DEALLOC(output, "false-false-false" , "append");
-			_23_dealloc = true;
+			_RETAIN_DEALLOC_POST(_23, output);
 		}
 		//assign %1 = %23  : byte[]
 		_DEALLOC(output);
@@ -621,7 +621,7 @@ blklab20:;
 				// isCopyEliminated of '_1' = true
 				_30 = _append_(output, output_size, false, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
 				_RETAIN_DEALLOC(output, "false-false-false" , "append");
-				_30_dealloc = true;
+				_RETAIN_DEALLOC_POST(_30, output);
 			}
 			//assign %1 = %30  : byte[]
 			_DEALLOC(output);
@@ -780,7 +780,7 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_2' = true
 		_21 = _compress_(data, data_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_21));
 		_RETAIN_DEALLOC(data, "false-false-true" , "compress");
-		_21_dealloc = true;
+		_RETAIN_DEALLOC_POST(_21, data);
 	}
 	//assign %3 = %21  : byte[]
 	_DEALLOC(compress_data);
@@ -829,7 +829,7 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_3' = true
 		_33 = _decompress_(compress_data, compress_data_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
 		_RETAIN_DEALLOC(compress_data, "false-false-false" , "decompress");
-		_33_dealloc = true;
+		_RETAIN_DEALLOC_POST(_33, compress_data);
 	}
 	//assign %4 = %33  : byte[]
 	_DEALLOC(decompress_data);

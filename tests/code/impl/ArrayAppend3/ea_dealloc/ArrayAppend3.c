@@ -293,7 +293,7 @@ int main(int argc, char** args){
 		_DEALLOC(_16);
 		_16 = _toString_(tmp_till_0, till_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		_CALLEE_DEALLOC(till, "false-false-false" , "toString");
-		_16_dealloc = true;
+		_CALLEE_DEALLOC_POST(_16, till);
 	}
 	//indirectinvoke () = %15 (%16) : method(int[])->()
 	{

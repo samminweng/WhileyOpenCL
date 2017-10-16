@@ -121,7 +121,8 @@ int main(int argc, char** args){
 		_COPY_1DARRAY_PARAM(a, tmp_a_0, int64_t);
 		_DEALLOC(_10);
 		_10 = _func_(tmp_a_0, a_size, false, _11, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
-		_CALLER_DEALLOC(_10, tmp_a_0, "false-true-false" , "func");
+		_CALLER_DEALLOC(a, "false-true-false" , "func");
+		_CALLER_DEALLOC_POST(_10, tmp_a_0);
 	}
 	//assign %1 = %10  : int[]
 	_DEALLOC(a);
@@ -192,7 +193,8 @@ blklab2:;
 		_COPY_1DARRAY_PARAM(b, tmp_b_0, int64_t);
 		_DEALLOC(_28);
 		_28 = _func_(tmp_b_0, b_size, false, _29, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
-		_CALLER_DEALLOC(_28, tmp_b_0, "false-true-true" , "func");
+		_CALLER_DEALLOC(b, "false-true-true" , "func");
+		_CALLER_DEALLOC_POST(_28, tmp_b_0);
 	}
 	//assign %3 = %28  : int[]
 	_DEALLOC(c);

@@ -304,7 +304,7 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_1' = true
 		_16 = _toString_(till, till_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		_RETAIN_DEALLOC(till, "false-false-false" , "toString");
-		_16_dealloc = true;
+		_RETAIN_DEALLOC_POST(_16, till);
 	}
 	//indirectinvoke () = %15 (%16) : method(int[])->()
 	{

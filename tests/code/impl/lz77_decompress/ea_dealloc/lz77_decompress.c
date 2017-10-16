@@ -157,7 +157,7 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 			_DEALLOC(_23);
 			_23 = _append_(tmp_output_0, output_size, true, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 			_CALLEE_DEALLOC(output, "false-false-false" , "append");
-			_23_dealloc = true;
+			_CALLEE_DEALLOC_POST(_23, output);
 		}
 		//assign %1 = %23  : byte[]
 		_DEALLOC(output);
@@ -204,7 +204,7 @@ blklab5:;
 				_DEALLOC(_30);
 				_30 = _append_(tmp_output_0, output_size, true, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
 				_CALLEE_DEALLOC(output, "false-false-false" , "append");
-				_30_dealloc = true;
+				_CALLEE_DEALLOC_POST(_30, output);
 			}
 			//assign %1 = %30  : byte[]
 			_DEALLOC(output);
@@ -291,7 +291,7 @@ int main(int argc, char** args){
 		_DEALLOC(_8);
 		_8 = _decompress_(tmp_input_data_0, input_data_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_CALLEE_DEALLOC(input_data, "false-false-false" , "decompress");
-		_8_dealloc = true;
+		_CALLEE_DEALLOC_POST(_8, input_data);
 	}
 	//assign %3 = %8  : byte[]
 	_DEALLOC(decompress_data);

@@ -203,7 +203,7 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_13' = true
 		_4 = _Cash_1_(_13, _13_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_4));
 		_RETAIN_DEALLOC(_13, "false-false-false" , "Cash");
-		_4_dealloc = true;
+		_RETAIN_DEALLOC_POST(_4, _13);
 	}
 	//assign %2 = %4  : int[]
 	_DEALLOC(till);

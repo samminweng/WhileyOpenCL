@@ -259,7 +259,8 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 			_DEALLOC(_26);
 			// isCopyEliminated of '_2' = true
 			_26 = _opt_append_(items, items_size, false, items_length, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_26));
-			_RESET_DEALLOC(_26, items, "true-true-false" , "opt_append");
+			_RESET_DEALLOC(items, "true-true-false" , "opt_append");
+			_RESET_DEALLOC_POST(_26, items);
 		}
 		//assign %2 = %26  : byte[]
 		_DEALLOC(items);
@@ -315,7 +316,8 @@ blklab11:;
 				_DEALLOC(_34);
 				// isCopyEliminated of '_2' = true
 				_34 = _opt_append_(items, items_size, false, items_length, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_34));
-				_RESET_DEALLOC(_34, items, "true-true-false" , "opt_append");
+				_RESET_DEALLOC(items, "true-true-false" , "opt_append");
+				_RESET_DEALLOC_POST(_34, items);
 			}
 			//assign %2 = %34  : byte[]
 			_DEALLOC(items);
@@ -354,7 +356,7 @@ blklab9:;
 		// isCopyEliminated of '_2' = true
 		_39 = _resize_(items, items_size, false, items_length, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_39));
 		_RETAIN_DEALLOC(items, "false-false-false" , "resize");
-		_39_dealloc = true;
+		_RETAIN_DEALLOC_POST(_39, items);
 	}
 	//assign %1 = %39  : byte[]
 	_DEALLOC(output);
@@ -427,7 +429,7 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_2' = true
 		_8 = _decompress_(input_data, input_data_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_RETAIN_DEALLOC(input_data, "false-false-false" , "decompress");
-		_8_dealloc = true;
+		_RETAIN_DEALLOC_POST(_8, input_data);
 	}
 	//assign %3 = %8  : byte[]
 	_DEALLOC(decompress_data);

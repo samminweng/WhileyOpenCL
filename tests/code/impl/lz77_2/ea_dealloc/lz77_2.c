@@ -374,7 +374,7 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 			_DEALLOC_STRUCT(_16, Match);
 			_16 = _findLongestMatch_(tmp_data_0, data_size, true, pos);
 			_CALLEE_DEALLOC(data, "false-false-true" , "findLongestMatch");
-			_16_dealloc = true;
+			_CALLEE_DEALLOC_POST(_16, data);
 		}
 		//assign %5 = %16  : {int len,int offset}
 		_DEALLOC_STRUCT(m, Match);
@@ -461,7 +461,7 @@ blklab18:;
 		_DEALLOC(_31);
 		_31 = _resize_(tmp_output_0, output_size, true, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_31));
 		_CALLEE_DEALLOC(output, "false-false-false" , "resize");
-		_31_dealloc = true;
+		_CALLEE_DEALLOC_POST(_31, output);
 	}
 	//assign %1 = %31  : byte[]
 	_DEALLOC(output);
@@ -570,7 +570,7 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 			_DEALLOC(_23);
 			_23 = _append_(tmp_output_0, output_size, true, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 			_CALLEE_DEALLOC(output, "false-false-false" , "append");
-			_23_dealloc = true;
+			_CALLEE_DEALLOC_POST(_23, output);
 		}
 		//assign %1 = %23  : byte[]
 		_DEALLOC(output);
@@ -617,7 +617,7 @@ blklab21:;
 				_DEALLOC(_30);
 				_30 = _append_(tmp_output_0, output_size, true, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
 				_CALLEE_DEALLOC(output, "false-false-false" , "append");
-				_30_dealloc = true;
+				_CALLEE_DEALLOC_POST(_30, output);
 			}
 			//assign %1 = %30  : byte[]
 			_DEALLOC(output);
@@ -773,7 +773,7 @@ int main(int argc, char** args){
 		_DEALLOC(_21);
 		_21 = _compress_(tmp_data_0, data_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_21));
 		_CALLEE_DEALLOC(data, "false-false-true" , "compress");
-		_21_dealloc = true;
+		_CALLEE_DEALLOC_POST(_21, data);
 	}
 	//assign %3 = %21  : byte[]
 	_DEALLOC(compress_data);
@@ -822,7 +822,7 @@ int main(int argc, char** args){
 		_DEALLOC(_33);
 		_33 = _decompress_(tmp_compress_data_0, compress_data_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
 		_CALLEE_DEALLOC(compress_data, "false-false-false" , "decompress");
-		_33_dealloc = true;
+		_CALLEE_DEALLOC_POST(_33, compress_data);
 	}
 	//assign %4 = %33  : byte[]
 	_DEALLOC(decompress_data);

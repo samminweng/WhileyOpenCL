@@ -131,9 +131,9 @@ int main(int argc, char** args){
 		_DEALLOC(_3);
 		_3 = _test_append_(tmp_r_0, r_size, true, tmp__4_1, _4_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
 		_CALLEE_DEALLOC(r, "false-false-false" , "test_append");
-		_3_dealloc = true;
+		_CALLEE_DEALLOC_POST(_3, r);
 		_CALLEE_DEALLOC(_4, "false-false-false" , "test_append");
-		_3_dealloc = true;
+		_CALLEE_DEALLOC_POST(_3, _4);
 	}
 	//assign %1 = %3  : int[]
 	_DEALLOC(r);

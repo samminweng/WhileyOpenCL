@@ -134,9 +134,9 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_4' = true
 		_3 = _test_append_(r, r_size, false, _4, _4_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
 		_RETAIN_DEALLOC(r, "false-false-false" , "test_append");
-		_3_dealloc = true;
+		_RETAIN_DEALLOC_POST(_3, r);
 		_RETAIN_DEALLOC(_4, "false-false-false" , "test_append");
-		_3_dealloc = true;
+		_RETAIN_DEALLOC_POST(_3, _4);
 	}
 	//assign %1 = %3  : int[]
 	_DEALLOC(r);

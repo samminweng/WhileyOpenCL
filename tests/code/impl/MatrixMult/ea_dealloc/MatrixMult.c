@@ -295,7 +295,8 @@ int main(int argc, char** args){
 		_COPY_1DARRAY_PARAM(A, tmp_A_0, int64_t);
 		_DEALLOC(_16);
 		_16 = _init_(tmp_A_0, A_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
-		_CALLER_DEALLOC(_16, tmp_A_0, "true-true-false" , "init");
+		_CALLER_DEALLOC(A, "true-true-false" , "init");
+		_CALLER_DEALLOC_POST(_16, tmp_A_0);
 	}
 	//assign %4 = %16  : int[]
 	_DEALLOC(A);
@@ -319,7 +320,8 @@ int main(int argc, char** args){
 		_COPY_1DARRAY_PARAM(B, tmp_B_0, int64_t);
 		_DEALLOC(_20);
 		_20 = _init_(tmp_B_0, B_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
-		_CALLER_DEALLOC(_20, tmp_B_0, "true-true-false" , "init");
+		_CALLER_DEALLOC(B, "true-true-false" , "init");
+		_CALLER_DEALLOC_POST(_20, tmp_B_0);
 	}
 	//assign %5 = %20  : int[]
 	_DEALLOC(B);
@@ -348,10 +350,11 @@ int main(int argc, char** args){
 		_DEALLOC(_24);
 		_24 = _mat_mult_(tmp_A_0, A_size, true, tmp_B_1, B_size, true, tmp_C_2, C_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
 		_CALLEE_DEALLOC(A, "false-false-true" , "mat_mult");
-		_24_dealloc = true;
+		_CALLEE_DEALLOC_POST(_24, A);
 		_CALLEE_DEALLOC(B, "false-false-true" , "mat_mult");
-		_24_dealloc = true;
-		_CALLER_DEALLOC(_24, tmp_C_2, "true-true-false" , "mat_mult");
+		_CALLEE_DEALLOC_POST(_24, B);
+		_CALLER_DEALLOC(C, "true-true-false" , "mat_mult");
+		_CALLER_DEALLOC_POST(_24, tmp_C_2);
 	}
 	//assign %6 = %24  : int[]
 	_DEALLOC(C);

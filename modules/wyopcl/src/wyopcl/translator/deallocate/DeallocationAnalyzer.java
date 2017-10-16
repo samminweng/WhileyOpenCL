@@ -430,65 +430,52 @@ public class DeallocationAnalyzer extends Analyzer {
 				String parameter = stores.getVar(register, function);
 				// Get parameter type
 				Type parameter_type = stores.getRawType(register, function);
-				
+				statements.add(indent + macro_name +"(" + parameter + ", \"" + checks + "\" , \"" + func_name + "\");");
 				if (ret_type != null && stores.isCompoundType(ret_type)) {
 					// Write the checks results as a parameter to macro
 					// statements.add(indent+"//"+parameter+":"+checks);
 					switch(macro_name){
 					case "_CALLER_DEALLOC":
 						// Get tmp param name
-						String tmp_name =stores.getTmpParamName(parameter, index, code, function);
-						if (stores.isCompoundType(parameter_type)) {
-							if (parameter_type instanceof Type.Array) {								
-								Type elm_type = stores.getArrayElementType((Type.Array) parameter_type);
-								if (elm_type instanceof Type.Byte || stores.isIntType(elm_type)) {				
-									// Applied caller macro and used standard 'free' function to release extra copy
-									statements.add(indent + "_CALLER_DEALLOC(" + ret + ", " + tmp_name + ", \"" + checks
-											+ "\" , \"" + func_name + "\");");
-								} else {
-									// An array of structures
-									// Translate the type
-									String type_name = CodeGeneratorHelper.translateType(parameter_type, stores)
-											.replace("*", "");
-									// Applied caller_struct macro and used structure free function to release extra copy
-									statements.add(indent + "_CALLER_DEALLOC_STRUCT(" + ret + ", " + tmp_name + ", \""
-											+ checks + "\" , \"" + func_name + "\", " + type_name + ");");
-								}
+						String tmp_name = stores.getTmpParamName(parameter, index, code, function);
+						if (parameter_type instanceof Type.Array) {
+							Type elm_type = stores.getArrayElementType((Type.Array) parameter_type);
+							if (elm_type instanceof Type.Byte || stores.isIntType(elm_type)) {
+								// Applied caller macro and used standard 'free' function to release extra copy
+								statements.add(indent + "_CALLER_DEALLOC_POST(" + ret + ", " + tmp_name + ");");
 							} else {
-								// Structure type
-								String type_name = CodeGeneratorHelper.translateType(parameter_type, stores)
-										.replace("*", "");
-								// Applied caller_struct macro and used structure free function to release extra copy
-								statements.add(indent + "_CALLER_DEALLOC_STRUCT(" + ret + ", " + tmp_name + ", \""
-										+ checks + "\" , \"" + func_name + "\", " + type_name + ");");
+								throw new RuntimeException("Not Implemented");
+								// // An array of structures
+								// // Translate the type
+								// String type_name = CodeGeneratorHelper.translateType(parameter_type, stores)
+								// .replace("*", "");
+								// // Applied caller_struct macro and used structure free function to release extra copy
+								// statements.add(indent + "_CALLER_DEALLOC_STRUCT_POST(" + ret + ", " + tmp_name + ",
+								// \""
+								// + checks + "\" , \"" + func_name + "\", " + type_name + ");");
 							}
 						} else {
-							// Applied caller macro and used standard 'free' function to release extra copy
-							statements.add(indent + "_CALLER_DEALLOC(" + ret + ", " + parameter + ", \"" + checks
-									+ "\" , \"" + func_name + "\");");
+							// Structure type
+							String type_name = CodeGeneratorHelper.translateType(parameter_type, stores).replace("*",
+									"");
+							// Applied caller_struct macro and used structure free function to release extra copy
+							statements.add(indent + "_CALLER_DEALLOC_STRUCT_POST(" + ret + ", " + tmp_name + "\", " + type_name + ");");
 						}
 						break;
 					case "_RESET_DEALLOC":
 						// Added the macros
-						statements.add(indent + "_RESET_DEALLOC(" + ret +", " + parameter + ", \"" + checks 
-								+ "\" , \"" + func_name + "\");");			
+						statements.add(indent + "_RESET_DEALLOC_POST(" + ret +", " + parameter + ");");			
 						break;
 					case "_RETAIN_DEALLOC":	
 						// Added the macros
-						statements.add(indent + "_RETAIN_DEALLOC(" + parameter + ", \"" + checks + "\" , \"" + func_name
-								+ "\");");
-						statements.add(indent + assignDealloc(code.target(0), function, stores));
+						statements.add(indent + "_RETAIN_DEALLOC_POST(" + ret +", "+ parameter + ");");
 						break;
 					case "_CALLEE_DEALLOC":	
 						// Added the macros
-						statements.add(indent + "_CALLEE_DEALLOC(" + parameter + ", \"" + checks + "\" , \"" + func_name
-								+ "\");");
-						statements.add(indent + assignDealloc(code.target(0), function, stores));
-						break;
-						
+						statements.add(indent + "_CALLEE_DEALLOC_POST("+ ret +", " + parameter + ");");
+						break;						
 					case "_SUBSTRUCTURE_DEALLOC":
-						statements.add(indent + "_SUBSTRUCTURE_DEALLOC(" + parameter + ", \"" + checks + "\" , \"" + func_name
-								+ "\");");
+						statements.add(indent + "_SUBSTRUCTURE_DEALLOC(" + parameter +");");
 						statements.add(indent + assignDealloc(code.target(0), function, stores));
 						break;
 					default:
@@ -498,10 +485,6 @@ public class DeallocationAnalyzer extends Analyzer {
 					// Get tmp param name
 					String tmp_name =stores.getTmpParamName(parameter, index, code, function);
 					statements.add(indent + "free("+tmp_name+");");
-				}else{
-					statements.add(indent + macro_name +"(" + parameter + ", \"" + checks + "\" , \"" + func_name
-							+ "\");");
-					//throw new RuntimeException("Not implemented");
 				}
 				index++;
 			}

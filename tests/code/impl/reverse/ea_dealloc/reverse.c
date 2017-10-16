@@ -136,7 +136,7 @@ int main(int argc, char** args){
 		_DEALLOC(_5);
 		_5 = _reverse_(tmp__11_0, _11_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
 		_CALLEE_DEALLOC(_11, "false-false-false" , "reverse");
-		_5_dealloc = true;
+		_CALLEE_DEALLOC_POST(_5, _11);
 	}
 	//assign %1 = %5  : int[]
 	_DEALLOC(rs);
@@ -216,7 +216,7 @@ blklab5:;
 		_DEALLOC(_27);
 		_27 = _reverse_(tmp_arr_0, arr_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 		_CALLEE_DEALLOC(arr, "false-false-false" , "reverse");
-		_27_dealloc = true;
+		_CALLEE_DEALLOC_POST(_27, arr);
 	}
 	//assign %4 = %27  : int[]
 	_DEALLOC(arr);

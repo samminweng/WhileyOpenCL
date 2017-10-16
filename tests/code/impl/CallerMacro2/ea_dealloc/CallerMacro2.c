@@ -49,7 +49,8 @@ int64_t* _g3_(int64_t x, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 		_COPY_1DARRAY_PARAM(a, tmp_a_0, int64_t);
 		_DEALLOC(_7);
 		_7 = _func_(tmp_a_0, a_size, false, _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_7));
-		_CALLER_DEALLOC(_7, tmp_a_0, "true-true-true" , "func");
+		_CALLER_DEALLOC(a, "true-true-true" , "func");
+		_CALLER_DEALLOC_POST(_7, tmp_a_0);
 	}
 	//assign %3 = %7  : int[]
 	_DEALLOC(b);

@@ -228,7 +228,8 @@ int main(int argc, char** args){
 		_COPY_1DARRAY_PARAM(ys, tmp_ys_0, int64_t);
 		_DEALLOC(_11);
 		_11 = _bubbleSort_(tmp_ys_0, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
-		_CALLER_DEALLOC(_11, tmp_ys_0, "true-true-false" , "bubbleSort");
+		_CALLER_DEALLOC(ys, "true-true-false" , "bubbleSort");
+		_CALLER_DEALLOC_POST(_11, tmp_ys_0);
 	}
 	//assign %1 = %11  : int[]
 	_DEALLOC(ys);
@@ -289,7 +290,8 @@ blklab5:;
 		_COPY_1DARRAY_PARAM(ys, tmp_ys_0, int64_t);
 		_DEALLOC(_25);
 		_25 = _bubbleSort_(tmp_ys_0, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
-		_CALLER_DEALLOC(_25, tmp_ys_0, "true-true-false" , "bubbleSort");
+		_CALLER_DEALLOC(ys, "true-true-false" , "bubbleSort");
+		_CALLER_DEALLOC_POST(_25, tmp_ys_0);
 	}
 	//assign %1 = %25  : int[]
 	_DEALLOC(ys);
@@ -348,7 +350,8 @@ blklab6:;
 		_COPY_1DARRAY_PARAM(ys, tmp_ys_0, int64_t);
 		_DEALLOC(_38);
 		_38 = _bubbleSort_(tmp_ys_0, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
-		_CALLER_DEALLOC(_38, tmp_ys_0, "true-true-false" , "bubbleSort");
+		_CALLER_DEALLOC(ys, "true-true-false" , "bubbleSort");
+		_CALLER_DEALLOC_POST(_38, tmp_ys_0);
 	}
 	//assign %1 = %38  : int[]
 	_DEALLOC(ys);
@@ -409,7 +412,8 @@ blklab7:;
 		_COPY_1DARRAY_PARAM(ys, tmp_ys_0, int64_t);
 		_DEALLOC(_52);
 		_52 = _bubbleSort_(tmp_ys_0, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
-		_CALLER_DEALLOC(_52, tmp_ys_0, "true-true-false" , "bubbleSort");
+		_CALLER_DEALLOC(ys, "true-true-false" , "bubbleSort");
+		_CALLER_DEALLOC_POST(_52, tmp_ys_0);
 	}
 	//assign %1 = %52  : int[]
 	_DEALLOC(ys);
@@ -490,7 +494,8 @@ blklab9:;
 		_COPY_1DARRAY_PARAM(arr, tmp_arr_0, int64_t);
 		_DEALLOC(_68);
 		_68 = _bubbleSort_(tmp_arr_0, arr_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
-		_CALLER_DEALLOC(_68, tmp_arr_0, "true-true-false" , "bubbleSort");
+		_CALLER_DEALLOC(arr, "true-true-false" , "bubbleSort");
+		_CALLER_DEALLOC_POST(_68, tmp_arr_0);
 	}
 	//assign %4 = %68  : int[]
 	_DEALLOC(arr);
