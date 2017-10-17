@@ -169,7 +169,7 @@ blklab5:;
 		_DEALLOC(_15);
 		_15 = _reverse_(tmp_arr_0, arr_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
 		_CALLEE_DEALLOC(arr, "false-false-false" , "reverse");
-		_15_dealloc = true;
+		_CALLEE_DEALLOC_POST(_15, arr);
 	}
 	//assign %4 = %15  : int[]
 	_DEALLOC(arr);

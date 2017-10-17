@@ -86,7 +86,8 @@ _SLICE_ARRAY(_15, items, start, pivot);
 		_COPY_1DARRAY_PARAM(lhs, tmp_lhs_0, int64_t);
 		_DEALLOC(_16);
 		_16 = _sortV1_(tmp_lhs_0, lhs_size, false, _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
-		_CALLER_DEALLOC(_16, tmp_lhs_0, "true-true-false" , "sortV1");
+		_CALLER_DEALLOC(lhs, "true-true-false" , "sortV1");
+		_CALLER_DEALLOC_POST(_16, tmp_lhs_0);
 	}
 	//assign %5 = %16  : int[]
 	_DEALLOC(lhs);
@@ -112,7 +113,8 @@ _SLICE_ARRAY(_18, items, pivot, end);
 		_COPY_1DARRAY_PARAM(rhs, tmp_rhs_0, int64_t);
 		_DEALLOC(_19);
 		_19 = _sortV1_(tmp_rhs_0, rhs_size, false, _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
-		_CALLER_DEALLOC(_19, tmp_rhs_0, "true-true-false" , "sortV1");
+		_CALLER_DEALLOC(rhs, "true-true-false" , "sortV1");
+		_CALLER_DEALLOC_POST(_19, tmp_rhs_0);
 	}
 	//assign %6 = %19  : int[]
 	_DEALLOC(rhs);
@@ -355,7 +357,8 @@ blklab10:;
 		_COPY_1DARRAY_PARAM(arr, tmp_arr_0, int64_t);
 		_DEALLOC(_15);
 		_15 = _sortV1_(tmp_arr_0, arr_size, false, _16, max, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
-		_CALLER_DEALLOC(_15, tmp_arr_0, "true-true-false" , "sortV1");
+		_CALLER_DEALLOC(arr, "true-true-false" , "sortV1");
+		_CALLER_DEALLOC_POST(_15, tmp_arr_0);
 	}
 	//assign %4 = %15  : int[]
 	_DEALLOC(arr);

@@ -318,7 +318,8 @@ int main(int argc, char** args){
 		_DEALLOC(_20);
 		// isCopyEliminated of '_5' = true
 		_20 = _init_(A, A_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
-		_RESET_DEALLOC(_20, A, "true-true-false" , "init");
+		_RESET_DEALLOC(A, "true-true-false" , "init");
+		_RESET_DEALLOC_POST(_20, A);
 	}
 	//assign %5 = %20  : int[]
 	_DEALLOC(A);
@@ -343,7 +344,8 @@ int main(int argc, char** args){
 		_DEALLOC(_24);
 		// isCopyEliminated of '_6' = true
 		_24 = _init_(B, B_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
-		_RESET_DEALLOC(_24, B, "true-true-false" , "init");
+		_RESET_DEALLOC(B, "true-true-false" , "init");
+		_RESET_DEALLOC_POST(_24, B);
 	}
 	//assign %6 = %24  : int[]
 	_DEALLOC(B);
@@ -371,10 +373,11 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_7' = true
 		_28 = _mat_mult_(A, A_size, false, B, B_size, false, C, C_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 		_RETAIN_DEALLOC(A, "false-false-false" , "mat_mult");
-		_28_dealloc = true;
+		_RETAIN_DEALLOC_POST(_28, A);
 		_RETAIN_DEALLOC(B, "false-false-false" , "mat_mult");
-		_28_dealloc = true;
-		_RESET_DEALLOC(_28, C, "true-true-false" , "mat_mult");
+		_RETAIN_DEALLOC_POST(_28, B);
+		_RESET_DEALLOC(C, "true-true-false" , "mat_mult");
+		_RESET_DEALLOC_POST(_28, C);
 	}
 	//assign %7 = %28  : int[]
 	_DEALLOC(C);

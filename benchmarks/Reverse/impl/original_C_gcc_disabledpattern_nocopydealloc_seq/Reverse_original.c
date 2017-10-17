@@ -177,7 +177,7 @@ blklab5:;
 		// isCopyEliminated of '_4' = true
 		_15 = _reverse_(arr, arr_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
 		_RETAIN_DEALLOC(arr, "false-false-false" , "reverse");
-		_15_dealloc = true;
+		_RETAIN_DEALLOC_POST(_15, arr);
 	}
 	//assign %4 = %15  : int[]
 	_DEALLOC(arr);
