@@ -252,8 +252,9 @@ run(){
 			break 1 ## Break the for loop
 		fi
 		echo "Finish $i iteration" >> $result
+		sleep 10s
 		####### Wait until background process is completed
-		wait ${!}
+		#wait ${!}
 	done
 	### Output the hardware info.
 	cat /proc/cpuinfo >> $result
@@ -340,24 +341,24 @@ exec(){
 # # ###
 # # ###########################################
 # # # # # # ## # Reverse test case
-# init Reverse
-# exec Reverse original
+#init Reverse
+#exec Reverse original
 # #
 # # # # # # # # # # # # newTicTacToe test case
-init newTicTacToe
-exec newTicTacToe original
+#init newTicTacToe
+#exec newTicTacToe original
 # #
 # # # # # # # # # ## # BubbleSort test case
-#init BubbleSort
-#exec BubbleSort original
+init BubbleSort
+exec BubbleSort original
 # #
 # # # # # # # # # ## # MergeSort test case
-# init MergeSort
-# exec MergeSort original
+init MergeSort
+exec MergeSort original
 # #
 # # # # # # # # # MatrixMult test case
-# init MatrixMult
-# exec MatrixMult original
+init MatrixMult
+exec MatrixMult original
 # ####exec MatrixMult original 12000 # Naive code runs out of memory
 # # ### Cashtill test case
 # init Cashtill
