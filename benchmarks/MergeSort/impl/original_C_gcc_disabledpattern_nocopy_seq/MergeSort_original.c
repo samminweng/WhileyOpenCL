@@ -242,120 +242,157 @@ blklab0:;
 int main(int argc, char** args){
 	int64_t* n;
 	int64_t max;
+	int64_t repeats;
+	int64_t size;
 	int64_t index;
 	_DECL_1DARRAY(arr);
-	int64_t* _5;
-	_DECL_2DARRAY(_6);
-	int64_t _7;
-	_DECL_1DARRAY(_8);
+	int64_t* _7;
+	_DECL_2DARRAY(_8);
 	int64_t _9;
-	int64_t _10;
-	_DECL_1DARRAY(_11);
+	_DECL_1DARRAY(_10);
+	int64_t _11;
 	int64_t _12;
 	int64_t _13;
 	int64_t _14;
 	_DECL_1DARRAY(_15);
 	int64_t _16;
-	void* _17;
-	int64_t _19;
+	int64_t _17;
+	int64_t _18;
+	_DECL_1DARRAY(_19);
 	int64_t _20;
 	void* _21;
 	int64_t _23;
 	int64_t _24;
 	int64_t _25;
-	void* _26;
-	_DECL_1DARRAY(_28);
-	//fieldload %6 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	_CONV_ARGS(_6);
-	//const %7 = 0 : int
-	_7 = 0;
-	//indexof %8 = %6, %7 : int[][]
-	_8=_6[_7];
-	_8_size = _6_size_size;
-	//invoke (%5) = (%8) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
+	int64_t _26;
+	int64_t _27;
+	void* _28;
+	_DECL_1DARRAY(_30);
+	void* _31;
+	void* _33;
+	_DECL_1DARRAY(_35);
+	//fieldload %8 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	_CONV_ARGS(_8);
+	//const %9 = 0 : int
+	_9 = 0;
+	//indexof %10 = %8, %9 : int[][]
+	_10=_8[_9];
+	_10_size = _8_size_size;
+	//invoke (%7) = (%10) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
 	{
-		_STR_TO_INT(_5, _8);
+		_STR_TO_INT(_7, _10);
 	}
-	//assign %1 = %5  : null|int
+	//assign %1 = %7  : null|int
 	// isCopyEliminated = true
-	n = _5;
+	n = _7;
 	//ifis %1, null goto blklab9 : null|int
 	if(n == NULL) { goto blklab9;}
 	//assign %2 = %1  : int
 	// isCopyEliminated = true
 	max = *n;
-	//const %9 = 0 : int
-	_9 = 0;
-	//assign %3 = %9  : int
+	//const %11 = 0 : int
+	_11 = 0;
+	//assign %3 = %11  : int
 	// isCopyEliminated = true
-	index = _9;
-	//const %10 = 0 : int
-	_10 = 0;
-	//arraygen %11 = [10; 2] : int[]
-	_NEW_1DARRAY_int64_t(_11, max, _10);
-	//assign %4 = %11  : int[]
-	// isCopyEliminated = true
-	_UPDATE_1DARRAY(arr, _11);
-	//loop (%3, %4, %12, %13, %14)
+	repeats = _11;
+	//loop (%3, %4, %5, %6, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32)
 	while(true){
 		//ifge %3, %2 goto blklab10 : int
-		if(index>=max){goto blklab10;}
-		//sub %12 = %2, %3 : int
-		_12=max-index;
-		//update %4[%3] = %12 : int[] -> int[]
-		arr[index] = _12;
-		//const %13 = 1 : int
-		_13 = 1;
-		//add %14 = %3, %13 : int
-		_14=index+_13;
-		//assign %3 = %14  : int
+		if(repeats>=max){goto blklab10;}
+		//const %12 = 10000 : int
+		_12 = 10000;
+		//assign %4 = %12  : int
 		// isCopyEliminated = true
-		index = _14;
+		size = _12;
+		//const %13 = 0 : int
+		_13 = 0;
+		//assign %5 = %13  : int
+		// isCopyEliminated = true
+		index = _13;
+		//const %14 = 0 : int
+		_14 = 0;
+		//arraygen %15 = [14; 4] : int[]
+		_NEW_1DARRAY_int64_t(_15, size, _14);
+		//assign %6 = %15  : int[]
+		// isCopyEliminated = true
+		_UPDATE_1DARRAY(arr, _15);
+		//loop (%5, %6, %16, %17, %18)
+		while(true){
+			//ifge %5, %4 goto blklab12 : int
+			if(index>=size){goto blklab12;}
+			//sub %16 = %4, %5 : int
+			_16=size-index;
+			//update %6[%5] = %16 : int[] -> int[]
+			arr[index] = _16;
+			//const %17 = 1 : int
+			_17 = 1;
+			//add %18 = %5, %17 : int
+			_18=index+_17;
+			//assign %5 = %18  : int
+			// isCopyEliminated = true
+			index = _18;
+//.blklab13
+blklab13:;
+		}
+//.blklab12
+blklab12:;
+		//const %20 = 0 : int
+		_20 = 0;
+		//invoke (%19) = (%6, %20, %2) MergeSort_original:sortV1 : function(int[],int,int)->(int[])
+		{
+			// isCopyEliminated of '_6' = true
+			_19 = _sortV1_(arr, arr_size, _20, max, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
+		}
+		//assign %6 = %19  : int[]
+		// isCopyEliminated = true
+		_UPDATE_1DARRAY(arr, _19);
+		//fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+		//fieldload %22 = %21 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+		//const %23 = 1 : int
+		_23 = 1;
+		//sub %24 = %2, %23 : int
+		_24=max-_23;
+		//indexof %25 = %6, %24 : int[]
+		_25=arr[_24];
+		//indirectinvoke () = %22 (%25) : method(any)->()
+		{
+			printf("%"PRId64"\n", _25);
+		}
+		//const %26 = 1 : int
+		_26 = 1;
+		//add %27 = %3, %26 : int
+		_27=repeats+_26;
+		//assign %3 = %27  : int
+		// isCopyEliminated = true
+		repeats = _27;
+		//fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+		//fieldload %29 = %28 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+		//const %30 = [78,117,109,98,101,114,32,111,102,32,114,101,112,101,97,116,115,32] : int[]
+		_NEW_1DARRAY_int64_t(_30, 18, 0);
+		_30[0] = 78; _30[1] = 117; _30[2] = 109; _30[3] = 98; _30[4] = 101; _30[5] = 114; _30[6] = 32; _30[7] = 111; _30[8] = 102; _30[9] = 32; _30[10] = 114; _30[11] = 101; _30[12] = 112; _30[13] = 101; _30[14] = 97; _30[15] = 116; _30[16] = 115; _30[17] = 32; 
+		//indirectinvoke () = %29 (%30) : method(int[])->()
+		{
+			printf_s(_30, _30_size);
+		}
+		//fieldload %31 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+		//fieldload %32 = %31 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+		//indirectinvoke () = %32 (%3) : method(any)->()
+		{
+			printf("%"PRId64"\n", repeats);
+		}
 //.blklab11
 blklab11:;
 	}
 //.blklab10
 blklab10:;
-	//const %16 = 0 : int
-	_16 = 0;
-	//invoke (%15) = (%4, %16, %2) MergeSort_original:sortV1 : function(int[],int,int)->(int[])
+	//fieldload %33 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %34 = %33 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %35 = [80,97,115,115,32,77,101,114,103,101,115,111,114,116,32,116,101,115,116,32,99,97,115,101] : int[]
+	_NEW_1DARRAY_int64_t(_35, 24, 0);
+	_35[0] = 80; _35[1] = 97; _35[2] = 115; _35[3] = 115; _35[4] = 32; _35[5] = 77; _35[6] = 101; _35[7] = 114; _35[8] = 103; _35[9] = 101; _35[10] = 115; _35[11] = 111; _35[12] = 114; _35[13] = 116; _35[14] = 32; _35[15] = 116; _35[16] = 101; _35[17] = 115; _35[18] = 116; _35[19] = 32; _35[20] = 99; _35[21] = 97; _35[22] = 115; _35[23] = 101; 
+	//indirectinvoke () = %34 (%35) : method(int[])->()
 	{
-		// isCopyEliminated of '_4' = true
-		_15 = _sortV1_(arr, arr_size, _16, max, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
-	}
-	//assign %4 = %15  : int[]
-	// isCopyEliminated = true
-	_UPDATE_1DARRAY(arr, _15);
-	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %18 = %17 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %19 = 0 : int
-	_19 = 0;
-	//indexof %20 = %4, %19 : int[]
-	_20=arr[_19];
-	//indirectinvoke () = %18 (%20) : method(any)->()
-	{
-		printf("%"PRId64"\n", _20);
-	}
-	//fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %22 = %21 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %23 = 1 : int
-	_23 = 1;
-	//sub %24 = %2, %23 : int
-	_24=max-_23;
-	//indexof %25 = %4, %24 : int[]
-	_25=arr[_24];
-	//indirectinvoke () = %22 (%25) : method(any)->()
-	{
-		printf("%"PRId64"\n", _25);
-	}
-	//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %27 = %26 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %28 = [80,97,115,115,32,77,101,114,103,101,115,111,114,116,32,116,101,115,116,32,99,97,115,101] : int[]
-	_NEW_1DARRAY_int64_t(_28, 24, 0);
-	_28[0] = 80; _28[1] = 97; _28[2] = 115; _28[3] = 115; _28[4] = 32; _28[5] = 77; _28[6] = 101; _28[7] = 114; _28[8] = 103; _28[9] = 101; _28[10] = 115; _28[11] = 111; _28[12] = 114; _28[13] = 116; _28[14] = 32; _28[15] = 116; _28[16] = 101; _28[17] = 115; _28[18] = 116; _28[19] = 32; _28[20] = 99; _28[21] = 97; _28[22] = 115; _28[23] = 101; 
-	//indirectinvoke () = %27 (%28) : method(int[])->()
-	{
-		println_s(_28, _28_size);
+		println_s(_35, _35_size);
 	}
 //.blklab9
 blklab9:;

@@ -179,24 +179,24 @@ blklab4:;
 }
 
 int main(int argc, char** args){
-	int64_t* max;
+	int64_t* n;
+	int64_t max;
 	int64_t size;
 	int64_t width;
 	int64_t height;
+	int64_t repeats;
 	_DECL_1DARRAY(A);
 	_DECL_1DARRAY(B);
 	_DECL_1DARRAY(C);
-	int64_t* _8;
-	_DECL_2DARRAY(_9);
-	int64_t _10;
-	_DECL_1DARRAY(_11);
-	void* _12;
-	_DECL_1DARRAY(_14);
+	int64_t* _10;
+	_DECL_2DARRAY(_11);
+	int64_t _12;
+	_DECL_1DARRAY(_13);
+	int64_t _14;
 	void* _15;
-	int64_t _17;
-	int64_t _18;
-	_DECL_1DARRAY(_19);
-	_DECL_1DARRAY(_20);
+	_DECL_1DARRAY(_17);
+	void* _18;
+	int64_t _20;
 	int64_t _21;
 	int64_t _22;
 	_DECL_1DARRAY(_23);
@@ -205,143 +205,179 @@ int main(int argc, char** args){
 	int64_t _26;
 	_DECL_1DARRAY(_27);
 	_DECL_1DARRAY(_28);
-	void* _29;
+	int64_t _29;
+	int64_t _30;
 	_DECL_1DARRAY(_31);
-	void* _32;
-	int64_t _34;
+	_DECL_1DARRAY(_32);
+	void* _33;
 	int64_t _35;
 	int64_t _36;
 	int64_t _37;
 	int64_t _38;
 	int64_t _39;
 	int64_t _40;
-	void* _41;
-	_DECL_1DARRAY(_43);
-	//fieldload %9 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	_CONV_ARGS(_9);
-	//const %10 = 0 : int
-	_10 = 0;
-	//indexof %11 = %9, %10 : int[][]
-	_11=_9[_10];
-	_11_size = _9_size_size;
-	//invoke (%8) = (%11) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
+	int64_t _41;
+	int64_t _42;
+	int64_t _43;
+	void* _44;
+	_DECL_1DARRAY(_46);
+	void* _47;
+	void* _49;
+	_DECL_1DARRAY(_51);
+	//fieldload %11 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	_CONV_ARGS(_11);
+	//const %12 = 0 : int
+	_12 = 0;
+	//indexof %13 = %11, %12 : int[][]
+	_13=_11[_12];
+	_13_size = _11_size_size;
+	//invoke (%10) = (%13) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
 	{
-		_STR_TO_INT(_8, _11);
+		_STR_TO_INT(_10, _13);
 	}
-	//assign %1 = %8  : null|int
-	_NEW_INTEGER_POINTER(max, _8);
+	//assign %1 = %10  : null|int
+	_NEW_INTEGER_POINTER(n, _10);
 	//ifis %1, null goto blklab10 : null|int
-	if(max == NULL) { goto blklab10;}
+	if(n == NULL) { goto blklab10;}
 	//assign %2 = %1  : int
-	size = *max;
-	//assign %3 = %2  : int
+	max = *n;
+	//const %14 = 1000 : int
+	_14 = 1000;
+	//assign %3 = %14  : int
+	size = _14;
+	//assign %4 = %3  : int
 	width = size;
-	//assign %4 = %2  : int
+	//assign %5 = %3  : int
 	height = size;
-	//fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %13 = %12 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %14 = [115,105,122,101,32,61,32] : int[]
-	_NEW_1DARRAY_int64_t(_14, 7, 0);
-	_14[0] = 115; _14[1] = 105; _14[2] = 122; _14[3] = 101; _14[4] = 32; _14[5] = 61; _14[6] = 32; 
-	//indirectinvoke () = %13 (%14) : method(int[])->()
-	{
-		printf_s(_14, _14_size);
-	}
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %16 = %15 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//indirectinvoke () = %16 (%2) : method(any)->()
+	//fieldload %16 = %15 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %17 = [115,105,122,101,32,61,32] : int[]
+	_NEW_1DARRAY_int64_t(_17, 7, 0);
+	_17[0] = 115; _17[1] = 105; _17[2] = 122; _17[3] = 101; _17[4] = 32; _17[5] = 61; _17[6] = 32; 
+	//indirectinvoke () = %16 (%17) : method(int[])->()
+	{
+		printf_s(_17, _17_size);
+	}
+	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %19 = %18 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %19 (%3) : method(any)->()
 	{
 		printf("%"PRId64"\n", size);
 	}
-	//const %17 = 0 : int
-	_17 = 0;
-	//mul %18 = %3, %4 : int
-	_18=width*height;
-	//arraygen %19 = [17; 18] : int[]
-	_NEW_1DARRAY_int64_t(_19, _18, _17);
-	//assign %5 = %19  : int[]
-	_COPY_1DARRAY_int64_t(A, _19);
-	//invoke (%20) = (%5, %3, %4) MatrixMult_original:init : function(int[],int,int)->(int[])
-	{
-		void* tmp_A_0;
-		_COPY_1DARRAY_PARAM(A, tmp_A_0, int64_t);
-		_20 = _init_(tmp_A_0, A_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
+	//const %20 = 0 : int
+	_20 = 0;
+	//assign %6 = %20  : int
+	repeats = _20;
+	//loop (%6, %7, %8, %9, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48)
+	while(true){
+		//ifge %6, %2 goto blklab11 : int
+		if(repeats>=max){goto blklab11;}
+		//const %21 = 0 : int
+		_21 = 0;
+		//mul %22 = %4, %5 : int
+		_22=width*height;
+		//arraygen %23 = [21; 22] : int[]
+		_NEW_1DARRAY_int64_t(_23, _22, _21);
+		//assign %7 = %23  : int[]
+		_COPY_1DARRAY_int64_t(A, _23);
+		//invoke (%24) = (%7, %4, %5) MatrixMult_original:init : function(int[],int,int)->(int[])
+		{
+			void* tmp_A_0;
+			_COPY_1DARRAY_PARAM(A, tmp_A_0, int64_t);
+			_24 = _init_(tmp_A_0, A_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
+		}
+		//assign %7 = %24  : int[]
+		_COPY_1DARRAY_int64_t(A, _24);
+		//const %25 = 0 : int
+		_25 = 0;
+		//mul %26 = %4, %5 : int
+		_26=width*height;
+		//arraygen %27 = [25; 26] : int[]
+		_NEW_1DARRAY_int64_t(_27, _26, _25);
+		//assign %8 = %27  : int[]
+		_COPY_1DARRAY_int64_t(B, _27);
+		//invoke (%28) = (%8, %4, %5) MatrixMult_original:init : function(int[],int,int)->(int[])
+		{
+			void* tmp_B_0;
+			_COPY_1DARRAY_PARAM(B, tmp_B_0, int64_t);
+			_28 = _init_(tmp_B_0, B_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
+		}
+		//assign %8 = %28  : int[]
+		_COPY_1DARRAY_int64_t(B, _28);
+		//const %29 = 0 : int
+		_29 = 0;
+		//mul %30 = %4, %5 : int
+		_30=width*height;
+		//arraygen %31 = [29; 30] : int[]
+		_NEW_1DARRAY_int64_t(_31, _30, _29);
+		//assign %9 = %31  : int[]
+		_COPY_1DARRAY_int64_t(C, _31);
+		//invoke (%32) = (%7, %8, %9, %4, %5) MatrixMult_original:mat_mult : function(int[],int[],int[],int,int)->(int[])
+		{
+			void* tmp_A_0;
+			_COPY_1DARRAY_PARAM(A, tmp_A_0, int64_t);
+			void* tmp_B_1;
+			_COPY_1DARRAY_PARAM(B, tmp_B_1, int64_t);
+			void* tmp_C_2;
+			_COPY_1DARRAY_PARAM(C, tmp_C_2, int64_t);
+			_32 = _mat_mult_(tmp_A_0, A_size, tmp_B_1, B_size, tmp_C_2, C_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_32));
+		}
+		//assign %9 = %32  : int[]
+		_COPY_1DARRAY_int64_t(C, _32);
+		//fieldload %33 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+		//fieldload %34 = %33 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+		//const %35 = 1 : int
+		_35 = 1;
+		//sub %36 = %3, %35 : int
+		_36=size-_35;
+		//mul %37 = %36, %3 : int
+		_37=_36*size;
+		//add %38 = %37, %3 : int
+		_38=_37+size;
+		//const %39 = 1 : int
+		_39 = 1;
+		//sub %40 = %38, %39 : int
+		_40=_38-_39;
+		//indexof %41 = %9, %40 : int[]
+		_41=C[_40];
+		//indirectinvoke () = %34 (%41) : method(any)->()
+		{
+			printf("%"PRId64"\n", _41);
+		}
+		//const %42 = 1 : int
+		_42 = 1;
+		//add %43 = %6, %42 : int
+		_43=repeats+_42;
+		//assign %6 = %43  : int
+		repeats = _43;
+		//fieldload %44 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+		//fieldload %45 = %44 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+		//const %46 = [78,117,109,98,101,114,32,111,102,32,114,101,112,101,97,116,115,32] : int[]
+		_NEW_1DARRAY_int64_t(_46, 18, 0);
+		_46[0] = 78; _46[1] = 117; _46[2] = 109; _46[3] = 98; _46[4] = 101; _46[5] = 114; _46[6] = 32; _46[7] = 111; _46[8] = 102; _46[9] = 32; _46[10] = 114; _46[11] = 101; _46[12] = 112; _46[13] = 101; _46[14] = 97; _46[15] = 116; _46[16] = 115; _46[17] = 32; 
+		//indirectinvoke () = %45 (%46) : method(int[])->()
+		{
+			printf_s(_46, _46_size);
+		}
+		//fieldload %47 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+		//fieldload %48 = %47 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+		//indirectinvoke () = %48 (%6) : method(any)->()
+		{
+			printf("%"PRId64"\n", repeats);
+		}
+//.blklab12
+blklab12:;
 	}
-	//assign %5 = %20  : int[]
-	_COPY_1DARRAY_int64_t(A, _20);
-	//const %21 = 0 : int
-	_21 = 0;
-	//mul %22 = %3, %4 : int
-	_22=width*height;
-	//arraygen %23 = [21; 22] : int[]
-	_NEW_1DARRAY_int64_t(_23, _22, _21);
-	//assign %6 = %23  : int[]
-	_COPY_1DARRAY_int64_t(B, _23);
-	//invoke (%24) = (%6, %3, %4) MatrixMult_original:init : function(int[],int,int)->(int[])
+//.blklab11
+blklab11:;
+	//fieldload %49 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %50 = %49 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %51 = [80,97,115,115,32,77,97,116,114,105,120,77,117,108,116,32,116,101,115,116,32,99,97,115,101] : int[]
+	_NEW_1DARRAY_int64_t(_51, 25, 0);
+	_51[0] = 80; _51[1] = 97; _51[2] = 115; _51[3] = 115; _51[4] = 32; _51[5] = 77; _51[6] = 97; _51[7] = 116; _51[8] = 114; _51[9] = 105; _51[10] = 120; _51[11] = 77; _51[12] = 117; _51[13] = 108; _51[14] = 116; _51[15] = 32; _51[16] = 116; _51[17] = 101; _51[18] = 115; _51[19] = 116; _51[20] = 32; _51[21] = 99; _51[22] = 97; _51[23] = 115; _51[24] = 101; 
+	//indirectinvoke () = %50 (%51) : method(int[])->()
 	{
-		void* tmp_B_0;
-		_COPY_1DARRAY_PARAM(B, tmp_B_0, int64_t);
-		_24 = _init_(tmp_B_0, B_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
-	}
-	//assign %6 = %24  : int[]
-	_COPY_1DARRAY_int64_t(B, _24);
-	//const %25 = 0 : int
-	_25 = 0;
-	//mul %26 = %3, %4 : int
-	_26=width*height;
-	//arraygen %27 = [25; 26] : int[]
-	_NEW_1DARRAY_int64_t(_27, _26, _25);
-	//assign %7 = %27  : int[]
-	_COPY_1DARRAY_int64_t(C, _27);
-	//invoke (%28) = (%5, %6, %7, %3, %4) MatrixMult_original:mat_mult : function(int[],int[],int[],int,int)->(int[])
-	{
-		void* tmp_A_0;
-		_COPY_1DARRAY_PARAM(A, tmp_A_0, int64_t);
-		void* tmp_B_1;
-		_COPY_1DARRAY_PARAM(B, tmp_B_1, int64_t);
-		void* tmp_C_2;
-		_COPY_1DARRAY_PARAM(C, tmp_C_2, int64_t);
-		_28 = _mat_mult_(tmp_A_0, A_size, tmp_B_1, B_size, tmp_C_2, C_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
-	}
-	//assign %7 = %28  : int[]
-	_COPY_1DARRAY_int64_t(C, _28);
-	//fieldload %29 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %30 = %29 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %31 = [77,97,116,114,105,120,32,67,91,115,105,122,101,45,49,93,91,115,105,122,101,45,49,93,32,61,32] : int[]
-	_NEW_1DARRAY_int64_t(_31, 27, 0);
-	_31[0] = 77; _31[1] = 97; _31[2] = 116; _31[3] = 114; _31[4] = 105; _31[5] = 120; _31[6] = 32; _31[7] = 67; _31[8] = 91; _31[9] = 115; _31[10] = 105; _31[11] = 122; _31[12] = 101; _31[13] = 45; _31[14] = 49; _31[15] = 93; _31[16] = 91; _31[17] = 115; _31[18] = 105; _31[19] = 122; _31[20] = 101; _31[21] = 45; _31[22] = 49; _31[23] = 93; _31[24] = 32; _31[25] = 61; _31[26] = 32; 
-	//indirectinvoke () = %30 (%31) : method(int[])->()
-	{
-		printf_s(_31, _31_size);
-	}
-	//fieldload %32 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %33 = %32 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %34 = 1 : int
-	_34 = 1;
-	//sub %35 = %2, %34 : int
-	_35=size-_34;
-	//mul %36 = %35, %2 : int
-	_36=_35*size;
-	//add %37 = %36, %2 : int
-	_37=_36+size;
-	//const %38 = 1 : int
-	_38 = 1;
-	//sub %39 = %37, %38 : int
-	_39=_37-_38;
-	//indexof %40 = %7, %39 : int[]
-	_40=C[_39];
-	//indirectinvoke () = %33 (%40) : method(any)->()
-	{
-		printf("%"PRId64"\n", _40);
-	}
-	//fieldload %41 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %42 = %41 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %43 = [80,97,115,115,32,77,97,116,114,105,120,77,117,108,116,32,116,101,115,116,32,99,97,115,101] : int[]
-	_NEW_1DARRAY_int64_t(_43, 25, 0);
-	_43[0] = 80; _43[1] = 97; _43[2] = 115; _43[3] = 115; _43[4] = 32; _43[5] = 77; _43[6] = 97; _43[7] = 116; _43[8] = 114; _43[9] = 105; _43[10] = 120; _43[11] = 77; _43[12] = 117; _43[13] = 108; _43[14] = 116; _43[15] = 32; _43[16] = 116; _43[17] = 101; _43[18] = 115; _43[19] = 116; _43[20] = 32; _43[21] = 99; _43[22] = 97; _43[23] = 115; _43[24] = 101; 
-	//indirectinvoke () = %42 (%43) : method(int[])->()
-	{
-		println_s(_43, _43_size);
+		println_s(_51, _51_size);
 	}
 //.blklab10
 blklab10:;

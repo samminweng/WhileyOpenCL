@@ -24,9 +24,9 @@ declare -A patterns=( [LZ77_compress]=compress [LZ77_original_opt]=compress )
 declare -a threads=( 1 )
 
 ### declare parameters
-declare -A parameters=( [Reverse]="100000 1000000 10000000" [newTicTacToe]="100000 200000 300000" \
-			[BubbleSort]="1000 10000 100000" [MergeSort]="1000 10000 100000" \
-			[MatrixMult]="1000 2000 3000" \
+declare -A parameters=( [Reverse]="1 2 3" [newTicTacToe]="100000 200000 300000" \
+			[BubbleSort]="1 2 3" [MergeSort]="1 2 3" \
+			[MatrixMult]="1 2 3" \
 			[LZ77]="medium1x medium2x medium4x" \
 			[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm" \
 			[Cashtill]="100 200 300" \

@@ -31,21 +31,27 @@ function mat_mult(int[] a, int[] b, int[] data, int width, int height) -> (int[]
     return data
 
 method main(System.Console sys):
-    int|null max = Int.parse(sys.args[0])
-    if max != null:
-        int size = max
+    int|null n = Int.parse(sys.args[0])
+    if n != null:
+        int max = n
+        int size = 1000 // Fixed matrix size
         int width = size
         int height = size
         sys.out.print_s("size = ")
         sys.out.println(size)
-        // Initialize matrix A
-        int[] A = [0;width*height]
-        A = init(A, width, height)
-        // Initialize matrix B
-        int[] B = [0;width*height]
-        B = init(B, width, height)
-        int[] C = [0;width*height]
-        C = mat_mult(A, B, C, width, height)
-        sys.out.print_s("Matrix C[size-1][size-1] = ")
-        sys.out.println(C[(size-1)*size+size-1])
+        int repeats = 0
+        while repeats < max:
+            // Initialize matrix A
+            int[] A = [0;width*height]
+            A = init(A, width, height)
+            // Initialize matrix B
+            int[] B = [0;width*height]
+            B = init(B, width, height)
+            int[] C = [0;width*height]
+            C = mat_mult(A, B, C, width, height)
+            //sys.out.print_s("Matrix C[size-1][size-1] = ")
+            sys.out.println(C[(size-1)*size+size-1])
+            repeats = repeats + 1
+            sys.out.print_s("Number of repeats ")
+            sys.out.println(repeats)
         sys.out.println_s("Pass MatrixMult test case")

@@ -45,16 +45,22 @@ method main(System.Console sys):
     int|null n = Int.parse(sys.args[0])
     if n != null:
         int max = n
-        // Create a reverse array
-        int index = 0
-        int[] arr = [0;max]
-        //Fill in the array in the reverse order (max..0)
-        while index < max:
-            arr[index] = max - index
-            index = index + 1
-        //Use merge sort to order reversed array 'arr' ([10 ... 0])
-        arr = sortV1(arr, 0, max)
-        // Should be in the ascending order [0..10]
-        sys.out.println(arr[0])
-        sys.out.println(arr[max-1])
+        int repeats = 0
+        while repeats < max:
+            // Create a reverse array
+            int size = 10000
+            int index = 0
+            int[] arr = [0;size]
+            //Fill in the array in the reverse order (1000..1)
+            while index < size:
+                arr[index] = size - index
+                index = index + 1
+            //Use merge sort to order reversed array 'arr' ([1000 ... 1])
+            arr = sortV1(arr, 0, max)
+            // Should be in the ascending order [1..1000]
+            //sys.out.println(arr[0])
+            sys.out.println(arr[max-1])
+            repeats = repeats + 1
+            sys.out.print_s("Number of repeats ")
+            sys.out.println(repeats)
         sys.out.println_s("Pass Mergesort test case")

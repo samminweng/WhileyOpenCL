@@ -27,17 +27,23 @@ method main(System.Console sys):
 	int|null n = Int.parse(sys.args[0])
 	if n != null:
 		int max = n
-		//Merge sorting on a reverse array 'arr' ([max ... 0])
-		int index = 0
-		int[] arr = [0;max]
-		//sys.out.println(arr)
-		//Fill in the array in the reverse order (max..0)
-		while index <= max:
-			arr[index] = max - index
-			index = index + 1
-		//Sort the array
-		arr = bubbleSort(arr)
-		// Print the last element of sorted array
-		sys.out.println(arr[0])
-		sys.out.println(arr[max-1])
+		int size = 10000
+		int repeats = 0
+		while repeats < max:
+		      //Create a reverse array 'arr' ([10000 ... 1])
+		      int index = 0
+		      int[] arr = [0;size]
+		      //sys.out.println(arr)
+		      //Fill in the array in the reverse order (10000..1)
+		      while index < size:
+		            arr[index] = size - index
+		            index = index + 1
+		      //Sort the array
+		      arr = bubbleSort(arr)
+		      // Print the last element of sorted array
+		      //sys.out.println(arr[0])
+		      sys.out.println(arr[size-1])
+		      repeats = repeats + 1
+		sys.out.print_s("Number of repeats ")
+		sys.out.println(repeats)
 		sys.out.println_s("Pass BubbleSort test case")

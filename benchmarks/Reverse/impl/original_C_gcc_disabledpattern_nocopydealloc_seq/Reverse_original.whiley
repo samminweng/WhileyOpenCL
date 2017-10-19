@@ -14,18 +14,24 @@ method main(System.Console sys):
     int|null n = Int.parse(sys.args[0])
     if n != null:
         int max = n
-        //Merge sorting on a reverse array 'arr' ([max ... 0])
-        int index = 0
-        int[] arr = [0;max]
-        //sys.out.println(arr)
-        //Fill in the array in the reverse order (max..0)
-        while index < max:
-            arr[index] = max - index 
-            index = index + 1
-        //Sort the array
-        arr = reverse(arr)
-        /**Print the last element of sorted array */
-        sys.out.println(arr[0])
-        sys.out.println(arr[max-1])
-        /** Print out the successful message */
-        sys.out.println_s("Pass Reverse test case")
+        int size = 10000000
+        int repeats = 0
+        while repeats < max:
+              //Reverse an array 'arr' ([max ... 0])
+              int index = 0
+              int[] arr = [0;size]
+              //sys.out.println(arr)
+              //Fill in the array in the reverse order (10000000..0)
+              while index < size:
+              	    arr[index] = size - index
+              	    index = index + 1
+              //Sort the array
+              arr = reverse(arr)
+              /**Print the last element of sorted array */
+              //sys.out.println(arr[0])
+              sys.out.println(arr[size-1])
+              /** Print out the successful message */
+              repeats = repeats + 1
+        sys.out.print_s("Number of repeats: ")
+        sys.out.println(repeats)
+        sys.out.println_s("Pass Reverse test case ")
