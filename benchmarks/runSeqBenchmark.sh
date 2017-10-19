@@ -26,7 +26,7 @@ declare -a threads=( 1 2 4 8 )
 declare -A parameters=( [Reverse]="10 20 30" \
 			[newTicTacToe]="100000 200000 300000" \
 			[BubbleSort]="10 20 30" \
-			[MergeSort]="100 200 300" \
+			[MergeSort]="1000 2000 3000" \
 			[MatrixMult]="10 20 30" \
 			[LZ77]="medium1x medium2x medium4x medium8x medium16x medium32x medium64x medium128x medium256x" \
 			#[LZ77]="medium1x medium2x" \
@@ -341,24 +341,24 @@ exec(){
 # # ###
 # # ###########################################
 # # # # # # ## # Reverse test case
-init Reverse
-exec Reverse original
+#init Reverse
+#exec Reverse original
 # #
 # # # # # # # # # # # # newTicTacToe test case
-init newTicTacToe
-exec newTicTacToe original
+#init newTicTacToe
+#exec newTicTacToe original
 # #
 # # # # # # # # # ## # BubbleSort test case
-init BubbleSort
-exec BubbleSort original
+#init BubbleSort
+#exec BubbleSort original
 # #
 # # # # # # # # # ## # MergeSort test case
 init MergeSort
 exec MergeSort original
 # #
 # # # # # # # # # MatrixMult test case
-init MatrixMult
-exec MatrixMult original
+#init MatrixMult
+#exec MatrixMult original
 # ####exec MatrixMult original 12000 # Naive code runs out of memory
 # # ### Cashtill test case
 # init Cashtill

@@ -128,7 +128,7 @@ BEGIN {
 	parameters["Reverse"]="10 20 30";
 	parameters["newTicTacToe"]="100000 200000 300000";
 	parameters["BubbleSort"]="10 20 30";
-	parameters["MergeSort"]="10 20 30";
+	parameters["MergeSort"]="1000 2000 3000";
 	parameters["MatrixMult"]="10 20 30";
 	parameters["CoinGame"]="10000 20000 25000 30000 40000";
 	parameters["SobelEdge"]="image32x32 image64x64 image128x128 image256x256 image512x512 image1024x1024";

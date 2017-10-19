@@ -3,18 +3,14 @@ Flat profile:
 Each sample counts as 0.01 seconds.
   %   cumulative   self              self     total           
  time   seconds   seconds    calls   s/call   s/call  name    
- 99.89     11.78    11.78        1    11.78    11.78  mat_mult
-  0.08     11.79     0.01        6     0.00     0.00  create1DArray_int64_t
-  0.08     11.80     0.01        2     0.01     0.01  init
-  0.00     11.80     0.00       16     0.00     0.00  copy1DArray_int64_t
-  0.00     11.80     0.00        8     0.00     0.00  free_Matrix
-  0.00     11.80     0.00        5     0.00     0.00  copy_Matrix
-  0.00     11.80     0.00        3     0.00     0.00  matrix
-  0.00     11.80     0.00        3     0.00     0.00  printf_s
-  0.00     11.80     0.00        1     0.00     0.00  convertArgsToIntArray
-  0.00     11.80     0.00        1     0.00     0.00  free2DArray_int64_t
-  0.00     11.80     0.00        1     0.00     0.00  parseStringToInt
-  0.00     11.80     0.00        1     0.00     0.00  println_s
+ 99.89     77.23    77.23       10     7.72     7.72  _mat_mult_
+  0.12     77.32     0.09       20     0.00     0.00  _init_
+  0.06     77.37     0.05       42     0.00     0.00  create1DArray_int64_t
+  0.00     77.37     0.00       60     0.00     0.00  copy1DArray_int64_t
+  0.00     77.37     0.00       12     0.00     0.00  printf_s
+  0.00     77.37     0.00        1     0.00     0.00  convertArgsToIntArray
+  0.00     77.37     0.00        1     0.00     0.00  parseStringToInt
+  0.00     77.37     0.00        1     0.00     0.00  println_s
 
  %         the percentage of the total running time of the
 time       program used by this function.
@@ -28,13 +24,13 @@ seconds    function alone.  This is the major sort for this
 
 calls      the number of times this function was invoked, if
            this function is profiled, else blank.
- 
+
  self      the average number of milliseconds spent in this
 ms/call    function per call, if this function is profiled,
 	   else blank.
 
  total     the average number of milliseconds spent in this
-ms/call    function and its descendents per call, if this 
+ms/call    function and its descendents per call, if this
 	   function is profiled, else blank.
 
 name       the name of the function.  This is the minor sort
@@ -43,7 +39,7 @@ name       the name of the function.  This is the minor sort
 	   in parenthesis it shows where it would appear in
 	   the gprof listing if it were to be printed.
 
-Copyright (C) 2012 Free Software Foundation, Inc.
+Copyright (C) 2012-2015 Free Software Foundation, Inc.
 
 Copying and distribution of this file, with or without modification,
 are permitted in any medium without royalty provided the copyright
@@ -52,75 +48,45 @@ notice and this notice are preserved.
 		     Call graph (explanation follows)
 
 
-granularity: each sample hit covers 2 byte(s) for 0.08% of 11.80 seconds
+granularity: each sample hit covers 2 byte(s) for 0.01% of 77.37 seconds
 
 index % time    self  children    called     name
                                                  <spontaneous>
-[1]    100.0    0.00   11.80                 main [1]
-               11.78    0.00       1/1           mat_mult [2]
-                0.01    0.00       2/2           init [3]
-                0.01    0.00       3/6           create1DArray_int64_t [4]
-                0.00    0.00       6/8           free_Matrix [6]
-                0.00    0.00       5/5           copy_Matrix [7]
-                0.00    0.00       2/3           printf_s [9]
-                0.00    0.00       1/1           convertArgsToIntArray [10]
-                0.00    0.00       1/1           parseStringToInt [12]
-                0.00    0.00       1/1           println_s [13]
-                0.00    0.00       1/1           free2DArray_int64_t [11]
+[1]    100.0    0.00   77.37                 main [1]
+               77.23    0.00      10/10          _mat_mult_ [2]
+                0.09    0.00      20/20          _init_ [3]
+                0.05    0.00      42/42          create1DArray_int64_t [4]
+                0.00    0.00      60/60          copy1DArray_int64_t [5]
+                0.00    0.00      11/12          printf_s [6]
+                0.00    0.00       1/1           convertArgsToIntArray [7]
+                0.00    0.00       1/1           parseStringToInt [8]
+                0.00    0.00       1/1           println_s [9]
 -----------------------------------------------
-               11.78    0.00       1/1           main [1]
-[2]     99.8   11.78    0.00       1         mat_mult [2]
-                0.00    0.00       1/6           create1DArray_int64_t [4]
-                0.00    0.00       4/16          copy1DArray_int64_t [5]
-                0.00    0.00       2/8           free_Matrix [6]
-                0.00    0.00       1/3           matrix [8]
+               77.23    0.00      10/10          main [1]
+[2]     99.8   77.23    0.00      10         _mat_mult_ [2]
 -----------------------------------------------
-                0.01    0.00       2/2           main [1]
-[3]      0.1    0.01    0.00       2         init [3]
-                0.00    0.00       2/6           create1DArray_int64_t [4]
-                0.00    0.00       4/16          copy1DArray_int64_t [5]
-                0.00    0.00       2/3           matrix [8]
+                0.09    0.00      20/20          main [1]
+[3]      0.1    0.09    0.00      20         _init_ [3]
 -----------------------------------------------
-                0.00    0.00       1/6           mat_mult [2]
-                0.00    0.00       2/6           init [3]
-                0.01    0.00       3/6           main [1]
-[4]      0.1    0.01    0.00       6         create1DArray_int64_t [4]
+                0.05    0.00      42/42          main [1]
+[4]      0.1    0.05    0.00      42         create1DArray_int64_t [4]
 -----------------------------------------------
-                0.00    0.00       3/16          matrix [8]
-                0.00    0.00       4/16          init [3]
-                0.00    0.00       4/16          mat_mult [2]
-                0.00    0.00       5/16          copy_Matrix [7]
-[5]      0.0    0.00    0.00      16         copy1DArray_int64_t [5]
+                0.00    0.00      60/60          main [1]
+[5]      0.0    0.00    0.00      60         copy1DArray_int64_t [5]
 -----------------------------------------------
-                0.00    0.00       2/8           mat_mult [2]
-                0.00    0.00       6/8           main [1]
-[6]      0.0    0.00    0.00       8         free_Matrix [6]
------------------------------------------------
-                0.00    0.00       5/5           main [1]
-[7]      0.0    0.00    0.00       5         copy_Matrix [7]
-                0.00    0.00       5/16          copy1DArray_int64_t [5]
------------------------------------------------
-                0.00    0.00       1/3           mat_mult [2]
-                0.00    0.00       2/3           init [3]
-[8]      0.0    0.00    0.00       3         matrix [8]
-                0.00    0.00       3/16          copy1DArray_int64_t [5]
------------------------------------------------
-                0.00    0.00       1/3           println_s [13]
-                0.00    0.00       2/3           main [1]
-[9]      0.0    0.00    0.00       3         printf_s [9]
+                0.00    0.00       1/12          println_s [9]
+                0.00    0.00      11/12          main [1]
+[6]      0.0    0.00    0.00      12         printf_s [6]
 -----------------------------------------------
                 0.00    0.00       1/1           main [1]
-[10]     0.0    0.00    0.00       1         convertArgsToIntArray [10]
+[7]      0.0    0.00    0.00       1         convertArgsToIntArray [7]
 -----------------------------------------------
                 0.00    0.00       1/1           main [1]
-[11]     0.0    0.00    0.00       1         free2DArray_int64_t [11]
+[8]      0.0    0.00    0.00       1         parseStringToInt [8]
 -----------------------------------------------
                 0.00    0.00       1/1           main [1]
-[12]     0.0    0.00    0.00       1         parseStringToInt [12]
------------------------------------------------
-                0.00    0.00       1/1           main [1]
-[13]     0.0    0.00    0.00       1         println_s [13]
-                0.00    0.00       1/3           printf_s [9]
+[9]      0.0    0.00    0.00       1         println_s [9]
+                0.00    0.00       1/12          printf_s [6]
 -----------------------------------------------
 
  This table describes the call tree of the program, and was sorted by
@@ -205,7 +171,7 @@ index % time    self  children    called     name
  for that member, how many times it was called from other members of
  the cycle.
 
-Copyright (C) 2012 Free Software Foundation, Inc.
+Copyright (C) 2012-2015 Free Software Foundation, Inc.
 
 Copying and distribution of this file, with or without modification,
 are permitted in any medium without royalty provided the copyright
@@ -213,7 +179,6 @@ notice and this notice are preserved.
 
 Index by function name
 
-  [10] convertArgsToIntArray  [11] free2DArray_int64_t     [8] matrix
-   [5] copy1DArray_int64_t     [6] free_Matrix            [12] parseStringToInt
-   [7] copy_Matrix             [3] init                    [9] printf_s
-   [4] create1DArray_int64_t   [2] mat_mult               [13] println_s
+   [3] _init_                  [5] copy1DArray_int64_t     [6] printf_s
+   [2] _mat_mult_              [4] create1DArray_int64_t   [9] println_s
+   [7] convertArgsToIntArray   [8] parseStringToInt
