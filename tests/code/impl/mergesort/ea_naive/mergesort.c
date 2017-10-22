@@ -71,9 +71,9 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	_17 = 0;
 	//invoke (%16) = (%5, %17, %4) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		void* tmp_lhs_0;
-		_COPY_1DARRAY_PARAM(lhs, tmp_lhs_0, int64_t);
-		_16 = _sortV1_(tmp_lhs_0, lhs_size, _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
+		void* tmp_items;
+		_COPY_1DARRAY_PARAM(lhs, tmp_items, int64_t);
+		_16 = _sortV1_(tmp_items, lhs_size, _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 	}
 	//assign %5 = %16  : int[]
 	_COPY_1DARRAY_int64_t(lhs, _16);
@@ -89,9 +89,9 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	_21=end-pivot;
 	//invoke (%19) = (%6, %20, %21) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		void* tmp_rhs_0;
-		_COPY_1DARRAY_PARAM(rhs, tmp_rhs_0, int64_t);
-		_19 = _sortV1_(tmp_rhs_0, rhs_size, _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
+		void* tmp_items;
+		_COPY_1DARRAY_PARAM(rhs, tmp_items, int64_t);
+		_19 = _sortV1_(tmp_items, rhs_size, _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
 	}
 	//assign %6 = %19  : int[]
 	_COPY_1DARRAY_int64_t(rhs, _19);
@@ -335,9 +335,9 @@ int main(int argc, char** args){
 	_13 = 5;
 	//invoke (%11) = (%1, %12, %13) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		void* tmp_ys_0;
-		_COPY_1DARRAY_PARAM(ys, tmp_ys_0, int64_t);
-		_11 = _sortV1_(tmp_ys_0, ys_size, _12, _13, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
+		void* tmp_items;
+		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
+		_11 = _sortV1_(tmp_items, ys_size, _12, _13, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 	}
 	//assign %1 = %11  : int[]
 	_COPY_1DARRAY_int64_t(ys, _11);
@@ -384,9 +384,9 @@ blklab9:;
 	_27 = 4;
 	//invoke (%25) = (%1, %26, %27) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		void* tmp_ys_0;
-		_COPY_1DARRAY_PARAM(ys, tmp_ys_0, int64_t);
-		_25 = _sortV1_(tmp_ys_0, ys_size, _26, _27, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
+		void* tmp_items;
+		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
+		_25 = _sortV1_(tmp_items, ys_size, _26, _27, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 	}
 	//assign %1 = %25  : int[]
 	_COPY_1DARRAY_int64_t(ys, _25);
@@ -431,9 +431,9 @@ blklab10:;
 	_40 = 4;
 	//invoke (%38) = (%1, %39, %40) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		void* tmp_ys_0;
-		_COPY_1DARRAY_PARAM(ys, tmp_ys_0, int64_t);
-		_38 = _sortV1_(tmp_ys_0, ys_size, _39, _40, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
+		void* tmp_items;
+		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
+		_38 = _sortV1_(tmp_items, ys_size, _39, _40, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 	}
 	//assign %1 = %38  : int[]
 	_COPY_1DARRAY_int64_t(ys, _38);
@@ -480,9 +480,9 @@ blklab11:;
 	_54 = 5;
 	//invoke (%52) = (%1, %53, %54) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		void* tmp_ys_0;
-		_COPY_1DARRAY_PARAM(ys, tmp_ys_0, int64_t);
-		_52 = _sortV1_(tmp_ys_0, ys_size, _53, _54, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
+		void* tmp_items;
+		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
+		_52 = _sortV1_(tmp_items, ys_size, _53, _54, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 	}
 	//assign %1 = %52  : int[]
 	_COPY_1DARRAY_int64_t(ys, _52);
@@ -555,9 +555,9 @@ blklab13:;
 	_73=max+_72;
 	//invoke (%70) = (%4, %71, %73) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		void* tmp_arr_0;
-		_COPY_1DARRAY_PARAM(arr, tmp_arr_0, int64_t);
-		_70 = _sortV1_(tmp_arr_0, arr_size, _71, _73, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_70));
+		void* tmp_items;
+		_COPY_1DARRAY_PARAM(arr, tmp_items, int64_t);
+		_70 = _sortV1_(tmp_items, arr_size, _71, _73, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_70));
 	}
 	//assign %4 = %70  : int[]
 	_COPY_1DARRAY_int64_t(arr, _70);

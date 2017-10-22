@@ -406,9 +406,9 @@ blklab25:;
 		_20=change-_19;
 		//invoke (%17) = (%4, %20) cashtill:calculateChange : function(cashtill:Cash,cashtill:nat)->(cashtill:Cash|null)
 		{
-			void* tmp_tmp_0;
-			_COPY_1DARRAY_PARAM(tmp, tmp_tmp_0, int64_t);
-			_17 = _calculateChange_(tmp_tmp_0, tmp_size, _20, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_17));
+			void* tmp_till;
+			_COPY_1DARRAY_PARAM(tmp, tmp_till, int64_t);
+			_17 = _calculateChange_(tmp_till, tmp_size, _20, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_17));
 		}
 		//assign %5 = %17  : null|int[]
 		_COPY_1DARRAY_int64_t(chg, _17);
@@ -699,9 +699,9 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_1DARRAY_PARAM(giv
 	//fieldload %22 = %21 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%23) = (%2) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
-		void* tmp_given_0;
-		_COPY_1DARRAY_PARAM(given, tmp_given_0, int64_t);
-		_23 = _toString_(tmp_given_0, given_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
+		void* tmp_c;
+		_COPY_1DARRAY_PARAM(given, tmp_c, int64_t);
+		_23 = _toString_(tmp_c, given_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 	}
 	//indirectinvoke () = %22 (%23) : method(int[])->()
 	{
@@ -709,9 +709,9 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_1DARRAY_PARAM(giv
 	}
 	//invoke (%24) = (%2) cashtill:total : function(cashtill:Cash)->(int)
 	{
-		void* tmp_given_0;
-		_COPY_1DARRAY_PARAM(given, tmp_given_0, int64_t);
-		_24 = _total_(tmp_given_0, given_size);
+		void* tmp_c;
+		_COPY_1DARRAY_PARAM(given, tmp_c, int64_t);
+		_24 = _total_(tmp_c, given_size);
 	}
 	//ifge %24, %3 goto blklab36 : int
 	if(_24>=cost){goto blklab36;}
@@ -730,17 +730,17 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_1DARRAY_PARAM(giv
 blklab36:;
 	//invoke (%29) = (%2) cashtill:total : function(cashtill:Cash)->(int)
 	{
-		void* tmp_given_0;
-		_COPY_1DARRAY_PARAM(given, tmp_given_0, int64_t);
-		_29 = _total_(tmp_given_0, given_size);
+		void* tmp_c;
+		_COPY_1DARRAY_PARAM(given, tmp_c, int64_t);
+		_29 = _total_(tmp_c, given_size);
 	}
 	//sub %30 = %29, %3 : int
 	_30=_29-cost;
 	//invoke (%28) = (%1, %30) cashtill:calculateChange : function(cashtill:Cash,cashtill:nat)->(cashtill:Cash|null)
 	{
-		void* tmp_till_0;
-		_COPY_1DARRAY_PARAM(till, tmp_till_0, int64_t);
-		_28 = _calculateChange_(tmp_till_0, till_size, _30, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
+		void* tmp_till;
+		_COPY_1DARRAY_PARAM(till, tmp_till, int64_t);
+		_28 = _calculateChange_(tmp_till, till_size, _30, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 	}
 	//assign %5 = %28  : null|int[]
 	_COPY_1DARRAY_int64_t(change, _28);
@@ -776,9 +776,9 @@ blklab38:;
 	//fieldload %38 = %37 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%39) = (%5) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
-		void* tmp_change_0;
-		_COPY_1DARRAY_PARAM(change, tmp_change_0, int64_t);
-		_39 = _toString_(tmp_change_0, change_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_39));
+		void* tmp_c;
+		_COPY_1DARRAY_PARAM(change, tmp_c, int64_t);
+		_39 = _toString_(tmp_c, change_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_39));
 	}
 	//indirectinvoke () = %38 (%39) : method(int[])->()
 	{
@@ -786,21 +786,21 @@ blklab38:;
 	}
 	//invoke (%40) = (%1, %2) cashtill:add : function(cashtill:Cash,cashtill:Cash)->(cashtill:Cash)
 	{
-		void* tmp_till_0;
-		_COPY_1DARRAY_PARAM(till, tmp_till_0, int64_t);
-		void* tmp_given_1;
-		_COPY_1DARRAY_PARAM(given, tmp_given_1, int64_t);
-		_40 = _add_(tmp_till_0, till_size, tmp_given_1, given_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_40));
+		void* tmp_first;
+		_COPY_1DARRAY_PARAM(till, tmp_first, int64_t);
+		void* tmp_second;
+		_COPY_1DARRAY_PARAM(given, tmp_second, int64_t);
+		_40 = _add_(tmp_first, till_size, tmp_second, given_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_40));
 	}
 	//assign %1 = %40  : int[]
 	_COPY_1DARRAY_int64_t(till, _40);
 	//invoke (%41) = (%1, %5) cashtill:subtract : function(cashtill:Cash,cashtill:Cash)->(cashtill:Cash)
 	{
-		void* tmp_till_0;
-		_COPY_1DARRAY_PARAM(till, tmp_till_0, int64_t);
-		void* tmp_change_1;
-		_COPY_1DARRAY_PARAM(change, tmp_change_1, int64_t);
-		_41 = _subtract_(tmp_till_0, till_size, tmp_change_1, change_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_41));
+		void* tmp_first;
+		_COPY_1DARRAY_PARAM(till, tmp_first, int64_t);
+		void* tmp_second;
+		_COPY_1DARRAY_PARAM(change, tmp_second, int64_t);
+		_41 = _subtract_(tmp_first, till_size, tmp_second, change_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_41));
 	}
 	//assign %1 = %41  : int[]
 	_COPY_1DARRAY_int64_t(till, _41);
@@ -817,9 +817,9 @@ blklab38:;
 	//fieldload %46 = %45 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%47) = (%1) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
-		void* tmp_till_0;
-		_COPY_1DARRAY_PARAM(till, tmp_till_0, int64_t);
-		_47 = _toString_(tmp_till_0, till_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_47));
+		void* tmp_c;
+		_COPY_1DARRAY_PARAM(till, tmp_c, int64_t);
+		_47 = _toString_(tmp_c, till_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_47));
 	}
 	//indirectinvoke () = %46 (%47) : method(int[])->()
 	{
@@ -904,9 +904,9 @@ int main(int argc, char** args){
 	//fieldload %15 = %14 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%16) = (%1) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
-		void* tmp_till_0;
-		_COPY_1DARRAY_PARAM(till, tmp_till_0, int64_t);
-		_16 = _toString_(tmp_till_0, till_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
+		void* tmp_c;
+		_COPY_1DARRAY_PARAM(till, tmp_c, int64_t);
+		_16 = _toString_(tmp_c, till_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 	}
 	//indirectinvoke () = %15 (%16) : method(int[])->()
 	{
@@ -919,19 +919,19 @@ int main(int argc, char** args){
 	_20[0] = _19; 
 	//invoke (%18) = (%20) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
-		void* tmp__20_0;
-		_COPY_1DARRAY_PARAM(_20, tmp__20_0, int64_t);
-		_18 = _Cash_1_(tmp__20_0, _20_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
+		void* tmp_coins;
+		_COPY_1DARRAY_PARAM(_20, tmp_coins, int64_t);
+		_18 = _Cash_1_(tmp_coins, _20_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
 	}
 	//const %21 = 85 : int
 	_21 = 85;
 	//invoke (%17) = (%0, %1, %18, %21) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
-		void* tmp_till_1;
-		_COPY_1DARRAY_PARAM(till, tmp_till_1, int64_t);
-		void* tmp__18_2;
-		_COPY_1DARRAY_PARAM(_18, tmp__18_2, int64_t);
-		_17 = _buy_(stdout, tmp_till_1, till_size, tmp__18_2, _18_size, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_17));
+		void* tmp_till;
+		_COPY_1DARRAY_PARAM(till, tmp_till, int64_t);
+		void* tmp_given;
+		_COPY_1DARRAY_PARAM(_18, tmp_given, int64_t);
+		_17 = _buy_(stdout, tmp_till, till_size, tmp_given, _18_size, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_17));
 	}
 	//assign %1 = %17  : int[]
 	_COPY_1DARRAY_int64_t(till, _17);
@@ -942,19 +942,19 @@ int main(int argc, char** args){
 	_25[0] = _24; 
 	//invoke (%23) = (%25) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
-		void* tmp__25_0;
-		_COPY_1DARRAY_PARAM(_25, tmp__25_0, int64_t);
-		_23 = _Cash_1_(tmp__25_0, _25_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
+		void* tmp_coins;
+		_COPY_1DARRAY_PARAM(_25, tmp_coins, int64_t);
+		_23 = _Cash_1_(tmp_coins, _25_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 	}
 	//const %26 = 105 : int
 	_26 = 105;
 	//invoke (%22) = (%0, %1, %23, %26) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
-		void* tmp_till_1;
-		_COPY_1DARRAY_PARAM(till, tmp_till_1, int64_t);
-		void* tmp__23_2;
-		_COPY_1DARRAY_PARAM(_23, tmp__23_2, int64_t);
-		_22 = _buy_(stdout, tmp_till_1, till_size, tmp__23_2, _23_size, _26, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
+		void* tmp_till;
+		_COPY_1DARRAY_PARAM(till, tmp_till, int64_t);
+		void* tmp_given;
+		_COPY_1DARRAY_PARAM(_23, tmp_given, int64_t);
+		_22 = _buy_(stdout, tmp_till, till_size, tmp_given, _23_size, _26, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
 	}
 	//assign %1 = %22  : int[]
 	_COPY_1DARRAY_int64_t(till, _22);
@@ -965,19 +965,19 @@ int main(int argc, char** args){
 	_30[0] = _29; 
 	//invoke (%28) = (%30) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
-		void* tmp__30_0;
-		_COPY_1DARRAY_PARAM(_30, tmp__30_0, int64_t);
-		_28 = _Cash_1_(tmp__30_0, _30_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
+		void* tmp_coins;
+		_COPY_1DARRAY_PARAM(_30, tmp_coins, int64_t);
+		_28 = _Cash_1_(tmp_coins, _30_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 	}
 	//const %31 = 5 : int
 	_31 = 5;
 	//invoke (%27) = (%0, %1, %28, %31) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
-		void* tmp_till_1;
-		_COPY_1DARRAY_PARAM(till, tmp_till_1, int64_t);
-		void* tmp__28_2;
-		_COPY_1DARRAY_PARAM(_28, tmp__28_2, int64_t);
-		_27 = _buy_(stdout, tmp_till_1, till_size, tmp__28_2, _28_size, _31, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
+		void* tmp_till;
+		_COPY_1DARRAY_PARAM(till, tmp_till, int64_t);
+		void* tmp_given;
+		_COPY_1DARRAY_PARAM(_28, tmp_given, int64_t);
+		_27 = _buy_(stdout, tmp_till, till_size, tmp_given, _28_size, _31, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 	}
 	//assign %1 = %27  : int[]
 	_COPY_1DARRAY_int64_t(till, _27);
@@ -988,19 +988,19 @@ int main(int argc, char** args){
 	_35[0] = _34; 
 	//invoke (%33) = (%35) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
-		void* tmp__35_0;
-		_COPY_1DARRAY_PARAM(_35, tmp__35_0, int64_t);
-		_33 = _Cash_1_(tmp__35_0, _35_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
+		void* tmp_coins;
+		_COPY_1DARRAY_PARAM(_35, tmp_coins, int64_t);
+		_33 = _Cash_1_(tmp_coins, _35_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
 	}
 	//const %36 = 305 : int
 	_36 = 305;
 	//invoke (%32) = (%0, %1, %33, %36) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
-		void* tmp_till_1;
-		_COPY_1DARRAY_PARAM(till, tmp_till_1, int64_t);
-		void* tmp__33_2;
-		_COPY_1DARRAY_PARAM(_33, tmp__33_2, int64_t);
-		_32 = _buy_(stdout, tmp_till_1, till_size, tmp__33_2, _33_size, _36, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_32));
+		void* tmp_till;
+		_COPY_1DARRAY_PARAM(till, tmp_till, int64_t);
+		void* tmp_given;
+		_COPY_1DARRAY_PARAM(_33, tmp_given, int64_t);
+		_32 = _buy_(stdout, tmp_till, till_size, tmp_given, _33_size, _36, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_32));
 	}
 	//assign %1 = %32  : int[]
 	_COPY_1DARRAY_int64_t(till, _32);

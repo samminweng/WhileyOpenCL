@@ -131,10 +131,10 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_11);
 	//invoke (%5) = (%11) reverse:reverse : function(int[])->(int[])
 	{
-		void* tmp__11_0;
-		_COPY_1DARRAY_PARAM(_11, tmp__11_0, int64_t);
+		void* tmp_ls;
+		_COPY_1DARRAY_PARAM(_11, tmp_ls, int64_t);
 		_DEALLOC(_5);
-		_5 = _reverse_(tmp__11_0, _11_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
+		_5 = _reverse_(tmp_ls, _11_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
 		_CALLEE_DEALLOC(_11, "false-false-false" , "reverse");
 		_CALLEE_DEALLOC_POST(_5, _11);
 	}
@@ -211,10 +211,10 @@ blklab6:;
 blklab5:;
 	//invoke (%27) = (%4) reverse:reverse : function(int[])->(int[])
 	{
-		void* tmp_arr_0;
-		_COPY_1DARRAY_PARAM(arr, tmp_arr_0, int64_t);
+		void* tmp_ls;
+		_COPY_1DARRAY_PARAM(arr, tmp_ls, int64_t);
 		_DEALLOC(_27);
-		_27 = _reverse_(tmp_arr_0, arr_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
+		_27 = _reverse_(tmp_ls, arr_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 		_CALLEE_DEALLOC(arr, "false-false-false" , "reverse");
 		_CALLEE_DEALLOC_POST(_27, arr);
 	}

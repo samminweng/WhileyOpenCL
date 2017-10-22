@@ -200,9 +200,9 @@ int main(int argc, char** args){
 	_COPY_1DARRAY_int64_t(ys, _10);
 	//invoke (%11) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
-		void* tmp_ys_0;
-		_COPY_1DARRAY_PARAM(ys, tmp_ys_0, int64_t);
-		_11 = _bubbleSort_(tmp_ys_0, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
+		void* tmp_items;
+		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
+		_11 = _bubbleSort_(tmp_items, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 	}
 	//assign %1 = %11  : int[]
 	_COPY_1DARRAY_int64_t(ys, _11);
@@ -251,9 +251,9 @@ blklab5:;
 	_COPY_1DARRAY_int64_t(ys, _24);
 	//invoke (%25) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
-		void* tmp_ys_0;
-		_COPY_1DARRAY_PARAM(ys, tmp_ys_0, int64_t);
-		_25 = _bubbleSort_(tmp_ys_0, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
+		void* tmp_items;
+		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
+		_25 = _bubbleSort_(tmp_items, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 	}
 	//assign %1 = %25  : int[]
 	_COPY_1DARRAY_int64_t(ys, _25);
@@ -300,9 +300,9 @@ blklab6:;
 	_COPY_1DARRAY_int64_t(ys, _37);
 	//invoke (%38) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
-		void* tmp_ys_0;
-		_COPY_1DARRAY_PARAM(ys, tmp_ys_0, int64_t);
-		_38 = _bubbleSort_(tmp_ys_0, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
+		void* tmp_items;
+		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
+		_38 = _bubbleSort_(tmp_items, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 	}
 	//assign %1 = %38  : int[]
 	_COPY_1DARRAY_int64_t(ys, _38);
@@ -351,9 +351,9 @@ blklab7:;
 	_COPY_1DARRAY_int64_t(ys, _51);
 	//invoke (%52) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
-		void* tmp_ys_0;
-		_COPY_1DARRAY_PARAM(ys, tmp_ys_0, int64_t);
-		_52 = _bubbleSort_(tmp_ys_0, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
+		void* tmp_items;
+		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
+		_52 = _bubbleSort_(tmp_items, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 	}
 	//assign %1 = %52  : int[]
 	_COPY_1DARRAY_int64_t(ys, _52);
@@ -422,9 +422,9 @@ blklab10:;
 blklab9:;
 	//invoke (%68) = (%4) bubblesort:bubbleSort : function(int[])->(int[])
 	{
-		void* tmp_arr_0;
-		_COPY_1DARRAY_PARAM(arr, tmp_arr_0, int64_t);
-		_68 = _bubbleSort_(tmp_arr_0, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
+		void* tmp_items;
+		_COPY_1DARRAY_PARAM(arr, tmp_items, int64_t);
+		_68 = _bubbleSort_(tmp_items, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
 	}
 	//assign %4 = %68  : int[]
 	_COPY_1DARRAY_int64_t(arr, _68);

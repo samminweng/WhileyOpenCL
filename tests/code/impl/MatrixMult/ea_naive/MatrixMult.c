@@ -267,9 +267,9 @@ int main(int argc, char** args){
 	_COPY_1DARRAY_int64_t(A, _15);
 	//invoke (%16) = (%4, %2, %3) MatrixMult:init : function(int[],int,int)->(int[])
 	{
-		void* tmp_A_0;
-		_COPY_1DARRAY_PARAM(A, tmp_A_0, int64_t);
-		_16 = _init_(tmp_A_0, A_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
+		void* tmp_data;
+		_COPY_1DARRAY_PARAM(A, tmp_data, int64_t);
+		_16 = _init_(tmp_data, A_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 	}
 	//assign %4 = %16  : int[]
 	_COPY_1DARRAY_int64_t(A, _16);
@@ -283,9 +283,9 @@ int main(int argc, char** args){
 	_COPY_1DARRAY_int64_t(B, _19);
 	//invoke (%20) = (%5, %2, %3) MatrixMult:init : function(int[],int,int)->(int[])
 	{
-		void* tmp_B_0;
-		_COPY_1DARRAY_PARAM(B, tmp_B_0, int64_t);
-		_20 = _init_(tmp_B_0, B_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
+		void* tmp_data;
+		_COPY_1DARRAY_PARAM(B, tmp_data, int64_t);
+		_20 = _init_(tmp_data, B_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
 	}
 	//assign %5 = %20  : int[]
 	_COPY_1DARRAY_int64_t(B, _20);
@@ -299,13 +299,13 @@ int main(int argc, char** args){
 	_COPY_1DARRAY_int64_t(C, _23);
 	//invoke (%24) = (%4, %5, %6, %2, %3) MatrixMult:mat_mult : function(int[],int[],int[],int,int)->(int[])
 	{
-		void* tmp_A_0;
-		_COPY_1DARRAY_PARAM(A, tmp_A_0, int64_t);
-		void* tmp_B_1;
-		_COPY_1DARRAY_PARAM(B, tmp_B_1, int64_t);
-		void* tmp_C_2;
-		_COPY_1DARRAY_PARAM(C, tmp_C_2, int64_t);
-		_24 = _mat_mult_(tmp_A_0, A_size, tmp_B_1, B_size, tmp_C_2, C_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
+		void* tmp_a;
+		_COPY_1DARRAY_PARAM(A, tmp_a, int64_t);
+		void* tmp_b;
+		_COPY_1DARRAY_PARAM(B, tmp_b, int64_t);
+		void* tmp_data;
+		_COPY_1DARRAY_PARAM(C, tmp_data, int64_t);
+		_24 = _mat_mult_(tmp_a, A_size, tmp_b, B_size, tmp_data, C_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
 	}
 	//assign %6 = %24  : int[]
 	_COPY_1DARRAY_int64_t(C, _24);

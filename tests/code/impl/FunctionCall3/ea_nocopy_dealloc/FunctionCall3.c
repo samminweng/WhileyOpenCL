@@ -162,13 +162,13 @@ blklab0:;
 	_TRANSFER_DEALLOC(b, _26);
 	//invoke (%27) = (%2) FunctionCall3:func : function(int[])->(int[])
 	{
-		void* tmp_b_0;
-		_COPY_1DARRAY_PARAM(b, tmp_b_0, int64_t);
+		void* tmp_s;
+		_COPY_1DARRAY_PARAM(b, tmp_s, int64_t);
 		_DEALLOC(_27);
 		// isCopyEliminated of '_2' = false
-		_27 = _func_(tmp_b_0, b_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
+		_27 = _func_(tmp_s, b_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 		_CALLER_DEALLOC(b, "true-true-true" , "func");
-		_CALLER_DEALLOC_POST(_27, tmp_b_0);
+		_CALLER_DEALLOC_POST(_27, tmp_s);
 	}
 	//assign %3 = %27  : int[]
 	_DEALLOC(c);

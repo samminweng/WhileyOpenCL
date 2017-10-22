@@ -69,9 +69,9 @@ int main(int argc, char** args){
 	_COPY_1DARRAY_int64_t(a, _9);
 	//invoke (%10) = (%1) FunctionCall3:func : function(int[])->(int[])
 	{
-		void* tmp_a_0;
-		_COPY_1DARRAY_PARAM(a, tmp_a_0, int64_t);
-		_10 = _func_(tmp_a_0, a_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
+		void* tmp_s;
+		_COPY_1DARRAY_PARAM(a, tmp_s, int64_t);
+		_10 = _func_(tmp_s, a_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 	}
 	//assign %1 = %10  : int[]
 	_COPY_1DARRAY_int64_t(a, _10);
@@ -128,9 +128,9 @@ blklab0:;
 	_COPY_1DARRAY_int64_t(b, _26);
 	//invoke (%27) = (%2) FunctionCall3:func : function(int[])->(int[])
 	{
-		void* tmp_b_0;
-		_COPY_1DARRAY_PARAM(b, tmp_b_0, int64_t);
-		_27 = _func_(tmp_b_0, b_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
+		void* tmp_s;
+		_COPY_1DARRAY_PARAM(b, tmp_s, int64_t);
+		_27 = _func_(tmp_s, b_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 	}
 	//assign %3 = %27  : int[]
 	_COPY_1DARRAY_int64_t(c, _27);

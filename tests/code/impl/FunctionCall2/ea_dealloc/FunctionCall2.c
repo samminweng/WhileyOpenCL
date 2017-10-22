@@ -117,12 +117,12 @@ int main(int argc, char** args){
 	_11 = 6;
 	//invoke (%10) = (%1, %11) FunctionCall2:func : function(int[],int)->(int[])
 	{
-		void* tmp_a_0;
-		_COPY_1DARRAY_PARAM(a, tmp_a_0, int64_t);
+		void* tmp_s;
+		_COPY_1DARRAY_PARAM(a, tmp_s, int64_t);
 		_DEALLOC(_10);
-		_10 = _func_(tmp_a_0, a_size, false, _11, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
+		_10 = _func_(tmp_s, a_size, false, _11, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 		_CALLER_DEALLOC(a, "false-true-false" , "func");
-		_CALLER_DEALLOC_POST(_10, tmp_a_0);
+		_CALLER_DEALLOC_POST(_10, tmp_s);
 	}
 	//assign %1 = %10  : int[]
 	_DEALLOC(a);
@@ -189,12 +189,12 @@ blklab2:;
 	_29 = 1;
 	//invoke (%28) = (%2, %29) FunctionCall2:func : function(int[],int)->(int[])
 	{
-		void* tmp_b_0;
-		_COPY_1DARRAY_PARAM(b, tmp_b_0, int64_t);
+		void* tmp_s;
+		_COPY_1DARRAY_PARAM(b, tmp_s, int64_t);
 		_DEALLOC(_28);
-		_28 = _func_(tmp_b_0, b_size, false, _29, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
+		_28 = _func_(tmp_s, b_size, false, _29, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 		_CALLER_DEALLOC(b, "false-true-true" , "func");
-		_CALLER_DEALLOC_POST(_28, tmp_b_0);
+		_CALLER_DEALLOC_POST(_28, tmp_s);
 	}
 	//assign %3 = %28  : int[]
 	_DEALLOC(c);

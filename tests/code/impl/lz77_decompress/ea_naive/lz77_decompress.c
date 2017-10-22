@@ -136,9 +136,9 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYR
 		if(header!=_22){goto blklab5;}
 		//invoke (%23) = (%1, %4) lz77_decompress:append : function(byte[],byte)->(byte[])
 		{
-			void* tmp_output_0;
-			_COPY_1DARRAY_PARAM(output, tmp_output_0, BYTE);
-			_23 = _append_(tmp_output_0, output_size, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
+			void* tmp_items;
+			_COPY_1DARRAY_PARAM(output, tmp_items, BYTE);
+			_23 = _append_(tmp_items, output_size, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 		}
 		//assign %1 = %23  : byte[]
 		_COPY_1DARRAY_BYTE(output, _23);
@@ -178,9 +178,9 @@ blklab5:;
 			item = _29;
 			//invoke (%30) = (%1, %4) lz77_decompress:append : function(byte[],byte)->(byte[])
 			{
-				void* tmp_output_0;
-				_COPY_1DARRAY_PARAM(output, tmp_output_0, BYTE);
-				_30 = _append_(tmp_output_0, output_size, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
+				void* tmp_items;
+				_COPY_1DARRAY_PARAM(output, tmp_items, BYTE);
+				_30 = _append_(tmp_items, output_size, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
 			}
 			//assign %1 = %30  : byte[]
 			_COPY_1DARRAY_BYTE(output, _30);
@@ -242,9 +242,9 @@ int main(int argc, char** args){
 	_COPY_1DARRAY_BYTE(input_data, _6);
 	//invoke (%8) = (%2) lz77_decompress:decompress : function(byte[])->(byte[])
 	{
-		void* tmp_input_data_0;
-		_COPY_1DARRAY_PARAM(input_data, tmp_input_data_0, BYTE);
-		_8 = _decompress_(tmp_input_data_0, input_data_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
+		void* tmp_data;
+		_COPY_1DARRAY_PARAM(input_data, tmp_data, BYTE);
+		_8 = _decompress_(tmp_data, input_data_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 	}
 	//assign %3 = %8  : byte[]
 	_COPY_1DARRAY_BYTE(decompress_data, _8);

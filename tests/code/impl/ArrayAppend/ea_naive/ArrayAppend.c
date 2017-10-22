@@ -103,11 +103,11 @@ int main(int argc, char** args){
 	_4[0] = 32; _4[1] = 84; _4[2] = 104; _4[3] = 105; _4[4] = 115; _4[5] = 32; _4[6] = 105; _4[7] = 115; _4[8] = 32; _4[9] = 97; _4[10] = 32; _4[11] = 116; _4[12] = 101; _4[13] = 115; _4[14] = 116; _4[15] = 32; 
 	//invoke (%3) = (%1, %4) ArrayAppend:test_append : function(int[],int[])->(int[])
 	{
-		void* tmp_r_0;
-		_COPY_1DARRAY_PARAM(r, tmp_r_0, int64_t);
-		void* tmp__4_1;
-		_COPY_1DARRAY_PARAM(_4, tmp__4_1, int64_t);
-		_3 = _test_append_(tmp_r_0, r_size, tmp__4_1, _4_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
+		void* tmp_lhs;
+		_COPY_1DARRAY_PARAM(r, tmp_lhs, int64_t);
+		void* tmp_rhs;
+		_COPY_1DARRAY_PARAM(_4, tmp_rhs, int64_t);
+		_3 = _test_append_(tmp_lhs, r_size, tmp_rhs, _4_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
 	}
 	//assign %1 = %3  : int[]
 	_COPY_1DARRAY_int64_t(r, _3);

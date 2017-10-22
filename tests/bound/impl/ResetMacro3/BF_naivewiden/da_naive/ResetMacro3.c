@@ -82,9 +82,9 @@ int main(int argc, char** args){
 	_7 = 11;
 	//invoke (%6) = (%1, %7) ResetMacro3:func : function(int[],int)->(int[])
 	{
-		void* tmp_b_0;
-		_COPY_1DARRAY_PARAM(b, tmp_b_0, uint16_t);
-		_6 = _func_(tmp_b_0, b_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
+		void* tmp_b;
+		_COPY_1DARRAY_PARAM(b, tmp_b, uint16_t);
+		_6 = _func_(tmp_b, b_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 	}
 	//assign %2 = %6  : int[]
 	_COPY_1DARRAY(tmp, _6, uint16_t);
@@ -104,9 +104,9 @@ int main(int argc, char** args){
 	_16 = 65536;
 	//invoke (%15) = (%1, %16) ResetMacro3:func : function(int[],int)->(int[])
 	{
-		void* tmp_b_0;
-		_COPY_1DARRAY_PARAM(b, tmp_b_0, uint32_t);
-		_15 = _func_(tmp_b_0, b_size, _16, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
+		void* tmp_b;
+		_COPY_1DARRAY_PARAM(b, tmp_b, uint32_t);
+		_15 = _func_(tmp_b, b_size, _16, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
 	}
 	//assign %1 = %15  : int[]
 	_COPY_1DARRAY(b, _15, uint32_t);

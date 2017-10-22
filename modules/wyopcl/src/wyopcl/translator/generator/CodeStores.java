@@ -53,19 +53,26 @@ public class CodeStores {
 	}
 	/**
 	 * Return temporary parameter name to store extra copies
-	 * By default, 
-	 * 
+	 * For example, 'func(a, b)'
+	 * The temporary variable at index 1 is 'tmp_b'.
+	 * If 'tmp_b' is used, then 'tmp_b_0', 'tmp_b_1', etc
 	 * 
 	 * @param param
-	 * @param num
+	 * @param index
 	 * @param code
-	 * @param function
+	 * @param func
 	 * @return
 	 */
-	public String getTmpParamName(String param, int num,
-				Codes.Invoke code, FunctionOrMethod function){
-		CodeStore store = stores.get(function);
-		return store.getTmpParamName(param, num, code);
+	public String getTmpParamName(String param, int index,
+				Codes.Invoke code, FunctionOrMethod func){
+		// Get code store of 'function'
+		CodeStore store = stores.get(func);
+		// Extract called function from 
+		FunctionOrMethod calledFunc = getFunction(code.name.name(), code.type(0));
+		// Get parameter name at index of calledFunc
+		String fparam = getVar(index, calledFunc);
+		// Get the name of temporary parameter at 'func' 
+		return store.getTmpParamName(fparam, index, code);
 	}
 	
 	
@@ -751,33 +758,53 @@ public class CodeStores {
 		
 		/**
 		 * Returns the name of temporary parameter 'param'. 
-		 * By default, the name is 'tmp_param_num'. 
-		 * If the name is duplicated, we create another name with extra subfix '_' + num
-		 * e.g. 'tmp_param_1'
+		 * By default, the name is 'tmp_fparam'. 
+		 * If the name is used, create another name with extra subfix '_' + num
+		 * e.g. 'tmp_fparam_0'
 		 * 
-		 * @param param the parameter
-		 * @param num the index at parameter list
+		 * The key of map is fparam+_+index, and the value is the corresponding parameter name
+		 * 
+		 * 
+		 * @param fparam formal parameter at called function
+		 * @param index the index at parameter list
 		 * @param code
 		 * @return
 		 */
-		protected String getTmpParamName(String param, int num, Codes.Invoke code){
+		protected String getTmpParamName(String fparam, int index, Codes.Invoke code){
 			if(!param_names.containsKey(code)){
 				// Create a new set
 				param_names.put(code, new HashMap<String, String>());
 			}
 			HashMap<String, String> names = param_names.get(code);
-			String key = param+"_"+num;
+			String key = fparam + "_" +index;
+			// If 'name' is stored in map, return it.
 			if(names.containsKey(key)){
 				return names.get(key);
 			}
 			
-			// Create a temporary name 
-			String param_name = "tmp_" + param + "_" + num;
+			String name = "tmp_" + fparam;
+			int suffix = 0;
 			
-			// Put param_name to 'param_names'
-			names.put(param+"_"+num, param_name);
+			// Check if name is used in 'func' function
+			VariableDeclarations vars = function.attribute(VariableDeclarations.class);
+			for(int reg =0; reg< vars.size();reg++) {
+				String var_name = prefix + reg;
+				// Check if the name is defined in variable declaration
+				Declaration declaration = vars.get(reg);
+				if (declaration != null && declaration.name() != null && !declaration.name().isEmpty()) {
+					var_name = declaration.name();
+				}
+				// Check if 'name' is used in 'func' function
+				if(var_name.equals(name)) {
+					name = "tmp_" + fparam + "_"+ suffix;
+					suffix++;
+				}
+			}
+		
+			// Put 'name' to 'param_names'
+			names.put(key, name);
 			
-			return param_name;
+			return name;
 		}
 		
 		

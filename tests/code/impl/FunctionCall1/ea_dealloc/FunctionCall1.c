@@ -97,10 +97,10 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(a);
 	//invoke (%10) = (%1) FunctionCall1:func : function(int[])->(int[])
 	{
-		void* tmp_a_0;
-		_COPY_1DARRAY_PARAM(a, tmp_a_0, int64_t);
+		void* tmp_s;
+		_COPY_1DARRAY_PARAM(a, tmp_s, int64_t);
 		_DEALLOC(_10);
-		_10 = _func_(tmp_a_0, a_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
+		_10 = _func_(tmp_s, a_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 		_CALLEE_DEALLOC(a, "false-false-false" , "func");
 		_CALLEE_DEALLOC_POST(_10, a);
 	}
@@ -167,10 +167,10 @@ blklab0:;
 	_ADD_DEALLOC(b);
 	//invoke (%27) = (%2) FunctionCall1:func : function(int[])->(int[])
 	{
-		void* tmp_b_0;
-		_COPY_1DARRAY_PARAM(b, tmp_b_0, int64_t);
+		void* tmp_s;
+		_COPY_1DARRAY_PARAM(b, tmp_s, int64_t);
 		_DEALLOC(_27);
-		_27 = _func_(tmp_b_0, b_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
+		_27 = _func_(tmp_s, b_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 		_CALLEE_DEALLOC(b, "false-false-true" , "func");
 		_CALLEE_DEALLOC_POST(_27, b);
 	}

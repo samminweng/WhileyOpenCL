@@ -40,9 +40,9 @@ int main(int argc, char** args){
 	_7 = 11;
 	//invoke (%6) = (%1, %7) ResetMacro1:func : function(int[],int)->(int[])
 	{
-		void* tmp_x_0;
-		_COPY_1DARRAY_PARAM(x, tmp_x_0, int64_t);
-		_6 = _func_(tmp_x_0, x_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
+		void* tmp_x;
+		_COPY_1DARRAY_PARAM(x, tmp_x, int64_t);
+		_6 = _func_(tmp_x, x_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 	}
 	//assign %2 = %6  : int[]
 	_COPY_1DARRAY_int64_t(tmp, _6);

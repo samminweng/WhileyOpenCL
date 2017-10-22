@@ -340,21 +340,21 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, int64_t width, int6
 			pos = _46;
 			//invoke (%47) = (%0, %1, %2, %8, %9, %6) SobelEdge:convolution : function(byte[],int,int,int,int,int[])->(int)
 			{
-				void* tmp_pixels_0;
-				_COPY_1DARRAY_PARAM(pixels, tmp_pixels_0, BYTE);
-				void* tmp_v_sobel_5;
-				_COPY_1DARRAY_PARAM(v_sobel, tmp_v_sobel_5, int64_t);
-				_47 = _convolution_(tmp_pixels_0, pixels_size, width, height, x, y, tmp_v_sobel_5, v_sobel_size);
+				void* tmp_pixels;
+				_COPY_1DARRAY_PARAM(pixels, tmp_pixels, BYTE);
+				void* tmp_kernel;
+				_COPY_1DARRAY_PARAM(v_sobel, tmp_kernel, int64_t);
+				_47 = _convolution_(tmp_pixels, pixels_size, width, height, x, y, tmp_kernel, v_sobel_size);
 			}
 			//assign %11 = %47  : int
 			v_g = _47;
 			//invoke (%48) = (%0, %1, %2, %8, %9, %7) SobelEdge:convolution : function(byte[],int,int,int,int,int[])->(int)
 			{
-				void* tmp_pixels_0;
-				_COPY_1DARRAY_PARAM(pixels, tmp_pixels_0, BYTE);
-				void* tmp_h_sobel_5;
-				_COPY_1DARRAY_PARAM(h_sobel, tmp_h_sobel_5, int64_t);
-				_48 = _convolution_(tmp_pixels_0, pixels_size, width, height, x, y, tmp_h_sobel_5, h_sobel_size);
+				void* tmp_pixels;
+				_COPY_1DARRAY_PARAM(pixels, tmp_pixels, BYTE);
+				void* tmp_kernel;
+				_COPY_1DARRAY_PARAM(h_sobel, tmp_kernel, int64_t);
+				_48 = _convolution_(tmp_pixels, pixels_size, width, height, x, y, tmp_kernel, h_sobel_size);
 			}
 			//assign %12 = %48  : int
 			h_g = _48;
@@ -604,17 +604,17 @@ int main(int argc, char** args){
 	_COPY_1DARRAY_BYTE(pixels, _12);
 	//invoke (%14) = (%5, %2, %3) SobelEdge:sobelEdgeDetection : function(byte[],int,int)->(byte[])
 	{
-		void* tmp_pixels_0;
-		_COPY_1DARRAY_PARAM(pixels, tmp_pixels_0, BYTE);
-		_14 = _sobelEdgeDetection_(tmp_pixels_0, pixels_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_14));
+		void* tmp_pixels;
+		_COPY_1DARRAY_PARAM(pixels, tmp_pixels, BYTE);
+		_14 = _sobelEdgeDetection_(tmp_pixels, pixels_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_14));
 	}
 	//assign %6 = %14  : byte[]
 	_COPY_1DARRAY_BYTE(newPixels, _14);
 	//invoke () = (%0, %2, %3, %6) SobelEdge:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
-		void* tmp_newPixels_3;
-		_COPY_1DARRAY_PARAM(newPixels, tmp_newPixels_3, BYTE);
-		_print_pbm_(stdout, width, height, tmp_newPixels_3, newPixels_size);
+		void* tmp_pixels;
+		_COPY_1DARRAY_PARAM(newPixels, tmp_pixels, BYTE);
+		_print_pbm_(stdout, width, height, tmp_pixels, newPixels_size);
 	}
 	//return
 	exit(0);

@@ -1379,8 +1379,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Check the copy of parameter
 			List<Integer> copyReducedList = translatePreFunctionCall(statements, code, function);
 
-			// De-allocate lhs register
-			// translateLHSVarFunctionCall(statements, code, function);
 			// call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
 			translateActualFunctionCall(copyReducedList, statements, code, function);
 

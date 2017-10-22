@@ -35,10 +35,10 @@ int64_t* _g3_(int64_t x, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_8 = 11;
 	//invoke (%7) = (%2, %8) CallerMacro2:func : function(int[],int)->(int[])
 	{
-		void* tmp_a_0;
-		_COPY_1DARRAY_PARAM(a, tmp_a_0, int64_t);
+		void* tmp_x;
+		_COPY_1DARRAY_PARAM(a, tmp_x, int64_t);
 		// isCopyEliminated of '_2' = false
-		_7 = _func_(tmp_a_0, a_size, _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_7));
+		_7 = _func_(tmp_x, a_size, _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_7));
 	}
 	//assign %3 = %7  : int[]
 	// isCopyEliminated = true
