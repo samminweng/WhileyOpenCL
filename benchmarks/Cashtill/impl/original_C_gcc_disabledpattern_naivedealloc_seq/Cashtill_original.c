@@ -460,11 +460,12 @@ blklab25:;
 		_20=change-_19;
 		//invoke (%17) = (%4, %20) Cashtill_original:calculateChange : function(Cashtill_original:Cash,Cashtill_original:nat)->(Cashtill_original:Cash|null)
 		{
-			void* tmp_tmp;
+			void* tmp_till;
+			_COPY_1DARRAY_PARAM(tmp, tmp_till, int64_t);
 			_DEALLOC(_17);
-			_17 = _calculateChange_(_COPY_1DARRAY_PARAM_int64_t(tmp), true, _20, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_17));
+			_17 = _calculateChange_(tmp_till, tmp_size, true, _20, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_17));
 			_CALLEE_DEALLOC(tmp, "false-false-false" , "calculateChange");
-			_17_dealloc = true;
+			_CALLEE_DEALLOC_POST(_17, tmp);
 		}
 		//assign %5 = %17  : null|int[]
 		_DEALLOC(chg);
@@ -607,7 +608,7 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRA
 		//invoke (%13) = (%2, %14) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
 			_DEALLOC(_13);
-			_13 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_14), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_13));
+			_13 = Array_Append(r, r_size , _14, _14_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_13));
 			_ADD_DEALLOC(_13);
 		}
 		//assign %2 = %13  : int[]
@@ -629,7 +630,7 @@ blklab34:;
 		//invoke (%16) = (%2, %17) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
 			_DEALLOC(_16);
-			_16 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_17), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
+			_16 = Array_Append(r, r_size , _17, _17_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 			_ADD_DEALLOC(_16);
 		}
 		//assign %2 = %16  : int[]
@@ -644,7 +645,7 @@ blklab34:;
 		//invoke (%18) = (%2, %19) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
 			_DEALLOC(_18);
-			_18 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_19), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
+			_18 = Array_Append(r, r_size , _19, _19_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
 			_ADD_DEALLOC(_18);
 		}
 		//assign %2 = %18  : int[]
@@ -695,7 +696,7 @@ blklab34:;
 		//invoke (%20) = (%2, %22) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
 			_DEALLOC(_20);
-			_20 = Array_Append(_1DARRAY_PARAM(r), _1DARRAY_PARAM(_22), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
+			_20 = Array_Append(r, r_size , _22, _22_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
 			_ADD_DEALLOC(_20);
 		}
 		//assign %2 = %20  : int[]
@@ -752,89 +753,98 @@ blklab35:;
 	//return
 }
 
-int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_DEALLOC_PARAM(till), _DECL_1DARRAY_PARAM(given), _DECL_DEALLOC_PARAM(given), int64_t cost, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
-	_DECL_1DARRAY(_4);
-	_DECL_DEALLOC(_4);
+int64_t* _buy_(_DECL_1DARRAY_PARAM(till), _DECL_DEALLOC_PARAM(till), _DECL_1DARRAY_PARAM(given), _DECL_DEALLOC_PARAM(given), int64_t cost, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_1DARRAY(_3);
+	_DECL_DEALLOC(_3);
 	_DECL_1DARRAY(change);
 	_DECL_DEALLOC(change);
-	int64_t _6;
-	_DECL_1DARRAY(_7);
-	_DECL_DEALLOC(_7);
+	int64_t _5;
+	_DECL_1DARRAY(_6);
+	_DECL_DEALLOC(_6);
+	int64_t _7;
 	int64_t _8;
-	int64_t _9;
+	_DECL_1DARRAY(_9);
+	_DECL_DEALLOC(_9);
 	_DECL_1DARRAY(_10);
 	_DECL_DEALLOC(_10);
-	_DECL_1DARRAY(_11);
-	_DECL_DEALLOC(_11);
-	//invoke (%6) = (%2) Cashtill_original:total : function(Cashtill_original:Cash)->(int)
+	//invoke (%5) = (%1) Cashtill_original:total : function(Cashtill_original:Cash)->(int)
 	{
-		void* given_tmp;
-		_6 = _total_(_COPY_1DARRAY_PARAM_int64_t(given), true);
+		void* tmp_c;
+		_COPY_1DARRAY_PARAM(given, tmp_c, int64_t);
+		_5 = _total_(tmp_c, given_size, true);
 		_CALLEE_DEALLOC(given, "false-false-true" , "total");
 	}
-	//iflt %6, %3 goto blklab36 : int
-	if(_6<cost){goto blklab36;}
-	//invoke (%8) = (%2) Cashtill_original:total : function(Cashtill_original:Cash)->(int)
+	//iflt %5, %2 goto blklab36 : int
+	if(_5<cost){goto blklab36;}
+	//invoke (%7) = (%1) Cashtill_original:total : function(Cashtill_original:Cash)->(int)
 	{
-		void* given_tmp;
-		_8 = _total_(_COPY_1DARRAY_PARAM_int64_t(given), true);
+		void* tmp_c;
+		_COPY_1DARRAY_PARAM(given, tmp_c, int64_t);
+		_7 = _total_(tmp_c, given_size, true);
 		_CALLEE_DEALLOC(given, "false-false-true" , "total");
 	}
-	//sub %9 = %8, %3 : int
-	_9=_8-cost;
-	//invoke (%7) = (%1, %9) Cashtill_original:calculateChange : function(Cashtill_original:Cash,Cashtill_original:nat)->(Cashtill_original:Cash|null)
+	//sub %8 = %7, %2 : int
+	_8=_7-cost;
+	//invoke (%6) = (%0, %8) Cashtill_original:calculateChange : function(Cashtill_original:Cash,Cashtill_original:nat)->(Cashtill_original:Cash|null)
 	{
-		void* till_tmp;
-		_DEALLOC(_7);
-		_7 = _calculateChange_(_COPY_1DARRAY_PARAM_int64_t(till), true, _9, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_7));
+		void* tmp_till;
+		_COPY_1DARRAY_PARAM(till, tmp_till, int64_t);
+		_DEALLOC(_6);
+		_6 = _calculateChange_(tmp_till, till_size, true, _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		_CALLEE_DEALLOC(till, "false-false-true" , "calculateChange");
-		_7_dealloc = true;
+		_CALLEE_DEALLOC_POST(_6, till);
 	}
-	//assign %5 = %7  : null|int[]
+	//assign %4 = %6  : null|int[]
 	_DEALLOC(change);
-	_COPY_1DARRAY_int64_t(change, _7);
+	_COPY_1DARRAY_int64_t(change, _6);
 	_ADD_DEALLOC(change);
-	//ifis %5, null goto blklab37 : null|int[]
+	//ifis %4, null goto blklab37 : null|int[]
 	if(change == NULL) { goto blklab37;}
-	//invoke (%10) = (%1, %2) Cashtill_original:add : function(Cashtill_original:Cash,Cashtill_original:Cash)->(Cashtill_original:Cash)
+	//invoke (%9) = (%0, %1) Cashtill_original:add : function(Cashtill_original:Cash,Cashtill_original:Cash)->(Cashtill_original:Cash)
 	{
-		void* till_tmp;
-		void* given_tmp;
-		_DEALLOC(_10);
-		_10 = _add_(_COPY_1DARRAY_PARAM_int64_t(till), false, _COPY_1DARRAY_PARAM_int64_t(given), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
-		_CALLER_DEALLOC(_10, till, "true-true-false" , "add");
+		void* tmp_first;
+		_COPY_1DARRAY_PARAM(till, tmp_first, int64_t);
+		void* tmp_second;
+		_COPY_1DARRAY_PARAM(given, tmp_second, int64_t);
+		_DEALLOC(_9);
+		_9 = _add_(tmp_first, till_size, false, tmp_second, given_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_9));
+		_CALLER_DEALLOC(till, "true-true-false" , "add");
+		_CALLER_DEALLOC_POST(_9, tmp_first);
 		_CALLEE_DEALLOC(given, "false-false-false" , "add");
-		_10_dealloc = true;
+		_CALLEE_DEALLOC_POST(_9, given);
 	}
-	//assign %1 = %10  : int[]
+	//assign %0 = %9  : int[]
+	_DEALLOC(till);
+	_COPY_1DARRAY_int64_t(till, _9);
+	_ADD_DEALLOC(till);
+	//invoke (%10) = (%0, %4) Cashtill_original:subtract : function(Cashtill_original:Cash,Cashtill_original:Cash)->(Cashtill_original:Cash)
+	{
+		void* tmp_first;
+		_COPY_1DARRAY_PARAM(till, tmp_first, int64_t);
+		void* tmp_second;
+		_COPY_1DARRAY_PARAM(change, tmp_second, int64_t);
+		_DEALLOC(_10);
+		_10 = _subtract_(tmp_first, till_size, false, tmp_second, change_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
+		_CALLER_DEALLOC(till, "true-true-false" , "subtract");
+		_CALLER_DEALLOC_POST(_10, tmp_first);
+		_CALLEE_DEALLOC(change, "false-false-false" , "subtract");
+		_CALLEE_DEALLOC_POST(_10, change);
+	}
+	//assign %0 = %10  : int[]
 	_DEALLOC(till);
 	_COPY_1DARRAY_int64_t(till, _10);
-	_ADD_DEALLOC(till);
-	//invoke (%11) = (%1, %5) Cashtill_original:subtract : function(Cashtill_original:Cash,Cashtill_original:Cash)->(Cashtill_original:Cash)
-	{
-		void* till_tmp;
-		void* change_tmp;
-		_DEALLOC(_11);
-		_11 = _subtract_(_COPY_1DARRAY_PARAM_int64_t(till), false, _COPY_1DARRAY_PARAM_int64_t(change), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
-		_CALLER_DEALLOC(_11, till, "true-true-false" , "subtract");
-		_CALLEE_DEALLOC(change, "false-false-false" , "subtract");
-		_11_dealloc = true;
-	}
-	//assign %1 = %11  : int[]
-	_DEALLOC(till);
-	_COPY_1DARRAY_int64_t(till, _11);
 	_ADD_DEALLOC(till);
 //.blklab37
 blklab37:;
 //.blklab36
 blklab36:;
-	//return %1
+	//return %0
 	_DEALLOC(given);
-	_DEALLOC(_4);
+	_DEALLOC(_3);
 	_DEALLOC(change);
-	_DEALLOC(_7);
+	_DEALLOC(_6);
+	_DEALLOC(_9);
 	_DEALLOC(_10);
-	_DEALLOC(_11);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(till);
 	return till;
 	//return
@@ -902,8 +912,15 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_41);
 	_DECL_DEALLOC(_41);
 	int64_t _42;
-	int64_t _43;
-	int64_t _44;
+	void* _43;
+	_DECL_1DARRAY(_45);
+	_DECL_DEALLOC(_45);
+	void* _46;
+	_DECL_1DARRAY(_48);
+	_DECL_DEALLOC(_48);
+	void* _49;
+	int64_t _51;
+	int64_t _52;
 	//fieldload %6 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	_DEALLOC_2DARRAY_int64_t(_6);
 	_CONV_ARGS(_6);
@@ -932,7 +949,7 @@ int main(int argc, char** args){
 	_9 = 0;
 	//assign %3 = %9  : int
 	repeat = _9;
-	//loop (%3, %4, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44)
+	//loop (%3, %4, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52)
 	while(true){
 		//ifge %3, %2 goto blklab39 : int
 		if(repeat>=max){goto blklab39;}
@@ -990,23 +1007,27 @@ blklab41:;
 		_ADD_DEALLOC(_26);
 		//invoke (%24) = (%26) Cashtill_original:Cash : function(Cashtill_original:nat[])->(Cashtill_original:Cash)
 		{
-			void* _26_tmp;
+			void* tmp_coins;
+			_COPY_1DARRAY_PARAM(_26, tmp_coins, int64_t);
 			_DEALLOC(_24);
-			_24 = _Cash_1_(_COPY_1DARRAY_PARAM_int64_t(_26), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
+			_24 = _Cash_1_(tmp_coins, _26_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
 			_CALLEE_DEALLOC(_26, "false-false-false" , "Cash");
-			_24_dealloc = true;
+			_CALLEE_DEALLOC_POST(_24, _26);
 		}
 		//const %27 = 85 : int
 		_27 = 85;
-		//invoke (%23) = (%0, %4, %24, %27) Cashtill_original:buy : method(whiley/lang/System:Console,Cashtill_original:Cash,Cashtill_original:Cash,int)->(Cashtill_original:Cash)
+		//invoke (%23) = (%4, %24, %27) Cashtill_original:buy : function(Cashtill_original:Cash,Cashtill_original:Cash,int)->(Cashtill_original:Cash)
 		{
-			void* till_tmp;
-			void* _24_tmp;
+			void* tmp_till;
+			_COPY_1DARRAY_PARAM(till, tmp_till, int64_t);
+			void* tmp_given;
+			_COPY_1DARRAY_PARAM(_24, tmp_given, int64_t);
 			_DEALLOC(_23);
-			_23 = _buy_(stdout, _COPY_1DARRAY_PARAM_int64_t(till), false, _COPY_1DARRAY_PARAM_int64_t(_24), true, _27, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
-			_CALLER_DEALLOC(_23, till, "true-true-false" , "buy");
+			_23 = _buy_(tmp_till, till_size, false, tmp_given, _24_size, true, _27, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
+			_CALLER_DEALLOC(till, "true-true-false" , "buy");
+			_CALLER_DEALLOC_POST(_23, tmp_till);
 			_CALLEE_DEALLOC(_24, "false-false-false" , "buy");
-			_23_dealloc = true;
+			_CALLEE_DEALLOC_POST(_23, _24);
 		}
 		//assign %4 = %23  : int[]
 		_DEALLOC(till);
@@ -1021,23 +1042,27 @@ blklab41:;
 		_ADD_DEALLOC(_31);
 		//invoke (%29) = (%31) Cashtill_original:Cash : function(Cashtill_original:nat[])->(Cashtill_original:Cash)
 		{
-			void* _31_tmp;
+			void* tmp_coins;
+			_COPY_1DARRAY_PARAM(_31, tmp_coins, int64_t);
 			_DEALLOC(_29);
-			_29 = _Cash_1_(_COPY_1DARRAY_PARAM_int64_t(_31), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_29));
+			_29 = _Cash_1_(tmp_coins, _31_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_29));
 			_CALLEE_DEALLOC(_31, "false-false-false" , "Cash");
-			_29_dealloc = true;
+			_CALLEE_DEALLOC_POST(_29, _31);
 		}
 		//const %32 = 105 : int
 		_32 = 105;
-		//invoke (%28) = (%0, %4, %29, %32) Cashtill_original:buy : method(whiley/lang/System:Console,Cashtill_original:Cash,Cashtill_original:Cash,int)->(Cashtill_original:Cash)
+		//invoke (%28) = (%4, %29, %32) Cashtill_original:buy : function(Cashtill_original:Cash,Cashtill_original:Cash,int)->(Cashtill_original:Cash)
 		{
-			void* till_tmp;
-			void* _29_tmp;
+			void* tmp_till;
+			_COPY_1DARRAY_PARAM(till, tmp_till, int64_t);
+			void* tmp_given;
+			_COPY_1DARRAY_PARAM(_29, tmp_given, int64_t);
 			_DEALLOC(_28);
-			_28 = _buy_(stdout, _COPY_1DARRAY_PARAM_int64_t(till), false, _COPY_1DARRAY_PARAM_int64_t(_29), true, _32, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
-			_CALLER_DEALLOC(_28, till, "true-true-false" , "buy");
+			_28 = _buy_(tmp_till, till_size, false, tmp_given, _29_size, true, _32, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
+			_CALLER_DEALLOC(till, "true-true-false" , "buy");
+			_CALLER_DEALLOC_POST(_28, tmp_till);
 			_CALLEE_DEALLOC(_29, "false-false-false" , "buy");
-			_28_dealloc = true;
+			_CALLEE_DEALLOC_POST(_28, _29);
 		}
 		//assign %4 = %28  : int[]
 		_DEALLOC(till);
@@ -1052,23 +1077,27 @@ blklab41:;
 		_ADD_DEALLOC(_36);
 		//invoke (%34) = (%36) Cashtill_original:Cash : function(Cashtill_original:nat[])->(Cashtill_original:Cash)
 		{
-			void* _36_tmp;
+			void* tmp_coins;
+			_COPY_1DARRAY_PARAM(_36, tmp_coins, int64_t);
 			_DEALLOC(_34);
-			_34 = _Cash_1_(_COPY_1DARRAY_PARAM_int64_t(_36), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_34));
+			_34 = _Cash_1_(tmp_coins, _36_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_34));
 			_CALLEE_DEALLOC(_36, "false-false-false" , "Cash");
-			_34_dealloc = true;
+			_CALLEE_DEALLOC_POST(_34, _36);
 		}
 		//const %37 = 5 : int
 		_37 = 5;
-		//invoke (%33) = (%0, %4, %34, %37) Cashtill_original:buy : method(whiley/lang/System:Console,Cashtill_original:Cash,Cashtill_original:Cash,int)->(Cashtill_original:Cash)
+		//invoke (%33) = (%4, %34, %37) Cashtill_original:buy : function(Cashtill_original:Cash,Cashtill_original:Cash,int)->(Cashtill_original:Cash)
 		{
-			void* till_tmp;
-			void* _34_tmp;
+			void* tmp_till;
+			_COPY_1DARRAY_PARAM(till, tmp_till, int64_t);
+			void* tmp_given;
+			_COPY_1DARRAY_PARAM(_34, tmp_given, int64_t);
 			_DEALLOC(_33);
-			_33 = _buy_(stdout, _COPY_1DARRAY_PARAM_int64_t(till), false, _COPY_1DARRAY_PARAM_int64_t(_34), true, _37, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
-			_CALLER_DEALLOC(_33, till, "true-true-false" , "buy");
+			_33 = _buy_(tmp_till, till_size, false, tmp_given, _34_size, true, _37, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
+			_CALLER_DEALLOC(till, "true-true-false" , "buy");
+			_CALLER_DEALLOC_POST(_33, tmp_till);
 			_CALLEE_DEALLOC(_34, "false-false-false" , "buy");
-			_33_dealloc = true;
+			_CALLEE_DEALLOC_POST(_33, _34);
 		}
 		//assign %4 = %33  : int[]
 		_DEALLOC(till);
@@ -1083,34 +1112,70 @@ blklab41:;
 		_ADD_DEALLOC(_41);
 		//invoke (%39) = (%41) Cashtill_original:Cash : function(Cashtill_original:nat[])->(Cashtill_original:Cash)
 		{
-			void* _41_tmp;
+			void* tmp_coins;
+			_COPY_1DARRAY_PARAM(_41, tmp_coins, int64_t);
 			_DEALLOC(_39);
-			_39 = _Cash_1_(_COPY_1DARRAY_PARAM_int64_t(_41), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_39));
+			_39 = _Cash_1_(tmp_coins, _41_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_39));
 			_CALLEE_DEALLOC(_41, "false-false-false" , "Cash");
-			_39_dealloc = true;
+			_CALLEE_DEALLOC_POST(_39, _41);
 		}
 		//const %42 = 305 : int
 		_42 = 305;
-		//invoke (%38) = (%0, %4, %39, %42) Cashtill_original:buy : method(whiley/lang/System:Console,Cashtill_original:Cash,Cashtill_original:Cash,int)->(Cashtill_original:Cash)
+		//invoke (%38) = (%4, %39, %42) Cashtill_original:buy : function(Cashtill_original:Cash,Cashtill_original:Cash,int)->(Cashtill_original:Cash)
 		{
-			void* till_tmp;
-			void* _39_tmp;
+			void* tmp_till;
+			_COPY_1DARRAY_PARAM(till, tmp_till, int64_t);
+			void* tmp_given;
+			_COPY_1DARRAY_PARAM(_39, tmp_given, int64_t);
 			_DEALLOC(_38);
-			_38 = _buy_(stdout, _COPY_1DARRAY_PARAM_int64_t(till), false, _COPY_1DARRAY_PARAM_int64_t(_39), true, _42, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
-			_CALLER_DEALLOC(_38, till, "true-true-false" , "buy");
+			_38 = _buy_(tmp_till, till_size, false, tmp_given, _39_size, true, _42, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
+			_CALLER_DEALLOC(till, "true-true-false" , "buy");
+			_CALLER_DEALLOC_POST(_38, tmp_till);
 			_CALLEE_DEALLOC(_39, "false-false-false" , "buy");
-			_38_dealloc = true;
+			_CALLEE_DEALLOC_POST(_38, _39);
 		}
 		//assign %4 = %38  : int[]
 		_DEALLOC(till);
 		_COPY_1DARRAY_int64_t(till, _38);
 		_ADD_DEALLOC(till);
-		//const %43 = 1 : int
-		_43 = 1;
-		//add %44 = %3, %43 : int
-		_44=repeat+_43;
-		//assign %3 = %44  : int
-		repeat = _44;
+		//fieldload %43 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+		//fieldload %44 = %43 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+		//const %45 = [84,105,108,108,58,32] : int[]
+		_DEALLOC(_45);
+		_NEW_1DARRAY_int64_t(_45, 6, 0);
+		_45[0] = 84; _45[1] = 105; _45[2] = 108; _45[3] = 108; _45[4] = 58; _45[5] = 32; 
+		_ADD_DEALLOC(_45);
+		//indirectinvoke () = %44 (%45) : method(int[])->()
+		{
+			printf_s(_45, _45_size);
+		}
+		//fieldload %46 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+		//fieldload %47 = %46 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+		//invoke (%48) = (%4) Cashtill_original:toString : function(Cashtill_original:Cash)->(whiley/lang/ASCII:string)
+		{
+			void* tmp_c;
+			_COPY_1DARRAY_PARAM(till, tmp_c, int64_t);
+			_DEALLOC(_48);
+			_48 = _toString_(tmp_c, till_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_48));
+			_CALLEE_DEALLOC(till, "false-false-false" , "toString");
+			_CALLEE_DEALLOC_POST(_48, till);
+		}
+		//indirectinvoke () = %47 (%48) : method(int[])->()
+		{
+			println_s(_48, _48_size);
+		}
+		//fieldload %49 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+		//fieldload %50 = %49 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+		//indirectinvoke () = %50 (%3) : method(any)->()
+		{
+			printf("%"PRId64"\n", repeat);
+		}
+		//const %51 = 1 : int
+		_51 = 1;
+		//add %52 = %3, %51 : int
+		_52=repeat+_51;
+		//assign %3 = %52  : int
+		repeat = _52;
 //.blklab40
 blklab40:;
 	}
@@ -1138,6 +1203,8 @@ blklab38:;
 	_DEALLOC(_38);
 	_DEALLOC(_39);
 	_DEALLOC(_41);
+	_DEALLOC(_45);
+	_DEALLOC(_48);
 	exit(0);
 }
 

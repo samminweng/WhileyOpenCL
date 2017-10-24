@@ -82,12 +82,12 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	_17 = 0;
 	//invoke (%16) = (%5, %17, %4) MergeSort_original:sortV1 : function(int[],int,int)->(int[])
 	{
-		void* tmp_lhs_0;
-		_COPY_1DARRAY_PARAM(lhs, tmp_lhs_0, int64_t);
+		void* tmp_items;
+		_COPY_1DARRAY_PARAM(lhs, tmp_items, int64_t);
 		_DEALLOC(_16);
-		_16 = _sortV1_(tmp_lhs_0, lhs_size, false, _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
+		_16 = _sortV1_(tmp_items, lhs_size, false, _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		_CALLER_DEALLOC(lhs, "true-true-false" , "sortV1");
-		_CALLER_DEALLOC_POST(_16, tmp_lhs_0);
+		_CALLER_DEALLOC_POST(_16, tmp_items);
 	}
 	//assign %5 = %16  : int[]
 	_DEALLOC(lhs);
@@ -109,12 +109,12 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	_21=end-pivot;
 	//invoke (%19) = (%6, %20, %21) MergeSort_original:sortV1 : function(int[],int,int)->(int[])
 	{
-		void* tmp_rhs_0;
-		_COPY_1DARRAY_PARAM(rhs, tmp_rhs_0, int64_t);
+		void* tmp_items;
+		_COPY_1DARRAY_PARAM(rhs, tmp_items, int64_t);
 		_DEALLOC(_19);
-		_19 = _sortV1_(tmp_rhs_0, rhs_size, false, _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
+		_19 = _sortV1_(tmp_items, rhs_size, false, _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
 		_CALLER_DEALLOC(rhs, "true-true-false" , "sortV1");
-		_CALLER_DEALLOC_POST(_19, tmp_rhs_0);
+		_CALLER_DEALLOC_POST(_19, tmp_items);
 	}
 	//assign %6 = %19  : int[]
 	_DEALLOC(rhs);
@@ -262,8 +262,8 @@ int main(int argc, char** args){
 	int64_t* n;
 	_DECL_DEALLOC(n);
 	int64_t max;
-	int64_t repeats;
 	int64_t size;
+	int64_t repeats;
 	int64_t index;
 	_DECL_1DARRAY(arr);
 	_DECL_DEALLOC(arr);
@@ -321,27 +321,27 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(n);
 	//ifis %1, null goto blklab9 : null|int
 	if(n == NULL) { goto blklab9;}
-	//assign %2 = %1  : int
-	max = *n;
-	//const %11 = 0 : int
-	_11 = 0;
-	//assign %3 = %11  : int
-	repeats = _11;
-	//loop (%3, %4, %5, %6, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32)
+	//const %11 = 1 : int
+	_11 = 1;
+	//assign %2 = %11  : int
+	max = _11;
+	//assign %3 = %1  : int
+	size = *n;
+	//const %12 = 0 : int
+	_12 = 0;
+	//assign %4 = %12  : int
+	repeats = _12;
+	//loop (%4, %5, %6, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32)
 	while(true){
-		//ifge %3, %2 goto blklab10 : int
+		//ifge %4, %2 goto blklab10 : int
 		if(repeats>=max){goto blklab10;}
-		//const %12 = 10000 : int
-		_12 = 10000;
-		//assign %4 = %12  : int
-		size = _12;
 		//const %13 = 0 : int
 		_13 = 0;
 		//assign %5 = %13  : int
 		index = _13;
 		//const %14 = 0 : int
 		_14 = 0;
-		//arraygen %15 = [14; 4] : int[]
+		//arraygen %15 = [14; 3] : int[]
 		_DEALLOC(_15);
 		_NEW_1DARRAY_int64_t(_15, size, _14);
 		_ADD_DEALLOC(_15);
@@ -351,9 +351,9 @@ int main(int argc, char** args){
 		_ADD_DEALLOC(arr);
 		//loop (%5, %6, %16, %17, %18)
 		while(true){
-			//ifge %5, %4 goto blklab12 : int
+			//ifge %5, %3 goto blklab12 : int
 			if(index>=size){goto blklab12;}
-			//sub %16 = %4, %5 : int
+			//sub %16 = %3, %5 : int
 			_16=size-index;
 			//update %6[%5] = %16 : int[] -> int[]
 			arr[index] = _16;
@@ -372,12 +372,12 @@ blklab12:;
 		_20 = 0;
 		//invoke (%19) = (%6, %20, %2) MergeSort_original:sortV1 : function(int[],int,int)->(int[])
 		{
-			void* tmp_arr_0;
-			_COPY_1DARRAY_PARAM(arr, tmp_arr_0, int64_t);
+			void* tmp_items;
+			_COPY_1DARRAY_PARAM(arr, tmp_items, int64_t);
 			_DEALLOC(_19);
-			_19 = _sortV1_(tmp_arr_0, arr_size, false, _20, max, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
+			_19 = _sortV1_(tmp_items, arr_size, false, _20, max, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
 			_CALLER_DEALLOC(arr, "true-true-false" , "sortV1");
-			_CALLER_DEALLOC_POST(_19, tmp_arr_0);
+			_CALLER_DEALLOC_POST(_19, tmp_items);
 		}
 		//assign %6 = %19  : int[]
 		_DEALLOC(arr);
@@ -397,9 +397,9 @@ blklab12:;
 		}
 		//const %26 = 1 : int
 		_26 = 1;
-		//add %27 = %3, %26 : int
+		//add %27 = %4, %26 : int
 		_27=repeats+_26;
-		//assign %3 = %27  : int
+		//assign %4 = %27  : int
 		repeats = _27;
 		//fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %29 = %28 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -414,7 +414,7 @@ blklab12:;
 		}
 		//fieldload %31 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %32 = %31 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-		//indirectinvoke () = %32 (%3) : method(any)->()
+		//indirectinvoke () = %32 (%4) : method(any)->()
 		{
 			printf("%"PRId64"\n", repeats);
 		}

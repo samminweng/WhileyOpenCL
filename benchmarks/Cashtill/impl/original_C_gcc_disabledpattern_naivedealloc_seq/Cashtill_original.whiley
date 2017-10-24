@@ -181,7 +181,7 @@ constant Descriptions is [
  * Run through the sequence of a customer attempting to purchase an item
  * of a specified cost using a given amount of cash and a current till.
  */
- public method buy(System.Console console, Cash till, Cash given, int cost) -> Cash:
+function buy(Cash till, Cash given, int cost) -> Cash:
      if total(given) >= cost:
         Cash|null change = calculateChange(till,total(given) - cost)
         if change != null:
@@ -207,10 +207,11 @@ public method main(System.Console console):
             // console.out.print_s("Till: ")
             // console.out.println_s(toString(till))
             // now, run through some sequences...
-            till = buy(console,till,Cash([ONE_DOLLAR]),85)
-            till = buy(console,till,Cash([ONE_DOLLAR]),105)
-            till = buy(console,till,Cash([TEN_DOLLARS]),5)
-            till = buy(console,till,Cash([FIVE_DOLLARS]),305)
-            // console.out.print_s("Till: ")
-            // console.out.println_s(toString(till))
+            till = buy(till,Cash([ONE_DOLLAR]),85)
+            till = buy(till,Cash([ONE_DOLLAR]),105)
+            till = buy(till,Cash([TEN_DOLLARS]),5)
+            till = buy(till,Cash([FIVE_DOLLARS]),305)
+            console.out.print_s("Till: ")
+            console.out.println_s(toString(till))
+            console.out.println(repeat)
             repeat = repeat + 1

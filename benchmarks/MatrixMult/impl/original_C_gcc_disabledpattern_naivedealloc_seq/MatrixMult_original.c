@@ -268,12 +268,12 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(n);
 	//ifis %1, null goto blklab10 : null|int
 	if(n == NULL) { goto blklab10;}
-	//assign %2 = %1  : int
-	max = *n;
-	//const %14 = 1000 : int
-	_14 = 1000;
-	//assign %3 = %14  : int
-	size = _14;
+	//const %14 = 1 : int
+	_14 = 1;
+	//assign %2 = %14  : int
+	max = _14;
+	//assign %3 = %1  : int
+	size = *n;
 	//assign %4 = %3  : int
 	width = size;
 	//assign %5 = %3  : int
@@ -317,12 +317,12 @@ int main(int argc, char** args){
 		_ADD_DEALLOC(A);
 		//invoke (%24) = (%7, %4, %5) MatrixMult_original:init : function(int[],int,int)->(int[])
 		{
-			void* tmp_A_0;
-			_COPY_1DARRAY_PARAM(A, tmp_A_0, int64_t);
+			void* tmp_data;
+			_COPY_1DARRAY_PARAM(A, tmp_data, int64_t);
 			_DEALLOC(_24);
-			_24 = _init_(tmp_A_0, A_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
+			_24 = _init_(tmp_data, A_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
 			_CALLER_DEALLOC(A, "true-true-false" , "init");
-			_CALLER_DEALLOC_POST(_24, tmp_A_0);
+			_CALLER_DEALLOC_POST(_24, tmp_data);
 		}
 		//assign %7 = %24  : int[]
 		_DEALLOC(A);
@@ -342,12 +342,12 @@ int main(int argc, char** args){
 		_ADD_DEALLOC(B);
 		//invoke (%28) = (%8, %4, %5) MatrixMult_original:init : function(int[],int,int)->(int[])
 		{
-			void* tmp_B_0;
-			_COPY_1DARRAY_PARAM(B, tmp_B_0, int64_t);
+			void* tmp_data;
+			_COPY_1DARRAY_PARAM(B, tmp_data, int64_t);
 			_DEALLOC(_28);
-			_28 = _init_(tmp_B_0, B_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
+			_28 = _init_(tmp_data, B_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 			_CALLER_DEALLOC(B, "true-true-false" , "init");
-			_CALLER_DEALLOC_POST(_28, tmp_B_0);
+			_CALLER_DEALLOC_POST(_28, tmp_data);
 		}
 		//assign %8 = %28  : int[]
 		_DEALLOC(B);
@@ -367,20 +367,20 @@ int main(int argc, char** args){
 		_ADD_DEALLOC(C);
 		//invoke (%32) = (%7, %8, %9, %4, %5) MatrixMult_original:mat_mult : function(int[],int[],int[],int,int)->(int[])
 		{
-			void* tmp_A_0;
-			_COPY_1DARRAY_PARAM(A, tmp_A_0, int64_t);
-			void* tmp_B_1;
-			_COPY_1DARRAY_PARAM(B, tmp_B_1, int64_t);
-			void* tmp_C_2;
-			_COPY_1DARRAY_PARAM(C, tmp_C_2, int64_t);
+			void* tmp_a;
+			_COPY_1DARRAY_PARAM(A, tmp_a, int64_t);
+			void* tmp_b;
+			_COPY_1DARRAY_PARAM(B, tmp_b, int64_t);
+			void* tmp_data;
+			_COPY_1DARRAY_PARAM(C, tmp_data, int64_t);
 			_DEALLOC(_32);
-			_32 = _mat_mult_(tmp_A_0, A_size, true, tmp_B_1, B_size, true, tmp_C_2, C_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_32));
+			_32 = _mat_mult_(tmp_a, A_size, true, tmp_b, B_size, true, tmp_data, C_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_32));
 			_CALLEE_DEALLOC(A, "false-false-false" , "mat_mult");
 			_CALLEE_DEALLOC_POST(_32, A);
 			_CALLEE_DEALLOC(B, "false-false-false" , "mat_mult");
 			_CALLEE_DEALLOC_POST(_32, B);
 			_CALLER_DEALLOC(C, "true-true-false" , "mat_mult");
-			_CALLER_DEALLOC_POST(_32, tmp_C_2);
+			_CALLER_DEALLOC_POST(_32, tmp_data);
 		}
 		//assign %9 = %32  : int[]
 		_DEALLOC(C);

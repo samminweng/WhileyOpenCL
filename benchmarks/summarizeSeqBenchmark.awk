@@ -77,8 +77,8 @@ BEGIN {
 	filename = "";
 	FS = "\n";
 	## Test case name
-	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
-	#testcases="Cashtill";
+	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
+	testcases="CoinGame";
 
 	## Program Type
 	programs["Reverse"]="original";
@@ -125,15 +125,15 @@ BEGIN {
 	exectypes["CoinGame"] = "seq";
 	exectypes["SobelEdge"] = "seq";
 	### Parameter
-	parameters["Reverse"]="10 20 30";
+	parameters["Reverse"]="100000000 200000000 300000000";
 	parameters["newTicTacToe"]="100000 200000 300000";
-	parameters["BubbleSort"]="10 20 30";
-	parameters["MergeSort"]="1000 2000 3000";
-	parameters["MatrixMult"]="10 20 30";
+	parameters["BubbleSort"]="100000 200000 300000";
+	parameters["MergeSort"]="10000000 20000000 30000000";
+	parameters["MatrixMult"]="1000 2000 3000";
 	parameters["CoinGame"]="10000 20000 25000 30000 40000";
 	parameters["SobelEdge"]="image32x32 image64x64 image128x128 image256x256 image512x512 image1024x1024";
 	parameters["LZ77"]="medium1x medium2x medium4x medium8x medium16x medium32x medium64x medium128x medium256x";
-	parameters["Cashtill"]="1000 1200 1400 1600 1800 2000";
+	parameters["Cashtill"]="10000 20000 25000 30000 40000";
 
 	# The number of threads
 	threads["seq"]="1";

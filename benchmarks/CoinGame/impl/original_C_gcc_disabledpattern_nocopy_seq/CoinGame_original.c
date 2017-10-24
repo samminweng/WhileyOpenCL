@@ -273,7 +273,7 @@ blklab5:;
 	{
 		// isCopyEliminated of '_5' = true
 		// isCopyEliminated of '_3' = true
-		_25 = _findMoves_(_1DARRAY_PARAM(moves), n, _1DARRAY_PARAM(coins), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
+		_25 = _findMoves_(moves, moves_size, n, coins, coins_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 	}
 	//assign %5 = %25  : int[]
 	// isCopyEliminated = true
@@ -294,7 +294,7 @@ blklab5:;
 	_31[0] = 84; _31[1] = 104; _31[2] = 101; _31[3] = 32; _31[4] = 116; _31[5] = 111; _31[6] = 116; _31[7] = 97; _31[8] = 108; _31[9] = 32; _31[10] = 97; _31[11] = 109; _31[12] = 111; _31[13] = 117; _31[14] = 110; _31[15] = 116; _31[16] = 32; _31[17] = 111; _31[18] = 102; _31[19] = 32; _31[20] = 109; _31[21] = 111; _31[22] = 110; _31[23] = 101; _31[24] = 121; _31[25] = 32; _31[26] = 40; _31[27] = 109; _31[28] = 97; _31[29] = 120; _31[30] = 105; _31[31] = 109; _31[32] = 117; _31[33] = 109; _31[34] = 41; _31[35] = 32; _31[36] = 65; _31[37] = 108; _31[38] = 105; _31[39] = 99; _31[40] = 101; _31[41] = 32; _31[42] = 103; _31[43] = 101; _31[44] = 116; _31[45] = 115; _31[46] = 32; _31[47] = 105; _31[48] = 115; _31[49] = 32; 
 	//indirectinvoke () = %30 (%31) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_31));
+		printf_s(_31, _31_size);
 	}
 	//fieldload %32 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %33 = %32 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

@@ -86,13 +86,14 @@ int main(int argc, char** args){
 	int64_t _22;
 	int64_t _23;
 	int64_t _24;
-	int64_t _25;
-	int64_t _26;
-	void* _27;
-	_DECL_1DARRAY(_29);
-	void* _30;
+	void* _25;
+	int64_t _27;
+	int64_t _28;
+	void* _29;
+	_DECL_1DARRAY(_31);
 	void* _32;
-	_DECL_1DARRAY(_34);
+	void* _34;
+	_DECL_1DARRAY(_36);
 	//fieldload %8 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	_CONV_ARGS(_8);
 	//const %9 = 0 : int
@@ -108,17 +109,17 @@ int main(int argc, char** args){
 	_NEW_INTEGER_POINTER(n, _7);
 	//ifis %1, null goto blklab4 : null|int
 	if(n == NULL) { goto blklab4;}
-	//assign %2 = %1  : int
-	max = *n;
-	//const %11 = 10000000 : int
-	_11 = 10000000;
-	//assign %3 = %11  : int
-	size = _11;
+	//const %11 = 1 : int
+	_11 = 1;
+	//assign %2 = %11  : int
+	max = _11;
+	//assign %3 = %1  : int
+	size = *n;
 	//const %12 = 0 : int
 	_12 = 0;
 	//assign %4 = %12  : int
 	repeats = _12;
-	//loop (%4, %5, %6, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26)
+	//loop (%4, %5, %6, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28)
 	while(true){
 		//ifge %4, %2 goto blklab5 : int
 		if(repeats>=max){goto blklab5;}
@@ -153,9 +154,9 @@ blklab8:;
 blklab7:;
 		//invoke (%19) = (%6) Reverse_original:reverse : function(int[])->(int[])
 		{
-			void* tmp_arr_0;
-			_COPY_1DARRAY_PARAM(arr, tmp_arr_0, int64_t);
-			_19 = _reverse_(tmp_arr_0, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
+			void* tmp_arr;
+			_COPY_1DARRAY_PARAM(arr, tmp_arr, int64_t);
+			_19 = _reverse_(tmp_arr, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
 		}
 		//assign %6 = %19  : int[]
 		_COPY_1DARRAY_int64_t(arr, _19);
@@ -171,40 +172,46 @@ blklab7:;
 		{
 			printf("%"PRId64"\n", _24);
 		}
-		//const %25 = 1 : int
-		_25 = 1;
-		//add %26 = %4, %25 : int
-		_26=repeats+_25;
-		//assign %4 = %26  : int
-		repeats = _26;
+		//fieldload %25 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+		//fieldload %26 = %25 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+		//indirectinvoke () = %26 (%4) : method(any)->()
+		{
+			printf("%"PRId64"\n", repeats);
+		}
+		//const %27 = 1 : int
+		_27 = 1;
+		//add %28 = %4, %27 : int
+		_28=repeats+_27;
+		//assign %4 = %28  : int
+		repeats = _28;
 //.blklab6
 blklab6:;
 	}
 //.blklab5
 blklab5:;
-	//fieldload %27 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %28 = %27 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %29 = [78,117,109,98,101,114,32,111,102,32,114,101,112,101,97,116,115,58,32] : int[]
-	_NEW_1DARRAY_int64_t(_29, 19, 0);
-	_29[0] = 78; _29[1] = 117; _29[2] = 109; _29[3] = 98; _29[4] = 101; _29[5] = 114; _29[6] = 32; _29[7] = 111; _29[8] = 102; _29[9] = 32; _29[10] = 114; _29[11] = 101; _29[12] = 112; _29[13] = 101; _29[14] = 97; _29[15] = 116; _29[16] = 115; _29[17] = 58; _29[18] = 32; 
-	//indirectinvoke () = %28 (%29) : method(int[])->()
+	//fieldload %29 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %30 = %29 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %31 = [78,117,109,98,101,114,32,111,102,32,114,101,112,101,97,116,115,58,32] : int[]
+	_NEW_1DARRAY_int64_t(_31, 19, 0);
+	_31[0] = 78; _31[1] = 117; _31[2] = 109; _31[3] = 98; _31[4] = 101; _31[5] = 114; _31[6] = 32; _31[7] = 111; _31[8] = 102; _31[9] = 32; _31[10] = 114; _31[11] = 101; _31[12] = 112; _31[13] = 101; _31[14] = 97; _31[15] = 116; _31[16] = 115; _31[17] = 58; _31[18] = 32; 
+	//indirectinvoke () = %30 (%31) : method(int[])->()
 	{
-		printf_s(_29, _29_size);
+		printf_s(_31, _31_size);
 	}
-	//fieldload %30 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %31 = %30 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//indirectinvoke () = %31 (%4) : method(any)->()
+	//fieldload %32 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %33 = %32 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %33 (%4) : method(any)->()
 	{
 		printf("%"PRId64"\n", repeats);
 	}
-	//fieldload %32 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %33 = %32 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %34 = [80,97,115,115,32,82,101,118,101,114,115,101,32,116,101,115,116,32,99,97,115,101,32] : int[]
-	_NEW_1DARRAY_int64_t(_34, 23, 0);
-	_34[0] = 80; _34[1] = 97; _34[2] = 115; _34[3] = 115; _34[4] = 32; _34[5] = 82; _34[6] = 101; _34[7] = 118; _34[8] = 101; _34[9] = 114; _34[10] = 115; _34[11] = 101; _34[12] = 32; _34[13] = 116; _34[14] = 101; _34[15] = 115; _34[16] = 116; _34[17] = 32; _34[18] = 99; _34[19] = 97; _34[20] = 115; _34[21] = 101; _34[22] = 32; 
-	//indirectinvoke () = %33 (%34) : method(int[])->()
+	//fieldload %34 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %35 = %34 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %36 = [80,97,115,115,32,82,101,118,101,114,115,101,32,116,101,115,116,32,99,97,115,101,32] : int[]
+	_NEW_1DARRAY_int64_t(_36, 23, 0);
+	_36[0] = 80; _36[1] = 97; _36[2] = 115; _36[3] = 115; _36[4] = 32; _36[5] = 82; _36[6] = 101; _36[7] = 118; _36[8] = 101; _36[9] = 114; _36[10] = 115; _36[11] = 101; _36[12] = 32; _36[13] = 116; _36[14] = 101; _36[15] = 115; _36[16] = 116; _36[17] = 32; _36[18] = 99; _36[19] = 97; _36[20] = 115; _36[21] = 101; _36[22] = 32; 
+	//indirectinvoke () = %35 (%36) : method(int[])->()
 	{
-		println_s(_34, _34_size);
+		println_s(_36, _36_size);
 	}
 //.blklab4
 blklab4:;

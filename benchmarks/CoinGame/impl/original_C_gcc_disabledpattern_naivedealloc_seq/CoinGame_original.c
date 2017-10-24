@@ -286,13 +286,16 @@ blklab5:;
 	_ADD_DEALLOC(moves);
 	//invoke (%25) = (%5, %2, %3) CoinGame_original:findMoves : function(int[],int,int[])->(int[])
 	{
-		void* moves_tmp;
-		void* coins_tmp;
+		void* tmp_moves;
+		_COPY_1DARRAY_PARAM(moves, tmp_moves, int64_t);
+		void* tmp_coins;
+		_COPY_1DARRAY_PARAM(coins, tmp_coins, int64_t);
 		_DEALLOC(_25);
-		_25 = _findMoves_(_COPY_1DARRAY_PARAM_int64_t(moves), false, n, _COPY_1DARRAY_PARAM_int64_t(coins), true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
-		_CALLER_DEALLOC(_25, moves, "true-true-false" , "findMoves");
+		_25 = _findMoves_(tmp_moves, moves_size, false, n, tmp_coins, coins_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
+		_CALLER_DEALLOC(moves, "true-true-false" , "findMoves");
+		_CALLER_DEALLOC_POST(_25, tmp_moves);
 		_CALLEE_DEALLOC(coins, "false-false-false" , "findMoves");
-		_25_dealloc = true;
+		_CALLEE_DEALLOC_POST(_25, coins);
 	}
 	//assign %5 = %25  : int[]
 	_DEALLOC(moves);
@@ -315,7 +318,7 @@ blklab5:;
 	_ADD_DEALLOC(_31);
 	//indirectinvoke () = %30 (%31) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_31));
+		printf_s(_31, _31_size);
 	}
 	//fieldload %32 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %33 = %32 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

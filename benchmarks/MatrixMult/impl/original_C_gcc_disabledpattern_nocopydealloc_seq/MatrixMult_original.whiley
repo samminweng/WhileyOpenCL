@@ -33,8 +33,8 @@ function mat_mult(int[] a, int[] b, int[] data, int width, int height) -> (int[]
 method main(System.Console sys):
     int|null n = Int.parse(sys.args[0])
     if n != null:
-        int max = n
-        int size = 1000 // Fixed matrix size
+        int max = 1
+        int size = n // Matrix size is from CMD
         int width = size
         int height = size
         sys.out.print_s("size = ")

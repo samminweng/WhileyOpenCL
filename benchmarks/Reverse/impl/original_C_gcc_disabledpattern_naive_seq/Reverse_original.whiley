@@ -13,15 +13,15 @@ function reverse(int[] arr) -> int[]:
 method main(System.Console sys):
     int|null n = Int.parse(sys.args[0])
     if n != null:
-        int max = n
-        int size = 10000000
+        int max = 1
+        int size = n
         int repeats = 0
         while repeats < max:
-              //Reverse an array 'arr' ([max ... 0])
+              // Create a reverse array 'arr' ([size ... 0])
               int index = 0
               int[] arr = [0;size]
               //sys.out.println(arr)
-              //Fill in the array in the reverse order (10000000..0)
+              //Fill in the array in the reverse order (size..0)
               while index < size:
               	    arr[index] = size - index
               	    index = index + 1
@@ -30,6 +30,7 @@ method main(System.Console sys):
               /**Print the last element of sorted array */
               //sys.out.println(arr[0])
               sys.out.println(arr[size-1])
+              sys.out.println(repeats)     
               /** Print out the successful message */
               repeats = repeats + 1
         sys.out.print_s("Number of repeats: ")

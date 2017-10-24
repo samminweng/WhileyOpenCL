@@ -303,10 +303,11 @@ blklab5:;
 		_DEALLOC(_25);
 		// isCopyEliminated of '_5' = true
 		// isCopyEliminated of '_3' = true
-		_25 = _findMoves_(_1DARRAY_PARAM(moves), false, n, _1DARRAY_PARAM(coins), false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
-		_RESET_DEALLOC(_25, moves, "true-true-false" , "findMoves");
+		_25 = _findMoves_(moves, moves_size, false, n, coins, coins_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
+		_RESET_DEALLOC(moves, "true-true-false" , "findMoves");
+		_RESET_DEALLOC_POST(_25, moves);
 		_RETAIN_DEALLOC(coins, "false-false-false" , "findMoves");
-		_25_dealloc = true;
+		_RETAIN_DEALLOC_POST(_25, coins);
 	}
 	//assign %5 = %25  : int[]
 	_DEALLOC(moves);
@@ -331,7 +332,7 @@ blklab5:;
 	_ADD_DEALLOC(_31);
 	//indirectinvoke () = %30 (%31) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_31));
+		printf_s(_31, _31_size);
 	}
 	//fieldload %32 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %33 = %32 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

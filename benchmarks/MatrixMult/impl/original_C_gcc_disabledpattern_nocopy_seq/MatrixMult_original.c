@@ -252,14 +252,14 @@ int main(int argc, char** args){
 	n = _10;
 	//ifis %1, null goto blklab10 : null|int
 	if(n == NULL) { goto blklab10;}
-	//assign %2 = %1  : int
+	//const %14 = 1 : int
+	_14 = 1;
+	//assign %2 = %14  : int
 	// isCopyEliminated = true
-	max = *n;
-	//const %14 = 1000 : int
-	_14 = 1000;
-	//assign %3 = %14  : int
+	max = _14;
+	//assign %3 = %1  : int
 	// isCopyEliminated = true
-	size = _14;
+	size = *n;
 	//assign %4 = %3  : int
 	// isCopyEliminated = false
 	width = size;

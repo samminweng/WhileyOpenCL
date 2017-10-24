@@ -23,11 +23,11 @@ declare -A patterns=( [LZ77_original_opt]=compress [LZ77_compress]=compress )
 declare -a threads=( 1 2 4 8 )
 
 ### declare parameters
-declare -A parameters=( [Reverse]="10 20 30" \
+declare -A parameters=( [Reverse]="100000000 200000000 300000000" \
 			[newTicTacToe]="100000 200000 300000" \
-			[BubbleSort]="10 20 30" \
-			[MergeSort]="1000 2000 3000" \
-			[MatrixMult]="10 20 30" \
+			[BubbleSort]="100000 200000 300000" \
+			[MergeSort]="10000000 20000000 30000000" \
+			[MatrixMult]="1000 2000 3000" \
 			[LZ77]="medium1x medium2x medium4x medium8x medium16x medium32x medium64x medium128x medium256x" \
 			#[LZ77]="medium1x medium2x" \
 			[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm image256x256.pbm image512x512.pbm image1024x1024.pbm" \
@@ -353,20 +353,20 @@ exec(){
 #exec BubbleSort original
 # #
 # # # # # # # # # ## # MergeSort test case
-init MergeSort
-exec MergeSort original
+#init MergeSort
+#exec MergeSort original
 # #
 # # # # # # # # # MatrixMult test case
 #init MatrixMult
 #exec MatrixMult original
 # ####exec MatrixMult original 12000 # Naive code runs out of memory
 # # ### Cashtill test case
-# init Cashtill
-# exec Cashtill original
+#init Cashtill
+#exec Cashtill original
 
 # # ### CoinGame test case ###
-##init CoinGame
-##exec CoinGame original
+init CoinGame
+exec CoinGame original
 
 #### LZ77 test case
 #init LZ77

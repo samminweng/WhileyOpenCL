@@ -239,12 +239,12 @@ int main(int argc, char** args){
 	_NEW_INTEGER_POINTER(n, _10);
 	//ifis %1, null goto blklab10 : null|int
 	if(n == NULL) { goto blklab10;}
-	//assign %2 = %1  : int
-	max = *n;
-	//const %14 = 1000 : int
-	_14 = 1000;
-	//assign %3 = %14  : int
-	size = _14;
+	//const %14 = 1 : int
+	_14 = 1;
+	//assign %2 = %14  : int
+	max = _14;
+	//assign %3 = %1  : int
+	size = *n;
 	//assign %4 = %3  : int
 	width = size;
 	//assign %5 = %3  : int
@@ -282,9 +282,9 @@ int main(int argc, char** args){
 		_COPY_1DARRAY_int64_t(A, _23);
 		//invoke (%24) = (%7, %4, %5) MatrixMult_original:init : function(int[],int,int)->(int[])
 		{
-			void* tmp_A_0;
-			_COPY_1DARRAY_PARAM(A, tmp_A_0, int64_t);
-			_24 = _init_(tmp_A_0, A_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
+			void* tmp_data;
+			_COPY_1DARRAY_PARAM(A, tmp_data, int64_t);
+			_24 = _init_(tmp_data, A_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
 		}
 		//assign %7 = %24  : int[]
 		_COPY_1DARRAY_int64_t(A, _24);
@@ -298,9 +298,9 @@ int main(int argc, char** args){
 		_COPY_1DARRAY_int64_t(B, _27);
 		//invoke (%28) = (%8, %4, %5) MatrixMult_original:init : function(int[],int,int)->(int[])
 		{
-			void* tmp_B_0;
-			_COPY_1DARRAY_PARAM(B, tmp_B_0, int64_t);
-			_28 = _init_(tmp_B_0, B_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
+			void* tmp_data;
+			_COPY_1DARRAY_PARAM(B, tmp_data, int64_t);
+			_28 = _init_(tmp_data, B_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 		}
 		//assign %8 = %28  : int[]
 		_COPY_1DARRAY_int64_t(B, _28);
@@ -314,13 +314,13 @@ int main(int argc, char** args){
 		_COPY_1DARRAY_int64_t(C, _31);
 		//invoke (%32) = (%7, %8, %9, %4, %5) MatrixMult_original:mat_mult : function(int[],int[],int[],int,int)->(int[])
 		{
-			void* tmp_A_0;
-			_COPY_1DARRAY_PARAM(A, tmp_A_0, int64_t);
-			void* tmp_B_1;
-			_COPY_1DARRAY_PARAM(B, tmp_B_1, int64_t);
-			void* tmp_C_2;
-			_COPY_1DARRAY_PARAM(C, tmp_C_2, int64_t);
-			_32 = _mat_mult_(tmp_A_0, A_size, tmp_B_1, B_size, tmp_C_2, C_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_32));
+			void* tmp_a;
+			_COPY_1DARRAY_PARAM(A, tmp_a, int64_t);
+			void* tmp_b;
+			_COPY_1DARRAY_PARAM(B, tmp_b, int64_t);
+			void* tmp_data;
+			_COPY_1DARRAY_PARAM(C, tmp_data, int64_t);
+			_32 = _mat_mult_(tmp_a, A_size, tmp_b, B_size, tmp_data, C_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_32));
 		}
 		//assign %9 = %32  : int[]
 		_COPY_1DARRAY_int64_t(C, _32);

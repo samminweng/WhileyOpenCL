@@ -44,18 +44,18 @@ function sortV1(int[] items, int start, int end)->int[]:
 method main(System.Console sys):
     int|null n = Int.parse(sys.args[0])
     if n != null:
-        int max = n
+        int max = 1
+        int size = n // Size is from CMD	
         int repeats = 0
         while repeats < max:
             // Create a reverse array
-            int size = 10000
             int index = 0
             int[] arr = [0;size]
-            //Fill in the array in the reverse order (1000..1)
+            //Fill in the array in the reverse order (size..1)
             while index < size:
                 arr[index] = size - index
                 index = index + 1
-            //Use merge sort to order reversed array 'arr' ([1000 ... 1])
+            //Use merge sort to order reversed array 'arr' ([size ... 1])
             arr = sortV1(arr, 0, max)
             // Should be in the ascending order [1..1000]
             //sys.out.println(arr[0])
