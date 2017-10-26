@@ -1,26 +1,74 @@
-==13209== Memcheck, a memory error detector
-==13209== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==13209== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==13209== Command: ./out/CoinGame.original.gcc.disabledpattern.nocopydealloc.seq.out 100
-==13209== Parent PID: 12973
-==13209== 
-==13209== Invalid read of size 8
-==13209==    at 0x400DCA: _findMoves_ (CoinGame_original.c:109)
-==13209==    by 0x40153E: main (CoinGame_original.c:306)
-==13209==  Address 0x5203490 is 16 bytes before a block of size 83,232 alloc'd
-==13209==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==13209==    by 0x401F91: create1DArray_int64_t (Util.c:23)
-==13209==    by 0x401456: main (CoinGame_original.c:294)
-==13209== 
-==13209== 
-==13209== HEAP SUMMARY:
-==13209==     in use at exit: 0 bytes in 0 blocks
-==13209==   total heap usage: 8 allocs, 8 frees, 85,688 bytes allocated
-==13209== 
-==13209== All heap blocks were freed -- no leaks are possible
-==13209== 
-==13209== For counts of detected and suppressed errors, rerun with: -v
-==13209== ERROR SUMMARY: 2 errors from 1 contexts (suppressed: 0 from 0)
+Run the original CoinGame on 30000 using gcc and 1 threads...
+Run the original CoinGame on 30000 using gcc
+Begin 1 iteration
+The total amount of money (maximum) Alice gets is 30002
+Pass CoinGame test case
+
+Parameter:30000	ExecutionTime:3142639106	nanoseconds.
+Finish 1 iteration
+Run the original CoinGame on 30000 using gcc
+Begin 2 iteration
+The total amount of money (maximum) Alice gets is 30002
+Pass CoinGame test case
+
+Parameter:30000	ExecutionTime:3101625603	nanoseconds.
+Finish 2 iteration
+Run the original CoinGame on 30000 using gcc
+Begin 3 iteration
+The total amount of money (maximum) Alice gets is 30002
+Pass CoinGame test case
+
+Parameter:30000	ExecutionTime:3105541958	nanoseconds.
+Finish 3 iteration
+Run the original CoinGame on 30000 using gcc
+Begin 4 iteration
+The total amount of money (maximum) Alice gets is 30002
+Pass CoinGame test case
+
+Parameter:30000	ExecutionTime:3097553892	nanoseconds.
+Finish 4 iteration
+Run the original CoinGame on 30000 using gcc
+Begin 5 iteration
+The total amount of money (maximum) Alice gets is 30002
+Pass CoinGame test case
+
+Parameter:30000	ExecutionTime:3210817289	nanoseconds.
+Finish 5 iteration
+Run the original CoinGame on 30000 using gcc
+Begin 6 iteration
+The total amount of money (maximum) Alice gets is 30002
+Pass CoinGame test case
+
+Parameter:30000	ExecutionTime:3099430966	nanoseconds.
+Finish 6 iteration
+Run the original CoinGame on 30000 using gcc
+Begin 7 iteration
+The total amount of money (maximum) Alice gets is 30002
+Pass CoinGame test case
+
+Parameter:30000	ExecutionTime:3096811653	nanoseconds.
+Finish 7 iteration
+Run the original CoinGame on 30000 using gcc
+Begin 8 iteration
+The total amount of money (maximum) Alice gets is 30002
+Pass CoinGame test case
+
+Parameter:30000	ExecutionTime:3135385487	nanoseconds.
+Finish 8 iteration
+Run the original CoinGame on 30000 using gcc
+Begin 9 iteration
+The total amount of money (maximum) Alice gets is 30002
+Pass CoinGame test case
+
+Parameter:30000	ExecutionTime:3195748101	nanoseconds.
+Finish 9 iteration
+Run the original CoinGame on 30000 using gcc
+Begin 10 iteration
+The total amount of money (maximum) Alice gets is 30002
+Pass CoinGame test case
+
+Parameter:30000	ExecutionTime:3098649541	nanoseconds.
+Finish 10 iteration
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -28,7 +76,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3833.765
+cpu MHz		: 2099.367
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -55,7 +103,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3900.703
+cpu MHz		: 2935.554
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -82,7 +130,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.132
+cpu MHz		: 2054.609
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -109,7 +157,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3516.210
+cpu MHz		: 2251.835
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -136,7 +184,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3570.796
+cpu MHz		: 2429.140
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -163,7 +211,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3844.257
+cpu MHz		: 3401.328
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -190,7 +238,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3709.320
+cpu MHz		: 3401.195
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -217,7 +265,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3456.046
+cpu MHz		: 2251.703
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

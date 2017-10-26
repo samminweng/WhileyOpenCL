@@ -33,8 +33,7 @@ declare -A parameters=( [Reverse]="100000000 200000000 300000000" \
 			[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm image256x256.pbm image512x512.pbm image1024x1024.pbm" \
 			#[SobelEdge]="image2048x2048.pbm" \
 			[Cashtill]="1000 1200 1400 1600 1800 2000" \
-			[CoinGame]="26000" \
-			#[CoinGame]="10000 20000 25000 30000 40000" \
+			[CoinGame]="10000 20000 25000 30000 40000" \
 		      )
 ## Declare an associative array for image size in sobeledge test case
 declare -A widths=( [image32x32.pbm]=32 [image64x64.pbm]=64 [image128x128.pbm]=128 \

@@ -3,7 +3,7 @@ import whiley.io.File
 import whiley.lang.Math
 
 // Use dynamic programming to find moves for Alice
-// The coins are an array, starting from 0 upto n
+// The coins are an array, starting from 0 upto 5
 function findMoves(int[] moves, int n, int[] coins) -> int[]:
 	int s = 0
 	while s < n: // 0<= s < n

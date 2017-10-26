@@ -4,8 +4,8 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
-	#testcases="Cashtill";
+	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
+	testcases="CoinGame";
 	## Program Type
 	programs["Reverse"]="original";
 	programs["newTicTacToe"]="original";
@@ -38,7 +38,7 @@ BEGIN {
 	parameters["BubbleSort"]="1000 10000 100000";
 	parameters["MergeSort"]="1000 10000 100000";
 	parameters["MatrixMult"]="1000 2000 3000";
-	parameters["CoinGame"]="100 1000 10000 2000";
+	parameters["CoinGame"]="100 1000 10000";
 	parameters["SobelEdge"]="image32x32 image64x64 image128x128";
 	parameters["Cashtill"]="100 200 300";
 	# ### pattern transformation
