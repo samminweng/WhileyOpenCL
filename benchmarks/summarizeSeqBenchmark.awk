@@ -53,14 +53,18 @@ function generateReport(results){
 						 			}else{
 						 				## Out of memory
 					 					if(counts[key] == -1){
-					 						str = str"\tOOM";
-											print str;
-					 					}
-					 					## Out of time
-					 					if(counts[key] == -2){
-					 						str = str"\tOOT";
-											print str;
-					 					}
+										    str = str"\tOOM";
+										    print str;
+					 					}else if(counts[key] == -2){
+										    ## Out of time
+										    str = str"\tOOT";
+										    print str;
+					 					}else{
+										    str = str"\tNo data";
+										    ## No data
+										    print str;
+										}
+										
 						 			}
 								}
 							}
@@ -78,7 +82,7 @@ BEGIN {
 	FS = "\n";
 	## Test case name
 	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
-	testcases="CoinGame";
+	testcases="LZ77";
 
 	## Program Type
 	programs["Reverse"]="original";
@@ -88,11 +92,12 @@ BEGIN {
 	programs["MatrixMult"]="original";
 	programs["CoinGame"]="original";
 	programs["SobelEdge"]="original";
-	programs["LZ77"]="compress decompress opt_decompress original original_opt";
+	programs["LZ77"]="compress decompress opt_decompress";
 	programs["Cashtill"]="original";
 
 	# Code Generation
-	codegens = "naive naivedealloc nocopy nocopydealloc";
+	#codegens = "naive naivedealloc nocopy nocopydealloc";
+	codegens = "nocopy nocopydealloc";
 	# Pattern matching
 	patterns["Reverse"] = "disabled";
 	patterns["newTicTacToe"] = "disabled";
@@ -132,7 +137,8 @@ BEGIN {
 	parameters["MatrixMult"]="1000 2000 3000";
 	parameters["CoinGame"]="10000 20000 25000 30000 40000";
 	parameters["SobelEdge"]="image32x32 image64x64 image128x128 image256x256 image512x512 image1024x1024";
-	parameters["LZ77"]="medium1x medium2x medium4x medium8x medium16x medium32x medium64x medium128x medium256x";
+	#parameters["LZ77"]="medium1x medium2x medium4x medium8x medium16x medium32x medium64x medium128x medium256x";
+	parameters["LZ77"]="large1x large2x large4x large8x large16x large32x large64x large128x large256x";
 	parameters["Cashtill"]="10000 20000 25000 30000 40000";
 
 	# The number of threads

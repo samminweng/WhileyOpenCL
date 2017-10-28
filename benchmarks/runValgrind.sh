@@ -32,7 +32,7 @@ declare -A parameters=( [Reverse]="100000 1000000 10000000" [newTicTacToe]="1000
 			[Cashtill]="100 200 300" \
 			##[CoinGame]="25000"
 			[CoinGame]="100 1000 10000"
-		       )
+		    )
 ## Declare an associative array for image size in sobeledge test case
 declare -A widths=( [image32x32.pbm]=32 [image64x64.pbm]=64 [image128x128.pbm]=128 \
                     [image256x256.pbm]=256 [image512x512.pbm]=512 [image1024x1024.pbm]=1024 )
@@ -296,20 +296,20 @@ exec(){
 #exec Cashtill original
 
 # ### CoinGame test case ###
-init CoinGame
-exec CoinGame original
+#init CoinGame
+#exec CoinGame original
 
 # # # ###Sobel Edge test
 #init SobelEdge
 #exec SobelEdge original
 
 # # # ####LZ77 test case
-#init LZ77
+init LZ77
 #exec LZ77 original
 #exec LZ77 original_opt
-#exec LZ77 compress
-#exec LZ77 decompress
-#exec LZ77 opt_decompress
+exec LZ77 compress
+exec LZ77 decompress
+exec LZ77 opt_decompress
 # ### Fibonacci test case###
 # init Fibonacci
 # exec Fibonacci original 10

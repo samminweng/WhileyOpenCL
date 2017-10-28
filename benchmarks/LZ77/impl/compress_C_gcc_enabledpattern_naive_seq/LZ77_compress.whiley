@@ -124,7 +124,6 @@ method main(System.Console sys):
     File.Reader file = File.Reader(sys.args[0])
     byte[] data = file.readAll()
     sys.out.println_s("Data:         ")
-    sys.out.println_s(ASCII.fromBytes(data))
     sys.out.print(|data|)
     sys.out.println_s(" bytes")
     // Compress the data with LZ algorithm
@@ -132,8 +131,3 @@ method main(System.Console sys):
     sys.out.println_s("COMPRESSED Data:   ")
     sys.out.print(|compress_data|)
     sys.out.println_s(" bytes")
-    // Write out compressed data to 'small.dat' file
-    //File.Writer writer = File.Writer(sys.args[1])
-    //writer.write(compress_data)
-    //writer.close()
-    //file.close()

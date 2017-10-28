@@ -136,8 +136,9 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, int64_t pos){
 		if(offset>=pos){goto blklab5;}
 		//invoke (%14) = (%0, %6, %1) LZ77_compress:match : function(byte[],LZ77_compress:nat,LZ77_compress:nat)->(int)
 		{
-			void* data_tmp;
-			_14 = _match_(_COPY_1DARRAY_PARAM_BYTE(data), offset, pos);
+			void* tmp_data;
+			_COPY_1DARRAY_PARAM(data, tmp_data, BYTE);
+			_14 = _match_(tmp_data, data_size, offset, pos);
 		}
 		//assign %7 = %14  : int
 		len = _14;
@@ -317,8 +318,9 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREF
 		if(pos>=_10){goto blklab14;}
 		//invoke (%11) = (%0, %2) LZ77_compress:findLongestMatch : function(byte[],LZ77_compress:nat)->(LZ77_compress:Match)
 		{
-			void* data_tmp;
-			_11 = _findLongestMatch_(_COPY_1DARRAY_PARAM_BYTE(data), pos);
+			void* tmp_data;
+			_COPY_1DARRAY_PARAM(data, tmp_data, BYTE);
+			_11 = _findLongestMatch_(tmp_data, data_size, pos);
 		}
 		//assign %3 = %11  : {int len,int offset}
 		m = copy_Match(_11);
@@ -366,15 +368,17 @@ blklab16:;
 blklab17:;
 		//invoke (%22) = (%1, %4) LZ77_compress:append : function(byte[],byte)->(byte[])
 		{
-			void* output_tmp;
-			_22 = _append_(_COPY_1DARRAY_PARAM_BYTE(output), offset, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
+			void* tmp_items;
+			_COPY_1DARRAY_PARAM(output, tmp_items, BYTE);
+			_22 = _append_(tmp_items, output_size, offset, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
 		}
 		//assign %1 = %22  : byte[]
 		_COPY_1DARRAY_BYTE(output, _22);
 		//invoke (%23) = (%1, %5) LZ77_compress:append : function(byte[],byte)->(byte[])
 		{
-			void* output_tmp;
-			_23 = _append_(_COPY_1DARRAY_PARAM_BYTE(output), length, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
+			void* tmp_items;
+			_COPY_1DARRAY_PARAM(output, tmp_items, BYTE);
+			_23 = _append_(tmp_items, output_size, length, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 		}
 		//assign %1 = %23  : byte[]
 		_COPY_1DARRAY_BYTE(output, _23);
@@ -468,8 +472,9 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYR
 		if(header!=_22){goto blklab20;}
 		//invoke (%23) = (%1, %4) LZ77_compress:append : function(byte[],byte)->(byte[])
 		{
-			void* output_tmp;
-			_23 = _append_(_COPY_1DARRAY_PARAM_BYTE(output), item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
+			void* tmp_items;
+			_COPY_1DARRAY_PARAM(output, tmp_items, BYTE);
+			_23 = _append_(tmp_items, output_size, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 		}
 		//assign %1 = %23  : byte[]
 		_COPY_1DARRAY_BYTE(output, _23);
@@ -509,8 +514,9 @@ blklab20:;
 			item = _29;
 			//invoke (%30) = (%1, %4) LZ77_compress:append : function(byte[],byte)->(byte[])
 			{
-				void* output_tmp;
-				_30 = _append_(_COPY_1DARRAY_PARAM_BYTE(output), item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
+				void* tmp_items;
+				_COPY_1DARRAY_PARAM(output, tmp_items, BYTE);
+				_30 = _append_(tmp_items, output_size, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
 			}
 			//assign %1 = %30  : byte[]
 			_COPY_1DARRAY_BYTE(output, _30);
@@ -550,18 +556,16 @@ int main(int argc, char** args){
 	void* _10;
 	_DECL_1DARRAY(_12);
 	void* _13;
-	_DECL_1DARRAY(_15);
+	int64_t _15;
 	void* _16;
-	int64_t _18;
-	void* _19;
-	_DECL_1DARRAY(_21);
-	_DECL_1DARRAY_BYTE(_22);
+	_DECL_1DARRAY(_18);
+	_DECL_1DARRAY_BYTE(_19);
+	void* _20;
+	_DECL_1DARRAY(_22);
 	void* _23;
-	_DECL_1DARRAY(_25);
+	int64_t _25;
 	void* _26;
-	int64_t _28;
-	void* _29;
-	_DECL_1DARRAY(_31);
+	_DECL_1DARRAY(_28);
 	//fieldload %5 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	_CONV_ARGS(_5);
 	//const %6 = 0 : int
@@ -592,65 +596,55 @@ int main(int argc, char** args){
 		println_s(_12, _12_size);
 	}
 	//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %14 = %13 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//invoke (%15) = (%2) whiley/lang/ASCII:fromBytes : function(byte[])->(whiley/lang/ASCII:string)
+	//fieldload %14 = %13 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//lengthof %15 = %2 : byte[]
+	_15 = data_size;
+	//indirectinvoke () = %14 (%15) : method(any)->()
 	{
-		_15 = fromBytes(data, data_size);
-		_15_size = data_size;
-	}
-	//indirectinvoke () = %14 (%15) : method(int[])->()
-	{
-		println_s(_15, _15_size);
+		printf("%"PRId64, _15);
 	}
 	//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %17 = %16 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//lengthof %18 = %2 : byte[]
-	_18 = data_size;
-	//indirectinvoke () = %17 (%18) : method(any)->()
+	//fieldload %17 = %16 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %18 = [32,98,121,116,101,115] : int[]
+	_NEW_1DARRAY_int64_t(_18, 6, 0);
+	_18[0] = 32; _18[1] = 98; _18[2] = 121; _18[3] = 116; _18[4] = 101; _18[5] = 115; 
+	//indirectinvoke () = %17 (%18) : method(int[])->()
 	{
-		printf("%"PRId64, _18);
+		println_s(_18, _18_size);
 	}
-	//fieldload %19 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %20 = %19 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %21 = [32,98,121,116,101,115] : int[]
-	_NEW_1DARRAY_int64_t(_21, 6, 0);
-	_21[0] = 32; _21[1] = 98; _21[2] = 121; _21[3] = 116; _21[4] = 101; _21[5] = 115; 
-	//indirectinvoke () = %20 (%21) : method(int[])->()
+	//invoke (%19) = (%2) LZ77_compress:compress : function(byte[])->(byte[])
 	{
-		println_s(_21, _21_size);
+		void* tmp_data;
+		_COPY_1DARRAY_PARAM(data, tmp_data, BYTE);
+		_19 = _compress_(tmp_data, data_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
 	}
-	//invoke (%22) = (%2) LZ77_compress:compress : function(byte[])->(byte[])
+	//assign %3 = %19  : byte[]
+	_COPY_1DARRAY_BYTE(compress_data, _19);
+	//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %21 = %20 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %22 = [67,79,77,80,82,69,83,83,69,68,32,68,97,116,97,58,32,32,32] : int[]
+	_NEW_1DARRAY_int64_t(_22, 19, 0);
+	_22[0] = 67; _22[1] = 79; _22[2] = 77; _22[3] = 80; _22[4] = 82; _22[5] = 69; _22[6] = 83; _22[7] = 83; _22[8] = 69; _22[9] = 68; _22[10] = 32; _22[11] = 68; _22[12] = 97; _22[13] = 116; _22[14] = 97; _22[15] = 58; _22[16] = 32; _22[17] = 32; _22[18] = 32; 
+	//indirectinvoke () = %21 (%22) : method(int[])->()
 	{
-		void* data_tmp;
-		_22 = _compress_(_COPY_1DARRAY_PARAM_BYTE(data), _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
+		println_s(_22, _22_size);
 	}
-	//assign %3 = %22  : byte[]
-	_COPY_1DARRAY_BYTE(compress_data, _22);
 	//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %24 = %23 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %25 = [67,79,77,80,82,69,83,83,69,68,32,68,97,116,97,58,32,32,32] : int[]
-	_NEW_1DARRAY_int64_t(_25, 19, 0);
-	_25[0] = 67; _25[1] = 79; _25[2] = 77; _25[3] = 80; _25[4] = 82; _25[5] = 69; _25[6] = 83; _25[7] = 83; _25[8] = 69; _25[9] = 68; _25[10] = 32; _25[11] = 68; _25[12] = 97; _25[13] = 116; _25[14] = 97; _25[15] = 58; _25[16] = 32; _25[17] = 32; _25[18] = 32; 
-	//indirectinvoke () = %24 (%25) : method(int[])->()
+	//fieldload %24 = %23 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//lengthof %25 = %3 : byte[]
+	_25 = compress_data_size;
+	//indirectinvoke () = %24 (%25) : method(any)->()
 	{
-		println_s(_25, _25_size);
+		printf("%"PRId64, _25);
 	}
 	//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %27 = %26 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//lengthof %28 = %3 : byte[]
-	_28 = compress_data_size;
-	//indirectinvoke () = %27 (%28) : method(any)->()
+	//fieldload %27 = %26 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %28 = [32,98,121,116,101,115] : int[]
+	_NEW_1DARRAY_int64_t(_28, 6, 0);
+	_28[0] = 32; _28[1] = 98; _28[2] = 121; _28[3] = 116; _28[4] = 101; _28[5] = 115; 
+	//indirectinvoke () = %27 (%28) : method(int[])->()
 	{
-		printf("%"PRId64, _28);
-	}
-	//fieldload %29 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %30 = %29 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %31 = [32,98,121,116,101,115] : int[]
-	_NEW_1DARRAY_int64_t(_31, 6, 0);
-	_31[0] = 32; _31[1] = 98; _31[2] = 121; _31[3] = 116; _31[4] = 101; _31[5] = 115; 
-	//indirectinvoke () = %30 (%31) : method(int[])->()
-	{
-		println_s(_31, _31_size);
+		println_s(_28, _28_size);
 	}
 	//return
 	exit(0);

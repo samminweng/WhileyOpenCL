@@ -55,7 +55,6 @@ method main(System.Console sys):
     // Decompress the data to a string
     byte[] decompress_data = decompress(input_data)
     sys.out.println_s("DECOMPRESSED:   ")
-    sys.out.println_s(ASCII.fromBytes(decompress_data))
     sys.out.print(|decompress_data|)
     sys.out.println_s(" bytes")
     file.close()

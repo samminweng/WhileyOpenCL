@@ -5,14 +5,14 @@ BEGIN {
 	FS = "\t";
 	# Test case name
 	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
-	testcases="CoinGame";
+	testcases="LZ77";
 	## Program Type
 	programs["Reverse"]="original";
 	programs["newTicTacToe"]="original";
 	programs["BubbleSort"]="original";
 	programs["MergeSort"]="original";
 	programs["MatrixMult"]="original";
-	programs["LZ77"]="compress decompress opt_decompress original original_opt";
+	programs["LZ77"]="compress decompress opt_decompress";
 	programs["Cashtill"]="original";
 	programs["CoinGame"]="original";
 	programs["SobelEdge"]="original";
@@ -53,7 +53,7 @@ BEGIN {
 	filename=FILENAME;
 	split(filename, arr, "/");
 	split(arr[3], t_array, ".");
-		# Test case
+	# Test case
 	testcase=t_array[1];
 	# Program type
 	program=t_array[2];
@@ -62,9 +62,9 @@ BEGIN {
 	# Pattern
 	pattern=t_array[4];
 	if(pattern == "disabledpattern"){
-		pattern="disabled";
+	    pattern="disabled";
 	}else{
-		pattern="enabled";
+	    pattern="enabled";
 	}
 	# Codegen
 	codegen=t_array[5];
@@ -75,9 +75,9 @@ BEGIN {
 
 	# Get the number of threads
 	if(testcase == "SobelEdge"){
-		thread = t_array[9];
+	    thread = t_array[9];
 	}else{
-		thread=t_array[8];
+	    thread=t_array[8];
 	}
 	# Generate key
 	key=testcase","program","compiler","pattern","parameter","codegen","code","thread;
