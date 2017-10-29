@@ -81,8 +81,8 @@ BEGIN {
 	filename = "";
 	FS = "\n";
 	## Test case name
-	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
-	testcases="LZ77";
+	testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
+	#testcases="LZ77";
 
 	## Program Type
 	programs["Reverse"]="original";
@@ -96,8 +96,8 @@ BEGIN {
 	programs["Cashtill"]="original";
 
 	# Code Generation
-	#codegens = "naive naivedealloc nocopy nocopydealloc";
-	codegens = "nocopy nocopydealloc";
+	codegens = "naive naivedealloc nocopy nocopydealloc";
+	#codegens = "nocopy nocopydealloc";
 	# Pattern matching
 	patterns["Reverse"] = "disabled";
 	patterns["newTicTacToe"] = "disabled";

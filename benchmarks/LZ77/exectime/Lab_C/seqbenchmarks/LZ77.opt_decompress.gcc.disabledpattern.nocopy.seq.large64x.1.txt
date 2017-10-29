@@ -1,73 +1,73 @@
-Run the decompress LZ77 on large1x using gcc and 1 threads...
-Run the decompress LZ77 on large1x using gcc
+Run the opt_decompress LZ77 on large64x using gcc and 1 threads...
+Run the opt_decompress LZ77 on large64x using gcc
 Begin 1 iteration
 DECOMPRESSED:   
-574969 bytes
+36798016 bytes
 
-Parameter:large1x	ExecutionTime:16493371354	nanoseconds.
+Parameter:large64x	ExecutionTime:1191368159	nanoseconds.
 Finish 1 iteration
-Run the decompress LZ77 on large1x using gcc
+Run the opt_decompress LZ77 on large64x using gcc
 Begin 2 iteration
 DECOMPRESSED:   
-574969 bytes
+36798016 bytes
 
-Parameter:large1x	ExecutionTime:16447836468	nanoseconds.
+Parameter:large64x	ExecutionTime:184232675	nanoseconds.
 Finish 2 iteration
-Run the decompress LZ77 on large1x using gcc
+Run the opt_decompress LZ77 on large64x using gcc
 Begin 3 iteration
 DECOMPRESSED:   
-574969 bytes
+36798016 bytes
 
-Parameter:large1x	ExecutionTime:16381192130	nanoseconds.
+Parameter:large64x	ExecutionTime:248351598	nanoseconds.
 Finish 3 iteration
-Run the decompress LZ77 on large1x using gcc
+Run the opt_decompress LZ77 on large64x using gcc
 Begin 4 iteration
 DECOMPRESSED:   
-574969 bytes
+36798016 bytes
 
-Parameter:large1x	ExecutionTime:16504558992	nanoseconds.
+Parameter:large64x	ExecutionTime:183090738	nanoseconds.
 Finish 4 iteration
-Run the decompress LZ77 on large1x using gcc
+Run the opt_decompress LZ77 on large64x using gcc
 Begin 5 iteration
 DECOMPRESSED:   
-574969 bytes
+36798016 bytes
 
-Parameter:large1x	ExecutionTime:16434081682	nanoseconds.
+Parameter:large64x	ExecutionTime:158461347	nanoseconds.
 Finish 5 iteration
-Run the decompress LZ77 on large1x using gcc
+Run the opt_decompress LZ77 on large64x using gcc
 Begin 6 iteration
 DECOMPRESSED:   
-574969 bytes
+36798016 bytes
 
-Parameter:large1x	ExecutionTime:16434918893	nanoseconds.
+Parameter:large64x	ExecutionTime:240403925	nanoseconds.
 Finish 6 iteration
-Run the decompress LZ77 on large1x using gcc
+Run the opt_decompress LZ77 on large64x using gcc
 Begin 7 iteration
 DECOMPRESSED:   
-574969 bytes
+36798016 bytes
 
-Parameter:large1x	ExecutionTime:16416283158	nanoseconds.
+Parameter:large64x	ExecutionTime:177477075	nanoseconds.
 Finish 7 iteration
-Run the decompress LZ77 on large1x using gcc
+Run the opt_decompress LZ77 on large64x using gcc
 Begin 8 iteration
 DECOMPRESSED:   
-574969 bytes
+36798016 bytes
 
-Parameter:large1x	ExecutionTime:16346186293	nanoseconds.
+Parameter:large64x	ExecutionTime:155109851	nanoseconds.
 Finish 8 iteration
-Run the decompress LZ77 on large1x using gcc
+Run the opt_decompress LZ77 on large64x using gcc
 Begin 9 iteration
 DECOMPRESSED:   
-574969 bytes
+36798016 bytes
 
-Parameter:large1x	ExecutionTime:16357419085	nanoseconds.
+Parameter:large64x	ExecutionTime:154829822	nanoseconds.
 Finish 9 iteration
-Run the decompress LZ77 on large1x using gcc
+Run the opt_decompress LZ77 on large64x using gcc
 Begin 10 iteration
 DECOMPRESSED:   
-574969 bytes
+36798016 bytes
 
-Parameter:large1x	ExecutionTime:16406151065	nanoseconds.
+Parameter:large64x	ExecutionTime:159757822	nanoseconds.
 Finish 10 iteration
 processor	: 0
 vendor_id	: GenuineIntel
@@ -76,7 +76,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.000
+cpu MHz		: 1321.085
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -103,7 +103,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.000
+cpu MHz		: 899.937
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -130,7 +130,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3382.601
+cpu MHz		: 1246.046
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -157,7 +157,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.132
+cpu MHz		: 1138.867
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -184,7 +184,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.796
+cpu MHz		: 1843.703
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -211,7 +211,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3304.242
+cpu MHz		: 1044.304
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -238,7 +238,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.664
+cpu MHz		: 1434.375
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -265,7 +265,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3400.132
+cpu MHz		: 966.609
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
