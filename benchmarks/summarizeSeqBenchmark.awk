@@ -97,7 +97,7 @@ BEGIN {
 
 	# Code Generation
 	codegens = "naive naivedealloc nocopy nocopydealloc";
-	#codegens = "nocopy nocopydealloc";
+
 	# Pattern matching
 	patterns["Reverse"] = "disabled";
 	patterns["newTicTacToe"] = "disabled";
@@ -137,8 +137,8 @@ BEGIN {
 	parameters["MatrixMult"]="1000 2000 3000";
 	parameters["CoinGame"]="10000 20000 25000 30000 40000";
 	parameters["SobelEdge"]="image32x32 image64x64 image128x128 image256x256 image512x512 image1024x1024";
-	parameters["LZ77"]="medium1x medium5x medium10x medium25x medium50x medium75x medium100x medium125x medium150x medium175x medium200x";
-	#parameters["LZ77"]="medium1000x medium2000x medium3000x medium4000x medium5000x medium6000x medium7000x medium8000x medium9000x medium10000x";
+	#parameters["LZ77"]="medium1x medium5x medium10x medium25x medium50x medium75x medium100x medium125x medium150x medium175x medium200x";
+	parameters["LZ77"]="medium1000x medium2000x medium3000x medium4000x medium5000x medium6000x medium7000x medium8000x medium9000x medium10000x";
 	parameters["Cashtill"]="10000 20000 25000 30000 40000";
 
 	# The number of threads

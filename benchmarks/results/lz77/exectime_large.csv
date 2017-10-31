@@ -1,242 +1,78 @@
-Execution Time (nano second)
-TestCase	ProgramType	Compiler	Pattern	Parameter	CodeGen	Executable	Thread	1st	2nd	3rd	4th	5th	6th	7th	8th	9th	10th	Average
-LZ77	compress	gcc	disabled	medium1000x	naive	seq	1	No data
-LZ77	compress	gcc	disabled	medium1000x	naivedealloc	seq	1	No data
-LZ77	compress	gcc	disabled	medium1000x	nocopy	seq	1	OOM
-LZ77	compress	gcc	disabled	medium1000x	nocopydealloc	seq	1	121184018835	121247406253	121766778336	122178846148	122125092587	121893076759	121781602402	122490214473	121693836785	121775557774
-LZ77	compress	gcc	disabled	medium2000x	naive	seq	1	No data
-LZ77	compress	gcc	disabled	medium2000x	naivedealloc	seq	1	No data
-LZ77	compress	gcc	disabled	medium2000x	nocopy	seq	1	OOM
-LZ77	compress	gcc	disabled	medium2000x	nocopydealloc	seq	1	499215111130	492090771708	494220513164	493892730094	499864803423	491955755929	492972609147	499810487799	494543951242	495483297795
-LZ77	compress	gcc	disabled	medium3000x	naive	seq	1	No data
-LZ77	compress	gcc	disabled	medium3000x	naivedealloc	seq	1	No data
-LZ77	compress	gcc	disabled	medium3000x	nocopy	seq	1	OOM
-LZ77	compress	gcc	disabled	medium3000x	nocopydealloc	seq	1	No data
-LZ77	compress	gcc	disabled	medium4000x	naive	seq	1	No data
-LZ77	compress	gcc	disabled	medium4000x	naivedealloc	seq	1	No data
-LZ77	compress	gcc	disabled	medium4000x	nocopy	seq	1	No data
-LZ77	compress	gcc	disabled	medium4000x	nocopydealloc	seq	1	No data
-LZ77	compress	gcc	disabled	medium5000x	naive	seq	1	No data
-LZ77	compress	gcc	disabled	medium5000x	naivedealloc	seq	1	No data
-LZ77	compress	gcc	disabled	medium5000x	nocopy	seq	1	No data
-LZ77	compress	gcc	disabled	medium5000x	nocopydealloc	seq	1	No data
-LZ77	compress	gcc	disabled	medium6000x	naive	seq	1	No data
-LZ77	compress	gcc	disabled	medium6000x	naivedealloc	seq	1	No data
-LZ77	compress	gcc	disabled	medium6000x	nocopy	seq	1	No data
-LZ77	compress	gcc	disabled	medium6000x	nocopydealloc	seq	1	No data
-LZ77	compress	gcc	disabled	medium7000x	naive	seq	1	No data
-LZ77	compress	gcc	disabled	medium7000x	naivedealloc	seq	1	No data
-LZ77	compress	gcc	disabled	medium7000x	nocopy	seq	1	No data
-LZ77	compress	gcc	disabled	medium7000x	nocopydealloc	seq	1	No data
-LZ77	compress	gcc	disabled	medium8000x	naive	seq	1	No data
-LZ77	compress	gcc	disabled	medium8000x	naivedealloc	seq	1	No data
-LZ77	compress	gcc	disabled	medium8000x	nocopy	seq	1	No data
-LZ77	compress	gcc	disabled	medium8000x	nocopydealloc	seq	1	No data
-LZ77	compress	gcc	disabled	medium9000x	naive	seq	1	No data
-LZ77	compress	gcc	disabled	medium9000x	naivedealloc	seq	1	No data
-LZ77	compress	gcc	disabled	medium9000x	nocopy	seq	1	No data
-LZ77	compress	gcc	disabled	medium9000x	nocopydealloc	seq	1	No data
-LZ77	compress	gcc	disabled	medium10000x	naive	seq	1	No data
-LZ77	compress	gcc	disabled	medium10000x	naivedealloc	seq	1	No data
-LZ77	compress	gcc	disabled	medium10000x	nocopy	seq	1	No data
-LZ77	compress	gcc	disabled	medium10000x	nocopydealloc	seq	1	No data
-LZ77	compress	gcc	enabled	medium1000x	naive	seq	1	No data
-LZ77	compress	gcc	enabled	medium1000x	naivedealloc	seq	1	No data
-LZ77	compress	gcc	enabled	medium1000x	nocopy	seq	1	288377733	377028249	276204903	369876707	277588514	273989172	271768928	290848095	273172762	326800556
-LZ77	compress	gcc	enabled	medium1000x	nocopydealloc	seq	1	275866072	325967348	275913006	277110759	346465616	272134028	278290878	301274984	306707809	291167560
-LZ77	compress	gcc	enabled	medium2000x	naive	seq	1	No data
-LZ77	compress	gcc	enabled	medium2000x	naivedealloc	seq	1	No data
-LZ77	compress	gcc	enabled	medium2000x	nocopy	seq	1	541622141	569447812	537533324	534623173	535052801	533356679	534580071	614514375	554612246	534918102
-LZ77	compress	gcc	enabled	medium2000x	nocopydealloc	seq	1	574466593	545066602	567692609	578101746	562448097	597110314	538065927	609265414	540471082	536970341
-LZ77	compress	gcc	enabled	medium3000x	naive	seq	1	No data
-LZ77	compress	gcc	enabled	medium3000x	naivedealloc	seq	1	No data
-LZ77	compress	gcc	enabled	medium3000x	nocopy	seq	1	796355473	810816395	796841233	836861620	844705622	797056121	803921967	795223632	852192267	801018025
-LZ77	compress	gcc	enabled	medium3000x	nocopydealloc	seq	1	826618554	803982596	802884652	803725668	836077501	839919009	805663057	808267755	804013713	804617140
-LZ77	compress	gcc	enabled	medium4000x	naive	seq	1	No data
-LZ77	compress	gcc	enabled	medium4000x	naivedealloc	seq	1	No data
-LZ77	compress	gcc	enabled	medium4000x	nocopy	seq	1	1059542477	1059172105	1114885950	1106237783	1130165090	1059071855	1057656948	1062288703	1058721848	1132720239
-LZ77	compress	gcc	enabled	medium4000x	nocopydealloc	seq	1	1086879838	1127738380	1069747535	1069012633	1070269301	1070883482	1149386266	1121441550	1135227172	1084411387
-LZ77	compress	gcc	enabled	medium5000x	naive	seq	1	No data
-LZ77	compress	gcc	enabled	medium5000x	naivedealloc	seq	1	No data
-LZ77	compress	gcc	enabled	medium5000x	nocopy	seq	1	1321913217	1322237441	1321158061	1406094497	1326120037	1428917113	1323098397	1324471259	1371527714	1322768104
-LZ77	compress	gcc	enabled	medium5000x	nocopydealloc	seq	1	1418427720	1357791017	1338097245	1471274385	1366979555	1334763971	1334602692	1337899326	1332492641	1344923225
-LZ77	compress	gcc	enabled	medium6000x	naive	seq	1	No data
-LZ77	compress	gcc	enabled	medium6000x	naivedealloc	seq	1	No data
-LZ77	compress	gcc	enabled	medium6000x	nocopy	seq	1	1586491333	1665304567	1664598242	1587572250	1611408413	1585327977	1588782167	1633467701	1667706837	1623339693
-LZ77	compress	gcc	enabled	medium6000x	nocopydealloc	seq	1	1600487784	1605980941	1603819874	1611615523	1598305392	1643385349	1603325201	1649117107	1630270085	1611020245
-LZ77	compress	gcc	enabled	medium7000x	naive	seq	1	No data
-LZ77	compress	gcc	enabled	medium7000x	naivedealloc	seq	1	No data
-LZ77	compress	gcc	enabled	medium7000x	nocopy	seq	1	1850406157	1846234690	1869502936	1849597854	1862155652	1908824226	1853951538	1978877260	1846019248	1895370277
-LZ77	compress	gcc	enabled	medium7000x	nocopydealloc	seq	1	1866847403	1925661286	1895711531	1862509027	1866029845	1863699089	1869772710	1863546546	1933683553	1888778955
-LZ77	compress	gcc	enabled	medium8000x	naive	seq	1	No data
-LZ77	compress	gcc	enabled	medium8000x	naivedealloc	seq	1	No data
-LZ77	compress	gcc	enabled	medium8000x	nocopy	seq	1	2112251045	2108025279	2116080521	2143624078	2112340291	2141761918	2108816698	2172811689	2115445440	2108670860
-LZ77	compress	gcc	enabled	medium8000x	nocopydealloc	seq	1	2161366298	2176463528	2267066216	2164581814	2249563881	2215443093	2136098461	2156311729	2160820367	2162686347
-LZ77	compress	gcc	enabled	medium9000x	naive	seq	1	No data
-LZ77	compress	gcc	enabled	medium9000x	naivedealloc	seq	1	No data
-LZ77	compress	gcc	enabled	medium9000x	nocopy	seq	1	2408779875	2393139001	2378412521	2371942369	2381034668	2472678860	2429264160	2457314502	2418458874	2383904786
-LZ77	compress	gcc	enabled	medium9000x	nocopydealloc	seq	1	2401959305	2392863679	2390202296	2444313347	2407446677	2432796079	2394907602	2433421791	2394135258	2395944323
-LZ77	compress	gcc	enabled	medium10000x	naive	seq	1	No data
-LZ77	compress	gcc	enabled	medium10000x	naivedealloc	seq	1	No data
-LZ77	compress	gcc	enabled	medium10000x	nocopy	seq	1	2635179426	2635835429	2643762518	2634662897	2695820288	2691114218	2664503680	2635148225	2648431401	2711485396
-LZ77	compress	gcc	enabled	medium10000x	nocopydealloc	seq	1	2680122664	2654245284	2660002787	2656774297	2755593532	2750897222	2665465123	2658637016	2747829691	2658676037
-LZ77	decompress	gcc	disabled	medium1000x	naive	seq	1	No data
-LZ77	decompress	gcc	disabled	medium1000x	naivedealloc	seq	1	No data
-LZ77	decompress	gcc	disabled	medium1000x	nocopy	seq	1	No data
-LZ77	decompress	gcc	disabled	medium1000x	nocopydealloc	seq	1	No data
-LZ77	decompress	gcc	disabled	medium2000x	naive	seq	1	No data
-LZ77	decompress	gcc	disabled	medium2000x	naivedealloc	seq	1	No data
-LZ77	decompress	gcc	disabled	medium2000x	nocopy	seq	1	No data
-LZ77	decompress	gcc	disabled	medium2000x	nocopydealloc	seq	1	No data
-LZ77	decompress	gcc	disabled	medium3000x	naive	seq	1	No data
-LZ77	decompress	gcc	disabled	medium3000x	naivedealloc	seq	1	No data
-LZ77	decompress	gcc	disabled	medium3000x	nocopy	seq	1	No data
-LZ77	decompress	gcc	disabled	medium3000x	nocopydealloc	seq	1	No data
-LZ77	decompress	gcc	disabled	medium4000x	naive	seq	1	No data
-LZ77	decompress	gcc	disabled	medium4000x	naivedealloc	seq	1	No data
-LZ77	decompress	gcc	disabled	medium4000x	nocopy	seq	1	No data
-LZ77	decompress	gcc	disabled	medium4000x	nocopydealloc	seq	1	No data
-LZ77	decompress	gcc	disabled	medium5000x	naive	seq	1	No data
-LZ77	decompress	gcc	disabled	medium5000x	naivedealloc	seq	1	No data
-LZ77	decompress	gcc	disabled	medium5000x	nocopy	seq	1	No data
-LZ77	decompress	gcc	disabled	medium5000x	nocopydealloc	seq	1	No data
-LZ77	decompress	gcc	disabled	medium6000x	naive	seq	1	No data
-LZ77	decompress	gcc	disabled	medium6000x	naivedealloc	seq	1	No data
-LZ77	decompress	gcc	disabled	medium6000x	nocopy	seq	1	No data
-LZ77	decompress	gcc	disabled	medium6000x	nocopydealloc	seq	1	No data
-LZ77	decompress	gcc	disabled	medium7000x	naive	seq	1	No data
-LZ77	decompress	gcc	disabled	medium7000x	naivedealloc	seq	1	No data
-LZ77	decompress	gcc	disabled	medium7000x	nocopy	seq	1	No data
-LZ77	decompress	gcc	disabled	medium7000x	nocopydealloc	seq	1	No data
-LZ77	decompress	gcc	disabled	medium8000x	naive	seq	1	No data
-LZ77	decompress	gcc	disabled	medium8000x	naivedealloc	seq	1	No data
-LZ77	decompress	gcc	disabled	medium8000x	nocopy	seq	1	No data
-LZ77	decompress	gcc	disabled	medium8000x	nocopydealloc	seq	1	No data
-LZ77	decompress	gcc	disabled	medium9000x	naive	seq	1	No data
-LZ77	decompress	gcc	disabled	medium9000x	naivedealloc	seq	1	No data
-LZ77	decompress	gcc	disabled	medium9000x	nocopy	seq	1	No data
-LZ77	decompress	gcc	disabled	medium9000x	nocopydealloc	seq	1	No data
-LZ77	decompress	gcc	disabled	medium10000x	naive	seq	1	No data
-LZ77	decompress	gcc	disabled	medium10000x	naivedealloc	seq	1	No data
-LZ77	decompress	gcc	disabled	medium10000x	nocopy	seq	1	No data
-LZ77	decompress	gcc	disabled	medium10000x	nocopydealloc	seq	1	No data
-LZ77	decompress	gcc	enabled	medium1000x	naive	seq	1	No data
-LZ77	decompress	gcc	enabled	medium1000x	naivedealloc	seq	1	No data
-LZ77	decompress	gcc	enabled	medium1000x	nocopy	seq	1	No data
-LZ77	decompress	gcc	enabled	medium1000x	nocopydealloc	seq	1	No data
-LZ77	decompress	gcc	enabled	medium2000x	naive	seq	1	No data
-LZ77	decompress	gcc	enabled	medium2000x	naivedealloc	seq	1	No data
-LZ77	decompress	gcc	enabled	medium2000x	nocopy	seq	1	No data
-LZ77	decompress	gcc	enabled	medium2000x	nocopydealloc	seq	1	No data
-LZ77	decompress	gcc	enabled	medium3000x	naive	seq	1	No data
-LZ77	decompress	gcc	enabled	medium3000x	naivedealloc	seq	1	No data
-LZ77	decompress	gcc	enabled	medium3000x	nocopy	seq	1	No data
-LZ77	decompress	gcc	enabled	medium3000x	nocopydealloc	seq	1	No data
-LZ77	decompress	gcc	enabled	medium4000x	naive	seq	1	No data
-LZ77	decompress	gcc	enabled	medium4000x	naivedealloc	seq	1	No data
-LZ77	decompress	gcc	enabled	medium4000x	nocopy	seq	1	No data
-LZ77	decompress	gcc	enabled	medium4000x	nocopydealloc	seq	1	No data
-LZ77	decompress	gcc	enabled	medium5000x	naive	seq	1	No data
-LZ77	decompress	gcc	enabled	medium5000x	naivedealloc	seq	1	No data
-LZ77	decompress	gcc	enabled	medium5000x	nocopy	seq	1	No data
-LZ77	decompress	gcc	enabled	medium5000x	nocopydealloc	seq	1	No data
-LZ77	decompress	gcc	enabled	medium6000x	naive	seq	1	No data
-LZ77	decompress	gcc	enabled	medium6000x	naivedealloc	seq	1	No data
-LZ77	decompress	gcc	enabled	medium6000x	nocopy	seq	1	No data
-LZ77	decompress	gcc	enabled	medium6000x	nocopydealloc	seq	1	No data
-LZ77	decompress	gcc	enabled	medium7000x	naive	seq	1	No data
-LZ77	decompress	gcc	enabled	medium7000x	naivedealloc	seq	1	No data
-LZ77	decompress	gcc	enabled	medium7000x	nocopy	seq	1	No data
-LZ77	decompress	gcc	enabled	medium7000x	nocopydealloc	seq	1	No data
-LZ77	decompress	gcc	enabled	medium8000x	naive	seq	1	No data
-LZ77	decompress	gcc	enabled	medium8000x	naivedealloc	seq	1	No data
-LZ77	decompress	gcc	enabled	medium8000x	nocopy	seq	1	No data
-LZ77	decompress	gcc	enabled	medium8000x	nocopydealloc	seq	1	No data
-LZ77	decompress	gcc	enabled	medium9000x	naive	seq	1	No data
-LZ77	decompress	gcc	enabled	medium9000x	naivedealloc	seq	1	No data
-LZ77	decompress	gcc	enabled	medium9000x	nocopy	seq	1	No data
-LZ77	decompress	gcc	enabled	medium9000x	nocopydealloc	seq	1	No data
-LZ77	decompress	gcc	enabled	medium10000x	naive	seq	1	No data
-LZ77	decompress	gcc	enabled	medium10000x	naivedealloc	seq	1	No data
-LZ77	decompress	gcc	enabled	medium10000x	nocopy	seq	1	No data
-LZ77	decompress	gcc	enabled	medium10000x	nocopydealloc	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium1000x	naive	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium1000x	naivedealloc	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium1000x	nocopy	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium1000x	nocopydealloc	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium2000x	naive	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium2000x	naivedealloc	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium2000x	nocopy	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium2000x	nocopydealloc	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium3000x	naive	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium3000x	naivedealloc	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium3000x	nocopy	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium3000x	nocopydealloc	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium4000x	naive	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium4000x	naivedealloc	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium4000x	nocopy	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium4000x	nocopydealloc	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium5000x	naive	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium5000x	naivedealloc	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium5000x	nocopy	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium5000x	nocopydealloc	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium6000x	naive	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium6000x	naivedealloc	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium6000x	nocopy	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium6000x	nocopydealloc	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium7000x	naive	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium7000x	naivedealloc	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium7000x	nocopy	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium7000x	nocopydealloc	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium8000x	naive	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium8000x	naivedealloc	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium8000x	nocopy	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium8000x	nocopydealloc	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium9000x	naive	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium9000x	naivedealloc	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium9000x	nocopy	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium9000x	nocopydealloc	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium10000x	naive	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium10000x	naivedealloc	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium10000x	nocopy	seq	1	No data
-LZ77	opt_decompress	gcc	disabled	medium10000x	nocopydealloc	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium1000x	naive	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium1000x	naivedealloc	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium1000x	nocopy	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium1000x	nocopydealloc	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium2000x	naive	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium2000x	naivedealloc	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium2000x	nocopy	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium2000x	nocopydealloc	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium3000x	naive	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium3000x	naivedealloc	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium3000x	nocopy	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium3000x	nocopydealloc	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium4000x	naive	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium4000x	naivedealloc	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium4000x	nocopy	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium4000x	nocopydealloc	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium5000x	naive	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium5000x	naivedealloc	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium5000x	nocopy	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium5000x	nocopydealloc	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium6000x	naive	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium6000x	naivedealloc	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium6000x	nocopy	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium6000x	nocopydealloc	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium7000x	naive	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium7000x	naivedealloc	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium7000x	nocopy	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium7000x	nocopydealloc	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium8000x	naive	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium8000x	naivedealloc	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium8000x	nocopy	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium8000x	nocopydealloc	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium9000x	naive	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium9000x	naivedealloc	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium9000x	nocopy	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium9000x	nocopydealloc	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium10000x	naive	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium10000x	naivedealloc	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium10000x	nocopy	seq	1	No data
-LZ77	opt_decompress	gcc	enabled	medium10000x	nocopydealloc	seq	1	No data
+Execution Time (nano second),,,,,,,,,,,,,,,,,,
+TestCase,ProgramType,Compiler,Pattern,Parameter,CodeGen,Executable,Thread,1st,2nd,3rd,4th,5th,6th,7th,8th,9th,10th,Average
+LZ77,compress,gcc,enabled,medium1000x,nocopy,seq,1,288377733,377028249,276204903,369876707,277588514,273989172,271768928,290848095,273172762,326800556,
+LZ77,compress,gcc,enabled,medium1000x,nocopydealloc,seq,1,275866072,325967348,275913006,277110759,346465616,272134028,278290878,301274984,306707809,291167560,
+LZ77,compress,gcc,enabled,medium2000x,naive,seq,1,No data,,,,,,,,,,
+LZ77,compress,gcc,enabled,medium2000x,naivedealloc,seq,1,No data,,,,,,,,,,
+LZ77,compress,gcc,enabled,medium2000x,nocopy,seq,1,541622141,569447812,537533324,534623173,535052801,533356679,534580071,614514375,554612246,534918102,
+LZ77,compress,gcc,enabled,medium2000x,nocopydealloc,seq,1,574466593,545066602,567692609,578101746,562448097,597110314,538065927,609265414,540471082,536970341,
+LZ77,compress,gcc,enabled,medium3000x,naive,seq,1,No data,,,,,,,,,,
+LZ77,compress,gcc,enabled,medium3000x,naivedealloc,seq,1,No data,,,,,,,,,,
+LZ77,compress,gcc,enabled,medium3000x,nocopy,seq,1,796355473,810816395,796841233,836861620,844705622,797056121,803921967,795223632,852192267,801018025,
+LZ77,compress,gcc,enabled,medium3000x,nocopydealloc,seq,1,826618554,803982596,802884652,803725668,836077501,839919009,805663057,808267755,804013713,804617140,
+LZ77,compress,gcc,enabled,medium4000x,naive,seq,1,No data,,,,,,,,,,
+LZ77,compress,gcc,enabled,medium4000x,naivedealloc,seq,1,No data,,,,,,,,,,
+LZ77,compress,gcc,enabled,medium4000x,nocopy,seq,1,1059542477,1059172105,1114885950,1106237783,1130165090,1059071855,1057656948,1062288703,1058721848,1132720239,
+LZ77,compress,gcc,enabled,medium4000x,nocopydealloc,seq,1,1086879838,1127738380,1069747535,1069012633,1070269301,1070883482,1149386266,1121441550,1135227172,1084411387,
+LZ77,compress,gcc,enabled,medium5000x,naive,seq,1,No data,,,,,,,,,,
+LZ77,compress,gcc,enabled,medium5000x,naivedealloc,seq,1,No data,,,,,,,,,,
+LZ77,compress,gcc,enabled,medium5000x,nocopy,seq,1,1321913217,1322237441,1321158061,1406094497,1326120037,1428917113,1323098397,1324471259,1371527714,1322768104,
+LZ77,compress,gcc,enabled,medium5000x,nocopydealloc,seq,1,1418427720,1357791017,1338097245,1471274385,1366979555,1334763971,1334602692,1337899326,1332492641,1344923225,
+LZ77,compress,gcc,enabled,medium6000x,naive,seq,1,No data,,,,,,,,,,
+LZ77,compress,gcc,enabled,medium6000x,naivedealloc,seq,1,No data,,,,,,,,,,
+LZ77,compress,gcc,enabled,medium6000x,nocopy,seq,1,1586491333,1665304567,1664598242,1587572250,1611408413,1585327977,1588782167,1633467701,1667706837,1623339693,
+LZ77,compress,gcc,enabled,medium6000x,nocopydealloc,seq,1,1600487784,1605980941,1603819874,1611615523,1598305392,1643385349,1603325201,1649117107,1630270085,1611020245,
+LZ77,compress,gcc,enabled,medium7000x,naive,seq,1,No data,,,,,,,,,,
+LZ77,compress,gcc,enabled,medium7000x,naivedealloc,seq,1,No data,,,,,,,,,,
+LZ77,compress,gcc,enabled,medium7000x,nocopy,seq,1,1850406157,1846234690,1869502936,1849597854,1862155652,1908824226,1853951538,1978877260,1846019248,1895370277,
+LZ77,compress,gcc,enabled,medium7000x,nocopydealloc,seq,1,1866847403,1925661286,1895711531,1862509027,1866029845,1863699089,1869772710,1863546546,1933683553,1888778955,
+LZ77,compress,gcc,enabled,medium8000x,naive,seq,1,No data,,,,,,,,,,
+LZ77,compress,gcc,enabled,medium8000x,naivedealloc,seq,1,No data,,,,,,,,,,
+LZ77,compress,gcc,enabled,medium8000x,nocopy,seq,1,2112251045,2108025279,2116080521,2143624078,2112340291,2141761918,2108816698,2172811689,2115445440,2108670860,
+LZ77,compress,gcc,enabled,medium8000x,nocopydealloc,seq,1,2161366298,2176463528,2267066216,2164581814,2249563881,2215443093,2136098461,2156311729,2160820367,2162686347,
+LZ77,compress,gcc,enabled,medium9000x,naive,seq,1,No data,,,,,,,,,,
+LZ77,compress,gcc,enabled,medium9000x,naivedealloc,seq,1,No data,,,,,,,,,,
+LZ77,compress,gcc,enabled,medium9000x,nocopy,seq,1,2408779875,2393139001,2378412521,2371942369,2381034668,2472678860,2429264160,2457314502,2418458874,2383904786,
+LZ77,compress,gcc,enabled,medium9000x,nocopydealloc,seq,1,2401959305,2392863679,2390202296,2444313347,2407446677,2432796079,2394907602,2433421791,2394135258,2395944323,
+LZ77,compress,gcc,enabled,medium10000x,naive,seq,1,No data,,,,,,,,,,
+LZ77,compress,gcc,enabled,medium10000x,naivedealloc,seq,1,No data,,,,,,,,,,
+LZ77,compress,gcc,enabled,medium10000x,nocopy,seq,1,2635179426,2635835429,2643762518,2634662897,2695820288,2691114218,2664503680,2635148225,2648431401,2711485396,
+LZ77,compress,gcc,enabled,medium10000x,nocopydealloc,seq,1,2680122664,2654245284,2660002787,2656774297,2755593532,2750897222,2665465123,2658637016,2747829691,2658676037,
+LZ77,opt_decompress,gcc,disabled,medium1000x,nocopy,seq,1,156444881,24522138,29723876,23899327,46591653,30541326,23593217,21584129,25565945,38435106,
+LZ77,opt_decompress,gcc,disabled,medium1000x,nocopydealloc,seq,1,22247975,20967006,55193194,47289110,35692684,21930272,39937323,21411936,35910985,22356099,
+LZ77,opt_decompress,gcc,disabled,medium2000x,naive,seq,1,No data,,,,,,,,,,
+LZ77,opt_decompress,gcc,disabled,medium2000x,naivedealloc,seq,1,No data,,,,,,,,,,
+LZ77,opt_decompress,gcc,disabled,medium2000x,nocopy,seq,1,284920947,37922420,70615819,34388447,54562377,35246026,73349530,45501007,34903618,70176776,
+LZ77,opt_decompress,gcc,disabled,medium2000x,nocopydealloc,seq,1,35617370,49453407,34823703,64780435,73176158,37028810,48308735,35548161,65122267,70985864,
+LZ77,opt_decompress,gcc,disabled,medium3000x,naive,seq,1,No data,,,,,,,,,,
+LZ77,opt_decompress,gcc,disabled,medium3000x,naivedealloc,seq,1,No data,,,,,,,,,,
+LZ77,opt_decompress,gcc,disabled,medium3000x,nocopy,seq,1,423527225,78521249,73547658,67595727,54737826,139799530,49772390,63896568,59721050,63874115,
+LZ77,opt_decompress,gcc,disabled,medium3000x,nocopydealloc,seq,1,51137344,94378974,48469903,49342411,65884148,100230607,57205114,97332653,48790811,67155470,
+LZ77,opt_decompress,gcc,disabled,medium4000x,naive,seq,1,No data,,,,,,,,,,
+LZ77,opt_decompress,gcc,disabled,medium4000x,naivedealloc,seq,1,No data,,,,,,,,,,
+LZ77,opt_decompress,gcc,disabled,medium4000x,nocopy,seq,1,559105952,68788915,61295882,81598963,78483946,60517588,63723247,119021611,119087700,62946019,
+LZ77,opt_decompress,gcc,disabled,medium4000x,nocopydealloc,seq,1,66675432,108668409,67776220,61551761,79561300,67942140,60709080,174186978,66327680,65726664,
+LZ77,opt_decompress,gcc,disabled,medium5000x,naive,seq,1,No data,,,,,,,,,,
+LZ77,opt_decompress,gcc,disabled,medium5000x,naivedealloc,seq,1,No data,,,,,,,,,,
+LZ77,opt_decompress,gcc,disabled,medium5000x,nocopy,seq,1,691939076,73211716,77414164,75149679,74362589,73895322,89464024,94147240,207178796,83119546,
+LZ77,opt_decompress,gcc,disabled,medium5000x,nocopydealloc,seq,1,117734620,77600164,77516749,92370720,78996482,142358042,75955092,79188463,142608459,75525619,
+LZ77,opt_decompress,gcc,disabled,medium6000x,naive,seq,1,No data,,,,,,,,,,
+LZ77,opt_decompress,gcc,disabled,medium6000x,naivedealloc,seq,1,No data,,,,,,,,,,
+LZ77,opt_decompress,gcc,disabled,medium6000x,nocopy,seq,1,831739367,90465210,105018135,92034653,128336076,110874119,170994693,103039732,140387879,95688276,
+LZ77,opt_decompress,gcc,disabled,medium6000x,nocopydealloc,seq,1,91248086,122650875,115609730,104192878,171803429,95940383,91500247,117493949,137609463,129059506,
+LZ77,opt_decompress,gcc,disabled,medium7000x,naive,seq,1,No data,,,,,,,,,,
+LZ77,opt_decompress,gcc,disabled,medium7000x,naivedealloc,seq,1,No data,,,,,,,,,,
+LZ77,opt_decompress,gcc,disabled,medium7000x,nocopy,seq,1,971228040,142849898,168160377,255640348,153915267,110981132,104456886,133591978,148055869,105439005,
+LZ77,opt_decompress,gcc,disabled,medium7000x,nocopydealloc,seq,1,124623365,107330075,195525023,101305240,105676058,139717896,139764871,150749728,113667521,101485648,
+LZ77,opt_decompress,gcc,disabled,medium8000x,naive,seq,1,No data,,,,,,,,,,
+LZ77,opt_decompress,gcc,disabled,medium8000x,naivedealloc,seq,1,No data,,,,,,,,,,
+LZ77,opt_decompress,gcc,disabled,medium8000x,nocopy,seq,1,1106223291,192638959,181056271,127003272,116172406,157301017,114373781,124146314,114668393,118001332,
+LZ77,opt_decompress,gcc,disabled,medium8000x,nocopydealloc,seq,1,135798599,149219566,113266891,112605906,161294063,160854090,119210720,165086569,115381492,145169152,
+LZ77,opt_decompress,gcc,disabled,medium9000x,naive,seq,1,No data,,,,,,,,,,
+LZ77,opt_decompress,gcc,disabled,medium9000x,naivedealloc,seq,1,No data,,,,,,,,,,
+LZ77,opt_decompress,gcc,disabled,medium9000x,nocopy,seq,1,1241502783,131515391,153760980,130169487,126471804,162796225,195459800,196123843,127876680,133589063,
+LZ77,opt_decompress,gcc,disabled,medium9000x,nocopydealloc,seq,1,141137186,126375211,178019967,131822311,125071937,202161281,152133596,138143429,179557432,128371760,
+LZ77,opt_decompress,gcc,disabled,medium10000x,naive,seq,1,No data,,,,,,,,,,
+LZ77,opt_decompress,gcc,disabled,medium10000x,naivedealloc,seq,1,No data,,,,,,,,,,
+LZ77,opt_decompress,gcc,disabled,medium10000x,nocopy,seq,1,1377894743,139430997,187758710,144927159,174291149,138743401,199350252,227631353,148756953,187944315,
+LZ77,opt_decompress,gcc,disabled,medium10000x,nocopydealloc,seq,1,169893746,148863354,351319168,166286575,167829531,160797582,149579163,202383013,261512645,171995369,
