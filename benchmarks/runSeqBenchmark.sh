@@ -369,10 +369,10 @@ exec(){
 #exec CoinGame original
 
 #### LZ77 test case
-init LZ77
-exec LZ77 compress
+#init LZ77
+#exec LZ77 compress
 #exec LZ77 decompress
-#exec LZ77 opt_decompress
+exec LZ77 opt_decompress
 
 # # ###Sobel Edge test
 #init SobelEdge
