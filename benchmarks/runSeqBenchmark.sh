@@ -1,5 +1,6 @@
 #!/bin/bash
-TIMEOUT="3600s"
+## Set time out to be 10 min
+TIMEOUT="600s"
 ## Set shell script to UTF-8
 export LANG=C.UTF-8
 # Run Polly from clang
@@ -7,14 +8,13 @@ alias pollycc="clang -O3 -mllvm -polly"
 ### Get the root working directory
 UTILDIR="$(dirname "$(pwd)")/tests/code"
 BENCHMARKDIR="$(pwd)"
-
 ## declare compiler used for compilation
 declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" [MergeSort]="gcc" [MatrixMult]="gcc" \
 		       [LZ77]="gcc" [SobelEdge]="gcc" [Cashtill]="gcc" \
 		       [CoinGame]="gcc" )
 ## declare 4 kinds of code generation
-declare -a codegens=( "naive" "naivedealloc" "nocopy" "nocopydealloc" )
-#declare -a codegens=( "nocopy" "nocopydealloc" )
+#declare -a codegens=( "naive" "naivedealloc" "nocopy" "nocopydealloc" )
+declare -a codegens=( "nocopy" "nocopydealloc" )
 
 ## Declare an associative array for pattern matching
 declare -A patterns=( [LZ77_original_opt]=compress [LZ77_compress]=compress )
@@ -28,8 +28,8 @@ declare -A parameters=( [Reverse]="100000 1000000 10000000" \
 			[BubbleSort]="100000 200000 300000" \
 			[MergeSort]="10000000 20000000 30000000" \
 			[MatrixMult]="1000 2000 3000" \
-			[LZ77]="large1x large2x large4x large8x large16x large32x large64x large128x large256x" \
-			#[LZ77]="medium2x medium4x" \
+			#[LZ77]="medium1x medium5x medium10x medium25x medium50x medium75x medium100x medium125x medium150x medium175x medium200x" \
+			[LZ77]="medium1000x medium2000x medium3000x medium4000x medium5000x medium6000x medium7000x medium8000x medium9000x medium10000x" \
 			[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm image256x256.pbm image512x512.pbm image1024x1024.pbm" \
 			#[SobelEdge]="image2048x2048.pbm" \
 			[Cashtill]="1000 1200 1400 1600 1800 2000" \
@@ -204,7 +204,7 @@ run(){
 					"opt_decompress")
 						timeout $TIMEOUT "out/$executable" "$BENCHMARKDIR/$testcase/Outputfiles/$parameter.dat"  >> $result
 						;;
-				esac
+				esac		     
 				;;
 			"SobelEdge")
 				#echo $parameter
@@ -257,6 +257,7 @@ run(){
 	done
 	### Output the hardware info.
 	cat /proc/cpuinfo >> $result
+	sleep 10s
 	#read -p "Complete 'run' function Press [Enter] to continue..."
 }
 
@@ -294,7 +295,7 @@ exec(){
 					# Generate sequential C code
 					generateCode $testcase $program $compiler $codegen $patternmatch "seq"
 					# Compile C code
-					compile $testcase $program $compiler $codegen $patternmatch	"seq"
+					compile $testcase $program $compiler $codegen $patternmatch "seq"
 					## Run Polly
 					if [ $compiler = "polly" ]
 					then
@@ -340,8 +341,8 @@ exec(){
 # # ###
 # # ###########################################
 # # # # # # ## # Reverse test case
-init Reverse
-exec Reverse original
+#init Reverse
+#exec Reverse original
 # #
 # # # # # # # # # # # # newTicTacToe test case
 #init newTicTacToe
@@ -368,8 +369,8 @@ exec Reverse original
 #exec CoinGame original
 
 #### LZ77 test case
-#init LZ77
-#exec LZ77 compress
+init LZ77
+exec LZ77 compress
 #exec LZ77 decompress
 #exec LZ77 opt_decompress
 
