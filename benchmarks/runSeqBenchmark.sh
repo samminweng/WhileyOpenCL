@@ -29,7 +29,7 @@ declare -A parameters=( [Reverse]="100000 1000000 10000000" \
 			[MergeSort]="10000000 20000000 30000000" \
 			[MatrixMult]="1000 2000 3000" \
 			#[LZ77]="medium1x medium5x medium10x medium25x medium50x medium75x medium100x medium125x medium150x medium175x medium200x" \
-			[LZ77]="medium1000x medium2000x medium3000x medium4000x medium5000x medium6000x medium7000x medium8000x medium9000x medium10000x" \
+			[LZ77]="medium10000x medium20000x medium30000x medium40000x medium50000x medium60000x medium70000x medium80000x medium90000x medium100000x" \
 			[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm image256x256.pbm image512x512.pbm image1024x1024.pbm" \
 			#[SobelEdge]="image2048x2048.pbm" \
 			[Cashtill]="1000 1200 1400 1600 1800 2000" \
