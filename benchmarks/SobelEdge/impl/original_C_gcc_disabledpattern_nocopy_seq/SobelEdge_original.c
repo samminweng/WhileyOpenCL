@@ -361,7 +361,7 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, int64_t width, int6
 			{
 				// isCopyEliminated of '_0' = true
 				// isCopyEliminated of '_6' = true
-				_47 = _convolution_(_1DARRAY_PARAM(pixels), width, height, x, y, _1DARRAY_PARAM(v_sobel));
+				_47 = _convolution_(pixels, pixels_size, width, height, x, y, v_sobel, v_sobel_size);
 			}
 			//assign %11 = %47  : int
 			// isCopyEliminated = true
@@ -370,7 +370,7 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, int64_t width, int6
 			{
 				// isCopyEliminated of '_0' = true
 				// isCopyEliminated of '_7' = true
-				_48 = _convolution_(_1DARRAY_PARAM(pixels), width, height, x, y, _1DARRAY_PARAM(h_sobel));
+				_48 = _convolution_(pixels, pixels_size, width, height, x, y, h_sobel, h_sobel_size);
 			}
 			//assign %12 = %48  : int
 			// isCopyEliminated = true
@@ -479,7 +479,7 @@ void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t 
 	_14[0] = 32; 
 	//indirectinvoke () = %13 (%14) : method(int[])->()
 	{
-		printf_s(_1DARRAY_PARAM(_14));
+		printf_s(_14, _14_size);
 	}
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %16 = %15 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -547,7 +547,7 @@ blklab18:;
 			_31[0] = 32; 
 			//indirectinvoke () = %30 (%31) : method(int[])->()
 			{
-				printf_s(_1DARRAY_PARAM(_31));
+				printf_s(_31, _31_size);
 			}
 			//const %32 = 1 : int
 			_32 = 1;
@@ -603,6 +603,12 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_15);
 	_DECL_1DARRAY_BYTE(_16);
 	_DECL_1DARRAY_BYTE(_18);
+	void* _19;
+	_DECL_1DARRAY(_21);
+	void* _22;
+	int64_t _24;
+	void* _25;
+	_DECL_1DARRAY(_27);
 	//fieldload %9 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	_CONV_ARGS(_9);
 	//const %10 = 0 : int
@@ -653,15 +659,36 @@ int main(int argc, char** args){
 	//invoke (%18) = (%6, %4, %5) SobelEdge_original:sobelEdgeDetection : function(byte[],int,int)->(byte[])
 	{
 		// isCopyEliminated of '_6' = true
-		_18 = _sobelEdgeDetection_(_1DARRAY_PARAM(pixels), width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
+		_18 = _sobelEdgeDetection_(pixels, pixels_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
 	}
 	//assign %7 = %18  : byte[]
 	// isCopyEliminated = true
 	_UPDATE_1DARRAY(newPixels, _18);
-	//invoke () = (%0, %4, %5, %7) SobelEdge_original:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
+	//fieldload %19 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %20 = %19 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %21 = [66,108,117,114,114,101,100,32,73,109,97,103,101,32,115,105,122,101,115,58,32,32,32] : int[]
+	_NEW_1DARRAY_int64_t(_21, 23, 0);
+	_21[0] = 66; _21[1] = 108; _21[2] = 117; _21[3] = 114; _21[4] = 114; _21[5] = 101; _21[6] = 100; _21[7] = 32; _21[8] = 73; _21[9] = 109; _21[10] = 97; _21[11] = 103; _21[12] = 101; _21[13] = 32; _21[14] = 115; _21[15] = 105; _21[16] = 122; _21[17] = 101; _21[18] = 115; _21[19] = 58; _21[20] = 32; _21[21] = 32; _21[22] = 32; 
+	//indirectinvoke () = %20 (%21) : method(int[])->()
 	{
-		// isCopyEliminated of '_7' = true
-		_print_pbm_(stdout, width, height, _1DARRAY_PARAM(newPixels));
+		println_s(_21, _21_size);
+	}
+	//fieldload %22 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %23 = %22 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//lengthof %24 = %7 : byte[]
+	_24 = newPixels_size;
+	//indirectinvoke () = %23 (%24) : method(any)->()
+	{
+		printf("%"PRId64, _24);
+	}
+	//fieldload %25 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %26 = %25 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %27 = [32,98,121,116,101,115] : int[]
+	_NEW_1DARRAY_int64_t(_27, 6, 0);
+	_27[0] = 32; _27[1] = 98; _27[2] = 121; _27[3] = 116; _27[4] = 101; _27[5] = 115; 
+	//indirectinvoke () = %26 (%27) : method(int[])->()
+	{
+		println_s(_27, _27_size);
 	}
 //.blklab19
 blklab19:;

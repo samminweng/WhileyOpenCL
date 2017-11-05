@@ -82,7 +82,7 @@ BEGIN {
 	FS = "\n";
 	## Test case name
 	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
-	testcases="LZ77";
+	testcases="SobelEdge";
 
 	## Program Type
 	programs["Reverse"]="original";
@@ -136,9 +136,9 @@ BEGIN {
 	parameters["MergeSort"]="10000000 20000000 30000000";
 	parameters["MatrixMult"]="1000 2000 3000";
 	parameters["CoinGame"]="10000 20000 25000 30000 40000";
-	parameters["SobelEdge"]="image32x32 image64x64 image128x128 image256x256 image512x512 image1024x1024";
-	parameters["LZ77"]="medium1x medium5x medium7x medium10x medium25x medium50x medium75x medium100x medium120x medium125x medium150x medium175x medium200x";
-	parameters["LZ77"]="medium10000x medium20000x medium30000x medium40000x medium50000x medium60000x medium70000x medium80000x medium90000x medium100000x";
+	parameters["SobelEdge"]="image64x64 image128x128 image256x256 image512x512 image1024x1024 image2048x2048";
+	parameters["LZ77"]="medium1x medium5x medium7x medium10x medium25x medium50x medium75x medium100x medium120x medium125x medium150x medium175x medium200x medium225x medium250x medium275x medium300x medium325x medium350x medium375x medium400x";
+	#parameters["LZ77"]="medium10000x medium20000x medium30000x medium40000x medium50000x medium60000x medium70000x medium80000x medium90000x medium100000x";
 	parameters["Cashtill"]="10000 20000 25000 30000 40000";
 
 	# The number of threads
@@ -217,7 +217,7 @@ BEGIN {
 	}
 
 	# Get out-of-time error
-	if($1 == "OOT: Run out of time 3600s"){
+	if($1 ~ /OOT:/){
 		#print "key="key;
 		counts[key] = -2;
 		#print $1;

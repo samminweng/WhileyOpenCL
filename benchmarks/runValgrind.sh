@@ -28,7 +28,7 @@ declare -A parameters=( [Reverse]="100000 1000000 10000000" [newTicTacToe]="1000
 			[BubbleSort]="1000 10000 100000" [MergeSort]="1000 10000 100000" \
 			[MatrixMult]="1000 2000 3000" \
 			[LZ77]="medium1x medium2x medium4x" \
-			[SobelEdge]="image32x32.pbm image64x64.pbm image128x128.pbm" \
+			[SobelEdge]="image64x64.pbm image128x128.pbm image256x256.pbm" \
 			[Cashtill]="100 200 300" \
 			##[CoinGame]="25000"
 			[CoinGame]="100 1000 10000"
@@ -203,7 +203,7 @@ detectleaks(){
 			inputfile=$BENCHMARKDIR/$testcase/images/input/$parameter
 			outputfile=$BENCHMARKDIR/$testcase/images/output/$program"_"C"_"$compiler"_"$pattern"_"$codegen"_"$code"_"$parameter
 			##read -p "Press [Enter] to continue..."$outputfile":"$inputfile
-			valgrind --tool=memcheck "--log-file=$result" "out/$executable" $width $inputfile > $outputfile
+			valgrind --tool=memcheck "--log-file=$result" "out/$executable" $width $inputfile
 			;;
 		*)
 			## Other cases
@@ -300,16 +300,16 @@ exec(){
 #exec CoinGame original
 
 # # # ###Sobel Edge test
-#init SobelEdge
-#exec SobelEdge original
+init SobelEdge
+exec SobelEdge original
 
 # # # ####LZ77 test case
-init LZ77
+#init LZ77
 #exec LZ77 original
 #exec LZ77 original_opt
-exec LZ77 compress
-exec LZ77 decompress
-exec LZ77 opt_decompress
+#exec LZ77 compress
+#exec LZ77 decompress
+#exec LZ77 opt_decompress
 # ### Fibonacci test case###
 # init Fibonacci
 # exec Fibonacci original 10

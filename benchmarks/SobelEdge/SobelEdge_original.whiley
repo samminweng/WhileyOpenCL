@@ -57,7 +57,7 @@ function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
 			int h_g = convolution(pixels, width, height, x, y, h_sobel)
 			// Get total gradient
 			int t_g = Math.abs(v_g) + Math.abs(h_g)
-			// Edge threshold (64) Note that large thresholds generate few edges
+			// Edge threshold Note that large thresholds generate few edges
 			if t_g <= TH:
 				// Color other pixels as black
 				newPixels[pos] = BLACK
@@ -102,4 +102,7 @@ method main(System.Console sys):
 		// Read a PBM image as a byte array
 		byte[] pixels = file.readAll()
 		byte[] newPixels = sobelEdgeDetection(pixels, width, height)
-		print_pbm(sys, width, height, newPixels)
+		sys.out.println_s("Blurred Image sizes:   ")
+		sys.out.print(|newPixels|)
+		sys.out.println_s(" bytes")	
+		//print_pbm(sys, width, height, newPixels)

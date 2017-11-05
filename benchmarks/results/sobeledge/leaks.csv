@@ -1,14 +1,14 @@
 Memory Leak (bytes)
 TestCase	ProgramType	Compiler	Pattern	Parameter	CodeGen	Code	Thread	definite loss	indirect loss	possible loss	reachable loss
-SobelEdge	original	gcc	disabled	image32x32	naive	seq	1	2254136	0	0	8136
-SobelEdge	original	gcc	disabled	image32x32	naivedealloc	seq	1	0	0	0	0
-SobelEdge	original	gcc	disabled	image32x32	nocopy	seq	1	8360	0	0	4032
-SobelEdge	original	gcc	disabled	image32x32	nocopydealloc	seq	1	0	0	0	0
-SobelEdge	original	gcc	disabled	image64x64	naive	seq	1	34177336	0	4096	26568
+SobelEdge	original	gcc	disabled	image64x64	naive	seq	1	34144544	0	4096	22704
 SobelEdge	original	gcc	disabled	image64x64	naivedealloc	seq	1	0	0	0	0
-SobelEdge	original	gcc	disabled	image64x64	nocopy	seq	1	32936	0	0	10176
+SobelEdge	original	gcc	disabled	image64x64	nocopy	seq	1	144	0	0	10408
 SobelEdge	original	gcc	disabled	image64x64	nocopydealloc	seq	1	0	0	0	0
-SobelEdge	original	gcc	disabled	image128x128	naive	seq	1	539246904	0	131072	100344
+SobelEdge	original	gcc	disabled	image128x128	naive	seq	1	539115808	0	131072	84192
 SobelEdge	original	gcc	disabled	image128x128	naivedealloc	seq	1	0	0	0	0
-SobelEdge	original	gcc	disabled	image128x128	nocopy	seq	1	131240	0	0	34800
+SobelEdge	original	gcc	disabled	image128x128	nocopy	seq	1	144	0	0	35032
 SobelEdge	original	gcc	disabled	image128x128	nocopydealloc	seq	1	0	0	0	0
+SobelEdge	original	gcc	disabled	image256x256	naive	seq	1	8597471520	0	1966080	329952
+SobelEdge	original	gcc	disabled	image256x256	naivedealloc	seq	1	0	0	0	0
+SobelEdge	original	gcc	disabled	image256x256	nocopy	seq	1	144	0	0	133336
+SobelEdge	original	gcc	disabled	image256x256	nocopydealloc	seq	1	0	0	0	0
