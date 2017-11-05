@@ -13,8 +13,8 @@ declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" [
 		       [LZ77]="gcc" [SobelEdge]="gcc" [Cashtill]="gcc" \
 		       [CoinGame]="gcc" )
 ## declare 4 kinds of code generation
-declare -a codegens=( "naive" "naivedealloc" "nocopy" "nocopydealloc" )
-#declare -a codegens=( "nocopy" "nocopydealloc" )
+#declare -a codegens=( "naive" "naivedealloc" "nocopy" "nocopydealloc" )
+declare -a codegens=( "nocopy" "nocopydealloc" )
 
 ## Declare an associative array for pattern matching
 declare -A patterns=( [LZ77_original_opt]=compress [LZ77_compress]=compress )
@@ -31,15 +31,19 @@ declare -A parameters=( [Reverse]="100000 1000000 10000000" \
 			#[LZ77]="medium1x medium5x medium10x medium25x medium50x medium75x medium100x medium125x medium150x medium175x medium200x" \
 			[LZ77]="medium225x medium250x medium275x medium300x medium325x medium350x medium375x medium400x" \
 			#[LZ77]="medium10000x medium20000x medium30000x medium40000x medium50000x medium60000x medium70000x medium80000x medium90000x medium100000x" \
-			[SobelEdge]="image64x64.pbm image128x128.pbm image256x256.pbm image512x512.pbm image1024x1024.pbm image2048x2048.pbm" \
-			#[SobelEdge]="image2048x2048.pbm" \
+			#[SobelEdge]="image64x64.pbm image128x128.pbm image256x256.pbm image512x512.pbm image1024x1024.pbm image2048x2048.pbm" \
+			#[SobelEdge]="image4096x4096.pbm image8192x8192.pbm image16384x16384.pbm image32768x32768.pbm image38400x38400.pbm image44800x44800.pbm image51200x51200.pbm image57600x57600.pbm image64000x64000.pbm" \
+			[SobelEdge]="image4096x4096.pbm image8192x8192.pbm image16384x16384.pbm image32768x32768.pbm image38400x38400.pbm" \
 			[Cashtill]="1000 1200 1400 1600 1800 2000" \
 			[CoinGame]="10000 20000 25000 30000 40000" \
 		      )
 ## Declare an associative array for image size in sobeledge test case
 declare -A widths=( [image32x32.pbm]=32 [image64x64.pbm]=64 [image128x128.pbm]=128 \
 		    [image256x256.pbm]=256 [image512x512.pbm]=512 [image1024x1024.pbm]=1024 \
-		    [image2048x2048.pbm]=2048 \
+		    [image2048x2048.pbm]=2048 [image4096x4096.pbm]=4096 [image8192x8192.pbm]=8192 \
+		    [image16384x16384.pbm]=16384 [image32768x32768.pbm]=32768 [image38400x38400.pbm]=38400 \
+		    [image44800x44800.pbm]=44800 [image51200x51200.pbm]=51200 [image57600x57600.pbm]=57600 \
+		    [image64000x64000.pbm]=64000 \
 		  )
 
 ### Create the folder and/or clean up the files
@@ -217,11 +221,11 @@ run(){
 				inputfile=$BENCHMARKDIR/$testcase/images/input/$parameter
 				outputfile=$BENCHMARKDIR/$testcase/images/output/$compiler/$program"_"C"_"$compiler"_"$pattern"_"$codegen"_"$code"_"$parameter
 				##read -p "Press [Enter] to continue..."$outputfile":"$inputfile
-				timeout $TIMEOUT "out/$executable" $width $inputfile
+				timeout $TIMEOUT "out/$executable" $width $inputfile >> $result
 				;;
 			"Cashtill")
 				### Output the result to console without writing it to the file
-				timeout $TIMEOUT "out/$executable" $parameter
+				timeout $TIMEOUT "out/$executable" $parameter >> $result
 				;;
 			*)
 				###Export the number of threads for OpenMP code
@@ -378,7 +382,7 @@ exec(){
 #exec LZ77 opt_decompress
 
 # # ###Sobel Edge test
-init SobelEdge
+#init SobelEdge
 exec SobelEdge original
 
 # # ## Fibonacci test case

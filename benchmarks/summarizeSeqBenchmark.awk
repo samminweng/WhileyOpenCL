@@ -136,7 +136,8 @@ BEGIN {
 	parameters["MergeSort"]="10000000 20000000 30000000";
 	parameters["MatrixMult"]="1000 2000 3000";
 	parameters["CoinGame"]="10000 20000 25000 30000 40000";
-	parameters["SobelEdge"]="image64x64 image128x128 image256x256 image512x512 image1024x1024 image2048x2048";
+	#parameters["SobelEdge"]="image64x64 image128x128 image256x256 image512x512 image1024x1024 image2048x2048";
+	parameters["SobelEdge"]="image4096x4096 image8192x8192 image16384x16384 image32768x32768 image38400x38400";
 	parameters["LZ77"]="medium1x medium5x medium7x medium10x medium25x medium50x medium75x medium100x medium120x medium125x medium150x medium175x medium200x medium225x medium250x medium275x medium300x medium325x medium350x medium375x medium400x";
 	#parameters["LZ77"]="medium10000x medium20000x medium30000x medium40000x medium50000x medium60000x medium70000x medium80000x medium90000x medium100000x";
 	parameters["Cashtill"]="10000 20000 25000 30000 40000";
