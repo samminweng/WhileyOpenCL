@@ -5,7 +5,7 @@ import whiley.lang.Math
 
 constant SPACE is 00100000b // ASCII code of space (' ')
 constant BLACK is 01100010b // ASCII code of 'b'
-constant TH is 128 // Control the number of edges
+constant TH is 800 // Control the number of edges
 
 function wrap(int pos, int size) -> int:
 	if pos>=size:
@@ -58,7 +58,7 @@ function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
 			// Get total gradient
 			int t_g = Math.abs(v_g) + Math.abs(h_g)
 			// Edge threshold (64) Note that large thresholds generate few edges
-			if t_g <= TH:
+			if t_g > TH:
 				// Color other pixels as black
 				newPixels[pos] = BLACK
 			y = y + 1
@@ -83,8 +83,6 @@ method print_pbm(System.Console sys, int width, int height, byte[] pixels):
                 sys.out.print(0)
             else:
                 sys.out.print(1)
-		    // Each pixel is separated by a space
-            sys.out.print_s(" ")
             i = i + 1
         // Add a newline
         sys.out.println_s("")
@@ -92,12 +90,10 @@ method print_pbm(System.Console sys, int width, int height, byte[] pixels):
 
 // Main function
 method main(System.Console sys):
-	// Read feep.bpm
-	File.Reader r = File.Reader("../../../Inputfiles/image32x32.pbm")
-	int width =32
-	int height = 32
-	int size = width * height
-	byte[] pixels = r.readAll()
-	// Place a black pixel
+	File.Reader file = File.Reader("../../../Inputfiles/image64x64.pbm")
+	int width = 64
+	int height = 64
+	// Read a PBM image as a byte array
+	byte[] pixels = file.readAll()
 	byte[] newPixels = sobelEdgeDetection(pixels, width, height)
 	print_pbm(sys, width, height, newPixels)

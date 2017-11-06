@@ -22,9 +22,9 @@ import * from whiley.lang.System
 import whiley.lang.*
 
 method main(System.Console sys):
-    File.Reader file = File.Reader("../../../Inputfiles/image32x32.pbm")
-    int width=32
-    int height=32
+    File.Reader file = File.Reader("../../../Inputfiles/image64x64.pbm")
+    int width=64
+    int height=64
     byte[] data = file.readAll()
     sys.out.print_s("READ:         ")
     sys.out.print(|data|)

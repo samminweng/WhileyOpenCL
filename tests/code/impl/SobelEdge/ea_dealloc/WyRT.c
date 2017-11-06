@@ -269,11 +269,11 @@ BYTE* readPBM(FILE *file, size_t* _size){
 		if(c != ' ' && c != '\n'){
 			b = (BYTE)c;
 			if(b == '1'){
-				// b is an edge, represent by 'b'
-				arr[arr_ind] = (BYTE)98;
+				// b is an edge, represent by black color
+				arr[arr_ind] = (BYTE)0;
 			}else if(b == '0'){
-				// b is an space
-				arr[arr_ind] = (BYTE)32;
+				// b is an space, (by white color)
+				arr[arr_ind] = (BYTE)255;
 			}else{
 				arr[arr_ind] = (BYTE)b;
 			}
