@@ -101,4 +101,7 @@ method main(System.Console sys):
 		// Read a PBM image as a byte array
 		byte[] pixels = file.readAll()
 		byte[] newPixels = sobelEdgeDetection(pixels, width, height)
-		print_pbm(sys, width, height, newPixels)
+		sys.out.println_s("Blurred Image sizes:   ")
+		sys.out.print(|newPixels|)
+		sys.out.println_s(" bytes")
+		//print_pbm(sys, width, height, newPixels)

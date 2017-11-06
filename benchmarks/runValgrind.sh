@@ -28,14 +28,13 @@ declare -A parameters=( [Reverse]="100000 1000000 10000000" [newTicTacToe]="1000
 			[BubbleSort]="1000 10000 100000" [MergeSort]="1000 10000 100000" \
 			[MatrixMult]="1000 2000 3000" \
 			[LZ77]="medium1x medium2x medium4x" \
-			[SobelEdge]="image64x64.pbm image128x128.pbm image256x256.pbm" \
+			[SobelEdge]="image64x64.pbm image128x64.pbm image256x64.pbm" \
 			[Cashtill]="100 200 300" \
 			##[CoinGame]="25000"
 			[CoinGame]="100 1000 10000"
 		    )
 ## Declare an associative array for image size in sobeledge test case
-declare -A widths=( [image32x32.pbm]=32 [image64x64.pbm]=64 [image128x128.pbm]=128 \
-                    [image256x256.pbm]=256 [image512x512.pbm]=512 [image1024x1024.pbm]=1024 )
+declare -A widths=( [image64x64.pbm]=64 [image128x64.pbm]=128 [image256x64.pbm]=256 )
 
 ### Create the 'leak' folder and clean up the files
 init(){
@@ -301,7 +300,7 @@ exec(){
 
 # # # ###Sobel Edge test
 init SobelEdge
-exec SobelEdge original
+exec SobelEdge small
 
 # # # ####LZ77 test case
 #init LZ77

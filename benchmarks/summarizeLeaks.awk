@@ -15,7 +15,7 @@ BEGIN {
 	programs["LZ77"]="compress decompress opt_decompress";
 	programs["Cashtill"]="original";
 	programs["CoinGame"]="original";
-	programs["SobelEdge"]="original";
+	programs["SobelEdge"]="small";
 	# Compiler
 	compilers = "gcc";
 	# Pattern matching
@@ -39,7 +39,7 @@ BEGIN {
 	parameters["MergeSort"]="1000 10000 100000";
 	parameters["MatrixMult"]="1000 2000 3000";
 	parameters["CoinGame"]="100 1000 10000";
-	parameters["SobelEdge"]="image64x64 image128x128 image256x256";
+	parameters["SobelEdge"]="image64x64 image128x64 image256x64";
 	parameters["Cashtill"]="100 200 300";
 	# ### pattern transformation
 	parameters["LZ77"]="medium1x medium2x medium4x";

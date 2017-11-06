@@ -65,8 +65,8 @@ content[61]="0000000000000000000000000000000000000000000000000000000000000000"
 content[62]="0000000000000000000000000000000000000000000000000000000000000000"
 content[63]="0000000000000000000000000000000000000000000000000000000000000000"
 
-generateImages(){
-    rm *.pbm
+generateSmallImages(){
+    ##Replicate image64x64.pbm
     for n in 1 2 3 4 5 6 7 8 9 10
     do
 	width=$((n*64))
@@ -86,4 +86,39 @@ generateImages(){
     done
 }
 
-generateImages
+generateLargeImages(){
+    ## Create array 'var' of size 2048 from content array
+    declare -a var
+    size=2048    
+    for((i=0;i<$size;i++)){
+	   text=""
+	   c=$((i%64))
+	   repeats=$((size/64))
+	   for((j=0;j<$repeats;j++)){
+		text+=${content[c]}   
+	   }
+	   var[i]=$text
+	   #echo ${var[i]}   
+    }    
+    ##Replicate image2048x2048.pbm 
+    for n in 1 2 3 4 5 6 7 8 9 10
+    do
+	width=$((n*size))
+	height=$size
+	file="image"$width"x"$height".pbm"
+	echo $file
+	echo "P1" > $file
+	echo $width" "$height >> $file
+	# Generate texts
+	for((h=0;h<size;h++)){
+	       text=""
+	       for ((j=0;j<$n;j++)){
+		      text+=${var[h]} 
+		}
+		echo $text >> $file
+	}
+    done
+}
+
+#generateSmallImages
+generateLargeImages
