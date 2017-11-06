@@ -30,8 +30,6 @@ method print_pbm(System.Console sys, int width, int height, byte[] pixels):
                 sys.out.print(0)
             else:
                 sys.out.print(1)
-            // Each pixel is separated by a space
-            sys.out.print_s(" ")
             i = i + 1
         // Add a newline
         sys.out.println_s("")

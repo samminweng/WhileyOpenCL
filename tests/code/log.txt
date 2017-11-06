@@ -88,8 +88,8 @@ DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "gcds" "gcd_cached" ) (LIN
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "gcds" "gcd_cached" ) (LINE:209 FILE: gcd.c) in ea_dealloc folder	Frequency: 100
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_13" "Cash" ) (LINE:205 FILE: FunctionOverload2.c) in ea_nocopy_dealloc folder	Frequency: 1
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_13" "Cash" ) (LINE:201 FILE: FunctionOverload2.c) in ea_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "pixels" "print_pbm" ) (LINE:227 FILE: fileread2.c) in ea_nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "pixels" "print_pbm" ) (LINE:219 FILE: fileread2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "pixels" "print_pbm" ) (LINE:212 FILE: fileread2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "pixels" "print_pbm" ) (LINE:204 FILE: fileread2.c) in ea_dealloc folder	Frequency: 1
 DEBUG: _CALLEE_DEALLOC macro on ( "true-false-true" "queens" "run" ) (LINE:353 FILE: nqueens.c) in ea_nocopy_dealloc folder	Frequency: 1
 DEBUG: _CALLEE_DEALLOC macro on ( "true-false-true" "queens" "run" ) (LINE:257 FILE: nqueens.c) in ea_nocopy_dealloc folder	Frequency: 2056
 DEBUG: _SUBSTRUCTURE_DEALLOC macro on  ( "false-false-false" "p" "conflict" ) (LINE:196 FILE: nqueens.c) in ea_nocopy_dealloc folder	Frequency: 46752
@@ -365,8 +365,8 @@ DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "gcds" "gcd_cached" ) (LIN
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "gcds" "gcd_cached" ) (LINE:209 FILE: gcd.c) in ea_dealloc folder	Frequency: 100
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "_13" "Cash" ) (LINE:205 FILE: FunctionOverload2.c) in ea_nocopy_dealloc folder	Frequency: 1
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_13" "Cash" ) (LINE:201 FILE: FunctionOverload2.c) in ea_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "pixels" "print_pbm" ) (LINE:227 FILE: fileread2.c) in ea_nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "pixels" "print_pbm" ) (LINE:219 FILE: fileread2.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "pixels" "print_pbm" ) (LINE:212 FILE: fileread2.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "pixels" "print_pbm" ) (LINE:204 FILE: fileread2.c) in ea_dealloc folder	Frequency: 1
 DEBUG: _CALLEE_DEALLOC macro on ( "true-false-true" "queens" "run" ) (LINE:353 FILE: nqueens.c) in ea_nocopy_dealloc folder	Frequency: 1
 DEBUG: _CALLEE_DEALLOC macro on ( "true-false-true" "queens" "run" ) (LINE:257 FILE: nqueens.c) in ea_nocopy_dealloc folder	Frequency: 2056
 DEBUG: _SUBSTRUCTURE_DEALLOC macro on  ( "false-false-false" "p" "conflict" ) (LINE:196 FILE: nqueens.c) in ea_nocopy_dealloc folder	Frequency: 46752

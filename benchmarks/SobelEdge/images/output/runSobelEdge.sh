@@ -1,21 +1,25 @@
 #!/bin/bash
 runSobelEdge(){
     th=$1
-    cd "Threshold"$th/impl
-    ./../../../../../../bin/wyopcl -code -nocopy -dealloc SobelEdge_original.whiley
+    cd "Threshold"$th/
+    
+    rm *.pbm
+    ./../../../../../bin/wyopcl -code -nocopy -dealloc SobelEdge_small.whiley
  
     ## Compile .c to executable
-    gcc *.c -o SobelEdge_original.out
+    gcc *.c -o SobelEdge_small.out
+    height=64
     ## image size
-    for size in 64 128 256 2048
+    for n in 1 2 3 4 5 6 7 8 9 10
     do
-	infile="image"$size"x"$size".pbm"
-	outfile="image"$size"x"$size".pbm"
-	./SobelEdge_original.out $size ../../../input/$infile > ../$outfile
+	width=$((n*64))
+	infile="image"$width"x"$height".pbm"
+	outfile="output"$width"x"$height".pbm"
+	./SobelEdge_small.out $width ../../input/$infile > $outfile
     done
 
-    cd ../..
+    cd ../
 }
-runSobelEdge 64
-runSobelEdge 128
-runSobelEdge 200
+runSobelEdge 500
+runSobelEdge 800
+runSobelEdge 1100

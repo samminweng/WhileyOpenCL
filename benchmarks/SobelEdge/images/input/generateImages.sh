@@ -66,36 +66,23 @@ content[62]="0000000000000000000000000000000000000000000000000000000000000000"
 content[63]="0000000000000000000000000000000000000000000000000000000000000000"
 
 generateImages(){
-
-    #for n in 64 128 256 512 1024 2048 4096 8192 16384 32768
-    for n in 38400 44800 51200 57600 64000
-    do 
-	file="image"$n"x"$n".pbm"
+    rm *.pbm
+    for n in 1 2 3 4 5 6 7 8 9 10
+    do
+	width=$((n*64))
+	height=64
+	file="image"$width"x"$height".pbm"
+	echo $file
 	echo "P1" > $file
-	echo $n" "$n >> $file
+	echo $width" "$height >> $file
 	# Generate texts
-	case $n in 
-		64)
-		echo $n
-		for((c=0;c<64;c++)){
-			echo ${content[c]} >> $file
+	for((h=0;h<64;h++)){
+	       text=""
+	       for ((j=0;j<$n;j++)){
+		      text+=${content[h]} 
 		}
-		;;
-		*)
-		echo $n
-		repeats=$((n/64))
-		echo $repeats
-		for((i=0;i<$repeats;i++)){
-			for((c=0;c<64;c++)){
-				text=""
-				for ((j=0;j<$repeats;j++)){
-					text+=${content[c]} 
-				}
-				echo $text >> $file
-			}
-		}
-		;;  
-	esac
+		echo $text >> $file
+	}
     done
 }
 

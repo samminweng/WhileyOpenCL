@@ -21,17 +21,14 @@ void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t 
 	int64_t _25;
 	void* _26;
 	int64_t _28;
-	void* _29;
-	_DECL_1DARRAY(_31);
-	_DECL_DEALLOC(_31);
-	int64_t _32;
-	int64_t _33;
-	void* _34;
-	void* _36;
-	size_t _36_size = 0;
-	_DECL_DEALLOC(_36);
-	int64_t _37;
-	int64_t _38;
+	int64_t _29;
+	int64_t _30;
+	void* _31;
+	void* _33;
+	size_t _33_size = 0;
+	_DECL_DEALLOC(_33);
+	int64_t _34;
+	int64_t _35;
 	//fieldload %7 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %8 = %7 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %9 = [80,49] : int[]
@@ -70,7 +67,7 @@ void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t 
 	_17 = 0;
 	//assign %4 = %17  : int
 	j = _17;
-	//loop (%4, %5, %6, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38)
+	//loop (%4, %5, %6, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35)
 	while(true){
 		//ifge %4, %2 goto blklab0 : int
 		if(j>=height){goto blklab0;}
@@ -78,7 +75,7 @@ void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t 
 		_18 = 0;
 		//assign %5 = %18  : int
 		i = _18;
-		//loop (%5, %6, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33)
+		//loop (%5, %6, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30)
 		while(true){
 			//ifge %5, %1 goto blklab2 : int
 			if(i>=width){goto blklab2;}
@@ -116,44 +113,33 @@ blklab4:;
 			}
 //.blklab5
 blklab5:;
-			//fieldload %29 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %30 = %29 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//const %31 = [32] : int[]
-			_DEALLOC(_31);
-			_NEW_1DARRAY_int64_t(_31, 1, 0);
-			_31[0] = 32; 
-			_ADD_DEALLOC(_31);
-			//indirectinvoke () = %30 (%31) : method(int[])->()
-			{
-				printf_s(_31, _31_size);
-			}
-			//const %32 = 1 : int
-			_32 = 1;
-			//add %33 = %5, %32 : int
-			_33=i+_32;
-			//assign %5 = %33  : int
-			i = _33;
+			//const %29 = 1 : int
+			_29 = 1;
+			//add %30 = %5, %29 : int
+			_30=i+_29;
+			//assign %5 = %30  : int
+			i = _30;
 //.blklab3
 blklab3:;
 		}
 //.blklab2
 blklab2:;
-		//fieldload %34 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-		//fieldload %35 = %34 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-		//const %36 = [] : void[]
-		_DEALLOC(_36);
-		_NEW_1DARRAY_int64_t(_36, 0, 0);
-		_ADD_DEALLOC(_36);
-		//indirectinvoke () = %35 (%36) : method(int[])->()
+		//fieldload %31 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+		//fieldload %32 = %31 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+		//const %33 = [] : void[]
+		_DEALLOC(_33);
+		_NEW_1DARRAY_int64_t(_33, 0, 0);
+		_ADD_DEALLOC(_33);
+		//indirectinvoke () = %32 (%33) : method(int[])->()
 		{
-			println_s(_36, _36_size);
+			println_s(_33, _33_size);
 		}
-		//const %37 = 1 : int
-		_37 = 1;
-		//add %38 = %4, %37 : int
-		_38=j+_37;
-		//assign %4 = %38  : int
-		j = _38;
+		//const %34 = 1 : int
+		_34 = 1;
+		//add %35 = %4, %34 : int
+		_35=j+_34;
+		//assign %4 = %35  : int
+		j = _35;
 //.blklab1
 blklab1:;
 	}
@@ -163,8 +149,7 @@ blklab0:;
 	_DEALLOC(pixels);
 	_DEALLOC(_9);
 	_DEALLOC(_14);
-	_DEALLOC(_31);
-	_DEALLOC(_36);
+	_DEALLOC(_33);
 	return;
 }
 
