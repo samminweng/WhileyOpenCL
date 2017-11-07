@@ -39,6 +39,8 @@ declare -A parameters=( [Reverse]="100000 1000000 10000000" \
 ## Declare an associative array for image size in sobeledge test case
 declare -A widths=( [image64x64.pbm]=64 [image128x64.pbm]=128 [image192x64.pbm]=192 [image256x64.pbm]=256 [image320x64.pbm]=320 \
 		    [image384x64.pbm]=384 [image448x64.pbm]=448 [image512x64.pbm]=512 [image576x64.pbm]=576 [image640x64.pbm]=640 \
+		    [image2048x2048.pbm]=2048 [image4096x2048.pbm]=4096 [image6144x2048.pbm]=6144 [image8192x2048.pbm]=8192 [image10240x2048.pbm]=10240 \
+		    [image12288x2048.pbm]=12288 [image14336x2048.pbm]=14336 [image16384x2048.pbm]=16384 [image18432x2048.pbm]=18432 [image20480x2048.pbm]=20480 \
 		  )
 
 ### Create the folder and/or clean up the files
@@ -377,7 +379,8 @@ exec(){
 
 # # ###Sobel Edge test
 #init SobelEdge
-exec SobelEdge small
+#exec SobelEdge small
+exec SobelEdge large
 
 # # ## Fibonacci test case
 # # init Fibonacci
