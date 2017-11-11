@@ -99,6 +99,7 @@ public class CodeGenerationTestCase {
 				"lz77_decompress", // Uncompress the lz77 file.
 				"lz77_opt_decompress", // Optimised lz77 decompression
 				"SobelEdge", // Read 'feep.pbm', detect the edges and output the resulting array
+				"IntToByte", // Generate a byte array 
 		});
 	}
 	

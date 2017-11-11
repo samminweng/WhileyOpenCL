@@ -137,8 +137,11 @@ BEGIN {
 	parameters["MatrixMult"]="1000 2000 3000";
 	parameters["CoinGame"]="10000 20000 25000 30000 40000";
 	#parameters["SobelEdge"]="image64x64 image128x64 image192x64 image256x64 image320x64 image384x64 image448x64 image512x64 image576x64 image640x64";
-	parameters["SobelEdge"]="image2048x2048 image4096x2048 image6144x2048 image8192x2048 image10240x2048 image12288x2048 image14336x2048 image16384x2048 image18432x2048 image20480x2048";
-	parameters["LZ77"]="medium1x medium5x medium7x medium10x medium25x medium50x medium75x medium100x medium120x medium125x medium150x medium175x medium200x medium225x medium250x medium275x medium300x medium325x medium350x medium375x medium400x";
+	parameters["SobelEdge"]="image2048x2048 image4096x2048 image6144x2048 image8192x2048 image10240x2048 image12288x2048 image14336x2048 image16384x2048 " \
+	                        "image18432x2048 image20480x2048 image22528x2048 image24576x2048 image26624x2048 image28672x2048 image30720x2048 "\
+	                        "image32768x2048 image34816x2048 image36864x2048 image38912x2048 image40960x2048";
+	parameters["LZ77"]="medium1x medium5x medium7x medium10x medium25x medium50x medium75x medium100x medium120x medium125x medium150x medium175x medium200x "\
+	                   "medium225x medium250x medium275x medium300x medium325x medium350x medium375x medium400x";
 	#parameters["LZ77"]="medium10000x medium20000x medium30000x medium40000x medium50000x medium60000x medium70000x medium80000x medium90000x medium100000x";
 	parameters["Cashtill"]="10000 20000 25000 30000 40000";
 

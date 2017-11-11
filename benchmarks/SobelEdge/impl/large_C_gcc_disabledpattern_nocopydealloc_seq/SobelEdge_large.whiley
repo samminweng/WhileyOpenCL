@@ -21,21 +21,20 @@ function convolution(byte[] pixels, int width, int height, int xCenter, int yCen
 	int sum = 0
 	int kernelSize = 3
 	int kernelHalf = 1
-	int kernelY = 0
-	while kernelY < kernelSize:
-		int y=Math.abs((yCenter+kernelY-kernelHalf)%height)
-		int kernelX = 0
-		while kernelX < kernelSize:
-			int x=Math.abs((xCenter + kernelX - kernelHalf)%width)
-			// Get pixel
-			int pixel = Byte.toUnsignedInt(pixels[y*width+x])
-			// Get kernel value
-			int kernelVal = kernel[kernelY*kernelSize+kernelX]
-			// pixel * kernel value
+	int j = 0
+	while j < kernelSize:
+		int y=Math.abs((yCenter+j-kernelHalf)%height)
+		int i = 0
+		while i < kernelSize:
+			int x=Math.abs((xCenter + i - kernelHalf)%width)
+			int pixel = Byte.toUnsignedInt(pixels[y*width+x])// pixels[x, y]
+			// Get kernel[i, j]
+			int kernelVal = kernel[j*kernelSize+i]
+			//sum += pixels[x, y]*kernel[i, j]
 			sum = sum + pixel * kernelVal
-			kernelX = kernelX + 1
-		kernelY = kernelY + 1
-	return sum
+			i = i + 1
+		j = j + 1
+	return sum// 'sum' : convoluted value at pixels[xCenter, yCenter]
 
 // Perform Sobel edge detection
 function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:

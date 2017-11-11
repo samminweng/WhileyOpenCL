@@ -5,7 +5,7 @@ import whiley.lang.Math
 
 constant SPACE is 00100000b // ASCII code of space (' ')
 constant BLACK is 01100010b // ASCII code of 'b'
-constant TH is 1100 // Control the number of edges
+constant TH is 1210000 // Control the number of edges (1100*1100)
 
 function wrap(int pos, int size) -> int:
 	if pos>=size:
@@ -21,21 +21,20 @@ function convolution(byte[] pixels, int width, int height, int xCenter, int yCen
 	int sum = 0
 	int kernelSize = 3
 	int kernelHalf = 1
-	int kernelY = 0
-	while kernelY < kernelSize:
-		int y=Math.abs((yCenter+kernelY-kernelHalf)%height)
-		int kernelX = 0
-		while kernelX < kernelSize:
-			int x=Math.abs((xCenter + kernelX - kernelHalf)%width)
-			// Get pixel
-			int pixel = Byte.toUnsignedInt(pixels[y*width+x])
-			// Get kernel value
-			int kernelVal = kernel[kernelY*kernelSize+kernelX]
-			// pixel * kernel value
+	int j = 0
+	while j < kernelSize:
+		int y=Math.abs((yCenter+j-kernelHalf)%height)
+		int i = 0
+		while i < kernelSize:
+			int x=Math.abs((xCenter + i - kernelHalf)%width)
+			int pixel = Byte.toUnsignedInt(pixels[y*width+x])// pixels[x, y]
+			// Get kernel[i, j]
+			int kernelVal = kernel[j*kernelSize+i]
+			//sum += pixels[x, y]*kernel[i, j]
 			sum = sum + pixel * kernelVal
-			kernelX = kernelX + 1
-		kernelY = kernelY + 1
-	return sum
+			i = i + 1
+		j = j + 1
+	return sum// 'sum' : convoluted value at pixels[xCenter, yCenter]
 
 // Perform Sobel edge detection
 function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
@@ -56,7 +55,7 @@ function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
 			// Get horizontal gradient
 			int h_g = convolution(pixels, width, height, x, y, h_sobel)
 			// Get total gradient
-			int t_g = Math.abs(v_g) + Math.abs(h_g)
+			int t_g = v_g*v_g + h_g*h_g
 			// Edge threshold (64) Note that large thresholds generate few edges
 			if t_g > TH:
 				// Color other pixels as black
@@ -101,4 +100,7 @@ method main(System.Console sys):
 		// Read a PBM image as a byte array
 		byte[] pixels = file.readAll()
 		byte[] newPixels = sobelEdgeDetection(pixels, width, height)
+		//sys.out.println_s("Blurred Image sizes:   ")
+		//sys.out.print(|newPixels|)
+		//sys.out.println_s(" bytes")
 		print_pbm(sys, width, height, newPixels)

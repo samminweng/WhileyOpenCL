@@ -55,9 +55,9 @@ int64_t _convolution_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM(pixe
 	int64_t sum;
 	int64_t kernelSize;
 	int64_t kernelHalf;
-	int64_t kernelY;
+	int64_t j;
 	int64_t y;
-	int64_t kernelX;
+	int64_t i;
 	int64_t x;
 	int64_t pixel;
 	int64_t kernelVal;
@@ -106,13 +106,13 @@ int64_t _convolution_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM(pixe
 	_19 = 0;
 	//assign %10 = %19  : int
 	// isCopyEliminated = true
-	kernelY = _19;
+	j = _19;
 	//loop (%7, %10, %11, %12, %13, %14, %15, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41)
 	while(true){
 		//ifge %10, %8 goto blklab4 : int
-		if(kernelY>=kernelSize){goto blklab4;}
+		if(j>=kernelSize){goto blklab4;}
 		//add %21 = %4, %10 : int
-		_21=yCenter+kernelY;
+		_21=yCenter+j;
 		//sub %22 = %21, %9 : int
 		_22=_21-kernelHalf;
 		//rem %23 = %22, %2 : int
@@ -128,13 +128,13 @@ int64_t _convolution_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM(pixe
 		_24 = 0;
 		//assign %12 = %24  : int
 		// isCopyEliminated = true
-		kernelX = _24;
+		i = _24;
 		//loop (%7, %12, %13, %14, %15, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39)
 		while(true){
 			//ifge %12, %8 goto blklab6 : int
-			if(kernelX>=kernelSize){goto blklab6;}
+			if(i>=kernelSize){goto blklab6;}
 			//add %26 = %3, %12 : int
-			_26=xCenter+kernelX;
+			_26=xCenter+i;
 			//sub %27 = %26, %9 : int
 			_27=_26-kernelHalf;
 			//rem %28 = %27, %1 : int
@@ -160,9 +160,9 @@ int64_t _convolution_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM(pixe
 			// isCopyEliminated = true
 			pixel = _29;
 			//mul %33 = %10, %8 : int
-			_33=kernelY*kernelSize;
+			_33=j*kernelSize;
 			//add %34 = %33, %12 : int
-			_34=_33+kernelX;
+			_34=_33+i;
 			//indexof %35 = %5, %34 : int[]
 			_35=kernel[_34];
 			//assign %15 = %35  : int
@@ -178,10 +178,10 @@ int64_t _convolution_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM(pixe
 			//const %38 = 1 : int
 			_38 = 1;
 			//add %39 = %12, %38 : int
-			_39=kernelX+_38;
+			_39=i+_38;
 			//assign %12 = %39  : int
 			// isCopyEliminated = true
-			kernelX = _39;
+			i = _39;
 //.blklab7
 blklab7:;
 		}
@@ -190,10 +190,10 @@ blklab6:;
 		//const %40 = 1 : int
 		_40 = 1;
 		//add %41 = %10, %40 : int
-		_41=kernelY+_40;
+		_41=j+_40;
 		//assign %10 = %41  : int
 		// isCopyEliminated = true
-		kernelY = _41;
+		j = _41;
 //.blklab5
 blklab5:;
 	}
@@ -400,21 +400,17 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM
 			//assign %12 = %48  : int
 			// isCopyEliminated = true
 			h_g = _48;
-			//invoke (%49) = (%11) whiley/lang/Math:abs : function(int)->(int)
-			{
-				_49 = llabs(v_g);
-			}
-			//invoke (%50) = (%12) whiley/lang/Math:abs : function(int)->(int)
-			{
-				_50 = llabs(h_g);
-			}
+			//mul %49 = %11, %11 : int
+			_49=v_g*v_g;
+			//mul %50 = %12, %12 : int
+			_50=h_g*h_g;
 			//add %51 = %49, %50 : int
 			_51=_49+_50;
 			//assign %13 = %51  : int
 			// isCopyEliminated = true
 			t_g = _51;
-			//const %52 = 1100 : int
-			_52 = 1100;
+			//const %52 = 1210000 : int
+			_52 = 1210000;
 			//ifle %13, %52 goto blklab12 : int
 			if(t_g<=_52){goto blklab12;}
 			//const %53 = 01100010b : byte

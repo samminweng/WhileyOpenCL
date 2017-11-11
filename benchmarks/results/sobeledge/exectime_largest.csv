@@ -1,0 +1,42 @@
+Execution Time (nano second)
+TestCase	ProgramType	Compiler	Pattern	Parameter	CodeGen	Executable	Thread	1st	2nd	3rd	4th	5th	6th	7th	8th	9th	10th	Average
+SobelEdge	large	gcc	disabled	image2048x2048	naive	seq	1	No data
+SobelEdge	large	gcc	disabled	image2048x2048	naivedealloc	seq	1	No data
+SobelEdge	large	gcc	disabled	image2048x2048	nocopy	seq	1	205436119									
+SobelEdge	large	gcc	disabled	image2048x2048	nocopydealloc	seq	1	179455647									
+SobelEdge	large	gcc	disabled	image40960x2048	naive	seq	1	No data
+SobelEdge	large	gcc	disabled	image40960x2048	naivedealloc	seq	1	No data
+SobelEdge	large	gcc	disabled	image40960x2048	nocopy	seq	1	7035020152									
+SobelEdge	large	gcc	disabled	image40960x2048	nocopydealloc	seq	1	6874598445									
+SobelEdge	large	gcc	disabled	image61440x2048	naive	seq	1	No data
+SobelEdge	large	gcc	disabled	image61440x2048	naivedealloc	seq	1	No data
+SobelEdge	large	gcc	disabled	image61440x2048	nocopy	seq	1	6472362686									
+SobelEdge	large	gcc	disabled	image61440x2048	nocopydealloc	seq	1	6363567760									
+SobelEdge	large	gcc	disabled	image81920x2048	naive	seq	1	No data
+SobelEdge	large	gcc	disabled	image81920x2048	naivedealloc	seq	1	No data
+SobelEdge	large	gcc	disabled	image81920x2048	nocopy	seq	1	16032803742									
+SobelEdge	large	gcc	disabled	image81920x2048	nocopydealloc	seq	1	15115674420									
+SobelEdge	large	gcc	disabled	image102400x2048	naive	seq	1	No data
+SobelEdge	large	gcc	disabled	image102400x2048	naivedealloc	seq	1	No data
+SobelEdge	large	gcc	disabled	image102400x2048	nocopy	seq	1	11300110327									
+SobelEdge	large	gcc	disabled	image102400x2048	nocopydealloc	seq	1	10622492650									
+SobelEdge	large	gcc	disabled	image122880x2048	naive	seq	1	No data
+SobelEdge	large	gcc	disabled	image122880x2048	naivedealloc	seq	1	No data
+SobelEdge	large	gcc	disabled	image122880x2048	nocopy	seq	1	19823486198									
+SobelEdge	large	gcc	disabled	image122880x2048	nocopydealloc	seq	1	19797287758									
+SobelEdge	large	gcc	disabled	image143360x2048	naive	seq	1	No data
+SobelEdge	large	gcc	disabled	image143360x2048	naivedealloc	seq	1	No data
+SobelEdge	large	gcc	disabled	image143360x2048	nocopy	seq	1	15095748550									
+SobelEdge	large	gcc	disabled	image143360x2048	nocopydealloc	seq	1	15489224909									
+SobelEdge	large	gcc	disabled	image163840x2048	naive	seq	1	No data
+SobelEdge	large	gcc	disabled	image163840x2048	naivedealloc	seq	1	No data
+SobelEdge	large	gcc	disabled	image163840x2048	nocopy	seq	1	34605743214									
+SobelEdge	large	gcc	disabled	image163840x2048	nocopydealloc	seq	1	33450888747									
+SobelEdge	large	gcc	disabled	image184320x2048	naive	seq	1	No data
+SobelEdge	large	gcc	disabled	image184320x2048	naivedealloc	seq	1	No data
+SobelEdge	large	gcc	disabled	image184320x2048	nocopy	seq	1	20011370503									
+SobelEdge	large	gcc	disabled	image184320x2048	nocopydealloc	seq	1	19915819126									
+SobelEdge	large	gcc	disabled	image204800x2048	naive	seq	1	No data
+SobelEdge	large	gcc	disabled	image204800x2048	naivedealloc	seq	1	No data
+SobelEdge	large	gcc	disabled	image204800x2048	nocopy	seq	1	OOM
+SobelEdge	large	gcc	disabled	image204800x2048	nocopydealloc	seq	1	OOM

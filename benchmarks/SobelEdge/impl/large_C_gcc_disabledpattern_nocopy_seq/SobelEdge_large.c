@@ -55,9 +55,9 @@ int64_t _convolution_(BYTE* pixels, size_t pixels_size, int64_t width, int64_t h
 	int64_t sum;
 	int64_t kernelSize;
 	int64_t kernelHalf;
-	int64_t kernelY;
+	int64_t j;
 	int64_t y;
-	int64_t kernelX;
+	int64_t i;
 	int64_t x;
 	int64_t pixel;
 	int64_t kernelVal;
@@ -106,13 +106,13 @@ int64_t _convolution_(BYTE* pixels, size_t pixels_size, int64_t width, int64_t h
 	_19 = 0;
 	//assign %10 = %19  : int
 	// isCopyEliminated = true
-	kernelY = _19;
+	j = _19;
 	//loop (%7, %10, %11, %12, %13, %14, %15, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41)
 	while(true){
 		//ifge %10, %8 goto blklab4 : int
-		if(kernelY>=kernelSize){goto blklab4;}
+		if(j>=kernelSize){goto blklab4;}
 		//add %21 = %4, %10 : int
-		_21=yCenter+kernelY;
+		_21=yCenter+j;
 		//sub %22 = %21, %9 : int
 		_22=_21-kernelHalf;
 		//rem %23 = %22, %2 : int
@@ -128,13 +128,13 @@ int64_t _convolution_(BYTE* pixels, size_t pixels_size, int64_t width, int64_t h
 		_24 = 0;
 		//assign %12 = %24  : int
 		// isCopyEliminated = true
-		kernelX = _24;
+		i = _24;
 		//loop (%7, %12, %13, %14, %15, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39)
 		while(true){
 			//ifge %12, %8 goto blklab6 : int
-			if(kernelX>=kernelSize){goto blklab6;}
+			if(i>=kernelSize){goto blklab6;}
 			//add %26 = %3, %12 : int
-			_26=xCenter+kernelX;
+			_26=xCenter+i;
 			//sub %27 = %26, %9 : int
 			_27=_26-kernelHalf;
 			//rem %28 = %27, %1 : int
@@ -160,9 +160,9 @@ int64_t _convolution_(BYTE* pixels, size_t pixels_size, int64_t width, int64_t h
 			// isCopyEliminated = true
 			pixel = _29;
 			//mul %33 = %10, %8 : int
-			_33=kernelY*kernelSize;
+			_33=j*kernelSize;
 			//add %34 = %33, %12 : int
-			_34=_33+kernelX;
+			_34=_33+i;
 			//indexof %35 = %5, %34 : int[]
 			_35=kernel[_34];
 			//assign %15 = %35  : int
@@ -178,10 +178,10 @@ int64_t _convolution_(BYTE* pixels, size_t pixels_size, int64_t width, int64_t h
 			//const %38 = 1 : int
 			_38 = 1;
 			//add %39 = %12, %38 : int
-			_39=kernelX+_38;
+			_39=i+_38;
 			//assign %12 = %39  : int
 			// isCopyEliminated = true
-			kernelX = _39;
+			i = _39;
 //.blklab7
 blklab7:;
 		}
@@ -190,10 +190,10 @@ blklab6:;
 		//const %40 = 1 : int
 		_40 = 1;
 		//add %41 = %10, %40 : int
-		_41=kernelY+_40;
+		_41=j+_40;
 		//assign %10 = %41  : int
 		// isCopyEliminated = true
-		kernelY = _41;
+		j = _41;
 //.blklab5
 blklab5:;
 	}

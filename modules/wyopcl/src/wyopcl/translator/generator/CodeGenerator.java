@@ -2047,6 +2047,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						statement.add(indent + "printf_" + nominal.name().name() + "(" + input + ");");
 					} else if (input_type instanceof Type.Union) {
 						statement.add(indent + "printf(\"" + "%\"PRId64"+"\"\\n\", " + input + ");");
+					} else if (input_type instanceof Type.Byte) {
+						statement.add(indent + "printf(\"" + "%\"PRIu8"+"\"\\n\", " + input + ");");
 					} else {
 						throw new RuntimeException("Not implemented." + code);
 					}

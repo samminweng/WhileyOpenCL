@@ -5,7 +5,7 @@ import whiley.lang.Math
 
 constant SPACE is 00100000b // ASCII code of space (' ')
 constant BLACK is 01100010b // ASCII code of 'b'
-constant TH is 800 // Control the number of edges
+constant TH is 640000 // Control the number of edges
 
 function wrap(int pos, int size) -> int:
 	if pos>=size:
@@ -16,26 +16,23 @@ function wrap(int pos, int size) -> int:
 		else:
 			return pos
 
-// Perform convolution convolution on pixel at 'xCenter' and 'yCenter'
+// Compute convolution on pixels[xCenter, yCenter]
 function convolution(byte[] pixels, int width, int height, int xCenter, int yCenter, int[] kernel) ->int:
 	int sum = 0
 	int kernelSize = 3
 	int kernelHalf = 1
-	int kernelY = 0
-	while kernelY < kernelSize:
-		int y=Math.abs((yCenter+kernelY-kernelHalf)%height)
-		int kernelX = 0
-		while kernelX < kernelSize:
-			int x=Math.abs((xCenter + kernelX - kernelHalf)%width)
-			// Get pixel
-			int pixel = Byte.toUnsignedInt(pixels[y*width+x])
-			// Get kernel value
-			int kernelVal = kernel[kernelY*kernelSize+kernelX]
-			// pixel * kernel value
-			sum = sum + pixel * kernelVal
-			kernelX = kernelX + 1
-		kernelY = kernelY + 1
-	return sum
+	int j = 0
+	while j < kernelSize:
+		int y=Math.abs((yCenter+j-kernelHalf)%height)
+		int i = 0
+		while i < kernelSize:
+			int x=Math.abs((xCenter + i - kernelHalf)%width)
+			int pixel = Byte.toUnsignedInt(pixels[y*width+x])// pixels[x, y]		
+			int kernelVal = kernel[j*kernelSize+i]	// Get kernel[i, j]			
+			sum = sum + pixel * kernelVal//sum += pixels[x, y]*kernel[i, j]
+			i = i + 1
+		j = j + 1
+	return sum// 'sum' : convoluted value at pixels[xCenter, yCenter]
 
 // Perform Sobel edge detection
 function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
@@ -56,7 +53,7 @@ function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
 			// Get horizontal gradient
 			int h_g = convolution(pixels, width, height, x, y, h_sobel)
 			// Get total gradient
-			int t_g = Math.abs(v_g) + Math.abs(h_g)
+			int t_g = (v_g*v_g) + (h_g*h_g)
 			// Edge threshold (64) Note that large thresholds generate few edges
 			if t_g > TH:
 				// Color other pixels as black
