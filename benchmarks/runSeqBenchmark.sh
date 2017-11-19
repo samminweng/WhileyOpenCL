@@ -1,6 +1,6 @@
 #!/bin/bash
 ## Set time out to be 10 min
-TIMEOUT="600s"
+TIMEOUT="1200s"
 ## Set shell script to UTF-8
 export LANG=C.UTF-8
 # Run Polly from clang
@@ -32,17 +32,27 @@ declare -A parameters=( [Reverse]="100000 1000000 10000000" \
 			[LZ77]="medium225x medium250x medium275x medium300x medium325x medium350x medium375x medium400x" \
 			#[LZ77]="medium10000x medium20000x medium30000x medium40000x medium50000x medium60000x medium70000x medium80000x medium90000x medium100000x" \
 			#[SobelEdge]="image64x64.pbm image128x64.pbm image192x64.pbm image256x64.pbm image320x64.pbm image384x64.pbm image448x64.pbm image512x64.pbm image576x64.pbm image640x64.pbm" \
-			[SobelEdge]="image2048x2048.pbm image4096x2048.pbm image6144x2048.pbm image8192x2048.pbm image10240x2048.pbm image12288x2048.pbm image14336x2048.pbm image16384x2048.pbm image18432x2048.pbm image20480x2048.pbm" \
+			#[SobelEdge]="image2000x2000.pbm image4000x2000.pbm image6000x2000.pbm image8000x2000.pbm image10000x2000.pbm image12000x2000.pbm image14000x2000.pbm image16000x2000.pbm image18000x2000.pbm image20000x2000.pbm image22000x2000.pbm image24000x2000.pbm image26000x2000.pbm image28000x2000.pbm image30000x2000.pbm image32000x2000.pbm image34000x2000.pbm image36000x2000.pbm image38000x2000.pbm image40000x2000.pbm" \
+			#[SobelEdge]="image34816x2048.pbm image38912x2048.pbm image43008x2048.pbm image47104x2048.pbm image51200x2048.pbm image55296x2048.pbm image59392x2048.pbm image63488x2048.pbm" \
+			[SobelEdge]="image40959x2048.pbm image40960x2048.pbm image40961x2048.pbm" \
+			#[SobelEdge]="image2048x40959.pbm image2048x40960.pbm image2048x40961.pbm" \
 			[Cashtill]="1000 1200 1400 1600 1800 2000" \
 			[CoinGame]="10000 20000 25000 30000 40000" \
-		      )
+		    )
 ## Declare an associative array for image size in sobeledge test case
 declare -A widths=( [image64x64.pbm]=64 [image128x64.pbm]=128 [image192x64.pbm]=192 [image256x64.pbm]=256 [image320x64.pbm]=320 \
 		    [image384x64.pbm]=384 [image448x64.pbm]=448 [image512x64.pbm]=512 [image576x64.pbm]=576 [image640x64.pbm]=640 \
-		    [image2048x2048.pbm]=2048 [image4096x2048.pbm]=4096 [image6144x2048.pbm]=6144 [image8192x2048.pbm]=8192 \
-		    [image10240x2048.pbm]=10240 [image12288x2048.pbm]=12288 [image14336x2048.pbm]=14336 [image16384x2048.pbm]=16384 \
-		    [image18432x2048.pbm]=18432 [image20480x2048.pbm]=20480 \
+		    [image2000x2000.pbm]=2000 [image4000x2000.pbm]=4000 [image6000x2000.pbm]=6000 [image8000x2000.pbm]=8000 \
+		    [image10000x2000.pbm]=10000 [image12000x2000.pbm]=12000 [image14000x2000.pbm]=14000 [image16000x2000.pbm]=16000 \
+		    [image18000x2000.pbm]=18000 [image20000x2000.pbm]=20000 [image22000x2000.pbm]=22000 [image24000x2000.pbm]=24000 \
+		    [image26000x2000.pbm]=26000 [image28000x2000.pbm]=28000 [image30000x2000.pbm]=30000 [image32000x2000.pbm]=32000 \
+		    [image34000x2000.pbm]=34000 [image36000x2000.pbm]=36000 [image38000x2000.pbm]=38000 [image40000x2000.pbm]=40000 \
+		    [image32768x2048.pbm]=32768 [image34816x2048.pbm]=34816 [image36864x2048.pbm]=36864 [image38912x2048.pbm]=38912 [image40960x2048.pbm]=40960 \
+		    [image43008x2048.pbm]=43008 [image45056x2048.pbm]=45056 [image47104x2048.pbm]=47104 [image49152x2048.pbm]=49152 [image51200x2048.pbm]=51200 \
+		    [image53248x2048.pbm]=53248 [image55296x2048.pbm]=55296 [image57344x2048.pbm]=57344 [image59392x2048.pbm]=59392 [image61440x2048.pbm]=61440 \
+		    [image63488x2048.pbm]=63488 [image65536x2048.pbm]=65536 [image40959x2048.pbm]=40959 [image40961x2048.pbm]=40961 \
 		  )
+declare -A heights=( [image2048x40959.pbm]=40959 [image2048x40960.pbm]=40960 [image2048x40961.pbm]=40961 )
 
 ### Create the folder and/or clean up the files
 init(){
@@ -209,16 +219,39 @@ run(){
 					"opt_decompress")
 						timeout $TIMEOUT "out/$executable" "$BENCHMARKDIR/$testcase/Outputfiles/$parameter.dat"  >> $result
 						;;
-				esac		     
+				esac
 				;;
 			"SobelEdge")
-				#echo $parameter
-				width=${widths[$parameter]}
-				echo "width = "$width
-				## Copy PBM image to folder
-				inputfile=$BENCHMARKDIR/$testcase/images/input/$parameter
-				##read -p "Press [Enter] to continue..."$outputfile":"$inputfile
-				timeout $TIMEOUT "out/$executable" $width $inputfile >> $result
+				case "$program" in
+					"small")
+						#echo $parameter
+						width=${widths[$parameter]}
+						echo "width = "$width
+						## Copy PBM image to folder
+						inputfile=$BENCHMARKDIR/$testcase/images/input/$parameter
+						##read -p "Press [Enter] to continue..."$outputfile":"$inputfile
+						timeout $TIMEOUT "out/$executable" $width $inputfile >> $result
+						;;
+					"large")
+						width=${widths[$parameter]}
+						echo "width = "$width
+						timeout $TIMEOUT "out/$executable" $width >> $result
+						;;
+					"nomod")
+						width=${widths[$parameter]}
+						echo "width = "$width
+						timeout $TIMEOUT "out/$executable" $width >> $result
+						;;
+					"height")
+						height=${heights[$parameter]}
+						echo "height = "$height
+						timeout $TIMEOUT "out/$executable" $height >> $result
+						;;
+				        "testarray")
+						width=${widths[$parameter]}
+						echo "width = "$width
+						timeout $TIMEOUT "out/$executable" $width >> $result
+				esac
 				;;
 			"Cashtill")
 				### Output the result to console without writing it to the file
@@ -381,8 +414,10 @@ exec(){
 # # ###Sobel Edge test
 #init SobelEdge
 #exec SobelEdge small
-exec SobelEdge large
-
+#exec SobelEdge large
+#exec SobelEdge nomod
+#exec SobelEdge height
+exec SobelEdge testarray
 # # ## Fibonacci test case
 # # init Fibonacci
 # # exec Fibonacci original 10

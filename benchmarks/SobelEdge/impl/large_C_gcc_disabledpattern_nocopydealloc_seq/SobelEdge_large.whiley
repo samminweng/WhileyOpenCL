@@ -5,7 +5,7 @@ import whiley.lang.Math
 
 constant SPACE is 00100000b // ASCII code of space (' ')
 constant BLACK is 01100010b // ASCII code of 'b'
-constant TH is 800 // Control the number of edges
+constant TH is 640000 // Control the number of edges (800*800)
 
 function wrap(int pos, int size) -> int:
 	if pos>=size:
@@ -55,7 +55,7 @@ function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
 			// Get horizontal gradient
 			int h_g = convolution(pixels, width, height, x, y, h_sobel)
 			// Get total gradient
-			int t_g = Math.abs(v_g) + Math.abs(h_g)
+			int t_g = v_g*v_g + h_g*h_g
 			// Edge threshold (64) Note that large thresholds generate few edges
 			if t_g > TH:
 				// Color other pixels as black
@@ -91,14 +91,19 @@ method print_pbm(System.Console sys, int width, int height, byte[] pixels):
 
 // Main function
 method main(System.Console sys):
-	// args[0]: width, args[1]: file name
+	// args[0]: magnitude of width
 	int|null n = Int.parse(sys.args[0])
-	File.Reader file = File.Reader(sys.args[1])
 	if n != null:
 		int width = n
 		int height = 2048
-		// Read a PBM image as a byte array
-		byte[] pixels = file.readAll()
+		int size = width*height
+		// Create input pixels
+		byte[] pixels=[SPACE;size]
+		// Generate each pixels
+		int i=0
+		while i < size:
+		      pixels[i]=Int.toUnsignedByte(i%256)
+		      i = i + 1
 		byte[] newPixels = sobelEdgeDetection(pixels, width, height)
 		sys.out.println_s("Blurred Image sizes:   ")
 		sys.out.print(|newPixels|)

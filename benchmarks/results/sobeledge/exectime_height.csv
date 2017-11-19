@@ -1,0 +1,14 @@
+Execution Time (nano second)
+TestCase	ProgramType	Compiler	Pattern	Parameter	CodeGen	Executable	Thread	1st	2nd	3rd	4th	5th	6th	7th	8th	9th	10th	Average
+SobelEdge	height	gcc	disabled	image2048x40959	naive	seq	1	No data
+SobelEdge	height	gcc	disabled	image2048x40959	naivedealloc	seq	1	No data
+SobelEdge	height	gcc	disabled	image2048x40959	nocopy	seq	1	6555150080	6584465278	6501477559	6544178191	6514549520	6456665875	6717610756	6537090894	6725627327	6546092678
+SobelEdge	height	gcc	disabled	image2048x40959	nocopydealloc	seq	1	6457247430	6491206639	6543811096	6554264105	6564331089	6712888247	6835484298	6509707946	6546220452	6485078410
+SobelEdge	height	gcc	disabled	image2048x40960	naive	seq	1	No data
+SobelEdge	height	gcc	disabled	image2048x40960	naivedealloc	seq	1	No data
+SobelEdge	height	gcc	disabled	image2048x40960	nocopy	seq	1	6510389948	6490430442	6444925348	6494809763	6511625133	6525050184	6561653884	6807714235	6610557855	6590573463
+SobelEdge	height	gcc	disabled	image2048x40960	nocopydealloc	seq	1	6803969277	6456306913	6462642703	6530567967	6504138258	6502186726	6841972324	6578018895	6549517850	6732011741
+SobelEdge	height	gcc	disabled	image2048x40961	naive	seq	1	No data
+SobelEdge	height	gcc	disabled	image2048x40961	naivedealloc	seq	1	No data
+SobelEdge	height	gcc	disabled	image2048x40961	nocopy	seq	1	6550112679	6470622205	6588894195	6530745474	6800349738	6477264984	6556918383	6541669648	6565914556	6548386706
+SobelEdge	height	gcc	disabled	image2048x40961	nocopydealloc	seq	1	6511384571	6819166848	6461628693	6515257088	6773494719	6896693702	6761481818	6503008801	6462179011	6697288878

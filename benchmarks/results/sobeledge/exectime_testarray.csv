@@ -1,0 +1,14 @@
+Execution Time (nano second)
+TestCase	ProgramType	Compiler	Pattern	Parameter	CodeGen	Executable	Thread	1st	2nd	3rd	4th	5th	6th	7th	8th	9th	10th	Average
+SobelEdge	testarray	gcc	disabled	image40959x2048	naive	seq	1	No data
+SobelEdge	testarray	gcc	disabled	image40959x2048	naivedealloc	seq	1	No data
+SobelEdge	testarray	gcc	disabled	image40959x2048	nocopy	seq	1	44403180	42097972	56785416	23218339	40348035	25162769	46051433	29208372	24879258	45159150
+SobelEdge	testarray	gcc	disabled	image40959x2048	nocopydealloc	seq	1	22099379	37862802	25311270	52406562	31772925	22147204	33835551	25846187	34568690	27158280
+SobelEdge	testarray	gcc	disabled	image40960x2048	naive	seq	1	No data
+SobelEdge	testarray	gcc	disabled	image40960x2048	naivedealloc	seq	1	No data
+SobelEdge	testarray	gcc	disabled	image40960x2048	nocopy	seq	1	41420291	37856520	21454307	21914000	30420310	21049116	22143604	38258916	40468241	45720841
+SobelEdge	testarray	gcc	disabled	image40960x2048	nocopydealloc	seq	1	20740027	29963472	53015083	21985775	21889038	26396524	31773277	43490130	28729639	21151372
+SobelEdge	testarray	gcc	disabled	image40961x2048	naive	seq	1	No data
+SobelEdge	testarray	gcc	disabled	image40961x2048	naivedealloc	seq	1	No data
+SobelEdge	testarray	gcc	disabled	image40961x2048	nocopy	seq	1	24897179	42609120	40199399	25916042	42783376	25343245	28926306	22043853	26445620	25118070
+SobelEdge	testarray	gcc	disabled	image40961x2048	nocopydealloc	seq	1	37140167	21111461	29988546	39022271	23311144	66317122	41979217	44987294	49780298	30845940

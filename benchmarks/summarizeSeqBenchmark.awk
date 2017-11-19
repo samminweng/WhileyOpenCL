@@ -91,7 +91,7 @@ BEGIN {
 	programs["MergeSort"]="original";
 	programs["MatrixMult"]="original";
 	programs["CoinGame"]="original";
-	programs["SobelEdge"]="large";
+	programs["SobelEdge"]="testarray";
 	programs["LZ77"]="compress decompress opt_decompress";
 	programs["Cashtill"]="original";
 
@@ -137,10 +137,13 @@ BEGIN {
 	parameters["MatrixMult"]="1000 2000 3000";
 	parameters["CoinGame"]="10000 20000 25000 30000 40000";
 	#parameters["SobelEdge"]="image64x64 image128x64 image192x64 image256x64 image320x64 image384x64 image448x64 image512x64 image576x64 image640x64";
-	parameters["SobelEdge"]="image2048x2048 image4096x2048 image6144x2048 image8192x2048 image10240x2048 image12288x2048 image14336x2048 image16384x2048 " \
-	                        "image18432x2048 image20480x2048 image22528x2048 image24576x2048 image26624x2048 image28672x2048 image30720x2048 "\
-	                        "image32768x2048 image34816x2048 image36864x2048 image38912x2048 image40960x2048";
-	parameters["LZ77"]="medium1x medium5x medium7x medium10x medium25x medium50x medium75x medium100x medium120x medium125x medium150x medium175x medium200x "\
+	#parameters["SobelEdge"]="image2000x2000 image4000x2000 image6000x2000 image8000x2000 image10000x2000 image12000x2000 image14000x2000 image16000x2000 image18000x2000 image20000x2000" \
+#	    " image22000x2000 image24000x2000 image26000x2000 image28000x2000 image30000x2000 image32000x2000 image34000x2000 image36000x2000 image38000x2000 image40000x2000" \
+#	    " image32768x2048 image34816x2048 image36864x2048 image38912x2048 image40960x2048 image43008x2048 image45056x2048 image47104x2048 image49152x2048 image51200x2048" \
+#	    " image53248x2048 image55296x2048 image57344x2048 image59392x2048 image61440x2048 image63488x2048 image65536x2048";
+	parameters["SobelEdge"]="image40959x2048 image40960x2048 image40961x2048";
+	#parameters["SobelEdge"]="image2048x40959 image2048x40960 image2048x40961";
+	parameters["LZ77"]="medium1x medium5x medium7x medium10x medium25x medium50x medium75x medium100x medium120x medium125x medium150x medium175x medium200x " \
 	                   "medium225x medium250x medium275x medium300x medium325x medium350x medium375x medium400x";
 	#parameters["LZ77"]="medium10000x medium20000x medium30000x medium40000x medium50000x medium60000x medium70000x medium80000x medium90000x medium100000x";
 	parameters["Cashtill"]="10000 20000 25000 30000 40000";
