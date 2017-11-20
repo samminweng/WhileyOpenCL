@@ -49,14 +49,14 @@ function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
 	//while pos < size:
 	//      newPixels[pos] = BLACK
 	//      pos = pos + 1
-	int x = 0
-	while x<width:
-		int y = 0
-		while y<height:
+	int y = 0
+	while y<height:
+		int x = 0
+		while x<width:
 			int pos = y*width + x
 			newPixels[pos] = BLACK
-			y = y + 1
-		x = x + 1
+			x = x + 1
+		y = y + 1
 	return newPixels
 
 // Print a pbm image
