@@ -216,13 +216,13 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM
 	_DECL_DEALLOC(v_sobel);
 	_DECL_1DARRAY(h_sobel);
 	_DECL_DEALLOC(h_sobel);
+	int64_t y;
+	int64_t x;
 	int64_t pos;
-	int64_t _9;
-	BYTE _10;
-	_DECL_1DARRAY_BYTE(_11);
-	_DECL_DEALLOC(_11);
-	int64_t _12;
-	int64_t _13;
+	int64_t _11;
+	BYTE _12;
+	_DECL_1DARRAY_BYTE(_13);
+	_DECL_DEALLOC(_13);
 	int64_t _14;
 	int64_t _15;
 	int64_t _16;
@@ -233,10 +233,10 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM
 	int64_t _21;
 	int64_t _22;
 	int64_t _23;
-	_DECL_1DARRAY(_24);
-	_DECL_DEALLOC(_24);
+	int64_t _24;
 	int64_t _25;
-	int64_t _26;
+	_DECL_1DARRAY(_26);
+	_DECL_DEALLOC(_26);
 	int64_t _27;
 	int64_t _28;
 	int64_t _29;
@@ -247,116 +247,151 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM
 	int64_t _34;
 	int64_t _35;
 	int64_t _36;
-	_DECL_1DARRAY(_37);
-	_DECL_DEALLOC(_37);
+	int64_t _37;
 	int64_t _38;
-	BYTE _39;
+	_DECL_1DARRAY(_39);
+	_DECL_DEALLOC(_39);
 	int64_t _40;
 	int64_t _41;
-	//mul %9 = %1, %2 : int
-	_9=width*height;
-	//assign %4 = %9  : int
+	int64_t _42;
+	int64_t _43;
+	BYTE _44;
+	int64_t _45;
+	int64_t _46;
+	int64_t _47;
+	int64_t _48;
+	//mul %11 = %1, %2 : int
+	_11=width*height;
+	//assign %4 = %11  : int
 	// isCopyEliminated = true
-	size = _9;
-	//const %10 = 00100000b : byte
-	_10 = 0b00100000;
-	//arraygen %11 = [10; 4] : byte[]
-	_DEALLOC(_11);
-	_NEW_1DARRAY_BYTE(_11, size, _10);
-	_ADD_DEALLOC(_11);
-	//assign %5 = %11  : byte[]
+	size = _11;
+	//const %12 = 00100000b : byte
+	_12 = 0b00100000;
+	//arraygen %13 = [12; 4] : byte[]
+	_DEALLOC(_13);
+	_NEW_1DARRAY_BYTE(_13, size, _12);
+	_ADD_DEALLOC(_13);
+	//assign %5 = %13  : byte[]
 	_DEALLOC(newPixels);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(newPixels, _11);
-	_TRANSFER_DEALLOC(newPixels, _11);
-	//const %12 = 1 : int
-	_12 = 1;
-	//neg %13 = %12 : int
-	_13= -_12;
-	//const %14 = 0 : int
-	_14 = 0;
-	//const %15 = 1 : int
-	_15 = 1;
-	//const %16 = 2 : int
-	_16 = 2;
-	//neg %17 = %16 : int
-	_17= -_16;
-	//const %18 = 0 : int
-	_18 = 0;
-	//const %19 = 2 : int
-	_19 = 2;
-	//const %20 = 1 : int
-	_20 = 1;
-	//neg %21 = %20 : int
-	_21= -_20;
-	//const %22 = 0 : int
-	_22 = 0;
-	//const %23 = 1 : int
-	_23 = 1;
-	//newlist %24 = (%13, %14, %15, %17, %18, %19, %21, %22, %23) : int[]
-	_DEALLOC(_24);
-	_NEW_1DARRAY_int64_t(_24, 9, 0);
-	_24[0] = _13; _24[1] = _14; _24[2] = _15; _24[3] = _17; _24[4] = _18; _24[5] = _19; _24[6] = _21; _24[7] = _22; _24[8] = _23; 
-	_ADD_DEALLOC(_24);
-	//assign %6 = %24  : int[]
-	_DEALLOC(v_sobel);
-	// isCopyEliminated = true
-	_UPDATE_1DARRAY(v_sobel, _24);
-	_TRANSFER_DEALLOC(v_sobel, _24);
+	_UPDATE_1DARRAY(newPixels, _13);
+	_TRANSFER_DEALLOC(newPixels, _13);
+	//const %14 = 1 : int
+	_14 = 1;
+	//neg %15 = %14 : int
+	_15= -_14;
+	//const %16 = 0 : int
+	_16 = 0;
+	//const %17 = 1 : int
+	_17 = 1;
+	//const %18 = 2 : int
+	_18 = 2;
+	//neg %19 = %18 : int
+	_19= -_18;
+	//const %20 = 0 : int
+	_20 = 0;
+	//const %21 = 2 : int
+	_21 = 2;
+	//const %22 = 1 : int
+	_22 = 1;
+	//neg %23 = %22 : int
+	_23= -_22;
+	//const %24 = 0 : int
+	_24 = 0;
 	//const %25 = 1 : int
 	_25 = 1;
-	//const %26 = 2 : int
-	_26 = 2;
+	//newlist %26 = (%15, %16, %17, %19, %20, %21, %23, %24, %25) : int[]
+	_DEALLOC(_26);
+	_NEW_1DARRAY_int64_t(_26, 9, 0);
+	_26[0] = _15; _26[1] = _16; _26[2] = _17; _26[3] = _19; _26[4] = _20; _26[5] = _21; _26[6] = _23; _26[7] = _24; _26[8] = _25; 
+	_ADD_DEALLOC(_26);
+	//assign %6 = %26  : int[]
+	_DEALLOC(v_sobel);
+	// isCopyEliminated = true
+	_UPDATE_1DARRAY(v_sobel, _26);
+	_TRANSFER_DEALLOC(v_sobel, _26);
 	//const %27 = 1 : int
 	_27 = 1;
-	//const %28 = 0 : int
-	_28 = 0;
-	//const %29 = 0 : int
-	_29 = 0;
+	//const %28 = 2 : int
+	_28 = 2;
+	//const %29 = 1 : int
+	_29 = 1;
 	//const %30 = 0 : int
 	_30 = 0;
-	//const %31 = 1 : int
-	_31 = 1;
-	//neg %32 = %31 : int
-	_32= -_31;
-	//const %33 = 2 : int
-	_33 = 2;
+	//const %31 = 0 : int
+	_31 = 0;
+	//const %32 = 0 : int
+	_32 = 0;
+	//const %33 = 1 : int
+	_33 = 1;
 	//neg %34 = %33 : int
 	_34= -_33;
-	//const %35 = 1 : int
-	_35 = 1;
+	//const %35 = 2 : int
+	_35 = 2;
 	//neg %36 = %35 : int
 	_36= -_35;
-	//newlist %37 = (%25, %26, %27, %28, %29, %30, %32, %34, %36) : int[]
-	_DEALLOC(_37);
-	_NEW_1DARRAY_int64_t(_37, 9, 0);
-	_37[0] = _25; _37[1] = _26; _37[2] = _27; _37[3] = _28; _37[4] = _29; _37[5] = _30; _37[6] = _32; _37[7] = _34; _37[8] = _36; 
-	_ADD_DEALLOC(_37);
-	//assign %7 = %37  : int[]
+	//const %37 = 1 : int
+	_37 = 1;
+	//neg %38 = %37 : int
+	_38= -_37;
+	//newlist %39 = (%27, %28, %29, %30, %31, %32, %34, %36, %38) : int[]
+	_DEALLOC(_39);
+	_NEW_1DARRAY_int64_t(_39, 9, 0);
+	_39[0] = _27; _39[1] = _28; _39[2] = _29; _39[3] = _30; _39[4] = _31; _39[5] = _32; _39[6] = _34; _39[7] = _36; _39[8] = _38; 
+	_ADD_DEALLOC(_39);
+	//assign %7 = %39  : int[]
 	_DEALLOC(h_sobel);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(h_sobel, _37);
-	_TRANSFER_DEALLOC(h_sobel, _37);
-	//const %38 = 0 : int
-	_38 = 0;
-	//assign %8 = %38  : int
+	_UPDATE_1DARRAY(h_sobel, _39);
+	_TRANSFER_DEALLOC(h_sobel, _39);
+	//const %40 = 0 : int
+	_40 = 0;
+	//assign %8 = %40  : int
 	// isCopyEliminated = true
-	pos = _38;
-	//loop (%5, %8, %39, %40, %41)
+	y = _40;
+	//loop (%5, %8, %9, %10, %41, %42, %43, %44, %45, %46, %47, %48)
 	while(true){
-		//ifge %8, %4 goto blklab8 : int
-		if(pos>=size){goto blklab8;}
-		//const %39 = 01100010b : byte
-		_39 = 0b01100010;
-		//update %5[%8] = %39 : byte[] -> byte[]
-		newPixels[pos] = _39;
-		//const %40 = 1 : int
-		_40 = 1;
-		//add %41 = %8, %40 : int
-		_41=pos+_40;
-		//assign %8 = %41  : int
+		//ifge %8, %2 goto blklab8 : int
+		if(y>=height){goto blklab8;}
+		//const %41 = 0 : int
+		_41 = 0;
+		//assign %9 = %41  : int
 		// isCopyEliminated = true
-		pos = _41;
+		x = _41;
+		//loop (%5, %9, %10, %42, %43, %44, %45, %46)
+		while(true){
+			//ifge %9, %1 goto blklab10 : int
+			if(x>=width){goto blklab10;}
+			//mul %42 = %8, %1 : int
+			_42=y*width;
+			//add %43 = %42, %9 : int
+			_43=_42+x;
+			//assign %10 = %43  : int
+			// isCopyEliminated = true
+			pos = _43;
+			//const %44 = 01100010b : byte
+			_44 = 0b01100010;
+			//update %5[%10] = %44 : byte[] -> byte[]
+			newPixels[pos] = _44;
+			//const %45 = 1 : int
+			_45 = 1;
+			//add %46 = %9, %45 : int
+			_46=x+_45;
+			//assign %9 = %46  : int
+			// isCopyEliminated = true
+			x = _46;
+//.blklab11
+blklab11:;
+		}
+//.blklab10
+blklab10:;
+		//const %47 = 1 : int
+		_47 = 1;
+		//add %48 = %8, %47 : int
+		_48=y+_47;
+		//assign %8 = %48  : int
+		// isCopyEliminated = true
+		y = _48;
 //.blklab9
 blklab9:;
 	}
@@ -367,9 +402,9 @@ blklab8:;
 	_DEALLOC(_3);
 	_DEALLOC(v_sobel);
 	_DEALLOC(h_sobel);
-	_DEALLOC(_11);
-	_DEALLOC(_24);
-	_DEALLOC(_37);
+	_DEALLOC(_13);
+	_DEALLOC(_26);
+	_DEALLOC(_39);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(newPixels);
 	return newPixels;
 	//return
@@ -446,8 +481,8 @@ void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t 
 	j = _17;
 	//loop (%4, %5, %6, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35)
 	while(true){
-		//ifge %4, %2 goto blklab10 : int
-		if(j>=height){goto blklab10;}
+		//ifge %4, %2 goto blklab12 : int
+		if(j>=height){goto blklab12;}
 		//const %18 = 0 : int
 		_18 = 0;
 		//assign %5 = %18  : int
@@ -455,8 +490,8 @@ void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t 
 		i = _18;
 		//loop (%5, %6, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30)
 		while(true){
-			//ifge %5, %1 goto blklab12 : int
-			if(i>=width){goto blklab12;}
+			//ifge %5, %1 goto blklab14 : int
+			if(i>=width){goto blklab14;}
 			//mul %19 = %4, %1 : int
 			_19=j*width;
 			//add %20 = %19, %5 : int
@@ -468,8 +503,8 @@ void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t 
 			_21=pixels[pos];
 			//const %22 = 00100000b : byte
 			_22 = 0b00100000;
-			//ifne %21, %22 goto blklab14 : byte
-			if(_21!=_22){goto blklab14;}
+			//ifne %21, %22 goto blklab16 : byte
+			if(_21!=_22){goto blklab16;}
 			//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %24 = %23 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %25 = 0 : int
@@ -478,10 +513,10 @@ void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t 
 			{
 				printf("%"PRId64, _25);
 			}
-			//goto blklab15
-			goto blklab15;
-//.blklab14
-blklab14:;
+			//goto blklab17
+			goto blklab17;
+//.blklab16
+blklab16:;
 			//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 			//fieldload %27 = %26 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 			//const %28 = 1 : int
@@ -490,8 +525,8 @@ blklab14:;
 			{
 				printf("%"PRId64, _28);
 			}
-//.blklab15
-blklab15:;
+//.blklab17
+blklab17:;
 			//const %29 = 1 : int
 			_29 = 1;
 			//add %30 = %5, %29 : int
@@ -499,11 +534,11 @@ blklab15:;
 			//assign %5 = %30  : int
 			// isCopyEliminated = true
 			i = _30;
-//.blklab13
-blklab13:;
+//.blklab15
+blklab15:;
 		}
-//.blklab12
-blklab12:;
+//.blklab14
+blklab14:;
 		//fieldload %31 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %32 = %31 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 		//const %33 = [] : void[]
@@ -521,11 +556,11 @@ blklab12:;
 		//assign %4 = %35  : int
 		// isCopyEliminated = true
 		j = _35;
-//.blklab11
-blklab11:;
+//.blklab13
+blklab13:;
 	}
-//.blklab10
-blklab10:;
+//.blklab12
+blklab12:;
 	//return
 	_DEALLOC(pixels);
 	_DEALLOC(_9);
@@ -594,8 +629,8 @@ int main(int argc, char** args){
 	// isCopyEliminated = true
 	n = _8;
 	_TRANSFER_DEALLOC(n, _8);
-	//ifis %1, null goto blklab16 : null|int
-	if(n == NULL) { goto blklab16;}
+	//ifis %1, null goto blklab18 : null|int
+	if(n == NULL) { goto blklab18;}
 	//assign %2 = %1  : int
 	// isCopyEliminated = true
 	width = *n;
@@ -627,8 +662,8 @@ int main(int argc, char** args){
 	i = _16;
 	//loop (%5, %6, %17, %18, %19, %20, %21)
 	while(true){
-		//ifge %6, %4 goto blklab17 : int
-		if(i>=size){goto blklab17;}
+		//ifge %6, %4 goto blklab19 : int
+		if(i>=size){goto blklab19;}
 		//const %18 = 256 : int
 		_18 = 256;
 		//rem %19 = %6, %18 : int
@@ -646,11 +681,11 @@ int main(int argc, char** args){
 		//assign %6 = %21  : int
 		// isCopyEliminated = true
 		i = _21;
-//.blklab18
-blklab18:;
+//.blklab20
+blklab20:;
 	}
-//.blklab17
-blklab17:;
+//.blklab19
+blklab19:;
 	//invoke (%22) = (%5, %2, %3) SobelEdge_test:sobelEdgeDetection : function(byte[],int,int)->(byte[])
 	{
 		_DEALLOC(_22);
@@ -694,8 +729,8 @@ blklab17:;
 	{
 		println_s(_31, _31_size);
 	}
-//.blklab16
-blklab16:;
+//.blklab18
+blklab18:;
 	//return
 	_DEALLOC(n);
 	_DEALLOC(pixels);

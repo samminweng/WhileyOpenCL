@@ -45,28 +45,18 @@ function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
 	int[] v_sobel = [-1,0,1,-2,0,2,-1,0,1]
 	int[] h_sobel = [1,2,1,0,0,0,-1,-2,-1]
 	// Perform sobel edge detection
-	int pos = 0
-	while pos < size:
-	      newPixels[pos] = BLACK
-	      pos = pos + 1
-	//int y = 0
-	//while y<height:
-	//	int x = 0
-	//	while x<width:
-	//		int pos = y*width + x
-	//		// Get vertical gradient
-	//		//int v_g = convolution(pixels, width, height, x, y, v_sobel)
-	//		// Get horizontal gradient
-	//		//int h_g = convolution(pixels, width, height, x, y, h_sobel)
-	//		// Get total gradient
-	//		//int t_g = v_g*v_g + h_g*h_g
-	//		// Large thresholds generate few edges
-	//		//if t_g > TH:
-	//		//	// Color other pixels as black
-	//		//	newPixels[pos] = BLACK
-	//		newPixels[pos] = BLACK
-	//		x = x + 1
-	//	y = y + 1
+	//int pos = 0
+	//while pos < size:
+	//      newPixels[pos] = BLACK
+	//      pos = pos + 1
+	int y = 0
+	while y<height:
+		int x = 0
+		while x<width:
+			int pos = y*width + x
+			newPixels[pos] = BLACK
+			x = x + 1
+		y = y + 1
 	return newPixels
 
 // Print a pbm image
