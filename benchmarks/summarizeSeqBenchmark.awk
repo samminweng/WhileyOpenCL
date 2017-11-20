@@ -91,7 +91,7 @@ BEGIN {
 	programs["MergeSort"]="original";
 	programs["MatrixMult"]="original";
 	programs["CoinGame"]="original";
-	programs["SobelEdge"]="testarray";
+	programs["SobelEdge"]="test";
 	programs["LZ77"]="compress decompress opt_decompress";
 	programs["Cashtill"]="original";
 

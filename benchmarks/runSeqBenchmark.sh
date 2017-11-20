@@ -232,25 +232,16 @@ run(){
 						##read -p "Press [Enter] to continue..."$outputfile":"$inputfile
 						timeout $TIMEOUT "out/$executable" $width $inputfile >> $result
 						;;
-					"large")
-						width=${widths[$parameter]}
-						echo "width = "$width
-						timeout $TIMEOUT "out/$executable" $width >> $result
-						;;
-					"nomod")
-						width=${widths[$parameter]}
-						echo "width = "$width
-						timeout $TIMEOUT "out/$executable" $width >> $result
-						;;
 					"height")
 						height=${heights[$parameter]}
 						echo "height = "$height
 						timeout $TIMEOUT "out/$executable" $height >> $result
 						;;
-				        "testarray")
+				        *)
 						width=${widths[$parameter]}
 						echo "width = "$width
 						timeout $TIMEOUT "out/$executable" $width >> $result
+						;;
 				esac
 				;;
 			"Cashtill")
@@ -417,7 +408,7 @@ exec(){
 #exec SobelEdge large
 #exec SobelEdge nomod
 #exec SobelEdge height
-exec SobelEdge testarray
+exec SobelEdge test
 # # ## Fibonacci test case
 # # init Fibonacci
 # # exec Fibonacci original 10
