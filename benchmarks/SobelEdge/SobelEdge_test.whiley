@@ -86,21 +86,22 @@ method print_pbm(System.Console sys, int width, int height, byte[] pixels):
 
 // Main function
 method main(System.Console sys):
-	// args[0]: width
-	int|null n = Int.parse(sys.args[0])
-	if n != null:
-		int width = n
-		int height = 2048
-		int size = width*height
-		// Create input pixels
-		byte[] pixels=[SPACE;size]
+	// args[0]: input
+	int|null input = Int.parse(sys.args[0])
+	if input != null:
+		int n = input
+		int m = 16384
+		int size = n*m
+		// Create an array
+		byte[] a = [SPACE;size]
 		// Generate each pixels
-		int i=0
-		while i < size:
-			pixels[i]=Int.toUnsignedByte(i%256)
-			i = i + 1
-		byte[] newPixels = sobelEdgeDetection(pixels, width, height)
-		sys.out.println_s("Blurred Image sizes:   ")
-		sys.out.print(|newPixels|)
-		sys.out.println_s(" bytes")
-		//print_pbm(sys, width, height, newPixels)
+		int x =0
+		while x < n:
+			int p = x
+			int y = 0
+			while y< m:
+				a[p] = Int.toUnsignedByte(7)
+				p = p + n
+				y = y + 1
+			x = x + 1
+		sys.out.println_s("Pass the test")

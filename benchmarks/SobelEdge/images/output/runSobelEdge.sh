@@ -8,14 +8,14 @@ runSobelEdge(){
  
     ## Compile .c to executable
     gcc *.c -o SobelEdge_small.out
-    height=64
+    width=64
     ## image size
     for n in 1 2 3 4 5 6 7 8 9 10
     do
-	width=$((n*64))
+	height=$((n*64))
 	infile="image"$width"x"$height".pbm"
 	outfile="output"$width"x"$height".pbm"
-	./SobelEdge_small.out $width ../../input/$infile > $outfile
+	./SobelEdge_small.out $height ../../input/$infile > $outfile
     done
 
     cd ../

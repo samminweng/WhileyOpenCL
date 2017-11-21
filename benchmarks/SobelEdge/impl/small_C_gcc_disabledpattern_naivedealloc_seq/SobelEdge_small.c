@@ -665,12 +665,12 @@ int main(int argc, char** args){
 	file = _11;
 	//ifis %1, null goto blklab19 : null|int
 	if(n == NULL) { goto blklab19;}
-	//assign %3 = %1  : int
-	width = *n;
 	//const %15 = 64 : int
 	_15 = 64;
-	//assign %4 = %15  : int
-	height = _15;
+	//assign %3 = %15  : int
+	width = _15;
+	//assign %4 = %1  : int
+	height = *n;
 	//fieldload %17 = %2 readAll : {method()->(int) available,method()->() close,method()->(bool) hasMore,method(int)->(byte[]) read,method()->(byte[]) readAll}
 	//indirectinvoke (%16) = %17 () : method()->(byte[])
 	{

@@ -89,12 +89,12 @@ method print_pbm(System.Console sys, int width, int height, byte[] pixels):
 
 // Main function
 method main(System.Console sys):
-	// args[0]: width, args[1]: file name
+	// args[0]: height, args[1]: file name
 	int|null n = Int.parse(sys.args[0])
 	File.Reader file = File.Reader(sys.args[1])
 	if n != null:
-		int width = n
-		int height = 64
+		int width = 64
+		int height = n
 		// Read a PBM image as a byte array
 		byte[] pixels = file.readAll()
 		byte[] newPixels = sobelEdgeDetection(pixels, width, height)

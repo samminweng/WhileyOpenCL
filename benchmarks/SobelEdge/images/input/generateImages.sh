@@ -66,22 +66,20 @@ content[62]="0000000000000000000000000000000000000000000000000000000000000000"
 content[63]="0000000000000000000000000000000000000000000000000000000000000000"
 
 generateSmallImages(){
-    ##Replicate image64x64.pbm
+    ##Replicate image64x64.pbm to the height
     for n in 1 2 3 4 5 6 7 8 9 10
     do
-	width=$((n*64))
-	height=64
+	width=64
+	height=$((n*64))
 	file="image"$width"x"$height".pbm"
 	echo $file
 	echo "P1" > $file
 	echo $width" "$height >> $file
 	# Generate texts
-	for((h=0;h<64;h++)){
-	       text=""
-	       for ((j=0;j<$n;j++)){
-		      text+=${content[h]} 
+	for ((j=0;j<$n;j++)){
+		for((h=0;h<64;h++)){
+		       echo ${content[h]} >> $file 
 		}
-		echo $text >> $file
 	}
     done
 }
@@ -120,5 +118,5 @@ generateLargeImages(){
     done
 }
 
-#generateSmallImages
-generateLargeImages
+generateSmallImages
+#generateLargeImages

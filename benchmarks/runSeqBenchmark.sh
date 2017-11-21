@@ -31,28 +31,23 @@ declare -A parameters=( [Reverse]="100000 1000000 10000000" \
 			#[LZ77]="medium1x medium5x medium10x medium25x medium50x medium75x medium100x medium125x medium150x medium175x medium200x" \
 			[LZ77]="medium225x medium250x medium275x medium300x medium325x medium350x medium375x medium400x" \
 			#[LZ77]="medium10000x medium20000x medium30000x medium40000x medium50000x medium60000x medium70000x medium80000x medium90000x medium100000x" \
-			#[SobelEdge]="image64x64.pbm image128x64.pbm image192x64.pbm image256x64.pbm image320x64.pbm image384x64.pbm image448x64.pbm image512x64.pbm image576x64.pbm image640x64.pbm" \
-			#[SobelEdge]="image2000x2000.pbm image4000x2000.pbm image6000x2000.pbm image8000x2000.pbm image10000x2000.pbm image12000x2000.pbm image14000x2000.pbm image16000x2000.pbm image18000x2000.pbm image20000x2000.pbm image22000x2000.pbm image24000x2000.pbm image26000x2000.pbm image28000x2000.pbm image30000x2000.pbm image32000x2000.pbm image34000x2000.pbm image36000x2000.pbm image38000x2000.pbm image40000x2000.pbm" \
-			#[SobelEdge]="image34816x2048.pbm image38912x2048.pbm image43008x2048.pbm image47104x2048.pbm image51200x2048.pbm image55296x2048.pbm image59392x2048.pbm image63488x2048.pbm" \
-			[SobelEdge]="image40959x2048.pbm image40960x2048.pbm image40961x2048.pbm" \
-			#[SobelEdge]="image2048x40959.pbm image2048x40960.pbm image2048x40961.pbm" \
+			#[SobelEdge]="image64x64.pbm image64x128.pbm image64x192.pbm image64x256.pbm image64x320.pbm image64x384.pbm image64x448.pbm image64x512.pbm image64x576.pbm image64x640.pbm" \
+			#[SobelEdge]="image2000x2000.pbm image2000x4000.pbm image2000x6000.pbm image2000x8000.pbm image2000x10000.pbm image2000x12000.pbm image2000x14000.pbm image2000x16000.pbm image2000x18000.pbm image2000x20000.pbm image2000x22000.pbm image2000x24000.pbm image2000x26000.pbm image2000x28000.pbm image2000x30000.pbm image2000x32000.pbm image2000x34000.pbm image2000x36000.pbm image2000x38000.pbm image2000x40000.pbm" \
+			#[SobelEdge]="image40959x2048.pbm image40960x2048.pbm image40961x2048.pbm" \
+			[SobelEdge]="image16383x16384.pbm image16384x16384.pbm image16385x16384.pbm" \
 			[Cashtill]="1000 1200 1400 1600 1800 2000" \
 			[CoinGame]="10000 20000 25000 30000 40000" \
 		    )
 ## Declare an associative array for image size in sobeledge test case
-declare -A widths=( [image64x64.pbm]=64 [image128x64.pbm]=128 [image192x64.pbm]=192 [image256x64.pbm]=256 [image320x64.pbm]=320 \
-		    [image384x64.pbm]=384 [image448x64.pbm]=448 [image512x64.pbm]=512 [image576x64.pbm]=576 [image640x64.pbm]=640 \
-		    [image2000x2000.pbm]=2000 [image4000x2000.pbm]=4000 [image6000x2000.pbm]=6000 [image8000x2000.pbm]=8000 \
-		    [image10000x2000.pbm]=10000 [image12000x2000.pbm]=12000 [image14000x2000.pbm]=14000 [image16000x2000.pbm]=16000 \
-		    [image18000x2000.pbm]=18000 [image20000x2000.pbm]=20000 [image22000x2000.pbm]=22000 [image24000x2000.pbm]=24000 \
-		    [image26000x2000.pbm]=26000 [image28000x2000.pbm]=28000 [image30000x2000.pbm]=30000 [image32000x2000.pbm]=32000 \
-		    [image34000x2000.pbm]=34000 [image36000x2000.pbm]=36000 [image38000x2000.pbm]=38000 [image40000x2000.pbm]=40000 \
-		    [image32768x2048.pbm]=32768 [image34816x2048.pbm]=34816 [image36864x2048.pbm]=36864 [image38912x2048.pbm]=38912 [image40960x2048.pbm]=40960 \
-		    [image43008x2048.pbm]=43008 [image45056x2048.pbm]=45056 [image47104x2048.pbm]=47104 [image49152x2048.pbm]=49152 [image51200x2048.pbm]=51200 \
-		    [image53248x2048.pbm]=53248 [image55296x2048.pbm]=55296 [image57344x2048.pbm]=57344 [image59392x2048.pbm]=59392 [image61440x2048.pbm]=61440 \
-		    [image63488x2048.pbm]=63488 [image65536x2048.pbm]=65536 [image40959x2048.pbm]=40959 [image40961x2048.pbm]=40961 \
-		  )
-declare -A heights=( [image2048x40959.pbm]=40959 [image2048x40960.pbm]=40960 [image2048x40961.pbm]=40961 )
+declare -A widths=( [image16383x16384.pbm]=16383 [image16384x16384.pbm]=16384 [image16385x16384.pbm]=16385 )
+declare -A heights=([image64x64.pbm]=64 [image64x128.pbm]=128 [image64x192.pbm]=192 [image64x256.pbm]=256 [image64x320.pbm]=320 \
+		    [image64x384.pbm]=384 [image64x448.pbm]=448 [image64x512.pbm]=512 [image64x576.pbm]=576 [image64x640.pbm]=640 \
+		    [image2000x2000.pbm]=2000 [image2000x4000.pbm]=4000 [image2000x6000.pbm]=6000 [image2000x8000.pbm]=8000 \
+		    [image2000x10000.pbm]=10000 [image2000x12000.pbm]=12000 [image2000x14000.pbm]=14000 [image2000x16000.pbm]=16000 \
+		    [image2000x18000.pbm]=18000 [image2000x20000.pbm]=20000 [image2000x22000.pbm]=22000 [image2000x24000.pbm]=24000 \
+		    [image2000x26000.pbm]=26000 [image2000x28000.pbm]=28000 [image2000x30000.pbm]=30000 [image2000x32000.pbm]=32000 \
+		    [image2000x34000.pbm]=34000 [image2000x36000.pbm]=36000 [image2000x38000.pbm]=38000 [image2000x40000.pbm]=40000 \
+		    )
 
 ### Create the folder and/or clean up the files
 init(){
@@ -225,19 +220,19 @@ run(){
 				case "$program" in
 					"small")
 						#echo $parameter
-						width=${widths[$parameter]}
-						echo "width = "$width
+						height=${heights[$parameter]}
+						echo "height = "$height
 						## Copy PBM image to folder
 						inputfile=$BENCHMARKDIR/$testcase/images/input/$parameter
 						##read -p "Press [Enter] to continue..."$outputfile":"$inputfile
-						timeout $TIMEOUT "out/$executable" $width $inputfile >> $result
+						timeout $TIMEOUT "out/$executable" $height $inputfile >> $result
 						;;
-					"height")
+					"large")
 						height=${heights[$parameter]}
 						echo "height = "$height
 						timeout $TIMEOUT "out/$executable" $height >> $result
 						;;
-				        *)
+				    "test")
 						width=${widths[$parameter]}
 						echo "width = "$width
 						timeout $TIMEOUT "out/$executable" $width >> $result
@@ -406,8 +401,6 @@ exec(){
 #init SobelEdge
 #exec SobelEdge small
 #exec SobelEdge large
-#exec SobelEdge nomod
-#exec SobelEdge height
 exec SobelEdge test
 # # ## Fibonacci test case
 # # init Fibonacci

@@ -570,178 +570,166 @@ blklab12:;
 }
 
 int main(int argc, char** args){
-	int64_t* n;
-	_DECL_DEALLOC(n);
-	int64_t width;
-	int64_t height;
+	int64_t* input;
+	_DECL_DEALLOC(input);
+	int64_t n;
+	int64_t m;
 	int64_t size;
-	_DECL_1DARRAY_BYTE(pixels);
-	_DECL_DEALLOC(pixels);
-	int64_t i;
-	_DECL_1DARRAY_BYTE(newPixels);
-	_DECL_DEALLOC(newPixels);
-	int64_t* _8;
-	_DECL_DEALLOC(_8);
-	_DECL_2DARRAY(_9);
+	_DECL_1DARRAY_BYTE(a);
+	_DECL_DEALLOC(a);
+	int64_t x;
+	int64_t p;
+	int64_t y;
+	int64_t* _9;
 	_DECL_DEALLOC(_9);
-	int64_t _10;
-	_DECL_1DARRAY(_11);
-	_DECL_DEALLOC(_11);
-	int64_t _12;
+	_DECL_2DARRAY(_10);
+	_DECL_DEALLOC(_10);
+	int64_t _11;
+	_DECL_1DARRAY(_12);
+	_DECL_DEALLOC(_12);
 	int64_t _13;
-	BYTE _14;
-	_DECL_1DARRAY_BYTE(_15);
-	_DECL_DEALLOC(_15);
-	int64_t _16;
-	BYTE _17;
+	int64_t _14;
+	BYTE _15;
+	_DECL_1DARRAY_BYTE(_16);
+	_DECL_DEALLOC(_16);
+	int64_t _17;
 	int64_t _18;
-	int64_t _19;
+	BYTE _19;
 	int64_t _20;
 	int64_t _21;
-	_DECL_1DARRAY_BYTE(_22);
-	_DECL_DEALLOC(_22);
-	void* _23;
-	_DECL_1DARRAY(_25);
-	_DECL_DEALLOC(_25);
+	int64_t _22;
+	int64_t _23;
+	int64_t _24;
+	int64_t _25;
 	void* _26;
-	int64_t _28;
-	void* _29;
-	_DECL_1DARRAY(_31);
-	_DECL_DEALLOC(_31);
-	//fieldload %9 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	_DEALLOC_2DARRAY_int64_t(_9);
-	_CONV_ARGS(_9);
-	_ADD_DEALLOC(_9);
-	//const %10 = 0 : int
-	_10 = 0;
-	//indexof %11 = %9, %10 : int[][]
-	_11=_9[_10];
-	_11_size = _9_size_size;
-	_REMOVE_DEALLOC(_11);
-	//invoke (%8) = (%11) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
+	_DECL_1DARRAY(_28);
+	_DECL_DEALLOC(_28);
+	//fieldload %10 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	_DEALLOC_2DARRAY_int64_t(_10);
+	_CONV_ARGS(_10);
+	_ADD_DEALLOC(_10);
+	//const %11 = 0 : int
+	_11 = 0;
+	//indexof %12 = %10, %11 : int[][]
+	_12=_10[_11];
+	_12_size = _10_size_size;
+	_REMOVE_DEALLOC(_12);
+	//invoke (%9) = (%12) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
 	{
-		_STR_TO_INT(_8, _11);
-		_ADD_DEALLOC(_8);
-		_REMOVE_DEALLOC(_11);
+		_STR_TO_INT(_9, _12);
+		_ADD_DEALLOC(_9);
+		_REMOVE_DEALLOC(_12);
 	}
-	//assign %1 = %8  : null|int
-	_DEALLOC(n);
+	//assign %1 = %9  : null|int
+	_DEALLOC(input);
 	// isCopyEliminated = true
-	n = _8;
-	_TRANSFER_DEALLOC(n, _8);
+	input = _9;
+	_TRANSFER_DEALLOC(input, _9);
 	//ifis %1, null goto blklab18 : null|int
-	if(n == NULL) { goto blklab18;}
+	if(input == NULL) { goto blklab18;}
 	//assign %2 = %1  : int
 	// isCopyEliminated = true
-	width = *n;
-	//const %12 = 2048 : int
-	_12 = 2048;
-	//assign %3 = %12  : int
+	n = *input;
+	//const %13 = 16384 : int
+	_13 = 16384;
+	//assign %3 = %13  : int
 	// isCopyEliminated = true
-	height = _12;
-	//mul %13 = %2, %3 : int
-	_13=width*height;
-	//assign %4 = %13  : int
+	m = _13;
+	//mul %14 = %2, %3 : int
+	_14=n*m;
+	//assign %4 = %14  : int
 	// isCopyEliminated = true
-	size = _13;
-	//const %14 = 00100000b : byte
-	_14 = 0b00100000;
-	//arraygen %15 = [14; 4] : byte[]
-	_DEALLOC(_15);
-	_NEW_1DARRAY_BYTE(_15, size, _14);
-	_ADD_DEALLOC(_15);
-	//assign %5 = %15  : byte[]
-	_DEALLOC(pixels);
+	size = _14;
+	//const %15 = 00100000b : byte
+	_15 = 0b00100000;
+	//arraygen %16 = [15; 4] : byte[]
+	_DEALLOC(_16);
+	_NEW_1DARRAY_BYTE(_16, size, _15);
+	_ADD_DEALLOC(_16);
+	//assign %5 = %16  : byte[]
+	_DEALLOC(a);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(pixels, _15);
-	_TRANSFER_DEALLOC(pixels, _15);
-	//const %16 = 0 : int
-	_16 = 0;
-	//assign %6 = %16  : int
+	_UPDATE_1DARRAY(a, _16);
+	_TRANSFER_DEALLOC(a, _16);
+	//const %17 = 0 : int
+	_17 = 0;
+	//assign %6 = %17  : int
 	// isCopyEliminated = true
-	i = _16;
-	//loop (%5, %6, %17, %18, %19, %20, %21)
+	x = _17;
+	//loop (%5, %6, %7, %8, %18, %19, %20, %21, %22, %23, %24, %25)
 	while(true){
-		//ifge %6, %4 goto blklab19 : int
-		if(i>=size){goto blklab19;}
-		//const %18 = 256 : int
-		_18 = 256;
-		//rem %19 = %6, %18 : int
-		_19=i%_18;
-		//invoke (%17) = (%19) whiley/lang/Int:toUnsignedByte : function(whiley/lang/Int:u8)->(byte)
-		{
-			_17 = (BYTE)_19;
-		}
-		//update %5[%6] = %17 : byte[] -> byte[]
-		pixels[i] = _17;
-		//const %20 = 1 : int
-		_20 = 1;
-		//add %21 = %6, %20 : int
-		_21=i+_20;
-		//assign %6 = %21  : int
+		//ifge %6, %2 goto blklab19 : int
+		if(x>=n){goto blklab19;}
+		//assign %7 = %6  : int
+		// isCopyEliminated = false
+		p = x;
+		//const %18 = 0 : int
+		_18 = 0;
+		//assign %8 = %18  : int
 		// isCopyEliminated = true
-		i = _21;
+		y = _18;
+		//loop (%5, %7, %8, %19, %20, %21, %22, %23)
+		while(true){
+			//ifge %8, %3 goto blklab21 : int
+			if(y>=m){goto blklab21;}
+			//const %20 = 7 : int
+			_20 = 7;
+			//invoke (%19) = (%20) whiley/lang/Int:toUnsignedByte : function(whiley/lang/Int:u8)->(byte)
+			{
+				_19 = (BYTE)_20;
+			}
+			//update %5[%7] = %19 : byte[] -> byte[]
+			a[p] = _19;
+			//add %21 = %7, %2 : int
+			_21=p+n;
+			//assign %7 = %21  : int
+			// isCopyEliminated = true
+			p = _21;
+			//const %22 = 1 : int
+			_22 = 1;
+			//add %23 = %8, %22 : int
+			_23=y+_22;
+			//assign %8 = %23  : int
+			// isCopyEliminated = true
+			y = _23;
+//.blklab22
+blklab22:;
+		}
+//.blklab21
+blklab21:;
+		//const %24 = 1 : int
+		_24 = 1;
+		//add %25 = %6, %24 : int
+		_25=x+_24;
+		//assign %6 = %25  : int
+		// isCopyEliminated = true
+		x = _25;
 //.blklab20
 blklab20:;
 	}
 //.blklab19
 blklab19:;
-	//invoke (%22) = (%5, %2, %3) SobelEdge_test:sobelEdgeDetection : function(byte[],int,int)->(byte[])
-	{
-		_DEALLOC(_22);
-		// isCopyEliminated of '_5' = true
-		_22 = _sobelEdgeDetection_(pixels, pixels_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
-		_RETAIN_DEALLOC(pixels, "false-false-false" , "sobelEdgeDetection");
-		_RETAIN_DEALLOC_POST(_22, pixels);
-	}
-	//assign %7 = %22  : byte[]
-	_DEALLOC(newPixels);
-	// isCopyEliminated = true
-	_UPDATE_1DARRAY(newPixels, _22);
-	_TRANSFER_DEALLOC(newPixels, _22);
-	//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %24 = %23 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %25 = [66,108,117,114,114,101,100,32,73,109,97,103,101,32,115,105,122,101,115,58,32,32,32] : int[]
-	_DEALLOC(_25);
-	_NEW_1DARRAY_int64_t(_25, 23, 0);
-	_25[0] = 66; _25[1] = 108; _25[2] = 117; _25[3] = 114; _25[4] = 114; _25[5] = 101; _25[6] = 100; _25[7] = 32; _25[8] = 73; _25[9] = 109; _25[10] = 97; _25[11] = 103; _25[12] = 101; _25[13] = 32; _25[14] = 115; _25[15] = 105; _25[16] = 122; _25[17] = 101; _25[18] = 115; _25[19] = 58; _25[20] = 32; _25[21] = 32; _25[22] = 32; 
-	_ADD_DEALLOC(_25);
-	//indirectinvoke () = %24 (%25) : method(int[])->()
-	{
-		println_s(_25, _25_size);
-	}
 	//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %27 = %26 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//lengthof %28 = %7 : byte[]
-	_28 = newPixels_size;
-	//indirectinvoke () = %27 (%28) : method(any)->()
+	//fieldload %27 = %26 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %28 = [80,97,115,115,32,116,104,101,32,116,101,115,116] : int[]
+	_DEALLOC(_28);
+	_NEW_1DARRAY_int64_t(_28, 13, 0);
+	_28[0] = 80; _28[1] = 97; _28[2] = 115; _28[3] = 115; _28[4] = 32; _28[5] = 116; _28[6] = 104; _28[7] = 101; _28[8] = 32; _28[9] = 116; _28[10] = 101; _28[11] = 115; _28[12] = 116; 
+	_ADD_DEALLOC(_28);
+	//indirectinvoke () = %27 (%28) : method(int[])->()
 	{
-		printf("%"PRId64, _28);
-	}
-	//fieldload %29 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %30 = %29 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %31 = [32,98,121,116,101,115] : int[]
-	_DEALLOC(_31);
-	_NEW_1DARRAY_int64_t(_31, 6, 0);
-	_31[0] = 32; _31[1] = 98; _31[2] = 121; _31[3] = 116; _31[4] = 101; _31[5] = 115; 
-	_ADD_DEALLOC(_31);
-	//indirectinvoke () = %30 (%31) : method(int[])->()
-	{
-		println_s(_31, _31_size);
+		println_s(_28, _28_size);
 	}
 //.blklab18
 blklab18:;
 	//return
-	_DEALLOC(n);
-	_DEALLOC(pixels);
-	_DEALLOC(newPixels);
-	_DEALLOC(_8);
-	_FREE_ARGS(_9);
-	_DEALLOC(_11);
-	_DEALLOC(_15);
-	_DEALLOC(_22);
-	_DEALLOC(_25);
-	_DEALLOC(_31);
+	_DEALLOC(input);
+	_DEALLOC(a);
+	_DEALLOC(_9);
+	_FREE_ARGS(_10);
+	_DEALLOC(_12);
+	_DEALLOC(_16);
+	_DEALLOC(_28);
 	exit(0);
 }
 

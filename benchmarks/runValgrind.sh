@@ -28,13 +28,13 @@ declare -A parameters=( [Reverse]="100000 1000000 10000000" [newTicTacToe]="1000
 			[BubbleSort]="1000 10000 100000" [MergeSort]="1000 10000 100000" \
 			[MatrixMult]="1000 2000 3000" \
 			[LZ77]="medium1x medium2x medium4x" \
-			[SobelEdge]="image64x64.pbm image128x64.pbm image256x64.pbm" \
+			[SobelEdge]="image64x64.pbm image64x128.pbm image64x256.pbm" \
 			[Cashtill]="100 200 300" \
 			##[CoinGame]="25000"
 			[CoinGame]="100 1000 10000"
 		    )
 ## Declare an associative array for image size in sobeledge test case
-declare -A widths=( [image64x64.pbm]=64 [image128x64.pbm]=128 [image256x64.pbm]=256 )
+declare -A heights=( [image64x64.pbm]=64 [image64x128.pbm]=128 [image64x256.pbm]=256 )
 
 ### Create the 'leak' folder and clean up the files
 init(){
@@ -196,13 +196,13 @@ detectleaks(){
 			;;
 		"SobelEdge")
 			#echo $parameter
-			width=${widths[$parameter]}
-			echo "width = "$width
+			height=${heights[$parameter]}
+			echo "height = "$height
 			## Copy PBM image to folder
 			inputfile=$BENCHMARKDIR/$testcase/images/input/$parameter
 			outputfile=$BENCHMARKDIR/$testcase/images/output/$program"_"C"_"$compiler"_"$pattern"_"$codegen"_"$code"_"$parameter
 			##read -p "Press [Enter] to continue..."$outputfile":"$inputfile
-			valgrind --tool=memcheck "--log-file=$result" "out/$executable" $width $inputfile
+			valgrind --tool=memcheck "--log-file=$result" "out/$executable" $height $inputfile
 			;;
 		*)
 			## Other cases

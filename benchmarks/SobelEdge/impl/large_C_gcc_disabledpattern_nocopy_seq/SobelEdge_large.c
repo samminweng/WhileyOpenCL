@@ -615,8 +615,8 @@ int main(int argc, char** args){
 	n = _8;
 	//ifis %1, null goto blklab19 : null|int
 	if(n == NULL) { goto blklab19;}
-	//const %12 = 2048 : int
-	_12 = 2048;
+	//const %12 = 2000 : int
+	_12 = 2000;
 	//assign %2 = %12  : int
 	// isCopyEliminated = true
 	width = _12;

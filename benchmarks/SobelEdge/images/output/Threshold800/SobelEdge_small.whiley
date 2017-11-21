@@ -5,7 +5,7 @@ import whiley.lang.Math
 
 constant SPACE is 00100000b // ASCII code of space (' ')
 constant BLACK is 01100010b // ASCII code of 'b'
-constant TH is 640000 // Control the number of edges (800*800)
+constant TH is 640000 // Control the number of edges
 
 function wrap(int pos, int size) -> int:
 	if pos>=size:
@@ -16,7 +16,7 @@ function wrap(int pos, int size) -> int:
 		else:
 			return pos
 
-// Perform convolution convolution on pixel at 'xCenter' and 'yCenter'
+// Compute convolution on pixels[xCenter, yCenter]
 function convolution(byte[] pixels, int width, int height, int xCenter, int yCenter, int[] kernel) ->int:
 	int sum = 0
 	int kernelSize = 3
@@ -27,11 +27,9 @@ function convolution(byte[] pixels, int width, int height, int xCenter, int yCen
 		int i = 0
 		while i < kernelSize:
 			int x=Math.abs((xCenter + i - kernelHalf)%width)
-			int pixel = Byte.toUnsignedInt(pixels[y*width+x])// pixels[x, y]
-			// Get kernel[i, j]
-			int kernelVal = kernel[j*kernelSize+i]
-			//sum += pixels[x, y]*kernel[i, j]
-			sum = sum + pixel * kernelVal
+			int pixel = Byte.toUnsignedInt(pixels[y*width+x])// pixels[x, y]		
+			int kernelVal = kernel[j*kernelSize+i]	// Get kernel[i, j]			
+			sum = sum + pixel * kernelVal//sum += pixels[x, y]*kernel[i, j]
 			i = i + 1
 		j = j + 1
 	return sum// 'sum' : convoluted value at pixels[xCenter, yCenter]
@@ -55,7 +53,7 @@ function sobelEdgeDetection(byte[] pixels, int width, int height) -> byte[]:
 			// Get horizontal gradient
 			int h_g = convolution(pixels, width, height, x, y, h_sobel)
 			// Get total gradient
-			int t_g = v_g*v_g + h_g*h_g
+			int t_g = (v_g*v_g) + (h_g*h_g)
 			// Edge threshold (64) Note that large thresholds generate few edges
 			if t_g > TH:
 				// Color other pixels as black
@@ -91,12 +89,12 @@ method print_pbm(System.Console sys, int width, int height, byte[] pixels):
 
 // Main function
 method main(System.Console sys):
-	// args[0]: width, args[1]: file name
+	// args[0]: height, args[1]: file name
 	int|null n = Int.parse(sys.args[0])
 	File.Reader file = File.Reader(sys.args[1])
 	if n != null:
-		int width = n
-		int height = 64
+		int width = 64
+		int height = n
 		// Read a PBM image as a byte array
 		byte[] pixels = file.readAll()
 		byte[] newPixels = sobelEdgeDetection(pixels, width, height)

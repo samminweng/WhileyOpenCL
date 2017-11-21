@@ -677,14 +677,14 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(n, _8);
 	//ifis %1, null goto blklab19 : null|int
 	if(n == NULL) { goto blklab19;}
-	//assign %2 = %1  : int
+	//const %12 = 2000 : int
+	_12 = 2000;
+	//assign %2 = %12  : int
 	// isCopyEliminated = true
-	width = *n;
-	//const %12 = 2048 : int
-	_12 = 2048;
-	//assign %3 = %12  : int
+	width = _12;
+	//assign %3 = %1  : int
 	// isCopyEliminated = true
-	height = _12;
+	height = *n;
 	//mul %13 = %2, %3 : int
 	_13=width*height;
 	//assign %4 = %13  : int

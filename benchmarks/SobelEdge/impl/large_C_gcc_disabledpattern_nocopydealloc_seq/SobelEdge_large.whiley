@@ -91,11 +91,11 @@ method print_pbm(System.Console sys, int width, int height, byte[] pixels):
 
 // Main function
 method main(System.Console sys):
-	// args[0]: magnitude of width
+	// args[0]: height
 	int|null n = Int.parse(sys.args[0])
 	if n != null:
-		int width = n
-		int height = 2048
+		int width = 2000
+		int height = n
 		int size = width*height
 		// Create input pixels
 		byte[] pixels=[SPACE;size]
