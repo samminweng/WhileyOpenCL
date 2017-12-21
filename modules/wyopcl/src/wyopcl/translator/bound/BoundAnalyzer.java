@@ -534,7 +534,14 @@ public class BoundAnalyzer {
 		// Return the inferred bounds of the function
 		return bnds;
 	}
-
+	/**
+	 * Extract bound constraints from an assignment
+	 * 
+	 * 
+	 * 
+	 * @param code
+	 * @param function
+	 */
 	private void analyze(Codes.Assign code, FunctionOrMethod function) {
 		// Get the current blok
 		BoundBlock cur_blk = BoundAnalyzerHelper.getCurrentBlock(function);
@@ -601,7 +608,7 @@ public class BoundAnalyzer {
 	}
 
 	/**
-	 * Parses 'Const' bytecode to add the 'Const' constraint to the list.
+	 * Parses 'Const' bytecode to add the 'Const' constraint to the block.
 	 * 
 	 * @param code
 	 */
