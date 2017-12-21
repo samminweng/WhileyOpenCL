@@ -3,8 +3,10 @@
 #include <stdint.h>
 #include <string.h>
 #define MAX_LINE_LENGTH 1024*16
-const int TH = 640000;
 typedef uint8_t BYTE;
+const int TH = 640000;
+const BYTE SPACE = ' ' - '0';
+const BYTE BLACK = 'b' - '0';
 
 // Read an image as an array of bytes
 BYTE* readPBM(FILE *file, size_t* _size){
@@ -16,7 +18,7 @@ BYTE* readPBM(FILE *file, size_t* _size){
 	//while(getline(&line, &length, file) != -1){
 	while(fgets(line, length, file) != NULL){
 		// Check if the line is a comment
-		if(line[0]!='#'){
+		if(line[0]!='P'){
 			// Read the height and width
 			sscanf(line, "%d %d\n", &width, &height);
 			break;
@@ -99,7 +101,7 @@ BYTE* sobelEdgeDetection(BYTE* pixels, size_t pixels_size, int width, int height
     BYTE* newPixels = malloc(sizeof(BYTE)*size);// The output image of sobel edge detection
     int i =0;
     while(i<size){// A blank picture
-        newPixels[i] = ' ' - '0'; // Default value is ' '
+        newPixels[i] = SPACE; // Default value is ' '
         i++;
     }
     // vertical and horizontal sobel filter (3x3 kernel)
@@ -115,14 +117,41 @@ BYTE* sobelEdgeDetection(BYTE* pixels, size_t pixels_size, int width, int height
 			int h_g = convolution(pixels, pixels_size, width, height, x, y, h_sobel);// Get horizontal gradient
 			int t_g = (v_g*v_g) + (h_g*h_g);// Get total gradient
 			if(t_g > TH){// Edge threshold (64) Note that large thresholds generate few edges
-                newPixels[pos] = 'b' -'0';// Color other pixels as black
+                newPixels[pos] = BLACK;// Color other pixels as black
             }
 			y = y + 1;
         }
+		x = x + 1;
     }
     *_size = size;
     return newPixels;
 }
+
+void print_pbm(int width, int height, BYTE* pixels, size_t pixels_size){
+	FILE* fp;
+	fp = fopen("output.pbm", "w+");
+	fprintf(fp, "P1\n");
+	fprintf(fp, "%d %d\n", width, height);
+
+	int j = 0;
+	while(j<height){
+		int i = 0;
+		while(i<width){
+			int pos = j*width + i;
+			if(pixels[pos] == SPACE){
+				fprintf(fp, "0");
+			}else{
+				fprintf(fp, "1");
+			}
+			i = i + 1;
+		}
+		fprintf(fp, "\n");
+		j = j + 1;
+	}
+	fclose(fp);
+
+}
+
 
 int main(int argc, char** args){
     FILE* fp;
@@ -136,14 +165,18 @@ int main(int argc, char** args){
     // Read a PBM image as a byte array
     size_t pixels_size = 0;
     BYTE* pixels = readPBM(fp, &pixels_size);
-    int i = 0;
+    fclose(fp);
+    /*int i = 0;
     while(i<pixels_size){
-        printf("pixels[%d]=%d",i, pixels[i]);
+        printf("pixels[%d]=%d\n",i, pixels[i]);
         i++;
-    }
-    //size_t newPixels_size = 0;
-    //BYTE* newPixels = sobelEdgeDetection(pixels, pixels_size, width, height, &newPixels_size);
-    //printf("Blurred Image sizes: %d bytes", newPixels_size);
+    }*/
+    size_t newPixels_size = 0;
+    BYTE* newPixels = sobelEdgeDetection(pixels, pixels_size, width, height, &newPixels_size);
+    printf("Blurred Image sizes: %zu bytes", newPixels_size);
 
+    print_pbm(width, height, newPixels, newPixels_size);
+    free(pixels);
+    free(newPixels);
     return 0;
 }
