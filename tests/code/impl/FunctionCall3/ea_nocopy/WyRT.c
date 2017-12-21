@@ -241,7 +241,7 @@ BYTE* readPBM(FILE *file, size_t* _size){
 	//while(getline(&line, &length, file) != -1){
 	while(fgets(line, length, file) != NULL){
 		// Check if the line is a comment
-		if(line[0]!='#'){
+		if(line[0]!='#' && line[0]!='P'){
 			// Read the height and width
 			sscanf(line, "%d %d\n", &width, &height);
 			break;

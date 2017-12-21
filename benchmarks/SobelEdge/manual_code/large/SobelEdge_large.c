@@ -8,61 +8,6 @@ const int TH = 640000;
 const BYTE SPACE = ' ' - '0';
 const BYTE BLACK = 'b' - '0';
 
-// Read an image as an array of bytes
-BYTE* readPBM(FILE *file, size_t* _size){
-	char* line = malloc(MAX_LINE_LENGTH*sizeof(char));
-	size_t length = MAX_LINE_LENGTH;
-	int width = 0;
-	int height = 0;
-	// Read 'width' and 'height' from a file
-	//while(getline(&line, &length, file) != -1){
-	while(fgets(line, length, file) != NULL){
-		// Check if the line is a comment
-		if(line[0]!='#' && line[0]!='P'){
-			// Read the height and width
-			sscanf(line, "%d %d\n", &width, &height);
-			break;
-		}
-	}
-	// Free 'line' as it is not used anymore
-	free(line);
-
-	size_t size = width * height;
-
-	// Allocated byte array. Note the last char (EOF)
-	BYTE* arr = (BYTE*)malloc(size*sizeof(BYTE));
-	if(arr == NULL){
-		fputs("fail to allocate the array at 'readPBM' function in Util.c\n", stderr);
-		exit(-2);
-	}
-
-	// Read a file line-by-line and pyt each byte to the array
-	size_t arr_ind = 0;
-
-	char c;
-	// Read one byte
-	while((c = getc(file)) != EOF){
-		BYTE b;
-		if(c != ' ' && c != '\n'){
-			b = (BYTE)c;
-			if(b == '1'){
-				// b is an edge, represent by black color
-				arr[arr_ind] = (BYTE)0;
-			}else if(b == '0'){
-				// b is an space, (by white color)
-				arr[arr_ind] = (BYTE)255;
-			}else{
-				arr[arr_ind] = (BYTE)b;
-			}
-			arr_ind++;
-		}
-	}
-
-	*_size = size;
-
-	return arr;
-}
-
 
 int wrap(int pos, int size){
     if(pos>=size){
@@ -154,18 +99,28 @@ void print_pbm(int width, int height, BYTE* pixels, size_t pixels_size){
 
 
 int main(int argc, char** args){
-    FILE* fp;
+    /*FILE* fp;
     fp = fopen("../../images/input/image64x64.pbm", "r");
     if(!fp){
         printf("File does not exit\n");
         exit(-2);
     }
-    int width = 64;
-    int height = 64;
-    // Read a PBM image as a byte array
+	// Read a PBM image as a byte array
     size_t pixels_size = 0;
     BYTE* pixels = readPBM(fp, &pixels_size);
-    fclose(fp);
+	fclose(fp);
+	*/
+    int width = 64;
+    int height = 640;
+	int size = width * height;
+	size_t pixels_size = size;
+	BYTE* pixels = malloc(sizeof(BYTE)*size);
+	int i =0;
+	while(i<size){// Randomly generate each pixel
+		pixels[i] = i%256;
+		i++;
+	}
+
     size_t newPixels_size = 0;
     BYTE* newPixels = sobelEdgeDetection(pixels, pixels_size, width, height, &newPixels_size);
     printf("Blurred Image sizes: %zu bytes", newPixels_size);
