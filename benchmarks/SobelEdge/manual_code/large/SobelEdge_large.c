@@ -2,12 +2,10 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
-#define MAX_LINE_LENGTH 1024*16
 typedef uint8_t BYTE;
 const int TH = 640000;
 const BYTE SPACE = ' ' - '0';
 const BYTE BLACK = 'b' - '0';
-
 
 int wrap(int pos, int size){
     if(pos>=size){
@@ -23,18 +21,18 @@ int wrap(int pos, int size){
 
 int convolution(BYTE* pixels, size_t pixels_size, int width, int height, int xCenter, int yCenter, int kernel[9]){
     int sum = 0;
-	int kernelSize = 3;
-	int kernelHalf = 1;
-	int j = 0;
+    int kernelSize = 3;
+    int kernelHalf = 1;
+    int j = 0;
     while(j < kernelSize){
         int y = abs((yCenter+j-kernelHalf)%height);
         int i = 0;
         while(i < kernelSize){
             int x=abs((xCenter + i - kernelHalf)%width);
-			int pixel = (int)(pixels[y*width+x]);// pixels[x, y]
-			int kernelVal = kernel[j*kernelSize+i];	// Get kernel[i, j]
-			sum = sum + pixel * kernelVal;//sum += pixels[x, y]*kernel[i, j]
-			i = i + 1;
+            int pixel = (int)(pixels[y*width+x]);// pixels[x, y]
+            int kernelVal = kernel[j*kernelSize+i];	// Get kernel[i, j]
+            sum = sum + pixel * kernelVal;//sum += pixels[x, y]*kernel[i, j]
+            i = i + 1;
         }
         j = j + 1;
     }
@@ -50,23 +48,23 @@ BYTE* sobelEdgeDetection(BYTE* pixels, size_t pixels_size, int width, int height
         i++;
     }
     // vertical and horizontal sobel filter (3x3 kernel)
-	int v_sobel[9]= {-1,0,1,-2,0,2,-1,0,1};
-	int h_sobel[9]= {1,2,1,0,0,0,-1,-2,-1};
-	// Perform sobel edge detection
-	int x = 0;
+    int v_sobel[9]= {-1,0,1,-2,0,2,-1,0,1};
+    int h_sobel[9]= {1,2,1,0,0,0,-1,-2,-1};
+    // Perform sobel edge detection
+    int x = 0;
     while(x<width){
         int y = 0;
-		while(y<height){
+        while(y<height){
             int pos = y*width + x;
-			int v_g = convolution(pixels, pixels_size, width, height, x, y, v_sobel);// Get vertical gradient
-			int h_g = convolution(pixels, pixels_size, width, height, x, y, h_sobel);// Get horizontal gradient
-			int t_g = (v_g*v_g) + (h_g*h_g);// Get total gradient
-			if(t_g > TH){// Edge threshold (64) Note that large thresholds generate few edges
+            int v_g = convolution(pixels, pixels_size, width, height, x, y, v_sobel);// Get vertical gradient
+            int h_g = convolution(pixels, pixels_size, width, height, x, y, h_sobel);// Get horizontal gradient
+            int t_g = (v_g*v_g) + (h_g*h_g);// Get total gradient
+            if(t_g > TH){// Large thresholds generate few edges
                 newPixels[pos] = BLACK;// Color other pixels as black
             }
-			y = y + 1;
+            y = y + 1;
         }
-		x = x + 1;
+        x = x + 1;
     }
     *_size = size;
     return newPixels;
@@ -110,22 +108,29 @@ int main(int argc, char** args){
     BYTE* pixels = readPBM(fp, &pixels_size);
 	fclose(fp);
 	*/
-    int width = 64;
-    int height = 640;
-	int size = width * height;
-	size_t pixels_size = size;
-	BYTE* pixels = malloc(sizeof(BYTE)*size);
-	int i =0;
-	while(i<size){// Randomly generate each pixel
-		pixels[i] = i%256;
-		i++;
-	}
-
+    if(argc != 2){
+        printf("Height is required");
+        exit(-1);
+    }
+    int width = 2000;
+    int height = atoi(args[1]);
+    int size = width * height;
+    size_t pixels_size = size;
+    BYTE* pixels = malloc(sizeof(BYTE)*size);
+    int i =0;
+    while(i<size){// Initialise each pixel with SPACE
+        pixels[i] = SPACE;
+        i++;
+    }
+    i =0;
+    while(i<size){// Randomly generate each pixel
+        pixels[i] = i%256;
+        i++;
+    }
     size_t newPixels_size = 0;
     BYTE* newPixels = sobelEdgeDetection(pixels, pixels_size, width, height, &newPixels_size);
-    printf("Blurred Image sizes: %zu bytes", newPixels_size);
-
-    print_pbm(width, height, newPixels, newPixels_size);
+    printf("Blurred Image sizes: %zu bytes\n", newPixels_size);
+    //print_pbm(width, height, newPixels, newPixels_size);
     free(pixels);
     free(newPixels);
     return 0;

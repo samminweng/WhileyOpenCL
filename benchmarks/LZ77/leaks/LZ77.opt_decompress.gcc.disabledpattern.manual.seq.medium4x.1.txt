@@ -1,0 +1,15 @@
+==17674== Memcheck, a memory error detector
+==17674== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==17674== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==17674== Command: opt_decompress/out/LZ77_opt_decompress.manual.out ../Outputfiles/medium4x.dat
+==17674== Parent PID: 17634
+==17674== 
+==17674== 
+==17674== HEAP SUMMARY:
+==17674==     in use at exit: 0 bytes in 0 blocks
+==17674==   total heap usage: 18 allocs, 18 frees, 38,607 bytes allocated
+==17674== 
+==17674== All heap blocks were freed -- no leaks are possible
+==17674== 
+==17674== For counts of detected and suppressed errors, rerun with: -v
+==17674== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
