@@ -644,16 +644,28 @@ int main(int argc, char** args){
 	int64_t _19;
 	int64_t _20;
 	int64_t _21;
-	_DECL_1DARRAY_BYTE(_22);
-	_DECL_DEALLOC(_22);
-	void* _23;
-	_DECL_1DARRAY(_25);
-	_DECL_DEALLOC(_25);
-	void* _26;
-	int64_t _28;
-	void* _29;
-	_DECL_1DARRAY(_31);
-	_DECL_DEALLOC(_31);
+	void* _22;
+	_DECL_1DARRAY(_24);
+	_DECL_DEALLOC(_24);
+	void* _25;
+	int64_t _27;
+	BYTE _28;
+	_DECL_1DARRAY_BYTE(_29);
+	_DECL_DEALLOC(_29);
+	void* _30;
+	_DECL_1DARRAY(_32);
+	_DECL_DEALLOC(_32);
+	void* _33;
+	int64_t _35;
+	void* _36;
+	_DECL_1DARRAY(_38);
+	_DECL_DEALLOC(_38);
+	void* _39;
+	_DECL_1DARRAY(_41);
+	_DECL_DEALLOC(_41);
+	void* _42;
+	int64_t _44;
+	BYTE _45;
 	//fieldload %9 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	_DEALLOC_2DARRAY_int64_t(_9);
 	_CONV_ARGS(_9);
@@ -732,48 +744,90 @@ blklab21:;
 	}
 //.blklab20
 blklab20:;
-	//invoke (%22) = (%5, %2, %3) SobelEdge_large:sobelEdgeDetection : function(byte[],int,int)->(byte[])
+	//fieldload %22 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %23 = %22 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %24 = [112,105,120,101,108,115,91,49,48,48,48,93,61] : int[]
+	_DEALLOC(_24);
+	_NEW_1DARRAY_int64_t(_24, 13, 0);
+	_24[0] = 112; _24[1] = 105; _24[2] = 120; _24[3] = 101; _24[4] = 108; _24[5] = 115; _24[6] = 91; _24[7] = 49; _24[8] = 48; _24[9] = 48; _24[10] = 48; _24[11] = 93; _24[12] = 61; 
+	_ADD_DEALLOC(_24);
+	//indirectinvoke () = %23 (%24) : method(int[])->()
 	{
-		_DEALLOC(_22);
-		// isCopyEliminated of '_5' = true
-		_22 = _sobelEdgeDetection_(pixels, pixels_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
-		_RETAIN_DEALLOC(pixels, "false-false-false" , "sobelEdgeDetection");
-		_RETAIN_DEALLOC_POST(_22, pixels);
+		printf_s(_24, _24_size);
 	}
-	//assign %7 = %22  : byte[]
+	//fieldload %25 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %26 = %25 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %27 = 1000 : int
+	_27 = 1000;
+	//indexof %28 = %5, %27 : byte[]
+	_28=pixels[_27];
+	//indirectinvoke () = %26 (%28) : method(any)->()
+	{
+		printf("%"PRIu8"\n", _28);
+	}
+	//invoke (%29) = (%5, %2, %3) SobelEdge_large:sobelEdgeDetection : function(byte[],int,int)->(byte[])
+	{
+		_DEALLOC(_29);
+		// isCopyEliminated of '_5' = true
+		_29 = _sobelEdgeDetection_(pixels, pixels_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_29));
+		_RETAIN_DEALLOC(pixels, "false-false-false" , "sobelEdgeDetection");
+		_RETAIN_DEALLOC_POST(_29, pixels);
+	}
+	//assign %7 = %29  : byte[]
 	_DEALLOC(newPixels);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(newPixels, _22);
-	_TRANSFER_DEALLOC(newPixels, _22);
-	//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %24 = %23 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %25 = [66,108,117,114,114,101,100,32,73,109,97,103,101,32,115,105,122,101,115,58,32,32,32] : int[]
-	_DEALLOC(_25);
-	_NEW_1DARRAY_int64_t(_25, 23, 0);
-	_25[0] = 66; _25[1] = 108; _25[2] = 117; _25[3] = 114; _25[4] = 114; _25[5] = 101; _25[6] = 100; _25[7] = 32; _25[8] = 73; _25[9] = 109; _25[10] = 97; _25[11] = 103; _25[12] = 101; _25[13] = 32; _25[14] = 115; _25[15] = 105; _25[16] = 122; _25[17] = 101; _25[18] = 115; _25[19] = 58; _25[20] = 32; _25[21] = 32; _25[22] = 32; 
-	_ADD_DEALLOC(_25);
-	//indirectinvoke () = %24 (%25) : method(int[])->()
+	_UPDATE_1DARRAY(newPixels, _29);
+	_TRANSFER_DEALLOC(newPixels, _29);
+	//fieldload %30 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %31 = %30 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %32 = [66,108,117,114,114,101,100,32,73,109,97,103,101,32,115,105,122,101,115,58,32,32,32] : int[]
+	_DEALLOC(_32);
+	_NEW_1DARRAY_int64_t(_32, 23, 0);
+	_32[0] = 66; _32[1] = 108; _32[2] = 117; _32[3] = 114; _32[4] = 114; _32[5] = 101; _32[6] = 100; _32[7] = 32; _32[8] = 73; _32[9] = 109; _32[10] = 97; _32[11] = 103; _32[12] = 101; _32[13] = 32; _32[14] = 115; _32[15] = 105; _32[16] = 122; _32[17] = 101; _32[18] = 115; _32[19] = 58; _32[20] = 32; _32[21] = 32; _32[22] = 32; 
+	_ADD_DEALLOC(_32);
+	//indirectinvoke () = %31 (%32) : method(int[])->()
 	{
-		println_s(_25, _25_size);
+		println_s(_32, _32_size);
 	}
-	//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %27 = %26 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//lengthof %28 = %7 : byte[]
-	_28 = newPixels_size;
-	//indirectinvoke () = %27 (%28) : method(any)->()
+	//fieldload %33 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %34 = %33 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//lengthof %35 = %7 : byte[]
+	_35 = newPixels_size;
+	//indirectinvoke () = %34 (%35) : method(any)->()
 	{
-		printf("%"PRId64, _28);
+		printf("%"PRId64, _35);
 	}
-	//fieldload %29 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %30 = %29 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %31 = [32,98,121,116,101,115] : int[]
-	_DEALLOC(_31);
-	_NEW_1DARRAY_int64_t(_31, 6, 0);
-	_31[0] = 32; _31[1] = 98; _31[2] = 121; _31[3] = 116; _31[4] = 101; _31[5] = 115; 
-	_ADD_DEALLOC(_31);
-	//indirectinvoke () = %30 (%31) : method(int[])->()
+	//fieldload %36 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %37 = %36 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %38 = [32,98,121,116,101,115] : int[]
+	_DEALLOC(_38);
+	_NEW_1DARRAY_int64_t(_38, 6, 0);
+	_38[0] = 32; _38[1] = 98; _38[2] = 121; _38[3] = 116; _38[4] = 101; _38[5] = 115; 
+	_ADD_DEALLOC(_38);
+	//indirectinvoke () = %37 (%38) : method(int[])->()
 	{
-		println_s(_31, _31_size);
+		println_s(_38, _38_size);
+	}
+	//fieldload %39 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %40 = %39 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %41 = [110,101,119,80,105,120,101,108,115,91,49,48,48,48,93,61] : int[]
+	_DEALLOC(_41);
+	_NEW_1DARRAY_int64_t(_41, 16, 0);
+	_41[0] = 110; _41[1] = 101; _41[2] = 119; _41[3] = 80; _41[4] = 105; _41[5] = 120; _41[6] = 101; _41[7] = 108; _41[8] = 115; _41[9] = 91; _41[10] = 49; _41[11] = 48; _41[12] = 48; _41[13] = 48; _41[14] = 93; _41[15] = 61; 
+	_ADD_DEALLOC(_41);
+	//indirectinvoke () = %40 (%41) : method(int[])->()
+	{
+		printf_s(_41, _41_size);
+	}
+	//fieldload %42 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %43 = %42 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %44 = 1000 : int
+	_44 = 1000;
+	//indexof %45 = %7, %44 : byte[]
+	_45=newPixels[_44];
+	//indirectinvoke () = %43 (%45) : method(any)->()
+	{
+		printf("%"PRId64, _45);
 	}
 //.blklab19
 blklab19:;
@@ -785,9 +839,11 @@ blklab19:;
 	_FREE_ARGS(_9);
 	_DEALLOC(_11);
 	_DEALLOC(_15);
-	_DEALLOC(_22);
-	_DEALLOC(_25);
-	_DEALLOC(_31);
+	_DEALLOC(_24);
+	_DEALLOC(_29);
+	_DEALLOC(_32);
+	_DEALLOC(_38);
+	_DEALLOC(_41);
 	exit(0);
 }
 

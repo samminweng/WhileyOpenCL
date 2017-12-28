@@ -6,8 +6,8 @@ export LANG=C.UTF-8
 declare -a parameters=( "10000x" "20000x" "30000x" "40000x" "50000x" "60000x" "70000x" "80000x" "90000x" "100000x" )
 #declare -a parameters=( "100x" "200x" )
 testcase="LZ77"
-declare -a programs=( "opt_compress" "opt_decompress" )
-#declare -a programs=( "opt_decompress" )
+#declare -a programs=( "opt_compress" "opt_decompress" )
+declare -a programs=( "opt_compress" )
 compiler="gcc"
 pattern="disabledpattern"
 codegen="manual"
@@ -35,9 +35,9 @@ do
             echo "Run the $program $testcase on $parameter using $compiler" >> $result
             echo "Begin $i iteration" >> $result
             #read -p "Press [Enter] to continue..."
-            start=`date +%s%N`
             echo $parameter
             echo "parameter = "$parameter
+            start=`date +%s%N`
             case "$program" in
                 "compress")
                     timeout $TIMEOUT $executable "../Inputfiles/medium$parameter.in" >> $result

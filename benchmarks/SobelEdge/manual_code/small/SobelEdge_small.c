@@ -5,8 +5,8 @@
 #define MAX_LINE_LENGTH 1024*16
 typedef uint8_t BYTE;
 const int TH = 640000;
-const BYTE SPACE = ' ' - '0';
-const BYTE BLACK = 'b' - '0';
+const BYTE SPACE = 32;
+const BYTE BLACK = 98;
 
 // Read an image as an array of bytes
 BYTE* readPBM(FILE *file, size_t* _size){
@@ -76,7 +76,7 @@ int wrap(int pos, int size){
     }
 }
 
-int convolution(BYTE* pixels, size_t pixels_size, int width, int height, int xCenter, int yCenter, int kernel[9]){
+int convolution(BYTE* pixels, size_t pixels_size, int width, int height, int xCenter, int yCenter, int* kernel){
     int sum = 0;
 	int kernelSize = 3;
 	int kernelHalf = 1;
@@ -86,7 +86,7 @@ int convolution(BYTE* pixels, size_t pixels_size, int width, int height, int xCe
         int i = 0;
         while(i < kernelSize){
             int x=abs((xCenter + i - kernelHalf)%width);
-			int pixel = (int)(pixels[y*width+x]);// pixels[x, y]
+			int pixel = pixels[y*width+x];// pixels[x, y]
 			int kernelVal = kernel[j*kernelSize+i];	// Get kernel[i, j]
 			sum = sum + pixel * kernelVal;//sum += pixels[x, y]*kernel[i, j]
 			i = i + 1;
@@ -96,34 +96,38 @@ int convolution(BYTE* pixels, size_t pixels_size, int width, int height, int xCe
     return sum;
 }
 
-BYTE* sobelEdgeDetection(BYTE* pixels, size_t pixels_size, int width, int height, size_t* _size){//Sobel edge detection
-    int size = width * height;
-    BYTE* newPixels = malloc(sizeof(BYTE)*size);// The output image of sobel edge detection
+BYTE* sobelEdgeDetection(BYTE* pixels, size_t pixels_size, int width, int height, size_t newPixels_size){//Sobel edge detection
+    BYTE* newPixels = (BYTE*) malloc(sizeof(BYTE)*newPixels_size);// The output image of sobel edge detection
     int i =0;
-    while(i<size){// A blank picture
+    while(i<newPixels_size){// A blank picture
         newPixels[i] = SPACE; // Default value is ' '
         i++;
     }
     // vertical and horizontal sobel filter (3x3 kernel)
-	int v_sobel[9]= {-1,0,1,-2,0,2,-1,0,1};
-	int h_sobel[9]= {1,2,1,0,0,0,-1,-2,-1};
-	// Perform sobel edge detection
-	int x = 0;
+    //int v_sobel[9]={-1,0,1,-2,0,2,-1,0,1};
+    int* v_sobel=malloc(sizeof(int)*9);
+    v_sobel[0]=-1;v_sobel[1]=0;v_sobel[2]=1;v_sobel[3]=-2;v_sobel[4]=0;v_sobel[5]=2;v_sobel[6]=-1;v_sobel[7]=0;v_sobel[8]=1;
+    //int h_sobel[9]={1,2,1,0,0,0,-1,-2,-1};
+    int* h_sobel=malloc(sizeof(int)*9);
+    h_sobel[0]=1;h_sobel[1]=2;h_sobel[2]=1;h_sobel[3]=0;h_sobel[4]=0;h_sobel[5]=0;h_sobel[6]=-1;h_sobel[7]=-2;h_sobel[8]=-1;
+    // Perform sobel edge detection
+    int x = 0;
     while(x<width){
         int y = 0;
-		while(y<height){
+        while(y<height){
             int pos = y*width + x;
-			int v_g = convolution(pixels, pixels_size, width, height, x, y, v_sobel);// Get vertical gradient
-			int h_g = convolution(pixels, pixels_size, width, height, x, y, h_sobel);// Get horizontal gradient
-			int t_g = (v_g*v_g) + (h_g*h_g);// Get total gradient
-			if(t_g > TH){// Edge threshold (64) Note that large thresholds generate few edges
+            int v_g = convolution(pixels, pixels_size, width, height, x, y, v_sobel);// Get vertical gradient
+            int h_g = convolution(pixels, pixels_size, width, height, x, y, h_sobel);// Get horizontal gradient
+            int t_g = (v_g*v_g) + (h_g*h_g);// Get total gradient
+            if(t_g > TH){// Large thresholds generate few edges
                 newPixels[pos] = BLACK;// Color other pixels as black
             }
-			y = y + 1;
+            y = y + 1;
         }
-		x = x + 1;
+        x = x + 1;
     }
-    *_size = size;
+    free(v_sobel);
+    free(h_sobel);
     return newPixels;
 }
 
@@ -155,19 +159,19 @@ void print_pbm(int width, int height, BYTE* pixels, size_t pixels_size){
 
 int main(int argc, char** args){
     FILE* fp;
-    fp = fopen("../../images/input/image64x64.pbm", "r");
+    fp = fopen("../../images/input/image64x128.pbm", "r");
     if(!fp){
         printf("File does not exit\n");
         exit(-2);
     }
     int width = 64;
-    int height = 64;
+    int height = 128;
     // Read a PBM image as a byte array
     size_t pixels_size = 0;
     BYTE* pixels = readPBM(fp, &pixels_size);
     fclose(fp);
-    size_t newPixels_size = 0;
-    BYTE* newPixels = sobelEdgeDetection(pixels, pixels_size, width, height, &newPixels_size);
+    size_t newPixels_size = pixels_size;
+    BYTE* newPixels = sobelEdgeDetection(pixels, pixels_size, width, height, newPixels_size);
     printf("Blurred Image sizes: %zu bytes", newPixels_size);
 
     print_pbm(width, height, newPixels, newPixels_size);

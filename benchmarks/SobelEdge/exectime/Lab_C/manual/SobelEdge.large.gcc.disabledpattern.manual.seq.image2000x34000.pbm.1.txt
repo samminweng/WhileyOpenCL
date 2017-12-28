@@ -1,62 +1,102 @@
 Run the large SobelEdge on 34000 using gcc
 Begin 1 iteration
+height=34000
+size=68000000
+pixels[1000]=232
 Blurred Image sizes: 68000000 bytes
+newPixels[1000]=32
 
-Parameter:34000	ExecutionTime:683171893	nanoseconds.
+Parameter:34000	ExecutionTime:683881294	nanoseconds.
 Finish 1 iteration
 Run the large SobelEdge on 34000 using gcc
 Begin 2 iteration
+height=34000
+size=68000000
+pixels[1000]=232
 Blurred Image sizes: 68000000 bytes
+newPixels[1000]=32
 
-Parameter:34000	ExecutionTime:688797653	nanoseconds.
+Parameter:34000	ExecutionTime:712501691	nanoseconds.
 Finish 2 iteration
 Run the large SobelEdge on 34000 using gcc
 Begin 3 iteration
+height=34000
+size=68000000
+pixels[1000]=232
 Blurred Image sizes: 68000000 bytes
+newPixels[1000]=32
 
-Parameter:34000	ExecutionTime:684044212	nanoseconds.
+Parameter:34000	ExecutionTime:693539306	nanoseconds.
 Finish 3 iteration
 Run the large SobelEdge on 34000 using gcc
 Begin 4 iteration
+height=34000
+size=68000000
+pixels[1000]=232
 Blurred Image sizes: 68000000 bytes
+newPixels[1000]=32
 
-Parameter:34000	ExecutionTime:738111765	nanoseconds.
+Parameter:34000	ExecutionTime:684329285	nanoseconds.
 Finish 4 iteration
 Run the large SobelEdge on 34000 using gcc
 Begin 5 iteration
+height=34000
+size=68000000
+pixels[1000]=232
 Blurred Image sizes: 68000000 bytes
+newPixels[1000]=32
 
-Parameter:34000	ExecutionTime:745815505	nanoseconds.
+Parameter:34000	ExecutionTime:683344787	nanoseconds.
 Finish 5 iteration
 Run the large SobelEdge on 34000 using gcc
 Begin 6 iteration
+height=34000
+size=68000000
+pixels[1000]=232
 Blurred Image sizes: 68000000 bytes
+newPixels[1000]=32
 
-Parameter:34000	ExecutionTime:709587325	nanoseconds.
+Parameter:34000	ExecutionTime:686277131	nanoseconds.
 Finish 6 iteration
 Run the large SobelEdge on 34000 using gcc
 Begin 7 iteration
+height=34000
+size=68000000
+pixels[1000]=232
 Blurred Image sizes: 68000000 bytes
+newPixels[1000]=32
 
-Parameter:34000	ExecutionTime:682444757	nanoseconds.
+Parameter:34000	ExecutionTime:695914892	nanoseconds.
 Finish 7 iteration
 Run the large SobelEdge on 34000 using gcc
 Begin 8 iteration
+height=34000
+size=68000000
+pixels[1000]=232
 Blurred Image sizes: 68000000 bytes
+newPixels[1000]=32
 
-Parameter:34000	ExecutionTime:690193056	nanoseconds.
+Parameter:34000	ExecutionTime:684658642	nanoseconds.
 Finish 8 iteration
 Run the large SobelEdge on 34000 using gcc
 Begin 9 iteration
+height=34000
+size=68000000
+pixels[1000]=232
 Blurred Image sizes: 68000000 bytes
+newPixels[1000]=32
 
-Parameter:34000	ExecutionTime:684531851	nanoseconds.
+Parameter:34000	ExecutionTime:683251726	nanoseconds.
 Finish 9 iteration
 Run the large SobelEdge on 34000 using gcc
 Begin 10 iteration
+height=34000
+size=68000000
+pixels[1000]=232
 Blurred Image sizes: 68000000 bytes
+newPixels[1000]=32
 
-Parameter:34000	ExecutionTime:690449517	nanoseconds.
+Parameter:34000	ExecutionTime:682442783	nanoseconds.
 Finish 10 iteration
 processor	: 0
 vendor_id	: GenuineIntel
@@ -65,7 +105,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3649.820
+cpu MHz		: 3079.921
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -79,7 +119,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm epb tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt dtherm ida arat pln pts
 bugs		:
-bogomips	: 6783.92
+bogomips	: 6784.55
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -92,7 +132,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3839.609
+cpu MHz		: 3400.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -106,7 +146,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm epb tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt dtherm ida arat pln pts
 bugs		:
-bogomips	: 6783.92
+bogomips	: 6784.55
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -119,7 +159,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3708.257
+cpu MHz		: 3400.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -133,7 +173,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm epb tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt dtherm ida arat pln pts
 bugs		:
-bogomips	: 6783.92
+bogomips	: 6784.55
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -146,7 +186,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3767.226
+cpu MHz		: 3308.757
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -160,7 +200,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm epb tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt dtherm ida arat pln pts
 bugs		:
-bogomips	: 6783.92
+bogomips	: 6784.55
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -173,7 +213,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3868.296
+cpu MHz		: 3382.335
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -187,7 +227,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm epb tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt dtherm ida arat pln pts
 bugs		:
-bogomips	: 6783.92
+bogomips	: 6784.55
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -200,7 +240,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3436.523
+cpu MHz		: 3401.062
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -214,7 +254,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm epb tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt dtherm ida arat pln pts
 bugs		:
-bogomips	: 6783.92
+bogomips	: 6784.55
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -227,7 +267,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3575.843
+cpu MHz		: 2898.632
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -241,7 +281,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm epb tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt dtherm ida arat pln pts
 bugs		:
-bogomips	: 6783.92
+bogomips	: 6784.55
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -254,7 +294,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3374.765
+cpu MHz		: 3400.265
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -268,7 +308,7 @@ cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm epb tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt dtherm ida arat pln pts
 bugs		:
-bogomips	: 6783.92
+bogomips	: 6784.55
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual

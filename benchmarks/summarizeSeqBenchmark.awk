@@ -92,12 +92,12 @@ BEGIN {
 	programs["MatrixMult"]="original";
 	programs["CoinGame"]="original";
 	programs["SobelEdge"]="large";
-	programs["LZ77"]="compress opt_decompress";
+	programs["LZ77"]="opt_compress opt_decompress";
 	programs["Cashtill"]="original";
 
 	# Code Generation
-	codegens = "naive naivedealloc nocopy nocopydealloc";
-	#codegens = "manual";
+	#codegens = "naive naivedealloc nocopy nocopydealloc";
+	codegens = "manual";
 	# Pattern matching
 	patterns["Reverse"] = "disabled";
 	patterns["newTicTacToe"] = "disabled";

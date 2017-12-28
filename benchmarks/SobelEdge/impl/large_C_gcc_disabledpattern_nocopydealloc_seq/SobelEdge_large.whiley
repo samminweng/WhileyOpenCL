@@ -104,8 +104,12 @@ method main(System.Console sys):
 		while i < size:
 		      pixels[i]=Int.toUnsignedByte(i%256)
 		      i = i + 1
+		sys.out.print_s("pixels[1000]=")
+		sys.out.println(pixels[1000])
 		byte[] newPixels = sobelEdgeDetection(pixels, width, height)
 		sys.out.println_s("Blurred Image sizes:   ")
 		sys.out.print(|newPixels|)
 		sys.out.println_s(" bytes")
+		sys.out.print_s("newPixels[1000]=")
+		sys.out.print(newPixels[1000])
 		//print_pbm(sys, width, height, newPixels)
