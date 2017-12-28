@@ -57,7 +57,7 @@ do
 		fi
 		echo "Finish $i iteration" >> $result
 		####### Wait until background process is completed
-		wait ${!}
+		sleep 5s
     done
     ### Output the hardware info.
     cat /proc/cpuinfo >> $result

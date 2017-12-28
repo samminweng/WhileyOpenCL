@@ -82,7 +82,7 @@ BEGIN {
 	FS = "\n";
 	## Test case name
 	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
-	testcases="SobelEdge";
+	testcases="LZ77";
 
 	## Program Type
 	programs["Reverse"]="original";
@@ -92,12 +92,12 @@ BEGIN {
 	programs["MatrixMult"]="original";
 	programs["CoinGame"]="original";
 	programs["SobelEdge"]="large";
-	programs["LZ77"]="compress decompress opt_decompress";
+	programs["LZ77"]="compress opt_decompress";
 	programs["Cashtill"]="original";
 
 	# Code Generation
-	#codegens = "naive naivedealloc nocopy nocopydealloc";
-	codegens = "manual";
+	codegens = "naive naivedealloc nocopy nocopydealloc";
+	#codegens = "manual";
 	# Pattern matching
 	patterns["Reverse"] = "disabled";
 	patterns["newTicTacToe"] = "disabled";
@@ -141,9 +141,9 @@ BEGIN {
 	    " image2000x22000 image2000x24000 image2000x26000 image2000x28000 image2000x30000 image2000x32000 image2000x34000 image2000x36000 image2000x38000 image2000x40000";
 	#parameters["SobelEdge"]="image40959x2048 image40960x2048 image40961x2048";
 	#parameters["SobelEdge"]="image16383x16384 image16384x16384 image16385x16384";
-	parameters["LZ77"]="medium1x medium5x medium7x medium10x medium25x medium50x medium75x medium100x medium120x medium125x medium150x medium175x medium200x " \
-	                   "medium225x medium250x medium275x medium300x medium325x medium350x medium375x medium400x";
-	#parameters["LZ77"]="medium10000x medium20000x medium30000x medium40000x medium50000x medium60000x medium70000x medium80000x medium90000x medium100000x";
+	#parameters["LZ77"]="medium1x medium5x medium7x medium10x medium25x medium50x medium75x medium100x medium120x medium125x medium150x medium175x medium200x " \
+	#                   "medium225x medium250x medium275x medium300x medium325x medium350x medium375x medium400x";
+	parameters["LZ77"]="medium10000x medium20000x medium30000x medium40000x medium50000x medium60000x medium70000x medium80000x medium90000x medium100000x";
 	parameters["Cashtill"]="10000 20000 25000 30000 40000";
 
 	# The number of threads

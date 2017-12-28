@@ -17,7 +17,7 @@ declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" [
 declare -a codegens=( "nocopy" "nocopydealloc" )
 
 ## Declare an associative array for pattern matching
-declare -A patterns=( [LZ77_original_opt]=compress [LZ77_compress]=compress )
+declare -A patterns=( [LZ77_compress]=compress )
 
 ## declare the number of threads
 declare -a threads=( 1 2 4 8 )
@@ -29,8 +29,8 @@ declare -A parameters=( [Reverse]="100000 1000000 10000000" \
 			[MergeSort]="10000000 20000000 30000000" \
 			[MatrixMult]="1000 2000 3000" \
 			#[LZ77]="medium1x medium5x medium10x medium25x medium50x medium75x medium100x medium125x medium150x medium175x medium200x" \
-			[LZ77]="medium225x medium250x medium275x medium300x medium325x medium350x medium375x medium400x" \
-			#[LZ77]="medium10000x medium20000x medium30000x medium40000x medium50000x medium60000x medium70000x medium80000x medium90000x medium100000x" \
+			#[LZ77]="medium225x medium250x medium275x medium300x medium325x medium350x medium375x medium400x" \
+			[LZ77]="medium10000x medium20000x medium30000x medium40000x medium50000x medium60000x medium70000x medium80000x medium90000x medium100000x" \
 			#[SobelEdge]="image64x64.pbm image64x128.pbm image64x192.pbm image64x256.pbm image64x320.pbm image64x384.pbm image64x448.pbm image64x512.pbm image64x576.pbm image64x640.pbm" \
 			#[SobelEdge]="image2000x2000.pbm image2000x4000.pbm image2000x6000.pbm image2000x8000.pbm image2000x10000.pbm image2000x12000.pbm image2000x14000.pbm image2000x16000.pbm image2000x18000.pbm image2000x20000.pbm image2000x22000.pbm image2000x24000.pbm image2000x26000.pbm image2000x28000.pbm image2000x30000.pbm image2000x32000.pbm image2000x34000.pbm image2000x36000.pbm image2000x38000.pbm image2000x40000.pbm" \
 			#[SobelEdge]="image40959x2048.pbm image40960x2048.pbm image40961x2048.pbm" \
@@ -304,8 +304,8 @@ exec(){
 				# Test pattern is missing or not (non-empty string (-n))
 				if [ -n "$str" ]
 				then
-					#patternmatches="enabledpattern"
-					patternmatches="disabledpattern enabledpattern"
+					patternmatches="enabledpattern"
+					#patternmatches="disabledpattern enabledpattern"
 					#read -p "Found Pattern..."${patternmatches}
 				else
 					patternmatches="disabledpattern"
@@ -393,15 +393,15 @@ exec(){
 
 #### LZ77 test case
 #init LZ77
-#exec LZ77 compress
+exec LZ77 compress
 #exec LZ77 decompress
-#exec LZ77 opt_decompress
+exec LZ77 opt_decompress
 
 # # ###Sobel Edge test
 #init SobelEdge
 #exec SobelEdge small
 #exec SobelEdge large
-exec SobelEdge test
+#exec SobelEdge test
 # # ## Fibonacci test case
 # # init Fibonacci
 # # exec Fibonacci original 10

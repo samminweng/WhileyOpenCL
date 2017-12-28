@@ -145,12 +145,12 @@ int main(int argc, char** args){
 	// Decompress compressed data array
 	size_t decompress_data_size;
 	BYTE* decompress_data = decompress(data, data_size, &decompress_data_size);
-	i=0;
+	/*i=0;
 	while(i<decompress_data_size){
 		char c = decompress_data[i];
 		printf("%c", c);
 		i++;
-	}
+	}*/
 	printf("\nDecompress Data: %zu bytes\n", decompress_data_size);
 	free(data);
 	free(decompress_data);
