@@ -57,7 +57,7 @@ nat match(BYTE* data, size_t data_size, nat offset, nat end){
     return len;
 }
 
-Match* findLongestMatch(BYTE* data, size_t data_size, nat pos){
+Match findLongestMatch(BYTE* data, size_t data_size, nat pos){
     nat bestOffset = 0;
     nat bestLen = 0;
     int start = max(pos - 255, 0);
@@ -71,9 +71,9 @@ Match* findLongestMatch(BYTE* data, size_t data_size, nat pos){
         }
         offset = offset + 1;
     }
-    Match* ret = (Match*) malloc(sizeof(Match));
-    ret->len = bestLen;
-    ret->offset = bestOffset;
+    Match ret;
+    ret.len = bestLen;
+    ret.offset = bestOffset;
     // Return a 'Match' object
     return ret;
 }
@@ -91,24 +91,21 @@ BYTE* resize(BYTE* items, size_t items_size, int size, size_t* nitems_size) {
 
 BYTE* compress(BYTE* data, size_t data_size, size_t* _size){
     nat pos = 0;
-	Match* m = NULL;
+	Match m;
 	size_t tmp_size=0;
 	BYTE* tmp =NULL;
 	size_t output_size=2*data_size;
     BYTE* output = malloc(sizeof(BYTE)*output_size);
 	int size = 0;
     while(pos < data_size){
-		if(m != NULL){// Match m is not used afterward
-			free(m);
-		}
         m = findLongestMatch(data, data_size, pos);
-        BYTE offset = (BYTE) m->offset;
-		BYTE length = (BYTE) m->len;
+        BYTE offset = (BYTE) m.offset;
+		BYTE length = (BYTE) m.len;
 		if(offset == 0){
 			length = data[pos];
 			pos = pos + 1;
 		}else{
-			pos = pos + m->len;
+			pos = pos + m.len;
 		}
 		output[size] = offset;
 		size++;
@@ -122,9 +119,6 @@ BYTE* compress(BYTE* data, size_t data_size, size_t* _size){
 	}
 	output = tmp;
 	output_size = tmp_size;
-	if(m!= NULL){// Match m is a local variable
-		free(m);
-	}
 	*_size = output_size;
 	return output;
 }
@@ -168,7 +162,7 @@ int main(int argc, char** args){
 		i++;
 	}*/
 	printf("Compress Data: %zu bytes\n", compress_data_size);
-
+	printf("compress_data[1000]=%d\n", compress_data[1000]);
 	free(data);
 	free(compress_data);
     return 0;
