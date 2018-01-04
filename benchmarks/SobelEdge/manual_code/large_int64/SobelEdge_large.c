@@ -29,7 +29,7 @@ int64_t convolution(BYTE* pixels, size_t pixels_size, int64_t width, int64_t hei
         int64_t i = 0;
         while(i < kernelSize){
             int64_t x=llabs((xCenter + i - kernelHalf)%width);
-			int64_t pixel = pixels[y*width+x];// pixels[x, y]
+			int64_t pixel = (unsigned int)pixels[y*width+x];// pixels[x, y]
 			int64_t kernelVal = kernel[j*kernelSize+i];	// Get kernel[i, j]
 			sum = sum + pixel * kernelVal;//sum += pixels[x, y]*kernel[i, j]
 			i = i + 1;

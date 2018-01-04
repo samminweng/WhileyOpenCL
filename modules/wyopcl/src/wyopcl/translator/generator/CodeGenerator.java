@@ -1297,7 +1297,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			case "abs":
 				// Use 'llabs' function to return the absolute value of 'rhs'
 				// because the rhs is a int64_t integer.
-				statements.add(indent + lhs + " = llabs(" + rhs + ");");
+				statements.add(indent + lhs + " = abs(" + rhs + ");");
 				break;
 			case "min":
 				String rhs1 = stores.getVar(code.operand(1), function);

@@ -25,11 +25,11 @@ int convolution(BYTE* pixels, size_t pixels_size, int width, int height, int xCe
 	int kernelHalf = 1;
 	int j = 0;
     while(j < kernelSize){
-        int y = llabs((yCenter+j-kernelHalf)%height);
+        int y = abs((yCenter+j-kernelHalf)%height);
         int i = 0;
         while(i < kernelSize){
-            int x=llabs((xCenter + i - kernelHalf)%width);
-			int pixel = pixels[y*width+x];// pixels[x, y]
+            int x=abs((xCenter + i - kernelHalf)%width);
+			int pixel = (unsigned int) pixels[y*width+x];// pixels[x, y]
 			int kernelVal = kernel[j*kernelSize+i];	// Get kernel[i, j]
 			sum = sum + pixel * kernelVal;//sum += pixels[x, y]*kernel[i, j]
 			i = i + 1;
@@ -47,12 +47,12 @@ BYTE* sobelEdgeDetection(BYTE* pixels, size_t pixels_size, int width, int height
         i++;
     }
     // vertical and horizontal sobel filter (3x3 kernel)
-    //int v_sobel[9]={-1,0,1,-2,0,2,-1,0,1};
-    int* v_sobel=malloc(sizeof(int)*9);
-    v_sobel[0]=-1;v_sobel[1]=0;v_sobel[2]=1;v_sobel[3]=-2;v_sobel[4]=0;v_sobel[5]=2;v_sobel[6]=-1;v_sobel[7]=0;v_sobel[8]=1;
-    //int h_sobel[9]={1,2,1,0,0,0,-1,-2,-1};
-    int* h_sobel=malloc(sizeof(int)*9);
-    h_sobel[0]=1;h_sobel[1]=2;h_sobel[2]=1;h_sobel[3]=0;h_sobel[4]=0;h_sobel[5]=0;h_sobel[6]=-1;h_sobel[7]=-2;h_sobel[8]=-1;
+    int v_sobel[9]={-1,0,1,-2,0,2,-1,0,1};
+    //int* v_sobel=malloc(sizeof(int)*9);
+    //v_sobel[0]=-1;v_sobel[1]=0;v_sobel[2]=1;v_sobel[3]=-2;v_sobel[4]=0;v_sobel[5]=2;v_sobel[6]=-1;v_sobel[7]=0;v_sobel[8]=1;
+    int h_sobel[9]={1,2,1,0,0,0,-1,-2,-1};
+    //int* h_sobel=malloc(sizeof(int)*9);
+    //h_sobel[0]=1;h_sobel[1]=2;h_sobel[2]=1;h_sobel[3]=0;h_sobel[4]=0;h_sobel[5]=0;h_sobel[6]=-1;h_sobel[7]=-2;h_sobel[8]=-1;
     // Perform sobel edge detection
     int x = 0;
     while(x<width){
@@ -69,8 +69,6 @@ BYTE* sobelEdgeDetection(BYTE* pixels, size_t pixels_size, int width, int height
         }
         x = x + 1;
     }
-    free(v_sobel);
-    free(h_sobel);
     return newPixels;
 }
 

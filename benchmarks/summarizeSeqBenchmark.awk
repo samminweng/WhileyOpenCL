@@ -82,7 +82,7 @@ BEGIN {
 	FS = "\n";
 	## Test case name
 	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
-	testcases="LZ77";
+	testcases="SobelEdge";
 
 	## Program Type
 	programs["Reverse"]="original";
@@ -91,7 +91,7 @@ BEGIN {
 	programs["MergeSort"]="original";
 	programs["MatrixMult"]="original";
 	programs["CoinGame"]="original";
-	programs["SobelEdge"]="large";
+	programs["SobelEdge"]="large large_64 large_generated";
 	programs["LZ77"]="opt_compress opt_decompress";
 	programs["Cashtill"]="original";
 
