@@ -91,13 +91,14 @@ BEGIN {
 	programs["MergeSort"]="original";
 	programs["MatrixMult"]="original";
 	programs["CoinGame"]="original";
-	programs["SobelEdge"]="large large_64 large_generated";
+	#programs["SobelEdge"]="large large_64 large_generated";
+	programs["SobelEdge"]="large";
 	programs["LZ77"]="opt_compress opt_decompress";
 	programs["Cashtill"]="original";
 
 	# Code Generation
-	#codegens = "naive naivedealloc nocopy nocopydealloc";
-	codegens = "manual";
+	codegens = "naive naivedealloc nocopy nocopydealloc";
+	#codegens = "manual";
 	# Pattern matching
 	patterns["Reverse"] = "disabled";
 	patterns["newTicTacToe"] = "disabled";

@@ -119,7 +119,7 @@ int64_t _convolution_(BYTE* pixels, size_t pixels_size, int64_t width, int64_t h
 		_23=_22%height;
 		//invoke (%20) = (%23) whiley/lang/Math:abs : function(int)->(int)
 		{
-			_20 = llabs(_23);
+			_20 = abs(_23);
 		}
 		//assign %11 = %20  : int
 		// isCopyEliminated = true
@@ -141,7 +141,7 @@ int64_t _convolution_(BYTE* pixels, size_t pixels_size, int64_t width, int64_t h
 			_28=_27%width;
 			//invoke (%25) = (%28) whiley/lang/Math:abs : function(int)->(int)
 			{
-				_25 = llabs(_28);
+				_25 = abs(_28);
 			}
 			//assign %13 = %25  : int
 			// isCopyEliminated = true
