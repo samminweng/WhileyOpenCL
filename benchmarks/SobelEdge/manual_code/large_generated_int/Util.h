@@ -57,7 +57,7 @@ void indirect_printf(int64_t input);
 void printf_s(int64_t* input, size_t input_size);
 void println_s(int64_t* input, size_t input_size);
 // Parse a string into an integer
-int64_t* parseStringToInt(int64_t* arr);
+int* parseStringToInt(int64_t* arr);
 // 1D Array
 int64_t** convertArgsToIntArray(int argc, char** args, size_t *arr_size, size_t *arr_size_size);
 // ArrayList Operators

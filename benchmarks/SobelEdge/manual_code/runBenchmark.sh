@@ -7,7 +7,7 @@ export LANG=C.UTF-8
 declare -a parameters=( "2000" "4000" "6000" "8000" "10000" "12000" "14000" "16000" "18000" "20000" \
                         "22000" "24000" "26000" "28000" "30000" "32000" "34000" "36000" "38000" "40000" )
 testcase="SobelEdge"
-declare -a programs=( "large" "large_64" "large_generated" )
+declare -a programs=( "large_int" "large_int64" "large_generated_int" "large_generated_int64" )
 compiler="gcc"
 pattern="disabledpattern"
 codegen="manual"

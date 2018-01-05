@@ -827,7 +827,7 @@ blklab20:;
 	_45=newPixels[_44];
 	//indirectinvoke () = %43 (%45) : method(any)->()
 	{
-		printf("%"PRId64, _45);
+		printf("%d\n", _45);
 	}
 //.blklab19
 blklab19:;

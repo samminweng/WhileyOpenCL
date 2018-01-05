@@ -94,14 +94,14 @@ int64_t* copy1DArray_int64_t(int64_t *arr, size_t size){
  *	And return a integer pointer
  *
  */
-int64_t* parseStringToInt(int64_t* arr){
+int* parseStringToInt(int64_t* arr){
 	size_t i=0;
 	int64_t value=0;
 	while(arr[i]>=0&&arr[i]<=9){
 		value = value*10+arr[i];
 		i++;
 	}
-	int64_t* p = malloc(sizeof(int64_t));
+	int* p = malloc(sizeof(int));
 	*p = value;
 	return p;
 }
