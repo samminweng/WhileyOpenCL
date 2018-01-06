@@ -145,9 +145,9 @@ int64_t _convolution_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM(pixe
 			_31=_30+x;
 			//indexof %32 = %0, %31 : byte[]
 			_32=pixels[_31];
-			//invoke (%29) = (%32) whiley/lang/Byte:toUnsignedInt : function(byte)->(whiley/lang/Int:uint)
+			//invoke (%29) = (%32) whiley/lang/Byte:toInt : function(byte)->(int)
 			{
-				_29 = (unsigned int)_32;
+				_29 = (int)_32;
 			}
 			//assign %14 = %29  : int
 			pixel = _29;

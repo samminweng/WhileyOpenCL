@@ -1,14 +1,14 @@
 Memory Leak (bytes)
 TestCase	ProgramType	Compiler	Pattern	Parameter	CodeGen	Code	Thread	definite loss	indirect loss	possible loss	reachable loss
-SobelEdge	small	gcc	disabled	image64x64	naive	seq	1	34144544	0	4096	22704
+SobelEdge	small	gcc	disabled	image64x64	naive	seq	1	34144544	0	4096	22800
 SobelEdge	small	gcc	disabled	image64x64	naivedealloc	seq	1	0	0	0	0
-SobelEdge	small	gcc	disabled	image64x64	nocopy	seq	1	144	0	0	10408
+SobelEdge	small	gcc	disabled	image64x64	nocopy	seq	1	144	0	0	10504
 SobelEdge	small	gcc	disabled	image64x64	nocopydealloc	seq	1	0	0	0	0
-SobelEdge	small	gcc	disabled	image64x128	naive	seq	1	135364896	0	40960	43216
+SobelEdge	small	gcc	disabled	image64x128	naive	seq	1	135381280	0	24576	43312
 SobelEdge	small	gcc	disabled	image64x128	naivedealloc	seq	1	0	0	0	0
-SobelEdge	small	gcc	disabled	image64x128	nocopy	seq	1	144	0	0	18632
+SobelEdge	small	gcc	disabled	image64x128	nocopy	seq	1	144	0	0	18728
 SobelEdge	small	gcc	disabled	image64x128	nocopydealloc	seq	1	0	0	0	0
-SobelEdge	small	gcc	disabled	image64x256	naive	seq	1	539115808	0	131072	84176
+SobelEdge	small	gcc	disabled	image64x256	naive	seq	1	539181344	0	65536	84272
 SobelEdge	small	gcc	disabled	image64x256	naivedealloc	seq	1	0	0	0	0
-SobelEdge	small	gcc	disabled	image64x256	nocopy	seq	1	144	0	0	35016
+SobelEdge	small	gcc	disabled	image64x256	nocopy	seq	1	144	0	0	35112
 SobelEdge	small	gcc	disabled	image64x256	nocopydealloc	seq	1	0	0	0	0

@@ -115,7 +115,7 @@ int64_t _convolution_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM(pixe
 		_23=_22%height;
 		//invoke (%20) = (%23) whiley/lang/Math:abs : function(int)->(int)
 		{
-			_20 = llabs(_23);
+			_20 = abs(_23);
 		}
 		//assign %11 = %20  : int
 		y = _20;
@@ -135,7 +135,7 @@ int64_t _convolution_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM(pixe
 			_28=_27%width;
 			//invoke (%25) = (%28) whiley/lang/Math:abs : function(int)->(int)
 			{
-				_25 = llabs(_28);
+				_25 = abs(_28);
 			}
 			//assign %13 = %25  : int
 			x = _25;
@@ -145,9 +145,9 @@ int64_t _convolution_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM(pixe
 			_31=_30+x;
 			//indexof %32 = %0, %31 : byte[]
 			_32=pixels[_31];
-			//invoke (%29) = (%32) whiley/lang/Byte:toUnsignedInt : function(byte)->(whiley/lang/Int:uint)
+			//invoke (%29) = (%32) whiley/lang/Byte:toInt : function(byte)->(int)
 			{
-				_29 = (unsigned int)_32;
+				_29 = (int)_32;
 			}
 			//assign %14 = %29  : int
 			pixel = _29;

@@ -28,7 +28,7 @@ function convolution(byte[] pixels, int width, int height, int xCenter, int yCen
 		while kernelX < kernelSize:
 			int x=Math.abs((xCenter + kernelX - kernelHalf)%width)
 			// Get pixel
-			int pixel = Byte.toUnsignedInt(pixels[y*width+x])
+			int pixel = Byte.toInt(pixels[y*width+x])
 			// Get kernel value
 			int kernelVal = kernel[kernelY*kernelSize+kernelX]
 			// pixel * kernel value

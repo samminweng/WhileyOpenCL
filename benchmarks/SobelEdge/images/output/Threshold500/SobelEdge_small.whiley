@@ -27,8 +27,8 @@ function convolution(byte[] pixels, int width, int height, int xCenter, int yCen
 		int i = 0
 		while i < kernelSize:
 			int x=Math.abs((xCenter + i - kernelHalf)%width)
-			int pixel = Byte.toUnsignedInt(pixels[y*width+x])// pixels[x, y]		
-			int kernelVal = kernel[j*kernelSize+i]	// Get kernel[i, j]			
+			int pixel = Byte.toInt(pixels[y*width+x])// pixels[x, y]
+			int kernelVal = kernel[j*kernelSize+i]	// Get kernel[i, j]
 			sum = sum + pixel * kernelVal//sum += pixels[x, y]*kernel[i, j]
 			i = i + 1
 		j = j + 1
