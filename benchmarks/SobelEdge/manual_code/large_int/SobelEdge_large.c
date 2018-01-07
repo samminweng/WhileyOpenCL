@@ -28,11 +28,11 @@ int convolution(BYTE* pixels, size_t pixels_size, int width, int height, int xCe
         int y = abs((yCenter+j-kernelHalf)%height);
         int i = 0;
         while(i < kernelSize){
-            int x=abs((xCenter + i - kernelHalf)%width);
-			int pixel = (unsigned int) pixels[y*width+x];// pixels[x, y]
-			int kernelVal = kernel[j*kernelSize+i];	// Get kernel[i, j]
-			sum = sum + pixel * kernelVal;//sum += pixels[x, y]*kernel[i, j]
-			i = i + 1;
+          int x=abs((xCenter + i - kernelHalf)%width);
+          int pixel = (unsigned int) pixels[y*width+x];// pixels[x, y]
+          int kernelVal = kernel[j*kernelSize+i];	// Get kernel[i, j]
+          sum = sum + pixel * kernelVal;//sum += pixels[x, y]*kernel[i, j]
+          i = i + 1;
         }
         j = j + 1;
     }

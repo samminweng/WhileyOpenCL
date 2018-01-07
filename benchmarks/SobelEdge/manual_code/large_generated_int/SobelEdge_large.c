@@ -50,26 +50,6 @@ blklab1:;
 	//return
 }
 
-int convolution(BYTE* pixels, size_t pixels_size, int width, int height, int xCenter, int yCenter, int64_t* kernel){
-    int sum = 0;
-	int kernelSize = 3;
-	int kernelHalf = 1;
-	int j = 0;
-    while(j < kernelSize){
-        int y = abs((yCenter+j-kernelHalf)%height);
-        int i = 0;
-        while(i < kernelSize){
-            int x=abs((xCenter + i - kernelHalf)%width);
-			int pixel = (unsigned int) pixels[y*width+x];// pixels[x, y]
-			int kernelVal = kernel[j*kernelSize+i];	// Get kernel[i, j]
-			sum = sum + pixel * kernelVal;//sum += pixels[x, y]*kernel[i, j]
-			i = i + 1;
-        }
-        j = j + 1;
-    }
-    return sum;
-}
-
 int _convolution_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM(pixels), int width, int height, int xCenter, int yCenter, _DECL_1DARRAY_PARAM(kernel), _DECL_DEALLOC_PARAM(kernel)){
 	int _6;
 	int sum;
@@ -172,9 +152,9 @@ int _convolution_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM(pixels),
 			_31=_30+x;
 			//indexof %32 = %0, %31 : byte[]
 			_32=pixels[_31];
-			//invoke (%29) = (%32) whiley/lang/Byte:toUnsignedInt : function(byte)->(whiley/lang/Int:uint)
+			//invoke (%29) = (%32) whiley/lang/Byte:toInt : function(byte)->(int)
 			{
-				_29 = (unsigned int)_32;
+				_29 = (int)_32;
 			}
 			//assign %14 = %29  : int
 			// isCopyEliminated = true
@@ -405,7 +385,6 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM
 				_47 = _convolution_(pixels, pixels_size, false, width, height, x, y, v_sobel, v_sobel_size, false);
 				_RETAIN_DEALLOC(pixels, "false-false-true" , "convolution");
 				_RETAIN_DEALLOC(v_sobel, "false-false-true" , "convolution");
-				//_47 = convolution(pixels, pixels_size, width, height, x, y, v_sobel);
 			}
 			//assign %11 = %47  : int
 			// isCopyEliminated = true
@@ -417,7 +396,6 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM
 				_48 = _convolution_(pixels, pixels_size, false, width, height, x, y, h_sobel, h_sobel_size, false);
 				_RETAIN_DEALLOC(pixels, "false-false-true" , "convolution");
 				_RETAIN_DEALLOC(h_sobel, "false-false-true" , "convolution");
-				//_48 = convolution(pixels, pixels_size, width, height, x, y, h_sobel);
 			}
 			//assign %12 = %48  : int
 			// isCopyEliminated = true
@@ -849,7 +827,7 @@ blklab20:;
 	_45=newPixels[_44];
 	//indirectinvoke () = %43 (%45) : method(any)->()
 	{
-		printf("%d\n", _45);
+		printf("%d", _45);
 	}
 //.blklab19
 blklab19:;
