@@ -24,7 +24,7 @@ do
         ## Compile all C files into executable
         executable=$program/"out"/$testcase"_"$program.$codegen.out
         mkdir -p "$program/out"
-        gcc -O3 $program/*.c -o $executable
+        gcc -O2 $program/*.c -o $executable
         thread=1
         result="../exectime/C/$testcase.$program.$compiler.$pattern.$codegen.seq.image2000x$parameter.pbm.$thread.txt"
         #read -p "Press [Enter] to continue..."$result
