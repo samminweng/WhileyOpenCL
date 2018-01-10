@@ -4,8 +4,9 @@ TIMEOUT="3600s"
 export LANG=C.UTF-8
 ### declare parameters
 #declare -a parameters=( "2000" "4000" )
-declare -a parameters=( "2000" "4000" "6000" "8000" "10000" "12000" "14000" "16000" "18000" "20000" \
-                        "22000" "24000" "26000" "28000" "30000" "32000" "34000" "36000" "38000" "40000" )
+#declare -a parameters=( "2000" "4000" "6000" "8000" "10000" "12000" "14000" "16000" "18000" "20000" \
+#                        "22000" "24000" "26000" "28000" "30000" "32000" "34000" "36000" "38000" "40000" )
+declare -a parameters=( "34000" )
 testcase="SobelEdge"
 #declare -a programs=( "large_int32" "large_int64" "large_generated_int32" "large_generated_int64" )
 declare -a programs=( "large_int32"  )
