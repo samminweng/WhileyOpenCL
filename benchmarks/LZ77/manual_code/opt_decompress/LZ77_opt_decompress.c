@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <string.h>
 // Structure
-typedef int64_t nat;
+typedef uint64_t nat;
 typedef uint8_t BYTE;
 // Read a file from the beginning to end
 BYTE* readFile(FILE *file, size_t* _size){

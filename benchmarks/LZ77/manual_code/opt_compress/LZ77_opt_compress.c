@@ -5,7 +5,7 @@
 #define max(a, b) a ^ ((a ^ b) & -(a < b))
 #define min(a, b) b ^ ((a ^ b) & -(a < b))
 // Structure
-typedef int64_t nat;
+typedef uint64_t nat;
 typedef struct{
 	int64_t len;
 	int64_t offset;

@@ -7,7 +7,8 @@ export LANG=C.UTF-8
 declare -a parameters=( "2000" "4000" "6000" "8000" "10000" "12000" "14000" "16000" "18000" "20000" \
                         "22000" "24000" "26000" "28000" "30000" "32000" "34000" "36000" "38000" "40000" )
 testcase="SobelEdge"
-declare -a programs=( "large_int" "large_int64" "large_generated_int" "large_generated_int64" )
+#declare -a programs=( "large_int32" "large_int64" "large_generated_int32" "large_generated_int64" )
+declare -a programs=( "large_int32"  )
 compiler="gcc"
 pattern="disabledpattern"
 codegen="manual"
@@ -24,7 +25,7 @@ do
         ## Compile all C files into executable
         executable=$program/"out"/$testcase"_"$program.$codegen.out
         mkdir -p "$program/out"
-        gcc -O2 $program/*.c -o $executable
+        gcc -O3 $program/*.c -o $executable
         thread=1
         result="../exectime/C/$testcase.$program.$compiler.$pattern.$codegen.seq.image2000x$parameter.pbm.$thread.txt"
         #read -p "Press [Enter] to continue..."$result
