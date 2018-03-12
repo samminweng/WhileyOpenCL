@@ -53,6 +53,7 @@ public class CodeGenerationTestCase {
 	@Parameterized.Parameters(name = "{index}:{0}")
 	public static Collection<String> testCases() {
 		return Arrays.asList(new String[] { 
+				"example", // Test case for 'caller' macro
 				"CallerMacro1", // Test case for 'CALLER' macro
 				"CallerMacro2", // Test case for 'Caller' macro
 				"CallerMacro3", // Test case for 'Caller' macro

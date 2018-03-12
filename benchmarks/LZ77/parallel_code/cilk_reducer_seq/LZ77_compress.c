@@ -28,79 +28,72 @@ void printf_Match(Match* match){
 	printf("}");
 }
 int64_t _match_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), int64_t offset, int64_t end){
-	int64_t _3 = 0;
-	int64_t pos = 0;
-	int64_t len = 0;
-	int64_t maxIter = 0;
-	int64_t _7 = 0;
-	int64_t _8 = 0;
-	int64_t _9 = 0;
-	int64_t _10 = 0;
-	int64_t _11 = 0;
-	int64_t _12 = 0;
-	int64_t _13 = 0;
-	int64_t _14 = 0;
-	BYTE _15;
-	int64_t _16 = 0;
-	BYTE _17;
-	int64_t _18 = 0;
-	int64_t _19 = 0;
+	int64_t length;
+	int64_t pos;
+	int64_t len;
+	int64_t _6;
+	int64_t _7;
+	BYTE _8;
+	BYTE _9;
+	int64_t _10;
+	int64_t _11;
+	int64_t _12;
+	int64_t _13;
+	int64_t _14;
+	int64_t _15;
+	int64_t _16;
 	//assign %4 = %2  : int
 	// isCopyEliminated = true
 	pos = end;
-	//const %7 = 0 : int
-	_7 = 0;
-	//assign %5 = %7  : int
+	//const %6 = 0 : int
+	_6 = 0;
+	//assign %5 = %6  : int
 	// isCopyEliminated = true
-	len = _7;
-	//sub %9 = %4, %1 : int
-	_9=pos-offset;
-	//lengthof %10 = %0 : byte[]
-	_10 = data_size;
-	//sub %11 = %10, %4 : int
-	_11=_10-pos;
-	//invoke (%8) = (%9, %11) whiley/lang/Math:min : function(int,int)->(int)
-	{
-		_8 = min(_9, _11);
-	}
-	//assign %6 = %8  : int
-	// isCopyEliminated = true
-	maxIter = _8;
-	//const %13 = 255 : int
-	_13 = 255;
-	//invoke (%12) = (%13, %6) whiley/lang/Math:min : function(int,int)->(int)
-	{
-		_12 = min(_13, maxIter);
-	}
-	//assign %6 = %12  : int
-	// isCopyEliminated = true
-	maxIter = _12;
-	//loop (%5, %14, %15, %16, %17, %18, %19)
+	len = _6;
+	//loop (%1, %4, %5, %7, %8, %9, %10, %11, %12, %13, %14, %15, %16)
 	while(true){
-		//ifge %5, %6 goto blklab1 : int
-		if(len>=maxIter){goto blklab1;}
-		//add %14 = %1, %5 : int
-		_14=offset+len;
-		//indexof %15 = %0, %14 : byte[]
-		_15=data[_14];
-		//add %16 = %4, %5 : int
-		_16=pos+len;
-		//indexof %17 = %0, %16 : byte[]
-		_17=data[_16];
-		//ifne %15, %17 goto blklab1 : byte
-		if(_15!=_17){goto blklab1;}
-		//const %18 = 1 : int
-		_18 = 1;
-		//add %19 = %5, %18 : int
-		_19=len+_18;
-		//assign %5 = %19  : int
+		//ifge %1, %4 goto blklab3 : int
+		if(offset>=pos){goto blklab3;}
+		//lengthof %7 = %0 : byte[]
+		_7 = data_size;
+		//ifge %4, %7 goto blklab3 : int
+		if(pos>=_7){goto blklab3;}
+		//indexof %8 = %0, %1 : byte[]
+		_8=data[offset];
+		//indexof %9 = %0, %4 : byte[]
+		_9=data[pos];
+		//ifne %8, %9 goto blklab3 : byte
+		if(_8!=_9){goto blklab3;}
+		//const %10 = 255 : int
+		_10 = 255;
+		//ifge %5, %10 goto blklab3 : int
+		if(len>=_10){goto blklab3;}
+		//const %11 = 1 : int
+		_11 = 1;
+		//add %12 = %1, %11 : int
+		_12=offset+_11;
+		//assign %1 = %12  : int
 		// isCopyEliminated = true
-		len = _19;
-		//.blklab2
-		blklab2:;
+		offset = _12;
+		//const %13 = 1 : int
+		_13 = 1;
+		//add %14 = %4, %13 : int
+		_14=pos+_13;
+		//assign %4 = %14  : int
+		// isCopyEliminated = true
+		pos = _14;
+		//const %15 = 1 : int
+		_15 = 1;
+		//add %16 = %5, %15 : int
+		_16=len+_15;
+		//assign %5 = %16  : int
+		// isCopyEliminated = true
+		len = _16;
+//.blklab4
+blklab4:;
 	}
-	//.blklab1
-	blklab1:;
+//.blklab3
+blklab3:;
 	//return %5
 	_DEALLOC(data);
 	return len;
@@ -211,7 +204,7 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 	}
 	//.blklab3
 	blklab3:;
-	//printf("POS:%d\tbestLen:%d\tbestOffset:%d\n", pos, bestLen, bestOffset);
+	printf("POS:%d\tbestLen:%d\tbestOffset:%d\n", pos, bestLen, bestOffset);
 	//newrecord %18 = (%4, %3) : {int len,int offset}
 	_DEALLOC_STRUCT(_18, Match);
 	_18 = malloc(sizeof(Match));

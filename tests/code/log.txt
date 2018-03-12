@@ -1,3 +1,7 @@
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "b" "func" ) (LINE:98 FILE: example.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-true" "b" "func" ) (LINE:98 FILE: example.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-true" "b" "func" ) (LINE:95 FILE: example.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "b" "func" ) (LINE:95 FILE: example.c) in ea_dealloc folder	Frequency: 1
 DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "a" "func" ) (LINE:53 FILE: CallerMacro1.c) in ea_nocopy_dealloc folder	Frequency: 1
 DEBUG: Potential memory leaks at ( "true-true-true" "a" "func" ) (LINE:53 FILE: CallerMacro1.c) in ea_nocopy_dealloc folder	Frequency: 1
 DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "a" "func" ) (LINE:51 FILE: CallerMacro1.c) in ea_dealloc folder	Frequency: 1
@@ -275,6 +279,10 @@ DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "h_sobel" "convolution" ) (
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "newPixels" "print_pbm" ) (LINE:662 FILE: SobelEdge.c) in ea_dealloc folder	Frequency: 1
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "v_sobel" "convolution" ) (LINE:370 FILE: SobelEdge.c) in ea_dealloc folder	Frequency: 4096
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "pixels" "convolution" ) (LINE:369 FILE: SobelEdge.c) in ea_dealloc folder	Frequency: 4096
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "b" "func" ) (LINE:98 FILE: example.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-true" "b" "func" ) (LINE:98 FILE: example.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-true" "b" "func" ) (LINE:95 FILE: example.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "b" "func" ) (LINE:95 FILE: example.c) in ea_dealloc folder	Frequency: 1
 DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "a" "func" ) (LINE:53 FILE: CallerMacro1.c) in ea_nocopy_dealloc folder	Frequency: 1
 DEBUG: Potential memory leaks at ( "true-true-true" "a" "func" ) (LINE:53 FILE: CallerMacro1.c) in ea_nocopy_dealloc folder	Frequency: 1
 DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "a" "func" ) (LINE:51 FILE: CallerMacro1.c) in ea_dealloc folder	Frequency: 1
