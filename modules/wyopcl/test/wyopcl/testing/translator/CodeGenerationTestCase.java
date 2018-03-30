@@ -52,8 +52,8 @@ public class CodeGenerationTestCase {
 
 	@Parameterized.Parameters(name = "{index}:{0}")
 	public static Collection<String> testCases() {
-		return Arrays.asList(new String[] { 
-				"example", // Test case for 'caller' macro
+		return Arrays.asList(new String[] {
+				"opt_append", // Test case for arraylist-like append
 				"CallerMacro1", // Test case for 'CALLER' macro
 				"CallerMacro2", // Test case for 'Caller' macro
 				"CallerMacro3", // Test case for 'Caller' macro
@@ -95,10 +95,10 @@ public class CodeGenerationTestCase {
 				"CoinGame3",
 				"CoinGame4",
 				"cashtill",
-				"lz77",
-				"lz77_2",
-				"lz77_decompress", // Uncompress the lz77 file.
-				"lz77_opt_decompress", // Optimised lz77 decompression
+				"lz77_compress", // Compress a file by appending one item to array 
+				"lz77_opt_compress", // Compress a file by pre-allocating the array
+				"lz77_decompress", // Uncompress the lz77 file and append to the output array
+				"lz77_opt_decompress", // Optimized lz77 decompression by using ArrayList appending
 				"SobelEdge", // Read 'feep.pbm', detect the edges and output the resulting array
 				"IntToByte", // Generate a byte array 
 		});

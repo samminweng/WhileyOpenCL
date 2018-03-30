@@ -1,9 +1,7 @@
-#include "example.h"
-BYTE* _opt_append_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64_t inspos, BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+#include "opt_append.h"
+BYTE* _opt_append_(BYTE* items, size_t items_size, int64_t inspos, BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(output);
-	_DECL_DEALLOC(output);
 	_DECL_1DARRAY_BYTE(nitems);
-	_DECL_DEALLOC(nitems);
 	int64_t index;
 	int64_t _6;
 	BYTE _7;
@@ -13,7 +11,6 @@ BYTE* _opt_append_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), i
 	int64_t _11;
 	int64_t _12;
 	_DECL_1DARRAY_BYTE(_13);
-	_DECL_DEALLOC(_13);
 	int64_t _14;
 	int64_t _15;
 	int64_t _16;
@@ -34,9 +31,6 @@ BYTE* _opt_append_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), i
 	//update %0[%1] = %2 : byte[] -> byte[]
 	items[inspos] = item;
 	//return %0
-	_DEALLOC(output);
-	_DEALLOC(nitems);
-	_DEALLOC(_13);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(items);
 	return items;
 	//goto blklab7
@@ -56,18 +50,12 @@ blklab6:;
 	//add %12 = %10, %11 : int
 	_12=_10+_11;
 	//arraygen %13 = [7; 12] : byte[]
-	_DEALLOC(_13);
 	_NEW_1DARRAY_BYTE(_13, _12, _7);
-	_ADD_DEALLOC(_13);
 	//assign %4 = %13  : byte[]
-	_DEALLOC(nitems);
-	// isCopyEliminated = true
-	_UPDATE_1DARRAY(nitems, _13);
-	_TRANSFER_DEALLOC(nitems, _13);
+	_COPY_1DARRAY_BYTE(nitems, _13);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %5 = %14  : int
-	// isCopyEliminated = true
 	index = _14;
 	//loop (%4, %5, %15, %16, %18, %19, %20, %21, %22, %23, %24, %25, %26)
 	while(true){
@@ -84,7 +72,6 @@ blklab6:;
 		//add %26 = %5, %25 : int
 		_26=index+_25;
 		//assign %5 = %26  : int
-		// isCopyEliminated = true
 		index = _26;
 //.blklab9
 blklab9:;
@@ -94,9 +81,6 @@ blklab8:;
 	//update %4[%5] = %2 : byte[] -> byte[]
 	nitems[index] = item;
 	//return %4
-	_DEALLOC(items);
-	_DEALLOC(output);
-	_DEALLOC(_13);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(nitems);
 	return nitems;
 //.blklab7
@@ -106,20 +90,16 @@ blklab7:;
 
 int main(int argc, char** args){
 	_DECL_1DARRAY_BYTE(b);
-	_DECL_DEALLOC(b);
 	int64_t inspos;
 	BYTE item;
 	_DECL_1DARRAY_BYTE(a);
-	_DECL_DEALLOC(a);
 	BYTE _5;
 	int64_t _6;
 	_DECL_1DARRAY_BYTE(_7);
-	_DECL_DEALLOC(_7);
 	int64_t _8;
 	BYTE _9;
 	int64_t _10;
 	_DECL_1DARRAY_BYTE(_11);
-	_DECL_DEALLOC(_11);
 	int64_t _12;
 	BYTE _13;
 	BYTE _14;
@@ -136,35 +116,26 @@ int main(int argc, char** args){
 	int64_t _25;
 	void* _26;
 	_DECL_1DARRAY(_28);
-	_DECL_DEALLOC(_28);
 	void* _29;
 	int64_t _31;
 	BYTE _32;
 	void* _33;
 	_DECL_1DARRAY(_35);
-	_DECL_DEALLOC(_35);
 	void* _36;
 	int64_t _38;
 	void* _39;
 	_DECL_1DARRAY(_41);
-	_DECL_DEALLOC(_41);
 	//const %5 = 00000000b : byte
 	_5 = 0b00000000;
 	//const %6 = 3 : int
 	_6 = 3;
 	//arraygen %7 = [5; 6] : byte[]
-	_DEALLOC(_7);
 	_NEW_1DARRAY_BYTE(_7, _6, _5);
-	_ADD_DEALLOC(_7);
 	//assign %1 = %7  : byte[]
-	_DEALLOC(b);
-	// isCopyEliminated = true
-	_UPDATE_1DARRAY(b, _7);
-	_TRANSFER_DEALLOC(b, _7);
+	_COPY_1DARRAY_BYTE(b, _7);
 	//const %8 = 3 : int
 	_8 = 3;
 	//assign %2 = %8  : int
-	// isCopyEliminated = true
 	inspos = _8;
 	//const %10 = 1 : int
 	_10 = 1;
@@ -173,23 +144,15 @@ int main(int argc, char** args){
 		_9 = (BYTE)_10;
 	}
 	//assign %3 = %9  : byte
-	// isCopyEliminated = true
 	item = _9;
-	//invoke (%11) = (%1, %2, %3) example:opt_append : function(byte[],example:nat,byte)->(byte[])
+	//invoke (%11) = (%1, %2, %3) opt_append:opt_append : function(byte[],opt_append:nat,byte)->(byte[])
 	{
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(b, tmp_items, BYTE);
-		_DEALLOC(_11);
-		// isCopyEliminated of '_1' = false
-		_11 = _opt_append_(tmp_items, b_size, false, inspos, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
-		_CALLER_DEALLOC(b, "true-true-true" , "opt_append");
-		_CALLER_DEALLOC_POST(_11, tmp_items);
+		_11 = _opt_append_(tmp_items, b_size, inspos, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 	}
 	//assign %4 = %11  : byte[]
-	_DEALLOC(a);
-	// isCopyEliminated = true
-	_UPDATE_1DARRAY(a, _11);
-	_TRANSFER_DEALLOC(a, _11);
+	_COPY_1DARRAY_BYTE(a, _11);
 	//assert
 	{
 		//const %12 = 2 : int
@@ -276,10 +239,8 @@ blklab18:;
 	//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %27 = %26 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %28 = [97,91,51,93,61] : int[]
-	_DEALLOC(_28);
 	_NEW_1DARRAY_int64_t(_28, 5, 0);
 	_28[0] = 97; _28[1] = 91; _28[2] = 51; _28[3] = 93; _28[4] = 61; 
-	_ADD_DEALLOC(_28);
 	//indirectinvoke () = %27 (%28) : method(int[])->()
 	{
 		printf_s(_28, _28_size);
@@ -297,10 +258,8 @@ blklab18:;
 	//fieldload %33 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %34 = %33 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %35 = [65,114,114,97,121,32,97,58,32] : int[]
-	_DEALLOC(_35);
 	_NEW_1DARRAY_int64_t(_35, 9, 0);
 	_35[0] = 65; _35[1] = 114; _35[2] = 114; _35[3] = 97; _35[4] = 121; _35[5] = 32; _35[6] = 97; _35[7] = 58; _35[8] = 32; 
-	_ADD_DEALLOC(_35);
 	//indirectinvoke () = %34 (%35) : method(int[])->()
 	{
 		printf_s(_35, _35_size);
@@ -316,22 +275,13 @@ blklab18:;
 	//fieldload %39 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %40 = %39 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %41 = [98,121,116,101,115] : int[]
-	_DEALLOC(_41);
 	_NEW_1DARRAY_int64_t(_41, 5, 0);
 	_41[0] = 98; _41[1] = 121; _41[2] = 116; _41[3] = 101; _41[4] = 115; 
-	_ADD_DEALLOC(_41);
 	//indirectinvoke () = %40 (%41) : method(int[])->()
 	{
 		println_s(_41, _41_size);
 	}
 	//return
-	_DEALLOC(b);
-	_DEALLOC(a);
-	_DEALLOC(_7);
-	_DEALLOC(_11);
-	_DEALLOC(_28);
-	_DEALLOC(_35);
-	_DEALLOC(_41);
 	exit(0);
 }
 

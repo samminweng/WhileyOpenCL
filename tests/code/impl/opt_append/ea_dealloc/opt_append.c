@@ -1,4 +1,4 @@
-#include "example.h"
+#include "opt_append.h"
 BYTE* _opt_append_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64_t inspos, BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(output);
 	_DECL_DEALLOC(output);
@@ -61,13 +61,11 @@ blklab6:;
 	_ADD_DEALLOC(_13);
 	//assign %4 = %13  : byte[]
 	_DEALLOC(nitems);
-	// isCopyEliminated = true
-	_UPDATE_1DARRAY(nitems, _13);
-	_TRANSFER_DEALLOC(nitems, _13);
+	_COPY_1DARRAY_BYTE(nitems, _13);
+	_ADD_DEALLOC(nitems);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %5 = %14  : int
-	// isCopyEliminated = true
 	index = _14;
 	//loop (%4, %5, %15, %16, %18, %19, %20, %21, %22, %23, %24, %25, %26)
 	while(true){
@@ -84,7 +82,6 @@ blklab6:;
 		//add %26 = %5, %25 : int
 		_26=index+_25;
 		//assign %5 = %26  : int
-		// isCopyEliminated = true
 		index = _26;
 //.blklab9
 blklab9:;
@@ -158,13 +155,11 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_7);
 	//assign %1 = %7  : byte[]
 	_DEALLOC(b);
-	// isCopyEliminated = true
-	_UPDATE_1DARRAY(b, _7);
-	_TRANSFER_DEALLOC(b, _7);
+	_COPY_1DARRAY_BYTE(b, _7);
+	_ADD_DEALLOC(b);
 	//const %8 = 3 : int
 	_8 = 3;
 	//assign %2 = %8  : int
-	// isCopyEliminated = true
 	inspos = _8;
 	//const %10 = 1 : int
 	_10 = 1;
@@ -173,23 +168,20 @@ int main(int argc, char** args){
 		_9 = (BYTE)_10;
 	}
 	//assign %3 = %9  : byte
-	// isCopyEliminated = true
 	item = _9;
-	//invoke (%11) = (%1, %2, %3) example:opt_append : function(byte[],example:nat,byte)->(byte[])
+	//invoke (%11) = (%1, %2, %3) opt_append:opt_append : function(byte[],opt_append:nat,byte)->(byte[])
 	{
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(b, tmp_items, BYTE);
 		_DEALLOC(_11);
-		// isCopyEliminated of '_1' = false
 		_11 = _opt_append_(tmp_items, b_size, false, inspos, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		_CALLER_DEALLOC(b, "true-true-true" , "opt_append");
 		_CALLER_DEALLOC_POST(_11, tmp_items);
 	}
 	//assign %4 = %11  : byte[]
 	_DEALLOC(a);
-	// isCopyEliminated = true
-	_UPDATE_1DARRAY(a, _11);
-	_TRANSFER_DEALLOC(a, _11);
+	_COPY_1DARRAY_BYTE(a, _11);
+	_ADD_DEALLOC(a);
 	//assert
 	{
 		//const %12 = 2 : int

@@ -1,4 +1,4 @@
-#include "example.h"
+#include "opt_append.h"
 BYTE* _opt_append_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64_t inspos, BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_1DARRAY_BYTE(output);
 	_DECL_DEALLOC(output);
@@ -175,7 +175,7 @@ int main(int argc, char** args){
 	//assign %3 = %9  : byte
 	// isCopyEliminated = true
 	item = _9;
-	//invoke (%11) = (%1, %2, %3) example:opt_append : function(byte[],example:nat,byte)->(byte[])
+	//invoke (%11) = (%1, %2, %3) opt_append:opt_append : function(byte[],opt_append:nat,byte)->(byte[])
 	{
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(b, tmp_items, BYTE);

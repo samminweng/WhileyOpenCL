@@ -1,7 +1,7 @@
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "b" "func" ) (LINE:98 FILE: example.c) in ea_nocopy_dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "true-true-true" "b" "func" ) (LINE:98 FILE: example.c) in ea_nocopy_dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "true-true-true" "b" "func" ) (LINE:95 FILE: example.c) in ea_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "b" "func" ) (LINE:95 FILE: example.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "b" "opt_append" ) (LINE:185 FILE: opt_append.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-true" "b" "opt_append" ) (LINE:185 FILE: opt_append.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "b" "opt_append" ) (LINE:178 FILE: opt_append.c) in ea_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-true" "b" "opt_append" ) (LINE:178 FILE: opt_append.c) in ea_dealloc folder	Frequency: 1
 DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "a" "func" ) (LINE:53 FILE: CallerMacro1.c) in ea_nocopy_dealloc folder	Frequency: 1
 DEBUG: Potential memory leaks at ( "true-true-true" "a" "func" ) (LINE:53 FILE: CallerMacro1.c) in ea_nocopy_dealloc folder	Frequency: 1
 DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "a" "func" ) (LINE:51 FILE: CallerMacro1.c) in ea_dealloc folder	Frequency: 1
@@ -221,52 +221,40 @@ DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "change" "subtract" ) (LIN
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_35" "Cash" ) (LINE:1278 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
 DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "till" "buy" ) (LINE:1291 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
 DEBUG: Potential memory leaks at ( "true-true-false" "till" "buy" ) (LINE:1256 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:451 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 9
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:623 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 12
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "compress_data" "decompress" ) (LINE:831 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "compress" ) (LINE:782 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:571 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 4
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:438 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 9
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "match" ) (LINE:153 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 60
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "findLongestMatch" ) (LINE:378 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 9
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "compress_data" "decompress" ) (LINE:794 FILE: lz77.c) in ea_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:414 FILE: lz77.c) in ea_dealloc folder	Frequency: 9
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "match" ) (LINE:145 FILE: lz77.c) in ea_dealloc folder	Frequency: 60
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "compress" ) (LINE:745 FILE: lz77.c) in ea_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:542 FILE: lz77.c) in ea_dealloc folder	Frequency: 4
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:589 FILE: lz77.c) in ea_dealloc folder	Frequency: 12
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "findLongestMatch" ) (LINE:359 FILE: lz77.c) in ea_dealloc folder	Frequency: 9
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:427 FILE: lz77.c) in ea_dealloc folder	Frequency: 9
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:657 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 12
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "match" ) (LINE:153 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 60
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:605 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 4
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "compress" ) (LINE:816 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "resize" ) (LINE:491 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "compress_data" "decompress" ) (LINE:865 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "findLongestMatch" ) (LINE:397 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 9
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "findLongestMatch" ) (LINE:376 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 9
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:572 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 4
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "compress" ) (LINE:775 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "compress_data" "decompress" ) (LINE:824 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:619 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 12
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "resize" ) (LINE:463 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "match" ) (LINE:145 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 60
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "findLongestMatch" ) (LINE:378 FILE: lz77_compress.c) in ea_nocopy_dealloc folder	Frequency: 9
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "data" "compress" ) (LINE:587 FILE: lz77_compress.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "match" ) (LINE:153 FILE: lz77_compress.c) in ea_nocopy_dealloc folder	Frequency: 60
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:438 FILE: lz77_compress.c) in ea_nocopy_dealloc folder	Frequency: 9
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:451 FILE: lz77_compress.c) in ea_nocopy_dealloc folder	Frequency: 9
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "match" ) (LINE:145 FILE: lz77_compress.c) in ea_dealloc folder	Frequency: 60
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "findLongestMatch" ) (LINE:359 FILE: lz77_compress.c) in ea_dealloc folder	Frequency: 9
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:414 FILE: lz77_compress.c) in ea_dealloc folder	Frequency: 9
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "compress" ) (LINE:561 FILE: lz77_compress.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:427 FILE: lz77_compress.c) in ea_dealloc folder	Frequency: 9
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "data" "compress" ) (LINE:621 FILE: lz77_opt_compress.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "match" ) (LINE:153 FILE: lz77_opt_compress.c) in ea_nocopy_dealloc folder	Frequency: 60
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "findLongestMatch" ) (LINE:397 FILE: lz77_opt_compress.c) in ea_nocopy_dealloc folder	Frequency: 9
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "resize" ) (LINE:491 FILE: lz77_opt_compress.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "findLongestMatch" ) (LINE:376 FILE: lz77_opt_compress.c) in ea_dealloc folder	Frequency: 9
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "compress" ) (LINE:591 FILE: lz77_opt_compress.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "match" ) (LINE:145 FILE: lz77_opt_compress.c) in ea_dealloc folder	Frequency: 60
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "resize" ) (LINE:463 FILE: lz77_opt_compress.c) in ea_dealloc folder	Frequency: 1
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:218 FILE: lz77_decompress.c) in ea_nocopy_dealloc folder	Frequency: 12
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:166 FILE: lz77_decompress.c) in ea_nocopy_dealloc folder	Frequency: 3
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:166 FILE: lz77_decompress.c) in ea_nocopy_dealloc folder	Frequency: 4
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "input_data" "decompress" ) (LINE:308 FILE: lz77_decompress.c) in ea_nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:159 FILE: lz77_decompress.c) in ea_dealloc folder	Frequency: 3
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:159 FILE: lz77_decompress.c) in ea_dealloc folder	Frequency: 4
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:206 FILE: lz77_decompress.c) in ea_dealloc folder	Frequency: 12
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "input_data" "decompress" ) (LINE:293 FILE: lz77_decompress.c) in ea_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "items" "opt_append" ) (LINE:319 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 12
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "input_data" "decompress" ) (LINE:431 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "items" "resize" ) (LINE:358 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "items" "opt_append" ) (LINE:262 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 3
-DEBUG: Potential memory leaks at ( "true-true-false" "items" "opt_append" ) (LINE:301 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 12
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "items" "opt_append" ) (LINE:301 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 12
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "items" "resize" ) (LINE:338 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "items" "opt_append" ) (LINE:250 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 3
-DEBUG: Potential memory leaks at ( "true-true-false" "items" "opt_append" ) (LINE:250 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 3
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "input_data" "decompress" ) (LINE:409 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "items" "resize" ) (LINE:367 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "input_data" "decompress" ) (LINE:440 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "items" "opt_append" ) (LINE:271 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 4
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "items" "opt_append" ) (LINE:328 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 12
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "items" "resize" ) (LINE:348 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "items" "opt_append" ) (LINE:260 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 4
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "input_data" "decompress" ) (LINE:419 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-false" "items" "opt_append" ) (LINE:260 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 4
+DEBUG: Potential memory leaks at ( "true-true-false" "items" "opt_append" ) (LINE:311 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 12
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "items" "opt_append" ) (LINE:311 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 12
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "pixels" "convolution" ) (LINE:397 FILE: SobelEdge.c) in ea_nocopy_dealloc folder	Frequency: 4096
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "newPixels" "print_pbm" ) (LINE:690 FILE: SobelEdge.c) in ea_nocopy_dealloc folder	Frequency: 1
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "pixels" "sobelEdgeDetection" ) (LINE:678 FILE: SobelEdge.c) in ea_nocopy_dealloc folder	Frequency: 1
@@ -279,10 +267,10 @@ DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "h_sobel" "convolution" ) (
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "newPixels" "print_pbm" ) (LINE:662 FILE: SobelEdge.c) in ea_dealloc folder	Frequency: 1
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "v_sobel" "convolution" ) (LINE:370 FILE: SobelEdge.c) in ea_dealloc folder	Frequency: 4096
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "pixels" "convolution" ) (LINE:369 FILE: SobelEdge.c) in ea_dealloc folder	Frequency: 4096
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "b" "func" ) (LINE:98 FILE: example.c) in ea_nocopy_dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "true-true-true" "b" "func" ) (LINE:98 FILE: example.c) in ea_nocopy_dealloc folder	Frequency: 1
-DEBUG: Potential memory leaks at ( "true-true-true" "b" "func" ) (LINE:95 FILE: example.c) in ea_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "b" "func" ) (LINE:95 FILE: example.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "b" "opt_append" ) (LINE:185 FILE: opt_append.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-true" "b" "opt_append" ) (LINE:185 FILE: opt_append.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "b" "opt_append" ) (LINE:178 FILE: opt_append.c) in ea_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-true" "b" "opt_append" ) (LINE:178 FILE: opt_append.c) in ea_dealloc folder	Frequency: 1
 DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "a" "func" ) (LINE:53 FILE: CallerMacro1.c) in ea_nocopy_dealloc folder	Frequency: 1
 DEBUG: Potential memory leaks at ( "true-true-true" "a" "func" ) (LINE:53 FILE: CallerMacro1.c) in ea_nocopy_dealloc folder	Frequency: 1
 DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "a" "func" ) (LINE:51 FILE: CallerMacro1.c) in ea_dealloc folder	Frequency: 1
@@ -502,52 +490,40 @@ DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "change" "subtract" ) (LIN
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "_35" "Cash" ) (LINE:1278 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
 DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "till" "buy" ) (LINE:1291 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
 DEBUG: Potential memory leaks at ( "true-true-false" "till" "buy" ) (LINE:1256 FILE: cashtill.c) in ea_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:451 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 9
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:623 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 12
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "compress_data" "decompress" ) (LINE:831 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "compress" ) (LINE:782 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:571 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 4
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:438 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 9
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "match" ) (LINE:153 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 60
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "findLongestMatch" ) (LINE:378 FILE: lz77.c) in ea_nocopy_dealloc folder	Frequency: 9
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "compress_data" "decompress" ) (LINE:794 FILE: lz77.c) in ea_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:414 FILE: lz77.c) in ea_dealloc folder	Frequency: 9
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "match" ) (LINE:145 FILE: lz77.c) in ea_dealloc folder	Frequency: 60
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "compress" ) (LINE:745 FILE: lz77.c) in ea_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:542 FILE: lz77.c) in ea_dealloc folder	Frequency: 4
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:589 FILE: lz77.c) in ea_dealloc folder	Frequency: 12
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "findLongestMatch" ) (LINE:359 FILE: lz77.c) in ea_dealloc folder	Frequency: 9
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:427 FILE: lz77.c) in ea_dealloc folder	Frequency: 9
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:657 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 12
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "match" ) (LINE:153 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 60
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:605 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 4
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "compress" ) (LINE:816 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "resize" ) (LINE:491 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "compress_data" "decompress" ) (LINE:865 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "findLongestMatch" ) (LINE:397 FILE: lz77_2.c) in ea_nocopy_dealloc folder	Frequency: 9
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "findLongestMatch" ) (LINE:376 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 9
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:572 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 4
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "compress" ) (LINE:775 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "compress_data" "decompress" ) (LINE:824 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:619 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 12
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "resize" ) (LINE:463 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "match" ) (LINE:145 FILE: lz77_2.c) in ea_dealloc folder	Frequency: 60
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "findLongestMatch" ) (LINE:378 FILE: lz77_compress.c) in ea_nocopy_dealloc folder	Frequency: 9
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "data" "compress" ) (LINE:587 FILE: lz77_compress.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "match" ) (LINE:153 FILE: lz77_compress.c) in ea_nocopy_dealloc folder	Frequency: 60
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:438 FILE: lz77_compress.c) in ea_nocopy_dealloc folder	Frequency: 9
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:451 FILE: lz77_compress.c) in ea_nocopy_dealloc folder	Frequency: 9
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "match" ) (LINE:145 FILE: lz77_compress.c) in ea_dealloc folder	Frequency: 60
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "findLongestMatch" ) (LINE:359 FILE: lz77_compress.c) in ea_dealloc folder	Frequency: 9
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:414 FILE: lz77_compress.c) in ea_dealloc folder	Frequency: 9
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "compress" ) (LINE:561 FILE: lz77_compress.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:427 FILE: lz77_compress.c) in ea_dealloc folder	Frequency: 9
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "data" "compress" ) (LINE:621 FILE: lz77_opt_compress.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "match" ) (LINE:153 FILE: lz77_opt_compress.c) in ea_nocopy_dealloc folder	Frequency: 60
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "data" "findLongestMatch" ) (LINE:397 FILE: lz77_opt_compress.c) in ea_nocopy_dealloc folder	Frequency: 9
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "resize" ) (LINE:491 FILE: lz77_opt_compress.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "findLongestMatch" ) (LINE:376 FILE: lz77_opt_compress.c) in ea_dealloc folder	Frequency: 9
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "data" "compress" ) (LINE:591 FILE: lz77_opt_compress.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "data" "match" ) (LINE:145 FILE: lz77_opt_compress.c) in ea_dealloc folder	Frequency: 60
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "resize" ) (LINE:463 FILE: lz77_opt_compress.c) in ea_dealloc folder	Frequency: 1
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:218 FILE: lz77_decompress.c) in ea_nocopy_dealloc folder	Frequency: 12
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:166 FILE: lz77_decompress.c) in ea_nocopy_dealloc folder	Frequency: 3
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "output" "append" ) (LINE:166 FILE: lz77_decompress.c) in ea_nocopy_dealloc folder	Frequency: 4
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "input_data" "decompress" ) (LINE:308 FILE: lz77_decompress.c) in ea_nocopy_dealloc folder	Frequency: 1
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:159 FILE: lz77_decompress.c) in ea_dealloc folder	Frequency: 3
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:159 FILE: lz77_decompress.c) in ea_dealloc folder	Frequency: 4
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "output" "append" ) (LINE:206 FILE: lz77_decompress.c) in ea_dealloc folder	Frequency: 12
 DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "input_data" "decompress" ) (LINE:293 FILE: lz77_decompress.c) in ea_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "items" "opt_append" ) (LINE:319 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 12
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "input_data" "decompress" ) (LINE:431 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 1
-DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "items" "resize" ) (LINE:358 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 1
-DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "items" "opt_append" ) (LINE:262 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 3
-DEBUG: Potential memory leaks at ( "true-true-false" "items" "opt_append" ) (LINE:301 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 12
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "items" "opt_append" ) (LINE:301 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 12
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "items" "resize" ) (LINE:338 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 1
-DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "items" "opt_append" ) (LINE:250 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 3
-DEBUG: Potential memory leaks at ( "true-true-false" "items" "opt_append" ) (LINE:250 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 3
-DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "input_data" "decompress" ) (LINE:409 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "items" "resize" ) (LINE:367 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "input_data" "decompress" ) (LINE:440 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 1
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "items" "opt_append" ) (LINE:271 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 4
+DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "items" "opt_append" ) (LINE:328 FILE: lz77_opt_decompress.c) in ea_nocopy_dealloc folder	Frequency: 12
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "items" "resize" ) (LINE:348 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 1
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "items" "opt_append" ) (LINE:260 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 4
+DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "input_data" "decompress" ) (LINE:419 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 1
+DEBUG: Potential memory leaks at ( "true-true-false" "items" "opt_append" ) (LINE:260 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 4
+DEBUG: Potential memory leaks at ( "true-true-false" "items" "opt_append" ) (LINE:311 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 12
+DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "items" "opt_append" ) (LINE:311 FILE: lz77_opt_decompress.c) in ea_dealloc folder	Frequency: 12
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "pixels" "convolution" ) (LINE:397 FILE: SobelEdge.c) in ea_nocopy_dealloc folder	Frequency: 4096
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "newPixels" "print_pbm" ) (LINE:690 FILE: SobelEdge.c) in ea_nocopy_dealloc folder	Frequency: 1
 DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-false" "pixels" "sobelEdgeDetection" ) (LINE:678 FILE: SobelEdge.c) in ea_nocopy_dealloc folder	Frequency: 1

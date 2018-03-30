@@ -1,3 +1,9 @@
+/**
+ * A simplistic implementation of the Lempel-Ziv 77 compressions/decompression.
+ *
+ * See: http://en.wikipedia.org/wiki/LZ77_and_LZ78
+ *      https://github.com/Whiley/WyBench/blob/master/src/009_lz77/Main.whiley
+ */
 import * from whiley.io.File
 import * from whiley.lang.System
 import whiley.lang.*
@@ -35,7 +41,8 @@ function findLongestMatch(byte[] data, nat pos) -> (Match m):
     // Return a 'Match' object
     return {offset:bestOffset, len:bestLen}
 
-// Append a byte to the byte array
+// Append a byte to the byte array inside 'Data' structure
+// This is temporary and should be removed
 function append(byte[] items, byte item) -> (byte[] nitems):
     //ensures |nitems| == |items| + 1:
     //
@@ -85,40 +92,22 @@ function compress(byte[] data) -> (byte[] output):
         output = append(output, length)
     return output
 
-// Decompress 'input' array to a string
-function decompress(byte[] data) -> (byte[] output):
-    output = [0b;0]
-    nat pos = 0
-    //
-    while (pos+1) < |data|:
-        byte header = data[pos]
-        byte item = data[pos+1]
-        pos = pos + 2
-        if header == 00000000b:
-            output = append(output, item)
-        else:
-            int offset = Byte.toUnsignedInt(header)
-            int len = Byte.toUnsignedInt(item)
-            int start = |output| - offset
-            int i = start
-            while i < (start+len):
-                // Get byte from output array
-                item = output[i]
-                //sys.out.println(item)
-                output = append(output, item)
-                i = i + 1
-    // all done!
-    return output
-
 method main(System.Console sys):
-    // Read a text file of repeated contents as a byte array
-    File.Reader file = File.Reader(sys.args[0])
+    // Read a input file as a byte array
+    File.Reader file = File.Reader("../../../Inputfiles/small.in")
     byte[] data = file.readAll()
     sys.out.println_s("Data:         ")
+    sys.out.println_s(ASCII.fromBytes(data))
     sys.out.print(|data|)
     sys.out.println_s(" bytes")
-    // Compress the data with LZ algorithm
+    // Compress the data using LZ algorithm
     byte[] compress_data = compress(data)
     sys.out.println_s("COMPRESSED Data:   ")
+    sys.out.println(compress_data)
     sys.out.print(|compress_data|)
     sys.out.println_s(" bytes")
+    // Write the compressed array to a file
+    File.Writer outfile = File.Writer("../../../Inputfiles/small.dat")
+    outfile.write(compress_data)
+    outfile.close()
+    file.close()

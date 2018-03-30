@@ -54,12 +54,12 @@ blklab3:;
 	//return
 }
 
-BYTE* _opt_append_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64_t items_length, BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
-	_DECL_1DARRAY_BYTE(_3);
-	_DECL_DEALLOC(_3);
+BYTE* _opt_append_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64_t inspos, BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_1DARRAY_BYTE(output);
+	_DECL_DEALLOC(output);
 	_DECL_1DARRAY_BYTE(nitems);
 	_DECL_DEALLOC(nitems);
-	int64_t i;
+	int64_t index;
 	int64_t _6;
 	BYTE _7;
 	int64_t _8;
@@ -71,19 +71,33 @@ BYTE* _opt_append_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), i
 	_DECL_DEALLOC(_13);
 	int64_t _14;
 	int64_t _15;
-	BYTE _16;
+	int64_t _16;
 	int64_t _17;
 	int64_t _18;
+	int64_t _19;
+	int64_t _20;
+	BYTE _21;
+	BYTE _22;
+	int64_t _23;
+	BYTE _24;
+	int64_t _25;
+	int64_t _26;
 	//lengthof %6 = %0 : byte[]
 	_6 = items_size;
-	//ifge %1, %6 goto blklab5 : int
-	if(items_length>=_6){goto blklab5;}
+	//ifge %1, %6 goto blklab10 : int
+	if(inspos>=_6){goto blklab10;}
 	//update %0[%1] = %2 : byte[] -> byte[]
-	items[items_length] = item;
-	//goto blklab6
-	goto blklab6;
-//.blklab5
-blklab5:;
+	items[inspos] = item;
+	//return %0
+	_DEALLOC(output);
+	_DEALLOC(nitems);
+	_DEALLOC(_13);
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(items);
+	return items;
+	//goto blklab11
+	goto blklab11;
+//.blklab10
+blklab10:;
 	//const %7 = 00000000b : byte
 	_7 = 0b00000000;
 	//lengthof %8 = %0 : byte[]
@@ -109,44 +123,39 @@ blklab5:;
 	_14 = 0;
 	//assign %5 = %14  : int
 	// isCopyEliminated = true
-	i = _14;
-	//loop (%4, %5, %15, %16, %17, %18)
+	index = _14;
+	//loop (%4, %5, %15, %16, %18, %19, %20, %21, %22, %23, %24, %25, %26)
 	while(true){
-		//lengthof %15 = %0 : byte[]
-		_15 = items_size;
-		//ifge %5, %15 goto blklab7 : int
-		if(i>=_15){goto blklab7;}
-		//indexof %16 = %0, %5 : byte[]
-		_16=items[i];
-		//update %4[%5] = %16 : byte[] -> byte[]
-		nitems[i] = _16;
-		//const %17 = 1 : int
-		_17 = 1;
-		//add %18 = %5, %17 : int
-		_18=i+_17;
-		//assign %5 = %18  : int
+		//lengthof %23 = %0 : byte[]
+		_23 = items_size;
+		//ifge %5, %23 goto blklab12 : int
+		if(index>=_23){goto blklab12;}
+		//indexof %24 = %0, %5 : byte[]
+		_24=items[index];
+		//update %4[%5] = %24 : byte[] -> byte[]
+		nitems[index] = _24;
+		//const %25 = 1 : int
+		_25 = 1;
+		//add %26 = %5, %25 : int
+		_26=index+_25;
+		//assign %5 = %26  : int
 		// isCopyEliminated = true
-		i = _18;
-//.blklab8
-blklab8:;
+		index = _26;
+//.blklab13
+blklab13:;
 	}
-//.blklab7
-blklab7:;
+//.blklab12
+blklab12:;
 	//update %4[%5] = %2 : byte[] -> byte[]
-	nitems[i] = item;
-	//assign %0 = %4  : byte[]
+	nitems[index] = item;
+	//return %4
 	_DEALLOC(items);
-	// isCopyEliminated = true
-	_UPDATE_1DARRAY(items, nitems);
-	_TRANSFER_DEALLOC(items, nitems);
-//.blklab6
-blklab6:;
-	//return %0
-	_DEALLOC(_3);
-	_DEALLOC(nitems);
+	_DEALLOC(output);
 	_DEALLOC(_13);
-	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(items);
-	return items;
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(nitems);
+	return nitems;
+//.blklab11
+blklab11:;
 	//return
 }
 
@@ -155,7 +164,7 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 	_DECL_DEALLOC(output);
 	_DECL_1DARRAY_BYTE(items);
 	_DECL_DEALLOC(items);
-	int64_t items_length;
+	int64_t inspos;
 	int64_t pos;
 	BYTE header;
 	BYTE item;
@@ -213,7 +222,7 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 	_14 = 0;
 	//assign %3 = %14  : int
 	// isCopyEliminated = true
-	items_length = _14;
+	inspos = _14;
 	//const %15 = 0 : int
 	_15 = 0;
 	//assign %4 = %15  : int
@@ -227,8 +236,8 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 		_17=pos+_16;
 		//lengthof %18 = %0 : byte[]
 		_18 = data_size;
-		//ifge %17, %18 goto blklab9 : int
-		if(_17>=_18){goto blklab9;}
+		//ifge %17, %18 goto blklab18 : int
+		if(_17>=_18){goto blklab18;}
 		//indexof %19 = %0, %4 : byte[]
 		_19=data[pos];
 		//assign %5 = %19  : byte
@@ -252,13 +261,13 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 		pos = _24;
 		//const %25 = 00000000b : byte
 		_25 = 0b00000000;
-		//ifne %5, %25 goto blklab11 : byte
-		if(header!=_25){goto blklab11;}
+		//ifne %5, %25 goto blklab20 : byte
+		if(header!=_25){goto blklab20;}
 		//invoke (%26) = (%2, %3, %6) lz77_opt_decompress:opt_append : function(byte[],lz77_opt_decompress:nat,byte)->(byte[])
 		{
 			_DEALLOC(_26);
 			// isCopyEliminated of '_2' = true
-			_26 = _opt_append_(items, items_size, false, items_length, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_26));
+			_26 = _opt_append_(items, items_size, false, inspos, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_26));
 			_RESET_DEALLOC(items, "true-true-false" , "opt_append");
 			_RESET_DEALLOC_POST(_26, items);
 		}
@@ -270,14 +279,14 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 		//const %27 = 1 : int
 		_27 = 1;
 		//add %28 = %3, %27 : int
-		_28=items_length+_27;
+		_28=inspos+_27;
 		//assign %3 = %28  : int
 		// isCopyEliminated = true
-		items_length = _28;
-		//goto blklab12
-		goto blklab12;
-//.blklab11
-blklab11:;
+		inspos = _28;
+		//goto blklab21
+		goto blklab21;
+//.blklab20
+blklab20:;
 		//invoke (%29) = (%5) whiley/lang/Byte:toUnsignedInt : function(byte)->(whiley/lang/Int:uint)
 		{
 			_29 = (unsigned int)header;
@@ -293,7 +302,7 @@ blklab11:;
 		// isCopyEliminated = true
 		len = _30;
 		//sub %31 = %3, %7 : int
-		_31=items_length-offset;
+		_31=inspos-offset;
 		//assign %9 = %31  : int
 		// isCopyEliminated = true
 		start = _31;
@@ -304,8 +313,8 @@ blklab11:;
 		while(true){
 			//add %32 = %9, %8 : int
 			_32=start+len;
-			//ifge %10, %32 goto blklab13 : int
-			if(i>=_32){goto blklab13;}
+			//ifge %10, %32 goto blklab22 : int
+			if(i>=_32){goto blklab22;}
 			//indexof %33 = %2, %10 : byte[]
 			_33=items[i];
 			//assign %6 = %33  : byte
@@ -315,7 +324,7 @@ blklab11:;
 			{
 				_DEALLOC(_34);
 				// isCopyEliminated of '_2' = true
-				_34 = _opt_append_(items, items_size, false, items_length, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_34));
+				_34 = _opt_append_(items, items_size, false, inspos, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_34));
 				_RESET_DEALLOC(items, "true-true-false" , "opt_append");
 				_RESET_DEALLOC_POST(_34, items);
 			}
@@ -327,10 +336,10 @@ blklab11:;
 			//const %35 = 1 : int
 			_35 = 1;
 			//add %36 = %3, %35 : int
-			_36=items_length+_35;
+			_36=inspos+_35;
 			//assign %3 = %36  : int
 			// isCopyEliminated = true
-			items_length = _36;
+			inspos = _36;
 			//const %37 = 1 : int
 			_37 = 1;
 			//add %38 = %10, %37 : int
@@ -338,23 +347,23 @@ blklab11:;
 			//assign %10 = %38  : int
 			// isCopyEliminated = true
 			i = _38;
-//.blklab14
-blklab14:;
+//.blklab23
+blklab23:;
 		}
-//.blklab13
-blklab13:;
-//.blklab12
-blklab12:;
-//.blklab10
-blklab10:;
+//.blklab22
+blklab22:;
+//.blklab21
+blklab21:;
+//.blklab19
+blklab19:;
 	}
-//.blklab9
-blklab9:;
+//.blklab18
+blklab18:;
 	//invoke (%39) = (%2, %3) lz77_opt_decompress:resize : function(byte[],int)->(byte[])
 	{
 		_DEALLOC(_39);
 		// isCopyEliminated of '_2' = true
-		_39 = _resize_(items, items_size, false, items_length, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_39));
+		_39 = _resize_(items, items_size, false, inspos, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_39));
 		_RETAIN_DEALLOC(items, "false-false-false" , "resize");
 		_RETAIN_DEALLOC_POST(_39, items);
 	}
@@ -400,10 +409,10 @@ int main(int argc, char** args){
 	void* _18;
 	_DECL_1DARRAY(_20);
 	_DECL_DEALLOC(_20);
-	//const %5 = [46,46,47,46,46,47,46,46,47,73,110,112,117,116,102,105,108,101,115,47,115,109,97,108,108,46,100,97,116] : int[]
+	//const %5 = [46,46,47,46,46,47,46,46,47,73,110,112,117,116,102,105,108,101,115,47,115,109,97,108,108,95,111,112,116,46,100,97,116] : int[]
 	_DEALLOC(_5);
-	_NEW_1DARRAY_int64_t(_5, 29, 0);
-	_5[0] = 46; _5[1] = 46; _5[2] = 47; _5[3] = 46; _5[4] = 46; _5[5] = 47; _5[6] = 46; _5[7] = 46; _5[8] = 47; _5[9] = 73; _5[10] = 110; _5[11] = 112; _5[12] = 117; _5[13] = 116; _5[14] = 102; _5[15] = 105; _5[16] = 108; _5[17] = 101; _5[18] = 115; _5[19] = 47; _5[20] = 115; _5[21] = 109; _5[22] = 97; _5[23] = 108; _5[24] = 108; _5[25] = 46; _5[26] = 100; _5[27] = 97; _5[28] = 116; 
+	_NEW_1DARRAY_int64_t(_5, 33, 0);
+	_5[0] = 46; _5[1] = 46; _5[2] = 47; _5[3] = 46; _5[4] = 46; _5[5] = 47; _5[6] = 46; _5[7] = 46; _5[8] = 47; _5[9] = 73; _5[10] = 110; _5[11] = 112; _5[12] = 117; _5[13] = 116; _5[14] = 102; _5[15] = 105; _5[16] = 108; _5[17] = 101; _5[18] = 115; _5[19] = 47; _5[20] = 115; _5[21] = 109; _5[22] = 97; _5[23] = 108; _5[24] = 108; _5[25] = 95; _5[26] = 111; _5[27] = 112; _5[28] = 116; _5[29] = 46; _5[30] = 100; _5[31] = 97; _5[32] = 116; 
 	_ADD_DEALLOC(_5);
 	//invoke (%4) = (%5) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
 	{
