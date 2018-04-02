@@ -5,14 +5,14 @@ BEGIN {
 	FS = "\t";
 	# Test case name
 	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
-	testcases="SobelEdge";
+	testcases="LZ77";
 	## Program Type
 	programs["Reverse"]="original";
 	programs["newTicTacToe"]="original";
 	programs["BubbleSort"]="original";
 	programs["MergeSort"]="original";
 	programs["MatrixMult"]="original";
-	programs["LZ77"]="compress decompress opt_decompress";
+	programs["LZ77"]="compress opt_compress decompress opt_decompress";
 	programs["Cashtill"]="original";
 	programs["CoinGame"]="original";
 	programs["SobelEdge"]="small";
@@ -24,7 +24,7 @@ BEGIN {
 	patterns["BubbleSort"] = "disabled";
 	patterns["MergeSort"] = "disabled";
 	patterns["MatrixMult"] = "disabled";
-	patterns["LZ77"] = "disabled enabled";
+	patterns["LZ77"] = "disabled";
 	patterns["Cashtill"] = "disabled";
 	patterns["CoinGame"] = "disabled";
 	patterns["SobelEdge"] = "disabled";

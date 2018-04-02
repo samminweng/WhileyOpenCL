@@ -10,14 +10,13 @@ UTILDIR="$(dirname "$(pwd)")/tests/code"
 BENCHMARKDIR="$(pwd)"
 ## declare compiler used for compilation
 declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" [MergeSort]="gcc" [MatrixMult]="gcc" \
-		       [LZ77]="gcc" [SobelEdge]="gcc" [Cashtill]="gcc" \
-		       [CoinGame]="gcc" )
+		       		   [LZ77]="gcc" [SobelEdge]="gcc" [Cashtill]="gcc" [CoinGame]="gcc" )
 ## declare 4 kinds of code generation
-#declare -a codegens=( "naive" "naivedealloc" "nocopy" "nocopydealloc" )
-declare -a codegens=( "nocopy" "nocopydealloc" )
+declare -a codegens=( "naive" "naivedealloc" "nocopy" "nocopydealloc" )
+#declare -a codegens=( "nocopy" "nocopydealloc" )
 
-## Declare an associative array for pattern matching
-declare -A patterns=( [LZ77_compress]=compress )
+# ## Declare an associative array for pattern matching
+# declare -A patterns=( [LZ77_compress]=compress )
 
 ## declare the number of threads
 declare -a threads=( 1 2 4 8 )
@@ -28,9 +27,9 @@ declare -A parameters=( [Reverse]="100000 1000000 10000000" \
 			[BubbleSort]="100000 200000 300000" \
 			[MergeSort]="10000000 20000000 30000000" \
 			[MatrixMult]="1000 2000 3000" \
-			#[LZ77]="medium1x medium5x medium10x medium25x medium50x medium75x medium100x medium125x medium150x medium175x medium200x" \
-			#[LZ77]="medium225x medium250x medium275x medium300x medium325x medium350x medium375x medium400x" \
-			[LZ77]="medium10000x medium20000x medium30000x medium40000x medium50000x medium60000x medium70000x medium80000x medium90000x medium100000x" \
+			#[LZ77_compress]="medium1x medium5x medium7x medium10x medium25x medium50x medium75x medium100x medium120x medium125x medium150x medium175x medium200x medium225x medium250x medium275x medium300x medium325x medium350x medium375x medium400x" \
+			[LZ77]="medium1x medium5x medium10x medium25x medium50x medium75x medium100x medium125x medium150x medium175x medium200x" \
+			#[LZ77]="medium10000x medium20000x medium30000x medium40000x medium50000x medium60000x medium70000x medium80000x medium90000x medium100000x" \
 			#[SobelEdge]="image64x64.pbm image64x128.pbm image64x192.pbm image64x256.pbm image64x320.pbm image64x384.pbm image64x448.pbm image64x512.pbm image64x576.pbm image64x640.pbm" \
 			#[SobelEdge]="image2000x2000.pbm" \
 			[SobelEdge]="image2000x2000.pbm image2000x4000.pbm image2000x6000.pbm image2000x8000.pbm image2000x10000.pbm image2000x12000.pbm image2000x14000.pbm image2000x16000.pbm image2000x18000.pbm image2000x20000.pbm image2000x22000.pbm image2000x24000.pbm image2000x26000.pbm image2000x28000.pbm image2000x30000.pbm image2000x32000.pbm image2000x34000.pbm image2000x36000.pbm image2000x38000.pbm image2000x40000.pbm" \
@@ -75,16 +74,16 @@ generateCode(){
 	codeDir=$BENCHMARKDIR/$testcase/impl/$program"_"C"_"$compiler"_"$pattern"_"$codegen"_"$code
 	### Shell script that generates C code
 	wyopcl=./../../../../bin/wyopcl
-	## Enable the pattern matching on the specified function
-	if [ $pattern = "enabledpattern" ]
-	then
-		func=${patterns[$testcase"_"$program]}
-		if [ -n "$func" ]
-		then
-			### Enable pattern transformation
-			wyopcl=$wyopcl" -pattern $func"
-		fi
-	fi
+	# ## Enable the pattern matching on the specified function
+	# if [ $pattern = "enabledpattern" ]
+	# then
+	# 	func=${patterns[$testcase"_"$program]}
+	# 	if [ -n "$func" ]
+	# 	then
+	# 		### Enable pattern transformation
+	# 		wyopcl=$wyopcl" -pattern $func"
+	# 	fi
+	# fi
 	## Clean the folder
 	rm -rf "$codeDir"
 	mkdir -p "$codeDir"
@@ -209,6 +208,9 @@ run(){
 					"compress")
 						timeout $TIMEOUT "out/$executable" "$BENCHMARKDIR/$testcase/Inputfiles/$parameter.in" >> $result
 						;;
+					"opt_compress")
+						timeout $TIMEOUT "out/$executable" "$BENCHMARKDIR/$testcase/Inputfiles/$parameter.in" >> $result
+						;;
 					"decompress")
 						timeout $TIMEOUT "out/$executable" "$BENCHMARKDIR/$testcase/Outputfiles/$parameter.dat"  >> $result
 						;;
@@ -300,17 +302,18 @@ exec(){
 			for codegen in "${codegens[@]}"
 			do
 				echo $codegen
-				str=${patterns[$testcase"_"$program]}
-				echo $str
+				#str=${patterns[$testcase"_"$program]}
+				#echo $str
 				# Test pattern is missing or not (non-empty string (-n))
-				if [ -n "$str" ]
-				then
-					patternmatches="enabledpattern"
-					#patternmatches="disabledpattern enabledpattern"
-					#read -p "Found Pattern..."${patternmatches}
-				else
-					patternmatches="disabledpattern"
-				fi
+				# if [ -n "$str" ]
+				# then
+				# 	patternmatches="enabledpattern"
+				# 	#patternmatches="disabledpattern enabledpattern"
+				# 	#read -p "Found Pattern..."${patternmatches}
+				# else
+				# 	patternmatches="disabledpattern"
+				# fi
+				patternmatches="disabledpattern"
 				#read -p "Press [Enter] to continue..."$patternmatches
 				## Go through patternmatch setting
 				for patternmatch in ${patternmatches}
@@ -395,13 +398,14 @@ exec(){
 #### LZ77 test case
 #init LZ77
 #exec LZ77 compress
-#exec LZ77 decompress
-#exec LZ77 opt_decompress
+#exec LZ77 opt_compress
+exec LZ77 decompress
+exec LZ77 opt_decompress
 
 # # ###Sobel Edge test
 #init SobelEdge
 #exec SobelEdge small
-exec SobelEdge large
+#exec SobelEdge large
 #exec SobelEdge test
 # # ## Fibonacci test case
 # # init Fibonacci

@@ -18,7 +18,7 @@ declare -A compilers=( [Reverse]="gcc" [newTicTacToe]="gcc" [BubbleSort]="gcc" \
 declare -a codegens=("naive" "naivedealloc" "nocopy" "nocopydealloc")
 
 ## Declare an associative array for pattern matching
-declare -A patterns=( [LZ77_compress]=compress [LZ77_original_opt]=compress )
+#declare -A patterns=( [LZ77_compress]=compress [LZ77_original_opt]=compress )
 
 ## declare the number of threads
 declare -a threads=( 1 )
@@ -186,6 +186,9 @@ detectleaks(){
 				"compress")
 					valgrind --tool=memcheck "--log-file=$result" "./out/$executable" "$BENCHMARKDIR/$testcase/Inputfiles/$parameter.in"
 					;;
+				"opt_compress")
+					valgrind --tool=memcheck "--log-file=$result" "./out/$executable" "$BENCHMARKDIR/$testcase/Inputfiles/$parameter.in"
+					;;
 				"decompress")
 					valgrind --tool=memcheck "--log-file=$result" "./out/$executable" "$BENCHMARKDIR/$testcase/Outputfiles/$parameter.dat"
 					;;
@@ -237,15 +240,15 @@ exec(){
 				compile $testcase $program $compiler $codegen "disabledpattern" "seq"
 
 				# ## Get the pattern option
-				func=${patterns[$testcase"_"$program]}
-				if [ $func ]
-				then
-					echo $func
-					# Generate C code with enabled pattern matching and transform
-					generateCode $testcase $program $compiler $codegen "enabledpattern" "seq"
-					# Detect the leaks of generated C code using different compiler
-					compile $testcase $program $compiler $codegen "enabledpattern" "seq"
-				fi
+				# func=${patterns[$testcase"_"$program]}
+				# if [ $func ]
+				# then
+				# 	echo $func
+				# 	# Generate C code with enabled pattern matching and transform
+				# 	generateCode $testcase $program $compiler $codegen "enabledpattern" "seq"
+				# 	# Detect the leaks of generated C code using different compiler
+				# 	compile $testcase $program $compiler $codegen "enabledpattern" "seq"
+				# fi
 
 				for param_arr in "${parameters[$testcase]}"
 				do
@@ -254,12 +257,12 @@ exec(){
 						echo "parameter "$parameter
 						detectleaks $testcase $program $compiler $codegen "disabledpattern" "seq" 1 $parameter
 						# ## Get the pattern option
-						func=${patterns[$testcase"_"$program]}
-						if [ $func ]
-						then
-							## Run the executable
-							detectleaks $testcase $program $compiler $codegen "enabledpattern" "seq" 1 $parameter
-						fi
+						# func=${patterns[$testcase"_"$program]}
+						# if [ $func ]
+						# then
+						# 	## Run the executable
+						# 	detectleaks $testcase $program $compiler $codegen "enabledpattern" "seq" 1 $parameter
+						# fi
 					done
 				done
 			done
@@ -299,16 +302,17 @@ exec(){
 #exec CoinGame original
 
 # # # ###Sobel Edge test
-init SobelEdge
-exec SobelEdge small
+#init SobelEdge
+#exec SobelEdge small
 
 # # # ####LZ77 test case
-#init LZ77
+init LZ77
 #exec LZ77 original
 #exec LZ77 original_opt
-#exec LZ77 compress
-#exec LZ77 decompress
-#exec LZ77 opt_decompress
+exec LZ77 compress
+exec LZ77 opt_compress
+exec LZ77 decompress
+exec LZ77 opt_decompress
 # ### Fibonacci test case###
 # init Fibonacci
 # exec Fibonacci original 10

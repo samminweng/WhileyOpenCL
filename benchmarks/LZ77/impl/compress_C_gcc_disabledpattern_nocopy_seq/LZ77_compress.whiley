@@ -8,15 +8,6 @@ type nat is (int x) where x >= 0
 type Match is ({nat offset, nat len} this)
 
 // Find the matched entry with affine loop bound
-/*function match(byte[] data, nat offset, nat end) -> int:
-    nat pos = end
-    nat len = 0
-    nat maxIter = Math.min(pos - offset, |data| - pos)
-    maxIter = Math.min(255, maxIter)
-    while len < maxIter && data[offset+len] == data[pos+len]:
-        len = len + 1
-    return len
-*/
 function match(byte[] data, nat offset, nat end) -> (int length)
     ensures 0 <= length && length <= 255:
     nat pos = end

@@ -1,4 +1,14 @@
 #!/bin/bash
+generateInputs_medium(){
+	multiply=$1
+    ### Use medium1x as a base file to produce multiple-sized medium files
+	file="medium"$multiply"x.in"
+	for ((number=1;number <=$multiply;number++)){
+		echo $number
+		cat medium1x.in >> $file
+	}
+}
+
 generateInputs_large(){
     ### Generate 10,000x file
 	file="medium10000x.in"
@@ -18,4 +28,5 @@ generateInputs_large(){
     done
 }
 
-generateInputs_large
+
+generateInputs_medium 58
