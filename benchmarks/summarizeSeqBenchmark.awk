@@ -147,8 +147,8 @@ BEGIN {
 	#parameters["LZ77"]="medium1x medium5x medium7x medium10x medium25x medium50x medium75x medium100x " \
 	#				   "medium120x medium125x medium150x medium175x medium200x " \
 	#                   "medium225x medium250x medium275x medium300x medium325x medium350x medium375x medium400x";
-	parameters["LZ77"]="medium1x medium5x medium10x medium25x medium50x medium75x medium100x " \
-					   "medium125x medium150x medium175x medium200x";
+	parameters["LZ77"]="medium1x medium5x medium10x medium25x medium50x medium58x medium59x medium60x "\
+					   "medium75x medium100x medium125x medium150x medium175x medium200x";
 	#parameters["LZ77"]="medium10000x medium20000x medium30000x medium40000x medium50000x medium60000x medium70000x medium80000x medium90000x medium100000x";
 	parameters["Cashtill"]="10000 20000 25000 30000 40000";
 

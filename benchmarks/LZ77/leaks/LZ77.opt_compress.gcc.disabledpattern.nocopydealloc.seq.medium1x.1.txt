@@ -1,18 +1,18 @@
-==15280== Memcheck, a memory error detector
-==15280== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==15280== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==15280== Command: ./out/LZ77.opt_compress.gcc.disabledpattern.nocopydealloc.seq.out /home/mw169/workspace/WhileyOpenCL/benchmarks/LZ77/Inputfiles/medium1x.in
-==15280== Parent PID: 14649
-==15280== 
-==15280== 
-==15280== HEAP SUMMARY:
-==15280==     in use at exit: 0 bytes in 0 blocks
-==15280==   total heap usage: 789 allocs, 789 frees, 45,880 bytes allocated
-==15280== 
-==15280== All heap blocks were freed -- no leaks are possible
-==15280== 
-==15280== For counts of detected and suppressed errors, rerun with: -v
-==15280== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14469== Memcheck, a memory error detector
+==14469== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==14469== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==14469== Command: ./out/LZ77.opt_compress.gcc.disabledpattern.nocopydealloc.seq.out /home/mw169/workspace/WhileyOpenCL/benchmarks/LZ77/Inputfiles/medium1x.in
+==14469== Parent PID: 13842
+==14469== 
+==14469== 
+==14469== HEAP SUMMARY:
+==14469==     in use at exit: 0 bytes in 0 blocks
+==14469==   total heap usage: 789 allocs, 789 frees, 45,880 bytes allocated
+==14469== 
+==14469== All heap blocks were freed -- no leaks are possible
+==14469== 
+==14469== For counts of detected and suppressed errors, rerun with: -v
+==14469== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -20,7 +20,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3868.429
+cpu MHz		: 3806.007
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -47,7 +47,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3611.968
+cpu MHz		: 3839.875
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -74,7 +74,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3885.429
+cpu MHz		: 3891.539
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -101,7 +101,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3875.601
+cpu MHz		: 3695.507
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -128,7 +128,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3868.164
+cpu MHz		: 3764.039
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -155,7 +155,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3805.210
+cpu MHz		: 3835.093
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -182,7 +182,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3899.773
+cpu MHz		: 3867.632
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -209,7 +209,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3901.765
+cpu MHz		: 3839.476
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
