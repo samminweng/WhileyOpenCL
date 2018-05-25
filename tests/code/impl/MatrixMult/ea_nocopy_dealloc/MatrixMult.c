@@ -307,7 +307,6 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(A, _15);
 	//invoke (%16) = (%4, %2, %3) MatrixMult:init : function(int[],int,int)->(int[])
 	{
-		_DEALLOC(_16);
 		// isCopyEliminated of '_4' = true
 		_16 = _init_(A, A_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		_RESET_DEALLOC(A, "true-true-false" , "init");
@@ -333,7 +332,6 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(B, _19);
 	//invoke (%20) = (%5, %2, %3) MatrixMult:init : function(int[],int,int)->(int[])
 	{
-		_DEALLOC(_20);
 		// isCopyEliminated of '_5' = true
 		_20 = _init_(B, B_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
 		_RESET_DEALLOC(B, "true-true-false" , "init");
@@ -359,7 +357,6 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(C, _23);
 	//invoke (%24) = (%4, %5, %6, %2, %3) MatrixMult:mat_mult : function(int[],int[],int[],int,int)->(int[])
 	{
-		_DEALLOC(_24);
 		// isCopyEliminated of '_4' = true
 		// isCopyEliminated of '_5' = true
 		// isCopyEliminated of '_6' = true

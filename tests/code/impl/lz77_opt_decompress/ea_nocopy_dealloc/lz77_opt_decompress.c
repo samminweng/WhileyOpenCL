@@ -265,7 +265,6 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 		if(header!=_25){goto blklab20;}
 		//invoke (%26) = (%2, %3, %6) lz77_opt_decompress:opt_append : function(byte[],lz77_opt_decompress:nat,byte)->(byte[])
 		{
-			_DEALLOC(_26);
 			// isCopyEliminated of '_2' = true
 			_26 = _opt_append_(items, items_size, false, inspos, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_26));
 			_RESET_DEALLOC(items, "true-true-false" , "opt_append");
@@ -322,7 +321,6 @@ blklab20:;
 			item = _33;
 			//invoke (%34) = (%2, %3, %6) lz77_opt_decompress:opt_append : function(byte[],lz77_opt_decompress:nat,byte)->(byte[])
 			{
-				_DEALLOC(_34);
 				// isCopyEliminated of '_2' = true
 				_34 = _opt_append_(items, items_size, false, inspos, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_34));
 				_RESET_DEALLOC(items, "true-true-false" , "opt_append");
@@ -361,7 +359,6 @@ blklab19:;
 blklab18:;
 	//invoke (%39) = (%2, %3) lz77_opt_decompress:resize : function(byte[],int)->(byte[])
 	{
-		_DEALLOC(_39);
 		// isCopyEliminated of '_2' = true
 		_39 = _resize_(items, items_size, false, inspos, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_39));
 		_RETAIN_DEALLOC(items, "false-false-false" , "resize");
@@ -434,7 +431,6 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(input_data, _6);
 	//invoke (%8) = (%2) lz77_opt_decompress:decompress : function(byte[])->(byte[])
 	{
-		_DEALLOC(_8);
 		// isCopyEliminated of '_2' = true
 		_8 = _decompress_(input_data, input_data_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_RETAIN_DEALLOC(input_data, "false-false-false" , "decompress");
@@ -460,7 +456,6 @@ int main(int argc, char** args){
 	//fieldload %13 = %12 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%14) = (%3) whiley/lang/ASCII:fromBytes : function(byte[])->(whiley/lang/ASCII:string)
 	{
-		_DEALLOC(_14);
 		_14 = fromBytes(decompress_data, decompress_data_size);
 		_14_size = decompress_data_size;
 		_ADD_DEALLOC(_14);

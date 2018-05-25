@@ -1164,11 +1164,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 
 			final String lhs_var = lhs;
+			// If the code type is deallocation only, then we generated the preDealloc macro to release the lhs
 			// Deallocate lhs register
 			this.deallocatedAnalyzer.ifPresent(a -> {
 				statement.add(indent + a.preDealloc(lhs_var, update, function, stores));
 			});
-
+			
 			return lhs;
 
 		} else {
@@ -1195,6 +1196,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				} else {
 					lhs = null;
 				}
+				
+				// If the code type is a function call, then when the copy and deallocation macros are both enabled, 
+			    //then we do not need to generate the preDealloc macro to release the lhs of the function return
+				if(this.copyAnalyzer.isPresent() && this.deallocatedAnalyzer.isPresent()) {
+					return lhs;
+				}
 			} else if (code instanceof Codes.NewArray) {
 				lhs = stores.getVar(((Codes.NewArray) code).target(0), function);
 				type = stores.getRawType(((Codes.NewArray) code).target(0), function);
@@ -1207,6 +1214,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 
 			final Type lhs_type = type;
+			
+			
 			// Deallocate lhs register
 			this.deallocatedAnalyzer.ifPresent(a -> {
 				statement.add(indent + a.preDealloc(lhs, lhs_type, stores));

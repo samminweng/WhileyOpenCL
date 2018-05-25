@@ -52,7 +52,6 @@ int main(int argc, char** args){
 	_7 = 11;
 	//invoke (%6) = (%1, %7) ResetMacro1:func : function(int[],int)->(int[])
 	{
-		_DEALLOC(_6);
 		// isCopyEliminated of '_1' = true
 		_6 = _func_(x, x_size, false, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		_RESET_DEALLOC(x, "true-true-false" , "func");

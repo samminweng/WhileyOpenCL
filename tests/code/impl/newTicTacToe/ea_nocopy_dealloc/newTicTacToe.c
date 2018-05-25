@@ -205,7 +205,6 @@ int main(int argc, char** args){
 	repeat = _6;
 	//invoke (%7) = () newTicTacToe:EmptyBoard : function()->(newTicTacToe:Board)
 	{
-		_DEALLOC_STRUCT(_7, Board);
 		_7 = _EmptyBoard_();
 		_7_dealloc = true;
 	}
@@ -216,7 +215,6 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(b1, _7);
 	//invoke (%8) = () newTicTacToe:EmptyBoard : function()->(newTicTacToe:Board)
 	{
-		_DEALLOC_STRUCT(_8, Board);
 		_8 = _EmptyBoard_();
 		_8_dealloc = true;
 	}

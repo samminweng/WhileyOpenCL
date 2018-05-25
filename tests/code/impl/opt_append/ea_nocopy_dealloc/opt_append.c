@@ -179,7 +179,6 @@ int main(int argc, char** args){
 	{
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(b, tmp_items, BYTE);
-		_DEALLOC(_11);
 		// isCopyEliminated of '_1' = false
 		_11 = _opt_append_(tmp_items, b_size, false, inspos, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		_CALLER_DEALLOC(b, "true-true-true" , "opt_append");

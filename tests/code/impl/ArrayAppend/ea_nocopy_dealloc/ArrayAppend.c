@@ -129,7 +129,6 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_4);
 	//invoke (%3) = (%1, %4) ArrayAppend:test_append : function(int[],int[])->(int[])
 	{
-		_DEALLOC(_3);
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_4' = true
 		_3 = _test_append_(r, r_size, false, _4, _4_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));

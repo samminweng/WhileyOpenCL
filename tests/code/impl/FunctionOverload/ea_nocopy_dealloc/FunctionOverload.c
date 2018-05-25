@@ -47,7 +47,6 @@ int main(int argc, char** args){
 	_DECL_DEALLOC(_2);
 	//invoke (%2) = () FunctionOverload:Cash : function()->(FunctionOverload:Cash)
 	{
-		_DEALLOC(_2);
 		_2 = _Cash_(_1DARRAYSIZE_PARAM_CALLBYREFERENCE(_2));
 		_2_dealloc = true;
 	}

@@ -28,8 +28,8 @@ declare -A parameters=( [Reverse]="100000 1000000 10000000" \
 			[MergeSort]="10000000 20000000 30000000" \
 			[MatrixMult]="1000 2000 3000" \
 			#[LZ77_compress]="medium1x medium5x medium7x medium10x medium25x medium50x medium75x medium100x medium120x medium125x medium150x medium175x medium200x medium225x medium250x medium275x medium300x medium325x medium350x medium375x medium400x" \
-			[LZ77]="medium1x medium5x medium10x medium25x medium50x medium75x medium100x medium125x medium150x medium175x medium200x" \
-			#[LZ77]="medium60x" \
+			#[LZ77]="medium1x medium5x medium10x medium25x medium50x medium75x medium100x medium125x medium150x medium175x medium200x" \
+			[LZ77]="medium60x" \
 			#[LZ77]="medium75x medium100x medium125x medium150x medium175x medium200x" \
 			#[LZ77]="medium10000x medium20000x medium30000x medium40000x medium50000x medium60000x medium70000x medium80000x medium90000x medium100000x" \
 			#[SobelEdge]="image64x64.pbm image64x128.pbm image64x192.pbm image64x256.pbm image64x320.pbm image64x384.pbm image64x448.pbm image64x512.pbm image64x576.pbm image64x640.pbm" \

@@ -372,7 +372,6 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 		if(pos>=_10){goto blklab14;}
 		//invoke (%11) = (%0, %2) lz77_compress:findLongestMatch : function(byte[],lz77_compress:nat)->(lz77_compress:Match)
 		{
-			_DEALLOC_STRUCT(_11, Match);
 			// isCopyEliminated of '_0' = true
 			_11 = _findLongestMatch_(data, data_size, false, pos);
 			_RETAIN_DEALLOC(data, "false-false-true" , "findLongestMatch");
@@ -432,7 +431,6 @@ blklab16:;
 blklab17:;
 		//invoke (%22) = (%1, %4) lz77_compress:append : function(byte[],byte)->(byte[])
 		{
-			_DEALLOC(_22);
 			// isCopyEliminated of '_1' = true
 			_22 = _append_(output, output_size, false, offset, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
 			_RETAIN_DEALLOC(output, "false-false-false" , "append");
@@ -445,7 +443,6 @@ blklab17:;
 		_TRANSFER_DEALLOC(output, _22);
 		//invoke (%23) = (%1, %5) lz77_compress:append : function(byte[],byte)->(byte[])
 		{
-			_DEALLOC(_23);
 			// isCopyEliminated of '_1' = true
 			_23 = _append_(output, output_size, false, length, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 			_RETAIN_DEALLOC(output, "false-false-false" , "append");
@@ -551,7 +548,6 @@ int main(int argc, char** args){
 	//fieldload %13 = %12 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%14) = (%2) whiley/lang/ASCII:fromBytes : function(byte[])->(whiley/lang/ASCII:string)
 	{
-		_DEALLOC(_14);
 		_14 = fromBytes(data, data_size);
 		_14_size = data_size;
 		_ADD_DEALLOC(_14);
@@ -581,7 +577,6 @@ int main(int argc, char** args){
 	}
 	//invoke (%21) = (%2) lz77_compress:compress : function(byte[])->(byte[])
 	{
-		_DEALLOC(_21);
 		// isCopyEliminated of '_2' = true
 		_21 = _compress_(data, data_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_21));
 		_RETAIN_DEALLOC(data, "false-false-false" , "compress");

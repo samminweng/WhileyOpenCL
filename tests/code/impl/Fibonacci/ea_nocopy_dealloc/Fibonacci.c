@@ -44,7 +44,6 @@ blklab0:;
 	_10=n-_9;
 	//invoke (%8) = (%0, %10) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
-		_DEALLOC(_8);
 		// isCopyEliminated of '_0' = true
 		_8 = _fibonacci_(ls, ls_size, false, _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_RESET_DEALLOC(ls, "true-true-false" , "fibonacci");
@@ -131,7 +130,6 @@ int main(int argc, char** args){
 	_8=max-_7;
 	//invoke (%6) = (%2, %8) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
-		_DEALLOC(_6);
 		// isCopyEliminated of '_2' = true
 		_6 = _fibonacci_(arr, arr_size, false, _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		_RESET_DEALLOC(arr, "true-true-false" , "fibonacci");

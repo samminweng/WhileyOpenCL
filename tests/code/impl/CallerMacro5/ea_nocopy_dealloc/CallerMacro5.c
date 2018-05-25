@@ -174,7 +174,6 @@ int main(int argc, char** args){
 	{
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(x, tmp_x, int64_t);
-		_DEALLOC(_6);
 		// isCopyEliminated of '_1' = false
 		_6 = _func_(tmp_x, x_size, false, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		_CALLER_DEALLOC(x, "false-true-true" , "func");
@@ -229,7 +228,6 @@ blklab3:;
 	{
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(x, tmp_x, int64_t);
-		_DEALLOC(_18);
 		// isCopyEliminated of '_1' = false
 		_18 = _func_(tmp_x, x_size, false, _19, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
 		_CALLER_DEALLOC(x, "false-true-true" , "func");
@@ -282,7 +280,6 @@ blklab4:;
 	_31 = 9;
 	//invoke (%30) = (%1, %31) CallerMacro5:func : function(int[],int)->(int[])
 	{
-		_DEALLOC(_30);
 		// isCopyEliminated of '_1' = true
 		_30 = _func_(x, x_size, false, _31, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
 		_RESET_DEALLOC(x, "false-true-false" , "func");
