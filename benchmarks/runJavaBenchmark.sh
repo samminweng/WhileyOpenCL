@@ -1,6 +1,12 @@
 #!/bin/bash
 TIMEOUT="3600s"
 BENCHMARKDIR="$(pwd)"
+### declare parameters
+declare -A parameters=( 
+			[LZ77]="medium1x medium5x medium10x medium25x medium50x medium60x medium65x medium68x medium69x medium70x medium71x medium75x medium100x medium125x medium150x medium175x medium200x" 
+			#[LZ77]="medium10000x medium20000x medium30000x medium40000x medium50000x medium60000x medium70000x medium80000x medium90000x medium100000x"
+		)
+
 
 ### Create the folder and/or clean up the files
 init(){
@@ -11,14 +17,12 @@ init(){
 	rm -f "$dir/"*.*
 }
 
-
-
 ### Generate Java code
 generateCode(){
 	testcase=$1
 	program=$2
 	### 
-	codeDir="$BENCHMARKDIR/$testcase/impl/$program/Java"
+	codeDir=$BENCHMARKDIR/$testcase/impl/$program"_"Java
 	echo $codeDir
 	## Clean the folder
 	rm -rf "$codeDir"
@@ -30,7 +34,7 @@ generateCode(){
 	cd $codeDir
 
 	### Whiley-to-Java compiler
-	wyjc=./../../../../../bin/wyjc
+	wyjc=./../../../../bin/wyjc
 	
 	echo $codegen
 	## Translate Whiley programs into naive Java code
@@ -43,22 +47,19 @@ runCode(){
 	program=$2
 	parameter=$3
 	compiler=Java
-	### The executable file name
-	executable="$testcase.$program.naive.disabledpattern.$compiler.1.$parameter.out"
 	### Output file 
-	mkdir -p $BENCHMARKDIR/$testcase/exectime/Java
-	result="$BENCHMARKDIR/$testcase/exectime/Java/$executable.txt"
+	result="$BENCHMARKDIR/$testcase/exectime/Java/$testcase.$program.java.disabledpattern.naive.seq.$parameter.1.txt"
 	### Output header
-	echo "Run the $program $testcase on $parameter using $compiler and 1 threads..." > $result
+	echo "Run the $program $testcase on $parameter using $compiler..." > $result
 	## Execute Java code
-		wyj=./../../../../../bin/wyj
+	wyj=./../../../../bin/wyj
 	## Repeat 10 times
 	for i in {1..10}
 	do
 		echo "Run the $program $testcase on $parameter using $compiler" >> $result
 		echo "Begin $i iteration" >> $result
 		start=`date +%s%N`
-		timeout $TIMEOUT $wyj $testcase"_"$program $parameter >> $result
+		timeout $TIMEOUT $wyj $testcase"_"$program "$BENCHMARKDIR/$testcase/files/compressedfiles/$parameter.dat" >> $result
 		end=`date +%s%N`
 		exectime=$((end-start))
 		printf '\nParameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter $exectime >> $result
@@ -74,15 +75,27 @@ runCode(){
 exec(){
 	testcase=$1
 	program=$2
-	parameter=$3
-
 	## Generate Java code
 	generateCode $testcase $program
-	## Run Java code
-	runCode $testcase $program $parameter
 
+	for param_arr in "${parameters[$testcase]}"
+	do
+		for parameter in $param_arr
+		do
+			echo "parameter "$parameter
+			## Run Java code
+			runCode $testcase $program $parameter
+		done
+	done
 	cd $BENCHMARKDIR
 }
+
+
+# LZ77 decompression
+init LZ77
+exec LZ77 opt_decompress
+
+
 
 ## Reverse test case
 #init Reverse
@@ -117,3 +130,4 @@ exec(){
 # exec SobelEdge original 256
 # exec SobelEdge original 512
 # exec SobelEdge original 1024
+
