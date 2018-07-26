@@ -329,7 +329,7 @@ void printf1DArray_BYTE(BYTE* input, size_t input_size) {
 	size_t i=0;
 	while(i<input_size){
 		// Print out the byte as two digits of hexadecimal
-		printf(" %02x ", input[i]);
+		printf(" %02x ", (unsigned int) input[i]);
 		i++;
 	}
 	printf("\n");
