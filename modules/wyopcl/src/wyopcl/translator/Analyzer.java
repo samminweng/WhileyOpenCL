@@ -700,7 +700,7 @@ public abstract class Analyzer {
 	 */
 	protected void postorderTraversalCallGraph(DefaultMutableTreeNode tree) {
 		// Go through all the nodes in post order
-		Enumeration<DefaultMutableTreeNode> nodes = tree.postorderEnumeration();
+		Enumeration<DefaultMutableTreeNode> nodes = (Enumeration<DefaultMutableTreeNode>) tree.postorderEnumeration();
 		while (nodes.hasMoreElements()) {
 			DefaultMutableTreeNode node = nodes.nextElement();
 			// Root node represents the tree and does not have the function.
@@ -729,7 +729,7 @@ public abstract class Analyzer {
 			if (callingfunction != null && !callingfunction.equals(function)) {
 				// Create the tree node and append the node to the parent node
 				DefaultMutableTreeNode node = new DefaultMutableTreeNode(callingfunction);
-				parentNode.add(node);
+				parentNode.add((DefaultMutableTreeNode)node);
 				// Iterate the calling function
 				for (Code c : callingfunction.body().bytecodes()) {
 					buildCallGraph(c, callingfunction, node);

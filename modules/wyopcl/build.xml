@@ -9,7 +9,7 @@
 	</path>
 	<target name="compile-wyopcl">
 		<mkdir dir="../../build"/>
-		<javac encoding="UTF-8" debug="true" debuglevel="vars,lines,source" source="1.8" includeantruntime="true">
+		<javac encoding="UTF-8" debug="true" debuglevel="vars,lines,source" source="1.8" target="1.8" includeantruntime="true">
 			<classpath refid="wyopcl-cp"/>
 			<src path="src"/>
 			<src path="test"/>
