@@ -27,21 +27,21 @@ import java.util.stream.Collectors;
 import org.apache.maven.artifact.ant.shaded.FileUtils;
 
 public final class BaseTestUtil {
-	private final String version = "v0.3.39";
+	private final static String version = "v0.3.39";
 	// user.dir is the current directory.
-	private final String workspace_path = System.getProperty("user.dir") + File.separator;
-	private final String lib_path = workspace_path + "lib" + File.separator;
+	private final static String workspace_path = System.getProperty("user.dir") + File.separator;
+	private final static String lib_path = workspace_path + "lib" + File.separator;
 
-	protected final String classpath = lib_path + "wyjc-" + version + ".jar" + File.pathSeparator + lib_path + "wyopcl-"
+	protected final static String classpath = lib_path + "wyjc-" + version + ".jar" + File.pathSeparator + lib_path + "wyopcl-"
 			+ version + ".jar" + File.pathSeparator + lib_path + "wyrl-" + version + ".jar" + File.pathSeparator
 			+ lib_path + "wycs-" + version + ".jar" + File.pathSeparator + lib_path + "wybs-" + version + ".jar"
 			+ File.pathSeparator + lib_path + "wyil-" + version + ".jar" + File.pathSeparator + lib_path + "wyc-"
 			+ version + ".jar" + File.pathSeparator;
 
-	private final String whiley_runtime_lib = lib_path + "wyrt-" + version + ".jar";
+	protected final static String whiley_runtime_lib = lib_path + "wyrt-" + version + ".jar";
 
 	// Log file
-	private final File logfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "log.txt");
+	//private final static File logfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "log.txt");
 
 	public BaseTestUtil() {
 
@@ -299,7 +299,7 @@ public final class BaseTestUtil {
 	 * @param workingDir
 	 *            Working directory
 	 */
-	private int runCmd(String cmd, Path workingDir, boolean isWriteOut) {
+	protected static int runCmd(String cmd, Path workingDir, boolean isWriteOut, File logfile) {
 		// Get the runtime.
 		Runtime rt = Runtime.getRuntime();
 		// Compile the C program
@@ -410,7 +410,7 @@ public final class BaseTestUtil {
 	 * @param sourcePath 
 	 * @param destPath
 	 */
-	private void createFolderAndCopyFiles(String testcase, Path basePath, Path destPath) {
+	protected static void createFolderAndCopyFiles(String testcase, Path basePath, Path destPath) {
 		try {
 
 			// Create the destDir folder.
@@ -446,7 +446,7 @@ public final class BaseTestUtil {
 	 * @param destDir
 	 * @param isWriteOut decides whether to write output to a file or not.
 	 */
-	private void compileAndRunCCode(String testcase, Path destDir, boolean isWriteOut) {
+	protected static void compileAndRunCCode(String testcase, Path destDir, boolean isWriteOut, File logfile) {
 		// Get Operation System.
 		// 4. Compile and run the C code.
 		if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
@@ -455,7 +455,7 @@ public final class BaseTestUtil {
 			String path = System.getenv("PATH");// Get PATH environment variable.
 			if (path.contains("MinGW")) {
 				// Check the exit value. If not 0, the compilation has errors.
-				assertEquals(runCmd("cmd /c gcc -std=c11 -D DEBUG *.c -o " + testcase + ".out", destDir, isWriteOut), 0);
+				assertEquals(runCmd("cmd /c gcc -std=c11 -D DEBUG *.c -o " + testcase + ".out", destDir, isWriteOut, logfile), 0);
 			} /*else if (path.contains("cygwin")) {
 				// Gcc is a link (Windows command does not get it), so call its actual name (i.e. gcc-3 or gcc-4)
 				assertEquals(runCmd("cmd /c gcc-4 -std=c11 -D DEBUG *.c  -o " + testcase + ".out", destDir), 0);
@@ -466,12 +466,12 @@ public final class BaseTestUtil {
 			}
 
 			// Run the output file.
-			assertEquals(runCmd("cmd /c " + testcase + ".out", destDir, isWriteOut), 0);
+			assertEquals(runCmd("cmd /c " + testcase + ".out", destDir, isWriteOut, logfile), 0);
 		} else {
 			// Use C11 standard to Compile the C program into *.out and place it in current working directory
-			assertEquals(runCmd("gcc -std=c11 -D DEBUG Util.c WyRT.c "+testcase+".c -o " + testcase + ".out", destDir, isWriteOut), 0);
+			assertEquals(runCmd("gcc -std=c11 -D DEBUG Util.c WyRT.c "+testcase+".c -o " + testcase + ".out", destDir, isWriteOut, logfile), 0);
 			// Run the generated out file
-			assertEquals(runCmd("./" + testcase + ".out", destDir, isWriteOut), 0);
+			assertEquals(runCmd("./" + testcase + ".out", destDir, isWriteOut, logfile), 0);
 		}
 
 	}
@@ -623,6 +623,7 @@ public final class BaseTestUtil {
 	 */
 	public void execCodeGeneration(Path baseDir, String testcase, String... options) {
 		try {
+			File logfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "log.txt");
 			// 1. Find the destination folder
 			Path destDir= processOptions(baseDir, testcase, options);
 
@@ -633,7 +634,7 @@ public final class BaseTestUtil {
 			String cmd = makeCmd(testcase, options);
 
 			// 4. Generate the C code
-			runCmd(cmd, destDir, false);
+			runCmd(cmd, destDir, false, logfile);
 
 			// Check if *.c and *.h files are generated or not.
 			assertEquals(Files.exists(Paths.get(destDir + File.separator + testcase + ".c")), true);
@@ -642,9 +643,9 @@ public final class BaseTestUtil {
 			// Get Operation System.
 			if(testcase.equals("SobelEdge1")|| testcase.equals("SobelEdge2")){
 				// Write output to a PBM file
-				compileAndRunCCode(testcase, destDir, true);
+				compileAndRunCCode(testcase, destDir, true, logfile);
 			}else{
-				compileAndRunCCode(testcase, destDir, false);
+				compileAndRunCCode(testcase, destDir, false, logfile);
 			}
 
 			// Delete the Wyil files inside folder
