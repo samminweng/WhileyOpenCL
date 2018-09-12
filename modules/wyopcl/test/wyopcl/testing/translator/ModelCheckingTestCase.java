@@ -200,15 +200,13 @@ public class ModelCheckingTestCase {
 		return testcases;
 	}
 
-	@Test
+	//@Test
 	/**
-	 * Given three variables and produce
+	 * Given three variables and produce Whiley programs. 
+	 * For each Whiley program the test produces the optimised C code and compiles and run the code.
 	 */
 	public void testTwoVariables() throws IOException {
-		
-		
-		
-		//
+		// Generates the varaibles
 		ArrayList<String> variables = new ArrayList<String>();
 		variables.add("a");
 		variables.add("b");
@@ -217,8 +215,10 @@ public class ModelCheckingTestCase {
 		// Write out Whiley programs
 		ArrayList<String> testcases = generateWhileyPrograms(variables);
 
-		// Log file
+		// Log file stores error messages
 		File logfile = new File(modelCheckingDir + File.separator + "log.txt");
+		logfile.deleteOnExit();// Delete the file 
+		logfile.createNewFile();// Create the file
 		
 		for (String testcase : testcases) {
 			Path destPath = Paths.get(implDir + File.separator + testcase);
@@ -239,5 +239,43 @@ public class ModelCheckingTestCase {
 		}
 
 	}
+	
+	
+	@Test
+	public void testThreeVariables() throws IOException {
+		// Generates the varaibles
+		ArrayList<String> variables = new ArrayList<String>();
+		variables.add("a");
+		variables.add("b");
+		variables.add("c");
+
+		// Write out Whiley programs
+		ArrayList<String> testcases = generateWhileyPrograms(variables);
+
+		// Log file stores error messages
+		File logfile = new File(modelCheckingDir + File.separator + "log.txt");
+		logfile.deleteOnExit();// Delete the file 
+		logfile.createNewFile();// Create the file
+		
+		for (String testcase : testcases) {
+			Path destPath = Paths.get(implDir + File.separator + testcase);
+			BaseTestUtil.createFolderAndCopyFiles(testcase, modelCheckingDir, destPath);
+			String cmd = "java -cp " + BaseTestUtil.classpath + " wyopcl.WyopclMain -bp " + BaseTestUtil.whiley_runtime_lib;
+			// Run -nocopy -dealloc -code options to produce optimized C code
+			cmd += " -nocopy -dealloc -code";
+			cmd += " " + testcase + ".whiley";
+
+			// Run 'cmd' to generate C code
+			BaseTestUtil.runCmd(cmd, destPath, false, logfile);
+			
+			System.out.println(cmd);
+			
+			Path destDir = Paths.get(implDir + File.separator + testcase);
+			BaseTestUtil.compileAndRunCCode(testcase, destDir, false, logfile);
+			//runCmd(testcase);
+		}
+
+	}
+	
 
 }

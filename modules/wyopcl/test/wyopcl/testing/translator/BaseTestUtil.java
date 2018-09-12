@@ -468,10 +468,15 @@ public final class BaseTestUtil {
 			// Run the output file.
 			assertEquals(runCmd("cmd /c " + testcase + ".out", destDir, isWriteOut, logfile), 0);
 		} else {
+			
+			String cmd = "gcc -std=c11 -D DEBUG Util.c WyRT.c "+testcase+".c -o " + testcase + ".out";
+			System.out.println(cmd);
 			// Use C11 standard to Compile the C program into *.out and place it in current working directory
-			assertEquals(runCmd("gcc -std=c11 -D DEBUG Util.c WyRT.c "+testcase+".c -o " + testcase + ".out", destDir, isWriteOut, logfile), 0);
+			assertEquals(runCmd(cmd, destDir, isWriteOut, logfile), 0);
+			cmd = "./" + testcase + ".out";
+			System.out.println(cmd);
 			// Run the generated out file
-			assertEquals(runCmd("./" + testcase + ".out", destDir, isWriteOut, logfile), 0);
+			assertEquals(runCmd(cmd, destDir, isWriteOut, logfile), 0);
 		}
 
 	}

@@ -182,4 +182,24 @@
 		</junit>
 		<fail message="Test failure detected, stopping build." if="tests.failed"/>
 	</target>
+	<!--Test our deallocation and copy analysis, and code generator with model checking.-->
+	<target name="test-modelchecking" depends="build" >
+		<!-- Empty the output file of standard error -->
+		<delete file="../../tests/modelchecking/log.txt"/>
+		<!-- =================================
+			'showoutput' option enable junit to sends any output instantly
+			reference: https://ant.apache.org/manual/Tasks/junit.html
+	    	===================================
+	    -->
+		<junit fork="true" showoutput="yes" dir="${basedir}/../../" failureProperty="tests.failed" printsummary="yes" outputtoformatters="true">
+			<formatter type="brief" usefile="false" />
+			<classpath refid="junit-classpath"/>
+			<batchtest>
+				<fileset dir="${basedir}/test">
+					<include name="**/ModelCheckingTestCase*" />
+				</fileset>
+			</batchtest>
+		</junit>
+		<fail message="Test failure detected, stopping build." if="tests.failed"/>
+	</target>
 </project>
