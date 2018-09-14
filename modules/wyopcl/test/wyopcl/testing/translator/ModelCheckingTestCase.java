@@ -147,6 +147,9 @@ public class ModelCheckingTestCase {
 	 * @throws IOException
 	 */
 	private ArrayList<String> generateWhileyPrograms(ArrayList<String> variables) throws IOException {
+		// The number of variables
+		int numVars = variables.size();
+		
 		ArrayList<String> assignments = new ArrayList<String>();
 
 		// An array stores all the assignments
@@ -168,7 +171,7 @@ public class ModelCheckingTestCase {
 		// Take out each item from the collection and write as a Whiley file (*.whiley)
 		int index = 1;
 		for (ArrayList<String> statements : collections) {
-			String testcase = "assignment_test" + index;
+			String testcase = "assignment_"+numVars+"Vars_test" + index;
 			// Put test case to 'testcases' array
 			testcases.add(testcase);
 			// Create a Whiley file
@@ -200,12 +203,13 @@ public class ModelCheckingTestCase {
 		return testcases;
 	}
 
-	//@Test
+	//
 	/**
 	 * Given three variables and produce Whiley programs. 
 	 * For each Whiley program the test produces the optimised C code and compiles and run the code.
 	 */
-	public void testTwoVariables() throws IOException {
+	@Test
+	public void test2Variables() throws IOException {
 		// Generates the varaibles
 		ArrayList<String> variables = new ArrayList<String>();
 		variables.add("a");
@@ -242,7 +246,7 @@ public class ModelCheckingTestCase {
 	
 	
 	@Test
-	public void testThreeVariables() throws IOException {
+	public void test3Variables() throws IOException {
 		// Generates the varaibles
 		ArrayList<String> variables = new ArrayList<String>();
 		variables.add("a");
