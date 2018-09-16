@@ -33,7 +33,7 @@ int64_t* _test_append_(_DECL_1DARRAY_PARAM(lhs), _DECL_DEALLOC_PARAM(lhs), _DECL
 	//arraygen %9 = [5; 8] : int[]
 	_DEALLOC(_9);
 	_NEW_1DARRAY_int64_t(_9, _8, _5);
-	_ADD_DEALLOC(_9);
+	_NEW1DARRAY_DEALLOC(_9, _5, _8);
 	//assign %3 = %9  : int[]
 	_DEALLOC(rs);
 	// isCopyEliminated = true

@@ -19,7 +19,7 @@ int main(int argc, char** args){
 	//arraygen %5 = [3; 4] : int[]
 	_DEALLOC(_5);
 	_NEW_1DARRAY_int64_t(_5, _4, _3);
-	_ADD_DEALLOC(_5);
+	_NEW1DARRAY_DEALLOC(_5, _3, _4);
 	//assign %1 = %5  : int[]
 	_DEALLOC(a);
 	// isCopyEliminated = true
@@ -32,7 +32,7 @@ int main(int argc, char** args){
 	//arraygen %8 = [6; 7] : int[]
 	_DEALLOC(_8);
 	_NEW_1DARRAY_int64_t(_8, _7, _6);
-	_ADD_DEALLOC(_8);
+	_NEW1DARRAY_DEALLOC(_8, _6, _7);
 	//assign %2 = %8  : int[]
 	_DEALLOC(b);
 	// isCopyEliminated = true

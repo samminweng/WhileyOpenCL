@@ -333,7 +333,7 @@ public final class BaseTestUtil {
 			while (in_sc.hasNextLine()) {
 				String line = in_sc.nextLine();
 				// De-bugging message can be ignored, to speed up ant task
-				if (line.startsWith("DEBUG:")) {
+				if (line.contains("DEBUG:")) {
 					// Store debugging messages only
 					line = line + " in " + workingDir.getFileName() + " folder";
 					messages.add(line);

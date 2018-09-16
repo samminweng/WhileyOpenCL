@@ -180,7 +180,7 @@ int main(int argc, char** args){
 	//arraygen %13 = [11; 12] : int[]
 	_DEALLOC(_13);
 	_NEW_1DARRAY_int64_t(_13, _12, _11);
-	_ADD_DEALLOC(_13);
+	_NEW1DARRAY_DEALLOC(_13, _11, _12);
 	//assign %2 = %13  : int[]
 	_DEALLOC(gcds);
 	_COPY_1DARRAY_int64_t(gcds, _13);

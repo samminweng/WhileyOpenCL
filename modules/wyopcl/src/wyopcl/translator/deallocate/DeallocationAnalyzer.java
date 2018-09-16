@@ -142,6 +142,25 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
+	 * 
+	 * @param register
+	 * @param function
+	 * @param stores
+	 * @return
+	 */
+	private String new1DArrayDealloc(int register, int valueReg, int sizeReg, FunctionOrMethod function, CodeStores stores) {
+		Type type = stores.getRawType(register, function);
+		if (stores.isCompoundType(type) || type instanceof Type.Union) {
+			String var = stores.getVar(register, function);
+			String value = stores.getVar(valueReg, function);
+			String size = stores.getVar(sizeReg, function);
+			return "_NEW1DARRAY_DEALLOC(" + var + ", "+ value +", "+size+");";
+		}
+		return "";
+	}
+	
+	
+	/**
 	 * Compute deallocation flag of array generator
 	 * 
 	 * @param code
@@ -152,9 +171,10 @@ public class DeallocationAnalyzer extends Analyzer {
 	private List<String> computeDealloc(Codes.ArrayGenerator code, FunctionOrMethod function, CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
-
-		// Assign deallocation flag to lhs variable.
-		statements.add(indent + addDealloc(code.target(0), function, stores));
+		
+		//statements.add(indent + addDealloc(code.target(0), function, stores));
+		// Apply '_NEW1DARRAY_DEALLOC' macro 
+		statements.add(indent + new1DArrayDealloc(code.target(0), code.operand(0), code.operand(1), function, stores));
 
 		return statements;
 

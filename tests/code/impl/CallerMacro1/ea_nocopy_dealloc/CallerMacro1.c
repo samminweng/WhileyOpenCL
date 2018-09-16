@@ -35,7 +35,7 @@ int64_t* _g1_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	//arraygen %5 = [3; 4] : int[]
 	_DEALLOC(_5);
 	_NEW_1DARRAY_int64_t(_5, _4, _3);
-	_ADD_DEALLOC(_5);
+	_NEW1DARRAY_DEALLOC(_5, _3, _4);
 	//assign %1 = %5  : int[]
 	_DEALLOC(a);
 	// isCopyEliminated = true

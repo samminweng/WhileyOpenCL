@@ -28,7 +28,7 @@ int main(int argc, char** args){
 	//arraygen %6 = [5; 1] : byte[]
 	_DEALLOC(_6);
 	_NEW_1DARRAY_BYTE(_6, size, _5);
-	_ADD_DEALLOC(_6);
+	_NEW1DARRAY_DEALLOC(_6, _5, size);
 	//assign %2 = %6  : byte[]
 	_DEALLOC(pixels);
 	_COPY_1DARRAY_BYTE(pixels, _6);

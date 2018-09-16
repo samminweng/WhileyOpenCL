@@ -66,7 +66,7 @@ int main(int argc, char** args){
 	//arraygen %7 = [5; 6] : int[]
 	_DEALLOC(_7);
 	_NEW_1DARRAY_int64_t(_7, _6, _5);
-	_ADD_DEALLOC(_7);
+	_NEW1DARRAY_DEALLOC(_7, _5, _6);
 	//assign %1 = %7  : int[]
 	_DEALLOC(a);
 	_COPY_1DARRAY_int64_t(a, _7);
@@ -78,7 +78,7 @@ int main(int argc, char** args){
 	//arraygen %10 = [8; 9] : int[]
 	_DEALLOC(_10);
 	_NEW_1DARRAY_int64_t(_10, _9, _8);
-	_ADD_DEALLOC(_10);
+	_NEW1DARRAY_DEALLOC(_10, _8, _9);
 	//assign %2 = %10  : int[]
 	_DEALLOC(b);
 	_COPY_1DARRAY_int64_t(b, _10);
@@ -102,7 +102,7 @@ int main(int argc, char** args){
 	//arraygen %13 = [11; 12] : int[]
 	_DEALLOC(_13);
 	_NEW_1DARRAY_int64_t(_13, _12, _11);
-	_ADD_DEALLOC(_13);
+	_NEW1DARRAY_DEALLOC(_13, _11, _12);
 	//assign %2 = %13  : int[]
 	_DEALLOC(b);
 	_COPY_1DARRAY_int64_t(b, _13);

@@ -336,7 +336,7 @@ int main(int argc, char** args){
 	//arraygen %8 = [7; 1] : {int c,int r}[]
 	_DEALLOC_1DARRAY_STRUCT(_8, POS);
 	_NEW_1DARRAY_STRUCT(_8, n, _7, POS);
-	_ADD_DEALLOC(_8);
+	_NEW1DARRAY_DEALLOC(_8, _7, n);
 	//assign %2 = %8  : {int c,int r}[]
 	_DEALLOC_1DARRAY_STRUCT(queens, POS);
 	// isCopyEliminated = true

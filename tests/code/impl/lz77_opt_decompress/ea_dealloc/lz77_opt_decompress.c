@@ -15,7 +15,7 @@ BYTE* _resize_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64
 	//arraygen %5 = [4; 1] : byte[]
 	_DEALLOC(_5);
 	_NEW_1DARRAY_BYTE(_5, size, _4);
-	_ADD_DEALLOC(_5);
+	_NEW1DARRAY_DEALLOC(_5, _4, size);
 	//assign %2 = %5  : byte[]
 	_DEALLOC(nitems);
 	_COPY_1DARRAY_BYTE(nitems, _5);
@@ -110,7 +110,7 @@ blklab10:;
 	//arraygen %13 = [7; 12] : byte[]
 	_DEALLOC(_13);
 	_NEW_1DARRAY_BYTE(_13, _12, _7);
-	_ADD_DEALLOC(_13);
+	_NEW1DARRAY_DEALLOC(_13, _7, _12);
 	//assign %4 = %13  : byte[]
 	_DEALLOC(nitems);
 	_COPY_1DARRAY_BYTE(nitems, _13);
@@ -206,7 +206,7 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 	//arraygen %13 = [11; 12] : byte[]
 	_DEALLOC(_13);
 	_NEW_1DARRAY_BYTE(_13, _12, _11);
-	_ADD_DEALLOC(_13);
+	_NEW1DARRAY_DEALLOC(_13, _11, _12);
 	//assign %2 = %13  : byte[]
 	_DEALLOC(items);
 	_COPY_1DARRAY_BYTE(items, _13);

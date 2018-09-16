@@ -17,7 +17,7 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(b), _DECL_DEALLOC_PARAM(b), int64_t num, _DE
 	//arraygen %6 = [4; 5] : int[]
 	_DEALLOC(_6);
 	_NEW_1DARRAY_int64_t(_6, _5, _4);
-	_ADD_DEALLOC(_6);
+	_NEW1DARRAY_DEALLOC(_6, _4, _5);
 	//assign %3 = %6  : int[]
 	_DEALLOC(c);
 	_COPY_1DARRAY_int64_t(c, _6);
@@ -85,7 +85,7 @@ int main(int argc, char** args){
 	//arraygen %5 = [3; 4] : int[]
 	_DEALLOC(_5);
 	_NEW_1DARRAY_int64_t(_5, _4, _3);
-	_ADD_DEALLOC(_5);
+	_NEW1DARRAY_DEALLOC(_5, _3, _4);
 	//assign %1 = %5  : int[]
 	_DEALLOC(b);
 	_COPY_1DARRAY_int64_t(b, _5);

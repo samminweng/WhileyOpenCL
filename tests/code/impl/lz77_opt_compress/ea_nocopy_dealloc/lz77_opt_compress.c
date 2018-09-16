@@ -218,7 +218,7 @@ BYTE* _append_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), BYTE 
 	//arraygen %8 = [4; 7] : byte[]
 	_DEALLOC(_8);
 	_NEW_1DARRAY_BYTE(_8, _7, _4);
-	_ADD_DEALLOC(_8);
+	_NEW1DARRAY_DEALLOC(_8, _4, _7);
 	//assign %2 = %8  : byte[]
 	_DEALLOC(nitems);
 	// isCopyEliminated = true
@@ -277,7 +277,7 @@ BYTE* _resize_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64
 	//arraygen %5 = [4; 1] : byte[]
 	_DEALLOC(_5);
 	_NEW_1DARRAY_BYTE(_5, size, _4);
-	_ADD_DEALLOC(_5);
+	_NEW1DARRAY_DEALLOC(_5, _4, size);
 	//assign %2 = %5  : byte[]
 	_DEALLOC(nitems);
 	// isCopyEliminated = true
@@ -372,7 +372,7 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 	//arraygen %13 = [12; 3] : byte[]
 	_DEALLOC(_13);
 	_NEW_1DARRAY_BYTE(_13, arr_capacity, _12);
-	_ADD_DEALLOC(_13);
+	_NEW1DARRAY_DEALLOC(_13, _12, arr_capacity);
 	//assign %1 = %13  : byte[]
 	_DEALLOC(output);
 	// isCopyEliminated = true

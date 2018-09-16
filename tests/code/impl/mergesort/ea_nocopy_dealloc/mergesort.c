@@ -632,7 +632,7 @@ blklab12:;
 	//arraygen %66 = [63; 65] : int[]
 	_DEALLOC(_66);
 	_NEW_1DARRAY_int64_t(_66, _65, _63);
-	_ADD_DEALLOC(_66);
+	_NEW1DARRAY_DEALLOC(_66, _63, _65);
 	//assign %4 = %66  : int[]
 	_DEALLOC(arr);
 	// isCopyEliminated = true

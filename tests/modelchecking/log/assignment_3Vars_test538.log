@@ -1,15 +1,12 @@
-==32734== Memcheck, a memory error detector
-==32734== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==32734== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==32734== Command: ./impl/assignment_3Vars_test538/assignment_3Vars_test538.out
-==32734== Parent PID: 25953
-==32734== 
-==32734== 
-==32734== HEAP SUMMARY:
-==32734==     in use at exit: 0 bytes in 0 blocks
-==32734==   total heap usage: 3 allocs, 3 frees, 120 bytes allocated
-==32734== 
-==32734== All heap blocks were freed -- no leaks are possible
-==32734== 
-==32734== For counts of detected and suppressed errors, rerun with: -v
-==32734== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _6 ) (LINE:28 FILE: impl/assignment_3Vars_test538/assignment_3Vars_test538.c)
+	DEBUG: _TRANSFER_DEALLOC macro on  ( a and _6 ) (LINE:33 FILE: impl/assignment_3Vars_test538/assignment_3Vars_test538.c)
+	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _9 ) (LINE:41 FILE: impl/assignment_3Vars_test538/assignment_3Vars_test538.c)
+	DEBUG: _TRANSFER_DEALLOC macro on  ( b and _9 ) (LINE:46 FILE: impl/assignment_3Vars_test538/assignment_3Vars_test538.c)
+	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _12 ) (LINE:54 FILE: impl/assignment_3Vars_test538/assignment_3Vars_test538.c)
+	DEBUG: _TRANSFER_DEALLOC macro on  ( c and _12 ) (LINE:59 FILE: impl/assignment_3Vars_test538/assignment_3Vars_test538.c)
+	DEBUG: _TRANSFER_DEALLOC macro on  ( c and a ) (LINE:64 FILE: impl/assignment_3Vars_test538/assignment_3Vars_test538.c)
+	DEBUG: _TRANSFER_DEALLOC macro on  ( b and c ) (LINE:69 FILE: impl/assignment_3Vars_test538/assignment_3Vars_test538.c)
+	DEBUG: _TRANSFER_DEALLOC macro on  ( a and c ) (LINE:74 FILE: impl/assignment_3Vars_test538/assignment_3Vars_test538.c)
+	DEBUG: _TRANSFER_DEALLOC macro on  ( a and b ) (LINE:79 FILE: impl/assignment_3Vars_test538/assignment_3Vars_test538.c)
+	DEBUG: _TRANSFER_DEALLOC macro on  ( c and b ) (LINE:84 FILE: impl/assignment_3Vars_test538/assignment_3Vars_test538.c)
+	DEBUG: _TRANSFER_DEALLOC macro on  ( b and a ) (LINE:89 FILE: impl/assignment_3Vars_test538/assignment_3Vars_test538.c)

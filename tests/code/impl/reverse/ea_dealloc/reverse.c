@@ -31,7 +31,7 @@ int64_t* _reverse_(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls), _DECL_1DARR
 	//arraygen %8 = [6; 7] : int[]
 	_DEALLOC(_8);
 	_NEW_1DARRAY_int64_t(_8, _7, _6);
-	_ADD_DEALLOC(_8);
+	_NEW1DARRAY_DEALLOC(_8, _6, _7);
 	//assign %3 = %8  : int[]
 	_DEALLOC(r);
 	_COPY_1DARRAY_int64_t(r, _8);
@@ -185,7 +185,7 @@ blklab4:;
 	//arraygen %23 = [20; 22] : int[]
 	_DEALLOC(_23);
 	_NEW_1DARRAY_int64_t(_23, _22, _20);
-	_ADD_DEALLOC(_23);
+	_NEW1DARRAY_DEALLOC(_23, _20, _22);
 	//assign %4 = %23  : int[]
 	_DEALLOC(arr);
 	_COPY_1DARRAY_int64_t(arr, _23);

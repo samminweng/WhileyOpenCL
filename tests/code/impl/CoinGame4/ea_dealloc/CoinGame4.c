@@ -598,7 +598,7 @@ int main(int argc, char** args){
 	//arraygen %7 = [5; 6] : int[]
 	_DEALLOC(_7);
 	_NEW_1DARRAY_int64_t(_7, _6, _5);
-	_ADD_DEALLOC(_7);
+	_NEW1DARRAY_DEALLOC(_7, _5, _6);
 	//assign %2 = %7  : int[]
 	_DEALLOC(moves);
 	_COPY_1DARRAY_int64_t(moves, _7);

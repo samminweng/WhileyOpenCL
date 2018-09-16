@@ -90,7 +90,7 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 		//arraygen %11 = [10; 1] : int[]
 		_DEALLOC(_11);
 		_NEW_1DARRAY_int64_t(_11, n, _10);
-		_ADD_DEALLOC(_11);
+		_NEW1DARRAY_DEALLOC(_11, _10, n);
 		//assign %4 = %11  : int[]
 		_DEALLOC(x);
 		// isCopyEliminated = true
@@ -101,7 +101,7 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 		//arraygen %13 = [12; 1] : int[]
 		_DEALLOC(_13);
 		_NEW_1DARRAY_int64_t(_13, n, _12);
-		_ADD_DEALLOC(_13);
+		_NEW1DARRAY_DEALLOC(_13, _12, n);
 		//assign %5 = %13  : int[]
 		_DEALLOC(y);
 		// isCopyEliminated = true
@@ -112,7 +112,7 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 		//arraygen %15 = [14; 1] : int[]
 		_DEALLOC(_15);
 		_NEW_1DARRAY_int64_t(_15, n, _14);
-		_ADD_DEALLOC(_15);
+		_NEW1DARRAY_DEALLOC(_15, _14, n);
 		//assign %6 = %15  : int[]
 		_DEALLOC(z);
 		// isCopyEliminated = true
@@ -355,7 +355,7 @@ int main(int argc, char** args){
 	//arraygen %7 = [5; 6] : int[]
 	_DEALLOC(_7);
 	_NEW_1DARRAY_int64_t(_7, _6, _5);
-	_ADD_DEALLOC(_7);
+	_NEW1DARRAY_DEALLOC(_7, _5, _6);
 	//assign %2 = %7  : int[]
 	_DEALLOC(moves);
 	// isCopyEliminated = true

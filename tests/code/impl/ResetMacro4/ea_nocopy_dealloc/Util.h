@@ -93,7 +93,7 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 #define str(x) #x
 #ifdef DEBUG
 // Print out the message
-#define DEBUG_PRINT(msg) if(DEBUG){fputs("DEBUG: " msg " (LINE:" num2str(__LINE__) " FILE: " __FILE__ ")\n", stdout);}
+#define DEBUG_PRINT(msg) if(DEBUG){fputs("\tDEBUG: " msg " (LINE:" num2str(__LINE__) " FILE: " __FILE__ ")\n", stdout);}
 #else
 #define DEBUG_PRINT(msg) // Do nothing
 #endif
@@ -343,13 +343,30 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 * Deallocation Macros for assignment
 *
 */
+// New Array generator 
+#define _NEW1DARRAY_DEALLOC(a, value, size) \
+		({\
+			DEBUG_PRINT("_NEW1DARRAY_DEALLOC macro on  ( "str(a)" )");\
+			a##_dealloc = true;\
+		})
 // Add deallocation flag for a given variable
-#define _ADD_DEALLOC(a) if(a != NULL) {a##_dealloc = true;}else{a##_dealloc = false;}
+#define _ADD_DEALLOC(a) \
+        ({\
+		    DEBUG_PRINT("_ADD_DEALLOC macro on  ( "str(a)" )");\
+			a##_dealloc = true;\
+		})
 // Take out a variable's deallocation flag
-#define _REMOVE_DEALLOC(a) a##_dealloc = false;
+#define _REMOVE_DEALLOC(a) \
+        ({\
+			DEBUG_PRINT("_REMOVE_DEALLOC macro on  ( "str(a)" )");\
+			a##_dealloc = false;\
+		})
 // Transfer one variable's deallocation flag to another
-#define _TRANSFER_DEALLOC(a, b) a##_dealloc = b##_dealloc; b##_dealloc = false;
-
+#define _TRANSFER_DEALLOC(a, b)  \
+        ({\
+			DEBUG_PRINT("_TRANSFER_DEALLOC macro on  ( "str(a)" and "str(b)" )");\
+			a##_dealloc = b##_dealloc; b##_dealloc = false;\
+		})
 /***
 *
 * Deallocation Macros for function call 'ret = func(param)'
