@@ -94,8 +94,18 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 #ifdef DEBUG
 // Print out the message
 #define DEBUG_PRINT(msg) if(DEBUG){fputs("\tDEBUG: " msg " (LINE:" num2str(__LINE__) " FILE: " __FILE__ ")\n", stdout);}
+// CHeck if e(a) 
+#define DEBUG_CHECK_ASUMPTION(a, b) \
+({\
+	if(a != b || a##_dealloc == false){\
+		fputs("The assumption holds", stdout);\
+	}else{\
+		fputs("Error! The assumption fails. ", stdout);\
+	}\
+})
 #else
 #define DEBUG_PRINT(msg) // Do nothing
+#define DEBUG_CHECK_ASUMPTION(a, b) // Do nothing
 #endif
 /***
  *
@@ -103,7 +113,7 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
  *
  */
 // Declare 1D array of integers or bytes
-#define _DECL_1DARRAY(a) int64_t* a = NULL; size_t a##_size = 0;
+#define _DECL_1DARRAY(a) int64_t* a; size_t a##_size;
 #define _DECL_1DARRAY_BYTE(a) BYTE* a = NULL; size_t a##_size = 0;
 // Declare 2D array variable
 #define _DECL_2DARRAY(a) int64_t** a = NULL; size_t a##_size = 0; size_t a##_size_size = 0;

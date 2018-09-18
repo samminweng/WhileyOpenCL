@@ -53,10 +53,14 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_12, _11, _10);
 	_NEW1DARRAY_DEALLOC(_12, _10, _11);
 	//assign %3 = %12  : int[]
+	// Check if c_dealloc == false or c != _12 
+	//DEBUG_CHECK(c, _12);
+	DEBUG_CHECK_ASUMPTION(c, _12);
 	_DEALLOC(c);
 	// isCopyEliminated = true
 	_UPDATE_1DARRAY(c, _12);
 	_TRANSFER_DEALLOC(c, _12);
+	
 	//assign %1 = %2  : int[]
 	_DEALLOC(a);
 	// isCopyEliminated = true
