@@ -703,8 +703,23 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Add copy analysis result as a comment.
 			if(this.copyAnalyzer.isPresent()){
 				statement.add(indent+ "// isCopyEliminated = " + isCopyEliminated);
-			}			
-			statement.add(generateAssignmentCode(code, isCopyEliminated, function, stores));
+			}		
+			
+			if(this.copyAnalyzer.isPresent() && this.deallocatedAnalyzer.isPresent()
+					&& lhs_type instanceof Type.Array) {
+				int dimension = stores.getArrayDimension(lhs_type);
+				// Get element type
+				Type elm_type = stores.getArrayElementType((Type.Array) lhs_type);
+				if ((stores.isIntType(elm_type) || elm_type instanceof Type.Byte) && isCopyEliminated) {
+					// Then we can apply '_TRANSFER_DEALLOC' without generating other code
+				}else {
+					statement.add(generateAssignmentCode(code, isCopyEliminated, function, stores));
+				}
+			}else {
+				statement.add(generateAssignmentCode(code, isCopyEliminated, function, stores));
+			}
+			
+			
 
 			if (isCopyEliminated && stores.isCompoundType(lhs_type)) {
 				// Check if lhs is a substructure.
@@ -1181,6 +1196,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			} else if (code instanceof Codes.Assign) {
 				lhs = stores.getVar(((Codes.Assign) code).target(0), function);
 				type = stores.getRawType(((Codes.Assign) code).target(0), function);
+				// Copy and deallocation analysers are both enabled
+				if(this.copyAnalyzer.isPresent() && this.deallocatedAnalyzer.isPresent() 
+						&& type instanceof Type.Array) {
+					// Then we can avoid generating PRE_DEALLOC macro
+					return lhs;
+				}
+				
 			} else if (code instanceof Codes.Const) {
 				lhs = stores.getVar(((Codes.Const) code).target(0), function);
 				type = stores.getRawType(((Codes.Const) code).target(0), function);

@@ -44,10 +44,8 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_5, _4, _3);
 	_NEW1DARRAY_DEALLOC(_5, _3, _4);
 	//assign %1 = %5  : int[]
-	_DEALLOC(x);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(x, _5);
-	_TRANSFER_DEALLOC(x, _5);
+	_TRANSFER_DEALLOC(x, _5, 1);
 	//const %7 = 11 : int
 	_7 = 11;
 	//invoke (%6) = (%1, %7) ResetMacro1:func : function(int[],int)->(int[])
@@ -58,15 +56,11 @@ int main(int argc, char** args){
 		_RESET_DEALLOC_POST(_6, x);
 	}
 	//assign %2 = %6  : int[]
-	_DEALLOC(tmp);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(tmp, _6);
-	_TRANSFER_DEALLOC(tmp, _6);
+	_TRANSFER_DEALLOC(tmp, _6, 1);
 	//assign %1 = %2  : int[]
-	_DEALLOC(x);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(x, tmp);
-	_TRANSFER_DEALLOC(x, tmp);
+	_TRANSFER_DEALLOC(x, tmp, 1);
 	//assert
 	{
 		//const %8 = 0 : int

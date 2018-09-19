@@ -18,7 +18,7 @@ int main(int argc, char** args){
 	_DEALLOC(r);
 	// isCopyEliminated = true
 	_UPDATE_1DARRAY(r, _2);
-	_TRANSFER_DEALLOC(r, _2);
+	_TRANSFER_DEALLOC_STRUCT(r, _2);
 	//const %4 = [32,84,104,105,115,32,105,115,32,97,32,116,101,115,116,32] : int[]
 	_DEALLOC(_4);
 	_NEW_1DARRAY_int64_t(_4, 16, 0);
@@ -33,7 +33,7 @@ int main(int argc, char** args){
 	_DEALLOC(r);
 	// isCopyEliminated = true
 	_UPDATE_1DARRAY(r, _3);
-	_TRANSFER_DEALLOC(r, _3);
+	_TRANSFER_DEALLOC_STRUCT(r, _3);
 	//fieldload %5 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %6 = %5 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//indirectinvoke () = %6 (%1) : method(int[])->()

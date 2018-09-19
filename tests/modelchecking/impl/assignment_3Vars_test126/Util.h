@@ -94,8 +94,18 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 #ifdef DEBUG
 // Print out the message
 #define DEBUG_PRINT(msg) if(DEBUG){fputs("\tDEBUG: " msg " (LINE:" num2str(__LINE__) " FILE: " __FILE__ ")\n", stdout);}
+// CHeck if e(a) != e(b) and not e(a_dealloc)
+#define DEBUG_CHECK_ASUMPTION(a, b) \
+({\
+	if(a != b || a##_dealloc == false){\
+		fputs("The assumption holds", stdout);\
+	}else{\
+		fputs("Error! The assumption fails. ", stdout);\
+	}\
+})
 #else
 #define DEBUG_PRINT(msg) // Do nothing
+#define DEBUG_CHECK_ASUMPTION(a, b) // Do nothing
 #endif
 /***
  *
@@ -362,10 +372,14 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 			a##_dealloc = false;\
 		})
 // Transfer one variable's deallocation flag to another
-#define _TRANSFER_DEALLOC(a, b)  \
+#define _TRANSFER_DEALLOC(a, b, dimension)  \
         ({\
 			DEBUG_PRINT("_TRANSFER_DEALLOC macro on  ( "str(a)" and "str(b)" )");\
-			a##_dealloc = b##_dealloc; b##_dealloc = false;\
+			DEBUG_CHECK_ASUMPTION(a, b);\
+			_DEALLOC(a);\
+			_UPDATE_##dimension##DARRAY(a, b);\
+			a##_dealloc = b##_dealloc;\
+			b##_dealloc = false;\
 		})
 /***
 *

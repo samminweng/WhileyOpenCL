@@ -227,10 +227,8 @@ int main(int argc, char** args){
 	_10[0] = _5; _10[1] = _6; _10[2] = _7; _10[3] = _8; _10[4] = _9; 
 	_ADD_DEALLOC(_10);
 	//assign %1 = %10  : int[]
-	_DEALLOC(ys);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(ys, _10);
-	_TRANSFER_DEALLOC(ys, _10);
+	_TRANSFER_DEALLOC(ys, _10, 1);
 	//invoke (%11) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		// isCopyEliminated of '_1' = true
@@ -239,10 +237,8 @@ int main(int argc, char** args){
 		_RESET_DEALLOC_POST(_11, ys);
 	}
 	//assign %1 = %11  : int[]
-	_DEALLOC(ys);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(ys, _11);
-	_TRANSFER_DEALLOC(ys, _11);
+	_TRANSFER_DEALLOC(ys, _11, 1);
 	//assert
 	{
 		//const %12 = 1 : int
@@ -289,10 +285,8 @@ blklab5:;
 	_24[0] = _20; _24[1] = _21; _24[2] = _22; _24[3] = _23; 
 	_ADD_DEALLOC(_24);
 	//assign %1 = %24  : int[]
-	_DEALLOC(ys);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(ys, _24);
-	_TRANSFER_DEALLOC(ys, _24);
+	_TRANSFER_DEALLOC(ys, _24, 1);
 	//invoke (%25) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		// isCopyEliminated of '_1' = true
@@ -301,10 +295,8 @@ blklab5:;
 		_RESET_DEALLOC_POST(_25, ys);
 	}
 	//assign %1 = %25  : int[]
-	_DEALLOC(ys);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(ys, _25);
-	_TRANSFER_DEALLOC(ys, _25);
+	_TRANSFER_DEALLOC(ys, _25, 1);
 	//assert
 	{
 		//const %26 = 2 : int
@@ -349,10 +341,8 @@ blklab6:;
 	_37[0] = _33; _37[1] = _34; _37[2] = _35; _37[3] = _36; 
 	_ADD_DEALLOC(_37);
 	//assign %1 = %37  : int[]
-	_DEALLOC(ys);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(ys, _37);
-	_TRANSFER_DEALLOC(ys, _37);
+	_TRANSFER_DEALLOC(ys, _37, 1);
 	//invoke (%38) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		// isCopyEliminated of '_1' = true
@@ -361,10 +351,8 @@ blklab6:;
 		_RESET_DEALLOC_POST(_38, ys);
 	}
 	//assign %1 = %38  : int[]
-	_DEALLOC(ys);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(ys, _38);
-	_TRANSFER_DEALLOC(ys, _38);
+	_TRANSFER_DEALLOC(ys, _38, 1);
 	//assert
 	{
 		//const %39 = 1 : int
@@ -411,10 +399,8 @@ blklab7:;
 	_51[0] = _46; _51[1] = _47; _51[2] = _48; _51[3] = _49; _51[4] = _50; 
 	_ADD_DEALLOC(_51);
 	//assign %1 = %51  : int[]
-	_DEALLOC(ys);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(ys, _51);
-	_TRANSFER_DEALLOC(ys, _51);
+	_TRANSFER_DEALLOC(ys, _51, 1);
 	//invoke (%52) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		// isCopyEliminated of '_1' = true
@@ -423,10 +409,8 @@ blklab7:;
 		_RESET_DEALLOC_POST(_52, ys);
 	}
 	//assign %1 = %52  : int[]
-	_DEALLOC(ys);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(ys, _52);
-	_TRANSFER_DEALLOC(ys, _52);
+	_TRANSFER_DEALLOC(ys, _52, 1);
 	//assert
 	{
 		//const %53 = 1 : int
@@ -476,10 +460,8 @@ blklab8:;
 	_NEW_1DARRAY_int64_t(_64, max, _63);
 	_NEW1DARRAY_DEALLOC(_64, _63, max);
 	//assign %4 = %64  : int[]
-	_DEALLOC(arr);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(arr, _64);
-	_TRANSFER_DEALLOC(arr, _64);
+	_TRANSFER_DEALLOC(arr, _64, 1);
 	//loop (%3, %4, %65, %66, %67)
 	while(true){
 		//ifge %3, %2 goto blklab9 : int
@@ -508,10 +490,8 @@ blklab9:;
 		_RESET_DEALLOC_POST(_68, arr);
 	}
 	//assign %4 = %68  : int[]
-	_DEALLOC(arr);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(arr, _68);
-	_TRANSFER_DEALLOC(arr, _68);
+	_TRANSFER_DEALLOC(arr, _68, 1);
 	//assert
 	{
 		//const %69 = 1 : int

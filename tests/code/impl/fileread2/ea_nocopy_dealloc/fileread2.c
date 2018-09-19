@@ -201,10 +201,8 @@ int main(int argc, char** args){
 		_ADD_DEALLOC(_9);
 	}
 	//assign %4 = %9  : byte[]
-	_DEALLOC(pixels);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(pixels, _9);
-	_TRANSFER_DEALLOC(pixels, _9);
+	_TRANSFER_DEALLOC(pixels, _9, 1);
 	//invoke () = (%0, %2, %3, %4) fileread2:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
 		// isCopyEliminated of '_4' = true

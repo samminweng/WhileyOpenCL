@@ -598,10 +598,15 @@ public class DeallocationAnalyzer extends Analyzer {
 	 */
 	private String transferDealloc(int lhs, int rhs, FunctionOrMethod function, CodeStores stores) {
 		Type type = stores.getRawType(lhs, function);
-		if (stores.isCompoundType(type) || type instanceof Type.Union) {
+		if (type instanceof Type.Array) {
 			String lhs_var = stores.getVar(lhs, function);
 			String rhs_var = stores.getVar(rhs, function);
-			return "_TRANSFER_DEALLOC(" + lhs_var + ", " + rhs_var + ");";
+			int dimension = stores.getArrayDimension(type);
+			return "_TRANSFER_DEALLOC(" + lhs_var + ", " + rhs_var + ", "+dimension+");";
+		}else if (stores.isCompoundType(type) || type instanceof Type.Union) {
+			String lhs_var = stores.getVar(lhs, function);
+			String rhs_var = stores.getVar(rhs, function);
+			return "_TRANSFER_DEALLOC_STRUCT(" + lhs_var + ", " + rhs_var+");";
 		}
 		return "";
 	}

@@ -7,10 +7,8 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(s), _DECL_DEALLOC_PARAM(s), _DECL_1DARRAYSIZ
 	int64_t _3;
 	int64_t _4;
 	//assign %2 = %0  : int[]
-	_DEALLOC(t);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(t, s);
-	_TRANSFER_DEALLOC(t, s);
+	_TRANSFER_DEALLOC(t, s, 1);
 	//const %3 = 3 : int
 	_3 = 3;
 	//const %4 = 2 : int
@@ -93,10 +91,8 @@ int main(int argc, char** args){
 	_9[0] = _4; _9[1] = _5; _9[2] = _6; _9[3] = _7; _9[4] = _8; 
 	_ADD_DEALLOC(_9);
 	//assign %1 = %9  : int[]
-	_DEALLOC(a);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(a, _9);
-	_TRANSFER_DEALLOC(a, _9);
+	_TRANSFER_DEALLOC(a, _9, 1);
 	//invoke (%10) = (%1) FunctionCall1:func : function(int[])->(int[])
 	{
 		// isCopyEliminated of '_1' = true
@@ -105,10 +101,8 @@ int main(int argc, char** args){
 		_RESET_DEALLOC_POST(_10, a);
 	}
 	//assign %1 = %10  : int[]
-	_DEALLOC(a);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(a, _10);
-	_TRANSFER_DEALLOC(a, _10);
+	_TRANSFER_DEALLOC(a, _10, 1);
 	//assert
 	{
 		//const %11 = 2 : int
@@ -163,10 +157,8 @@ blklab0:;
 	_26[0] = _21; _26[1] = _22; _26[2] = _23; _26[3] = _24; _26[4] = _25; 
 	_ADD_DEALLOC(_26);
 	//assign %2 = %26  : int[]
-	_DEALLOC(b);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(b, _26);
-	_TRANSFER_DEALLOC(b, _26);
+	_TRANSFER_DEALLOC(b, _26, 1);
 	//invoke (%27) = (%2) FunctionCall1:func : function(int[])->(int[])
 	{
 		void* tmp_s;
@@ -177,10 +169,8 @@ blklab0:;
 		_CALLER_DEALLOC_POST(_27, tmp_s);
 	}
 	//assign %3 = %27  : int[]
-	_DEALLOC(c);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(c, _27);
-	_TRANSFER_DEALLOC(c, _27);
+	_TRANSFER_DEALLOC(c, _27, 1);
 	//assert
 	{
 		//const %28 = 2 : int

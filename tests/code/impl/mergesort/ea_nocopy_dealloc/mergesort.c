@@ -75,10 +75,8 @@ _SLICE_ARRAY(_15, items, start, pivot);
 		_ADD_DEALLOC(_15);
 	}
 	//assign %5 = %15  : int[]
-	_DEALLOC(lhs);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(lhs, _15);
-	_TRANSFER_DEALLOC(lhs, _15);
+	_TRANSFER_DEALLOC(lhs, _15, 1);
 	//const %17 = 0 : int
 	_17 = 0;
 	//invoke (%16) = (%5, %17, %4) mergesort:sortV1 : function(int[],int,int)->(int[])
@@ -89,20 +87,16 @@ _SLICE_ARRAY(_15, items, start, pivot);
 		_RESET_DEALLOC_POST(_16, lhs);
 	}
 	//assign %5 = %16  : int[]
-	_DEALLOC(lhs);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(lhs, _16);
-	_TRANSFER_DEALLOC(lhs, _16);
+	_TRANSFER_DEALLOC(lhs, _16, 1);
 	//invoke (%18) = (%0, %4, %2) whiley/lang/Array:slice : function(int[],int,int)->(int[])
 	{
 _SLICE_ARRAY(_18, items, pivot, end);
 		_ADD_DEALLOC(_18);
 	}
 	//assign %6 = %18  : int[]
-	_DEALLOC(rhs);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(rhs, _18);
-	_TRANSFER_DEALLOC(rhs, _18);
+	_TRANSFER_DEALLOC(rhs, _18, 1);
 	//const %20 = 0 : int
 	_20 = 0;
 	//sub %21 = %2, %4 : int
@@ -115,10 +109,8 @@ _SLICE_ARRAY(_18, items, pivot, end);
 		_RESET_DEALLOC_POST(_19, rhs);
 	}
 	//assign %6 = %19  : int[]
-	_DEALLOC(rhs);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(rhs, _19);
-	_TRANSFER_DEALLOC(rhs, _19);
+	_TRANSFER_DEALLOC(rhs, _19, 1);
 	//const %22 = 0 : int
 	_22 = 0;
 	//assign %7 = %22  : int
@@ -389,10 +381,8 @@ int main(int argc, char** args){
 	_10[0] = _5; _10[1] = _6; _10[2] = _7; _10[3] = _8; _10[4] = _9; 
 	_ADD_DEALLOC(_10);
 	//assign %1 = %10  : int[]
-	_DEALLOC(ys);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(ys, _10);
-	_TRANSFER_DEALLOC(ys, _10);
+	_TRANSFER_DEALLOC(ys, _10, 1);
 	//const %12 = 0 : int
 	_12 = 0;
 	//const %13 = 5 : int
@@ -405,10 +395,8 @@ int main(int argc, char** args){
 		_RESET_DEALLOC_POST(_11, ys);
 	}
 	//assign %1 = %11  : int[]
-	_DEALLOC(ys);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(ys, _11);
-	_TRANSFER_DEALLOC(ys, _11);
+	_TRANSFER_DEALLOC(ys, _11, 1);
 	//assert
 	{
 		//const %14 = 1 : int
@@ -449,10 +437,8 @@ blklab9:;
 	_24[0] = _20; _24[1] = _21; _24[2] = _22; _24[3] = _23; 
 	_ADD_DEALLOC(_24);
 	//assign %1 = %24  : int[]
-	_DEALLOC(ys);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(ys, _24);
-	_TRANSFER_DEALLOC(ys, _24);
+	_TRANSFER_DEALLOC(ys, _24, 1);
 	//const %26 = 0 : int
 	_26 = 0;
 	//const %27 = 4 : int
@@ -465,10 +451,8 @@ blklab9:;
 		_RESET_DEALLOC_POST(_25, ys);
 	}
 	//assign %1 = %25  : int[]
-	_DEALLOC(ys);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(ys, _25);
-	_TRANSFER_DEALLOC(ys, _25);
+	_TRANSFER_DEALLOC(ys, _25, 1);
 	//assert
 	{
 		//const %28 = 2 : int
@@ -507,10 +491,8 @@ blklab10:;
 	_37[0] = _33; _37[1] = _34; _37[2] = _35; _37[3] = _36; 
 	_ADD_DEALLOC(_37);
 	//assign %1 = %37  : int[]
-	_DEALLOC(ys);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(ys, _37);
-	_TRANSFER_DEALLOC(ys, _37);
+	_TRANSFER_DEALLOC(ys, _37, 1);
 	//const %39 = 0 : int
 	_39 = 0;
 	//const %40 = 4 : int
@@ -523,10 +505,8 @@ blklab10:;
 		_RESET_DEALLOC_POST(_38, ys);
 	}
 	//assign %1 = %38  : int[]
-	_DEALLOC(ys);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(ys, _38);
-	_TRANSFER_DEALLOC(ys, _38);
+	_TRANSFER_DEALLOC(ys, _38, 1);
 	//assert
 	{
 		//const %41 = 1 : int
@@ -567,10 +547,8 @@ blklab11:;
 	_51[0] = _46; _51[1] = _47; _51[2] = _48; _51[3] = _49; _51[4] = _50; 
 	_ADD_DEALLOC(_51);
 	//assign %1 = %51  : int[]
-	_DEALLOC(ys);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(ys, _51);
-	_TRANSFER_DEALLOC(ys, _51);
+	_TRANSFER_DEALLOC(ys, _51, 1);
 	//const %53 = 0 : int
 	_53 = 0;
 	//const %54 = 5 : int
@@ -583,10 +561,8 @@ blklab11:;
 		_RESET_DEALLOC_POST(_52, ys);
 	}
 	//assign %1 = %52  : int[]
-	_DEALLOC(ys);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(ys, _52);
-	_TRANSFER_DEALLOC(ys, _52);
+	_TRANSFER_DEALLOC(ys, _52, 1);
 	//assert
 	{
 		//const %55 = 1 : int
@@ -634,10 +610,8 @@ blklab12:;
 	_NEW_1DARRAY_int64_t(_66, _65, _63);
 	_NEW1DARRAY_DEALLOC(_66, _63, _65);
 	//assign %4 = %66  : int[]
-	_DEALLOC(arr);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(arr, _66);
-	_TRANSFER_DEALLOC(arr, _66);
+	_TRANSFER_DEALLOC(arr, _66, 1);
 	//loop (%3, %4, %67, %68, %69)
 	while(true){
 		//ifgt %3, %2 goto blklab13 : int
@@ -672,10 +646,8 @@ blklab13:;
 		_RESET_DEALLOC_POST(_70, arr);
 	}
 	//assign %4 = %70  : int[]
-	_DEALLOC(arr);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(arr, _70);
-	_TRANSFER_DEALLOC(arr, _70);
+	_TRANSFER_DEALLOC(arr, _70, 1);
 	//assert
 	{
 		//const %74 = 0 : int

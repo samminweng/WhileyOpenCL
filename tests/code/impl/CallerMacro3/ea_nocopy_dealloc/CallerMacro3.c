@@ -51,10 +51,8 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_5, _4, _3);
 	_NEW1DARRAY_DEALLOC(_5, _3, _4);
 	//assign %1 = %5  : int[]
-	_DEALLOC(b);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(b, _5);
-	_TRANSFER_DEALLOC(b, _5);
+	_TRANSFER_DEALLOC(b, _5, 1);
 	//const %6 = 1 : int
 	_6 = 1;
 	//const %7 = 1 : int
@@ -71,10 +69,8 @@ int main(int argc, char** args){
 		_CALLER_DEALLOC_POST(_8, tmp_x);
 	}
 	//assign %2 = %8  : int[]
-	_DEALLOC(a);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(a, _8);
-	_TRANSFER_DEALLOC(a, _8);
+	_TRANSFER_DEALLOC(a, _8, 1);
 	//const %9 = 0 : int
 	_9 = 0;
 	//const %10 = 1 : int

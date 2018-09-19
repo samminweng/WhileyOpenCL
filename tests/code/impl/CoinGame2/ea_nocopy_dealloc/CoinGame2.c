@@ -92,10 +92,8 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 		_NEW_1DARRAY_int64_t(_11, n, _10);
 		_NEW1DARRAY_DEALLOC(_11, _10, n);
 		//assign %4 = %11  : int[]
-		_DEALLOC(x);
 		// isCopyEliminated = true
-		_UPDATE_1DARRAY(x, _11);
-		_TRANSFER_DEALLOC(x, _11);
+		_TRANSFER_DEALLOC(x, _11, 1);
 		//const %12 = 0 : int
 		_12 = 0;
 		//arraygen %13 = [12; 1] : int[]
@@ -103,10 +101,8 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 		_NEW_1DARRAY_int64_t(_13, n, _12);
 		_NEW1DARRAY_DEALLOC(_13, _12, n);
 		//assign %5 = %13  : int[]
-		_DEALLOC(y);
 		// isCopyEliminated = true
-		_UPDATE_1DARRAY(y, _13);
-		_TRANSFER_DEALLOC(y, _13);
+		_TRANSFER_DEALLOC(y, _13, 1);
 		//const %14 = 0 : int
 		_14 = 0;
 		//arraygen %15 = [14; 1] : int[]
@@ -114,10 +110,8 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 		_NEW_1DARRAY_int64_t(_15, n, _14);
 		_NEW1DARRAY_DEALLOC(_15, _14, n);
 		//assign %6 = %15  : int[]
-		_DEALLOC(z);
 		// isCopyEliminated = true
-		_UPDATE_1DARRAY(z, _15);
-		_TRANSFER_DEALLOC(z, _15);
+		_TRANSFER_DEALLOC(z, _15, 1);
 		//assign %7 = %3  : int
 		// isCopyEliminated = false
 		j = s;
@@ -357,10 +351,8 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_7, _6, _5);
 	_NEW1DARRAY_DEALLOC(_7, _5, _6);
 	//assign %2 = %7  : int[]
-	_DEALLOC(moves);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(moves, _7);
-	_TRANSFER_DEALLOC(moves, _7);
+	_TRANSFER_DEALLOC(moves, _7, 1);
 	//invoke (%8) = (%2, %1) CoinGame2:findMoves : function(int[],int)->(int[])
 	{
 		// isCopyEliminated of '_2' = true
@@ -369,10 +361,8 @@ int main(int argc, char** args){
 		_RESET_DEALLOC_POST(_8, moves);
 	}
 	//assign %2 = %8  : int[]
-	_DEALLOC(moves);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(moves, _8);
-	_TRANSFER_DEALLOC(moves, _8);
+	_TRANSFER_DEALLOC(moves, _8, 1);
 	//const %9 = 1 : int
 	_9 = 1;
 	//sub %10 = %1, %9 : int

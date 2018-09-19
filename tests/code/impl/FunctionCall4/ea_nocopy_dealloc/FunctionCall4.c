@@ -21,10 +21,8 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(s), _DECL_DEALLOC_PARAM(s), int64_t n, _DECL
 	//ifle %1, %5 goto blklab0 : int
 	if(n<=_5){goto blklab0;}
 	//assign %3 = %0  : int[]
-	_DEALLOC(t);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(t, s);
-	_TRANSFER_DEALLOC(t, s);
+	_TRANSFER_DEALLOC(t, s, 1);
 	//const %6 = 3 : int
 	_6 = 3;
 	//const %7 = 2 : int
@@ -58,10 +56,8 @@ blklab0:;
 	_13[0] = _8; _13[1] = _9; _13[2] = _10; _13[3] = _11; _13[4] = _12; 
 	_ADD_DEALLOC(_13);
 	//assign %4 = %13  : int[]
-	_DEALLOC(new_t);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(new_t, _13);
-	_TRANSFER_DEALLOC(new_t, _13);
+	_TRANSFER_DEALLOC(new_t, _13, 1);
 	//return %4
 	_DEALLOC(s);
 	_DEALLOC(_2);
@@ -144,10 +140,8 @@ int main(int argc, char** args){
 	_9[0] = _4; _9[1] = _5; _9[2] = _6; _9[3] = _7; _9[4] = _8; 
 	_ADD_DEALLOC(_9);
 	//assign %1 = %9  : int[]
-	_DEALLOC(a);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(a, _9);
-	_TRANSFER_DEALLOC(a, _9);
+	_TRANSFER_DEALLOC(a, _9, 1);
 	//const %11 = 6 : int
 	_11 = 6;
 	//invoke (%10) = (%1, %11) FunctionCall4:func : function(int[],int)->(int[])
@@ -158,10 +152,8 @@ int main(int argc, char** args){
 		_RESET_DEALLOC_POST(_10, a);
 	}
 	//assign %1 = %10  : int[]
-	_DEALLOC(a);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(a, _10);
-	_TRANSFER_DEALLOC(a, _10);
+	_TRANSFER_DEALLOC(a, _10, 1);
 	//assert
 	{
 		//const %12 = 2 : int
@@ -216,10 +208,8 @@ blklab2:;
 	_27[0] = _22; _27[1] = _23; _27[2] = _24; _27[3] = _25; _27[4] = _26; 
 	_ADD_DEALLOC(_27);
 	//assign %2 = %27  : int[]
-	_DEALLOC(b);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(b, _27);
-	_TRANSFER_DEALLOC(b, _27);
+	_TRANSFER_DEALLOC(b, _27, 1);
 	//const %29 = 1 : int
 	_29 = 1;
 	//invoke (%28) = (%2, %29) FunctionCall4:func : function(int[],int)->(int[])
@@ -232,10 +222,8 @@ blklab2:;
 		_CALLER_DEALLOC_POST(_28, tmp_s);
 	}
 	//assign %3 = %28  : int[]
-	_DEALLOC(c);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(c, _28);
-	_TRANSFER_DEALLOC(c, _28);
+	_TRANSFER_DEALLOC(c, _28, 1);
 	//assert
 	{
 		//const %30 = 2 : int

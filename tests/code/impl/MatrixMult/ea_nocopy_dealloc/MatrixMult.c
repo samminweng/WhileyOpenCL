@@ -301,10 +301,8 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_15, _14, _13);
 	_NEW1DARRAY_DEALLOC(_15, _13, _14);
 	//assign %4 = %15  : int[]
-	_DEALLOC(A);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(A, _15);
-	_TRANSFER_DEALLOC(A, _15);
+	_TRANSFER_DEALLOC(A, _15, 1);
 	//invoke (%16) = (%4, %2, %3) MatrixMult:init : function(int[],int,int)->(int[])
 	{
 		// isCopyEliminated of '_4' = true
@@ -313,10 +311,8 @@ int main(int argc, char** args){
 		_RESET_DEALLOC_POST(_16, A);
 	}
 	//assign %4 = %16  : int[]
-	_DEALLOC(A);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(A, _16);
-	_TRANSFER_DEALLOC(A, _16);
+	_TRANSFER_DEALLOC(A, _16, 1);
 	//const %17 = 0 : int
 	_17 = 0;
 	//mul %18 = %2, %3 : int
@@ -326,10 +322,8 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_19, _18, _17);
 	_NEW1DARRAY_DEALLOC(_19, _17, _18);
 	//assign %5 = %19  : int[]
-	_DEALLOC(B);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(B, _19);
-	_TRANSFER_DEALLOC(B, _19);
+	_TRANSFER_DEALLOC(B, _19, 1);
 	//invoke (%20) = (%5, %2, %3) MatrixMult:init : function(int[],int,int)->(int[])
 	{
 		// isCopyEliminated of '_5' = true
@@ -338,10 +332,8 @@ int main(int argc, char** args){
 		_RESET_DEALLOC_POST(_20, B);
 	}
 	//assign %5 = %20  : int[]
-	_DEALLOC(B);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(B, _20);
-	_TRANSFER_DEALLOC(B, _20);
+	_TRANSFER_DEALLOC(B, _20, 1);
 	//const %21 = 0 : int
 	_21 = 0;
 	//mul %22 = %2, %3 : int
@@ -351,10 +343,8 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_23, _22, _21);
 	_NEW1DARRAY_DEALLOC(_23, _21, _22);
 	//assign %6 = %23  : int[]
-	_DEALLOC(C);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(C, _23);
-	_TRANSFER_DEALLOC(C, _23);
+	_TRANSFER_DEALLOC(C, _23, 1);
 	//invoke (%24) = (%4, %5, %6, %2, %3) MatrixMult:mat_mult : function(int[],int[],int[],int,int)->(int[])
 	{
 		// isCopyEliminated of '_4' = true
@@ -369,10 +359,8 @@ int main(int argc, char** args){
 		_RESET_DEALLOC_POST(_24, C);
 	}
 	//assign %6 = %24  : int[]
-	_DEALLOC(C);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(C, _24);
-	_TRANSFER_DEALLOC(C, _24);
+	_TRANSFER_DEALLOC(C, _24, 1);
 	//assert
 	{
 		//const %25 = 19 : int

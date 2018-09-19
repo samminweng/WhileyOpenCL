@@ -50,10 +50,8 @@ blklab0:;
 		_RESET_DEALLOC_POST(_8, ls);
 	}
 	//assign %0 = %8  : int[]
-	_DEALLOC(ls);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(ls, _8);
-	_TRANSFER_DEALLOC(ls, _8);
+	_TRANSFER_DEALLOC(ls, _8, 1);
 	//const %11 = 1 : int
 	_11 = 1;
 	//sub %12 = %1, %11 : int
@@ -120,10 +118,8 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_5, max, _4);
 	_NEW1DARRAY_DEALLOC(_5, _4, max);
 	//assign %2 = %5  : int[]
-	_DEALLOC(arr);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(arr, _5);
-	_TRANSFER_DEALLOC(arr, _5);
+	_TRANSFER_DEALLOC(arr, _5, 1);
 	//const %7 = 1 : int
 	_7 = 1;
 	//sub %8 = %1, %7 : int
@@ -136,10 +132,8 @@ int main(int argc, char** args){
 		_RESET_DEALLOC_POST(_6, arr);
 	}
 	//assign %2 = %6  : int[]
-	_DEALLOC(arr);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(arr, _6);
-	_TRANSFER_DEALLOC(arr, _6);
+	_TRANSFER_DEALLOC(arr, _6, 1);
 	//assert
 	{
 		//const %9 = 0 : int

@@ -53,10 +53,8 @@ int main(int argc, char** args){
 	_9[0] = _4; _9[1] = _5; _9[2] = _6; _9[3] = _7; _9[4] = _8; 
 	_ADD_DEALLOC(_9);
 	//assign %1 = %9  : int[]
-	_DEALLOC(a);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(a, _9);
-	_TRANSFER_DEALLOC(a, _9);
+	_TRANSFER_DEALLOC(a, _9, 1);
 	//const %10 = 1 : int
 	_10 = 1;
 	//const %11 = 1 : int
@@ -73,25 +71,17 @@ int main(int argc, char** args){
 	_15[0] = _10; _15[1] = _11; _15[2] = _12; _15[3] = _13; _15[4] = _14; 
 	_ADD_DEALLOC(_15);
 	//assign %2 = %15  : int[]
-	_DEALLOC(b);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(b, _15);
-	_TRANSFER_DEALLOC(b, _15);
+	_TRANSFER_DEALLOC(b, _15, 1);
 	//assign %3 = %1  : int[]
-	_DEALLOC(tmp);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(tmp, a);
-	_TRANSFER_DEALLOC(tmp, a);
+	_TRANSFER_DEALLOC(tmp, a, 1);
 	//assign %1 = %2  : int[]
-	_DEALLOC(a);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(a, b);
-	_TRANSFER_DEALLOC(a, b);
+	_TRANSFER_DEALLOC(a, b, 1);
 	//assign %2 = %3  : int[]
-	_DEALLOC(b);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(b, tmp);
-	_TRANSFER_DEALLOC(b, tmp);
+	_TRANSFER_DEALLOC(b, tmp, 1);
 	//assert
 	{
 		//const %16 = 1 : int

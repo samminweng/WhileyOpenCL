@@ -94,7 +94,7 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 #ifdef DEBUG
 // Print out the message
 #define DEBUG_PRINT(msg) if(DEBUG){fputs("\tDEBUG: " msg " (LINE:" num2str(__LINE__) " FILE: " __FILE__ ")\n", stdout);}
-// CHeck if e(a) 
+// CHeck if e(a) != e(b) and not e(a_dealloc)
 #define DEBUG_CHECK_ASUMPTION(a, b) \
 ({\
 	if(a != b || a##_dealloc == false){\
@@ -113,7 +113,7 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
  *
  */
 // Declare 1D array of integers or bytes
-#define _DECL_1DARRAY(a) int64_t* a; size_t a##_size;
+#define _DECL_1DARRAY(a) int64_t* a = NULL; size_t a##_size = 0;
 #define _DECL_1DARRAY_BYTE(a) BYTE* a = NULL; size_t a##_size = 0;
 // Declare 2D array variable
 #define _DECL_2DARRAY(a) int64_t** a = NULL; size_t a##_size = 0; size_t a##_size_size = 0;
@@ -372,10 +372,14 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 			a##_dealloc = false;\
 		})
 // Transfer one variable's deallocation flag to another
-#define _TRANSFER_DEALLOC(a, b)  \
+#define _TRANSFER_DEALLOC(a, b, dimension)  \
         ({\
 			DEBUG_PRINT("_TRANSFER_DEALLOC macro on  ( "str(a)" and "str(b)" )");\
-			a##_dealloc = b##_dealloc; b##_dealloc = false;\
+			DEBUG_CHECK_ASUMPTION(a, b);\
+			_DEALLOC(a);\
+			_UPDATE_##dimension##DARRAY(a, b);\
+			a##_dealloc = b##_dealloc;\
+			b##_dealloc = false;\
 		})
 /***
 *

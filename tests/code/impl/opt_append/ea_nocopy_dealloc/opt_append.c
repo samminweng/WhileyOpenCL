@@ -60,10 +60,8 @@ blklab6:;
 	_NEW_1DARRAY_BYTE(_13, _12, _7);
 	_NEW1DARRAY_DEALLOC(_13, _7, _12);
 	//assign %4 = %13  : byte[]
-	_DEALLOC(nitems);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(nitems, _13);
-	_TRANSFER_DEALLOC(nitems, _13);
+	_TRANSFER_DEALLOC(nitems, _13, 1);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %5 = %14  : int
@@ -157,10 +155,8 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_BYTE(_7, _6, _5);
 	_NEW1DARRAY_DEALLOC(_7, _5, _6);
 	//assign %1 = %7  : byte[]
-	_DEALLOC(b);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(b, _7);
-	_TRANSFER_DEALLOC(b, _7);
+	_TRANSFER_DEALLOC(b, _7, 1);
 	//const %8 = 3 : int
 	_8 = 3;
 	//assign %2 = %8  : int
@@ -185,10 +181,8 @@ int main(int argc, char** args){
 		_CALLER_DEALLOC_POST(_11, tmp_items);
 	}
 	//assign %4 = %11  : byte[]
-	_DEALLOC(a);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(a, _11);
-	_TRANSFER_DEALLOC(a, _11);
+	_TRANSFER_DEALLOC(a, _11, 1);
 	//assert
 	{
 		//const %12 = 2 : int

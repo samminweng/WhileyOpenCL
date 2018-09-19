@@ -212,7 +212,7 @@ int main(int argc, char** args){
 	_DEALLOC_STRUCT(b1, Board);
 	// isCopyEliminated = true
 	b1 = _7;
-	_TRANSFER_DEALLOC(b1, _7);
+	_TRANSFER_DEALLOC(b1, _7, 0);
 	//invoke (%8) = () newTicTacToe:EmptyBoard : function()->(newTicTacToe:Board)
 	{
 		_8 = _EmptyBoard_();
@@ -222,7 +222,7 @@ int main(int argc, char** args){
 	_DEALLOC_STRUCT(b2, Board);
 	// isCopyEliminated = true
 	b2 = _8;
-	_TRANSFER_DEALLOC(b2, _8);
+	_TRANSFER_DEALLOC(b2, _8, 0);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %4 = %9  : int

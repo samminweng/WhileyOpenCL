@@ -29,10 +29,8 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(x), _DECL_DEALLOC_PARAM(x), int64_t num, _DE
 	_NEW_1DARRAY_int64_t(_9, _8, _7);
 	_NEW1DARRAY_DEALLOC(_9, _7, _8);
 	//assign %3 = %9  : int[]
-	_DEALLOC(a);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(a, _9);
-	_TRANSFER_DEALLOC(a, _9);
+	_TRANSFER_DEALLOC(a, _9, 1);
 	//const %10 = 1 : int
 	_10 = 1;
 	//const %11 = 3 : int
@@ -42,22 +40,15 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(x), _DECL_DEALLOC_PARAM(x), int64_t num, _DE
 	_NEW_1DARRAY_int64_t(_12, _11, _10);
 	_NEW1DARRAY_DEALLOC(_12, _10, _11);
 	//assign %4 = %12  : int[]
-	_DEALLOC(b);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(b, _12);
-	_TRANSFER_DEALLOC(b, _12);
+	_TRANSFER_DEALLOC(b, _12, 1);
 	//assign %4 = %3  : int[]
-	_DEALLOC(b);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(b, a);
-	_TRANSFER_DEALLOC(b, a);
+	_TRANSFER_DEALLOC(b, a, 1);
 	//assign %5 = %4  : int[]
-	_DEALLOC(c);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(c, b);
-	_TRANSFER_DEALLOC(c, b);
+	_TRANSFER_DEALLOC(c, b, 1);
 	//assign %6 = %5  : int[]
-	_DEALLOC(d);
 	// isCopyEliminated = false
 	_COPY_1DARRAY_int64_t(d, c);
 	_ADD_DEALLOC(d);
@@ -164,10 +155,8 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_5, _4, _3);
 	_NEW1DARRAY_DEALLOC(_5, _3, _4);
 	//assign %1 = %5  : int[]
-	_DEALLOC(x);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(x, _5);
-	_TRANSFER_DEALLOC(x, _5);
+	_TRANSFER_DEALLOC(x, _5, 1);
 	//const %7 = 11 : int
 	_7 = 11;
 	//invoke (%6) = (%1, %7) CallerMacro5:func : function(int[],int)->(int[])
@@ -180,10 +169,8 @@ int main(int argc, char** args){
 		_CALLER_DEALLOC_POST(_6, tmp_x);
 	}
 	//assign %2 = %6  : int[]
-	_DEALLOC(y);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(y, _6);
-	_TRANSFER_DEALLOC(y, _6);
+	_TRANSFER_DEALLOC(y, _6, 1);
 	//assert
 	{
 		//const %8 = 0 : int
@@ -234,10 +221,8 @@ blklab3:;
 		_CALLER_DEALLOC_POST(_18, tmp_x);
 	}
 	//assign %2 = %18  : int[]
-	_DEALLOC(y);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(y, _18);
-	_TRANSFER_DEALLOC(y, _18);
+	_TRANSFER_DEALLOC(y, _18, 1);
 	//assert
 	{
 		//const %20 = 0 : int
@@ -286,10 +271,8 @@ blklab4:;
 		_RESET_DEALLOC_POST(_30, x);
 	}
 	//assign %2 = %30  : int[]
-	_DEALLOC(y);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(y, _30);
-	_TRANSFER_DEALLOC(y, _30);
+	_TRANSFER_DEALLOC(y, _30, 1);
 	//assert
 	{
 		//const %32 = 0 : int

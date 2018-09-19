@@ -548,10 +548,8 @@ blklab17:;
 				_RESET_DEALLOC_POST(_41, moves);
 			}
 			//assign %0 = %41  : int[]
-			_DEALLOC(moves);
 			// isCopyEliminated = true
-			_UPDATE_1DARRAY(moves, _41);
-			_TRANSFER_DEALLOC(moves, _41);
+			_TRANSFER_DEALLOC(moves, _41, 1);
 			//const %42 = 1 : int
 			_42 = 1;
 			//add %43 = %4, %42 : int
@@ -625,10 +623,8 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_7, _6, _5);
 	_NEW1DARRAY_DEALLOC(_7, _5, _6);
 	//assign %2 = %7  : int[]
-	_DEALLOC(moves);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(moves, _7);
-	_TRANSFER_DEALLOC(moves, _7);
+	_TRANSFER_DEALLOC(moves, _7, 1);
 	//invoke (%8) = (%2, %1) CoinGame4:findMoves : function(int[],int)->(int[])
 	{
 		// isCopyEliminated of '_2' = true
@@ -637,10 +633,8 @@ int main(int argc, char** args){
 		_RESET_DEALLOC_POST(_8, moves);
 	}
 	//assign %2 = %8  : int[]
-	_DEALLOC(moves);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(moves, _8);
-	_TRANSFER_DEALLOC(moves, _8);
+	_TRANSFER_DEALLOC(moves, _8, 1);
 	//invoke () = (%0, %2, %1) CoinGame4:play : method(whiley/lang/System:Console,int[],int)->()
 	{
 		// isCopyEliminated of '_2' = true
