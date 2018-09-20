@@ -1,0 +1,19 @@
+	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _7 ) (LINE:69 FILE: livecheck.c)
+	DEBUG: _TRANSFER_DEALLOC macro on  ( a and _7 ) (LINE:72 FILE: livecheck.c)
+	DEBUG: The assumption holds	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _10 ) (LINE:80 FILE: livecheck.c)
+	DEBUG: _TRANSFER_DEALLOC macro on  ( b and _10 ) (LINE:83 FILE: livecheck.c)
+	DEBUG: The assumption holds	DEBUG: _TRANSFER_DEALLOC macro on  ( a and b ) (LINE:86 FILE: livecheck.c)
+	DEBUG: The assumption holds	DEBUG: _TRANSFER_DEALLOC macro on  ( c and b ) (LINE:89 FILE: livecheck.c)
+	DEBUG: The assumption holds	DEBUG: _TRANSFER_DEALLOC macro on  ( d and b ) (LINE:92 FILE: livecheck.c)
+	DEBUG: The assumption holds	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _13 ) (LINE:100 FILE: livecheck.c)
+	DEBUG: _TRANSFER_DEALLOC macro on  ( b and _13 ) (LINE:103 FILE: livecheck.c)
+	DEBUG: The assumption holds	DEBUG: _ADD_DEALLOC macro on  ( _28 ) (LINE:178 FILE: livecheck.c)
+a[0] = 1
+	DEBUG: _ADD_DEALLOC macro on  ( _35 ) (LINE:199 FILE: livecheck.c)
+b[0] = 2
+	DEBUG: _ADD_DEALLOC macro on  ( _42 ) (LINE:220 FILE: livecheck.c)
+c[0] = 1
+	DEBUG: _ADD_DEALLOC macro on  ( _49 ) (LINE:241 FILE: livecheck.c)
+d[0] = 1
+	DEBUG: _ADD_DEALLOC macro on  ( _56 ) (LINE:262 FILE: livecheck.c)
+Pass livecheck test case

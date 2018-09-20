@@ -47,8 +47,8 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRA
 	_NEW_1DARRAY_int64_t(_6, 0, 0);
 	_ADD_DEALLOC(_6);
 	//assign %2 = %6  : void[]
-	_DEALLOC(r);
 	// isCopyEliminated = true
+	_DEALLOC(r);
 	_UPDATE_1DARRAY(r, _6);
 	_TRANSFER_DEALLOC_STRUCT(r, _6);
 	//const %7 = true : bool
@@ -87,12 +87,13 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRA
 		_ADD_DEALLOC(_14);
 		//invoke (%13) = (%2, %14) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
+			_DEALLOC(_13);
 			_13 = Array_Append(r, r_size , _14, _14_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_13));
-			_ADD_DEALLOC(_13);
+			_13_dealloc = true;
 		}
 		//assign %2 = %13  : int[]
-		_DEALLOC(r);
 		// isCopyEliminated = true
+		_DEALLOC(r);
 		_UPDATE_1DARRAY(r, _13);
 		_TRANSFER_DEALLOC_STRUCT(r, _13);
 //.blklab5
@@ -104,17 +105,19 @@ blklab5:;
 		firstTime = _15;
 		//invoke (%17) = (%5) whiley/lang/Int:toString : function(int)->(whiley/lang/ASCII:string)
 		{
+			_DEALLOC(_17);
 			_17 = Int_toString(amt, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_17));
-			_ADD_DEALLOC(_17);
+			_17_dealloc = true;
 		}
 		//invoke (%16) = (%2, %17) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
+			_DEALLOC(_16);
 			_16 = Array_Append(r, r_size , _17, _17_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
-			_ADD_DEALLOC(_16);
+			_16_dealloc = true;
 		}
 		//assign %2 = %16  : int[]
-		_DEALLOC(r);
 		// isCopyEliminated = true
+		_DEALLOC(r);
 		_UPDATE_1DARRAY(r, _16);
 		_TRANSFER_DEALLOC_STRUCT(r, _16);
 		//const %19 = [32,120,32] : int[]
@@ -124,12 +127,13 @@ blklab5:;
 		_ADD_DEALLOC(_19);
 		//invoke (%18) = (%2, %19) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
+			_DEALLOC(_18);
 			_18 = Array_Append(r, r_size , _19, _19_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
-			_ADD_DEALLOC(_18);
+			_18_dealloc = true;
 		}
 		//assign %2 = %18  : int[]
-		_DEALLOC(r);
 		// isCopyEliminated = true
+		_DEALLOC(r);
 		_UPDATE_1DARRAY(r, _18);
 		_TRANSFER_DEALLOC_STRUCT(r, _18);
 		//const %21 = [[49,99],[53,99],[49,48,99],[50,48,99],[53,48,99],[36,49],[36,53],[36,49,48]] : int[][]
@@ -175,12 +179,13 @@ blklab5:;
 		_REMOVE_DEALLOC(_22);
 		//invoke (%20) = (%2, %22) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
+			_DEALLOC(_20);
 			_20 = Array_Append(r, r_size , _22, _22_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
-			_ADD_DEALLOC(_20);
+			_20_dealloc = true;
 		}
 		//assign %2 = %20  : int[]
-		_DEALLOC(r);
 		// isCopyEliminated = true
+		_DEALLOC(r);
 		_UPDATE_1DARRAY(r, _20);
 		_TRANSFER_DEALLOC_STRUCT(r, _20);
 //.blklab4
@@ -209,8 +214,8 @@ blklab2:;
 	_26[0] = 40; _26[1] = 110; _26[2] = 111; _26[3] = 116; _26[4] = 104; _26[5] = 105; _26[6] = 110; _26[7] = 103; _26[8] = 41; 
 	_ADD_DEALLOC(_26);
 	//assign %2 = %26  : int[]
-	_DEALLOC(r);
 	// isCopyEliminated = true
+	_DEALLOC(r);
 	_UPDATE_1DARRAY(r, _26);
 	_TRANSFER_DEALLOC_STRUCT(r, _26);
 //.blklab6
@@ -293,6 +298,7 @@ int main(int argc, char** args){
 	//fieldload %15 = %14 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%16) = (%1) ArrayAppend3:toString : function(ArrayAppend3:Cash)->(whiley/lang/ASCII:string)
 	{
+		_DEALLOC(_16);
 		// isCopyEliminated of '_1' = true
 		_16 = _toString_(till, till_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		_RETAIN_DEALLOC(till, "false-false-false" , "toString");

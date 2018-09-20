@@ -149,6 +149,7 @@ blklab2:;
 		_COPY_1DARRAY_PARAM(a, tmp_a, int64_t);
 		void* tmp_b;
 		_COPY_1DARRAY_PARAM(a, tmp_b, int64_t);
+		_DEALLOC(_11);
 		// isCopyEliminated of '_1' = false
 		// isCopyEliminated of '_1' = false
 		_11 = _add_(tmp_a, a_size, false, tmp_b, a_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));

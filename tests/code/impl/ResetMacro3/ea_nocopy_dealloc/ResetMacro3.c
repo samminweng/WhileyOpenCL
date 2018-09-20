@@ -92,6 +92,7 @@ int main(int argc, char** args){
 	_7 = 11;
 	//invoke (%6) = (%1, %7) ResetMacro3:func : function(int[],int)->(int[])
 	{
+		_DEALLOC(_6);
 		// isCopyEliminated of '_1' = true
 		_6 = _func_(b, b_size, false, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		_RESET_DEALLOC(b, "true-true-false" , "func");
@@ -134,6 +135,7 @@ blklab2:;
 	_16 = 65536;
 	//invoke (%15) = (%1, %16) ResetMacro3:func : function(int[],int)->(int[])
 	{
+		_DEALLOC(_15);
 		// isCopyEliminated of '_1' = true
 		_15 = _func_(b, b_size, false, _16, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
 		_RESET_DEALLOC(b, "true-true-false" , "func");

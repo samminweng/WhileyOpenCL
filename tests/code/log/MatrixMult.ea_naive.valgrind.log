@@ -1,0 +1,37 @@
+==3189== Memcheck, a memory error detector
+==3189== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==3189== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==3189== Command: ./MatrixMult.out
+==3189== Parent PID: 812
+==3189== 
+==3189== 
+==3189== HEAP SUMMARY:
+==3189==     in use at exit: 45,272 bytes in 17 blocks
+==3189==   total heap usage: 18 allocs, 1 frees, 53,464 bytes allocated
+==3189== 
+==3189== 3,200 bytes in 1 blocks are definitely lost in loss record 15 of 17
+==3189==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==3189==    by 0x401F4B: copy1DArray_int64_t (Util.c:80)
+==3189==    by 0x40118D: main (MatrixMult.c:267)
+==3189== 
+==3189== 3,200 bytes in 1 blocks are definitely lost in loss record 16 of 17
+==3189==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==3189==    by 0x401F4B: copy1DArray_int64_t (Util.c:80)
+==3189==    by 0x4012E1: main (MatrixMult.c:283)
+==3189== 
+==3189== 3,200 bytes in 1 blocks are definitely lost in loss record 17 of 17
+==3189==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==3189==    by 0x401F4B: copy1DArray_int64_t (Util.c:80)
+==3189==    by 0x401435: main (MatrixMult.c:299)
+==3189== 
+==3189== LEAK SUMMARY:
+==3189==    definitely lost: 9,600 bytes in 3 blocks
+==3189==    indirectly lost: 0 bytes in 0 blocks
+==3189==      possibly lost: 0 bytes in 0 blocks
+==3189==    still reachable: 35,672 bytes in 14 blocks
+==3189==         suppressed: 0 bytes in 0 blocks
+==3189== Reachable blocks (those to which a pointer was found) are not shown.
+==3189== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==3189== 
+==3189== For counts of detected and suppressed errors, rerun with: -v
+==3189== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)

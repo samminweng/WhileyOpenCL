@@ -664,6 +664,7 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(pixels, _10, 1);
 	//invoke (%12) = (%4, %2, %3) SobelEdge:sobelEdgeDetection : function(byte[],int,int)->(byte[])
 	{
+		_DEALLOC(_12);
 		// isCopyEliminated of '_4' = true
 		_12 = _sobelEdgeDetection_(pixels, pixels_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_12));
 		_RETAIN_DEALLOC(pixels, "false-false-false" , "sobelEdgeDetection");

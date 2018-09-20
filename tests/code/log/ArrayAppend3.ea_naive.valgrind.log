@@ -1,0 +1,116 @@
+==1000== Memcheck, a memory error detector
+==1000== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==1000== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==1000== Command: ./ArrayAppend3.out
+==1000== Parent PID: 812
+==1000== 
+==1000== 
+==1000== HEAP SUMMARY:
+==1000==     in use at exit: 11,840 bytes in 82 blocks
+==1000==   total heap usage: 83 allocs, 1 frees, 20,032 bytes allocated
+==1000== 
+==1000== 0 bytes in 1 blocks are definitely lost in loss record 1 of 21
+==1000==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1000==    by 0x4016E8: create1DArray_int64_t (Util.c:23)
+==1000==    by 0x400CF3: _toString_ (ArrayAppend3.c:32)
+==1000==    by 0x4015FE: main (ArrayAppend3.c:220)
+==1000== 
+==1000== 0 bytes in 1 blocks are definitely lost in loss record 2 of 21
+==1000==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1000==    by 0x401894: copy1DArray_int64_t (Util.c:80)
+==1000==    by 0x400D1B: _toString_ (ArrayAppend3.c:34)
+==1000==    by 0x4015FE: main (ArrayAppend3.c:220)
+==1000== 
+==1000== 0 bytes in 1 blocks are definitely lost in loss record 3 of 21
+==1000==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1000==    by 0x4016E8: create1DArray_int64_t (Util.c:23)
+==1000==    by 0x40128B: _toString_ (ArrayAppend3.c:153)
+==1000==    by 0x4015FE: main (ArrayAppend3.c:220)
+==1000== 
+==1000== 48 bytes in 6 blocks are definitely lost in loss record 5 of 21
+==1000==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1000==    by 0x40251B: Int_toString (WyRT.c:16)
+==1000==    by 0x400E93: _toString_ (ArrayAppend3.c:78)
+==1000==    by 0x4015FE: main (ArrayAppend3.c:220)
+==1000== 
+==1000== 80 bytes in 5 blocks are definitely lost in loss record 9 of 21
+==1000==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1000==    by 0x4016E8: create1DArray_int64_t (Util.c:23)
+==1000==    by 0x400DDC: _toString_ (ArrayAppend3.c:62)
+==1000==    by 0x4015FE: main (ArrayAppend3.c:220)
+==1000== 
+==1000== 144 bytes in 6 blocks are definitely lost in loss record 10 of 21
+==1000==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1000==    by 0x4016E8: create1DArray_int64_t (Util.c:23)
+==1000==    by 0x400F1C: _toString_ (ArrayAppend3.c:87)
+==1000==    by 0x4015FE: main (ArrayAppend3.c:220)
+==1000== 
+==1000== 1,000 bytes in 5 blocks are definitely lost in loss record 12 of 21
+==1000==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1000==    by 0x401894: copy1DArray_int64_t (Util.c:80)
+==1000==    by 0x40123D: _toString_ (ArrayAppend3.c:138)
+==1000==    by 0x4015FE: main (ArrayAppend3.c:220)
+==1000== 
+==1000== 1,080 bytes in 5 blocks are definitely lost in loss record 13 of 21
+==1000==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1000==    by 0x4016E8: create1DArray_int64_t (Util.c:23)
+==1000==    by 0x402738: Array_Append (WyRT.c:62)
+==1000==    by 0x400E31: _toString_ (ArrayAppend3.c:66)
+==1000==    by 0x4015FE: main (ArrayAppend3.c:220)
+==1000== 
+==1000== 1,080 bytes in 5 blocks are definitely lost in loss record 14 of 21
+==1000==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1000==    by 0x401894: copy1DArray_int64_t (Util.c:80)
+==1000==    by 0x400E5F: _toString_ (ArrayAppend3.c:69)
+==1000==    by 0x4015FE: main (ArrayAppend3.c:220)
+==1000== 
+==1000== 1,128 bytes in 6 blocks are definitely lost in loss record 15 of 21
+==1000==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1000==    by 0x4016E8: create1DArray_int64_t (Util.c:23)
+==1000==    by 0x402738: Array_Append (WyRT.c:62)
+==1000==    by 0x400EC8: _toString_ (ArrayAppend3.c:82)
+==1000==    by 0x4015FE: main (ArrayAppend3.c:220)
+==1000== 
+==1000== 1,128 bytes in 6 blocks are definitely lost in loss record 16 of 21
+==1000==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1000==    by 0x401894: copy1DArray_int64_t (Util.c:80)
+==1000==    by 0x400EF6: _toString_ (ArrayAppend3.c:85)
+==1000==    by 0x4015FE: main (ArrayAppend3.c:220)
+==1000== 
+==1000== 1,272 bytes in 6 blocks are definitely lost in loss record 18 of 21
+==1000==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1000==    by 0x4016E8: create1DArray_int64_t (Util.c:23)
+==1000==    by 0x402738: Array_Append (WyRT.c:62)
+==1000==    by 0x400F83: _toString_ (ArrayAppend3.c:91)
+==1000==    by 0x4015FE: main (ArrayAppend3.c:220)
+==1000== 
+==1000== 1,272 bytes in 6 blocks are definitely lost in loss record 19 of 21
+==1000==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1000==    by 0x401894: copy1DArray_int64_t (Util.c:80)
+==1000==    by 0x400FB1: _toString_ (ArrayAppend3.c:94)
+==1000==    by 0x4015FE: main (ArrayAppend3.c:220)
+==1000== 
+==1000== 1,416 bytes in 6 blocks are definitely lost in loss record 20 of 21
+==1000==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1000==    by 0x4016E8: create1DArray_int64_t (Util.c:23)
+==1000==    by 0x402738: Array_Append (WyRT.c:62)
+==1000==    by 0x40120F: _toString_ (ArrayAppend3.c:135)
+==1000==    by 0x4015FE: main (ArrayAppend3.c:220)
+==1000== 
+==1000== 1,536 (384 direct, 1,152 indirect) bytes in 6 blocks are definitely lost in loss record 21 of 21
+==1000==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1000==    by 0x401E5C: create2DArray_int64_t_empty (Util.c:236)
+==1000==    by 0x400FDD: _toString_ (ArrayAppend3.c:96)
+==1000==    by 0x4015FE: main (ArrayAppend3.c:220)
+==1000== 
+==1000== LEAK SUMMARY:
+==1000==    definitely lost: 10,032 bytes in 71 blocks
+==1000==    indirectly lost: 1,152 bytes in 6 blocks
+==1000==      possibly lost: 0 bytes in 0 blocks
+==1000==    still reachable: 656 bytes in 5 blocks
+==1000==         suppressed: 0 bytes in 0 blocks
+==1000== Reachable blocks (those to which a pointer was found) are not shown.
+==1000== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==1000== 
+==1000== For counts of detected and suppressed errors, rerun with: -v
+==1000== ERROR SUMMARY: 15 errors from 15 contexts (suppressed: 0 from 0)

@@ -267,6 +267,7 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(moves, _7, 1);
 	//invoke (%8) = (%2, %1) CoinGame1:findMoves : function(int[],int)->(int[])
 	{
+		_DEALLOC(_8);
 		// isCopyEliminated of '_2' = true
 		_8 = _findMoves_(moves, moves_size, false, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_RESET_DEALLOC(moves, "true-true-false" , "findMoves");

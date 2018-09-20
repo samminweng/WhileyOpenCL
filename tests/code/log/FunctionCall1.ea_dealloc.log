@@ -1,0 +1,16 @@
+	DEBUG: _ADD_DEALLOC macro on  ( _9 ) (LINE:93 FILE: FunctionCall1.c)
+	DEBUG: _ADD_DEALLOC macro on  ( a ) (LINE:97 FILE: FunctionCall1.c)
+	DEBUG: _ADD_DEALLOC macro on  ( t ) (LINE:12 FILE: FunctionCall1.c)
+	DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "a" "func" ) (LINE:104 FILE: FunctionCall1.c)
+	DEBUG: _ADD_DEALLOC macro on  ( a ) (LINE:110 FILE: FunctionCall1.c)
+	DEBUG: _ADD_DEALLOC macro on  ( _16 ) (LINE:134 FILE: FunctionCall1.c)
+a[2]=3
+	DEBUG: _ADD_DEALLOC macro on  ( _26 ) (LINE:163 FILE: FunctionCall1.c)
+	DEBUG: _ADD_DEALLOC macro on  ( b ) (LINE:167 FILE: FunctionCall1.c)
+	DEBUG: _ADD_DEALLOC macro on  ( t ) (LINE:12 FILE: FunctionCall1.c)
+	DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "b" "func" ) (LINE:174 FILE: FunctionCall1.c)
+	DEBUG: _ADD_DEALLOC macro on  ( c ) (LINE:180 FILE: FunctionCall1.c)
+	DEBUG: _ADD_DEALLOC macro on  ( _36 ) (LINE:221 FILE: FunctionCall1.c)
+b[2]=0
+	DEBUG: _ADD_DEALLOC macro on  ( _43 ) (LINE:242 FILE: FunctionCall1.c)
+c[2]=3

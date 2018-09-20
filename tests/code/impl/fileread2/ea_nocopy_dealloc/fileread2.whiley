@@ -34,6 +34,7 @@ method print_pbm(System.Console sys, int width, int height, byte[] pixels):
         // Add a newline
         sys.out.println_s("")
         j = j + 1
+    sys.out.println("")
 
 method main(System.Console sys):
     File.Reader r = File.Reader("../../../Inputfiles/image64x64.pbm")

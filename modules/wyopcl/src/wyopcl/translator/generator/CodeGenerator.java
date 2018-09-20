@@ -680,7 +680,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.Assign code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
-		String lhs = translateLHSVarFunctionCall(statement, code, function);
+		String lhs = stores.getVar(code.target(0), function);
 		// Get the actual type for lhs variable.
 		String indent = stores.getIndent(function);
 		Type lhs_type = stores.getRawType(code.target(0), function);
@@ -703,24 +703,30 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Add copy analysis result as a comment.
 			if(this.copyAnalyzer.isPresent()){
 				statement.add(indent+ "// isCopyEliminated = " + isCopyEliminated);
-			}		
-			
-			if(this.copyAnalyzer.isPresent() && this.deallocatedAnalyzer.isPresent()
-					&& lhs_type instanceof Type.Array) {
-				int dimension = stores.getArrayDimension(lhs_type);
-				// Get element type
-				Type elm_type = stores.getArrayElementType((Type.Array) lhs_type);
-				if ((stores.isIntType(elm_type) || elm_type instanceof Type.Byte) && isCopyEliminated) {
-					// Then we can apply '_TRANSFER_DEALLOC' without generating other code
-				}else {
-					statement.add(generateAssignmentCode(code, isCopyEliminated, function, stores));
-				}
-			}else {
-				statement.add(generateAssignmentCode(code, isCopyEliminated, function, stores));
 			}
 			
 			
-
+			if(this.deallocatedAnalyzer.isPresent()	&& lhs_type instanceof Type.Array) {
+				// Get element type
+				Type elm_type = stores.getArrayElementType((Type.Array) lhs_type);
+				if ((elm_type instanceof Type.Byte || stores.isIntType(elm_type)) && isCopyEliminated) {
+					// Then we can apply '_TRANSFER_DEALLOC' without generating other code
+				}else {
+					// Deallocate lhs register
+					this.deallocatedAnalyzer.ifPresent(a -> {
+						statement.add(indent + a.preDealloc(lhs, lhs_type, stores));				
+					});
+					//statement.add(indent + "_DEALLOC("+ lhs+ ");");
+					statement.add(generateAssignmentCode(code, isCopyEliminated, function, stores));
+				}
+			}else {
+				// Deallocate lhs register
+				this.deallocatedAnalyzer.ifPresent(a -> {
+					statement.add(indent + a.preDealloc(lhs, lhs_type, stores));				
+				});
+				statement.add(generateAssignmentCode(code, isCopyEliminated, function, stores));
+			}
+			
 			if (isCopyEliminated && stores.isCompoundType(lhs_type)) {
 				// Check if lhs is a substructure.
 				stores.addSubStructure(code.target(0), code.operand(0), function);
@@ -1201,8 +1207,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						&& type instanceof Type.Array) {
 					// Then we can avoid generating PRE_DEALLOC macro
 					return lhs;
-				}
-				
+				}				
 			} else if (code instanceof Codes.Const) {
 				lhs = stores.getVar(((Codes.Const) code).target(0), function);
 				type = stores.getRawType(((Codes.Const) code).target(0), function);
@@ -1221,9 +1226,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				
 				// If the code type is a function call, then when the copy and deallocation macros are both enabled, 
 			    //then we do not need to generate the preDealloc macro to release the lhs of the function return
-				if(this.copyAnalyzer.isPresent() && this.deallocatedAnalyzer.isPresent()) {
-					return lhs;
-				}
+				//if(this.copyAnalyzer.isPresent() && this.deallocatedAnalyzer.isPresent()) {
+				//	return lhs;
+				//}
 			} else if (code instanceof Codes.NewArray) {
 				lhs = stores.getVar(((Codes.NewArray) code).target(0), function);
 				type = stores.getRawType(((Codes.NewArray) code).target(0), function);
@@ -1321,9 +1326,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String lhs = stores.getVar(code.target(0), function);
 			String rhs = stores.getVar(code.operand(0), function);
 			switch (code.name.name()) {
-			// Parse a string into an integer.
 			case "parse":
+				// Parse a string into an integer.
 				statements.add(indent + "_STR_TO_INT(" + lhs + ", " + rhs + ");");
+				if(this.deallocatedAnalyzer.isPresent()) {
+					// remove the flag from rhs variable
+					statements.add(indent + rhs+"_dealloc = false;");
+				}
 				break;
 			case "abs":
 				// Use 'llabs' function to return the absolute value of 'rhs'
@@ -1343,11 +1352,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statements.add(indent + lhs + " = (BYTE)" + rhs + ";");
 				break;
 			case "fromBytes":
-				translateLHSVarFunctionCall(statements, code, function);// Extra and free lhs variable before function call.
-				// Call built-in 'fromBytes' function to convert 'byte[]' to a string
+				if(this.deallocatedAnalyzer.isPresent()) {
+					// PRE_DEALLOC macro is used to free lhs variable before function call.
+					statements.add(indent + "_DEALLOC("+lhs+");");
+				}
 				statements.add(indent + lhs + " = fromBytes(" + rhs + ", " + rhs + "_size);");
 				// Propagate the size variable 
 				statements.add(indent + lhs+"_size = "+ rhs+"_size;");
+				if(this.deallocatedAnalyzer.isPresent()) {
+					// Specify the flag to lhs var
+					statements.add(indent + lhs + "_dealloc = true;");
+				}
 				break;
 			case "toUnsignedInt": 
 				// Convert a byte to integer
@@ -1362,10 +1377,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statements.add(indent+ lhs + " = (BYTE)"+rhs+";");
 				break;
 			case "toString":
-				lhs = translateLHSVarFunctionCall(statements, code, function);
+				if(this.deallocatedAnalyzer.isPresent()) {
+					// PRE_DEALLOC macro is used to free lhs variable before function call.
+					statements.add(indent + "_DEALLOC("+lhs+");");
+				}
 				// Convert an integer to a string (an integer array of ASCII code)
 				// Call WyRT built-in 'InttoString' function
 				statements.add(indent + lhs + " = Int_toString(" + rhs + ", _1DARRAYSIZE_PARAM_CALLBYREFERENCE("+lhs+"));");
+				if(this.deallocatedAnalyzer.isPresent()) {
+					// Specify the flag to lhs var
+					statements.add(indent + lhs + "_dealloc = true;");
+				}				
 				break;
 				// Slice an array into a new sub-array at given starting and ending index.
 			case "slice":
@@ -1376,24 +1398,34 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				String start = stores.getVar(code.operand(1), function);
 				String end = stores.getVar(code.operand(2), function);
 				statements.add("_SLICE_ARRAY(" + lhs + ", " + array + ", " + start + ", " + end + ");");
+				if(this.deallocatedAnalyzer.isPresent()) {
+					// Specify the flag to lhs var
+					statements.add(indent + lhs + "_dealloc = true;");
+				}				
 				break;
 			case "append":
-				// Free the left-handed side variable 
-				lhs = translateLHSVarFunctionCall(statements, code, function);;				
+				if(this.deallocatedAnalyzer.isPresent()) {
+					// PRE_DEALLOC macro is used to free lhs variable before function call.
+					statements.add(indent + "_DEALLOC("+lhs+");");
+				}			
 				// Append an array to another array, e.g. 'invoke (%13) = (%2, %14) whiley/lang/Array:append'
 				String rhs_arr  = stores.getVar(code.operand(0), function);
 				String rhs1_arr = stores.getVar(code.operand(1), function);
 				// Call built-in ArrayAppend function in WyRT.c
 				statements.add(indent+ lhs + " = Array_Append("+rhs_arr+", "+rhs_arr+ "_size , "+rhs1_arr+", "+rhs1_arr+"_size, "
 						+ "_1DARRAYSIZE_PARAM_CALLBYREFERENCE("+lhs+"));");
+				if(this.deallocatedAnalyzer.isPresent()) {
+					// Specify the flag to lhs var
+					statements.add(indent + lhs + "_dealloc = true;");
+				}
 				break;
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);
 			}
 
-			this.deallocatedAnalyzer.ifPresent(a -> {
-				statements.addAll(a.postDealloc(code, function, stores, copyAnalyzer));
-			});
+			//this.deallocatedAnalyzer.ifPresent(a -> {
+			//	statements.addAll(a.postDealloc(code, function, stores, copyAnalyzer));
+			//});
 		}else if(module.contains("whiley/io")){
 			String lhs = stores.getVar(code.target(0), function);
 			String rhs = stores.getVar(code.operand(0), function);

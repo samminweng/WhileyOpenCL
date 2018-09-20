@@ -1,0 +1,16 @@
+	DEBUG: _ADD_DEALLOC macro on  ( _9 ) (LINE:110 FILE: FunctionCall2.c)
+	DEBUG: _TRANSFER_DEALLOC macro on  ( a and _9 ) (LINE:113 FILE: FunctionCall2.c)
+	DEBUG: The assumption holds	DEBUG: _TRANSFER_DEALLOC macro on  ( t and s ) (LINE:16 FILE: FunctionCall2.c)
+	DEBUG: The assumption holds	DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "a" "func" ) (LINE:121 FILE: FunctionCall2.c)
+	DEBUG: _TRANSFER_DEALLOC macro on  ( a and _10 ) (LINE:126 FILE: FunctionCall2.c)
+	DEBUG: The assumption holds	DEBUG: _ADD_DEALLOC macro on  ( _17 ) (LINE:150 FILE: FunctionCall2.c)
+a[2]=3
+	DEBUG: _ADD_DEALLOC macro on  ( _27 ) (LINE:179 FILE: FunctionCall2.c)
+	DEBUG: _TRANSFER_DEALLOC macro on  ( b and _27 ) (LINE:182 FILE: FunctionCall2.c)
+	DEBUG: The assumption holds	DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "b" "func" ) (LINE:192 FILE: FunctionCall2.c)
+	DEBUG: Potential memory leaks at ( "true-true-true" "b" "func" ) (LINE:192 FILE: FunctionCall2.c)
+	DEBUG: _TRANSFER_DEALLOC macro on  ( c and _28 ) (LINE:197 FILE: FunctionCall2.c)
+	DEBUG: The assumption holds	DEBUG: _ADD_DEALLOC macro on  ( _38 ) (LINE:238 FILE: FunctionCall2.c)
+b[2]=0
+	DEBUG: _ADD_DEALLOC macro on  ( _45 ) (LINE:259 FILE: FunctionCall2.c)
+c[2]=0

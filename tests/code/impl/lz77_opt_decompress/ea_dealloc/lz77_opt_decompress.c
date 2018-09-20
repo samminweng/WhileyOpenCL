@@ -441,7 +441,7 @@ int main(int argc, char** args){
 		_DEALLOC(_14);
 		_14 = fromBytes(decompress_data, decompress_data_size);
 		_14_size = decompress_data_size;
-		_ADD_DEALLOC(_14);
+		_14_dealloc = true;
 	}
 	//indirectinvoke () = %13 (%14) : method(int[])->()
 	{

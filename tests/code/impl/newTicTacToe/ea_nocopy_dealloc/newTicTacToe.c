@@ -205,24 +205,26 @@ int main(int argc, char** args){
 	repeat = _6;
 	//invoke (%7) = () newTicTacToe:EmptyBoard : function()->(newTicTacToe:Board)
 	{
+		_DEALLOC_STRUCT(_7, Board);
 		_7 = _EmptyBoard_();
 		_7_dealloc = true;
 	}
 	//assign %2 = %7  : null|{int move,int[] pieces}
-	_DEALLOC_STRUCT(b1, Board);
 	// isCopyEliminated = true
+	_DEALLOC_STRUCT(b1, Board);
 	b1 = _7;
-	_TRANSFER_DEALLOC(b1, _7, 0);
+	_TRANSFER_DEALLOC_STRUCT(b1, _7);
 	//invoke (%8) = () newTicTacToe:EmptyBoard : function()->(newTicTacToe:Board)
 	{
+		_DEALLOC_STRUCT(_8, Board);
 		_8 = _EmptyBoard_();
 		_8_dealloc = true;
 	}
 	//assign %3 = %8  : null|{int move,int[] pieces}
-	_DEALLOC_STRUCT(b2, Board);
 	// isCopyEliminated = true
+	_DEALLOC_STRUCT(b2, Board);
 	b2 = _8;
-	_TRANSFER_DEALLOC(b2, _8, 0);
+	_TRANSFER_DEALLOC_STRUCT(b2, _8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %4 = %9  : int
@@ -291,15 +293,15 @@ blklab16:;
 		//update %2.move = %22 : {int move,int[] pieces} -> {int move,int[] pieces}
 		b1->move = _22;
 		//assign %3 = %2  : {int move,int[] pieces}
-		_DEALLOC_STRUCT(b2, Board);
 		// isCopyEliminated = false
+		_DEALLOC_STRUCT(b2, Board);
 		b2 = copy_Board(b1);
 		_ADD_DEALLOC(b2);
 		//const %23 = null : null
 		_23 = NULL;
 		//assign %2 = %23  : null
-		_DEALLOC_STRUCT(b1, Board);
 		// isCopyEliminated = true
+		_DEALLOC_STRUCT(b1, Board);
 		b1 = NULL;
 		_REMOVE_DEALLOC(b1);
 		//goto blklab20
@@ -332,15 +334,15 @@ blklab19:;
 		//update %3.move = %30 : {int move,int[] pieces} -> {int move,int[] pieces}
 		b2->move = _30;
 		//assign %2 = %3  : {int move,int[] pieces}
-		_DEALLOC_STRUCT(b1, Board);
 		// isCopyEliminated = false
+		_DEALLOC_STRUCT(b1, Board);
 		b1 = copy_Board(b2);
 		_ADD_DEALLOC(b1);
 		//const %31 = null : null
 		_31 = NULL;
 		//assign %3 = %31  : null
-		_DEALLOC_STRUCT(b2, Board);
 		// isCopyEliminated = true
+		_DEALLOC_STRUCT(b2, Board);
 		b2 = NULL;
 		_REMOVE_DEALLOC(b2);
 //.blklab21

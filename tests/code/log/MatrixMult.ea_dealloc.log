@@ -1,0 +1,23 @@
+	DEBUG: _ADD_DEALLOC macro on  ( _10 ) (LINE:269 FILE: MatrixMult.c)
+size = 20
+	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _15 ) (LINE:287 FILE: MatrixMult.c)
+	DEBUG: _ADD_DEALLOC macro on  ( A ) (LINE:291 FILE: MatrixMult.c)
+	DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "A" "init" ) (LINE:298 FILE: MatrixMult.c)
+	DEBUG: Potential memory leaks at ( "true-true-false" "A" "init" ) (LINE:298 FILE: MatrixMult.c)
+	DEBUG: _ADD_DEALLOC macro on  ( A ) (LINE:304 FILE: MatrixMult.c)
+	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _19 ) (LINE:312 FILE: MatrixMult.c)
+	DEBUG: _ADD_DEALLOC macro on  ( B ) (LINE:316 FILE: MatrixMult.c)
+	DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "B" "init" ) (LINE:323 FILE: MatrixMult.c)
+	DEBUG: Potential memory leaks at ( "true-true-false" "B" "init" ) (LINE:323 FILE: MatrixMult.c)
+	DEBUG: _ADD_DEALLOC macro on  ( B ) (LINE:329 FILE: MatrixMult.c)
+	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _23 ) (LINE:337 FILE: MatrixMult.c)
+	DEBUG: _ADD_DEALLOC macro on  ( C ) (LINE:341 FILE: MatrixMult.c)
+	DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "A" "mat_mult" ) (LINE:352 FILE: MatrixMult.c)
+	DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "B" "mat_mult" ) (LINE:354 FILE: MatrixMult.c)
+	DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "C" "mat_mult" ) (LINE:356 FILE: MatrixMult.c)
+	DEBUG: Potential memory leaks at ( "true-true-false" "C" "mat_mult" ) (LINE:356 FILE: MatrixMult.c)
+	DEBUG: _ADD_DEALLOC macro on  ( C ) (LINE:362 FILE: MatrixMult.c)
+	DEBUG: _ADD_DEALLOC macro on  ( _48 ) (LINE:444 FILE: MatrixMult.c)
+Matrix C[size-1][size-1] = 3610
+	DEBUG: _ADD_DEALLOC macro on  ( _60 ) (LINE:475 FILE: MatrixMult.c)
+Pass MatrixMult test case

@@ -29,6 +29,10 @@ void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t 
 	_DECL_DEALLOC(_33);
 	int64_t _34;
 	int64_t _35;
+	void* _36;
+	void* _38;
+	size_t _38_size = 0;
+	_DECL_DEALLOC(_38);
 	//fieldload %7 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %8 = %7 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %9 = [80,49] : int[]
@@ -145,11 +149,22 @@ blklab1:;
 	}
 //.blklab0
 blklab0:;
+	//fieldload %36 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %37 = %36 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %38 = [] : void[]
+	_DEALLOC(_38);
+	_NEW_1DARRAY_int64_t(_38, 0, 0);
+	_ADD_DEALLOC(_38);
+	//indirectinvoke () = %37 (%38) : method(any)->()
+	{
+		_PRINT_1DARRAY_int64_t(_38);
+	}
 	//return
 	_DEALLOC(pixels);
 	_DEALLOC(_9);
 	_DEALLOC(_14);
 	_DEALLOC(_33);
+	_DEALLOC(_38);
 	return;
 }
 

@@ -165,6 +165,7 @@ int main(int argc, char** args){
 	_DECL_DEALLOC(_13);
 	//invoke (%3) = () FunctionOverload2:Cash : function()->(FunctionOverload2:Cash)
 	{
+		_DEALLOC(_3);
 		_3 = _Cash_(_1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
 		_3_dealloc = true;
 	}
@@ -194,6 +195,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_13);
 	//invoke (%4) = (%13) FunctionOverload2:Cash : function(FunctionOverload2:nat[])->(FunctionOverload2:Cash)
 	{
+		_DEALLOC(_4);
 		// isCopyEliminated of '_13' = true
 		_4 = _Cash_1_(_13, _13_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_4));
 		_RETAIN_DEALLOC(_13, "false-false-false" , "Cash");

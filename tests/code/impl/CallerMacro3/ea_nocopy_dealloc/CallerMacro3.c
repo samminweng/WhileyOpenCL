@@ -63,6 +63,7 @@ int main(int argc, char** args){
 	{
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(b, tmp_x, int64_t);
+		_DEALLOC(_8);
 		// isCopyEliminated of '_1' = false
 		_8 = _f_(tmp_x, b_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_CALLER_DEALLOC(b, "false-true-true" , "f");

@@ -2,8 +2,9 @@
 
 runValgrind(){
     rm -rf log/* # Clear all the log files
-    rm -rf log.txt
-    touch log.txt
+    memorylog="memorylog.txt"
+    rm -rf $memorylog
+    touch $memorylog
     for folder in impl/*
     do
         echo $folder
@@ -15,12 +16,12 @@ runValgrind(){
         # Run the valgrind
         valgrind --leak-check=full --log-file=log/$testcase.valgrind.log ./$folder/$testcase.out > log/$testcase.log
         # Put all output to a single file
-        echo "=== Test report for $testcase ===" >> log.txt
-        echo "The deallocation macros are as below:" >> log.txt
-        cat log/$testcase.log >> log.txt
-        echo "The Valgrind memory detector as below:" >> log.txt
-        cat log/$testcase.valgrind.log >> log.txt
-        echo -e "\n\n" >> log.txt
+        echo "=== Test report for $testcase ===" >> $memorylog
+        echo "The Valgrind memory detector as below:" >> $memorylog
+        cat log/$testcase.valgrind.log >> $memorylog
+        echo "The deallocation macros are as below:" >> $memorylog
+        cat log/$testcase.log >> $memorylog
+        echo -e "\n\n" >> $memorylog
         #read -p "Press enter to continue"
     done
 }

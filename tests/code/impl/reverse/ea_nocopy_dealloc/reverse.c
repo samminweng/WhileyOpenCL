@@ -133,6 +133,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_11);
 	//invoke (%5) = (%11) reverse:reverse : function(int[])->(int[])
 	{
+		_DEALLOC(_5);
 		// isCopyEliminated of '_11' = true
 		_5 = _reverse_(_11, _11_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
 		_RETAIN_DEALLOC(_11, "false-false-false" , "reverse");
@@ -212,6 +213,7 @@ blklab6:;
 blklab5:;
 	//invoke (%27) = (%4) reverse:reverse : function(int[])->(int[])
 	{
+		_DEALLOC(_27);
 		// isCopyEliminated of '_4' = true
 		_27 = _reverse_(arr, arr_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 		_RETAIN_DEALLOC(arr, "false-false-false" , "reverse");

@@ -81,13 +81,13 @@ public class CodeGenerationTestCase {
 				"fileread", //Read 'feep.pbm' as a byte array
 				"fileread2",// Read 'feep.pbm' and output the array to console
 				//"nqueens", 
-				// This case uses an array of structures which is not suitable for our deallocation, so we disable this case.
+				// This case uses an array of structures and recursive function call, so we disable this case.
 				"livecheck",
 				// Micro-benchmarks
 				"reverse",
 				"mergesort",
 				"bubblesort",
-				// "newTicTacToe",
+				"newTicTacToe",
 				// This case uses an array of structures, which is not suitable for our deallocation macro
 				// So we disable it.
 				"MatrixMult",

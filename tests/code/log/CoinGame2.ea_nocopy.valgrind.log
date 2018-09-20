@@ -1,0 +1,40 @@
+==1784== Memcheck, a memory error detector
+==1784== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==1784== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==1784== Command: ./CoinGame2.out
+==1784== Parent PID: 812
+==1784== 
+==1784== 
+==1784== HEAP SUMMARY:
+==1784==     in use at exit: 3,784 bytes in 33 blocks
+==1784==   total heap usage: 34 allocs, 1 frees, 11,976 bytes allocated
+==1784== 
+==1784== 800 bytes in 10 blocks are definitely lost in loss record 4 of 6
+==1784==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1784==    by 0x401BB1: create1DArray_int64_t (Util.c:23)
+==1784==    by 0x400CA5: _findMoves_ (CoinGame2.c:84)
+==1784==    by 0x40154D: main (CoinGame2.c:332)
+==1784== 
+==1784== 800 bytes in 10 blocks are definitely lost in loss record 5 of 6
+==1784==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1784==    by 0x401BB1: create1DArray_int64_t (Util.c:23)
+==1784==    by 0x400CFA: _findMoves_ (CoinGame2.c:91)
+==1784==    by 0x40154D: main (CoinGame2.c:332)
+==1784== 
+==1784== 800 bytes in 10 blocks are definitely lost in loss record 6 of 6
+==1784==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1784==    by 0x401BB1: create1DArray_int64_t (Util.c:23)
+==1784==    by 0x400D4F: _findMoves_ (CoinGame2.c:98)
+==1784==    by 0x40154D: main (CoinGame2.c:332)
+==1784== 
+==1784== LEAK SUMMARY:
+==1784==    definitely lost: 2,400 bytes in 30 blocks
+==1784==    indirectly lost: 0 bytes in 0 blocks
+==1784==      possibly lost: 0 bytes in 0 blocks
+==1784==    still reachable: 1,384 bytes in 3 blocks
+==1784==         suppressed: 0 bytes in 0 blocks
+==1784== Reachable blocks (those to which a pointer was found) are not shown.
+==1784== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==1784== 
+==1784== For counts of detected and suppressed errors, rerun with: -v
+==1784== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)

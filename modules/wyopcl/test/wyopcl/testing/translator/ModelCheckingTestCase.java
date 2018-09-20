@@ -44,7 +44,7 @@ public class ModelCheckingTestCase {
 	 * 
 	 * @param testcase
 	 */
-	private int runCmd(String testcase) {
+	/*private int runCmd(String testcase) {
 
 		String cmd = "java -cp " + BaseTestUtil.classpath + " wyopcl.WyopclMain -bp " + BaseTestUtil.whiley_runtime_lib;
 		// Run -nocopy -dealloc -code options to produce optimized C code
@@ -114,7 +114,7 @@ public class ModelCheckingTestCase {
 		}
 		return exitValue;
 
-	}
+	}*/
 
 	/**
 	 * Recursively permutate the assignments and return the 'collections' array

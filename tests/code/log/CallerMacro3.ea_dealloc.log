@@ -1,0 +1,9 @@
+	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _5 ) (LINE:52 FILE: CallerMacro3.c)
+	DEBUG: _ADD_DEALLOC macro on  ( b ) (LINE:56 FILE: CallerMacro3.c)
+	DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "b" "f" ) (LINE:69 FILE: CallerMacro3.c)
+	DEBUG: Potential memory leaks at ( "false-true-true" "b" "f" ) (LINE:69 FILE: CallerMacro3.c)
+	DEBUG: _ADD_DEALLOC macro on  ( a ) (LINE:75 FILE: CallerMacro3.c)
+	DEBUG: _ADD_DEALLOC macro on  ( _19 ) (LINE:122 FILE: CallerMacro3.c)
+a[1] = 1
+	DEBUG: _ADD_DEALLOC macro on  ( _26 ) (LINE:143 FILE: CallerMacro3.c)
+b[1] = 0

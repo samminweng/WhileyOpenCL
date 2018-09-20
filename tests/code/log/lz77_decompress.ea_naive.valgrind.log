@@ -1,0 +1,84 @@
+==2974== Memcheck, a memory error detector
+==2974== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==2974== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==2974== Command: ./lz77_decompress.out
+==2974== Parent PID: 812
+==2974== 
+==2974== 
+==2974== HEAP SUMMARY:
+==2974==     in use at exit: 1,134 bytes in 74 blocks
+==2974==   total heap usage: 79 allocs, 5 frees, 34,484 bytes allocated
+==2974== 
+==2974== 0 bytes in 1 blocks are definitely lost in loss record 1 of 19
+==2974==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==2974==    by 0x401880: create1DArray_BYTE (Util.c:41)
+==2974==    by 0x400DC4: _decompress_ (lz77_decompress.c:98)
+==2974==    by 0x4014EA: main (lz77_decompress.c:247)
+==2974== 
+==2974== 0 bytes in 1 blocks are definitely lost in loss record 2 of 19
+==2974==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==2974==    by 0x401915: copy1DArray_BYTE (Util.c:61)
+==2974==    by 0x400DF2: _decompress_ (lz77_decompress.c:100)
+==2974==    by 0x4014EA: main (lz77_decompress.c:247)
+==2974== 
+==2974== 12 bytes in 3 blocks are definitely lost in loss record 3 of 19
+==2974==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==2974==    by 0x401915: copy1DArray_BYTE (Util.c:61)
+==2974==    by 0x400FB2: _decompress_ (lz77_decompress.c:144)
+==2974==    by 0x4014EA: main (lz77_decompress.c:247)
+==2974== 
+==2974== 24 bytes in 4 blocks are definitely lost in loss record 9 of 19
+==2974==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==2974==    by 0x400F10: _decompress_ (lz77_decompress.c:140)
+==2974==    by 0x4014EA: main (lz77_decompress.c:247)
+==2974== 
+==2974== 28 bytes in 4 blocks are definitely lost in loss record 10 of 19
+==2974==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==2974==    by 0x401880: create1DArray_BYTE (Util.c:41)
+==2974==    by 0x400C54: _append_ (lz77_decompress.c:24)
+==2974==    by 0x400F84: _decompress_ (lz77_decompress.c:141)
+==2974==    by 0x4014EA: main (lz77_decompress.c:247)
+==2974== 
+==2974== 28 bytes in 4 blocks are definitely lost in loss record 11 of 19
+==2974==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==2974==    by 0x401915: copy1DArray_BYTE (Util.c:61)
+==2974==    by 0x400C73: _append_ (lz77_decompress.c:26)
+==2974==    by 0x400F84: _decompress_ (lz77_decompress.c:141)
+==2974==    by 0x4014EA: main (lz77_decompress.c:247)
+==2974== 
+==2974== 96 bytes in 12 blocks are definitely lost in loss record 13 of 19
+==2974==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==2974==    by 0x401065: _decompress_ (lz77_decompress.c:182)
+==2974==    by 0x4014EA: main (lz77_decompress.c:247)
+==2974== 
+==2974== 108 bytes in 12 blocks are definitely lost in loss record 14 of 19
+==2974==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==2974==    by 0x401880: create1DArray_BYTE (Util.c:41)
+==2974==    by 0x400C54: _append_ (lz77_decompress.c:24)
+==2974==    by 0x4010D9: _decompress_ (lz77_decompress.c:183)
+==2974==    by 0x4014EA: main (lz77_decompress.c:247)
+==2974== 
+==2974== 108 bytes in 12 blocks are definitely lost in loss record 15 of 19
+==2974==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==2974==    by 0x401915: copy1DArray_BYTE (Util.c:61)
+==2974==    by 0x400C73: _append_ (lz77_decompress.c:26)
+==2974==    by 0x4010D9: _decompress_ (lz77_decompress.c:183)
+==2974==    by 0x4014EA: main (lz77_decompress.c:247)
+==2974== 
+==2974== 108 bytes in 12 blocks are definitely lost in loss record 16 of 19
+==2974==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==2974==    by 0x401915: copy1DArray_BYTE (Util.c:61)
+==2974==    by 0x401107: _decompress_ (lz77_decompress.c:186)
+==2974==    by 0x4014EA: main (lz77_decompress.c:247)
+==2974== 
+==2974== LEAK SUMMARY:
+==2974==    definitely lost: 512 bytes in 65 blocks
+==2974==    indirectly lost: 0 bytes in 0 blocks
+==2974==      possibly lost: 0 bytes in 0 blocks
+==2974==    still reachable: 622 bytes in 9 blocks
+==2974==         suppressed: 0 bytes in 0 blocks
+==2974== Reachable blocks (those to which a pointer was found) are not shown.
+==2974== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==2974== 
+==2974== For counts of detected and suppressed errors, rerun with: -v
+==2974== ERROR SUMMARY: 10 errors from 10 contexts (suppressed: 0 from 0)

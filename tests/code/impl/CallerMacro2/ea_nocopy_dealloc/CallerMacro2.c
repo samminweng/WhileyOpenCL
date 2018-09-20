@@ -46,6 +46,7 @@ int64_t* _g3_(int64_t x, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	{
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(a, tmp_x, int64_t);
+		_DEALLOC(_7);
 		// isCopyEliminated of '_2' = false
 		_7 = _func_(tmp_x, a_size, false, _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_7));
 		_CALLER_DEALLOC(a, "true-true-true" , "func");
@@ -114,6 +115,7 @@ int main(int argc, char** args){
 	_4 = 1;
 	//invoke (%3) = (%4) CallerMacro2:g3 : function(int)->(int[])
 	{
+		_DEALLOC(_3);
 		_3 = _g3_(_4, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
 		_3_dealloc = true;
 	}
@@ -162,6 +164,7 @@ blklab2:;
 	_16 = 0;
 	//invoke (%15) = (%16) CallerMacro2:g3 : function(int)->(int[])
 	{
+		_DEALLOC(_15);
 		_15 = _g3_(_16, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
 		_15_dealloc = true;
 	}

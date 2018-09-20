@@ -15,8 +15,8 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_2, 0, 0);
 	_ADD_DEALLOC(_2);
 	//assign %1 = %2  : void[]
-	_DEALLOC(r);
 	// isCopyEliminated = true
+	_DEALLOC(r);
 	_UPDATE_1DARRAY(r, _2);
 	_TRANSFER_DEALLOC_STRUCT(r, _2);
 	//const %4 = [32,84,104,105,115,32,105,115,32,97,32,116,101,115,116,32] : int[]
@@ -26,12 +26,13 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(_4);
 	//invoke (%3) = (%1, %4) whiley/lang/Array:append : function(int[],int[])->(int[])
 	{
+		_DEALLOC(_3);
 		_3 = Array_Append(r, r_size , _4, _4_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
-		_ADD_DEALLOC(_3);
+		_3_dealloc = true;
 	}
 	//assign %1 = %3  : int[]
-	_DEALLOC(r);
 	// isCopyEliminated = true
+	_DEALLOC(r);
 	_UPDATE_1DARRAY(r, _3);
 	_TRANSFER_DEALLOC_STRUCT(r, _3);
 	//fieldload %5 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}

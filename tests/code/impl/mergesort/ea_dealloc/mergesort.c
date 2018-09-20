@@ -72,7 +72,7 @@ int64_t* _sortV1_(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), int64_
 	{
 		_DEALLOC(_15);
 _SLICE_ARRAY(_15, items, start, pivot);
-		_ADD_DEALLOC(_15);
+		_15_dealloc = true;
 	}
 	//assign %5 = %15  : int[]
 	_DEALLOC(lhs);
@@ -97,7 +97,7 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	{
 		_DEALLOC(_18);
 _SLICE_ARRAY(_18, items, pivot, end);
-		_ADD_DEALLOC(_18);
+		_18_dealloc = true;
 	}
 	//assign %6 = %18  : int[]
 	_DEALLOC(rhs);

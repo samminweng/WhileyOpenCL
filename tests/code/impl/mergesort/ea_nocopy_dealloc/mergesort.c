@@ -71,8 +71,9 @@ int64_t* _sortV1_(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), int64_
 	pivot = _14;
 	//invoke (%15) = (%0, %1, %4) whiley/lang/Array:slice : function(int[],int,int)->(int[])
 	{
+		_DEALLOC(_15);
 _SLICE_ARRAY(_15, items, start, pivot);
-		_ADD_DEALLOC(_15);
+		_15_dealloc = true;
 	}
 	//assign %5 = %15  : int[]
 	// isCopyEliminated = true
@@ -81,6 +82,7 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	_17 = 0;
 	//invoke (%16) = (%5, %17, %4) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
+		_DEALLOC(_16);
 		// isCopyEliminated of '_5' = true
 		_16 = _sortV1_(lhs, lhs_size, false, _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		_RESET_DEALLOC(lhs, "true-true-false" , "sortV1");
@@ -91,8 +93,9 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	_TRANSFER_DEALLOC(lhs, _16, 1);
 	//invoke (%18) = (%0, %4, %2) whiley/lang/Array:slice : function(int[],int,int)->(int[])
 	{
+		_DEALLOC(_18);
 _SLICE_ARRAY(_18, items, pivot, end);
-		_ADD_DEALLOC(_18);
+		_18_dealloc = true;
 	}
 	//assign %6 = %18  : int[]
 	// isCopyEliminated = true
@@ -103,6 +106,7 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	_21=end-pivot;
 	//invoke (%19) = (%6, %20, %21) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
+		_DEALLOC(_19);
 		// isCopyEliminated of '_6' = true
 		_19 = _sortV1_(rhs, rhs_size, false, _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
 		_RESET_DEALLOC(rhs, "true-true-false" , "sortV1");
@@ -389,6 +393,7 @@ int main(int argc, char** args){
 	_13 = 5;
 	//invoke (%11) = (%1, %12, %13) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
+		_DEALLOC(_11);
 		// isCopyEliminated of '_1' = true
 		_11 = _sortV1_(ys, ys_size, false, _12, _13, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		_RESET_DEALLOC(ys, "true-true-false" , "sortV1");
@@ -445,6 +450,7 @@ blklab9:;
 	_27 = 4;
 	//invoke (%25) = (%1, %26, %27) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
+		_DEALLOC(_25);
 		// isCopyEliminated of '_1' = true
 		_25 = _sortV1_(ys, ys_size, false, _26, _27, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 		_RESET_DEALLOC(ys, "true-true-false" , "sortV1");
@@ -499,6 +505,7 @@ blklab10:;
 	_40 = 4;
 	//invoke (%38) = (%1, %39, %40) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
+		_DEALLOC(_38);
 		// isCopyEliminated of '_1' = true
 		_38 = _sortV1_(ys, ys_size, false, _39, _40, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 		_RESET_DEALLOC(ys, "true-true-false" , "sortV1");
@@ -555,6 +562,7 @@ blklab11:;
 	_54 = 5;
 	//invoke (%52) = (%1, %53, %54) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
+		_DEALLOC(_52);
 		// isCopyEliminated of '_1' = true
 		_52 = _sortV1_(ys, ys_size, false, _53, _54, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 		_RESET_DEALLOC(ys, "true-true-false" , "sortV1");
@@ -640,6 +648,7 @@ blklab13:;
 	_73=max+_72;
 	//invoke (%70) = (%4, %71, %73) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
+		_DEALLOC(_70);
 		// isCopyEliminated of '_4' = true
 		_70 = _sortV1_(arr, arr_size, false, _71, _73, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_70));
 		_RESET_DEALLOC(arr, "true-true-false" , "sortV1");

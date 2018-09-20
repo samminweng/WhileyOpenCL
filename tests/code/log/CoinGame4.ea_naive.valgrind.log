@@ -1,0 +1,87 @@
+==1909== Memcheck, a memory error detector
+==1909== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==1909== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==1909== Command: ./CoinGame4.out
+==1909== Parent PID: 812
+==1909== 
+==1909== Invalid read of size 8
+==1909==    at 0x400DDB: _play_ (CoinGame4.c:106)
+==1909==    by 0x402034: main (CoinGame4.c:570)
+==1909==  Address 0x521b0f8 is 8 bytes before a block of size 800 alloc'd
+==1909==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1909==    by 0x401FBB: main (CoinGame4.c:569)
+==1909== 
+==1909== 
+==1909== HEAP SUMMARY:
+==1909==     in use at exit: 94,664 bytes in 157 blocks
+==1909==   total heap usage: 158 allocs, 1 frees, 102,856 bytes allocated
+==1909== 
+==1909== 40 bytes in 5 blocks are definitely lost in loss record 1 of 16
+==1909==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1909==    by 0x4024EA: create1DArray_int64_t (Util.c:23)
+==1909==    by 0x401357: _play_ (CoinGame4.c:225)
+==1909==    by 0x402034: main (CoinGame4.c:570)
+==1909== 
+==1909== 80 bytes in 5 blocks are definitely lost in loss record 2 of 16
+==1909==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1909==    by 0x4024EA: create1DArray_int64_t (Util.c:23)
+==1909==    by 0x4012D5: _play_ (CoinGame4.c:208)
+==1909==    by 0x402034: main (CoinGame4.c:570)
+==1909== 
+==1909== 160 bytes in 10 blocks are definitely lost in loss record 3 of 16
+==1909==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1909==    by 0x4024EA: create1DArray_int64_t (Util.c:23)
+==1909==    by 0x401227: _play_ (CoinGame4.c:187)
+==1909==    by 0x402034: main (CoinGame4.c:570)
+==1909== 
+==1909== 240 bytes in 10 blocks are definitely lost in loss record 4 of 16
+==1909==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1909==    by 0x4024EA: create1DArray_int64_t (Util.c:23)
+==1909==    by 0x40119D: _play_ (CoinGame4.c:172)
+==1909==    by 0x402034: main (CoinGame4.c:570)
+==1909== 
+==1909== 384 bytes in 1 blocks are definitely lost in loss record 5 of 16
+==1909==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1909==    by 0x4024EA: create1DArray_int64_t (Util.c:23)
+==1909==    by 0x401408: _play_ (CoinGame4.c:258)
+==1909==    by 0x402034: main (CoinGame4.c:570)
+==1909== 
+==1909== 640 bytes in 5 blocks are definitely lost in loss record 7 of 16
+==1909==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1909==    by 0x4024EA: create1DArray_int64_t (Util.c:23)
+==1909==    by 0x401029: _play_ (CoinGame4.c:155)
+==1909==    by 0x402034: main (CoinGame4.c:570)
+==1909== 
+==1909== 720 bytes in 5 blocks are definitely lost in loss record 8 of 16
+==1909==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1909==    by 0x4024EA: create1DArray_int64_t (Util.c:23)
+==1909==    by 0x400EA2: _play_ (CoinGame4.c:142)
+==1909==    by 0x402034: main (CoinGame4.c:570)
+==1909== 
+==1909== 800 bytes in 1 blocks are definitely lost in loss record 14 of 16
+==1909==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1909==    by 0x402696: copy1DArray_int64_t (Util.c:80)
+==1909==    by 0x401EE6: main (CoinGame4.c:557)
+==1909== 
+==1909== 43,200 bytes in 54 blocks are definitely lost in loss record 15 of 16
+==1909==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1909==    by 0x402696: copy1DArray_int64_t (Util.c:80)
+==1909==    by 0x401D5B: _findMoves_ (CoinGame4.c:495)
+==1909==    by 0x401F79: main (CoinGame4.c:562)
+==1909== 
+==1909== 44,000 bytes in 55 blocks are definitely lost in loss record 16 of 16
+==1909==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1909==    by 0x401C87: _findMoves_ (CoinGame4.c:491)
+==1909==    by 0x401F79: main (CoinGame4.c:562)
+==1909== 
+==1909== LEAK SUMMARY:
+==1909==    definitely lost: 90,264 bytes in 151 blocks
+==1909==    indirectly lost: 0 bytes in 0 blocks
+==1909==      possibly lost: 0 bytes in 0 blocks
+==1909==    still reachable: 4,400 bytes in 6 blocks
+==1909==         suppressed: 0 bytes in 0 blocks
+==1909== Reachable blocks (those to which a pointer was found) are not shown.
+==1909== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==1909== 
+==1909== For counts of detected and suppressed errors, rerun with: -v
+==1909== ERROR SUMMARY: 11 errors from 11 contexts (suppressed: 0 from 0)

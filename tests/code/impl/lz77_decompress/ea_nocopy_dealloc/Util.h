@@ -98,9 +98,9 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 #define DEBUG_CHECK_ASUMPTION(a, b) \
 ({\
 	if(a != b || a##_dealloc == false){\
-		fputs("The assumption holds", stdout);\
+		fputs("\tDEBUG: The assumption holds", stdout);\
 	}else{\
-		fputs("Error! The assumption fails. ", stdout);\
+		fputs("\tDEBUG: Runtime check error! The assumption fails. ", stdout);\
 	}\
 })
 #else
@@ -371,7 +371,7 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 			DEBUG_PRINT("_REMOVE_DEALLOC macro on  ( "str(a)" )");\
 			a##_dealloc = false;\
 		})
-// Transfer one variable's deallocation flag to another
+// Transfer an array variable's deallocation flag to another
 #define _TRANSFER_DEALLOC(a, b, dimension)  \
         ({\
 			DEBUG_PRINT("_TRANSFER_DEALLOC macro on  ( "str(a)" and "str(b)" )");\
@@ -381,7 +381,7 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 			a##_dealloc = b##_dealloc;\
 			b##_dealloc = false;\
 		})
-// Transfer structure variable's deallocation flag to another
+// Transfer structure typed variable's deallocation flag to another
 #define _TRANSFER_DEALLOC_STRUCT(a, b) \
         ({\
 			DEBUG_PRINT("_TRANSFER_DEALLOC_STRUCT macro on  ( "str(a)" and "str(b)" )");\

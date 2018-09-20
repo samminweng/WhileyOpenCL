@@ -335,8 +335,8 @@ public final class BaseTestUtil {
 				// De-bugging message can be ignored, to speed up ant task
 				if (line.contains("DEBUG:")) {
 					// Store debugging messages only
-					line = line + " in " + workingDir.getFileName() + " folder";
-					messages.add(line);
+					//line = line + " in " + workingDir.getFileName() + " folder";
+					//messages.add(line);
 				} else {
 					// Print out the message on console
 					System.out.println(line);

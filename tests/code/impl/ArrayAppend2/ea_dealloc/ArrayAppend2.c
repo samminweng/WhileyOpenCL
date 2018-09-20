@@ -27,7 +27,7 @@ int main(int argc, char** args){
 	{
 		_DEALLOC(_3);
 		_3 = Array_Append(r, r_size , _4, _4_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
-		_ADD_DEALLOC(_3);
+		_3_dealloc = true;
 	}
 	//assign %1 = %3  : int[]
 	_DEALLOC(r);

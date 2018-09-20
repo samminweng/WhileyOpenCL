@@ -602,7 +602,15 @@ public class DeallocationAnalyzer extends Analyzer {
 			String lhs_var = stores.getVar(lhs, function);
 			String rhs_var = stores.getVar(rhs, function);
 			int dimension = stores.getArrayDimension(type);
-			return "_TRANSFER_DEALLOC(" + lhs_var + ", " + rhs_var + ", "+dimension+");";
+			Type elm_type = stores.getArrayElementType((Type.Array)type);
+			if (stores.isIntType(elm_type) || elm_type instanceof Type.Byte) {
+				// For integer typed array, apply single transfer dealloc macro  
+				return "_TRANSFER_DEALLOC(" + lhs_var + ", " + rhs_var + ", "+dimension+");";
+			}else {
+				// Otherwise, apply transfer structure macro
+				return "_TRANSFER_DEALLOC_STRUCT(" + lhs_var + ", " + rhs_var+");";
+			}
+			
 		}else if (stores.isCompoundType(type) || type instanceof Type.Union) {
 			String lhs_var = stores.getVar(lhs, function);
 			String rhs_var = stores.getVar(rhs, function);

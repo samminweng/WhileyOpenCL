@@ -1,0 +1,32 @@
+==2833== Memcheck, a memory error detector
+==2833== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==2833== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==2833== Command: ./livecheck.out
+==2833== Parent PID: 812
+==2833== 
+==2833== 
+==2833== HEAP SUMMARY:
+==2833==     in use at exit: 776 bytes in 14 blocks
+==2833==   total heap usage: 15 allocs, 1 frees, 8,968 bytes allocated
+==2833== 
+==2833== 40 bytes in 1 blocks are definitely lost in loss record 8 of 14
+==2833==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==2833==    by 0x401862: copy1DArray_int64_t (Util.c:80)
+==2833==    by 0x400D10: main (livecheck.c:57)
+==2833== 
+==2833== 40 bytes in 1 blocks are definitely lost in loss record 9 of 14
+==2833==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==2833==    by 0x401862: copy1DArray_int64_t (Util.c:80)
+==2833==    by 0x400D82: main (livecheck.c:65)
+==2833== 
+==2833== LEAK SUMMARY:
+==2833==    definitely lost: 80 bytes in 2 blocks
+==2833==    indirectly lost: 0 bytes in 0 blocks
+==2833==      possibly lost: 0 bytes in 0 blocks
+==2833==    still reachable: 696 bytes in 12 blocks
+==2833==         suppressed: 0 bytes in 0 blocks
+==2833== Reachable blocks (those to which a pointer was found) are not shown.
+==2833== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==2833== 
+==2833== For counts of detected and suppressed errors, rerun with: -v
+==2833== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)

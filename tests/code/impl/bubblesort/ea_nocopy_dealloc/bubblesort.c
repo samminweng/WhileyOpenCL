@@ -231,6 +231,7 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(ys, _10, 1);
 	//invoke (%11) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
+		_DEALLOC(_11);
 		// isCopyEliminated of '_1' = true
 		_11 = _bubbleSort_(ys, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		_RESET_DEALLOC(ys, "true-true-false" , "bubbleSort");
@@ -289,6 +290,7 @@ blklab5:;
 	_TRANSFER_DEALLOC(ys, _24, 1);
 	//invoke (%25) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
+		_DEALLOC(_25);
 		// isCopyEliminated of '_1' = true
 		_25 = _bubbleSort_(ys, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 		_RESET_DEALLOC(ys, "true-true-false" , "bubbleSort");
@@ -345,6 +347,7 @@ blklab6:;
 	_TRANSFER_DEALLOC(ys, _37, 1);
 	//invoke (%38) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
+		_DEALLOC(_38);
 		// isCopyEliminated of '_1' = true
 		_38 = _bubbleSort_(ys, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 		_RESET_DEALLOC(ys, "true-true-false" , "bubbleSort");
@@ -403,6 +406,7 @@ blklab7:;
 	_TRANSFER_DEALLOC(ys, _51, 1);
 	//invoke (%52) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
+		_DEALLOC(_52);
 		// isCopyEliminated of '_1' = true
 		_52 = _bubbleSort_(ys, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 		_RESET_DEALLOC(ys, "true-true-false" , "bubbleSort");
@@ -484,6 +488,7 @@ blklab10:;
 blklab9:;
 	//invoke (%68) = (%4) bubblesort:bubbleSort : function(int[])->(int[])
 	{
+		_DEALLOC(_68);
 		// isCopyEliminated of '_4' = true
 		_68 = _bubbleSort_(arr, arr_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
 		_RESET_DEALLOC(arr, "true-true-false" , "bubbleSort");

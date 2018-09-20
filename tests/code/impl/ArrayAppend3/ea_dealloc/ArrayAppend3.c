@@ -85,7 +85,7 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRA
 		{
 			_DEALLOC(_13);
 			_13 = Array_Append(r, r_size , _14, _14_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_13));
-			_ADD_DEALLOC(_13);
+			_13_dealloc = true;
 		}
 		//assign %2 = %13  : int[]
 		_DEALLOC(r);
@@ -101,13 +101,13 @@ blklab5:;
 		{
 			_DEALLOC(_17);
 			_17 = Int_toString(amt, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_17));
-			_ADD_DEALLOC(_17);
+			_17_dealloc = true;
 		}
 		//invoke (%16) = (%2, %17) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
 			_DEALLOC(_16);
 			_16 = Array_Append(r, r_size , _17, _17_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
-			_ADD_DEALLOC(_16);
+			_16_dealloc = true;
 		}
 		//assign %2 = %16  : int[]
 		_DEALLOC(r);
@@ -122,7 +122,7 @@ blklab5:;
 		{
 			_DEALLOC(_18);
 			_18 = Array_Append(r, r_size , _19, _19_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
-			_ADD_DEALLOC(_18);
+			_18_dealloc = true;
 		}
 		//assign %2 = %18  : int[]
 		_DEALLOC(r);
@@ -173,7 +173,7 @@ blklab5:;
 		{
 			_DEALLOC(_20);
 			_20 = Array_Append(r, r_size , _22, _22_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
-			_ADD_DEALLOC(_20);
+			_20_dealloc = true;
 		}
 		//assign %2 = %20  : int[]
 		_DEALLOC(r);
