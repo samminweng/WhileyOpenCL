@@ -107,7 +107,7 @@ int main(int argc, char** args){
 	_DEALLOC(_9);
 	_NEW_1DARRAY_int64_t(_9, 5, 0);
 	_9[0] = _4; _9[1] = _5; _9[2] = _6; _9[3] = _7; _9[4] = _8; 
-	_ADD_DEALLOC(_9);
+	_9_dealloc = true;
 	//assign %1 = %9  : int[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(a, _9, 1);
@@ -147,7 +147,7 @@ blklab2:;
 	_DEALLOC(_17);
 	_NEW_1DARRAY_int64_t(_17, 5, 0);
 	_17[0] = 97; _17[1] = 91; _17[2] = 50; _17[3] = 93; _17[4] = 61; 
-	_ADD_DEALLOC(_17);
+	_17_dealloc = true;
 	//indirectinvoke () = %16 (%17) : method(int[])->()
 	{
 		printf_s(_17, _17_size);
@@ -176,7 +176,7 @@ blklab2:;
 	_DEALLOC(_27);
 	_NEW_1DARRAY_int64_t(_27, 5, 0);
 	_27[0] = _22; _27[1] = _23; _27[2] = _24; _27[3] = _25; _27[4] = _26; 
-	_ADD_DEALLOC(_27);
+	_27_dealloc = true;
 	//assign %2 = %27  : int[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(b, _27, 1);
@@ -235,7 +235,7 @@ blklab4:;
 	_DEALLOC(_38);
 	_NEW_1DARRAY_int64_t(_38, 5, 0);
 	_38[0] = 98; _38[1] = 91; _38[2] = 50; _38[3] = 93; _38[4] = 61; 
-	_ADD_DEALLOC(_38);
+	_38_dealloc = true;
 	//indirectinvoke () = %37 (%38) : method(int[])->()
 	{
 		printf_s(_38, _38_size);
@@ -256,7 +256,7 @@ blklab4:;
 	_DEALLOC(_45);
 	_NEW_1DARRAY_int64_t(_45, 5, 0);
 	_45[0] = 99; _45[1] = 91; _45[2] = 50; _45[3] = 93; _45[4] = 61; 
-	_ADD_DEALLOC(_45);
+	_45_dealloc = true;
 	//indirectinvoke () = %44 (%45) : method(int[])->()
 	{
 		printf_s(_45, _45_size);

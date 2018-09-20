@@ -1,27 +1,27 @@
-==1684== Memcheck, a memory error detector
-==1684== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==1684== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==1684== Command: ./CoinGame1.out
-==1684== Parent PID: 812
-==1684== 
-==1684== 
-==1684== HEAP SUMMARY:
-==1684==     in use at exit: 3,784 bytes in 6 blocks
-==1684==   total heap usage: 7 allocs, 1 frees, 11,976 bytes allocated
-==1684== 
-==1684== 800 bytes in 1 blocks are definitely lost in loss record 6 of 6
-==1684==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==1684==    by 0x401A3A: copy1DArray_int64_t (Util.c:80)
-==1684==    by 0x401185: main (CoinGame1.c:244)
-==1684== 
-==1684== LEAK SUMMARY:
-==1684==    definitely lost: 800 bytes in 1 blocks
-==1684==    indirectly lost: 0 bytes in 0 blocks
-==1684==      possibly lost: 0 bytes in 0 blocks
-==1684==    still reachable: 2,984 bytes in 5 blocks
-==1684==         suppressed: 0 bytes in 0 blocks
-==1684== Reachable blocks (those to which a pointer was found) are not shown.
-==1684== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==1684== 
-==1684== For counts of detected and suppressed errors, rerun with: -v
-==1684== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==21952== Memcheck, a memory error detector
+==21952== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==21952== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==21952== Command: ./CoinGame1.out
+==21952== Parent PID: 21151
+==21952== 
+==21952== 
+==21952== HEAP SUMMARY:
+==21952==     in use at exit: 3,784 bytes in 6 blocks
+==21952==   total heap usage: 7 allocs, 1 frees, 11,976 bytes allocated
+==21952== 
+==21952== 800 bytes in 1 blocks are definitely lost in loss record 6 of 6
+==21952==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==21952==    by 0x401A3A: copy1DArray_int64_t (Util.c:80)
+==21952==    by 0x401185: main (CoinGame1.c:244)
+==21952== 
+==21952== LEAK SUMMARY:
+==21952==    definitely lost: 800 bytes in 1 blocks
+==21952==    indirectly lost: 0 bytes in 0 blocks
+==21952==      possibly lost: 0 bytes in 0 blocks
+==21952==    still reachable: 2,984 bytes in 5 blocks
+==21952==         suppressed: 0 bytes in 0 blocks
+==21952== Reachable blocks (those to which a pointer was found) are not shown.
+==21952== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==21952== 
+==21952== For counts of detected and suppressed errors, rerun with: -v
+==21952== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

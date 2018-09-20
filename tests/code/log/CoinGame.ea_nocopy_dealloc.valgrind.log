@@ -1,23 +1,23 @@
-==1643== Memcheck, a memory error detector
-==1643== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==1643== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==1643== Command: ./CoinGame.out
-==1643== Parent PID: 812
-==1643== 
-==1643== Invalid read of size 8
-==1643==    at 0x400E14: _play_ (CoinGame.c:119)
-==1643==    by 0x40246C: main (CoinGame.c:614)
-==1643==  Address 0x5203038 is 8 bytes before a block of size 800 alloc'd
-==1643==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==1643==    by 0x402A1F: create1DArray_int64_t (Util.c:23)
-==1643==    by 0x4021F1: main (CoinGame.c:595)
-==1643== 
-==1643== 
-==1643== HEAP SUMMARY:
-==1643==     in use at exit: 0 bytes in 0 blocks
-==1643==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
-==1643== 
-==1643== All heap blocks were freed -- no leaks are possible
-==1643== 
-==1643== For counts of detected and suppressed errors, rerun with: -v
-==1643== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==21916== Memcheck, a memory error detector
+==21916== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==21916== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==21916== Command: ./CoinGame.out
+==21916== Parent PID: 21151
+==21916== 
+==21916== Invalid read of size 8
+==21916==    at 0x400E14: _play_ (CoinGame.c:119)
+==21916==    by 0x40239A: main (CoinGame.c:614)
+==21916==  Address 0x5203038 is 8 bytes before a block of size 800 alloc'd
+==21916==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==21916==    by 0x40292F: create1DArray_int64_t (Util.c:23)
+==21916==    by 0x40211F: main (CoinGame.c:595)
+==21916== 
+==21916== 
+==21916== HEAP SUMMARY:
+==21916==     in use at exit: 0 bytes in 0 blocks
+==21916==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
+==21916== 
+==21916== All heap blocks were freed -- no leaks are possible
+==21916== 
+==21916== For counts of detected and suppressed errors, rerun with: -v
+==21916== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

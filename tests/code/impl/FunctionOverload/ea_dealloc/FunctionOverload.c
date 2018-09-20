@@ -32,7 +32,7 @@ int64_t* _Cash_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DEALLOC(_9);
 	_NEW_1DARRAY_int64_t(_9, 8, 0);
 	_9[0] = _1; _9[1] = _2; _9[2] = _3; _9[3] = _4; _9[4] = _5; _9[5] = _6; _9[6] = _7; _9[7] = _8; 
-	_ADD_DEALLOC(_9);
+	_9_dealloc = true;
 	//return %9
 	_DEALLOC(_0);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(_9);

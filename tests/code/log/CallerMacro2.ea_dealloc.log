@@ -4,7 +4,6 @@
 	DEBUG: Potential memory leaks at ( "true-true-true" "a" "func" ) (LINE:52 FILE: CallerMacro2.c)
 	DEBUG: _ADD_DEALLOC macro on  ( b ) (LINE:58 FILE: CallerMacro2.c)
 	DEBUG: _ADD_DEALLOC macro on  ( a ) (LINE:126 FILE: CallerMacro2.c)
-	DEBUG: _ADD_DEALLOC macro on  ( _10 ) (LINE:150 FILE: CallerMacro2.c)
 a[0] = 0
 	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _6 ) (LINE:39 FILE: CallerMacro2.c)
 	DEBUG: _ADD_DEALLOC macro on  ( a ) (LINE:43 FILE: CallerMacro2.c)
@@ -12,5 +11,4 @@ a[0] = 0
 	DEBUG: Potential memory leaks at ( "true-true-true" "a" "func" ) (LINE:52 FILE: CallerMacro2.c)
 	DEBUG: _ADD_DEALLOC macro on  ( b ) (LINE:58 FILE: CallerMacro2.c)
 	DEBUG: _ADD_DEALLOC macro on  ( b ) (LINE:176 FILE: CallerMacro2.c)
-	DEBUG: _ADD_DEALLOC macro on  ( _22 ) (LINE:200 FILE: CallerMacro2.c)
 b[0] = 11

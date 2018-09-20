@@ -32,7 +32,7 @@ int64_t* _Cash_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DEALLOC(_9);
 	_NEW_1DARRAY_int64_t(_9, 8, 0);
 	_9[0] = _1; _9[1] = _2; _9[2] = _3; _9[3] = _4; _9[4] = _5; _9[5] = _6; _9[6] = _7; _9[7] = _8; 
-	_ADD_DEALLOC(_9);
+	_9_dealloc = true;
 	//return %9
 	_DEALLOC(_0);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(_9);
@@ -94,7 +94,7 @@ int64_t* _Cash_1_(_DECL_1DARRAY_PARAM(coins), _DECL_DEALLOC_PARAM(coins), _DECL_
 	_DEALLOC(_13);
 	_NEW_1DARRAY_int64_t(_13, 8, 0);
 	_13[0] = _5; _13[1] = _6; _13[2] = _7; _13[3] = _8; _13[4] = _9; _13[5] = _10; _13[6] = _11; _13[7] = _12; 
-	_ADD_DEALLOC(_13);
+	_13_dealloc = true;
 	//assign %2 = %13  : int[]
 	_DEALLOC(cash);
 	_COPY_1DARRAY_int64_t(cash, _13);
@@ -175,7 +175,7 @@ int64_t _total_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c)){
 		_DEALLOC(_7);
 		_NEW_1DARRAY_int64_t(_7, 8, 0);
 		_7[0] = 1; _7[1] = 5; _7[2] = 10; _7[3] = 20; _7[4] = 50; _7[5] = 100; _7[6] = 500; _7[7] = 1000; 
-		_ADD_DEALLOC(_7);
+		_7_dealloc = true;
 		//indexof %8 = %7, %3 : int[]
 		_8=_7[i];
 		//indexof %9 = %0, %3 : int[]
@@ -432,7 +432,7 @@ blklab25:;
 		_DEALLOC(_12);
 		_NEW_1DARRAY_int64_t(_12, 8, 0);
 		_12[0] = 1; _12[1] = 5; _12[2] = 10; _12[3] = 20; _12[4] = 50; _12[5] = 100; _12[6] = 500; _12[7] = 1000; 
-		_ADD_DEALLOC(_12);
+		_12_dealloc = true;
 		//indexof %13 = %12, %3 : int[]
 		_13=_12[i];
 		//ifgt %13, %1 goto blklab29 : int
@@ -453,7 +453,7 @@ blklab25:;
 		_DEALLOC(_18);
 		_NEW_1DARRAY_int64_t(_18, 8, 0);
 		_18[0] = 1; _18[1] = 5; _18[2] = 10; _18[3] = 20; _18[4] = 50; _18[5] = 100; _18[6] = 500; _18[7] = 1000; 
-		_ADD_DEALLOC(_18);
+		_18_dealloc = true;
 		//indexof %19 = %18, %3 : int[]
 		_19=_18[i];
 		//sub %20 = %1, %19 : int
@@ -569,7 +569,7 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRA
 	//const %6 = [] : void[]
 	_DEALLOC(_6);
 	_NEW_1DARRAY_int64_t(_6, 0, 0);
-	_ADD_DEALLOC(_6);
+	_6_dealloc = true;
 	//assign %2 = %6  : void[]
 	_DEALLOC(r);
 	_COPY_1DARRAY_int64_t(r, _6);
@@ -604,7 +604,7 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRA
 		_DEALLOC(_14);
 		_NEW_1DARRAY_int64_t(_14, 2, 0);
 		_14[0] = 44; _14[1] = 32; 
-		_ADD_DEALLOC(_14);
+		_14_dealloc = true;
 		//invoke (%13) = (%2, %14) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
 			_DEALLOC(_13);
@@ -641,7 +641,7 @@ blklab34:;
 		_DEALLOC(_19);
 		_NEW_1DARRAY_int64_t(_19, 3, 0);
 		_19[0] = 32; _19[1] = 120; _19[2] = 32; 
-		_ADD_DEALLOC(_19);
+		_19_dealloc = true;
 		//invoke (%18) = (%2, %19) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
 			_DEALLOC(_18);
@@ -688,11 +688,11 @@ blklab34:;
 			memcpy(_21[7], tmp, 3*sizeof(int64_t));
 		}
 
-		_ADD_DEALLOC(_21);
+		_21_dealloc = true;
 		//indexof %22 = %21, %4 : int[][]
 		_22=_21[i];
 		_22_size = _21_size_size;
-		_REMOVE_DEALLOC(_22);
+		_22_dealloc = false;
 		//invoke (%20) = (%2, %22) whiley/lang/Array:append : function(int[],int[])->(int[])
 		{
 			_DEALLOC(_20);
@@ -719,14 +719,14 @@ blklab31:;
 	//const %25 = [] : void[]
 	_DEALLOC(_25);
 	_NEW_1DARRAY_int64_t(_25, 0, 0);
-	_ADD_DEALLOC(_25);
+	_25_dealloc = true;
 	//ifne %2, %25 goto blklab35 : int[]
 	if(r!=_25){goto blklab35;}
 	//const %26 = [40,110,111,116,104,105,110,103,41] : int[]
 	_DEALLOC(_26);
 	_NEW_1DARRAY_int64_t(_26, 9, 0);
 	_26[0] = 40; _26[1] = 110; _26[2] = 111; _26[3] = 116; _26[4] = 104; _26[5] = 105; _26[6] = 110; _26[7] = 103; _26[8] = 41; 
-	_ADD_DEALLOC(_26);
+	_26_dealloc = true;
 	//assign %2 = %26  : int[]
 	_DEALLOC(r);
 	_COPY_1DARRAY_int64_t(r, _26);
@@ -809,7 +809,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_DEALLOC_PARAM(til
 	_DEALLOC(_8);
 	_NEW_1DARRAY_int64_t(_8, 2, 0);
 	_8[0] = 45; _8[1] = 45; 
-	_ADD_DEALLOC(_8);
+	_8_dealloc = true;
 	//indirectinvoke () = %7 (%8) : method(int[])->()
 	{
 		println_s(_8, _8_size);
@@ -820,7 +820,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_DEALLOC_PARAM(til
 	_DEALLOC(_11);
 	_NEW_1DARRAY_int64_t(_11, 36, 0);
 	_11[0] = 67; _11[1] = 117; _11[2] = 115; _11[3] = 116; _11[4] = 111; _11[5] = 109; _11[6] = 101; _11[7] = 114; _11[8] = 32; _11[9] = 119; _11[10] = 97; _11[11] = 110; _11[12] = 116; _11[13] = 115; _11[14] = 32; _11[15] = 116; _11[16] = 111; _11[17] = 32; _11[18] = 112; _11[19] = 117; _11[20] = 114; _11[21] = 99; _11[22] = 104; _11[23] = 97; _11[24] = 115; _11[25] = 101; _11[26] = 32; _11[27] = 105; _11[28] = 116; _11[29] = 101; _11[30] = 109; _11[31] = 32; _11[32] = 102; _11[33] = 111; _11[34] = 114; _11[35] = 32; 
-	_ADD_DEALLOC(_11);
+	_11_dealloc = true;
 	//indirectinvoke () = %10 (%11) : method(int[])->()
 	{
 		printf_s(_11, _11_size);
@@ -843,7 +843,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_DEALLOC_PARAM(til
 	_DEALLOC(_17);
 	_NEW_1DARRAY_int64_t(_17, 2, 0);
 	_17[0] = 99; _17[1] = 46; 
-	_ADD_DEALLOC(_17);
+	_17_dealloc = true;
 	//indirectinvoke () = %16 (%17) : method(int[])->()
 	{
 		println_s(_17, _17_size);
@@ -854,7 +854,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_DEALLOC_PARAM(til
 	_DEALLOC(_20);
 	_NEW_1DARRAY_int64_t(_20, 16, 0);
 	_20[0] = 67; _20[1] = 117; _20[2] = 115; _20[3] = 116; _20[4] = 111; _20[5] = 109; _20[6] = 101; _20[7] = 114; _20[8] = 32; _20[9] = 103; _20[10] = 105; _20[11] = 118; _20[12] = 101; _20[13] = 115; _20[14] = 58; _20[15] = 32; 
-	_ADD_DEALLOC(_20);
+	_20_dealloc = true;
 	//indirectinvoke () = %19 (%20) : method(int[])->()
 	{
 		printf_s(_20, _20_size);
@@ -889,7 +889,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_DEALLOC_PARAM(til
 	_DEALLOC(_27);
 	_NEW_1DARRAY_int64_t(_27, 35, 0);
 	_27[0] = 67; _27[1] = 117; _27[2] = 115; _27[3] = 116; _27[4] = 111; _27[5] = 109; _27[6] = 101; _27[7] = 114; _27[8] = 32; _27[9] = 104; _27[10] = 97; _27[11] = 115; _27[12] = 32; _27[13] = 110; _27[14] = 111; _27[15] = 116; _27[16] = 32; _27[17] = 103; _27[18] = 105; _27[19] = 118; _27[20] = 101; _27[21] = 110; _27[22] = 32; _27[23] = 101; _27[24] = 110; _27[25] = 111; _27[26] = 117; _27[27] = 103; _27[28] = 104; _27[29] = 32; _27[30] = 99; _27[31] = 97; _27[32] = 115; _27[33] = 104; _27[34] = 33; 
-	_ADD_DEALLOC(_27);
+	_27_dealloc = true;
 	//indirectinvoke () = %26 (%27) : method(int[])->()
 	{
 		println_s(_27, _27_size);
@@ -932,7 +932,7 @@ blklab40:;
 	_DEALLOC(_33);
 	_NEW_1DARRAY_int64_t(_33, 35, 0);
 	_33[0] = 67; _33[1] = 97; _33[2] = 115; _33[3] = 104; _33[4] = 32; _33[5] = 116; _33[6] = 105; _33[7] = 108; _33[8] = 108; _33[9] = 32; _33[10] = 99; _33[11] = 97; _33[12] = 110; _33[13] = 110; _33[14] = 111; _33[15] = 116; _33[16] = 32; _33[17] = 103; _33[18] = 105; _33[19] = 118; _33[20] = 101; _33[21] = 32; _33[22] = 101; _33[23] = 120; _33[24] = 97; _33[25] = 99; _33[26] = 116; _33[27] = 32; _33[28] = 99; _33[29] = 104; _33[30] = 97; _33[31] = 110; _33[32] = 103; _33[33] = 101; _33[34] = 33; 
-	_ADD_DEALLOC(_33);
+	_33_dealloc = true;
 	//indirectinvoke () = %32 (%33) : method(int[])->()
 	{
 		println_s(_33, _33_size);
@@ -947,7 +947,7 @@ blklab38:;
 	_DEALLOC(_36);
 	_NEW_1DARRAY_int64_t(_36, 14, 0);
 	_36[0] = 67; _36[1] = 104; _36[2] = 97; _36[3] = 110; _36[4] = 103; _36[5] = 101; _36[6] = 32; _36[7] = 103; _36[8] = 105; _36[9] = 118; _36[10] = 101; _36[11] = 110; _36[12] = 58; _36[13] = 32; 
-	_ADD_DEALLOC(_36);
+	_36_dealloc = true;
 	//indirectinvoke () = %35 (%36) : method(int[])->()
 	{
 		printf_s(_36, _36_size);
@@ -1007,7 +1007,7 @@ blklab38:;
 	_DEALLOC(_44);
 	_NEW_1DARRAY_int64_t(_44, 6, 0);
 	_44[0] = 84; _44[1] = 105; _44[2] = 108; _44[3] = 108; _44[4] = 58; _44[5] = 32; 
-	_ADD_DEALLOC(_44);
+	_44_dealloc = true;
 	//indirectinvoke () = %43 (%44) : method(int[])->()
 	{
 		printf_s(_44, _44_size);
@@ -1126,7 +1126,7 @@ int main(int argc, char** args){
 	_DEALLOC(_10);
 	_NEW_1DARRAY_int64_t(_10, 8, 0);
 	_10[0] = _2; _10[1] = _3; _10[2] = _4; _10[3] = _5; _10[4] = _6; _10[5] = _7; _10[6] = _8; _10[7] = _9; 
-	_ADD_DEALLOC(_10);
+	_10_dealloc = true;
 	//assign %1 = %10  : int[]
 	_DEALLOC(till);
 	_COPY_1DARRAY_int64_t(till, _10);
@@ -1137,7 +1137,7 @@ int main(int argc, char** args){
 	_DEALLOC(_13);
 	_NEW_1DARRAY_int64_t(_13, 6, 0);
 	_13[0] = 84; _13[1] = 105; _13[2] = 108; _13[3] = 108; _13[4] = 58; _13[5] = 32; 
-	_ADD_DEALLOC(_13);
+	_13_dealloc = true;
 	//indirectinvoke () = %12 (%13) : method(int[])->()
 	{
 		printf_s(_13, _13_size);
@@ -1163,7 +1163,7 @@ int main(int argc, char** args){
 	_DEALLOC(_20);
 	_NEW_1DARRAY_int64_t(_20, 1, 0);
 	_20[0] = _19; 
-	_ADD_DEALLOC(_20);
+	_20_dealloc = true;
 	//invoke (%18) = (%20) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
 		void* tmp_coins;
@@ -1198,7 +1198,7 @@ int main(int argc, char** args){
 	_DEALLOC(_25);
 	_NEW_1DARRAY_int64_t(_25, 1, 0);
 	_25[0] = _24; 
-	_ADD_DEALLOC(_25);
+	_25_dealloc = true;
 	//invoke (%23) = (%25) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
 		void* tmp_coins;
@@ -1233,7 +1233,7 @@ int main(int argc, char** args){
 	_DEALLOC(_30);
 	_NEW_1DARRAY_int64_t(_30, 1, 0);
 	_30[0] = _29; 
-	_ADD_DEALLOC(_30);
+	_30_dealloc = true;
 	//invoke (%28) = (%30) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
 		void* tmp_coins;
@@ -1268,7 +1268,7 @@ int main(int argc, char** args){
 	_DEALLOC(_35);
 	_NEW_1DARRAY_int64_t(_35, 1, 0);
 	_35[0] = _34; 
-	_ADD_DEALLOC(_35);
+	_35_dealloc = true;
 	//invoke (%33) = (%35) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
 		void* tmp_coins;

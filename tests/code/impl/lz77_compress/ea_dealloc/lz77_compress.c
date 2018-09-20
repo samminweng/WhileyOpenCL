@@ -172,7 +172,7 @@ blklab5:;
 	_18 = malloc(sizeof(Match));
 	_18->len = bestLen;
 	_18->offset = bestOffset;
-	_ADD_DEALLOC(_18);
+	_18_dealloc = true;
 	//return %18
 	_DEALLOC(data);
 	_DEALLOC_STRUCT(m, Match);
@@ -492,7 +492,7 @@ int main(int argc, char** args){
 	_DEALLOC(_6);
 	_NEW_1DARRAY_int64_t(_6, 28, 0);
 	_6[0] = 46; _6[1] = 46; _6[2] = 47; _6[3] = 46; _6[4] = 46; _6[5] = 47; _6[6] = 46; _6[7] = 46; _6[8] = 47; _6[9] = 73; _6[10] = 110; _6[11] = 112; _6[12] = 117; _6[13] = 116; _6[14] = 102; _6[15] = 105; _6[16] = 108; _6[17] = 101; _6[18] = 115; _6[19] = 47; _6[20] = 115; _6[21] = 109; _6[22] = 97; _6[23] = 108; _6[24] = 108; _6[25] = 46; _6[26] = 105; _6[27] = 110; 
-	_ADD_DEALLOC(_6);
+	_6_dealloc = true;
 	//invoke (%5) = (%6) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
 	{
 		_5 = Reader(_6, _6_size);
@@ -515,7 +515,7 @@ int main(int argc, char** args){
 	_DEALLOC(_11);
 	_NEW_1DARRAY_int64_t(_11, 14, 0);
 	_11[0] = 68; _11[1] = 97; _11[2] = 116; _11[3] = 97; _11[4] = 58; _11[5] = 32; _11[6] = 32; _11[7] = 32; _11[8] = 32; _11[9] = 32; _11[10] = 32; _11[11] = 32; _11[12] = 32; _11[13] = 32; 
-	_ADD_DEALLOC(_11);
+	_11_dealloc = true;
 	//indirectinvoke () = %10 (%11) : method(int[])->()
 	{
 		println_s(_11, _11_size);
@@ -547,7 +547,7 @@ int main(int argc, char** args){
 	_DEALLOC(_20);
 	_NEW_1DARRAY_int64_t(_20, 6, 0);
 	_20[0] = 32; _20[1] = 98; _20[2] = 121; _20[3] = 116; _20[4] = 101; _20[5] = 115; 
-	_ADD_DEALLOC(_20);
+	_20_dealloc = true;
 	//indirectinvoke () = %19 (%20) : method(int[])->()
 	{
 		println_s(_20, _20_size);
@@ -571,7 +571,7 @@ int main(int argc, char** args){
 	_DEALLOC(_24);
 	_NEW_1DARRAY_int64_t(_24, 19, 0);
 	_24[0] = 67; _24[1] = 79; _24[2] = 77; _24[3] = 80; _24[4] = 82; _24[5] = 69; _24[6] = 83; _24[7] = 83; _24[8] = 69; _24[9] = 68; _24[10] = 32; _24[11] = 68; _24[12] = 97; _24[13] = 116; _24[14] = 97; _24[15] = 58; _24[16] = 32; _24[17] = 32; _24[18] = 32; 
-	_ADD_DEALLOC(_24);
+	_24_dealloc = true;
 	//indirectinvoke () = %23 (%24) : method(int[])->()
 	{
 		println_s(_24, _24_size);
@@ -596,7 +596,7 @@ int main(int argc, char** args){
 	_DEALLOC(_32);
 	_NEW_1DARRAY_int64_t(_32, 6, 0);
 	_32[0] = 32; _32[1] = 98; _32[2] = 121; _32[3] = 116; _32[4] = 101; _32[5] = 115; 
-	_ADD_DEALLOC(_32);
+	_32_dealloc = true;
 	//indirectinvoke () = %31 (%32) : method(int[])->()
 	{
 		println_s(_32, _32_size);
@@ -605,7 +605,7 @@ int main(int argc, char** args){
 	_DEALLOC(_34);
 	_NEW_1DARRAY_int64_t(_34, 29, 0);
 	_34[0] = 46; _34[1] = 46; _34[2] = 47; _34[3] = 46; _34[4] = 46; _34[5] = 47; _34[6] = 46; _34[7] = 46; _34[8] = 47; _34[9] = 73; _34[10] = 110; _34[11] = 112; _34[12] = 117; _34[13] = 116; _34[14] = 102; _34[15] = 105; _34[16] = 108; _34[17] = 101; _34[18] = 115; _34[19] = 47; _34[20] = 115; _34[21] = 109; _34[22] = 97; _34[23] = 108; _34[24] = 108; _34[25] = 46; _34[26] = 100; _34[27] = 97; _34[28] = 116; 
-	_ADD_DEALLOC(_34);
+	_34_dealloc = true;
 	//invoke (%33) = (%34) whiley/io/File:Writer : method(whiley/lang/ASCII:string)->(whiley/io/File:Writer)
 	{
 		_33 = Writer(_34, _34_size);

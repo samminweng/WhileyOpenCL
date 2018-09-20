@@ -112,7 +112,7 @@ int main(int argc, char** args){
 	//const %2 = [] : void[]
 	_DEALLOC(_2);
 	_NEW_1DARRAY_int64_t(_2, 0, 0);
-	_ADD_DEALLOC(_2);
+	_2_dealloc = true;
 	//assign %1 = %2  : void[]
 	_DEALLOC(r);
 	_COPY_1DARRAY_int64_t(r, _2);
@@ -121,7 +121,7 @@ int main(int argc, char** args){
 	_DEALLOC(_4);
 	_NEW_1DARRAY_int64_t(_4, 16, 0);
 	_4[0] = 32; _4[1] = 84; _4[2] = 104; _4[3] = 105; _4[4] = 115; _4[5] = 32; _4[6] = 105; _4[7] = 115; _4[8] = 32; _4[9] = 97; _4[10] = 32; _4[11] = 116; _4[12] = 101; _4[13] = 115; _4[14] = 116; _4[15] = 32; 
-	_ADD_DEALLOC(_4);
+	_4_dealloc = true;
 	//invoke (%3) = (%1, %4) ArrayAppend:test_append : function(int[],int[])->(int[])
 	{
 		void* tmp_lhs;

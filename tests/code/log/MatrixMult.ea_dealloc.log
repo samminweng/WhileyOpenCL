@@ -1,4 +1,3 @@
-	DEBUG: _ADD_DEALLOC macro on  ( _10 ) (LINE:269 FILE: MatrixMult.c)
 size = 20
 	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _15 ) (LINE:287 FILE: MatrixMult.c)
 	DEBUG: _ADD_DEALLOC macro on  ( A ) (LINE:291 FILE: MatrixMult.c)
@@ -17,7 +16,5 @@ size = 20
 	DEBUG: _CALLER_DEALLOC macro on ( "true-true-false" "C" "mat_mult" ) (LINE:356 FILE: MatrixMult.c)
 	DEBUG: Potential memory leaks at ( "true-true-false" "C" "mat_mult" ) (LINE:356 FILE: MatrixMult.c)
 	DEBUG: _ADD_DEALLOC macro on  ( C ) (LINE:362 FILE: MatrixMult.c)
-	DEBUG: _ADD_DEALLOC macro on  ( _48 ) (LINE:444 FILE: MatrixMult.c)
 Matrix C[size-1][size-1] = 3610
-	DEBUG: _ADD_DEALLOC macro on  ( _60 ) (LINE:475 FILE: MatrixMult.c)
 Pass MatrixMult test case

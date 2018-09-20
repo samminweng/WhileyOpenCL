@@ -9,7 +9,6 @@
 	DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "x" "func" ) (LINE:169 FILE: CallerMacro4.c)
 	DEBUG: Potential memory leaks at ( "false-true-true" "x" "func" ) (LINE:169 FILE: CallerMacro4.c)
 	DEBUG: _ADD_DEALLOC macro on  ( y ) (LINE:175 FILE: CallerMacro4.c)
-	DEBUG: _ADD_DEALLOC macro on  ( _13 ) (LINE:199 FILE: CallerMacro4.c)
 y[0] = 2
 	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _9 ) (LINE:30 FILE: CallerMacro4.c)
 	DEBUG: _ADD_DEALLOC macro on  ( a ) (LINE:34 FILE: CallerMacro4.c)
@@ -20,7 +19,6 @@ y[0] = 2
 	DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "x" "func" ) (LINE:222 FILE: CallerMacro4.c)
 	DEBUG: Potential memory leaks at ( "false-true-true" "x" "func" ) (LINE:222 FILE: CallerMacro4.c)
 	DEBUG: _ADD_DEALLOC macro on  ( y ) (LINE:228 FILE: CallerMacro4.c)
-	DEBUG: _ADD_DEALLOC macro on  ( _25 ) (LINE:252 FILE: CallerMacro4.c)
 y[0] = 0
 	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _9 ) (LINE:30 FILE: CallerMacro4.c)
 	DEBUG: _ADD_DEALLOC macro on  ( a ) (LINE:34 FILE: CallerMacro4.c)
@@ -31,5 +29,4 @@ y[0] = 0
 	DEBUG: _CALLER_DEALLOC macro on ( "false-true-false" "x" "func" ) (LINE:275 FILE: CallerMacro4.c)
 	DEBUG: Potential memory leaks at ( "false-true-false" "x" "func" ) (LINE:275 FILE: CallerMacro4.c)
 	DEBUG: _ADD_DEALLOC macro on  ( y ) (LINE:281 FILE: CallerMacro4.c)
-	DEBUG: _ADD_DEALLOC macro on  ( _37 ) (LINE:305 FILE: CallerMacro4.c)
 y[0] = 1

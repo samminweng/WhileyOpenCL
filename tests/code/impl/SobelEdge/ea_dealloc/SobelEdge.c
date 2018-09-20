@@ -299,7 +299,7 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM
 	_DEALLOC(_29);
 	_NEW_1DARRAY_int64_t(_29, 9, 0);
 	_29[0] = _18; _29[1] = _19; _29[2] = _20; _29[3] = _22; _29[4] = _23; _29[5] = _24; _29[6] = _26; _29[7] = _27; _29[8] = _28; 
-	_ADD_DEALLOC(_29);
+	_29_dealloc = true;
 	//assign %6 = %29  : int[]
 	_DEALLOC(v_sobel);
 	_COPY_1DARRAY_int64_t(v_sobel, _29);
@@ -332,7 +332,7 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM
 	_DEALLOC(_42);
 	_NEW_1DARRAY_int64_t(_42, 9, 0);
 	_42[0] = _30; _42[1] = _31; _42[2] = _32; _42[3] = _33; _42[4] = _34; _42[5] = _35; _42[6] = _37; _42[7] = _39; _42[8] = _41; 
-	_ADD_DEALLOC(_42);
+	_42_dealloc = true;
 	//assign %7 = %42  : int[]
 	_DEALLOC(h_sobel);
 	_COPY_1DARRAY_int64_t(h_sobel, _42);
@@ -476,7 +476,7 @@ void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t 
 	_DEALLOC(_9);
 	_NEW_1DARRAY_int64_t(_9, 2, 0);
 	_9[0] = 80; _9[1] = 49; 
-	_ADD_DEALLOC(_9);
+	_9_dealloc = true;
 	//indirectinvoke () = %8 (%9) : method(int[])->()
 	{
 		println_s(_9, _9_size);
@@ -493,7 +493,7 @@ void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t 
 	_DEALLOC(_14);
 	_NEW_1DARRAY_int64_t(_14, 1, 0);
 	_14[0] = 32; 
-	_ADD_DEALLOC(_14);
+	_14_dealloc = true;
 	//indirectinvoke () = %13 (%14) : method(int[])->()
 	{
 		printf_s(_14, _14_size);
@@ -570,7 +570,7 @@ blklab15:;
 		//const %33 = [] : void[]
 		_DEALLOC(_33);
 		_NEW_1DARRAY_int64_t(_33, 0, 0);
-		_ADD_DEALLOC(_33);
+		_33_dealloc = true;
 		//indirectinvoke () = %32 (%33) : method(int[])->()
 		{
 			println_s(_33, _33_size);
@@ -616,7 +616,7 @@ int main(int argc, char** args){
 	_DEALLOC(_7);
 	_NEW_1DARRAY_int64_t(_7, 34, 0);
 	_7[0] = 46; _7[1] = 46; _7[2] = 47; _7[3] = 46; _7[4] = 46; _7[5] = 47; _7[6] = 46; _7[7] = 46; _7[8] = 47; _7[9] = 73; _7[10] = 110; _7[11] = 112; _7[12] = 117; _7[13] = 116; _7[14] = 102; _7[15] = 105; _7[16] = 108; _7[17] = 101; _7[18] = 115; _7[19] = 47; _7[20] = 105; _7[21] = 109; _7[22] = 97; _7[23] = 103; _7[24] = 101; _7[25] = 54; _7[26] = 52; _7[27] = 120; _7[28] = 54; _7[29] = 52; _7[30] = 46; _7[31] = 112; _7[32] = 98; _7[33] = 109; 
-	_ADD_DEALLOC(_7);
+	_7_dealloc = true;
 	//invoke (%6) = (%7) whiley/io/File:Reader : method(whiley/lang/ASCII:string)->(whiley/io/File:Reader)
 	{
 		_6 = Reader(_7, _7_size);

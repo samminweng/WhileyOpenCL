@@ -1,46 +1,46 @@
-==2190== Memcheck, a memory error detector
-==2190== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==2190== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==2190== Command: ./fileread2.out
-==2190== Parent PID: 812
-==2190== 
-==2190== 
-==2190== HEAP SUMMARY:
-==2190==     in use at exit: 13,136 bytes in 72 blocks
-==2190==   total heap usage: 77 allocs, 5 frees, 62,323 bytes allocated
-==2190== 
-==2190== 0 bytes in 1 blocks are definitely lost in loss record 1 of 9
-==2190==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==2190==    by 0x4012A5: create1DArray_int64_t (Util.c:23)
-==2190==    by 0x400E47: _print_pbm_ (fileread2.c:145)
-==2190==    by 0x4011D5: main (fileread2.c:192)
-==2190== 
-==2190== 0 bytes in 64 blocks are definitely lost in loss record 2 of 9
-==2190==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==2190==    by 0x4012A5: create1DArray_int64_t (Util.c:23)
-==2190==    by 0x400DEC: _print_pbm_ (fileread2.c:126)
-==2190==    by 0x4011D5: main (fileread2.c:192)
-==2190== 
-==2190== 8 bytes in 1 blocks are definitely lost in loss record 3 of 9
-==2190==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==2190==    by 0x4012A5: create1DArray_int64_t (Util.c:23)
-==2190==    by 0x400C7D: _print_pbm_ (fileread2.c:50)
-==2190==    by 0x4011D5: main (fileread2.c:192)
-==2190== 
-==2190== 16 bytes in 1 blocks are definitely lost in loss record 4 of 9
-==2190==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==2190==    by 0x4012A5: create1DArray_int64_t (Util.c:23)
-==2190==    by 0x400C0B: _print_pbm_ (fileread2.c:35)
-==2190==    by 0x4011D5: main (fileread2.c:192)
-==2190== 
-==2190== LEAK SUMMARY:
-==2190==    definitely lost: 24 bytes in 67 blocks
-==2190==    indirectly lost: 0 bytes in 0 blocks
-==2190==      possibly lost: 0 bytes in 0 blocks
-==2190==    still reachable: 13,112 bytes in 5 blocks
-==2190==         suppressed: 0 bytes in 0 blocks
-==2190== Reachable blocks (those to which a pointer was found) are not shown.
-==2190== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==2190== 
-==2190== For counts of detected and suppressed errors, rerun with: -v
-==2190== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)
+==22476== Memcheck, a memory error detector
+==22476== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==22476== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==22476== Command: ./fileread2.out
+==22476== Parent PID: 21151
+==22476== 
+==22476== 
+==22476== HEAP SUMMARY:
+==22476==     in use at exit: 13,136 bytes in 72 blocks
+==22476==   total heap usage: 77 allocs, 5 frees, 62,323 bytes allocated
+==22476== 
+==22476== 0 bytes in 1 blocks are definitely lost in loss record 1 of 9
+==22476==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==22476==    by 0x4012A5: create1DArray_int64_t (Util.c:23)
+==22476==    by 0x400E47: _print_pbm_ (fileread2.c:145)
+==22476==    by 0x4011D5: main (fileread2.c:192)
+==22476== 
+==22476== 0 bytes in 64 blocks are definitely lost in loss record 2 of 9
+==22476==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==22476==    by 0x4012A5: create1DArray_int64_t (Util.c:23)
+==22476==    by 0x400DEC: _print_pbm_ (fileread2.c:126)
+==22476==    by 0x4011D5: main (fileread2.c:192)
+==22476== 
+==22476== 8 bytes in 1 blocks are definitely lost in loss record 3 of 9
+==22476==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==22476==    by 0x4012A5: create1DArray_int64_t (Util.c:23)
+==22476==    by 0x400C7D: _print_pbm_ (fileread2.c:50)
+==22476==    by 0x4011D5: main (fileread2.c:192)
+==22476== 
+==22476== 16 bytes in 1 blocks are definitely lost in loss record 4 of 9
+==22476==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==22476==    by 0x4012A5: create1DArray_int64_t (Util.c:23)
+==22476==    by 0x400C0B: _print_pbm_ (fileread2.c:35)
+==22476==    by 0x4011D5: main (fileread2.c:192)
+==22476== 
+==22476== LEAK SUMMARY:
+==22476==    definitely lost: 24 bytes in 67 blocks
+==22476==    indirectly lost: 0 bytes in 0 blocks
+==22476==      possibly lost: 0 bytes in 0 blocks
+==22476==    still reachable: 13,112 bytes in 5 blocks
+==22476==         suppressed: 0 bytes in 0 blocks
+==22476== Reachable blocks (those to which a pointer was found) are not shown.
+==22476== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==22476== 
+==22476== For counts of detected and suppressed errors, rerun with: -v
+==22476== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)

@@ -9,8 +9,7 @@
 	DEBUG: The assumption holds	DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "x" "func" ) (LINE:165 FILE: CallerMacro4.c)
 	DEBUG: Potential memory leaks at ( "false-true-true" "x" "func" ) (LINE:165 FILE: CallerMacro4.c)
 	DEBUG: _TRANSFER_DEALLOC macro on  ( y and _6 ) (LINE:170 FILE: CallerMacro4.c)
-	DEBUG: The assumption holds	DEBUG: _ADD_DEALLOC macro on  ( _13 ) (LINE:194 FILE: CallerMacro4.c)
-y[0] = 2
+	DEBUG: The assumption holdsy[0] = 2
 	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _9 ) (LINE:30 FILE: CallerMacro4.c)
 	DEBUG: _TRANSFER_DEALLOC macro on  ( a and _9 ) (LINE:33 FILE: CallerMacro4.c)
 	DEBUG: The assumption holds	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _12 ) (LINE:41 FILE: CallerMacro4.c)
@@ -20,8 +19,7 @@ y[0] = 2
 	DEBUG: The assumption holds	DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "x" "func" ) (LINE:218 FILE: CallerMacro4.c)
 	DEBUG: Potential memory leaks at ( "false-true-true" "x" "func" ) (LINE:218 FILE: CallerMacro4.c)
 	DEBUG: _TRANSFER_DEALLOC macro on  ( y and _18 ) (LINE:223 FILE: CallerMacro4.c)
-	DEBUG: The assumption holds	DEBUG: _ADD_DEALLOC macro on  ( _25 ) (LINE:247 FILE: CallerMacro4.c)
-y[0] = 0
+	DEBUG: The assumption holdsy[0] = 0
 	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _9 ) (LINE:30 FILE: CallerMacro4.c)
 	DEBUG: _TRANSFER_DEALLOC macro on  ( a and _9 ) (LINE:33 FILE: CallerMacro4.c)
 	DEBUG: The assumption holds	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _12 ) (LINE:41 FILE: CallerMacro4.c)
@@ -30,5 +28,4 @@ y[0] = 0
 	DEBUG: The assumption holds	DEBUG: _TRANSFER_DEALLOC macro on  ( d and b ) (LINE:50 FILE: CallerMacro4.c)
 	DEBUG: The assumption holds	DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "x" "func" ) (LINE:269 FILE: CallerMacro4.c)
 	DEBUG: _TRANSFER_DEALLOC macro on  ( y and _30 ) (LINE:274 FILE: CallerMacro4.c)
-	DEBUG: The assumption holds	DEBUG: _ADD_DEALLOC macro on  ( _37 ) (LINE:298 FILE: CallerMacro4.c)
-y[0] = 1
+	DEBUG: The assumption holdsy[0] = 1

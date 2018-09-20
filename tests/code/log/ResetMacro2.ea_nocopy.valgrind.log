@@ -1,22 +1,22 @@
-==3550== Memcheck, a memory error detector
-==3550== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==3550== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==3550== Command: ./ResetMacro2.out
-==3550== Parent PID: 812
-==3550== 
-==3550== 
-==3550== HEAP SUMMARY:
-==3550==     in use at exit: 80 bytes in 2 blocks
-==3550==   total heap usage: 3 allocs, 1 frees, 8,272 bytes allocated
-==3550== 
-==3550== LEAK SUMMARY:
-==3550==    definitely lost: 0 bytes in 0 blocks
-==3550==    indirectly lost: 0 bytes in 0 blocks
-==3550==      possibly lost: 0 bytes in 0 blocks
-==3550==    still reachable: 80 bytes in 2 blocks
-==3550==         suppressed: 0 bytes in 0 blocks
-==3550== Reachable blocks (those to which a pointer was found) are not shown.
-==3550== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==3550== 
-==3550== For counts of detected and suppressed errors, rerun with: -v
-==3550== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==23798== Memcheck, a memory error detector
+==23798== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==23798== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==23798== Command: ./ResetMacro2.out
+==23798== Parent PID: 21151
+==23798== 
+==23798== 
+==23798== HEAP SUMMARY:
+==23798==     in use at exit: 80 bytes in 2 blocks
+==23798==   total heap usage: 3 allocs, 1 frees, 8,272 bytes allocated
+==23798== 
+==23798== LEAK SUMMARY:
+==23798==    definitely lost: 0 bytes in 0 blocks
+==23798==    indirectly lost: 0 bytes in 0 blocks
+==23798==      possibly lost: 0 bytes in 0 blocks
+==23798==    still reachable: 80 bytes in 2 blocks
+==23798==         suppressed: 0 bytes in 0 blocks
+==23798== Reachable blocks (those to which a pointer was found) are not shown.
+==23798== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==23798== 
+==23798== For counts of detected and suppressed errors, rerun with: -v
+==23798== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

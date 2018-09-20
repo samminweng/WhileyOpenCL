@@ -32,7 +32,7 @@ int64_t* _Cash_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DEALLOC(_9);
 	_NEW_1DARRAY_int64_t(_9, 8, 0);
 	_9[0] = _1; _9[1] = _2; _9[2] = _3; _9[3] = _4; _9[4] = _5; _9[5] = _6; _9[6] = _7; _9[7] = _8; 
-	_ADD_DEALLOC(_9);
+	_9_dealloc = true;
 	//return %9
 	_DEALLOC(_0);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(_9);
@@ -94,7 +94,7 @@ int64_t* _Cash_1_(_DECL_1DARRAY_PARAM(coins), _DECL_DEALLOC_PARAM(coins), _DECL_
 	_DEALLOC(_13);
 	_NEW_1DARRAY_int64_t(_13, 8, 0);
 	_13[0] = _5; _13[1] = _6; _13[2] = _7; _13[3] = _8; _13[4] = _9; _13[5] = _10; _13[6] = _11; _13[7] = _12; 
-	_ADD_DEALLOC(_13);
+	_13_dealloc = true;
 	//assign %2 = %13  : int[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(cash, _13, 1);
@@ -192,7 +192,7 @@ int main(int argc, char** args){
 	_DEALLOC(_13);
 	_NEW_1DARRAY_int64_t(_13, 8, 0);
 	_13[0] = _5; _13[1] = _6; _13[2] = _7; _13[3] = _8; _13[4] = _9; _13[5] = _10; _13[6] = _11; _13[7] = _12; 
-	_ADD_DEALLOC(_13);
+	_13_dealloc = true;
 	//invoke (%4) = (%13) FunctionOverload2:Cash : function(FunctionOverload2:nat[])->(FunctionOverload2:Cash)
 	{
 		_DEALLOC(_4);

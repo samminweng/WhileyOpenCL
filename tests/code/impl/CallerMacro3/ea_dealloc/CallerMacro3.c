@@ -119,7 +119,7 @@ blklab1:;
 	_DEALLOC(_19);
 	_NEW_1DARRAY_int64_t(_19, 7, 0);
 	_19[0] = 97; _19[1] = 91; _19[2] = 49; _19[3] = 93; _19[4] = 32; _19[5] = 61; _19[6] = 32; 
-	_ADD_DEALLOC(_19);
+	_19_dealloc = true;
 	//indirectinvoke () = %18 (%19) : method(int[])->()
 	{
 		printf_s(_19, _19_size);
@@ -140,7 +140,7 @@ blklab1:;
 	_DEALLOC(_26);
 	_NEW_1DARRAY_int64_t(_26, 7, 0);
 	_26[0] = 98; _26[1] = 91; _26[2] = 49; _26[3] = 93; _26[4] = 32; _26[5] = 61; _26[6] = 32; 
-	_ADD_DEALLOC(_26);
+	_26_dealloc = true;
 	//indirectinvoke () = %25 (%26) : method(int[])->()
 	{
 		printf_s(_26, _26_size);

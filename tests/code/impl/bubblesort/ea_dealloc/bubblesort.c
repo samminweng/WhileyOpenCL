@@ -217,7 +217,7 @@ int main(int argc, char** args){
 	_DEALLOC(_10);
 	_NEW_1DARRAY_int64_t(_10, 5, 0);
 	_10[0] = _5; _10[1] = _6; _10[2] = _7; _10[3] = _8; _10[4] = _9; 
-	_ADD_DEALLOC(_10);
+	_10_dealloc = true;
 	//assign %1 = %10  : int[]
 	_DEALLOC(ys);
 	_COPY_1DARRAY_int64_t(ys, _10);
@@ -251,7 +251,7 @@ int main(int argc, char** args){
 		_DEALLOC(_17);
 		_NEW_1DARRAY_int64_t(_17, 5, 0);
 		_17[0] = _12; _17[1] = _13; _17[2] = _14; _17[3] = _15; _17[4] = _16; 
-		_ADD_DEALLOC(_17);
+		_17_dealloc = true;
 		//ifeq %1, %17 goto blklab5 : int[]
 		_IFEQ_ARRAY_int64_t(ys, _17, blklab5);
 		//fail
@@ -279,7 +279,7 @@ blklab5:;
 	_DEALLOC(_24);
 	_NEW_1DARRAY_int64_t(_24, 4, 0);
 	_24[0] = _20; _24[1] = _21; _24[2] = _22; _24[3] = _23; 
-	_ADD_DEALLOC(_24);
+	_24_dealloc = true;
 	//assign %1 = %24  : int[]
 	_DEALLOC(ys);
 	_COPY_1DARRAY_int64_t(ys, _24);
@@ -311,7 +311,7 @@ blklab5:;
 		_DEALLOC(_30);
 		_NEW_1DARRAY_int64_t(_30, 4, 0);
 		_30[0] = _26; _30[1] = _27; _30[2] = _28; _30[3] = _29; 
-		_ADD_DEALLOC(_30);
+		_30_dealloc = true;
 		//ifeq %1, %30 goto blklab6 : int[]
 		_IFEQ_ARRAY_int64_t(ys, _30, blklab6);
 		//fail
@@ -339,7 +339,7 @@ blklab6:;
 	_DEALLOC(_37);
 	_NEW_1DARRAY_int64_t(_37, 4, 0);
 	_37[0] = _33; _37[1] = _34; _37[2] = _35; _37[3] = _36; 
-	_ADD_DEALLOC(_37);
+	_37_dealloc = true;
 	//assign %1 = %37  : int[]
 	_DEALLOC(ys);
 	_COPY_1DARRAY_int64_t(ys, _37);
@@ -371,7 +371,7 @@ blklab6:;
 		_DEALLOC(_43);
 		_NEW_1DARRAY_int64_t(_43, 4, 0);
 		_43[0] = _39; _43[1] = _40; _43[2] = _41; _43[3] = _42; 
-		_ADD_DEALLOC(_43);
+		_43_dealloc = true;
 		//ifeq %1, %43 goto blklab7 : int[]
 		_IFEQ_ARRAY_int64_t(ys, _43, blklab7);
 		//fail
@@ -401,7 +401,7 @@ blklab7:;
 	_DEALLOC(_51);
 	_NEW_1DARRAY_int64_t(_51, 5, 0);
 	_51[0] = _46; _51[1] = _47; _51[2] = _48; _51[3] = _49; _51[4] = _50; 
-	_ADD_DEALLOC(_51);
+	_51_dealloc = true;
 	//assign %1 = %51  : int[]
 	_DEALLOC(ys);
 	_COPY_1DARRAY_int64_t(ys, _51);
@@ -435,7 +435,7 @@ blklab7:;
 		_DEALLOC(_58);
 		_NEW_1DARRAY_int64_t(_58, 5, 0);
 		_58[0] = _53; _58[1] = _54; _58[2] = _55; _58[3] = _56; _58[4] = _57; 
-		_ADD_DEALLOC(_58);
+		_58_dealloc = true;
 		//ifeq %1, %58 goto blklab8 : int[]
 		_IFEQ_ARRAY_int64_t(ys, _58, blklab8);
 		//fail
@@ -527,7 +527,7 @@ blklab9:;
 		_DEALLOC(_79);
 		_NEW_1DARRAY_int64_t(_79, 10, 0);
 		_79[0] = _69; _79[1] = _70; _79[2] = _71; _79[3] = _72; _79[4] = _73; _79[5] = _74; _79[6] = _75; _79[7] = _76; _79[8] = _77; _79[9] = _78; 
-		_ADD_DEALLOC(_79);
+		_79_dealloc = true;
 		//ifeq %4, %79 goto blklab11 : int[]
 		_IFEQ_ARRAY_int64_t(arr, _79, blklab11);
 		//fail
@@ -549,7 +549,7 @@ blklab11:;
 	_DEALLOC(_84);
 	_NEW_1DARRAY_int64_t(_84, 25, 0);
 	_84[0] = 80; _84[1] = 97; _84[2] = 115; _84[3] = 115; _84[4] = 32; _84[5] = 66; _84[6] = 117; _84[7] = 98; _84[8] = 98; _84[9] = 108; _84[10] = 101; _84[11] = 83; _84[12] = 111; _84[13] = 114; _84[14] = 116; _84[15] = 32; _84[16] = 116; _84[17] = 101; _84[18] = 115; _84[19] = 116; _84[20] = 32; _84[21] = 99; _84[22] = 97; _84[23] = 115; _84[24] = 101; 
-	_ADD_DEALLOC(_84);
+	_84_dealloc = true;
 	//indirectinvoke () = %83 (%84) : method(int[])->()
 	{
 		println_s(_84, _84_size);

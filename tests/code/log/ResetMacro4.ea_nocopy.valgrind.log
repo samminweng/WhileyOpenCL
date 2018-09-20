@@ -1,28 +1,28 @@
-==3687== Memcheck, a memory error detector
-==3687== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==3687== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==3687== Command: ./ResetMacro4.out
-==3687== Parent PID: 812
-==3687== 
-==3687== 
-==3687== HEAP SUMMARY:
-==3687==     in use at exit: 320 bytes in 4 blocks
-==3687==   total heap usage: 5 allocs, 1 frees, 8,512 bytes allocated
-==3687== 
-==3687== 80 bytes in 1 blocks are definitely lost in loss record 4 of 4
-==3687==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==3687==    by 0x40117E: create1DArray_int64_t (Util.c:23)
-==3687==    by 0x400C1F: _add_ (ResetMacro4.c:27)
-==3687==    by 0x400F93: main (ResetMacro4.c:139)
-==3687== 
-==3687== LEAK SUMMARY:
-==3687==    definitely lost: 80 bytes in 1 blocks
-==3687==    indirectly lost: 0 bytes in 0 blocks
-==3687==      possibly lost: 0 bytes in 0 blocks
-==3687==    still reachable: 240 bytes in 3 blocks
-==3687==         suppressed: 0 bytes in 0 blocks
-==3687== Reachable blocks (those to which a pointer was found) are not shown.
-==3687== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==3687== 
-==3687== For counts of detected and suppressed errors, rerun with: -v
-==3687== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==23935== Memcheck, a memory error detector
+==23935== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==23935== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==23935== Command: ./ResetMacro4.out
+==23935== Parent PID: 21151
+==23935== 
+==23935== 
+==23935== HEAP SUMMARY:
+==23935==     in use at exit: 320 bytes in 4 blocks
+==23935==   total heap usage: 5 allocs, 1 frees, 8,512 bytes allocated
+==23935== 
+==23935== 80 bytes in 1 blocks are definitely lost in loss record 4 of 4
+==23935==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==23935==    by 0x40117E: create1DArray_int64_t (Util.c:23)
+==23935==    by 0x400C1F: _add_ (ResetMacro4.c:27)
+==23935==    by 0x400F93: main (ResetMacro4.c:139)
+==23935== 
+==23935== LEAK SUMMARY:
+==23935==    definitely lost: 80 bytes in 1 blocks
+==23935==    indirectly lost: 0 bytes in 0 blocks
+==23935==      possibly lost: 0 bytes in 0 blocks
+==23935==    still reachable: 240 bytes in 3 blocks
+==23935==         suppressed: 0 bytes in 0 blocks
+==23935== Reachable blocks (those to which a pointer was found) are not shown.
+==23935== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==23935== 
+==23935== For counts of detected and suppressed errors, rerun with: -v
+==23935== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

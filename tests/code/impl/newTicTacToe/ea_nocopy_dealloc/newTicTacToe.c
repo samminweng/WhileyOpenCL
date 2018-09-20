@@ -66,14 +66,14 @@ Board* _EmptyBoard_(){
 	_DEALLOC(_11);
 	_NEW_1DARRAY_int64_t(_11, 9, 0);
 	_11[0] = _2; _11[1] = _3; _11[2] = _4; _11[3] = _5; _11[4] = _6; _11[5] = _7; _11[6] = _8; _11[7] = _9; _11[8] = _10; 
-	_ADD_DEALLOC(_11);
+	_11_dealloc = true;
 	//newrecord %12 = (%1, %11) : {int move,int[] pieces}
 	_DEALLOC_STRUCT(_12, Board);
 	_12 = malloc(sizeof(Board));
 	_12->move = _1;
 	_UPDATE_1DARRAY(_12->pieces, _11);
-	_REMOVE_DEALLOC(_11);
-	_ADD_DEALLOC(_12);
+	_11_dealloc = false;
+	_12_dealloc = true;
 	//return %12
 	_DEALLOC_STRUCT(r, Board);
 	_DEALLOC(_11);
@@ -236,7 +236,7 @@ int main(int argc, char** args){
 		_DEALLOC(_10);
 		_NEW_1DARRAY_int64_t(_10, 9, 0);
 		_10[0] = 0; _10[1] = 1; _10[2] = 2; _10[3] = 3; _10[4] = 4; _10[5] = 5; _10[6] = 6; _10[7] = 7; _10[8] = 8; 
-		_ADD_DEALLOC(_10);
+		_10_dealloc = true;
 		//lengthof %11 = %10 : int[]
 		_11 = _10_size;
 		//ifge %4, %11 goto blklab14 : int
@@ -245,7 +245,7 @@ int main(int argc, char** args){
 		_DEALLOC(_12);
 		_NEW_1DARRAY_int64_t(_12, 9, 0);
 		_12[0] = 0; _12[1] = 1; _12[2] = 2; _12[3] = 3; _12[4] = 4; _12[5] = 5; _12[6] = 6; _12[7] = 7; _12[8] = 8; 
-		_ADD_DEALLOC(_12);
+		_12_dealloc = true;
 		//indexof %13 = %12, %4 : int[]
 		_13=_12[i];
 		//assign %5 = %13  : int
@@ -275,7 +275,7 @@ blklab16:;
 		_DEALLOC(_18);
 		_NEW_1DARRAY_int64_t(_18, 22, 0);
 		_18[0] = 112; _18[1] = 108; _18[2] = 97; _18[3] = 121; _18[4] = 32; _18[5] = 49; _18[6] = 39; _18[7] = 115; _18[8] = 32; _18[9] = 116; _18[10] = 117; _18[11] = 114; _18[12] = 110; _18[13] = 32; _18[14] = 40; _18[15] = 67; _18[16] = 73; _18[17] = 82; _18[18] = 67; _18[19] = 76; _18[20] = 69; _18[21] = 41; 
-		_ADD_DEALLOC(_18);
+		_18_dealloc = true;
 		//indirectinvoke () = %17 (%18) : method(int[])->()
 		{
 			println_s(_18, _18_size);
@@ -303,7 +303,7 @@ blklab16:;
 		// isCopyEliminated = true
 		_DEALLOC_STRUCT(b1, Board);
 		b1 = NULL;
-		_REMOVE_DEALLOC(b1);
+		b1_dealloc = false;
 		//goto blklab20
 		goto blklab20;
 //.blklab19
@@ -316,7 +316,7 @@ blklab19:;
 		_DEALLOC(_26);
 		_NEW_1DARRAY_int64_t(_26, 21, 0);
 		_26[0] = 80; _26[1] = 108; _26[2] = 97; _26[3] = 121; _26[4] = 32; _26[5] = 50; _26[6] = 39; _26[7] = 115; _26[8] = 32; _26[9] = 116; _26[10] = 117; _26[11] = 114; _26[12] = 110; _26[13] = 32; _26[14] = 40; _26[15] = 67; _26[16] = 82; _26[17] = 79; _26[18] = 83; _26[19] = 83; _26[20] = 41; 
-		_ADD_DEALLOC(_26);
+		_26_dealloc = true;
 		//indirectinvoke () = %25 (%26) : method(int[])->()
 		{
 			println_s(_26, _26_size);
@@ -344,7 +344,7 @@ blklab19:;
 		// isCopyEliminated = true
 		_DEALLOC_STRUCT(b2, Board);
 		b2 = NULL;
-		_REMOVE_DEALLOC(b2);
+		b2_dealloc = false;
 //.blklab21
 blklab21:;
 //.blklab20
@@ -400,7 +400,7 @@ blklab23:;
 		//fieldload %36 = %3 pieces : {int move,int[] pieces}
 		_DEALLOC(_36);
 		_UPDATE_1DARRAY(_36, b2->pieces);
-		_REMOVE_DEALLOC(_36);
+		_36_dealloc = false;
 		//const %37 = 1 : int
 		_37 = 1;
 		//const %38 = 2 : int
@@ -423,7 +423,7 @@ blklab23:;
 		_DEALLOC(_46);
 		_NEW_1DARRAY_int64_t(_46, 9, 0);
 		_46[0] = _37; _46[1] = _38; _46[2] = _39; _46[3] = _40; _46[4] = _41; _46[5] = _42; _46[6] = _43; _46[7] = _44; _46[8] = _45; 
-		_ADD_DEALLOC(_46);
+		_46_dealloc = true;
 		//ifeq %36, %46 goto blklab25 : int[]
 		_IFEQ_ARRAY_int64_t(_36, _46, blklab25);
 //.blklab26
@@ -441,7 +441,7 @@ blklab25:;
 	_DEALLOC(_49);
 	_NEW_1DARRAY_int64_t(_49, 28, 0);
 	_49[0] = 80; _49[1] = 97; _49[2] = 115; _49[3] = 115; _49[4] = 32; _49[5] = 110; _49[6] = 101; _49[7] = 119; _49[8] = 32; _49[9] = 84; _49[10] = 105; _49[11] = 99; _49[12] = 84; _49[13] = 97; _49[14] = 99; _49[15] = 84; _49[16] = 111; _49[17] = 101; _49[18] = 32; _49[19] = 116; _49[20] = 101; _49[21] = 115; _49[22] = 116; _49[23] = 32; _49[24] = 99; _49[25] = 97; _49[26] = 115; _49[27] = 101; 
-	_ADD_DEALLOC(_49);
+	_49_dealloc = true;
 	//indirectinvoke () = %48 (%49) : method(int[])->()
 	{
 		printf_s(_49, _49_size);

@@ -4,13 +4,11 @@
 	DEBUG: Potential memory leaks at ( "true-true-true" "a" "func" ) (LINE:52 FILE: CallerMacro2.c)
 	DEBUG: _TRANSFER_DEALLOC macro on  ( b and _7 ) (LINE:57 FILE: CallerMacro2.c)
 	DEBUG: The assumption holds	DEBUG: _TRANSFER_DEALLOC macro on  ( a and _3 ) (LINE:124 FILE: CallerMacro2.c)
-	DEBUG: The assumption holds	DEBUG: _ADD_DEALLOC macro on  ( _10 ) (LINE:148 FILE: CallerMacro2.c)
-a[0] = 0
+	DEBUG: The assumption holdsa[0] = 0
 	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _6 ) (LINE:39 FILE: CallerMacro2.c)
 	DEBUG: _TRANSFER_DEALLOC macro on  ( a and _6 ) (LINE:42 FILE: CallerMacro2.c)
 	DEBUG: The assumption holds	DEBUG: _CALLER_DEALLOC macro on ( "true-true-true" "a" "func" ) (LINE:52 FILE: CallerMacro2.c)
 	DEBUG: Potential memory leaks at ( "true-true-true" "a" "func" ) (LINE:52 FILE: CallerMacro2.c)
 	DEBUG: _TRANSFER_DEALLOC macro on  ( b and _7 ) (LINE:57 FILE: CallerMacro2.c)
 	DEBUG: The assumption holds	DEBUG: _TRANSFER_DEALLOC macro on  ( b and _15 ) (LINE:173 FILE: CallerMacro2.c)
-	DEBUG: The assumption holds	DEBUG: _ADD_DEALLOC macro on  ( _22 ) (LINE:197 FILE: CallerMacro2.c)
-b[0] = 11
+	DEBUG: The assumption holdsb[0] = 11

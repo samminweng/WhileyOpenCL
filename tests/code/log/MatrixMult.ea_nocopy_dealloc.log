@@ -1,4 +1,3 @@
-	DEBUG: _ADD_DEALLOC macro on  ( _10 ) (LINE:284 FILE: MatrixMult.c)
 size = 20
 	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _15 ) (LINE:302 FILE: MatrixMult.c)
 	DEBUG: _TRANSFER_DEALLOC macro on  ( A and _15 ) (LINE:305 FILE: MatrixMult.c)
@@ -14,7 +13,5 @@ size = 20
 	DEBUG: _RETAIN_DEALLOC macro on  ( "false-false-true" "B" "mat_mult" ) (LINE:359 FILE: MatrixMult.c)
 	DEBUG: _RESET_DEALLOC macro on  ( "true-true-false" "C" "mat_mult" ) (LINE:361 FILE: MatrixMult.c)
 	DEBUG: _TRANSFER_DEALLOC macro on  ( C and _24 ) (LINE:366 FILE: MatrixMult.c)
-	DEBUG: The assumption holds	DEBUG: _ADD_DEALLOC macro on  ( _48 ) (LINE:448 FILE: MatrixMult.c)
-Matrix C[size-1][size-1] = 3610
-	DEBUG: _ADD_DEALLOC macro on  ( _60 ) (LINE:479 FILE: MatrixMult.c)
+	DEBUG: The assumption holdsMatrix C[size-1][size-1] = 3610
 Pass MatrixMult test case

@@ -193,13 +193,12 @@ public class DeallocationAnalyzer extends Analyzer {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
 
-		int lhs = code.target(0);
 		if (code.constant.type() instanceof Type.Null) {
 			// Constant is a NULL and remove deallocation flag
-			statements.add(indent + removeDealloc(lhs, function, stores));
+			statements.add(indent +this.removeDealloc(code.target(0), function, stores) );
 		} else if (code.constant.type() instanceof Type.Array) {
 			// Check if constant is an array and add deallocation flag
-			statements.add(indent + addDealloc(lhs, function, stores));
+			statements.add(indent + this.assignDealloc(code.target(0), function, stores));
 		} else {
 			// Do nothing
 		}
@@ -220,10 +219,10 @@ public class DeallocationAnalyzer extends Analyzer {
 	private List<String> computeDealloc(Codes.NewArray code, FunctionOrMethod function, CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
-		int lhs = code.target(0);
+		//String lhs = stores.getVar(code.target(0), function);
 		if (code.operands().length > 0) {
 			// Create an non-empty array, and add lhs variable to deallocation flag set.
-			statements.add(indent + addDealloc(lhs, function, stores));
+			statements.add(indent + this.assignDealloc(code.target(0), function, stores));
 		}
 
 		return statements;
@@ -250,9 +249,9 @@ public class DeallocationAnalyzer extends Analyzer {
 				statements.add(indent + removeDealloc(register, function, stores));
 			}
 		});
-
+		//String lhs = stores.getVar(code.target(0), function);
 		// Assign deallocation flag to lhs variable
-		statements.add(indent + addDealloc(code.target(0), function, stores));
+		statements.add(indent + this.assignDealloc(code.target(0), function, stores));
 
 		return statements;
 	}
@@ -346,18 +345,18 @@ public class DeallocationAnalyzer extends Analyzer {
 			CodeStores stores) {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
-		int lhs = code.target(0);
+		
 		if (code.field.equals("args")) {
 			// Add deallocation flag to lhs register
-			statements.add(indent + addDealloc(lhs, function, stores));
+			statements.add(indent + this.assignDealloc(code.target(0), function, stores));
 		} else {
 			if (isCopyEliminated) {
 				// That means 'fieldload' access one member
 				// rhs deallocation flag could be changed. But remove lhs deallocation flag
-				statements.add(indent + removeDealloc(lhs, function, stores));
+				statements.add(indent + this.removeDealloc(code.target(0), function, stores));
 			} else {
 				// Assign deallocation flag to lhs variable.
-				statements.add(indent + addDealloc(lhs, function, stores));
+				statements.add(indent + this.assignDealloc(code.target(0), function, stores));
 			}
 		}
 
@@ -390,28 +389,28 @@ public class DeallocationAnalyzer extends Analyzer {
 		String indent = stores.getIndent(function);
 
 		if (code.name.module().toString().contains("whiley/lang")) {
-			int lhs = code.target(0);
+			
 			switch (code.name.name()) {
 			case "parse":
-				int rhs = code.operand(0);
+				//int rhs = code.operand(0);
 				// Add deallocation flag to lhs.
-				statements.add(indent + addDealloc(lhs, function, stores));
+				statements.add(indent + this.assignDealloc(code.target(0), function, stores));
 				// Remove rhs deallocation flag
-				statements.add(indent + removeDealloc(rhs, function, stores));
+				statements.add(indent + this.removeDealloc(code.operand(0), function, stores));
 				break;
 			case "slice":
 				// Add deallocation flag to lhs.
-				statements.add(indent + addDealloc(lhs, function, stores));
+				statements.add(indent + this.assignDealloc(code.target(0), function, stores));
 				break;
 			case "fromBytes":
 				// Assign flag to lhs
-				statements.add(indent + addDealloc(lhs, function, stores));
+				statements.add(indent + this.assignDealloc(code.target(0), function, stores));
 				break;
 			case "append":
-				statements.add(indent + addDealloc(lhs, function, stores));
+				statements.add(indent + this.assignDealloc(code.target(0), function, stores));
 				break;
 			case "toString":
-				statements.add(indent + addDealloc(lhs, function, stores));
+				statements.add(indent + this.assignDealloc(code.target(0), function, stores));
 				break;
 			default:
 				// no change to statement
@@ -496,7 +495,7 @@ public class DeallocationAnalyzer extends Analyzer {
 						break;						
 					case "_SUBSTRUCTURE_DEALLOC":
 						statements.add(indent + "_SUBSTRUCTURE_DEALLOC(" + parameter +");");
-						statements.add(indent + assignDealloc(code.target(0), function, stores));
+						statements.add(indent + this.assignDealloc(code.target(0), function, stores));
 						break;
 					default:
 						throw new RuntimeException("Not implemented");
@@ -545,7 +544,7 @@ public class DeallocationAnalyzer extends Analyzer {
 		return "";
 	}
 	/**
-	 * Generate 'a_dealloc:=true' rather than using _ADD_DEALLOC
+	 * Generate 'a_dealloc:=true'
 	 * 
 	 * 
 	 * @param register
@@ -573,7 +572,7 @@ public class DeallocationAnalyzer extends Analyzer {
 		Type type = stores.getRawType(register, function);
 		if (stores.isCompoundType(type) || type instanceof Type.Union) {
 			String var = stores.getVar(register, function);
-			return "_REMOVE_DEALLOC(" + var + ");";
+			return var + "_dealloc = false;";
 		}
 		return "";
 	}

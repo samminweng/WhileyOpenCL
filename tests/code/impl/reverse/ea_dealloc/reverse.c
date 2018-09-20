@@ -128,7 +128,7 @@ int main(int argc, char** args){
 	_DEALLOC(_11);
 	_NEW_1DARRAY_int64_t(_11, 5, 0);
 	_11[0] = _6; _11[1] = _7; _11[2] = _8; _11[3] = _9; _11[4] = _10; 
-	_ADD_DEALLOC(_11);
+	_11_dealloc = true;
 	//invoke (%5) = (%11) reverse:reverse : function(int[])->(int[])
 	{
 		void* tmp_ls;
@@ -158,7 +158,7 @@ int main(int argc, char** args){
 		_DEALLOC(_17);
 		_NEW_1DARRAY_int64_t(_17, 5, 0);
 		_17[0] = _12; _17[1] = _13; _17[2] = _14; _17[3] = _15; _17[4] = _16; 
-		_ADD_DEALLOC(_17);
+		_17_dealloc = true;
 		//ifeq %1, %17 goto blklab4 : int[]
 		_IFEQ_ARRAY_int64_t(rs, _17, blklab4);
 		//fail
@@ -258,7 +258,7 @@ blklab8:;
 	_DEALLOC(_34);
 	_NEW_1DARRAY_int64_t(_34, 22, 0);
 	_34[0] = 80; _34[1] = 97; _34[2] = 115; _34[3] = 115; _34[4] = 32; _34[5] = 114; _34[6] = 101; _34[7] = 118; _34[8] = 101; _34[9] = 114; _34[10] = 115; _34[11] = 101; _34[12] = 32; _34[13] = 116; _34[14] = 101; _34[15] = 115; _34[16] = 116; _34[17] = 32; _34[18] = 99; _34[19] = 97; _34[20] = 115; _34[21] = 101; 
-	_ADD_DEALLOC(_34);
+	_34_dealloc = true;
 	//indirectinvoke () = %33 (%34) : method(int[])->()
 	{
 		printf_s(_34, _34_size);

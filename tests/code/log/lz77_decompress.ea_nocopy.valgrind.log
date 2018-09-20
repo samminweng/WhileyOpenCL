@@ -1,42 +1,42 @@
-==2991== Memcheck, a memory error detector
-==2991== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==2991== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==2991== Command: ./lz77_decompress.out
-==2991== Parent PID: 812
-==2991== 
-==2991== 
-==2991== HEAP SUMMARY:
-==2991==     in use at exit: 690 bytes in 22 blocks
-==2991==   total heap usage: 27 allocs, 5 frees, 34,040 bytes allocated
-==2991== 
-==2991== 0 bytes in 1 blocks are definitely lost in loss record 1 of 9
-==2991==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==2991==    by 0x4016E1: create1DArray_BYTE (Util.c:41)
-==2991==    by 0x400DB5: _decompress_ (lz77_decompress.c:101)
-==2991==    by 0x401363: main (lz77_decompress.c:262)
-==2991== 
-==2991== 12 bytes in 3 blocks are definitely lost in loss record 2 of 9
-==2991==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==2991==    by 0x4016E1: create1DArray_BYTE (Util.c:41)
-==2991==    by 0x400C54: _append_ (lz77_decompress.c:24)
-==2991==    by 0x400EF4: _decompress_ (lz77_decompress.c:148)
-==2991==    by 0x401363: main (lz77_decompress.c:262)
-==2991== 
-==2991== 108 bytes in 12 blocks are definitely lost in loss record 6 of 9
-==2991==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==2991==    by 0x4016E1: create1DArray_BYTE (Util.c:41)
-==2991==    by 0x400C54: _append_ (lz77_decompress.c:24)
-==2991==    by 0x400FD8: _decompress_ (lz77_decompress.c:195)
-==2991==    by 0x401363: main (lz77_decompress.c:262)
-==2991== 
-==2991== LEAK SUMMARY:
-==2991==    definitely lost: 120 bytes in 16 blocks
-==2991==    indirectly lost: 0 bytes in 0 blocks
-==2991==      possibly lost: 0 bytes in 0 blocks
-==2991==    still reachable: 570 bytes in 6 blocks
-==2991==         suppressed: 0 bytes in 0 blocks
-==2991== Reachable blocks (those to which a pointer was found) are not shown.
-==2991== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==2991== 
-==2991== For counts of detected and suppressed errors, rerun with: -v
-==2991== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
+==23249== Memcheck, a memory error detector
+==23249== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==23249== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==23249== Command: ./lz77_decompress.out
+==23249== Parent PID: 21151
+==23249== 
+==23249== 
+==23249== HEAP SUMMARY:
+==23249==     in use at exit: 690 bytes in 22 blocks
+==23249==   total heap usage: 27 allocs, 5 frees, 34,040 bytes allocated
+==23249== 
+==23249== 0 bytes in 1 blocks are definitely lost in loss record 1 of 9
+==23249==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==23249==    by 0x4016E1: create1DArray_BYTE (Util.c:41)
+==23249==    by 0x400DB5: _decompress_ (lz77_decompress.c:101)
+==23249==    by 0x401363: main (lz77_decompress.c:262)
+==23249== 
+==23249== 12 bytes in 3 blocks are definitely lost in loss record 2 of 9
+==23249==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==23249==    by 0x4016E1: create1DArray_BYTE (Util.c:41)
+==23249==    by 0x400C54: _append_ (lz77_decompress.c:24)
+==23249==    by 0x400EF4: _decompress_ (lz77_decompress.c:148)
+==23249==    by 0x401363: main (lz77_decompress.c:262)
+==23249== 
+==23249== 108 bytes in 12 blocks are definitely lost in loss record 6 of 9
+==23249==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==23249==    by 0x4016E1: create1DArray_BYTE (Util.c:41)
+==23249==    by 0x400C54: _append_ (lz77_decompress.c:24)
+==23249==    by 0x400FD8: _decompress_ (lz77_decompress.c:195)
+==23249==    by 0x401363: main (lz77_decompress.c:262)
+==23249== 
+==23249== LEAK SUMMARY:
+==23249==    definitely lost: 120 bytes in 16 blocks
+==23249==    indirectly lost: 0 bytes in 0 blocks
+==23249==      possibly lost: 0 bytes in 0 blocks
+==23249==    still reachable: 570 bytes in 6 blocks
+==23249==         suppressed: 0 bytes in 0 blocks
+==23249== Reachable blocks (those to which a pointer was found) are not shown.
+==23249== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==23249== 
+==23249== For counts of detected and suppressed errors, rerun with: -v
+==23249== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)

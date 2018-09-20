@@ -110,7 +110,7 @@ blklab0:;
 	_DEALLOC(_8);
 	_NEW_1DARRAY_int64_t(_8, 7, 0);
 	_8[0] = 97; _8[1] = 91; _8[2] = 48; _8[3] = 93; _8[4] = 32; _8[5] = 61; _8[6] = 32; 
-	_ADD_DEALLOC(_8);
+	_8_dealloc = true;
 	//indirectinvoke () = %7 (%8) : method(int[])->()
 	{
 		printf_s(_8, _8_size);

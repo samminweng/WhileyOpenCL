@@ -51,7 +51,7 @@ int main(int argc, char** args){
 	_DEALLOC(_9);
 	_NEW_1DARRAY_int64_t(_9, 5, 0);
 	_9[0] = _4; _9[1] = _5; _9[2] = _6; _9[3] = _7; _9[4] = _8; 
-	_ADD_DEALLOC(_9);
+	_9_dealloc = true;
 	//assign %1 = %9  : int[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(a, _9, 1);
@@ -69,7 +69,7 @@ int main(int argc, char** args){
 	_DEALLOC(_15);
 	_NEW_1DARRAY_int64_t(_15, 5, 0);
 	_15[0] = _10; _15[1] = _11; _15[2] = _12; _15[3] = _13; _15[4] = _14; 
-	_ADD_DEALLOC(_15);
+	_15_dealloc = true;
 	//assign %2 = %15  : int[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(b, _15, 1);
@@ -98,7 +98,7 @@ int main(int argc, char** args){
 		_DEALLOC(_21);
 		_NEW_1DARRAY_int64_t(_21, 5, 0);
 		_21[0] = _16; _21[1] = _17; _21[2] = _18; _21[3] = _19; _21[4] = _20; 
-		_ADD_DEALLOC(_21);
+		_21_dealloc = true;
 		//ifeq %1, %21 goto blklab0 : int[]
 		_IFEQ_ARRAY_int64_t(a, _21, blklab0);
 		//fail
@@ -124,7 +124,7 @@ blklab0:;
 		_DEALLOC(_27);
 		_NEW_1DARRAY_int64_t(_27, 5, 0);
 		_27[0] = _22; _27[1] = _23; _27[2] = _24; _27[3] = _25; _27[4] = _26; 
-		_ADD_DEALLOC(_27);
+		_27_dealloc = true;
 		//ifeq %2, %27 goto blklab1 : int[]
 		_IFEQ_ARRAY_int64_t(b, _27, blklab1);
 		//fail
@@ -140,7 +140,7 @@ blklab1:;
 	_DEALLOC(_30);
 	_NEW_1DARRAY_int64_t(_30, 19, 0);
 	_30[0] = 80; _30[1] = 97; _30[2] = 115; _30[3] = 115; _30[4] = 32; _30[5] = 115; _30[6] = 119; _30[7] = 97; _30[8] = 112; _30[9] = 32; _30[10] = 116; _30[11] = 101; _30[12] = 115; _30[13] = 116; _30[14] = 32; _30[15] = 99; _30[16] = 97; _30[17] = 115; _30[18] = 101; 
-	_ADD_DEALLOC(_30);
+	_30_dealloc = true;
 	//indirectinvoke () = %29 (%30) : method(int[])->()
 	{
 		printf_s(_30, _30_size);
