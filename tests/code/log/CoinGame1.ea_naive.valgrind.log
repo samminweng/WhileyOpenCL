@@ -1,27 +1,27 @@
-==29466== Memcheck, a memory error detector
-==29466== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==29466== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==29466== Command: ./CoinGame1.out
-==29466== Parent PID: 28647
-==29466== 
-==29466== 
-==29466== HEAP SUMMARY:
-==29466==     in use at exit: 3,784 bytes in 6 blocks
-==29466==   total heap usage: 7 allocs, 1 frees, 11,976 bytes allocated
-==29466== 
-==29466== 800 bytes in 1 blocks are definitely lost in loss record 6 of 6
-==29466==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==29466==    by 0x401A3A: copy1DArray_int64_t (Util.c:80)
-==29466==    by 0x401185: main (CoinGame1.c:244)
-==29466== 
-==29466== LEAK SUMMARY:
-==29466==    definitely lost: 800 bytes in 1 blocks
-==29466==    indirectly lost: 0 bytes in 0 blocks
-==29466==      possibly lost: 0 bytes in 0 blocks
-==29466==    still reachable: 2,984 bytes in 5 blocks
-==29466==         suppressed: 0 bytes in 0 blocks
-==29466== Reachable blocks (those to which a pointer was found) are not shown.
-==29466== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==29466== 
-==29466== For counts of detected and suppressed errors, rerun with: -v
-==29466== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==17931== Memcheck, a memory error detector
+==17931== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==17931== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==17931== Command: ./CoinGame1.out
+==17931== Parent PID: 17125
+==17931== 
+==17931== 
+==17931== HEAP SUMMARY:
+==17931==     in use at exit: 3,784 bytes in 6 blocks
+==17931==   total heap usage: 7 allocs, 1 frees, 11,976 bytes allocated
+==17931== 
+==17931== 800 bytes in 1 blocks are definitely lost in loss record 6 of 6
+==17931==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==17931==    by 0x401A3A: copy1DArray_int64_t (Util.c:80)
+==17931==    by 0x401185: main (CoinGame1.c:244)
+==17931== 
+==17931== LEAK SUMMARY:
+==17931==    definitely lost: 800 bytes in 1 blocks
+==17931==    indirectly lost: 0 bytes in 0 blocks
+==17931==      possibly lost: 0 bytes in 0 blocks
+==17931==    still reachable: 2,984 bytes in 5 blocks
+==17931==         suppressed: 0 bytes in 0 blocks
+==17931== Reachable blocks (those to which a pointer was found) are not shown.
+==17931== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==17931== 
+==17931== For counts of detected and suppressed errors, rerun with: -v
+==17931== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

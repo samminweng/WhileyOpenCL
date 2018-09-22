@@ -60,7 +60,7 @@ int64_t* Array_Append(_DECL_1DARRAY_PARAM(lhs), _DECL_1DARRAY_PARAM(rhs), _DECL_
 	//arraygen %9 = [5; 8] : int[]
 	_DEALLOC(_9);
 	_NEW_1DARRAY_int64_t(_9, _8, _5);
-	_ADD_DEALLOC(_9);
+	_9_dealloc=true;
 	//assign %3 = %9  : int[]
 	_TRANSFER_DEALLOC(rs, _9, 1);
 	//lengthof %10 = %0 : int[]

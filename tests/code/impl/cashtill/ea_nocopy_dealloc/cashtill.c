@@ -452,9 +452,7 @@ blklab25:;
 		if(_13>change){goto blklab29;}
 		//assign %4 = %0  : int[]
 		// isCopyEliminated = false
-		_DEALLOC(tmp);
-		_COPY_1DARRAY_int64_t(tmp, till);
-		_ADD_DEALLOC(tmp, till);
+		_ADD_DEALLOC(tmp, till, 1, int64_t);
 		//indexof %14 = %4, %3 : int[]
 		_14=tmp[i];
 		//const %15 = 1 : int
@@ -676,7 +674,7 @@ blklab34:;
 		_UPDATE_1DARRAY(r, _18);
 		_TRANSFER_DEALLOC_STRUCT(r, _18);
 		//const %21 = [[49,99],[53,99],[49,48,99],[50,48,99],[53,48,99],[36,49],[36,53],[36,49,48]] : int[][]
-		_DEALLOC_2DARRAY_int64_t(_21);
+		_DEALLOC_2DARRAY(_21);
 		_NEW_2DARRAY_int64_t_EMPTY(_21, 8, 3);
 		{
 			int64_t tmp[] = {49, 99, '\0'};
@@ -770,7 +768,7 @@ blklab35:;
 	_DEALLOC(_18);
 	_DEALLOC(_19);
 	_DEALLOC(_20);
-	_DEALLOC_2DARRAY_int64_t(_21);
+	_DEALLOC_2DARRAY(_21);
 	_DEALLOC(_22);
 	_DEALLOC(_25);
 	_DEALLOC(_26);

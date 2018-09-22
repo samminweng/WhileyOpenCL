@@ -5,9 +5,7 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(s), _DECL_DEALLOC_PARAM(s), _DECL_1DARRAYSIZ
 	_DECL_1DARRAY(t);
 	_DECL_DEALLOC(t);
 	//assign %2 = %0  : int[]
-	_DEALLOC(t);
-	_COPY_1DARRAY_int64_t(t, s);
-	_ADD_DEALLOC(t, s);
+	_ADD_DEALLOC(t, s, 1, int64_t);
 	//return %2
 	_DEALLOC(s);
 	_DEALLOC(_1);
@@ -84,9 +82,7 @@ int main(int argc, char** args){
 	_9[0] = _4; _9[1] = _5; _9[2] = _6; _9[3] = _7; _9[4] = _8; 
 	_9_dealloc = true;
 	//assign %1 = %9  : int[]
-	_DEALLOC(a);
-	_COPY_1DARRAY_int64_t(a, _9);
-	_ADD_DEALLOC(a, _9);
+	_ADD_DEALLOC(a, _9, 1, int64_t);
 	//invoke (%10) = (%1) FunctionCall3:func : function(int[])->(int[])
 	{
 		void* tmp_s;
@@ -97,9 +93,7 @@ int main(int argc, char** args){
 		_CALLEE_DEALLOC_POST(_10, a);
 	}
 	//assign %1 = %10  : int[]
-	_DEALLOC(a);
-	_COPY_1DARRAY_int64_t(a, _10);
-	_ADD_DEALLOC(a, _10);
+	_ADD_DEALLOC(a, _10, 1, int64_t);
 	//assert
 	{
 		//const %11 = 2 : int
@@ -154,9 +148,7 @@ blklab0:;
 	_26[0] = _21; _26[1] = _22; _26[2] = _23; _26[3] = _24; _26[4] = _25; 
 	_26_dealloc = true;
 	//assign %2 = %26  : int[]
-	_DEALLOC(b);
-	_COPY_1DARRAY_int64_t(b, _26);
-	_ADD_DEALLOC(b, _26);
+	_ADD_DEALLOC(b, _26, 1, int64_t);
 	//invoke (%27) = (%2) FunctionCall3:func : function(int[])->(int[])
 	{
 		void* tmp_s;
@@ -167,9 +159,7 @@ blklab0:;
 		_CALLEE_DEALLOC_POST(_27, b);
 	}
 	//assign %3 = %27  : int[]
-	_DEALLOC(c);
-	_COPY_1DARRAY_int64_t(c, _27);
-	_ADD_DEALLOC(c, _27);
+	_ADD_DEALLOC(c, _27, 1, int64_t);
 	//assert
 	{
 		//const %28 = 2 : int

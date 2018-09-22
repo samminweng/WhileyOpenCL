@@ -30,9 +30,7 @@ int64_t* _add_(_DECL_1DARRAY_PARAM(a), _DECL_DEALLOC_PARAM(a), _DECL_1DARRAY_PAR
 	_NEW_1DARRAY_int64_t(_10, length, _9);
 	_NEW1DARRAY_DEALLOC(_10, _9, length);
 	//assign %4 = %10  : int[]
-	_DEALLOC(r);
-	_COPY_1DARRAY_int64_t(r, _10);
-	_ADD_DEALLOC(r, _10);
+	_ADD_DEALLOC(r, _10, 1, int64_t);
 	//const %11 = 0 : int
 	_11 = 0;
 	//assign %5 = %11  : int
@@ -112,9 +110,7 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_6, _5, _4);
 	_NEW1DARRAY_DEALLOC(_6, _4, _5);
 	//assign %1 = %6  : int[]
-	_DEALLOC(a);
-	_COPY_1DARRAY_int64_t(a, _6);
-	_ADD_DEALLOC(a, _6);
+	_ADD_DEALLOC(a, _6, 1, int64_t);
 	//const %7 = 0 : int
 	_7 = 0;
 	//assign %2 = %7  : int
@@ -152,9 +148,7 @@ blklab2:;
 		_CALLER_DEALLOC_POST(_11, tmp_b);
 	}
 	//assign %3 = %11  : int[]
-	_DEALLOC(sum);
-	_COPY_1DARRAY_int64_t(sum, _11);
-	_ADD_DEALLOC(sum, _11);
+	_ADD_DEALLOC(sum, _11, 1, int64_t);
 	//const %12 = 0 : int
 	_12 = 0;
 	//assign %2 = %12  : int

@@ -1,27 +1,27 @@
-==30087== Memcheck, a memory error detector
-==30087== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==30087== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==30087== Command: ./FunctionCall2.out
-==30087== Parent PID: 28647
-==30087== 
-==30087== 
-==30087== HEAP SUMMARY:
-==30087==     in use at exit: 480 bytes in 12 blocks
-==30087==   total heap usage: 13 allocs, 1 frees, 8,672 bytes allocated
-==30087== 
-==30087== 40 bytes in 1 blocks are definitely lost in loss record 12 of 12
-==30087==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==30087==    by 0x4016D7: copy1DArray_int64_t (Util.c:80)
-==30087==    by 0x400E27: main (FunctionCall2.c:93)
-==30087== 
-==30087== LEAK SUMMARY:
-==30087==    definitely lost: 40 bytes in 1 blocks
-==30087==    indirectly lost: 0 bytes in 0 blocks
-==30087==      possibly lost: 0 bytes in 0 blocks
-==30087==    still reachable: 440 bytes in 11 blocks
-==30087==         suppressed: 0 bytes in 0 blocks
-==30087== Reachable blocks (those to which a pointer was found) are not shown.
-==30087== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==30087== 
-==30087== For counts of detected and suppressed errors, rerun with: -v
-==30087== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==18555== Memcheck, a memory error detector
+==18555== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==18555== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==18555== Command: ./FunctionCall2.out
+==18555== Parent PID: 17125
+==18555== 
+==18555== 
+==18555== HEAP SUMMARY:
+==18555==     in use at exit: 480 bytes in 12 blocks
+==18555==   total heap usage: 13 allocs, 1 frees, 8,672 bytes allocated
+==18555== 
+==18555== 40 bytes in 1 blocks are definitely lost in loss record 12 of 12
+==18555==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==18555==    by 0x4016D7: copy1DArray_int64_t (Util.c:80)
+==18555==    by 0x400E27: main (FunctionCall2.c:93)
+==18555== 
+==18555== LEAK SUMMARY:
+==18555==    definitely lost: 40 bytes in 1 blocks
+==18555==    indirectly lost: 0 bytes in 0 blocks
+==18555==      possibly lost: 0 bytes in 0 blocks
+==18555==    still reachable: 440 bytes in 11 blocks
+==18555==         suppressed: 0 bytes in 0 blocks
+==18555== Reachable blocks (those to which a pointer was found) are not shown.
+==18555== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==18555== 
+==18555== For counts of detected and suppressed errors, rerun with: -v
+==18555== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

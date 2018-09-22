@@ -541,8 +541,17 @@ public class DeallocationAnalyzer extends Analyzer {
 		String lhs_var = stores.getVar(lhs, function);
 		String rhs_var = stores.getVar(rhs, function);
 		if (type instanceof Type.Array) {
-			Type elm_type = ((Type.Array)type).element();
-			return "_ADD_DEALLOC(" + lhs_var + ", " + rhs_var + ");";			
+			// Get dimension 
+			int dimension = stores.getArrayDimension(type);
+			// Get element type, e.g. integer or byte
+			Type elm_type = ((Type.Array)type).element();			
+			if(stores.isIntType(elm_type)) {
+				return "_ADD_DEALLOC(" + lhs_var + ", " + rhs_var + ", " +dimension + ", int64_t);";	
+			}else if (elm_type instanceof Type.Byte) {
+				return "_ADD_DEALLOC(" + lhs_var + ", " + rhs_var + ", " +dimension + ", BYTE);";
+			}
+			
+			return "_ADD_DEALLOC_STRUCT(" + lhs_var + ", " + rhs_var + ");";			
 		}else if (stores.isCompoundType(type) || type instanceof Type.Union) {
 			return "_ADD_DEALLOC_STRUCT(" + lhs_var + ", " + rhs_var + ");";
 		}
@@ -850,9 +859,6 @@ public class DeallocationAnalyzer extends Analyzer {
 			return "";
 		}
 		
-		
-		
-		
 		// Get function name
 		String name = "";
 		// Check if var_type is a structure
@@ -864,7 +870,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			// For integer array, byte array or NULL array
 			if (stores.isIntType(elem_type) || elem_type instanceof Type.Void || elem_type instanceof Type.Byte) {
 				if (dimension == 2) {
-					return "_DEALLOC_2DARRAY_int64_t(" + var + ");";
+					return "_DEALLOC_2DARRAY(" + var + ");";
 				} else {
 					// Release the previously allocated variable, e.g. an array of integers
 					return "_DEALLOC(" + var + ");";

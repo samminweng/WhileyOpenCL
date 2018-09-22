@@ -303,7 +303,7 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 			a = NULL;\
 		})
 // Deallocate an array of an array of integers
-#define _DEALLOC_2DARRAY_int64_t(a) \
+#define _DEALLOC_2DARRAY(a) \
 		({\
 			if(a##_dealloc){\
 				free2DArray_int64_t(a, a##_size);\
@@ -358,10 +358,12 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 			DEBUG_PRINT("_NEW1DARRAY_DEALLOC macro on  ( "str(a)" )");\
 			a##_dealloc = true;\
 		})
-// Add deallocation flag for an array variable
-#define _ADD_DEALLOC(a, b) \
+// Add deallocation flag for an array variable of integer type
+#define _ADD_DEALLOC(a, b, dimension, type) \
         ({\
 		    DEBUG_PRINT("_ADD_DEALLOC macro on  ( "str(a)" and "str(b)" )");\
+			_DEALLOC(a);\
+			_COPY_##dimension##DARRAY_##type(a, b);\
 			a##_dealloc = true;\
 		})
 // Add deallocation flag for user-defined structure typed variable 
@@ -369,12 +371,6 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
         ({\
 		    DEBUG_PRINT("_ADD_DEALLOC_STRUCT macro on  ( "str(a)" and "str(b)" )");\
 			a##_dealloc = true;\
-		})
-// Take out a variable's deallocation flag
-//#define _REMOVE_DEALLOC(a) \
-        ({\
-			DEBUG_PRINT("_REMOVE_DEALLOC macro on  ( "str(a)" )");\
-			a##_dealloc = false;\
 		})
 // Transfer an array variable's deallocation flag to another
 #define _TRANSFER_DEALLOC(a, b, dimension)  \

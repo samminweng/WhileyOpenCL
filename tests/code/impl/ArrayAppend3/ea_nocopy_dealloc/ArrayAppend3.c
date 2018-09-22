@@ -137,7 +137,7 @@ blklab5:;
 		_UPDATE_1DARRAY(r, _18);
 		_TRANSFER_DEALLOC_STRUCT(r, _18);
 		//const %21 = [[49,99],[53,99],[49,48,99],[50,48,99],[53,48,99],[36,49],[36,53],[36,49,48]] : int[][]
-		_DEALLOC_2DARRAY_int64_t(_21);
+		_DEALLOC_2DARRAY(_21);
 		_NEW_2DARRAY_int64_t_EMPTY(_21, 8, 3);
 		{
 			int64_t tmp[] = {49, 99, '\0'};
@@ -231,7 +231,7 @@ blklab6:;
 	_DEALLOC(_18);
 	_DEALLOC(_19);
 	_DEALLOC(_20);
-	_DEALLOC_2DARRAY_int64_t(_21);
+	_DEALLOC_2DARRAY(_21);
 	_DEALLOC(_22);
 	_DEALLOC(_25);
 	_DEALLOC(_26);

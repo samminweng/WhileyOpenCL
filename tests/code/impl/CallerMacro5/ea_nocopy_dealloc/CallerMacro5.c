@@ -50,9 +50,7 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(x), _DECL_DEALLOC_PARAM(x), int64_t num, _DE
 	_TRANSFER_DEALLOC(c, b, 1);
 	//assign %6 = %5  : int[]
 	// isCopyEliminated = false
-	_DEALLOC(d);
-	_COPY_1DARRAY_int64_t(d, c);
-	_ADD_DEALLOC(d, c);
+	_ADD_DEALLOC(d, c, 1, int64_t);
 	//const %13 = 10 : int
 	_13 = 10;
 	//ifle %1, %13 goto blklab0 : int

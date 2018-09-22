@@ -1,27 +1,27 @@
-==31196== Memcheck, a memory error detector
-==31196== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==31196== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==31196== Command: ./ResetMacro1.out
-==31196== Parent PID: 28647
-==31196== 
-==31196== 
-==31196== HEAP SUMMARY:
-==31196==     in use at exit: 176 bytes in 6 blocks
-==31196==   total heap usage: 7 allocs, 1 frees, 8,368 bytes allocated
-==31196== 
-==31196== 24 bytes in 1 blocks are definitely lost in loss record 5 of 6
-==31196==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31196==    by 0x401147: copy1DArray_int64_t (Util.c:80)
-==31196==    by 0x400CAC: main (ResetMacro1.c:38)
-==31196== 
-==31196== LEAK SUMMARY:
-==31196==    definitely lost: 24 bytes in 1 blocks
-==31196==    indirectly lost: 0 bytes in 0 blocks
-==31196==      possibly lost: 0 bytes in 0 blocks
-==31196==    still reachable: 152 bytes in 5 blocks
-==31196==         suppressed: 0 bytes in 0 blocks
-==31196== Reachable blocks (those to which a pointer was found) are not shown.
-==31196== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==31196== 
-==31196== For counts of detected and suppressed errors, rerun with: -v
-==31196== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==19723== Memcheck, a memory error detector
+==19723== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==19723== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==19723== Command: ./ResetMacro1.out
+==19723== Parent PID: 17125
+==19723== 
+==19723== 
+==19723== HEAP SUMMARY:
+==19723==     in use at exit: 176 bytes in 6 blocks
+==19723==   total heap usage: 7 allocs, 1 frees, 8,368 bytes allocated
+==19723== 
+==19723== 24 bytes in 1 blocks are definitely lost in loss record 5 of 6
+==19723==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19723==    by 0x401147: copy1DArray_int64_t (Util.c:80)
+==19723==    by 0x400CAC: main (ResetMacro1.c:38)
+==19723== 
+==19723== LEAK SUMMARY:
+==19723==    definitely lost: 24 bytes in 1 blocks
+==19723==    indirectly lost: 0 bytes in 0 blocks
+==19723==      possibly lost: 0 bytes in 0 blocks
+==19723==    still reachable: 152 bytes in 5 blocks
+==19723==         suppressed: 0 bytes in 0 blocks
+==19723== Reachable blocks (those to which a pointer was found) are not shown.
+==19723== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==19723== 
+==19723== For counts of detected and suppressed errors, rerun with: -v
+==19723== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

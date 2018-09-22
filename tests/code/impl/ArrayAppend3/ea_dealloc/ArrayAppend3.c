@@ -129,7 +129,7 @@ blklab5:;
 		_COPY_1DARRAY_int64_t(r, _18);
 		_ADD_DEALLOC_STRUCT(r, _18);
 		//const %21 = [[49,99],[53,99],[49,48,99],[50,48,99],[53,48,99],[36,49],[36,53],[36,49,48]] : int[][]
-		_DEALLOC_2DARRAY_int64_t(_21);
+		_DEALLOC_2DARRAY(_21);
 		_NEW_2DARRAY_int64_t_EMPTY(_21, 8, 3);
 		{
 			int64_t tmp[] = {49, 99, '\0'};
@@ -220,7 +220,7 @@ blklab6:;
 	_DEALLOC(_18);
 	_DEALLOC(_19);
 	_DEALLOC(_20);
-	_DEALLOC_2DARRAY_int64_t(_21);
+	_DEALLOC_2DARRAY(_21);
 	_DEALLOC(_22);
 	_DEALLOC(_25);
 	_DEALLOC(_26);
@@ -270,9 +270,7 @@ int main(int argc, char** args){
 	_10[0] = _2; _10[1] = _3; _10[2] = _4; _10[3] = _5; _10[4] = _6; _10[5] = _7; _10[6] = _8; _10[7] = _9; 
 	_10_dealloc = true;
 	//assign %1 = %10  : int[]
-	_DEALLOC(till);
-	_COPY_1DARRAY_int64_t(till, _10);
-	_ADD_DEALLOC(till, _10);
+	_ADD_DEALLOC(till, _10, 1, int64_t);
 	//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %12 = %11 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %13 = [84,105,108,108,58,32] : int[]

@@ -208,9 +208,7 @@ BYTE* _append_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), BYTE 
 	_NEW_1DARRAY_BYTE(_8, _7, _4);
 	_NEW1DARRAY_DEALLOC(_8, _4, _7);
 	//assign %2 = %8  : byte[]
-	_DEALLOC(nitems);
-	_COPY_1DARRAY_BYTE(nitems, _8);
-	_ADD_DEALLOC(nitems, _8);
+	_ADD_DEALLOC(nitems, _8, 1, BYTE);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %3 = %9  : int
@@ -264,9 +262,7 @@ BYTE* _resize_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64
 	_NEW_1DARRAY_BYTE(_5, size, _4);
 	_NEW1DARRAY_DEALLOC(_5, _4, size);
 	//assign %2 = %5  : byte[]
-	_DEALLOC(nitems);
-	_COPY_1DARRAY_BYTE(nitems, _5);
-	_ADD_DEALLOC(nitems, _5);
+	_ADD_DEALLOC(nitems, _5, 1, BYTE);
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %3 = %6  : int
@@ -341,9 +337,7 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 	_NEW_1DARRAY_BYTE(_9, _8, _7);
 	_NEW1DARRAY_DEALLOC(_9, _7, _8);
 	//assign %1 = %9  : byte[]
-	_DEALLOC(output);
-	_COPY_1DARRAY_BYTE(output, _9);
-	_ADD_DEALLOC(output, _9);
+	_ADD_DEALLOC(output, _9, 1, BYTE);
 	//loop (%1, %2, %3, %4, %5, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23)
 	while(true){
 		//lengthof %10 = %0 : byte[]
@@ -415,9 +409,7 @@ blklab17:;
 			_CALLEE_DEALLOC_POST(_22, output);
 		}
 		//assign %1 = %22  : byte[]
-		_DEALLOC(output);
-		_COPY_1DARRAY_BYTE(output, _22);
-		_ADD_DEALLOC(output, _22);
+		_ADD_DEALLOC(output, _22, 1, BYTE);
 		//invoke (%23) = (%1, %5) lz77_compress:append : function(byte[],byte)->(byte[])
 		{
 			void* tmp_items;
@@ -428,9 +420,7 @@ blklab17:;
 			_CALLEE_DEALLOC_POST(_23, output);
 		}
 		//assign %1 = %23  : byte[]
-		_DEALLOC(output);
-		_COPY_1DARRAY_BYTE(output, _23);
-		_ADD_DEALLOC(output, _23);
+		_ADD_DEALLOC(output, _23, 1, BYTE);
 //.blklab15
 blklab15:;
 	}
@@ -506,9 +496,7 @@ int main(int argc, char** args){
 		_7_dealloc = true;
 	}
 	//assign %2 = %7  : byte[]
-	_DEALLOC(data);
-	_COPY_1DARRAY_BYTE(data, _7);
-	_ADD_DEALLOC(data, _7);
+	_ADD_DEALLOC(data, _7, 1, BYTE);
 	//fieldload %9 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %10 = %9 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %11 = [68,97,116,97,58,32,32,32,32,32,32,32,32,32] : int[]
@@ -562,9 +550,7 @@ int main(int argc, char** args){
 		_CALLEE_DEALLOC_POST(_21, data);
 	}
 	//assign %3 = %21  : byte[]
-	_DEALLOC(compress_data);
-	_COPY_1DARRAY_BYTE(compress_data, _21);
-	_ADD_DEALLOC(compress_data, _21);
+	_ADD_DEALLOC(compress_data, _21, 1, BYTE);
 	//fieldload %22 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %23 = %22 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %24 = [67,79,77,80,82,69,83,83,69,68,32,68,97,116,97,58,32,32,32] : int[]

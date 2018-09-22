@@ -1,39 +1,39 @@
-==31470== Memcheck, a memory error detector
-==31470== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==31470== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==31470== Command: ./reverse.out
-==31470== Parent PID: 28647
-==31470== 
-==31470== 
-==31470== HEAP SUMMARY:
-==31470==     in use at exit: 944 bytes in 13 blocks
-==31470==   total heap usage: 14 allocs, 1 frees, 9,136 bytes allocated
-==31470== 
-==31470== 40 bytes in 1 blocks are definitely lost in loss record 6 of 13
-==31470==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31470==    by 0x401569: create1DArray_int64_t (Util.c:23)
-==31470==    by 0x400C19: _reverse_ (reverse.c:29)
-==31470==    by 0x400F1A: main (reverse.c:116)
-==31470== 
-==31470== 88 bytes in 1 blocks are definitely lost in loss record 11 of 13
-==31470==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31470==    by 0x401715: copy1DArray_int64_t (Util.c:80)
-==31470==    by 0x4010ED: main (reverse.c:161)
-==31470== 
-==31470== 88 bytes in 1 blocks are definitely lost in loss record 12 of 13
-==31470==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31470==    by 0x401569: create1DArray_int64_t (Util.c:23)
-==31470==    by 0x400C19: _reverse_ (reverse.c:29)
-==31470==    by 0x4011E3: main (reverse.c:185)
-==31470== 
-==31470== LEAK SUMMARY:
-==31470==    definitely lost: 216 bytes in 3 blocks
-==31470==    indirectly lost: 0 bytes in 0 blocks
-==31470==      possibly lost: 0 bytes in 0 blocks
-==31470==    still reachable: 728 bytes in 10 blocks
-==31470==         suppressed: 0 bytes in 0 blocks
-==31470== Reachable blocks (those to which a pointer was found) are not shown.
-==31470== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==31470== 
-==31470== For counts of detected and suppressed errors, rerun with: -v
-==31470== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
+==19996== Memcheck, a memory error detector
+==19996== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==19996== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==19996== Command: ./reverse.out
+==19996== Parent PID: 17125
+==19996== 
+==19996== 
+==19996== HEAP SUMMARY:
+==19996==     in use at exit: 944 bytes in 13 blocks
+==19996==   total heap usage: 14 allocs, 1 frees, 9,136 bytes allocated
+==19996== 
+==19996== 40 bytes in 1 blocks are definitely lost in loss record 6 of 13
+==19996==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19996==    by 0x401569: create1DArray_int64_t (Util.c:23)
+==19996==    by 0x400C19: _reverse_ (reverse.c:29)
+==19996==    by 0x400F1A: main (reverse.c:116)
+==19996== 
+==19996== 88 bytes in 1 blocks are definitely lost in loss record 11 of 13
+==19996==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19996==    by 0x401715: copy1DArray_int64_t (Util.c:80)
+==19996==    by 0x4010ED: main (reverse.c:161)
+==19996== 
+==19996== 88 bytes in 1 blocks are definitely lost in loss record 12 of 13
+==19996==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19996==    by 0x401569: create1DArray_int64_t (Util.c:23)
+==19996==    by 0x400C19: _reverse_ (reverse.c:29)
+==19996==    by 0x4011E3: main (reverse.c:185)
+==19996== 
+==19996== LEAK SUMMARY:
+==19996==    definitely lost: 216 bytes in 3 blocks
+==19996==    indirectly lost: 0 bytes in 0 blocks
+==19996==      possibly lost: 0 bytes in 0 blocks
+==19996==    still reachable: 728 bytes in 10 blocks
+==19996==         suppressed: 0 bytes in 0 blocks
+==19996== Reachable blocks (those to which a pointer was found) are not shown.
+==19996== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==19996== 
+==19996== For counts of detected and suppressed errors, rerun with: -v
+==19996== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)

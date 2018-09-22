@@ -1,372 +1,372 @@
-==31004== Memcheck, a memory error detector
-==31004== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==31004== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==31004== Command: ./mergesort.out
-==31004== Parent PID: 28647
-==31004== 
-==31004== 
-==31004== HEAP SUMMARY:
-==31004==     in use at exit: 1,288 bytes in 59 blocks
-==31004==   total heap usage: 60 allocs, 1 frees, 9,480 bytes allocated
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 1 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x400D74: _sortV1_ (mergesort.c:77)
-==31004==    by 0x401508: main (mergesort.c:353)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 2 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x400D74: _sortV1_ (mergesort.c:77)
-==31004==    by 0x401508: main (mergesort.c:353)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 3 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x401508: main (mergesort.c:353)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 4 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x401508: main (mergesort.c:353)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 5 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x401508: main (mergesort.c:353)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 6 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x400D74: _sortV1_ (mergesort.c:77)
-==31004==    by 0x401740: main (mergesort.c:403)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 7 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x400D74: _sortV1_ (mergesort.c:77)
-==31004==    by 0x401740: main (mergesort.c:403)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 8 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x401740: main (mergesort.c:403)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 9 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x401740: main (mergesort.c:403)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 10 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x400D74: _sortV1_ (mergesort.c:77)
-==31004==    by 0x401958: main (mergesort.c:451)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 11 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x400D74: _sortV1_ (mergesort.c:77)
-==31004==    by 0x401958: main (mergesort.c:451)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 12 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x401958: main (mergesort.c:451)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 13 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x401958: main (mergesort.c:451)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 14 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x400D74: _sortV1_ (mergesort.c:77)
-==31004==    by 0x401B90: main (mergesort.c:501)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 15 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x400D74: _sortV1_ (mergesort.c:77)
-==31004==    by 0x401B90: main (mergesort.c:501)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 16 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x401B90: main (mergesort.c:501)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 17 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x401B90: main (mergesort.c:501)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 18 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x401B90: main (mergesort.c:501)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 19 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x400D74: _sortV1_ (mergesort.c:77)
-==31004==    by 0x400D74: _sortV1_ (mergesort.c:77)
-==31004==    by 0x401E30: main (mergesort.c:580)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 20 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x400D74: _sortV1_ (mergesort.c:77)
-==31004==    by 0x400D74: _sortV1_ (mergesort.c:77)
-==31004==    by 0x401E30: main (mergesort.c:580)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 21 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x400D74: _sortV1_ (mergesort.c:77)
-==31004==    by 0x401E30: main (mergesort.c:580)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 22 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x400D74: _sortV1_ (mergesort.c:77)
-==31004==    by 0x401E30: main (mergesort.c:580)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 23 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x400D74: _sortV1_ (mergesort.c:77)
-==31004==    by 0x401E30: main (mergesort.c:580)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 24 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x400D74: _sortV1_ (mergesort.c:77)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x401E30: main (mergesort.c:580)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 25 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x400D74: _sortV1_ (mergesort.c:77)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x401E30: main (mergesort.c:580)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 26 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x400D74: _sortV1_ (mergesort.c:77)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x401E30: main (mergesort.c:580)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 27 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x401E30: main (mergesort.c:580)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 28 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x401E30: main (mergesort.c:580)
-==31004== 
-==31004== 8 bytes in 1 blocks are definitely lost in loss record 29 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x401E30: main (mergesort.c:580)
-==31004== 
-==31004== 16 bytes in 1 blocks are definitely lost in loss record 30 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x401508: main (mergesort.c:353)
-==31004== 
-==31004== 16 bytes in 1 blocks are definitely lost in loss record 31 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x401508: main (mergesort.c:353)
-==31004== 
-==31004== 16 bytes in 1 blocks are definitely lost in loss record 32 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x401740: main (mergesort.c:403)
-==31004== 
-==31004== 16 bytes in 1 blocks are definitely lost in loss record 33 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x401740: main (mergesort.c:403)
-==31004== 
-==31004== 16 bytes in 1 blocks are definitely lost in loss record 34 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x401958: main (mergesort.c:451)
-==31004== 
-==31004== 16 bytes in 1 blocks are definitely lost in loss record 35 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x401958: main (mergesort.c:451)
-==31004== 
-==31004== 16 bytes in 1 blocks are definitely lost in loss record 36 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x401B90: main (mergesort.c:501)
-==31004== 
-==31004== 16 bytes in 1 blocks are definitely lost in loss record 37 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x401B90: main (mergesort.c:501)
-==31004== 
-==31004== 16 bytes in 1 blocks are definitely lost in loss record 38 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x400D74: _sortV1_ (mergesort.c:77)
-==31004==    by 0x401E30: main (mergesort.c:580)
-==31004== 
-==31004== 16 bytes in 1 blocks are definitely lost in loss record 39 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x400D74: _sortV1_ (mergesort.c:77)
-==31004==    by 0x401E30: main (mergesort.c:580)
-==31004== 
-==31004== 16 bytes in 1 blocks are definitely lost in loss record 40 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x400D74: _sortV1_ (mergesort.c:77)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x401E30: main (mergesort.c:580)
-==31004== 
-==31004== 16 bytes in 1 blocks are definitely lost in loss record 41 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x401E30: main (mergesort.c:580)
-==31004== 
-==31004== 24 bytes in 1 blocks are definitely lost in loss record 42 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x401508: main (mergesort.c:353)
-==31004== 
-==31004== 24 bytes in 1 blocks are definitely lost in loss record 43 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x401B90: main (mergesort.c:501)
-==31004== 
-==31004== 24 bytes in 1 blocks are definitely lost in loss record 44 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x400D74: _sortV1_ (mergesort.c:77)
-==31004==    by 0x401E30: main (mergesort.c:580)
-==31004== 
-==31004== 24 bytes in 1 blocks are definitely lost in loss record 45 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x401E30: main (mergesort.c:580)
-==31004== 
-==31004== 24 bytes in 1 blocks are definitely lost in loss record 46 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x400E45: _sortV1_ (mergesort.c:96)
-==31004==    by 0x401E30: main (mergesort.c:580)
-==31004== 
-==31004== 40 bytes in 1 blocks are definitely lost in loss record 55 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400D03: _sortV1_ (mergesort.c:67)
-==31004==    by 0x401E30: main (mergesort.c:580)
-==31004== 
-==31004== 48 bytes in 1 blocks are definitely lost in loss record 56 of 59
-==31004==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31004==    by 0x402219: slice (Util.c:7)
-==31004==    by 0x400DBF: _sortV1_ (mergesort.c:84)
-==31004==    by 0x401E30: main (mergesort.c:580)
-==31004== 
-==31004== LEAK SUMMARY:
-==31004==    definitely lost: 632 bytes in 48 blocks
-==31004==    indirectly lost: 0 bytes in 0 blocks
-==31004==      possibly lost: 0 bytes in 0 blocks
-==31004==    still reachable: 656 bytes in 11 blocks
-==31004==         suppressed: 0 bytes in 0 blocks
-==31004== Reachable blocks (those to which a pointer was found) are not shown.
-==31004== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==31004== 
-==31004== For counts of detected and suppressed errors, rerun with: -v
-==31004== ERROR SUMMARY: 48 errors from 48 contexts (suppressed: 0 from 0)
+==19527== Memcheck, a memory error detector
+==19527== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==19527== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==19527== Command: ./mergesort.out
+==19527== Parent PID: 17125
+==19527== 
+==19527== 
+==19527== HEAP SUMMARY:
+==19527==     in use at exit: 1,288 bytes in 59 blocks
+==19527==   total heap usage: 60 allocs, 1 frees, 9,480 bytes allocated
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 1 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x400D74: _sortV1_ (mergesort.c:77)
+==19527==    by 0x401508: main (mergesort.c:353)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 2 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x400D74: _sortV1_ (mergesort.c:77)
+==19527==    by 0x401508: main (mergesort.c:353)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 3 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x401508: main (mergesort.c:353)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 4 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x401508: main (mergesort.c:353)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 5 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x401508: main (mergesort.c:353)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 6 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x400D74: _sortV1_ (mergesort.c:77)
+==19527==    by 0x401740: main (mergesort.c:403)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 7 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x400D74: _sortV1_ (mergesort.c:77)
+==19527==    by 0x401740: main (mergesort.c:403)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 8 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x401740: main (mergesort.c:403)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 9 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x401740: main (mergesort.c:403)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 10 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x400D74: _sortV1_ (mergesort.c:77)
+==19527==    by 0x401958: main (mergesort.c:451)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 11 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x400D74: _sortV1_ (mergesort.c:77)
+==19527==    by 0x401958: main (mergesort.c:451)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 12 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x401958: main (mergesort.c:451)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 13 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x401958: main (mergesort.c:451)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 14 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x400D74: _sortV1_ (mergesort.c:77)
+==19527==    by 0x401B90: main (mergesort.c:501)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 15 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x400D74: _sortV1_ (mergesort.c:77)
+==19527==    by 0x401B90: main (mergesort.c:501)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 16 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x401B90: main (mergesort.c:501)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 17 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x401B90: main (mergesort.c:501)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 18 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x401B90: main (mergesort.c:501)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 19 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x400D74: _sortV1_ (mergesort.c:77)
+==19527==    by 0x400D74: _sortV1_ (mergesort.c:77)
+==19527==    by 0x401E30: main (mergesort.c:580)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 20 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x400D74: _sortV1_ (mergesort.c:77)
+==19527==    by 0x400D74: _sortV1_ (mergesort.c:77)
+==19527==    by 0x401E30: main (mergesort.c:580)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 21 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x400D74: _sortV1_ (mergesort.c:77)
+==19527==    by 0x401E30: main (mergesort.c:580)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 22 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x400D74: _sortV1_ (mergesort.c:77)
+==19527==    by 0x401E30: main (mergesort.c:580)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 23 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x400D74: _sortV1_ (mergesort.c:77)
+==19527==    by 0x401E30: main (mergesort.c:580)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 24 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x400D74: _sortV1_ (mergesort.c:77)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x401E30: main (mergesort.c:580)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 25 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x400D74: _sortV1_ (mergesort.c:77)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x401E30: main (mergesort.c:580)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 26 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x400D74: _sortV1_ (mergesort.c:77)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x401E30: main (mergesort.c:580)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 27 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x401E30: main (mergesort.c:580)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 28 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x401E30: main (mergesort.c:580)
+==19527== 
+==19527== 8 bytes in 1 blocks are definitely lost in loss record 29 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x401E30: main (mergesort.c:580)
+==19527== 
+==19527== 16 bytes in 1 blocks are definitely lost in loss record 30 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x401508: main (mergesort.c:353)
+==19527== 
+==19527== 16 bytes in 1 blocks are definitely lost in loss record 31 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x401508: main (mergesort.c:353)
+==19527== 
+==19527== 16 bytes in 1 blocks are definitely lost in loss record 32 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x401740: main (mergesort.c:403)
+==19527== 
+==19527== 16 bytes in 1 blocks are definitely lost in loss record 33 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x401740: main (mergesort.c:403)
+==19527== 
+==19527== 16 bytes in 1 blocks are definitely lost in loss record 34 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x401958: main (mergesort.c:451)
+==19527== 
+==19527== 16 bytes in 1 blocks are definitely lost in loss record 35 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x401958: main (mergesort.c:451)
+==19527== 
+==19527== 16 bytes in 1 blocks are definitely lost in loss record 36 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x401B90: main (mergesort.c:501)
+==19527== 
+==19527== 16 bytes in 1 blocks are definitely lost in loss record 37 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x401B90: main (mergesort.c:501)
+==19527== 
+==19527== 16 bytes in 1 blocks are definitely lost in loss record 38 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x400D74: _sortV1_ (mergesort.c:77)
+==19527==    by 0x401E30: main (mergesort.c:580)
+==19527== 
+==19527== 16 bytes in 1 blocks are definitely lost in loss record 39 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x400D74: _sortV1_ (mergesort.c:77)
+==19527==    by 0x401E30: main (mergesort.c:580)
+==19527== 
+==19527== 16 bytes in 1 blocks are definitely lost in loss record 40 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x400D74: _sortV1_ (mergesort.c:77)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x401E30: main (mergesort.c:580)
+==19527== 
+==19527== 16 bytes in 1 blocks are definitely lost in loss record 41 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x401E30: main (mergesort.c:580)
+==19527== 
+==19527== 24 bytes in 1 blocks are definitely lost in loss record 42 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x401508: main (mergesort.c:353)
+==19527== 
+==19527== 24 bytes in 1 blocks are definitely lost in loss record 43 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x401B90: main (mergesort.c:501)
+==19527== 
+==19527== 24 bytes in 1 blocks are definitely lost in loss record 44 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x400D74: _sortV1_ (mergesort.c:77)
+==19527==    by 0x401E30: main (mergesort.c:580)
+==19527== 
+==19527== 24 bytes in 1 blocks are definitely lost in loss record 45 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x401E30: main (mergesort.c:580)
+==19527== 
+==19527== 24 bytes in 1 blocks are definitely lost in loss record 46 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x400E45: _sortV1_ (mergesort.c:96)
+==19527==    by 0x401E30: main (mergesort.c:580)
+==19527== 
+==19527== 40 bytes in 1 blocks are definitely lost in loss record 55 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400D03: _sortV1_ (mergesort.c:67)
+==19527==    by 0x401E30: main (mergesort.c:580)
+==19527== 
+==19527== 48 bytes in 1 blocks are definitely lost in loss record 56 of 59
+==19527==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==19527==    by 0x402219: slice (Util.c:7)
+==19527==    by 0x400DBF: _sortV1_ (mergesort.c:84)
+==19527==    by 0x401E30: main (mergesort.c:580)
+==19527== 
+==19527== LEAK SUMMARY:
+==19527==    definitely lost: 632 bytes in 48 blocks
+==19527==    indirectly lost: 0 bytes in 0 blocks
+==19527==      possibly lost: 0 bytes in 0 blocks
+==19527==    still reachable: 656 bytes in 11 blocks
+==19527==         suppressed: 0 bytes in 0 blocks
+==19527== Reachable blocks (those to which a pointer was found) are not shown.
+==19527== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==19527== 
+==19527== For counts of detected and suppressed errors, rerun with: -v
+==19527== ERROR SUMMARY: 48 errors from 48 contexts (suppressed: 0 from 0)

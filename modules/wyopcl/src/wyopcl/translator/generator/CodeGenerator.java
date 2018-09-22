@@ -709,9 +709,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if(this.deallocatedAnalyzer.isPresent()	&& lhs_type instanceof Type.Array) {
 				// Get element type
 				Type elm_type = stores.getArrayElementType((Type.Array) lhs_type);
-				if ((elm_type instanceof Type.Byte || stores.isIntType(elm_type)) && isCopyEliminated) {
-					// Then we can apply '_TRANSFER_DEALLOC' without generating other code
+				if ((elm_type instanceof Type.Byte || stores.isIntType(elm_type))) {
+					// For an array of integer/BYTE type we can use macro directly without any pre-processing.
 				}else {
+					// For an array of structures we use different macros.
 					// Deallocate lhs register
 					this.deallocatedAnalyzer.ifPresent(a -> {
 						statement.add(indent + a.preDealloc(lhs, lhs_type, stores));				

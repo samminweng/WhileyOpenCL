@@ -72,3 +72,16 @@ $ ant test-copy
 1.3 Code Generator/Copy Elimination/Memory Deallocation
 The code generator (with copy/deallocation analysers) is tested with 43 Whiley programs.
 $ ant test-code
+To detect the memory leaks of each test case, we use the below shell script:
+$ cd tests/code
+$ ./memorydetect.sh
+All the execution results are output to 'memorylog.txt'
+
+1.4 Model checking
+Model checking is used to check the assumption at runtime with 722 test Whiley programs. 
+$ ant test-modelchecking
+To detect memory leaks and check if deallocation macro satisfies the assumption at runtime,
+we use the below shell script:
+$ cd tests/modelchecking
+$ ./memorydetect.sh
+All the execution results are output to 'memorylog.txt'

@@ -29,9 +29,7 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(x), _DECL_DEALLOC_PARAM(x), int64_t num, _DE
 	_NEW_1DARRAY_int64_t(_9, _8, _7);
 	_NEW1DARRAY_DEALLOC(_9, _7, _8);
 	//assign %3 = %9  : int[]
-	_DEALLOC(a);
-	_COPY_1DARRAY_int64_t(a, _9);
-	_ADD_DEALLOC(a, _9);
+	_ADD_DEALLOC(a, _9, 1, int64_t);
 	//const %10 = 1 : int
 	_10 = 1;
 	//const %11 = 3 : int
@@ -41,17 +39,11 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(x), _DECL_DEALLOC_PARAM(x), int64_t num, _DE
 	_NEW_1DARRAY_int64_t(_12, _11, _10);
 	_NEW1DARRAY_DEALLOC(_12, _10, _11);
 	//assign %4 = %12  : int[]
-	_DEALLOC(b);
-	_COPY_1DARRAY_int64_t(b, _12);
-	_ADD_DEALLOC(b, _12);
+	_ADD_DEALLOC(b, _12, 1, int64_t);
 	//assign %5 = %3  : int[]
-	_DEALLOC(c);
-	_COPY_1DARRAY_int64_t(c, a);
-	_ADD_DEALLOC(c, a);
+	_ADD_DEALLOC(c, a, 1, int64_t);
 	//assign %6 = %4  : int[]
-	_DEALLOC(d);
-	_COPY_1DARRAY_int64_t(d, b);
-	_ADD_DEALLOC(d, b);
+	_ADD_DEALLOC(d, b, 1, int64_t);
 	//const %13 = 10 : int
 	_13 = 10;
 	//ifle %1, %13 goto blklab0 : int
@@ -155,9 +147,7 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_5, _4, _3);
 	_NEW1DARRAY_DEALLOC(_5, _3, _4);
 	//assign %1 = %5  : int[]
-	_DEALLOC(x);
-	_COPY_1DARRAY_int64_t(x, _5);
-	_ADD_DEALLOC(x, _5);
+	_ADD_DEALLOC(x, _5, 1, int64_t);
 	//const %7 = 11 : int
 	_7 = 11;
 	//invoke (%6) = (%1, %7) CallerMacro4:func : function(int[],int)->(int[])
@@ -170,9 +160,7 @@ int main(int argc, char** args){
 		_CALLER_DEALLOC_POST(_6, tmp_x);
 	}
 	//assign %2 = %6  : int[]
-	_DEALLOC(y);
-	_COPY_1DARRAY_int64_t(y, _6);
-	_ADD_DEALLOC(y, _6);
+	_ADD_DEALLOC(y, _6, 1, int64_t);
 	//assert
 	{
 		//const %8 = 0 : int
@@ -223,9 +211,7 @@ blklab3:;
 		_CALLER_DEALLOC_POST(_18, tmp_x);
 	}
 	//assign %2 = %18  : int[]
-	_DEALLOC(y);
-	_COPY_1DARRAY_int64_t(y, _18);
-	_ADD_DEALLOC(y, _18);
+	_ADD_DEALLOC(y, _18, 1, int64_t);
 	//assert
 	{
 		//const %20 = 0 : int
@@ -276,9 +262,7 @@ blklab4:;
 		_CALLER_DEALLOC_POST(_30, tmp_x);
 	}
 	//assign %2 = %30  : int[]
-	_DEALLOC(y);
-	_COPY_1DARRAY_int64_t(y, _30);
-	_ADD_DEALLOC(y, _30);
+	_ADD_DEALLOC(y, _30, 1, int64_t);
 	//assert
 	{
 		//const %32 = 0 : int

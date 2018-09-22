@@ -1,52 +1,52 @@
-==31555== Memcheck, a memory error detector
-==31555== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==31555== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==31555== Command: ./SobelEdge.out
-==31555== Parent PID: 28647
-==31555== 
-==31555== 
-==31555== HEAP SUMMARY:
-==31555==     in use at exit: 9,184 bytes in 72 blocks
-==31555==   total heap usage: 77 allocs, 5 frees, 58,371 bytes allocated
-==31555== 
-==31555== 0 bytes in 64 blocks are definitely lost in loss record 1 of 9
-==31555==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31555==    by 0x401BFC: create1DArray_int64_t (Util.c:23)
-==31555==    by 0x401773: _print_pbm_ (SobelEdge.c:556)
-==31555==    by 0x401B2C: main (SobelEdge.c:628)
-==31555== 
-==31555== 8 bytes in 1 blocks are definitely lost in loss record 2 of 9
-==31555==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31555==    by 0x401BFC: create1DArray_int64_t (Util.c:23)
-==31555==    by 0x40160D: _print_pbm_ (SobelEdge.c:476)
-==31555==    by 0x401B2C: main (SobelEdge.c:628)
-==31555== 
-==31555== 16 bytes in 1 blocks are definitely lost in loss record 3 of 9
-==31555==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31555==    by 0x401BFC: create1DArray_int64_t (Util.c:23)
-==31555==    by 0x40159E: _print_pbm_ (SobelEdge.c:461)
-==31555==    by 0x401B2C: main (SobelEdge.c:628)
-==31555== 
-==31555== 72 bytes in 1 blocks are definitely lost in loss record 4 of 9
-==31555==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31555==    by 0x401BFC: create1DArray_int64_t (Util.c:23)
-==31555==    by 0x4010B8: _sobelEdgeDetection_ (SobelEdge.c:300)
-==31555==    by 0x401AF6: main (SobelEdge.c:620)
-==31555== 
-==31555== 72 bytes in 1 blocks are definitely lost in loss record 5 of 9
-==31555==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==31555==    by 0x401BFC: create1DArray_int64_t (Util.c:23)
-==31555==    by 0x401249: _sobelEdgeDetection_ (SobelEdge.c:330)
-==31555==    by 0x401AF6: main (SobelEdge.c:620)
-==31555== 
-==31555== LEAK SUMMARY:
-==31555==    definitely lost: 168 bytes in 68 blocks
-==31555==    indirectly lost: 0 bytes in 0 blocks
-==31555==      possibly lost: 0 bytes in 0 blocks
-==31555==    still reachable: 9,016 bytes in 4 blocks
-==31555==         suppressed: 0 bytes in 0 blocks
-==31555== Reachable blocks (those to which a pointer was found) are not shown.
-==31555== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==31555== 
-==31555== For counts of detected and suppressed errors, rerun with: -v
-==31555== ERROR SUMMARY: 5 errors from 5 contexts (suppressed: 0 from 0)
+==20081== Memcheck, a memory error detector
+==20081== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==20081== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==20081== Command: ./SobelEdge.out
+==20081== Parent PID: 17125
+==20081== 
+==20081== 
+==20081== HEAP SUMMARY:
+==20081==     in use at exit: 9,184 bytes in 72 blocks
+==20081==   total heap usage: 77 allocs, 5 frees, 58,371 bytes allocated
+==20081== 
+==20081== 0 bytes in 64 blocks are definitely lost in loss record 1 of 9
+==20081==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==20081==    by 0x401BFC: create1DArray_int64_t (Util.c:23)
+==20081==    by 0x401773: _print_pbm_ (SobelEdge.c:556)
+==20081==    by 0x401B2C: main (SobelEdge.c:628)
+==20081== 
+==20081== 8 bytes in 1 blocks are definitely lost in loss record 2 of 9
+==20081==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==20081==    by 0x401BFC: create1DArray_int64_t (Util.c:23)
+==20081==    by 0x40160D: _print_pbm_ (SobelEdge.c:476)
+==20081==    by 0x401B2C: main (SobelEdge.c:628)
+==20081== 
+==20081== 16 bytes in 1 blocks are definitely lost in loss record 3 of 9
+==20081==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==20081==    by 0x401BFC: create1DArray_int64_t (Util.c:23)
+==20081==    by 0x40159E: _print_pbm_ (SobelEdge.c:461)
+==20081==    by 0x401B2C: main (SobelEdge.c:628)
+==20081== 
+==20081== 72 bytes in 1 blocks are definitely lost in loss record 4 of 9
+==20081==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==20081==    by 0x401BFC: create1DArray_int64_t (Util.c:23)
+==20081==    by 0x4010B8: _sobelEdgeDetection_ (SobelEdge.c:300)
+==20081==    by 0x401AF6: main (SobelEdge.c:620)
+==20081== 
+==20081== 72 bytes in 1 blocks are definitely lost in loss record 5 of 9
+==20081==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==20081==    by 0x401BFC: create1DArray_int64_t (Util.c:23)
+==20081==    by 0x401249: _sobelEdgeDetection_ (SobelEdge.c:330)
+==20081==    by 0x401AF6: main (SobelEdge.c:620)
+==20081== 
+==20081== LEAK SUMMARY:
+==20081==    definitely lost: 168 bytes in 68 blocks
+==20081==    indirectly lost: 0 bytes in 0 blocks
+==20081==      possibly lost: 0 bytes in 0 blocks
+==20081==    still reachable: 9,016 bytes in 4 blocks
+==20081==         suppressed: 0 bytes in 0 blocks
+==20081== Reachable blocks (those to which a pointer was found) are not shown.
+==20081== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==20081== 
+==20081== For counts of detected and suppressed errors, rerun with: -v
+==20081== ERROR SUMMARY: 5 errors from 5 contexts (suppressed: 0 from 0)

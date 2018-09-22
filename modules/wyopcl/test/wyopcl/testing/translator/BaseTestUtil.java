@@ -318,8 +318,8 @@ public final class BaseTestUtil {
 //			// Store messages with an array list, to avoid duplicate messages and reduce log file size
 //			List<String> messages = new ArrayList<String>();
 //			// Instantly write out the output message to avoid the process to block.
-//			InputStream input = process.getInputStream();
-//			in_sc = new Scanner(input);
+			InputStream input = process.getInputStream();
+			in_sc = new Scanner(input);
 //			FileWriter pbmwriter = null;
 //			if(isWriteOut){
 //				// Write output as a PBM file.
@@ -330,8 +330,9 @@ public final class BaseTestUtil {
 //				pbmwriter = new FileWriter(pbmfile, true);
 //			}
 //
-//			while (in_sc.hasNextLine()) {
-//				String line = in_sc.nextLine();
+			//while (in_sc.hasNextLine()) {
+			//	String line = in_sc.nextLine();
+			//	System.out.println(line);
 //				// De-bugging message can be ignored, to speed up ant task
 //				if (line.contains("DEBUG:")) {
 //					// Store debugging messages only
@@ -346,7 +347,7 @@ public final class BaseTestUtil {
 //						pbmwriter.write(line+"\n");
 //					}		
 //				}
-//			}
+			//}
 //			// Close the writer
 //			if(isWriteOut){
 //				pbmwriter.close();

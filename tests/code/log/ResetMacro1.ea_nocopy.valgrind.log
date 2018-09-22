@@ -1,22 +1,22 @@
-==31212== Memcheck, a memory error detector
-==31212== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==31212== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==31212== Command: ./ResetMacro1.out
-==31212== Parent PID: 28647
-==31212== 
-==31212== 
-==31212== HEAP SUMMARY:
-==31212==     in use at exit: 80 bytes in 2 blocks
-==31212==   total heap usage: 3 allocs, 1 frees, 8,272 bytes allocated
-==31212== 
-==31212== LEAK SUMMARY:
-==31212==    definitely lost: 0 bytes in 0 blocks
-==31212==    indirectly lost: 0 bytes in 0 blocks
-==31212==      possibly lost: 0 bytes in 0 blocks
-==31212==    still reachable: 80 bytes in 2 blocks
-==31212==         suppressed: 0 bytes in 0 blocks
-==31212== Reachable blocks (those to which a pointer was found) are not shown.
-==31212== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==31212== 
-==31212== For counts of detected and suppressed errors, rerun with: -v
-==31212== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==19739== Memcheck, a memory error detector
+==19739== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==19739== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==19739== Command: ./ResetMacro1.out
+==19739== Parent PID: 17125
+==19739== 
+==19739== 
+==19739== HEAP SUMMARY:
+==19739==     in use at exit: 80 bytes in 2 blocks
+==19739==   total heap usage: 3 allocs, 1 frees, 8,272 bytes allocated
+==19739== 
+==19739== LEAK SUMMARY:
+==19739==    definitely lost: 0 bytes in 0 blocks
+==19739==    indirectly lost: 0 bytes in 0 blocks
+==19739==      possibly lost: 0 bytes in 0 blocks
+==19739==    still reachable: 80 bytes in 2 blocks
+==19739==         suppressed: 0 bytes in 0 blocks
+==19739== Reachable blocks (those to which a pointer was found) are not shown.
+==19739== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==19739== 
+==19739== For counts of detected and suppressed errors, rerun with: -v
+==19739== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
