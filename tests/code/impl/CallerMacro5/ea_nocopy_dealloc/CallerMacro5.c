@@ -52,7 +52,7 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(x), _DECL_DEALLOC_PARAM(x), int64_t num, _DE
 	// isCopyEliminated = false
 	_DEALLOC(d);
 	_COPY_1DARRAY_int64_t(d, c);
-	_ADD_DEALLOC(d);
+	_ADD_DEALLOC(d, c);
 	//const %13 = 10 : int
 	_13 = 10;
 	//ifle %1, %13 goto blklab0 : int

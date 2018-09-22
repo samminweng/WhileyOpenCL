@@ -1,63 +1,63 @@
-==22090== Memcheck, a memory error detector
-==22090== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==22090== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==22090== Command: ./CoinGame3.out
-==22090== Parent PID: 21151
-==22090== 
-==22090== 
-==22090== HEAP SUMMARY:
-==22090==     in use at exit: 4,264 bytes in 12 blocks
-==22090==   total heap usage: 13 allocs, 1 frees, 12,456 bytes allocated
-==22090== 
-==22090== 80 bytes in 1 blocks are definitely lost in loss record 1 of 12
-==22090==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==22090==    by 0x401BF7: create1DArray_int64_t (Util.c:23)
-==22090==    by 0x400C78: _findMoves_ (CoinGame3.c:74)
-==22090==    by 0x401581: main (CoinGame3.c:303)
-==22090== 
-==22090== 80 bytes in 1 blocks are definitely lost in loss record 2 of 12
-==22090==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==22090==    by 0x401DA3: copy1DArray_int64_t (Util.c:80)
-==22090==    by 0x400CA6: _findMoves_ (CoinGame3.c:76)
-==22090==    by 0x401581: main (CoinGame3.c:303)
-==22090== 
-==22090== 80 bytes in 1 blocks are definitely lost in loss record 3 of 12
-==22090==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==22090==    by 0x401BF7: create1DArray_int64_t (Util.c:23)
-==22090==    by 0x400CDF: _findMoves_ (CoinGame3.c:80)
-==22090==    by 0x401581: main (CoinGame3.c:303)
-==22090== 
-==22090== 80 bytes in 1 blocks are definitely lost in loss record 4 of 12
-==22090==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==22090==    by 0x401DA3: copy1DArray_int64_t (Util.c:80)
-==22090==    by 0x400D0D: _findMoves_ (CoinGame3.c:82)
-==22090==    by 0x401581: main (CoinGame3.c:303)
-==22090== 
-==22090== 80 bytes in 1 blocks are definitely lost in loss record 5 of 12
-==22090==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==22090==    by 0x401BF7: create1DArray_int64_t (Util.c:23)
-==22090==    by 0x400D46: _findMoves_ (CoinGame3.c:86)
-==22090==    by 0x401581: main (CoinGame3.c:303)
-==22090== 
-==22090== 80 bytes in 1 blocks are definitely lost in loss record 6 of 12
-==22090==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==22090==    by 0x401DA3: copy1DArray_int64_t (Util.c:80)
-==22090==    by 0x400D74: _findMoves_ (CoinGame3.c:88)
-==22090==    by 0x401581: main (CoinGame3.c:303)
-==22090== 
-==22090== 800 bytes in 1 blocks are definitely lost in loss record 12 of 12
-==22090==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==22090==    by 0x401DA3: copy1DArray_int64_t (Util.c:80)
-==22090==    by 0x4014EE: main (CoinGame3.c:298)
-==22090== 
-==22090== LEAK SUMMARY:
-==22090==    definitely lost: 1,280 bytes in 7 blocks
-==22090==    indirectly lost: 0 bytes in 0 blocks
-==22090==      possibly lost: 0 bytes in 0 blocks
-==22090==    still reachable: 2,984 bytes in 5 blocks
-==22090==         suppressed: 0 bytes in 0 blocks
-==22090== Reachable blocks (those to which a pointer was found) are not shown.
-==22090== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==22090== 
-==22090== For counts of detected and suppressed errors, rerun with: -v
-==22090== ERROR SUMMARY: 7 errors from 7 contexts (suppressed: 0 from 0)
+==29603== Memcheck, a memory error detector
+==29603== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==29603== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==29603== Command: ./CoinGame3.out
+==29603== Parent PID: 28647
+==29603== 
+==29603== 
+==29603== HEAP SUMMARY:
+==29603==     in use at exit: 4,264 bytes in 12 blocks
+==29603==   total heap usage: 13 allocs, 1 frees, 12,456 bytes allocated
+==29603== 
+==29603== 80 bytes in 1 blocks are definitely lost in loss record 1 of 12
+==29603==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==29603==    by 0x401BF7: create1DArray_int64_t (Util.c:23)
+==29603==    by 0x400C78: _findMoves_ (CoinGame3.c:74)
+==29603==    by 0x401581: main (CoinGame3.c:303)
+==29603== 
+==29603== 80 bytes in 1 blocks are definitely lost in loss record 2 of 12
+==29603==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==29603==    by 0x401DA3: copy1DArray_int64_t (Util.c:80)
+==29603==    by 0x400CA6: _findMoves_ (CoinGame3.c:76)
+==29603==    by 0x401581: main (CoinGame3.c:303)
+==29603== 
+==29603== 80 bytes in 1 blocks are definitely lost in loss record 3 of 12
+==29603==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==29603==    by 0x401BF7: create1DArray_int64_t (Util.c:23)
+==29603==    by 0x400CDF: _findMoves_ (CoinGame3.c:80)
+==29603==    by 0x401581: main (CoinGame3.c:303)
+==29603== 
+==29603== 80 bytes in 1 blocks are definitely lost in loss record 4 of 12
+==29603==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==29603==    by 0x401DA3: copy1DArray_int64_t (Util.c:80)
+==29603==    by 0x400D0D: _findMoves_ (CoinGame3.c:82)
+==29603==    by 0x401581: main (CoinGame3.c:303)
+==29603== 
+==29603== 80 bytes in 1 blocks are definitely lost in loss record 5 of 12
+==29603==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==29603==    by 0x401BF7: create1DArray_int64_t (Util.c:23)
+==29603==    by 0x400D46: _findMoves_ (CoinGame3.c:86)
+==29603==    by 0x401581: main (CoinGame3.c:303)
+==29603== 
+==29603== 80 bytes in 1 blocks are definitely lost in loss record 6 of 12
+==29603==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==29603==    by 0x401DA3: copy1DArray_int64_t (Util.c:80)
+==29603==    by 0x400D74: _findMoves_ (CoinGame3.c:88)
+==29603==    by 0x401581: main (CoinGame3.c:303)
+==29603== 
+==29603== 800 bytes in 1 blocks are definitely lost in loss record 12 of 12
+==29603==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==29603==    by 0x401DA3: copy1DArray_int64_t (Util.c:80)
+==29603==    by 0x4014EE: main (CoinGame3.c:298)
+==29603== 
+==29603== LEAK SUMMARY:
+==29603==    definitely lost: 1,280 bytes in 7 blocks
+==29603==    indirectly lost: 0 bytes in 0 blocks
+==29603==      possibly lost: 0 bytes in 0 blocks
+==29603==    still reachable: 2,984 bytes in 5 blocks
+==29603==         suppressed: 0 bytes in 0 blocks
+==29603== Reachable blocks (those to which a pointer was found) are not shown.
+==29603== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==29603== 
+==29603== For counts of detected and suppressed errors, rerun with: -v
+==29603== ERROR SUMMARY: 7 errors from 7 contexts (suppressed: 0 from 0)

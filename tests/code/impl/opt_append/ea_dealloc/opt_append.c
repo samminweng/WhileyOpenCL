@@ -62,7 +62,7 @@ blklab6:;
 	//assign %4 = %13  : byte[]
 	_DEALLOC(nitems);
 	_COPY_1DARRAY_BYTE(nitems, _13);
-	_ADD_DEALLOC(nitems);
+	_ADD_DEALLOC(nitems, _13);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %5 = %14  : int
@@ -156,7 +156,7 @@ int main(int argc, char** args){
 	//assign %1 = %7  : byte[]
 	_DEALLOC(b);
 	_COPY_1DARRAY_BYTE(b, _7);
-	_ADD_DEALLOC(b);
+	_ADD_DEALLOC(b, _7);
 	//const %8 = 3 : int
 	_8 = 3;
 	//assign %2 = %8  : int
@@ -181,7 +181,7 @@ int main(int argc, char** args){
 	//assign %4 = %11  : byte[]
 	_DEALLOC(a);
 	_COPY_1DARRAY_BYTE(a, _11);
-	_ADD_DEALLOC(a);
+	_ADD_DEALLOC(a, _11);
 	//assert
 	{
 		//const %12 = 2 : int

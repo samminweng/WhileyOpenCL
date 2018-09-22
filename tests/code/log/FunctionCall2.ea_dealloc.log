@@ -1,12 +1,12 @@
-	DEBUG: _ADD_DEALLOC macro on  ( a ) (LINE:115 FILE: FunctionCall2.c)
-	DEBUG: _ADD_DEALLOC macro on  ( t ) (LINE:17 FILE: FunctionCall2.c)
+	DEBUG: _ADD_DEALLOC macro on  ( a and _9 ) (LINE:115 FILE: FunctionCall2.c)
+	DEBUG: _ADD_DEALLOC macro on  ( t and s ) (LINE:17 FILE: FunctionCall2.c)
 	DEBUG: _CALLER_DEALLOC macro on ( "false-true-false" "a" "func" ) (LINE:124 FILE: FunctionCall2.c)
 	DEBUG: Potential memory leaks at ( "false-true-false" "a" "func" ) (LINE:124 FILE: FunctionCall2.c)
-	DEBUG: _ADD_DEALLOC macro on  ( a ) (LINE:130 FILE: FunctionCall2.c)
+	DEBUG: _ADD_DEALLOC macro on  ( a and _10 ) (LINE:130 FILE: FunctionCall2.c)
 a[2]=3
-	DEBUG: _ADD_DEALLOC macro on  ( b ) (LINE:187 FILE: FunctionCall2.c)
+	DEBUG: _ADD_DEALLOC macro on  ( b and _27 ) (LINE:187 FILE: FunctionCall2.c)
 	DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "b" "func" ) (LINE:196 FILE: FunctionCall2.c)
 	DEBUG: Potential memory leaks at ( "false-true-true" "b" "func" ) (LINE:196 FILE: FunctionCall2.c)
-	DEBUG: _ADD_DEALLOC macro on  ( c ) (LINE:202 FILE: FunctionCall2.c)
+	DEBUG: _ADD_DEALLOC macro on  ( c and _28 ) (LINE:202 FILE: FunctionCall2.c)
 b[2]=0
 c[2]=0

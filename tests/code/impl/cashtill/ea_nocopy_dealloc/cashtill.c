@@ -454,7 +454,7 @@ blklab25:;
 		// isCopyEliminated = false
 		_DEALLOC(tmp);
 		_COPY_1DARRAY_int64_t(tmp, till);
-		_ADD_DEALLOC(tmp);
+		_ADD_DEALLOC(tmp, till);
 		//indexof %14 = %4, %3 : int[]
 		_14=tmp[i];
 		//const %15 = 1 : int

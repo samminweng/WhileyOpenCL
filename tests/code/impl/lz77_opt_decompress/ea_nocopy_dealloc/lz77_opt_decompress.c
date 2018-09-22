@@ -413,7 +413,7 @@ int main(int argc, char** args){
 	//indirectinvoke (%6) = %7 () : method()->(byte[])
 	{
 		_6 = readAll(file, &_6_size);
-		_ADD_DEALLOC(_6);
+		_6_dealloc = true;
 	}
 	//assign %2 = %6  : byte[]
 	// isCopyEliminated = true

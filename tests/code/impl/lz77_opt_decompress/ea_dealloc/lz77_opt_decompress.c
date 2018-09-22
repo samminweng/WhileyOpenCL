@@ -19,7 +19,7 @@ BYTE* _resize_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64
 	//assign %2 = %5  : byte[]
 	_DEALLOC(nitems);
 	_COPY_1DARRAY_BYTE(nitems, _5);
-	_ADD_DEALLOC(nitems);
+	_ADD_DEALLOC(nitems, _5);
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %3 = %6  : int
@@ -114,7 +114,7 @@ blklab10:;
 	//assign %4 = %13  : byte[]
 	_DEALLOC(nitems);
 	_COPY_1DARRAY_BYTE(nitems, _13);
-	_ADD_DEALLOC(nitems);
+	_ADD_DEALLOC(nitems, _13);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %5 = %14  : int
@@ -210,7 +210,7 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 	//assign %2 = %13  : byte[]
 	_DEALLOC(items);
 	_COPY_1DARRAY_BYTE(items, _13);
-	_ADD_DEALLOC(items);
+	_ADD_DEALLOC(items, _13);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %3 = %14  : int
@@ -263,7 +263,7 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 		//assign %2 = %26  : byte[]
 		_DEALLOC(items);
 		_COPY_1DARRAY_BYTE(items, _26);
-		_ADD_DEALLOC(items);
+		_ADD_DEALLOC(items, _26);
 		//const %27 = 1 : int
 		_27 = 1;
 		//add %28 = %3, %27 : int
@@ -314,7 +314,7 @@ blklab20:;
 			//assign %2 = %34  : byte[]
 			_DEALLOC(items);
 			_COPY_1DARRAY_BYTE(items, _34);
-			_ADD_DEALLOC(items);
+			_ADD_DEALLOC(items, _34);
 			//const %35 = 1 : int
 			_35 = 1;
 			//add %36 = %3, %35 : int
@@ -351,7 +351,7 @@ blklab18:;
 	//assign %1 = %39  : byte[]
 	_DEALLOC(output);
 	_COPY_1DARRAY_BYTE(output, _39);
-	_ADD_DEALLOC(output);
+	_ADD_DEALLOC(output, _39);
 	//return %1
 	_DEALLOC(data);
 	_DEALLOC(items);
@@ -404,12 +404,12 @@ int main(int argc, char** args){
 	//indirectinvoke (%6) = %7 () : method()->(byte[])
 	{
 		_6 = readAll(file, &_6_size);
-		_ADD_DEALLOC(_6);
+		_6_dealloc = true;
 	}
 	//assign %2 = %6  : byte[]
 	_DEALLOC(input_data);
 	_COPY_1DARRAY_BYTE(input_data, _6);
-	_ADD_DEALLOC(input_data);
+	_ADD_DEALLOC(input_data, _6);
 	//invoke (%8) = (%2) lz77_opt_decompress:decompress : function(byte[])->(byte[])
 	{
 		void* tmp_data;
@@ -422,7 +422,7 @@ int main(int argc, char** args){
 	//assign %3 = %8  : byte[]
 	_DEALLOC(decompress_data);
 	_COPY_1DARRAY_BYTE(decompress_data, _8);
-	_ADD_DEALLOC(decompress_data);
+	_ADD_DEALLOC(decompress_data, _8);
 	//fieldload %9 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %10 = %9 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %11 = [68,69,67,79,77,80,82,69,83,83,69,68,58,32,32,32] : int[]

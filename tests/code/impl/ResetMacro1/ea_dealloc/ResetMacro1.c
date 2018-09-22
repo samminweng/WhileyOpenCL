@@ -46,7 +46,7 @@ int main(int argc, char** args){
 	//assign %1 = %5  : int[]
 	_DEALLOC(x);
 	_COPY_1DARRAY_int64_t(x, _5);
-	_ADD_DEALLOC(x);
+	_ADD_DEALLOC(x, _5);
 	//const %7 = 11 : int
 	_7 = 11;
 	//invoke (%6) = (%1, %7) ResetMacro1:func : function(int[],int)->(int[])
@@ -61,11 +61,11 @@ int main(int argc, char** args){
 	//assign %2 = %6  : int[]
 	_DEALLOC(tmp);
 	_COPY_1DARRAY_int64_t(tmp, _6);
-	_ADD_DEALLOC(tmp);
+	_ADD_DEALLOC(tmp, _6);
 	//assign %1 = %2  : int[]
 	_DEALLOC(x);
 	_COPY_1DARRAY_int64_t(x, tmp);
-	_ADD_DEALLOC(x);
+	_ADD_DEALLOC(x, tmp);
 	//assert
 	{
 		//const %8 = 0 : int

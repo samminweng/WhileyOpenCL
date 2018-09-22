@@ -221,7 +221,7 @@ int main(int argc, char** args){
 	//assign %1 = %10  : int[]
 	_DEALLOC(ys);
 	_COPY_1DARRAY_int64_t(ys, _10);
-	_ADD_DEALLOC(ys);
+	_ADD_DEALLOC(ys, _10);
 	//invoke (%11) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		void* tmp_items;
@@ -234,7 +234,7 @@ int main(int argc, char** args){
 	//assign %1 = %11  : int[]
 	_DEALLOC(ys);
 	_COPY_1DARRAY_int64_t(ys, _11);
-	_ADD_DEALLOC(ys);
+	_ADD_DEALLOC(ys, _11);
 	//assert
 	{
 		//const %12 = 1 : int
@@ -283,7 +283,7 @@ blklab5:;
 	//assign %1 = %24  : int[]
 	_DEALLOC(ys);
 	_COPY_1DARRAY_int64_t(ys, _24);
-	_ADD_DEALLOC(ys);
+	_ADD_DEALLOC(ys, _24);
 	//invoke (%25) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		void* tmp_items;
@@ -296,7 +296,7 @@ blklab5:;
 	//assign %1 = %25  : int[]
 	_DEALLOC(ys);
 	_COPY_1DARRAY_int64_t(ys, _25);
-	_ADD_DEALLOC(ys);
+	_ADD_DEALLOC(ys, _25);
 	//assert
 	{
 		//const %26 = 2 : int
@@ -343,7 +343,7 @@ blklab6:;
 	//assign %1 = %37  : int[]
 	_DEALLOC(ys);
 	_COPY_1DARRAY_int64_t(ys, _37);
-	_ADD_DEALLOC(ys);
+	_ADD_DEALLOC(ys, _37);
 	//invoke (%38) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		void* tmp_items;
@@ -356,7 +356,7 @@ blklab6:;
 	//assign %1 = %38  : int[]
 	_DEALLOC(ys);
 	_COPY_1DARRAY_int64_t(ys, _38);
-	_ADD_DEALLOC(ys);
+	_ADD_DEALLOC(ys, _38);
 	//assert
 	{
 		//const %39 = 1 : int
@@ -405,7 +405,7 @@ blklab7:;
 	//assign %1 = %51  : int[]
 	_DEALLOC(ys);
 	_COPY_1DARRAY_int64_t(ys, _51);
-	_ADD_DEALLOC(ys);
+	_ADD_DEALLOC(ys, _51);
 	//invoke (%52) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		void* tmp_items;
@@ -418,7 +418,7 @@ blklab7:;
 	//assign %1 = %52  : int[]
 	_DEALLOC(ys);
 	_COPY_1DARRAY_int64_t(ys, _52);
-	_ADD_DEALLOC(ys);
+	_ADD_DEALLOC(ys, _52);
 	//assert
 	{
 		//const %53 = 1 : int
@@ -468,7 +468,7 @@ blklab8:;
 	//assign %4 = %64  : int[]
 	_DEALLOC(arr);
 	_COPY_1DARRAY_int64_t(arr, _64);
-	_ADD_DEALLOC(arr);
+	_ADD_DEALLOC(arr, _64);
 	//loop (%3, %4, %65, %66, %67)
 	while(true){
 		//ifge %3, %2 goto blklab9 : int
@@ -500,7 +500,7 @@ blklab9:;
 	//assign %4 = %68  : int[]
 	_DEALLOC(arr);
 	_COPY_1DARRAY_int64_t(arr, _68);
-	_ADD_DEALLOC(arr);
+	_ADD_DEALLOC(arr, _68);
 	//assert
 	{
 		//const %69 = 1 : int

@@ -296,7 +296,7 @@ blklab16:;
 		// isCopyEliminated = false
 		_DEALLOC_STRUCT(b2, Board);
 		b2 = copy_Board(b1);
-		_ADD_DEALLOC(b2);
+		_ADD_DEALLOC_STRUCT(b2, b1);
 		//const %23 = null : null
 		_23 = NULL;
 		//assign %2 = %23  : null
@@ -337,7 +337,7 @@ blklab19:;
 		// isCopyEliminated = false
 		_DEALLOC_STRUCT(b1, Board);
 		b1 = copy_Board(b2);
-		_ADD_DEALLOC(b1);
+		_ADD_DEALLOC_STRUCT(b1, b2);
 		//const %31 = null : null
 		_31 = NULL;
 		//assign %3 = %31  : null

@@ -21,7 +21,7 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(b), _DECL_DEALLOC_PARAM(b), int64_t num, _DE
 	//assign %3 = %6  : int[]
 	_DEALLOC(c);
 	_COPY_1DARRAY_int64_t(c, _6);
-	_ADD_DEALLOC(c);
+	_ADD_DEALLOC(c, _6);
 	//const %7 = 10 : int
 	_7 = 10;
 	//ifle %1, %7 goto blklab0 : int
@@ -89,7 +89,7 @@ int main(int argc, char** args){
 	//assign %1 = %5  : int[]
 	_DEALLOC(b);
 	_COPY_1DARRAY_int64_t(b, _5);
-	_ADD_DEALLOC(b);
+	_ADD_DEALLOC(b, _5);
 	//const %7 = 11 : int
 	_7 = 11;
 	//invoke (%6) = (%1, %7) ResetMacro3:func : function(int[],int)->(int[])
@@ -104,11 +104,11 @@ int main(int argc, char** args){
 	//assign %2 = %6  : int[]
 	_DEALLOC(tmp);
 	_COPY_1DARRAY_int64_t(tmp, _6);
-	_ADD_DEALLOC(tmp);
+	_ADD_DEALLOC(tmp, _6);
 	//assign %1 = %2  : int[]
 	_DEALLOC(b);
 	_COPY_1DARRAY_int64_t(b, tmp);
-	_ADD_DEALLOC(b);
+	_ADD_DEALLOC(b, tmp);
 	//assert
 	{
 		//const %8 = 0 : int
@@ -150,7 +150,7 @@ blklab2:;
 	//assign %1 = %15  : int[]
 	_DEALLOC(b);
 	_COPY_1DARRAY_int64_t(b, _15);
-	_ADD_DEALLOC(b);
+	_ADD_DEALLOC(b, _15);
 	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %18 = %17 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %19 = 0 : int

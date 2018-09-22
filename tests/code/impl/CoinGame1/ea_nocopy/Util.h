@@ -283,6 +283,15 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 *
 */
 // Release the structure pointers without checking de-allocated flag.
+// Deallocate any previously allocated heap array variable
+#define _DEALLOC(a) \
+		({\
+			if(a##_dealloc){\
+				free(a);\
+				a = NULL;\
+				a##_dealloc=false;\
+			}\
+		})
 // The standard structure member function code to free an array of structure pointers
 #define _FREE_1DARRAY_STRUCT(a, name) \
 		({\
@@ -292,16 +301,6 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 			}\
 			free(a);\
 			a = NULL;\
-		})
-
-// Deallocate any previously allocated heap variable
-#define _DEALLOC(a) \
-		({\
-			if(a##_dealloc){\
-				free(a);\
-				a = NULL;\
-				a##_dealloc=false;\
-			}\
 		})
 // Deallocate an array of an array of integers
 #define _DEALLOC_2DARRAY_int64_t(a) \
@@ -359,14 +358,20 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 			DEBUG_PRINT("_NEW1DARRAY_DEALLOC macro on  ( "str(a)" )");\
 			a##_dealloc = true;\
 		})
-// Add deallocation flag for a given variable
-#define _ADD_DEALLOC(a) \
+// Add deallocation flag for an array variable
+#define _ADD_DEALLOC(a, b) \
         ({\
-		    DEBUG_PRINT("_ADD_DEALLOC macro on  ( "str(a)" )");\
+		    DEBUG_PRINT("_ADD_DEALLOC macro on  ( "str(a)" and "str(b)" )");\
+			a##_dealloc = true;\
+		})
+// Add deallocation flag for user-defined structure typed variable 
+#define _ADD_DEALLOC_STRUCT(a, b) \
+        ({\
+		    DEBUG_PRINT("_ADD_DEALLOC_STRUCT macro on  ( "str(a)" and "str(b)" )");\
 			a##_dealloc = true;\
 		})
 // Take out a variable's deallocation flag
-#define _REMOVE_DEALLOC(a) \
+//#define _REMOVE_DEALLOC(a) \
         ({\
 			DEBUG_PRINT("_REMOVE_DEALLOC macro on  ( "str(a)" )");\
 			a##_dealloc = false;\

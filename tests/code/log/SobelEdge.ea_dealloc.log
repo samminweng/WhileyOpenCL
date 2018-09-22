@@ -1,9 +1,8 @@
-	DEBUG: _ADD_DEALLOC macro on  ( _10 ) (LINE:638 FILE: SobelEdge.c)
-	DEBUG: _ADD_DEALLOC macro on  ( pixels ) (LINE:643 FILE: SobelEdge.c)
+	DEBUG: _ADD_DEALLOC macro on  ( pixels and _10 ) (LINE:643 FILE: SobelEdge.c)
 	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _16 ) (LINE:269 FILE: SobelEdge.c)
-	DEBUG: _ADD_DEALLOC macro on  ( newPixels ) (LINE:273 FILE: SobelEdge.c)
-	DEBUG: _ADD_DEALLOC macro on  ( v_sobel ) (LINE:306 FILE: SobelEdge.c)
-	DEBUG: _ADD_DEALLOC macro on  ( h_sobel ) (LINE:339 FILE: SobelEdge.c)
+	DEBUG: _ADD_DEALLOC macro on  ( newPixels and _16 ) (LINE:273 FILE: SobelEdge.c)
+	DEBUG: _ADD_DEALLOC macro on  ( v_sobel and _29 ) (LINE:306 FILE: SobelEdge.c)
+	DEBUG: _ADD_DEALLOC macro on  ( h_sobel and _42 ) (LINE:339 FILE: SobelEdge.c)
 	DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "pixels" "convolution" ) (LINE:369 FILE: SobelEdge.c)
 	DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "v_sobel" "convolution" ) (LINE:370 FILE: SobelEdge.c)
 	DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "pixels" "convolution" ) (LINE:381 FILE: SobelEdge.c)
@@ -16389,7 +16388,7 @@
 	DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "pixels" "convolution" ) (LINE:381 FILE: SobelEdge.c)
 	DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "h_sobel" "convolution" ) (LINE:382 FILE: SobelEdge.c)
 	DEBUG: _CALLEE_DEALLOC macro on ( "false-false-false" "pixels" "sobelEdgeDetection" ) (LINE:650 FILE: SobelEdge.c)
-	DEBUG: _ADD_DEALLOC macro on  ( newPixels ) (LINE:656 FILE: SobelEdge.c)
+	DEBUG: _ADD_DEALLOC macro on  ( newPixels and _12 ) (LINE:656 FILE: SobelEdge.c)
 P1
 64 64
 0000000000000000000000000000000000000000000000000000000000000000

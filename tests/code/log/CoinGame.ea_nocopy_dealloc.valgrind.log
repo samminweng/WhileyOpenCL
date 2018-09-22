@@ -1,23 +1,23 @@
-==21916== Memcheck, a memory error detector
-==21916== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==21916== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==21916== Command: ./CoinGame.out
-==21916== Parent PID: 21151
-==21916== 
-==21916== Invalid read of size 8
-==21916==    at 0x400E14: _play_ (CoinGame.c:119)
-==21916==    by 0x40239A: main (CoinGame.c:614)
-==21916==  Address 0x5203038 is 8 bytes before a block of size 800 alloc'd
-==21916==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==21916==    by 0x40292F: create1DArray_int64_t (Util.c:23)
-==21916==    by 0x40211F: main (CoinGame.c:595)
-==21916== 
-==21916== 
-==21916== HEAP SUMMARY:
-==21916==     in use at exit: 0 bytes in 0 blocks
-==21916==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
-==21916== 
-==21916== All heap blocks were freed -- no leaks are possible
-==21916== 
-==21916== For counts of detected and suppressed errors, rerun with: -v
-==21916== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==29430== Memcheck, a memory error detector
+==29430== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==29430== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==29430== Command: ./CoinGame.out
+==29430== Parent PID: 28647
+==29430== 
+==29430== Invalid read of size 8
+==29430==    at 0x400E14: _play_ (CoinGame.c:119)
+==29430==    by 0x40239A: main (CoinGame.c:614)
+==29430==  Address 0x5203038 is 8 bytes before a block of size 800 alloc'd
+==29430==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==29430==    by 0x40292F: create1DArray_int64_t (Util.c:23)
+==29430==    by 0x40211F: main (CoinGame.c:595)
+==29430== 
+==29430== 
+==29430== HEAP SUMMARY:
+==29430==     in use at exit: 0 bytes in 0 blocks
+==29430==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
+==29430== 
+==29430== All heap blocks were freed -- no leaks are possible
+==29430== 
+==29430== For counts of detected and suppressed errors, rerun with: -v
+==29430== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

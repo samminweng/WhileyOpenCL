@@ -530,7 +530,7 @@ blklab17:;
 			//assign %0 = %41  : int[]
 			_DEALLOC(moves);
 			_COPY_1DARRAY_int64_t(moves, _41);
-			_ADD_DEALLOC(moves);
+			_ADD_DEALLOC(moves, _41);
 			//const %42 = 1 : int
 			_42 = 1;
 			//add %43 = %4, %42 : int
@@ -602,7 +602,7 @@ int main(int argc, char** args){
 	//assign %2 = %7  : int[]
 	_DEALLOC(moves);
 	_COPY_1DARRAY_int64_t(moves, _7);
-	_ADD_DEALLOC(moves);
+	_ADD_DEALLOC(moves, _7);
 	//invoke (%8) = (%2, %1) CoinGame4:findMoves : function(int[],int)->(int[])
 	{
 		void* tmp_moves;
@@ -615,7 +615,7 @@ int main(int argc, char** args){
 	//assign %2 = %8  : int[]
 	_DEALLOC(moves);
 	_COPY_1DARRAY_int64_t(moves, _8);
-	_ADD_DEALLOC(moves);
+	_ADD_DEALLOC(moves, _8);
 	//invoke () = (%0, %2, %1) CoinGame4:play : method(whiley/lang/System:Console,int[],int)->()
 	{
 		void* tmp_moves;

@@ -299,7 +299,7 @@ public final class BaseTestUtil {
 	 * @param workingDir
 	 *            Working directory
 	 */
-	protected static int runCmd(String cmd, Path workingDir, boolean isWriteOut, File logfile) {
+	protected static int runCmd(String cmd, Path workingDir, boolean isWriteOut) {
 		// Get the runtime.
 		Runtime rt = Runtime.getRuntime();
 		// Compile the C program
@@ -315,41 +315,48 @@ public final class BaseTestUtil {
 			 */
 			process = rt.exec(cmd, null, workingDir.toFile());
 
-			// Store messages with an array list, to avoid duplicate messages and reduce log file size
-			List<String> messages = new ArrayList<String>();
-			// Instantly write out the output message to avoid the process to block.
-			InputStream input = process.getInputStream();
-			in_sc = new Scanner(input);
-			FileWriter pbmwriter = null;
-			if(isWriteOut){
-				// Write output as a PBM file.
-				File pbmfile = new File(workingDir+ File.separator +"output.pbm");
-				pbmfile.delete();
-				pbmfile.createNewFile();
-				// Create a writer
-				pbmwriter = new FileWriter(pbmfile, true);
-			}
-
-			while (in_sc.hasNextLine()) {
-				String line = in_sc.nextLine();
-				// De-bugging message can be ignored, to speed up ant task
-				if (line.contains("DEBUG:")) {
-					// Store debugging messages only
-					//line = line + " in " + workingDir.getFileName() + " folder";
-					//messages.add(line);
-				} else {
-					// Print out the message on console
-					System.out.println(line);
-					if(isWriteOut){
-						// Write out line to a file
-						pbmwriter.write(line+"\n");
-					}		
-				}
-			}
-			// Close the writer
-			if(isWriteOut){
-				pbmwriter.close();
-			}
+//			// Store messages with an array list, to avoid duplicate messages and reduce log file size
+//			List<String> messages = new ArrayList<String>();
+//			// Instantly write out the output message to avoid the process to block.
+//			InputStream input = process.getInputStream();
+//			in_sc = new Scanner(input);
+//			FileWriter pbmwriter = null;
+//			if(isWriteOut){
+//				// Write output as a PBM file.
+//				File pbmfile = new File(workingDir+ File.separator +"output.pbm");
+//				pbmfile.delete();
+//				pbmfile.createNewFile();
+//				// Create a writer
+//				pbmwriter = new FileWriter(pbmfile, true);
+//			}
+//
+//			while (in_sc.hasNextLine()) {
+//				String line = in_sc.nextLine();
+//				// De-bugging message can be ignored, to speed up ant task
+//				if (line.contains("DEBUG:")) {
+//					// Store debugging messages only
+//					//line = line + " in " + workingDir.getFileName() + " folder";
+//					//messages.add(line);
+//				} else {
+//					// Print out the message on console
+//					messages.add(line);
+//					//System.out.println(line);
+//					if(isWriteOut){
+//						// Write out line to a file
+//						pbmwriter.write(line+"\n");
+//					}		
+//				}
+//			}
+//			// Close the writer
+//			if(isWriteOut){
+//				pbmwriter.close();
+//			}
+//			
+//			// Print out all the messages
+//			for(String msg: messages) {
+//				System.out.println(msg);
+//			}
+			
 			// Get the return value.
 			exitValue = process.waitFor();
 			if (exitValue != 0) {
@@ -360,28 +367,28 @@ public final class BaseTestUtil {
 				while (err_sc.hasNext()) {
 					String line = err_sc.nextLine();
 					System.err.println(line);
-					messages.add(line);
+					//messages.add(line);
 				}
 			}
 
 			// Aggregate the message and count the number of occurrence
 			// And output the results as a hashmap
-			Map<String, Long> logs = messages.stream()
-					.collect(Collectors.groupingBy(msg -> msg, Collectors.counting()));
-			// Create log file to write out debug and error messages
-			if (!logfile.exists()) {
-				logfile.createNewFile();
-			}
-			FileWriter writer = new FileWriter(logfile, true);
-			logs.forEach((line, count) -> {
-				try {
-					writer.write(line + "\tFrequency: " + count+"\n");
-				} catch (IOException e) {
-					throw new RuntimeException("Error erors while writing "+logfile+ " file.");
-				}
-			});
-
-			writer.close();
+//			Map<String, Long> logs = messages.stream()
+//					.collect(Collectors.groupingBy(msg -> msg, Collectors.counting()));
+//			// Create log file to write out debug and error messages
+//			if (!logfile.exists()) {
+//				logfile.createNewFile();
+//			}
+//			FileWriter writer = new FileWriter(logfile, true);
+//			logs.forEach((line, count) -> {
+//				try {
+//					writer.write(line + "\tFrequency: " + count+"\n");
+//				} catch (IOException e) {
+//					throw new RuntimeException("Error erors while writing "+logfile+ " file.");
+//				}
+//			});
+//
+//			writer.close();
 
 		} catch (IOException | InterruptedException e) {
 			throw new RuntimeException("Errors occurs in executing '" + cmd + "'");
@@ -446,7 +453,7 @@ public final class BaseTestUtil {
 	 * @param destDir
 	 * @param isWriteOut decides whether to write output to a file or not.
 	 */
-	protected static void compileAndRunCCode(String testcase, Path destDir, boolean isWriteOut, File logfile) {
+	protected static void compileAndRunCCode(String testcase, Path destDir, boolean isWriteOut) {
 		// Get Operation System.
 		// 4. Compile and run the C code.
 		if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
@@ -455,7 +462,7 @@ public final class BaseTestUtil {
 			String path = System.getenv("PATH");// Get PATH environment variable.
 			if (path.contains("MinGW")) {
 				// Check the exit value. If not 0, the compilation has errors.
-				assertEquals(runCmd("cmd /c gcc -std=c11 -D DEBUG *.c -o " + testcase + ".out", destDir, isWriteOut, logfile), 0);
+				assertEquals(runCmd("cmd /c gcc -std=c11 *.c -o " + testcase + ".out", destDir, isWriteOut), 0);
 			} /*else if (path.contains("cygwin")) {
 				// Gcc is a link (Windows command does not get it), so call its actual name (i.e. gcc-3 or gcc-4)
 				assertEquals(runCmd("cmd /c gcc-4 -std=c11 -D DEBUG *.c  -o " + testcase + ".out", destDir), 0);
@@ -466,17 +473,17 @@ public final class BaseTestUtil {
 			}
 
 			// Run the output file.
-			assertEquals(runCmd("cmd /c " + testcase + ".out", destDir, isWriteOut, logfile), 0);
+			assertEquals(runCmd("cmd /c " + testcase + ".out", destDir, isWriteOut), 0);
 		} else {
 			
-			String cmd = "gcc -std=c11 -D DEBUG Util.c WyRT.c "+testcase+".c -o " + testcase + ".out";
+			String cmd = "gcc -std=c11 Util.c WyRT.c "+testcase+".c -o " + testcase + ".out";
 			System.out.println(cmd);
 			// Use C11 standard to Compile the C program into *.out and place it in current working directory
-			assertEquals(runCmd(cmd, destDir, isWriteOut, logfile), 0);
+			assertEquals(runCmd(cmd, destDir, isWriteOut), 0);
 			cmd = "./" + testcase + ".out";
 			System.out.println(cmd);
 			// Run the generated out file
-			assertEquals(runCmd(cmd, destDir, isWriteOut, logfile), 0);
+			assertEquals(runCmd(cmd, destDir, isWriteOut), 0);
 		}
 
 	}
@@ -639,7 +646,7 @@ public final class BaseTestUtil {
 			String cmd = makeCmd(testcase, options);
 
 			// 4. Generate the C code
-			runCmd(cmd, destDir, false, logfile);
+			runCmd(cmd, destDir, false);
 
 			// Check if *.c and *.h files are generated or not.
 			assertEquals(Files.exists(Paths.get(destDir + File.separator + testcase + ".c")), true);
@@ -648,9 +655,9 @@ public final class BaseTestUtil {
 			// Get Operation System.
 			if(testcase.equals("SobelEdge1")|| testcase.equals("SobelEdge2")){
 				// Write output to a PBM file
-				compileAndRunCCode(testcase, destDir, true, logfile);
+				compileAndRunCCode(testcase, destDir, true);
 			}else{
-				compileAndRunCCode(testcase, destDir, false, logfile);
+				compileAndRunCCode(testcase, destDir, false);
 			}
 
 			// Delete the Wyil files inside folder

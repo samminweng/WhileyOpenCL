@@ -32,7 +32,7 @@ int main(int argc, char** args){
 	//assign %2 = %6  : byte[]
 	_DEALLOC(pixels);
 	_COPY_1DARRAY_BYTE(pixels, _6);
-	_ADD_DEALLOC(pixels);
+	_ADD_DEALLOC(pixels, _6);
 	//const %7 = 0 : int
 	_7 = 0;
 	//assign %3 = %7  : int

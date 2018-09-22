@@ -1,27 +1,27 @@
-==22544== Memcheck, a memory error detector
-==22544== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==22544== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==22544== Command: ./FunctionCall1.out
-==22544== Parent PID: 21151
-==22544== 
-==22544== 
-==22544== HEAP SUMMARY:
-==22544==     in use at exit: 520 bytes in 13 blocks
-==22544==   total heap usage: 14 allocs, 1 frees, 8,712 bytes allocated
-==22544== 
-==22544== 40 bytes in 1 blocks are definitely lost in loss record 13 of 13
-==22544==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==22544==    by 0x401691: copy1DArray_int64_t (Util.c:80)
-==22544==    by 0x400DFF: main (FunctionCall1.c:77)
-==22544== 
-==22544== LEAK SUMMARY:
-==22544==    definitely lost: 40 bytes in 1 blocks
-==22544==    indirectly lost: 0 bytes in 0 blocks
-==22544==      possibly lost: 0 bytes in 0 blocks
-==22544==    still reachable: 480 bytes in 12 blocks
-==22544==         suppressed: 0 bytes in 0 blocks
-==22544== Reachable blocks (those to which a pointer was found) are not shown.
-==22544== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==22544== 
-==22544== For counts of detected and suppressed errors, rerun with: -v
-==22544== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==30019== Memcheck, a memory error detector
+==30019== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==30019== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==30019== Command: ./FunctionCall1.out
+==30019== Parent PID: 28647
+==30019== 
+==30019== 
+==30019== HEAP SUMMARY:
+==30019==     in use at exit: 520 bytes in 13 blocks
+==30019==   total heap usage: 14 allocs, 1 frees, 8,712 bytes allocated
+==30019== 
+==30019== 40 bytes in 1 blocks are definitely lost in loss record 13 of 13
+==30019==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30019==    by 0x401691: copy1DArray_int64_t (Util.c:80)
+==30019==    by 0x400DFF: main (FunctionCall1.c:77)
+==30019== 
+==30019== LEAK SUMMARY:
+==30019==    definitely lost: 40 bytes in 1 blocks
+==30019==    indirectly lost: 0 bytes in 0 blocks
+==30019==      possibly lost: 0 bytes in 0 blocks
+==30019==    still reachable: 480 bytes in 12 blocks
+==30019==         suppressed: 0 bytes in 0 blocks
+==30019== Reachable blocks (those to which a pointer was found) are not shown.
+==30019== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==30019== 
+==30019== For counts of detected and suppressed errors, rerun with: -v
+==30019== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

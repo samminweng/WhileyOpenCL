@@ -288,7 +288,7 @@ public class DeallocationAnalyzer extends Analyzer {
 				statements.add(indent + transferDealloc(lhs, rhs, function, stores));
 			} else {
 				// Add deallocation flag to lhs register
-				statements.add(indent + addDealloc(lhs, function, stores));
+				statements.add(indent + addDealloc(lhs, rhs, function, stores));
 			}
 		}
 
@@ -532,14 +532,19 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * </code>
 	 * </pre>
 	 * 
-	 * @param var
+	 * @param lhs lhs register
+	 * @param rhs rhs register
 	 * @return
 	 */
-	private String addDealloc(int register, FunctionOrMethod function, CodeStores stores) {
-		Type type = stores.getRawType(register, function);
-		if (stores.isCompoundType(type) || type instanceof Type.Union) {
-			String var = stores.getVar(register, function);
-			return "_ADD_DEALLOC(" + var + ");";
+	private String addDealloc(int lhs, int rhs, FunctionOrMethod function, CodeStores stores) {
+		Type type = stores.getRawType(lhs, function);
+		String lhs_var = stores.getVar(lhs, function);
+		String rhs_var = stores.getVar(rhs, function);
+		if (type instanceof Type.Array) {
+			Type elm_type = ((Type.Array)type).element();
+			return "_ADD_DEALLOC(" + lhs_var + ", " + rhs_var + ");";			
+		}else if (stores.isCompoundType(type) || type instanceof Type.Union) {
+			return "_ADD_DEALLOC_STRUCT(" + lhs_var + ", " + rhs_var + ");";
 		}
 		return "";
 	}

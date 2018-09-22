@@ -31,7 +31,7 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(x), _DECL_DEALLOC_PARAM(x), int64_t num, _DE
 	//assign %3 = %9  : int[]
 	_DEALLOC(a);
 	_COPY_1DARRAY_int64_t(a, _9);
-	_ADD_DEALLOC(a);
+	_ADD_DEALLOC(a, _9);
 	//const %10 = 1 : int
 	_10 = 1;
 	//const %11 = 3 : int
@@ -43,15 +43,15 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(x), _DECL_DEALLOC_PARAM(x), int64_t num, _DE
 	//assign %4 = %12  : int[]
 	_DEALLOC(b);
 	_COPY_1DARRAY_int64_t(b, _12);
-	_ADD_DEALLOC(b);
+	_ADD_DEALLOC(b, _12);
 	//assign %5 = %3  : int[]
 	_DEALLOC(c);
 	_COPY_1DARRAY_int64_t(c, a);
-	_ADD_DEALLOC(c);
+	_ADD_DEALLOC(c, a);
 	//assign %6 = %4  : int[]
 	_DEALLOC(d);
 	_COPY_1DARRAY_int64_t(d, b);
-	_ADD_DEALLOC(d);
+	_ADD_DEALLOC(d, b);
 	//const %13 = 10 : int
 	_13 = 10;
 	//ifle %1, %13 goto blklab0 : int
@@ -157,7 +157,7 @@ int main(int argc, char** args){
 	//assign %1 = %5  : int[]
 	_DEALLOC(x);
 	_COPY_1DARRAY_int64_t(x, _5);
-	_ADD_DEALLOC(x);
+	_ADD_DEALLOC(x, _5);
 	//const %7 = 11 : int
 	_7 = 11;
 	//invoke (%6) = (%1, %7) CallerMacro4:func : function(int[],int)->(int[])
@@ -172,7 +172,7 @@ int main(int argc, char** args){
 	//assign %2 = %6  : int[]
 	_DEALLOC(y);
 	_COPY_1DARRAY_int64_t(y, _6);
-	_ADD_DEALLOC(y);
+	_ADD_DEALLOC(y, _6);
 	//assert
 	{
 		//const %8 = 0 : int
@@ -225,7 +225,7 @@ blklab3:;
 	//assign %2 = %18  : int[]
 	_DEALLOC(y);
 	_COPY_1DARRAY_int64_t(y, _18);
-	_ADD_DEALLOC(y);
+	_ADD_DEALLOC(y, _18);
 	//assert
 	{
 		//const %20 = 0 : int
@@ -278,7 +278,7 @@ blklab4:;
 	//assign %2 = %30  : int[]
 	_DEALLOC(y);
 	_COPY_1DARRAY_int64_t(y, _30);
-	_ADD_DEALLOC(y);
+	_ADD_DEALLOC(y, _30);
 	//assert
 	{
 		//const %32 = 0 : int

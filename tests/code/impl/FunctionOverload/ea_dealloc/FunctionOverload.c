@@ -54,7 +54,7 @@ int main(int argc, char** args){
 	//assign %1 = %2  : int[]
 	_DEALLOC(empty);
 	_COPY_1DARRAY_int64_t(empty, _2);
-	_ADD_DEALLOC(empty);
+	_ADD_DEALLOC(empty, _2);
 	//return
 	_DEALLOC(empty);
 	_DEALLOC(_2);

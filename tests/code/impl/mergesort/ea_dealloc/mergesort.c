@@ -77,7 +77,7 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	//assign %5 = %15  : int[]
 	_DEALLOC(lhs);
 	_COPY_1DARRAY_int64_t(lhs, _15);
-	_ADD_DEALLOC(lhs);
+	_ADD_DEALLOC(lhs, _15);
 	//const %17 = 0 : int
 	_17 = 0;
 	//invoke (%16) = (%5, %17, %4) mergesort:sortV1 : function(int[],int,int)->(int[])
@@ -92,7 +92,7 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	//assign %5 = %16  : int[]
 	_DEALLOC(lhs);
 	_COPY_1DARRAY_int64_t(lhs, _16);
-	_ADD_DEALLOC(lhs);
+	_ADD_DEALLOC(lhs, _16);
 	//invoke (%18) = (%0, %4, %2) whiley/lang/Array:slice : function(int[],int,int)->(int[])
 	{
 		_DEALLOC(_18);
@@ -102,7 +102,7 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	//assign %6 = %18  : int[]
 	_DEALLOC(rhs);
 	_COPY_1DARRAY_int64_t(rhs, _18);
-	_ADD_DEALLOC(rhs);
+	_ADD_DEALLOC(rhs, _18);
 	//const %20 = 0 : int
 	_20 = 0;
 	//sub %21 = %2, %4 : int
@@ -119,7 +119,7 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	//assign %6 = %19  : int[]
 	_DEALLOC(rhs);
 	_COPY_1DARRAY_int64_t(rhs, _19);
-	_ADD_DEALLOC(rhs);
+	_ADD_DEALLOC(rhs, _19);
 	//const %22 = 0 : int
 	_22 = 0;
 	//assign %7 = %22  : int
@@ -382,7 +382,7 @@ int main(int argc, char** args){
 	//assign %1 = %10  : int[]
 	_DEALLOC(ys);
 	_COPY_1DARRAY_int64_t(ys, _10);
-	_ADD_DEALLOC(ys);
+	_ADD_DEALLOC(ys, _10);
 	//const %12 = 0 : int
 	_12 = 0;
 	//const %13 = 5 : int
@@ -399,7 +399,7 @@ int main(int argc, char** args){
 	//assign %1 = %11  : int[]
 	_DEALLOC(ys);
 	_COPY_1DARRAY_int64_t(ys, _11);
-	_ADD_DEALLOC(ys);
+	_ADD_DEALLOC(ys, _11);
 	//assert
 	{
 		//const %14 = 1 : int
@@ -442,7 +442,7 @@ blklab9:;
 	//assign %1 = %24  : int[]
 	_DEALLOC(ys);
 	_COPY_1DARRAY_int64_t(ys, _24);
-	_ADD_DEALLOC(ys);
+	_ADD_DEALLOC(ys, _24);
 	//const %26 = 0 : int
 	_26 = 0;
 	//const %27 = 4 : int
@@ -459,7 +459,7 @@ blklab9:;
 	//assign %1 = %25  : int[]
 	_DEALLOC(ys);
 	_COPY_1DARRAY_int64_t(ys, _25);
-	_ADD_DEALLOC(ys);
+	_ADD_DEALLOC(ys, _25);
 	//assert
 	{
 		//const %28 = 2 : int
@@ -500,7 +500,7 @@ blklab10:;
 	//assign %1 = %37  : int[]
 	_DEALLOC(ys);
 	_COPY_1DARRAY_int64_t(ys, _37);
-	_ADD_DEALLOC(ys);
+	_ADD_DEALLOC(ys, _37);
 	//const %39 = 0 : int
 	_39 = 0;
 	//const %40 = 4 : int
@@ -517,7 +517,7 @@ blklab10:;
 	//assign %1 = %38  : int[]
 	_DEALLOC(ys);
 	_COPY_1DARRAY_int64_t(ys, _38);
-	_ADD_DEALLOC(ys);
+	_ADD_DEALLOC(ys, _38);
 	//assert
 	{
 		//const %41 = 1 : int
@@ -560,7 +560,7 @@ blklab11:;
 	//assign %1 = %51  : int[]
 	_DEALLOC(ys);
 	_COPY_1DARRAY_int64_t(ys, _51);
-	_ADD_DEALLOC(ys);
+	_ADD_DEALLOC(ys, _51);
 	//const %53 = 0 : int
 	_53 = 0;
 	//const %54 = 5 : int
@@ -577,7 +577,7 @@ blklab11:;
 	//assign %1 = %52  : int[]
 	_DEALLOC(ys);
 	_COPY_1DARRAY_int64_t(ys, _52);
-	_ADD_DEALLOC(ys);
+	_ADD_DEALLOC(ys, _52);
 	//assert
 	{
 		//const %55 = 1 : int
@@ -625,7 +625,7 @@ blklab12:;
 	//assign %4 = %66  : int[]
 	_DEALLOC(arr);
 	_COPY_1DARRAY_int64_t(arr, _66);
-	_ADD_DEALLOC(arr);
+	_ADD_DEALLOC(arr, _66);
 	//loop (%3, %4, %67, %68, %69)
 	while(true){
 		//ifgt %3, %2 goto blklab13 : int
@@ -663,7 +663,7 @@ blklab13:;
 	//assign %4 = %70  : int[]
 	_DEALLOC(arr);
 	_COPY_1DARRAY_int64_t(arr, _70);
-	_ADD_DEALLOC(arr);
+	_ADD_DEALLOC(arr, _70);
 	//assert
 	{
 		//const %74 = 0 : int

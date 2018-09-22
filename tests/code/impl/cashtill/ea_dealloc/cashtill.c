@@ -98,7 +98,7 @@ int64_t* _Cash_1_(_DECL_1DARRAY_PARAM(coins), _DECL_DEALLOC_PARAM(coins), _DECL_
 	//assign %2 = %13  : int[]
 	_DEALLOC(cash);
 	_COPY_1DARRAY_int64_t(cash, _13);
-	_ADD_DEALLOC(cash);
+	_ADD_DEALLOC(cash, _13);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %3 = %14  : int
@@ -440,7 +440,7 @@ blklab25:;
 		//assign %4 = %0  : int[]
 		_DEALLOC(tmp);
 		_COPY_1DARRAY_int64_t(tmp, till);
-		_ADD_DEALLOC(tmp);
+		_ADD_DEALLOC(tmp, till);
 		//indexof %14 = %4, %3 : int[]
 		_14=tmp[i];
 		//const %15 = 1 : int
@@ -470,7 +470,7 @@ blklab25:;
 		//assign %5 = %17  : null|int[]
 		_DEALLOC(chg);
 		_COPY_1DARRAY_int64_t(chg, _17);
-		_ADD_DEALLOC(chg);
+		_ADD_DEALLOC_STRUCT(chg, _17);
 		//ifis %5, null goto blklab30 : null|int[]
 		if(chg == NULL) { goto blklab30;}
 		//indexof %21 = %5, %3 : int[]
@@ -573,7 +573,7 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRA
 	//assign %2 = %6  : void[]
 	_DEALLOC(r);
 	_COPY_1DARRAY_int64_t(r, _6);
-	_ADD_DEALLOC(r);
+	_ADD_DEALLOC_STRUCT(r, _6);
 	//const %7 = true : bool
 	_7 = true;
 	//assign %3 = %7  : bool
@@ -614,7 +614,7 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRA
 		//assign %2 = %13  : int[]
 		_DEALLOC(r);
 		_COPY_1DARRAY_int64_t(r, _13);
-		_ADD_DEALLOC(r);
+		_ADD_DEALLOC_STRUCT(r, _13);
 //.blklab34
 blklab34:;
 		//const %15 = false : bool
@@ -636,7 +636,7 @@ blklab34:;
 		//assign %2 = %16  : int[]
 		_DEALLOC(r);
 		_COPY_1DARRAY_int64_t(r, _16);
-		_ADD_DEALLOC(r);
+		_ADD_DEALLOC_STRUCT(r, _16);
 		//const %19 = [32,120,32] : int[]
 		_DEALLOC(_19);
 		_NEW_1DARRAY_int64_t(_19, 3, 0);
@@ -651,7 +651,7 @@ blklab34:;
 		//assign %2 = %18  : int[]
 		_DEALLOC(r);
 		_COPY_1DARRAY_int64_t(r, _18);
-		_ADD_DEALLOC(r);
+		_ADD_DEALLOC_STRUCT(r, _18);
 		//const %21 = [[49,99],[53,99],[49,48,99],[50,48,99],[53,48,99],[36,49],[36,53],[36,49,48]] : int[][]
 		_DEALLOC_2DARRAY_int64_t(_21);
 		_NEW_2DARRAY_int64_t_EMPTY(_21, 8, 3);
@@ -702,7 +702,7 @@ blklab34:;
 		//assign %2 = %20  : int[]
 		_DEALLOC(r);
 		_COPY_1DARRAY_int64_t(r, _20);
-		_ADD_DEALLOC(r);
+		_ADD_DEALLOC_STRUCT(r, _20);
 //.blklab33
 blklab33:;
 		//const %23 = 1 : int
@@ -730,7 +730,7 @@ blklab31:;
 	//assign %2 = %26  : int[]
 	_DEALLOC(r);
 	_COPY_1DARRAY_int64_t(r, _26);
-	_ADD_DEALLOC(r);
+	_ADD_DEALLOC_STRUCT(r, _26);
 //.blklab35
 blklab35:;
 	//return %2
@@ -919,7 +919,7 @@ blklab36:;
 	//assign %5 = %28  : null|int[]
 	_DEALLOC(change);
 	_COPY_1DARRAY_int64_t(change, _28);
-	_ADD_DEALLOC(change);
+	_ADD_DEALLOC_STRUCT(change, _28);
 	//ifis %5, null goto blklab40 : null|int[]
 	if(change == NULL) { goto blklab40;}
 	//goto blklab38
@@ -983,7 +983,7 @@ blklab38:;
 	//assign %1 = %40  : int[]
 	_DEALLOC(till);
 	_COPY_1DARRAY_int64_t(till, _40);
-	_ADD_DEALLOC(till);
+	_ADD_DEALLOC(till, _40);
 	//invoke (%41) = (%1, %5) cashtill:subtract : function(cashtill:Cash,cashtill:Cash)->(cashtill:Cash)
 	{
 		void* tmp_first;
@@ -1000,7 +1000,7 @@ blklab38:;
 	//assign %1 = %41  : int[]
 	_DEALLOC(till);
 	_COPY_1DARRAY_int64_t(till, _41);
-	_ADD_DEALLOC(till);
+	_ADD_DEALLOC(till, _41);
 	//fieldload %42 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %43 = %42 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %44 = [84,105,108,108,58,32] : int[]
@@ -1130,7 +1130,7 @@ int main(int argc, char** args){
 	//assign %1 = %10  : int[]
 	_DEALLOC(till);
 	_COPY_1DARRAY_int64_t(till, _10);
-	_ADD_DEALLOC(till);
+	_ADD_DEALLOC(till, _10);
 	//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %12 = %11 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %13 = [84,105,108,108,58,32] : int[]
@@ -1191,7 +1191,7 @@ int main(int argc, char** args){
 	//assign %1 = %17  : int[]
 	_DEALLOC(till);
 	_COPY_1DARRAY_int64_t(till, _17);
-	_ADD_DEALLOC(till);
+	_ADD_DEALLOC(till, _17);
 	//const %24 = 5 : int
 	_24 = 5;
 	//newlist %25 = (%24) : int[]
@@ -1226,7 +1226,7 @@ int main(int argc, char** args){
 	//assign %1 = %22  : int[]
 	_DEALLOC(till);
 	_COPY_1DARRAY_int64_t(till, _22);
-	_ADD_DEALLOC(till);
+	_ADD_DEALLOC(till, _22);
 	//const %29 = 7 : int
 	_29 = 7;
 	//newlist %30 = (%29) : int[]
@@ -1261,7 +1261,7 @@ int main(int argc, char** args){
 	//assign %1 = %27  : int[]
 	_DEALLOC(till);
 	_COPY_1DARRAY_int64_t(till, _27);
-	_ADD_DEALLOC(till);
+	_ADD_DEALLOC(till, _27);
 	//const %34 = 6 : int
 	_34 = 6;
 	//newlist %35 = (%34) : int[]
@@ -1296,7 +1296,7 @@ int main(int argc, char** args){
 	//assign %1 = %32  : int[]
 	_DEALLOC(till);
 	_COPY_1DARRAY_int64_t(till, _32);
-	_ADD_DEALLOC(till);
+	_ADD_DEALLOC(till, _32);
 	//return
 	_DEALLOC(till);
 	_DEALLOC(_10);

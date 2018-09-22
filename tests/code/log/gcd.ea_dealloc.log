@@ -1,6 +1,6 @@
 N = 10
 	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _13 ) (LINE:183 FILE: gcd.c)
-	DEBUG: _ADD_DEALLOC macro on  ( gcds ) (LINE:187 FILE: gcd.c)
+	DEBUG: _ADD_DEALLOC macro on  ( gcds and _13 ) (LINE:187 FILE: gcd.c)
 	DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "gcds" "gcd_cached" ) (LINE:209 FILE: gcd.c)
 Number: 0 Number: 0 GCD:0
 	DEBUG: _CALLEE_DEALLOC macro on ( "false-false-true" "gcds" "gcd_cached" ) (LINE:209 FILE: gcd.c)

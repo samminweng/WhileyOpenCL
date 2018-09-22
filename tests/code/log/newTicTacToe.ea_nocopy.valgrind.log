@@ -1,52 +1,52 @@
-==23593== Memcheck, a memory error detector
-==23593== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==23593== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==23593== Command: ./newTicTacToe.out
-==23593== Parent PID: 21151
-==23593== 
-==23593== 
-==23593== HEAP SUMMARY:
-==23593==     in use at exit: 4,272 bytes in 52 blocks
-==23593==   total heap usage: 53 allocs, 1 frees, 12,464 bytes allocated
-==23593== 
-==23593== 384 (96 direct, 288 indirect) bytes in 4 blocks are definitely lost in loss record 15 of 20
-==23593==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==23593==    by 0x400B9B: copy_Board (newTicTacToe.c:3)
-==23593==    by 0x401496: main (newTicTacToe.c:261)
-==23593== 
-==23593== 384 (96 direct, 288 indirect) bytes in 4 blocks are definitely lost in loss record 16 of 20
-==23593==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==23593==    by 0x400B9B: copy_Board (newTicTacToe.c:3)
-==23593==    by 0x401704: main (newTicTacToe.c:296)
-==23593== 
-==23593== 504 bytes in 3 blocks are definitely lost in loss record 17 of 20
-==23593==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==23593==    by 0x401C86: create1DArray_int64_t (Util.c:23)
-==23593==    by 0x4014E3: main (newTicTacToe.c:276)
-==23593== 
-==23593== 576 bytes in 8 blocks are definitely lost in loss record 18 of 20
-==23593==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==23593==    by 0x401C86: create1DArray_int64_t (Util.c:23)
-==23593==    by 0x401128: main (newTicTacToe.c:213)
-==23593== 
-==23593== 648 bytes in 9 blocks are definitely lost in loss record 19 of 20
-==23593==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==23593==    by 0x401C86: create1DArray_int64_t (Util.c:23)
-==23593==    by 0x401042: main (newTicTacToe.c:206)
-==23593== 
-==23593== 704 bytes in 4 blocks are definitely lost in loss record 20 of 20
-==23593==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==23593==    by 0x401C86: create1DArray_int64_t (Util.c:23)
-==23593==    by 0x40126D: main (newTicTacToe.c:241)
-==23593== 
-==23593== LEAK SUMMARY:
-==23593==    definitely lost: 2,624 bytes in 32 blocks
-==23593==    indirectly lost: 576 bytes in 8 blocks
-==23593==      possibly lost: 0 bytes in 0 blocks
-==23593==    still reachable: 1,072 bytes in 12 blocks
-==23593==         suppressed: 0 bytes in 0 blocks
-==23593== Reachable blocks (those to which a pointer was found) are not shown.
-==23593== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==23593== 
-==23593== For counts of detected and suppressed errors, rerun with: -v
-==23593== ERROR SUMMARY: 6 errors from 6 contexts (suppressed: 0 from 0)
+==31074== Memcheck, a memory error detector
+==31074== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==31074== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==31074== Command: ./newTicTacToe.out
+==31074== Parent PID: 28647
+==31074== 
+==31074== 
+==31074== HEAP SUMMARY:
+==31074==     in use at exit: 4,272 bytes in 52 blocks
+==31074==   total heap usage: 53 allocs, 1 frees, 12,464 bytes allocated
+==31074== 
+==31074== 384 (96 direct, 288 indirect) bytes in 4 blocks are definitely lost in loss record 15 of 20
+==31074==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==31074==    by 0x400B9B: copy_Board (newTicTacToe.c:3)
+==31074==    by 0x401496: main (newTicTacToe.c:261)
+==31074== 
+==31074== 384 (96 direct, 288 indirect) bytes in 4 blocks are definitely lost in loss record 16 of 20
+==31074==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==31074==    by 0x400B9B: copy_Board (newTicTacToe.c:3)
+==31074==    by 0x401704: main (newTicTacToe.c:296)
+==31074== 
+==31074== 504 bytes in 3 blocks are definitely lost in loss record 17 of 20
+==31074==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==31074==    by 0x401C86: create1DArray_int64_t (Util.c:23)
+==31074==    by 0x4014E3: main (newTicTacToe.c:276)
+==31074== 
+==31074== 576 bytes in 8 blocks are definitely lost in loss record 18 of 20
+==31074==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==31074==    by 0x401C86: create1DArray_int64_t (Util.c:23)
+==31074==    by 0x401128: main (newTicTacToe.c:213)
+==31074== 
+==31074== 648 bytes in 9 blocks are definitely lost in loss record 19 of 20
+==31074==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==31074==    by 0x401C86: create1DArray_int64_t (Util.c:23)
+==31074==    by 0x401042: main (newTicTacToe.c:206)
+==31074== 
+==31074== 704 bytes in 4 blocks are definitely lost in loss record 20 of 20
+==31074==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==31074==    by 0x401C86: create1DArray_int64_t (Util.c:23)
+==31074==    by 0x40126D: main (newTicTacToe.c:241)
+==31074== 
+==31074== LEAK SUMMARY:
+==31074==    definitely lost: 2,624 bytes in 32 blocks
+==31074==    indirectly lost: 576 bytes in 8 blocks
+==31074==      possibly lost: 0 bytes in 0 blocks
+==31074==    still reachable: 1,072 bytes in 12 blocks
+==31074==         suppressed: 0 bytes in 0 blocks
+==31074== Reachable blocks (those to which a pointer was found) are not shown.
+==31074== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==31074== 
+==31074== For counts of detected and suppressed errors, rerun with: -v
+==31074== ERROR SUMMARY: 6 errors from 6 contexts (suppressed: 0 from 0)

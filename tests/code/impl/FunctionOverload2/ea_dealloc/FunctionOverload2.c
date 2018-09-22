@@ -98,7 +98,7 @@ int64_t* _Cash_1_(_DECL_1DARRAY_PARAM(coins), _DECL_DEALLOC_PARAM(coins), _DECL_
 	//assign %2 = %13  : int[]
 	_DEALLOC(cash);
 	_COPY_1DARRAY_int64_t(cash, _13);
-	_ADD_DEALLOC(cash);
+	_ADD_DEALLOC(cash, _13);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %3 = %14  : int
@@ -170,7 +170,7 @@ int main(int argc, char** args){
 	//assign %1 = %3  : int[]
 	_DEALLOC(empty);
 	_COPY_1DARRAY_int64_t(empty, _3);
-	_ADD_DEALLOC(empty);
+	_ADD_DEALLOC(empty, _3);
 	//const %5 = 5 : int
 	_5 = 5;
 	//const %6 = 3 : int
@@ -204,7 +204,7 @@ int main(int argc, char** args){
 	//assign %2 = %4  : int[]
 	_DEALLOC(till);
 	_COPY_1DARRAY_int64_t(till, _4);
-	_ADD_DEALLOC(till);
+	_ADD_DEALLOC(till, _4);
 	//return
 	_DEALLOC(empty);
 	_DEALLOC(till);

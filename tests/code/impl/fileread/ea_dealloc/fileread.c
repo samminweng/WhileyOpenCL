@@ -46,12 +46,12 @@ int main(int argc, char** args){
 	//indirectinvoke (%9) = %10 () : method()->(byte[])
 	{
 		_9 = readAll(file, &_9_size);
-		_ADD_DEALLOC(_9);
+		_9_dealloc = true;
 	}
 	//assign %4 = %9  : byte[]
 	_DEALLOC(data);
 	_COPY_1DARRAY_BYTE(data, _9);
-	_ADD_DEALLOC(data);
+	_ADD_DEALLOC(data, _9);
 	//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %12 = %11 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %13 = [82,69,65,68,58,32,32,32,32,32,32,32,32,32] : int[]

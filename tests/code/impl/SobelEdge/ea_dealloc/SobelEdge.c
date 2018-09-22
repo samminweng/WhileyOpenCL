@@ -270,7 +270,7 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM
 	//assign %5 = %16  : byte[]
 	_DEALLOC(newPixels);
 	_COPY_1DARRAY_BYTE(newPixels, _16);
-	_ADD_DEALLOC(newPixels);
+	_ADD_DEALLOC(newPixels, _16);
 	//const %17 = 1 : int
 	_17 = 1;
 	//neg %18 = %17 : int
@@ -303,7 +303,7 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM
 	//assign %6 = %29  : int[]
 	_DEALLOC(v_sobel);
 	_COPY_1DARRAY_int64_t(v_sobel, _29);
-	_ADD_DEALLOC(v_sobel);
+	_ADD_DEALLOC(v_sobel, _29);
 	//const %30 = 1 : int
 	_30 = 1;
 	//const %31 = 2 : int
@@ -336,7 +336,7 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM
 	//assign %7 = %42  : int[]
 	_DEALLOC(h_sobel);
 	_COPY_1DARRAY_int64_t(h_sobel, _42);
-	_ADD_DEALLOC(h_sobel);
+	_ADD_DEALLOC(h_sobel, _42);
 	//const %43 = 0 : int
 	_43 = 0;
 	//assign %8 = %43  : int
@@ -635,12 +635,12 @@ int main(int argc, char** args){
 	//indirectinvoke (%10) = %11 () : method()->(byte[])
 	{
 		_10 = readAll(file, &_10_size);
-		_ADD_DEALLOC(_10);
+		_10_dealloc = true;
 	}
 	//assign %4 = %10  : byte[]
 	_DEALLOC(pixels);
 	_COPY_1DARRAY_BYTE(pixels, _10);
-	_ADD_DEALLOC(pixels);
+	_ADD_DEALLOC(pixels, _10);
 	//invoke (%12) = (%4, %2, %3) SobelEdge:sobelEdgeDetection : function(byte[],int,int)->(byte[])
 	{
 		void* tmp_pixels;
@@ -653,7 +653,7 @@ int main(int argc, char** args){
 	//assign %5 = %12  : byte[]
 	_DEALLOC(newPixels);
 	_COPY_1DARRAY_BYTE(newPixels, _12);
-	_ADD_DEALLOC(newPixels);
+	_ADD_DEALLOC(newPixels, _12);
 	//invoke () = (%0, %2, %3, %5) SobelEdge:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
 		void* tmp_pixels;

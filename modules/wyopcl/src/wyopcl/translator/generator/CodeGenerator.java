@@ -2132,7 +2132,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement.add(indent+ output + " = readAll("+ptr+", &"+output+"_size);");
 				// Add deallocation flag
 				this.deallocatedAnalyzer.ifPresent(a ->{
-					statement.add(indent+ "_ADD_DEALLOC("+output+");");
+					statement.add(indent+ output+"_dealloc = true;");
 				});
 			}else if(func_name.matches("write:\\w*")){
 				// Get file pointer

@@ -70,7 +70,7 @@ int main(int argc, char** args){
 	//assign %1 = %7  : int[]
 	_DEALLOC(a);
 	_COPY_1DARRAY_int64_t(a, _7);
-	_ADD_DEALLOC(a);
+	_ADD_DEALLOC(a, _7);
 	//const %8 = 1 : int
 	_8 = 1;
 	//const %9 = 5 : int
@@ -82,19 +82,19 @@ int main(int argc, char** args){
 	//assign %2 = %10  : int[]
 	_DEALLOC(b);
 	_COPY_1DARRAY_int64_t(b, _10);
-	_ADD_DEALLOC(b);
+	_ADD_DEALLOC(b, _10);
 	//assign %1 = %2  : int[]
 	_DEALLOC(a);
 	_COPY_1DARRAY_int64_t(a, b);
-	_ADD_DEALLOC(a);
+	_ADD_DEALLOC(a, b);
 	//assign %3 = %2  : int[]
 	_DEALLOC(c);
 	_COPY_1DARRAY_int64_t(c, b);
-	_ADD_DEALLOC(c);
+	_ADD_DEALLOC(c, b);
 	//assign %4 = %2  : int[]
 	_DEALLOC(d);
 	_COPY_1DARRAY_int64_t(d, b);
-	_ADD_DEALLOC(d);
+	_ADD_DEALLOC(d, b);
 	//const %11 = 2 : int
 	_11 = 2;
 	//const %12 = 5 : int
@@ -106,7 +106,7 @@ int main(int argc, char** args){
 	//assign %2 = %13  : int[]
 	_DEALLOC(b);
 	_COPY_1DARRAY_int64_t(b, _13);
-	_ADD_DEALLOC(b);
+	_ADD_DEALLOC(b, _13);
 	//assert
 	{
 		//const %14 = 0 : int

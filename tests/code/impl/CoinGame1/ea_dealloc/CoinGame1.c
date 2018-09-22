@@ -252,7 +252,7 @@ int main(int argc, char** args){
 	//assign %2 = %7  : int[]
 	_DEALLOC(moves);
 	_COPY_1DARRAY_int64_t(moves, _7);
-	_ADD_DEALLOC(moves);
+	_ADD_DEALLOC(moves, _7);
 	//invoke (%8) = (%2, %1) CoinGame1:findMoves : function(int[],int)->(int[])
 	{
 		void* tmp_moves;
@@ -265,7 +265,7 @@ int main(int argc, char** args){
 	//assign %2 = %8  : int[]
 	_DEALLOC(moves);
 	_COPY_1DARRAY_int64_t(moves, _8);
-	_ADD_DEALLOC(moves);
+	_ADD_DEALLOC(moves, _8);
 	//const %9 = 1 : int
 	_9 = 1;
 	//sub %10 = %1, %9 : int

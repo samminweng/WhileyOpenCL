@@ -29,7 +29,7 @@ BYTE* _append_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), BYTE 
 	//assign %2 = %8  : byte[]
 	_DEALLOC(nitems);
 	_COPY_1DARRAY_BYTE(nitems, _8);
-	_ADD_DEALLOC(nitems);
+	_ADD_DEALLOC(nitems, _8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %3 = %9  : int
@@ -113,7 +113,7 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 	//assign %1 = %11  : byte[]
 	_DEALLOC(output);
 	_COPY_1DARRAY_BYTE(output, _11);
-	_ADD_DEALLOC(output);
+	_ADD_DEALLOC(output, _11);
 	//const %12 = 0 : int
 	_12 = 0;
 	//assign %2 = %12  : int
@@ -162,7 +162,7 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 		//assign %1 = %23  : byte[]
 		_DEALLOC(output);
 		_COPY_1DARRAY_BYTE(output, _23);
-		_ADD_DEALLOC(output);
+		_ADD_DEALLOC(output, _23);
 		//goto blklab6
 		goto blklab6;
 //.blklab5
@@ -209,7 +209,7 @@ blklab5:;
 			//assign %1 = %30  : byte[]
 			_DEALLOC(output);
 			_COPY_1DARRAY_BYTE(output, _30);
-			_ADD_DEALLOC(output);
+			_ADD_DEALLOC(output, _30);
 			//const %31 = 1 : int
 			_31 = 1;
 			//add %32 = %8, %31 : int
@@ -278,12 +278,12 @@ int main(int argc, char** args){
 	//indirectinvoke (%6) = %7 () : method()->(byte[])
 	{
 		_6 = readAll(file, &_6_size);
-		_ADD_DEALLOC(_6);
+		_6_dealloc = true;
 	}
 	//assign %2 = %6  : byte[]
 	_DEALLOC(input_data);
 	_COPY_1DARRAY_BYTE(input_data, _6);
-	_ADD_DEALLOC(input_data);
+	_ADD_DEALLOC(input_data, _6);
 	//invoke (%8) = (%2) lz77_decompress:decompress : function(byte[])->(byte[])
 	{
 		void* tmp_data;
@@ -296,7 +296,7 @@ int main(int argc, char** args){
 	//assign %3 = %8  : byte[]
 	_DEALLOC(decompress_data);
 	_COPY_1DARRAY_BYTE(decompress_data, _8);
-	_ADD_DEALLOC(decompress_data);
+	_ADD_DEALLOC(decompress_data, _8);
 	//fieldload %9 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %10 = %9 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %11 = [68,69,67,79,77,80,82,69,83,83,69,68,58,32,32,32] : int[]

@@ -37,85 +37,6 @@ public class ModelCheckingTestCase {
 	final Path implDir = Paths.get(modelCheckingDir + File.separator + "impl");
 
 	
-
-	/**
-	 * Run Whiley-to-C compiler to optimize and generate C code
-	 * 
-	 * 
-	 * @param testcase
-	 */
-	/*private int runCmd(String testcase) {
-
-		String cmd = "java -cp " + BaseTestUtil.classpath + " wyopcl.WyopclMain -bp " + BaseTestUtil.whiley_runtime_lib;
-		// Run -nocopy -dealloc -code options to produce optimized C code
-		cmd += " -nocopy -dealloc -code";
-		cmd += " " + testcase + ".whiley";
-
-		System.out.println(cmd);
-		
-		Path workingDir = Paths.get(implDir + File.separator + testcase);
-		
-		// Get the runtime.
-		Runtime rt = Runtime.getRuntime();
-		// Compile the C program
-		Process process;
-		int exitValue = -1;
-		// Read the output of executables
-		Scanner in_sc = null;
-		Scanner err_sc = null;
-		try {
-			// Due to the limited buffer size, Windows/Linux may fail to write the large output from code generator, to
-			// the input stream and may cause the process to block, and even deadlock.
-			process = rt.exec(cmd, null, workingDir.toFile());
-
-			// Store messages with an array list, to avoid duplicate messages and reduce log file size
-			List<String> messages = new ArrayList<String>();
-			// Instantly write out the output message to avoid the process to block.
-			InputStream input = process.getInputStream();
-			in_sc = new Scanner(input);
-			while (in_sc.hasNextLine()) {
-				String line = in_sc.nextLine();
-				// De-bugging message can be ignored, to speed up ant task
-				if (line.startsWith("DEBUG:")) {
-					// Store debugging messages only
-					line = line + " in " + workingDir.getFileName() + " folder";
-					messages.add(line);
-				} else {
-					// Print out the message on console
-					System.out.println(line);
-				}
-			}
-			// Get the return value.
-			exitValue = process.waitFor();
-			if (exitValue != 0) {
-				// If not success, then print error messages.
-				InputStream error = process.getErrorStream();
-				// Read error stream using scanner and print out each line of error message.
-				err_sc = new Scanner(error);
-				while (err_sc.hasNext()) {
-					String line = err_sc.nextLine();
-					System.err.println(line);
-					messages.add(line);
-				}
-			}
-
-		} catch (IOException | InterruptedException e) {
-			throw new RuntimeException("Errors occurs in executing '" + cmd + "'");
-		} finally {
-			// Close the scanner and stream
-			if (in_sc != null) {
-				in_sc.close();
-			}
-
-			if (err_sc != null) {
-				err_sc.close();
-			}
-
-		}
-		return exitValue;
-
-	}*/
-
 	/**
 	 * Recursively permutate the assignments and return the 'collections' array
 	 * 
@@ -209,7 +130,7 @@ public class ModelCheckingTestCase {
 	 * For each Whiley program the test produces the optimised C code and compiles and run the code.
 	 */
 	@Test
-	public void test2Variables() throws IOException {
+	public void test2Variables_nocopy_dealloc() throws IOException {
 		// Generates the varaibles
 		ArrayList<String> variables = new ArrayList<String>();
 		variables.add("a");
@@ -219,13 +140,8 @@ public class ModelCheckingTestCase {
 		// Write out Whiley programs
 		ArrayList<String> testcases = generateWhileyPrograms(variables);
 
-		// Log file stores error messages
-		File logfile = new File(modelCheckingDir + File.separator + "log.txt");
-		logfile.deleteOnExit();// Delete the file 
-		logfile.createNewFile();// Create the file
-		
 		for (String testcase : testcases) {
-			Path destPath = Paths.get(implDir + File.separator + testcase);
+			Path destPath = Paths.get(implDir + File.separator + "nocopy_dealloc" + File.separator + testcase );
 			BaseTestUtil.createFolderAndCopyFiles(testcase, modelCheckingDir, destPath);
 			String cmd = "java -cp " + BaseTestUtil.classpath + " wyopcl.WyopclMain -bp " + BaseTestUtil.whiley_runtime_lib;
 			// Run -nocopy -dealloc -code options to produce optimized C code
@@ -233,12 +149,12 @@ public class ModelCheckingTestCase {
 			cmd += " " + testcase + ".whiley";
 
 			// Run 'cmd' to generate C code
-			BaseTestUtil.runCmd(cmd, destPath, false, logfile);
+			BaseTestUtil.runCmd(cmd, destPath, false);
 			
 			System.out.println(cmd);
 			
-			Path destDir = Paths.get(implDir + File.separator + testcase);
-			BaseTestUtil.compileAndRunCCode(testcase, destDir, false, logfile);
+			Path destDir = Paths.get(implDir + File.separator + "nocopy_dealloc" + File.separator + testcase );
+			BaseTestUtil.compileAndRunCCode(testcase, destDir, false);
 			//runCmd(testcase);
 		}
 
@@ -246,7 +162,7 @@ public class ModelCheckingTestCase {
 	
 	
 	@Test
-	public void test3Variables() throws IOException {
+	public void test3Variables_nocopy_dealloc() throws IOException {
 		// Generates the varaibles
 		ArrayList<String> variables = new ArrayList<String>();
 		variables.add("a");
@@ -255,14 +171,9 @@ public class ModelCheckingTestCase {
 
 		// Write out Whiley programs
 		ArrayList<String> testcases = generateWhileyPrograms(variables);
-
-		// Log file stores error messages
-		File logfile = new File(modelCheckingDir + File.separator + "log.txt");
-		logfile.deleteOnExit();// Delete the file 
-		logfile.createNewFile();// Create the file
-		
+	
 		for (String testcase : testcases) {
-			Path destPath = Paths.get(implDir + File.separator + testcase);
+			Path destPath = Paths.get(implDir + File.separator + "nocopy_dealloc" + File.separator + testcase );
 			BaseTestUtil.createFolderAndCopyFiles(testcase, modelCheckingDir, destPath);
 			String cmd = "java -cp " + BaseTestUtil.classpath + " wyopcl.WyopclMain -bp " + BaseTestUtil.whiley_runtime_lib;
 			// Run -nocopy -dealloc -code options to produce optimized C code
@@ -270,12 +181,12 @@ public class ModelCheckingTestCase {
 			cmd += " " + testcase + ".whiley";
 
 			// Run 'cmd' to generate C code
-			BaseTestUtil.runCmd(cmd, destPath, false, logfile);
+			BaseTestUtil.runCmd(cmd, destPath, false);
 			
 			System.out.println(cmd);
 			
-			Path destDir = Paths.get(implDir + File.separator + testcase);
-			BaseTestUtil.compileAndRunCCode(testcase, destDir, false, logfile);
+			Path destDir = Paths.get(implDir + File.separator + "nocopy_dealloc" + File.separator + testcase );
+			BaseTestUtil.compileAndRunCCode(testcase, destDir, false);
 			//runCmd(testcase);
 		}
 

@@ -1,22 +1,22 @@
-==22424== Memcheck, a memory error detector
-==22424== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==22424== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==22424== Command: ./fileread.out
-==22424== Parent PID: 21151
-==22424== 
-==22424== 
-==22424== HEAP SUMMARY:
-==22424==     in use at exit: 4,528 bytes in 4 blocks
-==22424==   total heap usage: 10 allocs, 6 frees, 54,267 bytes allocated
-==22424== 
-==22424== LEAK SUMMARY:
-==22424==    definitely lost: 0 bytes in 0 blocks
-==22424==    indirectly lost: 0 bytes in 0 blocks
-==22424==      possibly lost: 0 bytes in 0 blocks
-==22424==    still reachable: 4,528 bytes in 4 blocks
-==22424==         suppressed: 0 bytes in 0 blocks
-==22424== Reachable blocks (those to which a pointer was found) are not shown.
-==22424== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==22424== 
-==22424== For counts of detected and suppressed errors, rerun with: -v
-==22424== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==29898== Memcheck, a memory error detector
+==29898== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==29898== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==29898== Command: ./fileread.out
+==29898== Parent PID: 28647
+==29898== 
+==29898== 
+==29898== HEAP SUMMARY:
+==29898==     in use at exit: 4,528 bytes in 4 blocks
+==29898==   total heap usage: 10 allocs, 6 frees, 54,267 bytes allocated
+==29898== 
+==29898== LEAK SUMMARY:
+==29898==    definitely lost: 0 bytes in 0 blocks
+==29898==    indirectly lost: 0 bytes in 0 blocks
+==29898==      possibly lost: 0 bytes in 0 blocks
+==29898==    still reachable: 4,528 bytes in 4 blocks
+==29898==         suppressed: 0 bytes in 0 blocks
+==29898== Reachable blocks (those to which a pointer was found) are not shown.
+==29898== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==29898== 
+==29898== For counts of detected and suppressed errors, rerun with: -v
+==29898== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
