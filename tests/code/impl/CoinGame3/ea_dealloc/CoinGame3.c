@@ -82,7 +82,7 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 	_NEW_1DARRAY_int64_t(_10, n, _9);
 	_NEW1DARRAY_DEALLOC(_10, _9, n);
 	//assign %3 = %10  : int[]
-	_ADD_DEALLOC(x, _10, 1, int64_t);
+	_ADD_DEALLOC(x, _10, int64_t);
 	//const %11 = 0 : int
 	_11 = 0;
 	//arraygen %12 = [11; 1] : int[]
@@ -90,7 +90,7 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 	_NEW_1DARRAY_int64_t(_12, n, _11);
 	_NEW1DARRAY_DEALLOC(_12, _11, n);
 	//assign %4 = %12  : int[]
-	_ADD_DEALLOC(y, _12, 1, int64_t);
+	_ADD_DEALLOC(y, _12, int64_t);
 	//const %13 = 0 : int
 	_13 = 0;
 	//arraygen %14 = [13; 1] : int[]
@@ -98,7 +98,7 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 	_NEW_1DARRAY_int64_t(_14, n, _13);
 	_NEW1DARRAY_DEALLOC(_14, _13, n);
 	//assign %5 = %14  : int[]
-	_ADD_DEALLOC(z, _14, 1, int64_t);
+	_ADD_DEALLOC(z, _14, int64_t);
 	//const %15 = 0 : int
 	_15 = 0;
 	//assign %6 = %15  : int
@@ -322,7 +322,7 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_7, _6, _5);
 	_NEW1DARRAY_DEALLOC(_7, _5, _6);
 	//assign %2 = %7  : int[]
-	_ADD_DEALLOC(moves, _7, 1, int64_t);
+	_ADD_DEALLOC(moves, _7, int64_t);
 	//invoke (%8) = (%2, %1) CoinGame3:findMoves : function(int[],int)->(int[])
 	{
 		void* tmp_moves;
@@ -333,7 +333,7 @@ int main(int argc, char** args){
 		_CALLER_DEALLOC_POST(_8, tmp_moves);
 	}
 	//assign %2 = %8  : int[]
-	_ADD_DEALLOC(moves, _8, 1, int64_t);
+	_ADD_DEALLOC(moves, _8, int64_t);
 	//const %9 = 1 : int
 	_9 = 1;
 	//sub %10 = %1, %9 : int

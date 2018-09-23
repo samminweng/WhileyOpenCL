@@ -217,7 +217,7 @@ int main(int argc, char** args){
 	}
 	//assign %4 = %9  : byte[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(pixels, _9, 1);
+	_TRANSFER_DEALLOC(pixels, _9);
 	//invoke () = (%0, %2, %3, %4) fileread2:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
 		// isCopyEliminated of '_4' = true

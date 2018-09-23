@@ -53,7 +53,7 @@ int main(int argc, char** args){
 	}
 	//assign %1 = %2  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(empty, _2, 1);
+	_TRANSFER_DEALLOC(empty, _2);
 	//return
 	_DEALLOC(empty);
 	_DEALLOC(_2);

@@ -96,7 +96,7 @@ int64_t* _Cash_1_(_DECL_1DARRAY_PARAM(coins), _DECL_DEALLOC_PARAM(coins), _DECL_
 	_13[0] = _5; _13[1] = _6; _13[2] = _7; _13[3] = _8; _13[4] = _9; _13[5] = _10; _13[6] = _11; _13[7] = _12; 
 	_13_dealloc = true;
 	//assign %2 = %13  : int[]
-	_ADD_DEALLOC(cash, _13, 1, int64_t);
+	_ADD_DEALLOC(cash, _13, int64_t);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %3 = %14  : int
@@ -436,7 +436,7 @@ blklab25:;
 		//ifgt %13, %1 goto blklab29 : int
 		if(_13>change){goto blklab29;}
 		//assign %4 = %0  : int[]
-		_ADD_DEALLOC(tmp, till, 1, int64_t);
+		_ADD_DEALLOC(tmp, till, int64_t);
 		//indexof %14 = %4, %3 : int[]
 		_14=tmp[i];
 		//const %15 = 1 : int
@@ -466,7 +466,7 @@ blklab25:;
 		//assign %5 = %17  : null|int[]
 		_DEALLOC(chg);
 		_COPY_1DARRAY_int64_t(chg, _17);
-		_ADD_DEALLOC_STRUCT(chg, _17);
+		_ADD_DEALLOC_POST(chg, _17);
 		//ifis %5, null goto blklab30 : null|int[]
 		if(chg == NULL) { goto blklab30;}
 		//indexof %21 = %5, %3 : int[]
@@ -569,7 +569,7 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRA
 	//assign %2 = %6  : void[]
 	_DEALLOC(r);
 	_COPY_1DARRAY_int64_t(r, _6);
-	_ADD_DEALLOC_STRUCT(r, _6);
+	_ADD_DEALLOC_POST(r, _6);
 	//const %7 = true : bool
 	_7 = true;
 	//assign %3 = %7  : bool
@@ -610,7 +610,7 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRA
 		//assign %2 = %13  : int[]
 		_DEALLOC(r);
 		_COPY_1DARRAY_int64_t(r, _13);
-		_ADD_DEALLOC_STRUCT(r, _13);
+		_ADD_DEALLOC_POST(r, _13);
 //.blklab34
 blklab34:;
 		//const %15 = false : bool
@@ -632,7 +632,7 @@ blklab34:;
 		//assign %2 = %16  : int[]
 		_DEALLOC(r);
 		_COPY_1DARRAY_int64_t(r, _16);
-		_ADD_DEALLOC_STRUCT(r, _16);
+		_ADD_DEALLOC_POST(r, _16);
 		//const %19 = [32,120,32] : int[]
 		_DEALLOC(_19);
 		_NEW_1DARRAY_int64_t(_19, 3, 0);
@@ -647,7 +647,7 @@ blklab34:;
 		//assign %2 = %18  : int[]
 		_DEALLOC(r);
 		_COPY_1DARRAY_int64_t(r, _18);
-		_ADD_DEALLOC_STRUCT(r, _18);
+		_ADD_DEALLOC_POST(r, _18);
 		//const %21 = [[49,99],[53,99],[49,48,99],[50,48,99],[53,48,99],[36,49],[36,53],[36,49,48]] : int[][]
 		_DEALLOC_2DARRAY(_21);
 		_NEW_2DARRAY_int64_t_EMPTY(_21, 8, 3);
@@ -698,7 +698,7 @@ blklab34:;
 		//assign %2 = %20  : int[]
 		_DEALLOC(r);
 		_COPY_1DARRAY_int64_t(r, _20);
-		_ADD_DEALLOC_STRUCT(r, _20);
+		_ADD_DEALLOC_POST(r, _20);
 //.blklab33
 blklab33:;
 		//const %23 = 1 : int
@@ -726,7 +726,7 @@ blklab31:;
 	//assign %2 = %26  : int[]
 	_DEALLOC(r);
 	_COPY_1DARRAY_int64_t(r, _26);
-	_ADD_DEALLOC_STRUCT(r, _26);
+	_ADD_DEALLOC_POST(r, _26);
 //.blklab35
 blklab35:;
 	//return %2
@@ -915,7 +915,7 @@ blklab36:;
 	//assign %5 = %28  : null|int[]
 	_DEALLOC(change);
 	_COPY_1DARRAY_int64_t(change, _28);
-	_ADD_DEALLOC_STRUCT(change, _28);
+	_ADD_DEALLOC_POST(change, _28);
 	//ifis %5, null goto blklab40 : null|int[]
 	if(change == NULL) { goto blklab40;}
 	//goto blklab38
@@ -977,7 +977,7 @@ blklab38:;
 		_CALLEE_DEALLOC_POST(_40, given);
 	}
 	//assign %1 = %40  : int[]
-	_ADD_DEALLOC(till, _40, 1, int64_t);
+	_ADD_DEALLOC(till, _40, int64_t);
 	//invoke (%41) = (%1, %5) cashtill:subtract : function(cashtill:Cash,cashtill:Cash)->(cashtill:Cash)
 	{
 		void* tmp_first;
@@ -992,7 +992,7 @@ blklab38:;
 		_CALLEE_DEALLOC_POST(_41, change);
 	}
 	//assign %1 = %41  : int[]
-	_ADD_DEALLOC(till, _41, 1, int64_t);
+	_ADD_DEALLOC(till, _41, int64_t);
 	//fieldload %42 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %43 = %42 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %44 = [84,105,108,108,58,32] : int[]
@@ -1120,7 +1120,7 @@ int main(int argc, char** args){
 	_10[0] = _2; _10[1] = _3; _10[2] = _4; _10[3] = _5; _10[4] = _6; _10[5] = _7; _10[6] = _8; _10[7] = _9; 
 	_10_dealloc = true;
 	//assign %1 = %10  : int[]
-	_ADD_DEALLOC(till, _10, 1, int64_t);
+	_ADD_DEALLOC(till, _10, int64_t);
 	//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %12 = %11 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %13 = [84,105,108,108,58,32] : int[]
@@ -1179,7 +1179,7 @@ int main(int argc, char** args){
 		_CALLEE_DEALLOC_POST(_17, _18);
 	}
 	//assign %1 = %17  : int[]
-	_ADD_DEALLOC(till, _17, 1, int64_t);
+	_ADD_DEALLOC(till, _17, int64_t);
 	//const %24 = 5 : int
 	_24 = 5;
 	//newlist %25 = (%24) : int[]
@@ -1212,7 +1212,7 @@ int main(int argc, char** args){
 		_CALLEE_DEALLOC_POST(_22, _23);
 	}
 	//assign %1 = %22  : int[]
-	_ADD_DEALLOC(till, _22, 1, int64_t);
+	_ADD_DEALLOC(till, _22, int64_t);
 	//const %29 = 7 : int
 	_29 = 7;
 	//newlist %30 = (%29) : int[]
@@ -1245,7 +1245,7 @@ int main(int argc, char** args){
 		_CALLEE_DEALLOC_POST(_27, _28);
 	}
 	//assign %1 = %27  : int[]
-	_ADD_DEALLOC(till, _27, 1, int64_t);
+	_ADD_DEALLOC(till, _27, int64_t);
 	//const %34 = 6 : int
 	_34 = 6;
 	//newlist %35 = (%34) : int[]
@@ -1278,7 +1278,7 @@ int main(int argc, char** args){
 		_CALLEE_DEALLOC_POST(_32, _33);
 	}
 	//assign %1 = %32  : int[]
-	_ADD_DEALLOC(till, _32, 1, int64_t);
+	_ADD_DEALLOC(till, _32, int64_t);
 	//return
 	_DEALLOC(till);
 	_DEALLOC(_10);

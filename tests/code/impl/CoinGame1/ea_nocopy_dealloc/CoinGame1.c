@@ -264,7 +264,7 @@ int main(int argc, char** args){
 	_NEW1DARRAY_DEALLOC(_7, _5, _6);
 	//assign %2 = %7  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(moves, _7, 1);
+	_TRANSFER_DEALLOC(moves, _7);
 	//invoke (%8) = (%2, %1) CoinGame1:findMoves : function(int[],int)->(int[])
 	{
 		_DEALLOC(_8);
@@ -275,7 +275,7 @@ int main(int argc, char** args){
 	}
 	//assign %2 = %8  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(moves, _8, 1);
+	_TRANSFER_DEALLOC(moves, _8);
 	//const %9 = 1 : int
 	_9 = 1;
 	//sub %10 = %1, %9 : int

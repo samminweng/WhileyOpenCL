@@ -358,34 +358,35 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 			DEBUG_PRINT("_NEW1DARRAY_DEALLOC macro on  ( "str(a)" )");\
 			a##_dealloc = true;\
 		})
-// Add deallocation flag for an array variable of integer type
-#define _ADD_DEALLOC(a, b, dimension, type) \
+// For one dimensional array variable, add deallocation macro includes runtime assumption check, PRE_DEALLOC macro and assignment with copying, and lastly sets deallocation flag to 'a'
+#define _ADD_DEALLOC(a, b, type) \
         ({\
 		    DEBUG_PRINT("_ADD_DEALLOC macro on  ( "str(a)" and "str(b)" )");\
+			DEBUG_CHECK_ASUMPTION(a, b);\
 			_DEALLOC(a);\
-			_COPY_##dimension##DARRAY_##type(a, b);\
+			_COPY_1DARRAY_##type(a, b);\
 			a##_dealloc = true;\
 		})
-// Add deallocation flag for user-defined structure typed variable 
-#define _ADD_DEALLOC_STRUCT(a, b) \
+// This post macro is used for two dimensional array variable or user-defined structure typed variable 
+#define _ADD_DEALLOC_POST(a, b) \
         ({\
-		    DEBUG_PRINT("_ADD_DEALLOC_STRUCT macro on  ( "str(a)" and "str(b)" )");\
+		    DEBUG_PRINT("_ADD_DEALLOC_POST macro on  ( "str(a)" and "str(b)" )");\
 			a##_dealloc = true;\
 		})
-// Transfer an array variable's deallocation flag to another
-#define _TRANSFER_DEALLOC(a, b, dimension)  \
+// For one dimensional array variable, transfer macro includes runtime assumption check, PRE_DEALLOC macro and assignment without copying, and lastly transfers deallocation flag value from 'b' to 'a' 
+#define _TRANSFER_DEALLOC(a, b)  \
         ({\
 			DEBUG_PRINT("_TRANSFER_DEALLOC macro on  ( "str(a)" and "str(b)" )");\
 			DEBUG_CHECK_ASUMPTION(a, b);\
 			_DEALLOC(a);\
-			_UPDATE_##dimension##DARRAY(a, b);\
+			_UPDATE_1DARRAY(a, b);\
 			a##_dealloc = b##_dealloc;\
 			b##_dealloc = false;\
 		})
-// Transfer structure typed variable's deallocation flag to another
-#define _TRANSFER_DEALLOC_STRUCT(a, b) \
+// This post macro is used for two dimensional array variable or user-defined structure typed variable. 
+#define _TRANSFER_DEALLOC_POST(a, b) \
         ({\
-			DEBUG_PRINT("_TRANSFER_DEALLOC_STRUCT macro on  ( "str(a)" and "str(b)" )");\
+			DEBUG_PRINT("_TRANSFER_DEALLOC_POST macro on  ( "str(a)" and "str(b)" )");\
 			a##_dealloc = b##_dealloc;\
 			b##_dealloc = false;\
 		})

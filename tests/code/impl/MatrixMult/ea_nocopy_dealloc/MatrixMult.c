@@ -302,7 +302,7 @@ int main(int argc, char** args){
 	_NEW1DARRAY_DEALLOC(_15, _13, _14);
 	//assign %4 = %15  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(A, _15, 1);
+	_TRANSFER_DEALLOC(A, _15);
 	//invoke (%16) = (%4, %2, %3) MatrixMult:init : function(int[],int,int)->(int[])
 	{
 		_DEALLOC(_16);
@@ -313,7 +313,7 @@ int main(int argc, char** args){
 	}
 	//assign %4 = %16  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(A, _16, 1);
+	_TRANSFER_DEALLOC(A, _16);
 	//const %17 = 0 : int
 	_17 = 0;
 	//mul %18 = %2, %3 : int
@@ -324,7 +324,7 @@ int main(int argc, char** args){
 	_NEW1DARRAY_DEALLOC(_19, _17, _18);
 	//assign %5 = %19  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(B, _19, 1);
+	_TRANSFER_DEALLOC(B, _19);
 	//invoke (%20) = (%5, %2, %3) MatrixMult:init : function(int[],int,int)->(int[])
 	{
 		_DEALLOC(_20);
@@ -335,7 +335,7 @@ int main(int argc, char** args){
 	}
 	//assign %5 = %20  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(B, _20, 1);
+	_TRANSFER_DEALLOC(B, _20);
 	//const %21 = 0 : int
 	_21 = 0;
 	//mul %22 = %2, %3 : int
@@ -346,7 +346,7 @@ int main(int argc, char** args){
 	_NEW1DARRAY_DEALLOC(_23, _21, _22);
 	//assign %6 = %23  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(C, _23, 1);
+	_TRANSFER_DEALLOC(C, _23);
 	//invoke (%24) = (%4, %5, %6, %2, %3) MatrixMult:mat_mult : function(int[],int[],int[],int,int)->(int[])
 	{
 		_DEALLOC(_24);
@@ -363,7 +363,7 @@ int main(int argc, char** args){
 	}
 	//assign %6 = %24  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(C, _24, 1);
+	_TRANSFER_DEALLOC(C, _24);
 	//assert
 	{
 		//const %25 = 19 : int

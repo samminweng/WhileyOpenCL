@@ -182,7 +182,7 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_13, _12, _11);
 	_NEW1DARRAY_DEALLOC(_13, _11, _12);
 	//assign %2 = %13  : int[]
-	_ADD_DEALLOC(gcds, _13, 1, int64_t);
+	_ADD_DEALLOC(gcds, _13, int64_t);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %3 = %14  : int

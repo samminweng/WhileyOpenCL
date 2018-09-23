@@ -1,22 +1,22 @@
-==17847== Memcheck, a memory error detector
-==17847== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==17847== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==17847== Command: ./CoinGame.out
-==17847== Parent PID: 17125
-==17847== 
-==17847== Invalid read of size 8
-==17847==    at 0x400E14: _play_ (CoinGame.c:113)
-==17847==    by 0x4023FC: main (CoinGame.c:586)
-==17847==  Address 0x5205df8 is 8 bytes before a block of size 800 alloc'd
-==17847==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==17847==    by 0x40237B: main (CoinGame.c:585)
-==17847== 
-==17847== 
-==17847== HEAP SUMMARY:
-==17847==     in use at exit: 0 bytes in 0 blocks
-==17847==   total heap usage: 48 allocs, 48 frees, 14,856 bytes allocated
-==17847== 
-==17847== All heap blocks were freed -- no leaks are possible
-==17847== 
-==17847== For counts of detected and suppressed errors, rerun with: -v
-==17847== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==28971== Memcheck, a memory error detector
+==28971== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==28971== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==28971== Command: ./CoinGame.out
+==28971== Parent PID: 27586
+==28971== 
+==28971== Invalid read of size 8
+==28971==    at 0x400E14: _play_ (CoinGame.c:113)
+==28971==    by 0x4024B1: main (CoinGame.c:586)
+==28971==  Address 0x5205df8 is 8 bytes before a block of size 800 alloc'd
+==28971==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==28971==    by 0x402430: main (CoinGame.c:585)
+==28971== 
+==28971== 
+==28971== HEAP SUMMARY:
+==28971==     in use at exit: 0 bytes in 0 blocks
+==28971==   total heap usage: 48 allocs, 48 frees, 14,856 bytes allocated
+==28971== 
+==28971== All heap blocks were freed -- no leaks are possible
+==28971== 
+==28971== For counts of detected and suppressed errors, rerun with: -v
+==28971== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

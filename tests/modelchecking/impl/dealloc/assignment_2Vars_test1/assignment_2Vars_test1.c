@@ -21,7 +21,7 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_5, _4, _3);
 	_NEW1DARRAY_DEALLOC(_5, _3, _4);
 	//assign %1 = %5  : int[]
-	_ADD_DEALLOC(a, _5, 1, int64_t);
+	_ADD_DEALLOC(a, _5, int64_t);
 	//const %6 = 2 : int
 	_6 = 2;
 	//const %7 = 5 : int
@@ -31,11 +31,11 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_8, _7, _6);
 	_NEW1DARRAY_DEALLOC(_8, _6, _7);
 	//assign %2 = %8  : int[]
-	_ADD_DEALLOC(b, _8, 1, int64_t);
+	_ADD_DEALLOC(b, _8, int64_t);
 	//assign %1 = %2  : int[]
-	_ADD_DEALLOC(a, b, 1, int64_t);
+	_ADD_DEALLOC(a, b, int64_t);
 	//assign %2 = %1  : int[]
-	_ADD_DEALLOC(b, a, 1, int64_t);
+	_ADD_DEALLOC(b, a, int64_t);
 	//return
 	_DEALLOC(a);
 	_DEALLOC(b);

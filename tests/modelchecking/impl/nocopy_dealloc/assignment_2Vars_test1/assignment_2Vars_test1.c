@@ -22,7 +22,7 @@ int main(int argc, char** args){
 	_NEW1DARRAY_DEALLOC(_5, _3, _4);
 	//assign %1 = %5  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(a, _5, 1);
+	_TRANSFER_DEALLOC(a, _5);
 	//const %6 = 2 : int
 	_6 = 2;
 	//const %7 = 5 : int
@@ -33,13 +33,13 @@ int main(int argc, char** args){
 	_NEW1DARRAY_DEALLOC(_8, _6, _7);
 	//assign %2 = %8  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(b, _8, 1);
+	_TRANSFER_DEALLOC(b, _8);
 	//assign %1 = %2  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(a, b, 1);
+	_TRANSFER_DEALLOC(a, b);
 	//assign %2 = %1  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(b, a, 1);
+	_TRANSFER_DEALLOC(b, a);
 	//return
 	_DEALLOC(a);
 	_DEALLOC(b);

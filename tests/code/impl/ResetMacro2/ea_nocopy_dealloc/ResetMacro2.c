@@ -38,7 +38,7 @@ int64_t* _g2_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_NEW1DARRAY_DEALLOC(_5, _3, _4);
 	//assign %1 = %5  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(a, _5, 1);
+	_TRANSFER_DEALLOC(a, _5);
 	//const %7 = 11 : int
 	_7 = 11;
 	//invoke (%6) = (%1, %7) ResetMacro2:func : function(int[],int)->(int[])
@@ -51,7 +51,7 @@ int64_t* _g2_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	}
 	//assign %2 = %6  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(b, _6, 1);
+	_TRANSFER_DEALLOC(b, _6);
 	//return %2
 	_DEALLOC(_0);
 	_DEALLOC(a);
@@ -84,7 +84,7 @@ int main(int argc, char** args){
 	}
 	//assign %1 = %2  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(a, _2, 1);
+	_TRANSFER_DEALLOC(a, _2);
 	//assert
 	{
 		//const %3 = 0 : int

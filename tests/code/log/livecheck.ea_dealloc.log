@@ -1,13 +1,13 @@
 	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _7 ) (LINE:69 FILE: livecheck.c)
 	DEBUG: _ADD_DEALLOC macro on  ( a and _7 ) (LINE:71 FILE: livecheck.c)
-	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _10 ) (LINE:79 FILE: livecheck.c)
+	DEBUG: The assumption holds	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _10 ) (LINE:79 FILE: livecheck.c)
 	DEBUG: _ADD_DEALLOC macro on  ( b and _10 ) (LINE:81 FILE: livecheck.c)
-	DEBUG: _ADD_DEALLOC macro on  ( a and b ) (LINE:83 FILE: livecheck.c)
-	DEBUG: _ADD_DEALLOC macro on  ( c and b ) (LINE:85 FILE: livecheck.c)
-	DEBUG: _ADD_DEALLOC macro on  ( d and b ) (LINE:87 FILE: livecheck.c)
-	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _13 ) (LINE:95 FILE: livecheck.c)
+	DEBUG: The assumption holds	DEBUG: _ADD_DEALLOC macro on  ( a and b ) (LINE:83 FILE: livecheck.c)
+	DEBUG: The assumption holds	DEBUG: _ADD_DEALLOC macro on  ( c and b ) (LINE:85 FILE: livecheck.c)
+	DEBUG: The assumption holds	DEBUG: _ADD_DEALLOC macro on  ( d and b ) (LINE:87 FILE: livecheck.c)
+	DEBUG: The assumption holds	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _13 ) (LINE:95 FILE: livecheck.c)
 	DEBUG: _ADD_DEALLOC macro on  ( b and _13 ) (LINE:97 FILE: livecheck.c)
-a[0] = 1
+	DEBUG: The assumption holdsa[0] = 1
 b[0] = 2
 c[0] = 1
 d[0] = 1

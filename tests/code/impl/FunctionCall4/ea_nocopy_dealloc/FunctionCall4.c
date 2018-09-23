@@ -22,7 +22,7 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(s), _DECL_DEALLOC_PARAM(s), int64_t n, _DECL
 	if(n<=_5){goto blklab0;}
 	//assign %3 = %0  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(t, s, 1);
+	_TRANSFER_DEALLOC(t, s);
 	//const %6 = 3 : int
 	_6 = 3;
 	//const %7 = 2 : int
@@ -57,7 +57,7 @@ blklab0:;
 	_13_dealloc = true;
 	//assign %4 = %13  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(new_t, _13, 1);
+	_TRANSFER_DEALLOC(new_t, _13);
 	//return %4
 	_DEALLOC(s);
 	_DEALLOC(_2);
@@ -141,7 +141,7 @@ int main(int argc, char** args){
 	_9_dealloc = true;
 	//assign %1 = %9  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(a, _9, 1);
+	_TRANSFER_DEALLOC(a, _9);
 	//const %11 = 6 : int
 	_11 = 6;
 	//invoke (%10) = (%1, %11) FunctionCall4:func : function(int[],int)->(int[])
@@ -154,7 +154,7 @@ int main(int argc, char** args){
 	}
 	//assign %1 = %10  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(a, _10, 1);
+	_TRANSFER_DEALLOC(a, _10);
 	//assert
 	{
 		//const %12 = 2 : int
@@ -210,7 +210,7 @@ blklab2:;
 	_27_dealloc = true;
 	//assign %2 = %27  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(b, _27, 1);
+	_TRANSFER_DEALLOC(b, _27);
 	//const %29 = 1 : int
 	_29 = 1;
 	//invoke (%28) = (%2, %29) FunctionCall4:func : function(int[],int)->(int[])
@@ -225,7 +225,7 @@ blklab2:;
 	}
 	//assign %3 = %28  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(c, _28, 1);
+	_TRANSFER_DEALLOC(c, _28);
 	//assert
 	{
 		//const %30 = 2 : int

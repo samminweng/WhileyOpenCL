@@ -52,7 +52,7 @@ blklab0:;
 	}
 	//assign %0 = %8  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(ls, _8, 1);
+	_TRANSFER_DEALLOC(ls, _8);
 	//const %11 = 1 : int
 	_11 = 1;
 	//sub %12 = %1, %11 : int
@@ -120,7 +120,7 @@ int main(int argc, char** args){
 	_NEW1DARRAY_DEALLOC(_5, _4, max);
 	//assign %2 = %5  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(arr, _5, 1);
+	_TRANSFER_DEALLOC(arr, _5);
 	//const %7 = 1 : int
 	_7 = 1;
 	//sub %8 = %1, %7 : int
@@ -135,7 +135,7 @@ int main(int argc, char** args){
 	}
 	//assign %2 = %6  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(arr, _6, 1);
+	_TRANSFER_DEALLOC(arr, _6);
 	//assert
 	{
 		//const %9 = 0 : int

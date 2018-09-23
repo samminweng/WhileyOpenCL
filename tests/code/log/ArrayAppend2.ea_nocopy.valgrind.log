@@ -1,22 +1,22 @@
-==17248== Memcheck, a memory error detector
-==17248== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==17248== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==17248== Command: ./ArrayAppend2.out
-==17248== Parent PID: 17125
-==17248== 
-==17248== 
-==17248== HEAP SUMMARY:
-==17248==     in use at exit: 256 bytes in 3 blocks
-==17248==   total heap usage: 4 allocs, 1 frees, 8,448 bytes allocated
-==17248== 
-==17248== LEAK SUMMARY:
-==17248==    definitely lost: 0 bytes in 0 blocks
-==17248==    indirectly lost: 0 bytes in 0 blocks
-==17248==      possibly lost: 0 bytes in 0 blocks
-==17248==    still reachable: 256 bytes in 3 blocks
-==17248==         suppressed: 0 bytes in 0 blocks
-==17248== Reachable blocks (those to which a pointer was found) are not shown.
-==17248== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==17248== 
-==17248== For counts of detected and suppressed errors, rerun with: -v
-==17248== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==27803== Memcheck, a memory error detector
+==27803== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==27803== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==27803== Command: ./ArrayAppend2.out
+==27803== Parent PID: 27586
+==27803== 
+==27803== 
+==27803== HEAP SUMMARY:
+==27803==     in use at exit: 256 bytes in 3 blocks
+==27803==   total heap usage: 4 allocs, 1 frees, 8,448 bytes allocated
+==27803== 
+==27803== LEAK SUMMARY:
+==27803==    definitely lost: 0 bytes in 0 blocks
+==27803==    indirectly lost: 0 bytes in 0 blocks
+==27803==      possibly lost: 0 bytes in 0 blocks
+==27803==    still reachable: 256 bytes in 3 blocks
+==27803==         suppressed: 0 bytes in 0 blocks
+==27803== Reachable blocks (those to which a pointer was found) are not shown.
+==27803== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==27803== 
+==27803== For counts of detected and suppressed errors, rerun with: -v
+==27803== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

@@ -52,7 +52,7 @@ int main(int argc, char** args){
 		_2_dealloc = true;
 	}
 	//assign %1 = %2  : int[]
-	_ADD_DEALLOC(empty, _2, 1, int64_t);
+	_ADD_DEALLOC(empty, _2, int64_t);
 	//return
 	_DEALLOC(empty);
 	_DEALLOC(_2);

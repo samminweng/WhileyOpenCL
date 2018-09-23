@@ -38,7 +38,7 @@ int64_t* _g3_(int64_t x, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_NEW_1DARRAY_int64_t(_6, _5, _4);
 	_NEW1DARRAY_DEALLOC(_6, _4, _5);
 	//assign %2 = %6  : int[]
-	_ADD_DEALLOC(a, _6, 1, int64_t);
+	_ADD_DEALLOC(a, _6, int64_t);
 	//const %8 = 11 : int
 	_8 = 11;
 	//invoke (%7) = (%2, %8) CallerMacro2:func : function(int[],int)->(int[])
@@ -51,7 +51,7 @@ int64_t* _g3_(int64_t x, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 		_CALLER_DEALLOC_POST(_7, tmp_x);
 	}
 	//assign %3 = %7  : int[]
-	_ADD_DEALLOC(b, _7, 1, int64_t);
+	_ADD_DEALLOC(b, _7, int64_t);
 	//const %9 = 0 : int
 	_9 = 0;
 	//ifle %0, %9 goto blklab0 : int
@@ -117,7 +117,7 @@ int main(int argc, char** args){
 		_3_dealloc = true;
 	}
 	//assign %1 = %3  : int[]
-	_ADD_DEALLOC(a, _3, 1, int64_t);
+	_ADD_DEALLOC(a, _3, int64_t);
 	//assert
 	{
 		//const %5 = 0 : int
@@ -165,7 +165,7 @@ blklab2:;
 		_15_dealloc = true;
 	}
 	//assign %2 = %15  : int[]
-	_ADD_DEALLOC(b, _15, 1, int64_t);
+	_ADD_DEALLOC(b, _15, int64_t);
 	//assert
 	{
 		//const %17 = 0 : int

@@ -221,7 +221,7 @@ BYTE* _append_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), BYTE 
 	_NEW1DARRAY_DEALLOC(_8, _4, _7);
 	//assign %2 = %8  : byte[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(nitems, _8, 1);
+	_TRANSFER_DEALLOC(nitems, _8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//assign %3 = %9  : int
@@ -278,7 +278,7 @@ BYTE* _resize_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64
 	_NEW1DARRAY_DEALLOC(_5, _4, size);
 	//assign %2 = %5  : byte[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(nitems, _5, 1);
+	_TRANSFER_DEALLOC(nitems, _5);
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %3 = %6  : int
@@ -371,7 +371,7 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 	_NEW1DARRAY_DEALLOC(_13, _12, arr_capacity);
 	//assign %1 = %13  : byte[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(output, _13, 1);
+	_TRANSFER_DEALLOC(output, _13);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %4 = %14  : int
@@ -395,7 +395,7 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 		// isCopyEliminated = true
 		_DEALLOC_STRUCT(m, Match);
 		m = _16;
-		_TRANSFER_DEALLOC_STRUCT(m, _16);
+		_TRANSFER_DEALLOC_POST(m, _16);
 		//fieldload %18 = %5 offset : {int len,int offset}
 		_18 = m->offset;
 		//invoke (%17) = (%18) whiley/lang/Int:toUnsignedByte : function(whiley/lang/Int:u8)->(byte)
@@ -487,7 +487,7 @@ blklab18:;
 	}
 	//assign %1 = %31  : byte[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(output, _31, 1);
+	_TRANSFER_DEALLOC(output, _31);
 	//return %1
 	_DEALLOC(data);
 	_DEALLOC_STRUCT(m, Match);
@@ -559,7 +559,7 @@ int main(int argc, char** args){
 	}
 	//assign %2 = %7  : byte[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(data, _7, 1);
+	_TRANSFER_DEALLOC(data, _7);
 	//fieldload %9 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %10 = %9 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %11 = [68,97,116,97,58,32,32,32,32,32,32,32,32,32] : int[]
@@ -613,7 +613,7 @@ int main(int argc, char** args){
 	}
 	//assign %3 = %21  : byte[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(compress_data, _21, 1);
+	_TRANSFER_DEALLOC(compress_data, _21);
 	//fieldload %22 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %23 = %22 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %24 = [67,79,77,80,82,69,83,83,69,68,32,68,97,116,97,58,32,32,32] : int[]

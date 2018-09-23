@@ -1,46 +1,46 @@
-==18418== Memcheck, a memory error detector
-==18418== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==18418== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==18418== Command: ./fileread2.out
-==18418== Parent PID: 17125
-==18418== 
-==18418== 
-==18418== HEAP SUMMARY:
-==18418==     in use at exit: 13,136 bytes in 72 blocks
-==18418==   total heap usage: 77 allocs, 5 frees, 62,323 bytes allocated
-==18418== 
-==18418== 0 bytes in 1 blocks are definitely lost in loss record 1 of 9
-==18418==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==18418==    by 0x4012A5: create1DArray_int64_t (Util.c:23)
-==18418==    by 0x400E47: _print_pbm_ (fileread2.c:145)
-==18418==    by 0x4011D5: main (fileread2.c:192)
-==18418== 
-==18418== 0 bytes in 64 blocks are definitely lost in loss record 2 of 9
-==18418==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==18418==    by 0x4012A5: create1DArray_int64_t (Util.c:23)
-==18418==    by 0x400DEC: _print_pbm_ (fileread2.c:126)
-==18418==    by 0x4011D5: main (fileread2.c:192)
-==18418== 
-==18418== 8 bytes in 1 blocks are definitely lost in loss record 3 of 9
-==18418==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==18418==    by 0x4012A5: create1DArray_int64_t (Util.c:23)
-==18418==    by 0x400C7D: _print_pbm_ (fileread2.c:50)
-==18418==    by 0x4011D5: main (fileread2.c:192)
-==18418== 
-==18418== 16 bytes in 1 blocks are definitely lost in loss record 4 of 9
-==18418==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==18418==    by 0x4012A5: create1DArray_int64_t (Util.c:23)
-==18418==    by 0x400C0B: _print_pbm_ (fileread2.c:35)
-==18418==    by 0x4011D5: main (fileread2.c:192)
-==18418== 
-==18418== LEAK SUMMARY:
-==18418==    definitely lost: 24 bytes in 67 blocks
-==18418==    indirectly lost: 0 bytes in 0 blocks
-==18418==      possibly lost: 0 bytes in 0 blocks
-==18418==    still reachable: 13,112 bytes in 5 blocks
-==18418==         suppressed: 0 bytes in 0 blocks
-==18418== Reachable blocks (those to which a pointer was found) are not shown.
-==18418== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==18418== 
-==18418== For counts of detected and suppressed errors, rerun with: -v
-==18418== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)
+==29718== Memcheck, a memory error detector
+==29718== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==29718== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==29718== Command: ./fileread2.out
+==29718== Parent PID: 27586
+==29718== 
+==29718== 
+==29718== HEAP SUMMARY:
+==29718==     in use at exit: 13,136 bytes in 72 blocks
+==29718==   total heap usage: 77 allocs, 5 frees, 62,323 bytes allocated
+==29718== 
+==29718== 0 bytes in 1 blocks are definitely lost in loss record 1 of 9
+==29718==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==29718==    by 0x4012A5: create1DArray_int64_t (Util.c:23)
+==29718==    by 0x400E47: _print_pbm_ (fileread2.c:145)
+==29718==    by 0x4011D5: main (fileread2.c:192)
+==29718== 
+==29718== 0 bytes in 64 blocks are definitely lost in loss record 2 of 9
+==29718==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==29718==    by 0x4012A5: create1DArray_int64_t (Util.c:23)
+==29718==    by 0x400DEC: _print_pbm_ (fileread2.c:126)
+==29718==    by 0x4011D5: main (fileread2.c:192)
+==29718== 
+==29718== 8 bytes in 1 blocks are definitely lost in loss record 3 of 9
+==29718==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==29718==    by 0x4012A5: create1DArray_int64_t (Util.c:23)
+==29718==    by 0x400C7D: _print_pbm_ (fileread2.c:50)
+==29718==    by 0x4011D5: main (fileread2.c:192)
+==29718== 
+==29718== 16 bytes in 1 blocks are definitely lost in loss record 4 of 9
+==29718==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==29718==    by 0x4012A5: create1DArray_int64_t (Util.c:23)
+==29718==    by 0x400C0B: _print_pbm_ (fileread2.c:35)
+==29718==    by 0x4011D5: main (fileread2.c:192)
+==29718== 
+==29718== LEAK SUMMARY:
+==29718==    definitely lost: 24 bytes in 67 blocks
+==29718==    indirectly lost: 0 bytes in 0 blocks
+==29718==      possibly lost: 0 bytes in 0 blocks
+==29718==    still reachable: 13,112 bytes in 5 blocks
+==29718==         suppressed: 0 bytes in 0 blocks
+==29718== Reachable blocks (those to which a pointer was found) are not shown.
+==29718== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==29718== 
+==29718== For counts of detected and suppressed errors, rerun with: -v
+==29718== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)

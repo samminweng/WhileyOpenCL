@@ -7,7 +7,7 @@
 	DEBUG: The assumption holds	DEBUG: _TRANSFER_DEALLOC macro on  ( b and a ) (LINE:47 FILE: CallerMacro5.c)
 	DEBUG: The assumption holds	DEBUG: _TRANSFER_DEALLOC macro on  ( c and b ) (LINE:50 FILE: CallerMacro5.c)
 	DEBUG: The assumption holds	DEBUG: _ADD_DEALLOC macro on  ( d and c ) (LINE:53 FILE: CallerMacro5.c)
-	DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "x" "func" ) (LINE:168 FILE: CallerMacro5.c)
+	DEBUG: The assumption holds	DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "x" "func" ) (LINE:168 FILE: CallerMacro5.c)
 	DEBUG: Potential memory leaks at ( "false-true-true" "x" "func" ) (LINE:168 FILE: CallerMacro5.c)
 	DEBUG: _TRANSFER_DEALLOC macro on  ( y and _6 ) (LINE:173 FILE: CallerMacro5.c)
 	DEBUG: The assumption holdsy[0] = 2
@@ -18,7 +18,7 @@
 	DEBUG: The assumption holds	DEBUG: _TRANSFER_DEALLOC macro on  ( b and a ) (LINE:47 FILE: CallerMacro5.c)
 	DEBUG: The assumption holds	DEBUG: _TRANSFER_DEALLOC macro on  ( c and b ) (LINE:50 FILE: CallerMacro5.c)
 	DEBUG: The assumption holds	DEBUG: _ADD_DEALLOC macro on  ( d and c ) (LINE:53 FILE: CallerMacro5.c)
-	DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "x" "func" ) (LINE:221 FILE: CallerMacro5.c)
+	DEBUG: The assumption holds	DEBUG: _CALLER_DEALLOC macro on ( "false-true-true" "x" "func" ) (LINE:221 FILE: CallerMacro5.c)
 	DEBUG: Potential memory leaks at ( "false-true-true" "x" "func" ) (LINE:221 FILE: CallerMacro5.c)
 	DEBUG: _TRANSFER_DEALLOC macro on  ( y and _18 ) (LINE:226 FILE: CallerMacro5.c)
 	DEBUG: The assumption holdsy[0] = 0
@@ -29,6 +29,6 @@
 	DEBUG: The assumption holds	DEBUG: _TRANSFER_DEALLOC macro on  ( b and a ) (LINE:47 FILE: CallerMacro5.c)
 	DEBUG: The assumption holds	DEBUG: _TRANSFER_DEALLOC macro on  ( c and b ) (LINE:50 FILE: CallerMacro5.c)
 	DEBUG: The assumption holds	DEBUG: _ADD_DEALLOC macro on  ( d and c ) (LINE:53 FILE: CallerMacro5.c)
-	DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "x" "func" ) (LINE:272 FILE: CallerMacro5.c)
+	DEBUG: The assumption holds	DEBUG: _RESET_DEALLOC macro on  ( "false-true-false" "x" "func" ) (LINE:272 FILE: CallerMacro5.c)
 	DEBUG: _TRANSFER_DEALLOC macro on  ( y and _30 ) (LINE:277 FILE: CallerMacro5.c)
 	DEBUG: The assumption holdsy[0] = 0

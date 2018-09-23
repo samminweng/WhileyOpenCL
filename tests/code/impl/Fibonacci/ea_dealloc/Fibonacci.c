@@ -52,7 +52,7 @@ blklab0:;
 		_CALLER_DEALLOC_POST(_8, tmp_ls);
 	}
 	//assign %0 = %8  : int[]
-	_ADD_DEALLOC(ls, _8, 1, int64_t);
+	_ADD_DEALLOC(ls, _8, int64_t);
 	//const %11 = 1 : int
 	_11 = 1;
 	//sub %12 = %1, %11 : int
@@ -118,7 +118,7 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_5, max, _4);
 	_NEW1DARRAY_DEALLOC(_5, _4, max);
 	//assign %2 = %5  : int[]
-	_ADD_DEALLOC(arr, _5, 1, int64_t);
+	_ADD_DEALLOC(arr, _5, int64_t);
 	//const %7 = 1 : int
 	_7 = 1;
 	//sub %8 = %1, %7 : int
@@ -133,7 +133,7 @@ int main(int argc, char** args){
 		_CALLER_DEALLOC_POST(_6, tmp_ls);
 	}
 	//assign %2 = %6  : int[]
-	_ADD_DEALLOC(arr, _6, 1, int64_t);
+	_ADD_DEALLOC(arr, _6, int64_t);
 	//assert
 	{
 		//const %9 = 0 : int

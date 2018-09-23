@@ -228,7 +228,7 @@ int main(int argc, char** args){
 	_10_dealloc = true;
 	//assign %1 = %10  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(ys, _10, 1);
+	_TRANSFER_DEALLOC(ys, _10);
 	//invoke (%11) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		_DEALLOC(_11);
@@ -239,7 +239,7 @@ int main(int argc, char** args){
 	}
 	//assign %1 = %11  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(ys, _11, 1);
+	_TRANSFER_DEALLOC(ys, _11);
 	//assert
 	{
 		//const %12 = 1 : int
@@ -287,7 +287,7 @@ blklab5:;
 	_24_dealloc = true;
 	//assign %1 = %24  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(ys, _24, 1);
+	_TRANSFER_DEALLOC(ys, _24);
 	//invoke (%25) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		_DEALLOC(_25);
@@ -298,7 +298,7 @@ blklab5:;
 	}
 	//assign %1 = %25  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(ys, _25, 1);
+	_TRANSFER_DEALLOC(ys, _25);
 	//assert
 	{
 		//const %26 = 2 : int
@@ -344,7 +344,7 @@ blklab6:;
 	_37_dealloc = true;
 	//assign %1 = %37  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(ys, _37, 1);
+	_TRANSFER_DEALLOC(ys, _37);
 	//invoke (%38) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		_DEALLOC(_38);
@@ -355,7 +355,7 @@ blklab6:;
 	}
 	//assign %1 = %38  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(ys, _38, 1);
+	_TRANSFER_DEALLOC(ys, _38);
 	//assert
 	{
 		//const %39 = 1 : int
@@ -403,7 +403,7 @@ blklab7:;
 	_51_dealloc = true;
 	//assign %1 = %51  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(ys, _51, 1);
+	_TRANSFER_DEALLOC(ys, _51);
 	//invoke (%52) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		_DEALLOC(_52);
@@ -414,7 +414,7 @@ blklab7:;
 	}
 	//assign %1 = %52  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(ys, _52, 1);
+	_TRANSFER_DEALLOC(ys, _52);
 	//assert
 	{
 		//const %53 = 1 : int
@@ -465,7 +465,7 @@ blklab8:;
 	_NEW1DARRAY_DEALLOC(_64, _63, max);
 	//assign %4 = %64  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(arr, _64, 1);
+	_TRANSFER_DEALLOC(arr, _64);
 	//loop (%3, %4, %65, %66, %67)
 	while(true){
 		//ifge %3, %2 goto blklab9 : int
@@ -496,7 +496,7 @@ blklab9:;
 	}
 	//assign %4 = %68  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(arr, _68, 1);
+	_TRANSFER_DEALLOC(arr, _68);
 	//assert
 	{
 		//const %69 = 1 : int

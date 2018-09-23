@@ -188,7 +188,7 @@ int main(int argc, char** args){
 	_NEW1DARRAY_DEALLOC(_13, _11, _12);
 	//assign %2 = %13  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(gcds, _13, 1);
+	_TRANSFER_DEALLOC(gcds, _13);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %3 = %14  : int

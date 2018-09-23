@@ -1,23 +1,23 @@
-==17896== Memcheck, a memory error detector
-==17896== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==17896== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==17896== Command: ./CoinGame.out
-==17896== Parent PID: 17125
-==17896== 
-==17896== Invalid read of size 8
-==17896==    at 0x400E14: _play_ (CoinGame.c:119)
-==17896==    by 0x40239A: main (CoinGame.c:614)
-==17896==  Address 0x5203038 is 8 bytes before a block of size 800 alloc'd
-==17896==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==17896==    by 0x40292F: create1DArray_int64_t (Util.c:23)
-==17896==    by 0x40211F: main (CoinGame.c:595)
-==17896== 
-==17896== 
-==17896== HEAP SUMMARY:
-==17896==     in use at exit: 0 bytes in 0 blocks
-==17896==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
-==17896== 
-==17896== All heap blocks were freed -- no leaks are possible
-==17896== 
-==17896== For counts of detected and suppressed errors, rerun with: -v
-==17896== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==29119== Memcheck, a memory error detector
+==29119== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==29119== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==29119== Command: ./CoinGame.out
+==29119== Parent PID: 27586
+==29119== 
+==29119== Invalid read of size 8
+==29119==    at 0x400E14: _play_ (CoinGame.c:119)
+==29119==    by 0x40239A: main (CoinGame.c:614)
+==29119==  Address 0x5203038 is 8 bytes before a block of size 800 alloc'd
+==29119==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==29119==    by 0x40292F: create1DArray_int64_t (Util.c:23)
+==29119==    by 0x40211F: main (CoinGame.c:595)
+==29119== 
+==29119== 
+==29119== HEAP SUMMARY:
+==29119==     in use at exit: 0 bytes in 0 blocks
+==29119==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
+==29119== 
+==29119== All heap blocks were freed -- no leaks are possible
+==29119== 
+==29119== For counts of detected and suppressed errors, rerun with: -v
+==29119== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

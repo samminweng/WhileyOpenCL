@@ -83,7 +83,7 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 	_NEW1DARRAY_DEALLOC(_10, _9, n);
 	//assign %3 = %10  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(x, _10, 1);
+	_TRANSFER_DEALLOC(x, _10);
 	//const %11 = 0 : int
 	_11 = 0;
 	//arraygen %12 = [11; 1] : int[]
@@ -92,7 +92,7 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 	_NEW1DARRAY_DEALLOC(_12, _11, n);
 	//assign %4 = %12  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(y, _12, 1);
+	_TRANSFER_DEALLOC(y, _12);
 	//const %13 = 0 : int
 	_13 = 0;
 	//arraygen %14 = [13; 1] : int[]
@@ -101,7 +101,7 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 	_NEW1DARRAY_DEALLOC(_14, _13, n);
 	//assign %5 = %14  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(z, _14, 1);
+	_TRANSFER_DEALLOC(z, _14);
 	//const %15 = 0 : int
 	_15 = 0;
 	//assign %6 = %15  : int
@@ -333,7 +333,7 @@ int main(int argc, char** args){
 	_NEW1DARRAY_DEALLOC(_7, _5, _6);
 	//assign %2 = %7  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(moves, _7, 1);
+	_TRANSFER_DEALLOC(moves, _7);
 	//invoke (%8) = (%2, %1) CoinGame3:findMoves : function(int[],int)->(int[])
 	{
 		_DEALLOC(_8);
@@ -344,7 +344,7 @@ int main(int argc, char** args){
 	}
 	//assign %2 = %8  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(moves, _8, 1);
+	_TRANSFER_DEALLOC(moves, _8);
 	//const %9 = 1 : int
 	_9 = 1;
 	//sub %10 = %1, %9 : int

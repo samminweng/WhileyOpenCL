@@ -27,7 +27,7 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_6, _5, _4);
 	_NEW1DARRAY_DEALLOC(_6, _4, _5);
 	//assign %1 = %6  : int[]
-	_ADD_DEALLOC(a, _6, 1, int64_t);
+	_ADD_DEALLOC(a, _6, int64_t);
 	//const %7 = 2 : int
 	_7 = 2;
 	//const %8 = 5 : int
@@ -37,7 +37,7 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_9, _8, _7);
 	_NEW1DARRAY_DEALLOC(_9, _7, _8);
 	//assign %2 = %9  : int[]
-	_ADD_DEALLOC(b, _9, 1, int64_t);
+	_ADD_DEALLOC(b, _9, int64_t);
 	//const %10 = 3 : int
 	_10 = 3;
 	//const %11 = 5 : int
@@ -47,19 +47,19 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_12, _11, _10);
 	_NEW1DARRAY_DEALLOC(_12, _10, _11);
 	//assign %3 = %12  : int[]
-	_ADD_DEALLOC(c, _12, 1, int64_t);
+	_ADD_DEALLOC(c, _12, int64_t);
 	//assign %3 = %1  : int[]
-	_ADD_DEALLOC(c, a, 1, int64_t);
+	_ADD_DEALLOC(c, a, int64_t);
 	//assign %2 = %3  : int[]
-	_ADD_DEALLOC(b, c, 1, int64_t);
+	_ADD_DEALLOC(b, c, int64_t);
 	//assign %2 = %1  : int[]
-	_ADD_DEALLOC(b, a, 1, int64_t);
+	_ADD_DEALLOC(b, a, int64_t);
 	//assign %1 = %3  : int[]
-	_ADD_DEALLOC(a, c, 1, int64_t);
+	_ADD_DEALLOC(a, c, int64_t);
 	//assign %1 = %2  : int[]
-	_ADD_DEALLOC(a, b, 1, int64_t);
+	_ADD_DEALLOC(a, b, int64_t);
 	//assign %3 = %2  : int[]
-	_ADD_DEALLOC(c, b, 1, int64_t);
+	_ADD_DEALLOC(c, b, int64_t);
 	//return
 	_DEALLOC(a);
 	_DEALLOC(b);

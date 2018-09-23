@@ -1,23 +1,23 @@
-==18172== Memcheck, a memory error detector
-==18172== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==18172== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==18172== Command: ./CoinGame4.out
-==18172== Parent PID: 17125
-==18172== 
-==18172== Invalid read of size 8
-==18172==    at 0x400E14: _play_ (CoinGame4.c:119)
-==18172==    by 0x40259A: main (CoinGame4.c:643)
-==18172==  Address 0x5203038 is 8 bytes before a block of size 800 alloc'd
-==18172==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==18172==    by 0x402B2F: create1DArray_int64_t (Util.c:23)
-==18172==    by 0x40231F: main (CoinGame4.c:624)
-==18172== 
-==18172== 
-==18172== HEAP SUMMARY:
-==18172==     in use at exit: 0 bytes in 0 blocks
-==18172==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
-==18172== 
-==18172== All heap blocks were freed -- no leaks are possible
-==18172== 
-==18172== For counts of detected and suppressed errors, rerun with: -v
-==18172== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==29444== Memcheck, a memory error detector
+==29444== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==29444== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==29444== Command: ./CoinGame4.out
+==29444== Parent PID: 27586
+==29444== 
+==29444== Invalid read of size 8
+==29444==    at 0x400E14: _play_ (CoinGame4.c:119)
+==29444==    by 0x40259A: main (CoinGame4.c:643)
+==29444==  Address 0x5203038 is 8 bytes before a block of size 800 alloc'd
+==29444==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==29444==    by 0x402B2F: create1DArray_int64_t (Util.c:23)
+==29444==    by 0x40231F: main (CoinGame4.c:624)
+==29444== 
+==29444== 
+==29444== HEAP SUMMARY:
+==29444==     in use at exit: 0 bytes in 0 blocks
+==29444==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
+==29444== 
+==29444== All heap blocks were freed -- no leaks are possible
+==29444== 
+==29444== For counts of detected and suppressed errors, rerun with: -v
+==29444== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

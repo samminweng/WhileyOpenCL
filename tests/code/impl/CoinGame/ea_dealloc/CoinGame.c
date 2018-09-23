@@ -567,7 +567,7 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_7, _6, _5);
 	_NEW1DARRAY_DEALLOC(_7, _5, _6);
 	//assign %2 = %7  : int[]
-	_ADD_DEALLOC(moves, _7, 1, int64_t);
+	_ADD_DEALLOC(moves, _7, int64_t);
 	//invoke (%8) = (%2, %1) CoinGame:findMoves : function(int[],int)->(int[])
 	{
 		void* tmp_moves;
@@ -578,7 +578,7 @@ int main(int argc, char** args){
 		_CALLER_DEALLOC_POST(_8, tmp_moves);
 	}
 	//assign %2 = %8  : int[]
-	_ADD_DEALLOC(moves, _8, 1, int64_t);
+	_ADD_DEALLOC(moves, _8, int64_t);
 	//invoke () = (%0, %2, %1) CoinGame:play : method(whiley/lang/System:Console,int[],int)->()
 	{
 		void* tmp_moves;

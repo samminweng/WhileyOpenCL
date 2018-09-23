@@ -97,7 +97,7 @@ int64_t* _Cash_1_(_DECL_1DARRAY_PARAM(coins), _DECL_DEALLOC_PARAM(coins), _DECL_
 	_13_dealloc = true;
 	//assign %2 = %13  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(cash, _13, 1);
+	_TRANSFER_DEALLOC(cash, _13);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %3 = %14  : int
@@ -171,7 +171,7 @@ int main(int argc, char** args){
 	}
 	//assign %1 = %3  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(empty, _3, 1);
+	_TRANSFER_DEALLOC(empty, _3);
 	//const %5 = 5 : int
 	_5 = 5;
 	//const %6 = 3 : int
@@ -203,7 +203,7 @@ int main(int argc, char** args){
 	}
 	//assign %2 = %4  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(till, _4, 1);
+	_TRANSFER_DEALLOC(till, _4);
 	//return
 	_DEALLOC(empty);
 	_DEALLOC(till);

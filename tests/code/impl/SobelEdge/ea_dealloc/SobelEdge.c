@@ -268,7 +268,7 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM
 	_NEW_1DARRAY_BYTE(_16, size, _15);
 	_NEW1DARRAY_DEALLOC(_16, _15, size);
 	//assign %5 = %16  : byte[]
-	_ADD_DEALLOC(newPixels, _16, 1, BYTE);
+	_ADD_DEALLOC(newPixels, _16, BYTE);
 	//const %17 = 1 : int
 	_17 = 1;
 	//neg %18 = %17 : int
@@ -299,7 +299,7 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM
 	_29[0] = _18; _29[1] = _19; _29[2] = _20; _29[3] = _22; _29[4] = _23; _29[5] = _24; _29[6] = _26; _29[7] = _27; _29[8] = _28; 
 	_29_dealloc = true;
 	//assign %6 = %29  : int[]
-	_ADD_DEALLOC(v_sobel, _29, 1, int64_t);
+	_ADD_DEALLOC(v_sobel, _29, int64_t);
 	//const %30 = 1 : int
 	_30 = 1;
 	//const %31 = 2 : int
@@ -330,7 +330,7 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM
 	_42[0] = _30; _42[1] = _31; _42[2] = _32; _42[3] = _33; _42[4] = _34; _42[5] = _35; _42[6] = _37; _42[7] = _39; _42[8] = _41; 
 	_42_dealloc = true;
 	//assign %7 = %42  : int[]
-	_ADD_DEALLOC(h_sobel, _42, 1, int64_t);
+	_ADD_DEALLOC(h_sobel, _42, int64_t);
 	//const %43 = 0 : int
 	_43 = 0;
 	//assign %8 = %43  : int
@@ -632,7 +632,7 @@ int main(int argc, char** args){
 		_10_dealloc = true;
 	}
 	//assign %4 = %10  : byte[]
-	_ADD_DEALLOC(pixels, _10, 1, BYTE);
+	_ADD_DEALLOC(pixels, _10, BYTE);
 	//invoke (%12) = (%4, %2, %3) SobelEdge:sobelEdgeDetection : function(byte[],int,int)->(byte[])
 	{
 		void* tmp_pixels;
@@ -643,7 +643,7 @@ int main(int argc, char** args){
 		_CALLEE_DEALLOC_POST(_12, pixels);
 	}
 	//assign %5 = %12  : byte[]
-	_ADD_DEALLOC(newPixels, _12, 1, BYTE);
+	_ADD_DEALLOC(newPixels, _12, BYTE);
 	//invoke () = (%0, %2, %3, %5) SobelEdge:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
 		void* tmp_pixels;

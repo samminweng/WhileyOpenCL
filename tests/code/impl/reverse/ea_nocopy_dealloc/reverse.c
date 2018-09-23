@@ -35,7 +35,7 @@ int64_t* _reverse_(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls), _DECL_1DARR
 	_NEW1DARRAY_DEALLOC(_8, _6, _7);
 	//assign %3 = %8  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(r, _8, 1);
+	_TRANSFER_DEALLOC(r, _8);
 	//loop (%2, %3, %4, %9, %10, %11, %12, %13, %14, %15, %16, %17)
 	while(true){
 		//const %12 = 0 : int
@@ -141,7 +141,7 @@ int main(int argc, char** args){
 	}
 	//assign %1 = %5  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(rs, _5, 1);
+	_TRANSFER_DEALLOC(rs, _5);
 	//assert
 	{
 		//const %12 = 5 : int
@@ -190,7 +190,7 @@ blklab4:;
 	_NEW1DARRAY_DEALLOC(_23, _20, _22);
 	//assign %4 = %23  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(arr, _23, 1);
+	_TRANSFER_DEALLOC(arr, _23);
 	//loop (%3, %4, %24, %25, %26)
 	while(true){
 		//ifgt %3, %2 goto blklab5 : int
@@ -221,7 +221,7 @@ blklab5:;
 	}
 	//assign %4 = %27  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(arr, _27, 1);
+	_TRANSFER_DEALLOC(arr, _27);
 	//assert
 	{
 		//const %28 = 0 : int

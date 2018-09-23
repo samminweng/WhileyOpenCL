@@ -286,7 +286,7 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_15, _14, _13);
 	_NEW1DARRAY_DEALLOC(_15, _13, _14);
 	//assign %4 = %15  : int[]
-	_ADD_DEALLOC(A, _15, 1, int64_t);
+	_ADD_DEALLOC(A, _15, int64_t);
 	//invoke (%16) = (%4, %2, %3) MatrixMult:init : function(int[],int,int)->(int[])
 	{
 		void* tmp_data;
@@ -297,7 +297,7 @@ int main(int argc, char** args){
 		_CALLER_DEALLOC_POST(_16, tmp_data);
 	}
 	//assign %4 = %16  : int[]
-	_ADD_DEALLOC(A, _16, 1, int64_t);
+	_ADD_DEALLOC(A, _16, int64_t);
 	//const %17 = 0 : int
 	_17 = 0;
 	//mul %18 = %2, %3 : int
@@ -307,7 +307,7 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_19, _18, _17);
 	_NEW1DARRAY_DEALLOC(_19, _17, _18);
 	//assign %5 = %19  : int[]
-	_ADD_DEALLOC(B, _19, 1, int64_t);
+	_ADD_DEALLOC(B, _19, int64_t);
 	//invoke (%20) = (%5, %2, %3) MatrixMult:init : function(int[],int,int)->(int[])
 	{
 		void* tmp_data;
@@ -318,7 +318,7 @@ int main(int argc, char** args){
 		_CALLER_DEALLOC_POST(_20, tmp_data);
 	}
 	//assign %5 = %20  : int[]
-	_ADD_DEALLOC(B, _20, 1, int64_t);
+	_ADD_DEALLOC(B, _20, int64_t);
 	//const %21 = 0 : int
 	_21 = 0;
 	//mul %22 = %2, %3 : int
@@ -328,7 +328,7 @@ int main(int argc, char** args){
 	_NEW_1DARRAY_int64_t(_23, _22, _21);
 	_NEW1DARRAY_DEALLOC(_23, _21, _22);
 	//assign %6 = %23  : int[]
-	_ADD_DEALLOC(C, _23, 1, int64_t);
+	_ADD_DEALLOC(C, _23, int64_t);
 	//invoke (%24) = (%4, %5, %6, %2, %3) MatrixMult:mat_mult : function(int[],int[],int[],int,int)->(int[])
 	{
 		void* tmp_a;
@@ -347,7 +347,7 @@ int main(int argc, char** args){
 		_CALLER_DEALLOC_POST(_24, tmp_data);
 	}
 	//assign %6 = %24  : int[]
-	_ADD_DEALLOC(C, _24, 1, int64_t);
+	_ADD_DEALLOC(C, _24, int64_t);
 	//assert
 	{
 		//const %25 = 19 : int

@@ -97,7 +97,7 @@ int64_t* _Cash_1_(_DECL_1DARRAY_PARAM(coins), _DECL_DEALLOC_PARAM(coins), _DECL_
 	_13_dealloc = true;
 	//assign %2 = %13  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(cash, _13, 1);
+	_TRANSFER_DEALLOC(cash, _13);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %3 = %14  : int
@@ -452,7 +452,7 @@ blklab25:;
 		if(_13>change){goto blklab29;}
 		//assign %4 = %0  : int[]
 		// isCopyEliminated = false
-		_ADD_DEALLOC(tmp, till, 1, int64_t);
+		_ADD_DEALLOC(tmp, till, int64_t);
 		//indexof %14 = %4, %3 : int[]
 		_14=tmp[i];
 		//const %15 = 1 : int
@@ -482,7 +482,7 @@ blklab25:;
 		// isCopyEliminated = true
 		_DEALLOC(chg);
 		_UPDATE_1DARRAY(chg, _17);
-		_TRANSFER_DEALLOC_STRUCT(chg, _17);
+		_TRANSFER_DEALLOC_POST(chg, _17);
 		//ifis %5, null goto blklab30 : null|int[]
 		if(chg == NULL) { goto blklab30;}
 		//indexof %21 = %5, %3 : int[]
@@ -587,7 +587,7 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRA
 	// isCopyEliminated = true
 	_DEALLOC(r);
 	_UPDATE_1DARRAY(r, _6);
-	_TRANSFER_DEALLOC_STRUCT(r, _6);
+	_TRANSFER_DEALLOC_POST(r, _6);
 	//const %7 = true : bool
 	_7 = true;
 	//assign %3 = %7  : bool
@@ -632,7 +632,7 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRA
 		// isCopyEliminated = true
 		_DEALLOC(r);
 		_UPDATE_1DARRAY(r, _13);
-		_TRANSFER_DEALLOC_STRUCT(r, _13);
+		_TRANSFER_DEALLOC_POST(r, _13);
 //.blklab34
 blklab34:;
 		//const %15 = false : bool
@@ -656,7 +656,7 @@ blklab34:;
 		// isCopyEliminated = true
 		_DEALLOC(r);
 		_UPDATE_1DARRAY(r, _16);
-		_TRANSFER_DEALLOC_STRUCT(r, _16);
+		_TRANSFER_DEALLOC_POST(r, _16);
 		//const %19 = [32,120,32] : int[]
 		_DEALLOC(_19);
 		_NEW_1DARRAY_int64_t(_19, 3, 0);
@@ -672,7 +672,7 @@ blklab34:;
 		// isCopyEliminated = true
 		_DEALLOC(r);
 		_UPDATE_1DARRAY(r, _18);
-		_TRANSFER_DEALLOC_STRUCT(r, _18);
+		_TRANSFER_DEALLOC_POST(r, _18);
 		//const %21 = [[49,99],[53,99],[49,48,99],[50,48,99],[53,48,99],[36,49],[36,53],[36,49,48]] : int[][]
 		_DEALLOC_2DARRAY(_21);
 		_NEW_2DARRAY_int64_t_EMPTY(_21, 8, 3);
@@ -724,7 +724,7 @@ blklab34:;
 		// isCopyEliminated = true
 		_DEALLOC(r);
 		_UPDATE_1DARRAY(r, _20);
-		_TRANSFER_DEALLOC_STRUCT(r, _20);
+		_TRANSFER_DEALLOC_POST(r, _20);
 //.blklab33
 blklab33:;
 		//const %23 = 1 : int
@@ -754,7 +754,7 @@ blklab31:;
 	// isCopyEliminated = true
 	_DEALLOC(r);
 	_UPDATE_1DARRAY(r, _26);
-	_TRANSFER_DEALLOC_STRUCT(r, _26);
+	_TRANSFER_DEALLOC_POST(r, _26);
 //.blklab35
 blklab35:;
 	//return %2
@@ -940,7 +940,7 @@ blklab36:;
 	// isCopyEliminated = true
 	_DEALLOC(change);
 	_UPDATE_1DARRAY(change, _28);
-	_TRANSFER_DEALLOC_STRUCT(change, _28);
+	_TRANSFER_DEALLOC_POST(change, _28);
 	//ifis %5, null goto blklab40 : null|int[]
 	if(change == NULL) { goto blklab40;}
 	//goto blklab38
@@ -1000,7 +1000,7 @@ blklab38:;
 	}
 	//assign %1 = %40  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(till, _40, 1);
+	_TRANSFER_DEALLOC(till, _40);
 	//invoke (%41) = (%1, %5) cashtill:subtract : function(cashtill:Cash,cashtill:Cash)->(cashtill:Cash)
 	{
 		_DEALLOC(_41);
@@ -1014,7 +1014,7 @@ blklab38:;
 	}
 	//assign %1 = %41  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(till, _41, 1);
+	_TRANSFER_DEALLOC(till, _41);
 	//fieldload %42 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %43 = %42 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %44 = [84,105,108,108,58,32] : int[]
@@ -1142,7 +1142,7 @@ int main(int argc, char** args){
 	_10_dealloc = true;
 	//assign %1 = %10  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(till, _10, 1);
+	_TRANSFER_DEALLOC(till, _10);
 	//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %12 = %11 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %13 = [84,105,108,108,58,32] : int[]
@@ -1198,7 +1198,7 @@ int main(int argc, char** args){
 	}
 	//assign %1 = %17  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(till, _17, 1);
+	_TRANSFER_DEALLOC(till, _17);
 	//const %24 = 5 : int
 	_24 = 5;
 	//newlist %25 = (%24) : int[]
@@ -1229,7 +1229,7 @@ int main(int argc, char** args){
 	}
 	//assign %1 = %22  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(till, _22, 1);
+	_TRANSFER_DEALLOC(till, _22);
 	//const %29 = 7 : int
 	_29 = 7;
 	//newlist %30 = (%29) : int[]
@@ -1260,7 +1260,7 @@ int main(int argc, char** args){
 	}
 	//assign %1 = %27  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(till, _27, 1);
+	_TRANSFER_DEALLOC(till, _27);
 	//const %34 = 6 : int
 	_34 = 6;
 	//newlist %35 = (%34) : int[]
@@ -1291,7 +1291,7 @@ int main(int argc, char** args){
 	}
 	//assign %1 = %32  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(till, _32, 1);
+	_TRANSFER_DEALLOC(till, _32);
 	//return
 	_DEALLOC(till);
 	_DEALLOC(_10);

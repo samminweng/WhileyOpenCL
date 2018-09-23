@@ -709,10 +709,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if(this.deallocatedAnalyzer.isPresent()	&& lhs_type instanceof Type.Array) {
 				// Get element type
 				Type elm_type = stores.getArrayElementType((Type.Array) lhs_type);
-				if ((elm_type instanceof Type.Byte || stores.isIntType(elm_type))) {
-					// For an array of integer/BYTE type we can use macro directly without any pre-processing.
+				int dimension = stores.getArrayDimension(lhs_type);
+				if (dimension == 1 && (elm_type instanceof Type.Byte || stores.isIntType(elm_type))) {
+					// For one dimensional array variable of integer/BYTE type
+					// we can use macro directly without any pre-processing.
 				}else {
-					// For an array of structures we use different macros.
+					// For two dimensional array or structures we generate the statements separately.
 					// Deallocate lhs register
 					this.deallocatedAnalyzer.ifPresent(a -> {
 						statement.add(indent + a.preDealloc(lhs, lhs_type, stores));				

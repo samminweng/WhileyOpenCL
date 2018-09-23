@@ -50,7 +50,7 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRA
 	// isCopyEliminated = true
 	_DEALLOC(r);
 	_UPDATE_1DARRAY(r, _6);
-	_TRANSFER_DEALLOC_STRUCT(r, _6);
+	_TRANSFER_DEALLOC_POST(r, _6);
 	//const %7 = true : bool
 	_7 = true;
 	//assign %3 = %7  : bool
@@ -95,7 +95,7 @@ int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRA
 		// isCopyEliminated = true
 		_DEALLOC(r);
 		_UPDATE_1DARRAY(r, _13);
-		_TRANSFER_DEALLOC_STRUCT(r, _13);
+		_TRANSFER_DEALLOC_POST(r, _13);
 //.blklab5
 blklab5:;
 		//const %15 = false : bool
@@ -119,7 +119,7 @@ blklab5:;
 		// isCopyEliminated = true
 		_DEALLOC(r);
 		_UPDATE_1DARRAY(r, _16);
-		_TRANSFER_DEALLOC_STRUCT(r, _16);
+		_TRANSFER_DEALLOC_POST(r, _16);
 		//const %19 = [32,120,32] : int[]
 		_DEALLOC(_19);
 		_NEW_1DARRAY_int64_t(_19, 3, 0);
@@ -135,7 +135,7 @@ blklab5:;
 		// isCopyEliminated = true
 		_DEALLOC(r);
 		_UPDATE_1DARRAY(r, _18);
-		_TRANSFER_DEALLOC_STRUCT(r, _18);
+		_TRANSFER_DEALLOC_POST(r, _18);
 		//const %21 = [[49,99],[53,99],[49,48,99],[50,48,99],[53,48,99],[36,49],[36,53],[36,49,48]] : int[][]
 		_DEALLOC_2DARRAY(_21);
 		_NEW_2DARRAY_int64_t_EMPTY(_21, 8, 3);
@@ -187,7 +187,7 @@ blklab5:;
 		// isCopyEliminated = true
 		_DEALLOC(r);
 		_UPDATE_1DARRAY(r, _20);
-		_TRANSFER_DEALLOC_STRUCT(r, _20);
+		_TRANSFER_DEALLOC_POST(r, _20);
 //.blklab4
 blklab4:;
 		//const %23 = 1 : int
@@ -217,7 +217,7 @@ blklab2:;
 	// isCopyEliminated = true
 	_DEALLOC(r);
 	_UPDATE_1DARRAY(r, _26);
-	_TRANSFER_DEALLOC_STRUCT(r, _26);
+	_TRANSFER_DEALLOC_POST(r, _26);
 //.blklab6
 blklab6:;
 	//return %2
@@ -282,7 +282,7 @@ int main(int argc, char** args){
 	_10_dealloc = true;
 	//assign %1 = %10  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(till, _10, 1);
+	_TRANSFER_DEALLOC(till, _10);
 	//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %12 = %11 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %13 = [84,105,108,108,58,32] : int[]

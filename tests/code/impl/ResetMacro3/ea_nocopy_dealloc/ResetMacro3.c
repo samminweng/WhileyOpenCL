@@ -20,7 +20,7 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(b), _DECL_DEALLOC_PARAM(b), int64_t num, _DE
 	_NEW1DARRAY_DEALLOC(_6, _4, _5);
 	//assign %3 = %6  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(c, _6, 1);
+	_TRANSFER_DEALLOC(c, _6);
 	//const %7 = 10 : int
 	_7 = 10;
 	//ifle %1, %7 goto blklab0 : int
@@ -87,7 +87,7 @@ int main(int argc, char** args){
 	_NEW1DARRAY_DEALLOC(_5, _3, _4);
 	//assign %1 = %5  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(b, _5, 1);
+	_TRANSFER_DEALLOC(b, _5);
 	//const %7 = 11 : int
 	_7 = 11;
 	//invoke (%6) = (%1, %7) ResetMacro3:func : function(int[],int)->(int[])
@@ -100,10 +100,10 @@ int main(int argc, char** args){
 	}
 	//assign %2 = %6  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(tmp, _6, 1);
+	_TRANSFER_DEALLOC(tmp, _6);
 	//assign %1 = %2  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(b, tmp, 1);
+	_TRANSFER_DEALLOC(b, tmp);
 	//assert
 	{
 		//const %8 = 0 : int
@@ -143,7 +143,7 @@ blklab2:;
 	}
 	//assign %1 = %15  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(b, _15, 1);
+	_TRANSFER_DEALLOC(b, _15);
 	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %18 = %17 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %19 = 0 : int

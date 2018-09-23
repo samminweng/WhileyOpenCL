@@ -54,7 +54,7 @@ int main(int argc, char** args){
 	_9_dealloc = true;
 	//assign %1 = %9  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(a, _9, 1);
+	_TRANSFER_DEALLOC(a, _9);
 	//const %10 = 1 : int
 	_10 = 1;
 	//const %11 = 1 : int
@@ -72,16 +72,16 @@ int main(int argc, char** args){
 	_15_dealloc = true;
 	//assign %2 = %15  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(b, _15, 1);
+	_TRANSFER_DEALLOC(b, _15);
 	//assign %3 = %1  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(tmp, a, 1);
+	_TRANSFER_DEALLOC(tmp, a);
 	//assign %1 = %2  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(a, b, 1);
+	_TRANSFER_DEALLOC(a, b);
 	//assign %2 = %3  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(b, tmp, 1);
+	_TRANSFER_DEALLOC(b, tmp);
 	//assert
 	{
 		//const %16 = 1 : int
