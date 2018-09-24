@@ -1,22 +1,22 @@
-==6945== Memcheck, a memory error detector
-==6945== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==6945== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==6945== Command: ./livecheck.out
-==6945== Parent PID: 4976
-==6945== 
-==6945== 
-==6945== HEAP SUMMARY:
-==6945==     in use at exit: 536 bytes in 8 blocks
-==6945==   total heap usage: 9 allocs, 1 frees, 8,728 bytes allocated
-==6945== 
-==6945== LEAK SUMMARY:
-==6945==    definitely lost: 0 bytes in 0 blocks
-==6945==    indirectly lost: 0 bytes in 0 blocks
-==6945==      possibly lost: 0 bytes in 0 blocks
-==6945==    still reachable: 536 bytes in 8 blocks
-==6945==         suppressed: 0 bytes in 0 blocks
-==6945== Reachable blocks (those to which a pointer was found) are not shown.
-==6945== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==6945== 
-==6945== For counts of detected and suppressed errors, rerun with: -v
-==6945== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==754== Memcheck, a memory error detector
+==754== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==754== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==754== Command: ./livecheck.out
+==754== Parent PID: 29356
+==754== 
+==754== 
+==754== HEAP SUMMARY:
+==754==     in use at exit: 536 bytes in 8 blocks
+==754==   total heap usage: 9 allocs, 1 frees, 8,728 bytes allocated
+==754== 
+==754== LEAK SUMMARY:
+==754==    definitely lost: 0 bytes in 0 blocks
+==754==    indirectly lost: 0 bytes in 0 blocks
+==754==      possibly lost: 0 bytes in 0 blocks
+==754==    still reachable: 536 bytes in 8 blocks
+==754==         suppressed: 0 bytes in 0 blocks
+==754== Reachable blocks (those to which a pointer was found) are not shown.
+==754== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==754== 
+==754== For counts of detected and suppressed errors, rerun with: -v
+==754== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

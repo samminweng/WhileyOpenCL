@@ -1,0 +1,15 @@
+==12306== Memcheck, a memory error detector
+==12306== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==12306== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==12306== Command: ./impl/dealloc/assignment_3Vars_test210/assignment_3Vars_test210.dealloc.out
+==12306== Parent PID: 10074
+==12306== 
+==12306== 
+==12306== HEAP SUMMARY:
+==12306==     in use at exit: 0 bytes in 0 blocks
+==12306==   total heap usage: 13 allocs, 13 frees, 8,672 bytes allocated
+==12306== 
+==12306== All heap blocks were freed -- no leaks are possible
+==12306== 
+==12306== For counts of detected and suppressed errors, rerun with: -v
+==12306== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

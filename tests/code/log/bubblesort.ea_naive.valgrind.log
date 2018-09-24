@@ -1,62 +1,62 @@
-==5266== Memcheck, a memory error detector
-==5266== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==5266== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==5266== Command: ./bubblesort.out
-==5266== Parent PID: 4976
-==5266== 
-==5266== 
-==5266== HEAP SUMMARY:
-==5266==     in use at exit: 1,320 bytes in 26 blocks
-==5266==   total heap usage: 27 allocs, 1 frees, 9,512 bytes allocated
-==5266== 
-==5266== 32 bytes in 1 blocks are definitely lost in loss record 7 of 26
-==5266==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5266==    by 0x402259: copy1DArray_int64_t (Util.c:80)
-==5266==    by 0x40131D: main (bubblesort.c:251)
-==5266== 
-==5266== 32 bytes in 1 blocks are definitely lost in loss record 8 of 26
-==5266==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5266==    by 0x402259: copy1DArray_int64_t (Util.c:80)
-==5266==    by 0x4013E6: main (bubblesort.c:259)
-==5266== 
-==5266== 32 bytes in 1 blocks are definitely lost in loss record 9 of 26
-==5266==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5266==    by 0x402259: copy1DArray_int64_t (Util.c:80)
-==5266==    by 0x4015C2: main (bubblesort.c:300)
-==5266== 
-==5266== 32 bytes in 1 blocks are definitely lost in loss record 10 of 26
-==5266==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5266==    by 0x402259: copy1DArray_int64_t (Util.c:80)
-==5266==    by 0x40168B: main (bubblesort.c:308)
-==5266== 
-==5266== 40 bytes in 1 blocks are definitely lost in loss record 18 of 26
-==5266==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5266==    by 0x402259: copy1DArray_int64_t (Util.c:80)
-==5266==    by 0x401058: main (bubblesort.c:200)
-==5266== 
-==5266== 40 bytes in 1 blocks are definitely lost in loss record 19 of 26
-==5266==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5266==    by 0x402259: copy1DArray_int64_t (Util.c:80)
-==5266==    by 0x401121: main (bubblesort.c:208)
-==5266== 
-==5266== 40 bytes in 1 blocks are definitely lost in loss record 20 of 26
-==5266==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5266==    by 0x402259: copy1DArray_int64_t (Util.c:80)
-==5266==    by 0x401887: main (bubblesort.c:351)
-==5266== 
-==5266== 80 bytes in 1 blocks are definitely lost in loss record 25 of 26
-==5266==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5266==    by 0x402259: copy1DArray_int64_t (Util.c:80)
-==5266==    by 0x401B0F: main (bubblesort.c:403)
-==5266== 
-==5266== LEAK SUMMARY:
-==5266==    definitely lost: 328 bytes in 8 blocks
-==5266==    indirectly lost: 0 bytes in 0 blocks
-==5266==      possibly lost: 0 bytes in 0 blocks
-==5266==    still reachable: 992 bytes in 18 blocks
-==5266==         suppressed: 0 bytes in 0 blocks
-==5266== Reachable blocks (those to which a pointer was found) are not shown.
-==5266== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==5266== 
-==5266== For counts of detected and suppressed errors, rerun with: -v
-==5266== ERROR SUMMARY: 8 errors from 8 contexts (suppressed: 0 from 0)
+==29814== Memcheck, a memory error detector
+==29814== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==29814== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==29814== Command: ./bubblesort.out
+==29814== Parent PID: 29356
+==29814== 
+==29814== 
+==29814== HEAP SUMMARY:
+==29814==     in use at exit: 1,320 bytes in 26 blocks
+==29814==   total heap usage: 27 allocs, 1 frees, 9,512 bytes allocated
+==29814== 
+==29814== 32 bytes in 1 blocks are definitely lost in loss record 7 of 26
+==29814==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==29814==    by 0x402259: copy1DArray_int64_t (Util.c:80)
+==29814==    by 0x40131D: main (bubblesort.c:251)
+==29814== 
+==29814== 32 bytes in 1 blocks are definitely lost in loss record 8 of 26
+==29814==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==29814==    by 0x402259: copy1DArray_int64_t (Util.c:80)
+==29814==    by 0x4013E6: main (bubblesort.c:259)
+==29814== 
+==29814== 32 bytes in 1 blocks are definitely lost in loss record 9 of 26
+==29814==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==29814==    by 0x402259: copy1DArray_int64_t (Util.c:80)
+==29814==    by 0x4015C2: main (bubblesort.c:300)
+==29814== 
+==29814== 32 bytes in 1 blocks are definitely lost in loss record 10 of 26
+==29814==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==29814==    by 0x402259: copy1DArray_int64_t (Util.c:80)
+==29814==    by 0x40168B: main (bubblesort.c:308)
+==29814== 
+==29814== 40 bytes in 1 blocks are definitely lost in loss record 18 of 26
+==29814==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==29814==    by 0x402259: copy1DArray_int64_t (Util.c:80)
+==29814==    by 0x401058: main (bubblesort.c:200)
+==29814== 
+==29814== 40 bytes in 1 blocks are definitely lost in loss record 19 of 26
+==29814==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==29814==    by 0x402259: copy1DArray_int64_t (Util.c:80)
+==29814==    by 0x401121: main (bubblesort.c:208)
+==29814== 
+==29814== 40 bytes in 1 blocks are definitely lost in loss record 20 of 26
+==29814==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==29814==    by 0x402259: copy1DArray_int64_t (Util.c:80)
+==29814==    by 0x401887: main (bubblesort.c:351)
+==29814== 
+==29814== 80 bytes in 1 blocks are definitely lost in loss record 25 of 26
+==29814==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==29814==    by 0x402259: copy1DArray_int64_t (Util.c:80)
+==29814==    by 0x401B0F: main (bubblesort.c:403)
+==29814== 
+==29814== LEAK SUMMARY:
+==29814==    definitely lost: 328 bytes in 8 blocks
+==29814==    indirectly lost: 0 bytes in 0 blocks
+==29814==      possibly lost: 0 bytes in 0 blocks
+==29814==    still reachable: 992 bytes in 18 blocks
+==29814==         suppressed: 0 bytes in 0 blocks
+==29814== Reachable blocks (those to which a pointer was found) are not shown.
+==29814== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==29814== 
+==29814== For counts of detected and suppressed errors, rerun with: -v
+==29814== ERROR SUMMARY: 8 errors from 8 contexts (suppressed: 0 from 0)

@@ -1,1581 +1,1581 @@
-==5698== Memcheck, a memory error detector
-==5698== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==5698== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==5698== Command: ./cashtill.out
-==5698== Parent PID: 4976
-==5698== 
-==5698== 
-==5698== HEAP SUMMARY:
-==5698==     in use at exit: 14,774,120 bytes in 230,728 blocks
-==5698==   total heap usage: 230,729 allocs, 1 frees, 14,782,312 bytes allocated
-==5698== 
-==5698== 0 bytes in 1 blocks are definitely lost in loss record 1 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x40192D: _toString_ (cashtill.c:499)
-==5698==    by 0x40327D: main (cashtill.c:930)
-==5698== 
-==5698== 0 bytes in 1 blocks are definitely lost in loss record 2 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401E6B: _toString_ (cashtill.c:630)
-==5698==    by 0x40327D: main (cashtill.c:930)
-==5698== 
-==5698== 0 bytes in 1 blocks are definitely lost in loss record 3 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x40192D: _toString_ (cashtill.c:499)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 0 bytes in 1 blocks are definitely lost in loss record 4 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401E6B: _toString_ (cashtill.c:630)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 0 bytes in 1 blocks are definitely lost in loss record 5 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x40192D: _toString_ (cashtill.c:499)
-==5698==    by 0x402D7D: _buy_ (cashtill.c:805)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 0 bytes in 1 blocks are definitely lost in loss record 6 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401E6B: _toString_ (cashtill.c:630)
-==5698==    by 0x402D7D: _buy_ (cashtill.c:805)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 0 bytes in 1 blocks are definitely lost in loss record 7 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x40192D: _toString_ (cashtill.c:499)
-==5698==    by 0x402ED3: _buy_ (cashtill.c:843)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 0 bytes in 1 blocks are definitely lost in loss record 8 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401E6B: _toString_ (cashtill.c:630)
-==5698==    by 0x402ED3: _buy_ (cashtill.c:843)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 0 bytes in 1 blocks are definitely lost in loss record 9 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x40192D: _toString_ (cashtill.c:499)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x403410: main (cashtill.c:973)
-==5698== 
-==5698== 0 bytes in 1 blocks are definitely lost in loss record 10 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401E6B: _toString_ (cashtill.c:630)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x403410: main (cashtill.c:973)
-==5698== 
-==5698== 0 bytes in 1 blocks are definitely lost in loss record 11 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x40192D: _toString_ (cashtill.c:499)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 0 bytes in 1 blocks are definitely lost in loss record 12 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401E6B: _toString_ (cashtill.c:630)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 0 bytes in 1 blocks are definitely lost in loss record 13 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x40192D: _toString_ (cashtill.c:499)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 0 bytes in 1 blocks are definitely lost in loss record 14 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401E6B: _toString_ (cashtill.c:630)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 0 bytes in 1 blocks are definitely lost in loss record 15 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x40192D: _toString_ (cashtill.c:499)
-==5698==    by 0x402D7D: _buy_ (cashtill.c:805)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 0 bytes in 1 blocks are definitely lost in loss record 16 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401E6B: _toString_ (cashtill.c:630)
-==5698==    by 0x402D7D: _buy_ (cashtill.c:805)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 0 bytes in 1 blocks are definitely lost in loss record 17 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x40192D: _toString_ (cashtill.c:499)
-==5698==    by 0x402ED3: _buy_ (cashtill.c:843)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 0 bytes in 1 blocks are definitely lost in loss record 18 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401E6B: _toString_ (cashtill.c:630)
-==5698==    by 0x402ED3: _buy_ (cashtill.c:843)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 8 bytes in 1 blocks are definitely lost in loss record 23 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4044D4: Int_toString (WyRT.c:16)
-==5698==    by 0x401AA9: _toString_ (cashtill.c:551)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 8 bytes in 1 blocks are definitely lost in loss record 24 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401ADE: _toString_ (cashtill.c:555)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 8 bytes in 1 blocks are definitely lost in loss record 25 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4044D4: Int_toString (WyRT.c:16)
-==5698==    by 0x401AA9: _toString_ (cashtill.c:551)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x403410: main (cashtill.c:973)
-==5698== 
-==5698== 8 bytes in 1 blocks are definitely lost in loss record 26 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401ADE: _toString_ (cashtill.c:555)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x403410: main (cashtill.c:973)
-==5698== 
-==5698== 8 bytes in 1 blocks are definitely lost in loss record 27 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4044D4: Int_toString (WyRT.c:16)
-==5698==    by 0x402469: _buy_ (cashtill.c:702)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 8 bytes in 1 blocks are definitely lost in loss record 28 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4044D4: Int_toString (WyRT.c:16)
-==5698==    by 0x401AA9: _toString_ (cashtill.c:551)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 8 bytes in 1 blocks are definitely lost in loss record 29 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401ADE: _toString_ (cashtill.c:555)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 8 bytes in 1 blocks are definitely lost in loss record 30 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4044D4: Int_toString (WyRT.c:16)
-==5698==    by 0x401AA9: _toString_ (cashtill.c:551)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 8 bytes in 1 blocks are definitely lost in loss record 31 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401ADE: _toString_ (cashtill.c:555)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 16 bytes in 1 blocks are definitely lost in loss record 32 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x402127: _buy_ (cashtill.c:683)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 16 bytes in 1 blocks are definitely lost in loss record 33 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4044D4: Int_toString (WyRT.c:16)
-==5698==    by 0x402469: _buy_ (cashtill.c:702)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 16 bytes in 1 blocks are definitely lost in loss record 34 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4024A8: _buy_ (cashtill.c:711)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 16 bytes in 1 blocks are definitely lost in loss record 35 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401A04: _toString_ (cashtill.c:533)
-==5698==    by 0x402D7D: _buy_ (cashtill.c:805)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 16 bytes in 1 blocks are definitely lost in loss record 36 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x402127: _buy_ (cashtill.c:683)
-==5698==    by 0x403410: main (cashtill.c:973)
-==5698== 
-==5698== 16 bytes in 1 blocks are definitely lost in loss record 37 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4024A8: _buy_ (cashtill.c:711)
-==5698==    by 0x403410: main (cashtill.c:973)
-==5698== 
-==5698== 16 bytes in 1 blocks are definitely lost in loss record 38 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x402127: _buy_ (cashtill.c:683)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 16 bytes in 1 blocks are definitely lost in loss record 39 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4024A8: _buy_ (cashtill.c:711)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 16 bytes in 1 blocks are definitely lost in loss record 40 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x402127: _buy_ (cashtill.c:683)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 16 bytes in 1 blocks are definitely lost in loss record 41 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4024A8: _buy_ (cashtill.c:711)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 16 bytes in 2 blocks are definitely lost in loss record 42 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4044D4: Int_toString (WyRT.c:16)
-==5698==    by 0x401AA9: _toString_ (cashtill.c:551)
-==5698==    by 0x402D7D: _buy_ (cashtill.c:805)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 24 bytes in 1 blocks are definitely lost in loss record 43 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401B20: _toString_ (cashtill.c:561)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 24 bytes in 1 blocks are definitely lost in loss record 44 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4044D4: Int_toString (WyRT.c:16)
-==5698==    by 0x402469: _buy_ (cashtill.c:702)
-==5698==    by 0x403410: main (cashtill.c:973)
-==5698== 
-==5698== 24 bytes in 1 blocks are definitely lost in loss record 45 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401B20: _toString_ (cashtill.c:561)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x403410: main (cashtill.c:973)
-==5698== 
-==5698== 24 bytes in 1 blocks are definitely lost in loss record 46 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401B20: _toString_ (cashtill.c:561)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 24 bytes in 1 blocks are definitely lost in loss record 47 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4044D4: Int_toString (WyRT.c:16)
-==5698==    by 0x402469: _buy_ (cashtill.c:702)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 24 bytes in 1 blocks are definitely lost in loss record 48 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401B20: _toString_ (cashtill.c:561)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 24 bytes in 3 blocks are definitely lost in loss record 49 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4044D4: Int_toString (WyRT.c:16)
-==5698==    by 0x401AA9: _toString_ (cashtill.c:551)
-==5698==    by 0x402ED3: _buy_ (cashtill.c:843)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 32 bytes in 1 blocks are definitely lost in loss record 50 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401B87: _toString_ (cashtill.c:565)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 32 bytes in 1 blocks are definitely lost in loss record 51 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401B87: _toString_ (cashtill.c:565)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x403410: main (cashtill.c:973)
-==5698== 
-==5698== 32 bytes in 1 blocks are definitely lost in loss record 52 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401B87: _toString_ (cashtill.c:565)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 32 bytes in 1 blocks are definitely lost in loss record 53 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401B87: _toString_ (cashtill.c:565)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 32 bytes in 2 blocks are definitely lost in loss record 54 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401A04: _toString_ (cashtill.c:533)
-==5698==    by 0x402ED3: _buy_ (cashtill.c:843)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 40 bytes in 5 blocks are definitely lost in loss record 55 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4044D4: Int_toString (WyRT.c:16)
-==5698==    by 0x401AA9: _toString_ (cashtill.c:551)
-==5698==    by 0x402ED3: _buy_ (cashtill.c:843)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 40 bytes in 5 blocks are definitely lost in loss record 56 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4044D4: Int_toString (WyRT.c:16)
-==5698==    by 0x401AA9: _toString_ (cashtill.c:551)
-==5698==    by 0x402D7D: _buy_ (cashtill.c:805)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 48 bytes in 1 blocks are definitely lost in loss record 58 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x402E46: _buy_ (cashtill.c:832)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 48 bytes in 1 blocks are definitely lost in loss record 59 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x402E46: _buy_ (cashtill.c:832)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 48 bytes in 2 blocks are definitely lost in loss record 60 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401B20: _toString_ (cashtill.c:561)
-==5698==    by 0x402D7D: _buy_ (cashtill.c:805)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 48 bytes in 6 blocks are definitely lost in loss record 61 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4044D4: Int_toString (WyRT.c:16)
-==5698==    by 0x401AA9: _toString_ (cashtill.c:551)
-==5698==    by 0x40327D: main (cashtill.c:930)
-==5698== 
-==5698== 56 bytes in 1 blocks are definitely lost in loss record 62 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401E01: _toString_ (cashtill.c:610)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 56 bytes in 1 blocks are definitely lost in loss record 63 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401E01: _toString_ (cashtill.c:610)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x403410: main (cashtill.c:973)
-==5698== 
-==5698== 56 bytes in 1 blocks are definitely lost in loss record 64 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401E01: _toString_ (cashtill.c:610)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 56 bytes in 1 blocks are definitely lost in loss record 65 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401E01: _toString_ (cashtill.c:610)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 71 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 72 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 73 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 74 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 75 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 76 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 77 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 78 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 79 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 80 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 81 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 82 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 83 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 84 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 85 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 86 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 87 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 88 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 89 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 90 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 91 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 92 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x400C0A: _Cash_ (cashtill.c:30)
-==5698==    by 0x4013D6: _calculateChange_ (cashtill.c:372)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 93 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 94 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 95 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 96 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 97 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 98 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 99 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 100 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 101 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 64 bytes in 1 blocks are definitely lost in loss record 102 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x400C0A: _Cash_ (cashtill.c:30)
-==5698==    by 0x4013D6: _calculateChange_ (cashtill.c:372)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 64 bytes in 4 blocks are definitely lost in loss record 103 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401A04: _toString_ (cashtill.c:533)
-==5698==    by 0x402ED3: _buy_ (cashtill.c:843)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 64 bytes in 4 blocks are definitely lost in loss record 104 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401A04: _toString_ (cashtill.c:533)
-==5698==    by 0x402D7D: _buy_ (cashtill.c:805)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 72 bytes in 1 blocks are definitely lost in loss record 105 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401A59: _toString_ (cashtill.c:537)
-==5698==    by 0x402D7D: _buy_ (cashtill.c:805)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 72 bytes in 3 blocks are definitely lost in loss record 106 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401B20: _toString_ (cashtill.c:561)
-==5698==    by 0x402ED3: _buy_ (cashtill.c:843)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 80 bytes in 5 blocks are definitely lost in loss record 107 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401A04: _toString_ (cashtill.c:533)
-==5698==    by 0x40327D: main (cashtill.c:930)
-==5698== 
-==5698== 88 bytes in 2 blocks are definitely lost in loss record 108 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401ADE: _toString_ (cashtill.c:555)
-==5698==    by 0x402D7D: _buy_ (cashtill.c:805)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 112 bytes in 1 blocks are definitely lost in loss record 109 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x402C78: _buy_ (cashtill.c:794)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 112 bytes in 1 blocks are definitely lost in loss record 110 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x402C78: _buy_ (cashtill.c:794)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 120 bytes in 5 blocks are definitely lost in loss record 111 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401B20: _toString_ (cashtill.c:561)
-==5698==    by 0x402ED3: _buy_ (cashtill.c:843)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 120 bytes in 5 blocks are definitely lost in loss record 112 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401B20: _toString_ (cashtill.c:561)
-==5698==    by 0x402D7D: _buy_ (cashtill.c:805)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 128 bytes in 1 blocks are definitely lost in loss record 113 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x402507: _buy_ (cashtill.c:720)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 128 bytes in 1 blocks are definitely lost in loss record 114 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x402507: _buy_ (cashtill.c:720)
-==5698==    by 0x403410: main (cashtill.c:973)
-==5698== 
-==5698== 128 bytes in 1 blocks are definitely lost in loss record 115 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x402507: _buy_ (cashtill.c:720)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 128 bytes in 1 blocks are definitely lost in loss record 116 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x402507: _buy_ (cashtill.c:720)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 128 bytes in 2 blocks are definitely lost in loss record 117 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 128 bytes in 2 blocks are definitely lost in loss record 118 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 128 bytes in 2 blocks are definitely lost in loss record 119 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 136 bytes in 2 blocks are definitely lost in loss record 120 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401B87: _toString_ (cashtill.c:565)
-==5698==    by 0x402D7D: _buy_ (cashtill.c:805)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 144 bytes in 6 blocks are definitely lost in loss record 121 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401B20: _toString_ (cashtill.c:561)
-==5698==    by 0x40327D: main (cashtill.c:930)
-==5698== 
-==5698== 184 bytes in 2 blocks are definitely lost in loss record 122 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401E01: _toString_ (cashtill.c:610)
-==5698==    by 0x402D7D: _buy_ (cashtill.c:805)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 216 bytes in 2 blocks are definitely lost in loss record 127 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401A59: _toString_ (cashtill.c:537)
-==5698==    by 0x402ED3: _buy_ (cashtill.c:843)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 240 bytes in 3 blocks are definitely lost in loss record 128 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401ADE: _toString_ (cashtill.c:555)
-==5698==    by 0x402ED3: _buy_ (cashtill.c:843)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 256 (64 direct, 192 indirect) bytes in 1 blocks are definitely lost in loss record 129 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x403E15: create2DArray_int64_t_empty (Util.c:236)
-==5698==    by 0x401BCF: _toString_ (cashtill.c:571)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 256 (64 direct, 192 indirect) bytes in 1 blocks are definitely lost in loss record 130 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x403E15: create2DArray_int64_t_empty (Util.c:236)
-==5698==    by 0x401BCF: _toString_ (cashtill.c:571)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x403410: main (cashtill.c:973)
-==5698== 
-==5698== 256 (64 direct, 192 indirect) bytes in 1 blocks are definitely lost in loss record 131 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x403E15: create2DArray_int64_t_empty (Util.c:236)
-==5698==    by 0x401BCF: _toString_ (cashtill.c:571)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 256 (64 direct, 192 indirect) bytes in 1 blocks are definitely lost in loss record 132 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x403E15: create2DArray_int64_t_empty (Util.c:236)
-==5698==    by 0x401BCF: _toString_ (cashtill.c:571)
-==5698==    by 0x402663: _buy_ (cashtill.c:731)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 280 bytes in 1 blocks are definitely lost in loss record 133 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4026CA: _buy_ (cashtill.c:747)
-==5698==    by 0x403410: main (cashtill.c:973)
-==5698== 
-==5698== 280 bytes in 1 blocks are definitely lost in loss record 134 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x402A15: _buy_ (cashtill.c:781)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 288 bytes in 1 blocks are definitely lost in loss record 135 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x402186: _buy_ (cashtill.c:692)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 288 bytes in 1 blocks are definitely lost in loss record 136 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x402186: _buy_ (cashtill.c:692)
-==5698==    by 0x403410: main (cashtill.c:973)
-==5698== 
-==5698== 288 bytes in 1 blocks are definitely lost in loss record 137 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x402186: _buy_ (cashtill.c:692)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 288 bytes in 1 blocks are definitely lost in loss record 138 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x402186: _buy_ (cashtill.c:692)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 312 bytes in 3 blocks are definitely lost in loss record 139 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401B87: _toString_ (cashtill.c:565)
-==5698==    by 0x402ED3: _buy_ (cashtill.c:843)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 320 bytes in 5 blocks are definitely lost in loss record 140 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 320 bytes in 5 blocks are definitely lost in loss record 141 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 320 bytes in 5 blocks are definitely lost in loss record 142 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 320 bytes in 5 blocks are definitely lost in loss record 143 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 320 bytes in 5 blocks are definitely lost in loss record 144 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 320 bytes in 5 blocks are definitely lost in loss record 145 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 384 bytes in 3 blocks are definitely lost in loss record 147 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401E01: _toString_ (cashtill.c:610)
-==5698==    by 0x402ED3: _buy_ (cashtill.c:843)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 512 (128 direct, 384 indirect) bytes in 2 blocks are definitely lost in loss record 149 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x403E15: create2DArray_int64_t_empty (Util.c:236)
-==5698==    by 0x401BCF: _toString_ (cashtill.c:571)
-==5698==    by 0x402D7D: _buy_ (cashtill.c:805)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 512 bytes in 8 blocks are definitely lost in loss record 150 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x400F7B: _total_ (cashtill.c:163)
-==5698==    by 0x40269C: _buy_ (cashtill.c:740)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 512 bytes in 8 blocks are definitely lost in loss record 151 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x400F7B: _total_ (cashtill.c:163)
-==5698==    by 0x40299C: _buy_ (cashtill.c:760)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 512 bytes in 8 blocks are definitely lost in loss record 152 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x400F7B: _total_ (cashtill.c:163)
-==5698==    by 0x40269C: _buy_ (cashtill.c:740)
-==5698==    by 0x403410: main (cashtill.c:973)
-==5698== 
-==5698== 512 bytes in 8 blocks are definitely lost in loss record 153 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x400F7B: _total_ (cashtill.c:163)
-==5698==    by 0x40269C: _buy_ (cashtill.c:740)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 512 bytes in 8 blocks are definitely lost in loss record 154 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x400F7B: _total_ (cashtill.c:163)
-==5698==    by 0x40299C: _buy_ (cashtill.c:760)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 512 bytes in 8 blocks are definitely lost in loss record 155 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x400F7B: _total_ (cashtill.c:163)
-==5698==    by 0x40269C: _buy_ (cashtill.c:740)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 512 bytes in 8 blocks are definitely lost in loss record 156 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x400F7B: _total_ (cashtill.c:163)
-==5698==    by 0x40299C: _buy_ (cashtill.c:760)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 640 bytes in 10 blocks are definitely lost in loss record 158 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 640 bytes in 10 blocks are definitely lost in loss record 159 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 704 bytes in 11 blocks are definitely lost in loss record 160 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 720 bytes in 4 blocks are definitely lost in loss record 161 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401A59: _toString_ (cashtill.c:537)
-==5698==    by 0x402ED3: _buy_ (cashtill.c:843)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 720 bytes in 4 blocks are definitely lost in loss record 162 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401A59: _toString_ (cashtill.c:537)
-==5698==    by 0x402D7D: _buy_ (cashtill.c:805)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 760 bytes in 5 blocks are definitely lost in loss record 163 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401ADE: _toString_ (cashtill.c:555)
-==5698==    by 0x402ED3: _buy_ (cashtill.c:843)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 760 bytes in 5 blocks are definitely lost in loss record 164 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401ADE: _toString_ (cashtill.c:555)
-==5698==    by 0x402D7D: _buy_ (cashtill.c:805)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 768 (192 direct, 576 indirect) bytes in 3 blocks are definitely lost in loss record 165 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x403E15: create2DArray_int64_t_empty (Util.c:236)
-==5698==    by 0x401BCF: _toString_ (cashtill.c:571)
-==5698==    by 0x402ED3: _buy_ (cashtill.c:843)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 880 bytes in 5 blocks are definitely lost in loss record 166 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401B87: _toString_ (cashtill.c:565)
-==5698==    by 0x402ED3: _buy_ (cashtill.c:843)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 880 bytes in 5 blocks are definitely lost in loss record 167 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401B87: _toString_ (cashtill.c:565)
-==5698==    by 0x402D7D: _buy_ (cashtill.c:805)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 896 bytes in 14 blocks are definitely lost in loss record 168 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 1,000 bytes in 5 blocks are definitely lost in loss record 171 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401E01: _toString_ (cashtill.c:610)
-==5698==    by 0x40327D: main (cashtill.c:930)
-==5698== 
-==5698== 1,000 bytes in 5 blocks are definitely lost in loss record 172 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401E01: _toString_ (cashtill.c:610)
-==5698==    by 0x402ED3: _buy_ (cashtill.c:843)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 1,000 bytes in 5 blocks are definitely lost in loss record 173 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401E01: _toString_ (cashtill.c:610)
-==5698==    by 0x402D7D: _buy_ (cashtill.c:805)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 1,080 bytes in 5 blocks are definitely lost in loss record 174 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401A59: _toString_ (cashtill.c:537)
-==5698==    by 0x40327D: main (cashtill.c:930)
-==5698== 
-==5698== 1,128 bytes in 6 blocks are definitely lost in loss record 175 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401ADE: _toString_ (cashtill.c:555)
-==5698==    by 0x40327D: main (cashtill.c:930)
-==5698== 
-==5698== 1,272 bytes in 6 blocks are definitely lost in loss record 177 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4046F1: Array_Append (WyRT.c:62)
-==5698==    by 0x401B87: _toString_ (cashtill.c:565)
-==5698==    by 0x40327D: main (cashtill.c:930)
-==5698== 
-==5698== 1,280 (320 direct, 960 indirect) bytes in 5 blocks are definitely lost in loss record 178 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x403E15: create2DArray_int64_t_empty (Util.c:236)
-==5698==    by 0x401BCF: _toString_ (cashtill.c:571)
-==5698==    by 0x402ED3: _buy_ (cashtill.c:843)
-==5698==    by 0x403343: main (cashtill.c:952)
-==5698== 
-==5698== 1,280 (320 direct, 960 indirect) bytes in 5 blocks are definitely lost in loss record 179 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x403E15: create2DArray_int64_t_empty (Util.c:236)
-==5698==    by 0x401BCF: _toString_ (cashtill.c:571)
-==5698==    by 0x402D7D: _buy_ (cashtill.c:805)
-==5698==    by 0x4035AA: main (cashtill.c:1015)
-==5698== 
-==5698== 1,408 bytes in 22 blocks are definitely lost in loss record 180 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 1,408 bytes in 22 blocks are definitely lost in loss record 181 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 1,408 bytes in 22 blocks are definitely lost in loss record 182 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 1,536 (384 direct, 1,152 indirect) bytes in 6 blocks are definitely lost in loss record 183 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x403E15: create2DArray_int64_t_empty (Util.c:236)
-==5698==    by 0x401BCF: _toString_ (cashtill.c:571)
-==5698==    by 0x40327D: main (cashtill.c:930)
-==5698== 
-==5698== 5,504 bytes in 86 blocks are definitely lost in loss record 184 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 5,504 bytes in 86 blocks are definitely lost in loss record 185 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 5,504 bytes in 86 blocks are definitely lost in loss record 186 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 19,392 bytes in 303 blocks are definitely lost in loss record 187 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 19,392 bytes in 303 blocks are definitely lost in loss record 188 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 19,392 bytes in 303 blocks are definitely lost in loss record 189 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 62,080 bytes in 970 blocks are definitely lost in loss record 190 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 62,080 bytes in 970 blocks are definitely lost in loss record 191 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 62,080 bytes in 970 blocks are definitely lost in loss record 192 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 178,880 bytes in 2,795 blocks are definitely lost in loss record 193 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 178,880 bytes in 2,795 blocks are definitely lost in loss record 194 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 178,880 bytes in 2,795 blocks are definitely lost in loss record 195 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 452,480 bytes in 7,070 blocks are definitely lost in loss record 196 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 452,480 bytes in 7,070 blocks are definitely lost in loss record 197 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 452,480 bytes in 7,070 blocks are definitely lost in loss record 198 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 967,680 bytes in 15,120 blocks are definitely lost in loss record 199 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 967,680 bytes in 15,120 blocks are definitely lost in loss record 200 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 967,680 bytes in 15,120 blocks are definitely lost in loss record 201 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698==    by 0x4034DD: main (cashtill.c:994)
-==5698== 
-==5698== 1,612,800 bytes in 25,200 blocks are definitely lost in loss record 202 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698== 
-==5698== 1,612,800 bytes in 25,200 blocks are definitely lost in loss record 203 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698== 
-==5698== 1,612,800 bytes in 25,200 blocks are definitely lost in loss record 204 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4029D0: _buy_ (cashtill.c:767)
-==5698== 
-==5698== 1,612,800 bytes in 25,200 blocks are definitely lost in loss record 205 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x401485: _calculateChange_ (cashtill.c:399)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698== 
-==5698== 1,612,800 bytes in 25,200 blocks are definitely lost in loss record 206 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
-==5698==    by 0x401570: _calculateChange_ (cashtill.c:407)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698== 
-==5698== 1,612,800 bytes in 25,200 blocks are definitely lost in loss record 207 of 207
-==5698==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==5698==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
-==5698==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
-==5698== 
-==5698== LEAK SUMMARY:
-==5698==    definitely lost: 14,768,504 bytes in 230,692 blocks
-==5698==    indirectly lost: 4,800 bytes in 25 blocks
-==5698==      possibly lost: 0 bytes in 0 blocks
-==5698==    still reachable: 816 bytes in 11 blocks
-==5698==         suppressed: 0 bytes in 0 blocks
-==5698== Reachable blocks (those to which a pointer was found) are not shown.
-==5698== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==5698== 
-==5698== For counts of detected and suppressed errors, rerun with: -v
-==5698== ERROR SUMMARY: 187 errors from 187 contexts (suppressed: 0 from 0)
+==30715== Memcheck, a memory error detector
+==30715== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==30715== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==30715== Command: ./cashtill.out
+==30715== Parent PID: 29356
+==30715== 
+==30715== 
+==30715== HEAP SUMMARY:
+==30715==     in use at exit: 14,774,120 bytes in 230,728 blocks
+==30715==   total heap usage: 230,729 allocs, 1 frees, 14,782,312 bytes allocated
+==30715== 
+==30715== 0 bytes in 1 blocks are definitely lost in loss record 1 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x40192D: _toString_ (cashtill.c:499)
+==30715==    by 0x40327D: main (cashtill.c:930)
+==30715== 
+==30715== 0 bytes in 1 blocks are definitely lost in loss record 2 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401E6B: _toString_ (cashtill.c:630)
+==30715==    by 0x40327D: main (cashtill.c:930)
+==30715== 
+==30715== 0 bytes in 1 blocks are definitely lost in loss record 3 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x40192D: _toString_ (cashtill.c:499)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 0 bytes in 1 blocks are definitely lost in loss record 4 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401E6B: _toString_ (cashtill.c:630)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 0 bytes in 1 blocks are definitely lost in loss record 5 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x40192D: _toString_ (cashtill.c:499)
+==30715==    by 0x402D7D: _buy_ (cashtill.c:805)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 0 bytes in 1 blocks are definitely lost in loss record 6 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401E6B: _toString_ (cashtill.c:630)
+==30715==    by 0x402D7D: _buy_ (cashtill.c:805)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 0 bytes in 1 blocks are definitely lost in loss record 7 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x40192D: _toString_ (cashtill.c:499)
+==30715==    by 0x402ED3: _buy_ (cashtill.c:843)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 0 bytes in 1 blocks are definitely lost in loss record 8 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401E6B: _toString_ (cashtill.c:630)
+==30715==    by 0x402ED3: _buy_ (cashtill.c:843)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 0 bytes in 1 blocks are definitely lost in loss record 9 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x40192D: _toString_ (cashtill.c:499)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x403410: main (cashtill.c:973)
+==30715== 
+==30715== 0 bytes in 1 blocks are definitely lost in loss record 10 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401E6B: _toString_ (cashtill.c:630)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x403410: main (cashtill.c:973)
+==30715== 
+==30715== 0 bytes in 1 blocks are definitely lost in loss record 11 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x40192D: _toString_ (cashtill.c:499)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 0 bytes in 1 blocks are definitely lost in loss record 12 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401E6B: _toString_ (cashtill.c:630)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 0 bytes in 1 blocks are definitely lost in loss record 13 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x40192D: _toString_ (cashtill.c:499)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 0 bytes in 1 blocks are definitely lost in loss record 14 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401E6B: _toString_ (cashtill.c:630)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 0 bytes in 1 blocks are definitely lost in loss record 15 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x40192D: _toString_ (cashtill.c:499)
+==30715==    by 0x402D7D: _buy_ (cashtill.c:805)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 0 bytes in 1 blocks are definitely lost in loss record 16 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401E6B: _toString_ (cashtill.c:630)
+==30715==    by 0x402D7D: _buy_ (cashtill.c:805)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 0 bytes in 1 blocks are definitely lost in loss record 17 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x40192D: _toString_ (cashtill.c:499)
+==30715==    by 0x402ED3: _buy_ (cashtill.c:843)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 0 bytes in 1 blocks are definitely lost in loss record 18 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401E6B: _toString_ (cashtill.c:630)
+==30715==    by 0x402ED3: _buy_ (cashtill.c:843)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 8 bytes in 1 blocks are definitely lost in loss record 23 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4044D4: Int_toString (WyRT.c:16)
+==30715==    by 0x401AA9: _toString_ (cashtill.c:551)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 8 bytes in 1 blocks are definitely lost in loss record 24 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401ADE: _toString_ (cashtill.c:555)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 8 bytes in 1 blocks are definitely lost in loss record 25 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4044D4: Int_toString (WyRT.c:16)
+==30715==    by 0x401AA9: _toString_ (cashtill.c:551)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x403410: main (cashtill.c:973)
+==30715== 
+==30715== 8 bytes in 1 blocks are definitely lost in loss record 26 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401ADE: _toString_ (cashtill.c:555)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x403410: main (cashtill.c:973)
+==30715== 
+==30715== 8 bytes in 1 blocks are definitely lost in loss record 27 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4044D4: Int_toString (WyRT.c:16)
+==30715==    by 0x402469: _buy_ (cashtill.c:702)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 8 bytes in 1 blocks are definitely lost in loss record 28 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4044D4: Int_toString (WyRT.c:16)
+==30715==    by 0x401AA9: _toString_ (cashtill.c:551)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 8 bytes in 1 blocks are definitely lost in loss record 29 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401ADE: _toString_ (cashtill.c:555)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 8 bytes in 1 blocks are definitely lost in loss record 30 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4044D4: Int_toString (WyRT.c:16)
+==30715==    by 0x401AA9: _toString_ (cashtill.c:551)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 8 bytes in 1 blocks are definitely lost in loss record 31 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401ADE: _toString_ (cashtill.c:555)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 16 bytes in 1 blocks are definitely lost in loss record 32 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x402127: _buy_ (cashtill.c:683)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 16 bytes in 1 blocks are definitely lost in loss record 33 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4044D4: Int_toString (WyRT.c:16)
+==30715==    by 0x402469: _buy_ (cashtill.c:702)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 16 bytes in 1 blocks are definitely lost in loss record 34 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4024A8: _buy_ (cashtill.c:711)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 16 bytes in 1 blocks are definitely lost in loss record 35 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401A04: _toString_ (cashtill.c:533)
+==30715==    by 0x402D7D: _buy_ (cashtill.c:805)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 16 bytes in 1 blocks are definitely lost in loss record 36 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x402127: _buy_ (cashtill.c:683)
+==30715==    by 0x403410: main (cashtill.c:973)
+==30715== 
+==30715== 16 bytes in 1 blocks are definitely lost in loss record 37 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4024A8: _buy_ (cashtill.c:711)
+==30715==    by 0x403410: main (cashtill.c:973)
+==30715== 
+==30715== 16 bytes in 1 blocks are definitely lost in loss record 38 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x402127: _buy_ (cashtill.c:683)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 16 bytes in 1 blocks are definitely lost in loss record 39 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4024A8: _buy_ (cashtill.c:711)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 16 bytes in 1 blocks are definitely lost in loss record 40 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x402127: _buy_ (cashtill.c:683)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 16 bytes in 1 blocks are definitely lost in loss record 41 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4024A8: _buy_ (cashtill.c:711)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 16 bytes in 2 blocks are definitely lost in loss record 42 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4044D4: Int_toString (WyRT.c:16)
+==30715==    by 0x401AA9: _toString_ (cashtill.c:551)
+==30715==    by 0x402D7D: _buy_ (cashtill.c:805)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 24 bytes in 1 blocks are definitely lost in loss record 43 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401B20: _toString_ (cashtill.c:561)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 24 bytes in 1 blocks are definitely lost in loss record 44 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4044D4: Int_toString (WyRT.c:16)
+==30715==    by 0x402469: _buy_ (cashtill.c:702)
+==30715==    by 0x403410: main (cashtill.c:973)
+==30715== 
+==30715== 24 bytes in 1 blocks are definitely lost in loss record 45 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401B20: _toString_ (cashtill.c:561)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x403410: main (cashtill.c:973)
+==30715== 
+==30715== 24 bytes in 1 blocks are definitely lost in loss record 46 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401B20: _toString_ (cashtill.c:561)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 24 bytes in 1 blocks are definitely lost in loss record 47 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4044D4: Int_toString (WyRT.c:16)
+==30715==    by 0x402469: _buy_ (cashtill.c:702)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 24 bytes in 1 blocks are definitely lost in loss record 48 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401B20: _toString_ (cashtill.c:561)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 24 bytes in 3 blocks are definitely lost in loss record 49 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4044D4: Int_toString (WyRT.c:16)
+==30715==    by 0x401AA9: _toString_ (cashtill.c:551)
+==30715==    by 0x402ED3: _buy_ (cashtill.c:843)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 32 bytes in 1 blocks are definitely lost in loss record 50 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401B87: _toString_ (cashtill.c:565)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 32 bytes in 1 blocks are definitely lost in loss record 51 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401B87: _toString_ (cashtill.c:565)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x403410: main (cashtill.c:973)
+==30715== 
+==30715== 32 bytes in 1 blocks are definitely lost in loss record 52 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401B87: _toString_ (cashtill.c:565)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 32 bytes in 1 blocks are definitely lost in loss record 53 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401B87: _toString_ (cashtill.c:565)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 32 bytes in 2 blocks are definitely lost in loss record 54 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401A04: _toString_ (cashtill.c:533)
+==30715==    by 0x402ED3: _buy_ (cashtill.c:843)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 40 bytes in 5 blocks are definitely lost in loss record 55 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4044D4: Int_toString (WyRT.c:16)
+==30715==    by 0x401AA9: _toString_ (cashtill.c:551)
+==30715==    by 0x402ED3: _buy_ (cashtill.c:843)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 40 bytes in 5 blocks are definitely lost in loss record 56 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4044D4: Int_toString (WyRT.c:16)
+==30715==    by 0x401AA9: _toString_ (cashtill.c:551)
+==30715==    by 0x402D7D: _buy_ (cashtill.c:805)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 48 bytes in 1 blocks are definitely lost in loss record 58 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x402E46: _buy_ (cashtill.c:832)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 48 bytes in 1 blocks are definitely lost in loss record 59 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x402E46: _buy_ (cashtill.c:832)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 48 bytes in 2 blocks are definitely lost in loss record 60 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401B20: _toString_ (cashtill.c:561)
+==30715==    by 0x402D7D: _buy_ (cashtill.c:805)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 48 bytes in 6 blocks are definitely lost in loss record 61 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4044D4: Int_toString (WyRT.c:16)
+==30715==    by 0x401AA9: _toString_ (cashtill.c:551)
+==30715==    by 0x40327D: main (cashtill.c:930)
+==30715== 
+==30715== 56 bytes in 1 blocks are definitely lost in loss record 62 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401E01: _toString_ (cashtill.c:610)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 56 bytes in 1 blocks are definitely lost in loss record 63 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401E01: _toString_ (cashtill.c:610)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x403410: main (cashtill.c:973)
+==30715== 
+==30715== 56 bytes in 1 blocks are definitely lost in loss record 64 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401E01: _toString_ (cashtill.c:610)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 56 bytes in 1 blocks are definitely lost in loss record 65 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401E01: _toString_ (cashtill.c:610)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 71 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 72 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 73 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 74 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 75 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 76 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 77 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 78 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 79 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 80 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 81 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 82 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 83 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 84 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 85 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 86 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 87 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 88 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 89 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 90 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 91 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 92 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x400C0A: _Cash_ (cashtill.c:30)
+==30715==    by 0x4013D6: _calculateChange_ (cashtill.c:372)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 93 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 94 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 95 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 96 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 97 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 98 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 99 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 100 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 101 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 64 bytes in 1 blocks are definitely lost in loss record 102 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x400C0A: _Cash_ (cashtill.c:30)
+==30715==    by 0x4013D6: _calculateChange_ (cashtill.c:372)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 64 bytes in 4 blocks are definitely lost in loss record 103 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401A04: _toString_ (cashtill.c:533)
+==30715==    by 0x402ED3: _buy_ (cashtill.c:843)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 64 bytes in 4 blocks are definitely lost in loss record 104 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401A04: _toString_ (cashtill.c:533)
+==30715==    by 0x402D7D: _buy_ (cashtill.c:805)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 72 bytes in 1 blocks are definitely lost in loss record 105 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401A59: _toString_ (cashtill.c:537)
+==30715==    by 0x402D7D: _buy_ (cashtill.c:805)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 72 bytes in 3 blocks are definitely lost in loss record 106 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401B20: _toString_ (cashtill.c:561)
+==30715==    by 0x402ED3: _buy_ (cashtill.c:843)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 80 bytes in 5 blocks are definitely lost in loss record 107 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401A04: _toString_ (cashtill.c:533)
+==30715==    by 0x40327D: main (cashtill.c:930)
+==30715== 
+==30715== 88 bytes in 2 blocks are definitely lost in loss record 108 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401ADE: _toString_ (cashtill.c:555)
+==30715==    by 0x402D7D: _buy_ (cashtill.c:805)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 112 bytes in 1 blocks are definitely lost in loss record 109 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x402C78: _buy_ (cashtill.c:794)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 112 bytes in 1 blocks are definitely lost in loss record 110 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x402C78: _buy_ (cashtill.c:794)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 120 bytes in 5 blocks are definitely lost in loss record 111 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401B20: _toString_ (cashtill.c:561)
+==30715==    by 0x402ED3: _buy_ (cashtill.c:843)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 120 bytes in 5 blocks are definitely lost in loss record 112 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401B20: _toString_ (cashtill.c:561)
+==30715==    by 0x402D7D: _buy_ (cashtill.c:805)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 128 bytes in 1 blocks are definitely lost in loss record 113 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x402507: _buy_ (cashtill.c:720)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 128 bytes in 1 blocks are definitely lost in loss record 114 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x402507: _buy_ (cashtill.c:720)
+==30715==    by 0x403410: main (cashtill.c:973)
+==30715== 
+==30715== 128 bytes in 1 blocks are definitely lost in loss record 115 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x402507: _buy_ (cashtill.c:720)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 128 bytes in 1 blocks are definitely lost in loss record 116 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x402507: _buy_ (cashtill.c:720)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 128 bytes in 2 blocks are definitely lost in loss record 117 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 128 bytes in 2 blocks are definitely lost in loss record 118 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 128 bytes in 2 blocks are definitely lost in loss record 119 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 136 bytes in 2 blocks are definitely lost in loss record 120 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401B87: _toString_ (cashtill.c:565)
+==30715==    by 0x402D7D: _buy_ (cashtill.c:805)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 144 bytes in 6 blocks are definitely lost in loss record 121 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401B20: _toString_ (cashtill.c:561)
+==30715==    by 0x40327D: main (cashtill.c:930)
+==30715== 
+==30715== 184 bytes in 2 blocks are definitely lost in loss record 122 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401E01: _toString_ (cashtill.c:610)
+==30715==    by 0x402D7D: _buy_ (cashtill.c:805)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 216 bytes in 2 blocks are definitely lost in loss record 127 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401A59: _toString_ (cashtill.c:537)
+==30715==    by 0x402ED3: _buy_ (cashtill.c:843)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 240 bytes in 3 blocks are definitely lost in loss record 128 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401ADE: _toString_ (cashtill.c:555)
+==30715==    by 0x402ED3: _buy_ (cashtill.c:843)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 256 (64 direct, 192 indirect) bytes in 1 blocks are definitely lost in loss record 129 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x403E15: create2DArray_int64_t_empty (Util.c:236)
+==30715==    by 0x401BCF: _toString_ (cashtill.c:571)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 256 (64 direct, 192 indirect) bytes in 1 blocks are definitely lost in loss record 130 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x403E15: create2DArray_int64_t_empty (Util.c:236)
+==30715==    by 0x401BCF: _toString_ (cashtill.c:571)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x403410: main (cashtill.c:973)
+==30715== 
+==30715== 256 (64 direct, 192 indirect) bytes in 1 blocks are definitely lost in loss record 131 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x403E15: create2DArray_int64_t_empty (Util.c:236)
+==30715==    by 0x401BCF: _toString_ (cashtill.c:571)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 256 (64 direct, 192 indirect) bytes in 1 blocks are definitely lost in loss record 132 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x403E15: create2DArray_int64_t_empty (Util.c:236)
+==30715==    by 0x401BCF: _toString_ (cashtill.c:571)
+==30715==    by 0x402663: _buy_ (cashtill.c:731)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 280 bytes in 1 blocks are definitely lost in loss record 133 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4026CA: _buy_ (cashtill.c:747)
+==30715==    by 0x403410: main (cashtill.c:973)
+==30715== 
+==30715== 280 bytes in 1 blocks are definitely lost in loss record 134 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x402A15: _buy_ (cashtill.c:781)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 288 bytes in 1 blocks are definitely lost in loss record 135 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x402186: _buy_ (cashtill.c:692)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 288 bytes in 1 blocks are definitely lost in loss record 136 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x402186: _buy_ (cashtill.c:692)
+==30715==    by 0x403410: main (cashtill.c:973)
+==30715== 
+==30715== 288 bytes in 1 blocks are definitely lost in loss record 137 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x402186: _buy_ (cashtill.c:692)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 288 bytes in 1 blocks are definitely lost in loss record 138 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x402186: _buy_ (cashtill.c:692)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 312 bytes in 3 blocks are definitely lost in loss record 139 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401B87: _toString_ (cashtill.c:565)
+==30715==    by 0x402ED3: _buy_ (cashtill.c:843)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 320 bytes in 5 blocks are definitely lost in loss record 140 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 320 bytes in 5 blocks are definitely lost in loss record 141 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 320 bytes in 5 blocks are definitely lost in loss record 142 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 320 bytes in 5 blocks are definitely lost in loss record 143 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 320 bytes in 5 blocks are definitely lost in loss record 144 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 320 bytes in 5 blocks are definitely lost in loss record 145 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 384 bytes in 3 blocks are definitely lost in loss record 147 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401E01: _toString_ (cashtill.c:610)
+==30715==    by 0x402ED3: _buy_ (cashtill.c:843)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 512 (128 direct, 384 indirect) bytes in 2 blocks are definitely lost in loss record 149 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x403E15: create2DArray_int64_t_empty (Util.c:236)
+==30715==    by 0x401BCF: _toString_ (cashtill.c:571)
+==30715==    by 0x402D7D: _buy_ (cashtill.c:805)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 512 bytes in 8 blocks are definitely lost in loss record 150 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x400F7B: _total_ (cashtill.c:163)
+==30715==    by 0x40269C: _buy_ (cashtill.c:740)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 512 bytes in 8 blocks are definitely lost in loss record 151 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x400F7B: _total_ (cashtill.c:163)
+==30715==    by 0x40299C: _buy_ (cashtill.c:760)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 512 bytes in 8 blocks are definitely lost in loss record 152 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x400F7B: _total_ (cashtill.c:163)
+==30715==    by 0x40269C: _buy_ (cashtill.c:740)
+==30715==    by 0x403410: main (cashtill.c:973)
+==30715== 
+==30715== 512 bytes in 8 blocks are definitely lost in loss record 153 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x400F7B: _total_ (cashtill.c:163)
+==30715==    by 0x40269C: _buy_ (cashtill.c:740)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 512 bytes in 8 blocks are definitely lost in loss record 154 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x400F7B: _total_ (cashtill.c:163)
+==30715==    by 0x40299C: _buy_ (cashtill.c:760)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 512 bytes in 8 blocks are definitely lost in loss record 155 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x400F7B: _total_ (cashtill.c:163)
+==30715==    by 0x40269C: _buy_ (cashtill.c:740)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 512 bytes in 8 blocks are definitely lost in loss record 156 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x400F7B: _total_ (cashtill.c:163)
+==30715==    by 0x40299C: _buy_ (cashtill.c:760)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 640 bytes in 10 blocks are definitely lost in loss record 158 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 640 bytes in 10 blocks are definitely lost in loss record 159 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 704 bytes in 11 blocks are definitely lost in loss record 160 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 720 bytes in 4 blocks are definitely lost in loss record 161 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401A59: _toString_ (cashtill.c:537)
+==30715==    by 0x402ED3: _buy_ (cashtill.c:843)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 720 bytes in 4 blocks are definitely lost in loss record 162 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401A59: _toString_ (cashtill.c:537)
+==30715==    by 0x402D7D: _buy_ (cashtill.c:805)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 760 bytes in 5 blocks are definitely lost in loss record 163 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401ADE: _toString_ (cashtill.c:555)
+==30715==    by 0x402ED3: _buy_ (cashtill.c:843)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 760 bytes in 5 blocks are definitely lost in loss record 164 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401ADE: _toString_ (cashtill.c:555)
+==30715==    by 0x402D7D: _buy_ (cashtill.c:805)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 768 (192 direct, 576 indirect) bytes in 3 blocks are definitely lost in loss record 165 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x403E15: create2DArray_int64_t_empty (Util.c:236)
+==30715==    by 0x401BCF: _toString_ (cashtill.c:571)
+==30715==    by 0x402ED3: _buy_ (cashtill.c:843)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 880 bytes in 5 blocks are definitely lost in loss record 166 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401B87: _toString_ (cashtill.c:565)
+==30715==    by 0x402ED3: _buy_ (cashtill.c:843)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 880 bytes in 5 blocks are definitely lost in loss record 167 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401B87: _toString_ (cashtill.c:565)
+==30715==    by 0x402D7D: _buy_ (cashtill.c:805)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 896 bytes in 14 blocks are definitely lost in loss record 168 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 1,000 bytes in 5 blocks are definitely lost in loss record 171 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401E01: _toString_ (cashtill.c:610)
+==30715==    by 0x40327D: main (cashtill.c:930)
+==30715== 
+==30715== 1,000 bytes in 5 blocks are definitely lost in loss record 172 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401E01: _toString_ (cashtill.c:610)
+==30715==    by 0x402ED3: _buy_ (cashtill.c:843)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 1,000 bytes in 5 blocks are definitely lost in loss record 173 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401E01: _toString_ (cashtill.c:610)
+==30715==    by 0x402D7D: _buy_ (cashtill.c:805)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 1,080 bytes in 5 blocks are definitely lost in loss record 174 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401A59: _toString_ (cashtill.c:537)
+==30715==    by 0x40327D: main (cashtill.c:930)
+==30715== 
+==30715== 1,128 bytes in 6 blocks are definitely lost in loss record 175 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401ADE: _toString_ (cashtill.c:555)
+==30715==    by 0x40327D: main (cashtill.c:930)
+==30715== 
+==30715== 1,272 bytes in 6 blocks are definitely lost in loss record 177 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4046F1: Array_Append (WyRT.c:62)
+==30715==    by 0x401B87: _toString_ (cashtill.c:565)
+==30715==    by 0x40327D: main (cashtill.c:930)
+==30715== 
+==30715== 1,280 (320 direct, 960 indirect) bytes in 5 blocks are definitely lost in loss record 178 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x403E15: create2DArray_int64_t_empty (Util.c:236)
+==30715==    by 0x401BCF: _toString_ (cashtill.c:571)
+==30715==    by 0x402ED3: _buy_ (cashtill.c:843)
+==30715==    by 0x403343: main (cashtill.c:952)
+==30715== 
+==30715== 1,280 (320 direct, 960 indirect) bytes in 5 blocks are definitely lost in loss record 179 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x403E15: create2DArray_int64_t_empty (Util.c:236)
+==30715==    by 0x401BCF: _toString_ (cashtill.c:571)
+==30715==    by 0x402D7D: _buy_ (cashtill.c:805)
+==30715==    by 0x4035AA: main (cashtill.c:1015)
+==30715== 
+==30715== 1,408 bytes in 22 blocks are definitely lost in loss record 180 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 1,408 bytes in 22 blocks are definitely lost in loss record 181 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 1,408 bytes in 22 blocks are definitely lost in loss record 182 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 1,536 (384 direct, 1,152 indirect) bytes in 6 blocks are definitely lost in loss record 183 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x403E15: create2DArray_int64_t_empty (Util.c:236)
+==30715==    by 0x401BCF: _toString_ (cashtill.c:571)
+==30715==    by 0x40327D: main (cashtill.c:930)
+==30715== 
+==30715== 5,504 bytes in 86 blocks are definitely lost in loss record 184 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 5,504 bytes in 86 blocks are definitely lost in loss record 185 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 5,504 bytes in 86 blocks are definitely lost in loss record 186 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 19,392 bytes in 303 blocks are definitely lost in loss record 187 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 19,392 bytes in 303 blocks are definitely lost in loss record 188 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 19,392 bytes in 303 blocks are definitely lost in loss record 189 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 62,080 bytes in 970 blocks are definitely lost in loss record 190 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 62,080 bytes in 970 blocks are definitely lost in loss record 191 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 62,080 bytes in 970 blocks are definitely lost in loss record 192 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 178,880 bytes in 2,795 blocks are definitely lost in loss record 193 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 178,880 bytes in 2,795 blocks are definitely lost in loss record 194 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 178,880 bytes in 2,795 blocks are definitely lost in loss record 195 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 452,480 bytes in 7,070 blocks are definitely lost in loss record 196 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 452,480 bytes in 7,070 blocks are definitely lost in loss record 197 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 452,480 bytes in 7,070 blocks are definitely lost in loss record 198 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 967,680 bytes in 15,120 blocks are definitely lost in loss record 199 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 967,680 bytes in 15,120 blocks are definitely lost in loss record 200 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 967,680 bytes in 15,120 blocks are definitely lost in loss record 201 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715==    by 0x4034DD: main (cashtill.c:994)
+==30715== 
+==30715== 1,612,800 bytes in 25,200 blocks are definitely lost in loss record 202 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715== 
+==30715== 1,612,800 bytes in 25,200 blocks are definitely lost in loss record 203 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715== 
+==30715== 1,612,800 bytes in 25,200 blocks are definitely lost in loss record 204 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4029D0: _buy_ (cashtill.c:767)
+==30715== 
+==30715== 1,612,800 bytes in 25,200 blocks are definitely lost in loss record 205 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x401485: _calculateChange_ (cashtill.c:399)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715== 
+==30715== 1,612,800 bytes in 25,200 blocks are definitely lost in loss record 206 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x40384D: copy1DArray_int64_t (Util.c:80)
+==30715==    by 0x401570: _calculateChange_ (cashtill.c:407)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715== 
+==30715== 1,612,800 bytes in 25,200 blocks are definitely lost in loss record 207 of 207
+==30715==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==30715==    by 0x4036A1: create1DArray_int64_t (Util.c:23)
+==30715==    by 0x4015EA: _calculateChange_ (cashtill.c:417)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715==    by 0x4016CD: _calculateChange_ (cashtill.c:426)
+==30715== 
+==30715== LEAK SUMMARY:
+==30715==    definitely lost: 14,768,504 bytes in 230,692 blocks
+==30715==    indirectly lost: 4,800 bytes in 25 blocks
+==30715==      possibly lost: 0 bytes in 0 blocks
+==30715==    still reachable: 816 bytes in 11 blocks
+==30715==         suppressed: 0 bytes in 0 blocks
+==30715== Reachable blocks (those to which a pointer was found) are not shown.
+==30715== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==30715== 
+==30715== For counts of detected and suppressed errors, rerun with: -v
+==30715== ERROR SUMMARY: 187 errors from 187 contexts (suppressed: 0 from 0)

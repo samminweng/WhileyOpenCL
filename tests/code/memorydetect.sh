@@ -29,7 +29,6 @@ runValgrind(){
             if (( STATUS != 0))
             then 
                 echo "Error!!! $codetype $testcase code fails."
-                exit $STATUS
             fi
             # Put all output to a single file
             echo "=== Test report for the $codetype code of $testcase ===" >> $basefolder/$memorylog

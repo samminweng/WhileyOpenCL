@@ -1,22 +1,22 @@
-==5840== Memcheck, a memory error detector
-==5840== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==5840== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==5840== Command: ./CoinGame1.out
-==5840== Parent PID: 4976
-==5840== 
-==5840== 
-==5840== HEAP SUMMARY:
-==5840==     in use at exit: 1,384 bytes in 3 blocks
-==5840==   total heap usage: 4 allocs, 1 frees, 9,576 bytes allocated
-==5840== 
-==5840== LEAK SUMMARY:
-==5840==    definitely lost: 0 bytes in 0 blocks
-==5840==    indirectly lost: 0 bytes in 0 blocks
-==5840==      possibly lost: 0 bytes in 0 blocks
-==5840==    still reachable: 1,384 bytes in 3 blocks
-==5840==         suppressed: 0 bytes in 0 blocks
-==5840== Reachable blocks (those to which a pointer was found) are not shown.
-==5840== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==5840== 
-==5840== For counts of detected and suppressed errors, rerun with: -v
-==5840== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==31037== Memcheck, a memory error detector
+==31037== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==31037== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==31037== Command: ./CoinGame1.out
+==31037== Parent PID: 29356
+==31037== 
+==31037== 
+==31037== HEAP SUMMARY:
+==31037==     in use at exit: 1,384 bytes in 3 blocks
+==31037==   total heap usage: 4 allocs, 1 frees, 9,576 bytes allocated
+==31037== 
+==31037== LEAK SUMMARY:
+==31037==    definitely lost: 0 bytes in 0 blocks
+==31037==    indirectly lost: 0 bytes in 0 blocks
+==31037==      possibly lost: 0 bytes in 0 blocks
+==31037==    still reachable: 1,384 bytes in 3 blocks
+==31037==         suppressed: 0 bytes in 0 blocks
+==31037== Reachable blocks (those to which a pointer was found) are not shown.
+==31037== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==31037== 
+==31037== For counts of detected and suppressed errors, rerun with: -v
+==31037== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

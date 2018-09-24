@@ -1,22 +1,22 @@
-==7635== Memcheck, a memory error detector
-==7635== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==7635== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==7635== Command: ./ResetMacro2.out
-==7635== Parent PID: 4976
-==7635== 
-==7635== 
-==7635== HEAP SUMMARY:
-==7635==     in use at exit: 80 bytes in 2 blocks
-==7635==   total heap usage: 3 allocs, 1 frees, 8,272 bytes allocated
-==7635== 
-==7635== LEAK SUMMARY:
-==7635==    definitely lost: 0 bytes in 0 blocks
-==7635==    indirectly lost: 0 bytes in 0 blocks
-==7635==      possibly lost: 0 bytes in 0 blocks
-==7635==    still reachable: 80 bytes in 2 blocks
-==7635==         suppressed: 0 bytes in 0 blocks
-==7635== Reachable blocks (those to which a pointer was found) are not shown.
-==7635== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==7635== 
-==7635== For counts of detected and suppressed errors, rerun with: -v
-==7635== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==2175== Memcheck, a memory error detector
+==2175== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==2175== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==2175== Command: ./ResetMacro2.out
+==2175== Parent PID: 29356
+==2175== 
+==2175== 
+==2175== HEAP SUMMARY:
+==2175==     in use at exit: 80 bytes in 2 blocks
+==2175==   total heap usage: 3 allocs, 1 frees, 8,272 bytes allocated
+==2175== 
+==2175== LEAK SUMMARY:
+==2175==    definitely lost: 0 bytes in 0 blocks
+==2175==    indirectly lost: 0 bytes in 0 blocks
+==2175==      possibly lost: 0 bytes in 0 blocks
+==2175==    still reachable: 80 bytes in 2 blocks
+==2175==         suppressed: 0 bytes in 0 blocks
+==2175== Reachable blocks (those to which a pointer was found) are not shown.
+==2175== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==2175== 
+==2175== For counts of detected and suppressed errors, rerun with: -v
+==2175== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

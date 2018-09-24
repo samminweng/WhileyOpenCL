@@ -1,33 +1,33 @@
-==6583== Memcheck, a memory error detector
-==6583== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==6583== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==6583== Command: ./FunctionCall4.out
-==6583== Parent PID: 4976
-==6583== 
-==6583== 
-==6583== HEAP SUMMARY:
-==6583==     in use at exit: 560 bytes in 14 blocks
-==6583==   total heap usage: 15 allocs, 1 frees, 8,752 bytes allocated
-==6583== 
-==6583== 40 bytes in 1 blocks are definitely lost in loss record 13 of 14
-==6583==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==6583==    by 0x4017C6: copy1DArray_int64_t (Util.c:80)
-==6583==    by 0x400F16: main (FunctionCall4.c:115)
-==6583== 
-==6583== 40 bytes in 1 blocks are definitely lost in loss record 14 of 14
-==6583==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==6583==    by 0x40161A: create1DArray_int64_t (Util.c:23)
-==6583==    by 0x400CAC: _func_ (FunctionCall4.c:45)
-==6583==    by 0x4012B5: main (FunctionCall4.c:183)
-==6583== 
-==6583== LEAK SUMMARY:
-==6583==    definitely lost: 80 bytes in 2 blocks
-==6583==    indirectly lost: 0 bytes in 0 blocks
-==6583==      possibly lost: 0 bytes in 0 blocks
-==6583==    still reachable: 480 bytes in 12 blocks
-==6583==         suppressed: 0 bytes in 0 blocks
-==6583== Reachable blocks (those to which a pointer was found) are not shown.
-==6583== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==6583== 
-==6583== For counts of detected and suppressed errors, rerun with: -v
-==6583== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+==32505== Memcheck, a memory error detector
+==32505== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==32505== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==32505== Command: ./FunctionCall4.out
+==32505== Parent PID: 29356
+==32505== 
+==32505== 
+==32505== HEAP SUMMARY:
+==32505==     in use at exit: 560 bytes in 14 blocks
+==32505==   total heap usage: 15 allocs, 1 frees, 8,752 bytes allocated
+==32505== 
+==32505== 40 bytes in 1 blocks are definitely lost in loss record 13 of 14
+==32505==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==32505==    by 0x4017C6: copy1DArray_int64_t (Util.c:80)
+==32505==    by 0x400F16: main (FunctionCall4.c:115)
+==32505== 
+==32505== 40 bytes in 1 blocks are definitely lost in loss record 14 of 14
+==32505==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==32505==    by 0x40161A: create1DArray_int64_t (Util.c:23)
+==32505==    by 0x400CAC: _func_ (FunctionCall4.c:45)
+==32505==    by 0x4012B5: main (FunctionCall4.c:183)
+==32505== 
+==32505== LEAK SUMMARY:
+==32505==    definitely lost: 80 bytes in 2 blocks
+==32505==    indirectly lost: 0 bytes in 0 blocks
+==32505==      possibly lost: 0 bytes in 0 blocks
+==32505==    still reachable: 480 bytes in 12 blocks
+==32505==         suppressed: 0 bytes in 0 blocks
+==32505== Reachable blocks (those to which a pointer was found) are not shown.
+==32505== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==32505== 
+==32505== For counts of detected and suppressed errors, rerun with: -v
+==32505== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
