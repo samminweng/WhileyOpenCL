@@ -88,27 +88,21 @@ int64_t* _findMoves_(_DECL_1DARRAY_PARAM(moves), _DECL_DEALLOC_PARAM(moves), int
 		//const %10 = 0 : int
 		_10 = 0;
 		//arraygen %11 = [10; 1] : int[]
-		_DEALLOC(_11);
-		_NEW_1DARRAY_int64_t(_11, n, _10);
-		_NEW1DARRAY_DEALLOC(_11, _10, n);
+		_NEW1DARRAY_DEALLOC(_11, _10, n, int64_t);
 		//assign %4 = %11  : int[]
 		// isCopyEliminated = true
 		_TRANSFER_DEALLOC(x, _11);
 		//const %12 = 0 : int
 		_12 = 0;
 		//arraygen %13 = [12; 1] : int[]
-		_DEALLOC(_13);
-		_NEW_1DARRAY_int64_t(_13, n, _12);
-		_NEW1DARRAY_DEALLOC(_13, _12, n);
+		_NEW1DARRAY_DEALLOC(_13, _12, n, int64_t);
 		//assign %5 = %13  : int[]
 		// isCopyEliminated = true
 		_TRANSFER_DEALLOC(y, _13);
 		//const %14 = 0 : int
 		_14 = 0;
 		//arraygen %15 = [14; 1] : int[]
-		_DEALLOC(_15);
-		_NEW_1DARRAY_int64_t(_15, n, _14);
-		_NEW1DARRAY_DEALLOC(_15, _14, n);
+		_NEW1DARRAY_DEALLOC(_15, _14, n, int64_t);
 		//assign %6 = %15  : int[]
 		// isCopyEliminated = true
 		_TRANSFER_DEALLOC(z, _15);
@@ -347,9 +341,7 @@ int main(int argc, char** args){
 	//mul %6 = %1, %1 : int
 	_6=n*n;
 	//arraygen %7 = [5; 6] : int[]
-	_DEALLOC(_7);
-	_NEW_1DARRAY_int64_t(_7, _6, _5);
-	_NEW1DARRAY_DEALLOC(_7, _5, _6);
+	_NEW1DARRAY_DEALLOC(_7, _5, _6, int64_t);
 	//assign %2 = %7  : int[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(moves, _7);

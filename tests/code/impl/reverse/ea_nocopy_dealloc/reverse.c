@@ -30,9 +30,7 @@ int64_t* _reverse_(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls), _DECL_1DARR
 	//lengthof %7 = %0 : int[]
 	_7 = ls_size;
 	//arraygen %8 = [6; 7] : int[]
-	_DEALLOC(_8);
-	_NEW_1DARRAY_int64_t(_8, _7, _6);
-	_NEW1DARRAY_DEALLOC(_8, _6, _7);
+	_NEW1DARRAY_DEALLOC(_8, _6, _7, int64_t);
 	//assign %3 = %8  : int[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(r, _8);
@@ -185,9 +183,7 @@ blklab4:;
 	//add %22 = %2, %21 : int
 	_22=max+_21;
 	//arraygen %23 = [20; 22] : int[]
-	_DEALLOC(_23);
-	_NEW_1DARRAY_int64_t(_23, _22, _20);
-	_NEW1DARRAY_DEALLOC(_23, _20, _22);
+	_NEW1DARRAY_DEALLOC(_23, _20, _22, int64_t);
 	//assign %4 = %23  : int[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(arr, _23);

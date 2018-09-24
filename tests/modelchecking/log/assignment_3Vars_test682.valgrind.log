@@ -1,15 +1,15 @@
-==15642== Memcheck, a memory error detector
-==15642== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==15642== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==15642== Command: ./impl/nocopy_dealloc/assignment_3Vars_test682/assignment_3Vars_test682.out
-==15642== Parent PID: 25940
-==15642== 
-==15642== 
-==15642== HEAP SUMMARY:
-==15642==     in use at exit: 0 bytes in 0 blocks
-==15642==   total heap usage: 4 allocs, 4 frees, 8,312 bytes allocated
-==15642== 
-==15642== All heap blocks were freed -- no leaks are possible
-==15642== 
-==15642== For counts of detected and suppressed errors, rerun with: -v
-==15642== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==18638== Memcheck, a memory error detector
+==18638== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==18638== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==18638== Command: ./impl/dealloc/assignment_3Vars_test682/assignment_3Vars_test682.out
+==18638== Parent PID: 8007
+==18638== 
+==18638== 
+==18638== HEAP SUMMARY:
+==18638==     in use at exit: 0 bytes in 0 blocks
+==18638==   total heap usage: 13 allocs, 13 frees, 8,672 bytes allocated
+==18638== 
+==18638== All heap blocks were freed -- no leaks are possible
+==18638== 
+==18638== For counts of detected and suppressed errors, rerun with: -v
+==18638== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

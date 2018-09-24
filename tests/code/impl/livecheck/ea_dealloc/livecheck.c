@@ -64,9 +64,7 @@ int main(int argc, char** args){
 	//const %6 = 5 : int
 	_6 = 5;
 	//arraygen %7 = [5; 6] : int[]
-	_DEALLOC(_7);
-	_NEW_1DARRAY_int64_t(_7, _6, _5);
-	_NEW1DARRAY_DEALLOC(_7, _5, _6);
+	_NEW1DARRAY_DEALLOC(_7, _5, _6, int64_t);
 	//assign %1 = %7  : int[]
 	_ADD_DEALLOC(a, _7, int64_t);
 	//const %8 = 1 : int
@@ -74,9 +72,7 @@ int main(int argc, char** args){
 	//const %9 = 5 : int
 	_9 = 5;
 	//arraygen %10 = [8; 9] : int[]
-	_DEALLOC(_10);
-	_NEW_1DARRAY_int64_t(_10, _9, _8);
-	_NEW1DARRAY_DEALLOC(_10, _8, _9);
+	_NEW1DARRAY_DEALLOC(_10, _8, _9, int64_t);
 	//assign %2 = %10  : int[]
 	_ADD_DEALLOC(b, _10, int64_t);
 	//assign %1 = %2  : int[]
@@ -90,9 +86,7 @@ int main(int argc, char** args){
 	//const %12 = 5 : int
 	_12 = 5;
 	//arraygen %13 = [11; 12] : int[]
-	_DEALLOC(_13);
-	_NEW_1DARRAY_int64_t(_13, _12, _11);
-	_NEW1DARRAY_DEALLOC(_13, _11, _12);
+	_NEW1DARRAY_DEALLOC(_13, _11, _12, int64_t);
 	//assign %2 = %13  : int[]
 	_ADD_DEALLOC(b, _13, int64_t);
 	//assert

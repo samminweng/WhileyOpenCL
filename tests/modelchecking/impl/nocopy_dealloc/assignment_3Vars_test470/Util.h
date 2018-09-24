@@ -95,17 +95,18 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 // Print out the message
 #define DEBUG_PRINT(msg) if(DEBUG){fputs("\tDEBUG: " msg " (LINE:" num2str(__LINE__) " FILE: " __FILE__ ")\n", stdout);}
 // CHeck if e(a) != e(b) and not e(a_dealloc)
-#define DEBUG_CHECK_ASUMPTION(a, b) \
+#define DEBUG_CHECK_ASSUMPTION(a, b) \
 ({\
 	if(a != b || a##_dealloc == false){\
 		fputs("\tDEBUG: The assumption holds", stdout);\
 	}else{\
 		fputs("\tDEBUG: Runtime check error! The assumption fails. ", stdout);\
+		exit(-2);\
 	}\
 })
 #else
 #define DEBUG_PRINT(msg) // Do nothing
-#define DEBUG_CHECK_ASUMPTION(a, b) // Do nothing
+#define DEBUG_CHECK_ASSUMPTION(a, b) // Do nothing
 #endif
 /***
  *
@@ -352,17 +353,26 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 * Deallocation Macros for assignment
 *
 */
-// New Array generator 
-#define _NEW1DARRAY_DEALLOC(a, value, size) \
+// New Array generator
+// For one dimensional array of integer or Byte type, new1Darray_dealloc macro includes PRE_DEALLOC macro and new an array with given value and size, and lastly sets the variable's flag.
+#define _NEW1DARRAY_DEALLOC(a, value, size, type) \
 		({\
 			DEBUG_PRINT("_NEW1DARRAY_DEALLOC macro on  ( "str(a)" )");\
+			_DEALLOC(a);\
+			_NEW_1DARRAY_##type(a, size, value);\
+			a##_dealloc = true;\
+		})
+// This post macro is used for 1 dimensional array of user-defined type.
+#define _NEW1DARRAY_DEALLOC_POST(a, value, size) \
+		({\
+			DEBUG_PRINT("_NEW1DARRAY_DEALLOC_POST macro on  ( "str(a)" )");\
 			a##_dealloc = true;\
 		})
 // For one dimensional array variable, add deallocation macro includes runtime assumption check, PRE_DEALLOC macro and assignment with copying, and lastly sets deallocation flag to 'a'
 #define _ADD_DEALLOC(a, b, type) \
         ({\
 		    DEBUG_PRINT("_ADD_DEALLOC macro on  ( "str(a)" and "str(b)" )");\
-			DEBUG_CHECK_ASUMPTION(a, b);\
+			DEBUG_CHECK_ASSUMPTION(a, b);\
 			_DEALLOC(a);\
 			_COPY_1DARRAY_##type(a, b);\
 			a##_dealloc = true;\
@@ -377,7 +387,7 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 #define _TRANSFER_DEALLOC(a, b)  \
         ({\
 			DEBUG_PRINT("_TRANSFER_DEALLOC macro on  ( "str(a)" and "str(b)" )");\
-			DEBUG_CHECK_ASUMPTION(a, b);\
+			DEBUG_CHECK_ASSUMPTION(a, b);\
 			_DEALLOC(a);\
 			_UPDATE_1DARRAY(a, b);\
 			a##_dealloc = b##_dealloc;\

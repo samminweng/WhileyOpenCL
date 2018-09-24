@@ -178,9 +178,7 @@ int main(int argc, char** args){
 	//mul %12 = %1, %1 : int
 	_12=n*n;
 	//arraygen %13 = [11; 12] : int[]
-	_DEALLOC(_13);
-	_NEW_1DARRAY_int64_t(_13, _12, _11);
-	_NEW1DARRAY_DEALLOC(_13, _11, _12);
+	_NEW1DARRAY_DEALLOC(_13, _11, _12, int64_t);
 	//assign %2 = %13  : int[]
 	_ADD_DEALLOC(gcds, _13, int64_t);
 	//const %14 = 0 : int

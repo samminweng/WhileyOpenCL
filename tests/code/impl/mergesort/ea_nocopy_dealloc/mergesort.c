@@ -614,9 +614,7 @@ blklab12:;
 	//add %65 = %2, %64 : int
 	_65=max+_64;
 	//arraygen %66 = [63; 65] : int[]
-	_DEALLOC(_66);
-	_NEW_1DARRAY_int64_t(_66, _65, _63);
-	_NEW1DARRAY_DEALLOC(_66, _63, _65);
+	_NEW1DARRAY_DEALLOC(_66, _63, _65, int64_t);
 	//assign %4 = %66  : int[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(arr, _66);

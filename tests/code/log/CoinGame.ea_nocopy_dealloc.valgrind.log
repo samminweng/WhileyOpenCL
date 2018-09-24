@@ -1,23 +1,23 @@
-==29119== Memcheck, a memory error detector
-==29119== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==29119== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==29119== Command: ./CoinGame.out
-==29119== Parent PID: 27586
-==29119== 
-==29119== Invalid read of size 8
-==29119==    at 0x400E14: _play_ (CoinGame.c:119)
-==29119==    by 0x40239A: main (CoinGame.c:614)
-==29119==  Address 0x5203038 is 8 bytes before a block of size 800 alloc'd
-==29119==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==29119==    by 0x40292F: create1DArray_int64_t (Util.c:23)
-==29119==    by 0x40211F: main (CoinGame.c:595)
-==29119== 
-==29119== 
-==29119== HEAP SUMMARY:
-==29119==     in use at exit: 0 bytes in 0 blocks
-==29119==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
-==29119== 
-==29119== All heap blocks were freed -- no leaks are possible
-==29119== 
-==29119== For counts of detected and suppressed errors, rerun with: -v
-==29119== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==5786== Memcheck, a memory error detector
+==5786== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==5786== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==5786== Command: ./CoinGame.out
+==5786== Parent PID: 4976
+==5786== 
+==5786== Invalid read of size 8
+==5786==    at 0x400E14: _play_ (CoinGame.c:119)
+==5786==    by 0x4023AE: main (CoinGame.c:612)
+==5786==  Address 0x5205078 is 8 bytes before a block of size 800 alloc'd
+==5786==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==5786==    by 0x402943: create1DArray_int64_t (Util.c:23)
+==5786==    by 0x40213D: main (CoinGame.c:594)
+==5786== 
+==5786== 
+==5786== HEAP SUMMARY:
+==5786==     in use at exit: 0 bytes in 0 blocks
+==5786==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
+==5786== 
+==5786== All heap blocks were freed -- no leaks are possible
+==5786== 
+==5786== For counts of detected and suppressed errors, rerun with: -v
+==5786== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

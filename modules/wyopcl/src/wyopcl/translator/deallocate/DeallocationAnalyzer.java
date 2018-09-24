@@ -10,6 +10,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
+import wyil.lang.Type.Array;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
@@ -150,11 +151,25 @@ public class DeallocationAnalyzer extends Analyzer {
 	 */
 	private String new1DArrayDealloc(int register, int valueReg, int sizeReg, FunctionOrMethod function, CodeStores stores) {
 		Type type = stores.getRawType(register, function);
-		if (stores.isCompoundType(type) || type instanceof Type.Union) {
-			String var = stores.getVar(register, function);
-			String value = stores.getVar(valueReg, function);
-			String size = stores.getVar(sizeReg, function);
-			return "_NEW1DARRAY_DEALLOC(" + var + ", "+ value +", "+size+");";
+		String var = stores.getVar(register, function);
+		String value = stores.getVar(valueReg, function);
+		String size = stores.getVar(sizeReg, function);
+		if(type instanceof Type.Array) {
+			Array arrayType = (Type.Array)type;
+			Type elm_type = stores.getArrayElementType(arrayType);
+			int dimension = stores.getArrayDimension(arrayType);
+			if(dimension == 1 ) {
+				if(stores.isIntType(elm_type)) {
+					return "_NEW1DARRAY_DEALLOC(" + var + ", "+ value +", "+size+", int64_t);";
+				}else if(elm_type instanceof Type.Byte) {
+					return "_NEW1DARRAY_DEALLOC(" + var + ", "+ value +", "+size+", BYTE);";
+				}
+			}
+			// For other cases (2D array or 1D array of user-defined type), use _NEW1DARRAY_DEALLOC_POST 
+			return "_NEW1DARRAY_DEALLOC_POST(" + var + ", "+ value +", "+size+");";
+		}else if (stores.isCompoundType(type) || type instanceof Type.Union) {
+			// User-defined type
+			return "_NEW1DARRAY_DEALLOC_POST(" + var + ", "+ value +", "+size+");";
 		}
 		return "";
 	}

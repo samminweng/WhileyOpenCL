@@ -25,9 +25,7 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(x), _DECL_DEALLOC_PARAM(x), int64_t num, _DE
 	//const %8 = 3 : int
 	_8 = 3;
 	//arraygen %9 = [7; 8] : int[]
-	_DEALLOC(_9);
-	_NEW_1DARRAY_int64_t(_9, _8, _7);
-	_NEW1DARRAY_DEALLOC(_9, _7, _8);
+	_NEW1DARRAY_DEALLOC(_9, _7, _8, int64_t);
 	//assign %3 = %9  : int[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(a, _9);
@@ -36,9 +34,7 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(x), _DECL_DEALLOC_PARAM(x), int64_t num, _DE
 	//const %11 = 3 : int
 	_11 = 3;
 	//arraygen %12 = [10; 11] : int[]
-	_DEALLOC(_12);
-	_NEW_1DARRAY_int64_t(_12, _11, _10);
-	_NEW1DARRAY_DEALLOC(_12, _10, _11);
+	_NEW1DARRAY_DEALLOC(_12, _10, _11, int64_t);
 	//assign %4 = %12  : int[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(b, _12);
@@ -147,9 +143,7 @@ int main(int argc, char** args){
 	//const %4 = 3 : int
 	_4 = 3;
 	//arraygen %5 = [3; 4] : int[]
-	_DEALLOC(_5);
-	_NEW_1DARRAY_int64_t(_5, _4, _3);
-	_NEW1DARRAY_DEALLOC(_5, _3, _4);
+	_NEW1DARRAY_DEALLOC(_5, _3, _4, int64_t);
 	//assign %1 = %5  : int[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(x, _5);

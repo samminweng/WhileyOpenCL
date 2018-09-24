@@ -33,9 +33,7 @@ int64_t* _g2_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	//const %4 = 3 : int
 	_4 = 3;
 	//arraygen %5 = [3; 4] : int[]
-	_DEALLOC(_5);
-	_NEW_1DARRAY_int64_t(_5, _4, _3);
-	_NEW1DARRAY_DEALLOC(_5, _3, _4);
+	_NEW1DARRAY_DEALLOC(_5, _3, _4, int64_t);
 	//assign %1 = %5  : int[]
 	_ADD_DEALLOC(a, _5, int64_t);
 	//const %7 = 11 : int

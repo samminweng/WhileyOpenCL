@@ -26,9 +26,7 @@ int main(int argc, char** args){
 	//const %5 = 00100000b : byte
 	_5 = 0b00100000;
 	//arraygen %6 = [5; 1] : byte[]
-	_DEALLOC(_6);
-	_NEW_1DARRAY_BYTE(_6, size, _5);
-	_NEW1DARRAY_DEALLOC(_6, _5, size);
+	_NEW1DARRAY_DEALLOC(_6, _5, size, BYTE);
 	//assign %2 = %6  : byte[]
 	_ADD_DEALLOC(pixels, _6, BYTE);
 	//const %7 = 0 : int

@@ -264,9 +264,7 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM
 	//const %15 = 00100000b : byte
 	_15 = 0b00100000;
 	//arraygen %16 = [15; 4] : byte[]
-	_DEALLOC(_16);
-	_NEW_1DARRAY_BYTE(_16, size, _15);
-	_NEW1DARRAY_DEALLOC(_16, _15, size);
+	_NEW1DARRAY_DEALLOC(_16, _15, size, BYTE);
 	//assign %5 = %16  : byte[]
 	_ADD_DEALLOC(newPixels, _16, BYTE);
 	//const %17 = 1 : int

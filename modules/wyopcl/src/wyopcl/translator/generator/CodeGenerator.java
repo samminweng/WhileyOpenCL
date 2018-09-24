@@ -2408,8 +2408,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	@Override
 	protected void translate(ArrayGenerator code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
-		String lhs = translateLHSVarFunctionCall(statement, code, function);
-
+		//String lhs = translateLHSVarFunctionCall(statement, code, function);
+		String lhs = stores.getVar(code.target(0), function);
 		String indent = stores.getIndent(function);
 		Type.Array lhs_type = (Type.Array) stores.getRawType(code.target(0), function);
 		String rhs = stores.getVar(code.operand(0), function);
@@ -2417,27 +2417,47 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		Type elm_type = stores.getArrayElementType(lhs_type);
 		// Get array dimension
 		int dimension = stores.getArrayDimension(lhs_type);
-		if(elm_type instanceof Type.Byte){
-			// Generate a BYTE array and assign its value
-			statement.add(indent + "_NEW_"+dimension+ "DARRAY_BYTE(" + lhs + ", " + size + ", "
-					+ rhs + ");");
-		} else if (stores.isIntType(elm_type)) {
-			if(boundAnalyzer.isPresent()){
-				String translateType = boundAnalyzer.get().suggestIntegerType(code.operand(0), function);
-				// Generate a new array using _NEW_1DARRAY macro using
-				statement.add(indent + "_NEW_" + dimension + "DARRAY(" + lhs + ", " + size + ", "
-						+ rhs + ", "+ translateType +");");
-			}else{
-				// Generate an array with given size and values.
-				statement.add(indent + "_NEW_" + dimension + "DARRAY_int64_t(" + lhs + ", " + size + ", "
-						+ rhs + ");");
+		if(dimension == 1) {
+			if(elm_type instanceof Type.Byte){
+				if(this.deallocatedAnalyzer.isPresent()) {
+					// No needs to generate the code because _NEW1DARRAY_DEALLOC contains all the necessary code.
+				}else {
+					// Generate a BYTE array and assign its value
+					statement.add(indent + "_NEW_"+dimension+ "DARRAY_BYTE(" + lhs + ", " + size + ", "
+							+ rhs + ");");
+				}				
+			} else if (stores.isIntType(elm_type)) {
+				if(boundAnalyzer.isPresent()){
+					// Deallocate lhs register
+					this.deallocatedAnalyzer.ifPresent(a -> {
+						statement.add(indent + a.preDealloc(lhs, lhs_type, stores));
+					});
+					String translateType = boundAnalyzer.get().suggestIntegerType(code.operand(0), function);
+					// Generate a new array using _NEW_1DARRAY macro using
+					statement.add(indent + "_NEW_" + dimension + "DARRAY(" + lhs + ", " + size + ", "
+							+ rhs + ", "+ translateType +");");
+				}else{
+					if(this.deallocatedAnalyzer.isPresent()) {
+						// No needs to generate the code because we will use _NEW1DARRAY_DEALLOC macro 
+					}else {
+						// Generate an array with given size and values.
+						statement.add(indent + "_NEW_" + dimension + "DARRAY_int64_t(" + lhs + ", " + size + ", "
+								+ rhs + ");");
+					}
+				}
+			} else {
+				// Deallocate lhs register
+				this.deallocatedAnalyzer.ifPresent(a -> {
+					statement.add(indent + a.preDealloc(lhs, lhs_type, stores));
+				});
+				// Generate an array of structures
+				String struct = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");
+				statement.add(indent + "_NEW_1DARRAY_STRUCT(" + lhs + ", " + size + ", " + rhs + ", " + struct + ");");
 			}
-		} else {
-			// Generate an array of structures
-			String struct = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");
-			statement.add(indent + "_NEW_1DARRAY_STRUCT(" + lhs + ", " + size + ", " + rhs + ", " + struct + ");");
+		}else {
+			throw new RuntimeException("2D array generator is Not implemented!!");
 		}
-
+		
 		postDealloc(statement, code, function);
 
 		stores.addAllStatements(code, statement, function);

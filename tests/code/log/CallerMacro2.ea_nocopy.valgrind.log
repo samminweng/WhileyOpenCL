@@ -1,33 +1,33 @@
-==28396== Memcheck, a memory error detector
-==28396== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==28396== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==28396== Command: ./CallerMacro2.out
-==28396== Parent PID: 27586
-==28396== 
-==28396== 
-==28396== HEAP SUMMARY:
-==28396==     in use at exit: 208 bytes in 6 blocks
-==28396==   total heap usage: 7 allocs, 1 frees, 8,400 bytes allocated
-==28396== 
-==28396== 24 bytes in 1 blocks are definitely lost in loss record 3 of 6
-==28396==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==28396==    by 0x400CAB: _g3_ (CallerMacro2.c:39)
-==28396==    by 0x400E3B: main (CallerMacro2.c:92)
-==28396== 
-==28396== 24 bytes in 1 blocks are definitely lost in loss record 4 of 6
-==28396==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==28396==    by 0x4011ED: create1DArray_int64_t (Util.c:23)
-==28396==    by 0x400C7F: _g3_ (CallerMacro2.c:30)
-==28396==    by 0x400FD0: main (CallerMacro2.c:137)
-==28396== 
-==28396== LEAK SUMMARY:
-==28396==    definitely lost: 48 bytes in 2 blocks
-==28396==    indirectly lost: 0 bytes in 0 blocks
-==28396==      possibly lost: 0 bytes in 0 blocks
-==28396==    still reachable: 160 bytes in 4 blocks
-==28396==         suppressed: 0 bytes in 0 blocks
-==28396== Reachable blocks (those to which a pointer was found) are not shown.
-==28396== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==28396== 
-==28396== For counts of detected and suppressed errors, rerun with: -v
-==28396== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+==5420== Memcheck, a memory error detector
+==5420== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==5420== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==5420== Command: ./CallerMacro2.out
+==5420== Parent PID: 4976
+==5420== 
+==5420== 
+==5420== HEAP SUMMARY:
+==5420==     in use at exit: 208 bytes in 6 blocks
+==5420==   total heap usage: 7 allocs, 1 frees, 8,400 bytes allocated
+==5420== 
+==5420== 24 bytes in 1 blocks are definitely lost in loss record 3 of 6
+==5420==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==5420==    by 0x400CAB: _g3_ (CallerMacro2.c:39)
+==5420==    by 0x400E3B: main (CallerMacro2.c:92)
+==5420== 
+==5420== 24 bytes in 1 blocks are definitely lost in loss record 4 of 6
+==5420==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==5420==    by 0x4011ED: create1DArray_int64_t (Util.c:23)
+==5420==    by 0x400C7F: _g3_ (CallerMacro2.c:30)
+==5420==    by 0x400FD0: main (CallerMacro2.c:137)
+==5420== 
+==5420== LEAK SUMMARY:
+==5420==    definitely lost: 48 bytes in 2 blocks
+==5420==    indirectly lost: 0 bytes in 0 blocks
+==5420==      possibly lost: 0 bytes in 0 blocks
+==5420==    still reachable: 160 bytes in 4 blocks
+==5420==         suppressed: 0 bytes in 0 blocks
+==5420== Reachable blocks (those to which a pointer was found) are not shown.
+==5420== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==5420== 
+==5420== For counts of detected and suppressed errors, rerun with: -v
+==5420== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)

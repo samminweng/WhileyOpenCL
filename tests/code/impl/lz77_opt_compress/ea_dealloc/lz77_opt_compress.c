@@ -204,9 +204,7 @@ BYTE* _append_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), BYTE 
 	//add %7 = %5, %6 : int
 	_7=_5+_6;
 	//arraygen %8 = [4; 7] : byte[]
-	_DEALLOC(_8);
-	_NEW_1DARRAY_BYTE(_8, _7, _4);
-	_NEW1DARRAY_DEALLOC(_8, _4, _7);
+	_NEW1DARRAY_DEALLOC(_8, _4, _7, BYTE);
 	//assign %2 = %8  : byte[]
 	_ADD_DEALLOC(nitems, _8, BYTE);
 	//const %9 = 0 : int
@@ -258,9 +256,7 @@ BYTE* _resize_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64
 	//const %4 = 00000000b : byte
 	_4 = 0b00000000;
 	//arraygen %5 = [4; 1] : byte[]
-	_DEALLOC(_5);
-	_NEW_1DARRAY_BYTE(_5, size, _4);
-	_NEW1DARRAY_DEALLOC(_5, _4, size);
+	_NEW1DARRAY_DEALLOC(_5, _4, size, BYTE);
 	//assign %2 = %5  : byte[]
 	_ADD_DEALLOC(nitems, _5, BYTE);
 	//const %6 = 0 : int
@@ -346,9 +342,7 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 	//const %12 = 00000000b : byte
 	_12 = 0b00000000;
 	//arraygen %13 = [12; 3] : byte[]
-	_DEALLOC(_13);
-	_NEW_1DARRAY_BYTE(_13, arr_capacity, _12);
-	_NEW1DARRAY_DEALLOC(_13, _12, arr_capacity);
+	_NEW1DARRAY_DEALLOC(_13, _12, arr_capacity, BYTE);
 	//assign %1 = %13  : byte[]
 	_ADD_DEALLOC(output, _13, BYTE);
 	//const %14 = 0 : int

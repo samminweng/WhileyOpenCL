@@ -56,9 +56,7 @@ blklab6:;
 	//add %12 = %10, %11 : int
 	_12=_10+_11;
 	//arraygen %13 = [7; 12] : byte[]
-	_DEALLOC(_13);
-	_NEW_1DARRAY_BYTE(_13, _12, _7);
-	_NEW1DARRAY_DEALLOC(_13, _7, _12);
+	_NEW1DARRAY_DEALLOC(_13, _7, _12, BYTE);
 	//assign %4 = %13  : byte[]
 	_ADD_DEALLOC(nitems, _13, BYTE);
 	//const %14 = 0 : int
@@ -148,9 +146,7 @@ int main(int argc, char** args){
 	//const %6 = 3 : int
 	_6 = 3;
 	//arraygen %7 = [5; 6] : byte[]
-	_DEALLOC(_7);
-	_NEW_1DARRAY_BYTE(_7, _6, _5);
-	_NEW1DARRAY_DEALLOC(_7, _5, _6);
+	_NEW1DARRAY_DEALLOC(_7, _5, _6, BYTE);
 	//assign %1 = %7  : byte[]
 	_ADD_DEALLOC(b, _7, BYTE);
 	//const %8 = 3 : int

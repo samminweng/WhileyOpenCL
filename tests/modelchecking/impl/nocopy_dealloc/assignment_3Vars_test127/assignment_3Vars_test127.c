@@ -23,9 +23,7 @@ int main(int argc, char** args){
 	//const %5 = 5 : int
 	_5 = 5;
 	//arraygen %6 = [4; 5] : int[]
-	_DEALLOC(_6);
-	_NEW_1DARRAY_int64_t(_6, _5, _4);
-	_NEW1DARRAY_DEALLOC(_6, _4, _5);
+	_NEW1DARRAY_DEALLOC(_6, _4, _5, int64_t);
 	//assign %1 = %6  : int[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(a, _6);
@@ -34,9 +32,7 @@ int main(int argc, char** args){
 	//const %8 = 5 : int
 	_8 = 5;
 	//arraygen %9 = [7; 8] : int[]
-	_DEALLOC(_9);
-	_NEW_1DARRAY_int64_t(_9, _8, _7);
-	_NEW1DARRAY_DEALLOC(_9, _7, _8);
+	_NEW1DARRAY_DEALLOC(_9, _7, _8, int64_t);
 	//assign %2 = %9  : int[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(b, _9);
@@ -45,9 +41,7 @@ int main(int argc, char** args){
 	//const %11 = 5 : int
 	_11 = 5;
 	//arraygen %12 = [10; 11] : int[]
-	_DEALLOC(_12);
-	_NEW_1DARRAY_int64_t(_12, _11, _10);
-	_NEW1DARRAY_DEALLOC(_12, _10, _11);
+	_NEW1DARRAY_DEALLOC(_12, _10, _11, int64_t);
 	//assign %3 = %12  : int[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(c, _12);

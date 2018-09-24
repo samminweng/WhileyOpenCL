@@ -47,9 +47,7 @@ int main(int argc, char** args){
 	//const %4 = 10 : int
 	_4 = 10;
 	//arraygen %5 = [3; 4] : int[]
-	_DEALLOC(_5);
-	_NEW_1DARRAY_int64_t(_5, _4, _3);
-	_NEW1DARRAY_DEALLOC(_5, _3, _4);
+	_NEW1DARRAY_DEALLOC(_5, _3, _4, int64_t);
 	//assign %1 = %5  : int[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(b, _5);

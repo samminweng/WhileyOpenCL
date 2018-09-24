@@ -21,6 +21,13 @@ runValgrind(){
             gcc -std=c11 -g -D DEBUG $subfolder/*.c -o $subfolder/$testcase.out
             # Run the valgrind
             valgrind --leak-check=full --log-file=log/$testcase.valgrind.log ./$subfolder/$testcase.out > log/$testcase.log
+            # Check exit status
+            STATUS="${?}"
+            if (( STATUS != 0))
+            then 
+                echo "Error!!! $codetype $testcase code fails."
+                exit $STATUS
+            fi
             # Put all output to a single file
             echo "=== Test report for $codetype $testcase ===" >> $memorylog
             echo "The Valgrind memory detector as below:" >> $memorylog

@@ -115,9 +115,7 @@ int main(int argc, char** args){
 	//const %4 = 0 : int
 	_4 = 0;
 	//arraygen %5 = [4; 1] : int[]
-	_DEALLOC(_5);
-	_NEW_1DARRAY_int64_t(_5, max, _4);
-	_NEW1DARRAY_DEALLOC(_5, _4, max);
+	_NEW1DARRAY_DEALLOC(_5, _4, max, int64_t);
 	//assign %2 = %5  : int[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(arr, _5);

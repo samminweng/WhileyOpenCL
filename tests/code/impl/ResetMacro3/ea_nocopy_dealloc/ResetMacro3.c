@@ -15,9 +15,7 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(b), _DECL_DEALLOC_PARAM(b), int64_t num, _DE
 	//const %5 = 3 : int
 	_5 = 3;
 	//arraygen %6 = [4; 5] : int[]
-	_DEALLOC(_6);
-	_NEW_1DARRAY_int64_t(_6, _5, _4);
-	_NEW1DARRAY_DEALLOC(_6, _4, _5);
+	_NEW1DARRAY_DEALLOC(_6, _4, _5, int64_t);
 	//assign %3 = %6  : int[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(c, _6);
@@ -82,9 +80,7 @@ int main(int argc, char** args){
 	//const %4 = 3 : int
 	_4 = 3;
 	//arraygen %5 = [3; 4] : int[]
-	_DEALLOC(_5);
-	_NEW_1DARRAY_int64_t(_5, _4, _3);
-	_NEW1DARRAY_DEALLOC(_5, _3, _4);
+	_NEW1DARRAY_DEALLOC(_5, _3, _4, int64_t);
 	//assign %1 = %5  : int[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(b, _5);

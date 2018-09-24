@@ -1,27 +1,27 @@
-==28239== Memcheck, a memory error detector
-==28239== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==28239== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==28239== Command: ./CallerMacro1.out
-==28239== Parent PID: 27586
-==28239== 
-==28239== 
-==28239== HEAP SUMMARY:
-==28239==     in use at exit: 104 bytes in 3 blocks
-==28239==   total heap usage: 4 allocs, 1 frees, 8,296 bytes allocated
-==28239== 
-==28239== 24 bytes in 1 blocks are definitely lost in loss record 2 of 3
-==28239==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==28239==    by 0x400CA4: _g1_ (CallerMacro1.c:38)
-==28239==    by 0x400DA4: main (CallerMacro1.c:64)
-==28239== 
-==28239== LEAK SUMMARY:
-==28239==    definitely lost: 24 bytes in 1 blocks
-==28239==    indirectly lost: 0 bytes in 0 blocks
-==28239==      possibly lost: 0 bytes in 0 blocks
-==28239==    still reachable: 80 bytes in 2 blocks
-==28239==         suppressed: 0 bytes in 0 blocks
-==28239== Reachable blocks (those to which a pointer was found) are not shown.
-==28239== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==28239== 
-==28239== For counts of detected and suppressed errors, rerun with: -v
-==28239== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==5352== Memcheck, a memory error detector
+==5352== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==5352== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==5352== Command: ./CallerMacro1.out
+==5352== Parent PID: 4976
+==5352== 
+==5352== 
+==5352== HEAP SUMMARY:
+==5352==     in use at exit: 104 bytes in 3 blocks
+==5352==   total heap usage: 4 allocs, 1 frees, 8,296 bytes allocated
+==5352== 
+==5352== 24 bytes in 1 blocks are definitely lost in loss record 2 of 3
+==5352==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==5352==    by 0x400CA4: _g1_ (CallerMacro1.c:38)
+==5352==    by 0x400DA4: main (CallerMacro1.c:64)
+==5352== 
+==5352== LEAK SUMMARY:
+==5352==    definitely lost: 24 bytes in 1 blocks
+==5352==    indirectly lost: 0 bytes in 0 blocks
+==5352==      possibly lost: 0 bytes in 0 blocks
+==5352==    still reachable: 80 bytes in 2 blocks
+==5352==         suppressed: 0 bytes in 0 blocks
+==5352== Reachable blocks (those to which a pointer was found) are not shown.
+==5352== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==5352== 
+==5352== For counts of detected and suppressed errors, rerun with: -v
+==5352== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

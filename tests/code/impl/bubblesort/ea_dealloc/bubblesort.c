@@ -446,9 +446,7 @@ blklab8:;
 	//const %63 = 0 : int
 	_63 = 0;
 	//arraygen %64 = [63; 2] : int[]
-	_DEALLOC(_64);
-	_NEW_1DARRAY_int64_t(_64, max, _63);
-	_NEW1DARRAY_DEALLOC(_64, _63, max);
+	_NEW1DARRAY_DEALLOC(_64, _63, max, int64_t);
 	//assign %4 = %64  : int[]
 	_ADD_DEALLOC(arr, _64, int64_t);
 	//loop (%3, %4, %65, %66, %67)

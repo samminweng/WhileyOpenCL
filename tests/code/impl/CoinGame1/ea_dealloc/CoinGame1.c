@@ -246,9 +246,7 @@ int main(int argc, char** args){
 	//mul %6 = %1, %1 : int
 	_6=n*n;
 	//arraygen %7 = [5; 6] : int[]
-	_DEALLOC(_7);
-	_NEW_1DARRAY_int64_t(_7, _6, _5);
-	_NEW1DARRAY_DEALLOC(_7, _5, _6);
+	_NEW1DARRAY_DEALLOC(_7, _5, _6, int64_t);
 	//assign %2 = %7  : int[]
 	_ADD_DEALLOC(moves, _7, int64_t);
 	//invoke (%8) = (%2, %1) CoinGame1:findMoves : function(int[],int)->(int[])

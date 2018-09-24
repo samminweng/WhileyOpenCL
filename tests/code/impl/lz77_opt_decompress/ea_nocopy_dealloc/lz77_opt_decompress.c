@@ -13,9 +13,7 @@ BYTE* _resize_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64
 	//const %4 = 00000000b : byte
 	_4 = 0b00000000;
 	//arraygen %5 = [4; 1] : byte[]
-	_DEALLOC(_5);
-	_NEW_1DARRAY_BYTE(_5, size, _4);
-	_NEW1DARRAY_DEALLOC(_5, _4, size);
+	_NEW1DARRAY_DEALLOC(_5, _4, size, BYTE);
 	//assign %2 = %5  : byte[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(nitems, _5);
@@ -109,9 +107,7 @@ blklab10:;
 	//add %12 = %10, %11 : int
 	_12=_10+_11;
 	//arraygen %13 = [7; 12] : byte[]
-	_DEALLOC(_13);
-	_NEW_1DARRAY_BYTE(_13, _12, _7);
-	_NEW1DARRAY_DEALLOC(_13, _7, _12);
+	_NEW1DARRAY_DEALLOC(_13, _7, _12, BYTE);
 	//assign %4 = %13  : byte[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(nitems, _13);
@@ -206,9 +202,7 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 	//const %12 = 0 : int
 	_12 = 0;
 	//arraygen %13 = [11; 12] : byte[]
-	_DEALLOC(_13);
-	_NEW_1DARRAY_BYTE(_13, _12, _11);
-	_NEW1DARRAY_DEALLOC(_13, _11, _12);
+	_NEW1DARRAY_DEALLOC(_13, _11, _12, BYTE);
 	//assign %2 = %13  : byte[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(items, _13);
