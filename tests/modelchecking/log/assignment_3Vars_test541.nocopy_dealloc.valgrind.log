@@ -1,22 +1,15 @@
-==29712== Memcheck, a memory error detector
-==29712== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==29712== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==29712== Command: ./impl/nocopy_dealloc/assignment_3Vars_test541/assignment_3Vars_test541.nocopy_dealloc.out
-==29712== Parent PID: 10074
-==29712== 
-==29712== 
-==29712== HEAP SUMMARY:
-==29712==     in use at exit: 40 bytes in 1 blocks
-==29712==   total heap usage: 4 allocs, 3 frees, 8,312 bytes allocated
-==29712== 
-==29712== LEAK SUMMARY:
-==29712==    definitely lost: 0 bytes in 0 blocks
-==29712==    indirectly lost: 0 bytes in 0 blocks
-==29712==      possibly lost: 0 bytes in 0 blocks
-==29712==    still reachable: 40 bytes in 1 blocks
-==29712==         suppressed: 0 bytes in 0 blocks
-==29712== Reachable blocks (those to which a pointer was found) are not shown.
-==29712== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==29712== 
-==29712== For counts of detected and suppressed errors, rerun with: -v
-==29712== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==10549== Memcheck, a memory error detector
+==10549== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==10549== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==10549== Command: ./impl/nocopy_dealloc/assignment_3Vars_test541/assignment_3Vars_test541.nocopy_dealloc.out
+==10549== Parent PID: 23856
+==10549== 
+==10549== 
+==10549== HEAP SUMMARY:
+==10549==     in use at exit: 0 bytes in 0 blocks
+==10549==   total heap usage: 5 allocs, 5 frees, 8,352 bytes allocated
+==10549== 
+==10549== All heap blocks were freed -- no leaks are possible
+==10549== 
+==10549== For counts of detected and suppressed errors, rerun with: -v
+==10549== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

@@ -257,8 +257,8 @@ blklab16:;
 		//update %2.move = %22 : {int move,int[] pieces} -> {int move,int[] pieces}
 		b1->move = _22;
 		//assign %3 = %2  : {int move,int[] pieces}
-		// isCopyEliminated = false
-		b2 = copy_Board(b1);
+		// isCopyEliminated = true
+		b2 = b1;
 		//const %23 = null : null
 		_23 = NULL;
 		//assign %2 = %23  : null
@@ -292,8 +292,8 @@ blklab19:;
 		//update %3.move = %30 : {int move,int[] pieces} -> {int move,int[] pieces}
 		b2->move = _30;
 		//assign %2 = %3  : {int move,int[] pieces}
-		// isCopyEliminated = false
-		b1 = copy_Board(b2);
+		// isCopyEliminated = true
+		b1 = b2;
 		//const %31 = null : null
 		_31 = NULL;
 		//assign %3 = %31  : null

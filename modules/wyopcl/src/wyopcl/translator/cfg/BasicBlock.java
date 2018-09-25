@@ -103,7 +103,13 @@ public class BasicBlock implements Comparable<BasicBlock> {
 			public String toString() {
 				return "EXIT";
 			}
-		};
+		}, 
+		ASSIGN(14){
+			public String toString() {
+				return "ASSIGN";
+			}
+		}
+		;
 		public int order;
 
 		private BlockType(int order) {

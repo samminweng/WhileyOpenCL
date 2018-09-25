@@ -49,8 +49,8 @@ int main(int argc, char** args){
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(a, b);
 	//assign %2 = %1  : int[]
-	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(b, a);
+	// isCopyEliminated = false
+	_ADD_DEALLOC(b, a, int64_t);
 	//assign %3 = %1  : int[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(c, a);

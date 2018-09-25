@@ -293,10 +293,10 @@ blklab16:;
 		//update %2.move = %22 : {int move,int[] pieces} -> {int move,int[] pieces}
 		b1->move = _22;
 		//assign %3 = %2  : {int move,int[] pieces}
-		// isCopyEliminated = false
+		// isCopyEliminated = true
 		_DEALLOC_STRUCT(b2, Board);
-		b2 = copy_Board(b1);
-		_ADD_DEALLOC_POST(b2, b1);
+		b2 = b1;
+		_TRANSFER_DEALLOC_POST(b2, b1);
 		//const %23 = null : null
 		_23 = NULL;
 		//assign %2 = %23  : null
@@ -334,10 +334,10 @@ blklab19:;
 		//update %3.move = %30 : {int move,int[] pieces} -> {int move,int[] pieces}
 		b2->move = _30;
 		//assign %2 = %3  : {int move,int[] pieces}
-		// isCopyEliminated = false
+		// isCopyEliminated = true
 		_DEALLOC_STRUCT(b1, Board);
-		b1 = copy_Board(b2);
-		_ADD_DEALLOC_POST(b1, b2);
+		b1 = b2;
+		_TRANSFER_DEALLOC_POST(b1, b2);
 		//const %31 = null : null
 		_31 = NULL;
 		//assign %3 = %31  : null

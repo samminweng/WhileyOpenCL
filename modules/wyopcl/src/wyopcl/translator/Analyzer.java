@@ -13,11 +13,13 @@ import java.util.stream.Collectors;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import wyil.attributes.VariableDeclarations;
+import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
 import wyil.lang.CodeBlock;
 import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.Codes.Assert;
+import wyil.lang.Codes.Assign;
 import wyil.lang.Codes.Comparator;
 import wyil.lang.Codes.If;
 import wyil.lang.Codes.Invariant;
@@ -318,7 +320,9 @@ public abstract class Analyzer {
 			line = printWyILCode(function, code, line);
 			// Parse each byte-code and add the constraints accordingly.
 			try {
-				if (code instanceof Codes.If) {
+				if(code instanceof Codes.Assign) {
+					buildCFG((Codes.Assign) code, function);
+				}else if (code instanceof Codes.If) {
 					buildCFG((Codes.If) code, function);
 				} else if (code instanceof Codes.Return) {
 					buildCFG((Codes.Return) code, function);
@@ -340,6 +344,25 @@ public abstract class Analyzer {
 			} catch (Exception ex) {
 				throw new RuntimeException(ex.getMessage());
 			}
+		}
+	}
+
+	private void buildCFG(Assign code, FunctionOrMethod function) {
+		// Get the graph
+		CFGraph graph = getCFGraph(function);
+		// Get the current block
+		BasicBlock c_blk = graph.getCurrentBlock();
+		if(isArrayAssign(code, function)) {
+			// Create another block
+			String label = "Assign" + line;
+			BasicBlock assign_blk = graph.createBasicBlock(label, BlockType.ASSIGN, c_blk);
+			assign_blk.addCode(code);
+			// Create another block
+			BasicBlock blk = graph.createBasicBlock(label, BlockType.BLOCK, assign_blk);
+			// Set next_blk to be the current block.
+			graph.setCurrentBlock(blk);
+		}else{
+			c_blk.addCode(code);
 		}
 	}
 
@@ -657,6 +680,29 @@ public abstract class Analyzer {
 		return var_name;
 	}
 
+	/**
+	 * Check if the assignment is an array assignment
+	 * 
+	 * 
+	 * @param code
+	 * @param function
+	 * @return
+	 */
+	protected boolean isArrayAssign(Assign code, FunctionOrMethod function) {
+		int lhs_register = code.target(0);
+		//Get the declarations for lhs register
+		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
+		Declaration declaration = vars.get(lhs_register);
+		Type type = declaration.type();
+		// Check if lhs type is array or the below types 
+		if (type instanceof Type.Array || type instanceof Type.Record || type instanceof Type.Nominal
+				|| type instanceof Type.Union) {
+			return true; // Consider the assignment as array assignment
+		}
+		return false;
+	}
+	
+	
 	
 	/**
 	 * Map the function argument to the register in the calling function.

@@ -403,8 +403,8 @@ blklab25:;
 		//ifgt %13, %1 goto blklab29 : int
 		if(_13>change){goto blklab29;}
 		//assign %4 = %0  : int[]
-		// isCopyEliminated = false
-		_COPY_1DARRAY_int64_t(tmp, till);
+		// isCopyEliminated = true
+		_UPDATE_1DARRAY(tmp, till);
 		//indexof %14 = %4, %3 : int[]
 		_14=tmp[i];
 		//const %15 = 1 : int
@@ -763,8 +763,10 @@ blklab36:;
 	_30=_29-cost;
 	//invoke (%28) = (%1, %30) cashtill:calculateChange : function(cashtill:Cash,cashtill:nat)->(cashtill:Cash|null)
 	{
-		// isCopyEliminated of '_1' = true
-		_28 = _calculateChange_(till, till_size, _30, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
+		void* tmp_till;
+		_COPY_1DARRAY_PARAM(till, tmp_till, int64_t);
+		// isCopyEliminated of '_1' = false
+		_28 = _calculateChange_(tmp_till, till_size, _30, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 	}
 	//assign %5 = %28  : null|int[]
 	// isCopyEliminated = true

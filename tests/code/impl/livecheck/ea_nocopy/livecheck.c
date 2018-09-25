@@ -66,11 +66,11 @@ int main(int argc, char** args){
 	// isCopyEliminated = true
 	_UPDATE_1DARRAY(b, _10);
 	//assign %1 = %2  : int[]
-	// isCopyEliminated = true
-	_UPDATE_1DARRAY(a, b);
+	// isCopyEliminated = false
+	_COPY_1DARRAY_int64_t(a, b);
 	//assign %3 = %2  : int[]
-	// isCopyEliminated = true
-	_UPDATE_1DARRAY(c, b);
+	// isCopyEliminated = false
+	_COPY_1DARRAY_int64_t(c, b);
 	//assign %4 = %2  : int[]
 	// isCopyEliminated = true
 	_UPDATE_1DARRAY(d, b);

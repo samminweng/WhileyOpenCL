@@ -1,22 +1,22 @@
-==3778== Memcheck, a memory error detector
-==3778== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==3778== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==3778== Command: ./ArrayAppend.out
-==3778== Parent PID: 3720
-==3778== 
-==3778== 
-==3778== HEAP SUMMARY:
-==3778==     in use at exit: 256 bytes in 3 blocks
-==3778==   total heap usage: 4 allocs, 1 frees, 8,448 bytes allocated
-==3778== 
-==3778== LEAK SUMMARY:
-==3778==    definitely lost: 0 bytes in 0 blocks
-==3778==    indirectly lost: 0 bytes in 0 blocks
-==3778==      possibly lost: 0 bytes in 0 blocks
-==3778==    still reachable: 256 bytes in 3 blocks
-==3778==         suppressed: 0 bytes in 0 blocks
-==3778== Reachable blocks (those to which a pointer was found) are not shown.
-==3778== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==3778== 
-==3778== For counts of detected and suppressed errors, rerun with: -v
-==3778== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==25880== Memcheck, a memory error detector
+==25880== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==25880== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==25880== Command: ./ArrayAppend.out
+==25880== Parent PID: 25823
+==25880== 
+==25880== 
+==25880== HEAP SUMMARY:
+==25880==     in use at exit: 256 bytes in 3 blocks
+==25880==   total heap usage: 4 allocs, 1 frees, 8,448 bytes allocated
+==25880== 
+==25880== LEAK SUMMARY:
+==25880==    definitely lost: 0 bytes in 0 blocks
+==25880==    indirectly lost: 0 bytes in 0 blocks
+==25880==      possibly lost: 0 bytes in 0 blocks
+==25880==    still reachable: 256 bytes in 3 blocks
+==25880==         suppressed: 0 bytes in 0 blocks
+==25880== Reachable blocks (those to which a pointer was found) are not shown.
+==25880== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==25880== 
+==25880== For counts of detected and suppressed errors, rerun with: -v
+==25880== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

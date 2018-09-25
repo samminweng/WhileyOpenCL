@@ -1,146 +1,146 @@
-==4331== Memcheck, a memory error detector
-==4331== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==4331== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==4331== Command: ./CallerMacro5.out
-==4331== Parent PID: 3720
-==4331== 
-==4331== 
-==4331== HEAP SUMMARY:
-==4331==     in use at exit: 864 bytes in 32 blocks
-==4331==   total heap usage: 33 allocs, 1 frees, 9,056 bytes allocated
-==4331== 
-==4331== 24 bytes in 1 blocks are definitely lost in loss record 9 of 32
-==4331==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==4331==    by 0x40164B: create1DArray_int64_t (Util.c:23)
-==4331==    by 0x400C53: _func_ (CallerMacro5.c:21)
-==4331==    by 0x400FA0: main (CallerMacro5.c:116)
-==4331== 
-==4331== 24 bytes in 1 blocks are definitely lost in loss record 10 of 32
-==4331==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==4331==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
-==4331==    by 0x400C75: _func_ (CallerMacro5.c:23)
-==4331==    by 0x400FA0: main (CallerMacro5.c:116)
-==4331== 
-==4331== 24 bytes in 1 blocks are definitely lost in loss record 11 of 32
-==4331==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==4331==    by 0x40164B: create1DArray_int64_t (Util.c:23)
-==4331==    by 0x400CA7: _func_ (CallerMacro5.c:29)
-==4331==    by 0x400FA0: main (CallerMacro5.c:116)
-==4331== 
-==4331== 24 bytes in 1 blocks are definitely lost in loss record 12 of 32
-==4331==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==4331==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
-==4331==    by 0x400CC6: _func_ (CallerMacro5.c:31)
-==4331==    by 0x400FA0: main (CallerMacro5.c:116)
-==4331== 
-==4331== 24 bytes in 1 blocks are definitely lost in loss record 13 of 32
-==4331==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==4331==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
-==4331==    by 0x400CEE: _func_ (CallerMacro5.c:33)
-==4331==    by 0x400FA0: main (CallerMacro5.c:116)
-==4331== 
-==4331== 24 bytes in 1 blocks are definitely lost in loss record 14 of 32
-==4331==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==4331==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
-==4331==    by 0x400D0D: _func_ (CallerMacro5.c:35)
-==4331==    by 0x400FA0: main (CallerMacro5.c:116)
-==4331== 
-==4331== 24 bytes in 1 blocks are definitely lost in loss record 15 of 32
-==4331==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==4331==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
-==4331==    by 0x400D2C: _func_ (CallerMacro5.c:37)
-==4331==    by 0x400FA0: main (CallerMacro5.c:116)
-==4331== 
-==4331== 24 bytes in 1 blocks are definitely lost in loss record 16 of 32
-==4331==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==4331==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
-==4331==    by 0x400FCE: main (CallerMacro5.c:119)
-==4331== 
-==4331== 24 bytes in 1 blocks are definitely lost in loss record 17 of 32
-==4331==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==4331==    by 0x40164B: create1DArray_int64_t (Util.c:23)
-==4331==    by 0x400C53: _func_ (CallerMacro5.c:21)
-==4331==    by 0x4011D5: main (CallerMacro5.c:162)
-==4331== 
-==4331== 24 bytes in 1 blocks are definitely lost in loss record 18 of 32
-==4331==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==4331==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
-==4331==    by 0x400C75: _func_ (CallerMacro5.c:23)
-==4331==    by 0x4011D5: main (CallerMacro5.c:162)
-==4331== 
-==4331== 24 bytes in 1 blocks are definitely lost in loss record 19 of 32
-==4331==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==4331==    by 0x40164B: create1DArray_int64_t (Util.c:23)
-==4331==    by 0x400CA7: _func_ (CallerMacro5.c:29)
-==4331==    by 0x4011D5: main (CallerMacro5.c:162)
-==4331== 
-==4331== 24 bytes in 1 blocks are definitely lost in loss record 20 of 32
-==4331==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==4331==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
-==4331==    by 0x400CC6: _func_ (CallerMacro5.c:31)
-==4331==    by 0x4011D5: main (CallerMacro5.c:162)
-==4331== 
-==4331== 24 bytes in 1 blocks are definitely lost in loss record 21 of 32
-==4331==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==4331==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
-==4331==    by 0x400CEE: _func_ (CallerMacro5.c:33)
-==4331==    by 0x4011D5: main (CallerMacro5.c:162)
-==4331== 
-==4331== 24 bytes in 1 blocks are definitely lost in loss record 22 of 32
-==4331==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==4331==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
-==4331==    by 0x400D2C: _func_ (CallerMacro5.c:37)
-==4331==    by 0x4011D5: main (CallerMacro5.c:162)
-==4331== 
-==4331== 24 bytes in 1 blocks are definitely lost in loss record 23 of 32
-==4331==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==4331==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
-==4331==    by 0x401203: main (CallerMacro5.c:165)
-==4331== 
-==4331== 24 bytes in 1 blocks are definitely lost in loss record 24 of 32
-==4331==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==4331==    by 0x40164B: create1DArray_int64_t (Util.c:23)
-==4331==    by 0x400C53: _func_ (CallerMacro5.c:21)
-==4331==    by 0x4013F2: main (CallerMacro5.c:208)
-==4331== 
-==4331== 24 bytes in 1 blocks are definitely lost in loss record 25 of 32
-==4331==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==4331==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
-==4331==    by 0x400C75: _func_ (CallerMacro5.c:23)
-==4331==    by 0x4013F2: main (CallerMacro5.c:208)
-==4331== 
-==4331== 24 bytes in 1 blocks are definitely lost in loss record 26 of 32
-==4331==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==4331==    by 0x40164B: create1DArray_int64_t (Util.c:23)
-==4331==    by 0x400CA7: _func_ (CallerMacro5.c:29)
-==4331==    by 0x4013F2: main (CallerMacro5.c:208)
-==4331== 
-==4331== 24 bytes in 1 blocks are definitely lost in loss record 27 of 32
-==4331==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==4331==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
-==4331==    by 0x400CC6: _func_ (CallerMacro5.c:31)
-==4331==    by 0x4013F2: main (CallerMacro5.c:208)
-==4331== 
-==4331== 24 bytes in 1 blocks are definitely lost in loss record 28 of 32
-==4331==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==4331==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
-==4331==    by 0x400CEE: _func_ (CallerMacro5.c:33)
-==4331==    by 0x4013F2: main (CallerMacro5.c:208)
-==4331== 
-==4331== 24 bytes in 1 blocks are definitely lost in loss record 29 of 32
-==4331==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==4331==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
-==4331==    by 0x400D0D: _func_ (CallerMacro5.c:35)
-==4331==    by 0x4013F2: main (CallerMacro5.c:208)
-==4331== 
-==4331== LEAK SUMMARY:
-==4331==    definitely lost: 504 bytes in 21 blocks
-==4331==    indirectly lost: 0 bytes in 0 blocks
-==4331==      possibly lost: 0 bytes in 0 blocks
-==4331==    still reachable: 360 bytes in 11 blocks
-==4331==         suppressed: 0 bytes in 0 blocks
-==4331== Reachable blocks (those to which a pointer was found) are not shown.
-==4331== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==4331== 
-==4331== For counts of detected and suppressed errors, rerun with: -v
-==4331== ERROR SUMMARY: 21 errors from 21 contexts (suppressed: 0 from 0)
+==26411== Memcheck, a memory error detector
+==26411== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==26411== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==26411== Command: ./CallerMacro5.out
+==26411== Parent PID: 25823
+==26411== 
+==26411== 
+==26411== HEAP SUMMARY:
+==26411==     in use at exit: 864 bytes in 32 blocks
+==26411==   total heap usage: 33 allocs, 1 frees, 9,056 bytes allocated
+==26411== 
+==26411== 24 bytes in 1 blocks are definitely lost in loss record 9 of 32
+==26411==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==26411==    by 0x40164B: create1DArray_int64_t (Util.c:23)
+==26411==    by 0x400C53: _func_ (CallerMacro5.c:21)
+==26411==    by 0x400FA0: main (CallerMacro5.c:116)
+==26411== 
+==26411== 24 bytes in 1 blocks are definitely lost in loss record 10 of 32
+==26411==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==26411==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
+==26411==    by 0x400C75: _func_ (CallerMacro5.c:23)
+==26411==    by 0x400FA0: main (CallerMacro5.c:116)
+==26411== 
+==26411== 24 bytes in 1 blocks are definitely lost in loss record 11 of 32
+==26411==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==26411==    by 0x40164B: create1DArray_int64_t (Util.c:23)
+==26411==    by 0x400CA7: _func_ (CallerMacro5.c:29)
+==26411==    by 0x400FA0: main (CallerMacro5.c:116)
+==26411== 
+==26411== 24 bytes in 1 blocks are definitely lost in loss record 12 of 32
+==26411==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==26411==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
+==26411==    by 0x400CC6: _func_ (CallerMacro5.c:31)
+==26411==    by 0x400FA0: main (CallerMacro5.c:116)
+==26411== 
+==26411== 24 bytes in 1 blocks are definitely lost in loss record 13 of 32
+==26411==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==26411==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
+==26411==    by 0x400CEE: _func_ (CallerMacro5.c:33)
+==26411==    by 0x400FA0: main (CallerMacro5.c:116)
+==26411== 
+==26411== 24 bytes in 1 blocks are definitely lost in loss record 14 of 32
+==26411==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==26411==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
+==26411==    by 0x400D0D: _func_ (CallerMacro5.c:35)
+==26411==    by 0x400FA0: main (CallerMacro5.c:116)
+==26411== 
+==26411== 24 bytes in 1 blocks are definitely lost in loss record 15 of 32
+==26411==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==26411==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
+==26411==    by 0x400D2C: _func_ (CallerMacro5.c:37)
+==26411==    by 0x400FA0: main (CallerMacro5.c:116)
+==26411== 
+==26411== 24 bytes in 1 blocks are definitely lost in loss record 16 of 32
+==26411==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==26411==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
+==26411==    by 0x400FCE: main (CallerMacro5.c:119)
+==26411== 
+==26411== 24 bytes in 1 blocks are definitely lost in loss record 17 of 32
+==26411==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==26411==    by 0x40164B: create1DArray_int64_t (Util.c:23)
+==26411==    by 0x400C53: _func_ (CallerMacro5.c:21)
+==26411==    by 0x4011D5: main (CallerMacro5.c:162)
+==26411== 
+==26411== 24 bytes in 1 blocks are definitely lost in loss record 18 of 32
+==26411==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==26411==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
+==26411==    by 0x400C75: _func_ (CallerMacro5.c:23)
+==26411==    by 0x4011D5: main (CallerMacro5.c:162)
+==26411== 
+==26411== 24 bytes in 1 blocks are definitely lost in loss record 19 of 32
+==26411==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==26411==    by 0x40164B: create1DArray_int64_t (Util.c:23)
+==26411==    by 0x400CA7: _func_ (CallerMacro5.c:29)
+==26411==    by 0x4011D5: main (CallerMacro5.c:162)
+==26411== 
+==26411== 24 bytes in 1 blocks are definitely lost in loss record 20 of 32
+==26411==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==26411==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
+==26411==    by 0x400CC6: _func_ (CallerMacro5.c:31)
+==26411==    by 0x4011D5: main (CallerMacro5.c:162)
+==26411== 
+==26411== 24 bytes in 1 blocks are definitely lost in loss record 21 of 32
+==26411==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==26411==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
+==26411==    by 0x400CEE: _func_ (CallerMacro5.c:33)
+==26411==    by 0x4011D5: main (CallerMacro5.c:162)
+==26411== 
+==26411== 24 bytes in 1 blocks are definitely lost in loss record 22 of 32
+==26411==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==26411==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
+==26411==    by 0x400D2C: _func_ (CallerMacro5.c:37)
+==26411==    by 0x4011D5: main (CallerMacro5.c:162)
+==26411== 
+==26411== 24 bytes in 1 blocks are definitely lost in loss record 23 of 32
+==26411==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==26411==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
+==26411==    by 0x401203: main (CallerMacro5.c:165)
+==26411== 
+==26411== 24 bytes in 1 blocks are definitely lost in loss record 24 of 32
+==26411==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==26411==    by 0x40164B: create1DArray_int64_t (Util.c:23)
+==26411==    by 0x400C53: _func_ (CallerMacro5.c:21)
+==26411==    by 0x4013F2: main (CallerMacro5.c:208)
+==26411== 
+==26411== 24 bytes in 1 blocks are definitely lost in loss record 25 of 32
+==26411==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==26411==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
+==26411==    by 0x400C75: _func_ (CallerMacro5.c:23)
+==26411==    by 0x4013F2: main (CallerMacro5.c:208)
+==26411== 
+==26411== 24 bytes in 1 blocks are definitely lost in loss record 26 of 32
+==26411==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==26411==    by 0x40164B: create1DArray_int64_t (Util.c:23)
+==26411==    by 0x400CA7: _func_ (CallerMacro5.c:29)
+==26411==    by 0x4013F2: main (CallerMacro5.c:208)
+==26411== 
+==26411== 24 bytes in 1 blocks are definitely lost in loss record 27 of 32
+==26411==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==26411==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
+==26411==    by 0x400CC6: _func_ (CallerMacro5.c:31)
+==26411==    by 0x4013F2: main (CallerMacro5.c:208)
+==26411== 
+==26411== 24 bytes in 1 blocks are definitely lost in loss record 28 of 32
+==26411==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==26411==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
+==26411==    by 0x400CEE: _func_ (CallerMacro5.c:33)
+==26411==    by 0x4013F2: main (CallerMacro5.c:208)
+==26411== 
+==26411== 24 bytes in 1 blocks are definitely lost in loss record 29 of 32
+==26411==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==26411==    by 0x4017F7: copy1DArray_int64_t (Util.c:80)
+==26411==    by 0x400D0D: _func_ (CallerMacro5.c:35)
+==26411==    by 0x4013F2: main (CallerMacro5.c:208)
+==26411== 
+==26411== LEAK SUMMARY:
+==26411==    definitely lost: 504 bytes in 21 blocks
+==26411==    indirectly lost: 0 bytes in 0 blocks
+==26411==      possibly lost: 0 bytes in 0 blocks
+==26411==    still reachable: 360 bytes in 11 blocks
+==26411==         suppressed: 0 bytes in 0 blocks
+==26411== Reachable blocks (those to which a pointer was found) are not shown.
+==26411== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==26411== 
+==26411== For counts of detected and suppressed errors, rerun with: -v
+==26411== ERROR SUMMARY: 21 errors from 21 contexts (suppressed: 0 from 0)
