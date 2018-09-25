@@ -1,27 +1,27 @@
-==2011== Memcheck, a memory error detector
-==2011== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==2011== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==2011== Command: ./ResetMacro1.out
-==2011== Parent PID: 29356
-==2011== 
-==2011== 
-==2011== HEAP SUMMARY:
-==2011==     in use at exit: 176 bytes in 6 blocks
-==2011==   total heap usage: 7 allocs, 1 frees, 8,368 bytes allocated
-==2011== 
-==2011== 24 bytes in 1 blocks are definitely lost in loss record 5 of 6
-==2011==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==2011==    by 0x401147: copy1DArray_int64_t (Util.c:80)
-==2011==    by 0x400CAC: main (ResetMacro1.c:38)
-==2011== 
-==2011== LEAK SUMMARY:
-==2011==    definitely lost: 24 bytes in 1 blocks
-==2011==    indirectly lost: 0 bytes in 0 blocks
-==2011==      possibly lost: 0 bytes in 0 blocks
-==2011==    still reachable: 152 bytes in 5 blocks
-==2011==         suppressed: 0 bytes in 0 blocks
-==2011== Reachable blocks (those to which a pointer was found) are not shown.
-==2011== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==2011== 
-==2011== For counts of detected and suppressed errors, rerun with: -v
-==2011== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==6302== Memcheck, a memory error detector
+==6302== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==6302== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==6302== Command: ./ResetMacro1.out
+==6302== Parent PID: 3720
+==6302== 
+==6302== 
+==6302== HEAP SUMMARY:
+==6302==     in use at exit: 176 bytes in 6 blocks
+==6302==   total heap usage: 7 allocs, 1 frees, 8,368 bytes allocated
+==6302== 
+==6302== 24 bytes in 1 blocks are definitely lost in loss record 5 of 6
+==6302==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==6302==    by 0x401147: copy1DArray_int64_t (Util.c:80)
+==6302==    by 0x400CAC: main (ResetMacro1.c:38)
+==6302== 
+==6302== LEAK SUMMARY:
+==6302==    definitely lost: 24 bytes in 1 blocks
+==6302==    indirectly lost: 0 bytes in 0 blocks
+==6302==      possibly lost: 0 bytes in 0 blocks
+==6302==    still reachable: 152 bytes in 5 blocks
+==6302==         suppressed: 0 bytes in 0 blocks
+==6302== Reachable blocks (those to which a pointer was found) are not shown.
+==6302== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==6302== 
+==6302== For counts of detected and suppressed errors, rerun with: -v
+==6302== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

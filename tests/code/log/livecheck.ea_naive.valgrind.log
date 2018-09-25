@@ -1,32 +1,32 @@
-==721== Memcheck, a memory error detector
-==721== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==721== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==721== Command: ./livecheck.out
-==721== Parent PID: 29356
-==721== 
-==721== 
-==721== HEAP SUMMARY:
-==721==     in use at exit: 776 bytes in 14 blocks
-==721==   total heap usage: 15 allocs, 1 frees, 8,968 bytes allocated
-==721== 
-==721== 40 bytes in 1 blocks are definitely lost in loss record 8 of 14
-==721==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==721==    by 0x401862: copy1DArray_int64_t (Util.c:80)
-==721==    by 0x400D10: main (livecheck.c:57)
-==721== 
-==721== 40 bytes in 1 blocks are definitely lost in loss record 9 of 14
-==721==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==721==    by 0x401862: copy1DArray_int64_t (Util.c:80)
-==721==    by 0x400D82: main (livecheck.c:65)
-==721== 
-==721== LEAK SUMMARY:
-==721==    definitely lost: 80 bytes in 2 blocks
-==721==    indirectly lost: 0 bytes in 0 blocks
-==721==      possibly lost: 0 bytes in 0 blocks
-==721==    still reachable: 696 bytes in 12 blocks
-==721==         suppressed: 0 bytes in 0 blocks
-==721== Reachable blocks (those to which a pointer was found) are not shown.
-==721== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==721== 
-==721== For counts of detected and suppressed errors, rerun with: -v
-==721== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+==5685== Memcheck, a memory error detector
+==5685== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==5685== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==5685== Command: ./livecheck.out
+==5685== Parent PID: 3720
+==5685== 
+==5685== 
+==5685== HEAP SUMMARY:
+==5685==     in use at exit: 776 bytes in 14 blocks
+==5685==   total heap usage: 15 allocs, 1 frees, 8,968 bytes allocated
+==5685== 
+==5685== 40 bytes in 1 blocks are definitely lost in loss record 8 of 14
+==5685==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==5685==    by 0x401862: copy1DArray_int64_t (Util.c:80)
+==5685==    by 0x400D10: main (livecheck.c:57)
+==5685== 
+==5685== 40 bytes in 1 blocks are definitely lost in loss record 9 of 14
+==5685==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==5685==    by 0x401862: copy1DArray_int64_t (Util.c:80)
+==5685==    by 0x400D82: main (livecheck.c:65)
+==5685== 
+==5685== LEAK SUMMARY:
+==5685==    definitely lost: 80 bytes in 2 blocks
+==5685==    indirectly lost: 0 bytes in 0 blocks
+==5685==      possibly lost: 0 bytes in 0 blocks
+==5685==    still reachable: 696 bytes in 12 blocks
+==5685==         suppressed: 0 bytes in 0 blocks
+==5685== Reachable blocks (those to which a pointer was found) are not shown.
+==5685== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==5685== 
+==5685== For counts of detected and suppressed errors, rerun with: -v
+==5685== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)

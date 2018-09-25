@@ -1,103 +1,103 @@
-==1323== Memcheck, a memory error detector
-==1323== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==1323== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==1323== Command: ./lz77_opt_decompress.out
-==1323== Parent PID: 29356
-==1323== 
-==1323== 
-==1323== HEAP SUMMARY:
-==1323==     in use at exit: 1,172 bytes in 56 blocks
-==1323==   total heap usage: 61 allocs, 5 frees, 34,526 bytes allocated
-==1323== 
-==1323== 0 bytes in 1 blocks are definitely lost in loss record 1 of 22
-==1323==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==1323==    by 0x401BC6: create1DArray_BYTE (Util.c:41)
-==1323==    by 0x400F84: _decompress_ (lz77_opt_decompress.c:180)
-==1323==    by 0x401830: main (lz77_opt_decompress.c:351)
-==1323== 
-==1323== 0 bytes in 1 blocks are definitely lost in loss record 2 of 22
-==1323==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==1323==    by 0x401C5B: copy1DArray_BYTE (Util.c:61)
-==1323==    by 0x400FB2: _decompress_ (lz77_opt_decompress.c:182)
-==1323==    by 0x401830: main (lz77_opt_decompress.c:351)
-==1323== 
-==1323== 10 bytes in 2 blocks are definitely lost in loss record 3 of 22
-==1323==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==1323==    by 0x401BC6: create1DArray_BYTE (Util.c:41)
-==1323==    by 0x400DC7: _opt_append_ (lz77_opt_decompress.c:97)
-==1323==    by 0x4012FE: _decompress_ (lz77_opt_decompress.c:273)
-==1323==    by 0x401830: main (lz77_opt_decompress.c:351)
-==1323== 
-==1323== 10 bytes in 2 blocks are definitely lost in loss record 4 of 22
-==1323==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==1323==    by 0x401C5B: copy1DArray_BYTE (Util.c:61)
-==1323==    by 0x400DE6: _opt_append_ (lz77_opt_decompress.c:99)
-==1323==    by 0x4012FE: _decompress_ (lz77_opt_decompress.c:273)
-==1323==    by 0x401830: main (lz77_opt_decompress.c:351)
-==1323== 
-==1323== 16 bytes in 1 blocks are definitely lost in loss record 7 of 22
-==1323==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==1323==    by 0x401BC6: create1DArray_BYTE (Util.c:41)
-==1323==    by 0x400C2B: _resize_ (lz77_opt_decompress.c:14)
-==1323==    by 0x40140C: _decompress_ (lz77_opt_decompress.c:305)
-==1323==    by 0x401830: main (lz77_opt_decompress.c:351)
-==1323== 
-==1323== 16 bytes in 1 blocks are definitely lost in loss record 8 of 22
-==1323==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==1323==    by 0x401C5B: copy1DArray_BYTE (Util.c:61)
-==1323==    by 0x400C4A: _resize_ (lz77_opt_decompress.c:16)
-==1323==    by 0x40140C: _decompress_ (lz77_opt_decompress.c:305)
-==1323==    by 0x401830: main (lz77_opt_decompress.c:351)
-==1323== 
-==1323== 25 bytes in 4 blocks are definitely lost in loss record 12 of 22
-==1323==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==1323==    by 0x4010FB: _decompress_ (lz77_opt_decompress.c:226)
-==1323==    by 0x401830: main (lz77_opt_decompress.c:351)
-==1323== 
-==1323== 31 bytes in 1 blocks are definitely lost in loss record 13 of 22
-==1323==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==1323==    by 0x401398: _decompress_ (lz77_opt_decompress.c:304)
-==1323==    by 0x401830: main (lz77_opt_decompress.c:351)
-==1323== 
-==1323== 47 bytes in 3 blocks are definitely lost in loss record 14 of 22
-==1323==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==1323==    by 0x401BC6: create1DArray_BYTE (Util.c:41)
-==1323==    by 0x400DC7: _opt_append_ (lz77_opt_decompress.c:97)
-==1323==    by 0x401182: _decompress_ (lz77_opt_decompress.c:227)
-==1323==    by 0x401830: main (lz77_opt_decompress.c:351)
-==1323== 
-==1323== 47 bytes in 3 blocks are definitely lost in loss record 15 of 22
-==1323==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==1323==    by 0x401C5B: copy1DArray_BYTE (Util.c:61)
-==1323==    by 0x400DE6: _opt_append_ (lz77_opt_decompress.c:99)
-==1323==    by 0x401182: _decompress_ (lz77_opt_decompress.c:227)
-==1323==    by 0x401830: main (lz77_opt_decompress.c:351)
-==1323== 
-==1323== 50 bytes in 4 blocks are definitely lost in loss record 17 of 22
-==1323==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==1323==    by 0x401C5B: copy1DArray_BYTE (Util.c:61)
-==1323==    by 0x4011B0: _decompress_ (lz77_opt_decompress.c:230)
-==1323==    by 0x401830: main (lz77_opt_decompress.c:351)
-==1323== 
-==1323== 130 bytes in 12 blocks are definitely lost in loss record 20 of 22
-==1323==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==1323==    by 0x401280: _decompress_ (lz77_opt_decompress.c:272)
-==1323==    by 0x401830: main (lz77_opt_decompress.c:351)
-==1323== 
-==1323== 136 bytes in 12 blocks are definitely lost in loss record 21 of 22
-==1323==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==1323==    by 0x401C5B: copy1DArray_BYTE (Util.c:61)
-==1323==    by 0x40132C: _decompress_ (lz77_opt_decompress.c:276)
-==1323==    by 0x401830: main (lz77_opt_decompress.c:351)
-==1323== 
-==1323== LEAK SUMMARY:
-==1323==    definitely lost: 518 bytes in 47 blocks
-==1323==    indirectly lost: 0 bytes in 0 blocks
-==1323==      possibly lost: 0 bytes in 0 blocks
-==1323==    still reachable: 654 bytes in 9 blocks
-==1323==         suppressed: 0 bytes in 0 blocks
-==1323== Reachable blocks (those to which a pointer was found) are not shown.
-==1323== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==1323== 
-==1323== For counts of detected and suppressed errors, rerun with: -v
-==1323== ERROR SUMMARY: 13 errors from 13 contexts (suppressed: 0 from 0)
+==5961== Memcheck, a memory error detector
+==5961== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==5961== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==5961== Command: ./lz77_opt_decompress.out
+==5961== Parent PID: 3720
+==5961== 
+==5961== 
+==5961== HEAP SUMMARY:
+==5961==     in use at exit: 1,172 bytes in 56 blocks
+==5961==   total heap usage: 61 allocs, 5 frees, 34,526 bytes allocated
+==5961== 
+==5961== 0 bytes in 1 blocks are definitely lost in loss record 1 of 22
+==5961==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==5961==    by 0x401BC6: create1DArray_BYTE (Util.c:41)
+==5961==    by 0x400F84: _decompress_ (lz77_opt_decompress.c:180)
+==5961==    by 0x401830: main (lz77_opt_decompress.c:351)
+==5961== 
+==5961== 0 bytes in 1 blocks are definitely lost in loss record 2 of 22
+==5961==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==5961==    by 0x401C5B: copy1DArray_BYTE (Util.c:61)
+==5961==    by 0x400FB2: _decompress_ (lz77_opt_decompress.c:182)
+==5961==    by 0x401830: main (lz77_opt_decompress.c:351)
+==5961== 
+==5961== 10 bytes in 2 blocks are definitely lost in loss record 3 of 22
+==5961==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==5961==    by 0x401BC6: create1DArray_BYTE (Util.c:41)
+==5961==    by 0x400DC7: _opt_append_ (lz77_opt_decompress.c:97)
+==5961==    by 0x4012FE: _decompress_ (lz77_opt_decompress.c:273)
+==5961==    by 0x401830: main (lz77_opt_decompress.c:351)
+==5961== 
+==5961== 10 bytes in 2 blocks are definitely lost in loss record 4 of 22
+==5961==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==5961==    by 0x401C5B: copy1DArray_BYTE (Util.c:61)
+==5961==    by 0x400DE6: _opt_append_ (lz77_opt_decompress.c:99)
+==5961==    by 0x4012FE: _decompress_ (lz77_opt_decompress.c:273)
+==5961==    by 0x401830: main (lz77_opt_decompress.c:351)
+==5961== 
+==5961== 16 bytes in 1 blocks are definitely lost in loss record 7 of 22
+==5961==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==5961==    by 0x401BC6: create1DArray_BYTE (Util.c:41)
+==5961==    by 0x400C2B: _resize_ (lz77_opt_decompress.c:14)
+==5961==    by 0x40140C: _decompress_ (lz77_opt_decompress.c:305)
+==5961==    by 0x401830: main (lz77_opt_decompress.c:351)
+==5961== 
+==5961== 16 bytes in 1 blocks are definitely lost in loss record 8 of 22
+==5961==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==5961==    by 0x401C5B: copy1DArray_BYTE (Util.c:61)
+==5961==    by 0x400C4A: _resize_ (lz77_opt_decompress.c:16)
+==5961==    by 0x40140C: _decompress_ (lz77_opt_decompress.c:305)
+==5961==    by 0x401830: main (lz77_opt_decompress.c:351)
+==5961== 
+==5961== 25 bytes in 4 blocks are definitely lost in loss record 12 of 22
+==5961==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==5961==    by 0x4010FB: _decompress_ (lz77_opt_decompress.c:226)
+==5961==    by 0x401830: main (lz77_opt_decompress.c:351)
+==5961== 
+==5961== 31 bytes in 1 blocks are definitely lost in loss record 13 of 22
+==5961==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==5961==    by 0x401398: _decompress_ (lz77_opt_decompress.c:304)
+==5961==    by 0x401830: main (lz77_opt_decompress.c:351)
+==5961== 
+==5961== 47 bytes in 3 blocks are definitely lost in loss record 14 of 22
+==5961==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==5961==    by 0x401BC6: create1DArray_BYTE (Util.c:41)
+==5961==    by 0x400DC7: _opt_append_ (lz77_opt_decompress.c:97)
+==5961==    by 0x401182: _decompress_ (lz77_opt_decompress.c:227)
+==5961==    by 0x401830: main (lz77_opt_decompress.c:351)
+==5961== 
+==5961== 47 bytes in 3 blocks are definitely lost in loss record 15 of 22
+==5961==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==5961==    by 0x401C5B: copy1DArray_BYTE (Util.c:61)
+==5961==    by 0x400DE6: _opt_append_ (lz77_opt_decompress.c:99)
+==5961==    by 0x401182: _decompress_ (lz77_opt_decompress.c:227)
+==5961==    by 0x401830: main (lz77_opt_decompress.c:351)
+==5961== 
+==5961== 50 bytes in 4 blocks are definitely lost in loss record 17 of 22
+==5961==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==5961==    by 0x401C5B: copy1DArray_BYTE (Util.c:61)
+==5961==    by 0x4011B0: _decompress_ (lz77_opt_decompress.c:230)
+==5961==    by 0x401830: main (lz77_opt_decompress.c:351)
+==5961== 
+==5961== 130 bytes in 12 blocks are definitely lost in loss record 20 of 22
+==5961==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==5961==    by 0x401280: _decompress_ (lz77_opt_decompress.c:272)
+==5961==    by 0x401830: main (lz77_opt_decompress.c:351)
+==5961== 
+==5961== 136 bytes in 12 blocks are definitely lost in loss record 21 of 22
+==5961==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==5961==    by 0x401C5B: copy1DArray_BYTE (Util.c:61)
+==5961==    by 0x40132C: _decompress_ (lz77_opt_decompress.c:276)
+==5961==    by 0x401830: main (lz77_opt_decompress.c:351)
+==5961== 
+==5961== LEAK SUMMARY:
+==5961==    definitely lost: 518 bytes in 47 blocks
+==5961==    indirectly lost: 0 bytes in 0 blocks
+==5961==      possibly lost: 0 bytes in 0 blocks
+==5961==    still reachable: 654 bytes in 9 blocks
+==5961==         suppressed: 0 bytes in 0 blocks
+==5961== Reachable blocks (those to which a pointer was found) are not shown.
+==5961== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==5961== 
+==5961== For counts of detected and suppressed errors, rerun with: -v
+==5961== ERROR SUMMARY: 13 errors from 13 contexts (suppressed: 0 from 0)

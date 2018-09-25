@@ -1,64 +1,64 @@
-==30507== Memcheck, a memory error detector
-==30507== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==30507== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==30507== Command: ./CallerMacro5.out
-==30507== Parent PID: 29356
-==30507== 
-==30507== 
-==30507== HEAP SUMMARY:
-==30507==     in use at exit: 456 bytes in 15 blocks
-==30507==   total heap usage: 16 allocs, 1 frees, 8,648 bytes allocated
-==30507== 
-==30507== 24 bytes in 1 blocks are definitely lost in loss record 6 of 15
-==30507==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==30507==    by 0x401553: create1DArray_int64_t (Util.c:23)
-==30507==    by 0x400C53: _func_ (CallerMacro5.c:21)
-==30507==    by 0x400F4F: main (CallerMacro5.c:123)
-==30507== 
-==30507== 24 bytes in 1 blocks are definitely lost in loss record 7 of 15
-==30507==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==30507==    by 0x401553: create1DArray_int64_t (Util.c:23)
-==30507==    by 0x400C98: _func_ (CallerMacro5.c:30)
-==30507==    by 0x400F4F: main (CallerMacro5.c:123)
-==30507== 
-==30507== 24 bytes in 1 blocks are definitely lost in loss record 8 of 15
-==30507==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==30507==    by 0x4016FF: copy1DArray_int64_t (Util.c:80)
-==30507==    by 0x400CED: _func_ (CallerMacro5.c:42)
-==30507==    by 0x400F4F: main (CallerMacro5.c:123)
-==30507== 
-==30507== 24 bytes in 1 blocks are definitely lost in loss record 9 of 15
-==30507==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==30507==    by 0x401553: create1DArray_int64_t (Util.c:23)
-==30507==    by 0x400C98: _func_ (CallerMacro5.c:30)
-==30507==    by 0x40116C: main (CallerMacro5.c:171)
-==30507== 
-==30507== 24 bytes in 1 blocks are definitely lost in loss record 10 of 15
-==30507==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==30507==    by 0x4016FF: copy1DArray_int64_t (Util.c:80)
-==30507==    by 0x400CED: _func_ (CallerMacro5.c:42)
-==30507==    by 0x40116C: main (CallerMacro5.c:171)
-==30507== 
-==30507== 24 bytes in 1 blocks are definitely lost in loss record 11 of 15
-==30507==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==30507==    by 0x401553: create1DArray_int64_t (Util.c:23)
-==30507==    by 0x400C53: _func_ (CallerMacro5.c:21)
-==30507==    by 0x40130C: main (CallerMacro5.c:217)
-==30507== 
-==30507== 24 bytes in 1 blocks are definitely lost in loss record 12 of 15
-==30507==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==30507==    by 0x401553: create1DArray_int64_t (Util.c:23)
-==30507==    by 0x400C98: _func_ (CallerMacro5.c:30)
-==30507==    by 0x40130C: main (CallerMacro5.c:217)
-==30507== 
-==30507== LEAK SUMMARY:
-==30507==    definitely lost: 168 bytes in 7 blocks
-==30507==    indirectly lost: 0 bytes in 0 blocks
-==30507==      possibly lost: 0 bytes in 0 blocks
-==30507==    still reachable: 288 bytes in 8 blocks
-==30507==         suppressed: 0 bytes in 0 blocks
-==30507== Reachable blocks (those to which a pointer was found) are not shown.
-==30507== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==30507== 
-==30507== For counts of detected and suppressed errors, rerun with: -v
-==30507== ERROR SUMMARY: 7 errors from 7 contexts (suppressed: 0 from 0)
+==4347== Memcheck, a memory error detector
+==4347== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==4347== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==4347== Command: ./CallerMacro5.out
+==4347== Parent PID: 3720
+==4347== 
+==4347== 
+==4347== HEAP SUMMARY:
+==4347==     in use at exit: 456 bytes in 15 blocks
+==4347==   total heap usage: 16 allocs, 1 frees, 8,648 bytes allocated
+==4347== 
+==4347== 24 bytes in 1 blocks are definitely lost in loss record 6 of 15
+==4347==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==4347==    by 0x401553: create1DArray_int64_t (Util.c:23)
+==4347==    by 0x400C53: _func_ (CallerMacro5.c:21)
+==4347==    by 0x400F4F: main (CallerMacro5.c:123)
+==4347== 
+==4347== 24 bytes in 1 blocks are definitely lost in loss record 7 of 15
+==4347==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==4347==    by 0x401553: create1DArray_int64_t (Util.c:23)
+==4347==    by 0x400C98: _func_ (CallerMacro5.c:30)
+==4347==    by 0x400F4F: main (CallerMacro5.c:123)
+==4347== 
+==4347== 24 bytes in 1 blocks are definitely lost in loss record 8 of 15
+==4347==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==4347==    by 0x4016FF: copy1DArray_int64_t (Util.c:80)
+==4347==    by 0x400CED: _func_ (CallerMacro5.c:42)
+==4347==    by 0x400F4F: main (CallerMacro5.c:123)
+==4347== 
+==4347== 24 bytes in 1 blocks are definitely lost in loss record 9 of 15
+==4347==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==4347==    by 0x401553: create1DArray_int64_t (Util.c:23)
+==4347==    by 0x400C98: _func_ (CallerMacro5.c:30)
+==4347==    by 0x40116C: main (CallerMacro5.c:171)
+==4347== 
+==4347== 24 bytes in 1 blocks are definitely lost in loss record 10 of 15
+==4347==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==4347==    by 0x4016FF: copy1DArray_int64_t (Util.c:80)
+==4347==    by 0x400CED: _func_ (CallerMacro5.c:42)
+==4347==    by 0x40116C: main (CallerMacro5.c:171)
+==4347== 
+==4347== 24 bytes in 1 blocks are definitely lost in loss record 11 of 15
+==4347==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==4347==    by 0x401553: create1DArray_int64_t (Util.c:23)
+==4347==    by 0x400C53: _func_ (CallerMacro5.c:21)
+==4347==    by 0x40130C: main (CallerMacro5.c:217)
+==4347== 
+==4347== 24 bytes in 1 blocks are definitely lost in loss record 12 of 15
+==4347==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==4347==    by 0x401553: create1DArray_int64_t (Util.c:23)
+==4347==    by 0x400C98: _func_ (CallerMacro5.c:30)
+==4347==    by 0x40130C: main (CallerMacro5.c:217)
+==4347== 
+==4347== LEAK SUMMARY:
+==4347==    definitely lost: 168 bytes in 7 blocks
+==4347==    indirectly lost: 0 bytes in 0 blocks
+==4347==      possibly lost: 0 bytes in 0 blocks
+==4347==    still reachable: 288 bytes in 8 blocks
+==4347==         suppressed: 0 bytes in 0 blocks
+==4347== Reachable blocks (those to which a pointer was found) are not shown.
+==4347== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==4347== 
+==4347== For counts of detected and suppressed errors, rerun with: -v
+==4347== ERROR SUMMARY: 7 errors from 7 contexts (suppressed: 0 from 0)

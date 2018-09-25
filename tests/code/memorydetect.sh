@@ -5,6 +5,9 @@ runValgrind(){
     memorylog="memorylog.txt"
     rm -rf $memorylog
     touch $memorylog
+    failtestcases="failtestcase.txt"
+    rm -rf $failtestcases
+    touch $failtestcases
     for folder in impl/*
     do
         echo $folder
@@ -28,7 +31,7 @@ runValgrind(){
             STATUS="${?}"
             if (( STATUS != 0))
             then 
-                echo "Error!!! $codetype $testcase code fails."
+                echo "Error!!! $codetype $testcase code fails." >> $basefolder/$failtestcases
             fi
             # Put all output to a single file
             echo "=== Test report for the $codetype code of $testcase ===" >> $basefolder/$memorylog
