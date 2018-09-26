@@ -1,27 +1,27 @@
-==27240== Memcheck, a memory error detector
-==27240== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==27240== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==27240== Command: ./FunctionCall2.out
-==27240== Parent PID: 25823
-==27240== 
-==27240== 
-==27240== HEAP SUMMARY:
-==27240==     in use at exit: 480 bytes in 12 blocks
-==27240==   total heap usage: 13 allocs, 1 frees, 8,672 bytes allocated
-==27240== 
-==27240== 40 bytes in 1 blocks are definitely lost in loss record 12 of 12
-==27240==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==27240==    by 0x4016D7: copy1DArray_int64_t (Util.c:80)
-==27240==    by 0x400E27: main (FunctionCall2.c:93)
-==27240== 
-==27240== LEAK SUMMARY:
-==27240==    definitely lost: 40 bytes in 1 blocks
-==27240==    indirectly lost: 0 bytes in 0 blocks
-==27240==      possibly lost: 0 bytes in 0 blocks
-==27240==    still reachable: 440 bytes in 11 blocks
-==27240==         suppressed: 0 bytes in 0 blocks
-==27240== Reachable blocks (those to which a pointer was found) are not shown.
-==27240== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==27240== 
-==27240== For counts of detected and suppressed errors, rerun with: -v
-==27240== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==9723== Memcheck, a memory error detector
+==9723== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==9723== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==9723== Command: ./FunctionCall2.out
+==9723== Parent PID: 8227
+==9723== 
+==9723== 
+==9723== HEAP SUMMARY:
+==9723==     in use at exit: 480 bytes in 12 blocks
+==9723==   total heap usage: 13 allocs, 1 frees, 8,672 bytes allocated
+==9723== 
+==9723== 40 bytes in 1 blocks are definitely lost in loss record 12 of 12
+==9723==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==9723==    by 0x4016D7: copy1DArray_int64_t (Util.c:80)
+==9723==    by 0x400E27: main (FunctionCall2.c:93)
+==9723== 
+==9723== LEAK SUMMARY:
+==9723==    definitely lost: 40 bytes in 1 blocks
+==9723==    indirectly lost: 0 bytes in 0 blocks
+==9723==      possibly lost: 0 bytes in 0 blocks
+==9723==    still reachable: 440 bytes in 11 blocks
+==9723==         suppressed: 0 bytes in 0 blocks
+==9723== Reachable blocks (those to which a pointer was found) are not shown.
+==9723== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==9723== 
+==9723== For counts of detected and suppressed errors, rerun with: -v
+==9723== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

@@ -451,8 +451,8 @@ blklab25:;
 		//ifgt %13, %1 goto blklab29 : int
 		if(_13>change){goto blklab29;}
 		//assign %4 = %0  : int[]
-		// isCopyEliminated = true
-		_TRANSFER_DEALLOC(tmp, till);
+		// isCopyEliminated = false
+		_ADD_DEALLOC(tmp, till, int64_t);
 		//indexof %14 = %4, %3 : int[]
 		_14=tmp[i];
 		//const %15 = 1 : int
@@ -475,7 +475,7 @@ blklab25:;
 			_DEALLOC(_17);
 			// isCopyEliminated of '_4' = true
 			_17 = _calculateChange_(tmp, tmp_size, false, _20, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_17));
-			_RETAIN_DEALLOC(tmp, "true-false-false" , "calculateChange");
+			_RETAIN_DEALLOC(tmp, "false-false-false" , "calculateChange");
 			_RETAIN_DEALLOC_POST(_17, tmp);
 		}
 		//assign %5 = %17  : null|int[]
@@ -930,13 +930,11 @@ blklab36:;
 	_30=_29-cost;
 	//invoke (%28) = (%1, %30) cashtill:calculateChange : function(cashtill:Cash,cashtill:nat)->(cashtill:Cash|null)
 	{
-		void* tmp_till;
-		_COPY_1DARRAY_PARAM(till, tmp_till, int64_t);
 		_DEALLOC(_28);
-		// isCopyEliminated of '_1' = false
-		_28 = _calculateChange_(tmp_till, till_size, true, _30, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
-		_CALLEE_DEALLOC(till, "true-false-true" , "calculateChange");
-		_CALLEE_DEALLOC_POST(_28, till);
+		// isCopyEliminated of '_1' = true
+		_28 = _calculateChange_(till, till_size, false, _30, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
+		_RETAIN_DEALLOC(till, "false-false-true" , "calculateChange");
+		_RETAIN_DEALLOC_POST(_28, till);
 	}
 	//assign %5 = %28  : null|int[]
 	// isCopyEliminated = true

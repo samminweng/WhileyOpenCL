@@ -115,8 +115,14 @@ public class ModelCheckingTestCase {
 
 				Files.write(path, fixed.getBytes(), StandardOpenOption.CREATE);
 				List<String> lines = new ArrayList<String>();
-				for (String statement : statements) {
+				
+				int i = 0;
+				for (String statement : statements) {					
 					lines.add("\t" + statement);
+					if(i == 2) {
+						// Add extra read statement
+						lines.add("\tint i = b[0] //Test if there is invalid read error");
+					}
 				}
 				// Write out all lines to the Whiley program
 				Files.write(path, lines, StandardOpenOption.APPEND);
@@ -145,7 +151,8 @@ public class ModelCheckingTestCase {
 	private void generateWhileyAndProduceCCodeAndRunIt(ArrayList<String> variables) {
 		// Write out Whiley programs
 		ArrayList<String> testcases = generateWhileyPrograms(variables);
-		String[] codetypes = { "dealloc", "nocopy_dealloc" };
+		//String[] codetypes = { "dealloc", "nocopy_dealloc" };
+		String[] codetypes = { "nocopy_dealloc" };
 
 		for (String testcase : testcases) {
 			// For each test case produce two kinds of code type, i.e. dealloc, and nocopy + dealloc

@@ -235,6 +235,10 @@ public class BasicBlock implements Comparable<BasicBlock> {
 	public BlockType getType() {
 		return this.type;
 	}
+	
+	public void setType(BlockType type) {
+		this.type = type;
+	}
 
 	/**
 	 * Return a list of child blks.

@@ -353,12 +353,13 @@ public abstract class Analyzer {
 		// Get the current block
 		BasicBlock c_blk = graph.getCurrentBlock();
 		if(isArrayAssign(code, function)) {
+			// Set current block to be Assign block
+			c_blk.setType(BlockType.ASSIGN);
+			c_blk.addCode(code);			
 			// Create another block
-			String label = "Assign" + line;
-			BasicBlock assign_blk = graph.createBasicBlock(label, BlockType.ASSIGN, c_blk);
-			assign_blk.addCode(code);
+			String label = "Block" + line;
 			// Create another block
-			BasicBlock blk = graph.createBasicBlock(label, BlockType.BLOCK, assign_blk);
+			BasicBlock blk = graph.createBasicBlock(label, BlockType.BLOCK, c_blk);
 			// Set next_blk to be the current block.
 			graph.setCurrentBlock(blk);
 		}else{

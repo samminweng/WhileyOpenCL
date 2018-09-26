@@ -1,46 +1,46 @@
-==27120== Memcheck, a memory error detector
-==27120== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==27120== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==27120== Command: ./fileread2.out
-==27120== Parent PID: 25823
-==27120== 
-==27120== 
-==27120== HEAP SUMMARY:
-==27120==     in use at exit: 4,944 bytes in 70 blocks
-==27120==   total heap usage: 75 allocs, 5 frees, 54,131 bytes allocated
-==27120== 
-==27120== 0 bytes in 1 blocks are definitely lost in loss record 1 of 7
-==27120==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==27120==    by 0x401240: create1DArray_int64_t (Util.c:23)
-==27120==    by 0x400E47: _print_pbm_ (fileread2.c:150)
-==27120==    by 0x401170: main (fileread2.c:200)
-==27120== 
-==27120== 0 bytes in 64 blocks are definitely lost in loss record 2 of 7
-==27120==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==27120==    by 0x401240: create1DArray_int64_t (Util.c:23)
-==27120==    by 0x400DEC: _print_pbm_ (fileread2.c:130)
-==27120==    by 0x401170: main (fileread2.c:200)
-==27120== 
-==27120== 8 bytes in 1 blocks are definitely lost in loss record 3 of 7
-==27120==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==27120==    by 0x401240: create1DArray_int64_t (Util.c:23)
-==27120==    by 0x400C7D: _print_pbm_ (fileread2.c:50)
-==27120==    by 0x401170: main (fileread2.c:200)
-==27120== 
-==27120== 16 bytes in 1 blocks are definitely lost in loss record 4 of 7
-==27120==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==27120==    by 0x401240: create1DArray_int64_t (Util.c:23)
-==27120==    by 0x400C0B: _print_pbm_ (fileread2.c:35)
-==27120==    by 0x401170: main (fileread2.c:200)
-==27120== 
-==27120== LEAK SUMMARY:
-==27120==    definitely lost: 24 bytes in 67 blocks
-==27120==    indirectly lost: 0 bytes in 0 blocks
-==27120==      possibly lost: 0 bytes in 0 blocks
-==27120==    still reachable: 4,920 bytes in 3 blocks
-==27120==         suppressed: 0 bytes in 0 blocks
-==27120== Reachable blocks (those to which a pointer was found) are not shown.
-==27120== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==27120== 
-==27120== For counts of detected and suppressed errors, rerun with: -v
-==27120== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)
+==9600== Memcheck, a memory error detector
+==9600== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==9600== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==9600== Command: ./fileread2.out
+==9600== Parent PID: 8227
+==9600== 
+==9600== 
+==9600== HEAP SUMMARY:
+==9600==     in use at exit: 4,944 bytes in 70 blocks
+==9600==   total heap usage: 75 allocs, 5 frees, 54,131 bytes allocated
+==9600== 
+==9600== 0 bytes in 1 blocks are definitely lost in loss record 1 of 7
+==9600==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==9600==    by 0x401240: create1DArray_int64_t (Util.c:23)
+==9600==    by 0x400E47: _print_pbm_ (fileread2.c:150)
+==9600==    by 0x401170: main (fileread2.c:200)
+==9600== 
+==9600== 0 bytes in 64 blocks are definitely lost in loss record 2 of 7
+==9600==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==9600==    by 0x401240: create1DArray_int64_t (Util.c:23)
+==9600==    by 0x400DEC: _print_pbm_ (fileread2.c:130)
+==9600==    by 0x401170: main (fileread2.c:200)
+==9600== 
+==9600== 8 bytes in 1 blocks are definitely lost in loss record 3 of 7
+==9600==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==9600==    by 0x401240: create1DArray_int64_t (Util.c:23)
+==9600==    by 0x400C7D: _print_pbm_ (fileread2.c:50)
+==9600==    by 0x401170: main (fileread2.c:200)
+==9600== 
+==9600== 16 bytes in 1 blocks are definitely lost in loss record 4 of 7
+==9600==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==9600==    by 0x401240: create1DArray_int64_t (Util.c:23)
+==9600==    by 0x400C0B: _print_pbm_ (fileread2.c:35)
+==9600==    by 0x401170: main (fileread2.c:200)
+==9600== 
+==9600== LEAK SUMMARY:
+==9600==    definitely lost: 24 bytes in 67 blocks
+==9600==    indirectly lost: 0 bytes in 0 blocks
+==9600==      possibly lost: 0 bytes in 0 blocks
+==9600==    still reachable: 4,920 bytes in 3 blocks
+==9600==         suppressed: 0 bytes in 0 blocks
+==9600== Reachable blocks (those to which a pointer was found) are not shown.
+==9600== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==9600== 
+==9600== For counts of detected and suppressed errors, rerun with: -v
+==9600== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)

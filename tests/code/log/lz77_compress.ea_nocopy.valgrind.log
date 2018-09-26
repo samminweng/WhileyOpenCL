@@ -1,48 +1,48 @@
-==27811== Memcheck, a memory error detector
-==27811== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==27811== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==27811== Command: ./lz77_compress.out
-==27811== Parent PID: 25823
-==27811== 
-==27811== 
-==27811== HEAP SUMMARY:
-==27811==     in use at exit: 1,275 bytes in 36 blocks
-==27811==   total heap usage: 45 allocs, 9 frees, 59,782 bytes allocated
-==27811== 
-==27811== 0 bytes in 1 blocks are definitely lost in loss record 1 of 13
-==27811==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==27811==    by 0x401FB3: create1DArray_BYTE (Util.c:41)
-==27811==    by 0x401225: _compress_ (lz77_compress.c:329)
-==27811==    by 0x4019E0: main (lz77_compress.c:506)
-==27811== 
-==27811== 72 bytes in 8 blocks are definitely lost in loss record 6 of 13
-==27811==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==27811==    by 0x401FB3: create1DArray_BYTE (Util.c:41)
-==27811==    by 0x400FF0: _append_ (lz77_compress.c:209)
-==27811==    by 0x4013BE: _compress_ (lz77_compress.c:405)
-==27811==    by 0x4019E0: main (lz77_compress.c:506)
-==27811== 
-==27811== 81 bytes in 9 blocks are definitely lost in loss record 7 of 13
-==27811==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==27811==    by 0x401FB3: create1DArray_BYTE (Util.c:41)
-==27811==    by 0x400FF0: _append_ (lz77_compress.c:209)
-==27811==    by 0x40137D: _compress_ (lz77_compress.c:397)
-==27811==    by 0x4019E0: main (lz77_compress.c:506)
-==27811== 
-==27811== 144 bytes in 9 blocks are definitely lost in loss record 10 of 13
-==27811==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==27811==    by 0x400F50: _findLongestMatch_ (lz77_compress.c:179)
-==27811==    by 0x40127B: _compress_ (lz77_compress.c:342)
-==27811==    by 0x4019E0: main (lz77_compress.c:506)
-==27811== 
-==27811== LEAK SUMMARY:
-==27811==    definitely lost: 297 bytes in 27 blocks
-==27811==    indirectly lost: 0 bytes in 0 blocks
-==27811==      possibly lost: 0 bytes in 0 blocks
-==27811==    still reachable: 978 bytes in 9 blocks
-==27811==         suppressed: 0 bytes in 0 blocks
-==27811== Reachable blocks (those to which a pointer was found) are not shown.
-==27811== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==27811== 
-==27811== For counts of detected and suppressed errors, rerun with: -v
-==27811== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)
+==10346== Memcheck, a memory error detector
+==10346== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==10346== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==10346== Command: ./lz77_compress.out
+==10346== Parent PID: 8227
+==10346== 
+==10346== 
+==10346== HEAP SUMMARY:
+==10346==     in use at exit: 1,275 bytes in 36 blocks
+==10346==   total heap usage: 45 allocs, 9 frees, 59,782 bytes allocated
+==10346== 
+==10346== 0 bytes in 1 blocks are definitely lost in loss record 1 of 13
+==10346==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==10346==    by 0x401FB3: create1DArray_BYTE (Util.c:41)
+==10346==    by 0x401225: _compress_ (lz77_compress.c:329)
+==10346==    by 0x4019E0: main (lz77_compress.c:506)
+==10346== 
+==10346== 72 bytes in 8 blocks are definitely lost in loss record 6 of 13
+==10346==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==10346==    by 0x401FB3: create1DArray_BYTE (Util.c:41)
+==10346==    by 0x400FF0: _append_ (lz77_compress.c:209)
+==10346==    by 0x4013BE: _compress_ (lz77_compress.c:405)
+==10346==    by 0x4019E0: main (lz77_compress.c:506)
+==10346== 
+==10346== 81 bytes in 9 blocks are definitely lost in loss record 7 of 13
+==10346==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==10346==    by 0x401FB3: create1DArray_BYTE (Util.c:41)
+==10346==    by 0x400FF0: _append_ (lz77_compress.c:209)
+==10346==    by 0x40137D: _compress_ (lz77_compress.c:397)
+==10346==    by 0x4019E0: main (lz77_compress.c:506)
+==10346== 
+==10346== 144 bytes in 9 blocks are definitely lost in loss record 10 of 13
+==10346==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==10346==    by 0x400F50: _findLongestMatch_ (lz77_compress.c:179)
+==10346==    by 0x40127B: _compress_ (lz77_compress.c:342)
+==10346==    by 0x4019E0: main (lz77_compress.c:506)
+==10346== 
+==10346== LEAK SUMMARY:
+==10346==    definitely lost: 297 bytes in 27 blocks
+==10346==    indirectly lost: 0 bytes in 0 blocks
+==10346==      possibly lost: 0 bytes in 0 blocks
+==10346==    still reachable: 978 bytes in 9 blocks
+==10346==         suppressed: 0 bytes in 0 blocks
+==10346== Reachable blocks (those to which a pointer was found) are not shown.
+==10346== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==10346== 
+==10346== For counts of detected and suppressed errors, rerun with: -v
+==10346== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)

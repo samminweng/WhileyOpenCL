@@ -1,22 +1,22 @@
-==25949== Memcheck, a memory error detector
-==25949== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==25949== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==25949== Command: ./ArrayAppend2.out
-==25949== Parent PID: 25823
-==25949== 
-==25949== 
-==25949== HEAP SUMMARY:
-==25949==     in use at exit: 256 bytes in 3 blocks
-==25949==   total heap usage: 4 allocs, 1 frees, 8,448 bytes allocated
-==25949== 
-==25949== LEAK SUMMARY:
-==25949==    definitely lost: 0 bytes in 0 blocks
-==25949==    indirectly lost: 0 bytes in 0 blocks
-==25949==      possibly lost: 0 bytes in 0 blocks
-==25949==    still reachable: 256 bytes in 3 blocks
-==25949==         suppressed: 0 bytes in 0 blocks
-==25949== Reachable blocks (those to which a pointer was found) are not shown.
-==25949== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==25949== 
-==25949== For counts of detected and suppressed errors, rerun with: -v
-==25949== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==8357== Memcheck, a memory error detector
+==8357== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==8357== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==8357== Command: ./ArrayAppend2.out
+==8357== Parent PID: 8227
+==8357== 
+==8357== 
+==8357== HEAP SUMMARY:
+==8357==     in use at exit: 256 bytes in 3 blocks
+==8357==   total heap usage: 4 allocs, 1 frees, 8,448 bytes allocated
+==8357== 
+==8357== LEAK SUMMARY:
+==8357==    definitely lost: 0 bytes in 0 blocks
+==8357==    indirectly lost: 0 bytes in 0 blocks
+==8357==      possibly lost: 0 bytes in 0 blocks
+==8357==    still reachable: 256 bytes in 3 blocks
+==8357==         suppressed: 0 bytes in 0 blocks
+==8357== Reachable blocks (those to which a pointer was found) are not shown.
+==8357== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==8357== 
+==8357== For counts of detected and suppressed errors, rerun with: -v
+==8357== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

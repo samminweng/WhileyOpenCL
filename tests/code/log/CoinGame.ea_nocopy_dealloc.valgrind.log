@@ -1,23 +1,23 @@
-==26583== Memcheck, a memory error detector
-==26583== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==26583== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==26583== Command: ./CoinGame.out
-==26583== Parent PID: 25823
-==26583== 
-==26583== Invalid read of size 8
-==26583==    at 0x400E14: _play_ (CoinGame.c:119)
-==26583==    by 0x4023AE: main (CoinGame.c:612)
-==26583==  Address 0x5205078 is 8 bytes before a block of size 800 alloc'd
-==26583==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==26583==    by 0x402943: create1DArray_int64_t (Util.c:23)
-==26583==    by 0x40213D: main (CoinGame.c:594)
-==26583== 
-==26583== 
-==26583== HEAP SUMMARY:
-==26583==     in use at exit: 0 bytes in 0 blocks
-==26583==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
-==26583== 
-==26583== All heap blocks were freed -- no leaks are possible
-==26583== 
-==26583== For counts of detected and suppressed errors, rerun with: -v
-==26583== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==9025== Memcheck, a memory error detector
+==9025== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==9025== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==9025== Command: ./CoinGame.out
+==9025== Parent PID: 8227
+==9025== 
+==9025== Invalid read of size 8
+==9025==    at 0x400E14: _play_ (CoinGame.c:119)
+==9025==    by 0x4023AE: main (CoinGame.c:612)
+==9025==  Address 0x5205078 is 8 bytes before a block of size 800 alloc'd
+==9025==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==9025==    by 0x402943: create1DArray_int64_t (Util.c:23)
+==9025==    by 0x40213D: main (CoinGame.c:594)
+==9025== 
+==9025== 
+==9025== HEAP SUMMARY:
+==9025==     in use at exit: 0 bytes in 0 blocks
+==9025==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
+==9025== 
+==9025== All heap blocks were freed -- no leaks are possible
+==9025== 
+==9025== For counts of detected and suppressed errors, rerun with: -v
+==9025== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

@@ -1,56 +1,56 @@
-==28501== Memcheck, a memory error detector
-==28501== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==28501== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==28501== Command: ./ResetMacro3.out
-==28501== Parent PID: 25823
-==28501== 
-==28501== 
-==28501== HEAP SUMMARY:
-==28501==     in use at exit: 264 bytes in 11 blocks
-==28501==   total heap usage: 12 allocs, 1 frees, 8,456 bytes allocated
-==28501== 
-==28501== 24 bytes in 1 blocks are definitely lost in loss record 6 of 11
-==28501==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==28501==    by 0x4012E5: copy1DArray_int64_t (Util.c:80)
-==28501==    by 0x400D6C: main (ResetMacro3.c:70)
-==28501== 
-==28501== 24 bytes in 1 blocks are definitely lost in loss record 7 of 11
-==28501==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==28501==    by 0x401139: create1DArray_int64_t (Util.c:23)
-==28501==    by 0x400BF8: _func_ (ResetMacro3.c:15)
-==28501==    by 0x400E07: main (ResetMacro3.c:77)
-==28501== 
-==28501== 24 bytes in 1 blocks are definitely lost in loss record 8 of 11
-==28501==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==28501==    by 0x4012E5: copy1DArray_int64_t (Util.c:80)
-==28501==    by 0x400C17: _func_ (ResetMacro3.c:17)
-==28501==    by 0x400E07: main (ResetMacro3.c:77)
-==28501== 
-==28501== 24 bytes in 1 blocks are definitely lost in loss record 9 of 11
-==28501==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==28501==    by 0x4012E5: copy1DArray_int64_t (Util.c:80)
-==28501==    by 0x400E63: main (ResetMacro3.c:82)
-==28501== 
-==28501== 24 bytes in 1 blocks are definitely lost in loss record 10 of 11
-==28501==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==28501==    by 0x401139: create1DArray_int64_t (Util.c:23)
-==28501==    by 0x400BF8: _func_ (ResetMacro3.c:15)
-==28501==    by 0x400F99: main (ResetMacro3.c:116)
-==28501== 
-==28501== 24 bytes in 1 blocks are definitely lost in loss record 11 of 11
-==28501==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==28501==    by 0x4012E5: copy1DArray_int64_t (Util.c:80)
-==28501==    by 0x400C17: _func_ (ResetMacro3.c:17)
-==28501==    by 0x400F99: main (ResetMacro3.c:116)
-==28501== 
-==28501== LEAK SUMMARY:
-==28501==    definitely lost: 144 bytes in 6 blocks
-==28501==    indirectly lost: 0 bytes in 0 blocks
-==28501==      possibly lost: 0 bytes in 0 blocks
-==28501==    still reachable: 120 bytes in 5 blocks
-==28501==         suppressed: 0 bytes in 0 blocks
-==28501== Reachable blocks (those to which a pointer was found) are not shown.
-==28501== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==28501== 
-==28501== For counts of detected and suppressed errors, rerun with: -v
-==28501== ERROR SUMMARY: 6 errors from 6 contexts (suppressed: 0 from 0)
+==11080== Memcheck, a memory error detector
+==11080== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==11080== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==11080== Command: ./ResetMacro3.out
+==11080== Parent PID: 8227
+==11080== 
+==11080== 
+==11080== HEAP SUMMARY:
+==11080==     in use at exit: 264 bytes in 11 blocks
+==11080==   total heap usage: 12 allocs, 1 frees, 8,456 bytes allocated
+==11080== 
+==11080== 24 bytes in 1 blocks are definitely lost in loss record 6 of 11
+==11080==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==11080==    by 0x4012E5: copy1DArray_int64_t (Util.c:80)
+==11080==    by 0x400D6C: main (ResetMacro3.c:70)
+==11080== 
+==11080== 24 bytes in 1 blocks are definitely lost in loss record 7 of 11
+==11080==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==11080==    by 0x401139: create1DArray_int64_t (Util.c:23)
+==11080==    by 0x400BF8: _func_ (ResetMacro3.c:15)
+==11080==    by 0x400E07: main (ResetMacro3.c:77)
+==11080== 
+==11080== 24 bytes in 1 blocks are definitely lost in loss record 8 of 11
+==11080==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==11080==    by 0x4012E5: copy1DArray_int64_t (Util.c:80)
+==11080==    by 0x400C17: _func_ (ResetMacro3.c:17)
+==11080==    by 0x400E07: main (ResetMacro3.c:77)
+==11080== 
+==11080== 24 bytes in 1 blocks are definitely lost in loss record 9 of 11
+==11080==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==11080==    by 0x4012E5: copy1DArray_int64_t (Util.c:80)
+==11080==    by 0x400E63: main (ResetMacro3.c:82)
+==11080== 
+==11080== 24 bytes in 1 blocks are definitely lost in loss record 10 of 11
+==11080==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==11080==    by 0x401139: create1DArray_int64_t (Util.c:23)
+==11080==    by 0x400BF8: _func_ (ResetMacro3.c:15)
+==11080==    by 0x400F99: main (ResetMacro3.c:116)
+==11080== 
+==11080== 24 bytes in 1 blocks are definitely lost in loss record 11 of 11
+==11080==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==11080==    by 0x4012E5: copy1DArray_int64_t (Util.c:80)
+==11080==    by 0x400C17: _func_ (ResetMacro3.c:17)
+==11080==    by 0x400F99: main (ResetMacro3.c:116)
+==11080== 
+==11080== LEAK SUMMARY:
+==11080==    definitely lost: 144 bytes in 6 blocks
+==11080==    indirectly lost: 0 bytes in 0 blocks
+==11080==      possibly lost: 0 bytes in 0 blocks
+==11080==    still reachable: 120 bytes in 5 blocks
+==11080==         suppressed: 0 bytes in 0 blocks
+==11080== Reachable blocks (those to which a pointer was found) are not shown.
+==11080== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==11080== 
+==11080== For counts of detected and suppressed errors, rerun with: -v
+==11080== ERROR SUMMARY: 6 errors from 6 contexts (suppressed: 0 from 0)

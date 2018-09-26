@@ -1,63 +1,63 @@
-==26688== Memcheck, a memory error detector
-==26688== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==26688== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==26688== Command: ./CoinGame2.out
-==26688== Parent PID: 25823
-==26688== 
-==26688== 
-==26688== HEAP SUMMARY:
-==26688==     in use at exit: 8,584 bytes in 66 blocks
-==26688==   total heap usage: 67 allocs, 1 frees, 16,776 bytes allocated
-==26688== 
-==26688== 800 bytes in 1 blocks are definitely lost in loss record 6 of 12
-==26688==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==26688==    by 0x401E2E: copy1DArray_int64_t (Util.c:80)
-==26688==    by 0x401579: main (CoinGame2.c:317)
-==26688== 
-==26688== 800 bytes in 10 blocks are definitely lost in loss record 7 of 12
-==26688==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==26688==    by 0x401C82: create1DArray_int64_t (Util.c:23)
-==26688==    by 0x400CA5: _findMoves_ (CoinGame2.c:83)
-==26688==    by 0x40160C: main (CoinGame2.c:322)
-==26688== 
-==26688== 800 bytes in 10 blocks are definitely lost in loss record 8 of 12
-==26688==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==26688==    by 0x401E2E: copy1DArray_int64_t (Util.c:80)
-==26688==    by 0x400CD3: _findMoves_ (CoinGame2.c:85)
-==26688==    by 0x40160C: main (CoinGame2.c:322)
-==26688== 
-==26688== 800 bytes in 10 blocks are definitely lost in loss record 9 of 12
-==26688==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==26688==    by 0x401C82: create1DArray_int64_t (Util.c:23)
-==26688==    by 0x400D0C: _findMoves_ (CoinGame2.c:89)
-==26688==    by 0x40160C: main (CoinGame2.c:322)
-==26688== 
-==26688== 800 bytes in 10 blocks are definitely lost in loss record 10 of 12
-==26688==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==26688==    by 0x401E2E: copy1DArray_int64_t (Util.c:80)
-==26688==    by 0x400D3A: _findMoves_ (CoinGame2.c:91)
-==26688==    by 0x40160C: main (CoinGame2.c:322)
-==26688== 
-==26688== 800 bytes in 10 blocks are definitely lost in loss record 11 of 12
-==26688==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==26688==    by 0x401C82: create1DArray_int64_t (Util.c:23)
-==26688==    by 0x400D73: _findMoves_ (CoinGame2.c:95)
-==26688==    by 0x40160C: main (CoinGame2.c:322)
-==26688== 
-==26688== 800 bytes in 10 blocks are definitely lost in loss record 12 of 12
-==26688==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==26688==    by 0x401E2E: copy1DArray_int64_t (Util.c:80)
-==26688==    by 0x400DA1: _findMoves_ (CoinGame2.c:97)
-==26688==    by 0x40160C: main (CoinGame2.c:322)
-==26688== 
-==26688== LEAK SUMMARY:
-==26688==    definitely lost: 5,600 bytes in 61 blocks
-==26688==    indirectly lost: 0 bytes in 0 blocks
-==26688==      possibly lost: 0 bytes in 0 blocks
-==26688==    still reachable: 2,984 bytes in 5 blocks
-==26688==         suppressed: 0 bytes in 0 blocks
-==26688== Reachable blocks (those to which a pointer was found) are not shown.
-==26688== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==26688== 
-==26688== For counts of detected and suppressed errors, rerun with: -v
-==26688== ERROR SUMMARY: 7 errors from 7 contexts (suppressed: 0 from 0)
+==9129== Memcheck, a memory error detector
+==9129== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==9129== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==9129== Command: ./CoinGame2.out
+==9129== Parent PID: 8227
+==9129== 
+==9129== 
+==9129== HEAP SUMMARY:
+==9129==     in use at exit: 8,584 bytes in 66 blocks
+==9129==   total heap usage: 67 allocs, 1 frees, 16,776 bytes allocated
+==9129== 
+==9129== 800 bytes in 1 blocks are definitely lost in loss record 6 of 12
+==9129==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==9129==    by 0x401E2E: copy1DArray_int64_t (Util.c:80)
+==9129==    by 0x401579: main (CoinGame2.c:317)
+==9129== 
+==9129== 800 bytes in 10 blocks are definitely lost in loss record 7 of 12
+==9129==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==9129==    by 0x401C82: create1DArray_int64_t (Util.c:23)
+==9129==    by 0x400CA5: _findMoves_ (CoinGame2.c:83)
+==9129==    by 0x40160C: main (CoinGame2.c:322)
+==9129== 
+==9129== 800 bytes in 10 blocks are definitely lost in loss record 8 of 12
+==9129==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==9129==    by 0x401E2E: copy1DArray_int64_t (Util.c:80)
+==9129==    by 0x400CD3: _findMoves_ (CoinGame2.c:85)
+==9129==    by 0x40160C: main (CoinGame2.c:322)
+==9129== 
+==9129== 800 bytes in 10 blocks are definitely lost in loss record 9 of 12
+==9129==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==9129==    by 0x401C82: create1DArray_int64_t (Util.c:23)
+==9129==    by 0x400D0C: _findMoves_ (CoinGame2.c:89)
+==9129==    by 0x40160C: main (CoinGame2.c:322)
+==9129== 
+==9129== 800 bytes in 10 blocks are definitely lost in loss record 10 of 12
+==9129==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==9129==    by 0x401E2E: copy1DArray_int64_t (Util.c:80)
+==9129==    by 0x400D3A: _findMoves_ (CoinGame2.c:91)
+==9129==    by 0x40160C: main (CoinGame2.c:322)
+==9129== 
+==9129== 800 bytes in 10 blocks are definitely lost in loss record 11 of 12
+==9129==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==9129==    by 0x401C82: create1DArray_int64_t (Util.c:23)
+==9129==    by 0x400D73: _findMoves_ (CoinGame2.c:95)
+==9129==    by 0x40160C: main (CoinGame2.c:322)
+==9129== 
+==9129== 800 bytes in 10 blocks are definitely lost in loss record 12 of 12
+==9129==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==9129==    by 0x401E2E: copy1DArray_int64_t (Util.c:80)
+==9129==    by 0x400DA1: _findMoves_ (CoinGame2.c:97)
+==9129==    by 0x40160C: main (CoinGame2.c:322)
+==9129== 
+==9129== LEAK SUMMARY:
+==9129==    definitely lost: 5,600 bytes in 61 blocks
+==9129==    indirectly lost: 0 bytes in 0 blocks
+==9129==      possibly lost: 0 bytes in 0 blocks
+==9129==    still reachable: 2,984 bytes in 5 blocks
+==9129==         suppressed: 0 bytes in 0 blocks
+==9129== Reachable blocks (those to which a pointer was found) are not shown.
+==9129== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==9129== 
+==9129== For counts of detected and suppressed errors, rerun with: -v
+==9129== ERROR SUMMARY: 7 errors from 7 contexts (suppressed: 0 from 0)

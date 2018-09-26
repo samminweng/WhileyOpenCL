@@ -1,37 +1,37 @@
-==28089== Memcheck, a memory error detector
-==28089== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==28089== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==28089== Command: ./MatrixMult.out
-==28089== Parent PID: 25823
-==28089== 
-==28089== 
-==28089== HEAP SUMMARY:
-==28089==     in use at exit: 45,272 bytes in 17 blocks
-==28089==   total heap usage: 18 allocs, 1 frees, 53,464 bytes allocated
-==28089== 
-==28089== 3,200 bytes in 1 blocks are definitely lost in loss record 15 of 17
-==28089==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==28089==    by 0x401F4B: copy1DArray_int64_t (Util.c:80)
-==28089==    by 0x40118D: main (MatrixMult.c:267)
-==28089== 
-==28089== 3,200 bytes in 1 blocks are definitely lost in loss record 16 of 17
-==28089==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==28089==    by 0x401F4B: copy1DArray_int64_t (Util.c:80)
-==28089==    by 0x4012E1: main (MatrixMult.c:283)
-==28089== 
-==28089== 3,200 bytes in 1 blocks are definitely lost in loss record 17 of 17
-==28089==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==28089==    by 0x401F4B: copy1DArray_int64_t (Util.c:80)
-==28089==    by 0x401435: main (MatrixMult.c:299)
-==28089== 
-==28089== LEAK SUMMARY:
-==28089==    definitely lost: 9,600 bytes in 3 blocks
-==28089==    indirectly lost: 0 bytes in 0 blocks
-==28089==      possibly lost: 0 bytes in 0 blocks
-==28089==    still reachable: 35,672 bytes in 14 blocks
-==28089==         suppressed: 0 bytes in 0 blocks
-==28089== Reachable blocks (those to which a pointer was found) are not shown.
-==28089== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==28089== 
-==28089== For counts of detected and suppressed errors, rerun with: -v
-==28089== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
+==10615== Memcheck, a memory error detector
+==10615== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==10615== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==10615== Command: ./MatrixMult.out
+==10615== Parent PID: 8227
+==10615== 
+==10615== 
+==10615== HEAP SUMMARY:
+==10615==     in use at exit: 45,272 bytes in 17 blocks
+==10615==   total heap usage: 18 allocs, 1 frees, 53,464 bytes allocated
+==10615== 
+==10615== 3,200 bytes in 1 blocks are definitely lost in loss record 15 of 17
+==10615==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==10615==    by 0x401F4B: copy1DArray_int64_t (Util.c:80)
+==10615==    by 0x40118D: main (MatrixMult.c:267)
+==10615== 
+==10615== 3,200 bytes in 1 blocks are definitely lost in loss record 16 of 17
+==10615==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==10615==    by 0x401F4B: copy1DArray_int64_t (Util.c:80)
+==10615==    by 0x4012E1: main (MatrixMult.c:283)
+==10615== 
+==10615== 3,200 bytes in 1 blocks are definitely lost in loss record 17 of 17
+==10615==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==10615==    by 0x401F4B: copy1DArray_int64_t (Util.c:80)
+==10615==    by 0x401435: main (MatrixMult.c:299)
+==10615== 
+==10615== LEAK SUMMARY:
+==10615==    definitely lost: 9,600 bytes in 3 blocks
+==10615==    indirectly lost: 0 bytes in 0 blocks
+==10615==      possibly lost: 0 bytes in 0 blocks
+==10615==    still reachable: 35,672 bytes in 14 blocks
+==10615==         suppressed: 0 bytes in 0 blocks
+==10615== Reachable blocks (those to which a pointer was found) are not shown.
+==10615== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==10615== 
+==10615== For counts of detected and suppressed errors, rerun with: -v
+==10615== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)

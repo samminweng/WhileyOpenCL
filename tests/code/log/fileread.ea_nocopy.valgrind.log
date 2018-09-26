@@ -1,22 +1,22 @@
-==27050== Memcheck, a memory error detector
-==27050== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==27050== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==27050== Command: ./fileread.out
-==27050== Parent PID: 25823
-==27050== 
-==27050== 
-==27050== HEAP SUMMARY:
-==27050==     in use at exit: 4,528 bytes in 4 blocks
-==27050==   total heap usage: 10 allocs, 6 frees, 54,267 bytes allocated
-==27050== 
-==27050== LEAK SUMMARY:
-==27050==    definitely lost: 0 bytes in 0 blocks
-==27050==    indirectly lost: 0 bytes in 0 blocks
-==27050==      possibly lost: 0 bytes in 0 blocks
-==27050==    still reachable: 4,528 bytes in 4 blocks
-==27050==         suppressed: 0 bytes in 0 blocks
-==27050== Reachable blocks (those to which a pointer was found) are not shown.
-==27050== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==27050== 
-==27050== For counts of detected and suppressed errors, rerun with: -v
-==27050== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==9531== Memcheck, a memory error detector
+==9531== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==9531== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==9531== Command: ./fileread.out
+==9531== Parent PID: 8227
+==9531== 
+==9531== 
+==9531== HEAP SUMMARY:
+==9531==     in use at exit: 4,528 bytes in 4 blocks
+==9531==   total heap usage: 10 allocs, 6 frees, 54,267 bytes allocated
+==9531== 
+==9531== LEAK SUMMARY:
+==9531==    definitely lost: 0 bytes in 0 blocks
+==9531==    indirectly lost: 0 bytes in 0 blocks
+==9531==      possibly lost: 0 bytes in 0 blocks
+==9531==    still reachable: 4,528 bytes in 4 blocks
+==9531==         suppressed: 0 bytes in 0 blocks
+==9531== Reachable blocks (those to which a pointer was found) are not shown.
+==9531== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==9531== 
+==9531== For counts of detected and suppressed errors, rerun with: -v
+==9531== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
