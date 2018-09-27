@@ -1,33 +1,33 @@
-==8269== Memcheck, a memory error detector
-==8269== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==8269== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==8269== Command: ./ArrayAppend.out
-==8269== Parent PID: 8227
-==8269== 
-==8269== 
-==8269== HEAP SUMMARY:
-==8269==     in use at exit: 640 bytes in 8 blocks
-==8269==   total heap usage: 9 allocs, 1 frees, 8,832 bytes allocated
-==8269== 
-==8269== 0 bytes in 1 blocks are definitely lost in loss record 3 of 8
-==8269==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==8269==    by 0x4012E5: copy1DArray_int64_t (Util.c:80)
-==8269==    by 0x400E43: main (ArrayAppend.c:100)
-==8269== 
-==8269== 128 bytes in 1 blocks are definitely lost in loss record 8 of 8
-==8269==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==8269==    by 0x401139: create1DArray_int64_t (Util.c:23)
-==8269==    by 0x400C3A: _test_append_ (ArrayAppend.c:31)
-==8269==    by 0x401033: main (ArrayAppend.c:110)
-==8269== 
-==8269== LEAK SUMMARY:
-==8269==    definitely lost: 128 bytes in 2 blocks
-==8269==    indirectly lost: 0 bytes in 0 blocks
-==8269==      possibly lost: 0 bytes in 0 blocks
-==8269==    still reachable: 512 bytes in 6 blocks
-==8269==         suppressed: 0 bytes in 0 blocks
-==8269== Reachable blocks (those to which a pointer was found) are not shown.
-==8269== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==8269== 
-==8269== For counts of detected and suppressed errors, rerun with: -v
-==8269== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+==1551== Memcheck, a memory error detector
+==1551== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==1551== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==1551== Command: ./ArrayAppend.out
+==1551== Parent PID: 1511
+==1551== 
+==1551== 
+==1551== HEAP SUMMARY:
+==1551==     in use at exit: 640 bytes in 8 blocks
+==1551==   total heap usage: 9 allocs, 1 frees, 8,832 bytes allocated
+==1551== 
+==1551== 0 bytes in 1 blocks are definitely lost in loss record 3 of 8
+==1551==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1551==    by 0x4012E5: copy1DArray_int64_t (Util.c:80)
+==1551==    by 0x400E43: main (ArrayAppend.c:100)
+==1551== 
+==1551== 128 bytes in 1 blocks are definitely lost in loss record 8 of 8
+==1551==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==1551==    by 0x401139: create1DArray_int64_t (Util.c:23)
+==1551==    by 0x400C3A: _test_append_ (ArrayAppend.c:31)
+==1551==    by 0x401033: main (ArrayAppend.c:110)
+==1551== 
+==1551== LEAK SUMMARY:
+==1551==    definitely lost: 128 bytes in 2 blocks
+==1551==    indirectly lost: 0 bytes in 0 blocks
+==1551==      possibly lost: 0 bytes in 0 blocks
+==1551==    still reachable: 512 bytes in 6 blocks
+==1551==         suppressed: 0 bytes in 0 blocks
+==1551== Reachable blocks (those to which a pointer was found) are not shown.
+==1551== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==1551== 
+==1551== For counts of detected and suppressed errors, rerun with: -v
+==1551== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)

@@ -123,6 +123,7 @@ public class ModelCheckingTestCase {
 						// Add extra read statement
 						lines.add("\tint i = b[0] //Test if there is invalid read error");
 					}
+					i++;
 				}
 				// Write out all lines to the Whiley program
 				Files.write(path, lines, StandardOpenOption.APPEND);

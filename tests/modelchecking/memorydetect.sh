@@ -14,8 +14,8 @@ runValgrind(){
         codetype=$(echo $folder | cut -d "/" -f2)
         echo $codetype
         ## We run combined optimised code
-        #if [ "$codetype" = "nocopy_dealloc" ]
-        #then
+        if [ "$codetype" = "nocopy_dealloc" ]
+        then
             #read -p "Press enter to continue"   
             for subfolder in $folder/*
             do            
@@ -43,7 +43,7 @@ runValgrind(){
                 echo -e "\n\n" >> $memorylog
                 #read -p "Press enter to continue"
             done
-        #fi
+        fi
     done
 }
 runValgrind

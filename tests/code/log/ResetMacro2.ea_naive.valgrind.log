@@ -1,39 +1,39 @@
-==11002== Memcheck, a memory error detector
-==11002== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==11002== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==11002== Command: ./ResetMacro2.out
-==11002== Parent PID: 8227
-==11002== 
-==11002== 
-==11002== HEAP SUMMARY:
-==11002==     in use at exit: 176 bytes in 6 blocks
-==11002==   total heap usage: 7 allocs, 1 frees, 8,368 bytes allocated
-==11002== 
-==11002== 24 bytes in 1 blocks are definitely lost in loss record 3 of 6
-==11002==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==11002==    by 0x400FDF: create1DArray_int64_t (Util.c:23)
-==11002==    by 0x400C78: _g2_ (ResetMacro2.c:29)
-==11002==    by 0x400DC2: main (ResetMacro2.c:61)
-==11002== 
-==11002== 24 bytes in 1 blocks are definitely lost in loss record 4 of 6
-==11002==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==11002==    by 0x40118B: copy1DArray_int64_t (Util.c:80)
-==11002==    by 0x400C97: _g2_ (ResetMacro2.c:31)
-==11002==    by 0x400DC2: main (ResetMacro2.c:61)
-==11002== 
-==11002== 24 bytes in 1 blocks are definitely lost in loss record 5 of 6
-==11002==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==11002==    by 0x400CB3: _g2_ (ResetMacro2.c:37)
-==11002==    by 0x400DC2: main (ResetMacro2.c:61)
-==11002== 
-==11002== LEAK SUMMARY:
-==11002==    definitely lost: 72 bytes in 3 blocks
-==11002==    indirectly lost: 0 bytes in 0 blocks
-==11002==      possibly lost: 0 bytes in 0 blocks
-==11002==    still reachable: 104 bytes in 3 blocks
-==11002==         suppressed: 0 bytes in 0 blocks
-==11002== Reachable blocks (those to which a pointer was found) are not shown.
-==11002== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==11002== 
-==11002== For counts of detected and suppressed errors, rerun with: -v
-==11002== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
+==4183== Memcheck, a memory error detector
+==4183== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==4183== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==4183== Command: ./ResetMacro2.out
+==4183== Parent PID: 1511
+==4183== 
+==4183== 
+==4183== HEAP SUMMARY:
+==4183==     in use at exit: 176 bytes in 6 blocks
+==4183==   total heap usage: 7 allocs, 1 frees, 8,368 bytes allocated
+==4183== 
+==4183== 24 bytes in 1 blocks are definitely lost in loss record 3 of 6
+==4183==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==4183==    by 0x400FDF: create1DArray_int64_t (Util.c:23)
+==4183==    by 0x400C78: _g2_ (ResetMacro2.c:29)
+==4183==    by 0x400DC2: main (ResetMacro2.c:61)
+==4183== 
+==4183== 24 bytes in 1 blocks are definitely lost in loss record 4 of 6
+==4183==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==4183==    by 0x40118B: copy1DArray_int64_t (Util.c:80)
+==4183==    by 0x400C97: _g2_ (ResetMacro2.c:31)
+==4183==    by 0x400DC2: main (ResetMacro2.c:61)
+==4183== 
+==4183== 24 bytes in 1 blocks are definitely lost in loss record 5 of 6
+==4183==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==4183==    by 0x400CB3: _g2_ (ResetMacro2.c:37)
+==4183==    by 0x400DC2: main (ResetMacro2.c:61)
+==4183== 
+==4183== LEAK SUMMARY:
+==4183==    definitely lost: 72 bytes in 3 blocks
+==4183==    indirectly lost: 0 bytes in 0 blocks
+==4183==      possibly lost: 0 bytes in 0 blocks
+==4183==    still reachable: 104 bytes in 3 blocks
+==4183==         suppressed: 0 bytes in 0 blocks
+==4183== Reachable blocks (those to which a pointer was found) are not shown.
+==4183== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==4183== 
+==4183== For counts of detected and suppressed errors, rerun with: -v
+==4183== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)

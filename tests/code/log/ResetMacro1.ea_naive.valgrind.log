@@ -1,27 +1,27 @@
-==10934== Memcheck, a memory error detector
-==10934== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==10934== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==10934== Command: ./ResetMacro1.out
-==10934== Parent PID: 8227
-==10934== 
-==10934== 
-==10934== HEAP SUMMARY:
-==10934==     in use at exit: 176 bytes in 6 blocks
-==10934==   total heap usage: 7 allocs, 1 frees, 8,368 bytes allocated
-==10934== 
-==10934== 24 bytes in 1 blocks are definitely lost in loss record 5 of 6
-==10934==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==10934==    by 0x401147: copy1DArray_int64_t (Util.c:80)
-==10934==    by 0x400CAC: main (ResetMacro1.c:38)
-==10934== 
-==10934== LEAK SUMMARY:
-==10934==    definitely lost: 24 bytes in 1 blocks
-==10934==    indirectly lost: 0 bytes in 0 blocks
-==10934==      possibly lost: 0 bytes in 0 blocks
-==10934==    still reachable: 152 bytes in 5 blocks
-==10934==         suppressed: 0 bytes in 0 blocks
-==10934== Reachable blocks (those to which a pointer was found) are not shown.
-==10934== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==10934== 
-==10934== For counts of detected and suppressed errors, rerun with: -v
-==10934== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==4115== Memcheck, a memory error detector
+==4115== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==4115== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==4115== Command: ./ResetMacro1.out
+==4115== Parent PID: 1511
+==4115== 
+==4115== 
+==4115== HEAP SUMMARY:
+==4115==     in use at exit: 176 bytes in 6 blocks
+==4115==   total heap usage: 7 allocs, 1 frees, 8,368 bytes allocated
+==4115== 
+==4115== 24 bytes in 1 blocks are definitely lost in loss record 5 of 6
+==4115==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==4115==    by 0x401147: copy1DArray_int64_t (Util.c:80)
+==4115==    by 0x400CAC: main (ResetMacro1.c:38)
+==4115== 
+==4115== LEAK SUMMARY:
+==4115==    definitely lost: 24 bytes in 1 blocks
+==4115==    indirectly lost: 0 bytes in 0 blocks
+==4115==      possibly lost: 0 bytes in 0 blocks
+==4115==    still reachable: 152 bytes in 5 blocks
+==4115==         suppressed: 0 bytes in 0 blocks
+==4115== Reachable blocks (those to which a pointer was found) are not shown.
+==4115== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==4115== 
+==4115== For counts of detected and suppressed errors, rerun with: -v
+==4115== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

@@ -7,6 +7,7 @@ public method main(System.Console console):
 	c = a
 	c = b
 	b = a
+	int i = b[0] //Test if there is invalid read error
 	b = c
 	a = b
 	a = c

@@ -1,37 +1,37 @@
-==10108== Memcheck, a memory error detector
-==10108== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==10108== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==10108== Command: ./gcd.out
-==10108== Parent PID: 8227
-==10108== 
-==10108== 
-==10108== HEAP SUMMARY:
-==10108==     in use at exit: 18,432 bytes in 302 blocks
-==10108==   total heap usage: 303 allocs, 1 frees, 26,624 bytes allocated
-==10108== 
-==10108== 3,960 bytes in 99 blocks are definitely lost in loss record 6 of 8
-==10108==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==10108==    by 0x4013B6: create1DArray_int64_t (Util.c:23)
-==10108==    by 0x4011C2: main (gcd.c:262)
-==10108== 
-==10108== 6,336 bytes in 99 blocks are definitely lost in loss record 7 of 8
-==10108==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==10108==    by 0x4013B6: create1DArray_int64_t (Util.c:23)
-==10108==    by 0x400FE8: main (gcd.c:232)
-==10108== 
-==10108== 7,128 bytes in 99 blocks are definitely lost in loss record 8 of 8
-==10108==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==10108==    by 0x4013B6: create1DArray_int64_t (Util.c:23)
-==10108==    by 0x4010CC: main (gcd.c:247)
-==10108== 
-==10108== LEAK SUMMARY:
-==10108==    definitely lost: 17,424 bytes in 297 blocks
-==10108==    indirectly lost: 0 bytes in 0 blocks
-==10108==      possibly lost: 0 bytes in 0 blocks
-==10108==    still reachable: 1,008 bytes in 5 blocks
-==10108==         suppressed: 0 bytes in 0 blocks
-==10108== Reachable blocks (those to which a pointer was found) are not shown.
-==10108== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==10108== 
-==10108== For counts of detected and suppressed errors, rerun with: -v
-==10108== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
+==3361== Memcheck, a memory error detector
+==3361== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==3361== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==3361== Command: ./gcd.out
+==3361== Parent PID: 1511
+==3361== 
+==3361== 
+==3361== HEAP SUMMARY:
+==3361==     in use at exit: 18,432 bytes in 302 blocks
+==3361==   total heap usage: 303 allocs, 1 frees, 26,624 bytes allocated
+==3361== 
+==3361== 3,960 bytes in 99 blocks are definitely lost in loss record 6 of 8
+==3361==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==3361==    by 0x4013B6: create1DArray_int64_t (Util.c:23)
+==3361==    by 0x4011C2: main (gcd.c:262)
+==3361== 
+==3361== 6,336 bytes in 99 blocks are definitely lost in loss record 7 of 8
+==3361==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==3361==    by 0x4013B6: create1DArray_int64_t (Util.c:23)
+==3361==    by 0x400FE8: main (gcd.c:232)
+==3361== 
+==3361== 7,128 bytes in 99 blocks are definitely lost in loss record 8 of 8
+==3361==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==3361==    by 0x4013B6: create1DArray_int64_t (Util.c:23)
+==3361==    by 0x4010CC: main (gcd.c:247)
+==3361== 
+==3361== LEAK SUMMARY:
+==3361==    definitely lost: 17,424 bytes in 297 blocks
+==3361==    indirectly lost: 0 bytes in 0 blocks
+==3361==      possibly lost: 0 bytes in 0 blocks
+==3361==    still reachable: 1,008 bytes in 5 blocks
+==3361==         suppressed: 0 bytes in 0 blocks
+==3361== Reachable blocks (those to which a pointer was found) are not shown.
+==3361== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==3361== 
+==3361== For counts of detected and suppressed errors, rerun with: -v
+==3361== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)

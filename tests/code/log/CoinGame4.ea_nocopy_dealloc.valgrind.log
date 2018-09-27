@@ -1,23 +1,23 @@
-==9300== Memcheck, a memory error detector
-==9300== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==9300== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==9300== Command: ./CoinGame4.out
-==9300== Parent PID: 8227
-==9300== 
-==9300== Invalid read of size 8
-==9300==    at 0x400E14: _play_ (CoinGame4.c:119)
-==9300==    by 0x4025B8: main (CoinGame4.c:641)
-==9300==  Address 0x5205078 is 8 bytes before a block of size 800 alloc'd
-==9300==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==9300==    by 0x402B4D: create1DArray_int64_t (Util.c:23)
-==9300==    by 0x402347: main (CoinGame4.c:623)
-==9300== 
-==9300== 
-==9300== HEAP SUMMARY:
-==9300==     in use at exit: 0 bytes in 0 blocks
-==9300==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
-==9300== 
-==9300== All heap blocks were freed -- no leaks are possible
-==9300== 
-==9300== For counts of detected and suppressed errors, rerun with: -v
-==9300== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==2612== Memcheck, a memory error detector
+==2612== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==2612== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==2612== Command: ./CoinGame4.out
+==2612== Parent PID: 1511
+==2612== 
+==2612== Invalid read of size 8
+==2612==    at 0x400E14: _play_ (CoinGame4.c:119)
+==2612==    by 0x4025B8: main (CoinGame4.c:641)
+==2612==  Address 0x5205078 is 8 bytes before a block of size 800 alloc'd
+==2612==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==2612==    by 0x402B4D: create1DArray_int64_t (Util.c:23)
+==2612==    by 0x402347: main (CoinGame4.c:623)
+==2612== 
+==2612== 
+==2612== HEAP SUMMARY:
+==2612==     in use at exit: 0 bytes in 0 blocks
+==2612==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
+==2612== 
+==2612== All heap blocks were freed -- no leaks are possible
+==2612== 
+==2612== For counts of detected and suppressed errors, rerun with: -v
+==2612== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

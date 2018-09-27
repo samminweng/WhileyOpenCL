@@ -1,76 +1,76 @@
-==8992== Memcheck, a memory error detector
-==8992== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==8992== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
-==8992== Command: ./CoinGame.out
-==8992== Parent PID: 8227
-==8992== 
-==8992== Invalid read of size 8
-==8992==    at 0x400DDB: _play_ (CoinGame.c:106)
-==8992==    by 0x401F3E: main (CoinGame.c:546)
-==8992==  Address 0x5203db8 is 8 bytes before a block of size 800 alloc'd
-==8992==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==8992==    by 0x401EC5: main (CoinGame.c:545)
-==8992== 
-==8992== 
-==8992== HEAP SUMMARY:
-==8992==     in use at exit: 6,664 bytes in 47 blocks
-==8992==   total heap usage: 48 allocs, 1 frees, 14,856 bytes allocated
-==8992== 
-==8992== 40 bytes in 5 blocks are definitely lost in loss record 1 of 13
-==8992==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==8992==    by 0x4023F4: create1DArray_int64_t (Util.c:23)
-==8992==    by 0x401357: _play_ (CoinGame.c:225)
-==8992==    by 0x401F3E: main (CoinGame.c:546)
-==8992== 
-==8992== 80 bytes in 5 blocks are definitely lost in loss record 2 of 13
-==8992==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==8992==    by 0x4023F4: create1DArray_int64_t (Util.c:23)
-==8992==    by 0x4012D5: _play_ (CoinGame.c:208)
-==8992==    by 0x401F3E: main (CoinGame.c:546)
-==8992== 
-==8992== 160 bytes in 10 blocks are definitely lost in loss record 3 of 13
-==8992==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==8992==    by 0x4023F4: create1DArray_int64_t (Util.c:23)
-==8992==    by 0x401227: _play_ (CoinGame.c:187)
-==8992==    by 0x401F3E: main (CoinGame.c:546)
-==8992== 
-==8992== 240 bytes in 10 blocks are definitely lost in loss record 4 of 13
-==8992==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==8992==    by 0x4023F4: create1DArray_int64_t (Util.c:23)
-==8992==    by 0x40119D: _play_ (CoinGame.c:172)
-==8992==    by 0x401F3E: main (CoinGame.c:546)
-==8992== 
-==8992== 384 bytes in 1 blocks are definitely lost in loss record 5 of 13
-==8992==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==8992==    by 0x4023F4: create1DArray_int64_t (Util.c:23)
-==8992==    by 0x401408: _play_ (CoinGame.c:258)
-==8992==    by 0x401F3E: main (CoinGame.c:546)
-==8992== 
-==8992== 640 bytes in 5 blocks are definitely lost in loss record 7 of 13
-==8992==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==8992==    by 0x4023F4: create1DArray_int64_t (Util.c:23)
-==8992==    by 0x401029: _play_ (CoinGame.c:155)
-==8992==    by 0x401F3E: main (CoinGame.c:546)
-==8992== 
-==8992== 720 bytes in 5 blocks are definitely lost in loss record 8 of 13
-==8992==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==8992==    by 0x4023F4: create1DArray_int64_t (Util.c:23)
-==8992==    by 0x400EA2: _play_ (CoinGame.c:142)
-==8992==    by 0x401F3E: main (CoinGame.c:546)
-==8992== 
-==8992== 800 bytes in 1 blocks are definitely lost in loss record 13 of 13
-==8992==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
-==8992==    by 0x4025A0: copy1DArray_int64_t (Util.c:80)
-==8992==    by 0x401DF0: main (CoinGame.c:533)
-==8992== 
-==8992== LEAK SUMMARY:
-==8992==    definitely lost: 3,064 bytes in 42 blocks
-==8992==    indirectly lost: 0 bytes in 0 blocks
-==8992==      possibly lost: 0 bytes in 0 blocks
-==8992==    still reachable: 3,600 bytes in 5 blocks
-==8992==         suppressed: 0 bytes in 0 blocks
-==8992== Reachable blocks (those to which a pointer was found) are not shown.
-==8992== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==8992== 
-==8992== For counts of detected and suppressed errors, rerun with: -v
-==8992== ERROR SUMMARY: 9 errors from 9 contexts (suppressed: 0 from 0)
+==2302== Memcheck, a memory error detector
+==2302== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==2302== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==2302== Command: ./CoinGame.out
+==2302== Parent PID: 1511
+==2302== 
+==2302== Invalid read of size 8
+==2302==    at 0x400DDB: _play_ (CoinGame.c:106)
+==2302==    by 0x401F3E: main (CoinGame.c:546)
+==2302==  Address 0x5203db8 is 8 bytes before a block of size 800 alloc'd
+==2302==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==2302==    by 0x401EC5: main (CoinGame.c:545)
+==2302== 
+==2302== 
+==2302== HEAP SUMMARY:
+==2302==     in use at exit: 6,664 bytes in 47 blocks
+==2302==   total heap usage: 48 allocs, 1 frees, 14,856 bytes allocated
+==2302== 
+==2302== 40 bytes in 5 blocks are definitely lost in loss record 1 of 13
+==2302==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==2302==    by 0x4023F4: create1DArray_int64_t (Util.c:23)
+==2302==    by 0x401357: _play_ (CoinGame.c:225)
+==2302==    by 0x401F3E: main (CoinGame.c:546)
+==2302== 
+==2302== 80 bytes in 5 blocks are definitely lost in loss record 2 of 13
+==2302==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==2302==    by 0x4023F4: create1DArray_int64_t (Util.c:23)
+==2302==    by 0x4012D5: _play_ (CoinGame.c:208)
+==2302==    by 0x401F3E: main (CoinGame.c:546)
+==2302== 
+==2302== 160 bytes in 10 blocks are definitely lost in loss record 3 of 13
+==2302==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==2302==    by 0x4023F4: create1DArray_int64_t (Util.c:23)
+==2302==    by 0x401227: _play_ (CoinGame.c:187)
+==2302==    by 0x401F3E: main (CoinGame.c:546)
+==2302== 
+==2302== 240 bytes in 10 blocks are definitely lost in loss record 4 of 13
+==2302==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==2302==    by 0x4023F4: create1DArray_int64_t (Util.c:23)
+==2302==    by 0x40119D: _play_ (CoinGame.c:172)
+==2302==    by 0x401F3E: main (CoinGame.c:546)
+==2302== 
+==2302== 384 bytes in 1 blocks are definitely lost in loss record 5 of 13
+==2302==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==2302==    by 0x4023F4: create1DArray_int64_t (Util.c:23)
+==2302==    by 0x401408: _play_ (CoinGame.c:258)
+==2302==    by 0x401F3E: main (CoinGame.c:546)
+==2302== 
+==2302== 640 bytes in 5 blocks are definitely lost in loss record 7 of 13
+==2302==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==2302==    by 0x4023F4: create1DArray_int64_t (Util.c:23)
+==2302==    by 0x401029: _play_ (CoinGame.c:155)
+==2302==    by 0x401F3E: main (CoinGame.c:546)
+==2302== 
+==2302== 720 bytes in 5 blocks are definitely lost in loss record 8 of 13
+==2302==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==2302==    by 0x4023F4: create1DArray_int64_t (Util.c:23)
+==2302==    by 0x400EA2: _play_ (CoinGame.c:142)
+==2302==    by 0x401F3E: main (CoinGame.c:546)
+==2302== 
+==2302== 800 bytes in 1 blocks are definitely lost in loss record 13 of 13
+==2302==    at 0x4C2DBB6: malloc (vg_replace_malloc.c:299)
+==2302==    by 0x4025A0: copy1DArray_int64_t (Util.c:80)
+==2302==    by 0x401DF0: main (CoinGame.c:533)
+==2302== 
+==2302== LEAK SUMMARY:
+==2302==    definitely lost: 3,064 bytes in 42 blocks
+==2302==    indirectly lost: 0 bytes in 0 blocks
+==2302==      possibly lost: 0 bytes in 0 blocks
+==2302==    still reachable: 3,600 bytes in 5 blocks
+==2302==         suppressed: 0 bytes in 0 blocks
+==2302== Reachable blocks (those to which a pointer was found) are not shown.
+==2302== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==2302== 
+==2302== For counts of detected and suppressed errors, rerun with: -v
+==2302== ERROR SUMMARY: 9 errors from 9 contexts (suppressed: 0 from 0)
