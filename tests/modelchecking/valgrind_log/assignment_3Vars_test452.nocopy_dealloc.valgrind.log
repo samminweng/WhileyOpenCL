@@ -1,0 +1,15 @@
+==2722== Memcheck, a memory error detector
+==2722== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2722== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==2722== Command: ./impl/nocopy_dealloc/assignment_3Vars_test452/assignment_3Vars_test452.nocopy_dealloc.out
+==2722== Parent PID: 28363
+==2722== 
+==2722== 
+==2722== HEAP SUMMARY:
+==2722==     in use at exit: 0 bytes in 0 blocks
+==2722==   total heap usage: 5 allocs, 5 frees, 4,256 bytes allocated
+==2722== 
+==2722== All heap blocks were freed -- no leaks are possible
+==2722== 
+==2722== For counts of detected and suppressed errors, rerun with: -v
+==2722== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

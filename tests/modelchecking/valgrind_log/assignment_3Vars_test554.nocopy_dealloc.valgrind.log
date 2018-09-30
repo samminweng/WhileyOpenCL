@@ -1,0 +1,15 @@
+==4543== Memcheck, a memory error detector
+==4543== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==4543== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==4543== Command: ./impl/nocopy_dealloc/assignment_3Vars_test554/assignment_3Vars_test554.nocopy_dealloc.out
+==4543== Parent PID: 28363
+==4543== 
+==4543== 
+==4543== HEAP SUMMARY:
+==4543==     in use at exit: 0 bytes in 0 blocks
+==4543==   total heap usage: 4 allocs, 4 frees, 4,216 bytes allocated
+==4543== 
+==4543== All heap blocks were freed -- no leaks are possible
+==4543== 
+==4543== For counts of detected and suppressed errors, rerun with: -v
+==4543== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

@@ -1,0 +1,15 @@
+==5470== Memcheck, a memory error detector
+==5470== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==5470== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==5470== Command: ./impl/nocopy_dealloc/assignment_3Vars_test606/assignment_3Vars_test606.nocopy_dealloc.out
+==5470== Parent PID: 28363
+==5470== 
+==5470== 
+==5470== HEAP SUMMARY:
+==5470==     in use at exit: 0 bytes in 0 blocks
+==5470==   total heap usage: 5 allocs, 5 frees, 4,256 bytes allocated
+==5470== 
+==5470== All heap blocks were freed -- no leaks are possible
+==5470== 
+==5470== For counts of detected and suppressed errors, rerun with: -v
+==5470== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

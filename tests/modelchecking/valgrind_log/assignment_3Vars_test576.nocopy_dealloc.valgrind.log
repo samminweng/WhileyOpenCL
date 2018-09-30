@@ -1,0 +1,15 @@
+==4912== Memcheck, a memory error detector
+==4912== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==4912== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==4912== Command: ./impl/nocopy_dealloc/assignment_3Vars_test576/assignment_3Vars_test576.nocopy_dealloc.out
+==4912== Parent PID: 28363
+==4912== 
+==4912== 
+==4912== HEAP SUMMARY:
+==4912==     in use at exit: 0 bytes in 0 blocks
+==4912==   total heap usage: 7 allocs, 7 frees, 4,336 bytes allocated
+==4912== 
+==4912== All heap blocks were freed -- no leaks are possible
+==4912== 
+==4912== For counts of detected and suppressed errors, rerun with: -v
+==4912== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
