@@ -66,7 +66,7 @@ public class ModelCheckingTestCase {
 	 *            a collection of Whiley programs, which each contains a set of statements
 	 * @throws IOException
 	 */
-	private ArrayList<String> generateWhileyPrograms(ArrayList<String> variables) {
+	private ArrayList<String> generateAssginmentWhileyPrograms(ArrayList<String> variables) {
 		ArrayList<String> testcases = new ArrayList<String>();
 		try {
 			// The number of variables
@@ -102,34 +102,38 @@ public class ModelCheckingTestCase {
 				Files.deleteIfExists(path);
 				File file = new File(path.toString());
 				file.createNewFile();// Create a new file
-
+				
+				List<String> lines = new ArrayList<String>();
 				// Write out import
-				String fixed = "import whiley.lang.*\n\n" + "public method main(System.Console console):\n";
+				lines.add("import whiley.lang.*\n");
+				lines.add("public method main(System.Console console):");
 
-				// Write the array generator
+				// Write the array generator, e.g. int[] a =[1; 5]
 				int value = 1;
 				for (String variable : variables) {
-					fixed += "\tint[] " + variable + " =[" + value + "; 5]\n";
+					lines.add("\tint[] " + variable + " =[" + value + "; 5]");
 					value++;
 				}
-
-				Files.write(path, fixed.getBytes(), StandardOpenOption.CREATE);
-				List<String> lines = new ArrayList<String>();
+				// Write out a loop
+				lines.add("\tint j = 0");// Initialise the loop variable
+				lines.add("\twhile j < 10:");// Add a loop condition
 				
+				// Write out all the assignments
 				int i = 0;
 				for (String statement : statements) {					
-					lines.add("\t" + statement);
+					lines.add("\t\t" + statement);
 					if(i == 2) {
 						// Add extra read statement
-						lines.add("\tint i = b[0] //Test if there is invalid read error");
+						lines.add("\t\tint i = b[0] //Test if there is invalid read error");
 					}
 					i++;
 				}
-				// Write out all lines to the Whiley program
-				Files.write(path, lines, StandardOpenOption.APPEND);
-				index++;
-
+				// Increment the loop variable
+				lines.add("\t\tj = j + 1");
 				
+				// Write out all lines to the Whiley program
+				Files.write(path, lines, StandardOpenOption.CREATE);
+				index++;
 			}
 		} catch (IOException e) {
 			throw new RuntimeException("Errors!!! generateWhileyPrograms fails to execute!!!");
@@ -151,7 +155,7 @@ public class ModelCheckingTestCase {
 	 */
 	private void generateWhileyAndProduceCCodeAndRunIt(ArrayList<String> variables) {
 		// Write out Whiley programs
-		ArrayList<String> testcases = generateWhileyPrograms(variables);
+		ArrayList<String> testcases = generateAssginmentWhileyPrograms(variables);
 		//String[] codetypes = { "dealloc", "nocopy_dealloc" };
 		String[] codetypes = { "nocopy_dealloc" };
 

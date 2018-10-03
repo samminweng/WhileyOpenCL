@@ -4,10 +4,13 @@ public method main(System.Console console):
 	int[] a =[1; 5]
 	int[] b =[2; 5]
 	int[] c =[3; 5]
-	a = c
-	c = a
-	b = c
-	int i = b[0] //Test if there is invalid read error
-	c = b
-	a = b
-	b = a
+	int j = 0
+	while j < 10:
+		a = c
+		c = a
+		b = c
+		int i = b[0] //Test if there is invalid read error
+		c = b
+		a = b
+		b = a
+		j = j + 1

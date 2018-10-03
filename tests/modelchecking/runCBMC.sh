@@ -14,31 +14,27 @@ runCBMC(){
         # Get the code type
         codetype=$(echo $folder | cut -d "/" -f2)
         echo $codetype
-        ## We run combined optimised code
-        if [ "$codetype" = "nocopy_dealloc" ]
-        then
-            #read -p "Press enter to continue"   
-            for subfolder in $folder/*
-            do            
-                #echo $subfolder
-                # Get the test case
-                testcase=$(echo $subfolder | cut -d "/" -f3)
-                echo $testcase
-                #read -p "Press enter to continue"
-                # Run cbmc to verify our C code
-                cbmc $subfolder/*.c --memory-leak-check > $logFolder/$testcase.$codetype.log
-                # Check exit status
-                STATUS="${?}"
-                if (( STATUS != 0))
-                then 
-                    echo "Error!!! $codetype $testcase code fails." >> $failtestcases
-                fi
-                # Put all output to a single file
-                echo "=== Test report for $codetype $testcase using CBMC ===" >> $memorylog
-                cat $logFolder/$testcase.$codetype.log >> $memorylog
-                #read -p "Press enter to continue"
-            done
-        fi
+        #read -p "Press enter to continue"   
+        for subfolder in $folder/*
+        do            
+            #echo $subfolder
+            # Get the test case
+            testcase=$(echo $subfolder | cut -d "/" -f3)
+            echo $testcase
+            #read -p "Press enter to continue"
+            # Run cbmc to verify our C code
+            cbmc $subfolder/*.c --memory-leak-check > $logFolder/$testcase.$codetype.log
+            # Check exit status
+            STATUS="${?}"
+            if (( STATUS != 0))
+            then 
+                echo "Error!!! $codetype $testcase code fails." >> $failtestcases
+            fi
+            # Put all output to a single file
+            echo "=== Test report for $codetype $testcase using CBMC ===" >> $memorylog
+            cat $logFolder/$testcase.$codetype.log >> $memorylog
+            #read -p "Press enter to continue"
+        done
     done
 }
 runCBMC
