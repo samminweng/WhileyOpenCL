@@ -1,0 +1,188 @@
+CBMC version 5.10 (cbmc-5.10) 64-bit x86_64 linux
+Parsing impl/assignment/assignment_3Vars_test221/assignment_3Vars_test221.c
+Parsing impl/assignment/assignment_3Vars_test221/Util.c
+Parsing impl/assignment/assignment_3Vars_test221/WyRT.c
+Converting
+Type-checking Util
+Type-checking WyRT
+Type-checking assignment_3Vars_test221
+Generating GOTO Program
+Adding CPROVER library (x86_64)
+Removal of function pointers and virtual functions
+Generic Property Instrumentation
+Running with 8 object bits, 56 offset bits (default)
+Starting Bounded Model Checking
+Unwinding loop create1DArray_int64_t.0 iteration 1 file impl/assignment/assignment_3Vars_test221/Util.c line 30 function create1DArray_int64_t thread 0
+Unwinding loop create1DArray_int64_t.0 iteration 2 file impl/assignment/assignment_3Vars_test221/Util.c line 30 function create1DArray_int64_t thread 0
+Unwinding loop create1DArray_int64_t.0 iteration 3 file impl/assignment/assignment_3Vars_test221/Util.c line 30 function create1DArray_int64_t thread 0
+Unwinding loop create1DArray_int64_t.0 iteration 4 file impl/assignment/assignment_3Vars_test221/Util.c line 30 function create1DArray_int64_t thread 0
+Unwinding loop create1DArray_int64_t.0 iteration 5 file impl/assignment/assignment_3Vars_test221/Util.c line 30 function create1DArray_int64_t thread 0
+Unwinding loop create1DArray_int64_t.0 iteration 1 file impl/assignment/assignment_3Vars_test221/Util.c line 30 function create1DArray_int64_t thread 0
+Unwinding loop create1DArray_int64_t.0 iteration 2 file impl/assignment/assignment_3Vars_test221/Util.c line 30 function create1DArray_int64_t thread 0
+Unwinding loop create1DArray_int64_t.0 iteration 3 file impl/assignment/assignment_3Vars_test221/Util.c line 30 function create1DArray_int64_t thread 0
+Unwinding loop create1DArray_int64_t.0 iteration 4 file impl/assignment/assignment_3Vars_test221/Util.c line 30 function create1DArray_int64_t thread 0
+Unwinding loop create1DArray_int64_t.0 iteration 5 file impl/assignment/assignment_3Vars_test221/Util.c line 30 function create1DArray_int64_t thread 0
+Unwinding loop create1DArray_int64_t.0 iteration 1 file impl/assignment/assignment_3Vars_test221/Util.c line 30 function create1DArray_int64_t thread 0
+Unwinding loop create1DArray_int64_t.0 iteration 2 file impl/assignment/assignment_3Vars_test221/Util.c line 30 function create1DArray_int64_t thread 0
+Unwinding loop create1DArray_int64_t.0 iteration 3 file impl/assignment/assignment_3Vars_test221/Util.c line 30 function create1DArray_int64_t thread 0
+Unwinding loop create1DArray_int64_t.0 iteration 4 file impl/assignment/assignment_3Vars_test221/Util.c line 30 function create1DArray_int64_t thread 0
+Unwinding loop create1DArray_int64_t.0 iteration 5 file impl/assignment/assignment_3Vars_test221/Util.c line 30 function create1DArray_int64_t thread 0
+Unwinding loop main.0 iteration 1 file impl/assignment/assignment_3Vars_test221/assignment_3Vars_test221.c line 62 function main thread 0
+Unwinding loop main.0 iteration 2 file impl/assignment/assignment_3Vars_test221/assignment_3Vars_test221.c line 62 function main thread 0
+Unwinding loop main.0 iteration 3 file impl/assignment/assignment_3Vars_test221/assignment_3Vars_test221.c line 62 function main thread 0
+Unwinding loop main.0 iteration 4 file impl/assignment/assignment_3Vars_test221/assignment_3Vars_test221.c line 62 function main thread 0
+Unwinding loop main.0 iteration 5 file impl/assignment/assignment_3Vars_test221/assignment_3Vars_test221.c line 62 function main thread 0
+Unwinding loop main.0 iteration 6 file impl/assignment/assignment_3Vars_test221/assignment_3Vars_test221.c line 62 function main thread 0
+Unwinding loop main.0 iteration 7 file impl/assignment/assignment_3Vars_test221/assignment_3Vars_test221.c line 62 function main thread 0
+Unwinding loop main.0 iteration 8 file impl/assignment/assignment_3Vars_test221/assignment_3Vars_test221.c line 62 function main thread 0
+Unwinding loop main.0 iteration 9 file impl/assignment/assignment_3Vars_test221/assignment_3Vars_test221.c line 62 function main thread 0
+Unwinding loop main.0 iteration 10 file impl/assignment/assignment_3Vars_test221/assignment_3Vars_test221.c line 62 function main thread 0
+aborting path on assume(false) at file <builtin-library-exit> line 7 function exit thread 0
+size of program expression: 1592 steps
+simple slicing removed 1 assignments
+Generated 83 VCC(s), 13 remaining after simplification
+Passing problem to propositional reduction
+converting SSA
+Running propositional reduction
+Post-processing
+Solving with MiniSAT 2.2.1 with simplifier
+14044 variables, 1672 clauses
+SAT checker: instance is UNSATISFIABLE
+Runtime decision procedure: 0.00615397s
+
+** Results:
+[main.precondition_instance.1] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.2] free argument has offset zero: SUCCESS
+[main.precondition_instance.3] double free: SUCCESS
+[main.precondition_instance.4] free called for new[] object: SUCCESS
+[main.precondition_instance.5] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.6] free argument has offset zero: SUCCESS
+[main.precondition_instance.7] double free: SUCCESS
+[main.precondition_instance.8] free called for new[] object: SUCCESS
+[main.precondition_instance.9] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.10] free argument has offset zero: SUCCESS
+[main.precondition_instance.11] double free: SUCCESS
+[main.precondition_instance.12] free called for new[] object: SUCCESS
+[main.precondition_instance.13] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.14] free argument has offset zero: SUCCESS
+[main.precondition_instance.15] double free: SUCCESS
+[main.precondition_instance.16] free called for new[] object: SUCCESS
+[main.precondition_instance.17] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.18] free argument has offset zero: SUCCESS
+[main.precondition_instance.19] double free: SUCCESS
+[main.precondition_instance.20] free called for new[] object: SUCCESS
+[main.precondition_instance.21] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.22] free argument has offset zero: SUCCESS
+[main.precondition_instance.23] double free: SUCCESS
+[main.precondition_instance.24] free called for new[] object: SUCCESS
+[main.precondition_instance.25] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.26] free argument has offset zero: SUCCESS
+[main.precondition_instance.27] double free: SUCCESS
+[main.precondition_instance.28] free called for new[] object: SUCCESS
+[main.precondition_instance.29] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.30] free argument has offset zero: SUCCESS
+[main.precondition_instance.31] double free: SUCCESS
+[main.precondition_instance.32] free called for new[] object: SUCCESS
+[main.precondition_instance.33] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.34] free argument has offset zero: SUCCESS
+[main.precondition_instance.35] double free: SUCCESS
+[main.precondition_instance.36] free called for new[] object: SUCCESS
+[main.precondition_instance.37] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.38] free argument has offset zero: SUCCESS
+[main.precondition_instance.39] double free: SUCCESS
+[main.precondition_instance.40] free called for new[] object: SUCCESS
+[main.precondition_instance.41] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.42] free argument has offset zero: SUCCESS
+[main.precondition_instance.43] double free: SUCCESS
+[main.precondition_instance.44] free called for new[] object: SUCCESS
+[main.precondition_instance.45] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.46] free argument has offset zero: SUCCESS
+[main.precondition_instance.47] double free: SUCCESS
+[main.precondition_instance.48] free called for new[] object: SUCCESS
+[main.precondition_instance.49] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.50] free argument has offset zero: SUCCESS
+[main.precondition_instance.51] double free: SUCCESS
+[main.precondition_instance.52] free called for new[] object: SUCCESS
+[main.precondition_instance.53] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.54] free argument has offset zero: SUCCESS
+[main.precondition_instance.55] double free: SUCCESS
+[main.precondition_instance.56] free called for new[] object: SUCCESS
+[main.precondition_instance.57] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.58] free argument has offset zero: SUCCESS
+[main.precondition_instance.59] double free: SUCCESS
+[main.precondition_instance.60] free called for new[] object: SUCCESS
+[main.precondition_instance.61] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.62] free argument has offset zero: SUCCESS
+[main.precondition_instance.63] double free: SUCCESS
+[main.precondition_instance.64] free called for new[] object: SUCCESS
+[main.precondition_instance.65] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.66] free argument has offset zero: SUCCESS
+[main.precondition_instance.67] double free: SUCCESS
+[main.precondition_instance.68] free called for new[] object: SUCCESS
+[main.precondition_instance.69] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.70] free argument has offset zero: SUCCESS
+[main.precondition_instance.71] double free: SUCCESS
+[main.precondition_instance.72] free called for new[] object: SUCCESS
+[copy1DArray_int64_t.precondition_instance.1] memcpy src/dst overlap: SUCCESS
+[copy1DArray_int64_t.precondition_instance.2] memcpy source region readable: SUCCESS
+[copy1DArray_int64_t.precondition_instance.3] memcpy destination region writeable: SUCCESS
+[copy1DArray_BYTE.precondition_instance.1] memcpy src/dst overlap: SUCCESS
+[copy1DArray_BYTE.precondition_instance.2] memcpy source region readable: SUCCESS
+[copy1DArray_BYTE.precondition_instance.3] memcpy destination region writeable: SUCCESS
+[create2DArray_int64_t.precondition_instance.1] memcpy src/dst overlap: SUCCESS
+[create2DArray_int64_t.precondition_instance.2] memcpy source region readable: SUCCESS
+[create2DArray_int64_t.precondition_instance.3] memcpy destination region writeable: SUCCESS
+[copy2DArray_int64_t.precondition_instance.1] memcpy src/dst overlap: SUCCESS
+[copy2DArray_int64_t.precondition_instance.2] memcpy source region readable: SUCCESS
+[copy2DArray_int64_t.precondition_instance.3] memcpy destination region writeable: SUCCESS
+[free2DArray_int64_t.precondition_instance.1] free argument must be dynamic object: SUCCESS
+[free2DArray_int64_t.precondition_instance.2] free argument has offset zero: SUCCESS
+[free2DArray_int64_t.precondition_instance.3] double free: SUCCESS
+[free2DArray_int64_t.precondition_instance.4] free called for new[] object: SUCCESS
+[free2DArray_int64_t.precondition_instance.5] free argument must be dynamic object: SUCCESS
+[free2DArray_int64_t.precondition_instance.6] free argument has offset zero: SUCCESS
+[free2DArray_int64_t.precondition_instance.7] double free: SUCCESS
+[free2DArray_int64_t.precondition_instance.8] free called for new[] object: SUCCESS
+[slice.precondition_instance.1] memcpy src/dst overlap: SUCCESS
+[slice.precondition_instance.2] memcpy source region readable: SUCCESS
+[slice.precondition_instance.3] memcpy destination region writeable: SUCCESS
+[Array_Append.precondition_instance.1] free argument must be dynamic object: SUCCESS
+[Array_Append.precondition_instance.2] free argument has offset zero: SUCCESS
+[Array_Append.precondition_instance.3] double free: SUCCESS
+[Array_Append.precondition_instance.4] free called for new[] object: SUCCESS
+[Array_Append.precondition_instance.5] free argument must be dynamic object: SUCCESS
+[Array_Append.precondition_instance.6] free argument has offset zero: SUCCESS
+[Array_Append.precondition_instance.7] double free: SUCCESS
+[Array_Append.precondition_instance.8] free called for new[] object: SUCCESS
+[Array_Append.precondition_instance.9] free argument must be dynamic object: SUCCESS
+[Array_Append.precondition_instance.10] free argument has offset zero: SUCCESS
+[Array_Append.precondition_instance.11] double free: SUCCESS
+[Array_Append.precondition_instance.12] free called for new[] object: SUCCESS
+[Array_Append.precondition_instance.13] free argument must be dynamic object: SUCCESS
+[Array_Append.precondition_instance.14] free argument has offset zero: SUCCESS
+[Array_Append.precondition_instance.15] double free: SUCCESS
+[Array_Append.precondition_instance.16] free called for new[] object: SUCCESS
+[Writer.precondition_instance.1] free argument must be dynamic object: SUCCESS
+[Writer.precondition_instance.2] free argument has offset zero: SUCCESS
+[Writer.precondition_instance.3] double free: SUCCESS
+[Writer.precondition_instance.4] free called for new[] object: SUCCESS
+[Writer.precondition_instance.5] free argument must be dynamic object: SUCCESS
+[Writer.precondition_instance.6] free argument has offset zero: SUCCESS
+[Writer.precondition_instance.7] double free: SUCCESS
+[Writer.precondition_instance.8] free called for new[] object: SUCCESS
+[Reader.precondition_instance.1] free argument must be dynamic object: SUCCESS
+[Reader.precondition_instance.2] free argument has offset zero: SUCCESS
+[Reader.precondition_instance.3] double free: SUCCESS
+[Reader.precondition_instance.4] free called for new[] object: SUCCESS
+[isPBMFile.precondition_instance.1] free argument must be dynamic object: SUCCESS
+[isPBMFile.precondition_instance.2] free argument has offset zero: SUCCESS
+[isPBMFile.precondition_instance.3] double free: SUCCESS
+[isPBMFile.precondition_instance.4] free called for new[] object: SUCCESS
+[readPBM.precondition_instance.1] free argument must be dynamic object: SUCCESS
+[readPBM.precondition_instance.2] free argument has offset zero: SUCCESS
+[readPBM.precondition_instance.3] double free: SUCCESS
+[readPBM.precondition_instance.4] free called for new[] object: SUCCESS
+[__CPROVER__start.memory-leak.1] dynamically allocated memory never freed in __CPROVER_memory_leak == NULL: SUCCESS
+
+** 0 of 132 failed (1 iteration)
+VERIFICATION SUCCESSFUL

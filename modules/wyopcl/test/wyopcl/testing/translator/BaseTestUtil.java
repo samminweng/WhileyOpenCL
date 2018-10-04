@@ -418,7 +418,7 @@ public final class BaseTestUtil {
 	 * @param sourcePath 
 	 * @param destPath
 	 */
-	protected static void createFolderAndCopyFiles(String testcase, Path basePath, Path destPath) {
+	protected static void createFolderAndCopyFiles(String testcase, Path sourcePath, Path destPath) {
 		try {
 
 			// Create the destDir folder.
@@ -429,10 +429,10 @@ public final class BaseTestUtil {
 				// Create destDir subfolder
 				FileUtils.mkdir(destPath.toString());
 			}
+			// basePath + File.separator +"Whileyfiles"+ File.separator + testcase + ".whiley"
 
 			// 1. Copy source Whiley program to destDir directory.
-			FileUtils.copyFileToDirectory(new File(basePath + File.separator +"Whileyfiles"+ File.separator + testcase + ".whiley"),
-					destPath.toFile());
+			FileUtils.copyFileToDirectory(sourcePath.toFile(), destPath.toFile());
 			// 2. Copy Util.c/WyRT.c and Util.h/WyRT.h to destDir
 			FileUtils.copyFileToDirectory(new File(workspace_path + "tests" + File.separator + "code" + File.separator + File.separator+ "Util.c"),
 					destPath.toFile());
@@ -641,7 +641,8 @@ public final class BaseTestUtil {
 			Path destDir= processOptions(baseDir, testcase, options);
 
 			// 2. Prepare folder and copy files
-			createFolderAndCopyFiles(testcase, baseDir, destDir);
+			Path sourceDir = Paths.get(baseDir + File.separator +"Whileyfiles"+ File.separator + testcase + ".whiley");
+			createFolderAndCopyFiles(testcase, sourceDir, destDir);
 
 			// 3. Make the command line arguments.
 			String cmd = makeCmd(testcase, options);

@@ -19,6 +19,8 @@ import java.util.stream.Collectors;
 import org.apache.maven.artifact.ant.shaded.FileUtils;
 import org.junit.Test;
 
+import com.sun.glass.ui.CommonDialogs.Type;
+
 import java.nio.charset.StandardCharsets;
 
 public class ModelCheckingTestCase {
@@ -66,7 +68,7 @@ public class ModelCheckingTestCase {
 	 *            a collection of Whiley programs, which each contains a set of statements
 	 * @throws IOException
 	 */
-	private ArrayList<String> generateAssginmentWhileyPrograms(ArrayList<String> variables) {
+	private ArrayList<String> generateWhileyPrograms(ArrayList<String> variables, String category) {
 		ArrayList<String> testcases = new ArrayList<String>();
 		try {
 			// The number of variables
@@ -92,22 +94,36 @@ public class ModelCheckingTestCase {
 			// Take out each item from the collection and write as a Whiley file (*.whiley)
 			int index = 1;
 			for (ArrayList<String> statements : collections) {
-				String testcase = "assignment_" + numVars + "Vars_test" + index;
+				String testcase = category + "_" + numVars + "Vars_test" + index;
 				// Put test case to 'testcases' array
 				testcases.add(testcase);
 				// Create a Whiley file
-				Path path = Paths.get(whileyDir + File.separator + testcase + ".whiley");
+				Path path = Paths.get(whileyDir + File.separator + category + File.separator + testcase + ".whiley");
 				// Delete the file
 
 				Files.deleteIfExists(path);
 				File file = new File(path.toString());
 				file.createNewFile();// Create a new file
-				
+
 				List<String> lines = new ArrayList<String>();
 				// Write out import
 				lines.add("import whiley.lang.*\n");
-				lines.add("public method main(System.Console console):");
+				// Write out the function
+				if (category.equals("functioncall")) {
+					lines.add("function func(int[] x, int num) -> int[]:");
+					lines.add("\tint[] a = [0;3]");
+					lines.add("\tint[] b = [1;3]");
+					lines.add("\tint[] c = a");
+					lines.add("\tint[] d = b");
+					lines.add("\tif num > 10:");
+					lines.add("\t\treturn x");
+					lines.add("\telse:");
+					lines.add("\t\t\tif num >9:");
+					lines.add("\t\t\t\treturn c");
+					lines.add("\treturn d");
+				}
 
+				lines.add("public method main(System.Console console):");
 				// Write the array generator, e.g. int[] a =[1; 5]
 				int value = 1;
 				for (String variable : variables) {
@@ -117,20 +133,25 @@ public class ModelCheckingTestCase {
 				// Write out a loop
 				lines.add("\tint j = 0");// Initialise the loop variable
 				lines.add("\twhile j < 10:");// Add a loop condition
-				
+
 				// Write out all the assignments
 				int i = 0;
-				for (String statement : statements) {					
+				for (String statement : statements) {
 					lines.add("\t\t" + statement);
-					if(i == 2) {
+					if (i == 2) {
 						// Add extra read statement
 						lines.add("\t\tint i = b[0] //Test if there is invalid read error");
 					}
 					i++;
 				}
+				if (category.equals("functioncall")) {
+					// Add a function call at the end of loop
+					lines.add("\t\ta = func(b, 11)");
+				}
+
 				// Increment the loop variable
 				lines.add("\t\tj = j + 1");
-				
+
 				// Write out all lines to the Whiley program
 				Files.write(path, lines, StandardOpenOption.CREATE);
 				index++;
@@ -138,88 +159,85 @@ public class ModelCheckingTestCase {
 		} catch (IOException e) {
 			throw new RuntimeException("Errors!!! generateWhileyPrograms fails to execute!!!");
 		}
-		
+
 		return testcases;
-		
+
 	}
 
 	/**
-	 * Given a list of variable, 
+	 * Given a list of variable,
 	 * 
-	 * 1. Generate the Whiley programs
-	 * 2. Compile the Whiley program into C code with either deallocation analysis, or combined copy and deallocation 
-	 *    analysis
-	 * 3. Compile the generated C code
-	 * 4. Run the executable.
+	 * 1. Generate the Whiley programs 2. Compile the Whiley program into C code with either deallocation analysis, or
+	 * combined copy and deallocation analysis 3. Compile the generated C code 4. Run the executable.
 	 * 
 	 */
-	private void generateWhileyAndProduceCCodeAndRunIt(ArrayList<String> variables) {
+	private void generateWhileyAndProduceCCodeAndRunIt(ArrayList<String> variables, String category) {
 		// Write out Whiley programs
-		ArrayList<String> testcases = generateAssginmentWhileyPrograms(variables);
-		//String[] codetypes = { "dealloc", "nocopy_dealloc" };
-		String[] codetypes = { "nocopy_dealloc" };
+		ArrayList<String> testcases = generateWhileyPrograms(variables, category);
 
 		for (String testcase : testcases) {
-			// For each test case produce two kinds of code type, i.e. dealloc, and nocopy + dealloc
-			for (String codetype : codetypes) {
-				Path destPath = Paths.get(implDir + File.separator + codetype + File.separator + testcase);
-				BaseTestUtil.createFolderAndCopyFiles(testcase, modelCheckingDir, destPath);
-				String cmd = "java -cp " + BaseTestUtil.classpath + " wyopcl.WyopclMain -bp "
-						+ BaseTestUtil.whiley_runtime_lib;
+			Path destPath = Paths.get(implDir + File.separator + category + File.separator + testcase);
+			Path sourceDir = Paths.get(modelCheckingDir + File.separator +"Whileyfiles" + File.separator
+					                   + category + File.separator + testcase + ".whiley");
+			
+			BaseTestUtil.createFolderAndCopyFiles(testcase, sourceDir, destPath);
+			String cmd = "java -cp " + BaseTestUtil.classpath + " wyopcl.WyopclMain -bp "
+					+ BaseTestUtil.whiley_runtime_lib;
 
-				switch (codetype) {
-				case "dealloc":
-					// Run -dealloc -code options to produce deallocated-only C code
-					cmd += " -dealloc -code";
-					break;
-				case "nocopy_dealloc":
-					// Run -nocopy -dealloc -code options to produce deallocated + copy eliminated C code
-					cmd += " -nocopy -dealloc -code";
-					break;
-				}
+			// Run -nocopy -dealloc -code options to produce deallocated + copy eliminated C code
+			cmd += " -nocopy -dealloc -code";
 
-				cmd += " " + testcase + ".whiley";
+			cmd += " " + testcase + ".whiley";
 
-				// Run 'cmd' to generate C code
-				BaseTestUtil.runCmd(cmd, destPath, false);
-				// Print out the command
-				System.out.println(cmd);
+			// Run 'cmd' to generate C code
+			BaseTestUtil.runCmd(cmd, destPath, false);
+			// Print out the command
+			System.out.println(cmd);
 
-				Path destDir = Paths.get(implDir + File.separator + codetype + File.separator + testcase);
-				// Compile the C code with '-D DEBUG' and run it
-				// so that we can check if our assumption !a_dealloc || a != b is true
-				BaseTestUtil.compileAndRunCCode(testcase, destDir, false);
+			Path destDir = Paths.get(implDir + File.separator + category + File.separator + testcase);
+			// Compile the C code with '-D DEBUG' and run it
+			// so that we can check if our assumption !a_dealloc || a != b is true
+			BaseTestUtil.compileAndRunCCode(testcase, destDir, false);
 
-			}
 		}
 
 	}
 
 	//
 	/**
-	 * Given three variables and produce Whiley programs. 
-	 * For each Whiley program the test produces the optimised C code
+	 * Given three variables and produce Whiley programs. For each Whiley program the test produces the optimised C code
 	 * and compiles and run the code.
 	 */
 	@Test
-	public void test2Variables() throws IOException {
+	public void test2Variables_assignment() throws IOException {
 		// Generates the varaibles
 		ArrayList<String> variables = new ArrayList<String>();
 		variables.add("a");
 		variables.add("b");
-		generateWhileyAndProduceCCodeAndRunIt(variables);
+		generateWhileyAndProduceCCodeAndRunIt(variables, "assignment");
 	}
 
 	@Test
-	public void test3Variables() throws IOException {
+	public void test3Variables_assignment() throws IOException {
 		// Generates the varaibles
 		ArrayList<String> variables = new ArrayList<String>();
 		variables.add("a");
 		variables.add("b");
 		variables.add("c");
 
-		generateWhileyAndProduceCCodeAndRunIt(variables);
+		generateWhileyAndProduceCCodeAndRunIt(variables, "assignment");
 
 	}
 
+	@Test
+	public void test3Variables_functioncall() throws IOException {
+		// Generates the varaibles
+		ArrayList<String> variables = new ArrayList<String>();
+		variables.add("a");
+		variables.add("b");
+		variables.add("c");
+
+		generateWhileyAndProduceCCodeAndRunIt(variables, "functioncall");
+
+	}
 }
