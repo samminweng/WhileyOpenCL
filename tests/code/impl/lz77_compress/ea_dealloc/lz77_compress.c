@@ -139,10 +139,10 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data
 		if(offset>=pos){goto blklab5;}
 		//invoke (%14) = (%0, %6, %1) lz77_compress:match : function(byte[],lz77_compress:nat,lz77_compress:nat)->(int)
 		{
+			_CALLEE_DEALLOC(_14, data, "false-false-true" , "match");
 			void* tmp_data;
 			_COPY_1DARRAY_PARAM(data, tmp_data, BYTE);
 			_14 = _match_(tmp_data, data_size, true, offset, pos);
-			_CALLEE_DEALLOC(data, "false-false-true" , "match");
 		}
 		//assign %7 = %14  : int
 		len = _14;
@@ -340,11 +340,11 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_
 		if(pos>=_10){goto blklab14;}
 		//invoke (%11) = (%0, %2) lz77_compress:findLongestMatch : function(byte[],lz77_compress:nat)->(lz77_compress:Match)
 		{
+			_CALLEE_DEALLOC(_11, data, "false-false-true" , "findLongestMatch");
 			void* tmp_data;
 			_COPY_1DARRAY_PARAM(data, tmp_data, BYTE);
 			_DEALLOC_STRUCT(_11, Match);
 			_11 = _findLongestMatch_(tmp_data, data_size, true, pos);
-			_CALLEE_DEALLOC(data, "false-false-true" , "findLongestMatch");
 			_CALLEE_DEALLOC_POST(_11, data);
 		}
 		//assign %3 = %11  : {int len,int offset}
@@ -395,22 +395,22 @@ blklab16:;
 blklab17:;
 		//invoke (%22) = (%1, %4) lz77_compress:append : function(byte[],byte)->(byte[])
 		{
+			_CALLEE_DEALLOC(_22, output, "false-false-false" , "append");
 			void* tmp_items;
 			_COPY_1DARRAY_PARAM(output, tmp_items, BYTE);
 			_DEALLOC(_22);
 			_22 = _append_(tmp_items, output_size, true, offset, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
-			_CALLEE_DEALLOC(output, "false-false-false" , "append");
 			_CALLEE_DEALLOC_POST(_22, output);
 		}
 		//assign %1 = %22  : byte[]
 		_ADD_DEALLOC(output, _22, BYTE);
 		//invoke (%23) = (%1, %5) lz77_compress:append : function(byte[],byte)->(byte[])
 		{
+			_CALLEE_DEALLOC(_23, output, "false-false-false" , "append");
 			void* tmp_items;
 			_COPY_1DARRAY_PARAM(output, tmp_items, BYTE);
 			_DEALLOC(_23);
 			_23 = _append_(tmp_items, output_size, true, length, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
-			_CALLEE_DEALLOC(output, "false-false-false" , "append");
 			_CALLEE_DEALLOC_POST(_23, output);
 		}
 		//assign %1 = %23  : byte[]
@@ -536,11 +536,11 @@ int main(int argc, char** args){
 	}
 	//invoke (%21) = (%2) lz77_compress:compress : function(byte[])->(byte[])
 	{
+		_CALLEE_DEALLOC(_21, data, "false-false-false" , "compress");
 		void* tmp_data;
 		_COPY_1DARRAY_PARAM(data, tmp_data, BYTE);
 		_DEALLOC(_21);
 		_21 = _compress_(tmp_data, data_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_21));
-		_CALLEE_DEALLOC(data, "false-false-false" , "compress");
 		_CALLEE_DEALLOC_POST(_21, data);
 	}
 	//assign %3 = %21  : byte[]

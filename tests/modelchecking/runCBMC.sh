@@ -2,7 +2,6 @@
 # Use C bounded model checking to verify the absence of memory leaks in our generated C code
 runCBMC(){
     logFolder="log"
-    rm -rf $logFolder/* # Clear all the log files
     memorylog="log_cbmc.txt"
     rm -rf $memorylog
     touch $memorylog
@@ -25,7 +24,7 @@ runCBMC(){
                 echo $testcase
                 #read -p "Press enter to continue"
                 # Run cbmc to verify our C code
-                cbmc $subfolder/*.c --memory-leak-check > $logFolder/$testcase.cbmc.log
+                cbmc $subfolder/*.c --memory-leak-check --pointer-check > $logFolder/$testcase.cbmc.log
                 # Check exit status
                 STATUS="${?}"
                 if (( STATUS != 0))

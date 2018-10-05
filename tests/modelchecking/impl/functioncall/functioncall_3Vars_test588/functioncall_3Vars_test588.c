@@ -190,12 +190,12 @@ int main(int argc, char** args){
 		_20 = 11;
 		//invoke (%19) = (%2, %20) functioncall_3Vars_test588:func : function(int[],int)->(int[])
 		{
+			_CALLER_DEALLOC(_19, b, "false-true-true" , "func");
 			void* tmp_x;
 			_COPY_1DARRAY_PARAM(b, tmp_x, int64_t);
 			_DEALLOC(_19);
 			// isCopyEliminated of '_2' = false
 			_19 = _func_(tmp_x, b_size, false, _20, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
-			_CALLER_DEALLOC(b, "false-true-true" , "func");
 			_CALLER_DEALLOC_POST(_19, tmp_x);
 		}
 		//assign %1 = %19  : int[]

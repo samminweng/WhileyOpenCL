@@ -372,22 +372,22 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM
 			pos = _46;
 			//invoke (%47) = (%0, %1, %2, %8, %9, %6) SobelEdge:convolution : function(byte[],int,int,int,int,int[])->(int)
 			{
+				_RETAIN_DEALLOC(_47, v_sobel, "false-false-true" , "convolution");
+				_RETAIN_DEALLOC(_47, pixels, "false-false-true" , "convolution");
 				// isCopyEliminated of '_0' = true
 				// isCopyEliminated of '_6' = true
 				_47 = _convolution_(pixels, pixels_size, false, width, height, x, y, v_sobel, v_sobel_size, false);
-				_RETAIN_DEALLOC(pixels, "false-false-true" , "convolution");
-				_RETAIN_DEALLOC(v_sobel, "false-false-true" , "convolution");
 			}
 			//assign %11 = %47  : int
 			// isCopyEliminated = true
 			v_g = _47;
 			//invoke (%48) = (%0, %1, %2, %8, %9, %7) SobelEdge:convolution : function(byte[],int,int,int,int,int[])->(int)
 			{
+				_RETAIN_DEALLOC(_48, h_sobel, "false-false-true" , "convolution");
+				_RETAIN_DEALLOC(_48, pixels, "false-false-true" , "convolution");
 				// isCopyEliminated of '_0' = true
 				// isCopyEliminated of '_7' = true
 				_48 = _convolution_(pixels, pixels_size, false, width, height, x, y, h_sobel, h_sobel_size, false);
-				_RETAIN_DEALLOC(pixels, "false-false-true" , "convolution");
-				_RETAIN_DEALLOC(h_sobel, "false-false-true" , "convolution");
 			}
 			//assign %12 = %48  : int
 			// isCopyEliminated = true
@@ -662,10 +662,10 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(pixels, _10);
 	//invoke (%12) = (%4, %2, %3) SobelEdge:sobelEdgeDetection : function(byte[],int,int)->(byte[])
 	{
+		_RETAIN_DEALLOC(_12, pixels, "false-false-false" , "sobelEdgeDetection");
 		_DEALLOC(_12);
 		// isCopyEliminated of '_4' = true
 		_12 = _sobelEdgeDetection_(pixels, pixels_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_12));
-		_RETAIN_DEALLOC(pixels, "false-false-false" , "sobelEdgeDetection");
 		_RETAIN_DEALLOC_POST(_12, pixels);
 	}
 	//assign %5 = %12  : byte[]
@@ -673,9 +673,9 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(newPixels, _12);
 	//invoke () = (%0, %2, %3, %5) SobelEdge:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
+		_RETAIN_DEALLOC(, newPixels, "false-false-false" , "print_pbm");
 		// isCopyEliminated of '_5' = true
 		_print_pbm_(stdout, width, height, newPixels, newPixels_size, false);
-		_RETAIN_DEALLOC(newPixels, "false-false-false" , "print_pbm");
 	}
 	//return
 	if(file != NULL){fclose(file); file = NULL;}

@@ -220,9 +220,9 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(pixels, _9);
 	//invoke () = (%0, %2, %3, %4) fileread2:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
+		_RETAIN_DEALLOC(, pixels, "false-false-false" , "print_pbm");
 		// isCopyEliminated of '_4' = true
 		_print_pbm_(stdout, width, height, pixels, pixels_size, false);
-		_RETAIN_DEALLOC(pixels, "false-false-false" , "print_pbm");
 	}
 	//return
 	if(r != NULL){fclose(r); r = NULL;}

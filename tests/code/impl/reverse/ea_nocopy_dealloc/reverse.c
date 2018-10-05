@@ -131,10 +131,10 @@ int main(int argc, char** args){
 	_11_dealloc = true;
 	//invoke (%5) = (%11) reverse:reverse : function(int[])->(int[])
 	{
+		_RETAIN_DEALLOC(_5, _11, "false-false-false" , "reverse");
 		_DEALLOC(_5);
 		// isCopyEliminated of '_11' = true
 		_5 = _reverse_(_11, _11_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
-		_RETAIN_DEALLOC(_11, "false-false-false" , "reverse");
 		_RETAIN_DEALLOC_POST(_5, _11);
 	}
 	//assign %1 = %5  : int[]
@@ -209,10 +209,10 @@ blklab6:;
 blklab5:;
 	//invoke (%27) = (%4) reverse:reverse : function(int[])->(int[])
 	{
+		_RETAIN_DEALLOC(_27, arr, "false-false-false" , "reverse");
 		_DEALLOC(_27);
 		// isCopyEliminated of '_4' = true
 		_27 = _reverse_(arr, arr_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
-		_RETAIN_DEALLOC(arr, "false-false-false" , "reverse");
 		_RETAIN_DEALLOC_POST(_27, arr);
 	}
 	//assign %4 = %27  : int[]

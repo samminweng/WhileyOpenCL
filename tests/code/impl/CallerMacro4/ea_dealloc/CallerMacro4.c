@@ -146,11 +146,11 @@ int main(int argc, char** args){
 	_7 = 11;
 	//invoke (%6) = (%1, %7) CallerMacro4:func : function(int[],int)->(int[])
 	{
+		_CALLER_DEALLOC(_6, x, "false-true-true" , "func");
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(x, tmp_x, int64_t);
 		_DEALLOC(_6);
 		_6 = _func_(tmp_x, x_size, false, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
-		_CALLER_DEALLOC(x, "false-true-true" , "func");
 		_CALLER_DEALLOC_POST(_6, tmp_x);
 	}
 	//assign %2 = %6  : int[]
@@ -197,11 +197,11 @@ blklab3:;
 	_19 = 10;
 	//invoke (%18) = (%1, %19) CallerMacro4:func : function(int[],int)->(int[])
 	{
+		_CALLER_DEALLOC(_18, x, "false-true-true" , "func");
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(x, tmp_x, int64_t);
 		_DEALLOC(_18);
 		_18 = _func_(tmp_x, x_size, false, _19, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
-		_CALLER_DEALLOC(x, "false-true-true" , "func");
 		_CALLER_DEALLOC_POST(_18, tmp_x);
 	}
 	//assign %2 = %18  : int[]
@@ -248,11 +248,11 @@ blklab4:;
 	_31 = 9;
 	//invoke (%30) = (%1, %31) CallerMacro4:func : function(int[],int)->(int[])
 	{
+		_CALLER_DEALLOC(_30, x, "false-true-false" , "func");
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(x, tmp_x, int64_t);
 		_DEALLOC(_30);
 		_30 = _func_(tmp_x, x_size, false, _31, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
-		_CALLER_DEALLOC(x, "false-true-false" , "func");
 		_CALLER_DEALLOC_POST(_30, tmp_x);
 	}
 	//assign %2 = %30  : int[]

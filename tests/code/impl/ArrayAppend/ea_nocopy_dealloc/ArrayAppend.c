@@ -125,13 +125,13 @@ int main(int argc, char** args){
 	_4_dealloc = true;
 	//invoke (%3) = (%1, %4) ArrayAppend:test_append : function(int[],int[])->(int[])
 	{
+		_RETAIN_DEALLOC(_3, _4, "false-false-false" , "test_append");
+		_RETAIN_DEALLOC(_3, r, "false-false-false" , "test_append");
 		_DEALLOC(_3);
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_4' = true
 		_3 = _test_append_(r, r_size, false, _4, _4_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
-		_RETAIN_DEALLOC(r, "false-false-false" , "test_append");
 		_RETAIN_DEALLOC_POST(_3, r);
-		_RETAIN_DEALLOC(_4, "false-false-false" , "test_append");
 		_RETAIN_DEALLOC_POST(_3, _4);
 	}
 	//assign %1 = %3  : int[]

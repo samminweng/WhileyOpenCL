@@ -115,10 +115,10 @@ int main(int argc, char** args){
 	_11 = 6;
 	//invoke (%10) = (%1, %11) FunctionCall2:func : function(int[],int)->(int[])
 	{
+		_RESET_DEALLOC(_10, a, "true-true-false" , "func");
 		_DEALLOC(_10);
 		// isCopyEliminated of '_1' = true
 		_10 = _func_(a, a_size, false, _11, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
-		_RESET_DEALLOC(a, "true-true-false" , "func");
 		_RESET_DEALLOC_POST(_10, a);
 	}
 	//assign %1 = %10  : int[]
@@ -184,12 +184,12 @@ blklab2:;
 	_29 = 1;
 	//invoke (%28) = (%2, %29) FunctionCall2:func : function(int[],int)->(int[])
 	{
+		_CALLER_DEALLOC(_28, b, "true-true-true" , "func");
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(b, tmp_s, int64_t);
 		_DEALLOC(_28);
 		// isCopyEliminated of '_2' = false
 		_28 = _func_(tmp_s, b_size, false, _29, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
-		_CALLER_DEALLOC(b, "true-true-true" , "func");
 		_CALLER_DEALLOC_POST(_28, tmp_s);
 	}
 	//assign %3 = %28  : int[]

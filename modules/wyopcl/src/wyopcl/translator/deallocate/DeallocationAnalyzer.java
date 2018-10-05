@@ -464,7 +464,7 @@ public class DeallocationAnalyzer extends Analyzer {
 				String parameter = stores.getVar(register, function);
 				// Get parameter type
 				Type parameter_type = stores.getRawType(register, function);
-				statements.add(indent + macro_name +"(" + parameter + ", \"" + checks + "\" , \"" + func_name + "\");");
+				statements.add(indent + macro_name +"(" + ret + ", " + parameter + ", \"" + checks + "\" , \"" + func_name + "\");");
 				if (ret_type != null && stores.isCompoundType(ret_type)) {
 					// Write the checks results as a parameter to macro
 					// statements.add(indent+"//"+parameter+":"+checks);

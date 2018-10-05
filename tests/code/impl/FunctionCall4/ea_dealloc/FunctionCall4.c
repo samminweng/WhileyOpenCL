@@ -143,11 +143,11 @@ int main(int argc, char** args){
 	_11 = 6;
 	//invoke (%10) = (%1, %11) FunctionCall4:func : function(int[],int)->(int[])
 	{
+		_CALLEE_DEALLOC(_10, a, "false-false-false" , "func");
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(a, tmp_s, int64_t);
 		_DEALLOC(_10);
 		_10 = _func_(tmp_s, a_size, true, _11, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
-		_CALLEE_DEALLOC(a, "false-false-false" , "func");
 		_CALLEE_DEALLOC_POST(_10, a);
 	}
 	//assign %1 = %10  : int[]
@@ -211,11 +211,11 @@ blklab2:;
 	_29 = 1;
 	//invoke (%28) = (%2, %29) FunctionCall4:func : function(int[],int)->(int[])
 	{
+		_CALLEE_DEALLOC(_28, b, "false-false-true" , "func");
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(b, tmp_s, int64_t);
 		_DEALLOC(_28);
 		_28 = _func_(tmp_s, b_size, true, _29, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
-		_CALLEE_DEALLOC(b, "false-false-true" , "func");
 		_CALLEE_DEALLOC_POST(_28, b);
 	}
 	//assign %3 = %28  : int[]

@@ -253,10 +253,10 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 		if(header!=_25){goto blklab20;}
 		//invoke (%26) = (%2, %3, %6) lz77_opt_decompress:opt_append : function(byte[],lz77_opt_decompress:nat,byte)->(byte[])
 		{
+			_RESET_DEALLOC(_26, items, "true-true-false" , "opt_append");
 			_DEALLOC(_26);
 			// isCopyEliminated of '_2' = true
 			_26 = _opt_append_(items, items_size, false, inspos, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_26));
-			_RESET_DEALLOC(items, "true-true-false" , "opt_append");
 			_RESET_DEALLOC_POST(_26, items);
 		}
 		//assign %2 = %26  : byte[]
@@ -308,10 +308,10 @@ blklab20:;
 			item = _33;
 			//invoke (%34) = (%2, %3, %6) lz77_opt_decompress:opt_append : function(byte[],lz77_opt_decompress:nat,byte)->(byte[])
 			{
+				_RESET_DEALLOC(_34, items, "true-true-false" , "opt_append");
 				_DEALLOC(_34);
 				// isCopyEliminated of '_2' = true
 				_34 = _opt_append_(items, items_size, false, inspos, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_34));
-				_RESET_DEALLOC(items, "true-true-false" , "opt_append");
 				_RESET_DEALLOC_POST(_34, items);
 			}
 			//assign %2 = %34  : byte[]
@@ -345,10 +345,10 @@ blklab19:;
 blklab18:;
 	//invoke (%39) = (%2, %3) lz77_opt_decompress:resize : function(byte[],int)->(byte[])
 	{
+		_RETAIN_DEALLOC(_39, items, "false-false-false" , "resize");
 		_DEALLOC(_39);
 		// isCopyEliminated of '_2' = true
 		_39 = _resize_(items, items_size, false, inspos, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_39));
-		_RETAIN_DEALLOC(items, "false-false-false" , "resize");
 		_RETAIN_DEALLOC_POST(_39, items);
 	}
 	//assign %1 = %39  : byte[]
@@ -414,10 +414,10 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(input_data, _6);
 	//invoke (%8) = (%2) lz77_opt_decompress:decompress : function(byte[])->(byte[])
 	{
+		_RETAIN_DEALLOC(_8, input_data, "false-false-false" , "decompress");
 		_DEALLOC(_8);
 		// isCopyEliminated of '_2' = true
 		_8 = _decompress_(input_data, input_data_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
-		_RETAIN_DEALLOC(input_data, "false-false-false" , "decompress");
 		_RETAIN_DEALLOC_POST(_8, input_data);
 	}
 	//assign %3 = %8  : byte[]

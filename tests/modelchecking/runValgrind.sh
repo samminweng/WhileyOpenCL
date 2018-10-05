@@ -2,7 +2,6 @@
 ## Use valgrind to detect memory leaks in our generated C code
 runValgrind(){
     logFolder="log"
-    rm -rf $logFolder/* # Clear all the log files
     #read -p "Press enter to continue" 
     memorylog="log_valgrind.txt"
     rm -rf $memorylog

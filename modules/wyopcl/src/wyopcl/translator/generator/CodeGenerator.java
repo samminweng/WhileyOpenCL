@@ -1454,7 +1454,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 			// Generate the post-deallocation code
 			this.deallocatedAnalyzer.ifPresent(a -> {
-				statements.addAll(a.postDealloc(code, function, stores, copyAnalyzer));
+				List<String> list = a.postDealloc(code, function, stores, copyAnalyzer);
+				for(int i =0;i<list.size();i++) {
+					String statement = list.get(i);
+					// Check if the statement is the use of function call macro
+					if(statement.contains("_CALLER_DEALLOC(")|| statement.contains("_CALLEE_DEALLOC(")
+						|| statement.contains("_RESET_DEALLOC(") || statement.contains("_RETAIN_DEALLOC(")) {
+						// so we put it at the beginning of statements
+						statements.add(1, statement); 
+					}else {
+						statements.add(statement);
+					}
+				}
+				//statements.addAll(a.postDealloc(code, function, stores, copyAnalyzer));
 			});
 		}
 

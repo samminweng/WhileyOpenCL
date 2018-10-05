@@ -303,10 +303,10 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(A, _15);
 	//invoke (%16) = (%4, %2, %3) MatrixMult:init : function(int[],int,int)->(int[])
 	{
+		_RESET_DEALLOC(_16, A, "true-true-false" , "init");
 		_DEALLOC(_16);
 		// isCopyEliminated of '_4' = true
 		_16 = _init_(A, A_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
-		_RESET_DEALLOC(A, "true-true-false" , "init");
 		_RESET_DEALLOC_POST(_16, A);
 	}
 	//assign %4 = %16  : int[]
@@ -323,10 +323,10 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(B, _19);
 	//invoke (%20) = (%5, %2, %3) MatrixMult:init : function(int[],int,int)->(int[])
 	{
+		_RESET_DEALLOC(_20, B, "true-true-false" , "init");
 		_DEALLOC(_20);
 		// isCopyEliminated of '_5' = true
 		_20 = _init_(B, B_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
-		_RESET_DEALLOC(B, "true-true-false" , "init");
 		_RESET_DEALLOC_POST(_20, B);
 	}
 	//assign %5 = %20  : int[]
@@ -343,16 +343,16 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(C, _23);
 	//invoke (%24) = (%4, %5, %6, %2, %3) MatrixMult:mat_mult : function(int[],int[],int[],int,int)->(int[])
 	{
+		_RESET_DEALLOC(_24, C, "true-true-false" , "mat_mult");
+		_RETAIN_DEALLOC(_24, B, "false-false-true" , "mat_mult");
+		_RETAIN_DEALLOC(_24, A, "false-false-true" , "mat_mult");
 		_DEALLOC(_24);
 		// isCopyEliminated of '_4' = true
 		// isCopyEliminated of '_5' = true
 		// isCopyEliminated of '_6' = true
 		_24 = _mat_mult_(A, A_size, false, B, B_size, false, C, C_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
-		_RETAIN_DEALLOC(A, "false-false-true" , "mat_mult");
 		_RETAIN_DEALLOC_POST(_24, A);
-		_RETAIN_DEALLOC(B, "false-false-true" , "mat_mult");
 		_RETAIN_DEALLOC_POST(_24, B);
-		_RESET_DEALLOC(C, "true-true-false" , "mat_mult");
 		_RESET_DEALLOC_POST(_24, C);
 	}
 	//assign %6 = %24  : int[]

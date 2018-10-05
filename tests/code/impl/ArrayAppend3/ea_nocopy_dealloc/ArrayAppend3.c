@@ -298,10 +298,10 @@ int main(int argc, char** args){
 	//fieldload %15 = %14 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%16) = (%1) ArrayAppend3:toString : function(ArrayAppend3:Cash)->(whiley/lang/ASCII:string)
 	{
+		_RETAIN_DEALLOC(_16, till, "false-false-false" , "toString");
 		_DEALLOC(_16);
 		// isCopyEliminated of '_1' = true
 		_16 = _toString_(till, till_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
-		_RETAIN_DEALLOC(till, "false-false-false" , "toString");
 		_RETAIN_DEALLOC_POST(_16, till);
 	}
 	//indirectinvoke () = %15 (%16) : method(int[])->()
