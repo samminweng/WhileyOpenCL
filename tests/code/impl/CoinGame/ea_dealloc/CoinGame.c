@@ -569,9 +569,9 @@ int main(int argc, char** args){
 	//invoke (%8) = (%2, %1) CoinGame:findMoves : function(int[],int)->(int[])
 	{
 		_CALLER_DEALLOC(_8, moves, "true-true-false" , "findMoves");
+		_DEALLOC(_8);
 		void* tmp_moves;
 		_COPY_1DARRAY_PARAM(moves, tmp_moves, int64_t);
-		_DEALLOC(_8);
 		_8 = _findMoves_(tmp_moves, moves_size, false, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_CALLER_DEALLOC_POST(_8, tmp_moves);
 	}

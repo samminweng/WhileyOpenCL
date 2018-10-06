@@ -144,9 +144,9 @@ int main(int argc, char** args){
 	//invoke (%10) = (%1, %11) FunctionCall4:func : function(int[],int)->(int[])
 	{
 		_CALLEE_DEALLOC(_10, a, "false-false-false" , "func");
+		_DEALLOC(_10);
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(a, tmp_s, int64_t);
-		_DEALLOC(_10);
 		_10 = _func_(tmp_s, a_size, true, _11, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 		_CALLEE_DEALLOC_POST(_10, a);
 	}
@@ -212,9 +212,9 @@ blklab2:;
 	//invoke (%28) = (%2, %29) FunctionCall4:func : function(int[],int)->(int[])
 	{
 		_CALLEE_DEALLOC(_28, b, "false-false-true" , "func");
+		_DEALLOC(_28);
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(b, tmp_s, int64_t);
-		_DEALLOC(_28);
 		_28 = _func_(tmp_s, b_size, true, _29, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 		_CALLEE_DEALLOC_POST(_28, b);
 	}

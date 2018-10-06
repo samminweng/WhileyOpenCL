@@ -191,9 +191,9 @@ int main(int argc, char** args){
 	//invoke (%4) = (%13) FunctionOverload2:Cash : function(FunctionOverload2:nat[])->(FunctionOverload2:Cash)
 	{
 		_CALLEE_DEALLOC(_4, _13, "false-false-false" , "Cash");
+		_DEALLOC(_4);
 		void* tmp_coins;
 		_COPY_1DARRAY_PARAM(_13, tmp_coins, int64_t);
-		_DEALLOC(_4);
 		_4 = _Cash_1_(tmp_coins, _13_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_4));
 		_CALLEE_DEALLOC_POST(_4, _13);
 	}

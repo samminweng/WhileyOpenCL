@@ -43,9 +43,9 @@ int64_t* _g3_(int64_t x, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	//invoke (%7) = (%2, %8) CallerMacro2:func : function(int[],int)->(int[])
 	{
 		_CALLER_DEALLOC(_7, a, "true-true-true" , "func");
+		_DEALLOC(_7);
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(a, tmp_x, int64_t);
-		_DEALLOC(_7);
 		// isCopyEliminated of '_2' = false
 		_7 = _func_(tmp_x, a_size, false, _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_7));
 		_CALLER_DEALLOC_POST(_7, tmp_x);

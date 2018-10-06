@@ -41,9 +41,9 @@ int64_t* _g2_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	//invoke (%6) = (%1, %7) ResetMacro2:func : function(int[],int)->(int[])
 	{
 		_CALLER_DEALLOC(_6, a, "true-true-false" , "func");
+		_DEALLOC(_6);
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(a, tmp_x, int64_t);
-		_DEALLOC(_6);
 		_6 = _func_(tmp_x, a_size, false, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		_CALLER_DEALLOC_POST(_6, tmp_x);
 	}

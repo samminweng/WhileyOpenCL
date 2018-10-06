@@ -33,7 +33,9 @@ runCBMC(){
                 fi
                 # Put all output to a single file
                 echo "=== Test report for $category $testcase using CBMC ===" >> $memorylog
-                cat $logFolder/$testcase.cbmc.log >> $memorylog
+                head --lines=50 $logFolder/$testcase.cbmc.log >> $memorylog
+                echo -e "\n .... Please refer to $logFolder/$testcase.cbmc.log ....\n" >> $memorylog
+                tail $logFolder/$testcase.cbmc.log >> $memorylog
                 #read -p "Press enter to continue"
             done
         done

@@ -223,9 +223,9 @@ int main(int argc, char** args){
 	//invoke (%11) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		_CALLER_DEALLOC(_11, ys, "true-true-false" , "bubbleSort");
+		_DEALLOC(_11);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
-		_DEALLOC(_11);
 		_11 = _bubbleSort_(tmp_items, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		_CALLER_DEALLOC_POST(_11, tmp_items);
 	}
@@ -281,9 +281,9 @@ blklab5:;
 	//invoke (%25) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		_CALLER_DEALLOC(_25, ys, "true-true-false" , "bubbleSort");
+		_DEALLOC(_25);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
-		_DEALLOC(_25);
 		_25 = _bubbleSort_(tmp_items, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 		_CALLER_DEALLOC_POST(_25, tmp_items);
 	}
@@ -337,9 +337,9 @@ blklab6:;
 	//invoke (%38) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		_CALLER_DEALLOC(_38, ys, "true-true-false" , "bubbleSort");
+		_DEALLOC(_38);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
-		_DEALLOC(_38);
 		_38 = _bubbleSort_(tmp_items, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 		_CALLER_DEALLOC_POST(_38, tmp_items);
 	}
@@ -395,9 +395,9 @@ blklab7:;
 	//invoke (%52) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		_CALLER_DEALLOC(_52, ys, "true-true-false" , "bubbleSort");
+		_DEALLOC(_52);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
-		_DEALLOC(_52);
 		_52 = _bubbleSort_(tmp_items, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 		_CALLER_DEALLOC_POST(_52, tmp_items);
 	}
@@ -471,9 +471,9 @@ blklab9:;
 	//invoke (%68) = (%4) bubblesort:bubbleSort : function(int[])->(int[])
 	{
 		_CALLER_DEALLOC(_68, arr, "true-true-false" , "bubbleSort");
+		_DEALLOC(_68);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(arr, tmp_items, int64_t);
-		_DEALLOC(_68);
 		_68 = _bubbleSort_(tmp_items, arr_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
 		_CALLER_DEALLOC_POST(_68, tmp_items);
 	}

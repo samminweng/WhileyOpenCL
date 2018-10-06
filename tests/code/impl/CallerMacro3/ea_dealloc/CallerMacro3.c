@@ -59,9 +59,9 @@ int main(int argc, char** args){
 	//invoke (%8) = (%1) CallerMacro3:f : function(int[])->(int[])
 	{
 		_CALLER_DEALLOC(_8, b, "false-true-true" , "f");
+		_DEALLOC(_8);
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(b, tmp_x, int64_t);
-		_DEALLOC(_8);
 		_8 = _f_(tmp_x, b_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_CALLER_DEALLOC_POST(_8, tmp_x);
 	}

@@ -155,9 +155,9 @@ blklab0:;
 	//invoke (%27) = (%2) FunctionCall3:func : function(int[])->(int[])
 	{
 		_CALLER_DEALLOC(_27, b, "true-true-true" , "func");
+		_DEALLOC(_27);
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(b, tmp_s, int64_t);
-		_DEALLOC(_27);
 		// isCopyEliminated of '_2' = false
 		_27 = _func_(tmp_s, b_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 		_CALLER_DEALLOC_POST(_27, tmp_s);

@@ -445,9 +445,9 @@ blklab18:;
 	//invoke (%31) = (%1, %4) lz77_opt_compress:resize : function(byte[],int)->(byte[])
 	{
 		_CALLEE_DEALLOC(_31, output, "false-false-false" , "resize");
+		_DEALLOC(_31);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(output, tmp_items, BYTE);
-		_DEALLOC(_31);
 		_31 = _resize_(tmp_items, output_size, true, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_31));
 		_CALLEE_DEALLOC_POST(_31, output);
 	}
@@ -569,9 +569,9 @@ int main(int argc, char** args){
 	//invoke (%21) = (%2) lz77_opt_compress:compress : function(byte[])->(byte[])
 	{
 		_CALLEE_DEALLOC(_21, data, "false-false-false" , "compress");
+		_DEALLOC(_21);
 		void* tmp_data;
 		_COPY_1DARRAY_PARAM(data, tmp_data, BYTE);
-		_DEALLOC(_21);
 		_21 = _compress_(tmp_data, data_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_21));
 		_CALLEE_DEALLOC_POST(_21, data);
 	}

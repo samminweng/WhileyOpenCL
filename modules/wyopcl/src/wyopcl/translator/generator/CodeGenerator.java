@@ -1454,19 +1454,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 			// Generate the post-deallocation code
 			this.deallocatedAnalyzer.ifPresent(a -> {
-				List<String> list = a.postDealloc(code, function, stores, copyAnalyzer);
-				for(int i =0;i<list.size();i++) {
-					String statement = list.get(i);
-					// Check if the statement is the use of function call macro
-					if(statement.contains("_CALLER_DEALLOC(")|| statement.contains("_CALLEE_DEALLOC(")
-						|| statement.contains("_RESET_DEALLOC(") || statement.contains("_RETAIN_DEALLOC(")) {
-						// so we put it at the beginning of statements
-						statements.add(1, statement); 
-					}else {
-						statements.add(statement);
-					}
-				}
-				//statements.addAll(a.postDealloc(code, function, stores, copyAnalyzer));
+				statements.addAll(a.postDealloc(code, function, stores, copyAnalyzer));
 			});
 		}
 
@@ -1475,8 +1463,26 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		// Add the ending clause for the function call
 		statements.add(stores.getIndent(function) + "}");
+		
+		// Reorder the code to make them consistent with our macro design
+		List<String> list = new ArrayList<String>();
+		for(int i =0;i<statements.size();i++) {
+			String statement = statements.get(i);
+			// Check if the statement is the use of function call macro
+			// That is, _CALLER_DEALLOC, _CALLEE_DEALLOC, _RESET_DEALLOC, _RETAIN_DEALLOC
+			if(statement.matches(".*(\\_[A-Z]+\\_DEALLOC\\().*")) {
+				// so we put it at the beginning of statements
+				list.add(1, statement); 
+			}else if (statement.contains("_DEALLOC(")) {
+				// Put the pre_deallocation macro to the second position.
+				list.add(1, statement);
+			} else {
+				list.add(statement);
+			}
+		}
+		
 		// add the statement
-		stores.addAllStatements(code, statements, function);
+		stores.addAllStatements(code, list, function);
 	}
 
 	/**

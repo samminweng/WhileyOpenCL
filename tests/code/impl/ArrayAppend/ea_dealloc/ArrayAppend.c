@@ -122,11 +122,11 @@ int main(int argc, char** args){
 	{
 		_CALLEE_DEALLOC(_3, _4, "false-false-false" , "test_append");
 		_CALLEE_DEALLOC(_3, r, "false-false-false" , "test_append");
+		_DEALLOC(_3);
 		void* tmp_lhs;
 		_COPY_1DARRAY_PARAM(r, tmp_lhs, int64_t);
 		void* tmp_rhs;
 		_COPY_1DARRAY_PARAM(_4, tmp_rhs, int64_t);
-		_DEALLOC(_3);
 		_3 = _test_append_(tmp_lhs, r_size, true, tmp_rhs, _4_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
 		_CALLEE_DEALLOC_POST(_3, r);
 		_CALLEE_DEALLOC_POST(_3, _4);

@@ -48,9 +48,9 @@ int main(int argc, char** args){
 	//invoke (%6) = (%1, %7) ResetMacro1:func : function(int[],int)->(int[])
 	{
 		_CALLER_DEALLOC(_6, x, "true-true-false" , "func");
+		_DEALLOC(_6);
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(x, tmp_x, int64_t);
-		_DEALLOC(_6);
 		_6 = _func_(tmp_x, x_size, false, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		_CALLER_DEALLOC_POST(_6, tmp_x);
 	}

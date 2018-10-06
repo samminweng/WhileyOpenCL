@@ -287,9 +287,9 @@ int main(int argc, char** args){
 	//invoke (%16) = (%1) ArrayAppend3:toString : function(ArrayAppend3:Cash)->(whiley/lang/ASCII:string)
 	{
 		_CALLEE_DEALLOC(_16, till, "false-false-false" , "toString");
+		_DEALLOC(_16);
 		void* tmp_c;
 		_COPY_1DARRAY_PARAM(till, tmp_c, int64_t);
-		_DEALLOC(_16);
 		_16 = _toString_(tmp_c, till_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		_CALLEE_DEALLOC_POST(_16, till);
 	}
