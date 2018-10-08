@@ -10,7 +10,7 @@ Generating GOTO Program
 Adding CPROVER library (x86_64)
 Removal of function pointers and virtual functions
 Generic Property Instrumentation
-Running with 8 object bits, 56 offset bits (default)
+Running with 60 object bits, 4 offset bits (user-specified)
 Starting Bounded Model Checking
 Unwinding loop create1DArray_int64_t.0 iteration 1 file impl/assignment/assignment_3Vars_test67/Util.c line 30 function create1DArray_int64_t thread 0
 Unwinding loop create1DArray_int64_t.0 iteration 2 file impl/assignment/assignment_3Vars_test67/Util.c line 30 function create1DArray_int64_t thread 0
@@ -37,18 +37,108 @@ Unwinding loop main.0 iteration 7 file impl/assignment/assignment_3Vars_test67/a
 Unwinding loop main.0 iteration 8 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
 Unwinding loop main.0 iteration 9 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
 Unwinding loop main.0 iteration 10 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 11 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 12 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 13 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 14 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 15 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 16 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 17 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 18 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 19 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 20 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 21 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 22 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 23 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 24 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 25 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 26 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 27 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 28 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 29 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 30 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 31 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 32 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 33 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 34 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 35 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 36 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 37 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 38 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 39 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 40 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 41 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 42 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 43 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 44 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 45 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 46 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 47 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 48 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 49 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 50 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 51 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 52 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 53 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 54 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 55 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 56 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 57 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 58 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 59 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 60 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 61 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 62 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 63 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 64 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 65 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 66 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 67 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 68 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 69 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 70 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 71 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 72 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 73 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 74 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 75 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 76 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 77 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 78 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 79 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 80 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 81 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 82 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 83 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 84 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 85 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 86 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 87 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 88 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 89 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 90 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 91 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 92 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 93 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 94 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 95 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 96 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 97 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 98 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 99 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
+Unwinding loop main.0 iteration 100 file impl/assignment/assignment_3Vars_test67/assignment_3Vars_test67.c line 62 function main thread 0
 aborting path on assume(false) at file <builtin-library-exit> line 7 function exit thread 0
-size of program expression: 2507 steps
+size of program expression: 21317 steps
 simple slicing removed 1 assignments
-Generated 328 VCC(s), 108 remaining after simplification
+Generated 2218 VCC(s), 918 remaining after simplification
 Passing problem to propositional reduction
 converting SSA
 Running propositional reduction
 Post-processing
 Solving with MiniSAT 2.2.1 with simplifier
-24534 variables, 4584 clauses
+212040 variables, 55667 clauses
 SAT checker: instance is UNSATISFIABLE
-Runtime decision procedure: 0.0257164s
+Runtime decision procedure: 1.08962s
 
 ** Results:
 [main.precondition_instance.1] free argument must be dynamic object: SUCCESS

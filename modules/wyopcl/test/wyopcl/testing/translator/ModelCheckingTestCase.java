@@ -132,7 +132,7 @@ public class ModelCheckingTestCase {
 				}
 				// Write out a loop
 				lines.add("\tint j = 0");// Initialise the loop variable
-				lines.add("\twhile j < 10:");// Add a loop condition
+				lines.add("\twhile j < 100:");// Add a loop condition
 
 				// Write out all the assignments
 				int i = 0;

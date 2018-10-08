@@ -42,8 +42,8 @@ int main(int argc, char** args){
 	j = _10;
 	//loop (%1, %2, %3, %11, %12, %13)
 	while(true){
-		//const %11 = 10 : int
-		_11 = 10;
+		//const %11 = 100 : int
+		_11 = 100;
 		//ifge %3, %11 goto blklab0 : int
 		if(j>=_11){goto blklab0;}
 		//assign %1 = %2  : int[]

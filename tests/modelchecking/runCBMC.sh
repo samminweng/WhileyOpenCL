@@ -24,7 +24,10 @@ runCBMC(){
                 echo $testcase
                 #read -p "Press enter to continue"
                 # Run cbmc to verify our C code
-                cbmc $subfolder/*.c --memory-leak-check --pointer-check > $logFolder/$testcase.cbmc.log
+                # --object-bits n option increases the maximal number of objects 
+                # Otherwise CBMC reports too many addressed objects: maximum number of objects is set to 2^n=256 (with n=8);
+                # Note object-bits must be positive and less than the pointer width (64)
+                cbmc $subfolder/*.c --memory-leak-check --pointer-check --object-bits 60 > $logFolder/$testcase.cbmc.log
                 # Check exit status
                 STATUS="${?}"
                 if (( STATUS != 0))

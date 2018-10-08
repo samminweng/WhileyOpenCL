@@ -16,7 +16,7 @@ public method main(System.Console console):
 	int[] b =[2; 5]
 	int[] c =[3; 5]
 	int j = 0
-	while j < 10:
+	while j < 100:
 		b = a
 		c = a
 		b = c
