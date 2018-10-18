@@ -1,5 +1,6 @@
 #include "FunctionCall1.h"
-int64_t* _func_(_DECL_1DARRAY_PARAM(s), _DECL_DEALLOC_PARAM(s), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _func_(_DECL_1DARRAY_PARAM(s), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(s);
 	_DECL_1DARRAY(_1);
 	_DECL_DEALLOC(_1);
 	_DECL_1DARRAY(t);
@@ -98,7 +99,7 @@ int main(int argc, char** args){
 		_RESET_DEALLOC(_10, a, "true-true-false" , "func");
 		_DEALLOC(_10);
 		// isCopyEliminated of '_1' = true
-		_10 = _func_(a, a_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
+		_10 = _func_(a, a_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 		_RESET_DEALLOC_POST(_10, a);
 	}
 	//assign %1 = %10  : int[]
@@ -167,7 +168,7 @@ blklab0:;
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(b, tmp_s, int64_t);
 		// isCopyEliminated of '_2' = false
-		_27 = _func_(tmp_s, b_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
+		_27 = _func_(tmp_s, b_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 		_CALLER_DEALLOC_POST(_27, tmp_s);
 	}
 	//assign %3 = %27  : int[]

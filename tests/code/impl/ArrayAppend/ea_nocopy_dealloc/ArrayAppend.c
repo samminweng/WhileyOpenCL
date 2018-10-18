@@ -1,5 +1,7 @@
 #include "ArrayAppend.h"
-int64_t* _test_append_(_DECL_1DARRAY_PARAM(lhs), _DECL_DEALLOC_PARAM(lhs), _DECL_1DARRAY_PARAM(rhs), _DECL_DEALLOC_PARAM(rhs), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _test_append_(_DECL_1DARRAY_PARAM(lhs), _DECL_1DARRAY_PARAM(rhs), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(lhs);
+	_DECL_DEALLOC(rhs);
 	_DECL_1DARRAY(_2);
 	_DECL_DEALLOC(_2);
 	_DECL_1DARRAY(rs);
@@ -130,7 +132,7 @@ int main(int argc, char** args){
 		_DEALLOC(_3);
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_4' = true
-		_3 = _test_append_(r, r_size, false, _4, _4_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
+		_3 = _test_append_(r, r_size, _4, _4_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
 		_RETAIN_DEALLOC_POST(_3, r);
 		_RETAIN_DEALLOC_POST(_3, _4);
 	}

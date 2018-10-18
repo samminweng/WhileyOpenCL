@@ -1,5 +1,6 @@
 #include "lz77_decompress.h"
-BYTE* _append_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* _append_(BYTE* items, size_t items_size, BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(items);
 	_DECL_1DARRAY_BYTE(nitems);
 	_DECL_DEALLOC(nitems);
 	int64_t i;
@@ -64,7 +65,8 @@ blklab1:;
 	//return
 }
 
-BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(data);
 	_DECL_1DARRAY_BYTE(output);
 	_DECL_DEALLOC(output);
 	int64_t pos;
@@ -155,7 +157,7 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_DEALLOC_PARAM(data), _DEC
 			_RETAIN_DEALLOC(_23, output, "false-false-false" , "append");
 			_DEALLOC(_23);
 			// isCopyEliminated of '_1' = true
-			_23 = _append_(output, output_size, false, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
+			_23 = _append_(output, output_size, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 			_RETAIN_DEALLOC_POST(_23, output);
 		}
 		//assign %1 = %23  : byte[]
@@ -205,7 +207,7 @@ blklab5:;
 				_RETAIN_DEALLOC(_30, output, "false-false-false" , "append");
 				_DEALLOC(_30);
 				// isCopyEliminated of '_1' = true
-				_30 = _append_(output, output_size, false, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
+				_30 = _append_(output, output_size, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
 				_RETAIN_DEALLOC_POST(_30, output);
 			}
 			//assign %1 = %30  : byte[]
@@ -291,7 +293,7 @@ int main(int argc, char** args){
 		_RETAIN_DEALLOC(_8, input_data, "false-false-false" , "decompress");
 		_DEALLOC(_8);
 		// isCopyEliminated of '_2' = true
-		_8 = _decompress_(input_data, input_data_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
+		_8 = _decompress_(input_data, input_data_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_RETAIN_DEALLOC_POST(_8, input_data);
 	}
 	//assign %3 = %8  : byte[]

@@ -1,5 +1,6 @@
 #include "fileread2.h"
-void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM(pixels)){
+void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t pixels_size){
+	_DECL_DEALLOC(pixels);
 	int64_t j;
 	int64_t i;
 	int64_t pos;
@@ -222,7 +223,7 @@ int main(int argc, char** args){
 	{
 		_RETAIN_DEALLOC(, pixels, "false-false-false" , "print_pbm");
 		// isCopyEliminated of '_4' = true
-		_print_pbm_(stdout, width, height, pixels, pixels_size, false);
+		_print_pbm_(stdout, width, height, pixels, pixels_size);
 	}
 	//return
 	if(r != NULL){fclose(r); r = NULL;}

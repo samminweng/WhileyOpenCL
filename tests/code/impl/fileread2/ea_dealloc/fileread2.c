@@ -1,5 +1,6 @@
 #include "fileread2.h"
-void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM(pixels)){
+void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t pixels_size){
+	_DECL_DEALLOC(pixels);
 	int64_t j;
 	int64_t i;
 	int64_t pos;
@@ -214,7 +215,8 @@ int main(int argc, char** args){
 		_CALLEE_DEALLOC(, pixels, "false-false-false" , "print_pbm");
 		void* tmp_pixels;
 		_COPY_1DARRAY_PARAM(pixels, tmp_pixels, BYTE);
-		_print_pbm_(stdout, width, height, tmp_pixels, pixels_size, true);
+		_print_pbm_(stdout, width, height, tmp_pixels, pixels_size);
+		free(tmp_pixels);
 	}
 	//return
 	if(r != NULL){fclose(r); r = NULL;}

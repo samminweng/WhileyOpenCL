@@ -1,5 +1,6 @@
 #include "opt_append.h"
-BYTE* _opt_append_(BYTE* items, size_t items_size, _DECL_DEALLOC_PARAM(items), int64_t inspos, BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* _opt_append_(BYTE* items, size_t items_size, int64_t inspos, BYTE item, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(items);
 	_DECL_1DARRAY_BYTE(output);
 	_DECL_DEALLOC(output);
 	_DECL_1DARRAY_BYTE(nitems);
@@ -167,7 +168,7 @@ int main(int argc, char** args){
 		_DEALLOC(_11);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(b, tmp_items, BYTE);
-		_11 = _opt_append_(tmp_items, b_size, false, inspos, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
+		_11 = _opt_append_(tmp_items, b_size, inspos, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		_CALLER_DEALLOC_POST(_11, tmp_items);
 	}
 	//assign %4 = %11  : byte[]

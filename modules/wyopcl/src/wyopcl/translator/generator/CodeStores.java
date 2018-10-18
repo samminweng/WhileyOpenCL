@@ -63,8 +63,7 @@ public class CodeStores {
 	 * @param func
 	 * @return
 	 */
-	public String getTmpParamName(String param, int index,
-				Codes.Invoke code, FunctionOrMethod func){
+	public String getTmpParamName(String param, int index, Codes.Invoke code, FunctionOrMethod func){
 		// Get code store of 'function'
 		CodeStore store = stores.get(func);
 		// Extract called function from 

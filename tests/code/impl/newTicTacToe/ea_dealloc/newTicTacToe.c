@@ -80,7 +80,8 @@ Board* _EmptyBoard_(){
 	//return
 }
 
-int64_t _countOf_(_DECL_1DARRAY_PARAM(pieces), _DECL_DEALLOC_PARAM(pieces), int64_t s){
+int64_t _countOf_(_DECL_1DARRAY_PARAM(pieces), int64_t s){
+	_DECL_DEALLOC(pieces);
 	int64_t r;
 	int64_t count;
 	int64_t i;

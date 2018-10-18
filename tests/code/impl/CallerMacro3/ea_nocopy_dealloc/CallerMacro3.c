@@ -1,5 +1,6 @@
 #include "CallerMacro3.h"
-int64_t* _f_(_DECL_1DARRAY_PARAM(x), _DECL_DEALLOC_PARAM(x), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _f_(_DECL_1DARRAY_PARAM(x), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(x);
 	_DECL_1DARRAY(_1);
 	_DECL_DEALLOC(_1);
 	//return %0
@@ -64,7 +65,7 @@ int main(int argc, char** args){
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(b, tmp_x, int64_t);
 		// isCopyEliminated of '_1' = false
-		_8 = _f_(tmp_x, b_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
+		_8 = _f_(tmp_x, b_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_CALLER_DEALLOC_POST(_8, tmp_x);
 	}
 	//assign %2 = %8  : int[]

@@ -1,5 +1,6 @@
 #include "ArrayAppend3.h"
-int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_DEALLOC_PARAM(c), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _toString_(_DECL_1DARRAY_PARAM(c), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(c);
 	_DECL_1DARRAY(_1);
 	_DECL_DEALLOC(_1);
 	_DECL_1DARRAY(r);
@@ -301,7 +302,7 @@ int main(int argc, char** args){
 		_RETAIN_DEALLOC(_16, till, "false-false-false" , "toString");
 		_DEALLOC(_16);
 		// isCopyEliminated of '_1' = true
-		_16 = _toString_(till, till_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
+		_16 = _toString_(till, till_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		_RETAIN_DEALLOC_POST(_16, till);
 	}
 	//indirectinvoke () = %15 (%16) : method(int[])->()

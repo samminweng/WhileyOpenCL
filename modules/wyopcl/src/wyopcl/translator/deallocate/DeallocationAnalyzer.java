@@ -465,6 +465,7 @@ public class DeallocationAnalyzer extends Analyzer {
 				// Get parameter type
 				Type parameter_type = stores.getRawType(register, function);
 				statements.add(indent + macro_name +"(" + ret + ", " + parameter + ", \"" + checks + "\" , \"" + func_name + "\");");
+				// Check if the call has the return. If so, then we can apply deallocation POST macro. 
 				if (ret_type != null && stores.isCompoundType(ret_type)) {
 					// Write the checks results as a parameter to macro
 					// statements.add(indent+"//"+parameter+":"+checks);
@@ -493,8 +494,14 @@ public class DeallocationAnalyzer extends Analyzer {
 							String type_name = CodeGeneratorHelper.translateType(parameter_type, stores).replace("*",
 									"");
 							// Applied caller_struct macro and used structure free function to release extra copy
-							statements.add(indent + "_CALLER_DEALLOC_STRUCT_POST(" + ret + ", " + tmp_name + "\", " + type_name + ");");
+							statements.add(indent + "_CALLER_DEALLOC_STRUCT_POST(" + ret + ", " + tmp_name 
+									              + "\", " + type_name + ");");
 						}
+						break;
+					case "_CALLEE_DEALLOC":
+						tmp_name = stores.getTmpParamName(parameter, index, code, function);
+						// Added the macros
+						statements.add(indent + "_CALLEE_DEALLOC_POST("+ ret +", " + tmp_name + ");");
 						break;
 					case "_RESET_DEALLOC":
 						// Added the macros
@@ -503,11 +510,7 @@ public class DeallocationAnalyzer extends Analyzer {
 					case "_RETAIN_DEALLOC":	
 						// Added the macros
 						statements.add(indent + "_RETAIN_DEALLOC_POST(" + ret +", "+ parameter + ");");
-						break;
-					case "_CALLEE_DEALLOC":	
-						// Added the macros
-						statements.add(indent + "_CALLEE_DEALLOC_POST("+ ret +", " + parameter + ");");
-						break;						
+						break;											
 					case "_SUBSTRUCTURE_DEALLOC":
 						statements.add(indent + "_SUBSTRUCTURE_DEALLOC(" + parameter +");");
 						statements.add(indent + this.assignDealloc(code.target(0), function, stores));
@@ -515,9 +518,11 @@ public class DeallocationAnalyzer extends Analyzer {
 					default:
 						throw new RuntimeException("Not implemented");
 					}
-				}else if(macro_name.equals("_CALLER_DEALLOC")){
-					// Get tmp param name
+				} else if(macro_name.equals("_CALLEE_DEALLOC")){
+					// This case for the call without return 
+					// Get the name of temp variable that stores the copied parameter.
 					String tmp_name =stores.getTmpParamName(parameter, index, code, function);
+					// We explicitly add a free statement to release the tmp
 					statements.add(indent + "free("+tmp_name+");");
 				}
 				index++;

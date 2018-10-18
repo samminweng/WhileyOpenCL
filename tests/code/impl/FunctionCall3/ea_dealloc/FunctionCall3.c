@@ -1,5 +1,6 @@
 #include "FunctionCall3.h"
-int64_t* _func_(_DECL_1DARRAY_PARAM(s), _DECL_DEALLOC_PARAM(s), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _func_(_DECL_1DARRAY_PARAM(s), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(s);
 	_DECL_1DARRAY(_1);
 	_DECL_DEALLOC(_1);
 	_DECL_1DARRAY(t);
@@ -89,8 +90,8 @@ int main(int argc, char** args){
 		_DEALLOC(_10);
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(a, tmp_s, int64_t);
-		_10 = _func_(tmp_s, a_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
-		_CALLEE_DEALLOC_POST(_10, a);
+		_10 = _func_(tmp_s, a_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
+		_CALLEE_DEALLOC_POST(_10, tmp_s);
 	}
 	//assign %1 = %10  : int[]
 	_ADD_DEALLOC(a, _10, int64_t);
@@ -155,8 +156,8 @@ blklab0:;
 		_DEALLOC(_27);
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(b, tmp_s, int64_t);
-		_27 = _func_(tmp_s, b_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
-		_CALLEE_DEALLOC_POST(_27, b);
+		_27 = _func_(tmp_s, b_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
+		_CALLEE_DEALLOC_POST(_27, tmp_s);
 	}
 	//assign %3 = %27  : int[]
 	_ADD_DEALLOC(c, _27, int64_t);

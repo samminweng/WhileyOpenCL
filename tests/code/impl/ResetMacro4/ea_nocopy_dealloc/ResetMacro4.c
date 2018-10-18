@@ -1,5 +1,7 @@
 #include "ResetMacro4.h"
-int64_t* _add_(_DECL_1DARRAY_PARAM(a), _DECL_DEALLOC_PARAM(a), _DECL_1DARRAY_PARAM(b), _DECL_DEALLOC_PARAM(b), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _add_(_DECL_1DARRAY_PARAM(a), _DECL_1DARRAY_PARAM(b), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(a);
+	_DECL_DEALLOC(b);
 	_DECL_1DARRAY(_2);
 	_DECL_DEALLOC(_2);
 	int64_t length;
@@ -150,7 +152,7 @@ blklab2:;
 		_COPY_1DARRAY_PARAM(a, tmp_b, int64_t);
 		// isCopyEliminated of '_1' = false
 		// isCopyEliminated of '_1' = false
-		_11 = _add_(tmp_a, a_size, false, tmp_b, a_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
+		_11 = _add_(tmp_a, a_size, tmp_b, a_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		_CALLER_DEALLOC_POST(_11, tmp_a);
 		_CALLER_DEALLOC_POST(_11, tmp_b);
 	}

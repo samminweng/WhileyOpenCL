@@ -1,5 +1,6 @@
 #include "bubblesort.h"
-int64_t* _bubbleSort_(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _bubbleSort_(_DECL_1DARRAY_PARAM(items), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(items);
 	_DECL_1DARRAY(_1);
 	_DECL_DEALLOC(_1);
 	int64_t length;
@@ -234,7 +235,7 @@ int main(int argc, char** args){
 		_RESET_DEALLOC(_11, ys, "true-true-false" , "bubbleSort");
 		_DEALLOC(_11);
 		// isCopyEliminated of '_1' = true
-		_11 = _bubbleSort_(ys, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
+		_11 = _bubbleSort_(ys, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		_RESET_DEALLOC_POST(_11, ys);
 	}
 	//assign %1 = %11  : int[]
@@ -293,7 +294,7 @@ blklab5:;
 		_RESET_DEALLOC(_25, ys, "true-true-false" , "bubbleSort");
 		_DEALLOC(_25);
 		// isCopyEliminated of '_1' = true
-		_25 = _bubbleSort_(ys, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
+		_25 = _bubbleSort_(ys, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 		_RESET_DEALLOC_POST(_25, ys);
 	}
 	//assign %1 = %25  : int[]
@@ -350,7 +351,7 @@ blklab6:;
 		_RESET_DEALLOC(_38, ys, "true-true-false" , "bubbleSort");
 		_DEALLOC(_38);
 		// isCopyEliminated of '_1' = true
-		_38 = _bubbleSort_(ys, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
+		_38 = _bubbleSort_(ys, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 		_RESET_DEALLOC_POST(_38, ys);
 	}
 	//assign %1 = %38  : int[]
@@ -409,7 +410,7 @@ blklab7:;
 		_RESET_DEALLOC(_52, ys, "true-true-false" , "bubbleSort");
 		_DEALLOC(_52);
 		// isCopyEliminated of '_1' = true
-		_52 = _bubbleSort_(ys, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
+		_52 = _bubbleSort_(ys, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 		_RESET_DEALLOC_POST(_52, ys);
 	}
 	//assign %1 = %52  : int[]
@@ -489,7 +490,7 @@ blklab9:;
 		_RESET_DEALLOC(_68, arr, "true-true-false" , "bubbleSort");
 		_DEALLOC(_68);
 		// isCopyEliminated of '_4' = true
-		_68 = _bubbleSort_(arr, arr_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
+		_68 = _bubbleSort_(arr, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
 		_RESET_DEALLOC_POST(_68, arr);
 	}
 	//assign %4 = %68  : int[]

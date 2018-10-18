@@ -1,5 +1,6 @@
 #include "ResetMacro1.h"
-int64_t* _func_(_DECL_1DARRAY_PARAM(x), _DECL_DEALLOC_PARAM(x), int64_t num, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _func_(_DECL_1DARRAY_PARAM(x), int64_t num, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(x);
 	_DECL_1DARRAY(_2);
 	_DECL_DEALLOC(_2);
 	int64_t _3;
@@ -51,7 +52,7 @@ int main(int argc, char** args){
 		_DEALLOC(_6);
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(x, tmp_x, int64_t);
-		_6 = _func_(tmp_x, x_size, false, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
+		_6 = _func_(tmp_x, x_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		_CALLER_DEALLOC_POST(_6, tmp_x);
 	}
 	//assign %2 = %6  : int[]

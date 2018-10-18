@@ -50,7 +50,9 @@ blklab1:;
 	//return
 }
 
-int64_t _convolution_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM(pixels), int64_t width, int64_t height, int64_t xCenter, int64_t yCenter, _DECL_1DARRAY_PARAM(kernel), _DECL_DEALLOC_PARAM(kernel)){
+int64_t _convolution_(BYTE* pixels, size_t pixels_size, int64_t width, int64_t height, int64_t xCenter, int64_t yCenter, _DECL_1DARRAY_PARAM(kernel)){
+	_DECL_DEALLOC(pixels);
+	_DECL_DEALLOC(kernel);
 	int64_t _6;
 	int64_t sum;
 	int64_t kernelSize;
@@ -206,7 +208,8 @@ blklab4:;
 	//return
 }
 
-BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM(pixels), int64_t width, int64_t height, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, int64_t width, int64_t height, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(pixels);
 	_DECL_1DARRAY_BYTE(_3);
 	_DECL_DEALLOC(_3);
 	int64_t size;
@@ -376,7 +379,7 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM
 				_RETAIN_DEALLOC(_47, pixels, "false-false-true" , "convolution");
 				// isCopyEliminated of '_0' = true
 				// isCopyEliminated of '_6' = true
-				_47 = _convolution_(pixels, pixels_size, false, width, height, x, y, v_sobel, v_sobel_size, false);
+				_47 = _convolution_(pixels, pixels_size, width, height, x, y, v_sobel, v_sobel_size);
 			}
 			//assign %11 = %47  : int
 			// isCopyEliminated = true
@@ -387,7 +390,7 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM
 				_RETAIN_DEALLOC(_48, pixels, "false-false-true" , "convolution");
 				// isCopyEliminated of '_0' = true
 				// isCopyEliminated of '_7' = true
-				_48 = _convolution_(pixels, pixels_size, false, width, height, x, y, h_sobel, h_sobel_size, false);
+				_48 = _convolution_(pixels, pixels_size, width, height, x, y, h_sobel, h_sobel_size);
 			}
 			//assign %12 = %48  : int
 			// isCopyEliminated = true
@@ -452,7 +455,8 @@ blklab8:;
 	//return
 }
 
-void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t pixels_size, _DECL_DEALLOC_PARAM(pixels)){
+void _print_pbm_(FILE* sys, int64_t width, int64_t height, BYTE* pixels, size_t pixels_size){
+	_DECL_DEALLOC(pixels);
 	int64_t j;
 	int64_t i;
 	int64_t pos;
@@ -665,7 +669,7 @@ int main(int argc, char** args){
 		_RETAIN_DEALLOC(_12, pixels, "false-false-false" , "sobelEdgeDetection");
 		_DEALLOC(_12);
 		// isCopyEliminated of '_4' = true
-		_12 = _sobelEdgeDetection_(pixels, pixels_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_12));
+		_12 = _sobelEdgeDetection_(pixels, pixels_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_12));
 		_RETAIN_DEALLOC_POST(_12, pixels);
 	}
 	//assign %5 = %12  : byte[]
@@ -675,7 +679,7 @@ int main(int argc, char** args){
 	{
 		_RETAIN_DEALLOC(, newPixels, "false-false-false" , "print_pbm");
 		// isCopyEliminated of '_5' = true
-		_print_pbm_(stdout, width, height, newPixels, newPixels_size, false);
+		_print_pbm_(stdout, width, height, newPixels, newPixels_size);
 	}
 	//return
 	if(file != NULL){fclose(file); file = NULL;}

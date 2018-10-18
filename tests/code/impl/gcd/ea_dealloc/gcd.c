@@ -46,7 +46,8 @@ blklab2:;
 	//return
 }
 
-int64_t _gcd_cached_(int64_t a, int64_t b, int64_t n, _DECL_1DARRAY_PARAM(gcds), _DECL_DEALLOC_PARAM(gcds)){
+int64_t _gcd_cached_(int64_t a, int64_t b, int64_t n, _DECL_1DARRAY_PARAM(gcds)){
+	_DECL_DEALLOC(gcds);
 	int64_t _4;
 	int64_t _5;
 	int64_t _6;
@@ -202,7 +203,8 @@ int main(int argc, char** args){
 				_CALLEE_DEALLOC(_16, gcds, "false-false-true" , "gcd_cached");
 				void* tmp_gcds;
 				_COPY_1DARRAY_PARAM(gcds, tmp_gcds, int64_t);
-				_16 = _gcd_cached_(i, j, n, tmp_gcds, gcds_size, true);
+				_16 = _gcd_cached_(i, j, n, tmp_gcds, gcds_size);
+				free(tmp_gcds);
 			}
 			//mul %17 = %3, %1 : int
 			_17=i*n;

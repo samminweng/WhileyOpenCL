@@ -10,7 +10,7 @@ Generating GOTO Program
 Adding CPROVER library (x86_64)
 Removal of function pointers and virtual functions
 Generic Property Instrumentation
-Running with 60 object bits, 4 offset bits (user-specified)
+Running with 11 object bits, 53 offset bits (user-specified)
 Starting Bounded Model Checking
 Unwinding loop create1DArray_int64_t.0 iteration 1 file impl/assignment/assignment_3Vars_test13/Util.c line 30 function create1DArray_int64_t thread 0
 Unwinding loop create1DArray_int64_t.0 iteration 2 file impl/assignment/assignment_3Vars_test13/Util.c line 30 function create1DArray_int64_t thread 0
@@ -138,7 +138,7 @@ Post-processing
 Solving with MiniSAT 2.2.1 with simplifier
 317004 variables, 88739 clauses
 SAT checker: instance is UNSATISFIABLE
-Runtime decision procedure: 2.06169s
+Runtime decision procedure: 2.03369s
 
 ** Results:
 [main.precondition_instance.1] free argument must be dynamic object: SUCCESS

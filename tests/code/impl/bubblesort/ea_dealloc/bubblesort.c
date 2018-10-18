@@ -1,5 +1,6 @@
 #include "bubblesort.h"
-int64_t* _bubbleSort_(_DECL_1DARRAY_PARAM(items), _DECL_DEALLOC_PARAM(items), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _bubbleSort_(_DECL_1DARRAY_PARAM(items), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(items);
 	_DECL_1DARRAY(_1);
 	_DECL_DEALLOC(_1);
 	int64_t length;
@@ -226,7 +227,7 @@ int main(int argc, char** args){
 		_DEALLOC(_11);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
-		_11 = _bubbleSort_(tmp_items, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
+		_11 = _bubbleSort_(tmp_items, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		_CALLER_DEALLOC_POST(_11, tmp_items);
 	}
 	//assign %1 = %11  : int[]
@@ -284,7 +285,7 @@ blklab5:;
 		_DEALLOC(_25);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
-		_25 = _bubbleSort_(tmp_items, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
+		_25 = _bubbleSort_(tmp_items, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 		_CALLER_DEALLOC_POST(_25, tmp_items);
 	}
 	//assign %1 = %25  : int[]
@@ -340,7 +341,7 @@ blklab6:;
 		_DEALLOC(_38);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
-		_38 = _bubbleSort_(tmp_items, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
+		_38 = _bubbleSort_(tmp_items, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 		_CALLER_DEALLOC_POST(_38, tmp_items);
 	}
 	//assign %1 = %38  : int[]
@@ -398,7 +399,7 @@ blklab7:;
 		_DEALLOC(_52);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
-		_52 = _bubbleSort_(tmp_items, ys_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
+		_52 = _bubbleSort_(tmp_items, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 		_CALLER_DEALLOC_POST(_52, tmp_items);
 	}
 	//assign %1 = %52  : int[]
@@ -474,7 +475,7 @@ blklab9:;
 		_DEALLOC(_68);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(arr, tmp_items, int64_t);
-		_68 = _bubbleSort_(tmp_items, arr_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
+		_68 = _bubbleSort_(tmp_items, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
 		_CALLER_DEALLOC_POST(_68, tmp_items);
 	}
 	//assign %4 = %68  : int[]

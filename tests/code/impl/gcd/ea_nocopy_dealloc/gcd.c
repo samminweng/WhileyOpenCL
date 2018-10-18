@@ -48,7 +48,8 @@ blklab2:;
 	//return
 }
 
-int64_t _gcd_cached_(int64_t a, int64_t b, int64_t n, _DECL_1DARRAY_PARAM(gcds), _DECL_DEALLOC_PARAM(gcds)){
+int64_t _gcd_cached_(int64_t a, int64_t b, int64_t n, _DECL_1DARRAY_PARAM(gcds)){
+	_DECL_DEALLOC(gcds);
 	int64_t _4;
 	int64_t _5;
 	int64_t _6;
@@ -209,7 +210,7 @@ int main(int argc, char** args){
 			{
 				_RETAIN_DEALLOC(_16, gcds, "false-false-true" , "gcd_cached");
 				// isCopyEliminated of '_2' = true
-				_16 = _gcd_cached_(i, j, n, gcds, gcds_size, false);
+				_16 = _gcd_cached_(i, j, n, gcds, gcds_size);
 			}
 			//mul %17 = %3, %1 : int
 			_17=i*n;

@@ -110,6 +110,7 @@ public class ModelCheckingTestCase {
 				lines.add("import whiley.lang.*\n");
 				// Write out the function
 				if (category.equals("functioncall")) {
+					// Add a function 'func' that may return input 'x'
 					lines.add("function func(int[] x, int num) -> int[]:");
 					lines.add("\tint[] a = [0;3]");
 					lines.add("\tint[] b = [1;3]");
@@ -121,6 +122,18 @@ public class ModelCheckingTestCase {
 					lines.add("\t\t\tif num >9:");
 					lines.add("\t\t\t\treturn c");
 					lines.add("\treturn d");
+				}else if(category.equals("functioncall2")) {
+					// Add a function that does not return 'x'
+					lines.add("function func(int[] x, int num) -> int[]:");
+					lines.add("\tint[] a = [0;3]");
+					lines.add("\tint[] b = [1;3]");
+					lines.add("\tx[0] = num // Change 'x'");
+					lines.add("\tint[] c = a");
+					lines.add("\tint[] d = b");
+					lines.add("\tif num >9:");
+					lines.add("\t\treturn c // Does not return 'x'");
+					lines.add("\telse:");
+					lines.add("\t\treturn d // Does not return 'x'");
 				}
 
 				lines.add("public method main(System.Console console):");
@@ -144,7 +157,7 @@ public class ModelCheckingTestCase {
 					}
 					i++;
 				}
-				if (category.equals("functioncall")) {
+				if (category.contains("functioncall")) {
 					// Add a function call at the end of loop
 					lines.add("\t\ta = func(b, 11)");
 				}
@@ -238,6 +251,18 @@ public class ModelCheckingTestCase {
 		variables.add("c");
 
 		generateWhileyAndProduceCCodeAndRunIt(variables, "functioncall");
+
+	}
+	
+	@Test
+	public void test3Variables_functioncall2() throws IOException {
+		// Generates the varaibles
+		ArrayList<String> variables = new ArrayList<String>();
+		variables.add("a");
+		variables.add("b");
+		variables.add("c");
+
+		generateWhileyAndProduceCCodeAndRunIt(variables, "functioncall2");
 
 	}
 }

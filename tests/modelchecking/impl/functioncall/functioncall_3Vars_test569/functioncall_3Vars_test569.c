@@ -1,5 +1,6 @@
 #include "functioncall_3Vars_test569.h"
-int64_t* _func_(_DECL_1DARRAY_PARAM(x), _DECL_DEALLOC_PARAM(x), int64_t num, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _func_(_DECL_1DARRAY_PARAM(x), int64_t num, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(x);
 	_DECL_1DARRAY(_2);
 	_DECL_DEALLOC(_2);
 	_DECL_1DARRAY(a);
@@ -195,7 +196,7 @@ int main(int argc, char** args){
 			void* tmp_x;
 			_COPY_1DARRAY_PARAM(b, tmp_x, int64_t);
 			// isCopyEliminated of '_2' = false
-			_19 = _func_(tmp_x, b_size, false, _20, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
+			_19 = _func_(tmp_x, b_size, _20, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
 			_CALLER_DEALLOC_POST(_19, tmp_x);
 		}
 		//assign %1 = %19  : int[]

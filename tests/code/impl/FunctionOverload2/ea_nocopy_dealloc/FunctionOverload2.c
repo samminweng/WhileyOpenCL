@@ -40,7 +40,8 @@ int64_t* _Cash_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	//return
 }
 
-int64_t* _Cash_1_(_DECL_1DARRAY_PARAM(coins), _DECL_DEALLOC_PARAM(coins), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _Cash_1_(_DECL_1DARRAY_PARAM(coins), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(coins);
 	_DECL_1DARRAY(_1);
 	_DECL_DEALLOC(_1);
 	_DECL_1DARRAY(cash);
@@ -198,7 +199,7 @@ int main(int argc, char** args){
 		_RETAIN_DEALLOC(_4, _13, "false-false-false" , "Cash");
 		_DEALLOC(_4);
 		// isCopyEliminated of '_13' = true
-		_4 = _Cash_1_(_13, _13_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_4));
+		_4 = _Cash_1_(_13, _13_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_4));
 		_RETAIN_DEALLOC_POST(_4, _13);
 	}
 	//assign %2 = %4  : int[]

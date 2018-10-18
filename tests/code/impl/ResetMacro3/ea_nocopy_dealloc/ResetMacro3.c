@@ -1,5 +1,6 @@
 #include "ResetMacro3.h"
-int64_t* _func_(_DECL_1DARRAY_PARAM(b), _DECL_DEALLOC_PARAM(b), int64_t num, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _func_(_DECL_1DARRAY_PARAM(b), int64_t num, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(b);
 	_DECL_1DARRAY(_2);
 	_DECL_DEALLOC(_2);
 	_DECL_1DARRAY(c);
@@ -91,7 +92,7 @@ int main(int argc, char** args){
 		_RESET_DEALLOC(_6, b, "true-true-false" , "func");
 		_DEALLOC(_6);
 		// isCopyEliminated of '_1' = true
-		_6 = _func_(b, b_size, false, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
+		_6 = _func_(b, b_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		_RESET_DEALLOC_POST(_6, b);
 	}
 	//assign %2 = %6  : int[]
@@ -134,7 +135,7 @@ blklab2:;
 		_RESET_DEALLOC(_15, b, "true-true-false" , "func");
 		_DEALLOC(_15);
 		// isCopyEliminated of '_1' = true
-		_15 = _func_(b, b_size, false, _16, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
+		_15 = _func_(b, b_size, _16, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
 		_RESET_DEALLOC_POST(_15, b);
 	}
 	//assign %1 = %15  : int[]

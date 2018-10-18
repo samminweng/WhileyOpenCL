@@ -1,5 +1,7 @@
 #include "ArrayAppend.h"
-int64_t* _test_append_(_DECL_1DARRAY_PARAM(lhs), _DECL_DEALLOC_PARAM(lhs), _DECL_1DARRAY_PARAM(rhs), _DECL_DEALLOC_PARAM(rhs), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _test_append_(_DECL_1DARRAY_PARAM(lhs), _DECL_1DARRAY_PARAM(rhs), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(lhs);
+	_DECL_DEALLOC(rhs);
 	_DECL_1DARRAY(_2);
 	_DECL_DEALLOC(_2);
 	_DECL_1DARRAY(rs);
@@ -127,9 +129,9 @@ int main(int argc, char** args){
 		_COPY_1DARRAY_PARAM(r, tmp_lhs, int64_t);
 		void* tmp_rhs;
 		_COPY_1DARRAY_PARAM(_4, tmp_rhs, int64_t);
-		_3 = _test_append_(tmp_lhs, r_size, true, tmp_rhs, _4_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
-		_CALLEE_DEALLOC_POST(_3, r);
-		_CALLEE_DEALLOC_POST(_3, _4);
+		_3 = _test_append_(tmp_lhs, r_size, tmp_rhs, _4_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
+		_CALLEE_DEALLOC_POST(_3, tmp_lhs);
+		_CALLEE_DEALLOC_POST(_3, tmp_rhs);
 	}
 	//assign %1 = %3  : int[]
 	_DEALLOC(r);

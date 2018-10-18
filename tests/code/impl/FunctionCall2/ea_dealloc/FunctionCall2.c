@@ -1,5 +1,6 @@
 #include "FunctionCall2.h"
-int64_t* _func_(_DECL_1DARRAY_PARAM(s), _DECL_DEALLOC_PARAM(s), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _func_(_DECL_1DARRAY_PARAM(s), int64_t n, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(s);
 	_DECL_1DARRAY(_2);
 	_DECL_DEALLOC(_2);
 	_DECL_1DARRAY(t);
@@ -117,7 +118,7 @@ int main(int argc, char** args){
 		_DEALLOC(_10);
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(a, tmp_s, int64_t);
-		_10 = _func_(tmp_s, a_size, false, _11, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
+		_10 = _func_(tmp_s, a_size, _11, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 		_CALLER_DEALLOC_POST(_10, tmp_s);
 	}
 	//assign %1 = %10  : int[]
@@ -185,7 +186,7 @@ blklab2:;
 		_DEALLOC(_28);
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(b, tmp_s, int64_t);
-		_28 = _func_(tmp_s, b_size, false, _29, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
+		_28 = _func_(tmp_s, b_size, _29, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 		_CALLER_DEALLOC_POST(_28, tmp_s);
 	}
 	//assign %3 = %28  : int[]

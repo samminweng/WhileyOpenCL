@@ -1,5 +1,6 @@
 #include "MatrixMult.h"
-int64_t* _init_(_DECL_1DARRAY_PARAM(data), _DECL_DEALLOC_PARAM(data), int64_t width, int64_t height, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _init_(_DECL_1DARRAY_PARAM(data), int64_t width, int64_t height, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(data);
 	_DECL_1DARRAY(r);
 	_DECL_DEALLOC(r);
 	int64_t i;
@@ -67,7 +68,10 @@ blklab0:;
 	//return
 }
 
-int64_t* _mat_mult_(_DECL_1DARRAY_PARAM(a), _DECL_DEALLOC_PARAM(a), _DECL_1DARRAY_PARAM(b), _DECL_DEALLOC_PARAM(b), _DECL_1DARRAY_PARAM(data), _DECL_DEALLOC_PARAM(data), int64_t width, int64_t height, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _mat_mult_(_DECL_1DARRAY_PARAM(a), _DECL_1DARRAY_PARAM(b), _DECL_1DARRAY_PARAM(data), int64_t width, int64_t height, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(a);
+	_DECL_DEALLOC(b);
+	_DECL_DEALLOC(data);
 	_DECL_1DARRAY(c);
 	_DECL_DEALLOC(c);
 	int64_t i;
@@ -306,7 +310,7 @@ int main(int argc, char** args){
 		_RESET_DEALLOC(_16, A, "true-true-false" , "init");
 		_DEALLOC(_16);
 		// isCopyEliminated of '_4' = true
-		_16 = _init_(A, A_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
+		_16 = _init_(A, A_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		_RESET_DEALLOC_POST(_16, A);
 	}
 	//assign %4 = %16  : int[]
@@ -326,7 +330,7 @@ int main(int argc, char** args){
 		_RESET_DEALLOC(_20, B, "true-true-false" , "init");
 		_DEALLOC(_20);
 		// isCopyEliminated of '_5' = true
-		_20 = _init_(B, B_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
+		_20 = _init_(B, B_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
 		_RESET_DEALLOC_POST(_20, B);
 	}
 	//assign %5 = %20  : int[]
@@ -350,7 +354,7 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_4' = true
 		// isCopyEliminated of '_5' = true
 		// isCopyEliminated of '_6' = true
-		_24 = _mat_mult_(A, A_size, false, B, B_size, false, C, C_size, false, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
+		_24 = _mat_mult_(A, A_size, B, B_size, C, C_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
 		_RETAIN_DEALLOC_POST(_24, A);
 		_RETAIN_DEALLOC_POST(_24, B);
 		_RESET_DEALLOC_POST(_24, C);

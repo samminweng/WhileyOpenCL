@@ -1,5 +1,6 @@
 #include "reverse.h"
-int64_t* _reverse_(_DECL_1DARRAY_PARAM(ls), _DECL_DEALLOC_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _reverse_(_DECL_1DARRAY_PARAM(ls), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(ls);
 	_DECL_1DARRAY(_1);
 	_DECL_DEALLOC(_1);
 	int64_t i;
@@ -131,8 +132,8 @@ int main(int argc, char** args){
 		_DEALLOC(_5);
 		void* tmp_ls;
 		_COPY_1DARRAY_PARAM(_11, tmp_ls, int64_t);
-		_5 = _reverse_(tmp_ls, _11_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
-		_CALLEE_DEALLOC_POST(_5, _11);
+		_5 = _reverse_(tmp_ls, _11_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
+		_CALLEE_DEALLOC_POST(_5, tmp_ls);
 	}
 	//assign %1 = %5  : int[]
 	_ADD_DEALLOC(rs, _5, int64_t);
@@ -205,8 +206,8 @@ blklab5:;
 		_DEALLOC(_27);
 		void* tmp_ls;
 		_COPY_1DARRAY_PARAM(arr, tmp_ls, int64_t);
-		_27 = _reverse_(tmp_ls, arr_size, true, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
-		_CALLEE_DEALLOC_POST(_27, arr);
+		_27 = _reverse_(tmp_ls, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
+		_CALLEE_DEALLOC_POST(_27, tmp_ls);
 	}
 	//assign %4 = %27  : int[]
 	_ADD_DEALLOC(arr, _27, int64_t);

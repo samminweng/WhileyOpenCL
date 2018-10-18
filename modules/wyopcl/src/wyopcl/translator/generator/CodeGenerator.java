@@ -124,9 +124,23 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// The string declaration.
 		List<String> declarations = new ArrayList<String>();
 		// Skip the parameter registers and iterate over the remaining registers
-		int inputs = function.type().params().size();
+		ArrayList<Type> params = function.type().params();
 		String indent = "\t";
-		for (int reg = inputs; reg < vars.size(); reg++) {
+		// Declare the deallocation for the parameter
+		for(int reg = 0; reg< params.size();reg++) {
+			int register = reg;
+			// Declare deallocation flag
+			this.deallocatedAnalyzer.ifPresent(a -> {
+				String o = a.declareDeallocFlag(indent, register, function, stores);
+				if (o != null) {
+					declarations.add(o);
+				}
+			});
+			
+		}
+		
+		// Declare local variables 
+		for (int reg = params.size(); reg < vars.size(); reg++) {
 			Type type = stores.getRawType(reg, function);
 			// Get the variable name.
 			String var = stores.getVar(reg, function);
@@ -351,11 +365,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						}
 					}
 					// Add deallocation flag ('_dealloc') to input parameter
-					this.deallocatedAnalyzer.ifPresent(a -> {
-						if (stores.isCompoundType(parameter_type)) {
-							parameters.add("_DECL_DEALLOC_PARAM(" + var + ")");
-						}
-					});
+//					this.deallocatedAnalyzer.ifPresent(a -> {
+//						if (stores.isCompoundType(parameter_type)) {
+//							parameters.add("_DECL_DEALLOC_PARAM(" + var + ")");
+//						}
+//					});
 				}
 				// Pass the extra size variable of return array
 				if(ret_type != null){
@@ -1088,37 +1102,37 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				throw new RuntimeException("Not Implemented");
 			}
 
-			// Append deallocation flag to the function call
-			this.deallocatedAnalyzer.ifPresent(a -> {
-				String macro = a.computeDealloc(operand, code, function, stores, copyAnalyzer);
-				if (!macro.equals("")) {
-					// Split the macro into an array of two string
-					String[] parts = macro.split("\t");
-					String macro_name = parts[0];// Get the macro
-					switch (macro_name) {
-					case "_SUBSTRUCTURE_DEALLOC":
-						parameters.add("false");
-						break;
-					case "_RESET_DEALLOC":
-						parameters.add("false");
-						break;
-					case "_RETAIN_DEALLOC":
-						parameters.add("false");
-						break;
-					case "_CALLER_DEALLOC":
-						parameters.add("false");
-						break;
-					case "_CALLEE_DEALLOC":
-						parameters.add("true");
-						break;
-					default:
-						break;
-					}
-				} else {
-					// Do nothing
-				}
-
-			});
+//			// Append deallocation flag to the function call
+//			this.deallocatedAnalyzer.ifPresent(a -> {
+//				String macro = a.computeDealloc(operand, code, function, stores, copyAnalyzer);
+//				if (!macro.equals("")) {
+//					// Split the macro into an array of two string
+//					String[] parts = macro.split("\t");
+//					String macro_name = parts[0];// Get the macro
+//					switch (macro_name) {
+//					case "_SUBSTRUCTURE_DEALLOC":
+//						parameters.add("false");
+//						break;
+//					case "_RESET_DEALLOC":
+//						parameters.add("false");
+//						break;
+//					case "_RETAIN_DEALLOC":
+//						parameters.add("false");
+//						break;
+//					case "_CALLER_DEALLOC":
+//						parameters.add("false");
+//						break;
+//					case "_CALLEE_DEALLOC":
+//						parameters.add("true");
+//						break;
+//					default:
+//						break;
+//					}
+//				} else {
+//					// Do nothing
+//				}
+//
+//			});
 			
 			index++;
 		}

@@ -1,5 +1,6 @@
 #include "ResetMacro3.h"
-int64_t* _func_(_DECL_1DARRAY_PARAM(b), _DECL_DEALLOC_PARAM(b), int64_t num, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _func_(_DECL_1DARRAY_PARAM(b), int64_t num, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(b);
 	_DECL_1DARRAY(_2);
 	_DECL_DEALLOC(_2);
 	_DECL_1DARRAY(c);
@@ -90,7 +91,7 @@ int main(int argc, char** args){
 		_DEALLOC(_6);
 		void* tmp_b;
 		_COPY_1DARRAY_PARAM(b, tmp_b, int64_t);
-		_6 = _func_(tmp_b, b_size, false, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
+		_6 = _func_(tmp_b, b_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		_CALLER_DEALLOC_POST(_6, tmp_b);
 	}
 	//assign %2 = %6  : int[]
@@ -132,7 +133,7 @@ blklab2:;
 		_DEALLOC(_15);
 		void* tmp_b;
 		_COPY_1DARRAY_PARAM(b, tmp_b, int64_t);
-		_15 = _func_(tmp_b, b_size, false, _16, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
+		_15 = _func_(tmp_b, b_size, _16, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
 		_CALLER_DEALLOC_POST(_15, tmp_b);
 	}
 	//assign %1 = %15  : int[]

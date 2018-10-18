@@ -405,8 +405,8 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 * Deallocation Macros for function call 'a = func(b)'
 *
 */
-// '_RETAIN_DEALLOC' macro does NOT make the copy of argument and delegates caller to free the passing parameter
-// 'a = func(b, false)'
+// '_RETAIN_DEALLOC' macro does NOT make the copy of argument 
+// and free the passing parameter at caller site 'a = func(b, false)'
 #define _RETAIN_DEALLOC(a, b, checks, func_name)  \
 		({\
             DEBUG_PRINT("_RETAIN_DEALLOC macro on ( "str(a)" = "str(func_name)" "str(b)" "str(checks)" )");\
@@ -416,8 +416,8 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 		({\
             a##_dealloc = true; \
         })
-// 'RESET_DEALLOC' macro does not copy 'b' and delegate callee to free 'b'.
-// 'a = func(b, false)'
+// 'RESET_DEALLOC' macro does not copy 'b' 
+// and free 'b' at caller site. 'a = func(b, false)'
 #define _RESET_DEALLOC(a, b, checks, func_name) \
 		({\
 		    DEBUG_PRINT("_RESET_DEALLOC macro on ( "str(a)" = "str(func_name)" "str(b)" "str(checks)" )");\
@@ -432,8 +432,8 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
                 b##_dealloc = false;\
             }\
         })
-// '_CALLER_DEALLOC' macro makes a copy of actual argument and delegates caller
-//  to free passing parameter 'a = func(b, false)'
+// '_CALLER_DEALLOC' macro makes a copy of actual argument 
+//and free passing parameter at caller site 'a = func(b)' 
 // This macro also print out debugging message on memory leaks, due to
 // the fact a and b (extra copy) are not aliased and the copy is not freed either at caller nor callee.
 // 'checks' contains the analysis results of parameter 'b', e.g. 'true-true-false'
@@ -460,15 +460,18 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 			}\
             a##_dealloc = true;\
 		})
-// '_CALLEE_DEALLOC' macro makes a copy of actual parameter and delegates callee
-// to free the passing parameter 'a = func(b, true)'
+// '_CALLEE_DEALLOC' macro makes a copy of actual parameter 
+// And free the passing parameter at caller site 'a = func(b)'
 #define _CALLEE_DEALLOC(a, b, checks, func_name)  \
 		({\
             DEBUG_PRINT("_CALLEE_DEALLOC macro on ( "str(a)" = "str(func_name)" "str(b)" "str(checks)" )");\
             DEBUG_CHECK_ASSUMPTION(a, b);\
         })
+// Free the parameter at caller site 
 #define _CALLEE_DEALLOC_POST(a, b)  \
 	   ({\
+	        free(b);\
+			b = NULL;\
             a##_dealloc = true; \
         })
 // '_SUBSTRUCTURE_DEALLOC' macro applies the subtructure parameter
