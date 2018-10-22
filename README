@@ -78,10 +78,11 @@ $ ./memorydetect.sh
 All the execution results are output to 'memorylog.txt'
 
 1.4 Model checking
-Model checking is used to check the assumption at runtime with 722 test Whiley programs. 
+Model checking is used to check the assumption at runtime with 2,162 test Whiley programs.
+(722: ADD and TRANSFER macros, 360: CALLER macro, 360: CALLEE macro, 360: RESET macro, 360: RETAIN macro) 
 $ ant test-modelchecking
 To detect memory leaks and check if deallocation macro satisfies the assumption at runtime,
 we use the below shell script:
 $ cd tests/modelchecking
-$ ./memorydetect.sh
-All the execution results are output to 'memorylog.txt'
+$ ./runValgrind.sh
+All the execution results are output to 'log_valgrind.txt'
