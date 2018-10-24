@@ -16,6 +16,7 @@ import wyopcl.translator.Analyzer;
 import wyopcl.translator.LiveVariablesAnalysis;
 import wyopcl.translator.ReadWriteAnalyzer;
 import wyopcl.translator.ReturnAnalyzer;
+import wyopcl.translator.ReturnAnalyzer.RETURN;
 
 /**
  * Analyze the alias in the WyIL code to find all the necessary array copies and eliminate un-necessary copies.
@@ -98,8 +99,8 @@ public class CopyEliminationAnalyzer extends Analyzer {
 					// 'r' is NOT mutated inside invoked function
 					if (!isMutated) {
 						// Get the return 
-						boolean isReturn = returnAnalyzer.isReturned(callee_register, callee);
-						if(isReturn){
+						RETURN isReturn = returnAnalyzer.isReturned(callee_register, callee);
+						if(isReturn == RETURN.MAYBE_RETURN || isReturn == RETURN.ALWAYS_RETURN){
 							// We use caller macro
 							return false; // We need the copy
 						}

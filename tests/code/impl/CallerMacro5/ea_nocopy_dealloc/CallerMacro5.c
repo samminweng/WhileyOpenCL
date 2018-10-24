@@ -155,7 +155,7 @@ int main(int argc, char** args){
 	_7 = 11;
 	//invoke (%6) = (%1, %7) CallerMacro5:func : function(int[],int)->(int[])
 	{
-		_CALLER_DEALLOC(_6, x, "false-true-true" , "func");
+		_CALLER_DEALLOC(_6, x, "false-MAYBE_RETURN-true" , "func");
 		_DEALLOC(_6);
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(x, tmp_x, int64_t);
@@ -208,7 +208,7 @@ blklab3:;
 	_19 = 10;
 	//invoke (%18) = (%1, %19) CallerMacro5:func : function(int[],int)->(int[])
 	{
-		_CALLER_DEALLOC(_18, x, "false-true-true" , "func");
+		_CALLER_DEALLOC(_18, x, "false-MAYBE_RETURN-true" , "func");
 		_DEALLOC(_18);
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(x, tmp_x, int64_t);
@@ -261,7 +261,7 @@ blklab4:;
 	_31 = 9;
 	//invoke (%30) = (%1, %31) CallerMacro5:func : function(int[],int)->(int[])
 	{
-		_RESET_DEALLOC(_30, x, "false-true-false" , "func");
+		_RESET_DEALLOC(_30, x, "false-MAYBE_RETURN-false" , "func");
 		_DEALLOC(_30);
 		// isCopyEliminated of '_1' = true
 		_30 = _func_(x, x_size, _31, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));

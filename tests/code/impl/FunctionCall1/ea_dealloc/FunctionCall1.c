@@ -94,7 +94,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(a, _9, int64_t);
 	//invoke (%10) = (%1) FunctionCall1:func : function(int[])->(int[])
 	{
-		_CALLEE_DEALLOC(_10, a, "false-false-false" , "func");
+		_CALLEE_DEALLOC(_10, a, "false-NEVER_RETURN-false" , "func");
 		_DEALLOC(_10);
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(a, tmp_s, int64_t);
@@ -160,7 +160,7 @@ blklab0:;
 	_ADD_DEALLOC(b, _26, int64_t);
 	//invoke (%27) = (%2) FunctionCall1:func : function(int[])->(int[])
 	{
-		_CALLEE_DEALLOC(_27, b, "false-false-true" , "func");
+		_CALLEE_DEALLOC(_27, b, "false-NEVER_RETURN-true" , "func");
 		_DEALLOC(_27);
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(b, tmp_s, int64_t);

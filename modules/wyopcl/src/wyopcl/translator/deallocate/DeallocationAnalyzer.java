@@ -18,6 +18,7 @@ import wyopcl.translator.Analyzer;
 import wyopcl.translator.LiveVariablesAnalysis;
 import wyopcl.translator.ReadWriteAnalyzer;
 import wyopcl.translator.ReturnAnalyzer;
+import wyopcl.translator.ReturnAnalyzer.RETURN;
 import wyopcl.translator.copy.CopyEliminationAnalyzer;
 import wyopcl.translator.generator.CodeGeneratorHelper;
 import wyopcl.translator.generator.CodeStores;
@@ -742,7 +743,8 @@ public class DeallocationAnalyzer extends Analyzer {
 		FunctionOrMethod callingfunction = this.getCalledFunction(code);
 		int arguement = mapFunctionArgumentToCalleeRegister(register, code);
 		boolean isMutated = readwriteAnalyzer.isMutated(arguement, callingfunction);
-		boolean isReturned = returnAnalyzer.isReturned(arguement, callingfunction);
+		//boolean isReturned = returnAnalyzer.isReturned(arguement, callingfunction);
+		RETURN isReturned = returnAnalyzer.isReturned(arguement, callingfunction);
 		// Analyze the deallocation flags using live variable, read-write and return analysis
 		boolean isLive = liveAnalyzer.isLive(register, code, function);
 
@@ -758,7 +760,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			
 			if (!isMutated) {
 				// NOT mutated
-				if (!isReturned) {
+				if (isReturned == RETURN.NEVER_RETURN) {
 					// NOT mutated nor return
 					if (!isLive) {
 						return "_RETAIN_DEALLOC" + "\t" + checks;
@@ -778,7 +780,15 @@ public class DeallocationAnalyzer extends Analyzer {
 				}
 			} else {
 				// Mutated
-				if (isReturned) {
+				if (isReturned == RETURN.NEVER_RETURN) {
+					// Mutated and NOT returned
+					if (!isLive) {
+						return "_RETAIN_DEALLOC" + "\t" + checks;
+					} else {
+						// 'b' is alive
+						return "_CALLEE_DEALLOC" + "\t" + checks;
+					}					
+				} else {
 					// Mutated and returned
 					if (!isLive) {
 						// 'b' is NOT alive
@@ -787,25 +797,17 @@ public class DeallocationAnalyzer extends Analyzer {
 						// 'b' is alive
 						return "_CALLER_DEALLOC" + "\t" + checks;
 					}
-				} else {
-					// Mutated and NOT returned
-					if (!isLive) {
-						return "_RETAIN_DEALLOC" + "\t" + checks;
-					} else {
-						// 'b' is alive
-						return "_CALLEE_DEALLOC" + "\t" + checks;
-					}
 				}
 			}
 		} else {
 			// Naive code that the copy is always needed.
 			if (!isMutated) {
-				if (isReturned) {
+				if (!(isReturned == RETURN.NEVER_RETURN)) {// Maybe returned or always returned
 					// The de-allocation is Not done at callee.
 					return "_CALLER_DEALLOC" + "\t" + checks;
 				}
 			} else {
-				if (isReturned) {
+				if (!(isReturned == RETURN.NEVER_RETURN)) {// Maybe returned or always returned
 					return "_CALLER_DEALLOC" + "\t" + checks;
 				}
 			}

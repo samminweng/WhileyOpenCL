@@ -122,8 +122,8 @@ int main(int argc, char** args){
 	_4_dealloc = true;
 	//invoke (%3) = (%1, %4) ArrayAppend:test_append : function(int[],int[])->(int[])
 	{
-		_CALLEE_DEALLOC(_3, _4, "false-false-false" , "test_append");
-		_CALLEE_DEALLOC(_3, r, "false-false-false" , "test_append");
+		_CALLEE_DEALLOC(_3, _4, "false-NEVER_RETURN-false" , "test_append");
+		_CALLEE_DEALLOC(_3, r, "false-NEVER_RETURN-false" , "test_append");
 		_DEALLOC(_3);
 		void* tmp_lhs;
 		_COPY_1DARRAY_PARAM(r, tmp_lhs, int64_t);

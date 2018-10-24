@@ -179,7 +179,7 @@ int main(int argc, char** args){
 		_20 = 11;
 		//invoke (%19) = (%2, %20) functioncall2_3Vars_test52:func : function(int[],int)->(int[])
 		{
-			_CALLEE_DEALLOC(_19, b, "true-false-true" , "func");
+			_CALLEE_DEALLOC(_19, b, "true-NEVER_RETURN-true" , "func");
 			_DEALLOC(_19);
 			void* tmp_x;
 			_COPY_1DARRAY_PARAM(b, tmp_x, int64_t);

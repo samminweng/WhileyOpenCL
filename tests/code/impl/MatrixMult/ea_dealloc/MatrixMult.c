@@ -291,7 +291,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(A, _15, int64_t);
 	//invoke (%16) = (%4, %2, %3) MatrixMult:init : function(int[],int,int)->(int[])
 	{
-		_CALLER_DEALLOC(_16, A, "true-true-false" , "init");
+		_CALLER_DEALLOC(_16, A, "true-ALWAYS_RETURN-false" , "init");
 		_DEALLOC(_16);
 		void* tmp_data;
 		_COPY_1DARRAY_PARAM(A, tmp_data, int64_t);
@@ -310,7 +310,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(B, _19, int64_t);
 	//invoke (%20) = (%5, %2, %3) MatrixMult:init : function(int[],int,int)->(int[])
 	{
-		_CALLER_DEALLOC(_20, B, "true-true-false" , "init");
+		_CALLER_DEALLOC(_20, B, "true-ALWAYS_RETURN-false" , "init");
 		_DEALLOC(_20);
 		void* tmp_data;
 		_COPY_1DARRAY_PARAM(B, tmp_data, int64_t);
@@ -329,9 +329,9 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(C, _23, int64_t);
 	//invoke (%24) = (%4, %5, %6, %2, %3) MatrixMult:mat_mult : function(int[],int[],int[],int,int)->(int[])
 	{
-		_CALLER_DEALLOC(_24, C, "true-true-false" , "mat_mult");
-		_CALLEE_DEALLOC(_24, B, "false-false-true" , "mat_mult");
-		_CALLEE_DEALLOC(_24, A, "false-false-true" , "mat_mult");
+		_CALLER_DEALLOC(_24, C, "true-ALWAYS_RETURN-false" , "mat_mult");
+		_CALLEE_DEALLOC(_24, B, "false-NEVER_RETURN-true" , "mat_mult");
+		_CALLEE_DEALLOC(_24, A, "false-NEVER_RETURN-true" , "mat_mult");
 		_DEALLOC(_24);
 		void* tmp_a;
 		_COPY_1DARRAY_PARAM(A, tmp_a, int64_t);

@@ -164,7 +164,7 @@ int main(int argc, char** args){
 	item = _9;
 	//invoke (%11) = (%1, %2, %3) opt_append:opt_append : function(byte[],opt_append:nat,byte)->(byte[])
 	{
-		_CALLER_DEALLOC(_11, b, "true-true-true" , "opt_append");
+		_CALLER_DEALLOC(_11, b, "true-MAYBE_RETURN-true" , "opt_append");
 		_DEALLOC(_11);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(b, tmp_items, BYTE);

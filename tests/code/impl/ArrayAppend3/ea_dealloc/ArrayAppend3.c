@@ -287,7 +287,7 @@ int main(int argc, char** args){
 	//fieldload %15 = %14 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%16) = (%1) ArrayAppend3:toString : function(ArrayAppend3:Cash)->(whiley/lang/ASCII:string)
 	{
-		_CALLEE_DEALLOC(_16, till, "false-false-false" , "toString");
+		_CALLEE_DEALLOC(_16, till, "false-NEVER_RETURN-false" , "toString");
 		_DEALLOC(_16);
 		void* tmp_c;
 		_COPY_1DARRAY_PARAM(till, tmp_c, int64_t);

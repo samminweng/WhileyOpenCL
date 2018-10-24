@@ -134,8 +134,8 @@ blklab3:;
 blklab2:;
 	//invoke (%11) = (%1, %1) ResetMacro4:add : function(int[],int[])->(int[])
 	{
-		_CALLER_DEALLOC(_11, a, "true-true-true" , "add");
-		_CALLER_DEALLOC(_11, a, "true-true-true" , "add");
+		_CALLER_DEALLOC(_11, a, "true-ALWAYS_RETURN-true" , "add");
+		_CALLER_DEALLOC(_11, a, "true-ALWAYS_RETURN-true" , "add");
 		_DEALLOC(_11);
 		void* tmp_a;
 		_COPY_1DARRAY_PARAM(a, tmp_a, int64_t);

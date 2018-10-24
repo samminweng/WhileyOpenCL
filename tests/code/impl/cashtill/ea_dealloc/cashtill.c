@@ -465,7 +465,7 @@ blklab25:;
 		_20=change-_19;
 		//invoke (%17) = (%4, %20) cashtill:calculateChange : function(cashtill:Cash,cashtill:nat)->(cashtill:Cash|null)
 		{
-			_CALLEE_DEALLOC(_17, tmp, "false-false-false" , "calculateChange");
+			_CALLEE_DEALLOC(_17, tmp, "false-NEVER_RETURN-false" , "calculateChange");
 			_DEALLOC(_17);
 			void* tmp_till;
 			_COPY_1DARRAY_PARAM(tmp, tmp_till, int64_t);
@@ -871,7 +871,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_1DARRAY_PARAM(giv
 	//fieldload %22 = %21 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%23) = (%2) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
-		_CALLEE_DEALLOC(_23, given, "false-false-true" , "toString");
+		_CALLEE_DEALLOC(_23, given, "false-NEVER_RETURN-true" , "toString");
 		_DEALLOC(_23);
 		void* tmp_c;
 		_COPY_1DARRAY_PARAM(given, tmp_c, int64_t);
@@ -884,7 +884,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_1DARRAY_PARAM(giv
 	}
 	//invoke (%24) = (%2) cashtill:total : function(cashtill:Cash)->(int)
 	{
-		_CALLEE_DEALLOC(_24, given, "false-false-true" , "total");
+		_CALLEE_DEALLOC(_24, given, "false-NEVER_RETURN-true" , "total");
 		void* tmp_c;
 		_COPY_1DARRAY_PARAM(given, tmp_c, int64_t);
 		_24 = _total_(tmp_c, given_size);
@@ -909,7 +909,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_1DARRAY_PARAM(giv
 blklab36:;
 	//invoke (%29) = (%2) cashtill:total : function(cashtill:Cash)->(int)
 	{
-		_CALLEE_DEALLOC(_29, given, "false-false-true" , "total");
+		_CALLEE_DEALLOC(_29, given, "false-NEVER_RETURN-true" , "total");
 		void* tmp_c;
 		_COPY_1DARRAY_PARAM(given, tmp_c, int64_t);
 		_29 = _total_(tmp_c, given_size);
@@ -919,7 +919,7 @@ blklab36:;
 	_30=_29-cost;
 	//invoke (%28) = (%1, %30) cashtill:calculateChange : function(cashtill:Cash,cashtill:nat)->(cashtill:Cash|null)
 	{
-		_CALLEE_DEALLOC(_28, till, "false-false-true" , "calculateChange");
+		_CALLEE_DEALLOC(_28, till, "false-NEVER_RETURN-true" , "calculateChange");
 		_DEALLOC(_28);
 		void* tmp_till;
 		_COPY_1DARRAY_PARAM(till, tmp_till, int64_t);
@@ -966,7 +966,7 @@ blklab38:;
 	//fieldload %38 = %37 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%39) = (%5) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
-		_CALLEE_DEALLOC(_39, change, "false-false-true" , "toString");
+		_CALLEE_DEALLOC(_39, change, "false-NEVER_RETURN-true" , "toString");
 		_DEALLOC(_39);
 		void* tmp_c;
 		_COPY_1DARRAY_PARAM(change, tmp_c, int64_t);
@@ -979,8 +979,8 @@ blklab38:;
 	}
 	//invoke (%40) = (%1, %2) cashtill:add : function(cashtill:Cash,cashtill:Cash)->(cashtill:Cash)
 	{
-		_CALLEE_DEALLOC(_40, given, "false-false-false" , "add");
-		_CALLER_DEALLOC(_40, till, "true-true-false" , "add");
+		_CALLEE_DEALLOC(_40, given, "false-NEVER_RETURN-false" , "add");
+		_CALLER_DEALLOC(_40, till, "true-ALWAYS_RETURN-false" , "add");
 		_DEALLOC(_40);
 		void* tmp_first;
 		_COPY_1DARRAY_PARAM(till, tmp_first, int64_t);
@@ -994,8 +994,8 @@ blklab38:;
 	_ADD_DEALLOC(till, _40, int64_t);
 	//invoke (%41) = (%1, %5) cashtill:subtract : function(cashtill:Cash,cashtill:Cash)->(cashtill:Cash)
 	{
-		_CALLEE_DEALLOC(_41, change, "false-false-false" , "subtract");
-		_CALLER_DEALLOC(_41, till, "true-true-false" , "subtract");
+		_CALLEE_DEALLOC(_41, change, "false-NEVER_RETURN-false" , "subtract");
+		_CALLER_DEALLOC(_41, till, "true-ALWAYS_RETURN-false" , "subtract");
 		_DEALLOC(_41);
 		void* tmp_first;
 		_COPY_1DARRAY_PARAM(till, tmp_first, int64_t);
@@ -1022,7 +1022,7 @@ blklab38:;
 	//fieldload %46 = %45 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%47) = (%1) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
-		_CALLEE_DEALLOC(_47, till, "false-false-true" , "toString");
+		_CALLEE_DEALLOC(_47, till, "false-NEVER_RETURN-true" , "toString");
 		_DEALLOC(_47);
 		void* tmp_c;
 		_COPY_1DARRAY_PARAM(till, tmp_c, int64_t);
@@ -1150,7 +1150,7 @@ int main(int argc, char** args){
 	//fieldload %15 = %14 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%16) = (%1) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
-		_CALLEE_DEALLOC(_16, till, "false-false-true" , "toString");
+		_CALLEE_DEALLOC(_16, till, "false-NEVER_RETURN-true" , "toString");
 		_DEALLOC(_16);
 		void* tmp_c;
 		_COPY_1DARRAY_PARAM(till, tmp_c, int64_t);
@@ -1170,7 +1170,7 @@ int main(int argc, char** args){
 	_20_dealloc = true;
 	//invoke (%18) = (%20) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
-		_CALLEE_DEALLOC(_18, _20, "false-false-false" , "Cash");
+		_CALLEE_DEALLOC(_18, _20, "false-NEVER_RETURN-false" , "Cash");
 		_DEALLOC(_18);
 		void* tmp_coins;
 		_COPY_1DARRAY_PARAM(_20, tmp_coins, int64_t);
@@ -1181,8 +1181,8 @@ int main(int argc, char** args){
 	_21 = 85;
 	//invoke (%17) = (%0, %1, %18, %21) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
-		_CALLEE_DEALLOC(_17, _18, "false-false-false" , "buy");
-		_CALLER_DEALLOC(_17, till, "true-true-false" , "buy");
+		_CALLEE_DEALLOC(_17, _18, "false-NEVER_RETURN-false" , "buy");
+		_CALLER_DEALLOC(_17, till, "true-MAYBE_RETURN-false" , "buy");
 		_DEALLOC(_17);
 		void* tmp_till;
 		_COPY_1DARRAY_PARAM(till, tmp_till, int64_t);
@@ -1203,7 +1203,7 @@ int main(int argc, char** args){
 	_25_dealloc = true;
 	//invoke (%23) = (%25) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
-		_CALLEE_DEALLOC(_23, _25, "false-false-false" , "Cash");
+		_CALLEE_DEALLOC(_23, _25, "false-NEVER_RETURN-false" , "Cash");
 		_DEALLOC(_23);
 		void* tmp_coins;
 		_COPY_1DARRAY_PARAM(_25, tmp_coins, int64_t);
@@ -1214,8 +1214,8 @@ int main(int argc, char** args){
 	_26 = 105;
 	//invoke (%22) = (%0, %1, %23, %26) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
-		_CALLEE_DEALLOC(_22, _23, "false-false-false" , "buy");
-		_CALLER_DEALLOC(_22, till, "true-true-false" , "buy");
+		_CALLEE_DEALLOC(_22, _23, "false-NEVER_RETURN-false" , "buy");
+		_CALLER_DEALLOC(_22, till, "true-MAYBE_RETURN-false" , "buy");
 		_DEALLOC(_22);
 		void* tmp_till;
 		_COPY_1DARRAY_PARAM(till, tmp_till, int64_t);
@@ -1236,7 +1236,7 @@ int main(int argc, char** args){
 	_30_dealloc = true;
 	//invoke (%28) = (%30) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
-		_CALLEE_DEALLOC(_28, _30, "false-false-false" , "Cash");
+		_CALLEE_DEALLOC(_28, _30, "false-NEVER_RETURN-false" , "Cash");
 		_DEALLOC(_28);
 		void* tmp_coins;
 		_COPY_1DARRAY_PARAM(_30, tmp_coins, int64_t);
@@ -1247,8 +1247,8 @@ int main(int argc, char** args){
 	_31 = 5;
 	//invoke (%27) = (%0, %1, %28, %31) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
-		_CALLEE_DEALLOC(_27, _28, "false-false-false" , "buy");
-		_CALLER_DEALLOC(_27, till, "true-true-false" , "buy");
+		_CALLEE_DEALLOC(_27, _28, "false-NEVER_RETURN-false" , "buy");
+		_CALLER_DEALLOC(_27, till, "true-MAYBE_RETURN-false" , "buy");
 		_DEALLOC(_27);
 		void* tmp_till;
 		_COPY_1DARRAY_PARAM(till, tmp_till, int64_t);
@@ -1269,7 +1269,7 @@ int main(int argc, char** args){
 	_35_dealloc = true;
 	//invoke (%33) = (%35) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
-		_CALLEE_DEALLOC(_33, _35, "false-false-false" , "Cash");
+		_CALLEE_DEALLOC(_33, _35, "false-NEVER_RETURN-false" , "Cash");
 		_DEALLOC(_33);
 		void* tmp_coins;
 		_COPY_1DARRAY_PARAM(_35, tmp_coins, int64_t);
@@ -1280,8 +1280,8 @@ int main(int argc, char** args){
 	_36 = 305;
 	//invoke (%32) = (%0, %1, %33, %36) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
-		_CALLEE_DEALLOC(_32, _33, "false-false-false" , "buy");
-		_CALLER_DEALLOC(_32, till, "true-true-false" , "buy");
+		_CALLEE_DEALLOC(_32, _33, "false-NEVER_RETURN-false" , "buy");
+		_CALLER_DEALLOC(_32, till, "true-MAYBE_RETURN-false" , "buy");
 		_DEALLOC(_32);
 		void* tmp_till;
 		_COPY_1DARRAY_PARAM(till, tmp_till, int64_t);

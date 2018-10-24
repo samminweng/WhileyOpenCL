@@ -42,7 +42,7 @@ int64_t* _g2_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_7 = 11;
 	//invoke (%6) = (%1, %7) ResetMacro2:func : function(int[],int)->(int[])
 	{
-		_RESET_DEALLOC(_6, a, "true-true-false" , "func");
+		_RESET_DEALLOC(_6, a, "true-ALWAYS_RETURN-false" , "func");
 		_DEALLOC(_6);
 		// isCopyEliminated of '_1' = true
 		_6 = _func_(a, a_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));

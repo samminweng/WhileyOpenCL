@@ -146,7 +146,7 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYR
 		if(header!=_22){goto blklab5;}
 		//invoke (%23) = (%1, %4) lz77_decompress:append : function(byte[],byte)->(byte[])
 		{
-			_CALLEE_DEALLOC(_23, output, "false-false-false" , "append");
+			_CALLEE_DEALLOC(_23, output, "false-NEVER_RETURN-false" , "append");
 			_DEALLOC(_23);
 			void* tmp_items;
 			_COPY_1DARRAY_PARAM(output, tmp_items, BYTE);
@@ -191,7 +191,7 @@ blklab5:;
 			item = _29;
 			//invoke (%30) = (%1, %4) lz77_decompress:append : function(byte[],byte)->(byte[])
 			{
-				_CALLEE_DEALLOC(_30, output, "false-false-false" , "append");
+				_CALLEE_DEALLOC(_30, output, "false-NEVER_RETURN-false" , "append");
 				_DEALLOC(_30);
 				void* tmp_items;
 				_COPY_1DARRAY_PARAM(output, tmp_items, BYTE);
@@ -274,7 +274,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(input_data, _6, BYTE);
 	//invoke (%8) = (%2) lz77_decompress:decompress : function(byte[])->(byte[])
 	{
-		_CALLEE_DEALLOC(_8, input_data, "false-false-false" , "decompress");
+		_CALLEE_DEALLOC(_8, input_data, "false-NEVER_RETURN-false" , "decompress");
 		_DEALLOC(_8);
 		void* tmp_data;
 		_COPY_1DARRAY_PARAM(input_data, tmp_data, BYTE);

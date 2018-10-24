@@ -59,7 +59,7 @@ int main(int argc, char** args){
 	b[_7] = _6;
 	//invoke (%8) = (%1) CallerMacro3:f : function(int[])->(int[])
 	{
-		_CALLER_DEALLOC(_8, b, "false-true-true" , "f");
+		_CALLER_DEALLOC(_8, b, "false-ALWAYS_RETURN-true" , "f");
 		_DEALLOC(_8);
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(b, tmp_x, int64_t);

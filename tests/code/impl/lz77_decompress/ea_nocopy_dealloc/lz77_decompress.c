@@ -154,7 +154,7 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYR
 		if(header!=_22){goto blklab5;}
 		//invoke (%23) = (%1, %4) lz77_decompress:append : function(byte[],byte)->(byte[])
 		{
-			_RETAIN_DEALLOC(_23, output, "false-false-false" , "append");
+			_RETAIN_DEALLOC(_23, output, "false-NEVER_RETURN-false" , "append");
 			_DEALLOC(_23);
 			// isCopyEliminated of '_1' = true
 			_23 = _append_(output, output_size, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
@@ -204,7 +204,7 @@ blklab5:;
 			item = _29;
 			//invoke (%30) = (%1, %4) lz77_decompress:append : function(byte[],byte)->(byte[])
 			{
-				_RETAIN_DEALLOC(_30, output, "false-false-false" , "append");
+				_RETAIN_DEALLOC(_30, output, "false-NEVER_RETURN-false" , "append");
 				_DEALLOC(_30);
 				// isCopyEliminated of '_1' = true
 				_30 = _append_(output, output_size, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
@@ -290,7 +290,7 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(input_data, _6);
 	//invoke (%8) = (%2) lz77_decompress:decompress : function(byte[])->(byte[])
 	{
-		_RETAIN_DEALLOC(_8, input_data, "false-false-false" , "decompress");
+		_RETAIN_DEALLOC(_8, input_data, "false-NEVER_RETURN-false" , "decompress");
 		_DEALLOC(_8);
 		// isCopyEliminated of '_2' = true
 		_8 = _decompress_(input_data, input_data_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));

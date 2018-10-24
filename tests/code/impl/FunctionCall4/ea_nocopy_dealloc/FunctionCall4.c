@@ -147,7 +147,7 @@ int main(int argc, char** args){
 	_11 = 6;
 	//invoke (%10) = (%1, %11) FunctionCall4:func : function(int[],int)->(int[])
 	{
-		_RESET_DEALLOC(_10, a, "true-true-false" , "func");
+		_RESET_DEALLOC(_10, a, "true-MAYBE_RETURN-false" , "func");
 		_DEALLOC(_10);
 		// isCopyEliminated of '_1' = true
 		_10 = _func_(a, a_size, _11, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
@@ -216,7 +216,7 @@ blklab2:;
 	_29 = 1;
 	//invoke (%28) = (%2, %29) FunctionCall4:func : function(int[],int)->(int[])
 	{
-		_CALLER_DEALLOC(_28, b, "true-true-true" , "func");
+		_CALLER_DEALLOC(_28, b, "true-MAYBE_RETURN-true" , "func");
 		_DEALLOC(_28);
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(b, tmp_s, int64_t);

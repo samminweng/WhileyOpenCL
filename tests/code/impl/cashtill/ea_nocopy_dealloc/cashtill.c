@@ -481,7 +481,7 @@ blklab25:;
 		_20=change-_19;
 		//invoke (%17) = (%4, %20) cashtill:calculateChange : function(cashtill:Cash,cashtill:nat)->(cashtill:Cash|null)
 		{
-			_RETAIN_DEALLOC(_17, tmp, "false-false-false" , "calculateChange");
+			_RETAIN_DEALLOC(_17, tmp, "false-NEVER_RETURN-false" , "calculateChange");
 			_DEALLOC(_17);
 			// isCopyEliminated of '_4' = true
 			_17 = _calculateChange_(tmp, tmp_size, _20, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_17));
@@ -899,7 +899,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_1DARRAY_PARAM(giv
 	//fieldload %22 = %21 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%23) = (%2) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
-		_RETAIN_DEALLOC(_23, given, "false-false-true" , "toString");
+		_RETAIN_DEALLOC(_23, given, "false-NEVER_RETURN-true" , "toString");
 		_DEALLOC(_23);
 		// isCopyEliminated of '_2' = true
 		_23 = _toString_(given, given_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
@@ -911,7 +911,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_1DARRAY_PARAM(giv
 	}
 	//invoke (%24) = (%2) cashtill:total : function(cashtill:Cash)->(int)
 	{
-		_RETAIN_DEALLOC(_24, given, "false-false-true" , "total");
+		_RETAIN_DEALLOC(_24, given, "false-NEVER_RETURN-true" , "total");
 		// isCopyEliminated of '_2' = true
 		_24 = _total_(given, given_size);
 	}
@@ -934,7 +934,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_1DARRAY_PARAM(giv
 blklab36:;
 	//invoke (%29) = (%2) cashtill:total : function(cashtill:Cash)->(int)
 	{
-		_RETAIN_DEALLOC(_29, given, "false-false-true" , "total");
+		_RETAIN_DEALLOC(_29, given, "false-NEVER_RETURN-true" , "total");
 		// isCopyEliminated of '_2' = true
 		_29 = _total_(given, given_size);
 	}
@@ -942,7 +942,7 @@ blklab36:;
 	_30=_29-cost;
 	//invoke (%28) = (%1, %30) cashtill:calculateChange : function(cashtill:Cash,cashtill:nat)->(cashtill:Cash|null)
 	{
-		_RETAIN_DEALLOC(_28, till, "false-false-true" , "calculateChange");
+		_RETAIN_DEALLOC(_28, till, "false-NEVER_RETURN-true" , "calculateChange");
 		_DEALLOC(_28);
 		// isCopyEliminated of '_1' = true
 		_28 = _calculateChange_(till, till_size, _30, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
@@ -989,7 +989,7 @@ blklab38:;
 	//fieldload %38 = %37 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%39) = (%5) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
-		_RETAIN_DEALLOC(_39, change, "false-false-true" , "toString");
+		_RETAIN_DEALLOC(_39, change, "false-NEVER_RETURN-true" , "toString");
 		_DEALLOC(_39);
 		// isCopyEliminated of '_5' = true
 		_39 = _toString_(change, change_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_39));
@@ -1001,8 +1001,8 @@ blklab38:;
 	}
 	//invoke (%40) = (%1, %2) cashtill:add : function(cashtill:Cash,cashtill:Cash)->(cashtill:Cash)
 	{
-		_RETAIN_DEALLOC(_40, given, "false-false-false" , "add");
-		_RESET_DEALLOC(_40, till, "true-true-false" , "add");
+		_RETAIN_DEALLOC(_40, given, "false-NEVER_RETURN-false" , "add");
+		_RESET_DEALLOC(_40, till, "true-ALWAYS_RETURN-false" , "add");
 		_DEALLOC(_40);
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_2' = true
@@ -1015,8 +1015,8 @@ blklab38:;
 	_TRANSFER_DEALLOC(till, _40);
 	//invoke (%41) = (%1, %5) cashtill:subtract : function(cashtill:Cash,cashtill:Cash)->(cashtill:Cash)
 	{
-		_RETAIN_DEALLOC(_41, change, "false-false-false" , "subtract");
-		_RESET_DEALLOC(_41, till, "true-true-false" , "subtract");
+		_RETAIN_DEALLOC(_41, change, "false-NEVER_RETURN-false" , "subtract");
+		_RESET_DEALLOC(_41, till, "true-ALWAYS_RETURN-false" , "subtract");
 		_DEALLOC(_41);
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_5' = true
@@ -1042,7 +1042,7 @@ blklab38:;
 	//fieldload %46 = %45 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%47) = (%1) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
-		_RETAIN_DEALLOC(_47, till, "false-false-true" , "toString");
+		_RETAIN_DEALLOC(_47, till, "false-NEVER_RETURN-true" , "toString");
 		_DEALLOC(_47);
 		// isCopyEliminated of '_1' = true
 		_47 = _toString_(till, till_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_47));
@@ -1170,7 +1170,7 @@ int main(int argc, char** args){
 	//fieldload %15 = %14 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%16) = (%1) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
-		_RETAIN_DEALLOC(_16, till, "false-false-true" , "toString");
+		_RETAIN_DEALLOC(_16, till, "false-NEVER_RETURN-true" , "toString");
 		_DEALLOC(_16);
 		// isCopyEliminated of '_1' = true
 		_16 = _toString_(till, till_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
@@ -1189,7 +1189,7 @@ int main(int argc, char** args){
 	_20_dealloc = true;
 	//invoke (%18) = (%20) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
-		_RETAIN_DEALLOC(_18, _20, "false-false-false" , "Cash");
+		_RETAIN_DEALLOC(_18, _20, "false-NEVER_RETURN-false" , "Cash");
 		_DEALLOC(_18);
 		// isCopyEliminated of '_20' = true
 		_18 = _Cash_1_(_20, _20_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
@@ -1199,8 +1199,8 @@ int main(int argc, char** args){
 	_21 = 85;
 	//invoke (%17) = (%0, %1, %18, %21) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
-		_RETAIN_DEALLOC(_17, _18, "false-false-false" , "buy");
-		_RESET_DEALLOC(_17, till, "true-true-false" , "buy");
+		_RETAIN_DEALLOC(_17, _18, "false-NEVER_RETURN-false" , "buy");
+		_RESET_DEALLOC(_17, till, "true-MAYBE_RETURN-false" , "buy");
 		_DEALLOC(_17);
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_18' = true
@@ -1220,7 +1220,7 @@ int main(int argc, char** args){
 	_25_dealloc = true;
 	//invoke (%23) = (%25) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
-		_RETAIN_DEALLOC(_23, _25, "false-false-false" , "Cash");
+		_RETAIN_DEALLOC(_23, _25, "false-NEVER_RETURN-false" , "Cash");
 		_DEALLOC(_23);
 		// isCopyEliminated of '_25' = true
 		_23 = _Cash_1_(_25, _25_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
@@ -1230,8 +1230,8 @@ int main(int argc, char** args){
 	_26 = 105;
 	//invoke (%22) = (%0, %1, %23, %26) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
-		_RETAIN_DEALLOC(_22, _23, "false-false-false" , "buy");
-		_RESET_DEALLOC(_22, till, "true-true-false" , "buy");
+		_RETAIN_DEALLOC(_22, _23, "false-NEVER_RETURN-false" , "buy");
+		_RESET_DEALLOC(_22, till, "true-MAYBE_RETURN-false" , "buy");
 		_DEALLOC(_22);
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_23' = true
@@ -1251,7 +1251,7 @@ int main(int argc, char** args){
 	_30_dealloc = true;
 	//invoke (%28) = (%30) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
-		_RETAIN_DEALLOC(_28, _30, "false-false-false" , "Cash");
+		_RETAIN_DEALLOC(_28, _30, "false-NEVER_RETURN-false" , "Cash");
 		_DEALLOC(_28);
 		// isCopyEliminated of '_30' = true
 		_28 = _Cash_1_(_30, _30_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
@@ -1261,8 +1261,8 @@ int main(int argc, char** args){
 	_31 = 5;
 	//invoke (%27) = (%0, %1, %28, %31) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
-		_RETAIN_DEALLOC(_27, _28, "false-false-false" , "buy");
-		_RESET_DEALLOC(_27, till, "true-true-false" , "buy");
+		_RETAIN_DEALLOC(_27, _28, "false-NEVER_RETURN-false" , "buy");
+		_RESET_DEALLOC(_27, till, "true-MAYBE_RETURN-false" , "buy");
 		_DEALLOC(_27);
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_28' = true
@@ -1282,7 +1282,7 @@ int main(int argc, char** args){
 	_35_dealloc = true;
 	//invoke (%33) = (%35) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
-		_RETAIN_DEALLOC(_33, _35, "false-false-false" , "Cash");
+		_RETAIN_DEALLOC(_33, _35, "false-NEVER_RETURN-false" , "Cash");
 		_DEALLOC(_33);
 		// isCopyEliminated of '_35' = true
 		_33 = _Cash_1_(_35, _35_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_33));
@@ -1292,8 +1292,8 @@ int main(int argc, char** args){
 	_36 = 305;
 	//invoke (%32) = (%0, %1, %33, %36) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
-		_RETAIN_DEALLOC(_32, _33, "false-false-false" , "buy");
-		_RESET_DEALLOC(_32, till, "true-true-false" , "buy");
+		_RETAIN_DEALLOC(_32, _33, "false-NEVER_RETURN-false" , "buy");
+		_RESET_DEALLOC(_32, till, "true-MAYBE_RETURN-false" , "buy");
 		_DEALLOC(_32);
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_33' = true

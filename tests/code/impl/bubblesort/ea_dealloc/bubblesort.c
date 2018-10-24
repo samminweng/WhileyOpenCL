@@ -223,7 +223,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(ys, _10, int64_t);
 	//invoke (%11) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
-		_CALLER_DEALLOC(_11, ys, "true-true-false" , "bubbleSort");
+		_CALLER_DEALLOC(_11, ys, "true-ALWAYS_RETURN-false" , "bubbleSort");
 		_DEALLOC(_11);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
@@ -281,7 +281,7 @@ blklab5:;
 	_ADD_DEALLOC(ys, _24, int64_t);
 	//invoke (%25) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
-		_CALLER_DEALLOC(_25, ys, "true-true-false" , "bubbleSort");
+		_CALLER_DEALLOC(_25, ys, "true-ALWAYS_RETURN-false" , "bubbleSort");
 		_DEALLOC(_25);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
@@ -337,7 +337,7 @@ blklab6:;
 	_ADD_DEALLOC(ys, _37, int64_t);
 	//invoke (%38) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
-		_CALLER_DEALLOC(_38, ys, "true-true-false" , "bubbleSort");
+		_CALLER_DEALLOC(_38, ys, "true-ALWAYS_RETURN-false" , "bubbleSort");
 		_DEALLOC(_38);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
@@ -395,7 +395,7 @@ blklab7:;
 	_ADD_DEALLOC(ys, _51, int64_t);
 	//invoke (%52) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
-		_CALLER_DEALLOC(_52, ys, "true-true-false" , "bubbleSort");
+		_CALLER_DEALLOC(_52, ys, "true-ALWAYS_RETURN-false" , "bubbleSort");
 		_DEALLOC(_52);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
@@ -471,7 +471,7 @@ blklab10:;
 blklab9:;
 	//invoke (%68) = (%4) bubblesort:bubbleSort : function(int[])->(int[])
 	{
-		_CALLER_DEALLOC(_68, arr, "true-true-false" , "bubbleSort");
+		_CALLER_DEALLOC(_68, arr, "true-ALWAYS_RETURN-false" , "bubbleSort");
 		_DEALLOC(_68);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(arr, tmp_items, int64_t);

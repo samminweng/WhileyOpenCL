@@ -179,7 +179,7 @@ int main(int argc, char** args){
 		_20 = 11;
 		//invoke (%19) = (%2, %20) functioncall2_3Vars_test176:func : function(int[],int)->(int[])
 		{
-			_RETAIN_DEALLOC(_19, b, "true-false-false" , "func");
+			_RETAIN_DEALLOC(_19, b, "true-NEVER_RETURN-false" , "func");
 			_DEALLOC(_19);
 			// isCopyEliminated of '_2' = true
 			_19 = _func_(b, b_size, _20, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));

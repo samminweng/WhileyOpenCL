@@ -127,8 +127,8 @@ int main(int argc, char** args){
 	_4_dealloc = true;
 	//invoke (%3) = (%1, %4) ArrayAppend:test_append : function(int[],int[])->(int[])
 	{
-		_RETAIN_DEALLOC(_3, _4, "false-false-false" , "test_append");
-		_RETAIN_DEALLOC(_3, r, "false-false-false" , "test_append");
+		_RETAIN_DEALLOC(_3, _4, "false-NEVER_RETURN-false" , "test_append");
+		_RETAIN_DEALLOC(_3, r, "false-NEVER_RETURN-false" , "test_append");
 		_DEALLOC(_3);
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_4' = true

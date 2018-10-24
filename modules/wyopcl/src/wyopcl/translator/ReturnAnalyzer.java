@@ -23,6 +23,11 @@ import wyopcl.Configuration;
  *
  */
 public class ReturnAnalyzer extends Analyzer {
+
+	public enum RETURN {
+		ALWAYS_RETURN, MAYBE_RETURN, NEVER_RETURN
+	}
+
 	// Store the set of return registers for each function.
 	private HashMap<FunctionOrMethod, HashSet<Integer>> stores;
 
@@ -47,7 +52,7 @@ public class ReturnAnalyzer extends Analyzer {
 		if (isCopyAvoided) {
 			if (!(code instanceof Codes.Const) && !(code instanceof Codes.NewArray)
 					&& !(code instanceof Codes.IndexOf)) {
-				
+
 				// Extract lhs register
 				int lhs = -1;
 				if (code instanceof Codes.Assign) {
@@ -62,12 +67,12 @@ public class ReturnAnalyzer extends Analyzer {
 					if (invoke.targets().length > 0) {
 						lhs = ((Codes.Invoke) code).target(0);
 					}
-				} else if( code instanceof Codes.NewRecord){
-					lhs = ((Codes.NewRecord)code).target(0);
+				} else if (code instanceof Codes.NewRecord) {
+					lhs = ((Codes.NewRecord) code).target(0);
 				} else {
 					throw new RuntimeException("Not implemented");
 				}
-				
+
 				// Get return set of given function
 				HashSet<Integer> store = stores.get(function);
 				// Check if lhs variable is a return register
@@ -101,8 +106,10 @@ public class ReturnAnalyzer extends Analyzer {
 				if (code instanceof Codes.Return) {
 					Codes.Return r = (Codes.Return) code;
 					if (r.operands().length > 0) {
+						int reg = r.operand(0);
+
 						// add return register to set
-						store.add(r.operand(0));
+						store.add(reg);
 					}
 				}
 			}
@@ -121,19 +128,53 @@ public class ReturnAnalyzer extends Analyzer {
 	}
 
 	/**
+	 * Check if the register appears in every return statement of the function, and if the register 
+	 * never appears on the left-handed side of an assignment, which ensures the register is read-only.
+	 * 
+	 * @param register the passed register
+	 * @param function the called function
+	 * @return
+	 */
+	private boolean isRegisterAlwaysReturn(int register, FunctionOrMethod function) {
+		boolean isAlwaysReturned = true; 
+		// Go through each return bytecode
+		for (Code code : function.body().bytecodes()) {
+			if(code instanceof Codes.Return) {
+				Codes.Return ret = (Codes.Return)code;
+				if(ret.operands().length>0) {
+					// Check if the return register is the passed register
+					isAlwaysReturned = isAlwaysReturned & (ret.operand(0) == register);
+				}
+			}else if (code instanceof Codes.Assign) {
+				Codes.Assign ass = (Codes.Assign) code;
+				// Check if the register is NOT on the left-side
+				isAlwaysReturned = isAlwaysReturned & (ass.target(0) != register);
+			}
+		}
+		
+		return isAlwaysReturned;// true: the register is always returned.
+
+	}
+
+	/**
 	 * Check if a register is returned by the 'function'
 	 * 
 	 * @param register
 	 * @param function
 	 * @return true if the register is returned. Return false if it is not returned.
 	 */
-	public boolean isReturned(int register, FunctionOrMethod function) {
+	public RETURN isReturned(int register, FunctionOrMethod function) {
 		HashSet<Integer> store = stores.get(function);
 		if (store.contains(register)) {
-			return true;
+			if(isRegisterAlwaysReturn(register, function)) {
+				return RETURN.ALWAYS_RETURN;
+			}
+			return RETURN.MAYBE_RETURN;
+			// return true;
 		}
 
-		return false;
+		return RETURN.NEVER_RETURN;
+		// return false;
 	}
 
 }

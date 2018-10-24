@@ -208,7 +208,7 @@ int main(int argc, char** args){
 			if(j>=n){goto blklab15;}
 			//invoke (%16) = (%3, %4, %1, %2) gcd:gcd_cached : function(int,int,int,int[])->(int)
 			{
-				_RETAIN_DEALLOC(_16, gcds, "false-false-true" , "gcd_cached");
+				_RETAIN_DEALLOC(_16, gcds, "false-NEVER_RETURN-true" , "gcd_cached");
 				// isCopyEliminated of '_2' = true
 				_16 = _gcd_cached_(i, j, n, gcds, gcds_size);
 			}

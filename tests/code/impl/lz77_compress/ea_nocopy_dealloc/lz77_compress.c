@@ -150,7 +150,7 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, int64_t pos){
 		if(offset>=pos){goto blklab5;}
 		//invoke (%14) = (%0, %6, %1) lz77_compress:match : function(byte[],lz77_compress:nat,lz77_compress:nat)->(int)
 		{
-			_RETAIN_DEALLOC(_14, data, "false-false-true" , "match");
+			_RETAIN_DEALLOC(_14, data, "false-NEVER_RETURN-true" , "match");
 			// isCopyEliminated of '_0' = true
 			_14 = _match_(data, data_size, offset, pos);
 		}
@@ -365,7 +365,7 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREF
 		if(pos>=_10){goto blklab14;}
 		//invoke (%11) = (%0, %2) lz77_compress:findLongestMatch : function(byte[],lz77_compress:nat)->(lz77_compress:Match)
 		{
-			_RETAIN_DEALLOC(_11, data, "false-false-true" , "findLongestMatch");
+			_RETAIN_DEALLOC(_11, data, "false-NEVER_RETURN-true" , "findLongestMatch");
 			_DEALLOC_STRUCT(_11, Match);
 			// isCopyEliminated of '_0' = true
 			_11 = _findLongestMatch_(data, data_size, pos);
@@ -425,7 +425,7 @@ blklab16:;
 blklab17:;
 		//invoke (%22) = (%1, %4) lz77_compress:append : function(byte[],byte)->(byte[])
 		{
-			_RETAIN_DEALLOC(_22, output, "false-false-false" , "append");
+			_RETAIN_DEALLOC(_22, output, "false-NEVER_RETURN-false" , "append");
 			_DEALLOC(_22);
 			// isCopyEliminated of '_1' = true
 			_22 = _append_(output, output_size, offset, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
@@ -436,7 +436,7 @@ blklab17:;
 		_TRANSFER_DEALLOC(output, _22);
 		//invoke (%23) = (%1, %5) lz77_compress:append : function(byte[],byte)->(byte[])
 		{
-			_RETAIN_DEALLOC(_23, output, "false-false-false" , "append");
+			_RETAIN_DEALLOC(_23, output, "false-NEVER_RETURN-false" , "append");
 			_DEALLOC(_23);
 			// isCopyEliminated of '_1' = true
 			_23 = _append_(output, output_size, length, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
@@ -568,7 +568,7 @@ int main(int argc, char** args){
 	}
 	//invoke (%21) = (%2) lz77_compress:compress : function(byte[])->(byte[])
 	{
-		_RETAIN_DEALLOC(_21, data, "false-false-false" , "compress");
+		_RETAIN_DEALLOC(_21, data, "false-NEVER_RETURN-false" , "compress");
 		_DEALLOC(_21);
 		// isCopyEliminated of '_2' = true
 		_21 = _compress_(data, data_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_21));
