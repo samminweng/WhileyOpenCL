@@ -1468,7 +1468,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 			// Generate the post-deallocation code
 			this.deallocatedAnalyzer.ifPresent(a -> {
-				statements.addAll(a.postDealloc(code, function, stores, copyAnalyzer));
+				statements.addAll(a.postDeallocV2(code, function, stores, copyAnalyzer));
 			});
 		}
 
@@ -1483,8 +1483,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		for(int i =0;i<statements.size();i++) {
 			String statement = statements.get(i);
 			// Check if the statement is the use of function call macro
-			// That is, _CALLER_DEALLOC, _CALLEE_DEALLOC, _RESET_DEALLOC, _RETAIN_DEALLOC
-			if(statement.matches(".*(\\_[A-Z]+\\_DEALLOC\\().*")) {
+			if(statement.matches(".*(\\_[A-Z]+\\_PRE\\().*")) {
+				list.add(1, statement); // Put the PRE macro at the start of statements
+			}else if(statement.matches(".*(\\_[A-Z]+\\_DEALLOC\\().*")) {
 				// so we put it at the beginning of statements
 				list.add(1, statement); 
 			}else if (statement.contains("_DEALLOC(")) {

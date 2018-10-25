@@ -1,5 +1,6 @@
 import whiley.lang.*
 
+//Function 'func' never returns input 'x'
 function func(int[] x, int num) -> int[]:
 	int[] a = [0;3]
 	int[] b = [1;3]
@@ -15,7 +16,7 @@ public method main(System.Console console):
 	int[] b =[2; 5]
 	int[] c =[3; 5]
 	int j = 0
-	while j < 100:
+	while j < 10:
 		b = a
 		a = b
 		a = c

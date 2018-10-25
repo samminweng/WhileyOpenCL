@@ -716,7 +716,7 @@ public abstract class Analyzer {
 	 * @param code
 	 * @return the register in calling function
 	 */
-	protected int mapFunctionArgumentToCalleeRegister(int parameter, Codes.Invoke code) {
+	protected int mapArgumentToParameter(int parameter, Codes.Invoke code) {
 		// Map the register to input parameter.
 		int[] ops = code.operands();
 		

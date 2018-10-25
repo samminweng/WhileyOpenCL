@@ -93,7 +93,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 				FunctionOrMethod callee = this.getCalledFunction(functioncall);
 				if (callee != null) {
 					// Map the register to function argument.
-					int callee_register = this.mapFunctionArgumentToCalleeRegister(register, functioncall);
+					int callee_register = this.mapArgumentToParameter(register, functioncall);
 					// Check if parameter is modified inside 'invoked_function'.
 					boolean isMutated = readwriteAnalyzer.isMutated(callee_register, callee);
 					// 'r' is NOT mutated inside invoked function

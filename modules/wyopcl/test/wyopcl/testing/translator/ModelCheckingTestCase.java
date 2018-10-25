@@ -109,8 +109,10 @@ public class ModelCheckingTestCase {
 				// Write out import
 				lines.add("import whiley.lang.*\n");
 				// Write out the function
-				if (category.equals("functioncall")) {
-					// Add a function 'func' that may return input 'x'
+				switch(category) {
+				case "functioncall":
+					// Add a function that may return input 'x'
+					lines.add("//function 'func' that may return input 'x'");
 					lines.add("function func(int[] x, int num) -> int[]:");
 					lines.add("\tint[] a = [0;3]");
 					lines.add("\tint[] b = [1;3]");
@@ -121,9 +123,11 @@ public class ModelCheckingTestCase {
 					lines.add("\telse:");
 					lines.add("\t\t\tif num >9:");
 					lines.add("\t\t\t\treturn c");
-					lines.add("\treturn d");
-				}else if(category.equals("functioncall2")) {
-					// Add a function that does not return 'x'
+					lines.add("\treturn d");					
+					break;
+				case "functioncall2":
+					// Add a function that never return 'x'
+					lines.add("//Function 'func' never returns input 'x'");
 					lines.add("function func(int[] x, int num) -> int[]:");
 					lines.add("\tint[] a = [0;3]");
 					lines.add("\tint[] b = [1;3]");
@@ -134,8 +138,36 @@ public class ModelCheckingTestCase {
 					lines.add("\t\treturn c // Does not return 'x'");
 					lines.add("\telse:");
 					lines.add("\t\treturn d // Does not return 'x'");
+					break;
+				case "functioncall3":
+					// Add a function that always return input 'a'
+					lines.add("//Function 'func' always returns input 'a'");
+					lines.add("function func(int[] a) -> int[]:");
+					lines.add("\tint i = 0");
+					lines.add("\twhile i < |a|:");
+					lines.add("\t\ta[i] = 5");
+					lines.add("\t\ti = i + 1");
+					lines.add("\treturn a");
+					break;
+				case "functioncall4":
+					// Add a more complicated function that always return input 'a'
+					lines.add("//Function 'func' always returns input 'a'");
+					lines.add("function func(int[] a, int i, int j) -> int[]:");
+					lines.add("\tif a[i] < a[j]:");
+					lines.add("\t\ti = 0");
+					lines.add("\t\twhile i < j:");
+					lines.add("\t\t\ta[i] = a[j]");
+					lines.add("\t\t\ti = i + 1");
+					lines.add("\t\treturn a");
+					lines.add("\telse:");
+					lines.add("\t\ti = j + 1");
+					lines.add("\t\twhile i < |a|:");
+					lines.add("\t\t\ta[i] = a[j]");
+					lines.add("\t\t\ti = i + 1");
+					lines.add("\t\treturn a");
+					break;
 				}
-
+				
 				lines.add("public method main(System.Console console):");
 				// Write the array generator, e.g. int[] a =[1; 5]
 				int value = 1;
@@ -145,7 +177,7 @@ public class ModelCheckingTestCase {
 				}
 				// Write out a loop
 				lines.add("\tint j = 0");// Initialise the loop variable
-				lines.add("\twhile j < 100:");// Add a loop condition
+				lines.add("\twhile j < 10:");// Add a loop condition
 
 				// Write out all the assignments
 				int i = 0;
@@ -157,9 +189,20 @@ public class ModelCheckingTestCase {
 					}
 					i++;
 				}
-				if (category.contains("functioncall")) {
-					// Add a function call at the end of loop
+				// Add a function call at the end of loop
+				switch(category) {
+				case "functioncall":					
 					lines.add("\t\ta = func(b, 11)");
+					break;
+				case "functioncall2":
+					lines.add("\t\ta = func(b, 11)");
+					break;
+				case "functioncall3":
+					lines.add("\t\ta = func(b)");
+					break;
+				case "functioncall4":
+					lines.add("\t\ta = func(b, 2, 3)");
+					break;
 				}
 
 				// Increment the loop variable
@@ -221,7 +264,7 @@ public class ModelCheckingTestCase {
 	 * Given three variables and produce Whiley programs. For each Whiley program the test produces the optimised C code
 	 * and compiles and run the code.
 	 */
-	@Test
+	//@Test
 	public void test2Variables_assignment() throws IOException {
 		// Generates the varaibles
 		ArrayList<String> variables = new ArrayList<String>();
@@ -249,7 +292,7 @@ public class ModelCheckingTestCase {
 		variables.add("a");
 		variables.add("b");
 		variables.add("c");
-
+		// The called function may return input array
 		generateWhileyAndProduceCCodeAndRunIt(variables, "functioncall");
 
 	}
@@ -261,8 +304,31 @@ public class ModelCheckingTestCase {
 		variables.add("a");
 		variables.add("b");
 		variables.add("c");
-
+		// The called function never returns input array
 		generateWhileyAndProduceCCodeAndRunIt(variables, "functioncall2");
+
+	}
+	
+	@Test
+	public void test3Variables_functioncall3() throws IOException {
+		// Generates the varaibles
+		ArrayList<String> variables = new ArrayList<String>();
+		variables.add("a");
+		variables.add("b");
+		variables.add("c");
+		// The called function always returns input array
+		generateWhileyAndProduceCCodeAndRunIt(variables, "functioncall3");
+
+	}
+	@Test
+	public void test3Variables_functioncall4() throws IOException {
+		// Generates the varaibles
+		ArrayList<String> variables = new ArrayList<String>();
+		variables.add("a");
+		variables.add("b");
+		variables.add("c");
+		// The called function always returns input array
+		generateWhileyAndProduceCCodeAndRunIt(variables, "functioncall4");
 
 	}
 }

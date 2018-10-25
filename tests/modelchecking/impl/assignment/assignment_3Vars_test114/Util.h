@@ -405,6 +405,24 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 * Deallocation Macros for function call 'a = func(b)'
 *
 */
+// _FUNCTIONCALL_NO_COPY macro does not copy the array parameter
+#define _FUNCTIONCALL_NO_COPY_PRE(a, b, checks, func_name)  \
+		({\
+            DEBUG_PRINT("_FUNCTIONCALL_NO_COPY macro on ( "str(a)" = "str(func_name)" "str(b)" "str(checks)" )");\
+            DEBUG_CHECK_ASSUMPTION(a, b);\
+        })
+// _FUNCTIONCALL_COPY macro copies the array parameter
+#define _FUNCTIONCALL_COPY_PRE(a, b, checks, func_name)  \
+		({\
+            DEBUG_PRINT("_FUNCTIONCALL_COPY macro on ( "str(a)" = "str(func_name)" "str(b)" "str(checks)" )");\
+            DEBUG_CHECK_ASSUMPTION(a, b);\
+        })
+// _SUBSTRUCTURE_DEALLOC macro deals with user-defined type parameter
+#define _SUBSTRUCTURE_DEALLOC_PRE(a, b, checks, func_name)  \
+		({\
+            DEBUG_PRINT("_SUBSTRUCTURE_DEALLOC macro on ( "str(a)" = "str(func_name)" "str(b)" "str(checks)" )");\
+            DEBUG_CHECK_ASSUMPTION(a, b);\
+        })
 // '_RETAIN_DEALLOC' macro does NOT make the copy of argument 
 // and free the passing parameter at caller site 'a = func(b, false)'
 #define _RETAIN_DEALLOC(a, b, checks, func_name)  \

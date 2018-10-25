@@ -1,13 +1,9 @@
 #!/bin/bash
 # Use 'grep' to find the macros used in the impl folder
-caller=`grep "CALLER_DEALLOC(" impl/functioncall*/*/*.c | wc -l`
-callee=`grep "CALLEE_DEALLOC(" impl/functioncall*/*/*.c | wc -l`
-reset=`grep "RESET_DEALLOC(" impl/functioncall*/*/*.c | wc -l`
-retain=`grep "RETAIN_DEALLOC(" impl/functioncall*/*/*.c | wc -l`
-echo -e "The number of CALLER_DEALLOC macro is $caller"
-echo -e "The number of CALLEE_DEALLOC macro is $callee"
-echo -e "The number of RESET_DEALLOC macro is $reset"
-echo -e "The number of RETAIN_DEALLOC macro is $retain"
+copy=`grep "FUNCTIONCALL_NO_COPY" impl/functioncall*/*/*.c | wc -l`
+nocopy=`grep "FUNCTIONCALL_COPY" impl/functioncall*/*/*.c | wc -l`
+echo -e "The number of FUNCTIONCALL_NO_COPY macro is $copy"
+echo -e "The number of FUNCTIONCALL_COPY macro is $nocopy"
 # Put the test cases to log
 log="log_testcases.txt"
 rm $log
@@ -23,15 +19,13 @@ collectTestCases(){
         testcase=$(echo $file | cut -d "/" -f3)
         linenumber=$(echo $file | cut -d "/" -f4)
         linenumber=$(echo $linenumber | cut -d ":" -f2)
-        echo -e "Case "$i"\t\t"$testcase" at line "$linenumber "\t\t" $code  >> $log
+        echo -e "Case "$i"\t"$testcase" at line "$linenumber "\t" $code  >> $log
         i=$(( i + 1 ))
         #read -p "Press [Enter] to continue"
-    done < <(grep -n "$macro(" impl/functioncall*/*/*.c)
+    done < <(grep -n "$macro" impl/functioncall*/*/*.c)
 }
 
-collectTestCases "CALLER_DEALLOC"
-collectTestCases "CALLEE_DEALLOC"
-collectTestCases "RESET_DEALLOC"
-collectTestCases "RETAIN_DEALLOC"
+collectTestCases "FUNCTIONCALL_COPY"
+collectTestCases "FUNCTIONCALL_NO_COPY"
 
  

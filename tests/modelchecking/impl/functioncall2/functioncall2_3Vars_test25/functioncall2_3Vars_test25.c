@@ -146,8 +146,8 @@ int main(int argc, char** args){
 	j = _15;
 	//loop (%1, %2, %3, %4, %5, %16, %17, %18, %19, %20, %21, %22)
 	while(true){
-		//const %16 = 100 : int
-		_16 = 100;
+		//const %16 = 10 : int
+		_16 = 10;
 		//ifge %4, %16 goto blklab2 : int
 		if(j>=_16){goto blklab2;}
 		//assign %1 = %2  : int[]
@@ -179,13 +179,14 @@ int main(int argc, char** args){
 		_20 = 11;
 		//invoke (%19) = (%2, %20) functioncall2_3Vars_test25:func : function(int[],int)->(int[])
 		{
-			_CALLEE_DEALLOC(_19, b, "true-NEVER_RETURN-true" , "func");
+			_FUNCTIONCALL_COPY_PRE(_19, b, "true-NEVER_RETURN-true" , "func");
 			_DEALLOC(_19);
 			void* tmp_x;
 			_COPY_1DARRAY_PARAM(b, tmp_x, int64_t);
 			// isCopyEliminated of '_2' = false
 			_19 = _func_(tmp_x, b_size, _20, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
-			_CALLEE_DEALLOC_POST(_19, tmp_x);
+			free(tmp_x);
+			_19_dealloc = true;
 		}
 		//assign %1 = %19  : int[]
 		// isCopyEliminated = true

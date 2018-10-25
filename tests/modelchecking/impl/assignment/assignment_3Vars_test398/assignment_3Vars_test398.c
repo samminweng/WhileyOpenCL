@@ -60,8 +60,8 @@ int main(int argc, char** args){
 	j = _15;
 	//loop (%1, %2, %3, %4, %5, %16, %17, %18, %19, %20)
 	while(true){
-		//const %16 = 100 : int
-		_16 = 100;
+		//const %16 = 10 : int
+		_16 = 10;
 		//ifge %4, %16 goto blklab0 : int
 		if(j>=_16){goto blklab0;}
 		//assign %2 = %3  : int[]
