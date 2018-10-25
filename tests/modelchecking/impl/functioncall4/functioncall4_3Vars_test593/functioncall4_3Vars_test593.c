@@ -192,7 +192,7 @@ int main(int argc, char** args){
 		_21 = 3;
 		//invoke (%19) = (%2, %20, %21) functioncall4_3Vars_test593:func : function(int[],int,int)->(int[])
 		{
-			_FUNCTIONCALL_COPY_PRE(_19, b, "true-ALWAYS_RETURN-true" , "func");
+			_FUNCTIONCALL_COPY_PRE(_19, b, "true-MAYBE_RETURN-true" , "func");
 			_DEALLOC(_19);
 			void* tmp_a;
 			_COPY_1DARRAY_PARAM(b, tmp_a, int64_t);

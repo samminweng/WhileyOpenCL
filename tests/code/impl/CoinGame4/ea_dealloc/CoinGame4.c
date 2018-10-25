@@ -523,12 +523,15 @@ blklab16:;
 blklab17:;
 			//invoke (%41) = (%0, %5, %4, %1, %7, %6, %8) CoinGame4:pickCoin : function(int[],int,int,int,int,int,int)->(int[])
 			{
-				_CALLER_DEALLOC(_41, moves, "true-ALWAYS_RETURN-false" , "pickCoin");
+				_FUNCTIONCALL_COPY_PRE(_41, moves, "true-MAYBE_RETURN-false" , "pickCoin");
 				_DEALLOC(_41);
 				void* tmp_moves;
 				_COPY_1DARRAY_PARAM(moves, tmp_moves, int64_t);
 				_41 = _pickCoin_(tmp_moves, moves_size, i, j, n, x, y, z, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_41));
-				_CALLER_DEALLOC_POST(_41, tmp_moves);
+				if(_41 != tmp_moves ){
+					free(tmp_moves);
+				}
+				_41_dealloc = true;
 			}
 			//assign %0 = %41  : int[]
 			_ADD_DEALLOC(moves, _41, int64_t);
@@ -602,18 +605,21 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(moves, _7, int64_t);
 	//invoke (%8) = (%2, %1) CoinGame4:findMoves : function(int[],int)->(int[])
 	{
-		_CALLER_DEALLOC(_8, moves, "true-ALWAYS_RETURN-false" , "findMoves");
+		_FUNCTIONCALL_COPY_PRE(_8, moves, "true-MAYBE_RETURN-false" , "findMoves");
 		_DEALLOC(_8);
 		void* tmp_moves;
 		_COPY_1DARRAY_PARAM(moves, tmp_moves, int64_t);
 		_8 = _findMoves_(tmp_moves, moves_size, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
-		_CALLER_DEALLOC_POST(_8, tmp_moves);
+		if(_8 != tmp_moves ){
+			free(tmp_moves);
+		}
+		_8_dealloc = true;
 	}
 	//assign %2 = %8  : int[]
 	_ADD_DEALLOC(moves, _8, int64_t);
 	//invoke () = (%0, %2, %1) CoinGame4:play : method(whiley/lang/System:Console,int[],int)->()
 	{
-		_CALLEE_DEALLOC(, moves, "false-NEVER_RETURN-true" , "play");
+		_FUNCTIONCALL_COPY_PRE(, moves, "false-NEVER_RETURN-true" , "play");
 		void* tmp_moves;
 		_COPY_1DARRAY_PARAM(moves, tmp_moves, int64_t);
 		_play_(stdout, tmp_moves, moves_size, n);

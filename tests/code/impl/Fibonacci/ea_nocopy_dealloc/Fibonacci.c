@@ -45,11 +45,16 @@ blklab0:;
 	_10=n-_9;
 	//invoke (%8) = (%0, %10) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
-		_RESET_DEALLOC(_8, ls, "true-MAYBE_RETURN-false" , "fibonacci");
+		_FUNCTIONCALL_NO_COPY_PRE(_8, ls, "true-MAYBE_RETURN-false" , "fibonacci");
 		_DEALLOC(_8);
 		// isCopyEliminated of '_0' = true
 		_8 = _fibonacci_(ls, ls_size, _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
-		_RESET_DEALLOC_POST(_8, ls);
+		if( _8 != ls ){
+			_8_dealloc = true;
+		}else{
+			_8_dealloc = ls_dealloc;
+			ls_dealloc = false;
+		}
 	}
 	//assign %0 = %8  : int[]
 	// isCopyEliminated = true
@@ -126,11 +131,16 @@ int main(int argc, char** args){
 	_8=max-_7;
 	//invoke (%6) = (%2, %8) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
-		_RESET_DEALLOC(_6, arr, "true-MAYBE_RETURN-false" , "fibonacci");
+		_FUNCTIONCALL_NO_COPY_PRE(_6, arr, "true-MAYBE_RETURN-false" , "fibonacci");
 		_DEALLOC(_6);
 		// isCopyEliminated of '_2' = true
 		_6 = _fibonacci_(arr, arr_size, _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
-		_RESET_DEALLOC_POST(_6, arr);
+		if( _6 != arr ){
+			_6_dealloc = true;
+		}else{
+			_6_dealloc = arr_dealloc;
+			arr_dealloc = false;
+		}
 	}
 	//assign %2 = %6  : int[]
 	// isCopyEliminated = true

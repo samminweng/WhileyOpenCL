@@ -49,11 +49,16 @@ int main(int argc, char** args){
 	_7 = 11;
 	//invoke (%6) = (%1, %7) ResetMacro1:func : function(int[],int)->(int[])
 	{
-		_RESET_DEALLOC(_6, x, "true-ALWAYS_RETURN-false" , "func");
+		_FUNCTIONCALL_NO_COPY_PRE(_6, x, "true-MAYBE_RETURN-false" , "func");
 		_DEALLOC(_6);
 		// isCopyEliminated of '_1' = true
 		_6 = _func_(x, x_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
-		_RESET_DEALLOC_POST(_6, x);
+		if( _6 != x ){
+			_6_dealloc = true;
+		}else{
+			_6_dealloc = x_dealloc;
+			x_dealloc = false;
+		}
 	}
 	//assign %2 = %6  : int[]
 	// isCopyEliminated = true

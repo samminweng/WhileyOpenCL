@@ -150,7 +150,7 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, int64_t pos){
 		if(offset>=pos){goto blklab5;}
 		//invoke (%14) = (%0, %6, %1) lz77_opt_compress:match : function(byte[],lz77_opt_compress:nat,lz77_opt_compress:nat)->(int)
 		{
-			_RETAIN_DEALLOC(_14, data, "false-NEVER_RETURN-true" , "match");
+			_FUNCTIONCALL_NO_COPY_PRE(_14, data, "false-NEVER_RETURN-true" , "match");
 			// isCopyEliminated of '_0' = true
 			_14 = _match_(data, data_size, offset, pos);
 		}
@@ -384,11 +384,11 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREF
 		if(pos>=_15){goto blklab14;}
 		//invoke (%16) = (%0, %2) lz77_opt_compress:findLongestMatch : function(byte[],lz77_opt_compress:nat)->(lz77_opt_compress:Match)
 		{
-			_RETAIN_DEALLOC(_16, data, "false-NEVER_RETURN-true" , "findLongestMatch");
+			_FUNCTIONCALL_NO_COPY_PRE(_16, data, "false-NEVER_RETURN-true" , "findLongestMatch");
 			_DEALLOC_STRUCT(_16, Match);
 			// isCopyEliminated of '_0' = true
 			_16 = _findLongestMatch_(data, data_size, pos);
-			_RETAIN_DEALLOC_POST(_16, data);
+			_16_dealloc = true;
 		}
 		//assign %5 = %16  : {int len,int offset}
 		// isCopyEliminated = true
@@ -478,11 +478,11 @@ blklab18:;
 	}
 	//invoke (%31) = (%1, %4) lz77_opt_compress:resize : function(byte[],int)->(byte[])
 	{
-		_RETAIN_DEALLOC(_31, output, "false-NEVER_RETURN-false" , "resize");
+		_FUNCTIONCALL_NO_COPY_PRE(_31, output, "false-NEVER_RETURN-false" , "resize");
 		_DEALLOC(_31);
 		// isCopyEliminated of '_1' = true
 		_31 = _resize_(output, output_size, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_31));
-		_RETAIN_DEALLOC_POST(_31, output);
+		_31_dealloc = true;
 	}
 	//assign %1 = %31  : byte[]
 	// isCopyEliminated = true
@@ -604,11 +604,11 @@ int main(int argc, char** args){
 	}
 	//invoke (%21) = (%2) lz77_opt_compress:compress : function(byte[])->(byte[])
 	{
-		_RETAIN_DEALLOC(_21, data, "false-NEVER_RETURN-false" , "compress");
+		_FUNCTIONCALL_NO_COPY_PRE(_21, data, "false-NEVER_RETURN-false" , "compress");
 		_DEALLOC(_21);
 		// isCopyEliminated of '_2' = true
 		_21 = _compress_(data, data_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_21));
-		_RETAIN_DEALLOC_POST(_21, data);
+		_21_dealloc = true;
 	}
 	//assign %3 = %21  : byte[]
 	// isCopyEliminated = true

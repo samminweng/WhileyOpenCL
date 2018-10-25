@@ -96,11 +96,16 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(a, _9);
 	//invoke (%10) = (%1) FunctionCall1:func : function(int[])->(int[])
 	{
-		_RESET_DEALLOC(_10, a, "true-MAYBE_RETURN-false" , "func");
+		_FUNCTIONCALL_NO_COPY_PRE(_10, a, "true-MAYBE_RETURN-false" , "func");
 		_DEALLOC(_10);
 		// isCopyEliminated of '_1' = true
 		_10 = _func_(a, a_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
-		_RESET_DEALLOC_POST(_10, a);
+		if( _10 != a ){
+			_10_dealloc = true;
+		}else{
+			_10_dealloc = a_dealloc;
+			a_dealloc = false;
+		}
 	}
 	//assign %1 = %10  : int[]
 	// isCopyEliminated = true
@@ -163,13 +168,16 @@ blklab0:;
 	_TRANSFER_DEALLOC(b, _26);
 	//invoke (%27) = (%2) FunctionCall1:func : function(int[])->(int[])
 	{
-		_CALLER_DEALLOC(_27, b, "true-MAYBE_RETURN-true" , "func");
+		_FUNCTIONCALL_COPY_PRE(_27, b, "true-MAYBE_RETURN-true" , "func");
 		_DEALLOC(_27);
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(b, tmp_s, int64_t);
 		// isCopyEliminated of '_2' = false
 		_27 = _func_(tmp_s, b_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
-		_CALLER_DEALLOC_POST(_27, tmp_s);
+		if(_27 != tmp_s ){
+			free(tmp_s);
+		}
+		_27_dealloc = true;
 	}
 	//assign %3 = %27  : int[]
 	// isCopyEliminated = true

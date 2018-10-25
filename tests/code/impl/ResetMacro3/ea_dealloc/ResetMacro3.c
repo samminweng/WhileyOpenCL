@@ -87,12 +87,15 @@ int main(int argc, char** args){
 	_7 = 11;
 	//invoke (%6) = (%1, %7) ResetMacro3:func : function(int[],int)->(int[])
 	{
-		_CALLER_DEALLOC(_6, b, "true-MAYBE_RETURN-false" , "func");
+		_FUNCTIONCALL_COPY_PRE(_6, b, "true-MAYBE_RETURN-false" , "func");
 		_DEALLOC(_6);
 		void* tmp_b;
 		_COPY_1DARRAY_PARAM(b, tmp_b, int64_t);
 		_6 = _func_(tmp_b, b_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
-		_CALLER_DEALLOC_POST(_6, tmp_b);
+		if(_6 != tmp_b ){
+			free(tmp_b);
+		}
+		_6_dealloc = true;
 	}
 	//assign %2 = %6  : int[]
 	_ADD_DEALLOC(tmp, _6, int64_t);
@@ -129,12 +132,15 @@ blklab2:;
 	_16 = 65536;
 	//invoke (%15) = (%1, %16) ResetMacro3:func : function(int[],int)->(int[])
 	{
-		_CALLER_DEALLOC(_15, b, "true-MAYBE_RETURN-false" , "func");
+		_FUNCTIONCALL_COPY_PRE(_15, b, "true-MAYBE_RETURN-false" , "func");
 		_DEALLOC(_15);
 		void* tmp_b;
 		_COPY_1DARRAY_PARAM(b, tmp_b, int64_t);
 		_15 = _func_(tmp_b, b_size, _16, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
-		_CALLER_DEALLOC_POST(_15, tmp_b);
+		if(_15 != tmp_b ){
+			free(tmp_b);
+		}
+		_15_dealloc = true;
 	}
 	//assign %1 = %15  : int[]
 	_ADD_DEALLOC(b, _15, int64_t);

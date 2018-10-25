@@ -256,11 +256,16 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYR
 		if(header!=_25){goto blklab20;}
 		//invoke (%26) = (%2, %3, %6) lz77_opt_decompress:opt_append : function(byte[],lz77_opt_decompress:nat,byte)->(byte[])
 		{
-			_RESET_DEALLOC(_26, items, "true-MAYBE_RETURN-false" , "opt_append");
+			_FUNCTIONCALL_NO_COPY_PRE(_26, items, "true-MAYBE_RETURN-false" , "opt_append");
 			_DEALLOC(_26);
 			// isCopyEliminated of '_2' = true
 			_26 = _opt_append_(items, items_size, inspos, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_26));
-			_RESET_DEALLOC_POST(_26, items);
+			if( _26 != items ){
+				_26_dealloc = true;
+			}else{
+				_26_dealloc = items_dealloc;
+				items_dealloc = false;
+			}
 		}
 		//assign %2 = %26  : byte[]
 		// isCopyEliminated = true
@@ -311,11 +316,16 @@ blklab20:;
 			item = _33;
 			//invoke (%34) = (%2, %3, %6) lz77_opt_decompress:opt_append : function(byte[],lz77_opt_decompress:nat,byte)->(byte[])
 			{
-				_RESET_DEALLOC(_34, items, "true-MAYBE_RETURN-false" , "opt_append");
+				_FUNCTIONCALL_NO_COPY_PRE(_34, items, "true-MAYBE_RETURN-false" , "opt_append");
 				_DEALLOC(_34);
 				// isCopyEliminated of '_2' = true
 				_34 = _opt_append_(items, items_size, inspos, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_34));
-				_RESET_DEALLOC_POST(_34, items);
+				if( _34 != items ){
+					_34_dealloc = true;
+				}else{
+					_34_dealloc = items_dealloc;
+					items_dealloc = false;
+				}
 			}
 			//assign %2 = %34  : byte[]
 			// isCopyEliminated = true
@@ -348,11 +358,11 @@ blklab19:;
 blklab18:;
 	//invoke (%39) = (%2, %3) lz77_opt_decompress:resize : function(byte[],int)->(byte[])
 	{
-		_RETAIN_DEALLOC(_39, items, "false-NEVER_RETURN-false" , "resize");
+		_FUNCTIONCALL_NO_COPY_PRE(_39, items, "false-NEVER_RETURN-false" , "resize");
 		_DEALLOC(_39);
 		// isCopyEliminated of '_2' = true
 		_39 = _resize_(items, items_size, inspos, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_39));
-		_RETAIN_DEALLOC_POST(_39, items);
+		_39_dealloc = true;
 	}
 	//assign %1 = %39  : byte[]
 	// isCopyEliminated = true
@@ -417,11 +427,11 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(input_data, _6);
 	//invoke (%8) = (%2) lz77_opt_decompress:decompress : function(byte[])->(byte[])
 	{
-		_RETAIN_DEALLOC(_8, input_data, "false-NEVER_RETURN-false" , "decompress");
+		_FUNCTIONCALL_NO_COPY_PRE(_8, input_data, "false-NEVER_RETURN-false" , "decompress");
 		_DEALLOC(_8);
 		// isCopyEliminated of '_2' = true
 		_8 = _decompress_(input_data, input_data_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
-		_RETAIN_DEALLOC_POST(_8, input_data);
+		_8_dealloc = true;
 	}
 	//assign %3 = %8  : byte[]
 	// isCopyEliminated = true

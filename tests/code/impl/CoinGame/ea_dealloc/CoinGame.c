@@ -570,18 +570,21 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(moves, _7, int64_t);
 	//invoke (%8) = (%2, %1) CoinGame:findMoves : function(int[],int)->(int[])
 	{
-		_CALLER_DEALLOC(_8, moves, "true-ALWAYS_RETURN-false" , "findMoves");
+		_FUNCTIONCALL_COPY_PRE(_8, moves, "true-MAYBE_RETURN-false" , "findMoves");
 		_DEALLOC(_8);
 		void* tmp_moves;
 		_COPY_1DARRAY_PARAM(moves, tmp_moves, int64_t);
 		_8 = _findMoves_(tmp_moves, moves_size, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
-		_CALLER_DEALLOC_POST(_8, tmp_moves);
+		if(_8 != tmp_moves ){
+			free(tmp_moves);
+		}
+		_8_dealloc = true;
 	}
 	//assign %2 = %8  : int[]
 	_ADD_DEALLOC(moves, _8, int64_t);
 	//invoke () = (%0, %2, %1) CoinGame:play : method(whiley/lang/System:Console,int[],int)->()
 	{
-		_CALLEE_DEALLOC(, moves, "false-NEVER_RETURN-true" , "play");
+		_FUNCTIONCALL_COPY_PRE(, moves, "false-NEVER_RETURN-true" , "play");
 		void* tmp_moves;
 		_COPY_1DARRAY_PARAM(moves, tmp_moves, int64_t);
 		_play_(stdout, tmp_moves, moves_size, n);

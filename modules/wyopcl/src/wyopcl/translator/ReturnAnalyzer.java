@@ -3,6 +3,7 @@ package wyopcl.translator;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -127,6 +128,9 @@ public class ReturnAnalyzer extends Analyzer {
 		postorderTraversalCallGraph(tree);
 	}
 
+	
+	
+	
 	/**
 	 * Check if the register appears in every return statement of the function, and if the register 
 	 * never appears on the left-handed side of an assignment, which ensures the register is read-only.
@@ -135,10 +139,9 @@ public class ReturnAnalyzer extends Analyzer {
 	 * @param function the called function
 	 * @return
 	 */
-	private boolean isRegisterAlwaysReturn(int register, FunctionOrMethod function) {
-		boolean isAlwaysReturned = true; 
+	private boolean isRegisterAlwaysReturn(int register, List<Code> bytecodes, boolean isAlwaysReturned) {		
 		// Go through each return bytecode
-		for (Code code : function.body().bytecodes()) {
+		for (Code code : bytecodes) {
 			if(code instanceof Codes.Return) {
 				Codes.Return ret = (Codes.Return)code;
 				if(ret.operands().length>0) {
@@ -149,6 +152,13 @@ public class ReturnAnalyzer extends Analyzer {
 				Codes.Assign ass = (Codes.Assign) code;
 				// Check if the register is NOT on the left-side
 				isAlwaysReturned = isAlwaysReturned & (ass.target(0) != register);
+			}else if (code instanceof Codes.Update) {
+				// Check if the register is NOT on the left-side of an array update
+				Codes.Update update = (Codes.Update)code;
+				isAlwaysReturned = isAlwaysReturned & (update.target(0) != register);
+			}else if(code instanceof Codes.Loop) {
+				Codes.Loop loop = (Codes.Loop)code;
+				isAlwaysReturned = isRegisterAlwaysReturn(register, loop.bytecodes(), isAlwaysReturned); 
 			}
 		}
 		
@@ -166,7 +176,9 @@ public class ReturnAnalyzer extends Analyzer {
 	public RETURN isReturned(int register, FunctionOrMethod function) {
 		HashSet<Integer> store = stores.get(function);
 		if (store.contains(register)) {
-			if(isRegisterAlwaysReturn(register, function)) {
+			// Check if the register is on the left-handed side of the function body 
+			List<Code> bytecodes = function.body().bytecodes();
+			if(isRegisterAlwaysReturn(register, bytecodes, true)) {
 				return RETURN.ALWAYS_RETURN;
 			}
 			return RETURN.MAYBE_RETURN;

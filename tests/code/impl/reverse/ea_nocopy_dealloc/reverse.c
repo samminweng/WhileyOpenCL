@@ -132,11 +132,11 @@ int main(int argc, char** args){
 	_11_dealloc = true;
 	//invoke (%5) = (%11) reverse:reverse : function(int[])->(int[])
 	{
-		_RETAIN_DEALLOC(_5, _11, "false-NEVER_RETURN-false" , "reverse");
+		_FUNCTIONCALL_NO_COPY_PRE(_5, _11, "false-NEVER_RETURN-false" , "reverse");
 		_DEALLOC(_5);
 		// isCopyEliminated of '_11' = true
 		_5 = _reverse_(_11, _11_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
-		_RETAIN_DEALLOC_POST(_5, _11);
+		_5_dealloc = true;
 	}
 	//assign %1 = %5  : int[]
 	// isCopyEliminated = true
@@ -210,11 +210,11 @@ blklab6:;
 blklab5:;
 	//invoke (%27) = (%4) reverse:reverse : function(int[])->(int[])
 	{
-		_RETAIN_DEALLOC(_27, arr, "false-NEVER_RETURN-false" , "reverse");
+		_FUNCTIONCALL_NO_COPY_PRE(_27, arr, "false-NEVER_RETURN-false" , "reverse");
 		_DEALLOC(_27);
 		// isCopyEliminated of '_4' = true
 		_27 = _reverse_(arr, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
-		_RETAIN_DEALLOC_POST(_27, arr);
+		_27_dealloc = true;
 	}
 	//assign %4 = %27  : int[]
 	// isCopyEliminated = true

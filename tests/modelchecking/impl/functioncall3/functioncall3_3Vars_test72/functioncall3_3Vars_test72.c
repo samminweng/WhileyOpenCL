@@ -137,7 +137,7 @@ int main(int argc, char** args){
 		_TRANSFER_DEALLOC(c, a);
 		//invoke (%19) = (%2) functioncall3_3Vars_test72:func : function(int[])->(int[])
 		{
-			_FUNCTIONCALL_COPY_PRE(_19, b, "true-ALWAYS_RETURN-true" , "func");
+			_FUNCTIONCALL_COPY_PRE(_19, b, "true-MAYBE_RETURN-true" , "func");
 			_DEALLOC(_19);
 			void* tmp_a;
 			_COPY_1DARRAY_PARAM(b, tmp_a, int64_t);

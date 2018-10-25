@@ -624,7 +624,9 @@ public class DeallocationAnalyzer extends Analyzer {
 						if (macro.getReturn() == RETURN.NEVER_RETURN) {
 							// If so, we add a free statement to explicitly release the memory of temporary variable
 							statements.add(indent + "free(" + tmp_name + ");");
-						} else {
+						}else if(macro.getReturn() == RETURN.ALWAYS_RETURN) { 
+							// If so, then we do not need any free because the return variable is the parameter.
+						}else {
 							// For maybe and always return, we add if-else branch to safely release the memory
 							statements.add(indent + "if(" + ret + " != " + tmp_name + " ){");
 							statements.add(indent + "\tfree(" + tmp_name + ");");
@@ -650,20 +652,28 @@ public class DeallocationAnalyzer extends Analyzer {
 							statements.add(indent + "}");
 						}
 					}
+				}else {
+					// For none return value of a function call, we handle the below macros.
+					if(macro == MACRO._FUNCTIONCALL_COPY) {
+						String tmp_name = stores.getTmpParamName(parameter, index, code, function);
+						// We explicitly free the copied temporary variable as it is not used and returned afterwards
+						statements.add(indent + "free(" + tmp_name + ");");
+					}					
 				}
 				index++;
 			}
 		}
-
+		// For a special case, a = init(b, c) where a is int[], b is int and c is int
 		if (statements.size() == 0) {
-			// For a = init(b, c) where a is int[], b is int and c is int
 			// Add deallocation flag to lhs variable by default.
 			if (code.targets().length > 0) {
-				// throw new RuntimeException("Not implemented");
-				// Add the deallocation flag of lhs variable
-				statements.add(indent + assignDealloc(code.target(0), function, stores));
+				// Get the return type
+				Type ret_type = stores.getRawType(code.target(0), function);
+				if(stores.isCompoundType(ret_type)) {
+					// Add the deallocation flag of lhs variable
+					statements.add(indent + assignDealloc(code.target(0), function, stores));
+				}
 			}
-
 		}
 
 		return statements;
@@ -942,7 +952,11 @@ public class DeallocationAnalyzer extends Analyzer {
 			return "_CALLEE_DEALLOC" + "\t" + checks;
 		}
 	}
-
+	
+	/**
+	 * Define the function call macro as pre-defined constants.
+	 *
+	 */
 	public enum MACRO {
 		NONE(0), _FUNCTIONCALL_NO_COPY(1), _FUNCTIONCALL_COPY(2), _SUBSTRUCTURE_DEALLOC(3);
 		// Constructor
@@ -1018,14 +1032,14 @@ public class DeallocationAnalyzer extends Analyzer {
 				return macro;
 			}
 			// The rule of function call macro
-			if (!isMutated) {
-				// For a read-only parameter, we use NO_COPY macro
+			if (!isLive) {
+				// For a not live parameter, we use NO_COPY macro
 				MACRO macro = MACRO._FUNCTIONCALL_NO_COPY;
 				macro.setChecks(checks);
 				macro.setReturn(isReturned);
 				return macro;
-			} else if (!isLive) {
-				// For a not live parameter, we use NO_COPY macro
+			} else if (!isMutated && isReturned == RETURN.NEVER_RETURN) {
+				// For a read-only and live but never returned parameter, we use NO_COPY macro
 				MACRO macro = MACRO._FUNCTIONCALL_NO_COPY;
 				macro.setChecks(checks);
 				macro.setReturn(isReturned);

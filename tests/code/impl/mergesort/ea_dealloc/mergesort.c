@@ -81,12 +81,15 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	_17 = 0;
 	//invoke (%16) = (%5, %17, %4) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		_CALLER_DEALLOC(_16, lhs, "true-ALWAYS_RETURN-false" , "sortV1");
+		_FUNCTIONCALL_COPY_PRE(_16, lhs, "true-MAYBE_RETURN-false" , "sortV1");
 		_DEALLOC(_16);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(lhs, tmp_items, int64_t);
 		_16 = _sortV1_(tmp_items, lhs_size, _17, pivot, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
-		_CALLER_DEALLOC_POST(_16, tmp_items);
+		if(_16 != tmp_items ){
+			free(tmp_items);
+		}
+		_16_dealloc = true;
 	}
 	//assign %5 = %16  : int[]
 	_ADD_DEALLOC(lhs, _16, int64_t);
@@ -104,12 +107,15 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	_21=end-pivot;
 	//invoke (%19) = (%6, %20, %21) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		_CALLER_DEALLOC(_19, rhs, "true-ALWAYS_RETURN-false" , "sortV1");
+		_FUNCTIONCALL_COPY_PRE(_19, rhs, "true-MAYBE_RETURN-false" , "sortV1");
 		_DEALLOC(_19);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(rhs, tmp_items, int64_t);
 		_19 = _sortV1_(tmp_items, rhs_size, _20, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
-		_CALLER_DEALLOC_POST(_19, tmp_items);
+		if(_19 != tmp_items ){
+			free(tmp_items);
+		}
+		_19_dealloc = true;
 	}
 	//assign %6 = %19  : int[]
 	_ADD_DEALLOC(rhs, _19, int64_t);
@@ -380,12 +386,15 @@ int main(int argc, char** args){
 	_13 = 5;
 	//invoke (%11) = (%1, %12, %13) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		_CALLER_DEALLOC(_11, ys, "true-ALWAYS_RETURN-false" , "sortV1");
+		_FUNCTIONCALL_COPY_PRE(_11, ys, "true-MAYBE_RETURN-false" , "sortV1");
 		_DEALLOC(_11);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
 		_11 = _sortV1_(tmp_items, ys_size, _12, _13, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
-		_CALLER_DEALLOC_POST(_11, tmp_items);
+		if(_11 != tmp_items ){
+			free(tmp_items);
+		}
+		_11_dealloc = true;
 	}
 	//assign %1 = %11  : int[]
 	_ADD_DEALLOC(ys, _11, int64_t);
@@ -436,12 +445,15 @@ blklab9:;
 	_27 = 4;
 	//invoke (%25) = (%1, %26, %27) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		_CALLER_DEALLOC(_25, ys, "true-ALWAYS_RETURN-false" , "sortV1");
+		_FUNCTIONCALL_COPY_PRE(_25, ys, "true-MAYBE_RETURN-false" , "sortV1");
 		_DEALLOC(_25);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
 		_25 = _sortV1_(tmp_items, ys_size, _26, _27, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
-		_CALLER_DEALLOC_POST(_25, tmp_items);
+		if(_25 != tmp_items ){
+			free(tmp_items);
+		}
+		_25_dealloc = true;
 	}
 	//assign %1 = %25  : int[]
 	_ADD_DEALLOC(ys, _25, int64_t);
@@ -490,12 +502,15 @@ blklab10:;
 	_40 = 4;
 	//invoke (%38) = (%1, %39, %40) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		_CALLER_DEALLOC(_38, ys, "true-ALWAYS_RETURN-false" , "sortV1");
+		_FUNCTIONCALL_COPY_PRE(_38, ys, "true-MAYBE_RETURN-false" , "sortV1");
 		_DEALLOC(_38);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
 		_38 = _sortV1_(tmp_items, ys_size, _39, _40, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
-		_CALLER_DEALLOC_POST(_38, tmp_items);
+		if(_38 != tmp_items ){
+			free(tmp_items);
+		}
+		_38_dealloc = true;
 	}
 	//assign %1 = %38  : int[]
 	_ADD_DEALLOC(ys, _38, int64_t);
@@ -546,12 +561,15 @@ blklab11:;
 	_54 = 5;
 	//invoke (%52) = (%1, %53, %54) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		_CALLER_DEALLOC(_52, ys, "true-ALWAYS_RETURN-false" , "sortV1");
+		_FUNCTIONCALL_COPY_PRE(_52, ys, "true-MAYBE_RETURN-false" , "sortV1");
 		_DEALLOC(_52);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
 		_52 = _sortV1_(tmp_items, ys_size, _53, _54, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
-		_CALLER_DEALLOC_POST(_52, tmp_items);
+		if(_52 != tmp_items ){
+			free(tmp_items);
+		}
+		_52_dealloc = true;
 	}
 	//assign %1 = %52  : int[]
 	_ADD_DEALLOC(ys, _52, int64_t);
@@ -626,12 +644,15 @@ blklab13:;
 	_73=max+_72;
 	//invoke (%70) = (%4, %71, %73) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		_CALLER_DEALLOC(_70, arr, "true-ALWAYS_RETURN-false" , "sortV1");
+		_FUNCTIONCALL_COPY_PRE(_70, arr, "true-MAYBE_RETURN-false" , "sortV1");
 		_DEALLOC(_70);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(arr, tmp_items, int64_t);
 		_70 = _sortV1_(tmp_items, arr_size, _71, _73, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_70));
-		_CALLER_DEALLOC_POST(_70, tmp_items);
+		if(_70 != tmp_items ){
+			free(tmp_items);
+		}
+		_70_dealloc = true;
 	}
 	//assign %4 = %70  : int[]
 	_ADD_DEALLOC(arr, _70, int64_t);

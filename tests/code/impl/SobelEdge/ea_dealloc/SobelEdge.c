@@ -356,8 +356,8 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, int64_t width, int6
 			pos = _46;
 			//invoke (%47) = (%0, %1, %2, %8, %9, %6) SobelEdge:convolution : function(byte[],int,int,int,int,int[])->(int)
 			{
-				_CALLEE_DEALLOC(_47, v_sobel, "false-NEVER_RETURN-true" , "convolution");
-				_CALLEE_DEALLOC(_47, pixels, "false-NEVER_RETURN-true" , "convolution");
+				_FUNCTIONCALL_COPY_PRE(_47, v_sobel, "false-NEVER_RETURN-true" , "convolution");
+				_FUNCTIONCALL_COPY_PRE(_47, pixels, "false-NEVER_RETURN-true" , "convolution");
 				void* tmp_pixels;
 				_COPY_1DARRAY_PARAM(pixels, tmp_pixels, BYTE);
 				void* tmp_kernel;
@@ -370,8 +370,8 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, int64_t width, int6
 			v_g = _47;
 			//invoke (%48) = (%0, %1, %2, %8, %9, %7) SobelEdge:convolution : function(byte[],int,int,int,int,int[])->(int)
 			{
-				_CALLEE_DEALLOC(_48, h_sobel, "false-NEVER_RETURN-true" , "convolution");
-				_CALLEE_DEALLOC(_48, pixels, "false-NEVER_RETURN-true" , "convolution");
+				_FUNCTIONCALL_COPY_PRE(_48, h_sobel, "false-NEVER_RETURN-true" , "convolution");
+				_FUNCTIONCALL_COPY_PRE(_48, pixels, "false-NEVER_RETURN-true" , "convolution");
 				void* tmp_pixels;
 				_COPY_1DARRAY_PARAM(pixels, tmp_pixels, BYTE);
 				void* tmp_kernel;
@@ -641,18 +641,19 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(pixels, _10, BYTE);
 	//invoke (%12) = (%4, %2, %3) SobelEdge:sobelEdgeDetection : function(byte[],int,int)->(byte[])
 	{
-		_CALLEE_DEALLOC(_12, pixels, "false-NEVER_RETURN-false" , "sobelEdgeDetection");
+		_FUNCTIONCALL_COPY_PRE(_12, pixels, "false-NEVER_RETURN-false" , "sobelEdgeDetection");
 		_DEALLOC(_12);
 		void* tmp_pixels;
 		_COPY_1DARRAY_PARAM(pixels, tmp_pixels, BYTE);
 		_12 = _sobelEdgeDetection_(tmp_pixels, pixels_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_12));
-		_CALLEE_DEALLOC_POST(_12, tmp_pixels);
+		free(tmp_pixels);
+		_12_dealloc = true;
 	}
 	//assign %5 = %12  : byte[]
 	_ADD_DEALLOC(newPixels, _12, BYTE);
 	//invoke () = (%0, %2, %3, %5) SobelEdge:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
-		_CALLEE_DEALLOC(, newPixels, "false-NEVER_RETURN-false" , "print_pbm");
+		_FUNCTIONCALL_COPY_PRE(, newPixels, "false-NEVER_RETURN-false" , "print_pbm");
 		void* tmp_pixels;
 		_COPY_1DARRAY_PARAM(newPixels, tmp_pixels, BYTE);
 		_print_pbm_(stdout, width, height, tmp_pixels, newPixels_size);

@@ -94,12 +94,13 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(a, _9, int64_t);
 	//invoke (%10) = (%1) FunctionCall1:func : function(int[])->(int[])
 	{
-		_CALLEE_DEALLOC(_10, a, "false-NEVER_RETURN-false" , "func");
+		_FUNCTIONCALL_COPY_PRE(_10, a, "false-NEVER_RETURN-false" , "func");
 		_DEALLOC(_10);
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(a, tmp_s, int64_t);
 		_10 = _func_(tmp_s, a_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
-		_CALLEE_DEALLOC_POST(_10, tmp_s);
+		free(tmp_s);
+		_10_dealloc = true;
 	}
 	//assign %1 = %10  : int[]
 	_ADD_DEALLOC(a, _10, int64_t);
@@ -160,12 +161,13 @@ blklab0:;
 	_ADD_DEALLOC(b, _26, int64_t);
 	//invoke (%27) = (%2) FunctionCall1:func : function(int[])->(int[])
 	{
-		_CALLEE_DEALLOC(_27, b, "false-NEVER_RETURN-true" , "func");
+		_FUNCTIONCALL_COPY_PRE(_27, b, "false-NEVER_RETURN-true" , "func");
 		_DEALLOC(_27);
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(b, tmp_s, int64_t);
 		_27 = _func_(tmp_s, b_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
-		_CALLEE_DEALLOC_POST(_27, tmp_s);
+		free(tmp_s);
+		_27_dealloc = true;
 	}
 	//assign %3 = %27  : int[]
 	_ADD_DEALLOC(c, _27, int64_t);

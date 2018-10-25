@@ -1100,40 +1100,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				}
 			} else {
 				throw new RuntimeException("Not Implemented");
-			}
-
-//			// Append deallocation flag to the function call
-//			this.deallocatedAnalyzer.ifPresent(a -> {
-//				String macro = a.computeDealloc(operand, code, function, stores, copyAnalyzer);
-//				if (!macro.equals("")) {
-//					// Split the macro into an array of two string
-//					String[] parts = macro.split("\t");
-//					String macro_name = parts[0];// Get the macro
-//					switch (macro_name) {
-//					case "_SUBSTRUCTURE_DEALLOC":
-//						parameters.add("false");
-//						break;
-//					case "_RESET_DEALLOC":
-//						parameters.add("false");
-//						break;
-//					case "_RETAIN_DEALLOC":
-//						parameters.add("false");
-//						break;
-//					case "_CALLER_DEALLOC":
-//						parameters.add("false");
-//						break;
-//					case "_CALLEE_DEALLOC":
-//						parameters.add("true");
-//						break;
-//					default:
-//						break;
-//					}
-//				} else {
-//					// Do nothing
-//				}
-//
-//			});
-			
+			}			
 			index++;
 		}
 
@@ -1482,18 +1449,20 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		List<String> list = new ArrayList<String>();
 		for(int i =0;i<statements.size();i++) {
 			String statement = statements.get(i);
-			// Check if the statement is the use of function call macro
+			// Move function call pre macro to the first position
 			if(statement.matches(".*(\\_[A-Z]+\\_PRE\\().*")) {
-				list.add(1, statement); // Put the PRE macro at the start of statements
-			}else if(statement.matches(".*(\\_[A-Z]+\\_DEALLOC\\().*")) {
-				// so we put it at the beginning of statements
-				list.add(1, statement); 
+				list.add(1, statement); // Move the PRE macro 
 			}else if (statement.contains("_DEALLOC(")) {
-				// Put the pre_deallocation macro to the second position.
+				// Move PREDEALLOC macro to the first position.
 				list.add(1, statement);
 			} else {
 				list.add(statement);
 			}
+			/*This check is for old version of deallocation macros.
+			 * else if(statement.matches(".*(\\_[A-Z]+\\_DEALLOC\\().*")) {
+			// so we put it at the beginning of statements
+			list.add(0, statement); 
+		    }*/
 		}
 		
 		// add the statement

@@ -89,11 +89,16 @@ int main(int argc, char** args){
 	_7 = 11;
 	//invoke (%6) = (%1, %7) ResetMacro3:func : function(int[],int)->(int[])
 	{
-		_RESET_DEALLOC(_6, b, "true-MAYBE_RETURN-false" , "func");
+		_FUNCTIONCALL_NO_COPY_PRE(_6, b, "true-MAYBE_RETURN-false" , "func");
 		_DEALLOC(_6);
 		// isCopyEliminated of '_1' = true
 		_6 = _func_(b, b_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
-		_RESET_DEALLOC_POST(_6, b);
+		if( _6 != b ){
+			_6_dealloc = true;
+		}else{
+			_6_dealloc = b_dealloc;
+			b_dealloc = false;
+		}
 	}
 	//assign %2 = %6  : int[]
 	// isCopyEliminated = true
@@ -132,11 +137,16 @@ blklab2:;
 	_16 = 65536;
 	//invoke (%15) = (%1, %16) ResetMacro3:func : function(int[],int)->(int[])
 	{
-		_RESET_DEALLOC(_15, b, "true-MAYBE_RETURN-false" , "func");
+		_FUNCTIONCALL_NO_COPY_PRE(_15, b, "true-MAYBE_RETURN-false" , "func");
 		_DEALLOC(_15);
 		// isCopyEliminated of '_1' = true
 		_15 = _func_(b, b_size, _16, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
-		_RESET_DEALLOC_POST(_15, b);
+		if( _15 != b ){
+			_15_dealloc = true;
+		}else{
+			_15_dealloc = b_dealloc;
+			b_dealloc = false;
+		}
 	}
 	//assign %1 = %15  : int[]
 	// isCopyEliminated = true

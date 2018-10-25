@@ -137,12 +137,16 @@ int main(int argc, char** args){
 		_ADD_DEALLOC(a, b, int64_t);
 		//invoke (%19) = (%2) functioncall3_3Vars_test478:func : function(int[])->(int[])
 		{
-			_FUNCTIONCALL_NO_COPY_PRE(_19, b, "true-ALWAYS_RETURN-false" , "func");
+			_FUNCTIONCALL_NO_COPY_PRE(_19, b, "true-MAYBE_RETURN-false" , "func");
 			_DEALLOC(_19);
 			// isCopyEliminated of '_2' = true
 			_19 = _func_(b, b_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
-			_19_dealloc = b_dealloc;
-			b_dealloc = false;
+			if( _19 != b ){
+				_19_dealloc = true;
+			}else{
+				_19_dealloc = b_dealloc;
+				b_dealloc = false;
+			}
 		}
 		//assign %1 = %19  : int[]
 		// isCopyEliminated = true

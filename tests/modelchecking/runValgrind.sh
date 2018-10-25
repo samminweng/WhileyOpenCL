@@ -39,10 +39,10 @@ runValgrind(){
                 echo "=== Test report for $codetype $testcase ===" >> $memorylog
                 echo "The Valgrind memory detector as below:" >> $memorylog
                 cat $logFolder/$testcase.valgrind.log >> $memorylog
-                echo "The deallocation macros are as below:" >> $memorylog
-                head --lines=40 $logFolder/$testcase.log >> $memorylog
-                echo -e "\n .... Please refer to $logFolder/$testcase.log ....\n" >> $memorylog
-                tail $logFolder/$testcase.log >> $memorylog
+                #echo "The deallocation macros are as below:" >> $memorylog
+                #head --lines=40 $logFolder/$testcase.log >> $memorylog
+                #echo -e "\n .... Please refer to $logFolder/$testcase.log ....\n" >> $memorylog
+                #tail $logFolder/$testcase.log >> $memorylog
                 echo -e "\n\n" >> $memorylog
                 #read -p "Press enter to continue"
             done

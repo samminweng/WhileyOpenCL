@@ -59,12 +59,12 @@ int main(int argc, char** args){
 	b[_7] = _6;
 	//invoke (%8) = (%1) CallerMacro3:f : function(int[])->(int[])
 	{
-		_CALLER_DEALLOC(_8, b, "false-ALWAYS_RETURN-true" , "f");
+		_FUNCTIONCALL_COPY_PRE(_8, b, "false-ALWAYS_RETURN-true" , "f");
 		_DEALLOC(_8);
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(b, tmp_x, int64_t);
 		_8 = _f_(tmp_x, b_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
-		_CALLER_DEALLOC_POST(_8, tmp_x);
+		_8_dealloc = true;
 	}
 	//assign %2 = %8  : int[]
 	_ADD_DEALLOC(a, _8, int64_t);

@@ -141,7 +141,7 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, int64_t pos){
 		if(offset>=pos){goto blklab5;}
 		//invoke (%14) = (%0, %6, %1) lz77_opt_compress:match : function(byte[],lz77_opt_compress:nat,lz77_opt_compress:nat)->(int)
 		{
-			_CALLEE_DEALLOC(_14, data, "false-NEVER_RETURN-true" , "match");
+			_FUNCTIONCALL_COPY_PRE(_14, data, "false-NEVER_RETURN-true" , "match");
 			void* tmp_data;
 			_COPY_1DARRAY_PARAM(data, tmp_data, BYTE);
 			_14 = _match_(tmp_data, data_size, offset, pos);
@@ -363,12 +363,13 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREF
 		if(pos>=_15){goto blklab14;}
 		//invoke (%16) = (%0, %2) lz77_opt_compress:findLongestMatch : function(byte[],lz77_opt_compress:nat)->(lz77_opt_compress:Match)
 		{
-			_CALLEE_DEALLOC(_16, data, "false-NEVER_RETURN-true" , "findLongestMatch");
+			_FUNCTIONCALL_COPY_PRE(_16, data, "false-NEVER_RETURN-true" , "findLongestMatch");
 			void* tmp_data;
 			_COPY_1DARRAY_PARAM(data, tmp_data, BYTE);
 			_DEALLOC_STRUCT(_16, Match);
 			_16 = _findLongestMatch_(tmp_data, data_size, pos);
-			_CALLEE_DEALLOC_POST(_16, tmp_data);
+			free(tmp_data);
+			_16_dealloc = true;
 		}
 		//assign %5 = %16  : {int len,int offset}
 		_DEALLOC_STRUCT(m, Match);
@@ -450,12 +451,13 @@ blklab18:;
 	}
 	//invoke (%31) = (%1, %4) lz77_opt_compress:resize : function(byte[],int)->(byte[])
 	{
-		_CALLEE_DEALLOC(_31, output, "false-NEVER_RETURN-false" , "resize");
+		_FUNCTIONCALL_COPY_PRE(_31, output, "false-NEVER_RETURN-false" , "resize");
 		_DEALLOC(_31);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(output, tmp_items, BYTE);
 		_31 = _resize_(tmp_items, output_size, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_31));
-		_CALLEE_DEALLOC_POST(_31, tmp_items);
+		free(tmp_items);
+		_31_dealloc = true;
 	}
 	//assign %1 = %31  : byte[]
 	_ADD_DEALLOC(output, _31, BYTE);
@@ -574,12 +576,13 @@ int main(int argc, char** args){
 	}
 	//invoke (%21) = (%2) lz77_opt_compress:compress : function(byte[])->(byte[])
 	{
-		_CALLEE_DEALLOC(_21, data, "false-NEVER_RETURN-false" , "compress");
+		_FUNCTIONCALL_COPY_PRE(_21, data, "false-NEVER_RETURN-false" , "compress");
 		_DEALLOC(_21);
 		void* tmp_data;
 		_COPY_1DARRAY_PARAM(data, tmp_data, BYTE);
 		_21 = _compress_(tmp_data, data_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_21));
-		_CALLEE_DEALLOC_POST(_21, tmp_data);
+		free(tmp_data);
+		_21_dealloc = true;
 	}
 	//assign %3 = %21  : byte[]
 	_ADD_DEALLOC(compress_data, _21, BYTE);
