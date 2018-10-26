@@ -984,16 +984,13 @@ blklab38:;
 	//invoke (%40) = (%1, %2) cashtill:add : function(cashtill:Cash,cashtill:Cash)->(cashtill:Cash)
 	{
 		_FUNCTIONCALL_COPY_PRE(_40, given, "false-NEVER_RETURN-false" , "add");
-		_FUNCTIONCALL_COPY_PRE(_40, till, "true-MAYBE_RETURN-false" , "add");
+		_FUNCTIONCALL_COPY_PRE(_40, till, "true-ALWAYS_RETURN-false" , "add");
 		_DEALLOC(_40);
 		void* tmp_first;
 		_COPY_1DARRAY_PARAM(till, tmp_first, int64_t);
 		void* tmp_second;
 		_COPY_1DARRAY_PARAM(given, tmp_second, int64_t);
 		_40 = _add_(tmp_first, till_size, tmp_second, given_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_40));
-		if(_40 != tmp_first ){
-			free(tmp_first);
-		}
 		_40_dealloc = true;
 		free(tmp_second);
 		_40_dealloc = true;
@@ -1003,16 +1000,13 @@ blklab38:;
 	//invoke (%41) = (%1, %5) cashtill:subtract : function(cashtill:Cash,cashtill:Cash)->(cashtill:Cash)
 	{
 		_FUNCTIONCALL_COPY_PRE(_41, change, "false-NEVER_RETURN-false" , "subtract");
-		_FUNCTIONCALL_COPY_PRE(_41, till, "true-MAYBE_RETURN-false" , "subtract");
+		_FUNCTIONCALL_COPY_PRE(_41, till, "true-ALWAYS_RETURN-false" , "subtract");
 		_DEALLOC(_41);
 		void* tmp_first;
 		_COPY_1DARRAY_PARAM(till, tmp_first, int64_t);
 		void* tmp_second;
 		_COPY_1DARRAY_PARAM(change, tmp_second, int64_t);
 		_41 = _subtract_(tmp_first, till_size, tmp_second, change_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_41));
-		if(_41 != tmp_first ){
-			free(tmp_first);
-		}
 		_41_dealloc = true;
 		free(tmp_second);
 		_41_dealloc = true;

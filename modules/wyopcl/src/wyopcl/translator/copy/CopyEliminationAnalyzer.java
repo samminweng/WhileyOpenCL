@@ -79,7 +79,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 *         Note that The copies are not needed by default in some special forms of byte-code ('FieldLoad')
 	 * 
 	 */
-	public boolean isCopyEliminated(int register, Code code, FunctionOrMethod function) {
+	public boolean isCopyEliminated(int register, int pos, Code code, FunctionOrMethod function) {
 		boolean isLive = liveAnalyzer.isLive(register, code, function);
 
 		if (!isLive) {
@@ -93,7 +93,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 				FunctionOrMethod callee = this.getCalledFunction(functioncall);
 				if (callee != null) {
 					// Map the register to function argument.
-					int callee_register = this.mapArgumentToParameter(register, functioncall);
+					int callee_register = this.mapArgumentToParameter(register, pos, functioncall);
 					// Check if parameter is modified inside 'invoked_function'.
 					boolean isMutated = readwriteAnalyzer.isMutated(callee_register, callee);
 					// 'r' is NOT mutated inside invoked function
@@ -136,7 +136,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			for (Code code : function.body().bytecodes()) {
 				if (code instanceof Codes.Assign) {
 					int rhs = ((Codes.Assign) code).operand(0);
-					boolean isCopyEliminated = isCopyEliminated(rhs, code, function);
+					boolean isCopyEliminated = isCopyEliminated(rhs, 0, code, function);
 				}
 			}
 		}

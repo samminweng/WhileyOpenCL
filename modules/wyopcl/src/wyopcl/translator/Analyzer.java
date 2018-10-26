@@ -708,25 +708,30 @@ public abstract class Analyzer {
 	/**
 	 * Map the function argument to the register in the calling function.
 	 * For example, 'a = f(b, c)'
-	 * The passed argument 'b' is mapped to the first register
-	 * in calling function 'f'
+	 * The passed argument 'b' is mapped to the first register (register = 0)
+	 * The passed arguement 'c' is the second register (register = 1)
 	 * 
+	 * A special case, 'a = f(b, b)'
+	 * The first argument 'b' is the first register (register = 0)
+	 * The second argument 'b' is the second register (register = 1)
 	 * 
 	 * @param parameter the function argument at caller site
 	 * @param code
 	 * @return the register in calling function
 	 */
-	protected int mapArgumentToParameter(int parameter, Codes.Invoke code) {
+	protected int mapArgumentToParameter(int parameter, int pos, Codes.Invoke code) {
 		// Map the register to input parameter.
 		int[] ops = code.operands();
 		
 		// Find out the index of passed parameter
 		int register =0;
+		int index = 0;
 		while(register<ops.length){
-			if(ops[register] == parameter){
+			if(ops[register] == parameter && pos == index){
 				break;
 			}
 			register++;
+			index++;
 		}
 		
 		return register;// The operand index is also the registers defined in the function.

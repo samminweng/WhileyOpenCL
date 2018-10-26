@@ -88,7 +88,7 @@ Unwinding loop _func_.0 iteration 4 file impl/functioncall3/functioncall3_3Vars_
 Unwinding loop _func_.0 iteration 5 file impl/functioncall3/functioncall3_3Vars_test15/functioncall3_3Vars_test15.c line 18 function _func_ thread 0
 Unwinding loop main.0 iteration 10 file impl/functioncall3/functioncall3_3Vars_test15/functioncall3_3Vars_test15.c line 108 function main thread 0
 aborting path on assume(false) at file <builtin-library-exit> line 7 function exit thread 0
-size of program expression: 5168 steps
+size of program expression: 5158 steps
 simple slicing removed 1 assignments
 Generated 888 VCC(s), 348 remaining after simplification
 Passing problem to propositional reduction
@@ -98,7 +98,7 @@ Post-processing
 Solving with MiniSAT 2.2.1 with simplifier
 50784 variables, 10179 clauses
 SAT checker: instance is UNSATISFIABLE
-Runtime decision procedure: 0.0468605s
+Runtime decision procedure: 0.0477416s
 
 ** Results:
 [main.precondition_instance.1] free argument must be dynamic object: SUCCESS
@@ -195,10 +195,6 @@ Runtime decision procedure: 0.0468605s
 [main.precondition_instance.85] free argument has offset zero: SUCCESS
 [main.precondition_instance.86] double free: SUCCESS
 [main.precondition_instance.87] free called for new[] object: SUCCESS
-[main.precondition_instance.88] free argument must be dynamic object: SUCCESS
-[main.precondition_instance.89] free argument has offset zero: SUCCESS
-[main.precondition_instance.90] double free: SUCCESS
-[main.precondition_instance.91] free called for new[] object: SUCCESS
 [fputs.pointer_dereference.1] dereference failure: pointer NULL in *s: SUCCESS
 [fputs.pointer_dereference.2] dereference failure: pointer invalid in *s: SUCCESS
 [fputs.pointer_dereference.3] dereference failure: deallocated dynamic object in *s: SUCCESS
@@ -896,5 +892,5 @@ Runtime decision procedure: 0.0468605s
 [readFile.pointer_dereference.7] dereference failure: invalid integer address in *_size: SUCCESS
 [__CPROVER__start.memory-leak.1] dynamically allocated memory never freed in __CPROVER_memory_leak == NULL: SUCCESS
 
-** 0 of 794 failed (1 iteration)
+** 0 of 790 failed (1 iteration)
 VERIFICATION SUCCESSFUL

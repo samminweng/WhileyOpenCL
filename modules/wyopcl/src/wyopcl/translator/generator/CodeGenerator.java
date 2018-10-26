@@ -713,7 +713,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Point lhs to lambda function.
 			statement.add(indent + lhs + " = " + rhs + ";");
 		}else {
-			boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
+			boolean isCopyEliminated = isCopyEliminated(code.operand(0), 0, code, function);
 			// Add copy analysis result as a comment.
 			if(this.copyAnalyzer.isPresent()){
 				statement.add(indent+ "// isCopyEliminated = " + isCopyEliminated);
@@ -908,9 +908,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param function
 	 * @return
 	 */
-	private boolean isCopyEliminated(int register, Code code, FunctionOrMethod function) {
+	private boolean isCopyEliminated(int register, int pos, Code code, FunctionOrMethod function) {
 		if (this.copyAnalyzer.isPresent()) {
-			return this.copyAnalyzer.get().isCopyEliminated(register, code, function);
+			return this.copyAnalyzer.get().isCopyEliminated(register, pos, code, function);
 		}
 
 		return false;
@@ -945,7 +945,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Check if the parameter is an array or structure
 			if (stores.isCompoundType(param_type)) {
 				// Check if the copy of parameter
-				boolean isCopyEliminated = isCopyEliminated(operand, code, function);
+				boolean isCopyEliminated = isCopyEliminated(operand, index, code, function);
 				if (isCopyEliminated) {
 					// Put the operand to the copy-reduced list
 					copyReducedList.add(operand);
@@ -1685,7 +1685,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String lhs = translateLHSVarFunctionCall(statement, code, function);
 
 		// Generate update statement, e.g. a[i] = b
-		boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
+		boolean isCopyEliminated = isCopyEliminated(code.operand(0), 0, code, function);
 		statement.add(indent + lhs + " = " + stores.getVar(code.result(), function) + ";");
 
 		// Update the set with rhs variable
@@ -2240,15 +2240,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		HashMap<Integer, Boolean> copyEliminatedMap = new HashMap<Integer, Boolean>();
 		int[] operands = code.operands();
-		for (int i = 0; i < operands.length; i++) {
+		for (int index = 0; index < operands.length; index++) {
 			// Get operand
-			int register = operands[i];
+			int register = operands[index];
 			String rhs = stores.getVar(register, function);
-			String member = members.get(i);
+			String member = members.get(index);
 			String lhs_member = lhs + "->" + member;
 			Type member_type = stores.getRawType(register, function);
 			// Type type = code.type(0).field(member);
-			boolean isCopyEliminated = isCopyEliminated(register, code, function);
+			boolean isCopyEliminated = isCopyEliminated(register, index, code, function);
 			copyEliminatedMap.put(register, isCopyEliminated);
 
 			statement.addAll(CodeGeneratorHelper.generateAssignmentCode(member_type, indent, lhs_member, rhs,

@@ -445,7 +445,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			// Apply the macros for each parameter
 			int index = 0;
 			for (int register : code.operands()) {
-				String macro = computeDealloc(register, code, function, stores, copyAnalyzer);
+				String macro = computeDealloc(register, index, code, function, stores, copyAnalyzer);
 				if (macro.equals("")) {
 					index++;
 					// We do not need post code
@@ -587,7 +587,6 @@ public class DeallocationAnalyzer extends Analyzer {
 			}
 		} else {
 			// Get return variable and type
-			// Get function return variable
 			String ret = "";
 			Type ret_type = null;
 			if (code.targets().length > 0) {
@@ -599,7 +598,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			// Apply the macros for each parameter
 			int index = 0;
 			for (int register : code.operands()) {
-				MACRO macro = computeDeallocV2(register, code, function, stores, copyAnalyzer);
+				MACRO macro = computeDeallocV2(register, index, code, function, stores, copyAnalyzer);
 				if (macro == MACRO.NONE) {
 					index++;
 					// We do not need post code
@@ -870,7 +869,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 *         </ul>
 	 * 
 	 */
-	public String computeDealloc(int register, Codes.Invoke code, FunctionOrMethod function, CodeStores stores,
+	public String computeDealloc(int register, int pos, Codes.Invoke code, FunctionOrMethod function, CodeStores stores,
 			Optional<CopyEliminationAnalyzer> copyAnalyzer) {
 		Type type = stores.getRawType(register, function);
 		if (!stores.isCompoundType(type)) {
@@ -878,7 +877,7 @@ public class DeallocationAnalyzer extends Analyzer {
 		}
 
 		FunctionOrMethod callingfunction = this.getCalledFunction(code);
-		int arguement = mapArgumentToParameter(register, code);
+		int arguement = mapArgumentToParameter(register, pos, code);
 		boolean isMutated = readwriteAnalyzer.isMutated(arguement, callingfunction);
 		// boolean isReturned = returnAnalyzer.isReturned(arguement, callingfunction);
 		RETURN isReturned = returnAnalyzer.isReturned(arguement, callingfunction);
@@ -995,13 +994,16 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * 
 	 * @param register
 	 *            the register of function parameter
+	 * @param pos
+	 *            the position in the function call
+	 * This change allows the same parameter name (or register) is used at a function call, e.g. a = func(b, b)
 	 * @param code
 	 * @param function
 	 * @param stores
 	 * @param copyAnalyzer
 	 * @return
 	 */
-	public MACRO computeDeallocV2(int register, Codes.Invoke code, FunctionOrMethod function, CodeStores stores,
+	public MACRO computeDeallocV2(int register, int pos, Codes.Invoke code, FunctionOrMethod function, CodeStores stores,
 			Optional<CopyEliminationAnalyzer> copyAnalyzer) {
 		Type type = stores.getRawType(register, function);
 		// Check if the parameter is an array or structure type.
@@ -1012,7 +1014,7 @@ public class DeallocationAnalyzer extends Analyzer {
 		// Get the called function
 		FunctionOrMethod calledFunction = this.getCalledFunction(code);
 		// Map the argument of the function call to actual parameter of called function
-		int parameter = mapArgumentToParameter(register, code);
+		int parameter = mapArgumentToParameter(register, pos, code);
 		// Check if the parameter is mutated at called function
 		boolean isMutated = readwriteAnalyzer.isMutated(parameter, calledFunction);
 		// Check if the parameter is returned at called function

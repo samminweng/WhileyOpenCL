@@ -1002,17 +1002,13 @@ blklab38:;
 	//invoke (%40) = (%1, %2) cashtill:add : function(cashtill:Cash,cashtill:Cash)->(cashtill:Cash)
 	{
 		_FUNCTIONCALL_NO_COPY_PRE(_40, given, "false-NEVER_RETURN-false" , "add");
-		_FUNCTIONCALL_NO_COPY_PRE(_40, till, "true-MAYBE_RETURN-false" , "add");
+		_FUNCTIONCALL_NO_COPY_PRE(_40, till, "true-ALWAYS_RETURN-false" , "add");
 		_DEALLOC(_40);
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_2' = true
 		_40 = _add_(till, till_size, given, given_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_40));
-		if( _40 != till ){
-			_40_dealloc = true;
-		}else{
-			_40_dealloc = till_dealloc;
-			till_dealloc = false;
-		}
+		_40_dealloc = till_dealloc;
+		till_dealloc = false;
 		_40_dealloc = true;
 	}
 	//assign %1 = %40  : int[]
@@ -1021,17 +1017,13 @@ blklab38:;
 	//invoke (%41) = (%1, %5) cashtill:subtract : function(cashtill:Cash,cashtill:Cash)->(cashtill:Cash)
 	{
 		_FUNCTIONCALL_NO_COPY_PRE(_41, change, "false-NEVER_RETURN-false" , "subtract");
-		_FUNCTIONCALL_NO_COPY_PRE(_41, till, "true-MAYBE_RETURN-false" , "subtract");
+		_FUNCTIONCALL_NO_COPY_PRE(_41, till, "true-ALWAYS_RETURN-false" , "subtract");
 		_DEALLOC(_41);
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_5' = true
 		_41 = _subtract_(till, till_size, change, change_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_41));
-		if( _41 != till ){
-			_41_dealloc = true;
-		}else{
-			_41_dealloc = till_dealloc;
-			till_dealloc = false;
-		}
+		_41_dealloc = till_dealloc;
+		till_dealloc = false;
 		_41_dealloc = true;
 	}
 	//assign %1 = %41  : int[]

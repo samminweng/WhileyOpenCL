@@ -42,15 +42,12 @@ int64_t* _g1_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_7 = 11;
 	//invoke (%6) = (%1, %7) CallerMacro1:func : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_6, a, "true-MAYBE_RETURN-true" , "func");
+		_FUNCTIONCALL_COPY_PRE(_6, a, "true-ALWAYS_RETURN-true" , "func");
 		_DEALLOC(_6);
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(a, tmp_x, int64_t);
 		// isCopyEliminated of '_1' = false
 		_6 = _func_(tmp_x, a_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
-		if(_6 != tmp_x ){
-			free(tmp_x);
-		}
 		_6_dealloc = true;
 	}
 	//assign %2 = %6  : int[]

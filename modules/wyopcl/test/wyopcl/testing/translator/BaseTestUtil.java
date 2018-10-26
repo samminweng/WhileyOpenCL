@@ -318,8 +318,8 @@ public final class BaseTestUtil {
 //			// Store messages with an array list, to avoid duplicate messages and reduce log file size
 //			List<String> messages = new ArrayList<String>();
 //			// Instantly write out the output message to avoid the process to block.
-			InputStream input = process.getInputStream();
-			in_sc = new Scanner(input);
+			//InputStream input = process.getInputStream();
+			//in_sc = new Scanner(input);
 //			FileWriter pbmwriter = null;
 //			if(isWriteOut){
 //				// Write output as a PBM file.

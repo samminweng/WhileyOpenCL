@@ -555,7 +555,7 @@ public class BoundAnalyzer {
 				// Update the aliased information
 				if (copyAnalyzer.isPresent()) {
 					// Check if the copy of rhs variable is removed
-					boolean isCopyEliminated = copyAnalyzer.get().isCopyEliminated(code.operand(0), code, function);
+					boolean isCopyEliminated = copyAnalyzer.get().isCopyEliminated(code.operand(0), 0, code, function);
 					if (isCopyEliminated) {
 						int l_reg = code.target(0);
 						int r_reg = code.operand(0);

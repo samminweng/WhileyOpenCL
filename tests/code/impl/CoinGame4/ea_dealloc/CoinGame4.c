@@ -523,14 +523,11 @@ blklab16:;
 blklab17:;
 			//invoke (%41) = (%0, %5, %4, %1, %7, %6, %8) CoinGame4:pickCoin : function(int[],int,int,int,int,int,int)->(int[])
 			{
-				_FUNCTIONCALL_COPY_PRE(_41, moves, "true-MAYBE_RETURN-false" , "pickCoin");
+				_FUNCTIONCALL_COPY_PRE(_41, moves, "true-ALWAYS_RETURN-false" , "pickCoin");
 				_DEALLOC(_41);
 				void* tmp_moves;
 				_COPY_1DARRAY_PARAM(moves, tmp_moves, int64_t);
 				_41 = _pickCoin_(tmp_moves, moves_size, i, j, n, x, y, z, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_41));
-				if(_41 != tmp_moves ){
-					free(tmp_moves);
-				}
 				_41_dealloc = true;
 			}
 			//assign %0 = %41  : int[]

@@ -48,14 +48,11 @@ int main(int argc, char** args){
 	_7 = 11;
 	//invoke (%6) = (%1, %7) ResetMacro1:func : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_6, x, "true-MAYBE_RETURN-false" , "func");
+		_FUNCTIONCALL_COPY_PRE(_6, x, "true-ALWAYS_RETURN-false" , "func");
 		_DEALLOC(_6);
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(x, tmp_x, int64_t);
 		_6 = _func_(tmp_x, x_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
-		if(_6 != tmp_x ){
-			free(tmp_x);
-		}
 		_6_dealloc = true;
 	}
 	//assign %2 = %6  : int[]

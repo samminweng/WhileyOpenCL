@@ -1,23 +1,23 @@
-==28675== Memcheck, a memory error detector
-==28675== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==28675== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==28675== Command: ./CoinGame.out
-==28675== Parent PID: 28248
-==28675== 
-==28675== Invalid read of size 8
-==28675==    at 0x400E13: _play_ (CoinGame.c:120)
-==28675==    by 0x40225B: main (CoinGame.c:620)
-==28675==  Address 0x5204038 is 8 bytes before a block of size 800 alloc'd
-==28675==    at 0x4C2DBF6: malloc (vg_replace_malloc.c:299)
-==28675==    by 0x4027D2: create1DArray_int64_t (Util.c:23)
-==28675==    by 0x40211D: main (CoinGame.c:596)
-==28675== 
-==28675== 
-==28675== HEAP SUMMARY:
-==28675==     in use at exit: 0 bytes in 0 blocks
-==28675==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
-==28675== 
-==28675== All heap blocks were freed -- no leaks are possible
-==28675== 
-==28675== For counts of detected and suppressed errors, rerun with: -v
-==28675== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==32187== Memcheck, a memory error detector
+==32187== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==32187== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==32187== Command: ./CoinGame.out
+==32187== Parent PID: 31759
+==32187== 
+==32187== Invalid read of size 8
+==32187==    at 0x400E13: _play_ (CoinGame.c:120)
+==32187==    by 0x402245: main (CoinGame.c:616)
+==32187==  Address 0x5204038 is 8 bytes before a block of size 800 alloc'd
+==32187==    at 0x4C2DBF6: malloc (vg_replace_malloc.c:299)
+==32187==    by 0x4027BC: create1DArray_int64_t (Util.c:23)
+==32187==    by 0x40211D: main (CoinGame.c:596)
+==32187== 
+==32187== 
+==32187== HEAP SUMMARY:
+==32187==     in use at exit: 0 bytes in 0 blocks
+==32187==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
+==32187== 
+==32187== All heap blocks were freed -- no leaks are possible
+==32187== 
+==32187== For counts of detected and suppressed errors, rerun with: -v
+==32187== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

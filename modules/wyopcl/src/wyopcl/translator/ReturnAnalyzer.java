@@ -152,11 +152,7 @@ public class ReturnAnalyzer extends Analyzer {
 				Codes.Assign ass = (Codes.Assign) code;
 				// Check if the register is NOT on the left-side
 				isAlwaysReturned = isAlwaysReturned & (ass.target(0) != register);
-			}else if (code instanceof Codes.Update) {
-				// Check if the register is NOT on the left-side of an array update
-				Codes.Update update = (Codes.Update)code;
-				isAlwaysReturned = isAlwaysReturned & (update.target(0) != register);
-			}else if(code instanceof Codes.Loop) {
+			} else if(code instanceof Codes.Loop) {
 				Codes.Loop loop = (Codes.Loop)code;
 				isAlwaysReturned = isRegisterAlwaysReturn(register, loop.bytecodes(), isAlwaysReturned); 
 			}

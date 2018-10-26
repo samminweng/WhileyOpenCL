@@ -291,14 +291,11 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(A, _15, int64_t);
 	//invoke (%16) = (%4, %2, %3) MatrixMult:init : function(int[],int,int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_16, A, "true-MAYBE_RETURN-false" , "init");
+		_FUNCTIONCALL_COPY_PRE(_16, A, "true-ALWAYS_RETURN-false" , "init");
 		_DEALLOC(_16);
 		void* tmp_data;
 		_COPY_1DARRAY_PARAM(A, tmp_data, int64_t);
 		_16 = _init_(tmp_data, A_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
-		if(_16 != tmp_data ){
-			free(tmp_data);
-		}
 		_16_dealloc = true;
 	}
 	//assign %4 = %16  : int[]
@@ -313,14 +310,11 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(B, _19, int64_t);
 	//invoke (%20) = (%5, %2, %3) MatrixMult:init : function(int[],int,int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_20, B, "true-MAYBE_RETURN-false" , "init");
+		_FUNCTIONCALL_COPY_PRE(_20, B, "true-ALWAYS_RETURN-false" , "init");
 		_DEALLOC(_20);
 		void* tmp_data;
 		_COPY_1DARRAY_PARAM(B, tmp_data, int64_t);
 		_20 = _init_(tmp_data, B_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
-		if(_20 != tmp_data ){
-			free(tmp_data);
-		}
 		_20_dealloc = true;
 	}
 	//assign %5 = %20  : int[]
@@ -335,7 +329,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(C, _23, int64_t);
 	//invoke (%24) = (%4, %5, %6, %2, %3) MatrixMult:mat_mult : function(int[],int[],int[],int,int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_24, C, "true-MAYBE_RETURN-false" , "mat_mult");
+		_FUNCTIONCALL_COPY_PRE(_24, C, "true-ALWAYS_RETURN-false" , "mat_mult");
 		_FUNCTIONCALL_COPY_PRE(_24, B, "false-NEVER_RETURN-true" , "mat_mult");
 		_FUNCTIONCALL_COPY_PRE(_24, A, "false-NEVER_RETURN-true" , "mat_mult");
 		_DEALLOC(_24);
@@ -350,9 +344,6 @@ int main(int argc, char** args){
 		_24_dealloc = true;
 		free(tmp_b);
 		_24_dealloc = true;
-		if(_24 != tmp_data ){
-			free(tmp_data);
-		}
 		_24_dealloc = true;
 	}
 	//assign %6 = %24  : int[]

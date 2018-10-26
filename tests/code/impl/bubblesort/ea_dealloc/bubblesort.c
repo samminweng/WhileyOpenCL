@@ -223,14 +223,11 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(ys, _10, int64_t);
 	//invoke (%11) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_11, ys, "true-MAYBE_RETURN-false" , "bubbleSort");
+		_FUNCTIONCALL_COPY_PRE(_11, ys, "true-ALWAYS_RETURN-false" , "bubbleSort");
 		_DEALLOC(_11);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
 		_11 = _bubbleSort_(tmp_items, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
-		if(_11 != tmp_items ){
-			free(tmp_items);
-		}
 		_11_dealloc = true;
 	}
 	//assign %1 = %11  : int[]
@@ -284,14 +281,11 @@ blklab5:;
 	_ADD_DEALLOC(ys, _24, int64_t);
 	//invoke (%25) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_25, ys, "true-MAYBE_RETURN-false" , "bubbleSort");
+		_FUNCTIONCALL_COPY_PRE(_25, ys, "true-ALWAYS_RETURN-false" , "bubbleSort");
 		_DEALLOC(_25);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
 		_25 = _bubbleSort_(tmp_items, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
-		if(_25 != tmp_items ){
-			free(tmp_items);
-		}
 		_25_dealloc = true;
 	}
 	//assign %1 = %25  : int[]
@@ -343,14 +337,11 @@ blklab6:;
 	_ADD_DEALLOC(ys, _37, int64_t);
 	//invoke (%38) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_38, ys, "true-MAYBE_RETURN-false" , "bubbleSort");
+		_FUNCTIONCALL_COPY_PRE(_38, ys, "true-ALWAYS_RETURN-false" , "bubbleSort");
 		_DEALLOC(_38);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
 		_38 = _bubbleSort_(tmp_items, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
-		if(_38 != tmp_items ){
-			free(tmp_items);
-		}
 		_38_dealloc = true;
 	}
 	//assign %1 = %38  : int[]
@@ -404,14 +395,11 @@ blklab7:;
 	_ADD_DEALLOC(ys, _51, int64_t);
 	//invoke (%52) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_52, ys, "true-MAYBE_RETURN-false" , "bubbleSort");
+		_FUNCTIONCALL_COPY_PRE(_52, ys, "true-ALWAYS_RETURN-false" , "bubbleSort");
 		_DEALLOC(_52);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
 		_52 = _bubbleSort_(tmp_items, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
-		if(_52 != tmp_items ){
-			free(tmp_items);
-		}
 		_52_dealloc = true;
 	}
 	//assign %1 = %52  : int[]
@@ -483,14 +471,11 @@ blklab10:;
 blklab9:;
 	//invoke (%68) = (%4) bubblesort:bubbleSort : function(int[])->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_68, arr, "true-MAYBE_RETURN-false" , "bubbleSort");
+		_FUNCTIONCALL_COPY_PRE(_68, arr, "true-ALWAYS_RETURN-false" , "bubbleSort");
 		_DEALLOC(_68);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(arr, tmp_items, int64_t);
 		_68 = _bubbleSort_(tmp_items, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
-		if(_68 != tmp_items ){
-			free(tmp_items);
-		}
 		_68_dealloc = true;
 	}
 	//assign %4 = %68  : int[]

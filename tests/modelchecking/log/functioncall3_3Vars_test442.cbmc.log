@@ -88,7 +88,7 @@ Unwinding loop _func_.0 iteration 4 file impl/functioncall3/functioncall3_3Vars_
 Unwinding loop _func_.0 iteration 5 file impl/functioncall3/functioncall3_3Vars_test442/functioncall3_3Vars_test442.c line 18 function _func_ thread 0
 Unwinding loop main.0 iteration 10 file impl/functioncall3/functioncall3_3Vars_test442/functioncall3_3Vars_test442.c line 108 function main thread 0
 aborting path on assume(false) at file <builtin-library-exit> line 7 function exit thread 0
-size of program expression: 2758 steps
+size of program expression: 2748 steps
 simple slicing removed 1 assignments
 Generated 678 VCC(s), 258 remaining after simplification
 Passing problem to propositional reduction
@@ -98,7 +98,7 @@ Post-processing
 Solving with MiniSAT 2.2.1 with simplifier
 20017 variables, 3741 clauses
 SAT checker: instance is UNSATISFIABLE
-Runtime decision procedure: 0.0144642s
+Runtime decision procedure: 0.0141574s
 
 ** Results:
 [main.precondition_instance.1] free argument must be dynamic object: SUCCESS
