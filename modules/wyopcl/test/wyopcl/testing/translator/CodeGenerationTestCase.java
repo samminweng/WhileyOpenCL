@@ -104,6 +104,7 @@ public class CodeGenerationTestCase {
 				"lz77_opt_decompress", // Optimized lz77 decompression by using ArrayList appending
 				"SobelEdge", // Read 'feep.pbm', detect the edges and output the resulting array
 				"IntToByte", // Generate a byte array 
+				"PassedParameterTwice", // The same parameter is passed twice 
 		});
 	}
 	
