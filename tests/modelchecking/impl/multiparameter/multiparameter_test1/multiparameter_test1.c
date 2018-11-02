@@ -84,7 +84,6 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_2' = true
 		_10 = _func_(tmp_a, a_size, b, b_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 		_10_dealloc = true;
-		_10_dealloc = true;
 	}
 	//assign %3 = %10  : int[]
 	// isCopyEliminated = true

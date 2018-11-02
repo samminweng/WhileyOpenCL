@@ -113,11 +113,12 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_2' = false
 		_10 = _func_(a, a_size, tmp_b, b_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
-		_10_dealloc = true;
-		if(_10 != tmp_b ){
+		if( _10 == tmp_b ){
+			_10_dealloc = true;
+		} else {
+			_10_dealloc = true;
 			free(tmp_b);
 		}
-		_10_dealloc = true;
 	}
 	//assign %3 = %10  : int[]
 	// isCopyEliminated = true

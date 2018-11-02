@@ -3,6 +3,7 @@ package wyopcl.translator.deallocate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Optional;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -545,6 +546,12 @@ public class DeallocationAnalyzer extends Analyzer {
 	/**
 	 * Given a function call, compute its post deallocation code
 	 * 
+	 * b = func(a1,..., an)
+	 * 
+	 * Assume a1,..., an are nocopy if( b == a1){ #ifdef a_live a1 = copy(b) b_dealloc = a1_dealloc a1_dealloc = true
+	 * #else b_dealloc = a1_dealloc a1_dealloc = false #endif }else if (b == a2){ // Same for a2 }....{
+	 * 
+	 * }else{ b_dealloc = true }
 	 * 
 	 * @param code
 	 * @param function
@@ -595,72 +602,184 @@ public class DeallocationAnalyzer extends Analyzer {
 				ret_type = stores.getRawType(code.target(0), function);
 			}
 
+			// Store all function call copy macros in a HashMap
+			HashMap<String, MACRO> functioncallCopyMacroMap = new HashMap<String, MACRO>();
+			// Store all function call nocopy macros in a HashMap
+			HashMap<String, MACRO> functioncallNoCopyMacroMap = new HashMap<String, MACRO>();
 			// Apply the macros for each parameter
 			int index = 0;
 			for (int register : code.operands()) {
 				MACRO macro = computeDeallocV2(register, index, code, function, stores, copyAnalyzer);
-				if (macro == MACRO.NONE) {
+				if (macro.getMacroType() == MACROTYPE.NONE) {
 					index++;
 					// We do not need post code
 					continue;
 				}
 				// Get check results (mutable, return and live checks on parameter)
 				String parameter = stores.getVar(register, function);
-				// Get parameter type
-				//Type parameter_type = stores.getRawType(register, function);
-				statements.add(indent + macro + "_PRE(" + ret + ", " + parameter + ", \"" + macro.checks 
-						              + "\" , \"" + code.name.name() + "\");");
-				// Check if the call has the return. If so, then we can apply deallocation POST macro.
+				// Type parameter_type = stores.getRawType(register, function);
+				statements.add(indent + macro.getMacroType() + "_PRE(" + ret + ", " + parameter + ", \"" + macro.checks
+						+ "\" , \"" + code.name.name() + "\");");
 				if (ret_type != null && stores.isCompoundType(ret_type)) {
-					// Check the macro
-					if (macro == MACRO._SUBSTRUCTURE_DEALLOC) {
+					//
+					if (macro.getMacroType() == MACROTYPE._SUBSTRUCTURE_DEALLOC) {
 						statements.add(indent + macro + "(" + parameter + ");");
 						statements.add(indent + this.assignDealloc(code.target(0), function, stores));
-					} else if (macro == MACRO._FUNCTIONCALL_COPY) {
-						// Get the name of temp variable that stores the copied parameter.
-						String tmp_name = stores.getTmpParamName(parameter, index, code, function);
-						// Check if isReturned is NEVER_RETURN.
-						if (macro.getReturn() == RETURN.NEVER_RETURN) {
-							// If so, we add a free statement to explicitly release the memory of temporary variable
-							statements.add(indent + "free(" + tmp_name + ");");
-						}else if(macro.getReturn() == RETURN.ALWAYS_RETURN) { 
-							// If so, then we do not need any free because the return variable is the parameter.
-						}else {
-							// For maybe and always return, we add if-else branch to safely release the memory
-							statements.add(indent + "if(" + ret + " != " + tmp_name + " ){");
-							statements.add(indent + "\tfree(" + tmp_name + ");");
-							statements.add(indent + "}");
-						}
-						// Add a assignment to specify the flag to return variable
-						statements.add(indent + ret + "_dealloc = true;");
-					} else if (macro == MACRO._FUNCTIONCALL_NO_COPY) {
-						// Check the return analysis
-						if (macro.getReturn() == RETURN.NEVER_RETURN) {
-							// For never-returned parameter, we explicitly set the flag of return variable
-							statements.add(indent + ret + "_dealloc = true;");
-						} else if (macro.getReturn() == RETURN.ALWAYS_RETURN) {
-							statements.add(indent + ret + "_dealloc = " + parameter + "_dealloc;");
-							statements.add(indent + parameter + "_dealloc = false;");
+					} else {
+						if (macro.getMacroType() == MACROTYPE._FUNCTIONCALL_COPY) {
+							functioncallCopyMacroMap.put(index + ":" + parameter, macro);
 						} else {
-							// For maybe-return parameter, we include if-else branches
-							statements.add(indent + "if( " + ret + " != " + parameter + " ){");
-							statements.add(indent + "\t" + ret + "_dealloc = true;");
-							statements.add(indent + "}else{");
-							statements.add(indent + "\t" + ret + "_dealloc = " + parameter + "_dealloc;");
-							statements.add(indent + "\t" + parameter + "_dealloc = false;");
-							statements.add(indent + "}");
+							functioncallNoCopyMacroMap.put(index + ":" + parameter, macro);
 						}
 					}
-				}else {
-					// For none return value of a function call, we handle the below macros.
-					if(macro == MACRO._FUNCTIONCALL_COPY) {
+				} else {
+					// For no returned value or returned integer, we generate the code directly and handle the below
+					// macros.
+					if (macro.getMacroType() == MACROTYPE._FUNCTIONCALL_COPY) {
 						String tmp_name = stores.getTmpParamName(parameter, index, code, function);
 						// We explicitly free the copied temporary variable as it is not used and returned afterwards
 						statements.add(indent + "free(" + tmp_name + ");");
-					}					
+					}
 				}
 				index++;
 			}
+			// Store the code after the function call
+			ArrayList<String> postMacro = new ArrayList<String>();
+
+			// Collect all temporary variables
+			ArrayList<String> temp_paramNames = new ArrayList<String>();
+			for (String key : functioncallCopyMacroMap.keySet()) {
+				index = Integer.parseInt(key.split(":")[0]);
+				String parameter = key.split(":")[1];
+				// Get the name of temp variable that stores the copied parameter.
+				String tmp_name = stores.getTmpParamName(parameter, index, code, function);
+				temp_paramNames.add(tmp_name);
+			}
+
+			boolean isFirst = true;
+			boolean isAlways = false;
+			boolean isNever = true;
+			// Go through all parameters that use functioncall_nocopy macro
+			for (Entry<String, MACRO> entry : functioncallNoCopyMacroMap.entrySet()) {
+				MACRO macro = entry.getValue();
+				index = Integer.parseInt(entry.getKey().split(":")[0]);
+				String parameter = entry.getKey().split(":")[1];
+				if (macro.getReturn() == RETURN.MAYBE_RETURN) {
+					if (isFirst) {
+						postMacro.add(indent + "if( " + ret + " == " + parameter + " ){");
+						isFirst = false;
+					} else {
+						// Add else if statement
+						postMacro.add(indent + "} else if( " + ret + " == " + parameter + " ){");
+					}
+					if (macro.getLive()) {
+						// Make a copy of return variable to parameters
+						postMacro.add(indent + "_COPY_1DARRAY_int64_t(" + parameter + ", " + ret + ", int64_t);");
+						postMacro.add(indent + "\t" + ret + "_dealloc = " + parameter + "_dealloc;");
+						postMacro.add(indent + "\t" + parameter + "_dealloc = true;");
+					} else {
+						postMacro.add(indent + "\t" + ret + "_dealloc = " + parameter + "_dealloc;");
+						postMacro.add(indent + "\t" + parameter + "_dealloc = false;");
+					}
+					// Free all the temp copies
+					for (String tmp_name : temp_paramNames) {
+						postMacro.add(indent + "\tfree(" + tmp_name + ");");
+					}					
+					isNever = isNever & false;
+				} else if (macro.getReturn() == RETURN.ALWAYS_RETURN) {
+					// Clear all the previous code
+					postMacro.clear();
+					if (macro.getLive()) {
+						// Make a copy of return variable to parameters
+						postMacro.add(indent + "_COPY_1DARRAY_int64_t(" + parameter + ", " + ret + ", int64_t);");
+						postMacro.add(indent + ret + "_dealloc = " + parameter + "_dealloc;");
+						postMacro.add(indent + parameter + "_dealloc = true;");
+					} else {
+						postMacro.add(indent + ret + "_dealloc = " + parameter + "_dealloc;");
+						postMacro.add(indent + parameter + "_dealloc = false;");
+					}
+					// Free all the temp copies
+					for (String tmp_name : temp_paramNames) {
+						postMacro.add(indent + "\tfree(" + tmp_name + ");");
+					}
+					isAlways = true;
+					isNever = isNever & false;
+					break;
+				} else if (macro.getReturn() == RETURN.NEVER_RETURN) {
+					// Do nothing. Parameter is never returned, and no case is needed.
+					isNever = isNever & true;
+				}
+			}
+
+			// Go through all parameters that use functioncall_copy macro
+			for (Entry<String, MACRO> entry : functioncallCopyMacroMap.entrySet()) {
+				MACRO macro = entry.getValue();
+				index = Integer.parseInt(entry.getKey().split(":")[0]);
+				String parameter = entry.getKey().split(":")[1];
+				String tmp_parameter = stores.getTmpParamName(parameter, index, code, function);
+				// Check if isReturned is NEVER_RETURN.
+				if (macro.getReturn() == RETURN.NEVER_RETURN) {
+					// If so, we add a free statement to explicitly release the memory of temporary variable
+					// Get the name of temp variable that stores the copied parameter.
+					// postMacro.add(indent + "free(" + tmp_parameter + ");");
+					isNever = isNever & true;
+				} else if (macro.getReturn() == RETURN.ALWAYS_RETURN) {
+					// If so, then we do not need any free because the return variable is the parameter.
+					// Add a assignment to specify the flag to return variable
+					postMacro.add(indent + ret + "_dealloc = true;");
+					// Free all the other temp variable
+					for (String tmp_name : temp_paramNames) {
+						if (!tmp_name.equals(tmp_parameter)) {
+							postMacro.add(indent + "\tfree(" + tmp_name + ");");
+						}
+					}
+					isAlways = true;
+					isNever = isNever & false;
+				} else {
+					// For maybe and always return, we add if-else branch to safely release the memory
+					if (isFirst) {
+						postMacro.add(indent + "if( " + ret + " == " + tmp_parameter + " ){");
+						isFirst = false;
+					} else {
+						// Add else if statement
+						postMacro.add(indent + "} else if( " + ret + " == " + tmp_parameter + " ){");
+					}
+					// Add a assignment to specify the flag to return variable
+					postMacro.add(indent + "\t" + ret + "_dealloc = true;");
+					// Free all the other temp variable
+					for (String tmp_name : temp_paramNames) {
+						if (!tmp_name.equals(tmp_parameter)) {
+							postMacro.add(indent + "\tfree(" + tmp_name + ");");
+						}
+					}
+					isNever = isNever & false;
+				}
+
+			}
+
+			// Add the extra code for never-return or maybe-return
+			if (isAlways) {
+				// Do nothing
+			} else if (isNever) {
+				// For all never-returned result, we need to include the below code
+				postMacro.add(indent + ret + "_dealloc = true;");
+				// Free all the temp copies
+				for (String tmp_name : temp_paramNames) {
+					postMacro.add(indent + "free(" + tmp_name + ");");
+				}
+			} else {
+				// For a maybe-return, we need to include an else case
+				postMacro.add(indent + "} else {");
+				postMacro.add(indent + "\t" + ret + "_dealloc = true;");
+				// Free all the temp copies
+				for (String tmp_name : temp_paramNames) {
+					postMacro.add(indent + "\tfree(" + tmp_name + ");");
+				}
+				postMacro.add(indent + "}");
+			}
+			// Put all the post no-copy macro to statements.
+			statements.addAll(postMacro);
+
 		}
 		// For a special case, a = init(b, c) where a is int[], b is int and c is int
 		if (statements.size() == 0) {
@@ -668,7 +787,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			if (code.targets().length > 0) {
 				// Get the return type
 				Type ret_type = stores.getRawType(code.target(0), function);
-				if(stores.isCompoundType(ret_type)) {
+				if (stores.isCompoundType(ret_type)) {
 					// Add the deallocation flag of lhs variable
 					statements.add(indent + assignDealloc(code.target(0), function, stores));
 				}
@@ -951,37 +1070,54 @@ public class DeallocationAnalyzer extends Analyzer {
 			return "_CALLEE_DEALLOC" + "\t" + checks;
 		}
 	}
-	
+
+	public enum MACROTYPE {
+		NONE, _FUNCTIONCALL_NO_COPY, _FUNCTIONCALL_COPY, _SUBSTRUCTURE_DEALLOC
+	}
+
 	/**
 	 * Define the function call macro as pre-defined constants.
 	 *
 	 */
-	public enum MACRO {
-		NONE(0), _FUNCTIONCALL_NO_COPY(1), _FUNCTIONCALL_COPY(2), _SUBSTRUCTURE_DEALLOC(3);
-		// Constructor
-		int num;
-
-		private MACRO(int num) {
-			this.num = num;
-		}
-
+	public class MACRO {
 		// Store the analysis results, e.g. false-NEVER_RETURN-false
 		// means the parameter is not mutated, never returned and is not live after the call.
 		private String checks = "";
+		private MACROTYPE macro; // Macro name
+		private boolean isLive = false;
+		private boolean isMutate = false;
+		// Return analysis result
+		private RETURN isReturned;
 
-		public void setChecks(String checks) {
-			this.checks = checks;
+		// Constructor
+		public MACRO(MACROTYPE macro) {
+			this.macro = macro;
 		}
 
+		// Constructor
+		public MACRO(MACROTYPE macro, String checks, RETURN r) {
+			this(macro);
+			this.checks = checks;
+			// Get isMutate
+			this.isMutate = Boolean.parseBoolean(checks.split("-")[0]);
+			// Split the checks to get liveness
+			this.isLive = Boolean.parseBoolean(checks.split("-")[2]);
+			// Set return analysis result
+			this.isReturned = r;
+		}
+
+		public MACROTYPE getMacroType() {
+			return this.macro;
+		}
+
+		// Get the analysis results
 		public String getChecks() {
 			return this.checks;
 		}
 
-		// Return analysis result
-		private RETURN isReturned;
-
-		public void setReturn(RETURN r) {
-			this.isReturned = r;
+		// Get the liveness
+		public boolean getLive() {
+			return this.isLive;
 		}
 
 		public RETURN getReturn() {
@@ -995,21 +1131,21 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param register
 	 *            the register of function parameter
 	 * @param pos
-	 *            the position in the function call
-	 * This change allows the same parameter name (or register) is used at a function call, e.g. a = func(b, b)
+	 *            the position in the function call This change allows the same parameter name (or register) is used at
+	 *            a function call, e.g. a = func(b, b)
 	 * @param code
 	 * @param function
 	 * @param stores
 	 * @param copyAnalyzer
 	 * @return
 	 */
-	public MACRO computeDeallocV2(int register, int pos, Codes.Invoke code, FunctionOrMethod function, CodeStores stores,
-			Optional<CopyEliminationAnalyzer> copyAnalyzer) {
+	public MACRO computeDeallocV2(int register, int pos, Codes.Invoke code, FunctionOrMethod function,
+			CodeStores stores, Optional<CopyEliminationAnalyzer> copyAnalyzer) {
 		Type type = stores.getRawType(register, function);
 		// Check if the parameter is an array or structure type.
 		if (!stores.isCompoundType(type)) {
 			// For a primitive type, then no needs to use macro
-			return MACRO.NONE;
+			return new MACRO(MACROTYPE.NONE);
 		}
 		// Get the called function
 		FunctionOrMethod calledFunction = this.getCalledFunction(code);
@@ -1029,36 +1165,21 @@ public class DeallocationAnalyzer extends Analyzer {
 			boolean isSubStructure = stores.isSubstructure(register, function);
 			if (isSubStructure) {
 				// The substructure is passed to function call with 'false' flag
-				MACRO macro = MACRO._SUBSTRUCTURE_DEALLOC;
-				macro.setChecks(checks);
-				return macro;
+				return new MACRO(MACROTYPE._SUBSTRUCTURE_DEALLOC, checks, isReturned);
 			}
 			// The rule of function call macro
 			if (!isLive) {
 				// For a not live parameter, we use NO_COPY macro
-				MACRO macro = MACRO._FUNCTIONCALL_NO_COPY;
-				macro.setChecks(checks);
-				macro.setReturn(isReturned);
-				return macro;
+				return new MACRO(MACROTYPE._FUNCTIONCALL_NO_COPY, checks, isReturned);
 			} else if (!isMutated && isReturned == RETURN.NEVER_RETURN) {
 				// For a read-only and live but never returned parameter, we use NO_COPY macro
-				MACRO macro = MACRO._FUNCTIONCALL_NO_COPY;
-				macro.setChecks(checks);
-				macro.setReturn(isReturned);
-				return macro;
+				return new MACRO(MACROTYPE._FUNCTIONCALL_NO_COPY, checks, isReturned);
 			} else {
-				// For the remaing cases, we use COPY macro
-				MACRO macro = MACRO._FUNCTIONCALL_COPY;
-				macro.setChecks(checks);
-				macro.setReturn(isReturned);
-				return macro;
+				return new MACRO(MACROTYPE._FUNCTIONCALL_COPY, checks, isReturned);
 			}
 		} else {
 			// Naive code that the copy is always needed.
-			MACRO macro = MACRO._FUNCTIONCALL_COPY;
-			macro.setChecks(checks);
-			macro.setReturn(isReturned);
-			return macro;
+			return new MACRO(MACROTYPE._FUNCTIONCALL_COPY, checks, isReturned);
 		}
 	}
 

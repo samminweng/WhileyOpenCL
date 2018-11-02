@@ -13,6 +13,8 @@ runCBMC(){
         # Get the code type
         codetype=$(echo $folder | cut -d "/" -f2)
         echo $codetype
+        if [ "$codetype" = "multiparameter" ]
+        then
         for category in $folder/*
         do
             #read -p "Press enter to continue"   
@@ -36,12 +38,14 @@ runCBMC(){
                 fi
                 # Put all output to a single file
                 echo "=== Test report for $category $testcase using CBMC ===" >> $memorylog
-                head --lines=50 $logFolder/$testcase.cbmc.log >> $memorylog
-                echo -e "\n .... Please refer to $logFolder/$testcase.cbmc.log ....\n" >> $memorylog
-                tail $logFolder/$testcase.cbmc.log >> $memorylog
+                cat $logFolder/$testcase.cbmc.log >> $memorylog
+                #head --lines=50 $logFolder/$testcase.cbmc.log >> $memorylog
+                #echo -e "\n .... Please refer to $logFolder/$testcase.cbmc.log ....\n" >> $memorylog
+                #tail $logFolder/$testcase.cbmc.log >> $memorylog
                 #read -p "Press enter to continue"
             done
         done
+        fi
     done
 }
 runCBMC
