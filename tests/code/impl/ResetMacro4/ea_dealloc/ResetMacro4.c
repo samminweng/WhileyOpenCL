@@ -143,8 +143,7 @@ blklab2:;
 		_COPY_1DARRAY_PARAM(a, tmp_b, int64_t);
 		_11 = _add_(tmp_a, a_size, tmp_b, a_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		_11_dealloc = true;
-		free(tmp_b);
-		_11_dealloc = true;
+			free(tmp_b);
 	}
 	//assign %3 = %11  : int[]
 	_ADD_DEALLOC(sum, _11, int64_t);

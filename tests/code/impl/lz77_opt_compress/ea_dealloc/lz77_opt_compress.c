@@ -368,8 +368,8 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREF
 			_COPY_1DARRAY_PARAM(data, tmp_data, BYTE);
 			_DEALLOC_STRUCT(_16, Match);
 			_16 = _findLongestMatch_(tmp_data, data_size, pos);
-			free(tmp_data);
 			_16_dealloc = true;
+			free(tmp_data);
 		}
 		//assign %5 = %16  : {int len,int offset}
 		_DEALLOC_STRUCT(m, Match);
@@ -456,8 +456,8 @@ blklab18:;
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(output, tmp_items, BYTE);
 		_31 = _resize_(tmp_items, output_size, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_31));
-		free(tmp_items);
 		_31_dealloc = true;
+		free(tmp_items);
 	}
 	//assign %1 = %31  : byte[]
 	_ADD_DEALLOC(output, _31, BYTE);
@@ -581,8 +581,8 @@ int main(int argc, char** args){
 		void* tmp_data;
 		_COPY_1DARRAY_PARAM(data, tmp_data, BYTE);
 		_21 = _compress_(tmp_data, data_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_21));
-		free(tmp_data);
 		_21_dealloc = true;
+		free(tmp_data);
 	}
 	//assign %3 = %21  : byte[]
 	_ADD_DEALLOC(compress_data, _21, BYTE);

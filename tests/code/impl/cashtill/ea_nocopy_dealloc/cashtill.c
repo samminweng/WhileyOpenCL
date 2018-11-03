@@ -1009,7 +1009,6 @@ blklab38:;
 		_40 = _add_(till, till_size, given, given_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_40));
 		_40_dealloc = till_dealloc;
 		till_dealloc = false;
-		_40_dealloc = true;
 	}
 	//assign %1 = %40  : int[]
 	// isCopyEliminated = true
@@ -1024,7 +1023,6 @@ blklab38:;
 		_41 = _subtract_(till, till_size, change, change_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_41));
 		_41_dealloc = till_dealloc;
 		till_dealloc = false;
-		_41_dealloc = true;
 	}
 	//assign %1 = %41  : int[]
 	// isCopyEliminated = true
@@ -1207,13 +1205,12 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_18' = true
 		_17 = _buy_(stdout, till, till_size, _18, _18_size, _21, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_17));
-		if( _17 != till ){
-			_17_dealloc = true;
-		}else{
+		if( _17 == till ){
 			_17_dealloc = till_dealloc;
 			till_dealloc = false;
+		} else {
+			_17_dealloc = true;
 		}
-		_17_dealloc = true;
 	}
 	//assign %1 = %17  : int[]
 	// isCopyEliminated = true
@@ -1243,13 +1240,12 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_23' = true
 		_22 = _buy_(stdout, till, till_size, _23, _23_size, _26, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
-		if( _22 != till ){
-			_22_dealloc = true;
-		}else{
+		if( _22 == till ){
 			_22_dealloc = till_dealloc;
 			till_dealloc = false;
+		} else {
+			_22_dealloc = true;
 		}
-		_22_dealloc = true;
 	}
 	//assign %1 = %22  : int[]
 	// isCopyEliminated = true
@@ -1279,13 +1275,12 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_28' = true
 		_27 = _buy_(stdout, till, till_size, _28, _28_size, _31, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
-		if( _27 != till ){
-			_27_dealloc = true;
-		}else{
+		if( _27 == till ){
 			_27_dealloc = till_dealloc;
 			till_dealloc = false;
+		} else {
+			_27_dealloc = true;
 		}
-		_27_dealloc = true;
 	}
 	//assign %1 = %27  : int[]
 	// isCopyEliminated = true
@@ -1315,13 +1310,12 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_33' = true
 		_32 = _buy_(stdout, till, till_size, _33, _33_size, _36, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_32));
-		if( _32 != till ){
-			_32_dealloc = true;
-		}else{
+		if( _32 == till ){
 			_32_dealloc = till_dealloc;
 			till_dealloc = false;
+		} else {
+			_32_dealloc = true;
 		}
-		_32_dealloc = true;
 	}
 	//assign %1 = %32  : int[]
 	// isCopyEliminated = true

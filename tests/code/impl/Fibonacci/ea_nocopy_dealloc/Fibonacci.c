@@ -49,11 +49,11 @@ blklab0:;
 		_DEALLOC(_8);
 		// isCopyEliminated of '_0' = true
 		_8 = _fibonacci_(ls, ls_size, _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
-		if( _8 != ls ){
-			_8_dealloc = true;
-		}else{
+		if( _8 == ls ){
 			_8_dealloc = ls_dealloc;
 			ls_dealloc = false;
+		} else {
+			_8_dealloc = true;
 		}
 	}
 	//assign %0 = %8  : int[]
@@ -135,11 +135,11 @@ int main(int argc, char** args){
 		_DEALLOC(_6);
 		// isCopyEliminated of '_2' = true
 		_6 = _fibonacci_(arr, arr_size, _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
-		if( _6 != arr ){
-			_6_dealloc = true;
-		}else{
+		if( _6 == arr ){
 			_6_dealloc = arr_dealloc;
 			arr_dealloc = false;
+		} else {
+			_6_dealloc = true;
 		}
 	}
 	//assign %2 = %6  : int[]

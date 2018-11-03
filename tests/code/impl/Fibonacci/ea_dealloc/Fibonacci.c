@@ -50,10 +50,12 @@ blklab0:;
 		void* tmp_ls;
 		_COPY_1DARRAY_PARAM(ls, tmp_ls, int64_t);
 		_8 = _fibonacci_(tmp_ls, ls_size, _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
-		if(_8 != tmp_ls ){
+		if( _8 == tmp_ls ){
+			_8_dealloc = true;
+		} else {
+			_8_dealloc = true;
 			free(tmp_ls);
 		}
-		_8_dealloc = true;
 	}
 	//assign %0 = %8  : int[]
 	_ADD_DEALLOC(ls, _8, int64_t);
@@ -132,10 +134,12 @@ int main(int argc, char** args){
 		void* tmp_ls;
 		_COPY_1DARRAY_PARAM(arr, tmp_ls, int64_t);
 		_6 = _fibonacci_(tmp_ls, arr_size, _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
-		if(_6 != tmp_ls ){
+		if( _6 == tmp_ls ){
+			_6_dealloc = true;
+		} else {
+			_6_dealloc = true;
 			free(tmp_ls);
 		}
-		_6_dealloc = true;
 	}
 	//assign %2 = %6  : int[]
 	_ADD_DEALLOC(arr, _6, int64_t);

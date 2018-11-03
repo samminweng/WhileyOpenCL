@@ -196,8 +196,8 @@ int main(int argc, char** args){
 		void* tmp_coins;
 		_COPY_1DARRAY_PARAM(_13, tmp_coins, int64_t);
 		_4 = _Cash_1_(tmp_coins, _13_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_4));
-		free(tmp_coins);
 		_4_dealloc = true;
+		free(tmp_coins);
 	}
 	//assign %2 = %4  : int[]
 	_ADD_DEALLOC(till, _4, int64_t);

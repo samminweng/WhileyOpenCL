@@ -130,10 +130,9 @@ int main(int argc, char** args){
 		void* tmp_rhs;
 		_COPY_1DARRAY_PARAM(_4, tmp_rhs, int64_t);
 		_3 = _test_append_(tmp_lhs, r_size, tmp_rhs, _4_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
+		_3_dealloc = true;
 		free(tmp_lhs);
-		_3_dealloc = true;
 		free(tmp_rhs);
-		_3_dealloc = true;
 	}
 	//assign %1 = %3  : int[]
 	_DEALLOC(r);

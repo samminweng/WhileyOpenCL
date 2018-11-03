@@ -154,8 +154,7 @@ blklab2:;
 		// isCopyEliminated of '_1' = false
 		_11 = _add_(tmp_a, a_size, tmp_b, a_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		_11_dealloc = true;
-		free(tmp_b);
-		_11_dealloc = true;
+			free(tmp_b);
 	}
 	//assign %3 = %11  : int[]
 	// isCopyEliminated = true

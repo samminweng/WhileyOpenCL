@@ -154,10 +154,12 @@ int main(int argc, char** args){
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(x, tmp_x, int64_t);
 		_6 = _func_(tmp_x, x_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
-		if(_6 != tmp_x ){
+		if( _6 == tmp_x ){
+			_6_dealloc = true;
+		} else {
+			_6_dealloc = true;
 			free(tmp_x);
 		}
-		_6_dealloc = true;
 	}
 	//assign %2 = %6  : int[]
 	_ADD_DEALLOC(y, _6, int64_t);
@@ -208,10 +210,12 @@ blklab3:;
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(x, tmp_x, int64_t);
 		_18 = _func_(tmp_x, x_size, _19, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
-		if(_18 != tmp_x ){
+		if( _18 == tmp_x ){
+			_18_dealloc = true;
+		} else {
+			_18_dealloc = true;
 			free(tmp_x);
 		}
-		_18_dealloc = true;
 	}
 	//assign %2 = %18  : int[]
 	_ADD_DEALLOC(y, _18, int64_t);
@@ -262,10 +266,12 @@ blklab4:;
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(x, tmp_x, int64_t);
 		_30 = _func_(tmp_x, x_size, _31, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
-		if(_30 != tmp_x ){
+		if( _30 == tmp_x ){
+			_30_dealloc = true;
+		} else {
+			_30_dealloc = true;
 			free(tmp_x);
 		}
-		_30_dealloc = true;
 	}
 	//assign %2 = %30  : int[]
 	_ADD_DEALLOC(y, _30, int64_t);

@@ -340,11 +340,9 @@ int main(int argc, char** args){
 		void* tmp_data;
 		_COPY_1DARRAY_PARAM(C, tmp_data, int64_t);
 		_24 = _mat_mult_(tmp_a, A_size, tmp_b, B_size, tmp_data, C_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
-		free(tmp_a);
 		_24_dealloc = true;
-		free(tmp_b);
-		_24_dealloc = true;
-		_24_dealloc = true;
+			free(tmp_a);
+			free(tmp_b);
 	}
 	//assign %6 = %24  : int[]
 	_ADD_DEALLOC(C, _24, int64_t);

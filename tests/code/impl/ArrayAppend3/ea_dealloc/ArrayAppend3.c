@@ -292,8 +292,8 @@ int main(int argc, char** args){
 		void* tmp_c;
 		_COPY_1DARRAY_PARAM(till, tmp_c, int64_t);
 		_16 = _toString_(tmp_c, till_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
-		free(tmp_c);
 		_16_dealloc = true;
+		free(tmp_c);
 	}
 	//indirectinvoke () = %15 (%16) : method(int[])->()
 	{

@@ -17,17 +17,17 @@ Unwinding loop create1DArray_int64_t.0 iteration 2 file impl/multiparameter/mult
 Unwinding loop create1DArray_int64_t.0 iteration 1 file impl/multiparameter/multiparameter_test18/Util.c line 30 function create1DArray_int64_t thread 0
 Unwinding loop create1DArray_int64_t.0 iteration 2 file impl/multiparameter/multiparameter_test18/Util.c line 30 function create1DArray_int64_t thread 0
 aborting path on assume(false) at file <builtin-library-exit> line 7 function exit thread 0
-size of program expression: 587 steps
+size of program expression: 638 steps
 simple slicing removed 1 assignments
-Generated 107 VCC(s), 32 remaining after simplification
+Generated 115 VCC(s), 32 remaining after simplification
 Passing problem to propositional reduction
 converting SSA
 Running propositional reduction
 Post-processing
 Solving with MiniSAT 2.2.1 with simplifier
-7209 variables, 2556 clauses
+7236 variables, 2622 clauses
 SAT checker: instance is UNSATISFIABLE
-Runtime decision procedure: 0.00472758s
+Runtime decision procedure: 0.00460803s
 
 ** Results:
 [main.precondition_instance.1] free argument must be dynamic object: SUCCESS
@@ -68,6 +68,14 @@ Runtime decision procedure: 0.00472758s
 [main.precondition_instance.36] free argument has offset zero: SUCCESS
 [main.precondition_instance.37] double free: SUCCESS
 [main.precondition_instance.38] free called for new[] object: SUCCESS
+[main.precondition_instance.39] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.40] free argument has offset zero: SUCCESS
+[main.precondition_instance.41] double free: SUCCESS
+[main.precondition_instance.42] free called for new[] object: SUCCESS
+[main.precondition_instance.43] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.44] free argument has offset zero: SUCCESS
+[main.precondition_instance.45] double free: SUCCESS
+[main.precondition_instance.46] free called for new[] object: SUCCESS
 [main.pointer_dereference.1] dereference failure: pointer NULL in a[_13]: SUCCESS
 [main.pointer_dereference.2] dereference failure: pointer invalid in a[_13]: SUCCESS
 [main.pointer_dereference.3] dereference failure: deallocated dynamic object in a[_13]: SUCCESS
@@ -82,14 +90,6 @@ Runtime decision procedure: 0.00472758s
 [main.pointer_dereference.12] dereference failure: pointer outside dynamic object bounds in b[_17]: SUCCESS
 [main.pointer_dereference.13] dereference failure: pointer outside object bounds in b[_17]: SUCCESS
 [main.pointer_dereference.14] dereference failure: invalid integer address in b[_17]: SUCCESS
-[main.precondition_instance.39] free argument must be dynamic object: SUCCESS
-[main.precondition_instance.40] free argument has offset zero: SUCCESS
-[main.precondition_instance.41] double free: SUCCESS
-[main.precondition_instance.42] free called for new[] object: SUCCESS
-[main.precondition_instance.43] free argument must be dynamic object: SUCCESS
-[main.precondition_instance.44] free argument has offset zero: SUCCESS
-[main.precondition_instance.45] double free: SUCCESS
-[main.precondition_instance.46] free called for new[] object: SUCCESS
 [main.precondition_instance.47] free argument must be dynamic object: SUCCESS
 [main.precondition_instance.48] free argument has offset zero: SUCCESS
 [main.precondition_instance.49] double free: SUCCESS
@@ -106,6 +106,14 @@ Runtime decision procedure: 0.00472758s
 [main.precondition_instance.60] free argument has offset zero: SUCCESS
 [main.precondition_instance.61] double free: SUCCESS
 [main.precondition_instance.62] free called for new[] object: SUCCESS
+[main.precondition_instance.63] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.64] free argument has offset zero: SUCCESS
+[main.precondition_instance.65] double free: SUCCESS
+[main.precondition_instance.66] free called for new[] object: SUCCESS
+[main.precondition_instance.67] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.68] free argument has offset zero: SUCCESS
+[main.precondition_instance.69] double free: SUCCESS
+[main.precondition_instance.70] free called for new[] object: SUCCESS
 [fputs.pointer_dereference.1] dereference failure: pointer NULL in *s: SUCCESS
 [fputs.pointer_dereference.2] dereference failure: pointer invalid in *s: SUCCESS
 [fputs.pointer_dereference.3] dereference failure: deallocated dynamic object in *s: SUCCESS
@@ -839,5 +847,5 @@ Runtime decision procedure: 0.00472758s
 [readFile.pointer_dereference.7] dereference failure: invalid integer address in *_size: SUCCESS
 [__CPROVER__start.memory-leak.1] dynamically allocated memory never freed in __CPROVER_memory_leak == NULL: SUCCESS
 
-** 0 of 808 failed (1 iteration)
+** 0 of 816 failed (1 iteration)
 VERIFICATION SUCCESSFUL

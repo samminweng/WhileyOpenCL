@@ -17,7 +17,7 @@ Unwinding loop create1DArray_int64_t.0 iteration 2 file impl/multiparameter/mult
 Unwinding loop create1DArray_int64_t.0 iteration 1 file impl/multiparameter/multiparameter_test74/Util.c line 30 function create1DArray_int64_t thread 0
 Unwinding loop create1DArray_int64_t.0 iteration 2 file impl/multiparameter/multiparameter_test74/Util.c line 30 function create1DArray_int64_t thread 0
 aborting path on assume(false) at file <builtin-library-exit> line 7 function exit thread 0
-size of program expression: 314 steps
+size of program expression: 313 steps
 simple slicing removed 1 assignments
 Generated 58 VCC(s), 9 remaining after simplification
 Passing problem to propositional reduction
@@ -27,7 +27,7 @@ Post-processing
 Solving with MiniSAT 2.2.1 with simplifier
 2965 variables, 799 clauses
 SAT checker: instance is UNSATISFIABLE
-Runtime decision procedure: 0.00230999s
+Runtime decision procedure: 0.00204167s
 
 ** Results:
 [main.precondition_instance.1] free argument must be dynamic object: SUCCESS

@@ -607,10 +607,12 @@ int main(int argc, char** args){
 		void* tmp_moves;
 		_COPY_1DARRAY_PARAM(moves, tmp_moves, int64_t);
 		_8 = _findMoves_(tmp_moves, moves_size, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
-		if(_8 != tmp_moves ){
+		if( _8 == tmp_moves ){
+			_8_dealloc = true;
+		} else {
+			_8_dealloc = true;
 			free(tmp_moves);
 		}
-		_8_dealloc = true;
 	}
 	//assign %2 = %8  : int[]
 	_ADD_DEALLOC(moves, _8, int64_t);

@@ -72,14 +72,17 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_1' = false
 		// isCopyEliminated of '_1' = false
 		_6 = _f_(tmp_a, a_size, tmp_b, a_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
-		if(_6 != tmp_a ){
+		if( _6 == tmp_a ){
+			_6_dealloc = true;
+			free(tmp_b);
+		} else if( _6 == tmp_b ){
+			_6_dealloc = true;
 			free(tmp_a);
-		}
-		_6_dealloc = true;
-		if(_6 != tmp_b ){
+		} else {
+			_6_dealloc = true;
+			free(tmp_a);
 			free(tmp_b);
 		}
-		_6_dealloc = true;
 	}
 	//assign %2 = %6  : int[]
 	// isCopyEliminated = true

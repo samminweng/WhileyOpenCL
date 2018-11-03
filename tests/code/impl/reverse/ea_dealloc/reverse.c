@@ -133,8 +133,8 @@ int main(int argc, char** args){
 		void* tmp_ls;
 		_COPY_1DARRAY_PARAM(_11, tmp_ls, int64_t);
 		_5 = _reverse_(tmp_ls, _11_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
-		free(tmp_ls);
 		_5_dealloc = true;
+		free(tmp_ls);
 	}
 	//assign %1 = %5  : int[]
 	_ADD_DEALLOC(rs, _5, int64_t);
@@ -208,8 +208,8 @@ blklab5:;
 		void* tmp_ls;
 		_COPY_1DARRAY_PARAM(arr, tmp_ls, int64_t);
 		_27 = _reverse_(tmp_ls, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
-		free(tmp_ls);
 		_27_dealloc = true;
+		free(tmp_ls);
 	}
 	//assign %4 = %27  : int[]
 	_ADD_DEALLOC(arr, _27, int64_t);

@@ -595,11 +595,14 @@ public class DeallocationAnalyzer extends Analyzer {
 		} else {
 			// Get return variable and type
 			String ret = "";
-			Type ret_type = null;
+			Boolean isReturnArray = false;
+			// Type ret_type = null;
 			if (code.targets().length > 0) {
 				ret = stores.getVar(code.target(0), function);
 				// Get the return type
-				ret_type = stores.getRawType(code.target(0), function);
+				Type ret_type = stores.getRawType(code.target(0), function);
+				// The return value is an array typed
+				isReturnArray = (ret_type != null) && stores.isCompoundType(ret_type);
 			}
 
 			// Store all function call copy macros in a HashMap
@@ -620,12 +623,14 @@ public class DeallocationAnalyzer extends Analyzer {
 				// Type parameter_type = stores.getRawType(register, function);
 				statements.add(indent + macro.getMacroType() + "_PRE(" + ret + ", " + parameter + ", \"" + macro.checks
 						+ "\" , \"" + code.name.name() + "\");");
-				if (ret_type != null && stores.isCompoundType(ret_type)) {
-					//
+				if (isReturnArray) {
 					if (macro.getMacroType() == MACROTYPE._SUBSTRUCTURE_DEALLOC) {
+						// For substructured parameter, we include the code without any further code.
 						statements.add(indent + macro + "(" + parameter + ");");
 						statements.add(indent + this.assignDealloc(code.target(0), function, stores));
+						continue;
 					} else {
+						// For other
 						if (macro.getMacroType() == MACROTYPE._FUNCTIONCALL_COPY) {
 							functioncallCopyMacroMap.put(index + ":" + parameter, macro);
 						} else {
@@ -643,6 +648,7 @@ public class DeallocationAnalyzer extends Analyzer {
 				}
 				index++;
 			}
+
 			// Store the code after the function call
 			ArrayList<String> postMacro = new ArrayList<String>();
 
@@ -684,7 +690,7 @@ public class DeallocationAnalyzer extends Analyzer {
 					// Free all the temp copies
 					for (String tmp_name : temp_paramNames) {
 						postMacro.add(indent + "\tfree(" + tmp_name + ");");
-					}					
+					}
 					isNever = isNever & false;
 				} else if (macro.getReturn() == RETURN.ALWAYS_RETURN) {
 					// Clear all the previous code
@@ -762,7 +768,9 @@ public class DeallocationAnalyzer extends Analyzer {
 				// Do nothing
 			} else if (isNever) {
 				// For all never-returned result, we need to include the below code
-				postMacro.add(indent + ret + "_dealloc = true;");
+				if (isReturnArray) {
+					postMacro.add(indent + ret + "_dealloc = true;");
+				}
 				// Free all the temp copies
 				for (String tmp_name : temp_paramNames) {
 					postMacro.add(indent + "free(" + tmp_name + ");");
@@ -779,21 +787,8 @@ public class DeallocationAnalyzer extends Analyzer {
 			}
 			// Put all the post no-copy macro to statements.
 			statements.addAll(postMacro);
-
 		}
-		// For a special case, a = init(b, c) where a is int[], b is int and c is int
-		if (statements.size() == 0) {
-			// Add deallocation flag to lhs variable by default.
-			if (code.targets().length > 0) {
-				// Get the return type
-				Type ret_type = stores.getRawType(code.target(0), function);
-				if (stores.isCompoundType(ret_type)) {
-					// Add the deallocation flag of lhs variable
-					statements.add(indent + assignDealloc(code.target(0), function, stores));
-				}
-			}
-		}
-
+		
 		return statements;
 	}
 

@@ -646,8 +646,8 @@ int main(int argc, char** args){
 		void* tmp_pixels;
 		_COPY_1DARRAY_PARAM(pixels, tmp_pixels, BYTE);
 		_12 = _sobelEdgeDetection_(tmp_pixels, pixels_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_12));
-		free(tmp_pixels);
 		_12_dealloc = true;
+		free(tmp_pixels);
 	}
 	//assign %5 = %12  : byte[]
 	_ADD_DEALLOC(newPixels, _12, BYTE);

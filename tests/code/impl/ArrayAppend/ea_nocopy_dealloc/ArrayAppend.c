@@ -134,7 +134,6 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_4' = true
 		_3 = _test_append_(r, r_size, _4, _4_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
 		_3_dealloc = true;
-		_3_dealloc = true;
 	}
 	//assign %1 = %3  : int[]
 	// isCopyEliminated = true

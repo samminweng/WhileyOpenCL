@@ -634,11 +634,11 @@ int main(int argc, char** args){
 		_DEALLOC(_8);
 		// isCopyEliminated of '_2' = true
 		_8 = _findMoves_(moves, moves_size, n, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
-		if( _8 != moves ){
-			_8_dealloc = true;
-		}else{
+		if( _8 == moves ){
 			_8_dealloc = moves_dealloc;
 			moves_dealloc = false;
+		} else {
+			_8_dealloc = true;
 		}
 	}
 	//assign %2 = %8  : int[]

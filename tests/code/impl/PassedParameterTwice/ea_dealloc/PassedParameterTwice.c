@@ -69,14 +69,17 @@ int main(int argc, char** args){
 		void* tmp_b;
 		_COPY_1DARRAY_PARAM(a, tmp_b, int64_t);
 		_6 = _f_(tmp_a, a_size, tmp_b, a_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
-		if(_6 != tmp_a ){
+		if( _6 == tmp_a ){
+			_6_dealloc = true;
+			free(tmp_b);
+		} else if( _6 == tmp_b ){
+			_6_dealloc = true;
 			free(tmp_a);
-		}
-		_6_dealloc = true;
-		if(_6 != tmp_b ){
+		} else {
+			_6_dealloc = true;
+			free(tmp_a);
 			free(tmp_b);
 		}
-		_6_dealloc = true;
 	}
 	//assign %2 = %6  : int[]
 	_ADD_DEALLOC(b, _6, int64_t);

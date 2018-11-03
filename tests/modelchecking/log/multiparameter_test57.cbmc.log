@@ -20,17 +20,17 @@ Unwinding loop create1DArray_int64_t.0 iteration 1 file impl/multiparameter/mult
 Unwinding loop create1DArray_int64_t.0 iteration 2 file impl/multiparameter/multiparameter_test57/Util.c line 30 function create1DArray_int64_t thread 0
 Unwinding loop create1DArray_int64_t.0 iteration 3 file impl/multiparameter/multiparameter_test57/Util.c line 30 function create1DArray_int64_t thread 0
 aborting path on assume(false) at file <builtin-library-exit> line 7 function exit thread 0
-size of program expression: 610 steps
+size of program expression: 634 steps
 simple slicing removed 1 assignments
-Generated 118 VCC(s), 33 remaining after simplification
+Generated 122 VCC(s), 33 remaining after simplification
 Passing problem to propositional reduction
 converting SSA
 Running propositional reduction
 Post-processing
 Solving with MiniSAT 2.2.1 with simplifier
-8349 variables, 3378 clauses
+8370 variables, 3428 clauses
 SAT checker: instance is UNSATISFIABLE
-Runtime decision procedure: 0.00580778s
+Runtime decision procedure: 0.00528728s
 
 ** Results:
 [main.precondition_instance.1] free argument must be dynamic object: SUCCESS
@@ -64,6 +64,10 @@ Runtime decision procedure: 0.00580778s
 [main.precondition_instance.29] free argument has offset zero: SUCCESS
 [main.precondition_instance.30] double free: SUCCESS
 [main.precondition_instance.31] free called for new[] object: SUCCESS
+[main.precondition_instance.32] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.33] free argument has offset zero: SUCCESS
+[main.precondition_instance.34] double free: SUCCESS
+[main.precondition_instance.35] free called for new[] object: SUCCESS
 [main.pointer_dereference.1] dereference failure: pointer NULL in b[_13]: SUCCESS
 [main.pointer_dereference.2] dereference failure: pointer invalid in b[_13]: SUCCESS
 [main.pointer_dereference.3] dereference failure: deallocated dynamic object in b[_13]: SUCCESS
@@ -71,10 +75,6 @@ Runtime decision procedure: 0.00580778s
 [main.pointer_dereference.5] dereference failure: pointer outside dynamic object bounds in b[_13]: SUCCESS
 [main.pointer_dereference.6] dereference failure: pointer outside object bounds in b[_13]: SUCCESS
 [main.pointer_dereference.7] dereference failure: invalid integer address in b[_13]: SUCCESS
-[main.precondition_instance.32] free argument must be dynamic object: SUCCESS
-[main.precondition_instance.33] free argument has offset zero: SUCCESS
-[main.precondition_instance.34] double free: SUCCESS
-[main.precondition_instance.35] free called for new[] object: SUCCESS
 [main.precondition_instance.36] free argument must be dynamic object: SUCCESS
 [main.precondition_instance.37] free argument has offset zero: SUCCESS
 [main.precondition_instance.38] double free: SUCCESS
@@ -95,6 +95,10 @@ Runtime decision procedure: 0.00580778s
 [main.precondition_instance.53] free argument has offset zero: SUCCESS
 [main.precondition_instance.54] double free: SUCCESS
 [main.precondition_instance.55] free called for new[] object: SUCCESS
+[main.precondition_instance.56] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.57] free argument has offset zero: SUCCESS
+[main.precondition_instance.58] double free: SUCCESS
+[main.precondition_instance.59] free called for new[] object: SUCCESS
 [fputs.pointer_dereference.1] dereference failure: pointer NULL in *s: SUCCESS
 [fputs.pointer_dereference.2] dereference failure: pointer invalid in *s: SUCCESS
 [fputs.pointer_dereference.3] dereference failure: deallocated dynamic object in *s: SUCCESS
@@ -844,5 +848,5 @@ Runtime decision procedure: 0.00580778s
 [readFile.pointer_dereference.7] dereference failure: invalid integer address in *_size: SUCCESS
 [__CPROVER__start.memory-leak.1] dynamically allocated memory never freed in __CPROVER_memory_leak == NULL: SUCCESS
 
-** 0 of 810 failed (1 iteration)
+** 0 of 814 failed (1 iteration)
 VERIFICATION SUCCESSFUL

@@ -99,8 +99,8 @@ int main(int argc, char** args){
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(a, tmp_s, int64_t);
 		_10 = _func_(tmp_s, a_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
-		free(tmp_s);
 		_10_dealloc = true;
+		free(tmp_s);
 	}
 	//assign %1 = %10  : int[]
 	_ADD_DEALLOC(a, _10, int64_t);
@@ -166,8 +166,8 @@ blklab0:;
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(b, tmp_s, int64_t);
 		_27 = _func_(tmp_s, b_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
-		free(tmp_s);
 		_27_dealloc = true;
+		free(tmp_s);
 	}
 	//assign %3 = %27  : int[]
 	_ADD_DEALLOC(c, _27, int64_t);

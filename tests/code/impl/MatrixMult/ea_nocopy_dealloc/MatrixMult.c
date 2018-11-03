@@ -357,8 +357,6 @@ int main(int argc, char** args){
 		// isCopyEliminated of '_5' = true
 		// isCopyEliminated of '_6' = true
 		_24 = _mat_mult_(A, A_size, B, B_size, C, C_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
-		_24_dealloc = true;
-		_24_dealloc = true;
 		_24_dealloc = C_dealloc;
 		C_dealloc = false;
 	}

@@ -176,10 +176,12 @@ int main(int argc, char** args){
 		_COPY_1DARRAY_PARAM(b, tmp_items, BYTE);
 		// isCopyEliminated of '_1' = false
 		_11 = _opt_append_(tmp_items, b_size, inspos, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
-		if(_11 != tmp_items ){
+		if( _11 == tmp_items ){
+			_11_dealloc = true;
+		} else {
+			_11_dealloc = true;
 			free(tmp_items);
 		}
-		_11_dealloc = true;
 	}
 	//assign %4 = %11  : byte[]
 	// isCopyEliminated = true

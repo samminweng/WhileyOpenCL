@@ -260,11 +260,11 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYR
 			_DEALLOC(_26);
 			// isCopyEliminated of '_2' = true
 			_26 = _opt_append_(items, items_size, inspos, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_26));
-			if( _26 != items ){
-				_26_dealloc = true;
-			}else{
+			if( _26 == items ){
 				_26_dealloc = items_dealloc;
 				items_dealloc = false;
+			} else {
+				_26_dealloc = true;
 			}
 		}
 		//assign %2 = %26  : byte[]
@@ -320,11 +320,11 @@ blklab20:;
 				_DEALLOC(_34);
 				// isCopyEliminated of '_2' = true
 				_34 = _opt_append_(items, items_size, inspos, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_34));
-				if( _34 != items ){
-					_34_dealloc = true;
-				}else{
+				if( _34 == items ){
 					_34_dealloc = items_dealloc;
 					items_dealloc = false;
+				} else {
+					_34_dealloc = true;
 				}
 			}
 			//assign %2 = %34  : byte[]

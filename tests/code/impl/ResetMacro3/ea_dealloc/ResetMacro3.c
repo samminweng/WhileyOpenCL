@@ -92,10 +92,12 @@ int main(int argc, char** args){
 		void* tmp_b;
 		_COPY_1DARRAY_PARAM(b, tmp_b, int64_t);
 		_6 = _func_(tmp_b, b_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
-		if(_6 != tmp_b ){
+		if( _6 == tmp_b ){
+			_6_dealloc = true;
+		} else {
+			_6_dealloc = true;
 			free(tmp_b);
 		}
-		_6_dealloc = true;
 	}
 	//assign %2 = %6  : int[]
 	_ADD_DEALLOC(tmp, _6, int64_t);
@@ -137,10 +139,12 @@ blklab2:;
 		void* tmp_b;
 		_COPY_1DARRAY_PARAM(b, tmp_b, int64_t);
 		_15 = _func_(tmp_b, b_size, _16, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
-		if(_15 != tmp_b ){
+		if( _15 == tmp_b ){
+			_15_dealloc = true;
+		} else {
+			_15_dealloc = true;
 			free(tmp_b);
 		}
-		_15_dealloc = true;
 	}
 	//assign %1 = %15  : int[]
 	_ADD_DEALLOC(b, _15, int64_t);
