@@ -611,6 +611,8 @@ public class DeallocationAnalyzer extends Analyzer {
 			HashMap<String, MACRO> functioncallNoCopyMacroMap = new HashMap<String, MACRO>();
 			// Apply the macros for each parameter
 			int index = 0;
+			boolean isAlways = false; // Check if any macro is always-returned.
+			boolean isNever = true;// Check if all macros are never-returned.
 			for (int register : code.operands()) {
 				MACRO macro = computeDeallocV2(register, index, code, function, stores, copyAnalyzer);
 				if (macro.getMacroType() == MACROTYPE.NONE) {
@@ -630,7 +632,12 @@ public class DeallocationAnalyzer extends Analyzer {
 						statements.add(indent + this.assignDealloc(code.target(0), function, stores));
 						continue;
 					} else {
-						// For other
+						// For other cases, we use function call macro
+						isNever = isNever & macro.getReturn() == RETURN.NEVER_RETURN;
+						if(macro.getReturn() == RETURN.ALWAYS_RETURN) {
+							isAlways = true;
+						}				
+						// Get the macro type
 						if (macro.getMacroType() == MACROTYPE._FUNCTIONCALL_COPY) {
 							functioncallCopyMacroMap.put(index + ":" + parameter, macro);
 						} else {
@@ -638,6 +645,7 @@ public class DeallocationAnalyzer extends Analyzer {
 						}
 					}
 				} else {
+					isNever = true;
 					// For no returned value or returned integer, we generate the code directly and handle the below
 					// macros.
 					if (macro.getMacroType() == MACROTYPE._FUNCTIONCALL_COPY) {
@@ -663,8 +671,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			}
 
 			boolean isFirst = true;
-			boolean isAlways = false;
-			boolean isNever = true;
+			
 			// Go through all parameters that use functioncall_nocopy macro
 			for (Entry<String, MACRO> entry : functioncallNoCopyMacroMap.entrySet()) {
 				MACRO macro = entry.getValue();
@@ -691,7 +698,7 @@ public class DeallocationAnalyzer extends Analyzer {
 					for (String tmp_name : temp_paramNames) {
 						postMacro.add(indent + "\tfree(" + tmp_name + ");");
 					}
-					isNever = isNever & false;
+					//isNever = isNever & false;
 				} else if (macro.getReturn() == RETURN.ALWAYS_RETURN) {
 					// Clear all the previous code
 					postMacro.clear();
@@ -708,12 +715,12 @@ public class DeallocationAnalyzer extends Analyzer {
 					for (String tmp_name : temp_paramNames) {
 						postMacro.add(indent + "\tfree(" + tmp_name + ");");
 					}
-					isAlways = true;
-					isNever = isNever & false;
+					//isAlways = true;
+					//isNever = isNever & false;
 					break;
 				} else if (macro.getReturn() == RETURN.NEVER_RETURN) {
 					// Do nothing. Parameter is never returned, and no case is needed.
-					isNever = isNever & true;
+					//isNever = isNever & true;
 				}
 			}
 
@@ -728,7 +735,7 @@ public class DeallocationAnalyzer extends Analyzer {
 					// If so, we add a free statement to explicitly release the memory of temporary variable
 					// Get the name of temp variable that stores the copied parameter.
 					// postMacro.add(indent + "free(" + tmp_parameter + ");");
-					isNever = isNever & true;
+					//isNever = isNever & true;
 				} else if (macro.getReturn() == RETURN.ALWAYS_RETURN) {
 					// If so, then we do not need any free because the return variable is the parameter.
 					// Add a assignment to specify the flag to return variable
@@ -739,8 +746,8 @@ public class DeallocationAnalyzer extends Analyzer {
 							postMacro.add(indent + "\tfree(" + tmp_name + ");");
 						}
 					}
-					isAlways = true;
-					isNever = isNever & false;
+					//isAlways = true;
+					//isNever = isNever & false;
 				} else {
 					// For maybe and always return, we add if-else branch to safely release the memory
 					if (isFirst) {
@@ -758,7 +765,7 @@ public class DeallocationAnalyzer extends Analyzer {
 							postMacro.add(indent + "\tfree(" + tmp_name + ");");
 						}
 					}
-					isNever = isNever & false;
+					//isNever = isNever & false;
 				}
 
 			}
