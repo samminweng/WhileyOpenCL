@@ -1201,8 +1201,8 @@ int main(int argc, char** args){
 			free(tmp_given);
 		} else {
 			_17_dealloc = true;
-			free(tmp_given);
 			free(tmp_till);
+			free(tmp_given);
 		}
 	}
 	//assign %1 = %17  : int[]
@@ -1241,8 +1241,8 @@ int main(int argc, char** args){
 			free(tmp_given);
 		} else {
 			_22_dealloc = true;
-			free(tmp_given);
 			free(tmp_till);
+			free(tmp_given);
 		}
 	}
 	//assign %1 = %22  : int[]
@@ -1281,8 +1281,8 @@ int main(int argc, char** args){
 			free(tmp_given);
 		} else {
 			_27_dealloc = true;
-			free(tmp_given);
 			free(tmp_till);
+			free(tmp_given);
 		}
 	}
 	//assign %1 = %27  : int[]

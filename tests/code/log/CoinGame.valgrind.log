@@ -1,23 +1,23 @@
-==10489== Memcheck, a memory error detector
-==10489== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==10489== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==10489== Command: ./CoinGame.out
-==10489== Parent PID: 10071
-==10489== 
-==10489== Invalid read of size 8
-==10489==    at 0x400E13: _play_ (CoinGame.c:120)
-==10489==    by 0x402245: main (CoinGame.c:616)
-==10489==  Address 0x5204038 is 8 bytes before a block of size 800 alloc'd
-==10489==    at 0x4C2DBF6: malloc (vg_replace_malloc.c:299)
-==10489==    by 0x4027BC: create1DArray_int64_t (Util.c:23)
-==10489==    by 0x40211D: main (CoinGame.c:596)
-==10489== 
-==10489== 
-==10489== HEAP SUMMARY:
-==10489==     in use at exit: 0 bytes in 0 blocks
-==10489==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
-==10489== 
-==10489== All heap blocks were freed -- no leaks are possible
-==10489== 
-==10489== For counts of detected and suppressed errors, rerun with: -v
-==10489== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==2581== Memcheck, a memory error detector
+==2581== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2581== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==2581== Command: ./CoinGame.out
+==2581== Parent PID: 2066
+==2581== 
+==2581== Invalid read of size 8
+==2581==    at 0x400E13: _play_ (CoinGame.c:120)
+==2581==    by 0x402245: main (CoinGame.c:616)
+==2581==  Address 0x5204038 is 8 bytes before a block of size 800 alloc'd
+==2581==    at 0x4C2DBF6: malloc (vg_replace_malloc.c:299)
+==2581==    by 0x4027BC: create1DArray_int64_t (Util.c:23)
+==2581==    by 0x40211D: main (CoinGame.c:596)
+==2581== 
+==2581== 
+==2581== HEAP SUMMARY:
+==2581==     in use at exit: 0 bytes in 0 blocks
+==2581==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
+==2581== 
+==2581== All heap blocks were freed -- no leaks are possible
+==2581== 
+==2581== For counts of detected and suppressed errors, rerun with: -v
+==2581== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
