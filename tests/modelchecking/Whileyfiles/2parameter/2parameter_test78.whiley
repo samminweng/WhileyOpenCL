@@ -10,4 +10,4 @@ function func(int[] a, int[] b) -> int[]:
 public method main(System.Console console):
 	int[] a = [2; 2]
 	int[] b = [2; 2]
-	int[] c = func(a, b)
+	int[] r = func(a, b)

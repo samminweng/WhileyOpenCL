@@ -72,8 +72,8 @@ int main(int argc, char** args){
 	_DECL_DEALLOC(a);
 	_DECL_1DARRAY(b);
 	_DECL_DEALLOC(b);
-	_DECL_1DARRAY(c);
-	_DECL_DEALLOC(c);
+	_DECL_1DARRAY(r);
+	_DECL_DEALLOC(r);
 	int64_t _4;
 	int64_t _5;
 	_DECL_1DARRAY(_6);
@@ -119,11 +119,11 @@ int main(int argc, char** args){
 	}
 	//assign %3 = %10  : int[]
 	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(c, _10);
+	_TRANSFER_DEALLOC(r, _10);
 	//return
 	_DEALLOC(a);
 	_DEALLOC(b);
-	_DEALLOC(c);
+	_DEALLOC(r);
 	_DEALLOC(_6);
 	_DEALLOC(_9);
 	_DEALLOC(_10);

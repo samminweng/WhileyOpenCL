@@ -10,6 +10,6 @@ function func(int[] a, int[] b) -> int[]:
 public method main(System.Console console):
 	int[] a = [2; 2]
 	int[] b = [2; 2]
-	int[] c = func(a, b)
+	int[] r = func(a, b)
 	console.out.println(a[0]) //Live_a
 	console.out.println(b[0]) //Live_b

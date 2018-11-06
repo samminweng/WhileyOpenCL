@@ -379,12 +379,12 @@ public class ModelCheckingTestCase {
 				// Write the method 'main'
 				lines.add("public method main(System.Console console):");
 				// Write the array generator, e.g. int[] a =[2; 2]
-				String[] variables = { "a", "b" };
+				String[] variables = parameters;
 				for (String variable : variables) {
 					lines.add("\tint[] " + variable + " = [2; 2]");
 				}
 				// Write out a function call
-				lines.add("\tint[] c = func(a, b)");// Initialise the loop variable
+				lines.add("\tint[] r = func(" + String.join(", ", variables) + ")");// add the function call 
 				// Get the live variable
 				String[] live_properties = liveness.split("\\|");
 				for (String live : live_properties) {
@@ -450,8 +450,18 @@ public class ModelCheckingTestCase {
 	public void test2Parameters_functioncall() throws IOException {
 		String[] parameters = { "a", "b" };
 		ArrayList<String> testcases = generateWhileyProgramsV2("2parameter", parameters);
+		assert testcases.size() == 96;
 		generateWhileyAndProduceCCodeAndRunIt(testcases, "2parameter");
 	}
+	
+	//@Test
+	public void test3Parameters_functioncall() throws IOException {
+		String[] parameters = { "a", "b", "c" };
+		ArrayList<String> testcases = generateWhileyProgramsV2("3parameter", parameters);
+		//assert testcases.size() == 706;
+		//generateWhileyAndProduceCCodeAndRunIt(testcases, "3parameter");
+	}
+	
 
 	// @Test
 	public void test3Variables_assignment() throws IOException {
