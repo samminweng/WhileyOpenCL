@@ -1,7 +1,7 @@
 #!/bin/bash
 # Use 'grep' to find the macros used in the impl folder
-copy=`grep "FUNCTIONCALL_NO_COPY" impl/multiparameter/*/*.c | wc -l`
-nocopy=`grep "FUNCTIONCALL_COPY" impl/multiparameter/*/*.c | wc -l`
+copy=`grep "FUNCTIONCALL_NO_COPY" impl/2parameter/*/*.c | wc -l`
+nocopy=`grep "FUNCTIONCALL_COPY" impl/2parameter/*/*.c | wc -l`
 echo -e "The number of FUNCTIONCALL_NO_COPY macro is $copy"
 echo -e "The number of FUNCTIONCALL_COPY macro is $nocopy"
 # Put the test cases to log
@@ -22,7 +22,7 @@ collectTestCases(){
         echo -e "Case "$i"\t"$testcase" at line "$linenumber "\t" $code  >> $log
         i=$(( i + 1 ))
         #read -p "Press [Enter] to continue"
-    done < <(grep -n "$macro" impl/multiparameter/*/*.c)
+    done < <(grep -n "$macro" impl/2parameter/*/*.c)
 }
 
 collectTestCases "FUNCTIONCALL_COPY"

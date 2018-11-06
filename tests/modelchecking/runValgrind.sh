@@ -14,8 +14,8 @@ runValgrind(){
         # Get the code type
         codetype=$(echo $folder | cut -d "/" -f2)
         echo $codetype
-        if [ "$codetype" = "multiparameter" ]
-        then
+        #if [ "$codetype" = "multiparameter" ]
+        #then
         ## We run combined optimised code
         #read -p "Press enter to continue"   
         for category in $folder/*
@@ -49,7 +49,7 @@ runValgrind(){
                     #read -p "Press enter to continue"
                 done
             done
-        fi
+        #fi
     done
 }
 runValgrind

@@ -13,8 +13,8 @@ runCBMC(){
         # Get the code type
         codetype=$(echo $folder | cut -d "/" -f2)
         echo $codetype
-        if [ "$codetype" = "multiparameter" ]
-        then
+        #if [ "$codetype" = "multiparameter" ]
+        #then
         for category in $folder/*
         do
             #read -p "Press enter to continue"   
@@ -45,7 +45,7 @@ runCBMC(){
                 #read -p "Press enter to continue"
             done
         done
-        fi
+        #fi
     done
 }
 runCBMC

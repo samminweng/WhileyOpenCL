@@ -1,0 +1,9 @@
+	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _6 ) (LINE:100 FILE: impl/2parameter/2parameter_test3/2parameter_test3.c)
+	DEBUG: _TRANSFER_DEALLOC macro on  ( a = _6 ) (LINE:103 FILE: impl/2parameter/2parameter_test3/2parameter_test3.c)
+	DEBUG: The assumption holds	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _9 ) (LINE:109 FILE: impl/2parameter/2parameter_test3/2parameter_test3.c)
+	DEBUG: _TRANSFER_DEALLOC macro on  ( b = _9 ) (LINE:112 FILE: impl/2parameter/2parameter_test3/2parameter_test3.c)
+	DEBUG: The assumption holds	DEBUG: _FUNCTIONCALL_NO_COPY macro on ( _10 = "func" b "false-NEVER_RETURN-true" ) (LINE:115 FILE: impl/2parameter/2parameter_test3/2parameter_test3.c)
+	DEBUG: The assumption holds	DEBUG: _FUNCTIONCALL_COPY macro on ( _10 = "func" a "false-MAYBE_RETURN-true" ) (LINE:116 FILE: impl/2parameter/2parameter_test3/2parameter_test3.c)
+	DEBUG: The assumption holds	DEBUG: _TRANSFER_DEALLOC macro on  ( c = _10 ) (LINE:132 FILE: impl/2parameter/2parameter_test3/2parameter_test3.c)
+	DEBUG: The assumption holds2
+2

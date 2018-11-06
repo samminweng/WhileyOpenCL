@@ -291,10 +291,10 @@ public class ModelCheckingTestCase {
 	 * @param category
 	 * @return
 	 */
-	private ArrayList<String> generateWhileyProgramsV2(String category) {
+	private ArrayList<String> generateWhileyProgramsV2(String category, String[] parameters) {
 		ArrayList<String> testcases = new ArrayList<String>();
 		try {
-			String[] parameters = { "a", "b" };
+			//String[] parameters = { "a", "b" };
 			ArrayList<String> combination = permutateAnalysisResult(parameters);
 
 			// // Take out each item from the collection and write as a Whiley file (*.whiley)
@@ -448,8 +448,9 @@ public class ModelCheckingTestCase {
 	 */
 	@Test
 	public void test2Parameters_functioncall() throws IOException {
-		ArrayList<String> testcases = generateWhileyProgramsV2("multiparameter");
-		generateWhileyAndProduceCCodeAndRunIt(testcases, "multiparameter");
+		String[] parameters = { "a", "b" };
+		ArrayList<String> testcases = generateWhileyProgramsV2("2parameter", parameters);
+		generateWhileyAndProduceCCodeAndRunIt(testcases, "2parameter");
 	}
 
 	// @Test
