@@ -13,10 +13,6 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(a), _DECL_1DARRAY_PARAM(b), _DECL_1DARRAYSIZ
 	int64_t _9;
 	int64_t _10;
 	int64_t _11;
-	int64_t _12;
-	int64_t _13;
-	_DECL_1DARRAY(_14);
-	_DECL_DEALLOC(_14);
 	//const %4 = 0 : int
 	_4 = 0;
 	//const %5 = 0 : int
@@ -43,25 +39,17 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(a), _DECL_1DARRAY_PARAM(b), _DECL_1DARRAYSIZ
 	//return %0
 	_DEALLOC(b);
 	_DEALLOC(_2);
-	_DEALLOC(_14);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(a);
 	return a;
 	//goto blklab1
 	goto blklab1;
 //.blklab0
 blklab0:;
-	//const %12 = 3 : int
-	_12 = 3;
-	//const %13 = 3 : int
-	_13 = 3;
-	//arraygen %14 = [12; 13] : int[]
-	_NEW1DARRAY_DEALLOC(_14, _12, _13, int64_t);
-	//return %14
+	//return %1
 	_DEALLOC(a);
-	_DEALLOC(b);
 	_DEALLOC(_2);
-	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(_14);
-	return _14;
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(b);
+	return b;
 //.blklab1
 blklab1:;
 	//return
@@ -110,19 +98,26 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(b, _9);
 	//invoke (%10) = (%1, %2) 2parameter_test15:func : function(int[],int[])->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_10, b, "false-NEVER_RETURN-true" , "func");
+		_FUNCTIONCALL_COPY_PRE(_10, b, "false-MAYBE_RETURN-true" , "func");
 		_FUNCTIONCALL_COPY_PRE(_10, a, "true-MAYBE_RETURN-true" , "func");
 		_DEALLOC(_10);
 		void* tmp_a;
 		_COPY_1DARRAY_PARAM(a, tmp_a, int64_t);
+		void* tmp_b;
+		_COPY_1DARRAY_PARAM(b, tmp_b, int64_t);
 		// isCopyEliminated of '_1' = false
-		// isCopyEliminated of '_2' = true
-		_10 = _func_(tmp_a, a_size, b, b_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
+		// isCopyEliminated of '_2' = false
+		_10 = _func_(tmp_a, a_size, tmp_b, b_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 		if( _10 == tmp_a ){
 			_10_dealloc = true;
+			free(tmp_b);
+		} else if( _10 == tmp_b ){
+			_10_dealloc = true;
+			free(tmp_a);
 		} else {
 			_10_dealloc = true;
 			free(tmp_a);
+			free(tmp_b);
 		}
 	}
 	//assign %3 = %10  : int[]

@@ -11,8 +11,8 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(a), _DECL_1DARRAY_PARAM(b), _DECL_1DARRAYSIZ
 	int64_t _7;
 	int64_t _8;
 	int64_t _9;
-	int64_t _10;
-	int64_t _11;
+	_DECL_1DARRAY(_10);
+	_DECL_DEALLOC(_10);
 	//const %4 = 0 : int
 	_4 = 0;
 	//indexof %5 = %0, %4 : int[]
@@ -26,32 +26,18 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(a), _DECL_1DARRAY_PARAM(b), _DECL_1DARRAYSIZ
 	_7 = 0;
 	//update %1[%7] = %6 : int[] -> int[]
 	b[_7] = _6;
-	//const %8 = 0 : int
-	_8 = 0;
-	//indexof %9 = %0, %8 : int[]
-	_9=a[_8];
-	//const %10 = 0 : int
-	_10 = 0;
-	//indexof %11 = %1, %10 : int[]
-	_11=b[_10];
-	//ifne %9, %11 goto blklab0 : int
-	if(_9!=_11){goto blklab0;}
-	//return %0
+	//const %8 = 3 : int
+	_8 = 3;
+	//const %9 = 3 : int
+	_9 = 3;
+	//arraygen %10 = [8; 9] : int[]
+	_NEW1DARRAY_DEALLOC(_10, _8, _9, int64_t);
+	//return %10
+	_DEALLOC(a);
 	_DEALLOC(b);
 	_DEALLOC(_2);
-	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(a);
-	return a;
-	//goto blklab1
-	goto blklab1;
-//.blklab0
-blklab0:;
-	//return %1
-	_DEALLOC(a);
-	_DEALLOC(_2);
-	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(b);
-	return b;
-//.blklab1
-blklab1:;
+	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(_10);
+	return _10;
 	//return
 }
 
@@ -95,24 +81,13 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(b, _9);
 	//invoke (%10) = (%1, %2) 2parameter_test36:func : function(int[],int[])->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_10, b, "true-MAYBE_RETURN-false" , "func");
-		_FUNCTIONCALL_COPY_PRE(_10, a, "false-MAYBE_RETURN-true" , "func");
+		_FUNCTIONCALL_NO_COPY_PRE(_10, b, "true-NEVER_RETURN-false" , "func");
+		_FUNCTIONCALL_NO_COPY_PRE(_10, a, "false-NEVER_RETURN-true" , "func");
 		_DEALLOC(_10);
-		void* tmp_a;
-		_COPY_1DARRAY_PARAM(a, tmp_a, int64_t);
-		// isCopyEliminated of '_1' = false
+		// isCopyEliminated of '_1' = true
 		// isCopyEliminated of '_2' = true
-		_10 = _func_(tmp_a, a_size, b, b_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
-		if( _10 == b ){
-			_10_dealloc = b_dealloc;
-			b_dealloc = false;
-			free(tmp_a);
-		} else if( _10 == tmp_a ){
-			_10_dealloc = true;
-		} else {
-			_10_dealloc = true;
-			free(tmp_a);
-		}
+		_10 = _func_(a, a_size, b, b_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
+		_10_dealloc = true;
 	}
 	//assign %3 = %10  : int[]
 	// isCopyEliminated = true

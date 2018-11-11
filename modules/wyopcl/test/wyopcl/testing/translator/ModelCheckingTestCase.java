@@ -222,7 +222,6 @@ public class ModelCheckingTestCase {
 	static final String AlwaysReturn = "AlwaysReturn";
 	static final String NeverReturn = "NeverReturn";
 	static final String MaybeReturn = "MaybeReturn";
-	
 
 	// Liveness analysis result
 	static final String Live = "Live";
@@ -230,43 +229,75 @@ public class ModelCheckingTestCase {
 
 	// Read-write analysis result
 	static final String ReadOnly = "ReadOnly";
-	static final String	ReadWrite = "ReadWrite";
+	static final String ReadWrite = "ReadWrite";
 
 	/**
-	 * Produce the combination of parameters
+	 * Produce the combination of parameters's return results, i.e. maybe-return and never-return, recursively.
 	 * 
+	 * 
+	 * @param parameters
+	 * @param index
+	 *            current parameter index
+	 * @param ret
+	 *            the string that stores the combination of all parameters
+	 * @param returnness
+	 *            the array list that stores all the combinations.
+	 * @return
+	 */
+	private static void permutateReturnness(String[] result, String[] parameters, int index, String ret,
+			List<String> returnness) {
+		if (index == parameters.length) {
+			// Add the final combination to 'returnness' list
+			returnness.add(ret);
+			return;
+		}
+
+		String ret1 = ret; // Copy the string to ret1
+		if (!ret1.equals("")) {
+			ret = ret1 + "|" + result[0] + "_" + parameters[index];
+		} else {
+			ret = result[0] + "_" + parameters[index];
+		}
+		// Continue to perform permutation on next parameters
+		permutateReturnness(result, parameters, index + 1, ret, returnness);
+		if (!ret1.equals("")) {
+			ret = ret1 + "|" + result[1] + "_" + parameters[index];
+		} else {
+			ret = result[1] + "_" + parameters[index];
+		}
+		permutateReturnness(result, parameters, index + 1, ret, returnness);
+	}
+
+	/**
+	 * Generate all combination of liveness, read-only and return properties.
 	 * 
 	 * @param parameters
 	 * @return
 	 */
-	private ArrayList<String> permutateAnalysisResult(String[] parameters) {
-
-		// Define three factors
-		ArrayList<String> returnness = new ArrayList<String>();
-		// Generate the combination of returness analysis
-		returnness.add(AlwaysReturn + "_" + parameters[0]);
-		returnness.add(AlwaysReturn + "_" + parameters[1]);
-		returnness.add(MaybeReturn + "_" + parameters[0] + "|" + NeverReturn + "_" + parameters[1]);
-		returnness.add(MaybeReturn + "_" + parameters[1] + "|" + NeverReturn + "_" + parameters[0]);
-		returnness.add(NeverReturn + "_" + parameters[0] + "|" + NeverReturn + "_" + parameters[1]);
-		returnness.add(MaybeReturn + "_" + parameters[0] + "|" + MaybeReturn + "_" + parameters[1]);
-
+	private void permutateAnalysisResult(String category, String[] parameters, List<String> combination) {
+		// Define three factors, e.g. liveness, read-only and returnness
 		// Produce the combination of liveness analysis
 		ArrayList<String> liveness = new ArrayList<String>();
-		liveness.add(Live + "_" + parameters[0] + "|" + Live + "_" + parameters[1]);
-		liveness.add(Live + "_" + parameters[0] + "|" + NotLive + "_" + parameters[1]);
-		liveness.add(NotLive + "_" + parameters[0] + "|" + Live + "_" + parameters[1]);
-		liveness.add(NotLive + "_" + parameters[0] + "|" + NotLive + "_" + parameters[1]);
+		String[] live_results = { Live, NotLive };
+		permutateReturnness(live_results, parameters, 0, "", liveness);
 
-		// Produce the combination of read-write analysis
+		// Produce the combination of read-only analysis
 		ArrayList<String> mutateness = new ArrayList<String>();
-		mutateness.add(ReadOnly + "_" + parameters[0] + "|" + ReadOnly + "_" + parameters[1]);
-		mutateness.add(ReadOnly + "_" + parameters[0] + "|" + ReadWrite + "_" + parameters[1]);
-		mutateness.add(ReadWrite + "_" + parameters[0] + "|" + ReadOnly + "_" + parameters[1]);
-		mutateness.add(ReadWrite + "_" + parameters[0] + "|" + ReadWrite + "_" + parameters[1]);
+		String[] readwrite_results = { ReadOnly, ReadWrite };
+		permutateReturnness(readwrite_results, parameters, 0, "", mutateness);
+
+		ArrayList<String> returnness = new ArrayList<String>();
+		// Generate the combination of returnness analysis
+		// The number of always-return is the number of parameters
+		for (int i = 0; i < parameters.length; i++) {
+			returnness.add(AlwaysReturn + "_" + parameters[i]);
+		}
+		// The combination of never-return/ maybe-return for all parameters
+		String[] return_results = { MaybeReturn, NeverReturn };
+		permutateReturnness(return_results, parameters, 0, "", returnness);
 
 		// Produce the final combination
-		ArrayList<String> combination = new ArrayList<String>();
+		// ArrayList<String> combination = new ArrayList<String>();
 		for (String live : liveness) {
 			for (String mutate : mutateness) {
 				for (String ret : returnness) {
@@ -274,12 +305,23 @@ public class ModelCheckingTestCase {
 				}
 			}
 		}
-		assert combination.size() == 96;
-		for (int index = 1; index <= combination.size(); index++) {
-			System.out.println("Test case " + index + "\t" + combination.get(index - 1));
+		try {
+			// Write out the combination to a file
+			final Path log = Paths.get(modelCheckingDir + File.separator + "log_" + category + "_testcase.txt");
+			Files.deleteIfExists(log);
+			Files.createFile(log);
+			// Go throught each combination
+			for (int i = 1; i <= combination.size(); i++) {
+				String str = "Test case " + i + "\t" + combination.get(i - 1) + "\n";
+				Files.write(log, str.getBytes(), StandardOpenOption.APPEND);
+				System.out.print(str);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
-		return combination;
+		return;
 	}
 
 	/**
@@ -291,21 +333,21 @@ public class ModelCheckingTestCase {
 	 * @param category
 	 * @return
 	 */
-	private ArrayList<String> generateWhileyProgramsV2(String category, String[] parameters) {
-		ArrayList<String> testcases = new ArrayList<String>();
+	private List<String> generateWhileyProgramsV2(String category, String[] parameters, List<String> combination) {
+		List<String> testcases = new ArrayList<String>();
 		try {
-			//String[] parameters = { "a", "b" };
-			ArrayList<String> combination = permutateAnalysisResult(parameters);
 
+			// Create the folder
+			BaseTestUtil.createFolder(Paths.get(whileyDir + File.separator + category));
 			// // Take out each item from the collection and write as a Whiley file (*.whiley)
 			for (int index = 1; index <= combination.size(); index++) {
 				String testcase = category + "_test" + index;
 				// Put test case to 'testcases' array
 				testcases.add(testcase);
+
 				// Create a Whiley file
 				Path path = Paths.get(whileyDir + File.separator + category + File.separator + testcase + ".whiley");
 				// Delete the file
-				//
 				Files.deleteIfExists(path);
 				File file = new File(path.toString());
 				file.createNewFile();// Create a new file
@@ -321,7 +363,12 @@ public class ModelCheckingTestCase {
 				// Write out import
 				lines.add("import whiley.lang.*\n");
 				// Write out the called function
-				lines.add("function func(int[] " + parameters[0] + ", int[] " + parameters[1] + ") -> int[]:");
+				// Collect all parameters
+				List<String> parameterList = new ArrayList<String>(); 
+				for(String parameter: parameters) {
+					parameterList.add("int[] " + parameter);
+				}
+				lines.add("function func(" + String.join(", ", parameterList) + ") -> int[]:");
 				// Get read-write property of parameters
 				String[] readwrite = mutateness.split("\\|");
 				// Go through each parameter's readwrite property
@@ -384,7 +431,7 @@ public class ModelCheckingTestCase {
 					lines.add("\tint[] " + variable + " = [2; 2]");
 				}
 				// Write out a function call
-				lines.add("\tint[] r = func(" + String.join(", ", variables) + ")");// add the function call 
+				lines.add("\tint[] r = func(" + String.join(", ", variables) + ")");// add the function call
 				// Get the live variable
 				String[] live_properties = liveness.split("\\|");
 				for (String live : live_properties) {
@@ -406,26 +453,31 @@ public class ModelCheckingTestCase {
 	}
 
 	/**
-	 * Given a list of variable,
+	 * Given a list of test cases, do the below:
 	 * 
-	 * 1. Generate the Whiley programs 2. Compile the Whiley program into C code with either deallocation analysis, or
-	 * combined copy and deallocation analysis 3. Compile the generated C code 4. Run the executable.
+	 * 1. Create the folder in 'impl' folder and copy library files (Util.c Util.h WyRT.c WyRT.h) to the folder
+	 * 
+	 * 2. Compile the Whiley program into C code with copy and deallocation enabled.
+	 * 
+	 * 3. Compile the generated C code and run the executable.
+	 * 
+	 * @param category
+	 *            the category name
+	 * @param testcases
+	 *            a list of test cases
 	 * 
 	 */
-	private void generateWhileyAndProduceCCodeAndRunIt(ArrayList<String> testcases, String category) {
+	private void produceCCodeAndRunIt(String category, List<String> testcases) {
 		for (String testcase : testcases) {
 			Path destPath = Paths.get(implDir + File.separator + category + File.separator + testcase);
+			BaseTestUtil.createFolder(destPath);// Create the folder
 			Path sourceDir = Paths.get(modelCheckingDir + File.separator + "Whileyfiles" + File.separator + category
 					+ File.separator + testcase + ".whiley");
 
 			BaseTestUtil.createFolderAndCopyFiles(testcase, sourceDir, destPath);
-			String cmd = "java -cp " + BaseTestUtil.classpath + " wyopcl.WyopclMain -bp "
-					+ BaseTestUtil.whiley_runtime_lib;
-
 			// Run -nocopy -dealloc -code options to produce deallocated + copy eliminated C code
-			cmd += " -nocopy -dealloc -code";
-
-			cmd += " " + testcase + ".whiley";
+			String cmd = "java -cp " + BaseTestUtil.classpath + " wyopcl.WyopclMain -bp "
+					+ BaseTestUtil.whiley_runtime_lib + " -nocopy -dealloc -code " + testcase + ".whiley";
 
 			// Run 'cmd' to generate C code
 			BaseTestUtil.runCmd(cmd, destPath, false);
@@ -449,19 +501,26 @@ public class ModelCheckingTestCase {
 	@Test
 	public void test2Parameters_functioncall() throws IOException {
 		String[] parameters = { "a", "b" };
-		ArrayList<String> testcases = generateWhileyProgramsV2("2parameter", parameters);
+		String category = "2parameter";
+		List<String> combination = new ArrayList<String>();
+		permutateAnalysisResult(category, parameters, combination);
+		assert combination.size() == 96;
+		List<String> testcases = generateWhileyProgramsV2(category, parameters, combination);
 		assert testcases.size() == 96;
-		generateWhileyAndProduceCCodeAndRunIt(testcases, "2parameter");
+		produceCCodeAndRunIt(category, testcases);
 	}
-	
-	//@Test
+
+	@Test
 	public void test3Parameters_functioncall() throws IOException {
 		String[] parameters = { "a", "b", "c" };
-		ArrayList<String> testcases = generateWhileyProgramsV2("3parameter", parameters);
-		//assert testcases.size() == 706;
-		//generateWhileyAndProduceCCodeAndRunIt(testcases, "3parameter");
+		String category = "3parameter";
+		List<String> combination = new ArrayList<String>();
+		permutateAnalysisResult(category, parameters, combination);
+		assert combination.size() == 704;
+		List<String> testcases = generateWhileyProgramsV2(category, parameters, combination);
+		assert testcases.size() == 704;
+		produceCCodeAndRunIt(category, testcases);
 	}
-	
 
 	// @Test
 	public void test3Variables_assignment() throws IOException {
@@ -472,7 +531,7 @@ public class ModelCheckingTestCase {
 		variables.add("c");
 		ArrayList<String> testcases = generateWhileyPrograms(variables, "assignment");
 
-		generateWhileyAndProduceCCodeAndRunIt(testcases, "assignment");
+		produceCCodeAndRunIt("assignment", testcases);
 
 	}
 
@@ -485,7 +544,7 @@ public class ModelCheckingTestCase {
 		variables.add("c");
 		ArrayList<String> testcases = generateWhileyPrograms(variables, "functioncall");
 		// The called function may return input array
-		generateWhileyAndProduceCCodeAndRunIt(testcases, "functioncall");
+		produceCCodeAndRunIt("functioncall", testcases);
 
 	}
 
@@ -498,7 +557,7 @@ public class ModelCheckingTestCase {
 		variables.add("c");
 		ArrayList<String> testcases = generateWhileyPrograms(variables, "functioncall2");
 		// The called function never returns input array
-		generateWhileyAndProduceCCodeAndRunIt(testcases, "functioncall2");
+		produceCCodeAndRunIt("functioncall2", testcases);
 
 	}
 
@@ -511,7 +570,7 @@ public class ModelCheckingTestCase {
 		variables.add("c");
 		ArrayList<String> testcases = generateWhileyPrograms(variables, "functioncall3");
 		// The called function always returns input array
-		generateWhileyAndProduceCCodeAndRunIt(testcases, "functioncall3");
+		produceCCodeAndRunIt("functioncall3", testcases);
 
 	}
 
@@ -524,7 +583,7 @@ public class ModelCheckingTestCase {
 		variables.add("c");
 		ArrayList<String> testcases = generateWhileyPrograms(variables, "functioncall4");
 		// The called function always returns input array
-		generateWhileyAndProduceCCodeAndRunIt(testcases, "functioncall4");
+		produceCCodeAndRunIt("functioncall4", testcases);
 
 	}
 }
