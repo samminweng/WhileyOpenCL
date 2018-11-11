@@ -20,17 +20,17 @@ Unwinding loop create1DArray_int64_t.0 iteration 1 file impl/2parameter/2paramet
 Unwinding loop create1DArray_int64_t.0 iteration 2 file impl/2parameter/2parameter_test17/Util.c line 30 function create1DArray_int64_t thread 0
 Unwinding loop create1DArray_int64_t.0 iteration 3 file impl/2parameter/2parameter_test17/Util.c line 30 function create1DArray_int64_t thread 0
 aborting path on assume(false) at file <builtin-library-exit> line 7 function exit thread 0
-size of program expression: 506 steps
+size of program expression: 716 steps
 simple slicing removed 1 assignments
-Generated 104 VCC(s), 28 remaining after simplification
+Generated 132 VCC(s), 38 remaining after simplification
 Passing problem to propositional reduction
 converting SSA
 Running propositional reduction
 Post-processing
 Solving with MiniSAT 2.2.1 with simplifier
-4854 variables, 1036 clauses
+9616 variables, 3840 clauses
 SAT checker: instance is UNSATISFIABLE
-Runtime decision procedure: 0.00310647s
+Runtime decision procedure: 0.00592433s
 
 ** Results:
 [main.precondition_instance.1] free argument must be dynamic object: SUCCESS
@@ -56,14 +56,25 @@ Runtime decision procedure: 0.00310647s
 [main.precondition_instance.21] memcpy src/dst overlap: SUCCESS
 [main.precondition_instance.22] memcpy source region readable: SUCCESS
 [main.precondition_instance.23] memcpy destination region writeable: SUCCESS
-[main.precondition_instance.24] free argument must be dynamic object: SUCCESS
-[main.precondition_instance.25] free argument has offset zero: SUCCESS
-[main.precondition_instance.26] double free: SUCCESS
-[main.precondition_instance.27] free called for new[] object: SUCCESS
-[main.precondition_instance.28] free argument must be dynamic object: SUCCESS
-[main.precondition_instance.29] free argument has offset zero: SUCCESS
-[main.precondition_instance.30] double free: SUCCESS
-[main.precondition_instance.31] free called for new[] object: SUCCESS
+[main.precondition_instance.24] memcpy src/dst overlap: SUCCESS
+[main.precondition_instance.25] memcpy source region readable: SUCCESS
+[main.precondition_instance.26] memcpy destination region writeable: SUCCESS
+[main.precondition_instance.27] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.28] free argument has offset zero: SUCCESS
+[main.precondition_instance.29] double free: SUCCESS
+[main.precondition_instance.30] free called for new[] object: SUCCESS
+[main.precondition_instance.31] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.32] free argument has offset zero: SUCCESS
+[main.precondition_instance.33] double free: SUCCESS
+[main.precondition_instance.34] free called for new[] object: SUCCESS
+[main.precondition_instance.35] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.36] free argument has offset zero: SUCCESS
+[main.precondition_instance.37] double free: SUCCESS
+[main.precondition_instance.38] free called for new[] object: SUCCESS
+[main.precondition_instance.39] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.40] free argument has offset zero: SUCCESS
+[main.precondition_instance.41] double free: SUCCESS
+[main.precondition_instance.42] free called for new[] object: SUCCESS
 [main.pointer_dereference.1] dereference failure: pointer NULL in a[_13]: SUCCESS
 [main.pointer_dereference.2] dereference failure: pointer invalid in a[_13]: SUCCESS
 [main.pointer_dereference.3] dereference failure: deallocated dynamic object in a[_13]: SUCCESS
@@ -78,30 +89,30 @@ Runtime decision procedure: 0.00310647s
 [main.pointer_dereference.12] dereference failure: pointer outside dynamic object bounds in b[_17]: SUCCESS
 [main.pointer_dereference.13] dereference failure: pointer outside object bounds in b[_17]: SUCCESS
 [main.pointer_dereference.14] dereference failure: invalid integer address in b[_17]: SUCCESS
-[main.precondition_instance.32] free argument must be dynamic object: SUCCESS
-[main.precondition_instance.33] free argument has offset zero: SUCCESS
-[main.precondition_instance.34] double free: SUCCESS
-[main.precondition_instance.35] free called for new[] object: SUCCESS
-[main.precondition_instance.36] free argument must be dynamic object: SUCCESS
-[main.precondition_instance.37] free argument has offset zero: SUCCESS
-[main.precondition_instance.38] double free: SUCCESS
-[main.precondition_instance.39] free called for new[] object: SUCCESS
-[main.precondition_instance.40] free argument must be dynamic object: SUCCESS
-[main.precondition_instance.41] free argument has offset zero: SUCCESS
-[main.precondition_instance.42] double free: SUCCESS
-[main.precondition_instance.43] free called for new[] object: SUCCESS
-[main.precondition_instance.44] free argument must be dynamic object: SUCCESS
-[main.precondition_instance.45] free argument has offset zero: SUCCESS
-[main.precondition_instance.46] double free: SUCCESS
-[main.precondition_instance.47] free called for new[] object: SUCCESS
-[main.precondition_instance.48] free argument must be dynamic object: SUCCESS
-[main.precondition_instance.49] free argument has offset zero: SUCCESS
-[main.precondition_instance.50] double free: SUCCESS
-[main.precondition_instance.51] free called for new[] object: SUCCESS
-[main.precondition_instance.52] free argument must be dynamic object: SUCCESS
-[main.precondition_instance.53] free argument has offset zero: SUCCESS
-[main.precondition_instance.54] double free: SUCCESS
-[main.precondition_instance.55] free called for new[] object: SUCCESS
+[main.precondition_instance.43] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.44] free argument has offset zero: SUCCESS
+[main.precondition_instance.45] double free: SUCCESS
+[main.precondition_instance.46] free called for new[] object: SUCCESS
+[main.precondition_instance.47] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.48] free argument has offset zero: SUCCESS
+[main.precondition_instance.49] double free: SUCCESS
+[main.precondition_instance.50] free called for new[] object: SUCCESS
+[main.precondition_instance.51] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.52] free argument has offset zero: SUCCESS
+[main.precondition_instance.53] double free: SUCCESS
+[main.precondition_instance.54] free called for new[] object: SUCCESS
+[main.precondition_instance.55] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.56] free argument has offset zero: SUCCESS
+[main.precondition_instance.57] double free: SUCCESS
+[main.precondition_instance.58] free called for new[] object: SUCCESS
+[main.precondition_instance.59] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.60] free argument has offset zero: SUCCESS
+[main.precondition_instance.61] double free: SUCCESS
+[main.precondition_instance.62] free called for new[] object: SUCCESS
+[main.precondition_instance.63] free argument must be dynamic object: SUCCESS
+[main.precondition_instance.64] free argument has offset zero: SUCCESS
+[main.precondition_instance.65] double free: SUCCESS
+[main.precondition_instance.66] free called for new[] object: SUCCESS
 [fputs.pointer_dereference.1] dereference failure: pointer NULL in *s: SUCCESS
 [fputs.pointer_dereference.2] dereference failure: pointer invalid in *s: SUCCESS
 [fputs.pointer_dereference.3] dereference failure: deallocated dynamic object in *s: SUCCESS
@@ -660,6 +671,16 @@ Runtime decision procedure: 0.00310647s
 [_func_.pointer_dereference.12] dereference failure: pointer outside dynamic object bounds in b[_6]: SUCCESS
 [_func_.pointer_dereference.13] dereference failure: pointer outside object bounds in b[_6]: SUCCESS
 [_func_.pointer_dereference.14] dereference failure: invalid integer address in b[_6]: SUCCESS
+[_func_.pointer_dereference.15] dereference failure: pointer NULL in a[_8]: SUCCESS
+[_func_.pointer_dereference.16] dereference failure: pointer invalid in a[_8]: SUCCESS
+[_func_.pointer_dereference.17] dereference failure: deallocated dynamic object in a[_8]: SUCCESS
+[_func_.pointer_dereference.18] dereference failure: dead object in a[_8]: SUCCESS
+[_func_.pointer_dereference.19] dereference failure: pointer outside dynamic object bounds in a[_8]: SUCCESS
+[_func_.pointer_dereference.20] dereference failure: pointer outside object bounds in a[_8]: SUCCESS
+[_func_.pointer_dereference.21] dereference failure: invalid integer address in a[_8]: SUCCESS
+[_func_.pointer_dereference.22] dereference failure: pointer outside dynamic object bounds in b[_10]: SUCCESS
+[_func_.pointer_dereference.23] dereference failure: pointer outside object bounds in b[_10]: SUCCESS
+[_func_.pointer_dereference.24] dereference failure: invalid integer address in b[_10]: SUCCESS
 [_func_.precondition_instance.1] free argument must be dynamic object: SUCCESS
 [_func_.precondition_instance.2] free argument has offset zero: SUCCESS
 [_func_.precondition_instance.3] double free: SUCCESS
@@ -676,13 +697,32 @@ Runtime decision procedure: 0.00310647s
 [_func_.precondition_instance.14] free argument has offset zero: SUCCESS
 [_func_.precondition_instance.15] double free: SUCCESS
 [_func_.precondition_instance.16] free called for new[] object: SUCCESS
-[_func_.pointer_dereference.15] dereference failure: pointer NULL in *_size_call_by_ref: SUCCESS
-[_func_.pointer_dereference.16] dereference failure: pointer invalid in *_size_call_by_ref: SUCCESS
-[_func_.pointer_dereference.17] dereference failure: deallocated dynamic object in *_size_call_by_ref: SUCCESS
-[_func_.pointer_dereference.18] dereference failure: dead object in *_size_call_by_ref: SUCCESS
-[_func_.pointer_dereference.19] dereference failure: pointer outside dynamic object bounds in *_size_call_by_ref: SUCCESS
-[_func_.pointer_dereference.20] dereference failure: pointer outside object bounds in *_size_call_by_ref: SUCCESS
-[_func_.pointer_dereference.21] dereference failure: invalid integer address in *_size_call_by_ref: SUCCESS
+[_func_.pointer_dereference.25] dereference failure: pointer NULL in *_size_call_by_ref: SUCCESS
+[_func_.pointer_dereference.26] dereference failure: pointer invalid in *_size_call_by_ref: SUCCESS
+[_func_.pointer_dereference.27] dereference failure: deallocated dynamic object in *_size_call_by_ref: SUCCESS
+[_func_.pointer_dereference.28] dereference failure: dead object in *_size_call_by_ref: SUCCESS
+[_func_.pointer_dereference.29] dereference failure: pointer outside dynamic object bounds in *_size_call_by_ref: SUCCESS
+[_func_.pointer_dereference.30] dereference failure: pointer outside object bounds in *_size_call_by_ref: SUCCESS
+[_func_.pointer_dereference.31] dereference failure: invalid integer address in *_size_call_by_ref: SUCCESS
+[_func_.precondition_instance.17] free argument must be dynamic object: SUCCESS
+[_func_.precondition_instance.18] free argument has offset zero: SUCCESS
+[_func_.precondition_instance.19] double free: SUCCESS
+[_func_.precondition_instance.20] free called for new[] object: SUCCESS
+[_func_.precondition_instance.21] free argument must be dynamic object: SUCCESS
+[_func_.precondition_instance.22] free argument has offset zero: SUCCESS
+[_func_.precondition_instance.23] double free: SUCCESS
+[_func_.precondition_instance.24] free called for new[] object: SUCCESS
+[_func_.precondition_instance.25] free argument must be dynamic object: SUCCESS
+[_func_.precondition_instance.26] free argument has offset zero: SUCCESS
+[_func_.precondition_instance.27] double free: SUCCESS
+[_func_.precondition_instance.28] free called for new[] object: SUCCESS
+[_func_.pointer_dereference.32] dereference failure: pointer NULL in *_size_call_by_ref: SUCCESS
+[_func_.pointer_dereference.33] dereference failure: pointer invalid in *_size_call_by_ref: SUCCESS
+[_func_.pointer_dereference.34] dereference failure: deallocated dynamic object in *_size_call_by_ref: SUCCESS
+[_func_.pointer_dereference.35] dereference failure: dead object in *_size_call_by_ref: SUCCESS
+[_func_.pointer_dereference.36] dereference failure: pointer outside dynamic object bounds in *_size_call_by_ref: SUCCESS
+[_func_.pointer_dereference.37] dereference failure: pointer outside object bounds in *_size_call_by_ref: SUCCESS
+[_func_.pointer_dereference.38] dereference failure: invalid integer address in *_size_call_by_ref: SUCCESS
 [optimized_append.pointer_dereference.1] dereference failure: pointer NULL in *op_1_size: SUCCESS
 [optimized_append.pointer_dereference.2] dereference failure: pointer invalid in *op_1_size: SUCCESS
 [optimized_append.pointer_dereference.3] dereference failure: deallocated dynamic object in *op_1_size: SUCCESS
@@ -818,5 +858,5 @@ Runtime decision procedure: 0.00310647s
 [readFile.pointer_dereference.7] dereference failure: invalid integer address in *_size: SUCCESS
 [__CPROVER__start.memory-leak.1] dynamically allocated memory never freed in __CPROVER_memory_leak == NULL: SUCCESS
 
-** 0 of 784 failed (1 iteration)
+** 0 of 824 failed (1 iteration)
 VERIFICATION SUCCESSFUL

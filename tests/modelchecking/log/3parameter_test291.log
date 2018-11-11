@@ -1,0 +1,11 @@
+	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _7 ) (LINE:102 FILE: impl/3parameter/3parameter_test291/3parameter_test291.c)
+	DEBUG: _TRANSFER_DEALLOC macro on  ( a = _7 ) (LINE:105 FILE: impl/3parameter/3parameter_test291/3parameter_test291.c)
+	DEBUG: The assumption holds	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _10 ) (LINE:111 FILE: impl/3parameter/3parameter_test291/3parameter_test291.c)
+	DEBUG: _TRANSFER_DEALLOC macro on  ( b = _10 ) (LINE:114 FILE: impl/3parameter/3parameter_test291/3parameter_test291.c)
+	DEBUG: The assumption holds	DEBUG: _NEW1DARRAY_DEALLOC macro on  ( _13 ) (LINE:120 FILE: impl/3parameter/3parameter_test291/3parameter_test291.c)
+	DEBUG: _TRANSFER_DEALLOC macro on  ( c = _13 ) (LINE:123 FILE: impl/3parameter/3parameter_test291/3parameter_test291.c)
+	DEBUG: The assumption holds	DEBUG: _FUNCTIONCALL_NO_COPY macro on ( _14 = "func" c "false-NEVER_RETURN-false" ) (LINE:126 FILE: impl/3parameter/3parameter_test291/3parameter_test291.c)
+	DEBUG: The assumption holds	DEBUG: _FUNCTIONCALL_NO_COPY macro on ( _14 = "func" b "true-MAYBE_RETURN-false" ) (LINE:127 FILE: impl/3parameter/3parameter_test291/3parameter_test291.c)
+	DEBUG: The assumption holds	DEBUG: _FUNCTIONCALL_COPY macro on ( _14 = "func" a "false-MAYBE_RETURN-true" ) (LINE:128 FILE: impl/3parameter/3parameter_test291/3parameter_test291.c)
+	DEBUG: The assumption holds	DEBUG: _TRANSFER_DEALLOC macro on  ( r = _14 ) (LINE:149 FILE: impl/3parameter/3parameter_test291/3parameter_test291.c)
+	DEBUG: The assumption holds2
