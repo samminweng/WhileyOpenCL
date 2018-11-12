@@ -635,7 +635,7 @@ public final class BaseTestUtil {
 	 */
 	public void execCodeGeneration(Path baseDir, String testcase, String... options) {
 		try {
-			File logfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "log.txt");
+			//File logfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "log.txt");
 			// 1. Find the destination folder
 			Path destDir = processOptions(baseDir, testcase, options);
 			
@@ -648,7 +648,7 @@ public final class BaseTestUtil {
 			String cmd = makeCmd(testcase, options);
 
 			// 4. Generate the C code
-			createFolder(destDir); // Create the folder
+			//createFolder(destDir); // Create the folder
 			runCmd(cmd, destDir, false);
 
 			// Check if *.c and *.h files are generated or not.

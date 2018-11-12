@@ -1,1790 +1,1790 @@
 === Test report for ea_dealloc ArrayAppend ===
 The Valgrind memory detector as below:
-==2087== Memcheck, a memory error detector
-==2087== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2087== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2087== Command: ./ArrayAppend.out
-==2087== Parent PID: 2066
-==2087== 
-==2087== 
-==2087== HEAP SUMMARY:
-==2087==     in use at exit: 0 bytes in 0 blocks
-==2087==   total heap usage: 9 allocs, 9 frees, 8,832 bytes allocated
-==2087== 
-==2087== All heap blocks were freed -- no leaks are possible
-==2087== 
-==2087== For counts of detected and suppressed errors, rerun with: -v
-==2087== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12491== Memcheck, a memory error detector
+==12491== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12491== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12491== Command: ./ArrayAppend.out
+==12491== Parent PID: 12470
+==12491== 
+==12491== 
+==12491== HEAP SUMMARY:
+==12491==     in use at exit: 0 bytes in 0 blocks
+==12491==   total heap usage: 9 allocs, 9 frees, 8,832 bytes allocated
+==12491== 
+==12491== All heap blocks were freed -- no leaks are possible
+==12491== 
+==12491== For counts of detected and suppressed errors, rerun with: -v
+==12491== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc ArrayAppend ===
 The Valgrind memory detector as below:
-==2108== Memcheck, a memory error detector
-==2108== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2108== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2108== Command: ./ArrayAppend.out
-==2108== Parent PID: 2066
-==2108== 
-==2108== 
-==2108== HEAP SUMMARY:
-==2108==     in use at exit: 0 bytes in 0 blocks
-==2108==   total heap usage: 4 allocs, 4 frees, 8,448 bytes allocated
-==2108== 
-==2108== All heap blocks were freed -- no leaks are possible
-==2108== 
-==2108== For counts of detected and suppressed errors, rerun with: -v
-==2108== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12511== Memcheck, a memory error detector
+==12511== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12511== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12511== Command: ./ArrayAppend.out
+==12511== Parent PID: 12470
+==12511== 
+==12511== 
+==12511== HEAP SUMMARY:
+==12511==     in use at exit: 0 bytes in 0 blocks
+==12511==   total heap usage: 4 allocs, 4 frees, 8,448 bytes allocated
+==12511== 
+==12511== All heap blocks were freed -- no leaks are possible
+==12511== 
+==12511== For counts of detected and suppressed errors, rerun with: -v
+==12511== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc ArrayAppend2 ===
 The Valgrind memory detector as below:
-==2126== Memcheck, a memory error detector
-==2126== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2126== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2126== Command: ./ArrayAppend2.out
-==2126== Parent PID: 2066
-==2126== 
-==2126== 
-==2126== HEAP SUMMARY:
-==2126==     in use at exit: 0 bytes in 0 blocks
-==2126==   total heap usage: 6 allocs, 6 frees, 8,576 bytes allocated
-==2126== 
-==2126== All heap blocks were freed -- no leaks are possible
-==2126== 
-==2126== For counts of detected and suppressed errors, rerun with: -v
-==2126== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12529== Memcheck, a memory error detector
+==12529== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12529== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12529== Command: ./ArrayAppend2.out
+==12529== Parent PID: 12470
+==12529== 
+==12529== 
+==12529== HEAP SUMMARY:
+==12529==     in use at exit: 0 bytes in 0 blocks
+==12529==   total heap usage: 6 allocs, 6 frees, 8,576 bytes allocated
+==12529== 
+==12529== All heap blocks were freed -- no leaks are possible
+==12529== 
+==12529== For counts of detected and suppressed errors, rerun with: -v
+==12529== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc ArrayAppend2 ===
 The Valgrind memory detector as below:
-==2147== Memcheck, a memory error detector
-==2147== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2147== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2147== Command: ./ArrayAppend2.out
-==2147== Parent PID: 2066
-==2147== 
-==2147== 
-==2147== HEAP SUMMARY:
-==2147==     in use at exit: 0 bytes in 0 blocks
-==2147==   total heap usage: 4 allocs, 4 frees, 8,448 bytes allocated
-==2147== 
-==2147== All heap blocks were freed -- no leaks are possible
-==2147== 
-==2147== For counts of detected and suppressed errors, rerun with: -v
-==2147== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12550== Memcheck, a memory error detector
+==12550== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12550== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12550== Command: ./ArrayAppend2.out
+==12550== Parent PID: 12470
+==12550== 
+==12550== 
+==12550== HEAP SUMMARY:
+==12550==     in use at exit: 0 bytes in 0 blocks
+==12550==   total heap usage: 4 allocs, 4 frees, 8,448 bytes allocated
+==12550== 
+==12550== All heap blocks were freed -- no leaks are possible
+==12550== 
+==12550== For counts of detected and suppressed errors, rerun with: -v
+==12550== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc ArrayAppend3 ===
 The Valgrind memory detector as below:
-==2164== Memcheck, a memory error detector
-==2164== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2164== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2164== Command: ./ArrayAppend3.out
-==2164== Parent PID: 2066
-==2164== 
-==2164== 
-==2164== HEAP SUMMARY:
-==2164==     in use at exit: 0 bytes in 0 blocks
-==2164==   total heap usage: 83 allocs, 83 frees, 20,032 bytes allocated
-==2164== 
-==2164== All heap blocks were freed -- no leaks are possible
-==2164== 
-==2164== For counts of detected and suppressed errors, rerun with: -v
-==2164== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12567== Memcheck, a memory error detector
+==12567== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12567== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12567== Command: ./ArrayAppend3.out
+==12567== Parent PID: 12470
+==12567== 
+==12567== 
+==12567== HEAP SUMMARY:
+==12567==     in use at exit: 0 bytes in 0 blocks
+==12567==   total heap usage: 83 allocs, 83 frees, 20,032 bytes allocated
+==12567== 
+==12567== All heap blocks were freed -- no leaks are possible
+==12567== 
+==12567== For counts of detected and suppressed errors, rerun with: -v
+==12567== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc ArrayAppend3 ===
 The Valgrind memory detector as below:
-==2184== Memcheck, a memory error detector
-==2184== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2184== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2184== Command: ./ArrayAppend3.out
-==2184== Parent PID: 2066
-==2184== 
-==2184== 
-==2184== HEAP SUMMARY:
-==2184==     in use at exit: 0 bytes in 0 blocks
-==2184==   total heap usage: 57 allocs, 57 frees, 15,008 bytes allocated
-==2184== 
-==2184== All heap blocks were freed -- no leaks are possible
-==2184== 
-==2184== For counts of detected and suppressed errors, rerun with: -v
-==2184== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12587== Memcheck, a memory error detector
+==12587== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12587== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12587== Command: ./ArrayAppend3.out
+==12587== Parent PID: 12470
+==12587== 
+==12587== 
+==12587== HEAP SUMMARY:
+==12587==     in use at exit: 0 bytes in 0 blocks
+==12587==   total heap usage: 57 allocs, 57 frees, 15,008 bytes allocated
+==12587== 
+==12587== All heap blocks were freed -- no leaks are possible
+==12587== 
+==12587== For counts of detected and suppressed errors, rerun with: -v
+==12587== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc bubblesort ===
 The Valgrind memory detector as below:
-==2202== Memcheck, a memory error detector
-==2202== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2202== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2202== Command: ./bubblesort.out
-==2202== Parent PID: 2066
-==2202== 
-==2202== 
-==2202== HEAP SUMMARY:
-==2202==     in use at exit: 0 bytes in 0 blocks
-==2202==   total heap usage: 27 allocs, 27 frees, 9,512 bytes allocated
-==2202== 
-==2202== All heap blocks were freed -- no leaks are possible
-==2202== 
-==2202== For counts of detected and suppressed errors, rerun with: -v
-==2202== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12605== Memcheck, a memory error detector
+==12605== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12605== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12605== Command: ./bubblesort.out
+==12605== Parent PID: 12470
+==12605== 
+==12605== 
+==12605== HEAP SUMMARY:
+==12605==     in use at exit: 0 bytes in 0 blocks
+==12605==   total heap usage: 27 allocs, 27 frees, 9,512 bytes allocated
+==12605== 
+==12605== All heap blocks were freed -- no leaks are possible
+==12605== 
+==12605== For counts of detected and suppressed errors, rerun with: -v
+==12605== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc bubblesort ===
 The Valgrind memory detector as below:
-==2222== Memcheck, a memory error detector
-==2222== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2222== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2222== Command: ./bubblesort.out
-==2222== Parent PID: 2066
-==2222== 
-==2222== 
-==2222== HEAP SUMMARY:
-==2222==     in use at exit: 0 bytes in 0 blocks
-==2222==   total heap usage: 12 allocs, 12 frees, 8,840 bytes allocated
-==2222== 
-==2222== All heap blocks were freed -- no leaks are possible
-==2222== 
-==2222== For counts of detected and suppressed errors, rerun with: -v
-==2222== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12625== Memcheck, a memory error detector
+==12625== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12625== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12625== Command: ./bubblesort.out
+==12625== Parent PID: 12470
+==12625== 
+==12625== 
+==12625== HEAP SUMMARY:
+==12625==     in use at exit: 0 bytes in 0 blocks
+==12625==   total heap usage: 12 allocs, 12 frees, 8,840 bytes allocated
+==12625== 
+==12625== All heap blocks were freed -- no leaks are possible
+==12625== 
+==12625== For counts of detected and suppressed errors, rerun with: -v
+==12625== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc CallerMacro1 ===
 The Valgrind memory detector as below:
-==2239== Memcheck, a memory error detector
-==2239== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2239== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2239== Command: ./CallerMacro1.out
-==2239== Parent PID: 2066
-==2239== 
-==2239== 
-==2239== HEAP SUMMARY:
-==2239==     in use at exit: 0 bytes in 0 blocks
-==2239==   total heap usage: 7 allocs, 7 frees, 8,368 bytes allocated
-==2239== 
-==2239== All heap blocks were freed -- no leaks are possible
-==2239== 
-==2239== For counts of detected and suppressed errors, rerun with: -v
-==2239== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12642== Memcheck, a memory error detector
+==12642== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12642== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12642== Command: ./CallerMacro1.out
+==12642== Parent PID: 12470
+==12642== 
+==12642== 
+==12642== HEAP SUMMARY:
+==12642==     in use at exit: 0 bytes in 0 blocks
+==12642==   total heap usage: 7 allocs, 7 frees, 8,368 bytes allocated
+==12642== 
+==12642== All heap blocks were freed -- no leaks are possible
+==12642== 
+==12642== For counts of detected and suppressed errors, rerun with: -v
+==12642== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc CallerMacro1 ===
 The Valgrind memory detector as below:
-==2261== Memcheck, a memory error detector
-==2261== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2261== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2261== Command: ./CallerMacro1.out
-==2261== Parent PID: 2066
-==2261== 
-==2261== 
-==2261== HEAP SUMMARY:
-==2261==     in use at exit: 0 bytes in 0 blocks
-==2261==   total heap usage: 4 allocs, 4 frees, 8,296 bytes allocated
-==2261== 
-==2261== All heap blocks were freed -- no leaks are possible
-==2261== 
-==2261== For counts of detected and suppressed errors, rerun with: -v
-==2261== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12663== Memcheck, a memory error detector
+==12663== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12663== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12663== Command: ./CallerMacro1.out
+==12663== Parent PID: 12470
+==12663== 
+==12663== 
+==12663== HEAP SUMMARY:
+==12663==     in use at exit: 0 bytes in 0 blocks
+==12663==   total heap usage: 4 allocs, 4 frees, 8,296 bytes allocated
+==12663== 
+==12663== All heap blocks were freed -- no leaks are possible
+==12663== 
+==12663== For counts of detected and suppressed errors, rerun with: -v
+==12663== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc CallerMacro2 ===
 The Valgrind memory detector as below:
-==2279== Memcheck, a memory error detector
-==2279== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2279== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2279== Command: ./CallerMacro2.out
-==2279== Parent PID: 2066
-==2279== 
-==2279== 
-==2279== HEAP SUMMARY:
-==2279==     in use at exit: 0 bytes in 0 blocks
-==2279==   total heap usage: 13 allocs, 13 frees, 8,544 bytes allocated
-==2279== 
-==2279== All heap blocks were freed -- no leaks are possible
-==2279== 
-==2279== For counts of detected and suppressed errors, rerun with: -v
-==2279== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12686== Memcheck, a memory error detector
+==12686== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12686== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12686== Command: ./CallerMacro2.out
+==12686== Parent PID: 12470
+==12686== 
+==12686== 
+==12686== HEAP SUMMARY:
+==12686==     in use at exit: 0 bytes in 0 blocks
+==12686==   total heap usage: 13 allocs, 13 frees, 8,544 bytes allocated
+==12686== 
+==12686== All heap blocks were freed -- no leaks are possible
+==12686== 
+==12686== For counts of detected and suppressed errors, rerun with: -v
+==12686== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc CallerMacro2 ===
 The Valgrind memory detector as below:
-==2301== Memcheck, a memory error detector
-==2301== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2301== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2301== Command: ./CallerMacro2.out
-==2301== Parent PID: 2066
-==2301== 
-==2301== 
-==2301== HEAP SUMMARY:
-==2301==     in use at exit: 0 bytes in 0 blocks
-==2301==   total heap usage: 7 allocs, 7 frees, 8,400 bytes allocated
-==2301== 
-==2301== All heap blocks were freed -- no leaks are possible
-==2301== 
-==2301== For counts of detected and suppressed errors, rerun with: -v
-==2301== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12706== Memcheck, a memory error detector
+==12706== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12706== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12706== Command: ./CallerMacro2.out
+==12706== Parent PID: 12470
+==12706== 
+==12706== 
+==12706== HEAP SUMMARY:
+==12706==     in use at exit: 0 bytes in 0 blocks
+==12706==   total heap usage: 7 allocs, 7 frees, 8,400 bytes allocated
+==12706== 
+==12706== All heap blocks were freed -- no leaks are possible
+==12706== 
+==12706== For counts of detected and suppressed errors, rerun with: -v
+==12706== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc CallerMacro3 ===
 The Valgrind memory detector as below:
-==2318== Memcheck, a memory error detector
-==2318== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2318== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2318== Command: ./CallerMacro3.out
-==2318== Parent PID: 2066
-==2318== 
-==2318== 
-==2318== HEAP SUMMARY:
-==2318==     in use at exit: 0 bytes in 0 blocks
-==2318==   total heap usage: 7 allocs, 7 frees, 8,624 bytes allocated
-==2318== 
-==2318== All heap blocks were freed -- no leaks are possible
-==2318== 
-==2318== For counts of detected and suppressed errors, rerun with: -v
-==2318== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12724== Memcheck, a memory error detector
+==12724== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12724== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12724== Command: ./CallerMacro3.out
+==12724== Parent PID: 12470
+==12724== 
+==12724== 
+==12724== HEAP SUMMARY:
+==12724==     in use at exit: 0 bytes in 0 blocks
+==12724==   total heap usage: 7 allocs, 7 frees, 8,624 bytes allocated
+==12724== 
+==12724== All heap blocks were freed -- no leaks are possible
+==12724== 
+==12724== For counts of detected and suppressed errors, rerun with: -v
+==12724== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc CallerMacro3 ===
 The Valgrind memory detector as below:
-==2348== Memcheck, a memory error detector
-==2348== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2348== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2348== Command: ./CallerMacro3.out
-==2348== Parent PID: 2066
-==2348== 
-==2348== 
-==2348== HEAP SUMMARY:
-==2348==     in use at exit: 0 bytes in 0 blocks
-==2348==   total heap usage: 5 allocs, 5 frees, 8,464 bytes allocated
-==2348== 
-==2348== All heap blocks were freed -- no leaks are possible
-==2348== 
-==2348== For counts of detected and suppressed errors, rerun with: -v
-==2348== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12745== Memcheck, a memory error detector
+==12745== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12745== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12745== Command: ./CallerMacro3.out
+==12745== Parent PID: 12470
+==12745== 
+==12745== 
+==12745== HEAP SUMMARY:
+==12745==     in use at exit: 0 bytes in 0 blocks
+==12745==   total heap usage: 5 allocs, 5 frees, 8,464 bytes allocated
+==12745== 
+==12745== All heap blocks were freed -- no leaks are possible
+==12745== 
+==12745== For counts of detected and suppressed errors, rerun with: -v
+==12745== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc CallerMacro4 ===
 The Valgrind memory detector as below:
-==2381== Memcheck, a memory error detector
-==2381== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2381== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2381== Command: ./CallerMacro4.out
-==2381== Parent PID: 2066
-==2381== 
-==2381== 
-==2381== HEAP SUMMARY:
-==2381==     in use at exit: 0 bytes in 0 blocks
-==2381==   total heap usage: 30 allocs, 30 frees, 8,984 bytes allocated
-==2381== 
-==2381== All heap blocks were freed -- no leaks are possible
-==2381== 
-==2381== For counts of detected and suppressed errors, rerun with: -v
-==2381== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12763== Memcheck, a memory error detector
+==12763== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12763== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12763== Command: ./CallerMacro4.out
+==12763== Parent PID: 12470
+==12763== 
+==12763== 
+==12763== HEAP SUMMARY:
+==12763==     in use at exit: 0 bytes in 0 blocks
+==12763==   total heap usage: 30 allocs, 30 frees, 8,984 bytes allocated
+==12763== 
+==12763== All heap blocks were freed -- no leaks are possible
+==12763== 
+==12763== For counts of detected and suppressed errors, rerun with: -v
+==12763== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc CallerMacro4 ===
 The Valgrind memory detector as below:
-==2445== Memcheck, a memory error detector
-==2445== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2445== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2445== Command: ./CallerMacro4.out
-==2445== Parent PID: 2066
-==2445== 
-==2445== 
-==2445== HEAP SUMMARY:
-==2445==     in use at exit: 0 bytes in 0 blocks
-==2445==   total heap usage: 13 allocs, 13 frees, 8,576 bytes allocated
-==2445== 
-==2445== All heap blocks were freed -- no leaks are possible
-==2445== 
-==2445== For counts of detected and suppressed errors, rerun with: -v
-==2445== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12784== Memcheck, a memory error detector
+==12784== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12784== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12784== Command: ./CallerMacro4.out
+==12784== Parent PID: 12470
+==12784== 
+==12784== 
+==12784== HEAP SUMMARY:
+==12784==     in use at exit: 0 bytes in 0 blocks
+==12784==   total heap usage: 13 allocs, 13 frees, 8,576 bytes allocated
+==12784== 
+==12784== All heap blocks were freed -- no leaks are possible
+==12784== 
+==12784== For counts of detected and suppressed errors, rerun with: -v
+==12784== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc CallerMacro5 ===
 The Valgrind memory detector as below:
-==2466== Memcheck, a memory error detector
-==2466== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2466== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2466== Command: ./CallerMacro5.out
-==2466== Parent PID: 2066
-==2466== 
-==2466== 
-==2466== HEAP SUMMARY:
-==2466==     in use at exit: 0 bytes in 0 blocks
-==2466==   total heap usage: 33 allocs, 33 frees, 9,056 bytes allocated
-==2466== 
-==2466== All heap blocks were freed -- no leaks are possible
-==2466== 
-==2466== For counts of detected and suppressed errors, rerun with: -v
-==2466== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12802== Memcheck, a memory error detector
+==12802== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12802== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12802== Command: ./CallerMacro5.out
+==12802== Parent PID: 12470
+==12802== 
+==12802== 
+==12802== HEAP SUMMARY:
+==12802==     in use at exit: 0 bytes in 0 blocks
+==12802==   total heap usage: 33 allocs, 33 frees, 9,056 bytes allocated
+==12802== 
+==12802== All heap blocks were freed -- no leaks are possible
+==12802== 
+==12802== For counts of detected and suppressed errors, rerun with: -v
+==12802== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc CallerMacro5 ===
 The Valgrind memory detector as below:
-==2488== Memcheck, a memory error detector
-==2488== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2488== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2488== Command: ./CallerMacro5.out
-==2488== Parent PID: 2066
-==2488== 
-==2488== 
-==2488== HEAP SUMMARY:
-==2488==     in use at exit: 0 bytes in 0 blocks
-==2488==   total heap usage: 16 allocs, 16 frees, 8,648 bytes allocated
-==2488== 
-==2488== All heap blocks were freed -- no leaks are possible
-==2488== 
-==2488== For counts of detected and suppressed errors, rerun with: -v
-==2488== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12822== Memcheck, a memory error detector
+==12822== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12822== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12822== Command: ./CallerMacro5.out
+==12822== Parent PID: 12470
+==12822== 
+==12822== 
+==12822== HEAP SUMMARY:
+==12822==     in use at exit: 0 bytes in 0 blocks
+==12822==   total heap usage: 16 allocs, 16 frees, 8,648 bytes allocated
+==12822== 
+==12822== All heap blocks were freed -- no leaks are possible
+==12822== 
+==12822== For counts of detected and suppressed errors, rerun with: -v
+==12822== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc cashtill ===
 The Valgrind memory detector as below:
-==2507== Memcheck, a memory error detector
-==2507== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2507== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2507== Command: ./cashtill.out
-==2507== Parent PID: 2066
-==2507== 
-==2507== 
-==2507== HEAP SUMMARY:
-==2507==     in use at exit: 0 bytes in 0 blocks
-==2507==   total heap usage: 307,694 allocs, 307,694 frees, 19,715,080 bytes allocated
-==2507== 
-==2507== All heap blocks were freed -- no leaks are possible
-==2507== 
-==2507== For counts of detected and suppressed errors, rerun with: -v
-==2507== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12840== Memcheck, a memory error detector
+==12840== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12840== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12840== Command: ./cashtill.out
+==12840== Parent PID: 12470
+==12840== 
+==12840== 
+==12840== HEAP SUMMARY:
+==12840==     in use at exit: 0 bytes in 0 blocks
+==12840==   total heap usage: 307,694 allocs, 307,694 frees, 19,715,080 bytes allocated
+==12840== 
+==12840== All heap blocks were freed -- no leaks are possible
+==12840== 
+==12840== For counts of detected and suppressed errors, rerun with: -v
+==12840== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc cashtill ===
 The Valgrind memory detector as below:
-==2527== Memcheck, a memory error detector
-==2527== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2527== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2527== Command: ./cashtill.out
-==2527== Parent PID: 2066
-==2527== 
-==2527== 
-==2527== HEAP SUMMARY:
-==2527==     in use at exit: 0 bytes in 0 blocks
-==2527==   total heap usage: 230,729 allocs, 230,729 frees, 14,782,312 bytes allocated
-==2527== 
-==2527== All heap blocks were freed -- no leaks are possible
-==2527== 
-==2527== For counts of detected and suppressed errors, rerun with: -v
-==2527== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12862== Memcheck, a memory error detector
+==12862== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12862== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12862== Command: ./cashtill.out
+==12862== Parent PID: 12470
+==12862== 
+==12862== 
+==12862== HEAP SUMMARY:
+==12862==     in use at exit: 0 bytes in 0 blocks
+==12862==   total heap usage: 230,729 allocs, 230,729 frees, 14,782,312 bytes allocated
+==12862== 
+==12862== All heap blocks were freed -- no leaks are possible
+==12862== 
+==12862== For counts of detected and suppressed errors, rerun with: -v
+==12862== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc CoinGame ===
 The Valgrind memory detector as below:
-==2546== Memcheck, a memory error detector
-==2546== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2546== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2546== Command: ./CoinGame.out
-==2546== Parent PID: 2066
-==2546== 
-==2546== Invalid read of size 8
-==2546==    at 0x400E13: _play_ (CoinGame.c:114)
-==2546==    by 0x402333: main (CoinGame.c:587)
-==2546==  Address 0x5204db8 is 8 bytes before a block of size 800 alloc'd
-==2546==    at 0x4C2DBF6: malloc (vg_replace_malloc.c:299)
-==2546==    by 0x4022BA: main (CoinGame.c:586)
-==2546== 
-==2546== 
-==2546== HEAP SUMMARY:
-==2546==     in use at exit: 0 bytes in 0 blocks
-==2546==   total heap usage: 48 allocs, 48 frees, 14,856 bytes allocated
-==2546== 
-==2546== All heap blocks were freed -- no leaks are possible
-==2546== 
-==2546== For counts of detected and suppressed errors, rerun with: -v
-==2546== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==12879== Memcheck, a memory error detector
+==12879== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12879== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12879== Command: ./CoinGame.out
+==12879== Parent PID: 12470
+==12879== 
+==12879== Invalid read of size 8
+==12879==    at 0x400E13: _play_ (CoinGame.c:114)
+==12879==    by 0x402333: main (CoinGame.c:587)
+==12879==  Address 0x5204db8 is 8 bytes before a block of size 800 alloc'd
+==12879==    at 0x4C2DBF6: malloc (vg_replace_malloc.c:299)
+==12879==    by 0x4022BA: main (CoinGame.c:586)
+==12879== 
+==12879== 
+==12879== HEAP SUMMARY:
+==12879==     in use at exit: 0 bytes in 0 blocks
+==12879==   total heap usage: 48 allocs, 48 frees, 14,856 bytes allocated
+==12879== 
+==12879== All heap blocks were freed -- no leaks are possible
+==12879== 
+==12879== For counts of detected and suppressed errors, rerun with: -v
+==12879== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc CoinGame ===
 The Valgrind memory detector as below:
-==2581== Memcheck, a memory error detector
-==2581== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2581== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2581== Command: ./CoinGame.out
-==2581== Parent PID: 2066
-==2581== 
-==2581== Invalid read of size 8
-==2581==    at 0x400E13: _play_ (CoinGame.c:120)
-==2581==    by 0x402245: main (CoinGame.c:616)
-==2581==  Address 0x5204038 is 8 bytes before a block of size 800 alloc'd
-==2581==    at 0x4C2DBF6: malloc (vg_replace_malloc.c:299)
-==2581==    by 0x4027BC: create1DArray_int64_t (Util.c:23)
-==2581==    by 0x40211D: main (CoinGame.c:596)
-==2581== 
-==2581== 
-==2581== HEAP SUMMARY:
-==2581==     in use at exit: 0 bytes in 0 blocks
-==2581==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
-==2581== 
-==2581== All heap blocks were freed -- no leaks are possible
-==2581== 
-==2581== For counts of detected and suppressed errors, rerun with: -v
-==2581== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==12900== Memcheck, a memory error detector
+==12900== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12900== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12900== Command: ./CoinGame.out
+==12900== Parent PID: 12470
+==12900== 
+==12900== Invalid read of size 8
+==12900==    at 0x400E13: _play_ (CoinGame.c:120)
+==12900==    by 0x402245: main (CoinGame.c:616)
+==12900==  Address 0x5204038 is 8 bytes before a block of size 800 alloc'd
+==12900==    at 0x4C2DBF6: malloc (vg_replace_malloc.c:299)
+==12900==    by 0x4027BC: create1DArray_int64_t (Util.c:23)
+==12900==    by 0x40211D: main (CoinGame.c:596)
+==12900== 
+==12900== 
+==12900== HEAP SUMMARY:
+==12900==     in use at exit: 0 bytes in 0 blocks
+==12900==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
+==12900== 
+==12900== All heap blocks were freed -- no leaks are possible
+==12900== 
+==12900== For counts of detected and suppressed errors, rerun with: -v
+==12900== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc CoinGame1 ===
 The Valgrind memory detector as below:
-==2599== Memcheck, a memory error detector
-==2599== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2599== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2599== Command: ./CoinGame1.out
-==2599== Parent PID: 2066
-==2599== 
-==2599== 
-==2599== HEAP SUMMARY:
-==2599==     in use at exit: 0 bytes in 0 blocks
-==2599==   total heap usage: 7 allocs, 7 frees, 11,976 bytes allocated
-==2599== 
-==2599== All heap blocks were freed -- no leaks are possible
-==2599== 
-==2599== For counts of detected and suppressed errors, rerun with: -v
-==2599== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12917== Memcheck, a memory error detector
+==12917== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12917== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12917== Command: ./CoinGame1.out
+==12917== Parent PID: 12470
+==12917== 
+==12917== 
+==12917== HEAP SUMMARY:
+==12917==     in use at exit: 0 bytes in 0 blocks
+==12917==   total heap usage: 7 allocs, 7 frees, 11,976 bytes allocated
+==12917== 
+==12917== All heap blocks were freed -- no leaks are possible
+==12917== 
+==12917== For counts of detected and suppressed errors, rerun with: -v
+==12917== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc CoinGame1 ===
 The Valgrind memory detector as below:
-==2619== Memcheck, a memory error detector
-==2619== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2619== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2619== Command: ./CoinGame1.out
-==2619== Parent PID: 2066
-==2619== 
-==2619== 
-==2619== HEAP SUMMARY:
-==2619==     in use at exit: 0 bytes in 0 blocks
-==2619==   total heap usage: 4 allocs, 4 frees, 9,576 bytes allocated
-==2619== 
-==2619== All heap blocks were freed -- no leaks are possible
-==2619== 
-==2619== For counts of detected and suppressed errors, rerun with: -v
-==2619== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12979== Memcheck, a memory error detector
+==12979== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12979== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12979== Command: ./CoinGame1.out
+==12979== Parent PID: 12470
+==12979== 
+==12979== 
+==12979== HEAP SUMMARY:
+==12979==     in use at exit: 0 bytes in 0 blocks
+==12979==   total heap usage: 4 allocs, 4 frees, 9,576 bytes allocated
+==12979== 
+==12979== All heap blocks were freed -- no leaks are possible
+==12979== 
+==12979== For counts of detected and suppressed errors, rerun with: -v
+==12979== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc CoinGame2 ===
 The Valgrind memory detector as below:
-==2637== Memcheck, a memory error detector
-==2637== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2637== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2637== Command: ./CoinGame2.out
-==2637== Parent PID: 2066
-==2637== 
-==2637== 
-==2637== HEAP SUMMARY:
-==2637==     in use at exit: 0 bytes in 0 blocks
-==2637==   total heap usage: 67 allocs, 67 frees, 16,776 bytes allocated
-==2637== 
-==2637== All heap blocks were freed -- no leaks are possible
-==2637== 
-==2637== For counts of detected and suppressed errors, rerun with: -v
-==2637== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==13037== Memcheck, a memory error detector
+==13037== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==13037== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==13037== Command: ./CoinGame2.out
+==13037== Parent PID: 12470
+==13037== 
+==13037== 
+==13037== HEAP SUMMARY:
+==13037==     in use at exit: 0 bytes in 0 blocks
+==13037==   total heap usage: 67 allocs, 67 frees, 16,776 bytes allocated
+==13037== 
+==13037== All heap blocks were freed -- no leaks are possible
+==13037== 
+==13037== For counts of detected and suppressed errors, rerun with: -v
+==13037== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc CoinGame2 ===
 The Valgrind memory detector as below:
-==2657== Memcheck, a memory error detector
-==2657== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2657== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2657== Command: ./CoinGame2.out
-==2657== Parent PID: 2066
-==2657== 
-==2657== 
-==2657== HEAP SUMMARY:
-==2657==     in use at exit: 0 bytes in 0 blocks
-==2657==   total heap usage: 34 allocs, 34 frees, 11,976 bytes allocated
-==2657== 
-==2657== All heap blocks were freed -- no leaks are possible
-==2657== 
-==2657== For counts of detected and suppressed errors, rerun with: -v
-==2657== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==13087== Memcheck, a memory error detector
+==13087== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==13087== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==13087== Command: ./CoinGame2.out
+==13087== Parent PID: 12470
+==13087== 
+==13087== 
+==13087== HEAP SUMMARY:
+==13087==     in use at exit: 0 bytes in 0 blocks
+==13087==   total heap usage: 34 allocs, 34 frees, 11,976 bytes allocated
+==13087== 
+==13087== All heap blocks were freed -- no leaks are possible
+==13087== 
+==13087== For counts of detected and suppressed errors, rerun with: -v
+==13087== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc CoinGame3 ===
 The Valgrind memory detector as below:
-==2674== Memcheck, a memory error detector
-==2674== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2674== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2674== Command: ./CoinGame3.out
-==2674== Parent PID: 2066
-==2674== 
-==2674== 
-==2674== HEAP SUMMARY:
-==2674==     in use at exit: 0 bytes in 0 blocks
-==2674==   total heap usage: 13 allocs, 13 frees, 12,456 bytes allocated
-==2674== 
-==2674== All heap blocks were freed -- no leaks are possible
-==2674== 
-==2674== For counts of detected and suppressed errors, rerun with: -v
-==2674== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==13136== Memcheck, a memory error detector
+==13136== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==13136== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==13136== Command: ./CoinGame3.out
+==13136== Parent PID: 12470
+==13136== 
+==13136== 
+==13136== HEAP SUMMARY:
+==13136==     in use at exit: 0 bytes in 0 blocks
+==13136==   total heap usage: 13 allocs, 13 frees, 12,456 bytes allocated
+==13136== 
+==13136== All heap blocks were freed -- no leaks are possible
+==13136== 
+==13136== For counts of detected and suppressed errors, rerun with: -v
+==13136== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc CoinGame3 ===
 The Valgrind memory detector as below:
-==2695== Memcheck, a memory error detector
-==2695== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2695== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2695== Command: ./CoinGame3.out
-==2695== Parent PID: 2066
-==2695== 
-==2695== 
-==2695== HEAP SUMMARY:
-==2695==     in use at exit: 0 bytes in 0 blocks
-==2695==   total heap usage: 7 allocs, 7 frees, 9,816 bytes allocated
-==2695== 
-==2695== All heap blocks were freed -- no leaks are possible
-==2695== 
-==2695== For counts of detected and suppressed errors, rerun with: -v
-==2695== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==13197== Memcheck, a memory error detector
+==13197== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==13197== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==13197== Command: ./CoinGame3.out
+==13197== Parent PID: 12470
+==13197== 
+==13197== 
+==13197== HEAP SUMMARY:
+==13197==     in use at exit: 0 bytes in 0 blocks
+==13197==   total heap usage: 7 allocs, 7 frees, 9,816 bytes allocated
+==13197== 
+==13197== All heap blocks were freed -- no leaks are possible
+==13197== 
+==13197== For counts of detected and suppressed errors, rerun with: -v
+==13197== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc CoinGame4 ===
 The Valgrind memory detector as below:
-==2712== Memcheck, a memory error detector
-==2712== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2712== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2712== Command: ./CoinGame4.out
-==2712== Parent PID: 2066
-==2712== 
-==2712== Invalid read of size 8
-==2712==    at 0x400E13: _play_ (CoinGame4.c:114)
-==2712==    by 0x402501: main (CoinGame4.c:624)
-==2712==  Address 0x521c0f8 is 8 bytes before a block of size 800 alloc'd
-==2712==    at 0x4C2DBF6: malloc (vg_replace_malloc.c:299)
-==2712==    by 0x402488: main (CoinGame4.c:623)
-==2712== 
-==2712== 
-==2712== HEAP SUMMARY:
-==2712==     in use at exit: 0 bytes in 0 blocks
-==2712==   total heap usage: 158 allocs, 158 frees, 102,856 bytes allocated
-==2712== 
-==2712== All heap blocks were freed -- no leaks are possible
-==2712== 
-==2712== For counts of detected and suppressed errors, rerun with: -v
-==2712== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==13264== Memcheck, a memory error detector
+==13264== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==13264== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==13264== Command: ./CoinGame4.out
+==13264== Parent PID: 12470
+==13264== 
+==13264== Invalid read of size 8
+==13264==    at 0x400E13: _play_ (CoinGame4.c:114)
+==13264==    by 0x402501: main (CoinGame4.c:624)
+==13264==  Address 0x521c0f8 is 8 bytes before a block of size 800 alloc'd
+==13264==    at 0x4C2DBF6: malloc (vg_replace_malloc.c:299)
+==13264==    by 0x402488: main (CoinGame4.c:623)
+==13264== 
+==13264== 
+==13264== HEAP SUMMARY:
+==13264==     in use at exit: 0 bytes in 0 blocks
+==13264==   total heap usage: 158 allocs, 158 frees, 102,856 bytes allocated
+==13264== 
+==13264== All heap blocks were freed -- no leaks are possible
+==13264== 
+==13264== For counts of detected and suppressed errors, rerun with: -v
+==13264== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc CoinGame4 ===
 The Valgrind memory detector as below:
-==2732== Memcheck, a memory error detector
-==2732== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2732== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2732== Command: ./CoinGame4.out
-==2732== Parent PID: 2066
-==2732== 
-==2732== Invalid read of size 8
-==2732==    at 0x400E13: _play_ (CoinGame4.c:120)
-==2732==    by 0x4023A1: main (CoinGame4.c:651)
-==2732==  Address 0x5204038 is 8 bytes before a block of size 800 alloc'd
-==2732==    at 0x4C2DBF6: malloc (vg_replace_malloc.c:299)
-==2732==    by 0x402918: create1DArray_int64_t (Util.c:23)
-==2732==    by 0x402263: main (CoinGame4.c:627)
-==2732== 
-==2732== 
-==2732== HEAP SUMMARY:
-==2732==     in use at exit: 0 bytes in 0 blocks
-==2732==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
-==2732== 
-==2732== All heap blocks were freed -- no leaks are possible
-==2732== 
-==2732== For counts of detected and suppressed errors, rerun with: -v
-==2732== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==13314== Memcheck, a memory error detector
+==13314== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==13314== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==13314== Command: ./CoinGame4.out
+==13314== Parent PID: 12470
+==13314== 
+==13314== Invalid read of size 8
+==13314==    at 0x400E13: _play_ (CoinGame4.c:120)
+==13314==    by 0x4023A1: main (CoinGame4.c:651)
+==13314==  Address 0x5204038 is 8 bytes before a block of size 800 alloc'd
+==13314==    at 0x4C2DBF6: malloc (vg_replace_malloc.c:299)
+==13314==    by 0x402918: create1DArray_int64_t (Util.c:23)
+==13314==    by 0x402263: main (CoinGame4.c:627)
+==13314== 
+==13314== 
+==13314== HEAP SUMMARY:
+==13314==     in use at exit: 0 bytes in 0 blocks
+==13314==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
+==13314== 
+==13314== All heap blocks were freed -- no leaks are possible
+==13314== 
+==13314== For counts of detected and suppressed errors, rerun with: -v
+==13314== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc factorial ===
 The Valgrind memory detector as below:
-==2749== Memcheck, a memory error detector
-==2749== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2749== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2749== Command: ./factorial.out
-==2749== Parent PID: 2066
-==2749== 
-==2749== 
-==2749== HEAP SUMMARY:
-==2749==     in use at exit: 0 bytes in 0 blocks
-==2749==   total heap usage: 2 allocs, 2 frees, 8,384 bytes allocated
-==2749== 
-==2749== All heap blocks were freed -- no leaks are possible
-==2749== 
-==2749== For counts of detected and suppressed errors, rerun with: -v
-==2749== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==13362== Memcheck, a memory error detector
+==13362== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==13362== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==13362== Command: ./factorial.out
+==13362== Parent PID: 12470
+==13362== 
+==13362== 
+==13362== HEAP SUMMARY:
+==13362==     in use at exit: 0 bytes in 0 blocks
+==13362==   total heap usage: 2 allocs, 2 frees, 8,384 bytes allocated
+==13362== 
+==13362== All heap blocks were freed -- no leaks are possible
+==13362== 
+==13362== For counts of detected and suppressed errors, rerun with: -v
+==13362== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc factorial ===
 The Valgrind memory detector as below:
-==2770== Memcheck, a memory error detector
-==2770== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2770== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2770== Command: ./factorial.out
-==2770== Parent PID: 2066
-==2770== 
-==2770== 
-==2770== HEAP SUMMARY:
-==2770==     in use at exit: 0 bytes in 0 blocks
-==2770==   total heap usage: 2 allocs, 2 frees, 8,384 bytes allocated
-==2770== 
-==2770== All heap blocks were freed -- no leaks are possible
-==2770== 
-==2770== For counts of detected and suppressed errors, rerun with: -v
-==2770== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==13416== Memcheck, a memory error detector
+==13416== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==13416== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==13416== Command: ./factorial.out
+==13416== Parent PID: 12470
+==13416== 
+==13416== 
+==13416== HEAP SUMMARY:
+==13416==     in use at exit: 0 bytes in 0 blocks
+==13416==   total heap usage: 2 allocs, 2 frees, 8,384 bytes allocated
+==13416== 
+==13416== All heap blocks were freed -- no leaks are possible
+==13416== 
+==13416== For counts of detected and suppressed errors, rerun with: -v
+==13416== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc Fibonacci ===
 The Valgrind memory detector as below:
-==2787== Memcheck, a memory error detector
-==2787== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2787== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2787== Command: ./Fibonacci.out
-==2787== Parent PID: 2066
-==2787== 
-==2787== 
-==2787== HEAP SUMMARY:
-==2787==     in use at exit: 0 bytes in 0 blocks
-==2787==   total heap usage: 23 allocs, 23 frees, 10,064 bytes allocated
-==2787== 
-==2787== All heap blocks were freed -- no leaks are possible
-==2787== 
-==2787== For counts of detected and suppressed errors, rerun with: -v
-==2787== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==13464== Memcheck, a memory error detector
+==13464== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==13464== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==13464== Command: ./Fibonacci.out
+==13464== Parent PID: 12470
+==13464== 
+==13464== 
+==13464== HEAP SUMMARY:
+==13464==     in use at exit: 0 bytes in 0 blocks
+==13464==   total heap usage: 23 allocs, 23 frees, 10,064 bytes allocated
+==13464== 
+==13464== All heap blocks were freed -- no leaks are possible
+==13464== 
+==13464== For counts of detected and suppressed errors, rerun with: -v
+==13464== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc Fibonacci ===
 The Valgrind memory detector as below:
-==2807== Memcheck, a memory error detector
-==2807== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2807== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2807== Command: ./Fibonacci.out
-==2807== Parent PID: 2066
-==2807== 
-==2807== 
-==2807== HEAP SUMMARY:
-==2807==     in use at exit: 0 bytes in 0 blocks
-==2807==   total heap usage: 4 allocs, 4 frees, 8,544 bytes allocated
-==2807== 
-==2807== All heap blocks were freed -- no leaks are possible
-==2807== 
-==2807== For counts of detected and suppressed errors, rerun with: -v
-==2807== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==13521== Memcheck, a memory error detector
+==13521== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==13521== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==13521== Command: ./Fibonacci.out
+==13521== Parent PID: 12470
+==13521== 
+==13521== 
+==13521== HEAP SUMMARY:
+==13521==     in use at exit: 0 bytes in 0 blocks
+==13521==   total heap usage: 4 allocs, 4 frees, 8,544 bytes allocated
+==13521== 
+==13521== All heap blocks were freed -- no leaks are possible
+==13521== 
+==13521== For counts of detected and suppressed errors, rerun with: -v
+==13521== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc fileread ===
 The Valgrind memory detector as below:
-==2824== Memcheck, a memory error detector
-==2824== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2824== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2824== Command: ./fileread.out
-==2824== Parent PID: 2066
-==2824== 
-==2824== 
-==2824== HEAP SUMMARY:
-==2824==     in use at exit: 0 bytes in 0 blocks
-==2824==   total heap usage: 11 allocs, 11 frees, 58,363 bytes allocated
-==2824== 
-==2824== All heap blocks were freed -- no leaks are possible
-==2824== 
-==2824== For counts of detected and suppressed errors, rerun with: -v
-==2824== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==13589== Memcheck, a memory error detector
+==13589== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==13589== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==13589== Command: ./fileread.out
+==13589== Parent PID: 12470
+==13589== 
+==13589== 
+==13589== HEAP SUMMARY:
+==13589==     in use at exit: 0 bytes in 0 blocks
+==13589==   total heap usage: 11 allocs, 11 frees, 58,363 bytes allocated
+==13589== 
+==13589== All heap blocks were freed -- no leaks are possible
+==13589== 
+==13589== For counts of detected and suppressed errors, rerun with: -v
+==13589== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc fileread ===
 The Valgrind memory detector as below:
-==2845== Memcheck, a memory error detector
-==2845== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2845== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2845== Command: ./fileread.out
-==2845== Parent PID: 2066
-==2845== 
-==2845== 
-==2845== HEAP SUMMARY:
-==2845==     in use at exit: 0 bytes in 0 blocks
-==2845==   total heap usage: 10 allocs, 10 frees, 54,267 bytes allocated
-==2845== 
-==2845== All heap blocks were freed -- no leaks are possible
-==2845== 
-==2845== For counts of detected and suppressed errors, rerun with: -v
-==2845== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==13639== Memcheck, a memory error detector
+==13639== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==13639== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==13639== Command: ./fileread.out
+==13639== Parent PID: 12470
+==13639== 
+==13639== 
+==13639== HEAP SUMMARY:
+==13639==     in use at exit: 0 bytes in 0 blocks
+==13639==   total heap usage: 10 allocs, 10 frees, 54,267 bytes allocated
+==13639== 
+==13639== All heap blocks were freed -- no leaks are possible
+==13639== 
+==13639== For counts of detected and suppressed errors, rerun with: -v
+==13639== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc fileread2 ===
 The Valgrind memory detector as below:
-==2862== Memcheck, a memory error detector
-==2862== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2862== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2862== Command: ./fileread2.out
-==2862== Parent PID: 2066
-==2862== 
-==2862== 
-==2862== HEAP SUMMARY:
-==2862==     in use at exit: 0 bytes in 0 blocks
-==2862==   total heap usage: 77 allocs, 77 frees, 62,323 bytes allocated
-==2862== 
-==2862== All heap blocks were freed -- no leaks are possible
-==2862== 
-==2862== For counts of detected and suppressed errors, rerun with: -v
-==2862== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==13686== Memcheck, a memory error detector
+==13686== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==13686== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==13686== Command: ./fileread2.out
+==13686== Parent PID: 12470
+==13686== 
+==13686== 
+==13686== HEAP SUMMARY:
+==13686==     in use at exit: 0 bytes in 0 blocks
+==13686==   total heap usage: 77 allocs, 77 frees, 62,323 bytes allocated
+==13686== 
+==13686== All heap blocks were freed -- no leaks are possible
+==13686== 
+==13686== For counts of detected and suppressed errors, rerun with: -v
+==13686== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc fileread2 ===
 The Valgrind memory detector as below:
-==2882== Memcheck, a memory error detector
-==2882== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2882== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2882== Command: ./fileread2.out
-==2882== Parent PID: 2066
-==2882== 
-==2882== 
-==2882== HEAP SUMMARY:
-==2882==     in use at exit: 0 bytes in 0 blocks
-==2882==   total heap usage: 75 allocs, 75 frees, 54,131 bytes allocated
-==2882== 
-==2882== All heap blocks were freed -- no leaks are possible
-==2882== 
-==2882== For counts of detected and suppressed errors, rerun with: -v
-==2882== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==13741== Memcheck, a memory error detector
+==13741== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==13741== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==13741== Command: ./fileread2.out
+==13741== Parent PID: 12470
+==13741== 
+==13741== 
+==13741== HEAP SUMMARY:
+==13741==     in use at exit: 0 bytes in 0 blocks
+==13741==   total heap usage: 75 allocs, 75 frees, 54,131 bytes allocated
+==13741== 
+==13741== All heap blocks were freed -- no leaks are possible
+==13741== 
+==13741== For counts of detected and suppressed errors, rerun with: -v
+==13741== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc FunctionCall1 ===
 The Valgrind memory detector as below:
-==2899== Memcheck, a memory error detector
-==2899== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2899== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2899== Command: ./FunctionCall1.out
-==2899== Parent PID: 2066
-==2899== 
-==2899== 
-==2899== HEAP SUMMARY:
-==2899==     in use at exit: 0 bytes in 0 blocks
-==2899==   total heap usage: 14 allocs, 14 frees, 8,712 bytes allocated
-==2899== 
-==2899== All heap blocks were freed -- no leaks are possible
-==2899== 
-==2899== For counts of detected and suppressed errors, rerun with: -v
-==2899== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==13791== Memcheck, a memory error detector
+==13791== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==13791== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==13791== Command: ./FunctionCall1.out
+==13791== Parent PID: 12470
+==13791== 
+==13791== 
+==13791== HEAP SUMMARY:
+==13791==     in use at exit: 0 bytes in 0 blocks
+==13791==   total heap usage: 14 allocs, 14 frees, 8,712 bytes allocated
+==13791== 
+==13791== All heap blocks were freed -- no leaks are possible
+==13791== 
+==13791== For counts of detected and suppressed errors, rerun with: -v
+==13791== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc FunctionCall1 ===
 The Valgrind memory detector as below:
-==2921== Memcheck, a memory error detector
-==2921== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2921== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2921== Command: ./FunctionCall1.out
-==2921== Parent PID: 2066
-==2921== 
-==2921== 
-==2921== HEAP SUMMARY:
-==2921==     in use at exit: 0 bytes in 0 blocks
-==2921==   total heap usage: 7 allocs, 7 frees, 8,432 bytes allocated
-==2921== 
-==2921== All heap blocks were freed -- no leaks are possible
-==2921== 
-==2921== For counts of detected and suppressed errors, rerun with: -v
-==2921== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==13854== Memcheck, a memory error detector
+==13854== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==13854== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==13854== Command: ./FunctionCall1.out
+==13854== Parent PID: 12470
+==13854== 
+==13854== 
+==13854== HEAP SUMMARY:
+==13854==     in use at exit: 0 bytes in 0 blocks
+==13854==   total heap usage: 7 allocs, 7 frees, 8,432 bytes allocated
+==13854== 
+==13854== All heap blocks were freed -- no leaks are possible
+==13854== 
+==13854== For counts of detected and suppressed errors, rerun with: -v
+==13854== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc FunctionCall2 ===
 The Valgrind memory detector as below:
-==2938== Memcheck, a memory error detector
-==2938== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2938== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2938== Command: ./FunctionCall2.out
-==2938== Parent PID: 2066
-==2938== 
-==2938== 
-==2938== HEAP SUMMARY:
-==2938==     in use at exit: 0 bytes in 0 blocks
-==2938==   total heap usage: 13 allocs, 13 frees, 8,672 bytes allocated
-==2938== 
-==2938== All heap blocks were freed -- no leaks are possible
-==2938== 
-==2938== For counts of detected and suppressed errors, rerun with: -v
-==2938== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==13912== Memcheck, a memory error detector
+==13912== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==13912== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==13912== Command: ./FunctionCall2.out
+==13912== Parent PID: 12470
+==13912== 
+==13912== 
+==13912== HEAP SUMMARY:
+==13912==     in use at exit: 0 bytes in 0 blocks
+==13912==   total heap usage: 13 allocs, 13 frees, 8,672 bytes allocated
+==13912== 
+==13912== All heap blocks were freed -- no leaks are possible
+==13912== 
+==13912== For counts of detected and suppressed errors, rerun with: -v
+==13912== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc FunctionCall2 ===
 The Valgrind memory detector as below:
-==2960== Memcheck, a memory error detector
-==2960== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2960== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2960== Command: ./FunctionCall2.out
-==2960== Parent PID: 2066
-==2960== 
-==2960== 
-==2960== HEAP SUMMARY:
-==2960==     in use at exit: 0 bytes in 0 blocks
-==2960==   total heap usage: 7 allocs, 7 frees, 8,432 bytes allocated
-==2960== 
-==2960== All heap blocks were freed -- no leaks are possible
-==2960== 
-==2960== For counts of detected and suppressed errors, rerun with: -v
-==2960== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==13962== Memcheck, a memory error detector
+==13962== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==13962== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==13962== Command: ./FunctionCall2.out
+==13962== Parent PID: 12470
+==13962== 
+==13962== 
+==13962== HEAP SUMMARY:
+==13962==     in use at exit: 0 bytes in 0 blocks
+==13962==   total heap usage: 7 allocs, 7 frees, 8,432 bytes allocated
+==13962== 
+==13962== All heap blocks were freed -- no leaks are possible
+==13962== 
+==13962== For counts of detected and suppressed errors, rerun with: -v
+==13962== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc FunctionCall3 ===
 The Valgrind memory detector as below:
-==2978== Memcheck, a memory error detector
-==2978== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2978== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2978== Command: ./FunctionCall3.out
-==2978== Parent PID: 2066
-==2978== 
-==2978== 
-==2978== HEAP SUMMARY:
-==2978==     in use at exit: 0 bytes in 0 blocks
-==2978==   total heap usage: 14 allocs, 14 frees, 8,712 bytes allocated
-==2978== 
-==2978== All heap blocks were freed -- no leaks are possible
-==2978== 
-==2978== For counts of detected and suppressed errors, rerun with: -v
-==2978== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14013== Memcheck, a memory error detector
+==14013== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14013== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==14013== Command: ./FunctionCall3.out
+==14013== Parent PID: 12470
+==14013== 
+==14013== 
+==14013== HEAP SUMMARY:
+==14013==     in use at exit: 0 bytes in 0 blocks
+==14013==   total heap usage: 14 allocs, 14 frees, 8,712 bytes allocated
+==14013== 
+==14013== All heap blocks were freed -- no leaks are possible
+==14013== 
+==14013== For counts of detected and suppressed errors, rerun with: -v
+==14013== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc FunctionCall3 ===
 The Valgrind memory detector as below:
-==2998== Memcheck, a memory error detector
-==2998== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2998== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==2998== Command: ./FunctionCall3.out
-==2998== Parent PID: 2066
-==2998== 
-==2998== 
-==2998== HEAP SUMMARY:
-==2998==     in use at exit: 0 bytes in 0 blocks
-==2998==   total heap usage: 7 allocs, 7 frees, 8,432 bytes allocated
-==2998== 
-==2998== All heap blocks were freed -- no leaks are possible
-==2998== 
-==2998== For counts of detected and suppressed errors, rerun with: -v
-==2998== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14070== Memcheck, a memory error detector
+==14070== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14070== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==14070== Command: ./FunctionCall3.out
+==14070== Parent PID: 12470
+==14070== 
+==14070== 
+==14070== HEAP SUMMARY:
+==14070==     in use at exit: 0 bytes in 0 blocks
+==14070==   total heap usage: 7 allocs, 7 frees, 8,432 bytes allocated
+==14070== 
+==14070== All heap blocks were freed -- no leaks are possible
+==14070== 
+==14070== For counts of detected and suppressed errors, rerun with: -v
+==14070== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc FunctionCall4 ===
 The Valgrind memory detector as below:
-==3015== Memcheck, a memory error detector
-==3015== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3015== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3015== Command: ./FunctionCall4.out
-==3015== Parent PID: 2066
-==3015== 
-==3015== 
-==3015== HEAP SUMMARY:
-==3015==     in use at exit: 0 bytes in 0 blocks
-==3015==   total heap usage: 15 allocs, 15 frees, 8,752 bytes allocated
-==3015== 
-==3015== All heap blocks were freed -- no leaks are possible
-==3015== 
-==3015== For counts of detected and suppressed errors, rerun with: -v
-==3015== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14136== Memcheck, a memory error detector
+==14136== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14136== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==14136== Command: ./FunctionCall4.out
+==14136== Parent PID: 12470
+==14136== 
+==14136== 
+==14136== HEAP SUMMARY:
+==14136==     in use at exit: 0 bytes in 0 blocks
+==14136==   total heap usage: 15 allocs, 15 frees, 8,752 bytes allocated
+==14136== 
+==14136== All heap blocks were freed -- no leaks are possible
+==14136== 
+==14136== For counts of detected and suppressed errors, rerun with: -v
+==14136== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc FunctionCall4 ===
 The Valgrind memory detector as below:
-==3036== Memcheck, a memory error detector
-==3036== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3036== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3036== Command: ./FunctionCall4.out
-==3036== Parent PID: 2066
-==3036== 
-==3036== 
-==3036== HEAP SUMMARY:
-==3036==     in use at exit: 0 bytes in 0 blocks
-==3036==   total heap usage: 8 allocs, 8 frees, 8,472 bytes allocated
-==3036== 
-==3036== All heap blocks were freed -- no leaks are possible
-==3036== 
-==3036== For counts of detected and suppressed errors, rerun with: -v
-==3036== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14187== Memcheck, a memory error detector
+==14187== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14187== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==14187== Command: ./FunctionCall4.out
+==14187== Parent PID: 12470
+==14187== 
+==14187== 
+==14187== HEAP SUMMARY:
+==14187==     in use at exit: 0 bytes in 0 blocks
+==14187==   total heap usage: 8 allocs, 8 frees, 8,472 bytes allocated
+==14187== 
+==14187== All heap blocks were freed -- no leaks are possible
+==14187== 
+==14187== For counts of detected and suppressed errors, rerun with: -v
+==14187== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc FunctionOverload ===
 The Valgrind memory detector as below:
-==3053== Memcheck, a memory error detector
-==3053== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3053== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3053== Command: ./FunctionOverload.out
-==3053== Parent PID: 2066
-==3053== 
-==3053== 
-==3053== HEAP SUMMARY:
-==3053==     in use at exit: 0 bytes in 0 blocks
-==3053==   total heap usage: 2 allocs, 2 frees, 128 bytes allocated
-==3053== 
-==3053== All heap blocks were freed -- no leaks are possible
-==3053== 
-==3053== For counts of detected and suppressed errors, rerun with: -v
-==3053== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14234== Memcheck, a memory error detector
+==14234== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14234== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==14234== Command: ./FunctionOverload.out
+==14234== Parent PID: 12470
+==14234== 
+==14234== 
+==14234== HEAP SUMMARY:
+==14234==     in use at exit: 0 bytes in 0 blocks
+==14234==   total heap usage: 2 allocs, 2 frees, 128 bytes allocated
+==14234== 
+==14234== All heap blocks were freed -- no leaks are possible
+==14234== 
+==14234== For counts of detected and suppressed errors, rerun with: -v
+==14234== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc FunctionOverload ===
 The Valgrind memory detector as below:
-==3073== Memcheck, a memory error detector
-==3073== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3073== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3073== Command: ./FunctionOverload.out
-==3073== Parent PID: 2066
-==3073== 
-==3073== 
-==3073== HEAP SUMMARY:
-==3073==     in use at exit: 0 bytes in 0 blocks
-==3073==   total heap usage: 1 allocs, 1 frees, 64 bytes allocated
-==3073== 
-==3073== All heap blocks were freed -- no leaks are possible
-==3073== 
-==3073== For counts of detected and suppressed errors, rerun with: -v
-==3073== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14285== Memcheck, a memory error detector
+==14285== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14285== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==14285== Command: ./FunctionOverload.out
+==14285== Parent PID: 12470
+==14285== 
+==14285== 
+==14285== HEAP SUMMARY:
+==14285==     in use at exit: 0 bytes in 0 blocks
+==14285==   total heap usage: 1 allocs, 1 frees, 64 bytes allocated
+==14285== 
+==14285== All heap blocks were freed -- no leaks are possible
+==14285== 
+==14285== For counts of detected and suppressed errors, rerun with: -v
+==14285== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc FunctionOverload2 ===
 The Valgrind memory detector as below:
-==3090== Memcheck, a memory error detector
-==3090== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3090== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3090== Command: ./FunctionOverload2.out
-==3090== Parent PID: 2066
-==3090== 
-==3090== 
-==3090== HEAP SUMMARY:
-==3090==     in use at exit: 0 bytes in 0 blocks
-==3090==   total heap usage: 7 allocs, 7 frees, 448 bytes allocated
-==3090== 
-==3090== All heap blocks were freed -- no leaks are possible
-==3090== 
-==3090== For counts of detected and suppressed errors, rerun with: -v
-==3090== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14334== Memcheck, a memory error detector
+==14334== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14334== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==14334== Command: ./FunctionOverload2.out
+==14334== Parent PID: 12470
+==14334== 
+==14334== 
+==14334== HEAP SUMMARY:
+==14334==     in use at exit: 0 bytes in 0 blocks
+==14334==   total heap usage: 7 allocs, 7 frees, 448 bytes allocated
+==14334== 
+==14334== All heap blocks were freed -- no leaks are possible
+==14334== 
+==14334== For counts of detected and suppressed errors, rerun with: -v
+==14334== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc FunctionOverload2 ===
 The Valgrind memory detector as below:
-==3111== Memcheck, a memory error detector
-==3111== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3111== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3111== Command: ./FunctionOverload2.out
-==3111== Parent PID: 2066
-==3111== 
-==3111== 
-==3111== HEAP SUMMARY:
-==3111==     in use at exit: 0 bytes in 0 blocks
-==3111==   total heap usage: 3 allocs, 3 frees, 192 bytes allocated
-==3111== 
-==3111== All heap blocks were freed -- no leaks are possible
-==3111== 
-==3111== For counts of detected and suppressed errors, rerun with: -v
-==3111== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14391== Memcheck, a memory error detector
+==14391== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14391== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==14391== Command: ./FunctionOverload2.out
+==14391== Parent PID: 12470
+==14391== 
+==14391== 
+==14391== HEAP SUMMARY:
+==14391==     in use at exit: 0 bytes in 0 blocks
+==14391==   total heap usage: 3 allocs, 3 frees, 192 bytes allocated
+==14391== 
+==14391== All heap blocks were freed -- no leaks are possible
+==14391== 
+==14391== For counts of detected and suppressed errors, rerun with: -v
+==14391== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc gcd ===
 The Valgrind memory detector as below:
-==3128== Memcheck, a memory error detector
-==3128== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3128== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3128== Command: ./gcd.out
-==3128== Parent PID: 2066
-==3128== 
-==3128== 
-==3128== HEAP SUMMARY:
-==3128==     in use at exit: 0 bytes in 0 blocks
-==3128==   total heap usage: 404 allocs, 404 frees, 107,424 bytes allocated
-==3128== 
-==3128== All heap blocks were freed -- no leaks are possible
-==3128== 
-==3128== For counts of detected and suppressed errors, rerun with: -v
-==3128== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14439== Memcheck, a memory error detector
+==14439== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14439== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==14439== Command: ./gcd.out
+==14439== Parent PID: 12470
+==14439== 
+==14439== 
+==14439== HEAP SUMMARY:
+==14439==     in use at exit: 0 bytes in 0 blocks
+==14439==   total heap usage: 404 allocs, 404 frees, 107,424 bytes allocated
+==14439== 
+==14439== All heap blocks were freed -- no leaks are possible
+==14439== 
+==14439== For counts of detected and suppressed errors, rerun with: -v
+==14439== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc gcd ===
 The Valgrind memory detector as below:
-==3148== Memcheck, a memory error detector
-==3148== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3148== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3148== Command: ./gcd.out
-==3148== Parent PID: 2066
-==3148== 
-==3148== 
-==3148== HEAP SUMMARY:
-==3148==     in use at exit: 0 bytes in 0 blocks
-==3148==   total heap usage: 303 allocs, 303 frees, 26,624 bytes allocated
-==3148== 
-==3148== All heap blocks were freed -- no leaks are possible
-==3148== 
-==3148== For counts of detected and suppressed errors, rerun with: -v
-==3148== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14513== Memcheck, a memory error detector
+==14513== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14513== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==14513== Command: ./gcd.out
+==14513== Parent PID: 12470
+==14513== 
+==14513== 
+==14513== HEAP SUMMARY:
+==14513==     in use at exit: 0 bytes in 0 blocks
+==14513==   total heap usage: 303 allocs, 303 frees, 26,624 bytes allocated
+==14513== 
+==14513== All heap blocks were freed -- no leaks are possible
+==14513== 
+==14513== For counts of detected and suppressed errors, rerun with: -v
+==14513== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc IntToByte ===
 The Valgrind memory detector as below:
-==3165== Memcheck, a memory error detector
-==3165== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3165== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3165== Command: ./IntToByte.out
-==3165== Parent PID: 2066
-==3165== 
-==3165== 
-==3165== HEAP SUMMARY:
-==3165==     in use at exit: 0 bytes in 0 blocks
-==3165==   total heap usage: 3 allocs, 3 frees, 8,792 bytes allocated
-==3165== 
-==3165== All heap blocks were freed -- no leaks are possible
-==3165== 
-==3165== For counts of detected and suppressed errors, rerun with: -v
-==3165== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14560== Memcheck, a memory error detector
+==14560== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14560== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==14560== Command: ./IntToByte.out
+==14560== Parent PID: 12470
+==14560== 
+==14560== 
+==14560== HEAP SUMMARY:
+==14560==     in use at exit: 0 bytes in 0 blocks
+==14560==   total heap usage: 3 allocs, 3 frees, 8,792 bytes allocated
+==14560== 
+==14560== All heap blocks were freed -- no leaks are possible
+==14560== 
+==14560== For counts of detected and suppressed errors, rerun with: -v
+==14560== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc IntToByte ===
 The Valgrind memory detector as below:
-==3186== Memcheck, a memory error detector
-==3186== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3186== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3186== Command: ./IntToByte.out
-==3186== Parent PID: 2066
-==3186== 
-==3186== 
-==3186== HEAP SUMMARY:
-==3186==     in use at exit: 0 bytes in 0 blocks
-==3186==   total heap usage: 2 allocs, 2 frees, 8,492 bytes allocated
-==3186== 
-==3186== All heap blocks were freed -- no leaks are possible
-==3186== 
-==3186== For counts of detected and suppressed errors, rerun with: -v
-==3186== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14610== Memcheck, a memory error detector
+==14610== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14610== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==14610== Command: ./IntToByte.out
+==14610== Parent PID: 12470
+==14610== 
+==14610== 
+==14610== HEAP SUMMARY:
+==14610==     in use at exit: 0 bytes in 0 blocks
+==14610==   total heap usage: 2 allocs, 2 frees, 8,492 bytes allocated
+==14610== 
+==14610== All heap blocks were freed -- no leaks are possible
+==14610== 
+==14610== For counts of detected and suppressed errors, rerun with: -v
+==14610== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc livecheck ===
 The Valgrind memory detector as below:
-==3203== Memcheck, a memory error detector
-==3203== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3203== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3203== Command: ./livecheck.out
-==3203== Parent PID: 2066
-==3203== 
-==3203== 
-==3203== HEAP SUMMARY:
-==3203==     in use at exit: 0 bytes in 0 blocks
-==3203==   total heap usage: 15 allocs, 15 frees, 8,968 bytes allocated
-==3203== 
-==3203== All heap blocks were freed -- no leaks are possible
-==3203== 
-==3203== For counts of detected and suppressed errors, rerun with: -v
-==3203== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14657== Memcheck, a memory error detector
+==14657== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14657== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==14657== Command: ./livecheck.out
+==14657== Parent PID: 12470
+==14657== 
+==14657== 
+==14657== HEAP SUMMARY:
+==14657==     in use at exit: 0 bytes in 0 blocks
+==14657==   total heap usage: 15 allocs, 15 frees, 8,968 bytes allocated
+==14657== 
+==14657== All heap blocks were freed -- no leaks are possible
+==14657== 
+==14657== For counts of detected and suppressed errors, rerun with: -v
+==14657== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc livecheck ===
 The Valgrind memory detector as below:
-==3223== Memcheck, a memory error detector
-==3223== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3223== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3223== Command: ./livecheck.out
-==3223== Parent PID: 2066
-==3223== 
-==3223== 
-==3223== HEAP SUMMARY:
-==3223==     in use at exit: 0 bytes in 0 blocks
-==3223==   total heap usage: 11 allocs, 11 frees, 8,808 bytes allocated
-==3223== 
-==3223== All heap blocks were freed -- no leaks are possible
-==3223== 
-==3223== For counts of detected and suppressed errors, rerun with: -v
-==3223== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14714== Memcheck, a memory error detector
+==14714== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14714== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==14714== Command: ./livecheck.out
+==14714== Parent PID: 12470
+==14714== 
+==14714== 
+==14714== HEAP SUMMARY:
+==14714==     in use at exit: 0 bytes in 0 blocks
+==14714==   total heap usage: 11 allocs, 11 frees, 8,808 bytes allocated
+==14714== 
+==14714== All heap blocks were freed -- no leaks are possible
+==14714== 
+==14714== For counts of detected and suppressed errors, rerun with: -v
+==14714== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc lz77_compress ===
 The Valgrind memory detector as below:
-==3241== Memcheck, a memory error detector
-==3241== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3241== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3241== Command: ./lz77_compress.out
-==3241== Parent PID: 2066
-==3241== 
-==3241== 
-==3241== HEAP SUMMARY:
-==3241==     in use at exit: 0 bytes in 0 blocks
-==3241==   total heap usage: 181 allocs, 181 frees, 61,575 bytes allocated
-==3241== 
-==3241== All heap blocks were freed -- no leaks are possible
-==3241== 
-==3241== For counts of detected and suppressed errors, rerun with: -v
-==3241== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14765== Memcheck, a memory error detector
+==14765== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14765== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==14765== Command: ./lz77_compress.out
+==14765== Parent PID: 12470
+==14765== 
+==14765== 
+==14765== HEAP SUMMARY:
+==14765==     in use at exit: 0 bytes in 0 blocks
+==14765==   total heap usage: 181 allocs, 181 frees, 61,575 bytes allocated
+==14765== 
+==14765== All heap blocks were freed -- no leaks are possible
+==14765== 
+==14765== For counts of detected and suppressed errors, rerun with: -v
+==14765== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc lz77_compress ===
 The Valgrind memory detector as below:
-==3262== Memcheck, a memory error detector
-==3262== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3262== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3262== Command: ./lz77_compress.out
-==3262== Parent PID: 2066
-==3262== 
-==3262== 
-==3262== HEAP SUMMARY:
-==3262==     in use at exit: 0 bytes in 0 blocks
-==3262==   total heap usage: 45 allocs, 45 frees, 59,782 bytes allocated
-==3262== 
-==3262== All heap blocks were freed -- no leaks are possible
-==3262== 
-==3262== For counts of detected and suppressed errors, rerun with: -v
-==3262== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14827== Memcheck, a memory error detector
+==14827== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14827== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==14827== Command: ./lz77_compress.out
+==14827== Parent PID: 12470
+==14827== 
+==14827== 
+==14827== HEAP SUMMARY:
+==14827==     in use at exit: 0 bytes in 0 blocks
+==14827==   total heap usage: 45 allocs, 45 frees, 59,782 bytes allocated
+==14827== 
+==14827== All heap blocks were freed -- no leaks are possible
+==14827== 
+==14827== For counts of detected and suppressed errors, rerun with: -v
+==14827== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc lz77_decompress ===
 The Valgrind memory detector as below:
-==3279== Memcheck, a memory error detector
-==3279== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3279== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3279== Command: ./lz77_decompress.out
-==3279== Parent PID: 2066
-==3279== 
-==3279== 
-==3279== HEAP SUMMARY:
-==3279==     in use at exit: 0 bytes in 0 blocks
-==3279==   total heap usage: 79 allocs, 79 frees, 34,484 bytes allocated
-==3279== 
-==3279== All heap blocks were freed -- no leaks are possible
-==3279== 
-==3279== For counts of detected and suppressed errors, rerun with: -v
-==3279== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14883== Memcheck, a memory error detector
+==14883== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14883== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==14883== Command: ./lz77_decompress.out
+==14883== Parent PID: 12470
+==14883== 
+==14883== 
+==14883== HEAP SUMMARY:
+==14883==     in use at exit: 0 bytes in 0 blocks
+==14883==   total heap usage: 79 allocs, 79 frees, 34,484 bytes allocated
+==14883== 
+==14883== All heap blocks were freed -- no leaks are possible
+==14883== 
+==14883== For counts of detected and suppressed errors, rerun with: -v
+==14883== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc lz77_decompress ===
 The Valgrind memory detector as below:
-==3299== Memcheck, a memory error detector
-==3299== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3299== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3299== Command: ./lz77_decompress.out
-==3299== Parent PID: 2066
-==3299== 
-==3299== 
-==3299== HEAP SUMMARY:
-==3299==     in use at exit: 0 bytes in 0 blocks
-==3299==   total heap usage: 27 allocs, 27 frees, 34,040 bytes allocated
-==3299== 
-==3299== All heap blocks were freed -- no leaks are possible
-==3299== 
-==3299== For counts of detected and suppressed errors, rerun with: -v
-==3299== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14913== Memcheck, a memory error detector
+==14913== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14913== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==14913== Command: ./lz77_decompress.out
+==14913== Parent PID: 12470
+==14913== 
+==14913== 
+==14913== HEAP SUMMARY:
+==14913==     in use at exit: 0 bytes in 0 blocks
+==14913==   total heap usage: 27 allocs, 27 frees, 34,040 bytes allocated
+==14913== 
+==14913== All heap blocks were freed -- no leaks are possible
+==14913== 
+==14913== For counts of detected and suppressed errors, rerun with: -v
+==14913== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc lz77_opt_compress ===
 The Valgrind memory detector as below:
-==3317== Memcheck, a memory error detector
-==3317== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3317== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3317== Command: ./lz77_opt_compress.out
-==3317== Parent PID: 2066
-==3317== 
-==3317== 
-==3317== HEAP SUMMARY:
-==3317==     in use at exit: 0 bytes in 0 blocks
-==3317==   total heap usage: 113 allocs, 113 frees, 61,095 bytes allocated
-==3317== 
-==3317== All heap blocks were freed -- no leaks are possible
-==3317== 
-==3317== For counts of detected and suppressed errors, rerun with: -v
-==3317== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14980== Memcheck, a memory error detector
+==14980== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14980== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==14980== Command: ./lz77_opt_compress.out
+==14980== Parent PID: 12470
+==14980== 
+==14980== 
+==14980== HEAP SUMMARY:
+==14980==     in use at exit: 0 bytes in 0 blocks
+==14980==   total heap usage: 113 allocs, 113 frees, 61,095 bytes allocated
+==14980== 
+==14980== All heap blocks were freed -- no leaks are possible
+==14980== 
+==14980== For counts of detected and suppressed errors, rerun with: -v
+==14980== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc lz77_opt_compress ===
 The Valgrind memory detector as below:
-==3341== Memcheck, a memory error detector
-==3341== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3341== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3341== Command: ./lz77_opt_compress.out
-==3341== Parent PID: 2066
-==3341== 
-==3341== 
-==3341== HEAP SUMMARY:
-==3341==     in use at exit: 0 bytes in 0 blocks
-==3341==   total heap usage: 28 allocs, 28 frees, 59,697 bytes allocated
-==3341== 
-==3341== All heap blocks were freed -- no leaks are possible
-==3341== 
-==3341== For counts of detected and suppressed errors, rerun with: -v
-==3341== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==15031== Memcheck, a memory error detector
+==15031== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==15031== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==15031== Command: ./lz77_opt_compress.out
+==15031== Parent PID: 12470
+==15031== 
+==15031== 
+==15031== HEAP SUMMARY:
+==15031==     in use at exit: 0 bytes in 0 blocks
+==15031==   total heap usage: 28 allocs, 28 frees, 59,697 bytes allocated
+==15031== 
+==15031== All heap blocks were freed -- no leaks are possible
+==15031== 
+==15031== For counts of detected and suppressed errors, rerun with: -v
+==15031== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc lz77_opt_decompress ===
 The Valgrind memory detector as below:
-==3358== Memcheck, a memory error detector
-==3358== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3358== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3358== Command: ./lz77_opt_decompress.out
-==3358== Parent PID: 2066
-==3358== 
-==3358== 
-==3358== HEAP SUMMARY:
-==3358==     in use at exit: 0 bytes in 0 blocks
-==3358==   total heap usage: 61 allocs, 61 frees, 34,526 bytes allocated
-==3358== 
-==3358== All heap blocks were freed -- no leaks are possible
-==3358== 
-==3358== For counts of detected and suppressed errors, rerun with: -v
-==3358== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==15080== Memcheck, a memory error detector
+==15080== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==15080== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==15080== Command: ./lz77_opt_decompress.out
+==15080== Parent PID: 12470
+==15080== 
+==15080== 
+==15080== HEAP SUMMARY:
+==15080==     in use at exit: 0 bytes in 0 blocks
+==15080==   total heap usage: 61 allocs, 61 frees, 34,526 bytes allocated
+==15080== 
+==15080== All heap blocks were freed -- no leaks are possible
+==15080== 
+==15080== For counts of detected and suppressed errors, rerun with: -v
+==15080== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc lz77_opt_decompress ===
 The Valgrind memory detector as below:
-==3378== Memcheck, a memory error detector
-==3378== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3378== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3378== Command: ./lz77_opt_decompress.out
-==3378== Parent PID: 2066
-==3378== 
-==3378== 
-==3378== HEAP SUMMARY:
-==3378==     in use at exit: 0 bytes in 0 blocks
-==3378==   total heap usage: 17 allocs, 17 frees, 34,013 bytes allocated
-==3378== 
-==3378== All heap blocks were freed -- no leaks are possible
-==3378== 
-==3378== For counts of detected and suppressed errors, rerun with: -v
-==3378== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==15138== Memcheck, a memory error detector
+==15138== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==15138== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==15138== Command: ./lz77_opt_decompress.out
+==15138== Parent PID: 12470
+==15138== 
+==15138== 
+==15138== HEAP SUMMARY:
+==15138==     in use at exit: 0 bytes in 0 blocks
+==15138==   total heap usage: 17 allocs, 17 frees, 34,013 bytes allocated
+==15138== 
+==15138== All heap blocks were freed -- no leaks are possible
+==15138== 
+==15138== For counts of detected and suppressed errors, rerun with: -v
+==15138== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc MatrixMult ===
 The Valgrind memory detector as below:
-==3396== Memcheck, a memory error detector
-==3396== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3396== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3396== Command: ./MatrixMult.out
-==3396== Parent PID: 2066
-==3396== 
-==3396== 
-==3396== HEAP SUMMARY:
-==3396==     in use at exit: 0 bytes in 0 blocks
-==3396==   total heap usage: 18 allocs, 18 frees, 53,464 bytes allocated
-==3396== 
-==3396== All heap blocks were freed -- no leaks are possible
-==3396== 
-==3396== For counts of detected and suppressed errors, rerun with: -v
-==3396== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==15196== Memcheck, a memory error detector
+==15196== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==15196== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==15196== Command: ./MatrixMult.out
+==15196== Parent PID: 12470
+==15196== 
+==15196== 
+==15196== HEAP SUMMARY:
+==15196==     in use at exit: 0 bytes in 0 blocks
+==15196==   total heap usage: 18 allocs, 18 frees, 53,464 bytes allocated
+==15196== 
+==15196== All heap blocks were freed -- no leaks are possible
+==15196== 
+==15196== For counts of detected and suppressed errors, rerun with: -v
+==15196== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc MatrixMult ===
 The Valgrind memory detector as below:
-==3416== Memcheck, a memory error detector
-==3416== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3416== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3416== Command: ./MatrixMult.out
-==3416== Parent PID: 2066
-==3416== 
-==3416== 
-==3416== HEAP SUMMARY:
-==3416==     in use at exit: 0 bytes in 0 blocks
-==3416==   total heap usage: 7 allocs, 7 frees, 18,264 bytes allocated
-==3416== 
-==3416== All heap blocks were freed -- no leaks are possible
-==3416== 
-==3416== For counts of detected and suppressed errors, rerun with: -v
-==3416== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==15256== Memcheck, a memory error detector
+==15256== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==15256== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==15256== Command: ./MatrixMult.out
+==15256== Parent PID: 12470
+==15256== 
+==15256== 
+==15256== HEAP SUMMARY:
+==15256==     in use at exit: 0 bytes in 0 blocks
+==15256==   total heap usage: 7 allocs, 7 frees, 18,264 bytes allocated
+==15256== 
+==15256== All heap blocks were freed -- no leaks are possible
+==15256== 
+==15256== For counts of detected and suppressed errors, rerun with: -v
+==15256== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc mergesort ===
 The Valgrind memory detector as below:
-==3433== Memcheck, a memory error detector
-==3433== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3433== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3433== Command: ./mergesort.out
-==3433== Parent PID: 2066
-==3433== 
-==3433== 
-==3433== HEAP SUMMARY:
-==3433==     in use at exit: 0 bytes in 0 blocks
-==3433==   total heap usage: 219 allocs, 219 frees, 12,072 bytes allocated
-==3433== 
-==3433== All heap blocks were freed -- no leaks are possible
-==3433== 
-==3433== For counts of detected and suppressed errors, rerun with: -v
-==3433== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==15303== Memcheck, a memory error detector
+==15303== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==15303== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==15303== Command: ./mergesort.out
+==15303== Parent PID: 12470
+==15303== 
+==15303== 
+==15303== HEAP SUMMARY:
+==15303==     in use at exit: 0 bytes in 0 blocks
+==15303==   total heap usage: 219 allocs, 219 frees, 12,072 bytes allocated
+==15303== 
+==15303== All heap blocks were freed -- no leaks are possible
+==15303== 
+==15303== For counts of detected and suppressed errors, rerun with: -v
+==15303== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc mergesort ===
 The Valgrind memory detector as below:
-==3453== Memcheck, a memory error detector
-==3453== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3453== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3453== Command: ./mergesort.out
-==3453== Parent PID: 2066
-==3453== 
-==3453== 
-==3453== HEAP SUMMARY:
-==3453==     in use at exit: 0 bytes in 0 blocks
-==3453==   total heap usage: 60 allocs, 60 frees, 9,480 bytes allocated
-==3453== 
-==3453== All heap blocks were freed -- no leaks are possible
-==3453== 
-==3453== For counts of detected and suppressed errors, rerun with: -v
-==3453== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==15353== Memcheck, a memory error detector
+==15353== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==15353== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==15353== Command: ./mergesort.out
+==15353== Parent PID: 12470
+==15353== 
+==15353== 
+==15353== HEAP SUMMARY:
+==15353==     in use at exit: 0 bytes in 0 blocks
+==15353==   total heap usage: 60 allocs, 60 frees, 9,480 bytes allocated
+==15353== 
+==15353== All heap blocks were freed -- no leaks are possible
+==15353== 
+==15353== For counts of detected and suppressed errors, rerun with: -v
+==15353== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc newTicTacToe ===
 The Valgrind memory detector as below:
-==3471== Memcheck, a memory error detector
-==3471== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3471== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3471== Command: ./newTicTacToe.out
-==3471== Parent PID: 2066
-==3471== 
-==3471== 
-==3471== HEAP SUMMARY:
-==3471==     in use at exit: 0 bytes in 0 blocks
-==3471==   total heap usage: 59 allocs, 59 frees, 12,800 bytes allocated
-==3471== 
-==3471== All heap blocks were freed -- no leaks are possible
-==3471== 
-==3471== For counts of detected and suppressed errors, rerun with: -v
-==3471== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==15405== Memcheck, a memory error detector
+==15405== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==15405== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==15405== Command: ./newTicTacToe.out
+==15405== Parent PID: 12470
+==15405== 
+==15405== 
+==15405== HEAP SUMMARY:
+==15405==     in use at exit: 0 bytes in 0 blocks
+==15405==   total heap usage: 59 allocs, 59 frees, 12,800 bytes allocated
+==15405== 
+==15405== All heap blocks were freed -- no leaks are possible
+==15405== 
+==15405== For counts of detected and suppressed errors, rerun with: -v
+==15405== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc newTicTacToe ===
 The Valgrind memory detector as below:
-==3491== Memcheck, a memory error detector
-==3491== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3491== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3491== Command: ./newTicTacToe.out
-==3491== Parent PID: 2066
-==3491== 
-==3491== 
-==3491== HEAP SUMMARY:
-==3491==     in use at exit: 0 bytes in 0 blocks
-==3491==   total heap usage: 35 allocs, 35 frees, 11,600 bytes allocated
-==3491== 
-==3491== All heap blocks were freed -- no leaks are possible
-==3491== 
-==3491== For counts of detected and suppressed errors, rerun with: -v
-==3491== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==15453== Memcheck, a memory error detector
+==15453== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==15453== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==15453== Command: ./newTicTacToe.out
+==15453== Parent PID: 12470
+==15453== 
+==15453== 
+==15453== HEAP SUMMARY:
+==15453==     in use at exit: 0 bytes in 0 blocks
+==15453==   total heap usage: 35 allocs, 35 frees, 11,600 bytes allocated
+==15453== 
+==15453== All heap blocks were freed -- no leaks are possible
+==15453== 
+==15453== For counts of detected and suppressed errors, rerun with: -v
+==15453== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc opt_append ===
 The Valgrind memory detector as below:
-==3508== Memcheck, a memory error detector
-==3508== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3508== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3508== Command: ./opt_append.out
-==3508== Parent PID: 2066
-==3508== 
-==3508== 
-==3508== HEAP SUMMARY:
-==3508==     in use at exit: 0 bytes in 0 blocks
-==3508==   total heap usage: 10 allocs, 10 frees, 8,374 bytes allocated
-==3508== 
-==3508== All heap blocks were freed -- no leaks are possible
-==3508== 
-==3508== For counts of detected and suppressed errors, rerun with: -v
-==3508== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==15502== Memcheck, a memory error detector
+==15502== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==15502== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==15502== Command: ./opt_append.out
+==15502== Parent PID: 12470
+==15502== 
+==15502== 
+==15502== HEAP SUMMARY:
+==15502==     in use at exit: 0 bytes in 0 blocks
+==15502==   total heap usage: 10 allocs, 10 frees, 8,374 bytes allocated
+==15502== 
+==15502== All heap blocks were freed -- no leaks are possible
+==15502== 
+==15502== For counts of detected and suppressed errors, rerun with: -v
+==15502== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc opt_append ===
 The Valgrind memory detector as below:
-==3529== Memcheck, a memory error detector
-==3529== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3529== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3529== Command: ./opt_append.out
-==3529== Parent PID: 2066
-==3529== 
-==3529== 
-==3529== HEAP SUMMARY:
-==3529==     in use at exit: 0 bytes in 0 blocks
-==3529==   total heap usage: 7 allocs, 7 frees, 8,357 bytes allocated
-==3529== 
-==3529== All heap blocks were freed -- no leaks are possible
-==3529== 
-==3529== For counts of detected and suppressed errors, rerun with: -v
-==3529== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==15560== Memcheck, a memory error detector
+==15560== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==15560== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==15560== Command: ./opt_append.out
+==15560== Parent PID: 12470
+==15560== 
+==15560== 
+==15560== HEAP SUMMARY:
+==15560==     in use at exit: 0 bytes in 0 blocks
+==15560==   total heap usage: 7 allocs, 7 frees, 8,357 bytes allocated
+==15560== 
+==15560== All heap blocks were freed -- no leaks are possible
+==15560== 
+==15560== For counts of detected and suppressed errors, rerun with: -v
+==15560== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc PassedParameterTwice ===
 The Valgrind memory detector as below:
-==3546== Memcheck, a memory error detector
-==3546== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3546== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3546== Command: ./PassedParameterTwice.out
-==3546== Parent PID: 2066
-==3546== 
-==3546== 
-==3546== HEAP SUMMARY:
-==3546==     in use at exit: 0 bytes in 0 blocks
-==3546==   total heap usage: 6 allocs, 6 frees, 8,272 bytes allocated
-==3546== 
-==3546== All heap blocks were freed -- no leaks are possible
-==3546== 
-==3546== For counts of detected and suppressed errors, rerun with: -v
-==3546== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==15602== Memcheck, a memory error detector
+==15602== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==15602== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==15602== Command: ./PassedParameterTwice.out
+==15602== Parent PID: 12470
+==15602== 
+==15602== 
+==15602== HEAP SUMMARY:
+==15602==     in use at exit: 0 bytes in 0 blocks
+==15602==   total heap usage: 6 allocs, 6 frees, 8,272 bytes allocated
+==15602== 
+==15602== All heap blocks were freed -- no leaks are possible
+==15602== 
+==15602== For counts of detected and suppressed errors, rerun with: -v
+==15602== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc PassedParameterTwice ===
 The Valgrind memory detector as below:
-==3566== Memcheck, a memory error detector
-==3566== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3566== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3566== Command: ./PassedParameterTwice.out
-==3566== Parent PID: 2066
-==3566== 
-==3566== 
-==3566== HEAP SUMMARY:
-==3566==     in use at exit: 0 bytes in 0 blocks
-==3566==   total heap usage: 4 allocs, 4 frees, 8,240 bytes allocated
-==3566== 
-==3566== All heap blocks were freed -- no leaks are possible
-==3566== 
-==3566== For counts of detected and suppressed errors, rerun with: -v
-==3566== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==15658== Memcheck, a memory error detector
+==15658== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==15658== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==15658== Command: ./PassedParameterTwice.out
+==15658== Parent PID: 12470
+==15658== 
+==15658== 
+==15658== HEAP SUMMARY:
+==15658==     in use at exit: 0 bytes in 0 blocks
+==15658==   total heap usage: 4 allocs, 4 frees, 8,240 bytes allocated
+==15658== 
+==15658== All heap blocks were freed -- no leaks are possible
+==15658== 
+==15658== For counts of detected and suppressed errors, rerun with: -v
+==15658== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc ResetMacro1 ===
 The Valgrind memory detector as below:
-==3583== Memcheck, a memory error detector
-==3583== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3583== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3583== Command: ./ResetMacro1.out
-==3583== Parent PID: 2066
-==3583== 
-==3583== 
-==3583== HEAP SUMMARY:
-==3583==     in use at exit: 0 bytes in 0 blocks
-==3583==   total heap usage: 7 allocs, 7 frees, 8,368 bytes allocated
-==3583== 
-==3583== All heap blocks were freed -- no leaks are possible
-==3583== 
-==3583== For counts of detected and suppressed errors, rerun with: -v
-==3583== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==15725== Memcheck, a memory error detector
+==15725== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==15725== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==15725== Command: ./ResetMacro1.out
+==15725== Parent PID: 12470
+==15725== 
+==15725== 
+==15725== HEAP SUMMARY:
+==15725==     in use at exit: 0 bytes in 0 blocks
+==15725==   total heap usage: 7 allocs, 7 frees, 8,368 bytes allocated
+==15725== 
+==15725== All heap blocks were freed -- no leaks are possible
+==15725== 
+==15725== For counts of detected and suppressed errors, rerun with: -v
+==15725== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc ResetMacro1 ===
 The Valgrind memory detector as below:
-==3604== Memcheck, a memory error detector
-==3604== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3604== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3604== Command: ./ResetMacro1.out
-==3604== Parent PID: 2066
-==3604== 
-==3604== 
-==3604== HEAP SUMMARY:
-==3604==     in use at exit: 0 bytes in 0 blocks
-==3604==   total heap usage: 3 allocs, 3 frees, 8,272 bytes allocated
-==3604== 
-==3604== All heap blocks were freed -- no leaks are possible
-==3604== 
-==3604== For counts of detected and suppressed errors, rerun with: -v
-==3604== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==15777== Memcheck, a memory error detector
+==15777== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==15777== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==15777== Command: ./ResetMacro1.out
+==15777== Parent PID: 12470
+==15777== 
+==15777== 
+==15777== HEAP SUMMARY:
+==15777==     in use at exit: 0 bytes in 0 blocks
+==15777==   total heap usage: 3 allocs, 3 frees, 8,272 bytes allocated
+==15777== 
+==15777== All heap blocks were freed -- no leaks are possible
+==15777== 
+==15777== For counts of detected and suppressed errors, rerun with: -v
+==15777== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc ResetMacro2 ===
 The Valgrind memory detector as below:
-==3622== Memcheck, a memory error detector
-==3622== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3622== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3622== Command: ./ResetMacro2.out
-==3622== Parent PID: 2066
-==3622== 
-==3622== 
-==3622== HEAP SUMMARY:
-==3622==     in use at exit: 0 bytes in 0 blocks
-==3622==   total heap usage: 7 allocs, 7 frees, 8,368 bytes allocated
-==3622== 
-==3622== All heap blocks were freed -- no leaks are possible
-==3622== 
-==3622== For counts of detected and suppressed errors, rerun with: -v
-==3622== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==15824== Memcheck, a memory error detector
+==15824== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==15824== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==15824== Command: ./ResetMacro2.out
+==15824== Parent PID: 12470
+==15824== 
+==15824== 
+==15824== HEAP SUMMARY:
+==15824==     in use at exit: 0 bytes in 0 blocks
+==15824==   total heap usage: 7 allocs, 7 frees, 8,368 bytes allocated
+==15824== 
+==15824== All heap blocks were freed -- no leaks are possible
+==15824== 
+==15824== For counts of detected and suppressed errors, rerun with: -v
+==15824== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc ResetMacro2 ===
 The Valgrind memory detector as below:
-==3642== Memcheck, a memory error detector
-==3642== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3642== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3642== Command: ./ResetMacro2.out
-==3642== Parent PID: 2066
-==3642== 
-==3642== 
-==3642== HEAP SUMMARY:
-==3642==     in use at exit: 0 bytes in 0 blocks
-==3642==   total heap usage: 3 allocs, 3 frees, 8,272 bytes allocated
-==3642== 
-==3642== All heap blocks were freed -- no leaks are possible
-==3642== 
-==3642== For counts of detected and suppressed errors, rerun with: -v
-==3642== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==15875== Memcheck, a memory error detector
+==15875== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==15875== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==15875== Command: ./ResetMacro2.out
+==15875== Parent PID: 12470
+==15875== 
+==15875== 
+==15875== HEAP SUMMARY:
+==15875==     in use at exit: 0 bytes in 0 blocks
+==15875==   total heap usage: 3 allocs, 3 frees, 8,272 bytes allocated
+==15875== 
+==15875== All heap blocks were freed -- no leaks are possible
+==15875== 
+==15875== For counts of detected and suppressed errors, rerun with: -v
+==15875== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc ResetMacro3 ===
 The Valgrind memory detector as below:
-==3660== Memcheck, a memory error detector
-==3660== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3660== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3660== Command: ./ResetMacro3.out
-==3660== Parent PID: 2066
-==3660== 
-==3660== 
-==3660== HEAP SUMMARY:
-==3660==     in use at exit: 0 bytes in 0 blocks
-==3660==   total heap usage: 12 allocs, 12 frees, 8,456 bytes allocated
-==3660== 
-==3660== All heap blocks were freed -- no leaks are possible
-==3660== 
-==3660== For counts of detected and suppressed errors, rerun with: -v
-==3660== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==15925== Memcheck, a memory error detector
+==15925== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==15925== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==15925== Command: ./ResetMacro3.out
+==15925== Parent PID: 12470
+==15925== 
+==15925== 
+==15925== HEAP SUMMARY:
+==15925==     in use at exit: 0 bytes in 0 blocks
+==15925==   total heap usage: 12 allocs, 12 frees, 8,456 bytes allocated
+==15925== 
+==15925== All heap blocks were freed -- no leaks are possible
+==15925== 
+==15925== For counts of detected and suppressed errors, rerun with: -v
+==15925== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc ResetMacro3 ===
 The Valgrind memory detector as below:
-==3681== Memcheck, a memory error detector
-==3681== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3681== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3681== Command: ./ResetMacro3.out
-==3681== Parent PID: 2066
-==3681== 
-==3681== 
-==3681== HEAP SUMMARY:
-==3681==     in use at exit: 0 bytes in 0 blocks
-==3681==   total heap usage: 4 allocs, 4 frees, 8,264 bytes allocated
-==3681== 
-==3681== All heap blocks were freed -- no leaks are possible
-==3681== 
-==3681== For counts of detected and suppressed errors, rerun with: -v
-==3681== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==15982== Memcheck, a memory error detector
+==15982== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==15982== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==15982== Command: ./ResetMacro3.out
+==15982== Parent PID: 12470
+==15982== 
+==15982== 
+==15982== HEAP SUMMARY:
+==15982==     in use at exit: 0 bytes in 0 blocks
+==15982==   total heap usage: 4 allocs, 4 frees, 8,264 bytes allocated
+==15982== 
+==15982== All heap blocks were freed -- no leaks are possible
+==15982== 
+==15982== For counts of detected and suppressed errors, rerun with: -v
+==15982== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc ResetMacro4 ===
 The Valgrind memory detector as below:
-==3698== Memcheck, a memory error detector
-==3698== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3698== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3698== Command: ./ResetMacro4.out
-==3698== Parent PID: 2066
-==3698== 
-==3698== 
-==3698== HEAP SUMMARY:
-==3698==     in use at exit: 0 bytes in 0 blocks
-==3698==   total heap usage: 8 allocs, 8 frees, 8,752 bytes allocated
-==3698== 
-==3698== All heap blocks were freed -- no leaks are possible
-==3698== 
-==3698== For counts of detected and suppressed errors, rerun with: -v
-==3698== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16030== Memcheck, a memory error detector
+==16030== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==16030== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==16030== Command: ./ResetMacro4.out
+==16030== Parent PID: 12470
+==16030== 
+==16030== 
+==16030== HEAP SUMMARY:
+==16030==     in use at exit: 0 bytes in 0 blocks
+==16030==   total heap usage: 8 allocs, 8 frees, 8,752 bytes allocated
+==16030== 
+==16030== All heap blocks were freed -- no leaks are possible
+==16030== 
+==16030== For counts of detected and suppressed errors, rerun with: -v
+==16030== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc ResetMacro4 ===
 The Valgrind memory detector as below:
-==3718== Memcheck, a memory error detector
-==3718== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3718== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3718== Command: ./ResetMacro4.out
-==3718== Parent PID: 2066
-==3718== 
-==3718== 
-==3718== HEAP SUMMARY:
-==3718==     in use at exit: 0 bytes in 0 blocks
-==3718==   total heap usage: 5 allocs, 5 frees, 8,512 bytes allocated
-==3718== 
-==3718== All heap blocks were freed -- no leaks are possible
-==3718== 
-==3718== For counts of detected and suppressed errors, rerun with: -v
-==3718== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16100== Memcheck, a memory error detector
+==16100== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==16100== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==16100== Command: ./ResetMacro4.out
+==16100== Parent PID: 12470
+==16100== 
+==16100== 
+==16100== HEAP SUMMARY:
+==16100==     in use at exit: 0 bytes in 0 blocks
+==16100==   total heap usage: 5 allocs, 5 frees, 8,512 bytes allocated
+==16100== 
+==16100== All heap blocks were freed -- no leaks are possible
+==16100== 
+==16100== For counts of detected and suppressed errors, rerun with: -v
+==16100== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc reverse ===
 The Valgrind memory detector as below:
-==3735== Memcheck, a memory error detector
-==3735== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3735== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3735== Command: ./reverse.out
-==3735== Parent PID: 2066
-==3735== 
-==3735== 
-==3735== HEAP SUMMARY:
-==3735==     in use at exit: 0 bytes in 0 blocks
-==3735==   total heap usage: 14 allocs, 14 frees, 9,136 bytes allocated
-==3735== 
-==3735== All heap blocks were freed -- no leaks are possible
-==3735== 
-==3735== For counts of detected and suppressed errors, rerun with: -v
-==3735== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16148== Memcheck, a memory error detector
+==16148== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==16148== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==16148== Command: ./reverse.out
+==16148== Parent PID: 12470
+==16148== 
+==16148== 
+==16148== HEAP SUMMARY:
+==16148==     in use at exit: 0 bytes in 0 blocks
+==16148==   total heap usage: 14 allocs, 14 frees, 9,136 bytes allocated
+==16148== 
+==16148== All heap blocks were freed -- no leaks are possible
+==16148== 
+==16148== For counts of detected and suppressed errors, rerun with: -v
+==16148== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc reverse ===
 The Valgrind memory detector as below:
-==3756== Memcheck, a memory error detector
-==3756== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3756== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3756== Command: ./reverse.out
-==3756== Parent PID: 2066
-==3756== 
-==3756== 
-==3756== HEAP SUMMARY:
-==3756==     in use at exit: 0 bytes in 0 blocks
-==3756==   total heap usage: 7 allocs, 7 frees, 8,664 bytes allocated
-==3756== 
-==3756== All heap blocks were freed -- no leaks are possible
-==3756== 
-==3756== For counts of detected and suppressed errors, rerun with: -v
-==3756== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16198== Memcheck, a memory error detector
+==16198== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==16198== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==16198== Command: ./reverse.out
+==16198== Parent PID: 12470
+==16198== 
+==16198== 
+==16198== HEAP SUMMARY:
+==16198==     in use at exit: 0 bytes in 0 blocks
+==16198==   total heap usage: 7 allocs, 7 frees, 8,664 bytes allocated
+==16198== 
+==16198== All heap blocks were freed -- no leaks are possible
+==16198== 
+==16198== For counts of detected and suppressed errors, rerun with: -v
+==16198== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc SobelEdge ===
 The Valgrind memory detector as below:
-==3773== Memcheck, a memory error detector
-==3773== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3773== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3773== Command: ./SobelEdge.out
-==3773== Parent PID: 2066
-==3773== 
-==3773== 
-==3773== HEAP SUMMARY:
-==3773==     in use at exit: 0 bytes in 0 blocks
-==3773==   total heap usage: 16,468 allocs, 16,468 frees, 34,223,251 bytes allocated
-==3773== 
-==3773== All heap blocks were freed -- no leaks are possible
-==3773== 
-==3773== For counts of detected and suppressed errors, rerun with: -v
-==3773== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16245== Memcheck, a memory error detector
+==16245== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==16245== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==16245== Command: ./SobelEdge.out
+==16245== Parent PID: 12470
+==16245== 
+==16245== 
+==16245== HEAP SUMMARY:
+==16245==     in use at exit: 0 bytes in 0 blocks
+==16245==   total heap usage: 16,468 allocs, 16,468 frees, 34,223,251 bytes allocated
+==16245== 
+==16245== All heap blocks were freed -- no leaks are possible
+==16245== 
+==16245== For counts of detected and suppressed errors, rerun with: -v
+==16245== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc SobelEdge ===
 The Valgrind memory detector as below:
-==3793== Memcheck, a memory error detector
-==3793== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3793== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3793== Command: ./SobelEdge.out
-==3793== Parent PID: 2066
-==3793== 
-==3793== 
-==3793== HEAP SUMMARY:
-==3793==     in use at exit: 0 bytes in 0 blocks
-==3793==   total heap usage: 77 allocs, 77 frees, 58,371 bytes allocated
-==3793== 
-==3793== All heap blocks were freed -- no leaks are possible
-==3793== 
-==3793== For counts of detected and suppressed errors, rerun with: -v
-==3793== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16299== Memcheck, a memory error detector
+==16299== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==16299== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==16299== Command: ./SobelEdge.out
+==16299== Parent PID: 12470
+==16299== 
+==16299== 
+==16299== HEAP SUMMARY:
+==16299==     in use at exit: 0 bytes in 0 blocks
+==16299==   total heap usage: 77 allocs, 77 frees, 58,371 bytes allocated
+==16299== 
+==16299== All heap blocks were freed -- no leaks are possible
+==16299== 
+==16299== For counts of detected and suppressed errors, rerun with: -v
+==16299== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_dealloc swap ===
 The Valgrind memory detector as below:
-==3811== Memcheck, a memory error detector
-==3811== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3811== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3811== Command: ./swap.out
-==3811== Parent PID: 2066
-==3811== 
-==3811== 
-==3811== HEAP SUMMARY:
-==3811==     in use at exit: 0 bytes in 0 blocks
-==3811==   total heap usage: 11 allocs, 11 frees, 8,704 bytes allocated
-==3811== 
-==3811== All heap blocks were freed -- no leaks are possible
-==3811== 
-==3811== For counts of detected and suppressed errors, rerun with: -v
-==3811== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16356== Memcheck, a memory error detector
+==16356== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==16356== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==16356== Command: ./swap.out
+==16356== Parent PID: 12470
+==16356== 
+==16356== 
+==16356== HEAP SUMMARY:
+==16356==     in use at exit: 0 bytes in 0 blocks
+==16356==   total heap usage: 11 allocs, 11 frees, 8,704 bytes allocated
+==16356== 
+==16356== All heap blocks were freed -- no leaks are possible
+==16356== 
+==16356== For counts of detected and suppressed errors, rerun with: -v
+==16356== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
 === Test report for ea_nocopy_dealloc swap ===
 The Valgrind memory detector as below:
-==3831== Memcheck, a memory error detector
-==3831== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3831== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==3831== Command: ./swap.out
-==3831== Parent PID: 2066
-==3831== 
-==3831== 
-==3831== HEAP SUMMARY:
-==3831==     in use at exit: 0 bytes in 0 blocks
-==3831==   total heap usage: 6 allocs, 6 frees, 8,504 bytes allocated
-==3831== 
-==3831== All heap blocks were freed -- no leaks are possible
-==3831== 
-==3831== For counts of detected and suppressed errors, rerun with: -v
-==3831== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16409== Memcheck, a memory error detector
+==16409== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==16409== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==16409== Command: ./swap.out
+==16409== Parent PID: 12470
+==16409== 
+==16409== 
+==16409== HEAP SUMMARY:
+==16409==     in use at exit: 0 bytes in 0 blocks
+==16409==   total heap usage: 6 allocs, 6 frees, 8,504 bytes allocated
+==16409== 
+==16409== All heap blocks were freed -- no leaks are possible
+==16409== 
+==16409== For counts of detected and suppressed errors, rerun with: -v
+==16409== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 

@@ -139,5 +139,4 @@ public class CodeGenerationTestCase {
 		util.verifyOutput(testcase, codeDir, "nocopy_dealloc");
 	}
 	
-	
 }
