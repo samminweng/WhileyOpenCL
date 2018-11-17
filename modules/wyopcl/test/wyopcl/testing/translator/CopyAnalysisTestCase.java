@@ -53,7 +53,11 @@ public class CopyAnalysisTestCase {
 		return Arrays.asList(new String[] { 
 				"testcase1",
 				"testcase2", 
-				"testcase3"
+				"testcase3",
+				"testcase4",
+				"testcase5", 
+				"testcase6",
+				"testcase7"
 			});
 	}
 	

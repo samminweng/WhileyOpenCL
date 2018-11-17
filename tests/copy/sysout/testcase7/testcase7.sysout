@@ -1,0 +1,70 @@
+root->func
+root->main
+func.0 [indexof %4 = %0, %1 : int[]]
+func.1 [indexof %5 = %0, %2 : int[]]
+func.2 [ifge %4, %5 goto blklab0 : int]
+func.3 [const %6 = 0 : int]
+func.4 [assign %1 = %6  : int]
+func.5 [loop (%0, %1, %7, %8, %9)]
+func.6 [.blklab2]
+func.7 [return %0]
+func.8 [goto blklab1]
+func.9 [.blklab0]
+func.10 [const %10 = 1 : int]
+func.11 [add %11 = %2, %10 : int]
+func.12 [assign %1 = %11  : int]
+func.13 [loop (%0, %1, %12, %13, %14, %15)]
+func.14 [.blklab4]
+func.15 [return %0]
+func.16 [.blklab1]
+func.17 [return]
+func	i = _6	//assign %1 = %6  : int
+	[Live] _6 is false
+func	i = _11	//assign %1 = %11  : int
+	[Live] _11 is false
+main.0 [const %4 = 2 : int]
+main.1 [const %5 = 2 : int]
+main.2 [arraygen %6 = [4; 5] : int[]]
+main.3 [assign %1 = %6  : int[]]
+main.4 [const %7 = 2 : int]
+main.5 [const %8 = 2 : int]
+main.6 [arraygen %9 = [7; 8] : int[]]
+main.7 [assign %2 = %9  : int[]]
+main.8 [const %10 = 2 : int]
+main.9 [const %11 = 2 : int]
+main.10 [arraygen %12 = [10; 11] : int[]]
+main.11 [assign %3 = %12  : int[]]
+main.12 [const %14 = 2 : int]
+main.13 [const %15 = 3 : int]
+main.14 [invoke (%13) = (%2, %14, %15) testcase7:func : function(int[],int,int)->(int[])]
+main.15 [assign %1 = %13  : int[]]
+main.16 [fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.17 [fieldload %17 = %16 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.18 [const %18 = 0 : int]
+main.19 [indexof %19 = %1, %18 : int[]]
+main.20 [indirectinvoke () = %17 (%19) : method(any)->()]
+main.21 [fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.22 [fieldload %21 = %20 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.23 [const %22 = 0 : int]
+main.24 [indexof %23 = %2, %22 : int[]]
+main.25 [indirectinvoke () = %21 (%23) : method(any)->()]
+main.26 [fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.27 [fieldload %25 = %24 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.28 [const %26 = 0 : int]
+main.29 [indexof %27 = %3, %26 : int[]]
+main.30 [indirectinvoke () = %25 (%27) : method(any)->()]
+main.31 [return]
+main	a = _6	//assign %1 = %6  : int[]
+	[Live] _6 is false
+main	b = _9	//assign %2 = %9  : int[]
+	[Live] _9 is false
+main	c = _12	//assign %3 = %12  : int[]
+	[Live] _12 is false
+main	_13 = func(b, _14, _15)	//invoke (%13) = (%2, %14, %15) testcase7:func : function(int[],int,int)->(int[])
+	[Live] b = true	[ReadWrite] b = true	[RETURN] b = ALWAYS_RETURN
+	[Live] _14 is false
+	[Live] _15 is false
+main	a = _13	//assign %1 = %13  : int[]
+	[Live] _13 is false
+
+Copy elimination analysis completed. File: testcase7.wyil

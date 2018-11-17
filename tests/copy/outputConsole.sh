@@ -2,7 +2,7 @@
 BASEDIR="$(pwd)"
 outputConsoleToSysout(){
     # Change the source Whiley folder
-    for i in {1..3}
+    for i in {1..7}
     do
         testcase="testcase$i"
         folder="$BASEDIR/sysout/$testcase"
