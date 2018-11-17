@@ -8,7 +8,7 @@ function func(int[] a, int[] b) -> int[]:
 	int rb = b[0]	//ReadOnly_b
 	int[] r = g(a, b)
 	r[0] = 1
-	return b[0]
+	return b
 // Main method
 public method main(System.Console console):
 	int[] a = [2; 2]

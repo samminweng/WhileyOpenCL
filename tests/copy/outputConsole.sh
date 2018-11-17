@@ -1,19 +1,31 @@
 #!/bin/bash
 BASEDIR="$(pwd)"
+runWyOpenCL(){
+    testcase=$1
+    folder="$BASEDIR/sysout/$testcase"
+    echo $folder
+    mkdir -p $folder
+    # Copy whiley program to folder
+    cp $BASEDIR/Whileyfiles/$testcase.whiley $folder
+    #read -p "Press enter to continue"
+    cd $folder
+    ./../../../../bin/wyopcl -nocopy -ea -verbose $testcase.whiley > $folder/$testcase.sysout
+    rm *.wyil
+}
+
 outputConsoleToSysout(){
-    # Change the source Whiley folder
-    for i in {1..7}
+    # Run normal test case
+    for i in {1..10}
     do
         testcase="testcase$i"
-        folder="$BASEDIR/sysout/$testcase"
-        echo $folder
-        mkdir -p $folder
-        # Copy whiley program to folder
-        cp $BASEDIR/Whileyfiles/$testcase.whiley $folder
-        #read -p "Press enter to continue"
-        cd $folder
-        ./../../../../bin/wyopcl -nocopy -ea -verbose $testcase.whiley > $folder/$testcase.sysout
-        rm *.wyil
+        runWyOpenCL $testcase
+    done
+    cd $BASEDIR
+    # Run special case
+    for i in {1..2}
+    do
+        specialcase="specialcase$i"
+        runWyOpenCL $specialcase
     done
 }
 outputConsoleToSysout

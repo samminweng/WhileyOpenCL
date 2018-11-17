@@ -6,8 +6,9 @@ func.2 [loop (%0, %2, %4, %5, %6, %7)]
 func.3 [.blklab0]
 func.4 [return %0]
 func.5 [return]
-func	i = _3	//assign %2 = %3  : int
-	[Live] _3 is false
+//End of func function
+[func.1 i = _3] //assign %2 = %3  : int
+	 liveness: _3 = false
 main.0 [const %4 = 2 : int]
 main.1 [const %5 = 2 : int]
 main.2 [arraygen %6 = [4; 5] : int[]]
@@ -38,15 +39,16 @@ main.26 [const %24 = 0 : int]
 main.27 [indexof %25 = %3, %24 : int[]]
 main.28 [indirectinvoke () = %23 (%25) : method(any)->()]
 main.29 [return]
-main	a = _6	//assign %1 = %6  : int[]
-	[Live] _6 is false
-main	b = _9	//assign %2 = %9  : int[]
-	[Live] _9 is false
-main	c = _12	//assign %3 = %12  : int[]
-	[Live] _12 is false
-main	_13 = func(b)	//invoke (%13) = (%2) testcase6:func : function(int[])->(int[])
-	[Live] b = true	[ReadWrite] b = true	[RETURN] b = ALWAYS_RETURN
-main	a = _13	//assign %1 = %13  : int[]
-	[Live] _13 is false
+//End of main function
+[main.3 a = _6] //assign %1 = %6  : int[]
+	 liveness: _6 = false
+[main.7 b = _9] //assign %2 = %9  : int[]
+	 liveness: _9 = false
+[main.11 c = _12] //assign %3 = %12  : int[]
+	 liveness: _12 = false
+[main.12 _13 = func(b)] //invoke (%13) = (%2) testcase6:func : function(int[])->(int[])
+	 liveness: b = true	 readonly: b = false	 return: b = ALWAYS_RETURN
+[main.13 a = _13] //assign %1 = %13  : int[]
+	 liveness: _13 = false
 
 Copy elimination analysis completed. File: testcase6.wyil

@@ -1,0 +1,69 @@
+root->func
+root->main
+func.0 [const %4 = 0 : int]
+func.1 [const %5 = 3 : int]
+func.2 [arraygen %6 = [4; 5] : int[]]
+func.3 [assign %3 = %6  : int[]]
+func.4 [const %7 = 10 : int]
+func.5 [ifle %1, %7 goto blklab0 : int]
+func.6 [const %8 = 0 : int]
+func.7 [update %0[%8] = %1 : int[] -> int[]]
+func.8 [return %0]
+func.9 [goto blklab1]
+func.10 [.blklab0]
+func.11 [return %3]
+func.12 [.blklab1]
+func.13 [return]
+//End of func function
+[func.3 a = _6] //assign %3 = %6  : int[]
+	 liveness: _6 = false
+main.0 [const %3 = 2 : int]
+main.1 [const %4 = 3 : int]
+main.2 [arraygen %5 = [3; 4] : int[]]
+main.3 [assign %1 = %5  : int[]]
+main.4 [const %7 = 11 : int]
+main.5 [invoke (%6) = (%1, %7) testcase10:func : function(int[],int)->(int[])]
+main.6 [assign %2 = %6  : int[]]
+main.7 [assign %1 = %2  : int[]]
+main.8 [assert]
+main.9 [fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.10 [fieldload %12 = %11 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.11 [const %13 = [120,91,48,93,32,61,32] : int[]]
+main.12 [indirectinvoke () = %12 (%13) : method(int[])->()]
+main.13 [fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.14 [fieldload %15 = %14 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.15 [const %16 = 0 : int]
+main.16 [indexof %17 = %1, %16 : int[]]
+main.17 [indirectinvoke () = %15 (%17) : method(any)->()]
+main.18 [const %19 = 65536 : int]
+main.19 [invoke (%18) = (%1, %19) testcase10:func : function(int[],int)->(int[])]
+main.20 [assign %1 = %18  : int[]]
+main.21 [assert]
+main.22 [fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.23 [fieldload %24 = %23 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.24 [const %25 = [120,91,48,93,32,61,32] : int[]]
+main.25 [indirectinvoke () = %24 (%25) : method(int[])->()]
+main.26 [fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
+main.27 [fieldload %27 = %26 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
+main.28 [const %28 = 0 : int]
+main.29 [indexof %29 = %1, %28 : int[]]
+main.30 [indirectinvoke () = %27 (%29) : method(any)->()]
+main.31 [assert]
+main.32 [return]
+//End of main function
+[main.3 x = _5] //assign %1 = %5  : int[]
+	 liveness: _5 = false
+[main.5 _6 = func(x, _7)] //invoke (%6) = (%1, %7) testcase10:func : function(int[],int)->(int[])
+	 liveness: x = false
+	 liveness: _7 = false
+[main.6 tmp = _6] //assign %2 = %6  : int[]
+	 liveness: _6 = false
+[main.7 x = tmp] //assign %1 = %2  : int[]
+	 liveness: tmp = false
+[main.19 _18 = func(x, _19)] //invoke (%18) = (%1, %19) testcase10:func : function(int[],int)->(int[])
+	 liveness: x = false
+	 liveness: _19 = false
+[main.20 x = _18] //assign %1 = %18  : int[]
+	 liveness: _18 = false
+
+Copy elimination analysis completed. File: testcase10.wyil

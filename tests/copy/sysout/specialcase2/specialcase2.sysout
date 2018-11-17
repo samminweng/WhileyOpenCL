@@ -1,0 +1,47 @@
+root->g
+root->func
+root->main
+g.0 [return %0]
+g.1 [return]
+//End of g function
+func.0 [const %6 = 0 : int]
+func.1 [indexof %7 = %0, %6 : int[]]
+func.2 [assign %3 = %7  : int]
+func.3 [const %8 = 0 : int]
+func.4 [indexof %9 = %1, %8 : int[]]
+func.5 [assign %4 = %9  : int]
+func.6 [invoke (%10) = (%0, %1) specialcase2:g : function(int[],int[])->(int[])]
+func.7 [assign %5 = %10  : int[]]
+func.8 [const %11 = 1 : int]
+func.9 [const %12 = 0 : int]
+func.10 [update %5[%12] = %11 : int[] -> int[]]
+func.11 [return %1]
+func.12 [return]
+//End of func function
+[func.2 ra = _7] //assign %3 = %7  : int
+	 liveness: _7 = false
+[func.5 rb = _9] //assign %4 = %9  : int
+	 liveness: _9 = false
+[func.6 _10 = g(a, b)] //invoke (%10) = (%0, %1) specialcase2:g : function(int[],int[])->(int[])
+	 liveness: a = false
+	 liveness: b = true	 readonly: b = true	 return: b = NEVER_RETURN
+[func.7 r = _10] //assign %5 = %10  : int[]
+	 liveness: _10 = false
+main.0 [const %3 = 2 : int]
+main.1 [const %4 = 2 : int]
+main.2 [arraygen %5 = [3; 4] : int[]]
+main.3 [assign %1 = %5  : int[]]
+main.4 [invoke (%6) = (%1, %1) specialcase2:func : function(int[],int[])->(int[])]
+main.5 [assign %2 = %6  : int[]]
+main.6 [assert]
+main.7 [return]
+//End of main function
+[main.3 a = _5] //assign %1 = %5  : int[]
+	 liveness: _5 = false
+[main.4 _6 = func(a, a)] //invoke (%6) = (%1, %1) specialcase2:func : function(int[],int[])->(int[])
+	 liveness: a = true	 readonly: a = false	 return: a = NEVER_RETURN
+	 liveness: a = true	 readonly: a = false	 return: a = ALWAYS_RETURN
+[main.5 r = _6] //assign %2 = %6  : int[]
+	 liveness: _6 = false
+
+Copy elimination analysis completed. File: specialcase2.wyil

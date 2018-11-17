@@ -79,36 +79,37 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 *         Note that The copies are not needed by default in some special forms of byte-code ('FieldLoad')
 	 * 
 	 */
-	public boolean isCopyEliminated(int register, int pos, Code code, FunctionOrMethod function) {
+	public boolean isCopyEliminated(int register, int pos, Code code, FunctionOrMethod function) {		
 		boolean isLive = liveAnalyzer.isLive(register, code, function);
+		if (this.isVerbose) {
+			System.out.print("\t liveness: " + getVar(register, function) + " = " + isLive);
+		}
 		
 		if (!isLive) {
-			if (this.isVerbose) {
-				System.out.print("\t[Live] " + getVar(register, function) + " is " + isLive + "\n");
+			if(this.isVerbose) {
+				System.out.print("\n");
 			}
 			// The register is NOT alive, and thus the copy can be eliminated.
 			return true;
 		} else {
-			// The register is alive
+			// The register is alive and continue checking if the code is a function call.
 			if (code instanceof Codes.Invoke) {
-				if (this.isVerbose) {
-					System.out.print("\t[Live] " + getVar(register, function) + " = " + isLive);
-				}
 				// Special case for a function call
 				Codes.Invoke functioncall = (Codes.Invoke) code;
 				FunctionOrMethod callee = this.getCalledFunction(functioncall);
 				if (callee != null) {
 					// Map the register to function argument.
-					int callee_register = this.mapArgumentToParameter(register, pos, functioncall);
+					int param = this.mapArgumentToParameter(register, pos, functioncall);
 					// Check if parameter is modified inside 'invoked_function'.
-					boolean isMutated = readwriteAnalyzer.isMutated(callee_register, callee);
+					boolean isMutated = readwriteAnalyzer.isMutated(param, callee);
 					if (this.isVerbose) {
-						System.out.print("\t[ReadWrite] " + getVar(register, function) + " = " + isMutated);
+						// Read-only is the negated 'isMutated' value
+						System.out.print("\t readonly: " + getVar(register, function) + " = " + !isMutated);
 					}
 					// Get the return
-					RETURN isReturn = returnAnalyzer.isReturned(callee_register, callee);
+					RETURN isReturn = returnAnalyzer.isReturned(param, callee);
 					if (this.isVerbose) {
-						System.out.print("\t[RETURN] " + getVar(register, function) + " = " + isReturn + "\n");
+						System.out.print("\t return: " + getVar(register, function) + " = " + isReturn + "\n");
 					}
 					// 'r' is NOT mutated inside invoked function
 					if (!isMutated) {	
@@ -119,10 +120,17 @@ public class CopyEliminationAnalyzer extends Analyzer {
 						return true;
 					}
 				}
-			}
+				// End of invoke code
+			}else {
+				// End the messages
+				if(this.isVerbose) {
+					System.out.print("\n");
+				}
+			}			
+			// For all the other cases, the copy must be kept.
+			return false;
 		}
-		// For all the other cases, the copy must be kept.
-		return false;
+		
 	}
 
 	/**
@@ -153,7 +161,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			Codes.Assign assign = (Codes.Assign) code;
 			String lhs = getVar(assign.target(0), function);
 			String rhs = getVar(assign.operand(0), function);
-			System.out.println(name +"\t" +  lhs + " = " + rhs + "\t//" + code);
+			System.out.println("["+name + "." + line +" " +  lhs + " = " + rhs + "] //" + code);
 		} else if (code instanceof Codes.Invoke) {
 			Codes.Invoke invoke = (Codes.Invoke) code;			
 			String lhs = getVar(invoke.target(0), function);
@@ -162,10 +170,10 @@ public class CopyEliminationAnalyzer extends Analyzer {
 				String param = getVar(op, function);
 				params.add(param);
 			}			
-			System.out.println(name + "\t" +  lhs + " = " +invoke.name.name() + "("+ String.join(", ", params) + ")" 
-			                    + "\t//" + code);
+			System.out.println("[" + name + "." + line + " " + lhs + " = " +invoke.name.name() + "("+ String.join(", ", params) + ")" 
+			                    + "] //" + code);
 		} else {
-			System.out.println(name + "." + line + " [\t" + code + "]");
+			System.out.println("[" +name + "." + line + " ] //" + code + "");
 		}
 
 	}
@@ -176,7 +184,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 * @param function
 	 * @param code_blk
 	 */
-	private void printWyilCode(FunctionOrMethod function, List<Code> code_blk) {
+	private void printWyILCodeBlock(FunctionOrMethod function, List<Code> code_blk) {
 		String name = function.name();
 		line =0;
 		// Parse each byte-code and add the constraints accordingly.
@@ -185,6 +193,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			System.out.println(name + "." + line + " [" + code + "]");
 			line++;// Increment the line number
 		}
+		System.out.println("//End of " + name + " function");
 	}
 
 	/**
@@ -212,8 +221,9 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			function = this.getFunction(function);
 			// Print out all byte-code of function
 			if (this.isVerbose) {
-				this.printWyilCode(function, function.body().bytecodes());
+				this.printWyILCodeBlock(function, function.body().bytecodes());
 			}
+			line = 0;
 			// Analyze whether the copy is need for each byte-code
 			for (Code code : function.body().bytecodes()) {
 				if (code instanceof Codes.Assign) {
@@ -239,6 +249,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 						}
 					}
 				}
+				line++;
 			}
 		}
 	}

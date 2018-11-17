@@ -1,23 +1,44 @@
 root->func
 root->main
-func.0 [const %7 = 0 : int]
-func.1 [indexof %8 = %0, %7 : int[]]
-func.2 [assign %4 = %8  : int]
-func.3 [const %9 = 0 : int]
-func.4 [indexof %10 = %1, %9 : int[]]
-func.5 [assign %5 = %10  : int]
-func.6 [const %11 = 0 : int]
-func.7 [indexof %12 = %2, %11 : int[]]
-func.8 [assign %6 = %12  : int]
-func.9 [return %0]
-func.10 [return]
+func.0 [const %11 = 0 : int]
+func.1 [indexof %12 = %0, %11 : int[]]
+func.2 [assign %4 = %12  : int]
+func.3 [const %13 = 0 : int]
+func.4 [indexof %14 = %1, %13 : int[]]
+func.5 [assign %5 = %14  : int]
+func.6 [const %15 = 0 : int]
+func.7 [indexof %16 = %2, %15 : int[]]
+func.8 [assign %6 = %16  : int]
+func.9 [const %17 = 0 : int]
+func.10 [indexof %18 = %0, %17 : int[]]
+func.11 [const %19 = 0 : int]
+func.12 [indexof %20 = %1, %19 : int[]]
+func.13 [ifne %18, %20 goto blklab0 : int]
+func.14 [assign %9 = %0  : int[]]
+func.15 [assign %10 = %1  : int[]]
+func.16 [return %10]
+func.17 [goto blklab1]
+func.18 [.blklab0]
+func.19 [assign %9 = %2  : int[]]
+func.20 [assign %10 = %9  : int[]]
+func.21 [return %10]
+func.22 [.blklab1]
+func.23 [return]
 //End of func function
-[func.2 ra = _8] //assign %4 = %8  : int
-	 liveness: _8 = false
-[func.5 rb = _10] //assign %5 = %10  : int
-	 liveness: _10 = false
-[func.8 rc = _12] //assign %6 = %12  : int
+[func.2 ra = _12] //assign %4 = %12  : int
 	 liveness: _12 = false
+[func.5 rb = _14] //assign %5 = %14  : int
+	 liveness: _14 = false
+[func.8 rc = _16] //assign %6 = %16  : int
+	 liveness: _16 = false
+[func.14 y = a] //assign %9 = %0  : int[]
+	 liveness: a = false
+[func.15 x = b] //assign %10 = %1  : int[]
+	 liveness: b = false
+[func.19 y = c] //assign %9 = %2  : int[]
+	 liveness: c = false
+[func.20 x = y] //assign %10 = %9  : int[]
+	 liveness: y = false
 main.0 [const %5 = 2 : int]
 main.1 [const %6 = 2 : int]
 main.2 [arraygen %7 = [5; 6] : int[]]
@@ -30,7 +51,7 @@ main.8 [const %11 = 2 : int]
 main.9 [const %12 = 2 : int]
 main.10 [arraygen %13 = [11; 12] : int[]]
 main.11 [assign %3 = %13  : int[]]
-main.12 [invoke (%14) = (%1, %2, %3) testcase1:func : function(int[],int[],int[])->(int[])]
+main.12 [invoke (%14) = (%1, %2, %3) specialcase1:func : function(int[],int[],int[])->(int[])]
 main.13 [assign %4 = %14  : int[]]
 main.14 [fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}]
 main.15 [fieldload %16 = %15 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}]
@@ -55,11 +76,11 @@ main.29 [return]
 	 liveness: _10 = false
 [main.11 c = _13] //assign %3 = %13  : int[]
 	 liveness: _13 = false
-[main.12 _14 = func(a, b, c)] //invoke (%14) = (%1, %2, %3) testcase1:func : function(int[],int[],int[])->(int[])
-	 liveness: a = true	 readonly: a = true	 return: a = ALWAYS_RETURN
-	 liveness: b = true	 readonly: b = true	 return: b = NEVER_RETURN
-	 liveness: c = true	 readonly: c = true	 return: c = NEVER_RETURN
+[main.12 _14 = func(a, b, c)] //invoke (%14) = (%1, %2, %3) specialcase1:func : function(int[],int[],int[])->(int[])
+	 liveness: a = true	 readonly: a = false	 return: a = MAYBE_RETURN
+	 liveness: b = true	 readonly: b = false	 return: b = MAYBE_RETURN
+	 liveness: c = true	 readonly: c = false	 return: c = MAYBE_RETURN
 [main.13 r = _14] //assign %4 = %14  : int[]
 	 liveness: _14 = false
 
-Copy elimination analysis completed. File: testcase1.wyil
+Copy elimination analysis completed. File: specialcase1.wyil

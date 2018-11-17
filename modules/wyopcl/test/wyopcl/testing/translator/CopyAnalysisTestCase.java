@@ -57,7 +57,12 @@ public class CopyAnalysisTestCase {
 				"testcase4",
 				"testcase5", 
 				"testcase6",
-				"testcase7"
+				"testcase7",
+				"testcase8",
+				"testcase9",
+				"testcase10",
+				"specialcase1",
+				"specialcase2",
 			});
 	}
 	

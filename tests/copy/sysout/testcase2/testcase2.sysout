@@ -26,12 +26,13 @@ func.22 [arraygen %22 = [20; 21] : int[]]
 func.23 [return %22]
 func.24 [.blklab1]
 func.25 [return]
-func	ra = _8	//assign %4 = %8  : int
-	[Live] _8 is false
-func	rb = _10	//assign %5 = %10  : int
-	[Live] _10 is false
-func	rc = _12	//assign %6 = %12  : int
-	[Live] _12 is false
+//End of func function
+[func.2 ra = _8] //assign %4 = %8  : int
+	 liveness: _8 = false
+[func.5 rb = _10] //assign %5 = %10  : int
+	 liveness: _10 = false
+[func.8 rc = _12] //assign %6 = %12  : int
+	 liveness: _12 = false
 main.0 [const %5 = 2 : int]
 main.1 [const %6 = 2 : int]
 main.2 [arraygen %7 = [5; 6] : int[]]
@@ -62,17 +63,18 @@ main.26 [const %25 = 0 : int]
 main.27 [indexof %26 = %3, %25 : int[]]
 main.28 [indirectinvoke () = %24 (%26) : method(any)->()]
 main.29 [return]
-main	a = _7	//assign %1 = %7  : int[]
-	[Live] _7 is false
-main	b = _10	//assign %2 = %10  : int[]
-	[Live] _10 is false
-main	c = _13	//assign %3 = %13  : int[]
-	[Live] _13 is false
-main	_14 = func(a, b, c)	//invoke (%14) = (%1, %2, %3) testcase2:func : function(int[],int[],int[])->(int[])
-	[Live] a = true	[ReadWrite] a = false	[RETURN] a = NEVER_RETURN
-	[Live] b = true	[ReadWrite] b = false	[RETURN] b = NEVER_RETURN
-	[Live] c = true	[ReadWrite] c = false	[RETURN] c = NEVER_RETURN
-main	r = _14	//assign %4 = %14  : int[]
-	[Live] _14 is false
+//End of main function
+[main.3 a = _7] //assign %1 = %7  : int[]
+	 liveness: _7 = false
+[main.7 b = _10] //assign %2 = %10  : int[]
+	 liveness: _10 = false
+[main.11 c = _13] //assign %3 = %13  : int[]
+	 liveness: _13 = false
+[main.12 _14 = func(a, b, c)] //invoke (%14) = (%1, %2, %3) testcase2:func : function(int[],int[],int[])->(int[])
+	 liveness: a = true	 readonly: a = true	 return: a = NEVER_RETURN
+	 liveness: b = true	 readonly: b = true	 return: b = NEVER_RETURN
+	 liveness: c = true	 readonly: c = true	 return: c = NEVER_RETURN
+[main.13 r = _14] //assign %4 = %14  : int[]
+	 liveness: _14 = false
 
 Copy elimination analysis completed. File: testcase2.wyil

@@ -22,14 +22,15 @@ func.18 [.blklab2]
 func.19 [return %6]
 func.20 [.blklab1]
 func.21 [return]
-func	a = _9	//assign %3 = %9  : int[]
-	[Live] _9 is false
-func	b = _12	//assign %4 = %12  : int[]
-	[Live] _12 is false
-func	c = a	//assign %5 = %3  : int[]
-	[Live] a is false
-func	d = b	//assign %6 = %4  : int[]
-	[Live] b is false
+//End of func function
+[func.3 a = _9] //assign %3 = %9  : int[]
+	 liveness: _9 = false
+[func.7 b = _12] //assign %4 = %12  : int[]
+	 liveness: _12 = false
+[func.8 c = a] //assign %5 = %3  : int[]
+	 liveness: a = false
+[func.9 d = b] //assign %6 = %4  : int[]
+	 liveness: b = false
 main.0 [const %4 = 2 : int]
 main.1 [const %5 = 2 : int]
 main.2 [arraygen %6 = [4; 5] : int[]]
@@ -61,16 +62,17 @@ main.27 [const %25 = 0 : int]
 main.28 [indexof %26 = %3, %25 : int[]]
 main.29 [indirectinvoke () = %24 (%26) : method(any)->()]
 main.30 [return]
-main	a = _6	//assign %1 = %6  : int[]
-	[Live] _6 is false
-main	b = _9	//assign %2 = %9  : int[]
-	[Live] _9 is false
-main	c = _12	//assign %3 = %12  : int[]
-	[Live] _12 is false
-main	_13 = func(b, _14)	//invoke (%13) = (%2, %14) testcase4:func : function(int[],int)->(int[])
-	[Live] b = true	[ReadWrite] b = false	[RETURN] b = MAYBE_RETURN
-	[Live] _14 is false
-main	a = _13	//assign %1 = %13  : int[]
-	[Live] _13 is false
+//End of main function
+[main.3 a = _6] //assign %1 = %6  : int[]
+	 liveness: _6 = false
+[main.7 b = _9] //assign %2 = %9  : int[]
+	 liveness: _9 = false
+[main.11 c = _12] //assign %3 = %12  : int[]
+	 liveness: _12 = false
+[main.13 _13 = func(b, _14)] //invoke (%13) = (%2, %14) testcase4:func : function(int[],int)->(int[])
+	 liveness: b = true	 readonly: b = true	 return: b = MAYBE_RETURN
+	 liveness: _14 = false
+[main.14 a = _13] //assign %1 = %13  : int[]
+	 liveness: _13 = false
 
 Copy elimination analysis completed. File: testcase4.wyil
