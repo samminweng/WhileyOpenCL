@@ -278,32 +278,17 @@ public abstract class Analyzer {
 			line = 0;
 			iterateWyilCode(function, function.body().bytecodes());
 		}
-
-		if (isVerbose) {
-			// Print out CFGraph.
-			this.printCFG(function);
-		}
-	}
-
-	/**
-	 * Prints out each bytecode with line number and indentation.
-	 * 
-	 * @param name
-	 * @param line
-	 */
-	private int printWyILCode(FunctionOrMethod function, Code code, int line) {
 //		if (isVerbose) {
-//			String name = function.name();
-//			// Print out the bytecode
-//			if (code instanceof Codes.Label) {
-//				System.out.println(name + "." + line + " [" + code + "]");
-//			} else {
-//				System.out.println(name + "." + line + " [\t" + code + "]");
-//			}
+//			// Print out CFGraph.
+//			this.printCFG(function);
 //		}
-		return ++line;
 	}
 
+	
+	
+	
+	
+	
 	/**
 	 * Build up the control flow graph: iterating each byte-code to create the block (e.g. loop structure/if-else
 	 * branches) or reuse the current block to put the constraints into the corresponding block.
@@ -317,7 +302,8 @@ public abstract class Analyzer {
 		// Parse each byte-code and add the constraints accordingly.
 		for (Code code : code_blk) {
 			// Get the Block.Entry and print out each byte-code
-			line = printWyILCode(function, code, line);
+			//printWyILCode(function, code, line);
+			line++; // Increment the line number
 			// Parse each byte-code and add the constraints accordingly.
 			try {
 				if(code instanceof Codes.Assign) {
@@ -479,9 +465,7 @@ public abstract class Analyzer {
 	 * @param function
 	 */
 	private void buildCFG(Loop code, FunctionOrMethod function) {
-		// Begin a loop
-		
-		// Search for loop condition
+		// Begin a loop and search for loop condition
 		String loop_cond = "";
 		for(Code c: code.bytecodes()){
 			// The first if-else is the loop condition

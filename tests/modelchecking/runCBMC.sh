@@ -1,8 +1,7 @@
 #!/bin/bash
 # Use C bounded model checking to verify the absence of memory leaks in our generated C code
 runCBMC(){
-    logFolder="log"
-    
+    logFolder="log"    
     failtestcases="failtestcase.txt"
     rm -rf $failtestcases
     touch $failtestcases

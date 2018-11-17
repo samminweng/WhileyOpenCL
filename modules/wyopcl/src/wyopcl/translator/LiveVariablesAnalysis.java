@@ -246,10 +246,10 @@ public class LiveVariablesAnalysis extends Analyzer {
 			// Check if the function has been transformed. If so, use the transformed one.
 			function = this.getFunction(function);
 			computeLiveness(function);
-			// Print out analysis result
-			if (isVerbose) {
-				printLivenss(function);
-			}
+//			// Print out analysis result
+//			if (isVerbose) {
+//				printLivenss(function);
+//			}
 		}
 	}
 }

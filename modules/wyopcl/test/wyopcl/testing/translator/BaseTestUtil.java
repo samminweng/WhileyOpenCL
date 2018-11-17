@@ -40,10 +40,6 @@ public final class BaseTestUtil {
 
 	protected final static String whiley_runtime_lib = lib_path + "wyrt-" + version + ".jar";
 
-	// Log file
-	// private final static File logfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator
-	// + "log.txt");
-
 	public BaseTestUtil() {
 
 	}
@@ -60,83 +56,19 @@ public final class BaseTestUtil {
 	 *            the reader of the predefined output file (*.sysout). Read the expected output file.
 	 * @throws IOException
 	 */
-	private void assertOutput(BufferedReader output_reader, BufferedReader expected_reader) throws IOException {
+	protected static void assertOutput(BufferedReader output_reader, BufferedReader expected_reader)
+			throws IOException {
 		String expected = null;
-		boolean isSkip = true;
-		// Takes out each line from expected file and check if it matches with
-		// 1000 line from the output.
+		// Takes out each line from expected file and check if it matches with 1000 line from the output.
 		while (((expected = expected_reader.readLine()) != null)) {
-			if (isSkip == false) {
-				// Check if the output is the same as expected.
-				String output = output_reader.readLine();
-				System.out.println(output);
-				assertEquals(expected, output);
-			}
-
-			if (expected.startsWith("Whiley => Wyil: compiled 1 file(s)")) {
-				isSkip = false;
-			}
-
+			// Check if the output is the same as expected.
+			String output = output_reader.readLine();
+			System.out.println(output);
+			assertEquals(expected, output);
 		}
 		// Nullify the file input/output objects.
 		expected_reader.close();
 		output_reader.close();
-
-	}
-
-	/***
-	 * Execute the copy analysis and compare the system output with output file.
-	 * 
-	 * 
-	 * 
-	 * @param baseDir
-	 * @param testcase
-	 * @param options
-	 */
-	public void execCopyAnalysis(Path baseDir, String testcase, String... options) {
-		// Get the assertion option (-ea runtime option enables assertion)
-		String ea = "disable_assertion";
-		for (int index = 0; index < options.length; index++) {
-			// Check if '-ea' option is passed to enable assertion
-			if (options[index].equals("-ea")) {
-				ea = "enable_assertion";
-			}
-		}
-
-		Process process;
-		try {
-			Path destDir = Paths
-					.get(baseDir + File.separator + "sysout" + File.separator + testcase + File.separator + ea);
-
-			// Copy source.whiley to destDir folder
-			Files.copy(Paths.get(baseDir + File.separator + "Whileyfiles" + File.separator + testcase + ".whiley"),
-					Paths.get(destDir + File.separator + testcase + ".whiley"), StandardCopyOption.REPLACE_EXISTING);
-
-			Path sysout = Paths.get(destDir + File.separator + "nocopy.sysout");
-			// Make the command
-			String cmd = makeCmd(testcase, options);
-
-			// Get the runtime.
-			Runtime rt = Runtime.getRuntime();
-			// Change the folder Run the command
-			process = rt.exec(cmd, null, destDir.toFile());
-
-			process.waitFor();
-
-			// Start the process to analyse the bounds
-			InputStream input = process.getInputStream();
-
-			// Check the bound results against pre-stored results
-			assertOutput(new BufferedReader(new InputStreamReader(input, Charset.forName("UTF-8"))),
-					Files.newBufferedReader(sysout, StandardCharsets.UTF_8));
-
-			// Remove all generated WyIL files.
-			Files.deleteIfExists(Paths.get(destDir + testcase + ".wyil"));
-		} catch (Exception e) {
-			throw new RuntimeException("Test file: " + testcase + ".whiley", e);
-		}
-
-		process.destroy();
 
 	}
 
@@ -399,7 +331,7 @@ public final class BaseTestUtil {
 		}
 		return exitValue;
 	}
-	
+
 	/**
 	 * Create the folder and clean the folder if existed
 	 * 
@@ -526,7 +458,7 @@ public final class BaseTestUtil {
 	 * 
 	 * @return the command line that runs on
 	 */
-	private String makeCmd(String testcase, String... options) {
+	protected static String makeCmd(String testcase, String... options) {
 		String cmd = "java -cp " + classpath + " wyopcl.WyopclMain -bp " + whiley_runtime_lib;
 		// Run the code generator with optimization.
 		int index = 0;
@@ -635,10 +567,10 @@ public final class BaseTestUtil {
 	 */
 	public void execCodeGeneration(Path baseDir, String testcase, String... options) {
 		try {
-			//File logfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "log.txt");
+			// File logfile = new File(workspace_path + "tests" + File.separator + "code" + File.separator + "log.txt");
 			// 1. Find the destination folder
 			Path destDir = processOptions(baseDir, testcase, options);
-			
+
 			// 2. Prepare folder and copy files
 			Path sourceDir = Paths
 					.get(baseDir + File.separator + "Whileyfiles" + File.separator + testcase + ".whiley");
@@ -648,7 +580,7 @@ public final class BaseTestUtil {
 			String cmd = makeCmd(testcase, options);
 
 			// 4. Generate the C code
-			//createFolder(destDir); // Create the folder
+			// createFolder(destDir); // Create the folder
 			runCmd(cmd, destDir, false);
 
 			// Check if *.c and *.h files are generated or not.

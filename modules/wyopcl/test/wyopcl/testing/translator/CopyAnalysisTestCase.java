@@ -1,8 +1,15 @@
 package wyopcl.testing.translator;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -14,18 +21,19 @@ import org.junit.runners.Parameterized;
 
 @RunWith(Parameterized.class)
 public class CopyAnalysisTestCase {
-	private BaseTestUtil util;
-	final Path sourceDir = Paths.get(System.getProperty("user.dir")+ File.separator + "tests" + File.separator + "copy");
+	//private BaseTestUtil util;
+	final Path sourceDir = Paths.get(System.getProperty("user.dir")+ File.separator + "tests" 
+	                                      + File.separator + "copy");
 	private String testcase;// A list of test cases
 	
 	@Before
 	public void initialize() throws Exception {
-		util = new BaseTestUtil();
+		//util = new BaseTestUtil();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		util = null;
+		//util = null;
 	}
 	
 	/**
@@ -43,39 +51,68 @@ public class CopyAnalysisTestCase {
 		
 		// Add a list of test cases
 		return Arrays.asList(new String[] { 
-				"reverse",
-				"ResetMacro3", 
-				"livecheck",
-				"livecheck1",
-				"ResetMacro4",
-				"ifelse", 
-				"cashtill", 
-				"nestedwhileloop"
+				"testcase1",
+				"testcase2", 
+				"testcase3"
 			});
 	}
 	
-	@Test
-	public void testCopyAndDisableAssertion(){
-		// Perform copy analysis with assertion disabled 
-		util.execCopyAnalysis(sourceDir, testcase, "-verbose", "-nocopy");
+	
+	
+	/***
+	 * Execute the copy analysis and compare the system output with output file.
+	 * 
+	 * 
+	 * 
+	 * @param baseDir
+	 * @param testcase
+	 * @param options
+	 */
+	public void execCopyAnalysis(Path baseDir, String testcase, String... options) {
+		
+		Process process;
+		try {
+			Path destDir = Paths
+					.get(baseDir + File.separator + "sysout" + File.separator + testcase + File.separator);
+
+			// Copy source.whiley to destDir folder
+			Files.copy(Paths.get(baseDir + File.separator + "Whileyfiles" + File.separator + testcase + ".whiley"),
+					Paths.get(destDir + File.separator + testcase + ".whiley"), StandardCopyOption.REPLACE_EXISTING);
+
+			Path sysout = Paths.get(destDir + File.separator + testcase+".sysout");
+			// Make the command
+			String cmd = BaseTestUtil.makeCmd(testcase, options);
+
+			// Get the runtime.
+			Runtime rt = Runtime.getRuntime();
+			// Change the folder Run the command
+			process = rt.exec(cmd, null, destDir.toFile());
+
+			process.waitFor();
+
+			// Start the process to analyse the bounds
+			InputStream input = process.getInputStream();
+
+			// Check the bound results against pre-stored results
+			BaseTestUtil.assertOutput(new BufferedReader(new InputStreamReader(input, Charset.forName("UTF-8"))),
+					Files.newBufferedReader(sysout, StandardCharsets.UTF_8));
+
+			// Remove all generated WyIL files.
+			Files.deleteIfExists(Paths.get(destDir + testcase + ".wyil"));
+		} catch (Exception e) {
+			throw new RuntimeException("Test file: " + testcase + ".whiley", e);
+		}
+
+		process.destroy();
+
 	}
+	
 	
 	@Test
 	public void testCopyAndEnableAssertion(){
 		// Perform copy analysis with assertion enabled 
-		util.execCopyAnalysis(sourceDir, testcase, "-verbose", "-nocopy", "-ea");
+		execCopyAnalysis(sourceDir, testcase, "-verbose", "-nocopy", "-ea");
 	}
 	
-	@Test
-	public void testCopyAndDisableAssertionAndGenerateCode(){
-		// Generate C code with copy analysis enabled and assertion disabled 
-		util.execCodeGeneration(sourceDir, testcase, "-nocopy", "-da", "-code");
-	}
-	
-	@Test
-	public void testCopyAndEnableAssertionAndGenerateCode(){
-		// Generate C code with copy analysis enabled and assertion enabled 
-		util.execCodeGeneration(sourceDir, testcase, "-nocopy", "-ea", "-code");
-	}
 	
 }

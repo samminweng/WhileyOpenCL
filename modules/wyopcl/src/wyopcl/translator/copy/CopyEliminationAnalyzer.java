@@ -1,12 +1,16 @@
 package wyopcl.translator.copy;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import wybs.lang.Builder;
+import wyil.attributes.VariableDeclarations;
+import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.WyilFile;
@@ -30,15 +34,14 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	// Perform return checks
 	private ReturnAnalyzer returnAnalyzer;
 	// Perform liveness checks
-	public LiveVariablesAnalysis liveAnalyzer;
+	private LiveVariablesAnalysis liveAnalyzer;
+	private int line;
 
 	/**
 	 * Basic Constructor
 	 */
-	public CopyEliminationAnalyzer(Configuration config,
-								   ReadWriteAnalyzer readwriteAnalyzer, 
-								   ReturnAnalyzer returnAnalyzer,
-								   LiveVariablesAnalysis liveAnalyzer) {
+	public CopyEliminationAnalyzer(Configuration config, ReadWriteAnalyzer readwriteAnalyzer,
+			ReturnAnalyzer returnAnalyzer, LiveVariablesAnalysis liveAnalyzer) {
 		super(config);
 		this.readwriteAnalyzer = readwriteAnalyzer;
 		this.returnAnalyzer = returnAnalyzer;
@@ -54,18 +57,15 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	public void apply(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
 		// Builds up a CFG of the function.
 		super.apply(module, transformFuncMap);
-		//if (this.config.isVerbose()) {
-			// Iterate each function to determine if copies are needed.
-			postorderTraversalCallGraph(tree);
-		//}
+		postorderTraversalCallGraph(tree);
 	}
 
 	/**
 	 * Determines whether to make a copy of array using liveness information and mutability property. Rules are as
 	 * below:
 	 * 
-	 * f mutates b? |F |F |T |T f returns b? |F |T |T |F ---------------------------------------------- b is live? T |No
-	 * Copy|No Copy |Copy |Copy F |No Copy|No Copy |No Copy|No Copy
+	 * f mutates b? |F |F |T |T f returns b? |F |T |T |F b is live? T |No
+	 * 
 	 * 
 	 * 
 	 * @param register
@@ -81,13 +81,19 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 */
 	public boolean isCopyEliminated(int register, int pos, Code code, FunctionOrMethod function) {
 		boolean isLive = liveAnalyzer.isLive(register, code, function);
-
+		
 		if (!isLive) {
+			if (this.isVerbose) {
+				System.out.print("\t[Live] " + getVar(register, function) + " is " + isLive + "\n");
+			}
 			// The register is NOT alive, and thus the copy can be eliminated.
 			return true;
 		} else {
 			// The register is alive
 			if (code instanceof Codes.Invoke) {
+				if (this.isVerbose) {
+					System.out.print("\t[Live] " + getVar(register, function) + " = " + isLive);
+				}
 				// Special case for a function call
 				Codes.Invoke functioncall = (Codes.Invoke) code;
 				FunctionOrMethod callee = this.getCalledFunction(functioncall);
@@ -96,11 +102,17 @@ public class CopyEliminationAnalyzer extends Analyzer {
 					int callee_register = this.mapArgumentToParameter(register, pos, functioncall);
 					// Check if parameter is modified inside 'invoked_function'.
 					boolean isMutated = readwriteAnalyzer.isMutated(callee_register, callee);
+					if (this.isVerbose) {
+						System.out.print("\t[ReadWrite] " + getVar(register, function) + " = " + isMutated);
+					}
+					// Get the return
+					RETURN isReturn = returnAnalyzer.isReturned(callee_register, callee);
+					if (this.isVerbose) {
+						System.out.print("\t[RETURN] " + getVar(register, function) + " = " + isReturn + "\n");
+					}
 					// 'r' is NOT mutated inside invoked function
-					if (!isMutated) {
-						// Get the return 
-						RETURN isReturn = returnAnalyzer.isReturned(callee_register, callee);
-						if(isReturn == RETURN.MAYBE_RETURN || isReturn == RETURN.ALWAYS_RETURN){
+					if (!isMutated) {	
+						if (isReturn == RETURN.MAYBE_RETURN || isReturn == RETURN.ALWAYS_RETURN) {
 							// We use caller macro
 							return false; // We need the copy
 						}
@@ -116,14 +128,80 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	/**
 	 * Update the read-write set due to changes to the copy of rhs register
 	 * 
-	 * @param isCopyAvoided
+	 * @param isCopyEliminated
 	 * @param code
 	 * @param function
 	 */
-	public void updateSet(boolean isCopyAvoided, int register, Code code, FunctionOrMethod function) {
+	public void updateSet(boolean isCopyEliminated, int register, Code code, FunctionOrMethod function) {
 		// Based on the copy analysis results, update the readwrite set.
-		this.readwriteAnalyzer.updateSet(isCopyAvoided, register, code, function);
-		this.returnAnalyzer.updateSet(isCopyAvoided, register, code, function);
+		this.readwriteAnalyzer.updateSet(isCopyEliminated, register, code, function);
+		this.returnAnalyzer.updateSet(isCopyEliminated, register, code, function);
+	}
+
+	/**
+	 * Prints out each bytecode with line number and indentation.
+	 * 
+	 * @param name
+	 * @param line
+	 */
+	private void printWyILCode(FunctionOrMethod function, Code code) {
+		String name = function.name();
+		// Print out the bytecode
+		if (code instanceof Codes.Label) {
+			System.out.println(name + "." + line + " [" + code + "]");
+		} else if (code instanceof Codes.Assign) {
+			Codes.Assign assign = (Codes.Assign) code;
+			String lhs = getVar(assign.target(0), function);
+			String rhs = getVar(assign.operand(0), function);
+			System.out.println(name +"\t" +  lhs + " = " + rhs + "\t//" + code);
+		} else if (code instanceof Codes.Invoke) {
+			Codes.Invoke invoke = (Codes.Invoke) code;			
+			String lhs = getVar(invoke.target(0), function);
+			List<String> params = new ArrayList<String>();
+			for(int op: invoke.operands()) {
+				String param = getVar(op, function);
+				params.add(param);
+			}			
+			System.out.println(name + "\t" +  lhs + " = " +invoke.name.name() + "("+ String.join(", ", params) + ")" 
+			                    + "\t//" + code);
+		} else {
+			System.out.println(name + "." + line + " [\t" + code + "]");
+		}
+
+	}
+
+	/**
+	 * Print out each line of code in function 'function'
+	 * 
+	 * @param function
+	 * @param code_blk
+	 */
+	private void printWyilCode(FunctionOrMethod function, List<Code> code_blk) {
+		String name = function.name();
+		line =0;
+		// Parse each byte-code and add the constraints accordingly.
+		for (Code code : code_blk) {
+			// Get the Block.Entry and print out each byte-code
+			System.out.println(name + "." + line + " [" + code + "]");
+			line++;// Increment the line number
+		}
+	}
+
+	/**
+	 * Get variable name
+	 * 
+	 * @param reg
+	 * @return
+	 */
+	private String getVar(int reg, FunctionOrMethod function) {
+		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
+		String name = "_" + reg;
+		// Check if the register has been kept in the declarations.
+		Declaration declaration = vars.get(reg);
+		if (declaration != null && declaration.name() != null && !declaration.name().isEmpty()) {
+			name = declaration.name();
+		}
+		return name;
 	}
 
 	@Override
@@ -132,11 +210,34 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		if (function != null) {
 			// Check and Get the transformed function
 			function = this.getFunction(function);
+			// Print out all byte-code of function
+			if (this.isVerbose) {
+				this.printWyilCode(function, function.body().bytecodes());
+			}
 			// Analyze whether the copy is need for each byte-code
 			for (Code code : function.body().bytecodes()) {
 				if (code instanceof Codes.Assign) {
+					if (this.isVerbose) {
+						printWyILCode(function, code);
+					}
 					int rhs = ((Codes.Assign) code).operand(0);
 					boolean isCopyEliminated = isCopyEliminated(rhs, 0, code, function);
+					updateSet(isCopyEliminated, rhs, code, function);
+				} else if (code instanceof Codes.Invoke) {
+					Codes.Invoke invoke = (Codes.Invoke) code;
+					// Check if the called function is not runtime call
+					String module = invoke.name.module().toString();
+					if (!module.contains("whiley/lang") && !module.contains("whiley/io")) {
+						if (this.isVerbose) {
+							printWyILCode(function, code);
+						}
+						int pos = 0;
+						for (int param : invoke.operands()) {
+							boolean isCopyEliminated = isCopyEliminated(param, pos, code, function);
+							updateSet(isCopyEliminated, param, code, function);
+							pos++;
+						}
+					}
 				}
 			}
 		}
