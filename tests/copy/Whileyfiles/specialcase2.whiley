@@ -6,7 +6,7 @@ function g(int[] a, int[] b) -> int[]:
 function func(int[] a, int[] b) -> int[]:
 	int ra = a[0]	//ReadOnly_a
 	int rb = b[0]	//ReadOnly_b
-	int[] r = g(a, b)
+	int[] r = g(a, b) // b is read-only and never returned
 	r[0] = 1
 	return b
 // Main method
