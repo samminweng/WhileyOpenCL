@@ -106,17 +106,17 @@ public class ReturnAnalyzer extends Analyzer {
 
 		// Get the alias set for lhs/rhs
 		HashSet<Integer> aliasSet = getAliasVariables(lhs, function);
-		
+
 		// Get return set of given function
 		HashSet<Integer> returnStore = returnStores.get(function);
 
 		// Check if any return variable is aliased to lhs register
-		for(int retRegister: returnStore) {
-			if(aliasSet.contains(retRegister)) {
+		for (int retRegister : returnStore) {
+			if (aliasSet.contains(retRegister)) {
 				// Put all the aliasing variables to return set
 				returnStore.addAll(aliasSet);
 				break;
-			}			
+			}
 		}
 
 	}
@@ -169,9 +169,13 @@ public class ReturnAnalyzer extends Analyzer {
 	}
 
 	/**
+	 * This function is replaced by analyzeFunction
+	 * 
+	 * 
 	 * Compute the return set for the given function node
 	 * 
 	 * @param currentNode
+	 * @deprecated
 	 */
 	@Override
 	protected void visit(DefaultMutableTreeNode currentNode) {
@@ -266,6 +270,34 @@ public class ReturnAnalyzer extends Analyzer {
 
 		return RETURN.NEVER_RETURN;
 		// return false;
+	}
+
+	@Override
+	public void analyzeFunction(FunctionOrMethod function) {
+
+		HashSet<Integer> returnStore;
+		if (!returnStores.containsKey(function)) {
+			returnStores.put(function, new HashSet<Integer>());
+			aliasStores.put(function, new ArrayList<HashSet<Integer>>());
+		}
+		// Store return registers
+		returnStore = returnStores.get(function);
+		// Go through each return bytecode
+		for (Code code : function.body().bytecodes()) {
+			if (code instanceof Codes.Return) {
+				Codes.Return r = (Codes.Return) code;
+				if (r.operands().length > 0) {
+					int reg = r.operand(0);
+					// add return register to set
+					returnStore.add(reg);
+				}
+			}
+		}
+		
+		if(this.isVerbose) {			
+			System.out.println("// Return variables in "+ function.name() + ":" + returnStore);
+		}
+
 	}
 
 }

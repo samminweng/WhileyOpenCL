@@ -4,6 +4,7 @@ import wybs.lang.Builder;
 import wybs.util.StdBuildRule;
 import wybs.util.StdProject;
 import wyopcl.translator.Translator;
+import wyopcl.translator.TranslatorV2;
 /**
  * An builder is used to create the translator to produce c code 
  * and optimizes the generated code according to command-line options.
@@ -39,7 +40,7 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 	protected void addBuildRules(StdProject project) {
 		// Add default build rule for converting whiley files into wyil files. 
 		super.addBuildRules(project);
-		Builder builder = new Translator(config);
+		Builder builder = new TranslatorV2(config);
 		project.add(new StdBuildRule(builder, wyilDir, wyilIncludes,
 				wyilExcludes, null));
 	}	

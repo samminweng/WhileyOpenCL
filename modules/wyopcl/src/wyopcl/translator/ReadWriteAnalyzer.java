@@ -166,10 +166,41 @@ public class ReadWriteAnalyzer extends Analyzer {
 		return false;// Read-only
 	}
 
+	
 	/**
+	 * Go through each WyIL-code and add the lhs register to read-write set.
+	 * 
+	 * 
+	 * @param function
+	 */
+	public void analyzeFunction(FunctionOrMethod function) {
+		
+		HashSet<Integer> store;// Store all read-write variables for 'function'
+		if (!stores.containsKey(function)) {
+			stores.put(function, new HashSet<Integer>());
+		}
+		
+		// Store read-write registers
+		store = stores.get(function);
+		// Go through each bytecode and add lhs register to read-write set
+		for (Code code : function.body().bytecodes()) {
+			this.iterateBytecode(code, store);
+		}
+		
+		if(this.isVerbose) {			
+			System.out.println("// Read-write variables in "+ function.name() + ":" + store);
+		}
+		
+	}
+	
+	/**
+	 * This function is replaced by 'analyzeFunction'
+	 * 
+	 * 
 	 * Compute the read-write set for the given function
 	 * 
 	 * @param currentNode
+	 * @deprecated
 	 */
 	@Override
 	protected void visit(DefaultMutableTreeNode currentNode) {
@@ -212,6 +243,7 @@ public class ReadWriteAnalyzer extends Analyzer {
 	 * 
 	 *
 	 * @param module
+	 * @deprecated
 	 */
 	public void apply(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
 		super.apply(module, transformFuncMap);

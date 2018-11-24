@@ -19,8 +19,6 @@ import java.util.stream.Collectors;
 import org.apache.maven.artifact.ant.shaded.FileUtils;
 import org.junit.Test;
 
-import com.sun.glass.ui.CommonDialogs.Type;
-
 import java.nio.charset.StandardCharsets;
 
 public class ModelCheckingTestCase {

@@ -102,14 +102,14 @@ public class LiveVariablesAnalysis extends Analyzer {
 			// For function call
 			if (code instanceof Codes.Invoke) {
 				// Check if the 'reg' is used into 'code' more than once.
-				Codes.Invoke invoke = (Codes.Invoke)code;
-				int counts=0;
-				for(int op:invoke.operands()){
-					if(op == reg){
+				Codes.Invoke invoke = (Codes.Invoke) code;
+				int counts = 0;
+				for (int op : invoke.operands()) {
+					if (op == reg) {
 						counts++;
 					}
 				}
-				if(counts >=2){
+				if (counts >= 2) {
 					return true;// That means, 'reg' is used twice.
 				}
 			}
@@ -153,16 +153,17 @@ public class LiveVariablesAnalysis extends Analyzer {
 	 * @param livenessStore
 	 */
 	private void printLivenss(FunctionOrMethod function) {
-		// Get function name
-		System.out.println("###### Live variables for " + function.name() + " function. ######");
 		// Get liveness
 		LiveVariables liveness = getLiveness(function);
-		// Get the list of blocks for the function.
-		for (BasicBlock block : this.getBlocks(function)) {
-			// Print out the in/out set for the block.
-			System.out.println("In" + ":{" + getLiveVariables(liveness.getIN(block), function) + "}\n" + block + "\nOut"
-					+ ":{" + getLiveVariables(liveness.getOUT(block), function) + "}\n");
-		}
+		// Get function name
+		System.out.println("// Live variables for " + function.name() + " function" + liveness.toString());
+
+		 // Get the list of blocks for the function.
+		 for (BasicBlock block : this.getBlocks(function)) {
+		 // Print out the in/out set for the block.
+		 System.out.println("In" + ":{" + getLiveVariables(liveness.getIN(block), function) + "}\n" + block + "\nOut"
+		 + ":{" + getLiveVariables(liveness.getOUT(block), function) + "}");
+		 }
 	}
 
 	/**
@@ -222,17 +223,20 @@ public class LiveVariablesAnalysis extends Analyzer {
 	 * @param function
 	 *            code block of function
 	 */
-	private void computeLiveness(FunctionOrMethod function) {
+	@Override
+	public void analyzeFunction(FunctionOrMethod function) {
 		LiveVariables liveness = new LiveVariables(this.config);
 		CFGraph cfGraph = this.getCFGraph(function);
 		if (cfGraph != null) {
 			liveness.computeLiveness(function.name(), isVerbose, cfGraph);
 			// Store the liveness analysis for the function.
 			livenessStore.put(function, liveness);
-//			// Print out analysis result
-//			if (isVerbose) {
-//				printLivenss(function);
-//			}
+			// Print out analysis result
+			if (isVerbose) {
+				// Get liveness of a function
+				System.out.println("// Live variables for " + function.name() + " function" + liveness.toString());
+				//printLivenss(function);
+			}
 		} else {
 			throw new RuntimeException("Not building CFG for " + function);
 		}
@@ -245,11 +249,12 @@ public class LiveVariablesAnalysis extends Analyzer {
 		if (function != null) {
 			// Check if the function has been transformed. If so, use the transformed one.
 			function = this.getFunction(function);
-			computeLiveness(function);
-//			// Print out analysis result
-//			if (isVerbose) {
-//				printLivenss(function);
-//			}
+			analyzeFunction(function);
+			// // Print out analysis result
+			// if (isVerbose) {
+			// printLivenss(function);
+			// }
 		}
 	}
+
 }

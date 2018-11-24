@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
 
 import wyil.attributes.VariableDeclarations;
 import wyil.attributes.VariableDeclarations.Declaration;
@@ -49,13 +50,13 @@ public abstract class Analyzer {
 	// Boolean flag indicates whether to print out debugging messages
 	public boolean isVerbose;
 	// Maps of CFGs
-	protected HashMap<FunctionOrMethod, CFGraph> cfgraphs;
+	public static HashMap<FunctionOrMethod, CFGraph> cfgraphs;
 	// The line number
 	private int line;
 	// Wyil byte-code
-	protected WyilFile module;
+	public static WyilFile module;
 	// The tree node of calling graph
-	protected DefaultMutableTreeNode tree;
+	public static DefaultMutableTreeNode tree;
 	// The transformed functions
 	protected Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap;
 
@@ -74,30 +75,26 @@ public abstract class Analyzer {
 	 * @param module
 	 */
 	public void apply(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
-		this.module = module;
+		Analyzer.module = module;
 		this.transformFuncMap = transformFuncMap;
 		this.buildCallGraph(module);
 		// Iterate each function to build up CFG
 		for (FunctionOrMethod function : module.functionOrMethods()) {
-			// Check if the function is transformed 
+			// Check if the function is transformed
 			function = this.getFunction(function);
 			this.buildCFG(function);
-			
+
 		}
-		
+
 		// Build up CFG for transformed function
-		if(transformFuncMap.isPresent()){
-			for(FunctionOrMethod transformedFunction : transformFuncMap.get().values()){
-				this.buildCFG(transformedFunction);
-			}
-		}
-		
-		
+		// if(transformFuncMap.isPresent()){
+		// for(FunctionOrMethod transformedFunction : transformFuncMap.get().values()){
+		// this.buildCFG(transformedFunction);
+		// }
+		// }
+
 	}
 
-	
-	
-	
 	/**
 	 * Get the function. If the function has been transformed, then return the transformed one.
 	 * 
@@ -106,17 +103,17 @@ public abstract class Analyzer {
 	 */
 	protected FunctionOrMethod getFunction(FunctionOrMethod function) {
 		String name = function.name();
-		if (!this.module.functionOrMethod(name).isEmpty()){
+		if (!this.module.functionOrMethod(name).isEmpty()) {
 			// Check if the function has been transformed into a new function byte-code.
-			if(transformFuncMap.isPresent() && transformFuncMap.get().containsKey(function)){ 
+			if (transformFuncMap.isPresent() && transformFuncMap.get().containsKey(function)) {
 				FunctionOrMethod transformedFunc = transformFuncMap.get().get(function);
-				return transformedFunc;				
+				return transformedFunc;
 			}
 		}
-		
+
 		return function;
 	}
-	
+
 	/**
 	 * Get the called function
 	 * 
@@ -126,22 +123,20 @@ public abstract class Analyzer {
 	protected FunctionOrMethod getCalledFunction(Codes.Invoke code) {
 		String name = code.name.name();
 		wyil.lang.Type.FunctionOrMethod type = code.type(0);
-		if (!this.module.functionOrMethod(name).isEmpty()){
+		if (!this.module.functionOrMethod(name).isEmpty()) {
 			// Get the function byte with function name and type
-			for(FunctionOrMethod func: this.module.functionOrMethods()){
-				if(func.name().equals(name)
-						&&func.type().equals(type)){
+			for (FunctionOrMethod func : this.module.functionOrMethods()) {
+				if (func.name().equals(name) && func.type().equals(type)) {
 					// Get the function
 					func = this.getFunction(func);
 					return func;
 				}
 			}
 		}
-		
+
 		return null;
 	}
-	
-	
+
 	/**
 	 * Given a function name, get the CFGraph.
 	 * 
@@ -169,15 +164,12 @@ public abstract class Analyzer {
 			List<Code> codeblk = blk.getCodeBlock();
 			// Check if code blk contains this byte-code.
 			if (codeblk.contains(code)) {
-					return blk;
+				return blk;
 			}
-			
+
 		}
 		return null;
 	}
-	
-	
-	
 
 	/**
 	 * Gets the list of basic blocks for a function.
@@ -232,18 +224,19 @@ public abstract class Analyzer {
 		String dot_string = "digraph " + name + "{\n";
 		CFGraph graph = getCFGraph(function);
 		List<BasicBlock> blks = graph.getBlockList();
-		// Write out each block 
+		// Write out each block
 		for (BasicBlock blk : blks) {
-			if(blk.getType() == BlockType.LOOP_BODY || blk.getType() == BlockType.LOOP_HEADER
-			  || blk.getType() == BlockType.LOOP_EXIT){
+			if (blk.getType() == BlockType.LOOP_BODY || blk.getType() == BlockType.LOOP_HEADER
+					|| blk.getType() == BlockType.LOOP_EXIT) {
 				// Draw loop structures with grey box shape
-				dot_string += "\""+ blk.getLabel() + " [" + blk.getType() + "]\""+"[shape=box,style=filled,color=\".7 .3 1.0\"];\n";
-			}else if(blk.getType() == BlockType.COND){
+				dot_string += "\"" + blk.getLabel() + " [" + blk.getType() + "]\""
+						+ "[shape=box,style=filled,color=\".7 .3 1.0\"];\n";
+			} else if (blk.getType() == BlockType.COND) {
 				// Draw condition with a diamond shape
-				dot_string += "\""+ blk.getLabel() + " [" + blk.getType() + "]\""+"[shape=diamond];\n";
-			} else{
+				dot_string += "\"" + blk.getLabel() + " [" + blk.getType() + "]\"" + "[shape=diamond];\n";
+			} else {
 				// Draw if-else branches with a box shape
-				dot_string += "\""+ blk.getLabel() + " [" + blk.getType() + "]\""+"[shape=box];\n";
+				dot_string += "\"" + blk.getLabel() + " [" + blk.getType() + "]\"" + "[shape=box];\n";
 			}
 		}
 		// Write out the edges between two blocks
@@ -278,17 +271,12 @@ public abstract class Analyzer {
 			line = 0;
 			iterateWyilCode(function, function.body().bytecodes());
 		}
-//		if (isVerbose) {
-//			// Print out CFGraph.
-//			this.printCFG(function);
-//		}
+		// if (isVerbose) {
+		// // Print out CFGraph.
+		// this.printCFG(function);
+		// }
 	}
 
-	
-	
-	
-	
-	
 	/**
 	 * Build up the control flow graph: iterating each byte-code to create the block (e.g. loop structure/if-else
 	 * branches) or reuse the current block to put the constraints into the corresponding block.
@@ -302,13 +290,13 @@ public abstract class Analyzer {
 		// Parse each byte-code and add the constraints accordingly.
 		for (Code code : code_blk) {
 			// Get the Block.Entry and print out each byte-code
-			//printWyILCode(function, code, line);
+			// printWyILCode(function, code, line);
 			line++; // Increment the line number
 			// Parse each byte-code and add the constraints accordingly.
 			try {
-				if(code instanceof Codes.Assign) {
+				if (code instanceof Codes.Assign) {
 					buildCFG((Codes.Assign) code, function);
-				}else if (code instanceof Codes.If) {
+				} else if (code instanceof Codes.If) {
 					buildCFG((Codes.If) code, function);
 				} else if (code instanceof Codes.Return) {
 					buildCFG((Codes.Return) code, function);
@@ -338,17 +326,17 @@ public abstract class Analyzer {
 		CFGraph graph = getCFGraph(function);
 		// Get the current block
 		BasicBlock c_blk = graph.getCurrentBlock();
-		if(isArrayAssign(code, function)) {
+		if (isArrayAssign(code, function)) {
 			// Set current block to be Assign block
 			c_blk.setType(BlockType.ASSIGN);
-			c_blk.addCode(code);			
+			c_blk.addCode(code);
 			// Create another block
 			String label = "Block" + line;
 			// Create another block
 			BasicBlock blk = graph.createBasicBlock(label, BlockType.BLOCK, c_blk);
 			// Set next_blk to be the current block.
 			graph.setCurrentBlock(blk);
-		}else{
+		} else {
 			c_blk.addCode(code);
 		}
 	}
@@ -373,7 +361,7 @@ public abstract class Analyzer {
 		BasicBlock blk = graph.createBasicBlock(label, BlockType.BLOCK, update_blk);
 		// Set next_blk to be the current block.
 		graph.setCurrentBlock(blk);
-		
+
 	}
 
 	/**
@@ -397,10 +385,10 @@ public abstract class Analyzer {
 		// Add the code to blk
 		code.bytecodes().forEach(c -> assert_blk.addCode(c));
 
-		// Create a child block after assertion  
+		// Create a child block after assertion
 		BasicBlock child = graph.createBasicBlock(label, BlockType.BLOCK, assert_blk);
-		 
-		// Set child block as current one 
+
+		// Set child block as current one
 		graph.setCurrentBlock(child);
 
 	}
@@ -416,19 +404,18 @@ public abstract class Analyzer {
 		// Get the graph
 		CFGraph graph = getCFGraph(function);
 		BasicBlock c_blk = graph.getCurrentBlock();
-		
+
 		// Check if any array typed parameter is used in 'invoke' code
-		boolean isArrayParam = false;		
-		for(Type paramtype: code.type(0).params()){
-			if(paramtype instanceof Type.Array 
-				|| paramtype instanceof Type.Nominal // Structure
-				){
+		boolean isArrayParam = false;
+		for (Type paramtype : code.type(0).params()) {
+			if (paramtype instanceof Type.Array || paramtype instanceof Type.Nominal // Structure
+			) {
 				isArrayParam = true;
 				break;
 			}
 		}
-		
-		if(isArrayParam){
+
+		if (isArrayParam) {
 			// Create a 'function call' block
 			// Get the label name (e.g. swap12).
 			String label = code.name.name() + line;
@@ -439,14 +426,15 @@ public abstract class Analyzer {
 			BasicBlock blk = graph.createBasicBlock(label, BlockType.BLOCK, invoke_blk);
 			// Set next_blk to be the current block.
 			graph.setCurrentBlock(blk);
-		}else{
+		} else {
 			// Add 'invoke' code to current block
 			c_blk.addCode(code);
 		}
 	}
-	
+
 	/**
 	 * Adds an invariant code to the current block
+	 * 
 	 * @param code
 	 * @param function
 	 */
@@ -467,15 +455,15 @@ public abstract class Analyzer {
 	private void buildCFG(Loop code, FunctionOrMethod function) {
 		// Begin a loop and search for loop condition
 		String loop_cond = "";
-		for(Code c: code.bytecodes()){
+		for (Code c : code.bytecodes()) {
 			// The first if-else is the loop condition
-			if(c instanceof Codes.If){
+			if (c instanceof Codes.If) {
 				// Extract the label
-				loop_cond = ((Codes.If)c).target;
+				loop_cond = ((Codes.If) c).target;
 				break;
 			}
 		}
-		
+
 		CFGraph graph = getCFGraph(function);
 		BasicBlock c_blk = graph.getCurrentBlock();
 		// Create the loop header
@@ -488,12 +476,12 @@ public abstract class Analyzer {
 		graph.setCurrentBlock(loop_body);
 		// Get the list of byte-code and iterate through the list.
 		iterateWyilCode(function, code.bytecodes());
-		// After iterating all loop byte-code, link the current block to the loop header 
+		// After iterating all loop byte-code, link the current block to the loop header
 		c_blk = graph.getCurrentBlock();
 		c_blk.addChild(loop_header);
 		// Set the current block to be loop exit.
 		graph.setCurrentBlock(loop_exit);
-		
+
 		// Finish a loop
 
 	}
@@ -515,12 +503,12 @@ public abstract class Analyzer {
 			// Create a new block
 			goto_blk = graph.createBasicBlock(label, BlockType.BLOCK);
 		}
-		
-		if(current_blk != null){
+
+		if (current_blk != null) {
 			// Link the current and goto blocks
 			current_blk.addChild(goto_blk);
 		}
-		
+
 		// Set the current blk to null blk
 		graph.setCurrentBlock(null);
 	}
@@ -542,7 +530,7 @@ public abstract class Analyzer {
 		BasicBlock c_blk = graph.getCurrentBlock();
 		// Get the target block (else branch or loop exit).
 		BasicBlock blk = graph.getBasicBlock(label);
-		if(blk == null){
+		if (blk == null) {
 			// Create a new block
 			blk = graph.createBasicBlock(label, BlockType.BLOCK);
 		}
@@ -552,7 +540,7 @@ public abstract class Analyzer {
 			// Add current block to the target block.
 			c_blk.addChild(blk);
 		}
-		
+
 		// Switch the current block to the target block
 		graph.setCurrentBlock(blk);
 
@@ -596,7 +584,7 @@ public abstract class Analyzer {
 
 		// Check if the 'if' bytecode is the loop condition.
 		BasicBlock loop_body = graph.getBasicBlock(code.target, BlockType.LOOP_BODY);
-		if (loop_body!= null) {
+		if (loop_body != null) {
 			// Added the condition to loop body
 			loop_body.addCode(code);
 		} else {
@@ -625,7 +613,7 @@ public abstract class Analyzer {
 		BasicBlock blk = graph.getCurrentBlock();
 		// Check if there is any return value. If no, no needs of making a "Return" block.
 		if (code.operands().length > 0) {
-			String label = "return"+prefix+code.operand(0);
+			String label = "return" + prefix + code.operand(0);
 			// Create the return block, using target as the label.
 			blk = graph.createBasicBlock(label, BlockType.RETURN, blk);
 			// Add the code to current block.
@@ -675,59 +663,62 @@ public abstract class Analyzer {
 	 */
 	protected boolean isArrayAssign(Assign code, FunctionOrMethod function) {
 		int lhs_register = code.target(0);
-		//Get the declarations for lhs register
+		// Get the declarations for lhs register
 		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
 		Declaration declaration = vars.get(lhs_register);
 		Type type = declaration.type();
-		// Check if lhs type is array or the below types 
+		// Check if lhs type is array or the below types
 		if (type instanceof Type.Array || type instanceof Type.Record || type instanceof Type.Nominal
 				|| type instanceof Type.Union) {
 			return true; // Consider the assignment as array assignment
 		}
 		return false;
 	}
-	
-	
-	
+
 	/**
-	 * Map the function argument to the register in the calling function.
-	 * For example, 'a = f(b, c)'
-	 * The passed argument 'b' is mapped to the first register (register = 0)
-	 * The passed arguement 'c' is the second register (register = 1)
+	 * Map the function argument to the register in the calling function. For example, 'a = f(b, c)' The passed argument
+	 * 'b' is mapped to the first register (register = 0) The passed arguement 'c' is the second register (register = 1)
 	 * 
-	 * A special case, 'a = f(b, b)'
-	 * The first argument 'b' is the first register (register = 0)
-	 * The second argument 'b' is the second register (register = 1)
+	 * A special case, 'a = f(b, b)' The first argument 'b' is the first register (register = 0) The second argument 'b'
+	 * is the second register (register = 1)
 	 * 
-	 * @param parameter the function argument at caller site
+	 * @param parameter
+	 *            the function argument at caller site
 	 * @param code
 	 * @return the register in calling function
 	 */
 	protected int mapArgumentToParameter(int parameter, int pos, Codes.Invoke code) {
 		// Map the register to input parameter.
 		int[] ops = code.operands();
-		
+
 		// Find out the index of passed parameter
-		int register =0;
+		int register = 0;
 		int index = 0;
-		while(register<ops.length){
-			if(ops[register] == parameter && pos == index){
+		while (register < ops.length) {
+			if (ops[register] == parameter && pos == index) {
 				break;
 			}
 			register++;
 			index++;
 		}
-		
+
 		return register;// The operand index is also the registers defined in the function.
 	}
-	
+
 	/**
 	 * Visit the node and analyze the function
 	 * 
 	 * @param currentNode
 	 */
 	protected abstract void visit(DefaultMutableTreeNode node);
-	
+
+	/**
+	 * Analyze each line of code in function.
+	 * 
+	 * @param function
+	 */
+	public abstract void analyzeFunction(FunctionOrMethod function);
+
 	/**
 	 * Perform the post-order traversal to visit all nodes of a tree reference:
 	 * http://www.tutorialspoint.com/data_structures_algorithms/tree_traversal.htm
@@ -736,17 +727,42 @@ public abstract class Analyzer {
 	 */
 	protected void postorderTraversalCallGraph(DefaultMutableTreeNode tree) {
 		// Go through all the nodes in post order
-		Enumeration<DefaultMutableTreeNode> nodes = (Enumeration<DefaultMutableTreeNode>) tree.postorderEnumeration();
+		Enumeration<TreeNode> nodes = tree.postorderEnumeration();
 		while (nodes.hasMoreElements()) {
-			DefaultMutableTreeNode node = nodes.nextElement();
+			DefaultMutableTreeNode node = (DefaultMutableTreeNode) nodes.nextElement();
 			// Root node represents the tree and does not have the function.
-			if (!node.isRoot()){
+			if (!node.isRoot()) {
 				visit(node);
 			}
 		}
 	}
-	
-	
+
+	/**
+	 * Return the functions in the post-order of calling graph.
+	 * 
+	 * @return
+	 */
+	public List<FunctionOrMethod> getFunctionsInPostOrderOfCallingGraph() {
+		List<FunctionOrMethod> functionList = new ArrayList<FunctionOrMethod>();
+
+		// Get a list of functions in the call graph tree
+		Enumeration<TreeNode> childNodes = tree.postorderEnumeration();
+		while (childNodes.hasMoreElements()) {
+			DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) childNodes.nextElement();
+
+			Object userObj = childNode.getUserObject();
+			// Check if the object is a funciton object
+			if (userObj instanceof FunctionOrMethod) {
+				FunctionOrMethod function = (FunctionOrMethod) childNode.getUserObject();
+				functionList.add(function);
+			}
+
+		}
+
+		return functionList;
+
+	}
+
 	/**
 	 * Iterate each code recursively to build the call graph
 	 * 
@@ -765,7 +781,7 @@ public abstract class Analyzer {
 			if (callingfunction != null && !callingfunction.equals(function)) {
 				// Create the tree node and append the node to the parent node
 				DefaultMutableTreeNode node = new DefaultMutableTreeNode(callingfunction);
-				parentNode.add((DefaultMutableTreeNode)node);
+				parentNode.add((DefaultMutableTreeNode) node);
 				// Iterate the calling function
 				for (Code c : callingfunction.body().bytecodes()) {
 					buildCallGraph(c, callingfunction, node);
@@ -773,7 +789,7 @@ public abstract class Analyzer {
 			}
 		} else if (code instanceof Codes.IndirectInvoke) {
 			// Do nothing
-			//System.out.println(code);
+			// System.out.println(code);
 		} else if (code instanceof Codes.Loop) {
 			Codes.Loop loop = (Codes.Loop) code;
 			// Iterate the byte-code inside loop body
@@ -783,32 +799,29 @@ public abstract class Analyzer {
 		}
 
 	}
-	
+
 	/**
-	 * Go through each function in the tree (post-order)
-	 * to check if the given node is one of child nodes. 
+	 * Go through each function in the tree (post-order) to check if the given node is one of child nodes.
 	 * 
 	 * 
 	 * @param node
 	 * @return true if the node is a child node.
 	 */
-	private boolean findCallGraph(DefaultMutableTreeNode node){
+	private boolean findCallGraph(DefaultMutableTreeNode node) {
 		// Get a list of functions in the call graph tree
-		Enumeration<DefaultMutableTreeNode> childNodes = tree.postorderEnumeration();
+		Enumeration<TreeNode> childNodes = tree.postorderEnumeration();
 		boolean isFound = false;
-		while(childNodes.hasMoreElements()){
-			DefaultMutableTreeNode childNode = childNodes.nextElement();
+		while (childNodes.hasMoreElements()) {
+			DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) childNodes.nextElement();
 			// Check if the given node is one of child nodes
-			if(childNode.getUserObject().equals(node.getUserObject())){
+			if (childNode.getUserObject().equals(node.getUserObject())) {
 				isFound = true;// Found the child node
 				break;
 			}
 		}
 		return isFound;// Not found
 	}
-	
-	
-	
+
 	/**
 	 * Creates a call graph to represent calling relationship between functions
 	 * 
@@ -821,33 +834,31 @@ public abstract class Analyzer {
 	protected void buildCallGraph(WyilFile module) {
 		// Ensure the tree is built once
 		if (tree == null) {
-			
+
 			// Create a root function
-			tree = new DefaultMutableTreeNode("root"); 
-			
+			tree = new DefaultMutableTreeNode("root");
+
 			// Build call graph, starting with main function (root node)
 			FunctionOrMethod main = module.functionOrMethod("main").get(0);
 			DefaultMutableTreeNode mainNode = new DefaultMutableTreeNode(main);
-			
+
 			// Go through main function
 			for (Code code : main.body().bytecodes()) {
 				buildCallGraph(code, main, mainNode);
 			}
-			
-			
+
 			// Discover un-used or un-called functions to the tree
-			for(FunctionOrMethod function: module.functionOrMethods()){
+			for (FunctionOrMethod function : module.functionOrMethods()) {
 				DefaultMutableTreeNode node = new DefaultMutableTreeNode(function);
 				// Check if the node function is added to the tree
 				boolean isFound = findCallGraph(node);
-				if(!isFound){
+				if (!isFound) {
 					// If not, then add the node to the tree
 					tree.add(node);
 				}
 			}
-			
-			
+
 		}
 	}
-	
+
 }

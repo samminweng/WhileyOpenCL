@@ -47,7 +47,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	private Optional<DeallocationAnalyzer> deallocatedAnalyzer = Optional.empty();
 	// Optional bound analyzer
 	private Optional<BoundAnalyzer> boundAnalyzer = Optional.empty();
-	// Optional transformed function 
+	// Optional transformed function
 	private Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap = Optional.empty();
 
 	/**
@@ -86,33 +86,45 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Write out user-defined types.
 		this.writeUserTypes((List<wyil.lang.WyilFile.Type>) module.types());
 
-		// Translate each function
-		for (FunctionOrMethod function : module.functionOrMethods()) {
-			// Check if the function is transformed
-			if(transformFuncMap.isPresent()&& transformFuncMap.get().containsKey(function)){
-				// Get the transformed function
-				FunctionOrMethod transformedFunc = transformFuncMap.get().get(function);
+		Collection<FunctionOrMethod> functions = module.functionOrMethods();
 
-				// Add the function name to the transformed function
-				stores.addTransformFunctionName(function, transformedFunc);
-
-				// Generate the function block
-				for (Code code : transformedFunc.body().bytecodes()) {
-					// Iterate and translate each code into the target language.
-					this.iterateCode(code, transformedFunc);
-				}
-				// Write the code
-				this.writeFunction(transformedFunc);				
-			}else{
-				// Generate the function block
-				for (Code code : function.body().bytecodes()) {
-					// Iterate and translate each code into the target language.
-					this.iterateCode(code, function);
-				}
-				// Write the code
-				this.writeFunction(function);
-			}
+		// Check if any analyser exist. If so, we use the calling graph to produce the code accordingly.
+		if (this.copyAnalyzer.isPresent()) {
+			functions = this.copyAnalyzer.get().getFunctionsInPostOrderOfCallingGraph();
+		}else if(this.deallocatedAnalyzer.isPresent()) {
+			functions = this.deallocatedAnalyzer.get().getFunctionsInPostOrderOfCallingGraph();
+		} else {
+			functions = module.functionOrMethods();
 		}
+
+		// Translate each function in the order of WyIL code
+		for (FunctionOrMethod function : functions) {
+			// // Check if the function is transformed
+			// if(transformFuncMap.isPresent()&& transformFuncMap.get().containsKey(function)){
+			// // Get the transformed function
+			// FunctionOrMethod transformedFunc = transformFuncMap.get().get(function);
+			//
+			// // Add the function name to the transformed function
+			// stores.addTransformFunctionName(function, transformedFunc);
+			//
+			// // Generate the function block
+			// for (Code code : transformedFunc.body().bytecodes()) {
+			// // Iterate and translate each code into the target language.
+			// this.iterateCode(code, transformedFunc);
+			// }
+			// // Write the code
+			// this.writeFunction(transformedFunc);
+			// }else{
+			// Generate the function block
+			for (Code code : function.body().bytecodes()) {
+				// Iterate and translate each code into the target language.
+				this.iterateCode(code, function);
+			}
+			// Write the code
+			this.writeFunction(function);
+			// }
+		}
+
 	}
 
 	/**
@@ -127,7 +139,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		ArrayList<Type> params = function.type().params();
 		String indent = "\t";
 		// Declare the deallocation for the parameter
-		for(int reg = 0; reg< params.size();reg++) {
+		for (int reg = 0; reg < params.size(); reg++) {
 			int register = reg;
 			// Declare deallocation flag
 			this.deallocatedAnalyzer.ifPresent(a -> {
@@ -136,10 +148,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					declarations.add(o);
 				}
 			});
-			
+
 		}
-		
-		// Declare local variables 
+
+		// Declare local variables
 		for (int reg = params.size(); reg < vars.size(); reg++) {
 			Type type = stores.getRawType(reg, function);
 			// Get the variable name.
@@ -149,19 +161,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			} else {
 				if (type == null || type instanceof Type.Null) {
 					declarations.add(indent + "void* " + var + ";");
-				} else if(type instanceof Type.Byte){
+				} else if (type instanceof Type.Byte) {
 					declarations.add(indent + "BYTE " + var + ";");
 				} else if (type instanceof Type.Int) {
 					String translateType;
-					if(boundAnalyzer.isPresent()){
+					if (boundAnalyzer.isPresent()) {
 						translateType = boundAnalyzer.get().suggestIntegerType(reg, function);
-					}else{
+					} else {
 						// Use the int64_t integer
 						translateType = CodeGeneratorHelper.translateType(type, stores);
 					}
 					String def = indent + translateType + " " + var + ";";// Initialize an integer variable to 0
 
-					if(boundAnalyzer.isPresent()){
+					if (boundAnalyzer.isPresent()) {
 						def = def + " //" + boundAnalyzer.get().getInferredDomain(reg, function);
 					}
 
@@ -172,23 +184,24 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					// Check elm type is an integer
 					Type elm_type = stores.getArrayElementType((Type.Array) type);
 					// Add variable declaration
-					if(elm_type instanceof Type.Byte){
-						// Declare a BYTE array 
+					if (elm_type instanceof Type.Byte) {
+						// Declare a BYTE array
 						declarations.add(indent + "_DECL_" + dimension + "DARRAY_BYTE(" + var + ");");
-					}else if (stores.isIntType(elm_type)) {
+					} else if (stores.isIntType(elm_type)) {
 						// Choose integer type for a single dimensional array
-						if(boundAnalyzer.isPresent() && dimension == 1){
+						if (boundAnalyzer.isPresent() && dimension == 1) {
 							String translateType = boundAnalyzer.get().suggestIntegerType(reg, function);
-							String def = indent + translateType + "* " + var + " = NULL;";// Initialize an integer variable to 0
+							String def = indent + translateType + "* " + var + " = NULL;";// Initialize an integer
+																							// variable to 0
 
-							if(boundAnalyzer.isPresent()){
+							if (boundAnalyzer.isPresent()) {
 								def = def + " //" + boundAnalyzer.get().getInferredDomain(reg, function);
 							}
 
 							declarations.add(def);
 							// Declare array size variable as 'size_t' type
 							declarations.add(indent + "size_t " + var + "_size = 0;");
-						}else{
+						} else {
 							// Declare an integer array using int64_t
 							declarations.add(indent + "_DECL_" + dimension + "DARRAY(" + var + ");");
 						}
@@ -198,21 +211,21 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						// Declare array size variable as 'size_t' type
 						declarations.add(indent + "size_t " + var + "_size = 0;");
 					}
-				} else if ((type instanceof Type.Reference 
+				} else if ((type instanceof Type.Reference
 						&& ((Type.Reference) type).element() instanceof Type.Array)) {
 					// Declare array variable
 					int dimension = stores.getArrayDimension(type);
 					declarations.add(indent + "_DECL_" + dimension + "DARRAY(" + var + ");");
-				} else if((type instanceof Type.Union && stores.isIntArrayOrAliasedType(type))  
-						|| (type instanceof Type.Nominal && stores.isIntArrayOrAliasedType(type))){
+				} else if ((type instanceof Type.Union && stores.isIntArrayOrAliasedType(type))
+						|| (type instanceof Type.Nominal && stores.isIntArrayOrAliasedType(type))) {
 					// Check if union type is null|int[] or nomial type is aliased to int[]
 					declarations.add(indent + "_DECL_1DARRAY(" + var + ");");
-				} else if(type instanceof Type.Nominal && ((Type.Nominal)type).name().name().equals("string")){
-					// Special case for ASCII.String type 
+				} else if (type instanceof Type.Nominal && ((Type.Nominal) type).name().name().equals("string")) {
+					// Special case for ASCII.String type
 					// Declare an array of bytes
 					declarations.add(indent + "_DECL_1DARRAY_BYTE(" + var + ");");
-				} else if (type instanceof Type.Record || type instanceof Type.Nominal 
-						|| type instanceof Type.Union || type instanceof Type.Bool) {
+				} else if (type instanceof Type.Record || type instanceof Type.Nominal || type instanceof Type.Union
+						|| type instanceof Type.Bool) {
 					String translateType = CodeGeneratorHelper.translateType(type, stores);
 					declarations.add(indent + translateType + " " + var + ";");
 				} else {
@@ -259,8 +272,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Given a function, translates it into function declaration including
-	 * function name and input parameters, e.g.
+	 * Given a function, translates it into function declaration including function name and input parameters, e.g.
 	 * 
 	 * <pre>
 	 * <code>
@@ -278,15 +290,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String declaration = "";
 		final List<Type> params = function.type().params();
 		// Compute the bound if bound analyser is present
-		if(boundAnalyzer.isPresent()){
-			int r=0;
+		if (boundAnalyzer.isPresent()) {
+			int r = 0;
 			declaration += "//";
 			// Go through all parameters
-			for(Type param : params){
+			for (Type param : params) {
 				if (stores.isIntType(param)) {
 					Domain d = boundAnalyzer.get().getInferredDomain(r, function);
 					// Print out the domains of parameters
-					declaration += "\t"+d;
+					declaration += "\t" + d;
 				}
 			}
 			declaration += "\n";
@@ -297,17 +309,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			declaration += "int main(int argc, char** args)";
 		} else {
 			// Translate function declaration in C
-			
+
 			// Translate the return type
 			Type ret_type = null;
 			{
 				if (function.type().returns().size() > 0) {
 					ret_type = function.type().returns().get(0);
 					// Translate array typed return value
-					if(boundAnalyzer.isPresent() && ret_type instanceof Type.Array){
-						// Register of return value is -1					 
-						declaration += boundAnalyzer.get().suggestIntegerType(-1, function) +"*";
-					}else{
+					if (boundAnalyzer.isPresent() && ret_type instanceof Type.Array) {
+						// Register of return value is -1
+						declaration += boundAnalyzer.get().suggestIntegerType(-1, function) + "*";
+					} else {
 						// Translate return type
 						declaration += CodeGeneratorHelper.translateType(ret_type, stores);
 					}
@@ -328,27 +340,27 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					String var = stores.getVar(op, function);
 					if (parameter_type instanceof Type.Array) {
 						// Array type
-						
+
 						Type elm_type = stores.getArrayElementType((Type.Array) parameter_type);
 						if (stores.isIntType(elm_type)) {
 							int dimension = stores.getArrayDimension(parameter_type);
-							if(boundAnalyzer.isPresent() && dimension == 1){
+							if (boundAnalyzer.isPresent() && dimension == 1) {
 								String translateType = boundAnalyzer.get().suggestIntegerType(op, function);
 								// Pass array parameter along with array size
-								String def = translateType + "* " + var + ", size_t "+ var + "_size";
+								String def = translateType + "* " + var + ", size_t " + var + "_size";
 								parameters.add(def);
-								
-							}else{
+
+							} else {
 								// Generate the parameter types using default macro
 								parameters.add("_DECL_" + dimension + "DARRAY_PARAM(" + var + ")");
-							}							
+							}
 						} else {
 							// E.g. POS* var, size_t var_size
 							String elem_type = CodeGeneratorHelper.translateType(parameter_type, stores);
 							// Declare a 'size_t' size variable
 							parameters.add(elem_type + " " + var + ", size_t " + var + "_size");
 						}
-					} else if (stores.isIntArrayOrAliasedType(parameter_type)){
+					} else if (stores.isIntArrayOrAliasedType(parameter_type)) {
 						// Pass the parameter along with size variable
 						parameters.add("_DECL_1DARRAY_PARAM(" + var + ")");
 					} else {
@@ -356,34 +368,34 @@ public class CodeGenerator extends AbstractCodeGenerator {
 							// Add lambda function pointer
 							parameters.add(declareLambda(var, (Type.Function) parameter_type));
 						} else {
-							if(parameter_type instanceof Type.Int && boundAnalyzer.isPresent()){
-								parameters.add(boundAnalyzer.get().suggestIntegerType(op, function) + " " +var);
-							}else{
+							if (parameter_type instanceof Type.Int && boundAnalyzer.isPresent()) {
+								parameters.add(boundAnalyzer.get().suggestIntegerType(op, function) + " " + var);
+							} else {
 								parameters.add(CodeGeneratorHelper.translateType(parameter_type, stores) + " " + var);
 							}
 
 						}
 					}
 					// Add deallocation flag ('_dealloc') to input parameter
-//					this.deallocatedAnalyzer.ifPresent(a -> {
-//						if (stores.isCompoundType(parameter_type)) {
-//							parameters.add("_DECL_DEALLOC_PARAM(" + var + ")");
-//						}
-//					});
+					// this.deallocatedAnalyzer.ifPresent(a -> {
+					// if (stores.isCompoundType(parameter_type)) {
+					// parameters.add("_DECL_DEALLOC_PARAM(" + var + ")");
+					// }
+					// });
 				}
 				// Pass the extra size variable of return array
-				if(ret_type != null){
-					if(ret_type instanceof Type.Array){
-						Type.Array arr_type = (Type.Array)ret_type;
+				if (ret_type != null) {
+					if (ret_type instanceof Type.Array) {
+						Type.Array arr_type = (Type.Array) ret_type;
 						// Get array dimension
 						int dimension = stores.getArrayDimension(arr_type);
-						// Declare the call-by-reference size variable for output array, e.g. 'size_t* a_size' 
-						parameters.add("_DECL_"+dimension+"DARRAYSIZE_PARAM_CALLBYREFERENCE");
-					}else if(stores.isIntArrayOrAliasedType(ret_type)){
-						// The return type is aliased to array type, e.g. string 
+						// Declare the call-by-reference size variable for output array, e.g. 'size_t* a_size'
+						parameters.add("_DECL_" + dimension + "DARRAYSIZE_PARAM_CALLBYREFERENCE");
+					} else if (stores.isIntArrayOrAliasedType(ret_type)) {
+						// The return type is aliased to array type, e.g. string
 						// Pass the size variable as a reference
 						parameters.add("_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE");
-					}else{
+					} else {
 						// For other types, no extra parameter is required.
 					}
 				}
@@ -395,9 +407,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			declaration += ")";
 		}
 
-//		if (config.isVerbose()) {
-//			System.out.println(declaration);
-//		}
+		// if (config.isVerbose()) {
+		// System.out.println(declaration);
+		// }
 		return declaration;
 	}
 
@@ -425,6 +437,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			memcpy(_21[0], tmp, 2*sizeof(int64_t));
 		}....
 	 * </pre>
+	 * 
 	 * @param code
 	 * @see Codes.Const
 	 */
@@ -437,10 +450,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		if (constant.type() instanceof Type.Null) {
 			statement.add(indent + lhs + " = NULL;");
 		} else {
-			if(constant.type() instanceof Type.Byte){
+			if (constant.type() instanceof Type.Byte) {
 				// Declare a BYTE constant
-				statement.add(indent+lhs+" = 0b"+constant.toString().replaceAll("b", "")+";");
-			}else if (constant.type() instanceof Type.Array) {
+				statement.add(indent + lhs + " = 0b" + constant.toString().replaceAll("b", "") + ";");
+			} else if (constant.type() instanceof Type.Array) {
 				// Cast the constant to an array
 				Constant.Array list = (Constant.Array) code.constant;
 				// Get element type
@@ -463,15 +476,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				} else {
 					// Get array dimension
 					int dimension = stores.getArrayDimension(constant.type());
-					if(dimension == 1){
-						if(boundAnalyzer.isPresent()){
+					if (dimension == 1) {
+						if (boundAnalyzer.isPresent()) {
 							String translateType = boundAnalyzer.get().suggestIntegerType(code.target(), function);
 							// Generate a new array using _NEW_1DARRAY macro using
-							statement.add(indent + "_NEW_1DARRAY(" + lhs + ", " + list.values.size() + ", 0" + ", "+ translateType +");");
-						}else{
+							statement.add(indent + "_NEW_1DARRAY(" + lhs + ", " + list.values.size() + ", 0" + ", "
+									+ translateType + ");");
+						} else {
 							statement.add(indent + "_NEW_1DARRAY_int64_t(" + lhs + ", " + list.values.size() + ", 0);");
 						}
-						
+
 						if (!list.values.isEmpty()) {
 							// Assign values to each element
 							String s = indent;
@@ -480,54 +494,56 @@ public class CodeGenerator extends AbstractCodeGenerator {
 							}
 							statement.add(s);
 						}
-					}else if (dimension == 2){
+					} else if (dimension == 2) {
 						// Create a 2D array
 						int _1d_size = list.values.size(); // Get size of 1st dimension
 						// the size of 2nd array : go through each sub-array to get maximal subarray size
 						int _max_2d_size = 0;
-						for(int i=0; i<list.values.size();i++){
-							Constant.Array subarray = (Constant.Array)list.values.get(i);
-							if(subarray.values.size() > _max_2d_size){
+						for (int i = 0; i < list.values.size(); i++) {
+							Constant.Array subarray = (Constant.Array) list.values.get(i);
+							if (subarray.values.size() > _max_2d_size) {
 								_max_2d_size = subarray.values.size();
 							}
 						}
 
 						// Generate the code
-						statement.add(indent + "_NEW_2DARRAY_int64_t_EMPTY(" + lhs + ", " + _1d_size + ", "+_max_2d_size+");");
+						statement.add(indent + "_NEW_2DARRAY_int64_t_EMPTY(" + lhs + ", " + _1d_size + ", "
+								+ _max_2d_size + ");");
 
 						// Assign the value to each sub-array
 						// {
-						//		int64_t tmp[] = {49, 99};
-						//		memcpy(_21[0], tmp, 2*sizeof(int64_t));
+						// int64_t tmp[] = {49, 99};
+						// memcpy(_21[0], tmp, 2*sizeof(int64_t));
 						// }
 						String s = "";
 						for (int i = 0; i < list.values.size(); i++) {
-							ArrayList<Constant> subitem = (((Constant.Array)list.values.get(i))).values;
-							//ArrayList<String> subarray = new ArrayList<String>();
+							ArrayList<Constant> subitem = (((Constant.Array) list.values.get(i))).values;
+							// ArrayList<String> subarray = new ArrayList<String>();
 							// Generate the code
-							s += indent+"{\n"+ indent + "\tint64_t tmp[] = {";
-							int sub_index=0;
+							s += indent + "{\n" + indent + "\tint64_t tmp[] = {";
+							int sub_index = 0;
 							boolean isFirst = true;
 							// Get the array size and convert the array to a string, e.g. {49, 99};
-							while(sub_index<_max_2d_size){
-								if(isFirst==false){
-									s+= ", "; // Add the comma (',') to separate each item 
+							while (sub_index < _max_2d_size) {
+								if (isFirst == false) {
+									s += ", "; // Add the comma (',') to separate each item
 								}
-								// Get each item. If no item is found, add '\0' 
-								if(sub_index<subitem.size()){
+								// Get each item. If no item is found, add '\0'
+								if (sub_index < subitem.size()) {
 									s += subitem.get(sub_index).toString();
-								}else{
+								} else {
 									// Add '\0' char to subarray so each subarray has the same length
 									s += "\'\\0\'";
 								}
 								sub_index++;
-								isFirst= false;
+								isFirst = false;
 							}
 							s += "};\n";
 
 							// Copy the subarray to lhs array, e.g. memcpy(_21[0], tmp, 2*sizeof(int64_t));
-							s += indent + "\tmemcpy("+lhs+"["+i+"], tmp, "+_max_2d_size+"*sizeof(int64_t));\n";
-							s += indent+"}\n";
+							s += indent + "\tmemcpy(" + lhs + "[" + i + "], tmp, " + _max_2d_size
+									+ "*sizeof(int64_t));\n";
+							s += indent + "}\n";
 						}
 						statement.add(s);
 
@@ -569,9 +585,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		if (!stores.isCompoundType(lhs_type)) {
 			Type rhs_type = stores.getRawType(code.operand(0), function);
 			// Special case for the assignment of int[]|null
-			if(stores.isIntArrayOrAliasedType(lhs_type)){				
+			if (stores.isIntArrayOrAliasedType(lhs_type)) {
 				if (isCopyEliminated) {
-					// Have in-place update 
+					// Have in-place update
 					return indent + "_UPDATE_1DARRAY(" + lhs + ", " + rhs + ");";
 				} else {
 					return indent + "_COPY_1DARRAY_int64_t(" + lhs + ", " + rhs + ");";
@@ -599,7 +615,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Update lhs with rhs
 			return indent + lhs + " = " + rhs + ";";
 
-		} 
+		}
 
 		if (lhs_type instanceof Type.Array) {
 			int dimension = stores.getArrayDimension(lhs_type);
@@ -607,7 +623,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			Type elm_type = stores.getArrayElementType((Type.Array) lhs_type);
 
 			// Special case of BYTE array
-			if(elm_type instanceof Type.Byte){
+			if (elm_type instanceof Type.Byte) {
 				// Check if the lhs copy is needed or not
 				if (isCopyEliminated) {
 					// Have in-place update
@@ -615,20 +631,20 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				} else {
 					// Have a copied assignment
 					return indent + "_COPY_" + dimension + "DARRAY_BYTE(" + lhs + ", " + rhs + ");";
-				}					
-			}else if (stores.isIntType(elm_type)) {
+				}
+			} else if (stores.isIntType(elm_type)) {
 				// Check if the lhs copy is needed or not
 				if (isCopyEliminated) {
 					return indent + "_UPDATE_" + dimension + "DARRAY(" + lhs + ", " + rhs + ");";
 				} else {
-					if(boundAnalyzer.isPresent()&& dimension == 1){
+					if (boundAnalyzer.isPresent() && dimension == 1) {
 						String translateType = boundAnalyzer.get().suggestIntegerType(code.target(0), function);
-						return indent + "_COPY_1DARRAY(" + lhs + ", " + rhs + ", "+translateType+");";
-					}else{
+						return indent + "_COPY_1DARRAY(" + lhs + ", " + rhs + ", " + translateType + ");";
+					} else {
 						return indent + "_COPY_" + dimension + "DARRAY_int64_t(" + lhs + ", " + rhs + ");";
 					}
 				}
-			}else {
+			} else {
 				String struct = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");
 				// An array of structure pointers
 				if (isCopyEliminated) {
@@ -639,8 +655,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					return indent + "_COPY_1DARRAY_STRUCT(" + lhs + ", " + rhs + ", " + struct + ");";
 				}
 			}
-		} else if(stores.isIntArrayOrAliasedType(lhs_type)){
-			// The type is alised to an integer array, e.g. string 
+		} else if (stores.isIntArrayOrAliasedType(lhs_type)) {
+			// The type is alised to an integer array, e.g. string
 			if (isCopyEliminated) {
 				return indent + "_UPDATE_1DARRAY(" + lhs + ", " + rhs + ");";
 			} else {
@@ -651,11 +667,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if (isCopyEliminated) {
 				return indent + lhs + " = " + rhs + ";";
 			} else {
-				return indent + lhs + " = copy_"
-						+ CodeGeneratorHelper.translateType(lhs_type, stores).replace("*", "") + "(" + rhs + ");";
+				return indent + lhs + " = copy_" + CodeGeneratorHelper.translateType(lhs_type, stores).replace("*", "")
+						+ "(" + rhs + ");";
 			}
 		}
-
 
 	}
 
@@ -675,18 +690,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * </code>
 	 * </pre>
 	 * 
-	 * Note that we need to copy input parameter(_5) to ensure value-semantics
-	 * in Whiley, but the copy can eliminated by our copy analyzer. For example,
+	 * Note that we need to copy input parameter(_5) to ensure value-semantics in Whiley, but the copy can eliminated by
+	 * our copy analyzer. For example,
 	 * <p>
 	 * <code> _4 = _5;//Remove the copy.</code>
 	 * </p>
 	 * 
 	 * Special cases:
 	 * <ul>
-	 * <li>Referenced array: reference type is free of array copies in nature as
-	 * it extracts the value from the register and assigns to target register.
-	 * But if the referenced value is an array, we still need to propagate the
-	 * array size to new register.</li>
+	 * <li>Referenced array: reference type is free of array copies in nature as it extracts the value from the register
+	 * and assigns to target register. But if the referenced value is an array, we still need to propagate the array
+	 * size to new register.</li>
 	 * 
 	 * </ul>
 	 * 
@@ -699,51 +713,49 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String indent = stores.getIndent(function);
 		Type lhs_type = stores.getRawType(code.target(0), function);
 		String rhs = stores.getVar(code.operand(0), function);
-		// The type of file reader is NULL 
-		if(lhs_type == null || lhs_type instanceof Type.Null){
-			statement.add(indent+lhs + " = "+rhs+";");			
-		}else if(lhs_type instanceof Type.Nominal 
-				&& ((Type.Nominal) lhs_type).name().name().equals("Reader")
-				&& ((Type.Nominal) lhs_type).name().name().equals("Writer")){
+		// The type of file reader is NULL
+		if (lhs_type == null || lhs_type instanceof Type.Null) {
+			statement.add(indent + lhs + " = " + rhs + ";");
+		} else if (lhs_type instanceof Type.Nominal && ((Type.Nominal) lhs_type).name().name().equals("Reader")
+				&& ((Type.Nominal) lhs_type).name().name().equals("Writer")) {
 			// Special case for File read/write
 			// Have in-place update
-			statement.add(indent+lhs + " = "+rhs+";");			
-		}else if (lhs_type instanceof Type.Function) {
+			statement.add(indent + lhs + " = " + rhs + ";");
+		} else if (lhs_type instanceof Type.Function) {
 			statement.add(indent + declareLambda(lhs, (Type.Function) lhs_type) + ";");
 			// Point lhs to lambda function.
 			statement.add(indent + lhs + " = " + rhs + ";");
-		}else {
+		} else {
 			boolean isCopyEliminated = isCopyEliminated(code.operand(0), 0, code, function);
 			// Add copy analysis result as a comment.
-			if(this.copyAnalyzer.isPresent()){
-				statement.add(indent+ "// isCopyEliminated = " + isCopyEliminated);
+			if (this.copyAnalyzer.isPresent()) {
+				statement.add(indent + "// isCopyEliminated = " + isCopyEliminated);
 			}
-			
-			
-			if(this.deallocatedAnalyzer.isPresent()	&& lhs_type instanceof Type.Array) {
+
+			if (this.deallocatedAnalyzer.isPresent() && lhs_type instanceof Type.Array) {
 				// Get element type
 				Type elm_type = stores.getArrayElementType((Type.Array) lhs_type);
 				int dimension = stores.getArrayDimension(lhs_type);
 				if (dimension == 1 && (elm_type instanceof Type.Byte || stores.isIntType(elm_type))) {
 					// For one dimensional array variable of integer/BYTE type
 					// we can use macro directly without any pre-processing.
-				}else {
+				} else {
 					// For two dimensional array or structures we generate the statements separately.
 					// Deallocate lhs register
 					this.deallocatedAnalyzer.ifPresent(a -> {
-						statement.add(indent + a.preDealloc(lhs, lhs_type, stores));				
+						statement.add(indent + a.preDealloc(lhs, lhs_type, stores));
 					});
-					//statement.add(indent + "_DEALLOC("+ lhs+ ");");
+					// statement.add(indent + "_DEALLOC("+ lhs+ ");");
 					statement.add(generateAssignmentCode(code, isCopyEliminated, function, stores));
 				}
-			}else {
+			} else {
 				// Deallocate lhs register
 				this.deallocatedAnalyzer.ifPresent(a -> {
-					statement.add(indent + a.preDealloc(lhs, lhs_type, stores));				
+					statement.add(indent + a.preDealloc(lhs, lhs_type, stores));
 				});
 				statement.add(generateAssignmentCode(code, isCopyEliminated, function, stores));
 			}
-			
+
 			if (isCopyEliminated && stores.isCompoundType(lhs_type)) {
 				// Check if lhs is a substructure.
 				stores.addSubStructure(code.target(0), code.operand(0), function);
@@ -786,8 +798,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Generates the code for <code>Codes.BinaryOperator</code> code. For
-	 * example,
+	 * Generates the code for <code>Codes.BinaryOperator</code> code. For example,
 	 * 
 	 * <pre>
 	 * <code>
@@ -804,7 +815,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * </pre>
 	 * 
 	 * When the bound analysis is enabled and any of the operands has infinite bounds, then add overflow checks
-	 * Currently, the checks supports only three overflows (add, sub, mul) 
+	 * Currently, the checks supports only three overflows (add, sub, mul)
 	 * 
 	 * @param code
 	 */
@@ -817,44 +828,44 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String op2 = stores.getVar(code.operand(1), function);
 
 		// Add extra overflow check
-		if(this.boundAnalyzer.isPresent()){
-			this.boundAnalyzer.ifPresent(analyser->{
+		if (this.boundAnalyzer.isPresent()) {
+			this.boundAnalyzer.ifPresent(analyser -> {
 				// Get Domain of left and two right operands
 				Domain left = analyser.getInferredDomain(code.target(0), function);
-				Domain right1 = analyser.getInferredDomain(code.operand(0) , function);
-				Domain right2 = analyser.getInferredDomain(code.operand(1) , function);
+				Domain right1 = analyser.getInferredDomain(code.operand(0), function);
+				Domain right2 = analyser.getInferredDomain(code.operand(1), function);
 				// If any operand is un-bounded, then add overflow checking
-				if(left.isUnbound() || right1.isUnbound() || right2.isUnbound()){
+				if (left.isUnbound() || right1.isUnbound() || right2.isUnbound()) {
 					switch (code.kind) {
 					case ADD:
-						statement.add(indent+"_DETECT_INT_ADD_OVERFLOW("+op1+","+op2+","+res+");");
+						statement.add(indent + "_DETECT_INT_ADD_OVERFLOW(" + op1 + "," + op2 + "," + res + ");");
 						break;
 					case SUB:
-						statement.add(indent+"_DETECT_INT_SUB_OVERFLOW("+op1+","+op2+","+res+");");
+						statement.add(indent + "_DETECT_INT_SUB_OVERFLOW(" + op1 + "," + op2 + "," + res + ");");
 						break;
 					case MUL:
-						statement.add(indent+"_DETECT_INT_MUL_OVERFLOW("+op1+","+op2+","+res+");");
+						statement.add(indent + "_DETECT_INT_MUL_OVERFLOW(" + op1 + "," + op2 + "," + res + ");");
 						break;
 					default:
 						// Do nothing
 						break;
 					}
-				}else{
+				} else {
 					switch (code.kind) {
 					case ADD:
-						statement.add(indent+res +" = " +op1 + " + " + op2+";");
+						statement.add(indent + res + " = " + op1 + " + " + op2 + ";");
 						break;
 					case SUB:
-						statement.add(indent+res +" = " +op1 + " - " + op2+";");
+						statement.add(indent + res + " = " + op1 + " - " + op2 + ";");
 						break;
 					case MUL:
-						statement.add(indent+res +" = " +op1 + " * " + op2+";");
+						statement.add(indent + res + " = " + op1 + " * " + op2 + ";");
 						break;
 					case DIV:
-						statement.add(indent+res +" = " +op1 + " / " + op2+";");
+						statement.add(indent + res + " = " + op1 + " / " + op2 + ";");
 						break;
 					case REM:
-						statement.add(indent+res +" = " +op1 + " % " + op2+";");
+						statement.add(indent + res + " = " + op1 + " % " + op2 + ";");
 						break;
 					default:
 						// Do nothing
@@ -862,7 +873,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					}
 				}
 			});
-		}else{
+		} else {
 			// Translate the arithmetic operation
 			String stat = indent + res + "=" + op1;
 			switch (code.kind) {
@@ -894,14 +905,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 			statement.add(stat);
 		}
-		
+
 		// Add the generated code
 		stores.addAllStatements(code, statement, function);
 	}
 
 	/**
-	 * Checks if the copy of given register is needed or not, based on liveness
-	 * information.
+	 * Checks if the copy of given register is needed or not, based on liveness information.
 	 * 
 	 * @param register
 	 * @param code
@@ -917,9 +927,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Check the copy of each function parameter. If the copy is needed, then
-	 * generate local temporary variable to reference the copied parameter. For
-	 * example, 'a = func(b)' can be translated into c code:
+	 * Check the copy of each function parameter. If the copy is needed, then generate local temporary variable to
+	 * reference the copied parameter. For example, 'a = func(b)' can be translated into c code:
 	 * 
 	 * <pre>
 	 * <code>
@@ -934,7 +943,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param function
 	 * @return a list of parameter whose copy can be safely reduced.
 	 */
-	private List<Integer> translatePreFunctionCall(List<String> statements, Codes.Invoke code, FunctionOrMethod function) {
+	private List<Integer> translatePreFunctionCall(List<String> statements, Codes.Invoke code,
+			FunctionOrMethod function) {
 		String indent = stores.getIndent(function);
 		// Create a array to store the parameter whose parameter can be reduced.
 		List<Integer> copyReducedList = new ArrayList<Integer>();
@@ -950,70 +960,73 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					// Put the operand to the copy-reduced list
 					copyReducedList.add(operand);
 				} else {
-					
+
 					// Generate the temporary block variable to store the copied
 					// parameter
 					String tmp_name = stores.getTmpParamName(param, index, code, function);
-					
+
 					// Declare the temporary variable
-					statements.add(indent + "void* " +tmp_name + ";");
-					
-					if(stores.isIntArrayOrAliasedType(param_type)){
+					statements.add(indent + "void* " + tmp_name + ";");
+
+					if (stores.isIntArrayOrAliasedType(param_type)) {
 						Type elm = stores.getArrayElementType(param_type);
 						int dimension = stores.getArrayDimension(param_type);
 						// Make the copy
-						if(elm instanceof Type.Byte){
-							if(dimension == 1){
+						if (elm instanceof Type.Byte) {
+							if (dimension == 1) {
 								// Copy 1D array of 64-bit integers
-								statements.add(indent + "_COPY_1DARRAY_PARAM(" + param + ", "+tmp_name +", BYTE);");
+								statements.add(indent + "_COPY_1DARRAY_PARAM(" + param + ", " + tmp_name + ", BYTE);");
 							}
-						}else if (stores.isIntType(elm)) {							
-							if(boundAnalyzer.isPresent()&& dimension == 1){
+						} else if (stores.isIntType(elm)) {
+							if (boundAnalyzer.isPresent() && dimension == 1) {
 								String translateType = boundAnalyzer.get().suggestIntegerType(code.target(0), function);
 								// Make a copy before the function call
-								statements.add(indent + "_COPY_1DARRAY_PARAM(" + param + ", "+tmp_name +", "+translateType+");");
-							}else{
-								if(dimension == 1){
+								statements.add(indent + "_COPY_1DARRAY_PARAM(" + param + ", " + tmp_name + ", "
+										+ translateType + ");");
+							} else {
+								if (dimension == 1) {
 									// Copy 1D array of 64-bit integers
-									statements.add(indent + "_COPY_1DARRAY_PARAM(" + param + ", "+tmp_name +", int64_t);");
-								}else if(dimension == 2){
+									statements.add(
+											indent + "_COPY_1DARRAY_PARAM(" + param + ", " + tmp_name + ", int64_t);");
+								} else if (dimension == 2) {
 									// Copy 2D array of 64-bit integers
-									statements.add(indent + "_COPY_2DARRAY_PARAM_int64_t(" + param + ", "+tmp_name +");");
-								}else{
+									statements.add(
+											indent + "_COPY_2DARRAY_PARAM_int64_t(" + param + ", " + tmp_name + ");");
+								} else {
 									throw new RuntimeException("Not implemented");
 								}
-								
+
 							}
-							
+
 						} else {
 							String elm_type = CodeGeneratorHelper.translateType(elm, stores).replace("*", "");
 							// Copy the array of structures and pass it as a function parameter
-							statements.add(indent +"_COPY_1DARRAY_PARAM_STRUCT" + "(" + param+ ", "+tmp_name + ", " + elm_type + ")");
+							statements.add(indent + "_COPY_1DARRAY_PARAM_STRUCT" + "(" + param + ", " + tmp_name + ", "
+									+ elm_type + ")");
 						}
-					}else if (param_type instanceof Type.Record || param_type instanceof Type.Nominal
-							|| param_type instanceof Type.Union) {	
+					} else if (param_type instanceof Type.Record || param_type instanceof Type.Nominal
+							|| param_type instanceof Type.Union) {
 						// Add copy analysis result as a comment.
-						if(this.copyAnalyzer.isPresent()){
-							statements.add(indent+ "// isCopyEliminated of '"+prefix+operand+"' = " + isCopyEliminated);
+						if (this.copyAnalyzer.isPresent()) {
+							statements.add(
+									indent + "// isCopyEliminated of '" + prefix + operand + "' = " + isCopyEliminated);
 						}
-						
+
 						if (!isCopyEliminated) {
 							// Temporary variable is used to reference the extra copy of parameter
 							String type_name = CodeGeneratorHelper.translateType(param_type, stores).replace("*", "");
-							statements.add(indent + tmp_name +" = copy_"+type_name+"("+ param + ");");
+							statements.add(indent + tmp_name + " = copy_" + type_name + "(" + param + ");");
 						}
 					}
-					
-					
+
 				}
 			}
 			index++;
 		}
 
-		
 		// De-allocate lhs register
 		translateLHSVarFunctionCall(statements, code, function);
-		
+
 		return copyReducedList;
 	}
 
@@ -1050,46 +1063,46 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if (parameter_type instanceof Type.Nominal
 					&& ((Type.Nominal) parameter_type).name().name().equals("Console")) {
 				parameters.add("stdout");
-			} else if (parameter_type instanceof Type.Byte){
+			} else if (parameter_type instanceof Type.Byte) {
 				parameters.add(parameter);
 			} else if (stores.isIntType(parameter_type)) {
 				parameters.add(parameter);
-			}else if (stores.isIntArrayOrAliasedType(parameter_type)) {
+			} else if (stores.isIntArrayOrAliasedType(parameter_type)) {
 				Type elm = stores.getArrayElementType(parameter_type);
 				int dimension = stores.getArrayDimension(parameter_type);
 				// Add copy analysis result as a comment.
-				if(this.copyAnalyzer.isPresent()){
-					statements.add(indent+ "// isCopyEliminated of '"+prefix+operand+"' = " + isCopyEliminated);
+				if (this.copyAnalyzer.isPresent()) {
+					statements.add(indent + "// isCopyEliminated of '" + prefix + operand + "' = " + isCopyEliminated);
 				}
 				if (isCopyEliminated) {
-					parameters.add(parameter+ ", "+ parameter+"_size");
+					parameters.add(parameter + ", " + parameter + "_size");
 					// Extra size variable for 2D array
-					if(dimension == 2){
-						parameters.add(parameter+"_size_size");
+					if (dimension == 2) {
+						parameters.add(parameter + "_size_size");
 					}
 				} else {
 					// Get temporary variable
 					String copied_param_name = stores.getTmpParamName(parameter, index, code, function);
 					// Copy is made
-					if (stores.isIntType(elm) || elm instanceof Type.Byte) {						
+					if (stores.isIntType(elm) || elm instanceof Type.Byte) {
 						// Pass the name of temporary parameter to a function call with
-						parameters.add(copied_param_name + ", "+parameter+"_size");
+						parameters.add(copied_param_name + ", " + parameter + "_size");
 						// Extra size variable for 2D array
-						if(dimension == 2){
-							parameters.add(parameter+"_size_size");
-						}						
+						if (dimension == 2) {
+							parameters.add(parameter + "_size_size");
+						}
 					} else {
 						// Copy an array of structures and Passed copied parameter to called function
-						parameters.add(copied_param_name + ", "+parameter+"_size");
+						parameters.add(copied_param_name + ", " + parameter + "_size");
 					}
 				}
 			} else if (parameter_type instanceof Type.Record || parameter_type instanceof Type.Nominal
-					|| parameter_type instanceof Type.Union) {	
+					|| parameter_type instanceof Type.Union) {
 				// Add copy analysis result as a comment.
-				if(this.copyAnalyzer.isPresent()){
-					statements.add(indent+ "// isCopyEliminated of '"+prefix+operand+"' = " + isCopyEliminated);
+				if (this.copyAnalyzer.isPresent()) {
+					statements.add(indent + "// isCopyEliminated of '" + prefix + operand + "' = " + isCopyEliminated);
 				}
-				
+
 				if (isCopyEliminated) {
 					parameters.add(parameter);
 				} else {
@@ -1100,22 +1113,22 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				}
 			} else {
 				throw new RuntimeException("Not Implemented");
-			}			
+			}
 			index++;
 		}
 
 		// Add extra call-by-ref size parameter for output array
-		if(code.targets().length>0){
+		if (code.targets().length > 0) {
 			// Get the return type
 			Type ret_type = stores.getRawType(code.target(0), function);
-			// Check if the return is an array 
-			if(ret_type instanceof Type.Array || stores.isIntArrayOrAliasedType(ret_type)){
+			// Check if the return is an array
+			if (ret_type instanceof Type.Array || stores.isIntArrayOrAliasedType(ret_type)) {
 				// Get array dimension
 				int dimension = stores.getArrayDimension(ret_type);
 				// Get return variable
 				String ret_var = stores.getVar(code.target(0), function);
 				// Pass the call-by-ref size variable to the function call
-				parameters.add("_"+dimension+"DARRAYSIZE_PARAM_CALLBYREFERENCE("+ret_var+")");
+				parameters.add("_" + dimension + "DARRAYSIZE_PARAM_CALLBYREFERENCE(" + ret_var + ")");
 			}
 		}
 
@@ -1124,10 +1137,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				.collect(Collectors.joining(", "));
 
 		// Get the invoked function name
-		String func_name = stores.getFunctionName(code); 
+		String func_name = stores.getFunctionName(code);
 
 		// Combine lhs and rhs to the statement
-		//statements.add(function_return + code.name.name() + "(" + rhs + ");");
+		// statements.add(function_return + code.name.name() + "(" + rhs + ");");
 		statements.add(function_return + func_name + "(" + rhs + ");");
 
 	}
@@ -1150,8 +1163,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String lhs = stores.getVar(update.target(0), function);
 			// Get lhs type
 			Type struct_type = stores.getRawType(update.target(0), function);
-			if (struct_type instanceof Type.Array
-					|| stores.isIntArrayOrAliasedType(struct_type)) {
+			if (struct_type instanceof Type.Array || stores.isIntArrayOrAliasedType(struct_type)) {
 				// Iterates operands to increase the depths.
 				for (int i = 0; i < update.operands().length - 1; i++) {
 					lhs += "[" + stores.getVar(update.operand(i), function) + "]";
@@ -1174,7 +1186,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			this.deallocatedAnalyzer.ifPresent(a -> {
 				statement.add(indent + a.preDealloc(lhs_var, update, function, stores));
 			});
-			
+
 			return lhs;
 
 		} else {
@@ -1187,11 +1199,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				lhs = stores.getVar(((Codes.Assign) code).target(0), function);
 				type = stores.getRawType(((Codes.Assign) code).target(0), function);
 				// Copy and deallocation analysers are both enabled
-				if(this.copyAnalyzer.isPresent() && this.deallocatedAnalyzer.isPresent() 
+				if (this.copyAnalyzer.isPresent() && this.deallocatedAnalyzer.isPresent()
 						&& type instanceof Type.Array) {
 					// Then we can avoid generating PRE_DEALLOC macro
 					return lhs;
-				}				
+				}
 			} else if (code instanceof Codes.Const) {
 				lhs = stores.getVar(((Codes.Const) code).target(0), function);
 				type = stores.getRawType(((Codes.Const) code).target(0), function);
@@ -1207,12 +1219,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				} else {
 					lhs = null;
 				}
-				
-				// If the code type is a function call, then when the copy and deallocation macros are both enabled, 
-			    //then we do not need to generate the preDealloc macro to release the lhs of the function return
-				//if(this.copyAnalyzer.isPresent() && this.deallocatedAnalyzer.isPresent()) {
-				//	return lhs;
-				//}
+
+				// If the code type is a function call, then when the copy and deallocation macros are both enabled,
+				// then we do not need to generate the preDealloc macro to release the lhs of the function return
+				// if(this.copyAnalyzer.isPresent() && this.deallocatedAnalyzer.isPresent()) {
+				// return lhs;
+				// }
 			} else if (code instanceof Codes.NewArray) {
 				lhs = stores.getVar(((Codes.NewArray) code).target(0), function);
 				type = stores.getRawType(((Codes.NewArray) code).target(0), function);
@@ -1225,8 +1237,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 
 			final Type lhs_type = type;
-			
-			
+
 			// Deallocate lhs register
 			this.deallocatedAnalyzer.ifPresent(a -> {
 				statement.add(indent + a.preDealloc(lhs, lhs_type, stores));
@@ -1254,8 +1265,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Produces the code for <code>Codes.Invoke</code> code. For example, the
-	 * following WyIL code:
+	 * Produces the code for <code>Codes.Invoke</code> code. For example, the following WyIL code:
 	 * 
 	 * <pre>
 	 * <code>invoke %12 = (%1) While_Valid_1:reverse : function([int]) -> [int]</code>
@@ -1270,15 +1280,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * </code>
 	 * </pre>
 	 * 
-	 * Before invoking the function, copy the array ('xs') first and then pass
-	 * the cloned array to the function. So that the original array will not be
-	 * overwritten and its value is safely preserved.
+	 * Before invoking the function, copy the array ('xs') first and then pass the cloned array to the function. So that
+	 * the original array will not be overwritten and its value is safely preserved.
 	 * 
 	 * Special cases:
 	 * <ul>
 	 * <li>Parse Integer<br>
-	 * <code>invoke %5 = (%8) whiley/lang/Int:parse : function(whiley/lang/ASCII:string) -> null|int</code>
-	 * <br>
+	 * <code>invoke %5 = (%8) whiley/lang/Int:parse : function(whiley/lang/ASCII:string) -> null|int</code> <br>
 	 * can translate this into <br>
 	 * <code>_5=parseInteger(_8);</code>
 	 * <li>Slice Array<br>
@@ -1313,9 +1321,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			case "parse":
 				// Parse a string into an integer.
 				statements.add(indent + "_STR_TO_INT(" + lhs + ", " + rhs + ");");
-				if(this.deallocatedAnalyzer.isPresent()) {
+				if (this.deallocatedAnalyzer.isPresent()) {
 					// remove the flag from rhs variable
-					statements.add(indent + rhs+"_dealloc = false;");
+					statements.add(indent + rhs + "_dealloc = false;");
 				}
 				break;
 			case "abs":
@@ -1336,44 +1344,45 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statements.add(indent + lhs + " = (BYTE)" + rhs + ";");
 				break;
 			case "fromBytes":
-				if(this.deallocatedAnalyzer.isPresent()) {
+				if (this.deallocatedAnalyzer.isPresent()) {
 					// PRE_DEALLOC macro is used to free lhs variable before function call.
-					statements.add(indent + "_DEALLOC("+lhs+");");
+					statements.add(indent + "_DEALLOC(" + lhs + ");");
 				}
 				statements.add(indent + lhs + " = fromBytes(" + rhs + ", " + rhs + "_size);");
-				// Propagate the size variable 
-				statements.add(indent + lhs+"_size = "+ rhs+"_size;");
-				if(this.deallocatedAnalyzer.isPresent()) {
+				// Propagate the size variable
+				statements.add(indent + lhs + "_size = " + rhs + "_size;");
+				if (this.deallocatedAnalyzer.isPresent()) {
 					// Specify the flag to lhs var
 					statements.add(indent + lhs + "_dealloc = true;");
 				}
 				break;
-			case "toUnsignedInt": 
+			case "toUnsignedInt":
 				// Convert a byte to integer
-				statements.add(indent+ lhs + " = (unsigned int)"+rhs+";");
+				statements.add(indent + lhs + " = (unsigned int)" + rhs + ";");
 				break;
-			case "toInt": 
+			case "toInt":
 				// Convert a byte to integer
-				statements.add(indent+ lhs + " = (int)"+rhs+";");
+				statements.add(indent + lhs + " = (int)" + rhs + ";");
 				break;
 			case "toByte":
 				// Convert an integer to a byte
-				statements.add(indent+ lhs + " = (BYTE)"+rhs+";");
+				statements.add(indent + lhs + " = (BYTE)" + rhs + ";");
 				break;
 			case "toString":
-				if(this.deallocatedAnalyzer.isPresent()) {
+				if (this.deallocatedAnalyzer.isPresent()) {
 					// PRE_DEALLOC macro is used to free lhs variable before function call.
-					statements.add(indent + "_DEALLOC("+lhs+");");
+					statements.add(indent + "_DEALLOC(" + lhs + ");");
 				}
 				// Convert an integer to a string (an integer array of ASCII code)
 				// Call WyRT built-in 'InttoString' function
-				statements.add(indent + lhs + " = Int_toString(" + rhs + ", _1DARRAYSIZE_PARAM_CALLBYREFERENCE("+lhs+"));");
-				if(this.deallocatedAnalyzer.isPresent()) {
+				statements.add(indent + lhs + " = Int_toString(" + rhs + ", _1DARRAYSIZE_PARAM_CALLBYREFERENCE(" + lhs
+						+ "));");
+				if (this.deallocatedAnalyzer.isPresent()) {
 					// Specify the flag to lhs var
 					statements.add(indent + lhs + "_dealloc = true;");
-				}				
+				}
 				break;
-				// Slice an array into a new sub-array at given starting and ending index.
+			// Slice an array into a new sub-array at given starting and ending index.
 			case "slice":
 				// Extract lhs variable and free the variable (if de-allocation analysis enabled)
 				lhs = translateLHSVarFunctionCall(statements, code, function);
@@ -1382,23 +1391,23 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				String start = stores.getVar(code.operand(1), function);
 				String end = stores.getVar(code.operand(2), function);
 				statements.add("_SLICE_ARRAY(" + lhs + ", " + array + ", " + start + ", " + end + ");");
-				if(this.deallocatedAnalyzer.isPresent()) {
+				if (this.deallocatedAnalyzer.isPresent()) {
 					// Specify the flag to lhs var
 					statements.add(indent + lhs + "_dealloc = true;");
-				}				
+				}
 				break;
 			case "append":
-				if(this.deallocatedAnalyzer.isPresent()) {
+				if (this.deallocatedAnalyzer.isPresent()) {
 					// PRE_DEALLOC macro is used to free lhs variable before function call.
-					statements.add(indent + "_DEALLOC("+lhs+");");
-				}			
+					statements.add(indent + "_DEALLOC(" + lhs + ");");
+				}
 				// Append an array to another array, e.g. 'invoke (%13) = (%2, %14) whiley/lang/Array:append'
-				String rhs_arr  = stores.getVar(code.operand(0), function);
+				String rhs_arr = stores.getVar(code.operand(0), function);
 				String rhs1_arr = stores.getVar(code.operand(1), function);
 				// Call built-in ArrayAppend function in WyRT.c
-				statements.add(indent+ lhs + " = Array_Append("+rhs_arr+", "+rhs_arr+ "_size , "+rhs1_arr+", "+rhs1_arr+"_size, "
-						+ "_1DARRAYSIZE_PARAM_CALLBYREFERENCE("+lhs+"));");
-				if(this.deallocatedAnalyzer.isPresent()) {
+				statements.add(indent + lhs + " = Array_Append(" + rhs_arr + ", " + rhs_arr + "_size , " + rhs1_arr
+						+ ", " + rhs1_arr + "_size, " + "_1DARRAYSIZE_PARAM_CALLBYREFERENCE(" + lhs + "));");
+				if (this.deallocatedAnalyzer.isPresent()) {
 					// Specify the flag to lhs var
 					statements.add(indent + lhs + "_dealloc = true;");
 				}
@@ -1407,25 +1416,25 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				throw new RuntimeException("Un-implemented code:" + code);
 			}
 
-			//this.deallocatedAnalyzer.ifPresent(a -> {
-			//	statements.addAll(a.postDealloc(code, function, stores, copyAnalyzer));
-			//});
-		}else if(module.contains("whiley/io")){
+			// this.deallocatedAnalyzer.ifPresent(a -> {
+			// statements.addAll(a.postDealloc(code, function, stores, copyAnalyzer));
+			// });
+		} else if (module.contains("whiley/io")) {
 			String lhs = stores.getVar(code.target(0), function);
 			String rhs = stores.getVar(code.operand(0), function);
 			switch (code.name.name()) {
 			case "Reader":
 				// Read a file name (an array of ASCII code) and output an file pointer
-				statements.add(indent+ lhs + " = Reader("+rhs+", "+rhs+"_size);");
+				statements.add(indent + lhs + " = Reader(" + rhs + ", " + rhs + "_size);");
 				break;
 			case "Writer":
 				// Open a file to write the byte array
-				statements.add(indent+ lhs + " = Writer("+rhs+", "+rhs+"_size);");
+				statements.add(indent + lhs + " = Writer(" + rhs + ", " + rhs + "_size);");
 				break;
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);
-			}			
-		} else {		
+			}
+		} else {
 
 			// Check the copy of parameter
 			List<Integer> copyReducedList = translatePreFunctionCall(statements, code, function);
@@ -1444,15 +1453,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		// Add the ending clause for the function call
 		statements.add(stores.getIndent(function) + "}");
-		
+
 		// Reorder the code to make them consistent with our macro design
 		List<String> list = new ArrayList<String>();
-		for(int i =0;i<statements.size();i++) {
+		for (int i = 0; i < statements.size(); i++) {
 			String statement = statements.get(i);
 			// Move function call pre macro to the first position
-			if(statement.matches(".*(\\_[A-Z]+\\_PRE\\().*")) {
-				list.add(1, statement); // Move the PRE macro 
-			}else if (statement.contains("_DEALLOC(")) {
+			if (statement.matches(".*(\\_[A-Z]+\\_PRE\\().*")) {
+				list.add(1, statement); // Move the PRE macro
+			} else if (statement.contains("_DEALLOC(")) {
 				// Move PREDEALLOC macro to the first position.
 				list.add(1, statement);
 			} else {
@@ -1462,17 +1471,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			 * else if(statement.matches(".*(\\_[A-Z]+\\_DEALLOC\\().*")) {
 			// so we put it at the beginning of statements
 			list.add(0, statement); 
-		    }*/
+			}*/
 		}
-		
+
 		// add the statement
 		stores.addAllStatements(code, list, function);
 	}
 
 	/**
-	 * Translated the Whiley comparator into C comparison operators, e.g. EQ :=
-	 * '=='. If the negated option is provided, then the comparator is first
-	 * negated and then converted into C code.
+	 * Translated the Whiley comparator into C comparison operators, e.g. EQ := '=='. If the negated option is provided,
+	 * then the comparator is first negated and then converted into C code.
 	 * 
 	 * @param op
 	 *            Whiley comparator
@@ -1522,13 +1530,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Generates the code for <code>Codes.If</code> code. For example, For
-	 * example, the byte-code: <code> ifeq %1, %38 goto blklab2 : [int]</code>
-	 * can be translated into C code:
+	 * Generates the code for <code>Codes.If</code> code. For example, For example, the byte-code:
+	 * <code> ifeq %1, %38 goto blklab2 : [int]</code> can be translated into C code:
 	 * <code>_IFEQ_ARRAY_int64_t(_1, _38, blklab2);</code>
 	 * 
-	 * Note that _IFEQ_ARRAY macro checks if both of arrays are the same (1:
-	 * true, 0:false).
+	 * Note that _IFEQ_ARRAY macro checks if both of arrays are the same (1: true, 0:false).
 	 * 
 	 * <pre>
 	 * <code>
@@ -1554,23 +1560,23 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		List<String> statement = new ArrayList<String>();
 		// Added a special case to compare two arrays.
-		if (code.type(0) instanceof Type.Array&& code.op.equals(Comparator.EQ)) {
+		if (code.type(0) instanceof Type.Array && code.op.equals(Comparator.EQ)) {
 			// Get array element type
-			Type elem_type = stores.getArrayElementType((Type.Array)code.type(0));
+			Type elem_type = stores.getArrayElementType((Type.Array) code.type(0));
 			// Compare two arrays
-			if(elem_type instanceof Type.Byte){
+			if (elem_type instanceof Type.Byte) {
 				// Use the '_IFEQ_ARRAY_int64_t' macro to compare two arrays of integers
-				statement.add(indent + "_IFEQ_ARRAY_BYTE(" + lhs + ", " + rhs + ", " + code.target + ");");				
-			}else if(stores.isIntType(elem_type)){
+				statement.add(indent + "_IFEQ_ARRAY_BYTE(" + lhs + ", " + rhs + ", " + code.target + ");");
+			} else if (stores.isIntType(elem_type)) {
 				// Use the '_IFEQ_ARRAY_int64_t' macro to compare two arrays of integers
 				statement.add(indent + "_IFEQ_ARRAY_int64_t(" + lhs + ", " + rhs + ", " + code.target + ");");
-			}else{
+			} else {
 				throw new RuntimeException("Not implemented");
 			}
 
 		} else {
 			statement.add(indent + "if(" + lhs
-					// The condition
+			// The condition
 					+ translate(code.op, false) + rhs
 					// The goto statement
 					+ "){" + "goto " + code.target + ";" + "}");
@@ -1580,10 +1586,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Translates the <code>Codes.AssertOrAssume</code> byte-code. This function
-	 * iterates over the list of byte-code in each assertion or assumption and
-	 * translated each byte-code. The translated C code is surrounded by two
-	 * brackets ('{' and '}') with an indentation.
+	 * Translates the <code>Codes.AssertOrAssume</code> byte-code. This function iterates over the list of byte-code in
+	 * each assertion or assumption and translated each byte-code. The translated C code is surrounded by two brackets
+	 * ('{' and '}') with an indentation.
 	 * 
 	 * @param code
 	 */
@@ -1610,8 +1615,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Translated the <code>Codes.Label</code> byte-code into C code. For
-	 * example,
+	 * Translated the <code>Codes.Label</code> byte-code into C code. For example,
 	 * 
 	 * <pre>
 	 * <code>
@@ -1651,8 +1655,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Translates the update byte-code into C code, and removes the deallocation
-	 * flag of rhs variable (a[i] = b; b_dealloc = false;) For example,
+	 * Translates the update byte-code into C code, and removes the deallocation flag of rhs variable (a[i] = b;
+	 * b_dealloc = false;) For example,
 	 * 
 	 * <pre>
 	 * <code>
@@ -1673,8 +1677,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * Special cases
 	 * <ul>
 	 * <li>Referenced array: the update of reference is different, for example,
-	 * <code>update (*%0)[%6] = %51 : &[int] -> &[int]</code> can transform this
-	 * to: <code>(*_0)[_6] = _51;</code>
+	 * <code>update (*%0)[%6] = %51 : &[int] -> &[int]</code> can transform this to: <code>(*_0)[_6] = _51;</code>
 	 * 
 	 * 
 	 * @param code
@@ -1692,7 +1695,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, code.operand(0), code, function));
 
 		this.deallocatedAnalyzer
-		.ifPresent(a -> a.postDealloc(isCopyEliminated, code.operand(0), statement, code, function, stores));
+				.ifPresent(a -> a.postDealloc(isCopyEliminated, code.operand(0), statement, code, function, stores));
 
 		stores.addAllStatements(code, statement, function);
 	}
@@ -1703,8 +1706,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Translates the <code>Codes.Return</code> byte-code into C code. For
-	 * example,
+	 * Translates the <code>Codes.Return</code> byte-code into C code. For example,
 	 * 
 	 * <pre>
 	 * <code>
@@ -1740,12 +1742,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 				// Get the return type
 				Type ret_type = stores.getRawType(code.operand(0), function);
-				if(stores.isIntArrayOrAliasedType(ret_type)){
-					//Type.Array arr_type = (Type.Array)ret_type;
+				if (stores.isIntArrayOrAliasedType(ret_type)) {
+					// Type.Array arr_type = (Type.Array)ret_type;
 					// Get the array dimension
 					int dimension = stores.getArrayDimension(ret_type);
 					// Propagate the size of output array to passing call-by-reference parameter
-					statements.add(indent + "_UPDATE_"+dimension+"DARRAYSZIE_PARAM_CALLBYREFERENCE(" + ret_var + ");");
+					statements.add(
+							indent + "_UPDATE_" + dimension + "DARRAYSZIE_PARAM_CALLBYREFERENCE(" + ret_var + ");");
 				}
 
 				statements.add(indent + "return " + ret_var + ";");
@@ -1761,31 +1764,31 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statements.add(indent + "exit(0);");
 			} else {
 				// Check if the return type matches with method declaration
-				if(function.type().returns().size() == code.operands().length){
+				if (function.type().returns().size() == code.operands().length) {
 					// Add the code to deallocate all variables.
 					this.deallocatedAnalyzer.ifPresent(a -> {
 						statements.addAll(a.preDealloc(code, function, stores));
 					});
 					if (code.operands().length == 0) {
 						statements.add(indent + "return;");
-					}else if(code.operands().length == 1){
-						// Get return variable		
+					} else if (code.operands().length == 1) {
+						// Get return variable
 						String ret_var = stores.getVar(code.operand(0), function);
 						// Get the return type
 						Type ret_type = stores.getRawType(code.operand(0), function);
-						if(stores.isIntArrayOrAliasedType(ret_type)){
-							//Type.Array arr_type = (Type.Array)ret_type;
+						if (stores.isIntArrayOrAliasedType(ret_type)) {
+							// Type.Array arr_type = (Type.Array)ret_type;
 							// Get the array dimension
 							int dimension = stores.getArrayDimension(ret_type);
 							// Propagate the size of output array to passing call-by-reference parameter
-							statements.add(indent + "_UPDATE_"+dimension+"DARRAYSZIE_PARAM_CALLBYREFERENCE(" + ret_var + ");");
-						}						
+							statements.add(indent + "_UPDATE_" + dimension + "DARRAYSZIE_PARAM_CALLBYREFERENCE("
+									+ ret_var + ");");
+						}
 						statements.add(indent + "return " + ret_var + ";");
-					}else {						
+					} else {
 						throw new RuntimeException("Not implemented for return statement in a method");
 					}
 				}
-
 
 			}
 		}
@@ -1828,9 +1831,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		Type lhs_type = stores.getRawType(code.target(0), function);
 		if (stores.isCompoundType(lhs_type)) {
 			// Check if the lhs_type is an array
-			if(lhs_type instanceof Type.Array){
-				// Update the array size at left-handed size 
-				statement.add(indent + lhs+"_size = "+rhs+"_size_size;");
+			if (lhs_type instanceof Type.Array) {
+				// Update the array size at left-handed size
+				statement.add(indent + lhs + "_size = " + rhs + "_size_size;");
 			}
 
 			// Add lhs to substructure set
@@ -1862,8 +1865,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * </pre>
 	 * 
 	 * 
-	 * Note that if the new list is an empty list, then its element type is a
-	 * 'void', which is not supposed to store any value. For example,
+	 * Note that if the new list is an empty list, then its element type is a 'void', which is not supposed to store any
+	 * value. For example,
 	 * 
 	 * <pre>
 	 * <code>
@@ -1871,9 +1874,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * </code>
 	 * </pre>
 	 * 
-	 * In this case, the void type is converted into integer type by default
-	 * because there is no type mapping to the 'void' type in C. And there is no
-	 * translation either.
+	 * In this case, the void type is converted into integer type by default because there is no type mapping to the
+	 * 'void' type in C. And there is no translation either.
 	 * 
 	 * @param code
 	 */
@@ -1889,14 +1891,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Check the array element type
 			Type elm_type = code.type(0).element();
 			// Create the array using '_NEW' macro
-			if(elm_type instanceof Type.Byte){
+			if (elm_type instanceof Type.Byte) {
 				statement.add(indent + "_NEW_1DARRAY_BYTE(" + lhs + ", " + length + ", 0b0);");
-			}else if(elm_type instanceof Type.Int){
+			} else if (elm_type instanceof Type.Int) {
 				statement.add(indent + "_NEW_1DARRAY_int64_t(" + lhs + ", " + length + ", 0);");
-			}else{
+			} else {
 				throw new RuntimeException("Not implemented");
 			}
-
 
 			String s = indent;
 			// Initialize the array
@@ -1930,10 +1931,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * Special case:
 	 * <ul>
-	 * <li>Note that at this stage, the field load code that loads
-	 * <code>System.out.println</code> is not translated into any C code.</li>
-	 * <li>The field code, that loads <code>fieldload %6 = %0 args</code> is
-	 * translated into
+	 * <li>Note that at this stage, the field load code that loads <code>System.out.println</code> is not translated
+	 * into any C code.</li>
+	 * <li>The field code, that loads <code>fieldload %6 = %0 args</code> is translated into
 	 * <code>_6 = convertArgsToIntArray(argc, args, _6_size);</code>
 	 * 
 	 * @param code
@@ -1947,27 +1947,26 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				|| field.equals("println_s")) {
 			// Load the field to the target register.
 			stores.loadField(code.target(0), field, function);
-		} else if (field.equals("readAll")||field.equals("write")||field.equals("close")){
-			// Get file pointer 
+		} else if (field.equals("readAll") || field.equals("write") || field.equals("close")) {
+			// Get file pointer
 			String fileptr = stores.getVar(code.operand(0), function);
 			// Load the field and file pointer to the target register.
-			stores.loadField(code.target(0), field+":"+fileptr, function);
+			stores.loadField(code.target(0), field + ":" + fileptr, function);
 		} else {
 			// Free lhs variable
 			translateLHSVarFunctionCall(statement, code, function);
 			boolean isCopyEliminated;// The copy is NOT needed by default.
 			if (field.equals("args")) {
 				String var_name = stores.getVar(code.target(0), function);
-				stores.aliasCmdArgument(var_name);				
+				stores.aliasCmdArgument(var_name);
 				// Convert the arguments into an array of integer array (int64_t**).
-				statement.add( stores.getIndent(function)
-						+ "_CONV_ARGS(" + var_name + ");");
+				statement.add(stores.getIndent(function) + "_CONV_ARGS(" + var_name + ");");
 				isCopyEliminated = false;
 			} else {
 				Type lhs_type = stores.getRawType(code.target(0), function);
 				String rhs = stores.getVar(code.operand(0), function) + "->" + code.field;
 				isCopyEliminated = true;
-				//isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
+				// isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
 				// Generate copy/uncopy assignment code
 				statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, stores.getIndent(function),
 						stores.getVar(code.target(0), function), rhs, isCopyEliminated, stores));
@@ -2017,8 +2016,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * where 'indirect_printf' function is defined in 'Util.c'.
 	 * 
-	 * If the input type is an instance of user defined type, then get the type
-	 * declaration first and convert it into the corresponding type.
+	 * If the input type is an instance of user defined type, then get the type declaration first and convert it into
+	 * the corresponding type.
 	 * 
 	 * @param code
 	 *            Codes.IndirectInvoke byte-code
@@ -2031,7 +2030,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		statement.add(stores.getIndent(function) + "{");
 		// Increase the indent
 		stores.increaseIndent(function);
-		String indent = stores.getIndent(function);		
+		String indent = stores.getIndent(function);
 		if (code.type(0) instanceof Type.Function) {
 			// Get the lambda expression
 			String lhs = stores.getVar(code.target(0), function);
@@ -2044,7 +2043,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Get the input
 			String input = null;
 			Type input_type = null;
-			if(func_name.contains("print")){
+			if (func_name.contains("print")) {
 				input = stores.getVar(code.operand(1), function);
 				input_type = stores.getRawType(code.operand(1), function);
 				switch (func_name) {
@@ -2052,65 +2051,63 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					statement.add(indent + "printf(\"" + "%\"PRId64, " + input + ");");
 					break;
 				case "print_s":
-					if(boundAnalyzer.isPresent()){
+					if (boundAnalyzer.isPresent()) {
 						statement.add(indent + "_PRINT_STR(" + input + ");");
-					}else{
-						statement.add(indent + "printf_s(" + input + ", "+input+"_size);");
+					} else {
+						statement.add(indent + "printf_s(" + input + ", " + input + "_size);");
 					}
 					break;
 				case "println_s":
-					if(boundAnalyzer.isPresent()){
+					if (boundAnalyzer.isPresent()) {
 						statement.add(indent + "_PRINTLN_STR(" + input + ");");
-					}else{
+					} else {
 						statement.add(indent + "println_s(" + input + ", " + input + "_size);");
 					}
 					break;
 				case "println":
 					// Check input's type to call different println function.
 					if (input_type instanceof Type.Int) {
-						if(boundAnalyzer.isPresent()){
+						if (boundAnalyzer.isPresent()) {
 							// Reference :http://en.cppreference.com/w/c/types/integer
 							String translateType = boundAnalyzer.get().suggestIntegerType(code.operand(1), function);
-							if(translateType.startsWith("u")){
+							if (translateType.startsWith("u")) {
 								// Unsigned integer
-								switch(translateType){
+								switch (translateType) {
 								case "uint16_t":
-									statement.add(indent + "printf(\"" + "%\"PRIu16"+"\"\\n\", " + input + ");");
+									statement.add(indent + "printf(\"" + "%\"PRIu16" + "\"\\n\", " + input + ");");
 									break;
 								case "uint32_t":
-									statement.add(indent + "printf(\"" + "%\"PRIu32"+"\"\\n\", " + input + ");");
+									statement.add(indent + "printf(\"" + "%\"PRIu32" + "\"\\n\", " + input + ");");
 									break;
 								case "uint64_t":
-									statement.add(indent + "printf(\"" + "%\"PRIu64"+"\"\\n\", " + input + ");");
+									statement.add(indent + "printf(\"" + "%\"PRIu64" + "\"\\n\", " + input + ");");
 									break;
 								}
-							}else{
+							} else {
 								// Signed integer
-								switch(translateType){
+								switch (translateType) {
 								case "int16_t":
-									statement.add(indent + "printf(\"" + "%\"PRId16"+"\"\\n\", " + input + ");");
+									statement.add(indent + "printf(\"" + "%\"PRId16" + "\"\\n\", " + input + ");");
 									break;
 								case "int32_t":
-									statement.add(indent + "printf(\"" + "%\"PRId32"+"\"\\n\", " + input + ");");
+									statement.add(indent + "printf(\"" + "%\"PRId32" + "\"\\n\", " + input + ");");
 									break;
 								case "int64_t":
-									statement.add(indent + "printf(\"" + "%\"PRId64"+"\"\\n\", " + input + ");");
+									statement.add(indent + "printf(\"" + "%\"PRId64" + "\"\\n\", " + input + ");");
 									break;
 								}
 							}
-							
-							
-						}else{
-							statement.add(indent + "printf(\"" + "%\"PRId64"+"\"\\n\", " + input + ");");
+
+						} else {
+							statement.add(indent + "printf(\"" + "%\"PRId64" + "\"\\n\", " + input + ");");
 						}
-						
-						
+
 					} else if (input_type instanceof Type.Array) {
-						Type elm_type = stores.getArrayElementType((Type.Array)input_type);
+						Type elm_type = stores.getArrayElementType((Type.Array) input_type);
 						// Print out arrays w.r.t. array element type
-						if(elm_type instanceof Type.Byte){
+						if (elm_type instanceof Type.Byte) {
 							statement.add(indent + "_PRINT_1DARRAY_BYTE(" + input + ");");
-						}else{
+						} else {
 							statement.add(indent + "_PRINT_1DARRAY_int64_t(" + input + ");");
 						}
 					} else if (input_type instanceof Type.Nominal) {
@@ -2118,9 +2115,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						// Print out a user-defined type structure
 						statement.add(indent + "printf_" + nominal.name().name() + "(" + input + ");");
 					} else if (input_type instanceof Type.Union) {
-						statement.add(indent + "printf(\"" + "%\"PRId64"+"\"\\n\", " + input + ");");
+						statement.add(indent + "printf(\"" + "%\"PRId64" + "\"\\n\", " + input + ");");
 					} else if (input_type instanceof Type.Byte) {
-						statement.add(indent + "printf(\"" + "%\"PRIu8"+"\"\\n\", " + input + ");");
+						statement.add(indent + "printf(\"" + "%\"PRIu8" + "\"\\n\", " + input + ");");
 					} else {
 						throw new RuntimeException("Not implemented." + code);
 					}
@@ -2128,31 +2125,31 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				default:
 					throw new RuntimeException("Not implemented." + code);
 				}
-			}else if (func_name.matches("readAll:\\w*")){
+			} else if (func_name.matches("readAll:\\w*")) {
 				// Get file pointer
 				String ptr = func_name.split(":")[1];
 				// Get output variable
 				String output = stores.getVar(code.target(0), function);
 				// Read a file as an array of Bytes
-				statement.add(indent+ output + " = readAll("+ptr+", &"+output+"_size);");
+				statement.add(indent + output + " = readAll(" + ptr + ", &" + output + "_size);");
 				// Add deallocation flag
-				this.deallocatedAnalyzer.ifPresent(a ->{
-					statement.add(indent+ output+"_dealloc = true;");
+				this.deallocatedAnalyzer.ifPresent(a -> {
+					statement.add(indent + output + "_dealloc = true;");
 				});
-			}else if(func_name.matches("write:\\w*")){
+			} else if (func_name.matches("write:\\w*")) {
 				// Get file pointer
 				String ptr = func_name.split(":")[1];
 				// Get byte array at index '1'
 				String arr = stores.getVar(code.operand(1), function);
 				// Read a file as an array of Bytes
-				statement.add(indent+"writeAll("+ptr+", "+arr+", "+arr+"_size);");
-			}else if(func_name.matches("close:\\w*")){
+				statement.add(indent + "writeAll(" + ptr + ", " + arr + ", " + arr + "_size);");
+			} else if (func_name.matches("close:\\w*")) {
 				// Close the file pointer
 				String ptr = func_name.split(":")[1];
-				// Close and nullify the file 
-				statement.add(indent+"fclose("+ptr+");");
-				statement.add(indent+""+ptr+" = NULL;");
-			}else{
+				// Close and nullify the file
+				statement.add(indent + "fclose(" + ptr + ");");
+				statement.add(indent + "" + ptr + " = NULL;");
+			} else {
 				throw new RuntimeException("Not implemented." + code);
 			}
 
@@ -2175,9 +2172,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Iterate over the list of loop byte-code and translate each code into C
-	 * code. To separate the bytecode inside a loop from the main byte-code, the
-	 * loop flag is enabled and the indentation is increased.
+	 * Iterate over the list of loop byte-code and translate each code into C code. To separate the bytecode inside a
+	 * loop from the main byte-code, the loop flag is enabled and the indentation is increased.
 	 * 
 	 * @param code
 	 */
@@ -2218,8 +2214,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * </code>
 	 * </pre>
 	 * 
-	 * @TODO Fix the sequence of fields in a record type as the order of fields
-	 *       is in the reversed direction of operands.
+	 * @TODO Fix the sequence of fields in a record type as the order of fields is in the reversed direction of
+	 *       operands.
 	 * 
 	 * @param code
 	 */
@@ -2273,9 +2269,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Write out the generated C code, which starts with variable declarations,
-	 * followed by a list of statements and a list of free statements at the
-	 * end.
+	 * Write out the generated C code, which starts with variable declarations, followed by a list of statements and a
+	 * list of free statements at the end.
 	 * 
 	 * @param writer
 	 */
@@ -2309,12 +2304,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Translate ifis Wyil code into C code. This code checks that the register
-	 * is the given value.
+	 * Translate ifis Wyil code into C code. This code checks that the register is the given value.
 	 * 
-	 * For example, the ifis Wyil code
-	 * <code>ifis %1, null goto blklab6 : null|int</code> can be translated int
-	 * C code <code>if(_1 == NULL) {goto blklab6;}
+	 * For example, the ifis Wyil code <code>ifis %1, null goto blklab6 : null|int</code> can be translated int C code
+	 * <code>if(_1 == NULL) {goto blklab6;}
 	 * 
 	 */
 	@Override
@@ -2332,8 +2325,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Translate deference Wyil code into C code. Deference in C is to use '*'
-	 * operator to get the value of lhs operand and assign it to rhs operand.
+	 * Translate deference Wyil code into C code. Deference in C is to use '*' operator to get the value of lhs operand
+	 * and assign it to rhs operand.
 	 * 
 	 * For example, <code>
 	 * deref %16 = %0 : &[int]
@@ -2363,9 +2356,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Translate newobject Wyil code into C code. The newObject code creates a
-	 * new object from the value of 'rhs' and assign the address of new object
-	 * to 'lhs'.
+	 * Translate newobject Wyil code into C code. The newObject code creates a new object from the value of 'rhs' and
+	 * assign the address of new object to 'lhs'.
 	 * 
 	 * For example, <code>
 	 * newobject %4 = %3 : &[void]
@@ -2384,8 +2376,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/***
-	 * Generates a multi-dimensional array with 'genXDArray' built-in C function
-	 * in C, e.g.
+	 * Generates a multi-dimensional array with 'genXDArray' built-in C function in C, e.g.
 	 * 
 	 * <pre>
 	 * <code>
@@ -2410,7 +2401,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	@Override
 	protected void translate(ArrayGenerator code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
-		//String lhs = translateLHSVarFunctionCall(statement, code, function);
+		// String lhs = translateLHSVarFunctionCall(statement, code, function);
 		String lhs = stores.getVar(code.target(0), function);
 		String indent = stores.getIndent(function);
 		Type.Array lhs_type = (Type.Array) stores.getRawType(code.target(0), function);
@@ -2419,32 +2410,32 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		Type elm_type = stores.getArrayElementType(lhs_type);
 		// Get array dimension
 		int dimension = stores.getArrayDimension(lhs_type);
-		if(dimension == 1) {
-			if(elm_type instanceof Type.Byte){
-				if(this.deallocatedAnalyzer.isPresent()) {
+		if (dimension == 1) {
+			if (elm_type instanceof Type.Byte) {
+				if (this.deallocatedAnalyzer.isPresent()) {
 					// No needs to generate the code because _NEW1DARRAY_DEALLOC contains all the necessary code.
-				}else {
+				} else {
 					// Generate a BYTE array and assign its value
-					statement.add(indent + "_NEW_"+dimension+ "DARRAY_BYTE(" + lhs + ", " + size + ", "
-							+ rhs + ");");
-				}				
+					statement
+							.add(indent + "_NEW_" + dimension + "DARRAY_BYTE(" + lhs + ", " + size + ", " + rhs + ");");
+				}
 			} else if (stores.isIntType(elm_type)) {
-				if(boundAnalyzer.isPresent()){
+				if (boundAnalyzer.isPresent()) {
 					// Deallocate lhs register
 					this.deallocatedAnalyzer.ifPresent(a -> {
 						statement.add(indent + a.preDealloc(lhs, lhs_type, stores));
 					});
 					String translateType = boundAnalyzer.get().suggestIntegerType(code.operand(0), function);
 					// Generate a new array using _NEW_1DARRAY macro using
-					statement.add(indent + "_NEW_" + dimension + "DARRAY(" + lhs + ", " + size + ", "
-							+ rhs + ", "+ translateType +");");
-				}else{
-					if(this.deallocatedAnalyzer.isPresent()) {
-						// No needs to generate the code because we will use _NEW1DARRAY_DEALLOC macro 
-					}else {
+					statement.add(indent + "_NEW_" + dimension + "DARRAY(" + lhs + ", " + size + ", " + rhs + ", "
+							+ translateType + ");");
+				} else {
+					if (this.deallocatedAnalyzer.isPresent()) {
+						// No needs to generate the code because we will use _NEW1DARRAY_DEALLOC macro
+					} else {
 						// Generate an array with given size and values.
-						statement.add(indent + "_NEW_" + dimension + "DARRAY_int64_t(" + lhs + ", " + size + ", "
-								+ rhs + ");");
+						statement.add(indent + "_NEW_" + dimension + "DARRAY_int64_t(" + lhs + ", " + size + ", " + rhs
+								+ ");");
 					}
 				}
 			} else {
@@ -2456,10 +2447,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				String struct = CodeGeneratorHelper.translateType(elm_type, stores).replace("*", "");
 				statement.add(indent + "_NEW_1DARRAY_STRUCT(" + lhs + ", " + size + ", " + rhs + ", " + struct + ");");
 			}
-		}else {
+		} else {
 			throw new RuntimeException("2D array generator is Not implemented!!");
 		}
-		
+
 		postDealloc(statement, code, function);
 
 		stores.addAllStatements(code, statement, function);
@@ -2485,13 +2476,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Check if userType is a typedef structure.
 			if (type instanceof Type.Int) {
 				structs.add("typedef " + CodeGeneratorHelper.translateType(type, stores) + " " + type_name + ";");
-			} else if (type instanceof Type.Array ){
+			} else if (type instanceof Type.Array) {
 				// An array of integers
-				Type element= ((Type.Array)type).element();
-				if(stores.isIntType(element)){
-					// Define user type as a type of integer array 
-					structs.add("typedef "+CodeGeneratorHelper.translateType(type, stores)+ " " + type_name +";");
-				}else{
+				Type element = ((Type.Array) type).element();
+				if (stores.isIntType(element)) {
+					// Define user type as a type of integer array
+					structs.add("typedef " + CodeGeneratorHelper.translateType(type, stores) + " " + type_name + ";");
+				} else {
 					throw new RuntimeException("Not Implemented!");
 				}
 			} else if (type instanceof Type.Record) {
@@ -2550,8 +2541,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	private void writeIncludes() {
 		String file_name = this.config.getFilename();
 		// Include "Util.h" "WyRT.h" to test_case.h
-		String includes = "#include \"Util.h\"\n"+
-				"#include \"WyRT.h\"\n";
+		String includes = "#include \"Util.h\"\n" + "#include \"WyRT.h\"\n";
 
 		try {
 			// Create a new one or over-write an existing one.
@@ -2573,10 +2563,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 	/**
 	 * Translates the lambda expression into anonymous function in C.
-	 * <http://stackoverflow.com/questions/10405436/anonymous-functions-using-gcc-statement-expressions>
-	 * Currently, we translate the lambda function into GCC anonymous function,
-	 * e.g. <code>lambda %3 = (_) lambda:$lambda88 : function(int)->(int)</code>
-	 * can be translated into:
+	 * <http://stackoverflow.com/questions/10405436/anonymous-functions-using-gcc-statement-expressions> Currently, we
+	 * translate the lambda function into GCC anonymous function, e.g.
+	 * <code>lambda %3 = (_) lambda:$lambda88 : function(int)->(int)</code> can be translated into:
 	 * 
 	 * <pre>
 	 * <code>

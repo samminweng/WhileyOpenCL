@@ -30,11 +30,11 @@ import wyopcl.translator.ReturnAnalyzer.RETURN;
  */
 public class CopyEliminationAnalyzer extends Analyzer {
 	// Perform read-write checks
-	private ReadWriteAnalyzer readwriteAnalyzer;
+	private final ReadWriteAnalyzer readwriteAnalyzer;
 	// Perform return checks
-	private ReturnAnalyzer returnAnalyzer;
+	private final ReturnAnalyzer returnAnalyzer;
 	// Perform liveness checks
-	private LiveVariablesAnalysis liveAnalyzer;
+	private final LiveVariablesAnalysis liveAnalyzer;
 	private int line;
 
 	/**
@@ -79,14 +79,14 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 *         Note that The copies are not needed by default in some special forms of byte-code ('FieldLoad')
 	 * 
 	 */
-	public boolean isCopyEliminated(int register, int pos, Code code, FunctionOrMethod function) {		
+	public boolean isCopyEliminated(int register, int pos, Code code, FunctionOrMethod function) {
 		boolean isLive = liveAnalyzer.isLive(register, code, function);
 		if (this.isVerbose) {
 			System.out.print("\t liveness: " + getVar(register, function) + " = " + isLive);
 		}
-		
+
 		if (!isLive) {
-			if(this.isVerbose) {
+			if (this.isVerbose) {
 				System.out.print("\n");
 			}
 			// The register is NOT alive, and thus the copy can be eliminated.
@@ -112,7 +112,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 						System.out.print("\t return: " + getVar(register, function) + " = " + isReturn + "\n");
 					}
 					// 'r' is NOT mutated inside invoked function
-					if (!isMutated) {	
+					if (!isMutated) {
 						if (isReturn == RETURN.MAYBE_RETURN || isReturn == RETURN.ALWAYS_RETURN) {
 							// We use caller macro
 							return false; // We need the copy
@@ -121,16 +121,16 @@ public class CopyEliminationAnalyzer extends Analyzer {
 					}
 				}
 				// End of invoke code
-			}else {
+			} else {
 				// End the messages
-				if(this.isVerbose) {
+				if (this.isVerbose) {
 					System.out.print("\n");
 				}
-			}			
+			}
 			// For all the other cases, the copy must be kept.
 			return false;
 		}
-		
+
 	}
 
 	/**
@@ -161,19 +161,19 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			Codes.Assign assign = (Codes.Assign) code;
 			String lhs = getVar(assign.target(0), function);
 			String rhs = getVar(assign.operand(0), function);
-			System.out.println("["+name + "." + line +" " +  lhs + " = " + rhs + "] //" + code);
+			System.out.println("[" + name + "." + line + " " + lhs + " = " + rhs + "] //" + code);
 		} else if (code instanceof Codes.Invoke) {
-			Codes.Invoke invoke = (Codes.Invoke) code;			
+			Codes.Invoke invoke = (Codes.Invoke) code;
 			String lhs = getVar(invoke.target(0), function);
 			List<String> params = new ArrayList<String>();
-			for(int op: invoke.operands()) {
+			for (int op : invoke.operands()) {
 				String param = getVar(op, function);
 				params.add(param);
-			}			
-			System.out.println("[" + name + "." + line + " " + lhs + " = " +invoke.name.name() + "("+ String.join(", ", params) + ")" 
-			                    + "] //" + code);
+			}
+			System.out.println("[" + name + "." + line + " " + lhs + " = " + invoke.name.name() + "("
+					+ String.join(", ", params) + ")" + "] //" + code);
 		} else {
-			System.out.println("[" +name + "." + line + " ] //" + code + "");
+			System.out.println("[" + name + "." + line + " ] //" + code + "");
 		}
 
 	}
@@ -186,7 +186,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 */
 	private void printWyILCodeBlock(FunctionOrMethod function, List<Code> code_blk) {
 		String name = function.name();
-		line =0;
+		line = 0;
 		// Parse each byte-code and add the constraints accordingly.
 		for (Code code : code_blk) {
 			// Get the Block.Entry and print out each byte-code
@@ -219,6 +219,11 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		if (function != null) {
 			// Check and Get the transformed function
 			function = this.getFunction(function);
+			// Analyze the function code using readWrite, return and live variable analyser
+			this.readwriteAnalyzer.analyzeFunction(function);
+			this.returnAnalyzer.analyzeFunction(function);
+			this.liveAnalyzer.analyzeFunction(function);
+
 			// Print out all byte-code of function
 			if (this.isVerbose) {
 				this.printWyILCodeBlock(function, function.body().bytecodes());
@@ -252,5 +257,47 @@ public class CopyEliminationAnalyzer extends Analyzer {
 				line++;
 			}
 		}
+	}
+
+	@Override
+	public void analyzeFunction(FunctionOrMethod function) {
+		// Analyze the function code using readWrite, return and live variable analyser
+		this.readwriteAnalyzer.analyzeFunction(function);
+		this.returnAnalyzer.analyzeFunction(function);
+		this.liveAnalyzer.analyzeFunction(function);
+
+		// Print out all byte-code of function
+		if (this.isVerbose) {
+			this.printWyILCodeBlock(function, function.body().bytecodes());
+		}
+		line = 0;
+		// Analyze whether the copy is need for each byte-code
+		for (Code code : function.body().bytecodes()) {
+			if (code instanceof Codes.Assign) {
+				if (this.isVerbose) {
+					printWyILCode(function, code);
+				}
+				int rhs = ((Codes.Assign) code).operand(0);
+				boolean isCopyEliminated = isCopyEliminated(rhs, 0, code, function);
+				updateSet(isCopyEliminated, rhs, code, function);
+			} else if (code instanceof Codes.Invoke) {
+				Codes.Invoke invoke = (Codes.Invoke) code;
+				// Check if the called function is not runtime call
+				String module = invoke.name.module().toString();
+				if (!module.contains("whiley/lang") && !module.contains("whiley/io")) {
+					if (this.isVerbose) {
+						printWyILCode(function, code);
+					}
+					int pos = 0;
+					for (int param : invoke.operands()) {
+						boolean isCopyEliminated = isCopyEliminated(param, pos, code, function);
+						updateSet(isCopyEliminated, param, code, function);
+						pos++;
+					}
+				}
+			}
+			line++;
+		}
+
 	}
 }

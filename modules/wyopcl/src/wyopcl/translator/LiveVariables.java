@@ -299,4 +299,14 @@ public class LiveVariables {
 		}
 		return getOUT(b);
 	}
+	
+	/**
+	 * Show the values of in/out sets of live variable analysis
+	 */
+	public String toString() {
+		return "\n// In Set: " + this.inSet.values() + "\n// Out Set:" + this.outSet.values();
+				
+		
+	}
+	
 }
