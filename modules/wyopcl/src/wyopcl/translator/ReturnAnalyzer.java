@@ -1,18 +1,11 @@
 package wyopcl.translator;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Optional;
-
-import javax.swing.tree.DefaultMutableTreeNode;
-
 import wyil.lang.Code;
 import wyil.lang.Codes;
-import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 
@@ -32,14 +25,14 @@ public class ReturnAnalyzer extends Analyzer {
 	}
 
 	// Store the set of return registers for each function.
-	private HashMap<FunctionOrMethod, HashSet<Integer>> returnStores;
+	private LinkedHashMap<FunctionOrMethod, LinkedHashSet<Integer>> returnStores;
 	// Store the set of aliasing variables
-	private HashMap<FunctionOrMethod, List<HashSet<Integer>>> aliasStores;
+	private LinkedHashMap<FunctionOrMethod, List<LinkedHashSet<Integer>>> aliasStores;
 
 	public ReturnAnalyzer(Configuration config) {
 		super(config);
-		this.returnStores = new HashMap<FunctionOrMethod, HashSet<Integer>>();
-		this.aliasStores = new HashMap<FunctionOrMethod, List<HashSet<Integer>>>();
+		this.returnStores = new LinkedHashMap<FunctionOrMethod, LinkedHashSet<Integer>>();
+		this.aliasStores = new LinkedHashMap<FunctionOrMethod, List<LinkedHashSet<Integer>>>();
 	}
 
 	/**
@@ -49,10 +42,10 @@ public class ReturnAnalyzer extends Analyzer {
 	 * @param function
 	 * @return
 	 */
-	private HashSet<Integer> getAliasVariables(int register, FunctionOrMethod function) {
-		List<HashSet<Integer>> aliasStore = aliasStores.get(function);
+	private LinkedHashSet<Integer> getAliasVariables(int register, FunctionOrMethod function) {
+		List<LinkedHashSet<Integer>> aliasStore = aliasStores.get(function);
 		// Search for aliasing set g
-		for (HashSet<Integer> aliasSet : aliasStore) {
+		for (LinkedHashSet<Integer> aliasSet : aliasStore) {
 			if (aliasSet.contains(register)) {
 				// Return the aliasing set
 				return aliasSet;
@@ -71,15 +64,15 @@ public class ReturnAnalyzer extends Analyzer {
 	 * @param function
 	 */
 	private void aliasVariables(int lhs, int rhs, FunctionOrMethod function) {
-		List<HashSet<Integer>> aliasStore = aliasStores.get(function);
+		List<LinkedHashSet<Integer>> aliasStore = aliasStores.get(function);
 
 		// Get alias set for lhs register
-		HashSet<Integer> aliasSetLHS = getAliasVariables(lhs, function);
-		HashSet<Integer> aliasSetRHS = getAliasVariables(rhs, function);
+		LinkedHashSet<Integer> aliasSetLHS = getAliasVariables(lhs, function);
+		LinkedHashSet<Integer> aliasSetRHS = getAliasVariables(rhs, function);
 		// Go through each case and if any aliasing exists before, then we update the set
 		// If both set are found, then merge both set to a single
 		if (aliasSetLHS != null && aliasSetRHS != null) {
-			HashSet<Integer> mergeSet = new HashSet<Integer>();
+			LinkedHashSet<Integer> mergeSet = new LinkedHashSet<Integer>();
 			mergeSet.addAll(aliasSetLHS);
 			mergeSet.addAll(aliasSetRHS);
 			// Remove the previous lhs and rhs aliasing set
@@ -97,7 +90,7 @@ public class ReturnAnalyzer extends Analyzer {
 		} else {
 			// Both sets are null, so create a new set
 			// Put both variables into a new set
-			HashSet<Integer> aliasSet = new HashSet<Integer>();
+			LinkedHashSet<Integer> aliasSet = new LinkedHashSet<Integer>();
 			aliasSet.add(lhs);
 			aliasSet.add(rhs);
 			// Put the set to the store
@@ -105,10 +98,10 @@ public class ReturnAnalyzer extends Analyzer {
 		}
 
 		// Get the alias set for lhs/rhs
-		HashSet<Integer> aliasSet = getAliasVariables(lhs, function);
+		LinkedHashSet<Integer> aliasSet = getAliasVariables(lhs, function);
 
 		// Get return set of given function
-		HashSet<Integer> returnStore = returnStores.get(function);
+		LinkedHashSet<Integer> returnStore = returnStores.get(function);
 
 		// Check if any return variable is aliased to lhs register
 		for (int retRegister : returnStore) {
@@ -257,7 +250,7 @@ public class ReturnAnalyzer extends Analyzer {
 	 * @return true if the register is returned. Return false if it is not returned.
 	 */
 	public RETURN isReturned(int register, FunctionOrMethod function) {
-		HashSet<Integer> store = returnStores.get(function);
+		LinkedHashSet<Integer> store = returnStores.get(function);
 		if (store.contains(register)) {
 			// Check if the register is on the left-handed side of the function body
 			List<Code> bytecodes = function.body().bytecodes();
@@ -275,10 +268,10 @@ public class ReturnAnalyzer extends Analyzer {
 	@Override
 	public void analyzeFunction(FunctionOrMethod function) {
 
-		HashSet<Integer> returnStore;
+		LinkedHashSet<Integer> returnStore;
 		if (!returnStores.containsKey(function)) {
-			returnStores.put(function, new HashSet<Integer>());
-			aliasStores.put(function, new ArrayList<HashSet<Integer>>());
+			returnStores.put(function, new LinkedHashSet<Integer>());
+			aliasStores.put(function, new ArrayList<LinkedHashSet<Integer>>());
 		}
 		// Store return registers
 		returnStore = returnStores.get(function);

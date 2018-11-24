@@ -873,9 +873,9 @@ public class CodeStores {
 			}
 			// Add the translated statement.
 			if (statement != null) {
-				if (isVerbose) {
-					System.out.println(statement);
-				}
+//				if (isVerbose) {
+//					System.out.println(statement);
+//				}
 				statements.add(statement);
 			}
 		}
@@ -899,9 +899,9 @@ public class CodeStores {
 			}
 			// Add the translated statement.
 			if (statement != null) {
-				if (isVerbose) {
-					System.out.println(statement);
-				}
+//				if (isVerbose) {
+//					System.out.println(statement);
+//				}
 				// Filter empty s
 				statement.stream()
 				// Remove 'tab' in a string and check if the string is empty

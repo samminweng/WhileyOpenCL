@@ -1,7 +1,7 @@
 package wyopcl.translator;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import wyil.lang.Code;
@@ -22,8 +22,8 @@ import wyopcl.translator.cfg.CFGraph;
  */
 public class LiveVariables {
 	private boolean isChanged;// Indicate if there is any change of in/out set.
-	private HashMap<BasicBlock, HashSet<Integer>> inSet;// Each env stores the register numbers.
-	private HashMap<BasicBlock, HashSet<Integer>> outSet;
+	private LinkedHashMap<BasicBlock, LinkedHashSet<Integer>> inSet;// Each env stores the register numbers.
+	private LinkedHashMap<BasicBlock, LinkedHashSet<Integer>> outSet;
 	//private Configuration config;
 	private boolean isAssertEnable;
 
@@ -35,15 +35,15 @@ public class LiveVariables {
 	public LiveVariables(Configuration config) {
 		//this.config = config;
 		this.isAssertEnable = config.isEnabled(Configuration.ENABLEASSERTION);
-		inSet = new HashMap<BasicBlock, HashSet<Integer>>();
-		outSet = new HashMap<BasicBlock, HashSet<Integer>>();
+		inSet = new LinkedHashMap<BasicBlock, LinkedHashSet<Integer>>();
+		outSet = new LinkedHashMap<BasicBlock, LinkedHashSet<Integer>>();
 	}
 
 	private void initialize(List<BasicBlock> blocks) {
 		// Initialize in/out set for each block.
 		for (BasicBlock block : blocks) {
-			HashSet<Integer> in = new HashSet<Integer>();
-			HashSet<Integer> out = new HashSet<Integer>();
+			LinkedHashSet<Integer> in = new LinkedHashSet<Integer>();
+			LinkedHashSet<Integer> out = new LinkedHashSet<Integer>();
 			// Use different initial values for return block.
 			if (block.getType().equals(BlockType.RETURN)) {
 				Codes.Return code = (Return) block.getCodeBlock().get(0);
@@ -85,9 +85,9 @@ public class LiveVariables {
 					continue;
 				}
 				// Compute in/out for a block
-				HashSet<Integer> out = (HashSet<Integer>) computeOut(block);
+				LinkedHashSet<Integer> out = (LinkedHashSet<Integer>) computeOut(block);
 				// Compute the store in set of the block.
-				HashSet<Integer> in = computeIN(block, (HashSet<Integer>) out.clone());
+				LinkedHashSet<Integer> in = computeIN(block, (LinkedHashSet<Integer>) out.clone());
 //				if (isVerbose) {
 //					System.out.println("In" + ":{" + in + "}\n" + block + "\nOut" + ":{" + out + "}\n");
 //				}
@@ -132,10 +132,10 @@ public class LiveVariables {
 	 * @author David J. Pearce, 2011
 	 *
 	 */
-	public HashSet<Integer> propagate(CodeBlock.Index index, Code code, HashSet<Integer> environment) {
+	public LinkedHashSet<Integer> propagate(CodeBlock.Index index, Code code, LinkedHashSet<Integer> environment) {
 		// rewrites.put(index,null);
 		boolean isLive = true;
-		environment = (HashSet<Integer>) environment.clone();
+		environment = (LinkedHashSet<Integer>) environment.clone();
 
 		// Compute 'env = (env - def)' where 'def' set is dead variables at code
 		if (code instanceof Code.AbstractBytecode) {
@@ -193,7 +193,7 @@ public class LiveVariables {
 	 *            the 'in' set
 	 * @return the resulting 'in' set.
 	 */
-	private HashSet<Integer> compute(List<Code> codes, HashSet<Integer> in) {
+	private LinkedHashSet<Integer> compute(List<Code> codes, LinkedHashSet<Integer> in) {
 		// Traverse the wyil code in the reverse order.
 		for (int i = codes.size() - 1; i >= 0; i--) {
 			// Compute the live variables, and store the results in in/out set.
@@ -229,9 +229,9 @@ public class LiveVariables {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public HashSet<Integer> computeIN(BasicBlock b, HashSet<Integer> in) {
+	public LinkedHashSet<Integer> computeIN(BasicBlock b, LinkedHashSet<Integer> in) {
 		// Get the exiting 'in' set
-		HashSet<Integer> old_in = (HashSet<Integer>) getIN(b).clone();
+		LinkedHashSet<Integer> old_in = (LinkedHashSet<Integer>) getIN(b).clone();
 
 		List<Code> codes = b.getCodeBlock();
 		in = compute(codes, in);
@@ -251,8 +251,8 @@ public class LiveVariables {
 	 * @param block
 	 * @param new_out
 	 */
-	protected void setOUT(BasicBlock blk, HashSet<Integer> out) {
-		HashSet<Integer> old_out = getOUT(blk);
+	protected void setOUT(BasicBlock blk, LinkedHashSet<Integer> out) {
+		LinkedHashSet<Integer> old_out = getOUT(blk);
 		if (!old_out.equals(out)) {
 			this.isChanged |= true;
 			outSet.put(blk, out);
@@ -265,7 +265,7 @@ public class LiveVariables {
 	 * @param block
 	 * @return
 	 */
-	public HashSet<Integer> getIN(BasicBlock block) {
+	public LinkedHashSet<Integer> getIN(BasicBlock block) {
 		return inSet.get(block);
 	}
 
@@ -275,7 +275,7 @@ public class LiveVariables {
 	 * @param block
 	 * @return
 	 */
-	public HashSet<Integer> getOUT(BasicBlock block) {
+	public LinkedHashSet<Integer> getOUT(BasicBlock block) {
 		return outSet.get(block);
 	}
 
@@ -284,14 +284,14 @@ public class LiveVariables {
 	 * 
 	 * @param set
 	 */
-	public HashSet<Integer> computeOut(BasicBlock b) {
+	public LinkedHashSet<Integer> computeOut(BasicBlock b) {
 		// Check if the block is not exit block.
-		HashSet<Integer> out = getOUT(b);
+		LinkedHashSet<Integer> out = getOUT(b);
 		// Check if block has the children.
 		if (!b.isLeaf()) {
 			// Take the union of child blocks' in set.
 			for (BasicBlock child : b.getChildNodes()) {
-				HashSet<Integer> in = getIN(child);
+				LinkedHashSet<Integer> in = getIN(child);
 				out.addAll(in);
 			}
 			// Update 'out' set of the block

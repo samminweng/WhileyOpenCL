@@ -19,16 +19,22 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+/**
+ * Run copy analyzer combined with code generator to produce the copy optimized C code.
+ * 
+ * @author Min-Hsien Weng
+ *
+ */
 @RunWith(Parameterized.class)
 public class CopyAnalysisTestCase {
-	//private BaseTestUtil util;
+	
 	final Path sourceDir = Paths.get(System.getProperty("user.dir")+ File.separator + "tests" 
 	                                      + File.separator + "copy");
 	private String testcase;// A list of test cases
 	
 	@Before
 	public void initialize() throws Exception {
-		//util = new BaseTestUtil();
+		
 	}
 
 	@After
@@ -120,7 +126,7 @@ public class CopyAnalysisTestCase {
 	@Test
 	public void testCopyAndEnableAssertion(){
 		// Perform copy analysis with assertion enabled 
-		execCopyAnalysis(sourceDir, testcase, "-verbose", "-nocopy", "-ea");
+		execCopyAnalysis(sourceDir, testcase, "-verbose", "-nocopy", "-ea", "-code");
 	}
 	
 	

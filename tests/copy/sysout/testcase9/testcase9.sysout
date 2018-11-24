@@ -1,4 +1,8 @@
-root->main
+// Read-write variables in main:[3, 4, 5, 1, 2, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+// Return variables in main:[]
+// Live variables for main function
+// In Set: [[0], [0], [0, 1], [0, 1, 2], [0, 1, 2], [0, 2, 1], []]
+// Out Set:[[0], [0, 1], [0, 1, 2], [0, 1, 2], [0, 2, 1], [], []]
 main.0 [const %3 = 0 : int]
 main.1 [const %4 = 5 : int]
 main.2 [arraygen %5 = [3; 4] : int[]]
@@ -37,5 +41,9 @@ main.32 [return]
 	 liveness: _5 = false
 [main.4 b = a] //assign %2 = %1  : int[]
 	 liveness: a = true
+	 liveness: _5 = false
+	 liveness: a = true
+	 liveness: _7 = false
 
 Copy elimination analysis completed. File: testcase9.wyil
+Code Generation completed. File: testcase9.c, testcase9.h

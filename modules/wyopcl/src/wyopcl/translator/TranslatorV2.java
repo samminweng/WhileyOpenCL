@@ -51,20 +51,20 @@ public class TranslatorV2 implements Builder {
 	 * de-allocation analyzer
 	 */
 	private void instantiate(WyilFile module) {
-		
-		if(readwriteAnalyzer == null){
+
+		if (readwriteAnalyzer == null) {
 			// Create read-write analyzer
-			readwriteAnalyzer = new ReadWriteAnalyzer(config);			
+			readwriteAnalyzer = new ReadWriteAnalyzer(config);
 		}
-		
-		if(returnAnalyzer == null){
+
+		if (returnAnalyzer == null) {
 			// Create return analyzer
-			returnAnalyzer = new ReturnAnalyzer(config);			
+			returnAnalyzer = new ReturnAnalyzer(config);
 		}
-		
-		if(liveAnalyzer == null){
+
+		if (liveAnalyzer == null) {
 			// Create live variable analyzer
-			liveAnalyzer = new LiveVariablesAnalysis(config);			
+			liveAnalyzer = new LiveVariablesAnalysis(config);
 		}
 	}
 
@@ -87,58 +87,57 @@ public class TranslatorV2 implements Builder {
 
 		// Put the in-memory WyIL file to config for later retrieval.
 		this.config.setOption(Configuration.MODULE, module);
-		
-//		// Store the byte-code of transformed function 
-		Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap = Optional.empty();
-//		// Check if pattern matching is enabled. 
-//		if(config.isEnabled(Configuration.PATTERN)){
-//			// Create the hash map
-//			HashMap<FunctionOrMethod, FunctionOrMethod> map = new HashMap<FunctionOrMethod, FunctionOrMethod>();
-//			// Get the function name
-//			String func_name = config.getFunctionName();
-//			// Get the WyIL code by given function name
-//			List<FunctionOrMethod> funcs = module.functionOrMethod(func_name);
-//			if(funcs == null|| (funcs != null && funcs.isEmpty())){
-//				throw new RuntimeException("Could not find '"+func_name+ "' function. File: " + config.getFilename());
-//			}
-//			// Get the WyIL code
-//			FunctionOrMethod functionOrMethod = funcs.get(0);
-//			Pattern pattern;
-//			// Perform pattern matching
-//			PatternMatcher matcher = new PatternMatcher(config);
-//			try{
-//				pattern = matcher.analyzePattern(functionOrMethod);
-//				// Print out the matched pattern
-//				message += "Pattern matching on "+ func_name+" function completed. \n" + pattern;
-//			}catch(Exception ex){
-//				throw new RuntimeException("Errors on Pattern Matching"); 
-//			}
-//			// Transform the pattern if possible
-//			PatternTransformer transformer = new PatternTransformer(config);
-//			try{
-//				// Output the transformed function
-//				FunctionOrMethod transformedFunctionOrMethod = transformer.transformPatternUsingVisitor(pattern);
-//				if(transformedFunctionOrMethod != null){
-//					map.put(functionOrMethod, transformedFunctionOrMethod);
-//					// Print out the matched transformation
-//					message += "\nPattern transformation on "+ func_name+" function completed. ";
-//				}				
-//			}catch(Exception ex){
-//				throw new RuntimeException("Errors on Pattern Transformation"); 
-//			}
-//			
-//			transformFuncMap = Optional.of(map);
-//			message += " File: " + config.getFilename()+".wyil";
-//		}
+
+		// // Store the byte-code of transformed function
+		//Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap = Optional.empty();
+		// // Check if pattern matching is enabled.
+		// if(config.isEnabled(Configuration.PATTERN)){
+		// // Create the hash map
+		// HashMap<FunctionOrMethod, FunctionOrMethod> map = new HashMap<FunctionOrMethod, FunctionOrMethod>();
+		// // Get the function name
+		// String func_name = config.getFunctionName();
+		// // Get the WyIL code by given function name
+		// List<FunctionOrMethod> funcs = module.functionOrMethod(func_name);
+		// if(funcs == null|| (funcs != null && funcs.isEmpty())){
+		// throw new RuntimeException("Could not find '"+func_name+ "' function. File: " + config.getFilename());
+		// }
+		// // Get the WyIL code
+		// FunctionOrMethod functionOrMethod = funcs.get(0);
+		// Pattern pattern;
+		// // Perform pattern matching
+		// PatternMatcher matcher = new PatternMatcher(config);
+		// try{
+		// pattern = matcher.analyzePattern(functionOrMethod);
+		// // Print out the matched pattern
+		// message += "Pattern matching on "+ func_name+" function completed. \n" + pattern;
+		// }catch(Exception ex){
+		// throw new RuntimeException("Errors on Pattern Matching");
+		// }
+		// // Transform the pattern if possible
+		// PatternTransformer transformer = new PatternTransformer(config);
+		// try{
+		// // Output the transformed function
+		// FunctionOrMethod transformedFunctionOrMethod = transformer.transformPatternUsingVisitor(pattern);
+		// if(transformedFunctionOrMethod != null){
+		// map.put(functionOrMethod, transformedFunctionOrMethod);
+		// // Print out the matched transformation
+		// message += "\nPattern transformation on "+ func_name+" function completed. ";
+		// }
+		// }catch(Exception ex){
+		// throw new RuntimeException("Errors on Pattern Transformation");
+		// }
+		//
+		// transformFuncMap = Optional.of(map);
+		// message += " File: " + config.getFilename()+".wyil";
+		// }
 		instantiate(module);
 		// Check if the copy elimination analysis is enabled.
 		Optional<CopyEliminationAnalyzer> copyAnalyzer = Optional.empty();
-		if (config.isEnabled(Configuration.NOCOPY)) {			
-			CopyEliminationAnalyzer analyzer = new CopyEliminationAnalyzer(config,
-					readwriteAnalyzer, returnAnalyzer, liveAnalyzer);
+		if (config.isEnabled(Configuration.NOCOPY)) {
+			CopyEliminationAnalyzer analyzer = new CopyEliminationAnalyzer(config, readwriteAnalyzer, returnAnalyzer,
+					liveAnalyzer);
 			analyzer.apply(module);
-			copyAnalyzer = Optional.of(analyzer);
-			message += "\nCopy elimination analysis completed. File: " + config.getFilename()+".wyil";
+			copyAnalyzer = Optional.of(analyzer);			
 		}
 
 		// Check if deallocation analysis is enabled or not
@@ -150,24 +149,23 @@ public class TranslatorV2 implements Builder {
 			analyzer.apply(module);
 			// Create a deallocatedAnalyzer that may hold a null analyzer.
 			deallocAnalyzer = Optional.of(analyzer);
-			message += "\nDeallocation analysis completed.\nFile: " + config.getFilename()+".wyil";
 		}
-//
-//		// Check if the bound analysis is enabled.
+		//
+		// // Check if the bound analysis is enabled.
 		Optional<BoundAnalyzer> boundAnalyzer = Optional.empty();
 		if (config.isEnabled(Configuration.BOUND)) {
-			if(liveAnalyzer == null){
+			if (liveAnalyzer == null) {
 				// Create live variable analyzer
 				liveAnalyzer = new LiveVariablesAnalysis(config);
 				// Builds up a calling graph and perform live variable checks.
 				liveAnalyzer.apply(module);
 			}
-			
+
 			/**
-			 * Takes the in-memory wyil file and analyzes the bounds of integer variables in Main function. If any function call
-			 * is encountered, then propagate the input bounds to the callee and then analyze the bounds and produces the
-			 * context-sensitive bounds for the invoked function. The bounds of return value is propagated to the caller
-			 * function.
+			 * Takes the in-memory wyil file and analyzes the bounds of integer variables in Main function. If any
+			 * function call is encountered, then propagate the input bounds to the callee and then analyze the bounds
+			 * and produces the context-sensitive bounds for the invoked function. The bounds of return value is
+			 * propagated to the caller function.
 			 */
 			BoundAnalyzer analyzer = new BoundAnalyzer(module, liveAnalyzer, copyAnalyzer, config);
 			try {
@@ -188,15 +186,22 @@ public class TranslatorV2 implements Builder {
 
 		// Reads the in-memory WyIL file and generates the code in C
 		if (config.isEnabled(Configuration.CODE)) {
-			CodeGenerator generator = new CodeGenerator(config, copyAnalyzer, deallocAnalyzer, boundAnalyzer, transformFuncMap);
+			CodeGenerator generator = new CodeGenerator(config, copyAnalyzer, deallocAnalyzer, boundAnalyzer);
 			generator.apply(module);
+			// Generate output messages
+			if (config.isEnabled(Configuration.NOCOPY)) {
+				message += "\nCopy elimination analysis completed. File: " + config.getFilename() + ".wyil";
+			}
+			if (config.isEnabled(Configuration.DEALLOC)) {
+				message += "\nDeallocation analysis completed.\nFile: " + config.getFilename() + ".wyil";
+			}
 			message += "\nCode Generation completed. File: " + config.getFilename() + ".c, " + config.getFilename()
 					+ ".h";
 		}
 
 		long endTime = System.currentTimeMillis();
 		System.out.println(message);
-		//System.out.println(message + " Time: " + (endTime - start) + " ms Memory Usage: " + memory);
+		// System.out.println(message + " Time: " + (endTime - start) + " ms Memory Usage: " + memory);
 		return generatedFiles;
 	}
 

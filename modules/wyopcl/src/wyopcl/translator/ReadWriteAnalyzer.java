@@ -1,17 +1,9 @@
 package wyopcl.translator;
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeNode;
-
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import wyil.lang.Code;
 import wyil.lang.Codes;
-import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 
@@ -36,11 +28,11 @@ import wyopcl.Configuration;
  */
 public class ReadWriteAnalyzer extends Analyzer {
 	// Store the set of read-write registers for each function.
-	private HashMap<FunctionOrMethod, HashSet<Integer>> stores;
+	private LinkedHashMap<FunctionOrMethod, LinkedHashSet<Integer>> stores;
 
 	public ReadWriteAnalyzer(Configuration config) {
 		super(config);
-		stores = new HashMap<FunctionOrMethod, HashSet<Integer>>();
+		stores = new LinkedHashMap<FunctionOrMethod, LinkedHashSet<Integer>>();
 	}
 
 	/**
@@ -63,7 +55,7 @@ public class ReadWriteAnalyzer extends Analyzer {
 					&& !(code instanceof Codes.IndexOf) && !(code instanceof Codes.NewRecord)
 					&& !(code instanceof Codes.FieldLoad) && !(code instanceof Codes.Update)) {
 				// Adds register to readwrite set.
-				HashSet<Integer> store = stores.get(function);
+				LinkedHashSet<Integer> store = stores.get(function);
 				// The copy is NOT made, and the RHS register is aliased to lhs
 				store.add(register);
 			}
@@ -71,12 +63,12 @@ public class ReadWriteAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Given a byte-code, add lhs variable to the Hashset.
+	 * Given a byte-code, add lhs variable to the LinkedHashSet.
 	 * 
 	 * @param code
 	 * @param store
 	 */
-	private void iterateBytecode(Code code, HashSet<Integer> store) {
+	private void iterateBytecode(Code code, LinkedHashSet<Integer> store) {
 		// Skip the workflow code type
 		if (code instanceof Codes.Debug || code instanceof Codes.Fail || code instanceof Codes.Goto
 				|| code instanceof Codes.If || code instanceof Codes.IfIs || code instanceof Codes.Label
@@ -158,7 +150,7 @@ public class ReadWriteAnalyzer extends Analyzer {
 	 * @return true if register is read-write. Otherwise, return false (read-only).
 	 */
 	public boolean isMutated(int register, FunctionOrMethod function) {
-		HashSet<Integer> store = stores.get(function);
+		LinkedHashSet<Integer> store = stores.get(function);
 		// Check if the register belongs to read-write set
 		if (store.contains(register)) {
 			return true; // read-write
@@ -175,9 +167,9 @@ public class ReadWriteAnalyzer extends Analyzer {
 	 */
 	public void analyzeFunction(FunctionOrMethod function) {
 		
-		HashSet<Integer> store;// Store all read-write variables for 'function'
+		LinkedHashSet<Integer> store;// Store all read-write variables for 'function'
 		if (!stores.containsKey(function)) {
-			stores.put(function, new HashSet<Integer>());
+			stores.put(function, new LinkedHashSet<Integer>());
 		}
 		
 		// Store read-write registers
@@ -192,64 +184,6 @@ public class ReadWriteAnalyzer extends Analyzer {
 		}
 		
 	}
-	
-//	/**
-//	 * This function is replaced by 'analyzeFunction'
-//	 * 
-//	 * 
-//	 * Compute the read-write set for the given function
-//	 * 
-//	 * @param currentNode
-//	 * @deprecated
-//	 */
-//	@Override
-//	protected void visit(DefaultMutableTreeNode currentNode) {
-//		// Compute the readwrite set for the give node
-//		FunctionOrMethod function = (FunctionOrMethod) currentNode.getUserObject();
-//		
-//		if (function != null) {
-//			// Get the transformed function
-//			// function = this.getFunction(function);
-//			
-//			HashSet<Integer> store;
-//			if (!stores.containsKey(function)) {
-//				stores.put(function, new HashSet<Integer>());
-//			}
-//			
-//			// Store read-write registers
-//			store = stores.get(function);
-//			// Go through each bytecode and add lhs register to read-write set
-//			for (Code code : function.body().bytecodes()) {
-//				iterateBytecode(code, store);
-//			}
-//			
-//			// Print out the node information (path).
-//			if (!currentNode.isRoot()) {
-//				DefaultMutableTreeNode parent = (DefaultMutableTreeNode)currentNode.getParent();
-//				if(parent.getUserObject() instanceof FunctionOrMethod){
-//					System.out.println(((FunctionOrMethod)parent.getUserObject()).name() + "->" + function.name());
-//				}else{
-//					System.out.println(((String)parent.getUserObject()) + "->" + function.name());
-//				}
-//			}
-//			
-//		}
-//
-//		
-//	}
-//
-//	/**
-//	 * Go through every function, and checks each byte-code and adds the lhs register to read-write set.
-//	 * 
-//	 *
-//	 * @param module
-//	 * @deprecated
-//	 */
-//	public void apply(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
-//		super.apply(module, transformFuncMap);
-//		// Traverse the tree in post-order and find out whether a variable is read-write or not
-//		postorderTraversalCallGraph(tree);
-//
-//	}
+
 
 }

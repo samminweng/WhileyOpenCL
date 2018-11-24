@@ -60,14 +60,27 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		super(config);
 	}
 
+	/**
+	 * @deprecated
+	 * @param config
+	 * @param copyAnalyzer
+	 * @param deallcAnalyzer
+	 * @param boundAnalyzer
+	 * @param transformFuncMap
+	 */
 	public CodeGenerator(Configuration config, Optional<CopyEliminationAnalyzer> copyAnalyzer,
 			Optional<DeallocationAnalyzer> deallcAnalyzer, Optional<BoundAnalyzer> boundAnalyzer,
 			Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
 		this(config);
+		throw new RuntimeException("Not used anymore");
+	}
+	
+	public CodeGenerator(Configuration config, Optional<CopyEliminationAnalyzer> copyAnalyzer,
+			Optional<DeallocationAnalyzer> deallcAnalyzer, Optional<BoundAnalyzer> boundAnalyzer) {
+		this(config);
 		this.copyAnalyzer = copyAnalyzer;
 		this.deallocatedAnalyzer = deallcAnalyzer;
 		this.boundAnalyzer = boundAnalyzer;
-		this.transformFuncMap = transformFuncMap;
 	}
 
 	/**

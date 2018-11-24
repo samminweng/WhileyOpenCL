@@ -1,5 +1,8 @@
-root->func
-root->main
+// Read-write variables in func:[3, 2, 4, 5, 0, 6, 7]
+// Return variables in func:[0]
+// Live variables for func function
+// In Set: [[0], [0], [2, 0], [2, 0], [0], [2, 0], [0, 2], [2, 0], [0], []]
+// Out Set:[[0], [2, 0], [2, 0], [2, 0], [0], [2, 0], [2, 0], [2, 0], [0], []]
 func.0 [const %3 = 0 : int]
 func.1 [assign %2 = %3  : int]
 func.2 [loop (%0, %2, %4, %5, %6, %7)]
@@ -9,6 +12,14 @@ func.5 [return]
 //End of func function
 [func.1 i = _3] //assign %2 = %3  : int
 	 liveness: _3 = false
+	 liveness: _3 = false
+	 liveness: i = true
+	 liveness: _7 = false
+// Read-write variables in main:[4, 5, 6, 1, 7, 8, 9, 2, 10, 11, 12, 3, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
+// Return variables in main:[]
+// Live variables for main function
+// In Set: [[0], [0], [0], [0, 2], [3, 0, 2], [3, 0, 2], [3, 0, 2, 13], [3, 0, 2, 1], []]
+// Out Set:[[0], [0], [0, 2], [3, 0, 2], [3, 0, 2], [3, 0, 2, 13], [3, 0, 2, 1], [], []]
 main.0 [const %4 = 2 : int]
 main.1 [const %5 = 2 : int]
 main.2 [arraygen %6 = [4; 5] : int[]]
@@ -50,5 +61,11 @@ main.29 [return]
 	 liveness: b = true	 readonly: b = false	 return: b = ALWAYS_RETURN
 [main.13 a = _13] //assign %1 = %13  : int[]
 	 liveness: _13 = false
+	 liveness: _6 = false
+	 liveness: _9 = false
+	 liveness: _12 = false
+	 liveness: b = true	 readonly: b = false	 return: b = ALWAYS_RETURN
+	 liveness: _13 = false
 
 Copy elimination analysis completed. File: testcase6.wyil
+Code Generation completed. File: testcase6.c, testcase6.h

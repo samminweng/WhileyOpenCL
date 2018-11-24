@@ -46,9 +46,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		this.readwriteAnalyzer = readwriteAnalyzer;
 		this.returnAnalyzer = returnAnalyzer;
 		this.liveAnalyzer = liveAnalyzer;
-
 	}
-
 
 	/**
 	 * Determines whether to make a copy of array using liveness information and mutability property. Rules are as
@@ -202,55 +200,6 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		}
 		return name;
 	}
-
-	/**
-	 * @deprecated 
-	 */
-	/*@Override
-	protected void visit(DefaultMutableTreeNode node) {
-		FunctionOrMethod function = (FunctionOrMethod) node.getUserObject();
-		if (function != null) {
-			// Check and Get the transformed function
-			//function = this.getFunction(function);
-			// Analyze the function code using readWrite, return and live variable analyser
-			this.readwriteAnalyzer.analyzeFunction(function);
-			this.returnAnalyzer.analyzeFunction(function);
-			this.liveAnalyzer.analyzeFunction(function);
-
-			// Print out all byte-code of function
-			if (this.isVerbose) {
-				this.printWyILCodeBlock(function, function.body().bytecodes());
-			}
-			line = 0;
-			// Analyze whether the copy is need for each byte-code
-			for (Code code : function.body().bytecodes()) {
-				if (code instanceof Codes.Assign) {
-					if (this.isVerbose) {
-						printWyILCode(function, code);
-					}
-					int rhs = ((Codes.Assign) code).operand(0);
-					boolean isCopyEliminated = isCopyEliminated(rhs, 0, code, function);
-					updateSet(isCopyEliminated, rhs, code, function);
-				} else if (code instanceof Codes.Invoke) {
-					Codes.Invoke invoke = (Codes.Invoke) code;
-					// Check if the called function is not runtime call
-					String module = invoke.name.module().toString();
-					if (!module.contains("whiley/lang") && !module.contains("whiley/io")) {
-						if (this.isVerbose) {
-							printWyILCode(function, code);
-						}
-						int pos = 0;
-						for (int param : invoke.operands()) {
-							boolean isCopyEliminated = isCopyEliminated(param, pos, code, function);
-							updateSet(isCopyEliminated, param, code, function);
-							pos++;
-						}
-					}
-				}
-				line++;
-			}
-		}
-	}*/
 
 	@Override
 	public void analyzeFunction(FunctionOrMethod function) {
