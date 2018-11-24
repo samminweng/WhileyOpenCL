@@ -1331,28 +1331,26 @@ public class DeallocationAnalyzer extends Analyzer {
 
 	}
 
-	@Override
-	public void apply(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
-		super.apply(module, transformFuncMap);
-		postorderTraversalCallGraph(tree);
-	}
 
-	@Override
-	protected void visit(DefaultMutableTreeNode node) {
-		FunctionOrMethod function = (FunctionOrMethod) node.getUserObject();
-		if (function != null) {
-			// Check and Get the transformed function
-			function = this.getFunction(function);
-			// Analyze the function code using readWrite, return and live variable analyser
-			this.readwriteAnalyzer.analyzeFunction(function);
-			this.returnAnalyzer.analyzeFunction(function);
-			this.liveAnalyzer.analyzeFunction(function);
-		}
-	}
+//	@Override
+//	protected void visit(DefaultMutableTreeNode node) {
+//		FunctionOrMethod function = (FunctionOrMethod) node.getUserObject();
+//		if (function != null) {
+//			// Check and Get the transformed function
+//			//function = this.getFunction(function);
+//			// Analyze the function code using readWrite, return and live variable analyser
+//			this.readwriteAnalyzer.analyzeFunction(function);
+//			this.returnAnalyzer.analyzeFunction(function);
+//			this.liveAnalyzer.analyzeFunction(function);
+//		}
+//	}
 
 	@Override
 	public void analyzeFunction(FunctionOrMethod function) {
-		// TODO Auto-generated method stub
+		// Analyze the function code using readWrite, return and live variable analyser
+		this.readwriteAnalyzer.analyzeFunction(function);
+		this.returnAnalyzer.analyzeFunction(function);
+		this.liveAnalyzer.analyzeFunction(function);
 		
 	}
 

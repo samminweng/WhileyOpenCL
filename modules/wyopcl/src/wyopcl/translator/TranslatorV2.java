@@ -50,27 +50,21 @@ public class TranslatorV2 implements Builder {
 	 * Instantiate all function analysis because those function analyzers are requested parameter for copy or
 	 * de-allocation analyzer
 	 */
-	private void instantiate(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
+	private void instantiate(WyilFile module) {
 		
 		if(readwriteAnalyzer == null){
 			// Create read-write analyzer
-			readwriteAnalyzer = new ReadWriteAnalyzer(config);
-			// Analyze the byte-code
-			//readwriteAnalyzer.apply(module, transformFuncMap);
+			readwriteAnalyzer = new ReadWriteAnalyzer(config);			
 		}
 		
 		if(returnAnalyzer == null){
 			// Create return analyzer
-			returnAnalyzer = new ReturnAnalyzer(config);
-			// Analyze the byte-code
-			//returnAnalyzer.apply(module, transformFuncMap);
+			returnAnalyzer = new ReturnAnalyzer(config);			
 		}
 		
 		if(liveAnalyzer == null){
 			// Create live variable analyzer
-			liveAnalyzer = new LiveVariablesAnalysis(config);
-			// Builds up a calling graph and perform live variable checks.
-			//liveAnalyzer.apply(module, transformFuncMap);
+			liveAnalyzer = new LiveVariablesAnalysis(config);			
 		}
 	}
 
@@ -136,13 +130,13 @@ public class TranslatorV2 implements Builder {
 //			transformFuncMap = Optional.of(map);
 //			message += " File: " + config.getFilename()+".wyil";
 //		}
-		instantiate(module, transformFuncMap);
+		instantiate(module);
 		// Check if the copy elimination analysis is enabled.
 		Optional<CopyEliminationAnalyzer> copyAnalyzer = Optional.empty();
 		if (config.isEnabled(Configuration.NOCOPY)) {			
 			CopyEliminationAnalyzer analyzer = new CopyEliminationAnalyzer(config,
 					readwriteAnalyzer, returnAnalyzer, liveAnalyzer);
-			analyzer.apply(module, transformFuncMap);
+			analyzer.apply(module);
 			copyAnalyzer = Optional.of(analyzer);
 			message += "\nCopy elimination analysis completed. File: " + config.getFilename()+".wyil";
 		}
@@ -153,7 +147,7 @@ public class TranslatorV2 implements Builder {
 			// Create an instance of DealloctionAnalyzer
 			DeallocationAnalyzer analyzer = new DeallocationAnalyzer(config, readwriteAnalyzer, returnAnalyzer,
 					liveAnalyzer);
-			analyzer.apply(module, transformFuncMap);
+			analyzer.apply(module);
 			// Create a deallocatedAnalyzer that may hold a null analyzer.
 			deallocAnalyzer = Optional.of(analyzer);
 			message += "\nDeallocation analysis completed.\nFile: " + config.getFilename()+".wyil";
@@ -166,7 +160,7 @@ public class TranslatorV2 implements Builder {
 				// Create live variable analyzer
 				liveAnalyzer = new LiveVariablesAnalysis(config);
 				// Builds up a calling graph and perform live variable checks.
-				liveAnalyzer.apply(module, transformFuncMap);
+				liveAnalyzer.apply(module);
 			}
 			
 			/**

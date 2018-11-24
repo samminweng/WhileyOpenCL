@@ -193,63 +193,63 @@ public class ReadWriteAnalyzer extends Analyzer {
 		
 	}
 	
-	/**
-	 * This function is replaced by 'analyzeFunction'
-	 * 
-	 * 
-	 * Compute the read-write set for the given function
-	 * 
-	 * @param currentNode
-	 * @deprecated
-	 */
-	@Override
-	protected void visit(DefaultMutableTreeNode currentNode) {
-		// Compute the readwrite set for the give node
-		FunctionOrMethod function = (FunctionOrMethod) currentNode.getUserObject();
-		
-		if (function != null) {
-			// Get the transformed function
-			function = this.getFunction(function);
-			
-			HashSet<Integer> store;
-			if (!stores.containsKey(function)) {
-				stores.put(function, new HashSet<Integer>());
-			}
-			
-			// Store read-write registers
-			store = stores.get(function);
-			// Go through each bytecode and add lhs register to read-write set
-			for (Code code : function.body().bytecodes()) {
-				iterateBytecode(code, store);
-			}
-			
-			// Print out the node information (path).
-			if (!currentNode.isRoot()) {
-				DefaultMutableTreeNode parent = (DefaultMutableTreeNode)currentNode.getParent();
-				if(parent.getUserObject() instanceof FunctionOrMethod){
-					System.out.println(((FunctionOrMethod)parent.getUserObject()).name() + "->" + function.name());
-				}else{
-					System.out.println(((String)parent.getUserObject()) + "->" + function.name());
-				}
-			}
-			
-		}
-
-		
-	}
-
-	/**
-	 * Go through every function, and checks each byte-code and adds the lhs register to read-write set.
-	 * 
-	 *
-	 * @param module
-	 * @deprecated
-	 */
-	public void apply(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
-		super.apply(module, transformFuncMap);
-		// Traverse the tree in post-order and find out whether a variable is read-write or not
-		postorderTraversalCallGraph(tree);
-
-	}
+//	/**
+//	 * This function is replaced by 'analyzeFunction'
+//	 * 
+//	 * 
+//	 * Compute the read-write set for the given function
+//	 * 
+//	 * @param currentNode
+//	 * @deprecated
+//	 */
+//	@Override
+//	protected void visit(DefaultMutableTreeNode currentNode) {
+//		// Compute the readwrite set for the give node
+//		FunctionOrMethod function = (FunctionOrMethod) currentNode.getUserObject();
+//		
+//		if (function != null) {
+//			// Get the transformed function
+//			// function = this.getFunction(function);
+//			
+//			HashSet<Integer> store;
+//			if (!stores.containsKey(function)) {
+//				stores.put(function, new HashSet<Integer>());
+//			}
+//			
+//			// Store read-write registers
+//			store = stores.get(function);
+//			// Go through each bytecode and add lhs register to read-write set
+//			for (Code code : function.body().bytecodes()) {
+//				iterateBytecode(code, store);
+//			}
+//			
+//			// Print out the node information (path).
+//			if (!currentNode.isRoot()) {
+//				DefaultMutableTreeNode parent = (DefaultMutableTreeNode)currentNode.getParent();
+//				if(parent.getUserObject() instanceof FunctionOrMethod){
+//					System.out.println(((FunctionOrMethod)parent.getUserObject()).name() + "->" + function.name());
+//				}else{
+//					System.out.println(((String)parent.getUserObject()) + "->" + function.name());
+//				}
+//			}
+//			
+//		}
+//
+//		
+//	}
+//
+//	/**
+//	 * Go through every function, and checks each byte-code and adds the lhs register to read-write set.
+//	 * 
+//	 *
+//	 * @param module
+//	 * @deprecated
+//	 */
+//	public void apply(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
+//		super.apply(module, transformFuncMap);
+//		// Traverse the tree in post-order and find out whether a variable is read-write or not
+//		postorderTraversalCallGraph(tree);
+//
+//	}
 
 }

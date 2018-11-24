@@ -58,7 +58,7 @@ public abstract class Analyzer {
 	// The tree node of calling graph
 	public static DefaultMutableTreeNode tree;
 	// The transformed functions
-	protected Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap;
+	//protected Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap;
 
 	/**
 	 * Constructor
@@ -69,19 +69,24 @@ public abstract class Analyzer {
 		this.isVerbose = config.isVerbose();
 	}
 
+	// This function is no long used any more
+	public void apply(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
+		throw new RuntimeException("No used any more");
+	}	
+	
 	/**
-	 * Assign module to analyzer
+	 * Build calling function graph and control flow graph
 	 * 
 	 * @param module
 	 */
-	public void apply(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
+	public void apply(WyilFile module) {
 		Analyzer.module = module;
-		this.transformFuncMap = transformFuncMap;
+		//this.transformFuncMap = transformFuncMap;
 		this.buildCallGraph(module);
 		// Iterate each function to build up CFG
 		for (FunctionOrMethod function : module.functionOrMethods()) {
 			// Check if the function is transformed
-			function = this.getFunction(function);
+			//function = this.getFunction(function);
 			this.buildCFG(function);
 
 		}
@@ -94,25 +99,29 @@ public abstract class Analyzer {
 		// }
 
 	}
+	
+	
+	
 
-	/**
-	 * Get the function. If the function has been transformed, then return the transformed one.
-	 * 
-	 * @param name
-	 * @return function. Return null if the function is not defined in whiley program.
-	 */
-	protected FunctionOrMethod getFunction(FunctionOrMethod function) {
-		String name = function.name();
-		if (!this.module.functionOrMethod(name).isEmpty()) {
-			// Check if the function has been transformed into a new function byte-code.
-			if (transformFuncMap.isPresent() && transformFuncMap.get().containsKey(function)) {
-				FunctionOrMethod transformedFunc = transformFuncMap.get().get(function);
-				return transformedFunc;
-			}
-		}
-
-		return function;
-	}
+//	/**
+//	 * Get the function. If the function has been transformed, then return the transformed one.
+//	 * 
+//	 * @param name
+//	 * @return function. Return null if the function is not defined in whiley program.
+//	 * @deprecated
+//	 */
+//	protected FunctionOrMethod getFunction(FunctionOrMethod function) {
+//		String name = function.name();
+//		if (!this.module.functionOrMethod(name).isEmpty()) {
+//			// Check if the function has been transformed into a new function byte-code.
+//			if (transformFuncMap.isPresent() && transformFuncMap.get().containsKey(function)) {
+//				FunctionOrMethod transformedFunc = transformFuncMap.get().get(function);
+//				return transformedFunc;
+//			}
+//		}
+//
+//		return function;
+//	}
 
 	/**
 	 * Get the called function
@@ -128,7 +137,7 @@ public abstract class Analyzer {
 			for (FunctionOrMethod func : this.module.functionOrMethods()) {
 				if (func.name().equals(name) && func.type().equals(type)) {
 					// Get the function
-					func = this.getFunction(func);
+					//func = this.getFunction(func);
 					return func;
 				}
 			}
@@ -710,7 +719,7 @@ public abstract class Analyzer {
 	 * 
 	 * @param currentNode
 	 */
-	protected abstract void visit(DefaultMutableTreeNode node);
+	//protected abstract void visit(DefaultMutableTreeNode node);
 
 	/**
 	 * Analyze each line of code in function.
@@ -724,18 +733,19 @@ public abstract class Analyzer {
 	 * http://www.tutorialspoint.com/data_structures_algorithms/tree_traversal.htm
 	 * 
 	 * @param root
+	 * @deprecated
 	 */
-	protected void postorderTraversalCallGraph(DefaultMutableTreeNode tree) {
-		// Go through all the nodes in post order
-		Enumeration<TreeNode> nodes = tree.postorderEnumeration();
-		while (nodes.hasMoreElements()) {
-			DefaultMutableTreeNode node = (DefaultMutableTreeNode) nodes.nextElement();
-			// Root node represents the tree and does not have the function.
-			if (!node.isRoot()) {
-				visit(node);
-			}
-		}
-	}
+//	protected void postorderTraversalCallGraph(DefaultMutableTreeNode tree) {
+//		// Go through all the nodes in post order
+//		Enumeration<TreeNode> nodes = tree.postorderEnumeration();
+//		while (nodes.hasMoreElements()) {
+//			DefaultMutableTreeNode node = (DefaultMutableTreeNode) nodes.nextElement();
+//			// Root node represents the tree and does not have the function.
+//			if (!node.isRoot()) {
+//				visit(node);
+//			}
+//		}
+//	}
 
 	/**
 	 * Return the functions in the post-order of calling graph.

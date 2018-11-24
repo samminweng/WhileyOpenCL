@@ -65,16 +65,16 @@ public class LiveVariablesAnalysis extends Analyzer {
 		this.isVerbose = isVerbose;
 	}
 
-	/**
-	 * Applies live variable analysis on each basic block.
-	 * 
-	 * @param module
-	 */
-	public void apply(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
-		// Builds up a CFG of the function.
-		super.apply(module, transformFuncMap);
-		postorderTraversalCallGraph(tree);
-	}
+//	/**
+//	 * Applies live variable analysis on each basic block.
+//	 * 
+//	 * @param module
+//	 */
+//	public void apply(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
+//		// Builds up a CFG of the function.
+//		super.apply(module, transformFuncMap);
+//		postorderTraversalCallGraph(tree);
+//	}
 
 	/**
 	 * Check if a register is alive after the code
@@ -242,19 +242,19 @@ public class LiveVariablesAnalysis extends Analyzer {
 		}
 	}
 
-	@Override
-	protected void visit(DefaultMutableTreeNode node) {
-		// Apply live analysis on each calling function
-		FunctionOrMethod function = (FunctionOrMethod) node.getUserObject();
-		if (function != null) {
-			// Check if the function has been transformed. If so, use the transformed one.
-			function = this.getFunction(function);
-			analyzeFunction(function);
-			// // Print out analysis result
-			// if (isVerbose) {
-			// printLivenss(function);
-			// }
-		}
-	}
+//	@Override
+//	protected void visit(DefaultMutableTreeNode node) {
+//		// Apply live analysis on each calling function
+//		FunctionOrMethod function = (FunctionOrMethod) node.getUserObject();
+//		if (function != null) {
+//			// Check if the function has been transformed. If so, use the transformed one.
+//			// function = this.getFunction(function);
+//			analyzeFunction(function);
+//			// // Print out analysis result
+//			// if (isVerbose) {
+//			// printLivenss(function);
+//			// }
+//		}
+//	}
 
 }

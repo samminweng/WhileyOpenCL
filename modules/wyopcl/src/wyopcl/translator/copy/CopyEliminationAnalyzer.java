@@ -30,11 +30,11 @@ import wyopcl.translator.ReturnAnalyzer.RETURN;
  */
 public class CopyEliminationAnalyzer extends Analyzer {
 	// Perform read-write checks
-	private final ReadWriteAnalyzer readwriteAnalyzer;
+	private ReadWriteAnalyzer readwriteAnalyzer;
 	// Perform return checks
-	private final ReturnAnalyzer returnAnalyzer;
+	private ReturnAnalyzer returnAnalyzer;
 	// Perform liveness checks
-	private final LiveVariablesAnalysis liveAnalyzer;
+	private LiveVariablesAnalysis liveAnalyzer;
 	private int line;
 
 	/**
@@ -49,16 +49,6 @@ public class CopyEliminationAnalyzer extends Analyzer {
 
 	}
 
-	/**
-	 * Applies live variable analysis on each basic block.
-	 * 
-	 * @param module
-	 */
-	public void apply(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
-		// Builds up a CFG of the function.
-		super.apply(module, transformFuncMap);
-		postorderTraversalCallGraph(tree);
-	}
 
 	/**
 	 * Determines whether to make a copy of array using liveness information and mutability property. Rules are as
@@ -213,12 +203,15 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		return name;
 	}
 
-	@Override
+	/**
+	 * @deprecated 
+	 */
+	/*@Override
 	protected void visit(DefaultMutableTreeNode node) {
 		FunctionOrMethod function = (FunctionOrMethod) node.getUserObject();
 		if (function != null) {
 			// Check and Get the transformed function
-			function = this.getFunction(function);
+			//function = this.getFunction(function);
 			// Analyze the function code using readWrite, return and live variable analyser
 			this.readwriteAnalyzer.analyzeFunction(function);
 			this.returnAnalyzer.analyzeFunction(function);
@@ -257,7 +250,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 				line++;
 			}
 		}
-	}
+	}*/
 
 	@Override
 	public void analyzeFunction(FunctionOrMethod function) {

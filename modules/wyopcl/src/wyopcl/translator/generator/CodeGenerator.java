@@ -91,7 +91,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Check if any analyser exist. If so, we use the calling graph to produce the code accordingly.
 		if (this.copyAnalyzer.isPresent()) {
 			functions = this.copyAnalyzer.get().getFunctionsInPostOrderOfCallingGraph();
-		}else if(this.deallocatedAnalyzer.isPresent()) {
+		} else if (this.deallocatedAnalyzer.isPresent()) {
 			functions = this.deallocatedAnalyzer.get().getFunctionsInPostOrderOfCallingGraph();
 		} else {
 			functions = module.functionOrMethods();
@@ -99,22 +99,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		// Translate each function in the order of WyIL code
 		for (FunctionOrMethod function : functions) {
-			// // Check if the function is transformed
-			// if(transformFuncMap.isPresent()&& transformFuncMap.get().containsKey(function)){
-			// // Get the transformed function
-			// FunctionOrMethod transformedFunc = transformFuncMap.get().get(function);
-			//
-			// // Add the function name to the transformed function
-			// stores.addTransformFunctionName(function, transformedFunc);
-			//
-			// // Generate the function block
-			// for (Code code : transformedFunc.body().bytecodes()) {
-			// // Iterate and translate each code into the target language.
-			// this.iterateCode(code, transformedFunc);
-			// }
-			// // Write the code
-			// this.writeFunction(transformedFunc);
-			// }else{
+			// Use the copy analyzer to analyze the function
+			if (this.copyAnalyzer.isPresent()) {
+				this.copyAnalyzer.get().analyzeFunction(function);
+			}
+			// Use the deallocation analyzer to analyze the function
+			if(this.deallocatedAnalyzer.isPresent()) {
+				this.deallocatedAnalyzer.get().analyzeFunction(function);
+			}			
+
 			// Generate the function block
 			for (Code code : function.body().bytecodes()) {
 				// Iterate and translate each code into the target language.
