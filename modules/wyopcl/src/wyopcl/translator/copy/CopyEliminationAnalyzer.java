@@ -70,7 +70,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	public boolean isCopyEliminated(int register, int pos, Code code, FunctionOrMethod function) {
 		boolean isLive = liveAnalyzer.isLive(register, code, function);
 		if (this.isVerbose) {
-			System.out.print("\t liveness: " + getVar(register, function) + " = " + isLive);
+			System.out.print("\t liveness: " + this.getActualVarName(register, function) + " = " + isLive);
 		}
 		if (!isLive) {
 			if (code instanceof Codes.Invoke) {
@@ -84,25 +84,25 @@ public class CopyEliminationAnalyzer extends Analyzer {
 					boolean isMutated = readwriteAnalyzer.isMutated(param, calledFunction);
 					if (this.isVerbose) {
 						// Read-only is the negated 'isMutated' value
-						System.out.print("\t readonly: " + getVar(register, function) + " = " + !isMutated);
+						System.out.print("\t readonly: " + getActualVarName(register, function) + " = " + !isMutated);
 					}
 					// Get the return
 					RETURN isReturn = returnAnalyzer.isReturned(param, calledFunction);
 					if (this.isVerbose) {
-						System.out.print("\t return: " + getVar(register, function) + " = " + isReturn);
+						System.out.print("\t return: " + getActualVarName(register, function) + " = " + isReturn);
 					}
 					// Alias register and return variable, if 'register' is always or may be returned by called func.
 					if (isReturn != RETURN.NEVER_RETURN) {
 						this.updateSet(true, register, code, function);
-					}					
+					}
 				}
-			}else {
-				// Alias register to lhs				
+			} else {
+				// Alias register to lhs
 				this.updateSet(true, register, code, function);
 			}
-			if(this.isVerbose) {
+			if (this.isVerbose) {
 				System.out.print("\n");
-			}			
+			}
 			// The register is NOT alive, and thus the copy can be eliminated.
 			return true;
 		} else {
@@ -118,12 +118,12 @@ public class CopyEliminationAnalyzer extends Analyzer {
 					boolean isMutated = readwriteAnalyzer.isMutated(param, callee);
 					if (this.isVerbose) {
 						// Read-only is the negated 'isMutated' value
-						System.out.print("\t readonly: " + getVar(register, function) + " = " + !isMutated);
+						System.out.print("\t readonly: " + getActualVarName(register, function) + " = " + !isMutated);
 					}
 					// Get the return
 					RETURN isReturn = returnAnalyzer.isReturned(param, callee);
 					if (this.isVerbose) {
-						System.out.print("\t return: " + getVar(register, function) + " = " + isReturn + "\n");
+						System.out.print("\t return: " + getActualVarName(register, function) + " = " + isReturn + "\n");
 					}
 					// 'r' is NOT mutated inside invoked function
 					if (!isMutated) {
@@ -179,15 +179,15 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			System.out.println(name + "." + line + " [" + code + "]");
 		} else if (code instanceof Codes.Assign) {
 			Codes.Assign assign = (Codes.Assign) code;
-			String lhs = getVar(assign.target(0), function);
-			String rhs = getVar(assign.operand(0), function);
+			String lhs = getActualVarName(assign.target(0), function);
+			String rhs = getActualVarName(assign.operand(0), function);
 			System.out.println("[" + name + "." + line + " " + lhs + " = " + rhs + "] //" + code);
 		} else if (code instanceof Codes.Invoke) {
 			Codes.Invoke invoke = (Codes.Invoke) code;
-			String lhs = getVar(invoke.target(0), function);
+			String lhs = getActualVarName(invoke.target(0), function);
 			List<String> params = new ArrayList<String>();
 			for (int op : invoke.operands()) {
-				String param = getVar(op, function);
+				String param = getActualVarName(op, function);
 				params.add(param);
 			}
 			System.out.println("[" + name + "." + line + " " + lhs + " = " + invoke.name.name() + "("
@@ -216,22 +216,6 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		System.out.println("//End of " + name + " function");
 	}
 
-	/**
-	 * Get variable name
-	 * 
-	 * @param reg
-	 * @return
-	 */
-	private String getVar(int reg, FunctionOrMethod function) {
-		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
-		String name = "_" + reg;
-		// Check if the register has been kept in the declarations.
-		Declaration declaration = vars.get(reg);
-		if (declaration != null && declaration.name() != null && !declaration.name().isEmpty()) {
-			name = declaration.name();
-		}
-		return name;
-	}
 
 	@Override
 	public void analyzeFunction(FunctionOrMethod function) {
@@ -253,7 +237,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 				}
 				int rhs = ((Codes.Assign) code).operand(0);
 				boolean isCopyEliminated = isCopyEliminated(rhs, 0, code, function);
-				//updateSet(isCopyEliminated, rhs, code, function);
+				// updateSet(isCopyEliminated, rhs, code, function);
 			} else if (code instanceof Codes.Invoke) {
 				Codes.Invoke invoke = (Codes.Invoke) code;
 				// Check if the called function is not runtime call
@@ -265,7 +249,6 @@ public class CopyEliminationAnalyzer extends Analyzer {
 					int pos = 0;
 					for (int param : invoke.operands()) {
 						boolean isCopyEliminated = isCopyEliminated(param, pos, code, function);
-
 						pos++;
 					}
 				}
