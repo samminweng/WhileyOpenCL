@@ -72,11 +72,37 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		if (this.isVerbose) {
 			System.out.print("\t liveness: " + getVar(register, function) + " = " + isLive);
 		}
-
 		if (!isLive) {
-			if (this.isVerbose) {
-				System.out.print("\n");
+			if (code instanceof Codes.Invoke) {
+				// Print out parameter properties
+				Codes.Invoke functioncall = (Codes.Invoke) code;
+				FunctionOrMethod calledFunction = this.getCalledFunction(functioncall);
+				if (calledFunction != null) {
+					// Map the register to function argument.
+					int param = this.mapArgumentToParameter(register, pos, functioncall);
+					// Check if parameter is modified inside 'invoked_function'.
+					boolean isMutated = readwriteAnalyzer.isMutated(param, calledFunction);
+					if (this.isVerbose) {
+						// Read-only is the negated 'isMutated' value
+						System.out.print("\t readonly: " + getVar(register, function) + " = " + !isMutated);
+					}
+					// Get the return
+					RETURN isReturn = returnAnalyzer.isReturned(param, calledFunction);
+					if (this.isVerbose) {
+						System.out.print("\t return: " + getVar(register, function) + " = " + isReturn);
+					}
+					// Alias register and return variable, if 'register' is always or may be returned by called func.
+					if (isReturn != RETURN.NEVER_RETURN) {
+						this.updateSet(true, register, code, function);
+					}					
+				}
+			}else {
+				// Alias register to lhs				
+				this.updateSet(true, register, code, function);
 			}
+			if(this.isVerbose) {
+				System.out.print("\n");
+			}			
 			// The register is NOT alive, and thus the copy can be eliminated.
 			return true;
 		} else {
@@ -104,6 +130,12 @@ public class CopyEliminationAnalyzer extends Analyzer {
 						if (isReturn == RETURN.MAYBE_RETURN || isReturn == RETURN.ALWAYS_RETURN) {
 							// We use caller macro
 							return false; // We need the copy
+						}
+						// We do not the copy and return variable may be aliased to register
+						// depending on whether 'register' is returned. If the 'register' is never returned,
+						// then we do not need to update Set
+						if (isReturn != RETURN.NEVER_RETURN) {
+							this.updateSet(true, register, code, function);
 						}
 						return true;
 					}
@@ -221,7 +253,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 				}
 				int rhs = ((Codes.Assign) code).operand(0);
 				boolean isCopyEliminated = isCopyEliminated(rhs, 0, code, function);
-				updateSet(isCopyEliminated, rhs, code, function);
+				//updateSet(isCopyEliminated, rhs, code, function);
 			} else if (code instanceof Codes.Invoke) {
 				Codes.Invoke invoke = (Codes.Invoke) code;
 				// Check if the called function is not runtime call
@@ -233,7 +265,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 					int pos = 0;
 					for (int param : invoke.operands()) {
 						boolean isCopyEliminated = isCopyEliminated(param, pos, code, function);
-						updateSet(isCopyEliminated, param, code, function);
+
 						pos++;
 					}
 				}
@@ -241,5 +273,11 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			line++;
 		}
 
+		// Print out read-write, return and live variable analysis
+		if (this.isVerbose) {
+			this.readwriteAnalyzer.printFunctionAnalysisResult(function);
+			this.returnAnalyzer.printFunctionAnalysisResult(function);
+			this.liveAnalyzer.printFunctionAnalysisResult(function);
+		}
 	}
 }

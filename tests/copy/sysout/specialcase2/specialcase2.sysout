@@ -1,16 +1,11 @@
-// Read-write variables in g:[]
-// Return variables in g:[0]
-// Live variables for g function
-// In Set: [[0], [0], [0], []]
-// Out Set:[[0], [0], [0], []]
 g.0 [return %0]
 g.1 [return]
 //End of g function
-// Read-write variables in func:[6, 7, 3, 8, 9, 4, 10, 5, 11, 12]
-// Return variables in func:[1]
-// Live variables for func function
-// In Set: [[1, 0], [1, 0], [1, 0], [1, 10], [1, 5], [1, 5], [1], [1], []]
-// Out Set:[[1, 0], [1, 0], [1, 10], [1, 5], [1, 5], [1], [1], [1], []]
+// Read-write variables in g: []
+// Return variables in g: [a]
+// Live variables for g function
+// In Set:[[a], [a], [a], []]
+// Out Set:[[a], [a], [a], []]
 func.0 [const %6 = 0 : int]
 func.1 [indexof %7 = %0, %6 : int[]]
 func.2 [assign %3 = %7  : int]
@@ -30,21 +25,21 @@ func.12 [return]
 [func.5 rb = _9] //assign %4 = %9  : int
 	 liveness: _9 = false
 [func.6 _10 = g(a, b)] //invoke (%10) = (%0, %1) specialcase2:g : function(int[],int[])->(int[])
-	 liveness: a = false
+	 liveness: a = false	 readonly: a = true	 return: a = ALWAYS_RETURN
 	 liveness: b = true	 readonly: b = true	 return: b = NEVER_RETURN
 [func.7 r = _10] //assign %5 = %10  : int[]
 	 liveness: _10 = false
+// Read-write variables in func: [_6, _7, ra, _8, _9, rb, _10, r, _11, _12, a]
+// Return variables in func: [b]
+// Live variables for func function
+// In Set:[[b, a], [b, a], [b, a], [b, _10], [b, r], [b, r], [b], [b], []]
+// Out Set:[[b, a], [b, a], [b, _10], [b, r], [b, r], [b], [b], [b], []]
 	 liveness: _7 = false
 	 liveness: _9 = false
-	 liveness: a = false
+	 liveness: a = false	 readonly: a = true	 return: a = ALWAYS_RETURN
 	 liveness: b = true	 readonly: b = true	 return: b = NEVER_RETURN
 	 liveness: _10 = false
 	 liveness: _12 = false
-// Read-write variables in main:[3, 4, 5, 1, 6, 2, 7, 8, 9]
-// Return variables in main:[]
-// Live variables for main function
-// In Set: [[], [], [1], [1], [1, 6], [1], []]
-// Out Set:[[], [1], [1], [1, 6], [1], [], []]
 main.0 [const %3 = 2 : int]
 main.1 [const %4 = 2 : int]
 main.2 [arraygen %5 = [3; 4] : int[]]
@@ -58,12 +53,17 @@ main.7 [return]
 	 liveness: _5 = false
 [main.4 _6 = func(a, a)] //invoke (%6) = (%1, %1) specialcase2:func : function(int[],int[])->(int[])
 	 liveness: a = true	 readonly: a = false	 return: a = NEVER_RETURN
-	 liveness: a = true	 readonly: a = false	 return: a = ALWAYS_RETURN
+	 liveness: a = true	 readonly: a = true	 return: a = ALWAYS_RETURN
 [main.5 r = _6] //assign %2 = %6  : int[]
 	 liveness: _6 = false
+// Read-write variables in main: [_3, _4, _5, a, _6, r, _7, _8, _9]
+// Return variables in main: []
+// Live variables for main function
+// In Set:[[], [], [a], [a], [a, _6], [a], []]
+// Out Set:[[], [a], [a], [a, _6], [a], [], []]
 	 liveness: _5 = false
 	 liveness: a = true	 readonly: a = false	 return: a = NEVER_RETURN
-	 liveness: a = true	 readonly: a = false	 return: a = ALWAYS_RETURN
+	 liveness: a = true	 readonly: a = true	 return: a = ALWAYS_RETURN
 	 liveness: _6 = false
 
 Copy elimination analysis completed. File: specialcase2.wyil

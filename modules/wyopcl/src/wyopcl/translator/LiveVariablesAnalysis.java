@@ -1,8 +1,10 @@
 package wyopcl.translator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,16 +67,16 @@ public class LiveVariablesAnalysis extends Analyzer {
 		this.isVerbose = isVerbose;
 	}
 
-//	/**
-//	 * Applies live variable analysis on each basic block.
-//	 * 
-//	 * @param module
-//	 */
-//	public void apply(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
-//		// Builds up a CFG of the function.
-//		super.apply(module, transformFuncMap);
-//		postorderTraversalCallGraph(tree);
-//	}
+	// /**
+	// * Applies live variable analysis on each basic block.
+	// *
+	// * @param module
+	// */
+	// public void apply(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
+	// // Builds up a CFG of the function.
+	// super.apply(module, transformFuncMap);
+	// postorderTraversalCallGraph(tree);
+	// }
 
 	/**
 	 * Check if a register is alive after the code
@@ -118,52 +120,6 @@ public class LiveVariablesAnalysis extends Analyzer {
 			throw new RuntimeException("Block not found.");
 		}
 		return isLive;
-	}
-
-	/**
-	 * Output the live variables, that are stored in In/Out set.
-	 * 
-	 * @param env
-	 *            In/Out set of live variables
-	 * @param vars
-	 *            the hash map, which maps register to the variable name.
-	 * @return
-	 */
-	private String getLiveVariables(HashSet<Integer> env, FunctionOrMethod function) {
-		String str = "";
-		Boolean isFirst = true;
-		Iterator<Integer> iterator = env.iterator();
-		while (iterator.hasNext()) {
-			int register = iterator.next();
-			if (!isFirst) {
-				str += ", ";
-			} else {
-				isFirst = false;
-			}
-			// Get the variable name from register
-			str += this.getActualVarName(register, function);
-		}
-		return str;
-	}
-
-	/**
-	 * Print out the liveness for a given function.
-	 * 
-	 * @param function
-	 * @param livenessStore
-	 */
-	private void printLivenss(FunctionOrMethod function) {
-		// Get liveness
-		LiveVariables liveness = getLiveness(function);
-		// Get function name
-		System.out.println("// Live variables for " + function.name() + " function" + liveness.toString());
-
-		 // Get the list of blocks for the function.
-		 for (BasicBlock block : this.getBlocks(function)) {
-		 // Print out the in/out set for the block.
-		 System.out.println("In" + ":{" + getLiveVariables(liveness.getIN(block), function) + "}\n" + block + "\nOut"
-		 + ":{" + getLiveVariables(liveness.getOUT(block), function) + "}");
-		 }
 	}
 
 	/**
@@ -231,30 +187,65 @@ public class LiveVariablesAnalysis extends Analyzer {
 			liveness.computeLiveness(function.name(), isVerbose, cfGraph);
 			// Store the liveness analysis for the function.
 			livenessStore.put(function, liveness);
-			// Print out analysis result
-			if (isVerbose) {
-				// Get liveness of a function
-				System.out.println("// Live variables for " + function.name() + " function" + liveness.toString());
-				//printLivenss(function);
-			}
 		} else {
 			throw new RuntimeException("Not building CFG for " + function);
 		}
 	}
 
-//	@Override
-//	protected void visit(DefaultMutableTreeNode node) {
-//		// Apply live analysis on each calling function
-//		FunctionOrMethod function = (FunctionOrMethod) node.getUserObject();
-//		if (function != null) {
-//			// Check if the function has been transformed. If so, use the transformed one.
-//			// function = this.getFunction(function);
-//			analyzeFunction(function);
-//			// // Print out analysis result
-//			// if (isVerbose) {
-//			// printLivenss(function);
-//			// }
-//		}
-//	}
+	/**
+	 * Output the live variables, that are stored in In/Out set.
+	 * 
+	 * @param set
+	 *            In/Out set of live variables
+	 * @param vars
+	 *            the hash map, which maps register to the variable name.
+	 * @return
+	 */
+	private String getLiveVariables(LinkedHashSet<Integer> set, FunctionOrMethod function) {
+		String str = "[";
+		Boolean isFirst = true;
+		Iterator<Integer> iterator = set.iterator();
+		while (iterator.hasNext()) {
+			int register = iterator.next();
+			if (!isFirst) {
+				str += ", ";
+			} else {
+				isFirst = false;
+			}
+			// Get the variable name from register
+			str += this.getActualVarName(register, function);
+		}
+		str += "]";
+		return str;
+	}
+
+	/**
+	 * Print the live variables of given function
+	 * 
+	 * @param function
+	 */
+	public void printFunctionAnalysisResult(FunctionOrMethod function) {
+		LiveVariables liveness = livenessStore.get(function);
+
+		// Get function name
+		System.out.println("// Live variables for " + function.name() + " function");
+
+		System.out.print("// In Set:");
+		List<String> results = new ArrayList<String>();
+		// Get the list of inSet of function.
+		for (LinkedHashSet<Integer> inSetValues : liveness.getInSet().values()) {
+			// Print out the in/out set for the block.
+			results.add(getLiveVariables(inSetValues, function));
+		}
+		System.out.println("[" + String.join(", ", results) + "]");
+		results.clear();
+		System.out.print("// Out Set:");
+		// Get the list of inSet of function.
+		for (LinkedHashSet<Integer> setValues : liveness.getOutSet().values()) {
+			// Print out the in/out set for the block.
+			results.add(getLiveVariables(setValues, function));
+		}
+		System.out.println("[" + String.join(", ", results) + "]");
+	}
 
 }

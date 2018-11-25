@@ -1,7 +1,10 @@
 package wyopcl.translator;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
+
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.WyilFile.FunctionOrMethod;
@@ -165,8 +168,7 @@ public class ReadWriteAnalyzer extends Analyzer {
 	 * 
 	 * @param function
 	 */
-	public void analyzeFunction(FunctionOrMethod function) {
-		
+	public void analyzeFunction(FunctionOrMethod function) {		
 		LinkedHashSet<Integer> store;// Store all read-write variables for 'function'
 		if (!stores.containsKey(function)) {
 			stores.put(function, new LinkedHashSet<Integer>());
@@ -177,13 +179,23 @@ public class ReadWriteAnalyzer extends Analyzer {
 		// Go through each bytecode and add lhs register to read-write set
 		for (Code code : function.body().bytecodes()) {
 			this.iterateBytecode(code, store);
-		}
-		
-		if(this.isVerbose) {			
-			System.out.println("// Read-write variables in "+ function.name() + ":" + store);
-		}
-		
+		}		
 	}
+	
+	
+	/**
+	 * 
+	 * @param function
+	 */
+	public void printFunctionAnalysisResult(FunctionOrMethod function) {
+		LinkedHashSet<Integer> store = stores.get(function);
+		List<String> results = new ArrayList<String>();		
+		for(int register: store) {
+			results.add(this.getActualVarName(register, function));
+		}		
+		System.out.println("// Read-write variables in "+ function.name() + ": [" + String.join(", ", results) + "]");
+	}
+	
 
 
 }

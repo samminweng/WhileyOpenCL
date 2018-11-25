@@ -27,21 +27,21 @@ import org.junit.runners.Parameterized;
  */
 @RunWith(Parameterized.class)
 public class CopyAnalysisTestCase {
-	
-	final Path sourceDir = Paths.get(System.getProperty("user.dir")+ File.separator + "tests" 
-	                                      + File.separator + "copy");
+
+	final Path sourceDir = Paths
+			.get(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "copy");
 	private String testcase;// A list of test cases
-	
+
 	@Before
 	public void initialize() throws Exception {
-		
+
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		//util = null;
+		// util = null;
 	}
-	
+
 	/**
 	 * Pass the test case parameters as the arguments to the method
 	 * 
@@ -49,31 +49,17 @@ public class CopyAnalysisTestCase {
 	 */
 	public CopyAnalysisTestCase(String testcase) {
 		this.testcase = testcase;
-		System.out.print("=== "+testcase+" ===\n");
+		System.out.print("=== " + testcase + " ===\n");
 	}
-	
+
 	@Parameterized.Parameters(name = "{index}:{0}")
 	public static Collection<String> testCases() {
-		
+
 		// Add a list of test cases
-		return Arrays.asList(new String[] { 
-				"testcase1",
-				"testcase2", 
-				"testcase3",
-				"testcase4",
-				"testcase5", 
-				"testcase6",
-				"testcase7",
-				"testcase8",
-				"testcase9",
-				"testcase10",
-				"specialcase1",
-				"specialcase2",
-			});
+		return Arrays.asList(new String[] { "testcase1", "testcase2", "testcase3", "testcase4", "testcase5",
+				"testcase6", "testcase7", "testcase8", "testcase9", "testcase10", "specialcase1", "specialcase2", });
 	}
-	
-	
-	
+
 	/***
 	 * Execute the copy analysis and compare the system output with output file.
 	 * 
@@ -84,17 +70,16 @@ public class CopyAnalysisTestCase {
 	 * @param options
 	 */
 	public void execCopyAnalysis(Path baseDir, String testcase, String... options) {
-		
+
 		Process process;
 		try {
-			Path destDir = Paths
-					.get(baseDir + File.separator + "sysout" + File.separator + testcase + File.separator);
+			Path destDir = Paths.get(baseDir + File.separator + "sysout" + File.separator + testcase + File.separator);
 
 			// Copy source.whiley to destDir folder
 			Files.copy(Paths.get(baseDir + File.separator + "Whileyfiles" + File.separator + testcase + ".whiley"),
 					Paths.get(destDir + File.separator + testcase + ".whiley"), StandardCopyOption.REPLACE_EXISTING);
 
-			Path sysout = Paths.get(destDir + File.separator + testcase+".sysout");
+			Path sysout = Paths.get(destDir + File.separator + testcase + ".sysout");
 			// Make the command
 			String cmd = BaseTestUtil.makeCmd(testcase, options);
 
@@ -121,13 +106,11 @@ public class CopyAnalysisTestCase {
 		process.destroy();
 
 	}
-	
-	
+
 	@Test
-	public void testCopyAndEnableAssertion(){
-		// Perform copy analysis with assertion enabled 
+	public void testCopyAndEnableAssertion() {
+		// Perform copy analysis with assertion enabled
 		execCopyAnalysis(sourceDir, testcase, "-verbose", "-nocopy", "-ea", "-code");
 	}
-	
-	
+
 }

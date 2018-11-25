@@ -1,14 +1,17 @@
 package wyopcl.translator;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 
+import wyil.attributes.VariableDeclarations;
 import wyil.lang.Code;
 import wyil.lang.CodeBlock;
 import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.Codes.Return;
+import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 import wyopcl.translator.cfg.BasicBlock;
 import wyopcl.translator.cfg.BasicBlock.BlockType;
@@ -300,13 +303,28 @@ public class LiveVariables {
 		return getOUT(b);
 	}
 	
+	
 	/**
 	 * Show the values of in/out sets of live variable analysis
 	 */
 	public String toString() {
 		return "\n// In Set: " + this.inSet.values() + "\n// Out Set:" + this.outSet.values();
-				
-		
+	}
+	
+	/**
+	 * Get In Set
+	 * @return
+	 */
+	public LinkedHashMap<BasicBlock, LinkedHashSet<Integer>> getInSet() {
+		return inSet;
+	}
+
+	/**
+	 * Get Out Set
+	 * @return
+	 */
+	public LinkedHashMap<BasicBlock, LinkedHashSet<Integer>> getOutSet() {
+		return outSet;
 	}
 	
 }

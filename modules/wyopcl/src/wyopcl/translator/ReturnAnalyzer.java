@@ -161,53 +161,53 @@ public class ReturnAnalyzer extends Analyzer {
 		}
 	}
 
-//	/**
-//	 * This function is replaced by analyzeFunction
-//	 * 
-//	 * 
-//	 * Compute the return set for the given function node
-//	 * 
-//	 * @param currentNode
-//	 * @deprecated
-//	 */
-//	@Override
-//	protected void visit(DefaultMutableTreeNode currentNode) {
-//		// Compute the return set for the give node
-//		FunctionOrMethod function = (FunctionOrMethod) currentNode.getUserObject();
-//		if (function != null) {
-//			// Get the transformed function if so.
-//			// function = this.getFunction(function);
-//			HashSet<Integer> returnStore;
-//			if (!returnStores.containsKey(function)) {
-//				returnStores.put(function, new HashSet<Integer>());
-//				aliasStores.put(function, new ArrayList<HashSet<Integer>>());
-//			}
-//			// Store return registers
-//			returnStore = returnStores.get(function);
-//			// Go through each return bytecode
-//			for (Code code : function.body().bytecodes()) {
-//				if (code instanceof Codes.Return) {
-//					Codes.Return r = (Codes.Return) code;
-//					if (r.operands().length > 0) {
-//						int reg = r.operand(0);
-//						// add return register to set
-//						returnStore.add(reg);
-//					}
-//				}
-//			}
-//		}
-//	}
+	// /**
+	// * This function is replaced by analyzeFunction
+	// *
+	// *
+	// * Compute the return set for the given function node
+	// *
+	// * @param currentNode
+	// * @deprecated
+	// */
+	// @Override
+	// protected void visit(DefaultMutableTreeNode currentNode) {
+	// // Compute the return set for the give node
+	// FunctionOrMethod function = (FunctionOrMethod) currentNode.getUserObject();
+	// if (function != null) {
+	// // Get the transformed function if so.
+	// // function = this.getFunction(function);
+	// HashSet<Integer> returnStore;
+	// if (!returnStores.containsKey(function)) {
+	// returnStores.put(function, new HashSet<Integer>());
+	// aliasStores.put(function, new ArrayList<HashSet<Integer>>());
+	// }
+	// // Store return registers
+	// returnStore = returnStores.get(function);
+	// // Go through each return bytecode
+	// for (Code code : function.body().bytecodes()) {
+	// if (code instanceof Codes.Return) {
+	// Codes.Return r = (Codes.Return) code;
+	// if (r.operands().length > 0) {
+	// int reg = r.operand(0);
+	// // add return register to set
+	// returnStore.add(reg);
+	// }
+	// }
+	// }
+	// }
+	// }
 
-//	/**
-//	 * Go through every function, and checks each return byte-code and adds the return register to the set.
-//	 * 
-//	 *
-//	 * @param module
-//	 */
-//	public void apply(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
-//		super.apply(module, transformFuncMap);
-//		postorderTraversalCallGraph(tree);
-//	}
+	// /**
+	// * Go through every function, and checks each return byte-code and adds the return register to the set.
+	// *
+	// *
+	// * @param module
+	// */
+	// public void apply(WyilFile module, Optional<HashMap<FunctionOrMethod, FunctionOrMethod>> transformFuncMap) {
+	// super.apply(module, transformFuncMap);
+	// postorderTraversalCallGraph(tree);
+	// }
 
 	/**
 	 * Check if the register appears in every return statement of the function, and if the register never appears on the
@@ -286,10 +286,20 @@ public class ReturnAnalyzer extends Analyzer {
 				}
 			}
 		}
-		
-		if(this.isVerbose) {			
-			System.out.println("// Return variables in "+ function.name() + ":" + returnStore);
-		}
+	}
+
+	/**
+	 * Print a brief return analysis result
+	 * 
+	 * @param function
+	 */
+	public void printFunctionAnalysisResult(FunctionOrMethod function) {
+		LinkedHashSet<Integer> returnStore = returnStores.get(function);
+		List<String> results = new ArrayList<String>();
+		for(Integer register: returnStore) {
+			results.add(this.getActualVarName(register, function));
+		}		
+		System.out.println("// Return variables in " + function.name() + ": [" + String.join(",", results) + "]");
 
 	}
 

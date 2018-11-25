@@ -1,8 +1,3 @@
-// Read-write variables in func:[7, 8, 9, 3, 10, 11, 12, 4, 5, 6, 13, 14]
-// Return variables in func:[0, 5, 6]
-// Live variables for func function
-// In Set: [[0, 1], [0, 1], [0, 1, 3], [0, 1, 4, 3], [0, 1, 5, 4], [0, 1, 5, 6], [0, 1, 13, 5, 6], [0, 1, 13], [5, 1, 6, 13], [0], [], [5, 1, 14, 6], [5, 1, 14], [6, 1, 14], [5], [6], []]
-// Out Set:[[0, 1], [0, 1, 3], [0, 1, 4, 3], [0, 1, 5, 4], [0, 1, 5, 6], [0, 1, 13, 5, 6], [0, 1, 13, 5, 6], [0], [5, 1, 14, 6], [0], [], [5, 1, 14, 6], [5], [6], [5], [6], []]
 func.0 [const %7 = 0 : int]
 func.1 [const %8 = 3 : int]
 func.2 [arraygen %9 = [7; 8] : int[]]
@@ -34,15 +29,15 @@ func.21 [return]
 	 liveness: a = false
 [func.9 d = b] //assign %6 = %4  : int[]
 	 liveness: b = false
+// Read-write variables in func: [_7, _8, _9, a, _10, _11, _12, b, c, d, _13, _14]
+// Return variables in func: [x,c,d,a,_9,b,_12]
+// Live variables for func function
+// In Set:[[x, num], [x, num], [x, num, a], [x, num, b, a], [x, num, c, b], [x, num, c, d], [x, num, _13, c, d], [x, num, _13], [c, num, d, _13], [x], [], [c, num, _14, d], [c, num, _14], [d, num, _14], [c], [d], []]
+// Out Set:[[x, num], [x, num, a], [x, num, b, a], [x, num, c, b], [x, num, c, d], [x, num, _13, c, d], [x, num, _13, c, d], [x], [c, num, _14, d], [x], [], [c, num, _14, d], [c], [d], [c], [d], []]
 	 liveness: _9 = false
 	 liveness: _12 = false
 	 liveness: a = false
 	 liveness: b = false
-// Read-write variables in main:[4, 5, 6, 1, 7, 8, 9, 2, 10, 11, 12, 3, 14, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
-// Return variables in main:[]
-// Live variables for main function
-// In Set: [[0], [0], [0], [0, 2], [3, 0, 2], [3, 0, 2, 14], [3, 0, 2, 13], [3, 0, 2, 1], []]
-// Out Set:[[0], [0], [0, 2], [3, 0, 2], [3, 0, 2, 14], [3, 0, 2, 13], [3, 0, 2, 1], [], []]
 main.0 [const %4 = 2 : int]
 main.1 [const %5 = 2 : int]
 main.2 [arraygen %6 = [4; 5] : int[]]
@@ -83,9 +78,14 @@ main.30 [return]
 	 liveness: _12 = false
 [main.13 _13 = func(b, _14)] //invoke (%13) = (%2, %14) testcase4:func : function(int[],int)->(int[])
 	 liveness: b = true	 readonly: b = true	 return: b = MAYBE_RETURN
-	 liveness: _14 = false
+	 liveness: _14 = false	 readonly: _14 = true	 return: _14 = NEVER_RETURN
 [main.14 a = _13] //assign %1 = %13  : int[]
 	 liveness: _13 = false
+// Read-write variables in main: [_4, _5, _6, a, _7, _8, _9, b, _10, _11, _12, c, _14, _13, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26]
+// Return variables in main: []
+// Live variables for main function
+// In Set:[[console], [console], [console], [console, b], [c, console, b], [c, console, b, _14], [c, console, b, _13], [c, console, b, a], []]
+// Out Set:[[console], [console], [console, b], [c, console, b], [c, console, b, _14], [c, console, b, _13], [c, console, b, a], [], []]
 	 liveness: _6 = false
 	 liveness: _9 = false
 	 liveness: _12 = false

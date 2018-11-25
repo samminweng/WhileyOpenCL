@@ -727,7 +727,8 @@ public abstract class Analyzer {
 	 * @param function
 	 */
 	public abstract void analyzeFunction(FunctionOrMethod function);
-
+	
+	
 	/**
 	 * Perform the post-order traversal to visit all nodes of a tree reference:
 	 * http://www.tutorialspoint.com/data_structures_algorithms/tree_traversal.htm

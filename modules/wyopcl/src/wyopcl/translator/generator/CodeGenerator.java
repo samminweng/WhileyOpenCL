@@ -74,7 +74,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		this(config);
 		throw new RuntimeException("Not used anymore");
 	}
-	
+
 	public CodeGenerator(Configuration config, Optional<CopyEliminationAnalyzer> copyAnalyzer,
 			Optional<DeallocationAnalyzer> deallcAnalyzer, Optional<BoundAnalyzer> boundAnalyzer) {
 		this(config);
@@ -117,9 +117,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				this.copyAnalyzer.get().analyzeFunction(function);
 			}
 			// Use the deallocation analyzer to analyze the function
-			if(this.deallocatedAnalyzer.isPresent()) {
+			if (this.deallocatedAnalyzer.isPresent()) {
 				this.deallocatedAnalyzer.get().analyzeFunction(function);
-			}			
+			}
 
 			// Generate the function block
 			for (Code code : function.body().bytecodes()) {
@@ -768,7 +768,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 
 			// Update the set with rhs variable
-			this.copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, code.operand(0), code, function));
+			//this.copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, code.operand(0), code, function));
 
 			// Add the post-deallocation code
 			this.deallocatedAnalyzer.ifPresent(
@@ -1472,12 +1472,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				list.add(1, statement);
 			} else {
 				list.add(statement);
-			}
-			/*This check is for old version of deallocation macros.
-			 * else if(statement.matches(".*(\\_[A-Z]+\\_DEALLOC\\().*")) {
-			// so we put it at the beginning of statements
-			list.add(0, statement); 
-			}*/
+			}			
 		}
 
 		// add the statement

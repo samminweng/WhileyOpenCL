@@ -1199,7 +1199,7 @@ int main(int argc, char** args){
 	_21 = 85;
 	//invoke (%17) = (%0, %1, %18, %21) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_17, _18, "true-NEVER_RETURN-false" , "buy");
+		_FUNCTIONCALL_NO_COPY_PRE(_17, _18, "false-NEVER_RETURN-false" , "buy");
 		_FUNCTIONCALL_NO_COPY_PRE(_17, till, "true-MAYBE_RETURN-false" , "buy");
 		_DEALLOC(_17);
 		// isCopyEliminated of '_1' = true
@@ -1234,7 +1234,7 @@ int main(int argc, char** args){
 	_26 = 105;
 	//invoke (%22) = (%0, %1, %23, %26) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_22, _23, "true-NEVER_RETURN-false" , "buy");
+		_FUNCTIONCALL_NO_COPY_PRE(_22, _23, "false-NEVER_RETURN-false" , "buy");
 		_FUNCTIONCALL_NO_COPY_PRE(_22, till, "true-MAYBE_RETURN-false" , "buy");
 		_DEALLOC(_22);
 		// isCopyEliminated of '_1' = true
@@ -1269,7 +1269,7 @@ int main(int argc, char** args){
 	_31 = 5;
 	//invoke (%27) = (%0, %1, %28, %31) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_27, _28, "true-NEVER_RETURN-false" , "buy");
+		_FUNCTIONCALL_NO_COPY_PRE(_27, _28, "false-NEVER_RETURN-false" , "buy");
 		_FUNCTIONCALL_NO_COPY_PRE(_27, till, "true-MAYBE_RETURN-false" , "buy");
 		_DEALLOC(_27);
 		// isCopyEliminated of '_1' = true
@@ -1304,7 +1304,7 @@ int main(int argc, char** args){
 	_36 = 305;
 	//invoke (%32) = (%0, %1, %33, %36) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_32, _33, "true-NEVER_RETURN-false" , "buy");
+		_FUNCTIONCALL_NO_COPY_PRE(_32, _33, "false-NEVER_RETURN-false" , "buy");
 		_FUNCTIONCALL_NO_COPY_PRE(_32, till, "true-MAYBE_RETURN-false" , "buy");
 		_DEALLOC(_32);
 		// isCopyEliminated of '_1' = true
