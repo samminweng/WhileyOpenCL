@@ -1,17 +1,10 @@
 import whiley.lang.*
 // Never return a, maybe_turn b and c
 function func(int[] a, int[] b, int[] c) -> int[]:
-	int ra = a[0]	//ReadOnly_a
-	int rb = b[0]	//ReadOnly_b
-	int rc = c[0]	//ReadOnly_c
-	if a[0] == b[0]:
-		int[] y = a
-		int[] x = b
-		return x
-	else:
-		int[] y = c
-		int[] x = y
-		return x
+	int[] x = a
+	x = b
+	x = c 
+	return x
 // Method 'main'
 public method main(System.Console console):
 	int[] a = [1; 2]
@@ -20,5 +13,5 @@ public method main(System.Console console):
 	int[] r = func(a, b, c)
 	assert a[0] == 1 //Live_a
 	assert b[0] == 2 //Live_b
-	assert c[0] == 3 //Live_c
+	assert c[0] == 3  //Live_c
 	assert r[0] == 3
