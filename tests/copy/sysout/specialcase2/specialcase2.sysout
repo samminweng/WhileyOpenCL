@@ -47,7 +47,8 @@ main.3 [assign %1 = %5  : int[]]
 main.4 [invoke (%6) = (%1, %1) specialcase2:func : function(int[],int[])->(int[])]
 main.5 [assign %2 = %6  : int[]]
 main.6 [assert]
-main.7 [return]
+main.7 [assert]
+main.8 [return]
 //End of main function
 [main.3 a = _5] //assign %1 = %5  : int[]
 	 liveness: _5 = false
@@ -56,15 +57,17 @@ main.7 [return]
 	 liveness: a = true	 readonly: a = true	 return: a = ALWAYS_RETURN
 [main.5 r = _6] //assign %2 = %6  : int[]
 	 liveness: _6 = false
-// Read-write variables in main: [_3, _4, _5, a, _6, r, _7, _8, _9]
+// Read-write variables in main: [_3, _4, _5, a, _6, r, _7, _8, _9, _10, _11, _12]
 // Return variables in main: []
 // Live variables for main function
-// In Set:[[], [], [a], [a], [a, _6], [a], []]
-// Out Set:[[], [a], [a], [a, _6], [a], [], []]
+// In Set:[[], [], [a], [a], [a, _6], [r, a], []]
+// Out Set:[[], [a], [a], [a, _6], [r, a], [], []]
 	 liveness: _5 = false
 	 liveness: a = true	 readonly: a = false	 return: a = NEVER_RETURN
 	 liveness: a = true	 readonly: a = true	 return: a = ALWAYS_RETURN
 	 liveness: _6 = false
 
 Copy elimination analysis completed. File: specialcase2.wyil
+Deallocation analysis completed.
+File: specialcase2.wyil
 Code Generation completed. File: specialcase2.c, specialcase2.h

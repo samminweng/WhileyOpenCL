@@ -9,7 +9,7 @@ runWyOpenCL(){
     cp $BASEDIR/Whileyfiles/$testcase.whiley $folder
     #read -p "Press enter to continue"
     cd $folder
-    ./../../../../bin/wyopcl -nocopy -ea -verbose -code $testcase.whiley > $folder/$testcase.sysout
+    ./../../../../bin/wyopcl -nocopy -dealloc -ea -verbose -code $testcase.whiley > $folder/$testcase.sysout
     rm *.wyil
 }
 

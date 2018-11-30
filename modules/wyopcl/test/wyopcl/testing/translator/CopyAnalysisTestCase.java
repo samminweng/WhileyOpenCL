@@ -20,7 +20,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 /**
- * Run copy analyzer combined with code generator to produce the copy optimized C code.
+ * Run copy analyzer combined with deallocation analysis and code generator to produce the copy optimized C code.
+ * 
+ * Each test outputs the messages and compares each line of the messages with pre-defined output for validating 
+ * the analysis results.
+ * 
  * 
  * @author Min-Hsien Weng
  *
@@ -30,6 +34,7 @@ public class CopyAnalysisTestCase {
 
 	final Path sourceDir = Paths
 			.get(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "copy");
+	final Path codeDir = Paths.get(System.getProperty("user.dir") + File.separator + "tests" + File.separator + "code");
 	private String testcase;// A list of test cases
 
 	@Before
@@ -74,10 +79,9 @@ public class CopyAnalysisTestCase {
 		Process process;
 		try {
 			Path destDir = Paths.get(baseDir + File.separator + "sysout" + File.separator + testcase + File.separator);
-
-			// Copy source.whiley to destDir folder
-			Files.copy(Paths.get(baseDir + File.separator + "Whileyfiles" + File.separator + testcase + ".whiley"),
-					Paths.get(destDir + File.separator + testcase + ".whiley"), StandardCopyOption.REPLACE_EXISTING);
+			Path sourceDir = Paths.get(baseDir + File.separator + "Whileyfiles" + File.separator + testcase + ".whiley");
+			// Copy the Util.c and WyRT.c to 'destDir' folder
+			BaseTestUtil.createFolderAndCopyFiles(testcase, sourceDir, destDir);
 
 			Path sysout = Paths.get(destDir + File.separator + testcase + ".sysout");
 			// Make the command
@@ -93,12 +97,17 @@ public class CopyAnalysisTestCase {
 			// Start the process to analyse the bounds
 			InputStream input = process.getInputStream();
 
-			// Check the bound results against pre-stored results
+			// Check the analysis results against pre-stored results
 			BaseTestUtil.assertOutput(new BufferedReader(new InputStreamReader(input, Charset.forName("UTF-8"))),
 					Files.newBufferedReader(sysout, StandardCharsets.UTF_8));
 
 			// Remove all generated WyIL files.
 			Files.deleteIfExists(Paths.get(destDir + testcase + ".wyil"));
+			
+			// Compile and run the generated C code
+			BaseTestUtil.compileAndRunCCode(testcase, destDir, false);
+			
+			
 		} catch (Exception e) {
 			throw new RuntimeException("Test file: " + testcase + ".whiley", e);
 		}
@@ -110,7 +119,7 @@ public class CopyAnalysisTestCase {
 	@Test
 	public void testCopyAndEnableAssertion() {
 		// Perform copy analysis with assertion enabled
-		execCopyAnalysis(sourceDir, testcase, "-verbose", "-nocopy", "-ea", "-code");
+		execCopyAnalysis(sourceDir, testcase, "-verbose", "-ea", "-nocopy", "-dealloc", "-code");
 	}
 
 }

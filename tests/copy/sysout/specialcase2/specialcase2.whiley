@@ -14,3 +14,4 @@ public method main(System.Console console):
 	int[] a = [2; 2]
 	int[] r = func(a, a) // first 'a' read-write, sec 'a' is read-only
 	assert a[0] == 2
+	assert r[0] == 2

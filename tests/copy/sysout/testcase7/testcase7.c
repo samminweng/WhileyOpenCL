@@ -1,6 +1,8 @@
 #include "testcase7.h"
 int64_t* _func_(_DECL_1DARRAY_PARAM(a), int64_t i, int64_t j, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(a);
 	_DECL_1DARRAY(_3);
+	_DECL_DEALLOC(_3);
 	int64_t _4;
 	int64_t _5;
 	int64_t _6;
@@ -45,6 +47,7 @@ blklab3:;
 //.blklab2
 blklab2:;
 	//return %0
+	_DEALLOC(_3);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(a);
 	return a;
 	//goto blklab1
@@ -81,6 +84,7 @@ blklab5:;
 //.blklab4
 blklab4:;
 	//return %0
+	_DEALLOC(_3);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(a);
 	return a;
 //.blklab1
@@ -90,18 +94,25 @@ blklab1:;
 
 int main(int argc, char** args){
 	_DECL_1DARRAY(a);
+	_DECL_DEALLOC(a);
 	_DECL_1DARRAY(b);
+	_DECL_DEALLOC(b);
 	_DECL_1DARRAY(c);
+	_DECL_DEALLOC(c);
 	int64_t _4;
 	int64_t _5;
 	_DECL_1DARRAY(_6);
+	_DECL_DEALLOC(_6);
 	int64_t _7;
 	int64_t _8;
 	_DECL_1DARRAY(_9);
+	_DECL_DEALLOC(_9);
 	int64_t _10;
 	int64_t _11;
 	_DECL_1DARRAY(_12);
+	_DECL_DEALLOC(_12);
 	_DECL_1DARRAY(_13);
+	_DECL_DEALLOC(_13);
 	int64_t _14;
 	int64_t _15;
 	void* _16;
@@ -118,42 +129,45 @@ int main(int argc, char** args){
 	//const %5 = 2 : int
 	_5 = 2;
 	//arraygen %6 = [4; 5] : int[]
-	_NEW_1DARRAY_int64_t(_6, _5, _4);
+	_NEW1DARRAY_DEALLOC(_6, _4, _5, int64_t);
 	//assign %1 = %6  : int[]
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(a, _6);
+	_TRANSFER_DEALLOC(a, _6);
 	//const %7 = 2 : int
 	_7 = 2;
 	//const %8 = 2 : int
 	_8 = 2;
 	//arraygen %9 = [7; 8] : int[]
-	_NEW_1DARRAY_int64_t(_9, _8, _7);
+	_NEW1DARRAY_DEALLOC(_9, _7, _8, int64_t);
 	//assign %2 = %9  : int[]
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(b, _9);
+	_TRANSFER_DEALLOC(b, _9);
 	//const %10 = 2 : int
 	_10 = 2;
 	//const %11 = 2 : int
 	_11 = 2;
 	//arraygen %12 = [10; 11] : int[]
-	_NEW_1DARRAY_int64_t(_12, _11, _10);
+	_NEW1DARRAY_DEALLOC(_12, _10, _11, int64_t);
 	//assign %3 = %12  : int[]
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(c, _12);
+	_TRANSFER_DEALLOC(c, _12);
 	//const %14 = 2 : int
 	_14 = 2;
 	//const %15 = 3 : int
 	_15 = 3;
 	//invoke (%13) = (%2, %14, %15) testcase7:func : function(int[],int,int)->(int[])
 	{
+		_FUNCTIONCALL_COPY_PRE(_13, b, "true-ALWAYS_RETURN-true" , "func");
+		_DEALLOC(_13);
 		void* tmp_a;
 		_COPY_1DARRAY_PARAM(b, tmp_a, int64_t);
 		// isCopyEliminated of '_2' = false
 		_13 = _func_(tmp_a, b_size, _14, _15, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_13));
+		_13_dealloc = true;
 	}
 	//assign %1 = %13  : int[]
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(a, _13);
+	_TRANSFER_DEALLOC(a, _13);
 	//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %17 = %16 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %18 = 0 : int
@@ -185,6 +199,13 @@ int main(int argc, char** args){
 		printf("%"PRId64"\n", _27);
 	}
 	//return
+	_DEALLOC(a);
+	_DEALLOC(b);
+	_DEALLOC(c);
+	_DEALLOC(_6);
+	_DEALLOC(_9);
+	_DEALLOC(_12);
+	_DEALLOC(_13);
 	exit(0);
 }
 

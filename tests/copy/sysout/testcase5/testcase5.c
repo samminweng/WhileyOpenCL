@@ -1,16 +1,24 @@
 #include "testcase5.h"
 int64_t* _func_(_DECL_1DARRAY_PARAM(x), int64_t num, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(x);
 	_DECL_1DARRAY(_2);
+	_DECL_DEALLOC(_2);
 	_DECL_1DARRAY(a);
+	_DECL_DEALLOC(a);
 	_DECL_1DARRAY(b);
+	_DECL_DEALLOC(b);
 	_DECL_1DARRAY(c);
+	_DECL_DEALLOC(c);
 	_DECL_1DARRAY(d);
+	_DECL_DEALLOC(d);
 	int64_t _7;
 	int64_t _8;
 	_DECL_1DARRAY(_9);
+	_DECL_DEALLOC(_9);
 	int64_t _10;
 	int64_t _11;
 	_DECL_1DARRAY(_12);
+	_DECL_DEALLOC(_12);
 	int64_t _13;
 	int64_t _14;
 	//const %7 = 0 : int
@@ -18,34 +26,41 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(x), int64_t num, _DECL_1DARRAYSIZE_PARAM_CAL
 	//const %8 = 3 : int
 	_8 = 3;
 	//arraygen %9 = [7; 8] : int[]
-	_NEW_1DARRAY_int64_t(_9, _8, _7);
+	_NEW1DARRAY_DEALLOC(_9, _7, _8, int64_t);
 	//assign %3 = %9  : int[]
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(a, _9);
+	_TRANSFER_DEALLOC(a, _9);
 	//const %10 = 1 : int
 	_10 = 1;
 	//const %11 = 3 : int
 	_11 = 3;
 	//arraygen %12 = [10; 11] : int[]
-	_NEW_1DARRAY_int64_t(_12, _11, _10);
+	_NEW1DARRAY_DEALLOC(_12, _10, _11, int64_t);
 	//assign %4 = %12  : int[]
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(b, _12);
+	_TRANSFER_DEALLOC(b, _12);
 	//const %13 = 0 : int
 	_13 = 0;
 	//update %0[%13] = %1 : int[] -> int[]
 	x[_13] = num;
 	//assign %5 = %3  : int[]
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(c, a);
+	_TRANSFER_DEALLOC(c, a);
 	//assign %6 = %4  : int[]
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(d, b);
+	_TRANSFER_DEALLOC(d, b);
 	//const %14 = 9 : int
 	_14 = 9;
 	//ifle %1, %14 goto blklab0 : int
 	if(num<=_14){goto blklab0;}
 	//return %5
+	_DEALLOC(x);
+	_DEALLOC(_2);
+	_DEALLOC(a);
+	_DEALLOC(b);
+	_DEALLOC(d);
+	_DEALLOC(_9);
+	_DEALLOC(_12);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(c);
 	return c;
 	//goto blklab1
@@ -53,6 +68,13 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(x), int64_t num, _DECL_1DARRAYSIZE_PARAM_CAL
 //.blklab0
 blklab0:;
 	//return %6
+	_DEALLOC(x);
+	_DEALLOC(_2);
+	_DEALLOC(a);
+	_DEALLOC(b);
+	_DEALLOC(c);
+	_DEALLOC(_9);
+	_DEALLOC(_12);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(d);
 	return d;
 //.blklab1
@@ -62,18 +84,25 @@ blklab1:;
 
 int main(int argc, char** args){
 	_DECL_1DARRAY(a);
+	_DECL_DEALLOC(a);
 	_DECL_1DARRAY(b);
+	_DECL_DEALLOC(b);
 	_DECL_1DARRAY(c);
+	_DECL_DEALLOC(c);
 	int64_t _4;
 	int64_t _5;
 	_DECL_1DARRAY(_6);
+	_DECL_DEALLOC(_6);
 	int64_t _7;
 	int64_t _8;
 	_DECL_1DARRAY(_9);
+	_DECL_DEALLOC(_9);
 	int64_t _10;
 	int64_t _11;
 	_DECL_1DARRAY(_12);
+	_DECL_DEALLOC(_12);
 	_DECL_1DARRAY(_13);
+	_DECL_DEALLOC(_13);
 	int64_t _14;
 	void* _15;
 	int64_t _17;
@@ -89,40 +118,44 @@ int main(int argc, char** args){
 	//const %5 = 2 : int
 	_5 = 2;
 	//arraygen %6 = [4; 5] : int[]
-	_NEW_1DARRAY_int64_t(_6, _5, _4);
+	_NEW1DARRAY_DEALLOC(_6, _4, _5, int64_t);
 	//assign %1 = %6  : int[]
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(a, _6);
+	_TRANSFER_DEALLOC(a, _6);
 	//const %7 = 2 : int
 	_7 = 2;
 	//const %8 = 2 : int
 	_8 = 2;
 	//arraygen %9 = [7; 8] : int[]
-	_NEW_1DARRAY_int64_t(_9, _8, _7);
+	_NEW1DARRAY_DEALLOC(_9, _7, _8, int64_t);
 	//assign %2 = %9  : int[]
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(b, _9);
+	_TRANSFER_DEALLOC(b, _9);
 	//const %10 = 2 : int
 	_10 = 2;
 	//const %11 = 2 : int
 	_11 = 2;
 	//arraygen %12 = [10; 11] : int[]
-	_NEW_1DARRAY_int64_t(_12, _11, _10);
+	_NEW1DARRAY_DEALLOC(_12, _10, _11, int64_t);
 	//assign %3 = %12  : int[]
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(c, _12);
+	_TRANSFER_DEALLOC(c, _12);
 	//const %14 = 11 : int
 	_14 = 11;
 	//invoke (%13) = (%2, %14) testcase5:func : function(int[],int)->(int[])
 	{
+		_FUNCTIONCALL_COPY_PRE(_13, b, "true-NEVER_RETURN-true" , "func");
+		_DEALLOC(_13);
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(b, tmp_x, int64_t);
 		// isCopyEliminated of '_2' = false
 		_13 = _func_(tmp_x, b_size, _14, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_13));
+		_13_dealloc = true;
+		free(tmp_x);
 	}
 	//assign %1 = %13  : int[]
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(a, _13);
+	_TRANSFER_DEALLOC(a, _13);
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %16 = %15 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %17 = 0 : int
@@ -154,6 +187,13 @@ int main(int argc, char** args){
 		printf("%"PRId64"\n", _26);
 	}
 	//return
+	_DEALLOC(a);
+	_DEALLOC(b);
+	_DEALLOC(c);
+	_DEALLOC(_6);
+	_DEALLOC(_9);
+	_DEALLOC(_12);
+	_DEALLOC(_13);
 	exit(0);
 }
 

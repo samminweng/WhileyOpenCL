@@ -467,8 +467,10 @@ public class ModelCheckingTestCase {
 	 */
 	private void produceCCodeAndRunIt(String category, List<String> testcases) {
 		for (String testcase : testcases) {
+			// The destination path for generated code
 			Path destPath = Paths.get(implDir + File.separator + category + File.separator + testcase);
 			BaseTestUtil.createFolder(destPath);// Create the folder
+			// The source path for Whiley code
 			Path sourceDir = Paths.get(modelCheckingDir + File.separator + "Whileyfiles" + File.separator + category
 					+ File.separator + testcase + ".whiley");
 

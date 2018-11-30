@@ -7,11 +7,13 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import wyil.attributes.VariableDeclarations;
+import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.ArrayGenerator;
@@ -133,14 +135,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 	}
 
+	
 	/**
 	 * Given a function, defines and initialize local variables
 	 */
 	protected List<String> declareVariables(FunctionOrMethod function) {
 		// Get variable declaration
 		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
-		// The string declaration.
-		List<String> declarations = new ArrayList<String>();
+		// The string declaration in C
+		List<String> decStatements = new ArrayList<String>();
+		// Store all the variable names to avoid duplicated declarations
+		List<String> varNames = new ArrayList<String>();
 		// Skip the parameter registers and iterate over the remaining registers
 		ArrayList<Type> params = function.type().params();
 		String indent = "\t";
@@ -151,105 +156,101 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			this.deallocatedAnalyzer.ifPresent(a -> {
 				String o = a.declareDeallocFlag(indent, register, function, stores);
 				if (o != null) {
-					declarations.add(o);
+					decStatements.add(o);
 				}
 			});
-
 		}
 
 		// Declare local variables
 		for (int reg = params.size(); reg < vars.size(); reg++) {
 			Type type = stores.getRawType(reg, function);
 			// Get the variable name.
-			String var = stores.getVar(reg, function);
-			if (type instanceof Type.FunctionOrMethod) {
-				continue;// Skip translation
-			} else {
-				if (type == null || type instanceof Type.Null) {
-					declarations.add(indent + "void* " + var + ";");
-				} else if (type instanceof Type.Byte) {
-					declarations.add(indent + "BYTE " + var + ";");
-				} else if (type instanceof Type.Int) {
-					String translateType;
-					if (boundAnalyzer.isPresent()) {
-						translateType = boundAnalyzer.get().suggestIntegerType(reg, function);
-					} else {
-						// Use the int64_t integer
-						translateType = CodeGeneratorHelper.translateType(type, stores);
-					}
-					String def = indent + translateType + " " + var + ";";// Initialize an integer variable to 0
-
-					if (boundAnalyzer.isPresent()) {
-						def = def + " //" + boundAnalyzer.get().getInferredDomain(reg, function);
-					}
-
-					declarations.add(def);
-				} else if (type instanceof Type.Array) {
-					// Get the array dimension
-					int dimension = stores.getArrayDimension(type);
-					// Check elm type is an integer
-					Type elm_type = stores.getArrayElementType((Type.Array) type);
-					// Add variable declaration
-					if (elm_type instanceof Type.Byte) {
-						// Declare a BYTE array
-						declarations.add(indent + "_DECL_" + dimension + "DARRAY_BYTE(" + var + ");");
-					} else if (stores.isIntType(elm_type)) {
-						// Choose integer type for a single dimensional array
-						if (boundAnalyzer.isPresent() && dimension == 1) {
-							String translateType = boundAnalyzer.get().suggestIntegerType(reg, function);
-							String def = indent + translateType + "* " + var + " = NULL;";// Initialize an integer
-																							// variable to 0
-
-							if (boundAnalyzer.isPresent()) {
-								def = def + " //" + boundAnalyzer.get().getInferredDomain(reg, function);
-							}
-
-							declarations.add(def);
-							// Declare array size variable as 'size_t' type
-							declarations.add(indent + "size_t " + var + "_size = 0;");
-						} else {
-							// Declare an integer array using int64_t
-							declarations.add(indent + "_DECL_" + dimension + "DARRAY(" + var + ");");
-						}
-					} else {
-						String translateType = CodeGeneratorHelper.translateType(elm_type, stores);
-						declarations.add(indent + translateType + "* " + var + ";");
-						// Declare array size variable as 'size_t' type
-						declarations.add(indent + "size_t " + var + "_size = 0;");
-					}
-				} else if ((type instanceof Type.Reference
-						&& ((Type.Reference) type).element() instanceof Type.Array)) {
-					// Declare array variable
-					int dimension = stores.getArrayDimension(type);
-					declarations.add(indent + "_DECL_" + dimension + "DARRAY(" + var + ");");
-				} else if ((type instanceof Type.Union && stores.isIntArrayOrAliasedType(type))
-						|| (type instanceof Type.Nominal && stores.isIntArrayOrAliasedType(type))) {
-					// Check if union type is null|int[] or nomial type is aliased to int[]
-					declarations.add(indent + "_DECL_1DARRAY(" + var + ");");
-				} else if (type instanceof Type.Nominal && ((Type.Nominal) type).name().name().equals("string")) {
-					// Special case for ASCII.String type
-					// Declare an array of bytes
-					declarations.add(indent + "_DECL_1DARRAY_BYTE(" + var + ");");
-				} else if (type instanceof Type.Record || type instanceof Type.Nominal || type instanceof Type.Union
-						|| type instanceof Type.Bool) {
-					String translateType = CodeGeneratorHelper.translateType(type, stores);
-					declarations.add(indent + translateType + " " + var + ";");
-				} else {
-					throw new RuntimeException("Not implemented");
-				}
+			String varname = stores.getVar(reg, function);
+			// Check if 'var' exists in 'varNames' and the var type is not a function. If any, skip the translation.
+			if (varNames.contains(varname) || type instanceof Type.FunctionOrMethod) {
+				continue;// Skip the translation.
 			}
+			// Add the 'varname' to 'varNames' set
+			varNames.add(varname);
+			if (type == null || type instanceof Type.Null) {
+				decStatements.add(indent + "void* " + varname + ";");
+			} else if (type instanceof Type.Byte) {
+				decStatements.add(indent + "BYTE " + varname + ";");
+			} else if (type instanceof Type.Int) {
+				String translateType;
+				if (boundAnalyzer.isPresent()) {
+					translateType = boundAnalyzer.get().suggestIntegerType(reg, function);
+				} else {
+					// Use the int64_t integer
+					translateType = CodeGeneratorHelper.translateType(type, stores);
+				}
+				String def = indent + translateType + " " + varname + ";";// Initialize an integer variable to 0
+				if (boundAnalyzer.isPresent()) {
+					def = def + " //" + boundAnalyzer.get().getInferredDomain(reg, function);
+				}
+				decStatements.add(def);
+			} else if (type instanceof Type.Array) {
+				// Get the array dimension
+				int dimension = stores.getArrayDimension(type);
+				// Check elm type is an integer
+				Type elm_type = stores.getArrayElementType((Type.Array) type);
+				// Add variable declaration
+				if (elm_type instanceof Type.Byte) {
+					// Declare a BYTE array
+					decStatements.add(indent + "_DECL_" + dimension + "DARRAY_BYTE(" + varname + ");");
+				} else if (stores.isIntType(elm_type)) {
+					// Choose integer type for a single dimensional array
+					if (boundAnalyzer.isPresent() && dimension == 1) {
+						String translateType = boundAnalyzer.get().suggestIntegerType(reg, function);
+						String def = indent + translateType + "* " + varname + " = NULL;";
+						// Initialize an integer variable to 0
+						if (boundAnalyzer.isPresent()) {
+							def = def + " //" + boundAnalyzer.get().getInferredDomain(reg, function);
+						}
+						decStatements.add(def);
+						// Declare array size variable as 'size_t' type
+						decStatements.add(indent + "size_t " + varname + "_size = 0;");
+					} else {
+						// Declare an integer array using int64_t
+						decStatements.add(indent + "_DECL_" + dimension + "DARRAY(" + varname + ");");
+					}
+				} else {
+					String translateType = CodeGeneratorHelper.translateType(elm_type, stores);
+					decStatements.add(indent + translateType + "* " + varname + ";");
+					// Declare array size variable as 'size_t' type
+					decStatements.add(indent + "size_t " + varname + "_size = 0;");
+				}
+			} else if ((type instanceof Type.Reference && ((Type.Reference) type).element() instanceof Type.Array)) {
+				// Declare array variable
+				int dimension = stores.getArrayDimension(type);
+				decStatements.add(indent + "_DECL_" + dimension + "DARRAY(" + varname + ");");
+			} else if ((type instanceof Type.Union && stores.isIntArrayOrAliasedType(type))
+					|| (type instanceof Type.Nominal && stores.isIntArrayOrAliasedType(type))) {
+				// Check if union type is null|int[] or nomial type is aliased to int[]
+				decStatements.add(indent + "_DECL_1DARRAY(" + varname + ");");
+			} else if (type instanceof Type.Nominal && ((Type.Nominal) type).name().name().equals("string")) {
+				// Special case for ASCII.String type
+				// Declare an array of bytes
+				decStatements.add(indent + "_DECL_1DARRAY_BYTE(" + varname + ");");
+			} else if (type instanceof Type.Record || type instanceof Type.Nominal || type instanceof Type.Union
+					|| type instanceof Type.Bool) {
+				String translateType = CodeGeneratorHelper.translateType(type, stores);
+				decStatements.add(indent + translateType + " " + varname + ";");
+			} else {
+				throw new RuntimeException("Not implemented");
+			}
+
 			int register = reg;
 			// Declare deallocation flag
 			this.deallocatedAnalyzer.ifPresent(a -> {
 				String o = a.declareDeallocFlag(indent, register, function, stores);
 				if (o != null) {
-					declarations.add(o);
+					decStatements.add(o);
 				}
 			});
 
 		}
-
-		return declarations;
+		return decStatements;
 	}
 
 	/**
@@ -768,7 +769,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 
 			// Update the set with rhs variable
-			//this.copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, code.operand(0), code, function));
+			// this.copyAnalyzer.ifPresent(a -> a.updateSet(isCopyEliminated, code.operand(0), code, function));
 
 			// Add the post-deallocation code
 			this.deallocatedAnalyzer.ifPresent(
@@ -1472,7 +1473,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				list.add(1, statement);
 			} else {
 				list.add(statement);
-			}			
+			}
 		}
 
 		// add the statement

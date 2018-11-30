@@ -61,10 +61,15 @@ public final class BaseTestUtil {
 		String expected = null;
 		// Takes out each line from expected file and check if it matches with 1000 line from the output.
 		while (((expected = expected_reader.readLine()) != null)) {
-			// Check if the output is the same as expected.
-			String output = output_reader.readLine();
-			System.out.println(output);
-			assertEquals(expected, output);
+			try {
+				// Check if the output is the same as expected.
+				String output = output_reader.readLine();
+				System.out.println(output);
+				assertEquals(expected, output);
+			}catch (AssertionError error) {
+	            // Output expected AssertionErrors.
+	            throw new RuntimeException(error);
+	        }			
 		}
 		// Nullify the file input/output objects.
 		expected_reader.close();
@@ -344,7 +349,7 @@ public final class BaseTestUtil {
 			try {
 				FileUtils.cleanDirectory(destPath.toFile());
 			} catch (IOException e) {
-				;
+				throw new RuntimeException("Errors on createFolder(" + destPath + ")");
 			}
 		} else {
 			// Create destDir subfolder
@@ -363,8 +368,6 @@ public final class BaseTestUtil {
 	 */
 	protected static void createFolderAndCopyFiles(String testcase, Path sourcePath, Path destPath) {
 		try {
-			createFolder(destPath);
-			// basePath + File.separator +"Whileyfiles"+ File.separator + testcase + ".whiley"
 			// 1. Copy source Whiley program to destDir directory.
 			FileUtils.copyFileToDirectory(sourcePath.toFile(), destPath.toFile());
 			// 2. Copy Util.c/WyRT.c and Util.h/WyRT.h to destDir
@@ -571,6 +574,7 @@ public final class BaseTestUtil {
 			// 1. Find the destination folder
 			Path destDir = processOptions(baseDir, testcase, options);
 
+			createFolder(destDir);
 			// 2. Prepare folder and copy files
 			Path sourceDir = Paths
 					.get(baseDir + File.separator + "Whileyfiles" + File.separator + testcase + ".whiley");
