@@ -146,17 +146,17 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(c, _13);
 	//invoke (%14) = (%1, %2, %3) testcase3:func : function(int[],int[],int[])->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_14, c, "true-MAYBE_RETURN-true" , "func");
-		_FUNCTIONCALL_COPY_PRE(_14, b, "true-MAYBE_RETURN-true" , "func");
-		_FUNCTIONCALL_NO_COPY_PRE(_14, a, "false-NEVER_RETURN-true" , "func");
+		_FUNCTIONCALL_COPY_PRE(_14, c, 2, "liveness: c = true, readonly: c = false, return:c = MAYBE_RETURN" , "func");
+		_FUNCTIONCALL_COPY_PRE(_14, b, 1, "liveness: b = true, readonly: b = false, return:b = MAYBE_RETURN" , "func");
+		_FUNCTIONCALL_NO_COPY_PRE(_14, a, 0, "liveness: a = true, readonly: a = true, return:a = NEVER_RETURN" , "func");
 		_DEALLOC(_14);
 		void* tmp_b;
 		_COPY_1DARRAY_PARAM(b, tmp_b, int64_t);
 		void* tmp_c;
 		_COPY_1DARRAY_PARAM(c, tmp_c, int64_t);
-		// isCopyEliminated of '_1' = true
-		// isCopyEliminated of '_2' = false
-		// isCopyEliminated of '_3' = false
+		// isCopyEliminated of 'a at 0' = true
+		// isCopyEliminated of 'b at 1' = false
+		// isCopyEliminated of 'c at 2' = false
 		_14 = _func_(a, a_size, tmp_b, b_size, tmp_c, c_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_14));
 		if( _14 == tmp_b ){
 			_14_dealloc = true;

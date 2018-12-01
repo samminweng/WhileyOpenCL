@@ -45,11 +45,11 @@ int64_t* _func_(_DECL_1DARRAY_PARAM(a), _DECL_1DARRAY_PARAM(b), _DECL_1DARRAYSIZ
 	rb = _9;
 	//invoke (%10) = (%0, %1) specialcase2:g : function(int[],int[])->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_10, b, "false-NEVER_RETURN-true" , "g");
-		_FUNCTIONCALL_NO_COPY_PRE(_10, a, "false-ALWAYS_RETURN-false" , "g");
+		_FUNCTIONCALL_NO_COPY_PRE(_10, b, 1, "liveness: b = true, readonly: b = true, return:b = NEVER_RETURN" , "g");
+		_FUNCTIONCALL_NO_COPY_PRE(_10, a, 0, "liveness: a = false, readonly: a = true, return:a = ALWAYS_RETURN" , "g");
 		_DEALLOC(_10);
-		// isCopyEliminated of '_0' = true
-		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of 'a at 0' = true
+		// isCopyEliminated of 'b at 1' = true
 		_10 = _g_(a, a_size, b, b_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 		_10_dealloc = a_dealloc;
 		a_dealloc = false;
@@ -101,15 +101,15 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(a, _5);
 	//invoke (%6) = (%1, %1) specialcase2:func : function(int[],int[])->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_6, a, "false-ALWAYS_RETURN-true" , "func");
-		_FUNCTIONCALL_COPY_PRE(_6, a, "true-NEVER_RETURN-true" , "func");
+		_FUNCTIONCALL_COPY_PRE(_6, a, 1, "liveness: a = true, readonly: a = true, return:a = ALWAYS_RETURN" , "func");
+		_FUNCTIONCALL_COPY_PRE(_6, a, 0, "liveness: a = true, readonly: a = false, return:a = NEVER_RETURN" , "func");
 		_DEALLOC(_6);
 		void* tmp_a;
 		_COPY_1DARRAY_PARAM(a, tmp_a, int64_t);
 		void* tmp_b;
 		_COPY_1DARRAY_PARAM(a, tmp_b, int64_t);
-		// isCopyEliminated of '_1' = false
-		// isCopyEliminated of '_1' = false
+		// isCopyEliminated of 'a at 0' = false
+		// isCopyEliminated of 'a at 1' = false
 		_6 = _func_(tmp_a, a_size, tmp_b, a_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		_6_dealloc = true;
 			free(tmp_a);

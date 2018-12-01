@@ -1,0 +1,49 @@
+func.0 [const %3 = 1 : int]
+func.1 [const %4 = 0 : int]
+func.2 [update %0[%4] = %3 : int[] -> int[]]
+func.3 [const %5 = 2 : int]
+func.4 [const %6 = 0 : int]
+func.5 [update %1[%6] = %5 : int[] -> int[]]
+func.6 [assert]
+func.7 [const %10 = 0 : int]
+func.8 [indexof %11 = %1, %10 : int[]]
+func.9 [return %11]
+func.10 [return]
+//End of func function
+// Read-write variables in func: [_3, _4, a, _5, _6, b, _7, _8, _9, _10, _11]
+// Return variables in func: [_11]
+// Live variables for func function
+// In Set:[[b, a], [b, a], [b, a], [a, b], [a, b], [b, a], [_11], []]
+// Out Set:[[b, a], [b, a], [a, b], [a, b], [b, a], [_11], [_11], []]
+	 liveness: _4 = false
+	 liveness: _6 = false
+main.0 [const %3 = 3 : int]
+main.1 [const %4 = 3 : int]
+main.2 [arraygen %5 = [3; 4] : int[]]
+main.3 [assign %1 = %5  : int[]]
+main.4 [invoke (%6) = (%1, %1) specialcase3:func : function(int[],int[])->(int)]
+main.5 [assign %2 = %6  : int]
+main.6 [assert]
+main.7 [return]
+//End of main function
+[main.3 a = _5] //assign %1 = %5  : int[]
+	 liveness: _5 = false
+[main.4 _6 = func(a, a)] //invoke (%6) = (%1, %1) specialcase3:func : function(int[],int[])->(int)
+	 liveness: a = true	 readonly: a = false	 return: a = NEVER_RETURN
+	 liveness: a = true	 readonly: a = false	 return: a = NEVER_RETURN
+[main.5 r = _6] //assign %2 = %6  : int
+	 liveness: _6 = false
+// Read-write variables in main: [_3, _4, _5, a, _6, r, _7]
+// Return variables in main: []
+// Live variables for main function
+// In Set:[[], [], [a], [a], [_6], []]
+// Out Set:[[], [a], [a], [_6], [], []]
+	 liveness: _5 = false
+	 liveness: a = true	 readonly: a = false	 return: a = NEVER_RETURN
+	 liveness: a = true	 readonly: a = false	 return: a = NEVER_RETURN
+	 liveness: _6 = false
+
+Copy elimination analysis completed. File: specialcase3.wyil
+Deallocation analysis completed.
+File: specialcase3.wyil
+Code Generation completed. File: specialcase3.c, specialcase3.h

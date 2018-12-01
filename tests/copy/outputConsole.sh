@@ -22,7 +22,7 @@ outputConsoleToSysout(){
     done
     cd $BASEDIR
     # Run special case
-    for i in {1..2}
+    for i in {1..5}
     do
         specialcase="specialcase$i"
         runWyOpenCL $specialcase

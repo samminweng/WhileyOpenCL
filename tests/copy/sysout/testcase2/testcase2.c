@@ -155,13 +155,13 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(c, _13);
 	//invoke (%14) = (%1, %2, %3) testcase2:func : function(int[],int[],int[])->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_14, c, "false-NEVER_RETURN-true" , "func");
-		_FUNCTIONCALL_NO_COPY_PRE(_14, b, "false-NEVER_RETURN-true" , "func");
-		_FUNCTIONCALL_NO_COPY_PRE(_14, a, "false-NEVER_RETURN-true" , "func");
+		_FUNCTIONCALL_NO_COPY_PRE(_14, c, 2, "liveness: c = true, readonly: c = true, return:c = NEVER_RETURN" , "func");
+		_FUNCTIONCALL_NO_COPY_PRE(_14, b, 1, "liveness: b = true, readonly: b = true, return:b = NEVER_RETURN" , "func");
+		_FUNCTIONCALL_NO_COPY_PRE(_14, a, 0, "liveness: a = true, readonly: a = true, return:a = NEVER_RETURN" , "func");
 		_DEALLOC(_14);
-		// isCopyEliminated of '_1' = true
-		// isCopyEliminated of '_2' = true
-		// isCopyEliminated of '_3' = true
+		// isCopyEliminated of 'a at 0' = true
+		// isCopyEliminated of 'b at 1' = true
+		// isCopyEliminated of 'c at 2' = true
 		_14 = _func_(a, a_size, b, b_size, c, c_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_14));
 		_14_dealloc = true;
 	}

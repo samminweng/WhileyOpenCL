@@ -169,7 +169,8 @@ public class DeallocationAnalyzer extends Analyzer {
 					return "_NEW1DARRAY_DEALLOC(" + var + ", " + value + ", " + size + ", BYTE);";
 				}
 			}
-			// For other cases (2D array or 1D array of user-defined type), use _NEW1DARRAY_DEALLOC_POST
+			// For other cases (2D array or 1D array of user-defined type), use
+			// _NEW1DARRAY_DEALLOC_POST
 			return "_NEW1DARRAY_DEALLOC_POST(" + var + ", " + value + ", " + size + ");";
 		} else if (stores.isCompoundType(type) || type instanceof Type.Union) {
 			// User-defined type
@@ -190,7 +191,8 @@ public class DeallocationAnalyzer extends Analyzer {
 		String indent = stores.getIndent(function);
 		List<String> statements = new ArrayList<String>();
 
-		// statements.add(indent + addDealloc(code.target(0), function, stores));
+		// statements.add(indent + addDealloc(code.target(0), function,
+		// stores));
 		// Apply '_NEW1DARRAY_DEALLOC' macro
 		statements.add(indent + new1DArrayDealloc(code.target(0), code.operand(0), code.operand(1), function, stores));
 
@@ -239,7 +241,8 @@ public class DeallocationAnalyzer extends Analyzer {
 		List<String> statements = new ArrayList<String>();
 		// String lhs = stores.getVar(code.target(0), function);
 		if (code.operands().length > 0) {
-			// Create an non-empty array, and add lhs variable to deallocation flag set.
+			// Create an non-empty array, and add lhs variable to deallocation
+			// flag set.
 			statements.add(indent + this.assignDealloc(code.target(0), function, stores));
 		}
 
@@ -262,7 +265,8 @@ public class DeallocationAnalyzer extends Analyzer {
 		argumentCopyEliminated.entrySet().forEach(entry -> {
 			int register = entry.getKey();
 			boolean isCopyEliminated = entry.getValue();
-			// Remove the deallocation flags for those member whose copies are not needed.
+			// Remove the deallocation flags for those member whose copies are
+			// not needed.
 			if (isCopyEliminated) {
 				statements.add(indent + removeDealloc(register, function, stores));
 			}
@@ -327,7 +331,8 @@ public class DeallocationAnalyzer extends Analyzer {
 
 		// The rhs register is the last operand
 		int rhs = code.operand(code.operands().length - 1);
-		// Remove rhs deallocation flag as the copy is not made at 'update' byte-code
+		// Remove rhs deallocation flag as the copy is not made at 'update'
+		// byte-code
 		statements.add(indent + removeDealloc(rhs, function, stores));
 		return statements;
 	}
@@ -346,7 +351,8 @@ public class DeallocationAnalyzer extends Analyzer {
 		List<String> statements = new ArrayList<String>();
 
 		int lhs = code.target(0);
-		// Transfer lhs deallocation flag due to non-transferable array deallocation flag
+		// Transfer lhs deallocation flag due to non-transferable array
+		// deallocation flag
 		statements.add(indent + removeDealloc(lhs, function, stores));
 		return statements;
 	}
@@ -370,7 +376,8 @@ public class DeallocationAnalyzer extends Analyzer {
 		} else {
 			if (isCopyEliminated) {
 				// That means 'fieldload' access one member
-				// rhs deallocation flag could be changed. But remove lhs deallocation flag
+				// rhs deallocation flag could be changed. But remove lhs
+				// deallocation flag
 				statements.add(indent + this.removeDealloc(code.target(0), function, stores));
 			} else {
 				// Assign deallocation flag to lhs variable.
@@ -408,30 +415,30 @@ public class DeallocationAnalyzer extends Analyzer {
 
 		if (code.name.module().toString().contains("whiley/lang")) {
 			switch (code.name.name()) {
-			case "parse":
-				// int rhs = code.operand(0);
-				// Add deallocation flag to lhs.
-				statements.add(indent + this.assignDealloc(code.target(0), function, stores));
-				// Remove rhs deallocation flag
-				statements.add(indent + this.removeDealloc(code.operand(0), function, stores));
-				break;
-			case "slice":
-				// Add deallocation flag to lhs.
-				statements.add(indent + this.assignDealloc(code.target(0), function, stores));
-				break;
-			case "fromBytes":
-				// Assign flag to lhs
-				statements.add(indent + this.assignDealloc(code.target(0), function, stores));
-				break;
-			case "append":
-				statements.add(indent + this.assignDealloc(code.target(0), function, stores));
-				break;
-			case "toString":
-				statements.add(indent + this.assignDealloc(code.target(0), function, stores));
-				break;
-			default:
-				// no change to statement
-				break;
+				case "parse" :
+					// int rhs = code.operand(0);
+					// Add deallocation flag to lhs.
+					statements.add(indent + this.assignDealloc(code.target(0), function, stores));
+					// Remove rhs deallocation flag
+					statements.add(indent + this.removeDealloc(code.operand(0), function, stores));
+					break;
+				case "slice" :
+					// Add deallocation flag to lhs.
+					statements.add(indent + this.assignDealloc(code.target(0), function, stores));
+					break;
+				case "fromBytes" :
+					// Assign flag to lhs
+					statements.add(indent + this.assignDealloc(code.target(0), function, stores));
+					break;
+				case "append" :
+					statements.add(indent + this.assignDealloc(code.target(0), function, stores));
+					break;
+				case "toString" :
+					statements.add(indent + this.assignDealloc(code.target(0), function, stores));
+					break;
+				default :
+					// no change to statement
+					break;
 			}
 		} else {
 			// Get return variable and type
@@ -457,7 +464,8 @@ public class DeallocationAnalyzer extends Analyzer {
 				String[] parts = macro.split("\t");
 				// Get macro name
 				String macro_name = parts[0];
-				// Get check results (mutable, return and live checks on parameter)
+				// Get check results (mutable, return and live checks on
+				// parameter)
 				String checks = parts[1];
 				// Get function name
 				String func_name = code.name.name();
@@ -467,62 +475,73 @@ public class DeallocationAnalyzer extends Analyzer {
 				Type parameter_type = stores.getRawType(register, function);
 				statements.add(indent + macro_name + "(" + ret + ", " + parameter + ", \"" + checks + "\" , \""
 						+ func_name + "\");");
-				// Check if the call has the return. If so, then we can apply deallocation POST macro.
+				// Check if the call has the return. If so, then we can apply
+				// deallocation POST macro.
 				if (ret_type != null && stores.isCompoundType(ret_type)) {
 					// Write the checks results as a parameter to macro
 					// statements.add(indent+"//"+parameter+":"+checks);
 					switch (macro_name) {
-					case "_CALLER_DEALLOC":
-						// Get tmp param name
-						String tmp_name = stores.getTmpParamName(parameter, index, code, function);
-						if (parameter_type instanceof Type.Array) {
-							Type elm_type = stores.getArrayElementType((Type.Array) parameter_type);
-							if (elm_type instanceof Type.Byte || stores.isIntType(elm_type)) {
-								// Applied caller macro and used standard 'free' function to release extra copy
-								statements.add(indent + "_CALLER_DEALLOC_POST(" + ret + ", " + tmp_name + ");");
+						case "_CALLER_DEALLOC" :
+							// Get tmp param name
+							String tmp_name = stores.getTmpParamName(parameter, index, code, function);
+							if (parameter_type instanceof Type.Array) {
+								Type elm_type = stores.getArrayElementType((Type.Array) parameter_type);
+								if (elm_type instanceof Type.Byte || stores.isIntType(elm_type)) {
+									// Applied caller macro and used standard
+									// 'free' function to release extra copy
+									statements.add(indent + "_CALLER_DEALLOC_POST(" + ret + ", " + tmp_name + ");");
+								} else {
+									throw new RuntimeException("Not Implemented");
+									// // An array of structures
+									// // Translate the type
+									// String type_name =
+									// CodeGeneratorHelper.translateType(parameter_type,
+									// stores)
+									// .replace("*", "");
+									// // Applied caller_struct macro and used
+									// structure free function to release extra
+									// copy
+									// statements.add(indent +
+									// "_CALLER_DEALLOC_STRUCT_POST(" + ret + ",
+									// " + tmp_name + ",
+									// \""
+									// + checks + "\" , \"" + func_name + "\", "
+									// + type_name + ");");
+								}
 							} else {
-								throw new RuntimeException("Not Implemented");
-								// // An array of structures
-								// // Translate the type
-								// String type_name = CodeGeneratorHelper.translateType(parameter_type, stores)
-								// .replace("*", "");
-								// // Applied caller_struct macro and used structure free function to release extra copy
-								// statements.add(indent + "_CALLER_DEALLOC_STRUCT_POST(" + ret + ", " + tmp_name + ",
-								// \""
-								// + checks + "\" , \"" + func_name + "\", " + type_name + ");");
+								// Structure type
+								String type_name = CodeGeneratorHelper.translateType(parameter_type, stores)
+										.replace("*", "");
+								// Applied caller_struct macro and used
+								// structure free function to release extra copy
+								statements.add(indent + "_CALLER_DEALLOC_STRUCT_POST(" + ret + ", " + tmp_name + "\", "
+										+ type_name + ");");
 							}
-						} else {
-							// Structure type
-							String type_name = CodeGeneratorHelper.translateType(parameter_type, stores).replace("*",
-									"");
-							// Applied caller_struct macro and used structure free function to release extra copy
-							statements.add(indent + "_CALLER_DEALLOC_STRUCT_POST(" + ret + ", " + tmp_name + "\", "
-									+ type_name + ");");
-						}
-						break;
-					case "_CALLEE_DEALLOC":
-						tmp_name = stores.getTmpParamName(parameter, index, code, function);
-						// Added the macros
-						statements.add(indent + "_CALLEE_DEALLOC_POST(" + ret + ", " + tmp_name + ");");
-						break;
-					case "_RESET_DEALLOC":
-						// Added the macros
-						statements.add(indent + "_RESET_DEALLOC_POST(" + ret + ", " + parameter + ");");
-						break;
-					case "_RETAIN_DEALLOC":
-						// Added the macros
-						statements.add(indent + "_RETAIN_DEALLOC_POST(" + ret + ", " + parameter + ");");
-						break;
-					case "_SUBSTRUCTURE_DEALLOC":
-						statements.add(indent + "_SUBSTRUCTURE_DEALLOC(" + parameter + ");");
-						statements.add(indent + this.assignDealloc(code.target(0), function, stores));
-						break;
-					default:
-						throw new RuntimeException("Not implemented");
+							break;
+						case "_CALLEE_DEALLOC" :
+							tmp_name = stores.getTmpParamName(parameter, index, code, function);
+							// Added the macros
+							statements.add(indent + "_CALLEE_DEALLOC_POST(" + ret + ", " + tmp_name + ");");
+							break;
+						case "_RESET_DEALLOC" :
+							// Added the macros
+							statements.add(indent + "_RESET_DEALLOC_POST(" + ret + ", " + parameter + ");");
+							break;
+						case "_RETAIN_DEALLOC" :
+							// Added the macros
+							statements.add(indent + "_RETAIN_DEALLOC_POST(" + ret + ", " + parameter + ");");
+							break;
+						case "_SUBSTRUCTURE_DEALLOC" :
+							statements.add(indent + "_SUBSTRUCTURE_DEALLOC(" + parameter + ");");
+							statements.add(indent + this.assignDealloc(code.target(0), function, stores));
+							break;
+						default :
+							throw new RuntimeException("Not implemented");
 					}
 				} else if (macro_name.equals("_CALLEE_DEALLOC")) {
 					// This case for the call without return
-					// Get the name of temp variable that stores the copied parameter.
+					// Get the name of temp variable that stores the copied
+					// parameter.
 					String tmp_name = stores.getTmpParamName(parameter, index, code, function);
 					// We explicitly add a free statement to release the tmp
 					statements.add(indent + "free(" + tmp_name + ");");
@@ -568,30 +587,30 @@ public class DeallocationAnalyzer extends Analyzer {
 
 		if (code.name.module().toString().contains("whiley/lang")) {
 			switch (code.name.name()) {
-			case "parse":
-				// int rhs = code.operand(0);
-				// Add deallocation flag to lhs.
-				statements.add(indent + this.assignDealloc(code.target(0), function, stores));
-				// Remove rhs deallocation flag
-				statements.add(indent + this.removeDealloc(code.operand(0), function, stores));
-				break;
-			case "slice":
-				// Add deallocation flag to lhs.
-				statements.add(indent + this.assignDealloc(code.target(0), function, stores));
-				break;
-			case "fromBytes":
-				// Assign flag to lhs
-				statements.add(indent + this.assignDealloc(code.target(0), function, stores));
-				break;
-			case "append":
-				statements.add(indent + this.assignDealloc(code.target(0), function, stores));
-				break;
-			case "toString":
-				statements.add(indent + this.assignDealloc(code.target(0), function, stores));
-				break;
-			default:
-				// no change to statement
-				break;
+				case "parse" :
+					// int rhs = code.operand(0);
+					// Add deallocation flag to lhs.
+					statements.add(indent + this.assignDealloc(code.target(0), function, stores));
+					// Remove rhs deallocation flag
+					statements.add(indent + this.removeDealloc(code.operand(0), function, stores));
+					break;
+				case "slice" :
+					// Add deallocation flag to lhs.
+					statements.add(indent + this.assignDealloc(code.target(0), function, stores));
+					break;
+				case "fromBytes" :
+					// Assign flag to lhs
+					statements.add(indent + this.assignDealloc(code.target(0), function, stores));
+					break;
+				case "append" :
+					statements.add(indent + this.assignDealloc(code.target(0), function, stores));
+					break;
+				case "toString" :
+					statements.add(indent + this.assignDealloc(code.target(0), function, stores));
+					break;
+				default :
+					// no change to statement
+					break;
 			}
 		} else {
 			// Get return variable and type
@@ -621,14 +640,17 @@ public class DeallocationAnalyzer extends Analyzer {
 					// We do not need post code
 					continue;
 				}
-				// Get check results (mutable, return and live checks on parameter)
+				// Get check results (mutable, return and live checks on
+				// parameter)
 				String parameter = stores.getVar(register, function);
-				// Type parameter_type = stores.getRawType(register, function);
-				statements.add(indent + macro.getMacroType() + "_PRE(" + ret + ", " + parameter + ", \"" + macro.checks
-						+ "\" , \"" + code.name.name() + "\");");
+				// Write pre_copy macro to show properties of each copied
+				// parameter
+				statements.add(indent + macro.getMacroType() + "_PRE(" + ret + ", " + parameter + ", " + index + ", \""
+						+ macro.toString() + "\" , \"" + code.name.name() + "\");");
 				if (isReturnArray) {
 					if (macro.getMacroType() == MACROTYPE._SUBSTRUCTURE_DEALLOC) {
-						// For substructured parameter, we include the code without any further code.
+						// For substructured parameter, we include the code
+						// without any further code.
 						statements.add(indent + macro + "(" + parameter + ");");
 						statements.add(indent + this.assignDealloc(code.target(0), function, stores));
 						continue;
@@ -650,7 +672,8 @@ public class DeallocationAnalyzer extends Analyzer {
 					// macros.
 					if (macro.getMacroType() == MACROTYPE._FUNCTIONCALL_COPY) {
 						String tmp_name = stores.getTmpParamName(parameter, index, code, function);
-						// We explicitly free the copied temporary variable as it is not used and returned afterwards
+						// We explicitly free the copied temporary variable as
+						// it is not used and returned afterwards
 						statements.add(indent + "free(" + tmp_name + ");");
 					}
 				}
@@ -665,16 +688,18 @@ public class DeallocationAnalyzer extends Analyzer {
 			for (String key : functioncallCopyMacroMap.keySet()) {
 				index = Integer.parseInt(key.split(":")[0]);
 				String tmp_parameter = key.split(":")[1];
-				// Get the name of temp variable that stores the copied parameter.
-				//String tmp_name = stores.getTmpParamName(parameter, index, code, function);
+				// Get the name of temp variable that stores the copied
+				// parameter.
+				// String tmp_name = stores.getTmpParamName(parameter, index,
+				// code, function);
 				temp_paramNames.add(tmp_parameter);
 			}
 
-			boolean isFirst = true;			
+			boolean isFirst = true;
 			// Go through all parameters that use functioncall_nocopy macro
 			for (Entry<String, MACRO> entry : functioncallNoCopyMacroMap.entrySet()) {
 				MACRO macro = entry.getValue();
-				//index = Integer.parseInt(entry.getKey().split(":")[0]);
+				// index = Integer.parseInt(entry.getKey().split(":")[0]);
 				String parameter = entry.getKey().split(":")[1];
 				if (macro.getReturn() == RETURN.MAYBE_RETURN) {
 					// Add if statement to check if 'ret' is the parameter
@@ -685,7 +710,8 @@ public class DeallocationAnalyzer extends Analyzer {
 						// Add else if statement
 						postMacro.add(indent + "} else if( " + ret + " == " + parameter + " ){");
 					}
-					// Generate the code w.r.t. the live status of the parameter after the call
+					// Generate the code w.r.t. the live status of the parameter
+					// after the call
 					if (macro.getLive()) {
 						// Make a copy of return variable to parameters
 						postMacro.add(indent + "_COPY_1DARRAY_int64_t(" + parameter + ", " + ret + ", int64_t);");
@@ -718,7 +744,8 @@ public class DeallocationAnalyzer extends Analyzer {
 					}
 					break;
 				} else if (macro.getReturn() == RETURN.NEVER_RETURN) {
-					// Do nothing. Parameter is never returned, and no case is needed.
+					// Do nothing. Parameter is never returned, and no case is
+					// needed.
 				}
 			}
 
@@ -726,7 +753,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			for (Entry<String, MACRO> entry : functioncallCopyMacroMap.entrySet()) {
 				MACRO macro = entry.getValue();
 				index = Integer.parseInt(entry.getKey().split(":")[0]);
-				String tmp_parameter = entry.getKey().split(":")[1];				
+				String tmp_parameter = entry.getKey().split(":")[1];
 				// Check if isReturned is NEVER_RETURN.
 				if (macro.getReturn() == RETURN.NEVER_RETURN) {
 					// We skip the if-else branch
@@ -735,13 +762,15 @@ public class DeallocationAnalyzer extends Analyzer {
 					postMacro.add(indent + ret + "_dealloc = true;");
 					// Free all the other temp variable
 					for (String tmp_name : temp_paramNames) {
-						// For always-return, we do not need to free the parameter because it is the return variable
+						// For always-return, we do not need to free the
+						// parameter because it is the return variable
 						if (!tmp_name.equals(tmp_parameter)) {
 							postMacro.add(indent + "\tfree(" + tmp_name + ");");
 						}
 					}
 				} else {
-					// For maybe and always return, we add if-else branch to safely release the memory
+					// For maybe and always return, we add if-else branch to
+					// safely release the memory
 					if (isFirst) {
 						postMacro.add(indent + "if( " + ret + " == " + tmp_parameter + " ){");
 						isFirst = false;
@@ -765,7 +794,8 @@ public class DeallocationAnalyzer extends Analyzer {
 			if (isAlways) {
 				// Do nothing
 			} else if (isNever) {
-				// For all never-returned result, we need to include the below code
+				// For all never-returned result, we need to include the below
+				// code
 				if (isReturnArray) {
 					postMacro.add(indent + ret + "_dealloc = true;");
 				}
@@ -777,7 +807,7 @@ public class DeallocationAnalyzer extends Analyzer {
 				// For a maybe-return, we need to include an else case
 				postMacro.add(indent + "} else {");
 				postMacro.add(indent + "\t" + ret + "_dealloc = true;");
-				// Free the memory of all the temp copies explicitly 
+				// Free the memory of all the temp copies explicitly
 				for (String tmp_name : temp_paramNames) {
 					postMacro.add(indent + "\tfree(" + tmp_name + ");");
 				}
@@ -786,7 +816,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			// Put all the post no-copy macro to statements.
 			statements.addAll(postMacro);
 		}
-		
+
 		return statements;
 	}
 
@@ -991,9 +1021,11 @@ public class DeallocationAnalyzer extends Analyzer {
 		FunctionOrMethod callingfunction = this.getCalledFunction(code);
 		int arguement = mapArgumentToParameter(register, pos, code);
 		boolean isMutated = readwriteAnalyzer.isMutated(arguement, callingfunction);
-		// boolean isReturned = returnAnalyzer.isReturned(arguement, callingfunction);
+		// boolean isReturned = returnAnalyzer.isReturned(arguement,
+		// callingfunction);
 		RETURN isReturned = returnAnalyzer.isReturned(arguement, callingfunction);
-		// Analyze the deallocation flags using live variable, read-write and return analysis
+		// Analyze the deallocation flags using live variable, read-write and
+		// return analysis
 		boolean isLive = liveAnalyzer.isLive(register, code, function);
 
 		String checks = isMutated + "-" + isReturned + "-" + isLive;
@@ -1021,7 +1053,8 @@ public class DeallocationAnalyzer extends Analyzer {
 						// If 'b' is NOT alive at caller site
 						return "_RESET_DEALLOC" + "\t" + checks;
 					} else {
-						// If 'b' is alive at caller site, then we use caller macro
+						// If 'b' is alive at caller site, then we use caller
+						// macro
 						return "_CALLER_DEALLOC" + "\t" + checks;
 						// return "_RESET_DEALLOC" + "\t" + checks;
 					}
@@ -1073,10 +1106,10 @@ public class DeallocationAnalyzer extends Analyzer {
 	 *
 	 */
 	public class MACRO {
-		// Store the analysis results, e.g. false-NEVER_RETURN-false
-		// means the parameter is not mutated, never returned and is not live after the call.
-		private String checks = "";
+		// Store the analysis results, e.g. liveness: b = true readonly: b = false return: b = NEVER_RETURN
+		// Parameter 'b' is live after the call, and it is not read-only and never returned by called function.
 		private MACROTYPE macro; // Macro name
+		private String varName;
 		private boolean isLive = false;
 		private boolean isMutate = false;
 		// Return analysis result
@@ -1088,24 +1121,20 @@ public class DeallocationAnalyzer extends Analyzer {
 		}
 
 		// Constructor
-		public MACRO(MACROTYPE macro, String checks, RETURN r) {
+		public MACRO(MACROTYPE macro, String checks, RETURN r, String varName) {
 			this(macro);
-			this.checks = checks;
 			// Get isMutate
 			this.isMutate = Boolean.parseBoolean(checks.split("-")[0]);
 			// Split the checks to get liveness
 			this.isLive = Boolean.parseBoolean(checks.split("-")[2]);
 			// Set return analysis result
 			this.isReturned = r;
+			// Get the variable name
+			this.varName = varName;
 		}
 
 		public MACROTYPE getMacroType() {
 			return this.macro;
-		}
-
-		// Get the analysis results
-		public String getChecks() {
-			return this.checks;
 		}
 
 		// Get the liveness
@@ -1116,6 +1145,12 @@ public class DeallocationAnalyzer extends Analyzer {
 		public RETURN getReturn() {
 			return this.isReturned;
 		}
+
+		public String toString() {
+			return "liveness: " + this.varName + " = " + this.isLive + ", readonly: " + this.varName + " = "
+					+ !this.isMutate + ", return:" + this.varName + " = " + this.isReturned;
+		}
+
 	}
 
 	/**
@@ -1140,14 +1175,16 @@ public class DeallocationAnalyzer extends Analyzer {
 			// For a primitive type, then no needs to use macro
 			return new MACRO(MACROTYPE.NONE);
 		}
+		// Get variable name at caller site
+		String varName = stores.getVar(register, function);
 		// Get the called function
 		FunctionOrMethod calledFunction = this.getCalledFunction(code);
 		// Map the argument of the function call to actual parameter of called function
-		int parameter = mapArgumentToParameter(register, pos, code);
+		int paramReg = mapArgumentToParameter(register, pos, code);
 		// Check if the parameter is mutated at called function
-		boolean isMutated = readwriteAnalyzer.isMutated(parameter, calledFunction);
+		boolean isMutated = readwriteAnalyzer.isMutated(paramReg, calledFunction);
 		// Check if the parameter is returned at called function
-		RETURN isReturned = returnAnalyzer.isReturned(parameter, calledFunction);
+		RETURN isReturned = returnAnalyzer.isReturned(paramReg, calledFunction);
 		// Check if argument is live at caller site
 		boolean isLive = liveAnalyzer.isLive(register, code, function);
 		// Combine all checks to a single result
@@ -1158,21 +1195,21 @@ public class DeallocationAnalyzer extends Analyzer {
 			boolean isSubStructure = stores.isSubstructure(register, function);
 			if (isSubStructure) {
 				// The substructure is passed to function call with 'false' flag
-				return new MACRO(MACROTYPE._SUBSTRUCTURE_DEALLOC, checks, isReturned);
+				return new MACRO(MACROTYPE._SUBSTRUCTURE_DEALLOC, checks, isReturned, varName);
 			}
 			// The rule of function call macro
 			if (!isLive) {
 				// For a not live parameter, we use NO_COPY macro
-				return new MACRO(MACROTYPE._FUNCTIONCALL_NO_COPY, checks, isReturned);
+				return new MACRO(MACROTYPE._FUNCTIONCALL_NO_COPY, checks, isReturned, varName);
 			} else if (!isMutated && isReturned == RETURN.NEVER_RETURN) {
 				// For a read-only and live but never returned parameter, we use NO_COPY macro
-				return new MACRO(MACROTYPE._FUNCTIONCALL_NO_COPY, checks, isReturned);
+				return new MACRO(MACROTYPE._FUNCTIONCALL_NO_COPY, checks, isReturned, varName);
 			} else {
-				return new MACRO(MACROTYPE._FUNCTIONCALL_COPY, checks, isReturned);
+				return new MACRO(MACROTYPE._FUNCTIONCALL_COPY, checks, isReturned, varName);
 			}
 		} else {
 			// Naive code that the copy is always needed.
-			return new MACRO(MACROTYPE._FUNCTIONCALL_COPY, checks, isReturned);
+			return new MACRO(MACROTYPE._FUNCTIONCALL_COPY, checks, isReturned, varName);
 		}
 	}
 
@@ -1210,7 +1247,8 @@ public class DeallocationAnalyzer extends Analyzer {
 			if (rhs_type instanceof Type.Record) {
 				// LHS and RHS are both structures
 				String struct = CodeGeneratorHelper.translateType(rhs_type, stores).replace("*", "");
-				// Use '_DEALLOC_MEMBER_STRUCT_UPDATECODE' macro to forcedly release the lhs
+				// Use '_DEALLOC_MEMBER_STRUCT_UPDATECODE' macro to forcedly
+				// release the lhs
 				return "_DEALLOC_MEMBER_STRUCT_UPDATECODE(" + struct_var + ", " + lhs + ", " + struct + ");";
 			}
 		}
@@ -1255,7 +1293,8 @@ public class DeallocationAnalyzer extends Analyzer {
 				if (dimension == 2) {
 					return "_DEALLOC_2DARRAY(" + var + ");";
 				} else {
-					// Release the previously allocated variable, e.g. an array of integers
+					// Release the previously allocated variable, e.g. an array
+					// of integers
 					return "_DEALLOC(" + var + ");";
 				}
 			} else {
@@ -1331,27 +1370,28 @@ public class DeallocationAnalyzer extends Analyzer {
 
 	}
 
-
-//	@Override
-//	protected void visit(DefaultMutableTreeNode node) {
-//		FunctionOrMethod function = (FunctionOrMethod) node.getUserObject();
-//		if (function != null) {
-//			// Check and Get the transformed function
-//			//function = this.getFunction(function);
-//			// Analyze the function code using readWrite, return and live variable analyser
-//			this.readwriteAnalyzer.analyzeFunction(function);
-//			this.returnAnalyzer.analyzeFunction(function);
-//			this.liveAnalyzer.analyzeFunction(function);
-//		}
-//	}
+	// @Override
+	// protected void visit(DefaultMutableTreeNode node) {
+	// FunctionOrMethod function = (FunctionOrMethod) node.getUserObject();
+	// if (function != null) {
+	// // Check and Get the transformed function
+	// //function = this.getFunction(function);
+	// // Analyze the function code using readWrite, return and live variable
+	// analyser
+	// this.readwriteAnalyzer.analyzeFunction(function);
+	// this.returnAnalyzer.analyzeFunction(function);
+	// this.liveAnalyzer.analyzeFunction(function);
+	// }
+	// }
 
 	@Override
 	public void analyzeFunction(FunctionOrMethod function) {
-		// Analyze the function code using readWrite, return and live variable analyser
+		// Analyze the function code using readWrite, return and live variable
+		// analyser
 		this.readwriteAnalyzer.analyzeFunction(function);
 		this.returnAnalyzer.analyzeFunction(function);
 		this.liveAnalyzer.analyzeFunction(function);
-		
+
 	}
 
 }

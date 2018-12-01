@@ -157,11 +157,11 @@ int main(int argc, char** args){
 	_15 = 3;
 	//invoke (%13) = (%2, %14, %15) testcase7:func : function(int[],int,int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_13, b, "true-ALWAYS_RETURN-true" , "func");
+		_FUNCTIONCALL_COPY_PRE(_13, b, 0, "liveness: b = true, readonly: b = false, return:b = ALWAYS_RETURN" , "func");
 		_DEALLOC(_13);
 		void* tmp_a;
 		_COPY_1DARRAY_PARAM(b, tmp_a, int64_t);
-		// isCopyEliminated of '_2' = false
+		// isCopyEliminated of 'b at 0' = false
 		_13 = _func_(tmp_a, b_size, _14, _15, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_13));
 		_13_dealloc = true;
 	}

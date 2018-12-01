@@ -1,0 +1,44 @@
+func.0 [const %3 = 2 : int]
+func.1 [const %4 = 0 : int]
+func.2 [update %1[%4] = %3 : int[] -> int[]]
+func.3 [const %5 = 0 : int]
+func.4 [indexof %6 = %0, %5 : int[]]
+func.5 [return %6]
+func.6 [return]
+//End of func function
+// Read-write variables in func: [_3, _4, b, _5, _6]
+// Return variables in func: [_6]
+// Live variables for func function
+// In Set:[[a, b], [a, b], [a, b], [a], [_6], []]
+// Out Set:[[a, b], [a, b], [a], [_6], [_6], []]
+	 liveness: _4 = false
+main.0 [const %3 = 1 : int]
+main.1 [const %4 = 1 : int]
+main.2 [arraygen %5 = [3; 4] : int[]]
+main.3 [assign %1 = %5  : int[]]
+main.4 [invoke (%6) = (%1, %1) specialcase5:func : function(int[],int[])->(int)]
+main.5 [assign %2 = %6  : int]
+main.6 [assert]
+main.7 [return]
+//End of main function
+[main.3 a = _5] //assign %1 = %5  : int[]
+	 liveness: _5 = false
+[main.4 _6 = func(a, a)] //invoke (%6) = (%1, %1) specialcase5:func : function(int[],int[])->(int)
+	 liveness: a = true	 readonly: a = true	 return: a = NEVER_RETURN
+	 liveness: a = true	 readonly: a = false	 return: a = NEVER_RETURN
+[main.5 r = _6] //assign %2 = %6  : int
+	 liveness: _6 = false
+// Read-write variables in main: [_3, _4, _5, a, _6, r, _7]
+// Return variables in main: []
+// Live variables for main function
+// In Set:[[], [], [a], [a], [_6], []]
+// Out Set:[[], [a], [a], [_6], [], []]
+	 liveness: _5 = false
+	 liveness: a = true	 readonly: a = true	 return: a = NEVER_RETURN
+	 liveness: a = true	 readonly: a = false	 return: a = NEVER_RETURN
+	 liveness: _6 = false
+
+Copy elimination analysis completed. File: specialcase5.wyil
+Deallocation analysis completed.
+File: specialcase5.wyil
+Code Generation completed. File: specialcase5.c, specialcase5.h

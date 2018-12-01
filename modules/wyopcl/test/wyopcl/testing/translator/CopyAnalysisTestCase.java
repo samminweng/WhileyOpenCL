@@ -22,8 +22,8 @@ import org.junit.runners.Parameterized;
 /**
  * Run copy analyzer combined with deallocation analysis and code generator to produce the copy optimized C code.
  * 
- * Each test outputs the messages and compares each line of the messages with pre-defined output for validating 
- * the analysis results.
+ * Each test outputs the messages and compares each line of the messages with pre-defined output for validating the
+ * analysis results.
  * 
  * 
  * @author Min-Hsien Weng
@@ -61,14 +61,13 @@ public class CopyAnalysisTestCase {
 	public static Collection<String> testCases() {
 
 		// Add a list of test cases
-		return Arrays.asList(new String[] { "testcase1", "testcase2", "testcase3", "testcase4", "testcase5",
-				"testcase6", "testcase7", "testcase8", "testcase9", "testcase10", "specialcase1", "specialcase2", });
+		return Arrays.asList(new String[]{"testcase1", "testcase2", "testcase3", "testcase4", "testcase5", "testcase6",
+				"testcase7", "testcase8", "testcase9", "testcase10", "specialcase1", "specialcase2", "specialcase3",
+				"specialcase4", "specialcase5",});
 	}
 
 	/***
-	 * Execute the copy analysis and compare the system output with output file.
-	 * 
-	 * 
+	 * Execute the copy analysis and compare the system output with output file. 
 	 * 
 	 * @param baseDir
 	 * @param testcase
@@ -79,7 +78,8 @@ public class CopyAnalysisTestCase {
 		Process process;
 		try {
 			Path destDir = Paths.get(baseDir + File.separator + "sysout" + File.separator + testcase + File.separator);
-			Path sourceDir = Paths.get(baseDir + File.separator + "Whileyfiles" + File.separator + testcase + ".whiley");
+			Path sourceDir = Paths
+					.get(baseDir + File.separator + "Whileyfiles" + File.separator + testcase + ".whiley");
 			// Copy the Util.c and WyRT.c to 'destDir' folder
 			BaseTestUtil.createFolderAndCopyFiles(testcase, sourceDir, destDir);
 
@@ -103,11 +103,10 @@ public class CopyAnalysisTestCase {
 
 			// Remove all generated WyIL files.
 			Files.deleteIfExists(Paths.get(destDir + testcase + ".wyil"));
-			
+
 			// Compile and run the generated C code
 			BaseTestUtil.compileAndRunCCode(testcase, destDir, false);
-			
-			
+
 		} catch (Exception e) {
 			throw new RuntimeException("Test file: " + testcase + ".whiley", e);
 		}

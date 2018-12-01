@@ -7,6 +7,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
@@ -135,7 +136,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 	}
 
-	
 	/**
 	 * Given a function, defines and initialize local variables
 	 */
@@ -844,39 +844,39 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// If any operand is un-bounded, then add overflow checking
 				if (left.isUnbound() || right1.isUnbound() || right2.isUnbound()) {
 					switch (code.kind) {
-					case ADD:
-						statement.add(indent + "_DETECT_INT_ADD_OVERFLOW(" + op1 + "," + op2 + "," + res + ");");
-						break;
-					case SUB:
-						statement.add(indent + "_DETECT_INT_SUB_OVERFLOW(" + op1 + "," + op2 + "," + res + ");");
-						break;
-					case MUL:
-						statement.add(indent + "_DETECT_INT_MUL_OVERFLOW(" + op1 + "," + op2 + "," + res + ");");
-						break;
-					default:
-						// Do nothing
-						break;
+						case ADD :
+							statement.add(indent + "_DETECT_INT_ADD_OVERFLOW(" + op1 + "," + op2 + "," + res + ");");
+							break;
+						case SUB :
+							statement.add(indent + "_DETECT_INT_SUB_OVERFLOW(" + op1 + "," + op2 + "," + res + ");");
+							break;
+						case MUL :
+							statement.add(indent + "_DETECT_INT_MUL_OVERFLOW(" + op1 + "," + op2 + "," + res + ");");
+							break;
+						default :
+							// Do nothing
+							break;
 					}
 				} else {
 					switch (code.kind) {
-					case ADD:
-						statement.add(indent + res + " = " + op1 + " + " + op2 + ";");
-						break;
-					case SUB:
-						statement.add(indent + res + " = " + op1 + " - " + op2 + ";");
-						break;
-					case MUL:
-						statement.add(indent + res + " = " + op1 + " * " + op2 + ";");
-						break;
-					case DIV:
-						statement.add(indent + res + " = " + op1 + " / " + op2 + ";");
-						break;
-					case REM:
-						statement.add(indent + res + " = " + op1 + " % " + op2 + ";");
-						break;
-					default:
-						// Do nothing
-						break;
+						case ADD :
+							statement.add(indent + res + " = " + op1 + " + " + op2 + ";");
+							break;
+						case SUB :
+							statement.add(indent + res + " = " + op1 + " - " + op2 + ";");
+							break;
+						case MUL :
+							statement.add(indent + res + " = " + op1 + " * " + op2 + ";");
+							break;
+						case DIV :
+							statement.add(indent + res + " = " + op1 + " / " + op2 + ";");
+							break;
+						case REM :
+							statement.add(indent + res + " = " + op1 + " % " + op2 + ";");
+							break;
+						default :
+							// Do nothing
+							break;
 					}
 				}
 			});
@@ -884,31 +884,31 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Translate the arithmetic operation
 			String stat = indent + res + "=" + op1;
 			switch (code.kind) {
-			case ADD:
-				stat += "+" + op2 + ";";
-				break;
-			case SUB:
-				stat += "-" + op2 + ";";
-				break;
-			case MUL:
-				stat += "*" + op2 + ";";
-				break;
-			case DIV:
-				stat += "/" + op2 + ";";
-				break;
-			case REM:
-				stat += "%" + op2 + ";";
-				break;
-			case BITWISEOR:
-				break;
-			case BITWISEXOR:
-				break;
-			case BITWISEAND:
-				break;
-			case LEFTSHIFT:
-				break;
-			case RIGHTSHIFT:
-				break;
+				case ADD :
+					stat += "+" + op2 + ";";
+					break;
+				case SUB :
+					stat += "-" + op2 + ";";
+					break;
+				case MUL :
+					stat += "*" + op2 + ";";
+					break;
+				case DIV :
+					stat += "/" + op2 + ";";
+					break;
+				case REM :
+					stat += "%" + op2 + ";";
+					break;
+				case BITWISEOR :
+					break;
+				case BITWISEXOR :
+					break;
+				case BITWISEAND :
+					break;
+				case LEFTSHIFT :
+					break;
+				case RIGHTSHIFT :
+					break;
 			}
 			statement.add(stat);
 		}
@@ -948,13 +948,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * @param code
 	 * @param function
-	 * @return a list of parameter whose copy can be safely reduced.
+	 * @return a HashMap of parameters whose copy can be safely reduced.
 	 */
-	private List<Integer> translatePreFunctionCall(List<String> statements, Codes.Invoke code,
+	private LinkedHashMap<Integer, Boolean> translatePreFunctionCall(List<String> statements, Codes.Invoke code,
 			FunctionOrMethod function) {
 		String indent = stores.getIndent(function);
 		// Create a array to store the parameter whose parameter can be reduced.
-		List<Integer> copyReducedList = new ArrayList<Integer>();
+		LinkedHashMap<Integer, Boolean> copyReducedList = new LinkedHashMap<Integer, Boolean>();
 		int index = 0;
 		for (int operand : code.operands()) {
 			String param = stores.getVar(operand, function);
@@ -963,18 +963,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if (stores.isCompoundType(param_type)) {
 				// Check if the copy of parameter
 				boolean isCopyEliminated = isCopyEliminated(operand, index, code, function);
-				if (isCopyEliminated) {
-					// Put the operand to the copy-reduced list
-					copyReducedList.add(operand);
-				} else {
-
-					// Generate the temporary block variable to store the copied
-					// parameter
+				// Put the copy analysis results to hashmap
+				copyReducedList.put(index, isCopyEliminated);
+				// For copied parameter, we generate extra code to make an array copy
+				if (!isCopyEliminated) {
+					// Generate the temporary block variable to store the copied parameter
 					String tmp_name = stores.getTmpParamName(param, index, code, function);
-
 					// Declare the temporary variable
 					statements.add(indent + "void* " + tmp_name + ";");
-
 					if (stores.isIntArrayOrAliasedType(param_type)) {
 						Type elm = stores.getArrayElementType(param_type);
 						int dimension = stores.getArrayDimension(param_type);
@@ -1044,8 +1040,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param f
 	 * @return
 	 */
-	private void translateActualFunctionCall(List<Integer> copyReducedList, List<String> statements, Codes.Invoke code,
-			FunctionOrMethod function) {
+	private void translateActualFunctionCall(LinkedHashMap<Integer, Boolean> copyEliminatedMap, List<String> statements,
+			Codes.Invoke code, FunctionOrMethod function) {
 		String indent = stores.getIndent(function);
 		String function_return = indent + "";
 		// Translate the function return
@@ -1053,20 +1049,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String lhs = stores.getVar(code.target(0), function);
 			function_return += lhs + " = ";
 		}
-
 		// Translate the right hand side of a function call
-
-		// Go through each parameter
+		// Go through each parameter and generate the function call statement, e.g. func(a, b)
 		List<String> parameters = new ArrayList<String>();
 		int index = 0;
 		for (int operand : code.operands()) {
 			// Get parameter name
 			String parameter = stores.getVar(operand, function);
 			Type parameter_type = stores.getRawType(operand, function);
-			// Check if the copy of parameter can be eliminated by copy analysis
-			boolean isCopyEliminated = copyReducedList.contains(operand);
-			// Check if the copy of function argument is needed or not
-			// And then generate the corresponding code
 			if (parameter_type instanceof Type.Nominal
 					&& ((Type.Nominal) parameter_type).name().name().equals("Console")) {
 				parameters.add("stdout");
@@ -1075,11 +1065,18 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			} else if (stores.isIntType(parameter_type)) {
 				parameters.add(parameter);
 			} else if (stores.isIntArrayOrAliasedType(parameter_type)) {
+				// Check if the copy of function argument is needed or not And then generate the corresponding code
 				Type elm = stores.getArrayElementType(parameter_type);
 				int dimension = stores.getArrayDimension(parameter_type);
+				// Check if the copy of parameter can be eliminated by copy analysis
+				boolean isCopyEliminated = false;
+				if (copyEliminatedMap.containsKey(index)) {
+					isCopyEliminated = copyEliminatedMap.get(index);
+				}
 				// Add copy analysis result as a comment.
 				if (this.copyAnalyzer.isPresent()) {
-					statements.add(indent + "// isCopyEliminated of '" + prefix + operand + "' = " + isCopyEliminated);
+					statements.add(indent + "// isCopyEliminated of '" + parameter + " at " + index + "' = "
+							+ isCopyEliminated);
 				}
 				if (isCopyEliminated) {
 					parameters.add(parameter + ", " + parameter + "_size");
@@ -1105,11 +1102,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				}
 			} else if (parameter_type instanceof Type.Record || parameter_type instanceof Type.Nominal
 					|| parameter_type instanceof Type.Union) {
+				// Check if the copy of parameter can be eliminated by copy analysis
+				boolean isCopyEliminated = false;
+				if (copyEliminatedMap.containsKey(index)) {
+					isCopyEliminated = copyEliminatedMap.get(index);
+				}
 				// Add copy analysis result as a comment.
 				if (this.copyAnalyzer.isPresent()) {
-					statements.add(indent + "// isCopyEliminated of '" + prefix + operand + "' = " + isCopyEliminated);
+					statements.add(indent + "// isCopyEliminated of '" + parameter + "' at " + index + " = "
+							+ isCopyEliminated);
 				}
-
 				if (isCopyEliminated) {
 					parameters.add(parameter);
 				} else {
@@ -1325,102 +1327,102 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String lhs = stores.getVar(code.target(0), function);
 			String rhs = stores.getVar(code.operand(0), function);
 			switch (code.name.name()) {
-			case "parse":
-				// Parse a string into an integer.
-				statements.add(indent + "_STR_TO_INT(" + lhs + ", " + rhs + ");");
-				if (this.deallocatedAnalyzer.isPresent()) {
-					// remove the flag from rhs variable
-					statements.add(indent + rhs + "_dealloc = false;");
-				}
-				break;
-			case "abs":
-				// Use 'llabs' function to return the absolute value of 'rhs'
-				// because the rhs is a int64_t integer.
-				statements.add(indent + lhs + " = abs(" + rhs + ");");
-				break;
-			case "min":
-				String rhs1 = stores.getVar(code.operand(1), function);
-				statements.add(indent + lhs + " = min(" + rhs + ", " + rhs1 + ");");
-				break;
-			case "max":
-				rhs1 = stores.getVar(code.operand(1), function);
-				statements.add(indent + lhs + " = max(" + rhs + ", " + rhs1 + ");");
-				break;
-			case "toUnsignedByte":
-				// Convert an integer to byte
-				statements.add(indent + lhs + " = (BYTE)" + rhs + ";");
-				break;
-			case "fromBytes":
-				if (this.deallocatedAnalyzer.isPresent()) {
-					// PRE_DEALLOC macro is used to free lhs variable before function call.
-					statements.add(indent + "_DEALLOC(" + lhs + ");");
-				}
-				statements.add(indent + lhs + " = fromBytes(" + rhs + ", " + rhs + "_size);");
-				// Propagate the size variable
-				statements.add(indent + lhs + "_size = " + rhs + "_size;");
-				if (this.deallocatedAnalyzer.isPresent()) {
-					// Specify the flag to lhs var
-					statements.add(indent + lhs + "_dealloc = true;");
-				}
-				break;
-			case "toUnsignedInt":
-				// Convert a byte to integer
-				statements.add(indent + lhs + " = (unsigned int)" + rhs + ";");
-				break;
-			case "toInt":
-				// Convert a byte to integer
-				statements.add(indent + lhs + " = (int)" + rhs + ";");
-				break;
-			case "toByte":
-				// Convert an integer to a byte
-				statements.add(indent + lhs + " = (BYTE)" + rhs + ";");
-				break;
-			case "toString":
-				if (this.deallocatedAnalyzer.isPresent()) {
-					// PRE_DEALLOC macro is used to free lhs variable before function call.
-					statements.add(indent + "_DEALLOC(" + lhs + ");");
-				}
-				// Convert an integer to a string (an integer array of ASCII code)
-				// Call WyRT built-in 'InttoString' function
-				statements.add(indent + lhs + " = Int_toString(" + rhs + ", _1DARRAYSIZE_PARAM_CALLBYREFERENCE(" + lhs
-						+ "));");
-				if (this.deallocatedAnalyzer.isPresent()) {
-					// Specify the flag to lhs var
-					statements.add(indent + lhs + "_dealloc = true;");
-				}
-				break;
-			// Slice an array into a new sub-array at given starting and ending index.
-			case "slice":
-				// Extract lhs variable and free the variable (if de-allocation analysis enabled)
-				lhs = translateLHSVarFunctionCall(statements, code, function);
-				// Call the 'slice' function.
-				String array = stores.getVar(code.operand(0), function);
-				String start = stores.getVar(code.operand(1), function);
-				String end = stores.getVar(code.operand(2), function);
-				statements.add("_SLICE_ARRAY(" + lhs + ", " + array + ", " + start + ", " + end + ");");
-				if (this.deallocatedAnalyzer.isPresent()) {
-					// Specify the flag to lhs var
-					statements.add(indent + lhs + "_dealloc = true;");
-				}
-				break;
-			case "append":
-				if (this.deallocatedAnalyzer.isPresent()) {
-					// PRE_DEALLOC macro is used to free lhs variable before function call.
-					statements.add(indent + "_DEALLOC(" + lhs + ");");
-				}
-				// Append an array to another array, e.g. 'invoke (%13) = (%2, %14) whiley/lang/Array:append'
-				String rhs_arr = stores.getVar(code.operand(0), function);
-				String rhs1_arr = stores.getVar(code.operand(1), function);
-				// Call built-in ArrayAppend function in WyRT.c
-				statements.add(indent + lhs + " = Array_Append(" + rhs_arr + ", " + rhs_arr + "_size , " + rhs1_arr
-						+ ", " + rhs1_arr + "_size, " + "_1DARRAYSIZE_PARAM_CALLBYREFERENCE(" + lhs + "));");
-				if (this.deallocatedAnalyzer.isPresent()) {
-					// Specify the flag to lhs var
-					statements.add(indent + lhs + "_dealloc = true;");
-				}
-				break;
-			default:
-				throw new RuntimeException("Un-implemented code:" + code);
+				case "parse" :
+					// Parse a string into an integer.
+					statements.add(indent + "_STR_TO_INT(" + lhs + ", " + rhs + ");");
+					if (this.deallocatedAnalyzer.isPresent()) {
+						// remove the flag from rhs variable
+						statements.add(indent + rhs + "_dealloc = false;");
+					}
+					break;
+				case "abs" :
+					// Use 'llabs' function to return the absolute value of 'rhs'
+					// because the rhs is a int64_t integer.
+					statements.add(indent + lhs + " = abs(" + rhs + ");");
+					break;
+				case "min" :
+					String rhs1 = stores.getVar(code.operand(1), function);
+					statements.add(indent + lhs + " = min(" + rhs + ", " + rhs1 + ");");
+					break;
+				case "max" :
+					rhs1 = stores.getVar(code.operand(1), function);
+					statements.add(indent + lhs + " = max(" + rhs + ", " + rhs1 + ");");
+					break;
+				case "toUnsignedByte" :
+					// Convert an integer to byte
+					statements.add(indent + lhs + " = (BYTE)" + rhs + ";");
+					break;
+				case "fromBytes" :
+					if (this.deallocatedAnalyzer.isPresent()) {
+						// PRE_DEALLOC macro is used to free lhs variable before function call.
+						statements.add(indent + "_DEALLOC(" + lhs + ");");
+					}
+					statements.add(indent + lhs + " = fromBytes(" + rhs + ", " + rhs + "_size);");
+					// Propagate the size variable
+					statements.add(indent + lhs + "_size = " + rhs + "_size;");
+					if (this.deallocatedAnalyzer.isPresent()) {
+						// Specify the flag to lhs var
+						statements.add(indent + lhs + "_dealloc = true;");
+					}
+					break;
+				case "toUnsignedInt" :
+					// Convert a byte to integer
+					statements.add(indent + lhs + " = (unsigned int)" + rhs + ";");
+					break;
+				case "toInt" :
+					// Convert a byte to integer
+					statements.add(indent + lhs + " = (int)" + rhs + ";");
+					break;
+				case "toByte" :
+					// Convert an integer to a byte
+					statements.add(indent + lhs + " = (BYTE)" + rhs + ";");
+					break;
+				case "toString" :
+					if (this.deallocatedAnalyzer.isPresent()) {
+						// PRE_DEALLOC macro is used to free lhs variable before function call.
+						statements.add(indent + "_DEALLOC(" + lhs + ");");
+					}
+					// Convert an integer to a string (an integer array of ASCII code)
+					// Call WyRT built-in 'InttoString' function
+					statements.add(indent + lhs + " = Int_toString(" + rhs + ", _1DARRAYSIZE_PARAM_CALLBYREFERENCE("
+							+ lhs + "));");
+					if (this.deallocatedAnalyzer.isPresent()) {
+						// Specify the flag to lhs var
+						statements.add(indent + lhs + "_dealloc = true;");
+					}
+					break;
+				// Slice an array into a new sub-array at given starting and ending index.
+				case "slice" :
+					// Extract lhs variable and free the variable (if de-allocation analysis enabled)
+					lhs = translateLHSVarFunctionCall(statements, code, function);
+					// Call the 'slice' function.
+					String array = stores.getVar(code.operand(0), function);
+					String start = stores.getVar(code.operand(1), function);
+					String end = stores.getVar(code.operand(2), function);
+					statements.add("_SLICE_ARRAY(" + lhs + ", " + array + ", " + start + ", " + end + ");");
+					if (this.deallocatedAnalyzer.isPresent()) {
+						// Specify the flag to lhs var
+						statements.add(indent + lhs + "_dealloc = true;");
+					}
+					break;
+				case "append" :
+					if (this.deallocatedAnalyzer.isPresent()) {
+						// PRE_DEALLOC macro is used to free lhs variable before function call.
+						statements.add(indent + "_DEALLOC(" + lhs + ");");
+					}
+					// Append an array to another array, e.g. 'invoke (%13) = (%2, %14) whiley/lang/Array:append'
+					String rhs_arr = stores.getVar(code.operand(0), function);
+					String rhs1_arr = stores.getVar(code.operand(1), function);
+					// Call built-in ArrayAppend function in WyRT.c
+					statements.add(indent + lhs + " = Array_Append(" + rhs_arr + ", " + rhs_arr + "_size , " + rhs1_arr
+							+ ", " + rhs1_arr + "_size, " + "_1DARRAYSIZE_PARAM_CALLBYREFERENCE(" + lhs + "));");
+					if (this.deallocatedAnalyzer.isPresent()) {
+						// Specify the flag to lhs var
+						statements.add(indent + lhs + "_dealloc = true;");
+					}
+					break;
+				default :
+					throw new RuntimeException("Un-implemented code:" + code);
 			}
 
 			// this.deallocatedAnalyzer.ifPresent(a -> {
@@ -1430,24 +1432,25 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String lhs = stores.getVar(code.target(0), function);
 			String rhs = stores.getVar(code.operand(0), function);
 			switch (code.name.name()) {
-			case "Reader":
-				// Read a file name (an array of ASCII code) and output an file pointer
-				statements.add(indent + lhs + " = Reader(" + rhs + ", " + rhs + "_size);");
-				break;
-			case "Writer":
-				// Open a file to write the byte array
-				statements.add(indent + lhs + " = Writer(" + rhs + ", " + rhs + "_size);");
-				break;
-			default:
-				throw new RuntimeException("Un-implemented code:" + code);
+				case "Reader" :
+					// Read a file name (an array of ASCII code) and output an file pointer
+					statements.add(indent + lhs + " = Reader(" + rhs + ", " + rhs + "_size);");
+					break;
+				case "Writer" :
+					// Open a file to write the byte array
+					statements.add(indent + lhs + " = Writer(" + rhs + ", " + rhs + "_size);");
+					break;
+				default :
+					throw new RuntimeException("Un-implemented code:" + code);
 			}
 		} else {
 
-			// Check the copy of parameter
-			List<Integer> copyReducedList = translatePreFunctionCall(statements, code, function);
+			// Check if the copy of parameter is needed, and store all the results to
+			// HashMap(key: parameter index, value: isCopyEliminated)
+			LinkedHashMap<Integer, Boolean> copyEliminatedMap = translatePreFunctionCall(statements, code, function);
 
 			// call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
-			translateActualFunctionCall(copyReducedList, statements, code, function);
+			translateActualFunctionCall(copyEliminatedMap, statements, code, function);
 
 			// Generate the post-deallocation code
 			this.deallocatedAnalyzer.ifPresent(a -> {
@@ -1494,38 +1497,38 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		if (isNegated) {
 			// The negated operator
 			switch (op) {
-			case EQ:
-				return "!=";
-			case NEQ:
-				return "==";
-			case LT:
-				return ">=";
-			case LTEQ:
-				return ">";
-			case GT:
-				return "<=";
-			case GTEQ:
-				return "<";
-			default:
-				return null;
+				case EQ :
+					return "!=";
+				case NEQ :
+					return "==";
+				case LT :
+					return ">=";
+				case LTEQ :
+					return ">";
+				case GT :
+					return "<=";
+				case GTEQ :
+					return "<";
+				default :
+					return null;
 			}
 		} else {
 			// The condition
 			switch (op) {
-			case EQ:
-				return "==";
-			case NEQ:
-				return "!=";
-			case LT:
-				return "<";
-			case LTEQ:
-				return "<=";
-			case GT:
-				return ">";
-			case GTEQ:
-				return ">=";
-			default:
-				return null;
+				case EQ :
+					return "==";
+				case NEQ :
+					return "!=";
+				case LT :
+					return "<";
+				case LTEQ :
+					return "<=";
+				case GT :
+					return ">";
+				case GTEQ :
+					return ">=";
+				default :
+					return null;
 			}
 		}
 
@@ -2049,83 +2052,90 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				input = stores.getVar(code.operand(1), function);
 				input_type = stores.getRawType(code.operand(1), function);
 				switch (func_name) {
-				case "print":
-					statement.add(indent + "printf(\"" + "%\"PRId64, " + input + ");");
-					break;
-				case "print_s":
-					if (boundAnalyzer.isPresent()) {
-						statement.add(indent + "_PRINT_STR(" + input + ");");
-					} else {
-						statement.add(indent + "printf_s(" + input + ", " + input + "_size);");
-					}
-					break;
-				case "println_s":
-					if (boundAnalyzer.isPresent()) {
-						statement.add(indent + "_PRINTLN_STR(" + input + ");");
-					} else {
-						statement.add(indent + "println_s(" + input + ", " + input + "_size);");
-					}
-					break;
-				case "println":
-					// Check input's type to call different println function.
-					if (input_type instanceof Type.Int) {
+					case "print" :
+						statement.add(indent + "printf(\"" + "%\"PRId64, " + input + ");");
+						break;
+					case "print_s" :
 						if (boundAnalyzer.isPresent()) {
-							// Reference :http://en.cppreference.com/w/c/types/integer
-							String translateType = boundAnalyzer.get().suggestIntegerType(code.operand(1), function);
-							if (translateType.startsWith("u")) {
-								// Unsigned integer
-								switch (translateType) {
-								case "uint16_t":
-									statement.add(indent + "printf(\"" + "%\"PRIu16" + "\"\\n\", " + input + ");");
-									break;
-								case "uint32_t":
-									statement.add(indent + "printf(\"" + "%\"PRIu32" + "\"\\n\", " + input + ");");
-									break;
-								case "uint64_t":
-									statement.add(indent + "printf(\"" + "%\"PRIu64" + "\"\\n\", " + input + ");");
-									break;
+							statement.add(indent + "_PRINT_STR(" + input + ");");
+						} else {
+							statement.add(indent + "printf_s(" + input + ", " + input + "_size);");
+						}
+						break;
+					case "println_s" :
+						if (boundAnalyzer.isPresent()) {
+							statement.add(indent + "_PRINTLN_STR(" + input + ");");
+						} else {
+							statement.add(indent + "println_s(" + input + ", " + input + "_size);");
+						}
+						break;
+					case "println" :
+						// Check input's type to call different println function.
+						if (input_type instanceof Type.Int) {
+							if (boundAnalyzer.isPresent()) {
+								// Reference :http://en.cppreference.com/w/c/types/integer
+								String translateType = boundAnalyzer.get().suggestIntegerType(code.operand(1),
+										function);
+								if (translateType.startsWith("u")) {
+									// Unsigned integer
+									switch (translateType) {
+										case "uint16_t" :
+											statement.add(
+													indent + "printf(\"" + "%\"PRIu16" + "\"\\n\", " + input + ");");
+											break;
+										case "uint32_t" :
+											statement.add(
+													indent + "printf(\"" + "%\"PRIu32" + "\"\\n\", " + input + ");");
+											break;
+										case "uint64_t" :
+											statement.add(
+													indent + "printf(\"" + "%\"PRIu64" + "\"\\n\", " + input + ");");
+											break;
+									}
+								} else {
+									// Signed integer
+									switch (translateType) {
+										case "int16_t" :
+											statement.add(
+													indent + "printf(\"" + "%\"PRId16" + "\"\\n\", " + input + ");");
+											break;
+										case "int32_t" :
+											statement.add(
+													indent + "printf(\"" + "%\"PRId32" + "\"\\n\", " + input + ");");
+											break;
+										case "int64_t" :
+											statement.add(
+													indent + "printf(\"" + "%\"PRId64" + "\"\\n\", " + input + ");");
+											break;
+									}
 								}
+
 							} else {
-								// Signed integer
-								switch (translateType) {
-								case "int16_t":
-									statement.add(indent + "printf(\"" + "%\"PRId16" + "\"\\n\", " + input + ");");
-									break;
-								case "int32_t":
-									statement.add(indent + "printf(\"" + "%\"PRId32" + "\"\\n\", " + input + ");");
-									break;
-								case "int64_t":
-									statement.add(indent + "printf(\"" + "%\"PRId64" + "\"\\n\", " + input + ");");
-									break;
-								}
+								statement.add(indent + "printf(\"" + "%\"PRId64" + "\"\\n\", " + input + ");");
 							}
 
-						} else {
+						} else if (input_type instanceof Type.Array) {
+							Type elm_type = stores.getArrayElementType((Type.Array) input_type);
+							// Print out arrays w.r.t. array element type
+							if (elm_type instanceof Type.Byte) {
+								statement.add(indent + "_PRINT_1DARRAY_BYTE(" + input + ");");
+							} else {
+								statement.add(indent + "_PRINT_1DARRAY_int64_t(" + input + ");");
+							}
+						} else if (input_type instanceof Type.Nominal) {
+							Type.Nominal nominal = (Type.Nominal) input_type;
+							// Print out a user-defined type structure
+							statement.add(indent + "printf_" + nominal.name().name() + "(" + input + ");");
+						} else if (input_type instanceof Type.Union) {
 							statement.add(indent + "printf(\"" + "%\"PRId64" + "\"\\n\", " + input + ");");
-						}
-
-					} else if (input_type instanceof Type.Array) {
-						Type elm_type = stores.getArrayElementType((Type.Array) input_type);
-						// Print out arrays w.r.t. array element type
-						if (elm_type instanceof Type.Byte) {
-							statement.add(indent + "_PRINT_1DARRAY_BYTE(" + input + ");");
+						} else if (input_type instanceof Type.Byte) {
+							statement.add(indent + "printf(\"" + "%\"PRIu8" + "\"\\n\", " + input + ");");
 						} else {
-							statement.add(indent + "_PRINT_1DARRAY_int64_t(" + input + ");");
+							throw new RuntimeException("Not implemented." + code);
 						}
-					} else if (input_type instanceof Type.Nominal) {
-						Type.Nominal nominal = (Type.Nominal) input_type;
-						// Print out a user-defined type structure
-						statement.add(indent + "printf_" + nominal.name().name() + "(" + input + ");");
-					} else if (input_type instanceof Type.Union) {
-						statement.add(indent + "printf(\"" + "%\"PRId64" + "\"\\n\", " + input + ");");
-					} else if (input_type instanceof Type.Byte) {
-						statement.add(indent + "printf(\"" + "%\"PRIu8" + "\"\\n\", " + input + ");");
-					} else {
+						break;
+					default :
 						throw new RuntimeException("Not implemented." + code);
-					}
-					break;
-				default:
-					throw new RuntimeException("Not implemented." + code);
 				}
 			} else if (func_name.matches("readAll:\\w*")) {
 				// Get file pointer

@@ -1,96 +1,28 @@
-#include "specialcase1.h"
+#include "specialcase4.h"
 int64_t* _func_(_DECL_1DARRAY_PARAM(a), _DECL_1DARRAY_PARAM(b), _DECL_1DARRAY_PARAM(c), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_DECL_DEALLOC(a);
 	_DECL_DEALLOC(b);
 	_DECL_DEALLOC(c);
 	_DECL_1DARRAY(_3);
 	_DECL_DEALLOC(_3);
-	int64_t ra;
-	int64_t rb;
-	int64_t rc;
-	_DECL_1DARRAY(y);
-	_DECL_DEALLOC(y);
 	_DECL_1DARRAY(x);
 	_DECL_DEALLOC(x);
-	int64_t _11;
-	int64_t _12;
-	int64_t _13;
-	int64_t _14;
-	int64_t _15;
-	int64_t _16;
-	int64_t _17;
-	int64_t _18;
-	int64_t _19;
-	int64_t _20;
-	//const %11 = 0 : int
-	_11 = 0;
-	//indexof %12 = %0, %11 : int[]
-	_12=a[_11];
-	//assign %4 = %12  : int
+	//assign %4 = %0  : int[]
 	// isCopyEliminated = true
-	ra = _12;
-	//const %13 = 0 : int
-	_13 = 0;
-	//indexof %14 = %1, %13 : int[]
-	_14=b[_13];
-	//assign %5 = %14  : int
-	// isCopyEliminated = true
-	rb = _14;
-	//const %15 = 0 : int
-	_15 = 0;
-	//indexof %16 = %2, %15 : int[]
-	_16=c[_15];
-	//assign %6 = %16  : int
-	// isCopyEliminated = true
-	rc = _16;
-	//const %17 = 0 : int
-	_17 = 0;
-	//indexof %18 = %0, %17 : int[]
-	_18=a[_17];
-	//const %19 = 0 : int
-	_19 = 0;
-	//indexof %20 = %1, %19 : int[]
-	_20=b[_19];
-	//ifne %18, %20 goto blklab0 : int
-	if(_18!=_20){goto blklab0;}
-	//assign %9 = %0  : int[]
-	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(y, a);
-	//assign %10 = %1  : int[]
+	_TRANSFER_DEALLOC(x, a);
+	//assign %4 = %1  : int[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(x, b);
-	//return %10
+	//assign %4 = %2  : int[]
+	// isCopyEliminated = true
+	_TRANSFER_DEALLOC(x, c);
+	//return %4
 	_DEALLOC(a);
 	_DEALLOC(b);
 	_DEALLOC(c);
 	_DEALLOC(_3);
-	_DEALLOC(y);
-	_DEALLOC(x);
-	_DEALLOC(y);
 	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(x);
 	return x;
-	//goto blklab1
-	goto blklab1;
-//.blklab0
-blklab0:;
-	//assign %9 = %2  : int[]
-	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(y, c);
-	//assign %10 = %9  : int[]
-	// isCopyEliminated = true
-	_TRANSFER_DEALLOC(x, y);
-	//return %10
-	_DEALLOC(a);
-	_DEALLOC(b);
-	_DEALLOC(c);
-	_DEALLOC(_3);
-	_DEALLOC(y);
-	_DEALLOC(x);
-	_DEALLOC(y);
-	_UPDATE_1DARRAYSZIE_PARAM_CALLBYREFERENCE(x);
-	return x;
-//.blklab1
-blklab1:;
 	//return
 }
 
@@ -156,7 +88,7 @@ int main(int argc, char** args){
 	//assign %3 = %13  : int[]
 	// isCopyEliminated = true
 	_TRANSFER_DEALLOC(c, _13);
-	//invoke (%14) = (%1, %2, %3) specialcase1:func : function(int[],int[],int[])->(int[])
+	//invoke (%14) = (%1, %2, %3) specialcase4:func : function(int[],int[],int[])->(int[])
 	{
 		_FUNCTIONCALL_COPY_PRE(_14, c, 2, "liveness: c = true, readonly: c = false, return:c = MAYBE_RETURN" , "func");
 		_FUNCTIONCALL_COPY_PRE(_14, b, 1, "liveness: b = true, readonly: b = false, return:b = MAYBE_RETURN" , "func");
@@ -202,13 +134,13 @@ int main(int argc, char** args){
 		_16=a[_15];
 		//const %17 = 1 : int
 		_17 = 1;
-		//ifeq %16, %17 goto blklab2 : int
-		if(_16==_17){goto blklab2;}
+		//ifeq %16, %17 goto blklab0 : int
+		if(_16==_17){goto blklab0;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-//.blklab2
-blklab2:;
+//.blklab0
+blklab0:;
 	//assert
 	}
 	//assert
@@ -219,13 +151,13 @@ blklab2:;
 		_19=b[_18];
 		//const %20 = 2 : int
 		_20 = 2;
-		//ifeq %19, %20 goto blklab3 : int
-		if(_19==_20){goto blklab3;}
+		//ifeq %19, %20 goto blklab1 : int
+		if(_19==_20){goto blklab1;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-//.blklab3
-blklab3:;
+//.blklab1
+blklab1:;
 	//assert
 	}
 	//assert
@@ -236,13 +168,13 @@ blklab3:;
 		_22=c[_21];
 		//const %23 = 3 : int
 		_23 = 3;
-		//ifeq %22, %23 goto blklab4 : int
-		if(_22==_23){goto blklab4;}
+		//ifeq %22, %23 goto blklab2 : int
+		if(_22==_23){goto blklab2;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-//.blklab4
-blklab4:;
+//.blklab2
+blklab2:;
 	//assert
 	}
 	//assert
@@ -253,13 +185,13 @@ blklab4:;
 		_25=r[_24];
 		//const %26 = 3 : int
 		_26 = 3;
-		//ifeq %25, %26 goto blklab5 : int
-		if(_25==_26){goto blklab5;}
+		//ifeq %25, %26 goto blklab3 : int
+		if(_25==_26){goto blklab3;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-//.blklab5
-blklab5:;
+//.blklab3
+blklab3:;
 	//assert
 	}
 	//return

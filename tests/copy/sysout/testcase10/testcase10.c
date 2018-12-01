@@ -98,9 +98,9 @@ int main(int argc, char** args){
 	_7 = 11;
 	//invoke (%6) = (%1, %7) testcase10:func : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_6, x, "true-MAYBE_RETURN-false" , "func");
+		_FUNCTIONCALL_NO_COPY_PRE(_6, x, 0, "liveness: x = false, readonly: x = false, return:x = MAYBE_RETURN" , "func");
 		_DEALLOC(_6);
-		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of 'x at 0' = true
 		_6 = _func_(x, x_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		if( _6 == x ){
 			_6_dealloc = x_dealloc;
@@ -157,9 +157,9 @@ blklab2:;
 	_19 = 65536;
 	//invoke (%18) = (%1, %19) testcase10:func : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_18, x, "true-MAYBE_RETURN-false" , "func");
+		_FUNCTIONCALL_NO_COPY_PRE(_18, x, 0, "liveness: x = false, readonly: x = false, return:x = MAYBE_RETURN" , "func");
 		_DEALLOC(_18);
-		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of 'x at 0' = true
 		_18 = _func_(x, x_size, _19, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
 		if( _18 == x ){
 			_18_dealloc = x_dealloc;
