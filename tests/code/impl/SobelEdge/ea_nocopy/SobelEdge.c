@@ -359,8 +359,8 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, int64_t width, int6
 			pos = _46;
 			//invoke (%47) = (%0, %1, %2, %8, %9, %6) SobelEdge:convolution : function(byte[],int,int,int,int,int[])->(int)
 			{
-				// isCopyEliminated of '_0' = true
-				// isCopyEliminated of '_6' = true
+				// isCopyEliminated of 'pixels at 0' = true
+				// isCopyEliminated of 'v_sobel at 5' = true
 				_47 = _convolution_(pixels, pixels_size, width, height, x, y, v_sobel, v_sobel_size);
 			}
 			//assign %11 = %47  : int
@@ -368,8 +368,8 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, int64_t width, int6
 			v_g = _47;
 			//invoke (%48) = (%0, %1, %2, %8, %9, %7) SobelEdge:convolution : function(byte[],int,int,int,int,int[])->(int)
 			{
-				// isCopyEliminated of '_0' = true
-				// isCopyEliminated of '_7' = true
+				// isCopyEliminated of 'pixels at 0' = true
+				// isCopyEliminated of 'h_sobel at 5' = true
 				_48 = _convolution_(pixels, pixels_size, width, height, x, y, h_sobel, h_sobel_size);
 			}
 			//assign %12 = %48  : int
@@ -616,7 +616,7 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY(pixels, _10);
 	//invoke (%12) = (%4, %2, %3) SobelEdge:sobelEdgeDetection : function(byte[],int,int)->(byte[])
 	{
-		// isCopyEliminated of '_4' = true
+		// isCopyEliminated of 'pixels at 0' = true
 		_12 = _sobelEdgeDetection_(pixels, pixels_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_12));
 	}
 	//assign %5 = %12  : byte[]
@@ -624,7 +624,7 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY(newPixels, _12);
 	//invoke () = (%0, %2, %3, %5) SobelEdge:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
-		// isCopyEliminated of '_5' = true
+		// isCopyEliminated of 'newPixels at 3' = true
 		_print_pbm_(stdout, width, height, newPixels, newPixels_size);
 	}
 	//return

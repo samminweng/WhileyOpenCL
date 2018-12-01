@@ -232,9 +232,9 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(ys, _10);
 	//invoke (%11) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_11, ys, "true-ALWAYS_RETURN-false" , "bubbleSort");
+		_FUNCTIONCALL_NO_COPY_PRE(_11, ys, 0, "liveness: ys = false, readonly: ys = false, return:ys = ALWAYS_RETURN" , "bubbleSort");
 		_DEALLOC(_11);
-		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of 'ys at 0' = true
 		_11 = _bubbleSort_(ys, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		_11_dealloc = ys_dealloc;
 		ys_dealloc = false;
@@ -292,9 +292,9 @@ blklab5:;
 	_TRANSFER_DEALLOC(ys, _24);
 	//invoke (%25) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_25, ys, "true-ALWAYS_RETURN-false" , "bubbleSort");
+		_FUNCTIONCALL_NO_COPY_PRE(_25, ys, 0, "liveness: ys = false, readonly: ys = false, return:ys = ALWAYS_RETURN" , "bubbleSort");
 		_DEALLOC(_25);
-		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of 'ys at 0' = true
 		_25 = _bubbleSort_(ys, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_25));
 		_25_dealloc = ys_dealloc;
 		ys_dealloc = false;
@@ -350,9 +350,9 @@ blklab6:;
 	_TRANSFER_DEALLOC(ys, _37);
 	//invoke (%38) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_38, ys, "true-ALWAYS_RETURN-false" , "bubbleSort");
+		_FUNCTIONCALL_NO_COPY_PRE(_38, ys, 0, "liveness: ys = false, readonly: ys = false, return:ys = ALWAYS_RETURN" , "bubbleSort");
 		_DEALLOC(_38);
-		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of 'ys at 0' = true
 		_38 = _bubbleSort_(ys, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_38));
 		_38_dealloc = ys_dealloc;
 		ys_dealloc = false;
@@ -410,9 +410,9 @@ blklab7:;
 	_TRANSFER_DEALLOC(ys, _51);
 	//invoke (%52) = (%1) bubblesort:bubbleSort : function(int[])->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_52, ys, "true-ALWAYS_RETURN-false" , "bubbleSort");
+		_FUNCTIONCALL_NO_COPY_PRE(_52, ys, 0, "liveness: ys = false, readonly: ys = false, return:ys = ALWAYS_RETURN" , "bubbleSort");
 		_DEALLOC(_52);
-		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of 'ys at 0' = true
 		_52 = _bubbleSort_(ys, ys_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_52));
 		_52_dealloc = ys_dealloc;
 		ys_dealloc = false;
@@ -491,9 +491,9 @@ blklab10:;
 blklab9:;
 	//invoke (%68) = (%4) bubblesort:bubbleSort : function(int[])->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_68, arr, "true-ALWAYS_RETURN-false" , "bubbleSort");
+		_FUNCTIONCALL_NO_COPY_PRE(_68, arr, 0, "liveness: arr = false, readonly: arr = false, return:arr = ALWAYS_RETURN" , "bubbleSort");
 		_DEALLOC(_68);
-		// isCopyEliminated of '_4' = true
+		// isCopyEliminated of 'arr at 0' = true
 		_68 = _bubbleSort_(arr, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_68));
 		_68_dealloc = arr_dealloc;
 		arr_dealloc = false;

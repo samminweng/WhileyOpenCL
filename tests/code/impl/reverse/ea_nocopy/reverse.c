@@ -115,7 +115,7 @@ int main(int argc, char** args){
 	_11[0] = _6; _11[1] = _7; _11[2] = _8; _11[3] = _9; _11[4] = _10; 
 	//invoke (%5) = (%11) reverse:reverse : function(int[])->(int[])
 	{
-		// isCopyEliminated of '_11' = true
+		// isCopyEliminated of '_11 at 0' = true
 		_5 = _reverse_(_11, _11_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
 	}
 	//assign %1 = %5  : int[]
@@ -188,7 +188,7 @@ blklab6:;
 blklab5:;
 	//invoke (%27) = (%4) reverse:reverse : function(int[])->(int[])
 	{
-		// isCopyEliminated of '_4' = true
+		// isCopyEliminated of 'arr at 0' = true
 		_27 = _reverse_(arr, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 	}
 	//assign %4 = %27  : int[]

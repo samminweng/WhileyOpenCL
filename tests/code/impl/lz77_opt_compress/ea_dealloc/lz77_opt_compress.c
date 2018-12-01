@@ -141,7 +141,7 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, int64_t pos){
 		if(offset>=pos){goto blklab5;}
 		//invoke (%14) = (%0, %6, %1) lz77_opt_compress:match : function(byte[],lz77_opt_compress:nat,lz77_opt_compress:nat)->(int)
 		{
-			_FUNCTIONCALL_COPY_PRE(_14, data, "false-NEVER_RETURN-true" , "match");
+			_FUNCTIONCALL_COPY_PRE(_14, data, 0, "liveness: data = true, readonly: data = true, return:data = NEVER_RETURN" , "match");
 			void* tmp_data;
 			_COPY_1DARRAY_PARAM(data, tmp_data, BYTE);
 			_14 = _match_(tmp_data, data_size, offset, pos);
@@ -363,7 +363,7 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREF
 		if(pos>=_15){goto blklab14;}
 		//invoke (%16) = (%0, %2) lz77_opt_compress:findLongestMatch : function(byte[],lz77_opt_compress:nat)->(lz77_opt_compress:Match)
 		{
-			_FUNCTIONCALL_COPY_PRE(_16, data, "false-NEVER_RETURN-true" , "findLongestMatch");
+			_FUNCTIONCALL_COPY_PRE(_16, data, 0, "liveness: data = true, readonly: data = true, return:data = NEVER_RETURN" , "findLongestMatch");
 			void* tmp_data;
 			_COPY_1DARRAY_PARAM(data, tmp_data, BYTE);
 			_DEALLOC_STRUCT(_16, Match);
@@ -451,7 +451,7 @@ blklab18:;
 	}
 	//invoke (%31) = (%1, %4) lz77_opt_compress:resize : function(byte[],int)->(byte[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_31, output, "false-NEVER_RETURN-false" , "resize");
+		_FUNCTIONCALL_COPY_PRE(_31, output, 0, "liveness: output = false, readonly: output = true, return:output = NEVER_RETURN" , "resize");
 		_DEALLOC(_31);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(output, tmp_items, BYTE);
@@ -576,7 +576,7 @@ int main(int argc, char** args){
 	}
 	//invoke (%21) = (%2) lz77_opt_compress:compress : function(byte[])->(byte[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_21, data, "false-NEVER_RETURN-false" , "compress");
+		_FUNCTIONCALL_COPY_PRE(_21, data, 0, "liveness: data = false, readonly: data = true, return:data = NEVER_RETURN" , "compress");
 		_DEALLOC(_21);
 		void* tmp_data;
 		_COPY_1DARRAY_PARAM(data, tmp_data, BYTE);

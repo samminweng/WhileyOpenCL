@@ -256,9 +256,9 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYR
 		if(header!=_25){goto blklab20;}
 		//invoke (%26) = (%2, %3, %6) lz77_opt_decompress:opt_append : function(byte[],lz77_opt_decompress:nat,byte)->(byte[])
 		{
-			_FUNCTIONCALL_NO_COPY_PRE(_26, items, "true-MAYBE_RETURN-false" , "opt_append");
+			_FUNCTIONCALL_NO_COPY_PRE(_26, items, 0, "liveness: items = false, readonly: items = false, return:items = MAYBE_RETURN" , "opt_append");
 			_DEALLOC(_26);
-			// isCopyEliminated of '_2' = true
+			// isCopyEliminated of 'items at 0' = true
 			_26 = _opt_append_(items, items_size, inspos, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_26));
 			if( _26 == items ){
 				_26_dealloc = items_dealloc;
@@ -316,9 +316,9 @@ blklab20:;
 			item = _33;
 			//invoke (%34) = (%2, %3, %6) lz77_opt_decompress:opt_append : function(byte[],lz77_opt_decompress:nat,byte)->(byte[])
 			{
-				_FUNCTIONCALL_NO_COPY_PRE(_34, items, "true-MAYBE_RETURN-false" , "opt_append");
+				_FUNCTIONCALL_NO_COPY_PRE(_34, items, 0, "liveness: items = false, readonly: items = false, return:items = MAYBE_RETURN" , "opt_append");
 				_DEALLOC(_34);
-				// isCopyEliminated of '_2' = true
+				// isCopyEliminated of 'items at 0' = true
 				_34 = _opt_append_(items, items_size, inspos, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_34));
 				if( _34 == items ){
 					_34_dealloc = items_dealloc;
@@ -358,9 +358,9 @@ blklab19:;
 blklab18:;
 	//invoke (%39) = (%2, %3) lz77_opt_decompress:resize : function(byte[],int)->(byte[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_39, items, "false-NEVER_RETURN-false" , "resize");
+		_FUNCTIONCALL_NO_COPY_PRE(_39, items, 0, "liveness: items = false, readonly: items = true, return:items = NEVER_RETURN" , "resize");
 		_DEALLOC(_39);
-		// isCopyEliminated of '_2' = true
+		// isCopyEliminated of 'items at 0' = true
 		_39 = _resize_(items, items_size, inspos, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_39));
 		_39_dealloc = true;
 	}
@@ -427,9 +427,9 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(input_data, _6);
 	//invoke (%8) = (%2) lz77_opt_decompress:decompress : function(byte[])->(byte[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_8, input_data, "false-NEVER_RETURN-false" , "decompress");
+		_FUNCTIONCALL_NO_COPY_PRE(_8, input_data, 0, "liveness: input_data = false, readonly: input_data = true, return:input_data = NEVER_RETURN" , "decompress");
 		_DEALLOC(_8);
-		// isCopyEliminated of '_2' = true
+		// isCopyEliminated of 'input_data at 0' = true
 		_8 = _decompress_(input_data, input_data_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_8_dealloc = true;
 	}

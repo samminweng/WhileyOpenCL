@@ -283,7 +283,7 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY(A, _15);
 	//invoke (%16) = (%4, %2, %3) MatrixMult:init : function(int[],int,int)->(int[])
 	{
-		// isCopyEliminated of '_4' = true
+		// isCopyEliminated of 'A at 0' = true
 		_16 = _init_(A, A_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 	}
 	//assign %4 = %16  : int[]
@@ -300,7 +300,7 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY(B, _19);
 	//invoke (%20) = (%5, %2, %3) MatrixMult:init : function(int[],int,int)->(int[])
 	{
-		// isCopyEliminated of '_5' = true
+		// isCopyEliminated of 'B at 0' = true
 		_20 = _init_(B, B_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
 	}
 	//assign %5 = %20  : int[]
@@ -317,9 +317,9 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY(C, _23);
 	//invoke (%24) = (%4, %5, %6, %2, %3) MatrixMult:mat_mult : function(int[],int[],int[],int,int)->(int[])
 	{
-		// isCopyEliminated of '_4' = true
-		// isCopyEliminated of '_5' = true
-		// isCopyEliminated of '_6' = true
+		// isCopyEliminated of 'A at 0' = true
+		// isCopyEliminated of 'B at 1' = true
+		// isCopyEliminated of 'C at 2' = true
 		_24 = _mat_mult_(A, A_size, B, B_size, C, C_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
 	}
 	//assign %6 = %24  : int[]

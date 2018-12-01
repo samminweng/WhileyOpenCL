@@ -252,7 +252,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(moves, _7, int64_t);
 	//invoke (%8) = (%2, %1) CoinGame1:findMoves : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_8, moves, "true-ALWAYS_RETURN-false" , "findMoves");
+		_FUNCTIONCALL_COPY_PRE(_8, moves, 0, "liveness: moves = false, readonly: moves = false, return:moves = ALWAYS_RETURN" , "findMoves");
 		_DEALLOC(_8);
 		void* tmp_moves;
 		_COPY_1DARRAY_PARAM(moves, tmp_moves, int64_t);

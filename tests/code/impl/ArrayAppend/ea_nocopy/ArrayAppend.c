@@ -108,8 +108,8 @@ int main(int argc, char** args){
 	_4[0] = 32; _4[1] = 84; _4[2] = 104; _4[3] = 105; _4[4] = 115; _4[5] = 32; _4[6] = 105; _4[7] = 115; _4[8] = 32; _4[9] = 97; _4[10] = 32; _4[11] = 116; _4[12] = 101; _4[13] = 115; _4[14] = 116; _4[15] = 32; 
 	//invoke (%3) = (%1, %4) ArrayAppend:test_append : function(int[],int[])->(int[])
 	{
-		// isCopyEliminated of '_1' = true
-		// isCopyEliminated of '_4' = true
+		// isCopyEliminated of 'r at 0' = true
+		// isCopyEliminated of '_4 at 1' = true
 		_3 = _test_append_(r, r_size, _4, _4_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
 	}
 	//assign %1 = %3  : int[]

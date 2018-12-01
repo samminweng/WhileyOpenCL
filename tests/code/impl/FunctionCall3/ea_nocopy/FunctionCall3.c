@@ -71,7 +71,7 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY(a, _9);
 	//invoke (%10) = (%1) FunctionCall3:func : function(int[])->(int[])
 	{
-		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of 'a at 0' = true
 		_10 = _func_(a, a_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 	}
 	//assign %1 = %10  : int[]
@@ -133,7 +133,7 @@ blklab0:;
 	{
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(b, tmp_s, int64_t);
-		// isCopyEliminated of '_2' = false
+		// isCopyEliminated of 'b at 0' = false
 		_27 = _func_(tmp_s, b_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 	}
 	//assign %3 = %27  : int[]

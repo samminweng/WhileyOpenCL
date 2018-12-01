@@ -60,11 +60,11 @@ int main(int argc, char** args){
 	b[_7] = _6;
 	//invoke (%8) = (%1) CallerMacro3:f : function(int[])->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_8, b, "false-ALWAYS_RETURN-true" , "f");
+		_FUNCTIONCALL_COPY_PRE(_8, b, 0, "liveness: b = true, readonly: b = true, return:b = ALWAYS_RETURN" , "f");
 		_DEALLOC(_8);
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(b, tmp_x, int64_t);
-		// isCopyEliminated of '_1' = false
+		// isCopyEliminated of 'b at 0' = false
 		_8 = _f_(tmp_x, b_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		_8_dealloc = true;
 	}

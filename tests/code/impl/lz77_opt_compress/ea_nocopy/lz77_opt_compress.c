@@ -145,7 +145,7 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, int64_t pos){
 		if(offset>=pos){goto blklab5;}
 		//invoke (%14) = (%0, %6, %1) lz77_opt_compress:match : function(byte[],lz77_opt_compress:nat,lz77_opt_compress:nat)->(int)
 		{
-			// isCopyEliminated of '_0' = true
+			// isCopyEliminated of 'data at 0' = true
 			_14 = _match_(data, data_size, offset, pos);
 		}
 		//assign %7 = %14  : int
@@ -358,7 +358,7 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREF
 		if(pos>=_15){goto blklab14;}
 		//invoke (%16) = (%0, %2) lz77_opt_compress:findLongestMatch : function(byte[],lz77_opt_compress:nat)->(lz77_opt_compress:Match)
 		{
-			// isCopyEliminated of '_0' = true
+			// isCopyEliminated of 'data at 0' = true
 			_16 = _findLongestMatch_(data, data_size, pos);
 		}
 		//assign %5 = %16  : {int len,int offset}
@@ -447,7 +447,7 @@ blklab18:;
 	}
 	//invoke (%31) = (%1, %4) lz77_opt_compress:resize : function(byte[],int)->(byte[])
 	{
-		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of 'output at 0' = true
 		_31 = _resize_(output, output_size, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_31));
 	}
 	//assign %1 = %31  : byte[]
@@ -543,7 +543,7 @@ int main(int argc, char** args){
 	}
 	//invoke (%21) = (%2) lz77_opt_compress:compress : function(byte[])->(byte[])
 	{
-		// isCopyEliminated of '_2' = true
+		// isCopyEliminated of 'data at 0' = true
 		_21 = _compress_(data, data_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_21));
 	}
 	//assign %3 = %21  : byte[]

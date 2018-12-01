@@ -149,7 +149,7 @@ int main(int argc, char** args){
 	_7 = 11;
 	//invoke (%6) = (%1, %7) CallerMacro5:func : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_6, x, "false-MAYBE_RETURN-true" , "func");
+		_FUNCTIONCALL_COPY_PRE(_6, x, 0, "liveness: x = true, readonly: x = true, return:x = MAYBE_RETURN" , "func");
 		_DEALLOC(_6);
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(x, tmp_x, int64_t);
@@ -205,7 +205,7 @@ blklab3:;
 	_19 = 10;
 	//invoke (%18) = (%1, %19) CallerMacro5:func : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_18, x, "false-MAYBE_RETURN-true" , "func");
+		_FUNCTIONCALL_COPY_PRE(_18, x, 0, "liveness: x = true, readonly: x = true, return:x = MAYBE_RETURN" , "func");
 		_DEALLOC(_18);
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(x, tmp_x, int64_t);
@@ -261,7 +261,7 @@ blklab4:;
 	_31 = 9;
 	//invoke (%30) = (%1, %31) CallerMacro5:func : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_30, x, "false-MAYBE_RETURN-false" , "func");
+		_FUNCTIONCALL_COPY_PRE(_30, x, 0, "liveness: x = false, readonly: x = true, return:x = MAYBE_RETURN" , "func");
 		_DEALLOC(_30);
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(x, tmp_x, int64_t);

@@ -62,15 +62,15 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(a, _5);
 	//invoke (%6) = (%1, %1) PassedParameterTwice:f : function(int[],int[])->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_6, a, "false-MAYBE_RETURN-true" , "f");
-		_FUNCTIONCALL_COPY_PRE(_6, a, "false-MAYBE_RETURN-true" , "f");
+		_FUNCTIONCALL_COPY_PRE(_6, a, 1, "liveness: a = true, readonly: a = true, return:a = MAYBE_RETURN" , "f");
+		_FUNCTIONCALL_COPY_PRE(_6, a, 0, "liveness: a = true, readonly: a = true, return:a = MAYBE_RETURN" , "f");
 		_DEALLOC(_6);
 		void* tmp_a;
 		_COPY_1DARRAY_PARAM(a, tmp_a, int64_t);
 		void* tmp_b;
 		_COPY_1DARRAY_PARAM(a, tmp_b, int64_t);
-		// isCopyEliminated of '_1' = false
-		// isCopyEliminated of '_1' = false
+		// isCopyEliminated of 'a at 0' = false
+		// isCopyEliminated of 'a at 1' = false
 		_6 = _f_(tmp_a, a_size, tmp_b, a_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		if( _6 == tmp_a ){
 			_6_dealloc = true;

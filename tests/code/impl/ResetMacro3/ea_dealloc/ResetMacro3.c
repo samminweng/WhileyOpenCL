@@ -87,7 +87,7 @@ int main(int argc, char** args){
 	_7 = 11;
 	//invoke (%6) = (%1, %7) ResetMacro3:func : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_6, b, "true-MAYBE_RETURN-false" , "func");
+		_FUNCTIONCALL_COPY_PRE(_6, b, 0, "liveness: b = false, readonly: b = false, return:b = MAYBE_RETURN" , "func");
 		_DEALLOC(_6);
 		void* tmp_b;
 		_COPY_1DARRAY_PARAM(b, tmp_b, int64_t);
@@ -134,7 +134,7 @@ blklab2:;
 	_16 = 65536;
 	//invoke (%15) = (%1, %16) ResetMacro3:func : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_15, b, "true-MAYBE_RETURN-false" , "func");
+		_FUNCTIONCALL_COPY_PRE(_15, b, 0, "liveness: b = false, readonly: b = false, return:b = MAYBE_RETURN" , "func");
 		_DEALLOC(_15);
 		void* tmp_b;
 		_COPY_1DARRAY_PARAM(b, tmp_b, int64_t);

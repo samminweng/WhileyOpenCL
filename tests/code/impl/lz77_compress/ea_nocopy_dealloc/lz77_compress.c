@@ -150,8 +150,8 @@ Match* _findLongestMatch_(BYTE* data, size_t data_size, int64_t pos){
 		if(offset>=pos){goto blklab5;}
 		//invoke (%14) = (%0, %6, %1) lz77_compress:match : function(byte[],lz77_compress:nat,lz77_compress:nat)->(int)
 		{
-			_FUNCTIONCALL_NO_COPY_PRE(_14, data, "false-NEVER_RETURN-true" , "match");
-			// isCopyEliminated of '_0' = true
+			_FUNCTIONCALL_NO_COPY_PRE(_14, data, 0, "liveness: data = true, readonly: data = true, return:data = NEVER_RETURN" , "match");
+			// isCopyEliminated of 'data at 0' = true
 			_14 = _match_(data, data_size, offset, pos);
 		}
 		//assign %7 = %14  : int
@@ -365,9 +365,9 @@ BYTE* _compress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYREF
 		if(pos>=_10){goto blklab14;}
 		//invoke (%11) = (%0, %2) lz77_compress:findLongestMatch : function(byte[],lz77_compress:nat)->(lz77_compress:Match)
 		{
-			_FUNCTIONCALL_NO_COPY_PRE(_11, data, "false-NEVER_RETURN-true" , "findLongestMatch");
+			_FUNCTIONCALL_NO_COPY_PRE(_11, data, 0, "liveness: data = true, readonly: data = true, return:data = NEVER_RETURN" , "findLongestMatch");
 			_DEALLOC_STRUCT(_11, Match);
-			// isCopyEliminated of '_0' = true
+			// isCopyEliminated of 'data at 0' = true
 			_11 = _findLongestMatch_(data, data_size, pos);
 			_11_dealloc = true;
 		}
@@ -425,9 +425,9 @@ blklab16:;
 blklab17:;
 		//invoke (%22) = (%1, %4) lz77_compress:append : function(byte[],byte)->(byte[])
 		{
-			_FUNCTIONCALL_NO_COPY_PRE(_22, output, "false-NEVER_RETURN-false" , "append");
+			_FUNCTIONCALL_NO_COPY_PRE(_22, output, 0, "liveness: output = false, readonly: output = true, return:output = NEVER_RETURN" , "append");
 			_DEALLOC(_22);
-			// isCopyEliminated of '_1' = true
+			// isCopyEliminated of 'output at 0' = true
 			_22 = _append_(output, output_size, offset, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_22));
 			_22_dealloc = true;
 		}
@@ -436,9 +436,9 @@ blklab17:;
 		_TRANSFER_DEALLOC(output, _22);
 		//invoke (%23) = (%1, %5) lz77_compress:append : function(byte[],byte)->(byte[])
 		{
-			_FUNCTIONCALL_NO_COPY_PRE(_23, output, "false-NEVER_RETURN-false" , "append");
+			_FUNCTIONCALL_NO_COPY_PRE(_23, output, 0, "liveness: output = false, readonly: output = true, return:output = NEVER_RETURN" , "append");
 			_DEALLOC(_23);
-			// isCopyEliminated of '_1' = true
+			// isCopyEliminated of 'output at 0' = true
 			_23 = _append_(output, output_size, length, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_23));
 			_23_dealloc = true;
 		}
@@ -568,9 +568,9 @@ int main(int argc, char** args){
 	}
 	//invoke (%21) = (%2) lz77_compress:compress : function(byte[])->(byte[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_21, data, "false-NEVER_RETURN-false" , "compress");
+		_FUNCTIONCALL_NO_COPY_PRE(_21, data, 0, "liveness: data = false, readonly: data = true, return:data = NEVER_RETURN" , "compress");
 		_DEALLOC(_21);
-		// isCopyEliminated of '_2' = true
+		// isCopyEliminated of 'data at 0' = true
 		_21 = _compress_(data, data_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_21));
 		_21_dealloc = true;
 	}

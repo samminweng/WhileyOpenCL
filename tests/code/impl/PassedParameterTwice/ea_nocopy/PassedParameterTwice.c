@@ -55,8 +55,8 @@ int main(int argc, char** args){
 		_COPY_1DARRAY_PARAM(a, tmp_a, int64_t);
 		void* tmp_b;
 		_COPY_1DARRAY_PARAM(a, tmp_b, int64_t);
-		// isCopyEliminated of '_1' = false
-		// isCopyEliminated of '_1' = false
+		// isCopyEliminated of 'a at 0' = false
+		// isCopyEliminated of 'a at 1' = false
 		_6 = _f_(tmp_a, a_size, tmp_b, a_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 	}
 	//assign %2 = %6  : int[]

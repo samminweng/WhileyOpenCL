@@ -372,7 +372,6 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 #define _ADD_DEALLOC(a, b, type) \
         ({\
 		    DEBUG_PRINT("_ADD_DEALLOC macro on  ( "str(a)" = "str(b)" )");\
-			DEBUG_CHECK_ASSUMPTION(a, b);\
 			_DEALLOC(a);\
 			_COPY_1DARRAY_##type(a, b);\
 			a##_dealloc = true;\
@@ -387,7 +386,6 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 #define _TRANSFER_DEALLOC(a, b)  \
         ({\
 			DEBUG_PRINT("_TRANSFER_DEALLOC macro on  ( "str(a)" = "str(b)" )");\
-			DEBUG_CHECK_ASSUMPTION(a, b);\
 			_DEALLOC(a);\
 			_UPDATE_1DARRAY(a, b);\
 			a##_dealloc = b##_dealloc;\
@@ -406,29 +404,25 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 *
 */
 // _FUNCTIONCALL_NO_COPY macro does not copy the array parameter
-#define _FUNCTIONCALL_NO_COPY_PRE(a, b, checks, func_name)  \
+#define _FUNCTIONCALL_NO_COPY_PRE(a, b, pos, checks, func_name)  \
 		({\
-            DEBUG_PRINT("_FUNCTIONCALL_NO_COPY macro on ( "str(a)" = "str(func_name)" "str(b)" "str(checks)" )");\
-            DEBUG_CHECK_ASSUMPTION(a, b);\
+            DEBUG_PRINT("_FUNCTIONCALL_NO_COPY macro on ( "str(a)" = "str(func_name)" "str(b)" at pos "str(pos)" "str(checks)" )");\
         })
 // _FUNCTIONCALL_COPY macro copies the array parameter
-#define _FUNCTIONCALL_COPY_PRE(a, b, checks, func_name)  \
+#define _FUNCTIONCALL_COPY_PRE(a, b, pos, checks, func_name)  \
 		({\
-            DEBUG_PRINT("_FUNCTIONCALL_COPY macro on ( "str(a)" = "str(func_name)" "str(b)" "str(checks)" )");\
-            DEBUG_CHECK_ASSUMPTION(a, b);\
+            DEBUG_PRINT("_FUNCTIONCALL_COPY macro on ( "str(a)" = "str(func_name)" "str(b)" at pos "str(pos)" "str(checks)" )");\
         })
 // _SUBSTRUCTURE_DEALLOC macro deals with user-defined type parameter
-#define _SUBSTRUCTURE_DEALLOC_PRE(a, b, checks, func_name)  \
+#define _SUBSTRUCTURE_DEALLOC_PRE(a, b, pos, checks, func_name)  \
 		({\
-            DEBUG_PRINT("_SUBSTRUCTURE_DEALLOC macro on ( "str(a)" = "str(func_name)" "str(b)" "str(checks)" )");\
-            DEBUG_CHECK_ASSUMPTION(a, b);\
+            DEBUG_PRINT("_SUBSTRUCTURE_DEALLOC macro on ( "str(a)" = "str(func_name)" "str(b)" at pos "str(pos)" "str(checks)" )");\
         })
 // '_RETAIN_DEALLOC' macro does NOT make the copy of argument 
 // and free the passing parameter at caller site 'a = func(b, false)'
 #define _RETAIN_DEALLOC(a, b, checks, func_name)  \
 		({\
             DEBUG_PRINT("_RETAIN_DEALLOC macro on ( "str(a)" = "str(func_name)" "str(b)" "str(checks)" )");\
-            DEBUG_CHECK_ASSUMPTION(a, b);\
         })
 #define _RETAIN_DEALLOC_POST(a, b)  \
 		({\
@@ -439,7 +433,6 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 #define _RESET_DEALLOC(a, b, checks, func_name) \
 		({\
 		    DEBUG_PRINT("_RESET_DEALLOC macro on ( "str(a)" = "str(func_name)" "str(b)" "str(checks)" )");\
-            DEBUG_CHECK_ASSUMPTION(a, b);\
         })
 #define _RESET_DEALLOC_POST(a, b) \
 		({\
@@ -459,7 +452,6 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 #define _CALLER_DEALLOC(a, b, checks, func_name) \
 		({\
 			DEBUG_PRINT("_CALLER_DEALLOC macro on ( "str(a)" = "str(func_name)" "str(b)" "str(checks)" )");\
-            DEBUG_CHECK_ASSUMPTION(a, b);\
         })
 #define _CALLER_DEALLOC_POST(a, b) \
 		({\
@@ -483,7 +475,6 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 #define _CALLEE_DEALLOC(a, b, checks, func_name)  \
 		({\
             DEBUG_PRINT("_CALLEE_DEALLOC macro on ( "str(a)" = "str(func_name)" "str(b)" "str(checks)" )");\
-            DEBUG_CHECK_ASSUMPTION(a, b);\
         })
 // Free the parameter at caller site 
 #define _CALLEE_DEALLOC_POST(a, b)  \

@@ -244,7 +244,7 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYR
 		if(header!=_25){goto blklab20;}
 		//invoke (%26) = (%2, %3, %6) lz77_opt_decompress:opt_append : function(byte[],lz77_opt_decompress:nat,byte)->(byte[])
 		{
-			_FUNCTIONCALL_COPY_PRE(_26, items, "true-MAYBE_RETURN-false" , "opt_append");
+			_FUNCTIONCALL_COPY_PRE(_26, items, 0, "liveness: items = false, readonly: items = false, return:items = MAYBE_RETURN" , "opt_append");
 			_DEALLOC(_26);
 			void* tmp_items;
 			_COPY_1DARRAY_PARAM(items, tmp_items, BYTE);
@@ -298,7 +298,7 @@ blklab20:;
 			item = _33;
 			//invoke (%34) = (%2, %3, %6) lz77_opt_decompress:opt_append : function(byte[],lz77_opt_decompress:nat,byte)->(byte[])
 			{
-				_FUNCTIONCALL_COPY_PRE(_34, items, "true-MAYBE_RETURN-false" , "opt_append");
+				_FUNCTIONCALL_COPY_PRE(_34, items, 0, "liveness: items = false, readonly: items = false, return:items = MAYBE_RETURN" , "opt_append");
 				_DEALLOC(_34);
 				void* tmp_items;
 				_COPY_1DARRAY_PARAM(items, tmp_items, BYTE);
@@ -338,7 +338,7 @@ blklab19:;
 blklab18:;
 	//invoke (%39) = (%2, %3) lz77_opt_decompress:resize : function(byte[],int)->(byte[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_39, items, "false-NEVER_RETURN-false" , "resize");
+		_FUNCTIONCALL_COPY_PRE(_39, items, 0, "liveness: items = false, readonly: items = true, return:items = NEVER_RETURN" , "resize");
 		_DEALLOC(_39);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(items, tmp_items, BYTE);
@@ -406,7 +406,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(input_data, _6, BYTE);
 	//invoke (%8) = (%2) lz77_opt_decompress:decompress : function(byte[])->(byte[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_8, input_data, "false-NEVER_RETURN-false" , "decompress");
+		_FUNCTIONCALL_COPY_PRE(_8, input_data, 0, "liveness: input_data = false, readonly: input_data = true, return:input_data = NEVER_RETURN" , "decompress");
 		_DEALLOC(_8);
 		void* tmp_data;
 		_COPY_1DARRAY_PARAM(input_data, tmp_data, BYTE);

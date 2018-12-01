@@ -299,9 +299,9 @@ int main(int argc, char** args){
 	//fieldload %15 = %14 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%16) = (%1) ArrayAppend3:toString : function(ArrayAppend3:Cash)->(whiley/lang/ASCII:string)
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_16, till, "false-NEVER_RETURN-false" , "toString");
+		_FUNCTIONCALL_NO_COPY_PRE(_16, till, 0, "liveness: till = false, readonly: till = true, return:till = NEVER_RETURN" , "toString");
 		_DEALLOC(_16);
-		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of 'till at 0' = true
 		_16 = _toString_(till, till_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		_16_dealloc = true;
 	}

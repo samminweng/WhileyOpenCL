@@ -155,7 +155,7 @@ int main(int argc, char** args){
 	{
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(b, tmp_items, BYTE);
-		// isCopyEliminated of '_1' = false
+		// isCopyEliminated of 'b at 0' = false
 		_11 = _opt_append_(tmp_items, b_size, inspos, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 	}
 	//assign %4 = %11  : byte[]

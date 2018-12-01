@@ -146,7 +146,7 @@ BYTE* _decompress_(BYTE* data, size_t data_size, _DECL_1DARRAYSIZE_PARAM_CALLBYR
 		if(header!=_22){goto blklab5;}
 		//invoke (%23) = (%1, %4) lz77_decompress:append : function(byte[],byte)->(byte[])
 		{
-			_FUNCTIONCALL_COPY_PRE(_23, output, "false-NEVER_RETURN-false" , "append");
+			_FUNCTIONCALL_COPY_PRE(_23, output, 0, "liveness: output = false, readonly: output = true, return:output = NEVER_RETURN" , "append");
 			_DEALLOC(_23);
 			void* tmp_items;
 			_COPY_1DARRAY_PARAM(output, tmp_items, BYTE);
@@ -192,7 +192,7 @@ blklab5:;
 			item = _29;
 			//invoke (%30) = (%1, %4) lz77_decompress:append : function(byte[],byte)->(byte[])
 			{
-				_FUNCTIONCALL_COPY_PRE(_30, output, "false-NEVER_RETURN-false" , "append");
+				_FUNCTIONCALL_COPY_PRE(_30, output, 0, "liveness: output = false, readonly: output = true, return:output = NEVER_RETURN" , "append");
 				_DEALLOC(_30);
 				void* tmp_items;
 				_COPY_1DARRAY_PARAM(output, tmp_items, BYTE);
@@ -276,7 +276,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(input_data, _6, BYTE);
 	//invoke (%8) = (%2) lz77_decompress:decompress : function(byte[])->(byte[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_8, input_data, "false-NEVER_RETURN-false" , "decompress");
+		_FUNCTIONCALL_COPY_PRE(_8, input_data, 0, "liveness: input_data = false, readonly: input_data = true, return:input_data = NEVER_RETURN" , "decompress");
 		_DEALLOC(_8);
 		void* tmp_data;
 		_COPY_1DARRAY_PARAM(input_data, tmp_data, BYTE);

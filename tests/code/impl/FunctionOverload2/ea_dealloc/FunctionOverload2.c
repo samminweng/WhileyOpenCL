@@ -191,7 +191,7 @@ int main(int argc, char** args){
 	_13_dealloc = true;
 	//invoke (%4) = (%13) FunctionOverload2:Cash : function(FunctionOverload2:nat[])->(FunctionOverload2:Cash)
 	{
-		_FUNCTIONCALL_COPY_PRE(_4, _13, "false-NEVER_RETURN-false" , "Cash");
+		_FUNCTIONCALL_COPY_PRE(_4, _13, 0, "liveness: _13 = false, readonly: _13 = true, return:_13 = NEVER_RETURN" , "Cash");
 		_DEALLOC(_4);
 		void* tmp_coins;
 		_COPY_1DARRAY_PARAM(_13, tmp_coins, int64_t);

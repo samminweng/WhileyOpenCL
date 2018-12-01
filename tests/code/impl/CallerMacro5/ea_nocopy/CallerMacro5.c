@@ -119,7 +119,7 @@ int main(int argc, char** args){
 	{
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(x, tmp_x, int64_t);
-		// isCopyEliminated of '_1' = false
+		// isCopyEliminated of 'x at 0' = false
 		_6 = _func_(tmp_x, x_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 	}
 	//assign %2 = %6  : int[]
@@ -167,7 +167,7 @@ blklab3:;
 	{
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(x, tmp_x, int64_t);
-		// isCopyEliminated of '_1' = false
+		// isCopyEliminated of 'x at 0' = false
 		_18 = _func_(tmp_x, x_size, _19, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
 	}
 	//assign %2 = %18  : int[]
@@ -213,7 +213,7 @@ blklab4:;
 	_31 = 9;
 	//invoke (%30) = (%1, %31) CallerMacro5:func : function(int[],int)->(int[])
 	{
-		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of 'x at 0' = true
 		_30 = _func_(x, x_size, _31, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
 	}
 	//assign %2 = %30  : int[]

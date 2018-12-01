@@ -36,7 +36,7 @@ int64_t* _g1_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	{
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(a, tmp_x, int64_t);
-		// isCopyEliminated of '_1' = false
+		// isCopyEliminated of 'a at 0' = false
 		_6 = _func_(tmp_x, a_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 	}
 	//assign %2 = %6  : int[]

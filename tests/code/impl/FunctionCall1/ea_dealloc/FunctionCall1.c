@@ -94,7 +94,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(a, _9, int64_t);
 	//invoke (%10) = (%1) FunctionCall1:func : function(int[])->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_10, a, "false-NEVER_RETURN-false" , "func");
+		_FUNCTIONCALL_COPY_PRE(_10, a, 0, "liveness: a = false, readonly: a = true, return:a = NEVER_RETURN" , "func");
 		_DEALLOC(_10);
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(a, tmp_s, int64_t);
@@ -161,7 +161,7 @@ blklab0:;
 	_ADD_DEALLOC(b, _26, int64_t);
 	//invoke (%27) = (%2) FunctionCall1:func : function(int[])->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_27, b, "false-NEVER_RETURN-true" , "func");
+		_FUNCTIONCALL_COPY_PRE(_27, b, 0, "liveness: b = true, readonly: b = true, return:b = NEVER_RETURN" , "func");
 		_DEALLOC(_27);
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(b, tmp_s, int64_t);

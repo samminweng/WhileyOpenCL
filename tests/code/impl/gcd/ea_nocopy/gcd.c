@@ -196,7 +196,7 @@ int main(int argc, char** args){
 			if(j>=n){goto blklab15;}
 			//invoke (%16) = (%3, %4, %1, %2) gcd:gcd_cached : function(int,int,int,int[])->(int)
 			{
-				// isCopyEliminated of '_2' = true
+				// isCopyEliminated of 'gcds at 3' = true
 				_16 = _gcd_cached_(i, j, n, gcds, gcds_size);
 			}
 			//mul %17 = %3, %1 : int

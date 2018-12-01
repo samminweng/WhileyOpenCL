@@ -89,9 +89,9 @@ int main(int argc, char** args){
 	_7 = 11;
 	//invoke (%6) = (%1, %7) ResetMacro3:func : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_6, b, "true-MAYBE_RETURN-false" , "func");
+		_FUNCTIONCALL_NO_COPY_PRE(_6, b, 0, "liveness: b = false, readonly: b = false, return:b = MAYBE_RETURN" , "func");
 		_DEALLOC(_6);
-		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of 'b at 0' = true
 		_6 = _func_(b, b_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		if( _6 == b ){
 			_6_dealloc = b_dealloc;
@@ -137,9 +137,9 @@ blklab2:;
 	_16 = 65536;
 	//invoke (%15) = (%1, %16) ResetMacro3:func : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_15, b, "true-MAYBE_RETURN-false" , "func");
+		_FUNCTIONCALL_NO_COPY_PRE(_15, b, 0, "liveness: b = false, readonly: b = false, return:b = MAYBE_RETURN" , "func");
 		_DEALLOC(_15);
-		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of 'b at 0' = true
 		_15 = _func_(b, b_size, _16, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_15));
 		if( _15 == b ){
 			_15_dealloc = b_dealloc;

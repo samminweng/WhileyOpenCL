@@ -61,8 +61,8 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(a, _5, int64_t);
 	//invoke (%6) = (%1, %1) PassedParameterTwice:f : function(int[],int[])->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_6, a, "false-MAYBE_RETURN-true" , "f");
-		_FUNCTIONCALL_COPY_PRE(_6, a, "false-MAYBE_RETURN-true" , "f");
+		_FUNCTIONCALL_COPY_PRE(_6, a, 1, "liveness: a = true, readonly: a = true, return:a = MAYBE_RETURN" , "f");
+		_FUNCTIONCALL_COPY_PRE(_6, a, 0, "liveness: a = true, readonly: a = true, return:a = MAYBE_RETURN" , "f");
 		_DEALLOC(_6);
 		void* tmp_a;
 		_COPY_1DARRAY_PARAM(a, tmp_a, int64_t);

@@ -196,7 +196,7 @@ int main(int argc, char** args){
 	_UPDATE_1DARRAY(pixels, _9);
 	//invoke () = (%0, %2, %3, %4) fileread2:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
-		// isCopyEliminated of '_4' = true
+		// isCopyEliminated of 'pixels at 3' = true
 		_print_pbm_(stdout, width, height, pixels, pixels_size);
 	}
 	//return

@@ -42,9 +42,9 @@ int64_t* _g2_(_DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_7 = 11;
 	//invoke (%6) = (%1, %7) ResetMacro2:func : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_6, a, "true-ALWAYS_RETURN-false" , "func");
+		_FUNCTIONCALL_NO_COPY_PRE(_6, a, 0, "liveness: a = false, readonly: a = false, return:a = ALWAYS_RETURN" , "func");
 		_DEALLOC(_6);
-		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of 'a at 0' = true
 		_6 = _func_(a, a_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		_6_dealloc = a_dealloc;
 		a_dealloc = false;

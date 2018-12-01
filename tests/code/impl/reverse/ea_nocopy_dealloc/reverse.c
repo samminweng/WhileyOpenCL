@@ -132,9 +132,9 @@ int main(int argc, char** args){
 	_11_dealloc = true;
 	//invoke (%5) = (%11) reverse:reverse : function(int[])->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_5, _11, "false-NEVER_RETURN-false" , "reverse");
+		_FUNCTIONCALL_NO_COPY_PRE(_5, _11, 0, "liveness: _11 = false, readonly: _11 = true, return:_11 = NEVER_RETURN" , "reverse");
 		_DEALLOC(_5);
-		// isCopyEliminated of '_11' = true
+		// isCopyEliminated of '_11 at 0' = true
 		_5 = _reverse_(_11, _11_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_5));
 		_5_dealloc = true;
 	}
@@ -210,9 +210,9 @@ blklab6:;
 blklab5:;
 	//invoke (%27) = (%4) reverse:reverse : function(int[])->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_27, arr, "false-NEVER_RETURN-false" , "reverse");
+		_FUNCTIONCALL_NO_COPY_PRE(_27, arr, 0, "liveness: arr = false, readonly: arr = true, return:arr = NEVER_RETURN" , "reverse");
 		_DEALLOC(_27);
-		// isCopyEliminated of '_4' = true
+		// isCopyEliminated of 'arr at 0' = true
 		_27 = _reverse_(arr, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_27));
 		_27_dealloc = true;
 	}

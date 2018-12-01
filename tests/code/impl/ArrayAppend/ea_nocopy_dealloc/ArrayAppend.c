@@ -127,11 +127,11 @@ int main(int argc, char** args){
 	_4_dealloc = true;
 	//invoke (%3) = (%1, %4) ArrayAppend:test_append : function(int[],int[])->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_3, _4, "false-NEVER_RETURN-false" , "test_append");
-		_FUNCTIONCALL_NO_COPY_PRE(_3, r, "false-NEVER_RETURN-false" , "test_append");
+		_FUNCTIONCALL_NO_COPY_PRE(_3, _4, 1, "liveness: _4 = false, readonly: _4 = true, return:_4 = NEVER_RETURN" , "test_append");
+		_FUNCTIONCALL_NO_COPY_PRE(_3, r, 0, "liveness: r = false, readonly: r = true, return:r = NEVER_RETURN" , "test_append");
 		_DEALLOC(_3);
-		// isCopyEliminated of '_1' = true
-		// isCopyEliminated of '_4' = true
+		// isCopyEliminated of 'r at 0' = true
+		// isCopyEliminated of '_4 at 1' = true
 		_3 = _test_append_(r, r_size, _4, _4_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_3));
 		_3_dealloc = true;
 	}

@@ -143,15 +143,15 @@ blklab3:;
 blklab2:;
 	//invoke (%11) = (%1, %1) ResetMacro4:add : function(int[],int[])->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_11, a, "true-NEVER_RETURN-true" , "add");
-		_FUNCTIONCALL_COPY_PRE(_11, a, "true-ALWAYS_RETURN-true" , "add");
+		_FUNCTIONCALL_COPY_PRE(_11, a, 1, "liveness: a = true, readonly: a = false, return:a = NEVER_RETURN" , "add");
+		_FUNCTIONCALL_COPY_PRE(_11, a, 0, "liveness: a = true, readonly: a = false, return:a = ALWAYS_RETURN" , "add");
 		_DEALLOC(_11);
 		void* tmp_a;
 		_COPY_1DARRAY_PARAM(a, tmp_a, int64_t);
 		void* tmp_b;
 		_COPY_1DARRAY_PARAM(a, tmp_b, int64_t);
-		// isCopyEliminated of '_1' = false
-		// isCopyEliminated of '_1' = false
+		// isCopyEliminated of 'a at 0' = false
+		// isCopyEliminated of 'a at 1' = false
 		_11 = _add_(tmp_a, a_size, tmp_b, a_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		_11_dealloc = true;
 			free(tmp_b);

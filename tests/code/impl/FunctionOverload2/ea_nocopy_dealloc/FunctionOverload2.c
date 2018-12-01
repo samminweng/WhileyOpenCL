@@ -196,9 +196,9 @@ int main(int argc, char** args){
 	_13_dealloc = true;
 	//invoke (%4) = (%13) FunctionOverload2:Cash : function(FunctionOverload2:nat[])->(FunctionOverload2:Cash)
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_4, _13, "false-NEVER_RETURN-false" , "Cash");
+		_FUNCTIONCALL_NO_COPY_PRE(_4, _13, 0, "liveness: _13 = false, readonly: _13 = true, return:_13 = NEVER_RETURN" , "Cash");
 		_DEALLOC(_4);
-		// isCopyEliminated of '_13' = true
+		// isCopyEliminated of '_13 at 0' = true
 		_4 = _Cash_1_(_13, _13_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_4));
 		_4_dealloc = true;
 	}

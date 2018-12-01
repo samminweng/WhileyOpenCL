@@ -375,10 +375,10 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, int64_t width, int6
 			pos = _46;
 			//invoke (%47) = (%0, %1, %2, %8, %9, %6) SobelEdge:convolution : function(byte[],int,int,int,int,int[])->(int)
 			{
-				_FUNCTIONCALL_NO_COPY_PRE(_47, v_sobel, "false-NEVER_RETURN-true" , "convolution");
-				_FUNCTIONCALL_NO_COPY_PRE(_47, pixels, "false-NEVER_RETURN-true" , "convolution");
-				// isCopyEliminated of '_0' = true
-				// isCopyEliminated of '_6' = true
+				_FUNCTIONCALL_NO_COPY_PRE(_47, v_sobel, 5, "liveness: v_sobel = true, readonly: v_sobel = true, return:v_sobel = NEVER_RETURN" , "convolution");
+				_FUNCTIONCALL_NO_COPY_PRE(_47, pixels, 0, "liveness: pixels = true, readonly: pixels = true, return:pixels = NEVER_RETURN" , "convolution");
+				// isCopyEliminated of 'pixels at 0' = true
+				// isCopyEliminated of 'v_sobel at 5' = true
 				_47 = _convolution_(pixels, pixels_size, width, height, x, y, v_sobel, v_sobel_size);
 			}
 			//assign %11 = %47  : int
@@ -386,10 +386,10 @@ BYTE* _sobelEdgeDetection_(BYTE* pixels, size_t pixels_size, int64_t width, int6
 			v_g = _47;
 			//invoke (%48) = (%0, %1, %2, %8, %9, %7) SobelEdge:convolution : function(byte[],int,int,int,int,int[])->(int)
 			{
-				_FUNCTIONCALL_NO_COPY_PRE(_48, h_sobel, "false-NEVER_RETURN-true" , "convolution");
-				_FUNCTIONCALL_NO_COPY_PRE(_48, pixels, "false-NEVER_RETURN-true" , "convolution");
-				// isCopyEliminated of '_0' = true
-				// isCopyEliminated of '_7' = true
+				_FUNCTIONCALL_NO_COPY_PRE(_48, h_sobel, 5, "liveness: h_sobel = true, readonly: h_sobel = true, return:h_sobel = NEVER_RETURN" , "convolution");
+				_FUNCTIONCALL_NO_COPY_PRE(_48, pixels, 0, "liveness: pixels = true, readonly: pixels = true, return:pixels = NEVER_RETURN" , "convolution");
+				// isCopyEliminated of 'pixels at 0' = true
+				// isCopyEliminated of 'h_sobel at 5' = true
 				_48 = _convolution_(pixels, pixels_size, width, height, x, y, h_sobel, h_sobel_size);
 			}
 			//assign %12 = %48  : int
@@ -666,9 +666,9 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(pixels, _10);
 	//invoke (%12) = (%4, %2, %3) SobelEdge:sobelEdgeDetection : function(byte[],int,int)->(byte[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_12, pixels, "false-NEVER_RETURN-false" , "sobelEdgeDetection");
+		_FUNCTIONCALL_NO_COPY_PRE(_12, pixels, 0, "liveness: pixels = false, readonly: pixels = true, return:pixels = NEVER_RETURN" , "sobelEdgeDetection");
 		_DEALLOC(_12);
-		// isCopyEliminated of '_4' = true
+		// isCopyEliminated of 'pixels at 0' = true
 		_12 = _sobelEdgeDetection_(pixels, pixels_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_12));
 		_12_dealloc = true;
 	}
@@ -677,8 +677,8 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(newPixels, _12);
 	//invoke () = (%0, %2, %3, %5) SobelEdge:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(, newPixels, "false-NEVER_RETURN-false" , "print_pbm");
-		// isCopyEliminated of '_5' = true
+		_FUNCTIONCALL_NO_COPY_PRE(, newPixels, 3, "liveness: newPixels = false, readonly: newPixels = true, return:newPixels = NEVER_RETURN" , "print_pbm");
+		// isCopyEliminated of 'newPixels at 3' = true
 		_print_pbm_(stdout, width, height, newPixels, newPixels_size);
 	}
 	//return

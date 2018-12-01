@@ -212,7 +212,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(pixels, _9, BYTE);
 	//invoke () = (%0, %2, %3, %4) fileread2:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
-		_FUNCTIONCALL_COPY_PRE(, pixels, "false-NEVER_RETURN-false" , "print_pbm");
+		_FUNCTIONCALL_COPY_PRE(, pixels, 3, "liveness: pixels = false, readonly: pixels = true, return:pixels = NEVER_RETURN" , "print_pbm");
 		void* tmp_pixels;
 		_COPY_1DARRAY_PARAM(pixels, tmp_pixels, BYTE);
 		_print_pbm_(stdout, width, height, tmp_pixels, pixels_size);

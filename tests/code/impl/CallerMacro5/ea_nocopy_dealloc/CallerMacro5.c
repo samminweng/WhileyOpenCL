@@ -155,11 +155,11 @@ int main(int argc, char** args){
 	_7 = 11;
 	//invoke (%6) = (%1, %7) CallerMacro5:func : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_6, x, "false-MAYBE_RETURN-true" , "func");
+		_FUNCTIONCALL_COPY_PRE(_6, x, 0, "liveness: x = true, readonly: x = true, return:x = MAYBE_RETURN" , "func");
 		_DEALLOC(_6);
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(x, tmp_x, int64_t);
-		// isCopyEliminated of '_1' = false
+		// isCopyEliminated of 'x at 0' = false
 		_6 = _func_(tmp_x, x_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		if( _6 == tmp_x ){
 			_6_dealloc = true;
@@ -213,11 +213,11 @@ blklab3:;
 	_19 = 10;
 	//invoke (%18) = (%1, %19) CallerMacro5:func : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_18, x, "false-MAYBE_RETURN-true" , "func");
+		_FUNCTIONCALL_COPY_PRE(_18, x, 0, "liveness: x = true, readonly: x = true, return:x = MAYBE_RETURN" , "func");
 		_DEALLOC(_18);
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(x, tmp_x, int64_t);
-		// isCopyEliminated of '_1' = false
+		// isCopyEliminated of 'x at 0' = false
 		_18 = _func_(tmp_x, x_size, _19, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_18));
 		if( _18 == tmp_x ){
 			_18_dealloc = true;
@@ -271,9 +271,9 @@ blklab4:;
 	_31 = 9;
 	//invoke (%30) = (%1, %31) CallerMacro5:func : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_30, x, "false-MAYBE_RETURN-false" , "func");
+		_FUNCTIONCALL_NO_COPY_PRE(_30, x, 0, "liveness: x = false, readonly: x = true, return:x = MAYBE_RETURN" , "func");
 		_DEALLOC(_30);
-		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of 'x at 0' = true
 		_30 = _func_(x, x_size, _31, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_30));
 		if( _30 == x ){
 			_30_dealloc = x_dealloc;

@@ -221,8 +221,8 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(pixels, _9);
 	//invoke () = (%0, %2, %3, %4) fileread2:print_pbm : method(whiley/lang/System:Console,int,int,byte[])->()
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(, pixels, "false-NEVER_RETURN-false" , "print_pbm");
-		// isCopyEliminated of '_4' = true
+		_FUNCTIONCALL_NO_COPY_PRE(, pixels, 3, "liveness: pixels = false, readonly: pixels = true, return:pixels = NEVER_RETURN" , "print_pbm");
+		// isCopyEliminated of 'pixels at 3' = true
 		_print_pbm_(stdout, width, height, pixels, pixels_size);
 	}
 	//return

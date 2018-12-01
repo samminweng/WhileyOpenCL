@@ -122,8 +122,8 @@ int main(int argc, char** args){
 	_4_dealloc = true;
 	//invoke (%3) = (%1, %4) ArrayAppend:test_append : function(int[],int[])->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_3, _4, "false-NEVER_RETURN-false" , "test_append");
-		_FUNCTIONCALL_COPY_PRE(_3, r, "false-NEVER_RETURN-false" , "test_append");
+		_FUNCTIONCALL_COPY_PRE(_3, _4, 1, "liveness: _4 = false, readonly: _4 = true, return:_4 = NEVER_RETURN" , "test_append");
+		_FUNCTIONCALL_COPY_PRE(_3, r, 0, "liveness: r = false, readonly: r = true, return:r = NEVER_RETURN" , "test_append");
 		_DEALLOC(_3);
 		void* tmp_lhs;
 		_COPY_1DARRAY_PARAM(r, tmp_lhs, int64_t);

@@ -523,7 +523,7 @@ blklab16:;
 blklab17:;
 			//invoke (%41) = (%0, %5, %4, %1, %7, %6, %8) CoinGame4:pickCoin : function(int[],int,int,int,int,int,int)->(int[])
 			{
-				_FUNCTIONCALL_COPY_PRE(_41, moves, "true-ALWAYS_RETURN-false" , "pickCoin");
+				_FUNCTIONCALL_COPY_PRE(_41, moves, 0, "liveness: moves = false, readonly: moves = false, return:moves = ALWAYS_RETURN" , "pickCoin");
 				_DEALLOC(_41);
 				void* tmp_moves;
 				_COPY_1DARRAY_PARAM(moves, tmp_moves, int64_t);
@@ -602,7 +602,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(moves, _7, int64_t);
 	//invoke (%8) = (%2, %1) CoinGame4:findMoves : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_8, moves, "true-MAYBE_RETURN-false" , "findMoves");
+		_FUNCTIONCALL_COPY_PRE(_8, moves, 0, "liveness: moves = false, readonly: moves = false, return:moves = MAYBE_RETURN" , "findMoves");
 		_DEALLOC(_8);
 		void* tmp_moves;
 		_COPY_1DARRAY_PARAM(moves, tmp_moves, int64_t);
@@ -618,7 +618,7 @@ int main(int argc, char** args){
 	_ADD_DEALLOC(moves, _8, int64_t);
 	//invoke () = (%0, %2, %1) CoinGame4:play : method(whiley/lang/System:Console,int[],int)->()
 	{
-		_FUNCTIONCALL_COPY_PRE(, moves, "false-NEVER_RETURN-true" , "play");
+		_FUNCTIONCALL_COPY_PRE(, moves, 1, "liveness: moves = true, readonly: moves = true, return:moves = NEVER_RETURN" , "play");
 		void* tmp_moves;
 		_COPY_1DARRAY_PARAM(moves, tmp_moves, int64_t);
 		_play_(stdout, tmp_moves, moves_size, n);

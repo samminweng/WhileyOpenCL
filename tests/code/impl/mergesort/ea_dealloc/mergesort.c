@@ -81,7 +81,7 @@ _SLICE_ARRAY(_15, items, start, pivot);
 	_17 = 0;
 	//invoke (%16) = (%5, %17, %4) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_16, lhs, "true-ALWAYS_RETURN-false" , "sortV1");
+		_FUNCTIONCALL_COPY_PRE(_16, lhs, 0, "liveness: lhs = false, readonly: lhs = false, return:lhs = ALWAYS_RETURN" , "sortV1");
 		_DEALLOC(_16);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(lhs, tmp_items, int64_t);
@@ -104,7 +104,7 @@ _SLICE_ARRAY(_18, items, pivot, end);
 	_21=end-pivot;
 	//invoke (%19) = (%6, %20, %21) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_19, rhs, "true-ALWAYS_RETURN-false" , "sortV1");
+		_FUNCTIONCALL_COPY_PRE(_19, rhs, 0, "liveness: rhs = false, readonly: rhs = false, return:rhs = ALWAYS_RETURN" , "sortV1");
 		_DEALLOC(_19);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(rhs, tmp_items, int64_t);
@@ -380,7 +380,7 @@ int main(int argc, char** args){
 	_13 = 5;
 	//invoke (%11) = (%1, %12, %13) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_11, ys, "true-ALWAYS_RETURN-false" , "sortV1");
+		_FUNCTIONCALL_COPY_PRE(_11, ys, 0, "liveness: ys = false, readonly: ys = false, return:ys = ALWAYS_RETURN" , "sortV1");
 		_DEALLOC(_11);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
@@ -436,7 +436,7 @@ blklab9:;
 	_27 = 4;
 	//invoke (%25) = (%1, %26, %27) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_25, ys, "true-ALWAYS_RETURN-false" , "sortV1");
+		_FUNCTIONCALL_COPY_PRE(_25, ys, 0, "liveness: ys = false, readonly: ys = false, return:ys = ALWAYS_RETURN" , "sortV1");
 		_DEALLOC(_25);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
@@ -490,7 +490,7 @@ blklab10:;
 	_40 = 4;
 	//invoke (%38) = (%1, %39, %40) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_38, ys, "true-ALWAYS_RETURN-false" , "sortV1");
+		_FUNCTIONCALL_COPY_PRE(_38, ys, 0, "liveness: ys = false, readonly: ys = false, return:ys = ALWAYS_RETURN" , "sortV1");
 		_DEALLOC(_38);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
@@ -546,7 +546,7 @@ blklab11:;
 	_54 = 5;
 	//invoke (%52) = (%1, %53, %54) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_52, ys, "true-ALWAYS_RETURN-false" , "sortV1");
+		_FUNCTIONCALL_COPY_PRE(_52, ys, 0, "liveness: ys = false, readonly: ys = false, return:ys = ALWAYS_RETURN" , "sortV1");
 		_DEALLOC(_52);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(ys, tmp_items, int64_t);
@@ -626,7 +626,7 @@ blklab13:;
 	_73=max+_72;
 	//invoke (%70) = (%4, %71, %73) mergesort:sortV1 : function(int[],int,int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_70, arr, "true-ALWAYS_RETURN-false" , "sortV1");
+		_FUNCTIONCALL_COPY_PRE(_70, arr, 0, "liveness: arr = false, readonly: arr = false, return:arr = ALWAYS_RETURN" , "sortV1");
 		_DEALLOC(_70);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(arr, tmp_items, int64_t);

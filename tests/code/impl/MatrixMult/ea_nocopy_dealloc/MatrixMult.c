@@ -307,9 +307,9 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(A, _15);
 	//invoke (%16) = (%4, %2, %3) MatrixMult:init : function(int[],int,int)->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_16, A, "true-ALWAYS_RETURN-false" , "init");
+		_FUNCTIONCALL_NO_COPY_PRE(_16, A, 0, "liveness: A = false, readonly: A = false, return:A = ALWAYS_RETURN" , "init");
 		_DEALLOC(_16);
-		// isCopyEliminated of '_4' = true
+		// isCopyEliminated of 'A at 0' = true
 		_16 = _init_(A, A_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_16));
 		_16_dealloc = A_dealloc;
 		A_dealloc = false;
@@ -328,9 +328,9 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(B, _19);
 	//invoke (%20) = (%5, %2, %3) MatrixMult:init : function(int[],int,int)->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_20, B, "true-ALWAYS_RETURN-false" , "init");
+		_FUNCTIONCALL_NO_COPY_PRE(_20, B, 0, "liveness: B = false, readonly: B = false, return:B = ALWAYS_RETURN" , "init");
 		_DEALLOC(_20);
-		// isCopyEliminated of '_5' = true
+		// isCopyEliminated of 'B at 0' = true
 		_20 = _init_(B, B_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_20));
 		_20_dealloc = B_dealloc;
 		B_dealloc = false;
@@ -349,13 +349,13 @@ int main(int argc, char** args){
 	_TRANSFER_DEALLOC(C, _23);
 	//invoke (%24) = (%4, %5, %6, %2, %3) MatrixMult:mat_mult : function(int[],int[],int[],int,int)->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_24, C, "true-ALWAYS_RETURN-false" , "mat_mult");
-		_FUNCTIONCALL_NO_COPY_PRE(_24, B, "false-NEVER_RETURN-true" , "mat_mult");
-		_FUNCTIONCALL_NO_COPY_PRE(_24, A, "false-NEVER_RETURN-true" , "mat_mult");
+		_FUNCTIONCALL_NO_COPY_PRE(_24, C, 2, "liveness: C = false, readonly: C = false, return:C = ALWAYS_RETURN" , "mat_mult");
+		_FUNCTIONCALL_NO_COPY_PRE(_24, B, 1, "liveness: B = true, readonly: B = true, return:B = NEVER_RETURN" , "mat_mult");
+		_FUNCTIONCALL_NO_COPY_PRE(_24, A, 0, "liveness: A = true, readonly: A = true, return:A = NEVER_RETURN" , "mat_mult");
 		_DEALLOC(_24);
-		// isCopyEliminated of '_4' = true
-		// isCopyEliminated of '_5' = true
-		// isCopyEliminated of '_6' = true
+		// isCopyEliminated of 'A at 0' = true
+		// isCopyEliminated of 'B at 1' = true
+		// isCopyEliminated of 'C at 2' = true
 		_24 = _mat_mult_(A, A_size, B, B_size, C, C_size, width, height, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_24));
 		_24_dealloc = C_dealloc;
 		C_dealloc = false;

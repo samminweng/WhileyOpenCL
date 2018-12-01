@@ -45,9 +45,9 @@ blklab0:;
 	_10=n-_9;
 	//invoke (%8) = (%0, %10) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_8, ls, "true-MAYBE_RETURN-false" , "fibonacci");
+		_FUNCTIONCALL_NO_COPY_PRE(_8, ls, 0, "liveness: ls = false, readonly: ls = false, return:ls = MAYBE_RETURN" , "fibonacci");
 		_DEALLOC(_8);
-		// isCopyEliminated of '_0' = true
+		// isCopyEliminated of 'ls at 0' = true
 		_8 = _fibonacci_(ls, ls_size, _10, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_8));
 		if( _8 == ls ){
 			_8_dealloc = ls_dealloc;
@@ -131,9 +131,9 @@ int main(int argc, char** args){
 	_8=max-_7;
 	//invoke (%6) = (%2, %8) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_NO_COPY_PRE(_6, arr, "true-MAYBE_RETURN-false" , "fibonacci");
+		_FUNCTIONCALL_NO_COPY_PRE(_6, arr, 0, "liveness: arr = false, readonly: arr = false, return:arr = MAYBE_RETURN" , "fibonacci");
 		_DEALLOC(_6);
-		// isCopyEliminated of '_2' = true
+		// isCopyEliminated of 'arr at 0' = true
 		_6 = _fibonacci_(arr, arr_size, _8, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 		if( _6 == arr ){
 			_6_dealloc = arr_dealloc;

@@ -144,7 +144,7 @@ int main(int argc, char** args){
 	_11 = 6;
 	//invoke (%10) = (%1, %11) FunctionCall4:func : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_10, a, "false-NEVER_RETURN-false" , "func");
+		_FUNCTIONCALL_COPY_PRE(_10, a, 0, "liveness: a = false, readonly: a = true, return:a = NEVER_RETURN" , "func");
 		_DEALLOC(_10);
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(a, tmp_s, int64_t);
@@ -213,7 +213,7 @@ blklab2:;
 	_29 = 1;
 	//invoke (%28) = (%2, %29) FunctionCall4:func : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_28, b, "false-NEVER_RETURN-true" , "func");
+		_FUNCTIONCALL_COPY_PRE(_28, b, 0, "liveness: b = true, readonly: b = true, return:b = NEVER_RETURN" , "func");
 		_DEALLOC(_28);
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(b, tmp_s, int64_t);

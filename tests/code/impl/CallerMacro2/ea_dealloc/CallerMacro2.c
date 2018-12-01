@@ -42,7 +42,7 @@ int64_t* _g3_(int64_t x, _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
 	_8 = 11;
 	//invoke (%7) = (%2, %8) CallerMacro2:func : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_7, a, "true-ALWAYS_RETURN-true" , "func");
+		_FUNCTIONCALL_COPY_PRE(_7, a, 0, "liveness: a = true, readonly: a = false, return:a = ALWAYS_RETURN" , "func");
 		_DEALLOC(_7);
 		void* tmp_x;
 		_COPY_1DARRAY_PARAM(a, tmp_x, int64_t);

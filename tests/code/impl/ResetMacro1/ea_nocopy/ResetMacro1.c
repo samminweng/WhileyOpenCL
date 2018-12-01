@@ -41,7 +41,7 @@ int main(int argc, char** args){
 	_7 = 11;
 	//invoke (%6) = (%1, %7) ResetMacro1:func : function(int[],int)->(int[])
 	{
-		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of 'x at 0' = true
 		_6 = _func_(x, x_size, _7, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_6));
 	}
 	//assign %2 = %6  : int[]

@@ -45,7 +45,7 @@ blklab0:;
 	_10=n-_9;
 	//invoke (%8) = (%0, %10) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_8, ls, "true-MAYBE_RETURN-false" , "fibonacci");
+		_FUNCTIONCALL_COPY_PRE(_8, ls, 0, "liveness: ls = false, readonly: ls = false, return:ls = MAYBE_RETURN" , "fibonacci");
 		_DEALLOC(_8);
 		void* tmp_ls;
 		_COPY_1DARRAY_PARAM(ls, tmp_ls, int64_t);
@@ -129,7 +129,7 @@ int main(int argc, char** args){
 	_8=max-_7;
 	//invoke (%6) = (%2, %8) Fibonacci:fibonacci : function(int[],int)->(int[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_6, arr, "true-MAYBE_RETURN-false" , "fibonacci");
+		_FUNCTIONCALL_COPY_PRE(_6, arr, 0, "liveness: arr = false, readonly: arr = false, return:arr = MAYBE_RETURN" , "fibonacci");
 		_DEALLOC(_6);
 		void* tmp_ls;
 		_COPY_1DARRAY_PARAM(arr, tmp_ls, int64_t);

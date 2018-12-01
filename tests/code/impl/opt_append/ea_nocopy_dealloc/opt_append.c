@@ -170,11 +170,11 @@ int main(int argc, char** args){
 	item = _9;
 	//invoke (%11) = (%1, %2, %3) opt_append:opt_append : function(byte[],opt_append:nat,byte)->(byte[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_11, b, "true-MAYBE_RETURN-true" , "opt_append");
+		_FUNCTIONCALL_COPY_PRE(_11, b, 0, "liveness: b = true, readonly: b = false, return:b = MAYBE_RETURN" , "opt_append");
 		_DEALLOC(_11);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(b, tmp_items, BYTE);
-		// isCopyEliminated of '_1' = false
+		// isCopyEliminated of 'b at 0' = false
 		_11 = _opt_append_(tmp_items, b_size, inspos, item, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_11));
 		if( _11 == tmp_items ){
 			_11_dealloc = true;

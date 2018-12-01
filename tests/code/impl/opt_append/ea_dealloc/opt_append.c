@@ -164,7 +164,7 @@ int main(int argc, char** args){
 	item = _9;
 	//invoke (%11) = (%1, %2, %3) opt_append:opt_append : function(byte[],opt_append:nat,byte)->(byte[])
 	{
-		_FUNCTIONCALL_COPY_PRE(_11, b, "true-MAYBE_RETURN-true" , "opt_append");
+		_FUNCTIONCALL_COPY_PRE(_11, b, 0, "liveness: b = true, readonly: b = false, return:b = MAYBE_RETURN" , "opt_append");
 		_DEALLOC(_11);
 		void* tmp_items;
 		_COPY_1DARRAY_PARAM(b, tmp_items, BYTE);

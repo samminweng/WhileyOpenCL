@@ -97,7 +97,7 @@ int main(int argc, char** args){
 	_11 = 6;
 	//invoke (%10) = (%1, %11) FunctionCall2:func : function(int[],int)->(int[])
 	{
-		// isCopyEliminated of '_1' = true
+		// isCopyEliminated of 'a at 0' = true
 		_10 = _func_(a, a_size, _11, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_10));
 	}
 	//assign %1 = %10  : int[]
@@ -161,7 +161,7 @@ blklab2:;
 	{
 		void* tmp_s;
 		_COPY_1DARRAY_PARAM(b, tmp_s, int64_t);
-		// isCopyEliminated of '_2' = false
+		// isCopyEliminated of 'b at 0' = false
 		_28 = _func_(tmp_s, b_size, _29, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_28));
 	}
 	//assign %3 = %28  : int[]

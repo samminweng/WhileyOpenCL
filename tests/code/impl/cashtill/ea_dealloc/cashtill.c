@@ -465,7 +465,7 @@ blklab25:;
 		_20=change-_19;
 		//invoke (%17) = (%4, %20) cashtill:calculateChange : function(cashtill:Cash,cashtill:nat)->(cashtill:Cash|null)
 		{
-			_FUNCTIONCALL_COPY_PRE(_17, tmp, "false-NEVER_RETURN-false" , "calculateChange");
+			_FUNCTIONCALL_COPY_PRE(_17, tmp, 0, "liveness: tmp = false, readonly: tmp = true, return:tmp = NEVER_RETURN" , "calculateChange");
 			_DEALLOC(_17);
 			void* tmp_till;
 			_COPY_1DARRAY_PARAM(tmp, tmp_till, int64_t);
@@ -872,7 +872,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_1DARRAY_PARAM(giv
 	//fieldload %22 = %21 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%23) = (%2) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
-		_FUNCTIONCALL_COPY_PRE(_23, given, "false-NEVER_RETURN-true" , "toString");
+		_FUNCTIONCALL_COPY_PRE(_23, given, 0, "liveness: given = true, readonly: given = true, return:given = NEVER_RETURN" , "toString");
 		_DEALLOC(_23);
 		void* tmp_c;
 		_COPY_1DARRAY_PARAM(given, tmp_c, int64_t);
@@ -886,7 +886,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_1DARRAY_PARAM(giv
 	}
 	//invoke (%24) = (%2) cashtill:total : function(cashtill:Cash)->(int)
 	{
-		_FUNCTIONCALL_COPY_PRE(_24, given, "false-NEVER_RETURN-true" , "total");
+		_FUNCTIONCALL_COPY_PRE(_24, given, 0, "liveness: given = true, readonly: given = true, return:given = NEVER_RETURN" , "total");
 		void* tmp_c;
 		_COPY_1DARRAY_PARAM(given, tmp_c, int64_t);
 		_24 = _total_(tmp_c, given_size);
@@ -911,7 +911,7 @@ int64_t* _buy_(FILE* console, _DECL_1DARRAY_PARAM(till), _DECL_1DARRAY_PARAM(giv
 blklab36:;
 	//invoke (%29) = (%2) cashtill:total : function(cashtill:Cash)->(int)
 	{
-		_FUNCTIONCALL_COPY_PRE(_29, given, "false-NEVER_RETURN-true" , "total");
+		_FUNCTIONCALL_COPY_PRE(_29, given, 0, "liveness: given = true, readonly: given = true, return:given = NEVER_RETURN" , "total");
 		void* tmp_c;
 		_COPY_1DARRAY_PARAM(given, tmp_c, int64_t);
 		_29 = _total_(tmp_c, given_size);
@@ -921,7 +921,7 @@ blklab36:;
 	_30=_29-cost;
 	//invoke (%28) = (%1, %30) cashtill:calculateChange : function(cashtill:Cash,cashtill:nat)->(cashtill:Cash|null)
 	{
-		_FUNCTIONCALL_COPY_PRE(_28, till, "false-NEVER_RETURN-true" , "calculateChange");
+		_FUNCTIONCALL_COPY_PRE(_28, till, 0, "liveness: till = true, readonly: till = true, return:till = NEVER_RETURN" , "calculateChange");
 		_DEALLOC(_28);
 		void* tmp_till;
 		_COPY_1DARRAY_PARAM(till, tmp_till, int64_t);
@@ -969,7 +969,7 @@ blklab38:;
 	//fieldload %38 = %37 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%39) = (%5) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
-		_FUNCTIONCALL_COPY_PRE(_39, change, "false-NEVER_RETURN-true" , "toString");
+		_FUNCTIONCALL_COPY_PRE(_39, change, 0, "liveness: change = true, readonly: change = true, return:change = NEVER_RETURN" , "toString");
 		_DEALLOC(_39);
 		void* tmp_c;
 		_COPY_1DARRAY_PARAM(change, tmp_c, int64_t);
@@ -983,8 +983,8 @@ blklab38:;
 	}
 	//invoke (%40) = (%1, %2) cashtill:add : function(cashtill:Cash,cashtill:Cash)->(cashtill:Cash)
 	{
-		_FUNCTIONCALL_COPY_PRE(_40, given, "false-NEVER_RETURN-false" , "add");
-		_FUNCTIONCALL_COPY_PRE(_40, till, "true-ALWAYS_RETURN-false" , "add");
+		_FUNCTIONCALL_COPY_PRE(_40, given, 1, "liveness: given = false, readonly: given = true, return:given = NEVER_RETURN" , "add");
+		_FUNCTIONCALL_COPY_PRE(_40, till, 0, "liveness: till = false, readonly: till = false, return:till = ALWAYS_RETURN" , "add");
 		_DEALLOC(_40);
 		void* tmp_first;
 		_COPY_1DARRAY_PARAM(till, tmp_first, int64_t);
@@ -998,8 +998,8 @@ blklab38:;
 	_ADD_DEALLOC(till, _40, int64_t);
 	//invoke (%41) = (%1, %5) cashtill:subtract : function(cashtill:Cash,cashtill:Cash)->(cashtill:Cash)
 	{
-		_FUNCTIONCALL_COPY_PRE(_41, change, "false-NEVER_RETURN-false" , "subtract");
-		_FUNCTIONCALL_COPY_PRE(_41, till, "true-ALWAYS_RETURN-false" , "subtract");
+		_FUNCTIONCALL_COPY_PRE(_41, change, 1, "liveness: change = false, readonly: change = true, return:change = NEVER_RETURN" , "subtract");
+		_FUNCTIONCALL_COPY_PRE(_41, till, 0, "liveness: till = false, readonly: till = false, return:till = ALWAYS_RETURN" , "subtract");
 		_DEALLOC(_41);
 		void* tmp_first;
 		_COPY_1DARRAY_PARAM(till, tmp_first, int64_t);
@@ -1026,7 +1026,7 @@ blklab38:;
 	//fieldload %46 = %45 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%47) = (%1) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
-		_FUNCTIONCALL_COPY_PRE(_47, till, "false-NEVER_RETURN-true" , "toString");
+		_FUNCTIONCALL_COPY_PRE(_47, till, 0, "liveness: till = true, readonly: till = true, return:till = NEVER_RETURN" , "toString");
 		_DEALLOC(_47);
 		void* tmp_c;
 		_COPY_1DARRAY_PARAM(till, tmp_c, int64_t);
@@ -1155,7 +1155,7 @@ int main(int argc, char** args){
 	//fieldload %15 = %14 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//invoke (%16) = (%1) cashtill:toString : function(cashtill:Cash)->(whiley/lang/ASCII:string)
 	{
-		_FUNCTIONCALL_COPY_PRE(_16, till, "false-NEVER_RETURN-true" , "toString");
+		_FUNCTIONCALL_COPY_PRE(_16, till, 0, "liveness: till = true, readonly: till = true, return:till = NEVER_RETURN" , "toString");
 		_DEALLOC(_16);
 		void* tmp_c;
 		_COPY_1DARRAY_PARAM(till, tmp_c, int64_t);
@@ -1176,7 +1176,7 @@ int main(int argc, char** args){
 	_20_dealloc = true;
 	//invoke (%18) = (%20) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
-		_FUNCTIONCALL_COPY_PRE(_18, _20, "false-NEVER_RETURN-false" , "Cash");
+		_FUNCTIONCALL_COPY_PRE(_18, _20, 0, "liveness: _20 = false, readonly: _20 = true, return:_20 = NEVER_RETURN" , "Cash");
 		_DEALLOC(_18);
 		void* tmp_coins;
 		_COPY_1DARRAY_PARAM(_20, tmp_coins, int64_t);
@@ -1188,8 +1188,8 @@ int main(int argc, char** args){
 	_21 = 85;
 	//invoke (%17) = (%0, %1, %18, %21) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
-		_FUNCTIONCALL_COPY_PRE(_17, _18, "false-NEVER_RETURN-false" , "buy");
-		_FUNCTIONCALL_COPY_PRE(_17, till, "true-MAYBE_RETURN-false" , "buy");
+		_FUNCTIONCALL_COPY_PRE(_17, _18, 2, "liveness: _18 = false, readonly: _18 = true, return:_18 = NEVER_RETURN" , "buy");
+		_FUNCTIONCALL_COPY_PRE(_17, till, 1, "liveness: till = false, readonly: till = false, return:till = MAYBE_RETURN" , "buy");
 		_DEALLOC(_17);
 		void* tmp_till;
 		_COPY_1DARRAY_PARAM(till, tmp_till, int64_t);
@@ -1216,7 +1216,7 @@ int main(int argc, char** args){
 	_25_dealloc = true;
 	//invoke (%23) = (%25) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
-		_FUNCTIONCALL_COPY_PRE(_23, _25, "false-NEVER_RETURN-false" , "Cash");
+		_FUNCTIONCALL_COPY_PRE(_23, _25, 0, "liveness: _25 = false, readonly: _25 = true, return:_25 = NEVER_RETURN" , "Cash");
 		_DEALLOC(_23);
 		void* tmp_coins;
 		_COPY_1DARRAY_PARAM(_25, tmp_coins, int64_t);
@@ -1228,8 +1228,8 @@ int main(int argc, char** args){
 	_26 = 105;
 	//invoke (%22) = (%0, %1, %23, %26) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
-		_FUNCTIONCALL_COPY_PRE(_22, _23, "false-NEVER_RETURN-false" , "buy");
-		_FUNCTIONCALL_COPY_PRE(_22, till, "true-MAYBE_RETURN-false" , "buy");
+		_FUNCTIONCALL_COPY_PRE(_22, _23, 2, "liveness: _23 = false, readonly: _23 = true, return:_23 = NEVER_RETURN" , "buy");
+		_FUNCTIONCALL_COPY_PRE(_22, till, 1, "liveness: till = false, readonly: till = false, return:till = MAYBE_RETURN" , "buy");
 		_DEALLOC(_22);
 		void* tmp_till;
 		_COPY_1DARRAY_PARAM(till, tmp_till, int64_t);
@@ -1256,7 +1256,7 @@ int main(int argc, char** args){
 	_30_dealloc = true;
 	//invoke (%28) = (%30) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
-		_FUNCTIONCALL_COPY_PRE(_28, _30, "false-NEVER_RETURN-false" , "Cash");
+		_FUNCTIONCALL_COPY_PRE(_28, _30, 0, "liveness: _30 = false, readonly: _30 = true, return:_30 = NEVER_RETURN" , "Cash");
 		_DEALLOC(_28);
 		void* tmp_coins;
 		_COPY_1DARRAY_PARAM(_30, tmp_coins, int64_t);
@@ -1268,8 +1268,8 @@ int main(int argc, char** args){
 	_31 = 5;
 	//invoke (%27) = (%0, %1, %28, %31) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
-		_FUNCTIONCALL_COPY_PRE(_27, _28, "false-NEVER_RETURN-false" , "buy");
-		_FUNCTIONCALL_COPY_PRE(_27, till, "true-MAYBE_RETURN-false" , "buy");
+		_FUNCTIONCALL_COPY_PRE(_27, _28, 2, "liveness: _28 = false, readonly: _28 = true, return:_28 = NEVER_RETURN" , "buy");
+		_FUNCTIONCALL_COPY_PRE(_27, till, 1, "liveness: till = false, readonly: till = false, return:till = MAYBE_RETURN" , "buy");
 		_DEALLOC(_27);
 		void* tmp_till;
 		_COPY_1DARRAY_PARAM(till, tmp_till, int64_t);
@@ -1296,7 +1296,7 @@ int main(int argc, char** args){
 	_35_dealloc = true;
 	//invoke (%33) = (%35) cashtill:Cash : function(cashtill:nat[])->(cashtill:Cash)
 	{
-		_FUNCTIONCALL_COPY_PRE(_33, _35, "false-NEVER_RETURN-false" , "Cash");
+		_FUNCTIONCALL_COPY_PRE(_33, _35, 0, "liveness: _35 = false, readonly: _35 = true, return:_35 = NEVER_RETURN" , "Cash");
 		_DEALLOC(_33);
 		void* tmp_coins;
 		_COPY_1DARRAY_PARAM(_35, tmp_coins, int64_t);
@@ -1308,8 +1308,8 @@ int main(int argc, char** args){
 	_36 = 305;
 	//invoke (%32) = (%0, %1, %33, %36) cashtill:buy : method(whiley/lang/System:Console,cashtill:Cash,cashtill:Cash,int)->(cashtill:Cash)
 	{
-		_FUNCTIONCALL_COPY_PRE(_32, _33, "false-NEVER_RETURN-false" , "buy");
-		_FUNCTIONCALL_COPY_PRE(_32, till, "true-MAYBE_RETURN-false" , "buy");
+		_FUNCTIONCALL_COPY_PRE(_32, _33, 2, "liveness: _33 = false, readonly: _33 = true, return:_33 = NEVER_RETURN" , "buy");
+		_FUNCTIONCALL_COPY_PRE(_32, till, 1, "liveness: till = false, readonly: till = false, return:till = MAYBE_RETURN" , "buy");
 		_DEALLOC(_32);
 		void* tmp_till;
 		_COPY_1DARRAY_PARAM(till, tmp_till, int64_t);

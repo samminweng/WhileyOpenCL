@@ -171,7 +171,7 @@ int main(int argc, char** args){
 	_13[0] = _5; _13[1] = _6; _13[2] = _7; _13[3] = _8; _13[4] = _9; _13[5] = _10; _13[6] = _11; _13[7] = _12; 
 	//invoke (%4) = (%13) FunctionOverload2:Cash : function(FunctionOverload2:nat[])->(FunctionOverload2:Cash)
 	{
-		// isCopyEliminated of '_13' = true
+		// isCopyEliminated of '_13 at 0' = true
 		_4 = _Cash_1_(_13, _13_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_4));
 	}
 	//assign %2 = %4  : int[]
