@@ -63,7 +63,7 @@ public class CopyAnalysisTestCase {
 		// Add a list of test cases
 		return Arrays.asList(new String[]{"testcase1", "testcase2", "testcase3", "testcase4", "testcase5", "testcase6",
 				"testcase7", "testcase8", "testcase9", "testcase10", "specialcase1", "specialcase2", "specialcase3",
-				"specialcase4", "specialcase5",});
+				"specialcase4", "specialcase5","specialcase6"});
 	}
 
 	/***

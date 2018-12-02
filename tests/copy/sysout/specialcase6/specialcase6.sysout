@@ -1,0 +1,58 @@
+fill.0 [lengthof %4 = %0 : int[]]
+fill.1 [ifge %2, %4 goto blklab0 : int]
+fill.2 [update %0[%2] = %1 : int[] -> int[]]
+fill.3 [const %6 = 1 : int]
+fill.4 [add %7 = %2, %6 : int]
+fill.5 [invoke (%5) = (%0, %1, %7) specialcase6:fill : function(int[],int,int)->(int[])]
+fill.6 [return %5]
+fill.7 [goto blklab1]
+fill.8 [.blklab0]
+fill.9 [return %0]
+fill.10 [.blklab1]
+fill.11 [return]
+//End of fill function
+[fill.5 _5 = fill(a, v, _7)] //invoke (%5) = (%0, %1, %7) specialcase6:fill : function(int[],int,int)->(int[])
+	 liveness: a = false	 readonly: a = false	 return: a = MAYBE_RETURN
+	 liveness: v = false	 readonly: v = true	 return: v = NEVER_RETURN
+	 liveness: _7 = false	 readonly: _7 = true	 return: _7 = NEVER_RETURN
+// Read-write variables in fill: [_4, a, _6, _7, _5]
+// Return variables in fill: [_5,a]
+// Live variables for fill function
+// In Set:[[v, i, a], [v, i, a], [v, i, a, _4], [v, i, a, _4], [a, i, _4], [v, i, a], [a, v, i], [a, v, _7], [_5], [_5], [], [a], []]
+// Out Set:[[v, i, a], [v, i, a, _4], [v, i, a, _4], [v, i, a], [a], [a, v, i], [a, v, _7], [_5], [_5], [_5], [], [a], []]
+	 liveness: i = true
+	 liveness: a = false	 readonly: a = false	 return: a = MAYBE_RETURN
+main.0 [const %3 = 0 : int]
+main.1 [const %4 = 7 : int]
+main.2 [arraygen %5 = [3; 4] : int[]]
+main.3 [assign %1 = %5  : int[]]
+main.4 [const %7 = 8 : int]
+main.5 [const %8 = 0 : int]
+main.6 [invoke (%6) = (%1, %7, %8) specialcase6:fill : function(int[],int,int)->(int[])]
+main.7 [assign %2 = %6  : int[]]
+main.8 [assert]
+main.9 [assert]
+main.10 [assert]
+main.11 [return]
+//End of main function
+[main.3 a = _5] //assign %1 = %5  : int[]
+	 liveness: _5 = false
+[main.6 _6 = fill(a, _7, _8)] //invoke (%6) = (%1, %7, %8) specialcase6:fill : function(int[],int,int)->(int[])
+	 liveness: a = false	 readonly: a = false	 return: a = MAYBE_RETURN
+	 liveness: _7 = false	 readonly: _7 = true	 return: _7 = NEVER_RETURN
+	 liveness: _8 = false	 readonly: _8 = true	 return: _8 = NEVER_RETURN
+[main.7 b = _6] //assign %2 = %6  : int[]
+	 liveness: _6 = false
+// Read-write variables in main: [_3, _4, _5, a, _7, _8, _6, b, _9, _10, _11, _12, _13, _14, _15, _16]
+// Return variables in main: []
+// Live variables for main function
+// In Set:[[], [], [a], [a, _7, _8], [_6], [b], []]
+// Out Set:[[], [a], [a, _7, _8], [_6], [b], [], []]
+	 liveness: _5 = false
+	 liveness: a = false	 readonly: a = false	 return: a = MAYBE_RETURN
+	 liveness: _6 = false
+
+Copy elimination analysis completed. File: specialcase6.wyil
+Deallocation analysis completed.
+File: specialcase6.wyil
+Code Generation completed. File: specialcase6.c, specialcase6.h
