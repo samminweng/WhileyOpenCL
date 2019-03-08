@@ -53,58 +53,59 @@ public class CodeGenerationTestCase {
 	@Parameterized.Parameters(name = "{index}:{0}")
 	public static Collection<String> testCases() {
 		return Arrays.asList(new String[] {
-				"opt_append", // Test case for arraylist-like append
-				"CallerMacro1", // Test case for 'CALLER' macro
-				"CallerMacro2", // Test case for 'Caller' macro
-				"CallerMacro3", // Test case for 'Caller' macro
-				"CallerMacro4", // Test case for 'Caller' macro
-				"CallerMacro5", // Test case for 'Caller' macro
-				"ResetMacro1", // Test case for 'RESET' macro
-				"ResetMacro2", // Test case for 'RESET' macro
-				"ResetMacro3", // Test case for 'RESET' macro
-				"ResetMacro4", // Test case for 'RESET' macro
-				"FunctionCall1",
-				"FunctionCall2",
-				"FunctionCall3",
-				"FunctionCall4",
-				"ArrayAppend", // Test 'append' function
-				"ArrayAppend2", // Test 'append' function at WyRT runtime library
-				"ArrayAppend3", // Test 'toString' function in cashtill test case
-				// Not used in benchmarks
-				// "rectangle", // Use 'rectangle' structure
-				"swap",				
-				"factorial",
-				"Fibonacci",
-				"gcd",
-				"FunctionOverload", // Define types and functions with the same name 
-				"FunctionOverload2", // Define two functions with the same name	
-				"fileread", //Read 'feep.pbm' as a byte array
-				"fileread2",// Read 'feep.pbm' and output the array to console
-				//"nqueens", 
-				// This case uses an array of structures and recursive function call, so we disable this case.
-				"livecheck",
-				// Micro-benchmarks
-				"reverse",
-				"mergesort",
-				"bubblesort",
-				"newTicTacToe",
-				// This case uses an array of structures, which is not suitable for our deallocation macro
-				// So we disable it.
-				"MatrixMult",
-				// Benchmarks
-				"CoinGame",
-				"CoinGame1",
-				"CoinGame2",
-				"CoinGame3",
-				"CoinGame4",
-				"cashtill",
-				"lz77_compress", // Compress a file by appending one item to array 
-				"lz77_opt_compress", // Compress a file by pre-allocating the array
-				"lz77_decompress", // Uncompress the lz77 file and append to the output array
-				"lz77_opt_decompress", // Optimized lz77 decompression by using ArrayList appending
-				"SobelEdge", // Read 'feep.pbm', detect the edges and output the resulting array
-				"IntToByte", // Generate a byte array 
-				"PassedParameterTwice", // The same parameter is passed twice 
+//				"opt_append", // Test case for arraylist-like append
+//				"CallerMacro1", // Test case for 'CALLER' macro
+//				"CallerMacro2", // Test case for 'Caller' macro
+//				"CallerMacro3", // Test case for 'Caller' macro
+//				"CallerMacro4", // Test case for 'Caller' macro
+//				"CallerMacro5", // Test case for 'Caller' macro
+//				"ResetMacro1", // Test case for 'RESET' macro
+//				"ResetMacro2", // Test case for 'RESET' macro
+//				"ResetMacro3", // Test case for 'RESET' macro
+//				"ResetMacro4", // Test case for 'RESET' macro
+//				"FunctionCall1",
+//				"FunctionCall2",
+//				"FunctionCall3",
+//				"FunctionCall4",
+//				"ArrayAppend", // Test 'append' function
+//				"ArrayAppend2", // Test 'append' function at WyRT runtime library
+//				"ArrayAppend3", // Test 'toString' function in cashtill test case
+//				// Not used in benchmarks
+//				// "rectangle", // Use 'rectangle' structure
+//				"swap",				
+//				"factorial",
+//				"Fibonacci",
+//				"gcd",
+//				"FunctionOverload", // Define types and functions with the same name 
+//				"FunctionOverload2", // Define two functions with the same name	
+//				"fileread", //Read 'feep.pbm' as a byte array
+//				"fileread2",// Read 'feep.pbm' and output the array to console
+//				//"nqueens", 
+//				// This case uses an array of structures and recursive function call, so we disable this case.
+//				"livecheck",
+//				// Micro-benchmarks
+//				"reverse",
+//				"mergesort",
+//				"bubblesort",
+//				"newTicTacToe",
+//				// This case uses an array of structures, which is not suitable for our deallocation macro
+//				// So we disable it.
+//				"MatrixMult",
+//				// Benchmarks
+//				"CoinGame",
+//				"CoinGame1",
+//				"CoinGame2",
+//				"CoinGame3",
+//				"CoinGame4",
+//				"cashtill",
+//				"lz77_compress", // Compress a file by appending one item to array 
+//				"lz77_opt_compress", // Compress a file by pre-allocating the array
+//				"lz77_decompress", // Uncompress the lz77 file and append to the output array
+//				"lz77_opt_decompress", // Optimized lz77 decompression by using ArrayList appending
+//				"SobelEdge", // Read 'feep.pbm', detect the edges and output the resulting array
+//				"IntToByte", // Generate a byte array 
+//				"PassedParameterTwice", // The same parameter is passed twice 
+				"Recursion"
 		});
 	}
 	
