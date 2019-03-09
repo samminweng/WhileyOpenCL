@@ -1,5 +1,6 @@
 #include "Reverse_original.h"
-int64_t* _reverse_(_DECL_1DARRAY_PARAM(arr), _DECL_DEALLOC_PARAM(arr), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+int64_t* _reverse_(_DECL_1DARRAY_PARAM(arr), _DECL_1DARRAYSIZE_PARAM_CALLBYREFERENCE){
+	_DECL_DEALLOC(arr);
 	_DECL_1DARRAY(_1);
 	_DECL_DEALLOC(_1);
 	int64_t i;
@@ -30,13 +31,9 @@ int64_t* _reverse_(_DECL_1DARRAY_PARAM(arr), _DECL_DEALLOC_PARAM(arr), _DECL_1DA
 	//lengthof %7 = %0 : int[]
 	_7 = arr_size;
 	//arraygen %8 = [6; 7] : int[]
-	_DEALLOC(_8);
-	_NEW_1DARRAY_int64_t(_8, _7, _6);
-	_ADD_DEALLOC(_8);
+	_NEW1DARRAY_DEALLOC(_8, _6, _7, int64_t);
 	//assign %3 = %8  : int[]
-	_DEALLOC(r);
 	// isCopyEliminated = true
-	_UPDATE_1DARRAY(r, _8);
 	_TRANSFER_DEALLOC(r, _8);
 	//loop (%2, %3, %4, %9, %10, %11, %12, %13, %14, %15, %16, %17)
 	while(true){
@@ -118,26 +115,25 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(_36);
 	_DECL_DEALLOC(_36);
 	//fieldload %8 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	_DEALLOC_2DARRAY_int64_t(_8);
+	_DEALLOC_2DARRAY(_8);
 	_CONV_ARGS(_8);
-	_ADD_DEALLOC(_8);
+	_8_dealloc = true;
 	//const %9 = 0 : int
 	_9 = 0;
 	//indexof %10 = %8, %9 : int[][]
 	_10=_8[_9];
 	_10_size = _8_size_size;
-	_REMOVE_DEALLOC(_10);
+	_10_dealloc = false;
 	//invoke (%7) = (%10) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
 	{
 		_STR_TO_INT(_7, _10);
-		_ADD_DEALLOC(_7);
-		_REMOVE_DEALLOC(_10);
+		_10_dealloc = false;
 	}
 	//assign %1 = %7  : null|int
-	_DEALLOC(n);
 	// isCopyEliminated = true
+	_DEALLOC(n);
 	n = _7;
-	_TRANSFER_DEALLOC(n, _7);
+	_TRANSFER_DEALLOC_POST(n, _7);
 	//ifis %1, null goto blklab4 : null|int
 	if(n == NULL) { goto blklab4;}
 	//const %11 = 1 : int
@@ -165,13 +161,9 @@ int main(int argc, char** args){
 		//const %14 = 0 : int
 		_14 = 0;
 		//arraygen %15 = [14; 3] : int[]
-		_DEALLOC(_15);
-		_NEW_1DARRAY_int64_t(_15, size, _14);
-		_ADD_DEALLOC(_15);
+		_NEW1DARRAY_DEALLOC(_15, _14, size, int64_t);
 		//assign %6 = %15  : int[]
-		_DEALLOC(arr);
 		// isCopyEliminated = true
-		_UPDATE_1DARRAY(arr, _15);
 		_TRANSFER_DEALLOC(arr, _15);
 		//loop (%5, %6, %16, %17, %18)
 		while(true){
@@ -195,16 +187,14 @@ blklab8:;
 blklab7:;
 		//invoke (%19) = (%6) Reverse_original:reverse : function(int[])->(int[])
 		{
+			_FUNCTIONCALL_NO_COPY_PRE(_19, arr, 0, "liveness: arr = false, readonly: arr = true, return:arr = NEVER_RETURN" , "reverse");
 			_DEALLOC(_19);
-			// isCopyEliminated of '_6' = true
-			_19 = _reverse_(arr, arr_size, false, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
-			_RETAIN_DEALLOC(arr, "false-false-false" , "reverse");
-			_RETAIN_DEALLOC_POST(_19, arr);
+			// isCopyEliminated of 'arr at 0' = true
+			_19 = _reverse_(arr, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
+			_19_dealloc = true;
 		}
 		//assign %6 = %19  : int[]
-		_DEALLOC(arr);
 		// isCopyEliminated = true
-		_UPDATE_1DARRAY(arr, _19);
 		_TRANSFER_DEALLOC(arr, _19);
 		//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %21 = %20 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
@@ -242,7 +232,7 @@ blklab5:;
 	_DEALLOC(_31);
 	_NEW_1DARRAY_int64_t(_31, 19, 0);
 	_31[0] = 78; _31[1] = 117; _31[2] = 109; _31[3] = 98; _31[4] = 101; _31[5] = 114; _31[6] = 32; _31[7] = 111; _31[8] = 102; _31[9] = 32; _31[10] = 114; _31[11] = 101; _31[12] = 112; _31[13] = 101; _31[14] = 97; _31[15] = 116; _31[16] = 115; _31[17] = 58; _31[18] = 32; 
-	_ADD_DEALLOC(_31);
+	_31_dealloc = true;
 	//indirectinvoke () = %30 (%31) : method(int[])->()
 	{
 		printf_s(_31, _31_size);
@@ -259,7 +249,7 @@ blklab5:;
 	_DEALLOC(_36);
 	_NEW_1DARRAY_int64_t(_36, 23, 0);
 	_36[0] = 80; _36[1] = 97; _36[2] = 115; _36[3] = 115; _36[4] = 32; _36[5] = 82; _36[6] = 101; _36[7] = 118; _36[8] = 101; _36[9] = 114; _36[10] = 115; _36[11] = 101; _36[12] = 32; _36[13] = 116; _36[14] = 101; _36[15] = 115; _36[16] = 116; _36[17] = 32; _36[18] = 99; _36[19] = 97; _36[20] = 115; _36[21] = 101; _36[22] = 32; 
-	_ADD_DEALLOC(_36);
+	_36_dealloc = true;
 	//indirectinvoke () = %35 (%36) : method(int[])->()
 	{
 		println_s(_36, _36_size);

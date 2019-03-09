@@ -81,12 +81,12 @@ BEGIN {
 	filename = "";
 	FS = "\n";
 	## Test case name
-	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
-	testcases="LZ77";
+	testcases="Reverse newTicTacToe BubbleSort MatrixMult";
+	#testcases="LZ77";
 
 	## Program Type
 	programs["Reverse"]="original";
-	programs["newTicTacToe"]="original";
+	programs["newTicTacToe"]="intarray";
 	programs["BubbleSort"]="original";
 	programs["MergeSort"]="original";
 	programs["MatrixMult"]="original";
@@ -131,11 +131,11 @@ BEGIN {
 	exectypes["CoinGame"] = "seq";
 	exectypes["SobelEdge"] = "seq";
 	### Parameter
-	parameters["Reverse"]="100000000 200000000 300000000";
-	parameters["newTicTacToe"]="100000 200000 300000";
-	parameters["BubbleSort"]="100000 200000 300000";
+	parameters["Reverse"]="500000 1000000 1500000";
+	parameters["newTicTacToe"]="500000 1000000 1500000";
+	parameters["BubbleSort"]="10000 20000 30000";
 	parameters["MergeSort"]="10000000 20000000 30000000";
-	parameters["MatrixMult"]="1000 2000 3000";
+	parameters["MatrixMult"]="500 1000 1500";
 	parameters["CoinGame"]="10000 20000 25000 30000 40000";
 	#parameters["SobelEdge"]="image64x64 image64x128 image64x192 image64x256 image64x320 image64x384 image64x448 image64x512 image64x576 image64x640";
 	parameters["SobelEdge"]="image2000x2000 image2000x4000 image2000x6000 image2000x8000 image2000x10000 "\

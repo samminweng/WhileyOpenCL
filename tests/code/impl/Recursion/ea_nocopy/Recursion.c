@@ -107,3 +107,80 @@ blklab1:;
 	//return
 }
 
+int main(int argc, char** args){
+	_DECL_1DARRAY(b);
+	_DECL_1DARRAY(c);
+	int64_t _3;
+	int64_t _4;
+	int64_t _5;
+	_DECL_1DARRAY(_6);
+	int64_t _7;
+	int64_t _8;
+	int64_t _9;
+	_DECL_1DARRAY(_10);
+	void* _11;
+	_DECL_1DARRAY(_13);
+	int64_t _14;
+	void* _15;
+	_DECL_1DARRAY(_17);
+	int64_t _18;
+	//const %3 = 0 : int
+	_3 = 0;
+	//const %4 = 1 : int
+	_4 = 1;
+	//const %5 = 2 : int
+	_5 = 2;
+	//newlist %6 = (%3, %4, %5) : int[]
+	_NEW_1DARRAY_int64_t(_6, 3, 0);
+	_6[0] = _3; _6[1] = _4; _6[2] = _5; 
+	//assign %1 = %6  : int[]
+	// isCopyEliminated = true
+	_UPDATE_1DARRAY(b, _6);
+	//const %7 = 3 : int
+	_7 = 3;
+	//const %8 = 4 : int
+	_8 = 4;
+	//const %9 = 5 : int
+	_9 = 5;
+	//newlist %10 = (%7, %8, %9) : int[]
+	_NEW_1DARRAY_int64_t(_10, 3, 0);
+	_10[0] = _7; _10[1] = _8; _10[2] = _9; 
+	//assign %2 = %10  : int[]
+	// isCopyEliminated = true
+	_UPDATE_1DARRAY(c, _10);
+	//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %12 = %11 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %14 = 1 : int
+	_14 = 1;
+	//invoke (%13) = (%1, %2, %14) Recursion:func : function(int[],int[],int)->(int[])
+	{
+		void* tmp_b;
+		_COPY_1DARRAY_PARAM(b, tmp_b, int64_t);
+		void* tmp_c;
+		_COPY_1DARRAY_PARAM(c, tmp_c, int64_t);
+		// isCopyEliminated of 'b at 0' = false
+		// isCopyEliminated of 'c at 1' = false
+		_13 = _func_(tmp_b, b_size, tmp_c, c_size, _14, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_13));
+	}
+	//indirectinvoke () = %12 (%13) : method(any)->()
+	{
+		_PRINT_1DARRAY_int64_t(_13);
+	}
+	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %16 = %15 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %18 = 2 : int
+	_18 = 2;
+	//invoke (%17) = (%1, %2, %18) Recursion:func : function(int[],int[],int)->(int[])
+	{
+		// isCopyEliminated of 'b at 0' = true
+		// isCopyEliminated of 'c at 1' = true
+		_17 = _func_(b, b_size, c, c_size, _18, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_17));
+	}
+	//indirectinvoke () = %16 (%17) : method(any)->()
+	{
+		_PRINT_1DARRAY_int64_t(_17);
+	}
+	//return
+	exit(0);
+}
+

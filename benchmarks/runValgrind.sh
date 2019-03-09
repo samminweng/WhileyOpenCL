@@ -24,9 +24,12 @@ declare -a codegens=("naive" "naivedealloc" "nocopy" "nocopydealloc")
 declare -a threads=( 1 )
 
 ### declare parameters
-declare -A parameters=( [Reverse]="100000 1000000 10000000" [newTicTacToe]="100000 200000 300000" \
-			[BubbleSort]="1000 10000 100000" [MergeSort]="1000 10000 100000" \
-			[MatrixMult]="1000 2000 3000" \
+declare -A parameters=(
+			[Reverse]="500000 1000000 1500000" \
+			[newTicTacToe]="500000 1000000 1500000" \
+			[BubbleSort]="10000 20000 30000" \
+			[MergeSort]="1000 10000 100000" \
+			[MatrixMult]="500 1000 1500" \
 			[LZ77]="medium1x medium2x medium4x" \
 			[SobelEdge]="image64x64.pbm image64x128.pbm image64x256.pbm" \
 			[Cashtill]="100 200 300" \
@@ -278,8 +281,8 @@ exec(){
 #exec Reverse original
 # # #
 # # # # # # ### newTicTacToe test case ###
-# init newTicTacToe
-# exec newTicTacToe original
+init newTicTacToe
+exec newTicTacToe intarray
 # # #
 # # # # # # ## # BubbleSort test case##
 #init BubbleSort
@@ -306,13 +309,13 @@ exec(){
 #exec SobelEdge small
 
 # # # ####LZ77 test case
-init LZ77
+#init LZ77
 #exec LZ77 original
 #exec LZ77 original_opt
-exec LZ77 compress
-exec LZ77 opt_compress
-exec LZ77 decompress
-exec LZ77 opt_decompress
+#exec LZ77 compress
+#exec LZ77 opt_compress
+#exec LZ77 decompress
+#exec LZ77 opt_decompress
 # ### Fibonacci test case###
 # init Fibonacci
 # exec Fibonacci original 10

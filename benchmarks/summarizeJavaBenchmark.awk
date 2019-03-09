@@ -16,11 +16,11 @@ function generateReport(results){
 		for(pa=1;pa<=program_total;pa++){
 			program = program_array[pa];
 			## Compiler
-			compilers_total=split(compilers[testcase], compiler_array, " ");
+			compilers_total=split(compilers, compiler_array, " ");
 			for(cr=1;cr<=compilers_total;cr++){
 				compiler=compiler_array[cr];
 				## Get pattern
-				patterns_total=split(patterns[testcase], pattern_array, " ");
+				patterns_total=split(patterns, pattern_array, " ");
 				for(pt=1; pt<=patterns_total;pt++){
 					pattern=pattern_array[pt];
 					# Get the parameter
@@ -32,11 +32,11 @@ function generateReport(results){
 						for(c=1;c<=codegen_total;c++){
 							codegen=codegen_array[c];
 							## Get executable type
-							exectype_total=split(exectypes[testcase], exectype_array, " ");
+							exectype_total=split(exectypes, exectype_array, " ");
 							#print "exectype_total="exectype_total;
 							for(ec=1;ec<=exectype_total;ec++){
 								exectype=exectype_array[ec];
-								th_total=split(threads[exectype], th_array, " ");
+								th_total=split(threads, th_array, " ");
 								for(th=1;th<=th_total;th++){
 									thread=th_array[th];
 									key=testcase","program","codegen","pattern","compiler","exectype","parameter","thread;
@@ -81,27 +81,33 @@ BEGIN {
 	filename = "";
 	FS = "\n";
 	## Test case name
-	testcases="LZ77";
-
+	testcases="Reverse newTicTacToe BubbleSort MatrixMult";
 	## Program Type
 	programs["LZ77"]="opt_decompress";
-
+	programs["Reverse"]="original";
+	programs["newTicTacToe"]="intarray";
+	programs["BubbleSort"]="original";
+	programs["MergeSort"]="original";
+	programs["MatrixMult"]="original";
 	# Code Generation
-	codegens = "naive";
+	codegens="naive";
 	# Pattern matching
-	patterns["LZ77"] = "disabled";
-
+	patterns="disabled";
 	# Compiler
-	compilers["LZ77"] = "java";
+	compilers="java";
 	### Executive type
-	exectypes["LZ77"] = "seq";
+	exectypes="seq";
 	### Parameter
 	parameters["LZ77"]="medium1x medium5x medium10x medium25x medium50x medium60x medium65x medium68x medium69x "\
 					   "medium70x medium71x medium75x medium100x medium125x medium150x medium175x medium200x";
+	parameters["Reverse"]="500000 1000000 1500000";
+	parameters["newTicTacToe"]="500000 1000000 1500000";
+	parameters["BubbleSort"]="10000 20000 30000";
+	parameters["MergeSort"]="100000 200000 300000";
+	parameters["MatrixMult"]="500 600 700";
 	#parameters["LZ77"]="medium10000x medium20000x medium30000x medium40000x medium50000x medium60000x medium70000x medium80000x medium90000x medium100000x";
 	# The number of threads
-	threads["seq"]="1";
-
+	threads="1";
 	# Results
 	cpu_utils[""] = "";
 	exec_times[""] = "";
@@ -111,7 +117,8 @@ BEGIN {
 {
 	filename=FILENAME;
 	split(filename, arr, "/");
-	split(arr[5], t_array, ".");
+	#print "arr[4]="arr[4];
+	split(arr[4], t_array, ".");
 	# Test case
 	testcase=t_array[1];
 	# Program type

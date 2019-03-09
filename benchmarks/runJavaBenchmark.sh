@@ -1,9 +1,14 @@
 #!/bin/bash
-TIMEOUT="3600s"
+TIMEOUT="900s"
 BENCHMARKDIR="$(pwd)"
 ### declare parameters
 declare -A parameters=( 
-			[LZ77]="medium1x medium5x medium10x medium25x medium50x medium60x medium65x medium68x medium69x medium70x medium71x medium75x medium100x medium125x medium150x medium175x medium200x" 
+			[LZ77]="medium1x medium5x medium10x medium25x medium50x medium60x medium65x medium68x medium69x medium70x medium71x medium75x medium100x medium125x medium150x medium175x medium200x" \
+			[Reverse]="500000 1000000 1500000" \
+			[newTicTacToe]="500000 1000000 1500000" \
+			[BubbleSort]="10000 20000 30000" \
+			[MergeSort]="500000 600000 700000" \
+			[MatrixMult]="500 1000 1500"
 			#[LZ77]="medium10000x medium20000x medium30000x medium40000x medium50000x medium60000x medium70000x medium80000x medium90000x medium100000x"
 		)
 
@@ -59,11 +64,46 @@ runCode(){
 		echo "Run the $program $testcase on $parameter using $compiler" >> $result
 		echo "Begin $i iteration" >> $result
 		start=`date +%s%N`
-		timeout $TIMEOUT $wyj $testcase"_"$program "$BENCHMARKDIR/$testcase/files/compressedfiles/$parameter.dat" >> $result
-		end=`date +%s%N`
-		exectime=$((end-start))
-		printf '\nParameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter $exectime >> $result
+		case "$testcase" in
+			"LZ77")
+				timeout $TIMEOUT $wyj $testcase"_"$program "$BENCHMARKDIR/$testcase/files/compressedfiles/$parameter.dat" >> $result
+				;;
+			"Reverse")
+				timeout $TIMEOUT $wyj $testcase"_"$program $parameter >> $result
+				;;
+			"newTicTacToe")
+				timeout $TIMEOUT $wyj $testcase"_"$program $parameter >> $result
+				;;	
+			"BubbleSort")
+				timeout $TIMEOUT $wyj $testcase"_"$program $parameter >> $result
+				;;	
+			"MergeSort")
+				timeout $TIMEOUT $wyj $testcase"_"$program $parameter >> $result
+				;;	
+			"MatrixMult")
+				timeout $TIMEOUT $wyj $testcase"_"$program $parameter >> $result
+				;;	
+		esac		
+		## Get exit code
+		exitcode="$?"
+		## Exit code of time out
+		if [ "$exitcode" == "124" ]
+		then
+			printf "\nOOT: Run out of time $TIMEOUT\n" >> $result
+			break 1 ## Break the for loop
+		fi
+		## Check exit status
+		if [ "$exitcode" = "0" ]
+		then
+			end=`date +%s%N`
+			exectime=$((end-start))
+			printf '\nParameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter $exectime >> $result
+		else
+			printf "\nOOM:Run out of memory\n" >> $result
+			break 1 ## Break the for loop
+		fi
 		echo "Finish $i iteration" >> $result
+		sleep 10s
 	done
 	### Output the hardware info.
 	cat /proc/cpuinfo >> $result
@@ -90,36 +130,29 @@ exec(){
 	cd $BENCHMARKDIR
 }
 
-
 # LZ77 decompression
-init LZ77
-exec LZ77 opt_decompress
-
-
+#init LZ77
+#exec LZ77 opt_decompress
 
 ## Reverse test case
 #init Reverse
-#exec Reverse original 100000
-#exec Reverse original 1000000 ### Too long running time
-# exec Reverse original 10000000
+#exec Reverse original
+
 # ## TicTacToe test case
-# init newTicTacToe
-# exec newTicTacToe original 1000
-# exec newTicTacToe original 10000
-# exec newTicTacToe original 100000
+#init newTicTacToe
+#exec newTicTacToe intarray
 
 # ### MergeSort test case
-# init MergeSort
-# exec MergeSort original 1000
-# exec MergeSort original 10000
-# exec MergeSort original 100000
+#init MergeSort
+#exec MergeSort original
+
+##BubbleSort test case
+#init BubbleSort
+#exec BubbleSort original
 
 # ## # MatrixMult test case
-# init MatrixMult
-# exec MatrixMult original 1000 ## Too long running time
-#exec MatrixMult original 2000
-#exec MatrixMult original 3000
-
+init MatrixMult
+exec MatrixMult original
 # # # ###Sobel Edge test
 # init SobelEdge
 # exec SobelEdge original 8

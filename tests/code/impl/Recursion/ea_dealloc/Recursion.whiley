@@ -16,8 +16,10 @@ function func(int[] b, int[] c, int i) -> (int[] a) :
 		return c
 
 method main(System.Console sys):
-	int[] b = [0;3] // [0,0,0]
-	int[] c = [1;3] // [1,1,1]
-	assert func(b, c, 0) == [1,1,1]
+	int[] b = [0,1,2] // [0,0,0]
+	int[] c = [3,4,5] // [1,1,1]
+	//assert func(b, c, 0) == [3,4,5]
+	//assert func(b, c, 1) == [0,1,2]
+	//assert func(b, c, 2) == [0,0,2]
 	sys.out.println(func(b, c, 1))
 	sys.out.println(func(b, c, 2))

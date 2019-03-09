@@ -4,11 +4,11 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	#testcases="Reverse newTicTacToe BubbleSort MergeSort MatrixMult";
-	testcases="LZ77";
+	testcases="Reverse newTicTacToe BubbleSort MatrixMult";
+	#testcases="LZ77";
 	## Program Type
 	programs["Reverse"]="original";
-	programs["newTicTacToe"]="original";
+	programs["newTicTacToe"]="intarray";
 	programs["BubbleSort"]="original";
 	programs["MergeSort"]="original";
 	programs["MatrixMult"]="original";
@@ -33,11 +33,11 @@ BEGIN {
 	## Code type
 	codes="seq";
 	# Parameter
-	parameters["Reverse"]="100000 1000000 10000000";
-	parameters["newTicTacToe"]="100000 200000 300000";
-	parameters["BubbleSort"]="1000 10000 100000";
+	parameters["Reverse"]="500000 1000000 1500000";
+	parameters["newTicTacToe"]="500000 1000000 1500000";
+	parameters["BubbleSort"]="10000 20000 30000";
 	parameters["MergeSort"]="1000 10000 100000";
-	parameters["MatrixMult"]="1000 2000 3000";
+	parameters["MatrixMult"]="500 1000 1500";
 	parameters["CoinGame"]="100 1000 10000";
 	parameters["SobelEdge"]="image64x64 image64x128 image64x256";
 	parameters["Cashtill"]="100 200 300";

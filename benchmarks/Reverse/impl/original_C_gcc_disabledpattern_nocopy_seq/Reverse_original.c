@@ -165,7 +165,7 @@ blklab8:;
 blklab7:;
 		//invoke (%19) = (%6) Reverse_original:reverse : function(int[])->(int[])
 		{
-			// isCopyEliminated of '_6' = true
+			// isCopyEliminated of 'arr at 0' = true
 			_19 = _reverse_(arr, arr_size, _1DARRAYSIZE_PARAM_CALLBYREFERENCE(_19));
 		}
 		//assign %6 = %19  : int[]

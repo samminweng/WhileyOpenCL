@@ -60,10 +60,8 @@ int64_t* Array_Append(_DECL_1DARRAY_PARAM(lhs), _DECL_1DARRAY_PARAM(rhs), _DECL_
 	//arraygen %9 = [5; 8] : int[]
 	_DEALLOC(_9);
 	_NEW_1DARRAY_int64_t(_9, _8, _5);
-	_ADD_DEALLOC(_9);
+	_9_dealloc=true;
 	//assign %3 = %9  : int[]
-	_DEALLOC(rs);
-	_UPDATE_1DARRAY(rs, _9);
 	_TRANSFER_DEALLOC(rs, _9);
 	//lengthof %10 = %0 : int[]
 	_10 = lhs_size;
@@ -241,7 +239,7 @@ BYTE* readPBM(FILE *file, size_t* _size){
 	//while(getline(&line, &length, file) != -1){
 	while(fgets(line, length, file) != NULL){
 		// Check if the line is a comment
-		if(line[0]!='#'){
+		if(line[0]!='#' && line[0]!='P'){
 			// Read the height and width
 			sscanf(line, "%d %d\n", &width, &height);
 			break;
@@ -269,11 +267,11 @@ BYTE* readPBM(FILE *file, size_t* _size){
 		if(c != ' ' && c != '\n'){
 			b = (BYTE)c;
 			if(b == '1'){
-				// b is an edge, represent by 'b'
-				arr[arr_ind] = (BYTE)98;
+				// b is an edge, represent by black color
+				arr[arr_ind] = (BYTE)0;
 			}else if(b == '0'){
-				// b is an space
-				arr[arr_ind] = (BYTE)32;
+				// b is an space, (by white color)
+				arr[arr_ind] = (BYTE)255;
 			}else{
 				arr[arr_ind] = (BYTE)b;
 			}
