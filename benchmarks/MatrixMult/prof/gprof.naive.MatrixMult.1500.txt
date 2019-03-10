@@ -3,14 +3,14 @@ Flat profile:
 Each sample counts as 0.01 seconds.
   %   cumulative   self              self     total           
  time   seconds   seconds    calls   s/call   s/call  name    
- 99.84    149.48   149.48       20     7.47     7.47  _mat_mult_
-  0.15    149.70     0.22       40     0.01     0.01  _init_
-  0.08    149.82     0.12       82     0.00     0.00  create1DArray_int64_t
-  0.00    149.82     0.00      120     0.00     0.00  copy1DArray_int64_t
-  0.00    149.82     0.00       22     0.00     0.00  printf_s
-  0.00    149.82     0.00        1     0.00     0.00  convertArgsToIntArray
-  0.00    149.82     0.00        1     0.00     0.00  parseStringToInt
-  0.00    149.82     0.00        1     0.00     0.00  println_s
+ 99.97     37.83    37.83        1    37.83    37.83  _mat_mult_
+  0.05     37.85     0.02        5     0.00     0.00  create1DArray_int64_t
+  0.05     37.87     0.02        2     0.01     0.01  _init_
+  0.00     37.87     0.00        6     0.00     0.00  copy1DArray_int64_t
+  0.00     37.87     0.00        2     0.00     0.00  printf_s
+  0.00     37.87     0.00        1     0.00     0.00  convertArgsToIntArray
+  0.00     37.87     0.00        1     0.00     0.00  parseStringToInt
+  0.00     37.87     0.00        1     0.00     0.00  println_s
 
  %         the percentage of the total running time of the
 time       program used by this function.
@@ -48,35 +48,35 @@ notice and this notice are preserved.
 		     Call graph (explanation follows)
 
 
-granularity: each sample hit covers 2 byte(s) for 0.01% of 149.82 seconds
+granularity: each sample hit covers 2 byte(s) for 0.03% of 37.87 seconds
 
 index % time    self  children    called     name
                                                  <spontaneous>
-[1]    100.0    0.00  149.82                 main [1]
-              149.48    0.00      20/20          _mat_mult_ [2]
-                0.22    0.00      40/40          _init_ [3]
-                0.12    0.00      82/82          create1DArray_int64_t [4]
-                0.00    0.00     120/120         copy1DArray_int64_t [5]
-                0.00    0.00      21/22          printf_s [6]
+[1]    100.0    0.00   37.87                 main [1]
+               37.83    0.00       1/1           _mat_mult_ [2]
+                0.02    0.00       5/5           create1DArray_int64_t [3]
+                0.02    0.00       2/2           _init_ [4]
+                0.00    0.00       6/6           copy1DArray_int64_t [5]
                 0.00    0.00       1/1           convertArgsToIntArray [7]
                 0.00    0.00       1/1           parseStringToInt [8]
+                0.00    0.00       1/2           printf_s [6]
                 0.00    0.00       1/1           println_s [9]
 -----------------------------------------------
-              149.48    0.00      20/20          main [1]
-[2]     99.8  149.48    0.00      20         _mat_mult_ [2]
+               37.83    0.00       1/1           main [1]
+[2]     99.9   37.83    0.00       1         _mat_mult_ [2]
 -----------------------------------------------
-                0.22    0.00      40/40          main [1]
-[3]      0.1    0.22    0.00      40         _init_ [3]
+                0.02    0.00       5/5           main [1]
+[3]      0.1    0.02    0.00       5         create1DArray_int64_t [3]
 -----------------------------------------------
-                0.12    0.00      82/82          main [1]
-[4]      0.1    0.12    0.00      82         create1DArray_int64_t [4]
+                0.02    0.00       2/2           main [1]
+[4]      0.1    0.02    0.00       2         _init_ [4]
 -----------------------------------------------
-                0.00    0.00     120/120         main [1]
-[5]      0.0    0.00    0.00     120         copy1DArray_int64_t [5]
+                0.00    0.00       6/6           main [1]
+[5]      0.0    0.00    0.00       6         copy1DArray_int64_t [5]
 -----------------------------------------------
-                0.00    0.00       1/22          println_s [9]
-                0.00    0.00      21/22          main [1]
-[6]      0.0    0.00    0.00      22         printf_s [6]
+                0.00    0.00       1/2           main [1]
+                0.00    0.00       1/2           println_s [9]
+[6]      0.0    0.00    0.00       2         printf_s [6]
 -----------------------------------------------
                 0.00    0.00       1/1           main [1]
 [7]      0.0    0.00    0.00       1         convertArgsToIntArray [7]
@@ -86,7 +86,7 @@ index % time    self  children    called     name
 -----------------------------------------------
                 0.00    0.00       1/1           main [1]
 [9]      0.0    0.00    0.00       1         println_s [9]
-                0.00    0.00       1/22          printf_s [6]
+                0.00    0.00       1/2           printf_s [6]
 -----------------------------------------------
 
  This table describes the call tree of the program, and was sorted by
@@ -179,6 +179,6 @@ notice and this notice are preserved.
 
 Index by function name
 
-   [3] _init_                  [5] copy1DArray_int64_t     [6] printf_s
-   [2] _mat_mult_              [4] create1DArray_int64_t   [9] println_s
+   [4] _init_                  [5] copy1DArray_int64_t     [6] printf_s
+   [2] _mat_mult_              [3] create1DArray_int64_t   [9] println_s
    [7] convertArgsToIntArray   [8] parseStringToInt

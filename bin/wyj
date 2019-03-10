@@ -64,3 +64,6 @@ done
 . $DIR/bin/wy_common.bash
 
 java -cp "$WHILEY_CLASSPATH" "$@"
+
+### Disable JIT compiler to find the source of performance optimisation
+#java -Djava.compiler=NONE -cp "$WHILEY_CLASSPATH" "$@"

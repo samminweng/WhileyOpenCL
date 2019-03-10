@@ -104,7 +104,7 @@ BEGIN {
 	parameters["newTicTacToe"]="500000 1000000 1500000";
 	parameters["BubbleSort"]="10000 20000 30000";
 	parameters["MergeSort"]="100000 200000 300000";
-	parameters["MatrixMult"]="500 600 700";
+	parameters["MatrixMult"]="500 1000 1500";
 	#parameters["LZ77"]="medium10000x medium20000x medium30000x medium40000x medium50000x medium60000x medium70000x medium80000x medium90000x medium100000x";
 	# The number of threads
 	threads="1";
