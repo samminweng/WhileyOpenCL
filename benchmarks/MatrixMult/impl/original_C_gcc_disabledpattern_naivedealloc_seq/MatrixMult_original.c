@@ -253,6 +253,7 @@ int main(int argc, char** args){
 	//invoke (%8) = (%11) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
 	{
 		_STR_TO_INT(_8, _11);
+		_8_dealloc = true;
 		_11_dealloc = false;
 	}
 	//assign %1 = %8  : null|int

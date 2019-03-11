@@ -1331,6 +1331,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					// Parse a string into an integer.
 					statements.add(indent + "_STR_TO_INT(" + lhs + ", " + rhs + ");");
 					if (this.deallocatedAnalyzer.isPresent()) {
+						// Add the flag to lhs variable
+						statements.add(indent + lhs + "_dealloc = true;");
 						// remove the flag from rhs variable
 						statements.add(indent + rhs + "_dealloc = false;");
 					}

@@ -1,24 +1,24 @@
-==10351== Memcheck, a memory error detector
-==10351== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==10351== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==10351== Command: ./out/newTicTacToe.intarray.gcc.disabledpattern.nocopy.seq.out 500000
-==10351== Parent PID: 8786
-==10351== 
-==10351== 
-==10351== HEAP SUMMARY:
-==10351==     in use at exit: 756,000,288 bytes in 15,000,004 blocks
-==10351==   total heap usage: 15,000,005 allocs, 1 frees, 756,001,312 bytes allocated
-==10351== 
-==10351== LEAK SUMMARY:
-==10351==    definitely lost: 755,998,776 bytes in 14,999,981 blocks
-==10351==    indirectly lost: 0 bytes in 0 blocks
-==10351==      possibly lost: 792 bytes in 11 blocks
-==10351==    still reachable: 720 bytes in 12 blocks
-==10351==         suppressed: 0 bytes in 0 blocks
-==10351== Rerun with --leak-check=full to see details of leaked memory
-==10351== 
-==10351== For counts of detected and suppressed errors, rerun with: -v
-==10351== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==3804== Memcheck, a memory error detector
+==3804== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==3804== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==3804== Command: ./out/newTicTacToe.intarray.gcc.disabledpattern.nocopy.seq.out 500000
+==3804== Parent PID: 3020
+==3804== 
+==3804== 
+==3804== HEAP SUMMARY:
+==3804==     in use at exit: 756,000,288 bytes in 15,000,004 blocks
+==3804==   total heap usage: 15,000,005 allocs, 1 frees, 756,001,312 bytes allocated
+==3804== 
+==3804== LEAK SUMMARY:
+==3804==    definitely lost: 755,998,776 bytes in 14,999,981 blocks
+==3804==    indirectly lost: 0 bytes in 0 blocks
+==3804==      possibly lost: 792 bytes in 11 blocks
+==3804==    still reachable: 720 bytes in 12 blocks
+==3804==         suppressed: 0 bytes in 0 blocks
+==3804== Rerun with --leak-check=full to see details of leaked memory
+==3804== 
+==3804== For counts of detected and suppressed errors, rerun with: -v
+==3804== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -26,7 +26,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3781.039
+cpu MHz		: 3699.890
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -53,7 +53,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3853.953
+cpu MHz		: 3761.250
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -80,7 +80,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3894.992
+cpu MHz		: 3795.781
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -107,7 +107,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3521.921
+cpu MHz		: 3830.710
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -134,7 +134,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3900.703
+cpu MHz		: 3736.679
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -161,7 +161,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3485.796
+cpu MHz		: 3797.375
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -188,7 +188,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3746.640
+cpu MHz		: 3754.609
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -215,7 +215,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x1c
-cpu MHz		: 3861.656
+cpu MHz		: 3785.289
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

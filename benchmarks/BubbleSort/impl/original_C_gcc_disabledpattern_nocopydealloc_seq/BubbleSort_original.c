@@ -169,6 +169,7 @@ int main(int argc, char** args){
 	//invoke (%7) = (%10) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
 	{
 		_STR_TO_INT(_7, _10);
+		_7_dealloc = true;
 		_10_dealloc = false;
 	}
 	//assign %1 = %7  : null|int

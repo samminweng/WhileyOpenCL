@@ -281,7 +281,7 @@ exec(){
 #exec Reverse original
 # # #
 # # # # # # ### newTicTacToe test case ###
-init newTicTacToe
+#init newTicTacToe
 exec newTicTacToe intarray
 # # #
 # # # # # # ## # BubbleSort test case##
@@ -289,8 +289,8 @@ exec newTicTacToe intarray
 #exec BubbleSort original
 # # #
 # # # # # # ## # MergeSort test case##
-#init MergeSort
-#exec MergeSort original
+##init MergeSort
+##exec MergeSort original
 # # #
 # # # # # # # MatrixMult test case##
 #init MatrixMult
