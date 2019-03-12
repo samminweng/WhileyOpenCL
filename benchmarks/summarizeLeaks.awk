@@ -4,7 +4,7 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcases="Reverse newTicTacToe BubbleSort MatrixMult";
+	testcases="Reverse newTicTacToe BubbleSort MatrixMult LZ77";
 	#testcases="LZ77";
 	## Program Type
 	programs["Reverse"]="original";
@@ -12,7 +12,8 @@ BEGIN {
 	programs["BubbleSort"]="original";
 	programs["MergeSort"]="original";
 	programs["MatrixMult"]="original";
-	programs["LZ77"]="compress opt_compress decompress opt_decompress";
+	#programs["LZ77"]="compress opt_compress decompress opt_decompress";
+	programs["LZ77"]="opt_decompress";
 	programs["Cashtill"]="original";
 	programs["CoinGame"]="original";
 	programs["SobelEdge"]="small";
