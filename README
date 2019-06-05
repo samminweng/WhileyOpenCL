@@ -1,5 +1,5 @@
 ============================================================================================
-Introduction
+# Introduction
 ============================================================================================
 
 The Whiley programming language employs the extended static checking to eliminate the errors at the compile time, and compiles the high-level Whiley program into different kinds of implementations. However, the C implementations that the Whiley compiler generates are currently quite inefficient, due to always using unbounded integers, unbounded data structures with frequent copying, etc. This project aims to use the program analysis techniques to generate efficient parallel implementations in C and OpenCL and to gain the speed-up across heterogeneous platforms.
