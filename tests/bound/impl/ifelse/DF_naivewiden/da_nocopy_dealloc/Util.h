@@ -93,9 +93,20 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 #define str(x) #x
 #ifdef DEBUG
 // Print out the message
-#define DEBUG_PRINT(msg) if(DEBUG){fputs("DEBUG: " msg " (LINE:" num2str(__LINE__) " FILE: " __FILE__ ")\n", stdout);}
+#define DEBUG_PRINT(msg) if(DEBUG){fputs("\tDEBUG: " msg " (LINE:" num2str(__LINE__) " FILE: " __FILE__ ")\n", stdout);}
+// CHeck if e(a) != e(b) and not e(a_dealloc)
+#define DEBUG_CHECK_ASSUMPTION(a, b) \
+({\
+	if(a != b || a##_dealloc == false){\
+		fputs("\tDEBUG: The assumption holds", stdout);\
+	}else{\
+		fputs("\tDEBUG: Runtime check error! The assumption fails. ", stdout);\
+		exit(-2);\
+	}\
+})
 #else
 #define DEBUG_PRINT(msg) // Do nothing
+#define DEBUG_CHECK_ASSUMPTION(a, b) // Do nothing
 #endif
 /***
  *
@@ -273,6 +284,15 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 *
 */
 // Release the structure pointers without checking de-allocated flag.
+// Deallocate any previously allocated heap array variable
+#define _DEALLOC(a) \
+		({\
+			if(a##_dealloc){\
+				free(a);\
+				a = NULL;\
+				a##_dealloc=false;\
+			}\
+		})
 // The standard structure member function code to free an array of structure pointers
 #define _FREE_1DARRAY_STRUCT(a, name) \
 		({\
@@ -283,18 +303,8 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 			free(a);\
 			a = NULL;\
 		})
-
-// Deallocate any previously allocated heap variable
-#define _DEALLOC(a) \
-		({\
-			if(a##_dealloc){\
-				free(a);\
-				a = NULL;\
-				a##_dealloc=false;\
-			}\
-		})
 // Deallocate an array of an array of integers
-#define _DEALLOC_2DARRAY_int64_t(a) \
+#define _DEALLOC_2DARRAY(a) \
 		({\
 			if(a##_dealloc){\
 				free2DArray_int64_t(a, a##_size);\
@@ -343,80 +353,135 @@ int64_t* slice(int64_t* arr, size_t arr_size, int start, int end);
 * Deallocation Macros for assignment
 *
 */
-// Add deallocation flag for a given variable
-#define _ADD_DEALLOC(a) if(a != NULL) {a##_dealloc = true;}else{a##_dealloc = false;}
-// Take out a variable's deallocation flag
-#define _REMOVE_DEALLOC(a) a##_dealloc = false;
-// Transfer one variable's deallocation flag to another
-#define _TRANSFER_DEALLOC(a, b) a##_dealloc = b##_dealloc; b##_dealloc = false;
-
+// New Array generator
+// For one dimensional array of integer or Byte type, new1Darray_dealloc macro includes PRE_DEALLOC macro and new an array with given value and size, and lastly sets the variable's flag.
+#define _NEW1DARRAY_DEALLOC(a, value, size, type) \
+		({\
+			DEBUG_PRINT("_NEW1DARRAY_DEALLOC macro on  ( "str(a)" )");\
+			_DEALLOC(a);\
+			_NEW_1DARRAY_##type(a, size, value);\
+			a##_dealloc = true;\
+		})
+// This post macro is used for 1 dimensional array of user-defined type.
+#define _NEW1DARRAY_DEALLOC_POST(a, value, size) \
+		({\
+			DEBUG_PRINT("_NEW1DARRAY_DEALLOC_POST macro on  ( "str(a)" )");\
+			a##_dealloc = true;\
+		})
+// For one dimensional array variable, add deallocation macro includes runtime assumption check, PRE_DEALLOC macro and assignment with copying, and lastly sets deallocation flag to 'a'
+#define _ADD_DEALLOC(a, b, type) \
+        ({\
+		    DEBUG_PRINT("_ADD_DEALLOC macro on  ( "str(a)" = "str(b)" )");\
+			_DEALLOC(a);\
+			_COPY_1DARRAY_##type(a, b);\
+			a##_dealloc = true;\
+		})
+// This post macro is used for two dimensional array variable or user-defined structure typed variable 
+#define _ADD_DEALLOC_POST(a, b) \
+        ({\
+		    DEBUG_PRINT("_ADD_DEALLOC_POST macro on  ( "str(a)" = "str(b)" )");\
+			a##_dealloc = true;\
+		})
+// For one dimensional array variable, transfer macro includes runtime assumption check, PRE_DEALLOC macro and assignment without copying, and lastly transfers deallocation flag value from 'b' to 'a' 
+#define _TRANSFER_DEALLOC(a, b)  \
+        ({\
+			DEBUG_PRINT("_TRANSFER_DEALLOC macro on  ( "str(a)" = "str(b)" )");\
+			_DEALLOC(a);\
+			_UPDATE_1DARRAY(a, b);\
+			a##_dealloc = b##_dealloc;\
+			b##_dealloc = false;\
+		})
+// This post macro is used for two dimensional array variable or user-defined structure typed variable. 
+#define _TRANSFER_DEALLOC_POST(a, b) \
+        ({\
+			DEBUG_PRINT("_TRANSFER_DEALLOC_POST macro on  ( "str(a)" = "str(b)" )");\
+			a##_dealloc = b##_dealloc;\
+			b##_dealloc = false;\
+		})
 /***
 *
-* Deallocation Macros for function call 'ret = func(param)'
+* Deallocation Macros for function call 'a = func(b)'
 *
 */
-// '_RETAIN_DEALLOC' macro does NOT make the copy of argument and delegates caller
-// to free the passing parameter 'ret = func(param, false)'
-#define _RETAIN_DEALLOC(param, checks, func_name)  \
+// _FUNCTIONCALL_NO_COPY macro does not copy the array parameter
+#define _FUNCTIONCALL_NO_COPY_PRE(a, b, pos, checks, func_name)  \
 		({\
-            DEBUG_PRINT("_RETAIN_DEALLOC macro on  ( "str(checks)" "str(#param) " "str(func_name)" )");\
+            DEBUG_PRINT("_FUNCTIONCALL_NO_COPY macro on ( "str(a)" = "str(func_name)" "str(b)" at pos "str(pos)" "str(checks)" )");\
         })
-#define _RETAIN_DEALLOC_POST(ret, param)  \
+// _FUNCTIONCALL_COPY macro copies the array parameter
+#define _FUNCTIONCALL_COPY_PRE(a, b, pos, checks, func_name)  \
 		({\
-            ret##_dealloc = true; \
+            DEBUG_PRINT("_FUNCTIONCALL_COPY macro on ( "str(a)" = "str(func_name)" "str(b)" at pos "str(pos)" "str(checks)" )");\
         })
-// 'RESET_DEALLOC' macro does not copy 'param' and delegate calle to free 'param', e.g. 'ret = func(param, false)'
-#define _RESET_DEALLOC(param, checks, func_name) \
+// _SUBSTRUCTURE_DEALLOC macro deals with user-defined type parameter
+#define _SUBSTRUCTURE_DEALLOC_PRE(a, b, pos, checks, func_name)  \
 		({\
-		    DEBUG_PRINT("_RESET_DEALLOC macro on  ( "str(checks)" "str(#param)" "str(func_name)" )");\
+            DEBUG_PRINT("_SUBSTRUCTURE_DEALLOC macro on ( "str(a)" = "str(func_name)" "str(b)" at pos "str(pos)" "str(checks)" )");\
         })
-#define _RESET_DEALLOC_POST(ret, param) \
+// '_RETAIN_DEALLOC' macro does NOT make the copy of argument 
+// and free the passing parameter at caller site 'a = func(b, false)'
+#define _RETAIN_DEALLOC(a, b, checks, func_name)  \
 		({\
-            if (ret != param) {\
-                ret##_dealloc = true;\
+            DEBUG_PRINT("_RETAIN_DEALLOC macro on ( "str(a)" = "str(func_name)" "str(b)" "str(checks)" )");\
+        })
+#define _RETAIN_DEALLOC_POST(a, b)  \
+		({\
+            a##_dealloc = true; \
+        })
+// 'RESET_DEALLOC' macro does not copy 'b' 
+// and free 'b' at caller site. 'a = func(b, false)'
+#define _RESET_DEALLOC(a, b, checks, func_name) \
+		({\
+		    DEBUG_PRINT("_RESET_DEALLOC macro on ( "str(a)" = "str(func_name)" "str(b)" "str(checks)" )");\
+        })
+#define _RESET_DEALLOC_POST(a, b) \
+		({\
+            if (a != b) {\
+                a##_dealloc = true;\
             }else{\
-                ret##_dealloc = param##_dealloc;\
-                param##_dealloc = false;\
+                a##_dealloc = b##_dealloc;\
+                b##_dealloc = false;\
             }\
         })
-// '_CALLER_DEALLOC' macro makes a copy of actual argument and delegates caller
-//  to free passing parameter 'ret = func(tmp=copy(param), false)'
+// '_CALLER_DEALLOC' macro makes a copy of actual argument 
+//and free passing parameter at caller site 'a = func(b)' 
 // This macro also print out debugging message on memory leaks, due to
-// the fact a and tmp (extra copy) are not aliased and the copy is not freed
-// either at caller nor callee.
-// 'checks' contains the analysis results of parameter 'param', e.g. 'true-true-false'
+// the fact a and b (extra copy) are not aliased and the copy is not freed either at caller nor callee.
+// 'checks' contains the analysis results of parameter 'b', e.g. 'true-true-false'
 // Mutable check = true, return check = true, live variable check = false
-#define _CALLER_DEALLOC(tmp, checks, func_name) \
+#define _CALLER_DEALLOC(a, b, checks, func_name) \
 		({\
-			DEBUG_PRINT("_CALLER_DEALLOC macro on ( "str(checks)" "str(#tmp)" "str(func_name)" )");\
-            DEBUG_PRINT("Potential memory leaks at ( "str(checks)" "str(#tmp)" "str(func_name)" )");\
+			DEBUG_PRINT("_CALLER_DEALLOC macro on ( "str(a)" = "str(func_name)" "str(b)" "str(checks)" )");\
         })
-#define _CALLER_DEALLOC_POST(ret, tmp) \
+#define _CALLER_DEALLOC_POST(a, b) \
 		({\
-			if(ret != tmp){\
-				free(tmp);\
-				tmp = NULL;\
+			if(a != b){\
+				free(b);\
+				b = NULL;\
 			}\
-            ret##_dealloc = true;\
+            a##_dealloc = true;\
 		})
 // Free the extra copy of the structure using built-in structure free function
-#define _CALLER_DEALLOC_STRUCT_POST(ret, tmp, name) \
+#define _CALLER_DEALLOC_STRUCT_POST(a, b, name) \
 		({\
-			if(ret != tmp){\
-				free_##name(tmp);\
-				tmp = NULL;\
+			if(a != b){\
+				free_##name(b);\
+				b = NULL;\
 			}\
-            ret##_dealloc = true;\
+            a##_dealloc = true;\
 		})
-// '_CALLEE_DEALLOC' macro makes a copy of actual parameter and delegates callee
-// to free the passing parameter 'ret = func(tmp=copy(param), true)'
-#define _CALLEE_DEALLOC(tmp, checks, func_name)  \
+// '_CALLEE_DEALLOC' macro makes a copy of actual parameter 
+// And free the passing parameter at caller site 'a = func(b)'
+#define _CALLEE_DEALLOC(a, b, checks, func_name)  \
 		({\
-            DEBUG_PRINT("_CALLEE_DEALLOC macro on ( "str(checks)" "str(#tmp) " "str(func_name)" )");\
+            DEBUG_PRINT("_CALLEE_DEALLOC macro on ( "str(a)" = "str(func_name)" "str(b)" "str(checks)" )");\
         })
-#define _CALLEE_DEALLOC_POST(ret, tmp)  \
+// Free the parameter at caller site 
+#define _CALLEE_DEALLOC_POST(a, b)  \
 	   ({\
-            ret##_dealloc = true; \
+	        free(b);\
+			b = NULL;\
+            a##_dealloc = true; \
         })
 // '_SUBSTRUCTURE_DEALLOC' macro applies the subtructure parameter
 #define _SUBSTRUCTURE_DEALLOC(param, checks, func_name) \

@@ -1,23 +1,23 @@
-==5731== Memcheck, a memory error detector
-==5731== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==5731== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==5731== Command: ./CoinGame4.out
-==5731== Parent PID: 5092
-==5731== 
-==5731== Invalid read of size 8
-==5731==    at 0x400E13: _play_ (CoinGame4.c:120)
-==5731==    by 0x4023A1: main (CoinGame4.c:651)
-==5731==  Address 0x5204038 is 8 bytes before a block of size 800 alloc'd
-==5731==    at 0x4C2DBF6: malloc (vg_replace_malloc.c:299)
-==5731==    by 0x402918: create1DArray_int64_t (Util.c:23)
-==5731==    by 0x402263: main (CoinGame4.c:627)
-==5731== 
-==5731== 
-==5731== HEAP SUMMARY:
-==5731==     in use at exit: 0 bytes in 0 blocks
-==5731==   total heap usage: 44 allocs, 44 frees, 11,656 bytes allocated
-==5731== 
-==5731== All heap blocks were freed -- no leaks are possible
-==5731== 
-==5731== For counts of detected and suppressed errors, rerun with: -v
-==5731== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==5671== Memcheck, a memory error detector
+==5671== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==5671== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==5671== Command: ./CoinGame4.out
+==5671== Parent PID: 5110
+==5671== 
+==5671== Invalid read of size 8
+==5671==    at 0x108F37: _play_ (CoinGame4.c:120)
+==5671==    by 0x10A4CD: main (CoinGame4.c:651)
+==5671==  Address 0x522d038 is 8 bytes before a block of size 800 alloc'd
+==5671==    at 0x4C2FB0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5671==    by 0x10AA4A: create1DArray_int64_t (Util.c:23)
+==5671==    by 0x10A38F: main (CoinGame4.c:627)
+==5671== 
+==5671== 
+==5671== HEAP SUMMARY:
+==5671==     in use at exit: 0 bytes in 0 blocks
+==5671==   total heap usage: 44 allocs, 44 frees, 7,560 bytes allocated
+==5671== 
+==5671== All heap blocks were freed -- no leaks are possible
+==5671== 
+==5671== For counts of detected and suppressed errors, rerun with: -v
+==5671== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

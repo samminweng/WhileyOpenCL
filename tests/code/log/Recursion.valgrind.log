@@ -1,0 +1,93 @@
+==6530== Memcheck, a memory error detector
+==6530== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==6530== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==6530== Command: ./Recursion.out
+==6530== Parent PID: 5110
+==6530== 
+==6530== Invalid read of size 8
+==6530==    at 0x10A37C: printf1DArray_int64_t (Util.c:313)
+==6530==    by 0x10972C: main (Recursion.c:225)
+==6530==  Address 0x522d100 is 0 bytes inside a block of size 24 free'd
+==6530==    at 0x4C30D3B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6530==    by 0x10970A: main (Recursion.c:219)
+==6530==  Block was alloc'd at
+==6530==    at 0x4C2FB0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6530==    by 0x1095D8: main (Recursion.c:208)
+==6530== 
+==6530== Invalid read of size 8
+==6530==    at 0x10A3AF: printf1DArray_int64_t (Util.c:316)
+==6530==    by 0x10972C: main (Recursion.c:225)
+==6530==  Address 0x522d108 is 8 bytes inside a block of size 24 free'd
+==6530==    at 0x4C30D3B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6530==    by 0x10970A: main (Recursion.c:219)
+==6530==  Block was alloc'd at
+==6530==    at 0x4C2FB0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6530==    by 0x1095D8: main (Recursion.c:208)
+==6530== 
+==6530== Invalid write of size 8
+==6530==    at 0x108F29: _func_ (Recursion.c:69)
+==6530==    by 0x10978D: main (Recursion.c:238)
+==6530==  Address 0x522e208 is 8 bytes inside a block of size 24 free'd
+==6530==    at 0x4C30D3B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6530==    by 0x108E87: _func_ (Recursion.c:56)
+==6530==    by 0x10978D: main (Recursion.c:238)
+==6530==  Block was alloc'd at
+==6530==    at 0x4C2FB0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6530==    by 0x108DAC: _func_ (Recursion.c:46)
+==6530==    by 0x10978D: main (Recursion.c:238)
+==6530== 
+==6530== Invalid read of size 8
+==6530==    at 0x10A37C: printf1DArray_int64_t (Util.c:313)
+==6530==    by 0x1097D1: main (Recursion.c:248)
+==6530==  Address 0x522e200 is 0 bytes inside a block of size 24 free'd
+==6530==    at 0x4C30D3B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6530==    by 0x108E87: _func_ (Recursion.c:56)
+==6530==    by 0x10978D: main (Recursion.c:238)
+==6530==  Block was alloc'd at
+==6530==    at 0x4C2FB0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6530==    by 0x108DAC: _func_ (Recursion.c:46)
+==6530==    by 0x10978D: main (Recursion.c:238)
+==6530== 
+==6530== Invalid read of size 8
+==6530==    at 0x10A3AF: printf1DArray_int64_t (Util.c:316)
+==6530==    by 0x1097D1: main (Recursion.c:248)
+==6530==  Address 0x522e208 is 8 bytes inside a block of size 24 free'd
+==6530==    at 0x4C30D3B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6530==    by 0x108E87: _func_ (Recursion.c:56)
+==6530==    by 0x10978D: main (Recursion.c:238)
+==6530==  Block was alloc'd at
+==6530==    at 0x4C2FB0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6530==    by 0x108DAC: _func_ (Recursion.c:46)
+==6530==    by 0x10978D: main (Recursion.c:238)
+==6530== 
+==6530== Invalid free() / delete / delete[] / realloc()
+==6530==    at 0x4C30D3B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6530==    by 0x109888: main (Recursion.c:255)
+==6530==  Address 0x522d100 is 0 bytes inside a block of size 24 free'd
+==6530==    at 0x4C30D3B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6530==    by 0x10970A: main (Recursion.c:219)
+==6530==  Block was alloc'd at
+==6530==    at 0x4C2FB0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6530==    by 0x1095D8: main (Recursion.c:208)
+==6530== 
+==6530== Invalid free() / delete / delete[] / realloc()
+==6530==    at 0x4C30D3B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6530==    by 0x1098AC: main (Recursion.c:256)
+==6530==  Address 0x522e200 is 0 bytes inside a block of size 24 free'd
+==6530==    at 0x4C30D3B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6530==    by 0x108E87: _func_ (Recursion.c:56)
+==6530==    by 0x10978D: main (Recursion.c:238)
+==6530==  Block was alloc'd at
+==6530==    at 0x4C2FB0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6530==    by 0x108DAC: _func_ (Recursion.c:46)
+==6530==    by 0x10978D: main (Recursion.c:238)
+==6530== 
+==6530== 
+==6530== HEAP SUMMARY:
+==6530==     in use at exit: 0 bytes in 0 blocks
+==6530==   total heap usage: 6 allocs, 8 frees, 4,216 bytes allocated
+==6530== 
+==6530== All heap blocks were freed -- no leaks are possible
+==6530== 
+==6530== For counts of detected and suppressed errors, rerun with: -v
+==6530== ERROR SUMMARY: 9 errors from 7 contexts (suppressed: 0 from 0)
