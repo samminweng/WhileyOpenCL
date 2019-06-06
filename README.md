@@ -121,7 +121,7 @@ All the execution results are output to 'log_valgrind.txt'
 We also provide a set of both sequential and parallel benchmark results in `benchmarks/` folder, including:
 
 | Benchmarks                  | Folder            |
-| -------------               |:------------------|
+| :-------------              |:------------------|
 | Micro-Benchmark             | Reverse, newTicTacToe, MergeSort, BubbleSort, MatrixMult |
 | Case: Cash Till             | Cashtill      |
 | Case: Coin Game             | CoinGame      |
