@@ -137,7 +137,7 @@ We also provide a set of both sequential and parallel benchmark results in `benc
 
 ## Built With
 
-* [Whiley Compiler] (http://whiley.org/) - Our compiler is built as a separate module from Whiley compiler
+* [Whiley Compiler] (http://whiley.org/) - Our compiler is built as a separate module on top of Whiley compiler
 * [Java] (Java JDK) - Implemented in Java
 * [Apache ANT] (https://ant.apache.org/) - Used to compile the project and run unit testing
 
