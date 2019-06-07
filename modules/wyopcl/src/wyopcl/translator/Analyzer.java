@@ -153,7 +153,7 @@ public abstract class Analyzer {
 	 *            the function name
 	 * @return the cached CFGraph. If no cached graph is found, return null.
 	 */
-	protected CFGraph getCFGraph(FunctionOrMethod function) {
+	public CFGraph getCFGraph(FunctionOrMethod function) {
 		if (cfgraphs.containsKey(function))
 			return cfgraphs.get(function);
 		return null;

@@ -19,9 +19,9 @@ import wyopcl.translator.bound.constraint.Range;
 import wyopcl.translator.cfg.BasicBlock;
 
 /**
- * The bound block is used to build the bound graph (CFG) for bound analysis. 
+ * The bound block is used to build the bound graph (CFG) for bound analysis.
  * 
- * The bound block contains a list of constraints, an union of bounds, and parent/child block (etc).. 
+ * The bound block contains a list of constraints, an union of bounds, and parent/child block (etc)..
  * 
  * 
  * @author Min-Hsien Weng
@@ -32,7 +32,7 @@ public class BoundBlock extends BasicBlock {
 	// The set of dead variable, that will be passed onto the parent block
 	private LinkedHashSet<Integer> deadVars;
 	// The set of variables, which will be used in the block
-	private LinkedHashSet<Integer> vars; 
+	private LinkedHashSet<Integer> vars;
 
 	private LinkedHashSet<Code> codes;// Store all the byte-code for a block, preserving insertion order
 	private List<Constraint> constraints;
@@ -57,16 +57,15 @@ public class BoundBlock extends BasicBlock {
 	}
 
 	/**
-	 * clear all the 'Range' constraints, which are used to propagates input/output bounds 
-	 * between a function call
+	 * clear all the 'Range' constraints, which are used to propagates input/output bounds between a function call
 	 */
 	public void emptyRangeConstraints() {
-		// Remove the Range constraints 
+		// Remove the Range constraints
 		Iterator<Constraint> iterator = this.constraints.iterator();
-		// Use the iterator to remove 
-		while(iterator.hasNext()){
+		// Use the iterator to remove
+		while (iterator.hasNext()) {
 			Constraint c = iterator.next();
-			if(c instanceof Range){
+			if (c instanceof Range) {
 				iterator.remove();
 			}
 		}
@@ -74,7 +73,8 @@ public class BoundBlock extends BasicBlock {
 
 	/**
 	 * Empty the bounds and initialize each variable with empty domain
-	 * @param list 
+	 * 
+	 * @param list
 	 */
 	public void emptyBounds() {
 		this.bounds = new Bounds();
@@ -88,14 +88,12 @@ public class BoundBlock extends BasicBlock {
 	public void addCode(Code code) {
 		this.codes.add(code);
 	}
-	
+
 	/**
-	 * Combines the bounds of current and parent nodes into the union of bounds.
-	 * Check if the var has been existed in the current bounds. If so, then the
-	 * union operator takes
+	 * Combines the bounds of current and parent nodes into the union of bounds. Check if the var has been existed in
+	 * the current bounds. If so, then the union operator takes
 	 * 
-	 * min of current and parent' lower bounds and max of these two blk's upper
-	 * bounds.
+	 * min of current and parent' lower bounds and max of these two blk's upper bounds.
 	 * 
 	 * And sets the bounds directly to current bounds.
 	 * 
@@ -111,10 +109,9 @@ public class BoundBlock extends BasicBlock {
 	 * 
 	 * @param parent
 	 */
-	public void intersecBounds(BoundBlock parent){
+	public void intersecBounds(BoundBlock parent) {
 		this.bounds.intersect((Bounds) parent.getBounds().clone());
 	}
-
 
 	/**
 	 * Add a constraint to the list of constraints.
@@ -124,10 +121,10 @@ public class BoundBlock extends BasicBlock {
 	 */
 	public void addConstraint(Constraint c) {
 		// Constraint can be null, e.g. the negated equality is null
-		if(c != null){
+		if (c != null) {
 			constraints.add(c);
 		}
-		
+
 	}
 
 	public Bounds getBounds() {
@@ -147,21 +144,16 @@ public class BoundBlock extends BasicBlock {
 	 * Repeatedly infer the Bound consistent with all the constraints.
 	 * 
 	 * @param iterations
-	 *            optional parameter. iterations[0] specifies the number of
-	 *            iterations. If not specifies, the default value is 5.
+	 *            optional parameter. iterations[0] specifies the number of iterations. If not specifies, the default
+	 *            value is 5.
 	 * @return true if bounds remain 'unchanged'. Otherwise, return false.
 	 */
-	/*public boolean inferFixedPoint(int... iterations) {
-		int MaxIteration = iterations.length > 0 ? iterations[0] : 5;
-		boolean isFixedPoint = true;
-		for (int i = 0; i < MaxIteration; i++) {
-			// Initialize the isFixedPointed
-			isFixedPoint = true;
-			// Use the OR bitwise operator to combine all the results.
-			isFixedPoint |= inferBounds();
-		}
-		return isFixedPoint;
-	}*/
+	/*
+	 * public boolean inferFixedPoint(int... iterations) { int MaxIteration = iterations.length > 0 ? iterations[0] : 5;
+	 * boolean isFixedPoint = true; for (int i = 0; i < MaxIteration; i++) { // Initialize the isFixedPointed
+	 * isFixedPoint = true; // Use the OR bitwise operator to combine all the results. isFixedPoint |= inferBounds(); }
+	 * return isFixedPoint; }
+	 */
 
 	@Override
 	public String toString() {
@@ -169,25 +161,27 @@ public class BoundBlock extends BasicBlock {
 		String str = "";
 		str += String.format("%s [%s] ", this.getLabel(), this.getType());
 		// Display the list of byte-code
-		if(this.codes.size()>0){
+		if (this.codes.size() > 0) {
 			str += "\n-------------------------------";
-			int index=0;
-			for(Code code: this.codes){
-				str += "\n"+index+":"+code;
+			int index = 0;
+			for (Code code : this.codes) {
+				str += "\n" + index + ":" + code;
 				index++;
 			}
 			str += "\n-------------------------------";
 		}
-		// Display the vars set,  bounds and constraints.	
-		str += String.format("%n%s %s", "Vars", this.vars.stream().map(var ->  prefix + var).collect(Collectors.toList()));
-		// Display the dead vars set 
-		str += String.format("%n%s %s", "DeadVars", this.deadVars.stream().map(var ->  prefix + var).collect(Collectors.toList()));
+		// Display the vars set, bounds and constraints.
+		str += String.format("%n%s %s", "Vars",
+				this.vars.stream().map(var -> prefix + var).collect(Collectors.toList()));
+		// Display the dead vars set
+		str += String.format("%n%s %s", "DeadVars",
+				this.deadVars.stream().map(var -> prefix + var).collect(Collectors.toList()));
 		// Print out the constraints
 		str += String.format("%n%s %s%n", "Constraints", this.constraints);
 		// Print out the bounds
 		str += this.bounds + "\n";
 		str += "IsReachable=" + isReachable();
-		//str += "\n-------------------------------\n";
+		// str += "\n-------------------------------\n";
 
 		return str;
 	}
@@ -203,7 +197,7 @@ public class BoundBlock extends BasicBlock {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -226,14 +220,12 @@ public class BoundBlock extends BasicBlock {
 		this.bounds.addDomain(d);
 	}
 
-
 	/**
 	 * Iterate through the constraints to infer the bounds
 	 * 
-	 * @return true if the bounds are changed. Return false if bounds remain
-	 *         unchanged.
+	 * @return true if the bounds are changed. Return false if bounds remain unchanged.
 	 */
-	public void inferBounds() {		
+	public void inferBounds() {
 		// Iterate through the constraints to infer the bounds.
 		for (Constraint c : this.constraints) {
 			c.inferBound(this.bounds);
@@ -246,18 +238,18 @@ public class BoundBlock extends BasicBlock {
 	 * @param var
 	 */
 	public void addVar(String var) {
-		this.vars.add(this.toRegister(var));		
+		this.vars.add(this.toRegister(var));
 	}
 
 	/**
 	 * Check 'var' is in the 'Vars' set
+	 * 
 	 * @param var
 	 * @return
 	 */
-	public boolean isDeadVars(String var){
+	public boolean isDeadVars(String var) {
 		return this.deadVars.contains(this.toRegister(var));
 	}
-
 
 	/**
 	 * Produce the input bounds of the block
@@ -267,68 +259,62 @@ public class BoundBlock extends BasicBlock {
 		// Reset the block bounds
 		this.emptyBounds();
 
-		// Produce the input bound by taking union of bound in all parent blocks before bound inference 
+		// Produce the input bound by taking union of bound in all parent blocks before bound inference
 		for (BasicBlock blk : this.getParentNodes()) {
-			BoundBlock parent = (BoundBlock)blk;			
+			BoundBlock parent = (BoundBlock) blk;
 			// Get all the domains in parent blocks
 			HashMap<String, Domain> parent_domains = parent.bounds.getBounds();
 			Iterator<Entry<String, Domain>> iterator = parent_domains.entrySet().iterator();
-			while(iterator.hasNext()){
+			while (iterator.hasNext()) {
 				Entry<String, Domain> entry = iterator.next();
 				// Get variable
 				String var = entry.getKey();
 				// Get new domain
 				Domain new_domain = entry.getValue();
 				// Check if the variable is in 'Vars'
-				if(!parent.isDeadVars(var)){
+				if (!parent.isDeadVars(var)) {
 					this.bounds.union(var, new_domain);
 				}
 			}
 
 		}
 	}
+
 	/**
 	 * Compute dead variables of given block.
 	 * 
-	 * <pre>DeadVars = Vars - LiveVars</pre>
+	 * <pre>
+	 * DeadVars = Vars - LiveVars
+	 * </pre>
 	 * 
 	 * 
 	 * @param liveAnalyzer
 	 * @param function
 	 * 
-	 * TODO: use the above equation to compute dead variables, and replace the exiting ones
+	 *            TODO: use the above equation to compute dead variables, and replace the exiting ones
 	 * 
 	 */
 	public void computeDeadVars(LiveVariablesAnalysis liveAnalyzer, FunctionOrMethod function) {
 		// For an empty block, no dead variables
-		if(this.vars.isEmpty()){
+		if (this.vars.isEmpty()) {
 			return;
 		}
-		
+
 		// Get live variables of the current block in a function
 		HashSet<Integer> liveVars = liveAnalyzer.getLiveVars(function, this);
-		
+
 		this.deadVars.clear();
 		this.deadVars.addAll(this.vars); // deadVars = Vars
 		this.deadVars.removeAll(liveVars); // deadVars - liveVars
-		
-		
-		/*if(this.codes.isEmpty()){
-			return;
-		}
-		
-		// Get the last code
-		Code last_code = (Code)this.codes.toArray()[this.codes.size()-1];
-		// Go through each variable
-		for(int r: this.vars){
-			// Check if the register is live after last code 
-			boolean islive = liveAnalyzer.isLive(r, last_code, function);
-			if(islive == false){
-				// Put the dead variable to 'DeadVars' set.
-				this.deadVars.add(r);
-			}
-		}
-		*/
+
+		/*
+		 * if(this.codes.isEmpty()){ return; }
+		 * 
+		 * // Get the last code Code last_code = (Code)this.codes.toArray()[this.codes.size()-1]; // Go through each
+		 * variable for(int r: this.vars){ // Check if the register is live after last code boolean islive =
+		 * liveAnalyzer.isLive(r, last_code, function); if(islive == false){ // Put the dead variable to 'DeadVars' set.
+		 * this.deadVars.add(r); } }
+		 */
 	}
 
 }

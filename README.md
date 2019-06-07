@@ -20,7 +20,7 @@ Note other useful commands are:
 
 ## Usage
 Whiley-to-C compiler is written in Java to generate and optimise C code automatically. We also use formal method to construct proofs and validate the correctness using automatic Boogie solver. 
-
+<!--
 * Bound Analyzer
 
 Bound analyzer infers the bounds and checks the bounds consistent with all constraints.
@@ -38,6 +38,7 @@ Pattern matching matches patterns in a function and transforms 'AppendArray' pat
 ```
 $ cd examples && ./../bin/wyopcl -pattern compress lz77.whiley
 ```
+-->
 
 * Copy Elimination Analysis
 

@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 import wyil.lang.Codes.If;
+import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyopcl.translator.bound.constraint.Constraint;
 import wyopcl.translator.cfg.BasicBlock;
@@ -52,7 +53,7 @@ public class BoundGraph {
 	}	
 
 	/**
-	 * Create a basic block with the specific label name
+	 * Create a basic block for invoke code.
 	 * 
 	 * @param label
 	 *            the branch name
@@ -61,6 +62,27 @@ public class BoundGraph {
 	 * @param parents
 	 *            the parent blk
 	 * @return the blk
+	 */
+	public BoundBlock createInvokeBasicBlock(Codes.Invoke code, BlockType type, BoundBlock... parents) {
+		//Create a new block
+		BoundBlock blk = new BoundBlock(code.name.toString(), type);
+		//Add this block to the block list.
+		blocks.add(blk);
+		//Connect the block with the given parent blocks.
+		BoundBlock parent = parents.length > 0 ? parents[0] : null;
+		if (parent != null) {
+			parent.addChild(blk);
+		}
+		return blk;
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @param label
+	 * @param type
+	 * @param parents
+	 * @return
 	 */
 	public BoundBlock createBasicBlock(String label, BlockType type, BoundBlock... parents) {
 		//Create a new block
@@ -148,6 +170,11 @@ public class BoundGraph {
 		if(blk != null){
 			return blk;
 		}
+		
+		blk = getBasicBlock(label, BlockType.INVOKE);
+		if(blk != null) {
+			return blk;
+		}		
 		//If no blocks is found, then return/create a new block.
 		return createBasicBlock(label, BlockType.BLOCK);
 	}

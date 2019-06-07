@@ -169,10 +169,12 @@ public class TranslatorV2 implements Builder {
 			 */
 			BoundAnalyzer analyzer = new BoundAnalyzer(module, liveAnalyzer, copyAnalyzer, config);
 			try {
+				analyzer.apply(module); // Build up bound block CFG
+				//System.out.println("Debugs");
 				// Get the function code block
 				FunctionOrMethod function = module.functionOrMethod("main").get(0);
 				// Start with main function.
-				analyzer.buildCFG(function);
+				// analyzer.buildCFG(function);
 				// Infer the bounds at the end of main function.
 				analyzer.inferBounds(function);
 				// Print out the bounds in all functions

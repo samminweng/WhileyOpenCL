@@ -133,45 +133,20 @@ public class LiveVariablesAnalysis extends Analyzer {
 		return livenessStore.get(function);
 	}
 
+	
 	/**
-	 * Map bound block to Basic Block used in live variable analysis
+	 * Return the live variables of given basic block.
 	 * 
 	 * @param function
-	 * @param code
+	 * @param blk
 	 * @return
 	 */
-	private BasicBlock mapBoundBlockToBlock(FunctionOrMethod function, BoundBlock bnd_blk) {
-		CFGraph graph = getCFGraph(function);
-		// Get the list of block for the function.
-		for (BasicBlock blk : graph.getBlockList()) {
-			if (blk.equals(bnd_blk)) {
-				return blk;
-			}
-		}
-		throw new RuntimeException("Can not find the basic block in live variable analysis");
-	}
-
-	/**
-	 * Return the live variable set of given bound block.
-	 * 
-	 * <pre>
-	 * DeadVars = Vars - LiveVars
-	 * </pre>
-	 * 
-	 * @param function
-	 * @param bnd_blk
-	 * @return
-	 */
-	public HashSet<Integer> getLiveVars(FunctionOrMethod function, BoundBlock bnd_blk) {
-		// Map 'BoundBlock' to basic block, used in analyser
-		BasicBlock blk = mapBoundBlockToBlock(function, bnd_blk);
-
+	public HashSet<Integer> getLiveVars(FunctionOrMethod function, BasicBlock blk) {
 		// Return the live variables in the block
 		HashSet<Integer> out = livenessStore.get(function).getOUT(blk);
-
 		return out;
-
 	}
+	
 
 	/**
 	 * Applies live variable analysis on the function, in order to get in/out set of each block.

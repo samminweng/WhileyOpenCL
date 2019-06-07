@@ -39,6 +39,8 @@ import wyopcl.translator.bound.constraint.LeftMultiply;
 import wyopcl.translator.bound.constraint.Negate;
 import wyopcl.translator.bound.constraint.NotEquals;
 import wyopcl.translator.bound.constraint.Range;
+import wyopcl.translator.cfg.BasicBlock;
+import wyopcl.translator.cfg.CFGraph;
 import wyopcl.translator.cfg.BasicBlock.BlockType;
 import wyopcl.translator.copy.CopyEliminationAnalyzer;
 
@@ -92,6 +94,19 @@ public class BoundAnalyzer {
 		this.isVerbose = config.isVerbose();
 		this.isDFTraversal = config.getOption(Configuration.TRAVERSAL).equals("DF") ? true : false;
 		this.isNaiveWiden = config.getOption(Configuration.BOUND).equals("naive") ? true : false;
+	}
+
+	/**
+	 * Build up bound block CFG for bound analyser
+	 * 
+	 * @param module
+	 */
+	public void apply(WyilFile module) {
+		// Iterate each function to build up CFG
+		for (FunctionOrMethod function : module.functionOrMethods()) {
+			// Build up CFG 
+			this.buildCFG(function);
+		}
 	}
 
 	/**
@@ -318,6 +333,47 @@ public class BoundAnalyzer {
 		}
 
 	}
+	
+	/**
+	 * Map bound block to Basic Block used in live variable analysis
+	 * 
+	 * @param function
+	 * @param code
+	 * @return
+	 */
+	private BasicBlock mapBoundBlockToBlock(FunctionOrMethod function, BoundBlock bnd_blk) {
+		CFGraph graph = this.liveAnalyzer.getCFGraph(function);
+		// Get the list of block for the function.
+		for (BasicBlock blk : graph.getBlockList()) {
+			if (blk.equals(bnd_blk)) {
+				return blk;
+			}
+		}
+		throw new RuntimeException("Can not find the basic block in live variable analysis");
+	}
+	
+	/**
+	 * Return the live variable set of given bound block.
+	 * 
+	 * <pre>
+	 * DeadVars = Vars - LiveVars
+	 * </pre>
+	 * 
+	 * @param function
+	 * @param bnd_blk
+	 * @return
+	 */
+	public HashSet<Integer> getLiveVars(FunctionOrMethod function, BoundBlock bnd_blk) {
+		// Map 'BoundBlock' to basic block, used in analyser
+		BasicBlock blk = mapBoundBlockToBlock(function, bnd_blk);
+
+		// Return the live variables in the block
+		HashSet<Integer> out = this.liveAnalyzer.getLiveVars(function, blk);
+
+		return out;
+
+	}
+	
 
 	/***
 	 * Initialize each variable of a function with an empty domain.
@@ -477,7 +533,7 @@ public class BoundAnalyzer {
 		Bounds bnds = graph.produceFinalBound();
 
 		// Update the final bounds if copy analysis enabled because some variables are aliased
-		//if (copyAnalyzer.isPresent()) {
+		// if (copyAnalyzer.isPresent()) {
 		if (this.aliasedMap.containsKey(function)) {
 			// Go through each aliased register in aliasedMap
 			ArrayList<Set<Integer>> list = this.aliasedMap.get(function);
@@ -489,12 +545,12 @@ public class BoundAnalyzer {
 				for (Integer reg : aliasedSet) {
 					// Get the domain
 					Domain d;
-					if(reg == -1){// Return variable
+					if (reg == -1) {// Return variable
 						d = bnds.getDomain("return");
-					}else{
+					} else {
 						d = bnds.getDomain(prefix + reg);
 					}
-					
+
 					// Find the larger domains
 					if (largerDomain == null) {
 						largerDomain = d;
@@ -507,14 +563,14 @@ public class BoundAnalyzer {
 				BigInteger lower_bound = largerDomain.getLower();
 				BigInteger upper_bound = largerDomain.getUpper();
 				for (Integer reg : aliasedSet) {
-					if(reg >0){// Update the bounds of alised variables
+					if (reg > 0) {// Update the bounds of alised variables
 						bnds.setLowerBound(prefix + reg, lower_bound);
 						bnds.setUpperBound(prefix + reg, upper_bound);
 					}
 				}
 			}
 		}
-		//}
+		// }
 
 		if (isVerbose) {
 			BoundAnalyzerHelper.printBoundsAndSize(function, bnds);
@@ -695,36 +751,36 @@ public class BoundAnalyzer {
 
 			if (BoundAnalyzerHelper.isIntType(code.type(0))) {
 				switch (code.op) {
-				case EQ:
-					c = new Equals(left, right);
-					neg_c = new NotEquals(left, right);
-					break;
-				case NEQ:
-					c = new NotEquals(left, right);
-					neg_c = new Equals(left, right);
-					break;
-				case LT:
-					c = new LessThan(left, right);
-					neg_c = new GreaterThanEquals(left, right);
-					break;
-				case LTEQ:
-					// Add the 'left <= right' constraint to the branched list.
-					c = new LessThanEquals(left, right);
-					neg_c = new GreaterThan(left, right);
-					break;
-				case GT:
-					c = new GreaterThan(left, right);
-					neg_c = new LessThanEquals(left, right);
-					break;
-				case GTEQ:
-					// Branch and add the left >= right constraint to
-					c = new GreaterThanEquals(left, right);
-					neg_c = new LessThan(left, right);
-					// Add the constraint 'left< right' to current constraint
-					// list.
-					break;
-				default:
-					throw new RuntimeException("Unknow operator (" + code + ")");
+					case EQ :
+						c = new Equals(left, right);
+						neg_c = new NotEquals(left, right);
+						break;
+					case NEQ :
+						c = new NotEquals(left, right);
+						neg_c = new Equals(left, right);
+						break;
+					case LT :
+						c = new LessThan(left, right);
+						neg_c = new GreaterThanEquals(left, right);
+						break;
+					case LTEQ :
+						// Add the 'left <= right' constraint to the branched list.
+						c = new LessThanEquals(left, right);
+						neg_c = new GreaterThan(left, right);
+						break;
+					case GT :
+						c = new GreaterThan(left, right);
+						neg_c = new LessThanEquals(left, right);
+						break;
+					case GTEQ :
+						// Branch and add the left >= right constraint to
+						c = new GreaterThanEquals(left, right);
+						neg_c = new LessThan(left, right);
+						// Add the constraint 'left< right' to current constraint
+						// list.
+						break;
+					default :
+						throw new RuntimeException("Unknow operator (" + code + ")");
 
 				}
 
@@ -813,17 +869,17 @@ public class BoundAnalyzer {
 					return_block.addVar(retOp);
 					// Put the code to return blk
 					return_block.addCode(code);
-					
+
 					// Alias return variable with retOp
 					// Alias lhs and rhs registers
 					if (!this.aliasedMap.containsKey(function)) {
 						this.aliasedMap.put(function, new ArrayList<Set<Integer>>());
 					}
-					
+
 					ArrayList<Set<Integer>> list = this.aliasedMap.get(function);
-					
+
 					// The register of return variable is -1
-					int r = -1; 
+					int r = -1;
 
 					// Find the aliased set in the list
 					boolean isFound = false;
@@ -875,11 +931,11 @@ public class BoundAnalyzer {
 		// Get a graph
 		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
 		switch (kind) {
-		case NEG:
-			graph.addConstraint(new Negate(x, y));
-			break;
-		default:
-			throw new RuntimeException("unknown unary operator encountered (" + code + ")");
+			case NEG :
+				graph.addConstraint(new Negate(x, y));
+				break;
+			default :
+				throw new RuntimeException("unknown unary operator encountered (" + code + ")");
 		}
 
 	}
@@ -951,36 +1007,36 @@ public class BoundAnalyzer {
 			String right0 = prefix + code.operand(0);
 			String right1 = prefix + code.operand(1);
 			switch (code.kind) {
-			case ADD:
-				// Use the left plus to represent the addition
-				cur_blk.addConstraint(new LeftPlus(right0, right1, left));
-				break;
-			case SUB:
-				// Negated the operand
-				cur_blk.addConstraint(new Negate(right1, right1));
-				// Use the left plus to represent the subtraction.
-				cur_blk.addConstraint(new LeftPlus(right0, right1, left));
-				// graph.addConstraint(new Plus(prefix + code.operand(0), prefix + code.operand(1), target));
-				break;
-			case MUL:
-				cur_blk.addConstraint(new LeftMultiply(right0, right1, left));
-				break;
-			case DIV:
-				break;
-			case REM:
-				break;
-			case BITWISEAND:
-				break;
-			case BITWISEOR:
-				break;
-			case BITWISEXOR:
-				break;
-			case LEFTSHIFT:
-				break;
-			case RIGHTSHIFT:
-				break;
-			default:
-				throw new RuntimeException("unknown binary expression encountered (" + code + ")");
+				case ADD :
+					// Use the left plus to represent the addition
+					cur_blk.addConstraint(new LeftPlus(right0, right1, left));
+					break;
+				case SUB :
+					// Negated the operand
+					cur_blk.addConstraint(new Negate(right1, right1));
+					// Use the left plus to represent the subtraction.
+					cur_blk.addConstraint(new LeftPlus(right0, right1, left));
+					// graph.addConstraint(new Plus(prefix + code.operand(0), prefix + code.operand(1), target));
+					break;
+				case MUL :
+					cur_blk.addConstraint(new LeftMultiply(right0, right1, left));
+					break;
+				case DIV :
+					break;
+				case REM :
+					break;
+				case BITWISEAND :
+					break;
+				case BITWISEOR :
+					break;
+				case BITWISEXOR :
+					break;
+				case LEFTSHIFT :
+					break;
+				case RIGHTSHIFT :
+					break;
+				default :
+					throw new RuntimeException("unknown binary expression encountered (" + code + ")");
 			}
 			// left, right0, and right1 are use variable
 			cur_blk.addVar(left);
@@ -1063,11 +1119,11 @@ public class BoundAnalyzer {
 				union_bnd.union(bnd);
 			}
 
-			if(this.isVerbose){
+			if (this.isVerbose) {
 				System.out.println("Final bounds of " + function.name() + " :");
 				BoundAnalyzerHelper.printBoundsAndSize(function, union_bnd);
 			}
-			
+
 			// Put union bound to map
 			this.unionBound.put(function, union_bnd);
 
@@ -1175,6 +1231,12 @@ public class BoundAnalyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.Invoke code, FunctionOrMethod function) {
+		// Get the CFG 
+		BoundGraph graph = BoundAnalyzerHelper.getCFGraph(function);
+		BoundBlock c_blk = graph.getCurrentBlock();
+		
+		BoundBlock blk = graph.createInvokeBasicBlock(code, BlockType.INVOKE, c_blk);
+		
 		FunctionOrMethod callee = this.module.functionOrMethod(code.name.name(), code.type(0));
 		FunctionOrMethod caller = function;
 		if (callee != null) {
@@ -1184,7 +1246,7 @@ public class BoundAnalyzer {
 			Bounds input_bnds = inferBounds(caller);
 
 			// Build CFGraph for callee.
-			buildCFG(callee);
+			//buildCFG(callee);
 
 			// Propagate the bounds of input parameters to the function.
 			BoundAnalyzerHelper.propagateBoundsToCallee(callee, code, input_bnds);
