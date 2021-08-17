@@ -131,6 +131,7 @@ We also provide a set of both sequential and parallel benchmark results in `benc
 
 ## Publication
 
+* Weng, MH., Malik, R. & Utting, M. (2021) [Automatic proofs of memory deallocation for a Whiley-to-C Compiler.] (https://doi.org/10.1007/s10703-021-00378-0) In Formal Methods in System Design Journal.  
 * Weng, M. H. (2019). [Efficient Compilation of a Verification-friendly Programming Language](https://researchcommons.waikato.ac.nz/handle/10289/12432) (Doctoral dissertation, The University of Waikato).
 * Weng, M. H., Pfahringer, B., & Utting, M. (2017). [Static techniques for reducing memory usage in the C implementation of whiley programs.](https://dl.acm.org/citation.cfm?doid=3014812.3014827) In ACSW'17. ACM.
 * Weng, M. H., Utting, M., & Pfahringer, B. (2016). [Bound analysis for Whiley programs.](https://www.sciencedirect.com/science/article/pii/S1571066116000062) Electronic Notes in Theoretical Computer Science, 320, 53-67.
@@ -140,6 +141,11 @@ We also provide a set of both sequential and parallel benchmark results in `benc
 * [Whiley Compiler] (http://whiley.org/) - Our compiler is built as a separate module on top of Whiley compiler
 * [Java] (Java JDK) - Implemented in Java
 * [Apache ANT] (https://ant.apache.org/) - Used to compile the project and run unit testing
+ 
+## Citation Information
+If you use either any of our project or dataset in your research, please cite the below paper. 
+>   Weng, MH., Malik, R. & Utting, M. Automatic proofs of memory deallocation for a Whiley-to-C Compiler. Form Methods Syst Des (2021). https://doi.org/10.1007/s10703-021-00378-0
+  
 
 ## Contributing
 
